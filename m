@@ -2,141 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68956C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65515C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244026AbiCGQOY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 11:14:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
+        id S244040AbiCGQPj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 11:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237281AbiCGQOX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 11:14:23 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF6B24089
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:13:27 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id m21so15150709edc.0
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 08:13:27 -0800 (PST)
+        with ESMTP id S244036AbiCGQPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 11:15:36 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 394BE3D1D8
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:14:42 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id d194so2680575qkg.5
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 08:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=olkui+rjt2NpRONMhQoxd7x13HBXRrQeV/sSyrlnWzU=;
-        b=XikyzSdQD5Gre17dRU5k5/oAZ25VLjjrWWGXEuLKNoHHZ4Oi94mfijPRFqj0IbeFmt
-         X6HdnFu+wBX3leffRwdcnyZ11CxaufoIlaR0TpHP6G7XrmgFI+xjUk7+0POqxsc9IDxi
-         Pdt3KoQuzXW2wQ30HN4Ik14+d5wwOY9BTwprq+s03KAPRf0SAlt58AZUvhEndNWV6KEc
-         c1AJRX9Rt7L2ig1oUGnUXVZJbSa6fMdHVo4D+nYoC+VJRmW8GldGZg8ElLiUvjSBMVnk
-         UMO18GndgSBGudxBaQJvjtf1L/rNTX1EvdzK1gmH4D8MGwGffg8imR4jjG44Yj1ZSmAz
-         VtjA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ZoiIgqXEWzyqtlTaQ+Ba//J1RZ862dZb+NKa2/0g3sQ=;
+        b=QsAMKoPlQow2i7/YHzifqjjc65o0lZb3IY3libeorT7JoQshK0+xHTw/0dxadJSlTq
+         RF0yCOQro9u9BHRNZzWGPW9/ZAA+6WbdRZzAoUkp7Bd0q3WRlppFaWJ+41jOOEzXjgqZ
+         bq9nmsSpuvuu6DPqrNyi1D4QurfskCYJ1bDseh2OXwZ0I0D/OBdkpMcszdaI1pl58Qmb
+         dVdsIthwoSqz0PvOSjp68azocp8G73z94oAKn+lQsE5OmqT+VUiTeVFlbKJ11VzORwUy
+         LL/jCLL7gqOQQd+TsnQrl0nlQIzvC4nZ0W03dGaBTuI1ts6Oyr6jmngrAz/N4kpGjHcE
+         xYfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=olkui+rjt2NpRONMhQoxd7x13HBXRrQeV/sSyrlnWzU=;
-        b=GI154+ZADNwzfufWg/Y1e/lQXBYBHPRIn0sHm/rQQhHrGmlO89mH2yUFdN2MbxcbnP
-         i+4/YYimXiOwB7qHWJptdisPdJtuzyUZHdGsk5hJDDrlsCD3JrIE1b4BP0NSBesideVp
-         Ak+ZTh9HqgWxqLrIWHSntdOfwwDp55NJpxYapsCNHP3OLXGYaqrjJzZ8X/lyi+agMn8B
-         aoyQ56iMrAmom0s/tXt41IVaOXgTvq7610o1HfrU8Y7EC+Dc5fSBh318HQdjbBWPtfp0
-         X0ssDtA/SD6cdHoqAS+ZlYGVMhKvtAOriZAXiVFmsvqiLoClnAOks3/cTg7kqPH1WE/E
-         RJNw==
-X-Gm-Message-State: AOAM533c9pw1qbY5idYbVnnY/6r8xKbsNtJ6N3NuqgKhDcT4aznwSuXn
-        F3v/EqK9eQAWGm2xqNnVsYg=
-X-Google-Smtp-Source: ABdhPJxwIJPE1QxA/sy372TY5R8RcRZiKIi/5XXAObbUm5QLgygBpSih8NzcQB5gvM4AiOWJ1bacSQ==
-X-Received: by 2002:a05:6402:2810:b0:415:ff8b:cd2a with SMTP id h16-20020a056402281000b00415ff8bcd2amr11644979ede.333.1646669606247;
-        Mon, 07 Mar 2022 08:13:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k23-20020a1709062a5700b006ccd8fdc300sm4826554eje.180.2022.03.07.08.13.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 08:13:25 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRFzA-001b5I-Vg;
-        Mon, 07 Mar 2022 17:13:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
- helpful
-Date:   Mon, 07 Mar 2022 17:05:54 +0100
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
- <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
- <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2203071655070.11118@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2203071655070.11118@tvgsbejvaqbjf.bet>
-Message-ID: <220307.86tuc9yc4b.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ZoiIgqXEWzyqtlTaQ+Ba//J1RZ862dZb+NKa2/0g3sQ=;
+        b=bBaF1dTHigO62i51vzhxlwzL7kFwH4V7BCmpmJqCXWYkxHLF7NJ1z4w07EuNaP2ztQ
+         lBSZL9Er+Xd0bkMNytPigtBOIYvPdQObb9uzmxojW0F+m35fzsiAbJNkHwksbuMmjKyA
+         EMiHKA7r3JuOzCNGZGNYTFCgvBZVHrbd9C/rK9d7T7d63uUHeumQDDBqs5u6Rnc7ydow
+         Q9mBEMi0hLC3rifNLSXWk1uiE9uhNBST/fy6GOC2OzhgSwNP3z/GXYfFEiyxiUxMoU8p
+         pBKoe3hTWgYUwldcTUuahqL5lvVNE4iEQL+t97bh3CBEULkyS11zxREDaA5ct1jEFrIf
+         ByZA==
+X-Gm-Message-State: AOAM531xji7KhvyMBvrRkv+5WexnJ6juGIOp2fBZxAqLPPcCvalG8YEe
+        0YfCplpS/cy2HtlXwTXKCtQe
+X-Google-Smtp-Source: ABdhPJwY/DwGWrZ3N2jm3xcKwqSaMCGodal6L8qfJvB4BW2fdX97yvWoMuid3tXFc3CQl/fSieLycw==
+X-Received: by 2002:a05:620a:17a0:b0:648:e2c1:b764 with SMTP id ay32-20020a05620a17a000b00648e2c1b764mr7326886qkb.427.1646669681292;
+        Mon, 07 Mar 2022 08:14:41 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id b8-20020a05620a088800b00648bfd00a41sm6288007qka.80.2022.03.07.08.14.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Mar 2022 08:14:41 -0800 (PST)
+Message-ID: <142219bd-5047-a27d-d53f-2ec2f6cb9c08@github.com>
+Date:   Mon, 7 Mar 2022 11:14:40 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 08/11] bundle: parse filter capability
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+ <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
+ <220307.86bkyhzs3r.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220307.86bkyhzs3r.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/7/2022 10:38 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+...
+>> diff --git a/bundle.h b/bundle.h
+>> index 06009fe6b1f..eb026153d56 100644
+>> --- a/bundle.h
+>> +++ b/bundle.h
+>> @@ -5,11 +5,14 @@
+>>  #include "cache.h"
+>>  #include "string-list.h"
+>>  
+>> +struct list_objects_filter_options;
+>> +
+> 
+> For the other ones we include the relevant header, do the same here (or
+> if there's a need to not do it, do we need it for the rest too?)
 
-On Mon, Mar 07 2022, Johannes Schindelin wrote:
+The others are .c files that require looking into the struct. This
+declaration is all that's required for this header file.
 
-> On Wed, 2 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->>
->> On Tue, Mar 01 2022, Johannes Schindelin via GitGitGadget wrote:
->>
->> > Changes since v1:
->> >
->> >  * In the patch that removed MAKE_TARGETS, a stale comment about that
->> >    variable is also removed.
->> >  * The comment about set -x has been adjusted because it no longer app=
-lies
->> >    as-is.
->> >  * The commit message of "ci: make it easier to find failed tests' log=
-s in
->> >    the GitHub workflow" has been adjusted to motivate the improvement
->> >    better.
->>
->> Just briefly: Much of the feedback I had on v1 is still unanswered,
->
-> Yes, because I got the sense that your feedback ignores the goal of making
-> it easier to diagnose test failures.
+>>  struct bundle_header {
+>>  	unsigned version;
+>>  	struct string_list prerequisites;
+>>  	struct string_list references;
+>>  	const struct git_hash_algo *hash_algo;
+>> +	struct list_objects_filter_options *filter;
+>>  };
+> 
+> I haven't tried, but any reason this needs to be a *filter
+> v.s. embedding it in the struct?
+> 
+> Then we'd just need list_objects_filter_release() and not the free() as
+> well.
+> 
+> Is it because you're piggy-backing on "if (header->filter)" as "do we
+> have it" state, better to check .nr?
 
-I think that's a rather strange conclusion given that I've submitted a
-parallel series that makes some of those failures easier to diagnose
-than the same changes in this series. I.e. the failures in build
-v.s. test phases, not the individual test format output (but those are
-orthagonal).
+Yes. I replied to Junio before that there is some assumption in
+the filtering code that the .nr == 0 case is listed as a BUG()
+so we would possibly be breaking expectations in a different
+way doing the embedded version.
 
-I think it's a fair summary of our differences that we're just placing
-different values on UX responsiveness. I'm pretty sure there's some
-amount of UX slowdown you'd consider unacceptable, no matter how much
-the output was improved.
+>> @@ -55,7 +55,7 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
+>>   * expand_list_objects_filter_spec() first).  We also "intern" the arg for the
+>>   * convenience of the current command.
+>>   */
+> 
+> These API docs....
+> 
+>> -static int gently_parse_list_objects_filter(
+>> +int gently_parse_list_objects_filter(
+>>  	struct list_objects_filter_options *filter_options,
+>>  	const char *arg,
+>>  	struct strbuf *errbuf)
+>> diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+>> index da5b6737e27..347a99c28cf 100644
+>> --- a/list-objects-filter-options.h
+>> +++ b/list-objects-filter-options.h
+>> @@ -72,6 +72,11 @@ struct list_objects_filter_options {
+>>  /* Normalized command line arguments */
+>>  #define CL_ARG__FILTER "filter"
+> 
+> ...should be moved here, presumably.
 
-Clearly we just use it differently.
-
->> or in the case of the performance issues I think just saying that this
->> output is aimed at non-long-time-contributors doesn't really justify the
->> large observed slowdowns.
->
-> What good is a quickly-loading web site when it is less than useful?
-
-For all the flaws in the current output there are cases now where you
-can click on a failure, see a summary of the 1-2 tests that failed, and
-even find your way through the right place in the rather verbose raw log
-output in 1/4 or 1/2 the time it takes the initial page on the new UX to
-loda.
-
-> I'd much rather have a slow-loading web site that gets me to where I need
-> to be than a fast-loading one that leaves me as puzzled as before.
-
-I think it's clear that we're going to disagree on this point, but I'd
-still think that:
-
- * In a re-roll, you should amend these patches to clearly note that's a
-   UX trade-off you're making, perhaps with rough before/after timings
-   similar to the ones I've posted.
-
-   I.e. now those patches say nothing about the UX change resulting in
-   UX that's *much* slower than before. Clearly noting that trade-off
-   for reviewers is not the same as saying the trade-off can't be made.
-
- * I don't see why the changes here can't be made configurable (and
-   perhaps you'd argue they should be on by default) via the ci-config
-   phase.
+Yes. Thanks!
+-Stolee
