@@ -2,158 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8A5C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 11:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC509C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 11:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238600AbiCGLYz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 06:24:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58658 "EHLO
+        id S239553AbiCGLZE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 06:25:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242028AbiCGLYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 06:24:40 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1D74130E
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 02:53:11 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id hw13so30865436ejc.9
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 02:53:11 -0800 (PST)
+        with ESMTP id S241982AbiCGLYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 06:24:47 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004C66F480
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 02:53:37 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id o18-20020a05600c4fd200b003826701f847so10483007wmq.4
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 02:53:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=RGZ4mBELtP2GzZADEgYxmMHGx2tw8oJsFDD70s8KUQM=;
-        b=duNc33ITm4CbWxVwYsCtCfxhP6jISGllUSGcyqlRiPPYYSDj05waD8z5/FVDlXnOOx
-         5W+YEcYwcLdgihiXcWA7OnC2LfTwdyUhPyK4QRwUHluxSTUDPmrA1UIIkaH9B4ocwU1g
-         z6sJAqwg7bum6fwy05yeXFQtGXJQrz8wM3l8KSlt+f/P/oHIDJF9qRtQof5q2f8tcQdJ
-         bJOLfTSHNSMC2GmcMT3XUHVfE0RrBZz0iBMxg/p/pB+sd0rsWXAYpe+lJSqqJDgMr5Lg
-         H0o8nh7emDZcFdM4lOHb7FftPgLMK6+SAo0fwydRkSyMVpMUDIQTQkVwflcr/DPE/plW
-         ioLA==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+iWGcOgW0mv+6f02ssJExmbZZ+a4hJl3QsZACgUMNqY=;
+        b=a6WPasn36afdcEC5TqoiJ2ScSEumPxW39YqPIUvPACf508EanQsrJviW2Yc05wO3KU
+         QzGYZHgBGYsr1AB3R6uGJA0TAcdtZe6+y6wTCXBT2jYg2NgsmD84yArlyknAg0AUzvM1
+         +5AtumFV0JzyFkXiU6UCXpy+VNVNo6L3m5aW0Oe2VM2QJLUjyDKe1JdkmHDXYVgbMEbF
+         eCVW9qd7MuPZSLZKW49UwmgqsqtpncwU79AydOLvr0fmHhX2ihKjZPU1zZguMiFDLnwI
+         KxMdA2nRf/A2JO6h2I3VRzBC23Ms6fog15/oH2rFmXyTeUDn5KlJ1VO3w/0fE74A2FNj
+         GkXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=RGZ4mBELtP2GzZADEgYxmMHGx2tw8oJsFDD70s8KUQM=;
-        b=CdfklnTuSMT5PRQvvCsvsdPICbzPbbffvOEKXIw7KFTEIvhB0E0FTu3kawfnPqRj+y
-         Ad2BuMntV7v72WzS8PSSD+icq/NnazQ7tJ9m1yAg/o61gg3HVT+jqJ1xeYL7GIn0T/xi
-         YgRCczN004+CDMIr/H1TkhjJTF3GHWKpNVaEVUIqTObtchMyiG0HLbbxfC85nS8t2ko1
-         cFKf6IUmHa2Iz3Ba7TFIiOXTw14T9czhDyVXXJ5Z3fbzg+ZQzvREpF6i9OfRsOcTEqs+
-         m4zDvxDp8csHquF4giHQ0x7Ds0jgBp5ULEZgJywqdf5hvP8wAaBKi0HAyXh3Pipc4+Y5
-         ed7A==
-X-Gm-Message-State: AOAM532szuTWBZXBiRv9gdLNdgqMjOhdw39/hOXHdZaRYYuHaPK9SGSD
-        6wUuJ/N3wSUXPI4u6Ta/3uRLNeBYqrw=
-X-Google-Smtp-Source: ABdhPJzZAGsIoWjpVNceErUuM5byCEm4kaeWPkRY5crZkid9nz5oXn4WwAV993X+Ds8P/L0Vm39m/g==
-X-Received: by 2002:a17:907:1c10:b0:6da:6316:d009 with SMTP id nc16-20020a1709071c1000b006da6316d009mr8571784ejc.621.1646650389908;
-        Mon, 07 Mar 2022 02:53:09 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e8-20020a17090681c800b006d9f7b69649sm4573531ejx.32.2022.03.07.02.53.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 02:53:09 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRAzE-001QWQ-Iv;
-        Mon, 07 Mar 2022 11:53:08 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 19/30] help: include fsmonitor--daemon feature flag
- in version info
-Date:   Mon, 07 Mar 2022 11:51:04 +0100
-References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
- <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
- <bc240a9e665841a622c96b8a245ce033684394f6.1646160212.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <bc240a9e665841a622c96b8a245ce033684394f6.1646160212.git.gitgitgadget@gmail.com>
-Message-ID: <220307.86cziy2fvv.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+iWGcOgW0mv+6f02ssJExmbZZ+a4hJl3QsZACgUMNqY=;
+        b=zWOmLwwJs0OUTbL0mwpElXZ8qPQwdx5mS7XAnZDALx4jvLcbiRe4m1j57VIfeL20bI
+         Os3nhKe9u2rP96FBDvr3DBqVutZGSgn5IydPUS0Hzsa1rouHxbQ6JsjkmqBOSQeiwgbN
+         t7uU4XZSKJaBUaHRZRQAYhNQLLMaABTPjBgjKgdjwEiJDDJA+44fzk3Y9MZ8OdkiKZDu
+         Tsrcw1nowxTPJZ7/aN1rAdZv4gmn9agZBk+w2/vmYmQBU1OZdD12B+bz2DqEzJLvnjsk
+         soMmnIbl6qa5twjl+7qBI0H/TvMDNmkAOrH8k3Xf6UYtkFaQmzrGMl3eFmcXdS+7UTTT
+         PZXA==
+X-Gm-Message-State: AOAM532wWvtipyFGuoopEenQMnpQOuEVoGl26hd/5NlERUNJomBjAdep
+        xcX/6lFqfxTZtbYfjJi+uZw=
+X-Google-Smtp-Source: ABdhPJyyoiluwZE7iND2JcIFzUfdp1Tw3PXJr7NumhiEZljHXXpdHh+lcVlujEERwjjmHbB3Y0ONdw==
+X-Received: by 2002:a1c:f003:0:b0:37b:d5fc:5c9e with SMTP id a3-20020a1cf003000000b0037bd5fc5c9emr8634639wmb.154.1646650416518;
+        Mon, 07 Mar 2022 02:53:36 -0800 (PST)
+Received: from [192.168.1.201] (206.2.7.51.dyn.plus.net. [51.7.2.206])
+        by smtp.googlemail.com with ESMTPSA id h36-20020a05600c49a400b00382aa0b1619sm12214837wmp.45.2022.03.07.02.53.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Mar 2022 02:53:35 -0800 (PST)
+Message-ID: <8aa11144-c9ce-46aa-2edd-15e8fa1298dc@gmail.com>
+Date:   Mon, 7 Mar 2022 10:53:34 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/4] terminal: restore settings on SIGTSTP
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>, carenas@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+ <20220304131126.8293-5-phillip.wood123@gmail.com>
+ <220305.86bkyk4hwc.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <220305.86bkyk4hwc.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
-On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
+On 05/03/2022 13:59, Ævar Arnfjörð Bjarmason wrote:
+> [...] 
+>>   int save_term(unsigned flags)
+>>   {
+>> +	struct sigaction sa;
+>> +
+>>   	if (term_fd < 0)
+>>   		term_fd = (flags & SAVE_TERM_STDIN) ? 0
+>>   						    : open("/dev/tty", O_RDWR);
+>> @@ -44,6 +136,26 @@ int save_term(unsigned flags)
+>>   	if (tcgetattr(term_fd, &old_term) < 0)
+>>   		return -1;
+>>   	sigchain_push_common(restore_term_on_signal);
+>> +	/*
+>> +	 * If job control is disabled then the shell will have set the
+>> +	 * disposition of SIGTSTP to SIG_IGN.
+>> +	 */
+>> +	sigaction(SIGTSTP, NULL, &sa);
+>> +	if (sa.sa_handler == SIG_IGN)
+>> +		return 0;
+>> +
+>> +	/* avoid calling gettext() from signal handler */
+>> +	background_resume_msg = xstrdup(_("error: cannot resume in the background"));
+>> +	restore_error_msg = xstrdup(_("error: cannot restore terminal settings"));
+> 
+> You don't need to xstrdup() the return values of gettext() (here _()),
+> you'll get a pointer to static storage that's safe to hold on to for the
+> duration of the program.
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> Add the "feature: fsmonitor--daemon" message to the output of
-> `git version --build-options`.
->
-> The builtin FSMonitor is only available on certain platforms and
-> even then only when certain Makefile flags are enabled, so print
-> a message in the verbose version output when it is available.
->
-> This can be used by test scripts for prereq testing.  Granted, tests
-> could just try `git fsmonitor--daemon status` and look for a 128 exit
-> code or grep for a "not supported" message on stderr, but these
-> methods are rather obscure.
->
-> The main advantage is that the feature message will automatically
-> appear in bug reports and other support requests.
->
-> This concept was also used during the development of Scalar for
-> similar reasons.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  help.c        | 4 ++++
->  t/test-lib.sh | 6 ++++++
->  2 files changed, 10 insertions(+)
->
-> diff --git a/help.c b/help.c
-> index 71444906ddf..9112a51e84b 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -12,6 +12,7 @@
->  #include "refs.h"
->  #include "parse-options.h"
->  #include "prompt.h"
-> +#include "fsmonitor-ipc.h"
->  
->  struct category_description {
->  	uint32_t category;
-> @@ -695,6 +696,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
->  		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
->  		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
->  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
-> +
-> +		if (fsmonitor_ipc__is_supported())
-> +			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
->  	}
->  }
->  
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index e4716b0b867..46cd596e7f5 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1799,3 +1799,9 @@ test_lazy_prereq SHA1 '
->  # Tests that verify the scheduler integration must set this locally
->  # to avoid errors.
->  GIT_TEST_MAINT_SCHEDULER="none:exit 1"
-> +
-> +# Does this platform support `git fsmonitor--daemon`
-> +#
-> +test_lazy_prereq FSMONITOR_DAEMON '
-> +	git version --build-options | grep "feature:" | grep "fsmonitor--daemon"
-> +'
+I had a look at the documentation and could not see anything about the 
+lifetime of the returned string, all it says is "don't alter it"
 
-As I found recently (referenced in another series) the test_lazy_prereq
-doesn't currently catch segfaults etc. in git even if test_must_fail and
-friends are used.
+> In this case I think it would make sense to skip "error: " from the
+> message itself.
+> 
+> Eventually we'll get to making usage.c have that prefix translated, and
+> can have some utility function exposed there (I have WIP patches for
+> this already since a while ago).
+> 
+> To translators it'll look like the same thing, and avoid churn when we
+> make the "error: " prefix translatable.
 
-But it's still better to future-proof things and not add more cases of
-git on the LHS of a pipe. So instead:
+Unless we add a function that returns a string rather than printing the 
+message I don't see how it avoids churn in the future. Having the whole 
+string with the "error: " prefix translated here does not add any extra 
+burden to translators - it is still the same number of strings to translate.
 
-    git version .. >out &&
-    grep ...
+> Aside: If you do keep the xstrdup() (perhaps an xstrfmt() with the above
+> advice...) doesn't it make sense to add the "\n" here, so you'll have
+> one write_in_full() above?
 
-The prereqs are run in their own temporary directory, so creating those
-files is OK.
+I decided to keep the translated string simpler by omitting the newline, 
+calling write_in_full() twice isn't a bit deal (I don't think the output 
+can be split by a write from another thread or signal handler in between).
 
-Also: You run "grep" here twice, but as the code context shown we could
-just run it once.
+Best Wishes
+
+Phillip
 
