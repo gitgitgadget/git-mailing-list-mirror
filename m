@@ -2,110 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A99ACC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9716BC433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243964AbiCGP6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 10:58:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49400 "EHLO
+        id S233008AbiCGQDI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 11:03:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243901AbiCGP6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:58:04 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4037D00F
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:57:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646668626;
-        bh=x7AaAunOpqLM/cOz9K19Rh12UsClubMv8k9EsVApDUg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ihtysGlXdkjR0nrQHBZri1gaubVQMClM7tH+3dpwrZhJyDaMqmqlwupgoIyrURaeh
-         UANp1SiO+/R88b6LHKI5VJDrYEwJE21GkBrA7zNLxN07bXDGv2k/RMCOUK/Kgfd2X+
-         /DhD8IqNv+5JY3FWSG8A5Pwt/aKZf5JPbSkUfdO8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1o66KE11NE-00h6Ay; Mon, 07
- Mar 2022 16:57:06 +0100
-Date:   Mon, 7 Mar 2022 16:57:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
- helpful
-In-Reply-To: <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203071655070.11118@tvgsbejvaqbjf.bet>
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com> <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S243886AbiCGQCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 11:02:54 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5028EB72
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:02:00 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id m21so15097729edc.0
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 08:02:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Gw+iLcdSysu8B1ltV5KnuZ94GvvQ15gO688o8j+Qmbs=;
+        b=T2QnI2lw+ICjoqyQP+Y+ZHsrgS54XqtZcfTk2le2butAASc06lYnyX1MttGsXC3QpH
+         zxaT1SSCyuYyVFpatQJBxvH6kQ1Dz7IBWWIWQveJNsb6rTa3kiHRtNTcIfzLCyFTLDaM
+         sSsITYeP91yNAgOgR8cd/LSjXACaXcAFUMKIdNOU5kr7Ek5or6wEUy8NKpo97uO3xgok
+         hzJb8dgXj/Hy90SXaHedDUoWOk+TNFl4On9QpKwr5TXORHsS6JCt8Uskyz0NCxV4tvOW
+         h/eSsJEq16UIaLpjatgxtObjSyeTqJ6jDRfHWjsp5NYehFE00sIyTcH12SAi6v2JRb7+
+         CB+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Gw+iLcdSysu8B1ltV5KnuZ94GvvQ15gO688o8j+Qmbs=;
+        b=ZEYw59UHvbPz+Owh1GmDHB9VFcIXGWVTFbiruCrLl1cwQcN+tGwfonsENGN1OZGiNZ
+         s9uAaeUo6gFRgS6XepyyGNORoxdpfl/dCdhYUvE6yMzRl8XFS/UyTHzEN9zIM3HJ/rXD
+         kUGcNg0gR20w7HV4pJbNXXgPYT4FMHWfvORz/8iV5kvI60DDwXS9L3aHnLdgoNsj0aD7
+         XWdWtGYk2kubsUvPG9NCmEsKbotCWdR5pLAoqC2Y5K2EgADDJalN+B06oz5kwGgFtkUl
+         bqfR3WMjMEk3Fj2mf11EoZ6kcX+H+/W1puVxEBBPs4HofaZFpH34CFiF+eiWWyFLeqYU
+         kkZw==
+X-Gm-Message-State: AOAM531GAmAcJIDQ+2zTsSFPKpgGN8ocVSpblF716+m1H7mTQ73x31a6
+        vvBj5DygmBeO0QjDAmANjAbXOZ8ydD6T8A==
+X-Google-Smtp-Source: ABdhPJw25AnhzLA4JnPFxJ8YS94Nn7rxE2QlnrWnmbp2BC7gzZpb3ZvhEAkcNcLvtl98E30wbQm1lw==
+X-Received: by 2002:a05:6402:d7:b0:413:673:ba2f with SMTP id i23-20020a05640200d700b004130673ba2fmr11571480edu.29.1646668918612;
+        Mon, 07 Mar 2022 08:01:58 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p15-20020a170906784f00b006ccb9e1278csm4848420ejm.6.2022.03.07.08.01.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Mar 2022 08:01:58 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nRFo5-001aem-GS;
+        Mon, 07 Mar 2022 17:01:57 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 08/11] bundle: parse filter capability
+Date:   Mon, 07 Mar 2022 16:55:17 +0100
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+ <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
+Message-ID: <220307.86y21lycne.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-961277992-1646668626=:11118"
-X-Provags-ID: V03:K1:3seiYPkqV+Xe7gpgiasfNlksW8V41wm9bGpEhmd3U+CwSH32C18
- n+/oZkDlOzt8dwSmvM9NpVWb3h+DmnPCbtQcLgHMfOCjfKgj2HkjrXxzPfX+K4EXAR+GTGS
- VdDrv4Pj58ecx/PXsutiSMvd5/BLdXpzZGc/rJc4tAJENcBjGepEYOcSf+iodEo6HnlZWVE
- r7X0tT73zkt9oBP02bUpw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RAVLPmiTqRc=:lKdLEwQL6nzLceNNQiGLdO
- L0p6yrfWEt+Bo0YTSiB0pWe1AkP5FKl8ar0JUwjBXGwynPI/zUjBMx8orYHxiSYJ/HKsOH03c
- rHyKkaNz5bmAxndwdAu7LSB5QxvjTtwOXH1klKtjUBtl8NJ/wAADPIArvORooqHxdv+/EGpci
- DJf9sy8qB+Y0+3pshMK15olxCsOGsDaaxA3IG1f2hBF9XgVfoo/Bv35QMqDrjpH7d5cu950mi
- +yr6uUGbhkcOdWPz6n2pX5xAvhLLu3TJMKce9WDupdg0ls47I2Mn0vAb6aY35wVIVwOsRKCwh
- faHMeblbwrW/+P5wz/24yVxU63/HSW/IzpZdPufJU9XlzVPmCEYXC8PcAxek0vlrYKFuPmnap
- QQUce7RLdHwaP9MuYkMP6fS0aLh2eGBTkP8v1FJ7NPN8mLpsI+zP8LebnjyvuPNOz2nHvoQd2
- lQSoedqum3qVNsMl9u18Eyl02dtUhOA+YdpfnJ0xg27cBIdCCHQdocZCBrE2TxsJ/rDNmTNeY
- A4Bc2wdNBljEIzCuULwzXP6Dtc/VHn1xlwQ8PJTJA2SJOjjo7CDVXTBfNLKFs6VukEI8kCkrG
- iyQY38ioqEzlZ1QqfSmLNh/uVD7NGzZFgXrf6DTPo0RcBQ5jN3iPnfu0l7N69NJAQwDBYC9Gg
- uNR5hDp7EN8KFZSYqB1euO8+4xI+4CotPZ+gWbnPT4k5F+klvmK5WP5aBfEr3tJluDtzwoDkI
- wTMmmm7s1fcRaaQ4hA+4y2zi88LmtcyogEvBVry4HzJdUw9FkIKF0PJqxeNz/ws5XarE/Onz+
- lIOrRj1HnoVe8+2HHxfBZOZEzUS32lxGRTrgNVX0zy5dnsMvo01tmvqo6cqhnf1KUNqfOKvqs
- LfwUtFtWS0+zHjXO1VCzPoDKLt3yiyhQQeW6kJAiKw5BYC5w7kCsMVNHNlQsFffF2kqaSirNk
- xVlc/etZJ5rUvCQplv0heVCOahXS7L4gkX3uuwhRk0xWxXaZWgn4HlTRnYd1dVgQ+c4IcYdDj
- acAw3Kp5BZU5XsqT0bJ2GXpNf3IKmA9zmZttAIuuP0lBgOtsVnWXjKYS4t3AK9Sy1XFOA0CBC
- e4nDIutt+Quifw=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-961277992-1646668626=:11118
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
 
-Hi =C3=86var,
+> From: Derrick Stolee <derrickstolee@github.com>
+> [...]
+>  static int parse_capability(struct bundle_header *header, const char *capability)
+> @@ -45,6 +47,11 @@ static int parse_capability(struct bundle_header *header, const char *capability
+>  		header->hash_algo = &hash_algos[algo];
+>  		return 0;
+>  	}
+> +	if (skip_prefix(capability, "filter=", &arg)) {
+> +		CALLOC_ARRAY(header->filter, 1);
+> +		parse_list_objects_filter(header->filter, arg);
+> +		return 0;
+> +	}
+>  	return error(_("unknown capability '%s'"), capability);
+>  }
 
-On Wed, 2 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+[Something I should have noted in the other reply, but missed].
 
->
-> On Tue, Mar 01 2022, Johannes Schindelin via GitGitGadget wrote:
->
-> > Changes since v1:
-> >
-> >  * In the patch that removed MAKE_TARGETS, a stale comment about that
-> >    variable is also removed.
-> >  * The comment about set -x has been adjusted because it no longer app=
-lies
-> >    as-is.
-> >  * The commit message of "ci: make it easier to find failed tests' log=
-s in
-> >    the GitHub workflow" has been adjusted to motivate the improvement
-> >    better.
->
-> Just briefly: Much of the feedback I had on v1 is still unanswered,
+Before this series we just had the object-format capability, and now we
+have a 2nd one.
 
-Yes, because I got the sense that your feedback ignores the goal of making
-it easier to diagnose test failures.
+As before we'll return errors un unknown capabilities.
 
-> or in the case of the performance issues I think just saying that this
-> output is aimed at non-long-time-contributors doesn't really justify the
-> large observed slowdowns.
+I think it's worthwhile to stop here & think how we think about
+cross-version compatibility between git versions. I.e. we're not
+changing the *format version* here (nor is it needed), but just adding a
+new capability that older gits won't know about.
 
-What good is a quickly-loading web site when it is less than useful?
+I don't know if this is a case where older versions could limp along in
+some cases and still unbundle these, probably that's never happening?
 
-I'd much rather have a slow-loading web site that gets me to where I need
-to be than a fast-loading one that leaves me as puzzled as before.
+So probably nothing needs to change here, I was just wondering *if* we
+had capabilities that were optional in some cases whether we shouldn't
+while-we're-at-it give those some prefix indicating that, and have older
+versions just issue a warning().
 
-Ciao,
-Johannes
+Then have them just try to call index-pack & see if that worked.
 
---8323328-961277992-1646668626=:11118--
+But yeah, all of that probably isn't applicable here at all :)
