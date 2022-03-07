@@ -2,182 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6996C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7144C43217
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235118AbiCGMQb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:16:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37396 "EHLO
+        id S241916AbiCGMXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 07:23:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233271AbiCGMQa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:16:30 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264167F6C3
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:15:36 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id c20so1150127edr.8
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:15:36 -0800 (PST)
+        with ESMTP id S242070AbiCGMWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 07:22:55 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9F080216
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:22:01 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id d10so31470840eje.10
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:22:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=BHAYr60rw4Q4SqOsUFsA/nxIDlMg+erd4cS0HfMxUbQ=;
-        b=Hp5mk1eHIFrLj8s/HX1nfgEscaK1l9h5Zsv/QWnVPGjTBZCCLUiCo+I1JHeVSON2RP
-         fJ7W1Pm1BzPRy5GVgMdXjvBojAD+NI9Ckc9tPvwi3LWANmB9Fa2I5w2VgCFPCrdyUqnG
-         f/js5c7Dq5Sif/NV7U7aaFdENByAfDOpr+TTOpBYgyKjOSheIR6OLwxc4MCD/gUM7tnF
-         UkXyrt9o0EVfLGysvSisGPyVKSwtL0JAMSCBkAcCQJEWdKN0UJdbZRayNIyc1dsOWpcC
-         mLRYoNWo+vspQXBy0Z+HqQOnNvZPYGH9KHx+YvsRDYz9HgbSpYU85ufky+ZlcaH0BWA7
-         N9sg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=xRa3CoZ8OgLjGTuj8ePYx9ZpuPFTgQf54LLHAuPY5m4=;
+        b=Blqhl0eClwZ+YXt2GXkwO/qXsP678D7+MqkCmGLMFc2zOhHS0zbi/xKV8oLzMIVfuY
+         zWlVjMBVVk7XbRzCNbfzirxhFQ4vV16H/I1N9sdUv8Cv26f5VRiTDOTWh+aVc1ovElLy
+         nYIyQCi09sb+VlMCmwUzgmAKtS2eZt0C5aG1R9jwN7+KYRgg0yxFtbXtokY2zEWWc76g
+         mbN9/yGXYE92I4+y8QcBC1RjX4zegiamm+p3DTuFbcn6gwy+wES4tlWaYYe2J7hUfaSD
+         zpGOUpq2SIYCqSyyyUY4iy4t3rSD2OYWB+8rXcW49cEZdPTs43A9zePIcRNkMnkjsE87
+         l1bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=BHAYr60rw4Q4SqOsUFsA/nxIDlMg+erd4cS0HfMxUbQ=;
-        b=l2ig4iQUmX5vCMAt4wiI8vSEG0DdQy79QVznMGE64NCghaBeC1HSF+MMbkAXWPCzi5
-         5Xa/VesC0/MF5RyXfrpGYxbaOQrdIfNbDTUtj2wSfOT+KjdCvAasCa/7Gfoe9XoHl4XA
-         0VljhqdDgDDkd0YRI9EDK6GpYhkG6PjEQDfQAwiVcu/T+iYg8NegsaSQkLghxEPNyjL6
-         Kal8d4S8T8rxWJ8hx6f5/J0u968puY7jNZO7NByjaZ5tnt7CNmaXjSb66PvTB0bHZjO5
-         iY/p9mdTnui2r2hnG7+KNhtx09AkvPtCNsz5fQHmFjCmGtAYdYSLbut4FZSBfDD4ttbL
-         Bh+A==
-X-Gm-Message-State: AOAM532LDA6JLqglMThv1hRRQPYnZBp74wbysacMa4pDEuaFKX6x/dz8
-        0mOuNjY8OgnANpsyATnS8sY=
-X-Google-Smtp-Source: ABdhPJy4x9CSD/Tgc9JHDsdCIfp8NbHzikV+7ibTH9yIEVQxPUqbSaOgAK7D3JHp5FA4D7Ek1ucahQ==
-X-Received: by 2002:a05:6402:440b:b0:415:c50d:853b with SMTP id y11-20020a056402440b00b00415c50d853bmr10732138eda.346.1646655334412;
-        Mon, 07 Mar 2022 04:15:34 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=xRa3CoZ8OgLjGTuj8ePYx9ZpuPFTgQf54LLHAuPY5m4=;
+        b=bTfGtIiq6bDk75vS7qT4LI4q6Ki3tItTWfEZbX8U1HIuy9o1gONAL6XOV/HiHoRYlR
+         ZI7S+lqIxWPV1eVuuEb6wBA3bnm22iBnc9MRT9OLDxKZ+j4XhpM6Grf4sn329BOblJfo
+         xN02txt+DUIpKkuDR0gxaTiNTAGV3mbyQFk3qQvM7YNbOIAhmSkerHiGZK9+mi3jNVqy
+         rId2SBzVHznyd48H5GJmlCLlJH0FnT00e4EXd3bM8rBFj+cyORAPo7w7WAwxY/IRSb63
+         4Ld93/KYPoaVIY907AHW5g6J3c9oWAhQuXpMV59EI69NSSW5B1BHjGoTF8QLzkMm3GLf
+         1Ipw==
+X-Gm-Message-State: AOAM532ChFUhTikAgjtvrmmWpM081AEken3NxI/ISHjzdRkMsy1krmAs
+        5ZWXgo2PHo3R54txdL8iGHUvMEO7HXot6Q==
+X-Google-Smtp-Source: ABdhPJzWcOgyyVqxyWj1tlBxAUSWb/taVA7UqjLnngXf/hg2m/Kan60Yhpft8xpak2nJslnl6tvu7w==
+X-Received: by 2002:a17:906:c18c:b0:6d5:8518:e567 with SMTP id g12-20020a170906c18c00b006d58518e567mr8464484ejz.37.1646655719474;
+        Mon, 07 Mar 2022 04:21:59 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020aa7db89000000b0041372781e69sm6006933edt.52.2022.03.07.04.15.33
+        by smtp.gmail.com with ESMTPSA id m24-20020a170906161800b006d420027b63sm4714545ejd.18.2022.03.07.04.21.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:15:33 -0800 (PST)
+        Mon, 07 Mar 2022 04:21:58 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nRCGz-001TcE-B5;
-        Mon, 07 Mar 2022 13:15:33 +0100
+        id 1nRCNB-001Tsf-SP;
+        Mon, 07 Mar 2022 13:21:57 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>, git <git@vger.kernel.org>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: What does it mean to have multiple upstream tracking branches?
-Date:   Mon, 07 Mar 2022 13:12:13 +0100
-References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
- <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
- <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqzgm2vjab.fsf@gitster.g>
- <CAPMMpoh38fm-jNi=GD+uf6O+JLiJz-ue2zh5ceWpwmTYBRKzvw@mail.gmail.com>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] cat-file: skip expanding default format
+Date:   Mon, 07 Mar 2022 13:15:48 +0100
+References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAPMMpoh38fm-jNi=GD+uf6O+JLiJz-ue2zh5ceWpwmTYBRKzvw@mail.gmail.com>
-Message-ID: <220307.86a6e20xi2.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
+Message-ID: <220307.865yoq0x7e.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Mar 07 2022, Tao Klerks wrote:
+On Fri, Mar 04 2022, John Cai via GitGitGadget wrote:
 
-> On Sun, Mar 6, 2022 at 10:54 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Glen Choo <chooglen@google.com> writes:
->>
->> > Not that I would ever _recommend_ someone to work like this though.
->> > Junio also wondered whether anyone uses this [1].
->> >
->> > [1] https://lore.kernel.org/git/xmqqbl2hw10h.fsf@gitster.g
->>
->> I actually think the current octopus behaviour is a sensible one
->> (after all, that was what we envisioned how it would be used when we
->> did the mechanism long time ago).  If you have mutliple, say source
->> and docs, groups working for you and you are taking their work from
->> time to time, something like this:
->>
->>     [branch "main"]
->>         remote = central-repo
->>         merge = sources
->>         merge = docs
->>
->> would let your folks push into the central-repo, and a "git pull"
->> will help you advance your main branch that you'll publish later.
->>
->> You can explain multiple .merge entries for such an integration
->> branch like I just did and I think such an explanation makes perfect
->> sense, but these are quite different from what we view as "upstream"
->> in the traditional sense.  In the setting illustrated here, yours is
->> the main integration repository, the center of the universe, and
->> those folks working in the 'sources' and 'docs' groups view yours as
->> their "upstream".
->>
->> So, "what does it mean to have multiple branch.*.merge entries" has
->> a good answer: you are integrating from these contributors and these
->> entries are not your "upstream" in the usual sense---you do not even
->> push back to them.  Asking "what does it mean to have multiple
->> upstream" makes little sense, I would think.
->>
->> Now, with the 'main' branch used in such a manner, if you did
->>
->>    $ git branch --track=inherit topic main
->>
->> and worked on the "topic" branch, you do not push back to either the
->> sources or docs of the central-repo, of course, but it is unclear if
->> you even want to "pull" to create octopus from these two branches at
->> the central-repo, which essentially duplicates the pull's you would
->> do on your 'main' branch.  I suspect that you'd rather want to merge
->> updates 'main' accumulated (or rebase on them).
->>
->> The reason why I asked what Josh's plans are for the multiple .merge
->> entries in that thread [1] when the "--inherit" feature was being
->> invented was exactly about this point.  I wondered if last-one-wins
->> may make sense (and as the above octopus set-up tells us, it may
->> not), but if we want to keep "multiple .merge entries means an
->> integrator making octpus merges", then it may make sense not to copy
->> them when there are multiple with "--track=inherit", to avoid
->> spreading the "curious" nature of the branch like 'main' depicted
->> above.
+> From: John Cai <johncai86@gmail.com>
 >
-> Given that the notion of "inherit"ing the tracking configuration is a
-> (relatively) new one anyway, and given the slightly esoteric nature of
-> the "multiple branch merge entries lead to octopus merges"
-> functionality, I would argue that it makes more sense to die when
-> branching under this specific configuration, saying something like
-> "inheriting the tracking configuration of a branch with multiple
-> branch merge entries is not supported - we think you're making a
-> mistake".
-
-I don't know if this is plausible in this case, but we need to be very
-careful with that in general. I.e. some people might set the "sensible"
-default remote config for "origin" in their ~/.gitconfig or whatever,
-including "merge" for a "master" and all.
-
-Then expect that if they have a local repo that we'll take whatever
-custom values there to override them, if any.
-
-So for most config variables that take a "last set wins" it's a feature
-to ignore any previous entries.
-
-But in this case it might be different due to the odditity of the remote
-config, how we almost always manage it with "git remote" or "git clone"
-etc.
-
-> Skipping the creation of tracking entries in this case, even with a
-> warning/explanation output to stdout, would be a "slightly hidden
-> surprise", in that git command output is often not read by, or even
-> visible to users when a command is successful, eg in a GUI.
+> When format is passed into --batch, --batch-check, --batch-command,
+> the format gets expanded. When nothing is passed in, the default format
+> is set and the expand_format() gets called.
 >
-> If we think this will basically never happen and really makes no sense
-> anyway, as Junio seems to suggest, then I would argue the extra
-> complexity in the codebase to support the "inheriting multiple branch
-> merge entries" is unwarranted.
+> We can save on these cycles by hardcoding how to print the
+> information when nothing is passed as the format, or when the default
+> format is passed. There is no need for the fully expanded format with
+> the default. Since batch_object_write() happens on every object provided
+> in batch mode, we get a nice performance improvement.
 >
-> Either way, I will happily drop this topic as it does not appear to
-> require follow-up in direct relation to my "--track=simple"
-> work/proposal. On the other hand, I'd be happy to work on a patch to
-> eliminate this multi-tracking-branch-inheritance path/support (undoing
-> some of Josh's work here) if the team believes this makes sense.
+> git rev-list --all > /tmp/all-obj.txt
+>
+> git cat-file --batch-check </tmp/all-obj.txt
+>
+> with HEAD^:
+>
+> Time (mean =C2=B1 =CF=83): 57.6 ms =C2=B1 1.7 ms [User: 51.5 ms, System: =
+6.2 ms]
+> Range (min =E2=80=A6 max): 54.6 ms =E2=80=A6 64.7 ms 50 runs
+>
+> with HEAD:
+>
+> Time (mean =C2=B1 =CF=83): 49.8 ms =C2=B1 1.7 ms [User: 42.6 ms, System: =
+7.3 ms]
+> Range (min =E2=80=A6 max): 46.9 ms =E2=80=A6 55.9 ms 56 runs
+>
+> If nothing is provided as a format argument, or if the default format is
+> passed, skip expanding of the format and print the object info with a
+> default format.
+>
+> Based-on-patch-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
 
-Just on my side: Don't take any of my comments in this thread as a "we
-shouldn't do this", it was genuine confusion, thanks for clearing it up
-:)
+Nit: I think it's probably better to just add a Signed-off-by here for
+me instead to indicate that it's originally based on my crappy WIP code
+(but most of what you've got here is thoroughly yours & better).
 
-Perhaps a gently step into adding validation for this (if needed) is to
-do the die()/advise() or whatever or the write (i.e. when we copy
-branches, or use --track=inherit) v.s. when we use the config (in "git
-fetch" et al) ?
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> [...]
+> +static void print_default_format(char *buf, int len, struct expand_data =
+*data)
+> +{
+> +	snprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
+> +		 data->info.type_name->buf,
+> +		 (uintmax_t)*data->info.sizep);
+> +
+> +}
+> +
+>  /*
+>   * If "pack" is non-NULL, then "offset" is the byte offset within the pa=
+ck from
+>   * which the object may be accessed (though note that we may also rely on
+> @@ -363,6 +372,12 @@ static void batch_object_write(const char *obj_name,
+>  			       struct packed_git *pack,
+>  			       off_t offset)
+>  {
+> +	const char *fmt;
+> +
+> +	struct strbuf type_name =3D STRBUF_INIT;
+> +	if (!opt->format)
+> +		data->info.type_name =3D &type_name;
+> +
+>  	if (!data->skip_object_info) {
+>  		int ret;
+>=20=20
+> @@ -377,12 +392,21 @@ static void batch_object_write(const char *obj_name,
+>  			printf("%s missing\n",
+>  			       obj_name ? obj_name : oid_to_hex(&data->oid));
+>  			fflush(stdout);
+> -			return;
+> +			goto cleanup;
+>  		}
+>  	}
+>=20=20
+> +	if (!opt->format && !opt->print_contents) {
+> +		char buf[1024];
+> +
+> +		print_default_format(buf, 1024, data);
+> +		batch_write(opt, buf, strlen(buf));
+
+Just a nit (Junio comment on most of the rest), for something that's an
+optimization patch we shouldn't ever need to do strlen() here, since we
+just called snprintf(), let's just use its return value instead.
+
+I also think that in this case you'll want xsnprintf(), and if not this
+code is buggy & needs to check the return value (but let's just use x*()
+...).
+
+FWIW snprintf() relly should be in a mostly-banned.h, but we only have
+the blanket banned.h, and there's a few legitimate uses of it :)
+
+(And yes, this is all probably commentary on my own bugs in some WIP
+code, but at this point I honestly can't remember & didn't look it up)
+
+Thanks for hacking on this & carrying it forward!
