@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEF5EC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 074B1C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242563AbiCGMuZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:50:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
+        id S242569AbiCGMu1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 07:50:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242565AbiCGMuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:50:18 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DA34DF72
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:49:23 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id q7-20020a7bce87000000b00382255f4ca9so10756351wmj.2
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:49:23 -0800 (PST)
+        with ESMTP id S242576AbiCGMuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 07:50:23 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22B24ECD1
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:49:25 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id j26so12723598wrb.1
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5Dj0VA9aMm31hU8kdtChxba4uoq3oSO4kDdOlUNVeOY=;
-        b=YfV2KVGr+21igtFVYEQAo+FtHac7pr4xq2oG4qhQcqn3QB46h+J4ihYbPIhDKMterD
-         2ilWNTv5Q+JHIjsNpXRYkVORHG8mtyHhBCUxNlSoNgo21aDNJfLJ6TgAGnepjDTGzAMV
-         KjARq9wWCbfqQIIfzWhZVXObVbp2bdtZ3s2xfS22M/wp2/DiRFj+Ep9TaasmQaM5EQ4O
-         jK6NWn/iH4pg/ul8B/YP7fbclFFNUqeSdVvU0yUptR+lMsZisbLZdnPty0t+Mfpk2Cw6
-         aQqk/qm7yeKLOCq6xDwY5MHDdb7ZHzoI8VEHTfMtPGx7XsZ4ataqgtNFi6Q0DdTbElJI
-         iJ3A==
+        bh=kr3O9vpmsT14aQgP7pbd/to4TXOIFtHN4oAdr+J2k8Y=;
+        b=lQ5a4AKyZzKZculk+vyrU5f42+NdaVMEbo4/ebFW6b0GOYOZOMduk7Lz0IQAapnyf5
+         Gnbjc6LUmSkBnwyWJeC6xMy/JxFCu12va4/Q5g9CScJ89FCI5r9wAbgX/y2DApB1NH3z
+         pCmI/8XvYB6SS9SpXQnLW13es0Czmrk1A4h2syvuh4jM+MaafAvK5rEtIS9aCfIy5gtv
+         8iUlepvSciBBf/cX6pRTygCRhB/D9pyuvxq/xyEdbv+INhQRUSkyG6D8Jnje0Q1zgpK9
+         QUWpNOtC+Ngjw423t3Jw9IOnR22y6zmGKb2kbxm6MGJzShHr0HRINn14HlCuRTiKowPs
+         s+Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5Dj0VA9aMm31hU8kdtChxba4uoq3oSO4kDdOlUNVeOY=;
-        b=20FAXD7M7D+lI0QZMi2m9eo5UTeouioKVfsA6feaeo4wNAbDdBYdckI60fktZEJFwm
-         MfUcKb9DMPbMJG69C9hgi19aMCYnjcpTT1Bg7qO3Bfks6+SX+wSXEYU9Hg5wy3uLT3rG
-         nAklAp/xlpoWOx/Zz6h/e67kAg2f3K2aA0B9RZP2YWwofXe8w84ScbvvfrgfPB6cLaru
-         4QH8/zUT9Hxt5xPus6wLuPq9hL+wIr/RBMPytupvdBjxKcFEh4JpHgI3cPGveT2Y1SRU
-         hZYnrTnHxJFu6bu1u1rerkY5CK9Pvd59op3xTcPhmkEHmKYtWTCPDApRPG+uowv2z5TN
-         oXsQ==
-X-Gm-Message-State: AOAM531/sPN9IQVz38h3tO83CF8lK01bGV2d9TjCot+abpvj9FDIa7el
-        qTVW+/u1yaKB3LLQo/A16Gjr3E9Fo2zEcw==
-X-Google-Smtp-Source: ABdhPJxr8D/VR94wguGVlcHziFC4YQQC+dpaiaIwM0hiHfKjFhroxXB6hbNUuXRS24zuwe2uMMwJvQ==
-X-Received: by 2002:a7b:c38f:0:b0:385:e56c:8624 with SMTP id s15-20020a7bc38f000000b00385e56c8624mr18578161wmj.19.1646657361389;
-        Mon, 07 Mar 2022 04:49:21 -0800 (PST)
+        bh=kr3O9vpmsT14aQgP7pbd/to4TXOIFtHN4oAdr+J2k8Y=;
+        b=PHJnH7W7YWzcN2QQsJl4p8D63IKQ/Kwmkux6TZm8EQJBzBnkXBLMM8FvDQ+DUVBZ21
+         JyI7+Y9CdXxLr+koTgdyvYYeWlZohXrH7/+twqKQDfwx6DYtPKm31u24C+pYJrHdggAi
+         QjGFtqxfPFlAOr+X+Y3RPmOujVAjq4iZJHevc3cZu4tBlYGsiZpKSZbJ8extzcTecFjD
+         gFrVebnr/FThTK8RPVSxVAMOP/5biU50mwFuUF1Qk54SjS76JMYqd8EXqEK1WSZqE0I6
+         2ISwXa1ww1NyK2U6Pprx8VKzZ4czFAc4A1sg9dZaScPXh7TOc6p4sS4bJDfEXQSHp5ZZ
+         gyFQ==
+X-Gm-Message-State: AOAM5304XPFiDTeW/an3z1a5e8lYuOJHtKikXI2TQAZpj28/Z7Zf5SnC
+        WSTzk5N1cf3oEpuclaWi2i21Yjv/N5REKQ==
+X-Google-Smtp-Source: ABdhPJwNd6TkCetrxLhMJrnMxtQXVT0QXpCl4LBliWxMGi1qgCNtNftOGzDhtkOirMcdLaJDqZTnAw==
+X-Received: by 2002:a5d:48d1:0:b0:1e3:2401:f229 with SMTP id p17-20020a5d48d1000000b001e32401f229mr8233195wrs.694.1646657364103;
+        Mon, 07 Mar 2022 04:49:24 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o3-20020a1c7503000000b0038100e2a1adsm12729091wmc.47.2022.03.07.04.49.20
+        by smtp.gmail.com with ESMTPSA id o3-20020a1c7503000000b0038100e2a1adsm12729091wmc.47.2022.03.07.04.49.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:49:20 -0800 (PST)
+        Mon, 07 Mar 2022 04:49:23 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,12 +56,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 00/15] tests: don't ignore "git" exit codes
-Date:   Mon,  7 Mar 2022 13:48:51 +0100
-Message-Id: <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
+Subject: [PATCH v2 02/15] tests: use "test_stdout_line_count", not "test $(git [...] | wc -l)"
+Date:   Mon,  7 Mar 2022 13:48:53 +0100
+Message-Id: <patch-v2-02.15-e1105b029d6-20220307T124817Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1242.gfeba0eae32b
-In-Reply-To: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
-References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com> <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,107 +69,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes issues where we ignored the exit code of "git" due
-to it being on the LHS of a pipe, or because we interpolated its
-output with $() in a "test" construct, or had missing &&- chains in
-helper functions etc.
+Use the test_stdout_line_count helper added in
+cdff1bb5a3d (test-lib-functions: introduce test_stdout_line_count,
+2021-07-04) so that we'll spot if git itself dies, segfaults etc in
+these expressions.
 
-As noted in v1
-(https://lore.kernel.org/git/cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com/)
-this is not a general search/replacement, but fixes real issues we run
-into with SANITIZE=leak.
+Because we didn't distinguish these failure conditions before I'd
+mistakenly marked these tests as passing under SANITIZE=leak in
+dd9cede9136 (leak tests: mark some rev-list tests as passing with
+SANITIZE=leak, 2021-10-31).
 
-Changes since v1:
+While we're at it let's re-indent these lines to match our usual
+style, as we're having to change all of them anyway.
 
- * Minor commit message improvement for 11/15
- * Added a comment for some non-obvious prereq setup code, as
-   suggested by Junio.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t6005-rev-list-count.sh | 43 +++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
 
-Ævar Arnfjörð Bjarmason (15):
-  tests: change some 'test $(git) = "x"' to test_cmp
-  tests: use "test_stdout_line_count", not "test $(git [...] | wc -l)"
-  read-tree tests: check "diff-files" exit code on failure
-  diff tests: don't ignore "git diff" exit code
-  diff tests: don't ignore "git diff" exit code in "read" loop
-  apply tests: use "test_must_fail" instead of ad-hoc pattern
-  merge tests: use "test_must_fail" instead of ad-hoc pattern
-  rev-parse tests: don't ignore "git reflog" exit code
-  notes tests: don't ignore "git" exit code
-  diff tests: don't ignore "git rev-list" exit code
-  rev-list tests: don't hide abort() in "test_expect_failure"
-  gettext tests: don't ignore "test-tool regex" exit code
-  apply tests: don't ignore "git ls-files" exit code, drop sub-shell
-  checkout tests: don't ignore "git <cmd>" exit code
-  rev-list simplify tests: don't ignore "git" exit code
-
- t/t0002-gitfile.sh                     |   6 +-
- t/t1001-read-tree-m-2way.sh            |   6 +-
- t/t1002-read-tree-m-u-2way.sh          |   6 +-
- t/t1503-rev-parse-verify.sh            |   5 +-
- t/t2012-checkout-last.sh               |  51 ++++++---
- t/t2200-add-update.sh                  |  33 ++++--
- t/t3302-notes-index-expensive.sh       |   6 +-
- t/t3303-notes-subtrees.sh              |   9 +-
- t/t3305-notes-fanout.sh                |  14 +--
- t/t4020-diff-external.sh               | 153 ++++++++++++-------------
- t/t4027-diff-submodule.sh              |   7 +-
- t/t4123-apply-shrink.sh                |  18 +--
- t/t4128-apply-root.sh                  |  36 +++---
- t/t6005-rev-list-count.sh              |  43 ++++---
- t/t6012-rev-list-simplify.sh           |  12 +-
- t/t6102-rev-list-unexpected-objects.sh |  13 ++-
- t/t6407-merge-binary.sh                |  22 +---
- t/t7103-reset-bare.sh                  |   7 +-
- t/t7812-grep-icase-non-ascii.sh        |  16 ++-
- 19 files changed, 245 insertions(+), 218 deletions(-)
-
-Range-diff against v1:
- 1:  78b9c52551f =  1:  78b9c52551f tests: change some 'test $(git) = "x"' to test_cmp
- 2:  e1105b029d6 =  2:  e1105b029d6 tests: use "test_stdout_line_count", not "test $(git [...] | wc -l)"
- 3:  5f02e30d1ab =  3:  5f02e30d1ab read-tree tests: check "diff-files" exit code on failure
- 4:  a425ced5609 =  4:  a425ced5609 diff tests: don't ignore "git diff" exit code
- 5:  b1aeac3f68e =  5:  b1aeac3f68e diff tests: don't ignore "git diff" exit code in "read" loop
- 6:  7952ae1f3b5 =  6:  7952ae1f3b5 apply tests: use "test_must_fail" instead of ad-hoc pattern
- 7:  276be19e35e =  7:  276be19e35e merge tests: use "test_must_fail" instead of ad-hoc pattern
- 8:  dca2ac3a171 =  8:  dca2ac3a171 rev-parse tests: don't ignore "git reflog" exit code
- 9:  ca9e12f2bac =  9:  ca9e12f2bac notes tests: don't ignore "git" exit code
-10:  946397033d4 = 10:  946397033d4 diff tests: don't ignore "git rev-list" exit code
-11:  26c838f0560 ! 11:  52397b3575a rev-list tests: don't hide abort() in "test_expect_failure"
-    @@ Commit message
-         "test_expect_success", but would allow us say "test_todo" here (and
-         "success" would emit a "not ok [...] # TODO", not "ok [...]".
-     
-    -    In lieu of those larger changes let's more narrowly fix the problem at
-    +    So even though using "test_expect_success" here comes with its own
-    +    problems[2], let's use it as a narrow change to fix the problem at
-         hand here and stop conflating the current "success" with actual
-         SANITIZE=leak failures.
-     
-         1. https://lore.kernel.org/git/87tuhmk19c.fsf@evledraar.gmail.com/
-    +    2. https://lore.kernel.org/git/xmqq4k9kj15p.fsf@gitster.g/
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-12:  f3cc5bc7eb9 ! 12:  552dcac705d gettext tests: don't ignore "test-tool regex" exit code
-    @@ t/t7812-grep-icase-non-ascii.sh: test_expect_success GETTEXT_LOCALE 'setup' '
-     -test-tool regex "HALLÓ" "Halló" ICASE &&
-     -test_set_prereq REGEX_LOCALE
-     +test_expect_success GETTEXT_LOCALE 'setup REGEX_LOCALE prerequisite' '
-    ++	# This "test-tool" invocation is identical...
-     +	if test-tool regex "HALLÓ" "Halló" ICASE
-     +	then
-     +		test_set_prereq REGEX_LOCALE
-     +	else
-    ++
-    ++		# ... to this one, but this way "test_must_fail" will
-    ++		# tell a segfault or abort() from the regexec() test
-    ++		# itself
-     +		test_must_fail test-tool regex "HALLÓ" "Halló" ICASE
-     +	fi
-     +'
-13:  834809b1b8a = 13:  dbe8d168401 apply tests: don't ignore "git ls-files" exit code, drop sub-shell
-14:  34cada14fec = 14:  22b81d7f93a checkout tests: don't ignore "git <cmd>" exit code
-15:  4ee216711cf = 15:  16889ed154f rev-list simplify tests: don't ignore "git" exit code
+diff --git a/t/t6005-rev-list-count.sh b/t/t6005-rev-list-count.sh
+index 86542c650e2..e960049f647 100755
+--- a/t/t6005-rev-list-count.sh
++++ b/t/t6005-rev-list-count.sh
+@@ -2,7 +2,6 @@
+ 
+ test_description='git rev-list --max-count and --skip test'
+ 
+-TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+@@ -14,39 +13,39 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'no options' '
+-    test $(git rev-list HEAD | wc -l) = 5
++	test_stdout_line_count = 5 git rev-list HEAD
+ '
+ 
+ test_expect_success '--max-count' '
+-    test $(git rev-list HEAD --max-count=0 | wc -l) = 0 &&
+-    test $(git rev-list HEAD --max-count=3 | wc -l) = 3 &&
+-    test $(git rev-list HEAD --max-count=5 | wc -l) = 5 &&
+-    test $(git rev-list HEAD --max-count=10 | wc -l) = 5
++	test_stdout_line_count = 0 git rev-list HEAD --max-count=0 &&
++	test_stdout_line_count = 3 git rev-list HEAD --max-count=3 &&
++	test_stdout_line_count = 5 git rev-list HEAD --max-count=5 &&
++	test_stdout_line_count = 5 git rev-list HEAD --max-count=10
+ '
+ 
+ test_expect_success '--max-count all forms' '
+-    test $(git rev-list HEAD --max-count=1 | wc -l) = 1 &&
+-    test $(git rev-list HEAD -1 | wc -l) = 1 &&
+-    test $(git rev-list HEAD -n1 | wc -l) = 1 &&
+-    test $(git rev-list HEAD -n 1 | wc -l) = 1
++	test_stdout_line_count = 1 git rev-list HEAD --max-count=1 &&
++	test_stdout_line_count = 1 git rev-list HEAD -1 &&
++	test_stdout_line_count = 1 git rev-list HEAD -n1 &&
++	test_stdout_line_count = 1 git rev-list HEAD -n 1
+ '
+ 
+ test_expect_success '--skip' '
+-    test $(git rev-list HEAD --skip=0 | wc -l) = 5 &&
+-    test $(git rev-list HEAD --skip=3 | wc -l) = 2 &&
+-    test $(git rev-list HEAD --skip=5 | wc -l) = 0 &&
+-    test $(git rev-list HEAD --skip=10 | wc -l) = 0
++	test_stdout_line_count = 5 git rev-list HEAD --skip=0 &&
++	test_stdout_line_count = 2 git rev-list HEAD --skip=3 &&
++	test_stdout_line_count = 0 git rev-list HEAD --skip=5 &&
++	test_stdout_line_count = 0 git rev-list HEAD --skip=10
+ '
+ 
+ test_expect_success '--skip --max-count' '
+-    test $(git rev-list HEAD --skip=0 --max-count=0 | wc -l) = 0 &&
+-    test $(git rev-list HEAD --skip=0 --max-count=10 | wc -l) = 5 &&
+-    test $(git rev-list HEAD --skip=3 --max-count=0 | wc -l) = 0 &&
+-    test $(git rev-list HEAD --skip=3 --max-count=1 | wc -l) = 1 &&
+-    test $(git rev-list HEAD --skip=3 --max-count=2 | wc -l) = 2 &&
+-    test $(git rev-list HEAD --skip=3 --max-count=10 | wc -l) = 2 &&
+-    test $(git rev-list HEAD --skip=5 --max-count=10 | wc -l) = 0 &&
+-    test $(git rev-list HEAD --skip=10 --max-count=10 | wc -l) = 0
++	test_stdout_line_count = 0 git rev-list HEAD --skip=0 --max-count=0 &&
++	test_stdout_line_count = 5 git rev-list HEAD --skip=0 --max-count=10 &&
++	test_stdout_line_count = 0 git rev-list HEAD --skip=3 --max-count=0 &&
++	test_stdout_line_count = 1 git rev-list HEAD --skip=3 --max-count=1 &&
++	test_stdout_line_count = 2 git rev-list HEAD --skip=3 --max-count=2 &&
++	test_stdout_line_count = 2 git rev-list HEAD --skip=3 --max-count=10 &&
++	test_stdout_line_count = 0 git rev-list HEAD --skip=5 --max-count=10 &&
++	test_stdout_line_count = 0 git rev-list HEAD --skip=10 --max-count=10
+ '
+ 
+ test_done
 -- 
 2.35.1.1242.gfeba0eae32b
 
