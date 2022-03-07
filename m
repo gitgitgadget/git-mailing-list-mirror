@@ -2,83 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 785DEC433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A99ACC433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240935AbiCGP4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 10:56:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47704 "EHLO
+        id S243964AbiCGP6H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 10:58:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231715AbiCGPz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:55:59 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A48C76E0B
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:55:05 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id x8-20020a9d6288000000b005b22c373759so3212090otk.8
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 07:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=B6a0uGK/rWXwqCaWjTjOPA/NyCBO9mnnnYPgfEU4btU=;
-        b=b4g8e2Z+5oKDoxY/N2/MsVWkc7y3qpVIjaQ6dzOxV3Ci3mRLhwsSaZ8CykLig7XmTW
-         fJ9vInz5Qcp7ooHIhFv6gVbOMF6Yn5MQwuSaVqIGTiSm7qzP4dKbmfAdXuH4C16lTQaf
-         fDWeF5q0xHfnlB9X9xj75EgeXYZpc77YlYO63P/QC2R5c0vLcYACJNb55VilFzOK6E6p
-         XhEkCxRmJYj8iZV4chf422VWDgMOQKX4KsUQVQbcQHetpAxZ/VMofcAreh394KXOc80H
-         VSB4lUTfCUlt1NynoP9z3MaChb15jRGndmDVxvOfaIwPtsdZS34bZKQhWblBJZ5cxGly
-         v2LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=B6a0uGK/rWXwqCaWjTjOPA/NyCBO9mnnnYPgfEU4btU=;
-        b=BLY8RsK/EghIiPiZQRdLq8OKOeojTNtbHf7Js/86BCfsxcbodhT/bKg0b6s95kHSJf
-         L98IPezNz6XQURsNbzedQ8nMrwJAAVCkobm02DqLhsSo0jk9YOSL5E/NlbIbze2AtLQm
-         It6a/5NRqrCy3R64VS8v0yG4x3jxefmLLJ/cZVTqYrt1WYVyoqZ9ot9vFyfRonJwx8Gx
-         4SHhZ7nImdHQm1JkimyUnnny7QxcJmpRUWft3ty6K2aRmhghcIqquRw4SWYmzNYKJUOi
-         RhZ1YdWDZo0ug4oL/r6pfJ+KWACM/7qx2vhppMFnakklVV7mxjzqjwMJAuLk3AEMUZpk
-         wMGg==
-X-Gm-Message-State: AOAM533tI8kRj7gBwBI+hVGbKPemA/opwdG/dRkOo3lUUfbW8DJ2qCgp
-        fxlgfYLrCKTT+v1+2tP8y2tO
-X-Google-Smtp-Source: ABdhPJyv3KxcBHHKjJhy2X9DIjEkUVgyNwlo+4b4pGSBeNQJ8aaP5lLU835vXYa8q+ghZTJ4PZuj+A==
-X-Received: by 2002:a05:6830:4112:b0:5b2:38e4:8ed with SMTP id w18-20020a056830411200b005b238e408edmr1456013ott.143.1646668504393;
-        Mon, 07 Mar 2022 07:55:04 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 6-20020aca0d06000000b002d9c27d3218sm2247356oin.6.2022.03.07.07.55.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 07:55:03 -0800 (PST)
-Message-ID: <0b0802fb-c977-d8ab-092a-b8a576daf3c6@github.com>
-Date:   Mon, 7 Mar 2022 10:55:02 -0500
+        with ESMTP id S243901AbiCGP6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 10:58:04 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4037D00F
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:57:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646668626;
+        bh=x7AaAunOpqLM/cOz9K19Rh12UsClubMv8k9EsVApDUg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ihtysGlXdkjR0nrQHBZri1gaubVQMClM7tH+3dpwrZhJyDaMqmqlwupgoIyrURaeh
+         UANp1SiO+/R88b6LHKI5VJDrYEwJE21GkBrA7zNLxN07bXDGv2k/RMCOUK/Kgfd2X+
+         /DhD8IqNv+5JY3FWSG8A5Pwt/aKZf5JPbSkUfdO8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1o66KE11NE-00h6Ay; Mon, 07
+ Mar 2022 16:57:06 +0100
+Date:   Mon, 7 Mar 2022 16:57:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+In-Reply-To: <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203071655070.11118@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com> <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 0/2] string-list.h: make "nr" and "alloc" a "size_t"
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-References: <cover-0.2-00000000000-20220307T113707Z-avarab@gmail.com>
- <cover-v2-0.2-00000000000-20220307T152316Z-avarab@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover-v2-0.2-00000000000-20220307T152316Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-961277992-1646668626=:11118"
+X-Provags-ID: V03:K1:3seiYPkqV+Xe7gpgiasfNlksW8V41wm9bGpEhmd3U+CwSH32C18
+ n+/oZkDlOzt8dwSmvM9NpVWb3h+DmnPCbtQcLgHMfOCjfKgj2HkjrXxzPfX+K4EXAR+GTGS
+ VdDrv4Pj58ecx/PXsutiSMvd5/BLdXpzZGc/rJc4tAJENcBjGepEYOcSf+iodEo6HnlZWVE
+ r7X0tT73zkt9oBP02bUpw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RAVLPmiTqRc=:lKdLEwQL6nzLceNNQiGLdO
+ L0p6yrfWEt+Bo0YTSiB0pWe1AkP5FKl8ar0JUwjBXGwynPI/zUjBMx8orYHxiSYJ/HKsOH03c
+ rHyKkaNz5bmAxndwdAu7LSB5QxvjTtwOXH1klKtjUBtl8NJ/wAADPIArvORooqHxdv+/EGpci
+ DJf9sy8qB+Y0+3pshMK15olxCsOGsDaaxA3IG1f2hBF9XgVfoo/Bv35QMqDrjpH7d5cu950mi
+ +yr6uUGbhkcOdWPz6n2pX5xAvhLLu3TJMKce9WDupdg0ls47I2Mn0vAb6aY35wVIVwOsRKCwh
+ faHMeblbwrW/+P5wz/24yVxU63/HSW/IzpZdPufJU9XlzVPmCEYXC8PcAxek0vlrYKFuPmnap
+ QQUce7RLdHwaP9MuYkMP6fS0aLh2eGBTkP8v1FJ7NPN8mLpsI+zP8LebnjyvuPNOz2nHvoQd2
+ lQSoedqum3qVNsMl9u18Eyl02dtUhOA+YdpfnJ0xg27cBIdCCHQdocZCBrE2TxsJ/rDNmTNeY
+ A4Bc2wdNBljEIzCuULwzXP6Dtc/VHn1xlwQ8PJTJA2SJOjjo7CDVXTBfNLKFs6VukEI8kCkrG
+ iyQY38ioqEzlZ1QqfSmLNh/uVD7NGzZFgXrf6DTPo0RcBQ5jN3iPnfu0l7N69NJAQwDBYC9Gg
+ uNR5hDp7EN8KFZSYqB1euO8+4xI+4CotPZ+gWbnPT4k5F+klvmK5WP5aBfEr3tJluDtzwoDkI
+ wTMmmm7s1fcRaaQ4hA+4y2zi88LmtcyogEvBVry4HzJdUw9FkIKF0PJqxeNz/ws5XarE/Onz+
+ lIOrRj1HnoVe8+2HHxfBZOZEzUS32lxGRTrgNVX0zy5dnsMvo01tmvqo6cqhnf1KUNqfOKvqs
+ LfwUtFtWS0+zHjXO1VCzPoDKLt3yiyhQQeW6kJAiKw5BYC5w7kCsMVNHNlQsFffF2kqaSirNk
+ xVlc/etZJ5rUvCQplv0heVCOahXS7L4gkX3uuwhRk0xWxXaZWgn4HlTRnYd1dVgQ+c4IcYdDj
+ acAw3Kp5BZU5XsqT0bJ2GXpNf3IKmA9zmZttAIuuP0lBgOtsVnWXjKYS4t3AK9Sy1XFOA0CBC
+ e4nDIutt+Quifw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2022 10:27 AM, Ævar Arnfjörð Bjarmason wrote:
-> Change the "struct string_list" to have a "size_t" for "nr" and
-> "alloc", ensuring we won't overflow on platforms where size_t is 64
-> bit, but "unsigned int" is 32 bit.
-> 
-> This replaces the v1 1/2 to get rid of the casts we use for Q_(), and
-> the 2/2's addition of casts is then consistent with those.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This version looks a lot better, localizing the need for understanding
-cast implications into the implementation of Q_() instead of every
-caller.
+--8323328-961277992-1646668626=:11118
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
--Stolee
+Hi =C3=86var,
+
+On Wed, 2 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+>
+> On Tue, Mar 01 2022, Johannes Schindelin via GitGitGadget wrote:
+>
+> > Changes since v1:
+> >
+> >  * In the patch that removed MAKE_TARGETS, a stale comment about that
+> >    variable is also removed.
+> >  * The comment about set -x has been adjusted because it no longer app=
+lies
+> >    as-is.
+> >  * The commit message of "ci: make it easier to find failed tests' log=
+s in
+> >    the GitHub workflow" has been adjusted to motivate the improvement
+> >    better.
+>
+> Just briefly: Much of the feedback I had on v1 is still unanswered,
+
+Yes, because I got the sense that your feedback ignores the goal of making
+it easier to diagnose test failures.
+
+> or in the case of the performance issues I think just saying that this
+> output is aimed at non-long-time-contributors doesn't really justify the
+> large observed slowdowns.
+
+What good is a quickly-loading web site when it is less than useful?
+
+I'd much rather have a slow-loading web site that gets me to where I need
+to be than a fast-loading one that leaves me as puzzled as before.
+
+Ciao,
+Johannes
+
+--8323328-961277992-1646668626=:11118--
