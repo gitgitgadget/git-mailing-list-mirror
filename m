@@ -2,147 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85C3FC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45772C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236135AbiCGMaO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:30:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45254 "EHLO
+        id S242518AbiCGMfS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 07:35:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235518AbiCGMaN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:30:13 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C0185955
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:29:18 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id yy13so22706719ejb.2
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:29:18 -0800 (PST)
+        with ESMTP id S242515AbiCGMfL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 07:35:11 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CC088B03
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:33:50 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id n33-20020a05600c3ba100b003832caf7f3aso6556551wms.0
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:33:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=c2efJgp2Eo6cgol7WpS9XkAzL9RxKCqphoIzj/31KR8=;
-        b=PAok5bMLrO+BUYw19bs3yEzqDmCsht9+DOJ1S1qlmfJFGZy1Pi9AFAwA4nBUbdisbZ
-         VTsZSO9x5y8ePutI96ervRLDqUbZarmOQ2hby+f7D4qxDTJPaNBEghrLDAAIfBHdJjqU
-         B/nkEum1uw0NZZNvHznPuMD5SO/vLRwHZ5r7hNn++v8Ic5+dwxA/kn/EMHGYAScGW88S
-         6RlEtqoA3hRWqn9ip9Bp2wbqwLAAMcut2upGGvPoMZlUBQPfz1oN+2th1HEf6EBwyCy9
-         LP7W0TXcDCAyyHf0aMzoJZy0bCx9sc+SNEKGeAwuCV5VqtbDSCvj/GeKzeBI9wn6gdaT
-         hDQA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Cg0Mi89t11gUJ/BzBwRtWdH6/TKUryHHUl5SmmB555k=;
+        b=cac1SnhgirZuBESCa0pGAHq2mkM5WFygCOLReC+08fOvnZ3gqyCKFblwaeMbv4DCA5
+         hze7J8IA0JOzakae2DubpQeRLW+QOIJBPnszQGrPGtgpuW86cOTEgZQEEWhNpm/3SeL2
+         FHoBxNAqx/lNkge4MydnqESZ4xygjxjjTYJhQsyKRjToQgTI/XC+u8haQWcAiL7bKiWd
+         K6j9zUX44/WcmrPjrHyyI8IDh0QyU03YSphOvHvMVeVvXjEZ9oW9mX8hwTIRFQ6EW1zB
+         AnxVKPi1+KLln315ELWFIWMJgW+yUXCcYlaEvpb6hvVevBj+BmuvCfdzy18wZHIvnyaU
+         cJrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=c2efJgp2Eo6cgol7WpS9XkAzL9RxKCqphoIzj/31KR8=;
-        b=bslV5BwSREAgnFdt9J9JAXkm7EHpfEmKOzF983sTowVVD8GpC1jwec6TYoRSPx9ipX
-         ojs/ThcaXxHRUKWH7m0yHpKnPLlCZMfAUguRWA1Cv9oa5WpCXGZQOhd4rib8fT0FOba9
-         Dpu7bqopM5fH1Rgk4OIqcsEMkRjdctsEkQyov0pIvJ9AQ4jpat7ylCDhF+vYt0TljiYL
-         7LdtMjykvyblW+71x8wq7EsYfmA7j1ddyp4T/wE1kXOLjckZXZ1JqA8mYK5eO8b7CZB6
-         rwyw8t7h/DFGpKPU6/1eIo3eo5PxtHzuYcQmkwOUlo7pHxjFhu3P2tkWmKbSP6wy/oUK
-         mckw==
-X-Gm-Message-State: AOAM530IcsIju8T5eZrlMIZ8mNcSt34HUmqPxszUcOMIyUQHekP0ndLv
-        ig4JH86/b0zA82Dh9/18UcA0JBr2BiF00A==
-X-Google-Smtp-Source: ABdhPJy9r91c7mwAd1khWceJGo2gn/Dm0hYTvyiuQBb5NWD3ejZe28HDbzUkpL8WNh3YMYnYlW0QNA==
-X-Received: by 2002:a17:907:97cc:b0:6da:a8fb:d1db with SMTP id js12-20020a17090797cc00b006daa8fbd1dbmr9107470ejc.267.1646656156484;
-        Mon, 07 Mar 2022 04:29:16 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id qb30-20020a1709077e9e00b006d6f8c77695sm4610011ejc.101.2022.03.07.04.29.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Cg0Mi89t11gUJ/BzBwRtWdH6/TKUryHHUl5SmmB555k=;
+        b=GuVAA3qzq27MsHkIqUCJ0GYgGezeqyNCZM6t3aulnOvrvVph+hZdk4077QG7WGK+E7
+         FIroN4M3uceudtSZ0d7ui3bFJDyxAkdeXu4Jek83fIAcAAuWpNHSspEAYQdAsS1hO8Ab
+         rJfhUoRAhLAN0KrsoF1Uzg5BsLe80ojEXnzw2YbRknuSv0BATi/kex5dhVnQq77+9VVw
+         mt6CMKGjspDUgnGJEEdKI/4ceD+Ld6eG5sXyMRy1ZbBcdObG+5PRWg7zR37d8D8qSTLn
+         tJwF4OrwcKc5CODU9GWsI8GysUHWnwQ0Qhz/nuVtLdMB3/1b/lbFcO84arwOGtlU0AW3
+         CR4A==
+X-Gm-Message-State: AOAM531zfeKE5Hc9picdvvxX1Ysrr6ETXT8Qpp2taCMnikrWS4Pf/TGw
+        AwA+kUM8jtWNDFCXh0PP+3geZyX6nJSsJw==
+X-Google-Smtp-Source: ABdhPJwH7tWjmZY/qlzTmdvAgJ/ipIwIEKdq1XNA9RI00LRB6ZHb/RXcDAZ1QQbh/y7n8xYzSbyJNw==
+X-Received: by 2002:a1c:f718:0:b0:380:ed20:6557 with SMTP id v24-20020a1cf718000000b00380ed206557mr18456449wmh.53.1646656428678;
+        Mon, 07 Mar 2022 04:33:48 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n4-20020a05600c4f8400b00380e45cd564sm13657012wmq.8.2022.03.07.04.33.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:29:15 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRCUE-001UAS-W6;
-        Mon, 07 Mar 2022 13:29:14 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jason Yundt <jason@jasonyundt.email>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] gitweb: remove invalid http-equiv="content-type"
-Date:   Mon, 07 Mar 2022 13:23:49 +0100
-References: <20220307033723.175553-1-jason@jasonyundt.email>
- <20220307033723.175553-3-jason@jasonyundt.email>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220307033723.175553-3-jason@jasonyundt.email>
-Message-ID: <220307.861qze0wv9.gmgdl@evledraar.gmail.com>
+        Mon, 07 Mar 2022 04:33:47 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/2] hooks: fix a race in hook execution
+Date:   Mon,  7 Mar 2022 13:33:44 +0100
+Message-Id: <cover-v2-0.2-00000000000-20220307T123244Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1242.gfeba0eae32b
+In-Reply-To: <cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com>
+References: <cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A documentation & commit-message only change to this v1 which fixes an
+obscure race condition in hook execution. For v1 see:
+https://lore.kernel.org/git/cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com/
 
-On Sun, Mar 06 2022, Jason Yundt wrote:
+Junio: This topic wasn't picked up yet, but hopefully will be with the
+below, which should address coments you & Taylor had on the v1.
 
-> Before this change, gitweb would generate pages which included:
->
-> 	<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
->
-> A meta element with http-equiv="content-type" is said to be in the
-> "Encoding declaration state". According to the HTML Standard,
->
-> 	The Encoding declaration state may be used in HTML documents,
-> 	but elements with an http-equiv attribute in that state must not
-> 	be used in XML documents.
->
-> 	Source: <https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-content-type>
->
-> This change removes that meta element since gitweb always generates XML
-> documents.
->
-> Signed-off-by: Jason Yundt <jason@jasonyundt.email>
-> ---
->  gitweb/gitweb.perl                        |  4 +---
->  t/t9502-gitweb-standalone-parse-output.sh | 13 +++++++++++++
->  2 files changed, 14 insertions(+), 3 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index fbd1c20a23..606b50104c 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -4213,8 +4213,7 @@ sub git_header_html {
->  	my %opts = @_;
->  
->  	my $title = get_page_title();
-> -	my $content_type = get_content_type_html();
-> -	print $cgi->header(-type=>$content_type, -charset => 'utf-8',
-> +	print $cgi->header(-type=>get_content_type_html(), -charset => 'utf-8',
+Ævar Arnfjörð Bjarmason (2):
+  merge: don't run post-hook logic on --no-verify
+  hooks: fix an obscure TOCTOU "did we just run a hook?" race
 
-I think it would be better to just skip this hunk, no behavior will
-change if it's left in.
+ builtin/commit.c       | 18 +++++++++++-------
+ builtin/merge.c        | 28 +++++++++++++++++-----------
+ builtin/receive-pack.c |  8 +++++---
+ commit.c               |  2 +-
+ commit.h               |  3 ++-
+ hook.c                 |  7 +++++++
+ hook.h                 | 12 ++++++++++++
+ sequencer.c            |  4 ++--
+ 8 files changed, 57 insertions(+), 25 deletions(-)
 
->  	                   -status=> $status, -expires => $expires)
->  		unless ($opts{'-no_http_header'});
->  	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
-> @@ -4225,7 +4224,6 @@ sub git_header_html {
->  <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
->  <!-- git core binaries version $git_version -->
->  <head>
-> -<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
+Range-diff against v1:
+1:  9b5144daee6 ! 1:  8f7b01ed758 merge: don't run post-hook logic on --no-verify
+    @@ Commit message
+         hand. There's no point in invoking discard_cache() here if the hook
+         couldn't have possibly updated the index.
+     
+    +    It's buggy that we use "hook_exist()" here, and as discussed in the
+    +    subsequent commit it's subject to obscure race conditions that we're
+    +    about to fix, but for now this change is a strict improvement that
+    +    retains any caveats to do with the use of "hooks_exist()" as-is.
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/merge.c ##
+2:  d01d088073b ! 2:  9d16984898c hooks: fix a TOCTOU in "did we run a hook?" heuristic
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    hooks: fix a TOCTOU in "did we run a hook?" heuristic
+    +    hooks: fix an obscure TOCTOU "did we just run a hook?" race
+     
+         Fix a Time-of-check to time-of-use (TOCTOU) race in code added in
+         680ee550d72 (commit: skip discarding the index if there is no
+         pre-commit hook, 2017-08-14).
+     
+    -    We can fix the race passing around information about whether or not we
+    -    ran the hook in question, instead of running hook_exists() after the
+    -    fact to check if the hook in question exists. This problem has been
+    +    This obscure race condition can occur if we e.g. ran the "pre-commit"
+    +    hook and it modified the index, but hook_exists() returns false later
+    +    on (e.g., because the hook itself went away, the directory became
+    +    unreadable, etc.). Then we won't call discard_cache() when we should
+    +    have.
+    +
+    +    The race condition itself probably doesn't matter, and users would
+    +    have been unlikely to run into it in practice. This problem has been
+         noted on-list when 680ee550d72 was discussed[1], but had not been
+         fixed.
+     
+    -    In addition to fixing this for the pre-commit hook as suggested there
+    -    I'm also fixing this for the pre-merge-commit hook. See
+    -    6098817fd7f (git-merge: honor pre-merge-commit hook, 2019-08-07) for
+    -    the introduction of its previous behavior.
+    +    This change is mainly intended to improve the readability of the code
+    +    involved, and to make reasoning about it more straightforward. It
+    +    wasn't as obvious what we were trying to do here, but by having an
+    +    "invoked_hook" it's clearer that e.g. our discard_cache() is happening
+    +    because of the earlier hook execution.
+     
+         Let's also change this for the push-to-checkout hook. Now instead of
+         checking if the hook exists and either doing a push to checkout or a
+    @@ Commit message
+         This leaves uses of hook_exists() in two places that matter. The
+         "reference-transaction" check in refs.c, see 67541597670 (refs:
+         implement reference transaction hook, 2020-06-19), and the
+    -    prepare-commit-msg hook, see 66618a50f9c (sequencer: run
+    +    "prepare-commit-msg" hook, see 66618a50f9c (sequencer: run
+         'prepare-commit-msg' hook, 2018-01-24).
+     
+         In both of those cases we're saving ourselves CPU time by not
+    @@ Commit message
+         don't have the hook. So using this "invoked_hook" pattern doesn't make
+         sense in those cases.
+     
+    -    More importantly, in those cases the worst we'll do is miss that we
+    -    "should" run the hook because a new hook appeared, whereas in the
+    -    pre-commit and pre-merge-commit cases we'll skip an important
+    -    discard_cache() on the bases of our faulty guess.
+    -
+    -    I do think none of these races really matter in practice. It would be
+    -    some one-off issue as a hook was added or removed. I did think it was
+    -    stupid that we didn't pass a "did this run?" flag instead of doing
+    -    this guessing at a distance though, so now we're not guessing anymore.
+    +    The "reference-transaction" and "prepare-commit-msg" hook also aren't
+    +    racy. In those cases we'll skip the hook runs if we race with a new
+    +    hook being added, whereas in the TOCTOU races being fixed here we were
+    +    incorrectly skipping the required post-hook logic.
+     
+         1. https://lore.kernel.org/git/20170810191613.kpmhzg4seyxy3cpq@sigill.intra.peff.net/
+     
+    @@ hook.h: struct run_hooks_opt
+     +
+     +	/**
+     +	 * A pointer which if provided will be set to 1 or 0 depending
+    -+	 * on if a hook was invoked (i.e. existed), regardless of
+    -+	 * whether or not that was successful. Used for avoiding
+    -+	 * TOCTOU races in code that would otherwise call hook_exist()
+    -+	 * after a "maybe hook run" to see if a hook was invoked.
+    ++	 * on if a hook was started, regardless of whether or not that
+    ++	 * was successful. I.e. if the underlying start_command() was
+    ++	 * successful this will be set to 1.
+    ++	 *
+    ++	 * Used for avoiding TOCTOU races in code that would otherwise
+    ++	 * call hook_exist() after a "maybe hook run" to see if a hook
+    ++	 * was invoked.
+     +	 */
+     +	int *invoked_hook;
+      };
+-- 
+2.35.1.1242.gfeba0eae32b
 
-..with this being the only behavior change (yeah the variable will now
-be used only in one place, but that's fine)
-
-I'm not sure I understand this change really. The result in always XML,
-so application/xhtml+xml is redundant, text/html, or both?
-
-But aside from that: I have seen browsers get the lack of encoding=""
-"wrong" with data at rest, don't some still default to ISO-8859-1?
-
-So won't this result in badly decoded data if you save the web page &
-view it locally?
-
->  <meta name="generator" content="gitweb/$version git/$git_version$mod_perl_version"/>
->  <meta name="robots" content="index, nofollow"/>
->  <title>$title</title>
-> diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb-standalone-parse-output.sh
-> index e7363511dd..25165edacc 100755
-> --- a/t/t9502-gitweb-standalone-parse-output.sh
-> +++ b/t/t9502-gitweb-standalone-parse-output.sh
-> @@ -207,4 +207,17 @@ test_expect_success 'xss checks' '
->  	xss "" "$TAG+"
->  '
->  
-> +no_http_equiv_content_type() {
-> +	gitweb_run "$@" &&
-> +	! grep -Ei "http-equiv=['\"]?content-type" gitweb.body
-
-Nit: Should we skip the "-i" here since we're testing our own output,
-and not http standards in general (i.e. we don't have to worry about the
-case of http-equiv?)
