@@ -2,148 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E692BC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 295CDC433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237365AbiCGOPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 09:15:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
+        id S240363AbiCGOtb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 09:49:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239293AbiCGOPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 09:15:07 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5513F8A6EE
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:14:13 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so3070643otq.13
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:14:13 -0800 (PST)
+        with ESMTP id S236508AbiCGOta (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 09:49:30 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0793134E
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:48:35 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id i5so15412875oih.1
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:48:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=wEVroOdxvgGNvSS9COvF8s0/VWddDVPUISGri3YGyyM=;
-        b=i45WKOnDeBMwmksEUgU2kZDnJKBjV0FAkVqWL9wNMigU6EkKfGKn6SM9BPONIcegh1
-         fv6/OtLmbaScdnuF+JRICIgoAAY4CtRvaqlc4152ueEC4316uFk8dDNIvvx3DOHwSKxf
-         gGGwfSvJR1BR0Etm1Dy9el70zWcFRTjZj/LSJYUWs5FIgCjKELSEIskLchcr5iNKh3Tp
-         ZyXsovSCTTjBQ+pZivZmDCD8RUQ4QByKjM9hWe6oHRdBdxBOkGWu1koitQrOIW1pedio
-         YrlrwdHI5ok8QTmfOB9VLnGkWH0PQSFn9bSITislrk7o5vrvznrMbhHa84ud386Fl/Gp
-         O9EA==
+        bh=ngA2P47JlKncDX8RW0Z4R8pTJuUu4xsMf8S84PYpXfc=;
+        b=W5kezCFTwbNim3744g86l5KEkcfp/Ajlhvz5EUHnwcGfD2YmaQhr2zVI8/By0OcH8R
+         rN6ZvtFNqjpQ6rh9Uyp0KwQvWcpUmtedftalTK9+41kb4xnlY82300htcTC2BMR8AAH2
+         DL9Hus83DaiSwhpGQVadcoDuoNYLU3TNp/qfkDQbcvMW2+O22wwtH/z5hDJZyGo8WU9w
+         ur4PwfQO1zsG8tDxs7YRsiYTd5CcMuJEZX+Z8cj6sAHJkdIUBPr75vgD8lda5ai7BPhS
+         Pv2KKSDPFz4A0qvHdkyQaV6FME++f6VGoQc14+zXWY6Vrb2umYj9Xqj8M1qaTWBrTWpU
+         ToDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=wEVroOdxvgGNvSS9COvF8s0/VWddDVPUISGri3YGyyM=;
-        b=CJjaI7mm13Ecv+0GWiOPLopoIjUI/F6PdeapXz//ixM7jdRhSDJFcHNmafjCxBOrl6
-         iztpP0y4CTOZuQc1hsrXhEBx9d9cb7VgI5phD8pMEjjVu4XIroljzjBVmYpsD52ErBLI
-         L5qgGsVg1ASdC0GgRr05g9AwdgQnWT8YJL/FV2Ijkh8BrnPGPciIoN7JuG2KJXCsbB6M
-         T6Ev4bmDsENewuQKv8qvB6Hj9l0yE9sE9YXZWBuF66oHiPvLR0sRpVh+scEiR0Uvj/ar
-         fqQKX//V4zgc3pXyqHtVKcpLSEg+2eoqT4sB0xKiOywn2rHLZDSVpMqVRzPlIhMaYpqV
-         +7tg==
-X-Gm-Message-State: AOAM53157U6MZ3WtGqlLjXIHij0MHB435hbsv1qhZQP+hcbtGVagBb5X
-        v4zvaQ1gPEGN1TjyOa3uqfF/
-X-Google-Smtp-Source: ABdhPJyTdilBFSkNt6wXInoZ7BQ9x8cjyC/H6V/6FU8mtTj1+jtjtc4YUWyt44CQI/wie2KL6uUueg==
-X-Received: by 2002:a05:6830:1e91:b0:5ad:599a:96cb with SMTP id n17-20020a0568301e9100b005ad599a96cbmr5877642otr.329.1646662452678;
-        Mon, 07 Mar 2022 06:14:12 -0800 (PST)
+        bh=ngA2P47JlKncDX8RW0Z4R8pTJuUu4xsMf8S84PYpXfc=;
+        b=XIyTYUHsL6YDZ52zrpMy7rbxDN5dmqCKqxufpBFMMNEXBpMafNS1s6FTBdFPx6jjuN
+         NBTopFqT1t0OPz4Q9DErVuWAs1Vtk7cE3BHQm1iwVEGtEVS274f9bwlzb1kg8I2kB8ps
+         Y4IDf3LvebNTkiesqViAuDxslnrcqxKJXB3j0jNMromkPs7cDZYUlenTLF2xYUzyw3G+
+         Ru4fbW7VV+quok98C9s4CuIr6sHaV6tTk9i5AJTZ+OZmPPzy99eylzZyZSNLb5rF79ZX
+         6Vo/Vw8JRH/DeNvcu4p6bTBmhEJlrTfqzQlBdyNtfGr/59MgiIoy2K3IaRiGA9cvTIcP
+         UCAw==
+X-Gm-Message-State: AOAM531J+RqD8RwYiUg4goxhFqPNxYZoHkewiCE+9PDPWdVIjQMpRx32
+        QUbrO+j/gE4fFCwY0nTen2ga
+X-Google-Smtp-Source: ABdhPJx8KIDMKZqaUTqI2yQqv0MYo0GsUPNL8xplJ8h//zuRAMK3/nu9x5KM0bfNgf4t35+vDh1NNA==
+X-Received: by 2002:aca:de8b:0:b0:2cf:5b:be98 with SMTP id v133-20020acade8b000000b002cf005bbe98mr18045106oig.170.1646664514606;
+        Mon, 07 Mar 2022 06:48:34 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id a14-20020a544e0e000000b002d97bda3874sm6307018oiy.57.2022.03.07.06.14.09
+        by smtp.gmail.com with ESMTPSA id g18-20020a9d6c52000000b005af7c7cb702sm6046654otq.34.2022.03.07.06.48.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 06:14:11 -0800 (PST)
-Message-ID: <edb5897a-30f0-e5a6-1166-d03f5bdaeb47@github.com>
-Date:   Mon, 7 Mar 2022 09:14:09 -0500
+        Mon, 07 Mar 2022 06:48:34 -0800 (PST)
+Message-ID: <ee6c7a5b-63e8-af1c-fdb7-75dca9cd798d@github.com>
+Date:   Mon, 7 Mar 2022 09:48:33 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [PATCH 10/11] bundle: create filtered bundles
+Subject: Re: [PATCH 11/11] bundle: unbundle promisor packs
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
         zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
 References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
- <xmqq5yotxpdo.fsf@gitster.g>
+ <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
+ <xmqqzgm5wafu.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq5yotxpdo.fsf@gitster.g>
+In-Reply-To: <xmqqzgm5wafu.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/4/2022 6:35 PM, Junio C Hamano wrote:
+On 3/4/2022 6:43 PM, Junio C Hamano wrote:
 > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
 >> From: Derrick Stolee <derrickstolee@github.com>
 >>
->> A previous change allowed Git to parse bundles with the 'filter'
->> capability. Now, teach Git to create bundles with this option.
->>
->> Some rearranging of code is required to get the option parsing in the
->> correct spot. There are now two reasons why we might need capabilities
->> (a new hash algorithm or an object filter) so that is pulled out into a
->> place where we can check both at the same time.
->>
->> The --filter option is parsed as part of setup_revisions(), but it
->> expected the --objects flag, too. That flag is somewhat implied by 'git
->> bundle' because it creates a pack-file walking objects, but there is
->> also a walk that walks the revision range expecting only commits. Make
->> this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
->> before the call to setup_revisions().
+>> In order to have a valid pack-file after unbundling a bundle that has
+>> the 'filter' capability, we need to generate a .promisor file. The
+>> bundle does not promise _where_ the objects can be found, but we can
+>> expect that these bundles will be unbundled in repositories with
+>> appropriate promisor remotes that can find those missing objects.
+> 
+> That sounds like a lot of wishful thinking, but I do not think of a
+> better way to phrase the idea.  Taking a bundle out of a repository
+> and unbundling it elsewhere is "git fetch" that could be done to
+> send objects from the former to the latter repository, so I am OK
+> with the assumption that the original repository will stay available
+> for such users who took its contents over sneaker-net instead of
+> over the wire.
+
+As an aside, I'm also concerned about the existing model of promisor
+remotes where it depends on each remote, and isn't a repository-wide
+state. In particular, if I do a blobless partial clone of git/git and
+then add git-for-windows/git as a remote and fetch it, it will break
+because git-for-windows/git isn't set up as a promisor remote and we
+expect to have every blob reachable from its pack-file (even though
+it was not sent because we advertised a commit that can reach it).
+
+I've been thinking about adjusting the config parsing around promisors
+to say "I see one promisor remote, so I will assume all remotes are
+promisors." It seems to me that this will fix cases like the above
+without further breaking any cases (that are not already broken).
+
+But that's a tangent for another time. :)
+ 
+>> Use the 'git index-pack --promisor=<message>' option to create this
+>> .promisor file. Add "from-bundle" as the message to help anyone diagnose
+>> issues with these promisor packs.
 >>
 >> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 >> ---
+>>  bundle.c               | 4 ++++
+>>  t/t6020-bundle-misc.sh | 8 +++++++-
+>>  2 files changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/bundle.c b/bundle.c
+>> index e284ef63062..3d97de40ef0 100644
+>> --- a/bundle.c
+>> +++ b/bundle.c
+>> @@ -631,6 +631,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
+>>  	struct child_process ip = CHILD_PROCESS_INIT;
+>>  	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+>>  
+>> +	/* If there is a filter, then we need to create the promisor pack. */
+>> +	if (header->filter)
+>> +		strvec_push(&ip.args, "--promisor=from-bundle");
+>> +
+>>  	if (extra_index_pack_args) {
+>>  		strvec_pushv(&ip.args, extra_index_pack_args->v);
+>>  		strvec_clear(extra_index_pack_args);
+>> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+>> index 39cfefafb65..344af34db1e 100755
+>> --- a/t/t6020-bundle-misc.sh
+>> +++ b/t/t6020-bundle-misc.sh
+>> @@ -513,7 +513,13 @@ do
+>>  		The bundle uses this filter: $filter
+>>  		The bundle records a complete history.
+>>  		EOF
+>> -		test_cmp expect actual
+>> +		test_cmp expect actual &&
+>> +
+>> +		# This creates the first pack-file in the
+>> +		# .git/objects/pack directory. Look for a .promisor.
+>> +		git bundle unbundle partial.bdl &&
+>> +		ls .git/objects/pack/pack-*.promisor >promisor &&
+>> +		test_line_count = 1 promisor
 > 
-> Now, the gem of the series ;-)
-
-:D
-
->> +	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] ||
->> +	    revs.filter)
+> OK.  Do we also want to inspect the contents of the resulting
+> repository to make sure that the bundle had the right contents?
 > 
-> Did we need to wrap?  With these on a single line, the line is way
-> shorter than the line with "because our hash algorithm is not" on
-> it.
-
-Perhaps I was thinking about having one line per "reason", which might
-be extended in the future. But there's no reason to waste space right
-now.
-
->> +	/*
->> +	 * Nullify the filter here, and any object walking. We only care
->> +	 * about commits and tags here. The revs_copy has the right
->> +	 * instances of these values.
->> +	 */
->> +	revs.filter = NULL;
->>  	revs.blob_objects = revs.tree_objects = 0;
->>  	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
->>  	object_array_remove_duplicates(&revs_copy.pending);
+> One idea to do so would probably be
 > 
-> OK.  We prepare revs, and we save it to revs_copy, because we
-> perform two traversals, one to determine which bottom commits are
-> required to unbundle the bundle (which is done with the instance
-> "revs"), and then later to actually enumerate the objects to place
-> in the bundle (using "revs_copy").  Is there a reason why we need to
-> remove .filter in order to perform the first traversal?
+>  - prepare a test repository (you already have it)
+>  - prepare a partial.bdl (you already do this)
 > 
-> This is a tangent, but I wish we could reliably determine when we
-> can optimize the first traversal away, by inspecting revs.  If there
-> are any pending objects with UNINTERESTING bit, or members like
-> max_count, max_age, min_age are set, we'd end up traversing down to
-> all roots and the prerequisites list would be empty.
+>  - clone the test repository into a new repository, with the same
+>    filter
+>  - create an empty repository, unbundle the partial.bdl
+> 
+>  - take "for-each-ref" and list of objects available in these two
+>    "partial copies" from the test repository, and compare
 
-Noted for potential follow-up.
+Good idea. Thanks!
+
+Of course, looking closer at it... "git bundle unbundle" doesn't
+actually store the refs directly in the refspace, but instead only
+outputs the refs that it used.
+
+Here is an attempt to verify the refs that are reported match
+those in a mirror clone.
+
+--- >8 ---
+
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 344af34db1e..a228cbfc4e3 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -490,7 +490,7 @@ test_expect_success 'unfiltered bundle with --objects' '
+ for filter in "blob:none" "tree:0" "tree:1" "blob:limit=100"
+ do
+ 	test_expect_success 'filtered bundle: $filter' '
+-		test_when_finished rm -rf .git/objects/pack &&
++		test_when_finished rm -rf .git/objects/pack cloned unbundled &&
+ 		git bundle create partial.bdl \
+ 			--all \
+ 			--filter=$filter &&
+@@ -515,11 +515,22 @@ do
+ 		EOF
+ 		test_cmp expect actual &&
  
->> +	test_expect_success 'filtered bundle: $filter' '
-...
-> 
-> OK.
-> 
-> It is somewhat curious why our bundle tests do not unbundle and
-> check the resulting contents of the repository we unbundle it in.
+-		# This creates the first pack-file in the
+-		# .git/objects/pack directory. Look for a .promisor.
+-		git bundle unbundle partial.bdl &&
+-		ls .git/objects/pack/pack-*.promisor >promisor &&
+-		test_line_count = 1 promisor
++		git init unbundled &&
++		(
++			cd unbundled &&
++			# This creates the first pack-file in the
++			# .git/objects/pack directory. Look for a .promisor.
++			git bundle unbundle ../partial.bdl >ref-list.txt &&
++			ls .git/objects/pack/pack-*.promisor >promisor &&
++			test_line_count = 1 promisor
++		) &&
++
++		git clone --filter=blob:none --mirror "file://$(pwd)" cloned &&
++		git -C cloned for-each-ref \
++			--format="%(objectname) %(refname)" >cloned-refs.txt &&
++		echo "$(git -C cloned rev-parse HEAD) HEAD" >>cloned-refs.txt &&
++		test_cmp cloned-refs.txt unbundled/ref-list.txt
+ 	'
+ done
+ 
+--- >8 ---
 
-I haven't checked your response yet, but hopefully this is answered in
-the next patch which teaches Git how to unbundle bundles with this new
-capability.
+I also attempted doing a "git clone --bare partial.bdl unbundled.git" to
+get the 'git clone' command to actually place the refs. However, 'git clone'
+does not set up the repository filter based on the bundle, so it reports
+missing blobs (even though there is no checkout). Making this work would
+require that "repository global promisor config" idea that I mentioned in
+another reply. I'll make note of this as a potential application of that
+idea.
 
 Thanks,
 -Stolee
