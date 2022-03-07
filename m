@@ -2,96 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 874E0C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F5CC433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241442AbiCGOK0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 09:10:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47268 "EHLO
+        id S237851AbiCGOLQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 09:11:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233551AbiCGOKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 09:10:25 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91CF16A014
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:09:31 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id d194so2307880qkg.5
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:09:31 -0800 (PST)
+        with ESMTP id S236204AbiCGOLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 09:11:14 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 832156E4CD
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:10:18 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id hw13so32104905ejc.9
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:10:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=S2M8XkqAhi+iWkWoTL90TmzL4/A8xKVC5Jg2LEMnbRY=;
-        b=Dyp2brjwGNBq83L7B1o5AdaHP9qHJKhu/qBtNt5W8uKEP41y3nJjYf8AAE/3qxDNAs
-         lj+G1Sgtsj3jbuoJXoaI3xkt33zs2YfeW+Uk61Pxs/0BtVHtCxPwN42L/U8UIt9yxVMM
-         z0jDrCHhNY9oQLrGn5zPCDAT9nEdYd1jYTwP/f63Iu1KYhXJYPvhBtdy7K5nWZ4v3KNZ
-         SotqYBH0Rqz0DuiWd0ZkBj5vvmTXPyHGntfW1nA5UmKlLW8m8tlNCg7mX/xf6/SED0R4
-         TlqArs/XJqaWk+ybIKUGUa/GVvfOvqe+s9+sRs+1iQSEF/TJxl7+liDx2+GPpCnAAWJ/
-         WVJQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9ULoK2m9wh5xLXBQezm8qQQGuNpWDNaUHY8UVClwCvg=;
+        b=XvpSk7NqgQlPx2WkofxJtQq0NJRzqupf4dIU3/oDeRDxeeXMBpeNXztyGKhEM6BV8R
+         uU6unJaX4d60jwPMOF85Tsp3y5P8Fb3N3XxRMtnHpe8RnOn7nbIsO7ZAt/UG+4tAIM/0
+         NeGHTM4pxsvcNhWTaokkanMjHlgieL4CXJz3CKO4fRYezD1OHtU0DDtICS++jRw/e6yo
+         /3Oh1aesO0xavaJ13yBEl4nTPUPhGn4I28ZMym48JkP6rdDkpZ4sY2Ck+C9sTHVVgd0/
+         2OfigCVDTC4FtYIvM+N4VAIsBNUZ8NVW/onhzqrHvR6Azk58t8P7kGAmExRMpkzQvxZH
+         eJYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=S2M8XkqAhi+iWkWoTL90TmzL4/A8xKVC5Jg2LEMnbRY=;
-        b=RgNpwwn+jjtaFehGlaqsbyLBJkY8OOEu0AeEsXH1z2Jid3lEUYYfPSmFo8/73WQyrI
-         RZBiIex/xLjxCEsYd7DG9zKVZYZqmWniHNZXmt4hCTDKszj1IVF2fhjfpheHY1ZYNaqU
-         ajs588MY36yDe2s6RzDleRHroJL5+fnzCQ8boFgoXyUer0YZezqiNLy33Sq7de8E0Dte
-         4sU/XuZe62jJSOEwXG3tvBAAPDjM19L+ly+1tgB2UoE+sf1ERMKnkTfpriCWVsI3PWaM
-         gbqN2DaORCT0Cm4fp7zXx+3sXuD0AhpgLLoJp/12Ps4oqbJx0wnjbzaHA+V0tmIbu1bc
-         Jl+Q==
-X-Gm-Message-State: AOAM530+ACeSQOK6yNfYkDbYB5zguiS8lBxqJ31eVAfNzJvn7FlEwgSS
-        C9EAh7ueNPS54bxoWvvisJvkIvc0e2hl
-X-Google-Smtp-Source: ABdhPJzCO1eLw5HRPXSciU8TpEA85oY+Q/OEYFxaVHZYAT8UVJFWkc1JZq3Vk4kQoESuoB2WN5Drzg==
-X-Received: by 2002:a05:620a:45ab:b0:67a:ee5a:470e with SMTP id bp43-20020a05620a45ab00b0067aee5a470emr6546655qkb.418.1646662170654;
-        Mon, 07 Mar 2022 06:09:30 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p68-20020a378d47000000b006491d2d1450sm6295018qkd.10.2022.03.07.06.09.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 06:09:30 -0800 (PST)
-Message-ID: <934e76db-e85b-7d62-e98c-0d1a8450bdaf@github.com>
-Date:   Mon, 7 Mar 2022 09:09:29 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=9ULoK2m9wh5xLXBQezm8qQQGuNpWDNaUHY8UVClwCvg=;
+        b=O9r+oooDeIDorGeiJb6dC9hPpKWd/l1VK+yVlDm5T+UV6MOeK92F7Zzx51klPUjR3e
+         xqI2PLKBb0Mxa7kPNdv0bQcjpsFjASVdACb3csQMth4LhTFG+Tq2bNorPFiv2RZsrNHJ
+         HLJ0/H9a1pLh8jdjqAVfZ1vwzghK7Iu4JbiGq+NtMh0S3cFFtPxYTdjXGbxrHOQ217te
+         /sRj6LGMT4VGJPxMypYSYdKusMFGwhsOVn/ln2NE8/B2pV/4msrUZlWxxGOuzXS3Y9Wu
+         FT3HG88luZS6RPr0b6hnTtQhlfh+52lOclBY7vgv1mpN9HuAgGHlQLyu3GzOpMc4Mlm4
+         IPDA==
+X-Gm-Message-State: AOAM533hRyR8SLTTujAviuZSPpy/oVVb4+7EyZTo7BsYK7MHyTjpNY4u
+        ZEkyyj/COyrrngaF67ce54c=
+X-Google-Smtp-Source: ABdhPJx+BlTcQULkVKAJUbviNa7Uc6GXrL17D9GdxlBXANTMMykbs+im/PdJZhQxFaOAR+hCtbSnfg==
+X-Received: by 2002:a17:906:4e8a:b0:6da:a1df:98fe with SMTP id v10-20020a1709064e8a00b006daa1df98femr9278767eju.66.1646662217031;
+        Mon, 07 Mar 2022 06:10:17 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id q22-20020a170906771600b006cf8a37ebf5sm4734811ejm.103.2022.03.07.06.10.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Mar 2022 06:10:16 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nRE3z-001Wag-7c;
+        Mon, 07 Mar 2022 15:10:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/2] gettext API users: correct use of casts for Q_()
+Date:   Mon, 07 Mar 2022 14:54:51 +0100
+References: <cover-0.2-00000000000-20220307T113707Z-avarab@gmail.com>
+ <patch-1.2-83659fbc459-20220307T113707Z-avarab@gmail.com>
+ <a34c37c0-b6fd-9f4f-e990-9869f375937e@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <a34c37c0-b6fd-9f4f-e990-9869f375937e@github.com>
+Message-ID: <220307.86wnh5zwe0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 07/11] bundle: safely handle --objects option
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <1476a9495c53a165e6971afe75205889524fe7ca.1645638911.git.gitgitgadget@gmail.com>
- <83bfbce4-3c79-031a-5961-429145910409@jeffhostetler.com>
- <xmqqilstxr3o.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqilstxr3o.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/4/2022 5:58 PM, Junio C Hamano wrote:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
->> On 2/23/22 12:55 PM, Derrick Stolee via GitGitGadget wrote:
->>> From: Derrick Stolee <derrickstolee@github.com>
->>> Since 'git bundle' uses setup_revisions() to specify the object
->>> walk,
->>> some options do not make sense to include during the pack-objects child
->>> process. Further, these options are used for a call to
->>> traverse_commit_list() which would then require a callback which is
->>> currently NULL.
->>> By populating the callback we prevent a segfault in the case of
->>> adding
->>> the --objects flag. This is really a redundant statement because the
->>
->> Nit: I stumbled over "...because the bundles are constructing..."
->> Is there a better wording here??
-> 
-> "... because the command is constructing ..." should be sufficient,
-> I hope?
 
-That works for me. Thanks!
--Stolee
+On Mon, Mar 07 2022, Derrick Stolee wrote:
+
+> On 3/7/2022 6:38 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Change users of the inline gettext.h Q_() function to cast its
+>> argument to "unsigned long" instead of "int" or "unsigned int".
+>>=20
+>> The ngettext() function (which Q_() resolves to) takes an "unsigned
+>> long int", and so does our Q_() wrapper for it, see 0c9ea33b90f (i18n:
+>> add stub Q_() wrapper for ngettext, 2011-03-09).
+>>=20
+>> In a subsequent commit we'll be making more use of this pattern of:
+>>=20
+>>     func(Q_(..%"PRIuMAX..., (unsigned long)x), (uintmax_t)x);
+>>=20
+>> By making this change we ensure that this case isn't the odd one out
+>> in that post-image.
+>
+>
+>>  	if (!res)
+>> -		printf(Q_("updated %d path\n",
+>> -			  "updated %d paths\n", count), (int)count);
+>> +		printf(Q_("updated %"PRIuMAX" path\n",
+>> +			  "updated %"PRIuMAX" paths\n", (unsigned long)count),
+>> +		       (uintmax_t)count);
+>
+> Why are we adding more uses of "unsigned long" which is not consistent
+> in its size across 64-bit Linux and 64-bit Windows? Specifically, on
+> Windows "unsigned long" is _not_ uintmax_t. Shouldn't we be using
+> uintmax_t everywhere instead?
+
+Whatever we do with "unsigned long" v.s. "size_t" or "uintmax_t" here
+we'll need to call the ngettext() function, which takes "unsigned long".
+
+Since you're quoting the part of the commit message that's explaining
+that I'm not sure if you're meaning this as a suggestion that the
+explanation should be clearer/more explicit, or just missed that
+ngettext() isn't ours...
+
+I did wonder if we should just skip the casts here and instead do:
+=09
+	diff --git a/gettext.h b/gettext.h
+	index d209911ebb8..095bf6b0e5e 100644
+	--- a/gettext.h
+	+++ b/gettext.h
+	@@ -49,8 +49,10 @@ static inline FORMAT_PRESERVING(1) const char *_(const =
+char *msgid)
+	 }
+=09=20
+	 static inline FORMAT_PRESERVING(1) FORMAT_PRESERVING(2)
+	-const char *Q_(const char *msgid, const char *plu, unsigned long n)
+	+const char *Q_(const char *msgid, const char *plu, size_t n)
+	 {
+	+	if (n > ULONG_MAX)
+	+		n =3D ULONG_MAX;
+	 	return ngettext(msgid, plu, n);
+	 }
+
+Which I suppose would be more correct than a cast, but the edge case
+where we'd need that ULONG_MAX is so obscure that I don't think it's
+worth worrying about it.
+
+I think for this series it probably makes more sense to drop the casts
+for the "n" argument entirely, what do you think?
