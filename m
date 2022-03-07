@@ -2,124 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB46AC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4CA5C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 13:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238245AbiCGMvD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:51:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43406 "EHLO
+        id S242794AbiCGNR1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 08:17:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242626AbiCGMun (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:50:43 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1A24FC51
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:49:43 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id n15so8977497wra.6
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:49:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=G5se80LEa3tDQZzinpGCSpffAeIEgYnbhyqhZn3uUT4=;
-        b=jxBF8r380MCGGPdVw0eMa5OeeaXjYPnC85EO9ugycsRMWzAwZXT9+RB+e3tFQ9GzGO
-         fsdbiyZe+9VuaMAe3NMZ49Y0TwlpvvQMoEPytzefIPAsfvUtzjpsuWykpoLDQACvYy6q
-         +DuVwOWwBrFTetCWxxH1xexDPY3jNQW1eNpCfhS2ui3Zhe1VJKMeG9QKCQp36QPh5BP7
-         Kc1n6FNfgn4Zg6+wx2PztYe64jXOskH2kjql3iLcAglCSINh49Iicfdkz8ITrvvvSIdg
-         B4Nga5vTNjF5HQ2Z7Hh5Ev6bKuiPRTwFfKu0JhqfKINk3AFABo8lfPufgknhTuA9jI1P
-         gNfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=G5se80LEa3tDQZzinpGCSpffAeIEgYnbhyqhZn3uUT4=;
-        b=Sc0uG+cz+2DghKbmRUx/ud6ILbuTjagSBv70rWKWroY2mrQyqznMJjYwRMn6Tcyd+6
-         A9SIQJrCPqfnY3jGVaUf226miSmJCegYQOgBpNi6FdzCtsebPO26912RlFY0+uK0rlgF
-         /L89LRMEyc9+jEnDhQ8mS0tpRngw6OGdIUPoyEJnkSiBFc/VpEr3Yz5UzCtGMtHw52WA
-         NfnSfW3Jy6FOdsVg5Yn1G8F6E15lADDOzOPfxTlgPJkRbCfnSgEs3qXH21uCCxXJ1Fv+
-         WH+fdI30bvVI5mLthbyI1Uny0MZPBz9pktVpuB9fm6UvuxSxu++4jBlRyDAI0NWdpPcJ
-         WOig==
-X-Gm-Message-State: AOAM5316/zmx44eY/zOId/++e2tXQW4AALxm9/CIDETDezOsba9F6woR
-        WfXKREk5emVedgrnQ4VcteAg1uL3YfaIvw==
-X-Google-Smtp-Source: ABdhPJyHghOuht0muq4+THOBg8qkaLW2izvMYnjKbT+k3AsazD31gE/5aBd8OGiE5iipJzPEnkz7Aw==
-X-Received: by 2002:adf:e552:0:b0:1ef:58cc:fd3c with SMTP id z18-20020adfe552000000b001ef58ccfd3cmr8195384wrm.264.1646657381966;
-        Mon, 07 Mar 2022 04:49:41 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o3-20020a1c7503000000b0038100e2a1adsm12729091wmc.47.2022.03.07.04.49.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:49:41 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Shubham Mishra <shivam828787@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 15/15] rev-list simplify tests: don't ignore "git" exit code
-Date:   Mon,  7 Mar 2022 13:49:06 +0100
-Message-Id: <patch-v2-15.15-16889ed154f-20220307T124817Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1242.gfeba0eae32b
-In-Reply-To: <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
-References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com> <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
+        with ESMTP id S242684AbiCGNRZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 08:17:25 -0500
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2106.outbound.protection.outlook.com [40.107.21.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D9E8BF06
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 05:16:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=oG6vXN9ZH7/8V23220nennRb0SW3FlYlS8LxTjyB0Fug2aDHoaCuShBvDauOk4bGdXdrdJgUhRPYJeVFUV5VB8BwYByMnEkLbnZfSbgkwQa7tuxePCo3HaDsSPgokXq+/AqEbosvDKeuq0A8Ejris0u/PFjuAY+iMJAq+GJAWuK9muUSrccQ5D9cXCYIyIBgnqE5wDhNSIjiGG+2LtM+VyynsflVdvadF6X3Z2bn2H4olqtdeVFpkaUt1BMoXiVDSgSYBd/ChVBbm40H+B1YfATIgwlLtf6MRdwvRSpPpc5nXdCdSFwQR6JRUuE1P0dlc8mLY/2t228CM0VSJjTRtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uhwOQwDUfvzPNfQckdGRMJteTOyMnxPXeXz7vRu5l1k=;
+ b=gRk1idVDP9XJTd3W0ub6sXW04l/a6NS0LKI6xqXjxenZuaZ6GCqHdlWnO9caFGynKp6h9oVP8dtGaGdrIAO7iYouMjtj9hbYCNVaAClxcbIMwdVYvGuTiYDZajUbOmiXYwQu74+jYOuu90fYQoj5cIeBQqf+2535YNvjWQL8Oce/7TsH4p/zKKOOE51ElRCWwcd8Jy7v0DPZ6C3Oz6a85mzbtXnVRrbnTJ0PRCxCJMtgrDTiGTuC2TtXCQ2Yby/eTb+no8N4kNJqdKCAAjxS1EKkzqQMdrSXfM/2P3gJMkk/7VlfPPsXDycvLFnzaHgnoPGxBXKG/pAooENcn5emOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=iga-tunisie.com; dmarc=pass action=none
+ header.from=iga-tunisie.com; dkim=pass header.d=iga-tunisie.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=igatn.onmicrosoft.com;
+ s=selector2-igatn-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uhwOQwDUfvzPNfQckdGRMJteTOyMnxPXeXz7vRu5l1k=;
+ b=NpMrQJBJ7ChNSpCDYAFRTH+UWIXrizUPpPCBJoAkvn6JuLta7/tcQIN+5RCgrAqlcyuVqwleHEAj4uP+hWj5OrLhHnU4JO6EATSQUnXOj6Vtt8SWch5dtf0yTt44uNkYCPcWy3Sne9nwQQSw06Vv4zdACw5oILQiuQrQrRnM/Rg=
+Received: from DBAP191MB1308.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:1ce::20)
+ by DB6P191MB0118.EURP191.PROD.OUTLOOK.COM (2603:10a6:4:8c::20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5038.14; Mon, 7 Mar 2022 13:16:28 +0000
+Received: from DBAP191MB1308.EURP191.PROD.OUTLOOK.COM
+ ([fe80::b052:28f2:f8ec:28a1]) by DBAP191MB1308.EURP191.PROD.OUTLOOK.COM
+ ([fe80::b052:28f2:f8ec:28a1%4]) with mapi id 15.20.5038.026; Mon, 7 Mar 2022
+ 13:16:28 +0000
+From:   Firas REGAYEG <fregayeg@iga-tunisie.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Imed ZARROUK <izarrouk@iga-tunisie.com>
+Subject: Git - Git flow assistance
+Thread-Topic: Git - Git flow assistance
+Thread-Index: AdgyJVr/oEi/bo+8SdeFBpF1P4kRsg==
+Date:   Mon, 7 Mar 2022 13:16:28 +0000
+Message-ID: <DBAP191MB1308984738C90410C8B4C61782089@DBAP191MB1308.EURP191.PROD.OUTLOOK.COM>
+Accept-Language: fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=iga-tunisie.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2893a7c9-52b2-476c-d69f-08da003cb047
+x-ms-traffictypediagnostic: DB6P191MB0118:EE_
+x-microsoft-antispam-prvs: <DB6P191MB011837921E81197CB1903A3782089@DB6P191MB0118.EURP191.PROD.OUTLOOK.COM>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: /KgSSt8jJB5c8RsTEx7KVnOtJLx1HMIArYmal6ZwZC6K3KaZQhyB75qkJpKVdE1o5eNNymfe6yMyVMd4uG6q1puuofHMvmUSPW0QrR3fUH5v2j3S5u+UqlmfTErbLvNS3SNHdTVMkJTzy9XZ7HNxcdSUgcfsdLZLU84M4UjkN3j25bdPsq5brx77+tnppXoqDJOgUg1v9vN5jCsclxhWbYj9vBa7w7EB6vgQajD7wTFs4Lyjm/GUoKzuTfZE276x9BwZ6Fmu6slb7kgN71BIPx5y6w6nHnX9tjBrvQ8ytUl5x5wYGazJ+FKDgj6uxe3VodQQMUIJd/zJjxSEH38w3TGLLocWcNxJcVLLLUpPlhrMbhyxnnYqxMWqOqVT/oLvDF5AYcOAOLcTQsnh0BdnfAwqtV+IOPfM0e8QSTt8IgQswxh1IV8NjUPiGuALwetXuXj1HncisCA69dLxmv2+fO1mK70EkjOy+m5ivsypxH+A2bIRh/qKethKlVmOaYbmHLpUK5ZHnPsH2WIYSKh9f4ZQ1hcqNO7Vuvqib+iVjQA6Fg96f3a8GdZN0s/OLr5upzUFOr5hXXBjMAvojakS36rh/ajuvPUzDBGZsV2SnQsY4PyEjEJvKfEVVUzndUlUp18nVXyCDvcs+TyMwChlYbhsLoKrD0uGvzczxGsIQiIRZp6BpZMOxBxKDhQHy2JwnnTEi1VBk0EaO/UgCmhgdQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBAP191MB1308.EURP191.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(39830400003)(136003)(376002)(396003)(366004)(346002)(2906002)(8936002)(52536014)(316002)(4744005)(508600001)(9686003)(71200400001)(6916009)(6506007)(7696005)(33656002)(5660300002)(55016003)(38070700005)(86362001)(38100700002)(122000001)(26005)(186003)(66446008)(66476007)(66556008)(4326008)(8676002)(64756008)(76116006)(66946007)(107886003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ozkfroL0/HluqV8vpk+lrsk6OJL9Kc90Sh89QxVkUFBSZlOSdppqpaZXLX?=
+ =?iso-8859-1?Q?vL3761hZt4t9nfbwh7C87KPxGINVikFHQsK1zBSZu0XBQ0U/ChhY/vSw/t?=
+ =?iso-8859-1?Q?2DE7WKAjW49UPuDwSixC5TLSG5mN5Ar7nuFAD2M+kccpyJ6cKV186tAm0e?=
+ =?iso-8859-1?Q?d5uOHp0bFJ+pLFKgr4vmJe8lpPeV540NXx0eCBSOGWwQxS3QCH8o+JRfd6?=
+ =?iso-8859-1?Q?IWkCCNlkQowGrn0DG7HKyW8I/MTzbsJQdSuXGlVWwv94CKeR2FYtaim9Hs?=
+ =?iso-8859-1?Q?T5ylQiu7O7UYVFNNu/Xa8VBQ9Duw2xv3KwwM++F9johbD/Ae0h7gdO3CIx?=
+ =?iso-8859-1?Q?N4aKUE+/vZLOhUXu5Cx1/K6d2snsyTQquvps7OeWjIJQOf8cptC47EuNCR?=
+ =?iso-8859-1?Q?FfWZsdWURMfCuA6o07PenLNLIKw9oHtDoAezJ6NK0HfzKTovTaxYniyBXM?=
+ =?iso-8859-1?Q?y/6y+iXoLzNnM5mRf0KikfTPDV/ggwTZvfyq4RO/fjkHytZrOK3OGGpCkm?=
+ =?iso-8859-1?Q?yvewGm81zXga6iUyuSZdzKtEwlzqlKSqJQWeXzT6Bp6L4EMGzAtm63ywR8?=
+ =?iso-8859-1?Q?3Sq2i3OKT2kp8+O/JScr+SviovIbeypoDnken8aAMnFAYCqr1Uwh0mOs0y?=
+ =?iso-8859-1?Q?750+89y/KbHtsQjry77IN10UQhbaKSs7FsIghcWW12D/s8AB66WyBR8bFu?=
+ =?iso-8859-1?Q?MMrv8vy/LYZ1UnIkuyxYWyf0MDgrKDnFUBx21mZJPkYt+Pe2KWoRZGnUhn?=
+ =?iso-8859-1?Q?nFa5CHFA3ei4Oc0w1zYgSWl2tbwtl2fdNpUyA90tLUbsKuUazn/dyzBVBf?=
+ =?iso-8859-1?Q?yosEU94ywgIR1YdWLxlE8bT0EqVKNE3npNRfCmn/+MFcT94ofFMbKyBhLY?=
+ =?iso-8859-1?Q?lIShJPtKmsH8lkX3RDeHv1nntYcx+TGs3uNtzmHQl+UkBk5rKcH9u9TAKL?=
+ =?iso-8859-1?Q?uyyZ+EAyZcYUOKb1nc5HFayMrA1V8IaxDWsc/P76HrkHKmexrbUHbdZbiv?=
+ =?iso-8859-1?Q?4hstGpj4CsIRxjV2esvzH3KxxaakylbYPldoGvsguSO5iFzFYo45NOjD/B?=
+ =?iso-8859-1?Q?MF7g3mb5U76H/qGqsOTwGKqcfQ90b+U3BKOsMi3pKf9SK4cOKu/isGkgxk?=
+ =?iso-8859-1?Q?d7A8Un3A4S1z7bq5R/L9MtZhP/c2FXE3mEdrJHE3Ibmw3IzeXcfSFCVPBZ?=
+ =?iso-8859-1?Q?55EEdBL84mRouB3j3d1+U2XF+HqSB/drfNc1gIBXcSSFcdUKea/tuDfP5a?=
+ =?iso-8859-1?Q?zNNj9TeNp3ezFRSz+0kdIkPVNOlKhOUM3wXtj+pIGqopWcKpkteMTfmNeQ?=
+ =?iso-8859-1?Q?lLZIzr+bFG6T0qHgPLn5L1RfW/OLVdCpRGGgpA95FEWcbe4L5DeUop5KPQ?=
+ =?iso-8859-1?Q?E0uoTi7z6GQQld7B840eyHhrDfHWrVUI78LGVGhjpQJSP/oNRqDZlYnOf9?=
+ =?iso-8859-1?Q?CXgQdvBmflRqivucPWOOIro+BUFCRyHr5DZyM6L6khzwfLxLoL5kHQ17KU?=
+ =?iso-8859-1?Q?2CnuuSF9jYqdLf530OELfb/wOrf/ooCULWqUME+Yo7hfYrCHbMDdUrD0Bg?=
+ =?iso-8859-1?Q?N7pbdvM5ZnL3uQCYh5177WzZLYQA7bhSSRC4cswP4YALD2J1TzGX7RK0Rq?=
+ =?iso-8859-1?Q?O/QrHMYzTUB+p4BWaKOfbTgK7X/1lwn7UBEUsmt4n5I6lE3egPo7KJvAgZ?=
+ =?iso-8859-1?Q?wpk/wtC38T2GlfWAl2I3m+E4o1kD5OTXe11oNEkJisQHcgENMziJ6ExYEg?=
+ =?iso-8859-1?Q?enmA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: iga-tunisie.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DBAP191MB1308.EURP191.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2893a7c9-52b2-476c-d69f-08da003cb047
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Mar 2022 13:16:28.1413
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bd4beb1-7091-4af5-97b4-848d72f15054
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1hZEw/w1oYYzrxD8Y2eWRKHGyrsrhormshWyEl3HUvC8fof56HAn9uuM7LSBt8b4aI+7Qd3AqRgO7sfRyW00RJcasamiL/85+mgT0cMnfpM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6P191MB0118
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a fragile test pattern introduced in 65347030590 (Topo-sort
-before --simplify-merges, 2008-08-03) to check the exit code of both
-"git name-rev" and "git log".
+Hello Git=A0!
 
-This test as a whole would fail under SANITIZE=leak, but we'd pass
-several "failing" tests due to hiding these exit codes before we'd
-spot git dying with abort(). Now we'll instead spot all of the
-failures.
+I'm Git fan, I'm using it currently in my job. Git is awesome, I really lik=
+e it.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t6012-rev-list-simplify.sh | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+I have an issue with git flow command and need some help please
+My problem is: In my team we create branch names with a pattern:=20
 
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index 63fcccec32e..de1e87f1621 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -12,7 +12,9 @@ note () {
- }
- 
- unnote () {
--	git name-rev --tags --annotate-stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
-+	test_when_finished "rm -f tmp" &&
-+	git name-rev --tags --annotate-stdin >tmp &&
-+	sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g" <tmp
- }
- 
- #
-@@ -111,8 +113,8 @@ check_outcome () {
- 	shift &&
- 	param="$*" &&
- 	test_expect_$outcome "log $param" '
--		git log --pretty="$FMT" --parents $param |
--		unnote >actual &&
-+		git log --pretty="$FMT" --parents $param >out &&
-+		unnote >actual <out &&
- 		sed -e "s/^.*	\([^ ]*\) .*/\1/" >check <actual &&
- 		test_cmp expect check
- 	'
-@@ -151,8 +153,8 @@ check_result 'L K I H G B' --exclude-first-parent-only --first-parent L ^F
- check_result 'E C B A' --full-history E -- lost
- test_expect_success 'full history simplification without parent' '
- 	printf "%s\n" E C B A >expect &&
--	git log --pretty="$FMT" --full-history E -- lost |
--	unnote >actual &&
-+	git log --pretty="$FMT" --full-history E -- lost >out &&
-+	unnote >actual <out &&
- 	sed -e "s/^.*	\([^ ]*\) .*/\1/" >check <actual &&
- 	test_cmp expect check
- '
--- 
-2.35.1.1242.gfeba0eae32b
+developer_identity/feature_or_bug /task_number-brief-description
+
+Now when I'm using the command it asks me to enter feature branches prefix =
+with a suggestion "feature/", is there a way to use variables in the name o=
+f branch?=20
+
+for example, a prefix like this one:
+
+developer_unique_id/
+
+=3D> We need to make a global variable as prefix in the branch name.=20
+
+If this isn't possible, is there another way to do something similar?=20
+
+Thanks in advance.
+
+Kind regards.
 
