@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42DF0C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 995BDC433FE
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241762AbiCGMoq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:44:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52900 "EHLO
+        id S241913AbiCGMos (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 07:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234737AbiCGMoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:44:44 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39288344CE
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:43:50 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id n15so8950123wra.6
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:43:50 -0800 (PST)
+        with ESMTP id S240154AbiCGMop (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 07:44:45 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F1C34B8D
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:43:51 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id q14so7506809wrc.4
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YdVU8jYQxYaz/fFx8Jtd+W3UfzrvK7ikWzseBQJyAh4=;
-        b=MalenUqjhYsbnJYycpA021+qjnhVNCQ+hUCTVYpf87c6oXiKCDVh68jUNM1E54FSjq
-         bBLAdy1bDCwRWVOpBf8P1ubgWISY9F6xYsSHQ0RrB1BHbOh+BUv43mYgYZVQ2bzuHmfP
-         mEoKEJHLzIkzkt4nsjk3QiVla6lwXcMCeZVeM9rBTE2vxfAeAU+4avguZ59VR5Jsv8nD
-         O8EQG/VfzSYpdyrle4SVrj7SYv3SLATJI8i0BABmLJxXuPRQZZlgwCdxkAEDXLrxzrIg
-         RsZk+P2TDK1Hig1HZOAsM0ulcAJFypIbg3UNoQFAFz/OOG153w6tYS4zby+GuOPLdVeh
-         nr6w==
+        bh=FZ3Ubdx0zSuxRjyTPyuMkoglAn+2rOMwTrCh3gMoGuY=;
+        b=LLm6IoyKYkkA0HmsOLE2FlgIZAqGP4YR+zxIeRz3AJjnv49f71THbA2RFVvN3xLasp
+         bzdCs3h8ltHcaLnR+La77sTiSGzUPDrm1Y6wLjIFnKkT3o+7TP2JH0H99DHRSZbr1BHJ
+         VGUIiN5SlKVKZjOCJ1R7SoWiRvvtBO+5ZJ6Zfke53MTU4ioR//XBbFgQ2s/7r92epQZx
+         fs++wxqMPqRKxCkNBdruOjkRdRx4zzSEaoYp6oXGi+YxMPyE9y/BleVDu4nC0FaztmFL
+         yCF5znKuEjOrj1PBL4atkYCpb28ddD3IFW5wbs905GixZUcExXb9Nem5ObOkwVFJUaZo
+         H+jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YdVU8jYQxYaz/fFx8Jtd+W3UfzrvK7ikWzseBQJyAh4=;
-        b=ouf6+8L+wnGuItv5nBPfp61tlZmOQkGGzUtJzyapjpE4swdCL0G4iE57cCzQShTcDI
-         ZL+bVmuVNhzb+t4GUJFxT3UDi2WXTbugkP2UPYWM1G00RMhz9f1Q9tZ+ZfQehEWaANhI
-         /ke0IWW4b+wGus852iD4i6TF2t2iIWhsF/0X2hraoCf3S3btnym9W6lt2YqhBxXbspmR
-         Dfd0QRYjrkOo5pzyANBlUFYTe2aPNJ6uRU3C/0QQUZ9Q3TmEzz7EePbOp2x0kM/G+zdH
-         0TalWlfgUhmQ3uXwhBNmiY7za5LJhEXT0HsW/WMana9kVP5h6zpzd2ulw72SR2W3URcg
-         /AJA==
-X-Gm-Message-State: AOAM531DF3BxbO5HECut5UAf3vVif8UtckQeJJUckH1lYPEVvnTIKKPe
-        OlPR39llps7TEEXQrvKq4tjznns3AIo+AA==
-X-Google-Smtp-Source: ABdhPJwPOCaD63Vdgub/Fpu9fd+ZTWuTUiYphxRLGkK6o6/fpO8UOWCWK27HlFRauPSalH9aa3CEPQ==
-X-Received: by 2002:a5d:64e9:0:b0:1f1:e729:1f3a with SMTP id g9-20020a5d64e9000000b001f1e7291f3amr5106413wri.387.1646657028522;
-        Mon, 07 Mar 2022 04:43:48 -0800 (PST)
+        bh=FZ3Ubdx0zSuxRjyTPyuMkoglAn+2rOMwTrCh3gMoGuY=;
+        b=4/z83Q1wbxXNypFGrSfEi8wt9tSEYN/511JpgdsH61YbCQnA2kikcByFOA1SGKojZZ
+         S1ct6nr4nniK3oeVolGx4gae3ftWE12O8tCtmW7T/h4qsKGKxmRW0lvuK4brtfLQcZ/V
+         Dq/NODi0dHhTnIBjFcFNwJHitbkMLmNCWlBJex/fjeNR4iFAWCuP4NRsCfcJgy41zMS3
+         +dIj4HupD+9xD0pUuADpE38cwYkVgZPSgusLDKZi27nk5lQ1i8NAp7uh5hI6sjnxEwE1
+         nhqP7CDOVpuWcD2YV7+iNtmAUuOzgclYhbsv2YeKyNNh7/DbqU0hstFICzKxXLUon4IF
+         hfkA==
+X-Gm-Message-State: AOAM531f3a+y88oFQdkqwvk5w9OaS0+a/1/RFgRz/ylEwTX6d2RZVl6a
+        zWBPdutwtjIJ+AcB6DgHxrcHoPxKWWyM/g==
+X-Google-Smtp-Source: ABdhPJx7aLgxyqmfoPNsD60BuwQVUeDgA+CeHFF2YGstNsQeuRBdUWJ0s2a2N/kKcV4Nqq5ezGIVzA==
+X-Received: by 2002:adf:f70a:0:b0:1ee:33bf:3864 with SMTP id r10-20020adff70a000000b001ee33bf3864mr7904495wrp.4.1646657029576;
+        Mon, 07 Mar 2022 04:43:49 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n5-20020a5d5985000000b001f0122f63e1sm5974671wri.85.2022.03.07.04.43.47
+        by smtp.gmail.com with ESMTPSA id n5-20020a5d5985000000b001f0122f63e1sm5974671wri.85.2022.03.07.04.43.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:43:47 -0800 (PST)
+        Mon, 07 Mar 2022 04:43:48 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 01/10] hook tests: turn exit code assertions into a loop
-Date:   Mon,  7 Mar 2022 13:43:32 +0100
-Message-Id: <patch-v2-01.10-706460d10b9-20220307T123909Z-avarab@gmail.com>
+Subject: [PATCH v2 02/10] t5540: don't rely on "hook/post-update.sample"
+Date:   Mon,  7 Mar 2022 13:43:33 +0100
+Message-Id: <patch-v2-02.10-4bee939a894-20220307T123909Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1242.gfeba0eae32b
 In-Reply-To: <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com>
@@ -68,61 +68,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend a test added in 96e7225b310 (hook: add 'run' subcommand,
-2021-12-22) to use a for-loop instead of a copy/pasting the same test
-for the four exit codes we test.
+Change code added in a87679339c0 (test: rename http fetch and push
+test files, 2014-02-06) to stop relying on the "exec git
+update-server-info" in "templates/hooks--post-update.sample", let's
+instead inline the expected hook in the test itself.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1800-hook.sh | 35 ++++++++++-------------------------
- 1 file changed, 10 insertions(+), 25 deletions(-)
+ t/t5540-http-push-webdav.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 29718aa9913..ff64597e959 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -53,31 +53,16 @@ test_expect_success 'git hook run: stdout and stderr both write to our stderr' '
- 	test_must_be_empty stdout.actual
- '
- 
--test_expect_success 'git hook run: exit codes are passed along' '
--	write_script .git/hooks/test-hook <<-EOF &&
--	exit 1
--	EOF
--
--	test_expect_code 1 git hook run test-hook &&
--
--	write_script .git/hooks/test-hook <<-EOF &&
--	exit 2
--	EOF
--
--	test_expect_code 2 git hook run test-hook &&
--
--	write_script .git/hooks/test-hook <<-EOF &&
--	exit 128
--	EOF
--
--	test_expect_code 128 git hook run test-hook &&
--
--	write_script .git/hooks/test-hook <<-EOF &&
--	exit 129
--	EOF
--
--	test_expect_code 129 git hook run test-hook
--'
-+for code in 1 2 128 129
-+do
-+	test_expect_success "git hook run: exit code $code is passed along" '
-+		write_script .git/hooks/test-hook <<-EOF &&
-+		exit $code
-+		EOF
-+
-+		test_expect_code $code git hook run test-hook
-+	'
-+done
- 
- test_expect_success 'git hook run arg u ments without -- is not allowed' '
- 	test_expect_code 129 git hook run test-hook arg u ments
+diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
+index b0dbacf0b9b..380e97c1762 100755
+--- a/t/t5540-http-push-webdav.sh
++++ b/t/t5540-http-push-webdav.sh
+@@ -42,7 +42,9 @@ test_expect_success 'setup remote repository' '
+ 	git clone --bare test_repo test_repo.git &&
+ 	cd test_repo.git &&
+ 	git --bare update-server-info &&
+-	mv hooks/post-update.sample hooks/post-update &&
++	write_script hooks/post-update <<-\EOF &&
++	exec git update-server-info
++	EOF
+ 	ORIG_HEAD=$(git rev-parse --verify HEAD) &&
+ 	cd - &&
+ 	mv test_repo.git "$HTTPD_DOCUMENT_ROOT_PATH"
 -- 
 2.35.1.1242.gfeba0eae32b
 
