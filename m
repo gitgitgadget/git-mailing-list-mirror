@@ -2,77 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E1FC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 20:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1EF8C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 20:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237651AbiCGUZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 15:25:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35360 "EHLO
+        id S240400AbiCGU1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 15:27:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239693AbiCGUZX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 15:25:23 -0500
-X-Greylist: delayed 182 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Mar 2022 12:24:28 PST
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267446E7BA
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 12:24:27 -0800 (PST)
-Received: from [10.0.2.15] ([147.147.167.40])
-        by smtp with ESMTPA
-        id RJr1nQpRgYWUuRJr2nOnAA; Mon, 07 Mar 2022 20:21:23 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1646684483; bh=eB6MBjyCk1M7UXlkRQiWk+YioCN7uRkQkLsrspsi5Uc=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=O2mBXEFNruVuTbFhO/FMCsuywaYpe0CXajiJG5XiB07eU6maPPtCMSAS31LmuDXBY
-         EDt447xT6cz2xcmSxT76Ksrzk/fkGMeBsQ2LZX6EAqqdjlQL8FVkdRyAhRNvAuSv1k
-         B9wz3TM1pD7AZkI9e90fuYTZeZ8nNTjqL4B1nRTEPKjvO07gcw571GsR7EPExnlPvG
-         pPe3z9sSATxqCcOuL5G5dhV755mcMNq5llmrondAmRXy06SpPoSl9NRHIXPD6qRmh1
-         NFiS5vf1xfyAEIhEy04aJco9anHyoDB7jdyG0fzSXnfHgwRsjCSS9ETlupb+jT/uIF
-         non55I/oz/gLQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=XfLqcK15 c=1 sm=1 tr=0 ts=62266943
- a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
- a=IkcTkHD0fZMA:10 a=c4Lp0R_3zJ6SiOuYX2UA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <e16ee84f-4fa5-6cc8-c96d-3b728e3c8b2a@ramsayjones.plus.com>
-Date:   Mon, 7 Mar 2022 20:21:14 +0000
+        with ESMTP id S234979AbiCGU1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 15:27:30 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17DDB77AAF
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 12:26:36 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id o64so3079799oib.7
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 12:26:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=pwGVFiYJTpnxWS65Ut6QYWMcUnnZPMvXR0a/04wJ5jk=;
+        b=A2O6rvmrNTW3G1LyfcdKcXdScYsGyPz77WzmONo0PC4rk5/SoGUooirs7dADJW4gFe
+         IThkjMhdSZvnXgMZLeVX9tSJXgOvl7ACIMix2JQkIvtUqpwu2Z/g+Qd+nL6jLd8qm2Kq
+         G6PsHgsL+Zbadcq+TuvkXFTWVpKccgI1Eg2eKp+O54FvLLCd4kI1MS9Bbt+InMlB+Gco
+         oidtxbf1dLfGhuSaOHwShFzdK6I3oPHGlGpK0rZPer/WNbQ7uGFN+XyeWFwrrAbC9FnM
+         AwZHukBDFKgGqiFZY2t/2IwyMe0TfnkIRa8aFgEwqmID4TgQLNg/vXR78cyykMCeyKRy
+         e7tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=pwGVFiYJTpnxWS65Ut6QYWMcUnnZPMvXR0a/04wJ5jk=;
+        b=tkYpM9zVQZQLD80kex2yLWyhl+w9ST1EoB48ikZUuucgqLzcldmccL8WmpfQKCncK7
+         az3O9PrqnygWjP++An/QgGk2VXIBeVLrfS+TBZwvj6htUcdTB77k5WU5YDFYxvVxnhHN
+         DmXGa1GFd/bU9z/dmRKqZjgb0ie5Y8QszwRMMnEqWREJyxvG2EY29WCXRLODiuAlfe0o
+         g18bDh8XgtDDCCPGooVaMg4wg36M73zj/R1XT3ZX/rc/77PM2eo9eiEFJNOmEncgeajt
+         FcEqEWLfoq4BG392NyRA2/4tSz7VN82j/Ai66mAN/fUwbl2jpRurjvi9HlSkd/ceu4h2
+         1NIg==
+X-Gm-Message-State: AOAM5320yFMqXBMkuB7vbMHQuZ3NR9hNWuTAyN0RwQY1pRpdu8NRIMUF
+        0U698q8ocViTJnGvVXW8zA+a0bEXhv+t
+X-Google-Smtp-Source: ABdhPJxkhpN1J5Zv0RY02HOL+EAy68SfAhyVPdd5ON7OqXs1pvhd4nBSv4nmDyKXFSO8M8ofZz4Chw==
+X-Received: by 2002:a05:6808:114d:b0:2d9:a03e:94a2 with SMTP id u13-20020a056808114d00b002d9a03e94a2mr497940oiu.12.1646684795405;
+        Mon, 07 Mar 2022 12:26:35 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id az10-20020a056808164a00b002d9c98e551bsm2210902oib.36.2022.03.07.12.26.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Mar 2022 12:26:34 -0800 (PST)
+Message-ID: <39f08f98-be0f-bba7-c41a-1c9eb6182a67@github.com>
+Date:   Mon, 7 Mar 2022 15:26:32 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/4] terminal: use flags for save_term()
-Content-Language: en-GB
-To:     phillip.wood@dunelm.org.uk, Git Mailing List <git@vger.kernel.org>
-Cc:     carenas@gmail.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220304131126.8293-2-phillip.wood123@gmail.com>
- <95cbca4c-ec26-853e-243f-461a365d9f71@ramsayjones.plus.com>
- <a2d91895-d933-9909-2f1b-5addd38974f3@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <a2d91895-d933-9909-2f1b-5addd38974f3@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] name-rev: use generation numbers if available
+Content-Language: en-US
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     "Keller, Jacob E" <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <20220228215025.325904-1-jacob.e.keller@intel.com>
+ <20220228215025.325904-3-jacob.e.keller@intel.com>
+ <xmqqpmn6wg98.fsf@gitster.g>
+ <CA+P7+xoECs-rXb4vpRrw40Q-oRvfu97kMig9zu0rEE6KagAyiw@mail.gmail.com>
+ <xmqqfso2t9cu.fsf@gitster.g>
+ <6b00c67b-01c9-bf22-a8e6-904f47fa7acf@github.com>
+ <f5ca62f4-eb3d-eeb7-e7c8-7fb800f3d6cd@intel.com>
+ <3c3e6063-7eb4-7ff4-3a1b-a07db1fe969f@github.com>
+ <xmqqfso1pgmv.fsf@gitster.g>
+ <CO1PR11MB5089DC997DB42023324F1BF0D6029@CO1PR11MB5089.namprd11.prod.outlook.com>
+ <xmqqilsvet82.fsf@gitster.g>
+ <CA+P7+xo=UwUQ422o36_8XGNWoYjROGi5wBT4=jy4ThJBs_z=Xw@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CA+P7+xo=UwUQ422o36_8XGNWoYjROGi5wBT4=jy4ThJBs_z=Xw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNJyvR9WKgz2MOtf3Y7oL+nc6W3tCsyq3Cl0aFZfajUPfKM9+RhRNwKYl2kYg1zLtRX4gebHVcLvxa9QREEBG4MXT8oz4LhyHunlIqDDQlFoFLuyUWSR
- Dcm7bwlz9TgdT7maCJk0RbbOQCxejQ+s0GvoXDAXq7DqP0LxW+baF5smDFLQQRD0J4jD05SX3chTsSx5r7sB8FWiVQ0mzkQhfvo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On 07/03/2022 11:11, Phillip Wood wrote:
-> Hi Ramsay
-[snip]
->> .. but here, you pass the flags as the second parameter. ;-)
+On 3/7/2022 3:22 PM, Jacob Keller wrote:
+> On Wed, Mar 2, 2022 at 5:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+>>
+>>> Let's clarify. There are two versions of the test in this version:
+>>>
+>>> 1) test which enables commit graph and tests that it does the right behavior.
+>>>
+>>> 2) test which removes commit graph and tests that it behaves the old way.
+>>>
+>>>
+>>> test (1) checks the flow with the commit graph enabled, and verifies that with a commit graph the new behavior is used. This test will fail if you revert the name-rev commit-graph support.
+>>>
+>>> test (2) always performs the way we don't like. (since we disable the commit graph and the new flow doesn't kick in) This is the test I think I will eliminate in the next revision.
+>>>
+>>>
+>>> I will remove the 2nd test, since the first test covers the change
+>>> in behavior just fine, and I think I agree we don't need to set
+>>> in-stone the implementation without commit graph.
+>>>
+>>> I will also look at adding a test which performs a count of which
+>>> revisions get inspected and makes sure that we actually are doing
+>>> the optimization.
+>>
+>> Sounds like a sensible thing to do.
+>>
+>> In any case, in the current patch, #2 is not working in
+>> linux-TEST-vars job at CI.  You can visit this URL
+>>
+>> https://github.com/git/git/runs/5400048732?check_suite_focus=true#step:4:68062
+>>
+>> while logged into your GitHub account for details.
 > 
-> Oh dear that's embarrassing, thanks for your careful review.
+> Looks like this job sets all the TEST variables including
+> GIT_TEST_COMMIT_GRAPH=1? The negative test passes because the commit
+> graph is enforced on and we then succeed even though we were trying to
+> test the negative case.
 > 
-> Are patches 3 & 4 OK for non-stop platforms?
+> I'm going to remove that test in v3 anyways, so I don't think it is a
+> big deal. However, I wonder is there some way to mark a test as
+> explicitely "don't run if GIT_TEST_COMMIT_GRAPH is set"?
 
-Err... I didn't notice any problems with patches 3 & 4, but, as
-far as the non-stop platform is concerned, I wouldn't have a clue! ;-)
+Typically, we try to keep them compatible in both cases. However,
+you can set GIT_TEST_COMMIT_GRAPH=0 for the test, if you want. Be
+careful to only change it locally to the single test, not "globally"
+to the full test script.
 
-(Perhaps you were thinking of Randall?)
-
-ATB,
-Ramsay Jones
-
-
+Thanks,
+-Stolee
