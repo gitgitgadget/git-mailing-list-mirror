@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2557FC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 13:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA48DC433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 13:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237584AbiCGNmz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 08:42:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33752 "EHLO
+        id S242920AbiCGNoh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 08:44:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235932AbiCGNmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 08:42:45 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E8685BE3
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 05:41:51 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id o22so3565318qta.8
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 05:41:51 -0800 (PST)
+        with ESMTP id S242951AbiCGNof (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 08:44:35 -0500
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E41403D6
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 05:43:34 -0800 (PST)
+Received: by mail-oo1-xc2b.google.com with SMTP id 6-20020a4a0906000000b0031d7eb98d31so17708197ooa.10
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 05:43:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=mODeORzTpligVGBiM6YdSlxju+JFsaCgnBfgnt4adHY=;
-        b=by1JZ4a5CxTavKDf/hCgZhQZNiPzb0hGCS6ln1Z46RepolKd/lInzkWmDYRlJPoAep
-         hzjzBc5YEYCZw1sXls9dzBsyFdhn9AE4f4TSts65nfFQSpR8deAEhPzpQeN6nEcpV9ey
-         IEghJE9f/GwZjiR8GVV+6LdTVsw/b0EcnbSa9GpZOmcuYuwIHzxw+TSVnCq7FtB5h/LZ
-         e7sOmQFb5/+y2CHZ5MMChOHC2QL1tgyTnam6lNfZCvhUzXtHaW48btgQQs8E9Ah1/4z9
-         y0Hvhydaoczm0NpGQSNCmO9rz9RVItlCHNn0eWHbGDyuTQjlVFts0Ym4mWFcFWzfHMhj
-         Gg9Q==
+        bh=TyuYOaeifkUuq1Ph58h890l0dtQjgxReb+uxsAjd2Kg=;
+        b=F2/bJP3qKdvm0hRcGobAvarWj0Hnk15Ey0Mh1S4Eqe9HKjj317mKYrBRq2V1d2NaPe
+         lCesjhAcw/uwTwfGv1r5UWM7DzpdwmH0RiPTiVE5L0s4k7irhPSz0QD6VW3DzLN154zR
+         /+LZ7fQC8tBSJ2rHl7Zjd7Rrjb5fbps/++dMqxvASS/U+qQVBji7nTRZRKB+hMw9i/Ag
+         /q5EimRimekLDR7cH3WVfbf2s3oLhfTr+RHSyu5sNAGe85j67TiBi+kI/0sVbR4A25Lv
+         0RFYfzHU+cDp6s05j1EmqvFN1K7V+LFN3SRGEgGiEEAQI7Z4Aiev/5IWUNNADY7s1P/+
+         2fvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=mODeORzTpligVGBiM6YdSlxju+JFsaCgnBfgnt4adHY=;
-        b=f/1dcOUdTOZY199l72Zzhh3l7Qvjfi/J0zZA/7msHrrx4xLcudet4bjqQGSiJdDB73
-         ODmpncbByR6utgoAuAyNW4VjNKdZtyGoyNboATez2Lcy5haVkYSg9eLaB/uF6Q0ahEv1
-         BunUXwmqHflyAGbce5CtNgAd/Y6+VgWkdqX7/M7edXDQSHMQfxH4ntBXBBOXlIX6HR72
-         Gm0jXKbtucBZp0/zAi04bPOBfhNU8mpm1CFLDNnk36fPBoWfC8vgHmaCqwMOblDzhWXL
-         wq0lDdEPOmzWb2S1NcnC7R+ivkjNhmOT1SZ4td3VcUu6H1BmduPT1bz6NAs+SA+84CsS
-         Ab4Q==
-X-Gm-Message-State: AOAM530xrlXigMjRr1PggZdaQPpXxRkFA354gzcxTdQiKKsDxVz7DvZR
-        dk0Wp1+q8G3Urd/lb98yKjtYc7MjHl88
-X-Google-Smtp-Source: ABdhPJwFsZnIJRTEyRuLkKKQG9BHTxh4ZMFK4pTfWHrmMyRyyXPXclYzK0l0tZ4yqItA07S6hiL9Zg==
-X-Received: by 2002:ac8:594e:0:b0:2c6:c63f:8f12 with SMTP id 14-20020ac8594e000000b002c6c63f8f12mr9251512qtz.451.1646660510136;
-        Mon, 07 Mar 2022 05:41:50 -0800 (PST)
+        bh=TyuYOaeifkUuq1Ph58h890l0dtQjgxReb+uxsAjd2Kg=;
+        b=k7RtlzUXSJNeTNqZSbIP3zePS5iUXLOs8FFNhbhbZPqb85ZZZKWgRylKz+D/c8Jr1J
+         Ehyw1gUFTqa9twhMJNlGiHUnSL/48DDowY4Y9MrMxrohy5vEOjAHuPEMfvzqYe5Xqhxn
+         MW/lx+rkz8oiQ3f02tYgbmEAocLkLNuK9W+TfhDp5j9SFoGe6jBYG4Y5NQi20gULQI4e
+         tYTFkvRad65YtjxbADMhfqHwPUdxaWBQ6Tb+/0gdxrdf2HYEZt2hXlP+TXwhbph4qN1R
+         COemTfvnORbMQNRx6YIuDNguI7XDDV0q+BMK+jgLmXCjwxjoNQY0e0KEAxaheBtG1vsr
+         ZOjA==
+X-Gm-Message-State: AOAM532uM5KGT8FSBf/dJ8lNqv1pLsOt8VnAZd1GXlCVJtgmI+L+WfaU
+        /a/8K6w+k5LN+HMYfhCMX1Pc
+X-Google-Smtp-Source: ABdhPJyctTnDRsT88tUELOhs6/pud/tU3mx+ZCwMKSIcaSK3LENbOS20Q4CCrRmWHsKKUirK7UvGOw==
+X-Received: by 2002:a05:6870:73c9:b0:da:34cf:a3e7 with SMTP id a9-20020a05687073c900b000da34cfa3e7mr4264600oan.37.1646660613412;
+        Mon, 07 Mar 2022 05:43:33 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id d77-20020ae9ef50000000b00649555ce936sm6237275qkg.83.2022.03.07.05.41.48
+        by smtp.gmail.com with ESMTPSA id p1-20020a05687052c100b000da2ef5ecdesm2350561oak.44.2022.03.07.05.43.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 05:41:49 -0800 (PST)
-Message-ID: <a34c37c0-b6fd-9f4f-e990-9869f375937e@github.com>
-Date:   Mon, 7 Mar 2022 08:41:48 -0500
+        Mon, 07 Mar 2022 05:43:33 -0800 (PST)
+Message-ID: <34eb7b5a-180c-0e4a-0929-8eaf52f80090@github.com>
+Date:   Mon, 7 Mar 2022 08:43:32 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [PATCH 1/2] gettext API users: correct use of casts for Q_()
+Subject: Re: [PATCH 2/2] string-list API: change "nr" and "alloc" to "size_t"
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
 References: <cover-0.2-00000000000-20220307T113707Z-avarab@gmail.com>
- <patch-1.2-83659fbc459-20220307T113707Z-avarab@gmail.com>
+ <patch-2.2-398682c07aa-20220307T113707Z-avarab@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <patch-1.2-83659fbc459-20220307T113707Z-avarab@gmail.com>
+In-Reply-To: <patch-2.2-398682c07aa-20220307T113707Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -69,32 +69,24 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 3/7/2022 6:38 AM, Ævar Arnfjörð Bjarmason wrote:
-> Change users of the inline gettext.h Q_() function to cast its
-> argument to "unsigned long" instead of "int" or "unsigned int".
+> Change the "nr" and "alloc" members of "struct string_list" to use
+> "size_t" instead of "nr". On some platforms the size of an "unsigned
+> int" will be smaller than a "size_t", e.g. a 32 bit unsigned v.s. 64
+> bit unsigned. As "struct string_list" is a generic API we use in a lot
+> of places this might cause overflows.
 > 
-> The ngettext() function (which Q_() resolves to) takes an "unsigned
-> long int", and so does our Q_() wrapper for it, see 0c9ea33b90f (i18n:
-> add stub Q_() wrapper for ngettext, 2011-03-09).
-> 
-> In a subsequent commit we'll be making more use of this pattern of:
-> 
->     func(Q_(..%"PRIuMAX..., (unsigned long)x), (uintmax_t)x);
-> 
-> By making this change we ensure that this case isn't the odd one out
-> in that post-image.
 
+>  			printf_ln(Q_("The bundle requires this ref:",
+> -				     "The bundle requires these %d refs:",
+> -				     r->nr),
+> -				  r->nr);
+> +				     "The bundle requires these %"PRIuMAX" refs:",
+> +				     (unsigned long)r->nr),
+> +				  (uintmax_t)r->nr);
 
->  	if (!res)
-> -		printf(Q_("updated %d path\n",
-> -			  "updated %d paths\n", count), (int)count);
-> +		printf(Q_("updated %"PRIuMAX" path\n",
-> +			  "updated %"PRIuMAX" paths\n", (unsigned long)count),
-> +		       (uintmax_t)count);
-
-Why are we adding more uses of "unsigned long" which is not consistent
-in its size across 64-bit Linux and 64-bit Windows? Specifically, on
-Windows "unsigned long" is _not_ uintmax_t. Shouldn't we be using
-uintmax_t everywhere instead?
+There are more additions of unsigned long here, which will possibly
+truncate the size_t of r->nr. I must be missing something here that
+explains why you are making this choice.
 
 Thanks,
 -Stolee
