@@ -2,140 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3D3CC433FE
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 304B7C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244210AbiCGQbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 11:31:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46534 "EHLO
+        id S241485AbiCGQc0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 11:32:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244207AbiCGQa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 11:30:59 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EC06E4F6
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:30:04 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so18412471ooi.2
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 08:30:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cuEBINC5ix5EMknTR+e2lnMGvdhiKCG8j3JiXyGjUxo=;
-        b=Za/NrgoZFMwnW+lCsERNOklQ+aWsfGwVV11NOE9zM722ggLp0MQca5n0ZlZsD7Ytg5
-         jLemftLXydaH4sMa4WyBDmu+UYT3NB7c63h7uwLJSF01JWsHGfx209HgXomCOS6m5LUp
-         114Kzmy9vxeWHFBnOIHe+k8jktpgX5Hx3jVr37lm0K9iyB9dmo4rq1TkP9JW6VfVuMOB
-         mbuzKJ/H/CWKpnqStFo/lh0zXYA8yG/QJYwW2rIffq51PerYp9iIUCRwkKlGMLRL+rTS
-         2/EgmI1lbsVcKS2FoG0vq63M0l51kzFpIC5rk09TC5AML6N8grA+aKhsVqxVqb2Ef9iW
-         HDLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cuEBINC5ix5EMknTR+e2lnMGvdhiKCG8j3JiXyGjUxo=;
-        b=fvBbQpRuMNqze6LHOhU8ss3Sc+VJ4gK6grdVoXHMBgt9FAP6/Jl+EKNZf/5S8XhbQK
-         akI8lD6F7ALTOQq7Jg3ezn06xWjflYMFImB6a1vtHHY/ZfFvMV+i8XYHP460D0GZ6Gtj
-         H9i7of26nhDIT5Wzbmxf0DFrJGS4VATgz/PRXc4elMI6ja/VjSJ3B19c75xFJG6ShiG5
-         HEJyhV0GvtU7EDPWZ9Yz+Zj+RiizfljlTl+yL3yQKMf4WCAR52ilmDzc6Al7FVWIJySm
-         9zvBQ5AlpIa4WMXQ0XhAKGhjtg1WQTBhS9Pg3/ahpncpaADlLIfiiCrl0r5vx3II/zKU
-         +4vA==
-X-Gm-Message-State: AOAM533+7tyHq/LRMZCRWl7McFj3hKFQmmiFpEiD8WB9n22f8v6DgBJr
-        jGp45uBMpkogep91PN1y64RL
-X-Google-Smtp-Source: ABdhPJx9vFXCl1Mlen5n/TQOxUAX3ftBEIJB6RoqGYmKyahCsZJN1rzi+m4HdUKHU7MS1gXwFDlG9Q==
-X-Received: by 2002:a05:6870:4341:b0:d3:1412:8ecb with SMTP id x1-20020a056870434100b000d314128ecbmr6156249oah.36.1646670603881;
-        Mon, 07 Mar 2022 08:30:03 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f21-20020a4ada55000000b0031c16df28f9sm5860875oou.42.2022.03.07.08.29.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 08:29:47 -0800 (PST)
-Message-ID: <e1b91bb3-4f42-5829-269a-a4a4ec6eb4bf@github.com>
-Date:   Mon, 7 Mar 2022 11:29:43 -0500
+        with ESMTP id S234814AbiCGQcZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 11:32:25 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D78931B0
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:31:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646670686;
+        bh=O9ASZuW+ipRZbx6eYcbrNO+evZnh1c8i2jXXFiUhy2c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DUiKLtwQT8QBruQ77n0BwR9LjpekCyi+HEDTDnZumuWIHYZM53hXaYcHz3LqKE5mB
+         yLFLebnOJzFWe+acl8++C0ANq8MP7fs37RyJV6zdKAlOhEl19/w+EKNqPVZZAwa/lm
+         U0k6Ua4f9YyILRetq9nUKUp98lcSRXpC2XcLdkBU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ml6qM-1nssOA1mvc-00lRrr; Mon, 07
+ Mar 2022 17:31:26 +0100
+Date:   Mon, 7 Mar 2022 17:31:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: en/merge-tree (Was: Re: What's cooking in git.git (Feb 2022,
+ #08; Mon, 28))
+In-Reply-To: <CABPp-BGZ7OAYRR5YKRsxJSo-C=ho+qcNAkqwkim8CkhCfCeHsA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203071728410.11118@tvgsbejvaqbjf.bet>
+References: <xmqqmti9ssah.fsf@gitster.g> <CABPp-BGZ7OAYRR5YKRsxJSo-C=ho+qcNAkqwkim8CkhCfCeHsA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 08/11] bundle: parse filter capability
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
- <220307.86bkyhzs3r.gmgdl@evledraar.gmail.com>
- <142219bd-5047-a27d-d53f-2ec2f6cb9c08@github.com>
- <220307.86pmmxybmz.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220307.86pmmxybmz.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HA5ZrqkyBltrYm+pVFrQKZSsffLa9VmVttGPHkkM2jwzF5h5HIl
+ SplRs3z3PIg96sUdpzfU8XC4u653z3x6cyORIqtmEnSRnQ1aLEY7YLqf0HBpnX/kTj6KZ7z
+ +uXf3cbpRKqQQluvI9KwModeqWjqR1O2RN8FUJFf3bKduGiu9ZZxt+Ih3Sx8kcZERrjb9WX
+ dZ4vhBMiOJ4gykGRXb9Jg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0R12+m7KyHs=:ZzoahiulvMHdTdp2VQ1s74
+ 6j5YQdwixT81kw2UxKGMYn5t1rMFxEsDdrjP07o4wSNeH0doH50VyDyaM5YyolAJAuK+dktBz
+ QDd6leyYv7poLmNod6cndTMSyruA++y910Gg5v5nwOS5ZIOEtqosxhSo9amoFSxweCaChsmRK
+ LVZW0wy5TL+PHSLJLFvl5Lh/X+g0e4dckR2nnpyzJs+5uEZzN0mBmsqzeC46Lt5ZNQrRn26mD
+ L5kn857uDJ8zxtqaybQ7sEKCy+1K7qMJYmVjAVyqmv5oY18hPrpt6cNG7Ps83ywvZzHPhNcQa
+ ROrnffuBfr/MoMeI4W6cP9DuE0SpKiNlgdhAXRz6QYmWN/Tay1LqWTWL4aSpqa9UcErw+FzuW
+ FG63wOORxEVIs1S3UARiatCKJF90pQ4sfYJL+9Tcv0b11y4aD5vlA03pCbyztZ2l9pYxPrxBS
+ ziYw4idof00c5LuUeWExiTZ6FhxawFI/WSfOgCwf4q0dnzfeOiGWgzQiZ4B2YCSr+di432W5Z
+ Ut6jJPymFZ7E7tdUPx2XY8e4EZEwsc6j6VloFAz9tMECiQNkDsavI7xFGoSejOActPCBwZm01
+ 3O+/4mlUaSNqgB8LrIG3vRi8Pq8TgzMW8ZfKUGNWxDb8eRvtQTLXu7pUrexOHb84YYqQXH51C
+ DJbUafgTjgGQq4n6SKp4S+GdFDZ88hnPsTJcYQNopiPOu41aMDnUukZLsfqcw6I2pFAf+tbqb
+ M5YAmotDVRjKYrCPAlrUCyo30jBSA0ot+5iB9YwJi0FpOfRo5fEYHvm7Z06AIUbjEMnEY7lDi
+ JZ4vKElUzSjt1OHjlb5ZcIseE/DGZOt4MEY7taKktIy2w4IkPAb93JPWlTg7HOOhsdvjmy+6B
+ ryY18/YzD0/ilGdBTrQdyebcDr3iw93Z4vVHEclRElB0zXlR+BuFCFEDe44X2Aqc6T84K9WGO
+ 3uVhNMzPwBQXURdbh2A/9hJc5xeYgJ4WvsGd1D3k5qD0IOzGYQn+/cZDlHNWpEdpz9mZi4KNj
+ SZz9/2BRsmqtk8Wa7Mb7pozIAwT3Jod179rK3N687lRh7HMvjHfF+RWa1zJTTC/zJn0I+DOmP
+ GNssOoezik6b74=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2022 11:22 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Mar 07 2022, Derrick Stolee wrote:
-> 
->> On 3/7/2022 10:38 AM, Ævar Arnfjörð Bjarmason wrote:
->>>
->>> On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
->>>
->>>> From: Derrick Stolee <derrickstolee@github.com>
->> ...
->>>> diff --git a/bundle.h b/bundle.h
->>>> index 06009fe6b1f..eb026153d56 100644
->>>> --- a/bundle.h
->>>> +++ b/bundle.h
->>>> @@ -5,11 +5,14 @@
->>>>  #include "cache.h"
->>>>  #include "string-list.h"
->>>>  
->>>> +struct list_objects_filter_options;
->>>> +
->>>
->>> For the other ones we include the relevant header, do the same here (or
->>> if there's a need to not do it, do we need it for the rest too?)
->>
->> The others are .c files that require looking into the struct. This
->> declaration is all that's required for this header file.
->>
->>>>  struct bundle_header {
->>>>  	unsigned version;
->>>>  	struct string_list prerequisites;
->>>>  	struct string_list references;
->>>>  	const struct git_hash_algo *hash_algo;
->>>> +	struct list_objects_filter_options *filter;
->>>>  };
->>>
->>> I haven't tried, but any reason this needs to be a *filter
->>> v.s. embedding it in the struct?
->>>
->>> Then we'd just need list_objects_filter_release() and not the free() as
->>> well.
->>>
->>> Is it because you're piggy-backing on "if (header->filter)" as "do we
->>> have it" state, better to check .nr?
->>
->> Yes. I replied to Junio before that there is some assumption in
->> the filtering code that the .nr == 0 case is listed as a BUG()
->> so we would possibly be breaking expectations in a different
->> way doing the embedded version.
-> 
-> Having an "unsigned int using_filter:1" or whatever IMO makes that much
-> clearer than needing to carefully eyeball code that's already using
-> embedded structs & see why the one exception that's malloc'd is because
-> of that or some other reason...
+Hi Elijah,
 
-I think your recommended "using_filter" is messy. Having this
-struct be a pointer instead of embedded self-documents that it
-is optional (and can be NULL) but that if it is non-NULL, then
-it should be considered and valid.
+On Tue, 1 Mar 2022, Elijah Newren wrote:
 
-Here, I'm focusing on not allowing a non-sensical state, such
-as using_filter = 0 but filter is actually populated with a
-valid filter. The possibility of this state means there is a
-higher chance of introducing a bug over time by not keeping
-these values coupled.
+> On Tue, Mar 1, 2022 at 7:26 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > * en/merge-tree (2022-02-23) 13 commits
+> >  - git-merge-tree.txt: add a section on potentional usage mistakes
+> >  - merge-tree: add a --allow-unrelated-histories flag
+> >  - merge-tree: allow `ls-files -u` style info to be NUL terminated
+> >  - merge-tree: provide easy access to `ls-files -u` style info
+> >  - merge-tree: provide a list of which files have conflicts
+> >  - merge-ort: provide a merge_get_conflicted_files() helper function
+> >  - merge-tree: support including merge messages in output
+> >  - merge-ort: split out a separate display_update_messages() function
+> >  - merge-tree: implement real merges
+> >  - merge-tree: add option parsing and initial shell for real merge fun=
+ction
+> >  - merge-tree: move logic for existing merge into new function
+> >  - merge-tree: rename merge_trees() to trivial_merge_trees()
+> >  - Merge branch 'en/remerge-diff' into en/merge-trees
+> >
+> >  A new command is introduced that takes two commits and computes a
+> >  tree that would be contained in the resulting merge commit, if the
+> >  histories leading to these two commits were to be merged, and is
+> >  added as a new mode of "git merge-tree" subcommand.
+> >
+> >  Will merge to 'next'.
+> >  source: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
+>
+> As I mentioned on the last "What's cooking", let's not.  Please mark
+> it as expecting a reroll instead.  I'm waiting to hear back from Dscho
+> on whether my latest proposal at [1] would solve his usecase.  That
+> proposal suggests output format and various code changes.
+>
+> [1] https://lore.kernel.org/git/CABPp-BGnqXdFBNAyKRXgvCHv+aUZTMg-CgcQf95=
+dKAR-e1zSjQ@mail.gmail.com/
 
-Thanks,
--Stolee
+I am _so sorry_! I didn't expect you to wait for me (and even then, I
+cannot take time where there is no time to take, I am unfortunately quite
+short on time these days).
+
+=46rom my side, this patch series is totally ready to be merged to `next`!
+
+In the interest of heeding the matra "the perfect is the enemy of the
+good", let's avoid adding more concerns that this patch series needs to
+address.
+
+Whatever machine-parseable info we want to provide can be made optional,
+and we can iterate on the design by marking that option as experimental.
+
+Thank you so much for your hard work!
+Dscho
