@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00BDAC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E295C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238995AbiCGPiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 10:38:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57086 "EHLO
+        id S243862AbiCGPnt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 10:43:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235983AbiCGPiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:38:03 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C4C5D5E6
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:37:08 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id r13so32842426ejd.5
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 07:37:08 -0800 (PST)
+        with ESMTP id S243116AbiCGPnr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 10:43:47 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D1531218
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:42:51 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id yy13so24011541ejb.2
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 07:42:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=6/4cRvY8uH/iWcCm9GY4dBQwF52QNgPu5D9Z/ZGNIxY=;
-        b=CtkCNi+B/HGuGiu4oXFB5/l6jmb4CPi1tjlQ6rdem2LHCnUvj5sdXDgi9rmKkG8Pfi
-         c3aA9DxMLcLerY5k6cxL5JBPyGLM3HLZoR5bvZGnBro02djyYwnCb5ZwOi5DPrEBevoX
-         RpumrgYNdLAClw1GPHJb2l2ESAG9wUqBTrYCmH3LJZaQdCtIGrGGYWTHbn00+xuipZMp
-         BBaDPEQqDkqzfuHt7cfSNeHwxiXNSB9DpAdlASZ1JgJNRmertCRy6zPFHelg2KCQsq25
-         lkf+METdIrM3tnV2lOaUyOvwizJwLwf/ebWmdC7uBCm4FYPEA79SN0s6BszDW2LZZshj
-         v2dA==
+        bh=DGpb6p3U3pWorQ2uCjJaiF+9TdxybNV/H9Lz96uKpng=;
+        b=C0O0NTni2wMnFMw4ljRyiKuCY19aqg99y9MCQYGLtkAojfgqHSaCfWRaW1flqGNxCW
+         HhvUB9TOkiTOvuIMWcbIsHM2iqnFjU7iODcQNNk0f2OBKdVgt/slCQ2V9xGxazgC9IH0
+         Y6Ra7oPAA02Yz7BPtigeJyqF6kCp9MoyBFWtG6o8c83HSJZdOND4h1PRm8gM/PZK38Py
+         Amsxgi9vS8XzhsYJ2FYg+Ht5R8cVVZUL23Ke07M5apKjDueBRskPQJe1T1vR+tKxSGMG
+         d5RPHUsFaQm/YSrqaswW4yTxpqH3RSIxMczxq3So3FzkaYzYcpiem+q7/pPiPfm5OswW
+         +UPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=6/4cRvY8uH/iWcCm9GY4dBQwF52QNgPu5D9Z/ZGNIxY=;
-        b=VhdMjVPrjTmnSQnP8xYRSSMb4JQVVdmn4pTRPe441YBqLa4Q8GDdO7hqC4AF0DP9zr
-         h7b9dW8VDGVhxsBiR4VPwS0c0KJEz5cyj1B2Z+o4wx97itUac/DvVEH0LJxZGLqStxgZ
-         xs6leyDM6hiwJ3223pQnKwUGbW/nEtoF/ggwscyhy5J5mjyETWgKvhCduohR3X5BRiIQ
-         Qpv33ex+iGmRJgMnDTyTdvKwdpktIZ67gbm/Fsg6L/jrQzzl1XMwLfwuOGMeRO0ZysRA
-         DYEuVsOvuyt553q+Rn4d0NOUA1/7Ef9CUtWX/iVquzTXzA4S4dyBd6MXnJdpHJDAobr5
-         aUhA==
-X-Gm-Message-State: AOAM531dVJpm2oRtOJseegB+oTu0glqP9BPHJs3a1tvM4nZZ69TLhvVd
-        hIijVKkpka5pFwABRx1ksFug2OnBk/XYMQ==
-X-Google-Smtp-Source: ABdhPJzukC64tdTbJfKbVm3lu/fwoYQR2lBI6z0JLzU6J/EfcscsIXrfQgsa0L9NXh9jYbdqmurI2A==
-X-Received: by 2002:a17:907:1c98:b0:6db:b42:7f81 with SMTP id nb24-20020a1709071c9800b006db0b427f81mr7176019ejc.258.1646667426534;
-        Mon, 07 Mar 2022 07:37:06 -0800 (PST)
+        bh=DGpb6p3U3pWorQ2uCjJaiF+9TdxybNV/H9Lz96uKpng=;
+        b=cMOYI1gjZuGk0Yj5uW0Tkq7hJ5xcaYD/3DYFKXcaYiJb9T1MaQcjHBx2pZ/2/NXJ6l
+         gj+bcnPUldhSZQ5hKbbTI0361L5TZ/awwn93ph27wtCLe8JVq5BuGuDK6xEUnr7O1XmM
+         5sL82vEZKg1O/wUZWKfibySUpALqIzWPbEQ6g48r1RSHkPsVX+bBzsCCXMBD2ndD7VKv
+         XCzVgRcmvn+85WKlCh1MZEjX84tM8aND3py0zXv3Qpa+6/kjiDOETawH/tdYtqGRGZqD
+         nUyJ+lyXq8UpIHNNGv2C5+r0Nyw9OGqj06B3zTWcoTV3V/xhHi90YSSiCHSjVGGZFYCU
+         wW9w==
+X-Gm-Message-State: AOAM532Tlce6DULUp8o29FLjD0kl4Vipvn61rVjhHNZAfbv+KaVKJwdR
+        vY2ix0jR1Qk/OQf5Bt7PE2zWSsRXAOQC9w==
+X-Google-Smtp-Source: ABdhPJxP726Is60ZIO+5pXBuedvqLJIc6AdV1VS2sCcJQ7u7oPbGu7dMRKGFf9XYXl5QPZCPx2Nthw==
+X-Received: by 2002:a17:907:608b:b0:6da:8fa8:27e8 with SMTP id ht11-20020a170907608b00b006da8fa827e8mr9564024ejc.168.1646667770078;
+        Mon, 07 Mar 2022 07:42:50 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id kw5-20020a170907770500b006db075e5358sm2416031ejc.66.2022.03.07.07.37.06
+        by smtp.gmail.com with ESMTPSA id w22-20020a05640234d600b004165de83109sm807268edc.48.2022.03.07.07.42.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 07:37:06 -0800 (PST)
+        Mon, 07 Mar 2022 07:42:49 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nRFQ1-001Zgu-Fs;
-        Mon, 07 Mar 2022 16:37:05 +0100
+        id 1nRFVY-001Ztm-SD;
+        Mon, 07 Mar 2022 16:42:48 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
         zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 07/11] bundle: safely handle --objects option
-Date:   Mon, 07 Mar 2022 16:35:25 +0100
+Subject: Re: [PATCH 08/11] bundle: parse filter capability
+Date:   Mon, 07 Mar 2022 16:38:30 +0100
 References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <1476a9495c53a165e6971afe75205889524fe7ca.1645638911.git.gitgitgadget@gmail.com>
+ <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <1476a9495c53a165e6971afe75205889524fe7ca.1645638911.git.gitgitgadget@gmail.com>
-Message-ID: <220307.86fsntzsda.gmgdl@evledraar.gmail.com>
+In-reply-to: <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
+Message-ID: <220307.86bkyhzs3r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,61 +74,137 @@ On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
 
 > From: Derrick Stolee <derrickstolee@github.com>
 >
-> Since 'git bundle' uses setup_revisions() to specify the object walk,
-> some options do not make sense to include during the pack-objects child
-> process. Further, these options are used for a call to
-> traverse_commit_list() which would then require a callback which is
-> currently NULL.
+> The v3 bundle format has capabilities, allowing newer versions of Git to
+> create bundles with newer features. Older versions that do not
+> understand these new capabilities will fail with a helpful warning.
 >
-> By populating the callback we prevent a segfault in the case of adding
-> the --objects flag. This is really a redundant statement because the
-> bundles are constructing a pack-file containing all objects in the
-> discovered commit range.
+> Create a new capability allowing Git to understand that the contained
+> pack-file is filtered according to some object filter. Typically, this
+> filter will be "blob:none" for a blobless partial clone.
 >
-> Adding --objects to a 'git bundle' command might cause a slower command,
-> but at least it will not have a hard failure when the user supplies this
-> option. We can also disable walking trees and blobs in advance of this
-> walk.
+> This change teaches Git to parse this capability, place its value in the
+> bundle header, and demonstrate this understanding by adding a message to
+> 'git bundle verify'.
 >
 > Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 > ---
->  bundle.c               | 10 +++++++++-
->  t/t6020-bundle-misc.sh | 12 ++++++++++++
->  2 files changed, 21 insertions(+), 1 deletion(-)
+>  bundle.c                      | 17 ++++++++++++++++-
+>  bundle.h                      |  3 +++
+>  list-objects-filter-options.c |  2 +-
+>  list-objects-filter-options.h |  5 +++++
+>  4 files changed, 25 insertions(+), 2 deletions(-)
 >
 > diff --git a/bundle.c b/bundle.c
-> index a0bb687b0f4..dc56db9a50a 100644
+> index dc56db9a50a..2afced4d991 100644
 > --- a/bundle.c
 > +++ b/bundle.c
-> @@ -451,6 +451,12 @@ struct bundle_prerequisites_info {
->  	int fd;
->  };
+> @@ -11,7 +11,7 @@
+>  #include "run-command.h"
+>  #include "refs.h"
+>  #include "strvec.h"
+> -
+> +#include "list-objects-filter-options.h"
 >  
-> +
-> +static void ignore_object(struct object *obj, const char *v, void *data)
-> +{
-> +	/* Do nothing. */
-> +}
-> +
->  static void write_bundle_prerequisites(struct commit *commit, void *data)
+>  static const char v2_bundle_signature[] = "# v2 git bundle\n";
+>  static const char v3_bundle_signature[] = "# v3 git bundle\n";
+> @@ -33,6 +33,8 @@ void bundle_header_release(struct bundle_header *header)
 >  {
->  	struct bundle_prerequisites_info *bpi = data;
-> @@ -544,7 +550,9 @@ int create_bundle(struct repository *r, const char *path,
->  		die("revision walk setup failed");
->  	bpi.fd = bundle_fd;
->  	bpi.pending = &revs_copy.pending;
-> -	traverse_commit_list(&revs, write_bundle_prerequisites, NULL, &bpi);
+>  	string_list_clear(&header->prerequisites, 1);
+>  	string_list_clear(&header->references, 1);
+> +	list_objects_filter_release(header->filter);
+> +	free(header->filter);
+>  }
+>  
+>  static int parse_capability(struct bundle_header *header, const char *capability)
+> @@ -45,6 +47,11 @@ static int parse_capability(struct bundle_header *header, const char *capability
+>  		header->hash_algo = &hash_algos[algo];
+>  		return 0;
+>  	}
+> +	if (skip_prefix(capability, "filter=", &arg)) {
+> +		CALLOC_ARRAY(header->filter, 1);
+> +		parse_list_objects_filter(header->filter, arg);
+> +		return 0;
+> +	}
+>  	return error(_("unknown capability '%s'"), capability);
+>  }
+>  
+> @@ -220,6 +227,8 @@ int verify_bundle(struct repository *r,
+>  	req_nr = revs.pending.nr;
+>  	setup_revisions(2, argv, &revs, NULL);
+>  
+> +	revs.filter = header->filter;
 > +
-> +	revs.blob_objects = revs.tree_objects = 0;
-> +	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
->  	object_array_remove_duplicates(&revs_copy.pending);
+>  	if (prepare_revision_walk(&revs))
+>  		die(_("revision walk setup failed"));
+>  
+> @@ -259,6 +268,12 @@ int verify_bundle(struct repository *r,
+>  			     r->nr),
+>  			  r->nr);
+>  		list_refs(r, 0, NULL);
+> +
+> +		if (header->filter) {
+> +			printf_ln("The bundle uses this filter: %s",
+> +				  list_objects_filter_spec(header->filter));
+> +		}
+> +
+>  		r = &header->prerequisites;
+>  		if (!r->nr) {
+>  			printf_ln(_("The bundle records a complete history."));
+> diff --git a/bundle.h b/bundle.h
+> index 06009fe6b1f..eb026153d56 100644
+> --- a/bundle.h
+> +++ b/bundle.h
+> @@ -5,11 +5,14 @@
+>  #include "cache.h"
+>  #include "string-list.h"
+>  
+> +struct list_objects_filter_options;
+> +
 
-The callback dummy callback part of it seems like something we'd be
-better off doing by just teaching traverse_commit_list() to pay
-attention to our "NULL" in this case.
+For the other ones we include the relevant header, do the same here (or
+if there's a need to not do it, do we need it for the rest too?)
 
-But maybe I'd don't quite get why it either can't say "oh it's, NULL,
-don't need to call that", or alternatively die earlier as it notices it
-needs to call it, but it wasn't provided.
+>  struct bundle_header {
+>  	unsigned version;
+>  	struct string_list prerequisites;
+>  	struct string_list references;
+>  	const struct git_hash_algo *hash_algo;
+> +	struct list_objects_filter_options *filter;
+>  };
 
-The same presumably goes for show_commit_fn.
+I haven't tried, but any reason this needs to be a *filter
+v.s. embedding it in the struct?
+
+Then we'd just need list_objects_filter_release() and not the free() as
+well.
+
+Is it because you're piggy-backing on "if (header->filter)" as "do we
+have it" state, better to check .nr?
+
+> @@ -55,7 +55,7 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
+>   * expand_list_objects_filter_spec() first).  We also "intern" the arg for the
+>   * convenience of the current command.
+>   */
+
+These API docs....
+
+> -static int gently_parse_list_objects_filter(
+> +int gently_parse_list_objects_filter(
+>  	struct list_objects_filter_options *filter_options,
+>  	const char *arg,
+>  	struct strbuf *errbuf)
+> diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+> index da5b6737e27..347a99c28cf 100644
+> --- a/list-objects-filter-options.h
+> +++ b/list-objects-filter-options.h
+> @@ -72,6 +72,11 @@ struct list_objects_filter_options {
+>  /* Normalized command line arguments */
+>  #define CL_ARG__FILTER "filter"
+
+...should be moved here, presumably.
+
+> +int gently_parse_list_objects_filter(
+> +	struct list_objects_filter_options *filter_options,
+> +	const char *arg,
+> +	struct strbuf *errbuf);
+> +
