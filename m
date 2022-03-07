@@ -2,111 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9716BC433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EB89C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 16:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbiCGQDI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 11:03:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59610 "EHLO
+        id S240094AbiCGQIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 11:08:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243886AbiCGQCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 11:02:54 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5028EB72
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:02:00 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id m21so15097729edc.0
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 08:02:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Gw+iLcdSysu8B1ltV5KnuZ94GvvQ15gO688o8j+Qmbs=;
-        b=T2QnI2lw+ICjoqyQP+Y+ZHsrgS54XqtZcfTk2le2butAASc06lYnyX1MttGsXC3QpH
-         zxaT1SSCyuYyVFpatQJBxvH6kQ1Dz7IBWWIWQveJNsb6rTa3kiHRtNTcIfzLCyFTLDaM
-         sSsITYeP91yNAgOgR8cd/LSjXACaXcAFUMKIdNOU5kr7Ek5or6wEUy8NKpo97uO3xgok
-         hzJb8dgXj/Hy90SXaHedDUoWOk+TNFl4On9QpKwr5TXORHsS6JCt8Uskyz0NCxV4tvOW
-         h/eSsJEq16UIaLpjatgxtObjSyeTqJ6jDRfHWjsp5NYehFE00sIyTcH12SAi6v2JRb7+
-         CB+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Gw+iLcdSysu8B1ltV5KnuZ94GvvQ15gO688o8j+Qmbs=;
-        b=ZEYw59UHvbPz+Owh1GmDHB9VFcIXGWVTFbiruCrLl1cwQcN+tGwfonsENGN1OZGiNZ
-         s9uAaeUo6gFRgS6XepyyGNORoxdpfl/dCdhYUvE6yMzRl8XFS/UyTHzEN9zIM3HJ/rXD
-         kUGcNg0gR20w7HV4pJbNXXgPYT4FMHWfvORz/8iV5kvI60DDwXS9L3aHnLdgoNsj0aD7
-         XWdWtGYk2kubsUvPG9NCmEsKbotCWdR5pLAoqC2Y5K2EgADDJalN+B06oz5kwGgFtkUl
-         bqfR3WMjMEk3Fj2mf11EoZ6kcX+H+/W1puVxEBBPs4HofaZFpH34CFiF+eiWWyFLeqYU
-         kkZw==
-X-Gm-Message-State: AOAM531GAmAcJIDQ+2zTsSFPKpgGN8ocVSpblF716+m1H7mTQ73x31a6
-        vvBj5DygmBeO0QjDAmANjAbXOZ8ydD6T8A==
-X-Google-Smtp-Source: ABdhPJw25AnhzLA4JnPFxJ8YS94Nn7rxE2QlnrWnmbp2BC7gzZpb3ZvhEAkcNcLvtl98E30wbQm1lw==
-X-Received: by 2002:a05:6402:d7:b0:413:673:ba2f with SMTP id i23-20020a05640200d700b004130673ba2fmr11571480edu.29.1646668918612;
-        Mon, 07 Mar 2022 08:01:58 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p15-20020a170906784f00b006ccb9e1278csm4848420ejm.6.2022.03.07.08.01.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 08:01:58 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRFo5-001aem-GS;
-        Mon, 07 Mar 2022 17:01:57 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 08/11] bundle: parse filter capability
-Date:   Mon, 07 Mar 2022 16:55:17 +0100
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <e7dbb46e6acb5c22a0b456135f3af42b974e0268.1645638911.git.gitgitgadget@gmail.com>
-Message-ID: <220307.86y21lycne.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231715AbiCGQIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 11:08:49 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 955BF13E2E
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 08:07:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646669263;
+        bh=EBaJ5F31kL0AvalK1U3bteCD/WHvzlmZx55Txr7P1Ss=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=OuWd1ezikj2Bm6JVVw9BdvD9Ng80Nklp2P0xESlG0NCj/z1yatEcbZGTuxzCyqe0K
+         WPRdudU1BCyzebjuu5ckGsKa8oomsmzae7aL+wIFC3H/3H3YerVGaYKC8ke2Kn+F2Y
+         2fQUzrXIUvzN7mYROL7RC+yH4wezKNkbgWftky+Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mzhj9-1oMwrG0XU9-00vjFU; Mon, 07
+ Mar 2022 17:07:43 +0100
+Date:   Mon, 7 Mar 2022 17:07:41 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+In-Reply-To: <30dbc8fb-a1db-05bc-3dcb-070e11cf4715@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203071657180.11118@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet> <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+ <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <30dbc8fb-a1db-05bc-3dcb-070e11cf4715@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:16no14mOUFgL6iZyKzTd6uLRpymcvTv8F3MpbhoYAy8Kbo/SCuV
+ JFsBbw1Cldcidc6eBIcZF1dy2BW0UtqtiC0i7MzFqOtFGST/5inloa3vQwSKK0D9SvyvaUC
+ 1+S8/JXyL9kVi8Tb8O2j1YHYi7dT/A6Cs0YA31Uqc6yMOB3rVKCuIH4PyZ02il4Go8yNTs8
+ m1wCrzXGPJqxUB97PlIYg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5s3C8h+oTX0=:06dFN0zQIIxqiLzsPtplsB
+ nfyeB+c8cy/vJ6noSH2H1vta9z81lhO5Lal8bNAI5LlgZ9+NuykjB7a96DpBw/lmvKzACD4uh
+ qetOIp+rb3axkxjjhngPUyVvx4Bt3HgCYspRCc8TcU5aAgeq0l65yt9cMOqio+y2h3HUXZeO3
+ l38rGshb0qkN60fg5PElkyt967xJxbWyhL1cQ4P6E6d5J5U1rhW1G66C9qKflXjnh6UH5QuWj
+ u2xaEFzPbC2FikATzwW4c0Tcgz18UBWnLwj1msP6fMMbg59UsINJ6+hkT744+FUiVLngx98Ro
+ c/BsV7TJh9DzWtRbYC/VaGpBbK3N0lYWA0TFgy/cktwImM154uHCepRtQhEp0lKaVz48rLnC3
+ gztFt/BupBorhVBtQHoHi27LYohh2swD1yeR7CmLP/H1MsP7Dh1nvz3eJA4gQOM67ysx6+nZf
+ rWgFv0sJaXJ4cMtgkD9DG6Qn60zgFRFv/z6yLNbK+IoUGgXJMjlNRF5FCUYPFTBHb32pEXFyP
+ 2GvmZNcIvFsqTLUsk6Y9nUVQfmIpw1d0Ao7LbrkwWmfmGIMYz8TOCVL3zHEO7cBh7NnK539V5
+ l3NWfHbtlhqYq1cC+fB9KEDX9nSg0uLPaT6w0YpFYEL/yb3Y11deXPb7ynfoLwqtU8qYRRWGc
+ e0iUU1c7TDw6PDfOvBaT0Ui4vOspOyRdxBxtB9WsQHL07uQYdSRozf/u9HzO8a0zirGrV+45R
+ 4lCJmGp5DcuR9SfJsDBBMwix53I+8z1jYSQKeq8D8K/rLlhdm6QUJolsPBFVcrGCPXBZQcPNs
+ er5pkfozstu8qxA0NNvFuXGWi0OSvrImnt0ITxh52A0CvC3hpXpox7PapWfgkq8CVUjqdMkGi
+ eHqHWRnKMon1OUs3YC5Wr844Gvco9q5UahxZMTheGNwpoXvM9bGfRnXuGP1XXrVHkOWXMWM3r
+ gYO/8ccXY1uUpXdYt1lyv0RZ6uAs7C1Jb4DZ+DB1RFQSvF6oLHtrs0pYTh3T6l3SNQ9PzERFQ
+ eWZfwT7YbacVbdKqI1XU8I1P9lZvjPCwnEdCbZSPvYR11Z4YzakzjmmJznGg+wBbxph/z6NGK
+ vXwVhQDTP6/ZRg=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
-On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
+On Wed, 2 Mar 2022, Phillip Wood wrote:
 
-> From: Derrick Stolee <derrickstolee@github.com>
-> [...]
->  static int parse_capability(struct bundle_header *header, const char *capability)
-> @@ -45,6 +47,11 @@ static int parse_capability(struct bundle_header *header, const char *capability
->  		header->hash_algo = &hash_algos[algo];
->  		return 0;
->  	}
-> +	if (skip_prefix(capability, "filter=", &arg)) {
-> +		CALLOC_ARRAY(header->filter, 1);
-> +		parse_list_objects_filter(header->filter, arg);
-> +		return 0;
-> +	}
->  	return error(_("unknown capability '%s'"), capability);
->  }
+> On 25/02/2022 14:10, Johannes Schindelin wrote:
+>
+> > On Wed, 23 Feb 2022, Phillip Wood wrote:
+> >
+> > > With the first link above the initial page load is faster but to get
+> > > to the output of the failing test case I have click on "Run
+> > > ci/print_test_failures.sh" then wait for that to load and then
+> > > search for "not ok" to actually get to the information I'm after.
+> >
+> > And that's only because you are familiar with what you have to do.
+> >
+> > Any new contributor would be stuck with the information presented on t=
+he
+> > initial load, without any indication that more information _is_ availa=
+ble,
+> > just hidden away in the next step's log (which is marked as "succeedin=
+g",
+> > therefore misleading the inclined reader into thinking that this canno=
+t
+> > potentially contain any information pertinent to the _failure_ that ne=
+eds
+> > to be investigated).
+>
+> Yes it took we a while to realize how to get to the test output when I f=
+irst
+> started looking at the CI results.
 
-[Something I should have noted in the other reply, but missed].
+Thank you for saying that. Since nobody else said it as clearly as you, I
+really started to doubt myself here.
 
-Before this series we just had the object-format capability, and now we
-have a 2nd one.
+> One thing I forgot to mention was that when you expand a failing test it=
+ shows
+> the test script twice before the output e.g.
+>
+> Error: failed: t7527.35 Matrix[uc:false][fsm:true] enable fsmonitor
+> failure: t7527.35 Matrix[uc:false][fsm:true] enable fsmonitor
+>   				git config core.fsmonitor true &&
+>   				git fsmonitor--daemon start &&
+>   				git update-index --fsmonitor
+>
+>   expecting success of 7527.35 'Matrix[uc:false][fsm:true] enable fsmoni=
+tor':
+>   				git config core.fsmonitor true &&
+>   				git fsmonitor--daemon start &&
+>   				git update-index --fsmonitor
+>
+>  ++ git config core.fsmonitor true
+>  ++ git fsmonitor--daemon start
+>  ...
+>
+> I don't know how easy it would be to fix that so that we only show "expe=
+cting
+> success of ..." without the test being printed first
 
-As before we'll return errors un unknown capabilities.
+It's not _super_ easy: right now, the patch series does not touch the code
+that prints the latter message. In fact, that latter message is generated
+_before_ the test fails, and redirected via `tee` into
+`GIT_TEST_TEE_OUTPUT_FILE`. Then, once the verdict is clear that this test
+case failed, the first message is printed (the one that is colored in the
+output via `::error::`), and the output from the
+`GIT_TEST_TEE_OUTPUT_FILE` file is pasted, starting at the offset marking
+the start of the test case.
 
-I think it's worthwhile to stop here & think how we think about
-cross-version compatibility between git versions. I.e. we're not
-changing the *format version* here (nor is it needed), but just adding a
-new capability that older gits won't know about.
+The easiest workaround would probably to add a flag that suppresses the
+header `expecting success` in case we're running with the
+`--github-workflow-markup` option.
 
-I don't know if this is a case where older versions could limp along in
-some cases and still unbundle these, probably that's never happening?
+I'll put it on my ever-growing TODO list, but maybe in the interest of
+heeding the mantra "the perfect is the enemy of the good", this can be
+done on top of this series rather than blocking it?
 
-So probably nothing needs to change here, I was just wondering *if* we
-had capabilities that were optional in some cases whether we shouldn't
-while-we're-at-it give those some prefix indicating that, and have older
-versions just issue a warning().
-
-Then have them just try to call index-pack & see if that worked.
-
-But yeah, all of that probably isn't applicable here at all :)
+Thanks,
+Dscho
