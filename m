@@ -2,95 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6772AC433FE
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E692BC433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 14:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243027AbiCGOLf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 09:11:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51796 "EHLO
+        id S237365AbiCGOPM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 09:15:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243020AbiCGOLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 09:11:33 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9768D6B7
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:10:39 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id kt27so32337378ejb.0
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:10:39 -0800 (PST)
+        with ESMTP id S239293AbiCGOPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 09:15:07 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5513F8A6EE
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 06:14:13 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so3070643otq.13
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 06:14:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=yR4Q+i+Rd8ATQNNrjTGlyPOElfLQLl5apWMeFHG+dMQ=;
-        b=DlSWR3gVE6Az6VC6SfICNA5rZMF5hqlUTGzKXxD51t0eBAnsAng9mhWcH9TIeFa9ik
-         iiG46YstbJoDJYeclrM2/rus8hBUHsNqlCfX53UgtBvHvHvpmZ2VxUYWYYFKFQIcd0pO
-         Vg3vkSFqP9+X0Fezcq++aXJyD9J9Ul87az3At2wgZgTm9yMj4GEYVBRiRmIJ3tom2pYp
-         rP04NfgC7/BuHKG52I/41IslLwG/LLYLS4ZvfxywnwNUgodFy34uOovIG7R/ciDkxF5f
-         JjxT8ZNtD/yGYL56ivGy1y4sgtOHtMi4dr7Uon+8XxX2Pd9leaPl3HwDfxXY6S1Z1DQo
-         Jx8w==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=wEVroOdxvgGNvSS9COvF8s0/VWddDVPUISGri3YGyyM=;
+        b=i45WKOnDeBMwmksEUgU2kZDnJKBjV0FAkVqWL9wNMigU6EkKfGKn6SM9BPONIcegh1
+         fv6/OtLmbaScdnuF+JRICIgoAAY4CtRvaqlc4152ueEC4316uFk8dDNIvvx3DOHwSKxf
+         gGGwfSvJR1BR0Etm1Dy9el70zWcFRTjZj/LSJYUWs5FIgCjKELSEIskLchcr5iNKh3Tp
+         ZyXsovSCTTjBQ+pZivZmDCD8RUQ4QByKjM9hWe6oHRdBdxBOkGWu1koitQrOIW1pedio
+         YrlrwdHI5ok8QTmfOB9VLnGkWH0PQSFn9bSITislrk7o5vrvznrMbhHa84ud386Fl/Gp
+         O9EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=yR4Q+i+Rd8ATQNNrjTGlyPOElfLQLl5apWMeFHG+dMQ=;
-        b=11bld5ncXKsqE2Kmxcu8ubWzDs3Lu4YE6lLxecO6ypGp/9yGe13f1LikWSgK2KZd/B
-         CJgDzcwLfNuTQ4KkJyoY8OmMv/8LQxCSKAtgH3zLE1ekh2CZg0QhzJ36CYvNf7RMgu6u
-         zJbaTOmNgY/8khCCXMrUoUPI+5ujdmiIFv6WZrRxrm3AfUIS6yS0u/MPCp3+uhiuNDIC
-         vcEGas0q5njwIvFwFHr5nIIKCg+WEd3xvK01TON0ujDDR30IJ44dBZtN+uLslpE6qHsZ
-         zAMf/GPHbWQ60HIg867CAG8b7COd1NLUEk4T8eBxiTk4Trq12NuTcYamsN26Iqudmdvz
-         S93A==
-X-Gm-Message-State: AOAM530cDQ1lFl6Xxr503q5+egpOe//kRVruYz17BMlVcSecXbHwd47I
-        1TDOhWw+gaTCa0PUCMZBEnI=
-X-Google-Smtp-Source: ABdhPJykTUHgI01iGgkOhrgp+XmCqxox7cWwZl8XpUvXk53p9rVzIiUa7bhsEfQmsLgNf5TbxlLjgw==
-X-Received: by 2002:a17:906:1ec3:b0:6cf:d118:59e2 with SMTP id m3-20020a1709061ec300b006cfd11859e2mr9224578ejj.767.1646662237812;
-        Mon, 07 Mar 2022 06:10:37 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u23-20020a17090626d700b006cfcd39645fsm4844162ejc.88.2022.03.07.06.10.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 06:10:37 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRE4J-001WbV-H8;
-        Mon, 07 Mar 2022 15:10:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 2/2] string-list API: change "nr" and "alloc" to "size_t"
-Date:   Mon, 07 Mar 2022 15:10:23 +0100
-References: <cover-0.2-00000000000-20220307T113707Z-avarab@gmail.com>
- <patch-2.2-398682c07aa-20220307T113707Z-avarab@gmail.com>
- <34eb7b5a-180c-0e4a-0929-8eaf52f80090@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <34eb7b5a-180c-0e4a-0929-8eaf52f80090@github.com>
-Message-ID: <220307.86sfrtzwdg.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=wEVroOdxvgGNvSS9COvF8s0/VWddDVPUISGri3YGyyM=;
+        b=CJjaI7mm13Ecv+0GWiOPLopoIjUI/F6PdeapXz//ixM7jdRhSDJFcHNmafjCxBOrl6
+         iztpP0y4CTOZuQc1hsrXhEBx9d9cb7VgI5phD8pMEjjVu4XIroljzjBVmYpsD52ErBLI
+         L5qgGsVg1ASdC0GgRr05g9AwdgQnWT8YJL/FV2Ijkh8BrnPGPciIoN7JuG2KJXCsbB6M
+         T6Ev4bmDsENewuQKv8qvB6Hj9l0yE9sE9YXZWBuF66oHiPvLR0sRpVh+scEiR0Uvj/ar
+         fqQKX//V4zgc3pXyqHtVKcpLSEg+2eoqT4sB0xKiOywn2rHLZDSVpMqVRzPlIhMaYpqV
+         +7tg==
+X-Gm-Message-State: AOAM53157U6MZ3WtGqlLjXIHij0MHB435hbsv1qhZQP+hcbtGVagBb5X
+        v4zvaQ1gPEGN1TjyOa3uqfF/
+X-Google-Smtp-Source: ABdhPJyTdilBFSkNt6wXInoZ7BQ9x8cjyC/H6V/6FU8mtTj1+jtjtc4YUWyt44CQI/wie2KL6uUueg==
+X-Received: by 2002:a05:6830:1e91:b0:5ad:599a:96cb with SMTP id n17-20020a0568301e9100b005ad599a96cbmr5877642otr.329.1646662452678;
+        Mon, 07 Mar 2022 06:14:12 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id a14-20020a544e0e000000b002d97bda3874sm6307018oiy.57.2022.03.07.06.14.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Mar 2022 06:14:11 -0800 (PST)
+Message-ID: <edb5897a-30f0-e5a6-1166-d03f5bdaeb47@github.com>
+Date:   Mon, 7 Mar 2022 09:14:09 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 10/11] bundle: create filtered bundles
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+ <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
+ <xmqq5yotxpdo.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq5yotxpdo.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/4/2022 6:35 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> A previous change allowed Git to parse bundles with the 'filter'
+>> capability. Now, teach Git to create bundles with this option.
+>>
+>> Some rearranging of code is required to get the option parsing in the
+>> correct spot. There are now two reasons why we might need capabilities
+>> (a new hash algorithm or an object filter) so that is pulled out into a
+>> place where we can check both at the same time.
+>>
+>> The --filter option is parsed as part of setup_revisions(), but it
+>> expected the --objects flag, too. That flag is somewhat implied by 'git
+>> bundle' because it creates a pack-file walking objects, but there is
+>> also a walk that walks the revision range expecting only commits. Make
+>> this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
+>> before the call to setup_revisions().
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>> ---
+> 
+> Now, the gem of the series ;-)
 
-On Mon, Mar 07 2022, Derrick Stolee wrote:
+:D
 
-> On 3/7/2022 6:38 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Change the "nr" and "alloc" members of "struct string_list" to use
->> "size_t" instead of "nr". On some platforms the size of an "unsigned
->> int" will be smaller than a "size_t", e.g. a 32 bit unsigned v.s. 64
->> bit unsigned. As "struct string_list" is a generic API we use in a lot
->> of places this might cause overflows.
->>=20
->
->>  			printf_ln(Q_("The bundle requires this ref:",
->> -				     "The bundle requires these %d refs:",
->> -				     r->nr),
->> -				  r->nr);
->> +				     "The bundle requires these %"PRIuMAX" refs:",
->> +				     (unsigned long)r->nr),
->> +				  (uintmax_t)r->nr);
->
-> There are more additions of unsigned long here, which will possibly
-> truncate the size_t of r->nr. I must be missing something here that
-> explains why you are making this choice.
+>> +	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] ||
+>> +	    revs.filter)
+> 
+> Did we need to wrap?  With these on a single line, the line is way
+> shorter than the line with "because our hash algorithm is not" on
+> it.
 
-Replied to in the reply to your comment on 1/2.
+Perhaps I was thinking about having one line per "reason", which might
+be extended in the future. But there's no reason to waste space right
+now.
+
+>> +	/*
+>> +	 * Nullify the filter here, and any object walking. We only care
+>> +	 * about commits and tags here. The revs_copy has the right
+>> +	 * instances of these values.
+>> +	 */
+>> +	revs.filter = NULL;
+>>  	revs.blob_objects = revs.tree_objects = 0;
+>>  	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
+>>  	object_array_remove_duplicates(&revs_copy.pending);
+> 
+> OK.  We prepare revs, and we save it to revs_copy, because we
+> perform two traversals, one to determine which bottom commits are
+> required to unbundle the bundle (which is done with the instance
+> "revs"), and then later to actually enumerate the objects to place
+> in the bundle (using "revs_copy").  Is there a reason why we need to
+> remove .filter in order to perform the first traversal?
+> 
+> This is a tangent, but I wish we could reliably determine when we
+> can optimize the first traversal away, by inspecting revs.  If there
+> are any pending objects with UNINTERESTING bit, or members like
+> max_count, max_age, min_age are set, we'd end up traversing down to
+> all roots and the prerequisites list would be empty.
+
+Noted for potential follow-up.
+ 
+>> +	test_expect_success 'filtered bundle: $filter' '
+...
+> 
+> OK.
+> 
+> It is somewhat curious why our bundle tests do not unbundle and
+> check the resulting contents of the repository we unbundle it in.
+
+I haven't checked your response yet, but hopefully this is answered in
+the next patch which teaches Git how to unbundle bundles with this new
+capability.
+
+Thanks,
+-Stolee
