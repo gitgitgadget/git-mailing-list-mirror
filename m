@@ -2,65 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 513E2C433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE5B9C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 12:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242466AbiCGMpM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 07:45:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54038 "EHLO
+        id S242559AbiCGMuY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 07:50:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231908AbiCGMo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 07:44:56 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC5637BE6
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:43:58 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id b5so23102535wrr.2
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:43:58 -0800 (PST)
+        with ESMTP id S242560AbiCGMuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 07:50:22 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F974EA29
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 04:49:24 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id k8-20020a05600c1c8800b003899c7ac55dso1688370wms.1
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 04:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D8mpyPhzgCc6zeBZM5cpYHbR5nnnbJOpOr7wII/8Ymc=;
-        b=bmVtUsYkKQCHMRI3aDzyEX6dPfDtCif+zHigthHwV9sracz8Rf97E8CP5CDxfUIZ8N
-         YUsOrbkt9+LePN7T5/srBqfobHStTcqgkSCMnT+/2CGiqG31y1Tz64niSr7jq7j4xQI6
-         1KIwZUZ7AbrwMFSAzt7t2Gq7sHWq4SWzDbsqWZK53cnLEVGZ0fQF927/vYw57Mfj1zg0
-         n6eCrRvt3A8n4YHiIorSxBUSUeapfDtumexntPbJCBelzWSNllp4zJW1qyoa6CZ9kFAq
-         mmz6tWGnSLmABkvspByN69H72LiyUMpVEBSmrGdgW2tQ+QjxIkgIXaEve3aaFVc60nRt
-         6oqQ==
+        bh=GgVhn/RIHawi9SKobZg4W/rWL7yqKE+K4KX2RrOHIos=;
+        b=T5garc5HYYeBNjRRT4MCGwisMsnwWU1XiIrU/43te7/FnthJ6b+2XQQhNeT8rp5NQA
+         elqeBECi0PRHiqB8GkwJMTDUwmr0PPrqajKpth1a/D2RVCg9TsXC5b4UKz4p3yc/Vnx+
+         0sidNpZARC3kvuo5coCpWSChLgrbBqYIkAZIkQJ5Dv0ksM4baIJDXlLEkkekV+aRLE+h
+         RfT3kuWuYlomCv18keN4zWLCFlosriVaduH7kiQ83MVSAIzdPsKgnwnteheibJUdI8kv
+         828OkLlWKfOK7QC4zn0f9KTzs/dZZId46Lf0CojI2N24UwTlI1htRXcaETrTc6MXCPGa
+         9TkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D8mpyPhzgCc6zeBZM5cpYHbR5nnnbJOpOr7wII/8Ymc=;
-        b=Wjd91I1OCxOvaS1IVkEJQRzM9C/NmunJgc4zdC7IVk0G9AvjmyaE8+OBUmkL0Hf4WK
-         NBxMVOQLsb/4j4hK7E/dmtnO+GoC8FfNFp7hLgfPirH5rPo/BIeJqOyCDj/anqjY+puy
-         eWz+1ENewgoMx6gjwp+40Z302+EXO76yg1cJR1nMM1r/W+O61bgHT2hry5C6GfmpzLJr
-         dduxrUGp9Iujiv/x/IfMJW+Qcdqf448bYlNVQdiL7iA+Y5j+v24tcZlFs4a04qF72NEY
-         SP9TuA8SVHeD71SZ9KsD8/6o1xrpkg5UFnutkbXRDcJF3esr13uOlf+zfbqV9GGDURLS
-         3vxA==
-X-Gm-Message-State: AOAM533z0+Uf3jc/6qCGY0q9gqmWMVybFmAKoeJXihzrYen/44R3cayG
-        kQIG+/rJilDzncirUGjJ15VsPGYSi6tAIA==
-X-Google-Smtp-Source: ABdhPJxNFVW3VAsBCrqVyBioA3gAUcn98VuscpTvYKNtFuLXrWMactrgN9p8i+E5XC7soKJsR2JjzA==
-X-Received: by 2002:a05:6000:15c1:b0:1f0:73d6:b716 with SMTP id y1-20020a05600015c100b001f073d6b716mr8204021wry.293.1646657036652;
-        Mon, 07 Mar 2022 04:43:56 -0800 (PST)
+        bh=GgVhn/RIHawi9SKobZg4W/rWL7yqKE+K4KX2RrOHIos=;
+        b=CeWDWy12MjynP38wIXzLS0xZpO7WyoxPWqXCVEGcs06mROxOvJNJK/1OxUeip87IgX
+         OnJoUZvBiGQs6wkeYo/xBbRzgrZm5aUIubHvKI4LPVM65gkMmKGuzIjMLgv176uTAhhi
+         yU6NV6CYuVEuhp1XTmxQDT8bUaxLRmSr4M2CLmMn4ADKNmIEADT2cS2p9C9TUc4tFOtQ
+         8MXsCbQIVIIcgeHPvgQv7Hi99eKR7EZBqVyTDQWfeLWEcD1iaJfQuvDeVayPEuEdb0hl
+         RAoVr0oGKfY60+ThTnO9Wt6D7FLHPV3WJMeCzx1n93XO2wuhPX3V3MJkjakfmH8jfHq+
+         Of4A==
+X-Gm-Message-State: AOAM532SODbTv4GbGNMNu/4ToCDo88evQf4iw8OJ7OpVShZCDK9/0JvB
+        6GkU5K4Ij27uGzQQV2XcU4jfWVfndkT/gA==
+X-Google-Smtp-Source: ABdhPJyeLDeAFqJROGV0B9cWWuQqY5XW3HpLcd4ERShXLUeA9eR83d1zJ9/ME7Jd0UVDZStc6kQNQQ==
+X-Received: by 2002:a05:600c:21ce:b0:389:9052:a1ca with SMTP id x14-20020a05600c21ce00b003899052a1camr9036138wmj.123.1646657362830;
+        Mon, 07 Mar 2022 04:49:22 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n5-20020a5d5985000000b001f0122f63e1sm5974671wri.85.2022.03.07.04.43.55
+        by smtp.gmail.com with ESMTPSA id o3-20020a1c7503000000b0038100e2a1adsm12729091wmc.47.2022.03.07.04.49.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 04:43:55 -0800 (PST)
+        Mon, 07 Mar 2022 04:49:22 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        Shubham Mishra <shivam828787@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 09/10] tests: change "mkdir -p && write_script" to use "test_hook"
-Date:   Mon,  7 Mar 2022 13:43:40 +0100
-Message-Id: <patch-v2-09.10-121ca23db37-20220307T123909Z-avarab@gmail.com>
+Subject: [PATCH v2 01/15] tests: change some 'test $(git) = "x"' to test_cmp
+Date:   Mon,  7 Mar 2022 13:48:52 +0100
+Message-Id: <patch-v2-01.15-78b9c52551f-20220307T124817Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1242.gfeba0eae32b
-In-Reply-To: <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com> <cover-v2-00.15-00000000000-20220307T124817Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,395 +69,230 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change tests that used a "mkdir -p .git/hooks && write_script" pattern
-to use the new "test_hook" helper instead. The new helper does not
-create the .git/hooks directory, rather we assume that the default
-template will do so for us.
+Change some of the patterns in the test suite where we were hiding the
+exit code from "git" by invoking it in a sub-shell within a "test"
+expression to use temporary files and test_cmp instead.
 
-An upcoming series[1] will extend "test_hook" to operate in a
-"--template=" mode, but for now assuming that we have a .git/hooks
-already is a safe assumption. If that assumption becomes false in the
-future we'll only need to change 'test_hook", instead of all of these
-callsites.
-
-1. https://lore.kernel.org/git/cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com/
+These are not all the occurrences of this anti-pattern, but these in
+particular hid issues where LSAN was dying, and I'd thus marked these
+tests as passing under the linux-leaks CI job in past commits with
+"TEST_PASSES_SANITIZE_LEAK=true". Let's deal with that by either
+removing that marking, or skipping specific tests under
+!SANITIZE_LEAK.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0029-core-unsetenvvars.sh      |  3 +--
- t/t1350-config-hooks-path.sh      |  4 ++--
- t/t3404-rebase-interactive.sh     | 10 ++--------
- t/t3430-rebase-merges.sh          |  6 +++---
- t/t4150-am.sh                     | 24 ++++++------------------
- t/t5403-post-checkout-hook.sh     |  3 +--
- t/t5534-push-signed.sh            | 26 ++++++++------------------
- t/t7113-post-index-change-hook.sh |  7 +++----
- t/t9001-send-email.sh             |  4 +---
- t/t9800-git-p4-basic.sh           |  5 ++---
- 10 files changed, 29 insertions(+), 63 deletions(-)
+ t/t0002-gitfile.sh    |  6 ++++--
+ t/t2200-add-update.sh | 33 +++++++++++++++++++++------------
+ t/t4128-apply-root.sh | 33 ++++++++++++++++++++-------------
+ t/t7103-reset-bare.sh |  7 +++++--
+ 4 files changed, 50 insertions(+), 29 deletions(-)
 
-diff --git a/t/t0029-core-unsetenvvars.sh b/t/t0029-core-unsetenvvars.sh
-index b138e1d9cbc..4e8e90dd982 100755
---- a/t/t0029-core-unsetenvvars.sh
-+++ b/t/t0029-core-unsetenvvars.sh
-@@ -12,8 +12,7 @@ then
- fi
- 
- test_expect_success 'setup' '
--	mkdir -p "$TRASH_DIRECTORY/.git/hooks" &&
--	write_script "$TRASH_DIRECTORY/.git/hooks/pre-commit" <<-\EOF
-+	test_hook --setup pre-commit <<-\EOF
- 	echo $HOBBES >&2
- 	EOF
- '
-diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
-index fa9647a7c0b..f6dc83e2aab 100755
---- a/t/t1350-config-hooks-path.sh
-+++ b/t/t1350-config-hooks-path.sh
-@@ -6,11 +6,11 @@ test_description='Test the core.hooksPath configuration variable'
- 
- test_expect_success 'set up a pre-commit hook in core.hooksPath' '
- 	>actual &&
--	mkdir -p .git/custom-hooks .git/hooks &&
-+	mkdir -p .git/custom-hooks &&
- 	write_script .git/custom-hooks/pre-commit <<-\EOF &&
- 	echo CUSTOM >>actual
- 	EOF
--	write_script .git/hooks/pre-commit <<-\EOF
-+	test_hook --setup pre-commit <<-\EOF
- 	echo NORMAL >>actual
- 	EOF
- '
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index a38f2da7691..f31afd4a547 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -619,9 +619,7 @@ test_expect_success 'rebase a detached HEAD' '
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 76052cb5620..f6356db183b 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -65,9 +65,11 @@ test_expect_success 'check commit-tree' '
+ 	test_path_is_file "$REAL/objects/$(objpath $SHA)"
  '
  
- test_expect_success 'rebase a commit violating pre-commit' '
--
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-commit <<-\EOF &&
-+	test_hook pre-commit <<-\EOF &&
- 	test -z "$(git diff --cached --check)"
- 	EOF
- 	echo "monde! " >> file1 &&
-@@ -636,8 +634,6 @@ test_expect_success 'rebase a commit violating pre-commit' '
+-test_expect_success 'check rev-list' '
++test_expect_success !SANITIZE_LEAK 'check rev-list' '
+ 	git update-ref "HEAD" "$SHA" &&
+-	test "$SHA" = "$(git rev-list HEAD)"
++	git rev-list HEAD >actual &&
++	echo $SHA >expected &&
++	test_cmp expected actual
  '
  
- test_expect_success 'rebase with a file named HEAD in worktree' '
--
--	rm -fr .git/hooks &&
- 	git reset --hard &&
- 	git checkout -b branch3 A &&
+ test_expect_success 'setup_git_dir twice in subdir' '
+diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+index acd3650d3c0..0c38f8e3569 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -14,7 +14,6 @@ only the updates to dir/sub.
+ Also tested are "git add -u" without limiting, and "git add -u"
+ without contents changes, and other conditions'
  
-@@ -1688,10 +1684,8 @@ test_expect_success 'valid author header when author contains single quote' '
- '
- 
- test_expect_success 'post-commit hook is called' '
--	test_when_finished "rm -f .git/hooks/post-commit" &&
- 	>actual &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-commit <<-\EOS &&
-+	test_hook post-commit <<-\EOS &&
- 	git rev-parse HEAD >>actual
- 	EOS
- 	(
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 43c82d9a33b..f351701fec2 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -292,9 +292,9 @@ test_expect_success 'post-rewrite hook and fixups work for merges' '
- 	git commit --fixup HEAD same2.t &&
- 	fixup="$(git rev-parse HEAD)" &&
- 
--	mkdir -p .git/hooks &&
--	test_when_finished "rm .git/hooks/post-rewrite" &&
--	echo "cat >actual" | write_script .git/hooks/post-rewrite &&
-+	test_hook post-rewrite <<-\EOF &&
-+	cat >actual
-+	EOF
- 
- 	test_tick &&
- 	git rebase -i --autosquash -r HEAD^^^ &&
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 159fae8d016..cdad4b68807 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -315,12 +315,10 @@ test_expect_success 'am --patch-format=hg applies hg patch' '
- '
- 
- test_expect_success 'am with applypatch-msg hook' '
--	test_when_finished "rm -f .git/hooks/applypatch-msg" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/applypatch-msg <<-\EOF &&
-+	test_hook applypatch-msg <<-\EOF &&
- 	cat "$1" >actual-msg &&
- 	echo hook-message >"$1"
- 	EOF
-@@ -335,12 +333,10 @@ test_expect_success 'am with applypatch-msg hook' '
- '
- 
- test_expect_success 'am with failing applypatch-msg hook' '
--	test_when_finished "rm -f .git/hooks/applypatch-msg" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/applypatch-msg <<-\EOF &&
-+	test_hook applypatch-msg <<-\EOF &&
- 	exit 1
- 	EOF
- 	test_must_fail git am patch1 &&
-@@ -350,12 +346,10 @@ test_expect_success 'am with failing applypatch-msg hook' '
- '
- 
- test_expect_success 'am with pre-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/pre-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-applypatch <<-\EOF &&
-+	test_hook pre-applypatch <<-\EOF &&
- 	git diff first >diff.actual
- 	exit 0
- 	EOF
-@@ -368,12 +362,10 @@ test_expect_success 'am with pre-applypatch hook' '
- '
- 
- test_expect_success 'am with failing pre-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/pre-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-applypatch <<-\EOF &&
-+	test_hook pre-applypatch <<-\EOF &&
- 	exit 1
- 	EOF
- 	test_must_fail git am patch1 &&
-@@ -383,12 +375,10 @@ test_expect_success 'am with failing pre-applypatch hook' '
- '
- 
- test_expect_success 'am with post-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/post-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	test_hook post-applypatch <<-\EOF &&
- 	git rev-parse HEAD >head.actual
- 	git diff second >diff.actual
- 	exit 0
-@@ -403,12 +393,10 @@ test_expect_success 'am with post-applypatch hook' '
- '
- 
- test_expect_success 'am with failing post-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/post-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	test_hook post-applypatch <<-\EOF &&
- 	git rev-parse HEAD >head.actual
- 	exit 1
- 	EOF
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index d1181816906..978f240cdac 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -10,8 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+-TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success setup '
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-checkout <<-\EOF &&
-+	test_hook --setup post-checkout <<-\EOF &&
- 	echo "$@" >.git/post-checkout.args
- 	EOF
- 	test_commit one &&
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 24d374adbae..7c0a148e73c 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -35,8 +35,7 @@ test_expect_success setup '
- 
- test_expect_success 'unsigned push does not send push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -52,8 +51,7 @@ test_expect_success 'unsigned push does not send push certificate' '
- 
- test_expect_success 'talking with a receiver without push certificate support' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -69,22 +67,19 @@ test_expect_success 'talking with a receiver without push certificate support' '
- 
- test_expect_success 'push --signed fails with a receiver without push certificate support' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	test_must_fail git push --signed dst noop ff +noff 2>err &&
- 	test_i18ngrep "the receiving end does not support" err
+@@ -41,20 +40,28 @@ test_expect_success update '
  '
  
- test_expect_success 'push --signed=1 is accepted' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	test_must_fail git push --signed=1 dst noop ff +noff 2>err &&
- 	test_i18ngrep "the receiving end does not support" err
+ test_expect_success 'update noticed a removal' '
+-	test "$(git ls-files dir1/sub1)" = ""
++	git ls-files dir1/sub1 >out &&
++	test_must_be_empty out
  '
  
- test_expect_success GPG 'no certificate for a signed push with no update' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	if test -n "${GIT_PUSH_CERT-}"
- 	then
- 		git cat-file blob $GIT_PUSH_CERT >../push-cert
-@@ -96,9 +91,8 @@ test_expect_success GPG 'no certificate for a signed push with no update' '
- 
- test_expect_success GPG 'signed push sends push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -139,10 +133,9 @@ test_expect_success GPG 'signed push sends push certificate' '
- 
- test_expect_success GPGSSH 'ssh signed push sends push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -223,9 +216,8 @@ test_expect_success GPG 'inconsistent push options in signed push not allowed' '
- 
- test_expect_success GPG 'fail without key and heed user.signingkey' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -273,9 +265,8 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
- test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- 	test_config gpg.format x509 &&
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -326,10 +317,9 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- test_expect_success GPGSSH 'fail without key and heed user.signingkey ssh' '
- 	test_config gpg.format ssh &&
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-diff --git a/t/t7113-post-index-change-hook.sh b/t/t7113-post-index-change-hook.sh
-index a21781d68a1..58e55a7c779 100755
---- a/t/t7113-post-index-change-hook.sh
-+++ b/t/t7113-post-index-change-hook.sh
-@@ -17,8 +17,7 @@ test_expect_success 'setup' '
+ test_expect_success 'update touched correct path' '
+-	test "$(git diff-files --name-status dir2/sub3)" = ""
++	git diff-files --name-status dir2/sub3 >out &&
++	test_must_be_empty out
  '
  
- test_expect_success 'test status, add, commit, others trigger hook without flags set' '
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir is set." >testfailure
- 			exit 1
-@@ -63,7 +62,7 @@ test_expect_success 'test status, add, commit, others trigger hook without flags
+ test_expect_success 'update did not touch other tracked files' '
+-	test "$(git diff-files --name-status check)" = "M	check" &&
+-	test "$(git diff-files --name-status top)" = "M	top"
++	echo "M	check" >expect &&
++	git diff-files --name-status check >actual &&
++	test_cmp expect actual &&
++
++	echo "M	top" >expect &&
++	git diff-files --name-status top >actual &&
++	test_cmp expect actual
  '
  
- test_expect_success 'test checkout and reset trigger the hook' '
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1 && test "$2" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
- 			exit 1
-@@ -106,7 +105,7 @@ test_expect_success 'test checkout and reset trigger the hook' '
+ test_expect_success 'update did not touch untracked files' '
+-	test "$(git ls-files dir2/other)" = ""
++	git ls-files dir2/other >out &&
++	test_must_be_empty out
  '
  
- test_expect_success 'test reset --mixed and update-index triggers the hook' '
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1 && test "$2" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
- 			exit 1
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 84d0f40d76a..42694fe5841 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2288,9 +2288,7 @@ test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
+ test_expect_success 'cache tree has not been corrupted' '
+@@ -76,9 +83,8 @@ test_expect_success 'update from a subdirectory' '
  '
  
- test_expect_success $PREREQ 'invoke hook' '
--	mkdir -p .git/hooks &&
+ test_expect_success 'change gets noticed' '
 -
--	write_script .git/hooks/sendemail-validate <<-\EOF &&
-+	test_hook sendemail-validate <<-\EOF &&
- 	# test that we have the correct environment variable, pwd, and
- 	# argument
- 	case "$GIT_DIR" in
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index 3c1534c94d6..8b30062c0cf 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -279,8 +279,7 @@ test_expect_success 'run hook p4-pre-submit before submit' '
- 		git p4 submit --dry-run >out &&
- 		grep "Would apply" out
- 	) &&
--	mkdir -p "$git"/.git/hooks &&
--	write_script "$git"/.git/hooks/p4-pre-submit <<-\EOF &&
-+	test_hook -C "$git" p4-pre-submit <<-\EOF &&
- 	exit 0
- 	EOF
- 	(
-@@ -288,7 +287,7 @@ test_expect_success 'run hook p4-pre-submit before submit' '
- 		git p4 submit --dry-run >out &&
- 		grep "Would apply" out
- 	) &&
--	write_script "$git"/.git/hooks/p4-pre-submit <<-\EOF &&
-+	test_hook -C "$git" --clobber p4-pre-submit <<-\EOF &&
- 	exit 1
- 	EOF
- 	(
+-	test "$(git diff-files --name-status dir1)" = ""
+-
++	git diff-files --name-status dir1 >out &&
++	test_must_be_empty out
+ '
+ 
+ test_expect_success 'non-qualified update in subdir updates from the root' '
+@@ -103,7 +109,8 @@ test_expect_success 'replace a file with a symlink' '
+ test_expect_success 'add everything changed' '
+ 
+ 	git add -u &&
+-	test -z "$(git diff-files)"
++	git diff-files >out &&
++	test_must_be_empty out
+ 
+ '
+ 
+@@ -111,7 +118,8 @@ test_expect_success 'touch and then add -u' '
+ 
+ 	touch check &&
+ 	git add -u &&
+-	test -z "$(git diff-files)"
++	git diff-files >out &&
++	test_must_be_empty out
+ 
+ '
+ 
+@@ -119,7 +127,8 @@ test_expect_success 'touch and then add explicitly' '
+ 
+ 	touch check &&
+ 	git add check &&
+-	test -z "$(git diff-files)"
++	git diff-files >out &&
++	test_must_be_empty out
+ 
+ '
+ 
+diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
+index cb3181e8b71..ba89a2f2d73 100755
+--- a/t/t4128-apply-root.sh
++++ b/t/t4128-apply-root.sh
+@@ -2,8 +2,6 @@
+ 
+ test_description='apply same filename'
+ 
+-
+-TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+@@ -26,10 +24,11 @@ diff a/bla/blub/dir/file b/bla/blub/dir/file
+ EOF
+ 
+ test_expect_success 'apply --directory -p (1)' '
+-
+ 	git apply --directory=some/sub -p3 --index patch &&
+-	test Bello = $(git show :some/sub/dir/file) &&
+-	test Bello = $(cat some/sub/dir/file)
++	echo Bello >expect &&
++	git show :some/sub/dir/file >actual &&
++	test_cmp expect actual &&
++	test_cmp expect some/sub/dir/file
+ 
+ '
+ 
+@@ -37,8 +36,10 @@ test_expect_success 'apply --directory -p (2) ' '
+ 
+ 	git reset --hard initial &&
+ 	git apply --directory=some/sub/ -p3 --index patch &&
+-	test Bello = $(git show :some/sub/dir/file) &&
+-	test Bello = $(cat some/sub/dir/file)
++	echo Bello >expect &&
++	git show :some/sub/dir/file >actual &&
++	test_cmp expect actual &&
++	test_cmp expect some/sub/dir/file
+ 
+ '
+ 
+@@ -55,8 +56,10 @@ EOF
+ test_expect_success 'apply --directory (new file)' '
+ 	git reset --hard initial &&
+ 	git apply --directory=some/sub/dir/ --index patch &&
+-	test content = $(git show :some/sub/dir/newfile) &&
+-	test content = $(cat some/sub/dir/newfile)
++	echo content >expect &&
++	git show :some/sub/dir/newfile >actual &&
++	test_cmp expect actual &&
++	test_cmp expect some/sub/dir/newfile
+ '
+ 
+ cat > patch << EOF
+@@ -72,8 +75,10 @@ EOF
+ test_expect_success 'apply --directory -p (new file)' '
+ 	git reset --hard initial &&
+ 	git apply -p2 --directory=some/sub/dir/ --index patch &&
+-	test content = $(git show :some/sub/dir/newfile2) &&
+-	test content = $(cat some/sub/dir/newfile2)
++	echo content >expect &&
++	git show :some/sub/dir/newfile2 >actual &&
++	test_cmp expect actual &&
++	test_cmp expect some/sub/dir/newfile2
+ '
+ 
+ cat > patch << EOF
+@@ -107,8 +112,10 @@ EOF
+ test_expect_success 'apply --directory (quoted filename)' '
+ 	git reset --hard initial &&
+ 	git apply --directory=some/sub/dir/ --index patch &&
+-	test content = $(git show :some/sub/dir/quotefile) &&
+-	test content = $(cat some/sub/dir/quotefile)
++	echo content >expect &&
++	git show :some/sub/dir/quotefile >actual &&
++	test_cmp expect actual &&
++	test_cmp expect some/sub/dir/quotefile
+ '
+ 
+ test_done
+diff --git a/t/t7103-reset-bare.sh b/t/t7103-reset-bare.sh
+index 0de83e36199..a60153f9f32 100755
+--- a/t/t7103-reset-bare.sh
++++ b/t/t7103-reset-bare.sh
+@@ -63,9 +63,12 @@ test_expect_success '"mixed" reset is not allowed in bare' '
+ 	test_must_fail git reset --mixed HEAD^
+ '
+ 
+-test_expect_success '"soft" reset is allowed in bare' '
++test_expect_success !SANITIZE_LEAK '"soft" reset is allowed in bare' '
+ 	git reset --soft HEAD^ &&
+-	test "$(git show --pretty=format:%s | head -n 1)" = "one"
++	git show --pretty=format:%s >out &&
++	echo one >expect &&
++	head -n 1 out >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_done
 -- 
 2.35.1.1242.gfeba0eae32b
 
