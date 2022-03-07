@@ -2,128 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00941C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 808C1C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237077AbiCGPsr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 10:48:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55404 "EHLO
+        id S243917AbiCGPuH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 10:50:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230270AbiCGPsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:48:46 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E621F6462
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:47:50 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id qx21so32846797ejb.13
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 07:47:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=0SawmOa8pckKTkrqgrJ4Bp9e0/I1z8oqAUdd4ocfoDw=;
-        b=ptPrqXiQ+4iwtVbTlfS4KHiVb7s4I+Vw2kdhNrIzliP4sOm8PcvEwdNiSBy+SGEg7b
-         5FpGdZp7dUDIdcvjQpngjzaMshi+Hj2nOYX7NxUq5F2pqJyG7c33T7r7Qpr7DPj1TZDQ
-         4q8fJEh5Xo41aZFZkIPrWGKoR5AseLYnxS03wf8IRsVe4JW8BVaQy0Hwj1vixyCkGB5T
-         cytNjQKKvda8JzIj+btC4dN1xTX3uvqpijefP+qYLst1RMVKXpulYiYj9bd1B6fBDzQc
-         NMZ/CMmv+0kbBCvE3jbu++zRXJsLxbmHHnyZQuvHRppZr18h21/byZ6rfQ+VQb8n+8+C
-         FRVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=0SawmOa8pckKTkrqgrJ4Bp9e0/I1z8oqAUdd4ocfoDw=;
-        b=CE62nHy3xv7pTlMO/3f/0eLRURvYrczc4/0TORGQm4Q4nUTcLynleShMAP8STTbQWP
-         0abLX7ib2iQJHj2p1uOyi2mOLLT0rw6urIR0dtP/2uTdgx31+FHQTFG4BRIDe1Yhxfte
-         FMa5gT5GpRtvsCIwge8fxhfG4k+qTP1jKXHSjw2CB2K5E0e9FaoYi28h8SLSR+sHIYUb
-         AlFG47Zs3iXMmLXBL6orxw6mLBM2OYiOgjCtxt3M7AFdNogRGBpnDaWU+cYMlbQT/Z5E
-         Pk5liUYHHn0lsfgF69jSM7kJ2wWIhIBbgzEayWDYjTm5vOGurJOmwMOieIDaqzMbIZ+Q
-         pYsg==
-X-Gm-Message-State: AOAM5328pot6aOJs71T5SwbO9AREEbjGIEIbGdjDpbTU8hA2i8rw24OP
-        3qFncXtRmjjj9Ppv84qIQ5BlNj9EWKg5KA==
-X-Google-Smtp-Source: ABdhPJwn9cngF5HS/VhNC2RDTLB309HQFRjOT+YeppNbVS9ATM2nxNYbXS3i+Rm/HqBlC29tDIC+ww==
-X-Received: by 2002:a17:907:2d11:b0:6da:924b:748f with SMTP id gs17-20020a1709072d1100b006da924b748fmr9300285ejc.584.1646668068878;
-        Mon, 07 Mar 2022 07:47:48 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id da19-20020a056402177300b00413583e0996sm6300856edb.14.2022.03.07.07.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 07:47:48 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRFaN-001a7v-Py;
-        Mon, 07 Mar 2022 16:47:47 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 11/11] bundle: unbundle promisor packs
-Date:   Mon, 07 Mar 2022 16:47:04 +0100
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
-Message-ID: <220307.8635jtzrvg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S243994AbiCGPt7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 10:49:59 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A66657BB
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:48:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646668126;
+        bh=8BrrfrA93WxJwp7+KSeczsgsUUHUOc97XtUQmpX3Zxs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fCd6ejMQz1ow8tn4Pl6D5vjf+QZUMMTtyIi4iCP5ziXQodADwNwKTBtnExb9AWyAL
+         BGy+2Xb6/0f7lgnsNjwtGVhwMvXJcGUqvC5T3Mz/z5+kBgOWqsrUmKgSvv2UEzlYn0
+         vlOj0HpZns1/2EmcUBn43bw4LEuVOw4m74w2AeDI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU4s-1nzUUM1sVo-00aTUp; Mon, 07
+ Mar 2022 16:48:46 +0100
+Date:   Mon, 7 Mar 2022 16:48:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: win+VS environment has "cut" but not "paste"?
+In-Reply-To: <xmqqee3i2mlw.fsf_-_@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2203071646500.11118@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet> <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+ <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:lRlW1AprUn9mUCz8rP+23WTXYpiNO39EJOzSeSL5WqNU+6hnm8E
+ Sn2kEzLIF/n0pMbUjdagESgbD3umJ32hNxD9Vtlio/tow8T22/tEVfdQb/jRV5sx09vrTOo
+ xlWDGp/6gwyfyeuJ3QF+2KCt6s6pmhL/+J8k/4RdXZQD9ey2VYPiMQzyn48Q3uiOtxPuU8i
+ 6FxIkRbs5662Occ3pNM3Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qkC9YQoU0fM=:lNm/USckLRIohuuPaXnTYa
+ HGhgQCwDvAEkGn5fATKSQ2fRlpEEewa7QoPx/GXiVm9wtAYMJCG5beYAwE0vLjV++rHnRjR5h
+ JczbV6t7dfOGQM4PGBELIwkLEWPLramJ3EWTQq1s0uQzQe75zK6+R7dbuTwL/MF2Zqe1dhxt+
+ bQ5fKeX6ThDCYNg0iAOE/owfRUkAkI2X1zT4Ko7nfWN5DS/n+mw+LVEKhEuGnjDUIQytR0TUi
+ fZ6XGNqw5ew3fUbZKs79Cngs2gffDnHM1NWGtTBn3W/2nf+zR/kJRA9B263zw8poMPwGLMrr+
+ qjLj2xhW7Tbqsx5xiGB1oLTZ/VVvRNWcGmxGwkfoU0s1ZBUr0fCEu7t4ABiK16Ammwj+6uj2l
+ 7KGRnUudGWrjH+E56DcCSmIJW0FCTk20ZdA869hRNqzHKhcN+GlYEvykBIsROS3OZvHrq3WhT
+ B39hEcX8wma8XxYtJO1Qe6VCbeCtkyEaZOa4iGrjo1SKq+LCcCPN81NuGsA2lr4nHTlQmQSUr
+ kyhHScE1eT64Fx4ab3jZF+HGQv8HmgZEnMo6hYZUS5mTNXelciicAvovaesL2mRjo5gs305oj
+ 35ssJP29bTO5WFjIPp08qzf2mvvfcv723n3UquE48hj1xy+phK94JlYxHjA8DhwiYpDjCUqJc
+ MBQYoPZa+xtNfaHHf67I897NTZpXjpzmihSV1+sNsTlTeQ0p+bVopiEqRxKE3Cla2AG/rh7WN
+ /q/W01XUmSlLU3CmEZwCmhLIvyJLe707JZvt1kamwYlQMHlB66QAcsJPYdIaM3OflntHWmvjz
+ jNiuNNTYvlA8gD5glFwiCoXpgqnTKOuUJj1KGgPBBW6Tezs+I64xaKnmhTUBobUqcweOi+NGi
+ uyF05gRcaq2f0D9ZuiyGeAlSqQN7MmN6CBBUIC3bZ13tDLAT664Q9SGjPkzMi0VSQl3/BPong
+ syEpf48AlwM/H67GwBValIubywExzk0t8s5CO8Ni6kMgR+++vVhxIIgNnimw7PEkcagu2tn7F
+ +nGNu9lAkOfSXUNeIuetU0Ta6osiPZ9VJ1izTGEI3laLcklNT0BhFpwkH5WfhfJGaGRMR7voA
+ lioLRJTDQ4Rdd4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
+On Thu, 3 Mar 2022, Junio C Hamano wrote:
 
-> From: Derrick Stolee <derrickstolee@github.com>
+> GitHub CI seems to fail due to lack of "paste" for win+VS job.  This
+> was somewhat unexpected, as our test scripts seem to make liberal
+> use of "cut" that goes together with it.
 >
-> In order to have a valid pack-file after unbundling a bundle that has
-> the 'filter' capability, we need to generate a .promisor file. The
-> bundle does not promise _where_ the objects can be found, but we can
-> expect that these bundles will be unbundled in repositories with
-> appropriate promisor remotes that can find those missing objects.
+>     https://github.com/git/git/runs/5415486631?check_suite_focus=3Dtrue#=
+step:5:6199
 >
-> Use the 'git index-pack --promisor=<message>' option to create this
-> .promisor file. Add "from-bundle" as the message to help anyone diagnose
-> issues with these promisor packs.
+> The particular failure at the URL comes from the use of "paste" in
+> 5ea4f3a5 (name-rev: use generation numbers if available,
+> 2022-02-28), but it hardly is the first use of the command.  There
+> is one use of it in t/aggregate-results.sh in 'master/main' already.
 >
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  bundle.c               | 4 ++++
->  t/t6020-bundle-misc.sh | 8 +++++++-
->  2 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/bundle.c b/bundle.c
-> index e284ef63062..3d97de40ef0 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -631,6 +631,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
->  	struct child_process ip = CHILD_PROCESS_INIT;
->  	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
->  
-> +	/* If there is a filter, then we need to create the promisor pack. */
-> +	if (header->filter)
-> +		strvec_push(&ip.args, "--promisor=from-bundle");
-> +
->  	if (extra_index_pack_args) {
->  		strvec_pushv(&ip.args, extra_index_pack_args->v);
->  		strvec_clear(extra_index_pack_args);
-> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-> index 39cfefafb65..344af34db1e 100755
-> --- a/t/t6020-bundle-misc.sh
-> +++ b/t/t6020-bundle-misc.sh
-> @@ -513,7 +513,13 @@ do
->  		The bundle uses this filter: $filter
->  		The bundle records a complete history.
->  		EOF
-> -		test_cmp expect actual
-> +		test_cmp expect actual &&
-> +
-> +		# This creates the first pack-file in the
-> +		# .git/objects/pack directory. Look for a .promisor.
-> +		git bundle unbundle partial.bdl &&
-> +		ls .git/objects/pack/pack-*.promisor >promisor &&
-> +		test_line_count = 1 promisor
->  	'
->  done
+> We could rewrite the tests that use "paste" but looking at the use
+> of the tool in the test (and the aggregate thing), rewriting them
+> due to lack of a tool, whose source should be freely available from
+> where "cut" was taken from, does not sound like too attractive a
+> direction to go in, but I do not know how much work is involved in
+> adding it (and in general, any basic tool with similar complexity
+> that we may find missing in the future) to the win+VS environment.
 
-Aside from what Junio mentioned, the preceding commit seems to be
-incomplete here. I.e. I'd expect to see this replace a case where we
-died or whatever before. What happened if we invoked "unbundle" before?
+I added it:
+https://github.com/git-for-windows/git-sdk-64/commit/e3ade7eef2503149dfefe=
+630037c2fd6d24f2c14
+
+It will take ~35 minutes (at time of writing) for
+https://dev.azure.com/Git-for-Windows/git/_build/results?buildId=3D95542&v=
+iew=3Dresults
+to make the corresponding artifact available to the
+`setup-git-for-windows-sdk` Action we use.
+
+Ciao,
+Dscho
