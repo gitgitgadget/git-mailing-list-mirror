@@ -2,164 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 920EEC433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 17:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BAA9C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 18:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233272AbiCGRmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 12:42:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55142 "EHLO
+        id S244496AbiCGSEe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 13:04:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbiCGRmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 12:42:49 -0500
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A2293984
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 09:41:54 -0800 (PST)
-Received: by mail-qv1-xf2f.google.com with SMTP id j5so12591097qvs.13
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 09:41:54 -0800 (PST)
+        with ESMTP id S240475AbiCGSEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 13:04:33 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A774DF76
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 10:03:39 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id n2so5076469plf.4
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 10:03:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=wB/vJ9z/t2nTqcb4iYqgR0CzRogR0Bu2AXhcalL3d+E=;
-        b=LiGfACsUNWua8n0iOpXg+zQjGPATmtYjX0lRvHffGvhPHK6j8PZ3vyyOFK0VQi7GLH
-         43PLycsrsLOivZ7aV5GHCyhKEeZ+BMPXzuLAOcZJd3fyI3kKfge/FzjZWGrrUG8uwIjz
-         0/Hy0Tiyek7nCt5NjaMylY9HYrzdV6fXAP5N04d0YxlyZi//olWw8zFfYgqTHmD2/Pi2
-         dq8z2XDeq+ePFFqh45CVu12pmmHvZuFWKrSHLwABCq9GR/5A4y5Lzp9qlnAv5tQG6YLH
-         UcqQF118WvJOjl9avXfNzCR9AKMdxUb2ey7BtgYjf5kVyxMaiknHd2jJmVdHTJ4S3i7w
-         S1+w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HSvjwnbgupIIH5aBA7V3bvgxx3luXpVj8rs0P+cMcxk=;
+        b=UQ4ANHTafRNs2r8/z2l6IEVw9fTybkSXmGEUp3QTSbxcEA0Igfx3YbW4noNMWRkYUt
+         bxo80DO1mtP4z0Ke89cM7SOzSFCjFcpsveX6b1SY5DuqhfOzj1peBG3kYpvY9aJSwlJN
+         BrkBZ5lgnDA5drhzJORdKOphCKliMyiZeaTHv49vc7RYCAS3Iy57FPp578JXiFnPsidi
+         M0KXcEdMSOpEHMu4CkI5smmjedgfOAKn9ZhGUr0oBZYv6y3JD8QS2/AjEWJiABfsgGGk
+         EQERFlLpNk43iYDTdNN/e94WF3AcwbpsWEbyabjXceb4rm0rTxbPZe10OU/J0kLmLnhw
+         Mm4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=wB/vJ9z/t2nTqcb4iYqgR0CzRogR0Bu2AXhcalL3d+E=;
-        b=wNn0IWrV9T5kI+X0zkX8bKuU+1JqOJu/QhqVdXQgjoyChKsXmpqTz0CatEE6kwo5C2
-         VmEe1P0X5nyb2lwinSV9y78fMh29zaEyLmcahzUtKzgIRnyRoPRfch6KlbofBqEYrKl9
-         CvhRx7TlniYHbPfA4jtYQqWW25Okq2dcEMVcCFlITyVff5aE20RsWpF9Yn2kMm6ukHnA
-         xQY1KmtOI1+9h2opPIfsHStxQf2bAaQOAdaYTqqFJibLmJQltCYW3y+0kcPD9AKePhyN
-         H0PR96oJxN1gUDNqeCPMHb/NcIcjcGwxGDbfydfW1WKgsbsXo4yhZXPbkvPzGgwqy8tq
-         j6mQ==
-X-Gm-Message-State: AOAM530S78G8kacTOwaMK07Zq+R4oaJFQnwWQlPB4m/1ej/Kp2CXUHnB
-        WFY2A4oiGlcOJa55Xwtvvumn/er5iVQ=
-X-Google-Smtp-Source: ABdhPJwl6s/wVfx9h6giDNNW8mkvoCSo+qYr8JSXQC4Wuh+umeKoEb52rWNrRLn08cKZnyxcKKAM0w==
-X-Received: by 2002:a05:6214:2609:b0:435:1db0:7578 with SMTP id gu9-20020a056214260900b004351db07578mr9074863qvb.20.1646674913364;
-        Mon, 07 Mar 2022 09:41:53 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id r14-20020a05622a034e00b002de72634a7asm9015490qtw.37.2022.03.07.09.41.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Mar 2022 09:41:52 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cat-file: skip expanding default format
-Date:   Mon, 07 Mar 2022 12:41:52 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <68505E7E-AEED-4DA7-A70F-8B4FE214C05D@gmail.com>
-In-Reply-To: <xmqqilsquwaw.fsf@gitster.g>
-References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
- <xmqqmti2uwzr.fsf@gitster.g> <xmqqilsquwaw.fsf@gitster.g>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HSvjwnbgupIIH5aBA7V3bvgxx3luXpVj8rs0P+cMcxk=;
+        b=wQxCoQAz7HnYJJ8gCBN6TtyWMKchEu1FwZNB+1yOkq5Mqc+io4S8gO/hB4ra/KFkjA
+         aqgg0t0ZUczgd6AyRH6POL9smH5ncrQxqmwVf7fK3A1p7fHgo3Cj/4SOLdEkCHEuWVyc
+         Ih7SgTCDoPkjlfdjlBHHnJZNYUO6aksu9UFP6DqyTe6V0egnscDLUdeyvPfx7hj5GvUZ
+         rjC3lj96bpfhrH6Qnkn2TVyipR6nGbgz0m+FIgywoIn4YT9jNUb99BAnoif9y146MuWg
+         MZUWn9qDps9e0FrXmw46eRY3F5zuLZqYFsq/SYX49KX8QjrLBCaXxom+sX6Z0xImGYj3
+         XgDw==
+X-Gm-Message-State: AOAM533paqiO6GET/0Sx9MaMqOULdcdOvzh9xAT3M8VlF+KESTjmEmor
+        ftDq/Jk9En43MZZRqPJIw8Q=
+X-Google-Smtp-Source: ABdhPJx4qLtDpVP7izmG4AXXdzs1owOFcXwAjg+a8QLL8SgRvXqqkN3J9H59Pp8SkoOvBS40FHYC1Q==
+X-Received: by 2002:a17:903:22cb:b0:151:9f41:8738 with SMTP id y11-20020a17090322cb00b001519f418738mr13761065plg.46.1646676218374;
+        Mon, 07 Mar 2022 10:03:38 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:7d6c:e74e:dfc4:f2bb])
+        by smtp.gmail.com with ESMTPSA id 25-20020a17090a191900b001bf53bab69dsm25620pjg.35.2022.03.07.10.03.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Mar 2022 10:03:38 -0800 (PST)
+Date:   Mon, 7 Mar 2022 10:03:35 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, tytso@mit.edu, derrickstolee@github.com,
+        gitster@pobox.com, larsxschneider@gmail.com
+Subject: Re: [PATCH v3 01/17] Documentation/technical: add cruft-packs.txt
+Message-ID: <YiZI99yeijQe5Jaq@google.com>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1646266835.git.me@ttaylorr.com>
+ <784ee7e0eec9ba520ebaaa27de2de810e2f6798a.1646266835.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <784ee7e0eec9ba520ebaaa27de2de810e2f6798a.1646266835.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On 7 Mar 2022, at 1:11, Junio C Hamano wrote:
+Taylor Blau wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> From: John Cai <johncai86@gmail.com>
->>>
->>> When format is passed into --batch, --batch-check, --batch-command,
->>> the format gets expanded. When nothing is passed in, the default format
->>> is set and the expand_format() gets called.
->>>
->>> We can save on these cycles by hardcoding how to print the
->>> information when nothing is passed as the format, or when the default
->>> format is passed. There is no need for the fully expanded format with
->>> the default. Since batch_object_write() happens on every object provided
->>> in batch mode, we get a nice performance improvement.
->>
->> That is OK in principle, but ...
->>
->>> +	if (!opt->format && !opt->print_contents) {
->>> +		char buf[1024];
->>> +
->>> +		print_default_format(buf, 1024, data);
->>> +		batch_write(opt, buf, strlen(buf));
->>> +		goto cleanup;
->>> +	}
->>> +
->>> +	fmt = opt->format ? opt->format : default_format;
->>
->> ... instead of doing this, wouldn't it be nicer to base the decision
->> to call print_default_format() on purely the contents of the format,
->> i.e.
->>
->> 	fmt = opt->format ? opt->format : default_format;
->> 	if (!strcmp(fmt, DEFAULT_FORMAT) && !opt->print_contents) {
->> 		... the above print_default_format() call block here ...
->> 		goto cleanup;
->> 	}
->>
->> where DEFAULT_FORMAT is
->>
->> #define DEFAULT_FORMAT = "%(objectname) %(objecttype) %(objectsize)"
->>
->> and
->>
->>> @@ -515,9 +543,7 @@ static int batch_objects(struct batch_options *opt)
->>>  	struct expand_data data;
->>>  	int save_warning;
->>>  	int retval = 0;
->>> -
->>> -	if (!opt->format)
->>> -		opt->format = "%(objectname) %(objecttype) %(objectsize)";
->>
->> retain the defaulting with
->>
->> 	if (!opt->format)
->> 		opt->format = DEFAULT_FORMAT;
->>
->> instead of making opt->format == NULL to mean something special?
->>
->> That way, even if the user-input happens to name the format that is
->> identical to DEFAULT_FORMAT, because we only care what the format
->> is, and not where the format comes from, we will get the same
->> optimization.  Wouldn't it make more sense?
->
-> Actually, doing that literally and naively would not be a good idea,
-> as the special case code is inside batch_object_write() that is
-> called once per each object, and because the format used will not
-> change for each call, doing strcmp() every time is wasteful.  The
-> same is true for
->
-> 	fmt = opt->format ? opt->format : default_format;
->
-> as opt->format will not change across calls to this function.
->
-> So, if we were to do this optimization:
->
->  * we key on the fact that opt->format is NULL to trigger the
->    optimization inside batch_object_write(), so that we do not have
->    to strcmp(DEFAULT_FORMAT, fmt) for each and every object.
->
->  * a while loop in batch_objects() or for_each_*_object() calls is
->    what calls batch_object_write() for each object.  So somewhere
->    early in that function (or before we enter the function), we can
->    check opt->format and
->
->     - if it is NULL, we can leave it NULL.
->     - if it is the same as DEFAULT_FORMAT, clear it to NULL.
->
->    so that the optimization in batch_object_write() can cheaply kick
->    in.
->
-> would be a good way to go, perhaps?
+> Create a technical document to explain cruft packs. It contains a brief
+> overview of the problem, some background, details on the implementation,
+> and a couple of alternative approaches not considered here.
 
-thanks for looking into this. Yeah, I think the approach you outlined makes
-sense for the reasons given.
+Sorry for the very slow review!  I've mentioned a few times that this
+overlaps in interesting ways with the gc mechanism described in
+hash-function-transition.txt, so I'd like to compare and see how they
+interact.
+
+[...]
+> --- /dev/null
+> +++ b/Documentation/technical/cruft-packs.txt
+> @@ -0,0 +1,97 @@
+[...]
+> +Unreachable objects aren't removed immediately, since doing so could race with
+> +an incoming push which may reference an object which is about to be deleted.
+> +Instead, those unreachable objects are stored as loose object and stay that way
+> +until they are older than the expiration window, at which point they are removed
+> +by linkgit:git-prune[1].
+> +
+> +Git must store these unreachable objects loose in order to keep track of their
+> +per-object mtimes.
+
+It's worth noting that this behavior is already racy.  That is because
+when an unreachable object becomes newly reachable, we do not update
+its mtime and the mtimes of every object reachable from it, so if it
+then becomes transiently unreachable again then it can be wrongly
+collected.
+
+[...]
+>                                these repositories often take up a large amount of
+> +disk space, since we can only zlib compress them, but not store them in delta
+> +chains.
+
+Yes!  I'm happy we're making progress on this.
+
+> +
+> +== Cruft packs
+> +
+> +A cruft pack eliminates the need for storing unreachable objects in a loose
+> +state by including the per-object mtimes in a separate file alongside a single
+> +pack containing all loose objects.
+
+Can this doc say a little about how "git prune" handles these files?
+In particular, does a non cruft pack aware copy of Git (or JGit,
+libgit2, etc) do the right thing or does it fight with this mechanism?
+If the latter, do we have a repository extension (extensions.*) to
+prevent that?
+
+[...]
+> +  3. Write the pack out, along with a `.mtimes` file that records the per-object
+> +     timestamps.
+
+As a point of comparison, the design in hash-function-transition uses
+a single timestamp for the whole pack.  During read operations, objects
+in a cruft pack are considered present; during writes, they are
+considered _not present_ so that if we want to make a cruft object
+newly present then we put a copy of it in a new pack.
+
+Advantage of the mtimes file approach:
+- less duplication of storage: a revived object is only stored once,
+  in a cruft pack, and then the next gc can "graduate" it out of the
+  cruft pack and shrink the cruft pack
+- less affect on non-gc Git code: writes don't need to know that any
+  cruft objects referenced need to be copied into a new pack
+
+Advantages of the mtime per cruft pack approach:
+- easy expiration: once a cruft pack has reached its expiration date,
+  it can be deleted as a whole
+- less I/O churn: a cruft pack stays as-is until combined into another
+  cruft pack or deleted.  There is no frequently-modified mtimes file
+  associated to it
+- informs the storage layer about what is likely to be accessed: cruft
+  packs can get filesystem attributes to put them in less-optimized
+  storage since they are likely to be less frequently read
+
+[...]
+> +Notable alternatives to this design include:
+> +
+> +  - The location of the per-object mtime data, and
+> +  - Storing unreachable objects in multiple cruft packs.
+> +
+> +On the location of mtime data, a new auxiliary file tied to the pack was chosen
+> +to avoid complicating the `.idx` format. If the `.idx` format were ever to gain
+> +support for optional chunks of data, it may make sense to consolidate the
+> +`.mtimes` format into the `.idx` itself.
+> +
+> +Storing unreachable objects among multiple cruft packs (e.g., creating a new
+> +cruft pack during each repacking operation including only unreachable objects
+> +which aren't already stored in an earlier cruft pack) is significantly more
+> +complicated to construct, and so aren't pursued here. The obvious drawback to
+> +the current implementation is that the entire cruft pack must be re-written from
+> +scratch.
+
+This doesn't mention the approach described in
+hash-function-transition.txt (and that's already implemented and has
+been in use for many years in JGit's DfsRepository).  Does that mean
+you aren't aware of it?
+
+Thanks,
+Jonathan
