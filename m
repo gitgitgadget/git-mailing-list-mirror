@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C19ACC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 00:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DBA3C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 00:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343661AbiCHAQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 19:16:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37248 "EHLO
+        id S1343979AbiCHAQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 19:16:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245557AbiCHAQC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S245592AbiCHAQC (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Mar 2022 19:16:02 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E97737BD9
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 16:15:04 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id v1-20020a25fc01000000b006289a83ed20so14960747ybd.7
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 16:15:04 -0800 (PST)
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DCF137BFA
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 16:15:06 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id b9-20020a17090aa58900b001b8b14b4aabso391540pjq.9
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 16:15:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=s/FLsWLRzpv4s8A/gCDPZWY0SRQ54rF476qzo5TKO5Y=;
-        b=pjER4O+98Y3oIJg5WN77T6QR4fe1vichgvBgHHMXZ3dAK2UW1ygIybepw0ZK4KyEBo
-         r8lhPA40clT6efp87sSwELpki9V3Okj4vV9gYsg/rJ3X1Tu6zstbNsNfWU17QVG76PZT
-         4D0mb592uhTEhJuUDiYyl5FrwcFdiR6b3ynLrXY8IjDDD6jUFATEjczgUmJkW0WNyLCr
-         eDbTvj1Lq6ZBYOrzxY03xzogvkg2rnyXchWDMga++Nahsq9DJloWEmk9kXx7qyln+9Gj
-         rXUi9nbZY4PJ1hCjpO8mrE4vnXjRXCy1hL5cFggC0s1lW5IivvaZRgpNn6SAAyFKdAqY
-         d+5g==
+        bh=0+DUoUS5ilqFWzyXgb3pLwZXXCHYiCAPtFOWIKm3PTw=;
+        b=mUAqLeSxYNWRrljB5bJ7b0B7AJcoy5++Hej4dvxXivTx77bvohmsKxZMaad9ZaRW4m
+         OxSsfOAeyjL02u+mv9Pz9uohLQf/aZR98aZpK2MC6RuV3uPpnFzfBxTIsfqjEpPKSm/e
+         9ZW01OvK1DveuG5bEIR1v9/yxAPFCJ475IGDxgcAyx1uUZb3vfLI7WQELYT3g4sQ69Md
+         AX7FIDcV4Wc7WA0ZxLG40rIQlMqxG2A0t9V78/eg2O/mxPQ4PfpzVPcMeTFySj64qS6D
+         4YBCkCEGSo9EtkRVQGxNn1cSoCuZxDxKvegyAAR/QmlpHMmeTKx47YHqXtTEZdKXbykZ
+         6ojg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=s/FLsWLRzpv4s8A/gCDPZWY0SRQ54rF476qzo5TKO5Y=;
-        b=8EvawB+7fm6aPwaLdQdc2vb2Vwo2etqfrzAJX4qyAZXAxxJ93mg7/aCOgOebXl07Fl
-         Qmr/70gL7p2cI92tqXw20frYA6TZ17p+JxLlEd2pZyndt6Q3BjeP/XlRofz+vzk3gfCJ
-         AS1sZsm59mqFuzNR/xERMiwC0F0V0TXGu9VGiisFSoVT+qviTnuZUFTImkg0YCobaaLv
-         1jOrYIUWm82HUx9dDYvNLAZamOT7AQH2GuVMD1k/sEyI+pyp/05nS5Kxwy7swz93z5Bg
-         AjEMvFCxF2GniROZGiIc7gnp076WVtFdD6hEt+oPk4Hj9aceWZd3UdqhhKRH98erEH+H
-         ROmw==
-X-Gm-Message-State: AOAM531tABt3/fMd0ercATpaNQEQnLEGpYYK2tkljHj9WnN56tf3F/ct
-        /IcXXQ8M3XS103h6d0Q/u53wWscZI+IKHLAKeWAJTpKFOFpJGx1i13P+tJnpiECKyuHkKDVrdKD
-        mYKGZOpcII0nshPQn/r/9Pe6SkupwfTZtykfUB+ivjRcxiiv8WsWYATu8+YE6/3s=
-X-Google-Smtp-Source: ABdhPJw8tAk2PgW2zIr/3oACA86+XXX8z5ljuPRAEz7tAOLBNNLRrjKSUAalEnGBoYFHPTaRP8KCNeBon07S1w==
+        bh=0+DUoUS5ilqFWzyXgb3pLwZXXCHYiCAPtFOWIKm3PTw=;
+        b=USEWsKXXDCqx6ADqGQzVpn5H5GSJy5Cp8iYHEq0RNw6BCV5cL2T3/Q5DT6HDYmvcwR
+         6LIpEh14eOw+41psSPntX8SQ51Jm/aeGnBwkdzCE7imPz2HTK90VCKUDHJUhxVMFJYTx
+         OaW2qsDk+4YS1ga508ezquMTfjSbk5L18RxKZsvf8gi9Z9TCQwgi4YJER6QBCOVaaAF0
+         aNjIl6y8fu/MY6Pqcw2cwCJvNcO/LbdhRPx5DhUeY1QXO00Yfg3iHLJ5Vc4iJHBE0PfH
+         L2qGq91Ou4UEY3GwhFU/8rAvXgGHd6mZbf4edI9bafAwh+VeYiU5npgJFxy0pYs4/ri0
+         Gmcg==
+X-Gm-Message-State: AOAM532nVnsdn9eoG8nHkx++VQ4Wx8VseJLlgSQnRI2CRuTwD3YPzueW
+        tXK+ze/C6kMwV2BorUOG8SoQ4hH6Sf3gAnugIySlFmdsOdGW06MuXFjznTIcbBcJver8a3M85q8
+        u3ZcTi2H5j8O1Uep64SlMzgRQv3t7KBH4M/oUiwtNu/+nVNd5oiVwwNvbZSZvxAA=
+X-Google-Smtp-Source: ABdhPJwHp+dO2r7P/GHtzzb8eJBezpRV5OKLmGoXdPjxhut8DEq3KvZ3I8XD8mTk6EZCVsAYbuy/Mrpey45uKw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a25:d745:0:b0:628:be36:6bf3 with SMTP id
- o66-20020a25d745000000b00628be366bf3mr9845927ybg.350.1646698503682; Mon, 07
- Mar 2022 16:15:03 -0800 (PST)
-Date:   Mon,  7 Mar 2022 16:14:29 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:90b:17d1:b0:1bf:1e3:ded3 with SMTP id
+ me17-20020a17090b17d100b001bf01e3ded3mr1722168pjb.144.1646698505709; Mon, 07
+ Mar 2022 16:15:05 -0800 (PST)
+Date:   Mon,  7 Mar 2022 16:14:30 -0800
 In-Reply-To: <20220308001433.94995-1-chooglen@google.com>
-Message-Id: <20220308001433.94995-7-chooglen@google.com>
+Message-Id: <20220308001433.94995-8-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220304005757.70107-1-chooglen@google.com> <20220308001433.94995-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.616.g0bdcbb4464-goog
-Subject: [PATCH v5 06/10] submodule: store new submodule commits oid_array in
- a struct
+Subject: [PATCH v5 07/10] submodule: extract get_fetch_task()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -66,172 +65,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit prepares for a future commit that will teach `git fetch
---recurse-submodules` how to fetch submodules that are present in
-<gitdir>/modules, but are not populated. To do this, we need to store
-more information about the changed submodule so that we can read the
-submodule configuration from the superproject commit instead of the
-filesystem.
+get_next_submodule() configures the parallel submodule fetch by
+performing two functions:
 
-Refactor the changed submodules string_list.util to hold a struct
-instead of an oid_array. This struct only holds the new_commits
-oid_array for now; more information will be added later.
+* iterate the index to find submodules
+* configure the child processes to fetch the submodules found in the
+  previous step
+
+Extract the index iterating code into an iterator function,
+get_fetch_task(), so that get_next_submodule() is agnostic of how
+to find submodules. This prepares for a subsequent commit will teach the
+fetch machinery to also iterate through the list of changed
+submodules (in addition to the index).
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- submodule.c | 52 ++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 18 deletions(-)
+ submodule.c | 61 +++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 25 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 3bc189cf05..0b9c25f9d3 100644
+index 0b9c25f9d3..7a5316b6f7 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -806,6 +806,20 @@ static const char *default_name_or_path(const char *path_or_name)
- 	return path_or_name;
- }
+@@ -1389,6 +1389,7 @@ struct fetch_task {
+ 	struct repository *repo;
+ 	const struct submodule *sub;
+ 	unsigned free_sub : 1; /* Do we need to free the submodule? */
++	const char *default_argv; /* The default fetch mode. */
  
-+/*
-+ * Holds relevant information for a changed submodule. Used as the .util
-+ * member of the changed submodule string_list_item.
-+ */
-+struct changed_submodule_data {
-+	/* The submodule commits that have changed in the rev walk. */
-+	struct oid_array new_commits;
-+};
-+
-+static void changed_submodule_data_clear(struct changed_submodule_data *cs_data)
-+{
-+	oid_array_clear(&cs_data->new_commits);
-+}
-+
- static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 					  struct diff_options *options,
- 					  void *data)
-@@ -820,6 +834,7 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 		const struct submodule *submodule;
- 		const char *name;
- 		struct string_list_item *item;
-+		struct changed_submodule_data *cs_data;
- 
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
-@@ -848,9 +863,9 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
- 
- 		item = string_list_insert(changed, name);
- 		if (!item->util)
--			/* NEEDSWORK: should we have oid_array_init()? */
--			item->util = xcalloc(1, sizeof(struct oid_array));
--		oid_array_append(item->util, &p->two->oid);
-+			item->util = xcalloc(1, sizeof(struct changed_submodule_data));
-+		cs_data = item->util;
-+		oid_array_append(&cs_data->new_commits, &p->two->oid);
- 	}
- }
- 
-@@ -897,11 +912,12 @@ static void collect_changed_submodules(struct repository *r,
- 	reset_revision_walk();
- }
- 
--static void free_submodules_oids(struct string_list *submodules)
-+static void free_submodules_data(struct string_list *submodules)
- {
- 	struct string_list_item *item;
- 	for_each_string_list_item(item, submodules)
--		oid_array_clear((struct oid_array *) item->util);
-+		changed_submodule_data_clear(item->util);
-+
- 	string_list_clear(submodules, 1);
- }
- 
-@@ -1074,7 +1090,7 @@ int find_unpushed_submodules(struct repository *r,
- 	collect_changed_submodules(r, &submodules, &argv);
- 
- 	for_each_string_list_item(name, &submodules) {
--		struct oid_array *commits = name->util;
-+		struct changed_submodule_data *cs_data = name->util;
- 		const struct submodule *submodule;
- 		const char *path = NULL;
- 
-@@ -1087,11 +1103,11 @@ int find_unpushed_submodules(struct repository *r,
- 		if (!path)
- 			continue;
- 
--		if (submodule_needs_pushing(r, path, commits))
-+		if (submodule_needs_pushing(r, path, &cs_data->new_commits))
- 			string_list_insert(needs_pushing, path);
- 	}
- 
--	free_submodules_oids(&submodules);
-+	free_submodules_data(&submodules);
- 	strvec_clear(&argv);
- 
- 	return needs_pushing->nr;
-@@ -1261,7 +1277,7 @@ static void calculate_changed_submodule_paths(struct repository *r,
- 	collect_changed_submodules(r, changed_submodule_names, &argv);
- 
- 	for_each_string_list_item(name, changed_submodule_names) {
--		struct oid_array *commits = name->util;
-+		struct changed_submodule_data *cs_data = name->util;
- 		const struct submodule *submodule;
- 		const char *path = NULL;
- 
-@@ -1274,8 +1290,8 @@ static void calculate_changed_submodule_paths(struct repository *r,
- 		if (!path)
- 			continue;
- 
--		if (submodule_has_commits(r, path, null_oid(), commits)) {
--			oid_array_clear(commits);
-+		if (submodule_has_commits(r, path, null_oid(), &cs_data->new_commits)) {
-+			changed_submodule_data_clear(cs_data);
- 			*name->string = '\0';
- 		}
- 	}
-@@ -1312,7 +1328,7 @@ int submodule_touches_in_range(struct repository *r,
- 
- 	strvec_clear(&args);
- 
--	free_submodules_oids(&subs);
-+	free_submodules_data(&subs);
+ 	struct oid_array *commits; /* Ensure these commits are fetched */
+ };
+@@ -1466,14 +1467,11 @@ static struct repository *get_submodule_repo_for(struct repository *r,
  	return ret;
  }
  
-@@ -1596,7 +1612,7 @@ static int fetch_finish(int retvalue, struct strbuf *err,
- 	struct fetch_task *task = task_cb;
+-static int get_next_submodule(struct child_process *cp,
+-			      struct strbuf *err, void *data, void **task_cb)
++static struct fetch_task *
++get_fetch_task(struct submodule_parallel_fetch *spf, struct strbuf *err)
+ {
+-	struct submodule_parallel_fetch *spf = data;
+-
+ 	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
+ 		const struct cache_entry *ce = spf->r->index->cache[spf->count];
+-		const char *default_argv;
+ 		struct fetch_task *task;
  
- 	struct string_list_item *it;
--	struct oid_array *commits;
-+	struct changed_submodule_data *cs_data;
+ 		if (!S_ISGITLINK(ce->ce_mode))
+@@ -1493,10 +1491,10 @@ static int get_next_submodule(struct child_process *cp,
+ 					&spf->changed_submodule_names,
+ 					task->sub->name))
+ 				continue;
+-			default_argv = "on-demand";
++			task->default_argv = "on-demand";
+ 			break;
+ 		case RECURSE_SUBMODULES_ON:
+-			default_argv = "yes";
++			task->default_argv = "yes";
+ 			break;
+ 		case RECURSE_SUBMODULES_OFF:
+ 			continue;
+@@ -1504,29 +1502,12 @@ static int get_next_submodule(struct child_process *cp,
  
- 	if (!task || !task->sub)
- 		BUG("callback cookie bogus");
-@@ -1624,14 +1640,14 @@ static int fetch_finish(int retvalue, struct strbuf *err,
- 		/* Could be an unchanged submodule, not contained in the list */
- 		goto out;
+ 		task->repo = get_submodule_repo_for(spf->r, task->sub->path, null_oid());
+ 		if (task->repo) {
+-			struct strbuf submodule_prefix = STRBUF_INIT;
+-			child_process_init(cp);
+-			cp->dir = task->repo->gitdir;
+-			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
+-			cp->git_cmd = 1;
+ 			if (!spf->quiet)
+ 				strbuf_addf(err, _("Fetching submodule %s%s\n"),
+ 					    spf->prefix, ce->name);
+-			strvec_init(&cp->args);
+-			strvec_pushv(&cp->args, spf->args.v);
+-			strvec_push(&cp->args, default_argv);
+-			strvec_push(&cp->args, "--submodule-prefix");
+-
+-			strbuf_addf(&submodule_prefix, "%s%s/",
+-						       spf->prefix,
+-						       task->sub->path);
+-			strvec_push(&cp->args, submodule_prefix.buf);
  
--	commits = it->util;
--	oid_array_filter(commits,
-+	cs_data = it->util;
-+	oid_array_filter(&cs_data->new_commits,
- 			 commit_missing_in_sub,
- 			 task->repo);
+ 			spf->count++;
+-			*task_cb = task;
+-
+-			strbuf_release(&submodule_prefix);
+-			return 1;
++			return task;
+ 		} else {
+ 			struct strbuf empty_submodule_path = STRBUF_INIT;
  
- 	/* Are there commits we want, but do not exist? */
--	if (commits->nr) {
--		task->commits = commits;
-+	if (cs_data->new_commits.nr) {
-+		task->commits = &cs_data->new_commits;
- 		ALLOC_GROW(spf->oid_fetch_tasks,
- 			   spf->oid_fetch_tasks_nr + 1,
- 			   spf->oid_fetch_tasks_alloc);
-@@ -1689,7 +1705,7 @@ int fetch_populated_submodules(struct repository *r,
+@@ -1550,6 +1531,36 @@ static int get_next_submodule(struct child_process *cp,
+ 			strbuf_release(&empty_submodule_path);
+ 		}
+ 	}
++	return NULL;
++}
++
++static int get_next_submodule(struct child_process *cp, struct strbuf *err,
++			      void *data, void **task_cb)
++{
++	struct submodule_parallel_fetch *spf = data;
++	struct fetch_task *task = get_fetch_task(spf, err);
++
++	if (task) {
++		struct strbuf submodule_prefix = STRBUF_INIT;
++
++		child_process_init(cp);
++		cp->dir = task->repo->gitdir;
++		prepare_submodule_repo_env_in_gitdir(&cp->env_array);
++		cp->git_cmd = 1;
++		strvec_init(&cp->args);
++		strvec_pushv(&cp->args, spf->args.v);
++		strvec_push(&cp->args, task->default_argv);
++		strvec_push(&cp->args, "--submodule-prefix");
++
++		strbuf_addf(&submodule_prefix, "%s%s/",
++						spf->prefix,
++						task->sub->path);
++		strvec_push(&cp->args, submodule_prefix.buf);
++		*task_cb = task;
++
++		strbuf_release(&submodule_prefix);
++		return 1;
++	}
  
- 	strvec_clear(&spf.args);
- out:
--	free_submodules_oids(&spf.changed_submodule_names);
-+	free_submodules_data(&spf.changed_submodule_names);
- 	return spf.result;
- }
- 
+ 	if (spf->oid_fetch_tasks_nr) {
+ 		struct fetch_task *task =
 -- 
 2.33.GIT
 
