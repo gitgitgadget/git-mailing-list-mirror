@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F618C433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B4A8C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347556AbiCHOkc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 09:40:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52234 "EHLO
+        id S1347577AbiCHOki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 09:40:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347555AbiCHOkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 09:40:25 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BF8238D9D
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:28 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id t11so28899549wrm.5
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:28 -0800 (PST)
+        with ESMTP id S1347564AbiCHOk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 09:40:29 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB8838DA5
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:29 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id u10so27262770wra.9
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
-        b=O2fjw40CHBQE/K8AR/0TJxndePsrHxJrVyCOHyoAdgYngviJ/9CRM7pQzYmJEGBAPC
-         8S4zGHs1yunoTZiGT+Kgz6JLJm4LC5CQTiLw4ky0EJGB56HT3aiQkbup30d23i4veVg5
-         0x/O/sc768sU9ElC3tnt4GxOBDe7R86mXUUs8V69ZukeScN72ZXmSpMX9Buhkz+nx9bZ
-         yQMH9dJftee4vZ6aF8s6aTL1e6I9BwCZObGrO8eZoZZPqZAQov8oeQQDrEXRb06VSLpE
-         BEqNX4zx2abDjrcFboDDQOq5LQxT+rVsoTEJiDCxNkZ/9o3+MOvXC02/HzBcZxhrwUl7
-         U+Ww==
+        bh=cODEiV4ork0dtdnF/SVv9/aBWdDEJq0vadf34r48t0g=;
+        b=H2hXAzZ8I9Chgf0RM6rJQ2BVbAMzrPc7+Cwdbr2JrrEUlbmMoyD7gu8jCbo6pFW9BR
+         8R6rOj2cetNjH/QG9pyGXD3n+mv08sxV2xnZn2muwYNXqxd7+ygs9ZGHZTwSpIP8qAo3
+         Bu9Yq0fjtRIwhvPG6iCoMq4w434zU/8Ycv3GSSjCRv5+s3M/7nnQRaWEDsLH6TFYQODd
+         N5Obp4hJFsjDR0jWVl3MZvokgQhcH5wQj+pz/Bkz9z7evs9TJdvJtP2FHa1wDUmmubd2
+         fCwQPS9rm7aSOOHQweoEvucrY+ZH3i+qWUBVrrAoiORN2So/DIaQxGB26l5qvGDO+5M/
+         YVFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
-        b=Z18KxtD2aeeFkyQ84B/xxcHxOgX8S4a8xpiqZviBE6KhirOhJC9NQEb6M+zJ2o+7YE
-         1qaCH+7P/64vOaUIat5sR/EP8Ej8GT1SlU4bbHX82YTziuzi2x+94udFy8Ol87WazViW
-         X9F0A5GMdTxvhaexMtIMy8ad9Xq/vlN9cW21c3S0XkSFspYoebDPBt78AO7Xts4RsS3j
-         ULfcoEGV0a0uaCEnGlxvG0CzHZG2EXZ3xXeWYk/mMzaWckuZwWSsTYh+M6XGdQWed+gt
-         N8n98Gs06dXAjDkYDyY3zkyMthQjO5CHKwIZy2q2hiPYvUl2qLmTqrR9Svm1JnHqbOCk
-         AhXg==
-X-Gm-Message-State: AOAM533dnYEcKzYTH56AWr9zQ61CIBGXcAe43rtAS4rEdNBLuFLzJ0P3
-        pUTOcLyRpWovBeh2dsZUnMsbTBmo+Uw=
-X-Google-Smtp-Source: ABdhPJy0wIC19CMgn2eT5fs5cDm/gEBSd5jDobd6msc3u8ewD4w8hsMuQ6nryPolwpCHTuFpkOfb+g==
-X-Received: by 2002:a5d:5850:0:b0:1f0:2d5b:dc35 with SMTP id i16-20020a5d5850000000b001f02d5bdc35mr12385786wrf.344.1646750366418;
-        Tue, 08 Mar 2022 06:39:26 -0800 (PST)
+        bh=cODEiV4ork0dtdnF/SVv9/aBWdDEJq0vadf34r48t0g=;
+        b=BJekvfDqlKhIolu2KxK/t5ckYDa40wzkj9HJzPfB++/kCSkRJVvc1Tp1kEPTy1lXoh
+         s2Po97I4qnoog1UlNc2IfjqrLw8GyBhATpeYV91VAUpdqSwpEwoRvLhbZ3Txqkyl6m1E
+         VlcE+FBpIpo+9BGi2KGgpjVrnCpbFNTYdZpOgC0P2xh2wJ1t0VlQkSAcTr8dVCamwWHT
+         y6VOXJVgU73anBYNPuZLD2o+ZUY+LRK8B2U5bJq9nJ34NA2DzR2i5zKWZMgRyJe34Swy
+         LhOy/a9lKPG6NPXZkrva7E3nO8/Bja4ScuHa56jmOserwrBOMka4eCjDGtIwEzc3kz+g
+         BOow==
+X-Gm-Message-State: AOAM530Nf32422vE1d/BwD1Jcq96eBq2cUbm6nZqKITSeIAvtw87prf5
+        DxCTu8Vk8DsheN6UWBuvsdGCRuXNUt8=
+X-Google-Smtp-Source: ABdhPJytXwUlGU4keWkhq5SelTiH5pKXDs1UaaFIgQntobn+LWjU7/vGANmRLnDIRrvJlWm40QbN5A==
+X-Received: by 2002:adf:d210:0:b0:1f1:f999:b538 with SMTP id j16-20020adfd210000000b001f1f999b538mr6834682wrh.473.1646750368126;
+        Tue, 08 Mar 2022 06:39:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17-20020adfbc11000000b001f023d197b8sm14004629wrg.68.2022.03.08.06.39.25
+        by smtp.gmail.com with ESMTPSA id n188-20020a1ca4c5000000b00389c692a3b5sm1592743wme.42.2022.03.08.06.39.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 06:39:25 -0800 (PST)
-Message-Id: <efc03168818e9328d4d1f47f9d48fe2a46d1e2c9.1646750359.git.gitgitgadget@gmail.com>
+        Tue, 08 Mar 2022 06:39:27 -0800 (PST)
+Message-Id: <025f38290f5a705c80854a42e1abcaba9a9f336d.1646750359.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
         <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 14:39:13 +0000
-Subject: [PATCH v3 06/12] MyFirstObjectWalk: update recommended usage
+Date:   Tue, 08 Mar 2022 14:39:15 +0000
+Subject: [PATCH v3 08/12] bundle: parse filter capability
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,113 +70,182 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change consolidated traverse_commit_list() and
-traverse_commit_list_filtered(). This allows us to simplify the
-recommended usage in MyFirstObjectWalk.txt to use this new set of
-values.
+The v3 bundle format has capabilities, allowing newer versions of Git to
+create bundles with newer features. Older versions that do not
+understand these new capabilities will fail with a helpful warning.
 
-While here, add some clarification on the difference between the two
-methods.
+Create a new capability allowing Git to understand that the contained
+pack-file is filtered according to some object filter. Typically, this
+filter will be "blob:none" for a blobless partial clone.
+
+This change teaches Git to parse this capability, place its value in the
+bundle header, and demonstrate this understanding by adding a message to
+'git bundle verify'.
+
+Since we will use gently_parse_list_objects_filter() outside of
+list-objects-filter-options.c, make it an external method and move its
+API documentation to before its declaration.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/MyFirstObjectWalk.txt | 44 +++++++++++------------------
- 1 file changed, 16 insertions(+), 28 deletions(-)
+ Documentation/technical/bundle-format.txt | 11 ++++++++---
+ bundle.c                                  | 15 ++++++++++++++-
+ bundle.h                                  |  2 ++
+ list-objects-filter-options.c             | 17 +----------------
+ list-objects-filter-options.h             | 20 ++++++++++++++++++++
+ 5 files changed, 45 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index ca267941f3e..8d9e85566e6 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -522,24 +522,25 @@ function shows that the all-object walk is being performed by
- `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
- functions reside in `list-objects.c`; examining the source shows that, despite
- the name, these functions traverse all kinds of objects. Let's have a look at
--the arguments to `traverse_commit_list_filtered()`, which are a superset of the
--arguments to the unfiltered version.
-+the arguments to `traverse_commit_list()`.
+diff --git a/Documentation/technical/bundle-format.txt b/Documentation/technical/bundle-format.txt
+index bac558d049a..b9be8644cf5 100644
+--- a/Documentation/technical/bundle-format.txt
++++ b/Documentation/technical/bundle-format.txt
+@@ -71,6 +71,11 @@ and the Git bundle v2 format cannot represent a shallow clone repository.
+ == Capabilities
  
--- `struct list_objects_filter_options *filter_options`: This is a struct which
--  stores a filter-spec as outlined in `Documentation/rev-list-options.txt`.
--- `struct rev_info *revs`: This is the `rev_info` used for the walk.
-+- `struct rev_info *revs`: This is the `rev_info` used for the walk. If
-+  its `filter` member is not `NULL`, then `filter` contains information for
-+  how to filter the object list.
- - `show_commit_fn show_commit`: A callback which will be used to handle each
-   individual commit object.
- - `show_object_fn show_object`: A callback which will be used to handle each
-   non-commit object (so each blob, tree, or tag).
- - `void *show_data`: A context buffer which is passed in turn to `show_commit`
-   and `show_object`.
+ Because there is no opportunity for negotiation, unknown capabilities cause 'git
+-bundle' to abort.  The only known capability is `object-format`, which specifies
+-the hash algorithm in use, and can take the same values as the
+-`extensions.objectFormat` configuration value.
++bundle' to abort.
 +
-+In addition, `traverse_commit_list_filtered()` has an additional paramter:
++* `object-format` specifies the hash algorithm in use, and can take the same
++  values as the `extensions.objectFormat` configuration value.
 +
- - `struct oidset *omitted`: A linked-list of object IDs which the provided
-   filter caused to be omitted.
- 
--It looks like this `traverse_commit_list_filtered()` uses callbacks we provide
--instead of needing us to call it repeatedly ourselves. Cool! Let's add the
--callbacks first.
-+It looks like these methods use callbacks we provide instead of needing us
-+to call it repeatedly ourselves. Cool! Let's add the callbacks first.
- 
- For the sake of this tutorial, we'll simply keep track of how many of each kind
- of object we find. At file scope in `builtin/walken.c` add the following
-@@ -712,20 +713,9 @@ help understand. In our case, that means we omit trees and blobs not directly
- referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
- `HEAD` in the `pending` list.)
- 
--First, we'll need to `#include "list-objects-filter-options.h"` and set up the
--`struct list_objects_filter_options` at the top of the function.
++* `filter` specifies an object filter as in the `--filter` option in
++  linkgit:git-rev-list[1]. The resulting pack-file must be marked as a
++  `.promisor` pack-file after it is unbundled.
+diff --git a/bundle.c b/bundle.c
+index 7ba60a573d7..41922565627 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -11,7 +11,7 @@
+ #include "run-command.h"
+ #include "refs.h"
+ #include "strvec.h"
 -
------
--static void walken_object_walk(struct rev_info *rev)
--{
--	struct list_objects_filter_options filter_options = { 0 };
--
--	...
------
--
- For now, we are not going to track the omitted objects, so we'll replace those
- parameters with `NULL`. For the sake of simplicity, we'll add a simple
--build-time branch to use our filter or not. Replace the line calling
-+build-time branch to use our filter or not. Preface the line calling
- `traverse_commit_list()` with the following, which will remind us which kind of
- walk we've just performed:
++#include "list-objects-filter-options.h"
  
-@@ -733,19 +723,17 @@ walk we've just performed:
- 	if (0) {
- 		/* Unfiltered: */
- 		trace_printf(_("Unfiltered object walk.\n"));
--		traverse_commit_list(rev, walken_show_commit,
--				walken_show_object, NULL);
- 	} else {
- 		trace_printf(
- 			_("Filtered object walk with filterspec 'tree:1'.\n"));
--		parse_list_objects_filter(&filter_options, "tree:1");
--
--		traverse_commit_list_filtered(&filter_options, rev,
--			walken_show_commit, walken_show_object, NULL, NULL);
-+		CALLOC_ARRAY(rev->filter, 1);
-+		parse_list_objects_filter(rev->filter, "tree:1");
+ static const char v2_bundle_signature[] = "# v2 git bundle\n";
+ static const char v3_bundle_signature[] = "# v3 git bundle\n";
+@@ -33,6 +33,7 @@ void bundle_header_release(struct bundle_header *header)
+ {
+ 	string_list_clear(&header->prerequisites, 1);
+ 	string_list_clear(&header->references, 1);
++	list_objects_filter_release(&header->filter);
+ }
+ 
+ static int parse_capability(struct bundle_header *header, const char *capability)
+@@ -45,6 +46,10 @@ static int parse_capability(struct bundle_header *header, const char *capability
+ 		header->hash_algo = &hash_algos[algo];
+ 		return 0;
  	}
-+	traverse_commit_list(rev, walken_show_commit,
-+			     walken_show_object, NULL);
- ----
++	if (skip_prefix(capability, "filter=", &arg)) {
++		parse_list_objects_filter(&header->filter, arg);
++		return 0;
++	}
+ 	return error(_("unknown capability '%s'"), capability);
+ }
  
--`struct list_objects_filter_options` is usually built directly from a command
-+The `rev->filter` member is usually built directly from a command
- line argument, so the module provides an easy way to build one from a string.
- Even though we aren't taking user input right now, we can still build one with
- a hardcoded string using `parse_list_objects_filter()`.
-@@ -784,7 +772,7 @@ object:
- ----
- 	...
+@@ -220,6 +225,8 @@ int verify_bundle(struct repository *r,
+ 	req_nr = revs.pending.nr;
+ 	setup_revisions(2, argv, &revs, NULL);
  
--		traverse_commit_list_filtered(&filter_options, rev,
-+		traverse_commit_list_filtered(rev,
- 			walken_show_commit, walken_show_object, NULL, &omitted);
++	revs.filter = &header->filter;
++
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
  
- 	...
+@@ -259,6 +266,12 @@ int verify_bundle(struct repository *r,
+ 			     r->nr),
+ 			  r->nr);
+ 		list_refs(r, 0, NULL);
++
++		if (header->filter.choice != LOFC_DISABLED) {
++			printf_ln("The bundle uses this filter: %s",
++				  list_objects_filter_spec(&header->filter));
++		}
++
+ 		r = &header->prerequisites;
+ 		if (!r->nr) {
+ 			printf_ln(_("The bundle records a complete history."));
+diff --git a/bundle.h b/bundle.h
+index 06009fe6b1f..7fef2108f43 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -4,12 +4,14 @@
+ #include "strvec.h"
+ #include "cache.h"
+ #include "string-list.h"
++#include "list-objects-filter-options.h"
+ 
+ struct bundle_header {
+ 	unsigned version;
+ 	struct string_list prerequisites;
+ 	struct string_list references;
+ 	const struct git_hash_algo *hash_algo;
++	struct list_objects_filter_options filter;
+ };
+ 
+ #define BUNDLE_HEADER_INIT \
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index fd8d59f653a..d8597cdee36 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -40,22 +40,7 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
+ 	BUG("list_object_filter_config_name: invalid argument '%d'", c);
+ }
+ 
+-/*
+- * Parse value of the argument to the "filter" keyword.
+- * On the command line this looks like:
+- *       --filter=<arg>
+- * and in the pack protocol as:
+- *       "filter" SP <arg>
+- *
+- * The filter keyword will be used by many commands.
+- * See Documentation/rev-list-options.txt for allowed values for <arg>.
+- *
+- * Capture the given arg as the "filter_spec".  This can be forwarded to
+- * subordinate commands when necessary (although it's better to pass it through
+- * expand_list_objects_filter_spec() first).  We also "intern" the arg for the
+- * convenience of the current command.
+- */
+-static int gently_parse_list_objects_filter(
++int gently_parse_list_objects_filter(
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *arg,
+ 	struct strbuf *errbuf)
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index da5b6737e27..f6fe6a3d2ca 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -72,6 +72,26 @@ struct list_objects_filter_options {
+ /* Normalized command line arguments */
+ #define CL_ARG__FILTER "filter"
+ 
++/*
++ * Parse value of the argument to the "filter" keyword.
++ * On the command line this looks like:
++ *       --filter=<arg>
++ * and in the pack protocol as:
++ *       "filter" SP <arg>
++ *
++ * The filter keyword will be used by many commands.
++ * See Documentation/rev-list-options.txt for allowed values for <arg>.
++ *
++ * Capture the given arg as the "filter_spec".  This can be forwarded to
++ * subordinate commands when necessary (although it's better to pass it through
++ * expand_list_objects_filter_spec() first).  We also "intern" the arg for the
++ * convenience of the current command.
++ */
++int gently_parse_list_objects_filter(
++	struct list_objects_filter_options *filter_options,
++	const char *arg,
++	struct strbuf *errbuf);
++
+ void list_objects_filter_die_if_populated(
+ 	struct list_objects_filter_options *filter_options);
+ 
 -- 
 gitgitgadget
 
