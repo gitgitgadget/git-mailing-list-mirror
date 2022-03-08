@@ -2,134 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2947CC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CEF9C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350524AbiCHWZO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 17:25:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
+        id S236859AbiCHWag (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 17:30:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236364AbiCHWZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 17:25:13 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7AC58390
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:24:15 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id k25so725505iok.8
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:24:15 -0800 (PST)
+        with ESMTP id S236837AbiCHWae (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 17:30:34 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3421958E45
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:29:37 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id b9-20020a17090aa58900b001b8b14b4aabso341126pjq.9
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uNnVZqzIgHmjnsMVK9IVTXmQHxX9mGj4BAmWzjkJLus=;
-        b=7ibqzirxHhIlf5Qt90li1dBpS54xnTfT4zzElvQ0o/ZlZyVkTJGr+935hwocKJabMf
-         Qf8qY863UGMvUXWqSpdu6DS4cdMKPK4snyjfo9WBJefvuRgEkG5YE6hAQ4HiNwz4ovOs
-         oYc72OEPz+FTGCr23bQdrf+6aWdqD9gwg3IJ2vjsoos+3NQOYerkiRsawt0B2F2BW9Wa
-         XMrkXuGIpqkUKEq6SEatuWppd/J1rJvg7ExkrL5Fu2sxkMj2tyFM8ZBnT064gj9zDgyH
-         TBdBIjA6yrOE9VISynN21K/UDejWtj8l8m9FEYxvP5eA/+wXEYfEXcW+etu/z1DSTXDd
-         JJ0Q==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=OU1fZz5kv+rjfwuCsl2+pMwUt+cuZblODSKs5wqVT1E=;
+        b=I9kqPMF0WDh0SBM8z+Z/QAMHehV6hCc79mT92KR3sJEPFmIhoY1gaOrFBYHelyiWQz
+         +W+j7p40r3Q6bL42YOV102o3Cu3lvBftjjegz+m1QC6VgHy+zsBBe9i5aNy//aBZuHAA
+         jcRN6QkMqZrX7ZScYtvzCy0dFRktm45BQYBS1bL6I+VRBRdvB1FEfWuBCkdWaLChviAm
+         kvRItXhV1CWrvDhUEdsodf6sifpRqOolONL3yU5C9LD+AE80kO7InfCtznZ6krkrRglQ
+         /E8+o7OOD5bkA/0cycH/CjHhLpl2ys84E6+SSaeO8Hh//TvIj7xfgTeMSvBTIt3GxKSg
+         MVnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uNnVZqzIgHmjnsMVK9IVTXmQHxX9mGj4BAmWzjkJLus=;
-        b=qU6WvUpXjmWMLWRijlL5Be9e0yJga2YjsxiiBAKZ28aIuFBiCVvTvNXgz8GMebFRfe
-         jKboLnPXx1nP4XMS700I085oI7lWIrSjQ+nPhDiOBYxlsSVjFYCj3QlW6ublJk8NGnhD
-         h0QIwpDDX9guBJE2wc+HvHbQOR7YrF7dhJObQdbLXjaogY7CGcnc9ocyfKavobL7BYoe
-         PjnnNEWWP87hZCSOFHg33vGTFdV3/+078A4twnapEsZ+4Joa/4jL1yDNpEzbp22yV6n1
-         vUnSvz1/YhP6XougB4TZjfviPQqYWlONDZz/d+SlPutTpjnLiEqcyeSXPxHPStP1D20i
-         Lo9A==
-X-Gm-Message-State: AOAM532PYvXkl3aF16COkZHLS/Uls7PzyOv9sTeKoDjJm0CQTmVJTYmc
-        eck0MNMWXGS6Dtg5Gl5e1w/ASw==
-X-Google-Smtp-Source: ABdhPJxrwma1JryL8oX7cBuLcxDw82WL8n1sn1O3sqp5mpWjIhXv/C5zbxFvVUnzF3sJLCqmC+/WWw==
-X-Received: by 2002:a05:6638:4605:b0:319:9afe:baf6 with SMTP id bw5-20020a056638460500b003199afebaf6mr568650jab.165.1646778255237;
-        Tue, 08 Mar 2022 14:24:15 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j9-20020a056e02154900b002c5f02e6eddsm68028ilu.76.2022.03.08.14.24.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 14:24:14 -0800 (PST)
-Date:   Tue, 8 Mar 2022 17:24:14 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2] cat-file: skip expanding default format
-Message-ID: <YifXjuN27U53c46c@nand.local>
-References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
- <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
- <YifSFQ8zEZimCkHl@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YifSFQ8zEZimCkHl@nand.local>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=OU1fZz5kv+rjfwuCsl2+pMwUt+cuZblODSKs5wqVT1E=;
+        b=fL43dIvhMp86Gj0Q3EYj4AggjaXCJIHFcKH+rZPKopWcJ8PcLQKSnu0MUrhUJ8TWa8
+         eA1qEtWtvE6xT/+/2xNw+gN2el3k7frYgqhL5RnhGMQLoDQmz1OEYLMFRelG3zhPeX3F
+         PmbE0/H3WLi1WjvBd0JyrXBhveNCVYyU9qGwdVXPDtQ/g7i0BfiOnynSEI3qTRNjXdjc
+         Tf91QiPkJsOYBII8+s+t4zPbbCsRWWBNt3kyL+MhHi+YgbsZOwg/QrxIOI1ET24+jf3C
+         RM84cQuE1a0SDpO9KOIY5Iaxf6mcv1BFJLY5XPF1BEJZk7H7jmWshSkkbum8vwOzq2iP
+         2f8A==
+X-Gm-Message-State: AOAM532sSgmRnm+rYXkOoIhpfURUNJ+ZvUfopLkQOj7UG1UbMnUDw6VH
+        508xpmVcADPAwGttYD+ffSuA370jdIjY8Q==
+X-Google-Smtp-Source: ABdhPJyJ8VDecjTucrb1ZQDR4EYQkCa5idUzjdN0mRF57fa9YXSOboBKMda2Q689B66zWHl4v6lR7OLUjKx47g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:b709:b0:151:49e7:d4e1 with SMTP
+ id d9-20020a170902b70900b0015149e7d4e1mr20259408pls.144.1646778576664; Tue,
+ 08 Mar 2022 14:29:36 -0800 (PST)
+Date:   Tue, 08 Mar 2022 14:29:32 -0800
+In-Reply-To: <kl6lee3c5bzl.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <kl6lbkyg5b8z.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220203215914.683922-1-emilyshaffer@google.com>
+ <20220301002613.1459916-1-emilyshaffer@google.com> <20220301002613.1459916-3-emilyshaffer@google.com>
+ <kl6lee3c5bzl.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v8 2/3] introduce submodule.hasSuperproject record
+From:   Glen Choo <chooglen@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 08, 2022 at 05:00:53PM -0500, Taylor Blau wrote:
-> On my copy of git.git., it shaves off around ~7ms that we're spending
-> just copying type names back and forth.
+Glen Choo <chooglen@google.com> writes:
 
-...while we're at it, I think we could go a little further and avoid
-doing the mark_query phase altogether, by doing something like:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 652861aa66..59dffda775 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -449,6 +449,9 @@ cmd_update()
+>>  			;;
+>>  		esac
+>>  
+>> +		# Note that the submodule is a submodule.
+>> +		git -C "$sm_path" config submodule.hasSuperproject "true"
+>> +
+>>  		if test -n "$recursive"
+>>  		then
+>>  			(
+>
+> This hunk has a textual conflict with 'ar/submodule-update reroll pt
+> 2', but the fix is easy - just teach "git submodule--helper update" to
+> set the config in C.
 
---- 8< ---
+From our dicussion (offline), it turns out this statement isn't really
+correct because we do set the config in C, but we do it in clone_submodule():
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index ab9a49e13a..4b3cfb9e68 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -542,24 +542,30 @@ static int batch_objects(struct batch_options *opt)
- 	int save_warning;
- 	int retval = 0;
+   diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+   index c5d3fc3817..92986646bc 100644
+   --- a/builtin/submodule--helper.c
+   +++ b/builtin/submodule--helper.c
+   @@ -1839,6 +1839,11 @@ static int clone_submodule(struct module_clone_data *clone_data)
+       git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+                  error_strategy);
 
--	/*
--	 * Expand once with our special mark_query flag, which will prime the
--	 * object_info to be handed to oid_object_info_extended for each
--	 * object.
--	 */
--	memset(&data, 0, sizeof(data));
--	data.mark_query = 1;
--	strbuf_expand(&output,
--		      opt->format ? opt->format : DEFAULT_FORMAT,
--		      expand_format,
--		      &data);
--	data.mark_query = 0;
--	strbuf_release(&output);
- 	if (opt->cmdmode)
- 		data.split_on_whitespace = 1;
+   +	/*
+   +	 * Teach the submodule that it's a submodule.
+   +	 */
+   +	git_config_set_in_file(p, "submodule.hasSuperproject", "true");
+   +
+     free(sm_alternate);
+     free(error_strategy);
 
--	if (opt->format && !strcmp(opt->format, DEFAULT_FORMAT))
-+	memset(&data, 0, sizeof(data));
-+	if (!opt->format || !strcmp(opt->format, DEFAULT_FORMAT)) {
-+		data.info.sizep = &data.size;
-+		data.info.typep = &data.type;
-+
- 		opt->format = NULL;
-+	} else {
-+		/*
-+		 * Expand once with our special mark_query flag, which will prime the
-+		 * object_info to be handed to oid_object_info_extended for each
-+		 * object.
-+		 */
-+		data.mark_query = 1;
-+		strbuf_expand(&output,
-+			      opt->format ? opt->format : DEFAULT_FORMAT,
-+			      expand_format,
-+			      &data);
-+		data.mark_query = 0;
-+		strbuf_release(&output);
-+	}
-+
- 	/*
- 	 * If we are printing out the object, then always fill in the type,
- 	 * since we will want to decide whether or not to stream.
+>> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+>> index 11cccbb333..422c3cc343 100755
+>> --- a/t/t7406-submodule-update.sh
+>> +++ b/t/t7406-submodule-update.sh
+>> @@ -1061,4 +1061,12 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+>>  	)
+>>  '
+>>  
+>> +test_expect_success 'submodule update adds submodule.hasSuperproject to older repos' '
+>> +	(cd super &&
+>> +	 git -C submodule config --unset submodule.hasSuperproject &&
+>> +	 git submodule update &&
+>> +	 git -C submodule config submodule.hasSuperproject
+>> +	)
+>> +'
+>> +
+>>  test_done
+>
+>
+> I think there is a gap in the test coverage. I notice that this doesn't
+> test that we set submodule.hasSuperproject when the submodule is cloned
+> for the first time with 'git submodule update'. I thought that maybe the
+> test for this was here...
+>
+>> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+>> index 40cf8d89aa..833fa01961 100755
+>> --- a/t/t7400-submodule-basic.sh
+>> +++ b/t/t7400-submodule-basic.sh
+>> @@ -115,6 +115,10 @@ inspect() {
+>>  	git -C "$sub_dir" rev-parse HEAD >head-sha1 &&
+>>  	git -C "$sub_dir" update-index --refresh &&
+>>  	git -C "$sub_dir" diff-files --exit-code &&
+>> +
+>> +	# Ensure that submodule.hasSuperproject is set.
+>> +	git -C "$sub_dir" config "submodule.hasSuperproject"
+>> +
+>>  	git -C "$sub_dir" clean -n -d -x >untracked
+>>  }
+>>  
+>
+> But when I removed the "set submodule.hasSuperproject in submodule"
+> line, i.e. 
+>
+>  		git -C "$sm_path" config submodule.hasSuperproject "true"
+>
+> t7400 still passes.
 
---- >8 ---
+So we would expect that newly cloned submodules would pass even without
+this .sh line.
 
-...but in my experiments it doesn't seem to help much. Or, at least, it
-doesn't obviously help, there's too much noise from run to run for me to
-see a worthwhile speed-up here.
+I don't think we need to do this twice in C and in shell. We can move
+this line:
 
-Thanks,
-Taylor
+   +	git_config_set_in_file(p, "submodule.hasSuperproject", "true");
+
+into run-update-procedure (and out of clone_submodule()). This way it's
+guaranteed to touch every submodule (newly cloned or not).
