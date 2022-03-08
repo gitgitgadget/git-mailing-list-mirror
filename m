@@ -2,205 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F99C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 19:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98D84C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 20:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344387AbiCHTpF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 14:45:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
+        id S1349785AbiCHUFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 15:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236303AbiCHTpD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 14:45:03 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77EA4EA31
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 11:44:06 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id v4so299966pjh.2
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 11:44:06 -0800 (PST)
+        with ESMTP id S239634AbiCHUFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 15:05:23 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A3F73AA41
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 12:04:26 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id k5-20020a17090a3cc500b001befa0d3102so2491354pjd.1
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 12:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=JGI9LXsxBlzWBli8TwWoPI7sc8SQ7cbqpoZfxDXoek8=;
-        b=rPOCXFq0MPlN/xPgaZ8DfhrxAwGrSQq4KwMTFSp+RSRWiYlcx8s/1rvmatcq5af5kO
-         P5HqrxuZR/f0tDzxmAF8gMePMm7N+wYsPo8cqbaV/8Gt7X45sFzkXKIdiH9LaRu/sHR0
-         z99TOQjs/Rp/pbQ9MaaKwCbW7u+miX1b8wbMgV4YFq224mLvtsiQ5Tmuuq8o+zk00MSH
-         8XpJFe/vm4erHhdvuOKpkkkyHknqb9RV8LncV7q5NQpGRGeS2OzGbZV7sYUR+1YcfuQE
-         fvuTkoxh67mHuMfahm2FJgz+Q2iCsydFPOeJ7ZgPvwszE+8MuKAAwbyrw00PUkMVzFPU
-         7uSQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BTLa68u6oD1PNpaIOXJPCDihx01OMNgUJD0B6BmhmPo=;
+        b=lI9o8RGgMbOgegv52MYoWq5kI0kVDav8xkdaf+9/ZBQhmCphMzYAwRh1WWmki8RjfE
+         VrssZ+aO10c8eCG0Q2EZn2tiSAPBkOvABK1sjwuBU1kc+ACfnqaeKfcHHPDcdHn4ofLP
+         e8EVFBYvz3rWrFSQENgJwveDBlZwoYTjhlJOmyC674PvKt8yRn/Itbair1RBqRpMrpjl
+         B4UL0CfvR7ZPkqtrzQQ3IwYUSYc1W6/WyFmBkbsDgUuARdh0G6DqBzVLXYKzNXzfkW5i
+         C9gv/s+28cw2uJ43xLsoToC1/hLe6iTyGL0zoKLFVifM6a+8OxV4Rqj8QKvepYu6NjCX
+         x1vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=JGI9LXsxBlzWBli8TwWoPI7sc8SQ7cbqpoZfxDXoek8=;
-        b=oXrOQqywbi7MytI7iY08fTz7u2R2kcP7/7v5a4D7dQXRchXo9sHKB1oJvntB0fxEen
-         +J29tMS7YxdZtf5dbt2oH1ruy+oNeSDwG6NVxZVopXhVPYmg8Vg67zHL6S9YNOXQHkRE
-         zxmzv/EZnfrwdxlfGjWrJbfek+MkrhqeJlxR/XKW1jo85AWpO49lzFuhI68Bv1Bq1I2h
-         IosinbV/xZq4VuS4tbvAvijM0LBZoNOBTz0FyBUXNjm8oJoblPAJaTa/cCzcicUT59Ab
-         M3MrqvTngwBjaBbG/9oebHrctyCcE5PS82uG5UpneZJUbRLzij02pWofI9t1FsevVdDZ
-         dkIw==
-X-Gm-Message-State: AOAM533s2oDOREZ266e0+VLGO2etMIrcLIWAzDG1umuqZ3yUEXwpxPWE
-        Rcwwi4edT2V3h/RnAc0AVj9aMg==
-X-Google-Smtp-Source: ABdhPJwwsZzOPL3j1on7Csy92JQWPeWedkQFQC+hWGeLQW7jxsp09B2xtIKd6O8Hh3EIIlW3HJZ83g==
-X-Received: by 2002:a17:903:41c9:b0:151:a545:2d5f with SMTP id u9-20020a17090341c900b00151a5452d5fmr19600542ple.114.1646768645839;
-        Tue, 08 Mar 2022 11:44:05 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:d378:557f:66de:402f])
-        by smtp.gmail.com with ESMTPSA id h17-20020a63df51000000b0036b9776ae5bsm15804446pgj.85.2022.03.08.11.44.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BTLa68u6oD1PNpaIOXJPCDihx01OMNgUJD0B6BmhmPo=;
+        b=XWaV1CDgfVixLLQRmc4nM7LgW01Hmk11/Ge1d1dsZuimK0busFaUGQVUS88oLMt+h5
+         XkxCUMKffSNsU21EUlu+QJA1tidK1rK0waWmt7A/BoB6FJZtyuqLHl8eVf8Jv5/gAkfD
+         sZRcotaRtMMMfyGDfSTtsk3HBRGw7piV5kfAuGOyDfHK/DD2EqCWRn+4IYp4v8T4ychg
+         JYlwpq5K4iymWksZIjarWMMrGNgOa3sJIMqULqMijqdq34YEvNEmwg8gi8bIWLlSyUso
+         l5LdtJl9a2U03TaWzAAWw+llStueUH6ohLstOwWAss3dKQNDEiLK9fKFYhyzM2a3zNen
+         hhhQ==
+X-Gm-Message-State: AOAM531iXt4Xipk7ZSZ3x6W6rPla9udbzjPRX72+hCbqeXB577po79Wr
+        k8VYYnzfAa6mNS5We7cv1usfOQ==
+X-Google-Smtp-Source: ABdhPJy+UVTVdhycuPAt458DWrj6GJxEhRYae3RoKt16qXrCiRDSlCnAF9d5q3RtId+F+hPbvG+sAA==
+X-Received: by 2002:a17:90a:2ec2:b0:1bc:8bdd:8cfc with SMTP id h2-20020a17090a2ec200b001bc8bdd8cfcmr6588618pjs.237.1646769865315;
+        Tue, 08 Mar 2022 12:04:25 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:7bb4:8168:2ecc:faea])
+        by smtp.gmail.com with ESMTPSA id mp10-20020a17090b190a00b001bf8453aea8sm3565142pjb.42.2022.03.08.12.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 11:44:05 -0800 (PST)
-Date:   Tue, 8 Mar 2022 11:43:59 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>, git <git@vger.kernel.org>
-Subject: Re: What does it mean to have multiple upstream tracking branches?
-Message-ID: <Yiex/y8s7mlHTydz@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>, git <git@vger.kernel.org>
-References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
- <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
- <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqzgm2vjab.fsf@gitster.g>
- <CAPMMpoh38fm-jNi=GD+uf6O+JLiJz-ue2zh5ceWpwmTYBRKzvw@mail.gmail.com>
- <220307.86a6e20xi2.gmgdl@evledraar.gmail.com>
+        Tue, 08 Mar 2022 12:04:24 -0800 (PST)
+Date:   Tue, 8 Mar 2022 12:04:18 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v8 2/3] introduce submodule.hasSuperproject record
+Message-ID: <Yie2wvbviWxhia2e@google.com>
+References: <20220203215914.683922-1-emilyshaffer@google.com>
+ <20220301002613.1459916-1-emilyshaffer@google.com>
+ <20220301002613.1459916-3-emilyshaffer@google.com>
+ <xmqqbkyqupg6.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220307.86a6e20xi2.gmgdl@evledraar.gmail.com>
+In-Reply-To: <xmqqbkyqupg6.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022.03.07 13:12, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Feb 28, 2022 at 11:00:57PM -0800, Junio C Hamano wrote:
 > 
-> On Mon, Mar 07 2022, Tao Klerks wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 > 
-> > On Sun, Mar 6, 2022 at 10:54 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Glen Choo <chooglen@google.com> writes:
-> >>
-> >> > Not that I would ever _recommend_ someone to work like this though.
-> >> > Junio also wondered whether anyone uses this [1].
-> >> >
-> >> > [1] https://lore.kernel.org/git/xmqqbl2hw10h.fsf@gitster.g
-> >>
-> >> I actually think the current octopus behaviour is a sensible one
-> >> (after all, that was what we envisioned how it would be used when we
-> >> did the mechanism long time ago).  If you have mutliple, say source
-> >> and docs, groups working for you and you are taking their work from
-> >> time to time, something like this:
-> >>
-> >>     [branch "main"]
-> >>         remote = central-repo
-> >>         merge = sources
-> >>         merge = docs
-> >>
-> >> would let your folks push into the central-repo, and a "git pull"
-> >> will help you advance your main branch that you'll publish later.
-> >>
-> >> You can explain multiple .merge entries for such an integration
-> >> branch like I just did and I think such an explanation makes perfect
-> >> sense, but these are quite different from what we view as "upstream"
-> >> in the traditional sense.  In the setting illustrated here, yours is
-> >> the main integration repository, the center of the universe, and
-> >> those folks working in the 'sources' and 'docs' groups view yours as
-> >> their "upstream".
-> >>
-> >> So, "what does it mean to have multiple branch.*.merge entries" has
-> >> a good answer: you are integrating from these contributors and these
-> >> entries are not your "upstream" in the usual sense---you do not even
-> >> push back to them.  Asking "what does it mean to have multiple
-> >> upstream" makes little sense, I would think.
-> >>
-> >> Now, with the 'main' branch used in such a manner, if you did
-> >>
-> >>    $ git branch --track=inherit topic main
-> >>
-> >> and worked on the "topic" branch, you do not push back to either the
-> >> sources or docs of the central-repo, of course, but it is unclear if
-> >> you even want to "pull" to create octopus from these two branches at
-> >> the central-repo, which essentially duplicates the pull's you would
-> >> do on your 'main' branch.  I suspect that you'd rather want to merge
-> >> updates 'main' accumulated (or rebase on them).
-> >>
-> >> The reason why I asked what Josh's plans are for the multiple .merge
-> >> entries in that thread [1] when the "--inherit" feature was being
-> >> invented was exactly about this point.  I wondered if last-one-wins
-> >> may make sense (and as the above octopus set-up tells us, it may
-> >> not), but if we want to keep "multiple .merge entries means an
-> >> integrator making octpus merges", then it may make sense not to copy
-> >> them when there are multiple with "--track=inherit", to avoid
-> >> spreading the "curious" nature of the branch like 'main' depicted
-> >> above.
-> >
-> > Given that the notion of "inherit"ing the tracking configuration is a
-> > (relatively) new one anyway, and given the slightly esoteric nature of
-> > the "multiple branch merge entries lead to octopus merges"
-> > functionality, I would argue that it makes more sense to die when
-> > branching under this specific configuration, saying something like
-> > "inheriting the tracking configuration of a branch with multiple
-> > branch merge entries is not supported - we think you're making a
-> > mistake".
+> > +	/*
+> > +	 * Note location of superproject's gitdir. Because the submodule already
+> > +	 * has a gitdir and local config, we can store this pointer from
+> > +	 * worktree config to worktree config, if the submodule has
+> > +	 * extensions.worktreeConfig set.
+> > +	 */
 > 
-> I don't know if this is plausible in this case, but we need to be very
-> careful with that in general. I.e. some people might set the "sensible"
-> default remote config for "origin" in their ~/.gitconfig or whatever,
-> including "merge" for a "master" and all.
-> 
-> Then expect that if they have a local repo that we'll take whatever
-> custom values there to override them, if any.
-> 
-> So for most config variables that take a "last set wins" it's a feature
-> to ignore any previous entries.
-> 
-> But in this case it might be different due to the odditity of the remote
-> config, how we almost always manage it with "git remote" or "git clone"
-> etc.
-> 
-> > Skipping the creation of tracking entries in this case, even with a
-> > warning/explanation output to stdout, would be a "slightly hidden
-> > surprise", in that git command output is often not read by, or even
-> > visible to users when a command is successful, eg in a GUI.
-> >
-> > If we think this will basically never happen and really makes no sense
-> > anyway, as Junio seems to suggest, then I would argue the extra
-> > complexity in the codebase to support the "inheriting multiple branch
-> > merge entries" is unwarranted.
-> >
-> > Either way, I will happily drop this topic as it does not appear to
-> > require follow-up in direct relation to my "--track=simple"
-> > work/proposal. On the other hand, I'd be happy to work on a patch to
-> > eliminate this multi-tracking-branch-inheritance path/support (undoing
-> > some of Josh's work here) if the team believes this makes sense.
-> 
-> Just on my side: Don't take any of my comments in this thread as a "we
-> shouldn't do this", it was genuine confusion, thanks for clearing it up
-> :)
-> 
-> Perhaps a gently step into adding validation for this (if needed) is to
-> do the die()/advise() or whatever or the write (i.e. when we copy
-> branches, or use --track=inherit) v.s. when we use the config (in "git
-> fetch" et al) ?
+> Probably the comment is a bit stale.  There is no longer a pointer
+> or location of superproject's gitdir recorded anywhere.
 
-Sorry for the late response to this thread. I don't have strong feelings
-regarding either keeping the current --track=inherit behavior or
-disallowing inheritance of multiple merge options. However, here is my
-original thinking that led me to the current implementation:
+Thanks. I considered replacing it with a new comment about "now we'll
+note that it's got a superproject", but I think that's clear enough from
+the config set line, so I deleted the comment entirely.
 
-If someone is using multiple merge branches, they are already treating
-the "upstream" config in a somewhat non-standard manner, as Junio
-already mentioned. Presumably, they know what they're doing. While the
---track=inherit mode is intended for automatically setting up *push*
-configuration, there may be some unforeseen-by-me benefit to also
-inheriting this non-standard setup. Since there's nothing technical
-preventing inheriting multiple merge branches, it seems better to trust
-the user to know what they're doing, rather than put a die() in place to
-stop them.
+> 
+> > +	strbuf_addf(&config_path, "%s/config", real_new_git_dir);
+> > +	git_configset_init(&sub_cs);
+> > +	git_configset_add_file(&sub_cs, config_path.buf);
+> > +
+> > +	git_config_set_in_file(config_path.buf, "submodule.hasSuperproject",
+> > +			       "true");
+> > +
+> > +	git_configset_clear(&sub_cs);
+> > +	strbuf_release(&config_path);
+> > +	strbuf_release(&sb);
+> >  	free(old_git_dir);
+> >  	free(real_old_git_dir);
+> >  	free(real_new_git_dir);
+> > diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> > index 40cf8d89aa..833fa01961 100755
+> > --- a/t/t7400-submodule-basic.sh
+> > +++ b/t/t7400-submodule-basic.sh
+> > @@ -115,6 +115,10 @@ inspect() {
+> >  	git -C "$sub_dir" rev-parse HEAD >head-sha1 &&
+> >  	git -C "$sub_dir" update-index --refresh &&
+> >  	git -C "$sub_dir" diff-files --exit-code &&
+> > +
+> > +	# Ensure that submodule.hasSuperproject is set.
+> > +	git -C "$sub_dir" config "submodule.hasSuperproject"
+> 
+> Are we sufficiently happy to see the variable is set to anything, or
+> do we require it to be set to boolean true?
+> 
+> If the former, the above is fine, with trailing && added.
+> 
+> If the latter, then something like
+> 
+> 	val=$(git config --type=bool "submodule.hasSuperproject") &&
+> 	test "$val" = true &&
+> 
+> would be more appropriate, but I wonder something like
+> 
+> test_config_is () {
+> 	local var expect val
+> 	var="$1" expect="$2"
+> 	shift 2
+>         val=$(git "$@" config --type=bool "$var") &&
+> 	test "$val" = "$expect"
+> }
+> 
+> would be in order.  That would allow us to write
+> 
+> 	test_config_is submodule.hasSuperproject true -C "$sub_dir" &&
+> 
 
-If folks feel that I'm wrong in my reasoning here, I'm happy to help
-review patches to fix the issue, and wouldn't feel like anyone is
-stepping on my toes if they do so :).
+This seemed neat, so I started to look into implementing it, and found
+`test_cmp_config()` which takes additional args to pass to `git config`
+- so I should be able to achieve this same thing with
+`test_config_is -C "$sub_dir" --type=bool true submodule.hasSuperproject`.
+
+> >  	git -C "$sub_dir" clean -n -d -x >untracked
+> >  }
+> >  
+> > diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> > index 11cccbb333..422c3cc343 100755
+> > --- a/t/t7406-submodule-update.sh
+> > +++ b/t/t7406-submodule-update.sh
+> > @@ -1061,4 +1061,12 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+> >  	)
+> >  '
+> >  
+> > +test_expect_success 'submodule update adds submodule.hasSuperproject to older repos' '
+> > +	(cd super &&
+> > +	 git -C submodule config --unset submodule.hasSuperproject &&
+> 
+> Are we testing that submodule.hasSuperproject is set, and that
+> it can successfully be unset?  "config --unset no.such.var" will
+> exit with non-zero status.
+> 
+> > +	 git submodule update &&
+> > +	 git -C submodule config submodule.hasSuperproject
+> 
+> Ditto.
+
+Ah, thanks.
