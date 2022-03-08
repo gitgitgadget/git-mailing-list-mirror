@@ -2,112 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B629BC433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 16:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F6AAC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 16:59:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346381AbiCHQzv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 11:55:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38360 "EHLO
+        id S237545AbiCHRAS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 12:00:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345576AbiCHQzu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 11:55:50 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE31D4EA31
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 08:54:53 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id p3-20020a17090a680300b001bbfb9d760eso2736126pjj.2
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 08:54:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:to:subject:references
-         :in-reply-to:content-transfer-encoding;
-        bh=q/dL+5swoRhtyeszO22iOJLCMTeaEirlRwbqDG2TXCo=;
-        b=bVONhY99sA7FWCzeJVrnh4RSG6IyhXe5Dz7E0EhVMpyIXm/pKEKBKwCapXcKHmd02/
-         KSgclyHhqCcpU/oOqy8tsUcB3TuDaoLzyfK3pgYAEzX5djc7lPLna3rLzdKIjj6TwbgX
-         ZaBli3ERLz5s2L6ckll0XOBImatjhu/l7cLy0Ou+RzZOpNva+J687m7FqbuN84g1bIvP
-         IjBWVSY4uddAdS/WhqXY01prbIHQ5y2Y3KI3ze1qVfVxeoMUdW0HjMbCXlIdoL5joZld
-         kXHGwK/y5dBV9Z51ogBS82RWw1M2ZBmIGzeRUpYgYlxsmA+KXA/dXFWjv1f3T6/FFlsN
-         ulOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
-         :subject:references:in-reply-to:content-transfer-encoding;
-        bh=q/dL+5swoRhtyeszO22iOJLCMTeaEirlRwbqDG2TXCo=;
-        b=Y28h99YBllv20UdgOPgllfeIod7eY+h+hE6bnVfNTNRvLRn0rQEVh6l+3VseHqgmkb
-         6/Y6SHcmOlMh5duB0Di3mHk68IBtyfK6Tklp/a1rJKgC85HC/Cfqk+btQDqVtivPgPdb
-         PVvEARflFxyKvqfpUCYS90nYuc5mUD/6xHleG0lfTSuXOhPgGgZn81DGvqlQueP+Tsnr
-         csvnJbHY35AtZpPz+k3NzFLV6uDRzy6j6AdNqLxFUmYiCWTdy2aJqK+KNI2yL0JKCo6O
-         v3QKmme4IEQQvY2cIctn7rrG/fttCAbOuYlpIXsNGVcU7DOcp/jvdWUhwy+IUv5yM9bK
-         duOw==
-X-Gm-Message-State: AOAM530UlOT61MbC9miDmJxbtcpyUC/Hlj7cFH7XTqMiS591d/5NFz4v
-        gGraQ7rkfqkuz2CuzK6C5fhJV1vC/DOZpQ==
-X-Google-Smtp-Source: ABdhPJwmgXDdnAJ9IwK+hTmcWqCf56c3sosTh+B3WzE4jv3uq75UlBl4d6XL+OQNiHYMTBR0Cf0z2w==
-X-Received: by 2002:a17:902:f707:b0:14a:fd51:3b5f with SMTP id h7-20020a170902f70700b0014afd513b5fmr18845040plo.98.1646758493164;
-        Tue, 08 Mar 2022 08:54:53 -0800 (PST)
-Received: from ?IPV6:2405:201:a800:4df9:5194:c9b1:2d1f:598e? ([2405:201:a800:4df9:5194:c9b1:2d1f:598e])
-        by smtp.gmail.com with ESMTPSA id c5-20020a056a00248500b004f6b5ddcc65sm17775416pfv.199.2022.03.08.08.54.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 08:54:52 -0800 (PST)
-Message-ID: <cf8a9316-c81e-2477-a565-1c38a168fc67@gmail.com>
-Date:   Tue, 8 Mar 2022 22:24:47 +0530
+        with ESMTP id S229740AbiCHRAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 12:00:16 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0630352E34
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 08:59:18 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2125118070;
+        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J065rLn3XrjwcJ94FhyMkyFdlxtkzciLQazOgE
+        aUxUk=; b=kOP3vkRgEu/BO0VMSpqVDQOXpSDKMpNjXNXwd9Qcok/3llU2h7N57W
+        KU+Yr7zKhI4qh/SUBO8ibcCtwHrxq3uAB2sjN6xGvDZLWdMHDf34I6rhrrfOJ1cT
+        B5fPjeNWUOyYJIcAgtgGAFr+btgmxiv1EiVBvhhRoGX5B0KOdbLys=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C823711806F;
+        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C4A011806C;
+        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2] cat-file: skip expanding default format
+References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
+        <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
+Date:   Tue, 08 Mar 2022 08:59:16 -0800
+In-Reply-To: <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com> (John
+        Cai via GitGitGadget's message of "Tue, 08 Mar 2022 02:54:23 +0000")
+Message-ID: <xmqqmti0nzx7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   jaydeepjd.8914@gmail.com
-To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH v5] userdiff: add builtin diff driver for kotlin language.
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
- <20220306111539.336475-1-jaydeepjd.8914@gmail.com>
- <8799cd42-bb05-a827-187d-33fb03565f21@kdbg.org>
-In-Reply-To: <8799cd42-bb05-a827-187d-33fb03565f21@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1714AB5E-9F01-11EC-A8A8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I guess that the suffix u is intended to mark unsigned integers. So, I
-> would say that the alternatives [fFlL] and [fFlLuU] should be swapped.
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 7b3f42950ec..ab9a49e13a4 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -351,6 +351,14 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+>  	}
+>  }
+>  
+> +static int print_default_format(char *buf, int len, struct expand_data *data)
+> +{
+> +	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
+> +		 data->info.type_name->buf,
+> +		 (uintmax_t)*data->info.sizep);
+> +
+> +}
 
-Okay.
+OK.  We want size and type if we were to show the default output out
+of the object-info API.
 
-> Furthermore, is it intentional that you do not recognize the '_' digit
-> separator in floating point numbers that begin with a decimal point?
+>  /*
+>   * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
+>   * which the object may be accessed (though note that we may also rely on
+> @@ -363,6 +371,11 @@ static void batch_object_write(const char *obj_name,
+>  			       struct packed_git *pack,
+>  			       off_t offset)
+>  {
+> +	struct strbuf type_name = STRBUF_INIT;
+> +
+> +	if (!opt->format)
+> +		data->info.type_name = &type_name;
 
-No. I will fix it.
+And at this point, !opt->format means we would use the default
+format, so we cannot leave .type_name member NULL.  That is OK
+but puzzling.  Why didn't we need this before?
 
-> > +	 /* unary and binary operators */
-> > +	 "|[-+*/<>%&^|=!]?==?|--|\\+\\+|<<?=?|>>?=?|&&|\\|[|]?|->|\\.\\*|!!|::|[?:.][.:]"),
-> 
-> What is the justification that there is still "|&&|\\|[|]?|" instead of
-> "|&&|\\|\\||" that I suggested (and I think I stressed that the point is
-> that single-character operators are matched elsewhere) and to which you
-> said "yes, right"?
+If the caller is batch_objects(), there is the "mark_query" call to
+strbuf_expand() to learn which field in data->info are needed, so
+it seems that this new code should NOT be necessary.
 
-Yes. Must have slipped my mind. Sorry.
+    Side note.  I briefly wondered if this expand is something you
+    would want to optimize when the default format is used, but this
+    is just "probe just once to ensure various members of data->info
+    are populated, to prepare for showing hundreds of objects in the
+    batch request", so it probably is not worth it.
 
-> Also, the part "|<<?=?|>>?=?|" can match <, >, <=, and >=, all of which
-> are matched by other expressions, so you could reduce it to "|<<=|>>=|",
-> because that are the only tokens that they must match.
+I am guessing that this is for callers that do not come via
+batch_objects() where the "mark_query" strbuf_expand() is not made?
+If so,
 
-Alright.
+ * why is it sufficient to fill .type_name and not .sizep for the
+   default format (i.e. when opt->format is NULL)?
 
-So, the final regexes are these, right?: 
+ * why is it OK not to do anything for non-default format?  If no
+   "mark_query" call has been made, we wouldn't be preparing the
+   .type_name field even if the user-supplied format calls for
+   %(objecttype), would we?
 
+Looking at the call graph:
 
-	 "[a-zA-Z_][a-zA-Z0-9_]*"
-	 /* hexadecimal and binary numbers */
-	 "|0[xXbB][0-9a-fA-F_]+[lLuU]*"
-	 /* integers and floats */
-	 "|[0-9][.]?[0-9_]+([Ee][-+]?[0-9]+)?[fFlLuU]*"
-	 /* floating point numbers beginning with decimal point */
-	 "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlL]?"
-	 /* unary and binary operators */
-	 "|[-+*/<>%&^|=!]?==?|--|\\+\\+|<<=|>>=|&&|[||]|->|\\.\\*|!!|::|[?:.][.:]"),
+ - batch_object_write() is called by
+   - batch_one_object()
+   - batch_object_cb()
+   - batch_unordered_object()
 
+ - batch_one_object() is called only by batch_objects()
+ - batch_object_cb() is used only by batch_objects()
 
-Thanks,
-Jaydeep.
+ - batch_unordered_object() is called by
+   - batch_unordered_loose()
+   - batch_unordered_packed()
+   and these two are called only by batch_objects()
 
+And the "mark_query" strbuf_expand() to probe which members in
+expand_data are are necessary is done very early, before any of the
+calls batch_objects() makes that reach batch_object_write().
 
+OK, so my initial guess that the new "we need .type_name member to
+point at a strbuf" is because there are some code that bypasses the
+"mark_query" strbuf_expand() in batch_objects() is totally wrong.
+Everybody uses the "mark_query" thing.  Then why do we need to ask
+type_name?
 
+Going back to the new special case print_default_format() gives us
+the answer to the question.  It expects that data->info already
+knows the stringified typename in the type_name member.  The
+original slow code path in expand_atom() uses this, instead:
+
+	} else if (is_atom("objecttype", atom, len)) {
+		if (data->mark_query)
+			data->info.typep = &data->type;
+		else
+			strbuf_addstr(sb, type_name(data->type));
+
+Which makes me wonder:
+
+ * Is calling type_name(data->type) for many objects a lot less
+   efficient than asking the stringified type_name from the
+   object-info layer?  If that is the case, would you gain
+   performance for all cases if you did this instead
+
+	} else if (is_atom("objecttype", atom, len)) {
+-		if (data->mark_query)
+-			data->info.typep = &data->type;
+-		else
+-			strbuf_addstr(sb, type_name(data->type));
++		if (data->mark_query) {
++			data->info.typep = &data->type;
++			data->info.type_name = &data->type_name;
++		} else {
++			strbuf_addstr(sb, data->type_name);
++		}
+
+   in expand_atom()?
+
+	Side note: I am keeping data->info.typep because a lot of
+	existing code switches on data->type, which is an enum.
+
+   We may have to keep the strbuf_release() at the end of this
+   function this patch added, to release data->info.type_name, if we
+   go that route, but we wouldn't be dealing with an on-stack
+   type_name in this function.
+
+ * If it does not make any difference between calling type_name() on
+   our side in expand_atom() or asking object-info API to do so,
+   then would it make more sense to lose the local type_name strbuf
+   and print type_name(data->type) in print_default_format() instead?
+
+Other than that, this looks good to me.
+
+Thanks.
