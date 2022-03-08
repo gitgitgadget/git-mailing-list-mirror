@@ -2,187 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F6AAC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 16:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF89C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 17:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237545AbiCHRAS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 12:00:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
+        id S1348584AbiCHRQe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 12:16:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbiCHRAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 12:00:16 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0630352E34
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 08:59:18 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2125118070;
-        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J065rLn3XrjwcJ94FhyMkyFdlxtkzciLQazOgE
-        aUxUk=; b=kOP3vkRgEu/BO0VMSpqVDQOXpSDKMpNjXNXwd9Qcok/3llU2h7N57W
-        KU+Yr7zKhI4qh/SUBO8ibcCtwHrxq3uAB2sjN6xGvDZLWdMHDf34I6rhrrfOJ1cT
-        B5fPjeNWUOyYJIcAgtgGAFr+btgmxiv1EiVBvhhRoGX5B0KOdbLys=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C823711806F;
-        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.230.65.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C4A011806C;
-        Tue,  8 Mar 2022 11:59:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2] cat-file: skip expanding default format
-References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
-        <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 08:59:16 -0800
-In-Reply-To: <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com> (John
-        Cai via GitGitGadget's message of "Tue, 08 Mar 2022 02:54:23 +0000")
-Message-ID: <xmqqmti0nzx7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1344409AbiCHRQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 12:16:31 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B8252E62
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 09:15:32 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id 12so19533310oix.12
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 09:15:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=zDt0FUzfcBbvOIo96P+nCBO/a9VUPRVPdw9ap0jtbXg=;
+        b=CWMWegs5mGjzAXfRiBLk4cdSlcsQS0Npx0OFHX/rCXO5Mj91/DKMN1i3tLz3ETOrFW
+         7+ChkZLJmsuQgvHBcoRGRJMTKhYHdFDTR/OhZlPCM5Eb+JXMS9g9HhGxvlcQEl8Do8qS
+         RuYlNfRM7SfX69K/Olyh2MVsNWUmFbxQBLs9KbMejZoFs3wX0MAAXRSAwnSgOLxiqMDQ
+         c9GL9A79xDi5vaxPDswlf4m3ilcHx6C/4G3djbjCL+zli+Y38XCmzRk3lCLnOmzn17SH
+         WSDKXbHaifJ0szSw4FA+pt+CxwYMAFZULlGwKqzYkz08HVzLT6NOsZiCCHBoB7KPaAwN
+         n5hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=zDt0FUzfcBbvOIo96P+nCBO/a9VUPRVPdw9ap0jtbXg=;
+        b=QbgVOPqxI8MZB+rMFBHlS6bFHKkuNoCmvXx9q3wWhMX+16Mhd3QAVj5v/2FFvNGpeo
+         Ew7GF45ZQ05ZM0znH8mAmrxoGdSeDcR3+H5HSk04DDY/7xpmzPgMh2THqmzZlhWzWpxy
+         Q2OB3a/GRY1SJLlIK2DIokZiEnJZ8ikGbtVe3kE5LUBrlQ7GUoM32NJ5dOHnljwpZ6lL
+         8zSOs2jEFdSlthpJss7Rgp7cS4f6lHoFXxBTTu0ANYyLO81qWJoofHJZ1ivVy0Q2H17D
+         F2EetfWCexz614CkUeAMUX+Y6g5sKfITtZLeHCGif9+hkuDzjYa45uaHi6Udm84UOJkx
+         7jgw==
+X-Gm-Message-State: AOAM531TcqWWK8EPJh+0ftavsNeLy2E1D+uSs8dwo96ZUXzuFpga57c7
+        MBOY1z1QTnxxZhQCpT1iMLlo
+X-Google-Smtp-Source: ABdhPJxocWw9HzctkYFcH6y9ikXarpqaB6IigohoxCEBTMB/dV8HMxLK7O4cUYf1r9WWPgNKurTU/Q==
+X-Received: by 2002:a05:6808:19a8:b0:2d5:1d0f:95e3 with SMTP id bj40-20020a05680819a800b002d51d0f95e3mr3366415oib.61.1646759731967;
+        Tue, 08 Mar 2022 09:15:31 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t11-20020a4ae40b000000b0031cc933b418sm7245219oov.40.2022.03.08.09.15.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Mar 2022 09:15:31 -0800 (PST)
+Message-ID: <ddebc223-1e13-e758-f9b1-d3f23961e459@github.com>
+Date:   Tue, 8 Mar 2022 12:15:29 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1714AB5E-9F01-11EC-A8A8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 00/25] [RFC] Bundle URIs
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, "Robin H . Johnson" <robbat2@gentoo.org>,
+        Teng Long <dyroneteng@gmail.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
+ <220224.86czjdb22l.gmgdl@evledraar.gmail.com>
+ <15aed4cc-2d16-0b3f-5235-f7858a705c52@github.com>
+ <a6981d6e-16b0-b0e1-a94d-a87ec20871bd@github.com>
+ <220304.86a6e5g44z.gmgdl@evledraar.gmail.com>
+ <1469e420-63e5-e2db-21d5-c70674ab04d5@github.com>
+In-Reply-To: <1469e420-63e5-e2db-21d5-c70674ab04d5@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 3/4/2022 10:12 AM, Derrick Stolee wrote:
+> On 3/4/2022 9:49 AM, Ævar Arnfjörð Bjarmason wrote:
+>> Also, as noted in the upthread
+>> <220224.86czjdb22l.gmgdl@evledraar.gmail.com> it might be useful to chat
+>> in a more voice/video medium in parallel (maybe mid-next-week) about the
+>> high-level ideas & to get a feel for our goals, conflicts etc. Doing
+>> that over very long E-Mail exchanges (and the fault of "long" there is
+>> mostly on my side:) can be a bit harder...
+> 
+> I agree. I we can work out a time in a private thread and I can send
+> you a video call invite.
 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 7b3f42950ec..ab9a49e13a4 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -351,6 +351,14 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
->  	}
->  }
->  
-> +static int print_default_format(char *buf, int len, struct expand_data *data)
-> +{
-> +	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
-> +		 data->info.type_name->buf,
-> +		 (uintmax_t)*data->info.sizep);
-> +
-> +}
+Ævar and I just finished our chat and came away with these two
+action items:
 
-OK.  We want size and type if we were to show the default output out
-of the object-info API.
+1. Ævar will finish prepping his RFC as-is and send it to the list.
+   It contains several deeply technical optimizations that are
+   critical to how his model works, but could also be used to
+   improve scenarios in the table of contents model.
 
->  /*
->   * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
->   * which the object may be accessed (though note that we may also rely on
-> @@ -363,6 +371,11 @@ static void batch_object_write(const char *obj_name,
->  			       struct packed_git *pack,
->  			       off_t offset)
->  {
-> +	struct strbuf type_name = STRBUF_INIT;
-> +
-> +	if (!opt->format)
-> +		data->info.type_name = &type_name;
+2. Ævar will then do a round of taking both series and combining
+   them in a way that allows the union of possible functionality
+   to work.
 
-And at this point, !opt->format means we would use the default
-format, so we cannot leave .type_name member NULL.  That is OK
-but puzzling.  Why didn't we need this before?
+3. As these things come out, I will make it a priority to read the
+   patches and provide feedback focusing on high-level concepts
+   and ways we can split the future, non-RFC series into chunks
+   that provide incremental functionality while keeping review
+   easier than reading the whole series.
 
-If the caller is batch_objects(), there is the "mark_query" call to
-strbuf_expand() to learn which field in data->info are needed, so
-it seems that this new code should NOT be necessary.
-
-    Side note.  I briefly wondered if this expand is something you
-    would want to optimize when the default format is used, but this
-    is just "probe just once to ensure various members of data->info
-    are populated, to prepare for showing hundreds of objects in the
-    batch request", so it probably is not worth it.
-
-I am guessing that this is for callers that do not come via
-batch_objects() where the "mark_query" strbuf_expand() is not made?
-If so,
-
- * why is it sufficient to fill .type_name and not .sizep for the
-   default format (i.e. when opt->format is NULL)?
-
- * why is it OK not to do anything for non-default format?  If no
-   "mark_query" call has been made, we wouldn't be preparing the
-   .type_name field even if the user-supplied format calls for
-   %(objecttype), would we?
-
-Looking at the call graph:
-
- - batch_object_write() is called by
-   - batch_one_object()
-   - batch_object_cb()
-   - batch_unordered_object()
-
- - batch_one_object() is called only by batch_objects()
- - batch_object_cb() is used only by batch_objects()
-
- - batch_unordered_object() is called by
-   - batch_unordered_loose()
-   - batch_unordered_packed()
-   and these two are called only by batch_objects()
-
-And the "mark_query" strbuf_expand() to probe which members in
-expand_data are are necessary is done very early, before any of the
-calls batch_objects() makes that reach batch_object_write().
-
-OK, so my initial guess that the new "we need .type_name member to
-point at a strbuf" is because there are some code that bypasses the
-"mark_query" strbuf_expand() in batch_objects() is totally wrong.
-Everybody uses the "mark_query" thing.  Then why do we need to ask
-type_name?
-
-Going back to the new special case print_default_format() gives us
-the answer to the question.  It expects that data->info already
-knows the stringified typename in the type_name member.  The
-original slow code path in expand_atom() uses this, instead:
-
-	} else if (is_atom("objecttype", atom, len)) {
-		if (data->mark_query)
-			data->info.typep = &data->type;
-		else
-			strbuf_addstr(sb, type_name(data->type));
-
-Which makes me wonder:
-
- * Is calling type_name(data->type) for many objects a lot less
-   efficient than asking the stringified type_name from the
-   object-info layer?  If that is the case, would you gain
-   performance for all cases if you did this instead
-
-	} else if (is_atom("objecttype", atom, len)) {
--		if (data->mark_query)
--			data->info.typep = &data->type;
--		else
--			strbuf_addstr(sb, type_name(data->type));
-+		if (data->mark_query) {
-+			data->info.typep = &data->type;
-+			data->info.type_name = &data->type_name;
-+		} else {
-+			strbuf_addstr(sb, data->type_name);
-+		}
-
-   in expand_atom()?
-
-	Side note: I am keeping data->info.typep because a lot of
-	existing code switches on data->type, which is an enum.
-
-   We may have to keep the strbuf_release() at the end of this
-   function this patch added, to release data->info.type_name, if we
-   go that route, but we wouldn't be dealing with an on-stack
-   type_name in this function.
-
- * If it does not make any difference between calling type_name() on
-   our side in expand_atom() or asking object-info API to do so,
-   then would it make more sense to lose the local type_name strbuf
-   and print type_name(data->type) in print_default_format() instead?
-
-Other than that, this looks good to me.
-
-Thanks.
+Thanks,
+-Stolee
