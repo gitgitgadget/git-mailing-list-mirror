@@ -2,190 +2,310 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8763DC433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9D8C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344490AbiCHWHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 17:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40558 "EHLO
+        id S1349676AbiCHWJs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 17:09:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234181AbiCHWHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 17:07:42 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6180C57168
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:06:45 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id qt6so859391ejb.11
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:06:45 -0800 (PST)
+        with ESMTP id S234529AbiCHWJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 17:09:48 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2750931911
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:08:50 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id e24so205315wrc.10
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:08:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HUXvqCuwfztjpKFz3RgfBwLkFcZotPjURBpuEy8QoBg=;
-        b=GT12Jht1mUfJaN6VjZ3Xbtj848Q7Pl3U+5X9ze9OvtXXH5ys1Rb+W+PBn8ZHUfKnue
-         eMoYwEVGxNCTVkDuAS1uBer1c6Ik5OhrO+j9OrPKwwn1yfW3B2t3n76PgfW7hNEZUIVC
-         /Y5n+F4qlwMM8k4Jhif7SZoqzTfj6rs4xPJXNitnvvPmS4Xmb4cKnvx8g0UIM6c0mZT9
-         msi4X7dJHLUtjRU7kRnH+y+JtiL3M8ySxfTbEwoNHLw/NR/vHQbwKSjPb7rY4PqUKcDh
-         NCSIPYRFwxFrjX9wX8Io+VIq+BM81I4cCJ+HVtfDEo1yVTS+TON8xbi+Y1N3+k5weYw6
-         kh9Q==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=i2Lwu3SjMXl/FURC4/1hYS7279qTRki/Cu35Bth/on8=;
+        b=kq/nxk8rv03qvoqx/4MSifF5W1SsuZ52AJPJPqQmw2MnCcp4MzbQ63xKowAno2sCM2
+         q98wLrxrgdfYRu2xOmsUXZU93ley4SeHbujSuldiFAJ/9zamV3XIozIReUifZ6V1b+Jn
+         G5GYiMSxYFoJPrKjoL+6m/YGqqmG6Thk5+h+g3BHxsv6mxPtkHq5Zj7K5H4ZjK0v0HBe
+         Ryjm1z8vusOS0zB4aCvjrtps4Qduk7/1Nnjhlfar52Ld+83t9S1nOXgiNi3IbBHgsU8T
+         6IbzP8TpDQsQ5+8q1AP2Sp4b6BlNqOZ0u+F6nbiQUke4hLeMw50vDXkcKivRxTp8t9bx
+         vrmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HUXvqCuwfztjpKFz3RgfBwLkFcZotPjURBpuEy8QoBg=;
-        b=pQJCjPkXUCAejvSr8ird+o/gZH3yuKvxLlOiPLLAT4tSrnTYhojRkbw71xrBQ8XAn5
-         NX8FUNipAkfPyhQUhjb4T6lTeSOY5rhRZj9mkP0YeAHyDZBgVu4rqCZPTIztPSzD0BWN
-         7I0znpwg6yjTtiXBvESCeAtopv0mTxCWCuDWQgElk1QEnmbuyOsP3FFMA5nUEveRtgXD
-         gTuqW6dNKVLL+FI4DLdC5Pqr00RblaYEbADLk5L6XvzRkk9M6tvpWJoJ4cXCGWavKVVd
-         3XABJAbJWdnyyLMExZ/JgyOACh/fS455q78Pezhw+GkKDU7eZDEI3T1NtyDoxw6ZMziW
-         pc1w==
-X-Gm-Message-State: AOAM5303mAmLJaHpIClQhLLUXyq+K/nutatbICFvZmzz7Ha/6eeT9dAz
-        9mJ3hlqs6FmcNgWnZlT3K8Q=
-X-Google-Smtp-Source: ABdhPJyswEznmBxyBCFeOBduZDSAWEZLyc1RU2YiWrf61DGrCy/CTkEx4moWFe1WBF0lYm/gUD88DQ==
-X-Received: by 2002:a17:907:392:b0:6da:8608:e09e with SMTP id ss18-20020a170907039200b006da8608e09emr15131796ejb.89.1646777203725;
-        Tue, 08 Mar 2022 14:06:43 -0800 (PST)
-Received: from [10.37.129.2] (guest-pat-13-128.njit.edu. [128.235.13.128])
-        by smtp.gmail.com with ESMTPSA id m10-20020a056402510a00b00415eee901c0sm24628edd.61.2022.03.08.14.06.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Mar 2022 14:06:43 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] cat-file: skip expanding default format
-Date:   Tue, 08 Mar 2022 17:06:41 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <52AB116A-E1A6-4609-AF13-A6C81581A511@gmail.com>
-In-Reply-To: <YifSFQ8zEZimCkHl@nand.local>
-References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
- <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
- <YifSFQ8zEZimCkHl@nand.local>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=i2Lwu3SjMXl/FURC4/1hYS7279qTRki/Cu35Bth/on8=;
+        b=YqWR9+WUCFvFk7CifnLtwiBtQoIfuityBiOP1JBo0Cpdt7H0SOUaoYk2VZq/SkVCvD
+         pspNGJTzb0wYX2RjNtYNjgf7im6Lpl5IvGMdUABfqRePl6xxpRuhxPViQBOyjgj4qJTz
+         PUusx0Szk9saJ2YN15SmqWj3GTpF/GnhIkehkh6/0xmEFpWIi1jQKTgmQMbpDRMqIXpK
+         Bc00R0ZQgmtkXdMHON0D//lONK6b1f3vDVMblotIz+BLWyp0L0kN4g2bWiM2l2ZeLtip
+         ONoRsC7QQ0QGcOQADhJoE/adswtpX1G69wqX8KRTs8UvBpviUEBrtHfJZinKRIYcIqMI
+         nYCw==
+X-Gm-Message-State: AOAM533pUoBqFmRwiwr7cyLSTGQHTDyg51tIAufEKFMZ03auSwPTTpuL
+        x+fvSExeGy8uz7E+H3PEcEQ3uyYPsXE=
+X-Google-Smtp-Source: ABdhPJxiB00nGX3CPwCFderk1/YpIfqzUwLb/cBNRvpQOqHTYcLQJ9B5V6yj48m39rDIxt4jZ3VJOQ==
+X-Received: by 2002:adf:f9c6:0:b0:1ef:832d:58fa with SMTP id w6-20020adff9c6000000b001ef832d58famr13875891wrr.378.1646777328363;
+        Tue, 08 Mar 2022 14:08:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k18-20020adfe8d2000000b0020294da2b42sm88836wrn.117.2022.03.08.14.08.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Mar 2022 14:08:47 -0800 (PST)
+Message-Id: <pull.1221.v3.git.git.1646777327043.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
+References: <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 08 Mar 2022 22:08:46 +0000
+Subject: [PATCH v3] cat-file: skip expanding default format
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor
+From: John Cai <johncai86@gmail.com>
 
-On 8 Mar 2022, at 17:00, Taylor Blau wrote:
+When format is passed into --batch, --batch-check, --batch-command,
+the format gets expanded. When nothing is passed in, the default format
+is set and the expand_format() gets called.
 
-> On Tue, Mar 08, 2022 at 02:54:23AM +0000, John Cai via GitGitGadget wro=
-te:
->>  /*
->>   * If "pack" is non-NULL, then "offset" is the byte offset within the=
- pack from
->>   * which the object may be accessed (though note that we may also rel=
-y on
->> @@ -363,6 +371,11 @@ static void batch_object_write(const char *obj_na=
-me,
->>  			       struct packed_git *pack,
->>  			       off_t offset)
->>  {
->> +	struct strbuf type_name =3D STRBUF_INIT;
->> +
->> +	if (!opt->format)
->> +		data->info.type_name =3D &type_name;
->
-> Hmmm, I'm not quite sure I understand why the extra string buffer is
-> necessary here. When we do the first expansion with the DEFAULT_FORMAT,=
+We can save on these cycles by hardcoding how to print the
+information when nothing is passed as the format, or when the default
+format is passed. There is no need for the fully expanded format with
+the default. Since batch_object_write() happens on every object provided
+in batch mode, we get a nice performance improvement.
 
-> we set data->info.typep to point at data->type.
->
-> So by the time we do our actual query (either with
-> `packed_object_info()` or just `oid_object_info_extended()`), we will
-> get the type filled into data->type.
->
-> And we should be able to use that in print_default_format(), which save=
-s
-> us in a couple of ways:
->
->   - We don't have to (stack) allocate a string buffer, which then needs=
+git rev-list --all > /tmp/all-obj.txt
 
->     to be cleaned up after printing each object.
->
->   - (More importantly) we can avoid the extra string copy through the
->     intermediate buffer by using type_name() directly.
+git cat-file --batch-check </tmp/all-obj.txt
 
-Agree with your reasoning here.
+with HEAD^:
 
->
-> Here's a small patch on top that you could apply, if you're interested:=
+Time (mean ± σ): 57.6 ms ± 1.7 ms [User: 51.5 ms, System: 6.2 ms]
+Range (min … max): 54.6 ms … 64.7 ms 50 runs
 
->
-> --- >8 ---
->
->
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index ab9a49e13a..9f55afa75b 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -355,5 +355,5 @@ static int print_default_format(char *buf, int len,=
- struct expand_data *data)
->  {
->  	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oi=
-d),
-> -		 data->info.type_name->buf,
-> +			 type_name(data->type),
->  		 (uintmax_t)*data->info.sizep);
->
-> @@ -372,9 +372,4 @@ static void batch_object_write(const char *obj_name=
-,
->  			       off_t offset)
->  {
-> -	struct strbuf type_name =3D STRBUF_INIT;
-> -
-> -	if (!opt->format)
-> -		data->info.type_name =3D &type_name;
-> -
->  	if (!data->skip_object_info) {
->  		int ret;
-> @@ -391,5 +386,5 @@ static void batch_object_write(const char *obj_name=
-,
->  			       obj_name ? obj_name : oid_to_hex(&data->oid));
->  			fflush(stdout);
-> -			goto cleanup;
-> +			return;
->  		}
->  	}
-> @@ -410,7 +405,4 @@ static void batch_object_write(const char *obj_name=
-,
->  		batch_write(opt, "\n", 1);
->  	}
-> -
-> -cleanup:
-> -	strbuf_release(&type_name);
->  }
->
-> --- 8< ---
->
-> On my copy of git.git., it shaves off around ~7ms that we're spending
-> just copying type names back and forth.
->
->     (without the above)
->     Benchmark 1: git.compile cat-file --batch-check --batch-all-objects=
+with HEAD:
 
->       Time (mean =C2=B1 =CF=83):     578.7 ms =C2=B1  12.7 ms    [User:=
- 553.4 ms, System: 25.2 ms]
->       Range (min =E2=80=A6 max):   568.1 ms =E2=80=A6 600.1 ms    10 ru=
-ns
->
->     (with the above)
->     Benchmark 1: git.compile cat-file --batch-check --batch-all-objects=
+Time (mean ± σ): 49.8 ms ± 1.7 ms [User: 42.6 ms, System: 7.3 ms]
+Range (min … max): 46.9 ms … 55.9 ms 56 runs
 
->       Time (mean =C2=B1 =CF=83):     571.5 ms =C2=B1   7.9 ms    [User:=
- 544.0 ms, System: 27.3 ms]
->       Range (min =E2=80=A6 max):   558.8 ms =E2=80=A6 583.2 ms    10 ru=
-ns
+If nothing is provided as a format argument, or if the default format is
+passed, skip expanding of the format and print the object info with a
+default format.
 
-Thanks for this suggestion and the benchmark! This is similar to what Jun=
-io suggested, and
-I do think this is the right thing to do here.
+See https://lore.kernel.org/git/87eecf8ork.fsf@evledraar.gmail.com/
 
->
-> Thanks,
-> Taylor
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+    optimize cat file batch info writing
+    
+    When cat-file --batch or --batch-check is used, we can skip having to
+    expand the format if no format is specified or if the default format is
+    specified. In this case we know exactly how to print the objects without
+    the full expanded format.
+    
+    This was first discussed in [1].
+    
+    We get a little performance boost from this optimization because this
+    happens for each objects provided to --batch, --batch-check, or
+    --batch-command. Because batch_object_write() is called on every oid
+    provided in batch mode, this optimization adds up when a large number of
+    oid info is printed.
+    
+    git rev-list --all >/tmp/all-objs.txt
+    
+    git cat-file --batch-check </tmp/all-obj.txt (with hyperfine)
+    
+    run on origin/master:
+    
+    Time (mean ± σ): 57.6 ms ± 1.7 ms [User: 51.5 ms, System: 6.2 ms] Range
+    (min … max): 54.6 ms … 64.7 ms 50 runs
+    
+    run on jc/optimize-cat-file-batch-default-format:
+    
+    Time (mean ± σ): 49.8 ms ± 1.7 ms [User: 42.6 ms, System: 7.3 ms] Range
+    (min … max): 46.9 ms … 55.9 ms 56 runs
+    
+    Changes since v1:
+    
+     * set opt->format in batch_objects so that the loop that prints objects
+       only has to check if the format is null to know to print the object
+       info in the default format
+     * fixed up commit trailer to include Ævar as Signed-off-by
+    
+     1. https://lore.kernel.org/git/87eecf8ork.fsf@evledraar.gmail.com/
 
-Thanks,
-John
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1221%2Fjohn-cai%2Fjc%2Foptimize-cat-file-batch-default-format-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1221/john-cai/jc/optimize-cat-file-batch-default-format-v3
+Pull-Request: https://github.com/git/git/pull/1221
+
+Range-diff vs v2:
+
+ 1:  f5d578d14a9 ! 1:  56d13da5141 cat-file: skip expanding default format
+     @@ builtin/cat-file.c: static void print_object_or_die(struct batch_options *opt, s
+      +static int print_default_format(char *buf, int len, struct expand_data *data)
+      +{
+      +	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
+     -+		 data->info.type_name->buf,
+     -+		 (uintmax_t)*data->info.sizep);
+     -+
+     ++			 type_name(data->type),
+     ++			 (uintmax_t)*data->info.sizep);
+      +}
+      +
+       /*
+        * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
+        * which the object may be accessed (though note that we may also rely on
+      @@ builtin/cat-file.c: static void batch_object_write(const char *obj_name,
+     - 			       struct packed_git *pack,
+     - 			       off_t offset)
+     - {
+     -+	struct strbuf type_name = STRBUF_INIT;
+     -+
+     -+	if (!opt->format)
+     -+		data->info.type_name = &type_name;
+     -+
+     - 	if (!data->skip_object_info) {
+     - 		int ret;
+     - 
+     -@@ builtin/cat-file.c: static void batch_object_write(const char *obj_name,
+     - 			printf("%s missing\n",
+     - 			       obj_name ? obj_name : oid_to_hex(&data->oid));
+     - 			fflush(stdout);
+     --			return;
+     -+			goto cleanup;
+       		}
+       	}
+       
+     @@ builtin/cat-file.c: static void batch_object_write(const char *obj_name,
+       
+       	if (opt->print_contents) {
+       		print_object_or_die(opt, data);
+     - 		batch_write(opt, "\n", 1);
+     - 	}
+     -+
+     -+cleanup:
+     -+	strbuf_release(&type_name);
+     - }
+     - 
+     -+
+     - static void batch_one_object(const char *obj_name,
+     - 			     struct strbuf *scratch,
+     - 			     struct batch_options *opt,
+      @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oid,
+       				      data);
+       }
+
+
+ builtin/cat-file.c       | 34 ++++++++++++++++++++++++++--------
+ t/perf/p1006-cat-file.sh | 16 ++++++++++++++++
+ 2 files changed, 42 insertions(+), 8 deletions(-)
+ create mode 100755 t/perf/p1006-cat-file.sh
+
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 7b3f42950ec..e2edba70b41 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -351,6 +351,13 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 	}
+ }
+ 
++static int print_default_format(char *buf, int len, struct expand_data *data)
++{
++	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
++			 type_name(data->type),
++			 (uintmax_t)*data->info.sizep);
++}
++
+ /*
+  * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
+  * which the object may be accessed (though note that we may also rely on
+@@ -381,10 +388,16 @@ static void batch_object_write(const char *obj_name,
+ 		}
+ 	}
+ 
+-	strbuf_reset(scratch);
+-	strbuf_expand(scratch, opt->format, expand_format, data);
+-	strbuf_addch(scratch, '\n');
+-	batch_write(opt, scratch->buf, scratch->len);
++	if (!opt->format) {
++		char buf[1024];
++		int len = print_default_format(buf, 1024, data);
++		batch_write(opt, buf, len);
++	} else {
++		strbuf_reset(scratch);
++		strbuf_expand(scratch, opt->format, expand_format, data);
++		strbuf_addch(scratch, '\n');
++		batch_write(opt, scratch->buf, scratch->len);
++	}
+ 
+ 	if (opt->print_contents) {
+ 		print_object_or_die(opt, data);
+@@ -508,6 +521,9 @@ static int batch_unordered_packed(const struct object_id *oid,
+ 				      data);
+ }
+ 
++
++#define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
++
+ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+@@ -516,9 +532,6 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
+ 
+-	if (!opt->format)
+-		opt->format = "%(objectname) %(objecttype) %(objectsize)";
+-
+ 	/*
+ 	 * Expand once with our special mark_query flag, which will prime the
+ 	 * object_info to be handed to oid_object_info_extended for each
+@@ -526,12 +539,17 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+-	strbuf_expand(&output, opt->format, expand_format, &data);
++	strbuf_expand(&output,
++		      opt->format ? opt->format : DEFAULT_FORMAT,
++		      expand_format,
++		      &data);
+ 	data.mark_query = 0;
+ 	strbuf_release(&output);
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
+ 
++	if (opt->format && !strcmp(opt->format, DEFAULT_FORMAT))
++		opt->format = NULL;
+ 	/*
+ 	 * If we are printing out the object, then always fill in the type,
+ 	 * since we will want to decide whether or not to stream.
+diff --git a/t/perf/p1006-cat-file.sh b/t/perf/p1006-cat-file.sh
+new file mode 100755
+index 00000000000..e463623f5a3
+--- /dev/null
++++ b/t/perf/p1006-cat-file.sh
+@@ -0,0 +1,16 @@
++#!/bin/sh
++
++test_description='Basic sort performance tests'
++. ./perf-lib.sh
++
++test_perf_large_repo
++
++test_expect_success 'setup' '
++	git rev-list --all >rla
++'
++
++test_perf 'cat-file --batch-check' '
++	git cat-file --batch-check <rla
++'
++
++test_done
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+-- 
+gitgitgadget
