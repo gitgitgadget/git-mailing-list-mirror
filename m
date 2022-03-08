@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B98C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F618C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344146AbiCHOka (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 09:40:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
+        id S1347556AbiCHOkc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 09:40:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347540AbiCHOkY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 09:40:24 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1058B38D8A
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:27 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id u1so28854104wrg.11
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:26 -0800 (PST)
+        with ESMTP id S1347555AbiCHOkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 09:40:25 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BF8238D9D
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:28 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id t11so28899549wrm.5
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QMqisOwNxGJZM+rj/78LU6orxR1EXwydOnTcmjLNxVs=;
-        b=OnChC/RMfqrJ5BhRVTD4jcfvsKZ3kk/HYk9qC44bcR20sppo1E6q5Nc+HEqNyRH3xr
-         AcFz2ixn1xqHJ4Zxk9DU9/PP08brvBe6ucVoUW+qg6DLKOtohp11FO0IRzaF7ro256ZH
-         uko9Rfn6kKGUhsQ8e11+FQGoaOoarcEusi0YU2yB11XrCfkSZw9b+mJES5bLWIk4k9AO
-         oic2g3XYHUT8HdCBMZAI3DYCEFBekG63TyRO3U7Lfi6f/tXRgreS7hp+grWvBfwHWYi+
-         bGQUktOI0ie54Pu6mq/mrQn5N9Ri+/SX+NOGeA9jhGmfnEsli/A5q3VGYwdcFrpDBUnz
-         1Nsg==
+        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
+        b=O2fjw40CHBQE/K8AR/0TJxndePsrHxJrVyCOHyoAdgYngviJ/9CRM7pQzYmJEGBAPC
+         8S4zGHs1yunoTZiGT+Kgz6JLJm4LC5CQTiLw4ky0EJGB56HT3aiQkbup30d23i4veVg5
+         0x/O/sc768sU9ElC3tnt4GxOBDe7R86mXUUs8V69ZukeScN72ZXmSpMX9Buhkz+nx9bZ
+         yQMH9dJftee4vZ6aF8s6aTL1e6I9BwCZObGrO8eZoZZPqZAQov8oeQQDrEXRb06VSLpE
+         BEqNX4zx2abDjrcFboDDQOq5LQxT+rVsoTEJiDCxNkZ/9o3+MOvXC02/HzBcZxhrwUl7
+         U+Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QMqisOwNxGJZM+rj/78LU6orxR1EXwydOnTcmjLNxVs=;
-        b=0y1x0S3gi1eUqE1/q1aAgjY/c+6Nq2anBtzsGkdayizJsTSGKxBh2Asvk5GKa0zR18
-         PoduzRnL6uPxy1r5ghUcqp9Y+/oG4RIsGN1Q1F8DU+oJ+BkJSpyPKDT9POoXfoF+FV3B
-         Uu6nX+sgObQ06zKTeudpcfmd8OHOBDrqvpMHASIR4uHPuiDFyjOi7ntdBPpuG1Khnbyo
-         MQsbPKdESIP248abNMMqjgRgfebfWkoIkexvzAwPZgEKHt6KnLNTB5ZAMK5YV1ts3uC1
-         v4kZSrj6o/rsJindPgzbGuCOvVAPVLfCEOPN3hKxVNDXy+6ktRlIttF8h228Ej5k9/Wo
-         uGsA==
-X-Gm-Message-State: AOAM533Up6TsXjwH6r0Lmx2nl0REm8JW4q1eyJF4Bkc3tJRhsray9sN4
-        UO4QJwzl4B/Zip8q58aviNDrch28dbE=
-X-Google-Smtp-Source: ABdhPJyPIqduyQfiLMacFA6edcuDnZoEuv9GHNhQkH0eD91vVMCmF3ZCASuTCOz++G488O/R8HCoEA==
-X-Received: by 2002:adf:ea0f:0:b0:1f0:61f6:c3df with SMTP id q15-20020adfea0f000000b001f061f6c3dfmr12504042wrm.543.1646750365449;
-        Tue, 08 Mar 2022 06:39:25 -0800 (PST)
+        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
+        b=Z18KxtD2aeeFkyQ84B/xxcHxOgX8S4a8xpiqZviBE6KhirOhJC9NQEb6M+zJ2o+7YE
+         1qaCH+7P/64vOaUIat5sR/EP8Ej8GT1SlU4bbHX82YTziuzi2x+94udFy8Ol87WazViW
+         X9F0A5GMdTxvhaexMtIMy8ad9Xq/vlN9cW21c3S0XkSFspYoebDPBt78AO7Xts4RsS3j
+         ULfcoEGV0a0uaCEnGlxvG0CzHZG2EXZ3xXeWYk/mMzaWckuZwWSsTYh+M6XGdQWed+gt
+         N8n98Gs06dXAjDkYDyY3zkyMthQjO5CHKwIZy2q2hiPYvUl2qLmTqrR9Svm1JnHqbOCk
+         AhXg==
+X-Gm-Message-State: AOAM533dnYEcKzYTH56AWr9zQ61CIBGXcAe43rtAS4rEdNBLuFLzJ0P3
+        pUTOcLyRpWovBeh2dsZUnMsbTBmo+Uw=
+X-Google-Smtp-Source: ABdhPJy0wIC19CMgn2eT5fs5cDm/gEBSd5jDobd6msc3u8ewD4w8hsMuQ6nryPolwpCHTuFpkOfb+g==
+X-Received: by 2002:a5d:5850:0:b0:1f0:2d5b:dc35 with SMTP id i16-20020a5d5850000000b001f02d5bdc35mr12385786wrf.344.1646750366418;
+        Tue, 08 Mar 2022 06:39:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p3-20020a05600c358300b003897e440047sm2552400wmq.28.2022.03.08.06.39.24
+        by smtp.gmail.com with ESMTPSA id s17-20020adfbc11000000b001f023d197b8sm14004629wrg.68.2022.03.08.06.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 08 Mar 2022 06:39:25 -0800 (PST)
-Message-Id: <bcb76a065bf977c53e32bdb52fb59087adf09159.1646750359.git.gitgitgadget@gmail.com>
+Message-Id: <efc03168818e9328d4d1f47f9d48fe2a46d1e2c9.1646750359.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
         <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 14:39:12 +0000
-Subject: [PATCH v3 05/12] list-objects: consolidate
- traverse_commit_list[_filtered]
+Date:   Tue, 08 Mar 2022 14:39:13 +0000
+Subject: [PATCH v3 06/12] MyFirstObjectWalk: update recommended usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,148 +70,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Now that all consumers of traverse_commit_list_filtered() populate the
-'filter' member of 'struct rev_info', we can drop that parameter from
-the method prototype to simplify things. In addition, the only thing
-different now between traverse_commit_list_filtered() and
-traverse_commit_list() is the presence of the 'omitted' parameter, which
-is only non-NULL for one caller. We can consolidate these two methods by
-having one call the other and use the simpler form everywhere the
-'omitted' parameter would be NULL.
+The previous change consolidated traverse_commit_list() and
+traverse_commit_list_filtered(). This allows us to simplify the
+recommended usage in MyFirstObjectWalk.txt to use this new set of
+values.
+
+While here, add some clarification on the difference between the two
+methods.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/pack-objects.c |  6 +++---
- builtin/rev-list.c     |  2 +-
- list-objects.c         | 25 ++++++++-----------------
- list-objects.h         | 12 ++++++++++--
- pack-bitmap.c          |  6 +++---
- 5 files changed, 25 insertions(+), 26 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 44 +++++++++++------------------
+ 1 file changed, 16 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 57f2cf49696..0432ae1e499 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3778,9 +3778,9 @@ static void get_object_list(int ac, const char **av)
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index ca267941f3e..8d9e85566e6 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -522,24 +522,25 @@ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
+ the name, these functions traverse all kinds of objects. Let's have a look at
+-the arguments to `traverse_commit_list_filtered()`, which are a superset of the
+-arguments to the unfiltered version.
++the arguments to `traverse_commit_list()`.
  
- 	if (!fn_show_object)
- 		fn_show_object = show_object;
--	traverse_commit_list_filtered(revs.filter, &revs,
--				      show_commit, fn_show_object, NULL,
--				      NULL);
-+	traverse_commit_list(&revs,
-+			     show_commit, fn_show_object,
-+			     NULL);
+-- `struct list_objects_filter_options *filter_options`: This is a struct which
+-  stores a filter-spec as outlined in `Documentation/rev-list-options.txt`.
+-- `struct rev_info *revs`: This is the `rev_info` used for the walk.
++- `struct rev_info *revs`: This is the `rev_info` used for the walk. If
++  its `filter` member is not `NULL`, then `filter` contains information for
++  how to filter the object list.
+ - `show_commit_fn show_commit`: A callback which will be used to handle each
+   individual commit object.
+ - `show_object_fn show_object`: A callback which will be used to handle each
+   non-commit object (so each blob, tree, or tag).
+ - `void *show_data`: A context buffer which is passed in turn to `show_commit`
+   and `show_object`.
++
++In addition, `traverse_commit_list_filtered()` has an additional paramter:
++
+ - `struct oidset *omitted`: A linked-list of object IDs which the provided
+   filter caused to be omitted.
  
- 	if (unpack_unreachable_expiration) {
- 		revs.ignore_missing_links = 1;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 556e78aebb9..3ab727817fd 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -733,7 +733,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		oidset_init(&missing_objects, DEFAULT_OIDSET_SIZE);
+-It looks like this `traverse_commit_list_filtered()` uses callbacks we provide
+-instead of needing us to call it repeatedly ourselves. Cool! Let's add the
+-callbacks first.
++It looks like these methods use callbacks we provide instead of needing us
++to call it repeatedly ourselves. Cool! Let's add the callbacks first.
  
- 	traverse_commit_list_filtered(
--		revs.filter, &revs, show_commit, show_object, &info,
-+		&revs, show_commit, show_object, &info,
- 		(arg_print_omitted ? &omitted_objects : NULL));
+ For the sake of this tutorial, we'll simply keep track of how many of each kind
+ of object we find. At file scope in `builtin/walken.c` add the following
+@@ -712,20 +713,9 @@ help understand. In our case, that means we omit trees and blobs not directly
+ referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
+ `HEAD` in the `pending` list.)
  
- 	if (arg_print_omitted) {
-diff --git a/list-objects.c b/list-objects.c
-index 2f623f82115..9422625b39e 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -416,22 +416,7 @@ static void do_traverse(struct traversal_context *ctx)
- 	strbuf_release(&csp);
- }
- 
--void traverse_commit_list(struct rev_info *revs,
--			  show_commit_fn show_commit,
--			  show_object_fn show_object,
--			  void *show_data)
--{
--	struct traversal_context ctx;
--	ctx.revs = revs;
--	ctx.show_commit = show_commit;
--	ctx.show_object = show_object;
--	ctx.show_data = show_data;
--	ctx.filter = NULL;
--	do_traverse(&ctx);
--}
+-First, we'll need to `#include "list-objects-filter-options.h"` and set up the
+-`struct list_objects_filter_options` at the top of the function.
 -
- void traverse_commit_list_filtered(
--	struct list_objects_filter_options *filter_options,
- 	struct rev_info *revs,
- 	show_commit_fn show_commit,
- 	show_object_fn show_object,
-@@ -444,7 +429,13 @@ void traverse_commit_list_filtered(
- 	ctx.show_object = show_object;
- 	ctx.show_commit = show_commit;
- 	ctx.show_data = show_data;
--	ctx.filter = list_objects_filter__init(omitted, filter_options);
-+	if (revs->filter)
-+		ctx.filter = list_objects_filter__init(omitted, revs->filter);
-+	else
-+		ctx.filter = NULL;
-+
- 	do_traverse(&ctx);
--	list_objects_filter__free(ctx.filter);
-+
-+	if (ctx.filter)
-+		list_objects_filter__free(ctx.filter);
- }
-diff --git a/list-objects.h b/list-objects.h
-index a952680e466..9eaf4de8449 100644
---- a/list-objects.h
-+++ b/list-objects.h
-@@ -7,7 +7,6 @@ struct rev_info;
+-----
+-static void walken_object_walk(struct rev_info *rev)
+-{
+-	struct list_objects_filter_options filter_options = { 0 };
+-
+-	...
+-----
+-
+ For now, we are not going to track the omitted objects, so we'll replace those
+ parameters with `NULL`. For the sake of simplicity, we'll add a simple
+-build-time branch to use our filter or not. Replace the line calling
++build-time branch to use our filter or not. Preface the line calling
+ `traverse_commit_list()` with the following, which will remind us which kind of
+ walk we've just performed:
  
- typedef void (*show_commit_fn)(struct commit *, void *);
- typedef void (*show_object_fn)(struct object *, const char *, void *);
--void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, void *);
+@@ -733,19 +723,17 @@ walk we've just performed:
+ 	if (0) {
+ 		/* Unfiltered: */
+ 		trace_printf(_("Unfiltered object walk.\n"));
+-		traverse_commit_list(rev, walken_show_commit,
+-				walken_show_object, NULL);
+ 	} else {
+ 		trace_printf(
+ 			_("Filtered object walk with filterspec 'tree:1'.\n"));
+-		parse_list_objects_filter(&filter_options, "tree:1");
+-
+-		traverse_commit_list_filtered(&filter_options, rev,
+-			walken_show_commit, walken_show_object, NULL, NULL);
++		CALLOC_ARRAY(rev->filter, 1);
++		parse_list_objects_filter(rev->filter, "tree:1");
+ 	}
++	traverse_commit_list(rev, walken_show_commit,
++			     walken_show_object, NULL);
+ ----
  
- typedef void (*show_edge_fn)(struct commit *);
- void mark_edges_uninteresting(struct rev_info *revs,
-@@ -18,11 +17,20 @@ struct oidset;
- struct list_objects_filter_options;
+-`struct list_objects_filter_options` is usually built directly from a command
++The `rev->filter` member is usually built directly from a command
+ line argument, so the module provides an easy way to build one from a string.
+ Even though we aren't taking user input right now, we can still build one with
+ a hardcoded string using `parse_list_objects_filter()`.
+@@ -784,7 +772,7 @@ object:
+ ----
+ 	...
  
- void traverse_commit_list_filtered(
--	struct list_objects_filter_options *filter_options,
- 	struct rev_info *revs,
- 	show_commit_fn show_commit,
- 	show_object_fn show_object,
- 	void *show_data,
- 	struct oidset *omitted);
+-		traverse_commit_list_filtered(&filter_options, rev,
++		traverse_commit_list_filtered(rev,
+ 			walken_show_commit, walken_show_object, NULL, &omitted);
  
-+static inline void traverse_commit_list(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	void *show_data)
-+{
-+	traverse_commit_list_filtered(revs, show_commit,
-+				      show_object, show_data, NULL);
-+}
-+
- #endif /* LIST_OBJECTS_H */
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 613f2797cdf..cbefaedbf43 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -822,9 +822,9 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 		show_data.bitmap_git = bitmap_git;
- 		show_data.base = base;
- 
--		traverse_commit_list_filtered(revs->filter, revs,
--					      show_commit, show_object,
--					      &show_data, NULL);
-+		traverse_commit_list(revs,
-+				     show_commit, show_object,
-+				     &show_data);
- 
- 		revs->include_check = NULL;
- 		revs->include_check_obj = NULL;
+ 	...
 -- 
 gitgitgadget
 
