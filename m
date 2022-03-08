@@ -2,84 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 065A5C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFA2C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbiCHNkZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 08:40:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
+        id S239090AbiCHNoQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 08:44:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229841AbiCHNkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 08:40:23 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5485E1FC
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:39:27 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id kt27so39429054ejb.0
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:39:27 -0800 (PST)
+        with ESMTP id S1347148AbiCHNoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 08:44:14 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14E613E2F
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:43:16 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id z8so15496085oix.3
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:43:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=7IorD6TVfGE4MJv3AwCHt6gyjUkuA72+NAlBEX59xu0=;
-        b=nWZaXwqxyeZxzAWWtoZCSyMgaERwRoFVdN+7AAaK6s2RjgVupI7aiPYHStzE/Oo3mA
-         A8fP8jKUplzQR6xGaviGW4ZjXK5JH0blP7AkQ9jC5XcGLCELgou3U2ufgcljoD0Jt/C+
-         BqFP8FVfVXSUoIgWP/s14HCOSK9iJBtowSh3ygnu85fvFOjEaBQpQdYsSFXOf0F2QjkJ
-         jeJfcTNRgggfJjeskMoBRc7rNX9+Bcpe3wNMQ5bGEBwoB6klzmsMWN7iwwGG3ZdvlBK3
-         0AtkywWbWgaizvLU2izRJPotxc3n/sIb9Az7Lgage6I4APXtXCnLtODhE8CjlFhBksoR
-         G5SA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=rVg6prbbGEgkYmZnzHDS8iJrZPYw3EDqa4MlMZvrTOc=;
+        b=R1oOaEHX/Ql0Eld119BETxjOwm0NLx6RQxCx/8aSFPuMbSaRxjodoTuaDMYYSGjqDu
+         128QW97+RzUEhIL9zhIITLSHG1M1SPpt/Ar4C/2iu5aX64vJlyTuu0xnmazd7BhGFyFY
+         cTOf9ih5x93f3Er07h5snXq10k9F7noB6paoT6Mr8QB1UeCDTbexIsGRdUiSuZWtidjf
+         hr29KBpp6Br30DXnnUja7zsJHfpZUNBq5DyjGkWtYOtzjYyvioRD173w6ULtLsyRL4Fz
+         dFNkPLE/Oi/FmQSwAIEyGIuH7S/AsqdAx4xVAESPiWPqV6UBpBuqGpwzGxH3z4R9IdR1
+         3tVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=7IorD6TVfGE4MJv3AwCHt6gyjUkuA72+NAlBEX59xu0=;
-        b=4TQMXJUE1FDBV9eBJ9bEjcmqaUJFEzFFeF7B28ooOAjiRPPQpkvON8hsSL1eiB23ZJ
-         InlZHqNf4hgikYD1dkdBvyXXVYPAlVm4EnIlgX8ZJ3f1Zg8/E7Nzn4jMd5ROc4c6zhCh
-         ut9niMbHTiLeusONxe3MCEPN8ZH6c7lIn1QZNtsHsJOpe/M1F8WZMWyi8b6lQhPj6YGR
-         fQfHxcBz58jB6hDXBbHGFvO/lzrH99D34Ab4fKPdZHB65esA89fFpGM1Xd53wnpahx3+
-         ACost8gCzR+8uKoKQUlXLMcI1tEBzoggjgE4Z3Rte1yxQy5zP6q/V5jVRdRH5/0BnYe7
-         weDQ==
-X-Gm-Message-State: AOAM530lnlmJRJ4jqa8IScy7eXp32easybwsovNVJp4/d32ulBKvP7OU
-        l8RHLCEMAY3aD0eNcOJjzHE=
-X-Google-Smtp-Source: ABdhPJyOnqAI719GfcQi6DvxE+ViuY7ZMw/z9mQRaOlgYwuMdO3ppT+kgdylIGvtSd00NtE+71I9/g==
-X-Received: by 2002:a17:907:1c81:b0:6da:626c:b789 with SMTP id nb1-20020a1709071c8100b006da626cb789mr13873916ejc.607.1646746765779;
-        Tue, 08 Mar 2022 05:39:25 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bm5-20020a170906c04500b006ce6f8892a5sm5891626ejb.7.2022.03.08.05.39.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 05:39:25 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRa3g-001v1f-HO;
-        Tue, 08 Mar 2022 14:39:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2] block-sha1: remove use of assembly
-Date:   Tue, 08 Mar 2022 14:38:06 +0100
-References: <20220307232552.2799122-1-sandals@crustytoothpaste.net>
- <20220308022240.2809483-1-sandals@crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220308022240.2809483-1-sandals@crustytoothpaste.net>
-Message-ID: <220308.864k48y35f.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=rVg6prbbGEgkYmZnzHDS8iJrZPYw3EDqa4MlMZvrTOc=;
+        b=ke8heR+8PBlfuPNo86CgHCIX5sXCgNJOMPHJoiS3Agr9d62juoq/UHaPwlWjGs2pGk
+         FdrHEhsGqzzgH+HI18KVLndlSs0EZ7OZNJGFs6yjY0J3oYbJz4nXmADdNc9YQGNyIQ7w
+         cHOZ/02EfJLZsk508/QbixB1sUMYbuKIx9FfR553f46Xgk39MfZ9aq3XHfTJUmgFHev1
+         Yk3p56/AZX4OFvJFB1M3vOKthdozsPPmILXlwA0DGy6bxpUua/uUmXQ4w+rjE+24Vea+
+         Cp6LQIVMf1udh+6wQF/k2QX4eer2QGZbW2gXO5OFX1o0EXTS5hbIc6h1m4X+ZpBtQXHg
+         nk2Q==
+X-Gm-Message-State: AOAM532hxYJfbqlYfVu39QaKpPAA/SxIb/rjLqNFDHhBCMxSMFUFu7hE
+        tASlw1cPAKYamD6EDMu8MCVS
+X-Google-Smtp-Source: ABdhPJwNn6XnvJPSQP6vnWVdg92PIsUW9crpSUiagVCeoHR/XHPD4/fHbm79Sn8zW1NmjeiTPOfO8A==
+X-Received: by 2002:aca:1b1a:0:b0:2d9:7198:25f9 with SMTP id b26-20020aca1b1a000000b002d9719825f9mr2661573oib.36.1646746996115;
+        Tue, 08 Mar 2022 05:43:16 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id u3-20020a056808114300b002d51f9b3263sm8057418oiu.28.2022.03.08.05.43.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Mar 2022 05:43:15 -0800 (PST)
+Message-ID: <e5bbc8ed-7d2e-668a-118d-7a13e3b75a91@github.com>
+Date:   Tue, 8 Mar 2022 08:43:14 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 08/12] bundle: parse filter capability
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+ <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
+ <898a7d945131042c48f8e99acccf26378a4c8586.1646689840.git.gitgitgadget@gmail.com>
+ <220308.86lexkyelv.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220308.86lexkyelv.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/8/2022 4:25 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Mar 07 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> The v3 bundle format has capabilities, allowing newer versions of Git to
+>> create bundles with newer features. Older versions that do not
+>> understand these new capabilities will fail with a helpful warning.
+>>
+>> Create a new capability allowing Git to understand that the contained
+>> pack-file is filtered according to some object filter. Typically, this
+>> filter will be "blob:none" for a blobless partial clone.
+>>
+>> This change teaches Git to parse this capability, place its value in the
+>> bundle header, and demonstrate this understanding by adding a message to
+>> 'git bundle verify'.
+>>
+>> Since we will use gently_parse_list_objects_filter() outside of
+>> list-objects-filter-options.c, make it an external method and move its
+>> API documentation to before its declaration.
+>> [...]
+>> --- a/bundle.c
+>> +++ b/bundle.c
+>> @@ -11,7 +11,7 @@
+>>  #include "run-command.h"
+>>  #include "refs.h"
+>>  #include "strvec.h"
+>> -
+>> +#include "list-objects-filter-options.h"
+>>  
+>>  static const char v2_bundle_signature[] = "# v2 git bundle\n";
+>>  static const char v3_bundle_signature[] = "# v3 git bundle\n";
+>> @@ -33,6 +33,8 @@ void bundle_header_release(struct bundle_header *header)
+>>  {
+>>  	string_list_clear(&header->prerequisites, 1);
+>>  	string_list_clear(&header->references, 1);
+>> +	list_objects_filter_release(header->filter);
+>> +	free(header->filter);
+>>  }
+>>  
+>>  static int parse_capability(struct bundle_header *header, const char *capability)
+>> @@ -45,6 +47,11 @@ static int parse_capability(struct bundle_header *header, const char *capability
+>>  		header->hash_algo = &hash_algos[algo];
+>>  		return 0;
+>>  	}
+>> +	if (skip_prefix(capability, "filter=", &arg)) {
+>> +		CALLOC_ARRAY(header->filter, 1);
+>> +		parse_list_objects_filter(header->filter, arg);
+>> +		return 0;
+>> +	}
+>>  	return error(_("unknown capability '%s'"), capability);
+>>  }
+>>  
+> 
+> Re the comment I had on the v1 about embedding this data in the struct
+> instead:
+> https://lore.kernel.org/git/220307.86y21lycne.gmgdl@evledraar.gmail.com/
+> 
+> The below diff passes all your tests, i.e. re using NULL as a marker I
+> think you may have missed that the API already has a LOFC_DISABLED for
+> this (and grepping reveals similar API use of it).
 
-On Tue, Mar 08 2022, brian m. carlson wrote:
+I did miss this LOFC_DISABLED use, which must be the correct way to
+interpret an "empty" filter set (re: earlier concerns that a .nr == 0
+was used as a BUG() statement in some places).
 
-I think the $subject of the patch needs updating. It's not removing all
-the assemply from the file, after this patch we still have the
-ARM-specific assembly.
+> I'm not 100% sure it's correct, but if it isn't that's also going to
+> suggest missing test coverage in this series.
+> 
+> In any case you want the BUNDLE_HEADER_INIT change, your version is
+> buggy in making that header use NODUP strings by hardcoding { 0 }.
 
-I don't have a box to test that on, but I wonder if that also triggers
-the pedantic mode?
+Thanks for pointing this out.
 
-Perhaps:
-
-    block-sha1: remove superfluous i386 and x86-64 assembly
-
-?
+Thanks,
+-Stolee
