@@ -2,108 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF89C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 17:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 140F9C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 17:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348584AbiCHRQe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 12:16:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45984 "EHLO
+        id S1349023AbiCHRVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 12:21:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344409AbiCHRQb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 12:16:31 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B8252E62
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 09:15:32 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id 12so19533310oix.12
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 09:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=zDt0FUzfcBbvOIo96P+nCBO/a9VUPRVPdw9ap0jtbXg=;
-        b=CWMWegs5mGjzAXfRiBLk4cdSlcsQS0Npx0OFHX/rCXO5Mj91/DKMN1i3tLz3ETOrFW
-         7+ChkZLJmsuQgvHBcoRGRJMTKhYHdFDTR/OhZlPCM5Eb+JXMS9g9HhGxvlcQEl8Do8qS
-         RuYlNfRM7SfX69K/Olyh2MVsNWUmFbxQBLs9KbMejZoFs3wX0MAAXRSAwnSgOLxiqMDQ
-         c9GL9A79xDi5vaxPDswlf4m3ilcHx6C/4G3djbjCL+zli+Y38XCmzRk3lCLnOmzn17SH
-         WSDKXbHaifJ0szSw4FA+pt+CxwYMAFZULlGwKqzYkz08HVzLT6NOsZiCCHBoB7KPaAwN
-         n5hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=zDt0FUzfcBbvOIo96P+nCBO/a9VUPRVPdw9ap0jtbXg=;
-        b=QbgVOPqxI8MZB+rMFBHlS6bFHKkuNoCmvXx9q3wWhMX+16Mhd3QAVj5v/2FFvNGpeo
-         Ew7GF45ZQ05ZM0znH8mAmrxoGdSeDcR3+H5HSk04DDY/7xpmzPgMh2THqmzZlhWzWpxy
-         Q2OB3a/GRY1SJLlIK2DIokZiEnJZ8ikGbtVe3kE5LUBrlQ7GUoM32NJ5dOHnljwpZ6lL
-         8zSOs2jEFdSlthpJss7Rgp7cS4f6lHoFXxBTTu0ANYyLO81qWJoofHJZ1ivVy0Q2H17D
-         F2EetfWCexz614CkUeAMUX+Y6g5sKfITtZLeHCGif9+hkuDzjYa45uaHi6Udm84UOJkx
-         7jgw==
-X-Gm-Message-State: AOAM531TcqWWK8EPJh+0ftavsNeLy2E1D+uSs8dwo96ZUXzuFpga57c7
-        MBOY1z1QTnxxZhQCpT1iMLlo
-X-Google-Smtp-Source: ABdhPJxocWw9HzctkYFcH6y9ikXarpqaB6IigohoxCEBTMB/dV8HMxLK7O4cUYf1r9WWPgNKurTU/Q==
-X-Received: by 2002:a05:6808:19a8:b0:2d5:1d0f:95e3 with SMTP id bj40-20020a05680819a800b002d51d0f95e3mr3366415oib.61.1646759731967;
-        Tue, 08 Mar 2022 09:15:31 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t11-20020a4ae40b000000b0031cc933b418sm7245219oov.40.2022.03.08.09.15.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 09:15:31 -0800 (PST)
-Message-ID: <ddebc223-1e13-e758-f9b1-d3f23961e459@github.com>
-Date:   Tue, 8 Mar 2022 12:15:29 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 00/25] [RFC] Bundle URIs
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        with ESMTP id S1349020AbiCHRUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 12:20:49 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33031C138
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 09:19:39 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEA0016ADD8;
+        Tue,  8 Mar 2022 12:19:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ptrv/z5Yudl0kRp1osITUUI6hDe7/7W1m5I0q6
+        WJH5k=; b=h6J/adtrlGV8ra2Xlk/v8sqqt+8hESlzG22gHhx0cVP/fcajgNyUM4
+        xJ5QIHTwMF534vfAKCF3xI9IQByQSq2bzcEOAnIrJvqupRAKWiNfTkbp0HiT6dkf
+        kC+E101aVp2pvsI18Dxd3Oets1u9X8LxUOVpl3jDfJtTGT0DjlSYA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D2EE316ADD7;
+        Tue,  8 Mar 2022 12:19:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2510016ADD6;
+        Tue,  8 Mar 2022 12:19:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        newren@gmail.com, "Robin H . Johnson" <robbat2@gentoo.org>,
-        Teng Long <dyroneteng@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
- <220224.86czjdb22l.gmgdl@evledraar.gmail.com>
- <15aed4cc-2d16-0b3f-5235-f7858a705c52@github.com>
- <a6981d6e-16b0-b0e1-a94d-a87ec20871bd@github.com>
- <220304.86a6e5g44z.gmgdl@evledraar.gmail.com>
- <1469e420-63e5-e2db-21d5-c70674ab04d5@github.com>
-In-Reply-To: <1469e420-63e5-e2db-21d5-c70674ab04d5@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH v3 12/12] clone: fail gracefully when cloning filtered
+ bundle
+References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
+        <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
+        <805e1d1172210c6a39b33edcb2cd6d21b754f821.1646750359.git.gitgitgadget@gmail.com>
+        <d9e6e3bb-b2ef-dbf4-6969-620b58727115@github.com>
+Date:   Tue, 08 Mar 2022 09:19:34 -0800
+In-Reply-To: <d9e6e3bb-b2ef-dbf4-6969-620b58727115@github.com> (Derrick
+        Stolee's message of "Tue, 8 Mar 2022 11:10:42 -0500")
+Message-ID: <xmqqilsonyzd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: ED021B28-9F03-11EC-B6A9-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/4/2022 10:12 AM, Derrick Stolee wrote:
-> On 3/4/2022 9:49 AM, Ævar Arnfjörð Bjarmason wrote:
->> Also, as noted in the upthread
->> <220224.86czjdb22l.gmgdl@evledraar.gmail.com> it might be useful to chat
->> in a more voice/video medium in parallel (maybe mid-next-week) about the
->> high-level ideas & to get a feel for our goals, conflicts etc. Doing
->> that over very long E-Mail exchanges (and the fault of "long" there is
->> mostly on my side:) can be a bit harder...
-> 
-> I agree. I we can work out a time in a private thread and I can send
-> you a video call invite.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Ævar and I just finished our chat and came away with these two
-action items:
+> On 3/8/2022 9:39 AM, Derrick Stolee via GitGitGadget wrote:
+>
+>> +	if (is_bundle) {
+>> +		struct bundle_header header = { 0 };
+>> +		int fd = read_bundle_header(path, &header);
+>> +		int has_filter = header.filter.choice != LOFC_DISABLED;
+>
+> Of course, as I was sending an email replying to What's Cooking, I
+> realized that I missed one of the suggestions, which is fixed with
+> this diff:
+>
+> --- >8 ---
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 623a5040b1..e57504c2aa 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1140,7 +1140,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	transport->cloning = 1;
+>  
+>  	if (is_bundle) {
+> -		struct bundle_header header = { 0 };
+> +		struct bundle_header header = BUNDLE_HEADER_INIT;
+>  		int fd = read_bundle_header(path, &header);
+>  		int has_filter = header.filter.choice != LOFC_DISABLED;
 
-1. Ævar will finish prepping his RFC as-is and send it to the list.
-   It contains several deeply technical optimizations that are
-   critical to how his model works, but could also be used to
-   improve scenarios in the table of contents model.
+Let me squash it into 12/12, then.
 
-2. Ævar will then do a round of taking both series and combining
-   them in a way that allows the union of possible functionality
-   to work.
+Thanks.
 
-3. As these things come out, I will make it a priority to read the
-   patches and provide feedback focusing on high-level concepts
-   and ways we can split the future, non-RFC series into chunks
-   that provide incremental functionality while keeping review
-   easier than reading the whole series.
-
-Thanks,
--Stolee
