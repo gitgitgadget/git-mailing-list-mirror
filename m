@@ -2,142 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0188C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 21:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D28FC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 21:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350318AbiCHVZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 16:25:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34282 "EHLO
+        id S1343961AbiCHVn1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 16:43:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234333AbiCHVZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 16:25:37 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738884FC4F
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 13:24:40 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id j26so125912wrb.1
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 13:24:40 -0800 (PST)
+        with ESMTP id S236104AbiCHVn0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 16:43:26 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 344CBDC3
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 13:42:28 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id e7-20020a17090a4a0700b001bc5a8c533eso298882pjh.4
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 13:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=8JWPeASzx+YwjpKe+XHsaFeDuKMPE/QP89ayMIT7J+U=;
-        b=KOkrsllR4mG0jq+ulIcEhrZPZI05l09wLe0OTnZJUlbDmE8qqlwKa+QOaWwXdJCwaj
-         bskd72Z8JMG0nNsvJVdj7bOtbuQFwCVk85wrxWokdCBgsLMVg4cnlU73AaJwOI0mRf1+
-         Nxg3w+SCTbGdlkx55ftEwDyvacj/XYeMWyjX5dKhnUEMKJxOu+IbqGyIv78gZMzlS5t9
-         fNlGIAfscKzecFBqt5tMkw1TIJ5KbSTRfpZwKb4rWjc+R9u8fTeZAP2xqdIAlsEYv8+R
-         XZIQzRX/r5OkIxwEnhElFIjLwxMSA7BBz6B1jBybFUMtWBbxtTMcq9OiIj/iSiigZeNj
-         Fl3A==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=tt7Pt3cmhYXtmrAO9FXJrxmCa/lZaJDjboMYuV1pkaQ=;
+        b=LDCJBDUjnXLvivEQFHc7fekQdDy5MP0DAZidviwvN7ZFTWU8g0vghORtTbFWfHMY1Q
+         fFO/o31UEYrtXkxnpvAqMO14aTXG+b/d0pFYnI5A5oR4NWQTdWiPFg1MWk2Wp7ieGqLL
+         3kN95ImvE2ZxuZurBVm3otNRWsMy8iX8dJ1FH+susbNWqKTRbZndOrnKPdSRwmoF53ab
+         lcQRHPM6D4iS+orvZpHCYtfAZHopXnjtSY+rzK0zVNx+WPA21zugIbaXfZUQG3F8XIXn
+         70gVRu17AM/YyFmhRwJhwDNi+ot9iZr9f8Q/8eBaIa4KrbBQFcsdXRTIuwuXElUq4ve3
+         pgug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=8JWPeASzx+YwjpKe+XHsaFeDuKMPE/QP89ayMIT7J+U=;
-        b=IzSHzRkryapsRcwaKVBmHqGWN1Cpfo2k5KWyp7Tenhpoyy2OU90M/G1FkILWxrRjS0
-         j7TZOO0DVYacI3WsMIOJMssTXZCCLfmxNwttE7pDI5zx2HMX4kDV06iOH9zCI1C91mJS
-         ZHhPvHP7mTGYNVMm7tMmu+yxB13EAAUvhul6BBNOXER3FNKGbK368tk7oLhH8EH4S9zp
-         /0z6PQklh6eIfy4vC8Qmml50YV/Wuunjyx+Nm37yAQMMqAg18LfncmoROr8eYCKM+dk1
-         OBvCp7jtb36CdypGwpDAT/3TLOcxm+cshmLuhyy6HX2b3FM/sFPEETGEc8ZEDEgnIabe
-         +IwQ==
-X-Gm-Message-State: AOAM533FVJsYaMfeBNZTu43vH+JXoCTJ/up+AcDGbTKYP85HkGZg9iAN
-        wpQcZXxe43MxnkHSbnjLYVbhVTxRKBI=
-X-Google-Smtp-Source: ABdhPJxpKkrOOgoCnfyB76wFtEju7XE4xqrIviz8IIQ/AAtx9q50OVMcxD52POikk2RwlZvx0p0kcQ==
-X-Received: by 2002:adf:d4c1:0:b0:1f0:59ad:7fb0 with SMTP id w1-20020adfd4c1000000b001f059ad7fb0mr13714479wrk.288.1646774678693;
-        Tue, 08 Mar 2022 13:24:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h36-20020a05600c49a400b00382aa0b1619sm14782wmp.45.2022.03.08.13.24.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 13:24:37 -0800 (PST)
-Message-Id: <pull.1225.git.git.1646774677277.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 21:24:37 +0000
-Subject: [PATCH] name-rev: make --stdin hidden
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=tt7Pt3cmhYXtmrAO9FXJrxmCa/lZaJDjboMYuV1pkaQ=;
+        b=46lqfNIuDkNs4fByahOss4yJ0HRmPQn8E0I6Ssvs7DX+RgD1QAriIFUFxD39jaEIzc
+         FM+B6g09+E0fIdLfQtg/2K+v++B5qQ3HtwLe7Vnckj/TlqHwuf1uHh3pzUkcnrNbi0KQ
+         h63ZlxbTb5lxZCIPFDyvMtYMq06rWhwBU1TT2Gi0ZoSjJC9cpqj8SVco6ycPMX4XoHM2
+         svJPZrIUyqZNxqH6fxcdXXBOjpwcBf7/SZFjwu1451BV/b4vA8on/XyQe0amTlIuhbDk
+         gd9W8X9MqBvn1mn+T4RzzV/R/1WjZWx4OrYtyW2mxRo+vCNbopFEQj6y1kIGV5RGl8Au
+         oHHQ==
+X-Gm-Message-State: AOAM530/cZF7apTJfdhhDqodzngV6XpFII1aRIkDfftrqhmbuPSpaizR
+        AGE0JAHEUJ1fXIdB9YNlp4I23Y3OhbgUOf4ZlRM1
+X-Google-Smtp-Source: ABdhPJwga4jZm73qm4tl1EZdEcaTOPw0xkRG3vwsiksZiyqgWqLgZfIBvvps925x2EeK42ZXrhV22e/gtnJPnqfNv0iR
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:8348:0:b0:380:abf8:ae3c with
+ SMTP id h69-20020a638348000000b00380abf8ae3cmr1719365pge.5.1646775747603;
+ Tue, 08 Mar 2022 13:42:27 -0800 (PST)
+Date:   Tue,  8 Mar 2022 13:42:22 -0800
+In-Reply-To: <20220308001433.94995-1-chooglen@google.com>
+Message-Id: <20220308214223.3856920-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
+Subject: Re: [PATCH v5 00/10] fetch --recurse-submodules: fetch unpopulated submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Glen Choo <chooglen@google.com> writes:
+> - <20220304235328.649768-1-jonathantanmy@google.com> I've described the
+>   differences between the no-submodule-in-index test and the
+>   other-submodule-in-index test (their comments now refer to one
+>   another, so the contrast is more obvious), but didn't reorder them
+>   because I thought that made the test setup less intuitive to read.
 
-In 34ae3b70 (name-rev: deprecate --stdin in favor of --annotate-stdin),
-we renamed --stdin to --annotate-stdin for the sake of a clearer name
-for the option, and added text that indicates --stdin is deprecated. The
-next step is to hide --stdin completely.
+Thanks - the comments make sense.
 
-Make the option hidden. Also, update documentation to remove all
-mentions of --stdin.
+> - <20220304234622.647776-1-jonathantanmy@google.com> I added
+>   expect.err.sub2 to verify_test_result() but didn't change
+>   write_expected_super() to account for sub2. It turned out to be tricky
+>   to predict the output when 'super' fetches >1 branch because each
+>   fetched branch can affect the formatting. e.g.
+> 
+>     	   OLD_HEAD..super  super           -> origin/super
+> 
+>   can become
+> 
+>     	   OLD_HEAD..super  super                   -> origin/super
+>     	   OLD_HEAD..super  some-other-branch       -> origin/some-other-branch
+> 
+>   (I could work around this by replacing the whitespace with sed, but it
+>   seemed like too much overhead for a one-off test).
 
-Signed-off-by: "John Cai" <johncai86@gmail.com>
----
-    name-rev: make --stdin hidden
-    
-    The next step of replacing name-rev --stdin with --annotate-stdin is to
-    make --stdin hidden. This patch also updates documentation to get rid of
-    any mention of --stdin.
+Overwriting just the super part works for me, thanks.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1225%2Fjohn-cai%2Fjc%2Fhide-name-rev-stdin-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1225/john-cai/jc/hide-name-rev-stdin-v1
-Pull-Request: https://github.com/git/git/pull/1225
+The only thing remaining from me is my comment about fetching OIDs from
+one submodule into another (of the same name but different URL) [1], but
+I looked into it myself and we can probably postpone handling this to
+another patch set.
 
- Documentation/git-name-rev.txt | 8 ++------
- builtin/name-rev.c             | 6 +++++-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+In such a patch set, we would probably need to store the URLs that are
+reported by upstream .gitmodules somewhere. (I forgot that we don't use
+them in this patch.) And then, either implement an autosync function
+(like "git submodule sync", perhaps gated by a "--sync-submodules"
+argument so that users can include it when fetching new commits and
+exclude it when fetching historical commits) and/or use those URLs in a
+diagnostic message to be printed when the fetch fails.
 
-diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-index ec8a27ce8bf..5f196c03708 100644
---- a/Documentation/git-name-rev.txt
-+++ b/Documentation/git-name-rev.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git name-rev' [--tags] [--refs=<pattern>]
--	       ( --all | --stdin | <commit-ish>... )
-+	       ( --all | --annotate-stdin | <commit-ish>... )
- 
- DESCRIPTION
- -----------
-@@ -70,10 +70,6 @@ The full name after substitution is master,
- while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
- -----------
- 
----stdin::
--	This option is deprecated in favor of 'git name-rev --annotate-stdin'.
--	They are functionally equivalent.
--
- --name-only::
- 	Instead of printing both the SHA-1 and the name, print only
- 	the name.  If given with --tags the usual tag prefix of
-@@ -107,7 +103,7 @@ Now you are wiser, because you know that it happened 940 revisions before v0.99.
- Another nice thing you can do is:
- 
- ------------
--% git log | git name-rev --stdin
-+% git log | git name-rev --annotate-stdin
- ------------
- 
- GIT
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 929591269dd..2389e7f752d 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -538,7 +538,11 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 				   N_("ignore refs matching <pattern>")),
- 		OPT_GROUP(""),
- 		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
--		OPT_BOOL(0, "stdin", &transform_stdin, N_("deprecated: use annotate-stdin instead")),
-+		OPT_BOOL_F(0,
-+			   "stdin",
-+			   &transform_stdin,
-+			   N_("deprecated: use annotate-stdin instead"),
-+			   PARSE_OPT_HIDDEN),
- 		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
- 		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
- 		OPT_BOOL(0, "always",     &always,
+As it is, the existing fetch-into-submodules-at-HEAD also suffers from
+the same flaw, so I'm OK postponing this to another patch set.
 
-base-commit: c2162907e9aa884bdb70208389cb99b181620d51
--- 
-gitgitgadget
+So,
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
+
+[1] https://lore.kernel.org/git/20220304234622.647776-1-jonathantanmy@google.com/
