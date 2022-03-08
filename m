@@ -2,202 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50648C433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 18:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07DFCC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 18:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349390AbiCHSK6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 13:10:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52724 "EHLO
+        id S1349658AbiCHS0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 13:26:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244244AbiCHSK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 13:10:57 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745F552E42
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 10:10:00 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id d10so41041079eje.10
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 10:10:00 -0800 (PST)
+        with ESMTP id S1349680AbiCHS0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 13:26:25 -0500
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BEF95A084
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 10:24:09 -0800 (PST)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-2d07ae11467so167666087b3.12
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 10:24:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V3jd36OsjURe0f2t1xaGmxP6L586q1I/7SMQs4Vqzn0=;
-        b=AOMNeGZFn9NRlPbOAygDfXDz4LhqGceZZbttxLHVUTVG3xWm+o1nHZT1k+/W4EQIv+
-         RBmmIgJA3N64tw+lFNibA6EUaerd9JdsSWaaGO2CSrX9sB27H05cHD65+QNEDmnrOZFM
-         KgNiQMtJo9794tUKu+l5PzrXKSdc7mAsoyKGw5hjXI9R1hGkF45EaqqtWVpUFqooi45Z
-         FBfJdAyX2y5If1ON/yO+Q8oTZXLLrruQukUFdf6q0P0U0BeOvxnXl2qtKkVz50DrIsqz
-         DMGiUQNZ5yJjEKwRl8CRX2yaMrUPaOIC15BX7BH0kFeUBOgZREQsowzBQuwjG86/qHXY
-         3mIw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=+6TnCVcKJcQEklrX7nsYWMIPUNqQwU7IFlaCyJqfjm8=;
+        b=ltncjhDvUswBdX3B/IGWCy3Kk7CJJuaw1S4/TQ3ZYVtCzlvaScBinxOrKF8l0alxAy
+         kbCL9/MqC6ip0BcVQG720LTRq03LC4RXjo6rmh+bA7uMjTj40aBtzLDaK+mOuYyWiMLu
+         r3HZCSAzs7nHpW2uia1G+a/xxoAf0BiB1yM3BYjc56gUZsufT7IFSPb8jxXFliiPR3RV
+         USmpWKbA3/de37fIhm/+UzRr7ElAW5PKItQb4jJh6uyT52U2YpW5w7Z+ac5iPjR91Rq7
+         VJs5pEjrFWSiQclGSECOgjnc+xNgtGXQdyTaAu1qiTjXzUZ1KyjNT9gYWNciplxCGadE
+         33cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V3jd36OsjURe0f2t1xaGmxP6L586q1I/7SMQs4Vqzn0=;
-        b=jayTR4RGHOUjSw4+TAHRaEVZPoQKlRtVaZZilUrjxYSK7Y1IjpCmtxRPlrhOMBkBZZ
-         bCsBAq63OZ2TUn3JxtX1vHXoo4N5vgdPnl+hBl2zg5s3iVypO3dOiiSJXq6e9Be6d8v6
-         eTcifsbKk9EOGVRiaCPK5ljhPLvlvDK/oZ7y8LODAQh7Ees3jJS0tbzvN3vqnSAKl8MC
-         lX4jHn92SH3gaQ2eyMRWImNnA4rq8Wk6LLcRSnAHns3jAXgOvoD8kBX/xsZTzdSf6Yk4
-         C9V631REsC7Qh3w8TnBg80RNpmsBTVSNrCxr9Hy1euqIwoHoBTEJj/qtWi4+w94G0YJ1
-         juug==
-X-Gm-Message-State: AOAM532/GvweQcp6jv7CUi/WlBXfj9xy53L+vv3Oyx1WHwVmkM+EXXTd
-        ke9WUr7KYip/xcyL3qm5W2mF215nAM4=
-X-Google-Smtp-Source: ABdhPJzodWb29OcSC21mi9AVvd/1132D4zAeMqO2rSWv7cFOBdADJnF4YNSCJxyP/5nligKTI6i25Q==
-X-Received: by 2002:a17:906:4c4b:b0:6da:a5d9:7af9 with SMTP id d11-20020a1709064c4b00b006daa5d97af9mr14385580ejw.336.1646762998833;
-        Tue, 08 Mar 2022 10:09:58 -0800 (PST)
-Received: from [10.37.129.2] (guest-pat-13-128.njit.edu. [128.235.13.128])
-        by smtp.gmail.com with ESMTPSA id d1-20020a17090694c100b006da91d57e93sm6096296ejy.207.2022.03.08.10.09.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Mar 2022 10:09:58 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v4 1/3] stash: add tests to ensure reflog --rewrite --updatref behavior
-Date:   Tue, 08 Mar 2022 13:09:52 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <A8BDCB7C-5F16-4EDE-B8B7-0B73C93B68D2@gmail.com>
-In-Reply-To: <34452e16-cf8e-8d23-671e-3c24cdf4e6a4@gmail.com>
-References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
- <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
- <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
- <xmqqlexsexse.fsf@gitster.g> <20334a5e-52b8-12a4-de93-a8baa5313858@gmail.com>
- <220303.86a6e72d1g.gmgdl@evledraar.gmail.com>
- <d73db784-c09b-a889-3d19-d41be7748e66@gmail.com>
- <F383C357-FEC3-4E1E-A0B7-97EDE05035FD@gmail.com>
- <34452e16-cf8e-8d23-671e-3c24cdf4e6a4@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=+6TnCVcKJcQEklrX7nsYWMIPUNqQwU7IFlaCyJqfjm8=;
+        b=IHzLAbKRQ0fiNKgJs8CkDGvdctO0k5aIyY73C4ITGnSqoQcnl6XldZa+8Kp9ZO2hi9
+         Z55EDmTNaXN6ohskJk4F99TUm9Ub2F4vY7P+MTgkF5O7vjT0sJloIzIDiPUdBoGNoUwd
+         dBVAE4bHqwJ9wlerWW8NB9ig1NndULB/PYS25K54RGbD9+fFcyHEtumDG/aWmzM/K2aQ
+         rNnTB0ehaBLNECKsFrG5h6FM4vSSrpkBSAxmjn5xMuIcUKbsej7WrqXQkqfvVaobNaNn
+         cfkilwwRGtbz+EwWW2uYIhPB2yqOUKVDC0glitB+ilIFIjt1gMcbDUpNM4rd1LnO0u25
+         ZduQ==
+X-Gm-Message-State: AOAM5319mCcvbZ4SrI86eSUfOVsf+A31880Tz0uRxypljHglI2CGdiGH
+        7+VSfYOnjf7tWd6DueK9ujYXPlrtKjUslQ==
+X-Google-Smtp-Source: ABdhPJwR+TvV6cftMxHj+6XtQ58sOH4/ayiAXfPOmCrnD5uANWpaueXUsejTQ4p2NRfJT2rwTV/I3NXCjhcoEA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a81:df04:0:b0:2dc:48db:dda3 with SMTP id
+ c4-20020a81df04000000b002dc48dbdda3mr14130069ywn.224.1646763847650; Tue, 08
+ Mar 2022 10:24:07 -0800 (PST)
+Date:   Tue, 08 Mar 2022 10:24:04 -0800
+In-Reply-To: <xmqqr17dp8s9.fsf@gitster.g>
+Message-Id: <kl6lh7885mm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220304005757.70107-1-chooglen@google.com> <20220308001433.94995-1-chooglen@google.com>
+ <xmqqr17dp8s9.fsf@gitster.g>
+Subject: Re: [PATCH v5 00/10] fetch --recurse-submodules: fetch unpopulated submodules
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 8 Mar 2022, at 5:39, Phillip Wood wrote:
+> Glen Choo <chooglen@google.com> writes:
+>
+>>   It's true that we don't need <.super_oid, .path> in order to init the
+>>   subrepo, but it turns out that recursive fetch reads some
+>>   configuration values from .gitmodules (via submodule_from_path()), so
+>>   we still need to store super_oid in order to read the correct
+>>   .gitmodules file.
+>
+> OK, but then do we know which .gitmodules file is the "correct" one,
+> when there are more than one .super_oid?  Or do we assume that
+> .gitmodules does not change in the range of superproject commits we
+> have fetched before deciding what commits need to be fetched in the
+> submodules?
 
-> Hi John
->
-> On 03/03/2022 19:12, John Cai wrote:
->> Hi Phillip,
->>
->> On 3 Mar 2022, at 12:28, Phillip Wood wrote:
->>
->>> On 03/03/2022 16:52, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>>
->>>> On Thu, Mar 03 2022, Phillip Wood wrote:
->>>>
->>>>> On 02/03/2022 23:32, Junio C Hamano wrote:
->>>>>> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>>>> [...]
->>>>>>> +test_expect_success REFFILES 'drop stash reflog updates refs/sta=
-sh with rewrite' '
->>>>>>> +	git init repo &&
->>>>>>> +	(
->>>>>>> +		cd repo &&
->>>>>>> +		setup_stash
->>>>>>> +	) &&
->>>>>> Hmph, so this is done inside the subdirectory.  The implementation=
+This uses a "first one wins approach", which obviously doesn't have
+correctness guarantees. But in practice, I don't think this is likely to
+cause problems:
 
->>>>>> of the helper in this iteration does look cleaner than in the
->>>>>> previous iteration.
->>>>>> But these many references to "repo/" and "-C repo" we see below
->>>>>> makes me wonder why we do not put the whole thing inside the
->>>>>> subshell we started earlier.
->>>>>> i.e.
->>>>>> 	git init repo &&
->>>>>> 	(
->>>>>> 		cd repo &&
->>>>>> 		setup_stash_test &&
->>>>>> 		echo 9 >file &&
->>>>>> 		old=3D$(git rev-parse stash@{0}) &&
->>>>>> 		git stash &&
->>>>>> 		new=3D$(git rev-parse stash@{0}) &&
->>>>>> 		...
->>>>>> 		test_cmp expect actual
->>>>>> 	)
->>>>>>
->>>>>
->>>>> I wonder if we could avoid the subshell entirely and avoid relying =
-on
->>>>> REFFILES (assuming we're not trying to test the implementation deta=
-ils
->>>>> of that refs backend) by doing something like
->>>>>
->>>>> test_expect_success 'drop stash reflog updates refs/stash with rewr=
-ite' '
->>>>> 	old=3D$(git rev-parse stash@{0}) &&
->>>>> 	setup_stash_test &&
->>>>> 	git rev-list -g stash >tmp &&
->>>>> 	sed /$old/d tmp >expect &&
->>>>> 	git rev-list -g stash >actual &&
->>>>> 	test_cmp expect actual
->>>>> '
->>>>
->>>> Unless I'm missing something that "rev-list -g" will emit only the R=
-HS
->>>> of the stash logs, i.e. no "0000..." etc.
->>>>
->>>> And if we only look at that the difference with specifying the flag
->>>> isn't visible, no?
->>>
->>> Maybe I'm missing what this test is actually needs to do. I thought i=
-t just needed to check that the deleted stash is removed from the reflog =
-and the others are unchanged. You're right that it wont show the LHS and =
-if that is important then you need to read the log file directly.
->>
->> We had discussed this briefly in [1], but the --rewrite option for ref=
-log delete will rewrite the LHS, which is not visible to normal ref API u=
-sers. So the only way to test that this happened is to reach inside of th=
-e file.
->>
->> 1. https://lore.kernel.org/git/xmqqczjdp2g8.fsf@gitster.g/
->
-> Thanks for the pointer, that was useful context that could maybe be add=
-ed to the commit message to explain why the test needs to check the lhs o=
-f the reflog if you reroll.
+- As far as I can tell, the only value we read from .gitmodules is
+  'submodule.<name>.fetchRecurseSubmodules', and this value gets
+  overridden by two other values: the CLI option, and the config
+  variable with the same name in .git/config.
 
-Good point. that would be helpful context since it took me a while to fig=
-ure it out myself--will re-roll, thanks!
+  During "git submodule init", we copy the config values from
+  .gitmodules to .git/config. Since we can only fetch init-ed submodules
+  anyway, it's quite unlikely that we will ever actually make use of the
+  .gitmodules config.
 
->
-> Best Wishes
->
-> Phillip
->
->>>
->>> Best Wishes
->>>
->>> Phillip
->>
->> thanks,
->> John
->>
->>>
->>>
->>>>>>> +	echo 9 >repo/file &&
->>>>>>> +
->>>>>>> +	old_oid=3D"$(git -C repo rev-parse stash@{0})" &&
->>>>>>> +	git -C repo stash &&
->>>>>>> +	new_oid=3D"$(git -C repo rev-parse stash@{0})" &&
->>>>>>> +
->>>>>>> +	cat >expect <<-EOF &&
->>>>>>> +	$(test_oid zero) $old_oid
->>>>>>> +	$old_oid $new_oid
->>>>>>> +	EOF
->>>>>>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->>>>>>> +	test_cmp expect actual &&
->>>>>>> +
->>>>>>> +	git -C repo stash drop stash@{1} &&
->>>>>>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->>>>>>> +	cat >expect <<-EOF &&
->>>>>>> +	$(test_oid zero) $new_oid
->>>>>>> +	EOF
->>>>>>> +	test_cmp expect actual
->>>>>>> +'
->>>>>>> +
->>>>>>>     test_expect_success 'stash pop' '
->>>>>>>     	git reset --hard &&
->>>>>>>     	git stash pop &&
->>>>
+- Even if we do use the .gitmodules config values, it's unlikely that
+  the values in .gitmodules will change often, so it _probably_ won't
+  matter which one we choose.
+
+- This only matters when the submodule is not in the index. If the
+  submodule _is_ in the index, we read .gitmodules from the filesystem
+  i.e. these patches shouldn't change the behavior for submodules in the
+  index.
