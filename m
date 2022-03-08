@@ -2,247 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB281C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 19:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F99C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 19:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347014AbiCHTCX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 14:02:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39556 "EHLO
+        id S1344387AbiCHTpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 14:45:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241039AbiCHTCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 14:02:21 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C23650E3E
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 11:01:24 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id s10so20136edd.0
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 11:01:24 -0800 (PST)
+        with ESMTP id S236303AbiCHTpD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 14:45:03 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77EA4EA31
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 11:44:06 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id v4so299966pjh.2
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 11:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vrlP0gRR0JMrYyjyxUDVVNajbbmOmyj2ACuNrXbtU0k=;
-        b=Qhzv7muc929dvZVjXJ4avmU7VOC2LC/H33ZTYs4w85T3X+KWMm/R4ji/sEKj19yBs6
-         vH91K+2s8+eS4tYWoqeyVA4Z5tnehpVy+qSUh1UCkCo8VSo7lbKx2/dmWMypAgA5a+QL
-         Z8zhtdIPSDfJ2AKZVDbVdcDk42Psms/h11aYI+F5opimhJJuQHXxgtHiy0L2F1GwaTGg
-         WmwOC+Clol6qaGaB1QEp2ERwhdq9lUpr+5zlVMg1+hdNSd6HOv1EcjDX8yx9hRvops/D
-         uT0l3PvJlmup1TwBqyDwDHpSamifc4GvyvdlGb7bZxU46Tlp/Zt7HtBI7AvLCBetVebJ
-         eONA==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JGI9LXsxBlzWBli8TwWoPI7sc8SQ7cbqpoZfxDXoek8=;
+        b=rPOCXFq0MPlN/xPgaZ8DfhrxAwGrSQq4KwMTFSp+RSRWiYlcx8s/1rvmatcq5af5kO
+         P5HqrxuZR/f0tDzxmAF8gMePMm7N+wYsPo8cqbaV/8Gt7X45sFzkXKIdiH9LaRu/sHR0
+         z99TOQjs/Rp/pbQ9MaaKwCbW7u+miX1b8wbMgV4YFq224mLvtsiQ5Tmuuq8o+zk00MSH
+         8XpJFe/vm4erHhdvuOKpkkkyHknqb9RV8LncV7q5NQpGRGeS2OzGbZV7sYUR+1YcfuQE
+         fvuTkoxh67mHuMfahm2FJgz+Q2iCsydFPOeJ7ZgPvwszE+8MuKAAwbyrw00PUkMVzFPU
+         7uSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vrlP0gRR0JMrYyjyxUDVVNajbbmOmyj2ACuNrXbtU0k=;
-        b=AolnML5sy3D4ZCTRxqg7t6DdkLhggz8p3+s3oVEJBmNA+Tjbmxvi5GsZ//aqm2JUs0
-         KLcPUdVxQ6i0kzbQKfD/TkyEmVvLwHc1hG/h3bfmceIuXD9E/qRHHDUXE0l+L2xJmzTD
-         KrwD7b/2Qeygkh2JE5OIq0t6azB15gX9mFd307E8eehpo7UGHxMG2pGeCiZE7h5wHJ3Q
-         z9zX0RKJfMVJ43balCwf2uE1aFbY20bZnRPGLkEnMusfFS3K3tGwjiNvXILtpNbo8BRo
-         xQI3ewiywWJ8WsH67qdIdbJynhUGVTLqo9U2Rbb0UGa2iv+krKj0esD6zTA7I9S6IXLy
-         zapA==
-X-Gm-Message-State: AOAM5323I2bVAP/luSyIZqgYmOOafEbVMxz3pk6tDyRD7hO2RkR/6rXT
-        Hpb79T6ZUV4qXmxAyL+GbqA=
-X-Google-Smtp-Source: ABdhPJzdVXWcitQL58ObJAcOMG3jl/kHDwuVdVW019z60UccVSsP265jEMJ1MJoIGPtEVULGL6XSZA==
-X-Received: by 2002:aa7:c687:0:b0:415:eb43:8ff5 with SMTP id n7-20020aa7c687000000b00415eb438ff5mr17716702edq.74.1646766082896;
-        Tue, 08 Mar 2022 11:01:22 -0800 (PST)
-Received: from [10.37.129.2] (guest-pat-13-128.njit.edu. [128.235.13.128])
-        by smtp.gmail.com with ESMTPSA id si13-20020a170906cecd00b006cded0c5ee2sm6319441ejb.61.2022.03.08.11.01.21
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Mar 2022 11:01:22 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] cat-file: skip expanding default format
-Date:   Tue, 08 Mar 2022 14:01:19 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <0D4FEF37-1652-4172-A266-9FF98DA2EE9C@gmail.com>
-In-Reply-To: <xmqqmti0nzx7.fsf@gitster.g>
-References: <pull.1221.git.git.1646429845306.gitgitgadget@gmail.com>
- <pull.1221.v2.git.git.1646708063480.gitgitgadget@gmail.com>
- <xmqqmti0nzx7.fsf@gitster.g>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=JGI9LXsxBlzWBli8TwWoPI7sc8SQ7cbqpoZfxDXoek8=;
+        b=oXrOQqywbi7MytI7iY08fTz7u2R2kcP7/7v5a4D7dQXRchXo9sHKB1oJvntB0fxEen
+         +J29tMS7YxdZtf5dbt2oH1ruy+oNeSDwG6NVxZVopXhVPYmg8Vg67zHL6S9YNOXQHkRE
+         zxmzv/EZnfrwdxlfGjWrJbfek+MkrhqeJlxR/XKW1jo85AWpO49lzFuhI68Bv1Bq1I2h
+         IosinbV/xZq4VuS4tbvAvijM0LBZoNOBTz0FyBUXNjm8oJoblPAJaTa/cCzcicUT59Ab
+         M3MrqvTngwBjaBbG/9oebHrctyCcE5PS82uG5UpneZJUbRLzij02pWofI9t1FsevVdDZ
+         dkIw==
+X-Gm-Message-State: AOAM533s2oDOREZ266e0+VLGO2etMIrcLIWAzDG1umuqZ3yUEXwpxPWE
+        Rcwwi4edT2V3h/RnAc0AVj9aMg==
+X-Google-Smtp-Source: ABdhPJwwsZzOPL3j1on7Csy92JQWPeWedkQFQC+hWGeLQW7jxsp09B2xtIKd6O8Hh3EIIlW3HJZ83g==
+X-Received: by 2002:a17:903:41c9:b0:151:a545:2d5f with SMTP id u9-20020a17090341c900b00151a5452d5fmr19600542ple.114.1646768645839;
+        Tue, 08 Mar 2022 11:44:05 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:d378:557f:66de:402f])
+        by smtp.gmail.com with ESMTPSA id h17-20020a63df51000000b0036b9776ae5bsm15804446pgj.85.2022.03.08.11.44.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Mar 2022 11:44:05 -0800 (PST)
+Date:   Tue, 8 Mar 2022 11:43:59 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>, git <git@vger.kernel.org>
+Subject: Re: What does it mean to have multiple upstream tracking branches?
+Message-ID: <Yiex/y8s7mlHTydz@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Tao Klerks <tao@klerks.biz>, Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>, git <git@vger.kernel.org>
+References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
+ <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
+ <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqzgm2vjab.fsf@gitster.g>
+ <CAPMMpoh38fm-jNi=GD+uf6O+JLiJz-ue2zh5ceWpwmTYBRKzvw@mail.gmail.com>
+ <220307.86a6e20xi2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220307.86a6e20xi2.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 2022.03.07 13:12, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Mar 07 2022, Tao Klerks wrote:
+> 
+> > On Sun, Mar 6, 2022 at 10:54 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Glen Choo <chooglen@google.com> writes:
+> >>
+> >> > Not that I would ever _recommend_ someone to work like this though.
+> >> > Junio also wondered whether anyone uses this [1].
+> >> >
+> >> > [1] https://lore.kernel.org/git/xmqqbl2hw10h.fsf@gitster.g
+> >>
+> >> I actually think the current octopus behaviour is a sensible one
+> >> (after all, that was what we envisioned how it would be used when we
+> >> did the mechanism long time ago).  If you have mutliple, say source
+> >> and docs, groups working for you and you are taking their work from
+> >> time to time, something like this:
+> >>
+> >>     [branch "main"]
+> >>         remote = central-repo
+> >>         merge = sources
+> >>         merge = docs
+> >>
+> >> would let your folks push into the central-repo, and a "git pull"
+> >> will help you advance your main branch that you'll publish later.
+> >>
+> >> You can explain multiple .merge entries for such an integration
+> >> branch like I just did and I think such an explanation makes perfect
+> >> sense, but these are quite different from what we view as "upstream"
+> >> in the traditional sense.  In the setting illustrated here, yours is
+> >> the main integration repository, the center of the universe, and
+> >> those folks working in the 'sources' and 'docs' groups view yours as
+> >> their "upstream".
+> >>
+> >> So, "what does it mean to have multiple branch.*.merge entries" has
+> >> a good answer: you are integrating from these contributors and these
+> >> entries are not your "upstream" in the usual sense---you do not even
+> >> push back to them.  Asking "what does it mean to have multiple
+> >> upstream" makes little sense, I would think.
+> >>
+> >> Now, with the 'main' branch used in such a manner, if you did
+> >>
+> >>    $ git branch --track=inherit topic main
+> >>
+> >> and worked on the "topic" branch, you do not push back to either the
+> >> sources or docs of the central-repo, of course, but it is unclear if
+> >> you even want to "pull" to create octopus from these two branches at
+> >> the central-repo, which essentially duplicates the pull's you would
+> >> do on your 'main' branch.  I suspect that you'd rather want to merge
+> >> updates 'main' accumulated (or rebase on them).
+> >>
+> >> The reason why I asked what Josh's plans are for the multiple .merge
+> >> entries in that thread [1] when the "--inherit" feature was being
+> >> invented was exactly about this point.  I wondered if last-one-wins
+> >> may make sense (and as the above octopus set-up tells us, it may
+> >> not), but if we want to keep "multiple .merge entries means an
+> >> integrator making octpus merges", then it may make sense not to copy
+> >> them when there are multiple with "--track=inherit", to avoid
+> >> spreading the "curious" nature of the branch like 'main' depicted
+> >> above.
+> >
+> > Given that the notion of "inherit"ing the tracking configuration is a
+> > (relatively) new one anyway, and given the slightly esoteric nature of
+> > the "multiple branch merge entries lead to octopus merges"
+> > functionality, I would argue that it makes more sense to die when
+> > branching under this specific configuration, saying something like
+> > "inheriting the tracking configuration of a branch with multiple
+> > branch merge entries is not supported - we think you're making a
+> > mistake".
+> 
+> I don't know if this is plausible in this case, but we need to be very
+> careful with that in general. I.e. some people might set the "sensible"
+> default remote config for "origin" in their ~/.gitconfig or whatever,
+> including "merge" for a "master" and all.
+> 
+> Then expect that if they have a local repo that we'll take whatever
+> custom values there to override them, if any.
+> 
+> So for most config variables that take a "last set wins" it's a feature
+> to ignore any previous entries.
+> 
+> But in this case it might be different due to the odditity of the remote
+> config, how we almost always manage it with "git remote" or "git clone"
+> etc.
+> 
+> > Skipping the creation of tracking entries in this case, even with a
+> > warning/explanation output to stdout, would be a "slightly hidden
+> > surprise", in that git command output is often not read by, or even
+> > visible to users when a command is successful, eg in a GUI.
+> >
+> > If we think this will basically never happen and really makes no sense
+> > anyway, as Junio seems to suggest, then I would argue the extra
+> > complexity in the codebase to support the "inheriting multiple branch
+> > merge entries" is unwarranted.
+> >
+> > Either way, I will happily drop this topic as it does not appear to
+> > require follow-up in direct relation to my "--track=simple"
+> > work/proposal. On the other hand, I'd be happy to work on a patch to
+> > eliminate this multi-tracking-branch-inheritance path/support (undoing
+> > some of Josh's work here) if the team believes this makes sense.
+> 
+> Just on my side: Don't take any of my comments in this thread as a "we
+> shouldn't do this", it was genuine confusion, thanks for clearing it up
+> :)
+> 
+> Perhaps a gently step into adding validation for this (if needed) is to
+> do the die()/advise() or whatever or the write (i.e. when we copy
+> branches, or use --track=inherit) v.s. when we use the config (in "git
+> fetch" et al) ?
 
-On 8 Mar 2022, at 11:59, Junio C Hamano wrote:
+Sorry for the late response to this thread. I don't have strong feelings
+regarding either keeping the current --track=inherit behavior or
+disallowing inheritance of multiple merge options. However, here is my
+original thinking that led me to the current implementation:
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
->> index 7b3f42950ec..ab9a49e13a4 100644
->> --- a/builtin/cat-file.c
->> +++ b/builtin/cat-file.c
->> @@ -351,6 +351,14 @@ static void print_object_or_die(struct batch_opti=
-ons *opt, struct expand_data *d
->>  	}
->>  }
->>
->> +static int print_default_format(char *buf, int len, struct expand_dat=
-a *data)
->> +{
->> +	return xsnprintf(buf, len, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->o=
-id),
->> +		 data->info.type_name->buf,
->> +		 (uintmax_t)*data->info.sizep);
->> +
->> +}
->
-> OK.  We want size and type if we were to show the default output out
-> of the object-info API.
->
->>  /*
->>   * If "pack" is non-NULL, then "offset" is the byte offset within the=
- pack from
->>   * which the object may be accessed (though note that we may also rel=
-y on
->> @@ -363,6 +371,11 @@ static void batch_object_write(const char *obj_na=
-me,
->>  			       struct packed_git *pack,
->>  			       off_t offset)
->>  {
->> +	struct strbuf type_name =3D STRBUF_INIT;
->> +
->> +	if (!opt->format)
->> +		data->info.type_name =3D &type_name;
->
-> And at this point, !opt->format means we would use the default
-> format, so we cannot leave .type_name member NULL.  That is OK
-> but puzzling.  Why didn't we need this before?
->
-> If the caller is batch_objects(), there is the "mark_query" call to
-> strbuf_expand() to learn which field in data->info are needed, so
-> it seems that this new code should NOT be necessary.
->
->     Side note.  I briefly wondered if this expand is something you
->     would want to optimize when the default format is used, but this
->     is just "probe just once to ensure various members of data->info
->     are populated, to prepare for showing hundreds of objects in the
->     batch request", so it probably is not worth it.
->
-> I am guessing that this is for callers that do not come via
-> batch_objects() where the "mark_query" strbuf_expand() is not made?
-> If so,
->
->  * why is it sufficient to fill .type_name and not .sizep for the
->    default format (i.e. when opt->format is NULL)?
->
->  * why is it OK not to do anything for non-default format?  If no
->    "mark_query" call has been made, we wouldn't be preparing the
->    .type_name field even if the user-supplied format calls for
->    %(objecttype), would we?
->
-> Looking at the call graph:
->
->  - batch_object_write() is called by
->    - batch_one_object()
->    - batch_object_cb()
->    - batch_unordered_object()
->
->  - batch_one_object() is called only by batch_objects()
->  - batch_object_cb() is used only by batch_objects()
->
->  - batch_unordered_object() is called by
->    - batch_unordered_loose()
->    - batch_unordered_packed()
->    and these two are called only by batch_objects()
->
-> And the "mark_query" strbuf_expand() to probe which members in
-> expand_data are are necessary is done very early, before any of the
-> calls batch_objects() makes that reach batch_object_write().
->
-> OK, so my initial guess that the new "we need .type_name member to
-> point at a strbuf" is because there are some code that bypasses the
-> "mark_query" strbuf_expand() in batch_objects() is totally wrong.
-> Everybody uses the "mark_query" thing.  Then why do we need to ask
-> type_name?
->
-> Going back to the new special case print_default_format() gives us
-> the answer to the question.  It expects that data->info already
-> knows the stringified typename in the type_name member.  The
-> original slow code path in expand_atom() uses this, instead:
->
-> 	} else if (is_atom("objecttype", atom, len)) {
-> 		if (data->mark_query)
-> 			data->info.typep =3D &data->type;
-> 		else
-> 			strbuf_addstr(sb, type_name(data->type));
+If someone is using multiple merge branches, they are already treating
+the "upstream" config in a somewhat non-standard manner, as Junio
+already mentioned. Presumably, they know what they're doing. While the
+--track=inherit mode is intended for automatically setting up *push*
+configuration, there may be some unforeseen-by-me benefit to also
+inheriting this non-standard setup. Since there's nothing technical
+preventing inheriting multiple merge branches, it seems better to trust
+the user to know what they're doing, rather than put a die() in place to
+stop them.
 
-Thanks for going through this analysis! so looks like I am relying on
-oid_object_info_extended() which calls do_oid_object_info_extended(), whi=
-ch calls
-type_name(co->type) if oi->type_name is not NULL.
-
-This is a bit roundabout, so I like what you suggest below of just callin=
-g
-type_name() in print_default_format() directly.
-
->
-> Which makes me wonder:
->
->  * Is calling type_name(data->type) for many objects a lot less
->    efficient than asking the stringified type_name from the
->    object-info layer?
-I'm not sure, but I imagine that if the # of calls to type_name remain th=
-e same,
-eg: once per object that it wouldn't really matter much where in the stac=
-k it
-happens. Also, I took a look at type_name() in object.c and it's just a l=
-ookup
-in a constant array so that should be pretty fast.
-
->    If that is the case, would you gain
->    performance for all cases if you did this instead
->
-> 	} else if (is_atom("objecttype", atom, len)) {
-> -		if (data->mark_query)
-> -			data->info.typep =3D &data->type;
-> -		else
-> -			strbuf_addstr(sb, type_name(data->type));
-> +		if (data->mark_query) {
-> +			data->info.typep =3D &data->type;
-> +			data->info.type_name =3D &data->type_name;
-> +		} else {
-> +			strbuf_addstr(sb, data->type_name);
-> +		}
->
->    in expand_atom()?
-
-I don't quite follow here. Would we add a member type_name to
-expand_data? Also where would the call to type_name() be to get the strin=
-gified
-type_name?
-
-Also I'm thinking this approach may not work well with the default format=
-
-optimization as we would be skipping the strbuf_expand() call altogether =
-when
-default format is used.
-
->
-> 	Side note: I am keeping data->info.typep because a lot of
-> 	existing code switches on data->type, which is an enum.
->
->    We may have to keep the strbuf_release() at the end of this
->    function this patch added, to release data->info.type_name, if we
->    go that route, but we wouldn't be dealing with an on-stack
->    type_name in this function.
->
->  * If it does not make any difference between calling type_name() on
->    our side in expand_atom() or asking object-info API to do so,
->    then would it make more sense to lose the local type_name strbuf
->    and print type_name(data->type) in print_default_format() instead?
-
-I think this is the most intuitive solution.
-
->
-> Other than that, this looks good to me.
->
-> Thanks.
-
-thanks!
-John
+If folks feel that I'm wrong in my reasoning here, I'm happy to help
+review patches to fix the issue, and wouldn't feel like anyone is
+stepping on my toes if they do so :).
