@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFFADC433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA2F1C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 22:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350673AbiCHWRL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 17:17:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S1350682AbiCHWRN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 17:17:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350682AbiCHWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1350687AbiCHWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 8 Mar 2022 17:16:58 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A00D57B04
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:15:47 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id h15so249582wrc.6
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:15:47 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E2257B27
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 14:15:49 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id i8so240971wrr.8
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 14:15:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fs9iPJ+0XRv7tWAgTyO8PFsvCHwRp8Z89GqJBryeRrg=;
-        b=FPmFQJMrZbLjK1eD3vC7MPhUzCccfjwOsTRZndOFegmk7q2g1QoAk/FFsrp1ITCitl
-         OeObNiHUvkXPVRilohOKtR6oted1DfZYzYTz914crjI10k/g6siQ4GnTLH4TU3hoPa9A
-         IfQYsiW4zJjU628DehGznJYymVc0x7zrd4zIY124C6SMYIojOWNPamUlQHJxRioROPY+
-         geXvyq1NC9roTZK2e025uL7sZ2BzbsqYGKFNe026yNtolFL1cx/vYrTYxLD2um9TSHCC
-         qU8g+H1SVWQE4Kv5QKvzWZcCu5tNmFu4oCw5EG7mRlVqvtUEUgyajYgpvOfPUKLnXO0r
-         4N/g==
+        bh=I0DEwYAS/m99+SGTZO7U7pFq7MF2RJupiNoTd3v948U=;
+        b=GTJcwX8DUTx+FBq7SeE4laWCDdc7fHRuCXJ4PdSUL0aWOmEzsDbqTVuVk7GwspqRBf
+         8KhxhpT0XiHmwh92YNnkV2IxnzM/2+kpRMhugLNgxdPbu/uuhHOnhjstG1hf1VcBNJpP
+         RyGpRgrv4F6s8ONu9K5PCoqMOTzUP7pKhZzLTyJJe/bJrNpb43U1z3iV6br+Oev+HgsX
+         J9LXnfDSb3okkUz4H0YT64OLmw9U8BufphJc+ERmxOXnYo37u1OhtJK0r8aC3P4P8Oq+
+         aV/DYzaPFsWLoZFfv3eEvkljwnyfmpBZHe/wgks6raNCZiCYVB992nzULzSajCM+7V1J
+         aBnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fs9iPJ+0XRv7tWAgTyO8PFsvCHwRp8Z89GqJBryeRrg=;
-        b=45qfwvi40vkj/bWsw7gAoBoRG38jCXKZqmsUTknXhZkT/PGYqD9bJ6DEfNUVtiH63Y
-         KNpsW7AgDyiiulwP35w7/5Qlu7hOLFVau6NvnKJNss9EH5CfYZD3H6u7MRXeyqJlfn38
-         8naAp8rnHj4+kvBqLBVKtVa7PwDPavyurJJMZbFnEQtorsn3fOUvFqwqyOrXAQniPG0O
-         2iBc5d3wa5hdnfmppjSyvUCNqLUxz722c3ZmqRgN3a9kJqbz1uWD3CJYjg02ZgMKiRLp
-         nte6rn5ZQ1unJjrT/eLdE1hreboXbjPDIIcIoHXO4kZgty7ZwlAt9SB4pV6eN7BSNrgR
-         vb4Q==
-X-Gm-Message-State: AOAM532EMk+4Zfb6SmOlVVQHT0nmii8fHRYUKHPqDcUESd1eIALhf1R/
-        31dOLDB99Z54XWZqIxIW6h17WnKaoe4=
-X-Google-Smtp-Source: ABdhPJz3AycHPSQGXm7yuy1VNDc6zv8m5juzytGF/182AacvmERDFgHbwZNF3tlTf/Ys3A8uK5Zqzw==
-X-Received: by 2002:adf:82aa:0:b0:1f0:21ec:6c46 with SMTP id 39-20020adf82aa000000b001f021ec6c46mr13537746wrc.286.1646777746200;
-        Tue, 08 Mar 2022 14:15:46 -0800 (PST)
+        bh=I0DEwYAS/m99+SGTZO7U7pFq7MF2RJupiNoTd3v948U=;
+        b=5bde1FUyub/AUFj8oPed8UtCrej9roIVJocg2rwvt8XlcEP1zs2/n63W90Beb/R36U
+         nJuXpSU87wlMmOplc5IntKPcxIomwyO3dKmMVEREn/2ieKGIwm+lPGSu70YQgnNxMHTV
+         ewMl76ZndQ/r0X+t7WB4O68ly6o3FZltsohbk4eC/hcTSFSkgYXk95qUB+SoRZkGnhQD
+         3Qes5yoF63rYGIAAFEdK+47MccFdXbAZJ6Ms+VIFQKG16LywilnJi4alJhyyZvvu0WTs
+         1WUXJA5xxDBVSYA1NT4b0WnmIr96+bAnawRVrCSGZ7lD4de86YXsnaNNie9Ax8uwQvCO
+         maxg==
+X-Gm-Message-State: AOAM5317kXKSNdZyuLfZLtLvmldXmspZJDPqMoB3AjcYB7gCKy+4juCG
+        Kz9XyU17sF2dFDHGmpXR1ux+IGOIO08=
+X-Google-Smtp-Source: ABdhPJwhdcT12VqJw1L1o7O991Mt3fjZP1oV7CtVbigifnWjjg0UhfUT7TGaN8k3DZdYVqozSYEcEw==
+X-Received: by 2002:a5d:404b:0:b0:1f1:f880:7aca with SMTP id w11-20020a5d404b000000b001f1f8807acamr9300698wrp.179.1646777748179;
+        Tue, 08 Mar 2022 14:15:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l25-20020a1c7919000000b0038999b380e9sm57480wme.38.2022.03.08.14.15.45
+        by smtp.gmail.com with ESMTPSA id m14-20020a05600c4f4e00b0038181486018sm64001wmq.40.2022.03.08.14.15.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 14:15:45 -0800 (PST)
-Message-Id: <f78e4ad87c0bd6b5f4c216a8bd5b61d1bcb6947f.1646777727.git.gitgitgadget@gmail.com>
+        Tue, 08 Mar 2022 14:15:47 -0800 (PST)
+Message-Id: <baf8c031a976fc18189df772e1a2bdff1c213e61.1646777727.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
 References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
         <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 22:15:15 +0000
-Subject: [PATCH v2 15/27] fsmonitor--daemon: stub in health thread
+Date:   Tue, 08 Mar 2022 22:15:17 +0000
+Subject: [PATCH v2 17/27] fsm-health-win32: force shutdown daemon if worktree
+ root moves
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,384 +73,207 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create another thread to watch over the daemon process and
-automatically shut it down if necessary.
+Force shutdown fsmonitor daemon if the worktree root directory
+is moved, renamed, or deleted.
 
-This commit creates the basic framework for a "health" thread
-to monitor the daemon and/or the file system.  Later commits
-will add platform-specific code to do the actual work.
+Use Windows low-level GetFileInformationByHandle() to get and
+compare the Windows system unique ID for the directory with a
+cached version when we started up.  This lets us detect the
+case where someone renames the directory that we are watching
+and then creates a new directory with the original pathname.
 
-The "health" thread is intended to monitor conditions that
-would be difficult to track inside the IPC thread pool and/or
-the file system listener threads.  For example, when there are
-file system events outside of the watched worktree root or if
-we want to have an idle-timeout auto-shutdown feature.
+This is important because we are listening to a named pipe for
+requests and they are stored in the Named Pipe File System (NPFS)
+which a kernel-resident pseudo filesystem not associated with
+the actual NTFS directory.
 
-This commit creates the health thread itself, defines the thread-proc
-and sets up the thread's event loop.  It integrates this new thread
-into the existing IPC and Listener thread models.
+For example, if the daemon was watching "~/foo/", it would have
+a directory-watch handle on that directory and a named-pipe
+handle for "//./pipe/...foo".  Moving the directory to "~/bar/"
+does not invalidate the directory handle.  (So the daemon would
+actually be watching "~/bar" but listening on "//./pipe/...foo".
+If the user then does "git init ~/foo" and causes another daemon
+to start, the first daemon will still have ownership of the pipe
+and the second daemon instance will fail to start.  "git status"
+clients in "~/foo" will ask "//./pipe/...foo" about changes and
+the first daemon instance will tell them about "~/bar".
 
-This commit defines the API to the platform-specific code where all of
-the monitoring will actually happen.
-
-The platform-specific code for MacOS is just stubs.  Meaning that the
-health thread will immediately exit on MacOS, but that is OK and
-expected.  Future work can define MacOS-specific monitoring.
-
-The platform-specific code for Windows sets up enough of the
-WaitForMultipleObjects() machinery to watch for system and/or custom
-events.  Currently, the set of wait handles only includes our custom
-shutdown event (sent from our other theads).  Later commits in this
-series will extend the set of wait handles to monitor other
-conditions.
+This commit causes the first daemon to shutdown if the system unique
+ID for "~/foo" changes (changes from what it was when the daemon
+started).  Shutdown occurs after a periodic poll.  After the
+first daemon exits and releases the lock on the named pipe,
+subsequent Git commands may cause another daemon to be started
+on "~/foo".  Similarly, a subsequent Git command may cause another
+daemon to be started on "~/bar".
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                             |  6 ++-
- builtin/fsmonitor--daemon.c          | 39 +++++++++++++++
- compat/fsmonitor/fsm-health-darwin.c | 24 ++++++++++
- compat/fsmonitor/fsm-health-win32.c  | 72 ++++++++++++++++++++++++++++
- compat/fsmonitor/fsm-health.h        | 47 ++++++++++++++++++
- contrib/buildsystems/CMakeLists.txt  |  2 +
- fsmonitor--daemon.h                  |  4 ++
- 7 files changed, 192 insertions(+), 2 deletions(-)
- create mode 100644 compat/fsmonitor/fsm-health-darwin.c
- create mode 100644 compat/fsmonitor/fsm-health-win32.c
- create mode 100644 compat/fsmonitor/fsm-health.h
+ compat/fsmonitor/fsm-health-win32.c | 143 ++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 93604fe8ef7..5f1623baadd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -472,8 +472,9 @@ all::
- #
- # If your platform supports a built-in fsmonitor backend, set
- # FSMONITOR_DAEMON_BACKEND to the "<name>" of the corresponding
--# `compat/fsmonitor/fsm-listen-<name>.c` that implements the
--# `fsm_listen__*()` routines.
-+# `compat/fsmonitor/fsm-listen-<name>.c` and
-+# `compat/fsmonitor/fsm-health-<name>.c` files
-+# that implement the `fsm_listen__*()` and `fsm_health__*()` routines.
- #
- # If your platform has OS-specific ways to tell if a repo is incompatible with
- # fsmonitor (whether the hook or IPC daemon version), set FSMONITOR_OS_SETTINGS
-@@ -1982,6 +1983,7 @@ endif
- ifdef FSMONITOR_DAEMON_BACKEND
- 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
- 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
-+	COMPAT_OBJS += compat/fsmonitor/fsm-health-$(FSMONITOR_DAEMON_BACKEND).o
- endif
- 
- ifdef FSMONITOR_OS_SETTINGS
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 92c61d5b94d..bebb3a292e2 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -3,6 +3,7 @@
- #include "parse-options.h"
- #include "fsmonitor.h"
- #include "fsmonitor-ipc.h"
-+#include "compat/fsmonitor/fsm-health.h"
- #include "compat/fsmonitor/fsm-listen.h"
- #include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
-@@ -1130,6 +1131,18 @@ void fsmonitor_publish(struct fsmonitor_daemon_state *state,
- 	pthread_mutex_unlock(&state->main_lock);
- }
- 
-+static void *fsm_health__thread_proc(void *_state)
-+{
-+	struct fsmonitor_daemon_state *state = _state;
-+
-+	trace2_thread_start("fsm-health");
-+
-+	fsm_health__loop(state);
-+
-+	trace2_thread_exit();
-+	return NULL;
-+}
-+
- static void *fsm_listen__thread_proc(void *_state)
- {
- 	struct fsmonitor_daemon_state *state = _state;
-@@ -1168,6 +1181,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 		 */
- 		.uds_disallow_chdir = 0
- 	};
-+	int health_started = 0;
- 	int listener_started = 0;
- 	int err = 0;
- 
-@@ -1195,6 +1209,17 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	}
- 	listener_started = 1;
- 
-+	/*
-+	 * Start the health thread to watch over our process.
-+	 */
-+	if (pthread_create(&state->health_thread, NULL,
-+			   fsm_health__thread_proc, state) < 0) {
-+		ipc_server_stop_async(state->ipc_server_data);
-+		err = error(_("could not start fsmonitor health thread"));
-+		goto cleanup;
-+	}
-+	health_started = 1;
-+
- 	/*
- 	 * The daemon is now fully functional in background threads.
- 	 * Our primary thread should now just wait while the threads
-@@ -1217,10 +1242,17 @@ cleanup:
- 		pthread_join(state->listener_thread, NULL);
- 	}
- 
-+	if (health_started) {
-+		fsm_health__stop_async(state);
-+		pthread_join(state->health_thread, NULL);
-+	}
-+
- 	if (err)
- 		return err;
- 	if (state->listen_error_code)
- 		return state->listen_error_code;
-+	if (state->health_error_code)
-+		return state->health_error_code;
- 	return 0;
- }
- 
-@@ -1236,6 +1268,7 @@ static int fsmonitor_run_daemon(void)
- 	pthread_mutex_init(&state.main_lock, NULL);
- 	pthread_cond_init(&state.cookies_cond, NULL);
- 	state.listen_error_code = 0;
-+	state.health_error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 
- 	/* Prepare to (recursively) watch the <worktree-root> directory. */
-@@ -1315,6 +1348,11 @@ static int fsmonitor_run_daemon(void)
- 		goto done;
- 	}
- 
-+	if (fsm_health__ctor(&state)) {
-+		err = error(_("could not initialize health thread"));
-+		goto done;
-+	}
-+
- 	/*
- 	 * CD out of the worktree root directory.
- 	 *
-@@ -1338,6 +1376,7 @@ done:
- 	pthread_cond_destroy(&state.cookies_cond);
- 	pthread_mutex_destroy(&state.main_lock);
- 	fsm_listen__dtor(&state);
-+	fsm_health__dtor(&state);
- 
- 	ipc_server_free(state.ipc_server_data);
- 
-diff --git a/compat/fsmonitor/fsm-health-darwin.c b/compat/fsmonitor/fsm-health-darwin.c
-new file mode 100644
-index 00000000000..b9f709e8548
---- /dev/null
-+++ b/compat/fsmonitor/fsm-health-darwin.c
-@@ -0,0 +1,24 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "fsmonitor.h"
-+#include "fsm-health.h"
-+#include "fsmonitor--daemon.h"
-+
-+int fsm_health__ctor(struct fsmonitor_daemon_state *state)
-+{
-+	return 0;
-+}
-+
-+void fsm_health__dtor(struct fsmonitor_daemon_state *state)
-+{
-+	return;
-+}
-+
-+void fsm_health__loop(struct fsmonitor_daemon_state *state)
-+{
-+	return;
-+}
-+
-+void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
-+{
-+}
 diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
-new file mode 100644
-index 00000000000..94b1d020f25
---- /dev/null
+index 24fc612bf02..0132ca79305 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
 +++ b/compat/fsmonitor/fsm-health-win32.c
-@@ -0,0 +1,72 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "fsmonitor.h"
-+#include "fsm-health.h"
-+#include "fsmonitor--daemon.h"
+@@ -29,8 +29,150 @@ struct fsm_health_data
+ 	HANDLE hHandles[1]; /* the array does not own these handles */
+ #define HEALTH_SHUTDOWN 0
+ 	int nr_handles; /* number of active event handles */
 +
-+struct fsm_health_data
++	struct wt_moved
++	{
++		wchar_t wpath[MAX_PATH + 1];
++		BY_HANDLE_FILE_INFORMATION bhfi;
++	} wt_moved;
+ };
+ 
++/*
++ * Lookup the system unique ID for the path.  This is as close as
++ * we get to an inode number, but this also contains volume info,
++ * so it is a little stronger.
++ */
++static int lookup_bhfi(wchar_t *wpath,
++		       BY_HANDLE_FILE_INFORMATION *bhfi)
 +{
-+	HANDLE hEventShutdown;
++	DWORD desired_access = FILE_LIST_DIRECTORY;
++	DWORD share_mode =
++		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
++	HANDLE hDir;
 +
-+	HANDLE hHandles[1]; /* the array does not own these handles */
-+#define HEALTH_SHUTDOWN 0
-+	int nr_handles; /* number of active event handles */
-+};
++	hDir = CreateFileW(wpath, desired_access, share_mode, NULL,
++			   OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
++	if (hDir == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] health thread could not open '%ls'"),
++		      GetLastError(), wpath);
++		return -1;
++	}
 +
-+int fsm_health__ctor(struct fsmonitor_daemon_state *state)
-+{
-+	struct fsm_health_data *data;
++	if (!GetFileInformationByHandle(hDir, bhfi)) {
++		error(_("[GLE %ld] health thread getting BHFI for '%ls'"),
++		      GetLastError(), wpath);
++		CloseHandle(hDir);
++		return -1;
++	}
 +
-+	CALLOC_ARRAY(data, 1);
-+
-+	data->hEventShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
-+
-+	data->hHandles[HEALTH_SHUTDOWN] = data->hEventShutdown;
-+	data->nr_handles++;
-+
-+	state->health_data = data;
++	CloseHandle(hDir);
 +	return 0;
 +}
 +
-+void fsm_health__dtor(struct fsmonitor_daemon_state *state)
++/*
++ * Compare the relevant fields from two system unique IDs.
++ * We use this to see if two different handles to the same
++ * path actually refer to the same *instance* of the file
++ * or directory.
++ */
++static int bhfi_eq(const BY_HANDLE_FILE_INFORMATION *bhfi_1,
++		   const BY_HANDLE_FILE_INFORMATION *bhfi_2)
 +{
-+	struct fsm_health_data *data;
-+
-+	if (!state || !state->health_data)
-+		return;
-+
-+	data = state->health_data;
-+
-+	CloseHandle(data->hEventShutdown);
-+
-+	FREE_AND_NULL(state->health_data);
++	return (bhfi_1->dwVolumeSerialNumber == bhfi_2->dwVolumeSerialNumber &&
++		bhfi_1->nFileIndexHigh == bhfi_2->nFileIndexHigh &&
++		bhfi_1->nFileIndexLow == bhfi_2->nFileIndexLow);
 +}
 +
-+void fsm_health__loop(struct fsmonitor_daemon_state *state)
++/*
++ * Shutdown if the original worktree root directory been deleted,
++ * moved, or renamed?
++ *
++ * Since the main thread did a "chdir(getenv($HOME))" and our CWD
++ * is not in the worktree root directory and because the listener
++ * thread added FILE_SHARE_DELETE to the watch handle, it is possible
++ * for the root directory to be moved or deleted while we are still
++ * watching it.  We want to detect that here and force a shutdown.
++ *
++ * Granted, a delete MAY cause some operations to fail, such as
++ * GetOverlappedResult(), but it is not guaranteed.  And because
++ * ReadDirectoryChangesW() only reports on changes *WITHIN* the
++ * directory, not changes *ON* the directory, our watch will not
++ * receive a delete event for it.
++ *
++ * A move/rename of the worktree root will also not generate an event.
++ * And since the listener thread already has an open handle, it may
++ * continue to receive events for events within the directory.
++ * However, the pathname of the named-pipe was constructed using the
++ * original location of the worktree root.  (Remember named-pipes are
++ * stored in the NPFS and not in the actual file system.)  Clients
++ * trying to talk to the worktree after the move/rename will not
++ * reach our daemon process, since we're still listening on the
++ * pipe with original path.
++ *
++ * Furthermore, if the user does something like:
++ *
++ *   $ mv repo repo.old
++ *   $ git init repo
++ *
++ * A new daemon cannot be started in the new instance of "repo"
++ * because the named-pipe is still being used by the daemon on
++ * the original instance.
++ *
++ * So, detect move/rename/delete and shutdown.  This should also
++ * handle unsafe drive removal.
++ *
++ * We use the file system unique ID to distinguish the original
++ * directory instance from a new instance and force a shutdown
++ * if the unique ID changes.
++ *
++ * Since a worktree move/rename/delete/unmount doesn't happen
++ * that often (and we can't get an immediate event anyway), we
++ * use a timeout and periodically poll it.
++ */
++static int has_worktree_moved(struct fsmonitor_daemon_state *state,
++			      enum interval_fn_ctx ctx)
 +{
 +	struct fsm_health_data *data = state->health_data;
++	BY_HANDLE_FILE_INFORMATION bhfi;
++	int r;
 +
-+	for (;;) {
-+		DWORD dwWait = WaitForMultipleObjects(data->nr_handles,
-+						      data->hHandles,
-+						      FALSE, INFINITE);
++	switch (ctx) {
++	case CTX_TERM:
++		return 0;
 +
-+		if (dwWait == WAIT_OBJECT_0 + HEALTH_SHUTDOWN)
-+			goto clean_shutdown;
++	case CTX_INIT:
++		if (xutftowcs_path(data->wt_moved.wpath,
++				   state->path_worktree_watch.buf) < 0) {
++			error(_("could not convert to wide characters: '%s'"),
++			      state->path_worktree_watch.buf);
++			return -1;
++		}
 +
-+		error(_("health thread wait failed [GLE %ld]"),
-+		      GetLastError());
-+		goto force_error_stop;
++		/*
++		 * On the first call we lookup the unique sequence ID for
++		 * the worktree root directory.
++		 */
++		return lookup_bhfi(data->wt_moved.wpath, &data->wt_moved.bhfi);
++
++	case CTX_TIMER:
++		r = lookup_bhfi(data->wt_moved.wpath, &bhfi);
++		if (r)
++			return r;
++		if (!bhfi_eq(&data->wt_moved.bhfi, &bhfi)) {
++			error(_("BHFI changed '%ls'"), data->wt_moved.wpath);
++			return -1;
++		}
++		return 0;
++
++	default:
++		die("unhandled case in 'has_worktree_moved': %d",
++		    (int)ctx);
 +	}
 +
-+force_error_stop:
-+	state->health_error_code = -1;
-+	ipc_server_stop_async(state->ipc_server_data);
-+clean_shutdown:
-+	return;
++	return 0;
 +}
 +
-+void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
-+{
-+	SetEvent(state->health_data->hHandles[HEALTH_SHUTDOWN]);
-+}
-diff --git a/compat/fsmonitor/fsm-health.h b/compat/fsmonitor/fsm-health.h
-new file mode 100644
-index 00000000000..45547ba9380
---- /dev/null
-+++ b/compat/fsmonitor/fsm-health.h
-@@ -0,0 +1,47 @@
-+#ifndef FSM_HEALTH_H
-+#define FSM_HEALTH_H
 +
-+/* This needs to be implemented by each backend */
-+
-+#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+
-+struct fsmonitor_daemon_state;
-+
-+/*
-+ * Initialize platform-specific data for the fsmonitor health thread.
-+ * This will be called from the main thread PRIOR to staring the
-+ * thread.
-+ *
-+ * Returns 0 if successful.
-+ * Returns -1 otherwise.
-+ */
-+int fsm_health__ctor(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * Cleanup platform-specific data for the health thread.
-+ * This will be called from the main thread AFTER joining the thread.
-+ */
-+void fsm_health__dtor(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * The main body of the platform-specific event loop to monitor the
-+ * health of the daemon process.  This will run in the health thread.
-+ *
-+ * The health thread should call `ipc_server_stop_async()` if it needs
-+ * to cause a shutdown.  (It should NOT do so if it receives a shutdown
-+ * shutdown signal.)
-+ *
-+ * It should set `state->health_error_code` to -1 if the daemon should exit
-+ * with an error.
-+ */
-+void fsm_health__loop(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * Gently request that the health thread shutdown.
-+ * It does not wait for it to stop.  The caller should do a JOIN
-+ * to wait for it.
-+ */
-+void fsm_health__stop_async(struct fsmonitor_daemon_state *state);
-+
-+#endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
-+#endif /* FSM_HEALTH_H */
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index b8f9f7a0388..16ace43d1c7 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -289,12 +289,14 @@ if(SUPPORTS_SIMPLE_IPC)
- 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-win32.c)
+ int fsm_health__ctor(struct fsmonitor_daemon_state *state)
+ {
+ 	struct fsm_health_data *data;
+@@ -64,6 +206,7 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
+  * A table of the polling functions.
+  */
+ static interval_fn *table[] = {
++	has_worktree_moved,
+ 	NULL, /* must be last */
+ };
  
- 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
- 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-darwin.c)
- 
- 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-darwin.c)
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 2c6fa1a5d91..2102a5c9ff5 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -34,9 +34,11 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
- void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
- 
- struct fsm_listen_data; /* opaque platform-specific data for listener thread */
-+struct fsm_health_data; /* opaque platform-specific data for health thread */
- 
- struct fsmonitor_daemon_state {
- 	pthread_t listener_thread;
-+	pthread_t health_thread;
- 	pthread_mutex_t main_lock;
- 
- 	struct strbuf path_worktree_watch;
-@@ -51,7 +53,9 @@ struct fsmonitor_daemon_state {
- 	struct hashmap cookies;
- 
- 	int listen_error_code;
-+	int health_error_code;
- 	struct fsm_listen_data *listen_data;
-+	struct fsm_health_data *health_data;
- 
- 	struct ipc_server_data *ipc_server_data;
- 	struct strbuf path_ipc;
 -- 
 gitgitgadget
 
