@@ -2,124 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CFFC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CB0C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347060AbiCHNGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 08:06:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45462 "EHLO
+        id S235783AbiCHNIy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 08:08:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236924AbiCHNGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 08:06:19 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B61648301
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:05:22 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id qt6so39055550ejb.11
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:05:22 -0800 (PST)
+        with ESMTP id S1347066AbiCHNIw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 08:08:52 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91B16643E
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:07:51 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id 11so15985317qtt.9
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=vxxPHfoecf8nFBNr9XLSbnrUBrrTtkimHjTHzptUPRU=;
-        b=cCSkFpCNNMSG960Dh3kas4Kyz19qklPrL9kt75SBcqvUKDkBXaGD4B/7zTINFNhwq1
-         TVIsmRyjdWzmTxtXTa/FDpR6FCZyB/dZbp99/ueCGS1tg9ieFIc7tN8DiV156mERL1eX
-         snhhM9JSFznUXYy+Q33CMZNNIuZyTtkBKEmSA34OLB0DvgYCKHGV9B2nelpqrLpjTVnz
-         ZAPZlwWg8YuurmizcqJ4zgMiAgcO7h72A752x/1UnUtmgvv+uDFfLBYmEFdAqug58iVA
-         ek5MLEUzbfLNIupqYd+C6aFUN4sF0ei0kPECllck6dAEekjY+cBbft3foRygHu0kLl9B
-         MqoQ==
+        h=message-id:subject:from:to:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=MIipkH1LEeGQ/rk5vIT/UxeehNnFDfnLH0ClJHl00zs=;
+        b=A645KUWq0ZL+qBNAHAuFbx8DC64A3axsVSK4OCZXLwEGt/PpSid7fTluM0PdFmQzM5
+         mKHOuc0Pga77RLQtLvAbwFzat/z4fYJji3NukV85+cAyeBVpKy7k4Gwc7PKZBYDGHJA5
+         eGTPf+xv5n7EqNK65yApIaP3e3FbhTr82yy5opQPbSSl/pJ/sRH2Z9zZ7Q/v7zP+3Ft7
+         vHsA066mr/tuCbTr5DysLNrotO2l87ZgE1uKGbkboSBZghQWdZLOCLPwbOpCJwwx62EH
+         ukv0m6m+rPEp6gaI9QseCWBiYSzeco6yy9uZ/RpcSAKqCkzuhH0ljA6xWe51ZeLgGMhz
+         /EZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=vxxPHfoecf8nFBNr9XLSbnrUBrrTtkimHjTHzptUPRU=;
-        b=x2BD5/H/z04dc3tvNezPmGIVnHsWleXygX7TN0QXuM/V9OPBF1dlVvCtCzJ674LEK2
-         2yWskOnRZG+8x3tXVmuzS4s4XbibFbnWMylYlS2rNmCAl3HnApMUyhTsUVDOMWoAmglD
-         SxaDb5otjhksDCLaUp2S6E8DLgW1TdNwGJJW022iNEQeYCt77Gzj89nByrnUAGdl+bwM
-         I1a2/lJJVxJeisFTjzB4PTTKB2Tpl4bTAyKleQq13J7rLLrItybMD1LShu8Bhk/AB8LQ
-         R+g61g74JIhWr8J9dSoad3q+bao7Z+/VtIhB85sCeHsUHQQnKMNFLr1ptiru2Vz9FkrA
-         IUQA==
-X-Gm-Message-State: AOAM531/K+GO0Oy/do8XsDhRhIJVj2XUulUFWjfAiORd3wcz/WIORhNY
-        v7uuNmCc43ljgeMos7sskAs=
-X-Google-Smtp-Source: ABdhPJz8PFAsnuakaEdX3+8lBVWUuw/BBp5zB1sbYq2tmMn8jAHVVYMXbsOmjS95c5BJOwam8SMtGw==
-X-Received: by 2002:a17:906:c59:b0:6b9:59d8:263e with SMTP id t25-20020a1709060c5900b006b959d8263emr13504645ejf.770.1646744720466;
-        Tue, 08 Mar 2022 05:05:20 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id og49-20020a1709071df100b006db0dcf673esm2955237ejc.27.2022.03.08.05.05.19
+        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=MIipkH1LEeGQ/rk5vIT/UxeehNnFDfnLH0ClJHl00zs=;
+        b=Z1AvaAoGSgvFm8GoO2hkIBo+2KJeAilyW6RsZBHpBps6RhSUKiT3n7eTx72ILVRGYT
+         Qfq9u4fYNpmpcCCkj0WMXz5b1oZKNTTgykow+fKQRBCQyfpwpe306Manbm4RvIvhfyR1
+         8dZOkEbVjl7hIJokh7uwKeDRuAoT6tTvQ3Zv8q/gjePHLdlhTjQ57xfmqa4HC8aC7KNh
+         Kj/zk5EEkEggT2gVSCy+PopLaHgiVNo/UgxhAz8v88bxybkfvWZdkEcqFxZ9lE+p0CDU
+         vJU3gQOPXPyYiFkhNzC+ApLtx7nk71bOMJyYlJxCOQSI3Uk+rRxlBVU/t+fr8b2jhlRR
+         4aEQ==
+X-Gm-Message-State: AOAM5314KKp3ay8i4wdxRC4RUkdc1y7YJSEm5wA2dy5aWJVo0tEtwZsL
+        DN+0hj6r3CI4O+SPesU6ki8G6bAMFIFZFQ==
+X-Google-Smtp-Source: ABdhPJydEvHg5gvUkpW+mBLgUynvMkGMNvhTpBr5fySbespYMlY+sDYeb8GzvgNljIkTaWZEqtDMFQ==
+X-Received: by 2002:ac8:580c:0:b0:2dd:d863:8a2d with SMTP id g12-20020ac8580c000000b002ddd8638a2dmr13285904qtg.469.1646744870721;
+        Tue, 08 Mar 2022 05:07:50 -0800 (PST)
+Received: from ?IPv6:2003:f6:ef00:8400:3d36:58a:667a:1da9? (p200300f6ef0084003d36058a667a1da9.dip0.t-ipconnect.de. [2003:f6:ef00:8400:3d36:58a:667a:1da9])
+        by smtp.gmail.com with ESMTPSA id r184-20020ae9ddc1000000b0067ca2630aa8sm1356569qkf.114.2022.03.08.05.07.49
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 05:05:19 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRZWh-001tqG-BR;
-        Tue, 08 Mar 2022 14:05:19 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
-Subject: Re: Keep reflogs for deleted (remote tracking) branches?
-Date:   Tue, 08 Mar 2022 13:59:38 +0100
-References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
- <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
-Message-ID: <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
+        Tue, 08 Mar 2022 05:07:50 -0800 (PST)
+Message-ID: <ea67407120aa710f81af048d22be09281ac28107.camel@gmail.com>
+Subject: git notes question
+From:   Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
+To:     git@vger.kernel.org
+Date:   Tue, 08 Mar 2022 14:08:23 +0100
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all,
 
-On Tue, Mar 08 2022, Han-Wen Nienhuys wrote:
+Sorry if this is something already asked before...
 
-> On Tue, Mar 8, 2022 at 12:28 PM Tao Klerks <tao@klerks.biz> wrote:
->> As far as I can tell, even "core.logAllRefUpdates=always" does *not*
->> keep any reflog entries around, even temporarily (until reflog
->> expiry), once a ref  is deleted - do I understand that correctly? Is
->> this behavior intentional / reasoned, or just a consequence of the
->> fact that it's *hard* to keep "managing" per-branch reflogs for
->> branches that don't exist?
->>
->> I am planning a workaround using server hooks to "back up" refs that
->> are being deleted from specific namespaces, in my specific case, and I
->> imagine that a system like github keeps track of deleted stuff itself
->> for a while, but I find this "per-ref reflog disappearance" behavior
->> puzzling / out-of-character, so wanted to make sure I'm not missing
->> something.
->
-> I think this behavior is motivated by directory/file conflicts. If you
-> have a reflog file in refs/logs/foo, you can't create a reflog for
-> refs/foo/bar, because that would live in refs/logs/foo/bar
->
-> At Google, we keep reflogs in a completely different storage system
-> altogether, which avoids this problem, and I wouldn't be surprised if
-> other large hosting providers do something similar.
+Is there any way to remove the default "Notes:" line on git-notes? I
+don't really mind to have it in git log but when generating patches for
+instance, I would like my notes to be something like:
 
-I once worked on a system where:
+commit title
 
- * References would be "archived", i.e. just a backup system that would
-   run "git fetch" without pruning.
+message
 
- * You were only allowed to push to either existing branches like
-   "master", or names with exactly one slash in them, e.g. "avar/topic",
-   not "avar/topic/nested", for that you'd need "avar/topic-nested" or
-   whatever.
+tags...
+---
 
-The second item neatly avoids D/F conflicts, at the cost of some
-grumbling from people who can't use their preferred branch name.
+v3:
+  notes on v3
 
-And you can easily implement backups without that constraint by fetching
-refs/* to refs/YYYYMMDD-HHMMSS/* or whatever, and have some manual
-pruning process in place for those "secondly refs".
+v2:
+  notes on v2
 
-More generally I have not really run into this as a practical
-problem.
+instead of having it like:
 
-I.e. if a co-worker created a branch, AND nobody else used it, AND
-nothing was based on it, AND someone (presumably they) thought it was OK
-to delete it, it was probably something nobody cared all that much about
-to begin with :)
+...
+---
 
-Another way to solve a similar problem is to have
-pre-receive/post-receive hooks log attempted/successful pushes, which
-along with an appropriate "gc" policy will allow you to manually look up
-these older branches (or even to fetch them, if you publish the log and
-set uploadpack.allowAnySHA1InWant=true).
+Notes:
+    ...
+
+I did some code inspection and I guess that using a USER format would
+be a way but I'm hopping there's a more direct way.
+
+Thanks!
+- Nuno Sá
