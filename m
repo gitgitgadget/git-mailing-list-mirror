@@ -2,67 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8DEEC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 12:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CFFC433FE
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbiCHMy7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 07:54:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58938 "EHLO
+        id S1347060AbiCHNGU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 08:06:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbiCHMy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 07:54:57 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4069047053
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 04:54:01 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id b24so1704225edu.10
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 04:54:01 -0800 (PST)
+        with ESMTP id S236924AbiCHNGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 08:06:19 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B61648301
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:05:22 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id qt6so39055550ejb.11
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=GDkc4piU/1Q/IjcE942SfcDteViTaGoWKqGAu927BvI=;
-        b=RtJK1f4f+T5OZkWH4yj3b46SH5g2yd0r6lCQN6S6PnBOTeOk2MK5BTUuOyJVnXEqs6
-         jzeRi+1ddJtzgO9XGan2G5F0D3RO4fPwJrQBctXeIyiCNUawasmDwQo01GBQ5i0HzvSy
-         hYDCMYhlmPOWccYJBxGjD5HtyFtrhL0TvdCC2NHz0fTaWOOkF1La5lyFHqJNfcHj6SGQ
-         hZPanwGv0WOOyb89+sEFDO+Ijs8oKIniOGwXXn1PKqr9OVr4KqZRPbQOTx3+2kaHq8JB
-         D5Syu20Eg7u4EGu5Li+/3laATa2Zc8qmAyvrfIxxyZOU7hrZAr4Z+E1GsBIJdrb6ZLR+
-         ngng==
+        bh=vxxPHfoecf8nFBNr9XLSbnrUBrrTtkimHjTHzptUPRU=;
+        b=cCSkFpCNNMSG960Dh3kas4Kyz19qklPrL9kt75SBcqvUKDkBXaGD4B/7zTINFNhwq1
+         TVIsmRyjdWzmTxtXTa/FDpR6FCZyB/dZbp99/ueCGS1tg9ieFIc7tN8DiV156mERL1eX
+         snhhM9JSFznUXYy+Q33CMZNNIuZyTtkBKEmSA34OLB0DvgYCKHGV9B2nelpqrLpjTVnz
+         ZAPZlwWg8YuurmizcqJ4zgMiAgcO7h72A752x/1UnUtmgvv+uDFfLBYmEFdAqug58iVA
+         ek5MLEUzbfLNIupqYd+C6aFUN4sF0ei0kPECllck6dAEekjY+cBbft3foRygHu0kLl9B
+         MqoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=GDkc4piU/1Q/IjcE942SfcDteViTaGoWKqGAu927BvI=;
-        b=PZGgMDF3No5gRcOtOsfM2kBjgWzTQK/brwNEoHTvyu0GvAOFFs12KA1XKHPUWisZzw
-         30MvIo35A8+lRTgGFa4IQLagJM8PacqoFb70+YN2sTtz6WUp9LaOW99WBOWAd4gfQcAs
-         AkUUp59ZCCK9bL78vEtosCWdxJCgRUd5P4ZmdxVdF1KUIP1djIkR+L4WWLXi3RHSo56H
-         khckv3SUcvlERB45aPbs8GmqPNqbP6Yy1LgkXOxWvhk2HjgyjTwKIQYJ+whWUCtmFSeE
-         E82B4iKlKH304u6tgh7YXREXufIGwTTxhNMnKnk9DUsU9RYPyZVL0n3ip8lhxhKiVxcE
-         3xJA==
-X-Gm-Message-State: AOAM530IteUyq7WmAkNnT20BLTG1X9QanD55bAHZk6HMcgOvD5QWiZys
-        YdiCyl2BlGB24Gv8zr38/zatsAKbytE6Fw==
-X-Google-Smtp-Source: ABdhPJzHDoi2QazlmMxW40x6SXwOuFxK5QYjsudj+2JtXVOLGeFzpnqUUU486h7LWsKVbcffefQrJA==
-X-Received: by 2002:a05:6402:1387:b0:416:2747:266e with SMTP id b7-20020a056402138700b004162747266emr14347844edv.409.1646744039569;
-        Tue, 08 Mar 2022 04:53:59 -0800 (PST)
+        bh=vxxPHfoecf8nFBNr9XLSbnrUBrrTtkimHjTHzptUPRU=;
+        b=x2BD5/H/z04dc3tvNezPmGIVnHsWleXygX7TN0QXuM/V9OPBF1dlVvCtCzJ674LEK2
+         2yWskOnRZG+8x3tXVmuzS4s4XbibFbnWMylYlS2rNmCAl3HnApMUyhTsUVDOMWoAmglD
+         SxaDb5otjhksDCLaUp2S6E8DLgW1TdNwGJJW022iNEQeYCt77Gzj89nByrnUAGdl+bwM
+         I1a2/lJJVxJeisFTjzB4PTTKB2Tpl4bTAyKleQq13J7rLLrItybMD1LShu8Bhk/AB8LQ
+         R+g61g74JIhWr8J9dSoad3q+bao7Z+/VtIhB85sCeHsUHQQnKMNFLr1ptiru2Vz9FkrA
+         IUQA==
+X-Gm-Message-State: AOAM531/K+GO0Oy/do8XsDhRhIJVj2XUulUFWjfAiORd3wcz/WIORhNY
+        v7uuNmCc43ljgeMos7sskAs=
+X-Google-Smtp-Source: ABdhPJz8PFAsnuakaEdX3+8lBVWUuw/BBp5zB1sbYq2tmMn8jAHVVYMXbsOmjS95c5BJOwam8SMtGw==
+X-Received: by 2002:a17:906:c59:b0:6b9:59d8:263e with SMTP id t25-20020a1709060c5900b006b959d8263emr13504645ejf.770.1646744720466;
+        Tue, 08 Mar 2022 05:05:20 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f15-20020a50e08f000000b004134a121ed2sm7813108edl.82.2022.03.08.04.53.58
+        by smtp.gmail.com with ESMTPSA id og49-20020a1709071df100b006db0dcf673esm2955237ejc.27.2022.03.08.05.05.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 04:53:58 -0800 (PST)
+        Tue, 08 Mar 2022 05:05:19 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nRZLi-001tQT-4v;
-        Tue, 08 Mar 2022 13:53:58 +0100
+        id 1nRZWh-001tqG-BR;
+        Tue, 08 Mar 2022 14:05:19 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jason Yundt <jason@jasonyundt.email>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] gitweb: remove invalid http-equiv="content-type"
-Date:   Tue, 08 Mar 2022 13:44:35 +0100
-References: <20220307033723.175553-1-jason@jasonyundt.email>
- <20220308010711.61817-3-jason@jasonyundt.email>
- <Yia2Y2zoOjvVdJ9O@camp.crustytoothpaste.net>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
+Subject: Re: Keep reflogs for deleted (remote tracking) branches?
+Date:   Tue, 08 Mar 2022 13:59:38 +0100
+References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
+ <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <Yia2Y2zoOjvVdJ9O@camp.crustytoothpaste.net>
-Message-ID: <220308.86cziwy595.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
+Message-ID: <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,94 +68,58 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Mar 08 2022, brian m. carlson wrote:
+On Tue, Mar 08 2022, Han-Wen Nienhuys wrote:
 
-> [[PGP Signed Part:Undecided]]
-> On 2022-03-08 at 01:07:11, Jason Yundt wrote:
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index fbd1c20a23..59457c1004 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -4225,7 +4225,7 @@ sub git_header_html {
->>  <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
->>  <!-- git core binaries version $git_version -->
->>  <head>
->> -<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
->> +<meta charset="utf-8"/>
+> On Tue, Mar 8, 2022 at 12:28 PM Tao Klerks <tao@klerks.biz> wrote:
+>> As far as I can tell, even "core.logAllRefUpdates=always" does *not*
+>> keep any reflog entries around, even temporarily (until reflog
+>> expiry), once a ref  is deleted - do I understand that correctly? Is
+>> this behavior intentional / reasoned, or just a consequence of the
+>> fact that it's *hard* to keep "managing" per-branch reflogs for
+>> branches that don't exist?
+>>
+>> I am planning a workaround using server hooks to "back up" refs that
+>> are being deleted from specific namespaces, in my specific case, and I
+>> imagine that a system like github keeps track of deleted stuff itself
+>> for a while, but I find this "per-ref reflog disappearance" behavior
+>> puzzling / out-of-character, so wanted to make sure I'm not missing
+>> something.
 >
-> I don't actually think this is an improvement.  I don't think it's
-> necessary, considering we have an XML declaration and the HTTP header,
-> both of which already say it's UTF-8 and will take precedence over this.
+> I think this behavior is motivated by directory/file conflicts. If you
+> have a reflog file in refs/logs/foo, you can't create a reflog for
+> refs/foo/bar, because that would live in refs/logs/foo/bar
+>
+> At Google, we keep reflogs in a completely different storage system
+> altogether, which avoids this problem, and I wouldn't be surprised if
+> other large hosting providers do something similar.
 
-Ageed. I was a bit surprised per Jason's
-https://lore.kernel.org/git/109813056.nniJfEyVGO@jason-desktop-linux/
-that the removal wasn't kept.
+I once worked on a system where:
 
-I.e. he was replying to a question of mine asking whether we didn't need
-this data at rest, e.g if you save the page. I didn't notice the "<?xml
-version..." we emit, which seems to be enough.
+ * References would be "archived", i.e. just a backup system that would
+   run "git fetch" without pruning.
 
-I.e. this seems to have always been redundant going back to c994d620cc8
-(v220, 2005-08-07), or rather, the character set part of it.
+ * You were only allowed to push to either existing branches like
+   "master", or names with exactly one slash in them, e.g. "avar/topic",
+   not "avar/topic/nested", for that you'd need "avar/topic-nested" or
+   whatever.
 
-Maybe I still don't understand this, but the commit message seems to me
-be conflating whether we send the *right* http-equiv with whether we
-send it at all, i.e. if the problem is that XML documents shouldn't be
-text/html isn't this correct?:
-	
-	diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-	index fbd1c20a232..c1c5af0b197 100755
-	--- a/gitweb/gitweb.perl
-	+++ b/gitweb/gitweb.perl
-	@@ -4049,7 +4049,13 @@ sub get_page_title {
-	 	return $title;
-	 }
-	 
-	+sub get_content_type_xml {
-	+	return 'application/xhtml+xml';
-	+}
-	+
-	 sub get_content_type_html {
-	+	my ($want_xml) = @_;
-	+
-	 	# require explicit support from the UA if we are to send the page as
-	 	# 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
-	 	# we have to do this because MSIE sometimes globs '*/*', pretending to
-	@@ -4057,7 +4063,7 @@ sub get_content_type_html {
-	 	if (defined $cgi->http('HTTP_ACCEPT') &&
-	 	    $cgi->http('HTTP_ACCEPT') =~ m/(,|;|\s|^)application\/xhtml\+xml(,|;|\s|$)/ &&
-	 	    $cgi->Accept('application/xhtml+xml') != 0) {
-	-		return 'application/xhtml+xml';
-	+		return get_content_type_html();
-	 	} else {
-	 		return 'text/html';
-	 	}
-	@@ -4214,6 +4220,7 @@ sub git_header_html {
-	 
-	 	my $title = get_page_title();
-	 	my $content_type = get_content_type_html();
-	+	my $content_type_xml = get_content_type_html();
-	 	print $cgi->header(-type=>$content_type, -charset => 'utf-8',
-	 	                   -status=> $status, -expires => $expires)
-	 		unless ($opts{'-no_http_header'});
-	@@ -4225,7 +4232,7 @@ sub git_header_html {
-	 <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <kay.sievers\@vrfy.org>, Christian Gierke -->
-	 <!-- git core binaries version $git_version -->
-	 <head>
-	-<meta http-equiv="content-type" content="$content_type; charset=utf-8"/>
-	+<meta http-equiv="content-type" content="$content_type_xml; charset=utf-8"/>
-	 <meta name="generator" content="gitweb/$version git/$git_version$mod_perl_version"/>
-	 <meta name="robots" content="index, nofollow"/>
-	 <title>$title</title>
+The second item neatly avoids D/F conflicts, at the cost of some
+grumbling from people who can't use their preferred branch name.
 
-Of course we might then *also* decide that <meta http-equiv> in this
-case isn't needed at all, but isn't that a seperate change?
+And you can easily implement backups without that constraint by fetching
+refs/* to refs/YYYYMMDD-HHMMSS/* or whatever, and have some manual
+pruning process in place for those "secondly refs".
 
-And won't conforming browsers treat application/xhtml+xml differently
-when the page is saved? A long time ago (Idid some web development)
-using it would enable pedantic strictness in browsers, i.e. unclosed
-tags etc. would be a hard error, but I can't reproduce that locally in
-either Firefox or Chrome now (with just the gitweb output as-is with
-that http-equiv tweaked).
+More generally I have not really run into this as a practical
+problem.
 
-So maybe it does nothing, or maybe it's just those browser...
+I.e. if a co-worker created a branch, AND nobody else used it, AND
+nothing was based on it, AND someone (presumably they) thought it was OK
+to delete it, it was probably something nobody cared all that much about
+to begin with :)
+
+Another way to solve a similar problem is to have
+pre-receive/post-receive hooks log attempted/successful pushes, which
+along with an appropriate "gc" policy will allow you to manually look up
+these older branches (or even to fetch them, if you publish the log and
+set uploadpack.allowAnySHA1InWant=true).
