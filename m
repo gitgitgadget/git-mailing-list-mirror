@@ -2,97 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43ED4C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 16:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94B77C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 16:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348184AbiCHQJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 11:09:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
+        id S1348222AbiCHQLp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 11:11:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232119AbiCHQJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 11:09:46 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7421E4D61B
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 08:08:49 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id 12so19316873oix.12
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 08:08:49 -0800 (PST)
+        with ESMTP id S1348224AbiCHQLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 11:11:43 -0500
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D36D50B13
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 08:10:44 -0800 (PST)
+Received: by mail-oo1-xc2f.google.com with SMTP id x26-20020a4a621a000000b00320d7d4af22so9426887ooc.4
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 08:10:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=NJbGZaRGTXFh9DUxvavCr7l6KMH34QtXGHF3drJOBOw=;
-        b=BPVWq9O4HsabjIF6TjXQ8TOUJQPEJqPSC6NZzusQctFrW1GXYrPqYrn/YeTxPCw2Ez
-         6Y7rRl2e3pxdMhacvV/Du/a6G5Fdk3STbUDEaDv+HN+uGr+gZ4XFxrFV7n2UMydnQTeX
-         g8lTtAl/vr86C2rvZ7ISRiKeih58MngPuQftkOZz7vhg5laD9UJWq6u2WTzNYF0VFuHy
-         j3lc29lax4YyfMstnVySz5NFZbiWL+ihGnURhkcH8OpDC4G4p4zHOpck+jiA7Nk1ejac
-         CXF8jlNHzZIZGy43OZa5a8UAfgI0a7Cf42mdzlZrXk8jN007UC6NYPPlByEH/GvF6LyN
-         PDFw==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GJ5KCfyEusL61woCcFtZ/JW6qeM8dvw+9zs5s/xED/M=;
+        b=Dqg4MXKUEp2sR81DK/HNE8eF1feQuMJL5U9Ll5fDhVYbJsSy5DtQCv1hGknzCtsVg7
+         rujOO+76n1i/lcy+J2KDRJ6uhcOo8yHdhHtP1RpVVFNLNZM6GwdLaPuJiSsiN8H7bq8i
+         PSqr1Ef5SkHQtVS2FFe91LWIjK1vMUEH29Ulyh0O7CYkspP52CJGdmyKrgYkEQXEz0uj
+         J5Cy8QKuwIKwnVYOYM1xdUqBxcG85n97ZYM0opxovI0Eipf9U8X/rMvastGpn4YnBsbW
+         ZcLUHBdmOJLJ1Eg9s4IJn/wCM34r5WVd2H4FZHwRxH9QPHcL5sronBvHJBnV3OSjCvne
+         y/jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NJbGZaRGTXFh9DUxvavCr7l6KMH34QtXGHF3drJOBOw=;
-        b=sRnL7mOSValIUgiPKbedbdmT9jBtaNo4v5hKxqYUOovV6MQou1c550Vxh1y+2Qp+sL
-         9XDOxuMzX1SGE79Ed0VA218SHrvJ1wo6yIW3F3CV3nP2PKxqXcXIkgmfTOEYXMMc2i9R
-         4FjHuyzCBRzmQd5zHtSoDlpGx6YUvm+2YqAd6mA5yVOFWlPua75CC/RvbQdCMpT8LQ80
-         LPbNNue/IJUBafls+0a5GwsWDyFdOFm9IT8QYTNLzc8EYgmy5VXER2Sf/vvwumyQ27bx
-         ifhFPNSLJxVYHUPnecmsejfxqBnjdtJT5zrZr9c0bmOfM6dlTjYjDf5xY0bo4mwXCPmD
-         7QzQ==
-X-Gm-Message-State: AOAM533BguO7KXI60UHWJE0M14W27mToszjJ/4GokgUwekgGhLI7liqX
-        eAQAvmrz7mPm9Ei+/CBB2lNAFee3vN3R
-X-Google-Smtp-Source: ABdhPJyEr+GNv0ZtdU2FCp9bo/sX2Tk0VDx/CzCpYP1uT4X/VBvXU3GSJ9eUZXmRsgxQ1SdOsRWz+g==
-X-Received: by 2002:a05:6808:d4b:b0:2d9:e193:18b2 with SMTP id w11-20020a0568080d4b00b002d9e19318b2mr2935778oik.227.1646755728696;
-        Tue, 08 Mar 2022 08:08:48 -0800 (PST)
+        bh=GJ5KCfyEusL61woCcFtZ/JW6qeM8dvw+9zs5s/xED/M=;
+        b=ajL1fiJ5HFROTW+ppm5lKt0lfIaYNE1E4y4PAMWcD/tBc1Cnz2vl1pQpL+Fm/IEB/n
+         vJmmzkWP6W/kXkVwDwDOmY8tgpW4lYRJ32Avk/DOLk/6v6uLIhUv/YTPNAl8WNkYoxLA
+         +08cxnCZIrc5rEEdXdEnHFQGWxfBTso60jdvq3go93nT1sbWiGte1tRfT5+Zq2iD8p45
+         XA6ikhERIW5G7WUkbEnwUQKJ1HeTCBw6T0wGDBCUoRGU9OnaqT55eSfucKWfcRtH8U/4
+         Dhf0Ks+b+k1ML22MkIEQmzMOk9KFjtdCdDz4Rc3460wlWdF/WtK0cql92EVrzvijorCK
+         SumA==
+X-Gm-Message-State: AOAM531lDNADl0ym03zOjPPrtypCez2Pm5B4/l1FzfS8ic+lQc4DCX8F
+        Z41kg38cISjjhJgmbNwXCAVLNeLKUeYk
+X-Google-Smtp-Source: ABdhPJyL2r4fBDdvoaC4VfQQtSCjSBraI7ZFE2W230tsY4br+dYPJJoiuo6UqlHQ3n7Fuptz9cv4Ig==
+X-Received: by 2002:a05:6870:350f:b0:da:b3f:323c with SMTP id k15-20020a056870350f00b000da0b3f323cmr2785384oah.236.1646755843914;
+        Tue, 08 Mar 2022 08:10:43 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id k22-20020a056830243600b005af5fb99326sm7761919ots.63.2022.03.08.08.08.47
+        by smtp.gmail.com with ESMTPSA id m17-20020a0568080f1100b002d71e151e51sm8675038oiw.0.2022.03.08.08.10.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 08:08:48 -0800 (PST)
-Message-ID: <618539f0-4f9f-1185-b929-e768054440c1@github.com>
-Date:   Tue, 8 Mar 2022 11:08:46 -0500
+        Tue, 08 Mar 2022 08:10:43 -0800 (PST)
+Message-ID: <d9e6e3bb-b2ef-dbf4-6969-620b58727115@github.com>
+Date:   Tue, 8 Mar 2022 11:10:42 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: ds/partial-bundles (was Re: What's cooking in git.git (Mar 2022, #02;
- Mon, 7))
+Subject: Re: [PATCH v3 12/12] clone: fail gracefully when cloning filtered
+ bundle
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <xmqqilspp5yg.fsf@gitster.g>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
+ <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
+ <805e1d1172210c6a39b33edcb2cd6d21b754f821.1646750359.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqilspp5yg.fsf@gitster.g>
+In-Reply-To: <805e1d1172210c6a39b33edcb2cd6d21b754f821.1646750359.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2022 8:51 PM, Junio C Hamano wrote:
-> * ds/partial-bundles (2022-03-07) 12 commits
->  - clone: fail gracefully when cloning filtered bundle
->  - bundle: unbundle promisor packs
->  - bundle: create filtered bundles
->  - rev-list: move --filter parsing into revision.c
->  - bundle: parse filter capability
->  - bundle: safely handle --objects option
->  - MyFirstObjectWalk: update recommended usage
->  - list-objects: consolidate traverse_commit_list[_filtered]
->  - pack-bitmap: drop filter in prepare_bitmap_walk()
->  - pack-objects: use rev.filter when possible
->  - revision: put object filter into struct rev_info
->  - index-pack: document and test the --promisor option
-> 
->  Bundle file format gets extended to allow a partial bundle,
->  filtered by similar criteria you would give when making a
->  partial/lazy clone.
-> 
->  Will merge to 'next'?
->  source: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
+On 3/8/2022 9:39 AM, Derrick Stolee via GitGitGadget wrote:
 
-I just sent a v3 [1] that takes more of Ævar's suggestions to make
-the changes more robust.
+> +	if (is_bundle) {
+> +		struct bundle_header header = { 0 };
+> +		int fd = read_bundle_header(path, &header);
+> +		int has_filter = header.filter.choice != LOFC_DISABLED;
 
-Thanks,
--Stolee
+Of course, as I was sending an email replying to What's Cooking, I
+realized that I missed one of the suggestions, which is fixed with
+this diff:
 
-[1] https://lore.kernel.org/git/pull.1159.v3.git.1646750359.gitgitgadget@gmail.com
+--- >8 ---
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 623a5040b1..e57504c2aa 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1140,7 +1140,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	transport->cloning = 1;
+ 
+ 	if (is_bundle) {
+-		struct bundle_header header = { 0 };
++		struct bundle_header header = BUNDLE_HEADER_INIT;
+ 		int fd = read_bundle_header(path, &header);
+ 		int has_filter = header.filter.choice != LOFC_DISABLED;
+ 
+
