@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B72B4C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 07:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B36C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 07:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344663AbiCHHk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 02:40:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50676 "EHLO
+        id S1344665AbiCHHlB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 02:41:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344647AbiCHHkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 02:40:52 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3B239834
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 23:39:56 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id n31-20020a05600c3b9f00b003898fc06f1eso847292wms.1
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 23:39:56 -0800 (PST)
+        with ESMTP id S1344650AbiCHHkx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 02:40:53 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441683DDEC
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 23:39:57 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id u1so26967630wrg.11
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 23:39:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LBs+toRKrNAeFvILpMVU2ojoAq4HAqoAo1bWvbw2bbg=;
-        b=b7lrPVGbk4U0+qFuy2X0smtsy82TjaHrw9fIp1cIUX+n+DQHFxAU7MOrXlG1cEZ7HJ
-         EHfin/zPDcqa+9H0NMHem7NlGrmZst+sD6YuxKDWiGRnX+adBrx6mMUinPSfmZDb8fFg
-         ui762MBUCwwuoB+QgoVAxcN3cEFgSWw5d8M9iBe/NtoHioLLmjndZSr3Gbt9wZ5QeKiV
-         X7/j/kd2Zmcft8c3aZlT3MXRk/QntvmMqnX+iXeXUcBvA9OfEQV+gdR+xKZcw/hr7KFT
-         9KIdoB1Hnxud5H+yyTVhdd1KYqHFKDjix+/VcHyNxV8V/9XLT+tZdieckIo8gyyUltMl
-         fCBg==
+        bh=PcEhBMfiRsbLFIkiYM4ha4Qn6/cpSDgGqF0zPHthGdk=;
+        b=WU5OGn1O1VMyF4Jnoy4We2+mbvrdeHY88ClIT6vXP3aS9dVZKwkbUAZ358gN0napDJ
+         RuhjfwA0EMdrmn1Y7I0DaM19oKXDQXyxY+Nvu0rjTvy6qQL4TuiCUX3ZHDi/AowPOmUO
+         eS6tw7NwshiPgiaKuj5X40mkfGqYJTKOMpYIU57vzPFo74BXIQgtw5Ap+AzqthJMbycH
+         /X/5fZiBQyrBD6Jo9QgouPU3EcSTSnLApjsE+eZmGsbrexEBVJvKD/yzsI7hwO9TMKW1
+         BJnTrK4yn3N5c59mp+nRmybeC40zT9WFr5QRFqOOqgtfIONlo7TTm/DFNHJoqnlnTnMw
+         7Akg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LBs+toRKrNAeFvILpMVU2ojoAq4HAqoAo1bWvbw2bbg=;
-        b=Eq1XYMvM009kAcdWizumo2qo45FPl3Ijq4V7uZWQDCuhGFHJHukShHVZl6himcvKdp
-         CHWLHya51Ozf3ZfVdQSySmx5KvXcN0F/v6kl6kr1rKaJwPYVCpNj5xv3LG9bCnBUHiS1
-         cSHMJiP3AljiB5zTRDzrDtuupPHM9BLTfkfuASaZyRgM3MUOOi8AJLKnBdaY/icZwdok
-         utujrKFuCFZSJSEJ3NftZupv50Pzd1uNO1h66Tmnip/C/AZDofNahCCjbnmjnvfQErnP
-         axJSTdvaNWcDsXrewTYst+73Af1niT05PPQgJ6a9TYfdENP/6ntsM2ePhn3N34BUQJXd
-         2p9w==
-X-Gm-Message-State: AOAM5306BJh+bg9z/L/P/eUDhOBIeaGQJQ+uDgh3F+xsih1NqAntkeV/
-        MTflrqsXRLE4d27BmtXvOfcpU7coxoc=
-X-Google-Smtp-Source: ABdhPJwsBUg24Y6wDP2bxOhwNpWQ0+mzTQB5VC2eenZxAG9wFnO/BKk7f1FFOKLc9+lDIDQ4gJKBhA==
-X-Received: by 2002:a05:600c:2219:b0:389:bc8b:ac48 with SMTP id z25-20020a05600c221900b00389bc8bac48mr2346856wml.14.1646725194726;
-        Mon, 07 Mar 2022 23:39:54 -0800 (PST)
+        bh=PcEhBMfiRsbLFIkiYM4ha4Qn6/cpSDgGqF0zPHthGdk=;
+        b=IQ2kJ3IR11mTJAJq6UHAXcov4LLnMS1+8OYK5sogiVY/Wf9SIhpPGuM2NFmlkSuwow
+         fR67pZcaQG4AovcKRclrh+HVg652ST9rK/B5kASfFgOT749yskn3ZOjTlRFvMth/uomu
+         BcbFys7h+QFbfTpwYmNVay2wDMqHZRqbG85EBUlNNdRJUrD4+iCMcr50uNQfcJAzQEl+
+         A5J7X7OBzeMBWUWJ9FYQSxdJ9lGVJKFGYtp1zmUDO0r1rJTsuJuyFeWGia20k8SW5mJO
+         a8lQXGTpxB8y/Csxs807BKKwlVX7+Rq0M3cYVBeyigxX1QhQHyRUVTmFX5EkClBYsLll
+         JJkg==
+X-Gm-Message-State: AOAM5315kCys9lZYf+M7rjQ1XfY+Tg4b0o8AKd1PP+8d1jNI3P2lA94l
+        Uu/cOB4ofpQmFzcbTOQFHgoTqPge0OY=
+X-Google-Smtp-Source: ABdhPJy1Yr6gBEEM6/eIixPUvRi1/y4Qff1P3D8/Xi2rAVKwvbXXJQp4vxFSe/xQRKmx2QUA4Mo9Rg==
+X-Received: by 2002:a05:6000:1044:b0:1eb:f72c:7f25 with SMTP id c4-20020a056000104400b001ebf72c7f25mr10858631wrx.155.1646725195663;
+        Mon, 07 Mar 2022 23:39:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b10-20020a05600003ca00b001f1f9a83123sm3978348wrg.103.2022.03.07.23.39.54
+        by smtp.gmail.com with ESMTPSA id f8-20020adfb608000000b0020229d72a4esm1733924wre.38.2022.03.07.23.39.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 23:39:54 -0800 (PST)
-Message-Id: <fe37a966699e073543d75e450197e535d021d622.1646725188.git.gitgitgadget@gmail.com>
+        Mon, 07 Mar 2022 23:39:55 -0800 (PST)
+Message-Id: <3265f41bcab7202991da5a7a160a85820fbff0c4.1646725188.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1148.git.1646725188.gitgitgadget@gmail.com>
 References: <pull.1148.git.1646725188.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 07:39:44 +0000
-Subject: [PATCH 5/9] git-sparse-checkout.txt: shuffle some sections and mark
- as internal
+Date:   Tue, 08 Mar 2022 07:39:45 +0000
+Subject: [PATCH 6/9] git-sparse-checkout.txt: add a new EXAMPLES section
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,87 +69,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-With cone mode as the default, it makes sense to discuss it before
-non-cone mode.  Also, the new default means we can just use directories
-in most cases and users do not need to understand patterns or their
-meanings.  Let's take advantage of this to mark several sections as
-"INTERNALS", notifying the user that they do not need to know all those
-details in order to make use of the sparse-checkout command.
+Since many users like to learn from examples, provide a section in the
+manual with example commands that would be used and a brief explanation
+of what each does.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-sparse-checkout.txt | 44 +++++++++++++--------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ Documentation/git-sparse-checkout.txt | 42 +++++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index b9e44e3dd4c..883b7f4c44f 100644
+index 883b7f4c44f..2cfb1d8f599 100644
 --- a/Documentation/git-sparse-checkout.txt
 +++ b/Documentation/git-sparse-checkout.txt
-@@ -136,8 +136,8 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
+@@ -136,6 +136,42 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
  the disable command, so the easy restore of calling a plain `init`
  decreased in utility.
  
--SPARSE CHECKOUT
-----------------
-+INTERNALS -- SPARSE CHECKOUT
-+----------------------------
- 
- "Sparse checkout" allows populating the working directory sparsely.  It
- uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell Git
-@@ -161,24 +161,8 @@ To repopulate the working directory with all files, use the
- `git sparse-checkout disable` command.
- 
- 
--FULL PATTERN SET
------------------
--
--By default, the sparse-checkout file uses the same syntax as `.gitignore`
--files.
--
--While `$GIT_DIR/info/sparse-checkout` is usually used to specify what
--files are included, you can also specify what files are _not_ included,
--using negative patterns. For example, to remove the file `unwanted`:
--
------------------
--/*
--!unwanted
------------------
--
--
--CONE PATTERN SET
------------------
-+INTERNALS -- CONE PATTERN SET
-+-----------------------------
- 
- The full pattern set allows for arbitrary pattern matches and complicated
- inclusion/exclusion rules. These can result in O(N*M) pattern matches when
-@@ -256,8 +240,24 @@ use `git add` and `git commit` to store them, then remove any remaining files
- manually to ensure Git can behave optimally.
- 
- 
--SUBMODULES
------------
-+INTERNALS -- FULL PATTERN SET
-+-----------------------------
++EXAMPLES
++--------
++`git sparse-checkout set MY/DIR1 SUB/DIR2`::
 +
-+By default, the sparse-checkout file uses the same syntax as `.gitignore`
-+files.
++	Change to a sparse checkout with all files (at any depth) under
++	MY/DIR1/ and SUB/DIR2/ present in the working copy (plus all
++	files immediately under MY/ and SUB/ and the toplevel
++	directory).  If already in a sparse checkout, change which files
++	are present in the working copy to this new selection.  Note
++	that this command will also delete all ignored files in any
++	directory that no longer has either tracked or
++	non-ignored-untracked files present.
 +
-+While `$GIT_DIR/info/sparse-checkout` is usually used to specify what
-+files are included, you can also specify what files are _not_ included,
-+using negative patterns. For example, to remove the file `unwanted`:
++`git sparse-checkout disable`::
 +
-+----------------
-+/*
-+!unwanted
-+----------------
++	Repopulate the working directory with all files, disabling sparse
++	checkouts.
 +
++`git sparse-checkout add SOME/DIR/ECTORY`::
 +
-+INTERNALS -- SUBMODULES
-+-----------------------
++	Add all files under SOME/DIR/ECTORY/ (at any depth) to the
++	sparse checkout, as well as all files immediately under
++	SOME/DIR/ and immediately under SOME/.  Must already be in a
++	sparse checkout before using this command.
++
++`git sparse-checkout reapply`::
++
++	It is possible for commands to update the working tree in a way
++	that does not respect the selected sparsity directories, either
++	because of special cases (such as hitting conflicts when
++	merging/rebasing), or because some commands didn't fully support
++	sparse checkouts (e.g. the old `recursive` merge backend had
++	only limited support).  This command reapplies the existing
++	sparse directory specifications to make the working directory
++	match.
++
+ INTERNALS -- SPARSE CHECKOUT
+ ----------------------------
  
- If your repository contains one or more submodules, then submodules
- are populated based on interactions with the `git submodule` command.
+@@ -154,12 +190,6 @@ directory, it updates the skip-worktree bits in the index based
+ on this file. The files matching the patterns in the file will
+ appear in the working directory, and the rest will not.
+ 
+-To enable the sparse-checkout feature, run `git sparse-checkout set` to
+-set the patterns you want to use.
+-
+-To repopulate the working directory with all files, use the
+-`git sparse-checkout disable` command.
+-
+ 
+ INTERNALS -- CONE PATTERN SET
+ -----------------------------
 -- 
 gitgitgadget
 
