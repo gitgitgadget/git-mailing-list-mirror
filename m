@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 870CCC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B98C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347563AbiCHOk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 09:40:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52112 "EHLO
+        id S1344146AbiCHOka (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 09:40:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347556AbiCHOkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 09:40:23 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D1338D89
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:26 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id x15so28862750wru.13
+        with ESMTP id S1347540AbiCHOkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 09:40:24 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1058B38D8A
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:27 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id u1so28854104wrg.11
         for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=q8+BEG3NwnoERyq+lPMXDfKtOelfHmetpKek56q/MYw=;
-        b=a1ci3vq0vpooecJ2NPweWk3cdVUExJpaQF5/42WKZWxMFAp75IT5Dzlp4yAYjPTFKv
-         ylnrcq/aiH20RrYjG/u6mt2GSSB8MkD2QUqDubq6p+ynAFuiIdjUE1rMuADNEirfNLn/
-         epZKt0ko4kQUm1ZtZtstoEcjawRYijhOAiVyuw+dpt7Vc3iDYZe5BkbwaF/3AukNuv7t
-         dX34zmPxCK19bnjS4Bkc+8c9hQCWqGquEXnQ/HQj/9mNi3I5wgqWQvoz+dGF93HjLsmx
-         iaJla6x3fFvPz1szA9yYARFNmPLjcwXqTeVq0YN1MKIPuuBEVMYBvkK6l8M0jlo4inp0
-         uBbg==
+        bh=QMqisOwNxGJZM+rj/78LU6orxR1EXwydOnTcmjLNxVs=;
+        b=OnChC/RMfqrJ5BhRVTD4jcfvsKZ3kk/HYk9qC44bcR20sppo1E6q5Nc+HEqNyRH3xr
+         AcFz2ixn1xqHJ4Zxk9DU9/PP08brvBe6ucVoUW+qg6DLKOtohp11FO0IRzaF7ro256ZH
+         uko9Rfn6kKGUhsQ8e11+FQGoaOoarcEusi0YU2yB11XrCfkSZw9b+mJES5bLWIk4k9AO
+         oic2g3XYHUT8HdCBMZAI3DYCEFBekG63TyRO3U7Lfi6f/tXRgreS7hp+grWvBfwHWYi+
+         bGQUktOI0ie54Pu6mq/mrQn5N9Ri+/SX+NOGeA9jhGmfnEsli/A5q3VGYwdcFrpDBUnz
+         1Nsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=q8+BEG3NwnoERyq+lPMXDfKtOelfHmetpKek56q/MYw=;
-        b=s+HhexJpvj2ZIOB4VZ58PzXPf8FLbzefaBqHE2q0Ea1Uk5NVB8vDqisognBZqJBp+I
-         o9PjUuDB1WVOC+XTNr83jq/NPruskjYxNARmfaGDoQ+WW7EQSdkm1sQzX0CUFzgQ2P3k
-         +IK9rvJJJfwitjyykVX2OyEXtpb/EHvpg4/UdpGv6LPDoZwgsPpZdMMynZGsQu3KUHBN
-         FzVUCM2/0RBZeFytJr/WMmog7pmj+YcKuudNjVbTx4Q+KWzYc8vHrkQG2axrihdETVMZ
-         KtEDK6v9Tw66NkDm+iNjBbg3IeUjDSKXy9dhORpTwVGilGVE4JINvMczRQ5xqYbpZmtj
-         vLJw==
-X-Gm-Message-State: AOAM532bLXktkDalTIPF68nzySUnB52P+8uOkuLgEclhqLpVpvfKF/ad
-        07Suxq8mhXgSRcR1SzWvvNSvI7lrNGU=
-X-Google-Smtp-Source: ABdhPJxEdUJ8mr3GOkYgkYpZ2NxgrjuMR+kMOP0n/JxgfeGdlvcRVJ1PWkiT2TmJfhiBL24BPg0kzQ==
-X-Received: by 2002:a5d:56cd:0:b0:1ee:3248:525b with SMTP id m13-20020a5d56cd000000b001ee3248525bmr12023573wrw.124.1646750364545;
-        Tue, 08 Mar 2022 06:39:24 -0800 (PST)
+        bh=QMqisOwNxGJZM+rj/78LU6orxR1EXwydOnTcmjLNxVs=;
+        b=0y1x0S3gi1eUqE1/q1aAgjY/c+6Nq2anBtzsGkdayizJsTSGKxBh2Asvk5GKa0zR18
+         PoduzRnL6uPxy1r5ghUcqp9Y+/oG4RIsGN1Q1F8DU+oJ+BkJSpyPKDT9POoXfoF+FV3B
+         Uu6nX+sgObQ06zKTeudpcfmd8OHOBDrqvpMHASIR4uHPuiDFyjOi7ntdBPpuG1Khnbyo
+         MQsbPKdESIP248abNMMqjgRgfebfWkoIkexvzAwPZgEKHt6KnLNTB5ZAMK5YV1ts3uC1
+         v4kZSrj6o/rsJindPgzbGuCOvVAPVLfCEOPN3hKxVNDXy+6ktRlIttF8h228Ej5k9/Wo
+         uGsA==
+X-Gm-Message-State: AOAM533Up6TsXjwH6r0Lmx2nl0REm8JW4q1eyJF4Bkc3tJRhsray9sN4
+        UO4QJwzl4B/Zip8q58aviNDrch28dbE=
+X-Google-Smtp-Source: ABdhPJyPIqduyQfiLMacFA6edcuDnZoEuv9GHNhQkH0eD91vVMCmF3ZCASuTCOz++G488O/R8HCoEA==
+X-Received: by 2002:adf:ea0f:0:b0:1f0:61f6:c3df with SMTP id q15-20020adfea0f000000b001f061f6c3dfmr12504042wrm.543.1646750365449;
+        Tue, 08 Mar 2022 06:39:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v4-20020a5d6784000000b001f1f7b814d7sm5974998wru.69.2022.03.08.06.39.23
+        by smtp.gmail.com with ESMTPSA id p3-20020a05600c358300b003897e440047sm2552400wmq.28.2022.03.08.06.39.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 06:39:23 -0800 (PST)
-Message-Id: <888774f6f28b291c928041a32c3df360cee13d10.1646750359.git.gitgitgadget@gmail.com>
+        Tue, 08 Mar 2022 06:39:25 -0800 (PST)
+Message-Id: <bcb76a065bf977c53e32bdb52fb59087adf09159.1646750359.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
         <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 14:39:11 +0000
-Subject: [PATCH v3 04/12] pack-bitmap: drop filter in prepare_bitmap_walk()
+Date:   Tue, 08 Mar 2022 14:39:12 +0000
+Subject: [PATCH v3 05/12] list-objects: consolidate
+ traverse_commit_list[_filtered]
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,171 +71,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Now that all consumers of prepare_bitmap_walk() have populated the
-'filter' member of 'struct rev_info', we can drop that extra parameter
-from the method and access it directly from the 'struct rev_info'.
+Now that all consumers of traverse_commit_list_filtered() populate the
+'filter' member of 'struct rev_info', we can drop that parameter from
+the method prototype to simplify things. In addition, the only thing
+different now between traverse_commit_list_filtered() and
+traverse_commit_list() is the presence of the 'omitted' parameter, which
+is only non-NULL for one caller. We can consolidate these two methods by
+having one call the other and use the simpler form everywhere the
+'omitted' parameter would be NULL.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/pack-objects.c |  2 +-
- builtin/rev-list.c     |  8 +++-----
- pack-bitmap.c          | 20 +++++++++-----------
- pack-bitmap.h          |  2 --
- reachable.c            |  2 +-
- 5 files changed, 14 insertions(+), 20 deletions(-)
+ builtin/pack-objects.c |  6 +++---
+ builtin/rev-list.c     |  2 +-
+ list-objects.c         | 25 ++++++++-----------------
+ list-objects.h         | 12 ++++++++++--
+ pack-bitmap.c          |  6 +++---
+ 5 files changed, 25 insertions(+), 26 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 256d9b1798f..57f2cf49696 100644
+index 57f2cf49696..0432ae1e499 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
+@@ -3778,9 +3778,9 @@ static void get_object_list(int ac, const char **av)
  
- static int get_object_list_from_bitmap(struct rev_info *revs)
- {
--	if (!(bitmap_git = prepare_bitmap_walk(revs, revs->filter, 0)))
-+	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
- 		return -1;
+ 	if (!fn_show_object)
+ 		fn_show_object = show_object;
+-	traverse_commit_list_filtered(revs.filter, &revs,
+-				      show_commit, fn_show_object, NULL,
+-				      NULL);
++	traverse_commit_list(&revs,
++			     show_commit, fn_show_object,
++			     NULL);
  
- 	if (pack_options_allow_reuse() &&
+ 	if (unpack_unreachable_expiration) {
+ 		revs.ignore_missing_links = 1;
 diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 6f2b91d304e..556e78aebb9 100644
+index 556e78aebb9..3ab727817fd 100644
 --- a/builtin/rev-list.c
 +++ b/builtin/rev-list.c
-@@ -434,8 +434,7 @@ static int try_bitmap_count(struct rev_info *revs,
- 	 */
- 	max_count = revs->max_count;
+@@ -733,7 +733,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		oidset_init(&missing_objects, DEFAULT_OIDSET_SIZE);
  
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
--					 filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
+ 	traverse_commit_list_filtered(
+-		revs.filter, &revs, show_commit, show_object, &info,
++		&revs, show_commit, show_object, &info,
+ 		(arg_print_omitted ? &omitted_objects : NULL));
  
-@@ -463,8 +462,7 @@ static int try_bitmap_traversal(struct rev_info *revs,
- 	if (revs->max_count >= 0)
- 		return -1;
+ 	if (arg_print_omitted) {
+diff --git a/list-objects.c b/list-objects.c
+index 2f623f82115..9422625b39e 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -416,22 +416,7 @@ static void do_traverse(struct traversal_context *ctx)
+ 	strbuf_release(&csp);
+ }
  
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
--					 filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
+-void traverse_commit_list(struct rev_info *revs,
+-			  show_commit_fn show_commit,
+-			  show_object_fn show_object,
+-			  void *show_data)
+-{
+-	struct traversal_context ctx;
+-	ctx.revs = revs;
+-	ctx.show_commit = show_commit;
+-	ctx.show_object = show_object;
+-	ctx.show_data = show_data;
+-	ctx.filter = NULL;
+-	do_traverse(&ctx);
+-}
+-
+ void traverse_commit_list_filtered(
+-	struct list_objects_filter_options *filter_options,
+ 	struct rev_info *revs,
+ 	show_commit_fn show_commit,
+ 	show_object_fn show_object,
+@@ -444,7 +429,13 @@ void traverse_commit_list_filtered(
+ 	ctx.show_object = show_object;
+ 	ctx.show_commit = show_commit;
+ 	ctx.show_data = show_data;
+-	ctx.filter = list_objects_filter__init(omitted, filter_options);
++	if (revs->filter)
++		ctx.filter = list_objects_filter__init(omitted, revs->filter);
++	else
++		ctx.filter = NULL;
++
+ 	do_traverse(&ctx);
+-	list_objects_filter__free(ctx.filter);
++
++	if (ctx.filter)
++		list_objects_filter__free(ctx.filter);
+ }
+diff --git a/list-objects.h b/list-objects.h
+index a952680e466..9eaf4de8449 100644
+--- a/list-objects.h
++++ b/list-objects.h
+@@ -7,7 +7,6 @@ struct rev_info;
  
-@@ -481,7 +479,7 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
- 	if (!show_disk_usage)
- 		return -1;
+ typedef void (*show_commit_fn)(struct commit *, void *);
+ typedef void (*show_object_fn)(struct object *, const char *, void *);
+-void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, void *);
  
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter, filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
+ typedef void (*show_edge_fn)(struct commit *);
+ void mark_edges_uninteresting(struct rev_info *revs,
+@@ -18,11 +17,20 @@ struct oidset;
+ struct list_objects_filter_options;
  
+ void traverse_commit_list_filtered(
+-	struct list_objects_filter_options *filter_options,
+ 	struct rev_info *revs,
+ 	show_commit_fn show_commit,
+ 	show_object_fn show_object,
+ 	void *show_data,
+ 	struct oidset *omitted);
+ 
++static inline void traverse_commit_list(
++	struct rev_info *revs,
++	show_commit_fn show_commit,
++	show_object_fn show_object,
++	void *show_data)
++{
++	traverse_commit_list_filtered(revs, show_commit,
++				      show_object, show_data, NULL);
++}
++
+ #endif /* LIST_OBJECTS_H */
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 9c666cdb8bd..613f2797cdf 100644
+index 613f2797cdf..cbefaedbf43 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -739,8 +739,7 @@ static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
- static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 				   struct rev_info *revs,
- 				   struct object_list *roots,
--				   struct bitmap *seen,
--				   struct list_objects_filter_options *filter)
-+				   struct bitmap *seen)
- {
- 	struct bitmap *base = NULL;
- 	int needs_walk = 0;
-@@ -823,7 +822,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+@@ -822,9 +822,9 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
  		show_data.bitmap_git = bitmap_git;
  		show_data.base = base;
  
--		traverse_commit_list_filtered(filter, revs,
-+		traverse_commit_list_filtered(revs->filter, revs,
- 					      show_commit, show_object,
- 					      &show_data, NULL);
+-		traverse_commit_list_filtered(revs->filter, revs,
+-					      show_commit, show_object,
+-					      &show_data, NULL);
++		traverse_commit_list(revs,
++				     show_commit, show_object,
++				     &show_data);
  
-@@ -1219,7 +1218,6 @@ static int can_filter_bitmap(struct list_objects_filter_options *filter)
- }
- 
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter,
- 					 int filter_provided_objects)
- {
- 	unsigned int i;
-@@ -1240,7 +1238,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	if (revs->prune)
- 		return NULL;
- 
--	if (!can_filter_bitmap(filter))
-+	if (!can_filter_bitmap(revs->filter))
- 		return NULL;
- 
- 	/* try to open a bitmapped pack, but don't parse it yet
-@@ -1297,8 +1295,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 
- 	if (haves) {
- 		revs->ignore_missing_links = 1;
--		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL,
--					    filter);
-+		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
- 		reset_revision_walk();
- 		revs->ignore_missing_links = 0;
- 
-@@ -1306,8 +1303,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 			BUG("failed to perform bitmap walk");
- 	}
- 
--	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap,
--				    filter);
-+	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap);
- 
- 	if (!wants_bitmap)
- 		BUG("failed to perform bitmap walk");
-@@ -1315,8 +1311,10 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	if (haves_bitmap)
- 		bitmap_and_not(wants_bitmap, haves_bitmap);
- 
--	filter_bitmap(bitmap_git, (filter && filter_provided_objects) ? NULL : wants,
--		      wants_bitmap, filter);
-+	filter_bitmap(bitmap_git,
-+		      (revs->filter && filter_provided_objects) ? NULL : wants,
-+		      wants_bitmap,
-+		      revs->filter);
- 
- 	bitmap_git->result = wants_bitmap;
- 	bitmap_git->haves = haves_bitmap;
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 19a63fa1abc..3d3ddd77345 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -10,7 +10,6 @@
- struct commit;
- struct repository;
- struct rev_info;
--struct list_objects_filter_options;
- 
- static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
- 
-@@ -54,7 +53,6 @@ void test_bitmap_walk(struct rev_info *revs);
- int test_bitmap_commits(struct repository *r);
- int test_bitmap_hashes(struct repository *r);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter,
- 					 int filter_provided_objects);
- uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
-diff --git a/reachable.c b/reachable.c
-index 84e3d0d75ed..b9f4ad886ef 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -205,7 +205,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	cp.progress = progress;
- 	cp.count = 0;
- 
--	bitmap_git = prepare_bitmap_walk(revs, NULL, 0);
-+	bitmap_git = prepare_bitmap_walk(revs, 0);
- 	if (bitmap_git) {
- 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
- 		free_bitmap_index(bitmap_git);
+ 		revs->include_check = NULL;
+ 		revs->include_check_obj = NULL;
 -- 
 gitgitgadget
 
