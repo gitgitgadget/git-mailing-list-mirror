@@ -2,96 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CB0C433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 065A5C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 13:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235783AbiCHNIy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 08:08:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48154 "EHLO
+        id S234083AbiCHNkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 08:40:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347066AbiCHNIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 08:08:52 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91B16643E
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:07:51 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id 11so15985317qtt.9
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:07:51 -0800 (PST)
+        with ESMTP id S229841AbiCHNkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 08:40:23 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5485E1FC
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 05:39:27 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id kt27so39429054ejb.0
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 05:39:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=MIipkH1LEeGQ/rk5vIT/UxeehNnFDfnLH0ClJHl00zs=;
-        b=A645KUWq0ZL+qBNAHAuFbx8DC64A3axsVSK4OCZXLwEGt/PpSid7fTluM0PdFmQzM5
-         mKHOuc0Pga77RLQtLvAbwFzat/z4fYJji3NukV85+cAyeBVpKy7k4Gwc7PKZBYDGHJA5
-         eGTPf+xv5n7EqNK65yApIaP3e3FbhTr82yy5opQPbSSl/pJ/sRH2Z9zZ7Q/v7zP+3Ft7
-         vHsA066mr/tuCbTr5DysLNrotO2l87ZgE1uKGbkboSBZghQWdZLOCLPwbOpCJwwx62EH
-         ukv0m6m+rPEp6gaI9QseCWBiYSzeco6yy9uZ/RpcSAKqCkzuhH0ljA6xWe51ZeLgGMhz
-         /EZA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=7IorD6TVfGE4MJv3AwCHt6gyjUkuA72+NAlBEX59xu0=;
+        b=nWZaXwqxyeZxzAWWtoZCSyMgaERwRoFVdN+7AAaK6s2RjgVupI7aiPYHStzE/Oo3mA
+         A8fP8jKUplzQR6xGaviGW4ZjXK5JH0blP7AkQ9jC5XcGLCELgou3U2ufgcljoD0Jt/C+
+         BqFP8FVfVXSUoIgWP/s14HCOSK9iJBtowSh3ygnu85fvFOjEaBQpQdYsSFXOf0F2QjkJ
+         jeJfcTNRgggfJjeskMoBRc7rNX9+Bcpe3wNMQ5bGEBwoB6klzmsMWN7iwwGG3ZdvlBK3
+         0AtkywWbWgaizvLU2izRJPotxc3n/sIb9Az7Lgage6I4APXtXCnLtODhE8CjlFhBksoR
+         G5SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=MIipkH1LEeGQ/rk5vIT/UxeehNnFDfnLH0ClJHl00zs=;
-        b=Z1AvaAoGSgvFm8GoO2hkIBo+2KJeAilyW6RsZBHpBps6RhSUKiT3n7eTx72ILVRGYT
-         Qfq9u4fYNpmpcCCkj0WMXz5b1oZKNTTgykow+fKQRBCQyfpwpe306Manbm4RvIvhfyR1
-         8dZOkEbVjl7hIJokh7uwKeDRuAoT6tTvQ3Zv8q/gjePHLdlhTjQ57xfmqa4HC8aC7KNh
-         Kj/zk5EEkEggT2gVSCy+PopLaHgiVNo/UgxhAz8v88bxybkfvWZdkEcqFxZ9lE+p0CDU
-         vJU3gQOPXPyYiFkhNzC+ApLtx7nk71bOMJyYlJxCOQSI3Uk+rRxlBVU/t+fr8b2jhlRR
-         4aEQ==
-X-Gm-Message-State: AOAM5314KKp3ay8i4wdxRC4RUkdc1y7YJSEm5wA2dy5aWJVo0tEtwZsL
-        DN+0hj6r3CI4O+SPesU6ki8G6bAMFIFZFQ==
-X-Google-Smtp-Source: ABdhPJydEvHg5gvUkpW+mBLgUynvMkGMNvhTpBr5fySbespYMlY+sDYeb8GzvgNljIkTaWZEqtDMFQ==
-X-Received: by 2002:ac8:580c:0:b0:2dd:d863:8a2d with SMTP id g12-20020ac8580c000000b002ddd8638a2dmr13285904qtg.469.1646744870721;
-        Tue, 08 Mar 2022 05:07:50 -0800 (PST)
-Received: from ?IPv6:2003:f6:ef00:8400:3d36:58a:667a:1da9? (p200300f6ef0084003d36058a667a1da9.dip0.t-ipconnect.de. [2003:f6:ef00:8400:3d36:58a:667a:1da9])
-        by smtp.gmail.com with ESMTPSA id r184-20020ae9ddc1000000b0067ca2630aa8sm1356569qkf.114.2022.03.08.05.07.49
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=7IorD6TVfGE4MJv3AwCHt6gyjUkuA72+NAlBEX59xu0=;
+        b=4TQMXJUE1FDBV9eBJ9bEjcmqaUJFEzFFeF7B28ooOAjiRPPQpkvON8hsSL1eiB23ZJ
+         InlZHqNf4hgikYD1dkdBvyXXVYPAlVm4EnIlgX8ZJ3f1Zg8/E7Nzn4jMd5ROc4c6zhCh
+         ut9niMbHTiLeusONxe3MCEPN8ZH6c7lIn1QZNtsHsJOpe/M1F8WZMWyi8b6lQhPj6YGR
+         fQfHxcBz58jB6hDXBbHGFvO/lzrH99D34Ab4fKPdZHB65esA89fFpGM1Xd53wnpahx3+
+         ACost8gCzR+8uKoKQUlXLMcI1tEBzoggjgE4Z3Rte1yxQy5zP6q/V5jVRdRH5/0BnYe7
+         weDQ==
+X-Gm-Message-State: AOAM530lnlmJRJ4jqa8IScy7eXp32easybwsovNVJp4/d32ulBKvP7OU
+        l8RHLCEMAY3aD0eNcOJjzHE=
+X-Google-Smtp-Source: ABdhPJyOnqAI719GfcQi6DvxE+ViuY7ZMw/z9mQRaOlgYwuMdO3ppT+kgdylIGvtSd00NtE+71I9/g==
+X-Received: by 2002:a17:907:1c81:b0:6da:626c:b789 with SMTP id nb1-20020a1709071c8100b006da626cb789mr13873916ejc.607.1646746765779;
+        Tue, 08 Mar 2022 05:39:25 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bm5-20020a170906c04500b006ce6f8892a5sm5891626ejb.7.2022.03.08.05.39.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 05:07:50 -0800 (PST)
-Message-ID: <ea67407120aa710f81af048d22be09281ac28107.camel@gmail.com>
-Subject: git notes question
-From:   Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
-To:     git@vger.kernel.org
-Date:   Tue, 08 Mar 2022 14:08:23 +0100
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 
+        Tue, 08 Mar 2022 05:39:25 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nRa3g-001v1f-HO;
+        Tue, 08 Mar 2022 14:39:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] block-sha1: remove use of assembly
+Date:   Tue, 08 Mar 2022 14:38:06 +0100
+References: <20220307232552.2799122-1-sandals@crustytoothpaste.net>
+ <20220308022240.2809483-1-sandals@crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20220308022240.2809483-1-sandals@crustytoothpaste.net>
+Message-ID: <220308.864k48y35f.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
 
-Sorry if this is something already asked before...
+On Tue, Mar 08 2022, brian m. carlson wrote:
 
-Is there any way to remove the default "Notes:" line on git-notes? I
-don't really mind to have it in git log but when generating patches for
-instance, I would like my notes to be something like:
+I think the $subject of the patch needs updating. It's not removing all
+the assemply from the file, after this patch we still have the
+ARM-specific assembly.
 
-commit title
+I don't have a box to test that on, but I wonder if that also triggers
+the pedantic mode?
 
-message
+Perhaps:
 
-tags...
----
+    block-sha1: remove superfluous i386 and x86-64 assembly
 
-v3:
-  notes on v3
-
-v2:
-  notes on v2
-
-instead of having it like:
-
-...
----
-
-Notes:
-    ...
-
-I did some code inspection and I guess that using a USER format would
-be a way but I'm hopping there's a more direct way.
-
-Thanks!
-- Nuno Sá
+?
