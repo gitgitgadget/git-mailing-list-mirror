@@ -2,160 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8DFAC433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1926CC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347590AbiCHOkx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 09:40:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
+        id S1347662AbiCHOzU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 09:55:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347573AbiCHOkg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 09:40:36 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8320439169
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:33 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id x15so28863315wru.13
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kfEW0dk/GJsWNlzL6rW1CD5ocGSfZpxQ5GeCl6aCtPw=;
-        b=ctXRrc1trZnbASvvbunink1LUkAA7FV9V/R652DbdfqrOwBZXLlTLT6pNHvjeTJ6Xy
-         QAIz1FdQkvF8uBa60k4DGrNbzZx5xHXJuWd48adrZf0j2PU7W5UbPWX8f9szHqLWklMX
-         YGeCxpO+x74qmph1w5TFx1hZvLBaK6KwmCT/gcy1etkAF2OxHk26s9iMLh1NHY1lwbaS
-         1gxuuB/7G8ZG1U+/2dKJvZYdTZDWzG0vhxzkL1azIcd2TZ9Jg8IABXysNE6c+GoGnAJ9
-         m+68/5Vp3x+XA4a2euNL0lKwywHiJTT/9NvZeTsvz2hfR9jOh0+48F8CzF9cYCT/7ljj
-         TglA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kfEW0dk/GJsWNlzL6rW1CD5ocGSfZpxQ5GeCl6aCtPw=;
-        b=mURqmewzYOH0jBAOkWoBcTRkVuOqLryRisSjH7QTjcTt0zqqKvU04k11qHVbdMfTdV
-         x5BePp53Fq3+/c3PRFK6y2fBwi/wSRKFrPNJdlLHp3HWONZIqYyWbbMBEWv/AZHD3nDR
-         4/qPBjQJ+OZTIDapHHH/2WOHfj2kXaE2Zo0qAT4E9Ce/CJqTOvExBIglVejX5abxvdgK
-         EcO9q8Cgahd6yYS0yNsChaZuvq4Yk7hql3W1MhWYl5GXFgAZLRmMzC+ihKPvOqugDLR4
-         Qaats0kswKZuRyP635DK7mnzXUO56NN2myR3fVYyK0u9KESBditpDKsTWQZLy0s6+TeV
-         yV+A==
-X-Gm-Message-State: AOAM530mR50UfufZUEHwbgqEgYyTBVbOqwwDgw79EcS5Ikq3Zzv1pr43
-        S9+9AGOjzNuzKeBWHQGl29RjTtDVDj0=
-X-Google-Smtp-Source: ABdhPJzMY6eP1um0RbTudrnozcrIXx2+A+2q7/JHq5gSJSrWG6vzKYY+W0ziyLlQBCUFF2yvhtTwuA==
-X-Received: by 2002:a05:6000:10c2:b0:1f1:e43d:c979 with SMTP id b2-20020a05600010c200b001f1e43dc979mr12049353wrx.671.1646750371710;
-        Tue, 08 Mar 2022 06:39:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k18-20020adfe8d2000000b0020294da2b42sm3689688wrn.117.2022.03.08.06.39.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 06:39:31 -0800 (PST)
-Message-Id: <805e1d1172210c6a39b33edcb2cd6d21b754f821.1646750359.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
-References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
-        <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 14:39:19 +0000
-Subject: [PATCH v3 12/12] clone: fail gracefully when cloning filtered bundle
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1347660AbiCHOzT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 09:55:19 -0500
+Received: from box.jasonyundt.email (box.jasonyundt.email [206.189.182.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 855C24D273
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:54:22 -0800 (PST)
+Received: from authenticated-user (box.jasonyundt.email [206.189.182.84])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.jasonyundt.email (Postfix) with ESMTPSA id 927137E74B;
+        Tue,  8 Mar 2022 09:54:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jasonyundt.email;
+        s=mail; t=1646751261;
+        bh=hgQgdzxUzcQvyhpiiOmRivScyuqY5bMRRQAXknoV+Pg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=NOVr7m1EFwp38wV5Zu/byET0tVukS+9+vn1SFZXfLKZ644c2xk0DPlf2fgQiTIgsZ
+         LS++RJlOOJCetXiPiU51ZXftoP0K4UoQGvbMrDeN92MuIaYw38YjY9Sutrirx3VdRl
+         1Uh0wlHbt66iBdcun+LaI+FiJmVizc+25iBJtbBuMO8ewn0RXoWdRJf40mHndpdNVF
+         pmQpeZl/FvdSJ/3rB4ZRalX6PdBzMHjvKgNfnSAEuKjnD3xRQNh02s6gUGGW7x0B7C
+         EhuMWvAgN0uO2WIAh0qfL0oHsgFoYjUltREkIF+IivXOT4OWi1jXLwInxRMwJP/4xS
+         Hw5IEsqYwu3aQ==
+From:   Jason Yundt <jason@jasonyundt.email>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] gitweb: remove invalid http-equiv="content-type"
+Date:   Tue, 08 Mar 2022 09:54:21 -0500
+Message-ID: <4175455.ejJDZkT8p0@jason-desktop-linux>
+In-Reply-To: <220308.86cziwy595.gmgdl@evledraar.gmail.com>
+References: <20220307033723.175553-1-jason@jasonyundt.email> <Yia2Y2zoOjvVdJ9O@camp.crustytoothpaste.net> <220308.86cziwy595.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+On Tuesday, March 8, 2022 7:44:35 AM EST =C3=86var Arnfj=C3=B6r=C3=B0 Bjarm=
+ason wrote:
+> Maybe I still don't understand this, but the commit message seems to me
+> be conflating whether we send the *right* http-equiv with whether we
+> send it at all,
 
-Users can create a new repository using 'git clone <bundle-file>'. The
-new "@filter" capability for bundles means that we can generate a bundle
-that does not contain all reachable objects, even if the header has no
-negative commit OIDs.
+The intent behind the commit message is to say that <meta
+http-equiv=3D"content-type" =E2=80=A6> is never correct in XHTML.
 
-It is feasible to think that we could make a filtered bundle work with
-the command
+> i.e. if the problem is that XML documents shouldn't be
+> text/html isn't this correct?:
+> =09
+> 	diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> 	index fbd1c20a232..c1c5af0b197 100755
+> 	--- a/gitweb/gitweb.perl
+> 	+++ b/gitweb/gitweb.perl
+> 	@@ -4049,7 +4049,13 @@ sub get_page_title {
+> 	 	return $title;
+> 	 }
+> 	=20
+> 	+sub get_content_type_xml {
+> 	+	return 'application/xhtml+xml';
+> 	+}
+> 	+
+> 	 sub get_content_type_html {
+> 	+	my ($want_xml) =3D @_;
+> 	+
+> 	 	# require explicit support from the UA if we are to send the page as
+> 	 	# 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
+> 	 	# we have to do this because MSIE sometimes globs '*/*', pretending to
+> 	@@ -4057,7 +4063,7 @@ sub get_content_type_html {
+> 	 	if (defined $cgi->http('HTTP_ACCEPT') &&
+> 	 	    $cgi->http('HTTP_ACCEPT') =3D~ m/(,|;|\s|^)application\/xhtml\+xml=
+(,|;|\s|$)/ &&
+> 	 	    $cgi->Accept('application/xhtml+xml') !=3D 0) {
+> 	-		return 'application/xhtml+xml';
+> 	+		return get_content_type_html();
 
-  git clone --filter=$filter --bare <bundle-file>
+I=E2=80=99m guessing that you meant to call get_content_type_xml() here.
 
-or possibly replacing --bare with --no-checkout. However, this requires
-having some repository-global config that specifies the specified object
-filter and notifies Git about the existence of promisor pack-files.
-Without a remote, that is currently impossible.
+> 	 	} else {
+> 	 		return 'text/html';
+> 	 	}
+> 	@@ -4214,6 +4220,7 @@ sub git_header_html {
+> 	=20
+> 	 	my $title =3D get_page_title();
+> 	 	my $content_type =3D get_content_type_html();
+> 	+	my $content_type_xml =3D get_content_type_html();
 
-As a stop-gap, parse the bundle header during 'git clone' and die() with
-a helpful error message instead of the current behavior of failing due
-to "missing objects".
+I=E2=80=99m also guessing that you meant to call get_content_type_xml() her=
+e.
 
-Most of the existing logic for handling bundle clones actually happens
-in fetch-pack.c, but that logic is the same as if the user specified
-'git fetch <bundle>', so we want to avoid failing to fetch a filtered
-bundle when in an existing repository that has the proper config set up
-for at least one remote.
+> 	 	print $cgi->header(-type=3D>$content_type, -charset =3D> 'utf-8',
+> 	 	                   -status=3D> $status, -expires =3D> $expires)
+> 	 		unless ($opts{'-no_http_header'});
+> 	@@ -4225,7 +4232,7 @@ sub git_header_html {
+> 	 <!-- git web interface version $version, (C) 2005-2006, Kay Sievers <ka=
+y.sievers\@vrfy.org>, Christian Gierke -->
+> 	 <!-- git core binaries version $git_version -->
+> 	 <head>
+> 	-<meta http-equiv=3D"content-type" content=3D"$content_type; charset=3Du=
+tf-8"/>
+> 	+<meta http-equiv=3D"content-type" content=3D"$content_type_xml; charset=
+=3Dutf-8"/>
+> 	 <meta name=3D"generator" content=3D"gitweb/$version git/$git_version$mo=
+d_perl_version"/>
+> 	 <meta name=3D"robots" content=3D"index, nofollow"/>
+> 	 <title>$title</title>
 
-Carefully comment around the test that this is not the desired long-term
-behavior of 'git clone' in this case, but instead that we need to do
-more work before that is possible.
+With those assumptions in mind, I don=E2=80=99t think that your code is cor=
+rect if
+the problem is that XML documents shouldn't be text/html. Here=E2=80=99s wh=
+y:
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/clone.c        | 13 +++++++++++++
- t/t6020-bundle-misc.sh | 12 ++++++++++++
- 2 files changed, 25 insertions(+)
+1. XML documents shouldn=E2=80=99t contain http-equiv=3D"content-type" [1].
+2. When a meta=E2=80=99s http-equiv attribute equals content-type, then its=
+ content
+    attribute should equal =E2=80=9Cthe literal string "text/html;", option=
+ally
+    followed by any number of ASCII whitespace, followed by the literal
+    string "charset=3Dutf-8".=E2=80=9D [1]
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 9c29093b352..623a5040b1c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -33,6 +33,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "hook.h"
-+#include "bundle.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -1138,6 +1139,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		warning(_("--local is ignored"));
- 	transport->cloning = 1;
- 
-+	if (is_bundle) {
-+		struct bundle_header header = { 0 };
-+		int fd = read_bundle_header(path, &header);
-+		int has_filter = header.filter.choice != LOFC_DISABLED;
-+
-+		if (fd > 0)
-+			close(fd);
-+		bundle_header_release(&header);
-+		if (has_filter)
-+			die(_("cannot clone from filtered bundle"));
-+	}
-+
- 	transport_set_option(transport, TRANS_OPT_KEEP, "yes");
- 
- 	if (reject_shallow)
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 42e8cf2eb29..5160cb0a75c 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -537,4 +537,16 @@ do
- 	'
- done
- 
-+# NEEDSWORK: 'git clone --bare' should be able to clone from a filtered
-+# bundle, but that requires a change to promisor/filter config options.
-+# For now, we fail gracefully with a helpful error. This behavior can be
-+# changed in the future to succeed as much as possible.
-+test_expect_success 'cloning from filtered bundle has useful error' '
-+	git bundle create partial.bdl \
-+		--all \
-+		--filter=blob:none &&
-+	test_must_fail git clone --bare partial.bdl partial 2>err &&
-+	grep "cannot clone from filtered bundle" err
-+'
-+
- test_done
--- 
-gitgitgadget
+[1]: <https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-=
+equiv-content-type>
+
+
+
