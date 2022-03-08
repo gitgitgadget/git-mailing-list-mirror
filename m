@@ -2,123 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA84FC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 07:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D99DC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 08:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243345AbiCHHlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 02:41:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50814 "EHLO
+        id S245407AbiCHIGv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 03:06:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344657AbiCHHk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 02:40:56 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461E939838
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 23:40:00 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id u1so26967820wrg.11
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 23:40:00 -0800 (PST)
+        with ESMTP id S1343693AbiCHIGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 03:06:50 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B3483E5E4
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 00:05:55 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id m22so16484225pja.0
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 00:05:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=Fxlxj1FThT+VFVxtG0FmA74Pe0Of9J0GFbRj6Lqk2d8=;
-        b=YbgHX7okOT+tiUevTa4142CeWu5vfsjnf7sVOFptV9OBqc4ZhkNykpIt1JZqLzN2M6
-         lTOml9gvS1CIneiNQt7C/6Ej4VDlW6bMZJyftv8fULBqK4jjlt3BzmCLZdf3I4MqG8NX
-         DZ97HrP9Vo5r2LtlVgCLrGfe7QLeEJ1MAXmFsZpRrFxQN3PwnvGqHE3bRr6rUFd/FQI1
-         553XvoN/e8Q7pFvriqrZ364XjEtKYCT9vrwoXfeR55gXVEd2fwEhWol/3jSefY1OekJT
-         raskbig/In5IrQuSy/X3G5BhFLL8XL/lnRg3ibVjHRYTIYO3zXXiwslHZYQBuU83qeuc
-         DASA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aBdfjUDmA/VC/T6IgycwmHdMxZLyPQQkTb9NJNeFUqw=;
+        b=PnewnY2WeYsj0EH/6HUtrIorXs8Yf0zxHa1P9hLilMkUZfcnPtmwPCiKWtwTXa7Thh
+         wSMWVARYK+rH5Wjinj9qevRDV3O61iLTh4vGvGSVig0Jl4cL1C/MHA5EG+1EDIiv3A03
+         KdPp4lPcmsxW903JrCq+7keJEW8DIOKZFyShqrXuNywGcjQNd8e90bIA7nmlgMUdWvRT
+         lFDusXtrdU3m95Wzy9uSLlRgWUv9yld6kKMJajKaFFw7HHFX0qPopfXG3kY4vYJK5jlW
+         pLCroG8bZYtx80m+m1kmBQFDLT9QvGsTj22NCr4JgZSUK8fr+zvNa50r53XgVDUkfmJd
+         zY0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Fxlxj1FThT+VFVxtG0FmA74Pe0Of9J0GFbRj6Lqk2d8=;
-        b=rMgKQFyXLymysuHiBEjPviJReC9MjuZH72+SfuAwtOH9JwjHV4eIHkin1i1h7Zy2Xn
-         ++NDoh2MhyVVuh9GCsi++0OXQbKECgHUTHyGJSLiHhFnjwFBDIbKjmR2tzXvr8pcvBP8
-         XpiORoORXfYzvCqKJcAEqxC2rbHSSHW0d++jreHx1X2uJeUhktXamvRDxH20cJC53pzJ
-         KAI/IhFqsYJPqjrrfy4hvN28yqLKxDOeAWTsQBT6y88ToUBNgm1Cs5MS9fesW7Xbae2M
-         f5wAZff/uef35+9EFbpTLEhNWwZW2jaO7FwcBwMnhuLVsUpSDXa9hzzQdb2r9C3O5qpK
-         6dFQ==
-X-Gm-Message-State: AOAM531Y7gfLm9y4TOBz7M2VNPH2/DKGdYn8tUkBf0ycYXBdUL/7Dj7U
-        hG9bk71RaYNHRCfwLi6LAjXVLtxqCA0=
-X-Google-Smtp-Source: ABdhPJzdMpvNxyj/Noxy1N5kQPVxLJ0+hsB3gGvEnuv900BvrLdBAA0dC+k+9aVNJGvXfHJpy2F0IQ==
-X-Received: by 2002:a05:6000:11cc:b0:1f0:6492:761a with SMTP id i12-20020a05600011cc00b001f06492761amr10941508wrx.412.1646725198708;
-        Mon, 07 Mar 2022 23:39:58 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f186-20020a1c38c3000000b00382a9b91515sm1364485wma.37.2022.03.07.23.39.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 23:39:58 -0800 (PST)
-Message-Id: <e7d3ff70914e1ba4622c2cb6cd30453089e5a53f.1646725188.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1148.git.1646725188.gitgitgadget@gmail.com>
-References: <pull.1148.git.1646725188.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 07:39:48 +0000
-Subject: [PATCH 9/9] Documentation: some sparsity wording clarifications
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aBdfjUDmA/VC/T6IgycwmHdMxZLyPQQkTb9NJNeFUqw=;
+        b=K2tZLbHTowcg8MnixWraNan/IOsCq2TwzRl9FS8wz3Wf6rsGtd3yplTJPRTXOgCb/n
+         GACELBeV1vdY1EUKuuvip9n4UZAbSrPUMvfBLZP1EikEFoqeAHfRiFZEq2pWToR2BNPJ
+         7aDAqR4tjXsBz6t2vkNdwwxLpqTn1QJ6Ynt44L1omiwRBJGoXpbZoravdK24SAQg++o4
+         BPkZEvz8uUuBmD/RfSQSblmQe+XOdJNV+kJcAQMz2FkpTtWcLYTyxuCtRUHySEUNQ52h
+         OSRPsXPbPZPyH44chdfONmxibUssQJivxhoflNEmBtNIUiRbYEe6KsdGZyFWlZkyuF6H
+         Hx4w==
+X-Gm-Message-State: AOAM533BW5DQiPAEOQQhxObyPutIcVKf49OWfRoIgMi4alUeCw3/+FbQ
+        ZEB5zu7OlPvHy13+gm++cdw=
+X-Google-Smtp-Source: ABdhPJwWEeiI+Um0O8qDfmqbt0UY4AT+PWyuA0ARNqAj1sLf+0edUBR8GPgVw5avfer1KEyCaeNZwA==
+X-Received: by 2002:a17:902:d202:b0:14e:f6b4:aa0f with SMTP id t2-20020a170902d20200b0014ef6b4aa0fmr15920268ply.104.1646726754484;
+        Tue, 08 Mar 2022 00:05:54 -0800 (PST)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.33])
+        by smtp.gmail.com with ESMTPSA id oo16-20020a17090b1c9000b001b89e05e2b2sm2008927pjb.34.2022.03.08.00.05.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Mar 2022 00:05:54 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: What's cooking in git.git (Mar 2022, #02; Mon, 7)
+Date:   Tue,  8 Mar 2022 16:05:51 +0800
+Message-Id: <20220308080551.18538-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.34.1.402.gef0f5bd184
+In-Reply-To: <xmqqilspp5yg.fsf@gitster.g>
+References: <xmqqilspp5yg.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Junio C Hamano wrote on Mon, 07 Mar 2022 17:51:19 -0800:
 
-Improve the wording for a couple paragraphs in two different manuals
-relating to sparse behavior.
+>[Stalled]
+>
+>* tl/ls-tree-oid-only (2022-03-04) 12 commits
+> - ls-tree: support --object-only option for "git-ls-tree"
+> - ls-tree: introduce "--format" option
+> - cocci: allow padding with `strbuf_addf()`
+> - ls-tree: introduce struct "show_tree_data"
+> - ls-tree: slightly refactor `show_tree()`
+> - ls-tree: fix "--name-only" and "--long" combined use bug
+> - ls-tree: simplify nesting if/else logic in "show_tree()"
+> - ls-tree: rename "retval" to "recurse" in "show_tree()"
+> - ls-tree: use "size_t", not "int" for "struct strbuf"'s "len"
+> - ls-tree: use "enum object_type", not {blob,tree,commit}_type
+> - ls-tree: add missing braces to "else" arms
+> - ls-tree: remove commented-out code
+>
+> "git ls-tree" learns "--oid-only" option, similar to "--name-only",
+> and more generalized "--format" option.
+> source: <cover.1646390152.git.dyroneteng@gmail.com>
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-read-tree.txt       |  9 +++++----
- Documentation/git-sparse-checkout.txt | 10 +++++-----
- 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 99bb387134d..cbafb1aed49 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -375,10 +375,11 @@ have finished your work-in-progress), attempt the merge again.
- SPARSE CHECKOUT
- ---------------
- 
--Note: The `update-index` and `read-tree` primitives for supporting the
--skip-worktree bit predated the introduction of
--linkgit:git-sparse-checkout[1].  Users are encouraged to use
--`sparse-checkout` in preference to these low-level primitives.
-+Note: The skip-worktree capabilities in linkgit:git-update-index[1]
-+and `read-tree` predated the introduction of
-+linkgit:git-sparse-checkout[1].  Users are encouraged to use the
-+`sparse-checkout` command in preference to these plumbing commands for
-+sparse-checkout/skip-worktree related needs.
- 
- "Sparse checkout" allows populating the working directory sparsely.
- It uses the skip-worktree bit (see linkgit:git-update-index[1]) to
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 11792187224..06f23660f63 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -15,11 +15,11 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--This command is used to create sparse checkouts, which means that it
--changes the working tree from having all tracked files present, to only
--have a subset of them.  It can also switch which subset of files are
--present, or undo and go back to having all tracked files present in the
--working copy.
-+This command is used to create sparse checkouts, which change the
-+working tree from having all tracked files present to only having a
-+subset of those files.  It can also switch which subset of files are
-+present, or undo and go back to having all tracked files present in
-+the working copy.
- 
- The subset of files is chosen by providing a list of directories in
- cone mode (the default), or by providing a list of patterns in
--- 
-gitgitgadget
+Sorry for the late reply.
+
+I posted a updated patchset last week, we already had a private review on that,
+but maybe string need Ævar Arnfjörð Bjarmason for taking a look.
+
+Thanks.
