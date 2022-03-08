@@ -2,181 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC49C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 10:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D5EC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 11:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346033AbiCHK4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 05:56:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42860 "EHLO
+        id S239523AbiCHL2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 06:28:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346035AbiCHKz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 05:55:58 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52DA4349F
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 02:55:01 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id j17so27921087wrc.0
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 02:55:01 -0800 (PST)
+        with ESMTP id S237609AbiCHL2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 06:28:48 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 300F111A3A
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 03:27:51 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id kt27so38619952ejb.0
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 03:27:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=m1WLqXaliJLrN471EXcqhSBOdiZo0gWh+cXdECZZo6M=;
-        b=nDMbLZKsc5SJavADaVcCvSNFN9gpQCxg+JFzPy2IM4CULBJbOlstVFIyFlsUjE/xy6
-         9n9MCHpmdqjzu7NT7s5tOrygq7wMh2gO/jihhdsIBUtNPFqBmcR1nTHmFg1zel72lOwO
-         x+lCnzFbW4J7/dJBQ9mnbNnEKuf9R6+d8tEf5NPzuiHZC8vwXUR0WRcuvYHmP53VpOU/
-         6sHizJYOEyu6s7PJnKWAORbCLadKnIu2Ieh7WcGCks5yZZc1g2MEv3ihX148tDYCFes/
-         HqjEvEwSf4NCOpRMQ/FzSGN9IEhGj6DaSnj3vVmgEwgX6vVc+HvZ7Z00XyXzqIsWTZMN
-         g2Yw==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=TrHCsfz5j/MoXWWvctgqlGVkYrMtKJUqvL4D9JEN1fo=;
+        b=rXIv+dd4siIy4Sl5gLaMKJPtstOXttByEIN/kua89thE0PdxibbpA7O4bPj3MeZ0UE
+         wXEN51X8eJWWKIInujyngrDnlN0rkGTX+WNcgfVd/Rdlk/r9UlI0RwWX9cGXGmIVoIFB
+         E2ly8hq6ECrE2Y47JBsKFCisostxgBYCuLalBRapvq2hqLWGNBVFefWCrD8O96+u9Xkq
+         ZlgnoeWTIfuiAotx9pMf8UHAASpyx0oVs+zMKMFMfC+7pae+0d+GeSCdaJ+cbpv3Tyst
+         gjxRx0/I4fSujzNsPNXi2f5QYOM5+g02pW13tx2Npfj8L88U13GkB/vuBMHFTm+LSlUD
+         rFvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=m1WLqXaliJLrN471EXcqhSBOdiZo0gWh+cXdECZZo6M=;
-        b=UeSTrEW+M+nBbJZpNxgZM3ceCVr5BOg7J3MybWkcIXOO4hM5ilN3wIjWeXWz4htWgN
-         OQKR1uq9aTIx5u7rI25ZYAPzBF1WKqjnA0LxkYL1c6vX8T+X89zINIXCRcO3QSpclMPG
-         PV6uDAm7j6xUwDSi+P+uPkEOUknzpWeFHsunE4tBi3dKWO5DgnW0mFFqWdcTi/JK5mR3
-         h2FTtAVUBsAaOI93QrMtXtg4lwpAPG6IDKJ6juUEIsvmmpcZzUMmyOi/MAo+iReIKnn8
-         QYWptXW4eKRmT4cXtbTSEVVBfAqSQtGICZRjaeuF0Q83wJNIQRkqV7WN8jIXKzn4WKxg
-         aLGw==
-X-Gm-Message-State: AOAM533oN1WnM5p32zVYWQvuQmEptqcI7uI0LO1zWk+Udr3xNts9Q589
-        ILlOdqTdUjjteHnayuTaITPSEQLQRZA=
-X-Google-Smtp-Source: ABdhPJyyDAvJ1Qm0dnYJT0Et8nagui5aGtvaxSvsJo2GT6zXLZZogcpbqHDPdmb4DoWJ8tNA7QzOKA==
-X-Received: by 2002:adf:e50a:0:b0:1f0:224e:fd6f with SMTP id j10-20020adfe50a000000b001f0224efd6fmr11815913wrm.209.1646736900324;
-        Tue, 08 Mar 2022 02:55:00 -0800 (PST)
-Received: from [192.168.1.201] (206.2.7.51.dyn.plus.net. [51.7.2.206])
-        by smtp.googlemail.com with ESMTPSA id f20-20020a05600c4e9400b003898e252cd4sm2107977wmq.12.2022.03.08.02.54.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 02:54:59 -0800 (PST)
-Message-ID: <09a0bb3f-1e03-5692-f54e-2ff080c21cc8@gmail.com>
-Date:   Tue, 8 Mar 2022 10:54:59 +0000
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=TrHCsfz5j/MoXWWvctgqlGVkYrMtKJUqvL4D9JEN1fo=;
+        b=7MOyeQZTSxK9MrlXHqCvjsvguMaet9GKYEEzEnV1lOuDQ2sDFmWbWoqR9X8Wp5nSix
+         FjqW0HIKNdGbGgZZICRVnY/TyvN7QxdNx/RcOPJjjhiqLM6IQsczF04PXIzd5yHLhh6V
+         gNRQOBJBxNlMcDJZHN7+TELQ0FqeFlwf936bYbfHKcRRMWoEEKNs0c6/W0KDbHWi+tlh
+         nZVCb94+ow/w8qy0MQzmjgxIot+F4gB/1piEfk4rhhY1c7BcI1f5i7XJA/fWJ461F2X/
+         7ZMDYVQBVCWFoGOA4eewXbrg6vpSsADXPHcj3EXUkJActk0E6cX6G4WArhKJDyl4rvat
+         IeiA==
+X-Gm-Message-State: AOAM5333QlEFiikkKs0pt6LtMl+CyU49/4D48bskRTJXlKrpWa6A1nAy
+        9B+aIYjLCwaJLJMigfBBYMqLECxegmR6RtUgIV8Y79xitowhDQ==
+X-Google-Smtp-Source: ABdhPJyk5euCj1NRHqZ6xz8Tn8Vc2RialZf3rkWGqGNxkrPSEdPp4GW5ifr9L22Zc+LMPn28a2/p/hfJAUNW05fydp4=
+X-Received: by 2002:a17:907:161f:b0:6da:aaaf:770f with SMTP id
+ hb31-20020a170907161f00b006daaaaf770fmr13530366ejc.540.1646738869489; Tue, 08
+ Mar 2022 03:27:49 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/4] terminal: restore settings on SIGTSTP
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Cc:     Git Mailing List <git@vger.kernel.org>, carenas@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220304131126.8293-5-phillip.wood123@gmail.com>
- <220305.86bkyk4hwc.gmgdl@evledraar.gmail.com>
- <8aa11144-c9ce-46aa-2edd-15e8fa1298dc@gmail.com>
- <220307.86ilsq0xxr.gmgdl@evledraar.gmail.com>
- <a02dea22-7403-7302-cf20-9aff75a10d14@gmail.com>
- <220307.86o82hzucl.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220307.86o82hzucl.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 8 Mar 2022 12:27:38 +0100
+Message-ID: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
+Subject: Keep reflogs for deleted (remote tracking) branches?
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/03/2022 14:45, Ævar Arnfjörð Bjarmason wrote:
->[...] 
-> On Mon, Mar 07 2022, Phillip Wood wrote:
-> 
->> On 07/03/2022 11:49, Ævar Arnfjörð Bjarmason wrote:
->>> On Mon, Mar 07 2022, Phillip Wood wrote:
->>>
->>>> Hi Ævar
->>>>
->>>> On 05/03/2022 13:59, Ævar Arnfjörð Bjarmason wrote:
->>>>> [...]
->>>>>>     int save_term(unsigned flags)
->>>>>>     {
->>>>>> +	struct sigaction sa;
->>>>>> +
->>>>>>     	if (term_fd < 0)
->>>>>>     		term_fd = (flags & SAVE_TERM_STDIN) ? 0
->>>>>>     						    : open("/dev/tty", O_RDWR);
->>>>>> @@ -44,6 +136,26 @@ int save_term(unsigned flags)
->>>>>>     	if (tcgetattr(term_fd, &old_term) < 0)
->>>>>>     		return -1;
->>>>>>     	sigchain_push_common(restore_term_on_signal);
->>>>>> +	/*
->>>>>> +	 * If job control is disabled then the shell will have set the
->>>>>> +	 * disposition of SIGTSTP to SIG_IGN.
->>>>>> +	 */
->>>>>> +	sigaction(SIGTSTP, NULL, &sa);
->>>>>> +	if (sa.sa_handler == SIG_IGN)
->>>>>> +		return 0;
->>>>>> +
->>>>>> +	/* avoid calling gettext() from signal handler */
->>>>>> +	background_resume_msg = xstrdup(_("error: cannot resume in the background"));
->>>>>> +	restore_error_msg = xstrdup(_("error: cannot restore terminal settings"));
->>>>> You don't need to xstrdup() the return values of gettext() (here
->>>>> _()),
->>>>> you'll get a pointer to static storage that's safe to hold on to for the
->>>>> duration of the program.
->>>>
->>>> I had a look at the documentation and could not see anything about the
->>>> lifetime of the returned string, all it says is "don't alter it"
->>> I think this is overed in "11.2.7 Optimization of the *gettext
->>> functions", a pedantic reading might suggest not, but what's meant with
->>> the combination of that API documentation & the description of how MO
->>> files work is that you're just getting pointers into the already-loaded
->>> translation catalog, so it's safe to hold onto the pointer and re-use it
->>> later.
->>
->> Strictly that section only shows it is safe if there are no other
->> calls to gettext() before the returned string is used. I agree the
->> implementation is likely to be just returning static strings but I
->> can't find anywhere that says another implementation (e.g. on
->> macos/*bsd) has to do that.
-> 
-> I agree. I'm 99.99% sure this is safe & portable use of the API, but I'm
-> having some trouble finding documentation for that...
-> 
->>> In any case, if we're going to be paranoid about gettext() it would make
->>> sense to propose that as some general change to how we use it, we rely
->>> on this assumption holding in a lot of our use of the API:
->>>       git grep '= _\('
->>> Rather than sneak that partcular new assumption in here in this
->>> already
->>> tricky code...
->>
->> The ones I looked at are mostly not calling gettext() again before
->> using the translated string (there is one exception in
->> builtin/remote.c).
-> 
-> Doesn't validate_encoding() in convert.c, process_entry() in
-> merge-ort.c, setup_unpack_trees_porcelain() in unpack-trees.c cmd_mv()
-> in builtin/mv.c etc. qualify?
+Hi folks,
 
-I only checked a few, cmd_mv() always assigns to the same variable so 
-the previous value is overwritten anyway, some of the others such as 
-unpack_trees are assuming the return value is valid after a subsequent 
-call to gettext(). I found[1] which states
+I have a practical question in case I missed something.
 
-     The string returned must not be modified by the program and can
-     be invalidated by a subsequent call to bind_textdomain_codeset()
-     or setlocale(3C).
+Imagine a small team (10ppl) working on a single centralized repo, in
+github for example. They regularly create new branches, and typically
+delete them eventually - after merging, or at other times when
+branches were a dead end or whatever. The members of this team all
+have a "simple" git remote configuration, the result of a "git clone"
+with no special configuration. One exception is that they have set
+"fetch.prune" to "true", because otherwise remote branches that have
+been deleted (in the context of completed merges, or arbitrarily by
+other team members) accumulate locally and having to explicitly prune
+them from time to time is a pain. Every time someone says "why do I
+still see these branches in my repo?", someone else replies "oh, just
+run 'git config fetch.prune true'".
 
-so I think we can drop the copying.
+Now, one day someone deletes a branch accidentally from the server,
+and the sole author of that branch has gone on vacation (or has an IT
+failure, or has left the company, or whatever). Other team members
+have seen this branch go by, it's appeared in their "fetch" output,
+but no-one remembers checking it out, so it's not in their main
+"HEAD" reflogs.
 
-> I.e. for a hypothetical gettext() that always returned the same pointer
-> and just overwrote it with the latest message those would all emit bad
-> output, wouldn't they?
-> 
->> In restore_term() I'm checking if the messages are NULL to see if job
->> control is enabled, I could use a flag but I'm inclined to just keep
->> coping the strings.
-> 
-> Checking if they're NULL is orthagonal to whether we xstrdup()
-> them. I.e. you'd just skip the xstrdup() and replace the FREE_AND_NULL
-> with a "= NULL" assignment, no?
+Even though the ref was at one point on every team member's computer,
+and they still undoubtedly have a dangling commit in their repos,
+they're going to have a hard time finding it - there are many dangling
+commits in any given repo.
 
-Yes, I'm not sure what I was thinking when I wrote that.
+Now my question: is there any way to (temporarily) keep a reflog for
+that deleted/pruned branch, in those team members' repos?
 
-Best Wishes
+As far as I can tell, even "core.logAllRefUpdates=always" does *not*
+keep any reflog entries around, even temporarily (until reflog
+expiry), once a ref  is deleted - do I understand that correctly? Is
+this behavior intentional / reasoned, or just a consequence of the
+fact that it's *hard* to keep "managing" per-branch reflogs for
+branches that don't exist?
 
-Phillip
+I am planning a workaround using server hooks to "back up" refs that
+are being deleted from specific namespaces, in my specific case, and I
+imagine that a system like github keeps track of deleted stuff itself
+for a while, but I find this "per-ref reflog disappearance" behavior
+puzzling / out-of-character, so wanted to make sure I'm not missing
+something.
 
-[1] 
-https://docs.oracle.com/cd/E88353_01/html/E37843/gettext-3c.html#REFMAN3Agettext-3c
-
+Thanks,
+Tao
