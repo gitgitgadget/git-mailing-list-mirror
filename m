@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 411BEC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A318AC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Mar 2022 14:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347447AbiCHOkY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Mar 2022 09:40:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52062 "EHLO
+        id S243308AbiCHOk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Mar 2022 09:40:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347549AbiCHOkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 09:40:20 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A87938D9D
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:23 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id h15so4535276wrc.6
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:23 -0800 (PST)
+        with ESMTP id S245743AbiCHOkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Mar 2022 09:40:21 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D5A838DA4
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 06:39:24 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id t11so28899222wrm.5
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 06:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
-        b=lCuzi6NanSuerHJToIHJNaZFXjRLC244M6rwqF3bt3kAOSkU11lwicq7rPbLDtEFUK
-         IcPG/z2TohZoQcNyovbTQh1wGyuHxcvU87haUxU1NU8ltLv+fUikGhrwIXk0EnUDG0Fx
-         VrwPIIkyMh7viczhf2WFIXKUmp3XGqlutNF6zC4hdylfrEbhUF7Km1UNOGKZLMLO0nFV
-         +XgSgkFl34g6wFydWxj2Gp5YlFwYw/WAYusd054pRoTDQMEjl9amkj5vY7Gm41OURE1C
-         GgMO9E0FFr8dNyPsBdlzaOxMU9XdT3o+GoLK7N6Ri3lnlghrc9tGgq9ukLfyD09Dy7yX
-         a+ug==
+        bh=sclOhVe4EV0U75UTToLOlsrVExWmGOlFRPY6iEbDWEo=;
+        b=e1i4Pdhnfmlwh8dx+0HqO1sg5MXKYFiW3hsXxuIE958CxFYWHiDlM8LM+03BUHbt8G
+         d0b+7m7z4FNURI+W9pqEl/6AZpPKHC3iyoasatgGhPm3Jbnqb40n43N8jAohC462uM2c
+         6v7KyQiDHJy21cgqYjyQOR93hcW8hxYEyaG3vnCGlEgUUYVVFQGkOaytpnIEfsu17z+u
+         dSvPzT9yKFgFYE0FN3mq77rwyDFIwU3lN7ho3OzWM1G3v99rCV5q2+zET20a+iJaet/V
+         vRYK16MRUDy9sKm6MWSxW5gQ+wIQPZmzgldSrkEfh+pQTmmhwOfmTwhhq6rHh/RScwXS
+         Omyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
-        b=C1H/PVHdsq8dy+OGgMFQEv53SPlRGzZvKZNCyy3c1CEJ/ufj4HUGDv963qk4EJiwkt
-         EwBQy1P2tgDJz4DGXYZ7H7Gz3C1Jh7S70fQVISvJF/WaaXJvTtdxX4WxfMHoowfor+BM
-         ms5hd+88riMR2THguA8kHukCyaLEn3H0mFIeGNhZKUFVBgV2dZFQBiKV7BdneF3PaXCm
-         +Nr9SHScny3o4G5WZhKAImSU7antevjRRfOXuPeo1CNaGqWNuOpwhmEBagWsZIrkS06P
-         WqSclYng4VhAv6kiW6PVLAg9AUwqYLIqjCysB5Ap168Ckj4iKoeYIFB+imW+QJ4qZIAx
-         6FhA==
-X-Gm-Message-State: AOAM5313QkqTQJeqgghBf3zlRyjPSnQJ63ef6swLibvaSrrLxwhrRKqC
-        gaFS5aAvGdLu45gDEhAi5xgfxuU6yeQ=
-X-Google-Smtp-Source: ABdhPJzxuXrLFbCvtddggPTk0A7ny5augS6Ef9x7IfTlJFuer3MhmEyOC/IvtT3yC2+dlm2TZdmwLA==
-X-Received: by 2002:a5d:49cb:0:b0:1f1:d7e0:3f66 with SMTP id t11-20020a5d49cb000000b001f1d7e03f66mr12887425wrs.218.1646750361785;
-        Tue, 08 Mar 2022 06:39:21 -0800 (PST)
+        bh=sclOhVe4EV0U75UTToLOlsrVExWmGOlFRPY6iEbDWEo=;
+        b=P7JJWYsY3QDdFFzNNTEWHyLLfGNZY+DymmZOcUsm77GGHVcIFlIHDy+sFDiuEM+wDE
+         V6VxR9fyD6bswlK/agNMKbWPAyQ8tLoTpA+ERV56ame5Ah+eqwgn5k9H3INhnWxiyyUj
+         Hxu6a01CgxkiiWCMjub3sQXjqI8rIaY8prWaPxR4ki6mGwaVguWZt3fwJrIb2F6V7wPT
+         1ktfPcnbZl3uuGFIhL2ughYYwt09VToUXnSJkABFhQwOwFkPyUCznv+OiC5MSLNfBfNR
+         U6hhCAZ/9dd8i1IYorhA7hClyrx+rj7amkQPqLNMSUUpdc1vjY2lOOjRRfLddk4PT+nr
+         XttQ==
+X-Gm-Message-State: AOAM5328u4zu22dIqUVYVqJ4HhgewRE5HnGia5MW8Vjmb0mlY4zAmotO
+        3SJzk8xtH7Nku678C0inP+or564XunM=
+X-Google-Smtp-Source: ABdhPJxqLKePr6yYcOcjj+yur0JopqtHUd3jukk8i2ve/DdSFkcOKY6r+MXnF7ZdMrOn/4j4ioVRJQ==
+X-Received: by 2002:adf:816e:0:b0:1e4:ad2b:cb24 with SMTP id 101-20020adf816e000000b001e4ad2bcb24mr12908949wrm.521.1646750362692;
+        Tue, 08 Mar 2022 06:39:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p3-20020a05600c358300b003897e440047sm2552272wmq.28.2022.03.08.06.39.20
+        by smtp.gmail.com with ESMTPSA id l7-20020adfe9c7000000b001f06f8ec92dsm11545825wrn.30.2022.03.08.06.39.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 06:39:21 -0800 (PST)
-Message-Id: <a1eb4dceb0b1444427c0358948c57bafc513918f.1646750359.git.gitgitgadget@gmail.com>
+        Tue, 08 Mar 2022 06:39:22 -0800 (PST)
+Message-Id: <3a88c99d9bc765bf4728fe0f0df1eed86adace0e.1646750359.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
         <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Mar 2022 14:39:08 +0000
-Subject: [PATCH v3 01/12] index-pack: document and test the --promisor option
+Date:   Tue, 08 Mar 2022 14:39:09 +0000
+Subject: [PATCH v3 02/12] revision: put object filter into struct rev_info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,56 +70,151 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The --promisor option of 'git index-pack' was created in 88e2f9e
-(introduce fetch-object: fetch one promisor object, 2017-12-05) but was
-untested. It is currently unused within the Git codebase, but that will
-change in an upcoming change to 'git bundle unbundle' when there is a
-filter capability.
+Placing a 'struct list_objects_filter_options' pointer within 'struct
+rev_info' will assist making some bookkeeping around object filters in
+the future.
 
-For now, add documentation about the option and add a test to ensure it
-is working as expected.
+For now, let's use this new member to remove a static global instance of
+the struct from builtin/rev-list.c.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-index-pack.txt | 8 ++++++++
- t/t5300-pack-object.sh           | 4 +++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ builtin/rev-list.c | 30 ++++++++++++++++--------------
+ revision.h         |  4 ++++
+ 2 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 1f1e3592251..4e71c256ecb 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -122,6 +122,14 @@ This option cannot be used with --stdin.
- +
- include::object-format-disclaimer.txt[]
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 777558e9b06..6f2b91d304e 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -62,7 +62,6 @@ static const char rev_list_usage[] =
+ static struct progress *progress;
+ static unsigned progress_counter;
  
-+--promisor[=<message>]::
-+	Before committing the pack-index, create a .promisor file for this
-+	pack. Particularly helpful when writing a promisor pack with --fix-thin
-+	since the name of the pack is not final until the pack has been fully
-+	written. If a `<message>` is provided, then that content will be
-+	written to the .promisor file for future reference. See
-+	link:technical/partial-clone.html[partial clone] for more information.
+-static struct list_objects_filter_options filter_options;
+ static struct oidset omitted_objects;
+ static int arg_print_omitted; /* print objects omitted by filter */
+ 
+@@ -400,7 +399,6 @@ static inline int parse_missing_action_value(const char *value)
+ }
+ 
+ static int try_bitmap_count(struct rev_info *revs,
+-			    struct list_objects_filter_options *filter,
+ 			    int filter_provided_objects)
+ {
+ 	uint32_t commit_count = 0,
+@@ -436,7 +434,8 @@ static int try_bitmap_count(struct rev_info *revs,
+ 	 */
+ 	max_count = revs->max_count;
+ 
+-	bitmap_git = prepare_bitmap_walk(revs, filter, filter_provided_objects);
++	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
++					 filter_provided_objects);
+ 	if (!bitmap_git)
+ 		return -1;
+ 
+@@ -453,7 +452,6 @@ static int try_bitmap_count(struct rev_info *revs,
+ }
+ 
+ static int try_bitmap_traversal(struct rev_info *revs,
+-				struct list_objects_filter_options *filter,
+ 				int filter_provided_objects)
+ {
+ 	struct bitmap_index *bitmap_git;
+@@ -465,7 +463,8 @@ static int try_bitmap_traversal(struct rev_info *revs,
+ 	if (revs->max_count >= 0)
+ 		return -1;
+ 
+-	bitmap_git = prepare_bitmap_walk(revs, filter, filter_provided_objects);
++	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
++					 filter_provided_objects);
+ 	if (!bitmap_git)
+ 		return -1;
+ 
+@@ -475,7 +474,6 @@ static int try_bitmap_traversal(struct rev_info *revs,
+ }
+ 
+ static int try_bitmap_disk_usage(struct rev_info *revs,
+-				 struct list_objects_filter_options *filter,
+ 				 int filter_provided_objects)
+ {
+ 	struct bitmap_index *bitmap_git;
+@@ -483,7 +481,7 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
+ 	if (!show_disk_usage)
+ 		return -1;
+ 
+-	bitmap_git = prepare_bitmap_walk(revs, filter, filter_provided_objects);
++	bitmap_git = prepare_bitmap_walk(revs, revs->filter, filter_provided_objects);
+ 	if (!bitmap_git)
+ 		return -1;
+ 
+@@ -597,13 +595,17 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
+-			parse_list_objects_filter(&filter_options, arg);
+-			if (filter_options.choice && !revs.blob_objects)
++			if (!revs.filter)
++				CALLOC_ARRAY(revs.filter, 1);
++			parse_list_objects_filter(revs.filter, arg);
++			if (revs.filter->choice && !revs.blob_objects)
+ 				die(_("object filtering requires --objects"));
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, ("--no-" CL_ARG__FILTER))) {
+-			list_objects_filter_set_no_filter(&filter_options);
++			if (!revs.filter)
++				CALLOC_ARRAY(revs.filter, 1);
++			list_objects_filter_set_no_filter(revs.filter);
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--filter-provided-objects")) {
+@@ -688,11 +690,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		progress = start_delayed_progress(show_progress, 0);
+ 
+ 	if (use_bitmap_index) {
+-		if (!try_bitmap_count(&revs, &filter_options, filter_provided_objects))
++		if (!try_bitmap_count(&revs, filter_provided_objects))
+ 			return 0;
+-		if (!try_bitmap_disk_usage(&revs, &filter_options, filter_provided_objects))
++		if (!try_bitmap_disk_usage(&revs, filter_provided_objects))
+ 			return 0;
+-		if (!try_bitmap_traversal(&revs, &filter_options, filter_provided_objects))
++		if (!try_bitmap_traversal(&revs, filter_provided_objects))
+ 			return 0;
+ 	}
+ 
+@@ -733,7 +735,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		oidset_init(&missing_objects, DEFAULT_OIDSET_SIZE);
+ 
+ 	traverse_commit_list_filtered(
+-		&filter_options, &revs, show_commit, show_object, &info,
++		revs.filter, &revs, show_commit, show_object, &info,
+ 		(arg_print_omitted ? &omitted_objects : NULL));
+ 
+ 	if (arg_print_omitted) {
+diff --git a/revision.h b/revision.h
+index 3c58c18c63a..1ddb73ab82e 100644
+--- a/revision.h
++++ b/revision.h
+@@ -81,6 +81,7 @@ struct rev_cmdline_info {
+ 
+ struct oidset;
+ struct topo_walk_info;
++struct list_objects_filter_options;
+ 
+ struct rev_info {
+ 	/* Starting list */
+@@ -94,6 +95,9 @@ struct rev_info {
+ 	/* The end-points specified by the end user */
+ 	struct rev_cmdline_info cmdline;
+ 
++	/* Object filter options. NULL for no filtering. */
++	struct list_objects_filter_options *filter;
 +
- NOTES
- -----
+ 	/* excluding from --branches, --refs, etc. expansion */
+ 	struct string_list *ref_excludes;
  
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 2fd845187e7..a11d61206ad 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -315,8 +315,10 @@ test_expect_success \
-      git index-pack -o tmp.idx test-3.pack &&
-      cmp tmp.idx test-1-${packname_1}.idx &&
- 
--     git index-pack test-3.pack &&
-+     git index-pack --promisor=message test-3.pack &&
-      cmp test-3.idx test-1-${packname_1}.idx &&
-+     echo message >expect &&
-+     test_cmp expect test-3.promisor &&
- 
-      cat test-2-${packname_2}.pack >test-3.pack &&
-      git index-pack -o tmp.idx test-2-${packname_2}.pack &&
 -- 
 gitgitgadget
 
