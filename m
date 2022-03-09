@@ -2,91 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82398C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 12:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49FDAC433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 12:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbiCIMUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 07:20:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
+        id S232711AbiCIMgN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 07:36:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiCIMUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 07:20:37 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE0516E7DD
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 04:19:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646828374;
-        bh=R7gPyXKJ3CyYt+LmC1KEI7JIl7Qfx+Axhb0t4BEvMzo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=B/p1KsByPnqhPkS39TcyoFjnQfvYIi5/znWkfYHDkN7DoynEyBejuKVXTg+vQStqZ
-         ZW27URqPomGeAIEwRElYw0ozL4QvalgnUwSTxsQ7yaw+WyGWgVkMJlqeGplVEYrfL2
-         XdQmHzaXSNiV24b42Rip4CWoT/9xQvN+8Y36dpEM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MyKHm-1oLvgX3q0a-00yhhQ; Wed, 09
- Mar 2022 13:19:34 +0100
-Date:   Wed, 9 Mar 2022 13:19:32 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>, carenas@gmail.com
-Subject: Re: [PATCH 4/4] terminal: restore settings on SIGTSTP
-In-Reply-To: <20220304131126.8293-5-phillip.wood123@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203091310080.357@tvgsbejvaqbjf.bet>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com> <20220304131126.8293-5-phillip.wood123@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S229981AbiCIMgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 07:36:12 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 211E4172E79
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 04:35:12 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id d17so2160849pfv.6
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 04:35:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=23ZOV+N82wm55qJMXMt7o/0RHo414mxc/dVh8rJn5+k=;
+        b=GK/IcHyXXUtXvzuIxTO6MMqa5cKQDTRj26+jqIecI0a345qW4xrgUsND+SEU0jWxRr
+         pCyIYXDlYIxblQIbtAjNvzJkz2td7HCYRMBu9ZzyM3hC//sglCd5Iduj81z/lmw6gj6R
+         TJUzd3303QbhbBa06zTFfmyoi3vmDXrmEVoTXo1y+Ciunl+/2dkPsSLzDz2pY+J5E1ze
+         ZoJKc141BWo9QH+yS8+MWV6S1Byxm6dlzvJVoIIGqIqKBB9WnSBlLozlCtN2ILIVtD9X
+         BeaHnsVJw6zb5gItki6SQjQflRD3hrqPJUVk1z/Ghs60wvb0vL/tp7wvkD9yLQL/pM5H
+         bu7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=23ZOV+N82wm55qJMXMt7o/0RHo414mxc/dVh8rJn5+k=;
+        b=Y6vyRdHl2z/m5OhMypDQdDjUJh/JTdInFmYshb4pXuAaqfMunzohLU0g4tTXa6gvlQ
+         jXATQp1fuvWH7mR0kKF4R21RL7SiBthluWfSYks72zvTeI/+XXWyJyl8qRYuO5k5lLQS
+         KguW6H0Wcplci74tpPnOGikfNNUz7jDVLx+yI0PH+HiMFeQ8NXzipgDpnT23tG7NWRMA
+         V+wvq13M0Rioa2HXHmj88wmNYUNKU8/XdV05h/RBfRVUG48J4WaJtoVTAGLNWuHyId+K
+         zq+LiCXe1f7gbX5wmTAaURns+ix4xyk+H8QBgBxVKHsNC0zbWdiYP+ROhayWq+Jg6p/E
+         QOVw==
+X-Gm-Message-State: AOAM532Vf+Kk1naSyvObisDhLIZViSLmLFNoPJxrYiubu/EDOkjc1kFT
+        V4nt+AN1WpGP82YvtXTCvr/VbEbkOKY=
+X-Google-Smtp-Source: ABdhPJwP185FW1yrc1d/8mgyJZ0hVHNCSnANuvm9PWTGGqmMHy3IxwHkmv8OMhVBvv6cNvfKmJLu1w==
+X-Received: by 2002:a05:6a00:1ac8:b0:4f7:55ba:95ef with SMTP id f8-20020a056a001ac800b004f755ba95efmr3048716pfv.75.1646829311258;
+        Wed, 09 Mar 2022 04:35:11 -0800 (PST)
+Received: from ubuntu.mate (subs02-180-214-232-94.three.co.id. [180.214.232.94])
+        by smtp.gmail.com with ESMTPSA id l17-20020a637011000000b0037d5eac87e3sm2259005pgc.18.2022.03.09.04.35.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 04:35:10 -0800 (PST)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH] repack: Sync list of options between synopsis and description in the documentation
+Date:   Wed,  9 Mar 2022 19:34:47 +0700
+Message-Id: <20220309123447.852883-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+3HVjdnr05LBIs6WV04DO39UGJSSJchB9xztXRwzjoYusyS08Sb
- LZ3+xV86a4kn93d9duxMF3KJKnWnKJbwl2FkYAXo0wtxq2Unulu9t0OkGeBBJ9zC9PHLHIW
- cPumlrddwmDXjeCBuDSbPVSALG2FyuZLvGCxQwRbcbU7aOuG7sRVulaH2xelmJ3Xzj8QI0k
- VBFKIGv29FHpMe2Q5wp+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0bcqgXmvuNM=:82fW1ZVyugpsLdo1vMOxZZ
- pCm8IOWEVLzHvoLT9J2093qUevOJ1H41dnAhh/9DoUnYsxjQVP7iPGlteLhfChsHsVkdNr/ru
- V52XjUjgR+iVdHCzFDz85n+u2FQUGCk1P5uqOnkAIzYFRGF/OV4nS/Y0cwrXnZTQSmoxR1mnP
- m9+ewRjQQEO/Wzx9AWoLjzAuWhL1scG1VWdVHoZBDnxhANNhcunduA3DtQsr2VntGhvtQjfdE
- eDuJVkqeMMveumeeRiMoaUOFgtbdgVTDRCSVIg0HGbFd6QxVP3C0RntqnaPEmFvJ7gmsPUQnj
- Cu6l0+2xK/xjfhZe2Wh9n0r39Y419XlWF7knTyoULoKqEe7oCMC9RabSVr8mU6XpWE/LoERPr
- uE/Ex1RvsjoPHs//iPH6B3zOdSCm1/jRdyWkSd2mVX6fzgD4Zl2iY+XrmuqUCdFhG3j98Nt3O
- XqMfjJMnuo4nU+0LiUkzuJyUxUdQ6lawmGEc0PNvTQTEueXvRoW+M4kjDDuz89bAKcXpNjBMD
- R5gAT1pzbrryTmM23rJt0rKuYRXpDppvuV63gJJT1ty8ZRgLx6D2f0IV9Om9LSU0gg0LUOzKj
- LIzV+0m/6+VgvOArS+8fuXyTBl4s/gZr5kyK5CwZxQ1Yc9ScHWBPMDdxjndfBZJcArhefHD0c
- iIhbtRDQ+CqbPXDkHUMjwrSwH15OhtEPx4C+eMBnGXrhVSwJzJvtoWv76TDIlHc6Ve7iWEgXQ
- S91dY/t53v+8A07LehzLr3LeEDyfZ3tUfRBaykjpD5tAFIL9Vn70M9malBHDc62Pfn/Nv512l
- QecEwS2ABGk/Dox9FJmSbpNnCmnbkg/IyeUqD9lkTwxdPR9cMrxjm4t1UyZa6uDPT5MQVy8Vt
- ZeeHaOa1PJll99GhNIwmtNxjsu4ZSkcSoJ+yX+ZF8BMSdCC3it3qotqDmgTH7005dKWdkOML7
- F8Yz7UIqINkA4079M0+tpBDgwFIFqlE8Jg6JP/8LQpKPZVOgIg20yvL6Vm3NjZQWhsf7hrhtj
- isSylAhpzqak1RB3zW1maQ+XnQM0uzOc5dhAXFtHFxJ5WkuAoidCQKRZe8IBlpu++S33YEaSZ
- 30rKe/SLMntSKY=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Options list in the synopsis and description section of git-repack(1)
+are out of sync. The latest addition was in commit 1d89d88d37
+(builtin/repack.c: support writing a MIDX while repacking, 2021-09-28),
+which only adds -m/--write-midx option.
 
-On Fri, 4 Mar 2022, Phillip Wood wrote:
+Add missing options to the synopsis. Additionaly, sort according to the
+order they appear in the description.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> If the user suspends git while it is waiting for a keypress reset the
-> terminal before stopping and restore the settings when git resumes. If
-> the user tries to resume in the background print an error
-> message (taking care to use async safe functions) before stopping
-> again. Ideally we would reprint the prompt for the user when git
-> resumes but this patch just restarts the read().
->
-> The signal handler is established with sigaction() rather than using
-> sigchain_push() as this allows us to control the signal mask when the
-> handler is invoked and ensure SA_RESTART is used to restart the
-> read() when resuming.
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+ Documentation/git-repack.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-This description makes sense. From my understanding of signals, the code
-also does make sense, but it is unfortunate that it has to be so much code
-to implement something as straight-forward as suspend/resume.
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index ee30edc178..26e997bde1 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -9,7 +9,13 @@ git-repack - Pack unpacked objects in a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
++'git repack' [-a] [-A] [-d] [-l] [-f] [-F] [-q | --quiet] [-n] [--window=<n>]
++	     [--depth=<n>] [--threads=<n>] [--window-memory=<n>]
++	     [--max-pack-size=<n>] [-b | --write-bitmap-index]
++	     [--pack-kept-objects] [--keep-pack=<pack-name>]
++	     [--unpack-unreachable=<when>] [-k | --keep-unreachable]
++	     [-i | --delta-islands] [-g | --geometric <factor>]
++	     [-m | --write-midx]
+ 
+ DESCRIPTION
+ -----------
 
-FWIW I tested the `add -p` command with these patches on Windows and it
-still works as well as when I had developed it.
+base-commit: c2162907e9aa884bdb70208389cb99b181620d51
+-- 
+An old man doll... just what I always wanted! - Clara
 
-Thank you,
-Dscho
