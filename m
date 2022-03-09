@@ -2,95 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8041FC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 18:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2FADC433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 18:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233434AbiCISEv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 13:04:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
+        id S235005AbiCISdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 13:33:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232546AbiCISEu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 13:04:50 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4DC1261E
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 10:03:51 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id f18-20020a623812000000b004f6a259bbf4so1951361pfa.7
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 10:03:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=cSNCe9tzRfZRE3KAQRmf9IF4z90VojgbF5fEKjHNfCo=;
-        b=tnIyCiaqskeACMFOIP+61VTP/e9yb16kdCwEc4MM4Es8cU0VWQvoV9g7kY/AMpuqhB
-         6K833NuCOEFiyAnq+qk0P5O9YpRMcUb6Y3djOvVmo5jSV6cm3uHi3MNWPAFjBreEhWB0
-         5H69Kr+evRew+KtH7r3ZiOjh3RQgCnM+t4cEETEd/rjbJgEsKidhPXjXr8JjlvVviEBs
-         5Gl4AiHBR8QR4q7wOAL7pilsnoqRB1UgHP1wKy0gI5q1AKUWu9Up+/wPbfn/fqVe5swd
-         MsPvG4jFO4TNCewk892mhiO3Sygb3TnXRLJgGP07QD49HTIkXofW6j6oOsbbhorpg77i
-         d3iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=cSNCe9tzRfZRE3KAQRmf9IF4z90VojgbF5fEKjHNfCo=;
-        b=33XEj6/DsMWx+CQlAu/SjUAwBp2WLtMoUnyGoVCmbi2V+T6RG/VrkfeyyEVo1pJJda
-         io8/3Zj9oU18ZUNS8eYDYKtl1W/nepBw9g5uFqaU9xKU0/bn3RL+BrCZc899FwsRUN9c
-         MsDLmQOeV/mZiRcf5g2o6Y9xOJHjuK45Ao18kpX3E2IxZY7dB1u6/fVxSln7W2xMo3IW
-         SwzQ0FSSVKGsjZjpHWibPkY2JyQqM+Xj6o/EMORDJacU9suhwRZMgad4EwPIC4qv732o
-         qGWUZlR/x1t77pmQwYvqsmuX15DglQRo4o07H2tJrCIUXv/kL7k9lji+k1CRyYe/JO30
-         TaJQ==
-X-Gm-Message-State: AOAM533ukNkPI/LbyS9f9o9s+m/qIaHavoEeDN9ATWbMLPki9iCAuTob
-        0x9ZZI0wDf+j+HctIXtQE+DsWgc98gQFYw==
-X-Google-Smtp-Source: ABdhPJwfJlfx77HL4nkoopfWdIIXt9LZgqqyf4bWpg4YwIrPP91ffleDkbJ2Ojs2B0rtg8ov6lr+EW66vj05Cw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:8203:b0:153:2e8:aaae with SMTP id
- x3-20020a170902820300b0015302e8aaaemr902534pln.14.1646849030879; Wed, 09 Mar
- 2022 10:03:50 -0800 (PST)
-Date:   Wed, 09 Mar 2022 10:03:42 -0800
-In-Reply-To: <xmqqilspp5yg.fsf@gitster.g>
-Message-Id: <kl6l8rtj57gh.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <xmqqilspp5yg.fsf@gitster.g>
-Subject: ar/submodule-udpate (was Re: What's cooking in git.git (Mar 2022,
- #02; Mon, 7))
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S230427AbiCISdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 13:33:41 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D275A4B860
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 10:32:42 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23D0D17F60E;
+        Wed,  9 Mar 2022 13:32:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=SgALLHWWwAhW
+        H9V3Rj5pKrK5lfyz3svWHxaJMM2nErE=; b=gkE4eU1WBS9MUdAJMN1JljFNtfsc
+        DDskvNA/B+yqIahGIsVQeWQjukaYpO0Y+qAumN72lkljzcTsNR3lmD/8hbYoRz8Y
+        KscRVFHmNAsm9oRvOsvlnI3B6P4TovoDuh6Mt3gscYPv1PBrH9oKohoNY4GpEV89
+        f66UyXcnMiJIcpo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1CA5517F60D;
+        Wed,  9 Mar 2022 13:32:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9548117F60B;
+        Wed,  9 Mar 2022 13:32:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason via
+         GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        stolee@gmail.com, zhiyou.jx@alibaba-inc.com,
+        jonathantanmy@google.com, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 07/12] list-objects: handle NULL function pointers
+References: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
+        <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
+        <782182a26e37eb8e84aef7d8cc67cf276b2abb54.1646750359.git.gitgitgadget@gmail.com>
+        <xmqq8rtknyni.fsf@gitster.g>
+        <220309.86k0d3mee3.gmgdl@evledraar.gmail.com>
+Date:   Wed, 09 Mar 2022 10:32:38 -0800
+In-Reply-To: <220309.86k0d3mee3.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 09 Mar 2022 14:40:03 +0100")
+Message-ID: <xmqqa6dzm0xl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4CC3795C-9FD7-11EC-87B3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> * ar/submodule-update (2022-03-04) 13 commits
->  - submodule--helper update-clone: check for --filter and --init
->  - submodule update: add tests for --filter
->  - submodule--helper: remove ensure-core-worktree
->  - submodule--helper update-clone: learn --init
->  - submodule--helper: allow setting superprefix for init_submodule()
->  - submodule--helper: refactor get_submodule_displaypath()
->  - submodule--helper run-update-procedure: learn --remote
->  - submodule--helper: don't use bitfield indirection for parse_options()
->  - submodule--helper: get remote names from any repository
->  - submodule--helper run-update-procedure: remove --suboid
->  - submodule--helper: reorganize code for sh to C conversion
->  - submodule--helper: remove update-module-mode
->  - submodule tests: test for init and update failure output
+> I suspect what's wanted here is "print all stuff before the "\n\n"
+> header/PACK delimiter, which is better done with "sed" like this:
 >
->  Rewrite of "git submodule update" in C (early part).
->
->  Will merge to 'next'?
->  source: <20220305001401.20888-1-chooglen@google.com>
+> 	sed -n -e '/^$/q' -e 'p'
 
-I don't anticipate further comments, so I think this set of patches
-should be pretty safe to merge :)
+I see.  Or just "sed -e '/^$/q'" would also be fine (i.e. "print
+everything up to, including the first blank line") for comparison
+purposes and may be simpler.
 
-A comment on the branch name: we kept the name 'ar/submodule-update'
-from when Atharva Raykar <raykar.ath@gmail.com> prepared v1 of his
-series that converts all of "git submodule update" to C. When other
-authors sent subsequent versions, it still made sense to keep this name
-because the patches still reached the same end state of having all of
-"git submodule update" in C.
-
-However, I've since broken this series up in two (to play better with
-other topics), and the above-named patches don't do a _full_ conversion
-of "git submodule update". Is something like "ar/submodule-update-1"
-more appropriate?
+Thanks.
