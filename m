@@ -2,263 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C1CBC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 11:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBCFCC433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 11:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231901AbiCILFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 06:05:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42910 "EHLO
+        id S232242AbiCILkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 06:40:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231801AbiCILFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 06:05:12 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D087CE902
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 03:04:13 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so3110208wms.3
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 03:04:13 -0800 (PST)
+        with ESMTP id S230188AbiCILke (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 06:40:34 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDDB49F3A
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 03:39:31 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id bi12so4346412ejb.3
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 03:39:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=gBBWGGf+ajwLZb9/2dlAU59Gd3RM6T/+YGhGYuEGcFI=;
-        b=SGH3xrGXjcUfETq9gM9OSxiEmCVw4/uGlBPlemg/nIj9n27dIJuOkEZcESHrN816HT
-         lHOL5WQ5dyFTM2fyiD/CRRYApmPnHqAsFlUUq/q3KvoHERFzhQb9LHp1gpvyrsb49+E/
-         mxe9xH+3vmxLJ6B2h738uRKgxzjpncI+KfRiYY3sujyMryFe43UnfoVx506p5OV75Fp4
-         /RCJ/Ouv9IzK/ISM4Boj399dF6orZ5pMJIH/+3kb/mzF0cGbwZXxyFj9t8A4dbixvXa8
-         tHBwzr+wiRz5ezoKl5rdUJFjUsSlmlnvIRZs00LiS4SCzsghRwVLzY83cDr/i6jau76m
-         OO4Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=d67r4wr3Zvvxj15jbyrqLqgNjLkoYozuOoYUaJwKf+I=;
+        b=M4Sk4/34d2KTS0EDpnLjiE0MpEY5XAMTyW3TIUIo8lMyJiFzQRVI4+eT5Uw3+xUu7l
+         N1bN4yjOepDmy9nmCu0PwLUByaVdZ2apu3tLYXN65xfY/aUdOipH4Jc1rDbzFnOaMk6I
+         aUIVnF5uFWNCIguQY3eg/xiCA/3dG52xgPUiHOQjuY2cVCNVYZ7x+Iu/o6ZBADvpSfo4
+         yAXRN16AWolJxBf/CVViyTG71O88JvwkhHvdC7tBDiZKFYK9i+FP6yVRqbYghabJRTN/
+         QlK/Z4a2+I7FG36+GgrpTCnoXjYMSG7gEhNqORYDppWA0PhQPtydcovSgmxUBXMR1NeR
+         kR3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=gBBWGGf+ajwLZb9/2dlAU59Gd3RM6T/+YGhGYuEGcFI=;
-        b=MMMGPRXAv+KP8+vajJWeSi3qoiB2n5QDL/WUNynH2oBqgB1t5mPW/laH6OAoJWuRz1
-         tX5B+KZANwPhaG1y0qt4vJ/JnLMAnWWYrtfQBwWqAdNGv1vp0lzc+hy1RRUYgFG3p/ts
-         brtFvf2kqNRXxggppPIFe+DgmCKuY/j5nmLQJDNu4T03OOFiRULB44z2c6ff4Sf1WsBB
-         h0qumnLxg0/TuqfXb9dK0FCLMxurNQtlf2wlJKvpdrK+0taNpQuIZrVTcuryccD09r1M
-         BrJtTAtWGAtmBr1ZeJhN59hZ3E/VFByW0ni7ytQeG6OI2l9Sxc1Un00/EmjwxdBDOZq6
-         1TmQ==
-X-Gm-Message-State: AOAM531+XjEDeYU1mKiNXKquRgeejw+KaYQdCbKTSCzE6RjqVeAhuUPI
-        8+IBlDdH6kpP9dx3OPmeI1EsYCgQSZk=
-X-Google-Smtp-Source: ABdhPJyj9Dd1Mh8Av/kLjTfxgcMujsHa+r3viBBW3OhKlZwEHUBraXkA2fRKzqMvL99B5avMx8kOug==
-X-Received: by 2002:a05:600c:2056:b0:389:736a:5631 with SMTP id p22-20020a05600c205600b00389736a5631mr7225937wmg.120.1646823851707;
-        Wed, 09 Mar 2022 03:04:11 -0800 (PST)
-Received: from localhost.localdomain (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.gmail.com with ESMTPSA id a17-20020a5d5091000000b001edb61b2687sm2072203wrt.63.2022.03.09.03.04.11
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=d67r4wr3Zvvxj15jbyrqLqgNjLkoYozuOoYUaJwKf+I=;
+        b=3415Z5YMEB4JK2DdUt1PInWkXB/1SFEBahAQxr9wpFPzQkMLqB+SVCJtlJd0UYVW5g
+         5l6exsQiyBDERFbkgTSimut8GSjooeIh1mgeD8CAMAfJIX9cEUpXC7vhA4mNgV7PNzPX
+         VtVKmcpfELEoDXUbXT0W+cuyxQqu7fKvWh8LTYGdhdS05L0U+xdNBdW0aQOBBI7z4wbr
+         pCN3j+ApjDOSXrySMiE9p1TPOyr6gIsir6kLKGRrdv0xRrhWZTJMFg66Bmd/JegdTYHX
+         NkQUAZJAhSnODpVmUs0BflyzQzNnwZRXaJ+oURUXSSoCHqADgyqb0bRr7Pr5m0mVn1sK
+         Mq5w==
+X-Gm-Message-State: AOAM531XDvEBeJdz219l7BkJg01+wU/OCE2Rm6BmJ6+tVbASI8iTCOMg
+        BchkpVLgdBeHpka9e+3naqc=
+X-Google-Smtp-Source: ABdhPJzol6dfFSXKd6ET7l11jMJ0RQGoKqCr0kZ4VITLOvXQ/8IPJPV9eBQ9qQx5dSMVthFVMlqzlg==
+X-Received: by 2002:a17:907:72d0:b0:6db:4788:66a9 with SMTP id du16-20020a17090772d000b006db478866a9mr7623133ejc.516.1646825970044;
+        Wed, 09 Mar 2022 03:39:30 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f7-20020a17090631c700b006b293ddbca1sm621602ejf.35.2022.03.09.03.39.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 03:04:11 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Carlo Arenas <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 4/4] terminal: restore settings on SIGTSTP
-Date:   Wed,  9 Mar 2022 11:03:25 +0000
-Message-Id: <20220309110325.36917-5-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220309110325.36917-1-phillip.wood123@gmail.com>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220309110325.36917-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        Wed, 09 Mar 2022 03:39:29 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nRufA-0008QH-OY;
+        Wed, 09 Mar 2022 12:39:28 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+Date:   Wed, 09 Mar 2022 11:56:41 +0100
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+ <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
+ <220302.86mti87cj2.gmgdl@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2203071655070.11118@tvgsbejvaqbjf.bet>
+ <220307.86tuc9yc4b.gmgdl@evledraar.gmail.com> <xmqqtuc9sm09.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqtuc9sm09.fsf@gitster.g>
+Message-ID: <220309.861qzbnymn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If the user suspends git while it is waiting for a keypress reset the
-terminal before stopping and restore the settings when git resumes. If
-the user tries to resume in the background print an error
-message (taking care to use async safe functions) before stopping
-again. Ideally we would reprint the prompt for the user when git
-resumes but this patch just restarts the read().
+On Mon, Mar 07 2022, Junio C Hamano wrote:
 
-The signal handler is established with sigaction() rather than using
-sigchain_push() as this allows us to control the signal mask when the
-handler is invoked and ensure SA_RESTART is used to restart the
-read() when resuming.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> I think that's a rather strange conclusion given that I've submitted a
+>> parallel series that makes some of those failures easier to diagnose
+>> than the same changes in this series. I.e. the failures in build
+>> v.s. test phases, not the individual test format output (but those are
+>> orthagonal).
+>
+> If you have a counter-proposal that you feel is solid enough, I do
+> not mind dropping the topic in question and replacing it with the
+> counter-proposal to let people see how it fares for a few days.  If
+> it allows others to view the output easily if you revert the merge
+> of this topic into 'seen' and replace with the counter-proposal and
+> push it to your own repository, that would be an even better way to
+> highlight the differences of two approaches, as that would allow us
+> to see the same failures side-by-side.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- compat/terminal.c | 125 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 121 insertions(+), 4 deletions(-)
+I proposed [1] as a counter-proposal to *part of* this series, which has
+various UX comparisons.
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 4189cbb12c..f425f7b339 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -1,4 +1,4 @@
--#include "git-compat-util.h"
-+#include "cache.h"
- #include "compat/terminal.h"
- #include "sigchain.h"
- #include "strbuf.h"
-@@ -23,6 +23,90 @@ static void restore_term_on_signal(int sig)
- static int term_fd = -1;
- static struct termios old_term;
- 
-+static const char *background_resume_msg;
-+static const char *restore_error_msg;
-+static volatile sig_atomic_t ttou_received;
-+
-+static void write_err(const char *msg)
-+{
-+	write_in_full(2, "error: ", strlen("error: "));
-+	write_in_full(2, msg, strlen(msg));
-+	write_in_full(2, "\n", 1);
-+}
-+
-+static void print_background_resume_msg(int signo)
-+{
-+	int saved_errno = errno;
-+	sigset_t mask;
-+	struct sigaction old_sa;
-+	struct sigaction sa = { .sa_handler = SIG_DFL };
-+
-+	ttou_received = 1;
-+	write_err(background_resume_msg);
-+	sigaction(signo, &sa, &old_sa);
-+	raise(signo);
-+	sigemptyset(&mask);
-+	sigaddset(&mask, signo);
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	/* Stopped here */
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	sigaction(signo, &old_sa, NULL);
-+	errno = saved_errno;
-+}
-+
-+static void restore_terminal_on_suspend(int signo)
-+{
-+	int saved_errno = errno;
-+	int res;
-+	struct termios t;
-+	sigset_t mask;
-+	struct sigaction old_sa;
-+	struct sigaction sa = { .sa_handler = SIG_DFL };
-+	int can_restore = 1;
-+
-+	if (tcgetattr(term_fd, &t) < 0)
-+		can_restore = 0;
-+
-+	if (tcsetattr(term_fd, TCSAFLUSH, &old_term) < 0)
-+		write_err(restore_error_msg);
-+
-+	sigaction(signo, &sa, &old_sa);
-+	raise(signo);
-+	sigemptyset(&mask);
-+	sigaddset(&mask, signo);
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	/* Stopped here */
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	sigaction(signo, &old_sa, NULL);
-+	if (!can_restore) {
-+		write_err(restore_error_msg);
-+		goto out;
-+	}
-+	/*
-+	 * If we resume in the background then we receive SIGTTOU when calling
-+	 * tcsetattr() below. Set up a handler to print an error message in that
-+	 * case.
-+	 */
-+	sigemptyset(&mask);
-+	sigaddset(&mask, SIGTTOU);
-+	sa.sa_mask = old_sa.sa_mask;
-+	sa.sa_handler = print_background_resume_msg;
-+	sa.sa_flags = SA_RESTART;
-+	sigaction(SIGTTOU, &sa, &old_sa);
-+ again:
-+	ttou_received = 0;
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	res = tcsetattr(term_fd, TCSAFLUSH, &t);
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	if (ttou_received)
-+		goto again;
-+	else if (res < 0)
-+		write_err(restore_error_msg);
-+	sigaction(SIGTTOU, &old_sa, NULL);
-+ out:
-+	errno = saved_errno;
-+}
-+
- void restore_term(void)
- {
- 	if (term_fd < 0)
-@@ -32,10 +116,19 @@ void restore_term(void)
- 	close(term_fd);
- 	term_fd = -1;
- 	sigchain_pop_common();
-+	if (restore_error_msg) {
-+		signal(SIGTTIN, SIG_DFL);
-+		signal(SIGTTOU, SIG_DFL);
-+		signal(SIGTSTP, SIG_DFL);
-+		restore_error_msg = NULL;
-+		background_resume_msg = NULL;
-+	}
- }
- 
- int save_term(enum save_term_flags flags)
- {
-+	struct sigaction sa;
-+
- 	if (term_fd < 0)
- 		term_fd = (flags & SAVE_TERM_STDIN) ? 0
- 						    : open("/dev/tty", O_RDWR);
-@@ -44,6 +137,26 @@ int save_term(enum save_term_flags flags)
- 	if (tcgetattr(term_fd, &old_term) < 0)
- 		return -1;
- 	sigchain_push_common(restore_term_on_signal);
-+	/*
-+	 * If job control is disabled then the shell will have set the
-+	 * disposition of SIGTSTP to SIG_IGN.
-+	 */
-+	sigaction(SIGTSTP, NULL, &sa);
-+	if (sa.sa_handler == SIG_IGN)
-+		return 0;
-+
-+	/* avoid calling gettext() from signal handler */
-+	background_resume_msg = _("cannot resume in the background, please use 'fg' to resume");
-+	restore_error_msg = _("cannot restore terminal settings");
-+	sa.sa_handler = restore_terminal_on_suspend;
-+	sa.sa_flags = SA_RESTART;
-+	sigemptyset(&sa.sa_mask);
-+	sigaddset(&sa.sa_mask, SIGTSTP);
-+	sigaddset(&sa.sa_mask, SIGTTIN);
-+	sigaddset(&sa.sa_mask, SIGTTOU);
-+	sigaction(SIGTSTP, &sa, NULL);
-+	sigaction(SIGTTIN, &sa, NULL);
-+	sigaction(SIGTTOU, &sa, NULL);
- 
- 	return 0;
- }
-@@ -93,6 +206,7 @@ static int getchar_with_timeout(int timeout)
- 	fd_set readfds;
- 	int res;
- 
-+ again:
- 	if (timeout >= 0) {
- 		tv.tv_sec = timeout / 1000;
- 		tv.tv_usec = (timeout % 1000) * 1000;
-@@ -102,9 +216,12 @@ static int getchar_with_timeout(int timeout)
- 	FD_ZERO(&readfds);
- 	FD_SET(0, &readfds);
- 	res = select(1, &readfds, NULL, NULL, tvp);
--	if (res < 0)
--		return EOF;
--
-+	if (res < 0) {
-+		if (errno == EINTR)
-+			goto again;
-+		else
-+			return EOF;
-+	}
- 	return getchar();
- }
- 
--- 
-2.35.1
+Note that it doesn't aim to change the test failure output
+significantly, but to structurally simplify .github/workflows/main.yml
+and ci/ for a significant line-count reduction, and improve part of the
+output that we get for "make" v.s. "make test", and to make it obvious
+what the parameters of each step are.
 
+Which is partially overlapping with 1/2 of Johannes's series here, I
+think it makes sense to split up those two concerns & address this more
+incrementally.
+
+I.e. my series shows that you can get what the first half of this series
+proposes to do by adding GitHub-specific output to ci/* without any such
+CI-backend-specific output, and the resulting presentation in the UX is
+better.
+
+It'll still apply to "master" with this topic ejected, there was a minor
+comment (needing commit message rephrasing) from SZEDER G=C3=A1bor on it, I
+could re-roll it if you're interested.
+
+> Am I correct to understand that one of the the common goals here is
+> to eliminate the need to discover how to get to the first failure
+> output without turning it slow by 10x to load the output?
+
+That's definitely an eventual common goal, I have a POC for how to do
+that with an alternate approach that doesn't suffer from that slowdown,
+and shows you much more targeted failure output (only the specific tests
+that failed) at [2].
+
+I just think it makes sense to split up the concerns how we arrange
+.github/workflows/main.yml & ci/* and how doing that differently can
+improve the CI UX, v.s. the mostly orthagonal concern of how test-lib.sh
++ prove can best summarize their failure output.
+
+>> I think it's clear that we're going to disagree on this point, but I'd
+>> still think that:
+>>
+>>  * In a re-roll, you should amend these patches to clearly note that's a
+>>    UX trade-off you're making, perhaps with rough before/after timings
+>>    similar to the ones I've posted.
+>>
+>>    I.e. now those patches say nothing about the UX change resulting in
+>>    UX that's *much* slower than before. Clearly noting that trade-off
+>>    for reviewers is not the same as saying the trade-off can't be made.
+>
+> Whether we perform counter-proposal comparison or not, the above is
+> a reasonable thing to ask.
+>
+>>  * I don't see why the changes here can't be made configurable (and
+>>    perhaps you'd argue they should be on by default) via the ci-config
+>>    phase.
+>
+> I do not know if such a knob is feasible, though.
+
+It would be rather trivial. Basically a matter of adding a "if:
+needs.ci-config.outputs.style =3D=3D 'basic'" to ci/print-test-failures.sh,
+and a corresponding flag passed down to ci/lib.sh to have it invoke
+test-lib.sh with --github-workflow-markup or not.
+
+I.e. this series detects it's running in GitHub CI and optionally tells
+test-lib.sh to emit different output, so to get the old output you'd
+just need to not opt-in to that.
+
+I think we can have our cake and eat it too though, so I don't think
+there's any point in such a knob per-se. The only reason I'm suggesting
+it is because Johannes doesn't otherwise seem to want to address the
+significant CI UX slowdowns in this series.
+
+I do think the approach taken by this series is inherently limited in
+solving that problem though, in a way that the approach outlined in [2]
+isn't.
+
+I.e. the problem is that we're throwing say ~30k-90k lines of raw CI
+output at some GitHub JavaScript to format and present. Your browser
+needs to download all the output, and then the browser needs to spin at
+100% CPU to present it to you.
+
+The reason for that is that anything that tweaks the test-lib.sh output
+is something you need to consume *in its entirety*. I.e. when you have a
+sequence like:
+
+    ok 1 test one
+    ok 2 test two
+    not ok 3 test three
+    1..3
+
+You don't know until the third test that you've had a failure. Short of
+teaching test-lib.sh even more complexity (e.g. pre-buffering its
+"passing" output) a UX layer needs to present all of it, and won't
+benefit from a parsed representation of it.
+
+Which is why I think adding other output formatters to test-lib.sh is a
+dead end approach to this problem.
+
+I mean, sure we could start parsing the new output emitted here, but
+that doesn't make sense either.
+
+We already run a full TAP parser over the output of the entire test
+suite, which we can easily use to only print details about those tests
+that failed[2]. We could also still have the full & raw output, but that
+could be in some other tab (or "stage", just like
+"ci/print-test-failures.sh" is now.
+
+To be fair that isn't quite as trivial in terms of patch count. In
+particular we have edge cases currently where the TAP output isn't valid
+due to bugs in test-lib.sh and/or tests, and can't combine it with the
+--verbose output. The demo at [2] is on top of some patches I've got
+locally to fix all of that.
+
+But I really think it's worth it to move a bit slower there & get it
+right rather than heading down the wrong direction of having another
+not-quite-machine-readable output target.
+
+I.e. once it's machine readable & parsed we can present it however we
+like, and can do *much better* output such as correlating trace output
+to the test source, and e.g. showing what specific line we failed
+on. Right now all of that needs to be eyeballed & inferred from the
+"--verbose -x" output (which is often non-obvious & a pain, especially
+when the "test_expect_success" block calls helper functions).
+
+1. https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-ava=
+rab@gmail.com/
+2. https://lore.kernel.org/git/220302.86mti87cj2.gmgdl@evledraar.gmail.com/
