@@ -2,90 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D93DC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC270C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236906AbiCITPy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 14:15:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39176 "EHLO
+        id S237481AbiCITTy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 14:19:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237387AbiCITPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 14:15:52 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 954BC10EC63
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:14:53 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1437123603;
-        Wed,  9 Mar 2022 14:14:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zxECVdB10eoF
-        WfWf7h+bbzCT39b5QqtI7UP09zSZ9I4=; b=wyfHw8kesQte1dqUIe2ZmaajB5rO
-        xgEddyzWjinLxoDumfXHspcz/kTxXE30ry0pS/0F2i2TIrrOtpTuhiDkL5fznt44
-        v2SpYJn+9tW4Xz+5WRW4bEU5cLbSXwVDg+IVjH3SmXHU90GjQ727k4Hpgk7BvCe+
-        45K6+i55/hxFjYM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D7302123602;
-        Wed,  9 Mar 2022 14:14:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.230.65.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3F0E5123600;
-        Wed,  9 Mar 2022 14:14:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: What's cooking in git.git (Mar 2022, #02; Mon, 7)
-References: <xmqqilspp5yg.fsf@gitster.g>
-        <20220308080551.18538-1-dyroneteng@gmail.com>
-Date:   Wed, 09 Mar 2022 11:14:51 -0800
-In-Reply-To: <20220308080551.18538-1-dyroneteng@gmail.com> (Teng Long's
-        message of "Tue, 8 Mar 2022 16:05:51 +0800")
-Message-ID: <xmqqbkyfkkes.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238273AbiCITS0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 14:18:26 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DD81451DF
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:17:05 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id t8-20020a0568301e2800b005b235a56f2dso2454329otr.9
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:17:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=F72gHTTrIXY3RXHWjcLrx0RnKcCiHg5egStKddIWYNc=;
+        b=LJbG5Ry1447S1lDuRG708x3XJePnqzSTncA8rEYR62A7LMywh01De4fo6xexf+YaQ8
+         dsU9UQ0JTguZIiYTHKR2V8cHJGGiDA64AZ0ij0qNrvF31NErzoVJb4M9DXCv3EwjgScY
+         VvM1t/egKnAmjLuSxAPoMRQTBp2KaORFnHLAdlLjaSgdr+UxIS/3aiP42ehIrd2zRcKu
+         +2INyuuR0z4Nt5C2rRmh0tZQyYkMf1CswKWceRaeu0ZJvrDjIG1HNY0gAAI9uKlXOVS2
+         w2xsw/YXjcC2TCc29dLu63KK6LFxmll80MQcrWtPm7jwXmNSPDzds2D1+Kj75U/B9CUQ
+         D2UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=F72gHTTrIXY3RXHWjcLrx0RnKcCiHg5egStKddIWYNc=;
+        b=ziH5VZROog77FrNC0vDGvQepq1fkQiytUT8qw/jlNKG1LinNaHqI88Wr16hAZWau5e
+         twgyVCR0oNh/ThTLiYIujguAoQ9g4Wt1FGhAkIzT2YV+v1H0UMf52SF9NN8Zv1vTd3W/
+         83R9wchV5oXcn7Z8IEFJpg8OFE24aCCCT3+5CrvjpoQ+2c0GCt1uJyk3RdgvHvBtapmQ
+         1F8m3AZQTeBwTk+s6kMKpzn4kvgDgudblbBEbwnbMLysCDgUlrm1FIRsa3Z6EEUS8ooo
+         jOaOq/K2XcM9ETvvGIckIWzXD36DDyLCh9TQ6VBqKj3mrUiT31DJLc5JRwKJ3+h3U8Fl
+         jJ5A==
+X-Gm-Message-State: AOAM531iW4aCvFvdJrsDlFPCGK8rIsYwo+Ic0w71w7f/Wnd51n5PudbL
+        PQMi8iU78XtJ1LAPA221XI2a
+X-Google-Smtp-Source: ABdhPJyesM5i6F88pkX/qPBXcPSSOM9b50WBbI5Z5u3aEXZHEEME4cv+gm0JYuc6x0ZGQjp2zgsTEg==
+X-Received: by 2002:a05:6830:3111:b0:5af:e372:53fc with SMTP id b17-20020a056830311100b005afe37253fcmr686675ots.29.1646853424194;
+        Wed, 09 Mar 2022 11:17:04 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id ed22-20020a056870b79600b000da32eab691sm1294962oab.23.2022.03.09.11.17.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Mar 2022 11:17:03 -0800 (PST)
+Message-ID: <bed6917e-105e-e19f-2fd9-201507fc8a26@github.com>
+Date:   Wed, 9 Mar 2022 14:17:01 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3256AF70-9FDD-11EC-88B8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 16/24] revisions API: have release_revisions() release
+ "mailmap"
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
+ <patch-16.24-1a988c96371-20220309T123321Z-avarab@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <patch-16.24-1a988c96371-20220309T123321Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+On 3/9/2022 8:16 AM, Ævar Arnfjörð Bjarmason wrote:
 
->>[Stalled]
->>
->>* tl/ls-tree-oid-only (2022-03-04) 12 commits
->> - ls-tree: support --object-only option for "git-ls-tree"
->> - ls-tree: introduce "--format" option
->> - cocci: allow padding with `strbuf_addf()`
->> - ls-tree: introduce struct "show_tree_data"
->> - ls-tree: slightly refactor `show_tree()`
->> - ls-tree: fix "--name-only" and "--long" combined use bug
->> - ls-tree: simplify nesting if/else logic in "show_tree()"
->> - ls-tree: rename "retval" to "recurse" in "show_tree()"
->> - ls-tree: use "size_t", not "int" for "struct strbuf"'s "len"
->> - ls-tree: use "enum object_type", not {blob,tree,commit}_type
->> - ls-tree: add missing braces to "else" arms
->> - ls-tree: remove commented-out code
->>
->> "git ls-tree" learns "--oid-only" option, similar to "--name-only",
->> and more generalized "--format" option.
->> source: <cover.1646390152.git.dyroneteng@gmail.com>
->
->
-> Sorry for the late reply.
->
-> I posted a updated patchset last week, we already had a private review =
-on that,
-> but maybe string need =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason for taking=
- a look.
+> @@ -1097,7 +1097,7 @@ static const char *find_author_by_nickname(const char *name)
+>  	struct rev_info revs;
+>  	struct commit *commit;
+>  	struct strbuf buf = STRBUF_INIT;
+> -	struct string_list mailmap = STRING_LIST_INIT_NODUP;
+> +	struct string_list *mailmap = xmalloc(sizeof(struct string_list));
+>  	const char *av[20];
+>  	int ac = 0;
+>  
+> @@ -1108,7 +1108,8 @@ static const char *find_author_by_nickname(const char *name)
+>  	av[++ac] = buf.buf;
+>  	av[++ac] = NULL;
+>  	setup_revisions(ac, av, &revs, NULL);
+> -	revs.mailmap = &mailmap;
+> +	string_list_init_nodup(mailmap);
+> +	revs.mailmap = mailmap;
+>  	read_mailmap(revs.mailmap);
+>  
+>  	if (prepare_revision_walk(&revs))
+> @@ -1119,7 +1120,6 @@ static const char *find_author_by_nickname(const char *name)
+>  		ctx.date_mode.type = DATE_NORMAL;
+>  		strbuf_release(&buf);
+>  		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
+> -		clear_mailmap(&mailmap);
 
-I should at least take it out of the Stalled bin.  An "all issues
-from previous reviews addressed and a final eyeballing tells us it
-looks good to go" would indeed be appreciated.
+It seems like you can completely remove the 'mailmap' variable and
+instead malloc and init revs.mailmap directly.
 
-Thanks.
+Thanks,
+-Stolee
