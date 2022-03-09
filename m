@@ -2,148 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB3EBC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 18:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB4BCC433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 18:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236871AbiCIS5b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 13:57:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42458 "EHLO
+        id S236835AbiCIS64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 13:58:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234106AbiCIS5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 13:57:30 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CB1125516
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 10:56:31 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id g3so4144592edu.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 10:56:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=n1o9F+kllVAc6cbxtGPxpvuVtYCcok3Zqp8DAhVljuw=;
-        b=kMyiJAlHM7u3qAMcKpQk7iy8h6sfax99Ms4CEijtOq1CgpkbZfCQJDi/k/hyN+7mTv
-         g33bYU6b2Lah+ha82kavnq+UgcbZJRgRJuTFBGbarcB8AK4Wt47VqTeCOFXk/IUJHB2A
-         Z/6ZKBY2nInFpfywqjxDXbCVVv3TrS4z3hrcJFNvt66RlLjHGjP/BI6X01D9OftCBMmk
-         xrRKgbhG/JiSQetxWpksNs1eHuWOx10JEHa6vqRYBd+GFpQsOTWAGm6JwSxZ501TbHnL
-         qfZd/AliGI8n7VZQ1qjqqAOZVc17WIspSnySUvISPGAz9NAgIgWfaH7k5SBs30QteWDn
-         3dzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=n1o9F+kllVAc6cbxtGPxpvuVtYCcok3Zqp8DAhVljuw=;
-        b=QeafTnONK12I7cFfswqWpVk2bmDH0TSAal7Mag/8HLAGr8MGq3HJJJX1Zig1uctmgi
-         J9NKJ9qfySdiYsttV8rMfC+e8ZA083OWfphKmLHWdWyvRCMpbiq2m5F0tI7rDvGR8BHf
-         CdNW54spR4hMyc/hUIOn5JARTFvfr54La0p9PJn4Jb544+PpVyFNywJPuflVxa9Q35Jk
-         HyyxZVbhTfAcl52XJnKybhsmCJrkiSbHHG3LG/XpuPXflrvzuk1YW8rmK8HlJ8en8QVi
-         amBWb0k1Dz6MrNmXENqesghoGi/08/RZW0WrJN86xrCxyhzDxTY46GceS8QEiDkj7sHB
-         zVGg==
-X-Gm-Message-State: AOAM533dHS/zt4LlYpusIzIp36qfC4c1/fvuLl81kAxdSMfC6Ph7gvGa
-        26Q/eR0UaQCjEBStCQ/FWf8=
-X-Google-Smtp-Source: ABdhPJzoEXeky1ccjoRjswX2iSVCiHGGgO5qpMS3a8cTsDPqN3COE0NMPJMpHPR0SWcC6Pi1mFPc+w==
-X-Received: by 2002:a50:fd09:0:b0:416:1a9c:d7b with SMTP id i9-20020a50fd09000000b004161a9c0d7bmr912701eds.78.1646852189507;
-        Wed, 09 Mar 2022 10:56:29 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ky5-20020a170907778500b006d1b2dd8d4csm1027568ejc.99.2022.03.09.10.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 10:56:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nS1U3-000C7P-Hq;
-        Wed, 09 Mar 2022 19:56:27 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
-Date:   Wed, 09 Mar 2022 19:50:15 +0100
-References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
- <7a164ba95710b4231d07982fd27ec51022929b81.1643686425.git.gitgitgadget@gmail.com>
- <xmqqr18m8514.fsf@gitster.g> <xmqqy22u6o3d.fsf@gitster.g>
- <CANQDOdfVg4e=nLLAynm261_R5z+rjZV3QgE8nLwGEmj1wQm_uA@mail.gmail.com>
- <xmqqczjt9hbz.fsf@gitster.g>
- <CANQDOdcRM-GdxQ6iiV6pSBZifzpn+vJrBi0f88um9Rk4YJMFng@mail.gmail.com>
- <xmqq35kp806v.fsf@gitster.g> <Ygn/GvLEjbCxN3Cc@ncase>
- <xmqqh7914bbo.fsf@gitster.g> <YiiuqK/tCnQOXrSV@ncase>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YiiuqK/tCnQOXrSV@ncase>
-Message-ID: <220309.867d93lztw.gmgdl@evledraar.gmail.com>
+        with ESMTP id S237054AbiCIS6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 13:58:54 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39CA46158
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 10:57:55 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E59510BDD5;
+        Wed,  9 Mar 2022 13:57:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1slgof3GgSAO
+        cIo7h2WarbsK1VvZDFYP5Jlnoo5xQrg=; b=H8J5cBSPms6b8yZxfDozf/SX6+wz
+        CHa6Sb8UHf6FA5zCM76rDbuE18rxnklHEOHYz1So0GGbVZys7oTrvGNz6KexM+Ow
+        LxmSXIX7yKQlMz71/dXS3iTcOizEIpYZqMOzwnedO8Y0ajgfhWkucZsDtbdf1UjF
+        3z5J6T60zY/vuv0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AF8310BDD4;
+        Wed,  9 Mar 2022 13:57:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DD1B10BDD2;
+        Wed,  9 Mar 2022 13:57:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v6 16/30] compat/fsmonitor/fsm-listen-darwin: add MacOS
+ header files for FSEvent
+References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+        <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+        <cdef9730b3f93a6f0f98d68ffb81bcb89d6e698e.1646160212.git.gitgitgadget@gmail.com>
+        <220307.86h78a2gcn.gmgdl@evledraar.gmail.com>
+        <1a060357-3296-81d5-bf23-a55263ef6d10@jeffhostetler.com>
+Date:   Wed, 09 Mar 2022 10:57:52 -0800
+In-Reply-To: <1a060357-3296-81d5-bf23-a55263ef6d10@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 9 Mar 2022 08:37:41 -0500")
+Message-ID: <xmqqk0d3kl73.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D3036F56-9FDA-11EC-BD23-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-On Wed, Mar 09 2022, Patrick Steinhardt wrote:
-
-> [[PGP Signed Part:Undecided]]
-> On Mon, Feb 14, 2022 at 09:17:31AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > To summarize my take: while the degree of durability may be something
->> > that's up for discussions, I think that the current defaults for
->> > atomicity are bad for users because they can and do lead to repository
->> > corruption.
->> 
->> Good summary.
->> 
->> If the user cares about fsynching loose object files in the right
->> way, we shouldn't leave loose ref files not following the safe
->> safety level, regardless of how this new core.fsync knobs would look
->> like.
->> 
->> I think we three are in agreement on that.
+> On 3/7/22 5:37 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
+>>=20
+>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>> [...]
+> [...]
 >
-> Is there anything I can specifically do to help out with this topic? We
-> have again hit data loss in production because we don't sync loose refs
-> to disk before renaming them into place, so I'd really love to sort out
-> this issue somehow so that I can revive my patch series which fixes the
-> known repository corruption [1].
+> =C3=86var sent feedback (thanks!) on 8 commits in the V6 version
+> on March 7.  I started responding to each as I got to them
+> in my inbox yesterday, but I'd like to take a break from
+> responding individually to each of them inside of Part 2.
 >
-> Alternatively, can we maybe find a way forward with applying a version
-> of my patch series without first settling the bigger question of how we
-> want the overall design to look like? In my opinion repository
-> corruption is a severe bug that needs to be fixed, and it doesn't feel
-> sensible to block such a fix over a discussion that potentially will
-> take a long time to settle.
->
-> Patrick
->
-> [1]: http://public-inbox.org/git/cover.1636544377.git.ps@pks.im/
+> Since most of the feedback is for "general cleanup" and since
+> Part 2 V6 is already in "next", I'd like to revisit these
+> issues with a few "cleanup" commits on top of Part 3 (which
+> is still in active review), rather than re-rolling or
+> appending "fixup" commits onto Part 2.
 
-I share that view. I was wondering how this topic fizzled out the other
-day, but then promptly forgot about it.
+Sounds good.  Prepending "preliminary clean-up" before part 3 would
+be even cleaner, I would suspect.
 
-I think the best thing at this point (hint hint!) would be for someone
-in the know to (re-)submit the various patches appropriate to move this
-forward. Whether that's just this series, part of it, or some/both of
-those + patches from you and Eric and this point I don't know/remember.
+In any case, let's consider part 2 "more or less done" unless we see
+a glaring mistake that requires us to revert and redo it from
+scratch.
 
-But just to be explicitly clear, as probably the person most responsible
-for pushing this towards the "bigger question of [...] overall
-design".
-
-I just wanted to facilitate a discussion that would result in the
-various stakeholders who wanted to add some fsync-related config coming
-up with something that's mutually compatible, and I think the design
-from Neeraj in this series fits that purpose, is Good Enough etc.
-
-I.e. the actually important and IMO blockers were all resolved, e.g. not
-having an fsync configuration that older git versions would needlessly
-die on, and not painting ourselves into a corner where
-e.g. core.fsync=false or something was squatted on by something other
-than a "no fsync, whatsoever" etc.
-
-(But I haven't looked at it again just now, so...)
-
-Anyway, just trying to be explicit that to whatever extent this was held
-up by questions/comments of mine I'm very happy to see this go forward.
-As you (basically) say we shouldn't lose sight of ongoing data loss in
-this area because of some config bikeshedding :)
+Thanks.
