@@ -2,97 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD78C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB09C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238329AbiCIVyZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 16:54:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50374 "EHLO
+        id S238471AbiCIVya (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 16:54:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234811AbiCIVyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 16:54:23 -0500
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E8FF01
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:53:22 -0800 (PST)
-Received: by mail-il1-x135.google.com with SMTP id l1so2482816ilv.3
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 13:53:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=piySpAEUtu1rYexSnhPtiP4CVCXqmaxuAjd5fWdOgts=;
-        b=c6VgEnOeOfeLI7etyAfG9glUY1RrppRkZpeh1GIyylMW7iAZykBYZ/0q4lfxwtzD1n
-         DiyZMWfLP+mScETK79ujbRFF1qKXkEk6m27nTcC9Nw0d8m+W9fWYdEUp549YsVDR9fuH
-         bNd32ZuVsJwLqVNpfZoY+g1RRja+LObwWg1udxGt20Gq0jYdTXXQtJyfW758XAY6KSR1
-         k43LKLZU1zFwf3O+SwK8bX3U9MAQ3aWrJ8+EgYnapM6jZepbn8wAdt2QdwKCUS2/kMNs
-         pfYE/06o/ajuYJ3JJR2NkPGr2QMTcD6HN4Pdr4En8jkwGHs8DOAG0rWfsb4Ey98nJhx5
-         3gHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=piySpAEUtu1rYexSnhPtiP4CVCXqmaxuAjd5fWdOgts=;
-        b=lxteTcZH7RXExTlirkMk1raFyzVPw9hPzYzdECoH2LnJ5VmKSqEB2hk5UeuRApEQ+j
-         G3Ia+E7czGNKt5IuuF70d4d4HuaINyiVwlG1gWrZzL74L+GuCn8DKjXGXLcmNjrOFH6w
-         s8j/pRirWe04GZstNxFKMbu8t1PD+Q1p5Jpt/UljM9aMdByAASW8k1n0CiHLbycfjNSH
-         c/vowJuMw0ZeAOAzz5n1k6839K8bGCelxSGrfrxMm9zHOd+MGVpF29j2C1S0tzgWMvfE
-         /4XKgNtbPHPSXa5Ru+VGHKM8ZU+srhU5DwmPcfW89g1PwxgXNFONmwY9zozVZEKGiAyB
-         7V8g==
-X-Gm-Message-State: AOAM532zzpcr2Y/tFy1sP2sBTIfEEZSNvndyXzSS2/yj5vH2i57k8Z02
-        wGA2tp1w6pN9tIrD2KCniIKpXQ==
-X-Google-Smtp-Source: ABdhPJyxpwaqqPpvhBvjalJx0SGNvbMaQ3WjZd/yFmPVRY/6u4u16YpPCCSMVvi4IU5fAioWm8zBLw==
-X-Received: by 2002:a92:c691:0:b0:2be:8eab:9f7d with SMTP id o17-20020a92c691000000b002be8eab9f7dmr1246638ilg.26.1646862801840;
-        Wed, 09 Mar 2022 13:53:21 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a4-20020a5d9544000000b00640a6eb6e1esm1676076ios.53.2022.03.09.13.53.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 13:53:21 -0800 (PST)
-Date:   Wed, 9 Mar 2022 16:53:20 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 10/24] revisions API users: use release_revisions() in
- builtin/log.c
-Message-ID: <Yikh0Cu3IJt16pIZ@nand.local>
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <patch-10.24-a89f0da4fd7-20220309T123321Z-avarab@gmail.com>
+        with ESMTP id S234811AbiCIVy2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 16:54:28 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA92E2E6A0
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:53:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646862804;
+        bh=+pC6UqGD7n8yd+uW6VN7rznI7rjNo1CUPU6RKYce4mc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hnR9tsGXuBkVi9o2dao/TF9k6RKBZTsioXNWFw8QO08h7a8rnGmo8TUlEgBuuk0AE
+         YifzAe38K1DNl6qcgkgjHqay+VBC+WUbqoJxLMC9e6NHKwVN1UKoE5XU3d6RpAFq/W
+         uokAFXjx9oYPZ2MJmLNJZLujzJDlZzPgLGq6i9yU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4s0j-1nTRp50QEx-001xkd; Wed, 09
+ Mar 2022 22:53:24 +0100
+Date:   Wed, 9 Mar 2022 22:53:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
+        Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH v3 2/2] t7063: mtime-mangling instead of delays in
+ untracked cache testing
+In-Reply-To: <dceb2857609fad8a8f93e489adc478ab0eb71c51.1646201124.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203092250080.357@tvgsbejvaqbjf.bet>
+References: <pull.1166.v2.git.1646127910.gitgitgadget@gmail.com>        <pull.1166.v3.git.1646201124.gitgitgadget@gmail.com> <dceb2857609fad8a8f93e489adc478ab0eb71c51.1646201124.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-10.24-a89f0da4fd7-20220309T123321Z-avarab@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:o5jvWtqAKLP1twAvvkVmFMi9nCzaXiklcmqfDCTMZW8/5L2owTg
+ MkSUMWsiSVjAHZaEN/xGArL8HBEicSt4YTYudAY1My+bX+ImwCjkFOpTxQG8+uSiftL+kAW
+ 8Up/u7yp0VUjvGFBoMInGfNj7PMCP1mXUBo/llwgn4GnbJ4JHfKqYpCS54IQN4FOqPTWGX1
+ lL8g+Xvrc39DNCHbi0ebQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BKKfPhJgiAw=:I4pZUOkWtIZeBcuD+9uHj7
+ RRefgMzvg2rHqWDNj1njG2WHOcaufTZo0lwJEIrKmnXdIoSOa6F/zPQtoSwPd76L9imxwuQYG
+ hFkbniqssz0w+cpXGx8j+ldMHjQ1cLMxMr8NNVPSwQMpkrQvt4rVn1iVJg+OHS+RFADpRYfmt
+ BKyNGzwAlwknV8vczqGqJN/stZtoNRsGPi63pkO/dFV/eGAFpQkzxds4JvqC9TLAkzB9hxgu+
+ yfeooq8XoRmkWiGR6chRg93fDe28BN/69Zajc4ID9nKKskXWHNHP8qIUt3PcJvZiVJMj0dwSR
+ 66jP/4tr+ARdojbl+rH4JO5HFfp7hHLYCer2zy1EWRmisRBCqG4CRNrrU7HTyeObsPMe7n7Ml
+ zljlys6YXeU8rFUXk1KPltsr7PQv0F3Qb3FqAdpt979Cug75Mnrk0qzhODmr6oQD3F1L7Dmnj
+ BVZ9uHrSrt8sgoZOJn68UTLRP4cs6dKaSQJpykzvgoj4Xky59ysiOa1GyyEJ/pEhcjmMmY6Fw
+ EmjdNmMfD8Wj/eR2xdoN2Ycr75A/kArlk5D9IPGulU1FKye9iIVGDThhgf8yZeeNHD+cxUydp
+ LrAU0krvepOYn3PVEsZKa85lzqWgXosrgI1W2f1gVIaUm4tiFokY6T/a3deSenSHMSkyYH7gg
+ TIS5CdUEVtj1b+gBjrWA2pTrpe4qCSlFXGKQQTS5vk8OK1iglek1KrG5MA44fLnS1wIYFxAgo
+ UKS/AW9BZjYkXy4aGxUIPtT0w7fYnlMljlpLgoV3cvQ7zKgZW48KbWzuKy+j+AjxFIpde+tqF
+ PnJsXY5dbEceXb2K9uyXnzryOC5S/X3I6wF/sQd6Xd6Hq0F+08JXo/YoDzZKmMBLcRmC2TnNV
+ ApYvEtiVVBYsjwMIMFOgy0J6lqUCiNbTugT2bqWXnGbdnDrjwV3dPdUac3+wAALRH2SKm6JLJ
+ 4QZ6Y4Yx+Oq30UKcGMWQl5sRs3JkhN/GuiqpmY/HxHDn35xMP9aTz74yr2yr8IEdJMz1+PlsS
+ dX90absbCL6LHn33C73feMZx2/Ccf3838/Fo239diGScxOyyHCyFQExCbvW5xdzAvpHcz6/d+
+ 5nsoqu/EufrCxs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 09, 2022 at 02:16:40PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> In the case of "format-patch" revert the addition of UNLEAK() in
-> dee839a2633 (format-patch: mark rev_info with UNLEAK, 2021-12-16), and
-> which will cause several tests that previously passed under
-> "TEST_PASSES_SANITIZE_LEAK=true" to start failing.
+Hi Tao,
 
-Thanks for calling this out. When I skimmed the diff first, I wasn't
-sure whether the change in t4126 was intentional or not. But this is
-helpful context to indicate that it was.
+On Wed, 2 Mar 2022, Tao Klerks via GitGitGadget wrote:
 
-> @@ -731,8 +737,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
->  			ret = error(_("unknown type: %d"), o->type);
->  		}
->  	}
-> -	free(objects);
-> -	return ret;
-> +	return cmd_log_deinit(ret, &rev);
->  }
+> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+> index a0c123b0a77..ca90ee805e7 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -90,6 +90,9 @@ test_expect_success 'setup' '
+>  	cd worktree &&
+>  	mkdir done dtwo dthree &&
+>  	touch one two three done/one dtwo/two dthree/three &&
+> +	test-tool chmtime =-300 one two three done/one dtwo/two dthree/three &&
+> +	test-tool chmtime =-300 done dtwo dthree &&
+> +	test-tool chmtime =-300 . &&
 
-Here `objects` points at `rev.pending.objects`, and that is now freed
-along the cmd_log_deinit() -> release_revision() -> object_array_clear()
-path.
+At first I puzzled why we need `done`, `dtwo`, dthree` and `.`, too, but
+it makes sense: the invariant is that all of the files/directories whose
+mtime is adjusted in these three new lines have the same mtime.
 
-Makes sense, and the rest looks good, too.
+A similar issue is...
+
+> @@ -520,14 +519,14 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+>  	echo three >done/three && # three is gitignored
+>  	echo four >done/four && # four is gitignored at a higher level
+>  	echo five >done/five && # five is not gitignored
+> -	echo test >base && #we need to ensure that the root dir is touched
+> -	rm base &&
+> +	test-tool chmtime =-180 done/two done/three done/four done/five done &&
+> +	# we need to ensure that the root dir is touched (in the past);
+> +	test-tool chmtime =-180 . &&
+
+Here, where I needed a moment to understand the invariant (and hence the
+need to adjust more than just the root directory's mtime).
+
+
+> @@ -597,11 +595,11 @@ EOF
+>  test_expect_success 'set up for test of subdir and sparse checkouts' '
+>  	mkdir done/sub &&
+>  	mkdir done/sub/sub &&
+> -	echo "sub" > done/sub/sub/file
+> +	echo "sub" > done/sub/sub/file &&
+> +	test-tool chmtime =-120 done/sub/sub/file done/sub/sub done/sub done
+
+Similar situation here, too.
+
+All this is to say that this patch looks good to me.
 
 Thanks,
-Taylor
+Dscho
