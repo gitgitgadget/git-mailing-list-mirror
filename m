@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9FB7C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEBEC433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230311AbiCIQDo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 11:03:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40474 "EHLO
+        id S234230AbiCIQDq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 11:03:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234247AbiCIQCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 11:02:54 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4759B17F6A4
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:50 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id k29-20020a05600c1c9d00b003817fdc0f00so1748732wms.4
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:49 -0800 (PST)
+        with ESMTP id S234290AbiCIQC6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 11:02:58 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC7217585A
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:58 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id p9so3741510wra.12
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nhoz//lgtAOsg7zwaxkPxCWbsvzxKtOa6k0srOiAd7k=;
-        b=LhTaBZdbwVrU2gIYkbkDjY5U3yaHC7VhXZy4mJHnspL33FmqPUHuW53yNo9oFYu6b7
-         5melvROP31/E28vhs4nt6mafFCJyDTyKazG44bxH8xdGxhkQIKN2xZMoQQ+DmWsbJIpi
-         6pWwHrXBj3sne6bFHMASKvwrrIzrwwWpGnmngvCf8QF1HjyrghgqKx+wf+p6jz9h2CQC
-         QwoFRvIPd5Vvp6vNRAYCAvzaVxxqQzTCISQbEGKGxjDuwDgLGTEQA/9olyh/lhTs/3nh
-         emfLD2pLXb8h0BSU6VthrE3kN7v693O9lEBD7DIUkNXSxtUvdOpvmjxzSnKLXDHIDLZd
-         uaIw==
+        bh=11Uo0gVQ9fME59Fqhjf9u776SRTbt2UmEbraPBNP+XE=;
+        b=oJZITbxbSASCqjoeRKPqk3LkDGf/nJeM+v9fKogJr6ee2NROZzp+M5QhM5r4lcU0B0
+         z9xguPAMRm1xZhVde4LliQ+LOypFWNdjOBU9uiRAPaWnNctPb4lCTBKlaQG/nRSwTpGd
+         dt84WZloFolLSZsGceFHil3KZpGszCPgOokJ5zGt+dPgARh2kpiOez6EHr4WgsRBIsvc
+         3/Y/JL2gG+R/VJYFV+WxDGOUVYXnzR9ilH00+eEBNfFg2PLsUppFDIReOn6xVCJe8EoU
+         KvMsjPThwy4wQ5fV66s/zksyWLs8EikyiBY1DkK4jr4eL0aXajhjuwrva2Qk14nJqoef
+         auVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nhoz//lgtAOsg7zwaxkPxCWbsvzxKtOa6k0srOiAd7k=;
-        b=uZkgFMpTGJfY8hWT8vTeJ68im1ocJZj2FdEGz7xMPUOXeb9dk0unGRrJSo57oh36Vr
-         AqjTnoAzcQMRsK6SfaIhtzkjue41C+tkVHegOHRXloqSohVaxoATuwcSMhLqGb59kxbb
-         U31JTcMgG/w+93iYX3wXJtCdsYhGtIhyPWDTAtDigM8cUV+OcP5mWzF7beeI7leZ+eI/
-         7Xn8mpfpFB4MKjStGDgIxyTvSMcH7lDcG/gIm5GxrjZIZ4gw4gZJb03CTdPmv1UsTzQy
-         MdTSlxAtNFmEiqYzavRsd3OmG8ATuD0SBNO0r+jSiOJ+0R0VisTlh/HuPmyKPIjiHO5B
-         3Fyg==
-X-Gm-Message-State: AOAM530qm6N1V1rQ6yeFiB8DxUkhd9PhhqIKVDpLqvGLpdC65OfhL7r1
-        unDPR3kcNEYa/dYlPt2VPMD6mg0WwIc=
-X-Google-Smtp-Source: ABdhPJxZRi1Oa/DmwspucF4pTCSxylN3mo+jhalPzu4ZkpeV9DhPWbWBJwvym1XuS3JKgrZOxKte6g==
-X-Received: by 2002:a7b:c04e:0:b0:380:ead9:254a with SMTP id u14-20020a7bc04e000000b00380ead9254amr8086702wmc.58.1646841708055;
-        Wed, 09 Mar 2022 08:01:48 -0800 (PST)
+        bh=11Uo0gVQ9fME59Fqhjf9u776SRTbt2UmEbraPBNP+XE=;
+        b=6MbdBlI9olJ+L0cqclHXCgPrLY8pmY6UAWvZY/D+sbMh+QXinkmam5p3WSqEbdpWjq
+         Qb7P5CIp3dIxxG5L7y2sCkqpzTku+GsNw6c0eaoldYd/gMz/cIc5MS5DZeJEsBfUCiMd
+         0x5NDEjJqU0iYX06LGmXCautF6JgitTSZW7+DzccmxGiKmR/bwdeD/DE1MdxNB5zfh8w
+         ecxfpo1S2xUPtxsEYqTm8XuU3iyiiw7YCnC0dHlII56fqJZjOc21x5nUUg4OrEGP/7XG
+         zGHT4n+OGXcoby7ejOxNnKz3jdzTNxReUvCh19c15JIznh5MPYuo1pD/H4Ktlv9XOSGj
+         3jYQ==
+X-Gm-Message-State: AOAM531BMaC4s6dlS9Hf7A1olcrunBAq04gI9iSKQb5Jy1pImV/Vi/WQ
+        olHbP+kD6qoExPMJW+X81QwVVj62k2g=
+X-Google-Smtp-Source: ABdhPJzrGqJA8c3QXE9r0ib+UhvM0OyJNSr/FzMuSMIyAbTkhUfJnl2YDvmzGdarSgnrcsWPsm1bjw==
+X-Received: by 2002:adf:9d93:0:b0:1f0:639f:3bc2 with SMTP id p19-20020adf9d93000000b001f0639f3bc2mr218897wre.203.1646841716820;
+        Wed, 09 Mar 2022 08:01:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r187-20020a1c44c4000000b0038377fb18f8sm3121207wma.5.2022.03.09.08.01.47
+        by smtp.gmail.com with ESMTPSA id b3-20020a5d4d83000000b001f1d72a6f97sm1943993wru.50.2022.03.09.08.01.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 08:01:47 -0800 (PST)
-Message-Id: <a4c5a727ef1fd7e36d6d870fd05cc694b0436c0d.1646841703.git.gitgitgadget@gmail.com>
+        Wed, 09 Mar 2022 08:01:56 -0800 (PST)
+Message-Id: <05d7322fdfcd6abb1f3a160405121e4c7974ebc4.1646841704.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
         <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Mar 2022 16:01:32 +0000
-Subject: [PATCH v4 02/13] list-objects-filter-options: create copy helper
+Date:   Wed, 09 Mar 2022 16:01:40 +0000
+Subject: [PATCH v4 10/13] rev-list: move --filter parsing into revision.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,59 +70,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-As we add more embedded members with type 'struct
-list_objects_filter_options', it will be important to easily perform a
-deep copy across multiple such structs. Create
-list_objects_filter_copy() to satisfy this need.
+Now that 'struct rev_info' has a 'filter' member and most consumers of
+object filtering are using that member instead of an external struct,
+move the parsing of the '--filter' option out of builtin/rev-list.c and
+into revision.c.
 
-This method is recursive to match the recursive nature of the struct.
+This use within handle_revision_pseudo_opt() allows us to find the
+option within setup_revisions() if the arguments are passed directly. In
+the case of a command such as 'git blame', the arguments are first
+scanned and checked with parse_revision_opt(), which complains about the
+option, so 'git blame --filter=blob:none <file>' does not become valid
+with this change.
+
+Some commands, such as 'git diff' gain this option without having it
+make an effect. And 'git diff --objects' was already possible, but does
+not actually make sense in that builtin.
+
+The key addition that is coming is 'git bundle create --filter=<X>' so
+we can create bundles containing promisor packs. More work is required
+to make them fully functional, but that will follow.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- list-objects-filter-options.c | 19 +++++++++++++++++++
- list-objects-filter-options.h |  4 ++++
- 2 files changed, 23 insertions(+)
+ builtin/rev-list.c | 11 -----------
+ revision.c         |  7 +++++++
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index fd8d59f653a..449d53af69f 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -415,3 +415,22 @@ void partial_clone_get_default_filter_spec(
- 					 &errbuf);
- 	strbuf_release(&errbuf);
- }
-+
-+void list_objects_filter_copy(
-+	struct list_objects_filter_options *dest,
-+	const struct list_objects_filter_options *src)
-+{
-+	int i;
-+	struct string_list_item *item;
-+
-+	/* Copy everything. We will overwrite the pointers shortly. */
-+	memcpy(dest, src, sizeof(struct list_objects_filter_options));
-+
-+	string_list_init_dup(&dest->filter_spec);
-+	for_each_string_list_item(item, &src->filter_spec)
-+		string_list_append(&dest->filter_spec, item->string);
-+
-+	ALLOC_ARRAY(dest->sub, dest->sub_alloc);
-+	for (i = 0; i < src->sub_nr; i++)
-+		list_objects_filter_copy(&dest->sub[i], &src->sub[i]);
-+}
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index da5b6737e27..425c38cae9d 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -132,4 +132,8 @@ void partial_clone_get_default_filter_spec(
- 	struct list_objects_filter_options *filter_options,
- 	const char *remote);
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ec433cb6d37..640828149c5 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -591,17 +591,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			show_progress = arg;
+ 			continue;
+ 		}
+-
+-		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
+-			parse_list_objects_filter(&revs.filter, arg);
+-			if (revs.filter.choice && !revs.blob_objects)
+-				die(_("object filtering requires --objects"));
+-			continue;
+-		}
+-		if (!strcmp(arg, ("--no-" CL_ARG__FILTER))) {
+-			list_objects_filter_set_no_filter(&revs.filter);
+-			continue;
+-		}
+ 		if (!strcmp(arg, "--filter-provided-objects")) {
+ 			filter_provided_objects = 1;
+ 			continue;
+diff --git a/revision.c b/revision.c
+index ad4286fbdde..15efe23c40f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -32,6 +32,7 @@
+ #include "utf8.h"
+ #include "bloom.h"
+ #include "json-writer.h"
++#include "list-objects-filter-options.h"
  
-+void list_objects_filter_copy(
-+	struct list_objects_filter_options *dest,
-+	const struct list_objects_filter_options *src);
-+
- #endif /* LIST_OBJECTS_FILTER_OPTIONS_H */
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -2669,6 +2670,10 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
+ 		revs->no_walk = 0;
+ 	} else if (!strcmp(arg, "--single-worktree")) {
+ 		revs->single_worktree = 1;
++	} else if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
++		parse_list_objects_filter(&revs->filter, arg);
++	} else if (!strcmp(arg, ("--no-" CL_ARG__FILTER))) {
++		list_objects_filter_set_no_filter(&revs->filter);
+ 	} else {
+ 		return 0;
+ 	}
+@@ -2872,6 +2877,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		die("cannot combine --walk-reflogs with history-limiting options");
+ 	if (revs->rewrite_parents && revs->children.name)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--parents", "--children");
++	if (revs->filter.choice && !revs->blob_objects)
++		die(_("object filtering requires --objects"));
+ 
+ 	/*
+ 	 * Limitations on the graph functionality
 -- 
 gitgitgadget
 
