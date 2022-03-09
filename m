@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCBE8C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25A1FC433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233120AbiCINTh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 08:19:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40588 "EHLO
+        id S233130AbiCINTi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 08:19:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233128AbiCINT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 08:19:26 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AC101795D2
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:18:03 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id q20so1356514wmq.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 05:18:03 -0800 (PST)
+        with ESMTP id S233069AbiCINTZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 08:19:25 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9E21795C7
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:18:02 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id u1so2962166wrg.11
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 05:18:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v1oKUhqigOW/6kmAsfsBgpkBTUZApUX8Azz2qrByCTw=;
-        b=LBKgvbtPeLVnOiFH6J7kdYvphhisP/9Rxq9JPiawqKUFaS05K5wYKF8xbhNyjlnZOC
-         /el4xzymWMFryEUJ37L1/Gh0DMBo5AhrhCEuM+288M6xSRmgQQL8Q7PW2+4aE15fnl4n
-         UlTSN4x6ZGHebWNTBi0Ko+firWk8oYRa9llDkrloOlPR5hcqwDkpJnwjBqDZxE5p24cb
-         8qL2jti7xIBM8B8WV62NSscDpB9k410pv9cPre9YJmSyZN9p1eZ52XtrLpLUEhxJdGod
-         xUueTDowZgviJKOz266LtpaM0SDQURSAzzI0tkyerQsv4e1x/enR+THdxbfoBSQW4Eui
-         URSg==
+        bh=wxx/+ZMnHehDYFTPEl5t82Fr+dvv6O4Oev9AdqK0R9k=;
+        b=bk4NwHTwAbap3TN4dRrSCpCuAVmnCpt0JGH2RLGHh1vFw9zL0Ejh2MkrjtgHgko8bi
+         BzddEdZhe0hjdRIG9SRRNSeoQ2jk7zov6J36wpULu7D7A0u+aJZcFLmPSypK5JucRhs2
+         z0nNFYLEbP6wTwvLetczeEqgMLyCDhuAXLL6X1GAngC1gtbOOxBd8VISEDXXbBnEtScI
+         buscvXTvxUyQzqPnZyNGa79lze1S0iu32RETdoAAw5J77BNz59Jg6DPAfi6cWa910x86
+         qtlYzIW0JYGptRkgMtlU7ypTHRvN0WVioDUd5TmJbbTugr6LGMzJoVYSUfaeMRVp1MA5
+         Z8BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v1oKUhqigOW/6kmAsfsBgpkBTUZApUX8Azz2qrByCTw=;
-        b=4LMj2Vocy3B08svYIdtGd62q6BSLAiLMd/LHSp4ejePTFUGpHm08liQZ7DNep6jKYI
-         R9bGWLqA2vopJAoxAks9LjAojwGqeLZN0tZBKgzzVtcWNpu3ZVX3l5iqMJ76VUUK6gQN
-         ZdcK9TzSuQdACxBqOKYyikPqMi/v0Y06eWkMoZcp8ekTGv7/8m2SSmqeBaDpfRH5C+sc
-         SGjjYgM0x6gc6hEsJluOiDgPjkRJSOsQul1srEv1QyjPn/oVNY8Ik1gxuLX8SbxemGpV
-         rVrMHXhWRNTZ5vW0/UeF+RUXDG7AjsdFYkXZRhaKN4yqMTZPTosZHTDGciBUv8cmj+BL
-         VAXQ==
-X-Gm-Message-State: AOAM530bzRcGfERJYHGu5i6TZeNZ2qmlysI9f2FuNj/3/i8gPqY2La3M
-        WCEpBRYT6giXdcrleZ0K1gRPe0t6yD1PqQ==
-X-Google-Smtp-Source: ABdhPJwYf6MUIPIVs4ROvqVIRKP0SToFSYsWxSoboTcelCSG8l+nf3ALyslEwk4FWBjn8aW2FGxTsA==
-X-Received: by 2002:a05:600c:694:b0:389:9c6e:c265 with SMTP id a20-20020a05600c069400b003899c6ec265mr3359092wmn.5.1646831881477;
-        Wed, 09 Mar 2022 05:18:01 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm2599988wri.0.2022.03.09.05.18.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=wxx/+ZMnHehDYFTPEl5t82Fr+dvv6O4Oev9AdqK0R9k=;
+        b=x4xysHakKVplHliwwiH9SXyMIfvoIHrGzkbTRGoi6pcDnKopyKAyYYoit4vTZHskie
+         dV91OKSKoNNoMa+Yd+/yZkFlh9zNTcms7r3hoA/+F/zMURjIBTIjsF6qjyJvZxWz+Iej
+         Z5cUEJ+3TvuUD/ihR6vtAJk9D9z0TRXYuu8vqAxaP/+WrdKnwZ2bzAunZaBa75M1/9AP
+         9t4DaTIh20/j9ilAG5MPRZNn8Z5/9p4sisJRJMQuaajy4u9fC8s8jNU+3/yYtdAIM2SW
+         wfu2HMZe7v1gUt5/TS/eeu9GQaKnZEfXb4qZzkOjMtmrn3GOmzvgv2ItrC89e1gBDwHd
+         ZVsg==
+X-Gm-Message-State: AOAM533HWR6QtlnBTaZGlR9jSZZBivQsHLPTumKlJhOqongnmvbKAuxB
+        JGUlzYF/D2UJz1X6NQiykphKRej/vaN0Xw==
+X-Google-Smtp-Source: ABdhPJyyOcSv6+d7EOzTwauj/e6tvNOHRKGfg3FxksE7RqnoAj+H0nGUIlLGU8ZeEiQkyiUsAQbA5w==
+X-Received: by 2002:adf:f48d:0:b0:1ed:e2d7:d5e0 with SMTP id l13-20020adff48d000000b001ede2d7d5e0mr15776319wro.252.1646831880615;
         Wed, 09 Mar 2022 05:18:00 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm2599988wri.0.2022.03.09.05.17.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 05:17:59 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 20/24] revisions API: clear "boundary_commits" in release_revisions()
-Date:   Wed,  9 Mar 2022 14:16:50 +0100
-Message-Id: <patch-20.24-fa53e81c7c0-20220309T123321Z-avarab@gmail.com>
+Subject: [PATCH 19/24] revisions API: have release_revisions() release "prune_data"
+Date:   Wed,  9 Mar 2022 14:16:49 +0100
+Message-Id: <patch-19.24-b5948be0d4e-20220309T123321Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1295.g6b025d3e231
 In-Reply-To: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
 References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
@@ -69,133 +69,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clear the "boundary_commits" object_array in release_revisions(). This
-makes a *lot* of tests pass under SANITIZE=leak, including most of the
-t/t[0-9]*git-svn*.sh tests.
-
-This includes the tests we had false-positive passes on before my
-6798b08e848 (perl Git.pm: don't ignore signalled failure in
-_cmd_close(), 2022-02-01), now they pass for real.
-
-Since there are 66 tests matching t/t[0-9]*git-svn*.sh it's easier to
-list those that don't pass than to touch most of those 66. So let's
-introduce a "TEST_FAILS_SANITIZE_LEAK=true", which if set in the tests
-won't cause lib-git-svn.sh to set "TEST_PASSES_SANITIZE_LEAK=true.
-
-This change also marks all the tests that we removed
-"TEST_FAILS_SANITIZE_LEAK=true" from in an earlier commit due to
-removing the UNLEAK() from cmd_format_patch(), we can now assert that
-its API use doesn't leak any "struct rev_info" memory.
+Extend the the release_revisions() function so that it frees the
+"prune_data" in the "struct ref_info". This means that any code that
+calls "release_revisions()" already can get rid of adjacent calls to
+clear_pathspec().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- revision.c                           | 1 +
- t/t4021-format-patch-numbered.sh     | 1 +
- t/t4028-format-patch-mime-headers.sh | 2 ++
- t/t4036-format-patch-signer-mime.sh  | 1 +
- t/t4122-apply-symlink-inside.sh      | 1 +
- t/t4126-apply-empty.sh               | 1 +
- t/t6110-rev-list-sparse.sh           | 1 +
- t/t9001-send-email.sh                | 1 +
- 8 files changed, 9 insertions(+)
+ add-interactive.c | 2 --
+ builtin/add.c     | 1 -
+ builtin/stash.c   | 2 --
+ diff-lib.c        | 1 -
+ revision.c        | 1 +
+ wt-status.c       | 2 --
+ 6 files changed, 1 insertion(+), 8 deletions(-)
 
+diff --git a/add-interactive.c b/add-interactive.c
+index 13d5ec6f49f..bd612270001 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -566,8 +566,6 @@ static int get_modified_files(struct repository *r,
+ 			run_diff_files(&rev, 0);
+ 		}
+ 
+-		if (ps)
+-			clear_pathspec(&rev.prune_data);
+ 		release_revisions(&rev);
+ 	}
+ 	hashmap_clear_and_free(&s.file_map, struct pathname_entry, ent);
+diff --git a/builtin/add.c b/builtin/add.c
+index 115a26ea633..fc729e14c17 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -142,7 +142,6 @@ int add_files_to_cache(const char *prefix,
+ 	rev.diffopt.flags.override_submodule_config = 1;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	return !!data.add_errors;
+ }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index b9fe6f7c712..53bfa82eeb1 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1072,7 +1072,6 @@ static int check_changes_tracked_files(const struct pathspec *ps)
+ 	}
+ 
+ done:
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	return ret;
+ }
+@@ -1284,7 +1283,6 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ 
+ done:
+ 	discard_index(&istate);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
+diff --git a/diff-lib.c b/diff-lib.c
+index 68858a39964..255abb4959f 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -641,7 +641,6 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ 
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
+-	clear_pathspec(&revs.prune_data);
+ 	release_revisions(&revs);
+ 	return 0;
+ }
 diff --git a/revision.c b/revision.c
-index 290700ea66f..a73e76bed4a 100644
+index f51a60b2a96..290700ea66f 100644
 --- a/revision.c
 +++ b/revision.c
 @@ -2952,6 +2952,7 @@ void release_revisions(struct rev_info *revs)
  	release_revisions_commit_list(revs);
  	object_array_clear(&revs->pending);
  	release_revisions_cmdline(&revs->cmdline);
-+	object_array_clear(&revs->boundary_commits);
- 	clear_pathspec(&revs->prune_data);
++	clear_pathspec(&revs->prune_data);
  	release_revisions_mailmap(revs->mailmap);
  	free_grep_patterns(&revs->grep_filter);
-diff --git a/t/t4021-format-patch-numbered.sh b/t/t4021-format-patch-numbered.sh
-index 9be65fd4440..1219aa226dc 100755
---- a/t/t4021-format-patch-numbered.sh
-+++ b/t/t4021-format-patch-numbered.sh
-@@ -5,6 +5,7 @@
+ }
+diff --git a/wt-status.c b/wt-status.c
+index aaef10451f3..4e6b2ca9b82 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -616,7 +616,6 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_files(&rev, 0);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ }
  
- test_description='Format-patch numbering options'
+@@ -655,7 +654,6 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_index(&rev, 1);
+ 	release_revisions(&rev);
+-	clear_pathspec(&rev.prune_data);
+ }
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4028-format-patch-mime-headers.sh b/t/t4028-format-patch-mime-headers.sh
-index 204ba673cb5..60cb819c42e 100755
---- a/t/t4028-format-patch-mime-headers.sh
-+++ b/t/t4028-format-patch-mime-headers.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='format-patch mime headers and extra headers do not conflict'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'create commit with utf-8 body' '
-diff --git a/t/t4036-format-patch-signer-mime.sh b/t/t4036-format-patch-signer-mime.sh
-index 98d9713d8b2..48655bcc789 100755
---- a/t/t4036-format-patch-signer-mime.sh
-+++ b/t/t4036-format-patch-signer-mime.sh
-@@ -2,6 +2,7 @@
- 
- test_description='format-patch -s should force MIME encoding as needed'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4122-apply-symlink-inside.sh b/t/t4122-apply-symlink-inside.sh
-index aa52de401b9..96965373036 100755
---- a/t/t4122-apply-symlink-inside.sh
-+++ b/t/t4122-apply-symlink-inside.sh
-@@ -4,6 +4,7 @@ test_description='apply to deeper directory without getting fooled with symlink'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index 66a7ba8ab8f..ece9fae207d 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -2,6 +2,7 @@
- 
- test_description='apply empty'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t6110-rev-list-sparse.sh b/t/t6110-rev-list-sparse.sh
-index 13c1da53528..ddefc7f24ee 100755
---- a/t/t6110-rev-list-sparse.sh
-+++ b/t/t6110-rev-list-sparse.sh
-@@ -4,6 +4,7 @@ test_description='operations that cull histories in unusual ways'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 84d0f40d76a..dfa6b20f7a6 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -4,6 +4,7 @@ test_description='git send-email'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # May be altered later in the test
+ static int add_file_to_list(const struct object_id *oid,
 -- 
 2.35.1.1295.g6b025d3e231
 
