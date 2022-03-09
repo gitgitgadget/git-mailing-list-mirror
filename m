@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 815AEC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F3BC433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233737AbiCIQD1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 11:03:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40472 "EHLO
+        id S234274AbiCIQDc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 11:03:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234248AbiCIQCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 11:02:54 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21D7A17F699
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:48 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id k29-20020a05600c1c9d00b003817fdc0f00so1748655wms.4
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:48 -0800 (PST)
+        with ESMTP id S234277AbiCIQC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 11:02:57 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563B717AEF0
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:55 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id r6so3345596wrr.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
-        b=q4hpUf0Q47d1OmEAvIkW8tVQ15X+I7Sj3u2DURYD5Q6kT9GGFDiOPWBq8PiTkitvn7
-         6n7UGDJEm3l68bf05mjSX6wRKZJlkfoF/KSAOtpGIJT4+CdDWRwa1bSo8Sn5EmfPtOd0
-         rGgSPWk8i4yhU50/1BQ1JuQWyxJCpe8ZcZo2pbMMzmruwcpu6KEv7B278Y2FfeMWE99T
-         /hWrnNDcZQ4waaqISyM2tFqyFkanCpE0s2Ll2IJ4o8oBTfK2FrS7jC1mclVP+bvNh7Bl
-         dG4ERmRhzxMjrYOa7+IKrXAbPxgoNo4gc1IHSQy5rBU6dM+5CGU566Cy1KB1mkZ8WI0Y
-         CGog==
+        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
+        b=NUrmalYNvUU3TrT68QNW/28Fq53KeyPduwk2IFQNo0zyYyAgfS/duaNwNebIXIGFwd
+         PLwl2xSDn8X72eOlf48RFuWz76tIDc0Uh21kAXHcM72R8hVb2m83rbeLjR/+vQmZOgxr
+         A1pbwDE5dObx6ZAbzp68g8M9CZF2RvHFv+3L9474HrVO7iZiJ00mlAZZvz3BN1RRt/6T
+         SHN9s9oiIfRqAl4afaDha979TQSjOGhDDOAPClWAvIy1Emcj21eAtqhXMzqvQoVrhMY4
+         E2SN1lTX8VmdHiVbZuwacDnNEK8/vyEFk3migbaZNwzpKMxbAlonBmnKPMqduOrkxdby
+         LZvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
-        b=IFFkA7rctMetKCBT2cAfaCAh0bRXumVoorL4hwENmhhY3YVObof0kwQhYw4T2qzyae
-         CiAIPUG1r8VRX0YG2A6y4cVFuJa6aB8TrB2bIUFJ961juVWkprwC9hLGs7JvdrSLgWGd
-         1oafF6oZOignpkEa0C82ASnrIWk9GIHAF7V8Wyg7VAZT9HJGKYZyrPj5dJ7w8WB3V6Dk
-         yasVOnwuExEP/s/+eZTVecj33WHal7SYhfm7QZPR3uox5XgYbVBcpKffDK2c3+K7I5Qn
-         GwFgmnzI2TF+6QsxITOoRAfXRiikxv4HpvI3PP+YIl7kqrSe6RAgtGVvbA1RYWPp1yDY
-         q7Pg==
-X-Gm-Message-State: AOAM532mF2mvrYmQvFmn+ySF+pfDFlgqKAsfBmCVzJoPplRto+qy8bSI
-        SD3P9Oe2cjcM5QNtGlYqfepsamtY1cM=
-X-Google-Smtp-Source: ABdhPJzdPfSodIppS9fant2JbYMG+912kU4KDPnrsZGNIe2J3vZ/AEFPP40MJNknu46FOLelzOfu4Q==
-X-Received: by 2002:a7b:c253:0:b0:389:bbf4:f431 with SMTP id b19-20020a7bc253000000b00389bbf4f431mr8108679wmj.65.1646841706911;
-        Wed, 09 Mar 2022 08:01:46 -0800 (PST)
+        bh=RxrhDEZAKd1TxOQXR/q4fcpzONcBLxkiP9hpg49quRw=;
+        b=KdoJROyUTRSBn1mYppzZHAB99dK473MxJuv854BMHrlX58dy27/c85Qw3i9o4JY7Am
+         eNgOXA4Vav2mecVQ3l0ZGMFQ7QAP5lsDtYiRhVuPb85eO4DbsjzVIaeozDPBdt1tD+AC
+         1YXX4PQzscHQxcSLymewADgYtty6f9DHKJNig+XgYdS56hjDdRfJn3ilW0iQtoYR8Cnk
+         CKcDodiUc60/gW4OrjFz0lTmTUnRymGEOlxu12XL2CCgki0dLheyEQeYm0TLdERjL3F1
+         cWuhPlEyHf1kKGPOrEZGUGgPEnwcollhzR4xt3Nrw+fBXHTlXHkX4Ulssn7O5Y8Nro3U
+         52Rw==
+X-Gm-Message-State: AOAM530vNIYKGtuHtVtsR0S8z+DdVembiSGi08tW+ZPH7VGzG3WBDeGV
+        +nBFM7Pmh4pKwFo8oCRIzeNZsKQf/G4=
+X-Google-Smtp-Source: ABdhPJy/mSEQw/gxK3z/Ru0HoSIabRrEa6FjW6Z6+qOhtw0eFLKKWFjfjcrC5pgTYxmSj2TlYfQW2Q==
+X-Received: by 2002:a5d:5850:0:b0:203:76f7:5421 with SMTP id i16-20020a5d5850000000b0020376f75421mr254609wrf.114.1646841713629;
+        Wed, 09 Mar 2022 08:01:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p18-20020adfba92000000b001e4ae791663sm2121056wrg.62.2022.03.09.08.01.45
+        by smtp.gmail.com with ESMTPSA id r17-20020a05600c35d100b00389d75e2a61sm152087wmq.28.2022.03.09.08.01.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 08:01:46 -0800 (PST)
-Message-Id: <a1eb4dceb0b1444427c0358948c57bafc513918f.1646841703.git.gitgitgadget@gmail.com>
+        Wed, 09 Mar 2022 08:01:53 -0800 (PST)
+Message-Id: <e522bf61b686101484e211e4f0ab7e07b07ff9d0.1646841704.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
         <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Mar 2022 16:01:31 +0000
-Subject: [PATCH v4 01/13] index-pack: document and test the --promisor option
+Date:   Wed, 09 Mar 2022 16:01:37 +0000
+Subject: [PATCH v4 07/13] MyFirstObjectWalk: update recommended usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,56 +70,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The --promisor option of 'git index-pack' was created in 88e2f9e
-(introduce fetch-object: fetch one promisor object, 2017-12-05) but was
-untested. It is currently unused within the Git codebase, but that will
-change in an upcoming change to 'git bundle unbundle' when there is a
-filter capability.
+The previous change consolidated traverse_commit_list() and
+traverse_commit_list_filtered(). This allows us to simplify the
+recommended usage in MyFirstObjectWalk.txt to use this new set of
+values.
 
-For now, add documentation about the option and add a test to ensure it
-is working as expected.
+While here, add some clarification on the difference between the two
+methods.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-index-pack.txt | 8 ++++++++
- t/t5300-pack-object.sh           | 4 +++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ Documentation/MyFirstObjectWalk.txt | 44 +++++++++++------------------
+ 1 file changed, 16 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 1f1e3592251..4e71c256ecb 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -122,6 +122,14 @@ This option cannot be used with --stdin.
- +
- include::object-format-disclaimer.txt[]
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index ca267941f3e..8d9e85566e6 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -522,24 +522,25 @@ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
+ the name, these functions traverse all kinds of objects. Let's have a look at
+-the arguments to `traverse_commit_list_filtered()`, which are a superset of the
+-arguments to the unfiltered version.
++the arguments to `traverse_commit_list()`.
  
-+--promisor[=<message>]::
-+	Before committing the pack-index, create a .promisor file for this
-+	pack. Particularly helpful when writing a promisor pack with --fix-thin
-+	since the name of the pack is not final until the pack has been fully
-+	written. If a `<message>` is provided, then that content will be
-+	written to the .promisor file for future reference. See
-+	link:technical/partial-clone.html[partial clone] for more information.
+-- `struct list_objects_filter_options *filter_options`: This is a struct which
+-  stores a filter-spec as outlined in `Documentation/rev-list-options.txt`.
+-- `struct rev_info *revs`: This is the `rev_info` used for the walk.
++- `struct rev_info *revs`: This is the `rev_info` used for the walk. If
++  its `filter` member is not `NULL`, then `filter` contains information for
++  how to filter the object list.
+ - `show_commit_fn show_commit`: A callback which will be used to handle each
+   individual commit object.
+ - `show_object_fn show_object`: A callback which will be used to handle each
+   non-commit object (so each blob, tree, or tag).
+ - `void *show_data`: A context buffer which is passed in turn to `show_commit`
+   and `show_object`.
 +
- NOTES
- -----
++In addition, `traverse_commit_list_filtered()` has an additional paramter:
++
+ - `struct oidset *omitted`: A linked-list of object IDs which the provided
+   filter caused to be omitted.
  
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 2fd845187e7..a11d61206ad 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -315,8 +315,10 @@ test_expect_success \
-      git index-pack -o tmp.idx test-3.pack &&
-      cmp tmp.idx test-1-${packname_1}.idx &&
+-It looks like this `traverse_commit_list_filtered()` uses callbacks we provide
+-instead of needing us to call it repeatedly ourselves. Cool! Let's add the
+-callbacks first.
++It looks like these methods use callbacks we provide instead of needing us
++to call it repeatedly ourselves. Cool! Let's add the callbacks first.
  
--     git index-pack test-3.pack &&
-+     git index-pack --promisor=message test-3.pack &&
-      cmp test-3.idx test-1-${packname_1}.idx &&
-+     echo message >expect &&
-+     test_cmp expect test-3.promisor &&
+ For the sake of this tutorial, we'll simply keep track of how many of each kind
+ of object we find. At file scope in `builtin/walken.c` add the following
+@@ -712,20 +713,9 @@ help understand. In our case, that means we omit trees and blobs not directly
+ referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
+ `HEAD` in the `pending` list.)
  
-      cat test-2-${packname_2}.pack >test-3.pack &&
-      git index-pack -o tmp.idx test-2-${packname_2}.pack &&
+-First, we'll need to `#include "list-objects-filter-options.h"` and set up the
+-`struct list_objects_filter_options` at the top of the function.
+-
+-----
+-static void walken_object_walk(struct rev_info *rev)
+-{
+-	struct list_objects_filter_options filter_options = { 0 };
+-
+-	...
+-----
+-
+ For now, we are not going to track the omitted objects, so we'll replace those
+ parameters with `NULL`. For the sake of simplicity, we'll add a simple
+-build-time branch to use our filter or not. Replace the line calling
++build-time branch to use our filter or not. Preface the line calling
+ `traverse_commit_list()` with the following, which will remind us which kind of
+ walk we've just performed:
+ 
+@@ -733,19 +723,17 @@ walk we've just performed:
+ 	if (0) {
+ 		/* Unfiltered: */
+ 		trace_printf(_("Unfiltered object walk.\n"));
+-		traverse_commit_list(rev, walken_show_commit,
+-				walken_show_object, NULL);
+ 	} else {
+ 		trace_printf(
+ 			_("Filtered object walk with filterspec 'tree:1'.\n"));
+-		parse_list_objects_filter(&filter_options, "tree:1");
+-
+-		traverse_commit_list_filtered(&filter_options, rev,
+-			walken_show_commit, walken_show_object, NULL, NULL);
++		CALLOC_ARRAY(rev->filter, 1);
++		parse_list_objects_filter(rev->filter, "tree:1");
+ 	}
++	traverse_commit_list(rev, walken_show_commit,
++			     walken_show_object, NULL);
+ ----
+ 
+-`struct list_objects_filter_options` is usually built directly from a command
++The `rev->filter` member is usually built directly from a command
+ line argument, so the module provides an easy way to build one from a string.
+ Even though we aren't taking user input right now, we can still build one with
+ a hardcoded string using `parse_list_objects_filter()`.
+@@ -784,7 +772,7 @@ object:
+ ----
+ 	...
+ 
+-		traverse_commit_list_filtered(&filter_options, rev,
++		traverse_commit_list_filtered(rev,
+ 			walken_show_commit, walken_show_object, NULL, &omitted);
+ 
+ 	...
 -- 
 gitgitgadget
 
