@@ -2,139 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A084C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11071C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231416AbiCIND4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 08:03:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58972 "EHLO
+        id S233051AbiCINSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 08:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231236AbiCINDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 08:03:55 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B7934B87
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:02:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646830970;
-        bh=l3kfII0CfI//GjQL0ppAd0Iy0tEJeTxz2VGb6nFMN0k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dYl85YOZlI6jCXlw5Nc72xRePGVWl0ma9KYNqy3n2Y13b+DpLgbbTcs0qMxRL2WkR
-         0jjDByHccHT2GDhKSxRdnKB2uwI6zJyp4chKgVtZSYJdwNsON9HHR34zjNGzMLj4Yo
-         jDOsQuPbGLjxWbefvigdhL2GRZSSQh0bRdiHW32Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbivM-1o0S28002I-00dEVo; Wed, 09
- Mar 2022 14:02:50 +0100
-Date:   Wed, 9 Mar 2022 14:02:48 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: win+VS environment has "cut" but not "paste"?
-In-Reply-To: <xmqqmti1u20m.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2203091320140.357@tvgsbejvaqbjf.bet>
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet> <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
- <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g> <220304.86mti6f4ny.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2203071649100.11118@tvgsbejvaqbjf.bet>
- <xmqqmti1u20m.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S229843AbiCINSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 08:18:20 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2B8177D34
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:17:22 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id q189so2562572oia.9
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 05:17:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=diN4bijGfg54HdysDHroyIA7eQu+iZdkkS9aWSIdmXQ=;
+        b=aIvYxw728QoV4j8DPWBpav+UVWionMIIxC6uS3krT5SZtqPCJxJJTSSJfovXBGMWaV
+         6jbBFqzalaQDxuZ3inVteanQO8FzODJrhgpLptCOCWwi542OoPBEpK/CC9LwFiM9q0xh
+         gUq0WwwH89cNFcdDq51/qgvGT1PuSYL8/HYzkdSzMfjFOAvxICsbtTC4dwhJphsSPqPq
+         7PNV+DwQUJj8W+wX3Watk/x2hMq1VXLd2iVqoUlzj86XBQjbaYJ3YLw6u9IfHV9bFvo2
+         KPwWyvt9QHWNOFpEUHhLpjJVauS5dGRHp83QzFGHgQ7sZJHieyhSC1KsETl5ir1m5uux
+         TXSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=diN4bijGfg54HdysDHroyIA7eQu+iZdkkS9aWSIdmXQ=;
+        b=RWaXgZmFIoA43zIfPi6h1uPG+GNaqRqc0NzEa70+jzlm7HaUdCQztzQnZoeZ2Agsvh
+         /4wTY1y+B8Li1S0ZWn2dG+IloB4/NoBAunLobB8Nu4uAc9muzc5sNrWvccFDEonYxif4
+         icwuCGC2++AECVdHbMQlnq9ug+So7OxnIUkUuYZcxkEJFhkhr8QPQw3y2O9yMWZBg3K9
+         djDghU2eafNIOwYHcBj5JXPkPeD7pjeHP1Upr7IaQvvBRofoh2+FQvtBsai8WAldsZbD
+         IGD6Wq3g/5Zwewz61Nc6is08EybO36p8UgUvgY4KB3IssvkE5Lxs7VNVa6sV449lUi7x
+         rZCw==
+X-Gm-Message-State: AOAM530aIjyYaCY0lN4vj30yMuFox/apvRt9LDr9DiILhgZiEW+fnaBY
+        Y+TfKLlD1hqEpvXnvIw+JAj87iCYofCkGCffhtLGi6wkPdE=
+X-Google-Smtp-Source: ABdhPJy7guRf+chCYmHmNde+1Stf1Na/8Rd4127EWKXuZpYKysVQPZuQHKoGsxbbiNQFzsT0ZjiqOeRed5AAaJzqUZ0=
+X-Received: by 2002:a05:6808:f8a:b0:2da:1e9b:e85d with SMTP id
+ o10-20020a0568080f8a00b002da1e9be85dmr4296192oiw.111.1646831841650; Wed, 09
+ Mar 2022 05:17:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1771250885-1646830970=:357"
-X-Provags-ID: V03:K1:insgxiyeXwRJ3169ly8/nwnKe9Us56NTcVcaR7/sLXV/qdUaFql
- 0R+Zyvb4msB45v921cM6YZb8XaOVuKzeDd24E+Ax9NA1/AQrWeN9w8KHLyaR7Q1pgwRqqp7
- kJXPTUXXqrQFx3mrVvuhxH4GmNEt/S84aiijj8szudcr1lHHpkmmsuDqPWN2hh8bIrSVVC+
- Ob3goXorBstvUmzeQrfbQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:f7bi54o0ANo=:wQNgd+haF8Uvyjxr6GpTDw
- DDMI6BXETYnqRIGf6aYSPMTfpjYxiupN6Ag7TqLZ4TrytKYda7qUQk/rw/Ubbf5426h77gSSY
- XSZMTW/WUhx48ZDLI5qlIEZN8j7yCveUjjugG3eZx+AVKF6zgK+owAYStAsGBQeQ/n9wuUVJ1
- YtD/AKNQGZfSxQaT4/2Ky1hW1+43z7VFPnJ5VGpz/QTgq1S+YHi7SGPKaP7sh8lmoFE43PifD
- BmfIJee8jKpVA6cgewMSiqkqOZSy0L0iKSQrom/4S9l9rlu5RZU3sJA7Gicmc06qKmq7JFQQ0
- S696QaNLi3m0EyFg30wSr3n1S3KdTIWLKTvQtG71LpvKw3YDw4YEj4RBCXhL/JlZJkawWiRyZ
- iRQkRlFQF1wqOvftLUry6C76BqkrGMjpeJchVKRSgqB/7We4Q7mi7oiOXUcz0xmkE6sPFpZCP
- H1Uk4SxQEU8Ifb7t3IfDxE+aPlDhC5z/AUkcKEQZv19Q2Ew992B78x0sVae0YR7AnD6Tzl1kO
- 7Kf7gzZPPjyrgN+XfxpauVZ6+VIQWXtBtkW1LJMie2mduEW8Fuit3Jf6XSl9QhJ6TsRT/Q7BD
- nWrMjTiDD5NkoJuy3swuGn7OSb64p3YgQqA2sGrVUQ/C3FdIZxcGEHXZHR3A+4LUPz7XcozzR
- ZUs/ShgyFKHaX2QtAN8LVKGAGNXWNA5Q8hbzpwXD32YHLBaqBiUH+PrR23+IlxiFt6/Jx8pdF
- env1koIScIpL4dj3z3djRcGMWe9Qcz0Sqh74x2WHT7A7V9ouoiAIeGQNG4o8V4DV0kPIRGHm3
- 2yuEUme03SpokesHxPy5oD+IniFRUabNxbRSZF4OqDA0Mxfob4xPCutZlvdSKKnns5NzEEnDS
- VkI+xNsAut2lBrn+ELaDtBIE+r8+Ic/W/UJOvfWvskmejlMiQvMW4XnOLFzabnPNhIMKdVubN
- Sg5M1dRwf3+dwl68wgPWo1JtmI1ntugkfHv+zrXK2DOKrx2MFae+kH0xdlP5xLm+/sOAAuyUe
- WY5R9DTAGQAuL8piX1KJpP4bd3cUEn9fcGIMpLONKtElwue/HQFKLV0QrBMQggoGkn738/qiy
- xkCJ6CaV7z21jg=
+References: <20220309123447.852883-1-bagasdotme@gmail.com>
+In-Reply-To: <20220309123447.852883-1-bagasdotme@gmail.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Wed, 9 Mar 2022 21:17:09 +0800
+Message-ID: <CAJyCBORGGbn6d5UYMdRnfrbn9OONcgMMxaCyJ4qUoQY3+s8-uQ@mail.gmail.com>
+Subject: Re: [PATCH] repack: Sync list of options between synopsis and
+ description in the documentation
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1771250885-1646830970=:357
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Junio,
-
-On Mon, 7 Mar 2022, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Mar 9, 2022 at 9:01 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
 >
-> > I said that the current output is only useful to veterans. The output =
-that
-> > hides the detailed log, under a separate job that is marked as
-> > non-failing.
-> >
-> > That's still as true as when I said it. :-)
+> Options list in the synopsis and description section of git-repack(1)
+> are out of sync. The latest addition was in commit 1d89d88d37
+> (builtin/repack.c: support writing a MIDX while repacking, 2021-09-28),
+> which only adds -m/--write-midx option.
 >
-> I think getting rid of the separate "print failures" CI step and
-> making it more discoverable how to reveal the details of failing
-> test step is a usability improvement.
+> Add missing options to the synopsis. Additionaly, sort according to the
+> order they appear in the description.
+>
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>  Documentation/git-repack.txt | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+> index ee30edc178..26e997bde1 100644
+> --- a/Documentation/git-repack.txt
+> +++ b/Documentation/git-repack.txt
+> @@ -9,7 +9,13 @@ git-repack - Pack unpacked objects in a repository
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
+> +'git repack' [-a] [-A] [-d] [-l] [-f] [-F] [-q | --quiet] [-n] [--window=<n>]
+> +            [--depth=<n>] [--threads=<n>] [--window-memory=<n>]
+> +            [--max-pack-size=<n>] [-b | --write-bitmap-index]
+> +            [--pack-kept-objects] [--keep-pack=<pack-name>]
+> +            [--unpack-unreachable=<when>] [-k | --keep-unreachable]
+> +            [-i | --delta-islands] [-g | --geometric <factor>]
+> +            [-m | --write-midx]
 
-I'm so glad you're saying that! I was starting to doubt whether my caring
-about getting rid of that `print failures` step was maybe misguided.
+Could we possibly just shorten the synopsis to something like this?
 
-> I am not =C3=86var, but I think what was questioned was the improvement
-> justifies multi dozens of seconds extra waiting time, which is a
-> usability dis-improvement.  I do not have a good answer to that
-> question.
+"git repack [<options>]"
 
-It is definitely worrisome that we have to pay such a price. And if there
-was a good answer how to improve that (without sacrificing the
-discoverability of the command trace corresponding to the test failure), I
-would be more than just eager to hear it.
+As Junio mentioned here [1], this could be a more "modern" style?
+Since the OPTIONS chunk below gives a more detailed usage, I
+think we can get rid of the redundancy in the SYNOPSIS. And it also
+helps with the aesthetic and clarity.
 
-I did consider generating a HTML-formatted report that would then be
-attached as a build artifact. But that would hide the relevant information
-even worse than a "print failures" step.
-
-Maybe I should just get rid of the grouping? But that _really_ helped me
-when I investigated the recent "usage string updates" vs "FSMonitor"
-problem, because the test case boundaries were so much clearer.
-
-Plus, as far as I saw, GitHub workflow logs always scroll to the end of
-the logs of the failing step, which would not help _at all_ here.
-
-So I dunno.
-
-> I am probably nearing to be a veteran who knows when to brew my tea
-> in my work cycle, and waiting for an extra minute or two while
-> browsing CI output is not a problem for me.
-
-:-)
-
-> But new "non-veteran" users may not share that.  That is something a
-> bit worrying about the new UI.
-
-Indeed. My goal, after all, is to improve the experience of contributors,
-not to make it harder.
-
-Still, given that you currently have to click quite a few times until you
-get to where you need to be, I have my doubts that what this patch series
-does is actually making things slower, measured in terms of the total time
-from seeing a failed build to being able to diagnose the cause by
-inspecting the command trace.
-
-Ciao,
-Dscho
-
---8323328-1771250885-1646830970=:357--
+[1]: https://lore.kernel.org/git/xmqq1r0awse5.fsf@gitster.g/
+-- 
+Thanks & Regards,
+Shaoxuan
