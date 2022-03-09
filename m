@@ -2,89 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE27C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D07C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236889AbiCIVd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 16:33:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58716 "EHLO
+        id S238443AbiCIVrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 16:47:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234520AbiCIVd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 16:33:56 -0500
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E10F3700B
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:32:55 -0800 (PST)
-Received: by mail-io1-xd2d.google.com with SMTP id e22so4300337ioe.11
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 13:32:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=iFuLnJQTfXSxvFbzCILbdQpK4JtH+LMBjQcQbCjTfNw=;
-        b=r5wU1OBkI57Uz9RaNGVwOOzNjEp42lzVrGmAnw35iujjqj8RMG7HeZ1XU0r9MWuDOf
-         8NTDguspI5AKxkmTAww8jL9wUgAlzE8vGLRO+W0lh7jAThe5jJyZttKUm1F6/8XS4p60
-         phc3DVt4Vr9lkHZ15oPZpWET/kAei0wVScanSRlvLJemx68kZuLmI1fkYdSgH+K8tEhe
-         fTx3GGHISMUkovJTPXsz71gwAK+/Y2NlZNlEQ2vKc876Ob4jfJbWYXaKM+NLX7zSW1XU
-         6QmAknIM4kn2NCTFOpZqri+Mc/SEx6Hq4WqXHymNlTPAlEwxe92rKiF7pjcgDk+y/Pi7
-         BwWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=iFuLnJQTfXSxvFbzCILbdQpK4JtH+LMBjQcQbCjTfNw=;
-        b=uf5LDFxVG/8YhWz8XJpAMCxs6GNnYi6B99ymG4vabrGOvjonoNzCVLjzIz1yn3Pu58
-         kx+cQfnm5fT9B0gU15SvJjTpJfP/EfcpfHRLgVPzScqzBXrEZ3QtCBQ/xJyh1gpHu+Zv
-         7IAK+8zZIi1MYVGcBLG4YMPVzpTEPf3OIZ+tKFII5UY+Utfp5UoXl1xVVQabkjKKzC7q
-         O06zdW8cORGYY07YZw2xWlzGprPKSpAGOarLWhenTAljZoZsvu7XwXJ+/YbwHCCBqlwq
-         DflllzTZu0uYoaLlLbJelXUXEE42hVvKrVdZp/rfVtEGM8LlH6RNwSWKOrwlVwudZfgW
-         bb8w==
-X-Gm-Message-State: AOAM532x2HhVlBKY9H8THkGCTNRwPQXUnGSKXDQfhQEu67AOKYLCZGNZ
-        iLbfTWeglCQwspOpp2m1Y8ddA0G6IvYYsW+A
-X-Google-Smtp-Source: ABdhPJw3LA/sWvle9OeF3KG8NznJJcX+6OnL0JLNMnW8j7Y5oHJJkJrnCkwmFMU+Avzp+jwd0c7c9g==
-X-Received: by 2002:a05:6638:359:b0:317:c322:b012 with SMTP id x25-20020a056638035900b00317c322b012mr1253151jap.285.1646861574645;
-        Wed, 09 Mar 2022 13:32:54 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a4-20020a056e02120400b002c638c50efesm1631438ilq.68.2022.03.09.13.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 13:32:54 -0800 (PST)
-Date:   Wed, 9 Mar 2022 16:32:53 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 05/24] revision.[ch]: provide and start using a
- release_revisions()
-Message-ID: <YikdBfMh++b8jPvu@nand.local>
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
+        with ESMTP id S231774AbiCIVrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 16:47:42 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9940F11E3C4
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:46:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646862397;
+        bh=Flmy8DkHsFVoiGVqeesMpuMojjmN3QWl12r2dnVC88o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=f7q+uk7//nkGADOUsF4oeXeG+rq5vplUcE+UcS/nsonQvH117+gGTSfx7BFWB9Jr6
+         tHvkIde7d5FfjdKLRobSWH68FpWBSpocRBWlIUJyMWfobQiCRYKJOM48idsn7nkb3x
+         SR4cOVYpX0lwtkwWhlqToIqnOINyBhq9MN4UUL4I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6qv-1nv4UA2HV5-00paLo; Wed, 09
+ Mar 2022 22:46:37 +0100
+Date:   Wed, 9 Mar 2022 22:46:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
+        Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH v3 1/2] t/helper/test-chmtime: update mingw to support
+ chmtime on directories
+In-Reply-To: <052b3dd9bba8a79890863ace0992aaee41874402.1646201124.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203092234440.357@tvgsbejvaqbjf.bet>
+References: <pull.1166.v2.git.1646127910.gitgitgadget@gmail.com>        <pull.1166.v3.git.1646201124.gitgitgadget@gmail.com> <052b3dd9bba8a79890863ace0992aaee41874402.1646201124.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:DYIR0FQyi2eeNfwG3eZ3EKU1WOJIMUvIfUO9JiFzT+efCk6c008
+ lrDB1gFsuLMev1OfwjOxN0I/6gfQoeS6wloIPgnPx0g/fBFJYCZeBqoMGQIRyjuTtKSNDQo
+ 1Sa60dtpRny81RWYLMzT2lExnAZBcR7ndoYAIHBxzuNdHckGey3689ETN8ilX8LOBSDUeMP
+ 33j3odGJW8ygmrTg0ozCw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gaEYo0gkVW8=:NXyzaF+QfewuSLtxxbwwpR
+ QY2b26hPZDulevVIHXuzZ0v7UDhqZJUNUR/IT/9SZkJYPmBZXHwbGwpCCNtisHZYWC7TenmhG
+ JKf+hGGVD2rL3g6KXpCjmz76SGmfehGXo0IOWRFWdO+cAYh29SylA/VKwmQHipup1nibg0GDF
+ ls3QRLHqITh47dAaBv/liaEaabrtvV5Q6bAEbsPowKyOodL6syABHiDzapQ/77pVoiMnBsQSI
+ dSPUciNELDlGe14psH9BZigw52i5H7mnr19Jkr6uHeKUCW0YY1D1azckM/Ojh+fdJNbD/6HzB
+ 6Kh7bwpXE0Niy4xVpoNPrlR55BkOtTVqXx/Pg2qd0C7td3l+uoxsH6lHSVJPc2PY1aoWkM0yQ
+ XzikaPpTAJgtTwT1Dw0XFitA+jX3SDiqSaj45OiAKSPzx5Ho+Z4IcrfM6wPDVy8X+Lw95xhLt
+ jN+tXflmx84YtGjJWC4c0KH/2sepW8sOvKJ3IfqebZnzcIAN5WvHraFqxw1ZAy+8aMHF16l/z
+ k9L/zJuSZ7TcV3/V9WBtBt7oaje+gsMvUfYqz8/tS5GSQm15S1tFyoG1TWK3VHQWl8UPktdds
+ I3RSw2LOLC4221fwjGgUO+PZB7F1YcKHMo2SdP8S7CEYN3BN/vRvLkBc5PCECdBWlwwWglqfG
+ IfOhv0anlvZBwdJRhAOPlFOrYuaOipwbL0CHbyJvYEyJHkQK5PNWqxgs/mArsHl8HC9A5e309
+ /BnznQ8vMF4+BmzNNV0ngR206B/wAFbNJ0Yw2P4wyWnNKdvkNfTkIGhG15aiAheAa6C5S89lS
+ rhddyBQOktm/Ot/JO/AXp/Ly5mkZq280wV5N6DBen5I0Tu9MsM3IUdXoHVxY8/9VO2kjxLcod
+ FCm4/TnNMadsEz5+jhe0HPXs5Qt00lZYZ7fr/FsGTsvX0cWjsPk2ZpM05fmFp2EgBhdsK2nhF
+ MmCA5F7k5Cd+YnMYJwfJX4hClk0Jnx2+A0rCA+h7jCmHZ928jUE7PDjVawjz/B6LTOlMULEYX
+ fVHKaFhIQw0ewDvEDbDwjW9zOzp41FwFgWVWFsWb9VLwegOrcyL33yRpMdlXHtOkYXJWtQFzP
+ CiUEeip3cPtPAU=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 09, 2022 at 02:16:35PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> Let's provide a release_revisions() function for these users, and
-> start migrating them over per the plan outlined in [1]. Right now this
-> only handles the "pending" member of the struct, but more will be
-> added in subsequent commits.
+Hi Tao,
 
-I could not be more excited about this change! The lack of easy
-mechanism to free everything in the rev_info structure has been a major
-impediment for me to get much value out of the SANITIZE=leak builds, and
-this is a huge step towards making those more useful.
+On Wed, 2 Mar 2022, Tao Klerks via GitGitGadget wrote:
 
-This plan looks good to me, as does this first patch to introduce the
-new API.
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 03af369b2b9..58f347d6ae5 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -961,9 +961,11 @@ static inline void time_t_to_filetime(time_t t, FIL=
+ETIME *ft)
+>  int mingw_utime (const char *file_name, const struct utimbuf *times)
+>  {
+>  	FILETIME mft, aft;
+> -	int fh, rc;
+> +	int rc;
+>  	DWORD attrs;
+>  	wchar_t wfilename[MAX_PATH];
+> +	HANDLE osfilehandle;
 
-Should it be documented anywhere in e.g.,
-Documentation/MyFirstObjectWalk.txt or elsewhere?
+I would prefer the short-and-sweet name `handle` here. _Especially_ since
+we are no longer using `_get_osfhandle()` at all anymore, meaning that
+the name is actually misleading.
 
-Thanks,
-Taylor
+> +
+>  	if (xutftowcs_path(wfilename, file_name) < 0)
+>  		return -1;
+>
+> @@ -975,7 +977,17 @@ int mingw_utime (const char *file_name, const struc=
+t utimbuf *times)
+>  		SetFileAttributesW(wfilename, attrs & ~FILE_ATTRIBUTE_READONLY);
+>  	}
+>
+> -	if ((fh =3D _wopen(wfilename, O_RDWR | O_BINARY)) < 0) {
+> +	osfilehandle =3D CreateFileW(wfilename,
+> +				   FILE_WRITE_ATTRIBUTES,
+> +				   0 /*FileShare.None*/,
+
+Hmm. I wonder why you don't want to allow shared access? Like, why
+disallow changing the mtime while a file is being read?
+
+This is a change in behavior, and I think we should avoid that. Wine uses
+`FILE_SHARE_READ | FILE_SHARE_WRITE` in its `_wopen()` implementation
+(there are a couple of layers of indirection leading all the way down to
+https://github.com/wine-mirror/wine/blob/1d178982ae5a73b18f367026c8689b567=
+89c39fd/dlls/msvcrt/file.c#L2261).
+
+The closest already-existing code that creates a file handle to a
+directory is in `mingw_getcwd()`, and it even adds `FILE_SHARE_DELETE` to
+the fray. That would probably be the best here, too.
+
+The rest of the patch
+> +				   NULL,
+> +				   OPEN_EXISTING,
+> +				   (attrs !=3D INVALID_FILE_ATTRIBUTES &&
+> +					(attrs & FILE_ATTRIBUTE_DIRECTORY)) ?
+> +					FILE_FLAG_BACKUP_SEMANTICS : 0,
+> +				   NULL);
+> +	if (osfilehandle =3D=3D INVALID_HANDLE_VALUE) {
+> +		errno =3D err_win_to_posix(GetLastError());
+>  		rc =3D -1;
+>  		goto revert_attrs;
+>  	}
+> @@ -987,12 +999,15 @@ int mingw_utime (const char *file_name, const stru=
+ct utimbuf *times)
+>  		GetSystemTimeAsFileTime(&mft);
+>  		aft =3D mft;
+>  	}
+> -	if (!SetFileTime((HANDLE)_get_osfhandle(fh), NULL, &aft, &mft)) {
+> +
+> +	if (!SetFileTime(osfilehandle, NULL, &aft, &mft)) {
+>  		errno =3D EINVAL;
+>  		rc =3D -1;
+>  	} else
+>  		rc =3D 0;
+> -	close(fh);
+> +
+> +	if (osfilehandle !=3D INVALID_HANDLE_VALUE)
+> +		CloseHandle(osfilehandle);
+
+It is quite obvious from the diff that it is quite impossible for
+`osfilehandle` to equal `INVALID_HANDLE_VALUE`, because if that is the
+case, we specifically `goto revert_attrs` which is two lines below:
+
+>
+>  revert_attrs:
+>  	if (attrs !=3D INVALID_FILE_ATTRIBUTES &&
+> --
+> gitgitgadget
+
+Therefore, I would prefer the `CloseHandle()` to be as unconditional as
+the now-replaced `close()` was.
+
+Thank you,
+Dscho
