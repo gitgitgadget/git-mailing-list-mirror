@@ -2,175 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D834EC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 23:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB521C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 23:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232101AbiCIXDR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 18:03:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
+        id S235074AbiCIXEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 18:04:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbiCIXDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 18:03:14 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21D0E1066F6
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 15:02:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646866931;
-        bh=QLLBAFvq5XkUMmnL95imUchYSK1qkRhg161BASBo8NU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Suze1PpqyhW8xY226F9gEUEoRUJ2ASupB65KzDVDkyxtzcuzYbi3xjAGe/EjmQA9g
-         iojIG2gUMbTLcP8Xupkl8HF3hGxNRuv6xIlLcUm7OEZ0xRS+PBsvKDxe+Oc14He3sU
-         muB7sqXb+HeNPzUYmq6vkwp8JXvWTAJztAt4nVnY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3lc9-1nSMQy1owt-000wOn; Thu, 10
- Mar 2022 00:02:11 +0100
-Date:   Thu, 10 Mar 2022 00:02:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Adam Kapos <adam@yousician.com>
-cc:     git@vger.kernel.org
-Subject: Re: Leading slash exclusion does not with git clean on Windows
-In-Reply-To: <CAMwvdPQLMK2-CPyLqSKBWZjEi+6o2iaj_=C2VnJA=sV5GUV47Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203092358510.357@tvgsbejvaqbjf.bet>
-References: <CAMwvdPQLMK2-CPyLqSKBWZjEi+6o2iaj_=C2VnJA=sV5GUV47Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S229940AbiCIXEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 18:04:22 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB63ED95E0
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 15:03:22 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id r6so4849013wrr.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 15:03:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=X4CTYWWdy5iVycp7d4sxXVOlKFY9zfnu5srEBSA4A74=;
+        b=Chewpo51IM+3vxP/+hXq1j/XTqayTe88sAXS10oaT+9zF+1jPUITFg4G0d+RWwTcP0
+         dG95Ki6Gckup/mlO6ka6F/I6QNtfzThghlT9wEWwB3YPfzeMljhbySknHF8NQd+RrkW6
+         dN2q9pV/l9OqV8BnuOTd7hn6juLm200ZXa9u3GGPe1N/BgInreIHipPIeuwqNiyUJkxE
+         5B+WJOy+eIcZNyV5X4z+Kp8VYfKGixP5q8rMtOxNzSgQ8feDq+HcFpayl0uWueqbvrpH
+         V5hSj4QChLhDDxTaBK/7BEsRPJX8AFrFHbvIo7Dsf4UJ2TFVLXhGFsYS0eehzi+D1ELq
+         bbHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=X4CTYWWdy5iVycp7d4sxXVOlKFY9zfnu5srEBSA4A74=;
+        b=RB74/zAGbtCJF4GBhdGRYMGyXkgt/FHlf3/CNkQnEt5TwM3tgVL284YUyl0DcEX4JE
+         rCM7747USLBt14JtjOVmOs1u3JEXrjPYr1DCcwOyi5io6+KicHLErHu6nGxoh4xTvwcU
+         kcKZ74yPFLO4mBnIaZj/RwpbLX1z98etoMqCm3e3wLX9xTEwOmmi0VaO4sRr1EMKrArq
+         8Y5mDtv0aaqQ1lpDRPnK9Nj3USHunFSjQG4mhlA8K9dsRKYpohGlhFP/wz9dfqXCGZCL
+         +9RwRcDsIqZEI+hAGdc32d7tmPNzXm/o0mECueCvtn3AAYrvQ9xwBNybY+9dpxAx0CEH
+         dn2g==
+X-Gm-Message-State: AOAM533v6Nx8AXQxWxZoBuZtFlAR7GUGM8avQh7eHZehCWwxvetttc5Y
+        JdwKvWcq0lvowUPVRrJH7mwLywquiZo=
+X-Google-Smtp-Source: ABdhPJz4PPvZV9c96aOfyTkpplh+7vYmBSbb0C/ZNDqB/ZWR9jxTQWqzebFkmi0uaiqzgQtNDknn/g==
+X-Received: by 2002:adf:eb4d:0:b0:1ed:c1f7:a951 with SMTP id u13-20020adfeb4d000000b001edc1f7a951mr1317148wrn.454.1646867001162;
+        Wed, 09 Mar 2022 15:03:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c2-20020a056000184200b002037b40de23sm2225809wri.8.2022.03.09.15.03.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 15:03:20 -0800 (PST)
+Message-Id: <685b1db888079c83573cfd984ae64f46284544af.1646866998.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com>
+References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
+        <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com>
+From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Mar 2022 23:03:14 +0000
+Subject: [PATCH v5 1/5] wrapper: move inclusion of CSPRNG headers the
+ wrapper.c file
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8z9u8Vzhcdjo55UFSPSUuqa5JOEu0wHKY6Yp9XyfpPovYtu3fkO
- qR0sInk1IuGtrLSs5NCGaz7Jhh04xeyhd2Dj++l+qvNAJlg1XSf7igAX5Yoox7muNZc2Bmt
- rkIrIKbEDLoBq0nP44ogp4XyUgJLqUyGYQnaaOaT6J7d+GcRCALUAAb+rUkvYz/bf4P66v7
- XDBLLTYi+rmm9RzZ1Nrqg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Z2JvgL7uw70=:pKw/tWfnDX/EcmuoYa8khS
- YfQ3RN5nSCTpqQhgEvQ5jCCmpFZk3WUmbsNjzCuGpuRmz05F7ZVJu53GUhpp1Ei0OScvflbB1
- Jluk+njDlMcQecz5Sp76VwfnZvIMVdHu6YucDwMwhzvkKX8ClvM+QrYK4vh8i+WxGQXOJbIcS
- sLBnx/AV8xmgyUmh37mR1WNyQf614RG1J5ZgqGvNmQekyTu6+CZ6OizN8t9nsct6L1WvujYZZ
- a55ne90tB0y6QcubFywAmr85aQsbiB4y6q5fQNOpV/W3Z2xTOtjf4gtVx7jWJwl01jJ9qsPMz
- znqoRifQz60RyL4UaFS/D1HElJpnnnGNjAsUEfhamsp1xBSnWpt12zJemElbJ+5hoFXr3RkQZ
- Mn70APN9mnc7PY6aMSDwCt+6WZima+ezWd13pMC7XrRAu0fD3c4NeIbUWjEMf/R291ThJEDeE
- T4/xRvIZs4rvFdFLsjYBPGRZz5u1ulixkAKfDaf14GICAGzHipjxZjUMCyQcCdJmBHOBFmaMz
- 3lJsj3C3vWaLtGVl0Rmi4DwDvl2knpKs0m8ibxgnmsJs6/bOEvSNIUsDRmI1RHBGcQXIgAWys
- ZvqXWtM8r6KWmmj1WawWCAyWdf6EzYn9CHl+ragPOWm+eiHC5B00iKUkOaAjaMb0hdzrE/PNo
- ZLi5Vv/+Xk8Ik551NDqaSsDrdWWzDfxDkj4AX5mepOwPzbBt3HVy6mTQsQuoltQRU4aX6y3NH
- SvERSfU3nhXdx5MnyunD85Wg2LoJ6PnuWyqwJ3lh+9MRmUQadTMf4Ij/6Rr0mMlx+pzA16H6s
- zLZjatfEyz+X9qrqkMTo3n8Y4NOP1ud4muvsHywtA9Co/goU/uUWDH5uwZ57AdBUdQDqcfmcL
- xdAcrSKqtGrgslf7gxVDUyUt5jP1qTUxaSrE5c+jBhgfYBc5vOOW7RUlKRXiiA5bhK6XgElGT
- pRFQKGpCxFTXUX8YtEmwM06Ug8ukESulqxEvlrM+CEcHtaqOkKgMlw4YcXEHhw1kYDpRu1f/K
- AQZWyVRpKq1PY76XosR8bX45dxsn1l5sGJSRW6DQlEfZH1vO/LuRFkIDfFzBosQBCCaUjv0js
- vnN2L1/c7eA6qI=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     rsbecker@nexbridge.com, bagasdotme@gmail.com, newren@gmail.com,
+        avarab@gmail.com, nksingh85@gmail.com, ps@pks.im,
+        sandals@crustytoothpaste.net,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adam,
+From: Neeraj Singh <neerajsi@microsoft.com>
 
+Including NTSecAPI.h in git-compat-util.h causes build errors in any
+other file that includes winternl.h. That file was included in order to
+get access to the RtlGenRandom cryptographically secure PRNG. This
+change scopes the inclusion of all PRNG headers to just the wrapper.c
+file, which is the only place it is really needed.
 
-On Wed, 16 Feb 2022, Adam Kapos wrote:
+Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+---
+ compat/winansi.c  |  5 -----
+ git-compat-util.h | 12 ------------
+ wrapper.c         | 14 ++++++++++++++
+ 3 files changed, 14 insertions(+), 17 deletions(-)
 
-> I came across an issue where the leading slash exclusion pattern does
-> not work with git clean on Windows.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> Run the following commands:
-> 1. mkdir foo
-> 2. mkdir -p bar/foo
-> 3. git clean -fdx --exclude /foo
->
-> What did you expect to happen? (Expected behavior)
-> The root-level directory is not removed because it's excluded
->
-> Removing bar/
->
-> What happened instead? (Actual behavior)
-> The root level directory is removed:
->
-> Removing bar/
-> Removing foo/
->
->
-> What's different between what you expected and what actually happened?
-> The root-level exclusion doesn't work
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 936a80a5f00..3abe8dd5a27 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -4,11 +4,6 @@
+ 
+ #undef NOGDI
+ 
+-/*
+- * Including the appropriate header file for RtlGenRandom causes MSVC to see a
+- * redefinition of types in an incompatible way when including headers below.
+- */
+-#undef HAVE_RTLGENRANDOM
+ #include "../git-compat-util.h"
+ #include <wingdi.h>
+ #include <winreg.h>
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 876907b9df4..a25ebb822ee 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -197,12 +197,6 @@
+ #endif
+ #include <windows.h>
+ #define GIT_WINDOWS_NATIVE
+-#ifdef HAVE_RTLGENRANDOM
+-/* This is required to get access to RtlGenRandom. */
+-#define SystemFunction036 NTAPI SystemFunction036
+-#include <NTSecAPI.h>
+-#undef SystemFunction036
+-#endif
+ #endif
+ 
+ #include <unistd.h>
+@@ -273,12 +267,6 @@
+ #else
+ #include <stdint.h>
+ #endif
+-#ifdef HAVE_ARC4RANDOM_LIBBSD
+-#include <bsd/stdlib.h>
+-#endif
+-#ifdef HAVE_GETRANDOM
+-#include <sys/random.h>
+-#endif
+ #ifdef NO_INTPTR_T
+ /*
+  * On I16LP32, ILP32 and LP64 "long" is the safe bet, however
+diff --git a/wrapper.c b/wrapper.c
+index 3258cdb171f..2a1aade473b 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -4,6 +4,20 @@
+ #include "cache.h"
+ #include "config.h"
+ 
++#ifdef HAVE_RTLGENRANDOM
++/* This is required to get access to RtlGenRandom. */
++#define SystemFunction036 NTAPI SystemFunction036
++#include <NTSecAPI.h>
++#undef SystemFunction036
++#endif
++
++#ifdef HAVE_ARC4RANDOM_LIBBSD
++#include <bsd/stdlib.h>
++#endif
++#ifdef HAVE_GETRANDOM
++#include <sys/random.h>
++#endif
++
+ static int memory_limit_check(size_t size, int gentle)
+ {
+ 	static size_t limit = 0;
+-- 
+gitgitgadget
 
-As mentioned in the Known Issues section of Git for Windows' Release Notes
-(https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.m=
-d#known-issues,
-also available via Start Menu>Git>Git Release Notes):
-
-	* If you specify command-line options starting with a slash,
-	  POSIX-to-Windows path conversion will kick in converting e.g.
-	  "`/usr/bin/bash.exe`" to "`C:\Program
-	  Files\Git\usr\bin\bash.exe`". When that is not desired -- e.g.
-	  "`--upload-pack=3D/opt/git/bin/git-upload-pack`" or "`-L/regex/`"
-	  -- you need to set the environment variable `MSYS_NO_PATHCONV`
-	  temporarily, like so:
-
-	  > `MSYS_NO_PATHCONV=3D1 git blame -L/pathconv/ msys2_path_conv.cc`
-
-	  Alternatively, you can double the first slash to avoid
-	  POSIX-to-Windows path conversion, e.g. "`//usr/bin/bash.exe`".
-
-Ciao,
-Johannes
-
-> Anything else you want to add:
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.35.1.windows.2, 2.31.1.windows.1
-> cpu: x86_64
-> built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Windows 10.0 22000
-> compiler info: gnuc: 10.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash=
-.exe
->
->
-> [Enabled Hooks]
-> post-commit
-> post-checkout
-> post-merge
-> pre-push
->
-> --
->
->
->
->
-> **Confidentiality**
-> The
->  information contained in this e-mail is
-> confidential, may be privileged
->  and is intended solely for the use of the
-> named addressee. Access to
-> this e-mail by any other person is not
-> authorised. If you are not the
-> intended recipient, you should not
-> disclose, copy, distribute, take any
-> action or rely on it and you should
-> please notify the sender by reply.
-> Any opinions expressed are not
-> necessarily those of the company.
->
-> We
->  may monitor all incoming and
-> outgoing emails in line with current
-> legislation. We have taken steps to
-> ensure that this email and
-> attachments are free from any virus, but it
-> remains your responsibility
-> to ensure that viruses do not adversely affect
-> you.
->
->
->
