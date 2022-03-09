@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D7A2C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BD22C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 16:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234237AbiCIQDe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 11:03:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40850 "EHLO
+        id S234282AbiCIQDf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 11:03:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234302AbiCIQC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 11:02:59 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7020F1795DE
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:59 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so3735950wmj.0
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:59 -0800 (PST)
+        with ESMTP id S234252AbiCIQCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 11:02:54 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9260917F6B5
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 08:01:52 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r6so3345282wrr.2
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 08:01:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wtq4sy4sjg9ijxSnEbwHlFT5qYc6N4W4kaL9UO5zixo=;
-        b=LVthuGICN2ngnO5HXMvgLcIEg80Q9I6Wh4d/V8vaHXtQMehEWNG+8O43Zj2SiSo/8B
-         dlhiaxVWdkUsQ3rlQcxLqAsiegw2iTDgxYHYniWBXj4cTMCTc4JTY95z6kjpX5OCtNZn
-         DugRN7FS9IpnLNrLQ1olr34GEShIoMVM7/j6Edu0gevArx6vc1I7WJH2T7TbudN4/v5J
-         toARHKRzqTOHnq1arcRSB+Irt6vs9gEv15/PU/JW/vDzJMCUtvNQYdLslNfhiLyolclU
-         vspElfV0WnCqklD+H5JBY1NCtutH7OKRNCkGkT5xdmbMU9mtF4wprvnTZQQ2z6S4O5GA
-         imvA==
+        bh=qvpX/0xqAMbcZk3Asv2E/I9bjNoKDUuKRq3KG+b3yEw=;
+        b=TrUGb/rucz6KEpUE44KzlxheQldvDzDCvOYL8f2fQ+OaIyCh2YUK0Pqi26A9EBL5qJ
+         XqfXD6Ewq5EcNNLO8YlKAUNU1eKPco+Ug4RfRGSrXoEIlFWkhgwZh0QoTd1S0Tm4SHuN
+         Q3xS9KYxMZDGEPUk8tttX83pwBOLdVgZL+bM0+Y9eCaMA99Xn9s4ov8Rw2193/vJP9lW
+         ttmwjFyhwIkysGZxrkRLMq7aoasARuA2cybtoznZ2XHQ/dF81Vr9yjkf6Dro6wkTSWsU
+         xKkJx/J+3Rwfx+gaz+HEzWMngZnoa0EjY1CX1k+ShMFaiy+RjCuzKdSxdWKZXudsxQhH
+         CvFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wtq4sy4sjg9ijxSnEbwHlFT5qYc6N4W4kaL9UO5zixo=;
-        b=hl9LxC26NiNz3LCHlp+K9pYOzWmeyfTQZZSoljs+O79af3G9k438Y5XFB4OvOTCfID
-         xNWk24lRErb4xKwHzdvjjACdIeCR08eTq37WiNtOsb2RUdEPYImkZR/hBPBP/haaWYki
-         qPyRft1ZpEUtuTgRXxvhQpqasD/REKaWfHDsL0o2kqPTFSwOYThkMRIiPEcmOt4raJMC
-         cbM+CPtehLuFroZTBygSmBgM+umqz53NVP0Ys+j27tNNS5s2mVJ+hDFU8CrXo7rn+0H5
-         IhzExSqlIq4La+tH00ucB0wlda1RGtMphyNR0TQMOvxXDKFGcPSrQ13DFLmgR47XvWxc
-         kj0Q==
-X-Gm-Message-State: AOAM530yFF5S5DWQIz0p2Hk3zuBOcJFUxG5to8/C2rnrBEo5IPvrBWeH
-        nm9Kbtirkgr45ogHhLJ6fGLflFP7dTg=
-X-Google-Smtp-Source: ABdhPJyoP65g/4WzdgsXDeKZvnDzJq+kiKMmcglDfNedzn5P6PlDu5Ye5yZgswUoslRY8X37CL31ww==
-X-Received: by 2002:a05:600c:3b13:b0:389:cf43:eaf5 with SMTP id m19-20020a05600c3b1300b00389cf43eaf5mr41139wms.198.1646841717792;
-        Wed, 09 Mar 2022 08:01:57 -0800 (PST)
+        bh=qvpX/0xqAMbcZk3Asv2E/I9bjNoKDUuKRq3KG+b3yEw=;
+        b=SFIs9UodIb9fM57ozsF2LfaHDxjG4z5vJ1mayLv4seaoPTBkeQBC5KP45pr4BrOihf
+         m4TkMwfnisKPjmEFzYAnLCll7Eme9cuiQ6dQ7IqEfgUl6noGFQxcnVVx8WqnkJd9a4IX
+         lLUo3Ydcgci7xVVqttd+afeAJmwhViCBEBzKA0xZzWxWewAPGaZU+cXdHmc/ja6X3ZJk
+         jUx93pW8aPcF+/k8ZNwUUlM+o9pZcc4wFgs1omM2uYTElMwgk8Q9Klo0RIJW5kXjDf9L
+         6FDeeDbEpW/kTGnCb+JG0cDkyp6dx6zsO07PBEtMLE6IXQDGFoimz96EWHTshzCHyspQ
+         fN9A==
+X-Gm-Message-State: AOAM531kjruPhiYGBlV1DPBuCMW2zkS+5znrP2p6l3x7ZtHb7Alfb9fk
+        81MYYxywqVF3S3H66Hz7LNYDM1U29QA=
+X-Google-Smtp-Source: ABdhPJyRM+NqCg2nI3hNl8oDk47hVMH4VRv74HVtooi3/YI5Hsgg+8O369ot9w8A8suSVMr38vIBcQ==
+X-Received: by 2002:adf:fa8c:0:b0:1f0:47ef:a04 with SMTP id h12-20020adffa8c000000b001f047ef0a04mr238254wrr.398.1646841710520;
+        Wed, 09 Mar 2022 08:01:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g6-20020a05600c4ec600b0037bf934bca3sm6366611wmq.17.2022.03.09.08.01.57
+        by smtp.gmail.com with ESMTPSA id bg20-20020a05600c3c9400b0037fa5c422c8sm5949334wmb.48.2022.03.09.08.01.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 08:01:57 -0800 (PST)
-Message-Id: <7435095bbc997ee8646bdfd804b1e820ffa80100.1646841704.git.gitgitgadget@gmail.com>
+        Wed, 09 Mar 2022 08:01:50 -0800 (PST)
+Message-Id: <ed22a77782bee97ef50fe1ff1a12fa2fa1470805.1646841703.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
         <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Mar 2022 16:01:41 +0000
-Subject: [PATCH v4 11/13] bundle: create filtered bundles
+Date:   Wed, 09 Mar 2022 16:01:34 +0000
+Subject: [PATCH v4 04/13] pack-objects: use rev.filter when possible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,173 +70,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-A previous change allowed Git to parse bundles with the 'filter'
-capability. Now, teach Git to create bundles with this option.
-
-Some rearranging of code is required to get the option parsing in the
-correct spot. There are now two reasons why we might need capabilities
-(a new hash algorithm or an object filter) so that is pulled out into a
-place where we can check both at the same time.
-
-The --filter option is parsed as part of setup_revisions(), but it
-expected the --objects flag, too. That flag is somewhat implied by 'git
-bundle' because it creates a pack-file walking objects, but there is
-also a walk that walks the revision range expecting only commits. Make
-this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
-before the call to setup_revisions().
+In builtin/pack-objects.c, we use a 'filter_options' global to populate
+the --filter=<X> argument. The previous change created a pointer to a
+filter option in 'struct rev_info', so we can use that pointer here as a
+start to simplifying some usage of object filters.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle.c               | 53 +++++++++++++++++++++++++++++++++---------
- t/t6020-bundle-misc.sh | 48 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 90 insertions(+), 11 deletions(-)
+ builtin/pack-objects.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 41e75efab9a..9370a6e307c 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -332,6 +332,9 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
- 		     "--stdout", "--thin", "--delta-base-offset",
- 		     NULL);
- 	strvec_pushv(&pack_objects.args, pack_options->v);
-+	if (revs->filter.choice)
-+		strvec_pushf(&pack_objects.args, "--filter=%s",
-+			     list_objects_filter_spec(&revs->filter));
- 	pack_objects.in = -1;
- 	pack_objects.out = bundle_fd;
- 	pack_objects.git_cmd = 1;
-@@ -499,10 +502,37 @@ int create_bundle(struct repository *r, const char *path,
- 	int bundle_to_stdout;
- 	int ref_count = 0;
- 	struct rev_info revs, revs_copy;
--	int min_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
-+	int min_version = 2;
- 	struct bundle_prerequisites_info bpi;
- 	int i;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ba2006f2212..e5b7d015d7d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
  
-+	/* init revs to list objects for pack-objects later */
-+	save_commit_buffer = 0;
-+	repo_init_revisions(r, &revs, NULL);
-+
-+	/*
-+	 * Pre-initialize the '--objects' flag so we can parse a
-+	 * --filter option successfully.
-+	 */
-+	revs.tree_objects = revs.blob_objects = 1;
-+
-+	argc = setup_revisions(argc, argv, &revs, NULL);
-+
-+	/*
-+	 * Reasons to require version 3:
-+	 *
-+	 * 1. @object-format is required because our hash algorithm is not
-+	 *    SHA1.
-+	 * 2. @filter is required because we parsed an object filter.
-+	 */
-+	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] || revs.filter.choice)
-+		min_version = 3;
-+
-+	if (argc > 1) {
-+		error(_("unrecognized argument: %s"), argv[1]);
-+		goto err;
-+	}
-+
- 	bundle_to_stdout = !strcmp(path, "-");
- 	if (bundle_to_stdout)
- 		bundle_fd = 1;
-@@ -525,17 +555,14 @@ int create_bundle(struct repository *r, const char *path,
- 		write_or_die(bundle_fd, capability, strlen(capability));
- 		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
- 		write_or_die(bundle_fd, "\n", 1);
--	}
--
--	/* init revs to list objects for pack-objects later */
--	save_commit_buffer = 0;
--	repo_init_revisions(r, &revs, NULL);
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+ {
+-	if (!(bitmap_git = prepare_bitmap_walk(revs, &filter_options, 0)))
++	if (!(bitmap_git = prepare_bitmap_walk(revs, &revs->filter, 0)))
+ 		return -1;
  
--	argc = setup_revisions(argc, argv, &revs, NULL);
--
--	if (argc > 1) {
--		error(_("unrecognized argument: %s"), argv[1]);
--		goto err;
-+		if (revs.filter.choice) {
-+			const char *value = expand_list_objects_filter_spec(&revs.filter);
-+			capability = "@filter=";
-+			write_or_die(bundle_fd, capability, strlen(capability));
-+			write_or_die(bundle_fd, value, strlen(value));
-+			write_or_die(bundle_fd, "\n", 1);
-+		}
- 	}
+ 	if (pack_options_allow_reuse() &&
+@@ -3727,6 +3727,7 @@ static void get_object_list(int ac, const char **av)
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	save_commit_buffer = 0;
+ 	setup_revisions(ac, av, &revs, &s_r_opt);
++	list_objects_filter_copy(&revs.filter, &filter_options);
  
- 	/* save revs.pending in revs_copy for later use */
-@@ -558,6 +585,10 @@ int create_bundle(struct repository *r, const char *path,
- 	bpi.fd = bundle_fd;
- 	bpi.pending = &revs_copy.pending;
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+@@ -3777,7 +3778,7 @@ static void get_object_list(int ac, const char **av)
  
-+	/*
-+	 * Remove any object walking here. We only care about commits and
-+	 * tags here. The revs_copy has the right instances of these values.
-+	 */
- 	revs.blob_objects = revs.tree_objects = 0;
- 	traverse_commit_list(&revs, write_bundle_prerequisites, NULL, &bpi);
- 	object_array_remove_duplicates(&revs_copy.pending);
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index df5ff561fa5..6e97c044ee7 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -487,4 +487,52 @@ test_expect_success 'unfiltered bundle with --objects' '
- 	test_cmp expect actual
- '
+ 	if (!fn_show_object)
+ 		fn_show_object = show_object;
+-	traverse_commit_list_filtered(&filter_options, &revs,
++	traverse_commit_list_filtered(&revs.filter, &revs,
+ 				      show_commit, fn_show_object, NULL,
+ 				      NULL);
  
-+for filter in "blob:none" "tree:0" "tree:1" "blob:limit=100"
-+do
-+	test_expect_success "filtered bundle: $filter" '
-+		test_when_finished rm -rf .git/objects/pack cloned unbundled &&
-+		git bundle create partial.bdl \
-+			--all \
-+			--filter=$filter &&
-+
-+		git bundle verify partial.bdl >unfiltered &&
-+		make_user_friendly_and_stable_output <unfiltered >actual &&
-+
-+		cat >expect <<-EOF &&
-+		The bundle contains these 10 refs:
-+		<COMMIT-P> refs/heads/main
-+		<COMMIT-N> refs/heads/release
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		<COMMIT-D> refs/pull/1/head
-+		<COMMIT-G> refs/pull/2/head
-+		<TAG-1> refs/tags/v1
-+		<TAG-2> refs/tags/v2
-+		<TAG-3> refs/tags/v3
-+		<COMMIT-P> HEAD
-+		The bundle uses this filter: $filter
-+		The bundle records a complete history.
-+		EOF
-+		test_cmp expect actual &&
-+
-+		test_config uploadpack.allowfilter 1 &&
-+		test_config uploadpack.allowanysha1inwant 1 &&
-+		git clone --no-local --filter=$filter --bare "file://$(pwd)" cloned &&
-+
-+		git init unbundled &&
-+		git -C unbundled bundle unbundle ../partial.bdl >ref-list.txt &&
-+
-+		# Count the same number of reachable objects.
-+		reflist=$(git for-each-ref --format="%(objectname)") &&
-+		git rev-list --objects --filter=$filter --missing=allow-any \
-+			$reflist >expect &&
-+		for repo in cloned unbundled
-+		do
-+			git -C $repo rev-list --objects --missing=allow-any \
-+				$reflist >actual &&
-+			test_cmp expect actual || return 1
-+		done
-+	'
-+done
-+
- test_done
 -- 
 gitgitgadget
 
