@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9A59C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3D40C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233065AbiCINSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 08:18:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37794 "EHLO
+        id S233073AbiCINSw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 08:18:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233054AbiCINSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 08:18:45 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73AC14FBF1
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:17:46 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id x15so2936164wru.13
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 05:17:46 -0800 (PST)
+        with ESMTP id S233059AbiCINSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 08:18:47 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36FD14FFE8
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:17:47 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id p9so2956043wra.12
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 05:17:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YuVGpbZGk27UjxrE8ZOvmt37LP90Wns4uQu2mYun1/k=;
-        b=gT3cIq27gCnaLDyHWyRm1pH4K1G01qHj/y0J7ku+dBQHvkl7fNYFJX3UaNYGnbkblu
-         GDxxIVB73KZvCvEhTaVQcNgeLUe4pwb7gwjQq+Wpa7QYj8a0k9sK+8Wf4A8nUTBqZYSA
-         xhDKWpzHKbCrkfFFopV8YBmRD89p03/VgCTG4bKl+gRq74ei1cfpyWdI5/X53f/JnXEX
-         QRutVzVPqAztjM5DzrXUIE1/bHB2dZvoRwd0jFQrOiwsHYvjR9MoSBeNxN2glOc/nIJh
-         ndfTWulceFayGxKyIDJt2++TDkAvwUqXSQLbDCmc1IetOEfTAPll7Agm2JzOgtWK6nDK
-         u3nA==
+        bh=AGRtydwUAAL/pJbRKXwRWN+K2yyQYXB33ugVthGbh40=;
+        b=j94HtLZwBIepM41NIqMg1NVEShoxySOt7r68ukpsnidqlswaC0QcILWsQa6fRnveLp
+         18PadqmRRI+0pt1igImiCNK3pARJq2boPbVh8m6ltX0/Y++tVn/BPpvWhekcyD6KSO76
+         Ub3RFOpc5jj5QMQ8sV0gqaZOEhzlqDJuKqKBaSy7P7qr7BiC/V2C05Mb80u6adoOwnWQ
+         /28d12lD8oD2kJ+yQ++bWO4aGy8vdi7zLvYVIwBsgNkJCuuPyp8KRYIVQJl92NrfotJ5
+         ynJcCWmpFFDJtzIexbJdTLsKwFZFF++ZcRpiHGFpadVT5aQKrylY2YuALRWdnmVhdPlF
+         vIxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YuVGpbZGk27UjxrE8ZOvmt37LP90Wns4uQu2mYun1/k=;
-        b=zVIhOQJfhj3A1NvaM0gEfy0fdp1JBDQbgYcragvZ7KafoD1Ky8Noqq5ZQurNnB6MCr
-         /BTAJ7xj8PwciuWPvoymtu+w8XdAPkOj7jidwa25aSQeFaLwhY25XPVbDSw+eU52B7ej
-         cGrDY/LYLveCqmDK2EbaftqKLLOsQQJc+QM+gqS+IJNaQL6TPgY8XCLlzi6h9qpz3b1P
-         SeZiystH+LWCRGbvurmHB8Nqrc4szuxVbPPmc3mxnF7Ci+vRC3DuglvnpIFmenxSUqki
-         UV9x/3dawuxPWZZr/H5v53Wa/mD3ZRUMSRdPNwhfQpkIySWDBza8Sn+FOjmQ2EHp7Bmn
-         9zMw==
-X-Gm-Message-State: AOAM530ZFCHrsInbitJz458CKprUy4p4l379KDTHRhqs/mMdNKnbr9gx
-        poy8RBreaYePZUqwE9iQ7Wcc9Ffn2jk=
-X-Google-Smtp-Source: ABdhPJxgXwOyy9nzUzW35LpwDI5hCGQtxKOnmOSMvPXJ+spOq22Lxhy7fdexrdlK1ZduQ0SePa45vA==
-X-Received: by 2002:a5d:45ca:0:b0:1ea:9bf9:ce5a with SMTP id b10-20020a5d45ca000000b001ea9bf9ce5amr15907543wrs.620.1646831865266;
-        Wed, 09 Mar 2022 05:17:45 -0800 (PST)
+        bh=AGRtydwUAAL/pJbRKXwRWN+K2yyQYXB33ugVthGbh40=;
+        b=F9cnjpo9g9tEltWEPn5WODi19ZqzX54YyUoh+reo9WwL3kpI7wnmgTIe6thRGp84pN
+         dwbNyuLVmInrB0yzXv7SNDifSRXEmuGaNI6xymtCzmOl6T0BZlRjLyiE39kW3BYzroq2
+         aAPIMJq04D7UEP82hVjRIjx2rgnqvEdYpfmqltg9lQ/cC490E/G0cNc0R4THG1HUK1zr
+         U6DHJCdxJJDTcl5VS6ZYV0BaQKzDb+1oJJBBYa0u5s9zUJhg0UetpLa8msu4xV7nZoUY
+         lNLio2qUmtyCXW+SB5+q39B9dQ1Xe/CytPRzTU6r1EUXz6kEUuiQuH770i8h8g5rKUfa
+         d2Uw==
+X-Gm-Message-State: AOAM530Qm4bVR1sZa9O9ara/lnt7M2xoMwElhY5kdx2DYHm41j2YdS4d
+        TF5h6nruDcrswKJGSaCYOpw8pcRvxPk=
+X-Google-Smtp-Source: ABdhPJxOlibpScZkDtkrHrLgGGeJICOj3K+x+SukwTaQvEzIs+WJMqmYp9RDfaxl15FacJrM/iDu/g==
+X-Received: by 2002:a05:6000:1549:b0:1f1:e564:874c with SMTP id 9-20020a056000154900b001f1e564874cmr14920256wry.668.1646831866136;
+        Wed, 09 Mar 2022 05:17:46 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm2599988wri.0.2022.03.09.05.17.44
+        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm2599988wri.0.2022.03.09.05.17.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 05:17:44 -0800 (PST)
+        Wed, 09 Mar 2022 05:17:45 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/24] blame: use "goto cleanup" for cleanup_scoreboard()
-Date:   Wed,  9 Mar 2022 14:16:32 +0100
-Message-Id: <patch-02.24-db0b04e53a9-20220309T123321Z-avarab@gmail.com>
+Subject: [PATCH 03/24] format-patch: don't leak "extra_headers" or "ref_message_ids"
+Date:   Wed,  9 Mar 2022 14:16:33 +0100
+Message-Id: <patch-03.24-ab1afe6c0c8-20220309T123321Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1295.g6b025d3e231
 In-Reply-To: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
 References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
@@ -69,38 +69,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend a freeing pattern added in 0906ac2b54b (blame: use changed-path
-Bloom filters, 2020-04-16) to use a "goto cleanup", so that we can be
-sure that we call cleanup_scoreboard().
+Fix two memory leaks in "struct rev_info" by freeing that memory in
+cmd_format_patch(). These two are unusual special-cases in being in
+the "struct rev_info", but not being "owned" by the code in
+revision.c. I.e. they're members of the struct so that this code in
+"builtin/log.c" can pass information code in log-tree.c.
 
-This change is needed so that a subsequent addition of a
-release_revisions() doesn't solve this unrelated issue while it's at
-it.
+See 20ff06805c6 (format-patch: resurrect extra headers from config,
+2006-06-02) and d1566f7883f (git-format-patch: Make the second and
+subsequent mails replies to the first, 2006-07-14) for the initial
+introduction of "extra_headers" and "ref_message_ids".
+
+We can count on repo_init_revisions() memset()-ing this data to 0
+however, so we can count on it being either NULL or something we
+allocated. In the case of "extra_headers" let's add a local "char *"
+variable to hold it, to avoid the eventual cast from "const char *"
+when we free() it.
+
+While we're at it let's also move to using string_list_init_nodup()
+instead of relying on calloc() implicitly coming up with the same
+result. See 770fedaf9fb (string-list.[ch]: add a
+string_list_init_{nodup,dup}(), 2021-07-01) for the introduction of
+the string_list_init_nodup() helper. The string_list_clear() here is
+redundant due to the *_nodup() initialization, but let's add it anyway
+for consistency with other API use.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/blame.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ builtin/log.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 8d15b68afc9..885b381ab83 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1167,7 +1167,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	if (!incremental)
- 		setup_pager();
- 	else
--		return 0;
-+		goto cleanup;
- 
- 	blame_sort_final(&sb);
- 
-@@ -1201,6 +1201,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		printf("num commits: %d\n", sb.num_commits);
+diff --git a/builtin/log.c b/builtin/log.c
+index c211d66d1d0..00846c2c8ac 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1746,6 +1746,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct commit *commit;
+ 	struct commit **list = NULL;
+ 	struct rev_info rev;
++	char *extra_headers = NULL;
+ 	struct setup_revision_opt s_r_opt;
+ 	int nr = 0, total, i;
+ 	int use_stdout = 0;
+@@ -1946,7 +1947,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addch(&buf, '\n');
  	}
  
-+cleanup:
- 	cleanup_scoreboard(&sb);
+-	rev.extra_headers = strbuf_detach(&buf, NULL);
++	extra_headers = strbuf_detach(&buf, NULL);
++	rev.extra_headers = extra_headers;
+ 
+ 	if (from) {
+ 		if (split_ident_line(&rev.from_ident, from, strlen(from)))
+@@ -2173,8 +2175,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		prepare_bases(&bases, base, list, nr);
+ 	}
+ 
+-	if (in_reply_to || thread || cover_letter)
+-		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
++	if (in_reply_to || thread || cover_letter) {
++		rev.ref_message_ids = xmalloc(sizeof(*rev.ref_message_ids));
++		string_list_init_nodup(rev.ref_message_ids);
++	}
+ 	if (in_reply_to) {
+ 		const char *msgid = clean_message_id(in_reply_to);
+ 		string_list_append(rev.ref_message_ids, msgid);
+@@ -2281,6 +2285,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&rdiff1);
+ 	strbuf_release(&rdiff2);
+ 	strbuf_release(&rdiff_title);
++	free(extra_headers);
++	if (rev.ref_message_ids) {
++		string_list_clear(rev.ref_message_ids, 0);
++		free(rev.ref_message_ids);
++	}
+ 	UNLEAK(rev);
  	return 0;
  }
 -- 
