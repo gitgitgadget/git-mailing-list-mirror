@@ -2,107 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8ECDC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB1E9C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 22:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234560AbiCIV7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 16:59:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35068 "EHLO
+        id S231733AbiCIWDp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 17:03:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232704AbiCIV7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 16:59:09 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C247639F
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:58:09 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id h7so2501813ile.1
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 13:58:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=snjG07+mTq8p1iTP0hJv2AhHjqZkcdEN4VgQYZ5k8cM=;
-        b=eb2fEShZRqS04rFCm14GsRo1jWf8u5XbgwXXUx+8xm+dTmDcosLqxa8wYlxNryLLoo
-         8nQOLS2X19ctN0IP1ivT6iYQdpZnG05w7sq/u2J2vHv7NJo4BXnZd3XZEke0+67iVfja
-         U8cKg7/8peLaukcXIVhZC/531ed/5YhFKhxh900dF3aPJ0mRt21DS0xfjds8P9BjjBFB
-         VN54HA9/xl10IdAEeyxT0VU2VBc2QOeHAI3GbjUTJiGFcYaMzpgTDZvBFGHIONe9nzrt
-         5y3lPtRP8q9vkc09aCci5XuisoeY3zbdC3emYh62BhWrG+0WChIt9ADT2Cl4Glwci8nG
-         oHFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=snjG07+mTq8p1iTP0hJv2AhHjqZkcdEN4VgQYZ5k8cM=;
-        b=JmBCT9wB8G97o+hAn2YYpd3AOzTVWUkz6GaLJYtUTXKsSCa5CGyGx+EOT+3q5heod5
-         C8e+/Ctg3MorpH1ucMUclTtGprNAI2Z2Ltxc+ADpCc1MLn0A8ftv9rIXC1HqXlBF06Fi
-         MXYmfNPkbR5nMp10XjVOITJlsmnAAihs6OzLpIwDowOCHm8RRkJheLFEWQzKOLZi3JLE
-         fyNztCHfOFGDY+GT1rcObR1ML9OOEMZ1bvgsAUDrwuwo3fbmq2e5ODqug1cRvkiilnLw
-         +rlkRiKmZreOp2UrJp4QOPfMXGJDE4eDb6WCYin4OPTfIvpYuIWRjyblc+DvuhSa2miT
-         l+Mw==
-X-Gm-Message-State: AOAM5306MsAKDojhMb/W/c11FmZZmPjizOxm5nvHF/BSsQDILSzMKaue
-        IxMTZkLkN8eO8AShNAuDH1UciQ==
-X-Google-Smtp-Source: ABdhPJzqVHaZf/j2gjPVv5gFuTV63aifKpWByx03UNJq3ItH2AaD2yBC94iggNr0/Ba+PTgFBobAfg==
-X-Received: by 2002:a05:6e02:16ca:b0:2c6:7857:a0c4 with SMTP id 10-20020a056e0216ca00b002c67857a0c4mr1252858ilx.97.1646863088794;
-        Wed, 09 Mar 2022 13:58:08 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w10-20020a056e02190a00b002c6637e1a1asm1763964ilu.47.2022.03.09.13.58.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 13:58:08 -0800 (PST)
-Date:   Wed, 9 Mar 2022 16:58:07 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 10/24] revisions API users: use release_revisions() in
- builtin/log.c
-Message-ID: <Yiki7+BSi5sNamRf@nand.local>
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <patch-10.24-a89f0da4fd7-20220309T123321Z-avarab@gmail.com>
- <50873925-a5bc-7df8-1407-371eb904e38e@github.com>
+        with ESMTP id S234044AbiCIWDn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 17:03:43 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51951694A0
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 14:02:41 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 674451249CB;
+        Wed,  9 Mar 2022 17:02:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vMXvIRvzTMR5hNei6G3q9iHS4m5qOEPGoi3ebg
+        gF2fI=; b=R5BlmYRwZ0Infrhx/oP92sdibzbfS8NVUTb7nFYn4OsUFtPTZqIHO1
+        QRWU4AkQW2yy0LiM91IaYwfxH6pXsP3GGZTiVp0Gq8jG/RlxGtVPIOYwi6KuKanu
+        fHtdhAIZq8Qg86xMeDuuEOdVGJqaeEseR6ypthRlbXrHJGVQFgjpo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F0A31249CA;
+        Wed,  9 Mar 2022 17:02:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.247.14.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C558B1249C9;
+        Wed,  9 Mar 2022 17:02:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH] test-lib: declare local variables as local
+References: <81f43fbefde84ab7af9ee2ac760845b728a48ab5.1646861976.git.git@grubix.eu>
+Date:   Wed, 09 Mar 2022 14:02:38 -0800
+In-Reply-To: <81f43fbefde84ab7af9ee2ac760845b728a48ab5.1646861976.git.git@grubix.eu>
+        (Michael J. Gruber's message of "Wed, 9 Mar 2022 22:41:43 +0100")
+Message-ID: <xmqqv8wmlr7l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <50873925-a5bc-7df8-1407-371eb904e38e@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A310B26C-9FF4-11EC-8210-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 09, 2022 at 02:12:15PM -0500, Derrick Stolee wrote:
-> On 3/9/2022 8:16 AM, Ævar Arnfjörð Bjarmason wrote:
+Michael J Gruber <git@grubix.eu> writes:
+
+> 131b94a10a ("test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_ on
+> glibc >= 2.34", 2022-03-04) introduced "local" variables without
+> declaring them as such. This conflicts with their use in some tests (at
+> least when running them with dash), leading to test failures in:
+
+Thanks.
+
 >
-> > +static int cmd_log_deinit(int ret, struct rev_info *rev)
-> > +{
-> > +	release_revisions(rev);
-> > +	return ret;
-> > +}
+> t0006-date.sh
+> t2002-checkout-cache-u.sh
+> t3430-rebase-merges.sh
+> t4138-apply-ws-expansion.sh
+> t4124-apply-ws-rule.sh
 >
-> This pattern of passing a return value through the helper
-> function is a clever way to get around adding "int ret = ...;
-> release(); return ret;" lines.
-
-Clever indeed. I originally thought that cmd_log_deinit() was going to
-be a wrapper around release_revisions() that also freed any log-specific
-bits of the rev_info structure that are used exclusively by this file.
-
-But that is not a great pattern, since having to track which file(s) use
-which field(s) of the rev_info structure sounds cumbersome, error-prone,
-and fragile. So I'm glad to see that it's really just used to
-temporarily hold a return value.
-
-I wouldn't be sad to see this as a macro, either, maybe something like:
-
-    #define LOG_TEARDOWN(ret, rev) \
-        do { release_revisions(rev); return ret; } while (0);
-
-to make it clear(er) that this has a pretty narrow single purpose. But
-even that doesn't seem like a great idea, since many of the uses have
-the result of a function call as the first argument, which obviously
-would not work with this macro.
-
-So it's probably fine as-is ;).
-
-Thanks,
-Taylor
+> Declare those variables as local to let the tests pass again.
+>
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
+> ---
+>  t/test-lib.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index a3b711988c..e3c9822bf3 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -548,6 +548,8 @@ then
+>  	}
+>  else
+>  	setup_malloc_check () {
+> +		local g
+> +		local t
+>  		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+>  		export MALLOC_CHECK_ MALLOC_PERTURB_
+>  		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
