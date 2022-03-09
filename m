@@ -2,95 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 439CAC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 12:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A084C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 13:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231420AbiCIMnU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 07:43:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52968 "EHLO
+        id S231416AbiCIND4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 08:03:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231723AbiCIMnT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 07:43:19 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192D9177742
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 04:42:21 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id z3so1823718plg.8
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 04:42:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hrJzXsbVrIsJH4vocTWXPi4pwIjVlT/ByzKlyaJhb5Y=;
-        b=nBjdTmsjCULEe8FOFMe5nnNL5n6e34Nsr3S9i++vcOgO5w1VyjYHHqi3DhCiE9XZ+1
-         YESUG9qidjz1O8qpjL+qZKjmkgHBhVjrc1QemDkpTliHs3JOUG/JtxjfDCqvAxsrFkkd
-         naOYxImJMHzNfNMxJD2mNg5aRC6Aj14pvg4bBAzi4FqnVAC2OAC+eJQnkchZExMPTIg7
-         HgaoIKqZnukMsIM2g9PVaKE19bfAjXr2+RdI6/OSiyP5LExHvE2tjHYsOwqo3b4c3kSu
-         pm9s6djehUpHcISA5VBPd86O79yk2N62uFKistBjAq6hidNPpCZyoLcc1MwuOo37EuCA
-         QZWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hrJzXsbVrIsJH4vocTWXPi4pwIjVlT/ByzKlyaJhb5Y=;
-        b=yYVYfcASu9qr5sYDiO8286c9Dzz5AVf+zlTnfALZ8Uz1MUGerm4PIBMo4dcpxkSRuq
-         AjR/f7NDpvoYK9oKeXFXq/SFpH3oOxylOuBU7msDli2JP80JNmAl5AAEJTpeyrrcHmqj
-         93kGPaJukQDycz//LS99gZ8wTzaU8fqHzCBWqUE8LaqRPKg2XRS7Of7kJNwiCC2nBIYH
-         xSC/0aqefK44ZzI7QrKnurLuXC8cc60zdTaODPLEEyX6XNch14XudfHMajpPSDkmQDhE
-         a6o7rVGwRcNBFDYDuBd/VAmdiQOwBj9gChgU/NSENBJLrE5qEItityXEMJBCd23oDS69
-         UhPw==
-X-Gm-Message-State: AOAM533n+hinsDqvAgjnWk+7w5YDzgrD1weF432Tjtg1pn+Jkc4myobb
-        XiQE1ZA45JjiP1+cDQTCc3i9enssAa4=
-X-Google-Smtp-Source: ABdhPJwo9BeekmOXu8AXYA/5V/YaTmhDiy3h1RFLN4IThuQQ+UA3PLI30eDpReZEX/AlcPulRf0XaQ==
-X-Received: by 2002:a17:90a:af88:b0:1bd:6b5d:4251 with SMTP id w8-20020a17090aaf8800b001bd6b5d4251mr9946609pjq.134.1646829740546;
-        Wed, 09 Mar 2022 04:42:20 -0800 (PST)
-Received: from [192.168.43.80] (subs02-180-214-232-94.three.co.id. [180.214.232.94])
-        by smtp.gmail.com with ESMTPSA id s6-20020a056a0008c600b004f667b8a6b6sm2815721pfu.193.2022.03.09.04.42.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Mar 2022 04:42:20 -0800 (PST)
-Message-ID: <a0bb08ba-ef7a-53ec-a3c1-9238f9eb90ce@gmail.com>
-Date:   Wed, 9 Mar 2022 19:42:16 +0700
+        with ESMTP id S231236AbiCINDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 08:03:55 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B7934B87
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 05:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646830970;
+        bh=l3kfII0CfI//GjQL0ppAd0Iy0tEJeTxz2VGb6nFMN0k=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dYl85YOZlI6jCXlw5Nc72xRePGVWl0ma9KYNqy3n2Y13b+DpLgbbTcs0qMxRL2WkR
+         0jjDByHccHT2GDhKSxRdnKB2uwI6zJyp4chKgVtZSYJdwNsON9HHR34zjNGzMLj4Yo
+         jDOsQuPbGLjxWbefvigdhL2GRZSSQh0bRdiHW32Y=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbivM-1o0S28002I-00dEVo; Wed, 09
+ Mar 2022 14:02:50 +0100
+Date:   Wed, 9 Mar 2022 14:02:48 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: win+VS environment has "cut" but not "paste"?
+In-Reply-To: <xmqqmti1u20m.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2203091320140.357@tvgsbejvaqbjf.bet>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet> <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+ <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g> <220304.86mti6f4ny.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2203071649100.11118@tvgsbejvaqbjf.bet>
+ <xmqqmti1u20m.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: Add an OPTIONS chunk to Documentation/git-sparse-checkout.txt
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, vdye@github.com
-Cc:     Git List <git@vger.kernel.org>
-References: <CAJyCBOTKq3t=QtynBMrHvP5__FfNpoeUJ7t8xMv-3zTbv4yU7Q@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <CAJyCBOTKq3t=QtynBMrHvP5__FfNpoeUJ7t8xMv-3zTbv4yU7Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1771250885-1646830970=:357"
+X-Provags-ID: V03:K1:insgxiyeXwRJ3169ly8/nwnKe9Us56NTcVcaR7/sLXV/qdUaFql
+ 0R+Zyvb4msB45v921cM6YZb8XaOVuKzeDd24E+Ax9NA1/AQrWeN9w8KHLyaR7Q1pgwRqqp7
+ kJXPTUXXqrQFx3mrVvuhxH4GmNEt/S84aiijj8szudcr1lHHpkmmsuDqPWN2hh8bIrSVVC+
+ Ob3goXorBstvUmzeQrfbQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:f7bi54o0ANo=:wQNgd+haF8Uvyjxr6GpTDw
+ DDMI6BXETYnqRIGf6aYSPMTfpjYxiupN6Ag7TqLZ4TrytKYda7qUQk/rw/Ubbf5426h77gSSY
+ XSZMTW/WUhx48ZDLI5qlIEZN8j7yCveUjjugG3eZx+AVKF6zgK+owAYStAsGBQeQ/n9wuUVJ1
+ YtD/AKNQGZfSxQaT4/2Ky1hW1+43z7VFPnJ5VGpz/QTgq1S+YHi7SGPKaP7sh8lmoFE43PifD
+ BmfIJee8jKpVA6cgewMSiqkqOZSy0L0iKSQrom/4S9l9rlu5RZU3sJA7Gicmc06qKmq7JFQQ0
+ S696QaNLi3m0EyFg30wSr3n1S3KdTIWLKTvQtG71LpvKw3YDw4YEj4RBCXhL/JlZJkawWiRyZ
+ iRQkRlFQF1wqOvftLUry6C76BqkrGMjpeJchVKRSgqB/7We4Q7mi7oiOXUcz0xmkE6sPFpZCP
+ H1Uk4SxQEU8Ifb7t3IfDxE+aPlDhC5z/AUkcKEQZv19Q2Ew992B78x0sVae0YR7AnD6Tzl1kO
+ 7Kf7gzZPPjyrgN+XfxpauVZ6+VIQWXtBtkW1LJMie2mduEW8Fuit3Jf6XSl9QhJ6TsRT/Q7BD
+ nWrMjTiDD5NkoJuy3swuGn7OSb64p3YgQqA2sGrVUQ/C3FdIZxcGEHXZHR3A+4LUPz7XcozzR
+ ZUs/ShgyFKHaX2QtAN8LVKGAGNXWNA5Q8hbzpwXD32YHLBaqBiUH+PrR23+IlxiFt6/Jx8pdF
+ env1koIScIpL4dj3z3djRcGMWe9Qcz0Sqh74x2WHT7A7V9ouoiAIeGQNG4o8V4DV0kPIRGHm3
+ 2yuEUme03SpokesHxPy5oD+IniFRUabNxbRSZF4OqDA0Mxfob4xPCutZlvdSKKnns5NzEEnDS
+ VkI+xNsAut2lBrn+ELaDtBIE+r8+Ic/W/UJOvfWvskmejlMiQvMW4XnOLFzabnPNhIMKdVubN
+ Sg5M1dRwf3+dwl68wgPWo1JtmI1ntugkfHv+zrXK2DOKrx2MFae+kH0xdlP5xLm+/sOAAuyUe
+ WY5R9DTAGQAuL8piX1KJpP4bd3cUEn9fcGIMpLONKtElwue/HQFKLV0QrBMQggoGkn738/qiy
+ xkCJ6CaV7z21jg=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/03/22 14.55, Shaoxuan Yuan wrote:
-> Hi all,
-> 
-> I'm wondering if we could add an OPTIONS chunk to
-> Documentation/git-sparse-checkout.txt?
-> 
-> Cause when I was skimming through the SYNOPSIS
-> and it says "git sparse-checkout <subcommand> [<options>]"
-> but I didn't quite see the options until I read into the COMMANDS.
-> 
-> Perhaps something like this:
-> 
-> OPTIONS
-> 
->      --[no-]cone
-> 
->      --[no-]sparse-index
-> 
->      --stdin
-> 
-> If this is okay to do then I will try to submit a patch later :)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-OK, but we need to list out subcommands and options in the SYNOPSIS,
-much like in git-worktree(1) and git-submodule(1).
+--8323328-1771250885-1646830970=:357
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
--- 
-An old man doll... just what I always wanted! - Clara
+Hi Junio,
+
+On Mon, 7 Mar 2022, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > I said that the current output is only useful to veterans. The output =
+that
+> > hides the detailed log, under a separate job that is marked as
+> > non-failing.
+> >
+> > That's still as true as when I said it. :-)
+>
+> I think getting rid of the separate "print failures" CI step and
+> making it more discoverable how to reveal the details of failing
+> test step is a usability improvement.
+
+I'm so glad you're saying that! I was starting to doubt whether my caring
+about getting rid of that `print failures` step was maybe misguided.
+
+> I am not =C3=86var, but I think what was questioned was the improvement
+> justifies multi dozens of seconds extra waiting time, which is a
+> usability dis-improvement.  I do not have a good answer to that
+> question.
+
+It is definitely worrisome that we have to pay such a price. And if there
+was a good answer how to improve that (without sacrificing the
+discoverability of the command trace corresponding to the test failure), I
+would be more than just eager to hear it.
+
+I did consider generating a HTML-formatted report that would then be
+attached as a build artifact. But that would hide the relevant information
+even worse than a "print failures" step.
+
+Maybe I should just get rid of the grouping? But that _really_ helped me
+when I investigated the recent "usage string updates" vs "FSMonitor"
+problem, because the test case boundaries were so much clearer.
+
+Plus, as far as I saw, GitHub workflow logs always scroll to the end of
+the logs of the failing step, which would not help _at all_ here.
+
+So I dunno.
+
+> I am probably nearing to be a veteran who knows when to brew my tea
+> in my work cycle, and waiting for an extra minute or two while
+> browsing CI output is not a problem for me.
+
+:-)
+
+> But new "non-veteran" users may not share that.  That is something a
+> bit worrying about the new UI.
+
+Indeed. My goal, after all, is to improve the experience of contributors,
+not to make it harder.
+
+Still, given that you currently have to click quite a few times until you
+get to where you need to be, I have my doubts that what this patch series
+does is actually making things slower, measured in terms of the total time
+from seeing a failed build to being able to diagnose the cause by
+inspecting the command trace.
+
+Ciao,
+Dscho
+
+--8323328-1771250885-1646830970=:357--
