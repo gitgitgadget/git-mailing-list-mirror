@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF64C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 11:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B71C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 11:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231824AbiCILFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 06:05:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42676 "EHLO
+        id S231847AbiCILFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 06:05:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231801AbiCILFK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231815AbiCILFK (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Mar 2022 06:05:10 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2237C9920
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 03:04:11 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id u10so2392989wra.9
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 03:04:11 -0800 (PST)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA33CC50D
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 03:04:12 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id r9-20020a1c4409000000b00389d0a5c511so74681wma.5
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 03:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=QuHF8Flg9SuapVM1SspQoc8UUTKP1kNuqZM8jPHoqxI=;
-        b=BwldxxhUYY+q6cFT3uDi3fIHvML4w96899w3uxW1rZKogEydeugMFu3EeHSUR2z5jq
-         LSCj8RxG/3NI2Tix/v8DyaCBGBiEB7Qmx3kzvHDQ4gnAPSLvKJcWjGa2474bbq0AS3Wo
-         FPthswZT6R8oRvJ73eo17VN2eLeF7z33tiNXymF27PmlLugnIPejH9SNDA004htjr7Mb
-         Lp898mpPDgCCp79e+RRthqO1tMeTiB3mz22ikthiUzWiGw8hMp/Liy/hpcLRCtlpsljS
-         Dj0Jh9L4yl+FUSWDYC+s31tYImygVPayo1a5aFdKG4ndtyKDbnx/CG5sp7lHqIDyuxwX
-         ad1Q==
+        bh=Y0NjIS+CY1bRy5mGkZTuI5JlDYUm77x/O9lkeLYyxKs=;
+        b=fZ/SLpob6wWgoZ6IgTWWFlQS4OwCP979tHaSvBYGnYAe7StnzFhGbeL/ZBDRbgJmWo
+         l9321imsHKSnM8cFj+OrK+cSdyrYFJkjIpJsFRW/VgamaeV/m2vaGxQ/5mdUsVcTkk/H
+         Tsevm1k4z3R8oJKaPHRNjMqhrcSNVI+b7u5BHIEVrYijKtolrOl0Ri3e2BGFVM2wK1Br
+         nGKzVTZH8N1+6mgoalyOCUd/ku4100uHhopZEFY8/x7CexlRXWwHzc2w8XnFoUsaUpvf
+         cPCPZKtyCKcqEhr8Z7jU5K6ogNZKJGI0nP5/i062kiOFRGeviAaxsPZURPRWlYFTGRzo
+         nELw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=QuHF8Flg9SuapVM1SspQoc8UUTKP1kNuqZM8jPHoqxI=;
-        b=bFZ+sGiXxNfT91hiUiKcnhWfwJs3eM/eGu3YURUqASOwrhmFVJBud2k0Tl3AGtmSEY
-         /JsrACjAmLW4sIfTrpbKiRoguUUe8Yl1MpCDBsO0ru3/a8vNuL7iuSwSjCp2Djq/1THb
-         v6FVGKFYFibqGpfeTEL6bovUkFvEPF5QsANlHaudMjrt3Mvh1n0LTce7M0XFY3/QeLrU
-         qGDEel/YEj6qtr0psqtcun9mkK6/+vLezCBP3le3/Y2+8RY1JPeyBMZO/zIfKE1xZADD
-         jRAWwjo9y9O9Umdrf6UdbPWNeepGUNDrxFijvx8Wd4rpX5TQdQOM4FHviDrwInxKVUIN
-         EguQ==
-X-Gm-Message-State: AOAM5327o8u62oxMpXsNV1yNJpEsY0Sh8TOaFN9/znjH7laQ3uS1a+5X
-        ikl9axqmq+5ie9iFBU8/Up4uaqau/+c=
-X-Google-Smtp-Source: ABdhPJzbKkRuHZphKN77xuKSgJLuPpdoYWcSxSKXRc3Pincq4teQ5U/s+4He+eo3hqGpIdg29ibRbA==
-X-Received: by 2002:adf:fcce:0:b0:1f0:2250:65aa with SMTP id f14-20020adffcce000000b001f0225065aamr14747372wrs.628.1646823850181;
+        bh=Y0NjIS+CY1bRy5mGkZTuI5JlDYUm77x/O9lkeLYyxKs=;
+        b=veo7gw9SGMQbfKbcC+esZCuAUGdBXqZTpvYdptISV4C+LS1+E1A6drE49t3YCQM5XK
+         KUoA8m3LKUz+2TBBya+1leOnic7mtV8gU8E7zM3YmgmBKEwezHTK5VH42sz4Gs1P9f2G
+         ngkuPZagB9ZweEGFRfQOrCl1GE1AlNUeR/jEuTAk8gBW+bl7k36KnWNT3ecVQkl4KrG2
+         vS0jdyImElHCnQNiKyZKGmnVsDepSgjGsHWfl20GczFVbNYHvFa8dz5P4cCu8Bnh/yWj
+         X3whgpbCMhBUV7jSSUCLkZdR/G2oCpFp3OyajX4udMZV6uYf8YiSSkIyyb/XZCNCX+AZ
+         kskg==
+X-Gm-Message-State: AOAM5325Cas2NUSY2TUeSEemGNXmuyiAXtvFAZzCFuEcEWI5wpLp/3EB
+        1g2xKnWwv3gnTO0PaI06ezpuDWp+ipg=
+X-Google-Smtp-Source: ABdhPJwcpg9JZ+mmK4oQP+2LnPIIK8yohqLOZDJBO1HJF0xgkk0xeWwVmBg/p4zG/uSLNOVPsn2yIA==
+X-Received: by 2002:a05:600c:4202:b0:382:a5d7:9ce5 with SMTP id x2-20020a05600c420200b00382a5d79ce5mr2845225wmh.45.1646823850957;
         Wed, 09 Mar 2022 03:04:10 -0800 (PST)
 Received: from localhost.localdomain (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.gmail.com with ESMTPSA id a17-20020a5d5091000000b001edb61b2687sm2072203wrt.63.2022.03.09.03.04.09
+        by smtp.gmail.com with ESMTPSA id a17-20020a5d5091000000b001edb61b2687sm2072203wrt.63.2022.03.09.03.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 03:04:09 -0800 (PST)
+        Wed, 09 Mar 2022 03:04:10 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -54,9 +54,9 @@ Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         <avarab@gmail.com>, Carlo Arenas <carenas@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 2/4] terminal: don't assume stdin is /dev/tty
-Date:   Wed,  9 Mar 2022 11:03:23 +0000
-Message-Id: <20220309110325.36917-3-phillip.wood123@gmail.com>
+Subject: [PATCH v2 3/4] terminal: work around macos poll() bug
+Date:   Wed,  9 Mar 2022 11:03:24 +0000
+Message-Id: <20220309110325.36917-4-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220309110325.36917-1-phillip.wood123@gmail.com>
 References: <20220304131126.8293-1-phillip.wood123@gmail.com>
@@ -70,61 +70,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-read_key_without_echo() reads from stdin but uses /dev/tty when it
-disables echo. This is unfortunate as there no guarantee that stdin is
-the same device as /dev/tty. The perl version of "add -p" uses stdin
-when it sets the terminal mode, this commit does the same for the
-builtin version. There is still a difference between the perl and
-builtin versions though - the perl version will ignore any errors when
-setting the terminal mode[1] and will still read single bytes when
-stdin is not a terminal. The builtin version displays a warning if
-setting the terminal mode fails and switches to reading a line at a
-time.
-
-[1] https://github.com/jonathanstowe/TermReadKey/blob/b061c913bbf7ff9bad9b4eea6caae189eacd6063/ReadKey.xs#L1090
+On macos the builtin "add -p" does not handle keys that generate
+escape sequences because poll() does not work with terminals
+there. Switch to using select() on non-windows platforms to work
+around this.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- compat/terminal.c | 5 +++--
- compat/terminal.h | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ compat/terminal.c | 43 +++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 37 insertions(+), 6 deletions(-)
 
 diff --git a/compat/terminal.c b/compat/terminal.c
-index 9392b068b1..cb653419c3 100644
+index cb653419c3..4189cbb12c 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -37,7 +37,8 @@ void restore_term(void)
- int save_term(enum save_term_flags flags)
- {
- 	if (term_fd < 0)
--		term_fd = open("/dev/tty", O_RDWR);
-+		term_fd = (flags & SAVE_TERM_STDIN) ? 0
-+						    : open("/dev/tty", O_RDWR);
- 	if (term_fd < 0)
- 		return -1;
- 	if (tcgetattr(term_fd, &old_term) < 0)
-@@ -362,7 +363,7 @@ int read_key_without_echo(struct strbuf *buf)
- 	static int warning_displayed;
- 	int ch;
+@@ -82,6 +82,32 @@ static int enable_non_canonical(enum save_term_flags flags)
+ 	return disable_bits(flags, ICANON | ECHO);
+ }
  
--	if (warning_displayed || enable_non_canonical(0) < 0) {
-+	if (warning_displayed || enable_non_canonical(SAVE_TERM_STDIN) < 0) {
- 		if (!warning_displayed) {
- 			warning("reading single keystrokes not supported on "
- 				"this platform; reading line instead");
-diff --git a/compat/terminal.h b/compat/terminal.h
-index 24c4df4c0e..3217611b08 100644
---- a/compat/terminal.h
-+++ b/compat/terminal.h
-@@ -4,6 +4,8 @@
- enum save_term_flags {
- 	/* Save input and output settings */
- 	SAVE_TERM_DUPLEX = 1 << 0,
-+	/* Save stdin rather than /dev/tty (fails if stdin is not a terminal) */
-+	SAVE_TERM_STDIN  = 1 << 1,
- };
++/*
++ * On macos it is not possible to use poll() with a terminal so use select
++ * instead.
++ */
++#include <sys/select.h>
++static int getchar_with_timeout(int timeout)
++{
++	struct timeval tv, *tvp = NULL;
++	fd_set readfds;
++	int res;
++
++	if (timeout >= 0) {
++		tv.tv_sec = timeout / 1000;
++		tv.tv_usec = (timeout % 1000) * 1000;
++		tvp = &tv;
++	}
++
++	FD_ZERO(&readfds);
++	FD_SET(0, &readfds);
++	res = select(1, &readfds, NULL, NULL, tvp);
++	if (res < 0)
++		return EOF;
++
++	return getchar();
++}
++
+ #elif defined(GIT_WINDOWS_NATIVE)
  
- /*
+ #define INPUT_PATH "CONIN$"
+@@ -247,6 +273,16 @@ static int mingw_getchar(void)
+ }
+ #define getchar mingw_getchar
+ 
++static int getchar_with_timeout(int timeout)
++{
++	struct pollfd pfd = { .fd = 0, .events = POLLIN };
++
++	if (poll(&pfd, 1, timeout) < 1)
++		return EOF;
++
++	return getchar();
++}
++
+ #endif
+ 
+ #ifndef FORCE_TEXT
+@@ -397,12 +433,7 @@ int read_key_without_echo(struct strbuf *buf)
+ 		 * half a second when we know that the sequence is complete.
+ 		 */
+ 		while (!is_known_escape_sequence(buf->buf)) {
+-			struct pollfd pfd = { .fd = 0, .events = POLLIN };
+-
+-			if (poll(&pfd, 1, 500) < 1)
+-				break;
+-
+-			ch = getchar();
++			ch = getchar_with_timeout(500);
+ 			if (ch == EOF)
+ 				return 0;
+ 			strbuf_addch(buf, ch);
 -- 
 2.35.1
 
