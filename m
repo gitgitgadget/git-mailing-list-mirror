@@ -2,139 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF8DCC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83640C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:57:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238024AbiCITuf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 14:50:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35826 "EHLO
+        id S236218AbiCIT6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 14:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238022AbiCITue (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 14:50:34 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09354266D
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:49:35 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id s5-20020a637705000000b00380cf1d3eb0so552568pgc.5
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:49:35 -0800 (PST)
+        with ESMTP id S233884AbiCIT6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 14:58:34 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0BF0B62
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:57:35 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id g19so3197550pfc.9
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:57:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=A60RHgpMc5obDjMPkQ7SiJZvwP1pKXxT/pJMdxK9U/s=;
-        b=Xmwn+ibXDNf/GCjfCgvTuV8ZlFy+x1XYU6TpyPT6ivnesAdarW2PJ/39JSUumf8cOS
-         rMzyM7KiEOxsecKZRY3Yq6mXbz62piVC4l8sYkvwiIBYByZ84c0mm6T24ZTkiOP0bfnq
-         +mZeuydcUcPptYw1GdnsS23O7rGkewR+SJa/OHigsgg3+fA75D3wPvP71cjFm5pOKFsU
-         Jtthf55noeEuIRmoeI3wyGNYxP43GyIgfKi0AD5j1cMOE9VbRkw16Q1odd3o7vqGzTfb
-         ZiolfI4PxZThk6olb73zAgq6bdlhfEOY4Y8Zs7sTK/ceNQrQAuKYJVCuvLSHokDqVAbh
-         sNfQ==
+        bh=+Sg6xPXHgEF55yvM616b6x86ClzVmN8oHf5AcqHqa4s=;
+        b=p7qigZMbjMBiInzJgYHf170uMzxCutr1AjSFniI4dfUmCF8O8L+fLSVsdju0WSDdR+
+         XzKodnd08HfL6rGWaVu7B0rbs6aYivpaU+hwXbcx0kJ9ip1Lt5ixumfEE39U8MS93ClK
+         YiCZYQxpz298YJlLaOTcYYRoHdDLxkv5/zZhArX8K9WHNO2TOwPVO/VOsCJqABR1RMBJ
+         PF6snS7qjiMzBBobNmrlLbw5QnWKMOJKHP3QLP263gTgySaUbvEyMkoAMuWYJOYtfKrc
+         g1bJnYp91O85ZE6hI42AxZT+Euu8C57XJ9eOMcC5wkd5Q5Oe/4znhygHPCqYYsYXAy4l
+         BdIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=A60RHgpMc5obDjMPkQ7SiJZvwP1pKXxT/pJMdxK9U/s=;
-        b=eTYSe5gLp4uwsWC2Maa1x2zNKqnO3Voqm4D7i2lH6HdB/8G4DITVnokWMI1AnyoShW
-         RLxnVvraF6wcY8+l+TF9tBIFrR7Lo6wt2dU7J95QNntZLH3CZVAqwGnVXLtb8cLnmTKe
-         PNFyhh09V080E92WQeonNmf3+qKvPlCweDe2sXIIFfgvmvkg7eI3VITaFhyCyvXO+/q4
-         u7OaqDo6hUzwxkH5z6WvhI9cl4nj6UMzbLePvAVYeu0GeeLa9iXIJUxKvKcFMLkETJUM
-         LZUHHQKrXfVeaX1tgzrzDQzNwdy8vEnpzBeovc53AQ6ew0ao55lua/CLAm8kaupF0xvp
-         A9mw==
-X-Gm-Message-State: AOAM530pY2nAQl9YIW0eTGJv0JMVO542Hql/nVASXkpFQiM1PJS/LHXL
-        kMieWUkweuEr2KMrFp6qrfqTFULY8yLT1g==
-X-Google-Smtp-Source: ABdhPJwuTaNm1DrmBBk1RFTTIAcOir2hrIxdiNp35OOuyG+iV8paIJQbszxWkpZ0kW83XVERiEAmd7X7SA2yjw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:9b95:b0:151:533b:9197 with SMTP
- id y21-20020a1709029b9500b00151533b9197mr1163076plp.66.1646855374469; Wed, 09
- Mar 2022 11:49:34 -0800 (PST)
-Date:   Wed, 09 Mar 2022 11:49:32 -0800
-In-Reply-To: <xmqqfsnrkkhd.fsf@gitster.g>
-Message-Id: <kl6l5yom6h4j.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220304005757.70107-1-chooglen@google.com> <20220308001433.94995-1-chooglen@google.com>
- <xmqqr17dp8s9.fsf@gitster.g> <kl6lh7885mm3.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqfsnrkkhd.fsf@gitster.g>
-Subject: Re: [PATCH v5 00/10] fetch --recurse-submodules: fetch unpopulated submodules
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+Sg6xPXHgEF55yvM616b6x86ClzVmN8oHf5AcqHqa4s=;
+        b=KsOoyiShzKa9JsUAiDa67EtTJQn1iVKt2VsnJkCa/+1PaJRcaB55v/CYJ0k7dE5MK/
+         QuQe7Uio3jv5pqTn/1nNG9cnAby4iYASvnu4omx6kt0MyuHB0QzDrjT1r+T3NIjGq8T7
+         Zr9acUn3jU6FO8FT/bSugS0wgezqh5ooPjZzdYYELYn9rjO+s5U7kFt10eTcR1PLFryJ
+         1pw2fB4rGjUrM3mufKkl7xLV+FYEqA5pUNVa1F/MsQOOdYx5ovkcacP6QaDBudC7AODI
+         Dr0I2j+0mggxVbj1TfNI7IoEsB3hHfay3v1SypVWdyUTT6eJ018ls7xk3XpuY4oxfhqV
+         DTCA==
+X-Gm-Message-State: AOAM533NJoIuxKhDpTcbrPP9jnpoqXjS38am3l+gp+NTWv8RgQv6R4Bm
+        lUZOwVJWtqb52vJbF4HcRXmFaQZcit2ywqSAzEI=
+X-Google-Smtp-Source: ABdhPJwv5cE8njVQ54DHpJvgpi44AiRQ+2G9i4966ZjKLNDpMAe84A7yxHRTJDajxQWYvMOcB8HvGQsF4en5qEwTrWw=
+X-Received: by 2002:a62:1d91:0:b0:4f6:f558:6d15 with SMTP id
+ d139-20020a621d91000000b004f6f5586d15mr1141283pfd.79.1646855854932; Wed, 09
+ Mar 2022 11:57:34 -0800 (PST)
+MIME-Version: 1.0
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <9d2e58ab-2d8f-0797-84ed-0c1e8941edaa@gmail.com> <CAP8UFD38WDwMKf3tMKGt6hMxmsuZk2JkDRJaOZsXFqHvbVLRLQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201281114440.347@tvgsbejvaqbjf.bet> <22e484c3-f313-5335-5f34-5df019b7ee98@gmail.com>
+ <nycvar.QRO.7.76.6.2203091249060.357@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2203091249060.357@tvgsbejvaqbjf.bet>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Date:   Thu, 10 Mar 2022 01:27:23 +0530
+Message-ID: <CA+ARAtqjFhR2W8OjzGgPmtin4g_9M-8jjyJ0XsS1_401uxBrLg@mail.gmail.com>
+Subject: Re: Git in GSoC 2022?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Community <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Dscho,
 
-> Glen Choo <chooglen@google.com> writes:
+On Wed, Mar 9, 2022 at 5:19 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
->> This uses a "first one wins approach", which obviously doesn't have
->> correctness guarantees. But in practice, I don't think this is likely to
->> cause problems:
->>
->> - As far as I can tell, the only value we read from .gitmodules is
->>   'submodule.<name>.fetchRecurseSubmodules', and this value gets
->>   overridden by two other values: the CLI option, and the config
->>   variable with the same name in .git/config.
->>
->>   During "git submodule init", we copy the config values from
->>   .gitmodules to .git/config. Since we can only fetch init-ed submodules
->>   anyway, it's quite unlikely that we will ever actually make use of the
->>   .gitmodules config.
+> Hi Kaartic,
 >
-> These are reasonable.
+> On Sun, 30 Jan 2022, Kaartic Sivaraam wrote:
 >
->> - Even if we do use the .gitmodules config values, it's unlikely that
->>   the values in .gitmodules will change often, so it _probably_ won't
->>   matter which one we choose.
+> > On 28/01/22 4:15 pm, Johannes Schindelin wrote:
+> > >
+> > > A project that I would personally find a lot of fun, with a great impact,
+> > > and never really talked about on this list, would be to offer a good
+> > > replacement for the `git daemon`: its purpose is to make it easy to stand
+> > > up an ad-hoc server, to allow developers to clone/fetch (and even push, if
+> > > that is enabled) via the network, unauthenticated. Now, the git://
+> > > protocol has served us well in the beginning, but it is increasingly
+> > > obvious that we should use https:// wherever possible. Wouldn't it be fun
+> > > to have a `git daemon` that talks https:// by default, maybe even
+> > > optionally offering a real web UI via gitweb? This is not as huge of a
+> > > project as it sounds, Jeff Hostetler already did a ton of work to that end
+> > > over in the Microsoft fork of Git: the `test-gvfs-protocol` helper is used
+> > > in the regression tests to offer Git repositories via http:// and the
+> > > biggest task to convert this to an HTTP-speaking `git daemon` would be to
+> > > rip out the GVFS parts. After that, HTTPS support could be added.
+> > >
+> >
+> > Sounds interesting. Would you mind drafting this into a project proposal
+> > for GSoC. Then we could add it to the list of ideas document [1].
+> >
+> > Also, would you be willing to mentor a student in case they pick this
+> > project? Or would you rather leave it to others?
 >
-> What bad things would we see if the value changes during the span of
-> history of the superproject we fetched?  How often we would see
-> broken behaviour is immaterial and breakage being rare is a no excuse
-> to import a new code with designed-in flaw.  Unless the "rare" is
-> "never", that is.
-
-Makes sense, I'll keep this mind.
-
-> I would think using ANY values from .gitmodules without having the
-> end-user agree with the settings and copying the settings to the
-> .git/config is a BUG.  So if it mattered from which superproject
-> commit we took .gitmodules from, that would mean we already have
-> such a bug and it is not a new problem.
+> I would _love_ to mentor a student, but my time constraints do not allow
+> me to do that.
 >
-> That would be a reasonable argument for this topic. Together with
-> the previous point, i.e. we do not copy values we see in the in-tree
-> .gitmodules file to .git/config anyway, it would make a good enough
-> assurance, I would think.
 
-To clarify, does this opinion of "don't use config values that aren't
-copied into .git/config" extend to in-tree .gitmodules? Prior to this
-series, we always read the in-tree .gitmodules to get the config - the
-user does not need to copy the settings to .git/config, but we don't
-pick a commit to read .gitmodules from.
+That's understandable. Thanks for sharing the project idea!
 
-If we still want to consider in-tree .gitmodules e.g. by merging
-.git/config and .gitmodules, then we still have the new problem of
-choosing the right .gitmodules.
+In case anyone else is interested to volunteer as a mentor for this project,
+do chime in. We could then add this one to the ideas list.
 
-If the answer is "no, we don't even consider in-tree .gitmodules"
-(unless we really have to, like cloning a new submodule), that seems
-pretty safe and predictable because we wouldn't have to look in two
-different places to figure out what the user wants. And more crucially,
-we'd never have to guess which .gitmodules to read - which will become
-more of an issue as we add more support for init-ed but unpopulated
-submodules.
-
-> It leads to a possible #leftoverbit clean-up.  Because we only fetch
-> submodules that are initialized, the API functions we are using in
-> this series has no reason to require us to feed _a_ commit in the
-> superproject to them so that they can find .gitmodules in them.
-
-Hm, this is true; an initialized submodule should already have the
-'expected' information in .git/config. And if we no longer have to fret
-about whether we're reading the correct .gitmodules, we can revisit the
-idea of "init a subrepo using only its name".
-
-> Fixing the API can probably be left outside the scope of the topic,
-> to be done soon after the dust from the topic settles, I think, to
-> avoid distracting us from the topic.
->
-> Thanks.
+--
+Sivaraam
