@@ -2,150 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA40C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 12:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E63C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 12:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232608AbiCIMGG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 07:06:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52320 "EHLO
+        id S232007AbiCIMT0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 07:19:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbiCIMGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 07:06:04 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE8E016F950
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 04:05:05 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id hw13so4368804ejc.9
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 04:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Ie3HBUs1wsd/aNY47qi1INHiTICMfLDj9/V7p5RhMfc=;
-        b=Vf7+46aemamvNvSorCCfDW6wiGlotGKJ5Ru9Z/ujoRCsLxwvQNaKiZos/lSpGDUcK7
-         M2gAyrHmy2G2zjR+mKGqsijxFJBSz+gUth/9faD8JKK2G2Yl2uMJ9JqInAMBEcME9oQF
-         YXgHc9zfp0HDd7Xo15paHcdd9EQ3Eo/HIdc+Vo/1VaRBt+hixJYbpF87DOiIsTwz/yzl
-         nNxwCAoIfzG3kxm0AeAnYMPqi3ouwbYryyMkIBNk7Zdw0KVjVtH43hNUlPj6XrfabVPa
-         aNDYdt2VY67rcF7H8+fNWhb1/TuhqT84KOnt2/jqmHyiNKyiBPBkw35/Q3dNMwmS+lRw
-         mItg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Ie3HBUs1wsd/aNY47qi1INHiTICMfLDj9/V7p5RhMfc=;
-        b=1uO5dLLt8p17aY9SDZozPGrM6Vcu4HH/gEb4Y7QztMUybAWIMHz/LmU3h/JUlEZVTk
-         52eOh684dY8rWFVgsNaDzOu/nw+jlgSpW/oXmpIgKOZZYgUh+kus8zQ1woB3xqi4ZmEZ
-         +JMexgZrQRf0AtUyNHLmEE8nAAmPdOhvMqPLQHDXAR8vk8WvoPYwlyn5eCUBhokE34aB
-         h0161Q69P2P8MTwUIfFOOq4WiTF6zlRYTdSfwmNS+r51d6A0LIBQjDYnEoHYTlMRtdwF
-         JndOrDwaRVPj64aNVhomyPTCisEXAkZ5gFVXz0i6hTDG4vAe43kPnHWe93ZXDBJ1zbiZ
-         2Eyw==
-X-Gm-Message-State: AOAM533rbMjxm1SQoh6Gn0LhrpwnV6TA4Fv6jtvFMCmnKAWkwTSZryGv
-        +d61NNdvkMYCNjOsVAfn8GE=
-X-Google-Smtp-Source: ABdhPJwhWcDb2PB89fMgOa6shd/jER+9x6OgnMlQMv5eiOORoquOvk3fD+0x3kgpjhsyrGfnlHYrEw==
-X-Received: by 2002:a17:906:7315:b0:6da:820d:4e02 with SMTP id di21-20020a170906731500b006da820d4e02mr17429820ejc.65.1646827503084;
-        Wed, 09 Mar 2022 04:05:03 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u5-20020a170906780500b006d0b99162casm655672ejm.114.2022.03.09.04.05.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 04:05:02 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nRv3t-0008s0-Lj;
-        Wed, 09 Mar 2022 13:05:01 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        with ESMTP id S231858AbiCIMTZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 07:19:25 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E623A123BEF
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 04:18:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646828304;
+        bh=Fh+OeUc25k4hsa+BHRQUj6tw/Paomvy9u/1HVr4sVRo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=VK4VJztBnDbkE0mWDayu1wRm7podOvGvnwPTRZLJ7mgJs6BwFeFfWISMeVE3IBpCY
+         J1FYUHl3wpyy3DA+KO+wRSAsPihSZUcH1eVCrJVYKOtWtH/5wT+hGgFNipI3Su3uHc
+         MUoFldF8EZa2VnK5icPBQu8ydrHZ8k8YR9VfGsvE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MZkpR-1nh8Nk3S4d-00Wpuv; Wed, 09
+ Mar 2022 13:18:23 +0100
+Date:   Wed, 9 Mar 2022 13:18:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Philip Oakley <philipoakley@iee.email>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
- helpful
-Date:   Wed, 09 Mar 2022 12:44:24 +0100
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
- <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
- <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
- <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
- <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
- <30dbc8fb-a1db-05bc-3dcb-070e11cf4715@gmail.com>
- <nycvar.QRO.7.76.6.2203071657180.11118@tvgsbejvaqbjf.bet>
- <xmqqilspu1pp.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqilspu1pp.fsf@gitster.g>
-Message-ID: <220309.86wnh3mivm.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 2/2] rebase: `preserve` is also a pull option, tell dying
+ users
+In-Reply-To: <fd18d7bf-53b6-50ca-12e7-ac66e8fe75da@iee.email>
+Message-ID: <nycvar.QRO.7.76.6.2203091317220.357@tvgsbejvaqbjf.bet>
+References: <pull.1155.git.1645526016.gitgitgadget@gmail.com> <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com> <220222.868ru27vtt.gmgdl@evledraar.gmail.com> <3e144b59-dce2-ce10-cd9b-eca92eee922c@iee.email>
+ <c5197f9d-11eb-5f91-ce33-c196069dc2d8@iee.email> <220223.86mtih6fai.gmgdl@evledraar.gmail.com> <8bd89179-e94b-cc13-6373-1aa9fb539e59@iee.email> <nycvar.QRO.7.76.6.2203071742240.11118@tvgsbejvaqbjf.bet> <fd18d7bf-53b6-50ca-12e7-ac66e8fe75da@iee.email>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rsxn6MVjlC+DQOokHSdI8P9aefcvyEW4ShlUP/hHfKH9Pu89/RO
+ wI9tSEgF6eHCoOrctvbgbC0O+XruESoTefcltlfmfSGMGS9akxuPhJxT728NVUzwYcGWKi7
+ 5nfFaSYXMg1R+/Dwwcfe0lJN3Gv6j3CSZkXbOdvfNY+OuPzf+RC5Qd5p0FHQEUTSXyxqpsL
+ 7IYwTYu2cJq6OwygbqiSQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GGxWKRlVZ9Q=:Wgv8mdc49o1mvij7f/cfvj
+ 7krA8M8Oexn0vCnXOjhazrWvIwsN+3uKIAL8cn8LCLzwxZcQRFIYEBUiQ39YR49Bg7xRd46NQ
+ g3INc35CDmkOCoQoOilpTFFFEEMpf+auzVQu8Or2coG9/sn288susoKQ8xVE6WmUWBEqeJ2Uc
+ aDeZPmGoWG0mdokIO2O6vEWh7xOEYhmL4RHaZLQYouOWRorvIGteLQEsNBb4GrANaZF0Qg9bP
+ Y3dS9nsEeuTrtOZu07dUyol45GW/17od2Kh1QKyhWpX05bW/tiNv/Ty8UOEdti1LYA1cRhFdG
+ Zu2jYkxILe7a44muXwCQg1GqCM6Y78sy6akaLLkvhFR672/FOaVB0StIb1YskD9AnBD7BtsrE
+ L40yPMTOlOQwWpxRtvlLwKBgooU/4LL8QLg51qPWnQcF4oE4uWpVG+Ez+7N/fvslRJlG3AWOP
+ IoWzsev7/sneXUMxbFBpGePQhWoU5Vw+LiH9+6z+ieTSQ3BRfGtOJQR3ls9Il7S5QDsni5E+/
+ jBsdyl6D2S3l4LTTu+VAKFwrPrLsCe/ipt3WlV5efrQVAYWsqsT0Ig5HZklsiNBwJNYaFZ6Gh
+ o5YCnL79SbvGpEGo3PRnF3RHCkZE5FJMtSQ601By2LKVqHtk4Du0MWcsqnUm8FGic5dP31Ari
+ xSs7jy4G7bGBc5Wu5JaJzH7VFNkIW+C5I0HJIkjkNjKjcdaRhgxGnZmcPI0Q7L1RFFYjGzg76
+ ajctVqip8zw6ELZXlpzEGZfjjce/rooQ23AreltQWK/hwi+P5GoVEWTSouISralZWw0DYQDVc
+ zfkMSLraGo1PwJFVyJYXbHKa5A9weZFAnhY/WMj3pW7Pzc/eK30CA7VDcXMasqD4Bq+SOifES
+ U2/F1MliNy8GcLg2s1wlv+7DSlikQlB/XNSTpZrpQEAL13nb5AOqPAiAg86XG9WJchVFP7iHG
+ JV4TWab00WYmrdmcn8GyAE//GLv8fVpA4mkW409yupRk+xUt103VSsqTRqr5HX5i1q1ll5WiT
+ ItWcEEA9DcAXkXBNk9K9eBtb2m+0gbE2zCEJITSk7r3LqecMaqlTR3Rnu4xMd3Dpu4Go7/72P
+ Mmc3WoAqVW8CKM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Philip,
 
-On Mon, Mar 07 2022, Junio C Hamano wrote:
+On Mon, 7 Mar 2022, Philip Oakley wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->>> One thing I forgot to mention was that when you expand a failing test it shows
->>> the test script twice before the output e.g.
->>>
->>> Error: failed: t7527.35 Matrix[uc:false][fsm:true] enable fsmonitor
->>> failure: t7527.35 Matrix[uc:false][fsm:true] enable fsmonitor
->>>   				git config core.fsmonitor true &&
->>>   				git fsmonitor--daemon start &&
->>>   				git update-index --fsmonitor
->>>
->>>   expecting success of 7527.35 'Matrix[uc:false][fsm:true] enable fsmonitor':
->>>   				git config core.fsmonitor true &&
->>>   				git fsmonitor--daemon start &&
->>>   				git update-index --fsmonitor
->>>
->>>  ++ git config core.fsmonitor true
->>>  ++ git fsmonitor--daemon start
->>>  ...
->>>
->>> I don't know how easy it would be to fix that so that we only show "expecting
->>> success of ..." without the test being printed first
->>
->> It's not _super_ easy: right now, the patch series does not touch the code
->
-> In other words, it is not a new issue introduced by this series, right?
+> On 07/03/2022 16:43, Johannes Schindelin wrote:
+> > Hi Philip,
+> >
+> > On Fri, 4 Mar 2022, Philip Oakley wrote:
+> >
+> >> I'll have another look at the ways these edge cases could appear, and
+> >> try an improve the commit message explanations where the diff doesn't
+> >> show sufficient context. It'll be at least next week.
+> > Can I punt this patch series back to you? (I sent it upstream on your
+> > behalf because I had assumed that you'd want me to, sorry for
+> > misunderstanding your intentions.)
+> >
+> I'm happy to continue to work on this series, and am grateful for your
+> support in pushing it through GGG. How is it best to transfer the
+> 'ownership' at GGG?
 
-It is a new issue in this series, specifically how
-"finalize_test_case_output" interacts with "test_{ok,failure}_" and
-friends.
+Sadly, I don't know of any way how I could transfer ownership to you, but
+maybe you can just open a new one and reference the first thread in the
+cover letter?
 
->> The easiest workaround would probably to add a flag that suppresses the
->> header `expecting success` in case we're running with the
->> `--github-workflow-markup` option.
->
-> If that is the case, let's leave it outside the series.
->
-> If we do not have to hide the solution behind any option specific to
-> "--github-workflow-markup", then even users (like me) who reguarly
-> run "cd t && sh ./t1234-a-particular-test.sh -i -v" would benefit if
-> we no longer have to look at the duplicated test script in the
-> output.
+> I've still got some family issues so it'll be later in the week, or even
+> next week before I can update the series.
 
-Unless you invoke it with --github-workflow-markup you won't see the
-duplication.
+Sorry to hear that you have issues. These are tough times, and I feel for
+you.
 
-I had some comments about inherent limitations in the approach in this
-series vis-a-vis parsing markup after the fact[1]. But that really
-doesn't seem to apply here. We're just printing the test source into the
-*.markup file twice for no particular reason, aren't we?
-
-*tests locally*
-
-Hrm, so first this is a bug:
-    
-    $ ./t0002-gitfile.sh  --github-workflow-markup
-    FATAL: Unexpected exit with code 1
-    FATAL: Unexpected exit with code 1
-    
-Seems it wants --tee but doesn't declare it, this works:
-
-    $ rm -rf test-results/; ./t0002-gitfile.sh  --github-workflow-markup --tee; cat test-results/t0002-gitfile.markup
-
-Isn't this a matter of making finalize_test_case_output not print the
-full $* (including the test source) for failures?
-
-1. https://lore.kernel.org/git/220309.861qzbnymn.gmgdl@evledraar.gmail.com/
+Ciao,
+Dscho
