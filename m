@@ -2,106 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DEEAC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B00E0C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:38:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237564AbiCITbb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 14:31:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48472 "EHLO
+        id S234808AbiCITjv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 14:39:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237486AbiCITba (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 14:31:30 -0500
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 694C55AA6C
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:30:30 -0800 (PST)
-Received: by mail-oo1-xc2e.google.com with SMTP id l24-20020a4a8558000000b00320d5a1f938so4114896ooh.8
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:30:30 -0800 (PST)
+        with ESMTP id S237640AbiCITju (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 14:39:50 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A96D7678
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:38:51 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id s10so4296501edd.0
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:38:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=oiee2nOpWq0RkTMgof5un6g9plvUp5CPhCpthLLaAOM=;
-        b=eER40w0S9wb4ra3+0g65rpsWlrLODZyAwv9c0nGy/f2B7857lFd9ud9dNGvmKkP7kP
-         oRqhicxz79y8QQtUmp2q4ThGyu8LP8+NOwdN1VSH5AMjU6Mcgom26HqFW7C6lSYb912U
-         QyStLBf1Aj7Hq3xiRp4EvBj5yO4znc3VetzzxI6GBwWs8NYK3piX6lv+Lq7gT7h3cufx
-         vtVFmunwmFw/qsixKKP8wExvkaxJOu3bOcH8QafLpWKNg2leAe3roI5/5uRBtwFPMb0z
-         51uObK9Qvfp02wUxrD3w8dup7DcSRuWn70jo/liAeRDbIKSWXQCj6Z0klMA9meiwZsGd
-         xkhA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=edJGVHDbqPTqp+bIAMZAK44G3Wt9XvFvKyOhDAK6rp0=;
+        b=IphP8X3FlMb74BNHTfiAkfdMwCPRNXZSeqpNamJqwePERg+l39k/wwOc/UL5iSVKBX
+         HIcURSGB5JSBE6t1zLdZXgKNPrrZc8jAJDA4luj58W3guFJj4Mne5Aur30rcPDZnHNvv
+         KrBsZvTpN4rUTOc9DK0yira465q6S1AAr+j7PcZjHaUwFZpjAGpMRiuDGpZuEo6uoLw5
+         /gOLiRCFh4lP2ex+wjDjeZaixUGAg1gHXw/eZNJhust0+Q4nQdjWzd1izIrAOF7vvq+l
+         drYo354PhgxbamOxMAXwMz76cjFDIBgZcJxQSz44PFzIRQ2fWEMW80VTHduObr7fAJCH
+         sJuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=oiee2nOpWq0RkTMgof5un6g9plvUp5CPhCpthLLaAOM=;
-        b=CnzbyDikTT6LMc9DuITc24z42jzd6GsR3UDqvIyJvtAVxlv1c0UA/oUzuL5J3Ltmub
-         7jW3/uac2AtKBvR4GGgF8OcbX6P+NCjuDujlj30bKfJs1Dl5PBrpJ8BlBzpXiQiiw/Qr
-         EbygwpfcpWkDwyEeCn3wECDlwG6LeKJwT9zjfpjmdVzeUBRQ9ON3ldkaAlnTgGvt1h7d
-         UsELUfrKPwRPym2kBwGIlXQ1ZsuGgiTswrDYsEoddy8/h6fTSmE/jxzaOYhNsVy6frAM
-         beltwqBKNKVIDndgm876w3nynM3LvMNH4MR3IxdHbFojYsMXHgJu2+IUYa/wHCzappKF
-         hLbw==
-X-Gm-Message-State: AOAM531AAEFbtlYNKmADpc6c8vct/q1QoiwZedrZ6ke2abc18FN/q4Ic
-        L/0r9EkbooOlfMKex3NtYVMS
-X-Google-Smtp-Source: ABdhPJzybNDyr5aUtTnotMukl1oPePDfTpnyqMed68OKNOd7flILYOry+M1UJFLuOYxgOsnr9jCkgA==
-X-Received: by 2002:a05:6870:508:b0:ce:c0c9:5f1 with SMTP id j8-20020a056870050800b000cec0c905f1mr6331537oao.67.1646854229352;
-        Wed, 09 Mar 2022 11:30:29 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id j10-20020a4ad2ca000000b0031c515672d0sm1394129oos.23.2022.03.09.11.30.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Mar 2022 11:30:28 -0800 (PST)
-Message-ID: <94242ef8-2e68-1b77-a108-2ed3604741fa@github.com>
-Date:   Wed, 9 Mar 2022 14:30:26 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=edJGVHDbqPTqp+bIAMZAK44G3Wt9XvFvKyOhDAK6rp0=;
+        b=7C0ITUJFo9HB9fz5Z+u1nF5QfHegzJMrdalW+wxSGAhskvT7F8NAjOQ+wVSMR06N6h
+         9mhMgf0u9BFnEofcpgTWT9Q/XpSEBuj8L5jbQZ3rwqGwuz8IfV3UUcGQ1Xq+bwOgg0/P
+         Su0C5otEi+ZWAJDr+j95QkS2lHRJOJUbcI4mFc/oHqgLW7gOiE/KD4e+alUBOmECxXPK
+         XV+OFpPx0muJBspT5YyUAwCf+XKvbwq9ZxGkfCfZ/cRBEk3C2s4ibRnBUS6f1BagNdYF
+         fZ3RblwqaTtHBeadvAWAtwMO/LJMSykmW9pBwSaJgvu9/ZEQMLXSx2QDzRIr9V6S8Y1y
+         QxOQ==
+X-Gm-Message-State: AOAM531gdhgW56rlBLCLlbi2jdW13hAQugrMno58Pwye6ijpMPsXjDFS
+        x3Wd3Q9dK4loLlxUmG9BVVc=
+X-Google-Smtp-Source: ABdhPJxFNsobEg7zpQbhpfPqM1b+f6fdE1GngdcInCw6k7o1iB0vIMMU0hW0S6H01Bv2fqh0lmnXVw==
+X-Received: by 2002:a05:6402:51d2:b0:415:c171:346c with SMTP id r18-20020a05640251d200b00415c171346cmr1012182edd.19.1646854729457;
+        Wed, 09 Mar 2022 11:38:49 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bw26-20020a170906c1da00b006c8aeca8febsm1078561ejb.47.2022.03.09.11.38.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 11:38:48 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nS292-000Did-1y;
+        Wed, 09 Mar 2022 20:38:48 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v6 16/30] compat/fsmonitor/fsm-listen-darwin: add MacOS
+ header files for FSEvent
+Date:   Wed, 09 Mar 2022 20:37:32 +0100
+References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <cdef9730b3f93a6f0f98d68ffb81bcb89d6e698e.1646160212.git.gitgitgadget@gmail.com>
+ <220307.86h78a2gcn.gmgdl@evledraar.gmail.com>
+ <1a060357-3296-81d5-bf23-a55263ef6d10@jeffhostetler.com>
+ <xmqqk0d3kl73.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqk0d3kl73.fsf@gitster.g>
+Message-ID: <220309.8635jqncfr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 00/24] revision.[ch]: add and use release_revisions()
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <77c8ef4b-5dce-401b-e703-cfa32e18c853@github.com>
-In-Reply-To: <77c8ef4b-5dce-401b-e703-cfa32e18c853@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/9/2022 9:34 AM, Derrick Stolee wrote:
-> On 3/9/2022 8:16 AM, Ævar Arnfjörð Bjarmason wrote:
->> == For Junio ==
->>
->> This has a trivially resolved conflict with Derrick Stolee's
->> aaf251cdc5c (revision: put object filter into struct rev_info,
->> 2022-03-08) currently in "seen" in builtin/rev-list.c.
->>
->> The resolution is to just keep the "goto cleanup" in place of "return
->> 0" in the conflicting lines, but to otherwise keep Derrick's version.
->>
->> It will pass with/without SANITIZE=leak when applied to both "master"
->> and "seen". I omitted one test change (described in a relevant commit
->> message) due to the latter not being true (no fault of "seen", just a
->> new leaking command being added to a test).
-> 
-> Since ds/partial-bundles will soon be updated in v4 to change the
-> pointer added to struct rev_info, it is even more likely that there
-> will be more important things to do with regards to clearing the
-> memory of rev_infos based on that change. It might be better to wait
-> for that update (coming soon) and then rebase directly on top.
 
-I took a look at the series as it stands now and have a few nits
-here and there. Generally, things are pretty standard in this kind
-of series you've been working diligently on for a while.
+On Wed, Mar 09 2022, Junio C Hamano wrote:
 
-The only thing I can recommend is to check that your leak-check
-statements are still true when reaching the end of the series, now
-that the filter member exists. Likely the tests that you are marking
-as leak-free do nothing with object filters, so they will still be
-true. Just something to keep in mind and maybe add a patch that
-recursively frees the contents of 'revs->filter' at the end.
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+>
+>> On 3/7/22 5:37 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>> On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
+>>>=20
+>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>> [...]
+>> [...]
+>>
+>> =C3=86var sent feedback (thanks!) on 8 commits in the V6 version
+>> on March 7.  I started responding to each as I got to them
+>> in my inbox yesterday, but I'd like to take a break from
+>> responding individually to each of them inside of Part 2.
+>>
+>> Since most of the feedback is for "general cleanup" and since
+>> Part 2 V6 is already in "next", I'd like to revisit these
+>> issues with a few "cleanup" commits on top of Part 3 (which
+>> is still in active review), rather than re-rolling or
+>> appending "fixup" commits onto Part 2.
+>
+> Sounds good.  Prepending "preliminary clean-up" before part 3 would
+> be even cleaner, I would suspect.
+>
+> In any case, let's consider part 2 "more or less done" unless we see
+> a glaring mistake that requires us to revert and redo it from
+> scratch.
 
-Thanks,
--Stolee
+Sounds good, my comments on v6 today were before I'd noticed that it was
+in "next", I think all of those can (well, it would be that way either
+way at this point...) be left for some potential follow-up.
+
+Thanks both, especially Jeff for sticking with this fsmonitor topic for
+so long & keeping it advancing.
