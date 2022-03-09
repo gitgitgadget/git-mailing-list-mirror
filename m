@@ -2,76 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E942C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 01:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EBD9C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 07:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbiCIBVn convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 8 Mar 2022 20:21:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34730 "EHLO
+        id S231232AbiCIH64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 02:58:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230406AbiCIBVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Mar 2022 20:21:37 -0500
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D763F1198
-        for <git@vger.kernel.org>; Tue,  8 Mar 2022 17:17:27 -0800 (PST)
-Received: by mail-qv1-f41.google.com with SMTP id eq14so887382qvb.3
-        for <git@vger.kernel.org>; Tue, 08 Mar 2022 17:17:27 -0800 (PST)
+        with ESMTP id S231265AbiCIH5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 02:57:36 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BACB1688F7
+        for <git@vger.kernel.org>; Tue,  8 Mar 2022 23:55:56 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id j7-20020a4ad6c7000000b0031c690e4123so1869923oot.11
+        for <git@vger.kernel.org>; Tue, 08 Mar 2022 23:55:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=/4zf8tr8r2ndNxrHg3YadfgWOE9LNq7nqqBNm3yzpuc=;
+        b=k+BRfjRbVlCQlk7NDU3v/0R0gPGv4R4DVbWX14n9Ys/lz2ZohGcyFjWA4YzJ/5RKB6
+         OE7svpjJV6awTQHPCoPo7KD5YQmjwNSEZfBRlTDx7D7rIpz78GulrNXtDtIMrOAZH2Be
+         APQtXGpeWE+bOKyLuVxL9V0zqFbeVqi5kC4v1iZfOWOZf6gTgE2jBqzArUQPLWAjEh+R
+         sfmUW/dpwoH7beZddu1ZxSDMskvtTy1/RqaSfnMe1Vdqfph4tIFNOfRTwP4rY6nU68Ko
+         po6oAqScobtRvRjGBsDX73JaP/eU/HI/Ma2AaL+07Tod4Rm1tCbjoh0S3tVsW7kgAIxn
+         PyMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5p38+yFaJYCpoQLM9mcHPRRu6NEYT8brn0peP3H7j1o=;
-        b=c9DJoFXS8HREpiHkhnHz7SgNnoqieZZE6/5Wtgu1DzoBv+AeOJUc+8gjQW47vu2KT7
-         kwnnp8VXlCKFFm98UPAeTVtlz362kbnkQlhJ21iYite9jPugltgCRoiMTFHk/zBq/Mo8
-         1kzie2NUs1rdZFMV2D32i1CPySXIy5xKw4vz8DR8R7hHgtlBVlAbi09GyrAl+aKJjgPw
-         KqOxIJrIrEoFOuvMq/njNngiTZDVT+fOfYuQlIB69eOm418xgwC4x2qXOqbFo7HKnNVz
-         hyxvQ39Q34kE3FP9odWIIGOyGVVWol5ib34GtYr1PWYytOmYkKrweKBDQs60hra+yp0U
-         hYEA==
-X-Gm-Message-State: AOAM531+OJ3qb6t03g6kN2iS5nWmAJcyO8dZM2rR3Bk7Ml164U5T7ELb
-        pWcBnqweigXqPbQOhwZsr8NwgusHjn1occgx2qufNJU7txuVUg==
-X-Google-Smtp-Source: ABdhPJybZlrjb7uwxGeGyybNTN5pxXO7b6uEIJqaIA1crmYZR8kDyZCgJqJuVNEY7Kt6tq0eR2aISvFhRHdgzZnynKk=
-X-Received: by 2002:a17:902:c215:b0:14f:f1c2:9fe3 with SMTP id
- 21-20020a170902c21500b0014ff1c29fe3mr20083565pll.145.1646784358419; Tue, 08
- Mar 2022 16:05:58 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=/4zf8tr8r2ndNxrHg3YadfgWOE9LNq7nqqBNm3yzpuc=;
+        b=MSgMpQofwiZkVR1ypMFxXbEeYG0YR9iPrylWxp0atIa5DiDfuShFLO+Ejp3niFIVtq
+         lsdpLRk+TZPewQTaXjidT9bm+W7+wv3iZ7PJJVZKx1E5qijgUDOsaJ9du3QQaB199/V6
+         gEBDcFyiHLgnMuxVuZKubr65yGArP+LjPDQpz1QADjYiW2JMGJb0jo32LJ28WQsi0AhM
+         rcJ44fRwesPBfvgA/WMtwexg6y4lFHjeODegFwtk3vcVE+e0XpVNH6zGWKcSU2YckpD4
+         Ai3M8m0l3or8MWTrIm0KWNSA2cFU8F/Zh1TAycz5w4kEXzCXrEriNdEzoqTwF/7+3mhU
+         lYCw==
+X-Gm-Message-State: AOAM531m6K34gMsn24LVc39s2oVIYW+kwQWG59yIYNNoJPe2y7bWyRQY
+        4TBY+KknhoeoI1PrxHkxXYcHJmVV5BbgpPft/jXp1g5GBEo=
+X-Google-Smtp-Source: ABdhPJwwg5yNjGvp1hsknyH61MnC6omllqxFwmTKxjgy4sXbl3v3Y6NRaqSgXooyKRbnS7AsTg9zuijk593Yyuv9FoY=
+X-Received: by 2002:a05:6870:f713:b0:d2:8adb:aaeb with SMTP id
+ ej19-20020a056870f71300b000d28adbaaebmr4635140oab.111.1646812555424; Tue, 08
+ Mar 2022 23:55:55 -0800 (PST)
 MIME-Version: 1.0
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <20220308113305.39395-1-carenas@gmail.com> <CAPig+cSNgQ7SEYk9M=L7z0G=hteTdupKS6sHJL8T7zEp=zkLEA@mail.gmail.com>
- <CAPig+cT3TNFBMesYvYoncawfBdLqKL971SoP_J7F9FgnL10Eqw@mail.gmail.com>
-In-Reply-To: <CAPig+cT3TNFBMesYvYoncawfBdLqKL971SoP_J7F9FgnL10Eqw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 8 Mar 2022 19:05:47 -0500
-Message-ID: <CAPig+cSUTaPRvALJyJ8AxNB4wMFLyaWBOa8f+_8K6quPbxTT5A@mail.gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use awk instead of expr for a POSIX non
- integer check
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Elia Pinto <gitter.spiros@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Wed, 9 Mar 2022 15:55:44 +0800
+Message-ID: <CAJyCBOTKq3t=QtynBMrHvP5__FfNpoeUJ7t8xMv-3zTbv4yU7Q@mail.gmail.com>
+Subject: Add an OPTIONS chunk to Documentation/git-sparse-checkout.txt
+To:     Derrick Stolee <stolee@gmail.com>, vdye@github.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 8, 2022 at 6:58 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Mar 8, 2022 at 6:55 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Tue, Mar 8, 2022 at 6:44 PM Carlo Marcelo Arenas Belón
-> > <carenas@gmail.com> wrote:
-> > > +               local _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null)
-> > > +               if echo "$_GLIBC_VERSION" | cut -d. -f1-2 |
-> > > +                       awk '{ if ($2 - 2.34 < 0) exit 1 }'
-> >
-> > No need for `cut` since `awk` can accomplish the same by itself.
-> >
-> >     if echo "$_GLIBC_VERSION" | awk '/^glibc / { if ($2 - 2.34 < 0) exit 1 }'
-> >
-> > should work, I would think.
->
-> Nevermind, I forgot you want to better support "2.34.9000" matches.
-> Though, awk should still be able to do so on its own, one would
-> expect, but not too important.
+Hi all,
 
-This seems to work, though it's getting a bit verbose:
+I'm wondering if we could add an OPTIONS chunk to
+Documentation/git-sparse-checkout.txt?
 
-    awk '/^glibc / { split($2,v,"."); if (sprintf("%s.%s", v[1], v[2])
-- 2.34 < 0) exit 1 }'
+Cause when I was skimming through the SYNOPSIS
+and it says "git sparse-checkout <subcommand> [<options>]"
+but I didn't quite see the options until I read into the COMMANDS.
+
+Perhaps something like this:
+
+OPTIONS
+
+    --[no-]cone
+
+    --[no-]sparse-index
+
+    --stdin
+
+If this is okay to do then I will try to submit a patch later :)
+-- 
+Thanks & Regards,
+Shaoxuan
