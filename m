@@ -2,92 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415BFC433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE27C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 21:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236231AbiCIVdr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 16:33:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
+        id S236889AbiCIVd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 16:33:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237633AbiCIVdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 16:33:45 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720A11EACC
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:32:46 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 845E51784CE;
-        Wed,  9 Mar 2022 16:32:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hKWuGNJWgboBOKKD5ZHThUM5OLD+RZx5R/K+/d
-        aHOQs=; b=jiAoUdQni8k0Paon+3n+gQ8MyVBkRdELPU4LrDIlWfAWCJAPNVJ7TL
-        /run6Zbh2KufKu2KqpZn+sR3WhahnpyawF3QDRWsvHK8DZBpHVmcXQwPhAy/SzMF
-        O2WCNc5wBclgepLpmOGza7BGSse26dXlcqL1eixkNEn56aRtVHx6g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D16F1784CD;
-        Wed,  9 Mar 2022 16:32:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.247.14.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 06B191784CC;
-        Wed,  9 Mar 2022 16:32:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robert Coup <robert@coup.net.nz>
-Cc:     Calvin Wan <calvinwan@google.com>,
-        Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        John Cai <johncai86@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 0/7] fetch: add repair: full refetch without negotiation
-References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
-        <20220309002729.3581315-1-calvinwan@google.com>
-        <CACf-nVeEBDQse0coA7QpQmQ92y9kDwXoTmayD8_NY2OHNZ5v+g@mail.gmail.com>
-Date:   Wed, 09 Mar 2022 13:32:42 -0800
-In-Reply-To: <CACf-nVeEBDQse0coA7QpQmQ92y9kDwXoTmayD8_NY2OHNZ5v+g@mail.gmail.com>
-        (Robert Coup's message of "Wed, 9 Mar 2022 09:57:37 +0000")
-Message-ID: <xmqqzglylslh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234520AbiCIVd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 16:33:56 -0500
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E10F3700B
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 13:32:55 -0800 (PST)
+Received: by mail-io1-xd2d.google.com with SMTP id e22so4300337ioe.11
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 13:32:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=iFuLnJQTfXSxvFbzCILbdQpK4JtH+LMBjQcQbCjTfNw=;
+        b=r5wU1OBkI57Uz9RaNGVwOOzNjEp42lzVrGmAnw35iujjqj8RMG7HeZ1XU0r9MWuDOf
+         8NTDguspI5AKxkmTAww8jL9wUgAlzE8vGLRO+W0lh7jAThe5jJyZttKUm1F6/8XS4p60
+         phc3DVt4Vr9lkHZ15oPZpWET/kAei0wVScanSRlvLJemx68kZuLmI1fkYdSgH+K8tEhe
+         fTx3GGHISMUkovJTPXsz71gwAK+/Y2NlZNlEQ2vKc876Ob4jfJbWYXaKM+NLX7zSW1XU
+         6QmAknIM4kn2NCTFOpZqri+Mc/SEx6Hq4WqXHymNlTPAlEwxe92rKiF7pjcgDk+y/Pi7
+         BwWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=iFuLnJQTfXSxvFbzCILbdQpK4JtH+LMBjQcQbCjTfNw=;
+        b=uf5LDFxVG/8YhWz8XJpAMCxs6GNnYi6B99ymG4vabrGOvjonoNzCVLjzIz1yn3Pu58
+         kx+cQfnm5fT9B0gU15SvJjTpJfP/EfcpfHRLgVPzScqzBXrEZ3QtCBQ/xJyh1gpHu+Zv
+         7IAK+8zZIi1MYVGcBLG4YMPVzpTEPf3OIZ+tKFII5UY+Utfp5UoXl1xVVQabkjKKzC7q
+         O06zdW8cORGYY07YZw2xWlzGprPKSpAGOarLWhenTAljZoZsvu7XwXJ+/YbwHCCBqlwq
+         DflllzTZu0uYoaLlLbJelXUXEE42hVvKrVdZp/rfVtEGM8LlH6RNwSWKOrwlVwudZfgW
+         bb8w==
+X-Gm-Message-State: AOAM532x2HhVlBKY9H8THkGCTNRwPQXUnGSKXDQfhQEu67AOKYLCZGNZ
+        iLbfTWeglCQwspOpp2m1Y8ddA0G6IvYYsW+A
+X-Google-Smtp-Source: ABdhPJw3LA/sWvle9OeF3KG8NznJJcX+6OnL0JLNMnW8j7Y5oHJJkJrnCkwmFMU+Avzp+jwd0c7c9g==
+X-Received: by 2002:a05:6638:359:b0:317:c322:b012 with SMTP id x25-20020a056638035900b00317c322b012mr1253151jap.285.1646861574645;
+        Wed, 09 Mar 2022 13:32:54 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a4-20020a056e02120400b002c638c50efesm1631438ilq.68.2022.03.09.13.32.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 13:32:54 -0800 (PST)
+Date:   Wed, 9 Mar 2022 16:32:53 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 05/24] revision.[ch]: provide and start using a
+ release_revisions()
+Message-ID: <YikdBfMh++b8jPvu@nand.local>
+References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
+ <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74198A32-9FF0-11EC-BD17-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert Coup <robert@coup.net.nz> writes:
+On Wed, Mar 09, 2022 at 02:16:35PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> Let's provide a release_revisions() function for these users, and
+> start migrating them over per the plan outlined in [1]. Right now this
+> only handles the "pending" member of the struct, but more will be
+> added in subsequent commits.
 
-> So, if you do a partial clone using `git clone --filter=...` then the
-> filter is saved into the config at `remote.<name>.partialclonefilter`
-> and is re-used by default for subsequent fetches from that remote. But
-> there's nothing to stop `git fetch --filter=...` being run multiple
-> times with different filters to carefully setup a repository for a
-> particular use case, or any notion that there has to be "one" filter
-> in place for a remote.
+I could not be more excited about this change! The lack of easy
+mechanism to free everything in the rev_info structure has been a major
+impediment for me to get much value out of the SANITIZE=leak builds, and
+this is a huge step towards making those more useful.
 
-The way I read Calvin's suggestion was that you won't allow such a
-random series of "git fetch"es without updating the "this is the
-filter that is consistent with the contents of this repository"
-record, which will lead to inconsistencies.  I.e.
+This plan looks good to me, as does this first patch to introduce the
+new API.
 
- - we must maintain the "filter that is consistent with the contents
-   of this repository", which this series does not do, but we should.
+Should it be documented anywhere in e.g.,
+Documentation/MyFirstObjectWalk.txt or elsewhere?
 
- - the "--refetch" is unnecessary and redundant, as long as such a
-   record is maintained; when a filter settings changes, we should
-   do the equivalent of "--refetch" automatically.
-
-IOW, ...
-
-> Running `git fetch --filter=...` doesn't update the remote's partial
-> clone filter in the config, and IMO it shouldn't for the above reason.
-
-... isn't "git fetch --fitler" that does not update the configured
-filter (and does not do a refetch automatically) a bug that made the
-"refetch" necessary in the first place?
-
-Or perhaps I read Calvin incorrectly?
+Thanks,
+Taylor
