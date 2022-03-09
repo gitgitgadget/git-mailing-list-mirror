@@ -2,132 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C23B5C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 22:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A07C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 22:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238690AbiCIWdP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 17:33:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
+        id S235867AbiCIW7C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 17:59:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235678AbiCIWdO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 17:33:14 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2741121511
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 14:32:14 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id b9so1143569ila.8
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 14:32:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=T1AeVSNKZ/14JJkkjA9ZC6AmwE9X6itODGdALFcMpio=;
-        b=cwEVzfOdETWd9BoeZUM05fkCclwPf+ADIyMLh2dzBM2efRba4RKQlJ1NQxn1XBGG7/
-         Qpp9rhb/IyYJfQ2GSpS/TTXahhWB+rwCExBLlir82oQZJ3PUGK9RyHsZMaMSFfGcFpnC
-         okyp8tQpoJCZw9jaRv7u6ie2SpZ8mOnsL5jQKDaiz+k9gpfA1RinjfmUg6BMME5ZZS5z
-         KvvEiaEI3B4dHnt/ZmYBkPDVzC6EXHQttgkUqMZ/Fddz3azj8DxW7t6lYWHm3ksIO5ED
-         jvZvpNiH9QdF5DQfaC+eWgspoqMawqdFt/5RR89Xo4EZ+7hMcoTCW3nAhSk3JUyjy98R
-         rIHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=T1AeVSNKZ/14JJkkjA9ZC6AmwE9X6itODGdALFcMpio=;
-        b=yAr0OPSFPYHJW8jyrUHmJsZR7BP5JafZJLld+BJxZe13uwKEa3yzwTTwIpvESKcGjN
-         zEnG9XF9FqzxNmCDauk2RiqWvhWiMhhub1VK8XkM+HHWOAuYN9792YLZV4/iRj1iEJdC
-         8tgcUyzlelN24wb+aQkn/VKLEt7DG4WyO+o0bfNopve6ErpTqQy/pqYsJpvDcA+j+Ro/
-         sYKJxzPGDTZd5K6yIY+C78zQ0Is0PXISe3RdcylHV4n64e0QGaf4i2T01+dB8NqqTjlK
-         G6jxYgn2NIQwmnYhPsRyajQxS1m3oaq9bbNWLnYnd5dg8zpGkABFamROODRHsBP4h0Sw
-         dQbg==
-X-Gm-Message-State: AOAM530ltjmBA9Obvc1/Rk+WlQokBdgiJhNVAxUVLiRmxtidv5RvBJT3
-        0+w0IhVCW10OnqlIUuEDYqbsnR9vjP/DakuZ
-X-Google-Smtp-Source: ABdhPJz6pDfSV+kZyLasUvIdO5pc0yLOaCbnMLLUVpp36QYFyHICAROvZDl+ZPhpRXZGHVyJgzM02A==
-X-Received: by 2002:a05:6e02:216a:b0:2c5:eefa:2bf1 with SMTP id s10-20020a056e02216a00b002c5eefa2bf1mr1276458ilv.236.1646865134103;
-        Wed, 09 Mar 2022 14:32:14 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j9-20020a056e02154900b002c5f02e6eddsm1822852ilu.76.2022.03.09.14.32.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Mar 2022 14:32:13 -0800 (PST)
-Date:   Wed, 9 Mar 2022 17:32:12 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] block-sha1: remove use of assembly
-Message-ID: <Yikq7POhuxeN1UPQ@nand.local>
-References: <20220307232552.2799122-1-sandals@crustytoothpaste.net>
- <20220308022240.2809483-1-sandals@crustytoothpaste.net>
- <220308.864k48y35f.gmgdl@evledraar.gmail.com>
- <Yikl2eGbc8sPsy5G@camp.crustytoothpaste.net>
+        with ESMTP id S230219AbiCIW7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 17:59:00 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6901C255AB
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 14:57:57 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45B1517904C;
+        Wed,  9 Mar 2022 17:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2x5lYgtqcz4J
+        j+OFspoH6h7vD5xpBVJbp9e3VKYyBvs=; b=RY+IRLA1iv0FHltuwdshrdqQ4yiz
+        qoYgA84Wt2mF06kI2HS3td7Q7ri8leBYi8N1N10usv3bt4TFtE+G8y13feCfcDLb
+        GqDSvPv8MR49WRSIX5RDqHIMTVa0mCQ6xAIVH0mErrXTVncYu1O2xDjY/H0Bi/hU
+        B3aPlNkaoy2dugE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3EFF917904B;
+        Wed,  9 Mar 2022 17:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.247.14.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 783A117904A;
+        Wed,  9 Mar 2022 17:57:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 05/24] revision.[ch]: provide and start using a
+ release_revisions()
+References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
+        <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
+Date:   Wed, 09 Mar 2022 14:57:52 -0800
+In-Reply-To: <patch-05.24-b89dcadcc22-20220309T123321Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 9 Mar
+ 2022 14:16:35
+        +0100")
+Message-ID: <xmqqmthylonj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Yikl2eGbc8sPsy5G@camp.crustytoothpaste.net>
+X-Pobox-Relay-ID: 5A2C4356-9FFC-11EC-9B7F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 09, 2022 at 10:10:33PM +0000, brian m. carlson wrote:
-> On 2022-03-08 at 13:38:06, Ævar Arnfjörð Bjarmason wrote:
-> >
-> > On Tue, Mar 08 2022, brian m. carlson wrote:
-> >
-> > I think the $subject of the patch needs updating. It's not removing all
-> > the assemply from the file, after this patch we still have the
-> > ARM-specific assembly.
-> >
-> > I don't have a box to test that on, but I wonder if that also triggers
-> > the pedantic mode?
-> >
-> > Perhaps:
-> >
-> >     block-sha1: remove superfluous i386 and x86-64 assembly
->
-> I suspect it has the same problem.  My inclination is to just remove it,
-> because my guess is that the compiler has gotten smarter between 2009
-> and now.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Almost certainly. I don't have a machine to test it on, either, but I
-would be shocked if `make BLK_SHA=YesPlease DEVELOPER=1` worked on
-master today on an arm machine.
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 9244827ca02..ed993383531 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -629,7 +629,7 @@ static void show_local_changes(struct object *head,
+>  	diff_setup_done(&rev.diffopt);
+>  	add_pending_object(&rev, head, NULL);
+>  	run_diff_index(&rev, 0);
+> -	object_array_clear(&rev.pending);
+> +	release_revisions(&rev);
+>  }
 
-> I honestly intend to just remove this code in a future version because
-> everyone not using SHA1DC has a security problem and we shouldn't offer
-> insecure options.
->
-> However, I think for now, I'm just going to reroll this with the new
-> title and then I can remove it in a future version unless somebody with
-> an ARM system can relatively quickly tell me whether it's necessary.
+I very much like this.
 
-I wonder if a good stop-gap for arm systems might be to do something
-like:
+> -	object_array_clear(&rev.pending);
+>  	clear_pathspec(&rev.prune_data);
+> +	release_revisions(&rev);
 
---- 8< ---
+But this makes readers wonder why .prune_data still needs a separate
+call to clear.  We are making it unnecessary to clear .pending
+separately, which was what made me say I very much like this in the
+first place.
 
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 1bb6e7c069..7402d02875 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -57,7 +57,7 @@
- #if defined(__i386__) || defined(__x86_64__)
-   #define setW(x, val) (*(volatile unsigned int *)&W(x) = (val))
- #elif defined(__GNUC__) && defined(__arm__)
--  #define setW(x, val) do { W(x) = (val); __asm__("":::"memory"); } while (0)
-+  #define setW(x, val) do { W(x) = (val); __extension__ __asm__("":::"memory"); } while (0)
- #else
-   #define setW(x, val) (W(x) = (val))
- #endif
+At least surviving clear_pathspec() now deserves an in-code comment?
+We'll know when we see what release_revisions() actually does.
 
---- >8 ---
+>  	run_diff_index(&rev, 1);
+> -	object_array_clear(&rev.pending);
+> -	return (rev.diffopt.flags.has_changes !=3D 0);
+> +	has_changes =3D rev.diffopt.flags.has_changes;
+> +	release_revisions(&rev);
+> +	return (has_changes !=3D 0);
 
-in the meantime in a separate patch. There it seems like the memory
-barrier is useful for machines with fewer than 25-ish registers. Though
-obviously moot if your ultimate goal is to get rid of the block sha1
-code.
+This is necessary because release_revisions(&rev) is a way to
+release all resources held by rev, and .has_changes is stored
+as a part of a resource that will be cleared.
 
-But in the meantime, a stop-gap patch may be useful. If you use that
-diff, feel free to forge my Signed-off-by.
+> diff --git a/revision.c b/revision.c
+> index 5824fdeddfd..831f2cf977b 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2926,6 +2926,13 @@ static void release_revisions_commit_list(struct=
+ rev_info *revs)
+>  	revs->commits =3D NULL;
+>  }
+> =20
+> +void release_revisions(struct rev_info *revs)
+> +{
+> +	if (!revs)
+> +		return;
+> +	object_array_clear(&revs->pending);
+> +}
 
-Thanks,
-Taylor
+Whoa. =20
+
+Earlier, we saw a code that indicates that a call to this function
+will invalidate the revs->diffopt.flags.has_changes but that is not
+the case, at least at this point in the series.  Is this a result of
+an incorrect "rebase -i"?
+
+Regarding the clear_pathspec() earlier we saw, it is OK to leave the
+call there without any extra comment, if the plan is to first start
+by introducing release_revisions() that does nothing but .pending
+field.  But then the diffopt.flags.has_changes thing we saw earlier
+should be postponed to a step where release_revisions() clears the
+diffopt structure that is embedded in rev_info.
+
+> @@ -2568,8 +2568,9 @@ int has_uncommitted_changes(struct repository *r,
+> =20
+>  	diff_setup_done(&rev_info.diffopt);
+>  	result =3D run_diff_index(&rev_info, 1);
+> -	object_array_clear(&rev_info.pending);
+> -	return diff_result_code(&rev_info.diffopt, result);
+> +	result =3D diff_result_code(&rev_info.diffopt, result);
+> +	release_revisions(&rev_info);
+> +	return result;
+
+Ditto.
