@@ -2,86 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96767C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C1E4C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Mar 2022 19:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235722AbiCITNT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 14:13:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58492 "EHLO
+        id S237323AbiCITO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 14:14:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232667AbiCITNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 14:13:17 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6703E14236D
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:12:18 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id z8so3671683oix.3
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 11:12:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vVRNbRanVqX4OqjqqDDzbou8s1gKt+fa5B1S6DWaCzc=;
-        b=IeN4faRRsgtC9SQdV8QtLsQwNrDAsK61qvXJ7J91wLf3fAL4K7iWjodwVQr/B8CX6c
-         RFjqQlyGmDpk8Pi6G5Q0v9o7S6vd5VZ1pmK8BfEj9+v790TOc94jm9h47O/3lO+lo92u
-         ItFK/uQwA2ykysG1K4JAPEnxo1yiepKOBjLdJK9JuB5cDx3SDO0aprX87Q6R2r7P8q6Y
-         1wtir8ThncbM0sboKkIIlmWfKrxBKDx6NzJQR5lLHJ23NWbTcloOm5LaHjnUH29rOXgm
-         wOCeLMC17SqsS7HK+DpL+aKUJ8f2/6koBq5WBqq9Yk6wrbQQKUM8/2QKeZwE+AoeCQk/
-         w+LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=vVRNbRanVqX4OqjqqDDzbou8s1gKt+fa5B1S6DWaCzc=;
-        b=ndVSTs1UsehR+x+yQMy3DtAmIqKFU4U53+ot5+IO5KuFaPfDnbgnoPMWt/ccCwczhv
-         V3eBiwDrIFmKmzQ76sg0DwzUz57BSumIUNfk2x6TyShtGOIGrTE7D5PdxaiES/5cUQfz
-         lrho73K9mut+c1iM07VacIf9nSEsfIpdHPmfB8hjbpChumuH/Nmf+4DTFTFs/SxuzUme
-         OuhLD9N1wuzuunKqX8Phrl/fBX8GvtpENzhNK7+tbMFnfM2nNa9XUhoJqpGttISzFGvE
-         6G9hNz6zZPW7V9czMb0qVmojzFeaQ0dpgLDIm6rxT3vu6GJumcO4JGGgabwJa1TX6flB
-         5CHw==
-X-Gm-Message-State: AOAM532ImuJ3TTEkgRH49ESMC5iSkVyegi3XFG1bxRu1mBqxVS9P+IIF
-        ck/735N2fZ33lDriLYrd5qFOJ25hg/o4
-X-Google-Smtp-Source: ABdhPJyaNEUnw1RlN3wvY5sP8Rwu2LXqqrxFXFNRuA7Or127zu9ywbC3rbBGbaTCrtq1mpFRkRdhvA==
-X-Received: by 2002:a05:6808:2209:b0:2d5:1bb4:bb37 with SMTP id bd9-20020a056808220900b002d51bb4bb37mr678929oib.53.1646853137777;
-        Wed, 09 Mar 2022 11:12:17 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p16-20020a05680811d000b002d72ec3a921sm1371571oiv.21.2022.03.09.11.12.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Mar 2022 11:12:17 -0800 (PST)
-Message-ID: <50873925-a5bc-7df8-1407-371eb904e38e@github.com>
-Date:   Wed, 9 Mar 2022 14:12:15 -0500
+        with ESMTP id S237326AbiCITOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 14:14:21 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD93BDBD13
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 11:13:22 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4905218F25E;
+        Wed,  9 Mar 2022 14:13:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hTWyaHzTxODumPvtiulLTL9I0p97JD7ZpXriiH
+        ShVs0=; b=q7QBh0BPu/Q5sYmQ36he5St0atWr75WMRM9/A6phcey/QBYzAk+MuA
+        CqeekTwyFtOB2JOH/YO11Y7+Sypn64Drw0IB0cnNr9jIhfL6tmrUPmrubT4aMMDg
+        r2z6FxXJw8kyd6yAzcGq7EZCGnrQ39rR30PYIKgm8YcOtmbzWkUeU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 40DC318F25D;
+        Wed,  9 Mar 2022 14:13:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ACC1818F25C;
+        Wed,  9 Mar 2022 14:13:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v5 00/10] fetch --recurse-submodules: fetch unpopulated
+ submodules
+References: <20220304005757.70107-1-chooglen@google.com>
+        <20220308001433.94995-1-chooglen@google.com>
+        <xmqqr17dp8s9.fsf@gitster.g>
+        <kl6lh7885mm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Wed, 09 Mar 2022 11:13:18 -0800
+In-Reply-To: <kl6lh7885mm3.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Tue, 08 Mar 2022 10:24:04 -0800")
+Message-ID: <xmqqfsnrkkhd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 10/24] revisions API users: use release_revisions() in
- builtin/log.c
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <patch-10.24-a89f0da4fd7-20220309T123321Z-avarab@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <patch-10.24-a89f0da4fd7-20220309T123321Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FB2BE7AE-9FDC-11EC-8DD1-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/9/2022 8:16 AM, Ævar Arnfjörð Bjarmason wrote:
+Glen Choo <chooglen@google.com> writes:
 
-> +static int cmd_log_deinit(int ret, struct rev_info *rev)
-> +{
-> +	release_revisions(rev);
-> +	return ret;
-> +}
+> This uses a "first one wins approach", which obviously doesn't have
+> correctness guarantees. But in practice, I don't think this is likely to
+> cause problems:
+>
+> - As far as I can tell, the only value we read from .gitmodules is
+>   'submodule.<name>.fetchRecurseSubmodules', and this value gets
+>   overridden by two other values: the CLI option, and the config
+>   variable with the same name in .git/config.
+>
+>   During "git submodule init", we copy the config values from
+>   .gitmodules to .git/config. Since we can only fetch init-ed submodules
+>   anyway, it's quite unlikely that we will ever actually make use of the
+>   .gitmodules config.
 
-This pattern of passing a return value through the helper
-function is a clever way to get around adding "int ret = ...;
-release(); return ret;" lines.
+These are reasonable.
 
-Thanks,
--Stolee
+> - Even if we do use the .gitmodules config values, it's unlikely that
+>   the values in .gitmodules will change often, so it _probably_ won't
+>   matter which one we choose.
+
+What bad things would we see if the value changes during the span of
+history of the superproject we fetched?  How often we would see
+broken behaviour is immaterial and breakage being rare is a no excuse
+to import a new code with designed-in flaw.  Unless the "rare" is
+"never", that is.
+
+I would think using ANY values from .gitmodules without having the
+end-user agree with the settings and copying the settings to the
+.git/config is a BUG.  So if it mattered from which superproject
+commit we took .gitmodules from, that would mean we already have
+such a bug and it is not a new problem.
+
+That would be a reasonable argument for this topic. Together with
+the previous point, i.e. we do not copy values we see in the in-tree
+.gitmodules file to .git/config anyway, it would make a good enough
+assurance, I would think.
+
+> - This only matters when the submodule is not in the index. If the
+>   submodule _is_ in the index, we read .gitmodules from the filesystem
+>   i.e. these patches shouldn't change the behavior for submodules in the
+>   index.
+
+How often we would see broken behaviour does not matter.  If it is
+broken when the submodule is not in the index, we need to know.
+
+But as you said, it does not sound likely that in-tree .gitmodules
+matters.
+
+It leads to a possible #leftoverbit clean-up.  Because we only fetch
+submodules that are initialized, the API functions we are using in
+this series has no reason to require us to feed _a_ commit in the
+superproject to them so that they can find .gitmodules in them.
+
+Fixing the API can probably be left outside the scope of the topic,
+to be done soon after the dust from the topic settles, I think, to
+avoid distracting us from the topic.
+
+Thanks.
+
+
