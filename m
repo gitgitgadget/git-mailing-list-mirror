@@ -2,120 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9079C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C16C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 15:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238515AbiCJOzI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 09:55:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53442 "EHLO
+        id S1343571AbiCJPFq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 10:05:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347337AbiCJOup (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 09:50:45 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A798190B50
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646923547;
-        bh=QSVRiyxLvctXZHOoVZi2IgL6FiMxMf/8thLLhGIrUn0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DGybXzGE2cXGQ5UsQL6ziEDqUcrP7wNLIviPti6qvfSqEiqnKQy62Q5KTOYPbzfcI
-         g+3mM9cBq70+lFNJ9Qqj4XSLSKL6JCTwMhUMyNrpM1FztUN5Hf4tPoTGSAXtR8W4WG
-         cZyuFpde1LQFwPy4rjKrQi6NpFLvGcaUysIxr45E=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVN6j-1nc2iC1zIV-00SOaA; Thu, 10
- Mar 2022 15:45:47 +0100
-Date:   Thu, 10 Mar 2022 15:45:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        with ESMTP id S1344061AbiCJPDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 10:03:35 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C19217F6A6
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:55:31 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id hw13so12146710ejc.9
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:55:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Q6+qVhT7731QVgTE+YgDNDVuTtm3HqYrgjT4FsR548g=;
+        b=UHuhXuJmhIEo54A3nP1PDsF55TTMSLwtkUSzBdqI6ByJnMiTDodOuwlmSOXJfIPwZa
+         uozNnjHRTqlWVdmcPncIgycTAWi5oyE17G2icISjV4feDjn1fXpn+3c9dLch5eZxWSjq
+         P3+zA3sBOKVsK91MKua99PJTyJEzKwbJPkOPUtE1Q+uk0DNrBmHTFL0ovokkpRL2acRO
+         sTzQ3UtlP/cSXMzii1u2uIJymhKTmate5UAcFn2fLb/OD8FEEfX/zai7auueMHDO0CmP
+         EZNrkZs8trej/ycmaZLBC9fFGfcebyijyz0SS+OzfrbB7aHUM7Bj5ljYzmeOFIZlnD2w
+         4LtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Q6+qVhT7731QVgTE+YgDNDVuTtm3HqYrgjT4FsR548g=;
+        b=mcQPhCvHGmhtoZ8SFX6K28yGHlsZemfHMHzLlT4OG1ekchasqS3ruzThdz57VZbuw9
+         kC6dsTe0jBKv29No5sxtQFh6EqvQI0x9bRceZphrCXupS2n+Pw2TIMLPUljCtmzdJLWj
+         iDZZ4mhx850Vn9QG0yvWrawP5iCWZYb0nbqO3/Y002KSkue4QGM9hNvatrjoicBNh7/6
+         I8UVXFEvuXjho4RCG6wqKw2Qe8UkJY4leLZvp6SGhGCLMJdU/cDP7ZiS3yT0Yl/hKyh3
+         IjDVsGjQYJu0Djy7H/zGpBeMRyz31p6L+sKpUaWe9eZC5CiC7mSuzzRdXYewTZeu+WSS
+         /ukg==
+X-Gm-Message-State: AOAM533cYHqYXRc8wL6ht5ZHXUf6KcI+h5cHgJBx6HFIgEaWl+Dm6sUK
+        QMjkrPaxHdhHKKy30MSQTv4=
+X-Google-Smtp-Source: ABdhPJx499cy8u7Q4AqHPIFL2ZHGcArN47Ij7wFNWCE5BXDl+9W4cCNMCD5M1QS4rEjkDusdHOhbzQ==
+X-Received: by 2002:a17:907:629a:b0:6d7:b33e:43f4 with SMTP id nd26-20020a170907629a00b006d7b33e43f4mr4649602ejc.149.1646924124749;
+        Thu, 10 Mar 2022 06:55:24 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s4-20020a170906a18400b006db0a78bde8sm1884141ejy.87.2022.03.10.06.55.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Mar 2022 06:55:24 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nSKCJ-000XUS-MZ;
+        Thu, 10 Mar 2022 15:55:23 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee <derrickstolee@github.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        newren@gmail.com, "Robin H . Johnson" <robbat2@gentoo.org>,
-        Teng Long <dyroneteng@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH 00/25] [RFC] Bundle URIs
-In-Reply-To: <ddebc223-1e13-e758-f9b1-d3f23961e459@github.com>
-Message-ID: <nycvar.QRO.7.76.6.2203101545140.357@tvgsbejvaqbjf.bet>
-References: <pull.1160.git.1645641063.gitgitgadget@gmail.com> <220224.86czjdb22l.gmgdl@evledraar.gmail.com> <15aed4cc-2d16-0b3f-5235-f7858a705c52@github.com> <a6981d6e-16b0-b0e1-a94d-a87ec20871bd@github.com> <220304.86a6e5g44z.gmgdl@evledraar.gmail.com>
- <1469e420-63e5-e2db-21d5-c70674ab04d5@github.com> <ddebc223-1e13-e758-f9b1-d3f23961e459@github.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 20/24] revisions API: clear "boundary_commits" in
+ release_revisions()
+Date:   Thu, 10 Mar 2022 15:55:10 +0100
+References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
+ <patch-20.24-fa53e81c7c0-20220309T123321Z-avarab@gmail.com>
+ <625c3868-60c9-009b-b01b-f186710d4d08@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <625c3868-60c9-009b-b01b-f186710d4d08@github.com>
+Message-ID: <220310.865yolkgbo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1470902776-1646923547=:357"
-X-Provags-ID: V03:K1:l9Prz+F7u10dQG/JdcmqSky4/CN3ePfiAqeIvg8J3yCCeMoZZ/x
- ytZGhFr0AY0IW1DJVH7VUmBRge80vcdQ2e2ZUQKG2HTOECNbKUa8+L2AkByTJkTg2IgzapM
- uiJphDQCE7vGi39C/5ezz65Is/94s0AoEEHP8NM/5MgAccfJC6sn0BtZhSwrnYoOLeDL0zv
- Esqoy1zh0nwFHPrh93eFw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:b4nkLEd4VFs=:dDP8XEU8tDN5rhhXoKXDRg
- FwB7Rv2mo8sdINL8aaC4gyWR0yVtEylxQXdt6k5JwxP8kQbfx8r2z3f6akjkF3wapBAZjkBdw
- h9JSXjRoU+C28H8aBLCPUFV1/pv9KkzY9FYgbL/eSPyLRKh0LZIVtWWbMGI/p9YTKbNS4VglF
- DTLfeD+V7xT1ElopjrP80zFeHxo4GozLtUN4IBIR2O9vnLM0nU+hZ5k/aDyI3gcuxWl5jXc0M
- /42ACXEgD0aJtmubC1mltzz12IckHURrntqesehV6NsXBD+fMFaiORWEZMPcPLaZzo7YBX3cc
- +eQZr8Kr4FiJX3Xhwyz2vkTuFGa0XN+Z9vWjATKBbWBV+k1A5hFwTQ+VgKjIVl8X5vtz2Nyj4
- 6arUrJ+GIzXReGUrrmEyktJ7rm83/3zJ2liR4Idd1ruWkGSg63Jz9fWUsiBTv6mGejEgoQsmq
- l2pcfUoFpUIWcHMg0Cr9qjXIn9lQX761a8+3wk+rpN5IT4LldASgW/0aSTDCSSiLkf6KXaGLY
- Bz2PSvT8d/miOd6tgGvCRL1Cswg1P+jMIoo1qYQ8Wwinbl/KnJJmzI1yUhrH0Uk17tSgKl70c
- PPYTq8CwdiGv403chBU0TGThegUceU1x7s4LOFt6/fwArYDuRX85s+plCJUC/DPGQwXktgnju
- DZaqZo8xq/Wocj7fgiP4Wc+LTnoITAJzS/l8rLNzeXds9/LoQKFNXslKIr2TZWbx9PfUYCzPj
- fwX2lNpr4Ve5U3J5RirWgZz4z+t+wq/m5j2QEQZ3QPSqyEr8Z6f9qVfaccFW+tpdhNRFETVMh
- Fn7eFb1ZxdoCrG2BcRAKE3MQORPmojpkOmeAyzKBcCyAPBfv2yCECwJ/5smXVQ+KVHP8Q0Cf9
- El0eltDhisoqG6/KS8xYw6s267KxEl6Ft5D/4YwVKqggjxt7Xr3JCqSIYFeMp9kg4svV7wJR+
- 7mtwH5+B4uCMxZGOqB7YQ1mTV5vcC+7FVKNtkhwoKTbnZbQI3JfgJvQWyxo4WeEL5zdqR9RW0
- y75NGlpJmfKG13gAZ7YC3UwfnkCwjpvgyfgwHiwFHrn9BsvO7aue/2BBOYlLIFJT0YqlRwTcg
- WWm2WF9SFjUGck=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1470902776-1646923547=:357
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 09 2022, Derrick Stolee wrote:
 
-Hi Stolee & =C3=86var,
-
-On Tue, 8 Mar 2022, Derrick Stolee wrote:
-
-> On 3/4/2022 10:12 AM, Derrick Stolee wrote:
-> > On 3/4/2022 9:49 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> Also, as noted in the upthread
-> >> <220224.86czjdb22l.gmgdl@evledraar.gmail.com> it might be useful to c=
-hat
-> >> in a more voice/video medium in parallel (maybe mid-next-week) about =
-the
-> >> high-level ideas & to get a feel for our goals, conflicts etc. Doing
-> >> that over very long E-Mail exchanges (and the fault of "long" there i=
-s
-> >> mostly on my side:) can be a bit harder...
-> >
-> > I agree. I we can work out a time in a private thread and I can send
-> > you a video call invite.
+> On 3/9/2022 8:16 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Clear the "boundary_commits" object_array in release_revisions(). This
+>> makes a *lot* of tests pass under SANITIZE=3Dleak, including most of the
+>> t/t[0-9]*git-svn*.sh tests.
+>>=20
+>> This includes the tests we had false-positive passes on before my
+>> 6798b08e848 (perl Git.pm: don't ignore signalled failure in
+>> _cmd_close(), 2022-02-01), now they pass for real.
+>>=20
+>> Since there are 66 tests matching t/t[0-9]*git-svn*.sh it's easier to
+>> list those that don't pass than to touch most of those 66. So let's
+>> introduce a "TEST_FAILS_SANITIZE_LEAK=3Dtrue", which if set in the tests
+>> won't cause lib-git-svn.sh to set "TEST_PASSES_SANITIZE_LEAK=3Dtrue.
 >
-> =C3=86var and I just finished our chat and came away with these two
-> action items:
->
-> 1. =C3=86var will finish prepping his RFC as-is and send it to the list.
->    It contains several deeply technical optimizations that are
->    critical to how his model works, but could also be used to
->    improve scenarios in the table of contents model.
->
-> 2. =C3=86var will then do a round of taking both series and combining
->    them in a way that allows the union of possible functionality
->    to work.
->
-> 3. As these things come out, I will make it a priority to read the
->    patches and provide feedback focusing on high-level concepts
->    and ways we can split the future, non-RFC series into chunks
->    that provide incremental functionality while keeping review
->    easier than reading the whole series.
+> This paragraph perhaps belongs a few patches earlier in "revisions
+> API: have release_revisions() release "cmdline"", or else there was
+> some swap of order here.
 
-I very much look forward to see the combined work soon!
-
-Thank you, both,
-Johannes
-
---8323328-1470902776-1646923547=:357--
+Indeed, this was a bad case of a commit message being duplicated, will
+fix. Sorry!
