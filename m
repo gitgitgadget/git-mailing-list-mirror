@@ -2,117 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C48C433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 20:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E16DCC433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 21:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245304AbiCJUl2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 15:41:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
+        id S1343868AbiCJVGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 16:06:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245280AbiCJUl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 15:41:28 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E642610F23A
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 12:40:25 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id 17so7315597lji.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 12:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DpgCO9HF0Q6evPL5AZJBw8h8541nUmZZSNoHLPsnbSU=;
-        b=ZrCs/Sfxx4UAc4Y4QnFlOUkFdGi+2x+0cbC1bj9zaGOB31xeEFHorgRF7SOsz8VH3u
-         etxNU/jleS/lxAEY9tocs+rY4zQejlswvWOC8cvT2Utqh8FpulEvfNC78gmYZkdKicHT
-         IKZKdCLqDYrKzjMSQ8EyfBcOSkCqqsoka54WE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DpgCO9HF0Q6evPL5AZJBw8h8541nUmZZSNoHLPsnbSU=;
-        b=KYHYZvGzGJbtjWb9Hihr7gBYyWKjspwSAPncORAXQ0vk22bm27UPET8WdvteQR4N1t
-         eruWmQwp2H9v9NGtsFB1I/I/wQW8THbv86ttQQlkYmNe4wUlsr29zrzFyLwPoibP1Baa
-         Y1gGkKsV8d/+4F4JY4bCkPj39kdQmh82dAeM1e/HrUhhVMkCHehmfRvAL2v3ykPeKnqh
-         QKBX0uw45fV/YDSzaJeT6P6/N14D0NzLQQKorFKB+6ZPEZpneNQxIlolJOP3WwRuSuE6
-         Yf7uvzENjnAiRLrEmC2lWNkBfyeIAZQaadD5t0gmjTVoqDV+ndlo+/7Ij5L6uPnuJ1jm
-         T8lg==
-X-Gm-Message-State: AOAM531483rtnaq3gKjArXd3QFt38iXDKlRGVKKc1oQ0dTg05jDozV5Q
-        4qJghFIDoWQccGnyfT1MYZbJc0y3vmzSCetXbRM=
-X-Google-Smtp-Source: ABdhPJyKUrOJXwSRwyufYf1B/eqsAsDTOFZd8sfM8eqNmhrk+51yLOTpRwynVm3HVO8e71Au4tQNOw==
-X-Received: by 2002:a2e:bd08:0:b0:247:f70c:d1e4 with SMTP id n8-20020a2ebd08000000b00247f70cd1e4mr4272215ljq.68.1646944823632;
-        Thu, 10 Mar 2022 12:40:23 -0800 (PST)
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com. [209.85.208.178])
-        by smtp.gmail.com with ESMTPSA id k12-20020ac257cc000000b0044836dac11fsm1163711lfo.135.2022.03.10.12.40.22
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Mar 2022 12:40:23 -0800 (PST)
-Received: by mail-lj1-f178.google.com with SMTP id s25so9458876lji.5
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 12:40:22 -0800 (PST)
-X-Received: by 2002:a2e:924d:0:b0:246:370c:5618 with SMTP id
- v13-20020a2e924d000000b00246370c5618mr4056661ljg.358.1646944822659; Thu, 10
- Mar 2022 12:40:22 -0800 (PST)
-MIME-Version: 1.0
-References: <CAHk-=wgh8emJn-+FtxN=m_SCPiP6cGKHU-5ozzV9tWBMxn+xcA@mail.gmail.com>
- <xmqqo82dd0qv.fsf@gitster.g>
-In-Reply-To: <xmqqo82dd0qv.fsf@gitster.g>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 10 Mar 2022 12:40:06 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wg+n_-btzoyMqnDYsJxFYAyUh0Kb=TkpS8RiD_h3G=_cA@mail.gmail.com>
-Message-ID: <CAHk-=wg+n_-btzoyMqnDYsJxFYAyUh0Kb=TkpS8RiD_h3G=_cA@mail.gmail.com>
-Subject: Re: RFC: Using '--no-output-indicator-old' to only show new state
+        with ESMTP id S230183AbiCJVGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 16:06:02 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 880E9186BA3
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 13:05:00 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id BB92E5A104;
+        Thu, 10 Mar 2022 21:04:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1646946299;
+        bh=2rAq/sQ1teXjM/0mkxYwLEutYyVCljqnoVboywaPesY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Y+lZOSQnWZ61GrNRhVNPmYaCOdSnjdUii1gCDo8WwzMT0wKYDRnezD2MU81zOsVYV
+         ccsFxQCpqgbSleNdps1t5OseKyapaZMCcLFdUFD/sKtWRGFMebSjl6RwpBv00aQTeB
+         wgNAx8HqFGxac/7njbTz8i9/qg/09I79OCpRtD2cq8FLNp48meLYPB+2A8DygeDxBo
+         R1XjoDc5RjjAVuB7lFDv6U831wdULZy3kVJshHKWKtupXU7gKDBVelFKbO9JQomzzg
+         lPpMLaZxLHkZA8JW1BEXRpP2VYRI8g43MrCI8we9nb7g3wicJgSNTZGtqj1i9Qw2FW
+         OUCcUcY+R9pDPGuQhKTk9/nSSIAnxtxbZN3qdM0bOe8NEb8AOGA/Oqbc8lcB/5mVSH
+         bZxU0zVh4rz1YO3C+tndMdhOCblXMUGUST92b4Q01OgzmV0XZdD96px0RZkVBS7ygP
+         1IN3WkdmZheT/3kDzSN4q9C8tRI0pcp/fM9mLUOa8IuYp4JB9uz
+Date:   Thu, 10 Mar 2022 21:04:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List Mailing <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 0/6] Importing and exporting stashes to refs
+Message-ID: <Yipn+UiRw/GL6u2Y@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+ <xmqq35jpei18.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MW/e2vKpHkP4Thw0"
+Content-Disposition: inline
+In-Reply-To: <xmqq35jpei18.fsf@gitster.g>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 10, 2022 at 12:13 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Sounds like the "apply --no-add" in the opposite direction ;-)
 
-I was thinking more the opposite of "--ours/theirs" when merging, but
-yeah, I guess "--no-add" is technically even closer.
+--MW/e2vKpHkP4Thw0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I would find it handy myself, too, though I tend to read my patches
-> after applying to my tree so the postimage is usually an invocation
-> of "less" away for me.
+On 2022-03-10 at 19:14:59, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > ...  The commits used in a stash export are nearly
+> > identical to those used in the stashes, with one notable change: the
+> > first parent of a stash is a pointer to the previous stash, or an empty
+> > commit if there is no previous stash.  All of the other parents used in
+> > the stash commit are present following it in their normal order.
+> > ...
+> > We intentionally attempt to exactly round-trip commits between stashes,
+> > although we don't do so for the exported data due to the base commit not
+> > having identical timestamps.  Preserving the commits exactly lets us
+> > more efficiently test our code and it also permits users to more easily
+> > determine if they have the same data.
+>=20
+> Hmph, out of reflog entries stash@{0}, stash@{1}, stash@{3}, if we
+> create a chain of commits A, B, C such that
+>=20
+> 	A^2 =3D B, A^1 =3D stash@{0}
+> 	B^2 =3D C, B^1 =3D stash@{1}
+> 	         C^1 =3D stash@{2}
+>=20
+> then the original stash entry commits can be recreated identically,
+> and after you export the stash as "A", you can "import" from it
+> without creating any new commit to represent the stash entries, no?
 
-Obviously just looking at the file itself is always an option, and I
-do that too. But I traditionally do that "grep -v" trick as I'm
-verifying the patch before sending it out (or before committing)
-because it's such a nice way to limit the output just to the changed
-parts.
+True, that's an alternative approach.  Mine has the nice ability that
+you can see the items in the stash with log --first-parent, which I
+found to be useful in my testing.  We could of course change yours
+to have that property as well by reversing the order, but then the last
+item in the chain would have a base commit or a different pattern.
 
-> I do not think it is a bad idea to have an option to give only the
-> postimage and another option to give only the preimage.  It would
-> also trivially allow people to show the side-by-side diff in GUI.
+Yours does have the nice ability that we can see the actual original
+stash commits as well.
 
-I suspect people doing GUI's are happy just parsing the '-' and '+'
-lines themselves, since they want both sides anyway.
+> When we create A, if we use a predictable commit log message and
+> the same author/committer ident as A^1 (i.e. stash@{0}), and do it
+> the same for B and C, then no matter who exports the stash and at
+> which time, we'd get an identical result, I would presume.
 
-For example, 'gitk' already has that diff/old/new checkbox, that does
-exactly what my patch does.
+True.
 
-And I doubt anybody wants gitk to re-run 'diff' just because somebody
-clicked another option - it's only used to visualize the diff that was
-already done differently.
+I do want to preserve my nice --first-parent property.  What I propose
+to do is this: I'll take your approach and reverse the parents to
+preserve the --first-parent chain and synthesize a predictable root
+commit based on the fake ID information we use for stashes when nobody's
+provided any.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Of course, I might be wrong. I didn't actually look at what 'gitk'
-does. Maybe it _does_ re-run diff when you click that thing.
+--MW/e2vKpHkP4Thw0
+Content-Type: application/pgp-signature; name="signature.asc"
 
-But that gitk behavior - which I also do use - is probably the best
-way to explain the feature.  It's just that I also want to get that
-"New version" behavior for plain "git diff" on the command line.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-I don't know what a good command line option would be, though. I'd
-like it to be somehat short, because the whole point of this is to be
-a convenience feature.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYipn+QAKCRB8DEliiIei
+gSSTAP46sNHVk3o+z1vindHvFwYkcGSIbfovBW39tAjei6pKggEAxpjNPU7z1lSV
+dw9KslhNJR1kPogDasMdVxvcsPKz7ww=
+=e2Y6
+-----END PGP SIGNATURE-----
 
-So "--new/old"? "--pre/post"?
-
-Or it could be something random, and tie it with the existing "-U"
-option, where "-U+" would be "positive side only", and "-U5-" would be
-"5 context lines, negative side only". Very dense and convenient,
-maybe not all that intuitive?
-
-                 Linus
+--MW/e2vKpHkP4Thw0--
