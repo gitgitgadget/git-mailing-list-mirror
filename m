@@ -2,354 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53880C433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 00:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A472C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 00:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237759AbiCJAG6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 19:06:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49652 "EHLO
+        id S238972AbiCJAWI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 19:22:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbiCJAG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 19:06:57 -0500
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D0FADD46
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 16:05:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646870758; x=1678406758;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=wONvaYijIL8f2st1nWhJPj1QqjchDQ+GLxUYhihOWXY=;
-  b=Cm87h4W8/YqkDcTj0O9K62HBh2bnEpvoAvyBGarS0j211mrsv6BFcSS7
-   bXg/1yXvYHos/Y2v2UauXpDRbTK8P0ZNa3hy9AMdMZdXeLWc0gJP9TAz9
-   yMXpzL2dihnPrBqz53Sk1JnmY24V0ei8bxewHyUPYMvOhvHvAUUDgILqk
-   qEFtXHjBz/coP/8cdfz1r590uydaq3Ts2FHIIwpHasX+lxzr1OGNebnww
-   c9Zi3d/6yKAYxdCsCXJJM0G1c0ONAG6VCpKdDySh9PDX1WVMKDxoUaoGX
-   rFyVAfWBB1H+UnckzknafKmUIxMbJfEgtIyODPBO6qg1NQnykF/FtRw47
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10281"; a="252689451"
-X-IronPort-AV: E=Sophos;i="5.90,169,1643702400"; 
-   d="scan'208";a="252689451"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2022 16:05:57 -0800
-X-IronPort-AV: E=Sophos;i="5.90,169,1643702400"; 
-   d="scan'208";a="781268420"
-Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.10])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2022 16:05:57 -0800
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v3] name-rev: use generation numbers if available
-Date:   Wed,  9 Mar 2022 16:05:50 -0800
-Message-Id: <20220310000550.2368737-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.35.1.355.ge7e302376dd6
+        with ESMTP id S238962AbiCJAWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 19:22:04 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3BEB123BD4
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 16:21:04 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id r13so8647762ejd.5
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 16:21:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=oCH71fKpyCcwbbT6I0rBSMxzHQs5Hc2PpA/8p868sO8=;
+        b=KCtUpmMTCnHAFVxcuzEtyD/QbefZtJkfj9VlDKaCFmpoeVxef87t9nSYqT5avHNLkv
+         sl1nysMShCnodYKCKj74cY8YqZZiPXj9gWGqc7ty9pJ0Mf5e7DBnsVTT4s646ayOeluk
+         hMVHpBkzOc8gxN826MYUTbLMdVVu6UQtcWsk2SEYkjBf8hyGTYtg1C4BhGYFRpYaT784
+         BeSmyCEo19yCqVNDL+zGpbe0x3nGsz8Vs7z5AAqQgzli3AiWCfvIR+sKhJMdIIZ51rm4
+         bYslYzh2k+efk7fimLdHw4Arom4vfnrkpcWmpWCLG6+MbTxngqj4N8IcJrH1eAveFIIc
+         hZ9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=oCH71fKpyCcwbbT6I0rBSMxzHQs5Hc2PpA/8p868sO8=;
+        b=UZ+C0Ks1SlgMpm8HDd0JgmXWh+vNp1WO8z31GWHSc4SOyiSlIsmrlFqm/HKq3c7CHv
+         9HyImJuPPWD0t+3wbKwo2JK1g8mnZS8kRrdqWKKqjzPUe3Vx8SwywUs/6jSbvs5XS3Mk
+         o1944zlh28vIiHvy7mblqWIzJpTIp/k/Hs1x1KHRfhZMYM0Urx5o+wNRnBPJAk1HPk4W
+         8pH7YNv9oAnrlQqZnnErAZOiMny49GFPcPXavydvpfJyT7Sdxw9NvfKwZmHTFALz7g4p
+         XrtZplYx0KR9H95m+txseSInl0E/2a9Dvd4fCBPNVlb2JnB+dEs06bmqvfobCileroKN
+         uCvA==
+X-Gm-Message-State: AOAM531AxMCJe7t9gcyWM4LqYfMYy3M303GW5DWwwvkjfdWwkmS/+Zbr
+        EI09dFnEI1FI5XrmhPmTCzZqBR6nlPci/g==
+X-Google-Smtp-Source: ABdhPJzDqy9Z3q6EA0g6xKPvzCBDbN4RrlWrJAUmgN65hIuwHK8BsFFmP5rSAglR3gdkvDnMx8Tn7Q==
+X-Received: by 2002:a17:907:7f93:b0:6db:7634:f214 with SMTP id qk19-20020a1709077f9300b006db7634f214mr1989371ejc.3.1646871663064;
+        Wed, 09 Mar 2022 16:21:03 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id gb2-20020a170907960200b006dac65a914esm1239330ejc.125.2022.03.09.16.21.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 16:21:02 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nS6Y9-000NXv-Pk;
+        Thu, 10 Mar 2022 01:21:01 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 21/24] revisions API: release "reflog_info" in release
+ revisions()
+Date:   Thu, 10 Mar 2022 01:13:31 +0100
+References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
+ <patch-21.24-ccf276641d6-20220309T123321Z-avarab@gmail.com>
+ <99c429f7-af5d-78ac-9888-9f4f58d01b62@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <99c429f7-af5d-78ac-9888-9f4f58d01b62@github.com>
+Message-ID: <220310.868rtilksy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
 
-If a commit in a sequence of linear history has a non-monotonically
-increasing commit timestamp, git name-rev might not properly name the
-commit.
+On Wed, Mar 09 2022, Derrick Stolee wrote:
 
-This occurs because name-rev uses a heuristic of the commit date to
-avoid searching down tags which lead to commits that are older than the
-named commit. This is intended to avoid work on larger repositories.
+> On 3/9/2022 8:16 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Add a missing reflog_walk_info_release() to "reflog-walk.c" and use it
+>> in release_revisions().
+>>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  reflog-walk.c            | 26 ++++++++++++++++++++++++--
+>>  reflog-walk.h            |  1 +
+>>  revision.c               |  1 +
+>>  t/t0100-previous.sh      |  1 +
+>>  t/t1401-symbolic-ref.sh  |  2 ++
+>>  t/t1411-reflog-show.sh   |  1 +
+>>  t/t1412-reflog-loop.sh   |  2 ++
+>>  t/t1415-worktree-refs.sh |  1 +
+>>  8 files changed, 33 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/reflog-walk.c b/reflog-walk.c
+>> index 8ac4b284b6b..4322228d122 100644
+>> --- a/reflog-walk.c
+>> +++ b/reflog-walk.c
+>> @@ -7,7 +7,7 @@
+>>  #include "reflog-walk.h"
+>>=20=20
+>>  struct complete_reflogs {
+>> -	char *ref;
+>> +	const char *ref;
+>>  	const char *short_ref;
+>
+> This seems like the opposite change from what I would
+> expect, because the 'const' implies non-ownership.
 
-This heuristic impacts git name-rev, and by extension git describe
---contains which is built on top of name-rev.
+Yes, I'll change it.
 
-Further more, if --all or --annotate-stdin is used, the heuristic is not
-enabled because the full history has to be analyzed anyways. This
-results in some confusion if a user sees that --annotate-stdin works but
-a normal name-rev does not.
+FWIW we've had recent discussions on this point & it's a bit
+context-dependant. See
+https://lore.kernel.org/git/patch-v2-1.1-e2a166a9733-20211021T201541Z-avara=
+b@gmail.com/
+and https://lore.kernel.org/git/xmqqlf2vbbl8.fsf@gitster.g/
 
-If the repository has a commit graph, we can use the generation numbers
-instead of using the commit dates. This is essentially the same check
-except that generation numbers make it exact, where the commit date
-heuristic could be incorrect due to clock errors.
+I.e. the preferred pattern is:
 
-Since we're extending the notion of cutoff to more than one variable,
-create a series of functions for setting and checking the cutoff. This
-avoids duplication and moves access of the global cutoff and
-generation_cutoff to as few functions as possible.
+ * Make it "char *" if it's your own private struct, because it's non-const
+ * If it's a "public API" and it's not really "const char *", but we
+   don't want the API user to think they can fiddle with it, make it
+   "const char *" and cast it in the free().
 
-Add several test cases including a test that covers the new commitGraph
-behavior, as well as tests for --all and --annotate-stdin with and
-without commitGraphs.
+In this case I think I just mixed those two up, or maybe I initially
+wrote it before that was clarified. In this case it's our own private
+struct within this file.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-Changes since v2:
-* Removed negative test with commit graph disabled
+>> -	free(array->ref);
+>> +	free((char *)array->ref);
+>> +	free((char *)array->short_ref);
+>
+> This further makes the point that we should be keeping
+> non-const versions so we can clearly document ownership.
 
-I wanted to add a test that counted number of revisions walked, but I
-couldn't figure out if we had a method to get this data out using GIT_TRACE
-or GIT_TRACE2...
+*nod*
 
- builtin/name-rev.c  |  71 +++++++++++++++++++++------
- t/t6120-describe.sh | 116 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 173 insertions(+), 14 deletions(-)
+>> +static void complete_reflogs_clear(void *util, const char *str)
+>> +{
+>> +	struct complete_reflogs *array =3D util;
+>> +	free_complete_reflog(array);
+>> +}
+>
+> Is there a reason we don't do the cast inside?
+>
+> 	free_complete_reflog((struct complete_reflogs *)util);
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 929591269ddf..c59b5699fe80 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -9,6 +9,7 @@
- #include "prio-queue.h"
- #include "hash-lookup.h"
- #include "commit-slab.h"
-+#include "commit-graph.h"
- 
- /*
-  * One day.  See the 'name a rev shortly after epoch' test in t6120 when
-@@ -26,9 +27,58 @@ struct rev_name {
- 
- define_commit_slab(commit_rev_name, struct rev_name);
- 
-+static timestamp_t generation_cutoff = GENERATION_NUMBER_INFINITY;
- static timestamp_t cutoff = TIME_MAX;
- static struct commit_rev_name rev_names;
- 
-+/* Disable the cutoff checks entirely */
-+static void disable_cutoff(void)
-+{
-+	generation_cutoff = 0;
-+	cutoff = 0;
-+}
-+
-+/* Cutoff searching any commits older than this one */
-+static void set_commit_cutoff(struct commit *commit)
-+{
-+
-+	if (cutoff > commit->date)
-+		cutoff = commit->date;
-+
-+	if (generation_cutoff) {
-+		timestamp_t generation = commit_graph_generation(commit);
-+
-+		if (generation_cutoff > generation)
-+			generation_cutoff = generation;
-+	}
-+}
-+
-+/* adjust the commit date cutoff with a slop to allow for slightly incorrect
-+ * commit timestamps in case of clock skew.
-+ */
-+static void adjust_cutoff_timestamp_for_slop(void)
-+{
-+	if (cutoff) {
-+		/* check for undeflow */
-+		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
-+			cutoff = cutoff - CUTOFF_DATE_SLOP;
-+		else
-+			cutoff = TIME_MIN;
-+	}
-+}
-+
-+/* Check if a commit is before the cutoff. Prioritize generation numbers
-+ * first, but use the commit timestamp if we lack generation data.
-+ */
-+static int commit_is_before_cutoff(struct commit *commit)
-+{
-+	if (generation_cutoff < GENERATION_NUMBER_INFINITY)
-+		return generation_cutoff &&
-+			commit_graph_generation(commit) < generation_cutoff;
-+
-+	return commit->date < cutoff;
-+}
-+
- /* How many generations are maximally preferred over _one_ merge traversal? */
- #define MERGE_TRAVERSAL_WEIGHT 65535
- 
-@@ -151,7 +201,7 @@ static void name_rev(struct commit *start_commit,
- 	struct rev_name *start_name;
- 
- 	parse_commit(start_commit);
--	if (start_commit->date < cutoff)
-+	if (commit_is_before_cutoff(start_commit))
- 		return;
- 
- 	start_name = create_or_update_name(start_commit, taggerdate, 0, 0,
-@@ -181,7 +231,7 @@ static void name_rev(struct commit *start_commit,
- 			int generation, distance;
- 
- 			parse_commit(parent);
--			if (parent->date < cutoff)
-+			if (commit_is_before_cutoff(parent))
- 				continue;
- 
- 			if (parent_number > 1) {
-@@ -568,7 +618,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		usage_with_options(name_rev_usage, opts);
- 	}
- 	if (all || annotate_stdin)
--		cutoff = 0;
-+		disable_cutoff();
- 
- 	for (; argc; argc--, argv++) {
- 		struct object_id oid;
-@@ -596,10 +646,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (commit) {
--			if (cutoff > commit->date)
--				cutoff = commit->date;
--		}
-+		if (commit)
-+			set_commit_cutoff(commit);
- 
- 		if (peel_tag) {
- 			if (!commit) {
-@@ -612,13 +660,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		add_object_array(object, *argv, &revs);
- 	}
- 
--	if (cutoff) {
--		/* check for undeflow */
--		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
--			cutoff = cutoff - CUTOFF_DATE_SLOP;
--		else
--			cutoff = TIME_MIN;
--	}
-+	adjust_cutoff_timestamp_for_slop();
-+
- 	for_each_ref(name_ref, &data);
- 	name_tips();
- 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 9781b92aeddf..0b18f737794b 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -488,6 +488,122 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
- 	)
- '
- 
-+# A-B-C-D-E-main
-+#
-+# Where C has a non-monotonically increasing commit timestamp w.r.t. other
-+# commits
-+test_expect_success 'non-monotonic commit dates setup' '
-+	UNIX_EPOCH_ZERO="@0 +0000" &&
-+	git init non-monotonic &&
-+	test_commit -C non-monotonic A &&
-+	test_commit -C non-monotonic --no-tag B &&
-+	test_commit -C non-monotonic --no-tag --date "$UNIX_EPOCH_ZERO" C &&
-+	test_commit -C non-monotonic D &&
-+	test_commit -C non-monotonic E
-+'
-+
-+test_expect_success 'name-rev with commitGraph handles non-monotonic timestamps' '
-+	test_config -C non-monotonic core.commitGraph false &&
-+	(
-+		cd non-monotonic &&
-+
-+		echo "main~3 tags/D~2" >expect &&
-+		git name-rev --tags main~3 >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'name-rev --all works with non-monotonic timestamps' '
-+	test_config -C non-monotonic core.commitGraph false &&
-+	(
-+		cd non-monotonic &&
-+
-+		rm -rf .git/info/commit-graph* &&
-+
-+		cat >tags <<-\EOF &&
-+		tags/E
-+		tags/D
-+		tags/D~1
-+		tags/D~2
-+		tags/A
-+		EOF
-+
-+		git log --pretty=%H >revs &&
-+
-+		paste -d" " revs tags | sort >expect &&
-+
-+		git name-rev --tags --all | sort >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'name-rev --annotate-stdin works with non-monotonic timestamps' '
-+	test_config -C non-monotonic core.commitGraph false &&
-+	(
-+		cd non-monotonic &&
-+
-+		rm -rf .git/info/commit-graph* &&
-+
-+		cat >expect <<-\EOF &&
-+		E
-+		D
-+		D~1
-+		D~2
-+		A
-+		EOF
-+
-+		git log --pretty=%H >revs &&
-+		git name-rev --tags --annotate-stdin --name-only <revs >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'name-rev --all works with commitGraph' '
-+	test_config -C non-monotonic core.commitGraph true &&
-+	(
-+		cd non-monotonic &&
-+
-+		git commit-graph write --reachable &&
-+
-+		cat >tags <<-\EOF &&
-+		tags/E
-+		tags/D
-+		tags/D~1
-+		tags/D~2
-+		tags/A
-+		EOF
-+
-+		git log --pretty=%H >revs &&
-+
-+		paste -d" " revs tags | sort >expect &&
-+
-+		git name-rev --tags --all | sort >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'name-rev --annotate-stdin works with commitGraph' '
-+	test_config -C non-monotonic core.commitGraph true &&
-+	(
-+		cd non-monotonic &&
-+
-+		git commit-graph write --reachable &&
-+
-+		cat >expect <<-\EOF &&
-+		E
-+		D
-+		D~1
-+		D~2
-+		A
-+		EOF
-+
-+		git log --pretty=%H >revs &&
-+		git name-rev --tags --annotate-stdin --name-only <revs >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- #               B
- #               o
- #                \
+I think we generally do that more often that not (although I should add
+an extra \n) there. I.e. to immediately cast the void* into a variable.
 
-base-commit: c2162907e9aa884bdb70208389cb99b181620d51
--- 
-2.35.1.355.ge7e302376dd6
-
+I also find it handy when e.g. stepping through in a debugger, because
+you'll have a variable you can inspect without de-referencing it every
+time, and if the function uses "array" for something else in the future
+it'll be less verbosity on the second use...
