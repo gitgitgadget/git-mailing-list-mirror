@@ -2,114 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03523C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 10:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 073BFC433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 12:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241406AbiCJKxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 05:53:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48512 "EHLO
+        id S241959AbiCJMeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 07:34:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241477AbiCJKxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 05:53:11 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B0D5D19D
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 02:52:10 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id t187so4418687pgb.1
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 02:52:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:to:subject:references
-         :in-reply-to:content-transfer-encoding;
-        bh=Ehs9JtR3/T/yDRQceRlFCHJZo38toji9vfGrB6yT4tU=;
-        b=S34XEvYx/fCePoHJh6sPxGdAi9NN44vI56Tr489f8RHztUae9UAnd2a0U5RKLU5EZD
-         9WcyMKLuDUk1yxnEdVoTMWhUMDuT6dt0uK3XHThzFUHEp9RRSl2Ne18PFSmVydZb9Sk9
-         xICpCtY2neZ/0Wo4TE+1l2NvGffPG9jZKyJv61BW+81X6fYj2ZzRLrl5MvBKvYsV1j/A
-         yaxbMAsj/3/G++PGu4mnzndWz2S0kixvjH67vjSHfa3luJ4XG8MwZ3rTnux3ivwZ5ksX
-         DOt5B8yJ9+toNU6SMAlDhM8YZlugMvFoKRGN6WMeh6YkV7SyE01fqSKgXS2zmnyginfo
-         l1/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
-         :subject:references:in-reply-to:content-transfer-encoding;
-        bh=Ehs9JtR3/T/yDRQceRlFCHJZo38toji9vfGrB6yT4tU=;
-        b=bZLQJEZY3QT/sMAd8QSFRkabRXN0iZ7KYHD7wjWzGtF1af5C0ynllkq8063SU5jPaE
-         ht06vwVBaFDAQQEjUEiVFEk8lkeWuieP6hcJH6Ohmq7MTG/+8RfXOJOdim8RJIydZE/I
-         Na4dOhRi5ZEJnhnSEVShKCss7z+rsN8qCt4R3Ita+9a6S5GDmKJ1l15lcBVCNDZu0BW+
-         rHoyj3WsDLjmdi1FgmZdI49Us238eRpUkanWrnyulPjOAafJEGzItBCheNJJzHhkCu01
-         OntSa2leL1x8BGqY+nkPdxrRG0EIzIIsnawclPogtbVq6UfRqGxF6Ab5r35wGORs0ZJJ
-         Fuiw==
-X-Gm-Message-State: AOAM531mtVZg6Ls1dWrCvuiminVSuN+AkPRqnQKWeEgMl2s3ET3KGVuP
-        XQPi7KE0xoHgagvN0tgkqR95LV1NIuZtaw==
-X-Google-Smtp-Source: ABdhPJy1s1V+lK7tP5grtfpYQR8G7z9AJDjp2o2EAnsNLlG2aYhSymAGGR6YPDyXE5IanUzVHhLaCA==
-X-Received: by 2002:a65:6050:0:b0:378:c9e5:b3ab with SMTP id a16-20020a656050000000b00378c9e5b3abmr3544155pgp.338.1646909530105;
-        Thu, 10 Mar 2022 02:52:10 -0800 (PST)
-Received: from ?IPV6:2405:201:a800:4df9:5194:c9b1:2d1f:598e? ([2405:201:a800:4df9:5194:c9b1:2d1f:598e])
-        by smtp.gmail.com with ESMTPSA id y34-20020a056a00182200b004f71c56a7e8sm6516708pfa.213.2022.03.10.02.52.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Mar 2022 02:52:09 -0800 (PST)
-Message-ID: <8d411f30-bfe9-ffbe-5ec5-1ae7b5c9588f@gmail.com>
-Date:   Thu, 10 Mar 2022 16:22:05 +0530
+        with ESMTP id S238163AbiCJMeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 07:34:17 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC441723EC
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 04:33:15 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5C6965C0114;
+        Thu, 10 Mar 2022 07:33:13 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 10 Mar 2022 07:33:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; bh=10jcVH5lsvD3aMySLxXRsG0+nWskwxQSFWAlsT
+        lhB8E=; b=XQOHAasi+/PDe6b4dui9md+BQ39087nqTniOV4yUOMyUBK+xUg2uPx
+        e404gKZyDn0svyTDAxqiZJGRsykuQl46fcS+KHM/CVyMdbN3Lfc5Fouhku2mHK8x
+        k6Zk28mhVL0UROM0tOKyAx55e4dxU13ref8rrOKB/+c9sts9HmoztkywjFNRrxoE
+        +/6KNK6t6JJqnHusHt87bmfpw2l4i7dHz3PH8RFIk1FeelsLFH2OKzznZpmw1RaP
+        Ds10FJVe/ct+v0lh2YvPbw2DC6JMdLrPcpEg98Zb9M/k8SgLoCkfvFBrUG3fpiKd
+        WYIOSVSiaUWAX1LaRBnLFBwrez9uNfIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=10jcVH5lsvD3aMySL
+        xXRsG0+nWskwxQSFWAlsTlhB8E=; b=mA+R9xnkWcCDC0h2hmb4YsbHW8fTfPFiN
+        f2FOAx2aTJl53r4I0s3xI6ngnG/zYO5s9vKRR68AxnLF5l5l8dpdeEAw/bMF/Knn
+        LIrvZVw1JAhMrDVB4HPRdPjTOLZeiuzvHZn2dv5rvbwJlwz+m4rjBKDdGEKjs0bl
+        6WO6NVLwI1aRGNBiiy93HNu5Agysamh9SqVs3c+g2MSfJYcPVogmBZuo84kHLbJs
+        xKcigBJXhLIRtICi/BVugVhYqjsspYoFfdCDWq24U6cXoar+epQvlVRjYDczK+ne
+        OFWAQPLtd4V7K76QtdN8ONjUsfS9NsVAgZeZOYzqfNQpDiCdq0g8w==
+X-ME-Sender: <xms:CfApYpELNQwWJy-LJnRhRJ3QWx1oTNKKBVg0nJdTsisqTjxzop8mNA>
+    <xme:CfApYuVOnIo7gFwUuN56jjpsaw0eNPDeg4xqg3aMTOgL2gzTg6gDQKrh534nrfFz0
+    -tKWDxdQxaTPCfsuw>
+X-ME-Received: <xmr:CfApYrKt67tbtB9jS1NSPo0fz9o4RAsqXkyLUkBNSEiLKOofHFrsflZjc7VrNULnIsryZfoCp2nPU_lti21XYVaiE1WD8bujogLuu2aMfbASxDAprG5yG4MHyxY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvtddggeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:CfApYvFMYoKbCXiept9TfNL6ftX49PD415ClMBllfzqPcjPksV0wHQ>
+    <xmx:CfApYvUMa_02AXGjcA6fZU1iRNKNHCO-lKZTqPr5AwvwDtefnS4NHQ>
+    <xmx:CfApYqM--_xmUBFC3deDLRPmrDi3kYQyy2byQ3xvBAGAPqjTuPhtwA>
+    <xmx:CfApYmFce_zirPBhU79GHdZxhMnfwfe47nw42_3mp-oW7Betfaqq3w>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Mar 2022 07:33:11 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b298b8ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 10 Mar 2022 12:33:06 +0000 (UTC)
+Date:   Thu, 10 Mar 2022 13:33:04 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh <nksingh85@gmail.com>,
+        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
+Message-ID: <YinwACkic3X1DKdr@ncase>
+References: <xmqqr18m8514.fsf@gitster.g>
+ <xmqqy22u6o3d.fsf@gitster.g>
+ <CANQDOdfVg4e=nLLAynm261_R5z+rjZV3QgE8nLwGEmj1wQm_uA@mail.gmail.com>
+ <xmqqczjt9hbz.fsf@gitster.g>
+ <CANQDOdcRM-GdxQ6iiV6pSBZifzpn+vJrBi0f88um9Rk4YJMFng@mail.gmail.com>
+ <xmqq35kp806v.fsf@gitster.g>
+ <Ygn/GvLEjbCxN3Cc@ncase>
+ <xmqqh7914bbo.fsf@gitster.g>
+ <YiiuqK/tCnQOXrSV@ncase>
+ <xmqqpmmuki68.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   jaydeepjd.8914@gmail.com
-To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Subject: Re: [PATCH v5] userdiff: add builtin diff driver for kotlin language.
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
- <20220306111539.336475-1-jaydeepjd.8914@gmail.com>
- <8799cd42-bb05-a827-187d-33fb03565f21@kdbg.org>
- <cf8a9316-c81e-2477-a565-1c38a168fc67@gmail.com>
- <72aca675-4c65-36bf-1337-34b2d1f40bb4@kdbg.org>
-In-Reply-To: <72aca675-4c65-36bf-1337-34b2d1f40bb4@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8hKijMTJ6+iJRZ2z"
+Content-Disposition: inline
+In-Reply-To: <xmqqpmmuki68.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the late reply. 
 
-On 3/9/22 12:02 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 08.03.22 um 17:54 schrieb jaydeepjd.8914@gmail.com:
-> > So, the final regexes are these, right?:
-> 
-> Not quite.
-> 
+--8hKijMTJ6+iJRZ2z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Mar 09, 2022 at 12:03:11PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> >> If the user cares about fsynching loose object files in the right
+> >> way, we shouldn't leave loose ref files not following the safe
+> >> safety level, regardless of how this new core.fsync knobs would look
+> >> like.
+> >>=20
+> >> I think we three are in agreement on that.
 > >
-> >       "[a-zA-Z_][a-zA-Z0-9_]*"
-> >       /* hexadecimal and binary numbers */
-> >       "|0[xXbB][0-9a-fA-F_]+[lLuU]*"
-> >       /* integers and floats */
-> >       "|[0-9][.]?[0-9_]+([Ee][-+]?[0-9]+)?[fFlLuU]*"
-> 
-> This would not match 12.5 because you allow only a single digit before
-> the decimal point. Perhaps
-> 
-> 	"|[0-9][.0-9_]*([Ee][-+]?[0-9]+)?[fFlLuU]*"
+> > Is there anything I can specifically do to help out with this topic? We
+> > have again hit data loss in production because we don't sync loose refs
+> > to disk before renaming them into place, so I'd really love to sort out
+> > this issue somehow so that I can revive my patch series which fixes the
+> > known repository corruption [1].
+>=20
+> How about doing a series to unconditionally sync loose ref creation
+> and modification?
+>=20
+> Alternatively, we could link it to the existing configuration to
+> control synching of object files.
+>=20
+> I do not think core.fsyncObjectFiles having "object" in its name is
+> a good reason not to think those who set it to true only care about
+> the loose object files and nothing else.  It is more sensible to
+> consider that those who set it to true cares about the repository
+> integrity more than those who set it to false, I would think.
+>=20
+> But that (i.e. doing it conditionally and choose which knob to use)
+> is one extra thing that needs justification, so starting from
+> unconditional fsync_or_die() may be the best way to ease it in.
 
-Okay. 
+I'd be happy to revive my old patch series, but this kind of depends on
+where we're standing with the other patch series by Neeraj. If you say
+that we'll likely not land his patch series for the upcoming release,
+but a small patch series which only starts to sync loose refs may have a
+chance, then I'd like to go down that path as a stop-gap solution.
+Otherwise it probably wouldn't make a lot of sense.
 
-> >       /* floating point numbers beginning with decimal point */
-> >       "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlL]?"
-> >       /* unary and binary operators */
-> >      
-> > "|[-+*/<>%&^|=!]?==?|--|\\+\\+|<<=|>>=|&&|[||]|->|\\.\\*|!!|::|[?:.][.:]"),
-> 
-> [||] does not work as you intend. A new suggestion: do not start with an
-> initial optional character in order to reduce the number of
-> backtrackings that the regular expression evaluation has to do. I would
-> write this line as
-> 
-> 	"|[-+*/<>%&^|=!]==?|--|\\+\\+|<<=|>>=|&&|\\|\\||->|\\.\\*|!!|::|[?:.][.:]"),
-> 
-> BTW which operators are handled by "[?:.][.:]"? I'm asking because you
-> list :: separatly that would also be matched by this sub-expression.
+Patrick
 
-It matches the following operators: `?:`, `?.`, `..` `::`. Although matching `::` is
-unnecessary since its matched before.
+--8hKijMTJ6+iJRZ2z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-https://kotlinlang.org/docs/keyword-reference.html#operators-and-special-symbols
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIp7/8ACgkQVbJhu7ck
+PpQI6BAAgUcJb/5V5cE9VT0JPaqKCSmZRxu+5FCgwus6VG4Ay7sbanu5bhywFL/g
+jXNqk7A2X1i7Wl3aXsntQyqkbqwUpjnX7lida25DX2InTKd/vZmypo9EvWjiJCyJ
++cffK2kZLeH4HNqZCpYf+u9WaURfX7aDnoNcD6Fpzgai6VKhFgCj4EKyLmlk0cPX
+kX8h7RHLcOb6iyXeqyPrHJI/zupespgI4LhzYOQ4zSohvzbRNQszVkocxaocEBg+
+bQgTB8yWCG9vclbRMxzXz+X+K0OxgOf+Rh6XBgAUtycwpYV4XHApuMU5UsJtPCwY
+VxLscCvjrKUV6KPJ+K53ULD056DeM9wUSh4RAfSN83M14KS94uMUWADqyYbh4kcf
+SxkP3BiGIA3jQyNCMEMiIaqAsxvdNbcy/tVRhuGpd4arKAFZc6X/1jAIiIccocJD
+lWglEMIYYto2F3xo4azB3G2rPQUjGR7dLPau0jz/KqvI8nHgSEwfp1YQLIf8huuT
+w4I4zvSaaZB3czQ/M6/1XJSYNFCUqbqZDKLRMqMFtZIkChXcsAltjVSaOK4TlPQ1
+ebSYvoqBNIhBCu9LV6Z+FedSW8tMagIJ6yXoi4OZe3aL+RIjNOd7BTyK/P6WIe0x
+YWsnD9gWYlY1b4PMnmnDUsRpUY8VnhjnlFiwTgKjFDtNArn59og=
+=sPDh
+-----END PGP SIGNATURE-----
 
- 
-
+--8hKijMTJ6+iJRZ2z--
