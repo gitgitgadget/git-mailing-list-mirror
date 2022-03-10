@@ -2,126 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6883C433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 01:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F40C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 01:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239106AbiCJBRY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 20:17:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S235034AbiCJBW6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 20:22:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239104AbiCJBRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 20:17:19 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73E0125591
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 17:16:19 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id h11so5647624ljb.2
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 17:16:19 -0800 (PST)
+        with ESMTP id S239164AbiCJBWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 20:22:55 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D41CB907
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 17:21:55 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id o6so5657035ljp.3
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 17:21:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HXKqsT8p8eoApeI8G7EkBAK4eaPav9QVluhkBQ8HRFw=;
-        b=jA7I4t+mPGY+mK/dcF7C5ErT4iWpop0M0MCTylbVwuJfl5VvCKQfcQTc4z8+xVOVsx
-         yl/XPxpiJZKVXZ2UVO1kvCf0kFBp9zJ3gQZyMhqjpPFdmWCLvYAsawIUiyb3BVygeSnH
-         PUyGMmRPJYwc2bQfK3wFnA12ePoIWAVOJx0z1JX7hHemhbXX2V4L++0UH7RObdhFhcNJ
-         g7evrCy8nN9ItPsFGWFRTuh/HUL1iNrIxqw+rs2XxL7dVTF+xg371QYYP6t56KhfURLg
-         +C7C3ktbJoJ6pp8WTnSzHJhqVnrrJvmbUy1NTFN939JJx+K60WonYuAUiUHAnH9PWNyt
-         wu9g==
+         :cc;
+        bh=UzYSnKZXEPLjrr4b5sXVbY43CvBdKASNf/p8Z4jWbQc=;
+        b=nmrppQ+zhLx3UqkKUDkOpEsyGw+X/OdWT9SsqiAxu+9cXLPOWlY5B0rWUqOnhxZUlR
+         dIg8GXYS4fL5GV9dJPFvyhBkr1IktsEGyS3s+kIhiukJocjVRGkXVBn6UCfHTVTUBGMc
+         XqPgzh8mukfOXjHxo/B/ZKGYoHu//mbudvu6k+bSvu/lTnhLVyDlYktdvfKL+PnJhwyh
+         wZ/gRmG2872bWg5AK0vPJjUV0+MrDC5bd5FMovdmErhRyLU+SVS2mlMp/7h+ERXW1XiB
+         NvzK4/g8+FDc7bXgB69AZzWGHbEpitomMaWzlgm9AdqGCKg62fXW1DNkM/lJDV18O9b4
+         EbIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HXKqsT8p8eoApeI8G7EkBAK4eaPav9QVluhkBQ8HRFw=;
-        b=4lrlQ2jqNtZw1vjjaupRIQq8aS0T6U3tomWJu4+YbA8Jfv97uXirsUB5qEZnnnxB7j
-         bL8dBINdY+a9li2yZLLW74J8ubHMmq9U3Dyr9L75WTzx+mPOAv7wyPAvjwn/VH/TWpGn
-         TZywdpat+CD6STuT6rHfSli6CPJVm089uh33o0vr3ASA8p6YCVGcd9vQm3wgjp0ZRS6O
-         c1coqekhuYBKo7j4pmLWwwZZ7uIf2EucM3w6N5tRs/zp6mL0W5v5iPiAf1RtnLNbNaAX
-         Bqhr4Xs8fNa+rzxOAoAgRd2/AaJArWXaV65geYQZBWCXPsGS0Hys8nAPcwMUWVnPushD
-         zGhQ==
-X-Gm-Message-State: AOAM531JthBljXgStsYWVX/y/kiY9INOpLHA8M7miTn3j5lPEBXXBQ+s
-        q1nXIQrn1JgPpOEWa+Qql5r9OXJ6ED4kefB26vg=
-X-Google-Smtp-Source: ABdhPJz/5uVaQqrV7o16oCKuhq3yJNUQ3Dme3SnqALlS7ahCs2DxcTte/7Crt4pPRtEpjF5UmbjgZC4euj393LU3ink=
-X-Received: by 2002:a05:651c:158e:b0:248:1ce:a2a with SMTP id
- h14-20020a05651c158e00b0024801ce0a2amr1423010ljq.172.1646874978069; Wed, 09
- Mar 2022 17:16:18 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=UzYSnKZXEPLjrr4b5sXVbY43CvBdKASNf/p8Z4jWbQc=;
+        b=oNGw0D6XDQ+xWIBNR5MtOsye2jOXq8bNRXZrEWdGgGAGUgTIjHNdJREveuSZU7R+Tc
+         qINp3xBcOINps8yc16QRFIHR601mWTmNtGIiEqad3pExkoswAHa8TAWF63DqCFblGBVG
+         Tf+YmXGa1KWVZbXwdN94jWuCPYxacUNG4IYGKaEGU1yaD2btqbNeJcr87trJUYa9AJFE
+         Qh+rnC7q9+Nw1wGZsA/C4tOQHmfxd24+DzTSzuWtfvNJ5hPmt4dMn84Af+0B+C4GKmZ5
+         XyhD/vF4uury8atSusvI/arjDcu9vzykC6EmMd/16dgRILR4hSONhl8y9R3DmUxfChIR
+         ZtOw==
+X-Gm-Message-State: AOAM531TcHn05GWrI6EvBjqbQ0IIXN6kvnjVfnOKvXTsAKMI4WlbPoNC
+        CaShXSjS9kJ4p/ENPwFGLQyXhR6VVxq+r4p3FgY=
+X-Google-Smtp-Source: ABdhPJwYUFDaiOMIEmPOfmRiDMqELVD22/+Y9ri1GeTUeC40lWAvgZJ8EHk/P3XVnO2xOkWa5Ao2GRhv2qOeAsSSTyg=
+X-Received: by 2002:a05:651c:516:b0:247:a27c:60fd with SMTP id
+ o22-20020a05651c051600b00247a27c60fdmr1426224ljp.73.1646875313939; Wed, 09
+ Mar 2022 17:21:53 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
- <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com> <211116.8635nwr055.gmgdl@evledraar.gmail.com>
- <CANQDOdcEtOMMOLcHrnTKReRS23PvjOGp58VdpEkV_6iZuSPXaw@mail.gmail.com>
- <211117.86ee7f8cm4.gmgdl@evledraar.gmail.com> <CANQDOdcKzxM+M7wgxUz831SbpwGWR7gcUC8xLFM14BcCJ+60sA@mail.gmail.com>
- <211201.864k7sbdjt.gmgdl@evledraar.gmail.com> <220310.86lexilo3d.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220310.86lexilo3d.gmgdl@evledraar.gmail.com>
+References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
+ <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com> <685b1db888079c83573cfd984ae64f46284544af.1646866998.git.gitgitgadget@gmail.com>
+ <xmqq8rtiln6a.fsf@gitster.g>
+In-Reply-To: <xmqq8rtiln6a.fsf@gitster.g>
 From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 9 Mar 2022 17:16:07 -0800
-Message-ID: <CANQDOdcJX9bYAJN4_M5-k_Ssg+kK+CVOsanXr+Xnu7B+nzfqSw@mail.gmail.com>
-Subject: Re: [PATCH v9 0/9] Implement a batched fsync option for core.fsyncObjectFiles
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+Date:   Wed, 9 Mar 2022 17:21:43 -0800
+Message-ID: <CANQDOde4e6434mDE3rra9VQMfhfksmJT48jvgNk6M4XDqtthrg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] wrapper: move inclusion of CSPRNG headers the
+ wrapper.c file
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 9, 2022 at 3:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Wed, Mar 9, 2022 at 3:29 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Replying to an old-ish E-Mail of mine with some more thought that came
-> to mind after[1] (another recently resurrected fsync() thread).
+> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> I wonder if there's another twist on the plan outlined in [2] that would
-> be both portable & efficient, i.e. the "slow" POSIX way to write files
-> A..Z is to open/write/close/fsync each one, so we'll trigger a HW flush
-> N times.
+> > Including NTSecAPI.h in git-compat-util.h causes build errors in any
+> > other file that includes winternl.h. That file was included in order to
+> > get access to the RtlGenRandom cryptographically secure PRNG. This
+> > change scopes the inclusion of all PRNG headers to just the wrapper.c
+> > file, which is the only place it is really needed.
 >
-> And as we've discussed, doing it just on Z will implicitly flush A..Y on
-> common OS's in the wild, which we're taking advantage of here.
+> It is true that wrapper.c is the only thing that needs these headers
+> included as part of its implementation detail of csprng_bytes(), and
+> I think I very much like this change for that reason.
 >
-> But aside from the rename() dance in[2], what do those OS's do if you
-> write A..Z, fsync() the "fd" for Z, and then fsync A..Y (or, presumably
-> equivalently, in reverse order: Y..A).
+> Having said that, if it true that including these two header files
+> in the same file will lead to compilation failure?  That sounds like
+> either (1) they represent two mutually incompatible APIs that will
+> cause breakage when code that use them, perhaps in two separate
+> files to avoid compilation failures, are linked together, or (2)
+> these system header files are simply broken.  Or something else?
 >
-> I'd think they'd be smart enough to know that they already implicitly
-> flushed that data since Z was flushend, and make those fsync()'s a
-> rather cheap noop.
+> > -/*
+> > - * Including the appropriate header file for RtlGenRandom causes MSVC to see a
+> > - * redefinition of types in an incompatible way when including headers below.
+> > - */
+> > -#undef HAVE_RTLGENRANDOM
 >
-> But I don't know, hence the question.
+> This comment hints it is more like (1) above?  A type used in one
+> part of the system is defined differently in other parts of the
+> system?  I cannot imagine anything but bad things happen when a
+> piece of code uses one definition of the type to declare a function,
+> and another piece of code uses the other definition of the same type
+> to declare a variable and passes it as a parameter to that function.
 >
-> If that's true then perhaps it's a path towards having our cake and
-> eating it too in some cases?
->
-> I.e. an FS that would flush A..Y if we flush Z would do so quickly and
-> reliably, whereas a FS that doesn't have such an optimization might be
-> just as slow for all of A..Y, but at least it'll be safe.
->
-> 1. https://lore.kernel.org/git/220309.867d93lztw.gmgdl@evledraar.gmail.co=
-m/
-> 2. https://lore.kernel.org/git/e1747ce00af7ab3170a69955b07d995d5321d6f3.1=
-637020263.git.gitgitgadget@gmail.com/
+> I do not know this patch makes the situation worse, and I am not a
+> Windows person with boxes to dig deeper to begin with.  Hence I do
+> not mind the change itself, but justifying the change primarily as a
+> workaround for some obscure header type clashes on a single system
+> leaves a bad taste.  If the first sentence weren't there, I wouldn't
+> have spent this many minutes wondering if this is a good change ;-)
 
-The important angle here is that we need some way to indicate to the
-OS what A..Y is before we fsync on Z.  I.e. the OS will cache any
-writes in memory until some sync-ish operation is done on *that
-specific file*.  Syncing just 'Z' with no sync operations on A..Y
-doesn't indicate that A..Y would get written out.  Apparently the bad
-old ext3 behavior was similar to what you're proposing where a sync on
-'Z' would imply something about independent files.
-
-Here's an interesting paper I recently came across that proposes the
-interface we'd really want, 'syncv':
-https://citeseerx.ist.psu.edu/viewdoc/download?doi=3D10.1.1.924.1168&rep=3D=
-rep1&type=3Dpdf.
+This is (2), these system header files are simply broken.  I've been
+looking deeper into why, but haven't bottomed out yet.
 
 Thanks,
 Neeraj
