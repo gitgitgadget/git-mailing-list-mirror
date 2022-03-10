@@ -2,162 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 073BFC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 12:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7967DC433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241959AbiCJMeS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 07:34:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50016 "EHLO
+        id S240534AbiCJNM6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 08:12:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238163AbiCJMeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 07:34:17 -0500
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC441723EC
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 04:33:15 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5C6965C0114;
-        Thu, 10 Mar 2022 07:33:13 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 10 Mar 2022 07:33:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=10jcVH5lsvD3aMySLxXRsG0+nWskwxQSFWAlsT
-        lhB8E=; b=XQOHAasi+/PDe6b4dui9md+BQ39087nqTniOV4yUOMyUBK+xUg2uPx
-        e404gKZyDn0svyTDAxqiZJGRsykuQl46fcS+KHM/CVyMdbN3Lfc5Fouhku2mHK8x
-        k6Zk28mhVL0UROM0tOKyAx55e4dxU13ref8rrOKB/+c9sts9HmoztkywjFNRrxoE
-        +/6KNK6t6JJqnHusHt87bmfpw2l4i7dHz3PH8RFIk1FeelsLFH2OKzznZpmw1RaP
-        Ds10FJVe/ct+v0lh2YvPbw2DC6JMdLrPcpEg98Zb9M/k8SgLoCkfvFBrUG3fpiKd
-        WYIOSVSiaUWAX1LaRBnLFBwrez9uNfIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=10jcVH5lsvD3aMySL
-        xXRsG0+nWskwxQSFWAlsTlhB8E=; b=mA+R9xnkWcCDC0h2hmb4YsbHW8fTfPFiN
-        f2FOAx2aTJl53r4I0s3xI6ngnG/zYO5s9vKRR68AxnLF5l5l8dpdeEAw/bMF/Knn
-        LIrvZVw1JAhMrDVB4HPRdPjTOLZeiuzvHZn2dv5rvbwJlwz+m4rjBKDdGEKjs0bl
-        6WO6NVLwI1aRGNBiiy93HNu5Agysamh9SqVs3c+g2MSfJYcPVogmBZuo84kHLbJs
-        xKcigBJXhLIRtICi/BVugVhYqjsspYoFfdCDWq24U6cXoar+epQvlVRjYDczK+ne
-        OFWAQPLtd4V7K76QtdN8ONjUsfS9NsVAgZeZOYzqfNQpDiCdq0g8w==
-X-ME-Sender: <xms:CfApYpELNQwWJy-LJnRhRJ3QWx1oTNKKBVg0nJdTsisqTjxzop8mNA>
-    <xme:CfApYuVOnIo7gFwUuN56jjpsaw0eNPDeg4xqg3aMTOgL2gzTg6gDQKrh534nrfFz0
-    -tKWDxdQxaTPCfsuw>
-X-ME-Received: <xmr:CfApYrKt67tbtB9jS1NSPo0fz9o4RAsqXkyLUkBNSEiLKOofHFrsflZjc7VrNULnIsryZfoCp2nPU_lti21XYVaiE1WD8bujogLuu2aMfbASxDAprG5yG4MHyxY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvtddggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:CfApYvFMYoKbCXiept9TfNL6ftX49PD415ClMBllfzqPcjPksV0wHQ>
-    <xmx:CfApYvUMa_02AXGjcA6fZU1iRNKNHCO-lKZTqPr5AwvwDtefnS4NHQ>
-    <xmx:CfApYqM--_xmUBFC3deDLRPmrDi3kYQyy2byQ3xvBAGAPqjTuPhtwA>
-    <xmx:CfApYmFce_zirPBhU79GHdZxhMnfwfe47nw42_3mp-oW7Betfaqq3w>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Mar 2022 07:33:11 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b298b8ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 10 Mar 2022 12:33:06 +0000 (UTC)
-Date:   Thu, 10 Mar 2022 13:33:04 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh <nksingh85@gmail.com>,
+        with ESMTP id S235602AbiCJNM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 08:12:57 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E737F4D629
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:11:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646917888;
+        bh=8kOJWXFP/As94CuZKbAur9QJB6vcIGjdEyCIARK9UuQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MO8F6yanfyqXOvaFPDAzZSFfHkKEyN3q3PoZFPcOgb3/4nBNlyuslMY4oSSd9L0aM
+         Ot6wrFkUoBmRACmrHgm7VRx+1IfVejGxKQsIYBN/KJUGVTEqaNBKdr4Uvrvl6chFtT
+         0al7/9TRuyJQ6deEmDZOCooS/gOlBHFTffjZ7nQk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm27-1nLuuC42ot-00GGYp; Thu, 10
+ Mar 2022 14:11:28 +0100
+Date:   Thu, 10 Mar 2022 14:11:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Neeraj Singh <nksingh85@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
         Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
-Message-ID: <YinwACkic3X1DKdr@ncase>
-References: <xmqqr18m8514.fsf@gitster.g>
- <xmqqy22u6o3d.fsf@gitster.g>
- <CANQDOdfVg4e=nLLAynm261_R5z+rjZV3QgE8nLwGEmj1wQm_uA@mail.gmail.com>
- <xmqqczjt9hbz.fsf@gitster.g>
- <CANQDOdcRM-GdxQ6iiV6pSBZifzpn+vJrBi0f88um9Rk4YJMFng@mail.gmail.com>
- <xmqq35kp806v.fsf@gitster.g>
- <Ygn/GvLEjbCxN3Cc@ncase>
- <xmqqh7914bbo.fsf@gitster.g>
- <YiiuqK/tCnQOXrSV@ncase>
- <xmqqpmmuki68.fsf@gitster.g>
+Subject: Re: [PATCH v5 3/5] core.fsync: introduce granular fsync control
+In-Reply-To: <CANQDOddU_WXD-6ncDGBrgpsuKT-XDGC=SeaaQTNQFdODFZ7TkQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203101406000.357@tvgsbejvaqbjf.bet>
+References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com> <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com> <e31886717b42837f4e1538a13c8954aa07865af5.1646866998.git.gitgitgadget@gmail.com> <xmqqo82eirnv.fsf@gitster.g>
+ <CANQDOddU_WXD-6ncDGBrgpsuKT-XDGC=SeaaQTNQFdODFZ7TkQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8hKijMTJ6+iJRZ2z"
-Content-Disposition: inline
-In-Reply-To: <xmqqpmmuki68.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NCw0sLr/hRwLfHbANugxVhrkMSDYM2abILMg6ugcRCPBcPOW8dB
+ YM35eXEipyGQ1qCQjZLLBWz5VIC2jkwANZdtHeM8YL6ZyEAZrxHCCn5pPzfBaiEGLUohF6o
+ 3P+Qg6VhzcRqTvNCpW6eQMeZw7SpLypMW/gj8Q88hYGL/BJiIhZS8He18M1vOcPAKgKatcY
+ jc7aXWe9wHLf1wotz7GjQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Mtr5Ut8VFqQ=:cOPnR8w+zCkIFd1dS8UC2X
+ bDlH0/Add1hUmrBwAKXFzf9RZcT5j/WRcyw+7t70VCyAHqAiiPOrtepjhrZm0yS9sAaFcPwDD
+ p+S2Xh7fgx0qeWwstY6SOJ93gChuclvj+PTpqcOy4y20qW1hmJIxqhTWv3LRyljinE0fe6obw
+ fS0jr1iT3wVlKymUZJSHb+at0dnkJxPmgukqazxTeP24qvD8G3QqfnxcMAcFDo9onq2VUNTm/
+ IJET/e+X5UPhl1fSCn0oea+qT4H9OtJ6R4O2NZEVKL8Ef3o7E89C6CogNhTfXzR6r6i56jKfe
+ 5dpbWZ83sTY2XoiHnXrnRljtYjspSfn2Yfe7HJkUMWRF3T/kkkk0jTn6GWW070YXLVjIImNx/
+ +5RbJPtRAG5oo4qOTY2g36mCVjW9UVyGYjCftPk33Ldhrr9PzMWf7ucV39kPGhHpZekw1gJ3i
+ wgWJGaQB0FNFouQN1BvQxydxE5guEx2DkUUqrLsa5QVHbt2IGbheM62dOYWpq8XNHbzhcAq35
+ XhVYYGItStk/snsXh2NEOnL/kluHQUN4hUIwKsv4A8SNwyDfpmrgyWZ7QaizO0Z19xO7tStIR
+ TbW78e90sDpU+S6ZxUs18+NH/kmgDJ+iFmpoYpYMEPWQkQGh7eBl2o/rWjWyBoJrTvBBT9hY5
+ 7B49+dmzHynaho0u50dAn5Ar/8wwnigzbZXv9LUlJenz4kKM3zH3Bd3/hEgkgQabm43CL4+Lz
+ uFPbc8v+Di554O3bDvVPT/YeOf8Ud4it22lpMSXZnB2UNAUMXZEVSWyoDVwRpD03COd82ygs6
+ jCJumS9qcbHwUyNkIZLzTsU+4xX0mG5vjsJyBgjxue4QEsswa4qGXCiHdHA9PGKeJ4CFRfREd
+ YdqCHnJGw6ZuM6Kc+UPlJXaLGULK60iHGhVNWRbmh/O2m8Fjvl4hj6ujwqtKgped57OX+R/dF
+ GnKVtb8cOoSKqZw8bcs6vvoU6fGUp8X2q9X3Vis9kqphM5lmRp+HHqgycBmIMDcdok6obvdd6
+ WdQpnvE2PQU+xLDRCFZZkWHbpOCvNTZJX5vkjV19falTDw0QPIu9EaMz4e1rXUhPIrc5nucjJ
+ T1FpwAiHuJv8wY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Neeraj,
 
---8hKijMTJ6+iJRZ2z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 9 Mar 2022, Neeraj Singh wrote:
 
-On Wed, Mar 09, 2022 at 12:03:11PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >> If the user cares about fsynching loose object files in the right
-> >> way, we shouldn't leave loose ref files not following the safe
-> >> safety level, regardless of how this new core.fsync knobs would look
-> >> like.
-> >>=20
-> >> I think we three are in agreement on that.
+> On Wed, Mar 9, 2022 at 4:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> > I am wondering if fsync_or_die() interface is abstracted well enough,
+> > or we need things like "the fd is inside this directory; in addition
+> > to doing the fsync of the fd, please sync the parent directory as
+> > well" support before we start adding more components (if there is such
+> > a need, perhaps it comes before this step).
 > >
-> > Is there anything I can specifically do to help out with this topic? We
-> > have again hit data loss in production because we don't sync loose refs
-> > to disk before renaming them into place, so I'd really love to sort out
-> > this issue somehow so that I can revive my patch series which fixes the
-> > known repository corruption [1].
->=20
-> How about doing a series to unconditionally sync loose ref creation
-> and modification?
->=20
-> Alternatively, we could link it to the existing configuration to
-> control synching of object files.
->=20
-> I do not think core.fsyncObjectFiles having "object" in its name is
-> a good reason not to think those who set it to true only care about
-> the loose object files and nothing else.  It is more sensible to
-> consider that those who set it to true cares about the repository
-> integrity more than those who set it to false, I would think.
->=20
-> But that (i.e. doing it conditionally and choose which knob to use)
-> is one extra thing that needs justification, so starting from
-> unconditional fsync_or_die() may be the best way to ease it in.
+>
+> I think syncing the parent directory is a separate fsyncMethod that
+> would require changes across the codebase to obtain an appropriate
+> directory fd. I'd prefer to treat that as a separable concern.
 
-I'd be happy to revive my old patch series, but this kind of depends on
-where we're standing with the other patch series by Neeraj. If you say
-that we'll likely not land his patch series for the upcoming release,
-but a small patch series which only starts to sync loose refs may have a
-chance, then I'd like to go down that path as a stop-gap solution.
-Otherwise it probably wouldn't make a lot of sense.
+That makes sense to me because I expect further abstraction to be
+necessary here because Unix/Linux semantics differ quite a bit more from
+Windows semantics when it comes to directory "file" descriptors than when
+talking about files' file descriptors.
 
-Patrick
+> > > +#define FSYNC_COMPONENTS_DEFAULT (FSYNC_COMPONENT_PACK | \
+> > > +                               FSYNC_COMPONENT_PACK_METADATA | \
+> > > +                               FSYNC_COMPONENT_COMMIT_GRAPH)
+> >
+> > IOW, everything other than loose object, which already has a
+> > separate core.fsyncObjectFiles knob to loosen.  Everything else we
+> > currently sync unconditionally and the default keeps that
+> > arrangement?
+> >
+>
+> Yes, trying to keep default behavior identical on non-Windows
+> platforms.  Windows will be expected to adopt batch mode, and have
+> loose objects in this set.
 
---8hKijMTJ6+iJRZ2z
-Content-Type: application/pgp-signature; name="signature.asc"
+We already adopted an early version of this patch series:
+https://github.com/git-for-windows/git/commit/98209a5f6e4
 
------BEGIN PGP SIGNATURE-----
+And yes, I will gladly adapt that to whatever lands in core Git.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIp7/8ACgkQVbJhu7ck
-PpQI6BAAgUcJb/5V5cE9VT0JPaqKCSmZRxu+5FCgwus6VG4Ay7sbanu5bhywFL/g
-jXNqk7A2X1i7Wl3aXsntQyqkbqwUpjnX7lida25DX2InTKd/vZmypo9EvWjiJCyJ
-+cffK2kZLeH4HNqZCpYf+u9WaURfX7aDnoNcD6Fpzgai6VKhFgCj4EKyLmlk0cPX
-kX8h7RHLcOb6iyXeqyPrHJI/zupespgI4LhzYOQ4zSohvzbRNQszVkocxaocEBg+
-bQgTB8yWCG9vclbRMxzXz+X+K0OxgOf+Rh6XBgAUtycwpYV4XHApuMU5UsJtPCwY
-VxLscCvjrKUV6KPJ+K53ULD056DeM9wUSh4RAfSN83M14KS94uMUWADqyYbh4kcf
-SxkP3BiGIA3jQyNCMEMiIaqAsxvdNbcy/tVRhuGpd4arKAFZc6X/1jAIiIccocJD
-lWglEMIYYto2F3xo4azB3G2rPQUjGR7dLPau0jz/KqvI8nHgSEwfp1YQLIf8huuT
-w4I4zvSaaZB3czQ/M6/1XJSYNFCUqbqZDKLRMqMFtZIkChXcsAltjVSaOK4TlPQ1
-ebSYvoqBNIhBCu9LV6Z+FedSW8tMagIJ6yXoi4OZe3aL+RIjNOd7BTyK/P6WIe0x
-YWsnD9gWYlY1b4PMnmnDUsRpUY8VnhjnlFiwTgKjFDtNArn59og=
-=sPDh
------END PGP SIGNATURE-----
-
---8hKijMTJ6+iJRZ2z--
+Thank you _so_ much for working on this!
+Dscho
