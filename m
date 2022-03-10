@@ -2,232 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B69AEC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D165C4167E
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239793AbiCJOAF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 09:00:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53934 "EHLO
+        id S243198AbiCJOVn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 09:21:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbiCJOAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 09:00:03 -0500
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99BBC12E772
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:59:02 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 405065C02FE;
-        Thu, 10 Mar 2022 08:59:00 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 10 Mar 2022 08:59:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=AbL3csZMC80iTzDtY7KlxloVeinJS4J/WMggFW
-        D6NGQ=; b=Mum3CnGnP2+XJT42lsrHSVh3mJ1m+SOjGBAo03DH8vN5emo++zzaMh
-        Cpyr9LKgSYWZDe/PuMXdxMyfInlm7RJLwe5A15VWEsO8Bl0XMEGyVLAucWzpbQgY
-        FsEj9gDRWZ3qiFeB2jMrrnVD25BcKhW6mrRA75+QNJyWTrgYUKLT0GjDwGwr3sc8
-        cB/Kct8tLWc+YXK/5NlhTXPetxb2yIUr2JEmNjXr7Cnkh8HqLapH9r4q7BtZxMFr
-        tSEcrt6kfYyPLmHAU9mAVl1md+Kc9kyW5PVvqwVX+bJyRWDmuvn/YGOBlQXwPpC1
-        q8rjtFhK8/IhFOguT4okUYZcjH/xs1Ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=AbL3csZMC80iTzDtY
-        7KlxloVeinJS4J/WMggFWD6NGQ=; b=boe+tHzWrMPWHB50NSfYy2+YigV0fnNZY
-        vku0SSl5Ma5NAS0yL3cnDNUGSBtJvwj/1ioohC8Kwao2ErxzdFsFOLVWm2Wi91yg
-        r0RSuE61iavEwMN0P5geIAiPXfKIxxm2qPbKdHaG2gmjt2DWiVNaexagp9dh52w/
-        Yrf/0g5Fnxn8NX6yk+YfY6ktnyHKunXc6Ke2P4fSru9Tc8pTol80Oy8Y9qMkQqxO
-        MW74/fmWNtKSUbUaeXDC0CF30YjjUvxkNDiq4hSSh522WKE8+kbDhPeNriCAp4t8
-        sslcvhynK63VNMmDYlB65WGi5gLckL/h/e5AlWVAPz2t/ZMTmO5zg==
-X-ME-Sender: <xms:IwQqYlR9Cwu7Cd-ob6SunacltpZrn_6ryD0dyDUT96MT27OiurtNjA>
-    <xme:IwQqYuzw4693pU6Dc3SbCVVgIM80_IxKRLO8BGucRp7e1HL0T2BlyCiPiNlEdXoUv
-    TmdDpcxFQlhhGR8EA>
-X-ME-Received: <xmr:IwQqYq30cWcehm2UKED4PDZYaqf2tvuVRnGESEhPt_FVxLjSJjynTJ0Bj9y8PXdN-EQvSHXcSZREwlkm2UfTZw-nt1Xpwu9-D8616UV76AIyxWXOfHjC91gDlA0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvtddgheekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:JAQqYtAHuEdkL2JLa5e9sLg82aZIVD4d5UDW6Lg8hDB_i2JHOUncKg>
-    <xmx:JAQqYuj3Y7AY_HIKX1Zcn-JJ5S4TgSHhEO_RzyNWlQsE0coCESgr9A>
-    <xmx:JAQqYhqaESagx557lBnVvMtpMNYjIvXgtvusGA_QBG5kXyjdgFYc0A>
-    <xmx:JAQqYmfUdpljTY7Jx6Vq_gi6iwb-dMrrIwRNT-scBiQvxt-F_H-RWw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Mar 2022 08:58:58 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 72ba10c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 10 Mar 2022 13:58:54 +0000 (UTC)
-Date:   Thu, 10 Mar 2022 14:58:53 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        abhishekkumar8222@gmail.com
-Subject: Re: [PATCH 3/7] commit-graph: start parsing generation v2 (again)
-Message-ID: <YioEHVo3GnzBl3rW@ncase>
-References: <f50e74f0-9ffa-f4f2-4663-269801495ed3@github.com>
- <Yh4zehdSnHLW1HuK@ncase>
- <1b9912f7-87be-2520-bb53-9e23529ad233@github.com>
- <Yh93vOkt2DkrGPh2@ncase>
- <db5eb248-1b54-9f24-8f8a-28c19a1eee6a@github.com>
- <YiCkRLFxn8Pok7Kc@ncase>
- <33deae83-1afd-1645-82f3-5af14f14094d@github.com>
- <06ea3190-32d0-c792-0ae9-c5600305f158@github.com>
- <YiXfnsbGzPXffdgV@ncase>
- <94ed6a1e-327c-3f94-b98b-db019a6f5ada@github.com>
+        with ESMTP id S244955AbiCJOUJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 09:20:09 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A040B153386
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:17:19 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id d10so12366749eje.10
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:17:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=kVlfZw2Y1Flr4GW5rXpHg68CQwcFQd3KMIL6UHMDVBU=;
+        b=bSkmDSgjS7GZDMgPnoyGFemXV47cGsMLPDXyKcGR6f9fFqn3CU3YFzlkW2yVrfAs+h
+         k87SY6SioNR/1evXzA+71hHnNJyt8HnacoXtR93cF74H9BV5K/15D371juXoTNZ3vZJ+
+         EiOzyUw8w6JnhUFNGWsjjakx2Gbdz9L3F2xS7FP8uh3IZOBbZoW8btPTt/wIPHBWzuyy
+         W6TTp1TjsSM9I/w49PIWn0ssP+f05a+RnnrMf0RJHXBZMY2FcxoS26mJ1lP4OBqYZmag
+         eLqDl6devSy1lxpMQQ1Zyq1FOhSXY9WFNO9rHpCUWlEEvInEAKNkpF4rEkd1Q6JcC6F4
+         MPUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=kVlfZw2Y1Flr4GW5rXpHg68CQwcFQd3KMIL6UHMDVBU=;
+        b=W6jNpeSe0uLl0g/9Pkc+ZvrqJed6QwdUbr0aX4ZNdwnAj5dsDAZ07242X9lxrJ96Li
+         oH0qQyp4ByBtFn18eL8AV/TCkIAoax8FJgm33WoeGCWoJALn2oWD4qZpF5iIDNagTP8d
+         C0S4oIC9IcFyc1TWlPcY2oEklLvWDP/asbcULyOhn9IPfVK/PVT0nKs0qSpot3yI65Bi
+         Jl/dvf3oasb1kiV18MW9Aq7iA1xb20OGR0vd7x49Adh6w8nYQuLJJtAV4bCmmAV7vm4C
+         9P7GY9+SNzleGxXITB2yKGAR39OAPgqkUdvUBkNfeKVjs09xVQgDo9d1r7hiyCxHhmwY
+         yS5g==
+X-Gm-Message-State: AOAM530wG16lSBYlHoHbcbF3U1z9wdSgjwZxXVi3O5I0hRooTG1nHeTo
+        L4vTJs4mCq5QmgEGh0S9jy1jGm0dsVJXCA==
+X-Google-Smtp-Source: ABdhPJxYDpvhgnrUWnSvr6egzoLOZSZKdF1BbbBmf3DpGziVxJqLykrSMOYVI/vPvgqcD2Y0Sr3xHQ==
+X-Received: by 2002:a17:906:7948:b0:6da:64ed:178e with SMTP id l8-20020a170906794800b006da64ed178emr4612190ejo.523.1646921837225;
+        Thu, 10 Mar 2022 06:17:17 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id a1-20020aa7d901000000b00416217c99bcsm2060959edr.65.2022.03.10.06.17.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Mar 2022 06:17:16 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nSJbP-000WD5-KJ;
+        Thu, 10 Mar 2022 15:17:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v9 0/9] Implement a batched fsync option for
+ core.fsyncObjectFiles
+Date:   Thu, 10 Mar 2022 15:01:34 +0100
+References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+ <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
+ <211116.8635nwr055.gmgdl@evledraar.gmail.com>
+ <CANQDOdcEtOMMOLcHrnTKReRS23PvjOGp58VdpEkV_6iZuSPXaw@mail.gmail.com>
+ <211117.86ee7f8cm4.gmgdl@evledraar.gmail.com>
+ <CANQDOdcKzxM+M7wgxUz831SbpwGWR7gcUC8xLFM14BcCJ+60sA@mail.gmail.com>
+ <211201.864k7sbdjt.gmgdl@evledraar.gmail.com>
+ <220310.86lexilo3d.gmgdl@evledraar.gmail.com>
+ <CANQDOdcJX9bYAJN4_M5-k_Ssg+kK+CVOsanXr+Xnu7B+nzfqSw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CANQDOdcJX9bYAJN4_M5-k_Ssg+kK+CVOsanXr+Xnu7B+nzfqSw@mail.gmail.com>
+Message-ID: <220310.86r179ki38.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Eq2x3T7PrsJzz5gk"
-Content-Disposition: inline
-In-Reply-To: <94ed6a1e-327c-3f94-b98b-db019a6f5ada@github.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Eq2x3T7PrsJzz5gk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 09 2022, Neeraj Singh wrote:
 
-On Mon, Mar 07, 2022 at 08:45:07AM -0500, Derrick Stolee wrote:
-> On 3/7/2022 5:34 AM, Patrick Steinhardt wrote:
-> > On Fri, Mar 04, 2022 at 09:03:15AM -0500, Derrick Stolee wrote:
-> >> On 3/3/2022 11:00 AM, Derrick Stolee wrote:
-> ...
-> >>> I will continue investigating and try to reproduce with this
-> >>> additional constraint of working across an alternate.
-> >>
-> >> My attempts to reproduce this across an alternate have failed. I
-> >> tried running the following test against Git without these patches,
-> >> then verify with the newer version of Git. (I also have generated
-> >> a few new layers on top with these patches, and they correctly drop
-> >> the GDA2 and GDO2 chunks when the lower layers "don't have gen v2".)
-> >>
-> >>
-> >> test_description=3D'commit-graph with offsets across alternates'
-> >> . ./test-lib.sh
-> >>
-> >> if ! test_have_prereq TIME_IS_64BIT || ! test_have_prereq TIME_T_IS_64=
-BIT
-> >> then
-> >> 	skip_all=3D'skipping 64-bit timestamp tests'
-> >> 	test_done
-> >> fi
-> >>
-> >>
-> >> UNIX_EPOCH_ZERO=3D"@0 +0000"
-> >> FUTURE_DATE=3D"@4147483646 +0000"
-> >>
-> >> GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=3D0
-> >>
-> >> test_expect_success 'generate alternate split commit-graph' '
-> >> 	git init alternate &&
-> >> 	(
-> >> 		cd alternate &&
-> >> 		test_commit --date "$UNIX_EPOCH_ZERO" 1 &&
-> >> 		test_commit --date "$FUTURE_DATE" 2 &&
-> >> 		git commit-graph write --reachable &&
-> >> 		test_commit --date "$UNIX_EPOCH_ZERO" 3 &&
-> >> 		test_commit --date "$FUTURE_DATE" 4 &&
-> >> 		git commit-graph write --reachable --split=3Dno-merge
-> >> 	) &&
-> >> 	git clone --shared alternate fork &&
-> >> 	(
-> >> 		cd fork &&
-> >> 		test_commit --date "$UNIX_EPOCH_ZERO" 5 &&
-> >> 		test_commit --date "$FUTURE_DATE" 6 &&
-> >> 		git commit-graph write --reachable --split=3Dno-merge &&
-> >> 		test_commit --date "$UNIX_EPOCH_ZERO" 7 &&
-> >> 		test_commit --date "$FUTURE_DATE" 8 &&
-> >> 		git commit-graph write --reachable --split=3Dno-merge
-> >> 	)
-> >> '
-> >>
-> >> test_done
-> >>
-> >>
-> >> My testing after running this with -d allows me to reliably see these
-> >> layers being created with GDAT and GDOV chunks. Running the 'git
-> >> commit-graph verify' command with the new code does not show those
-> >> errors, even after adding commits and another layer to the split
-> >> commit-graph.
-> >>
-> >> I look forward to any additional insights you might have here.
-> >=20
-> > I don't really know why, but now I've become unable to reproduce it
-> > again. I think we should just go with your patch 5/4 on top -- it does
-> > fix the most important issue, which is the `die()` I saw on almost all
-> > commands. The second part about the warnings I'm just not sure about,
-> > but I don't think it should stop this patch series given my own
-> > uncertainty.
->=20
-> Thanks for following up. I agree that with 5/4 we should be safe.
->=20
-> I'll remain available to quickly respond if anything else surprising
-> comes up in this area.
->=20
-> Thanks!
-> -Stolee
+> On Wed, Mar 9, 2022 at 3:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com> wrote:
+>>
+>> Replying to an old-ish E-Mail of mine with some more thought that came
+>> to mind after[1] (another recently resurrected fsync() thread).
+>>
+>> I wonder if there's another twist on the plan outlined in [2] that would
+>> be both portable & efficient, i.e. the "slow" POSIX way to write files
+>> A..Z is to open/write/close/fsync each one, so we'll trigger a HW flush
+>> N times.
+>>
+>> And as we've discussed, doing it just on Z will implicitly flush A..Y on
+>> common OS's in the wild, which we're taking advantage of here.
+>>
+>> But aside from the rename() dance in[2], what do those OS's do if you
+>> write A..Z, fsync() the "fd" for Z, and then fsync A..Y (or, presumably
+>> equivalently, in reverse order: Y..A).
+>>
+>> I'd think they'd be smart enough to know that they already implicitly
+>> flushed that data since Z was flushend, and make those fsync()'s a
+>> rather cheap noop.
+>>
+>> But I don't know, hence the question.
+>>
+>> If that's true then perhaps it's a path towards having our cake and
+>> eating it too in some cases?
+>>
+>> I.e. an FS that would flush A..Y if we flush Z would do so quickly and
+>> reliably, whereas a FS that doesn't have such an optimization might be
+>> just as slow for all of A..Y, but at least it'll be safe.
+>>
+>> 1. https://lore.kernel.org/git/220309.867d93lztw.gmgdl@evledraar.gmail.c=
+om/
+>> 2. https://lore.kernel.org/git/e1747ce00af7ab3170a69955b07d995d5321d6f3.=
+1637020263.git.gitgitgadget@gmail.com/
+>
+> The important angle here is that we need some way to indicate to the
+> OS what A..Y is before we fsync on Z.  I.e. the OS will cache any
+> writes in memory until some sync-ish operation is done on *that
+> specific file*.  Syncing just 'Z' with no sync operations on A..Y
+> doesn't indicate that A..Y would get written out.  Apparently the bad
+> old ext3 behavior was similar to what you're proposing where a sync on
+> 'Z' would imply something about independent files.
 
-There is another surprise I hit today in the context of generation
-numbers. In production, I found the following bug:
+It's certainly starting to sound like I'm misunderstanding this whole
+thing, but just to clarify again I'm talking about the sort of loops
+mentioned upthread in my [1]. I.e. you have (to copy from that E-Mail):
 
-    signal: aborted (core dumped): BUG: chunk-format.c:88: expected to writ=
-e 8 bytes to chunk 47444f56, but wrote 168304 instead
+    bulk_checkin_start_make_cookie():
+    n =3D 10
+    for i in 1..n:
+        write_nth(i, fsync: 0);
+    bulk_checkin_end_commit_cookie();
 
-47444f56 is the GENERATION_DATA_OVERFLOW chunk ID, and seemingly the
-precomputed size we intended to write was mismatching the data we have
-actually been writing to disk. And I think this stems from a mismatch in
-how we precompute the number of generation data overflows compared to
-how we're actually writing the data to disk:
+I.e. we have a "cookie" file in a given dir (where, in this example,
+we'd also write files A..Z). I.e. we write:
 
-    - We precompute how many generation number overflows there are in
-      `compute_generation_numbers()`. Here we only increment the number
-      of overflows in case all parents of a given commit have a non-zero
-      generation number and if the generation is bigger than OFFSET_MAX.
-      Seemingly we have found only a single commit which matches this
-      criteria because we pass `sizeof(timestamp_t) * overflows` as
-      expected size, and `sizeof(timestamp_t) =3D=3D 8`.
+    cookie
+    {A..Z}
+    cookie
 
-    - On the other hand, when we write generation numbers to disk in
-      `write_graph_chunk_generation_data_overflow()`, we always write a
-      chunk in case its offset is bigger than OFFSET_MAX. So we don't
-      care about the parents here, and this seems to extend the number
-      of commits which match this criteria to 21038 commits we write
-      into the file.
+And then only fsync() on the "cookie" at the end, which "flushes" the
+A..Z updates on some FS's (again, all per my possibly-incorrect
+understanding).
 
-The result is that the sanity check we do where we compare that the
-actually written amount of data matches what we expect fails because of
-the different ways we count this data.
+Which is why I proposed that in many/all cases we could do this,
+i.e. just the same without the "cookie" file (which AFAICT isn't needed
+per-se, but was just added to make the API a bit simpler in not needing
+to modify the relevant loops):
 
-This time I don't have access to the repository myself, I only tried to
-combine what's happening based on the bug message and the code.
+    all_fsync =3D bulk_checkin_mode() ? 0 : fsync_turned_on_in_general();
+    end_fsync =3D bulk_checkin_mode() ? 1 : all_fsync;
+    n =3D 10;
+    for i in 1..n:
+        write_nth(i, fsync: (i =3D=3D n) ? end_fsync : all_fsync);
 
-Patrick
+I.e. we don't pay the cost of the fsync() as we're in the loop, but just
+for the last file, which "flushes" the rest.
 
---Eq2x3T7PrsJzz5gk
-Content-Type: application/pgp-signature; name="signature.asc"
+So far all of that's a paraphrasing of existing exchanges, but what I
+was wondering now in[2] is if we add this to this last example above:
 
------BEGIN PGP SIGNATURE-----
+    for i in 1..n-1:
+        fsync_nth(i)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIqBBwACgkQVbJhu7ck
-PpQxGA/8DbVTZ5o34C6q2/HiBIsR8/iD8n3OwWOFulpj7C+GHhtuOLhOuxIHvLwE
-kHi+QfS9evIR9AM/y5mNGFP2HMASHMfmDVXcXX19kpEXqFOwyboDuujBYt2Nj3bn
-YScN53Bz5Go5Yid1qKnarNsaleycTudkfPk13T6GIO52eifsWPBTSSKUQlEqadNY
-2e+kWXy9mx1fvlUSRlvXbhO8uiHPi7lvNNodYbMJPHO7oYRBaxGDWtxQ8FokK6W9
-tpi3sFvT4ZhjVqnv5IqAgYBPA3KnWyHmzJA1zEeqc8vImpggwSwTZ7A+Joy+4M94
-94p3/f1WuqasQpDT0JoM7DK44Pf9ZLRESmN3i6uvVXnIGuLXBsdsLHpGLcjDIWnT
-oBeozBozu2a9S6mqM2kqn3Iun3oua0hgI3gVTJP6ANyj1JUONSUlHhWg/pHc7p1d
-p5fnkOiMdaDTGLDa/3J5zAe+zYZeQLBTKMo5frxsYBqRCCH00DVbBq66/jZbA24R
-xTw4Z3WiZMb+V/DmOzuBPXkANOL2oPk7az20gYxDPSFFbaxGf+oVS4mSR4GyVFGR
-/8j8hVpGbeVIm8xYy+n71IVuVQqOIeFtHQ/j7bbpQNioaT1YzNODKv2hjSWjIKxi
-ofPsIAPmFGEwcpgv3FwkuWKdCdMrII6uX0Om4nZGPJ7yG4Li5k8=
-=Dpt3
------END PGP SIGNATURE-----
+Wouldn't those same OS's that are being clever about deferring the
+syncing of A..Z as a "batch" be clever enough to turn that (re-)syncing
+into a NOOP?
 
---Eq2x3T7PrsJzz5gk--
+Of course in this case we'd need to keep the fd's open and be clever
+about E[MN]FILE (i.e. "Too many open..."), or do an fsync() every Nth
+for some reasonable Nth, e.g. somewhere in the 2^10..2^12 range.
+
+But *if* this works it seems to me to be something we might be able to
+enable when "core.fsyncObjectFiles" is configured on those systems.
+
+I.e. the implicit assumption with that configuration was that if we sync
+N loose objects and then update and fsync the ref that the FS would
+queue up the ref update after the syncing of the loose objects.
+
+This new "cookie" (or my suggested "fsync last of N") is basically
+making the same assumption, just with the slight twist that some OSs/FSs
+are known to behave like that on a per-subdir basis, no?
+
+> Here's an interesting paper I recently came across that proposes the
+> interface we'd really want, 'syncv':
+> https://citeseerx.ist.psu.edu/viewdoc/download?doi=3D10.1.1.924.1168&rep=
+=3Drep1&type=3Dpdf.
+
+1. https://lore.kernel.org/git/211201.864k7sbdjt.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/220310.86lexilo3d.gmgdl@evledraar.gmail.com/
