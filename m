@@ -2,109 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B01D6C433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 21:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40909C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 22:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344161AbiCJVzR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 16:55:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37410 "EHLO
+        id S240840AbiCJWMB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 17:12:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245598AbiCJVzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 16:55:16 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A729A194171
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 13:54:14 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id x123-20020a626381000000b004f6fc50208eso4012699pfb.11
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 13:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=dQF+dWIj/dsln5acb7KxXSF8fIesc3nQvZjmUAb6r8Q=;
-        b=hJ1v74vAtSLu2WgEBXfXOwdiJSoVEULVkKnGrUsvOeU0XGrryd9mIU56UsxI3Kjw0l
-         VMnGuUyUCsKBoBUAcU/pqQ4My41wYz6bMrrUc2vZfBVwZejz/0p6D0uTbz0CuvBt/8bU
-         cmY6lOODFYOVmIJP0WH/mNMBYLZkXKtcpUCmkAHlNy0Jx1r4enKtrGL/qlx/q881IndU
-         UXn+GzWfOiLWTaMtPsn0u2b7zcdcvwhMgubFdnFxypHWAtOHYMswQvDK2UE8nDTqfWQ1
-         4hb7jQiFZE0cOzWpPG3Z5E2LMPfj1JTVpbx6i8y8KmwacrkkxoEbxJrQM2P+3ZM+724+
-         S1+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=dQF+dWIj/dsln5acb7KxXSF8fIesc3nQvZjmUAb6r8Q=;
-        b=tlMpTJ+FqTtDoafCMZMjLhSPuGAADK0O0/fEnUDUzgkv7A4i8cDURWFZ5y0rYZ9Uo6
-         SXgCTgnra2jwmmQSewttxe/VUrsyw2hcx1q4j4riWugS5Cvv7x0cNNQJ5qRk4RcAVXRX
-         obn1X6K2cRF6JW6frPKWYvAGnjdTB3bvXQrdhkcSXZIs2NoI3juYLcBOmNBHNp0aHjjo
-         o9ym4CnX+KcurZmNrk67WIg4du0r5J9ATGy2PIts2MMyWC2pBn5NNka5puz0zCUKSVTq
-         7HH5xmZRm/gS/v4dgL04GgjTzNqP9qMhQozNgVpkCCcYlIMus29omUIVjHzeet9Iv2p2
-         ghAw==
-X-Gm-Message-State: AOAM532nN5+AuV7cT37//9+/psTp9vrdzKa4QL/4BSYeFcUtsDJ9lWFH
-        isrQEn6kIfTRh3xo3qXG/+CsBLaR4gtomA==
-X-Google-Smtp-Source: ABdhPJxHvD0SDFzsYNuS3M0RoZYr2A46v0UB/sjRYbwRD3v5dbuOc3R/IXoU0m9ZSogsK8Htaecddh1wFlAcyQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4d81:b0:1bf:8ce4:4f51 with SMTP
- id oj1-20020a17090b4d8100b001bf8ce44f51mr254661pjb.0.1646949253857; Thu, 10
- Mar 2022 13:54:13 -0800 (PST)
-Date:   Thu, 10 Mar 2022 13:54:12 -0800
-In-Reply-To: <20220310004423.2627181-3-emilyshaffer@google.com>
-Message-Id: <kl6l7d91sccb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220310004423.2627181-1-emilyshaffer@google.com> <20220310004423.2627181-3-emilyshaffer@google.com>
+        with ESMTP id S239224AbiCJWMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 17:12:00 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED9A41959FA
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 14:10:57 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEBD7107E27;
+        Thu, 10 Mar 2022 17:10:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pSUpoUuF4hcaY51U5b4hMYqcyNNvGMVKWkrKuS
+        B22t0=; b=EF+PB/lmc0GD3Ofm+ZPGOPs+tPqSwhSD6yp0eO+LHZyumlbViIPhsO
+        +s5gaMmk2+womfwFkZPmFpKuA5QxlTZDucO/42Igh29o0zGh/kCUJGcqx53ftehS
+        oXlVYmR52nQTWJJ6A/yEaCUj8teuccoR/0kfaWrrmqiDO0S99DGyc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9D40107E26;
+        Thu, 10 Mar 2022 17:10:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.247.14.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33800107E25;
+        Thu, 10 Mar 2022 17:10:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH v9 2/3] introduce submodule.hasSuperproject record
-From:   Glen Choo <chooglen@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <20220310004423.2627181-1-emilyshaffer@google.com>
+        <20220310004423.2627181-3-emilyshaffer@google.com>
+        <xmqqtuc6h83m.fsf@gitster.g>
+        <kl6la6dxsczx.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Thu, 10 Mar 2022 14:10:55 -0800
+In-Reply-To: <kl6la6dxsczx.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Thu, 10 Mar 2022 13:40:02 -0800")
+Message-ID: <xmqqwnh1bgr4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F55B07FA-A0BE-11EC-A486-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Glen Choo <chooglen@google.com> writes:
 
-> diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
-> index ee454f8126..99d5260b8e 100644
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Emily Shaffer <emilyshaffer@google.com> writes:
+>>
+>>> @@ -2617,6 +2622,12 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
+>>>  
+>>>  	free(prefixed_path);
+>>>  
+>>> +	/*
+>>> +	 * This entry point is always called from a submodule, so this is a
+>>> +	 * good place to set a hint that this repo is a submodule.
+>>> +	 */
+>>> +	git_config_set("submodule.hasSuperproject", "true");
+>>> +
+>>>  	if (!oideq(&update_data.oid, &update_data.suboid) || update_data.force)
+>>>  		return do_run_update_procedure(&update_data);
+>>
+>> In Glen's update to rewrite "submodule update" in C, this part is
+>> replaced with a call to update_submodule2().  I am not sure what the
+>> current repository is at this point of the code with and without
+>> Glen's topic, but are we sure we are in a submodule we discovered?
+>
+> Rereading this, I realize you probably meant that this conflicts with
+> part1, not part2...
+>
+> At the end of part1, update_submodule2() is called from inside the
+> submodule (specifically from run_update_procedure()). So a good merge
+> conflict resolution would be to set the config _before_ calling
+> update_submodule2(). e.g.
+>
+> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index c5d3fc3817..eda9ed550e 100644
+> index bef9ab22d4..f53808d995 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -1839,6 +1839,11 @@ static int clone_submodule(struct module_clone_data *clone_data)
->  		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
->  				       error_strategy);
->  
-> +	/*
-> +	 * Teach the submodule that it's a submodule.
-> +	 */
-> +	git_config_set_in_file(p, "submodule.hasSuperproject", "true");
-> +
->  	free(sm_alternate);
->  	free(error_strategy);
+> @@ -2672,6 +2677,11 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
+>                                             &update_data.update_strategy);
+>
+>         free(prefixed_path);
+> +       /*
+> +        * This entry point is always called from a submodule, so this is a
+> +        * good place to set a hint that this repo is a submodule.
+> +        */
+> +       git_config_set("submodule.hasSuperproject", "true");
+>         return update_submodule2(&update_data);
+>  }
 
-This git_config_set_* is superfluous - it sets the config in newly
-cloned submodules..
+That matched my tentative resolution I made last night, but what do
+you think about this part of the test added by the patch?
 
->  
-> @@ -2617,6 +2622,12 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
->  
->  	free(prefixed_path);
->  
-> +	/*
-> +	 * This entry point is always called from a submodule, so this is a
-> +	 * good place to set a hint that this repo is a submodule.
-> +	 */
-> +	git_config_set("submodule.hasSuperproject", "true");
-> +
->  	if (!oideq(&update_data.oid, &update_data.suboid) || update_data.force)
->  		return do_run_update_procedure(&update_data);
->  
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 11cccbb333..ec2397fc69 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1061,4 +1061,12 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+ 	)
+ '
+ 
++test_expect_success 'submodule update adds submodule.hasSuperproject to older repos' '
++	(cd super &&
++	 test_unconfig submodule.hasSuperproject &&
++	 git submodule update &&
++	 test_cmp_config -C submodule true --type=bool submodule.hasSuperproject
++	)
++'
++
+ test_done
 
-but this is called over *all* submodules, so we're guaranteed to always
-set the config if "git submodule update" isn't interrupted halfway.
+We go to "super", make sure that superproject does not have
+submodule.hasSuperproject set, run "git submodule update", and see
+if the configuration file in "submodule" subdirectory has the
+variable set.  It does not clear the variable from the submodule
+before starting, so the variable given to the submodule when it was
+cloned would be there, even if "git submodule update" failed to set
+it.
 
-I don't think we guarantee correctness if it is interrupted halfway e.g.
-core.worktree can be unset if it is interrupted halfway (because
-ensure-core-worktree is called adjacent to run-update-procedure, not
-inside of update-clone).
+I am wondering if it should do something like the attached instead.
 
-So I think it's better to just drop the previous hunk - it will
-disappear anyway in gc/submodule-update-part2.
+We
+
+ * clear the variable from "super" and "super/submodule"
+   repositories;
+
+ * run "git submodule update";
+
+ * ensure that "git submodule update" did not touch "super/.git/config";
+
+ * ensure that "git submodule update" added the variable to
+   "super/submodule/.git/config".
+
+Clearing the variable from "super" is technically wrong because the
+repository is set up as a submodule of "recursivesuper" and if we
+had further tests, we should restore it in "super", but the point is
+that we are makng sure "git submodule update" sets the variable in
+the configuration file of the submodule, and not in the superproject's. 
+
+With the conflict resolution above, this "corrected" test fails and
+shows that superproject's configuration file is updated after "git
+submodule update".
+
+This series alone, without your topic, this "corrected" test fails,
+and that is where my "are we sure we are mucking with the
+configuration file in the submodule"? comes from.
+
+diff --git c/t/t7406-submodule-update.sh w/t/t7406-submodule-update.sh
+index 000e055811..c9912bb242 100755
+--- c/t/t7406-submodule-update.sh
++++ w/t/t7406-submodule-update.sh
+@@ -1083,4 +1083,16 @@ test_expect_success 'submodule update --filter sets partial clone settings' '
+ 	test_cmp_config -C super-filter/submodule blob:none remote.origin.partialclonefilter
+ '
+ 
++test_expect_success 'submodule update adds submodule.hasSuperproject to older repos' '
++	(cd super &&
++	 test_unconfig submodule.hasSuperproject &&
++	 test_unconfig -C submodule submodule.hasSuperproject &&
++	 git submodule update &&
++	 echo in super &&
++	 test_cmp_config false --type=bool submodule.hasSuperproject &&
++	 echo in submodule &&
++	 test_cmp_config -C submodule true --type=bool submodule.hasSuperproject
++	)
++'
++
+ test_done
