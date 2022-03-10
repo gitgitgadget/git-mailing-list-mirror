@@ -2,74 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B668C4332F
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 18:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CAC8C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 18:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245590AbiCJStw convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 10 Mar 2022 13:49:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
+        id S245620AbiCJSyy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 13:54:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245601AbiCJStu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 13:49:50 -0500
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 827F74D9C3
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 10:48:48 -0800 (PST)
-Received: from Mazikeen (cpe788df74d2cc1-cm788df74d2cc0.cpe.net.cable.rogers.com [72.138.27.250] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22AImlML032275
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 10 Mar 2022 13:48:47 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Neeraj Singh'" <nksingh85@gmail.com>
-Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>,
-        "'Neeraj K. Singh via GitGitGadget'" <gitgitgadget@gmail.com>,
-        "'Git List'" <git@vger.kernel.org>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "'Jeff King'" <peff@peff.net>,
-        "'Jeff Hostetler'" <jeffhost@microsoft.com>,
-        "'Christoph Hellwig'" <hch@lst.de>,
-        "'Bagas Sanjaya'" <bagasdotme@gmail.com>,
-        "'Elijah Newren'" <newren@gmail.com>,
-        "'Neeraj K. Singh'" <neerajsi@microsoft.com>,
-        "'Patrick Steinhardt'" <ps@pks.im>,
-        "'Junio C Hamano'" <gitster@pobox.com>, "'Eric Wong'" <e@80x24.org>
-References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com> <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com> <211116.8635nwr055.gmgdl@evledraar.gmail.com> <CANQDOdcEtOMMOLcHrnTKReRS23PvjOGp58VdpEkV_6iZuSPXaw@mail.gmail.com> <211117.86ee7f8cm4.gmgdl@evledraar.gmail.com> <CANQDOdcKzxM+M7wgxUz831SbpwGWR7gcUC8xLFM14BcCJ+60sA@mail.gmail.com> <211201.864k7sbdjt.gmgdl@evledraar.gmail.com> <220310.86lexilo3d.gmgdl@evledraar.gmail.com> <CANQDOdcJX9bYAJN4_M5-k_Ssg+kK+CVOsanXr+Xnu7B+nzfqSw@mail.gmail.com> <220310.86r179ki38.gmgdl@evledraar.gmail.com> <CANQDOdf1pE+PUv_XqLobGq8Wvan-iH28RhBJFYM-NfxHKBjU+Q@mail.gmail.com> <00ae01d834a9$d443a530$7ccaef90$@nexbridge.com> <CANQDOdeFdTzB6GKEeNPJm0-j0qyD+n8+e=+Qn98PvRg8N5wdEQ@mail.gmail.com>
-In-Reply-To: <CANQDOdeFdTzB6GKEeNPJm0-j0qyD+n8+e=+Qn98PvRg8N5wdEQ@mail.gmail.com>
-Subject: RE: [PATCH v9 0/9] Implement a batched fsync option for core.fsyncObjectFiles
-Date:   Thu, 10 Mar 2022 13:48:41 -0500
-Organization: Nexbridge Inc.
-Message-ID: <00b501d834af$794cd830$6be68890$@nexbridge.com>
+        with ESMTP id S239137AbiCJSyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 13:54:52 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFD8155C1D
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 10:53:51 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E97CA182097;
+        Thu, 10 Mar 2022 13:53:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CIcB2jHkLYDSplgmrojBp5aFf6EF1RaLKWk9H5
+        EdEMg=; b=rQ4pwOjlfRJFZN3yySCdpqSmI7LSNErwmfZXkNdwgH9OwtCbr1q2pY
+        m1NF4554TXdvIv9xSNvhw1/1oOVtrJ8PpcvUr60nyb2dnmCy3MiCmhHccABCmUOI
+        XY6hpvKnQE9bk2pU+I3IHrE6w0j3ftjkjATCoG50QH1dEl/Cottwc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E2E5A182096;
+        Thu, 10 Mar 2022 13:53:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.247.14.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 65891182095;
+        Thu, 10 Mar 2022 13:53:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 0/4] builtin add -p: hopefully final readkey fixes
+References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+        <20220309110325.36917-1-phillip.wood123@gmail.com>
+        <xmqqilsmlo31.fsf@gitster.g> <xmqqzglyk89e.fsf@gitster.g>
+        <93d197db-c52c-101b-bdb0-3b4c9b073705@gmail.com>
+        <a1e51433-71b1-b32d-0475-192b83bac43a@gmail.com>
+Date:   Thu, 10 Mar 2022 10:53:47 -0800
+In-Reply-To: <a1e51433-71b1-b32d-0475-192b83bac43a@gmail.com> (Phillip Wood's
+        message of "Thu, 10 Mar 2022 18:18:31 +0000")
+Message-ID: <xmqqo82dej0k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGgIVyljHjFm8+Xd7vU2vU1n+z2ZQKRvucnAxQpxkcB5Wnx4wJZi8f1AnM48H0BjRpn+AFX0GFeAXM2sKsCoVUILQIqGAxUAWO/xr4C0AIy/axboC4A
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B71668A-A0A3-11EC-B683-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 10, 2022 1:43 PM, Neeraj Singh wrote:
->On Thu, Mar 10, 2022 at 10:08 AM <rsbecker@nexbridge.com> wrote:
->> While this might not be a surprise, on some platforms fsync is a thread-blocking
->operation. When the OS has kernel threads, fsync can potentially cause multiple
->processes (if implemented that way) to block, particularly where an fd is shared
->across threads (and thus processes), which may end up causing a deadlock. We
->might need to keep an eye out for this type of situation in the future and at least
->try to test for it. I cannot actually see a situation where this would occur in git, but
->that does not mean it is impossible. Food for thought.
->> --Randall
->
->fsync is expected to block the calling thread until the underlying data is durable.
->Unless the OS somehow depends on the git process to make progress before
->fsync can complete, there should be no deadlock, since there would be no cycle in
->the waiting graph.  This could be a problem for FUSE implementations that are
->backed by Git, but they already have to deal with that possiblity today and this
->patch series doesn't change anything.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-That assumption is based on a specific threading model. In cooperative user-thread models, fsync is process-blocking. While fsync, by spec is required to block the thread, there are no limitations on blocking everything else. In some systems, an fsync can block the entire file system. Just pointing that out. 
+> Looking more closely that should be "break" not "return 0". I think
+> what has happened is that I accidentally based these on an old version
+> of pw/single-key-interactive which did not contain 24d7ce383a
+> ("terminal: always reset terminal when reading without echo",
+> 2022-02-22)
 
+I thought the base pw/single-key-interactive topic is solid enough
+and ready for 'next'?  It probably is a good idea to rebase these
+follow-on patches on top of a merge of the base topic into 'master'.
+
+I'll keep v2 in 'seen' but mark the topic as "Expecting a reroll"
+in the draft of the next issue of the "What's cooking" report.
+
+Thanks.
