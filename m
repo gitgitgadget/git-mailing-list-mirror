@@ -2,117 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7967DC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50513C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:12:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240534AbiCJNM6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 08:12:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38788 "EHLO
+        id S233401AbiCJNN3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 08:13:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235602AbiCJNM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 08:12:57 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E737F4D629
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:11:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646917888;
-        bh=8kOJWXFP/As94CuZKbAur9QJB6vcIGjdEyCIARK9UuQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MO8F6yanfyqXOvaFPDAzZSFfHkKEyN3q3PoZFPcOgb3/4nBNlyuslMY4oSSd9L0aM
-         Ot6wrFkUoBmRACmrHgm7VRx+1IfVejGxKQsIYBN/KJUGVTEqaNBKdr4Uvrvl6chFtT
-         0al7/9TRuyJQ6deEmDZOCooS/gOlBHFTffjZ7nQk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm27-1nLuuC42ot-00GGYp; Thu, 10
- Mar 2022 14:11:28 +0100
-Date:   Thu, 10 Mar 2022 14:11:25 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Neeraj Singh <nksingh85@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v5 3/5] core.fsync: introduce granular fsync control
-In-Reply-To: <CANQDOddU_WXD-6ncDGBrgpsuKT-XDGC=SeaaQTNQFdODFZ7TkQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203101406000.357@tvgsbejvaqbjf.bet>
-References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com> <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com> <e31886717b42837f4e1538a13c8954aa07865af5.1646866998.git.gitgitgadget@gmail.com> <xmqqo82eirnv.fsf@gitster.g>
- <CANQDOddU_WXD-6ncDGBrgpsuKT-XDGC=SeaaQTNQFdODFZ7TkQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S230483AbiCJNN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 08:13:29 -0500
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3AC33C736
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:12:26 -0800 (PST)
+Received: by mail-io1-f49.google.com with SMTP id q11so6340902iod.6
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:12:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JB6iO5Hu3ip+GDp1D1mqwJy/mxUZCwlhB9N9y5XWIk0=;
+        b=Nxmz55xYQ/CtcwDS0E77XcflBBauzO8fh/T0WtPQUe6G8C3V3h+x14pDDl/OvXxAxT
+         CipUlzluX4bchrtbJJRbMHu2hTkjoRcEEiJHD2uQ+5fTT2ZHUxUw3THkD061GyFUwDbJ
+         7L2dr6zLeUCG4q37/d4ZNHA7MuhO713GFXvMb06q4CpvpiEbvr59XHUt1ijLRJ/DsmYu
+         lWXl04N2EAcXeabndRAEC/VFY54ELeLTStVigy1osBNlO4p8lNiO+zjni2i35ii1/IAn
+         edsTlfaGlOOFaOMe7A/k0K309J03r8WVtpw3sY6OaIaZzSh/JDTGfoWvjBt+Luu9CSEt
+         GYjA==
+X-Gm-Message-State: AOAM5333zy2EwX+7BSqvH7Jd4WIjBnDQUTnZVb6RHCWeSCPPuPmlUzG1
+        UJBjg98vxpCNWzXU5j0YN7VOhslhJYE/vL5bQGw=
+X-Google-Smtp-Source: ABdhPJyKfOmsBRLeqfvkxYJ5Yth+pf2q/nKIeHIrWuNBV2im6CdMkTC4cfgiscRrGzHoeQfb8E3bV6F2jFCJehsEBDI=
+X-Received: by 2002:a05:6638:1655:b0:319:a174:6ba0 with SMTP id
+ a21-20020a056638165500b00319a1746ba0mr4037078jat.195.1646917945822; Thu, 10
+ Mar 2022 05:12:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NCw0sLr/hRwLfHbANugxVhrkMSDYM2abILMg6ugcRCPBcPOW8dB
- YM35eXEipyGQ1qCQjZLLBWz5VIC2jkwANZdtHeM8YL6ZyEAZrxHCCn5pPzfBaiEGLUohF6o
- 3P+Qg6VhzcRqTvNCpW6eQMeZw7SpLypMW/gj8Q88hYGL/BJiIhZS8He18M1vOcPAKgKatcY
- jc7aXWe9wHLf1wotz7GjQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Mtr5Ut8VFqQ=:cOPnR8w+zCkIFd1dS8UC2X
- bDlH0/Add1hUmrBwAKXFzf9RZcT5j/WRcyw+7t70VCyAHqAiiPOrtepjhrZm0yS9sAaFcPwDD
- p+S2Xh7fgx0qeWwstY6SOJ93gChuclvj+PTpqcOy4y20qW1hmJIxqhTWv3LRyljinE0fe6obw
- fS0jr1iT3wVlKymUZJSHb+at0dnkJxPmgukqazxTeP24qvD8G3QqfnxcMAcFDo9onq2VUNTm/
- IJET/e+X5UPhl1fSCn0oea+qT4H9OtJ6R4O2NZEVKL8Ef3o7E89C6CogNhTfXzR6r6i56jKfe
- 5dpbWZ83sTY2XoiHnXrnRljtYjspSfn2Yfe7HJkUMWRF3T/kkkk0jTn6GWW070YXLVjIImNx/
- +5RbJPtRAG5oo4qOTY2g36mCVjW9UVyGYjCftPk33Ldhrr9PzMWf7ucV39kPGhHpZekw1gJ3i
- wgWJGaQB0FNFouQN1BvQxydxE5guEx2DkUUqrLsa5QVHbt2IGbheM62dOYWpq8XNHbzhcAq35
- XhVYYGItStk/snsXh2NEOnL/kluHQUN4hUIwKsv4A8SNwyDfpmrgyWZ7QaizO0Z19xO7tStIR
- TbW78e90sDpU+S6ZxUs18+NH/kmgDJ+iFmpoYpYMEPWQkQGh7eBl2o/rWjWyBoJrTvBBT9hY5
- 7B49+dmzHynaho0u50dAn5Ar/8wwnigzbZXv9LUlJenz4kKM3zH3Bd3/hEgkgQabm43CL4+Lz
- uFPbc8v+Di554O3bDvVPT/YeOf8Ud4it22lpMSXZnB2UNAUMXZEVSWyoDVwRpD03COd82ygs6
- jCJumS9qcbHwUyNkIZLzTsU+4xX0mG5vjsJyBgjxue4QEsswa4qGXCiHdHA9PGKeJ4CFRfREd
- YdqCHnJGw6ZuM6Kc+UPlJXaLGULK60iHGhVNWRbmh/O2m8Fjvl4hj6ujwqtKgped57OX+R/dF
- GnKVtb8cOoSKqZw8bcs6vvoU6fGUp8X2q9X3Vis9kqphM5lmRp+HHqgycBmIMDcdok6obvdd6
- WdQpnvE2PQU+xLDRCFZZkWHbpOCvNTZJX5vkjV19falTDw0QPIu9EaMz4e1rXUhPIrc5nucjJ
- T1FpwAiHuJv8wY=
-Content-Transfer-Encoding: quoted-printable
+References: <ea67407120aa710f81af048d22be09281ac28107.camel@gmail.com>
+ <CA+JQ7M-dkV_AGJ8+4C6HcCN1sQgBtyfYbgUbnQQmYz9So3WwQQ@mail.gmail.com>
+ <d204419925e7a4486d9a66a8a0f807a77be6d1b7.camel@gmail.com>
+ <xmqqee3bm2b8.fsf@gitster.g> <f5be5b264f30f689546db3883b4b64c88ba00cb3.camel@gmail.com>
+In-Reply-To: <f5be5b264f30f689546db3883b4b64c88ba00cb3.camel@gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Thu, 10 Mar 2022 14:11:49 +0100
+Message-ID: <CA+JQ7M9HUMK8=b0+uxN9Kwx1VSH3OnxvdYTdw4ZoT9COHhJdeA@mail.gmail.com>
+Subject: Re: git notes question
+To:     =?UTF-8?B?TnVubyBTw6E=?= <noname.nuno@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Neeraj,
+> What I was asking was just if there was a way to not use these default
+> strings.
 
-On Wed, 9 Mar 2022, Neeraj Singh wrote:
+Forgive me but I'm somewhat perplexed as to why you want to change it.
+Is there a specific use-case where this is a problem or is it a
+personal preference? Maybe you have a good reason and my imagination
+isn't stretching that far.
 
-> On Wed, Mar 9, 2022 at 4:21 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> > I am wondering if fsync_or_die() interface is abstracted well enough,
-> > or we need things like "the fd is inside this directory; in addition
-> > to doing the fsync of the fd, please sync the parent directory as
-> > well" support before we start adding more components (if there is such
-> > a need, perhaps it comes before this step).
-> >
->
-> I think syncing the parent directory is a separate fsyncMethod that
-> would require changes across the codebase to obtain an appropriate
-> directory fd. I'd prefer to treat that as a separable concern.
+> Well, this would be surely nice. For now, I will just remove it by hand
+> or script something to do it before calling git-send-email.
 
-That makes sense to me because I expect further abstraction to be
-necessary here because Unix/Linux semantics differ quite a bit more from
-Windows semantics when it comes to directory "file" descriptors than when
-talking about files' file descriptors.
-
-> > > +#define FSYNC_COMPONENTS_DEFAULT (FSYNC_COMPONENT_PACK | \
-> > > +                               FSYNC_COMPONENT_PACK_METADATA | \
-> > > +                               FSYNC_COMPONENT_COMMIT_GRAPH)
-> >
-> > IOW, everything other than loose object, which already has a
-> > separate core.fsyncObjectFiles knob to loosen.  Everything else we
-> > currently sync unconditionally and the default keeps that
-> > arrangement?
-> >
->
-> Yes, trying to keep default behavior identical on non-Windows
-> platforms.  Windows will be expected to adopt batch mode, and have
-> loose objects in this set.
-
-We already adopted an early version of this patch series:
-https://github.com/git-for-windows/git/commit/98209a5f6e4
-
-And yes, I will gladly adapt that to whatever lands in core Git.
-
-Thank you _so_ much for working on this!
-Dscho
+Here's a simples sed that changes Notes: to setoN:
+  sed '/^---$/{N;N;/^---\n\nNotes:$/s@Notes:@setoN:@}'
