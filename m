@@ -2,82 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ACD8C433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9AB6C4321E
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:31:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243912AbiCJOc3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 09:32:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50302 "EHLO
+        id S232448AbiCJOcc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 09:32:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343934AbiCJOba (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 09:31:30 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A0BE98E4
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:28:47 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 773A93F4165;
-        Thu, 10 Mar 2022 09:28:46 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3C0D43F4148;
-        Thu, 10 Mar 2022 09:28:46 -0500 (EST)
-Subject: Re: [PATCH v2 25/27] t/lib-unicode-nfc-nfd: helper prereqs for
- testing unicode nfc/nfd
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
- <5a0c1b7a2873accc6db4b34493962378819eacd4.1646777728.git.gitgitgadget@gmail.com>
- <af6c456a-d49f-e0f2-50ae-f44fdb6351e3@github.com>
- <6555f3dc-e72c-2b0f-fe66-d81d48dff6f7@github.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <1b35ccf2-fe23-145d-53b9-4a0cbb5bba8b@jeffhostetler.com>
-Date:   Thu, 10 Mar 2022 09:28:45 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S1343972AbiCJObe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 09:31:34 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631BECA31A
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:29:14 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id v4so5405855pjh.2
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:29:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=coup.net.nz; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2iM/In/GcepHWMmmxrvoH09cWD3Q2y2flO1kFb31CVE=;
+        b=QSIgXED/sFG9lY7p/0I9TiTawgKdPb6wqtANqoAhj/3VMDJpxBSYNv5Feajr5wLSVf
+         2YfFCf03EoMWo9O/O+LRYff4acZ4WUf4LqFLD7HLUjt0Ix1HAe+V7tGf01yHmoJRwsFq
+         iaq4LRuYgqAA9I1lO5DhNgkSSYEXNka/9v90g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2iM/In/GcepHWMmmxrvoH09cWD3Q2y2flO1kFb31CVE=;
+        b=1UUVt4LYGq0iEFYT52K4WqbO1JVdu4d1nWfGCrLGRNc75Z+xp1fC7+En5i1YOEfqEx
+         bZG4ieQUWnRg1vb5q1dIlAJaBslu8LiDFQPyjzFqu/4AIeb6wG2UHPoJ++Ao008uT9mj
+         jKDS9oZOVqR4ipTh3MHyL5cQ4yaWL7EUTmhpZdNCNtUUVbIWRNd6HUv9F/Ow/lirLXY9
+         URfdLnvUh2cv0J24ZS6GwtHCdWMgaOJhTVs7bWiqxpckdnKrsu9TqNqID83fbu8nOF1e
+         hwAktxL1BSzPRjIIAjp70Tfm8QEGtI83Fq6TW23X34yBbpywYzcDZtYETpFtIzzeWz6S
+         9aSQ==
+X-Gm-Message-State: AOAM532lsdcYTrAbn/pziQFOj00Y1cBICIpjpUNGvWFr1uUXz3TduQfW
+        Y3OdCENmB8Lkb5cOay4tQq2M1s7bCwYJst8M1hnhrg==
+X-Google-Smtp-Source: ABdhPJw1BL72gQ0H3iZKctnU4EfEsUDxrNrlpJSKPjAjc5JryMN53csvT57U0AXDwAFVb3Buzj4k/E/V6T9Q6BM20sU=
+X-Received: by 2002:a17:90b:4f8d:b0:1bf:7f90:35c with SMTP id
+ qe13-20020a17090b4f8d00b001bf7f90035cmr16095366pjb.166.1646922553643; Thu, 10
+ Mar 2022 06:29:13 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <6555f3dc-e72c-2b0f-fe66-d81d48dff6f7@github.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
+ <20220309002729.3581315-1-calvinwan@google.com> <CACf-nVeEBDQse0coA7QpQmQ92y9kDwXoTmayD8_NY2OHNZ5v+g@mail.gmail.com>
+ <xmqqzglylslh.fsf@gitster.g>
+In-Reply-To: <xmqqzglylslh.fsf@gitster.g>
+From:   Robert Coup <robert@coup.net.nz>
+Date:   Thu, 10 Mar 2022 14:29:02 +0000
+Message-ID: <CACf-nVf-O5+_nMrdBiRJ5sHg7g+DjTkPy1VuErDnEXJ0-9OJ0A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] fetch: add repair: full refetch without negotiation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        John Cai <johncai86@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+On Wed, 9 Mar 2022 at 21:32, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The way I read Calvin's suggestion was that you won't allow such a
+> random series of "git fetch"es without updating the "this is the
+> filter that is consistent with the contents of this repository"
+> record, which will lead to inconsistencies.  I.e.
+>
+>  - we must maintain the "filter that is consistent with the contents
+>    of this repository", which this series does not do, but we should.
 
-On 3/9/22 1:42 PM, Derrick Stolee wrote:
-> On 3/9/2022 1:40 PM, Derrick Stolee wrote:
->> On 3/8/2022 5:15 PM, Jeff Hostetler via GitGitGadget wrote:
->>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>
->>> Create a set of prereqs to help understand how file names
->>> are handled by the filesystem when they contain NFC and NFD
->>> Unicode characters.
->>
->> Prereqs look good and are well documented.
->>
->>> +if test $unicode_debug = 1
->>
->> Is this $unicode_debug something I should know from a previous
->> patch? or is it a leftover from local debugging?
-> 
-> I see that you set unicode_debug = 0 in a later patch, but I
-> suppose that we might want this output no matter what. Or, do
-> we think it will interrupt the output parsing of 'prove' and
-> other tools?
+I don't think we should strive to keep this "consistency" =E2=80=94
 
-I was afraid that it might interrupt tools like prove, but
-I just tried it and it didn't.  But yeah it would be safer
-to turn it off until someone actually wants to do some debugging
-in this area.
+>  - the "--refetch" is unnecessary and redundant, as long as such a
+>    record is maintained; when a filter settings changes, we should
+>    do the equivalent of "--refetch" automatically.
 
-Jeff
+=E2=80=94 we don't know how much data has been pulled in by fetches from
+different promisor and non-promisor remotes (past & present); or
+dynamically faulted in through branch switching or history
+exploration. And I can't see any particular benefit in attempting to
+keep track of that?
 
+=C3=86var suggested in future maybe we could figure out which commits a
+user definitively has all the blobs & trees for and refetch could
+negotiate from that position to improve efficiency: nothing in this
+series precludes such an enhancement.
 
+> ... isn't "git fetch --fitler" that does not update the configured
+> filter (and does not do a refetch automatically) a bug that made the
+> "refetch" necessary in the first place?
+
+I don't believe it's a bug. A fairly obvious partial clone example
+I've used before on repos where I want the commit history but not all
+the associated data (especially when the history is littered with
+giant blobs I don't care about):
+
+  git clone example.com/myrepo --filter=3Dblob:none
+  # does a partial clone with no blobs
+  # checkout faults in the blobs present at HEAD in bulk to populate
+the working tree
+  git config --unset remote.origin.partialclonefilter
+  # going forward, future fetches include all associated blobs for new comm=
+its
+
+Getting all the blobs for all history is something I'm explicitly
+trying not to do in this example, but if the next fetch from origin
+automatically did a "refetch" after I removed the filter that's
+exactly what would happen.
+
+We don't expect users to update `diff.algorithm` in config to run a
+minimal diff: using the `--diff-algorithm=3D` option on the command line
+overrides the config. And the same philosophy applies with fetch:
+`remote.<name>.partialclonefilter` provides the default filter for
+fetches, and a user can override it via `git fetch --filter=3D`. To me
+this is how Git commands are expected to work.
+
+Partial clones are still relatively new and advanced, and I don't
+believe we should try and over-predict too much what the correct
+behaviour is for a user.
+
+I'd be happy adding something to the documentation for the
+`remote.<name>.partialclonefilter` config setting to explain that
+changing or removing the filter won't backfill the local object DB and
+the user would need `fetch --refetch` for that.
+
+Thanks,
+Rob :)
