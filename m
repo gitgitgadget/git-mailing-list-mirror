@@ -2,134 +2,256 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9AB6C4321E
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E15B4C4332F
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 14:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232448AbiCJOcc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 09:32:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
+        id S238658AbiCJOg0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 09:36:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343972AbiCJObe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 09:31:34 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631BECA31A
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:29:14 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id v4so5405855pjh.2
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:29:14 -0800 (PST)
+        with ESMTP id S1344066AbiCJObk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 09:31:40 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7927E7DA80
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:30:17 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id qa43so12367130ejc.12
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 06:30:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coup.net.nz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2iM/In/GcepHWMmmxrvoH09cWD3Q2y2flO1kFb31CVE=;
-        b=QSIgXED/sFG9lY7p/0I9TiTawgKdPb6wqtANqoAhj/3VMDJpxBSYNv5Feajr5wLSVf
-         2YfFCf03EoMWo9O/O+LRYff4acZ4WUf4LqFLD7HLUjt0Ix1HAe+V7tGf01yHmoJRwsFq
-         iaq4LRuYgqAA9I1lO5DhNgkSSYEXNka/9v90g=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Bxz6ui6ZHOq5sJIalUpMorrj0hVYPzHl2COabfEi2LM=;
+        b=YJRBQahzVnDEHdrXhF66vloOAuTZknphZiikx5sW8WPayA7LXzT3dcZXf4YVeoUojv
+         VWV7WMcXrAVzicNKi+FtatfdOT9idVdLFxm48UkRDQXV5RqZWPczNSzyB261A5tHrsLH
+         mZvoFVFC7R0mjNrNPrwrcLq7+DLqGiaYIDCDboizRDK6OG9ZR5f7Ci99OUZ+Em0XVKUi
+         5p4aOKKysSAY4ttKLiE3ymZbHToKWxDq36ZkqPgOC1Ctltwk0aum8LsW864Ptq6NopFe
+         23ke926Z5HEab05oPaxKEjW23AqemY67SOrELACKRjH4Ra6oXFQ/e8tWrsOPTDlNuacW
+         icgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2iM/In/GcepHWMmmxrvoH09cWD3Q2y2flO1kFb31CVE=;
-        b=1UUVt4LYGq0iEFYT52K4WqbO1JVdu4d1nWfGCrLGRNc75Z+xp1fC7+En5i1YOEfqEx
-         bZG4ieQUWnRg1vb5q1dIlAJaBslu8LiDFQPyjzFqu/4AIeb6wG2UHPoJ++Ao008uT9mj
-         jKDS9oZOVqR4ipTh3MHyL5cQ4yaWL7EUTmhpZdNCNtUUVbIWRNd6HUv9F/Ow/lirLXY9
-         URfdLnvUh2cv0J24ZS6GwtHCdWMgaOJhTVs7bWiqxpckdnKrsu9TqNqID83fbu8nOF1e
-         hwAktxL1BSzPRjIIAjp70Tfm8QEGtI83Fq6TW23X34yBbpywYzcDZtYETpFtIzzeWz6S
-         9aSQ==
-X-Gm-Message-State: AOAM532lsdcYTrAbn/pziQFOj00Y1cBICIpjpUNGvWFr1uUXz3TduQfW
-        Y3OdCENmB8Lkb5cOay4tQq2M1s7bCwYJst8M1hnhrg==
-X-Google-Smtp-Source: ABdhPJw1BL72gQ0H3iZKctnU4EfEsUDxrNrlpJSKPjAjc5JryMN53csvT57U0AXDwAFVb3Buzj4k/E/V6T9Q6BM20sU=
-X-Received: by 2002:a17:90b:4f8d:b0:1bf:7f90:35c with SMTP id
- qe13-20020a17090b4f8d00b001bf7f90035cmr16095366pjb.166.1646922553643; Thu, 10
- Mar 2022 06:29:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Bxz6ui6ZHOq5sJIalUpMorrj0hVYPzHl2COabfEi2LM=;
+        b=epaEvNe2HcJ7ggeoLRmySbFhYuZJokDjXGs3+Nf86QIJiePJb2U+WmWFr3ROOBhA8g
+         A3vIh50lZT75gVxqdGiK7WnbBUKzQCHpjHmYRXZbwaC5FVwWqzN5KzpxH0tXg7hH5tfn
+         WGObPBQgIEEpoGoP5jHdnL/vM6+6QdrNhL928c5GI1z0in1Yk9ivt3woBQfXR/iqwqK2
+         a+dLdV8wYl73jbAnsZjn34bvVLE79N74GMDwz6DiVUTEHHXkaNJ1ix4G8KU8LROoKTmL
+         aax+61WgDkaGcoQo71n/2Ywif9YT9qMSLDJKY9UnJO9g3G/waIrNdWK5LAaj+5BcNO/7
+         rdMQ==
+X-Gm-Message-State: AOAM532rTyiXIWRwic3mLYA1UA29/Fce/Agp+QKw62+43jX4CP/NAhYG
+        OKsfrwzeGoE41hQqQ7o0JFE=
+X-Google-Smtp-Source: ABdhPJyDSSmTNZgxAVy4sGPbOihUTqAXlLqORHg6IV0q3hNBECTOvZ1eLAQ2ktDgZbNxU+i+Zu/3JA==
+X-Received: by 2002:a17:907:728b:b0:6da:97db:b66d with SMTP id dt11-20020a170907728b00b006da97dbb66dmr4461311ejc.636.1646922615094;
+        Thu, 10 Mar 2022 06:30:15 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id z11-20020a50e68b000000b00412ec8b2180sm2106951edm.90.2022.03.10.06.30.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Mar 2022 06:30:14 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nSJnx-000Wdj-7p;
+        Thu, 10 Mar 2022 15:30:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH v4 04/13] pack-objects: use rev.filter when possible
+Date:   Thu, 10 Mar 2022 15:24:05 +0100
+References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
+ <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
+ <ed22a77782bee97ef50fe1ff1a12fa2fa1470805.1646841703.git.gitgitgadget@gmail.com>
+ <220310.86zglyj5xz.gmgdl@evledraar.gmail.com>
+ <645650c1-7918-6985-a08b-cb47247b08d4@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <645650c1-7918-6985-a08b-cb47247b08d4@github.com>
+Message-ID: <220310.86mthxkhhm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
- <20220309002729.3581315-1-calvinwan@google.com> <CACf-nVeEBDQse0coA7QpQmQ92y9kDwXoTmayD8_NY2OHNZ5v+g@mail.gmail.com>
- <xmqqzglylslh.fsf@gitster.g>
-In-Reply-To: <xmqqzglylslh.fsf@gitster.g>
-From:   Robert Coup <robert@coup.net.nz>
-Date:   Thu, 10 Mar 2022 14:29:02 +0000
-Message-ID: <CACf-nVf-O5+_nMrdBiRJ5sHg7g+DjTkPy1VuErDnEXJ0-9OJ0A@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] fetch: add repair: full refetch without negotiation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Calvin Wan <calvinwan@google.com>,
-        Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        John Cai <johncai86@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Wed, 9 Mar 2022 at 21:32, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Mar 10 2022, Derrick Stolee wrote:
+
+> On 3/10/2022 8:11 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Wed, Mar 09 2022, Derrick Stolee via GitGitGadget wrote:
+>>=20
+>>> From: Derrick Stolee <derrickstolee@github.com>
+>>>
+>>> In builtin/pack-objects.c, we use a 'filter_options' global to populate
+>>> the --filter=3D<X> argument. The previous change created a pointer to a
+>>> filter option in 'struct rev_info', so we can use that pointer here as a
+>>> start to simplifying some usage of object filters.
+>>>
+>>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>>> ---
+>>>  builtin/pack-objects.c | 5 +++--
+>>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>>> index ba2006f2212..e5b7d015d7d 100644
+>>> --- a/builtin/pack-objects.c
+>>> +++ b/builtin/pack-objects.c
+>>> @@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
+>>>=20=20
+>>>  static int get_object_list_from_bitmap(struct rev_info *revs)
+>>>  {
+>>> -	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &filter_options, 0)))
+>>> +	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &revs->filter, 0)))
+>>>  		return -1;
+>>>=20=20
+>>>  	if (pack_options_allow_reuse() &&
+>>> @@ -3727,6 +3727,7 @@ static void get_object_list(int ac, const char **=
+av)
+>>>  	repo_init_revisions(the_repository, &revs, NULL);
+>>>  	save_commit_buffer =3D 0;
+>>>  	setup_revisions(ac, av, &revs, &s_r_opt);
+>>> +	list_objects_filter_copy(&revs.filter, &filter_options);
+>>>=20=20
+>>>  	/* make sure shallows are read */
+>>>  	is_repository_shallow(the_repository);
+>>> @@ -3777,7 +3778,7 @@ static void get_object_list(int ac, const char **=
+av)
+>>>=20=20
+>>>  	if (!fn_show_object)
+>>>  		fn_show_object =3D show_object;
+>>> -	traverse_commit_list_filtered(&filter_options, &revs,
+>>> +	traverse_commit_list_filtered(&revs.filter, &revs,
+>>>  				      show_commit, fn_show_object, NULL,
+>>>  				      NULL);
+>>=20
+>> Re your
+>> https://lore.kernel.org/git/77c8ef4b-5dce-401b-e703-cfa32e18c853@github.=
+com/
+>> I was looking at how to handle the interaction between this and my
+>> revisions_release() series.
+>>=20
+>> This adds a new memory leak, which can be seen with:
+>>=20
+>>     make SANITIZE=3Dleak
+>>     (cd t && ./t5532-fetch-proxy.sh -vixd)
+>>=20
+>> I.e. this part is new:
+>>=20=20=20=20=20
+>>     remote: Direct leak of 1 byte(s) in 1 object(s) allocated from:
+>>     remote:     #0 0x4552f8 in __interceptor_malloc (git+0x4552f8)
+>>     remote:     #1 0x75a089 in do_xmalloc wrapper.c:41:8
+>>     remote:     #2 0x75a046 in xmalloc wrapper.c:62:9
+>>     remote:     #3 0x62c692 in list_objects_filter_copy list-objects-fil=
+ter-options.c:433:2
+>>     remote:     #4 0x4f70bf in get_object_list builtin/pack-objects.c:37=
+30:2
+>>     remote:     #5 0x4f5e0e in cmd_pack_objects builtin/pack-objects.c:4=
+157:3
+>>     remote:     #6 0x4592ba in run_builtin git.c:465:11
+>>     remote:     #7 0x457d71 in handle_builtin git.c:718:3
+>>     remote:     #8 0x458ca5 in run_argv git.c:785:4
+>>     remote:     #9 0x457b30 in cmd_main git.c:916:19
+>>     remote:     #10 0x563179 in main common-main.c:56:11
+>>     remote:     #11 0x7fddd2da67ec in __libc_start_main csu/../csu/libc-=
+start.c:332:16
+>>     remote:     #12 0x4300e9 in _start (git+0x4300e9)
+>>=20=20=20=20=20
+>> Of course it's not "new" in the sense that we in effect leaked this
+>> before, but it was still reachable, you're just changing it so that
+>> instead of being stored in the static "filter_options" variable in
+>> pack-objects.c we're storing it in "struct rev_info", which has a
+>> different lifetime.
 >
-> The way I read Calvin's suggestion was that you won't allow such a
-> random series of "git fetch"es without updating the "this is the
-> filter that is consistent with the contents of this repository"
-> record, which will lead to inconsistencies.  I.e.
+> True, and 'struct rev_info' is not being release in any way, either,
+> right?
+
+Yes, sorry to not be clear there. There's 2x other leaks just in that
+one test on "master", my series addresses those, but then the 3rd
+"added" here will be left behind.
+
+>> I think instead of me rebasing my series on top of yours and tangling
+>> the two up a better option is to just add a change to this, so after
+>> list_objects_filter_copy() do:
+>>=20
+>>     UNLEAK(revs.filter);
+>>=20
+>> Or, alternatively adding this to the end of the function (in which case
+>> Junio will need to deal with a minor textual conflict):
+>>=20
+>>     list_objects_filter_release(&revs.filter);
+>>=20
+>> Both of those make my series merged with "seen" (which has this change)
+>> pass with SANITIZE=3Dleak + GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue again.
+>>=20
+>> You could do the same in your later change adding
+>> list_objects_filter_copy() to verify_bundle(), that one also adds a new
+>> leak, but happens not to cause test failures since the bundle.c code
+>> isn't otherwise marked as passing with SANITIZE=3Dleak, it fails in
+>> various other ways.
+>>=20
+>> Obviously we should do something about the actual leak eventually, but
+>> that can be done in some follow-up work to finish up the missing bits of
+>> release_revisions(), i.e. adding list_objects_filter_release() etc. to
+>> release_revisions().
 >
->  - we must maintain the "filter that is consistent with the contents
->    of this repository", which this series does not do, but we should.
+> I understand that you like to "show your work" by marking tests as
+> safe for leak-check by making the smallest changes possible, but your
+> series has a lot of small patches that do nothing but add a free() or
+> release_*() call instead of implementing the "right" release_revisions()
+> from the start.
 
-I don't think we should strive to keep this "consistency" =E2=80=94
+Yes, another way to do it would be to add the end-state
+release_revisions() I have and incrementally add it everywhere.
 
->  - the "--refetch" is unnecessary and redundant, as long as such a
->    record is maintained; when a filter settings changes, we should
->    do the equivalent of "--refetch" automatically.
+The way I opted to do it admittedly results in a bit more churn, but was
+(and still is) very useful to bisect and debug any changes.
 
-=E2=80=94 we don't know how much data has been pulled in by fetches from
-different promisor and non-promisor remotes (past & present); or
-dynamically faulted in through branch switching or history
-exploration. And I can't see any particular benefit in attempting to
-keep track of that?
+I.e. I can easily pinpoint for any failures what exact rev.* member
+being released caused a failure, which I couldn't do if I added the
+end-state release_revisions() and then started adding it to code in
+various places.
 
-=C3=86var suggested in future maybe we could figure out which commits a
-user definitively has all the blobs & trees for and refetch could
-negotiate from that position to improve efficiency: nothing in this
-series precludes such an enhancement.
+Then a failure due to adding it to say pack-objects wouldn't be easily
+distinguishable from a failure due to releasing rev.SOMETHING in
+pack-objects.
 
-> ... isn't "git fetch --fitler" that does not update the configured
-> filter (and does not do a refetch automatically) a bug that made the
-> "refetch" necessary in the first place?
+But in any case, the interaction with tips of these two sets of patches
+(this series & mine) would be the same whatever the intra-series
+progression I opted for is.
 
-I don't believe it's a bug. A fairly obvious partial clone example
-I've used before on repos where I want the commit history but not all
-the associated data (especially when the history is littered with
-giant blobs I don't care about):
+>> So I think just adding UNLEAK() here (and optionally, also to the
+>> bundle.c code) is the least invasive thing, if you & Junio are OK with
+>> that approach.
+>
+> Could you send a patch that does just that, so we are sure to cover
+> the warnings you are seeing in your tests?
 
-  git clone example.com/myrepo --filter=3Dblob:none
-  # does a partial clone with no blobs
-  # checkout faults in the blobs present at HEAD in bulk to populate
-the working tree
-  git config --unset remote.origin.partialclonefilter
-  # going forward, future fetches include all associated blobs for new comm=
-its
+I'm suggesting fixing the following up into this series, the first hunk
+is needed for the interaction with the release_revisions() series, the
+second is there for completeness, but isn't required currently:
 
-Getting all the blobs for all history is something I'm explicitly
-trying not to do in this example, but if the next fetch from origin
-automatically did a "refetch" after I removed the filter that's
-exactly what would happen.
-
-We don't expect users to update `diff.algorithm` in config to run a
-minimal diff: using the `--diff-algorithm=3D` option on the command line
-overrides the config. And the same philosophy applies with fetch:
-`remote.<name>.partialclonefilter` provides the default filter for
-fetches, and a user can override it via `git fetch --filter=3D`. To me
-this is how Git commands are expected to work.
-
-Partial clones are still relatively new and advanced, and I don't
-believe we should try and over-predict too much what the correct
-behaviour is for a user.
-
-I'd be happy adding something to the documentation for the
-`remote.<name>.partialclonefilter` config setting to explain that
-changing or removing the filter won't backfill the local object DB and
-the user would need `fetch --refetch` for that.
-
-Thanks,
-Rob :)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1a0b0950a28..ffe6197729c 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3987,6 +3987,7 @@ static void get_object_list(int ac, const char **av)
+ 	save_commit_buffer =3D 0;
+ 	setup_revisions(ac, av, &revs, &s_r_opt);
+ 	list_objects_filter_copy(&revs.filter, &filter_options);
++	UNLEAK(revs.filter);
+=20
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+diff --git a/bundle.c b/bundle.c
+index e359370cfcd..90cfea0c984 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -226,6 +226,7 @@ int verify_bundle(struct repository *r,
+ 	setup_revisions(2, argv, &revs, NULL);
+=20
+ 	list_objects_filter_copy(&revs.filter, &header->filter);
++	UNLEAK(revs.filter);
+=20
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
