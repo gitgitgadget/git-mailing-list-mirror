@@ -2,178 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC4DC433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96E0FC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242391AbiCJN0B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 08:26:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48110 "EHLO
+        id S242403AbiCJN0N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 08:26:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235453AbiCJN0A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 08:26:00 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9307214D275
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:24:59 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a8so12047358ejc.8
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:24:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=UEtGqlNeyRS9DJFQuWRhNnpHZ9bNcx84nUkxTsJjntw=;
-        b=IpzTRllL2q4yG+GyolOLiBmV2JM/bmJzbHgv+CVlS+AL4ph1KJXCLkto20A1/g/IY7
-         YIs/JvZBOjrZuGVtAAGkJaNw6IDK7yKXSHdJvK+J9+61AUGKC91vMcd1AhUtkbMn9iDJ
-         n3Rmi89gnVtK32ge9yC5t6j1OQ8hjFrX9e19u2ROR4xlKDYpse2ykDEtstGbjJduus3m
-         Awiva2MwnQFiDOareyhcEAtXYj3zKiWJmQndHAyKrZFXnK2mxVGjVRmNVm5xS+UnSyKH
-         BPFllcpr/+FGR9LOWqm63tSUdfj3qBmOdnTLeRm671jLyWMHBhtod0fxQQRDsW2D8B2t
-         Yyig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=UEtGqlNeyRS9DJFQuWRhNnpHZ9bNcx84nUkxTsJjntw=;
-        b=OQkVT1TzYI+F5M+sPlktBFijb+ULwcXtkfL81G1luUqYr636B2cbZ8A8fG6+R+ark4
-         S+9/yJRrxriJB0xc015/1X/Kn9vTq89HQuxbtZ1c1QdopBvA/TGIOgLSbKy8yA/gEjRc
-         bav8TwLEwqyJPlMePgKhHtSzTqRMvgX82KgUfwBmO3p0/5sqTaTS/8uq3PvhnenBSb9Y
-         llB7ItGyuyI+jCWlsfHriWJygrCgAk9QyYwHozVRtTXSPMCM7uHBQuw4kfjLhzbjQ1L2
-         VynoAkhvzl2Ay+PdUHuNqTTkuPPAybbqt06ZvMnHcCIPqVvtQN1RQbvCkZRWOdog+0s4
-         +hmw==
-X-Gm-Message-State: AOAM533dwmL9gQyTq2HFQcb9M3yLLUHTg0SWFLE7UNj7znT85CoR27Ra
-        D6Z20IYAP0n+SBHEopUML9zKE25Md4Q=
-X-Google-Smtp-Source: ABdhPJyB7dq5agxeqOsjfrOOB4lUpFziFmdg/LYJE1007KJ7EY4dgo2RlzyBKAeySWvaDCVssuB6bw==
-X-Received: by 2002:a17:907:1b20:b0:6da:649b:d99e with SMTP id mp32-20020a1709071b2000b006da649bd99emr4219339ejc.712.1646918697556;
-        Thu, 10 Mar 2022 05:24:57 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b004162d0b4cbbsm2013570edu.93.2022.03.10.05.24.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 05:24:56 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nSImm-000UE5-7B;
-        Thu, 10 Mar 2022 14:24:56 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 04/13] pack-objects: use rev.filter when possible
-Date:   Thu, 10 Mar 2022 14:11:18 +0100
-References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
- <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
- <ed22a77782bee97ef50fe1ff1a12fa2fa1470805.1646841703.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <ed22a77782bee97ef50fe1ff1a12fa2fa1470805.1646841703.git.gitgitgadget@gmail.com>
-Message-ID: <220310.86zglyj5xz.gmgdl@evledraar.gmail.com>
+        with ESMTP id S239226AbiCJN0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 08:26:12 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA32BD4C85
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:25:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1646918702;
+        bh=/lmQiWvsFbjG/xpcwYIp1uCjBvFX6DvHLEBFDsLESQ8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=idc/f5RimDfZsjionTVIgyBVheHULq13HIEd1PJPUp6vdhR0us7UF9bAN7HAuA76I
+         icJRTvYPQCq+TC9Wllfk58QISBwrHRRwqhJhoE6OoB64+EWP6q2yaE2taPYYiiu5hX
+         yVQQmbMAuxcdMRKYog5AFpbUjry9mAtcVB+XUgZ0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([89.1.212.224]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCbIx-1nJkKb1X2h-009et7; Thu, 10
+ Mar 2022 14:25:02 +0100
+Date:   Thu, 10 Mar 2022 14:25:00 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Carlo Arenas <carenas@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 0/4] builtin add -p: hopefully final readkey fixes
+In-Reply-To: <20220309110325.36917-1-phillip.wood123@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203101422500.357@tvgsbejvaqbjf.bet>
+References: <20220304131126.8293-1-phillip.wood123@gmail.com> <20220309110325.36917-1-phillip.wood123@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; BOUNDARY="8323328-2003438750-1646918585=:357"
+Content-ID: <nycvar.QRO.7.76.6.2203101423570.357@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:qwjW2QvJrlb5fYrJ6E9fXbY4YheOVwAohr9nCO6Sn00VCGUgDsD
+ mAB4eBgovg5aCmDTnet3m1JV9RCaW6z/0rTCK/4GVwJzpFY7D/flgTDpnSaQEdTshV0LE7W
+ 1XY84apl62CZnpKAH8DGLiyMJXmf19eyRWYpA/fGf7KtpsSR6UuvH1AppkUwxJmLUAi+Y14
+ zq9t8GHbP1z98tqQ04/BQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MndvqeKwOSI=:cK0TgjnWRnNmhcI427xIsF
+ tJMJtriNvH6oEVUMF+QjpR1iT07rCg8TtyVZ2BPkb0YPMWqz4IAw540+i96D+14O8yX1BmuQt
+ WDD5DRLvTJictSpwaslBas97+zSCmNQQ8WJ2fLaoZAibqdWmIfOGFnF7Dl1WMCICfvL70d9tD
+ zUywH/4FUd8A9jAxHk1azcQWOlltW1cGf2IQgxL5lUIbuq5+IhW9SfiaD33/Vbk+rwKeKSSng
+ cCK7CUV4zKC5xSY7g5aFxG4mPbG8hhEvJKFZiyDvAfFcHRtgX+UDW5oVoPg+G8lu/t5mAoOBl
+ NnM/QJxDrcPcC0r2095zLTwcuQrCcc5cySaCMYYwwRg7dVY8zY6lRdTEnET3zf7zVnwBw4UDq
+ JA1UqNQ/5i0xTpvJQh+bIZvgsyfaZ8OBGrM/8jvMmVjRNVo3gweiWoXVLXTEQrY1h4HA8vaJe
+ iEL8/mtsYUcSAhgHJNqoYuR7fclUA3rkzkoLQ0wl7jVon8Kt2kolBGXe4oqHrX+98UdjmSuxX
+ PFnAA84LkZq/L6i6sIlBoaXD/UriCykYglhSr4JI9A4DwdnLBQsch0Ko2mCbuxw4rwao7Mcqh
+ Suh+opnLM0kAyrT1yVxYluIkrKIOd8MOE1rRSksiQyBWi7ySoXZdDSTK4ewqgwd334LPDuQk3
+ zRdSCS5o/v/HVCMWlmxNbMKGMmNoZC/q/30timYxcxQCvXF6CPJBx/eyyG4m25fpKFbpnjXBM
+ nKJevkxGdPHc0HbrW68na2OgdkS/A7ZHFXPgBGjQjYI9ufb0Z7670y23vtMd1BuYfQs63YklV
+ z+wL/1i0ziD3Tf49wV0yvVSAEpMmf0yDI5pS/zkTdpxI7othyyd44JdCTInBwg3k2Wlz3TzLe
+ o8yOwVdDv+SB58zxD9OV5nkRTExp0o3z4hRsnWR1Yl3HPhSnmkYEplQyRgrXe17lg88/XnnyC
+ WnRH6is0sXYHAvVY48RKzjjG4MrYpUfN9TY0Lteb3iRO8aF3XXRC9tgJ/xXnhi1gMeERqISMM
+ MeamKsY2d5wgT8KJqCxC0coZ0Wn4E+cPT1bbDrYSQPvzMngA2cOkoRAwuHpflT8zp1rooD/9n
+ 0Jg4BeXT16wmUQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Mar 09 2022, Derrick Stolee via GitGitGadget wrote:
+--8323328-2003438750-1646918585=:357
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2203101423571.357@tvgsbejvaqbjf.bet>
 
-> From: Derrick Stolee <derrickstolee@github.com>
+Hi Phillip,
+
+On Wed, 9 Mar 2022, Phillip Wood wrote:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> In builtin/pack-objects.c, we use a 'filter_options' global to populate
-> the --filter=<X> argument. The previous change created a pointer to a
-> filter option in 'struct rev_info', so we can use that pointer here as a
-> start to simplifying some usage of object filters.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  builtin/pack-objects.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index ba2006f2212..e5b7d015d7d 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
->  
->  static int get_object_list_from_bitmap(struct rev_info *revs)
->  {
-> -	if (!(bitmap_git = prepare_bitmap_walk(revs, &filter_options, 0)))
-> +	if (!(bitmap_git = prepare_bitmap_walk(revs, &revs->filter, 0)))
->  		return -1;
->  
->  	if (pack_options_allow_reuse() &&
-> @@ -3727,6 +3727,7 @@ static void get_object_list(int ac, const char **av)
->  	repo_init_revisions(the_repository, &revs, NULL);
->  	save_commit_buffer = 0;
->  	setup_revisions(ac, av, &revs, &s_r_opt);
-> +	list_objects_filter_copy(&revs.filter, &filter_options);
->  
->  	/* make sure shallows are read */
->  	is_repository_shallow(the_repository);
-> @@ -3777,7 +3778,7 @@ static void get_object_list(int ac, const char **av)
->  
->  	if (!fn_show_object)
->  		fn_show_object = show_object;
-> -	traverse_commit_list_filtered(&filter_options, &revs,
-> +	traverse_commit_list_filtered(&revs.filter, &revs,
->  				      show_commit, fn_show_object, NULL,
->  				      NULL);
+> Thanks to Ramsay and =C3=86var for their comments on V1.
+> Changes since V1:
+>  * Patch 1
+>    - use an enum for save_term()'s flags (suggested by =C3=86var)
+>    - fixed argument order in the windows code (thanks to Ramsay)
+>  * Patch 2
+>    - fixed a typo in a comment (thanks to Ramsay)
+>  * Patch 4
+>    - stopped duplicating the strings returned by gettext() (suggested by
+>      =C3=86var)
+>    - reworked error message handling in the signal handler to add an
+>      "error: " prefix (suggested by =C3=86var)
+>    - tweaked the background resume error message
 
-Re your
-https://lore.kernel.org/git/77c8ef4b-5dce-401b-e703-cfa32e18c853@github.com/
-I was looking at how to handle the interaction between this and my
-revisions_release() series.
+While I did not ask for any of these changes, they look good to me. I had
+a look over the range-diff and found it reasonable.
 
-This adds a new memory leak, which can be seen with:
+Onwards to a bright built-in `add -p` future!
 
-    make SANITIZE=leak
-    (cd t && ./t5532-fetch-proxy.sh -vixd)
+Thanks,
+Dscho
 
-I.e. this part is new:
-    
-    remote: Direct leak of 1 byte(s) in 1 object(s) allocated from:
-    remote:     #0 0x4552f8 in __interceptor_malloc (git+0x4552f8)
-    remote:     #1 0x75a089 in do_xmalloc wrapper.c:41:8
-    remote:     #2 0x75a046 in xmalloc wrapper.c:62:9
-    remote:     #3 0x62c692 in list_objects_filter_copy list-objects-filter-options.c:433:2
-    remote:     #4 0x4f70bf in get_object_list builtin/pack-objects.c:3730:2
-    remote:     #5 0x4f5e0e in cmd_pack_objects builtin/pack-objects.c:4157:3
-    remote:     #6 0x4592ba in run_builtin git.c:465:11
-    remote:     #7 0x457d71 in handle_builtin git.c:718:3
-    remote:     #8 0x458ca5 in run_argv git.c:785:4
-    remote:     #9 0x457b30 in cmd_main git.c:916:19
-    remote:     #10 0x563179 in main common-main.c:56:11
-    remote:     #11 0x7fddd2da67ec in __libc_start_main csu/../csu/libc-start.c:332:16
-    remote:     #12 0x4300e9 in _start (git+0x4300e9)
-    
-Of course it's not "new" in the sense that we in effect leaked this
-before, but it was still reachable, you're just changing it so that
-instead of being stored in the static "filter_options" variable in
-pack-objects.c we're storing it in "struct rev_info", which has a
-different lifetime.
-
-I think instead of me rebasing my series on top of yours and tangling
-the two up a better option is to just add a change to this, so after
-list_objects_filter_copy() do:
-
-    UNLEAK(revs.filter);
-
-Or, alternatively adding this to the end of the function (in which case
-Junio will need to deal with a minor textual conflict):
-
-    list_objects_filter_release(&revs.filter);
-
-Both of those make my series merged with "seen" (which has this change)
-pass with SANITIZE=leak + GIT_TEST_PASSING_SANITIZE_LEAK=true again.
-
-You could do the same in your later change adding
-list_objects_filter_copy() to verify_bundle(), that one also adds a new
-leak, but happens not to cause test failures since the bundle.c code
-isn't otherwise marked as passing with SANITIZE=leak, it fails in
-various other ways.
-
-Obviously we should do something about the actual leak eventually, but
-that can be done in some follow-up work to finish up the missing bits of
-release_revisions(), i.e. adding list_objects_filter_release() etc. to
-release_revisions().
-
-So I think just adding UNLEAK() here (and optionally, also to the
-bundle.c code) is the least invasive thing, if you & Junio are OK with
-that approach.
+--8323328-2003438750-1646918585=:357--
