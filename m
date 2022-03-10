@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5A3C433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1075BC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242427AbiCJNgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 08:36:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48568 "EHLO
+        id S242437AbiCJNgj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 08:36:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233477AbiCJNgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 08:36:36 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D776814E958
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:35:35 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id t11so7994951wrm.5
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:35:35 -0800 (PST)
+        with ESMTP id S242419AbiCJNgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 08:36:37 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B1F14E960
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:35:36 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id x15so7948236wru.13
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:35:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DslYQt5BkcLyb5LoNBlecDCHb+pJGhV0+D+lBlrZAKc=;
-        b=ZcvJU3fqHxQdhBXN6NJDB9LapXI2V46eFYaxLOqxrW+NnWJBiZbqYQQQgXiwnrnoVT
-         VFkq9WAVjEYsQu7tMmvXfT7yIfUT2CIPLqNdOpQDkM4rPCkqrB6hDwBYOTgNnnQYa3kq
-         BMq8ywlWTlxxFfTSBOeLQQTM+ATs/Gd433DFDPhXHMFbklxR5HpjTdfM79r2NrGWEdfZ
-         K2uLzIdLIf5rExXGxpwTXxFCyXhIoZgjyOtwbFw2sFcTKQjapuE5Apuasyae8/N+kEiM
-         xZroqr/P1caNlgyE64DKDDUgi9NWcyWTRNgNpo7bzQedNLElwKc33vFI1kAeDmSQXQ3N
-         A3/w==
+        bh=71UqTVjIiUbJ1ahHInAEsbpiPVWgfl9HccksDeM7pM8=;
+        b=NgV8w/JxTOh+OqKyjft86Mgj34/rLP2kbJnsEFsudwsu9VhCrx35tj7EivvDNVUhrG
+         s3+GdYXRkdJdh7yLXdHTWyd4WQSwmZ2w7Cc4q8Kta+zHsXn5XYe3pOz3XIWlt4Jfm/8S
+         Y/BBkn0rFN55P3owLxUh79hphei7oLIJax7e7wOxjSxN0GlXWfvgC7S8v8tynhlTwu7n
+         ykf8kpusDSKi4/tiD+Y/ORxzn/EtcCyX6LoRTsxbpTNFTiUC8C2Z4eX6iwSsnc0YLghX
+         3HOT7PseKn388cGFo9GsZedBuiTYJ12iEb1MTo9oJCl9iaL4G0QQVp7ObKSluSDqxS5l
+         rXlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DslYQt5BkcLyb5LoNBlecDCHb+pJGhV0+D+lBlrZAKc=;
-        b=CIClgRFnQma2UOwsbzDzN5CLi4dIpXy2HPaWLJ4GUQrmGeaZV3ibCMclXQfM67v58S
-         F1oEtwJxInQYlmluFlVi/cnlRLvMFLzwzLiF7+qU0mHNGfqpDJh/p30LT8E6BkomkKpu
-         oTI1ISrdv5lhqSAOXJDDVtI1M4eROsjglR1STkA7PPBqKmKr6JcdV7/42/oqg4Zq5Khn
-         Dght027BeCr138WZe6yT4qeQllZjvgqlGgffiuGmLjveTof+bjMGuo8uoy890REA7Zoj
-         IB0LmMgWu8eLvjqrb8zeLj3s3er0uJQRa7aMcup1F+YglS1NpFbl1eAzImW3hybNp9ek
-         7pGQ==
-X-Gm-Message-State: AOAM532C1w51I1fwRY9R9bl5HnZ+LKE9XT8wZjfbMdof/mH8REQapOwP
-        R/tc1OV++T2IBzS7jrOTXzjowzXCcRU=
-X-Google-Smtp-Source: ABdhPJynpnllc0k38VdXIUoQZn6lykInmuF9Rxco32GTBARw8rg/+KMUlgE6tAvaIn517g/IfTKEgQ==
-X-Received: by 2002:a5d:4bcc:0:b0:1f1:d6f8:89f5 with SMTP id l12-20020a5d4bcc000000b001f1d6f889f5mr3576417wrt.713.1646919333755;
-        Thu, 10 Mar 2022 05:35:33 -0800 (PST)
+        bh=71UqTVjIiUbJ1ahHInAEsbpiPVWgfl9HccksDeM7pM8=;
+        b=4HKm1b4JcOUAcTyz5whkkkRZiAofCSdtynNHcZOzgTwWjNoXOe5iuYi0IfWbk/CGTg
+         NFo4kt3y0xHHl9L3IpDdRaIGswIr1aoYpyteEedImPNBWECCWqHzw1cZNWweVjrQenO9
+         /yj6yGTsb8yZDIG3RCibYKLUqXPjrHhnpFAwH63WSHDNsSntnBlLs+ykjcZZen281JwV
+         90EDkROAwzLtaUNiI2dHqHSXnHohjDrGIlPJjFknwXBLH2u04zBQ3gYUW9QVtZnROIsx
+         8wC3AGn2aFK20tuRNzx/+K7UUwXfoEAxCBRaRraPOkbsF3WD8FVBZtMQMFNSAZovrFO1
+         iALA==
+X-Gm-Message-State: AOAM533A3s/OMAJwIpUTGvlhCN0LzYX8PuEDXq3aIRiJUbkzAx1tub+k
+        xoG6s7vuLOLCqyE5YUsrUcG0AOzd3zM=
+X-Google-Smtp-Source: ABdhPJwUZOOgiEQ6FKngl7vqpezbKrMjQGDhdWg7IHsucczhPOP5z0MUKFDF8HvbCjZpgaw2Jz0YXA==
+X-Received: by 2002:a5d:4487:0:b0:1f1:232b:794f with SMTP id j7-20020a5d4487000000b001f1232b794fmr3719429wrq.715.1646919334714;
+        Thu, 10 Mar 2022 05:35:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m9-20020a05600c4f4900b00389e8184edcsm687908wmq.35.2022.03.10.05.35.32
+        by smtp.gmail.com with ESMTPSA id r187-20020a1c44c4000000b0038377fb18f8sm6735396wma.5.2022.03.10.05.35.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 05:35:33 -0800 (PST)
-Message-Id: <07f7ee46232b4ccc53787fa2e08887b436ee11c3.1646919331.git.gitgitgadget@gmail.com>
+        Thu, 10 Mar 2022 05:35:34 -0800 (PST)
+Message-Id: <284c6a3df84bed669790fe2f44905328269d1f4f.1646919331.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1172.git.1646919331.gitgitgadget@gmail.com>
 References: <pull.1172.git.1646919331.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Mar 2022 13:35:28 +0000
-Subject: [PATCH 1/4] trace2 docs: a couple of grammar fixes
+Date:   Thu, 10 Mar 2022 13:35:29 +0000
+Subject: [PATCH 2/4] trace2 docs: surround more terms in backticks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,63 +69,31 @@ From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/technical/api-trace2.txt | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ Documentation/technical/api-trace2.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index bb13ca3db8b..77216eff622 100644
+index 77216eff622..8ef921a4e4d 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
-@@ -24,7 +24,7 @@ for example.
+@@ -70,7 +70,7 @@ $ cat ~/log.normal
  
- Trace2 is controlled using `trace2.*` config values in the system and
- global config files and `GIT_TRACE2*` environment variables.  Trace2 does
--not read from repo local or worktree config files or respect `-c`
-+not read from repo local or worktree config files nor does it respect `-c`
- command line config settings.
+ The performance format target (PERF) is a column-based format to
+ replace GIT_TRACE_PERFORMANCE and is suitable for development and
+-testing, possibly to complement tools like gprof.  This format is
++testing, possibly to complement tools like `gprof`.  This format is
+ enabled with the `GIT_TRACE2_PERF` environment variable or the
+ `trace2.perfTarget` system or global config setting.
  
- == Trace2 Targets
-@@ -34,8 +34,8 @@ Format details are given in a later section.
+@@ -172,7 +172,7 @@ take a `va_list` argument.
+ Some functions have a `_printf_fl()` suffix to indicate that they also
+ take a varargs argument.
  
- === The Normal Format Target
+-There are CPP wrapper macros and ifdefs to hide most of these details.
++There are CPP wrapper macros and `#ifdef`s to hide most of these details.
+ See `trace2.h` for more details.  The following discussion will only
+ describe the simplified forms.
  
--The normal format target is a tradition printf format and similar
--to GIT_TRACE format.  This format is enabled with the `GIT_TRACE2`
-+The normal format target is a traditional printf format and similar
-+to the GIT_TRACE format.  This format is enabled with the `GIT_TRACE2`
- environment variable or the `trace2.normalTarget` system or global
- config setting.
- 
-@@ -635,7 +635,7 @@ process may be a shell script which doesn't have a session-id.)
- +
- This event is generated after the child is started in the background
- and given a little time to boot up and start working.  If the child
--startups normally and while the parent is still waiting, the "ready"
-+starts up normally while the parent is still waiting, the "ready"
- field will have the value "ready".
- If the child is too slow to start and the parent times out, the field
- will have the value "timeout".
-@@ -949,7 +949,7 @@ atexit elapsed:3.868970 code:0
- 
- Regions::
- 
--	Regions can be use to time an interesting section of code.
-+	Regions can be used to time an interesting section of code.
- +
- ----------------
- void wt_status_collect(struct wt_status *s)
-@@ -1103,9 +1103,9 @@ Thread Events::
- 
- 	Thread messages added to a thread-proc.
- +
--For example, the multithreaded preload-index code can be
-+For example, the multi-threaded preload-index code can be
- instrumented with a region around the thread pool and then
--per-thread start and exit events within the threadproc.
-+per-thread start and exit events within the thread-proc.
- +
- ----------------
- static void *preload_thread(void *_data)
 -- 
 gitgitgadget
 
