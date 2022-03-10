@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71393C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 17:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEB3C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 17:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245112AbiCJRg0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 12:36:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36988 "EHLO
+        id S245131AbiCJRg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 12:36:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233724AbiCJRgY (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232651AbiCJRgY (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Mar 2022 12:36:24 -0500
 Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E6418C795
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6D518A783
         for <git@vger.kernel.org>; Thu, 10 Mar 2022 09:35:22 -0800 (PST)
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 88A3B5A12B;
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7BAA65A106;
         Thu, 10 Mar 2022 17:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1646933721;
-        bh=7VLueFEbbs0vhyNcvB8Ou4O9wtpDEONFhHScpNaOm+o=;
+        bh=ffTBjIq2TATxaKesvFVM7WoW68LWkYhRoAEgMcYi+mo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=DCCh9AjLuEqwPWFYNI1th31J8XodGSv23do35mW680bsF+BvO4hd1eBXE0qLSFrYn
-         1ZW12hzjIi/xnJo3UPpHFGEZzo8Nqqc2vjSnunDxl7ysFdVjgbopSMgBikTti079M7
-         koNGkJMPjAgJCQ/lqdIuwUE6/3v9pVLLYO9dXHVjz7brLbivw0ywtmihA9Zr2cnT+E
-         scGQXzYNxfRinoCl7mOAwjTaqgnxug0WopSWxoRu5mgcCh7ZEV/8sfGHfym3NcwvOn
-         7zi2P907nYwOBMYMYW/SgIeJR/Gigquq5DC1VTx8/HWEDavq3XwNYv5txhqVb5QItl
-         yTv/XnkRsYz5NlZjz6hx+UdNkDkk5eUGWmVYPUMIfKajB7sQGXqyFBWEcouMrRS+Tk
-         3HYFojQFAqnN+67SixGAdMTyyXKDDT53MyjcC4nkIi/CKwKg7ZzhZRo0ijI9N/phyF
-         tTYRik8Ce8iM6RSvVPyT3Ppanq3msn/glbpQl60xdNJLorBekVM
+        b=FC/KZ+GtWuyl04ff4aEoGV6bzVaszmF2pJERru6ZKwLVNTMdV8rz/7QxpFo1q/6XQ
+         PlVLz2miqH+2EfqF0JeZa1sxsgfPzeSvURd+iYSZYiAuJWprqioJpHyNbAlZSfq2E/
+         3c8bwOjW77hjgRl0G2E6hBBVfoarN3zILVrEd7gX0pVKkrWp5Mg8in9UBf1/f2H1+Y
+         Cqrqkug3B5gEhFy1+tYK4KDYNyZBUjFlVPaEg9px1U7DKjAYkgd9u2Q6YvQ7tt92tR
+         xLm29a3UvN8NazwkCM4QYINdELeKeg/bZyBfp1CIbJ4jXEIc2S/8BOPbxnGbH6xtei
+         zWXTVpyRRmoCD67joQcS6vddRxNt3TRrTuO6KtoO85BahUjjeTMgtJwLVj88l4KYkY
+         dfCnaVPZ+6N+dGuy5WWFVfT7A9Qxik33rygygcS1bnAkJk9qtqIw0Z3BJtCxUilW2w
+         /VBrJyrY8vKvuUEkSOk/nw2W8g03Sabd8nHPG3VYuszGWckFQK6
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <dstolee@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 2/6] builtin/stash: fill in all commit data
-Date:   Thu, 10 Mar 2022 17:32:32 +0000
-Message-Id: <20220310173236.4165310-3-sandals@crustytoothpaste.net>
+Subject: [PATCH 1/6] builtin/stash: factor out generic function to look up stash info
+Date:   Thu, 10 Mar 2022 17:32:31 +0000
+Message-Id: <20220310173236.4165310-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
 In-Reply-To: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
 References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
@@ -50,41 +50,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_stash_info doesn't ensure that all entries are filled in in all
-cases.  However, we'll want to use this information to write new
-commits, and when we do so, we'll need all the information to be
-present.  Fill in all the commit information whenever we call this
-function.
+We have a function called get_stash_info that looks up this data based
+on a set of command-line arguments and produces diagnostics to the user
+on failure.  While this is helpful in the existing use cases, we'd like
+to make use of this logic in a more programmatic way in the future.
 
-Note that the behavior of info->has_u doesn't change here.  If we
-previously read a tree a refs/stash^3:, then refs/stash^3 must be a
-treeish.  We already here assume that the other parents specifically
-commits, so it should be safe to do so here as well.
+Split out much of the function into a function which can be used
+internally and which knows how to suppress these error messages with a
+quiet parameter.  Wire up the rest of the function to call this internal
+function to preserve the existing behavior.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/stash.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/stash.c | 50 ++++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index 2aa06cc91d..128f0a01ef 100644
+index 5897febfbe..2aa06cc91d 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -124,6 +124,7 @@ static void free_stash_info(struct stash_info *info)
- static void assert_stash_like(struct stash_info *info, const char *revision)
+@@ -130,38 +130,21 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
+ 		die(_("'%s' is not a stash-like commit"), revision);
+ }
+ 
+-static int get_stash_info(struct stash_info *info, int argc, const char **argv)
++static int get_stash_info_1(struct stash_info *info, const char *commit, int quiet)
  {
- 	if (get_oidf(&info->b_commit, "%s^1", revision) ||
-+	    get_oidf(&info->i_commit, "%s^2", revision) ||
- 	    get_oidf(&info->w_tree, "%s:", revision) ||
- 	    get_oidf(&info->b_tree, "%s^1:", revision) ||
- 	    get_oidf(&info->i_tree, "%s^2:", revision))
-@@ -166,7 +167,8 @@ static int get_stash_info_1(struct stash_info *info, const char *commit, int qui
+ 	int ret;
+ 	char *end_of_rev;
+ 	char *expanded_ref;
+ 	const char *revision;
+-	const char *commit = NULL;
+ 	struct object_id dummy;
+ 	struct strbuf symbolic = STRBUF_INIT;
  
- 	assert_stash_like(info, revision);
+-	if (argc > 1) {
+-		int i;
+-		struct strbuf refs_msg = STRBUF_INIT;
+-
+-		for (i = 0; i < argc; i++)
+-			strbuf_addf(&refs_msg, " '%s'", argv[i]);
+-
+-		fprintf_ln(stderr, _("Too many revisions specified:%s"),
+-			   refs_msg.buf);
+-		strbuf_release(&refs_msg);
+-
+-		return -1;
+-	}
+-
+-	if (argc == 1)
+-		commit = argv[0];
+-
+ 	strbuf_init(&info->revision, 0);
+ 	if (!commit) {
+ 		if (!ref_exists(ref_stash)) {
+ 			free_stash_info(info);
+-			fprintf_ln(stderr, _("No stash entries found."));
++			if (!quiet)
++				fprintf_ln(stderr, _("No stash entries found."));
+ 			return -1;
+ 		}
  
--	info->has_u = !get_oidf(&info->u_tree, "%s^3:", revision);
-+	info->has_u = !get_oidf(&info->u_commit, "%s^3", revision) &&
-+		      !get_oidf(&info->u_tree, "%s^3:", revision);
+@@ -175,7 +158,8 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ 	revision = info->revision.buf;
  
- 	end_of_rev = strchrnul(revision, '@');
- 	strbuf_add(&symbolic, revision, end_of_rev - revision);
+ 	if (get_oid(revision, &info->w_commit)) {
+-		error(_("%s is not a valid reference"), revision);
++		if (!quiet)
++			error(_("%s is not a valid reference"), revision);
+ 		free_stash_info(info);
+ 		return -1;
+ 	}
+@@ -204,6 +188,30 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ 	return !(ret == 0 || ret == 1);
+ }
+ 
++static int get_stash_info(struct stash_info *info, int argc, const char **argv)
++{
++	const char *commit = NULL;
++
++	if (argc > 1) {
++		int i;
++		struct strbuf refs_msg = STRBUF_INIT;
++
++		for (i = 0; i < argc; i++)
++			strbuf_addf(&refs_msg, " '%s'", argv[i]);
++
++		fprintf_ln(stderr, _("Too many revisions specified:%s"),
++			   refs_msg.buf);
++		strbuf_release(&refs_msg);
++
++		return -1;
++	}
++
++	if (argc == 1)
++		commit = argv[0];
++
++	return get_stash_info_1(info, commit, 0);
++}
++
+ static int do_clear_stash(void)
+ {
+ 	struct object_id obj;
