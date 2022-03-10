@@ -2,178 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB44C433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 275C8C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 13:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236089AbiCJN3M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 08:29:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
+        id S242411AbiCJNeG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 08:34:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234416AbiCJN3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 08:29:10 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99AC427DE
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:28:08 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id r65so3254894wma.2
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:28:08 -0800 (PST)
+        with ESMTP id S237910AbiCJNeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 08:34:06 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB090148657
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:33:04 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id x8-20020a9d6288000000b005b22c373759so4077813otk.8
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 05:33:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=jU5s4UOII3zwlUYKxqh9SbL5Z72f49bLfvKH5+zQAbI=;
-        b=c6eau1JVEpmZkEcdbg6aUMCb+wfiUkdfPkmhkYjwCASdvQ6mxUwWtdKpVpdtLa9Pru
-         V+4aJj8HJCARhmxbWMZVi+hksv9XUBBvcorLeKABDOQgaG9kVBGDCxZzk4yM1ep4p0LA
-         85AE0R374IeJO5bb14HoHMSDeAJgnuu+/YQ5mUc3sWVro3/rCuI6fjPsRTEDPJjPs4AF
-         bMOACY2a4PreRAQI71rHpXLg2Ib6pZGXz5NQ9Q6wdCtC3NqvkiLv5Nrr80c7GADHC6HZ
-         xevEe5zSf9r4F3WRx5pLgiJUyZXaa6xIPqZqHccwdRLGbmcX8eZcABLb3VcOL/O44Yus
-         LWMg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gMHO07JqA5gPB85Y6i3Ez/a5UvLcfWT/zNeDAeClTRA=;
+        b=Hh8vtlnD6CU7NB2lEP3XdwzeJb1GqAb8HxTLBoaHiag4bO61+mEKjUTuFcqMmotKeG
+         glEdqwjhN/S2S464qc7hx7yc2cs4cFG96q72ruN8gfFmNfBhfFE10kSVp/CF277Gf9NE
+         xmK/rmQM221GMTLVogvUCwGZIJMz38DY4IwNkElN5zrZhF+iabyneKcvbHPGP6Q89FCG
+         i7qUbU+60uevUZYEocRzUZFbkkS3JgORqGw/Smy8hwvS/Ajd3oks5P99Mr1fc7uRuI6Z
+         pN+9aKIpzuAnUSRSsgnhKkhEXLMEOwch1KnWDAVJoq8kxLODZeBfZOizd5O8Ygqn+Ypu
+         g/dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=jU5s4UOII3zwlUYKxqh9SbL5Z72f49bLfvKH5+zQAbI=;
-        b=ZFv03RD/2NLy5MPCH8zcP1mGOBDyJMBeJXJcdEVecPv/SHsFDx6lWm2bUwiwNvEEb0
-         wNP+Cbd3wEPNURTcE1dyseW/D8rVgdvKr3gdUYGr8WqZeTJXoAx56SwbxnEkmP9bScmf
-         Kz1s5KCLU7j6EDIO0UyuMiTx2XidKCkhqzreHH9eiizIe+N4F7UF6MonwsssV7NJvgDX
-         y/Vq3IIYr44+Pjx8Dn/oz/6gllXpi0ihLvRE3EsUoZGJIjpDrkdoG/b4CLU0B/JLnaKW
-         TuBvEESVPt+Bnhz5RZgB4AxFoz2+AaF8o8L7vVVKWYR03hhMaQgU41JkjinJzXKXkUBo
-         7Y1Q==
-X-Gm-Message-State: AOAM533+7f2FiIPvYBAzjLIakK7PgklibWs9MPSPi6Mvngkp7fjPIqtW
-        UkdzLXCn4nuXc0SlEKEV6UM=
-X-Google-Smtp-Source: ABdhPJw8IlJCYGCQELbnhSObY67voHG0zFu2vgm/9OiCu32t4Q4UvkZMF4jSQSvJLAUtPpkEunFCuA==
-X-Received: by 2002:a05:600c:3506:b0:389:d567:e9fa with SMTP id h6-20020a05600c350600b00389d567e9famr3616726wmq.74.1646918887370;
-        Thu, 10 Mar 2022 05:28:07 -0800 (PST)
-Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.googlemail.com with ESMTPSA id w7-20020a1cf607000000b00389a5390180sm4638961wmc.25.2022.03.10.05.28.06
+        bh=gMHO07JqA5gPB85Y6i3Ez/a5UvLcfWT/zNeDAeClTRA=;
+        b=N6SR7Gm3XP/3cav3gjO1ICZO7NbXM+qK6KQlHhJKa05KOP7nxWLJsjORU810mgtBqS
+         /R48stxsgvBa3MlOGi7DgvQQxgD6a6z5ncxFbEdDZgFF95GS7nhjfCwio4TrwxBUpkL5
+         olwWZotvSObKQh9tER+scrBk36UMDCc/SCoMJASCEoBNMtEmI3/1Vtd1TW+5QTpkQv9T
+         OaXlWlFvc+Z8idpwh07MAQ/+wBW6Z+JZBQAZRP2wSuFtjIjFj7+9ENTqBSAvd4ijgvZe
+         39hlnk9jUk8c+q6Sgt7q5T7WD13e+OdXoJoZYm66zuXVjuGhp50I4HNQMtEwBqvzplcO
+         /DCw==
+X-Gm-Message-State: AOAM532vaWHCq3QQa0S6C+Rb5M+cMA20iiT4UfTwXvmCJ4UKq7uAVkub
+        BKdxmC3QCExPjaU72F2mAQzI
+X-Google-Smtp-Source: ABdhPJyuy5WzYQ9yJ6qPv+b8WWbjlTrRJxnXq06CqmLICUTLEmhliyfYWVzPhXpxVIPbDtnuas4ggQ==
+X-Received: by 2002:a9d:5:0:b0:5b2:2cac:4f4f with SMTP id 5-20020a9d0005000000b005b22cac4f4fmr2661305ota.48.1646919184179;
+        Thu, 10 Mar 2022 05:33:04 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id ec47-20020a0568708c2f00b000d9ca2e1904sm2336722oab.45.2022.03.10.05.33.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Mar 2022 05:28:06 -0800 (PST)
-Message-ID: <93d197db-c52c-101b-bdb0-3b4c9b073705@gmail.com>
-Date:   Thu, 10 Mar 2022 13:28:05 +0000
+        Thu, 10 Mar 2022 05:33:03 -0800 (PST)
+Message-ID: <645650c1-7918-6985-a08b-cb47247b08d4@github.com>
+Date:   Thu, 10 Mar 2022 08:33:02 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/4] builtin add -p: hopefully final readkey fixes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4 04/13] pack-objects: use rev.filter when possible
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220309110325.36917-1-phillip.wood123@gmail.com>
- <xmqqilsmlo31.fsf@gitster.g> <xmqqzglyk89e.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqzglyk89e.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <pull.1159.v3.git.1646750359.gitgitgadget@gmail.com>
+ <pull.1159.v4.git.1646841703.gitgitgadget@gmail.com>
+ <ed22a77782bee97ef50fe1ff1a12fa2fa1470805.1646841703.git.gitgitgadget@gmail.com>
+ <220310.86zglyj5xz.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220310.86zglyj5xz.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
-
-On 09/03/2022 23:37, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 3/10/2022 8:11 AM, Ævar Arnfjörð Bjarmason wrote:
 > 
->>> These patches are based on 'pw/single-key-interactive'
+> On Wed, Mar 09 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
 >>
->> Is it still true, or does the base only apply to v1?
-
-The base is unchanged but does not seem to match
-pw/single-key-interactive. I'm not sure what happened there. They are
-based on 300db53b37 ("add -p: disable stdin buffering when
-interactive.singlekey is set", 2022-02-16) which is the second parent
-of e53fb7aa3f ("Merge branch 'pw/single-key-interactive' into seen",
-2022-02-20)
-
->> $ git checkout --detach pw/single-key-interactive
->> HEAD is now at ac618c418e add -p: disable stdin buffering when interactive.singlekey is set
->> $ git am -s ./+pw4-v2-add-p-single
->> Applying: terminal: use flags for save_term()
->> Applying: terminal: don't assume stdin is /dev/tty
->> Applying: terminal: work around macos poll() bug
->> error: patch failed: compat/terminal.c:397
->> error: compat/terminal.c: patch does not apply
->> Patch failed at 0003 terminal: work around macos poll() bug
->> hint: Use 'git am --show-current-patch=diff' to see the failed patch
->> When you have resolved this problem, run "git am --continue".
->> If you prefer to skip this patch, run "git am --skip" instead.
->> To restore the original branch and stop patching, run "git am --abort".
->> $ exit
+>> In builtin/pack-objects.c, we use a 'filter_options' global to populate
+>> the --filter=<X> argument. The previous change created a pointer to a
+>> filter option in 'struct rev_info', so we can use that pointer here as a
+>> start to simplifying some usage of object filters.
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>> ---
+>>  builtin/pack-objects.c | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>> index ba2006f2212..e5b7d015d7d 100644
+>> --- a/builtin/pack-objects.c
+>> +++ b/builtin/pack-objects.c
+>> @@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
+>>  
+>>  static int get_object_list_from_bitmap(struct rev_info *revs)
+>>  {
+>> -	if (!(bitmap_git = prepare_bitmap_walk(revs, &filter_options, 0)))
+>> +	if (!(bitmap_git = prepare_bitmap_walk(revs, &revs->filter, 0)))
+>>  		return -1;
+>>  
+>>  	if (pack_options_allow_reuse() &&
+>> @@ -3727,6 +3727,7 @@ static void get_object_list(int ac, const char **av)
+>>  	repo_init_revisions(the_repository, &revs, NULL);
+>>  	save_commit_buffer = 0;
+>>  	setup_revisions(ac, av, &revs, &s_r_opt);
+>> +	list_objects_filter_copy(&revs.filter, &filter_options);
+>>  
+>>  	/* make sure shallows are read */
+>>  	is_repository_shallow(the_repository);
+>> @@ -3777,7 +3778,7 @@ static void get_object_list(int ac, const char **av)
+>>  
+>>  	if (!fn_show_object)
+>>  		fn_show_object = show_object;
+>> -	traverse_commit_list_filtered(&filter_options, &revs,
+>> +	traverse_commit_list_filtered(&revs.filter, &revs,
+>>  				      show_commit, fn_show_object, NULL,
+>>  				      NULL);
 > 
-> I think I figured it out.  A merge of pw/single-key-interactive into
-> a recent tip of 'master' wants the "return 0" in the preimage below
-> to be "break" in compat/terminal.c
+> Re your
+> https://lore.kernel.org/git/77c8ef4b-5dce-401b-e703-cfa32e18c853@github.com/
+> I was looking at how to handle the interaction between this and my
+> revisions_release() series.
 > 
+> This adds a new memory leak, which can be seen with:
 > 
->> @@ -397,12 +433,7 @@ int read_key_without_echo(struct strbuf *buf)
->>   		 * half a second when we know that the sequence is complete.
->>   		 */
->>   		while (!is_known_escape_sequence(buf->buf)) {
->> -			struct pollfd pfd = { .fd = 0, .events = POLLIN };
->> -
->> -			if (poll(&pfd, 1, 500) < 1)
->> -				break;
->> -
->> -			ch = getchar();
->> +			ch = getchar_with_timeout(500);
->>   			if (ch == EOF)
->>   				return 0;
->>   			strbuf_addch(buf, ch);
+>     make SANITIZE=leak
+>     (cd t && ./t5532-fetch-proxy.sh -vixd)
+> 
+> I.e. this part is new:
+>     
+>     remote: Direct leak of 1 byte(s) in 1 object(s) allocated from:
+>     remote:     #0 0x4552f8 in __interceptor_malloc (git+0x4552f8)
+>     remote:     #1 0x75a089 in do_xmalloc wrapper.c:41:8
+>     remote:     #2 0x75a046 in xmalloc wrapper.c:62:9
+>     remote:     #3 0x62c692 in list_objects_filter_copy list-objects-filter-options.c:433:2
+>     remote:     #4 0x4f70bf in get_object_list builtin/pack-objects.c:3730:2
+>     remote:     #5 0x4f5e0e in cmd_pack_objects builtin/pack-objects.c:4157:3
+>     remote:     #6 0x4592ba in run_builtin git.c:465:11
+>     remote:     #7 0x457d71 in handle_builtin git.c:718:3
+>     remote:     #8 0x458ca5 in run_argv git.c:785:4
+>     remote:     #9 0x457b30 in cmd_main git.c:916:19
+>     remote:     #10 0x563179 in main common-main.c:56:11
+>     remote:     #11 0x7fddd2da67ec in __libc_start_main csu/../csu/libc-start.c:332:16
+>     remote:     #12 0x4300e9 in _start (git+0x4300e9)
+>     
+> Of course it's not "new" in the sense that we in effect leaked this
+> before, but it was still reachable, you're just changing it so that
+> instead of being stored in the static "filter_options" variable in
+> pack-objects.c we're storing it in "struct rev_info", which has a
+> different lifetime.
 
-That looks good to me. However unfortunately there are some semantic
-conflicts as well. The patch below is based on 6b1f77214c ("Merge branch
-'pw/add-p-single-key' into seen", 2022-03-09), hopefully Thunderbird wont
-mangle it. Whilst preparing the fixup I realized I need to reroll to
-fix a closing stdin in patch 2 and resetting the job signals on error in
-patch 4. What's the best base to use when rerolling?
+True, and 'struct rev_info' is not being release in any way, either,
+right?
 
-Best Wishes
+> I think instead of me rebasing my series on top of yours and tangling
+> the two up a better option is to just add a change to this, so after
+> list_objects_filter_copy() do:
+> 
+>     UNLEAK(revs.filter);
+> 
+> Or, alternatively adding this to the end of the function (in which case
+> Junio will need to deal with a minor textual conflict):
+> 
+>     list_objects_filter_release(&revs.filter);
+> 
+> Both of those make my series merged with "seen" (which has this change)
+> pass with SANITIZE=leak + GIT_TEST_PASSING_SANITIZE_LEAK=true again.
+> 
+> You could do the same in your later change adding
+> list_objects_filter_copy() to verify_bundle(), that one also adds a new
+> leak, but happens not to cause test failures since the bundle.c code
+> isn't otherwise marked as passing with SANITIZE=leak, it fails in
+> various other ways.
+> 
+> Obviously we should do something about the actual leak eventually, but
+> that can be done in some follow-up work to finish up the missing bits of
+> release_revisions(), i.e. adding list_objects_filter_release() etc. to
+> release_revisions().
 
-Phillip
+I understand that you like to "show your work" by marking tests as
+safe for leak-check by making the smallest changes possible, but your
+series has a lot of small patches that do nothing but add a free() or
+release_*() call instead of implementing the "right" release_revisions()
+from the start.
+ 
+> So I think just adding UNLEAK() here (and optionally, also to the
+> bundle.c code) is the least invasive thing, if you & Junio are OK with
+> that approach.
 
----- >8 ----
+Could you send a patch that does just that, so we are sure to cover
+the warnings you are seeing in your tests?
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Date: Thu, 10 Mar 2022 11:05:26 +0000
-Subject: [PATCH] fixup! Merge branch 'pw/add-p-single-key' into seen
-
----
-  compat/terminal.c | 3 ++-
-  editor.c          | 2 +-
-  2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 3172f4f408..d1ed5c07dc 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -141,7 +141,8 @@ int save_term(enum save_term_flags flags)
-         if (term_fd < 0)
-                 return -1;
-         if ((flags & SAVE_TERM_DUPLEX) && !is_controlling_terminal(term_fd)) {
--               close(term_fd);
-+               if (term_fd) /* avoid closing stdin */
-+                       close(term_fd);
-                 term_fd = -1;
-                 return -1;
-         }
-diff --git a/editor.c b/editor.c
-index 6c5c95e6a2..192d6ea75d 100644
---- a/editor.c
-+++ b/editor.c
-@@ -55,7 +55,7 @@ static int prepare_term(const char *editor)
-  
-         git_config_get_bool("editor.stty", &need_saverestore);
-         if (need_saverestore)
--               return save_term(1);
-+               return save_term(SAVE_TERM_DUPLEX);
-         return 0;
-  }
-  
--- 
-2.33.0.342.g580a6b0edd
+Thanks,
+-Stolee
