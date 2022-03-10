@@ -2,118 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C8EC433FE
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 01:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80609C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 01:59:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236151AbiCJB5X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Mar 2022 20:57:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43894 "EHLO
+        id S237522AbiCJCAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Mar 2022 21:00:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbiCJB5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Mar 2022 20:57:22 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C847128596
-        for <git@vger.kernel.org>; Wed,  9 Mar 2022 17:56:22 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id v28so5692245ljv.9
-        for <git@vger.kernel.org>; Wed, 09 Mar 2022 17:56:22 -0800 (PST)
+        with ESMTP id S231801AbiCJCAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Mar 2022 21:00:41 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA0BE27FED
+        for <git@vger.kernel.org>; Wed,  9 Mar 2022 17:59:40 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id 1so2748221qke.1
+        for <git@vger.kernel.org>; Wed, 09 Mar 2022 17:59:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=FcLEKpFQIQBw5NbmvmyFnX/Jxb2rQSkCylHljhbh6RE=;
-        b=e/rqb6zG9nPd0ZRhfOlYsbAMvEU0awj+ObfrDkmRyqaEAxmGwnCEALkYQD7YmMJE9t
-         CGcvZBY77IiBMkVLQq+/J0AejWyYNYr/Yqz7HWmPyTYnU6taYrwc5RiViHL429LM5DI1
-         yPklNyJf3tOEYbtm8tJFVltzTeinEfuZrueCZrv1MNsimBfs14vXjJB57YDpDLqw0rxY
-         13vQ8Yrx0K2QUNuuBBCkQ20pOD3jbXXJBLFsuXnseTQyunVCzVWK/LRQdAlIP6mwsVvq
-         fN31NJQx7exfW1XsCHBb5z5pRoHCcRjrnXAOyTRkvofdEFkLS5HijmBUpkhi8ZPZ5UYg
-         4deQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=bpm5/TLxPmov9Bafut5xTmLu/k36Bb+pMCC3CDwY5mA=;
+        b=WdhAH+oVv94WbPGZ+Pl5wcS8dwcwfod/I9ObB6tu0HD265PVlms2nDSqWOx0QxjfD1
+         U0/VJgbx97nREaiyhXV9OQ4Qeq56wrXjH7ElxLTb0emZ+fr3D8coeMXHg5a81RnsBE5h
+         aklCStX71I/nCenGVrxLyf6zogOYn5lYvdzLtGv5uJb3tdG3D/d3nZf0TQYkFxBLgxlt
+         rTyrRfXR6Ep7l+cW7byzfZhruy/rXfBTQsw3RDQuE1j/bURzGXlIYlmjNep7A+g4TrjK
+         RBlJ46dBOpvDefcuNKoI0k52PpKf/pdTaJx73od6tSWyPtxj7W0xSVoF+Xs6pzzhLvPH
+         V06g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=FcLEKpFQIQBw5NbmvmyFnX/Jxb2rQSkCylHljhbh6RE=;
-        b=jncAhfLS7GgpiBBprADdZ2axfgPDc9IolOBe+Bok3IbgUeZTPBa/gH5rsmGaGPMP0D
-         r28yxRada9trXoDrwg/u6PYKWiUIOtcx/g1CZK5GQp0EG2bx8m0+GvL7jkrpBMb3fV2F
-         XsAVBP+2tnwhds1/yYBsIUOntw8kRylZMDkExLlRE3+tDV3XD72nBvSHF2sC/0QNY1aQ
-         7ETrQuZJ6BU62p/vU5poY04WtfSisfEBNVofRc8AWrzgvqGv0CcyfEEc7x9NDDbgJeC3
-         lJkxttqJojma5hZP8Hz6QpzVzzgXPDJq8WVIsAIdXrHQ2mgRTv0DwvJgw7xWMcrgJGQv
-         G1aA==
-X-Gm-Message-State: AOAM531AyQi4CFVMht55k1J3vrJXFmezrdhD23sVMYY7dXo3d6ULxw65
-        rE1icepR6aEvgQIHHbfSd7Mytho69ndoZU0Hww8=
-X-Google-Smtp-Source: ABdhPJw/i3Lws0w+1/M6wCc2xtvA5EOC2GGWanFJQUFdb6l9fNA7NqlSA5wp72zyIXo63eYBmGZbJmpCGyP4WGC6JIs=
-X-Received: by 2002:a2e:9c01:0:b0:247:e785:49cf with SMTP id
- s1-20020a2e9c01000000b00247e78549cfmr1509417lji.413.1646877380611; Wed, 09
- Mar 2022 17:56:20 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bpm5/TLxPmov9Bafut5xTmLu/k36Bb+pMCC3CDwY5mA=;
+        b=kfNhwIcmd+e9ZtUcC7HoY2uEHk1MU6Q//wCsaMJUg/8RDiuQs9ajYawPfk6i5KTxfZ
+         EUCWjBFpb7mytv6yJWkknzyMT0myDOUOCOjXSTq6xmi8iktiPCg45B2+h+Q0A9HRh6qq
+         h/sYSy5BDGQtahAjI0TES6idKfMo4xv9vXoMMVh944VD0GdFz25K27MH5bi5rNRURHMH
+         FnPRCM03Jw0nwt2Rgpo++buIJ2qQZst6ylx1cTO5NyS+nhu6ao9iFqEqvpbnkXBJhWVQ
+         2MVjKTgLquFEkW3kMIIXyNIsXMF9Id1hrwjIBKb21eSCqMs24Ty0t7BKGTBr6DOZMkzC
+         B0IA==
+X-Gm-Message-State: AOAM530HgttsxElafY5LqqjdgGOjn0LgdZPy7iRuA7ZSc2FyV+SxxXiR
+        fSdMp9TUO0t+eGnXYrbSYU8=
+X-Google-Smtp-Source: ABdhPJyqBNpQ4srIM7Ob2Nf8TMSD758eA7D1+Vda+O6p0KF7opJc4w6nlVkZM0EmX4u3LMiLDv19Pw==
+X-Received: by 2002:a37:9dd4:0:b0:67b:1899:4b08 with SMTP id g203-20020a379dd4000000b0067b18994b08mr1709343qke.57.1646877579921;
+        Wed, 09 Mar 2022 17:59:39 -0800 (PST)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id y17-20020a05622a121100b002e0702457b2sm2377735qtx.20.2022.03.09.17.59.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Mar 2022 17:59:39 -0800 (PST)
+Date:   Wed, 9 Mar 2022 17:59:37 -0800
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] block-sha1: remove use of assembly
+Message-ID: <20220310015937.tx5hgpr75at7kvrm@carlos-mbp.lan>
+References: <20220307232552.2799122-1-sandals@crustytoothpaste.net>
+ <20220308022240.2809483-1-sandals@crustytoothpaste.net>
+ <220308.864k48y35f.gmgdl@evledraar.gmail.com>
+ <Yikl2eGbc8sPsy5G@camp.crustytoothpaste.net>
+ <Yikq7POhuxeN1UPQ@nand.local>
+ <220310.86cziulls6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
- <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com> <685b1db888079c83573cfd984ae64f46284544af.1646866998.git.gitgitgadget@gmail.com>
- <YilTug0iH/N2Fbpb@camp.crustytoothpaste.net>
-In-Reply-To: <YilTug0iH/N2Fbpb@camp.crustytoothpaste.net>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 9 Mar 2022 17:56:09 -0800
-Message-ID: <CANQDOdfZbOHZQt9Ah0t1AamTO2T7Gq0tmWX1jLqL6njE0LF6DA@mail.gmail.com>
-Subject: Re: [PATCH v5 1/5] wrapper: move inclusion of CSPRNG headers the
- wrapper.c file
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220310.86cziulls6.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 9, 2022 at 5:26 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2022-03-09 at 23:03:14, Neeraj Singh via GitGitGadget wrote:
-> > From: Neeraj Singh <neerajsi@microsoft.com>
+On Thu, Mar 10, 2022 at 12:52:31AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Mar 09 2022, Taylor Blau wrote:
+> 
+> > On Wed, Mar 09, 2022 at 10:10:33PM +0000, brian m. carlson wrote:
+> >> On 2022-03-08 at 13:38:06, Ævar Arnfjörð Bjarmason wrote:
+> >> >
+> >> > On Tue, Mar 08 2022, brian m. carlson wrote:
+> >> >
+> >> > I think the $subject of the patch needs updating. It's not removing all
+> >> > the assemply from the file, after this patch we still have the
+> >> > ARM-specific assembly.
+> >> >
+> >> > I don't have a box to test that on, but I wonder if that also triggers
+> >> > the pedantic mode?
+> >> >
+> >> > Perhaps:
+> >> >
+> >> >     block-sha1: remove superfluous i386 and x86-64 assembly
+> >>
+> >> I suspect it has the same problem.  My inclination is to just remove it,
+> >> because my guess is that the compiler has gotten smarter between 2009
+> >> and now.
 > >
-> > Including NTSecAPI.h in git-compat-util.h causes build errors in any
-> > other file that includes winternl.h. That file was included in order to
-> > get access to the RtlGenRandom cryptographically secure PRNG. This
-> > change scopes the inclusion of all PRNG headers to just the wrapper.c
-> > file, which is the only place it is really needed.
->
-> We generally prefer to do system includes in git-compat-util.h because
-> it allows us to paper over platform incompatibilities in one place and
-> to deal with the various ordering problems that can happen on certain
-> systems.
->
-> It may be that Windows needs additional help here; I don't know, because
-> I don't use Windows.  I personally find it unsavoury that Windows ships
-> with multiple incompatible header files like this, since such problems
-> are typically avoided by suitable include guards, whose utility has been
-> well known for several decades.  However, if that's the case, let's move
-> only the Windows changes there, and leave the Unix systems, which lack
-> this problem, alone.
->
-> It would also be helpful to explain the problem that Windows has in more
-> detail here, including any references to documentation that explains
-> this incompatibility, so those of us who are not Windows users can more
-> accurately reason about why we need to be so careful when including
-> header files there and why this is the best solution (and not, say,
-> providing our own include guards in a compat file).
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+> > Almost certainly. I don't have a machine to test it on, either, but I
+> > would be shocked if `make BLK_SHA=YesPlease DEVELOPER=1` worked on
+> > master today on an arm machine.
+> 
+> Why is that? The -pedantic error is specifically about
+> "gnu-statement-expression", i.e. the bracket syntax, not the inline
+> assembly per-se.
 
-I wasn't able to find any documentation from other people who hit this problem.
+not sure how gcc version (as mentioned elsewhere) might affect this, but
+had built it successfully in aarch64 with gcc 4.8.4, and arm32v6 with
+gcc 10.3.1.
 
-The root cause is that NtSecAPI.h has a typedef like this:
-```
-#ifndef _NTDEF_
-typedef LSA_UNICODE_STRING UNICODE_STRING, *PUNICODE_STRING;
-typedef LSA_STRING STRING, *PSTRING ;
-#endif
-```
-That's not really appropriate since NtSecAPI.h isn't the correct place
-to define this core primitive NT type.  It should be including
-winternl.h or a similar header.
-
-I'll update the change to only move the Windows definition to the .c file.
+Carlo
