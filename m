@@ -2,127 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 124C8C433EF
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 17:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54BEC433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 17:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244758AbiCJRfQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 12:35:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32914 "EHLO
+        id S245051AbiCJRgZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 12:36:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241154AbiCJRfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 12:35:15 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0462151686
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 09:34:13 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EA111053D5;
-        Thu, 10 Mar 2022 12:34:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F/+BtoVeWP/3OHSgbPZmEDtfwBOzOa8sihnnA7
-        PFPss=; b=PUG094n0k6pfsypg6udwSKSoqS5OVJdIRHtjUdplrbqAyr1xnfW95m
-        R4rVLwO6XaSgkIEbIuavkg9n7WkmzFYWy19NmWh3MzWADGijhlHfzt5ZPVfWi5JD
-        C9s29H4ut36jxstHzEWGJl4erI8XPGhcjVCJqkhzA0fXFJvMzRnrU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D9F31053D3;
-        Thu, 10 Mar 2022 12:34:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.247.14.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S243214AbiCJRgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 12:36:24 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13F0218C79E
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 09:35:22 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4064E1053D2;
-        Thu, 10 Mar 2022 12:34:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, rsbecker@nexbridge.com, bagasdotme@gmail.com,
-        newren@gmail.com, avarab@gmail.com, nksingh85@gmail.com,
-        sandals@crustytoothpaste.net,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH 6/8] core.fsync: add `fsync_component()` wrapper which
- doesn't die
-References: <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com>
-        <50e39f698a7c0cc06d3bc060e6dbc539ea693241.1646905589.git.ps@pks.im>
-Date:   Thu, 10 Mar 2022 09:34:09 -0800
-In-Reply-To: <50e39f698a7c0cc06d3bc060e6dbc539ea693241.1646905589.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Thu, 10 Mar 2022 10:53:17 +0100")
-Message-ID: <xmqqwnh1g19q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6D4305A104;
+        Thu, 10 Mar 2022 17:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1646933721;
+        bh=hc7EPCnRaJJpCg8hglT/sHj4w0r0wYf3gzMudFrGj5U=;
+        h=From:To:Cc:Subject:Date:Content-Type:From:Reply-To:Subject:Date:
+         To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
+         References:Content-Type:Content-Disposition;
+        b=xvNvSgntm+jHuB62wA/+5dqDlc3P/750gJ+PjmlMJvpM27CipbRDdhKJU00yH3osX
+         Iqhu3HTQb1Za2ZM7RgKjdD39T+f5iFCczhg5e7aHOM1yxf+gAKPhN2L6soWoUlQsVn
+         z+QA7aWmoVB9cOuXewQNy2w6lfEBfyfWSdWFvJ0MQ1lgYYpihOKNMAjNotNujSkKse
+         AqLn1pHU3nzscG7itS4PSRS8XShJTgDnOv5RXBdx2iSIXteEqvQbVv8WECWvbM/CXt
+         B9IP8FFJKxew14lNd0CLZPiAQYS0xcUjUj8WLTaTleQiJbi4uBPFkOo+wXyugdmDP1
+         7MysZBfOBfDO3z1MaWBWILcSsfloQCLxnHD+CtcjsTOXYvmV3kOWwYcDOMY3ktrawy
+         FgG47bHbHeQc/An3gDO8MCKjeU759fdMTv5+SJIIBSLOpgKdiHP1wCQaZOk6qMzLTv
+         u+lKz+m8WCuCO6LdE/SuoJ8EA8Q+skuzRwB1XWNw5KP9uOfywKZ
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 0/6] Importing and exporting stashes to refs
+Date:   Thu, 10 Mar 2022 17:32:30 +0000
+Message-Id: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4C0AA122-A098-11EC-9E4F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Stashes are currently stored using the reflog in a given repository.
+This is an interesting and novel way to handle them, but there is no way
+to easily move a stash across machines.  For example, stashes cannot be
+bundled, pushed, or fetched.
 
-> We have a `fsync_component_or_die()` helper function which only syncs
-> changes to disk in case the corresponding config is enabled by the user.
-> This wrapper will always die on an error though, which makes it
-> insufficient for new callsites we are about to add.
+This is suboptimal for a lot of reasons.  First, there is a recent push
+towards ephemeral development environments, but many users make heavy
+use of their stashes and wish to persist them long term[0].  Additionally,
+it would be convenient to share a snapshot of in-progress work with a
+colleague or a collaborator on a project.  And finally, many users wish
+to sync their in-progress state across machines, and we currently have
+no good way to do so, so they often do dangerous things like using cloud
+syncing services for their repositories.
 
-You can replace "which makes it ..." part with a bit more concrete
-description to save suspense from the readers.
+Let's solve this problem by allowing users to import and export stashes
+to a chain of commits.  The commits used in a stash export are nearly
+identical to those used in the stashes, with one notable change: the
+first parent of a stash is a pointer to the previous stash, or an empty
+commit if there is no previous stash.  All of the other parents used in
+the stash commit are present following it in their normal order.
 
-    fsync_component_or_die() that dies upon an error is not useful
-    for callers with their own error handling or recovery logic,
-    like ref transaction API.
+This allows users to write their exported stashes to a single ref and
+then push that ref to a remote or to bundle it for easy transport, and
+then fetch it on the receiving side.  It also permits saving the index
+and even untracked files and syncing them across machines, unlike
+temporary commits.
 
-    Split fsync_component() out that returns an error to help them.
+We intentionally attempt to exactly round-trip commits between stashes,
+although we don't do so for the exported data due to the base commit not
+having identical timestamps.  Preserving the commits exactly lets us
+more efficiently test our code and it also permits users to more easily
+determine if they have the same data.
 
-> -void fsync_or_die(int fd, const char *);
-> +int maybe_fsync(int fd);
-> ...
-> +static inline int fsync_component(enum fsync_component component, int fd)
-> +{
-> +	if (fsync_components & component)
-> +		return maybe_fsync(fd);
-> +	return 0;
-> +}
->  
->  static inline void fsync_component_or_die(enum fsync_component component, int fd, const char *msg)
->  {
-> -	if (fsync_components & component)
-> -		fsync_or_die(fd, msg);
-> +	if (fsync_component(component, fd) < 0)
-> +		die_errno("fsync error on '%s'", msg);
->  }
+The tooling here is intentionally plumbing.  It's designed to be simple
+and functional and get the basic job done.  If we want additional
+features, we can add them in the future, but this should be a simple,
+basic feature set that can support additional uses.
 
-I think in the eventuall reroll, these "static inline" functions on
-the I/O code path will become real functions in write-or-die.c but
-other than that this reorganization looks sensible.
+[0] For example, the present author has 124 stash entries in his
+repository for this project.
 
-Thanks.
+brian m. carlson (6):
+  builtin/stash: factor out generic function to look up stash info
+  builtin/stash: fill in all commit data
+  object-name: make get_oid quietly return an error
+  builtin/stash: provide a way to export stashes to a ref
+  builtin/stash: provide a way to import stashes from a ref
+  doc: add stash export and import to docs
 
-> diff --git a/write-or-die.c b/write-or-die.c
-> index 9faa5f9f56..4a5455ce46 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -56,19 +56,21 @@ void fprintf_or_die(FILE *f, const char *fmt, ...)
->  	}
->  }
->  
-> -void fsync_or_die(int fd, const char *msg)
-> +int maybe_fsync(int fd)
->  {
->  	if (use_fsync < 0)
->  		use_fsync = git_env_bool("GIT_TEST_FSYNC", 1);
->  	if (!use_fsync)
-> -		return;
-> +		return 0;
->  
->  	if (fsync_method == FSYNC_METHOD_WRITEOUT_ONLY &&
->  	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) >= 0)
-> -		return;
-> +		return 0;
->  
->  	if (git_fsync(fd, FSYNC_HARDWARE_FLUSH) < 0)
-> -		die_errno("fsync error on '%s'", msg);
-> +		return -1;
-> +
-> +	return 0;
->  }
->  
->  void write_or_die(int fd, const void *buf, size_t count)
+ Documentation/git-stash.txt |  27 +++
+ builtin/stash.c             | 359 +++++++++++++++++++++++++++++++++---
+ cache.h                     |  21 ++-
+ object-name.c               |   6 +-
+ t/t3903-stash.sh            |  52 ++++++
+ 5 files changed, 431 insertions(+), 34 deletions(-)
+
