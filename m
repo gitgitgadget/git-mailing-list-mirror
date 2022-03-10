@@ -2,163 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4454AC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 15:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC5C3C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Mar 2022 15:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231708AbiCJPcr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 10:32:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
+        id S239248AbiCJPng (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 10:43:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiCJPcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 10:32:46 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1869E15A228
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 07:31:45 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id bg10so12929553ejb.4
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 07:31:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=GmQLRtgRVu/1xBBcQUVsQD2rdMqe/1C6tVt8ubFnn68=;
-        b=N5vnde5dE8z4HFcPcbVZOwdenphVO9B8wBb0hCqAdO5EjmJ8hYDYlfD6O7hJA0sER6
-         ZeOrcxL7fKrL8wDaox2Grb9FGfkXtrjSVa7ZP8IBm57E59ZXrhNIw0PwWl9g1mzGtsox
-         7bO3N8H9duaDZx71h29D1iedADoMw3c/OBKEKPgpDIX9T8punmz7g4jUoyL4IAQlgpTw
-         2OjpDunhDtLYtQhOfH00VSbd28eFUQ2ck1MYsV61VjVr9+vZjuMWGCGNYHjb1FV9eCRp
-         b7u1oOaYY1x0EsQh8+1DWqo6vYz+r2YLRfmLasUWaCRmqtX1Rd0yCSbngCQS0WpJToBU
-         wJVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=GmQLRtgRVu/1xBBcQUVsQD2rdMqe/1C6tVt8ubFnn68=;
-        b=YxZdj+Dh44M4IGqXtTCPTXSm44Z/5tDMpkXbK91aZim+sOp3XabCPfp46lhjjWFP+/
-         5YRR0qqWQZcjw0bYRYOXkhHgDPcQ1Ys7OHwuOIdA0PD4KvsOPWb3rW9Dgo5LyPB1sQ40
-         bjjtduD7m1Y537Rydohd4ZqcUAMJGY6CX1tr1ooG3EFXplee7FhuR0O3OavXvAsnve4p
-         nT0HXAdn/Ibe/TI8NwJR8O+T30Jbz4jdY7a1SiONl0R3LiEYkGqQlzrPcESElkrSAjQ5
-         vD5VvVj2Zi7tSr4Bqpq6iWojACOpPLm43PrWlp3Xydbw9bWlMhyTGgtYx9vzD8p3mwcH
-         GPSA==
-X-Gm-Message-State: AOAM532Lc4ePETjDWJOog6vzbIUvu+0HiMnCDQW2Z29D/XH1D0h3dtjG
-        duISj8o2nCeUJ+3RBVHXCp8=
-X-Google-Smtp-Source: ABdhPJwGoAp3vlOVPZu5RjUIfqo4bHh9RFfMnHfN/fS6QoD7AHj/4U4r7ADl8GboYYuIGD2N8LDbSg==
-X-Received: by 2002:a17:907:6d9f:b0:6db:62b6:f3d6 with SMTP id sb31-20020a1709076d9f00b006db62b6f3d6mr4903642ejc.366.1646926303348;
-        Thu, 10 Mar 2022 07:31:43 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b004162d0b4cbbsm2150103edu.93.2022.03.10.07.31.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 07:31:42 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nSKlR-000Yja-Uu;
-        Thu, 10 Mar 2022 16:31:41 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: win+VS environment has "cut" but not "paste"?
-Date:   Thu, 10 Mar 2022 16:23:02 +0100
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
- <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
- <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
- <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
- <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
- <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g>
- <220304.86mti6f4ny.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2203071649100.11118@tvgsbejvaqbjf.bet>
- <xmqqmti1u20m.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2203091320140.357@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2203091320140.357@tvgsbejvaqbjf.bet>
-Message-ID: <220310.86o82dj02q.gmgdl@evledraar.gmail.com>
+        with ESMTP id S236938AbiCJPne (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 10:43:34 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018592A0
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 07:42:29 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 61F2E3F4114;
+        Thu, 10 Mar 2022 10:42:29 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id D842D3F4096;
+        Thu, 10 Mar 2022 10:42:28 -0500 (EST)
+Subject: Re: [PATCH v6 16/30] compat/fsmonitor/fsm-listen-darwin: add MacOS
+ header files for FSEvent
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <cdef9730b3f93a6f0f98d68ffb81bcb89d6e698e.1646160212.git.gitgitgadget@gmail.com>
+ <220307.86h78a2gcn.gmgdl@evledraar.gmail.com>
+ <aa6276f9-8d10-22f9-bfc0-2aa718d002e1@jeffhostetler.com>
+ <220309.86bkyfmctk.gmgdl@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2203101445360.357@tvgsbejvaqbjf.bet>
+ <220310.86a6dxkgjr.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <4fec0300-ff6b-f981-49f0-f8002847385f@jeffhostetler.com>
+Date:   Thu, 10 Mar 2022 10:42:27 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <220310.86a6dxkgjr.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Mar 09 2022, Johannes Schindelin wrote:
 
-> Hi Junio,
->
-> On Mon, 7 Mar 2022, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 3/10/22 9:42 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Mar 10 2022, Johannes Schindelin wrote:
+> 
+>> Hi Ævar,
 >>
->> > I said that the current output is only useful to veterans. The output =
-that
->> > hides the detailed log, under a separate job that is marked as
->> > non-failing.
->> >
->> > That's still as true as when I said it. :-)
+>> On Wed, 9 Mar 2022, Ævar Arnfjörð Bjarmason wrote:
 >>
->> I think getting rid of the separate "print failures" CI step and
->> making it more discoverable how to reveal the details of failing
->> test step is a usability improvement.
->
-> I'm so glad you're saying that! I was starting to doubt whether my caring
-> about getting rid of that `print failures` step was maybe misguided.
+>>> On Tue, Mar 08 2022, Jeff Hostetler wrote:
+>>>
+>>>> On 3/7/22 5:37 AM, Ævar Arnfjörð Bjarmason wrote:
+>>>>> On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
+>>>>>
+>>>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>>>> [...]
+>>>> [...]
+>>>>>
+>>>>>> +#else
+>>>>>> +/*
+>>>>>> + * Let Apple's headers declare `isalnum()` first, before
+>>>>>> + * Git's headers override it via a constant
+>>>>>> + */
+>>>>>
+>>>>>
+>>>>>> +#include <string.h>
+>>>>>> +#include <CoreFoundation/CoreFoundation.h>
+>>>>>> +#include <CoreServices/CoreServices.h>
+>>>>>> +#endif
+>>>>>
+>>>>> In cache.h which you'rejust about to include we don't include
+>>>>> string.h, but we do in git-compat-util.h, but that one includes
+>>>>> string.h before doing those overrides.
+>>>>>
+>>>>> This either isn't needed, or really should be some addition to
+>>>>> git-compat-util.h instead. I.e. if we've missed some edge case with
+>>>>> string.h and ctype.h on OSX we should handle that in git-compat-util.h
+>>>>> rather than <some other file/header> needing a portability workaround.
+>>>>
+>>>> [...]
+>>>>
+>>>> While it may not (now at least) be necessary, it's not doing
+>>>> any harm, so I'd rather leave it and not interrupt things.
+>>>> We can always revisit it later if we want.
+>>>
+>>> In terms of figuring out some mysterious portability issue, I think the
+>>> right time is now rather than later.
+>>
+>> I do not see that.
+>>
+>> In FSMonitor, this was clearly a problem that needed to be solved (and if
+>> you try to compile on an older macOS, you will run into those problems
+>> again).
+> 
+> So you can reproduce an issue where removing the "#include <string.h>"
+> from compat/fsmonitor/fsm-listen-darwin.c has an effect? Does swaping it
+> for "ctype.h" also solve that issue?
+> 
+> I was asking why the non-obvious portability hack was needed, and it
+> seems Jeff suggested it might not be upthread in
+> <aa6276f9-8d10-22f9-bfc0-2aa718d002e1@jeffhostetler.com>, but here you
+> seem to have a reproduction of in being needed, without more of the
+> relevant details (e.g. what OSX version(s))?
+> 
+>> If you are talking about the mysterious portability issue with an eye on
+>> `git-compat-util.h`, well... you can successfully compile Git's source
+>> code without this hack in `git-compat-util.h`. That's why the hack is not
+>> needed. Problem solved. Actually, there was not even a problem.
+> 
+> Do you mean we don't need the ctype.h overrides in git-compat-util.h at
+> all? I haven't looked into it, but needing to
+> 
+>>> I.e. now this doesn't have anyone relying on it, so we can easily
+>>> (re)discover whatever issue this was trying to solve.
+>>>
+>>> Whereas anyone who'd need to figure out why we include string.h on OSX
+>>> early in this case later would be left with this otherwise dead-end
+>>> thread, and a change at that point would possibly break existing code...
+>>
+>> Anyone who would need to figure out why we `#include` this header early
+>> would read the comment about `isalnum()`, I would hope, and understand
+>> that there are circumstances when Git's `isalnum()` macro interferes with
+>> Apple's, and that this `#include` order addresses that problem.
+>>
+>> They might even get to the point where they find
+>> https://github.com/dscho/git/commit/0f89c726a1912dce2bdab14aff8ebfec8550340d,
+>> maybe even the "original original" commit at
+>> https://github.com/kewillford/git/commit/d11ee4698c63347f40a8993ab86ee4e97f695d9b,
+>> which was a still-experimental version of the macOS backend, and where the
+>> `#include` order clearly mattered, else why would Kevin have bothered.
+>>
+>> Further, I strongly suspect that it had something to do with
+>> `CoreFoundation.h` or with `CoreServices.h` being `#include`d, and if you
+>> care to check the code above the quoted lines, you will see that you
+>> cannot even `#include` those headers using GCC, it only works with clang:
+>> https://github.com/jeffhostetler/git/commit/cdef9730b3f93a6f0f98d68ffb81bcb89d6e698e#diff-4e865160016fe490b80ad11273a10daca8bc412a75f2da4c6b08fb9e5e3b5e18R3
+>>
+>> At this stage, anybody investigating this issue who is a little bit like
+>> me would then be a bit bored with the investigation because there is
+>> actually no breakage here, just a curious `#include` order, and nothing
+>> else. So they might then drop it and move along.
+> 
+> My implicit observation upthread is that those sorts of details would
+> ideally be included in a comment or the commit message. I.e. I didn't
+> quite see why it was needed, and neither could the person submitting the
+> patch series when asked.
+> 
+> Sure, it's a minor issue, but patch review is also meant to uncover such
+> small issues.
+> 
 
-I don't think anyone's been maintaining that getting rid of it wouldn't
-be ideal. I for one have just been commenting on issues in the proposed
-implementation.
+There are two independent issues here.
+(1) compiling something that includes <CoreServices.h> with GCC.
+(2) the need for the #include <string.h> when compiling with clang.
 
-I think we might still want to retain some such steps in the future,
-i.e. if we have a failure have subsequent steps that on failure() bump
-varying levels of verbosity / raw logs etc., or even try re-running the
-test in different ways (e.g. narrow it down with --run).
+To address (1), we've #ifdef'd the top of the file and insert just
+the essential typedefs and prototypes.  (I'll pull them into a separate
+local header file as you suggested earlier to make that easier to see.)
+But otherwise, GCC is not an issue.
 
-But the failure step you see when something fails should ideally have
-the failure plus the relevant error, just as we do with compile errors.
+WRT (2) I have tried clang-11 on macOS 10.15 and clang-13 on 11.6 both
+with and without the <string.h> and it doesn't matter.  Everything
+compiles and t7527 passes in all [2x2] cases.  So I have to assume that
+something has changed in the Apple/clang SDK or runtime libraries or
+our source code in that single source file in the ~2 years since Kevin
+needed to add it.  I do not have access to an older Mac (Apple makes it
+hard to test back-compat with older OS's), so I cannot reproduce the
+error.  But I don't doubt that there was an error at one point -- I just
+don't know what it was.   So that's my context for saying that I don't
+think it is needed now, but I was willing to carry it forward in case
+it is still helpful for people with older Macs.  FWIW, it really seems
+pretty isolated and trivial and would only affect code in this single
+source file -- which from a quick scan, doesn't actually reference any
+of the functions in <string.h>, so there shouldn't be any need to think
+about git-compat-util.h or ctype.h, right?
 
->> I am not =C3=86var, but I think what was questioned was the improvement
->> justifies multi dozens of seconds extra waiting time, which is a
->> usability dis-improvement.  I do not have a good answer to that
->> question.
->
-> It is definitely worrisome that we have to pay such a price. And if there
-> was a good answer how to improve that (without sacrificing the
-> discoverability of the command trace corresponding to the test failure), I
-> would be more than just eager to hear it.
-
-Isn't the answer to that what I suggested in [1]; I.e. the performance
-problem being that we include N number of lines of the output that
-*didn't fail*, and that's what slows down showing the relevant output
-that *did* fail.
-
-I.e. if say t3070-wildmatch.sh fails in a couple of tests we'd show a
-*lot* of lines between the relevant failing tests, let's just elide the
-non-failing ones and show the output for the failing ones specifically.
-
-*Sometimes* (but very rarely) it's relevant to still look at the full
-output, since the failure might be due to an earlier silent failure in a
-previous test (or the state it left behind), but I think that's rare
-enough that the right thing to do is just to stick that in a subsequent
-"verbose dump" step or whatever.
-
->> But new "non-veteran" users may not share that.  That is something a
->> bit worrying about the new UI.
->
-> Indeed. My goal, after all, is to improve the experience of contributors,
-> not to make it harder.
->
-> Still, given that you currently have to click quite a few times until you
-> get to where you need to be, I have my doubts that what this patch series
-> does is actually making things slower, measured in terms of the total time
-> from seeing a failed build to being able to diagnose the cause by
-> inspecting the command trace.
-
-Yes, but wouldn't the "Test Summary Report" in [1] be the best of both
-worlds[1] (with some minor changes to adapt it to the GitHub "grouping"
-output, perhaps)?
-
-Then you'd always see the specific of the failing test at the end, if
-you had N number of failures you might have a lot of output above that,
-but even that we could always tweak with some smart heuristic. I.e. show
-verbose "not ok" output if failures <10, if 10..100 elide some for the
-raw log, if >100 just print "this is completely screwed" or whatever :)
-
-1. https://lore.kernel.org/git/220302.86mti87cj2.gmgdl@evledraar.gmail.com/
+Jeff
