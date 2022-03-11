@@ -2,272 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B94ADC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 15:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F48C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 16:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349145AbiCKP3v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 10:29:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43796 "EHLO
+        id S1343776AbiCKQVr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 11:21:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237999AbiCKP3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 10:29:50 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62293141FD7
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 07:28:46 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id q194so7221467qke.5
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 07:28:46 -0800 (PST)
+        with ESMTP id S237154AbiCKQVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 11:21:47 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AEAB1D0860
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:20:43 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id h7so6308512ile.1
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:20:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=e8GeFaU54PXyB1izTm6OT7ViKB0eN7js0C8LfDivM3Y=;
-        b=JimFt6FiyE9WhsvtfxyCRDbLa2uSFGyvqO8wCqIXyp7Bq3cGrTyPF5ESkWD2EnidpM
-         FeIvqRdBGxIU4ROfEm6Csh2E6w68HhkXQjnJKEnbFBPRCnNfXv1877hgQrg8nOHqPTCP
-         bGhckndd7YMLWbDQsGlKiH3HKd/ofuSGXWAE7gH5EFuNhILuVDTjUgwGobTYQO7xNHPJ
-         IhURy8TRSzPeFP0ipKYLzaOzLwi4JZNCHxahfTeUeAdalVhGMEWjjoZDZf/h9HxiGAxy
-         O58At/Lx+fMEP369YFtNMEWMoIk7qH09/3z765QZgr8n6QagcKR+42QhhVL1G0Gwn04L
-         LzeA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5fNeKhUEd7vxQYo6TccyxU5K9Ji2MUNDspwapGwzAHo=;
+        b=jr1dk6w5t9b5zT4FymCTnavgVcwlwGPLF98yzgTXN1XWi4uXYBRgmG7hGbHR6b7Www
+         shCN2Dz2HfjL+usNtH6T6EA7FaK0p7cZ57Tw1txfMSKZPpKhVbkk2AYXoKC6QWNhwEOG
+         az/N+rqo31kxlDsmw3r0nFyTtjj3XeVdckxYuwU0zqDShyr5/scQjP4gLvDoEmqnY/KL
+         JhxiBsBC8ReeUxi86teUj5MgXtSQXUsCnF0M8MmbY53E8wlkCdakQJGZ4n5MYFELDwWw
+         bVAjJlXv8HPOReKR8WmTOAK73HFJRth+X7rZCzLJicX+/kQu5rxkQ7RODArVhUKq+FH3
+         UjEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=e8GeFaU54PXyB1izTm6OT7ViKB0eN7js0C8LfDivM3Y=;
-        b=xe16Se7rYI6m96OEMHjVyXU456wjp1+p42+rIeZlfQseMQwrqNMoOU+i0uwbRlhQ9e
-         NdIYW5yDYlN8X3+kG2vdTXNoUF476UKyXMvXRVym1zxDOe5BzuQzeqvI6x0PcKOcyOZY
-         f4cVJFqzSvpSiAiG9ZrLWGAX3KDDlPNtOZOfOUwgsMzDIwLT5TZMDtZHbleNFdgCGh4A
-         ao+7H0tP0n5W+WJQ4wgGvlKIHuUkqNejeosWY6+opedni0twtGr5nJzGwiASLV1dqZpV
-         +sGhE5LZaKFfNdI4iCaShnOCai/p+vt8GM1Woyg0ll5mnfAEeUD3tRXMJ74JT5LYQDwF
-         Yljw==
-X-Gm-Message-State: AOAM533BzyVBGeDWDFKkWCBZNHwrmsiKVjuJlcyp04/0lc8bXVDHTq7o
-        MVrLOYUvva71KRcGFUK+12s=
-X-Google-Smtp-Source: ABdhPJxSqadoS4mH6Dvp9nzPVmwzvR1cR85NyIEL9U725BqwEufqC1DXlNeZF4NiZLhB09nJZ1nwYQ==
-X-Received: by 2002:ae9:ec0a:0:b0:67d:6c34:de44 with SMTP id h10-20020ae9ec0a000000b0067d6c34de44mr4512630qkg.152.1647012525448;
-        Fri, 11 Mar 2022 07:28:45 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id m62-20020a378a41000000b0067d211fc10esm4039299qkd.92.2022.03.11.07.28.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Mar 2022 07:28:45 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: set REF_HEAD_DETACH in checkout_up_to_date()
-Date:   Fri, 11 Mar 2022 10:28:44 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <6BBE6E16-C4CE-4A66-8A0F-1FDBCA0080D4@gmail.com>
-In-Reply-To: <7c1c0b8e-7895-7a0e-6ab0-e45e21ec7329@gmail.com>
-References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
- <7c1c0b8e-7895-7a0e-6ab0-e45e21ec7329@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5fNeKhUEd7vxQYo6TccyxU5K9Ji2MUNDspwapGwzAHo=;
+        b=J1UrSZSJf7UCvObowxmof5AWoIExEqw5CipFR+VAfnBbXavXHuwmvBfEguoszLDbvs
+         XdefCLPrlqRtuM+yvmzkYBUlDJkKpnlZf9u+fcufFybWdRDSDxFXwTphnrvgnjuE8Opg
+         1bu9UojCNEEsb8itRvpa4C1MK1edNqEwEtQ7Q98HpWkfYnhdZvGn6WzmbG648hOe2Exe
+         d72PE3gJJX6hA7VrCG1Yti6xGPreMobOOUrhFgMPyRA15VsJairhPEw1DyJbRbdZ2++Z
+         vO6wig/yp+uWX69ery5keHdIhzzdN0yBBbM1gFcDXTPyirKZV+udHY6hKhxqWrrwzbBS
+         Wakw==
+X-Gm-Message-State: AOAM5307wMpm5mTsDTZVNnEFY8rLtcF4kVoVQULBeizTD+Z+qE9nRcJK
+        /ftOeDkCvjAkIddvmIlwia4deH7C+N5+tdkY
+X-Google-Smtp-Source: ABdhPJyr7aZLtsPzMnx4a7h3YZMLXcMyw+ALsy2Cokl1z/0pWbJP1Q4fqNQVDAWux99zIZV89ZlvDw==
+X-Received: by 2002:a92:c810:0:b0:2c6:ba9:6a42 with SMTP id v16-20020a92c810000000b002c60ba96a42mr7986349iln.275.1647015642645;
+        Fri, 11 Mar 2022 08:20:42 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s13-20020a6bdc0d000000b006408888551dsm4291715ioc.8.2022.03.11.08.20.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Mar 2022 08:20:42 -0800 (PST)
+Date:   Fri, 11 Mar 2022 11:20:41 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] repack: add config to skip updating server info
+Message-ID: <Yit22Xcs6iF4MVB7@nand.local>
+References: <659d5528df56f6b9aece6b1f3c4e2e5a4ae04e1e.1646996936.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <659d5528df56f6b9aece6b1f3c4e2e5a4ae04e1e.1646996936.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On 11 Mar 2022, at 10:05, Phillip Wood wrote:
-
-> Hi John
->
-> Thanks for working on this
->
-> On 11/03/2022 05:05, John Cai via GitGitGadget wrote:
->> From: John Cai <johncai86@gmail.com>
->>
->> Fixes a bug whereby rebase updates the deferenced reference HEAD point=
-s
->> to instead of HEAD directly.
->>
->> If HEAD is on main and if the following is a fast-forward operation,
->>
->> git rebase $(git rev-parse main) $(git rev-parse topic)
->>
->> Instead of HEAD being set to $(git rev-parse topic), rebase erroneousl=
-y
->> dereferences HEAD and sets main to $(git rev-parse topic). This bug wa=
-s
->> reported by Michael McClimon. See [1].
->
-> Often we just add a Reported-by: trailer unless the liked email has som=
-e useful extra info (which arguably should not be the case with a well wr=
-itten commit message)
-
-Thanks, will adjust.
-
->
->> This is happening because on a fast foward with an oid as a <branch>,
->> update_refs() will only call update_ref() with REF_NO_DEREF if
->> RESET_HEAD_DETACH is set. This change was made in 176f5d96 (built-in r=
-ebase
->> --autostash: leave the current branch alone if possible,
->> 2018-11-07). In rebase, we are not setting the RESET_HEAD_DETACH flag,=
-
->> which means that the update_ref() call ends up dereferencing
->> HEAD and updating it to the oid used as <branch>.
->>
->> The correct behavior is that git rebase should update HEAD to $(git
->> rev-parse topic) without dereferencing it.
->>
->> Fix this bug by adding the RESET_HEAD_DETACH flag in checkout_up_to_da=
-te
->
-> As Junio points out it is confusing that it is always ok to pass that f=
-lag, I think we should only set it if we are not checking out a branch, s=
-ee below.
->
->> so that once reset_head() calls update_refs(), it calls update_ref() w=
-ith
->> REF_NO_DEREF which updates HEAD directly intead of deferencing it and
->> updating the branch that HEAD points to.
->>
->> Also add a test to ensure this behavior.
->>
->> 1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
->
-> Maybe
-> Reported-by: Michael McClimon <michael@mcclimon.org>
-> ?
->
->> Signed-off-by: John Cai <johncai86@gmail.com>
->> ---
->>      rebase: update HEAD when is an oid
->>          Fixes a bug [1] reported by Michael McClimon where rebase wit=
-h oids will
->>      erroneously update the branch HEAD points to.
->>           1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-=
-1226%2Fjohn-cai%2Fjc%2Ffix-rebase-oids-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-122=
-6/john-cai/jc/fix-rebase-oids-v1
->> Pull-Request: https://github.com/git/git/pull/1226
->>
->>   builtin/rebase.c  |  2 +-
->>   t/t3400-rebase.sh | 21 +++++++++++++++++++++
->>   2 files changed, 22 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/rebase.c b/builtin/rebase.c
->> index b29ad2b65e7..52afeffcc2e 100644
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -828,7 +828,7 @@ static int checkout_up_to_date(struct rebase_optio=
-ns *options)
->>   		    options->switch_to);
->>   	ropts.oid =3D &options->orig_head;
->>   	ropts.branch =3D options->head_name;
->> -	ropts.flags =3D RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
->> +	ropts.flags =3D RESET_HEAD_RUN_POST_CHECKOUT_HOOK | RESET_HEAD_DETAC=
-H;
->
-> I think it would be clearer if the post image ended up as
->
-> 	ropts.flags =3D RESET_HEAD_RUN_POST_CHECKOUT_HOOK
-> 	if (options->head_name)
-> 		ropts.branch =3D option->head_name
-> 	else
-> 		ropts.flags |=3D RESET_HEAD_DETACH
-
-Yes, this is what I had in mind as well :).
-
->
-> and we changed reset_head() to BUG() if both branch and RESET_HEAD_DETA=
-CH are given.
-
-I didn't consider this though, thanks for the suggestion.
-
->
->>   	ropts.head_msg =3D buf.buf;
->>   	if (reset_head(the_repository, &ropts) < 0)
->>   		ret =3D error(_("could not switch to %s"), options->switch_to);
->> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
->> index 71b1735e1dd..0b92e78976c 100755
->> --- a/t/t3400-rebase.sh
->> +++ b/t/t3400-rebase.sh
->> @@ -437,4 +437,25 @@ test_expect_success 'rebase when inside worktree =
-subdirectory' '
->>   	)
->>   '
->>  +test_expect_success 'rebase with oids' '
->> +	git init main-wt &&
->> +	(
->> +		cd main-wt &&
->> +		>file &&
->> +		git add file &&
->> +		git commit -m initial &&
->> +		git checkout -b side &&
->> +		echo >>file &&
->> +		git commit -a -m side &&
->> +		git checkout main &&
->> +		git tag hold &&
->> +		git checkout -B main hold &&
->> +		git rev-parse main >pre &&
->> +		git rebase $(git rev-parse main) $(git rev-parse side) &&
->> +		git rev-parse main >post &&
->> +		test "$(git rev-parse side)" =3D "$(cat .git/HEAD)" &&
->> +		test_cmp pre post
->> +	)
->> +'
->
-> Using a stand alone test for bisecting makes sense but I think we shoul=
-d try and use the existing test setup for the regression test (it certain=
-ly does not need to run in its own worktree). The diff below shows how th=
-is could be done. Ideally there would be a preparatory commit that modern=
-ized the whole of the setup test rather than just the two commits we're u=
-sing in the new test but that's not essential.
-
-sounds good to me, might as well clean things up while we're at it.
-
->
-> Best Wishes
->
-> Phillip
->
-> ---- >8 ----
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 71b1735e1d..d5a8ee39fc 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -18,10 +18,7 @@ GIT_AUTHOR_EMAIL=3Dbogus@email@address
->  export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
->
->  test_expect_success 'prepare repository with topic branches' '
-> -       git config core.logAllRefUpdates true &&
-> -       echo First >A &&
-> -       git update-index --add A &&
-> -       git commit -m "Add A." &&
-> +       test_commit "Add A." A First First &&
->         git checkout -b force-3way &&
->         echo Dummy >Y &&
->         git update-index --add Y &&
-> @@ -32,9 +29,7 @@ test_expect_success 'prepare repository with topic br=
-anches' '
->         git mv A D/A &&
->         git commit -m "Move A." &&
->         git checkout -b my-topic-branch main &&
-> -       echo Second >B &&
-> -       git update-index --add B &&
-> -       git commit -m "Add B." &&
-> +       test_commit "Add B." B Second Second &&
->         git checkout -f main &&
->         echo Third >>A &&
->         git update-index A &&
-> @@ -399,6 +394,15 @@ test_expect_success 'switch to branch not checked =
-out' '
->         git rebase main other
->  '
->
-> +test_expect_success 'switch to non-branch detaches HEAD' '
-> +       git checkout main &&
-> +       old_main=3D$(git rev-parse HEAD) &&
-> +       git rebase First Second^0 &&
-> +       test_cmp_rev HEAD Second &&
-> +       test_cmp_rev main $old_main &&
-> +       test_must_fail git symbolic-ref HEAD
-> +'
+On Fri, Mar 11, 2022 at 12:09:30PM +0100, Patrick Steinhardt wrote:
+> diff --git a/Documentation/config/repack.txt b/Documentation/config/repack.txt
+> index 9c413e177e..22bfc26afc 100644
+> --- a/Documentation/config/repack.txt
+> +++ b/Documentation/config/repack.txt
+> @@ -25,3 +25,6 @@ repack.writeBitmaps::
+>  	space and extra time spent on the initial repack.  This has
+>  	no effect if multiple packfiles are created.
+>  	Defaults to true on bare repos, false otherwise.
 > +
->  test_expect_success 'refuse to switch to branch checked out elsewhere'=
- '
->         git checkout main &&
->         git worktree add wt &&
+> +repack.updateServerInfo::
+> +	If set to false, git-repack will not run git-update-server-info.
+
+Can you clarify here what the default value of this config variable is,
+and how it interacts with repack's `-n` flag? E.g., something along the
+lines of:
+
+    repack.updateServerInfo::
+        If set to false, linkgit:git-repack[1] will not run
+        linkgit:git-update-serve-info[1]. Defaults to true. Can be
+        overridden when true by the `-n` option of
+        linkgit:git-repack[1].
+
+Perhaps a little verbose, but I think it leaves less ambiguity about
+what this new configuration variable is for.
+
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index da1e364a75..3baa993da2 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -22,6 +22,7 @@ static int delta_base_offset = 1;
+>  static int pack_kept_objects = -1;
+>  static int write_bitmaps = -1;
+>  static int use_delta_islands;
+> +static int no_update_server_info = 0;
+
+Not the fault of this patch, but I wonder if this would be less
+confusing if we stored `update_server_info` instead of
+`no_update_server_info`. If you have time, I think it may be worth a
+preparatory patch at the beginning to swap the two.
+
+> +test_expect_success 'updates server info by default' '
+> +	git init repo &&
+> +	test_when_finished "rm -rf repo" &&
+> +	test_commit -C repo message &&
+> +	test_path_is_missing repo/.git/objects/info/packs &&
+> +	test_path_is_missing repo/.git/info/refs &&
+> +	git -C repo repack &&
+> +	test_path_is_file repo/.git/objects/info/packs &&
+> +	test_path_is_file repo/.git/info/refs
+> +'
+
+I wonder if this and the below tests might be cleaned up with a pair of
+helper functions, perhaps:
+
+    test_server_info_present () {
+      test_path_is_file .git/objects/info/packs &&
+      test_path_is_file .git/info/refs
+    }
+
+    test_server_info_missing () {
+      test_path_is_missing .git/objects/info/packs &&
+      test_path_is_missing .git/info/refs
+    }
+
+t7700 has a mix of styles, but it may shorten some of the lines to use a
+subshell that is changed into the repo directory, e.g., the test above
+would become:
+
+    test_expect_success 'updates server info by default' '
+      git init repo &&
+      test_when_finished "rm -fr repo" &&
+      (
+        test_commit message &&
+        test_server_info_missing &&
+        git repack &&
+        test_server_info_present
+      )
+    '
+
+which reads a little more easily to me. It would be nice to avoid
+creating the sub-repos at all, perhaps by removing these files
+ourselves in between tests.
+
+> +test_expect_success '-n skips updating server info' '
+> +test_expect_success 'repack.updateServerInfo=true updates server info' '
+> +test_expect_success 'repack.updateServerInfo=false skips updating server info' '
+> +test_expect_success '-n overrides repack.updateServerInfo=true' '
+
+Great, these four and the above together cover all of the cases I think
+we'd be interested in.
+
+Thanks,
+Taylor
