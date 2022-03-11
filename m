@@ -2,172 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4F41C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 02:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CCF8C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 05:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238151AbiCKCSy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 21:18:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
+        id S234239AbiCKFGw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 00:06:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239274AbiCKCSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 21:18:53 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75CA5133E
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 18:17:50 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id qa43so16030417ejc.12
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 18:17:50 -0800 (PST)
+        with ESMTP id S233316AbiCKFGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 00:06:49 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C6E1AC28C
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 21:05:46 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id j17so11289008wrc.0
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 21:05:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=AL1/RuYE7MUcb9gQhsYazRXr73aE0tB5TyFwFyqNK4Q=;
-        b=LYjJ9lfCU4FLZaWQYHj6qAun2+dsxQ3cvMc1rYgjuGofgzoSa+XozzeDlyiospCrx1
-         j/rx1PK6RBW+B9pFXEiavDRQUT01dKDX8mkb8pT+hviFBRtTZvn8fByn2iFdqrqCUV7q
-         GtfQWhYpbTbskSyxI7Xe7LzLH4kFzUKdqCwyr1brp7NunIdSOC6d7uMIU/VkFws1KOfq
-         bqYT98v+YkQRpk5Szt27bPtPoQ0IdjNAsDUDxtR8MPpPzvLDbcxw5UexMMnY/TGWShYw
-         RwJAqf/SP3LeUGt0hTB4cvt1N197DmovejgsAR6pscJMRw06JwzjCp52vISSj/28J9U4
-         7xdQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cQMY8eBJv03m0zTELUWcg3dDbwHQb7hiymMn9kPePNU=;
+        b=peF2fD54cBd2i7k5R0lkMLlFAGnKKpgAv8F7RgRPwjKZXirwBv0RB5lBOfwvNSpL8o
+         L+M5+48lGCRA+BaIN/HoMYvVO5xxGFjEPCpDoWJ0tIepetc2zr5WcIJu7BeIWn4bD7nX
+         CcihMsOyKH3KCRDax0Xfq0Q217FfbBCiBmA0VIbDspDAOyigYns1tTzdkowm+nzmU5RR
+         TzkjS0Po+irxGHMSrIuEn5bne71+myHpGulM5w9O3dfHaKFx7g68YiiMVJHOy54PL7Y5
+         9Qx3E/OHWHYDKd+MYuAhZuw0fx1uhvOb2Dw+J8zgLndNOooTDJm3WtX8lvNOfCuhufTQ
+         lG8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=AL1/RuYE7MUcb9gQhsYazRXr73aE0tB5TyFwFyqNK4Q=;
-        b=Q+3P+jEvAufiFnwj05rgkAVFabgkiItx8vojGp+egmJMNuDCKWfK/pJMKN4sKlObsc
-         AVth5SHLOiQrICS8Wt+2gTGXBkBQj1BqCSY3+TRHsjn6zDChpA0idwciyXiCbo+3OrJr
-         +TDSRA8pSQDgWNMBogLXmnepRvha6kFf8R1zuDkgA0qPuYFbzvityOamCTx/4fuuDL5o
-         vm0brjOR0BtE8VcUq6OcrHmTUsQvO6CBGImveOeso5DDYk7F5oR5K9uU2axpgVkyZ043
-         c5vTOcxysV80ssPXYXyRnjcnNMLsKkPyeAm8IoI7LpMmHO2OtROpK0o6H60QXJy8oS40
-         SyZg==
-X-Gm-Message-State: AOAM530rtyW8bjOprvCYI1pxSA4SDk6VtXxatvaAoAD7NqyQG69J16V/
-        4CX5x2HsZjq8ZQxRrDcfi1c=
-X-Google-Smtp-Source: ABdhPJwXTPd1x02Zo3nBwD4SCjb6RQ+KLpZoKKc9A4lG2sKCgz3zFm2B7iZMcJub9zRqqJHcZh7FRA==
-X-Received: by 2002:a17:906:30d1:b0:6cf:d160:d8e4 with SMTP id b17-20020a17090630d100b006cfd160d8e4mr6766560ejb.265.1646965069103;
-        Thu, 10 Mar 2022 18:17:49 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p23-20020a17090664d700b006db59e6a243sm2425669ejn.53.2022.03.10.18.17.48
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cQMY8eBJv03m0zTELUWcg3dDbwHQb7hiymMn9kPePNU=;
+        b=H0Jhukd1yqVuyCKmeLEiRngrJUj43CuFroQJYari9eXxl6P9cPOj3MvVQMyhHC2nGa
+         EwfJrQpV57dAUPUry7AwEdh09L4oNssu8ocaVqq0oomJMDOijEBtZNkFgiFF002+I5nA
+         yH+hgXP+58D9DUaY5LwqxDmkgw0Ov9UzfaL6gz+yXZqR/cKYXlBf3iwqKqi5gZMHbnZJ
+         07Pz0kdoZot3u6oeYQKWpqXlBWo/BA8Bi1Q5ipOVPFc83hJVzt/KLaX76vzR2jJuzS60
+         O9lhI7bamZFo1+Iv5MrJxRxJB1PujeUjGuyeM3Fy1u/0Eg1Q/hCwUX1LjcmL1xdSIbpJ
+         +9BQ==
+X-Gm-Message-State: AOAM533QMohXDy6EY6dvOG8HUwBzTfSZFZN59EwmMUryIgMUdVA3BMzs
+        HfZYhX6Xzh6qlJhrMDSGB1hgFF1jht4=
+X-Google-Smtp-Source: ABdhPJyiSto3o47wU0swpMeh/gNNO5xGrcxRX/vbEMHaS/WVoeDHj2xO9q1Y6+9cG9WEfNUSlGCVaA==
+X-Received: by 2002:a05:6000:23a:b0:1f0:2359:9cd5 with SMTP id l26-20020a056000023a00b001f023599cd5mr5742561wrz.335.1646975144991;
+        Thu, 10 Mar 2022 21:05:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm8595466wri.0.2022.03.10.21.05.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 18:17:48 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nSUqi-000rq3-72;
-        Fri, 11 Mar 2022 03:17:48 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 4/6] builtin/stash: provide a way to export stashes to a
- ref
-Date:   Fri, 11 Mar 2022 03:08:04 +0100
-References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
- <20220310173236.4165310-5-sandals@crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220310173236.4165310-5-sandals@crustytoothpaste.net>
-Message-ID: <220311.86bkydi65v.gmgdl@evledraar.gmail.com>
+        Thu, 10 Mar 2022 21:05:44 -0800 (PST)
+Message-Id: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 11 Mar 2022 05:05:44 +0000
+Subject: [PATCH] rebase: set REF_HEAD_DETACH in checkout_up_to_date()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: John Cai <johncai86@gmail.com>
 
-On Thu, Mar 10 2022, brian m. carlson wrote:
+Fixes a bug whereby rebase updates the deferenced reference HEAD points
+to instead of HEAD directly.
 
-> +	size_t author_len, committer_len;
-> +	struct commit *this = NULL;
-> +	const char *orig_author = NULL, *orig_committer = NULL;
-> +	char *author = NULL, *committer = NULL;
-> +	const char *buffer = NULL;
-> +	unsigned long bufsize;
-> +	const char *p;
-> +	char *msg = NULL;
+If HEAD is on main and if the following is a fast-forward operation,
 
-These shouldn't be initialized unless they really need to..
+git rebase $(git rev-parse main) $(git rev-parse topic)
 
-> +	this = lookup_commit_reference(the_repository, &info->w_commit);
+Instead of HEAD being set to $(git rev-parse topic), rebase erroneously
+dereferences HEAD and sets main to $(git rev-parse topic). This bug was
+reported by Michael McClimon. See [1].
 
-..and some are clobbered right away here, so all of these should not be initializzed.
+This is happening because on a fast foward with an oid as a <branch>,
+update_refs() will only call update_ref() with REF_NO_DEREF if
+RESET_HEAD_DETACH is set. This change was made in 176f5d96 (built-in rebase
+--autostash: leave the current branch alone if possible,
+2018-11-07). In rebase, we are not setting the RESET_HEAD_DETACH flag,
+which means that the update_ref() call ends up dereferencing
+HEAD and updating it to the oid used as <branch>.
 
-> +	buffer = get_commit_buffer(this, &bufsize);
-> +	orig_author = find_commit_header(buffer, "author", &author_len);
-> +	orig_committer = find_commit_header(buffer, "committer", &committer_len);
-> +	p = memmem(buffer, bufsize, "\n\n", 2);
+The correct behavior is that git rebase should update HEAD to $(git
+rev-parse topic) without dereferencing it.
 
-...since by doing so we hide genuine "uninitialized"
-warnings. E.g. "author_len" here isn't initialized, but is set by
-find_commit_header(), but if that line was removed we'd warn below, but
-not if it's initialized when the variables are declared..
+Fix this bug by adding the RESET_HEAD_DETACH flag in checkout_up_to_date
+so that once reset_head() calls update_refs(), it calls update_ref() with
+REF_NO_DEREF which updates HEAD directly intead of deferencing it and
+updating the branch that HEAD points to.
 
-> +		for (size_t i = 0;; i++, nitems++) {
-> +			char buf[32];
-> +			int ret;
-> +
-> +			if (nalloc <= i) {
-> +				size_t new = nalloc * 3 / 2 + 5;
-> +				items = xrealloc(items, new * sizeof(*items));
-> +				nalloc = new;
+Also add a test to ensure this behavior.
 
-Can't we just use the usual ALLOC_GROW() pattern here?
+1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
 
-> +			}
-> +			snprintf(buf, sizeof(buf), "%zu", i);
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+    rebase: update HEAD when is an oid
+    
+    Fixes a bug [1] reported by Michael McClimon where rebase with oids will
+    erroneously update the branch HEAD points to.
+    
+     1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
 
-Aren't the %z formats unportable (even with our newly found reliance on
-more C99)? I vaguely recall trying them recently and the windows CI jobs
-erroring...
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1226%2Fjohn-cai%2Fjc%2Ffix-rebase-oids-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1226/john-cai/jc/fix-rebase-oids-v1
+Pull-Request: https://github.com/git/git/pull/1226
 
-> +	for (ssize_t i = nitems - 1; i >= 0; i--) {
+ builtin/rebase.c  |  2 +-
+ t/t3400-rebase.sh | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-The ssize_t type can be really small (it's not a signed size_t), so this
-is unportable, but in practice maybe it's OK...
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index b29ad2b65e7..52afeffcc2e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -828,7 +828,7 @@ static int checkout_up_to_date(struct rebase_options *options)
+ 		    options->switch_to);
+ 	ropts.oid = &options->orig_head;
+ 	ropts.branch = options->head_name;
+-	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
++	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK | RESET_HEAD_DETACH;
+ 	ropts.head_msg = buf.buf;
+ 	if (reset_head(the_repository, &ropts) < 0)
+ 		ret = error(_("could not switch to %s"), options->switch_to);
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 71b1735e1dd..0b92e78976c 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -437,4 +437,25 @@ test_expect_success 'rebase when inside worktree subdirectory' '
+ 	)
+ '
+ 
++test_expect_success 'rebase with oids' '
++	git init main-wt &&
++	(
++		cd main-wt &&
++		>file &&
++		git add file &&
++		git commit -m initial &&
++		git checkout -b side &&
++		echo >>file &&
++		git commit -a -m side &&
++		git checkout main &&
++		git tag hold &&
++		git checkout -B main hold &&
++		git rev-parse main >pre &&
++		git rebase $(git rev-parse main) $(git rev-parse side) &&
++		git rev-parse main >post &&
++		test "$(git rev-parse side)" = "$(cat .git/HEAD)" &&
++		test_cmp pre post
++	)
++'
++
+ test_done
 
-In this case if you're just wanting to count down in a list maybe you
-can use the pattern I used in 99d60545f87 (string-list API: change "nr"
-and "alloc" to "size_t", 2022-03-07)?
-
-> +	if (ref) {
-> +		update_ref(NULL, ref, &prev->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-> +	} else {
-> +		puts(oid_to_hex(&prev->object.oid));
-> +	}
-
-Nit: braces can be gone.
-
-> +out:
-> +	for (size_t i = 0; i < nitems; i++) {
-> +		free_stash_info(&items[i]);
-> +	}
-
-Ditto.
-
-> +static int export_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	int ret = 0;
-> +	int print = 0;
-> +	const char *ref = NULL;
-> +	struct option options[] = {
-> +		OPT_BOOL(0, "print", &print,
-> +			 N_("print the object ID instead of writing it to a ref")),
-> +		OPT_STRING(0, "to-ref", &ref, "refname",
-
-Needs _("refname")
-
-> +			   N_("save the data to the given ref")),
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_export_usage,
-> +			     PARSE_OPT_KEEP_DASHDASH);
-> +
-> +	if (!(!!ref ^ print))
-> +		return error("exactly one of --print or --to-ref is required");
-
-Cute, but maybe we can just use OPT_CMDMODE(), and if it's "to-ref"
-shift one off argv afterwards (which'll be your &ref).
-
-I.e. it'll give you the option incompatibility check, and without a new
-translaed string.
-
-Which, if we're keeping this version should use _().
-
+base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
+-- 
+gitgitgadget
