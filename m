@@ -2,101 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4A6CC433EF
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 13:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8CCC433EF
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 14:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348975AbiCKNxB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 08:53:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
+        id S1349058AbiCKOJA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 09:09:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235122AbiCKNw7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 08:52:59 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ABC1C4B05
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 05:51:55 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id y8so5915311edl.9
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 05:51:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=eysZKgyNkZJtL/HxRFu48ybZMmhMiOes0qcgghO3P+8=;
-        b=L/huO6J/LHYXPfHWT4W+9aEXMPjHbQcxEnI07lntv2xIQZrbyqcO1c0f67zP5jjhDt
-         m593btXFQU4AyV4KfLi0iOokjAkmN6FFIxe4hPODd/pXF86hG/KF/z1FWE821YoSX+nv
-         gt446t8cF/wQypMHXGFnnbrAGojC/ZAy0ak7Gm8EqrLGPH8GjOGFilgtTlxBm2DX5Vo4
-         7CU9e7gQzrfDvK2oq9/Gk6I/o+r5q4X2K2n57IW4ChrvE+7r0upi/dePFgke9oOdREMl
-         l0aGtgIu9ogZ7UzjaVr9kSAa2L7wUCN8qa4n9AC5e58E/X1Sie0m7e1Rts6ypNx5coaJ
-         ijkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=eysZKgyNkZJtL/HxRFu48ybZMmhMiOes0qcgghO3P+8=;
-        b=Znx22vNciXLIPfZfgwcaxRkExcZo7hNA+UtNkjrlvNacjkIGx1RhJORWR/YnJpY/zV
-         oldRxdM8saHh+LRxG4mWJur7Srkf8y2C+guIOcJv168isguVqdR3fyNUbtDxhtl4CfXX
-         3y3mQkwsaYCS2SraN4/ypN6X+u2aqxawMYlKVclmaHMO8hs0l6nZ9Zep7YRWjo2FhK5L
-         GnMKvfseX6GbtvdqgHh7fzq4R9YFmgBnG+msAWOxrVREeNY7wRVl4HCLSyafYsEscKLM
-         Vd5iKRWiVMMyxmIqcGBOnWhHoaMige3LeAFFJepNCXKmHCo27OUFlL+XyTcu5psSlZ4o
-         w/qQ==
-X-Gm-Message-State: AOAM530hSP6T5Tm07MEP8MTOZz3yi2XN+ViJZPPwL8qGuvhnaJfXDXx6
-        lhapvCsvVrxsBThB01vGDhtwqeKc/bOcRA==
-X-Google-Smtp-Source: ABdhPJz/X3IITK04PccsYgZJLYeDquJEKYRxdCZ4tdIJtfaPqeIy0X7RVb7ZyEB3gkfNiritt0HoLA==
-X-Received: by 2002:aa7:c401:0:b0:415:ce8a:9397 with SMTP id j1-20020aa7c401000000b00415ce8a9397mr8924056edq.389.1647006713575;
-        Fri, 11 Mar 2022 05:51:53 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z10-20020aa7cf8a000000b004160af67840sm3227130edx.66.2022.03.11.05.51.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 05:51:53 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nSfgO-00138U-FY;
-        Fri, 11 Mar 2022 14:51:52 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        aevar@gmail.com, newren@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 02/25] bundle: alphabetize subcommands better
-Date:   Fri, 11 Mar 2022 14:47:18 +0100
-References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
- <a9bcb6065523e2d2307fdc5b7bc92b04aba012e8.1645641063.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <a9bcb6065523e2d2307fdc5b7bc92b04aba012e8.1645641063.git.gitgitgadget@gmail.com>
-Message-ID: <220311.86czisha13.gmgdl@evledraar.gmail.com>
+        with ESMTP id S243047AbiCKOI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 09:08:58 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D1E29CBA
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 06:07:51 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 72AA33F4807;
+        Fri, 11 Mar 2022 09:07:50 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id E74823F47F8;
+        Fri, 11 Mar 2022 09:07:49 -0500 (EST)
+Subject: Re: [PATCH v6 03/30] fsmonitor: config settings are
+ repository-specific
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <ae622a517cf500d5b068871434e33f98e9cf586b.1646160212.git.gitgitgadget@gmail.com>
+ <220311.86fsnpi73l.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <dd9a1847-7163-49e6-4a8b-bc5c8c381f0d@jeffhostetler.com>
+Date:   Fri, 11 Mar 2022 09:07:47 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <220311.86fsnpi73l.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The usage strings for the 'git bundle' subcommands are not alphabetical.
-> This also applies to their inspection within cmd_bundle(). Fix this
-> ordering before we insert a new subcommand.
->
-> This change does not reorder the cmd_bundle_*() methods to avoid moving
-> lines that are more likely wanted in a future 'git blame' call. It is
-> fine that those longer methods are not ordered alphabetically.
+On 3/10/22 8:47 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> I know this is in "next", just looking over this code again...
+> 
+>> +static void lookup_fsmonitor_settings(struct repository *r)
+> 
+> Here we'll start loading the settings...
+> 
+>> +{
+>> +	struct fsmonitor_settings *s;
+>> +	const char *const_str;
+>> +	int bool_value;
+>> +
+>> +	if (r->settings.fsmonitor)
+>> +		return;
+> 
+> MARK
+> 
+>> +	CALLOC_ARRAY(s, 1);
+>> +
+>> +	r->settings.fsmonitor = s;
+> 
+> And right after we alloc the r->settings.fsmonitor we'll ...
+> 
+>> +	fsm_settings__set_disabled(r);
+> 
+> ...call this method...
+>> +
+>> +	/*
+>> +	 * Overload the existing "core.fsmonitor" config setting (which
+>> +	 * has historically been either unset or a hook pathname) to
+>> +	 * now allow a boolean value to enable the builtin FSMonitor
+>> +	 * or to turn everything off.  (This does imply that you can't
+>> +	 * use a hook script named "true" or "false", but that's OK.)
+>> +	 */
+>> +	switch (repo_config_get_maybe_bool(r, "core.fsmonitor", &bool_value)) {
+>> +
+>> +	case 0: /* config value was set to <bool> */
+>> +		if (bool_value)
+>> +			fsm_settings__set_ipc(r);
+>> +		return;
+>> +
+>> +	case 1: /* config value was unset */
+>> +		const_str = getenv("GIT_TEST_FSMONITOR");
+>> +		break;
+>> +
+>> +	case -1: /* config value set to an arbitrary string */
+>> +		if (repo_config_get_pathname(r, "core.fsmonitor", &const_str))
+>> +			return; /* should not happen */
+>> +		break;
+>> +
+>> +	default: /* should not happen */
+>> +		return;
+>> +	}
+>> +
+>> +	if (!const_str || !*const_str)
+>> +		return;
+>> +
+>> +	fsm_settings__set_hook(r, const_str);
+>> +}
+>> [...]
+>> +void fsm_settings__set_disabled(struct repository *r)
+>> +{
+>> +	if (!r)
+>> +		r = the_repository;
+>> +
+>> +	lookup_fsmonitor_settings(r);
+> 
+> ...which here will recurse into lookup_fsmonitor_settings and hit
+> "MARK".
+> 
+> So isn't that fsm_settings__set_disabled() within that method pointless?
 
-If we're moving these around it makes sense to make them use the pattern
-of macros we use in commit-graph.c. I could have sworn I changed that
-here already, but obviously not...
+Yeah, that got rolled up in one too many rebase/refactorings...
+I'll simplify.
 
-Anyway, I think as general UX I thought having these in alphabetical
-order was a non-goal. Doesn't it make more for these commands in general
-to list themost frequently used commands first.
+thanks
+jeff
 
-In this case though there's pretty much a mapping between that and what
-happens to be alphabetical order.
-
-But I'd think if e.g. we implemented an "add-ref" or whatever to
-in-place munge a bundle file to add more data to it such an obscure
-thing would be better off last, before create/unbundle/list-heads/verify
-etc.
-
-Jut my 0.02, but for this change I really don't mind it, other than the
-macro suggestion...
+> 
+>> +	r->settings.fsmonitor->mode = FSMONITOR_MODE_DISABLED;
+>> +	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
+> 
+> It seems as though the intent was to reach this, but these all happen to
+> be the same thing you'd get with CALLOC_ARRAY(), so I think this just
+> happened to work out...
+> 
+>> +enum fsmonitor_mode {
+>> +	FSMONITOR_MODE_DISABLED = 0,
+> 
+> ...I.e. this is luckily zero.
+> 
