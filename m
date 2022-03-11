@@ -2,170 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69CBFC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 17:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDDEFC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 18:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350737AbiCKR0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 12:26:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
+        id S1347143AbiCKSqF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 13:46:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350733AbiCKR0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 12:26:01 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349ED17B89F
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:57 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id u10so13952943wra.9
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:57 -0800 (PST)
+        with ESMTP id S231269AbiCKSqE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 13:46:04 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1AF1D17AF
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 10:45:00 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id h14so16525660lfk.11
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 10:45:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yjmNL/tivFKW02xWi2ghefdCPTSMO+axbZaAoU6mLo8=;
-        b=oMtiKWb96on7G77NYiI9vSkeLz6I04qPCWZx1D59coNCX8z2KVEDcSqSxOg9BlNrJa
-         ekuZ/CW0wqCBPV93XDYBjzFKAPJwtPRyUKXQYEXhtupzG8eOQo59PJ6JNccHS+1xtr0J
-         0YNS88++4uCzHVfhXRU2lLIXPTHX154TSzOmRsY3qrs1woTfXF+ewj8tD3pJCrfHo8Mk
-         t+zv0ILYLu91MGVxoisldOuIdRIGyIqfXiWJB2mIN+wOg2H2xxSoa76OJms04BYkQsF9
-         /LW49BrI0e2Chw1JN1QKnb0CmA9l9pepNhzOGpLB0DvxzhKbruBd/6MaMaeZZguSfL7X
-         Rs8w==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=EmXbRCgO0c6VgjWXSoQpE3M07CVuCaxcuSkcuLD4E9w=;
+        b=GE6kprWz71Ngqhv1H7YVwZkvM4VlCLlk/3ckXO3cNDaaUM6DWK1s8aB26WDdmGTYJa
+         MAdzhTTFqV2djj/2sNj8gacyMXpy8NPzVnXKM2e4LPSt44q5RmIDHPPLQzjKsjEF/7bJ
+         t91uKXsQDJHPMu/9aVNCQCwi28fkeSYdIjwt4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yjmNL/tivFKW02xWi2ghefdCPTSMO+axbZaAoU6mLo8=;
-        b=JUOMisphJ7axitYc2K5yWK0iaGA26ZraMMkU3wjrHb/q8J1maI+7dgKYySUFywDvOf
-         PsEMr8nwKsLjzMWhGe4lCQL6mZE3w5m7SE90NbTm2Ix7DWV7hmcMc82WKeDqlZW32KX2
-         Q6dh2z2N/XUjRbb29/lFx7C/OEKNJLPvLyf0b71PB3X4dO8Ww2wv/1/4No941vHrVRe2
-         J7Z6949eV2n9KjRmI2221FvfoYU89SeBGR+U709fA/XsRP3MdJzqlK30GKB/BwyuLWWS
-         iJMWzAMtI2gYOS7+M8wKo7hw/T9SzVruglTAlp6Q5qOQa31P93UIhssiK1BxKmhdUMuT
-         LHHw==
-X-Gm-Message-State: AOAM532QKI9neowcu5rHCEiDFDpRZZGadX7BrnTaIHHtsvMhVIFVFx0K
-        a4Hy98WN7hMCYoHRWfX/gKH1KHjK6OQ=
-X-Google-Smtp-Source: ABdhPJzGh0irWrh5+48A8vJwWbweUW9a4AxeVm0mAg/ZiMmctQ4fwvye/QTyVnWpclyBk73Un1pJdg==
-X-Received: by 2002:a05:6000:137a:b0:1f1:d6ec:7b69 with SMTP id q26-20020a056000137a00b001f1d6ec7b69mr7883098wrz.78.1647019495610;
-        Fri, 11 Mar 2022 09:24:55 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n16-20020a5d4850000000b0020373b34961sm6931069wrs.66.2022.03.11.09.24.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 09:24:55 -0800 (PST)
-Message-Id: <0e3c73375c18a470fd5357b09acefeaf5ca4017f.1647019492.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
-References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
-        <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Mar 2022 17:24:52 +0000
-Subject: [PATCH v2 2/2] rebase: set REF_HEAD_DETACH in checkout_up_to_date()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=EmXbRCgO0c6VgjWXSoQpE3M07CVuCaxcuSkcuLD4E9w=;
+        b=XlrlBTNYWUuC9ynDaz0AhdXc4wr3V9EBmoeUFcAKIvNHzvkRjJcJHMjw8U8j+jVNVV
+         K8AC4PaAy+zld26p0QPLuu5Ew+OmeUohs+jSbv03dFgCMBOhqW1V8t3e4T1hE/6g+6nb
+         ijCXpqimpFAVXX7CbSZeH6nOCxCPBZQlVJ/8046CdAcTi0tFmsqfw+6DwEPIQ6WLB2cN
+         K3Q+U5gQv3C4Kt/MzcThVi2tyqf/xIm/8NHZ+HhimM06OutzL5P6sh6VpEJpe39IT/fm
+         ncq4xQUl1bBv4ZWPt1aS6GUKJ5K8XWBrcZ8iwKQvVb2HqMPggxphqjIKsX5WvhabEkLV
+         7D/w==
+X-Gm-Message-State: AOAM533oE1tojTGRlfeajmwaEVE2mVm+VbShY2wU25fmpY2rQG64boD1
+        3HmZTQMmNVve82qkw6eeaNCdgUsRqtUo0SScjQo=
+X-Google-Smtp-Source: ABdhPJxvkTWA0Olv7qsu06RUpACpcJG7kfQQL+c7eyLQ6MgAgJR71rVkadXiQo9r5c/DlWvcrfuRHQ==
+X-Received: by 2002:a05:6512:3f99:b0:447:7fc0:8d3 with SMTP id x25-20020a0565123f9900b004477fc008d3mr6910925lfa.671.1647024298848;
+        Fri, 11 Mar 2022 10:44:58 -0800 (PST)
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com. [209.85.208.175])
+        by smtp.gmail.com with ESMTPSA id bu1-20020a056512168100b004437db5e773sm1739596lfb.94.2022.03.11.10.44.57
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Mar 2022 10:44:58 -0800 (PST)
+Received: by mail-lj1-f175.google.com with SMTP id v28so13196827ljv.9
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 10:44:57 -0800 (PST)
+X-Received: by 2002:a05:651c:1213:b0:247:e2d9:cdda with SMTP id
+ i19-20020a05651c121300b00247e2d9cddamr6665315lja.443.1647024297636; Fri, 11
+ Mar 2022 10:44:57 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+References: <220311.867d90j2vj.gmgdl@evledraar.gmail.com> <patch-1.1-d2ae423d1ad-20220311T094315Z-avarab@gmail.com>
+In-Reply-To: <patch-1.1-d2ae423d1ad-20220311T094315Z-avarab@gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 11 Mar 2022 10:44:41 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wjB_MZqG6QN8gcmdQ2Me9GWmr5HJ8TX8cj9fHck8y75XA@mail.gmail.com>
+Message-ID: <CAHk-=wjB_MZqG6QN8gcmdQ2Me9GWmr5HJ8TX8cj9fHck8y75XA@mail.gmail.com>
+Subject: Re: [PATCH] parse-options: add per-option flag to stop abbreviation
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List Mailing <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+On Fri, Mar 11, 2022 at 1:45 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> So let's tweak this rule to be more narrowly scoped, now we'll allow
+> abbreviated options regardless of PARSE_OPT_KEEP_UNKNOWN being set for
+> parse_options(), but we'll provide individual options an opt-out. By
+> using that opt-out for "--output-directory" we can have that case work
+> without overzealously disallowing others.
 
-Fixes a bug whereby rebase updates the deferenced reference HEAD points
-to instead of HEAD directly.
+Thanks, this looks much more obvious to me than the odd
+PARSE_OPT_KEEP_UNKNOWN logic was. And would seem to obviate the need
+for my hacky short aliases.
 
-If HEAD is on main and if the following is a fast-forward operation,
-
-git rebase $(git rev-parse main) $(git rev-parse topic)
-
-Instead of HEAD being set to $(git rev-parse topic), rebase erroneously
-dereferences HEAD and sets main to $(git rev-parse topic). See [1] for
-the original bug report.
-
-The callstack from checkout_up_to_date() is the following:
-
-cmd_rebase() -> checkout_up_to_date() -> reset_head() -> update_refs()
- -> update_ref()
-
-When <branch> is not a valid branch but a sha, rebase sets the head_name
-of rebase_options to NULL. This value gets passed down this call chain
-through the branch member of reset_head_opts also getting set to NULL
-all the way to update_refs(). update_refs() checks ropts.branch to
-decide whether or not to switch brancheds. If ropts.branch is NULL, it
-calls update_ref() to update HEAD. At this point however, from rebase's
-point of view, we want a detached HEAD. But, since checkout_up_to_date()
-does not set the RESET_HEAD_DETACH flag, the update_ref() call will
-deference HEAD and update the branch its pointing to, which in the above
-example is main.
-
-The correct behavior is that git rebase should update HEAD to $(git
-rev-parse topic) without dereferencing it.
-
-Fix this bug by adding the RESET_HEAD_DETACH flag in checkout_up_to_date
-if <branch> is not a valid branch. so that once reset_head() calls
-update_refs(), it calls update_ref() with REF_NO_DEREF which updates
-HEAD directly intead of deferencing it and updating the branch that HEAD
-points to.
-
-Also add a test to ensure this behavior.
-
-1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
-
-Reported-by: Michael McClimon <michael@mcclimon.org>
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- builtin/rebase.c  | 5 ++++-
- reset.c           | 3 +++
- t/t3400-rebase.sh | 9 +++++++++
- 3 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b29ad2b65e7..5ae7fa2a169 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -827,8 +827,11 @@ static int checkout_up_to_date(struct rebase_options *options)
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 		    options->switch_to);
- 	ropts.oid = &options->orig_head;
--	ropts.branch = options->head_name;
- 	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-+	if (options->head_name)
-+		ropts.branch = options->head_name;
-+	else
-+		ropts.flags |=  RESET_HEAD_DETACH;
- 	ropts.head_msg = buf.buf;
- 	if (reset_head(the_repository, &ropts) < 0)
- 		ret = error(_("could not switch to %s"), options->switch_to);
-diff --git a/reset.c b/reset.c
-index e3383a93343..f8e32fcc240 100644
---- a/reset.c
-+++ b/reset.c
-@@ -101,6 +101,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 	if (opts->branch_msg && !opts->branch)
- 		BUG("branch reflog message given without a branch");
- 
-+	if (switch_to_branch && opts->flags & RESET_HEAD_DETACH)
-+		BUG("attempting to detach HEAD when branch is given");
-+
- 	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
- 		ret = -1;
- 		goto leave_reset_head;
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 0643d015255..d5a8ee39fc4 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -394,6 +394,15 @@ test_expect_success 'switch to branch not checked out' '
- 	git rebase main other
- '
- 
-+test_expect_success 'switch to non-branch detaches HEAD' '
-+	git checkout main &&
-+	old_main=$(git rev-parse HEAD) &&
-+	git rebase First Second^0 &&
-+	test_cmp_rev HEAD Second &&
-+	test_cmp_rev main $old_main &&
-+	test_must_fail git symbolic-ref HEAD
-+'
-+
- test_expect_success 'refuse to switch to branch checked out elsewhere' '
- 	git checkout main &&
- 	git worktree add wt &&
--- 
-gitgitgadget
+                Linus
