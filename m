@@ -2,113 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C49C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 23:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5818C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 23:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230240AbiCKXLV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 18:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
+        id S229797AbiCKXOG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 18:14:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbiCKXLQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 18:11:16 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EBA4151366
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:10:07 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id r65so5964118wma.2
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:10:07 -0800 (PST)
+        with ESMTP id S229448AbiCKXOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 18:14:04 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC659BBBC
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:12:58 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so6190509wmp.5
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=uMvmpthBD+YkEiNfWbv6iDH+Be+JkEDi5FxHaWGa1Fk=;
-        b=i3PPkers5kpH0+L6QakoYHRlUxCgTFU83hPGuXDc++xoagsD++odlrnn6+FIfwZ/V5
-         UC0KmswVe/ku2+wQgPRiKkKizIy9aVINCWQWsiGTgKjiQ2h+Cbzkpng5fmHk3H6fXOEZ
-         mitljdBPEb5snKaNatEygdSg/JOsDZH6OTsdX920VILywENfNngHrBXtN4SENjdq9wvH
-         /CUR2mMzwTu8GaCOMirU2jZeYl4LEF8wKSjPjPTZwTolHK+vHmC7pHnq6+tFL3gwsddB
-         8+L6T1qYgv54S5MP55HgsAzuq8ZipuQXnq5KkIZmApyV8haK5Zx8zhFRHQUK9ZDmc85B
-         zsTQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FUroZ4Mya6xcccBpf61ufnBkXmscI16csl6+zPcmW84=;
+        b=cBaWP515G42NBBNHHtV8rspjRsV7tk1dGhv1BIHE5hxLBWKWvoiAoSaNw+7WV+cBRC
+         u0i8BhDlJ9Rc7/IP/PtYjL9j06YmFfSpyy+o3p3V2xMpLktks3I2sAv704aPo8ZEjA1p
+         7RmpgXMiE4KKXS1o1CuuIS/SfgwWdrrC9iM4XLdF3vogplE1dlUOuQ+B+dbxwbJkaVkp
+         cvsLENWlPV8cHoAyndDJ61otrbwyX7neagfr6EIx/v2seNBbr+ZjSV1kebqJmv0lTXGW
+         Si4Ii0PQuNczAyZBPx6aTW9nD2ggOnYugjFFPgw7i2lETkUxQOvHHInbwut6eOZvMmL7
+         Fg1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uMvmpthBD+YkEiNfWbv6iDH+Be+JkEDi5FxHaWGa1Fk=;
-        b=pdHliHJ8wKUv00p+09uXQJJd8NCU8qkaNzZrUZEmuBpIu6zn6BXTJ/9IDvvwSmkaEg
-         mdAa+rkg4jQyF9I9sD4Sw7Jpn03PL+vdSLdPskNv8YDzV4gOPdE2EaKu12KYtGpGvKMa
-         GmpMHo6+hUoZ7hQZEYkQnSmvOMV1vFlr2rH0Wp0/sF+6OWopn+iOzadPpBchLgfLExUX
-         tpkYHYgHa5CjTksnsw8nQ3DH1Z/Bl/jZ1gzVxJWVlXNKK7s50zAiTWs9S3/mYGyV4PpG
-         aDK7Yn1NVHA+zHkWmXvOknhq30XxpCrESmDGxFfBEGRgLkUR98oGt3XZeZuKMKw4jbsT
-         G8LA==
-X-Gm-Message-State: AOAM533nQlhssvmEl2VAOC4xVoI5t2IHUmMFAo6OigvUOJ3wEvVuVomi
-        wZ3Ltrlx6J0gJ/es1oww2LYy3EK9IHo=
-X-Google-Smtp-Source: ABdhPJxfXkEqwSyg4pvIN5RlxGZp/T7cqTIGARyR1qzJhSoMCDT0f8UDOlegUDroF0aQ+D6Z22dz1g==
-X-Received: by 2002:a05:600c:34d5:b0:389:a209:24ca with SMTP id d21-20020a05600c34d500b00389a20924camr17073532wmq.195.1647032858000;
-        Fri, 11 Mar 2022 13:07:38 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=FUroZ4Mya6xcccBpf61ufnBkXmscI16csl6+zPcmW84=;
+        b=ccTenvXTmRoY0c6HqV0DXl+OBAXVlRBgmii+6eD5FI8yU38H9Xwo5NIes0yzlHHdT9
+         uD1F7XrWfdhNYT0+DtL7hQ4XQobfRye8Nw3VXknHdNa548z6sLEwAjP44CIkwKp75nP8
+         N/6YOOFFKwtdJPFzDrBcP++4Wlg8mpneJswijcgKdENJkT0G1w3+rJTVzFmpgNeRRtyp
+         ByMhj5bvCQBwhgxT5Zp3SG8iMRiSzgqLPwc2SICWixYqjx1ErsqM3t4cXxbIZ3KtZXT1
+         B6wy/ChwGDYTRxtLpgcUJJukgUUUbAfJskJ2fcwE8npLgY3SHkHbdCNDn+BurAq6K80F
+         /IBA==
+X-Gm-Message-State: AOAM533xc9c3ELQM+OI57M37Fys2Xky7TySw3DpNJRtcNeVNekW5xW7B
+        4HJiD7jAZAKT0pANLRMMgUU3sT4llOU=
+X-Google-Smtp-Source: ABdhPJw9DzdgFc60lQ/GO9LmIaqQrOc4/Yuop22Y2hrILIBbRxnxKTPa/CXBpfM2IzJpFKIG1m3baA==
+X-Received: by 2002:a05:600c:507:b0:389:9f23:99e7 with SMTP id i7-20020a05600c050700b003899f2399e7mr17263082wmc.175.1647033314838;
+        Fri, 11 Mar 2022 13:15:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2-20020a5d6942000000b001f0485057c4sm7827743wrw.74.2022.03.11.13.07.37
+        by smtp.gmail.com with ESMTPSA id n5-20020a05600c3b8500b00389dd6566f3sm5608200wms.19.2022.03.11.13.15.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 13:07:37 -0800 (PST)
-Message-Id: <pull.1227.git.git.1647032857097.gitgitgadget@gmail.com>
-From:   "David Cantrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Mar 2022 21:07:36 +0000
-Subject: [PATCH] tab completion of filenames for 'git restore'
+        Fri, 11 Mar 2022 13:15:14 -0800 (PST)
+Message-Id: <cc7c92f7760b93d2c6a45ce87ca2c9aafc57f20f.1647033303.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 11 Mar 2022 21:15:00 +0000
+Subject: [PATCH 13/16] compat/fsmonitor/fsm-listen-win32: add _() to calls to
+ error()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     David Cantrell <david@cantrell.org.uk>,
-        David Cantrell <david@cantrell.org.uk>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: David Cantrell <david@cantrell.org.uk>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-If no --args are present after 'git restore' it assumes that you want
-to tab-complete one of the files with uncommitted changes
+fixup! compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend \
+on Windows
 
-Signed-off-by: David Cantrell <david@cantrell.org.uk>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
-    Improved bash tab completion for 'git restore' - adds support for
-    auto-completing filenames
-    
-    This adds tab-completion of filenames to the bash completions for git
-    restore.
+ compat/fsmonitor/fsm-listen-win32.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1227%2FDrHyde%2Ffilename-completion-for-git-restore-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1227/DrHyde/filename-completion-for-git-restore-v1
-Pull-Request: https://github.com/git/git/pull/1227
-
- contrib/completion/git-completion.bash | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 49a328aa8a4..7ccad8ff4b1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2883,14 +2883,21 @@ _git_restore ()
- 	case "$cur" in
- 	--conflict=*)
- 		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
-+		return
- 		;;
- 	--source=*)
- 		__git_complete_refs --cur="${cur##--source=}"
-+		return
- 		;;
- 	--*)
- 		__gitcomp_builtin restore
-+		return
- 		;;
- 	esac
-+
-+	if __git rev-parse --verify --quiet HEAD >/dev/null; then
-+		__git_complete_index_file "--committable"
-+	fi
- }
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index c2d11acbc1e..5b928ab66e5 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -82,7 +82,7 @@ static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
+ 		if (len > 0)
+ 			goto normalize;
+ 		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+-			error("[GLE %ld] could not convert path to UTF-8: '%.*ls'",
++			error(_("[GLE %ld] could not convert path to UTF-8: '%.*ls'"),
+ 			      GetLastError(),
+ 			      (int)(info->FileNameLength / sizeof(WCHAR)),
+ 			      info->FileName);
+@@ -185,7 +185,7 @@ static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
+ 	if (watch->is_active)
+ 		return 0;
  
- __git_revert_inprogress_options=$__git_sequencer_inprogress_options
-
-base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
+-	error("ReadDirectoryChangedW failed on '%s' [GLE %ld]",
++	error(_("ReadDirectoryChangedW failed on '%s' [GLE %ld]"),
+ 	      watch->path.buf, GetLastError());
+ 	return -1;
+ }
+@@ -228,7 +228,7 @@ static int recv_rdcw_watch(struct one_watch *watch)
+ 	 * sure it is worth it.
+ 	 */
+ 
+-	error("GetOverlappedResult failed on '%s' [GLE %ld]",
++	error(_("GetOverlappedResult failed on '%s' [GLE %ld]"),
+ 	      watch->path.buf, gle);
+ 	return -1;
+ }
 -- 
 gitgitgadget
+
