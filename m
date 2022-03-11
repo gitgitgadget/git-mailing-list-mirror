@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67220C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 16:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82668C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 16:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350310AbiCKQ0G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 11:26:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37552 "EHLO
+        id S1350312AbiCKQ0H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 11:26:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350289AbiCKQZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 11:25:49 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361DD10856D
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:24:45 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id r6so13292605wrr.2
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:24:45 -0800 (PST)
+        with ESMTP id S1350286AbiCKQZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 11:25:48 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4563A1111B3
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:24:43 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id p9so13672495wra.12
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 08:24:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VAs+mWqtC+XGazAdtOhiLst/VRu/6iJH7vVOH+Wsg4E=;
-        b=CJIjSaSSPNsLIKCPEH+gWjiwV4OgmkoVlUZHjhl+EW45FJ2ggcB7AEfode42m1m0Jd
-         cG8ynJi1KMOxqZt/nkBCslJpLBRt8HBxzeuuYp5/DGwGxj5Eyzj/n+QFxmR2oc4ZM4y+
-         7BE7p+7UIIY/LaH5vJM0K0bgKyxAlo3GwK7ROmRFYWuOGRhIEXXHMJ/K9dptb25xP7sn
-         24aG5M+I0IZb6RCme6ISQUd5xpuTHT6Mh8W1RViJIIlDCwqbZg9Pcn9Rs0Zu+9bUt/ug
-         PEn4YnBQz/3DiC2D+uiLNiVyrptwJDMcs2mxtQdrDtK4qj28R3enj87Yr7B7wk2nhJ/A
-         Ynuw==
+        bh=zUn1DOy5hTmWrJr4clO+wC+LjiT/FpKMP8Ap2nd5Sr4=;
+        b=W2WiINqxDELYfNvpWDGL5zVdfJJpKjfSI+alBr28r0TKdLFGQ/IgII6hI5TlKwA7gq
+         DYQEDhzqVMTC8qo9K9z5nqArPaQXlV3hsWAfubF4a/+GurGOmFqZJzxF/1zcnU/qAw5m
+         ZkwTi0pfkz52mRRXjd/JoodwsAcKdQum2z59eYGUjAxwyRhqbTg2UjMdHHumKoOtWseu
+         ncQwpM2kEnarG0qBVvXlDTP7bBIogLimZ39LGjR4YEsURHcNZLuZi6MRG5cStHsnoW5U
+         PGqZijYw9UrYOppcRwU1H/UlzPGoA4hOEBFMBO8V6NGQ9Z6FlQT+z0E5cXhromtkbOQm
+         aySw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VAs+mWqtC+XGazAdtOhiLst/VRu/6iJH7vVOH+Wsg4E=;
-        b=MNgFDu3hvp0HyGYAGPslDdnih2vGXKmNlD6Lr38NjKv4+lUtZpvG76/xy3rg13YRip
-         3Ldjhe0mDr/rXK1z06XXjQEsh6PsawTGp0eCTOIEvlYc2bxRckznm/zikK33yWnu+iTS
-         geSV3caYFrIygH3vcLIq5zAgbg5eyZc3fHWw13XDcoUqbGpPDhYO5gC3TVMIrWmkjkYE
-         2S5Ais4vBPobnLydeIY+qGruvwvrRLImt5nCteuBU/2yizOAA06keHqJwtWJMrVL+qus
-         h+qBNLukD4NLirkVgFalQvSPwBIWKae3CaEoX11/z1GLe5G1MrfPgrCx3qHyPnjXMeR0
-         rwSw==
-X-Gm-Message-State: AOAM530CUbZZvL8zm8Y1PCR24k0sTWvtkqGRbN+SoKyuLutNRHIJrea6
-        mZ5ArQZMfRa9V6c8aMZuJccE1SImAVOVKg==
-X-Google-Smtp-Source: ABdhPJx//34woua+FCKsYK78pTb3MPYPt/14OvSQAw2K+zsarhjbbDrWszeEYEJNzHcePWQR8vterg==
-X-Received: by 2002:a5d:69c7:0:b0:1f0:61f3:642b with SMTP id s7-20020a5d69c7000000b001f061f3642bmr8051310wrw.632.1647015883349;
-        Fri, 11 Mar 2022 08:24:43 -0800 (PST)
+        bh=zUn1DOy5hTmWrJr4clO+wC+LjiT/FpKMP8Ap2nd5Sr4=;
+        b=WBLxSBV8NUhaYb2itSWRQ50AXyqF8Jr1klP08IHDdWYqlS3Tc0weHHG9+AnKouWJyl
+         I7sXkgP9M901E6AUqeTSibMrzknUgojcHcWSOn0Wr70Fve6AuyYiok8NM6/2gsMZ2BU4
+         WYPVleGzMFHqhpTZVPwb6rGcyARDUYLHMGGwNxApUTu0X2EUcDl80UC7+pvo8xLlzoIS
+         7hkHN9EErR2VH6DINpIz4YPVWskmLa3ZqK4eiFM5boA7Egfah26Bhm0RAHfm41tQMB1F
+         P8wWST6erZ+w3HPdNziSLdZuwh/NWoTjqSPwQHy0W1mhKwW5/ynCClaZgf5r1hFb5tcZ
+         /LoQ==
+X-Gm-Message-State: AOAM530T9UmiXNZ+XuQwTQK5c9AeZ29upzd+Eev7CtBsR4PRZ2/eSf1Z
+        5i1AcIbDFJN0KJSj92wcFuyQDUaLPnqkdA==
+X-Google-Smtp-Source: ABdhPJx36d4UskXzTf1iI8HJE/tSS4+UAKJPJrBXD/gzFs+7ahd3Nc3PracPaTWRPvm3A+ItdVVWCA==
+X-Received: by 2002:a05:6000:1561:b0:203:7b90:1da0 with SMTP id 1-20020a056000156100b002037b901da0mr8107666wrz.629.1647015881558;
+        Fri, 11 Mar 2022 08:24:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f22-20020a1cc916000000b00380d3e49e89sm7318667wmb.22.2022.03.11.08.24.42
+        by smtp.gmail.com with ESMTPSA id f22-20020a1cc916000000b00380d3e49e89sm7318667wmb.22.2022.03.11.08.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 08:24:42 -0800 (PST)
+        Fri, 11 Mar 2022 08:24:41 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v2 13/13] bundle-uri: make the download program configurable
-Date:   Fri, 11 Mar 2022 17:24:25 +0100
-Message-Id: <RFC-patch-v2-13.13-40f37c8b9d5-20220311T155841Z-avarab@gmail.com>
+Subject: [RFC PATCH v2 11/13] bundle.h: make "fd" version of read_bundle_header() public
+Date:   Fri, 11 Mar 2022 17:24:23 +0100
+Message-Id: <RFC-patch-v2-11.13-5ade9419454-20220311T155841Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1337.g7e32d794afe
 In-Reply-To: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com> <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com>
@@ -72,130 +72,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in a preceding commit we really should be using libcurl's C
-API by default in get_bundle_uri(), but testing with a command-line
-program can be very handy, and useful e.g. to implement custom or
-ad-hoc caching.
-
-E.g. using part of the recipe noted in a preceding commit to create
-the "git-master-only.bdl" and "git-master-to-next.bdl" files, we can
-implement a trivial caching shellscript as:
-
-	cat >get-bundle.sh <<-\EOF &&
-	#!/bin/sh
-	set -xe
-
-	uri="$1"
-
-	bundle_cache_key () {
-		echo "Computing cache key for URI '$1' (only getting the header)" >&2
-
-		curl --silent --output - -- "$1" |
-		sed -n -e '/^$/q' -e 'p' |
-		git hash-object --stdin
-	}
-
-	get_cached_bundle_uri() {
-		cache_key=$(bundle_cache_key "$1")
-
-		path="/tmp/bundle-cache-$cache_key.bdl"
-
-		if test -e "$path"
-		then
-			echo "Using cache '$path' for URI '$1'" >&2
-			cat "$path"
-		else
-			echo "Downloading bundle URI $1" >&2
-			curl --silent --output - -- "$uri" | tee "$path"
-		fi
-	}
-
-	get_cached_bundle_uri "$1"
-	EOF
-	chmod +x get-bundle.sh &&
-	rm -rf /tmp/git.git &&
-	./git \
-		-c protocol.version=2 \
-		-c fetch.uriProtocols=file \
-		-c transfer.bundleURI.downloader=./get-bundle.sh \
-		-c transfer.injectBundleURI="file:///tmp/git-master-only.bdl" \
-		-c transfer.injectBundleURI="file:///tmp/git-master-to-next.bdl" \
-		clone --bare --no-tags --single-branch --branch next --template= \
-		--verbose --verbose \
-		https://github.com/git/git.git /tmp/git.git
-
-Now, clearly that specific example is rather pointless. We're getting
-a local file anyway, so "cat"-ing another local file doesn't make any
-difference, it's even slightly slower & more redundant as we're having
-to get it twice with "curl".
-
-But the point is that this can be trivially improved for use in any
-arbitrary custom caching strategy. E.g.:
-
- * A less dumber implementation that would stream the remote URL,
-   check the header as we go, and disconnect if we've got that content
-   locally.
- * Ditto, but using an ETag or other strategy.
- * N boxes could share a cache an NFS with a shared mount, or N
-   disconnected git processes could use a common cache without the
-   need for a front-line HTTP proxy server.
-
- * It would be trivial to extend this to guard against a "thundering
-   herd" (e.g. concurrent CI) downloading the same bundle N times. As
-   soon as we'd get the header we'd create a $cache_key.lock as we
-   download the rest, and other concurrent clients spotting that would
-   wait, then eventually cache "$cache_key".
-
-   Still racy as N clients could download the header in parallel, but
-   way less so (the header will be a tiny part of the payload).
+Change the parse_bundle_header() function to be non-static, and rename
+it to parse_bundle_header_fd(). The parse_bundle_header() function is
+already public, and it's a thin wrapper around this function. This
+will be used by code that wants to pass a fd to the bundle API.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/transfer.txt | 7 +++++++
- fetch-pack.c                      | 6 ++++++
- 2 files changed, 13 insertions(+)
+ bundle.c | 8 ++++----
+ bundle.h | 2 ++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
-index ae85ca5760b..5310cd96cb9 100644
---- a/Documentation/config/transfer.txt
-+++ b/Documentation/config/transfer.txt
-@@ -84,6 +84,13 @@ transfer.bundleURI::
- 	using bundles to bootstap is possible. Defaults to `true`,
- 	i.e. bundle-uri is tried whenever a server offers it.
+diff --git a/bundle.c b/bundle.c
+index a0bb687b0f4..bfe32f543a6 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -61,8 +61,8 @@ static int parse_bundle_signature(struct bundle_header *header, const char *line
+ 	return -1;
+ }
  
-+transfer.bundleURI.downloader::
-+	When set to `<program>` will be invoked when
-+	`transfer.bundleURI` is in effect to download URIs containing
-+	bundles. Expected to take one `URI` as an argument, and to
-+	emit the bundle on STDOUT. Defaults to "curl --silent --output
-+	- --". I.e. we'll invoke "curl --silent --output - -- <URI>".
-+
- transfer.injectBundleURI::
- 	Allows for the injection of `bundle-uri` lines into the
- 	protocol v2 transport dialog (see `protocol.version` in
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 4f1a7acb20d..6e22605f06c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1116,12 +1116,18 @@ static int get_bundle_uri(struct string_list_item *item, unsigned int nth,
- 	const char *uri = item->string;
- 	FILE *out;
- 	int out_fd;
-+	const char *tmp;
+-static int parse_bundle_header(int fd, struct bundle_header *header,
+-			       const char *report_path)
++int read_bundle_header_fd(int fd, struct bundle_header *header,
++			  const char *report_path)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int status = 0;
+@@ -138,7 +138,7 @@ int read_bundle_header(const char *path, struct bundle_header *header)
  
- 	strvec_push(&cmd.args, "curl");
- 	strvec_push(&cmd.args, "--silent");
- 	strvec_push(&cmd.args, "--output");
- 	strvec_push(&cmd.args, "-");
- 	strvec_push(&cmd.args, "--");
-+	if (!git_config_get_string_tmp("transfer.bundleURI.downloader", &tmp)) {
-+		strvec_clear(&cmd.args);
-+		strvec_push(&cmd.args, tmp);
-+		cmd.use_shell = 1;
-+	}
- 	strvec_push(&cmd.args, item->string);
- 	cmd.git_cmd = 0;
- 	cmd.no_stdin = 1;
+ 	if (fd < 0)
+ 		return error(_("could not open '%s'"), path);
+-	return parse_bundle_header(fd, header, path);
++	return read_bundle_header_fd(fd, header, path);
+ }
+ 
+ int is_bundle(const char *path, int quiet)
+@@ -148,7 +148,7 @@ int is_bundle(const char *path, int quiet)
+ 
+ 	if (fd < 0)
+ 		return 0;
+-	fd = parse_bundle_header(fd, &header, quiet ? NULL : path);
++	fd = read_bundle_header_fd(fd, &header, quiet ? NULL : path);
+ 	if (fd >= 0)
+ 		close(fd);
+ 	bundle_header_release(&header);
+diff --git a/bundle.h b/bundle.h
+index 06009fe6b1f..2893defbc33 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -22,6 +22,8 @@ void bundle_header_release(struct bundle_header *header);
+ 
+ int is_bundle(const char *path, int quiet);
+ int read_bundle_header(const char *path, struct bundle_header *header);
++int read_bundle_header_fd(int fd, struct bundle_header *header,
++			  const char *report_path);
+ int create_bundle(struct repository *r, const char *path,
+ 		  int argc, const char **argv, struct strvec *pack_options,
+ 		  int version);
 -- 
 2.35.1.1337.g7e32d794afe
 
