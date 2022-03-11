@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D08B8C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 17:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACF4CC433EF
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 17:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348478AbiCKR0A (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1350725AbiCKR0A (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 11 Mar 2022 12:26:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36046 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232923AbiCKRZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242130AbiCKRZ7 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Mar 2022 12:25:59 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CAD417B89F
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:55 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so5737619wmp.5
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:55 -0800 (PST)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD19192C8A
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:56 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id r10so13995182wrp.3
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 09:24:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rKNUCV/5Ks6CSibs0iMSAoXXSZ/6cZj+F0wDRcgBfP8=;
-        b=bkKTvcM1rhHJ7CYlZ88PoyVTXejw8lYEh24ns01/a2ZJFHZDVkELIpzcROIA1CX5zx
-         vnWnjLleW1MvCARV4WUIsoCdzKE7lMZpjUEDRcVg9RAkOCHDlz2iC7RpzAR9alupMoA9
-         VJBfGDZYeOx8GNZkOBLrCMPXB7SXd6aZthTSmAUaFO2P7S0OCWBkensdKNxAWR8SUu4h
-         JWhnRctr472GGxqOA/R1U2XKIHZ1YyX4NWJP6VM33OrL/kDCa555d6n6OuJwxeDzM74u
-         m8gKJAYiKOlj81q/sXWMocuJpbyFYd0xw7nDNCGY8YLxgyYbuixLxAGyhOV0Pkg5svMl
-         tG0w==
+        bh=/1sYErzcSd0ai11MCUe138RAAEGEmZzILDUfYsiZKDs=;
+        b=JTw0kUGNMriRPDS1YWjLQzhB/ifFFwC+O2lg05CYOSL4T4FZjTlPXTLhdp8sLMxJx5
+         dMPwoh/zOCRV9LXb6ZQalhSKRWAc3bS3YJQntbLbtupSPLKln7iEGIvWRyMwI1abhjdn
+         JcEzuYkGK0PiKZCsgntQHG/dPqXXX9Q0s0f/FnYRa1Sf3CAPmjpUiEedTPEJh2iHQf7t
+         6WZFAb6EAXE+4IfdF7lqeDAD4YcIj7Xl9NGGc7vlfWrzorR0iVg5XMeqNLhL2vxcKU6T
+         W0UdQO61rIZRP0K4snca9svZx9j7kF/IaLTY2aMKAiIhuOKi2HVWbp9dHwsy9/YYs+iO
+         Vw6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rKNUCV/5Ks6CSibs0iMSAoXXSZ/6cZj+F0wDRcgBfP8=;
-        b=UHg9hH2EHT4jUvX8c/Sf2y9VWb9HPyFa5K4q8g9hxVYYlQTicgD5pgrAYPaZAng6vV
-         p6/y4NPvPimdj44cs+o3IEo4YOLUigXaZqnaNF6oz3NB0ZXEBNoL4G2ApFiKvKA06H/o
-         o971l+T7CR+lLa13GVkKnIa/KsWMs2ILAEcapsmJ0pjzZIQIg+d/Yij89+f72d1XUi2y
-         JqlJG5Mgn/gj0MFHippdTTkFI2XdsSYg1PCTXPnz8sJA+mLVdYgeRgNmuMEnMbxsLBsI
-         QS5tO5WEWqZnbKkKRLAaiPKGBItoq7/rfutllRcgLOd757rtJvp3eATQyj+2WFaC9XaL
-         b2Tg==
-X-Gm-Message-State: AOAM5310PGMKoihxqabd2Nr6RhB8gJVRoYqoToVwPd59vMnJ+AtO4A89
-        0qDBr+rs4TjZIGhcJ38M2h+Ymb3BPW0=
-X-Google-Smtp-Source: ABdhPJycVh8nkptiEqSjzK5CWa4al96PVUvms7WHHZfTZeHBugkRqYP+rojoFCwe0wP5jUi6kireSw==
-X-Received: by 2002:a05:600c:1591:b0:388:7d62:1d1b with SMTP id r17-20020a05600c159100b003887d621d1bmr8543127wmf.66.1647019493768;
-        Fri, 11 Mar 2022 09:24:53 -0800 (PST)
+        bh=/1sYErzcSd0ai11MCUe138RAAEGEmZzILDUfYsiZKDs=;
+        b=bCVBnhariAP2ml3qJE/ULnWjLEYZrCco17W/3ekHHBo57LnKd4WLqfCUBFqFvZDh7H
+         FyI2BOI1+mnHcHmlY8srXDQaWOa7Ygtub2kb+oXtpzx+2iHREoniAvu9qxDncyqdpA/G
+         doB2lbBWkMvvNDz7kFnqN8EVIU18ogGR/JeSGgWvW4MJmVn1Q2Qk3B5Y2ngTVK5f1qfU
+         JQhuoLvbRiuFJKKi43hVzlMLT+lZmb6mkt7DrTgd69XDbv3AO/VgHlQ/LjeQ8EPxvu01
+         OGtvIf6EWzW2b753+kKZvyMn72sBirS57kK3g1+bp0TJ71elSo3OFQZ2bk1nJ8jAmQvF
+         0h1A==
+X-Gm-Message-State: AOAM533xG6UejQ+gtHE/q27ZpgnvVn/H7womkZ/ckvouaRaIQk6QeujF
+        ygyHR9hIOvfmNq40jP3w1E5PYjQDzRk=
+X-Google-Smtp-Source: ABdhPJz3wyxaooFVDStLNE6GKdkIotzI7cE1/XldqdCffUy+7Vb7xQ2uz7YwJHRgDpLSSlXWGcbjTQ==
+X-Received: by 2002:a5d:628d:0:b0:1f1:d81d:c954 with SMTP id k13-20020a5d628d000000b001f1d81dc954mr8081496wru.273.1647019494578;
+        Fri, 11 Mar 2022 09:24:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k12-20020adfb34c000000b001f1e13df54dsm7119894wrd.89.2022.03.11.09.24.52
+        by smtp.gmail.com with ESMTPSA id t184-20020a1c46c1000000b003814de297fcsm10818981wma.16.2022.03.11.09.24.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 09:24:53 -0800 (PST)
-Message-Id: <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
+        Fri, 11 Mar 2022 09:24:54 -0800 (PST)
+Message-Id: <f3f084adfa616a7bae7e7c94644f65a36f38652b.1647019492.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
 References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
+        <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Mar 2022 17:24:50 +0000
-Subject: [PATCH v2 0/2] rebase: update HEAD when is an oid
+Date:   Fri, 11 Mar 2022 17:24:51 +0000
+Subject: [PATCH v2 1/2] rebase: use test_commit helper in setup
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,166 +61,51 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>
+        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fixes a bug [1] reported by Michael McClimon where rebase with oids will
-erroneously update the branch HEAD points to.
+From: John Cai <johncai86@gmail.com>
 
- 1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
+To prepare for the next commit that will test rebase with oids instead
+of branch names, update the rebase setup test to add a couple of tags we
+can use. This uses the test_commit helper so we can replace some lines
+that add a commit manually.
 
-This patch has two parts:
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+ t/t3400-rebase.sh | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
- * updates rebase setup test to add some tags we will use, while swapping
-   out manual commit creation with the test_commit helper
- * sets RESET_HARD_DETACH flag if branch is not a valid refname
-
-changes since v1:
-
- * only set RESET_HEAD_DETACH if is not a valid branch
- * updated tests to use existing setup
-
-John Cai (2):
-  rebase: use test_commit helper in setup
-  rebase: set REF_HEAD_DETACH in checkout_up_to_date()
-
- builtin/rebase.c  |  5 ++++-
- reset.c           |  3 +++
- t/t3400-rebase.sh | 18 +++++++++++-------
- 3 files changed, 18 insertions(+), 8 deletions(-)
-
-
-base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1226%2Fjohn-cai%2Fjc%2Ffix-rebase-oids-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1226/john-cai/jc/fix-rebase-oids-v2
-Pull-Request: https://github.com/git/git/pull/1226
-
-Range-diff vs v1:
-
- -:  ----------- > 1:  f3f084adfa6 rebase: use test_commit helper in setup
- 1:  2538fd986d2 ! 2:  0e3c73375c1 rebase: set REF_HEAD_DETACH in checkout_up_to_date()
-     @@ Commit message
-          git rebase $(git rev-parse main) $(git rev-parse topic)
-      
-          Instead of HEAD being set to $(git rev-parse topic), rebase erroneously
-     -    dereferences HEAD and sets main to $(git rev-parse topic). This bug was
-     -    reported by Michael McClimon. See [1].
-     +    dereferences HEAD and sets main to $(git rev-parse topic). See [1] for
-     +    the original bug report.
-      
-     -    This is happening because on a fast foward with an oid as a <branch>,
-     -    update_refs() will only call update_ref() with REF_NO_DEREF if
-     -    RESET_HEAD_DETACH is set. This change was made in 176f5d96 (built-in rebase
-     -    --autostash: leave the current branch alone if possible,
-     -    2018-11-07). In rebase, we are not setting the RESET_HEAD_DETACH flag,
-     -    which means that the update_ref() call ends up dereferencing
-     -    HEAD and updating it to the oid used as <branch>.
-     +    The callstack from checkout_up_to_date() is the following:
-     +
-     +    cmd_rebase() -> checkout_up_to_date() -> reset_head() -> update_refs()
-     +     -> update_ref()
-     +
-     +    When <branch> is not a valid branch but a sha, rebase sets the head_name
-     +    of rebase_options to NULL. This value gets passed down this call chain
-     +    through the branch member of reset_head_opts also getting set to NULL
-     +    all the way to update_refs(). update_refs() checks ropts.branch to
-     +    decide whether or not to switch brancheds. If ropts.branch is NULL, it
-     +    calls update_ref() to update HEAD. At this point however, from rebase's
-     +    point of view, we want a detached HEAD. But, since checkout_up_to_date()
-     +    does not set the RESET_HEAD_DETACH flag, the update_ref() call will
-     +    deference HEAD and update the branch its pointing to, which in the above
-     +    example is main.
-      
-          The correct behavior is that git rebase should update HEAD to $(git
-          rev-parse topic) without dereferencing it.
-      
-          Fix this bug by adding the RESET_HEAD_DETACH flag in checkout_up_to_date
-     -    so that once reset_head() calls update_refs(), it calls update_ref() with
-     -    REF_NO_DEREF which updates HEAD directly intead of deferencing it and
-     -    updating the branch that HEAD points to.
-     +    if <branch> is not a valid branch. so that once reset_head() calls
-     +    update_refs(), it calls update_ref() with REF_NO_DEREF which updates
-     +    HEAD directly intead of deferencing it and updating the branch that HEAD
-     +    points to.
-      
-          Also add a test to ensure this behavior.
-      
-          1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
-      
-     +    Reported-by: Michael McClimon <michael@mcclimon.org>
-          Signed-off-by: John Cai <johncai86@gmail.com>
-      
-       ## builtin/rebase.c ##
-      @@ builtin/rebase.c: static int checkout_up_to_date(struct rebase_options *options)
-     + 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
-       		    options->switch_to);
-       	ropts.oid = &options->orig_head;
-     - 	ropts.branch = options->head_name;
-     --	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-     -+	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK | RESET_HEAD_DETACH;
-     +-	ropts.branch = options->head_name;
-     + 	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-     ++	if (options->head_name)
-     ++		ropts.branch = options->head_name;
-     ++	else
-     ++		ropts.flags |=  RESET_HEAD_DETACH;
-       	ropts.head_msg = buf.buf;
-       	if (reset_head(the_repository, &ropts) < 0)
-       		ret = error(_("could not switch to %s"), options->switch_to);
-      
-     + ## reset.c ##
-     +@@ reset.c: int reset_head(struct repository *r, const struct reset_head_opts *opts)
-     + 	if (opts->branch_msg && !opts->branch)
-     + 		BUG("branch reflog message given without a branch");
-     + 
-     ++	if (switch_to_branch && opts->flags & RESET_HEAD_DETACH)
-     ++		BUG("attempting to detach HEAD when branch is given");
-     ++
-     + 	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
-     + 		ret = -1;
-     + 		goto leave_reset_head;
-     +
-       ## t/t3400-rebase.sh ##
-     -@@ t/t3400-rebase.sh: test_expect_success 'rebase when inside worktree subdirectory' '
-     - 	)
-     +@@ t/t3400-rebase.sh: test_expect_success 'switch to branch not checked out' '
-     + 	git rebase main other
-       '
-       
-     -+test_expect_success 'rebase with oids' '
-     -+	git init main-wt &&
-     -+	(
-     -+		cd main-wt &&
-     -+		>file &&
-     -+		git add file &&
-     -+		git commit -m initial &&
-     -+		git checkout -b side &&
-     -+		echo >>file &&
-     -+		git commit -a -m side &&
-     -+		git checkout main &&
-     -+		git tag hold &&
-     -+		git checkout -B main hold &&
-     -+		git rev-parse main >pre &&
-     -+		git rebase $(git rev-parse main) $(git rev-parse side) &&
-     -+		git rev-parse main >post &&
-     -+		test "$(git rev-parse side)" = "$(cat .git/HEAD)" &&
-     -+		test_cmp pre post
-     -+	)
-     ++test_expect_success 'switch to non-branch detaches HEAD' '
-     ++	git checkout main &&
-     ++	old_main=$(git rev-parse HEAD) &&
-     ++	git rebase First Second^0 &&
-     ++	test_cmp_rev HEAD Second &&
-     ++	test_cmp_rev main $old_main &&
-     ++	test_must_fail git symbolic-ref HEAD
-      +'
-      +
-     - test_done
-     + test_expect_success 'refuse to switch to branch checked out elsewhere' '
-     + 	git checkout main &&
-     + 	git worktree add wt &&
-
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 71b1735e1dd..0643d015255 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -18,10 +18,7 @@ GIT_AUTHOR_EMAIL=bogus@email@address
+ export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+ 
+ test_expect_success 'prepare repository with topic branches' '
+-	git config core.logAllRefUpdates true &&
+-	echo First >A &&
+-	git update-index --add A &&
+-	git commit -m "Add A." &&
++	test_commit "Add A." A First First &&
+ 	git checkout -b force-3way &&
+ 	echo Dummy >Y &&
+ 	git update-index --add Y &&
+@@ -32,9 +29,7 @@ test_expect_success 'prepare repository with topic branches' '
+ 	git mv A D/A &&
+ 	git commit -m "Move A." &&
+ 	git checkout -b my-topic-branch main &&
+-	echo Second >B &&
+-	git update-index --add B &&
+-	git commit -m "Add B." &&
++	test_commit "Add B." B Second Second &&
+ 	git checkout -f main &&
+ 	echo Third >>A &&
+ 	git update-index A &&
 -- 
 gitgitgadget
+
