@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF7D9C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 22:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B163C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 22:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbiCKWrg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 17:47:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
+        id S229842AbiCKWsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 17:48:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbiCKWrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 17:47:24 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1388293F29
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:22:18 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 19so5898237wmy.3
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:22:18 -0800 (PST)
+        with ESMTP id S229758AbiCKWsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 17:48:11 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C6C283B60
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:23:02 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id l1-20020a05600c4f0100b00389645443d2so6160971wmq.2
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:23:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=E24EvvwnkSyOCEJmsHGJhLe1DkHNnlgm4bHeLK+leKE=;
-        b=SY7KGzrTOC510bZZ1bb8PYBgkjN/nj4uYeTo3zxjsiPnjRdmfp6uqM9hfL8pjKx88p
-         LZu+maaaHVRdXfqet5a5g8hlEsHER6D4Y76EsMKBsg3ByO5WdW01FHyXymckjen8g/fg
-         xVnWjguLljgS6gT46xfNI5wXRGbDSAeNNpOKXNSQOazIj606a+piAZfqDK4cmjktozSz
-         DDq56zr5OhUEjDDIBvigBHrnIVgzt2VZAhkYiWIx+Hs+tcDhje58rj94JIatg8tuIF9b
-         IYKjTMjFLaLxV3efGy4hqXxTOT0cM8+0OKPnjXYG7M/Tc22ZryqAaWmkrrONgSE7w+F9
-         1kxg==
+        bh=9g2wyL2OIZo9JPKszsWzDlTklgXo2s1AMtEwqOGQR8I=;
+        b=nOqUJH51cYaZumrB3/knd9zXUoe14Z05SWhP9yOjNky7uaeNHKtdT2yZEqhFKwgLAr
+         WwH/afZ72FrmSn+Aw9ZvSAIOvcov/SGZyLTdksFf3aVK2J76t4lDpP86Z65IqjXHWLIk
+         wg4xWh3qDK+gBhKjokFod7SAu2uHbtfwDu7ya1QLNE3cqvzXGniuMFEdyUzADHj0QXRq
+         HtYu+MvT/vLznZPG+vA1Pf3dqifEba1EAMq5xsKRBCt1D6D2Fz7coHF0YQFsmysGdbW2
+         eu3a/gfv2aBtXV/EHlTHYi+3IdgZBL23Ac/o7bSfmh6vHFuZrDkK1jGzwDxXDNxKZ9kz
+         REBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E24EvvwnkSyOCEJmsHGJhLe1DkHNnlgm4bHeLK+leKE=;
-        b=uLiWruPtoWY0J4UeZEzeYHdSpjaazNN+lj1qvrGN1C87xMwvLzwtTVtny35aiBXMzV
-         4u6UmgJ92UvxhzgXdK+HjBOCRrf9LW4Vhiy0ZvGmjAjTVepsNREWpwsFnTxFLgUKc6y6
-         A8Yn4YC9J94z/h0tZsCPmwSAdOsYwta6dw5J0sOCZ9RUpiqRPEhrIOCQBLFHTj3UVRYS
-         iNC382PTYcQNqDzPAoXwVqp0X6V9rDSc12WCobwrXoUHJ50wPUWOw6g+pyCmbtQ/2sIM
-         zFd4FjxLphjz/lAyLyV14UoUIZCBqUi8xmvz7P/zeOzJa+RGqGTfiUqxQfUxa8HINuht
-         Ofxg==
-X-Gm-Message-State: AOAM533kAHzBKDl74X9if08Xo4Tibt+yPUIgV3wwFEIn+9kiPVQH4JJA
-        rOtnXo6+LhaTLFElxicPUzGNyewY1V4=
-X-Google-Smtp-Source: ABdhPJyipR8Zx+v0NMQZ8WMl2Zbg7MhwWqHznF3zjZI61J/QHiQraNyHUryJGnMktoEcESTsO5pUNA==
-X-Received: by 2002:a7b:cd96:0:b0:381:201e:ba06 with SMTP id y22-20020a7bcd96000000b00381201eba06mr17180005wmj.78.1647033313230;
-        Fri, 11 Mar 2022 13:15:13 -0800 (PST)
+        bh=9g2wyL2OIZo9JPKszsWzDlTklgXo2s1AMtEwqOGQR8I=;
+        b=MyWJEiRyQ398k2BmslppLXiQNMy2RcWMUxKZzT2wxF2aAf0UXu134JpkqI0VtGak03
+         evMQkIj50UwiaxZHtJ1V+cYW/H7ITHevfJSkOSAkotTilfctegcazamEbUM6f4/WMbg7
+         UJMe1Afb9CB7RL/bdMOlFT5D8/rtuvFTJyEeMqYsKsbL//nNLAe7SA+wIOsYLkBbALOz
+         VN4z34qwi/Ap45CAkOaQd+vxoOOF9TabsiSlrI1AmPQ9io/XBh0A9jMP247mXnsqsF00
+         Roqry4ewcIhLuxu5cHkLR643DtkkMxjeAnYPAAQtIegL5BtNywys8B8WfbD3irN31RG5
+         3mPw==
+X-Gm-Message-State: AOAM531g/H+EYoeMEGoc5Gud7wlU9KoTyZoP1mec7FJgtQhFKDnAzy1e
+        negSkrouCnB4hT07huHexOJEWaswWws=
+X-Google-Smtp-Source: ABdhPJx6ExOwdnuYYrDz0fIprCHgirD4ycjahqUCMySRtH9+65vtPJEtodSu8m3cnVHp769L4KFDQw==
+X-Received: by 2002:a1c:2bc3:0:b0:381:3dd5:5707 with SMTP id r186-20020a1c2bc3000000b003813dd55707mr16872718wmr.31.1647033316422;
+        Fri, 11 Mar 2022 13:15:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m9-20020a05600c4f4900b00389e8184edcsm4324707wmq.35.2022.03.11.13.15.12
+        by smtp.gmail.com with ESMTPSA id g5-20020a5d64e5000000b00203914f5313sm3917129wri.114.2022.03.11.13.15.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 13:15:12 -0800 (PST)
-Message-Id: <d9592c7a0b798d0b5ab60580afbe36cd48d12616.1647033303.git.gitgitgadget@gmail.com>
+        Fri, 11 Mar 2022 13:15:16 -0800 (PST)
+Message-Id: <118ba1b5d04283da93b46f24201827c4a226d3fa.1647033303.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
 References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Mar 2022 21:14:58 +0000
-Subject: [PATCH 11/16] fsmonitor-ipc: add _() to calls to die()
+Date:   Fri, 11 Mar 2022 21:15:02 +0000
+Subject: [PATCH 15/16] fsmonitor--daemon: add _() to calls to error()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,36 +66,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-fixup! fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+fixup! fsmonitor--daemon: implement 'start' command
 
-Fix translation markings.
+Fixup translation on die().
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor-ipc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/fsmonitor--daemon.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-index 91a535f1219..789e7397baa 100644
---- a/fsmonitor-ipc.c
-+++ b/fsmonitor-ipc.c
-@@ -152,7 +152,7 @@ int fsmonitor_ipc__send_command(const char *command,
- 	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
- 				       &connection);
- 	if (state != IPC_STATE__LISTENING) {
--		die("fsmonitor--daemon is not running");
-+		die(_("fsmonitor--daemon is not running"));
- 		return -1;
- 	}
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index b3687a200ef..a30ecf6cfac 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1381,7 +1381,7 @@ static int try_to_start_background_daemon(void)
+ 	 * immediately exited).
+ 	 */
+ 	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
+-		die("fsmonitor--daemon is already running '%s'",
++		die(_("fsmonitor--daemon is already running '%s'"),
+ 		    the_repository->worktree);
  
-@@ -161,7 +161,7 @@ int fsmonitor_ipc__send_command(const char *command,
- 	ipc_client_close_connection(connection);
+ 	if (fsmonitor__announce_startup) {
+@@ -1411,13 +1411,13 @@ static int try_to_start_background_daemon(void)
+ 	default:
+ 	case SBGR_ERROR:
+ 	case SBGR_CB_ERROR:
+-		return error("daemon failed to start");
++		return error(_("daemon failed to start"));
  
- 	if (ret == -1) {
--		die("could not send '%s' command to fsmonitor--daemon", c);
-+		die(_("could not send '%s' command to fsmonitor--daemon"), c);
- 		return -1;
+ 	case SBGR_TIMEOUT:
+-		return error("daemon not online yet");
++		return error(_("daemon not online yet"));
+ 
+ 	case SBGR_DIED:
+-		return error("daemon terminated");
++		return error(_("daemon terminated"));
  	}
+ }
  
 -- 
 gitgitgadget
