@@ -2,96 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F66AC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 23:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C49C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 23:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbiCKXJx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 11 Mar 2022 18:09:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49810 "EHLO
+        id S230240AbiCKXLV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 18:11:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230144AbiCKXHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 18:07:52 -0500
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343E0181B16
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:06:47 -0800 (PST)
-Received: by mail-pl1-f170.google.com with SMTP id w4so8821674ply.13
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:06:47 -0800 (PST)
+        with ESMTP id S230237AbiCKXLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 18:11:16 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EBA4151366
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:10:07 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id r65so5964118wma.2
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 15:10:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=uMvmpthBD+YkEiNfWbv6iDH+Be+JkEDi5FxHaWGa1Fk=;
+        b=i3PPkers5kpH0+L6QakoYHRlUxCgTFU83hPGuXDc++xoagsD++odlrnn6+FIfwZ/V5
+         UC0KmswVe/ku2+wQgPRiKkKizIy9aVINCWQWsiGTgKjiQ2h+Cbzkpng5fmHk3H6fXOEZ
+         mitljdBPEb5snKaNatEygdSg/JOsDZH6OTsdX920VILywENfNngHrBXtN4SENjdq9wvH
+         /CUR2mMzwTu8GaCOMirU2jZeYl4LEF8wKSjPjPTZwTolHK+vHmC7pHnq6+tFL3gwsddB
+         8+L6T1qYgv54S5MP55HgsAzuq8ZipuQXnq5KkIZmApyV8haK5Zx8zhFRHQUK9ZDmc85B
+         zsTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wDUTBOIh02UnROvody3ZL99CNvaHKPa2n/jo+UjkhbM=;
-        b=CKTc2rBZpfPxXiul1qWn7/KH6K92FjolTWWduAkJQteQgfCs2r7tXdZkJZ1GUXL13t
-         GR8G/2mD25eIrT7cdHlaJH/ZqPbVCwhaN2Oovk6i0LD49U3Vgbgb8n3PmUQ/OSWxHYRO
-         gikfCP+D69e3c465BkcIjjEHVlqgeo9LMK6MYIXC8+AVQ1i6hGBSXrynlux7P+W+ooI9
-         AjbwfARidGaE+oOd2fswb1Wo/YSbArm4Yhouxx+l0l8MauaWIQO7qA4nCg48zwLkvfKM
-         P5sIiwNqdGZiz4OnDp7qsypVsGoUIHb61obudKKYbB3tA/xvdQKDzRydLfFhRjUsZ811
-         qb0Q==
-X-Gm-Message-State: AOAM532tGrctZQKSpKd1oneVrWriX3e0hmTUgoXJkJokaP9N4QR8YHn/
-        J18laoeKdlfyLZxuPOZQmch0jz8BfdnN5+V0VgjJsm9aSrk=
-X-Google-Smtp-Source: ABdhPJyphMTQfbYzbu5F8+OpDEnbUh8Fr5fhUU1bPBQg3mlGuSGSClF1aAoB2vnTTpcwQjkK3eAoztIkZ/wcSFDrYcA=
-X-Received: by 2002:a17:903:2287:b0:151:dab2:aacc with SMTP id
- b7-20020a170903228700b00151dab2aaccmr13045313plh.64.1647040006568; Fri, 11
- Mar 2022 15:06:46 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=uMvmpthBD+YkEiNfWbv6iDH+Be+JkEDi5FxHaWGa1Fk=;
+        b=pdHliHJ8wKUv00p+09uXQJJd8NCU8qkaNzZrUZEmuBpIu6zn6BXTJ/9IDvvwSmkaEg
+         mdAa+rkg4jQyF9I9sD4Sw7Jpn03PL+vdSLdPskNv8YDzV4gOPdE2EaKu12KYtGpGvKMa
+         GmpMHo6+hUoZ7hQZEYkQnSmvOMV1vFlr2rH0Wp0/sF+6OWopn+iOzadPpBchLgfLExUX
+         tpkYHYgHa5CjTksnsw8nQ3DH1Z/Bl/jZ1gzVxJWVlXNKK7s50zAiTWs9S3/mYGyV4PpG
+         aDK7Yn1NVHA+zHkWmXvOknhq30XxpCrESmDGxFfBEGRgLkUR98oGt3XZeZuKMKw4jbsT
+         G8LA==
+X-Gm-Message-State: AOAM533nQlhssvmEl2VAOC4xVoI5t2IHUmMFAo6OigvUOJ3wEvVuVomi
+        wZ3Ltrlx6J0gJ/es1oww2LYy3EK9IHo=
+X-Google-Smtp-Source: ABdhPJxfXkEqwSyg4pvIN5RlxGZp/T7cqTIGARyR1qzJhSoMCDT0f8UDOlegUDroF0aQ+D6Z22dz1g==
+X-Received: by 2002:a05:600c:34d5:b0:389:a209:24ca with SMTP id d21-20020a05600c34d500b00389a20924camr17073532wmq.195.1647032858000;
+        Fri, 11 Mar 2022 13:07:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r2-20020a5d6942000000b001f0485057c4sm7827743wrw.74.2022.03.11.13.07.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Mar 2022 13:07:37 -0800 (PST)
+Message-Id: <pull.1227.git.git.1647032857097.gitgitgadget@gmail.com>
+From:   "David Cantrell via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 11 Mar 2022 21:07:36 +0000
+Subject: [PATCH] tab completion of filenames for 'git restore'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <20220308113305.39395-1-carenas@gmail.com> <CAPig+cSNgQ7SEYk9M=L7z0G=hteTdupKS6sHJL8T7zEp=zkLEA@mail.gmail.com>
- <CAPig+cT3TNFBMesYvYoncawfBdLqKL971SoP_J7F9FgnL10Eqw@mail.gmail.com>
- <CAPig+cSUTaPRvALJyJ8AxNB4wMFLyaWBOa8f+_8K6quPbxTT5A@mail.gmail.com>
- <xmqqv8wnm30q.fsf@gitster.g> <220309.86pmmulw77.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220309.86pmmulw77.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 11 Mar 2022 18:06:35 -0500
-Message-ID: <CAPig+cQNeTAvWHm2GUGc2i=FKF2V6Gqkmmsw4kDOTzrSYEbgxA@mail.gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use awk instead of expr for a POSIX non
- integer check
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elia Pinto <gitter.spiros@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+To:     git@vger.kernel.org
+Cc:     David Cantrell <david@cantrell.org.uk>,
+        David Cantrell <david@cantrell.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 9, 2022 at 3:14 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Wed, Mar 09 2022, Junio C Hamano wrote:
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> >> This seems to work, though it's getting a bit verbose:
-> >>
-> >>     awk '/^glibc / { split($2,v,"."); if (sprintf("%s.%s", v[1], v[2])
-> >> - 2.34 < 0) exit 1 }'
-> >
-> > In general it is a good discipline to question a pipeline that
-> > preprocesses input fed to a script written in a language with full
-> > programming power like awk and perl (and to lessor extent, sed) to
-> > see if we can come up with a simpler solution without pipeline
-> > helping to solve what these languages are invented to solve, and I
-> > very much appreciate your exploration ;-)
->
-> I agree :) But the first language we've got here is C. Rather than
-> fiddle around with getconf, awk/sed etc. why not just the rather
-> trivial:
->
->         +#include "test-tool.h"
->         +#include "cache.h"
->         +
->         +int cmd__glibc_config(int argc, const char **argv)
->         +{
->         +#ifdef __GNU_LIBRARY__
->         +       printf("%d\n%d\n", __GLIBC__, __GLIBC_MINOR__);
->         +       return 0;
->         +#else
->         +       return 1;
->         +#endif
->         +}
+From: David Cantrell <david@cantrell.org.uk>
 
-It feels overkill to add this just for this one case which is
-otherwise done easily enough with existing shell tools.
+If no --args are present after 'git restore' it assumes that you want
+to tab-complete one of the files with uncommitted changes
 
-That said, perhaps I'm missing something, but I don't see how this
-solution helps us get away from the need for `expr`, `awk`, or `perl`
-since one of those languages would be needed to perform the arithmetic
-comparison (checking if glibc is >= 2.34).
+Signed-off-by: David Cantrell <david@cantrell.org.uk>
+---
+    Improved bash tab completion for 'git restore' - adds support for
+    auto-completing filenames
+    
+    This adds tab-completion of filenames to the bash completions for git
+    restore.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1227%2FDrHyde%2Ffilename-completion-for-git-restore-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1227/DrHyde/filename-completion-for-git-restore-v1
+Pull-Request: https://github.com/git/git/pull/1227
+
+ contrib/completion/git-completion.bash | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 49a328aa8a4..7ccad8ff4b1 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2883,14 +2883,21 @@ _git_restore ()
+ 	case "$cur" in
+ 	--conflict=*)
+ 		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
++		return
+ 		;;
+ 	--source=*)
+ 		__git_complete_refs --cur="${cur##--source=}"
++		return
+ 		;;
+ 	--*)
+ 		__gitcomp_builtin restore
++		return
+ 		;;
+ 	esac
++
++	if __git rev-parse --verify --quiet HEAD >/dev/null; then
++		__git_complete_index_file "--committable"
++	fi
+ }
+ 
+ __git_revert_inprogress_options=$__git_sequencer_inprogress_options
+
+base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
+-- 
+gitgitgadget
