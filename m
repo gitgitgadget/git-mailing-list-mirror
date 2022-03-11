@@ -2,113 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CABDC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 14:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D2AC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 15:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240130AbiCKOSW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 09:18:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
+        id S240728AbiCKPC0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 10:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349439AbiCKOSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 09:18:15 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Mar 2022 06:17:10 PST
-Received: from mail.vivaldi.com (mail.vivaldi.com [31.209.137.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C241C74E7
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 06:17:10 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.vivaldi.com (Postfix) with ESMTP id F0A7A1F873E
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=vivaldi.com; h=
-        mime-version:content-transfer-encoding:date:date:subject:subject
-        :from:from:message-id:content-type:content-type:received
-        :received; s=2019; t=1647007827; bh=jkPnzK1U8U/yhvm7Cyn6lzazS2Ev
-        y4ryv45AkH16n8E=; b=g51Zsub2iV9I5k9iqXKeYGW3qo2jyfYACNcHhTUqf2IM
-        CX72hVBkbOGJ1eyhF9JqG6ibhSpwvVc+Bhz00YwiAEKumhdI+NCuV/LybJLbPKd/
-        kuo9+aqS/+OUpJ1o59erieMQWobXk3wsBpyVdTSKXuXGpMh1RsNPs1ecyAB7ca8n
-        mZ7TvRIVFpxOJnTorugof2VR9qpGNx1O09yH4ZnSwR3Li3ew0LFgnUwogpcsUH5o
-        TVEQp53D3LMsatHYAOzmBxTRWIlsAJ+24fGoUEzeFb510YGU0KLJReqcLgaMML4z
-        Zt5WRoAY1Di9LdDLviMLKeqIMRozvafOZwm8gN3ufA==
-X-Virus-Scanned: Debian amavisd-new at vivaldi.com
-Received: from mail.vivaldi.com ([127.0.0.1])
-        by localhost (mail.vivaldi.com [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id Pq5Vkd55G5l4 for <git@vger.kernel.org>;
-        Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
-Received: from noip.localdomain (ti0182q160-1041.bb.online.no [109.189.134.30])
-        by mail.vivaldi.com (Postfix) with ESMTPSA id A51A71F8125
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Message-Id: <1647006095912.1308641200.2893260369@vivaldi.com>
-From:   "Yngve N. Pettersen" <yngve@vivaldi.com>
-To:     git@vger.kernel.org
-Subject: Incorrect work dir for submodule fetch operations
-Date:   Fri, 11 Mar 2022 14:10:25 +0000
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S233951AbiCKPCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 10:02:25 -0500
+X-Greylist: delayed 185 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Mar 2022 07:01:21 PST
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D7E31A41C4
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 07:01:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1647010693;
+    s=strato-dkim-0002; d=uhdejc.com;
+    h=To:Subject:From:Date:Message-ID:Cc:Date:From:Subject:Sender;
+    bh=XY3u4Bo38lTax5NcKiWOZXtyJ0SetTqOKfoqI8zyuRg=;
+    b=XoDMTkSX/9TGO/uVkyQYrBPJF5XxY6Hr2vJTnoPXExi46Ce0hkG0inELD2P560GKvk
+    tsVO8YMiF6dpAnu0bBuxyNGo/2kFwqwGMuHwQVQwy1QsFdjANfW9UdIig9HmhCm2mU99
+    Chv87jnd9k6THKS9+pgVY0kKUCgrWquR72bie+9M+wuozaDlio3CC7DXcfKO8vACtISM
+    Aw5/Jfe5w2mfIe9wmvdZVrSPJ/raduAM4Tojwb/K2fXWSPeaK1fM9X8J+4ckjdX6i/uA
+    VTFRAeXwhg5R0w6C0mz00igq5K+GBqxHHysxrV5ZwcCtd7UuNqGeJewEGobflWZPGF2F
+    MzdA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":Jm0KVVWgf/qsp6yYkPuIAWpZc5/7d/LUhoNVUVqyWOFyRWTQm1L2tCey"
+X-RZG-CLASS-ID: mo00
+Received: from [10.13.37.13]
+    by smtp.strato.com (RZmta 47.40.1 DYNA|AUTH)
+    with ESMTPSA id e5f035y2BEwDAN9
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate)
+    for <git@vger.kernel.org>;
+    Fri, 11 Mar 2022 15:58:13 +0100 (CET)
+Message-ID: <9c494301-3c52-c953-95ab-48675634ada7@UhdeJc.com>
+Date:   Fri, 11 Mar 2022 15:58:13 +0100
 MIME-Version: 1.0
+User-Agent: Why are you interested in my client, Sir?
+From:   Jan Christoph Uhde <Jan@UhdeJc.com>
+Subject: `git rebase -i --rebase-merges` formatting
+To:     git@vger.kernel.org
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Since Git 2.21 the Windows version have frequently reported 
+Hello,
 
-   error: cannot spawn git: Invalid argument
+for the following commits:
 
-and still do in 2.34 and 2.35.
+``` git log
+*   4fd94fd  (HEAD -> master) 6 hours ago Jan Christoph Uhde Merge branch 'b_two'
+|\
+| * cc75466  6 hours ago Jan Christoph Uhde b_two
+|/
+*   9ad8a2b  6 hours ago Jan Christoph Uhde Merge branch 'b_one'
+|\
+| * b23658f  (b_one) 6 hours ago Jan Christoph Uhde one
+|/
+* a9d65bc  6 hours ago Jan Christoph Uhde initial commit
+```
 
-The reported error does not seem to have any bad effects, but the error 
-report is an irritation.
+I get a this merge script when rebasing onto the initial commit.
 
-At the time, this was reported to the Git for Windows team as 
-<https://github.com/git-for-windows/git/issues/2126>
+``` actual merge script
+   1 label onto
+   2
+   3 # Branch b-one
+   4 reset onto
+   5 pick b23658f one
+   6 label b-one
+   7
+   8 # Branch b-two
+   9 reset onto
+  10 merge -C 9ad8a2b b-one # Merge branch 'b_one'
+  11 label branch-point
+  12 pick cc75466 b_two
+  13 label b-two
+  14
+  15 reset branch-point # Merge branch 'b_one'
+  16 merge -C 4fd94fd b-two # Merge branch 'b_two'
+  17
+  18 # Rebase a9d65bc..4fd94fd onto a9d65bc (11 commands)
+  19 #
+```
 
-As it has not yet been fixed, the past couple of days I have investigated 
-more closely.
-
-The error is printed for a submodule.c function submodule_has_commits() 
-which starts the command "rev-parse" for a submodule.
-
-The reason for the error is that the function starts the command for 
-submodule "foo", which is present in the checkout directory. However, the 
-actual CWD dir is the git dir for the current module, not the checkout 
-directory, and the change directory operation therefore fails.
-
-The "rev-parse" made it possible for me to connect this problem with a 
-different problem that I have been seeing at Linux and Mac, where the error 
-message 
-
-   fatal: exec 'rev-list': cd to 'foo' failed: No such file or directory
-
-is frequently reported, especially when a branch in the parent module has 
-new submodules defined.
-
-AFAICT, the reason for the CWD being the git dir, not the checkout dir, is 
-that  get_next_submodule() in submodule.c starts a fetch operation directly 
-in the git dir, instead of the checkout directory
-
-Further, submodule_has_commits() which is called by the fetch command via 
-fetch_populated_submodules() assumes that its CWD is in the checkout 
-directory.
-
-
-After a bisect it seems the regression point for this was commit 
-be76c2128234d94b47f7087152ee55d08bb65d88 
-<https://github.com/git-for-windows/git/commit/be76c2128234d94b47f7087152ee55d08bb65d88>, 
-which added the fetch in git dir command in get_next_submodule().
-
-A testcase for reproducing the issue can be found in 
-<https://github.com/git-for-windows/git/issues/2126#issuecomment-1064153093>
- (assumes default branch is "main"), which builds up a submodule set based 
-on two Chromium repos (chromium src, and depot_tools)
-
-I am uncertain what the proper fix for this issue should be, but my guess 
-is that each command need to specify whether it is going to work relative 
-to the git dir, or the checkout dir. It is IMO conceivable that other 
-commands may have this kind of problem, especially in a submodule context, 
-or that future features may encounter them.
+I think it should be more similar to this:
 
 
+``` suggested merge script
+   1 label onto
+   2 reset onto #Could imo go but probably avoids special cases
+   3
+   4 # Branch b-one
+   5 pick b23658f one
+   6 label b-one
+   7 reset onto
+   8 merge -C 9ad8a2b b-one # Merge branch 'b_one'
+   9 label branch-point
+  10
+  11 # Branch b-two
+  12 pick cc75466 b_two
+  13 label b-two
+  14 reset branch-point # Merge branch 'b_one'
+  15 merge -C 4fd94fd b-two # Merge branch 'b_two'
+  16 # add `label branch-point-1` here to avoid special cases?!
+  17
+  18 # Rebase a9d65bc..4fd94fd onto a9d65bc (11 commands)
+  19 #
+```
 
--- 
-Sincerely,
-Yngve N. Pettersen
-Vivaldi Technologies AS
+
+Looking at the sequencer.c it might not be worth the invested time
+to change the format. If it can not be resolved easily I think
+removing the empty lines and the branch-comments would suffice
+to reduce the confusion. I think they have been introduced to
+help people but here they are a hindrance.
+
+Another unrelated suggestion is to start with `branch-point-0`
+instead of `onto` and keep counting up. This would make the
+edit-distances smaller when you fiddle with the first commits.
+
+Regards
+
+Jan
+
+
