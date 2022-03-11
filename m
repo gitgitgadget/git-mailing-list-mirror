@@ -2,70 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E124BC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 01:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B710AC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 01:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240895AbiCKBkf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Mar 2022 20:40:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
+        id S1345512AbiCKB6m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Mar 2022 20:58:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234016AbiCKBke (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Mar 2022 20:40:34 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719FD1A2758
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 17:39:32 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id x5so9143622edd.11
-        for <git@vger.kernel.org>; Thu, 10 Mar 2022 17:39:32 -0800 (PST)
+        with ESMTP id S1345510AbiCKB6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Mar 2022 20:58:41 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007734F44A
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 17:57:38 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id bg10so16119396ejb.4
+        for <git@vger.kernel.org>; Thu, 10 Mar 2022 17:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=hG8ptM+A8BiloePTSaPO51M6vXs5/cU0/MoXoKZbMjM=;
-        b=BpoLyegfRs2wDEle5eLKIcYIFhA0X1omonICqpapsFZuTCab7JnZ9kIA0JU3VIjGEp
-         CUaU7GghlfgiU3qbrsX52MtfAd1g71Rw9wV345lDMXbLutL8RdKurcDx1JGx4PDE4h4v
-         8HiFKLezCqGoJV06j/HLwo4byafCBWArB/YFVgMcNdjoVRSqgMS17+deDNPxbR8RfrTW
-         7rSO1qRJzh9quYU2pRB4jgE49bjqbX3SHFVCaaXz1KpUJQCXgjEt1yfngZOVWMRXyE2B
-         +6QJ9v6dK0utYMPKZU/oLcCtF08dmz0to3ozWEujXdAxfNbHnRzX5NHSclLfhmtSLyHB
-         I1xQ==
+        bh=5FjBjEIYTvPGRm+UwzawlzcQmQF3Biu2H5aME3phk1s=;
+        b=DA07YDrjyanHR3g4Sn7x6iEaRbdfOhQCgeVNpUCQkxv8n9V7vaf28ipAOa413SQ6+5
+         kGPbA3q5pOK9894Xi7BNQyNVWfRResLutiloFJPfQn+6MZBcqFeBEHJk6aGGWwbPyoZO
+         bh8CA2ikveXbqT6OkcvHDoOnzp5Ce6kVkndzbilOWrKNODwTh5TT8LInHZv673g1MxU+
+         3zL48ifBBUacolCSy3tuqLSCEsOnHSe1F+P6Cgqrda2l/XnUuFYpQVBQ2yFFoAFHa0WF
+         JmATg85ypwoEotEKqRCk9aFx0iiYp3sUbClvtKX5lqX+pXXDtzo0TmbdGuwPGt0L0vwh
+         CzdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=hG8ptM+A8BiloePTSaPO51M6vXs5/cU0/MoXoKZbMjM=;
-        b=xCfEh9kwEGjnycmcAA89TOWbXXxGEkSysfNhW6hJ0pYQ4kvo+bhpGEUC8lA70FNNO2
-         CUKOrvPJhad9lm0ZV+sLOeWcIZ2zaL0HngC+03me7/jueVhd/sm9TvYj9dArcbz5vs07
-         /DBXa7vqdJ6oek5D5RBQPt9SxU+tyswMlyRZqKJ1IRwWpvFSXjTHnicUT9Iapz6btddV
-         Ui83VgPIjumH3+rfdUI2qwG4wmfw4RmxE3oO5yQ3w74mOdocV53YptotaBiKqvVEI9Hb
-         dVQEP7X522XzE1AHHqiUFjojH4/TqdzupSFNTHGer3jc9FPkmQgt69RnQKprfTKMl+w8
-         4Axg==
-X-Gm-Message-State: AOAM532j/WAQjYzg26S/Jzon6qgWDGe9Ukehz0H0pEOQLuWpi6AAsKcv
-        KVmn/KmzEx2uKunWGaR7cew=
-X-Google-Smtp-Source: ABdhPJy+p39+NeTvvR6RDLYniNZTqhGu3DpMwfePpGQQij6LPu4GSb5mztoiJawwiStbbIcb6x4oxA==
-X-Received: by 2002:a05:6402:1bc8:b0:416:2375:f815 with SMTP id ch8-20020a0564021bc800b004162375f815mr6945818edb.130.1646962770710;
-        Thu, 10 Mar 2022 17:39:30 -0800 (PST)
+        bh=5FjBjEIYTvPGRm+UwzawlzcQmQF3Biu2H5aME3phk1s=;
+        b=PwZNH4vwCwurP3LtzO9KgAO7iMxseTw0EZzp9j9Ya2ezLQ9ajYQ1EyBbfRe2DYwLRU
+         DRKsXZUeLmj95XOU4Gvy+ZkfDv1ozI9knx5QU6IwRxyk6BQBY5/RKTGB7gL/OChM35UZ
+         k1jKYWKdyQ93gUpaH23nt/OGyRd61JIaRmJFrIuqSZL3yh14MOnZZPUzvpo8n1j3px0M
+         nHRKoqIE5+FaeozFQcj8nJ6zFu9Wwdg+xY6H0e/7VRgqfGYIBuo1GH1HoC+r1pmICSX2
+         Mf8hrLVboeEgFl0Kwp3/5zsM4dlPfLytu9qyiJv4UHfo9lDW/v44AWnFj8Arf9/w/eFB
+         wuJg==
+X-Gm-Message-State: AOAM532EvS5x9GN7UoshNmvZb9XFZcDi73FkHAX2mxeRwhZIYaOHEsHM
+        q18CP6z8YJukTxxoMB/7Cq9+wyqtk4d/Cg==
+X-Google-Smtp-Source: ABdhPJz3GNBF/7HppXgDozOTO7UfhWUecNNYbI5XUKhoNjEu1zRhtwH5spVZnwi+AI05vJAsQWIiaA==
+X-Received: by 2002:a17:906:74c3:b0:6da:be6d:d64b with SMTP id z3-20020a17090674c300b006dabe6dd64bmr6795356ejl.695.1646963856248;
+        Thu, 10 Mar 2022 17:57:36 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sb31-20020a1709076d9f00b006ceb969822esm2378154ejc.76.2022.03.10.17.39.29
+        by smtp.gmail.com with ESMTPSA id fx3-20020a170906b74300b006daecedee44sm2384595ejb.220.2022.03.10.17.57.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 17:39:30 -0800 (PST)
+        Thu, 10 Mar 2022 17:57:35 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nSUFc-000qS0-Pn;
-        Fri, 11 Mar 2022 02:39:28 +0100
+        id 1nSUX8-000r76-SC;
+        Fri, 11 Mar 2022 02:57:34 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 04/27] fsmonitor-settings: bare repos are
- incompatible with FSMonitor
-Date:   Fri, 11 Mar 2022 02:31:00 +0100
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
- <8c4f90ae4fd5d9fbac9acb9307ee82ceffc7df08.1646777727.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v6 03/30] fsmonitor: config settings are
+ repository-specific
+Date:   Fri, 11 Mar 2022 02:47:09 +0100
+References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <ae622a517cf500d5b068871434e33f98e9cf586b.1646160212.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <8c4f90ae4fd5d9fbac9acb9307ee82ceffc7df08.1646777727.git.gitgitgadget@gmail.com>
-Message-ID: <220311.86k0d1i7xr.gmgdl@evledraar.gmail.com>
+In-reply-to: <ae622a517cf500d5b068871434e33f98e9cf586b.1646160212.git.gitgitgadget@gmail.com>
+Message-ID: <220311.86fsnpi73l.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,67 +75,89 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Mar 08 2022, Jeff Hostetler via GitGitGadget wrote:
+On Tue, Mar 01 2022, Jeff Hostetler via GitGitGadget wrote:
 
 > From: Jeff Hostetler <jeffhost@microsoft.com>
-> [...]
-> +	prepare_repo_settings(the_repository);
-> +	fsm_settings__set_ipc(the_repository);
+
+I know this is in "next", just looking over this code again...
+
+> +static void lookup_fsmonitor_settings(struct repository *r)
+
+Here we'll start loading the settings...
+
+> +{
+> +	struct fsmonitor_settings *s;
+> +	const char *const_str;
+> +	int bool_value;
 > +
-> +	if (fsm_settings__get_mode(the_repository) == FSMONITOR_MODE_INCOMPATIBLE) {
-> +		const char *msg = fsm_settings__get_reason_msg(the_repository);
+> +	if (r->settings.fsmonitor)
+> +		return;
+
+MARK
+
+> +	CALLOC_ARRAY(s, 1);
 > +
-> +		return error("%s '%s'", msg ? msg : "???", xgetcwd());
+> +	r->settings.fsmonitor = s;
+
+And right after we alloc the r->settings.fsmonitor we'll ...
+
+> +	fsm_settings__set_disabled(r);
+
+...call this method...
+> +
+> +	/*
+> +	 * Overload the existing "core.fsmonitor" config setting (which
+> +	 * has historically been either unset or a hook pathname) to
+> +	 * now allow a boolean value to enable the builtin FSMonitor
+> +	 * or to turn everything off.  (This does imply that you can't
+> +	 * use a hook script named "true" or "false", but that's OK.)
+> +	 */
+> +	switch (repo_config_get_maybe_bool(r, "core.fsmonitor", &bool_value)) {
+> +
+> +	case 0: /* config value was set to <bool> */
+> +		if (bool_value)
+> +			fsm_settings__set_ipc(r);
+> +		return;
+> +
+> +	case 1: /* config value was unset */
+> +		const_str = getenv("GIT_TEST_FSMONITOR");
+> +		break;
+> +
+> +	case -1: /* config value set to an arbitrary string */
+> +		if (repo_config_get_pathname(r, "core.fsmonitor", &const_str))
+> +			return; /* should not happen */
+> +		break;
+> +
+> +	default: /* should not happen */
+> +		return;
 > +	}
 > +
->  	if (!strcmp(subcmd, "start"))
->  		return !!try_to_start_background_daemon();
->  
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index d335f1ac72a..8f460e7195f 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -1237,6 +1237,13 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->  
->  	if (fsmonitor > 0) {
->  		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
+> +	if (!const_str || !*const_str)
+> +		return;
 > +
-> +		if (fsm_mode == FSMONITOR_MODE_INCOMPATIBLE) {
-> +			const char *msg = fsm_settings__get_reason_msg(r);
+> +	fsm_settings__set_hook(r, const_str);
+> +}
+> [...]
+> +void fsm_settings__set_disabled(struct repository *r)
+> +{
+> +	if (!r)
+> +		r = the_repository;
 > +
-> +			return error("%s '%s'", msg ? msg : "???", xgetcwd());
-> +		}
-> +
->  		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
->  			advise(_("core.fsmonitor is unset; "
->  				 "set it if you really want to "
+> +	lookup_fsmonitor_settings(r);
 
-Can w assert somewhere earlier that ->mode can't be
-FSMONITOR_MODE_INCOMPATIBLE at the same time that ->reason ==
-FSMONITOR_REASON_OK, should that ever happen?
+...which here will recurse into lookup_fsmonitor_settings and hit
+"MARK".
 
-Then we can get rid of the "???" case here.
+So isn't that fsm_settings__set_disabled() within that method pointless?
 
-The "%s '%s'" here should really be marked for translation, but just
-"some reason '$path'" is a pretty confusing message. This will emit
-e.g.:
+> +	r->settings.fsmonitor->mode = FSMONITOR_MODE_DISABLED;
+> +	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
 
-    "bare repos are incompatible with fsmonitor '/some/path/to/repo'"
+It seems as though the intent was to reach this, but these all happen to
+be the same thing you'd get with CALLOC_ARRAY(), so I think this just
+happened to work out...
 
-Since we always hand these to error maybe have the helper do e.g.:
+> +enum fsmonitor_mode {
+> +	FSMONITOR_MODE_DISABLED = 0,
 
-    error(_("bare repository '%s' is incompatible with fsmonitor"), path);
-
-I find the second-guessing in fsmonitor-settings.c really hard to
-follow, i.e. how seemingly every function has some "not loaded yet? load
-it" instead of a more typical "init it", "use it", "free it"
-pattern. Including stuff like this:
-	
-	enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
-	{
-	        if (!r)
-	                r = the_repository;
-
-But anyway, seeing as we do try really hard to load the_repository (or a
-repository) can't we use the_repository->gitdir etc. here instead of
-xgetcwd(), or the_repository->worktree when non-bare?
+...I.e. this is luckily zero.
