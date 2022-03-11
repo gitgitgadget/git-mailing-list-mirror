@@ -2,147 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 239B8C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 09:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A9F0C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 09:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234741AbiCKJnD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 04:43:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36302 "EHLO
+        id S1347671AbiCKJqf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 04:46:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230379AbiCKJnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 04:43:02 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 178EB1BE132
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 01:41:59 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id p15so17857187ejc.7
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 01:41:59 -0800 (PST)
+        with ESMTP id S1347661AbiCKJqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 04:46:32 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAEF91BE4D4
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 01:45:27 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id t11so12037955wrm.5
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 01:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=PkyJCxPEGORypT5B3e+yNyPNJDypl88iF5acYfUpMlM=;
-        b=aPr1++6jIQF8FLXkZTp79VrQbEk7g8ctVXqiZIB/fSzffLyKrdxAtSXdbw5x3tp3/3
-         cD8HaX1RNW/zF28ubDGSJWBvQj+A+TehncPZ6gMzG5E6qJXYTRVpsFdc5buvwPlcZK3c
-         7N1x7p1m3X71Nbzl90sqHBCeLq80wSBvUNrKokW0K9BhSnSYgU/3r/5IMSI1zOc0v7F9
-         Mjp+XCHYyjAmvNUY2Ge6Sf7Yb22todSw5mkfB5VitYGmBqQrMZuDHzkanWivZzBbPUZF
-         nhBUXf+wiwA3/G01I6+E9qfnmH+V1lwp8/l+Of0oxb2iimImmaifABoTyShkgCSb5Gpj
-         Oweg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XHkoWKW2Ghs5kmTNgfYSHda1Ncul6Xzq1jA2fmPsmnE=;
+        b=RJWw/BTn4e7ZTugBpJNhAktDNFSt/PVUSnwfZu90HdZTv+wy4uE999piS/coBS5n+Y
+         pjpt0fAO7HSFT0MoECZMn7iJkj2TPhVBozdajlGIXauo2xvHHZjsVbVWtXctWI8MqzOO
+         qhBpOw0FkZyJHitcKTbphg8XKw+pXdVZHMATINFCJWy0AMqs6AQcekrXfxTP2qEbLRai
+         9IaWFCKOWA27nWT0GmgFN8lrrNOQyfiZGV9bYO/p/6krcHInoBN+jXtTiQIZPbuJgA5u
+         dPDlSCcZMshm97XnA361Hfitv2eYU0NQQRMYvP/j5l90ff3X3lREv/jawu0SbUW2J3Zn
+         1gCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=PkyJCxPEGORypT5B3e+yNyPNJDypl88iF5acYfUpMlM=;
-        b=APghKbZ5bIPmZZEcFsbTzoYWC8GN9rU4PiSIRqCzX3SOvLX56PT0D274KFw+HnzPa6
-         w4LqKesZHsWyGn2ToMisjoiTBlFyC/jJcCokbRBS6Nvo+VJBFMUSjAKBBWwNmpgdrbtM
-         KhFSSUPqm3B0SLWLUOWXHoQXcxrn1Wdr86mzArWJ0hEGGac1qP5HF+PsnKdkfu2xD+m4
-         SBmJVtlSC6aYKOWLFDpmeoYC1aGqNQYhj81tYbgCC9OwFc+J2pC4GanP2oHBS4tIjhZe
-         Du6CE6LU7V+8sCfQOlj7qEllKv4wew/+sCivTQSO13yQLnxXkeCo5XMgQGgTu6SLf6w6
-         k5cg==
-X-Gm-Message-State: AOAM5314wDbRPNHhl965gSI4yjTWEMnrU609lktxLRzEmTpJwagc7uC4
-        tWoL2tG+vsdppAy02D/BBrM=
-X-Google-Smtp-Source: ABdhPJwnrNAro0kbyx7d6R/QPaJPYlQELI1qqwjXtYJs1LAtQXQhHMGzGXlQ02ydMNDvCDMFADrvog==
-X-Received: by 2002:a17:907:948b:b0:6d8:27f8:ab4a with SMTP id dm11-20020a170907948b00b006d827f8ab4amr7679367ejc.39.1646991717508;
-        Fri, 11 Mar 2022 01:41:57 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cc21-20020a0564021b9500b00403bc1dfd5csm3131609edb.85.2022.03.11.01.41.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XHkoWKW2Ghs5kmTNgfYSHda1Ncul6Xzq1jA2fmPsmnE=;
+        b=fMev2dU1J2E5+0AK4GSPtXR8uSQ+fuIjzqDfVuXD93uHfDKU2hubvKD6S5zgZjJAC4
+         bS7jR4oNXWrgGXLCqEdFs/V2hQxetImr1PpGa3trB4vfjxG0RKwSVAEwXJM9HO/YdJAx
+         upOrvqrL9GMGekfjVg2yNQN2FyD56kQjbAYOlZhdachEpJAs3KpYcQPoN3ntSHnBD8aZ
+         uRe82vIivNve+6WV7lFrACDLlaKBN86PpBFu+C6LgTLiaq0vdmvt/9DEI4Ol8T9ooYDs
+         c3qk1zzE2REW33sORKA+Vlftyb6hU8scvyh42HHPKBv74pMr5DgUg/4+iU8ghugzohLK
+         nVFQ==
+X-Gm-Message-State: AOAM531xctfFL288ithPFs90yeilkYMfy65m5Od6abXtqLJoL5P1Bobj
+        rs969AJ8KGPhbn93EA0BsYBokIRD/0JcVA==
+X-Google-Smtp-Source: ABdhPJxtH+17YDMdxNkD2p4DG+cv6HSq3BKimK2btabMoyfcUx4LWSo1BNg6SR81xJEEpmMuyK7j8w==
+X-Received: by 2002:a05:6000:228:b0:1f0:63aa:785 with SMTP id l8-20020a056000022800b001f063aa0785mr6467304wrz.332.1646991925963;
+        Fri, 11 Mar 2022 01:45:25 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b0037bb8df81a2sm12766241wmp.13.2022.03.11.01.45.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 01:41:57 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nSbmW-000xJb-FZ;
-        Fri, 11 Mar 2022 10:41:56 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        rsbecker@nexbridge.com, bagasdotme@gmail.com, newren@gmail.com,
-        nksingh85@gmail.com, sandals@crustytoothpaste.net,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH 7/8] core.fsync: new option to harden loose references
-Date:   Fri, 11 Mar 2022 10:36:26 +0100
-References: <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com>
- <f1e8a7bb3bf0f4c0414819cb1d5579dc08fd2a4f.1646905589.git.ps@pks.im>
- <xmqqzglx9em0.fsf@gitster.g> <YisTPSOqKkQQ1RbQ@ncase>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YisTPSOqKkQQ1RbQ@ncase>
-Message-ID: <220311.86y21ghlln.gmgdl@evledraar.gmail.com>
+        Fri, 11 Mar 2022 01:45:25 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] parse-options: add per-option flag to stop abbreviation
+Date:   Fri, 11 Mar 2022 10:45:14 +0100
+Message-Id: <patch-1.1-d2ae423d1ad-20220311T094315Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1334.gf8cd03b07c8
+In-Reply-To: <220311.867d90j2vj.gmgdl@evledraar.gmail.com>
+References: <220311.867d90j2vj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+For cases like "format-patch --output-directory=dir" we disallow
+abbreviations entirely, because we'd like setup_revisions() to do a
+subsequent option parsing pass, and it accepts "--output=file".
 
-On Fri, Mar 11 2022, Patrick Steinhardt wrote:
+That's one reason for why the parse_options() in diff.c added in
+4a288478394 (diff.c: prepare to use parse_options() for parsing,
+2019-01-27) passes PARSE_OPT_KEEP_UNKNOWN. I.e. we need the
+"--output=file" to be retained in the arguments for passing it down to
+setup_revisions().
 
-> [[PGP Signed Part:Undecided]]
-> On Thu, Mar 10, 2022 at 10:40:07PM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > @@ -1504,6 +1513,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
->> >  	oidcpy(&lock->old_oid, &orig_oid);
->> >  
->> >  	if (write_ref_to_lockfile(lock, &orig_oid, 0, &err) ||
->> > +	    files_sync_loose_ref(lock, &err) ||
->> >  	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
->> >  		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
->> >  		strbuf_release(&err);
->> 
->> Given that write_ref_to_lockfile() on the success code path does this:
->> 
->> 	fd = get_lock_file_fd(&lock->lk);
->> 	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
->> 	    write_in_full(fd, &term, 1) < 0 ||
->> 	    close_ref_gently(lock) < 0) {
->> 		strbuf_addf(err,
->> 			    "couldn't write '%s'", get_lock_file_path(&lock->lk));
->> 		unlock_ref(lock);
->> 		return -1;
->> 	}
->> 	return 0;
->> 
->> the above unfortunately does not work.  By the time the new call to
->> files_sync_loose_ref() is made, lock->fd is closed by the call to
->> close_lock_file_gently() made in close_ref_gently(), and because of
->> that, you'll get an error like this:
->> 
->>     Writing objects: 100% (3/3), 279 bytes | 279.00 KiB/s, done.
->>     Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
->>     remote: error: could not sync loose ref 'refs/heads/client_branch':
->>     Bad file descriptor     
->> 
->> when running "make test" (the above is from t5702 but I wouldn't be
->> surprised if this broke ALL ref updates).
->> 
->> Just before write_ref_to_lockfile() calls close_ref_gently() would
->> be a good place to make the fsync_loose_ref() call, perhaps?
->> 
->> 
->> Thanks.
+It's not stated explicitly but I think "--output"
+v.s. "--output-directory" is the specific case the author had in mind
+when adding the PARSE_OPT_KEEP_UNKNOWN case in the pre-image. That was
+added in an earlier commit in the same series,
+baa4adc66ae (parse-options: disable option abbreviation with
+PARSE_OPT_KEEP_UNKNOWN, 2019-01-27).
+
+As that commit shows we had to disallow "git difftool --symlink" as an
+abbreviation for "git difftool --symlinks" as a side-effect, even
+though that abbreviation wouldn't have conflicted.
+
+So let's tweak this rule to be more narrowly scoped, now we'll allow
+abbreviated options regardless of PARSE_OPT_KEEP_UNKNOWN being set for
+parse_options(), but we'll provide individual options an opt-out. By
+using that opt-out for "--output-directory" we can have that case work
+without overzealously disallowing others.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+> On Thu, Mar 10 2022, Linus Torvalds wrote:
 >
-> Yeah, that thought indeed occurred to me this night, too. I was hoping
-> that I could fix this before anybody noticed ;)
+>> On Thu, Mar 10, 2022 at 2:13 PM Linus Torvalds
+>> <torvalds@linux-foundation.org> wrote:
+>[...]
+>>> Here's the stupid patch that "works" but doesn't allow the shortened
+>>> version. Maybe somebody can point out what silly thing I did wrong.
+>>
+>> I just created a short alias to do this. Maybe there's some smarter
+>> option, but this seems to work.
 >
-> It's a bit unfortunate that we can't just defer this to a later place to
-> hopefully implement this more efficiently, but so be it. The alternative
-> would be to re-open all locked loose refs and then sync them to disk,
-> but this would likely be a lot more painful than just syncing them to
-> disk before closing it.
+> ..you needed to do that is because we pass PARSE_OPT_KEEP_UNKNOWN
+> parse_options() there, which turns off our abbreviation discovery logic,
+> i.e. where we'll take a --foo, --foob, --fooba if we have a --foobar
+> option defined.
+>
+> Looking at it there appears to be no good reason for why it's so
+> overzelous. If I remove the relevant PARSE_OPT_KEEP_UNKNOWN logic in
+> parse-options.c our entire test suite passes, except for one obscure
+> part where "git format-patch --output=x" needs to not abbreviate to "git
+> format-patch --output-directory=x".
+>
+> Which, for reasons is something where we do option parsing in two
+> passes, i.e. we hand the "output" option off to the revision walker.
+>
+> We really should just teach those callsites to "grab" the revisions.c
+> options and do the parse in one pass, but in the meantime this is a less
+> invasive way to have that case work, which makes your code work without
+> the OPT_ALIAS() hunk
 
-Aside: is open/write/close followed by open/fsync/close on the same file
-portably guaranteed to yield the same end result as a single
-open/write/fsync/close?
+It even passes CI! I think this change makes sense, with/without the
+RFC topic.
 
-I think in practice nobody would be insane enough to implement a system
-to do otherwise, but on the other hand I've seen some really insane
-behavior :)
+ builtin/log.c       | 3 ++-
+ parse-options.c     | 2 +-
+ parse-options.h     | 1 +
+ t/t7800-difftool.sh | 5 +++++
+ 4 files changed, 9 insertions(+), 2 deletions(-)
 
-I could see it being different e.g. in some NFS cases/configurations
-where the fsync() for an open FD syncs to the remote storage, and the
-second open() might therefore get the old version and noop-sync that.
+diff --git a/builtin/log.c b/builtin/log.c
+index c211d66d1d0..adacc65bc7e 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1811,7 +1811,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    PARSE_OPT_NONEG, subject_prefix_callback),
+ 		OPT_CALLBACK_F('o', "output-directory", &output_directory,
+ 			    N_("dir"), N_("store resulting files in <dir>"),
+-			    PARSE_OPT_NONEG, output_directory_callback),
++			    PARSE_OPT_NONEG | PARSE_OPT_NO_ABBREV,
++			    output_directory_callback),
+ 		OPT_CALLBACK_F('k', "keep-subject", &rev, NULL,
+ 			    N_("don't strip/add [PATCH]"),
+ 			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, keep_callback),
+diff --git a/parse-options.c b/parse-options.c
+index 6e57744fd22..9d0c4694482 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -332,7 +332,7 @@ static enum parse_opt_result parse_long_opt(
+ 			rest = NULL;
+ 		if (!rest) {
+ 			/* abbreviated? */
+-			if (!(p->flags & PARSE_OPT_KEEP_UNKNOWN) &&
++			if (!(options->flags & PARSE_OPT_NO_ABBREV) &&
+ 			    !strncmp(long_name, arg, arg_end - arg)) {
+ is_abbreviated:
+ 				if (abbrev_option &&
+diff --git a/parse-options.h b/parse-options.h
+index 685fccac137..f6372f60edb 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -48,6 +48,7 @@ enum parse_opt_option_flags {
+ 	PARSE_OPT_NOCOMPLETE = 1 << 9,
+ 	PARSE_OPT_COMP_ARG = 1 << 10,
+ 	PARSE_OPT_CMDMODE = 1 << 11,
++	PARSE_OPT_NO_ABBREV = 1 << 12,
+ };
+ 
+ enum parse_opt_result {
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 096456292c0..ae47426f66e 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -582,6 +582,11 @@ test_expect_success SYMLINKS 'difftool --dir-diff --symlinks without unstaged ch
+ 	EOF
+ 	git difftool --dir-diff --symlinks \
+ 		--extcmd "./.git/CHECK_SYMLINKS" branch HEAD &&
++	test_cmp expect actual &&
++
++	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
++	git difftool --dir-diff --symlink \
++		--extcmd "./.git/CHECK_SYMLINKS" branch HEAD &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.35.1.1334.gf8cd03b07c8
 
-Most implementations would guard against that in the common case by
-having a local cache of outstanding data to flush, but if you're talking
-to some sharded storage array for each request...
-
-Anyway, I *think* it should be OK, just an aside to check the assumption
-for any future work... :)
