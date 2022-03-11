@@ -2,160 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C71B1C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 14:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CABDC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Mar 2022 14:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244508AbiCKOPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 09:15:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42762 "EHLO
+        id S240130AbiCKOSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 09:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242666AbiCKOPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 09:15:45 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DDE1C6ED0
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 06:14:42 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id c7so7016706qka.7
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 06:14:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=ak9YtecTzZv3ISYxh8p2DaFTVkShExUcJIS/UaFavbY=;
-        b=XQdssn0PLlCBra6BVTKcbsOBR5BVDXFB5BzLitAGIjkzluy73DbCjXAN1dmZcBcLsj
-         CFTiYNP3Ed2gYVdelTJkd8r3ZWg1d2SR23alaNzQg/1HGf1O1FkxI+Tt9AnpJduxU/dK
-         FVATnB9fbHs6lC4iYaZacdgC2nyKOrZ3RU511qnnF3EYMdfeCC1GeZKB0jAiHnTOP6yo
-         hxjP4z2fAt/Tla+wjUDWDJRhXn0ug5rgVCTrMClcXEKLi6KTIGXvmbeYT/q9p8fKrIsz
-         5YZoU6CIriBAWtnu5UUlgwgbLyR2rkSEvTU/j7zXyj2CT50LvSZkejl/HA7pIzAqVacA
-         7/TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=ak9YtecTzZv3ISYxh8p2DaFTVkShExUcJIS/UaFavbY=;
-        b=dXUKvf6Xx0ofpJPYZ3oXZBEcTGN6x3NNo3QCaBxWaycaY5gk8b6dTFI9miTcsEwwjp
-         dV/Pj3VFmWScEzLisuqIazDd1VgmeXnLU+gPWz+QqkRwXoxuMhA7Peo93uoN5rMbWsBN
-         aSHYyfl100wgfZCvq+OIWpM840df4OT+yp9UkrwD8VmfNhI4SxpYagTZgMX14UPKrJEG
-         T2zWRfl8ijhutUtSruWYQ2vsmunGqK3GIffCYjQxUmfbzsHwN7rZ4eIeYWthuxnH7rSw
-         Ht3msf3lczEMu8NLRJqAbucUFqKbyFsVjI9WiItTlS2sDJ7+WwHAXqzsCyDTliw4uYJE
-         ELkA==
-X-Gm-Message-State: AOAM533hVf88dLmvURgOovIt3i6mZEQH7VqJEa4OibV7ke+BczxlXoaf
-        bTFAe+W9jKzQc5hDdK3U+9Y=
-X-Google-Smtp-Source: ABdhPJwerTgWxXU5aMbCH30eP9Oq5ibSCdVzBg0vv5sAMNWT0GM+7DhavrNQVlR+TyXeTGYmTy1+lQ==
-X-Received: by 2002:a37:ad0e:0:b0:67d:3c0c:6aea with SMTP id f14-20020a37ad0e000000b0067d3c0c6aeamr6553745qkm.65.1647008081097;
-        Fri, 11 Mar 2022 06:14:41 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id q26-20020ae9e41a000000b0067d1a20872fsm3921529qkc.94.2022.03.11.06.14.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Mar 2022 06:14:40 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] rebase: set REF_HEAD_DETACH in checkout_up_to_date()
-Date:   Fri, 11 Mar 2022 09:14:39 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <B1A94338-404E-43F2-AF3C-889097FD938B@gmail.com>
-In-Reply-To: <xmqq5yolav8l.fsf@gitster.g>
-References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
- <xmqq5yolav8l.fsf@gitster.g>
+        with ESMTP id S1349439AbiCKOSP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 09:18:15 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Mar 2022 06:17:10 PST
+Received: from mail.vivaldi.com (mail.vivaldi.com [31.209.137.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C241C74E7
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 06:17:10 -0800 (PST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vivaldi.com (Postfix) with ESMTP id F0A7A1F873E
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=vivaldi.com; h=
+        mime-version:content-transfer-encoding:date:date:subject:subject
+        :from:from:message-id:content-type:content-type:received
+        :received; s=2019; t=1647007827; bh=jkPnzK1U8U/yhvm7Cyn6lzazS2Ev
+        y4ryv45AkH16n8E=; b=g51Zsub2iV9I5k9iqXKeYGW3qo2jyfYACNcHhTUqf2IM
+        CX72hVBkbOGJ1eyhF9JqG6ibhSpwvVc+Bhz00YwiAEKumhdI+NCuV/LybJLbPKd/
+        kuo9+aqS/+OUpJ1o59erieMQWobXk3wsBpyVdTSKXuXGpMh1RsNPs1ecyAB7ca8n
+        mZ7TvRIVFpxOJnTorugof2VR9qpGNx1O09yH4ZnSwR3Li3ew0LFgnUwogpcsUH5o
+        TVEQp53D3LMsatHYAOzmBxTRWIlsAJ+24fGoUEzeFb510YGU0KLJReqcLgaMML4z
+        Zt5WRoAY1Di9LdDLviMLKeqIMRozvafOZwm8gN3ufA==
+X-Virus-Scanned: Debian amavisd-new at vivaldi.com
+Received: from mail.vivaldi.com ([127.0.0.1])
+        by localhost (mail.vivaldi.com [127.0.0.1]) (amavisd-new, port 10023)
+        with ESMTP id Pq5Vkd55G5l4 for <git@vger.kernel.org>;
+        Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
+Received: from noip.localdomain (ti0182q160-1041.bb.online.no [109.189.134.30])
+        by mail.vivaldi.com (Postfix) with ESMTPSA id A51A71F8125
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 14:10:27 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Message-Id: <1647006095912.1308641200.2893260369@vivaldi.com>
+From:   "Yngve N. Pettersen" <yngve@vivaldi.com>
+To:     git@vger.kernel.org
+Subject: Incorrect work dir for submodule fetch operations
+Date:   Fri, 11 Mar 2022 14:10:25 +0000
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
+Since Git 2.21 the Windows version have frequently reported 
 
-On 11 Mar 2022, at 0:55, Junio C Hamano wrote:
+   error: cannot spawn git: Invalid argument
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> This is happening because on a fast foward with an oid as a <branch>,
->> update_refs() will only call update_ref() with REF_NO_DEREF if
->> RESET_HEAD_DETACH is set. This change was made in 176f5d96 (built-in rebase
->> --autostash: leave the current branch alone if possible,
->> 2018-11-07). In rebase, we are not setting the RESET_HEAD_DETACH flag,
->> which means that the update_ref() call ends up dereferencing
->> HEAD and updating it to the oid used as <branch>.
->>
->> The correct behavior is that git rebase should update HEAD to $(git
->> rev-parse topic) without dereferencing it.
->
-> It is unintuitive that unconditionally setting the RESET_HEAD_DETACH
-> bit is the right solution.
->
-> If the command weren't "rebase master side^0" but "rebase master
-> side", i.e. "please rebase the side branch itself, not an unnamed
-> branch created out of the side branch, on master", according to
-> <reset.h>, we ought to end up being on a detached HEAD, as
-> reset_head() with the bit
->
->     /* Request a detached checkout */
->     #define RESET_HEAD_DETACH (1<<0)
->
-> requests a detached checkout.  But that apparently is not what would
-> happen with your patch applied.
->
-> Puzzled.  The solution to the puzzle probably deserves to be in the
-> proposed log message.
+and still do in 2.34 and 2.35.
 
-Good point. Thinking aloud, here is the callstack.
+The reported error does not seem to have any bad effects, but the error 
+report is an irritation.
 
-checkout_up_to_date() -> reset_head() -> update_refs() -> update_ref()
+At the time, this was reported to the Git for Windows team as 
+<https://github.com/git-for-windows/git/issues/2126>
 
-if <branch> is not a valid ref, rebase_options head_name is set to NULL. This
-eventually leads update_refs() to decide that it doesn't need to switch to a
-branch via its switch_to_branch variable.
+As it has not yet been fixed, the past couple of days I have investigated 
+more closely.
 
-reset.c:
+The error is printed for a submodule.c function submodule_has_commits() 
+which starts the command "rev-parse" for a submodule.
 
-if (!switch_to_branch)
-	ret = update_ref(reflog_head, "HEAD", oid, head,
-			 detach_head ? REF_NO_DEREF : 0,
-			 UPDATE_REFS_MSG_ON_ERR);
- else {
-	ret = update_ref(reflog_branch ? reflog_branch : reflog_head,
-			 switch_to_branch, oid, NULL, 0,
-			 UPDATE_REFS_MSG_ON_ERR);
-	if (!ret)
-		ret = create_symref("HEAD", switch_to_branch,
-				    reflog_head);
-}
+The reason for the error is that the function starts the command for 
+submodule "foo", which is present in the checkout directory. However, the 
+actual CWD dir is the git dir for the current module, not the checkout 
+directory, and the change directory operation therefore fails.
 
-since the flags do not include RESET_HEAD_DETACH, detach_head is set to false and we get a
-deferenced HEAD update.
+The "rev-parse" made it possible for me to connect this problem with a 
+different problem that I have been seeing at Linux and Mac, where the error 
+message 
 
-The solution I came up with works because when <branch> __is__ a valid branch,
-udpate_refs() takes a different code path that calls create_symref() with a
-branch, which is why we don't end up with a detached HEAD.
+   fatal: exec 'rev-list': cd to 'foo' failed: No such file or directory
 
-I see why this is confusing though. From checkout_up_to_date's perspective it looks like we
-are unconditionally detaching HEAD. So what we could do is only set the flag in
-checkout_up_to_date() when, from checkout_up_to_date's perspective, we will end
-up with a detached head. something like this:
+is frequently reported, especially when a branch in the parent module has 
+new submodules defined.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b29ad2b65e72..f0403fb12421 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -827,8 +827,10 @@ static int checkout_up_to_date(struct rebase_options *options)
-                    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
-                    options->switch_to);
-        ropts.oid = &options->orig_head;
--       ropts.branch = options->head_name;
-        ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-+       ropts.branch = options->head_name;
-+       if (!ropts.branch)
-+               ropts.flags |=  RESET_HEAD_DETACH;
-        ropts.head_msg = buf.buf;
-        if (reset_head(the_repository, &ropts) < 0)
-                ret = error(_("could not switch to %s"), options->switch_to);
+AFAICT, the reason for the CWD being the git dir, not the checkout dir, is 
+that  get_next_submodule() in submodule.c starts a fetch operation directly 
+in the git dir, instead of the checkout directory
 
-Otherwise, checkout_up_to_date() has to implicitly know the downstream logic in
-update_refs(). I believe that's the main source of the confusion--is that right?
+Further, submodule_has_commits() which is called by the fetch command via 
+fetch_populated_submodules() assumes that its CWD is in the checkout 
+directory.
 
->
-> Thanks.
 
-Thanks
-John
+After a bisect it seems the regression point for this was commit 
+be76c2128234d94b47f7087152ee55d08bb65d88 
+<https://github.com/git-for-windows/git/commit/be76c2128234d94b47f7087152ee55d08bb65d88>, 
+which added the fetch in git dir command in get_next_submodule().
+
+A testcase for reproducing the issue can be found in 
+<https://github.com/git-for-windows/git/issues/2126#issuecomment-1064153093>
+ (assumes default branch is "main"), which builds up a submodule set based 
+on two Chromium repos (chromium src, and depot_tools)
+
+I am uncertain what the proper fix for this issue should be, but my guess 
+is that each command need to specify whether it is going to work relative 
+to the git dir, or the checkout dir. It is IMO conceivable that other 
+commands may have this kind of problem, especially in a submodule context, 
+or that future features may encounter them.
+
+
+
+-- 
+Sincerely,
+Yngve N. Pettersen
+Vivaldi Technologies AS
