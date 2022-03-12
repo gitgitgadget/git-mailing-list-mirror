@@ -2,104 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FA45C433F5
-	for <git@archiver.kernel.org>; Sat, 12 Mar 2022 03:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14184C433F5
+	for <git@archiver.kernel.org>; Sat, 12 Mar 2022 04:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiCLDQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Mar 2022 22:16:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35542 "EHLO
+        id S230221AbiCLEhW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Mar 2022 23:37:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiCLDQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Mar 2022 22:16:55 -0500
-X-Greylist: delayed 317 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Mar 2022 19:15:50 PST
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BE724A93C
-        for <git@vger.kernel.org>; Fri, 11 Mar 2022 19:15:50 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 213823201D2F;
-        Fri, 11 Mar 2022 22:10:30 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 11 Mar 2022 22:10:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mcclimon.org; h=
-        cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=VzMimLGyCa7BA9il2Pw2lDdBBbIcPBfsy5f+oL
-        z2JHo=; b=icn26eoQFMdGlByuxUonIXpC9HaEUb0FLUAg8NAg2mUeJAIyhjhSIL
-        BlVlAQCP72Fmf4E4pfzC3jBwT/Q1Ylk2WwB0MX1eWXDUR7FDv78U3rDnOnXNyZel
-        lTIBOB6p4pSEV4JWTMzZcDttYQivAy+Bm2NbGhyNGFIySGTLesBXoeWu9FZnmdZw
-        xKbeIchT/+A56qKrzBBRH5VFdRZkGpQb7WENm9gHO1ahRnOFP7kz6bgdbGU3ZZn6
-        C4NlACrEjvnQsnBT7gsg8ot/yP6A7FxfiOiMZ8C2RWcVRe2VMP6/qebThY7/Y924
-        ietZo9EReypVPThg4IaGl4Zrpl9nvHag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=VzMimLGyCa7BA9il2
-        Pw2lDdBBbIcPBfsy5f+oLz2JHo=; b=Wdy0Li1siAfPAD91ySzQIbIc8PNK4TMF1
-        wfwf7CnP9cBajXbpRdh+vkKdeAsy6OnblM1Cn8DQ4CSlvo8Tjgq3Vs5KbFPF+x+i
-        XTICbi5L9s7Bh/zW8OoVusNjfCF2WW9nFceVBHUcqldE992TD7moe75FfTn4T3TG
-        48YRMjgqbL+hPHu3G1rYJ46PQw318AGBukgtn747/U+dZ0BFyX+jIBQ2F2uwq/pE
-        hFE4VW0OmSbqtpinG5rK1Uc0JrJma6/Ojgx16XjJrwYTVQxXhQs9TwovPhULvFKS
-        7wG0DPgTuFBHFIm4RFT1UZR/FX25kRUEgHyImn54FTQCMqr+uWCVQ==
-X-ME-Sender: <xms:JQ8sYh-p1Tr7PRArZWY7G9RmGyMI_smkxncCNXTi_qofrp31neTjrw>
-    <xme:JQ8sYlv4dBXLYZcF8DWQVtFO40Y_sie6Yp3MQ9T6a-UgMEA-xXWBvDvcCYikrU_H0
-    sad3mEgdXQbhhYdyDQ>
-X-ME-Received: <xmr:JQ8sYvDYMw9ZFatK-0fltW5cyDbaF3Qci9BEEbIFk35BELPAmE8ItV_bVkGNByabrk9M4j9if27pLPYcMOmIOo-eipFGZJACjtZ3RUHVmZko>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvfedgheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefoihgthhgr
-    vghlucfotgevlhhimhhonhcuoehmihgthhgrvghlsehmtggtlhhimhhonhdrohhrgheqne
-    cuggftrfgrthhtvghrnhepkeekleefhfffteeuleekkeethfehffelgedukefgkeffuddu
-    iedufeelgefhheelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepmhhitghhrggvlhesmhgttghlihhmohhnrdhorhhg
-X-ME-Proxy: <xmx:JQ8sYldqHnBA6Ld4FkUcoayMjzG-dO2aHYsYwva0BJYqf9nWhwRjtA>
-    <xmx:JQ8sYmM19cbcGZnlfrV9VwP9Iexi_wHlGRqEkWlei4n9YjGR4i7UMA>
-    <xmx:JQ8sYnlJiZY9pSqN3Jfz7RS4vDpf6nfqjTo2LjU1gczQRli_XinPrA>
-    <xmx:JQ8sYgUkabxehvVkVBkqs8Ngqy3xEMdFtTsJFBR9t5-k6ZT2Kg868w>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Mar 2022 22:10:29 -0500 (EST)
-Date:   Fri, 11 Mar 2022 22:10:28 -0500
-From:   Michael McClimon <michael@mcclimon.org>
-To:     John Cai <johncai86@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug with rebase and commit hashes
-Message-ID: <YiwPJD39+/hnu36j@newk>
-References: <YiokTm3GxIZQQUow@newk>
- <C92B297B-0634-40CC-B1C6-B2A7325BF7DA@gmail.com>
- <036EAEE4-D957-41F2-8B17-3AD7B2E49611@gmail.com>
+        with ESMTP id S229502AbiCLEhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Mar 2022 23:37:21 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B3E0159EAF
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 20:36:17 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id z16so9574559pfh.3
+        for <git@vger.kernel.org>; Fri, 11 Mar 2022 20:36:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:from:to:subject:references
+         :in-reply-to:content-transfer-encoding;
+        bh=CvZH3Xbe0wekTJUTxjeJZcXi0gNT91vvK3QlT1tiELk=;
+        b=CleXO7jmW7sLxvpiAPax9mLs7/VKapunxEZn2VhhFnWhURt4XYfI38furpYgJ4Bxug
+         7JOpdrDddUFReM+l9uHyETs4bEm8CqWx771CzLBoBG4hX4FHyDJV8R2/P+VDXyWKFe3H
+         XaauNFCXOSCFYlVu14vtEH0dOYTqDQ6XpyHQ8GWZ3d29qLzd0/RCmq5TWCwxCDoUC6FC
+         Y2Qml8OCoIQ7SSenm6DN/vxG2q5NyrN3nuCL+yplN5jZNI3OTFrXUiTw+Ur/gupSXIAc
+         eWbLQp+5yuzEwEf4LWm1SIO/W1yGfdX/XuOZ67j0uKTwJrJpBFmjXUKQf2ppDt9DH7Zi
+         OmSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
+         :subject:references:in-reply-to:content-transfer-encoding;
+        bh=CvZH3Xbe0wekTJUTxjeJZcXi0gNT91vvK3QlT1tiELk=;
+        b=MgmIhD09m8gePYrylwPh/X2ZkRZQ2F4k3wjJj4FX2LiLV0fuXWDO7nfD04+3ycph21
+         qCF+Y/ZO80KwHV6B2d+t3XHcQJmcQI/9noQbmMTfoWvR/c+YixEVG0t16b3IB2vNb443
+         n/oC+JTv0SAxVHV0fHD0qD3TKpExEvBXk9EWcpHgue3TsOhqD/5WAa9DrSHxXkTu7dal
+         uFG4jwP2rbUyIBfZc8AannMj7kmnsMzQAO1Yi9aQnjE+wFz4JioD12mu7U6QABVZYKjd
+         mG7C+hMA16vIK83QtPgIToZBIFQ5tP7XoCDojteEO8Jat9CLED3WG8VDU8uivsK3DjIb
+         vkeg==
+X-Gm-Message-State: AOAM533XX6P1aLLN14fz0qTcyNlEgyJvHjFJHZvVMj9+TGBudHgqndME
+        k7nXbmDmMqIRVP/ts/x8rdw=
+X-Google-Smtp-Source: ABdhPJx1xIAinrcB8ukiOy7SP5xGEsIdc59cH2kxZGFXVzCo6p0MydE+4OyZKeaeTKEpl6cT3sBaLg==
+X-Received: by 2002:a63:86:0:b0:36c:48e8:627e with SMTP id 128-20020a630086000000b0036c48e8627emr11361442pga.53.1647059776459;
+        Fri, 11 Mar 2022 20:36:16 -0800 (PST)
+Received: from ?IPV6:2405:201:a800:4df9:6560:dadc:f905:6d19? ([2405:201:a800:4df9:6560:dadc:f905:6d19])
+        by smtp.gmail.com with ESMTPSA id nk5-20020a17090b194500b001bf01e6e558sm10553155pjb.29.2022.03.11.20.36.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Mar 2022 20:36:16 -0800 (PST)
+Message-ID: <62e13889-315a-1a42-f37b-390702c0aa9d@gmail.com>
+Date:   Sat, 12 Mar 2022 10:06:08 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <036EAEE4-D957-41F2-8B17-3AD7B2E49611@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+From:   jaydeepjd.8914@gmail.com
+To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH v6] userdiff: add builtin diff driver for kotlin language.
+References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
+ <20220311072716.674808-1-jaydeepjd.8914@gmail.com>
+ <16543315-8515-a4d7-d75b-e7fe9731a7cf@kdbg.org>
+In-Reply-To: <16543315-8515-a4d7-d75b-e7fe9731a7cf@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks both! I had a look at this on the couch this evening, and with the
-caveat that I am not at all a C programmer, I think have a patch that fixes
-it:
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b29ad2b6..82fb5e2c 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -829,6 +829,8 @@ static int checkout_up_to_date(struct rebase_options *options)
-        ropts.oid = &options->orig_head;
-        ropts.branch = options->head_name;
-        ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-+       if (!ropts.branch)
-+               ropts.flags |= RESET_HEAD_DETACH;
-        ropts.head_msg = buf.buf;
-        if (reset_head(the_repository, &ropts) < 0)
-                ret = error(_("could not switch to %s"), options->switch_to);
 
 
-I haven't yet run the entire test suite, but I did run all the t*-rebase*
-tests, which passed, including Junio's up-thread here. If this seems not
-totally off-base, then I'll actually read the "my first contribution" docs and
-send in a proper patch and whatnot.
+On 3/12/22 1:37 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 11.03.22 um 08:27 schrieb Jaydeep P Das:
+> > The xfuncname pattern finds func/class declarations
+> > in diffs to display as a hunk header. The word_regex
+> > pattern finds individual tokens in Kotlin code to generate
+> > appropriate diffs.
+> >
+> > This patch adds xfuncname regex and word_regex for Kotlin
+> > language.
+> >
+> > Signed-off-by: Jaydeep P Das <jaydeepjd.8914@gmail.com>
+> > ---
+> 
+> Thank you. At first, I thought this round is it, but then I noticed this
+> line:
+> 
+> > +<RED>0xFF_EC_DE_5E 0b100_000 1<RESET><GREEN>0xFF_E1_DE_5E 0b100_100 2<RESET>00_000
+> 
+> Notice how the change from 100_000 to 200_000 breaks out the first digit
+> into its own token.
 
--- 
-Michael McClimon
-michael@mcclimon.org
+Wow. I completely missed it.
+
+> > diff --git a/userdiff.c b/userdiff.c
+> > index 8578cb0d12..c416c9b426 100644
+> > --- a/userdiff.c
+> > +++ b/userdiff.c
+> > @@ -168,6 +168,18 @@ PATTERNS("java",
+> >   	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+> >   	 "|[-+*/<>%&^|=!]="
+> >   	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+> > +PATTERNS("kotlin",
+> > +	 "^[ \t]*(([a-z]+[ \t]+)*(fun|class|interface)[ \t]+.*)$",
+> > +	 /* -- */
+> > +	 "[a-zA-Z_][a-zA-Z0-9_]*"
+> > +	 /* hexadecimal and binary numbers */
+> > +	 "|0[xXbB][0-9a-fA-F_]+[lLuU]*"
+> > +	 /* integers and floats */
+> > +	 "|[0-9][0-9_]*([.][0-9_]*)([Ee][-+]?[0-9]+)?[fFlLuU]*"
+> 
+> This line matches a non-empty digit sequence of any length, and I
+> thought the longest match would win. Why is that not the case here?
+> Frankly, I'm scratching my head over it. Any ideas?
+
+Yes. The capture group ([.][0-9_]*) should occur once or zero times. So
+this `([.][0-9_]*)?` will fix it.
+
+
