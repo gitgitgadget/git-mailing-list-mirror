@@ -2,193 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 316B5C433EF
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52CA3C433F5
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235450AbiCMTmc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 15:42:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
+        id S234860AbiCMTsv convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 13 Mar 2022 15:48:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233197AbiCMTmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 15:42:32 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC24846660
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:41:23 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5C9611DF52;
-        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=afXhkHckx5CkQRWdZMyJ/PpFCW3ScachO9fP3r
-        1iAqI=; b=awsY7ZqSed4A1CBU3gGRkpq5UW1hes7ldl5DvCGFf16sT6VOljlHmF
-        DyaPuSatbfF3o05yDYMRDslPLH7YFe+K9Z2+SfBBQf2eqegTxJVfD3K7z0Dt80Oh
-        grJrnAG4wblZjxZqMAN/QC05mIuoTyUtDlglAMnktAd9RFyzglrk0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD17411DF51;
-        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D29911DF4F;
-        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH] partial-clone: add a partial-clone test case
-References: <pull.1175.git.1647193162570.gitgitgadget@gmail.com>
-Date:   Sun, 13 Mar 2022 19:41:21 +0000
-In-Reply-To: <pull.1175.git.1647193162570.gitgitgadget@gmail.com> (Abhradeep
-        Chakraborty via GitGitGadget's message of "Sun, 13 Mar 2022 17:39:22
-        +0000")
-Message-ID: <xmqq4k41vdwe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229632AbiCMTsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 15:48:50 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E1B50455
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:47:42 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22DJlQD8034732
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 13 Mar 2022 15:47:27 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     <rsbecker@nexbridge.com>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Sean Allred'" <allred.sean@gmail.com>
+Cc:     <git@vger.kernel.org>, <sallred@epic.com>, <grmason@epic.com>,
+        <sconrad@epic.com>
+References: <878rtebxk0.fsf@gmail.com> <Yi4oO+ifSK8OH0Mt@camp.crustytoothpaste.net> <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
+In-Reply-To: <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
+Subject: RE: Dealing with corporate email recycling
+Date:   Sun, 13 Mar 2022 15:47:22 -0400
+Organization: Nexbridge Inc.
+Message-ID: <020901d83713$2b446ac0$81cd4040$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F9EAFCC-A305-11EC-8332-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQDHpNtgb5IcYOGFILwDPZIseKDDCgLKGfUhAnsfUr2utLAuYA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On March 13, 2022 1:53 PM, I wrote:
+>To: 'brian m. carlson' <sandals@crustytoothpaste.net>; 'Sean Allred'
+><allred.sean@gmail.com>
+>Cc: git@vger.kernel.org; sallred@epic.com; grmason@epic.com;
+>sconrad@epic.com
+>Subject: RE: Dealing with corporate email recycling
 >
-> In a blobless-cloned repo, `git log --follow -- <path>` (`<path>` have
-> an exact OID rename) doesn't download blob of the file from where the
-> new file is renamed.
+>On March 13, 2022 1:22 PM, brian m. carlson wrote:
+>>On 2022-03-12 at 22:38:56, Sean Allred wrote:
+>>> * Proposal: UUIDs
+>>>
+>>> To get what we want (i.e., the ability to run `git show HEAD~1`, know
+>>> that Ada wrote it, and report her current contact information), we
+>>> need some way of tracking identity over time.  A naive solution could
+>>> be to extend the mailmap format as recognized by Git:
+>>>
+>>>     $ git cat-file blob HEAD~1:.mailmap
+>>>     A. U. Thor <foo@example.com> [uuid A] <ada@example.com>
+>>>
+>>>     $ git cat-file blob HEAD:.mailmap
+>>>     A. U. Thor <ada@example.com> [uuid A]
+>>>     Roy G. Biv <foo@example.com> [uuid B] <roy@example.com>
+>>>
+>>> Now, when I run `git show HEAD~1`, Git would determine the UUID of
+>>> the email on the commit using the mailmap version in that tree:
+>>>
+>>>     $ git -c mailmap.blob=HEAD~1:.mailmap check-mailmap --uuid
+>>"<foo@example.com>"
+>>>     A
+>>>
+>>> Then, we can use that UUID to resolve to the current contact information:
+>>>
+>>>     $ git check-mailmap --uuid=A
+>>>     A. U. Thor <ada@example.com>
+>>>
+>>> Mailmap-sensitive commands can use this logic internally -- possibly
+>>> guarded under some new config setting.
+>>
+>>It's my intention to implement an approach where people's emails are
+>>identified by a key fingerprint of some sort and then converted into
+>>the proper email address by a mailmap that lives outside of the main
+>>history.  That is, my email address might be
+>>ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad@ssh-
+>>sha256.ns.git-scm.com,
+>>and then we have a mailmap that converts between the two.  If you
+>>wanted to have a UUID-based one, you could do 77c747a3-1599-4c8c-9569-
+>>f729c17632e6@uuid.ns.git-scm.com (assuming that namespace were registered).
+>>
+>>The benefit to the key part is that you can essentially prove that you
+>>are who you say you are.  A UUID doesn't have the possibility.
+>>
+>>This was discussed briefly at some sort of contributor summit we had at
+>>some point, but I've been busy and haven't gotten to it yet.  It is on
+>>my list of projects, however.
+>
+>This could require a global and security hardened tokenization or signing approach.
+>Email fingerprints from one organization would have to be able to move to
+>another organization easily - potentially as part of the git repo's metadata. I would
+>not use the same key as is used for signing fingerprints (mostly out of paranoia),
+>but this is conceptually similar to the public side of a key-pair. One would have to
+>have access to the private key in order to be a committer/author. Unfortunately,
+>as it stands today, that may be easily spoofed (--committer, --author), so that part
+>of the code would have to change with safeguards on what can be supplied -
+>something I think would be welcome. Keeping with a distributed philosophy is
+>probably essential. Just my take on it.
 
-Is this "doesn't" (documenting current behaviour, without saying if
-it is wrong or is desired) or "shouldn't" (documenting the desired
-behaviour, which the current implementation may or may not satisfy)?
+What about abstracting this into a map-email or map-identity hook of some kind? So, whenever there is a need to write an identity (committer, author, signed-off-by, etc.). That way, anyone who wants to, can implement whatever policy they want for replacing emails with some other value in the repo, and back again. It might be good to optimize it so that the hook is only invoked once per identity per request so that git log does not become insanely expensive.
 
-> +test_expect_success 'git log --follow does not download blobs if an exact OID rename found (blobless clone)' '
+Something like map-identity from <internal-value>  and map-identity to <external-value>, for example:
 
-That's mouthful.
+map-identity from "Randall S. Becker <rsbecker@nexbridge.com>"      > A056AAB2123
 
-> +	rm -rf repo partial.git &&
-> +	test_create_repo repo &&
-> +	content="some dummy content" &&
-> +	test_commit -C repo create-a-file file.txt "$content" &&
-> +	git -C repo mv file.txt new-file.txt &&
-> +	git -C repo commit -m rename-the-file &&
-> +	test_config -C repo uploadpack.allowfilter 1 &&
-> +	test_config -C repo uploadpack.allowanysha1inwant 1 &&
-> +
-> +	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
-> +	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-> +		git -C partial.git log --follow -- new-file.txt > "$(pwd)/trace.txt" &&
+And
 
-Lose SP after '>'.
+map-identity to A056AAB2123      >  Randall S. Becker <rsbecker@nexbridge.com>
 
-		git -C partial.git log --follow -- new-file.txt >"$(pwd)/trace.txt" &&
-
-> +	! test_subcommand_inexact fetch <trace.txt
-
-Looking at the implementation of the helper, it seems to be prepared
-to handle negation itself.  Shouldn't this be
-
-	test_subcommand_inexact ! fetch <trace.txt
-
-instead?
-
-> +'
-> +
->  test_expect_success 'lazy-fetch when accessing object not in the_repository' '
->  	rm -rf full partial.git &&
->  	test_create_repo full &&
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 0f439c99d61..07a2b60c103 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1811,7 +1811,7 @@ test_subcommand_inexact () {
->  		shift
->  	fi
->  
-> -	local expr=$(printf '"%s".*' "$@")
-> +	local expr=$(printf '.*"%s".*' "$@")
-
-The original wanted to make sure that the arguments to the helper
-are initial items of a comma separated list, and an existing caller,
-for example, i.e.
-
-  test_subcommand_inexact git pack-objects --honor-pack-keep <trace
-
-is relying on the behaviour to make sure 'git', 'pack-objects', ...
-appear at the beginning of "[...]" enclosed list.  This change
-breaks its ability to notice that an insertion of unrelated token
-before 'git' as an error.
-
-In other words, it looks like an uncalled-for selfish change.
-
-Why can't you specify what should NOT come before "fetch" in your
-use of this helper?
-
->  	expr="${expr%,}"
-
-The preimage already has this problem, but the stripping of trailing
-comma here is a result of mistaken copy-and-paste from the exact
-variant, I think.  test_subcommand uses
-
-	local expr=$(printf '"%s",' "$@")
-
-to concatenate "$@" into a single comma-separated string, so it
-perfectly makes sense to drop the last one here, but with or without
-your change here, neither is adding a comma that need to be
-stripped.
-
-
-It is not _your_ theme, but I think this helper is poorly designed,
-especially compared to the original "exact" variant.
-
-        test_subcommand_inexact () {
-                local negate=
-                if test "$1" = "!"
-                then
-                        negate=t
-                        shift
-                fi
-
-                local expr=$(printf '"%s".*' "$@")
-                expr="${expr%,}"
-
-                if test -n "$negate"
-                then
-                        ! grep "\"event\":\"child_start\".*\[$expr\]"
-                else
-                        grep "\"event\":\"child_start\".*\[$expr\]"
-                fi
-        }
-
-
-I've already touched that "${expr%,}" there is a totally useful
-statement that will always be a no-op.
-
-When "test_subcommand_inexact git pack-objects" is run, the printf
-assigns to $expr:
-
-		expr='"git".*"pack-objects".*'
-
-and the actual grep command invoked becomes
-
-	grep '"event":"child_start".*\["git".*"pack-objects".*\]'
-
-I am not sure if that is what we really want.
-
-I wonder if it was more like this that the original wanted to grep for:
-
-	grep '"event":"child_start".*\["git","pack-objects",.*\]'
-
-in which case the two lines there should be more like
-
-	local expr=$(printf '"%s",' "$@")
-	expr="${expr%,}.*"
-
-I would think.  This comes from Derrick's e4d0c11c (repack: respect
-kept objects with '--write-midx -b', 2021-12-20).
+Again, just a notion.
 
