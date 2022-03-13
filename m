@@ -2,134 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE676C433F5
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 17:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A2AC433F5
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 17:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235185AbiCMRke (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 13:40:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34118 "EHLO
+        id S235214AbiCMRyU convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 13 Mar 2022 13:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbiCMRkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 13:40:33 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5282F1EAD1
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:39:25 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so10574415wms.3
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=KpnMqio74vfQyIDeUJkIa4t8XycTwlTSK1lkJmzrR38=;
-        b=dJHQOr/69C6OU/b1fyndUOB2fyGAvU4U4Fa/QUiPGLaskJ3DMKrhSrSuUft8FgHHEi
-         q92RQbJaf2rszKdVLRp9oT4fy25OxOMi6Q7glpmYli+/InMbut0dW0paD0zn1LRFooWg
-         E5WUfT7vOrASp4XgsqTychJuc6IUXbX+DEcKQB/fS9p/3gUosKTMoWRWgqfByVAQ5kiH
-         uBTrH3sfdiTuWcroMHIid/1ITqq9ENcPEkSZ0P7tuKxPahQKor41ax9BwvmBIMLAgd97
-         /AUa0BOImYec5K67btsss0AqAKKhB2fjJaJZhWrw7iA4YpwEmQ9w1npZO//dPDVq5U2t
-         FWRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=KpnMqio74vfQyIDeUJkIa4t8XycTwlTSK1lkJmzrR38=;
-        b=fXZOylXY648IlBzlcJrCLmYxyZEHSchuoEyGcAyYHTgQyJAZf+ZA4iLlUk4lDoNJOg
-         qkzw/i2r3i2XlVkDwkWSPRqJCVjBjGhmRzo9wzJ+TrVFBH7n14kMqNrnpru49B/Si5rT
-         aSJVqv62H5dtIcvZB0ZdaPhpZs1bAvggzPt0bGkDwlloAgneH4+flVwJ+kDot85wQvx/
-         cTQIZnY2kBMqWub9dhocQ8DtOaoHTr8UJdikCizEP6PegmsJHNC+SISHwapT3wUEblXs
-         O3Eb0eBg1WhCWoG36TtjCM+8G9Xsu0xzzlLbVTY4HS/sj1q+LNpbhdJmGJKdUNlAesvR
-         6kKg==
-X-Gm-Message-State: AOAM531wRZAmBYHFQk738lQ2nFLEf1UeakakjqQ4NdJOLydGzkkIBt9r
-        LRdYwDBZhVS0/hzcB43dGoD4cFJcrao=
-X-Google-Smtp-Source: ABdhPJyDMBmx3eP3yN/Vm9vPiIBSy+Ou4s0wV6+O4mDqkQtjRien5uxUpAc3bvChg0vrAi9WUGPZZg==
-X-Received: by 2002:a1c:f607:0:b0:381:1db:d767 with SMTP id w7-20020a1cf607000000b0038101dbd767mr14249741wmc.165.1647193163579;
-        Sun, 13 Mar 2022 10:39:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v14-20020a7bcb4e000000b0034492fa24c6sm12801141wmj.34.2022.03.13.10.39.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Mar 2022 10:39:23 -0700 (PDT)
-Message-Id: <pull.1175.git.1647193162570.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Mar 2022 17:39:22 +0000
-Subject: [PATCH] partial-clone: add a partial-clone test case
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230184AbiCMRyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 13:54:19 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF07340FD
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:53:10 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22DHr2mP029472
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 13 Mar 2022 13:53:02 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Sean Allred'" <allred.sean@gmail.com>
+Cc:     <git@vger.kernel.org>, <sallred@epic.com>, <grmason@epic.com>,
+        <sconrad@epic.com>
+References: <878rtebxk0.fsf@gmail.com> <Yi4oO+ifSK8OH0Mt@camp.crustytoothpaste.net>
+In-Reply-To: <Yi4oO+ifSK8OH0Mt@camp.crustytoothpaste.net>
+Subject: RE: Dealing with corporate email recycling
+Date:   Sun, 13 Mar 2022 13:52:57 -0400
+Organization: Nexbridge Inc.
+Message-ID: <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQDHpNtgb5IcYOGFILwDPZIseKDDCgLKGfUhrshpIHA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On March 13, 2022 1:22 PM, brian m. carlson wrote:
+>On 2022-03-12 at 22:38:56, Sean Allred wrote:
+>> * Proposal: UUIDs
+>>
+>> To get what we want (i.e., the ability to run `git show HEAD~1`, know
+>> that Ada wrote it, and report her current contact information), we
+>> need some way of tracking identity over time.  A naive solution could
+>> be to extend the mailmap format as recognized by Git:
+>>
+>>     $ git cat-file blob HEAD~1:.mailmap
+>>     A. U. Thor <foo@example.com> [uuid A] <ada@example.com>
+>>
+>>     $ git cat-file blob HEAD:.mailmap
+>>     A. U. Thor <ada@example.com> [uuid A]
+>>     Roy G. Biv <foo@example.com> [uuid B] <roy@example.com>
+>>
+>> Now, when I run `git show HEAD~1`, Git would determine the UUID of the
+>> email on the commit using the mailmap version in that tree:
+>>
+>>     $ git -c mailmap.blob=HEAD~1:.mailmap check-mailmap --uuid
+>"<foo@example.com>"
+>>     A
+>>
+>> Then, we can use that UUID to resolve to the current contact information:
+>>
+>>     $ git check-mailmap --uuid=A
+>>     A. U. Thor <ada@example.com>
+>>
+>> Mailmap-sensitive commands can use this logic internally -- possibly
+>> guarded under some new config setting.
+>
+>It's my intention to implement an approach where people's emails are identified
+>by a key fingerprint of some sort and then converted into the proper email
+>address by a mailmap that lives outside of the main history.  That is, my email
+>address might be
+>ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad@ssh-
+>sha256.ns.git-scm.com,
+>and then we have a mailmap that converts between the two.  If you wanted to
+>have a UUID-based one, you could do 77c747a3-1599-4c8c-9569-
+>f729c17632e6@uuid.ns.git-scm.com (assuming that namespace were registered).
+>
+>The benefit to the key part is that you can essentially prove that you are who you
+>say you are.  A UUID doesn't have the possibility.
+>
+>This was discussed briefly at some sort of contributor summit we had at some
+>point, but I've been busy and haven't gotten to it yet.  It is on my list of projects,
+>however.
 
-In a blobless-cloned repo, `git log --follow -- <path>` (`<path>` have
-an exact OID rename) doesn't download blob of the file from where the
-new file is renamed.
+This could require a global and security hardened tokenization or signing approach. Email fingerprints from one organization would have to be able to move to another organization easily - potentially as part of the git repo's metadata. I would not use the same key as is used for signing fingerprints (mostly out of paranoia), but this is conceptually similar to the public side of a key-pair. One would have to have access to the private key in order to be a committer/author. Unfortunately, as it stands today, that may be easily spoofed (--committer, --author), so that part of the code would have to change with safeguards on what can be supplied - something I think would be welcome. Keeping with a distributed philosophy is probably essential. Just my take on it.
 
-Add a test case to verify it.
-
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
-    partial-clone: add a partial-clone test case
-    
-    Fixes #827 [1]
-    
-    [1] https://github.com/gitgitgadget/git/issues/827
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1175%2FAbhra303%2Fcheck_partial_clone-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1175/Abhra303/check_partial_clone-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1175
-
- t/t0410-partial-clone.sh | 16 ++++++++++++++++
- t/test-lib-functions.sh  |  2 +-
- 2 files changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index f17abd298c8..1e54f4844fd 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -618,6 +618,22 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
- 	git -C repo cherry-pick side1
- '
- 
-+test_expect_success 'git log --follow does not download blobs if an exact OID rename found (blobless clone)' '
-+	rm -rf repo partial.git &&
-+	test_create_repo repo &&
-+	content="some dummy content" &&
-+	test_commit -C repo create-a-file file.txt "$content" &&
-+	git -C repo mv file.txt new-file.txt &&
-+	git -C repo commit -m rename-the-file &&
-+	test_config -C repo uploadpack.allowfilter 1 &&
-+	test_config -C repo uploadpack.allowanysha1inwant 1 &&
-+
-+	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git -C partial.git log --follow -- new-file.txt > "$(pwd)/trace.txt" &&
-+	! test_subcommand_inexact fetch <trace.txt
-+'
-+
- test_expect_success 'lazy-fetch when accessing object not in the_repository' '
- 	rm -rf full partial.git &&
- 	test_create_repo full &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 0f439c99d61..07a2b60c103 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1811,7 +1811,7 @@ test_subcommand_inexact () {
- 		shift
- 	fi
- 
--	local expr=$(printf '"%s".*' "$@")
-+	local expr=$(printf '.*"%s".*' "$@")
- 	expr="${expr%,}"
- 
- 	if test -n "$negate"
-
-base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
--- 
-gitgitgadget
