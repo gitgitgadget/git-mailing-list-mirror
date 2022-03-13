@@ -2,147 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA87C433EF
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 316B5C433EF
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233464AbiCMTDu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 15:03:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55540 "EHLO
+        id S235450AbiCMTmc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 15:42:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230256AbiCMTDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 15:03:50 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9CA4D61A
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:02:41 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id v75so6401812oie.1
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tTDLSsJLZWB02IEnCcNx0q31wMgsaPTUyKKfUmez03I=;
-        b=LK1j+rQacr7klKZlmZDJmGOqe3mtE90W12kP/SvFpdCQKKwSAeAQsdWb4nj2YjzRQu
-         tlo7X8MfFNiENb2imM6/uS3e+UB00796EJapKdJOpjbkupYYOiG71m1FpULjELKX8hBL
-         R6/Jt7JIpfOZmjs2+SnIJaqlPxP12Y+UV3GEluzWg735tCrpXeWVts/JhoFNYfieFGTQ
-         F4EufZdlcRkX5Rgp5rBZhzvCtyOmdlMB0yXeXL+ns/qibiYGhsFO0XBnQR3M6sRRQrMG
-         1eqBAKhGUly4IAA4HSTW5XMdDZxqogPhpa7CZQS5RENxAGyI6Z2x7AfjZJfLhvhavPfr
-         JTVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tTDLSsJLZWB02IEnCcNx0q31wMgsaPTUyKKfUmez03I=;
-        b=VuebiYTHCa04IzsH8WwS/yUwBzC+iFTO9mBvL1J+NjgupfsLyxioaTHQl5a8SIJD+Q
-         SQgEl8cmNxl2rEialCvpPS8x1rIAxjgCb+Ou8iriPCogD0uJC56omwdm5pj913ehb3NG
-         T3RQfG/mQC+WvVNJ/YVmFl3TY9Xunn6IBXCLhzMkoWaQ7HrrY5nhr59vS80S5o+EXhD+
-         pCgjrwJ34l7l4lqeIeP3B9EVmpdL16Ty8t6fy8kpU6gcv38qd2gISbDzMt1hyyivGmFT
-         fK1foXooWPCMIwErMnTJ7w1BhQlrFxatKmT1H++5ADr9nj+obAxZ9RtMrsRxYx49b6vq
-         U5Eg==
-X-Gm-Message-State: AOAM530p5emnp8YfQdV1UiLlPErkRZUmdvZkbXPy/+8mA4aS3wTbJHtB
-        BeMTQf1ngpn9m0NKyGLvDf//K4E+pv6H1txLITA=
-X-Google-Smtp-Source: ABdhPJx6ar0eGXPA7BbTudOXokIb02AeL2CYpE/YxAXudcgk2jhnES0TRcnucy0xPjbrVMmcuuMHeUe1Htn+wHUeOCI=
-X-Received: by 2002:a05:6808:655:b0:2ec:ce86:303c with SMTP id
- z21-20020a056808065500b002ecce86303cmr2655151oih.217.1647198161010; Sun, 13
- Mar 2022 12:02:41 -0700 (PDT)
+        with ESMTP id S233197AbiCMTmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 15:42:32 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC24846660
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:41:23 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5C9611DF52;
+        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=afXhkHckx5CkQRWdZMyJ/PpFCW3ScachO9fP3r
+        1iAqI=; b=awsY7ZqSed4A1CBU3gGRkpq5UW1hes7ldl5DvCGFf16sT6VOljlHmF
+        DyaPuSatbfF3o05yDYMRDslPLH7YFe+K9Z2+SfBBQf2eqegTxJVfD3K7z0Dt80Oh
+        grJrnAG4wblZjxZqMAN/QC05mIuoTyUtDlglAMnktAd9RFyzglrk0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD17411DF51;
+        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D29911DF4F;
+        Sun, 13 Mar 2022 15:41:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH] partial-clone: add a partial-clone test case
+References: <pull.1175.git.1647193162570.gitgitgadget@gmail.com>
+Date:   Sun, 13 Mar 2022 19:41:21 +0000
+In-Reply-To: <pull.1175.git.1647193162570.gitgitgadget@gmail.com> (Abhradeep
+        Chakraborty via GitGitGadget's message of "Sun, 13 Mar 2022 17:39:22
+        +0000")
+Message-ID: <xmqq4k41vdwe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220304133702.26706-1-gitter.spiros@gmail.com> <20220308113305.39395-1-carenas@gmail.com>
-In-Reply-To: <20220308113305.39395-1-carenas@gmail.com>
-From:   Elia Pinto <gitter.spiros@gmail.com>
-Date:   Sun, 13 Mar 2022 20:02:33 +0100
-Message-ID: <CA+EOSBm1wfO-RPJHiHZiUxokdt8MW3ufoCk_aJ4o7O=x1_nwDQ@mail.gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use awk instead of expr for a POSIX non
- integer check
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F9EAFCC-A305-11EC-8332-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno mar 8 mar 2022 alle ore 12:34 Carlo Marcelo Arenas Bel=C3=B3n
-<carenas@gmail.com> ha scritto:
+"Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 >
-> Restrict the glibc version to a single version number and compare it
-> arithmetically against the base glibc version to avoid accidentally
-> matching against "2.3" and better supporting versions like "2.34.9000"
->
+> In a blobless-cloned repo, `git log --follow -- <path>` (`<path>` have
+> an exact OID rename) doesn't download blob of the file from where the
+> new file is renamed.
 
-I didn't understand the problem. How glibc names the versions is known:
+Is this "doesn't" (documenting current behaviour, without saying if
+it is wrong or is desired) or "shouldn't" (documenting the desired
+behaviour, which the current implementation may or may not satisfy)?
 
-https://sourceware.org/glibc/wiki/Glibc%20Timeline
+> +test_expect_success 'git log --follow does not download blobs if an exact OID rename found (blobless clone)' '
 
-What is wrong with the expr statement ?
+That's mouthful.
 
-+ expr 2.34 '<=3D' 2.35
-1
-+ expr 2.34 '<=3D' 2.34
-1
-+ expr 2.34 '<=3D' 2.33
-0
-+ expr 2.34 '<=3D' 2.32
-0
-+ expr 2.34 '<=3D' 2.31
-0
-+ expr 2.34 '<=3D' 2.30
-0
-+ expr 2.34 '<=3D' 2.29
-0
-+ expr 2.34 '<=3D' 2.28
-0
-+ expr 2.34 '<=3D' 2.27
-0
-+ expr 2.34 '<=3D' 2.26
-0
-+ expr 2.34 '<=3D' 2.25
-0
-+ expr 2.34 '<=3D' 2.24
-0
-+ expr 2.34 '<=3D' 2.23
-0
-+ expr 2.34 '<=3D' 2.22
-0
-+ expr 2.34 '<=3D' 2.21
-0
-+ expr 2.34 '<=3D' 2.20
-0
-+ expr 2.34 '<=3D' 2.19
-0
-+ expr 2.34 '<=3D' 2.18
-0
-+ expr 2.34 '<=3D' 2.17
-0
-+ expr 2.34 '<=3D' 2.16
-0
-+ expr 2.34 '<=3D' 2.15
-0
-+ expr 2.34 '<=3D' 2.13
+> +	rm -rf repo partial.git &&
+> +	test_create_repo repo &&
+> +	content="some dummy content" &&
+> +	test_commit -C repo create-a-file file.txt "$content" &&
+> +	git -C repo mv file.txt new-file.txt &&
+> +	git -C repo commit -m rename-the-file &&
+> +	test_config -C repo uploadpack.allowfilter 1 &&
+> +	test_config -C repo uploadpack.allowanysha1inwant 1 &&
+> +
+> +	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
+> +	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
+> +		git -C partial.git log --follow -- new-file.txt > "$(pwd)/trace.txt" &&
+
+Lose SP after '>'.
+
+		git -C partial.git log --follow -- new-file.txt >"$(pwd)/trace.txt" &&
+
+> +	! test_subcommand_inexact fetch <trace.txt
+
+Looking at the implementation of the helper, it seems to be prepared
+to handle negation itself.  Shouldn't this be
+
+	test_subcommand_inexact ! fetch <trace.txt
+
+instead?
+
+> +'
+> +
+>  test_expect_success 'lazy-fetch when accessing object not in the_repository' '
+>  	rm -rf full partial.git &&
+>  	test_create_repo full &&
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 0f439c99d61..07a2b60c103 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -1811,7 +1811,7 @@ test_subcommand_inexact () {
+>  		shift
+>  	fi
+>  
+> -	local expr=$(printf '"%s".*' "$@")
+> +	local expr=$(printf '.*"%s".*' "$@")
+
+The original wanted to make sure that the arguments to the helper
+are initial items of a comma separated list, and an existing caller,
+for example, i.e.
+
+  test_subcommand_inexact git pack-objects --honor-pack-keep <trace
+
+is relying on the behaviour to make sure 'git', 'pack-objects', ...
+appear at the beginning of "[...]" enclosed list.  This change
+breaks its ability to notice that an insertion of unrelated token
+before 'git' as an error.
+
+In other words, it looks like an uncalled-for selfish change.
+
+Why can't you specify what should NOT come before "fetch" in your
+use of this helper?
+
+>  	expr="${expr%,}"
+
+The preimage already has this problem, but the stripping of trailing
+comma here is a result of mistaken copy-and-paste from the exact
+variant, I think.  test_subcommand uses
+
+	local expr=$(printf '"%s",' "$@")
+
+to concatenate "$@" into a single comma-separated string, so it
+perfectly makes sense to drop the last one here, but with or without
+your change here, neither is adding a comma that need to be
+stripped.
 
 
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  t/test-lib.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 8e59c58e7e7..f624f87eb81 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -518,9 +518,9 @@ else
->         setup_malloc_check () {
->                 MALLOC_CHECK_=3D3 MALLOC_PERTURB_=3D165
->                 export MALLOC_CHECK_ MALLOC_PERTURB_
-> -               if _GLIBC_VERSION=3D$(getconf GNU_LIBC_VERSION 2>/dev/nul=
-l) &&
-> -                  _GLIBC_VERSION=3D${_GLIBC_VERSION#"glibc "} &&
-> -                  expr 2.34 \<=3D "$_GLIBC_VERSION" >/dev/null
-> +               local _GLIBC_VERSION=3D$(getconf GNU_LIBC_VERSION 2>/dev/=
-null)
-> +               if echo "$_GLIBC_VERSION" | cut -d. -f1-2 |
-> +                       awk '{ if ($2 - 2.34 < 0) exit 1 }'
->                 then
->                         g=3D
->                         LD_PRELOAD=3D"libc_malloc_debug.so.0"
-> --
-> 2.35.1.505.g27486cd1b2d
->
+It is not _your_ theme, but I think this helper is poorly designed,
+especially compared to the original "exact" variant.
+
+        test_subcommand_inexact () {
+                local negate=
+                if test "$1" = "!"
+                then
+                        negate=t
+                        shift
+                fi
+
+                local expr=$(printf '"%s".*' "$@")
+                expr="${expr%,}"
+
+                if test -n "$negate"
+                then
+                        ! grep "\"event\":\"child_start\".*\[$expr\]"
+                else
+                        grep "\"event\":\"child_start\".*\[$expr\]"
+                fi
+        }
+
+
+I've already touched that "${expr%,}" there is a totally useful
+statement that will always be a no-op.
+
+When "test_subcommand_inexact git pack-objects" is run, the printf
+assigns to $expr:
+
+		expr='"git".*"pack-objects".*'
+
+and the actual grep command invoked becomes
+
+	grep '"event":"child_start".*\["git".*"pack-objects".*\]'
+
+I am not sure if that is what we really want.
+
+I wonder if it was more like this that the original wanted to grep for:
+
+	grep '"event":"child_start".*\["git","pack-objects",.*\]'
+
+in which case the two lines there should be more like
+
+	local expr=$(printf '"%s",' "$@")
+	expr="${expr%,}.*"
+
+I would think.  This comes from Derrick's e4d0c11c (repack: respect
+kept objects with '--write-midx -b', 2021-12-20).
+
