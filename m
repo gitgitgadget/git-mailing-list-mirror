@@ -2,123 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52CA3C433F5
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BCCBC433EF
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234860AbiCMTsv convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 13 Mar 2022 15:48:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
+        id S235502AbiCMT4x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 15:56:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbiCMTsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 15:48:50 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E1B50455
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:47:42 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22DJlQD8034732
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 13 Mar 2022 15:47:27 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <rsbecker@nexbridge.com>,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Sean Allred'" <allred.sean@gmail.com>
-Cc:     <git@vger.kernel.org>, <sallred@epic.com>, <grmason@epic.com>,
-        <sconrad@epic.com>
-References: <878rtebxk0.fsf@gmail.com> <Yi4oO+ifSK8OH0Mt@camp.crustytoothpaste.net> <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
-In-Reply-To: <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
-Subject: RE: Dealing with corporate email recycling
-Date:   Sun, 13 Mar 2022 15:47:22 -0400
-Organization: Nexbridge Inc.
-Message-ID: <020901d83713$2b446ac0$81cd4040$@nexbridge.com>
+        with ESMTP id S229632AbiCMT4w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 15:56:52 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B190E7CDE2
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:55:44 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id y8so12068165edl.9
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zS8aC6J8KpyHkKujVuiUbv9PHVPRM7KNA//ELj4nT4A=;
+        b=dC54SZt2OSyrsoKgvHLZmUFXQ4SUZCmJunZZJRSgYgY7vfu+ai+w2/RJ6GGv8es8qr
+         c9lbfEEVXBITLn2e8vxh6J0HgOWcC9R3YFao7DCYYKqV+ZQqj6j10vKKJDdvUvQdJdLB
+         vUDJVweAf3kA94s/gyf2MnJL4cladtA0YkOg0ywN9cMdFyD7bAQz+mue+k8JZ0hHW8/4
+         7zzZnvHh61Jbx0sHS42TM0BsrD6qRTVjWNXOIuXTnW/UNsK5P9d6eRCQeCyjI9d9ZCIE
+         sgGiXJCy04wnHrod1Ctosqbz288wq4fWHcyF+MX/QP4NcUrQfBYH+zEUQk2iYrLbLtzy
+         Ho2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zS8aC6J8KpyHkKujVuiUbv9PHVPRM7KNA//ELj4nT4A=;
+        b=O8ae6vxxwLFgkGFB5NLW20p/x30A8vcn+ZcUU3vjXFqJ7hlvyaciShcS+cEJCLlqg8
+         SyCu3Yek9DeupbGgKjoV/mIzt/NDy9lHJKtJjfrvY6kvTPFSrHMFpbEroEW/zU7fXjF4
+         aDZWy2HFUrRJ2NgHmiQjLKlL7jgh+CF4mecGl7TM0Qrpp0+n37/wYtXC78rc25mGU5ei
+         lEzPvDBOu6jNDjhZV+Yi7pMc/Ajc2FeFz+9jpw9htoLOLlMRl/6dvly4KfMnNSC27S4h
+         NXP2EHp8RoJp/nYBf2GBKRrfrA0YP58HJ/Fl5y90DeRpY8C4/8VcQKb2ryXa+3qzj1QS
+         habA==
+X-Gm-Message-State: AOAM532gRUtYls+qhj8HrjrVFxxVFAEO+33WlYUHLGG3SZ/XLndMFCzE
+        dDiQvjFeeoHQX9n+NFA6/45Czb6+auE=
+X-Google-Smtp-Source: ABdhPJwcIi3wDGjWwRC1f1hANifBV9cCNbi5rKuQoD7xqwSM2orHUpUKkiiDsnzzfZDHRvpN0m8Rkg==
+X-Received: by 2002:a05:6402:26d3:b0:416:4186:6d7d with SMTP id x19-20020a05640226d300b0041641866d7dmr17881636edd.129.1647201342923;
+        Sun, 13 Mar 2022 12:55:42 -0700 (PDT)
+Received: from fedora35.example.com ([151.27.250.86])
+        by smtp.gmail.com with ESMTPSA id f6-20020a056402354600b0041871c5b9a6sm2164087edd.41.2022.03.13.12.55.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Mar 2022 12:55:42 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 0/5] Remove. duplicate include directives
+Date:   Sun, 13 Mar 2022 19:55:31 +0000
+Message-Id: <20220313195536.224075-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQDHpNtgb5IcYOGFILwDPZIseKDDCgLKGfUhAnsfUr2utLAuYA==
-Content-Language: en-ca
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 13, 2022 1:53 PM, I wrote:
->To: 'brian m. carlson' <sandals@crustytoothpaste.net>; 'Sean Allred'
-><allred.sean@gmail.com>
->Cc: git@vger.kernel.org; sallred@epic.com; grmason@epic.com;
->sconrad@epic.com
->Subject: RE: Dealing with corporate email recycling
->
->On March 13, 2022 1:22 PM, brian m. carlson wrote:
->>On 2022-03-12 at 22:38:56, Sean Allred wrote:
->>> * Proposal: UUIDs
->>>
->>> To get what we want (i.e., the ability to run `git show HEAD~1`, know
->>> that Ada wrote it, and report her current contact information), we
->>> need some way of tracking identity over time.  A naive solution could
->>> be to extend the mailmap format as recognized by Git:
->>>
->>>     $ git cat-file blob HEAD~1:.mailmap
->>>     A. U. Thor <foo@example.com> [uuid A] <ada@example.com>
->>>
->>>     $ git cat-file blob HEAD:.mailmap
->>>     A. U. Thor <ada@example.com> [uuid A]
->>>     Roy G. Biv <foo@example.com> [uuid B] <roy@example.com>
->>>
->>> Now, when I run `git show HEAD~1`, Git would determine the UUID of
->>> the email on the commit using the mailmap version in that tree:
->>>
->>>     $ git -c mailmap.blob=HEAD~1:.mailmap check-mailmap --uuid
->>"<foo@example.com>"
->>>     A
->>>
->>> Then, we can use that UUID to resolve to the current contact information:
->>>
->>>     $ git check-mailmap --uuid=A
->>>     A. U. Thor <ada@example.com>
->>>
->>> Mailmap-sensitive commands can use this logic internally -- possibly
->>> guarded under some new config setting.
->>
->>It's my intention to implement an approach where people's emails are
->>identified by a key fingerprint of some sort and then converted into
->>the proper email address by a mailmap that lives outside of the main
->>history.  That is, my email address might be
->>ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad@ssh-
->>sha256.ns.git-scm.com,
->>and then we have a mailmap that converts between the two.  If you
->>wanted to have a UUID-based one, you could do 77c747a3-1599-4c8c-9569-
->>f729c17632e6@uuid.ns.git-scm.com (assuming that namespace were registered).
->>
->>The benefit to the key part is that you can essentially prove that you
->>are who you say you are.  A UUID doesn't have the possibility.
->>
->>This was discussed briefly at some sort of contributor summit we had at
->>some point, but I've been busy and haven't gotten to it yet.  It is on
->>my list of projects, however.
->
->This could require a global and security hardened tokenization or signing approach.
->Email fingerprints from one organization would have to be able to move to
->another organization easily - potentially as part of the git repo's metadata. I would
->not use the same key as is used for signing fingerprints (mostly out of paranoia),
->but this is conceptually similar to the public side of a key-pair. One would have to
->have access to the private key in order to be a committer/author. Unfortunately,
->as it stands today, that may be easily spoofed (--committer, --author), so that part
->of the code would have to change with safeguards on what can be supplied -
->something I think would be welcome. Keeping with a distributed philosophy is
->probably essential. Just my take on it.
+This series of patches does not solve any particular problems but
+only eliminates unnecessary duplicate include directives
+from git sources
 
-What about abstracting this into a map-email or map-identity hook of some kind? So, whenever there is a need to write an identity (committer, author, signed-off-by, etc.). That way, anyone who wants to, can implement whatever policy they want for replacing emails with some other value in the repo, and back again. It might be good to optimize it so that the hook is only invoked once per identity per request so that git log does not become insanely expensive.
+Elia Pinto (5):
+  attr.c: delete duplicate include
+  builtin/gc.c: delete duplicate include
+  builtin/sparse-checkout.c: delete duplicate include
+  builtin/stash.c: delete duplicate include
+  t/helper/test-run-command.c: delete duplicate include
 
-Something like map-identity from <internal-value>  and map-identity to <external-value>, for example:
+ attr.c                      | 1 -
+ builtin/gc.c                | 1 -
+ builtin/sparse-checkout.c   | 1 -
+ builtin/stash.c             | 1 -
+ t/helper/test-run-command.c | 1 -
+ 5 files changed, 5 deletions(-)
 
-map-identity from "Randall S. Becker <rsbecker@nexbridge.com>"      > A056AAB2123
-
-And
-
-map-identity to A056AAB2123      >  Randall S. Becker <rsbecker@nexbridge.com>
-
-Again, just a notion.
+-- 
+2.35.1
 
