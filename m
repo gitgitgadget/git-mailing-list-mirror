@@ -2,95 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D25C433EF
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 22:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6714DC433F5
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 22:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234474AbiCMWbr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 18:31:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39488 "EHLO
+        id S235206AbiCMW6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 18:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiCMWbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 18:31:46 -0400
+        with ESMTP id S233316AbiCMW63 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 18:58:29 -0400
 Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C53F1C114
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 15:30:36 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id r2so16186429iod.9
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 15:30:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9F3457B9
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 15:57:20 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id r11so16225719ioh.10
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 15:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=references:user-agent:from:to:cc:subject:date:in-reply-to
-         :message-id:mime-version;
-        bh=IeZJOoEoUgEMBaxD1SP3GxjWrlwcW1Vaa680s833K/Q=;
-        b=Aau2dYnqzGP41+rLSnCoqDOLhBaCHCs61295dqJXK0f+teNLORgIBzGKbKj1Kmozm5
-         FzmoummmGS6whjuU+6xH2yYE/k2ZhCjjJW2IQOalfYv3OG1k2ztYL6sC0kUAgs4mdQ1b
-         dN8xe+39KpJrYtqEyBlxpQo+MEG0cTCjPZ1EImOSFMu74378XKhonY+wJy5l4HWU5s7t
-         w+32RUc+dJnucKx1Kh2D8/YxY71O1+FhyEcUS2tYvqcCRfeUham8FEVD0vw58yxw+nvo
-         yzauXmAnsH6HufMrDf3c8QBmhRZKsbVW60yhxl5qqFPvYryZ88L6sh8nQQKUeHv9D8+B
-         bYcw==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=N3B5kK13nzhgHOHURxwyaXLgPcN95GiuIlVcBz77wWE=;
+        b=JbdfC4QHrxojykxNG4NyDrJsNHYZ3GxdNZxh3+eCsTYbIiwmE8XFpVarv/i2St2Nkf
+         fVhVZnBqprNpny0p/DlA1ONY6BEQsVMQEcMfx6dXLPDGMKeb1XtjdtQijzl4F82wcsE+
+         ljxsPR9g2pl1ZkyvvcNk/Cf6v6mX9TICIjaLEZmXiUDp3Hhr33ajfjP+SvkumO8CE6wE
+         f9Hhs8DXxfcy8bI7Wat8rOYvHnsdBxYN6oUYAjegNDAZ3u/2sy1G8CdNTQ0kvjjKMgNj
+         tJE5iTkq7Wc3miOEvbiTrIU2NZzxko5qxCm94DIDcRDwpaciKMREiWeaL9rTGrR25us/
+         YSmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
-         :in-reply-to:message-id:mime-version;
-        bh=IeZJOoEoUgEMBaxD1SP3GxjWrlwcW1Vaa680s833K/Q=;
-        b=5ppI303tzgMRmrtosHbVoo2O2UZq7h9JWWRzxecWrE2up9S/PWKgMgsPLzhQnK4H3Y
-         xe01pNCr2TD+H1ud9KAsmLacmJYUwO29oRZPYsJbSv7s+bGrNaicHGat+9MWX7TQxPjg
-         HjMOT3CKamEMGQjx1A3XG5E6DccdduYGb1KdXtWJ0AKoxYNqwjbkP6krQ3Q5clpkgxXx
-         EuUlz+B4mnj9wQO2p+o18BRNe42w8KpW0oH4T07V4WkjuR6J7EZ9R23JrVrgGECMdwHY
-         HoDi1/bGOYOPrPaqcVmLsKe1PYgROm4eYH/sCwlZZFgT61V2eaW2OkPJlqAwAKRo7QKP
-         mmKA==
-X-Gm-Message-State: AOAM533r7sdJDCYwO8ydaPrRv3ORLhvx7o8QZs8U8eVdI6L/oZk8jpTR
-        Sy7+yhFreJVfU95im6BwhcfDXRu5Jcw=
-X-Google-Smtp-Source: ABdhPJy2bd/6q6greLN91n21ci85cbkDM8PzdhQkgzF/j72baSAIyd3AME/rzr67uT72yskhJGVuhw==
-X-Received: by 2002:a05:6638:12c3:b0:319:9b70:5ad8 with SMTP id v3-20020a05663812c300b003199b705ad8mr17656649jas.132.1647210635320;
-        Sun, 13 Mar 2022 15:30:35 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=N3B5kK13nzhgHOHURxwyaXLgPcN95GiuIlVcBz77wWE=;
+        b=HiyQD/JMPzYJx4CG0T/xqizou6p+vwX+SU+Mp7E9yoQ0GP5Gssu8NCsqKjMewVdp6l
+         4hZ1/UNovUgtHUzIhoJGZ18h8YyXni5eedE9UIafpclVRQwzqG6VcdLC7uBqMsOLPe9q
+         +LHyj6coKUfg00s0zFSBZsHqO4gY59k06vwKAvWXTB/cCFHahF+fsmEVyPfvRB8io+Cv
+         +Xu+22zkG5vc0RFKoLwipycu6hHJ74bJkwTtWQFKLATfPswHhsjMt4YzWHLX3DPmeCFl
+         fsS8/3u2k3JXEm8o0zLioc2ejCCBjIMN0ZqzS9K+uemP7LnU8H9HIHRACNd5YeSAqcbp
+         rIRQ==
+X-Gm-Message-State: AOAM530/mmw6jIimzUYxUFELqhh4tFYREAZ2r62aXWMgCvkvYmQi8Eqd
+        dMFS6BC5xy2fT4lNhupYyD1a8vy//LlVKQ==
+X-Google-Smtp-Source: ABdhPJxmnwLk6x0vO6vYjf+EDdMIRmNZdqtJu55Ukc4SULQSTnFBoOFpGQHTmLVx3DZYVqunuap9NQ==
+X-Received: by 2002:a05:6638:130f:b0:319:bc90:a885 with SMTP id r15-20020a056638130f00b00319bc90a885mr15294928jad.299.1647212239222;
+        Sun, 13 Mar 2022 15:57:19 -0700 (PDT)
 Received: from EPIC51148 ([199.204.58.10])
-        by smtp.gmail.com with ESMTPSA id w2-20020a056e021a6200b002c655123821sm8668328ilv.37.2022.03.13.15.30.34
+        by smtp.gmail.com with ESMTPSA id k15-20020a92c24f000000b002c79ec214f9sm1044177ilo.30.2022.03.13.15.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Mar 2022 15:30:34 -0700 (PDT)
-References: <878rtebxk0.fsf@gmail.com>
- <Yi4oO+ifSK8OH0Mt@camp.crustytoothpaste.net>
- <020501d83703$2f8785f0$8e9691d0$@nexbridge.com>
- <020901d83713$2b446ac0$81cd4040$@nexbridge.com>
+        Sun, 13 Mar 2022 15:57:18 -0700 (PDT)
+References: <878rtebxk0.fsf@gmail.com> <xmqq4k42n2g8.fsf@gitster.g>
+ <01cc01d83671$0acd4a20$2067de60$@nexbridge.com> <87zglu9c82.fsf@gmail.com>
+ <01f201d836e5$89247c30$9b6d7490$@nexbridge.com> <87v8whap0b.fsf@gmail.com>
+ <01f301d836eb$5c7a6810$156f3830$@nexbridge.com> <87r175amw2.fsf@gmail.com>
+ <f6ecca05-b669-0e36-302f-a6113571ac12@iee.email>
 User-agent: mu4e 1.7.9; emacs 27.2
 From:   Sean Allred <allred.sean@gmail.com>
-To:     rsbecker@nexbridge.com
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
         git@vger.kernel.org, sallred@epic.com, grmason@epic.com,
         sconrad@epic.com
 Subject: Re: Dealing with corporate email recycling
-Date:   Sun, 13 Mar 2022 17:23:36 -0500
-In-reply-to: <020901d83713$2b446ac0$81cd4040$@nexbridge.com>
-Message-ID: <87mthta3jq.fsf@gmail.com>
+Date:   Sun, 13 Mar 2022 17:40:47 -0500
+In-reply-to: <f6ecca05-b669-0e36-302f-a6113571ac12@iee.email>
+Message-ID: <87ilsha2b7.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-<rsbecker@nexbridge.com> writes:
-> What about abstracting this into a map-email or map-identity hook of
-> some kind? So, whenever there is a need to write an identity
-> (committer, author, signed-off-by, etc.). That way, anyone who wants
-> to, can implement whatever policy they want for replacing emails with
-> some other value in the repo, and back again.
+Philip Oakley <philipoakley@iee.email> writes:
+> The GDPR isn't as onerous as some suggest, as it isn't a set of black
+> and white rules, rather in cases like these you need to have a real
+> strong reason for why data is retained etc, such as being part of the
+> verification and validation of the commit data. There have been various
+> discussions around this in many of the technical journals.
 
-This is an interesting idea, but I'm afraid it might be difficult for
-forges to implement support for as opposed to something built-in.  If
-that's not as difficult as I might think it is, then perhaps this is a
-viable option once fleshed out.
+That's good to hear that this has already been discussed in the
+community (though I'm hardly surprised now that you mention it -- I'm
+sure it was and remains a hot topic!).
 
-> It might be good to optimize it so that the hook is only invoked once
-> per identity per request so that git log does not become insanely
-> expensive.
+> It maybe that your internal Git version could disable the particular
+> `format` option ('%ae'?) for the original name, so only the designated
+> ('redacted') mailmap entry is shown to casual users (assumes the repo is
+> inside the corporate firewall). This would avoid invalidating the repos
+> validation capability, while meeting the needs of GDPR type regulations.
 
-I'll add that Windows (and our particular environment) makes this
-troublesome as well.  Currently we see a base cost of 300ms for starting
-up a process.  Given how many identities git-log and friends would be
-chugging through, any hook would need to be capable of staying open --
-feeding identities through stdin.  I'm not sure run_hooks supports that
-right now.
+I do want to note that at present we're not primarily concerned with
+GDPR, but I am following up on that internally to see if there are any
+considerations we need to make.  This is certainly an interesting tactic
+for repositories that are hosted in GDPR-effective states, though.
 
+> In the same vein, a local Git version could, being open source, add
+> allowances for your extra mailmap entry details, such as adding a post
+> fix " % <approxidate>" limits for the use of the particular name/email
+> combo to allow date ranges to emerge.
+
+I'd prefer the ability to agree on a pattern and merge support for it
+upstream.  This way, forges can pick up support, too.  Bonus points if
+the forge doesn't necessarily have to do more work than it already does.
+
+Your " % <approxidate>" suggestion sounds a lot like the 'Valid-Before/
+Valid-After' proposal from my original post in this thread (admittedly
+not my idea).  Is there a compelling reason to use this approach over
+UUIDs?  I ask not to suggest there isn't a compelling reason, but mostly
+to make sure we consider the best arguments (and drawbacks) for any/all
+approaches.
+
+> I noted that all the .mailmap examples in the man page have ">" as the
+> final character, but I haven't looked to see if the code always requires
+> that the last element of the entry is an <email> address, or whether it
+> currently barfs on extra elements.
+
+FYI mailmap does support comment syntax (starting with # through \n).
+It's worth noting that =C3=86var suggested earlier that perhaps we could
+"(ab)use the comment syntax".  I tend to prefer their other approach,
+though:
+
+    > I.e. we simply ignore things we can't map now, so one way to do it
+    > is to start with something that produces an invalid (but harmless)
+    > mapping to current readers, [...]
+
+rather than use magic comments :-) Adapting to your suggestion, this
+might look like the following:
+
+    A. U. Thor <foo@example.com> <ada.example.com> <[ approxidate ]>
+
+Would be curious to know what other mailmap readers exist and how they
+would react to this.
 
 --
 Sean Allred
