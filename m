@@ -2,140 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FE9C433EF
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 17:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE676C433F5
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 17:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235149AbiCMR3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 13:29:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56196 "EHLO
+        id S235185AbiCMRke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 13:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235171AbiCMR3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 13:29:45 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B818403F2
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:28:37 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id qt6so29246083ejb.11
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:28:37 -0700 (PDT)
+        with ESMTP id S229379AbiCMRkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 13:40:33 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5282F1EAD1
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:39:25 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so10574415wms.3
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 10:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5e0mBP4WULZxN0r9zeb/Mg45hmzjsm+oSjPP+g65J8c=;
-        b=MWHJBMmzxrNgrlPLTgR57xOpUtlaWFfEQwCvFZULL6fW0yfL46hxffASH5bMH42nZh
-         cqQejAF88XrgikRwklONNy+4hrt+YV/APUQt4CFfl8ckC5aplBKyALnnj47A2qFc31GX
-         /OmNQ82OYv+b/HV0fHdmdXF8MxBm4PWQsPlUvojw8TLPQgfi3L7paQlwxVgRyrgxi1Qp
-         qBWOF7yBxZneVMTJ8SedoMg48KFFM+2aUnNG/pnrwF72Vvl+pjLOoM/nd/YGcNjBI8Xy
-         lUpOlTS+nce9zeN0eTw5AXkHJoyO74Tr31NvqOHo+OrSolU5PcP+J3NN1ujdDDmQGuQN
-         GeMQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=KpnMqio74vfQyIDeUJkIa4t8XycTwlTSK1lkJmzrR38=;
+        b=dJHQOr/69C6OU/b1fyndUOB2fyGAvU4U4Fa/QUiPGLaskJ3DMKrhSrSuUft8FgHHEi
+         q92RQbJaf2rszKdVLRp9oT4fy25OxOMi6Q7glpmYli+/InMbut0dW0paD0zn1LRFooWg
+         E5WUfT7vOrASp4XgsqTychJuc6IUXbX+DEcKQB/fS9p/3gUosKTMoWRWgqfByVAQ5kiH
+         uBTrH3sfdiTuWcroMHIid/1ITqq9ENcPEkSZ0P7tuKxPahQKor41ax9BwvmBIMLAgd97
+         /AUa0BOImYec5K67btsss0AqAKKhB2fjJaJZhWrw7iA4YpwEmQ9w1npZO//dPDVq5U2t
+         FWRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5e0mBP4WULZxN0r9zeb/Mg45hmzjsm+oSjPP+g65J8c=;
-        b=SyYIHfJOCsF7q1LJFTfRvNfTjcF3PIrhgzwOAJVZKZl8K1Kkvq/5lFPOBTc6HbJ4Pd
-         vsH/SDCbmmA9BX4UE1Hp6vWk97+vRqCg8Tb/nRalKcyMOcFU3rcJp1iCRu/Sp0/Ja82C
-         bUzulOc2OBvHKEtiZ39PpSbe9mEu1t4XzoFGtNBojjocsnml6B5Tv/vhxe6wMAuC2rtw
-         GDSRJ/kCxYk6/NJb5lVsabnzaZDk0o35gNIQbTJCJ+BV/ENDJAZXTfQaMhWX+jAa2r5G
-         A2IOgRhR9jkETzlFAKwxzjd6Ye8MmgEasSJLNbQwHAgkdHuuCGPN9k4hLGrGMWtNQgpq
-         teHA==
-X-Gm-Message-State: AOAM5312oEnetESHX5KZ22fOX1jtdYKGC3LMq7c6awGu6VwUukVKzXQH
-        ZlDzguvwJ//PZ543TtCf89/E6tGaKiM=
-X-Google-Smtp-Source: ABdhPJxpOE6gkvMYga97op26JsRZ+2tEb796JvrygR0e4wId7gTjkc8z49Wb4555WNJgj8kx7E0G5g==
-X-Received: by 2002:a17:906:1955:b0:6da:b4a3:7818 with SMTP id b21-20020a170906195500b006dab4a37818mr15961662eje.384.1647192515381;
-        Sun, 13 Mar 2022 10:28:35 -0700 (PDT)
-Received: from fedora35.example.com ([151.27.250.86])
-        by smtp.gmail.com with ESMTPSA id t14-20020a170906608e00b006d1455acc62sm5673552ejj.74.2022.03.13.10.28.34
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KpnMqio74vfQyIDeUJkIa4t8XycTwlTSK1lkJmzrR38=;
+        b=fXZOylXY648IlBzlcJrCLmYxyZEHSchuoEyGcAyYHTgQyJAZf+ZA4iLlUk4lDoNJOg
+         qkzw/i2r3i2XlVkDwkWSPRqJCVjBjGhmRzo9wzJ+TrVFBH7n14kMqNrnpru49B/Si5rT
+         aSJVqv62H5dtIcvZB0ZdaPhpZs1bAvggzPt0bGkDwlloAgneH4+flVwJ+kDot85wQvx/
+         cTQIZnY2kBMqWub9dhocQ8DtOaoHTr8UJdikCizEP6PegmsJHNC+SISHwapT3wUEblXs
+         O3Eb0eBg1WhCWoG36TtjCM+8G9Xsu0xzzlLbVTY4HS/sj1q+LNpbhdJmGJKdUNlAesvR
+         6kKg==
+X-Gm-Message-State: AOAM531wRZAmBYHFQk738lQ2nFLEf1UeakakjqQ4NdJOLydGzkkIBt9r
+        LRdYwDBZhVS0/hzcB43dGoD4cFJcrao=
+X-Google-Smtp-Source: ABdhPJyDMBmx3eP3yN/Vm9vPiIBSy+Ou4s0wV6+O4mDqkQtjRien5uxUpAc3bvChg0vrAi9WUGPZZg==
+X-Received: by 2002:a1c:f607:0:b0:381:1db:d767 with SMTP id w7-20020a1cf607000000b0038101dbd767mr14249741wmc.165.1647193163579;
+        Sun, 13 Mar 2022 10:39:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v14-20020a7bcb4e000000b0034492fa24c6sm12801141wmj.34.2022.03.13.10.39.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Mar 2022 10:28:34 -0700 (PDT)
-From:   Elia Pinto <gitter.spiros@gmail.com>
-To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2] t6423-merge-rename-directories.sh: use the $(...) construct
-Date:   Sun, 13 Mar 2022 17:28:29 +0000
-Message-Id: <20220313172829.215517-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.35.1
-MIME-Version: 1.0
+        Sun, 13 Mar 2022 10:39:23 -0700 (PDT)
+Message-Id: <pull.1175.git.1647193162570.gitgitgadget@gmail.com>
+From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 13 Mar 2022 17:39:22 +0000
+Subject: [PATCH] partial-clone: add a partial-clone test case
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Git CodingGuidelines prefer the $(...) construct for command
-substitution instead of using the backquotes `...`.
+From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-The backquoted form is the traditional method for command
-substitution, and is supported by POSIX.  However, all but the
-simplest uses become complicated quickly.  In particular, embedded
-command substitutions and/or the use of double quotes require
-careful escaping with the backslash character.
+In a blobless-cloned repo, `git log --follow -- <path>` (`<path>` have
+an exact OID rename) doesn't download blob of the file from where the
+new file is renamed.
 
-The patch was generated by:
+Add a test case to verify it.
 
-for _f in $(find . -name "*.sh")
-do
-	shellcheck -i SC2006 -f diff ${_f} | ifne git apply -p2
-done
-
-and then carefully proof-read.
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 ---
-This is version 2 of the patch.
+    partial-clone: add a partial-clone test case
+    
+    Fixes #827 [1]
+    
+    [1] https://github.com/gitgitgadget/git/issues/827
 
-In this one, only the commit message is reformatted
-https://lore.kernel.org/all/20220222084646.115147-1-gitter.spiros@gmail.com/t/#md1eb17764414c2a26421b1213ee084912c434d3b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1175%2FAbhra303%2Fcheck_partial_clone-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1175/Abhra303/check_partial_clone-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1175
 
- t/t6423-merge-rename-directories.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t0410-partial-clone.sh | 16 ++++++++++++++++
+ t/test-lib-functions.sh  |  2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 5b81a130e9..479db32cd6 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -4421,14 +4421,14 @@ test_setup_12c1 () {
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index f17abd298c8..1e54f4844fd 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -618,6 +618,22 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
+ 	git -C repo cherry-pick side1
+ '
  
- 		git checkout A &&
- 		git mv node2/ node1/ &&
--		for i in `git ls-files`; do echo side A >>$i; done &&
-+		for i in $(git ls-files); do echo side A >>$i; done &&
- 		git add -u &&
- 		test_tick &&
- 		git commit -m "A" &&
++test_expect_success 'git log --follow does not download blobs if an exact OID rename found (blobless clone)' '
++	rm -rf repo partial.git &&
++	test_create_repo repo &&
++	content="some dummy content" &&
++	test_commit -C repo create-a-file file.txt "$content" &&
++	git -C repo mv file.txt new-file.txt &&
++	git -C repo commit -m rename-the-file &&
++	test_config -C repo uploadpack.allowfilter 1 &&
++	test_config -C repo uploadpack.allowanysha1inwant 1 &&
++
++	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++		git -C partial.git log --follow -- new-file.txt > "$(pwd)/trace.txt" &&
++	! test_subcommand_inexact fetch <trace.txt
++'
++
+ test_expect_success 'lazy-fetch when accessing object not in the_repository' '
+ 	rm -rf full partial.git &&
+ 	test_create_repo full &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0f439c99d61..07a2b60c103 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1811,7 +1811,7 @@ test_subcommand_inexact () {
+ 		shift
+ 	fi
  
- 		git checkout B &&
- 		git mv node1/ node2/ &&
--		for i in `git ls-files`; do echo side B >>$i; done &&
-+		for i in $(git ls-files); do echo side B >>$i; done &&
- 		git add -u &&
- 		test_tick &&
- 		git commit -m "B"
-@@ -4511,7 +4511,7 @@ test_setup_12c2 () {
+-	local expr=$(printf '"%s".*' "$@")
++	local expr=$(printf '.*"%s".*' "$@")
+ 	expr="${expr%,}"
  
- 		git checkout A &&
- 		git mv node2/ node1/ &&
--		for i in `git ls-files`; do echo side A >>$i; done &&
-+		for i in $(git ls-files); do echo side A >>$i; done &&
- 		git add -u &&
- 		echo leaf5 >node1/leaf5 &&
- 		git add node1/leaf5 &&
-@@ -4520,7 +4520,7 @@ test_setup_12c2 () {
- 
- 		git checkout B &&
- 		git mv node1/ node2/ &&
--		for i in `git ls-files`; do echo side B >>$i; done &&
-+		for i in $(git ls-files); do echo side B >>$i; done &&
- 		git add -u &&
- 		echo leaf6 >node2/leaf6 &&
- 		git add node2/leaf6 &&
-@@ -4759,7 +4759,7 @@ test_setup_12f () {
- 		echo g >dir/subdir/tweaked/g &&
- 		echo h >dir/subdir/tweaked/h &&
- 		test_seq 20 30 >dir/subdir/tweaked/Makefile &&
--		for i in `test_seq 1 88`; do
-+		for i in $(test_seq 1 88); do
- 			echo content $i >dir/unchanged/file_$i
- 		done &&
- 		git add . &&
+ 	if test -n "$negate"
+
+base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
 -- 
-2.35.1
-
+gitgitgadget
