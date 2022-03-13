@@ -2,110 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A2CC433F5
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 07:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CF9DC433F5
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 07:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232148AbiCMHfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 03:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35194 "EHLO
+        id S231795AbiCMHvf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 03:51:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiCMHfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 03:35:46 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8AC282D21
-        for <git@vger.kernel.org>; Sat, 12 Mar 2022 23:34:38 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 994E5120B21;
-        Sun, 13 Mar 2022 03:34:37 -0400 (EDT)
+        with ESMTP id S230366AbiCMHvd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 03:51:33 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 189C9443C8
+        for <git@vger.kernel.org>; Sat, 12 Mar 2022 23:50:26 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41DB8119028;
+        Sun, 13 Mar 2022 03:50:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=LtZqxjxPlJGD
-        UiyYFa4ES0BR9N2wmjM0/4NIQtQlb5U=; b=O+9wEsScZxRGDc57AwaOXZs7kbcU
-        DJJu5QHDYgcV/DjGmHNeQeo2AfnO4b6JaSt5Vn5Rcc+QcTchRhNDKByNLXIW7I4h
-        egyztyiyLd6g9IMvEXDBGLsj2XVH/4Nt3m7F+NarC5+OplHbIIrSHA4bKAkRt7GT
-        UgbmuRxZyKMO3YI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8ED34120B20;
-        Sun, 13 Mar 2022 03:34:37 -0400 (EDT)
+        :content-type; s=sasl; bh=QnsdUDLkMSltwqvtrFjGCLYt8F7pOKiwIIm0Rx
+        hAq+0=; b=rCz6xM/7s+617KpB9i+IG+ppFSuT02PbideVNqYk8/4z0FclRb4w6H
+        w27P12f6GlyCPIDQM7+mYD37WkiilhuGtu0eEtNXuwqk1F57idMxb1GQb87O8G+v
+        JiW/vJkKCS9UGr0E1yGaiGoo8Jy9+o36rYrlr7erYoiCrcyztj5YM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A07E119026;
+        Sun, 13 Mar 2022 03:50:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA242120B1F;
-        Sun, 13 Mar 2022 03:34:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71B6D119025;
+        Sun, 13 Mar 2022 03:50:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use awk instead of expr for a POSIX non
- integer check
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
-        <20220308113305.39395-1-carenas@gmail.com>
-        <CAPig+cSNgQ7SEYk9M=L7z0G=hteTdupKS6sHJL8T7zEp=zkLEA@mail.gmail.com>
-        <CAPig+cT3TNFBMesYvYoncawfBdLqKL971SoP_J7F9FgnL10Eqw@mail.gmail.com>
-        <CAPig+cSUTaPRvALJyJ8AxNB4wMFLyaWBOa8f+_8K6quPbxTT5A@mail.gmail.com>
-        <xmqqv8wnm30q.fsf@gitster.g>
-        <220309.86pmmulw77.gmgdl@evledraar.gmail.com>
-        <CAPig+cQNeTAvWHm2GUGc2i=FKF2V6Gqkmmsw4kDOTzrSYEbgxA@mail.gmail.com>
-        <220312.86o82bfo7x.gmgdl@evledraar.gmail.com>
-        <xmqqtuc2lhis.fsf@gitster.g>
-        <CAPUEspgdmaztSShPd6vJpT7801_czRuBt_QaPu_W2JGOw+UqrQ@mail.gmail.com>
-Date:   Sun, 13 Mar 2022 07:34:35 +0000
-In-Reply-To: <CAPUEspgdmaztSShPd6vJpT7801_czRuBt_QaPu_W2JGOw+UqrQ@mail.gmail.com>
-        (Carlo Arenas's message of "Sat, 12 Mar 2022 18:37:27 -0800")
-Message-ID: <xmqqilsiwbjo.fsf@gitster.g>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/2] rebase: use test_commit helper in setup
+References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
+        <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
+        <f3f084adfa616a7bae7e7c94644f65a36f38652b.1647019492.git.gitgitgadget@gmail.com>
+Date:   Sun, 13 Mar 2022 07:50:24 +0000
+In-Reply-To: <f3f084adfa616a7bae7e7c94644f65a36f38652b.1647019492.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Fri, 11 Mar 2022 17:24:51
+        +0000")
+Message-ID: <xmqqee36watb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 08CD7C22-A2A0-11EC-BE17-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E46BDBC-A2A2-11EC-8A26-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Sat, Mar 12, 2022 at 6:21 PM Junio C Hamano <gitster@pobox.com> wrot=
-e:
->>
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->> > But probably better is to just amend that to call it as "test-tool l=
-ibc
->> > is-glibc-2.34-or-newer" or whatever. Then just do:
->> >
->> >       if (__GLIBC__ > 2 || (__GLIBC__ =3D=3D 2 && 34 >=3D __GLIBC_MI=
-NOR__))
->> >               return 0;
->> >       return 1;
->>
->> Yuck.  Then we'd have yet another libc-is-glibc-2.36-or-newer
->> option, too, in the future?
+> From: John Cai <johncai86@gmail.com>
 >
-> Luckily that won't be needed, as this the original version (with expr)
-> is practically good enough even if it might be a little odd looking
-> and incorrect for 2.4 <=3D glibc <=3D 2.9 (which are over 10 years old)=
-.
->
->   $ expr 2.34 \<=3D "2.34.9000"
->   1
->   $ expr 2.34 \<=3D ""
->   0
+> To prepare for the next commit that will test rebase with oids instead
+> of branch names, update the rebase setup test to add a couple of tags we
+> can use. This uses the test_commit helper so we can replace some lines
+> that add a commit manually.
 
-Yeah, that is good.
+OK.
 
-What I was trying to get at was to extend =C3=86var's one trivially to
+>  test_expect_success 'prepare repository with topic branches' '
+> -	git config core.logAllRefUpdates true &&
 
-  $ test-tool libc-is-at-or-later-than 2.34
+This lossage is not explained.  I do not know if we actually make
+use of the reflog in the tests, though.
 
-so that we can deal with
-
-  $ test-tool libc-is-at-or-later-than 2.36
-
-for free, but if we do not have to do anything, that is even better
-;-)
-
+> -	echo First >A &&
+> -	git update-index --add A &&
+> -	git commit -m "Add A." &&
+> +	test_commit "Add A." A First First &&
+>  	git checkout -b force-3way &&
+>  	echo Dummy >Y &&
+>  	git update-index --add Y &&
+> @@ -32,9 +29,7 @@ test_expect_success 'prepare repository with topic branches' '
+>  	git mv A D/A &&
+>  	git commit -m "Move A." &&
+>  	git checkout -b my-topic-branch main &&
+> -	echo Second >B &&
+> -	git update-index --add B &&
+> -	git commit -m "Add B." &&
+> +	test_commit "Add B." B Second Second &&
+>  	git checkout -f main &&
+>  	echo Third >>A &&
+>  	git update-index A &&
