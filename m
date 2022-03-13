@@ -2,67 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA443C433F5
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 18:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DE5DC433EF
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 19:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235266AbiCMSl0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Mar 2022 14:41:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40470 "EHLO
+        id S235310AbiCMTB4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 15:01:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233375AbiCMSlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Mar 2022 14:41:25 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303BF76E23
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 11:40:17 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B44AC11D881;
-        Sun, 13 Mar 2022 14:40:15 -0400 (EDT)
+        with ESMTP id S235294AbiCMTBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 15:01:51 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCFD4D61A
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 12:00:43 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B532F17CA44;
+        Sun, 13 Mar 2022 15:00:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=m3xR1SP+P/KdQvvWjW6lc9pxyCrmky2MYTX8S/
-        ilCxQ=; b=H9URDWzKdv6ofOgnsFcDK5PaP8dargsq7+HdEvPP4kY9ves73ZPRQW
-        eVJmyXcskmGHZSuyM+2bLR+Jh+dLAEa4dpTumLAUbZF5RevkTwzpBWPEJ6EsaNjx
-        jHx4nW08QAOhv/KkaLJhcjgWReUEjo0+QNN0HUAWiLI3DKWI2t4nA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB6CC11D87E;
-        Sun, 13 Mar 2022 14:40:15 -0400 (EDT)
+        :content-type; s=sasl; bh=2YU7GNAcgsjn4aWpEb50sS8if5qSJj1O6NjFUN
+        0g2/0=; b=IPKlDL+7szPjUlC1qVtquO8UjM51NlfInqp5GsKKgLNOhT00PbFuKK
+        XW6h9SIFmJK+3zg3QCid3ysppIdjRNkzbrcOWs+PSXoAjnLpF0b7Q+s00+vIqTwQ
+        YrU0wNa5jDdwdZKfBOiNq1XW9EciiMxd10UNg+U13+QIDWsBwA11Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC52617CA43;
+        Sun, 13 Mar 2022 15:00:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0D06611D87D;
-        Sun, 13 Mar 2022 14:40:14 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 381E117CA42;
+        Sun, 13 Mar 2022 15:00:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4] name-rev: use generation numbers if available
-References: <20220312000015.3643427-1-jacob.e.keller@intel.com>
-Date:   Sun, 13 Mar 2022 18:40:13 +0000
-In-Reply-To: <20220312000015.3643427-1-jacob.e.keller@intel.com> (Jacob
-        Keller's message of "Fri, 11 Mar 2022 16:00:15 -0800")
-Message-ID: <xmqqy21dvgqa.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] Documentation: simplify synopsis of git-repack(1)
+References: <20220312113136.26716-1-bagasdotme@gmail.com>
+Date:   Sun, 13 Mar 2022 19:00:39 +0000
+In-Reply-To: <20220312113136.26716-1-bagasdotme@gmail.com> (Bagas Sanjaya's
+        message of "Sat, 12 Mar 2022 18:31:37 +0700")
+Message-ID: <xmqqsfrlvfs8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 05E11C82-A2FD-11EC-9494-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: E023FF34-A2FF-11EC-9F5F-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> Add several test cases including a test that covers the new commitGraph
-> behavior, as well as tests for --all and --annotate-stdin with and
-> without commitGraphs.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> Changes since v3
-> * Fix the commit graph test as pointed out by Junio
+> Simplify SYNOPSIS section to only mention [<options>...] placeholder.
+> Redundant options list can now be avoided for aesthetic and clarity.
 
-This round looks good.  Let's merge it down.
+The "git cmd --help" output is meant to be readable and useful, so
+clarity is good, but I do not know much about aesthetics.
 
-Thanks.
+More importantly, the above does not answer a lot more important
+question.  Is it just loss of duplicated information that this
+commit brings in?  Isn't the motivation that "not all options are
+listed in SYNOPSIS section, and/or some options listed there are not
+described in the body text and are not supported"?  And instead of
+trying to keep them in sync, the author chose to simplify SYNOPSIS
+and have readers look options up in the body text, no?  These two
+would make a good pair of "what problem do we solve?" and "how we
+choose to solve it?".
+
+>  [verse]
+> -'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
+> +'git repack' [<options>...]
+
+Unlike commands with multiple "operation modes", "repack" does one
+thing and only one thing, so a single-liner "git repack <options>"
+may work well.
