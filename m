@@ -2,97 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24840C433EF
-	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 02:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C603C433EF
+	for <git@archiver.kernel.org>; Sun, 13 Mar 2022 05:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233405AbiCMCis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Mar 2022 21:38:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53100 "EHLO
+        id S233631AbiCMFoS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Mar 2022 00:44:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233407AbiCMCir (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Mar 2022 21:38:47 -0500
-Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 542D0369FE
-        for <git@vger.kernel.org>; Sat, 12 Mar 2022 18:37:40 -0800 (PST)
-Received: by mail-vk1-xa33.google.com with SMTP id j201so6647423vke.11
-        for <git@vger.kernel.org>; Sat, 12 Mar 2022 18:37:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vrHsj4jzcxSGBh/pvvhK1q9rZ6z7ROx3pv8vfvPXdDc=;
-        b=NA85qmKuTOoL0bmfnu1uWjSwYLwiCpA1SkoqZXBKUWydFjsLpPTdpdBSYZVDC9ZA3K
-         USg1vOJz/s32m4/y3EwBREBEzX1ipCbb4k6fn6PCDPgg7PML1H/kekkuDzMsBB52OFMW
-         rrnq4AIOBS/9idEtfdburtXWivuu9EAm/4i6jWp7+2Ivio1hAwKSJ1/WzuWEoKmE+a9u
-         1303u4iOjyGmO6W+X0ZsqC8dfiDrxWHIuI/JUF3rf8WgtNSXGtf5Yftq86HMdDtRncwy
-         en9IyaqvOC7Yy+DwFrz8tP7gZwFT8aa1RyrX4LIdLf67GpMnY/iOC6lN7Dg4/j3PD7+l
-         JzhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vrHsj4jzcxSGBh/pvvhK1q9rZ6z7ROx3pv8vfvPXdDc=;
-        b=atLcAHwErCTf0tVeuAE+yoy1Zc8NUEA+h1bBiFWvup3JCqSzsW7SmiI3NJGhvC64G7
-         k/i49V7GAExTlKjPs0VisPShZR7mGGmQQk2ttDDclPOpl0UfTb7W5Y/d5IPYyD9nuh1i
-         S6miFb59N4c0Xr8/fWW7A1DJVwzeB2mVbKNEk7Q/c1N4uL1RhkpGMQv7m3Mdkw9lAprC
-         ApTn53f/1imSLdOsv0uNiO80JsgyL6EyK0RmM47sOgMY3R8RdIOWggQtXUGSYaCAZ6+X
-         VpKE4+SuYBM4fBErbAUdDzF2zUH8ebZXg2xtfwJGU4bUBfJ5xCeCjD10Bb6fYTPRHXyH
-         9WuQ==
-X-Gm-Message-State: AOAM531YPbmc5jMdtW05mRmV/AHWHc5VYNCM7JaxxxjrNPuIwZxTZoHL
-        NZpfscz3vpoTcJJlMbgZC5PXz9UtxJjnyaqHNCI=
-X-Google-Smtp-Source: ABdhPJw3+1088hHILrCBtM0Eb0NbS2QiGbGfuvWg/E9XXUHFKee0uBhx3liGW/Ig3NisWbHz+OTtRC51eRATF2cDiw0=
-X-Received: by 2002:a05:6122:c88:b0:337:a516:6621 with SMTP id
- ba8-20020a0561220c8800b00337a5166621mr7701843vkb.39.1647139058601; Sat, 12
- Mar 2022 18:37:38 -0800 (PST)
+        with ESMTP id S233629AbiCMFoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Mar 2022 00:44:16 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C58A32044
+        for <git@vger.kernel.org>; Sat, 12 Mar 2022 21:43:09 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2578C197EDA;
+        Sun, 13 Mar 2022 00:43:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=gpOBHbF+1nuj
+        7cRonpRm+RDvQODLxyry6TiqJjeK2AY=; b=NUEBcXMC7v5ovcupx9ISm2cctjZG
+        zLPCEfjYO3p/KouLFBRVyPYZEdsP0g51W4NYfenGxZGg54B17h5NH+sqQBfv6OQd
+        a1A4r9Mz8H9kIaps/TMxJ4ebBISWM3l4tiD0n4xBk0YqZZtuzwB7CwpL62vyugrm
+        eLQH3Ix4k6X17Fo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1CF18197ED9;
+        Sun, 13 Mar 2022 00:43:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.78.140.88])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4DF05197ED8;
+        Sun, 13 Mar 2022 00:43:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v9 0/3] teach submodules to know they're submodules
+References: <20220301002613.1459916-1-emilyshaffer@google.com>
+        <20220310004423.2627181-1-emilyshaffer@google.com>
+        <220311.8635joj0lf.gmgdl@evledraar.gmail.com>
+Date:   Sat, 12 Mar 2022 21:43:03 -0800
+In-Reply-To: <220311.8635joj0lf.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 11 Mar 2022 10:09:50 +0100")
+Message-ID: <xmqqpmmql860.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <20220308113305.39395-1-carenas@gmail.com> <CAPig+cSNgQ7SEYk9M=L7z0G=hteTdupKS6sHJL8T7zEp=zkLEA@mail.gmail.com>
- <CAPig+cT3TNFBMesYvYoncawfBdLqKL971SoP_J7F9FgnL10Eqw@mail.gmail.com>
- <CAPig+cSUTaPRvALJyJ8AxNB4wMFLyaWBOa8f+_8K6quPbxTT5A@mail.gmail.com>
- <xmqqv8wnm30q.fsf@gitster.g> <220309.86pmmulw77.gmgdl@evledraar.gmail.com>
- <CAPig+cQNeTAvWHm2GUGc2i=FKF2V6Gqkmmsw4kDOTzrSYEbgxA@mail.gmail.com>
- <220312.86o82bfo7x.gmgdl@evledraar.gmail.com> <xmqqtuc2lhis.fsf@gitster.g>
-In-Reply-To: <xmqqtuc2lhis.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 12 Mar 2022 18:37:27 -0800
-Message-ID: <CAPUEspgdmaztSShPd6vJpT7801_czRuBt_QaPu_W2JGOw+UqrQ@mail.gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use awk instead of expr for a POSIX non
- integer check
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Elia Pinto <gitter.spiros@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 74FCBEE0-A290-11EC-AF9A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 12, 2022 at 6:21 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
-> > But probably better is to just amend that to call it as "test-tool libc
-> > is-glibc-2.34-or-newer" or whatever. Then just do:
-> >
-> >       if (__GLIBC__ > 2 || (__GLIBC__ =3D=3D 2 && 34 >=3D __GLIBC_MINOR=
-__))
-> >               return 0;
-> >       return 1;
->
-> Yuck.  Then we'd have yet another libc-is-glibc-2.36-or-newer
-> option, too, in the future?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Luckily that won't be needed, as this the original version (with expr)
-is practically good enough even if it might be a little odd looking
-and incorrect for 2.4 <=3D glibc <=3D 2.9 (which are over 10 years old).
+> But now it's a boolean indicating "it's there, discover it", and the
+> implied (but not really explicitly stated) reason in 2/3 is that it's
+> purely for optimization purposes at this point.
 
-  $ expr 2.34 \<=3D "2.34.9000"
-  1
-  $ expr 2.34 \<=3D ""
-  0
+You may know that I have a separate checkout of the 'todo' branch at
+path "Meta" in my working tree.
 
-Apologies for the confusion, and feel free to drop this patch
+I could use the hasSuperproject=3Dfalse setting there, to say "this is
+*NOT* a submodule, even the parent directory is a working tree of a
+different repository, it is not our superproject, so do *NOT* bother
+to go up to discover anything".
 
-Carlo
+If that configuration weren't there in the "Meta/.git/config", the
+parent directory of "Meta" (which has its own ".git") cannot tell if
+that "Meta" thing is a submodule being prepared that hasn't been
+added yet, or it will never intended to be a submodule.  I would
+imagine that "git add X" can later be taught to refuse to add X if
+there is X/.git and X/.git/config says it explicitly says that it
+does not have a superproject.
+
+So, I am not sure if it is a good characterization that it is for
+optimization at all.
