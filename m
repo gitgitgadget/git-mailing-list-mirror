@@ -2,99 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95E5EC433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 06:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47CADC433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 06:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234579AbiCNG6W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 02:58:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36896 "EHLO
+        id S236462AbiCNG6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 02:58:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230462AbiCNG6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 02:58:20 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83ECD3FBCB
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:10 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id bc27so12939122pgb.4
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:10 -0700 (PDT)
+        with ESMTP id S233747AbiCNG6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 02:58:21 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6205D3FBE9
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:12 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d19so6181798pfv.7
+        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tVLm6K4z1zBMiBf4e2dqQxxRAWwaetncPOZjD9iSX3k=;
-        b=S9lBfsDrfmNwUrpyNXUPT8QP7Ua/l1+umt9vnzbaZLFjvazmZJta0AIaC87BDqHv/Z
-         pAkQ8OG7kgR7vOZii1OvJpkl2ptU08+TerIXKQ6SuSK3NFY241YFe7zuvxwgNGrnJwXt
-         85lLRLtUGhIdE3kKaYTCv65cewv9RHCliKjN6BK6J+mxkFkgujR3yafqRgqvthi5F0rd
-         DS1VXFkhYZ4FcQTO5D4YuQnTYLwvo/btuUlttdKoD4TCAJAM++m4tCigMGVCmQlOY3hH
-         0MLRsnq5Ix3Lk7WgoGclPzp2b7g4X7VQvZ/J4YfMrOEEvAju+Yr0M/RalUSsHN1pLubS
-         uu3A==
+        bh=7l6R8Z85XOMsFz4+v6OTBgiT9ceDX8HFVhuZYb+TZlA=;
+        b=Qo4tOfByCRejbTeNqvCbShf9z/9GBag34CkM5R2y+jejqiDqnVto2NTWUvsloTI2Hv
+         4JXamTa+UA8VqhlYDOQ7t6HrxeoalyQZQNyPkz4rZFztck7EqHl8wPCenhVFkb/9FUM2
+         380AMxGqqjiiQcPsik034sww3/LoepJEG4r8oJ6RcOK/GVvt2Axwlbm/g5Il/q2hkctV
+         ivu+sKkMiYotn6aypn+bW9g7wzppgyDmOotteUDKyL8HsRnJPdUo5Hxy34wsMiUgKK5/
+         RLKpqKEZNEaj+QTj572ALXlUSWcrGB7oPqIWYcRKmXewk0Q/uini1OlNuUvNIWKSYH0e
+         T5pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tVLm6K4z1zBMiBf4e2dqQxxRAWwaetncPOZjD9iSX3k=;
-        b=EJWgTOFQhTr+Vh+b7O6JcH+AUALeOIFtsA1/3dGtOxxOHN38/0nUC8RYn6nDGBLVzt
-         cVt+9q88xzqJgAyqdk8DnmglciQJveuLyZjNkdRETbbp2pThgIZShUJuy9y8Akz48a1M
-         8gdAfz44PvxFLZjap/ibRzGhM5awLaSV4uaMuMAY+UBE8aULuNNicH76t6Mhr7ie0GU1
-         XqTR9xa78WaSKm1B2+k/ma/kKHDN7DFbuWXzZksob+9TQMRKlkkrRbdqd638U7l3lNAA
-         AL17gRA2xMNx5n1jVvKozsMlWhTPkBj5W1VRgUOT0w8+NhCopW7vcNCzt+9VP+5PZc4H
-         8r/g==
-X-Gm-Message-State: AOAM532i+f23iGA8N+Mw+shxtzQYfPa3dbf8+BIgFeYaxRW9CySpBJ+3
-        GSg9CfXE4wie22fcilueJUckXfeRs4zg4Q==
-X-Google-Smtp-Source: ABdhPJyred4qWHl7xTazE53b1PZV9lxBAzHRr2mhJaewXss1ENgjt19/Z/B/7xZULciP/dP657F8gw==
-X-Received: by 2002:a62:1a43:0:b0:4f6:ce73:d572 with SMTP id a64-20020a621a43000000b004f6ce73d572mr22540357pfa.69.1647241029838;
-        Sun, 13 Mar 2022 23:57:09 -0700 (PDT)
+        bh=7l6R8Z85XOMsFz4+v6OTBgiT9ceDX8HFVhuZYb+TZlA=;
+        b=4JcKvNuE1vYkaaAPn2vb87G9UA0A9U2glbCPOQhGnjQLq4KIN2j28+7CkSKjc8wLh1
+         LA5xMgaqTKRErYb1FgEXh1nlI3Wcv/t/XT7hEr4PgPZkmwB+JW/ZqNI+0+3xW3nmDWFT
+         3wLX1DzXYV3cfow8OxhmyybGCl/Q9tJKA+B6olx8UUFwlT4wLOdZwhca819U1HtjKetf
+         PhXGw2U8MwhvFZytBg7j/oMqUvNoyR+rNMRF9dupAEuM0AtUM+gqi3adLc0WYTLPiEEX
+         ogqjYA8XpDOFq17C5oAAULpIjahtJvsKNfnGxV0A16/mQgTae9dhkXYN/aR4B7gytdzE
+         f5gQ==
+X-Gm-Message-State: AOAM533Af7SnYeIKGe1kms9+ExYhv7JqSab1Koyc6NpnMkb/iGNCLerh
+        5is0wPUSoQSy+/DYKzfIhg/EwUtNU2JhMw==
+X-Google-Smtp-Source: ABdhPJzCbqjgYXZY7qsQPGM3eUublpCX0oA8Sy3lqbeKopC0IjFF+LF3E29HjPX9flB2MljHp65ryA==
+X-Received: by 2002:a63:8448:0:b0:380:5d66:f163 with SMTP id k69-20020a638448000000b003805d66f163mr18665816pgd.180.1647241031744;
+        Sun, 13 Mar 2022 23:57:11 -0700 (PDT)
 Received: from ffyuanda.localdomain ([119.131.153.242])
-        by smtp.gmail.com with ESMTPSA id ob13-20020a17090b390d00b001becfd7c6f3sm16761332pjb.27.2022.03.13.23.57.07
+        by smtp.gmail.com with ESMTPSA id ob13-20020a17090b390d00b001becfd7c6f3sm16761332pjb.27.2022.03.13.23.57.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Mar 2022 23:57:09 -0700 (PDT)
+        Sun, 13 Mar 2022 23:57:11 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     derrickstolee@github.com
 Cc:     bagasdotme@gmail.com, git@vger.kernel.org, newren@gmail.com,
         vdye@github.com, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v3 0/1] Documentation/git-sparse-checkout.txt: add an OPTIONS section
-Date:   Mon, 14 Mar 2022 14:56:58 +0800
-Message-Id: <20220314065659.82029-1-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v3 1/1] Documentation/git-sparse-checkout.txt: add an OPTIONS section
+Date:   Mon, 14 Mar 2022 14:56:59 +0800
+Message-Id: <20220314065659.82029-2-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220311132141.1817-1-shaoxuan.yuan02@gmail.com>
+In-Reply-To: <20220314065659.82029-1-shaoxuan.yuan02@gmail.com>
 References: <20220311132141.1817-1-shaoxuan.yuan02@gmail.com>
+ <20220314065659.82029-1-shaoxuan.yuan02@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-== Updates Log ==
+Add an OPTIONS section to the manual and move the descriptions about
+these options from COMMANDS to the section.
 
-Changes since v2:
-
- * correct Derrick's name in the single-patch (I really missed it XD)
- * rebase on Elijah's v2 [1]
- * move OPTIONS to after COMMANDS
- * add two sub-sections under option '--[no-]cone', one for command 'set' and
-one for command 'reapply'
- * change the command indicators from this style:
-
-  Use with ['set'|'reapply'].
-
-  to this style:
-
-  Use with the `set` and `reapply` commands.
-
-== Overview ==
-
-Add an OPTIONS section to the manual and move the descriptions/explanations for 
-these options from below COMMANDS to OPTIONS. 
-
-[1] https://lore.kernel.org/git/pull.1148.v2.git.1647054681.gitgitgadget@gmail.com/#r
-
-Shaoxuan Yuan (1):
-  Documentation/git-sparse-checkout.txt: add an OPTIONS section
-
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+---
  Documentation/git-sparse-checkout.txt | 106 +++++++++++++++-----------
  1 file changed, 63 insertions(+), 43 deletions(-)
 
-
-base-commit: 4b89a3392b04acccf28f09f90e26715140461373
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index e4a29a2baa..b8f3b89b74 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -55,44 +55,6 @@ config if not already present. The sparsity defined by the arguments to
+ the 'set' subcommand are stored in the worktree-specific sparse-checkout
+ file. See linkgit:git-worktree[1] and the documentation of
+ `extensions.worktreeConfig` in linkgit:git-config[1] for more details.
+-+
+-When the `--stdin` option is provided, the directories or patterns are
+-read from standard in as a newline-delimited list instead of from the
+-arguments.
+-+
+-By default, the input list is considered a list of directories, matching
+-the output of `git ls-tree -d --name-only`.  This includes interpreting
+-pathnames that begin with a double quote (") as C-style quoted strings.
+-Note that all files under the specified directories (at any depth) will
+-be included in the sparse checkout, as well as files that are siblings
+-of either the given directory or any of its ancestors (see 'CONE PATTERN
+-SET' below for more details).  In the past, this was not the default,
+-and `--cone` needed to be specified or `core.sparseCheckoutCone` needed
+-to be enabled.
+-+
+-When `--no-cone` is passed, the input list is considered a list of
+-patterns.  This mode is harder to use, and unless you can keep the
+-number of patterns small, its design also scales poorly.  It used to be
+-the default mode, but we do not recommend using it.  It does not work
+-with the `--sparse-index` option, and will likely be incompatible with
+-other new features as they are added.  See the "Non-cone Problems"
+-section below and the "Sparse Checkout" section of
+-linkgit:git-read-tree[1] for more details.
+-+
+-Use the `--[no-]sparse-index` option to use a sparse index (the
+-default is to not use it).  A sparse index reduces the size of the
+-index to be more closely aligned with your sparse-checkout
+-definition. This can have significant performance advantages for
+-commands such as `git status` or `git add`.  This feature is still
+-experimental. Some commands might be slower with a sparse index until
+-they are properly integrated with the feature.
+-+
+-**WARNING:** Using a sparse index requires modifying the index in a way
+-that is not completely understood by external tools. If you have trouble
+-with this compatibility, then run `git sparse-checkout init --no-sparse-index`
+-to rewrite your index to not be sparse. Older versions of Git will not
+-understand the sparse directory entries index extension and may fail to
+-interact with your repository until it is disabled.
+ 
+ 'add'::
+ 	Update the sparse-checkout file to include additional directories
+@@ -109,11 +71,6 @@ interact with your repository until it is disabled.
+ 	cases, it can make sense to run `git sparse-checkout reapply` later
+ 	after cleaning up affected paths (e.g. resolving conflicts, undoing
+ 	or committing changes, etc.).
+-+
+-The `reapply` command can also take `--[no-]cone` and `--[no-]sparse-index`
+-flags, with the same meaning as the flags from the `set` command, in order
+-to change which sparsity mode you are using without needing to also respecify
+-all sparsity paths.
+ 
+ 'disable'::
+ 	Disable the `core.sparseCheckout` config setting, and restore the
+@@ -139,6 +96,69 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
+ the disable command, so the easy restore of calling a plain `init`
+ decreased in utility.
+ 
++
++OPTIONS
++-------
++'--[no-]cone'::
++	Use with the `set` and `reapply` commands.
++	Specify using cone mode or not. The default is to use cone mode.
+++
++For `set` command:
+++
++By default, the input list is considered a list of directories, matching
++the output of `git ls-tree -d --name-only`.  This includes interpreting
++pathnames that begin with a double quote (") as C-style quoted strings.
++Note that all files under the specified directories (at any depth) will
++be included in the sparse checkout, as well as files that are siblings
++of either the given directory or any of its ancestors (see 'CONE PATTERN
++SET' below for more details).  In the past, this was not the default,
++and `--cone` needed to be specified or `core.sparseCheckoutCone` needed
++to be enabled.
+++
++When `--no-cone` is passed, the input list is considered a list of
++patterns.  This mode is harder to use, and unless you can keep the
++number of patterns small, its design also scales poorly.  It used to be
++the default mode, but we do not recommend using it.  It does not work
++with the `--sparse-index` option, and will likely be incompatible with
++other new features as they are added.  See the "Non-cone Problems"
++section below and the "Sparse Checkout" section of
++linkgit:git-read-tree[1] for more details.
+++
++For `reapply` command:
+++
++The `reapply` command can also take `--[no-]cone` and `--[no-]sparse-index`
++flags, with the same meaning as the flags from the `set` command, in order
++to change which sparsity mode you are using without needing to also respecify
++all sparsity paths.
++
++'--[no-]sparse-index'::
++	Use with the `set` and `reapply` commands.
++	Specify using a sparse index or not. The default is to not use a
++	sparse index.
+++
++Use the `--[no-]sparse-index` option to use a sparse index (the
++default is to not use it).  A sparse index reduces the size of the
++index to be more closely aligned with your sparse-checkout
++definition. This can have significant performance advantages for
++commands such as `git status` or `git add`.  This feature is still
++experimental. Some commands might be slower with a sparse index until
++they are properly integrated with the feature.
+++
++**WARNING:** Using a sparse index requires modifying the index in a way
++that is not completely understood by external tools. If you have trouble
++with this compatibility, then run `git sparse-checkout init --no-sparse-index`
++to rewrite your index to not be sparse. Older versions of Git will not
++understand the sparse directory entries index extension and may fail to
++interact with your repository until it is disabled.
++
++'--stdin'::
++	Use with the `set` and `add` commands.
+++
++When the `--stdin` option is provided, the directories or patterns are
++read from standard in as a newline-delimited list instead of from the
++arguments.
++
++
+ EXAMPLES
+ --------
+ `git sparse-checkout set MY/DIR1 SUB/DIR2`::
 -- 
 2.35.1
 
