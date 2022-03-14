@@ -2,119 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3D50C4332F
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 12:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D0E0C4167D
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 12:10:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240748AbiCNMLf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 08:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58618 "EHLO
+        id S240661AbiCNMLc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 08:11:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240983AbiCNMIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 08:08:11 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5832B1BB
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 05:04:14 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id z26so21500366lji.8
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 05:04:14 -0700 (PDT)
+        with ESMTP id S235328AbiCNML1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 08:11:27 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18BCB33A34
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 05:10:16 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id dr20so33061645ejc.6
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 05:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=La7XIqZG/XPlSAFiUru+cbwLXQlhbx0WNpTIejAXyAM=;
-        b=LloTibEAFPN0uVZinaL/ZXn6XtR3Sf1k+CnEV3G5EySQEyqps6RdenRmeQ1HgeD/Uo
-         qHID0y+pJl6NEN3ZNZeYgBIu7kib27E0wmI/6POSrZAddXnk0n4kaSRW3+LsllHpqdIE
-         Xj5FLaW26KRGAsc8HTyBc1bSRS02KUZfJuxdRPJLWvH4Fv35QVusEamOjyY6tP1MZnLG
-         HeTvIgWFX8bjVBlrGnTwcIZJ/zHOE4xCGkKRu3qMUyqVwYG6x19kIxFnmQdjxt2u7YZ0
-         lWNqx2RNjHfPHGncpSqTOLt6TzSUcSvAli7VOk7W46BV+83NCT9o/fTNeG6tf+KGjiwP
-         TP5w==
+         :cc:content-transfer-encoding;
+        bh=in5RMpP94cRvrZESXCUpjg1G2Vzopix0tDNvzVRGmG8=;
+        b=Vwe3gMdqWlVX50t0a2nw8FaSLTjwiZvoyNR6TXo0AEQ+GSGqVD8FfQqWgaIlsl0Kdw
+         YRz84oxtdXtiU8rX5rLqKnaOGeGBPRjoPP/ckG4hPv7Dn5rvKPXvl3eGgYfSDy0qn4H0
+         +fQ86cyPu6/f5XC/n371buGeVSO7cP+r/xEkjuG7RXRQWdyh1fNOHP9CARv+n0Dpbge6
+         NtcjTSqQrrmQdg+Fw4VbVaHiEc/E4+QaaaX36Tzt0IracKigok+APLiczV3bsDfmIpFE
+         zTziAGBWU2fdUT7yTBTq0JyjqUrDEbFoIAysV+cAaUshiC5X6ssoAaskUXXOg2Z9E7FS
+         CErw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=La7XIqZG/XPlSAFiUru+cbwLXQlhbx0WNpTIejAXyAM=;
-        b=OqKp3j0vZx3F0+u3EwE4xsvKTxkwBNQJoTPSEgEqzzMpnUKreI7/m+T0ArwvUjxhkU
-         ML80pq9l4p+RTpvmlsCOZo7twv3PmZhQoumSn9OGWb7gwx9X1RY/3N6kqFqspD6m63+E
-         6T5DFdcFqH9olJIreJE48DGCj5u4ObZAjqVcpf7HeOiwbjJKvCyd8MrlsLAB4uasIKy/
-         aNy/5IES5HOlUWwQw3MjLm6GngGE8sN/GAUA9vxvLiT7imIDp0pEBdOIOlPUwwK6DoRm
-         DDZ2growWGJxHYB+0F4r6AVL1E5Ytr4BlKOdRaJtRZlZJgOneOnBB46xpOpKDjMsI6Aw
-         xmeQ==
-X-Gm-Message-State: AOAM531RgLrHhW7TOv9aWnbGSiWFGUbNIU11Ub7/tfykR9BRHdkejOCu
-        Cnu+G3IbKKYihiwPBZHpRlK+LcV1Eh5/2NHX7J2m4WVdpraduA==
-X-Google-Smtp-Source: ABdhPJxrJg+jG05XdRl4feDb1gI6JDzqE8uEsG8NyTFiT/B6KqAF/bqwbyq7G17gAo6LSCGpfermJN/Y59QM5W/ShXg=
-X-Received: by 2002:a2e:b5b9:0:b0:246:b30:64c8 with SMTP id
- f25-20020a2eb5b9000000b002460b3064c8mr13766242ljn.17.1647259452586; Mon, 14
- Mar 2022 05:04:12 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=in5RMpP94cRvrZESXCUpjg1G2Vzopix0tDNvzVRGmG8=;
+        b=KiBietkNjYSN+6qGOBENG6YSExYKXSBwI6Vv6M5nltXRFBXxDmyj1MMkoYEM9rPD6T
+         v7qusLwlaZm+KasqwGOfWtVMkLZdZ6/4GzttQg5Yv+45h46GQC6VK384mLJjhI9LtYLu
+         H4ag8n80PnE7BXL2DLkhNhKho07GoLAM6A6sMDJzyPJdNnecSHBQDbNh02ugqbZlMHKB
+         +stJSWd2Zqqm284U6nZndhGUpKL+0wkItnKU5RWCFxnI1bKMXnJDpaHoe1Lojnl2/1Jh
+         pOQg1aDhFnfqzcemG675aWjrKKYcHZjWr0aM8wRq/RQWUyDgtdqMA8lvQQdjTcJwh+ce
+         rZCg==
+X-Gm-Message-State: AOAM533yuK+pSsM40Af/ODI6yXE2pcn39dWUI24j3elKwGKivcE79bI2
+        DoaApLZQHmZdEy6khwkrGhfdIT3WEz9Xf6r5pE1FKg==
+X-Google-Smtp-Source: ABdhPJxCPHPgUvi7KDEUVOSm3qE63aNmLB/BqYyfpN02Vr4/dpNYrJMTP+OG1xmk8bSxm1ez/V3P5nJ/78+e2mR/lsE=
+X-Received: by 2002:a17:906:a210:b0:6d5:9fa:11ce with SMTP id
+ r16-20020a170906a21000b006d509fa11cemr19537548ejy.172.1647259813144; Mon, 14
+ Mar 2022 05:10:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220314080601.10504-1-gaurijove@gmail.com>
-In-Reply-To: <20220314080601.10504-1-gaurijove@gmail.com>
-From:   Jayati Shrivastava <gaurijove@gmail.com>
-Date:   Mon, 14 Mar 2022 17:33:57 +0530
-Message-ID: <CANsrJQd0v2V9H8HPkiH2179C1c-NOSTRRB8YXt8v6R0YAbFPDQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Use reverse_commit_list helper function for in-place
- list reversal
-To:     Git List <git@vger.kernel.org>
-Cc:     johannes.schindelin@gmx.de, Hariom verma <hariom18599@gmail.com>
+References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
+ <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
+ <220308.868rtky4q8.gmgdl@evledraar.gmail.com> <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
+ <220314.86y21cerhe.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220314.86y21cerhe.gmgdl@evledraar.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 14 Mar 2022 13:10:01 +0100
+Message-ID: <CAPMMpohNi4LhyQm+WYfmRRVZ_B2YfoqeRzWRusza6VUwkJUOWg@mail.gmail.com>
+Subject: Re: Keep reflogs for deleted (remote tracking) branches?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch addresses https://github.com/gitgitgadget/git/issues/1156 . I have
-left builtin/merge.c unmodified since in its case, the original list
-is needed separately
-from its reverse copy.
+On Mon, Mar 14, 2022 at 11:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> I think you might find it interesting to have pre-receive hooks
+> e.g. reject pushes if you're deleting a topic whose commits aren't
+> entirely <your author> i.e. just something like:
+>
+>     git push -o ireallymeanit=3D1 --delete topic
+>
+> I.e. it's an easy to implement extra safety check that people can always
+> opt-out of, print a scary message and most people will think twice :)
 
-On Mon, Mar 14, 2022 at 1:36 PM JAYATI SHRIVASTAVA <gaurijove@gmail.com> wrote:
+That is indeed very interesting, thanks! I need to think about exactly
+when this is the right thing to do, but it's a tool in the box that I
+was not aware of!
+
+
+> > My question is specifically about the, in my opinion, very surprising
+> > behavior of deleting reflogs along with deleted branches - I mainly
+> > provided the example use-case for context.
 >
-> From: JAYATI SHRIVASTAVA <gaurijove@gmail.com>
+> Yes it's quite a mess, e.g. if you follow the rabit hole at the
+> recent[1].
 >
-> Here, a reverse copy of the list is being created by looping and the
-> original list is no longer used by the code. Therefore, instead of creating a copy,
-> we can reverse the original list in-place using the reverse_commit_list helper
-> function a copy.
+> One fundimental problem (discussed in various places around the reftable
+> backend) is that we carry N meanings for an empty reflog:
 >
-> Signed-off-by: JAYATI SHRIVASTAVA <gaurijove@gmail.com>
-> ---
->  sequencer.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
+> A. "This is an active branch, but we have expired the entries".
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index 35006c0cea..bccbb9e352 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3749,7 +3749,7 @@ static int do_merge(struct repository *r,
->         int run_commit_flags = 0;
->         struct strbuf ref_name = STRBUF_INIT;
->         struct commit *head_commit, *merge_commit, *i;
-> -       struct commit_list *bases, *j, *reversed = NULL;
-> +       struct commit_list *bases, *j;
->         struct commit_list *to_merge = NULL, **tail = &to_merge;
->         const char *strategy = !opts->xopts_nr &&
->                 (!opts->strategy ||
-> @@ -3984,9 +3984,7 @@ static int do_merge(struct repository *r,
->                       git_path_merge_head(r), 0);
->         write_message("no-ff", 5, git_path_merge_mode(r), 0);
+> B. "I manually created this, knowing that the various core.* configs
+>    around reflog will say "oh, a reflog exists, let's log to it" (in
+>    some cases).
 >
-> -       for (j = bases; j; j = j->next)
-> -               commit_list_insert(j->item, &reversed);
-> -       free_commit_list(bases);
-> +       bases = reverse_commit_list(bases);
+> C. Another is: This is "stale" log, i.e. no branch exists, but the log
+>    is there.
 >
->         repo_read_index(r);
->         init_merge_options(&o, r);
-> @@ -4002,10 +4000,10 @@ static int do_merge(struct repository *r,
->                  * update the index and working copy immediately.
->                  */
->                 ret = merge_ort_recursive(&o,
-> -                                         head_commit, merge_commit, reversed,
-> +                                         head_commit, merge_commit, bases,
->                                           &i);
->         } else {
-> -               ret = merge_recursive(&o, head_commit, merge_commit, reversed,
-> +               ret = merge_recursive(&o, head_commit, merge_commit, bases,
->                                       &i);
->         }
->         if (ret <= 0)
-> --
-> 2.35.1.455.g1a4874565f
+> Which is one reason[2] we'd delete them on branch deletion, because
+> otherwise we'd start logging again when a branch is re-created, which
+> possibly isn't what we wanted.
 >
+> 1. https://lore.kernel.org/git/de5e2b0e290791d0a4f58a893d8571b5fc8c4f1a.1=
+646952843.git.avarab@gmail.com
+> 2. I'm not saying this was intended, and haven't looked into this case,
+>    just that's it it's an emergent effect of how these files are treated
+>    now.
+
+Very interesting, thx. Fwiw I would argue that resuming full logging
+when a new branch appears with the same name (within the period of
+time where the reflog is not empty yet) is a very reasonable thing to
+end up doing, but I guess Han-Wen's note about potential path
+conflicts on branches *after* a deletion make this a hard thing to
+change, even if "accidental logging resuming" were accepted as a
+sensible outcome here.
