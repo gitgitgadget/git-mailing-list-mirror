@@ -2,208 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47CADC433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 06:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF3BC433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 07:19:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236462AbiCNG6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 02:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
+        id S236258AbiCNHUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 03:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233747AbiCNG6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 02:58:21 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6205D3FBE9
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:12 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d19so6181798pfv.7
-        for <git@vger.kernel.org>; Sun, 13 Mar 2022 23:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7l6R8Z85XOMsFz4+v6OTBgiT9ceDX8HFVhuZYb+TZlA=;
-        b=Qo4tOfByCRejbTeNqvCbShf9z/9GBag34CkM5R2y+jejqiDqnVto2NTWUvsloTI2Hv
-         4JXamTa+UA8VqhlYDOQ7t6HrxeoalyQZQNyPkz4rZFztck7EqHl8wPCenhVFkb/9FUM2
-         380AMxGqqjiiQcPsik034sww3/LoepJEG4r8oJ6RcOK/GVvt2Axwlbm/g5Il/q2hkctV
-         ivu+sKkMiYotn6aypn+bW9g7wzppgyDmOotteUDKyL8HsRnJPdUo5Hxy34wsMiUgKK5/
-         RLKpqKEZNEaj+QTj572ALXlUSWcrGB7oPqIWYcRKmXewk0Q/uini1OlNuUvNIWKSYH0e
-         T5pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7l6R8Z85XOMsFz4+v6OTBgiT9ceDX8HFVhuZYb+TZlA=;
-        b=4JcKvNuE1vYkaaAPn2vb87G9UA0A9U2glbCPOQhGnjQLq4KIN2j28+7CkSKjc8wLh1
-         LA5xMgaqTKRErYb1FgEXh1nlI3Wcv/t/XT7hEr4PgPZkmwB+JW/ZqNI+0+3xW3nmDWFT
-         3wLX1DzXYV3cfow8OxhmyybGCl/Q9tJKA+B6olx8UUFwlT4wLOdZwhca819U1HtjKetf
-         PhXGw2U8MwhvFZytBg7j/oMqUvNoyR+rNMRF9dupAEuM0AtUM+gqi3adLc0WYTLPiEEX
-         ogqjYA8XpDOFq17C5oAAULpIjahtJvsKNfnGxV0A16/mQgTae9dhkXYN/aR4B7gytdzE
-         f5gQ==
-X-Gm-Message-State: AOAM533Af7SnYeIKGe1kms9+ExYhv7JqSab1Koyc6NpnMkb/iGNCLerh
-        5is0wPUSoQSy+/DYKzfIhg/EwUtNU2JhMw==
-X-Google-Smtp-Source: ABdhPJzCbqjgYXZY7qsQPGM3eUublpCX0oA8Sy3lqbeKopC0IjFF+LF3E29HjPX9flB2MljHp65ryA==
-X-Received: by 2002:a63:8448:0:b0:380:5d66:f163 with SMTP id k69-20020a638448000000b003805d66f163mr18665816pgd.180.1647241031744;
-        Sun, 13 Mar 2022 23:57:11 -0700 (PDT)
-Received: from ffyuanda.localdomain ([119.131.153.242])
-        by smtp.gmail.com with ESMTPSA id ob13-20020a17090b390d00b001becfd7c6f3sm16761332pjb.27.2022.03.13.23.57.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Mar 2022 23:57:11 -0700 (PDT)
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     derrickstolee@github.com
-Cc:     bagasdotme@gmail.com, git@vger.kernel.org, newren@gmail.com,
-        vdye@github.com, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v3 1/1] Documentation/git-sparse-checkout.txt: add an OPTIONS section
-Date:   Mon, 14 Mar 2022 14:56:59 +0800
-Message-Id: <20220314065659.82029-2-shaoxuan.yuan02@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220314065659.82029-1-shaoxuan.yuan02@gmail.com>
-References: <20220311132141.1817-1-shaoxuan.yuan02@gmail.com>
- <20220314065659.82029-1-shaoxuan.yuan02@gmail.com>
+        with ESMTP id S232367AbiCNHUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 03:20:41 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E79B3FDB7
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 00:19:32 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 9FEB15C012F;
+        Mon, 14 Mar 2022 03:19:29 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Mon, 14 Mar 2022 03:19:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; bh=ra2/mr8wrCm/5S9+DOmJvfnPM1oybeQzULGD2R
+        qLUvs=; b=M6cJoDwahFkzBkZ/uRGUDGoACfWNEta1GgY5iePkGwcvy6FfJnwItm
+        2DAt45Q3uAb0siS938D7BxRymfoA1EYSRg1nw7+EGplLZz0DnqXkkrEf8tA2HPXw
+        T8k/vcrDLjjmkGVIzehFOIy3cLhVY/0SYEjpFkiY57fGkjPT7cmW2ERv4Jd+U2A4
+        Mo+8jzqow+nfkgGa1z55eZfBp+euliyFCT0zyBFTKnyCaxrBYV2XPDZyqQw4GuGR
+        X5AUqEo9W8WTAMELtbOwvFzSPrJ2bz2gOCUXxOFDakgLvApY8xo72+7F48C9uK1Q
+        SwwB5sQk411a21FykRdlO7dskyNFl7XQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ra2/mr8wrCm/5S9+D
+        OmJvfnPM1oybeQzULGD2RqLUvs=; b=PHgHJJnlnwsO0vMLosuPEiODNl9co9MoY
+        4vd6xmOyWXH/1ET2vgiUlHmwkT9HH5hD7XxG/qJsZfsLTTm7oMi0iXvByAGVbbu4
+        lS2xNp+iamuH/LTVHC31Uxkajr2S7M/wbfQ4lDZt7kfQ7pThpjnBVHO6ykFCxF4y
+        bDBqyVyyKlCbUr8oGP+0DwiaS0LOJiecI5ozGScQShnNI/SakHxkyZ/YvMK+sfJ9
+        Ot3MBuLzMttOJvYkRrgwFLS7o+XUA5MdYITsXx6BYkcho/uA27AJJ4LSCsyeBug7
+        uKZaWxtX/4M5itZRwC/ltDQv2Rzqrjayzh3g6452GwHxGiqlSxWXA==
+X-ME-Sender: <xms:gewuYhwzh6mMzAaGsNP_H0kVslxSqypP82vCCePne5wSIMDlmGUijg>
+    <xme:gewuYhQHQlRuRbEwS1z8r7MapxJvSNJXXnFgjr6ue8UzbU0LxYT_Cn41zSYTLb4LH
+    oJ32VDdnXQTu_kufw>
+X-ME-Received: <xmr:gewuYrVTSQiNXUBOAhoVZY5tFY6don7MISaMNKfSDt6qlUm5lQWxif1XP4uqIjCaal7TpovUL-jZXYZL7v1O_uvrQDX2Jrmr6a_YYwLpClrESv62rNe3I9M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvjedguddtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:gewuYjiuLM5mc9Bn9RIusbzcbQ-7pFobBklQLjDdDG_Yd9eNhJ7g_g>
+    <xmx:gewuYjBCcFVoY2vEzGtS1y3z3PopNgPCA8XP0WRuIMPRxBF3tgcNEg>
+    <xmx:gewuYsLqaWGkYciyity_e_Q6tMFkcmqR6Ye1drM-lGxAv6Re_opPZg>
+    <xmx:gewuYmpS50ivLXuTLVVQ-mbIirJoEsrD_sbMLm3MDnXVNgUTJQ5pCQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Mar 2022 03:19:28 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 90805f66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 14 Mar 2022 07:19:24 +0000 (UTC)
+Date:   Mon, 14 Mar 2022 08:19:23 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] repack: add config to skip updating server info
+Message-ID: <Yi7se2c03E4PNnsX@ncase>
+References: <659d5528df56f6b9aece6b1f3c4e2e5a4ae04e1e.1646996936.git.ps@pks.im>
+ <Yit22Xcs6iF4MVB7@nand.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="QNTI5fCCL0CMr3EG"
+Content-Disposition: inline
+In-Reply-To: <Yit22Xcs6iF4MVB7@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an OPTIONS section to the manual and move the descriptions about
-these options from COMMANDS to the section.
 
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
----
- Documentation/git-sparse-checkout.txt | 106 +++++++++++++++-----------
- 1 file changed, 63 insertions(+), 43 deletions(-)
+--QNTI5fCCL0CMr3EG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index e4a29a2baa..b8f3b89b74 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -55,44 +55,6 @@ config if not already present. The sparsity defined by the arguments to
- the 'set' subcommand are stored in the worktree-specific sparse-checkout
- file. See linkgit:git-worktree[1] and the documentation of
- `extensions.worktreeConfig` in linkgit:git-config[1] for more details.
--+
--When the `--stdin` option is provided, the directories or patterns are
--read from standard in as a newline-delimited list instead of from the
--arguments.
--+
--By default, the input list is considered a list of directories, matching
--the output of `git ls-tree -d --name-only`.  This includes interpreting
--pathnames that begin with a double quote (") as C-style quoted strings.
--Note that all files under the specified directories (at any depth) will
--be included in the sparse checkout, as well as files that are siblings
--of either the given directory or any of its ancestors (see 'CONE PATTERN
--SET' below for more details).  In the past, this was not the default,
--and `--cone` needed to be specified or `core.sparseCheckoutCone` needed
--to be enabled.
--+
--When `--no-cone` is passed, the input list is considered a list of
--patterns.  This mode is harder to use, and unless you can keep the
--number of patterns small, its design also scales poorly.  It used to be
--the default mode, but we do not recommend using it.  It does not work
--with the `--sparse-index` option, and will likely be incompatible with
--other new features as they are added.  See the "Non-cone Problems"
--section below and the "Sparse Checkout" section of
--linkgit:git-read-tree[1] for more details.
--+
--Use the `--[no-]sparse-index` option to use a sparse index (the
--default is to not use it).  A sparse index reduces the size of the
--index to be more closely aligned with your sparse-checkout
--definition. This can have significant performance advantages for
--commands such as `git status` or `git add`.  This feature is still
--experimental. Some commands might be slower with a sparse index until
--they are properly integrated with the feature.
--+
--**WARNING:** Using a sparse index requires modifying the index in a way
--that is not completely understood by external tools. If you have trouble
--with this compatibility, then run `git sparse-checkout init --no-sparse-index`
--to rewrite your index to not be sparse. Older versions of Git will not
--understand the sparse directory entries index extension and may fail to
--interact with your repository until it is disabled.
- 
- 'add'::
- 	Update the sparse-checkout file to include additional directories
-@@ -109,11 +71,6 @@ interact with your repository until it is disabled.
- 	cases, it can make sense to run `git sparse-checkout reapply` later
- 	after cleaning up affected paths (e.g. resolving conflicts, undoing
- 	or committing changes, etc.).
--+
--The `reapply` command can also take `--[no-]cone` and `--[no-]sparse-index`
--flags, with the same meaning as the flags from the `set` command, in order
--to change which sparsity mode you are using without needing to also respecify
--all sparsity paths.
- 
- 'disable'::
- 	Disable the `core.sparseCheckout` config setting, and restore the
-@@ -139,6 +96,69 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
- the disable command, so the easy restore of calling a plain `init`
- decreased in utility.
- 
-+
-+OPTIONS
-+-------
-+'--[no-]cone'::
-+	Use with the `set` and `reapply` commands.
-+	Specify using cone mode or not. The default is to use cone mode.
-++
-+For `set` command:
-++
-+By default, the input list is considered a list of directories, matching
-+the output of `git ls-tree -d --name-only`.  This includes interpreting
-+pathnames that begin with a double quote (") as C-style quoted strings.
-+Note that all files under the specified directories (at any depth) will
-+be included in the sparse checkout, as well as files that are siblings
-+of either the given directory or any of its ancestors (see 'CONE PATTERN
-+SET' below for more details).  In the past, this was not the default,
-+and `--cone` needed to be specified or `core.sparseCheckoutCone` needed
-+to be enabled.
-++
-+When `--no-cone` is passed, the input list is considered a list of
-+patterns.  This mode is harder to use, and unless you can keep the
-+number of patterns small, its design also scales poorly.  It used to be
-+the default mode, but we do not recommend using it.  It does not work
-+with the `--sparse-index` option, and will likely be incompatible with
-+other new features as they are added.  See the "Non-cone Problems"
-+section below and the "Sparse Checkout" section of
-+linkgit:git-read-tree[1] for more details.
-++
-+For `reapply` command:
-++
-+The `reapply` command can also take `--[no-]cone` and `--[no-]sparse-index`
-+flags, with the same meaning as the flags from the `set` command, in order
-+to change which sparsity mode you are using without needing to also respecify
-+all sparsity paths.
-+
-+'--[no-]sparse-index'::
-+	Use with the `set` and `reapply` commands.
-+	Specify using a sparse index or not. The default is to not use a
-+	sparse index.
-++
-+Use the `--[no-]sparse-index` option to use a sparse index (the
-+default is to not use it).  A sparse index reduces the size of the
-+index to be more closely aligned with your sparse-checkout
-+definition. This can have significant performance advantages for
-+commands such as `git status` or `git add`.  This feature is still
-+experimental. Some commands might be slower with a sparse index until
-+they are properly integrated with the feature.
-++
-+**WARNING:** Using a sparse index requires modifying the index in a way
-+that is not completely understood by external tools. If you have trouble
-+with this compatibility, then run `git sparse-checkout init --no-sparse-index`
-+to rewrite your index to not be sparse. Older versions of Git will not
-+understand the sparse directory entries index extension and may fail to
-+interact with your repository until it is disabled.
-+
-+'--stdin'::
-+	Use with the `set` and `add` commands.
-++
-+When the `--stdin` option is provided, the directories or patterns are
-+read from standard in as a newline-delimited list instead of from the
-+arguments.
-+
-+
- EXAMPLES
- --------
- `git sparse-checkout set MY/DIR1 SUB/DIR2`::
--- 
-2.35.1
+On Fri, Mar 11, 2022 at 11:20:41AM -0500, Taylor Blau wrote:
+> On Fri, Mar 11, 2022 at 12:09:30PM +0100, Patrick Steinhardt wrote:
+> > diff --git a/Documentation/config/repack.txt b/Documentation/config/rep=
+ack.txt
+> > index 9c413e177e..22bfc26afc 100644
+> > --- a/Documentation/config/repack.txt
+> > +++ b/Documentation/config/repack.txt
+> > @@ -25,3 +25,6 @@ repack.writeBitmaps::
+> >  	space and extra time spent on the initial repack.  This has
+> >  	no effect if multiple packfiles are created.
+> >  	Defaults to true on bare repos, false otherwise.
+> > +
+> > +repack.updateServerInfo::
+> > +	If set to false, git-repack will not run git-update-server-info.
+>=20
+> Can you clarify here what the default value of this config variable is,
+> and how it interacts with repack's `-n` flag? E.g., something along the
+> lines of:
+>=20
+>     repack.updateServerInfo::
+>         If set to false, linkgit:git-repack[1] will not run
+>         linkgit:git-update-serve-info[1]. Defaults to true. Can be
+>         overridden when true by the `-n` option of
+>         linkgit:git-repack[1].
+>=20
+> Perhaps a little verbose, but I think it leaves less ambiguity about
+> what this new configuration variable is for.
 
+Makes sense.
+
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index da1e364a75..3baa993da2 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -22,6 +22,7 @@ static int delta_base_offset =3D 1;
+> >  static int pack_kept_objects =3D -1;
+> >  static int write_bitmaps =3D -1;
+> >  static int use_delta_islands;
+> > +static int no_update_server_info =3D 0;
+>=20
+> Not the fault of this patch, but I wonder if this would be less
+> confusing if we stored `update_server_info` instead of
+> `no_update_server_info`. If you have time, I think it may be worth a
+> preparatory patch at the beginning to swap the two.
+[snip]
+
+I indeed first had a look at how to do this, but didn't find a negated
+`OPT_BOOL()`. I had another look now though, and it seems like this is
+typically solved via `OPT_NEGBIT()`.
+
+Thanks!
+
+Patrick
+
+--QNTI5fCCL0CMr3EG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIu7HoACgkQVbJhu7ck
+PpTlxBAAlLSwn9vQEEwtzbj+DhuVoh91D3HLgk80y0S62u8h6J4zdRNZ3iG5tttF
+AtKqHRe6cVE3z1/PkdROY8oPmPZTwAmMLgt8+vigkpO1SrqgejHO10dS7D3r0QvK
+F4Evpe3RFJ5EegB+8BxDMeBRHbby3qnZngtsePF9/ln4UHUQthh6wY6j55ro7lQ0
+oeH9zO0kM4tPdWgNAltbxo6tQbjITvEqghVZP6hcDqS/xeJXPvaVKSDlOAHmPOGm
+RwZh2Y9mxP/1icurYEU4HODguihsAxKTBuJjQPPiOSwNeOn4RsW9Wv8N9VzWg57W
+zski2PcGuYurVUP5p52QoBWjJc9cYF5VVQyIPa18Op3rI0wXeP5grnR1JQ6Sv00k
+e9n+DbJ7Y3ZyP5enVndf+L1KH6djjYJH35uXo1JgjFTO7afs8ED/jYjcVtUJEV6S
+aC2yhMa7K6WML5i5P7oY0b5oc22Tq1rlmagoAAcBJomjykYQYx0gUzEqmdyIiiR1
+VxvHgx7T/IX/HmysQ3ERSvQdJwhBjUPV0g9M/zt/nZCeeJs9vrQ2/pOR1YcudC0Z
+ehfn8aBXkKa33rJLm6a2BR1flEAYDSm/C2ZsbuqqHE4T1j01nORo8Q+GSolYv6uA
+3qNZtAsbE62mrSdR555mv6aqy65pON266T2XQG8jQ+cpOgmO0Jo=
+=S5ng
+-----END PGP SIGNATURE-----
+
+--QNTI5fCCL0CMr3EG--
