@@ -2,344 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 104D6C433FE
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 16:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ABABC433F5
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 16:10:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241162AbiCNQLp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 12:11:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47248 "EHLO
+        id S242898AbiCNQLq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 12:11:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234683AbiCNQLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 12:11:44 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2353CFED
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 09:10:33 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id j17so24884786wrc.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 09:10:33 -0700 (PDT)
+        with ESMTP id S242868AbiCNQLp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 12:11:45 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CFC3E0C9
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 09:10:35 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j26so24826443wrb.1
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 09:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Tt25bh0YOXUg5hP9YIuTJG48GrAyCuzRI6qQlb4kzws=;
-        b=I5nqYLEK7zBje8WmsD7zc1/wSPQ4hjDFlTXvi523t/t9H5iNJt3j45h8JiuixiFV+D
-         Em0j0HJJIYi22HH61a0PTYevuV+urJIu9Q5qHcOVcS68TS2QaieoJHp7kZea+HEUSSQk
-         hr/G+UXkkkxDWa58QB/G60xeB/Cb4jwuVr8OYr3Dkkuv+N9T0kqnxnlESGYH7EUXCklp
-         9pTvyqsURPLGf5okqcbxte3UqRYk9G8Vaq84p78NHbCykMcXeHV7uG2raOFZ7MZ5Xf3b
-         fWpndVChw6bIKldeCkKWnor4oHW+jNegm93zJrJSgTe/ReclCA+EqC8rBS/9jul6LzqM
-         BH5w==
+        bh=gsKzs7AJFyckwXhNdgglhBMpOVXFbOPZgH1AOJ2vYWo=;
+        b=kbyMw+XkBzD0kG9KcRZDRMm5sjnmLPL1xlkJ1VngX2F1x8qAnjMEvTDz0Fvicd3Q9M
+         wAMyVxTgc5t21L00hasKyCxHwTSHd3WKAjHZx4JdLYOtr298agNFQsf5cYEQhMVUZ4xI
+         xCGW9/um1Y/4uxbU6JqBn2qyyU41ucNFnodKMCjPLOkJzMw4NDPpthLuMKkZu7aVKcD/
+         uaHAje9maVMR5t2ZsduRqJueysz2Xsz2FvCloWRRvbDysI+Bar4halBY/l+ANaIHFC+I
+         T7MWK/iU7y/Hvc4wTnrvdn7QohMB2g8K7NFm7nj+AbXSsYxWRZZDE4MAl9Yy5nMsALkG
+         7JOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Tt25bh0YOXUg5hP9YIuTJG48GrAyCuzRI6qQlb4kzws=;
-        b=e10qj2aidvCpLLkI5o5tcJIdVdfTwAkVxAoCCmTxmj/VhQIWDUJqcCF5JADHLsb02d
-         irpeavV6Yc5AKwlj/Qpvv4NcVf9cFaSZ5onU4ZVQWZIjnfRFbJ5iS93aKtX3tf/UVoMY
-         2rHZGePbd0cWo+Cr1bljFEsYh9LwMLGOy54HbHncE7cxP1eSLEkK2Up+2pzTrrA2Hsu0
-         kfo2zZa/t/ORiFrXfzXP4weRJuv9WFF2+OEorYmC2T1+rGpQfwtSRAGSoznNBN1s4NUu
-         rMw2LbK0XZ2aD3Kf7+rJZKoRF87JcgKa1sd7lffliZZb0MQs2Yv2qaV6B6mt7Fuarmjr
-         JB0w==
-X-Gm-Message-State: AOAM533s+611uX3im/hl6p+WLKmvBPHKJ9lWAwXIr13E65F04R6u7gEw
-        tAV7MRDO+ruQoAPAKTrN2Bstu4BvFGE=
-X-Google-Smtp-Source: ABdhPJy4QI/YaT13HmtH/kkkztkLcjS6lycDYWgXeKVtfYAcURcLG9sm/BI3NB/Dp6JckZe4Yc4nyg==
-X-Received: by 2002:a5d:525b:0:b0:203:8f00:1a56 with SMTP id k27-20020a5d525b000000b002038f001a56mr15100720wrc.202.1647274231980;
-        Mon, 14 Mar 2022 09:10:31 -0700 (PDT)
+        bh=gsKzs7AJFyckwXhNdgglhBMpOVXFbOPZgH1AOJ2vYWo=;
+        b=yGoBlWytF8Sibdx8jIawAN6jmwoIHnVHy+kRPK2/fmScn31E+bSF/coFDpvpV5MRsD
+         GPyLrkXKVQW4W9lKM5D/z0jS6WlRrCSkaAwe+6WgqVTYoOWzQ+5VSzERIv6g5kMmhgEu
+         ZTZKRbYgNh3Wv5jWHckJ2RS0+VAV1y3HnteFM1UoT+Fn73+cwJjB9u6fNLIi/TJ9TSW9
+         l53HPzKnb1rtq8sdpNSfOizMdI6XWpw06T3n3SCF9t5f/Atssp28X2yyCWXYXGBcblF9
+         FIMMF0axWA3IuWcZKFfhXvA2V6bxyU6DbeK8r4YlKx1J3uqeaWusU+QwWyryVfC6AMlz
+         bT1Q==
+X-Gm-Message-State: AOAM530KVLN/Q/o6nUDXU9WS8QfZ3fiYFod8VMbrcp9IRjQWZqNcmtyE
+        PPKzO1cojSwTMjYugx/Avb3xtbG3hkg=
+X-Google-Smtp-Source: ABdhPJzOgsYN+8WBgoAIdQyRnjh6i21bafLxKLnJskd5Uz0lnVFB3UiJz0TfVJ/8rKG99Qfjwohp3A==
+X-Received: by 2002:a5d:588d:0:b0:203:8c45:8050 with SMTP id n13-20020a5d588d000000b002038c458050mr15786571wrf.502.1647274233611;
+        Mon, 14 Mar 2022 09:10:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v4-20020a5d6784000000b001f1f7b814d7sm13860816wru.69.2022.03.14.09.10.31
+        by smtp.gmail.com with ESMTPSA id i74-20020adf90d0000000b0020373ba7beesm22259749wri.0.2022.03.14.09.10.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 09:10:31 -0700 (PDT)
-Message-Id: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1170.git.1647043729.gitgitgadget@gmail.com>
+        Mon, 14 Mar 2022 09:10:33 -0700 (PDT)
+Message-Id: <7f0226bc3e646167808fbd2413dc54e87417230c.1647274230.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
 References: <pull.1170.git.1647043729.gitgitgadget@gmail.com>
+        <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Mar 2022 16:10:25 +0000
-Subject: [PATCH v2 0/5] Allow 'reset --quiet' to refresh the index, use 'reset --quiet' in 'stash'
+Date:   Mon, 14 Mar 2022 16:10:27 +0000
+Subject: [PATCH v2 2/5] reset: introduce --[no-]refresh option to --mixed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, Victoria Dye <vdye@github.com>
+Cc:     derrickstolee@github.com, Victoria Dye <vdye@github.com>,
+        Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the process of working on tests for 'git stash' sparse index integration,
-I found that the '--quiet' option in 'git stash' does not suppress all
-non-error output when used with '--index'. Specifically, this comes from an
-invocation of 'git reset' without the '--quiet' flag in 'reset_head()'. Upon
-enabling that flag, though, I discovered that 1) 'reset' does not refresh
-the index if '--quiet' is specified (as of [1]) and 2) 'git stash' needs the
-index to be refreshed after the reset.
+From: Victoria Dye <vdye@github.com>
 
-This series aims to decouple the "suppress logging" and "skip index refresh"
-behaviors in 'git reset --mixed', then allow 'stash' to internally use reset
-with logs suppressed but index refresh enabled. This is accomplished by
-introducing the '--[no-]refresh' option and 'reset.refresh' config setting
-to 'git reset'. Additionally, in the spirit of backward-compatibility,
-'--quiet' and/or 'reset.quiet=true' without any specified "refresh"
-option/config will continue to skip 'refresh_index(...)'.
+Add a new --[no-]refresh option that is intended to explicitly determine
+whether a mixed reset should end in an index refresh.
 
-There are also some minor updates to the advice that suggests skipping the
-index refresh:
+Starting at 9ac8125d1a (reset: don't compute unstaged changes after reset
+when --quiet, 2018-10-23), using the '--quiet' option results in skipping
+the call to 'refresh_index(...)' at the end of a mixed reset with the goal
+of improving performance. However, by coupling behavior that modifies the
+index with the option that silences logs, there is no way for users to have
+one without the other (i.e., silenced logs with a refreshed index) without
+incurring the overhead of a separate call to 'git update-index --refresh'.
+Furthermore, there is minimal user-facing documentation indicating that
+--quiet skips the index refresh, potentially leading to unexpected issues
+executing commands after 'git reset --quiet' that do not themselves refresh
+the index (e.g., internals of 'git stash', 'git read-tree').
 
- * replace recommendation to use "--quiet" with "--no-refresh"
- * use 'advise()' rather than 'printf()'
- * rename the advice config setting from 'advice.resetQuiet' to to
-   'advice.resetNoRefresh'
- * suppress advice if '--quiet' is specified in 'reset'
+To mitigate these issues, '--[no-]refresh' and 'reset.refresh' are
+introduced to provide a dedicated mechanism for refreshing the index. When
+either is set, '--quiet' and 'reset.quiet' revert to controlling only
+whether logs are silenced and do not affect index refresh.
 
-Finally, tests are added to 't7102-reset.sh' verifying whether index refresh
-happens when expected and to 't3903-stash.sh' verifying that 'apply --quiet'
-no longer prints extraneous logs.
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ Documentation/git-reset.txt |  9 +++++
+ builtin/reset.c             | 13 ++++++-
+ t/t7102-reset.sh            | 77 +++++++++++++++++++++++++++++++++----
+ 3 files changed, 91 insertions(+), 8 deletions(-)
 
-
-Changes since V1
-================
-
- * Update cover letter title
- * Squash 't7102' test fixes from patch 5 into patch 2
- * Refactor 't7102' tests to properly use inline config settings
-
-[1] https://lore.kernel.org/git/20181023190423.5772-2-peartben@gmail.com/
-
-Thanks! -Victoria
-
-Victoria Dye (5):
-  reset: revise index refresh advice
-  reset: introduce --[no-]refresh option to --mixed
-  reset: replace '--quiet' with '--no-refresh' in performance advice
-  reset: suppress '--no-refresh' advice if logging is silenced
-  stash: make internal resets quiet and refresh index
-
- Documentation/config/advice.txt |  8 ++--
- Documentation/git-reset.txt     |  9 ++++
- advice.c                        |  2 +-
- advice.h                        |  2 +-
- builtin/reset.c                 | 21 ++++++---
- builtin/stash.c                 |  5 ++-
- t/t3903-stash.sh                | 12 +++++
- t/t7102-reset.sh                | 77 ++++++++++++++++++++++++++++++---
- 8 files changed, 116 insertions(+), 20 deletions(-)
-
-
-base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1170%2Fvdye%2Fstash%2Fmake-reset-quiet-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1170/vdye/stash/make-reset-quiet-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1170
-
-Range-diff vs v1:
-
- 1:  7206ef8dd8a = 1:  7206ef8dd8a reset: revise index refresh advice
- 2:  bda93703013 ! 2:  7f0226bc3e6 reset: introduce --[no-]refresh option to --mixed
-     @@ Commit message
-          Add a new --[no-]refresh option that is intended to explicitly determine
-          whether a mixed reset should end in an index refresh.
-      
-     -    A few years ago, [1] introduced behavior to the '--quiet' option to skip the
-     -    call to 'refresh_index(...)' at the end of a mixed reset with the goal of
-     -    improving performance. However, by coupling behavior that modifies the index
-     -    with the option that silences logs, there is no way for users to have one
-     -    without the other (i.e., silenced logs with a refreshed index) without
-     +    Starting at 9ac8125d1a (reset: don't compute unstaged changes after reset
-     +    when --quiet, 2018-10-23), using the '--quiet' option results in skipping
-     +    the call to 'refresh_index(...)' at the end of a mixed reset with the goal
-     +    of improving performance. However, by coupling behavior that modifies the
-     +    index with the option that silences logs, there is no way for users to have
-     +    one without the other (i.e., silenced logs with a refreshed index) without
-          incurring the overhead of a separate call to 'git update-index --refresh'.
-          Furthermore, there is minimal user-facing documentation indicating that
-          --quiet skips the index refresh, potentially leading to unexpected issues
-     @@ Commit message
-          either is set, '--quiet' and 'reset.quiet' revert to controlling only
-          whether logs are silenced and do not affect index refresh.
-      
-     -    [1] 9ac8125d1a (reset: don't compute unstaged changes after reset when
-     -        --quiet, 2018-10-23)
-     -
-     +    Helped-by: Derrick Stolee <derrickstolee@github.com>
-          Signed-off-by: Victoria Dye <vdye@github.com>
-      
-       ## Documentation/git-reset.txt ##
-     @@ t/t7102-reset.sh: test_expect_success 'resetting an unmodified path is a no-op'
-      +	git rm --cached file2 &&
-      +
-      +	# Step 2
-     -+	git reset $1 --mixed HEAD &&
-     ++	git $1 reset $2 --mixed HEAD &&
-      +
-      +	# Step 3
-      +	git read-tree -m HEAD~1
-     @@ t/t7102-reset.sh: test_expect_success 'resetting an unmodified path is a no-op'
-      -	test_cmp expect output
-      +	# Verify default behavior (with no config settings or command line
-      +	# options)
-     -+	test_index_refreshed &&
-     ++	test_index_refreshed
-      +'
-      +test_expect_success '--mixed --[no-]quiet sets default refresh behavior' '
-      +	# Verify that --[no-]quiet and `reset.quiet` (without --[no-]refresh)
-      +	# determine refresh behavior
-      +
-      +	# Config setting
-     -+	test_must_fail test_index_refreshed -c reset.quiet=true &&
-     -+	test_index_refreshed -c reset.quiet=true &&
-     ++	! test_index_refreshed "-c reset.quiet=true" &&
-     ++	test_index_refreshed "-c reset.quiet=false" &&
-      +
-      +	# Command line option
-     -+	test_must_fail test_index_refreshed --quiet &&
-     -+	test_index_refreshed --no-quiet &&
-     ++	! test_index_refreshed "" --quiet &&
-     ++	test_index_refreshed "" --no-quiet &&
-      +
-      +	# Command line option overrides config setting
-     -+	test_must_fail test_index_refreshed -c reset.quiet=false --quiet &&
-     -+	test_index_refreshed -c reset.refresh=true --no-quiet
-     ++	! test_index_refreshed "-c reset.quiet=false" --quiet &&
-     ++	test_index_refreshed "-c reset.refresh=true" --no-quiet
-      +'
-      +
-      +test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
-      +	# Verify that --[no-]refresh and `reset.refresh` control index refresh
-      +
-      +	# Config setting
-     -+	test_index_refreshed -c reset.refresh=true &&
-     -+	test_must_fail test_index_refreshed -c reset.refresh=false &&
-     ++	test_index_refreshed "-c reset.refresh=true" &&
-     ++	! test_index_refreshed "-c reset.refresh=false" &&
-      +
-      +	# Command line option
-     -+	test_index_refreshed --refresh &&
-     -+	test_must_fail test_index_refreshed --no-refresh &&
-     ++	test_index_refreshed "" --refresh &&
-     ++	! test_index_refreshed "" --no-refresh &&
-      +
-      +	# Command line option overrides config setting
-     -+	test_index_refreshed -c reset.refresh=false --refresh &&
-     -+	test_must_fail test_index_refreshed -c reset.refresh=true --no-refresh
-     ++	test_index_refreshed "-c reset.refresh=false" --refresh &&
-     ++	! test_index_refreshed "-c reset.refresh=true" --no-refresh
-      +'
-      +
-      +test_expect_success '--mixed --refresh overrides --quiet refresh behavior' '
-      +	# Verify that *both* --refresh and `reset.refresh` override the
-      +	# default non-refresh behavior of --quiet
-     -+	test_index_refreshed --refresh --quiet &&
-     -+	test_index_refreshed --refresh -c reset.quiet=true &&
-     -+	test_index_refreshed -c reset.refresh=true --quiet &&
-     -+	test_index_refreshed -c reset.refresh=true -c reset.quiet=true
-     ++	test_index_refreshed "" "--quiet --refresh" &&
-     ++	test_index_refreshed "-c reset.quiet=true" --refresh &&
-     ++	test_index_refreshed "-c reset.refresh=true" --quiet &&
-     ++	test_index_refreshed "-c reset.refresh=true -c reset.quiet=true"
-       '
-       
-       test_expect_success '--mixed preserves skip-worktree' '
- 3:  63c5ee36feb = 3:  f869723d64f reset: replace '--quiet' with '--no-refresh' in performance advice
- 4:  3c65a9f1993 = 4:  cffca0ea5c6 reset: suppress '--no-refresh' advice if logging is silenced
- 5:  052499bbc93 ! 5:  3334d4cb6f3 stash: make internal resets quiet and refresh index
-     @@ t/t3903-stash.sh: test_expect_success 'apply -q is quiet' '
-       test_expect_success 'save -q is quiet' '
-       	git stash save --quiet >output.out 2>&1 &&
-       	test_must_be_empty output.out
-     -
-     - ## t/t7102-reset.sh ##
-     -@@ t/t7102-reset.sh: test_index_refreshed () {
-     - 	git rm --cached file2 &&
-     - 
-     - 	# Step 2
-     --	git reset $1 --mixed HEAD &&
-     -+	git reset $@ --mixed HEAD &&
-     - 
-     - 	# Step 3
-     - 	git read-tree -m HEAD~1
-     -@@ t/t7102-reset.sh: test_index_refreshed () {
-     - test_expect_success '--mixed refreshes the index' '
-     - 	# Verify default behavior (with no config settings or command line
-     - 	# options)
-     --	test_index_refreshed &&
-     -+	test_index_refreshed
-     - '
-     - test_expect_success '--mixed --[no-]quiet sets default refresh behavior' '
-     - 	# Verify that --[no-]quiet and `reset.quiet` (without --[no-]refresh)
-     - 	# determine refresh behavior
-     - 
-     --	# Config setting
-     --	test_must_fail test_index_refreshed -c reset.quiet=true &&
-     --	test_index_refreshed -c reset.quiet=true &&
-     --
-     - 	# Command line option
-     --	test_must_fail test_index_refreshed --quiet &&
-     -+	! test_index_refreshed --quiet &&
-     - 	test_index_refreshed --no-quiet &&
-     - 
-     --	# Command line option overrides config setting
-     --	test_must_fail test_index_refreshed -c reset.quiet=false --quiet &&
-     --	test_index_refreshed -c reset.refresh=true --no-quiet
-     -+	# Config: reset.quiet=false
-     -+	test_config reset.quiet false &&
-     -+	(
-     -+		test_index_refreshed &&
-     -+		! test_index_refreshed --quiet
-     -+	) &&
-     -+
-     -+	# Config: reset.quiet=true
-     -+	test_config reset.quiet true &&
-     -+	(
-     -+		! test_index_refreshed &&
-     -+		test_index_refreshed --no-quiet
-     -+	)
-     - '
-     - 
-     - test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
-     - 	# Verify that --[no-]refresh and `reset.refresh` control index refresh
-     - 
-     --	# Config setting
-     --	test_index_refreshed -c reset.refresh=true &&
-     --	test_must_fail test_index_refreshed -c reset.refresh=false &&
-     --
-     - 	# Command line option
-     - 	test_index_refreshed --refresh &&
-     --	test_must_fail test_index_refreshed --no-refresh &&
-     -+	! test_index_refreshed --no-refresh &&
-     -+
-     -+	# Config: reset.refresh=false
-     -+	test_config reset.refresh false &&
-     -+	(
-     -+		! test_index_refreshed &&
-     -+		test_index_refreshed --refresh
-     -+	) &&
-     - 
-     --	# Command line option overrides config setting
-     --	test_index_refreshed -c reset.refresh=false --refresh &&
-     --	test_must_fail test_index_refreshed -c reset.refresh=true --no-refresh
-     -+	# Config: reset.refresh=true
-     -+	test_config reset.refresh true &&
-     -+	(
-     -+		test_index_refreshed &&
-     -+		! test_index_refreshed --no-refresh
-     -+	)
-     - '
-     - 
-     - test_expect_success '--mixed --refresh overrides --quiet refresh behavior' '
-     - 	# Verify that *both* --refresh and `reset.refresh` override the
-     - 	# default non-refresh behavior of --quiet
-     -+
-     - 	test_index_refreshed --refresh --quiet &&
-     --	test_index_refreshed --refresh -c reset.quiet=true &&
-     --	test_index_refreshed -c reset.refresh=true --quiet &&
-     --	test_index_refreshed -c reset.refresh=true -c reset.quiet=true
-     -+
-     -+	# Config: reset.quiet=true
-     -+	test_config reset.quiet true &&
-     -+	test_index_refreshed --refresh &&
-     -+
-     -+	# Config: reset.quiet=true, reset.refresh=true
-     -+	test_config reset.refresh true &&
-     -+	test_index_refreshed
-     - '
-     - 
-     - test_expect_success '--mixed preserves skip-worktree' '
-
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 6f7685f53d5..89ddc85c2e4 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -110,6 +110,15 @@ OPTIONS
+ 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
+ 	override the default behavior.
+ 
++--refresh::
++--no-refresh::
++	Proactively refresh the index after a mixed reset. If unspecified, the
++	behavior falls back on the `reset.refresh` config option. If neither
++	`--[no-]refresh` nor `reset.refresh` are set, the default behavior is
++	decided by the `--[no-]quiet` option and/or `reset.quiet` config.
++	If `--quiet` is specified or `reset.quiet` is set with no command-line
++	"quiet" setting, refresh is disabled. Otherwise, refresh is enabled.
++
+ --pathspec-from-file=<file>::
+ 	Pathspec is passed in `<file>` instead of commandline args. If
+ 	`<file>` is exactly `-` then standard input is used. Pathspec
+diff --git a/builtin/reset.c b/builtin/reset.c
+index a420497a14f..7f667e13d71 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -392,6 +392,7 @@ static int git_reset_config(const char *var, const char *value, void *cb)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
++	int refresh = -1;
+ 	int patch_mode = 0, pathspec_file_nul = 0, unborn;
+ 	const char *rev, *pathspec_from_file = NULL;
+ 	struct object_id oid;
+@@ -399,6 +400,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	int intent_to_add = 0;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
++		OPT_BOOL(0, "refresh", &refresh,
++				N_("skip refreshing the index after reset")),
+ 		OPT_SET_INT(0, "mixed", &reset_type,
+ 						N_("reset HEAD and index"), MIXED),
+ 		OPT_SET_INT(0, "soft", &reset_type, N_("reset only HEAD"), SOFT),
+@@ -421,11 +424,19 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_reset_config, NULL);
+ 	git_config_get_bool("reset.quiet", &quiet);
++	git_config_get_bool("reset.refresh", &refresh);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
+ 						PARSE_OPT_KEEP_DASHDASH);
+ 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ 
++	/*
++	 * If refresh is completely unspecified (either by config or by command
++	 * line option), decide based on 'quiet'.
++	 */
++	if (refresh < 0)
++		refresh = !quiet;
++
+ 	if (pathspec_from_file) {
+ 		if (patch_mode)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
+@@ -517,7 +528,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			if (read_from_tree(&pathspec, &oid, intent_to_add))
+ 				return 1;
+ 			the_index.updated_skipworktree = 1;
+-			if (!quiet && get_git_work_tree()) {
++			if (refresh && get_git_work_tree()) {
+ 				uint64_t t_begin, t_delta_in_ms;
+ 
+ 				t_begin = getnanotime();
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index d05426062ec..005940778b7 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -462,14 +462,77 @@ test_expect_success 'resetting an unmodified path is a no-op' '
+ 	git diff-index --cached --exit-code HEAD
+ '
+ 
++test_index_refreshed () {
++
++	# To test whether the index is refresh, create a scenario where a
++	# command will fail if the index is *not* refreshed:
++	#   1. update the worktree to match HEAD & remove file2 in the index
++	#   2. reset --mixed to unstage the change from step 1
++	#   3. read-tree HEAD~1 (which differs from HEAD in file2)
++	# If the index is refreshed in step 2, then file2 in the index will be
++	# up-to-date with HEAD and read-tree will succeed (thus failing the
++	# test). If the index is *not* refreshed, however, the staged deletion
++	# of file2 from step 1 will conflict with the changes from the tree read
++	# in step 3, resulting in a failure.
++
++	# Step 0: start with a clean index
++	git reset --hard HEAD &&
++
++	# Step 1
++	git rm --cached file2 &&
++
++	# Step 2
++	git $1 reset $2 --mixed HEAD &&
++
++	# Step 3
++	git read-tree -m HEAD~1
++}
++
+ test_expect_success '--mixed refreshes the index' '
+-	cat >expect <<-\EOF &&
+-	Unstaged changes after reset:
+-	M	file2
+-	EOF
+-	echo 123 >>file2 &&
+-	git reset --mixed HEAD >output &&
+-	test_cmp expect output
++	# Verify default behavior (with no config settings or command line
++	# options)
++	test_index_refreshed
++'
++test_expect_success '--mixed --[no-]quiet sets default refresh behavior' '
++	# Verify that --[no-]quiet and `reset.quiet` (without --[no-]refresh)
++	# determine refresh behavior
++
++	# Config setting
++	! test_index_refreshed "-c reset.quiet=true" &&
++	test_index_refreshed "-c reset.quiet=false" &&
++
++	# Command line option
++	! test_index_refreshed "" --quiet &&
++	test_index_refreshed "" --no-quiet &&
++
++	# Command line option overrides config setting
++	! test_index_refreshed "-c reset.quiet=false" --quiet &&
++	test_index_refreshed "-c reset.refresh=true" --no-quiet
++'
++
++test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
++	# Verify that --[no-]refresh and `reset.refresh` control index refresh
++
++	# Config setting
++	test_index_refreshed "-c reset.refresh=true" &&
++	! test_index_refreshed "-c reset.refresh=false" &&
++
++	# Command line option
++	test_index_refreshed "" --refresh &&
++	! test_index_refreshed "" --no-refresh &&
++
++	# Command line option overrides config setting
++	test_index_refreshed "-c reset.refresh=false" --refresh &&
++	! test_index_refreshed "-c reset.refresh=true" --no-refresh
++'
++
++test_expect_success '--mixed --refresh overrides --quiet refresh behavior' '
++	# Verify that *both* --refresh and `reset.refresh` override the
++	# default non-refresh behavior of --quiet
++	test_index_refreshed "" "--quiet --refresh" &&
++	test_index_refreshed "-c reset.quiet=true" --refresh &&
++	test_index_refreshed "-c reset.refresh=true" --quiet &&
++	test_index_refreshed "-c reset.refresh=true -c reset.quiet=true"
+ '
+ 
+ test_expect_success '--mixed preserves skip-worktree' '
 -- 
 gitgitgadget
+
