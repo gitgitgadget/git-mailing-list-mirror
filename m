@@ -2,446 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3CC0C433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 17:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32BFEC433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 17:47:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237003AbiCNRVv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 13:21:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40210 "EHLO
+        id S240925AbiCNRsi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 13:48:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbiCNRVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 13:21:50 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09AEA3F309
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 10:20:40 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id w68-20020a62dd47000000b004f6aa5e4824so9850717pff.4
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 10:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=MSJtwn9ONTSUg4Cnh/azwSPTctmUxYaUqwAaoEDQhlE=;
-        b=U6x+HiCiFcHcUid+OL4g/hKFvtQrQ7DZPDqbVWLz/oEX7ZoHlOArRwxEeoVZ9BrWdR
-         4fugFFrjQBhXd7DipUFxeb5HzWSnAsQI+KIFnzwR32CIOCnqHHi7R1SayljNe0fxHeh1
-         lZ1AI6vC7WhrtpOGRXxuLVNYs1y45Z4km7RzGzFVn55UHi0u5VB6lQ0vaZy5sil18cjM
-         pDdxH2UBAocMII1vMNnosgCfn6ve1d5mfK/AsW3rg3xt7hiEJ2/OqQ/i6JRc9vHGKYQw
-         TxPHTlg77iUoomHw65lF7Q0zn0DcTJLnZVInnK0PjKvmewy1CTdKgLFYTXxlFOKdDZ3M
-         4eSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=MSJtwn9ONTSUg4Cnh/azwSPTctmUxYaUqwAaoEDQhlE=;
-        b=XQlKD1R4L1uNQtpbTNs03awv0k+qw27DUVhZjgruulIXFgyVAWsMyETzybKQ0OGsIh
-         d0auS6NCKBpY/k647jKdAMTz5rfRSXoiP8GY+TNG8HgSUTa1MTUjMGcWAnSrXOjJJEhQ
-         AdGqFcXqpmrCQrf5mJHdlr2AuJwN4PtcFenI75UfGwRh1fp5RBtxj0oZ6OvodV3uUqxB
-         SnFqC1cVwxqyQJq+K9VOv0Ldv2XCuRqFIhYBo9ge/Dvo7pnV5d7ZVe9/Yp7bmgNmLgVF
-         tx3F7UzmAcoZG0kx0O9N5Q8ojxK+X6RuLNxWGyzTA+aLs8Yk36/M1xZG8cLoVb3YhVtW
-         Zt8A==
-X-Gm-Message-State: AOAM532d5prFEeyR8VpMoVfOLaoKa+OFREtHS4mOjsvMYcDCUA/lc4O4
-        dXjgP8YhMoHiMWXHGquFNBMTwhZLLSBtOg==
-X-Google-Smtp-Source: ABdhPJxxIGEdGTZ8iJd+Y7f71tpN162XX7GCcXuUbCFy2BPYQ1UOWH68AyU1iaGq9+J8jcht8buQX9YZ+TY4Xw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:3e88:b0:1bf:3bd0:4b5f with SMTP
- id rj8-20020a17090b3e8800b001bf3bd04b5fmr283644pjb.106.1647278439527; Mon, 14
- Mar 2022 10:20:39 -0700 (PDT)
-Date:   Mon, 14 Mar 2022 10:20:37 -0700
-In-Reply-To: <20220312164803.57909-1-a97410985new@gmail.com>
-Message-Id: <kl6lwngwqwm2.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220304130854.857746-1-a97410985new@gmail.com> <20220312164803.57909-1-a97410985new@gmail.com>
-Subject: Re: [GSoC][PATCH v2] Add a diff driver for JavaScript languages.
-From:   Glen Choo <chooglen@google.com>
-To:     xing zhi jiang <a97410985new@gmail.com>, git@vger.kernel.org
-Cc:     j6t@kdbg.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S237599AbiCNRsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 13:48:37 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5E2DEBD
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 10:47:27 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E0BC517948B;
+        Mon, 14 Mar 2022 13:47:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4srj6VTb1VFA
+        wGVN9YLovM7T22Sl3K9nbfskHO8PFVk=; b=K71WtRJnClNesvWDXRakTfSgEKI/
+        X53UZGYRH/VN5SOqVTu0f+91Z3o89yHA06QPZOBY7Z4zvnzYIPOo1h3WDC4XPhKM
+        6GrTWpxv261cjBuwKMOU5iolkBnKcQqSdGyUNvPfhY/dB2o4EO94NEc3LMKlSD0B
+        KBauRUdpt7bRY7w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA01217948A;
+        Mon, 14 Mar 2022 13:47:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 66208179489;
+        Mon, 14 Mar 2022 13:47:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 05/16] fsmonitor--daemon: refactor cookie handling for
+ readability
+References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+        <84df95be620c76afed73d1679722459e2ff32018.1647033303.git.gitgitgadget@gmail.com>
+        <220314.86bky9ezdw.gmgdl@evledraar.gmail.com>
+        <7ddeffc4-3442-b4a1-e6f4-e68b3aa3f5ec@github.com>
+Date:   Mon, 14 Mar 2022 17:47:23 +0000
+In-Reply-To: <7ddeffc4-3442-b4a1-e6f4-e68b3aa3f5ec@github.com> (Derrick
+        Stolee's message of "Mon, 14 Mar 2022 10:49:18 -0400")
+Message-ID: <xmqqo828s9xw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CE71FF7E-A3BE-11EC-A460-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Welcome to the Git project :) I never realized that we didn't include a
-built in JS diff driver, so this would be quite welcome.
+> On 3/14/2022 4:00 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Fri, Mar 11 2022, Jeff Hostetler via GitGitGadget wrote:
+>
+>>> +	/*
+>>> +	 * Technically, close() and unlink() can fail, but we don't
+>>> +	 * care here.  We only created the file to trigger a watch
+>>> +	 * event from the FS to know that when we're up to date.
+>>> +	 */
+>>> +	close(fd);
+>>=20
+>> It still seems odd to explicitly want to ignore close() return values.
+>>=20
+>> I realize that we do in (too many) existing places, but why wouldn't w=
+e
+>> want to e.g. catch an I/O error here early?
+>
+> What exactly do you propose we do here if there is an I/O error
+> during close()?
 
-I'm not entirely familiar with this part of the system or our regex
-style, so I won't comment on those. I'll only comment on the patterns we
-are trying to detect and whether or not we want them.
+We created the file to trigger a watch event, but now we have a
+reason to suspect that the wished-for watch event may not come.
 
-I'm not 100% clear on the style around diff drivers e.g. how do we
-decide that we want a pattern or not? I'd appreciate any pointers to
-docs or commits.
+We only did so to know that when we're up to date.  Now we may never
+know?  We may go without realizing we are already up to date a bit
+longer than the reality?
 
-xing zhi jiang <a97410985new@gmail.com> writes:
+How much damage would it cause us to miss a watch event in this
+case?  Very little?  Is it a thing that sysadmins may care if we see
+too many of, but there is nothing the end user can immediately do
+about?  If it is, perhaps a trace2 event to report it (and other "we
+do not care here" syscalls that fail)?
 
-> diff --git a/t/t4018/javascript-assignment-of-anonymous-function b/t/t4018/javascript-assignment-of-anonymous-function
-> new file mode 100644
-> index 0000000000..b6f2ccccfc
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-anonymous-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = function (a, b) {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> diff --git a/t/t4018/javascript-assignment-of-arrow-function b/t/t4018/javascript-assignment-of-arrow-function
-> new file mode 100644
-> index 0000000000..24ce517b7a
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-arrow-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = (a, b) => {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> diff --git a/t/t4018/javascript-assignment-of-arrow-function-2 b/t/t4018/javascript-assignment-of-arrow-function-2
-> new file mode 100644
-> index 0000000000..bbf5de369e
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-arrow-function-2
-> @@ -0,0 +1,4 @@
-> +const RIGHT = (a, b)=>{
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> diff --git a/t/t4018/javascript-assignment-of-arrow-function-3 b/t/t4018/javascript-assignment-of-arrow-function-3
-> new file mode 100644
-> index 0000000000..4a07aa3259
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-arrow-function-3
-> @@ -0,0 +1,4 @@
-> +const RIGHT=test=>{
-> +	
-> +    return test + 1; // ChangeMe
-> +};
 
-These are all variable assignments of anonymous functions, so we won't
-'technically' be showing the function name in the diff, but as a
-practical matter, they are _probably_ referred to by this name
-consistently. So including them makes sense.
 
-> diff --git a/t/t4018/javascript-assignment-of-named-function b/t/t4018/javascript-assignment-of-named-function
-> new file mode 100644
-> index 0000000000..bfc486ebef
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-named-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = function test (a, b) {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> diff --git a/t/t4018/javascript-async-function b/t/t4018/javascript-async-function
-> new file mode 100644
-> index 0000000000..993e6926bf
-> --- /dev/null
-> +++ b/t/t4018/javascript-async-function
-> @@ -0,0 +1,4 @@
-> +async function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-export-async-function b/t/t4018/javascript-export-async-function
-> new file mode 100644
-> index 0000000000..fecbd669d7
-> --- /dev/null
-> +++ b/t/t4018/javascript-export-async-function
-> @@ -0,0 +1,4 @@
-> +export async function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-export-function b/t/t4018/javascript-export-function
-> new file mode 100644
-> index 0000000000..b5acbb2b08
-> --- /dev/null
-> +++ b/t/t4018/javascript-export-function
-> @@ -0,0 +1,4 @@
-> +export function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-
-These look good; the 'export' statements are part of the ES modules
-feature. I'm not sure if it makes sense to explicitly test these cases
-unless we have reason to believe that the 'export' keyword will affect
-the matching.
-
-> diff --git a/t/t4018/javascript-exports-anomyous-function b/t/t4018/javascript-exports-anomyous-function
-> new file mode 100644
-> index 0000000000..6786cbda8d
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-anomyous-function
-> @@ -0,0 +1,4 @@
-> +exports.setFlagged = RIGHT => {
-> +	
-> +    return ChangeMe;
-> +};
-> diff --git a/t/t4018/javascript-exports-anomyous-function-2 b/t/t4018/javascript-exports-anomyous-function-2
-> new file mode 100644
-> index 0000000000..883569f40d
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-anomyous-function-2
-> @@ -0,0 +1,4 @@
-> +exports.RIGHT = (a, b, runtime) => {
-> +	
-> +    return ChangeMe;
-> +};
-> diff --git a/t/t4018/javascript-exports-function b/t/t4018/javascript-exports-function
-> new file mode 100644
-> index 0000000000..63b79f5991
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-function
-> @@ -0,0 +1,4 @@
-> +exports.RIGHT = function(document) {
-> +    
-> +    return ChangeMe;
-> +}
-
-I don't think we should include 'exports.foo = bar'. To my knowledge,
-this is _not_ a standard ES feature, but rather the CommonJS module
-system popularized by Node.js [1] and other frameworks. To confirm this,
-I searched the ES spec and did not find any reference to exports.* [2].
-
-Even if we wanted to support nonstandard 'language features' (and this
-label is tenuous at best, CommonJS is not trying to replace the ES
-modules standard AFAIK), Node.js is also starting to support ES modules,
-so I don't think this is a good long term direction for Git.
-
-[1] https://nodejs.org/api/modules.html
-[2] https://262.ecma-international.org/12.0/#sec-exports
-
-> diff --git a/t/t4018/javascript-function b/t/t4018/javascript-function
-> new file mode 100644
-> index 0000000000..0cc0bf54e7
-> --- /dev/null
-> +++ b/t/t4018/javascript-function
-> @@ -0,0 +1,4 @@
-> +function RIGHT(a, b) {
-> +
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-function-2 b/t/t4018/javascript-function-2
-> new file mode 100644
-> index 0000000000..06cfb779f0
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-2
-> @@ -0,0 +1,10 @@
-> +function test(a, b) {
-> +  return {
-> +			RIGHT: function () {
-> +				currentUpdateRemovedChunks.forEach(function (chunkId) {
-> +					delete $installedChunks$[chunkId];
-> +				});
-> +				currentUpdateRemovedChunks = ChangeMe;
-> +   }
-> +  }
-> +}
-
-There is also the ES2015 'method shorthand' syntax [3], e.g. `bar` in:
-
-  const foo = {
-    bar() {
-      console.log('hi');
-    }
-  }
-
-[3] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions
-
-> diff --git a/t/t4018/javascript-function-belong-to-IIFE b/t/t4018/javascript-function-belong-to-IIFE
-> new file mode 100644
-> index 0000000000..6e5fe858c0
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-belong-to-IIFE
-> @@ -0,0 +1,6 @@
-> +(function () {
-> +  this.$RIGHT = function (needle, modifier) {
-> +      let a = 5;
-> +      return ChangeMe;
-> +  };
-> +}).call(aaaa.prototype);
-
- Does the IIFE matter in this case? This line:
-
-  this.$RIGHT = function (needle, modifier) {
-
-looks extremely similar to the previous test of `foo = function bar()`.
-
-Or perhaps this is meant to demonstrate the edge case of "matching in a
-complicated construct"? If so, perhaps we should test other edge cases
-like:
-
-   function WRONG() {
-     let RIGHT = function (needle, modifier) {
-         let a = 5;
-         return ChangeMe;
-     };
-   }
-
-> diff --git a/t/t4018/javascript-function-in-class b/t/t4018/javascript-function-in-class
-> new file mode 100644
-> index 0000000000..0cc0a26612
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-function-in-class-2 b/t/t4018/javascript-function-in-class-2
-> new file mode 100644
-> index 0000000000..725495fe55
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-class-2
-> @@ -0,0 +1,11 @@
-> +class Test {
-> +  RIGHT(
-> +      aaaaaaaaaa,
-> +      bbbbbbbbbb,
-> +      cccccccccc,
-> +      dddddddddd
-> +  ) {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-function-in-class-3 b/t/t4018/javascript-function-in-class-3
-> new file mode 100644
-> index 0000000000..e9b20728b2
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-class-3
-> @@ -0,0 +1,10 @@
-> +class Test {
-> +  RIGHT(aaaaaaaaaa,
-> +      bbbbbbbbbb,
-> +      cccccccccc,
-> +      dddddddddd
-> +  ) {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-function-in-object-literal b/t/t4018/javascript-function-in-object-literal
-> new file mode 100644
-> index 0000000000..021cc706dd
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-object-literal
-> @@ -0,0 +1,7 @@
-> +const obj = {
-> +    RIGHT: function (elems, callback, arg) {
-> +        var length, value;
-> +        // ...
-> +        return ChangeMe
-> +    }
-> +}
-> diff --git a/t/t4018/javascript-generator-function b/t/t4018/javascript-generator-function
-> new file mode 100644
-> index 0000000000..dc7793939f
-> --- /dev/null
-> +++ b/t/t4018/javascript-generator-function
-> @@ -0,0 +1,4 @@
-> +function* RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-generator-function-2 b/t/t4018/javascript-generator-function-2
-> new file mode 100644
-> index 0000000000..950676a612
-> --- /dev/null
-> +++ b/t/t4018/javascript-generator-function-2
-> @@ -0,0 +1,4 @@
-> +function *RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-getter-function-in-class b/t/t4018/javascript-getter-function-in-class
-> new file mode 100644
-> index 0000000000..9a5aee39f7
-> --- /dev/null
-> +++ b/t/t4018/javascript-getter-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  get RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-setter-function-in-class b/t/t4018/javascript-setter-function-in-class
-> new file mode 100644
-> index 0000000000..dc5f288665
-> --- /dev/null
-> +++ b/t/t4018/javascript-setter-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  set RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-skip-function-call-statement b/t/t4018/javascript-skip-function-call-statement
-> new file mode 100644
-> index 0000000000..321993c27e
-> --- /dev/null
-> +++ b/t/t4018/javascript-skip-function-call-statement
-> @@ -0,0 +1,7 @@
-> +class Test {
-> +  static RIGHT() {
-> +    haha();
-> +    haha2()
-> +    let b = ChangeMe;
-> +  }
-> +}
-> diff --git a/t/t4018/javascript-skip-keywords b/t/t4018/javascript-skip-keywords
-> new file mode 100644
-> index 0000000000..5584970b58
-> --- /dev/null
-> +++ b/t/t4018/javascript-skip-keywords
-> @@ -0,0 +1,34 @@
-> +function RIGHT(a, b) {
-> +  import("./async1")
-> +  if (a > 1) {
-> +    // ...
-> +  }
-> +  do {
-> +    // ...
-> +  } while (i < 5);
-> +  for (const element of array1) {
-> +    console.log(element)
-> +  }
-> +  with(o) {
-> +    console.log(x)
-> +  }
-> +  switch (expr) {
-> +    case 'a':
-> +      // ...
-> +      break;
-> +    case 'b':
-> +      // ...
-> +      break;
-> +    default:
-> +      // ...
-> +  }
-> +  try {
-> +    // ...
-> +    return (a + c)
-> +  } 
-> +  catch (error) {
-> +    // ...
-> +  }
-> +
-> +  return a + b; // ChangeMe
-> +}
-> diff --git a/t/t4018/javascript-static-function-in-class b/t/t4018/javascript-static-function-in-class
-> new file mode 100644
-> index 0000000000..fbf0b7ca3d
-> --- /dev/null
-> +++ b/t/t4018/javascript-static-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  static RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-
-The rest of the test cases look good.
