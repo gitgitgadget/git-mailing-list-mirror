@@ -2,102 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 845F9C433FE
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3856C4332F
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 11:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238710AbiCNKzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 06:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56116 "EHLO
+        id S239850AbiCNL6j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 07:58:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238707AbiCNKzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 06:55:21 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4B2022B0E
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:54:11 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n31-20020a05600c3b9f00b003898fc06f1eso11710888wms.1
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:54:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xz1B+1MXeTJSbEfArYYlKvKK9IYFl/PlHkBRQGwq/jg=;
-        b=qMeszuZ3EtGaQsDI4G0y/Ncb8lbrMrue141kciOghK8/fmsdxrpJ16P6f1+POhkQz8
-         enMGGMiKZy6mjJAurfvfAofjRUdyluHKmRUAWog2kdD2lhMb3Dkm4ynbrFnHpbj7ocCi
-         TZJ6bD3xN9RNBe/FWIsJeyW+KVTRI4FwBEJ70jZsEqXT5zp7h6iEZq1d+kL0uS5oXkpy
-         dj6tBgeAHFhWkeXtQ1+FvziyI1kQFegB39YQIiMUE6/IrT1UgmC/MTV6jOH9VYjfjwTS
-         QQIP3mX1aR6VdMSaIZ9Yc8N4gE0/O5olgq/liAaihwePTMYjV2KhCRW32zTg00ERyUwO
-         VdiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xz1B+1MXeTJSbEfArYYlKvKK9IYFl/PlHkBRQGwq/jg=;
-        b=4I2vRWvbGFX1OhThsIPEbvGyqsAWFvKrwHFozwrsXa6L3gZV5SZ+wfAjjD91vcyrK1
-         ShSaFWtzHXTKOyCE0nVbBcWe1h6wV2TzNlib77rVIz8P6oLiCZhmZsYP9zIllZQ3EBeX
-         X30ihY/DY1Pp16FDhVAG9ic1KQMQPXgRC6iQzh0ocmu+eAqEIvyTviIqjXtJyOzrKl1s
-         7ltpF7csqNajJNkUZ/AnluFGGTEfD2FEJCoazPhUEbZVTQ1KE31TH3z4hVbSmaWUdVn6
-         +i6WeHenFa4pAG2M6RFQB1ohW3hoG5qkiDgREurgDab3yh2PiI+aftfPkkzdfJcl3Vc6
-         L5bw==
-X-Gm-Message-State: AOAM53074v2cFNShGr5UyR25G/+IR7M7Vp9tTSL6X25UZVcmIjvMy+oO
-        vhWK5YxuyqMVpDt4VCv5x73vZ1YoDJzr8w==
-X-Google-Smtp-Source: ABdhPJytvna980HoAKzJil8sAkirwjOXpZRfKYbS2ssyPW7HxVsaUj69JYZ0HV1DTzBZ3adBwXnNwA==
-X-Received: by 2002:a05:600c:4f16:b0:389:d686:7dd0 with SMTP id l22-20020a05600c4f1600b00389d6867dd0mr16496830wmq.136.1647255250257;
-        Mon, 14 Mar 2022 03:54:10 -0700 (PDT)
-Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.googlemail.com with ESMTPSA id n16-20020a5d4850000000b0020373b34961sm12735096wrs.66.2022.03.14.03.54.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Mar 2022 03:54:09 -0700 (PDT)
-Message-ID: <b35edfb8-9b48-d5b3-8d77-cb61a22f85ef@gmail.com>
-Date:   Mon, 14 Mar 2022 10:54:09 +0000
+        with ESMTP id S239919AbiCNL5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 07:57:43 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA4CE4830C
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 04:56:22 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nTjJE-0000us-8h;
+        Mon, 14 Mar 2022 11:56:21 +0000
+Message-ID: <697d8717-bd3f-0871-d5b3-e6303c4ed726@iee.email>
+Date:   Mon, 14 Mar 2022 11:56:17 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] rebase: set REF_HEAD_DETACH in
- checkout_up_to_date()
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: Dealing with corporate email recycling
+Content-Language: en-GB
 To:     Junio C Hamano <gitster@pobox.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
- <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
- <0e3c73375c18a470fd5357b09acefeaf5ca4017f.1647019492.git.gitgitgadget@gmail.com>
- <xmqq7d8ywaf0.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq7d8ywaf0.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Sean Allred <allred.sean@gmail.com>
+Cc:     rsbecker@nexbridge.com, git@vger.kernel.org, sallred@epic.com,
+        grmason@epic.com, sconrad@epic.com
+References: <878rtebxk0.fsf@gmail.com> <xmqq4k42n2g8.fsf@gitster.g>
+ <01cc01d83671$0acd4a20$2067de60$@nexbridge.com> <87zglu9c82.fsf@gmail.com>
+ <01f201d836e5$89247c30$9b6d7490$@nexbridge.com> <87v8whap0b.fsf@gmail.com>
+ <01f301d836eb$5c7a6810$156f3830$@nexbridge.com> <87r175amw2.fsf@gmail.com>
+ <f6ecca05-b669-0e36-302f-a6113571ac12@iee.email> <87ilsha2b7.fsf@gmail.com>
+ <xmqqtuc1tpdj.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqqtuc1tpdj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/03/2022 07:58, Junio C Hamano wrote:
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> diff --git a/reset.c b/reset.c
->> index e3383a93343..f8e32fcc240 100644
->> --- a/reset.c
->> +++ b/reset.c
->> @@ -101,6 +101,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->>   	if (opts->branch_msg && !opts->branch)
->>   		BUG("branch reflog message given without a branch");
->>   
->> +	if (switch_to_branch && opts->flags & RESET_HEAD_DETACH)
-> 
-> It's just style thing but it probably is easier to read to have
-> an extra () around the bitwise-&.
-> 
->> +		BUG("attempting to detach HEAD when branch is given");
-> 
-> I wonder if there is a valid use case NOT to use RESET_HEAD_DETACH
-> when switch_to_branch == NULL.  If there isn't, it could be that
-> we can get rid of RESET_HEAD_DETACH bit and base this decision
-> solely on switch_to_branch'es NULLness.
+On 13/03/2022 23:16, Junio C Hamano wrote:
+> Sean Allred <allred.sean@gmail.com> writes:
+>
+>> rather than use magic comments :-) Adapting to your suggestion, this
+>> might look like the following:
+>>
+>>     A. U. Thor <foo@example.com> <ada.example.com> <[ approxidate ]>
+> You'd probably want a timerange (valid-from and valid-to), instead
+> of one single timestamp?
+I'm not so sure that the date range approach won't bring it's own
+problems. What happens outside the date range? i.e. Do we then have
+three identities: Before, During, and After, with only 'During' being
+defined?
 
-"rebase --skip" and "rebase --autostash" are two such uses I think
+I more see a single date being used as a termination point for an
+existing email sequence that defines a retrospective end point for the
+mapping of the old email addresses to a single person. Future emails for
+the same mailbox will be for a different 'current' person. This would
+match the single linked list commit history view using the chronology
+heuristic.
 
-Best Wishes
+The key here being to have a final identity system in place so that you
+can uniquely identify the old John Doe, from the newer John Doe`s at the
+relevant time point in the mailmap.
 
-Phillip
+>
+> Because at least three valid forms of mailmap entries should be
+> understood by the current generation of mailmap readers, i.e.
+>
+>     Human Readable Name <e-mail@add.re.ss>
+>     Right Name <right@add.re.ss> <wrong@add.re.ss>
+>     Right Name <right@add.re.ss> Wrong Name <wrong@add.re.ss>
+>
+> the extended entry format to record the validity timerange should
+> be chosen to cause parsers that are prepared to take these three
+> kinds of lines to barf and ignore.
+The presence of a _sequence_ of name/email changes isn't well defined.
+As I remember it we take the name/email updates in sequence and then
+apply a last one wins approach. It's not clear what would be done when
+we have two, or three different John Doe sequences all mixed in.
+
+
+A broader issue for the corporate email mailbox systems is those that
+are allocated to roles. So you may have Traning1@corp.com thru
+Training9@corp.com (we had) and if that training includes practical low
+hanging fruit examples from a project, it's difficult to disambiguate
+those commits. More likely is say, having TestPC1 - TestPC9 that
+included debug commits, perhaps even with pair programming test & debug
+sessions, so allocation to individuals (rather than mailbox) becomes a
+real problem. Hopefully that's rare in Sean's case.
+
+Philip
+
+
+
+ 
