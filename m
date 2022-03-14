@@ -2,91 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6FFC433F5
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 08:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C19F3C433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 08:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236692AbiCNILG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 04:11:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
+        id S237688AbiCNI1J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 04:27:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236770AbiCNILF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 04:11:05 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9369F2BE6
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 01:09:56 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id b15so14512031edn.4
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 01:09:56 -0700 (PDT)
+        with ESMTP id S231159AbiCNI1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 04:27:07 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 950C811A06
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 01:25:58 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id kt27so32190791ejb.0
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 01:25:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks-biz.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=q6UcGanwGzWhH5Dwz+aLI3+TFMCMByR05LwXNossPr4=;
-        b=aR0i/KCOpYtRswOvpyXidEA23zQWdVLr0I8rJO5l3xRWSWsvnvhMU4UDwf5apTJxc4
-         lPkxv1vjlRwJgYdrPCKI3g5cJxb2F8vBMToajz2jPhCsJDvHD+SlA+pDt/PbIPcjUalI
-         8/W0Z5Hhua2B3BrPSgqSML8JgWdBjxUdllbAi2l2YTu2OUyb1Wa8GDuPOzY18Xh+a1Bw
-         vJmlgSareqXW2eThdh0djRlXzY2y7nU5Zuzo693HCNe2IHfEv59X7klf7Wr+C/Y8xNqz
-         MTRScb4IAYiL3zSGoA7DMT9pmn0hHNj9NoQejYIakVxNAcS6GN5ivDKIN2ihDQLcju5H
-         z3EQ==
+         :cc:content-transfer-encoding;
+        bh=TZH1lGF2NR0bo8Lgu7ebxMixFoG0fpL+Jkk4BOi+a3Q=;
+        b=vBeUv3prONXkY1e7cdtvSEPZaUrO90BEumDrfNHu7ReHn9wnwiPLQ4+21+fkyd/i3p
+         OkyVtCgV8TZBALoKJXuIDYDnZ6JRqtAifpXrUTUiEnj7vMBawZGnZHB2c3aJzZk9K03u
+         oJBX4wtUw8ulSzaGR2bGk5vykDPVXB5ys7fDulTV/wRiChWH6Dxfk+f+Gc71idbDz3TE
+         NiZqzFXI1AJKu4UvFR/52jBsvdI5OqbeJ9HPfT+b9zAgSx/Ywg04lRiAR4w5jhTlL1fw
+         ILTutRPzQBVKrE0e6Kkmiie5armZpLLBKuMS1ud4TuzGSaF4wMvMZFMOl4K7TRHgSDts
+         ZHxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q6UcGanwGzWhH5Dwz+aLI3+TFMCMByR05LwXNossPr4=;
-        b=cz/3zdQLM5a3E5tW0cV+AXpqsPemDxfoBe0zK/8bektZw10drl9rZcP5D2EYbB9FBX
-         gMmxzvR/a+pOaY9MC5HAqegU9f9Q0aaCj+YMULFEp2WRss+7yuHVFsZzH0dNLQLSVFA2
-         Oacz1j5MsCMOG7g03nxCkP3GbXYBqrTDidnlVUfXNDPTfg/gNpcOEq6WVoadRmCO8UqJ
-         yPLCCSCXSbXCaOwTJliMv9c0AWu9lVTApefCKFa5jRDIzGVXn3PLpkk+e3b6hHR9iFic
-         e0/A2kggYZCFSnAm04bbur26aqK9uDrS1kO9ZRbjlmgX4e0cg8b8LwOdZ4Md1uD7orUT
-         hfAw==
-X-Gm-Message-State: AOAM533q8o1TG6hr4XYF19dWu7jHZDz1rF6CC2uUjGiR/ECMT0Lntuad
-        VVndDo67zf9zGRgC6qhhEnotgc3/0qmuZ844wzkzXYkJwAE=
-X-Google-Smtp-Source: ABdhPJw9GWkQQvmKtFiFVNA3Y7xJcpcdeqjzs70p7981odFmh2aBsejTTBqR8a1c15e5Q8D8HOzToIzTSQaVYP98TsU=
-X-Received: by 2002:a05:6402:2750:b0:416:29dd:1d17 with SMTP id
- z16-20020a056402275000b0041629dd1d17mr19367928edd.387.1647245395114; Mon, 14
- Mar 2022 01:09:55 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TZH1lGF2NR0bo8Lgu7ebxMixFoG0fpL+Jkk4BOi+a3Q=;
+        b=PJqDunANWIw5G1EpMHU3KmbrGTIWSS7iCDTt8EBJrICR6Lzf889Zp3DFpN4+ku1NHE
+         P8BwzF9xTAesU2gD8QOUHUzGlfl++FOC+DFe2gAaLnBn27TlP4WlcIshP/F7e33J/U9G
+         tOUEXPaPkD5W2qvBKA4EIb1CBX56dHI4TVjSsfDBEp21Q0tDE2LUruzTFgVVcVoYcDMp
+         VuuiQJHVRx+3w/YUIpC5Vw1swdeM8W78f1/bWcNU6QUqPcZ/xcx/wvBwh6C7NPs2RNGA
+         HRlwEl5muaR0hy5dCFdVNDtfo/DaXo4UyU0pRb8lUksPjrZQFvbq0WCI7OmiezeJi/hp
+         Y8Jg==
+X-Gm-Message-State: AOAM533N2LTeWQKtimBAOWAPoATZpZ81VlWnfLoA3qwOl9ZVU+FI1iKG
+        AFEGpKofiBuzu6WdFY47buPKIDzGjvuoFjeDsbGHXg==
+X-Google-Smtp-Source: ABdhPJy2oiZPI0uPXN6rq5uvyqmc3iaZbHO8J7BXkTRNbKTpPUGikH6lEokDwf2BMtlhyL3+bisK/Q1d0Zz3ZXPNhP8=
+X-Received: by 2002:a17:906:d54f:b0:6db:af13:dd8c with SMTP id
+ cr15-20020a170906d54f00b006dbaf13dd8cmr11125390ejc.540.1647246357084; Mon, 14
+ Mar 2022 01:25:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
- <2aa11123-5456-b0f1-6c33-302924164e98@jeffhostetler.com>
-In-Reply-To: <2aa11123-5456-b0f1-6c33-302924164e98@jeffhostetler.com>
+ <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com> <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 14 Mar 2022 09:09:39 +0100
-Message-ID: <CAPMMpoiF_vH_wUNfH6QrhLJmq+5kVWe2h_W-QEcctfF=dMdFmg@mail.gmail.com>
+Date:   Mon, 14 Mar 2022 09:25:40 +0100
+Message-ID: <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
 Subject: Re: Keep reflogs for deleted (remote tracking) branches?
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git <git@vger.kernel.org>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 8, 2022 at 3:57 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+On Tue, Mar 8, 2022 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
 >
-> On 3/8/22 6:27 AM, Tao Klerks wrote:
+> On Tue, Mar 08 2022, Han-Wen Nienhuys wrote:
+>
+> > On Tue, Mar 8, 2022 at 12:28 PM Tao Klerks <tao@klerks.biz> wrote:
+> >> As far as I can tell, even "core.logAllRefUpdates=3Dalways" does *not*
+> >> keep any reflog entries around, even temporarily (until reflog
+> >> expiry), once a ref  is deleted - do I understand that correctly? Is
+> >> this behavior intentional / reasoned, or just a consequence of the
+> >> fact that it's *hard* to keep "managing" per-branch reflogs for
+> >> branches that don't exist?
+> >>
+> >> I am planning a workaround using server hooks to "back up" refs that
+> >> are being deleted from specific namespaces, in my specific case, and I
+> >> imagine that a system like github keeps track of deleted stuff itself
+> >> for a while, but I find this "per-ref reflog disappearance" behavior
+> >> puzzling / out-of-character, so wanted to make sure I'm not missing
+> >> something.
 > >
-> > I have a practical question in case I missed something.
+> > I think this behavior is motivated by directory/file conflicts. If you
+> > have a reflog file in refs/logs/foo, you can't create a reflog for
+> > refs/foo/bar, because that would live in refs/logs/foo/bar
 > >
+> > At Google, we keep reflogs in a completely different storage system
+> > altogether, which avoids this problem, and I wouldn't be surprised if
+> > other large hosting providers do something similar.
+
+This is interesting - so at google is the assumption that the storage
+system, whatever it looks like, *does* keep reflogs for deleted
+branches? Or at least backs up states that get force-pushed out of
+existence?
+
 >
-> Have you considered having each team member have their own
-> private fork of the repo?  Then their branches are theirs
-> alone and no one else needs to see or collide with them.
+> I once worked on a system where:
+>
+>  * References would be "archived", i.e. just a backup system that would
+>    run "git fetch" without pruning.
+>
+>  * You were only allowed to push to either existing branches like
+>    "master", or names with exactly one slash in them, e.g. "avar/topic",
+>    not "avar/topic/nested", for that you'd need "avar/topic-nested" or
+>    whatever.
+>
+> The second item neatly avoids D/F conflicts, at the cost of some
+> grumbling from people who can't use their preferred branch name.
+>
+> And you can easily implement backups without that constraint by fetching
+> refs/* to refs/YYYYMMDD-HHMMSS/* or whatever, and have some manual
+> pruning process in place for those "secondly refs".
 
-Yes, this is a scheme that I've certainly considered - it is the
-public norm after all, at least in open-source development.
+Ah right, backing up into another system - I guess we could...
 
-In the case I'm describing, however, teams often prefer to work in
-communal spaces, seeing work appear and disappear in their group
-environment.
+>
+> More generally I have not really run into this as a practical
+> problem.
 
-Of course most teams wish to be isolated from each other, and of
-course individuals want and have the option to work in isolation from
-their team for any given period of time - and by "isolation" I don't
-necessarily mean secret, but rather "not pushing refs into a space
-that others will automatically fetch".
+That's fair, nor have I - but I *have* come reasonably close: one
+person accidentally deletes a branch that someone else had prepared
+*without even realizing*, and the initial author is not available, and
+I only find out about it a few hours later. Dangling commit hunt, here
+we come. (the original author became available and re-pushed before it
+came to that)
 
-The case I am describing is a specific subset of an ecosystem - the
-case where a team normally works in a communal central refspace.
+>
+> Another way to solve a similar problem is to have
+> pre-receive/post-receive hooks log attempted/successful pushes, which
+> along with an appropriate "gc" policy will allow you to manually look up
+> these older branches (or even to fetch them, if you publish the log and
+> set uploadpack.allowAnySHA1InWant=3Dtrue).
 
-Anyway, thanks - it looks like no-one considers git's behavior very
-surprising here, I guess I'll just implement a server-hook-based
-workaround.
+Yep, that's closer to my expected plan, thanks - my intent is to back
+up, on force-push and/or deletion, into a specific refspace with a
+cleanup policy, using a server hook. So after something is "deleted"
+(or force-pushed away), it can be easily recovered for a period of eg
+3 months in that refspace, eg
+"refs/force-push-backups/YYYY-MM-DD-<BRANCHNAME>-<HASHPREFIX>".
+
+My question is specifically about the, in my opinion, very surprising
+behavior of deleting reflogs along with deleted branches - I mainly
+provided the example use-case for context.
