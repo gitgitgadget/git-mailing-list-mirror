@@ -2,118 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12631C433F5
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 21:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C309C433F5
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 21:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235286AbiCNVhN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 17:37:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50644 "EHLO
+        id S245031AbiCNVnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 17:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbiCNVhL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 17:37:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD493E0D6
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 14:36:01 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E87DB1890D6;
-        Mon, 14 Mar 2022 17:36:00 -0400 (EDT)
+        with ESMTP id S237993AbiCNVnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 17:43:49 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC69C31DC5
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 14:42:39 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 24391112178;
+        Mon, 14 Mar 2022 17:42:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NiINgMuOQOEzAZ45erKo+ILfSw2lxJKV63sbaB
-        P3ynU=; b=MxueQvqWJtqxQRmoof0CpqnM1ed9Bta62eohdaxTke+nbQlUEIlJ3h
-        AEd4NlyuVRUf696k2EM+UgapjBjgckeoP+5Fqs4ylKTO8XpPXbyr0o8HF/tpF6T5
-        MGyXeggfS0Kg68i+lJChOehyjSVbdh8ezw0t4T3wV68HZYvpGEY1E=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E07C11890D5;
-        Mon, 14 Mar 2022 17:36:00 -0400 (EDT)
+        :content-type; s=sasl; bh=Em6WlQxyMu2htfxJBkOwfyHWdTkduPl1wznjjW
+        TmKNQ=; b=dDmMtQ0tdDg5+Qti5tAMAp8MjTw+AlWwFum/56FM7aokinYNHzby0r
+        d9n7Y4ZBVgi6H9LKp8pXTcLW0Yi9gsOInKdVo6bfS/8WOqjQ/WzFPzXrVb8+YJoh
+        1Wi4yyl10NHy9P7Lm4p8Z5Lno+3eoNTrwlnN0mi14mx+W3EBWnd6w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C36B112177;
+        Mon, 14 Mar 2022 17:42:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6F52A1890D3;
-        Mon, 14 Mar 2022 17:35:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BA21112176;
+        Mon, 14 Mar 2022 17:42:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] partial-clone: add a partial-clone test case
 References: <xmqq4k41vdwe.fsf@gitster.g>
         <20220314154638.59046-1-chakrabortyabhradeep79@gmail.com>
-Date:   Mon, 14 Mar 2022 21:35:57 +0000
-In-Reply-To: <20220314154638.59046-1-chakrabortyabhradeep79@gmail.com>
-        (Abhradeep Chakraborty's message of "Mon, 14 Mar 2022 21:16:38 +0530")
-Message-ID: <xmqqwngwnrnm.fsf@gitster.g>
+        <e38ebbfd-3ce4-6900-97e4-74b987c08b7d@github.com>
+Date:   Mon, 14 Mar 2022 21:42:35 +0000
+In-Reply-To: <e38ebbfd-3ce4-6900-97e4-74b987c08b7d@github.com> (Derrick
+        Stolee's message of "Mon, 14 Mar 2022 12:25:41 -0400")
+Message-ID: <xmqqsfrknrck.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BCA5CC60-A3DE-11EC-AE1F-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A9E87982-A3DF-11EC-80C5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
+>> 	git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin
+>> 
+>> Derrick told me to not depend on other flags like
+>> `-c fetch.negotiationAlgorithm` etc. as they might be changed or omitted
+>> and as it makes sense to me also. That's why I didn't specify those things.
 >
->> Is this "doesn't" (documenting current behaviour, without saying if
->> it is wrong or is desired) or "shouldn't" (documenting the desired
->> behaviour, which the current implementation may or may not satisfy)?
+> This reason is something that could be mentioned in the commit message
+> to motivate the change to the helper.
 >
-> The current behaviour is okay and this commit adds the test case for it.
-> So, in that sense, I think "shouldn't" is better word.
+>>> I wonder if it was more like this that the original wanted to grep for:
+>>>
+>>> 	grep '"event":"child_start".*\["git","pack-objects",.*\]'
+>> 
+>> I don't know about other cases, but in my case, atleast I really wanted
+>> it.
+>> 
+>> So, In this scenerio, should I stick with `test_subcommand_inexact` or I
+>> have to see other helper functions (or make my own) for it?
 >
->> That's mouthful.
+> As I mentioned earlier, it seems that
 >
-> Sorry if the test name is very long. But, I couldn't think of shorter
-> test name than this - to explain what the test case is.
+> 	test_subcommand_inexact ! git fetch
+>
+> would actually work for your needs without changing the helper. We will see
+> whether or not the helper needs to be updated in a way that that line would
+> not work anymore.
 
-"exact rename does not need to fetch the blob lazily"
+Ah, that is because the current implementation of the helper
+sprinkles ".*" in between each and every pair of parameters, so the
+resulting pattern \["git".*"fetch".*\] would not be prevented from
+matching by the presence of "-c var.iable=value"?
 
->> Lose SP after '>'.
->>
->> 		git -C partial.git log --follow -- new-file.txt >"$(pwd)/trace.txt" &&
->
-> Okay.
->
->> Looking at the implementation of the helper, it seems to be prepared
->> to handle negation itself.  Shouldn't this be
->>
->>	test_subcommand_inexact ! fetch <trace.txt
->>
->> instead?
->
-> Oops, completely missed it. Correcting it :)
->
->> Why can't you specify what should NOT come before "fetch" in your
->> use of this helper?
->
-> Below is the event triggered for non-exact OID rename -
->
-> 	git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin
->
-> Derrick told me to not depend on other flags like
-> `-c fetch.negotiationAlgorithm` etc. as they might be changed or omitted
-> and as it makes sense to me also. That's why I didn't specify those things.
->
->> I wonder if it was more like this that the original wanted to grep for:
->>
->>	grep '"event":"child_start".*\["git","pack-objects",.*\]'
->
-> I don't know about other cases, but in my case, atleast I really wanted
-> it.
->
-> So, In this scenerio, should I stick with `test_subcommand_inexact` or I
-> have to see other helper functions (or make my own) for it?
-
-If you are doing just a single grep, I am not sure why grepping for
-"fetch" alone without any helper is insufficient.  In any case,
-butchering the "inexcat" helper to loosen it for other existing
-users of the same helper does not sound like a good direction to go.
+In any case, the _inexact helper may need to be rethought, or at
+least documented better what inexact-ness it wants to allow.  With
+no concrete goals written down, my guess was that it wanted to
+ensure only the earlier command names and options, while ignoring
+the later arguments.  And that was where my "adding .* in between
+looks wrong, and stripping trailing comma with ${expt%,} is nonsense"
+comment came from.
 
 Thanks.
-
-
-
-
