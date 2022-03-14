@@ -2,113 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88BFCC433F5
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 22:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A41C433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 22:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236315AbiCNWXB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 18:23:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54006 "EHLO
+        id S245594AbiCNW0n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 18:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234191AbiCNWXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 18:23:01 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F3412ABB
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 15:21:50 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE5DE1898E6;
-        Mon, 14 Mar 2022 18:21:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gYB8WKB0ZZKz3jfOOT8qPjeb+bDxqw3P1/fUL8
-        U9zKQ=; b=Py0QuzRsP7qEPgT7b90y0rdpqQReDB/Yln9Fxgor+ev7QKCCGkwyQc
-        /PTTfEKQyOzvqwULMyB9WY/gU9D4sOiBtblPyimy8tTpPVV8LEQDrdcqq9OX0wSi
-        2QUwqlqXXoP46zqsLv8YVXYWcUXB11jCTtn7+QxH6EkS0BYEVf8wU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D7F521898E5;
-        Mon, 14 Mar 2022 18:21:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 594EC1898E2;
-        Mon, 14 Mar 2022 18:21:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH] partial-clone: add a partial-clone test case
-References: <pull.1175.git.1647193162570.gitgitgadget@gmail.com>
-        <xmqq4k41vdwe.fsf@gitster.g>
-        <1a383ecf-b350-9085-890f-d4b225cfa48a@github.com>
-Date:   Mon, 14 Mar 2022 22:21:46 +0000
-In-Reply-To: <1a383ecf-b350-9085-890f-d4b225cfa48a@github.com> (Derrick
-        Stolee's message of "Mon, 14 Mar 2022 12:24:41 -0400")
-Message-ID: <xmqqa6dsnpj9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S245598AbiCNW0h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 18:26:37 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5BA3DA73
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 15:25:24 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nTt7y-000Bw9-DR;
+        Mon, 14 Mar 2022 22:25:22 +0000
+Message-ID: <e49830fb-aef1-6848-4101-60cbb66704f6@iee.email>
+Date:   Mon, 14 Mar 2022 22:25:20 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2320492E-A3E5-11EC-A36C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: Dealing with corporate email recycling
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sean Allred <allred.sean@gmail.com>, rsbecker@nexbridge.com,
+        git@vger.kernel.org, sallred@epic.com, grmason@epic.com,
+        sconrad@epic.com
+References: <878rtebxk0.fsf@gmail.com> <xmqq4k42n2g8.fsf@gitster.g>
+ <01cc01d83671$0acd4a20$2067de60$@nexbridge.com> <87zglu9c82.fsf@gmail.com>
+ <01f201d836e5$89247c30$9b6d7490$@nexbridge.com> <87v8whap0b.fsf@gmail.com>
+ <01f301d836eb$5c7a6810$156f3830$@nexbridge.com> <87r175amw2.fsf@gmail.com>
+ <f6ecca05-b669-0e36-302f-a6113571ac12@iee.email> <87ilsha2b7.fsf@gmail.com>
+ <xmqqtuc1tpdj.fsf@gitster.g> <697d8717-bd3f-0871-d5b3-e6303c4ed726@iee.email>
+ <xmqq1qz4p6qn.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqq1qz4p6qn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
-
->> When "test_subcommand_inexact git pack-objects" is run, the printf
->> assigns to $expr:
->> 
->> 		expr='"git".*"pack-objects".*'
->> 
->> and the actual grep command invoked becomes
->> 
->> 	grep '"event":"child_start".*\["git".*"pack-objects".*\]'
->> 
->> I am not sure if that is what we really want.
+On 14/03/2022 21:24, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
 >
-> Ah, yes this certainly seems to not be the expected plan. It does
-> allow for more flexibility than intended: the intention was to
-> add flexibility at the end of the command, but instead adds
-> flexibility throughout, only caring that a certain list of options
-> is present as a subsequence (except that the first item is the
-> first item, namely "git" in most cases).
+>> On 13/03/2022 23:16, Junio C Hamano wrote:
+>>> Sean Allred <allred.sean@gmail.com> writes:
+>>>
+>>>> rather than use magic comments :-) Adapting to your suggestion, this
+>>>> might look like the following:
+>>>>
+>>>>     A. U. Thor <foo@example.com> <ada.example.com> <[ approxidate ]>
+>>> You'd probably want a timerange (valid-from and valid-to), instead
+>>> of one single timestamp?
+>> I'm not so sure that the date range approach won't bring it's own
+>> problems. What happens outside the date range? i.e. Do we then have
+>> three identities: Before, During, and After, with only 'During' being
+>> defined?
+> I have been assuming that the default is "what the commit has is
+> correct".
+That default is only true when there are no date limitations because of
+email re-use. i.e. singleton persons with unique emails do fit that
+default, which should be the majority.
 
-I guess I sent a response before reading this message from you.
+If an old email has been reused, then that default becomes false, which
+was Sean's starting point. In the corporate case, two (or more) distinct
+individuals have used the same commit|author email address, and the hope
+is, for a way of providing a disambiguation of those persons, based on
+their email and the commit date.
 
-> That unintended flexibility would allow the current needs to use
 >
-> 	test_subcommand_inexact ! git fetch
->
-> as desired, but there is the additional worries about whether it
-> is too flexible for the existing uses.
+>> I more see a single date being used as a termination point for an
+>> existing email sequence that defines a retrospective end point for the
+>> mapping of the old email addresses to a single person.
+> Implicitly specifying the valid-from date (which is either the
+> beginning of time, or the newest of valid-until time for the same
+> identifying string that is older than the valid-until date for the
+> entry in question) is fine.  I do not see fundamental difference
+> between the approach you suggest and having an explicit valid-from
+> date.
+With the first case we guarantee that we have named cover for all of the
+chronology via bisection, while the trisection can leave gaps without
+any allocation to a person,  or possibly overlaps.
 
-Yeah, it looked a bit too loose.
+A more convoluted case would be where three persons share the same
+emails in a rollover fashion, so the mailmap's simple name/email
+handover becomes knotted and intertwined in the handovers
+(Joe3->Joe2->Joe1).
 
-> If you think that we should fix the helper to work differently, then
-> I can work on a patch to do so, so Abhradeep doesn't get too
-> sidetracked on that.
+P.
 
-I agree that comparing what _inexact does and what its inventor
-wanted it to do and reconciling the differences would be outside
-the scope of this topic, which means the test in this patch should
-refrain from using the _inexact helper at all.
-
-I found it quite a roundabout way to look into trace to see if
-a "fetch" was run to determine if we are doing the right thing.
-
-Regardless of whatever mechanism is used to lazily fetch objects
-that have become necessary from the promisor remotes, what we want
-to ensure is that the blob object HEAD:new-file.txt is still missing
-in our object store after running "log --follow", isn't it?  In a
-future version of "git", our on-demand lazy fetch mechanism may not
-even invoke "git fetch" under the hood, after all.
-
-Don't we have a more direct way to ask "does this object exist in
-our object store, or is it merely left as a promise?" without
-triggering a lazy fetching that we can use in this test?  I think
-such a direct approach is what we want to use in this test.
 
 
