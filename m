@@ -2,111 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1AE5C433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B097C433F5
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:52:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238686AbiCNKuY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 06:50:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46748 "EHLO
+        id S231165AbiCNKx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 06:53:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbiCNKuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 06:50:20 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0C31EAD7
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:49:10 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id b19so840500wrh.11
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:49:10 -0700 (PDT)
+        with ESMTP id S229888AbiCNKxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 06:53:25 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497AA30F49
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:16 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id c25so17048967edj.13
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yZTdkAsjyjpF1sT6YS0iHyWRqhbdKTYW5EtdS/UpUAM=;
-        b=AX3GwCqX692H9Nokc3F6AhIUuxgBfgAm6G9V0CBBnllbiQy5A17A4XikA4dhzP14FJ
-         xl6wln+5sLBDc9dY8vroUgMYMIa7y+w41q9OaHp9xMhrGwx6PEUTIuAt6TBGp8eyTuPR
-         xIRTFzojxpdXKgX+MBX7MhxMmdnejtd2mkM1MriXYDv6EUNGWDwUJv8kB3ls7+yZe3xD
-         2/xaiHyoQC6Irk3iZ7nzVGflUEpFkKbDrDTMGXFZ+6wKSm+3oe/UZS+GfHS32INeENls
-         DTU75k4TvPgYnVsAnbYhOQ6Njg3pCBbVpmwiMlfOi5WYQIc2nH3PaeYG8DpVVW31s6dT
-         HKQg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=so33wluLcWntS9CdZf0ow0HvtXr+nqJClnUMi9O0kFY=;
+        b=YZIKQfXTkJBgKMIRQcccazXt/rhwrPQq9reuexp9ZKRu1EbvVirKARwymY05OWouFh
+         9wE+0yB2+8S4D41im7U/nql+W3SQnIX0VmHR/F5SXmRYKghRvApaR/TL26U5QTaaRby5
+         0A/O7iiJGxPAyOi7hykwDKDX2hJYxQKjKQAfEb5C+DkxBhyCbFHQmIVtWfy001Qt3GfX
+         DK4iblTZhPzb5ATzz/wlSUJMUl9//ynIT+kx7tsGbgdvxbHdb+ebpc+zHPK3MfuIjBsQ
+         8lo4c3+i/zmFowhVyLUxo/ldDsEpzYYvlO/XfdLKzGxWwe8dIjMsK6pq5EcN8tArH4RH
+         e5pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yZTdkAsjyjpF1sT6YS0iHyWRqhbdKTYW5EtdS/UpUAM=;
-        b=ry0JeWFW+fnMFeo8PIwsWrYlIuaW2sW5DGF68fegml4qqRi4jyXFCFS/TcPLlrQe1D
-         L4sdlyqD7vCwmB9SCvKLhzZfYTHeblkuEFJOpcJ9YQja0R5+reQT2aNjReVAo5o+dEc+
-         lcfb9vZqjIBuy48Eoj1hESktqzilhi9AWJsQdafwnypmPAnNlIbhdum1WYbwkqXjthms
-         JaTSFNV1/IlMiP3F/VWALiH/3zK6Qx6Uia381PMw6d1i3BHu9g94TGhA9eXwaNR2HhD9
-         vFZX0meHYqlkBOOwuBuDVI5r4GDYarrkMnc+76AMHG9XUYCZ0aD8pWlt7rP2h/PAKeP9
-         tilw==
-X-Gm-Message-State: AOAM531OejDqA3CckNgJmDANbev0VkBc82s+MbcQPHf0onHjocYuuzR5
-        3wp58xbeBxy2nVhfexFawe8=
-X-Google-Smtp-Source: ABdhPJyJRFsDKaHrdNQmVLXstKV161s5XXTtj9Jo0bcxIWlCs+Dkg7ZBt4teU8FajR8SsnxqCfhLtg==
-X-Received: by 2002:adf:ff8e:0:b0:1f1:dac0:c588 with SMTP id j14-20020adfff8e000000b001f1dac0c588mr15771044wrr.400.1647254949349;
-        Mon, 14 Mar 2022 03:49:09 -0700 (PDT)
-Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.googlemail.com with ESMTPSA id l7-20020adfe9c7000000b001f06f8ec92dsm12891333wrn.30.2022.03.14.03.49.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Mar 2022 03:49:08 -0700 (PDT)
-Message-ID: <92a80462-c00e-acf7-7cce-095891f42226@gmail.com>
-Date:   Mon, 14 Mar 2022 10:49:08 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=so33wluLcWntS9CdZf0ow0HvtXr+nqJClnUMi9O0kFY=;
+        b=WKbrQTfC1gakqmQVD22SNxE6ZnS5WmBkdP/jcZ80S1NrtRTfADStYE3N4My9Gmhx+F
+         mAywTIoaRwLuUveGM4aqi7Uqfa8PCOJ2I2c9+HVVsxoFCgNdC6ujN7unLgxiStHXYv7J
+         Hir24DGpbUA+qDhnFXDzRODA56Dq2vbngm8SVS4TaJSGP5hrmIreug/UiJJ54I+mxbYd
+         jpEP6qcfqGKthUgPNSYWIupOGD/rNEWLWunsWFv18VimWvXwsuzIwTcXzU472pm9tFPA
+         rGDCTn96BC2pUuxL/F/zn++xxE2rJMgASG3FcyMX/lMuCZU9QXjcQLfzDrOMOUyB3a3c
+         ZfDA==
+X-Gm-Message-State: AOAM531R2p1SiubrrI3udcBHYw8MZb1K3TN1OG5zu3j2+Dltg2ndVtJJ
+        CqBjQ23mVO625yG4Dbewemo=
+X-Google-Smtp-Source: ABdhPJxR8cfWtOEFIcWen8Y5o3C+AmO59HgVH5QYfXVUDpIcVGgMZYM8EpC/51f1Tt/1Ds0YkohlGw==
+X-Received: by 2002:a05:6402:cac:b0:410:a920:4e90 with SMTP id cn12-20020a0564020cac00b00410a9204e90mr19953947edb.60.1647255134659;
+        Mon, 14 Mar 2022 03:52:14 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i2-20020a1709067a4200b006db720b1231sm6491449ejo.2.2022.03.14.03.52.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Mar 2022 03:52:14 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nTiJB-000P6y-MW;
+        Mon, 14 Mar 2022 11:52:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
+Subject: Re: Keep reflogs for deleted (remote tracking) branches?
+Date:   Mon, 14 Mar 2022 11:44:43 +0100
+References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
+ <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
+ <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
+ <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
+Message-ID: <220314.86y21cerhe.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/4] terminal: use flags for save_term()
-Content-Language: en-US
-To:     Carlo Arenas <carenas@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220309110325.36917-1-phillip.wood123@gmail.com>
- <20220309110325.36917-2-phillip.wood123@gmail.com>
- <CAPUEsph4Gzd4S_YNeCF+uHntGWXdcA2wY9XL=-+MZtJ0YZb-Sg@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAPUEsph4Gzd4S_YNeCF+uHntGWXdcA2wY9XL=-+MZtJ0YZb-Sg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/03/2022 16:52, Carlo Arenas wrote:
-> On Wed, Mar 9, 2022 at 3:04 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> diff --git a/compat/terminal.h b/compat/terminal.h
->> index 0fb9fa147c..24c4df4c0e 100644
->> --- a/compat/terminal.h
->> +++ b/compat/terminal.h
->> @@ -1,14 +1,19 @@
->>   #ifndef COMPAT_TERMINAL_H
->>   #define COMPAT_TERMINAL_H
->>
->> +enum save_term_flags {
->> +       /* Save input and output settings */
->> +       SAVE_TERM_DUPLEX = 1 << 0,
->> +};
->> +
->>   /*
->>    * Save the terminal attributes so they can be restored later by a
->>    * call to restore_term(). Note that every successful call to
->>    * save_term() must be matched by a call to restore_term() even if the
->>    * attributes have not been changed. Returns 0 on success, -1 on
->>    * failure.
->>    */
->> -int save_term(int full_duplex);
->> +int save_term(unsigned flags);
-> 
-> s/unsigned/enum save_term_flags/
 
-Well spotted!
+On Mon, Mar 14 2022, Tao Klerks wrote:
 
-Thanks
+> On Tue, Mar 8, 2022 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com> wrote:
+>> More generally I have not really run into this as a practical
+>> problem.
+>
+> That's fair, nor have I - but I *have* come reasonably close: one
+> person accidentally deletes a branch that someone else had prepared
+> *without even realizing*, and the initial author is not available, and
+> I only find out about it a few hours later. Dangling commit hunt, here
+> we come. (the original author became available and re-pushed before it
+> came to that)
 
-Phillip
+I think you might find it interesting to have pre-receive hooks
+e.g. reject pushes if you're deleting a topic whose commits aren't
+entirely <your author> i.e. just something like:
 
-> Carlo
+    git push -o ireallymeanit=3D1 --delete topic
 
+I.e. it's an easy to implement extra safety check that people can always
+opt-out of, print a scary message and most people will think twice :)
+
+>> Another way to solve a similar problem is to have
+>> pre-receive/post-receive hooks log attempted/successful pushes, which
+>> along with an appropriate "gc" policy will allow you to manually look up
+>> these older branches (or even to fetch them, if you publish the log and
+>> set uploadpack.allowAnySHA1InWant=3Dtrue).
+>
+> Yep, that's closer to my expected plan, thanks - my intent is to back
+> up, on force-push and/or deletion, into a specific refspace with a
+> cleanup policy, using a server hook. So after something is "deleted"
+> (or force-pushed away), it can be easily recovered for a period of eg
+> 3 months in that refspace, eg
+> "refs/force-push-backups/YYYY-MM-DD-<BRANCHNAME>-<HASHPREFIX>".
+>
+> My question is specifically about the, in my opinion, very surprising
+> behavior of deleting reflogs along with deleted branches - I mainly
+> provided the example use-case for context.
+
+Yes it's quite a mess, e.g. if you follow the rabit hole at the
+recent[1].
+
+One fundimental problem (discussed in various places around the reftable
+backend) is that we carry N meanings for an empty reflog:
+
+A. "This is an active branch, but we have expired the entries".
+
+B. "I manually created this, knowing that the various core.* configs
+   around reflog will say "oh, a reflog exists, let's log to it" (in
+   some cases).
+
+C. Another is: This is "stale" log, i.e. no branch exists, but the log
+   is there.
+
+Which is one reason[2] we'd delete them on branch deletion, because
+otherwise we'd start logging again when a branch is re-created, which
+possibly isn't what we wanted.
+
+1. https://lore.kernel.org/git/de5e2b0e290791d0a4f58a893d8571b5fc8c4f1a.164=
+6952843.git.avarab@gmail.com
+2. I'm not saying this was intended, and haven't looked into this case,
+   just that's it it's an emergent effect of how these files are treated
+   now.
