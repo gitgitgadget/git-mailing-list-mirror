@@ -2,136 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B097C433F5
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7EE6C433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231165AbiCNKx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 06:53:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
+        id S238527AbiCNKxr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 06:53:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbiCNKxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 06:53:25 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497AA30F49
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:16 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id c25so17048967edj.13
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:16 -0700 (PDT)
+        with ESMTP id S231263AbiCNKxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 06:53:46 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF28743ED4
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:36 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id b19so856087wrh.11
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=so33wluLcWntS9CdZf0ow0HvtXr+nqJClnUMi9O0kFY=;
-        b=YZIKQfXTkJBgKMIRQcccazXt/rhwrPQq9reuexp9ZKRu1EbvVirKARwymY05OWouFh
-         9wE+0yB2+8S4D41im7U/nql+W3SQnIX0VmHR/F5SXmRYKghRvApaR/TL26U5QTaaRby5
-         0A/O7iiJGxPAyOi7hykwDKDX2hJYxQKjKQAfEb5C+DkxBhyCbFHQmIVtWfy001Qt3GfX
-         DK4iblTZhPzb5ATzz/wlSUJMUl9//ynIT+kx7tsGbgdvxbHdb+ebpc+zHPK3MfuIjBsQ
-         8lo4c3+i/zmFowhVyLUxo/ldDsEpzYYvlO/XfdLKzGxWwe8dIjMsK6pq5EcN8tArH4RH
-         e5pQ==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Ni09ienE0QsleZsKNR1SzZg0dsM+z/I3pkRA7a2Davc=;
+        b=Es20S241EUUjzndt/d4ntogsfnN5GHSZv//ebjvzLmPyJBmVLsljNRjcYhGwgvbKHG
+         T4t8a+Msuxfi0kpKoRPicoLPFgl1zXP1yO6tic9l0pSISfdt3LzhVUkGje+AicAMeSt4
+         tS0rVttuLCb7ruILSnMpcQRNw1h5CuazZd0hf9lEQVQfE+Z0QG9rtTenSRTUBXK0GXcg
+         IUC4X/NeEC9AGag/GOZMa+mleFQ8Xq3M1f5xdbECFG8EL7PobCOxv/mwUv6CMpIqJxRU
+         SC+5RqhfL3vEpJ91R2B3ue21RwTuVhuBBD3ABfdR9BtWRxGnhYxefzSOGwg+N4YoJDMU
+         7/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=so33wluLcWntS9CdZf0ow0HvtXr+nqJClnUMi9O0kFY=;
-        b=WKbrQTfC1gakqmQVD22SNxE6ZnS5WmBkdP/jcZ80S1NrtRTfADStYE3N4My9Gmhx+F
-         mAywTIoaRwLuUveGM4aqi7Uqfa8PCOJ2I2c9+HVVsxoFCgNdC6ujN7unLgxiStHXYv7J
-         Hir24DGpbUA+qDhnFXDzRODA56Dq2vbngm8SVS4TaJSGP5hrmIreug/UiJJ54I+mxbYd
-         jpEP6qcfqGKthUgPNSYWIupOGD/rNEWLWunsWFv18VimWvXwsuzIwTcXzU472pm9tFPA
-         rGDCTn96BC2pUuxL/F/zn++xxE2rJMgASG3FcyMX/lMuCZU9QXjcQLfzDrOMOUyB3a3c
-         ZfDA==
-X-Gm-Message-State: AOAM531R2p1SiubrrI3udcBHYw8MZb1K3TN1OG5zu3j2+Dltg2ndVtJJ
-        CqBjQ23mVO625yG4Dbewemo=
-X-Google-Smtp-Source: ABdhPJxR8cfWtOEFIcWen8Y5o3C+AmO59HgVH5QYfXVUDpIcVGgMZYM8EpC/51f1Tt/1Ds0YkohlGw==
-X-Received: by 2002:a05:6402:cac:b0:410:a920:4e90 with SMTP id cn12-20020a0564020cac00b00410a9204e90mr19953947edb.60.1647255134659;
-        Mon, 14 Mar 2022 03:52:14 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i2-20020a1709067a4200b006db720b1231sm6491449ejo.2.2022.03.14.03.52.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 03:52:14 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nTiJB-000P6y-MW;
-        Mon, 14 Mar 2022 11:52:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
-Subject: Re: Keep reflogs for deleted (remote tracking) branches?
-Date:   Mon, 14 Mar 2022 11:44:43 +0100
-References: <CAPMMpog=qBwLrxss_ci6ZMM+AjbdrF8tszXLW7YH1Zqr+m7mPQ@mail.gmail.com>
- <CAFQ2z_Oht=-QrzoH8FW_Jm-B7u9O0wXUaY-ifwZah6gkcgVVSA@mail.gmail.com>
- <220308.868rtky4q8.gmgdl@evledraar.gmail.com>
- <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAPMMpoiDTprbf_9J3gY6WQwUVWfOTms6LVyJDYQUOcUp-42doA@mail.gmail.com>
-Message-ID: <220314.86y21cerhe.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Ni09ienE0QsleZsKNR1SzZg0dsM+z/I3pkRA7a2Davc=;
+        b=8L0nLRmkDYHzBB4z7giz3s5eXSvytFLOkyNR1pLPT6w4SSXGqgLkqTFypHGA4hfRsj
+         jIb06Yvq4+jG7kdhtAO3kYxtLX7aot3Nu475L1SjWBjx/f3KJ3uwJD3T/76Lp+s0tUFh
+         GIo0zNHM0cCtVvsUFngUMfvIW4XAPLcmwUk5MbS9ZbEb5DbG6yEO1JK1j+Nq2ghmdo27
+         +I5qaQH/1yYYnSyK0X3TUPjw4sF4RuSXV6nFzdjfKEbF9qju3g4oCFTuWiCbtHK1x3Vc
+         G2mMjSc/OfdXH1HhulLQ7it3QtB8yk/jIc+/6Ef86mCcTOCFBpyOTqCrB22T8TCxsAxh
+         eHKQ==
+X-Gm-Message-State: AOAM530AysyFg0B5nPUXt8V21UzLJJc8bql0QgqSsmSec94oUmVZbBjx
+        uhcjHy42PKGyL8RjO+gCqNY=
+X-Google-Smtp-Source: ABdhPJy5NsXqj18PcogrFwlU/KPMk3CBMjEK5MGI1nCKTDAJpCWVZ2ftwbXwwcIqO9hBlHq1TqnbZw==
+X-Received: by 2002:a05:6000:154b:b0:203:7564:930 with SMTP id 11-20020a056000154b00b0020375640930mr16326240wry.349.1647255155603;
+        Mon, 14 Mar 2022 03:52:35 -0700 (PDT)
+Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
+        by smtp.googlemail.com with ESMTPSA id k14-20020a5d518e000000b002019c7402aasm12951321wrv.25.2022.03.14.03.52.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Mar 2022 03:52:35 -0700 (PDT)
+Message-ID: <4072d712-4138-6cf0-e0e0-5a3303ce010a@gmail.com>
+Date:   Mon, 14 Mar 2022 10:52:34 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/2] rebase: use test_commit helper in setup
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+References: <pull.1226.git.git.1646975144178.gitgitgadget@gmail.com>
+ <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
+ <f3f084adfa616a7bae7e7c94644f65a36f38652b.1647019492.git.gitgitgadget@gmail.com>
+ <xmqqee36watb.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqee36watb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 13/03/2022 07:50, Junio C Hamano wrote:
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> To prepare for the next commit that will test rebase with oids instead
+>> of branch names, update the rebase setup test to add a couple of tags we
+>> can use. This uses the test_commit helper so we can replace some lines
+>> that add a commit manually.
+> 
+> OK.
+> 
+>>   test_expect_success 'prepare repository with topic branches' '
+>> -	git config core.logAllRefUpdates true &&
+> 
+> This lossage is not explained.  I do not know if we actually make
+> use of the reflog in the tests, though.
 
-On Mon, Mar 14 2022, Tao Klerks wrote:
+It is the default these days so we don't need to waste a process setting 
+it here.
 
-> On Tue, Mar 8, 2022 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
-arab@gmail.com> wrote:
->> More generally I have not really run into this as a practical
->> problem.
->
-> That's fair, nor have I - but I *have* come reasonably close: one
-> person accidentally deletes a branch that someone else had prepared
-> *without even realizing*, and the initial author is not available, and
-> I only find out about it a few hours later. Dangling commit hunt, here
-> we come. (the original author became available and re-pushed before it
-> came to that)
+Best Wishes
 
-I think you might find it interesting to have pre-receive hooks
-e.g. reject pushes if you're deleting a topic whose commits aren't
-entirely <your author> i.e. just something like:
-
-    git push -o ireallymeanit=3D1 --delete topic
-
-I.e. it's an easy to implement extra safety check that people can always
-opt-out of, print a scary message and most people will think twice :)
-
->> Another way to solve a similar problem is to have
->> pre-receive/post-receive hooks log attempted/successful pushes, which
->> along with an appropriate "gc" policy will allow you to manually look up
->> these older branches (or even to fetch them, if you publish the log and
->> set uploadpack.allowAnySHA1InWant=3Dtrue).
->
-> Yep, that's closer to my expected plan, thanks - my intent is to back
-> up, on force-push and/or deletion, into a specific refspace with a
-> cleanup policy, using a server hook. So after something is "deleted"
-> (or force-pushed away), it can be easily recovered for a period of eg
-> 3 months in that refspace, eg
-> "refs/force-push-backups/YYYY-MM-DD-<BRANCHNAME>-<HASHPREFIX>".
->
-> My question is specifically about the, in my opinion, very surprising
-> behavior of deleting reflogs along with deleted branches - I mainly
-> provided the example use-case for context.
-
-Yes it's quite a mess, e.g. if you follow the rabit hole at the
-recent[1].
-
-One fundimental problem (discussed in various places around the reftable
-backend) is that we carry N meanings for an empty reflog:
-
-A. "This is an active branch, but we have expired the entries".
-
-B. "I manually created this, knowing that the various core.* configs
-   around reflog will say "oh, a reflog exists, let's log to it" (in
-   some cases).
-
-C. Another is: This is "stale" log, i.e. no branch exists, but the log
-   is there.
-
-Which is one reason[2] we'd delete them on branch deletion, because
-otherwise we'd start logging again when a branch is re-created, which
-possibly isn't what we wanted.
-
-1. https://lore.kernel.org/git/de5e2b0e290791d0a4f58a893d8571b5fc8c4f1a.164=
-6952843.git.avarab@gmail.com
-2. I'm not saying this was intended, and haven't looked into this case,
-   just that's it it's an emergent effect of how these files are treated
-   now.
+Phillip
