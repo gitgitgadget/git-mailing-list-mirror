@@ -2,109 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58E73C433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1AE5C433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 10:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238606AbiCNKkv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 06:40:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57354 "EHLO
+        id S238686AbiCNKuY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 06:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234281AbiCNKkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 06:40:49 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E5735264
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:39:40 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id l24-20020a4a8558000000b00320d5a1f938so19638145ooh.8
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:39:40 -0700 (PDT)
+        with ESMTP id S230147AbiCNKuU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 06:50:20 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0C31EAD7
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:49:10 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id b19so840500wrh.11
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 03:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MXxOOtq8OmpKEVxZIJndKgSbbzUjcanl7yWPw1YWHSk=;
-        b=aW/2W8GLlILLYMKbFY1eJoHsPoi/Ujzl/y2CNphOd06HuLyYSRrCZP6koXBF7dgPtW
-         CafRG/SYRjE2rb7cyNuQLcx0iNGNFvc3UOiHq4Ky5HNRMjEDP3q5+exRlG+Bqu4XJGrf
-         G6bvARlAkseyZ9QT6i0zCREHiEzTbnOpQKLiFHAOvqdMcLr7VaKUBJ9jbU62jQElMWVq
-         uXgpI3gOwvKx+qgL1vwG99yBkLRRKj7EUVz8Mf0Srfs8zhAb/GQSGWyM3Y5PWZsPhXN0
-         WXlnW9aRGUbJl8PSYj/ck9NiQTF3dSaDPYaMoupAJTxI/1zCUnsvQYWciX/8/uqjUC1T
-         8vgw==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yZTdkAsjyjpF1sT6YS0iHyWRqhbdKTYW5EtdS/UpUAM=;
+        b=AX3GwCqX692H9Nokc3F6AhIUuxgBfgAm6G9V0CBBnllbiQy5A17A4XikA4dhzP14FJ
+         xl6wln+5sLBDc9dY8vroUgMYMIa7y+w41q9OaHp9xMhrGwx6PEUTIuAt6TBGp8eyTuPR
+         xIRTFzojxpdXKgX+MBX7MhxMmdnejtd2mkM1MriXYDv6EUNGWDwUJv8kB3ls7+yZe3xD
+         2/xaiHyoQC6Irk3iZ7nzVGflUEpFkKbDrDTMGXFZ+6wKSm+3oe/UZS+GfHS32INeENls
+         DTU75k4TvPgYnVsAnbYhOQ6Njg3pCBbVpmwiMlfOi5WYQIc2nH3PaeYG8DpVVW31s6dT
+         HKQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MXxOOtq8OmpKEVxZIJndKgSbbzUjcanl7yWPw1YWHSk=;
-        b=RELPNKxGeGNfa9lP2IXqbYen1dDuWm8+OPGFIvw2hTvlATY0sMh8NG68yxp1LFJZwH
-         prqsR2zWcY8cKYFmwy/tpLOsvfopm4HIJh3xJA0lGQdrpXxr+RHrOVrkBBxmvucMG4d5
-         scIhHvX8GHQO+as+LY3u/Fd4dluW0i3swaBHWGZi39BNtSE5WbswNEk9wo/IDHfBmCkR
-         4/xzb5apAmfHT2+MJSAI30ze0u4we+Lss0Ro7AzHPh8GXVWaekN10DREHGSFIHKsaDpU
-         X6BmjJw3mE86OvU9eml4qv3VmbVaoEJ6oUzsqSwEY0qSugEQg75t5DiwczGvhzAWo4X/
-         /21w==
-X-Gm-Message-State: AOAM533RbWEjIljpyQFb2x8Ux42QVftUhf8AdB8RCY9i9AuRJjEsGC+n
-        nkhzkPW21EFwnR++Xs+l7l9IRgskwahkanmbs5bMcz2jDBw=
-X-Google-Smtp-Source: ABdhPJzF3qybp+ev7cIAkAGcvtfB5ZCyzeWO55/UxROXbqTYxdW+3hXRtCcvyCala+jUurzbrl/b74Gsh2WC1YZLB5w=
-X-Received: by 2002:a05:6870:eca1:b0:da:b3f:3229 with SMTP id
- eo33-20020a056870eca100b000da0b3f3229mr10915075oab.217.1647254379409; Mon, 14
- Mar 2022 03:39:39 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yZTdkAsjyjpF1sT6YS0iHyWRqhbdKTYW5EtdS/UpUAM=;
+        b=ry0JeWFW+fnMFeo8PIwsWrYlIuaW2sW5DGF68fegml4qqRi4jyXFCFS/TcPLlrQe1D
+         L4sdlyqD7vCwmB9SCvKLhzZfYTHeblkuEFJOpcJ9YQja0R5+reQT2aNjReVAo5o+dEc+
+         lcfb9vZqjIBuy48Eoj1hESktqzilhi9AWJsQdafwnypmPAnNlIbhdum1WYbwkqXjthms
+         JaTSFNV1/IlMiP3F/VWALiH/3zK6Qx6Uia381PMw6d1i3BHu9g94TGhA9eXwaNR2HhD9
+         vFZX0meHYqlkBOOwuBuDVI5r4GDYarrkMnc+76AMHG9XUYCZ0aD8pWlt7rP2h/PAKeP9
+         tilw==
+X-Gm-Message-State: AOAM531OejDqA3CckNgJmDANbev0VkBc82s+MbcQPHf0onHjocYuuzR5
+        3wp58xbeBxy2nVhfexFawe8=
+X-Google-Smtp-Source: ABdhPJyJRFsDKaHrdNQmVLXstKV161s5XXTtj9Jo0bcxIWlCs+Dkg7ZBt4teU8FajR8SsnxqCfhLtg==
+X-Received: by 2002:adf:ff8e:0:b0:1f1:dac0:c588 with SMTP id j14-20020adfff8e000000b001f1dac0c588mr15771044wrr.400.1647254949349;
+        Mon, 14 Mar 2022 03:49:09 -0700 (PDT)
+Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
+        by smtp.googlemail.com with ESMTPSA id l7-20020adfe9c7000000b001f06f8ec92dsm12891333wrn.30.2022.03.14.03.49.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Mar 2022 03:49:08 -0700 (PDT)
+Message-ID: <92a80462-c00e-acf7-7cce-095891f42226@gmail.com>
+Date:   Mon, 14 Mar 2022 10:49:08 +0000
 MIME-Version: 1.0
-References: <20220314002327.243915-1-gitter.spiros@gmail.com> <xmqqh781t7ks.fsf@gitster.g>
-In-Reply-To: <xmqqh781t7ks.fsf@gitster.g>
-From:   Elia Pinto <gitter.spiros@gmail.com>
-Date:   Mon, 14 Mar 2022 11:39:31 +0100
-Message-ID: <CA+EOSBkJtcvKJ1D1hMuWB0EkrGEfP7Dua6gP8MDHehto1r+E3A@mail.gmail.com>
-Subject: Re: [PATCH 6/6] attr.h: remove duplicate struct definition
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/4] terminal: use flags for save_term()
+Content-Language: en-US
+To:     Carlo Arenas <carenas@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+ <20220309110325.36917-1-phillip.wood123@gmail.com>
+ <20220309110325.36917-2-phillip.wood123@gmail.com>
+ <CAPUEsph4Gzd4S_YNeCF+uHntGWXdcA2wY9XL=-+MZtJ0YZb-Sg@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAPUEsph4Gzd4S_YNeCF+uHntGWXdcA2wY9XL=-+MZtJ0YZb-Sg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno lun 14 mar 2022 alle ore 06:40 Junio C Hamano
-<gitster@pobox.com> ha scritto:
->
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
-> > Subject: Re: [PATCH 6/6] attr.h: remove duplicate struct definition
->
-> I do not see other 5 from 1/6 thru 5/6 on the list.
-I'm sorry. It was my mistake in producing the patch. There are no
-other cases like this.
+On 11/03/2022 16:52, Carlo Arenas wrote:
+> On Wed, Mar 9, 2022 at 3:04 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> diff --git a/compat/terminal.h b/compat/terminal.h
+>> index 0fb9fa147c..24c4df4c0e 100644
+>> --- a/compat/terminal.h
+>> +++ b/compat/terminal.h
+>> @@ -1,14 +1,19 @@
+>>   #ifndef COMPAT_TERMINAL_H
+>>   #define COMPAT_TERMINAL_H
+>>
+>> +enum save_term_flags {
+>> +       /* Save input and output settings */
+>> +       SAVE_TERM_DUPLEX = 1 << 0,
+>> +};
+>> +
+>>   /*
+>>    * Save the terminal attributes so they can be restored later by a
+>>    * call to restore_term(). Note that every successful call to
+>>    * save_term() must be matched by a call to restore_term() even if the
+>>    * attributes have not been changed. Returns 0 on success, -1 on
+>>    * failure.
+>>    */
+>> -int save_term(int full_duplex);
+>> +int save_term(unsigned flags);
+> 
+> s/unsigned/enum save_term_flags/
 
-Thanks for your patience
->
-> If this is a leftover bit follow-up to the 5-patch series whose
-> cover letter was <20220313195536.224075-1-gitter.spiros@gmail.com>
-> we often see such a message
->
->  - with subject numbered as [PATCH 6/5]
->  - as follow-up to the same cover letter.
->
-> The patch text looks good, and we can see from the output of
->
->  $ git grep '^struct .*;' \*.h |
->    sort | uniq -c | sort -n | grep -v '^ *1 '
->
-> that this is the only duplicated opaque struct declaration in the
-> header files.
->
-> For now, I'd assume that is the case and queue it on the same topic
-> branch as the other five.  Thanks.
->
-> > struct index_state is declared more than once.
-> >
-> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> > ---
-> >  attr.h | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/attr.h b/attr.h
-> > index 3732505eda..3fb40cced0 100644
-> > --- a/attr.h
-> > +++ b/attr.h
-> > @@ -121,7 +121,6 @@ struct git_attr;
-> >  /* opaque structures used internally for attribute collection */
-> >  struct all_attrs_item;
-> >  struct attr_stack;
-> > -struct index_state;
-> >
-> >  /*
-> >   * Given a string, return the gitattribute object that
+Well spotted!
+
+Thanks
+
+Phillip
+
+> Carlo
+
