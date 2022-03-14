@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42BC4C433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 23:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A9E9C433EF
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 23:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239436AbiCNXuJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 19:50:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
+        id S1343781AbiCNXz0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 19:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231495AbiCNXuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 19:50:07 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6A3220E4
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 16:48:56 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id t5so16737810pfg.4
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 16:48:56 -0700 (PDT)
+        with ESMTP id S234318AbiCNXzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 19:55:25 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D699533E17
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 16:54:14 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id n2so14879653plf.4
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 16:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=+xg1wfLtkxblruV0pSAtwjS5wKtFnInThyr1dzsfd8M=;
-        b=SVuch+TETLrv3x1sRJyvpx7Qx8T1zrS6z+9By1abTTfHBVqrqJkiWRckmHhgQmmXff
-         EI0CAxw9MGRbYDPuy0cEIpDD+gHdbi76jzLDFvcNM4Uc3CJfHxu0wn7fRQGNwoV6pCD7
-         WkiFpSD4KZK4vlK2nxSBMC+g6Vmxs3cn7Xqare08IRdoQnvZ7KngcNSiz11fMD/btPu1
-         46nWSd7kp4YTtrnaliv8EyWrm94QgUIoMNkuYMvP6fwlmmsP1nF2QdTJNvFQtbDO/Cqw
-         uqYgYHx9hb28L2FYxFoEXZ/B/lkipr+zNmkPftuw6Mz/rZRJ7T/TY1o3KZExDgE6qOWJ
-         cvOg==
+        bh=9vx/LFqEyqA3jV07nA/jhAZedC9Mka/f36smDnR0+Ig=;
+        b=DbvCB5UwrgIg5jwaOzapAr74EDXt7bEx8e+ZkOWjRhVLtejfqY72AdPzC5zGcYbVoi
+         1JOQzAD9Zikzk4Z9/Wv8uuzNUKbr+XURsOYW64F43QqSLNnTpcrYt8MRMr746JLWIDLB
+         kVhJmapkr7015qzWHkvobOUtXGjK5emDrox6iditGEVCJ+2WgCPr4nEXIOPsyrZa2LlX
+         2073wKNtazqGtk2hN5P/hpk2Lq7rntLi86yRx4jZYABtt4P/FEioI7m6tQCiElj6o4Xv
+         +5QSraJKYUgoAKC5IkcklTkS82kr1xmHWb8Uf7EbAmEz6jr9fGNi2d2B1skjycmIRKbO
+         hXJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=+xg1wfLtkxblruV0pSAtwjS5wKtFnInThyr1dzsfd8M=;
-        b=7uMMg4ZCv4w3wpVjBcJQ+6NkgA7SoqMw+idkhjOmM6jLFPMDfPL/+TF2CZ/7+Uq3Rw
-         IxWzkfbiW54vj4iCVoIb6aDsRlWExErH0yZ9BRoiBwz+6fkWyv0VHF0vv5yaPTANSFBw
-         Q3cehP28Fu8M7c3oeeBma4aED5xEe1Ocg4SO9pIauWRGD9KeT7LDcAFbXcz2OedSfGN7
-         GOSMaaMaKT1anvFxDAWWkVBXAxTYVIPjSXsA0w9Kz7vO7kkn1UlcmSlZSKcwUII0a6/c
-         XmvOLZbfBN0gaf637Nm1l9yQNy2cw7ZKPqvO2I+DKjWbSsKL5BeonAMnW107oSOxEC0P
-         h9Tw==
-X-Gm-Message-State: AOAM532r63T9125INuRMSiCKCXK9lUdZwEi+WxcvmestSoFxO5W6MpxL
-        QFf2SLoULkSQWWMc5b2RCHXUDcJYRVhx
-X-Google-Smtp-Source: ABdhPJzzx2f1rZp0NokU3uy0daAZEyNE3m1+4Eyyau3wjyyfRX9UP2ztTjGa0OcmnxWDKGLzd3z7vw==
-X-Received: by 2002:a63:f40e:0:b0:380:6a04:4335 with SMTP id g14-20020a63f40e000000b003806a044335mr22017612pgi.523.1647301736452;
-        Mon, 14 Mar 2022 16:48:56 -0700 (PDT)
+        bh=9vx/LFqEyqA3jV07nA/jhAZedC9Mka/f36smDnR0+Ig=;
+        b=OSf+vsAaY2g/Crs/O7IZ50/gdhkrNt5q7WvlWuDcjUUaH3PVoA3xQD09UsPUBzacId
+         JWhPfqKyDwTo1vyoOhqG7VcFaNQVAXJo5r8psjUfu6UmmH953n5zUidoXn95/vqmlwGF
+         iLqiIH3O44KgzT0Ay/ce2Uj2dTXn05C3TaXVsPeXsoFcEs1fdMUuy4VB8T7ZMuTCBNsl
+         d8GkXrJUa77I5rn6nYF14/ELIS/mVxxQSgp4NgX64L4TfwyEPeXe8AWEHyWD6IpVWjuC
+         4JTMfB92sghXbEwL3LCuex05ishEAOkSEZboQXbGoEv3JblU5m5AD/N8joyhlnWF77rU
+         q5PQ==
+X-Gm-Message-State: AOAM531ZDyktkvTcai7ikkJ6PAT5rZDBd9qVyTefR5Q26x1G83bQRSPV
+        taJ786Tf+8tYr30VhLn4E+82
+X-Google-Smtp-Source: ABdhPJyZVpZ/TOvA4BrukowTAkBkYnXOKEU5znAgkDTsVrpzwX7+wLVuvibeXUdJJQLZNZT6VHz9fQ==
+X-Received: by 2002:a17:90a:8543:b0:1bc:c302:7030 with SMTP id a3-20020a17090a854300b001bcc3027030mr1614987pjw.182.1647302054383;
+        Mon, 14 Mar 2022 16:54:14 -0700 (PDT)
 Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id h8-20020a17090a648800b001bf2b437609sm613675pjj.24.2022.03.14.16.48.55
+        by smtp.gmail.com with ESMTPSA id d4-20020aa78e44000000b004f6aaa184c9sm20553969pfr.71.2022.03.14.16.54.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Mar 2022 16:48:56 -0700 (PDT)
-Message-ID: <ce5904f1-ee15-1be8-4019-d1cd10ac83f7@github.com>
-Date:   Mon, 14 Mar 2022 16:48:54 -0700
+        Mon, 14 Mar 2022 16:54:14 -0700 (PDT)
+Message-ID: <cccf5552-a753-b472-0e22-d7f45542d424@github.com>
+Date:   Mon, 14 Mar 2022 16:54:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [PATCH v2 2/5] reset: introduce --[no-]refresh option to --mixed
+Subject: Re: [PATCH v2 5/5] stash: make internal resets quiet and refresh
+ index
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, derrickstolee@github.com
 References: <pull.1170.git.1647043729.gitgitgadget@gmail.com>
  <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
- <7f0226bc3e646167808fbd2413dc54e87417230c.1647274230.git.gitgitgadget@gmail.com>
- <xmqq7d8ws5bo.fsf@gitster.g>
+ <3334d4cb6f302a35986d94ea8ffcd1ee9c6aae5d.1647274230.git.gitgitgadget@gmail.com>
+ <xmqqtuc0qq0w.fsf@gitster.g>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqq7d8ws5bo.fsf@gitster.g>
+In-Reply-To: <xmqqtuc0qq0w.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,140 +76,100 @@ Junio C Hamano wrote:
 > 
 >> From: Victoria Dye <vdye@github.com>
 >>
->> Add a new --[no-]refresh option that is intended to explicitly determine
->> whether a mixed reset should end in an index refresh.
+>> Add the options '-q' and '--refresh' to the 'git reset' executed in
+>> 'reset_head()', and '--refresh' to the 'git reset -q' executed in
+>> 'do_push_stash(...)'.
 >>
->> Starting at 9ac8125d1a (reset: don't compute unstaged changes after reset
->> when --quiet, 2018-10-23), using the '--quiet' option results in skipping
->> the call to 'refresh_index(...)' at the end of a mixed reset with the goal
->> of improving performance. However, by coupling behavior that modifies the
->> index with the option that silences logs, there is no way for users to have
->> one without the other (i.e., silenced logs with a refreshed index) without
->> incurring the overhead of a separate call to 'git update-index --refresh'.
->> Furthermore, there is minimal user-facing documentation indicating that
->> --quiet skips the index refresh, potentially leading to unexpected issues
->> executing commands after 'git reset --quiet' that do not themselves refresh
->> the index (e.g., internals of 'git stash', 'git read-tree').
+>> 'stash' is implemented such that git commands invoked  as part of it (e.g.,
+>> 'clean', 'read-tree', 'reset', etc.) have their informational output
+>> silenced. However, the 'reset' in 'reset_head()' is *not* called with '-q',
+>> leading to the potential for a misleading printout from 'git stash apply
+>> --index' if the stash included a removed file:
 >>
->> To mitigate these issues, '--[no-]refresh' and 'reset.refresh' are
->> introduced to provide a dedicated mechanism for refreshing the index. When
->> either is set, '--quiet' and 'reset.quiet' revert to controlling only
->> whether logs are silenced and do not affect index refresh.
+>> Unstaged changes after reset: D      <deleted file>
 >>
->> Helped-by: Derrick Stolee <derrickstolee@github.com>
+>> Not only is this confusing in its own right (since, after the reset, 'git
+>> stash' execution would stage the deletion in the index), it would be printed
+>> even when the stash was applied with the '-q' option. As a result, the
+>> messaging is removed entirely by calling 'git status' with '-q'.
+>>
+>> Additionally, because the default behavior of 'git reset -q' is to skip
+>> refreshing the index, but later operations in 'git stash' subcommands expect
+>> a non-stale index, enable '--refresh' as well.
+>>
 >> Signed-off-by: Victoria Dye <vdye@github.com>
 >> ---
->>  Documentation/git-reset.txt |  9 +++++
->>  builtin/reset.c             | 13 ++++++-
->>  t/t7102-reset.sh            | 77 +++++++++++++++++++++++++++++++++----
->>  3 files changed, 91 insertions(+), 8 deletions(-)
-> 
-> No complaints, but it is somewhat unsatisfying that we need these
-> two steps that keep --quiet tied to the decision to or not to
-> refresh.  In the longer term, it may be cleaner to completely
-> dissociate them, but it probably is not a huge deal.
-> 
->> +	/*
->> +	 * If refresh is completely unspecified (either by config or by command
->> +	 * line option), decide based on 'quiet'.
->> +	 */
->> +	if (refresh < 0)
->> +		refresh = !quiet;
-> 
-> OK.
-> 
->> @@ -517,7 +528,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->>  			if (read_from_tree(&pathspec, &oid, intent_to_add))
->>  				return 1;
->>  			the_index.updated_skipworktree = 1;
->> -			if (!quiet && get_git_work_tree()) {
->> +			if (refresh && get_git_work_tree()) {
->>  				uint64_t t_begin, t_delta_in_ms;
+>>  builtin/stash.c  |  5 +++--
+>>  t/t3903-stash.sh | 12 ++++++++++++
+>>  2 files changed, 15 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/builtin/stash.c b/builtin/stash.c
+>> index 3e8af210fde..91407d9bbe0 100644
+>> --- a/builtin/stash.c
+>> +++ b/builtin/stash.c
+>> @@ -310,7 +310,7 @@ static int reset_head(void)
+>>  	 * API for resetting.
+>>  	 */
+>>  	cp.git_cmd = 1;
+>> -	strvec_push(&cp.args, "reset");
+>> +	strvec_pushl(&cp.args, "reset", "--quiet", "--refresh", NULL);
 >>  
->>  				t_begin = getnanotime();
-> 
-> Quite sensible.
-> 
->> diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
->> index d05426062ec..005940778b7 100755
->> --- a/t/t7102-reset.sh
->> +++ b/t/t7102-reset.sh
->> @@ -462,14 +462,77 @@ test_expect_success 'resetting an unmodified path is a no-op' '
->>  	git diff-index --cached --exit-code HEAD
+>>  	return run_command(&cp);
+>>  }
+>> @@ -1633,7 +1633,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+>>  			struct child_process cp = CHILD_PROCESS_INIT;
+>>  
+>>  			cp.git_cmd = 1;
+>> -			strvec_pushl(&cp.args, "reset", "-q", "--", NULL);
+>> +			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
+>> +				     NULL);
+>>  			add_pathspecs(&cp.args, ps);
+>>  			if (run_command(&cp)) {
+>>  				ret = -1;
+>> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+>> index f36e121210e..17f2ad2344c 100755
+>> --- a/t/t3903-stash.sh
+>> +++ b/t/t3903-stash.sh
+>> @@ -261,6 +261,18 @@ test_expect_success 'apply -q is quiet' '
+>>  	test_must_be_empty output.out
 >>  '
 >>  
->> +test_index_refreshed () {
+>> +test_expect_success 'apply --index -q is quiet' '
+>> +	# Added file, deleted file, modified file all staged for commit
+>> +	echo foo >new-file &&
+>> +	echo test >file &&
+>> +	git add new-file file &&
+>> +	git rm other-file &&
 >> +
->> +	# To test whether the index is refresh, create a scenario where a
+>> +	git stash &&
 > 
-> Doesn't the verb "refresh" refer to the act of making it "fresh"
-> (again)?  i.e. update the cached stat info to up-to-date?
-> 
-> "To test whether the index has been refreshed" or "To test whether
-> the cached stat info is up-to-date", perhaps?
-> 
->> +	# command will fail if the index is *not* refreshed:
->> +	#   1. update the worktree to match HEAD & remove file2 in the index
-> 
-> In other words, file2 tentatively becomes untracked.
-> 
->> +	#   2. reset --mixed to unstage the change from step 1
-> 
-> But then, file2 is "added" to the index again, but added from the
-> HEAD.  If this did not refresh, then we do not know if the contents
-> of the file in the working tree is the same, and "diff-files" may
-> say "file2 may be modified".  If "reset" refreshes, this will take
-> us back to the same state as "reset --hard HEAD", and "diff-files"
-> will not report that "file2" is different.
-> 
->> +	#   3. read-tree HEAD~1 (which differs from HEAD in file2)
-> 
-> With "-m" option, I presume?  Do we want "-u" here, too?
-> 
->> +	# If the index is refreshed in step 2, then file2 in the index will be
->> +	# up-to-date with HEAD and read-tree will succeed (thus failing the
->> +	# test). If the index is *not* refreshed, however, the staged deletion
->> +	# of file2 from step 1 will conflict with the changes from the tree read
->> +	# in step 3, resulting in a failure.
-> 
-> This feels a bit brittle.  The implementation of "read-tree -m" may
-> choose to refresh beforehand to avoid such a failure.
-> 
-> In any case, the name of the helper alone wasn't of any help to
-> realize that this is about checking if "reset" refreshes the index
-> or not.  Perhaps call it more like
-> 
-> 	reset_refreshes_index
-> 
-> or something?
-> 
-> In any case, instead of the big comment block, comments interspersed
-> in the steps may be easier to follow.  
-> 
->> +	# Step 0: start with a clean index
->> +	git reset --hard HEAD &&
->> +
->> +	# Step 1
-> 	# remove file2 from the index
->> +	git rm --cached file2 &&
->> +
->> +	# Step 2
-> 	# resurrect file2 to the index from HEAD; if the cached stat
-> 	# info gets refreshed, this brings us back to the state
->         # after Step 0.  If not, "diff-files" would report file2 is
-> 	# different.
->> +	git $1 reset $2 --mixed HEAD &&
->> +
->> +	# Step 3
->> +	git read-tree -m HEAD~1
-> 
-> And use "diff-files file2" here?  Then you do not even have to rely
-> on HEAD and HEAD~1 being different at file2.
+> Hpmh.  The hunk that updates reset_head() does get exercised by
+> "apply --index", so testing that is OK, but we are also patching
+> "do_push_stash()" to be quiet, so don't we care the chattyness of
+> this step, too?
 > 
 
-These are all helpful suggestions, I'll include them in a re-roll
-(specifically: rename 'test_index_refreshed' to something mentioning
-'reset', move the test comments inline with the steps they execute, and use
-'diff-files' rather than 'read-tree'). 
+The '-q' option was already present in the reset in 'do_push_stash()', but I
+did add the '--refresh' option to ensure that (for example) 'git stash push
+--staged' refreshes the index. With that in mind...
 
-Thanks!
+> In these steps, we also want the same "did the command refresh the
+> index?" tests, no?
+> 
+
+yes, both cases where '--refresh' was added should be tested (since both
+will fail if they don't include that option). I'll add them in the next
+iteration.
+
+>> +	git stash apply --index -q >output.out 2>&1 &&
+>> +	test_must_be_empty output.out
+>> +'
+>> +
+>>  test_expect_success 'save -q is quiet' '
+>>  	git stash save --quiet >output.out 2>&1 &&
+>>  	test_must_be_empty output.out
+> 
+> Other than these nits I noticed, the overall idea of the topic is
+> well presented.  Thanks for working on this.
+> 
+
