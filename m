@@ -2,202 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2363C433EF
-	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 07:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6DDBC4332F
+	for <git@archiver.kernel.org>; Mon, 14 Mar 2022 08:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236790AbiCNHoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 03:44:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
+        id S237468AbiCNIG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 04:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236795AbiCNHoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 03:44:04 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16ED2F12
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 00:42:54 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id E11165C017C;
-        Mon, 14 Mar 2022 03:42:53 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 14 Mar 2022 03:42:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=kKRznbqlFAHQRc/CUQPCts4nlnjomHEvpDJ4NH
-        NFOVQ=; b=eG+QyxG9lk2ZwjzoGsJ5KF24vIHsVHr/y9hKOZ1JIjCVUsZp7y8q8Q
-        ZMoaXf64q8M6wmjC9i2ldMS7IwIOsPka39CZpvAJOMcSyxZDk0VsXy8Gg3CA9U4l
-        pVjqBbBsVOR+FJuh7Otl9oPHNFLrd+arEFe9kXyC8RaxopdM5QM9O+Uc8s5E7sSA
-        LSzVA2JXEIGhv1FZFLzfDpuvdhwduQEW8dXGCvnLPnMAo4QJOsiBYWK6GRD/8fj4
-        yAudgPsoXb2GAtZ2ddGWOqUbKImAFgtzjJVlgpxBmbeTZ7Dr1N8WLFlrbJGmgb21
-        640jziEtbqoMvtZqNbeNn6RFbYJ9huVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=kKRznbqlFAHQRc/CU
-        QPCts4nlnjomHEvpDJ4NHNFOVQ=; b=XCfaFWpE/qwF3QAmhKd19iwVM7SBKX+yN
-        xIXwYoQbVNhP8Bmk+vzFqA1V+EJJzM87Ka9ZXhqkFAUZ/wXq8mso/6sF+vndME1s
-        Jjen9kugZIszHFxiSk88eb+efmzRHlU/I5LdyOOxrtoxrFUCPYb4y7FjWQjn1XlJ
-        EsPUxL//rEOw4P1B9tSL5wEVVrZ4+BpHmFfF3jyAJiO0C3xvKArGFVW+WHi8dPut
-        d/DBr4bW7bOnNZ8HXOWc+3fB1leuL65ODYflUVY4l+0qktB1PKE98Jk3LysAW6qB
-        ewidKviv/WGiXdD69YsOS6xjU6eG9ARlFs0McEu+tMMInZrWNgwlQ==
-X-ME-Sender: <xms:_fEuYp0m9aP5Sl7rKtchC4qP3_0LDjnnPUeYiEXMZ4pufVCfNbGgZw>
-    <xme:_fEuYgGbxBaVKcI5Kok-J-ByCR0GjihxleIa6HRmBPULKbZo45DHu3iniS6NuTgwV
-    5Tn2i6SETDtqrGJuA>
-X-ME-Received: <xmr:_fEuYp49RQ_W8cnRgeLBWSl-MK2WHqH3Nsl9Rp3RyR5-SS4CTE5quHNANKyUfVlsup2csqyAqPLkQ25jTKYScQR6ht2bOqXQ14lCFEeZ-v0tCWjcoHslb8M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvjedguddutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:_fEuYm2cYszaVvL2v8Tm9iusrpFyxZVr7_DA1H0G7YEZXHEMSo49Ng>
-    <xmx:_fEuYsFMRpUXjy_Ug_Adbhe8UYFURbyAtoUSeHZF2kVDmJ7gI24h7A>
-    <xmx:_fEuYn-wtljSGOPyhrU9LZAfw-O9LagU_hYWGQ7XZk2DpA6kCU3zyA>
-    <xmx:_fEuYnMwVSu6qXlDB1eA8ZpkqRnsHE-ccIS8dxaRS1ToVBGlwxz2gA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Mar 2022 03:42:53 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9d78b34c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 14 Mar 2022 07:42:52 +0000 (UTC)
-Date:   Mon, 14 Mar 2022 08:42:51 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 2/2] repack: add config to skip updating server info
-Message-ID: <f8639116d2d384a6d285c75830c52d8a8230ae6b.1647243509.git.ps@pks.im>
-References: <659d5528df56f6b9aece6b1f3c4e2e5a4ae04e1e.1646996936.git.ps@pks.im>
- <cover.1647243508.git.ps@pks.im>
+        with ESMTP id S237984AbiCNID0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 04:03:26 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2452D1408F
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 00:59:58 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id p15so31920856ejc.7
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 00:59:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=0Bgwxx4+Zlp0/Vea87rgrZce0zrwg6IV8Sto/+e/4XQ=;
+        b=CeFlz+/91OQn/gk2rUDUhojABv+PGiswBIZsTxXj+0yLtjH11LVTTADhIEhpSVqTbo
+         kezDlNyBsANerc6Ei86ELGQIuTQwPgpMGEnmAe1gnOFSPfd5y3FjlVDtENdVIU7trU6b
+         pnc+4l2WmSrWwnk/n9Z9Et7yJWSJ+FAA4FaFgc9HhG9KVeYqug01g3hN4gfg/MFFlheH
+         tLZfzT+0iBs1744Wfu7tjRjVoNm5Ext/hQOSHsVdhGoS5Z1GjMj8jcGbvNlsX0FjEz9m
+         dC/w9u8r0WfCuDWmqI2W+Xl+0+ZVwubnXvsdZ5uGgpln1pTXB9tnISVMc8rJ0qLkJM7d
+         dH/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=0Bgwxx4+Zlp0/Vea87rgrZce0zrwg6IV8Sto/+e/4XQ=;
+        b=nhYZuUGS3Tnj0vVSvx4XpXcFFsWzFjv7LaDpSaH/vUWCRlx78Ob6PjQy4IDY/UTzjN
+         NEnkmdh40qB2PUhSSFqS5Fa67zRp4THQVBrMDiq1Qr8FOUG5YtXquEY4ftJyIqROF8Wm
+         26RBNDTYg9lVOktfV5S7ZX8rdw8DYwVKYev3M+kqNvyKdrh86Wp6GiT0hlArcpZUF4Gz
+         R+LQvDfptfSE2fLH+R5lF1D9W1NDYlN4JODzDi1R5/FYwYNQwYCZA7um/X737nSOP+rQ
+         7ITsRuwNdpxtYqpKob7ZtOkfkN7w8h1EzjWf0oSCbyqVcWwN+Ia3A6yQQRUB8DkgJv/V
+         9Amg==
+X-Gm-Message-State: AOAM532mGuEkeXrQ4OQi/sMZMZh35rCA+fe1pIC4AHSsv2vPLXTo+6jR
+        qjufsfmo7GR7OxaAOL5NMGU7Kqt1lcQ=
+X-Google-Smtp-Source: ABdhPJylNHKpz3WaZC4emjzWwDXK5gDj8uIXnrzVFu29YQ83dBt+c/KxzZNkuLLhdL+Njz3O3eIp9g==
+X-Received: by 2002:a17:906:4783:b0:6d0:9b6e:b5a5 with SMTP id cw3-20020a170906478300b006d09b6eb5a5mr18571860ejc.526.1647244785961;
+        Mon, 14 Mar 2022 00:59:45 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id z7-20020a05640240c700b00416cee953dasm5288853edb.24.2022.03.14.00.59.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Mar 2022 00:59:45 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nTfcG-000IqI-RO;
+        Mon, 14 Mar 2022 08:59:44 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 04/16] t/helper/fsmonitor-client: cleanup call to
+ parse_options()
+Date:   Mon, 14 Mar 2022 08:58:53 +0100
+References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+ <578c3682e2fb35af86087e6a0c277aa8766919d7.1647033303.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <578c3682e2fb35af86087e6a0c277aa8766919d7.1647033303.git.gitgitgadget@gmail.com>
+Message-ID: <220314.86fsnlezgv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TQ8HnRnTS6LSW51e"
-Content-Disposition: inline
-In-Reply-To: <cover.1647243508.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---TQ8HnRnTS6LSW51e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Mar 11 2022, Jeff Hostetler via GitGitGadget wrote:
 
-By default, git-repack(1) will update server info that is required by
-the dumb HTTP transport. This can be skipped by passing the `-n` flag,
-but what we're noticably missing is a config option to permanently
-disable updating this information.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> fixup! t/helper/fsmonitor-client: create IPC client to talk to \
+> FSMonitor Daemon
+>
+> Elminate unnecessary code in cmd__fsmonitor_client() WRT
+> parsing of options.
+>
+> Fix name of test-tool in usage.
+>
+> Don't localize die() message.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/helper/test-fsmonitor-client.c | 17 ++++++-----------
+>  1 file changed, 6 insertions(+), 11 deletions(-)
+>
+> diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
+> index f7a5b3a32fa..d59a640f1f9 100644
+> --- a/t/helper/test-fsmonitor-client.c
+> +++ b/t/helper/test-fsmonitor-client.c
+> @@ -49,7 +49,7 @@ static int do_send_query(const char *token)
+>  
+>  	ret = fsmonitor_ipc__send_query(token, &answer);
+>  	if (ret < 0)
+> -		die(_("could not query fsmonitor--daemon"));
+> +		die("could not query fsmonitor--daemon");
 
-Add a new option "repack.updateServerInfo" which can be used to disable
-the logic. Most hosting providers have turned off the dumb HTTP protocol
-anyway, and on the client-side it woudln't typically be useful either.
-Giving a persistent way to disable this feature thus makes quite some
-sense to avoid wasting compute cycles and storage.
+Good, since this is just a test helper.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/repack.txt |  5 +++++
- builtin/repack.c                |  6 +++++-
- t/t7700-repack.sh               | 18 ++++++++++++++++++
- 3 files changed, 28 insertions(+), 1 deletion(-)
+>  	write_in_full(1, answer.buf, answer.len);
+>  	strbuf_release(&answer);
+> @@ -85,8 +85,8 @@ int cmd__fsmonitor_client(int argc, const char **argv)
+>  	const char *token = NULL;
+>  
+>  	const char * const fsmonitor_client_usage[] = {
+> -		N_("test-helper fsmonitor-client query [<token>]"),
+> -		N_("test-helper fsmonitor-client flush"),
+> +		N_("test-tool fsmonitor-client query [<token>]"),
+> +		N_("test-tool fsmonitor-client flush"),
 
-diff --git a/Documentation/config/repack.txt b/Documentation/config/repack.=
-txt
-index 9c413e177e..41ac6953c8 100644
---- a/Documentation/config/repack.txt
-+++ b/Documentation/config/repack.txt
-@@ -25,3 +25,8 @@ repack.writeBitmaps::
- 	space and extra time spent on the initial repack.  This has
- 	no effect if multiple packfiles are created.
- 	Defaults to true on bare repos, false otherwise.
-+
-+repack.updateServerInfo::
-+	If set to false, linkgit:git-repack[1] will not run
-+	linkgit:git-update-server-info[1]. Defaults to true. Can be overridden
-+	when true by the `-n` option of linkgit:git-repack[1].
-diff --git a/builtin/repack.c b/builtin/repack.c
-index f2ac8ad14b..d1a563d5b6 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -22,6 +22,7 @@ static int delta_base_offset =3D 1;
- static int pack_kept_objects =3D -1;
- static int write_bitmaps =3D -1;
- static int use_delta_islands;
-+static int run_update_server_info =3D 1;
- static char *packdir, *packtmp_name, *packtmp;
-=20
- static const char *const git_repack_usage[] =3D {
-@@ -54,6 +55,10 @@ static int repack_config(const char *var, const char *va=
-lue, void *cb)
- 		use_delta_islands =3D git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (strcmp(var, "repack.updateserverinfo") =3D=3D 0) {
-+		run_update_server_info =3D git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_default_config(var, value, cb);
- }
-=20
-@@ -620,7 +625,6 @@ int cmd_repack(int argc, const char **argv, const char =
-*prefix)
- 	const char *unpack_unreachable =3D NULL;
- 	int keep_unreachable =3D 0;
- 	struct string_list keep_pack_list =3D STRING_LIST_INIT_NODUP;
--	int run_update_server_info =3D 1;
- 	struct pack_objects_args po_args =3D {NULL};
- 	int geometric_factor =3D 0;
- 	int write_midx =3D 0;
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 6b387bbdbe..770d143204 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -413,4 +413,22 @@ test_expect_success '-n skips updating server info' '
- 	test_server_info_missing
- '
-=20
-+test_expect_success 'repack.updateServerInfo=3Dtrue updates server info' '
-+	test_server_info_cleanup &&
-+	git -C update-server-info -c repack.updateServerInfo=3Dtrue repack &&
-+	test_server_info_present
-+'
-+
-+test_expect_success 'repack.updateServerInfo=3Dfalse skips updating server=
- info' '
-+	test_server_info_cleanup &&
-+	git -C update-server-info -c repack.updateServerInfo=3Dfalse repack &&
-+	test_server_info_missing
-+'
-+
-+test_expect_success '-n overrides repack.updateServerInfo=3Dtrue' '
-+	test_server_info_cleanup &&
-+	git -C update-server-info -c repack.updateServerInfo=3Dtrue repack -n &&
-+	test_server_info_missing
-+'
-+
- test_done
---=20
-2.35.1
+These are still marked for N_() translation.
 
+Even if tehse were built-ins only the one containing <token> should have
+N_(), as the other one is a literal command whose translation won't
+change.
 
---TQ8HnRnTS6LSW51e
-Content-Type: application/pgp-signature; name="signature.asc"
+>  		NULL,
+>  	};
+>  
+> @@ -96,17 +96,12 @@ int cmd__fsmonitor_client(int argc, const char **argv)
+>  		OPT_END()
+>  	};
+>  
+> -	if (argc < 2)
+> -		usage_with_options(fsmonitor_client_usage, options);
+> +	argc = parse_options(argc, argv, NULL, options, fsmonitor_client_usage, 0);
+>  
+> -	if (argc == 2 && !strcmp(argv[1], "-h"))
+> +	if (argc != 1)
+>  		usage_with_options(fsmonitor_client_usage, options);
+>  
+> -	subcmd = argv[1];
+> -	argv--;
+> -	argc++;
+> -
+> -	argc = parse_options(argc, argv, NULL, options, fsmonitor_client_usage, 0);
+> +	subcmd = argv[0];
+>  
+>  	setup_git_directory();
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIu8foACgkQVbJhu7ck
-PpTyXg/7Bk00inw9ZrI4qzuMP3b82IGjI/Qz9enu241T9qq4WpwX7BSzIeouedPi
-28d4SSxklgghbrhJtf3kjsbRSJKQbDZiy9bgbhfA26BCcL3EWRKzHKF1oL+VsJ76
-UkW3oclKMT4OZjVz4oXqrvPoEzJDubKyFHeRq5bLpM8fW/ISYc3YQq5r2V5o9khU
-TUTfmex10hUUIqYrh+OITxZftoqJiBLhNxy1CMJhaRybTMOj8EvRPAIZnToS40Ne
-YYiftjsgsJSuWsHRRpURlOz856R1riSw3WAmS/NlfjAVn45nFBTlbM0R+zuY1Exe
-Vb8dLPSswuTWk3HsezstFiN47eQtD77QXg5f9TYJhe4pg6aSDlZ7yQQduKi9R89i
-9hyFVzGTPyyWvJwqOZ1B0nz/VDWomp7ZnJ9FHh9kjlLTLsjHW6mJfKxgMSuHk6xJ
-N6l24friyS7+kkQr+k8uwp3S/QOgucYNDWYzbGQH1DA30S/HSOq3Aj6/e96locHg
-YxnwryffaUYd+zBK4OaPytis8mFvi5UzpvbExeYtcXGuC7ESkIX0ogNEsMo6V4gl
-rGVSEIE1hc/CPgddRWx9N8i2TKTNFpvUzMBE5O1EHGn5Z/PITJYefqWm5a1E3vbQ
-VkOMW+qjXffqcYDFzc3Nchgh3PuzP7K3oWDEGaoua5sLm9SYA98=
-=/Qc9
------END PGP SIGNATURE-----
-
---TQ8HnRnTS6LSW51e--
+Looks good.
