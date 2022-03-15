@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00EAFC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 21:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85D4AC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 21:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351981AbiCOVcZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 17:32:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37646 "EHLO
+        id S1351984AbiCOVc1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 17:32:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351340AbiCOVcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 17:32:17 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140DD5BE48
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:31:05 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id t11so378280wrm.5
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:31:05 -0700 (PDT)
+        with ESMTP id S1349209AbiCOVcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 17:32:19 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908B95BE44
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:31:06 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id h15so371565wrc.6
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VMEUndPqaZqgnJ/fjVlg4dlleAN5tgf3inMupsE+RpY=;
-        b=gr7J0kvQBIA/L/21qWVlT0rWgQ6ObVXnOnpCRYvP9Vg6H4dSxEaP+y1jEvyfGnS/jK
-         jCUxXMEoz1+/diVz8Sgpl/sGtVZzeOJoAfuyUS/dJCfhN8nVBZMmCa0YCWJTPMWudje8
-         hZFMX3AhEIItMDZICCc6g00BZlHUuzE+/b8Eg18IEGF0R1WiZuFl61oR8BpJxIT8czCy
-         dvSKHIY0JZY/La7czKpiiwOfLZ0V72dqzhvJNbgyTE29TktRdXhGW9yZf1II99EXjOcX
-         lk1YFpL+8CRnofRU5qJ7HnCxDXB12mGD4Zd5shVvk65UBFujRjs4Ffrz7ewROpnlyH/1
-         TwCA==
+        bh=xznHAbPb1YXa3RvOdPcCMBklNaMgBGuf4+t5joBYEHc=;
+        b=ohBTAnggQ6aMve0hdyqr7O9DO/rDt27rCitsYj6+cF3q2CDw/A9dalYfodUtXf+cpp
+         gnd1afcN+/acYbd/WO/O7RWsuz27QDTXt43E1qijmR6irevKxTy7YI5t+35+tKO9MKRP
+         TfQpOp+pAMo6wwTnR+WJtwonYVi90rX/Tfa2K1oqd8EhD2CcJjuYDP1T2P0XMKxvocfT
+         FXo9jI4ZRjViIkzGD9g9QAtOgwmZ8YOWytRfsu7DeB98AGSeFrZiPm1Fw59IEba2CS/I
+         RpVaJapgueEX8mVxClFThyfJhcNFx7FWPZnOus/E6E4F1E249rZLDXcrpAiZtWf6yzc1
+         x1ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VMEUndPqaZqgnJ/fjVlg4dlleAN5tgf3inMupsE+RpY=;
-        b=rfmJnaHH90u9zCWiKntsoBzeqZ1xMw0pO2b6uRBa7sxkIFx+CHWRwwHKvBHKlYP/6j
-         Kp70NBkDHYUJ+WqQuPQqSWd579appkuaavlBOoFmmDt5BYuUozOfecfdItyn+YJYalv6
-         I2sEWVz8CX2LCOaL3gCSQ4nEJZ3E8bREn4tRfka8WaskVYgGgx6g17uMbkZ/GEnETneN
-         Roz6lDtM/BxxXzwIzXFL3rP/Kldo9sqp6e/LGPijFIJNStR/kG6VvMG+pwHeA8/ySRut
-         KMQrclnCRceF1JhIWa4HYbGHwz4uaTNMXcJccAAxlvCrOsEpBlg2YIUn7b0VK7nE97pY
-         MjGg==
-X-Gm-Message-State: AOAM530Fm6+PU70MjpgzPYe83m3+PTe1FFpavNn3WUOe6gSIaX4VTVvw
-        pCbVMlmF0oSFbcLQUpZTiUWwLzPRdRE=
-X-Google-Smtp-Source: ABdhPJzkPpFxx657elMqcUfEvFvgDxT2FFvIhSRkns9thuCmTMtmvVduZ6w6iPhV1/wOF3OjPuH01g==
-X-Received: by 2002:a05:6000:1549:b0:1f1:e566:eb87 with SMTP id 9-20020a056000154900b001f1e566eb87mr21204800wry.87.1647379863546;
-        Tue, 15 Mar 2022 14:31:03 -0700 (PDT)
+        bh=xznHAbPb1YXa3RvOdPcCMBklNaMgBGuf4+t5joBYEHc=;
+        b=2a7l+T/RyUlryMRB9HveKsICPfcHib0TJGKbZmPX8TI7dKh3C6M/e+Qh8+T6vE8JOr
+         ZrXnwAljfp/IIRzIEH5Omf+DgZ7eLWFFlZ3KRr+gTShEk+tAWfpE1SNk2eooizy1ZUi0
+         H8MhlwHXPBdOoDC4uaPUUsUiqs4pj1E2fK8e4yybla8+ynpgzjwvzIHHBXmfhKtyb8U3
+         UrheBMmToxbfvuMwHAzXhwwL5P60pw/0y5x5crykZlidJwyK3KRThsILBIR6DiWB4/9n
+         nloocmOYnwUeIYFZlP7brm/alRzn8TkPhWhBtm9yRDQMrweC2r2NfruLC2dXHfp2ZBaf
+         5FbA==
+X-Gm-Message-State: AOAM532eDCBjgQ12kacl6VkD4RUfFGDLZTIFGdPXGcvPVa3n7VPA7YNp
+        2x/0X11MX6no8NSs7yg811UmzsD9NPw=
+X-Google-Smtp-Source: ABdhPJzuJ5vut6oJkxlIPzJmC5WrSzGEbIMeQT8rnMCJ7mx7ZnMLgy5a/xDLtdwNMjK63xWSAFv0Nw==
+X-Received: by 2002:adf:fe8d:0:b0:203:de3d:7f93 with SMTP id l13-20020adffe8d000000b00203de3d7f93mr426276wrr.55.1647379864993;
+        Tue, 15 Mar 2022 14:31:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c4f5400b0038b5162260csm9087wmq.23.2022.03.15.14.31.02
+        by smtp.gmail.com with ESMTPSA id d1-20020adffbc1000000b00203de0fff63sm91360wrs.70.2022.03.15.14.31.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 14:31:03 -0700 (PDT)
-Message-Id: <b0480f0c814ae1c726d51af172bf5833fc74f010.1647379859.git.gitgitgadget@gmail.com>
+        Tue, 15 Mar 2022 14:31:04 -0700 (PDT)
+Message-Id: <4e56c58c8cb812b244feaf814b43b7dc28879f9a.1647379859.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
 References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Mar 2022 21:30:55 +0000
-Subject: [PATCH 3/7] update-index: use the bulk-checkin infrastructure
+Date:   Tue, 15 Mar 2022 21:30:57 +0000
+Subject: [PATCH 5/7] core.fsync: use batch mode and sync loose objects by
+ default on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,55 +68,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-The update-index functionality is used internally by 'git stash push' to
-setup the internal stashed commit.
+Git for Windows has defaulted to core.fsyncObjectFiles=true since
+September 2017. We turn on syncing of loose object files with batch mode
+in upstream Git so that we can get broad coverage of the new code
+upstream.
 
-This change enables bulk-checkin for update-index infrastructure to
-speed up adding new objects to the object database by leveraging the
-batch fsync functionality.
-
-There is some risk with this change, since under batch fsync, the object
-files will be in a tmp-objdir until update-index is complete.  This
-usage is unlikely, since any tool invoking update-index and expecting to
-see objects would have to synchronize with the update-index process
-after passing it a file path.
+We don't actually do fsyncs in the test suite, since GIT_TEST_FSYNC is
+set to 0. However, we do exercise all of the surrounding batch mode code
+since GIT_TEST_FSYNC merely makes the maybe_fsync wrapper always appear
+to succeed.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
----
- builtin/update-index.c | 6 ++++++
- 1 file changed, 6 insertions(+)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 75d646377cc..38e9d7e88cb 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -5,6 +5,7 @@
-  */
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
-+#include "bulk-checkin.h"
- #include "config.h"
- #include "lockfile.h"
- #include "quote.h"
-@@ -1110,6 +1111,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+change fsyncmethod to batch as well
+---
+ cache.h           | 4 ++++
+ compat/mingw.h    | 3 +++
+ config.c          | 2 +-
+ git-compat-util.h | 2 ++
+ 4 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/cache.h b/cache.h
+index 4d07691e791..04193d87246 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1031,6 +1031,10 @@ enum fsync_component {
+ 			      FSYNC_COMPONENT_INDEX | \
+ 			      FSYNC_COMPONENT_REFERENCE)
  
- 	the_index.updated_skipworktree = 1;
- 
-+	/* we might be adding many objects to the object database */
-+	plug_bulk_checkin();
++#ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
++#define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
++#endif
 +
- 	/*
- 	 * Custom copy of parse_options() because we want to handle
- 	 * filename arguments as they come.
-@@ -1190,6 +1194,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 	}
+ /*
+  * A bitmask indicating which components of the repo should be fsynced.
+  */
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 6074a3d3ced..afe30868c04 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -332,6 +332,9 @@ int mingw_getpagesize(void);
+ int win32_fsync_no_flush(int fd);
+ #define fsync_no_flush win32_fsync_no_flush
  
-+	/* by now we must have added all of the new objects */
-+	unplug_bulk_checkin();
- 	if (split_index > 0) {
- 		if (git_config_get_split_index() == 0)
- 			warning(_("core.splitIndex is set to false; "
++#define FSYNC_COMPONENTS_PLATFORM_DEFAULT (FSYNC_COMPONENTS_DEFAULT | FSYNC_COMPONENT_LOOSE_OBJECT)
++#define FSYNC_METHOD_DEFAULT (FSYNC_METHOD_BATCH)
++
+ struct rlimit {
+ 	unsigned int rlim_cur;
+ };
+diff --git a/config.c b/config.c
+index 0b28f90de8b..c76443dc556 100644
+--- a/config.c
++++ b/config.c
+@@ -1342,7 +1342,7 @@ static const struct fsync_component_name {
+ 
+ static enum fsync_component parse_fsync_components(const char *var, const char *string)
+ {
+-	enum fsync_component current = FSYNC_COMPONENTS_DEFAULT;
++	enum fsync_component current = FSYNC_COMPONENTS_PLATFORM_DEFAULT;
+ 	enum fsync_component positive = 0, negative = 0;
+ 
+ 	while (string) {
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 0892e209a2f..fffe42ce7c1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1257,11 +1257,13 @@ __attribute__((format (printf, 3, 4))) NORETURN
+ void BUG_fl(const char *file, int line, const char *fmt, ...);
+ #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+ 
++#ifndef FSYNC_METHOD_DEFAULT
+ #ifdef __APPLE__
+ #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_WRITEOUT_ONLY
+ #else
+ #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_FSYNC
+ #endif
++#endif
+ 
+ enum fsync_action {
+ 	FSYNC_WRITEOUT_ONLY,
 -- 
 gitgitgadget
 
