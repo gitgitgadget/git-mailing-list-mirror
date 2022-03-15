@@ -2,152 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18183C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40FF2C433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 11:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347706AbiCOK7V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 06:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39014 "EHLO
+        id S238578AbiCOLEQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 07:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348045AbiCOK64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 06:58:56 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E371C3526F
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:44 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id j26so28369371wrb.1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:44 -0700 (PDT)
+        with ESMTP id S1347789AbiCOLEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 07:04:13 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDED3B3
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 04:02:53 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id b28so20586649lfc.4
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 04:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=rlSxrIK8uSgVb6L9FxQlZ/+0o5IDpChMZH+9IHC18nw=;
-        b=dRJ2H4iS5ShDUbqLRq43svK5MMu6ndvU9jN/YqZbHhUcghQQhVoKRRcxiKm7iUslnV
-         qEEmaCTvtCZ3b1C4bNYRBMX8uqXrluVkjtgmg+4M7+ifEy+L7pdB9PZCtly3Gu/Rfsam
-         Bt2neBuwPUDIC2D7nPg+CuRZwoSFBPQInbZLS8nJAmeGDbnAV9HVvOOa6qRz6k0tiMSS
-         miyQ5RuW9TTmsWaQQ7Es8wTH3JIXR7U1Y46PiKgeH5G6zr9jb8Qz6vTu7P5/z2sHX60v
-         yNDH5d1TTMxVSXHXcY+z6VzuuKtDubtkVxMPMsknc1Cjc98ksUuLCRPtw336x33CZ33j
-         acSQ==
+        d=koordinates.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o09+jaLrAA83Pkx6ige6DKgsz7SIre5lAgU+tMWCzg8=;
+        b=LBfWdd90sMJloa7UbSZYbRf35Kg5xbPC7eVzqPcFhr+Z2ZiPB4sY3+XFxeDJ6ZnsHv
+         9EpNoitv5s/vNi5s0PT2/UqByNamvLrEkPMI+Yut1FTA0UOx+8Mz1bIxEmEtt37zkgWA
+         IPn+zDhqnwSXFML2wpJfpWcVxnX3R0TxUcD8QYHaEZaDx+RRIduwIPfdcDnSAvjshRfQ
+         5E3VHuWrYPhEgwawS2zoVuIXJ19Zy/sVIsa6Xw6OE1ezDUe4gbm1xAqUOhHFVPK+23ad
+         2zT2/t1CFDZ/xR8EHiK3vEW7aUYg+Sa6ZRf/3xzWQuRivvUx6YsGkvxd4X+RDcglH7Zw
+         ci/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=rlSxrIK8uSgVb6L9FxQlZ/+0o5IDpChMZH+9IHC18nw=;
-        b=BFkwvAndmZ6yNG5egELRFIjzyDH0CLEZH/0pAQru5pG5bal/a9ZlscBhJiL/qG2/Pb
-         Hw1d+OuU7QaTjutmGhp8+zOsUOiTrYvnBsXrWPFqIqH3dpSaVx2jHODIMElzPHbztN1x
-         Y75aGWb0ZKvZptDLf7takFiB9UnPedtfPXSvskRUobiBivZZVS9SFTzlD3z+TKBdwLyJ
-         CoZqmm7okzXrbFQjQo7qnh+glQQrM3Y1dWDNHfsB/Yrz8HMqcfO0+QH5GjSUMZx4OS/E
-         DKDUwfzazLtWo61/TG+p4xCy2kQhGPwS5ifHn+7Hjhm9UPt3axywit3gG6Ia8vzzRyl6
-         FAKg==
-X-Gm-Message-State: AOAM530du1IvF56ABgf2/nfh8/W5NxQryW5BlLojfobw/b7Z6qxBAOzM
-        jENhhJV7pmyk5bmSKjqSR70rl6HAQvEpEQ==
-X-Google-Smtp-Source: ABdhPJzIEXyFtLh5q7KCsHTq74TGMtoVPNO4Ti4qwk5KJ0Bs8JaTkmBl7pSFosxffgkOVsNJDpP1ig==
-X-Received: by 2002:a5d:6d8a:0:b0:203:6efe:7961 with SMTP id l10-20020a5d6d8a000000b002036efe7961mr20297066wrs.367.1647341863543;
-        Tue, 15 Mar 2022 03:57:43 -0700 (PDT)
-Received: from localhost.localdomain (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.gmail.com with ESMTPSA id p16-20020adff210000000b001f062b80091sm15038530wro.34.2022.03.15.03.57.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 03:57:43 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Carlo Arenas <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 3/4] terminal: work around macos poll() bug
-Date:   Tue, 15 Mar 2022 10:57:22 +0000
-Message-Id: <20220315105723.19398-4-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220315105723.19398-1-phillip.wood123@gmail.com>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220315105723.19398-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o09+jaLrAA83Pkx6ige6DKgsz7SIre5lAgU+tMWCzg8=;
+        b=M/bpNqq3eTBVKL9UYO1Z/Qngmr52EUyka4+UD89Z4A5sDHORyBSuPLKynDSXpW5n+0
+         0nBrRij1uEKcGGXQ415eChkunPHp70v4pOjzdYPt50RhpJ5BshPKp249tm1+LYC+w2Ay
+         Lcs34YwuLjb4X60I4WPCaprV4aCaT6XcODT96UcQPgWwNlDvaJsQku0SU4azbMj2yxbS
+         vZDG3vuY/jsG9CR2QhLbghVMs/RmMv9uO2o/3ZON2zCRvXdoXkFK9Ui5NxpmgKu4Bmq8
+         qZ6D4/MGGUhe3fGmKCRfwTb++3BMkFsmhOxRd0tkoHSclt1BoZhWVSWfp/R7lF5r606V
+         HJPQ==
+X-Gm-Message-State: AOAM533BGsxRZq96gGItMc2P65PKxefHiJBZLFFfBIeM0F9Lp5BXeSVc
+        4ehUJ+lzMGuzlvvNe30mWju7SOJqPy5N0ed2EkUZoA==
+X-Google-Smtp-Source: ABdhPJw2zsryQvcreTbFHPuev/x4Z9vE2d395MKbdw4RhfRIUQgkdvcNG+/AlhuO5v2HKtiQkrnLUunhZQNnuZ2L29M=
+X-Received: by 2002:a05:6512:3e14:b0:448:7d8e:aba with SMTP id
+ i20-20020a0565123e1400b004487d8e0abamr10310952lfv.532.1647342172080; Tue, 15
+ Mar 2022 04:02:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqq5yogp6xo.fsf@gitster.g>
+In-Reply-To: <xmqq5yogp6xo.fsf@gitster.g>
+From:   Robert Coup <robert.coup@koordinates.com>
+Date:   Tue, 15 Mar 2022 11:02:35 +0000
+Message-ID: <CAFLLRpLiCLiXkHNe2u4TKk-FjDy4LVZZR4qqxG+MamZYEFNUGg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2022, #03; Mon, 14)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Junio,
 
-On macos the builtin "add -p" does not handle keys that generate
-escape sequences because poll() does not work with terminals
-there. Switch to using select() on non-windows platforms to work
-around this.
+On Mon, 14 Mar 2022 at 21:20, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> * rc/fetch-refetch (2022-03-04) 7 commits
+...
+>  "git fetch --refetch" learned to fetch everything without telling
+>  the other side what we already have, which is useful when you
+>  cannot trust what you have in the local object store.
+>
+>  Waiting for discussion to settle.
+>  cf. <20220309002729.3581315-1-calvinwan@google.com>
+>  source: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- compat/terminal.c | 42 ++++++++++++++++++++++++++++++++++++------
- 1 file changed, 36 insertions(+), 6 deletions(-)
+I am planning a re-roll for the boolean cli option, and I'll add some
+more documentation as I proposed after Calvin's review.
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index bfbde3c1af..89f326adc1 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -87,6 +87,31 @@ static int enable_non_canonical(enum save_term_flags flags)
- 	return disable_bits(flags, ICANON | ECHO);
- }
- 
-+/*
-+ * On macos it is not possible to use poll() with a terminal so use select
-+ * instead.
-+ */
-+static int getchar_with_timeout(int timeout)
-+{
-+	struct timeval tv, *tvp = NULL;
-+	fd_set readfds;
-+	int res;
-+
-+	if (timeout >= 0) {
-+		tv.tv_sec = timeout / 1000;
-+		tv.tv_usec = (timeout % 1000) * 1000;
-+		tvp = &tv;
-+	}
-+
-+	FD_ZERO(&readfds);
-+	FD_SET(0, &readfds);
-+	res = select(1, &readfds, NULL, NULL, tvp);
-+	if (res <= 0)
-+		return EOF;
-+
-+	return getchar();
-+}
-+
- #elif defined(GIT_WINDOWS_NATIVE)
- 
- #define INPUT_PATH "CONIN$"
-@@ -252,6 +277,16 @@ static int mingw_getchar(void)
- }
- #define getchar mingw_getchar
- 
-+static int getchar_with_timeout(int timeout)
-+{
-+	struct pollfd pfd = { .fd = 0, .events = POLLIN };
-+
-+	if (poll(&pfd, 1, timeout) < 1)
-+		return EOF;
-+
-+	return getchar();
-+}
-+
- #endif
- 
- #ifndef FORCE_TEXT
-@@ -402,12 +437,7 @@ int read_key_without_echo(struct strbuf *buf)
- 		 * half a second when we know that the sequence is complete.
- 		 */
- 		while (!is_known_escape_sequence(buf->buf)) {
--			struct pollfd pfd = { .fd = 0, .events = POLLIN };
--
--			if (poll(&pfd, 1, 500) < 1)
--				break;
--
--			ch = getchar();
-+			ch = getchar_with_timeout(500);
- 			if (ch == EOF)
- 				break;
- 			strbuf_addch(buf, ch);
--- 
-2.35.1
+It would be ace if Jonathan Tan can give it another once-over too,
+though the key aspects of the implementation haven't changed since his
+review of v1.
 
+Thanks,
+Rob :)
