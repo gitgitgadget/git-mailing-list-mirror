@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27135C4332F
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54988C433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233345AbiCOK7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 06:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38964 "EHLO
+        id S1347253AbiCOK7T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 06:59:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348037AbiCOK6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 06:58:55 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7495F2C139
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:42 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id d7so1297561wrb.7
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:42 -0700 (PDT)
+        with ESMTP id S1348053AbiCOK66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 06:58:58 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B813DE0C6
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:45 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id b19so5992979wrh.11
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=w0qwFQfT1BZRPW3fR4lJeO50Re3yWhTEJ4yjVHkMpzU=;
-        b=PrNPgpo1jvMgOvHpw9z6j9xQOQbIsseKOm4skwpdgMmEsv9+MYSBNNS4wmPh8ckb6N
-         VnhIVmmcg4cFYu1evQPJwu2alVnuBSkpScvHhedVRtso60b6+sLocsjO42sMOJj5eYYS
-         4cZmfrxHm2XM34HYhUIigJFNkadXfyWn5pfR3R65CoU8yP+E48a6QfJBSztXbzF1pByO
-         Hey3J0Zm7TBKVhNIys8LcxdCWpWcET0DamG+hd27abuk7MwwE6dAFYmxOAyAtuBxbtdo
-         WM6PC0BXAHjAnkBxGgUWH10Ex0K3PjHpvRIIMNxiIGj244rtU/4g6+FRhvKt+2/78WPl
-         l7NQ==
+        bh=2Dz0Cg11TBTd3hbbW9Jl0JfyYu6ZMfBwRlrVF6zr67E=;
+        b=CbBCtHx4Qy80jshwzDkGfjS0mmIaT7169rHXXj7FBvGqhSAo7q7iYOaQ3pDvgzs1ed
+         TBZ1OOk753XuOhG9O2Qvs2lDHwn1BeD0lBkK97IDh45wedxng4f8Kk3zaY7DpG3XXmWq
+         iJodasGLJYcV2AZdgHbLATtBJr7yHE3ps9j4iKAt/tNC/95IA8ZsVmbtQU3vRNhaG8oh
+         wYlfgMLcKWQVTgHbKf49RGj9zFssEo2JJKy7408GoUdexRi5U+6yF4qH4t9jtP06/zPO
+         KKCL97e7tytW2x8aRjfteUjMmoKnVar/egz7tIdc8LlHPuZwWvkKD5MVosZhOVKJurIw
+         0+uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=w0qwFQfT1BZRPW3fR4lJeO50Re3yWhTEJ4yjVHkMpzU=;
-        b=iLLIE/PADBCNXbmKMEmApDxdwY2odazw6Ba5yY4ts961QXTdDSUTekGRv9/s+wMPge
-         v4NntVBDKSgcQIjpAKB3fZAzY35PMCujvm9RMtlaqSLVwp59bYqgSxxwu9RQlrNJhQTk
-         0sAsX+0f+/KEE5f/qLwNm2RfIDXmAVAAFhTi+82GiGFZzeiH0XH6wHJq+oWRggUD7s5o
-         iKLMFsZ0sV9qJrW/5UBsisum0SEuNpB49oKmBQp6Geexluvvyo2hcO82swa0sTjMKlRL
-         jtk9PF7egQd1kNzN38eGRbc4fs1JOUMqfaAaFENpRxloWYi9+mouWI1BK/sH3DQNVUwN
-         5nSg==
-X-Gm-Message-State: AOAM533KoodTqfUSOi5QiGE+DNftRY+vsR4lySBQKBYsPCywb9trIB3d
-        nn/bRjfnPG2CXHPpUXR7EM4ZaMTX/GreIA==
-X-Google-Smtp-Source: ABdhPJxrNJDWsbE8Fk5on45TwFbh2rXvQUHhtpMaCzkiW7Hu6TpQ9EX+whpu9aRjccvOYs/vzLijhQ==
-X-Received: by 2002:a5d:590f:0:b0:203:7fca:72a8 with SMTP id v15-20020a5d590f000000b002037fca72a8mr19272444wrd.310.1647341860844;
-        Tue, 15 Mar 2022 03:57:40 -0700 (PDT)
+        bh=2Dz0Cg11TBTd3hbbW9Jl0JfyYu6ZMfBwRlrVF6zr67E=;
+        b=L4+Omn1QuT6sLG2mgacZH/iU2uIRFSPxAgUVmk86z/ZD4a/z9s4pe7Eb9NRZ7nYOkk
+         PoAF9PAEnF9Tpqxz3bLqy8nekS64uhibd8WNyUTVAgXDmZ02v+imxZU7HwMxgwNQN/gG
+         htz/Y9bsCcTd+G5ZiAlLVdg+4lOI4ujKzj1gMdgtFaCZt8ElJoL2VSt77XQH0qHpONtP
+         H07G8ZO1tJhKruyVJHsNRKYbFU/IVqovqbOIe/32r/38Iz31Z4CpXXeLaP2xFDTFfvGY
+         boBOtnCw0sta8kkaoQIfd5mbTpnbRudTFeFM1rWj8e17NM9jvjzNpC1Ihn3rZXLO9DKG
+         cXwg==
+X-Gm-Message-State: AOAM532zXHenYqLj4+1nau5/TRt1xs9sogrkXznwwdmqMneOBxtzgllA
+        NazNo9jkhCv7dS0+0QAOHZgZ5snHKk7y5Q==
+X-Google-Smtp-Source: ABdhPJyXJrb8lV3HHaGf8eGB/JitYqz1djkutFaTtS0qhKuKyILIiWfJZODHi7WAdgSg8G3lzf0fOA==
+X-Received: by 2002:a5d:6746:0:b0:203:d6c1:9c5b with SMTP id l6-20020a5d6746000000b00203d6c19c5bmr1615288wrw.446.1647341864321;
+        Tue, 15 Mar 2022 03:57:44 -0700 (PDT)
 Received: from localhost.localdomain (217.2.7.51.dyn.plus.net. [51.7.2.217])
-        by smtp.gmail.com with ESMTPSA id p16-20020adff210000000b001f062b80091sm15038530wro.34.2022.03.15.03.57.40
+        by smtp.gmail.com with ESMTPSA id p16-20020adff210000000b001f062b80091sm15038530wro.34.2022.03.15.03.57.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 03:57:40 -0700 (PDT)
+        Tue, 15 Mar 2022 03:57:44 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -55,15 +55,15 @@ Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 0/4] builtin add -p: hopefully final readkey fixes
-Date:   Tue, 15 Mar 2022 10:57:19 +0000
-Message-Id: <20220315105723.19398-1-phillip.wood123@gmail.com>
+Subject: [PATCH v3 4/4] terminal: restore settings on SIGTSTP
+Date:   Tue, 15 Mar 2022 10:57:23 +0000
+Message-Id: <20220315105723.19398-5-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220304131126.8293-1-phillip.wood123@gmail.com>
+In-Reply-To: <20220315105723.19398-1-phillip.wood123@gmail.com>
 References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+ <20220315105723.19398-1-phillip.wood123@gmail.com>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,247 +71,209 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Thanks to Ævar, Carlo and Dscho for their comments on V2.
-Changes since V2:
- * Patch 1
-   - fix save_term() prototype (thanks to Carlo)
- * Patch 2
-   - avoid closing tty_fd if it is stdin
- * Patch 3
-   - removed redundant #include (thanks to Ævar)
-   - handle select() timeout correctly
- * Patch 4
-   - reset job signals if settcattr() fails
+If the user suspends git while it is waiting for a keypress reset the
+terminal before stopping and restore the settings when git resumes. If
+the user tries to resume in the background print an error
+message (taking care to use async safe functions) before stopping
+again. Ideally we would reprint the prompt for the user when git
+resumes but this patch just restarts the read().
 
-These patches are based on a merge of pw/single-key-interactive and
-master. There are a couple of simple textual conflicts with
-'cb/save-term-across-editor-invocation' and unfortunately some
-semantic conflicts as well. A diff on top of the textual resolution
-which handles the semantic conflicts is given after the range-diff at
-the end of this message.
+The signal handler is established with sigaction() rather than using
+sigchain_push() as this allows us to control the signal mask when the
+handler is invoked and ensure SA_RESTART is used to restart the
+read() when resuming.
 
-V2 Cover Letter:
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ compat/terminal.c | 131 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 128 insertions(+), 3 deletions(-)
 
-Thanks to Ramsay and Ævar for their comments on V1.
-Changes since V1:
- * Patch 1
-   - use an enum for save_term()'s flags (suggested by Ævar)
-   - fixed argument order in the windows code (thanks to Ramsay)
- * Patch 2
-   - fixed a typo in a comment (thanks to Ramsay)
- * Patch 4
-   - stopped duplicating the strings returned by gettext() (suggested by
-     Ævar)
-   - reworked error message handling in the signal handler to add an
-     "error: " prefix (suggested by Ævar)
-   - tweaked the background resume error message
-
-V1 Cover Letter:
-
-Fix the remaining issues that I'm aware of when using the built in
-"add -p" with interactive.singlekey that are stopping it from being
-merged to master. The first three patches make sure that we call
-tcsetattr() and the same file descriptor that we use for read() and
-work around poll() being broken when reading from terminals on
-macos. The final patch is more of an improvement rather than a bug fix
-(the same issue already exists in the perl version) and could proceed
-separately.
-
-Unfortunately these patches conflict with
-'cb/save-term-across-editor-invocation' as well as the textual
-conflicts there is a semantic conflict as the argument to save_term()
-is changed so the code in editor.c will need updating.
-
-These patches are based on 'pw/single-key-interactive'
-
-Phillip Wood (4):
-  terminal: use flags for save_term()
-  terminal: don't assume stdin is /dev/tty
-  terminal: work around macos poll() bug
-  terminal: restore settings on SIGTSTP
-
- compat/terminal.c | 226 +++++++++++++++++++++++++++++++++++++++-------
- compat/terminal.h |   9 +-
- 2 files changed, 202 insertions(+), 33 deletions(-)
-
-Range-diff against v2:
-1:  fac5a0f5b7 ! 1:  2c4c5424d7 terminal: use flags for save_term()
-    @@ compat/terminal.h
-       * failure.
-       */
-     -int save_term(int full_duplex);
-    -+int save_term(unsigned flags);
-    ++int save_term(enum save_term_flags flags);
-      /* Restore the terminal attributes that were saved with save_term() */
-      void restore_term(void);
-      
-2:  bf29460ec6 ! 2:  cf9275c40c terminal: don't assume stdin is /dev/tty
-    @@ Commit message
-         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-      ## compat/terminal.c ##
-    -@@ compat/terminal.c: void restore_term(void)
-    +@@ compat/terminal.c: static void restore_term_on_signal(int sig)
-    + static int term_fd = -1;
-    + static struct termios old_term;
-    + 
-    ++static void close_term_fd(void)
-    ++{
-    ++	if (term_fd)
-    ++		close(term_fd);
-    ++	term_fd = -1;
-    ++}
-    ++
-    + void restore_term(void)
-    + {
-    + 	if (term_fd < 0)
-    + 		return;
-    + 
-    + 	tcsetattr(term_fd, TCSAFLUSH, &old_term);
-    +-	close(term_fd);
-    +-	term_fd = -1;
-    ++	close_term_fd();
-    + 	sigchain_pop_common();
-    + }
-    + 
-      int save_term(enum save_term_flags flags)
-      {
-      	if (term_fd < 0)
-    @@ compat/terminal.c: void restore_term(void)
-      	if (term_fd < 0)
-      		return -1;
-      	if (tcgetattr(term_fd, &old_term) < 0)
-    +@@ compat/terminal.c: static int disable_bits(enum save_term_flags flags, tcflag_t bits)
-    + 
-    + 	sigchain_pop_common();
-    + error:
-    +-	close(term_fd);
-    +-	term_fd = -1;
-    ++	close_term_fd();
-    + 	return -1;
-    + }
-    + 
-     @@ compat/terminal.c: int read_key_without_echo(struct strbuf *buf)
-      	static int warning_displayed;
-      	int ch;
-3:  1815606e82 ! 3:  4828d63ce5 terminal: work around macos poll() bug
-    @@ compat/terminal.c: static int enable_non_canonical(enum save_term_flags flags)
-     + * On macos it is not possible to use poll() with a terminal so use select
-     + * instead.
-     + */
-    -+#include <sys/select.h>
-     +static int getchar_with_timeout(int timeout)
-     +{
-     +	struct timeval tv, *tvp = NULL;
-    @@ compat/terminal.c: static int enable_non_canonical(enum save_term_flags flags)
-     +	FD_ZERO(&readfds);
-     +	FD_SET(0, &readfds);
-     +	res = select(1, &readfds, NULL, NULL, tvp);
-    -+	if (res < 0)
-    ++	if (res <= 0)
-     +		return EOF;
-     +
-     +	return getchar();
-    @@ compat/terminal.c: int read_key_without_echo(struct strbuf *buf)
-     -			ch = getchar();
-     +			ch = getchar_with_timeout(500);
-      			if (ch == EOF)
-    - 				return 0;
-    + 				break;
-      			strbuf_addch(buf, ch);
-4:  dd0e1fabb1 ! 4:  3185bc5223 terminal: restore settings on SIGTSTP
-    @@ compat/terminal.c: static void restore_term_on_signal(int sig)
-     +	errno = saved_errno;
-     +}
-     +
-    - void restore_term(void)
-    - {
-    - 	if (term_fd < 0)
-    -@@ compat/terminal.c: void restore_term(void)
-    - 	close(term_fd);
-    - 	term_fd = -1;
-    - 	sigchain_pop_common();
-    ++static void reset_job_signals(void)
-    ++{
-     +	if (restore_error_msg) {
-     +		signal(SIGTTIN, SIG_DFL);
-     +		signal(SIGTTOU, SIG_DFL);
-     +		signal(SIGTSTP, SIG_DFL);
-     +		restore_error_msg = NULL;
-     +		background_resume_msg = NULL;
-     +	}
-    ++}
-    ++
-    + static void close_term_fd(void)
-    + {
-    + 	if (term_fd)
-    +@@ compat/terminal.c: void restore_term(void)
-    + 	tcsetattr(term_fd, TCSAFLUSH, &old_term);
-    + 	close_term_fd();
-    + 	sigchain_pop_common();
-    ++	reset_job_signals();
-      }
-      
-      int save_term(enum save_term_flags flags)
-    @@ compat/terminal.c: int save_term(enum save_term_flags flags)
-      
-      	return 0;
-      }
-    +@@ compat/terminal.c: static int disable_bits(enum save_term_flags flags, tcflag_t bits)
-    + 		return 0;
-    + 
-    + 	sigchain_pop_common();
-    ++	reset_job_signals();
-    + error:
-    + 	close_term_fd();
-    + 	return -1;
-     @@ compat/terminal.c: static int getchar_with_timeout(int timeout)
-      	fd_set readfds;
-      	int res;
-    @@ compat/terminal.c: static int getchar_with_timeout(int timeout)
-      	FD_ZERO(&readfds);
-      	FD_SET(0, &readfds);
-      	res = select(1, &readfds, NULL, NULL, tvp);
-    --	if (res < 0)
-    --		return EOF;
-    +-	if (res <= 0)
-    ++	if (!res)
-    + 		return EOF;
-     -
-     +	if (res < 0) {
-     +		if (errno == EINTR)
-
-Semantic conflict resolution:
----- >8 ----
 diff --git a/compat/terminal.c b/compat/terminal.c
-index bffb1340ab..9a64b9a431 100644
+index 89f326adc1..45a9084bb3 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -150,9 +150,8 @@ int save_term(enum save_term_flags flags)
-                                                    : open("/dev/tty", O_RDWR);
-        if (term_fd < 0)
-                return -1;
--       if (full_duplex && !is_controlling_terminal(term_fd)) {
--               close(term_fd);
--               term_fd = -1;
-+       if (flags & SAVE_TERM_DUPLEX && !is_controlling_terminal(term_fd)) {
-+               close_term_fd();
-                return -1;
-        }
-        if (tcgetattr(term_fd, &old_term) < 0)
-diff --git a/editor.c b/editor.c
-index 6c5c95e6a2..192d6ea75d 100644
---- a/editor.c
-+++ b/editor.c
-@@ -55,7 +55,7 @@ static int prepare_term(const char *editor)
-
-        git_config_get_bool("editor.stty", &need_saverestore);
-        if (need_saverestore)
--               return save_term(1);
-+               return save_term(SAVE_TERM_DUPLEX);
-        return 0;
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "compat/terminal.h"
+ #include "sigchain.h"
+ #include "strbuf.h"
+@@ -23,6 +23,101 @@ static void restore_term_on_signal(int sig)
+ static int term_fd = -1;
+ static struct termios old_term;
+ 
++static const char *background_resume_msg;
++static const char *restore_error_msg;
++static volatile sig_atomic_t ttou_received;
++
++static void write_err(const char *msg)
++{
++	write_in_full(2, "error: ", strlen("error: "));
++	write_in_full(2, msg, strlen(msg));
++	write_in_full(2, "\n", 1);
++}
++
++static void print_background_resume_msg(int signo)
++{
++	int saved_errno = errno;
++	sigset_t mask;
++	struct sigaction old_sa;
++	struct sigaction sa = { .sa_handler = SIG_DFL };
++
++	ttou_received = 1;
++	write_err(background_resume_msg);
++	sigaction(signo, &sa, &old_sa);
++	raise(signo);
++	sigemptyset(&mask);
++	sigaddset(&mask, signo);
++	sigprocmask(SIG_UNBLOCK, &mask, NULL);
++	/* Stopped here */
++	sigprocmask(SIG_BLOCK, &mask, NULL);
++	sigaction(signo, &old_sa, NULL);
++	errno = saved_errno;
++}
++
++static void restore_terminal_on_suspend(int signo)
++{
++	int saved_errno = errno;
++	int res;
++	struct termios t;
++	sigset_t mask;
++	struct sigaction old_sa;
++	struct sigaction sa = { .sa_handler = SIG_DFL };
++	int can_restore = 1;
++
++	if (tcgetattr(term_fd, &t) < 0)
++		can_restore = 0;
++
++	if (tcsetattr(term_fd, TCSAFLUSH, &old_term) < 0)
++		write_err(restore_error_msg);
++
++	sigaction(signo, &sa, &old_sa);
++	raise(signo);
++	sigemptyset(&mask);
++	sigaddset(&mask, signo);
++	sigprocmask(SIG_UNBLOCK, &mask, NULL);
++	/* Stopped here */
++	sigprocmask(SIG_BLOCK, &mask, NULL);
++	sigaction(signo, &old_sa, NULL);
++	if (!can_restore) {
++		write_err(restore_error_msg);
++		goto out;
++	}
++	/*
++	 * If we resume in the background then we receive SIGTTOU when calling
++	 * tcsetattr() below. Set up a handler to print an error message in that
++	 * case.
++	 */
++	sigemptyset(&mask);
++	sigaddset(&mask, SIGTTOU);
++	sa.sa_mask = old_sa.sa_mask;
++	sa.sa_handler = print_background_resume_msg;
++	sa.sa_flags = SA_RESTART;
++	sigaction(SIGTTOU, &sa, &old_sa);
++ again:
++	ttou_received = 0;
++	sigprocmask(SIG_UNBLOCK, &mask, NULL);
++	res = tcsetattr(term_fd, TCSAFLUSH, &t);
++	sigprocmask(SIG_BLOCK, &mask, NULL);
++	if (ttou_received)
++		goto again;
++	else if (res < 0)
++		write_err(restore_error_msg);
++	sigaction(SIGTTOU, &old_sa, NULL);
++ out:
++	errno = saved_errno;
++}
++
++static void reset_job_signals(void)
++{
++	if (restore_error_msg) {
++		signal(SIGTTIN, SIG_DFL);
++		signal(SIGTTOU, SIG_DFL);
++		signal(SIGTSTP, SIG_DFL);
++		restore_error_msg = NULL;
++		background_resume_msg = NULL;
++	}
++}
++
+ static void close_term_fd(void)
+ {
+ 	if (term_fd)
+@@ -38,10 +133,13 @@ void restore_term(void)
+ 	tcsetattr(term_fd, TCSAFLUSH, &old_term);
+ 	close_term_fd();
+ 	sigchain_pop_common();
++	reset_job_signals();
  }
-
+ 
+ int save_term(enum save_term_flags flags)
+ {
++	struct sigaction sa;
++
+ 	if (term_fd < 0)
+ 		term_fd = (flags & SAVE_TERM_STDIN) ? 0
+ 						    : open("/dev/tty", O_RDWR);
+@@ -50,6 +148,26 @@ int save_term(enum save_term_flags flags)
+ 	if (tcgetattr(term_fd, &old_term) < 0)
+ 		return -1;
+ 	sigchain_push_common(restore_term_on_signal);
++	/*
++	 * If job control is disabled then the shell will have set the
++	 * disposition of SIGTSTP to SIG_IGN.
++	 */
++	sigaction(SIGTSTP, NULL, &sa);
++	if (sa.sa_handler == SIG_IGN)
++		return 0;
++
++	/* avoid calling gettext() from signal handler */
++	background_resume_msg = _("cannot resume in the background, please use 'fg' to resume");
++	restore_error_msg = _("cannot restore terminal settings");
++	sa.sa_handler = restore_terminal_on_suspend;
++	sa.sa_flags = SA_RESTART;
++	sigemptyset(&sa.sa_mask);
++	sigaddset(&sa.sa_mask, SIGTSTP);
++	sigaddset(&sa.sa_mask, SIGTTIN);
++	sigaddset(&sa.sa_mask, SIGTTOU);
++	sigaction(SIGTSTP, &sa, NULL);
++	sigaction(SIGTTIN, &sa, NULL);
++	sigaction(SIGTTOU, &sa, NULL);
+ 
+ 	return 0;
+ }
+@@ -72,6 +190,7 @@ static int disable_bits(enum save_term_flags flags, tcflag_t bits)
+ 		return 0;
+ 
+ 	sigchain_pop_common();
++	reset_job_signals();
+ error:
+ 	close_term_fd();
+ 	return -1;
+@@ -97,6 +216,7 @@ static int getchar_with_timeout(int timeout)
+ 	fd_set readfds;
+ 	int res;
+ 
++ again:
+ 	if (timeout >= 0) {
+ 		tv.tv_sec = timeout / 1000;
+ 		tv.tv_usec = (timeout % 1000) * 1000;
+@@ -106,9 +226,14 @@ static int getchar_with_timeout(int timeout)
+ 	FD_ZERO(&readfds);
+ 	FD_SET(0, &readfds);
+ 	res = select(1, &readfds, NULL, NULL, tvp);
+-	if (res <= 0)
++	if (!res)
+ 		return EOF;
+-
++	if (res < 0) {
++		if (errno == EINTR)
++			goto again;
++		else
++			return EOF;
++	}
+ 	return getchar();
+ }
+ 
 -- 
 2.35.1
 
