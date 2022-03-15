@@ -2,94 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27E4CC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 16:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3FCC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 16:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349935AbiCOQOg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 12:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
+        id S1350002AbiCOQ3K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 12:29:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240683AbiCOQOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 12:14:35 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E0BA30F49
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 09:13:22 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D03E112352;
-        Tue, 15 Mar 2022 12:13:21 -0400 (EDT)
+        with ESMTP id S1347087AbiCOQ3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 12:29:08 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1AFB5D
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 09:27:54 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E44B191CF4;
+        Tue, 15 Mar 2022 12:27:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+UHvx9IyBb6OYfkMpfTn7CKiU7Nto7CWclH6jw
-        LzJck=; b=GogK2v3d9+qAJUWDdiZ0T3wRu1FVnk1Ua7rVRn5GEd6cpflmK3JrDI
-        l1l04eTumfYQmmxbdv2czRLZvZjC/fjdV1IknbA3Ck+Tax3p7ARi5Kg+1d1J9ETU
-        DSQrMa8ED5/rftOWSTjJIJN7meuh+4BwVkTIKuSId7Qw0Bpg7L8zE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 219CC112351;
-        Tue, 15 Mar 2022 12:13:21 -0400 (EDT)
+        :content-type; s=sasl; bh=o0+Luai6stWL3c9KvhP94VROSDKnUC9pHCM+sM
+        6thqI=; b=YTlj8xBewZCQo43cG+0oRRXwYo2MmuAcDhS59P7c8eEfLqG96VFhF5
+        Hkn25P7Pcj9wfF4DkSP2RYCWnsT+5GjrdAmpbu9dRu07vrVB0LKXA3Joi5z1sjFm
+        q7LZE3N4SYAHnhFi3gn4rzM/AXnoqbXoKpzpogdwMRXOgKfnfKu3c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 681F7191CF3;
+        Tue, 15 Mar 2022 12:27:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6E63B112350;
-        Tue, 15 Mar 2022 12:13:20 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C6593191CB8;
+        Tue, 15 Mar 2022 12:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] partial-clone: add a partial-clone test case
-References: <xmqqa6dsnpj9.fsf@gitster.g>
-        <20220315113002.61748-1-chakrabortyabhradeep79@gmail.com>
-        <4d78dece-1212-5232-a441-683e941016c5@github.com>
-Date:   Tue, 15 Mar 2022 09:13:19 -0700
-In-Reply-To: <4d78dece-1212-5232-a441-683e941016c5@github.com> (Derrick
-        Stolee's message of "Tue, 15 Mar 2022 08:57:25 -0400")
-Message-ID: <xmqqv8wffb34.fsf@gitster.g>
+To:     "David Cantrell via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, David Cantrell <david@cantrell.org.uk>
+Subject: Re: [PATCH v2 0/2] Improved bash tab completion for 'git restore' -
+ adds support for auto-completing filenames
+References: <pull.1227.git.git.1647032857097.gitgitgadget@gmail.com>
+        <pull.1227.v2.git.git.1647305547.gitgitgadget@gmail.com>
+        <xmqq8rtbh320.fsf@gitster.g>
+Date:   Tue, 15 Mar 2022 09:27:48 -0700
+In-Reply-To: <xmqq8rtbh320.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        15 Mar 2022 04:23:51 -0700")
+Message-ID: <xmqqr173faez.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D4CBE530-A47A-11EC-B68D-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: DAF8BB20-A47C-11EC-A4C4-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> I tried to use `git rev-list --objects --missing=print` with `HEAD` and
->> first commit hash. But in both cases, I didn't found a missing `[?]` sign
->> before ` <blob-hash-ID> file.txt`. That means, both blob objects ( or I
->> think the same blob object) exists in the local repo.
-> ...
-
-Yup.  I was about to suggest --missing=allow-promisor to catch other
-unexpected missing objects, but in this toy history for testing,
-what is missing is all the objects expected from the promisor, so it
-should be sufficient to use --missing=print.
-
-> I think the key issue is that your clone says this:
+> "David Cantrell via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> +	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
+>> This adds tab-completion of filenames to the bash completions for git
+>> restore.
+>>
+>> David Cantrell (2):
+>>   tab completion of filenames for 'git restore'
+>>   if a file has been staged we don't want to list it
 >
-> which will do a checkout and download the blobs at tip.
->
-> If you add a "--bare" to this clone command, then no blobs should be
-> downloaded, and your rev-list command should show the missing objects.
+> Why two patches?  The second separate patch makes the topic look as
+> if "oops, the first step designed a wrong behaviour and here is a
+> brown paper bag fix-up".
 
-That sounds like pointing at a different issue.  If the test
-repository downloads the blobs at the tip, then the fact that the
-trace output did not have "fetch" in it does not mean much, does it?
-It could be that we refrained from lazily download the blob because
-we did not need its contents for the purpose of following through an
-exact rename, but it could also be that we did not need to lazily
-download it because we already had it.
+Sorry, I forgot the obligatory clarification for new contributors.
 
-> Hopefully my suggestion to use --bare will help.
+This project gives all contributors a chance to pretend to be a
+"perfect human".  When sending an updated patch (or patch series),
+contributors are encouraged to hide^W correct their earlier mistakes
+and present a perfect logical progression that they (would have, if
+they were perfect) followed to arrive at a perfect end result.
 
-Yup, thanks.
+So, instead of having step 1 that uses --committable without
+justifying why it was chosen, and then change mind in step 2 to
+replace it with --modified, have a single patch that uses
+--modified, and explain in the proposed log message that
+--committable and --modified may be possibilities, and why the patch
+chose to use the latter.  The resulting history without a flip-flop
+in the middle is easier to use by future developers to understand
+the reasoning behind each change.
 
-So regardless of "--missing=print" vs "grep in trace", there was a
-bug in the test set-up, and we caught it in this discussion, which
-is excellent.
-
+Thanks.
