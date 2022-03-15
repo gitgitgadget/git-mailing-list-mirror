@@ -2,105 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E06C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 00:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B70BC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 01:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344006AbiCOAxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 20:53:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44366 "EHLO
+        id S1344295AbiCOB1N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 21:27:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239060AbiCOAxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Mar 2022 20:53:42 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C0242A27
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 17:52:30 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id n33-20020a05600c3ba100b003832caf7f3aso661154wms.0
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 17:52:30 -0700 (PDT)
+        with ESMTP id S1344288AbiCOB1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Mar 2022 21:27:12 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43561A3AA
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 18:26:01 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id h21so4421427ila.7
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 18:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=hl9V6NOozKHu5s6HXE6nP9mQzECbMmfT0nmth1LsAjo=;
-        b=RVHo8wl/SOyTRW4F2iwmICU7mk8fh2tw6VFCN/X72x7rbB1X7ZJVV8CMkkPNrqn91X
-         O6VFMuykIfI49ZSyVP7Fn/6sOuOcDASkLDLmruAcdIhcI6x8Zt9tw6VxVHWtCqMBidoI
-         bnCYXvepuYmXj6+pfEjnRZi2dQcKD77RrNycKVNkGqPoZR48HAFeuCC66GzGhsOddmZ7
-         9XiE0sQC1EP5XW/1kJVBpRSc0zhYrJBf1JOlU7fT/Mo6Bo9/WjMdwjgdKprrxIN8KW0B
-         WuBb7t3hdoz6eSq/FVTj5xlLU1cFCR9ZRQOJAl1M2rGpSkr5zbKytEQml38PYdCkvjsb
-         lAOA==
+        h=references:user-agent:from:to:cc:subject:date:in-reply-to
+         :message-id:mime-version;
+        bh=ZwKwt37MV8j2Zuwvw/dN8adQWdJvBKciimVNdY9auqg=;
+        b=q2NbHHbU56M3IVpFLNX2x/qGyqvuf8hvJNKeySXudUoMltljf1Uq+fy1o6CmRCyXAT
+         pFpEKI4jcGxMfDgNIpIwRDyyJ9bvsCwR+s8nOuk7+iFktmZrReD4WiO9F4a7BKaoJOyC
+         aSO4vq9yziRwvSvv4AVb1CvXlFDyce0rEJwmUfwp9tlvQiGM1vGXu+lWg5TTwb2MK5ld
+         x7RuUXElHFSrWhXZDs9FH50pzLcZdfsHbMxiP2yHZYztI8c/iIze4Onw+dIC1ZgrruHj
+         foHZDJAqdsRRiy0Ns0whE/2FjHlYIsW2VIC6VTWLezVRfBL6uddzaS+e7TUINQxEdGXH
+         L1hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hl9V6NOozKHu5s6HXE6nP9mQzECbMmfT0nmth1LsAjo=;
-        b=K3DKOKm/vlhP7GQYPU6JEAx+SmHPoSWl3zhFkzBjGNZnIJHR6+re3ysEm29ZQiqOan
-         niQwVEsXS+9YkG/gACYP4iek930eG6KXHsHoLI6PlWpw+o7uc7CL39KndjDagMZzgMw/
-         mkRcnK4I7FtJDV0aaPWSeZRiWMj2/u67VQIlqYULu/jWmv42Sk9kdpyb11Dxtbp0ib/o
-         l3HXUIAo1g+1JhiYeHvXR/gGc2IDpwdL2BhXes9w9o3xAM/lTkJQwLKp/qeObTXZwcDO
-         +h6vWIfq30ejHb6giq6b9c0mgHyRUMc3OvwXxC3zGk208UNixeNhVUfGP/wzbZmSek5X
-         4Myw==
-X-Gm-Message-State: AOAM5300u/hN0bk5j3twU66iWU+sd2gijmL1MaCuXHM5Y6Twv1a7Gh9D
-        wvKfij6ruxbSoYD5x9JuPmNmTsV4UwA=
-X-Google-Smtp-Source: ABdhPJygSAxD+EF84oNnA/AmsOjZO0dOwY6YPEGinRqn58F9hsBTzFswcZV0M7n2vAJrLzOr0jV40w==
-X-Received: by 2002:a7b:ce83:0:b0:37b:f1f1:3a0c with SMTP id q3-20020a7bce83000000b0037bf1f13a0cmr1267634wmj.10.1647305549161;
-        Mon, 14 Mar 2022 17:52:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d15-20020a056000186f00b0020384249361sm13625785wri.104.2022.03.14.17.52.28
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
+         :in-reply-to:message-id:mime-version;
+        bh=ZwKwt37MV8j2Zuwvw/dN8adQWdJvBKciimVNdY9auqg=;
+        b=pSLQc4+lHt8KL3XwNKdAVI44ICofg/G6TZGl7pXcQx9Y2cOfw9eFi1C5T7ZEV+pT5i
+         qOPHM5D1JqrZ5Rn+OFeGGx6Kol7xu80/A17XkBZh97JSNB1klIaL/O7Xil8JhtvrWBRw
+         nOIpHtpg+jNW24KjMd4oHg2wLXmiwuJYrjBJT2fBXQ8cHuyQcX0MVgbxmSoN08ErRQgI
+         Lz4xOC0k+aZSADvn1SzzpZf+nmtWH36BGe0L6B92w6qTq8jYnxs4PetcPGKokWKZURku
+         u3mW0A5S1uqK8LyKdh5jyS/s9a2aoOZHI/R8TOSZd+hl/S8A9N07JttnSjOzHEi73hZi
+         qa4g==
+X-Gm-Message-State: AOAM531xkENaSAjHb24gWz0I8EUpw+oFQnDCmuzLJnwrFWqivBZCogk1
+        bifxBmepQiCfGfdxdqby/9A=
+X-Google-Smtp-Source: ABdhPJwtLZvokMcPN2ZwlV1PLo8JRrf0pkhi9m7RvbzVVNgZK7o6UaepuGRp5tXoTGQtSY07/74U1w==
+X-Received: by 2002:a92:ccc2:0:b0:2c7:8cb1:8b76 with SMTP id u2-20020a92ccc2000000b002c78cb18b76mr11391426ilq.89.1647307560992;
+        Mon, 14 Mar 2022 18:26:00 -0700 (PDT)
+Received: from EPIC51148 ([199.204.58.10])
+        by smtp.gmail.com with ESMTPSA id l14-20020a056e0205ce00b002c782f5e905sm5615556ils.74.2022.03.14.18.25.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 17:52:28 -0700 (PDT)
-Message-Id: <2bb8f1cb1c4072bed544baa34451ed0093e2f007.1647305547.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1227.v2.git.git.1647305547.gitgitgadget@gmail.com>
-References: <pull.1227.git.git.1647032857097.gitgitgadget@gmail.com>
-        <pull.1227.v2.git.git.1647305547.gitgitgadget@gmail.com>
-From:   "David Cantrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Mar 2022 00:52:26 +0000
-Subject: [PATCH v2 1/2] tab completion of filenames for 'git restore'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 14 Mar 2022 18:26:00 -0700 (PDT)
+References: <878rtebxk0.fsf@gmail.com> <xmqq4k42n2g8.fsf@gitster.g>
+ <01cc01d83671$0acd4a20$2067de60$@nexbridge.com> <87zglu9c82.fsf@gmail.com>
+ <01f201d836e5$89247c30$9b6d7490$@nexbridge.com> <87v8whap0b.fsf@gmail.com>
+ <01f301d836eb$5c7a6810$156f3830$@nexbridge.com> <87r175amw2.fsf@gmail.com>
+ <f6ecca05-b669-0e36-302f-a6113571ac12@iee.email>
+ <87ilsha2b7.fsf@gmail.com> <xmqqtuc1tpdj.fsf@gitster.g>
+ <697d8717-bd3f-0871-d5b3-e6303c4ed726@iee.email>
+User-agent: mu4e 1.7.9; emacs 27.2
+From:   Sean Allred <allred.sean@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+        git@vger.kernel.org, sallred@epic.com, grmason@epic.com,
+        sconrad@epic.com
+Subject: Re: Dealing with corporate email recycling
+Date:   Mon, 14 Mar 2022 20:23:57 -0500
+In-reply-to: <697d8717-bd3f-0871-d5b3-e6303c4ed726@iee.email>
+Message-ID: <87y21c2ehl.fsf@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     David Cantrell <david@cantrell.org.uk>,
-        David Cantrell <david@cantrell.org.uk>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: David Cantrell <david@cantrell.org.uk>
 
-If no --args are present after 'git restore' it assumes that you want
-to tab-complete one of the files with uncommitted changes
+Philip Oakley <philipoakley@iee.email> writes:
+> A broader issue for the corporate email mailbox systems is those that
+> are allocated to roles. So you may have Traning1@corp.com thru
+> Training9@corp.com (we had) and if that training includes practical low
+> hanging fruit examples from a project, it's difficult to disambiguate
+> those commits. More likely is say, having TestPC1 - TestPC9 that
+> included debug commits, perhaps even with pair programming test & debug
+> sessions, so allocation to individuals (rather than mailbox) becomes a
+> real problem. Hopefully that's rare in Sean's case.
 
-Signed-off-by: David Cantrell <david@cantrell.org.uk>
----
- contrib/completion/git-completion.bash | 7 +++++++
- 1 file changed, 7 insertions(+)
+Yep, this wouldn't happen for us.  Lots of other processes depend on
+there being an individual making the commit.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 49a328aa8a4..7ccad8ff4b1 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2883,14 +2883,21 @@ _git_restore ()
- 	case "$cur" in
- 	--conflict=*)
- 		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
-+		return
- 		;;
- 	--source=*)
- 		__git_complete_refs --cur="${cur##--source=}"
-+		return
- 		;;
- 	--*)
- 		__gitcomp_builtin restore
-+		return
- 		;;
- 	esac
-+
-+	if __git rev-parse --verify --quiet HEAD >/dev/null; then
-+		__git_complete_index_file "--committable"
-+	fi
- }
- 
- __git_revert_inprogress_options=$__git_sequencer_inprogress_options
--- 
-gitgitgadget
+I'd also be surprised if this didn't cause process problems for other
+folks, too.
 
+--
+Sean Allred
