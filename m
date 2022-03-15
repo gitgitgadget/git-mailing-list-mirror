@@ -2,81 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D2D8C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 17:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B8EC433EF
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 17:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349280AbiCORYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 13:24:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44130 "EHLO
+        id S1344163AbiCORnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 13:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350023AbiCORYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 13:24:17 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23FB010FD5
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:23:04 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E4AC185842;
-        Tue, 15 Mar 2022 13:23:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6dc0pOgGDZmr1xLgup7BDg8+cusx3NAVxUmxFm
-        eHZGI=; b=P3xyjm3z45I/bMDSRtPX9TDRkwvZLthXevarVkToJ23FzuVRBGE9G8
-        4BA32q268otFvD42l3U6iDz0Id360pgHb004XQm+gkTGRyhwQ+awdr9pmDB7gS5Q
-        kyD64XhtIreaidstydZRG5oYw3jXXNvd8WhkGEH6wZfy0fUVg+wvM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 371E8185840;
-        Tue, 15 Mar 2022 13:23:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BBAAA18583C;
-        Tue, 15 Mar 2022 13:23:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com
-Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
-References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
-        <20220315100145.214054-2-shaoxuan.yuan02@gmail.com>
-Date:   Tue, 15 Mar 2022 10:23:00 -0700
-In-Reply-To: <20220315100145.214054-2-shaoxuan.yuan02@gmail.com> (Shaoxuan
-        Yuan's message of "Tue, 15 Mar 2022 18:01:45 +0800")
-Message-ID: <xmqq8rtbf7uz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1350729AbiCORnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 13:43:01 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D021758E5E
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:41:47 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id x15so30073913wru.13
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:41:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=NQkxBxlK6Vs+UvJALa6KSU2vkODNAgOY1j+VRDD2VNg=;
+        b=l5xlR4BidnvIHJwna6Gm/I70OHEHsC0wfi5gOrrElR3zn7TZEc239F8e9aYXcxWs1k
+         EWo8KkD/GryogieLS0+4ExH0JW0clbzbJ4hlyNeJ01M8g4xK88Px/0A2BT3/K1HLBwMs
+         +CuOf9+E7h5kCMKmkSpoQo3IRIxcNbotoPJM+ddk/oVZ3VLB8tD2L4S9U1QqSHACMmL/
+         dT+a37lPvgYUd/kn88v/fUeMfHSFitvPTae66F1C6o71mwVO833Gp9a7I0mBxPN2cZPM
+         /9q+EWpkDX92r8qv44Z7Ub9L+RANEivIDdv8oi9RWJxIxg4uAjQJFbvduZH8h0njoeov
+         RiEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NQkxBxlK6Vs+UvJALa6KSU2vkODNAgOY1j+VRDD2VNg=;
+        b=cglxrL2en27hjPNqGCLpTuHzOJFO9YziLKDxmmisWTjQQlJYjFVFhhNRk70ol98LR7
+         2uCHYQ3BMavnLiL21mLf58+gtFJK1LrBMBdkBvgHRv95pnlX/lER9lLxOu4tx8CMEb5O
+         9P4jKCJrChN/GU3vF3qhI27mOHUqjYSyI+pCecKLHtfYdA+j4ZUJjlf5W9K4Gzk1k3Ma
+         BdPV7QXjB0EHvKlE8m4ckNCdvLsghcqxghdVrCALChnP6Z3Mn2ze9YVXXlFZKZOndUCv
+         qKSTaomUUEJG4ieeS+UnHod+JNWasDqbBmEZGZJTx+wH398d2qiXwa1CTYAi8MfiPod8
+         I8Bw==
+X-Gm-Message-State: AOAM533jYOnyW3gjsSBh/twEWvXKrmzrEsVfWe6xmfrF8ssuu/5QceMo
+        JLX2ri9d+uUMnTxGKiilV1c0a/Fkm+A=
+X-Google-Smtp-Source: ABdhPJxvG4IGlq96WfogP9cskciCydwaPnM8fJgG3d1BsHGASXi7TLkNq2rgzK2Po3HW0wc0q+8JaQ==
+X-Received: by 2002:adf:dcc2:0:b0:1f0:4c38:d6be with SMTP id x2-20020adfdcc2000000b001f04c38d6bemr20907119wrm.79.1647366106054;
+        Tue, 15 Mar 2022 10:41:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u15-20020a5d6daf000000b00203db33b2e4sm546838wrs.26.2022.03.15.10.41.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Mar 2022 10:41:45 -0700 (PDT)
+Message-Id: <pull.1178.git.1647366104967.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Mar 2022 17:41:44 +0000
+Subject: [PATCH] maintenance: fix synopsis in documentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 910CDF02-A484-11EC-AAB9-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
+From: Derrick Stolee <derrickstolee@github.com>
 
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> ---
->  builtin/mv.c                             |  3 +++
->  t/t1092-sparse-checkout-compatibility.sh | 34 ++++++++++++++++++++++++
->  2 files changed, 37 insertions(+)
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 83a465ba83..111360ebf5 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -138,6 +138,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->  
->  	git_config(git_default_config, NULL);
->  
-> +	prepare_repo_settings(the_repository);
-> +	the_repository->settings.command_requires_full_index = 0;
-> +
+The synopsis for 'git maintenance' did not include the commands other
+than the 'run' command. Update this to include the others. The 'start'
+command is the only one of these that parses additional options, and
+then only the --scheduler option.
 
-The command used to be marked as one of the commands that require
-full index to work correctly.  Why did it suddenly become not to
-require it, especially without any other changes to make it so?
+Also move the 'register' command down after 'stop' and before
+'unregister' for a logical grouping of the commands instead of an
+alphabetical one. The diff makes it look as three other commands are
+moved up.
 
-This patch needs a lot more explaining to do in itse proposed log
-message.
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    maintenance: fix synopsis in documentation
+    
+    This is a quick fix for an issue I noticed during another review [1].
+    
+    Thanks, -Stolee
+    
+    [1]
+    https://lore.kernel.org/git/dd9413da-1b8c-2adf-c471-e5fd4230375c@github.com/
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1178%2Fderrickstolee%2Fmaintenance-docs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1178/derrickstolee/maintenance-docs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1178
+
+ Documentation/git-maintenance.txt | 38 ++++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index e2cfb68ab57..e56bad28c65 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -10,6 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git maintenance' run [<options>]
++'git maintenance' start [--scheduler=<scheduler>]
++'git maintenance' (stop|register|unregister)
+ 
+ 
+ DESCRIPTION
+@@ -29,6 +31,24 @@ Git repository.
+ SUBCOMMANDS
+ -----------
+ 
++run::
++	Run one or more maintenance tasks. If one or more `--task` options
++	are specified, then those tasks are run in that order. Otherwise,
++	the tasks are determined by which `maintenance.<task>.enabled`
++	config options are true. By default, only `maintenance.gc.enabled`
++	is true.
++
++start::
++	Start running maintenance on the current repository. This performs
++	the same config updates as the `register` subcommand, then updates
++	the background scheduler to run `git maintenance run --scheduled`
++	on an hourly basis.
++
++stop::
++	Halt the background maintenance schedule. The current repository
++	is not removed from the list of maintained repositories, in case
++	the background maintenance is restarted later.
++
+ register::
+ 	Initialize Git config values so any scheduled maintenance will
+ 	start running on this repository. This adds the repository to the
+@@ -55,24 +75,6 @@ task:
+ setting `maintenance.auto = false` in the current repository. This config
+ setting will remain after a `git maintenance unregister` command.
+ 
+-run::
+-	Run one or more maintenance tasks. If one or more `--task` options
+-	are specified, then those tasks are run in that order. Otherwise,
+-	the tasks are determined by which `maintenance.<task>.enabled`
+-	config options are true. By default, only `maintenance.gc.enabled`
+-	is true.
+-
+-start::
+-	Start running maintenance on the current repository. This performs
+-	the same config updates as the `register` subcommand, then updates
+-	the background scheduler to run `git maintenance run --scheduled`
+-	on an hourly basis.
+-
+-stop::
+-	Halt the background maintenance schedule. The current repository
+-	is not removed from the list of maintained repositories, in case
+-	the background maintenance is restarted later.
+-
+ unregister::
+ 	Remove the current repository from background maintenance. This
+ 	only removes the repository from the configured list. It does not
+
+base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
+-- 
+gitgitgadget
