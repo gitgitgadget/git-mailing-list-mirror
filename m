@@ -2,116 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D7A2C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 18:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2161EC433EF
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 19:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351161AbiCOSwn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 14:52:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36672 "EHLO
+        id S239127AbiCOTHI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 15:07:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231664AbiCOSwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 14:52:41 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7245882A
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 11:51:29 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id lr15-20020a17090b4b8f00b001c646e432baso1538902pjb.3
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 11:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=HcVRYGiScxF/1RiC1npMHhFPN3/LvoaOzIPQs1nXyp4=;
-        b=QS5FwFKXH6yw25o4eGUNv5FYtHV1vX8UE1tgewVRRb4rl6kQHvBbAUzsVJ9dzkO4DW
-         F4AGGJfc1N6cksjRXQYy4pxBc0kx66tmgwOVArTsnN2xSbNXyoOPEMz1XXdOmsxP7lay
-         /3I6qQTOxZxJiOV+MjpQVXTH3AarqciTfVHqF2Yx6eKvXvBjEBdqatwgDI0fvcHnAbpc
-         tX3Y87EhAH0K8UHl1l4nvpZ66IKB2EpJnTPDlyoUQnI4LFIoBVUaM6bcfPQFf0+iljiV
-         pl/MYKXsnZpPzdcQr5lsPej7/x4SRr6QeMO7Y+qfTIVyLgZHSKYG+XpzTJGhriDp3+yW
-         EAVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HcVRYGiScxF/1RiC1npMHhFPN3/LvoaOzIPQs1nXyp4=;
-        b=4ODar8BPMNz3AUscCSqdkK3hnCA+7U3Q7ZppU+reXqMIzBL0c6SFlEVVNwrezk165/
-         o0Wbh+bXHJE73lkLG3SJOEHDemFWWw8d0S+MVjpzkFOywF/s4fQgusshaSh8TNbdb6Za
-         2LiyX5sMEjNMPsFGinFAu0NK7r5TJUoiTKPk+f4zYFFWZkc5uxf/0kndLf3B1yXxgH8L
-         2jC6BKyOX03D6l06MsTekHUgV+iJgGzrIBu6IQJTrGt6uD25jW0En4wP2tv+Vw82IfgR
-         B6gvYo/35iIKDA7teACXSMGxO/LDy9GsQ3X3bnTkMXDqON1/FokaJ9m9CVzpe+V62OoV
-         MAyw==
-X-Gm-Message-State: AOAM5314Xu2gpWZIVujvdYNkKgXDl4AuznloBj+yR3yC+PHq7ycAAaPJ
-        d5VjfnWr+ShJi762ljN7BCLvc8Pukxk/QQ==
-X-Google-Smtp-Source: ABdhPJz7AfdN3BN6cJT/spwl/p11pUqki6JA8xWPvAd4Rs3huRUQY02J+xSDBrvjhFkhSIZGSIhsUzAatVCZpw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:10c5:b0:4f7:3bef:7fdc with SMTP
- id d5-20020a056a0010c500b004f73bef7fdcmr29872476pfu.23.1647370288550; Tue, 15
- Mar 2022 11:51:28 -0700 (PDT)
-Date:   Tue, 15 Mar 2022 11:51:26 -0700
-In-Reply-To: <d8783660-1487-1899-19bf-10654801ea0a@kdbg.org>
-Message-Id: <kl6lee33xd5d.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220304130854.857746-1-a97410985new@gmail.com>
- <20220312164803.57909-1-a97410985new@gmail.com> <kl6lwngwqwm2.fsf@chooglen-macbookpro.roam.corp.google.com>
- <d8783660-1487-1899-19bf-10654801ea0a@kdbg.org>
-Subject: Re: [GSoC][PATCH v2] Add a diff driver for JavaScript languages.
-From:   Glen Choo <chooglen@google.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     xing zhi jiang <a97410985new@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S1351438AbiCOTHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 15:07:02 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A52E26AE1
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 12:05:23 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 08BF418653E;
+        Tue, 15 Mar 2022 15:05:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uAQJ8UE6/csz0mCmr2IwdTRZrfplOO40gS/tTV
+        bSdhw=; b=FA0Df+kETLXUuMzo2shXseHZjsnf9T6pUIoYMnnRkxqA0EuXZtTYcq
+        Z62HcV1u42BKrllE1UC0x4jXm3wqBhC6nRDfbVKlZ/sK3EnRud6fEFOVipSfGSfH
+        iRXem5bjUUtEfvMrbto9lUiXIUrTJ4s6gnhFF+BfGpBOQvCh6W/+c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0088318653D;
+        Tue, 15 Mar 2022 15:05:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6D2CD18653C;
+        Tue, 15 Mar 2022 15:05:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     <rsbecker@nexbridge.com>
+Cc:     "'Phillip Wood'" <phillip.wood123@gmail.com>,
+        "'Git Mailing List'" <git@vger.kernel.org>,
+        "'Phillip Wood'" <phillip.wood@dunelm.org.uk>,
+        =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
+        <avarab@gmail.com>, "'Carlo Arenas'" <carenas@gmail.com>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "'Ramsay Jones'" <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 2/4] terminal: don't assume stdin is /dev/tty
+References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+        <20220315105723.19398-1-phillip.wood123@gmail.com>
+        <20220315105723.19398-3-phillip.wood123@gmail.com>
+        <xmqqzglrdsd8.fsf@gitster.g>
+        <02fd01d83896$c0261240$407236c0$@nexbridge.com>
+Date:   Tue, 15 Mar 2022 12:05:19 -0700
+In-Reply-To: <02fd01d83896$c0261240$407236c0$@nexbridge.com>
+        (rsbecker@nexbridge.com's message of "Tue, 15 Mar 2022 14:01:46
+        -0400")
+Message-ID: <xmqqilsfdok0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DBFD44E4-A492-11EC-AAE3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+<rsbecker@nexbridge.com> writes:
 
-> Am 14.03.22 um 18:20 schrieb Glen Choo:
->> xing zhi jiang <a97410985new@gmail.com> writes:
->>> diff --git a/t/t4018/javascript-exports-function b/t/t4018/javascript-exports-function
->>> new file mode 100644
->>> index 0000000000..63b79f5991
->>> --- /dev/null
->>> +++ b/t/t4018/javascript-exports-function
->>> @@ -0,0 +1,4 @@
->>> +exports.RIGHT = function(document) {
->>> +    
->>> +    return ChangeMe; >>> +}
->> 
->> I don't think we should include 'exports.foo = bar'. To my knowledge,
->> this is _not_ a standard ES feature, but rather the CommonJS module
->> system popularized by Node.js [1] and other frameworks. To confirm this,
->> I searched the ES spec and did not find any reference to exports.* [2].
->> 
->> Even if we wanted to support nonstandard 'language features' (and this
->> label is tenuous at best, CommonJS is not trying to replace the ES
->> modules standard AFAIK), Node.js is also starting to support ES modules,
->> so I don't think this is a good long term direction for Git.
+>>The check before closing it is wrong.  It should be
+>>
+>>	if (0 <= term_fd)
 >
-> It is not a priority to model hunk header regular expressions after some
-> standard and to ignore stuff that is outside the standard. The goal is
-> to make them useful in a majority of cases. If there exists a noticable
-> chunk of code that uses non-standard constructs, then that is worth
-> being supported.
+> Should this expression succeed if term_fd == stdin? I might be missing the point here.
 
-Interesting, I'll take note. I'm still personally not keen on supporting
-CommonJS-only patterns when we are purportedly trying to show diffs for
-JavaScript, but if we think this fits the style, I'm happy to oblige.
+We could use "if (0 < term_fd)" to make this guard both about
+avoiding to call close() on an uninitialized FD and also about
+avoiding to close standard input.  I'd prefer to see them handled
+separately as these live at different conceptual levels
+(i.e. closing -1 is a no-no no matter what, closing 0 is bad if it
+is what we did not open but what the caller supplied us via the
+SAVE_TERM_STDIN bit, but it may be warranted if it was what we
+obtained from an earlier call to open("/dev/tty") we did ourselves).
 
-So the question becomes "Is there a significant amount of code that uses
-this pattern?" Probably - this is a fairly common pattern in Node.js
-after all. But in my experience,
 
- module.exports.RIGHT = function(document) {
-     
-     return ChangeMe;
- }
 
-is even more common. The difference between 'module.exports' and
-'exports' isn't worth going into (StackOverflow has all the answers, for
-the curious), but if we're taking the approach of supporting CommonJS,
-I'd like to be consistent and also support 'module.exports', i.e.
-perhaps change:
-
-  "^(exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)\n"
-
-to something like:
-
-  "^((module.)?exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)\n"
