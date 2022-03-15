@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F35E9C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27135C4332F
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347670AbiCOK7O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 06:59:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
+        id S233345AbiCOK7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 06:59:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348038AbiCOK6z (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1348037AbiCOK6z (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Mar 2022 06:58:55 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 421B531DC1
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:43 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id r7so432524wmq.2
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:43 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7495F2C139
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:42 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id d7so1297561wrb.7
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:57:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=a99DTiyebHzumtArYWAw5QFtDcxbm+7E/kL+LkfoINs=;
-        b=asyH8zENqeZInonmw0zb6CmwYvafFYG+bvzVDl9fXr6NEvBybEAutSd7SwRrv2fojC
-         0+cgZFm3NQeFzutrtZpq0z7dRlZ9jnZHAF4q51HEvP3d6FHTVKbkMkKITAbsXtIfura3
-         Oe/gD/wqn9VehzLaJlb92XZKylVXDC9f6xaIhfyZfmQtNfxQk7ucIfPtmQ5uOWJE31XD
-         5pyBdNj4sxiM8aTd8zMbzzE3dYaz8xe9qNrhb8agZWnXl/bVH6W6H3PHNEwIdt+8ef+9
-         YUf1zJaNHEiEuuX6RIb4GNSSaBFsOdbnC5Dex9CUwNQxugKkcFQfEESYTvw9liiFZkBc
-         X9sA==
+        bh=w0qwFQfT1BZRPW3fR4lJeO50Re3yWhTEJ4yjVHkMpzU=;
+        b=PrNPgpo1jvMgOvHpw9z6j9xQOQbIsseKOm4skwpdgMmEsv9+MYSBNNS4wmPh8ckb6N
+         VnhIVmmcg4cFYu1evQPJwu2alVnuBSkpScvHhedVRtso60b6+sLocsjO42sMOJj5eYYS
+         4cZmfrxHm2XM34HYhUIigJFNkadXfyWn5pfR3R65CoU8yP+E48a6QfJBSztXbzF1pByO
+         Hey3J0Zm7TBKVhNIys8LcxdCWpWcET0DamG+hd27abuk7MwwE6dAFYmxOAyAtuBxbtdo
+         WM6PC0BXAHjAnkBxGgUWH10Ex0K3PjHpvRIIMNxiIGj244rtU/4g6+FRhvKt+2/78WPl
+         l7NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=a99DTiyebHzumtArYWAw5QFtDcxbm+7E/kL+LkfoINs=;
-        b=Ry4MEoyhcaal5DoKdTr7IR0BDAss8HjlvIsEP+jYlXLbUDdQXImMhqhYGPG5ruvbtF
-         vBE1FqBDHhcSZCpxh3hjAAINewy0EJ5SeeSyFcnpBUyyt+jVKXWwzW69D+VjteRg8G+c
-         LbnmTEk2LDG/pA04X6eGrvaX7r+X3YVfzEL0wrye3N0HqSOATzclb3K/2ern6vZHncLL
-         DXo6OEdFbYxiaxN+job0GENRm8ynwKnsUVozK4iuNPd3Asq7RgSTJ3pEWmE1gy20vU/4
-         KhpD87KLu+DOQSjG+Bo71nyJdFClg+V9hxNTILvCtrhVac4sYYUqix4LDNFtB0HJlF6W
-         IZ4Q==
-X-Gm-Message-State: AOAM533y3F+iPZTsXJy01xS4hSpn0Ev8R0Ozz+XD6FbWjzVZiHhsfp6A
-        Jxx9JZPpAB0gTj1SMb2XRubAA5NhJYfQ9Q==
-X-Google-Smtp-Source: ABdhPJz+D/kQKQ8qCc7LPbpYGOOd0sop5iv5XQtjEcH7ZOre9o96jFIO/nlasN0/EkryEpEHxc3GaQ==
-X-Received: by 2002:a05:600c:19d1:b0:389:7772:b21b with SMTP id u17-20020a05600c19d100b003897772b21bmr2860027wmq.118.1647341861635;
-        Tue, 15 Mar 2022 03:57:41 -0700 (PDT)
+        bh=w0qwFQfT1BZRPW3fR4lJeO50Re3yWhTEJ4yjVHkMpzU=;
+        b=iLLIE/PADBCNXbmKMEmApDxdwY2odazw6Ba5yY4ts961QXTdDSUTekGRv9/s+wMPge
+         v4NntVBDKSgcQIjpAKB3fZAzY35PMCujvm9RMtlaqSLVwp59bYqgSxxwu9RQlrNJhQTk
+         0sAsX+0f+/KEE5f/qLwNm2RfIDXmAVAAFhTi+82GiGFZzeiH0XH6wHJq+oWRggUD7s5o
+         iKLMFsZ0sV9qJrW/5UBsisum0SEuNpB49oKmBQp6Geexluvvyo2hcO82swa0sTjMKlRL
+         jtk9PF7egQd1kNzN38eGRbc4fs1JOUMqfaAaFENpRxloWYi9+mouWI1BK/sH3DQNVUwN
+         5nSg==
+X-Gm-Message-State: AOAM533KoodTqfUSOi5QiGE+DNftRY+vsR4lySBQKBYsPCywb9trIB3d
+        nn/bRjfnPG2CXHPpUXR7EM4ZaMTX/GreIA==
+X-Google-Smtp-Source: ABdhPJxrNJDWsbE8Fk5on45TwFbh2rXvQUHhtpMaCzkiW7Hu6TpQ9EX+whpu9aRjccvOYs/vzLijhQ==
+X-Received: by 2002:a5d:590f:0:b0:203:7fca:72a8 with SMTP id v15-20020a5d590f000000b002037fca72a8mr19272444wrd.310.1647341860844;
+        Tue, 15 Mar 2022 03:57:40 -0700 (PDT)
 Received: from localhost.localdomain (217.2.7.51.dyn.plus.net. [51.7.2.217])
         by smtp.gmail.com with ESMTPSA id p16-20020adff210000000b001f062b80091sm15038530wro.34.2022.03.15.03.57.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 03:57:41 -0700 (PDT)
+        Tue, 15 Mar 2022 03:57:40 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -55,15 +55,15 @@ Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 1/4] terminal: use flags for save_term()
-Date:   Tue, 15 Mar 2022 10:57:20 +0000
-Message-Id: <20220315105723.19398-2-phillip.wood123@gmail.com>
+Subject: [PATCH v3 0/4] builtin add -p: hopefully final readkey fixes
+Date:   Tue, 15 Mar 2022 10:57:19 +0000
+Message-Id: <20220315105723.19398-1-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220315105723.19398-1-phillip.wood123@gmail.com>
+In-Reply-To: <20220304131126.8293-1-phillip.wood123@gmail.com>
 References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220315105723.19398-1-phillip.wood123@gmail.com>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,180 +71,247 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The next commit will add another flag in addition to the existing
-full_duplex so change the function signature to take a flags
-argument. Also alter the functions that call save_term() so that they
-can pass flags down to it.
+Thanks to Ævar, Carlo and Dscho for their comments on V2.
+Changes since V2:
+ * Patch 1
+   - fix save_term() prototype (thanks to Carlo)
+ * Patch 2
+   - avoid closing tty_fd if it is stdin
+ * Patch 3
+   - removed redundant #include (thanks to Ævar)
+   - handle select() timeout correctly
+ * Patch 4
+   - reset job signals if settcattr() fails
 
-The choice to use an enum for tho bitwise flags is because gdb will
-display the symbolic names of all the flags that are set rather than
-the integer value.
+These patches are based on a merge of pw/single-key-interactive and
+master. There are a couple of simple textual conflicts with
+'cb/save-term-across-editor-invocation' and unfortunately some
+semantic conflicts as well. A diff on top of the textual resolution
+which handles the semantic conflicts is given after the range-diff at
+the end of this message.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- compat/terminal.c | 41 +++++++++++++++++++++--------------------
- compat/terminal.h |  7 ++++++-
- 2 files changed, 27 insertions(+), 21 deletions(-)
+V2 Cover Letter:
 
+Thanks to Ramsay and Ævar for their comments on V1.
+Changes since V1:
+ * Patch 1
+   - use an enum for save_term()'s flags (suggested by Ævar)
+   - fixed argument order in the windows code (thanks to Ramsay)
+ * Patch 2
+   - fixed a typo in a comment (thanks to Ramsay)
+ * Patch 4
+   - stopped duplicating the strings returned by gettext() (suggested by
+     Ævar)
+   - reworked error message handling in the signal handler to add an
+     "error: " prefix (suggested by Ævar)
+   - tweaked the background resume error message
+
+V1 Cover Letter:
+
+Fix the remaining issues that I'm aware of when using the built in
+"add -p" with interactive.singlekey that are stopping it from being
+merged to master. The first three patches make sure that we call
+tcsetattr() and the same file descriptor that we use for read() and
+work around poll() being broken when reading from terminals on
+macos. The final patch is more of an improvement rather than a bug fix
+(the same issue already exists in the perl version) and could proceed
+separately.
+
+Unfortunately these patches conflict with
+'cb/save-term-across-editor-invocation' as well as the textual
+conflicts there is a semantic conflict as the argument to save_term()
+is changed so the code in editor.c will need updating.
+
+These patches are based on 'pw/single-key-interactive'
+
+Phillip Wood (4):
+  terminal: use flags for save_term()
+  terminal: don't assume stdin is /dev/tty
+  terminal: work around macos poll() bug
+  terminal: restore settings on SIGTSTP
+
+ compat/terminal.c | 226 +++++++++++++++++++++++++++++++++++++++-------
+ compat/terminal.h |   9 +-
+ 2 files changed, 202 insertions(+), 33 deletions(-)
+
+Range-diff against v2:
+1:  fac5a0f5b7 ! 1:  2c4c5424d7 terminal: use flags for save_term()
+    @@ compat/terminal.h
+       * failure.
+       */
+     -int save_term(int full_duplex);
+    -+int save_term(unsigned flags);
+    ++int save_term(enum save_term_flags flags);
+      /* Restore the terminal attributes that were saved with save_term() */
+      void restore_term(void);
+      
+2:  bf29460ec6 ! 2:  cf9275c40c terminal: don't assume stdin is /dev/tty
+    @@ Commit message
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+      ## compat/terminal.c ##
+    -@@ compat/terminal.c: void restore_term(void)
+    +@@ compat/terminal.c: static void restore_term_on_signal(int sig)
+    + static int term_fd = -1;
+    + static struct termios old_term;
+    + 
+    ++static void close_term_fd(void)
+    ++{
+    ++	if (term_fd)
+    ++		close(term_fd);
+    ++	term_fd = -1;
+    ++}
+    ++
+    + void restore_term(void)
+    + {
+    + 	if (term_fd < 0)
+    + 		return;
+    + 
+    + 	tcsetattr(term_fd, TCSAFLUSH, &old_term);
+    +-	close(term_fd);
+    +-	term_fd = -1;
+    ++	close_term_fd();
+    + 	sigchain_pop_common();
+    + }
+    + 
+      int save_term(enum save_term_flags flags)
+      {
+      	if (term_fd < 0)
+    @@ compat/terminal.c: void restore_term(void)
+      	if (term_fd < 0)
+      		return -1;
+      	if (tcgetattr(term_fd, &old_term) < 0)
+    +@@ compat/terminal.c: static int disable_bits(enum save_term_flags flags, tcflag_t bits)
+    + 
+    + 	sigchain_pop_common();
+    + error:
+    +-	close(term_fd);
+    +-	term_fd = -1;
+    ++	close_term_fd();
+    + 	return -1;
+    + }
+    + 
+     @@ compat/terminal.c: int read_key_without_echo(struct strbuf *buf)
+      	static int warning_displayed;
+      	int ch;
+3:  1815606e82 ! 3:  4828d63ce5 terminal: work around macos poll() bug
+    @@ compat/terminal.c: static int enable_non_canonical(enum save_term_flags flags)
+     + * On macos it is not possible to use poll() with a terminal so use select
+     + * instead.
+     + */
+    -+#include <sys/select.h>
+     +static int getchar_with_timeout(int timeout)
+     +{
+     +	struct timeval tv, *tvp = NULL;
+    @@ compat/terminal.c: static int enable_non_canonical(enum save_term_flags flags)
+     +	FD_ZERO(&readfds);
+     +	FD_SET(0, &readfds);
+     +	res = select(1, &readfds, NULL, NULL, tvp);
+    -+	if (res < 0)
+    ++	if (res <= 0)
+     +		return EOF;
+     +
+     +	return getchar();
+    @@ compat/terminal.c: int read_key_without_echo(struct strbuf *buf)
+     -			ch = getchar();
+     +			ch = getchar_with_timeout(500);
+      			if (ch == EOF)
+    - 				return 0;
+    + 				break;
+      			strbuf_addch(buf, ch);
+4:  dd0e1fabb1 ! 4:  3185bc5223 terminal: restore settings on SIGTSTP
+    @@ compat/terminal.c: static void restore_term_on_signal(int sig)
+     +	errno = saved_errno;
+     +}
+     +
+    - void restore_term(void)
+    - {
+    - 	if (term_fd < 0)
+    -@@ compat/terminal.c: void restore_term(void)
+    - 	close(term_fd);
+    - 	term_fd = -1;
+    - 	sigchain_pop_common();
+    ++static void reset_job_signals(void)
+    ++{
+     +	if (restore_error_msg) {
+     +		signal(SIGTTIN, SIG_DFL);
+     +		signal(SIGTTOU, SIG_DFL);
+     +		signal(SIGTSTP, SIG_DFL);
+     +		restore_error_msg = NULL;
+     +		background_resume_msg = NULL;
+     +	}
+    ++}
+    ++
+    + static void close_term_fd(void)
+    + {
+    + 	if (term_fd)
+    +@@ compat/terminal.c: void restore_term(void)
+    + 	tcsetattr(term_fd, TCSAFLUSH, &old_term);
+    + 	close_term_fd();
+    + 	sigchain_pop_common();
+    ++	reset_job_signals();
+      }
+      
+      int save_term(enum save_term_flags flags)
+    @@ compat/terminal.c: int save_term(enum save_term_flags flags)
+      
+      	return 0;
+      }
+    +@@ compat/terminal.c: static int disable_bits(enum save_term_flags flags, tcflag_t bits)
+    + 		return 0;
+    + 
+    + 	sigchain_pop_common();
+    ++	reset_job_signals();
+    + error:
+    + 	close_term_fd();
+    + 	return -1;
+     @@ compat/terminal.c: static int getchar_with_timeout(int timeout)
+      	fd_set readfds;
+      	int res;
+    @@ compat/terminal.c: static int getchar_with_timeout(int timeout)
+      	FD_ZERO(&readfds);
+      	FD_SET(0, &readfds);
+      	res = select(1, &readfds, NULL, NULL, tvp);
+    --	if (res < 0)
+    --		return EOF;
+    +-	if (res <= 0)
+    ++	if (!res)
+    + 		return EOF;
+     -
+     +	if (res < 0) {
+     +		if (errno == EINTR)
+
+Semantic conflict resolution:
+---- >8 ----
 diff --git a/compat/terminal.c b/compat/terminal.c
-index 3620184e79..da2f788137 100644
+index bffb1340ab..9a64b9a431 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -34,7 +34,7 @@ void restore_term(void)
- 	sigchain_pop_common();
+@@ -150,9 +150,8 @@ int save_term(enum save_term_flags flags)
+                                                    : open("/dev/tty", O_RDWR);
+        if (term_fd < 0)
+                return -1;
+-       if (full_duplex && !is_controlling_terminal(term_fd)) {
+-               close(term_fd);
+-               term_fd = -1;
++       if (flags & SAVE_TERM_DUPLEX && !is_controlling_terminal(term_fd)) {
++               close_term_fd();
+                return -1;
+        }
+        if (tcgetattr(term_fd, &old_term) < 0)
+diff --git a/editor.c b/editor.c
+index 6c5c95e6a2..192d6ea75d 100644
+--- a/editor.c
++++ b/editor.c
+@@ -55,7 +55,7 @@ static int prepare_term(const char *editor)
+
+        git_config_get_bool("editor.stty", &need_saverestore);
+        if (need_saverestore)
+-               return save_term(1);
++               return save_term(SAVE_TERM_DUPLEX);
+        return 0;
  }
- 
--int save_term(int full_duplex)
-+int save_term(enum save_term_flags flags)
- {
- 	if (term_fd < 0)
- 		term_fd = open("/dev/tty", O_RDWR);
-@@ -47,11 +47,11 @@ int save_term(int full_duplex)
- 	return 0;
- }
- 
--static int disable_bits(tcflag_t bits)
-+static int disable_bits(enum save_term_flags flags, tcflag_t bits)
- {
- 	struct termios t;
- 
--	if (save_term(0) < 0)
-+	if (save_term(flags) < 0)
- 		goto error;
- 
- 	t = old_term;
-@@ -71,14 +71,14 @@ static int disable_bits(tcflag_t bits)
- 	return -1;
- }
- 
--static int disable_echo(void)
-+static int disable_echo(enum save_term_flags flags)
- {
--	return disable_bits(ECHO);
-+	return disable_bits(flags, ECHO);
- }
- 
--static int enable_non_canonical(void)
-+static int enable_non_canonical(enum save_term_flags flags)
- {
--	return disable_bits(ICANON | ECHO);
-+	return disable_bits(flags, ICANON | ECHO);
- }
- 
- #elif defined(GIT_WINDOWS_NATIVE)
-@@ -126,15 +126,15 @@ void restore_term(void)
- 	hconin = hconout = INVALID_HANDLE_VALUE;
- }
- 
--int save_term(int full_duplex)
-+int save_term(enum save_term_flags flags)
- {
- 	hconin = CreateFileA("CONIN$", GENERIC_READ | GENERIC_WRITE,
- 	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
- 	    FILE_ATTRIBUTE_NORMAL, NULL);
- 	if (hconin == INVALID_HANDLE_VALUE)
- 		return -1;
- 
--	if (full_duplex) {
-+	if (flags & SAVE_TERM_DUPLEX) {
- 		hconout = CreateFileA("CONOUT$", GENERIC_READ | GENERIC_WRITE,
- 			FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
- 			FILE_ATTRIBUTE_NORMAL, NULL);
-@@ -154,7 +154,7 @@ int save_term(int full_duplex)
- 	return -1;
- }
- 
--static int disable_bits(DWORD bits)
-+static int disable_bits(enum save_term_flags flags, DWORD bits)
- {
- 	if (use_stty) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
-@@ -191,7 +191,7 @@ static int disable_bits(DWORD bits)
- 		use_stty = 0;
- 	}
- 
--	if (save_term(0) < 0)
-+	if (save_term(flags) < 0)
- 		return -1;
- 
- 	if (!SetConsoleMode(hconin, cmode_in & ~bits)) {
-@@ -204,14 +204,15 @@ static int disable_bits(DWORD bits)
- 	return 0;
- }
- 
--static int disable_echo(void)
-+static int disable_echo(enum save_term_flags flags)
- {
--	return disable_bits(ENABLE_ECHO_INPUT);
-+	return disable_bits(flags, ENABLE_ECHO_INPUT);
- }
- 
--static int enable_non_canonical(void)
-+static int enable_non_canonical(enum save_term_flags flags)
- {
--	return disable_bits(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT | ENABLE_PROCESSED_INPUT);
-+	return disable_bits(flags,
-+			    ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT | ENABLE_PROCESSED_INPUT);
- }
- 
- /*
-@@ -267,7 +268,7 @@ char *git_terminal_prompt(const char *prompt, int echo)
- 		return NULL;
- 	}
- 
--	if (!echo && disable_echo()) {
-+	if (!echo && disable_echo(0)) {
- 		fclose(input_fh);
- 		fclose(output_fh);
- 		return NULL;
-@@ -361,7 +362,7 @@ int read_key_without_echo(struct strbuf *buf)
- 	static int warning_displayed;
- 	int ch;
- 
--	if (warning_displayed || enable_non_canonical() < 0) {
-+	if (warning_displayed || enable_non_canonical(0) < 0) {
- 		if (!warning_displayed) {
- 			warning("reading single keystrokes not supported on "
- 				"this platform; reading line instead");
-@@ -413,10 +414,10 @@ int read_key_without_echo(struct strbuf *buf)
- 
- #else
- 
--int save_term(int full_duplex)
-+int save_term(enum save_term_flags flags)
- {
--	/* full_duplex == 1, but no support available */
--	return -full_duplex;
-+	/* no duplex support available */
-+	return -!!(flags & SAVE_TERM_DUPLEX);
- }
- 
- void restore_term(void)
-diff --git a/compat/terminal.h b/compat/terminal.h
-index 0fb9fa147c..aeb24c9478 100644
---- a/compat/terminal.h
-+++ b/compat/terminal.h
-@@ -1,14 +1,19 @@
- #ifndef COMPAT_TERMINAL_H
- #define COMPAT_TERMINAL_H
- 
-+enum save_term_flags {
-+	/* Save input and output settings */
-+	SAVE_TERM_DUPLEX = 1 << 0,
-+};
-+
- /*
-  * Save the terminal attributes so they can be restored later by a
-  * call to restore_term(). Note that every successful call to
-  * save_term() must be matched by a call to restore_term() even if the
-  * attributes have not been changed. Returns 0 on success, -1 on
-  * failure.
-  */
--int save_term(int full_duplex);
-+int save_term(enum save_term_flags flags);
- /* Restore the terminal attributes that were saved with save_term() */
- void restore_term(void);
- 
+
 -- 
 2.35.1
 
