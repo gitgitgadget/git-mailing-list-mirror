@@ -2,161 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B8EC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 17:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2946BC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 17:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344163AbiCORnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 13:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
+        id S1350648AbiCORoS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 13:44:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350729AbiCORnB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 13:43:01 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D021758E5E
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:41:47 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id x15so30073913wru.13
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=NQkxBxlK6Vs+UvJALa6KSU2vkODNAgOY1j+VRDD2VNg=;
-        b=l5xlR4BidnvIHJwna6Gm/I70OHEHsC0wfi5gOrrElR3zn7TZEc239F8e9aYXcxWs1k
-         EWo8KkD/GryogieLS0+4ExH0JW0clbzbJ4hlyNeJ01M8g4xK88Px/0A2BT3/K1HLBwMs
-         +CuOf9+E7h5kCMKmkSpoQo3IRIxcNbotoPJM+ddk/oVZ3VLB8tD2L4S9U1QqSHACMmL/
-         dT+a37lPvgYUd/kn88v/fUeMfHSFitvPTae66F1C6o71mwVO833Gp9a7I0mBxPN2cZPM
-         /9q+EWpkDX92r8qv44Z7Ub9L+RANEivIDdv8oi9RWJxIxg4uAjQJFbvduZH8h0njoeov
-         RiEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NQkxBxlK6Vs+UvJALa6KSU2vkODNAgOY1j+VRDD2VNg=;
-        b=cglxrL2en27hjPNqGCLpTuHzOJFO9YziLKDxmmisWTjQQlJYjFVFhhNRk70ol98LR7
-         2uCHYQ3BMavnLiL21mLf58+gtFJK1LrBMBdkBvgHRv95pnlX/lER9lLxOu4tx8CMEb5O
-         9P4jKCJrChN/GU3vF3qhI27mOHUqjYSyI+pCecKLHtfYdA+j4ZUJjlf5W9K4Gzk1k3Ma
-         BdPV7QXjB0EHvKlE8m4ckNCdvLsghcqxghdVrCALChnP6Z3Mn2ze9YVXXlFZKZOndUCv
-         qKSTaomUUEJG4ieeS+UnHod+JNWasDqbBmEZGZJTx+wH398d2qiXwa1CTYAi8MfiPod8
-         I8Bw==
-X-Gm-Message-State: AOAM533jYOnyW3gjsSBh/twEWvXKrmzrEsVfWe6xmfrF8ssuu/5QceMo
-        JLX2ri9d+uUMnTxGKiilV1c0a/Fkm+A=
-X-Google-Smtp-Source: ABdhPJxvG4IGlq96WfogP9cskciCydwaPnM8fJgG3d1BsHGASXi7TLkNq2rgzK2Po3HW0wc0q+8JaQ==
-X-Received: by 2002:adf:dcc2:0:b0:1f0:4c38:d6be with SMTP id x2-20020adfdcc2000000b001f04c38d6bemr20907119wrm.79.1647366106054;
-        Tue, 15 Mar 2022 10:41:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15-20020a5d6daf000000b00203db33b2e4sm546838wrs.26.2022.03.15.10.41.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 10:41:45 -0700 (PDT)
-Message-Id: <pull.1178.git.1647366104967.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Mar 2022 17:41:44 +0000
-Subject: [PATCH] maintenance: fix synopsis in documentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S239523AbiCORoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 13:44:16 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E3F22B3D
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 10:43:03 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26F04185B93;
+        Tue, 15 Mar 2022 13:43:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zTIIANIn5wj0JQXB2XmnOaOG6f70KxsnknrYQv
+        CD7Zk=; b=Cq78NVCiKO011UWEZlWkA/jFx3QRq11sQr8th2HYcxdgo1oe6DZae+
+        FihzvARjF3DqFg3fBDncL2cgNYvlgdyOj/4T3RTumbp4ytdJhtXdor1CFlZg7ZYy
+        qgXNx9DdcyrWeXsOVA2GZk0LxiZSxW5BJkiD2QezZYNENDZ+I4f1o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 209E5185B92;
+        Tue, 15 Mar 2022 13:43:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9EC3F185B8E;
+        Tue, 15 Mar 2022 13:43:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 2/4] terminal: don't assume stdin is /dev/tty
+References: <20220304131126.8293-1-phillip.wood123@gmail.com>
+        <20220315105723.19398-1-phillip.wood123@gmail.com>
+        <20220315105723.19398-3-phillip.wood123@gmail.com>
+Date:   Tue, 15 Mar 2022 10:42:59 -0700
+In-Reply-To: <20220315105723.19398-3-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Tue, 15 Mar 2022 10:57:21 +0000")
+Message-ID: <xmqqzglrdsd8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, shaoxuan.yuan02@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5BA41D00-A487-11EC-867A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-The synopsis for 'git maintenance' did not include the commands other
-than the 'run' command. Update this to include the others. The 'start'
-command is the only one of these that parses additional options, and
-then only the --scheduler option.
+> diff --git a/compat/terminal.c b/compat/terminal.c
+> index da2f788137..bfbde3c1af 100644
+> --- a/compat/terminal.c
+> +++ b/compat/terminal.c
+> @@ -23,21 +23,28 @@ static void restore_term_on_signal(int sig)
+>  static int term_fd = -1;
 
-Also move the 'register' command down after 'stop' and before
-'unregister' for a logical grouping of the commands instead of an
-alphabetical one. The diff makes it look as three other commands are
-moved up.
+The variable can be -1 to signal "no valid file descriptor".
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
-    maintenance: fix synopsis in documentation
-    
-    This is a quick fix for an issue I noticed during another review [1].
-    
-    Thanks, -Stolee
-    
-    [1]
-    https://lore.kernel.org/git/dd9413da-1b8c-2adf-c471-e5fd4230375c@github.com/
+>  static struct termios old_term;
+>  
+> +static void close_term_fd(void)
+> +{
+> +	if (term_fd)
+> +		close(term_fd);
+> +	term_fd = -1;
+> +}
+> +
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1178%2Fderrickstolee%2Fmaintenance-docs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1178/derrickstolee/maintenance-docs-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1178
+And we use that negative value after closing it.
 
- Documentation/git-maintenance.txt | 38 ++++++++++++++++---------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+The check before closing it is wrong.  It should be
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index e2cfb68ab57..e56bad28c65 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -10,6 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git maintenance' run [<options>]
-+'git maintenance' start [--scheduler=<scheduler>]
-+'git maintenance' (stop|register|unregister)
- 
- 
- DESCRIPTION
-@@ -29,6 +31,24 @@ Git repository.
- SUBCOMMANDS
- -----------
- 
-+run::
-+	Run one or more maintenance tasks. If one or more `--task` options
-+	are specified, then those tasks are run in that order. Otherwise,
-+	the tasks are determined by which `maintenance.<task>.enabled`
-+	config options are true. By default, only `maintenance.gc.enabled`
-+	is true.
-+
-+start::
-+	Start running maintenance on the current repository. This performs
-+	the same config updates as the `register` subcommand, then updates
-+	the background scheduler to run `git maintenance run --scheduled`
-+	on an hourly basis.
-+
-+stop::
-+	Halt the background maintenance schedule. The current repository
-+	is not removed from the list of maintained repositories, in case
-+	the background maintenance is restarted later.
-+
- register::
- 	Initialize Git config values so any scheduled maintenance will
- 	start running on this repository. This adds the repository to the
-@@ -55,24 +75,6 @@ task:
- setting `maintenance.auto = false` in the current repository. This config
- setting will remain after a `git maintenance unregister` command.
- 
--run::
--	Run one or more maintenance tasks. If one or more `--task` options
--	are specified, then those tasks are run in that order. Otherwise,
--	the tasks are determined by which `maintenance.<task>.enabled`
--	config options are true. By default, only `maintenance.gc.enabled`
--	is true.
--
--start::
--	Start running maintenance on the current repository. This performs
--	the same config updates as the `register` subcommand, then updates
--	the background scheduler to run `git maintenance run --scheduled`
--	on an hourly basis.
--
--stop::
--	Halt the background maintenance schedule. The current repository
--	is not removed from the list of maintained repositories, in case
--	the background maintenance is restarted later.
--
- unregister::
- 	Remove the current repository from background maintenance. This
- 	only removes the repository from the configured list. It does not
+	if (0 <= term_fd)
 
-base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
--- 
-gitgitgadget
+instead.  Or we could mimick the beginning of restore_term(), i.e.
+
+	if (term_fd < 0)
+		return;
+	close(term_fd);
+	term_fd = -1;
+
+>  void restore_term(void)
+>  {
+>  	if (term_fd < 0)
+>  		return;
+>  
+>  	tcsetattr(term_fd, TCSAFLUSH, &old_term);
+> -	close(term_fd);
+> -	term_fd = -1;
+> +	close_term_fd();
+
+Because we come this far only when term_fd is valid, this change is
+a no-op.  If we are adding more calls to close_term_fd(), it may be
+a good abstraction.
+
+>  	sigchain_pop_common();
+>  }
+>  
+>  int save_term(enum save_term_flags flags)
+>  {
+>  	if (term_fd < 0)
+> -		term_fd = open("/dev/tty", O_RDWR);
+> +		term_fd = (flags & SAVE_TERM_STDIN) ? 0
+> +						    : open("/dev/tty", O_RDWR);
+
+We can avoid overly long line by wrapping differently:
+
+		term_fd = ((flags & SAVE_TERM_STDIN)
+			   ? 0
+			   : open("/dev/tty", O_RDWR));
+
+We can turn our head sideways to see the parse tree this way.
+
+> @@ -66,8 +73,7 @@ static int disable_bits(enum save_term_flags flags, tcflag_t bits)
+>  
+>  	sigchain_pop_common();
+>  error:
+> -	close(term_fd);
+> -	term_fd = -1;
+> +	close_term_fd();
+
+OK.
+
+> @@ -362,7 +368,7 @@ int read_key_without_echo(struct strbuf *buf)
+>  	static int warning_displayed;
+>  	int ch;
+>  
+> -	if (warning_displayed || enable_non_canonical(0) < 0) {
+> +	if (warning_displayed || enable_non_canonical(SAVE_TERM_STDIN) < 0) {
+>  		if (!warning_displayed) {
+>  			warning("reading single keystrokes not supported on "
+>  				"this platform; reading line instead");
+
+The validity of this change is harder to see with only what we have
+in the patch, but the control flow is
+
+   enable_non_canonical(bits)
+   -> disable_bits(bits, ...)
+      -> save_term(bits)
+
+And we are passing SAVE_TERM_STDIN to say "reuse fd #0 and save the
+terminal settings of it, instead of opening /dev/tty anew".
+
+What happens if FD#0 is *not* connected to a tty, by the way?
+tcgetattr() in save_term() would fail, without clearing term_fd
+(i.e. term_fd is still 0 when save_term() returns a failure), and
+goes to the error code path, where close_term_fd() is called.
+
+Because we have the "if (term_fd)" bug in save_term(), this bug is
+hidden, but I think save_term() upon seeing a failure from tcgetattr()
+should clear term_fd to limit the damage, especially when it is trying
+to futz with caller supplied FD#0, not the tty it opened itself?
+
+> diff --git a/compat/terminal.h b/compat/terminal.h
+> index aeb24c9478..79ed00cf61 100644
+> --- a/compat/terminal.h
+> +++ b/compat/terminal.h
+> @@ -4,6 +4,8 @@
+>  enum save_term_flags {
+>  	/* Save input and output settings */
+>  	SAVE_TERM_DUPLEX = 1 << 0,
+> +	/* Save stdin rather than /dev/tty (fails if stdin is not a terminal) */
+> +	SAVE_TERM_STDIN  = 1 << 1,
+>  };
+>  
+>  /*
