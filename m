@@ -2,136 +2,3066 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B75D2C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 12:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA072C433EF
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 13:16:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347533AbiCOM6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 08:58:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
+        id S244090AbiCONSD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 09:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234583AbiCOM6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 08:58:41 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6A74E39E
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 05:57:29 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id w20-20020a4ae9f4000000b003243aa2c71aso4159683ooc.0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 05:57:29 -0700 (PDT)
+        with ESMTP id S239589AbiCONSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 09:18:02 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6C1527C7
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 06:16:47 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id qa43so40965340ejc.12
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 06:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AyP2ZbhxEFpEP6D9l+yx6RS4Q8I2w0HIMkLnayh/s4A=;
-        b=LBdrjwIzbJlbruWd8/Huw7TMmZKirsaAHfEjoNlXh8AkU2HkGtq8IEuSFEKdhgNSbt
-         EWC3NI+gEzkDN923F06iK1KuHF9CI4y5hOtKKk0YuzvslY1MH+6pSDuN6SFFQsHkJV+k
-         7ckdOWmRi0e1hBPrNZmKZf3V4I1NHERholq/Or7/v/Mmnd0UKdZwQU4tnHLBb6NuGvkh
-         J8TghO+BhlsOybR7VnBq0nDz0o6T5gnyP/Yx1ANBLJsA9cq6ZEFESJAjo2NTO9K3qE5U
-         65uqRkbcqwvwaWLM7vyFJhpAGoAedxi+9ueYSYdyl6U6KbNxAIQufKQy/96jHxq9zcgC
-         Astg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=z+KOQKHRK5p+awHF4u5o+N8p45db3MALNpcymzxy6Fg=;
+        b=PSE0nJ97IvCroUhTR5LrNjl4XyYEEupGg7l0H4Sd6ltY3XGtYGyRBDSpjcNqa1LcoN
+         IISorP6weosqbjuGYXwn9a01d6kCAX2ldF025hGhXJfeW4rqv7lP2R+gBDVbmnQbueig
+         1d0hrROSO95W5zLZJTXCQ3tcKVkbUOXwuKXhKfLircI25uqtsLM7K4AUFQVfZYUAcU7d
+         JVro2ZVYHvwMWcIiGFbDM/n8+HRwtUhR/U6KVZ4UCE0mWoELbGwRd8TqFvLARWEP3bjF
+         OLW4a+teZwfRolNDH79JDnETFA9fuuiVCq7KWcuezp+Nd8f2aMV8TF6TRMXDf1dxDAtp
+         WuRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=AyP2ZbhxEFpEP6D9l+yx6RS4Q8I2w0HIMkLnayh/s4A=;
-        b=CU1rug/H3hghFN/JO2U/O/H4Mn2wlUVHSUQpBBJ18eWpzdApGIpZFJbFAg5kCpjBeO
-         bK+EvVAHjFuc0sY1j8z9nYhtczfdm3ASBe1pL4Ohg2wEgH1luQ5gzs/x/i4k7aXKCfMK
-         QMcqRRWwARFfucv+CCNaePEqnTsvDPO+4EO3RcgDYRD9G2TP7j54PscU2uhDvp7txwAI
-         UYQjn/D34tspjgAUlVfRjUWYRkXcuyKn0Bfnip56FIl/htJr+Y39vTuTWy3qyqPhkQmJ
-         QjRrl5FaAoWKW8gcTVtmPHIA4SF+wgoThUCKYUI6AQP+TfxyUvlrRDLjuDB/h0zKADxD
-         cIFA==
-X-Gm-Message-State: AOAM533J1wiT0jOx4ybdLA6fSbDDhh1YHewJ14OBej0QT1rGgSPwuYLO
-        bXpBWiv+c8KZD5PKo58DRwAn
-X-Google-Smtp-Source: ABdhPJz31QUcsNk3MeclRkTKAj+oSd13wCBKx6aDXEi9HvQbpQFHbQicstTQy6NkDkfpwCRQaqKe0A==
-X-Received: by 2002:a05:6870:82a6:b0:dd:9f36:cdc3 with SMTP id q38-20020a05687082a600b000dd9f36cdc3mr754oae.260.1647349048801;
-        Tue, 15 Mar 2022 05:57:28 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p21-20020a4a2f15000000b00320fca09b74sm8829453oop.1.2022.03.15.05.57.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Mar 2022 05:57:27 -0700 (PDT)
-Message-ID: <4d78dece-1212-5232-a441-683e941016c5@github.com>
-Date:   Tue, 15 Mar 2022 08:57:25 -0400
+        bh=z+KOQKHRK5p+awHF4u5o+N8p45db3MALNpcymzxy6Fg=;
+        b=ywluNAK7iQFvrOyNaBIs04AdPTzcHQJqGXQ/PD9ZFAXoi/zS1ApnGTvLGGT6HR0Vnw
+         U76pRnyrCRJm4t12GPhi/G6x6UgLAN/TdCRJ2Llv+fmDUjAOfa5N/qMt5rl7AP0V/DMb
+         C5jkZwNkvM0lseGDcjpe/dTNAesgn9WjDOyT3ZkpKCr8ibcCIEVvvEVA13pmI8nbPKIr
+         +cVienYvkmpJDSuDzHzcWQCuoCYcHhZDzEbFWKTwy/7nlGNzjpE1z+ALXFSHGMP/jnLn
+         3ytj1pKxE25glhk5iJSDwL6dr0agixLtB+ferDrPTJjRh1pvMOXbOd6CV86sgo63XJp+
+         sGmQ==
+X-Gm-Message-State: AOAM531s7Aa1CzbmnryACF3D2pPBUoPHUTvHLO2jPUzHbRF3xoet3QXe
+        doRSeX2E0ME2CCw5l8pIY8u0bjdce28=
+X-Google-Smtp-Source: ABdhPJw0wKFZhgmRxYFwW5Xbk75k+bl0onhb1EtFKI21am1cI57c9UOqWhdakBAxBxz4/GpoV3oOlg==
+X-Received: by 2002:a17:906:5d08:b0:6db:7291:df22 with SMTP id g8-20020a1709065d0800b006db7291df22mr22089454ejt.178.1647350204096;
+        Tue, 15 Mar 2022 06:16:44 -0700 (PDT)
+Received: from fedora35.example.com ([151.27.250.86])
+        by smtp.gmail.com with ESMTPSA id qx13-20020a170906fccd00b006bdeb94f50csm8011888ejb.203.2022.03.15.06.16.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Mar 2022 06:16:43 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] git-curl-compat.h: addition of all symbols defined by curl
+Date:   Tue, 15 Mar 2022 13:16:38 +0000
+Message-Id: <20220315131638.924669-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] partial-clone: add a partial-clone test case
-Content-Language: en-US
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <xmqqa6dsnpj9.fsf@gitster.g>
- <20220315113002.61748-1-chakrabortyabhradeep79@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220315113002.61748-1-chakrabortyabhradeep79@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/15/2022 7:30 AM, Abhradeep Chakraborty wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> 
->> I found it quite a roundabout way to look into trace to see if
->> a "fetch" was run to determine if we are doing the right thing.
->>
->> Regardless of whatever mechanism is used to lazily fetch objects
->> that have become necessary from the promisor remotes, what we want
->> to ensure is that the blob object HEAD:new-file.txt is still missing
->> in our object store after running "log --follow", isn't it?  In a
->> future version of "git", our on-demand lazy fetch mechanism may not
->> even invoke "git fetch" under the hood, after all.
->>
->> Don't we have a more direct way to ask "does this object exist in
->> our object store, or is it merely left as a promise?" without
->> triggering a lazy fetching that we can use in this test?  I think
->> such a direct approach is what we want to use in this test.
-> 
-> I did think of other ways to detect the downloading before. Initially I
-> thought of using grep functionality to see if any download related
-> messages are printed or not. But I found that `git log` doesn't print
-> any download related messages (e.g. like "enumerating ...."). So, I
-> dropped that idea.
-> 
-> The next idea that came into my mind was to detect if the previous file
-> (the file from where the new file is renamed) is still missing ( you're
-> suggesting the same approach). But the problem I faced with this apprach
-> is I didn't find a way to detect if the file is missing.
-> 
-> I tried to use `git rev-list --objects --missing=print` with `HEAD` and
-> first commit hash. But in both cases, I didn't found a missing `[?]` sign
-> before ` <blob-hash-ID> file.txt`. That means, both blob objects ( or I
-> think the same blob object) exists in the local repo.
+This file was produced from a modified version of symbols.pl
+(https://github.com/curl/curl/blob/master/docs/libcurl/symbols.pl) and
+by manually adding the previous comments describing the dates of release
+of some curl versions not currently reported in the symbols-in-versions.
 
-Ah! This method really should have worked. And the test as written
-is not testing the right thing, because we also skip downloading the
-blobs if we already have them.
+To do this the symbols are listed in the order defined in the file
+symbols-in-versions rather than as they were previously inserted based
+on release dates.
 
-I think the key issue is that your clone says this:
+Most of these symbols are not used by git today. However, inserting
+them all starting from an automatic tool makes it largely unnecessary
+to update this file and therefore reduces the possibility
+of introducing possible errors in the future.
 
-+	git clone --filter=blob:none "file://$(pwd)/repo" partial.git &&
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ git-curl-compat.h | 2944 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 2875 insertions(+), 69 deletions(-)
 
-which will do a checkout and download the blobs at tip.
-
-If you add a "--bare" to this clone command, then no blobs should be
-downloaded, and your rev-list command should show the missing objects.
-
-> Most probably, this is because the content of these two files are same.
-> Blob object is never modified. So, as far as I think, both base trees ( one
-> which is pointed by the initial commit and other which is pointed by the latest
-> commit) is pointing to the same blob object. As a result, the file is not
-> missing. ( I am not sure if git really does it as I said; sorry if I am
-> wrong here)
-> 
-> That's why I asked Derrick to help me detecting the download and he
-> suggested me this. It is true that this is not ideal (use of `fetch` may
-> change later). But this was the only option that I can go with.
-> 
-> If you find another/better way or if you think I tried to use `git rev-list
-> ...` in the wrong way -  please tell me. I would be very happy.
-
-Hopefully my suggestion to use --bare will help.
-
-Thanks,
--Stolee
+diff --git a/git-curl-compat.h b/git-curl-compat.h
+index 56a83b6bbd..dc9086710a 100644
+--- a/git-curl-compat.h
++++ b/git-curl-compat.h
+@@ -24,25 +24,1228 @@
+  * doing so is sufficient to add support for it to older versions that
+  * don't have it.
+  *
+- * Keep any symbols in date order of when their support was
+- * introduced, oldest first, in the official version of cURL library.
+- */
+-
+-/**
+- * CURL_SOCKOPT_OK was added in 7.21.5, released in April 2011.
+- */
+-#if LIBCURL_VERSION_NUM < 0x071505
+-#define CURL_SOCKOPT_OK 0
+-#endif
+-
+-/**
+- * CURLOPT_TCP_KEEPALIVE was added in 7.25.0, released in March 2012.
++ * Keep any symbols in the order defined in the file symbols-in-versions
++ *
++ * This file was produced from a modified version of symbols.pl
++ * (https://github.com/curl/curl/blob/master/docs/libcurl/symbols.pl)
++ * and  by  manually adding comments describing the dates of release of
++ * some versions * not currently reported in the symbols-in-versions file
+  */
+-#if LIBCURL_VERSION_NUM >= 0x071900
+-#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
+-#endif
+ 
++#define LIBCURL_HAS(x) \
++  (defined(x ## _FIRST) && (x ## _FIRST <= LIBCURL_VERSION_NUM) && \
++   (!defined(x ## _LAST) || ( x ## _LAST >= LIBCURL_VERSION_NUM)))
+ 
++#define CURLALTSVC_H1_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLALTSVC_H1 \
++	LIBCURL_HAS(CURLALTSVC_H1_FIRST)
++#define CURLALTSVC_H2_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLALTSVC_H2 \
++	LIBCURL_HAS(CURLALTSVC_H2_FIRST)
++#define CURLALTSVC_H3_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLALTSVC_H3 \
++	LIBCURL_HAS(CURLALTSVC_H3_FIRST)
++#define CURLALTSVC_READONLYFILE_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLALTSVC_READONLYFILE \
++	LIBCURL_HAS(CURLALTSVC_READONLYFILE_FIRST)
++#define CURLAUTH_ANY_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_ANY \
++	LIBCURL_HAS(CURLAUTH_ANY_FIRST)
++#define CURLAUTH_ANYSAFE_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_ANYSAFE \
++	LIBCURL_HAS(CURLAUTH_ANYSAFE_FIRST)
++#define CURLAUTH_BASIC_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_BASIC \
++	LIBCURL_HAS(CURLAUTH_BASIC_FIRST)
++#define CURLAUTH_BEARER_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLAUTH_BEARER \
++	LIBCURL_HAS(CURLAUTH_BEARER_FIRST)
++#define CURLAUTH_DIGEST_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_DIGEST \
++	LIBCURL_HAS(CURLAUTH_DIGEST_FIRST)
++#define CURLAUTH_DIGEST_IE_FIRST 0x071303 /* Added in 7.19.3 */
++#define GIT_CURL_HAVE_CURLAUTH_DIGEST_IE \
++	LIBCURL_HAS(CURLAUTH_DIGEST_IE_FIRST)
++#define CURLAUTH_GSSAPI_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLAUTH_GSSAPI \
++	LIBCURL_HAS(CURLAUTH_GSSAPI_FIRST)
++#define CURLAUTH_NEGOTIATE_FIRST 0x072600 /* Added in 7.38.0 */
++#define GIT_CURL_HAVE_CURLAUTH_NEGOTIATE \
++	LIBCURL_HAS(CURLAUTH_NEGOTIATE_FIRST)
++#define CURLAUTH_NONE_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_NONE \
++	LIBCURL_HAS(CURLAUTH_NONE_FIRST)
++#define CURLAUTH_NTLM_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLAUTH_NTLM \
++	LIBCURL_HAS(CURLAUTH_NTLM_FIRST)
++#define CURLAUTH_NTLM_WB_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURLAUTH_NTLM_WB \
++	LIBCURL_HAS(CURLAUTH_NTLM_WB_FIRST)
++#define CURLAUTH_ONLY_FIRST 0x071503 /* Added in 7.21.3 */
++#define GIT_CURL_HAVE_CURLAUTH_ONLY \
++	LIBCURL_HAS(CURLAUTH_ONLY_FIRST)
++#define CURLAUTH_AWS_SIGV4_FIRST 0x074b00 /* Added in 7.75.0 */
++#define GIT_CURL_HAVE_CURLAUTH_AWS_SIGV4 \
++	LIBCURL_HAS(CURLAUTH_AWS_SIGV4_FIRST)
++#define CURLCLOSEPOLICY_CALLBACK_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_CALLBACK \
++	LIBCURL_HAS(CURLCLOSEPOLICY_CALLBACK_FIRST)
++#define CURLCLOSEPOLICY_LEAST_RECENTLY_USED_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_LEAST_RECENTLY_USED \
++	LIBCURL_HAS(CURLCLOSEPOLICY_LEAST_RECENTLY_USED_FIRST)
++#define CURLCLOSEPOLICY_LEAST_TRAFFIC_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_LEAST_TRAFFIC \
++	LIBCURL_HAS(CURLCLOSEPOLICY_LEAST_TRAFFIC_FIRST)
++#define CURLCLOSEPOLICY_NONE_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_NONE \
++	LIBCURL_HAS(CURLCLOSEPOLICY_NONE_FIRST)
++#define CURLCLOSEPOLICY_OLDEST_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_OLDEST \
++	LIBCURL_HAS(CURLCLOSEPOLICY_OLDEST_FIRST)
++#define CURLCLOSEPOLICY_SLOWEST_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLCLOSEPOLICY_SLOWEST \
++	LIBCURL_HAS(CURLCLOSEPOLICY_SLOWEST_FIRST)
++#define CURLE_ABORTED_BY_CALLBACK_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_ABORTED_BY_CALLBACK \
++	LIBCURL_HAS(CURLE_ABORTED_BY_CALLBACK_FIRST)
++#define CURLE_AGAIN_FIRST 0x071202 /* Added in 7.18.2 */
++#define GIT_CURL_HAVE_CURLE_AGAIN \
++	LIBCURL_HAS(CURLE_AGAIN_FIRST)
++#define CURLE_AUTH_ERROR_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURLE_AUTH_ERROR \
++	LIBCURL_HAS(CURLE_AUTH_ERROR_FIRST)
++#define CURLE_BAD_CONTENT_ENCODING_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_BAD_CONTENT_ENCODING \
++	LIBCURL_HAS(CURLE_BAD_CONTENT_ENCODING_FIRST)
++#define CURLE_BAD_DOWNLOAD_RESUME_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_BAD_DOWNLOAD_RESUME \
++	LIBCURL_HAS(CURLE_BAD_DOWNLOAD_RESUME_FIRST)
++#define CURLE_BAD_FUNCTION_ARGUMENT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_BAD_FUNCTION_ARGUMENT \
++	LIBCURL_HAS(CURLE_BAD_FUNCTION_ARGUMENT_FIRST)
++#define CURLE_CHUNK_FAILED_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLE_CHUNK_FAILED \
++	LIBCURL_HAS(CURLE_CHUNK_FAILED_FIRST)
++#define CURLE_CONV_FAILED_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLE_CONV_FAILED \
++	LIBCURL_HAS(CURLE_CONV_FAILED_FIRST)
++#define CURLE_COULDNT_CONNECT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_COULDNT_CONNECT \
++	LIBCURL_HAS(CURLE_COULDNT_CONNECT_FIRST)
++#define CURLE_COULDNT_RESOLVE_HOST_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_COULDNT_RESOLVE_HOST \
++	LIBCURL_HAS(CURLE_COULDNT_RESOLVE_HOST_FIRST)
++#define CURLE_COULDNT_RESOLVE_PROXY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_COULDNT_RESOLVE_PROXY \
++	LIBCURL_HAS(CURLE_COULDNT_RESOLVE_PROXY_FIRST)
++#define CURLE_FAILED_INIT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FAILED_INIT \
++	LIBCURL_HAS(CURLE_FAILED_INIT_FIRST)
++#define CURLE_FILESIZE_EXCEEDED_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLE_FILESIZE_EXCEEDED \
++	LIBCURL_HAS(CURLE_FILESIZE_EXCEEDED_FIRST)
++#define CURLE_FILE_COULDNT_READ_FILE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FILE_COULDNT_READ_FILE \
++	LIBCURL_HAS(CURLE_FILE_COULDNT_READ_FILE_FIRST)
++#define CURLE_FTP_ACCEPT_FAILED_FIRST 0x071800 /* Added in 7.24.0 */
++#define GIT_CURL_HAVE_CURLE_FTP_ACCEPT_FAILED \
++	LIBCURL_HAS(CURLE_FTP_ACCEPT_FAILED_FIRST)
++#define CURLE_FTP_ACCEPT_TIMEOUT_FIRST 0x071800 /* Added in 7.24.0 */
++#define GIT_CURL_HAVE_CURLE_FTP_ACCEPT_TIMEOUT \
++	LIBCURL_HAS(CURLE_FTP_ACCEPT_TIMEOUT_FIRST)
++#define CURLE_FTP_BAD_FILE_LIST_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLE_FTP_BAD_FILE_LIST \
++	LIBCURL_HAS(CURLE_FTP_BAD_FILE_LIST_FIRST)
++#define CURLE_FTP_CANT_GET_HOST_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_CANT_GET_HOST \
++	LIBCURL_HAS(CURLE_FTP_CANT_GET_HOST_FIRST)
++#define CURLE_FTP_COULDNT_RETR_FILE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_COULDNT_RETR_FILE \
++	LIBCURL_HAS(CURLE_FTP_COULDNT_RETR_FILE_FIRST)
++#define CURLE_FTP_COULDNT_SET_TYPE_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_FTP_COULDNT_SET_TYPE \
++	LIBCURL_HAS(CURLE_FTP_COULDNT_SET_TYPE_FIRST)
++#define CURLE_FTP_COULDNT_USE_REST_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_COULDNT_USE_REST \
++	LIBCURL_HAS(CURLE_FTP_COULDNT_USE_REST_FIRST)
++#define CURLE_FTP_PORT_FAILED_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_PORT_FAILED \
++	LIBCURL_HAS(CURLE_FTP_PORT_FAILED_FIRST)
++#define CURLE_FTP_PRET_FAILED_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLE_FTP_PRET_FAILED \
++	LIBCURL_HAS(CURLE_FTP_PRET_FAILED_FIRST)
++#define CURLE_FTP_WEIRD_227_FORMAT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_WEIRD_227_FORMAT \
++	LIBCURL_HAS(CURLE_FTP_WEIRD_227_FORMAT_FIRST)
++#define CURLE_FTP_WEIRD_PASS_REPLY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_WEIRD_PASS_REPLY \
++	LIBCURL_HAS(CURLE_FTP_WEIRD_PASS_REPLY_FIRST)
++#define CURLE_FTP_WEIRD_PASV_REPLY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FTP_WEIRD_PASV_REPLY \
++	LIBCURL_HAS(CURLE_FTP_WEIRD_PASV_REPLY_FIRST)
++#define CURLE_FUNCTION_NOT_FOUND_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_FUNCTION_NOT_FOUND \
++	LIBCURL_HAS(CURLE_FUNCTION_NOT_FOUND_FIRST)
++#define CURLE_GOT_NOTHING_FIRST 0x070901 /* Added in 7.9.1 */
++#define GIT_CURL_HAVE_CURLE_GOT_NOTHING \
++	LIBCURL_HAS(CURLE_GOT_NOTHING_FIRST)
++#define CURLE_HTTP2_FIRST 0x072600 /* Added in 7.38.0 */
++#define GIT_CURL_HAVE_CURLE_HTTP2 \
++	LIBCURL_HAS(CURLE_HTTP2_FIRST)
++#define CURLE_HTTP2_STREAM_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLE_HTTP2_STREAM \
++	LIBCURL_HAS(CURLE_HTTP2_STREAM_FIRST)
++#define CURLE_HTTP3_FIRST 0x074400 /* Added in 7.68.0 */
++#define GIT_CURL_HAVE_CURLE_HTTP3 \
++	LIBCURL_HAS(CURLE_HTTP3_FIRST)
++#define CURLE_HTTP_POST_ERROR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_HTTP_POST_ERROR \
++	LIBCURL_HAS(CURLE_HTTP_POST_ERROR_FIRST)
++#define CURLE_HTTP_RETURNED_ERROR_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLE_HTTP_RETURNED_ERROR \
++	LIBCURL_HAS(CURLE_HTTP_RETURNED_ERROR_FIRST)
++#define CURLE_INTERFACE_FAILED_FIRST 0x070c00 /* Added in 7.12.0 */
++#define GIT_CURL_HAVE_CURLE_INTERFACE_FAILED \
++	LIBCURL_HAS(CURLE_INTERFACE_FAILED_FIRST)
++#define CURLE_LDAP_CANNOT_BIND_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_LDAP_CANNOT_BIND \
++	LIBCURL_HAS(CURLE_LDAP_CANNOT_BIND_FIRST)
++#define CURLE_LDAP_SEARCH_FAILED_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_LDAP_SEARCH_FAILED \
++	LIBCURL_HAS(CURLE_LDAP_SEARCH_FAILED_FIRST)
++#define CURLE_LOGIN_DENIED_FIRST 0x070d01 /* Added in 7.13.1 */
++#define GIT_CURL_HAVE_CURLE_LOGIN_DENIED \
++	LIBCURL_HAS(CURLE_LOGIN_DENIED_FIRST)
++#define CURLE_NOT_BUILT_IN_FIRST 0x071505 /* Added in 7.21.5 */
++#define GIT_CURL_HAVE_CURLE_NOT_BUILT_IN \
++	LIBCURL_HAS(CURLE_NOT_BUILT_IN_FIRST)
++#define CURLE_NO_CONNECTION_AVAILABLE_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLE_NO_CONNECTION_AVAILABLE \
++	LIBCURL_HAS(CURLE_NO_CONNECTION_AVAILABLE_FIRST)
++#define CURLE_OK_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_OK \
++	LIBCURL_HAS(CURLE_OK_FIRST)
++#define CURLE_OPERATION_TIMEDOUT_FIRST 0x070a02 /* Added in 7.10.2 */
++#define GIT_CURL_HAVE_CURLE_OPERATION_TIMEDOUT \
++	LIBCURL_HAS(CURLE_OPERATION_TIMEDOUT_FIRST)
++#define CURLE_OUT_OF_MEMORY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_OUT_OF_MEMORY \
++	LIBCURL_HAS(CURLE_OUT_OF_MEMORY_FIRST)
++#define CURLE_PARTIAL_FILE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_PARTIAL_FILE \
++	LIBCURL_HAS(CURLE_PARTIAL_FILE_FIRST)
++#define CURLE_PEER_FAILED_VERIFICATION_FIRST 0x071101 /* Added in 7.17.1 */
++#define GIT_CURL_HAVE_CURLE_PEER_FAILED_VERIFICATION \
++	LIBCURL_HAS(CURLE_PEER_FAILED_VERIFICATION_FIRST)
++#define CURLE_PROXY_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLE_PROXY \
++	LIBCURL_HAS(CURLE_PROXY_FIRST)
++#define CURLE_QUIC_CONNECT_ERROR_FIRST 0x074500 /* Added in 7.69.0 */
++#define GIT_CURL_HAVE_CURLE_QUIC_CONNECT_ERROR \
++	LIBCURL_HAS(CURLE_QUIC_CONNECT_ERROR_FIRST)
++#define CURLE_QUOTE_ERROR_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_QUOTE_ERROR \
++	LIBCURL_HAS(CURLE_QUOTE_ERROR_FIRST)
++#define CURLE_RANGE_ERROR_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_RANGE_ERROR \
++	LIBCURL_HAS(CURLE_RANGE_ERROR_FIRST)
++#define CURLE_READ_ERROR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_READ_ERROR \
++	LIBCURL_HAS(CURLE_READ_ERROR_FIRST)
++#define CURLE_RECURSIVE_API_CALL_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLE_RECURSIVE_API_CALL \
++	LIBCURL_HAS(CURLE_RECURSIVE_API_CALL_FIRST)
++#define CURLE_RECV_ERROR_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_RECV_ERROR \
++	LIBCURL_HAS(CURLE_RECV_ERROR_FIRST)
++#define CURLE_REMOTE_ACCESS_DENIED_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_REMOTE_ACCESS_DENIED \
++	LIBCURL_HAS(CURLE_REMOTE_ACCESS_DENIED_FIRST)
++#define CURLE_REMOTE_DISK_FULL_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_REMOTE_DISK_FULL \
++	LIBCURL_HAS(CURLE_REMOTE_DISK_FULL_FIRST)
++#define CURLE_REMOTE_FILE_EXISTS_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_REMOTE_FILE_EXISTS \
++	LIBCURL_HAS(CURLE_REMOTE_FILE_EXISTS_FIRST)
++#define CURLE_REMOTE_FILE_NOT_FOUND_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLE_REMOTE_FILE_NOT_FOUND \
++	LIBCURL_HAS(CURLE_REMOTE_FILE_NOT_FOUND_FIRST)
++#define CURLE_RTSP_CSEQ_ERROR_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLE_RTSP_CSEQ_ERROR \
++	LIBCURL_HAS(CURLE_RTSP_CSEQ_ERROR_FIRST)
++#define CURLE_RTSP_SESSION_ERROR_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLE_RTSP_SESSION_ERROR \
++	LIBCURL_HAS(CURLE_RTSP_SESSION_ERROR_FIRST)
++#define CURLE_SEND_ERROR_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_SEND_ERROR \
++	LIBCURL_HAS(CURLE_SEND_ERROR_FIRST)
++#define CURLE_SEND_FAIL_REWIND_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLE_SEND_FAIL_REWIND \
++	LIBCURL_HAS(CURLE_SEND_FAIL_REWIND_FIRST)
++#define CURLE_SETOPT_OPTION_SYNTAX_FIRST 0x074e00 /* Added in 7.78.0 */
++#define GIT_CURL_HAVE_CURLE_SETOPT_OPTION_SYNTAX \
++	LIBCURL_HAS(CURLE_SETOPT_OPTION_SYNTAX_FIRST)
++#define CURLE_SSH_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLE_SSH \
++	LIBCURL_HAS(CURLE_SSH_FIRST)
++#define CURLE_SSL_CACERT_BADFILE_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_CACERT_BADFILE \
++	LIBCURL_HAS(CURLE_SSL_CACERT_BADFILE_FIRST)
++#define CURLE_SSL_CERTPROBLEM_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_SSL_CERTPROBLEM \
++	LIBCURL_HAS(CURLE_SSL_CERTPROBLEM_FIRST)
++#define CURLE_SSL_CIPHER_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLE_SSL_CIPHER \
++	LIBCURL_HAS(CURLE_SSL_CIPHER_FIRST)
++#define CURLE_SSL_CLIENTCERT_FIRST 0x074d00 /* Added in 7.77.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_CLIENTCERT \
++	LIBCURL_HAS(CURLE_SSL_CLIENTCERT_FIRST)
++#define CURLE_SSL_CONNECT_ERROR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_SSL_CONNECT_ERROR \
++	LIBCURL_HAS(CURLE_SSL_CONNECT_ERROR_FIRST)
++#define CURLE_SSL_CRL_BADFILE_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_CRL_BADFILE \
++	LIBCURL_HAS(CURLE_SSL_CRL_BADFILE_FIRST)
++#define CURLE_SSL_ENGINE_INITFAILED_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLE_SSL_ENGINE_INITFAILED \
++	LIBCURL_HAS(CURLE_SSL_ENGINE_INITFAILED_FIRST)
++#define CURLE_SSL_ENGINE_NOTFOUND_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLE_SSL_ENGINE_NOTFOUND \
++	LIBCURL_HAS(CURLE_SSL_ENGINE_NOTFOUND_FIRST)
++#define CURLE_SSL_ENGINE_SETFAILED_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLE_SSL_ENGINE_SETFAILED \
++	LIBCURL_HAS(CURLE_SSL_ENGINE_SETFAILED_FIRST)
++#define CURLE_SSL_INVALIDCERTSTATUS_FIRST 0x072900 /* Added in 7.41.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_INVALIDCERTSTATUS \
++	LIBCURL_HAS(CURLE_SSL_INVALIDCERTSTATUS_FIRST)
++#define CURLE_SSL_ISSUER_ERROR_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_ISSUER_ERROR \
++	LIBCURL_HAS(CURLE_SSL_ISSUER_ERROR_FIRST)
++#define CURLE_SSL_PINNEDPUBKEYNOTMATCH_FIRST 0x072700 /* Added in 7.39.0 */
++#define GIT_CURL_HAVE_CURLE_SSL_PINNEDPUBKEYNOTMATCH \
++	LIBCURL_HAS(CURLE_SSL_PINNEDPUBKEYNOTMATCH_FIRST)
++#define CURLE_SSL_SHUTDOWN_FAILED_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLE_SSL_SHUTDOWN_FAILED \
++	LIBCURL_HAS(CURLE_SSL_SHUTDOWN_FAILED_FIRST)
++#define CURLE_TELNET_OPTION_SYNTAX_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLE_TELNET_OPTION_SYNTAX \
++	LIBCURL_HAS(CURLE_TELNET_OPTION_SYNTAX_FIRST)
++#define CURLE_TFTP_ILLEGAL_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLE_TFTP_ILLEGAL \
++	LIBCURL_HAS(CURLE_TFTP_ILLEGAL_FIRST)
++#define CURLE_TFTP_NOSUCHUSER_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLE_TFTP_NOSUCHUSER \
++	LIBCURL_HAS(CURLE_TFTP_NOSUCHUSER_FIRST)
++#define CURLE_TFTP_NOTFOUND_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLE_TFTP_NOTFOUND \
++	LIBCURL_HAS(CURLE_TFTP_NOTFOUND_FIRST)
++#define CURLE_TFTP_PERM_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLE_TFTP_PERM \
++	LIBCURL_HAS(CURLE_TFTP_PERM_FIRST)
++#define CURLE_TFTP_UNKNOWNID_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLE_TFTP_UNKNOWNID \
++	LIBCURL_HAS(CURLE_TFTP_UNKNOWNID_FIRST)
++#define CURLE_TOO_MANY_REDIRECTS_FIRST 0x070500 /* Added in 7.5 */
++#define GIT_CURL_HAVE_CURLE_TOO_MANY_REDIRECTS \
++	LIBCURL_HAS(CURLE_TOO_MANY_REDIRECTS_FIRST)
++#define CURLE_UNKNOWN_OPTION_FIRST 0x071505 /* Added in 7.21.5 */
++#define GIT_CURL_HAVE_CURLE_UNKNOWN_OPTION \
++	LIBCURL_HAS(CURLE_UNKNOWN_OPTION_FIRST)
++#define CURLE_UNSUPPORTED_PROTOCOL_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_UNSUPPORTED_PROTOCOL \
++	LIBCURL_HAS(CURLE_UNSUPPORTED_PROTOCOL_FIRST)
++#define CURLE_UPLOAD_FAILED_FIRST 0x071003 /* Added in 7.16.3 */
++#define GIT_CURL_HAVE_CURLE_UPLOAD_FAILED \
++	LIBCURL_HAS(CURLE_UPLOAD_FAILED_FIRST)
++#define CURLE_URL_MALFORMAT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_URL_MALFORMAT \
++	LIBCURL_HAS(CURLE_URL_MALFORMAT_FIRST)
++#define CURLE_USE_SSL_FAILED_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLE_USE_SSL_FAILED \
++	LIBCURL_HAS(CURLE_USE_SSL_FAILED_FIRST)
++#define CURLE_WEIRD_SERVER_REPLY_FIRST 0x073300 /* Added in 7.51.0 */
++#define GIT_CURL_HAVE_CURLE_WEIRD_SERVER_REPLY \
++	LIBCURL_HAS(CURLE_WEIRD_SERVER_REPLY_FIRST)
++#define CURLE_WRITE_ERROR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLE_WRITE_ERROR \
++	LIBCURL_HAS(CURLE_WRITE_ERROR_FIRST)
++#define CURLFILETYPE_DEVICE_BLOCK_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_DEVICE_BLOCK \
++	LIBCURL_HAS(CURLFILETYPE_DEVICE_BLOCK_FIRST)
++#define CURLFILETYPE_DEVICE_CHAR_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_DEVICE_CHAR \
++	LIBCURL_HAS(CURLFILETYPE_DEVICE_CHAR_FIRST)
++#define CURLFILETYPE_DIRECTORY_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_DIRECTORY \
++	LIBCURL_HAS(CURLFILETYPE_DIRECTORY_FIRST)
++#define CURLFILETYPE_DOOR_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_DOOR \
++	LIBCURL_HAS(CURLFILETYPE_DOOR_FIRST)
++#define CURLFILETYPE_FILE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_FILE \
++	LIBCURL_HAS(CURLFILETYPE_FILE_FIRST)
++#define CURLFILETYPE_NAMEDPIPE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_NAMEDPIPE \
++	LIBCURL_HAS(CURLFILETYPE_NAMEDPIPE_FIRST)
++#define CURLFILETYPE_SOCKET_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_SOCKET \
++	LIBCURL_HAS(CURLFILETYPE_SOCKET_FIRST)
++#define CURLFILETYPE_SYMLINK_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_SYMLINK \
++	LIBCURL_HAS(CURLFILETYPE_SYMLINK_FIRST)
++#define CURLFILETYPE_UNKNOWN_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFILETYPE_UNKNOWN \
++	LIBCURL_HAS(CURLFILETYPE_UNKNOWN_FIRST)
++#define CURLFINFOFLAG_KNOWN_FILENAME_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_FILENAME \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_FILENAME_FIRST)
++#define CURLFINFOFLAG_KNOWN_FILETYPE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_FILETYPE \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_FILETYPE_FIRST)
++#define CURLFINFOFLAG_KNOWN_GID_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_GID \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_GID_FIRST)
++#define CURLFINFOFLAG_KNOWN_HLINKCOUNT_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_HLINKCOUNT \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_HLINKCOUNT_FIRST)
++#define CURLFINFOFLAG_KNOWN_PERM_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_PERM \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_PERM_FIRST)
++#define CURLFINFOFLAG_KNOWN_SIZE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_SIZE \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_SIZE_FIRST)
++#define CURLFINFOFLAG_KNOWN_TIME_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_TIME \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_TIME_FIRST)
++#define CURLFINFOFLAG_KNOWN_UID_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLFINFOFLAG_KNOWN_UID \
++	LIBCURL_HAS(CURLFINFOFLAG_KNOWN_UID_FIRST)
++#define CURLFTPAUTH_DEFAULT_FIRST 0x070c02 /* Added in 7.12.2 */
++#define GIT_CURL_HAVE_CURLFTPAUTH_DEFAULT \
++	LIBCURL_HAS(CURLFTPAUTH_DEFAULT_FIRST)
++#define CURLFTPAUTH_SSL_FIRST 0x070c02 /* Added in 7.12.2 */
++#define GIT_CURL_HAVE_CURLFTPAUTH_SSL \
++	LIBCURL_HAS(CURLFTPAUTH_SSL_FIRST)
++#define CURLFTPAUTH_TLS_FIRST 0x070c02 /* Added in 7.12.2 */
++#define GIT_CURL_HAVE_CURLFTPAUTH_TLS \
++	LIBCURL_HAS(CURLFTPAUTH_TLS_FIRST)
++#define CURLFTPMETHOD_DEFAULT_FIRST 0x070f03 /* Added in 7.15.3 */
++#define GIT_CURL_HAVE_CURLFTPMETHOD_DEFAULT \
++	LIBCURL_HAS(CURLFTPMETHOD_DEFAULT_FIRST)
++#define CURLFTPMETHOD_MULTICWD_FIRST 0x070f03 /* Added in 7.15.3 */
++#define GIT_CURL_HAVE_CURLFTPMETHOD_MULTICWD \
++	LIBCURL_HAS(CURLFTPMETHOD_MULTICWD_FIRST)
++#define CURLFTPMETHOD_NOCWD_FIRST 0x070f03 /* Added in 7.15.3 */
++#define GIT_CURL_HAVE_CURLFTPMETHOD_NOCWD \
++	LIBCURL_HAS(CURLFTPMETHOD_NOCWD_FIRST)
++#define CURLFTPMETHOD_SINGLECWD_FIRST 0x070f03 /* Added in 7.15.3 */
++#define GIT_CURL_HAVE_CURLFTPMETHOD_SINGLECWD \
++	LIBCURL_HAS(CURLFTPMETHOD_SINGLECWD_FIRST)
++#define CURLFTPSSL_CCC_ACTIVE_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLFTPSSL_CCC_ACTIVE \
++	LIBCURL_HAS(CURLFTPSSL_CCC_ACTIVE_FIRST)
++#define CURLFTPSSL_CCC_NONE_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLFTPSSL_CCC_NONE \
++	LIBCURL_HAS(CURLFTPSSL_CCC_NONE_FIRST)
++#define CURLFTPSSL_CCC_PASSIVE_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLFTPSSL_CCC_PASSIVE \
++	LIBCURL_HAS(CURLFTPSSL_CCC_PASSIVE_FIRST)
++#define CURLFTP_CREATE_DIR_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLFTP_CREATE_DIR \
++	LIBCURL_HAS(CURLFTP_CREATE_DIR_FIRST)
++#define CURLFTP_CREATE_DIR_NONE_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLFTP_CREATE_DIR_NONE \
++	LIBCURL_HAS(CURLFTP_CREATE_DIR_NONE_FIRST)
++#define CURLFTP_CREATE_DIR_RETRY_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLFTP_CREATE_DIR_RETRY \
++	LIBCURL_HAS(CURLFTP_CREATE_DIR_RETRY_FIRST)
++#define CURLGSSAPI_DELEGATION_FLAG_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURLGSSAPI_DELEGATION_FLAG \
++	LIBCURL_HAS(CURLGSSAPI_DELEGATION_FLAG_FIRST)
++#define CURLGSSAPI_DELEGATION_NONE_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURLGSSAPI_DELEGATION_NONE \
++	LIBCURL_HAS(CURLGSSAPI_DELEGATION_NONE_FIRST)
++#define CURLGSSAPI_DELEGATION_POLICY_FLAG_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURLGSSAPI_DELEGATION_POLICY_FLAG \
++	LIBCURL_HAS(CURLGSSAPI_DELEGATION_POLICY_FLAG_FIRST)
++#define CURLHEADER_SEPARATE_FIRST 0x072500 /* Added in 7.37.0 */
++#define GIT_CURL_HAVE_CURLHEADER_SEPARATE \
++	LIBCURL_HAS(CURLHEADER_SEPARATE_FIRST)
++#define CURLHEADER_UNIFIED_FIRST 0x072500 /* Added in 7.37.0 */
++#define GIT_CURL_HAVE_CURLHEADER_UNIFIED \
++	LIBCURL_HAS(CURLHEADER_UNIFIED_FIRST)
++#define CURLHSTS_ENABLE_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLHSTS_ENABLE \
++	LIBCURL_HAS(CURLHSTS_ENABLE_FIRST)
++#define CURLHSTS_READONLYFILE_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLHSTS_READONLYFILE \
++	LIBCURL_HAS(CURLHSTS_READONLYFILE_FIRST)
++#define CURLINFO_ACTIVESOCKET_FIRST 0x072d00 /* Added in 7.45.0 */
++#define GIT_CURL_HAVE_CURLINFO_ACTIVESOCKET \
++	LIBCURL_HAS(CURLINFO_ACTIVESOCKET_FIRST)
++#define CURLINFO_APPCONNECT_TIME_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLINFO_APPCONNECT_TIME \
++	LIBCURL_HAS(CURLINFO_APPCONNECT_TIME_FIRST)
++#define CURLINFO_APPCONNECT_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_APPCONNECT_TIME_T \
++	LIBCURL_HAS(CURLINFO_APPCONNECT_TIME_T_FIRST)
++#define CURLINFO_CERTINFO_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLINFO_CERTINFO \
++	LIBCURL_HAS(CURLINFO_CERTINFO_FIRST)
++#define CURLINFO_CONDITION_UNMET_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLINFO_CONDITION_UNMET \
++	LIBCURL_HAS(CURLINFO_CONDITION_UNMET_FIRST)
++#define CURLINFO_CONNECT_TIME_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_CONNECT_TIME \
++	LIBCURL_HAS(CURLINFO_CONNECT_TIME_FIRST)
++#define CURLINFO_CONNECT_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_CONNECT_TIME_T \
++	LIBCURL_HAS(CURLINFO_CONNECT_TIME_T_FIRST)
++#define CURLINFO_CONTENT_LENGTH_DOWNLOAD_FIRST 0x070601 /* Added in 7.6.1 */
++#define GIT_CURL_HAVE_CURLINFO_CONTENT_LENGTH_DOWNLOAD \
++	LIBCURL_HAS(CURLINFO_CONTENT_LENGTH_DOWNLOAD_FIRST)
++#define CURLINFO_CONTENT_LENGTH_DOWNLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_CONTENT_LENGTH_DOWNLOAD_T \
++	LIBCURL_HAS(CURLINFO_CONTENT_LENGTH_DOWNLOAD_T_FIRST)
++#define CURLINFO_CONTENT_LENGTH_UPLOAD_FIRST 0x070601 /* Added in 7.6.1 */
++#define GIT_CURL_HAVE_CURLINFO_CONTENT_LENGTH_UPLOAD \
++	LIBCURL_HAS(CURLINFO_CONTENT_LENGTH_UPLOAD_FIRST)
++#define CURLINFO_CONTENT_LENGTH_UPLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_CONTENT_LENGTH_UPLOAD_T \
++	LIBCURL_HAS(CURLINFO_CONTENT_LENGTH_UPLOAD_T_FIRST)
++#define CURLINFO_CONTENT_TYPE_FIRST 0x070904 /* Added in 7.9.4 */
++#define GIT_CURL_HAVE_CURLINFO_CONTENT_TYPE \
++	LIBCURL_HAS(CURLINFO_CONTENT_TYPE_FIRST)
++#define CURLINFO_COOKIELIST_FIRST 0x070e01 /* Added in 7.14.1 */
++#define GIT_CURL_HAVE_CURLINFO_COOKIELIST \
++	LIBCURL_HAS(CURLINFO_COOKIELIST_FIRST)
++#define CURLINFO_DATA_IN_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_DATA_IN \
++	LIBCURL_HAS(CURLINFO_DATA_IN_FIRST)
++#define CURLINFO_DATA_OUT_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_DATA_OUT \
++	LIBCURL_HAS(CURLINFO_DATA_OUT_FIRST)
++#define CURLINFO_DOUBLE_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_DOUBLE \
++	LIBCURL_HAS(CURLINFO_DOUBLE_FIRST)
++#define CURLINFO_EFFECTIVE_METHOD_FIRST 0x074800 /* Added in 7.72.0 */
++#define GIT_CURL_HAVE_CURLINFO_EFFECTIVE_METHOD \
++	LIBCURL_HAS(CURLINFO_EFFECTIVE_METHOD_FIRST)
++#define CURLINFO_EFFECTIVE_URL_FIRST 0x070400 /* Added in 7.4 */
++#define GIT_CURL_HAVE_CURLINFO_EFFECTIVE_URL \
++	LIBCURL_HAS(CURLINFO_EFFECTIVE_URL_FIRST)
++#define CURLINFO_END_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_END \
++	LIBCURL_HAS(CURLINFO_END_FIRST)
++#define CURLINFO_FILETIME_FIRST 0x070500 /* Added in 7.5 */
++#define GIT_CURL_HAVE_CURLINFO_FILETIME \
++	LIBCURL_HAS(CURLINFO_FILETIME_FIRST)
++#define CURLINFO_FILETIME_T_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLINFO_FILETIME_T \
++	LIBCURL_HAS(CURLINFO_FILETIME_T_FIRST)
++#define CURLINFO_FTP_ENTRY_PATH_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLINFO_FTP_ENTRY_PATH \
++	LIBCURL_HAS(CURLINFO_FTP_ENTRY_PATH_FIRST)
++#define CURLINFO_HEADER_IN_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_HEADER_IN \
++	LIBCURL_HAS(CURLINFO_HEADER_IN_FIRST)
++#define CURLINFO_HEADER_OUT_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_HEADER_OUT \
++	LIBCURL_HAS(CURLINFO_HEADER_OUT_FIRST)
++#define CURLINFO_HEADER_SIZE_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_HEADER_SIZE \
++	LIBCURL_HAS(CURLINFO_HEADER_SIZE_FIRST)
++#define CURLINFO_HTTPAUTH_AVAIL_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLINFO_HTTPAUTH_AVAIL \
++	LIBCURL_HAS(CURLINFO_HTTPAUTH_AVAIL_FIRST)
++#define CURLINFO_HTTP_CONNECTCODE_FIRST 0x070a07 /* Added in 7.10.7 */
++#define GIT_CURL_HAVE_CURLINFO_HTTP_CONNECTCODE \
++	LIBCURL_HAS(CURLINFO_HTTP_CONNECTCODE_FIRST)
++#define CURLINFO_HTTP_VERSION_FIRST 0x073200 /* Added in 7.50.0 */
++#define GIT_CURL_HAVE_CURLINFO_HTTP_VERSION \
++	LIBCURL_HAS(CURLINFO_HTTP_VERSION_FIRST)
++#define CURLINFO_LASTONE_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_LASTONE \
++	LIBCURL_HAS(CURLINFO_LASTONE_FIRST)
++#define CURLINFO_LASTSOCKET_FIRST 0x070f02 /* Added in 7.15.2 */
++#define GIT_CURL_HAVE_CURLINFO_LASTSOCKET \
++	LIBCURL_HAS(CURLINFO_LASTSOCKET_FIRST)
++#define CURLINFO_LOCAL_IP_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLINFO_LOCAL_IP \
++	LIBCURL_HAS(CURLINFO_LOCAL_IP_FIRST)
++#define CURLINFO_LOCAL_PORT_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLINFO_LOCAL_PORT \
++	LIBCURL_HAS(CURLINFO_LOCAL_PORT_FIRST)
++#define CURLINFO_LONG_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_LONG \
++	LIBCURL_HAS(CURLINFO_LONG_FIRST)
++#define CURLINFO_MASK_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_MASK \
++	LIBCURL_HAS(CURLINFO_MASK_FIRST)
++#define CURLINFO_NAMELOOKUP_TIME_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_NAMELOOKUP_TIME \
++	LIBCURL_HAS(CURLINFO_NAMELOOKUP_TIME_FIRST)
++#define CURLINFO_NAMELOOKUP_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_NAMELOOKUP_TIME_T \
++	LIBCURL_HAS(CURLINFO_NAMELOOKUP_TIME_T_FIRST)
++#define CURLINFO_NONE_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_NONE \
++	LIBCURL_HAS(CURLINFO_NONE_FIRST)
++#define CURLINFO_NUM_CONNECTS_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLINFO_NUM_CONNECTS \
++	LIBCURL_HAS(CURLINFO_NUM_CONNECTS_FIRST)
++#define CURLINFO_OFF_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_OFF_T \
++	LIBCURL_HAS(CURLINFO_OFF_T_FIRST)
++#define CURLINFO_OS_ERRNO_FIRST 0x070c02 /* Added in 7.12.2 */
++#define GIT_CURL_HAVE_CURLINFO_OS_ERRNO \
++	LIBCURL_HAS(CURLINFO_OS_ERRNO_FIRST)
++#define CURLINFO_PRETRANSFER_TIME_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_PRETRANSFER_TIME \
++	LIBCURL_HAS(CURLINFO_PRETRANSFER_TIME_FIRST)
++#define CURLINFO_PRETRANSFER_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_PRETRANSFER_TIME_T \
++	LIBCURL_HAS(CURLINFO_PRETRANSFER_TIME_T_FIRST)
++#define CURLINFO_PRIMARY_IP_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLINFO_PRIMARY_IP \
++	LIBCURL_HAS(CURLINFO_PRIMARY_IP_FIRST)
++#define CURLINFO_PRIMARY_PORT_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLINFO_PRIMARY_PORT \
++	LIBCURL_HAS(CURLINFO_PRIMARY_PORT_FIRST)
++#define CURLINFO_PRIVATE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLINFO_PRIVATE \
++	LIBCURL_HAS(CURLINFO_PRIVATE_FIRST)
++#define CURLINFO_PROTOCOL_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLINFO_PROTOCOL \
++	LIBCURL_HAS(CURLINFO_PROTOCOL_FIRST)
++#define CURLINFO_PROXYAUTH_AVAIL_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLINFO_PROXYAUTH_AVAIL \
++	LIBCURL_HAS(CURLINFO_PROXYAUTH_AVAIL_FIRST)
++#define CURLINFO_PROXY_ERROR_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLINFO_PROXY_ERROR \
++	LIBCURL_HAS(CURLINFO_PROXY_ERROR_FIRST)
++#define CURLINFO_PROXY_SSL_VERIFYRESULT_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLINFO_PROXY_SSL_VERIFYRESULT \
++	LIBCURL_HAS(CURLINFO_PROXY_SSL_VERIFYRESULT_FIRST)
++#define CURLINFO_PTR_FIRST 0x073601 /* Added in 7.54.1 */
++#define GIT_CURL_HAVE_CURLINFO_PTR \
++	LIBCURL_HAS(CURLINFO_PTR_FIRST)
++#define CURLINFO_REDIRECT_COUNT_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURLINFO_REDIRECT_COUNT \
++	LIBCURL_HAS(CURLINFO_REDIRECT_COUNT_FIRST)
++#define CURLINFO_REDIRECT_TIME_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURLINFO_REDIRECT_TIME \
++	LIBCURL_HAS(CURLINFO_REDIRECT_TIME_FIRST)
++#define CURLINFO_REDIRECT_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_REDIRECT_TIME_T \
++	LIBCURL_HAS(CURLINFO_REDIRECT_TIME_T_FIRST)
++#define CURLINFO_REDIRECT_URL_FIRST 0x071202 /* Added in 7.18.2 */
++#define GIT_CURL_HAVE_CURLINFO_REDIRECT_URL \
++	LIBCURL_HAS(CURLINFO_REDIRECT_URL_FIRST)
++#define CURLINFO_REFERER_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURLINFO_REFERER \
++	LIBCURL_HAS(CURLINFO_REFERER_FIRST)
++#define CURLINFO_REQUEST_SIZE_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_REQUEST_SIZE \
++	LIBCURL_HAS(CURLINFO_REQUEST_SIZE_FIRST)
++#define CURLINFO_RESPONSE_CODE_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLINFO_RESPONSE_CODE \
++	LIBCURL_HAS(CURLINFO_RESPONSE_CODE_FIRST)
++#define CURLINFO_RETRY_AFTER_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURLINFO_RETRY_AFTER \
++	LIBCURL_HAS(CURLINFO_RETRY_AFTER_FIRST)
++#define CURLINFO_RTSP_CLIENT_CSEQ_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLINFO_RTSP_CLIENT_CSEQ \
++	LIBCURL_HAS(CURLINFO_RTSP_CLIENT_CSEQ_FIRST)
++#define CURLINFO_RTSP_CSEQ_RECV_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLINFO_RTSP_CSEQ_RECV \
++	LIBCURL_HAS(CURLINFO_RTSP_CSEQ_RECV_FIRST)
++#define CURLINFO_RTSP_SERVER_CSEQ_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLINFO_RTSP_SERVER_CSEQ \
++	LIBCURL_HAS(CURLINFO_RTSP_SERVER_CSEQ_FIRST)
++#define CURLINFO_RTSP_SESSION_ID_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLINFO_RTSP_SESSION_ID \
++	LIBCURL_HAS(CURLINFO_RTSP_SESSION_ID_FIRST)
++#define CURLINFO_SCHEME_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLINFO_SCHEME \
++	LIBCURL_HAS(CURLINFO_SCHEME_FIRST)
++#define CURLINFO_SIZE_DOWNLOAD_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_SIZE_DOWNLOAD \
++	LIBCURL_HAS(CURLINFO_SIZE_DOWNLOAD_FIRST)
++#define CURLINFO_SIZE_DOWNLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_SIZE_DOWNLOAD_T \
++	LIBCURL_HAS(CURLINFO_SIZE_DOWNLOAD_T_FIRST)
++#define CURLINFO_SIZE_UPLOAD_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_SIZE_UPLOAD \
++	LIBCURL_HAS(CURLINFO_SIZE_UPLOAD_FIRST)
++#define CURLINFO_SIZE_UPLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_SIZE_UPLOAD_T \
++	LIBCURL_HAS(CURLINFO_SIZE_UPLOAD_T_FIRST)
++#define CURLINFO_SLIST_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLINFO_SLIST \
++	LIBCURL_HAS(CURLINFO_SLIST_FIRST)
++#define CURLINFO_SOCKET_FIRST 0x072d00 /* Added in 7.45.0 */
++#define GIT_CURL_HAVE_CURLINFO_SOCKET \
++	LIBCURL_HAS(CURLINFO_SOCKET_FIRST)
++#define CURLINFO_SPEED_DOWNLOAD_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_SPEED_DOWNLOAD \
++	LIBCURL_HAS(CURLINFO_SPEED_DOWNLOAD_FIRST)
++#define CURLINFO_SPEED_DOWNLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_SPEED_DOWNLOAD_T \
++	LIBCURL_HAS(CURLINFO_SPEED_DOWNLOAD_T_FIRST)
++#define CURLINFO_SPEED_UPLOAD_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_SPEED_UPLOAD \
++	LIBCURL_HAS(CURLINFO_SPEED_UPLOAD_FIRST)
++#define CURLINFO_SPEED_UPLOAD_T_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLINFO_SPEED_UPLOAD_T \
++	LIBCURL_HAS(CURLINFO_SPEED_UPLOAD_T_FIRST)
++#define CURLINFO_SSL_DATA_IN_FIRST 0x070c01 /* Added in 7.12.1 */
++#define GIT_CURL_HAVE_CURLINFO_SSL_DATA_IN \
++	LIBCURL_HAS(CURLINFO_SSL_DATA_IN_FIRST)
++#define CURLINFO_SSL_DATA_OUT_FIRST 0x070c01 /* Added in 7.12.1 */
++#define GIT_CURL_HAVE_CURLINFO_SSL_DATA_OUT \
++	LIBCURL_HAS(CURLINFO_SSL_DATA_OUT_FIRST)
++#define CURLINFO_SSL_ENGINES_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLINFO_SSL_ENGINES \
++	LIBCURL_HAS(CURLINFO_SSL_ENGINES_FIRST)
++#define CURLINFO_SSL_VERIFYRESULT_FIRST 0x070500 /* Added in 7.5 */
++#define GIT_CURL_HAVE_CURLINFO_SSL_VERIFYRESULT \
++	LIBCURL_HAS(CURLINFO_SSL_VERIFYRESULT_FIRST)
++#define CURLINFO_STARTTRANSFER_TIME_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURLINFO_STARTTRANSFER_TIME \
++	LIBCURL_HAS(CURLINFO_STARTTRANSFER_TIME_FIRST)
++#define CURLINFO_STARTTRANSFER_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_STARTTRANSFER_TIME_T \
++	LIBCURL_HAS(CURLINFO_STARTTRANSFER_TIME_T_FIRST)
++#define CURLINFO_STRING_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_STRING \
++	LIBCURL_HAS(CURLINFO_STRING_FIRST)
++#define CURLINFO_TEXT_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLINFO_TEXT \
++	LIBCURL_HAS(CURLINFO_TEXT_FIRST)
++#define CURLINFO_TLS_SSL_PTR_FIRST 0x073000 /* Added in 7.48.0 */
++#define GIT_CURL_HAVE_CURLINFO_TLS_SSL_PTR \
++	LIBCURL_HAS(CURLINFO_TLS_SSL_PTR_FIRST)
++#define CURLINFO_TOTAL_TIME_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_TOTAL_TIME \
++	LIBCURL_HAS(CURLINFO_TOTAL_TIME_FIRST)
++#define CURLINFO_TOTAL_TIME_T_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLINFO_TOTAL_TIME_T \
++	LIBCURL_HAS(CURLINFO_TOTAL_TIME_T_FIRST)
++#define CURLINFO_TYPEMASK_FIRST 0x070401 /* Added in 7.4.1 */
++#define GIT_CURL_HAVE_CURLINFO_TYPEMASK \
++	LIBCURL_HAS(CURLINFO_TYPEMASK_FIRST)
++#define CURLIOCMD_NOP_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLIOCMD_NOP \
++	LIBCURL_HAS(CURLIOCMD_NOP_FIRST)
++#define CURLIOCMD_RESTARTREAD_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLIOCMD_RESTARTREAD \
++	LIBCURL_HAS(CURLIOCMD_RESTARTREAD_FIRST)
++#define CURLIOE_FAILRESTART_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLIOE_FAILRESTART \
++	LIBCURL_HAS(CURLIOE_FAILRESTART_FIRST)
++#define CURLIOE_OK_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLIOE_OK \
++	LIBCURL_HAS(CURLIOE_OK_FIRST)
++#define CURLIOE_UNKNOWNCMD_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLIOE_UNKNOWNCMD \
++	LIBCURL_HAS(CURLIOE_UNKNOWNCMD_FIRST)
++#define CURLKHMATCH_MISMATCH_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHMATCH_MISMATCH \
++	LIBCURL_HAS(CURLKHMATCH_MISMATCH_FIRST)
++#define CURLKHMATCH_MISSING_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHMATCH_MISSING \
++	LIBCURL_HAS(CURLKHMATCH_MISSING_FIRST)
++#define CURLKHMATCH_OK_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHMATCH_OK \
++	LIBCURL_HAS(CURLKHMATCH_OK_FIRST)
++#define CURLKHSTAT_DEFER_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHSTAT_DEFER \
++	LIBCURL_HAS(CURLKHSTAT_DEFER_FIRST)
++#define CURLKHSTAT_FINE_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHSTAT_FINE \
++	LIBCURL_HAS(CURLKHSTAT_FINE_FIRST)
++#define CURLKHSTAT_FINE_ADD_TO_FILE_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHSTAT_FINE_ADD_TO_FILE \
++	LIBCURL_HAS(CURLKHSTAT_FINE_ADD_TO_FILE_FIRST)
++#define CURLKHSTAT_FINE_REPLACE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLKHSTAT_FINE_REPLACE \
++	LIBCURL_HAS(CURLKHSTAT_FINE_REPLACE_FIRST)
++#define CURLKHSTAT_REJECT_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHSTAT_REJECT \
++	LIBCURL_HAS(CURLKHSTAT_REJECT_FIRST)
++#define CURLKHTYPE_DSS_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHTYPE_DSS \
++	LIBCURL_HAS(CURLKHTYPE_DSS_FIRST)
++#define CURLKHTYPE_ECDSA_FIRST 0x073a00 /* Added in 7.58.0 */
++#define GIT_CURL_HAVE_CURLKHTYPE_ECDSA \
++	LIBCURL_HAS(CURLKHTYPE_ECDSA_FIRST)
++#define CURLKHTYPE_ED25519_FIRST 0x073a00 /* Added in 7.58.0 */
++#define GIT_CURL_HAVE_CURLKHTYPE_ED25519 \
++	LIBCURL_HAS(CURLKHTYPE_ED25519_FIRST)
++#define CURLKHTYPE_RSA_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHTYPE_RSA \
++	LIBCURL_HAS(CURLKHTYPE_RSA_FIRST)
++#define CURLKHTYPE_RSA1_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHTYPE_RSA1 \
++	LIBCURL_HAS(CURLKHTYPE_RSA1_FIRST)
++#define CURLKHTYPE_UNKNOWN_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLKHTYPE_UNKNOWN \
++	LIBCURL_HAS(CURLKHTYPE_UNKNOWN_FIRST)
++#define CURLMIMEOPT_FORMESCAPE_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLMIMEOPT_FORMESCAPE \
++	LIBCURL_HAS(CURLMIMEOPT_FORMESCAPE_FIRST)
++#define CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE \
++	LIBCURL_HAS(CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE_FIRST)
++#define CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE \
++	LIBCURL_HAS(CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE_FIRST)
++#define CURLMOPT_MAXCONNECTS_FIRST 0x071003 /* Added in 7.16.3 */
++#define GIT_CURL_HAVE_CURLMOPT_MAXCONNECTS \
++	LIBCURL_HAS(CURLMOPT_MAXCONNECTS_FIRST)
++#define CURLMOPT_MAX_CONCURRENT_STREAMS_FIRST 0x074300 /* Added in 7.67.0 */
++#define GIT_CURL_HAVE_CURLMOPT_MAX_CONCURRENT_STREAMS \
++	LIBCURL_HAS(CURLMOPT_MAX_CONCURRENT_STREAMS_FIRST)
++#define CURLMOPT_MAX_HOST_CONNECTIONS_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_MAX_HOST_CONNECTIONS \
++	LIBCURL_HAS(CURLMOPT_MAX_HOST_CONNECTIONS_FIRST)
++#define CURLMOPT_MAX_PIPELINE_LENGTH_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_MAX_PIPELINE_LENGTH \
++	LIBCURL_HAS(CURLMOPT_MAX_PIPELINE_LENGTH_FIRST)
++#define CURLMOPT_MAX_TOTAL_CONNECTIONS_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_MAX_TOTAL_CONNECTIONS \
++	LIBCURL_HAS(CURLMOPT_MAX_TOTAL_CONNECTIONS_FIRST)
++#define CURLMOPT_PIPELINING_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLMOPT_PIPELINING \
++	LIBCURL_HAS(CURLMOPT_PIPELINING_FIRST)
++#define CURLMOPT_PIPELINING_SERVER_BL_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_PIPELINING_SERVER_BL \
++	LIBCURL_HAS(CURLMOPT_PIPELINING_SERVER_BL_FIRST)
++#define CURLMOPT_PIPELINING_SITE_BL_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURLMOPT_PIPELINING_SITE_BL \
++	LIBCURL_HAS(CURLMOPT_PIPELINING_SITE_BL_FIRST)
++#define CURLMOPT_PUSHDATA_FIRST 0x072c00 /* Added in 7.44.0 */
++#define GIT_CURL_HAVE_CURLMOPT_PUSHDATA \
++	LIBCURL_HAS(CURLMOPT_PUSHDATA_FIRST)
++#define CURLMOPT_PUSHFUNCTION_FIRST 0x072c00 /* Added in 7.44.0 */
++#define GIT_CURL_HAVE_CURLMOPT_PUSHFUNCTION \
++	LIBCURL_HAS(CURLMOPT_PUSHFUNCTION_FIRST)
++#define CURLMOPT_SOCKETDATA_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLMOPT_SOCKETDATA \
++	LIBCURL_HAS(CURLMOPT_SOCKETDATA_FIRST)
++#define CURLMOPT_SOCKETFUNCTION_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLMOPT_SOCKETFUNCTION \
++	LIBCURL_HAS(CURLMOPT_SOCKETFUNCTION_FIRST)
++#define CURLMOPT_TIMERDATA_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLMOPT_TIMERDATA \
++	LIBCURL_HAS(CURLMOPT_TIMERDATA_FIRST)
++#define CURLMOPT_TIMERFUNCTION_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLMOPT_TIMERFUNCTION \
++	LIBCURL_HAS(CURLMOPT_TIMERFUNCTION_FIRST)
++#define CURLMSG_DONE_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLMSG_DONE \
++	LIBCURL_HAS(CURLMSG_DONE_FIRST)
++#define CURLMSG_NONE_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLMSG_NONE \
++	LIBCURL_HAS(CURLMSG_NONE_FIRST)
++#define CURLM_ABORTED_BY_CALLBACK_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLM_ABORTED_BY_CALLBACK \
++	LIBCURL_HAS(CURLM_ABORTED_BY_CALLBACK_FIRST)
++#define CURLM_ADDED_ALREADY_FIRST 0x072001 /* Added in 7.32.1 */
++#define GIT_CURL_HAVE_CURLM_ADDED_ALREADY \
++	LIBCURL_HAS(CURLM_ADDED_ALREADY_FIRST)
++#define CURLM_BAD_EASY_HANDLE_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_BAD_EASY_HANDLE \
++	LIBCURL_HAS(CURLM_BAD_EASY_HANDLE_FIRST)
++#define CURLM_BAD_FUNCTION_ARGUMENT_FIRST 0x074500 /* Added in 7.69.0 */
++#define GIT_CURL_HAVE_CURLM_BAD_FUNCTION_ARGUMENT \
++	LIBCURL_HAS(CURLM_BAD_FUNCTION_ARGUMENT_FIRST)
++#define CURLM_BAD_HANDLE_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_BAD_HANDLE \
++	LIBCURL_HAS(CURLM_BAD_HANDLE_FIRST)
++#define CURLM_BAD_SOCKET_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLM_BAD_SOCKET \
++	LIBCURL_HAS(CURLM_BAD_SOCKET_FIRST)
++#define CURLM_CALL_MULTI_PERFORM_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_CALL_MULTI_PERFORM \
++	LIBCURL_HAS(CURLM_CALL_MULTI_PERFORM_FIRST)
++#define CURLM_CALL_MULTI_SOCKET_FIRST 0x070f05 /* Added in 7.15.5 */
++#define GIT_CURL_HAVE_CURLM_CALL_MULTI_SOCKET \
++	LIBCURL_HAS(CURLM_CALL_MULTI_SOCKET_FIRST)
++#define CURLM_INTERNAL_ERROR_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_INTERNAL_ERROR \
++	LIBCURL_HAS(CURLM_INTERNAL_ERROR_FIRST)
++#define CURLM_OK_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_OK \
++	LIBCURL_HAS(CURLM_OK_FIRST)
++#define CURLM_OUT_OF_MEMORY_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLM_OUT_OF_MEMORY \
++	LIBCURL_HAS(CURLM_OUT_OF_MEMORY_FIRST)
++#define CURLM_RECURSIVE_API_CALL_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLM_RECURSIVE_API_CALL \
++	LIBCURL_HAS(CURLM_RECURSIVE_API_CALL_FIRST)
++#define CURLM_UNKNOWN_OPTION_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURLM_UNKNOWN_OPTION \
++	LIBCURL_HAS(CURLM_UNKNOWN_OPTION_FIRST)
++#define CURLM_WAKEUP_FAILURE_FIRST 0x074400 /* Added in 7.68.0 */
++#define GIT_CURL_HAVE_CURLM_WAKEUP_FAILURE \
++	LIBCURL_HAS(CURLM_WAKEUP_FAILURE_FIRST)
++#define CURLOPT_FIRST 0x074500 /* Added in 7.69.0 */
++#define GIT_CURL_HAVE_CURLOPT \
++	LIBCURL_HAS(CURLOPT_FIRST)
++#define CURLOPTTYPE_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_BLOB \
++	LIBCURL_HAS(CURLOPTTYPE_BLOB_FIRST)
++#define CURLOPTTYPE_CBPOINT_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_CBPOINT \
++	LIBCURL_HAS(CURLOPTTYPE_CBPOINT_FIRST)
++#define CURLOPTTYPE_FUNCTIONPOINT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_FUNCTIONPOINT \
++	LIBCURL_HAS(CURLOPTTYPE_FUNCTIONPOINT_FIRST)
++#define CURLOPTTYPE_LONG_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_LONG \
++	LIBCURL_HAS(CURLOPTTYPE_LONG_FIRST)
++#define CURLOPTTYPE_OBJECTPOINT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_OBJECTPOINT \
++	LIBCURL_HAS(CURLOPTTYPE_OBJECTPOINT_FIRST)
++#define CURLOPTTYPE_OFF_T_FIRST 0x070b00 /* Added in 7.11.0 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_OFF_T \
++	LIBCURL_HAS(CURLOPTTYPE_OFF_T_FIRST)
++#define CURLOPTTYPE_SLISTPOINT_FIRST 0x074102 /* Added in 7.65.2 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_SLISTPOINT \
++	LIBCURL_HAS(CURLOPTTYPE_SLISTPOINT_FIRST)
++#define CURLOPTTYPE_STRINGPOINT_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_STRINGPOINT \
++	LIBCURL_HAS(CURLOPTTYPE_STRINGPOINT_FIRST)
++#define CURLOPTTYPE_VALUES_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOPTTYPE_VALUES \
++	LIBCURL_HAS(CURLOPTTYPE_VALUES_FIRST)
++#define CURLOPT_ABSTRACT_UNIX_SOCKET_FIRST 0x073500 /* Added in 7.53.0 */
++#define GIT_CURL_HAVE_CURLOPT_ABSTRACT_UNIX_SOCKET \
++	LIBCURL_HAS(CURLOPT_ABSTRACT_UNIX_SOCKET_FIRST)
++#define CURLOPT_ACCEPTTIMEOUT_MS_FIRST 0x071800 /* Added in 7.24.0 */
++#define GIT_CURL_HAVE_CURLOPT_ACCEPTTIMEOUT_MS \
++	LIBCURL_HAS(CURLOPT_ACCEPTTIMEOUT_MS_FIRST)
++#define CURLOPT_ACCEPT_ENCODING_FIRST 0x071506 /* Added in 7.21.6 */
++#define GIT_CURL_HAVE_CURLOPT_ACCEPT_ENCODING \
++	LIBCURL_HAS(CURLOPT_ACCEPT_ENCODING_FIRST)
++#define CURLOPT_ADDRESS_SCOPE_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLOPT_ADDRESS_SCOPE \
++	LIBCURL_HAS(CURLOPT_ADDRESS_SCOPE_FIRST)
++#define CURLOPT_ALTSVC_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLOPT_ALTSVC \
++	LIBCURL_HAS(CURLOPT_ALTSVC_FIRST)
++#define CURLOPT_ALTSVC_CTRL_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLOPT_ALTSVC_CTRL \
++	LIBCURL_HAS(CURLOPT_ALTSVC_CTRL_FIRST)
++#define CURLOPT_APPEND_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLOPT_APPEND \
++	LIBCURL_HAS(CURLOPT_APPEND_FIRST)
++#define CURLOPT_AUTOREFERER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_AUTOREFERER \
++	LIBCURL_HAS(CURLOPT_AUTOREFERER_FIRST)
++#define CURLOPT_BUFFERSIZE_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_BUFFERSIZE \
++	LIBCURL_HAS(CURLOPT_BUFFERSIZE_FIRST)
++#define CURLOPT_CAINFO_FIRST 0x070402 /* Added in 7.4.2 */
++#define GIT_CURL_HAVE_CURLOPT_CAINFO \
++	LIBCURL_HAS(CURLOPT_CAINFO_FIRST)
++#define CURLOPT_CAINFO_BLOB_FIRST 0x074d00 /* Added in 7.77.0 */
++#define GIT_CURL_HAVE_CURLOPT_CAINFO_BLOB \
++	LIBCURL_HAS(CURLOPT_CAINFO_BLOB_FIRST)
++#define CURLOPT_CAPATH_FIRST 0x070908 /* Added in 7.9.8 */
++#define GIT_CURL_HAVE_CURLOPT_CAPATH \
++	LIBCURL_HAS(CURLOPT_CAPATH_FIRST)
++#define CURLOPT_CERTINFO_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_CERTINFO \
++	LIBCURL_HAS(CURLOPT_CERTINFO_FIRST)
++#define CURLOPT_CHUNK_BGN_FUNCTION_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_CHUNK_BGN_FUNCTION \
++	LIBCURL_HAS(CURLOPT_CHUNK_BGN_FUNCTION_FIRST)
++#define CURLOPT_CHUNK_DATA_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_CHUNK_DATA \
++	LIBCURL_HAS(CURLOPT_CHUNK_DATA_FIRST)
++#define CURLOPT_CHUNK_END_FUNCTION_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_CHUNK_END_FUNCTION \
++	LIBCURL_HAS(CURLOPT_CHUNK_END_FUNCTION_FIRST)
++#define CURLOPT_CLOSESOCKETDATA_FIRST 0x071507 /* Added in 7.21.7 */
++#define GIT_CURL_HAVE_CURLOPT_CLOSESOCKETDATA \
++	LIBCURL_HAS(CURLOPT_CLOSESOCKETDATA_FIRST)
++#define CURLOPT_CLOSESOCKETFUNCTION_FIRST 0x071507 /* Added in 7.21.7 */
++#define GIT_CURL_HAVE_CURLOPT_CLOSESOCKETFUNCTION \
++	LIBCURL_HAS(CURLOPT_CLOSESOCKETFUNCTION_FIRST)
++#define CURLOPT_CONNECTTIMEOUT_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_CONNECTTIMEOUT \
++	LIBCURL_HAS(CURLOPT_CONNECTTIMEOUT_FIRST)
++#define CURLOPT_CONNECTTIMEOUT_MS_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLOPT_CONNECTTIMEOUT_MS \
++	LIBCURL_HAS(CURLOPT_CONNECTTIMEOUT_MS_FIRST)
++#define CURLOPT_CONNECT_ONLY_FIRST 0x070f02 /* Added in 7.15.2 */
++#define GIT_CURL_HAVE_CURLOPT_CONNECT_ONLY \
++	LIBCURL_HAS(CURLOPT_CONNECT_ONLY_FIRST)
++#define CURLOPT_CONNECT_TO_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLOPT_CONNECT_TO \
++	LIBCURL_HAS(CURLOPT_CONNECT_TO_FIRST)
++#define CURLOPT_COOKIE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_COOKIE \
++	LIBCURL_HAS(CURLOPT_COOKIE_FIRST)
++#define CURLOPT_COOKIEFILE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_COOKIEFILE \
++	LIBCURL_HAS(CURLOPT_COOKIEFILE_FIRST)
++#define CURLOPT_COOKIEJAR_FIRST 0x070900 /* Added in 7.9 */
++#define GIT_CURL_HAVE_CURLOPT_COOKIEJAR \
++	LIBCURL_HAS(CURLOPT_COOKIEJAR_FIRST)
++#define CURLOPT_COOKIELIST_FIRST 0x070e01 /* Added in 7.14.1 */
++#define GIT_CURL_HAVE_CURLOPT_COOKIELIST \
++	LIBCURL_HAS(CURLOPT_COOKIELIST_FIRST)
++#define CURLOPT_COOKIESESSION_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURLOPT_COOKIESESSION \
++	LIBCURL_HAS(CURLOPT_COOKIESESSION_FIRST)
++#define CURLOPT_COPYPOSTFIELDS_FIRST 0x071101 /* Added in 7.17.1 */
++#define GIT_CURL_HAVE_CURLOPT_COPYPOSTFIELDS \
++	LIBCURL_HAS(CURLOPT_COPYPOSTFIELDS_FIRST)
++#define CURLOPT_CRLF_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_CRLF \
++	LIBCURL_HAS(CURLOPT_CRLF_FIRST)
++#define CURLOPT_CRLFILE_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLOPT_CRLFILE \
++	LIBCURL_HAS(CURLOPT_CRLFILE_FIRST)
++#define CURLOPT_CURLU_FIRST 0x073f00 /* Added in 7.63.0 */
++#define GIT_CURL_HAVE_CURLOPT_CURLU \
++	LIBCURL_HAS(CURLOPT_CURLU_FIRST)
++#define CURLOPT_CUSTOMREQUEST_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_CUSTOMREQUEST \
++	LIBCURL_HAS(CURLOPT_CUSTOMREQUEST_FIRST)
++#define CURLOPT_DEBUGDATA_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLOPT_DEBUGDATA \
++	LIBCURL_HAS(CURLOPT_DEBUGDATA_FIRST)
++#define CURLOPT_DEBUGFUNCTION_FIRST 0x070906 /* Added in 7.9.6 */
++#define GIT_CURL_HAVE_CURLOPT_DEBUGFUNCTION \
++	LIBCURL_HAS(CURLOPT_DEBUGFUNCTION_FIRST)
++#define CURLOPT_DEFAULT_PROTOCOL_FIRST 0x072d00 /* Added in 7.45.0 */
++#define GIT_CURL_HAVE_CURLOPT_DEFAULT_PROTOCOL \
++	LIBCURL_HAS(CURLOPT_DEFAULT_PROTOCOL_FIRST)
++#define CURLOPT_DIRLISTONLY_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLOPT_DIRLISTONLY \
++	LIBCURL_HAS(CURLOPT_DIRLISTONLY_FIRST)
++#define CURLOPT_DISALLOW_USERNAME_IN_URL_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLOPT_DISALLOW_USERNAME_IN_URL \
++	LIBCURL_HAS(CURLOPT_DISALLOW_USERNAME_IN_URL_FIRST)
++#define CURLOPT_DNS_CACHE_TIMEOUT_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_CACHE_TIMEOUT \
++	LIBCURL_HAS(CURLOPT_DNS_CACHE_TIMEOUT_FIRST)
++#define CURLOPT_DNS_INTERFACE_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_INTERFACE \
++	LIBCURL_HAS(CURLOPT_DNS_INTERFACE_FIRST)
++#define CURLOPT_DNS_LOCAL_IP4_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_LOCAL_IP4 \
++	LIBCURL_HAS(CURLOPT_DNS_LOCAL_IP4_FIRST)
++#define CURLOPT_DNS_LOCAL_IP6_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_LOCAL_IP6 \
++	LIBCURL_HAS(CURLOPT_DNS_LOCAL_IP6_FIRST)
++#define CURLOPT_DNS_SERVERS_FIRST 0x071800 /* Added in 7.24.0 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_SERVERS \
++	LIBCURL_HAS(CURLOPT_DNS_SERVERS_FIRST)
++#define CURLOPT_DNS_SHUFFLE_ADDRESSES_FIRST 0x073c00 /* Added in 7.60.0 */
++#define GIT_CURL_HAVE_CURLOPT_DNS_SHUFFLE_ADDRESSES \
++	LIBCURL_HAS(CURLOPT_DNS_SHUFFLE_ADDRESSES_FIRST)
++#define CURLOPT_DOH_SSL_VERIFYHOST_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURLOPT_DOH_SSL_VERIFYHOST \
++	LIBCURL_HAS(CURLOPT_DOH_SSL_VERIFYHOST_FIRST)
++#define CURLOPT_DOH_SSL_VERIFYPEER_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURLOPT_DOH_SSL_VERIFYPEER \
++	LIBCURL_HAS(CURLOPT_DOH_SSL_VERIFYPEER_FIRST)
++#define CURLOPT_DOH_SSL_VERIFYSTATUS_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURLOPT_DOH_SSL_VERIFYSTATUS \
++	LIBCURL_HAS(CURLOPT_DOH_SSL_VERIFYSTATUS_FIRST)
++#define CURLOPT_DOH_URL_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLOPT_DOH_URL \
++	LIBCURL_HAS(CURLOPT_DOH_URL_FIRST)
++#define CURLOPT_EGDSOCKET_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_EGDSOCKET \
++	LIBCURL_HAS(CURLOPT_EGDSOCKET_FIRST)
++#define CURLOPT_ENCODING_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_ENCODING \
++	LIBCURL_HAS(CURLOPT_ENCODING_FIRST)
++#define CURLOPT_ERRORBUFFER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_ERRORBUFFER \
++	LIBCURL_HAS(CURLOPT_ERRORBUFFER_FIRST)
++#define CURLOPT_EXPECT_100_TIMEOUT_MS_FIRST 0x072400 /* Added in 7.36.0 */
++#define GIT_CURL_HAVE_CURLOPT_EXPECT_100_TIMEOUT_MS \
++	LIBCURL_HAS(CURLOPT_EXPECT_100_TIMEOUT_MS_FIRST)
++#define CURLOPT_FAILONERROR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_FAILONERROR \
++	LIBCURL_HAS(CURLOPT_FAILONERROR_FIRST)
++#define CURLOPT_FILETIME_FIRST 0x070500 /* Added in 7.5 */
++#define GIT_CURL_HAVE_CURLOPT_FILETIME \
++	LIBCURL_HAS(CURLOPT_FILETIME_FIRST)
++#define CURLOPT_FNMATCH_DATA_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_FNMATCH_DATA \
++	LIBCURL_HAS(CURLOPT_FNMATCH_DATA_FIRST)
++#define CURLOPT_FNMATCH_FUNCTION_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_FNMATCH_FUNCTION \
++	LIBCURL_HAS(CURLOPT_FNMATCH_FUNCTION_FIRST)
++#define CURLOPT_FOLLOWLOCATION_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_FOLLOWLOCATION \
++	LIBCURL_HAS(CURLOPT_FOLLOWLOCATION_FIRST)
++#define CURLOPT_FORBID_REUSE_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_FORBID_REUSE \
++	LIBCURL_HAS(CURLOPT_FORBID_REUSE_FIRST)
++#define CURLOPT_FRESH_CONNECT_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_FRESH_CONNECT \
++	LIBCURL_HAS(CURLOPT_FRESH_CONNECT_FIRST)
++#define CURLOPT_FTPPORT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_FTPPORT \
++	LIBCURL_HAS(CURLOPT_FTPPORT_FIRST)
++#define CURLOPT_FTPSSLAUTH_FIRST 0x070c02 /* Added in 7.12.2 */
++#define GIT_CURL_HAVE_CURLOPT_FTPSSLAUTH \
++	LIBCURL_HAS(CURLOPT_FTPSSLAUTH_FIRST)
++#define CURLOPT_FTP_ACCOUNT_FIRST 0x070d00 /* Added in 7.13.0 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_ACCOUNT \
++	LIBCURL_HAS(CURLOPT_FTP_ACCOUNT_FIRST)
++#define CURLOPT_FTP_ALTERNATIVE_TO_USER_FIRST 0x070f05 /* Added in 7.15.5 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_ALTERNATIVE_TO_USER \
++	LIBCURL_HAS(CURLOPT_FTP_ALTERNATIVE_TO_USER_FIRST)
++#define CURLOPT_FTP_CREATE_MISSING_DIRS_FIRST 0x070a07 /* Added in 7.10.7 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_CREATE_MISSING_DIRS \
++	LIBCURL_HAS(CURLOPT_FTP_CREATE_MISSING_DIRS_FIRST)
++#define CURLOPT_FTP_FILEMETHOD_FIRST 0x070f01 /* Added in 7.15.1 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_FILEMETHOD \
++	LIBCURL_HAS(CURLOPT_FTP_FILEMETHOD_FIRST)
++#define CURLOPT_FTP_RESPONSE_TIMEOUT_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_RESPONSE_TIMEOUT \
++	LIBCURL_HAS(CURLOPT_FTP_RESPONSE_TIMEOUT_FIRST)
++#define CURLOPT_FTP_SKIP_PASV_IP_FIRST 0x070f00 /* Added in 7.15.0 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_SKIP_PASV_IP \
++	LIBCURL_HAS(CURLOPT_FTP_SKIP_PASV_IP_FIRST)
++#define CURLOPT_FTP_SSL_CCC_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_SSL_CCC \
++	LIBCURL_HAS(CURLOPT_FTP_SSL_CCC_FIRST)
++#define CURLOPT_FTP_USE_EPRT_FIRST 0x070a05 /* Added in 7.10.5 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_USE_EPRT \
++	LIBCURL_HAS(CURLOPT_FTP_USE_EPRT_FIRST)
++#define CURLOPT_FTP_USE_EPSV_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_USE_EPSV \
++	LIBCURL_HAS(CURLOPT_FTP_USE_EPSV_FIRST)
++#define CURLOPT_FTP_USE_PRET_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_FTP_USE_PRET \
++	LIBCURL_HAS(CURLOPT_FTP_USE_PRET_FIRST)
++#define CURLOPT_GSSAPI_DELEGATION_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURLOPT_GSSAPI_DELEGATION \
++	LIBCURL_HAS(CURLOPT_GSSAPI_DELEGATION_FIRST)
++#define CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS \
++	LIBCURL_HAS(CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS_FIRST)
++#define CURLOPT_HAPROXYPROTOCOL_FIRST 0x073c00 /* Added in 7.60.0 */
++#define GIT_CURL_HAVE_CURLOPT_HAPROXYPROTOCOL \
++	LIBCURL_HAS(CURLOPT_HAPROXYPROTOCOL_FIRST)
++#define CURLOPT_HEADER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_HEADER \
++	LIBCURL_HAS(CURLOPT_HEADER_FIRST)
++#define CURLOPT_HEADERDATA_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_HEADERDATA \
++	LIBCURL_HAS(CURLOPT_HEADERDATA_FIRST)
++#define CURLOPT_HEADERFUNCTION_FIRST 0x070702 /* Added in 7.7.2 */
++#define GIT_CURL_HAVE_CURLOPT_HEADERFUNCTION \
++	LIBCURL_HAS(CURLOPT_HEADERFUNCTION_FIRST)
++#define CURLOPT_HEADEROPT_FIRST 0x072500 /* Added in 7.37.0 */
++#define GIT_CURL_HAVE_CURLOPT_HEADEROPT \
++	LIBCURL_HAS(CURLOPT_HEADEROPT_FIRST)
++#define CURLOPT_HSTS_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTS \
++	LIBCURL_HAS(CURLOPT_HSTS_FIRST)
++#define CURLOPT_HSTS_CTRL_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTS_CTRL \
++	LIBCURL_HAS(CURLOPT_HSTS_CTRL_FIRST)
++#define CURLOPT_HSTSREADDATA_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTSREADDATA \
++	LIBCURL_HAS(CURLOPT_HSTSREADDATA_FIRST)
++#define CURLOPT_HSTSREADFUNCTION_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTSREADFUNCTION \
++	LIBCURL_HAS(CURLOPT_HSTSREADFUNCTION_FIRST)
++#define CURLOPT_HSTSWRITEDATA_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTSWRITEDATA \
++	LIBCURL_HAS(CURLOPT_HSTSWRITEDATA_FIRST)
++#define CURLOPT_HSTSWRITEFUNCTION_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLOPT_HSTSWRITEFUNCTION \
++	LIBCURL_HAS(CURLOPT_HSTSWRITEFUNCTION_FIRST)
++#define CURLOPT_HTTP09_ALLOWED_FIRST 0x074000 /* Added in 7.64.0 */
++#define GIT_CURL_HAVE_CURLOPT_HTTP09_ALLOWED \
++	LIBCURL_HAS(CURLOPT_HTTP09_ALLOWED_FIRST)
++#define CURLOPT_HTTP200ALIASES_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLOPT_HTTP200ALIASES \
++	LIBCURL_HAS(CURLOPT_HTTP200ALIASES_FIRST)
++#define CURLOPT_HTTPAUTH_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLOPT_HTTPAUTH \
++	LIBCURL_HAS(CURLOPT_HTTPAUTH_FIRST)
++#define CURLOPT_HTTPGET_FIRST 0x070801 /* Added in 7.8.1 */
++#define GIT_CURL_HAVE_CURLOPT_HTTPGET \
++	LIBCURL_HAS(CURLOPT_HTTPGET_FIRST)
++#define CURLOPT_HTTPHEADER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_HTTPHEADER \
++	LIBCURL_HAS(CURLOPT_HTTPHEADER_FIRST)
++#define CURLOPT_HTTPPROXYTUNNEL_FIRST 0x070300 /* Added in 7.3 */
++#define GIT_CURL_HAVE_CURLOPT_HTTPPROXYTUNNEL \
++	LIBCURL_HAS(CURLOPT_HTTPPROXYTUNNEL_FIRST)
++#define CURLOPT_HTTP_CONTENT_DECODING_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLOPT_HTTP_CONTENT_DECODING \
++	LIBCURL_HAS(CURLOPT_HTTP_CONTENT_DECODING_FIRST)
++#define CURLOPT_HTTP_TRANSFER_DECODING_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLOPT_HTTP_TRANSFER_DECODING \
++	LIBCURL_HAS(CURLOPT_HTTP_TRANSFER_DECODING_FIRST)
++#define CURLOPT_HTTP_VERSION_FIRST 0x070901 /* Added in 7.9.1 */
++#define GIT_CURL_HAVE_CURLOPT_HTTP_VERSION \
++	LIBCURL_HAS(CURLOPT_HTTP_VERSION_FIRST)
++#define CURLOPT_IGNORE_CONTENT_LENGTH_FIRST 0x070e01 /* Added in 7.14.1 */
++#define GIT_CURL_HAVE_CURLOPT_IGNORE_CONTENT_LENGTH \
++	LIBCURL_HAS(CURLOPT_IGNORE_CONTENT_LENGTH_FIRST)
++#define CURLOPT_INFILESIZE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_INFILESIZE \
++	LIBCURL_HAS(CURLOPT_INFILESIZE_FIRST)
++#define CURLOPT_INFILESIZE_LARGE_FIRST 0x070b00 /* Added in 7.11.0 */
++#define GIT_CURL_HAVE_CURLOPT_INFILESIZE_LARGE \
++	LIBCURL_HAS(CURLOPT_INFILESIZE_LARGE_FIRST)
++#define CURLOPT_INTERFACE_FIRST 0x070300 /* Added in 7.3 */
++#define GIT_CURL_HAVE_CURLOPT_INTERFACE \
++	LIBCURL_HAS(CURLOPT_INTERFACE_FIRST)
++#define CURLOPT_INTERLEAVEDATA_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_INTERLEAVEDATA \
++	LIBCURL_HAS(CURLOPT_INTERLEAVEDATA_FIRST)
++#define CURLOPT_INTERLEAVEFUNCTION_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_INTERLEAVEFUNCTION \
++	LIBCURL_HAS(CURLOPT_INTERLEAVEFUNCTION_FIRST)
++#define CURLOPT_IOCTLDATA_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLOPT_IOCTLDATA \
++	LIBCURL_HAS(CURLOPT_IOCTLDATA_FIRST)
++#define CURLOPT_IOCTLFUNCTION_FIRST 0x070c03 /* Added in 7.12.3 */
++#define GIT_CURL_HAVE_CURLOPT_IOCTLFUNCTION \
++	LIBCURL_HAS(CURLOPT_IOCTLFUNCTION_FIRST)
++#define CURLOPT_IPRESOLVE_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLOPT_IPRESOLVE \
++	LIBCURL_HAS(CURLOPT_IPRESOLVE_FIRST)
++#define CURLOPT_ISSUERCERT_FIRST 0x071300 /* Added in 7.19.0 */
++#define GIT_CURL_HAVE_CURLOPT_ISSUERCERT \
++	LIBCURL_HAS(CURLOPT_ISSUERCERT_FIRST)
++#define CURLOPT_ISSUERCERT_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_ISSUERCERT_BLOB \
++	LIBCURL_HAS(CURLOPT_ISSUERCERT_BLOB_FIRST)
++#define CURLOPT_KEEP_SENDING_ON_ERROR_FIRST 0x073300 /* Added in 7.51.0 */
++#define GIT_CURL_HAVE_CURLOPT_KEEP_SENDING_ON_ERROR \
++	LIBCURL_HAS(CURLOPT_KEEP_SENDING_ON_ERROR_FIRST)
++#define CURLOPT_KEYPASSWD_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLOPT_KEYPASSWD \
++	LIBCURL_HAS(CURLOPT_KEYPASSWD_FIRST)
++#define CURLOPT_KRBLEVEL_FIRST 0x071004 /* Added in 7.16.4 */
++#define GIT_CURL_HAVE_CURLOPT_KRBLEVEL \
++	LIBCURL_HAS(CURLOPT_KRBLEVEL_FIRST)
++#define CURLOPT_LOCALPORT_FIRST 0x070f02 /* Added in 7.15.2 */
++#define GIT_CURL_HAVE_CURLOPT_LOCALPORT \
++	LIBCURL_HAS(CURLOPT_LOCALPORT_FIRST)
++#define CURLOPT_LOCALPORTRANGE_FIRST 0x070f02 /* Added in 7.15.2 */
++#define GIT_CURL_HAVE_CURLOPT_LOCALPORTRANGE \
++	LIBCURL_HAS(CURLOPT_LOCALPORTRANGE_FIRST)
++#define CURLOPT_LOGIN_OPTIONS_FIRST 0x072200 /* Added in 7.34.0 */
+ /**
+  * CURLOPT_LOGIN_OPTIONS was added in 7.34.0, released in December
+  * 2013.
+@@ -53,77 +1256,1680 @@
+  * 2014-11-09) and the check it added for "072200" in the Makefile.
+ 
+  */
+-#if LIBCURL_VERSION_NUM >= 0x072200
+-#define GIT_CURL_HAVE_CURLOPT_LOGIN_OPTIONS 1
+-#endif
+-
+-/**
+- * CURL_SSLVERSION_TLSv1_[012] was added in 7.34.0, released in
+- * December 2013.
+- */
+-#if LIBCURL_VERSION_NUM >= 0x072200
+-#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_0
+-#endif
+-
++#define GIT_CURL_HAVE_CURLOPT_LOGIN_OPTIONS \
++	LIBCURL_HAS(CURLOPT_LOGIN_OPTIONS_FIRST)
++#define CURLOPT_LOW_SPEED_LIMIT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_LOW_SPEED_LIMIT \
++	LIBCURL_HAS(CURLOPT_LOW_SPEED_LIMIT_FIRST)
++#define CURLOPT_LOW_SPEED_TIME_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_LOW_SPEED_TIME \
++	LIBCURL_HAS(CURLOPT_LOW_SPEED_TIME_FIRST)
++#define CURLOPT_MAIL_AUTH_FIRST 0x071900 /* Added in 7.25.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAIL_AUTH \
++	LIBCURL_HAS(CURLOPT_MAIL_AUTH_FIRST)
++#define CURLOPT_MAIL_FROM_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAIL_FROM \
++	LIBCURL_HAS(CURLOPT_MAIL_FROM_FIRST)
++#define CURLOPT_MAIL_RCPT_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAIL_RCPT \
++	LIBCURL_HAS(CURLOPT_MAIL_RCPT_FIRST)
++#define CURLOPT_MAIL_RCPT_ALLLOWFAILS_FIRST 0x074500 /* Added in 7.69.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAIL_RCPT_ALLLOWFAILS \
++	LIBCURL_HAS(CURLOPT_MAIL_RCPT_ALLLOWFAILS_FIRST)
++#define CURLOPT_MAXAGE_CONN_FIRST 0x074100 /* Added in 7.65.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAXAGE_CONN \
++	LIBCURL_HAS(CURLOPT_MAXAGE_CONN_FIRST)
++#define CURLOPT_MAXCONNECTS_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_MAXCONNECTS \
++	LIBCURL_HAS(CURLOPT_MAXCONNECTS_FIRST)
++#define CURLOPT_MAXFILESIZE_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURLOPT_MAXFILESIZE \
++	LIBCURL_HAS(CURLOPT_MAXFILESIZE_FIRST)
++#define CURLOPT_MAXFILESIZE_LARGE_FIRST 0x070b00 /* Added in 7.11.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAXFILESIZE_LARGE \
++	LIBCURL_HAS(CURLOPT_MAXFILESIZE_LARGE_FIRST)
++#define CURLOPT_MAXLIFETIME_CONN_FIRST 0x075000 /* Added in 7.80.0 */
++#define GIT_CURL_HAVE_CURLOPT_MAXLIFETIME_CONN \
++	LIBCURL_HAS(CURLOPT_MAXLIFETIME_CONN_FIRST)
++#define CURLOPT_MAXREDIRS_FIRST 0x070500 /* Added in 7.5 */
++#define GIT_CURL_HAVE_CURLOPT_MAXREDIRS \
++	LIBCURL_HAS(CURLOPT_MAXREDIRS_FIRST)
++#define CURLOPT_MAX_RECV_SPEED_LARGE_FIRST 0x070f05 /* Added in 7.15.5 */
++#define GIT_CURL_HAVE_CURLOPT_MAX_RECV_SPEED_LARGE \
++	LIBCURL_HAS(CURLOPT_MAX_RECV_SPEED_LARGE_FIRST)
++#define CURLOPT_MAX_SEND_SPEED_LARGE_FIRST 0x070f05 /* Added in 7.15.5 */
++#define GIT_CURL_HAVE_CURLOPT_MAX_SEND_SPEED_LARGE \
++	LIBCURL_HAS(CURLOPT_MAX_SEND_SPEED_LARGE_FIRST)
++#define CURLOPT_MIMEPOST_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURLOPT_MIMEPOST \
++	LIBCURL_HAS(CURLOPT_MIMEPOST_FIRST)
++#define CURLOPT_MIME_OPTIONS_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLOPT_MIME_OPTIONS \
++	LIBCURL_HAS(CURLOPT_MIME_OPTIONS_FIRST)
++#define CURLOPT_NETRC_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_NETRC \
++	LIBCURL_HAS(CURLOPT_NETRC_FIRST)
++#define CURLOPT_NETRC_FILE_FIRST 0x070b00 /* Added in 7.11.0 */
++#define GIT_CURL_HAVE_CURLOPT_NETRC_FILE \
++	LIBCURL_HAS(CURLOPT_NETRC_FILE_FIRST)
++#define CURLOPT_NEW_DIRECTORY_PERMS_FIRST 0x071004 /* Added in 7.16.4 */
++#define GIT_CURL_HAVE_CURLOPT_NEW_DIRECTORY_PERMS \
++	LIBCURL_HAS(CURLOPT_NEW_DIRECTORY_PERMS_FIRST)
++#define CURLOPT_NEW_FILE_PERMS_FIRST 0x071004 /* Added in 7.16.4 */
++#define GIT_CURL_HAVE_CURLOPT_NEW_FILE_PERMS \
++	LIBCURL_HAS(CURLOPT_NEW_FILE_PERMS_FIRST)
++#define CURLOPT_NOBODY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_NOBODY \
++	LIBCURL_HAS(CURLOPT_NOBODY_FIRST)
++#define CURLOPT_NOPROGRESS_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_NOPROGRESS \
++	LIBCURL_HAS(CURLOPT_NOPROGRESS_FIRST)
++#define CURLOPT_NOPROXY_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLOPT_NOPROXY \
++	LIBCURL_HAS(CURLOPT_NOPROXY_FIRST)
++#define CURLOPT_NOSIGNAL_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_NOSIGNAL \
++	LIBCURL_HAS(CURLOPT_NOSIGNAL_FIRST)
++#define CURLOPT_OPENSOCKETDATA_FIRST 0x071101 /* Added in 7.17.1 */
++#define GIT_CURL_HAVE_CURLOPT_OPENSOCKETDATA \
++	LIBCURL_HAS(CURLOPT_OPENSOCKETDATA_FIRST)
++#define CURLOPT_OPENSOCKETFUNCTION_FIRST 0x071101 /* Added in 7.17.1 */
++#define GIT_CURL_HAVE_CURLOPT_OPENSOCKETFUNCTION \
++	LIBCURL_HAS(CURLOPT_OPENSOCKETFUNCTION_FIRST)
++#define CURLOPT_PASSWORD_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_PASSWORD \
++	LIBCURL_HAS(CURLOPT_PASSWORD_FIRST)
++#define CURLOPT_PATH_AS_IS_FIRST 0x072a00 /* Added in 7.42.0 */
++#define GIT_CURL_HAVE_CURLOPT_PATH_AS_IS \
++	LIBCURL_HAS(CURLOPT_PATH_AS_IS_FIRST)
++#define CURLOPT_PINNEDPUBLICKEY_FIRST 0x072700 /* Added in 7.39.0 */
+ /**
+  * CURLOPT_PINNEDPUBLICKEY was added in 7.39.0, released in November
+  * 2014. CURLE_SSL_PINNEDPUBKEYNOTMATCH was added in that same version.
+  */
+-#if LIBCURL_VERSION_NUM >= 0x072c00
+-#define GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY 1
+-#define GIT_CURL_HAVE_CURLE_SSL_PINNEDPUBKEYNOTMATCH 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY \
++	LIBCURL_HAS(CURLOPT_PINNEDPUBLICKEY_FIRST)
++#define CURLOPT_PIPEWAIT_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLOPT_PIPEWAIT \
++	LIBCURL_HAS(CURLOPT_PIPEWAIT_FIRST)
++#define CURLOPT_PORT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PORT \
++	LIBCURL_HAS(CURLOPT_PORT_FIRST)
++#define CURLOPT_POST_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_POST \
++	LIBCURL_HAS(CURLOPT_POST_FIRST)
++#define CURLOPT_POSTFIELDS_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_POSTFIELDS \
++	LIBCURL_HAS(CURLOPT_POSTFIELDS_FIRST)
++#define CURLOPT_POSTFIELDSIZE_FIRST 0x070200 /* Added in 7.2 */
++#define GIT_CURL_HAVE_CURLOPT_POSTFIELDSIZE \
++	LIBCURL_HAS(CURLOPT_POSTFIELDSIZE_FIRST)
++#define CURLOPT_POSTFIELDSIZE_LARGE_FIRST 0x070b01 /* Added in 7.11.1 */
++#define GIT_CURL_HAVE_CURLOPT_POSTFIELDSIZE_LARGE \
++	LIBCURL_HAS(CURLOPT_POSTFIELDSIZE_LARGE_FIRST)
++#define CURLOPT_POSTQUOTE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_POSTQUOTE \
++	LIBCURL_HAS(CURLOPT_POSTQUOTE_FIRST)
++#define CURLOPT_POSTREDIR_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_POSTREDIR \
++	LIBCURL_HAS(CURLOPT_POSTREDIR_FIRST)
++#define CURLOPT_PREQUOTE_FIRST 0x070905 /* Added in 7.9.5 */
++#define GIT_CURL_HAVE_CURLOPT_PREQUOTE \
++	LIBCURL_HAS(CURLOPT_PREQUOTE_FIRST)
++#define CURLOPT_PREREQDATA_FIRST 0x075000 /* Added in 7.80.0 */
++#define GIT_CURL_HAVE_CURLOPT_PREREQDATA \
++	LIBCURL_HAS(CURLOPT_PREREQDATA_FIRST)
++#define CURLOPT_PREREQFUNCTION_FIRST 0x075000 /* Added in 7.80.0 */
++#define GIT_CURL_HAVE_CURLOPT_PREREQFUNCTION \
++	LIBCURL_HAS(CURLOPT_PREREQFUNCTION_FIRST)
++#define CURLOPT_PRE_PROXY_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PRE_PROXY \
++	LIBCURL_HAS(CURLOPT_PRE_PROXY_FIRST)
++#define CURLOPT_PRIVATE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLOPT_PRIVATE \
++	LIBCURL_HAS(CURLOPT_PRIVATE_FIRST)
++#define CURLOPT_PROGRESSDATA_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROGRESSDATA \
++	LIBCURL_HAS(CURLOPT_PROGRESSDATA_FIRST)
++#define CURLOPT_PROTOCOLS_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLOPT_PROTOCOLS \
++	LIBCURL_HAS(CURLOPT_PROTOCOLS_FIRST)
++#define CURLOPT_PROXY_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY \
++	LIBCURL_HAS(CURLOPT_PROXY_FIRST)
++#define CURLOPT_PROXYAUTH_FIRST 0x070a07 /* Added in 7.10.7 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYAUTH \
++	LIBCURL_HAS(CURLOPT_PROXYAUTH_FIRST)
++#define CURLOPT_PROXYHEADER_FIRST 0x072500 /* Added in 7.37.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYHEADER \
++	LIBCURL_HAS(CURLOPT_PROXYHEADER_FIRST)
++#define CURLOPT_PROXYPASSWORD_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYPASSWORD \
++	LIBCURL_HAS(CURLOPT_PROXYPASSWORD_FIRST)
++#define CURLOPT_PROXYPORT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYPORT \
++	LIBCURL_HAS(CURLOPT_PROXYPORT_FIRST)
++#define CURLOPT_PROXYTYPE_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYTYPE \
++	LIBCURL_HAS(CURLOPT_PROXYTYPE_FIRST)
++#define CURLOPT_PROXYUSERNAME_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYUSERNAME \
++	LIBCURL_HAS(CURLOPT_PROXYUSERNAME_FIRST)
++#define CURLOPT_PROXYUSERPWD_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PROXYUSERPWD \
++	LIBCURL_HAS(CURLOPT_PROXYUSERPWD_FIRST)
++#define CURLOPT_PROXY_CAINFO_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_CAINFO \
++	LIBCURL_HAS(CURLOPT_PROXY_CAINFO_FIRST)
++#define CURLOPT_PROXY_CAINFO_BLOB_FIRST 0x074d00 /* Added in 7.77.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_CAINFO_BLOB \
++	LIBCURL_HAS(CURLOPT_PROXY_CAINFO_BLOB_FIRST)
++#define CURLOPT_PROXY_CAPATH_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_CAPATH \
++	LIBCURL_HAS(CURLOPT_PROXY_CAPATH_FIRST)
++#define CURLOPT_PROXY_CRLFILE_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_CRLFILE \
++	LIBCURL_HAS(CURLOPT_PROXY_CRLFILE_FIRST)
++#define CURLOPT_PROXY_ISSUERCERT_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_ISSUERCERT \
++	LIBCURL_HAS(CURLOPT_PROXY_ISSUERCERT_FIRST)
++#define CURLOPT_PROXY_ISSUERCERT_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_ISSUERCERT_BLOB \
++	LIBCURL_HAS(CURLOPT_PROXY_ISSUERCERT_BLOB_FIRST)
++#define CURLOPT_PROXY_KEYPASSWD_FIRST 0x073400 /* Added in 7.52.0 */
+ /**
+- * CURL_HTTP_VERSION_2 was added in 7.43.0, released in June 2015.
+- *
+- * The CURL_HTTP_VERSION_2 alias (but not CURL_HTTP_VERSION_2_0) has
+- * always been a macro, not an enum field (checked on curl version
+- * 7.78.0)
++ * CURLOPT_PROXY_{KEYPASSWD,SSLCERT,SSLKEY} was added in 7.52.0,
++ * released in August 2017.
+  */
+-#if LIBCURL_VERSION_NUM >= 0x072b00
+-#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURLOPT_PROXY_KEYPASSWD \
++	LIBCURL_HAS(CURLOPT_PROXY_KEYPASSWD_FIRST)
++#define CURLOPT_PROXY_PINNEDPUBLICKEY_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_PINNEDPUBLICKEY \
++	LIBCURL_HAS(CURLOPT_PROXY_PINNEDPUBLICKEY_FIRST)
++#define CURLOPT_PROXY_SERVICE_NAME_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SERVICE_NAME \
++	LIBCURL_HAS(CURLOPT_PROXY_SERVICE_NAME_FIRST)
++#define CURLOPT_PROXY_SSLCERT_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLCERT \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLCERT_FIRST)
++#define CURLOPT_PROXY_SSLCERTTYPE_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLCERTTYPE \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLCERTTYPE_FIRST)
++#define CURLOPT_PROXY_SSLCERT_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLCERT_BLOB \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLCERT_BLOB_FIRST)
++#define CURLOPT_PROXY_SSLKEY_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLKEY \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLKEY_FIRST)
++#define CURLOPT_PROXY_SSLKEYTYPE_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLKEYTYPE \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLKEYTYPE_FIRST)
++#define CURLOPT_PROXY_SSLKEY_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLKEY_BLOB \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLKEY_BLOB_FIRST)
++#define CURLOPT_PROXY_SSLVERSION_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSLVERSION \
++	LIBCURL_HAS(CURLOPT_PROXY_SSLVERSION_FIRST)
++#define CURLOPT_PROXY_SSL_CIPHER_LIST_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSL_CIPHER_LIST \
++	LIBCURL_HAS(CURLOPT_PROXY_SSL_CIPHER_LIST_FIRST)
++#define CURLOPT_PROXY_SSL_OPTIONS_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSL_OPTIONS \
++	LIBCURL_HAS(CURLOPT_PROXY_SSL_OPTIONS_FIRST)
++#define CURLOPT_PROXY_SSL_VERIFYHOST_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSL_VERIFYHOST \
++	LIBCURL_HAS(CURLOPT_PROXY_SSL_VERIFYHOST_FIRST)
++#define CURLOPT_PROXY_SSL_VERIFYPEER_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_SSL_VERIFYPEER \
++	LIBCURL_HAS(CURLOPT_PROXY_SSL_VERIFYPEER_FIRST)
++#define CURLOPT_PROXY_TLS13_CIPHERS_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_TLS13_CIPHERS \
++	LIBCURL_HAS(CURLOPT_PROXY_TLS13_CIPHERS_FIRST)
++#define CURLOPT_PROXY_TLSAUTH_PASSWORD_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_TLSAUTH_PASSWORD \
++	LIBCURL_HAS(CURLOPT_PROXY_TLSAUTH_PASSWORD_FIRST)
++#define CURLOPT_PROXY_TLSAUTH_TYPE_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_TLSAUTH_TYPE \
++	LIBCURL_HAS(CURLOPT_PROXY_TLSAUTH_TYPE_FIRST)
++#define CURLOPT_PROXY_TLSAUTH_USERNAME_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_TLSAUTH_USERNAME \
++	LIBCURL_HAS(CURLOPT_PROXY_TLSAUTH_USERNAME_FIRST)
++#define CURLOPT_PROXY_TRANSFER_MODE_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLOPT_PROXY_TRANSFER_MODE \
++	LIBCURL_HAS(CURLOPT_PROXY_TRANSFER_MODE_FIRST)
++#define CURLOPT_PUT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_PUT \
++	LIBCURL_HAS(CURLOPT_PUT_FIRST)
++#define CURLOPT_QUOTE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_QUOTE \
++	LIBCURL_HAS(CURLOPT_QUOTE_FIRST)
++#define CURLOPT_RANDOM_FILE_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_RANDOM_FILE \
++	LIBCURL_HAS(CURLOPT_RANDOM_FILE_FIRST)
++#define CURLOPT_RANGE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_RANGE \
++	LIBCURL_HAS(CURLOPT_RANGE_FIRST)
++#define CURLOPT_READDATA_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURLOPT_READDATA \
++	LIBCURL_HAS(CURLOPT_READDATA_FIRST)
++#define CURLOPT_READFUNCTION_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_READFUNCTION \
++	LIBCURL_HAS(CURLOPT_READFUNCTION_FIRST)
++#define CURLOPT_REDIR_PROTOCOLS_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLOPT_REDIR_PROTOCOLS \
++	LIBCURL_HAS(CURLOPT_REDIR_PROTOCOLS_FIRST)
++#define CURLOPT_REFERER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_REFERER \
++	LIBCURL_HAS(CURLOPT_REFERER_FIRST)
++#define CURLOPT_REQUEST_TARGET_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLOPT_REQUEST_TARGET \
++	LIBCURL_HAS(CURLOPT_REQUEST_TARGET_FIRST)
++#define CURLOPT_RESOLVE_FIRST 0x071503 /* Added in 7.21.3 */
++#define GIT_CURL_HAVE_CURLOPT_RESOLVE \
++	LIBCURL_HAS(CURLOPT_RESOLVE_FIRST)
++#define CURLOPT_RESOLVER_START_DATA_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLOPT_RESOLVER_START_DATA \
++	LIBCURL_HAS(CURLOPT_RESOLVER_START_DATA_FIRST)
++#define CURLOPT_RESOLVER_START_FUNCTION_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLOPT_RESOLVER_START_FUNCTION \
++	LIBCURL_HAS(CURLOPT_RESOLVER_START_FUNCTION_FIRST)
++#define CURLOPT_RESUME_FROM_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_RESUME_FROM \
++	LIBCURL_HAS(CURLOPT_RESUME_FROM_FIRST)
++#define CURLOPT_RESUME_FROM_LARGE_FIRST 0x070b00 /* Added in 7.11.0 */
++#define GIT_CURL_HAVE_CURLOPT_RESUME_FROM_LARGE \
++	LIBCURL_HAS(CURLOPT_RESUME_FROM_LARGE_FIRST)
++#define CURLOPT_RTSPHEADER_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSPHEADER \
++	LIBCURL_HAS(CURLOPT_RTSPHEADER_FIRST)
++#define CURLOPT_RTSP_CLIENT_CSEQ_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_CLIENT_CSEQ \
++	LIBCURL_HAS(CURLOPT_RTSP_CLIENT_CSEQ_FIRST)
++#define CURLOPT_RTSP_REQUEST_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_REQUEST \
++	LIBCURL_HAS(CURLOPT_RTSP_REQUEST_FIRST)
++#define CURLOPT_RTSP_SERVER_CSEQ_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_SERVER_CSEQ \
++	LIBCURL_HAS(CURLOPT_RTSP_SERVER_CSEQ_FIRST)
++#define CURLOPT_RTSP_SESSION_ID_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_SESSION_ID \
++	LIBCURL_HAS(CURLOPT_RTSP_SESSION_ID_FIRST)
++#define CURLOPT_RTSP_STREAM_URI_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_STREAM_URI \
++	LIBCURL_HAS(CURLOPT_RTSP_STREAM_URI_FIRST)
++#define CURLOPT_RTSP_TRANSPORT_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_RTSP_TRANSPORT \
++	LIBCURL_HAS(CURLOPT_RTSP_TRANSPORT_FIRST)
++#define CURLOPT_SASL_AUTHZID_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURLOPT_SASL_AUTHZID \
++	LIBCURL_HAS(CURLOPT_SASL_AUTHZID_FIRST)
++#define CURLOPT_SASL_IR_FIRST 0x071f00 /* Added in 7.31.0 */
++#define GIT_CURL_HAVE_CURLOPT_SASL_IR \
++	LIBCURL_HAS(CURLOPT_SASL_IR_FIRST)
++#define CURLOPT_SEEKDATA_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLOPT_SEEKDATA \
++	LIBCURL_HAS(CURLOPT_SEEKDATA_FIRST)
++#define CURLOPT_SEEKFUNCTION_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLOPT_SEEKFUNCTION \
++	LIBCURL_HAS(CURLOPT_SEEKFUNCTION_FIRST)
++#define CURLOPT_SERVER_RESPONSE_TIMEOUT_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLOPT_SERVER_RESPONSE_TIMEOUT \
++	LIBCURL_HAS(CURLOPT_SERVER_RESPONSE_TIMEOUT_FIRST)
++#define CURLOPT_SERVICE_NAME_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLOPT_SERVICE_NAME \
++	LIBCURL_HAS(CURLOPT_SERVICE_NAME_FIRST)
++#define CURLOPT_SHARE_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLOPT_SHARE \
++	LIBCURL_HAS(CURLOPT_SHARE_FIRST)
++#define CURLOPT_SOCKOPTDATA_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLOPT_SOCKOPTDATA \
++	LIBCURL_HAS(CURLOPT_SOCKOPTDATA_FIRST)
++#define CURLOPT_SOCKOPTFUNCTION_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLOPT_SOCKOPTFUNCTION \
++	LIBCURL_HAS(CURLOPT_SOCKOPTFUNCTION_FIRST)
++#define CURLOPT_SOCKS5_AUTH_FIRST 0x073700 /* Added in 7.55.0 */
++#define GIT_CURL_HAVE_CURLOPT_SOCKS5_AUTH \
++	LIBCURL_HAS(CURLOPT_SOCKS5_AUTH_FIRST)
++#define CURLOPT_SOCKS5_GSSAPI_NEC_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLOPT_SOCKS5_GSSAPI_NEC \
++	LIBCURL_HAS(CURLOPT_SOCKS5_GSSAPI_NEC_FIRST)
++#define CURLOPT_SSH_AUTH_TYPES_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_AUTH_TYPES \
++	LIBCURL_HAS(CURLOPT_SSH_AUTH_TYPES_FIRST)
++#define CURLOPT_SSH_COMPRESSION_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_COMPRESSION \
++	LIBCURL_HAS(CURLOPT_SSH_COMPRESSION_FIRST)
++#define CURLOPT_SSH_HOST_PUBLIC_KEY_MD5_FIRST 0x071101 /* Added in 7.17.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_HOST_PUBLIC_KEY_MD5 \
++	LIBCURL_HAS(CURLOPT_SSH_HOST_PUBLIC_KEY_MD5_FIRST)
++#define CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256_FIRST 0x075000 /* Added in 7.80.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256 \
++	LIBCURL_HAS(CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256_FIRST)
++#define CURLOPT_SSH_KEYDATA_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_KEYDATA \
++	LIBCURL_HAS(CURLOPT_SSH_KEYDATA_FIRST)
++#define CURLOPT_SSH_KEYFUNCTION_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_KEYFUNCTION \
++	LIBCURL_HAS(CURLOPT_SSH_KEYFUNCTION_FIRST)
++#define CURLOPT_SSH_KNOWNHOSTS_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_KNOWNHOSTS \
++	LIBCURL_HAS(CURLOPT_SSH_KNOWNHOSTS_FIRST)
++#define CURLOPT_SSH_PRIVATE_KEYFILE_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_PRIVATE_KEYFILE \
++	LIBCURL_HAS(CURLOPT_SSH_PRIVATE_KEYFILE_FIRST)
++#define CURLOPT_SSH_PUBLIC_KEYFILE_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSH_PUBLIC_KEYFILE \
++	LIBCURL_HAS(CURLOPT_SSH_PUBLIC_KEYFILE_FIRST)
++#define CURLOPT_SSLCERT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSLCERT \
++	LIBCURL_HAS(CURLOPT_SSLCERT_FIRST)
++#define CURLOPT_SSLCERTTYPE_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_SSLCERTTYPE \
++	LIBCURL_HAS(CURLOPT_SSLCERTTYPE_FIRST)
++#define CURLOPT_SSLCERT_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSLCERT_BLOB \
++	LIBCURL_HAS(CURLOPT_SSLCERT_BLOB_FIRST)
++#define CURLOPT_SSLENGINE_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_SSLENGINE \
++	LIBCURL_HAS(CURLOPT_SSLENGINE_FIRST)
++#define CURLOPT_SSLENGINE_DEFAULT_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_SSLENGINE_DEFAULT \
++	LIBCURL_HAS(CURLOPT_SSLENGINE_DEFAULT_FIRST)
++#define CURLOPT_SSLKEY_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_SSLKEY \
++	LIBCURL_HAS(CURLOPT_SSLKEY_FIRST)
++#define CURLOPT_SSLKEYTYPE_FIRST 0x070903 /* Added in 7.9.3 */
++#define GIT_CURL_HAVE_CURLOPT_SSLKEYTYPE \
++	LIBCURL_HAS(CURLOPT_SSLKEYTYPE_FIRST)
++#define CURLOPT_SSLKEY_BLOB_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSLKEY_BLOB \
++	LIBCURL_HAS(CURLOPT_SSLKEY_BLOB_FIRST)
++#define CURLOPT_SSLVERSION_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSLVERSION \
++	LIBCURL_HAS(CURLOPT_SSLVERSION_FIRST)
++#define CURLOPT_SSL_CIPHER_LIST_FIRST 0x070900 /* Added in 7.9 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_CIPHER_LIST \
++	LIBCURL_HAS(CURLOPT_SSL_CIPHER_LIST_FIRST)
++#define CURLOPT_SSL_CTX_DATA_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_CTX_DATA \
++	LIBCURL_HAS(CURLOPT_SSL_CTX_DATA_FIRST)
++#define CURLOPT_SSL_CTX_FUNCTION_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_CTX_FUNCTION \
++	LIBCURL_HAS(CURLOPT_SSL_CTX_FUNCTION_FIRST)
++#define CURLOPT_SSL_EC_CURVES_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_EC_CURVES \
++	LIBCURL_HAS(CURLOPT_SSL_EC_CURVES_FIRST)
++#define CURLOPT_SSL_ENABLE_ALPN_FIRST 0x072400 /* Added in 7.36.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_ENABLE_ALPN \
++	LIBCURL_HAS(CURLOPT_SSL_ENABLE_ALPN_FIRST)
++#define CURLOPT_SSL_ENABLE_NPN_FIRST 0x072400 /* Added in 7.36.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_ENABLE_NPN \
++	LIBCURL_HAS(CURLOPT_SSL_ENABLE_NPN_FIRST)
++#define CURLOPT_SSL_FALSESTART_FIRST 0x072a00 /* Added in 7.42.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_FALSESTART \
++	LIBCURL_HAS(CURLOPT_SSL_FALSESTART_FIRST)
++#define CURLOPT_SSL_OPTIONS_FIRST 0x071900 /* Added in 7.25.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_OPTIONS \
++	LIBCURL_HAS(CURLOPT_SSL_OPTIONS_FIRST)
++#define CURLOPT_SSL_SESSIONID_CACHE_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_SESSIONID_CACHE \
++	LIBCURL_HAS(CURLOPT_SSL_SESSIONID_CACHE_FIRST)
++#define CURLOPT_SSL_VERIFYHOST_FIRST 0x070801 /* Added in 7.8.1 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_VERIFYHOST \
++	LIBCURL_HAS(CURLOPT_SSL_VERIFYHOST_FIRST)
++#define CURLOPT_SSL_VERIFYPEER_FIRST 0x070402 /* Added in 7.4.2 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_VERIFYPEER \
++	LIBCURL_HAS(CURLOPT_SSL_VERIFYPEER_FIRST)
++#define CURLOPT_SSL_VERIFYSTATUS_FIRST 0x072900 /* Added in 7.41.0 */
++#define GIT_CURL_HAVE_CURLOPT_SSL_VERIFYSTATUS \
++	LIBCURL_HAS(CURLOPT_SSL_VERIFYSTATUS_FIRST)
++#define CURLOPT_STDERR_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_STDERR \
++	LIBCURL_HAS(CURLOPT_STDERR_FIRST)
++#define CURLOPT_STREAM_DEPENDS_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURLOPT_STREAM_DEPENDS \
++	LIBCURL_HAS(CURLOPT_STREAM_DEPENDS_FIRST)
++#define CURLOPT_STREAM_DEPENDS_E_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURLOPT_STREAM_DEPENDS_E \
++	LIBCURL_HAS(CURLOPT_STREAM_DEPENDS_E_FIRST)
++#define CURLOPT_STREAM_WEIGHT_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURLOPT_STREAM_WEIGHT \
++	LIBCURL_HAS(CURLOPT_STREAM_WEIGHT_FIRST)
++#define CURLOPT_SUPPRESS_CONNECT_HEADERS_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURLOPT_SUPPRESS_CONNECT_HEADERS \
++	LIBCURL_HAS(CURLOPT_SUPPRESS_CONNECT_HEADERS_FIRST)
++#define CURLOPT_TCP_FASTOPEN_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLOPT_TCP_FASTOPEN \
++	LIBCURL_HAS(CURLOPT_TCP_FASTOPEN_FIRST)
++#define CURLOPT_TCP_KEEPALIVE_FIRST 0x071900 /* Added in 7.25.0 */
++/**
++ * CURLOPT_TCP_KEEPALIVE was added in 7.25.0, released in March 2012.
++ */
++#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE \
++	LIBCURL_HAS(CURLOPT_TCP_KEEPALIVE_FIRST)
++#define CURLOPT_TCP_KEEPIDLE_FIRST 0x071900 /* Added in 7.25.0 */
++#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPIDLE \
++	LIBCURL_HAS(CURLOPT_TCP_KEEPIDLE_FIRST)
++#define CURLOPT_TCP_KEEPINTVL_FIRST 0x071900 /* Added in 7.25.0 */
++#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPINTVL \
++	LIBCURL_HAS(CURLOPT_TCP_KEEPINTVL_FIRST)
++#define CURLOPT_TCP_NODELAY_FIRST 0x070b02 /* Added in 7.11.2 */
++#define GIT_CURL_HAVE_CURLOPT_TCP_NODELAY \
++	LIBCURL_HAS(CURLOPT_TCP_NODELAY_FIRST)
++#define CURLOPT_TELNETOPTIONS_FIRST 0x070700 /* Added in 7.7 */
++#define GIT_CURL_HAVE_CURLOPT_TELNETOPTIONS \
++	LIBCURL_HAS(CURLOPT_TELNETOPTIONS_FIRST)
++#define CURLOPT_TFTP_BLKSIZE_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLOPT_TFTP_BLKSIZE \
++	LIBCURL_HAS(CURLOPT_TFTP_BLKSIZE_FIRST)
++#define CURLOPT_TFTP_NO_OPTIONS_FIRST 0x073000 /* Added in 7.48.0 */
++#define GIT_CURL_HAVE_CURLOPT_TFTP_NO_OPTIONS \
++	LIBCURL_HAS(CURLOPT_TFTP_NO_OPTIONS_FIRST)
++#define CURLOPT_TIMECONDITION_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_TIMECONDITION \
++	LIBCURL_HAS(CURLOPT_TIMECONDITION_FIRST)
++#define CURLOPT_TIMEOUT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_TIMEOUT \
++	LIBCURL_HAS(CURLOPT_TIMEOUT_FIRST)
++#define CURLOPT_TIMEOUT_MS_FIRST 0x071002 /* Added in 7.16.2 */
++#define GIT_CURL_HAVE_CURLOPT_TIMEOUT_MS \
++	LIBCURL_HAS(CURLOPT_TIMEOUT_MS_FIRST)
++#define CURLOPT_TIMEVALUE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_TIMEVALUE \
++	LIBCURL_HAS(CURLOPT_TIMEVALUE_FIRST)
++#define CURLOPT_TIMEVALUE_LARGE_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURLOPT_TIMEVALUE_LARGE \
++	LIBCURL_HAS(CURLOPT_TIMEVALUE_LARGE_FIRST)
++#define CURLOPT_TLS13_CIPHERS_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURLOPT_TLS13_CIPHERS \
++	LIBCURL_HAS(CURLOPT_TLS13_CIPHERS_FIRST)
++#define CURLOPT_TLSAUTH_PASSWORD_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURLOPT_TLSAUTH_PASSWORD \
++	LIBCURL_HAS(CURLOPT_TLSAUTH_PASSWORD_FIRST)
++#define CURLOPT_TLSAUTH_TYPE_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURLOPT_TLSAUTH_TYPE \
++	LIBCURL_HAS(CURLOPT_TLSAUTH_TYPE_FIRST)
++#define CURLOPT_TLSAUTH_USERNAME_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURLOPT_TLSAUTH_USERNAME \
++	LIBCURL_HAS(CURLOPT_TLSAUTH_USERNAME_FIRST)
++#define CURLOPT_TRAILERDATA_FIRST 0x074000 /* Added in 7.64.0 */
++#define GIT_CURL_HAVE_CURLOPT_TRAILERDATA \
++	LIBCURL_HAS(CURLOPT_TRAILERDATA_FIRST)
++#define CURLOPT_TRAILERFUNCTION_FIRST 0x074000 /* Added in 7.64.0 */
++#define GIT_CURL_HAVE_CURLOPT_TRAILERFUNCTION \
++	LIBCURL_HAS(CURLOPT_TRAILERFUNCTION_FIRST)
++#define CURLOPT_TRANSFERTEXT_FIRST 0x070101 /* Added in 7.1.1 */
++#define GIT_CURL_HAVE_CURLOPT_TRANSFERTEXT \
++	LIBCURL_HAS(CURLOPT_TRANSFERTEXT_FIRST)
++#define CURLOPT_TRANSFER_ENCODING_FIRST 0x071506 /* Added in 7.21.6 */
++#define GIT_CURL_HAVE_CURLOPT_TRANSFER_ENCODING \
++	LIBCURL_HAS(CURLOPT_TRANSFER_ENCODING_FIRST)
++#define CURLOPT_UNIX_SOCKET_PATH_FIRST 0x072800 /* Added in 7.40.0 */
++#define GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH \
++	LIBCURL_HAS(CURLOPT_UNIX_SOCKET_PATH_FIRST)
++#define CURLOPT_UNRESTRICTED_AUTH_FIRST 0x070a04 /* Added in 7.10.4 */
++#define GIT_CURL_HAVE_CURLOPT_UNRESTRICTED_AUTH \
++	LIBCURL_HAS(CURLOPT_UNRESTRICTED_AUTH_FIRST)
++#define CURLOPT_UPKEEP_INTERVAL_MS_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLOPT_UPKEEP_INTERVAL_MS \
++	LIBCURL_HAS(CURLOPT_UPKEEP_INTERVAL_MS_FIRST)
++#define CURLOPT_UPLOAD_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_UPLOAD \
++	LIBCURL_HAS(CURLOPT_UPLOAD_FIRST)
++#define CURLOPT_UPLOAD_BUFFERSIZE_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLOPT_UPLOAD_BUFFERSIZE \
++	LIBCURL_HAS(CURLOPT_UPLOAD_BUFFERSIZE_FIRST)
++#define CURLOPT_URL_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_URL \
++	LIBCURL_HAS(CURLOPT_URL_FIRST)
++#define CURLOPT_USERAGENT_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_USERAGENT \
++	LIBCURL_HAS(CURLOPT_USERAGENT_FIRST)
++#define CURLOPT_USERNAME_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURLOPT_USERNAME \
++	LIBCURL_HAS(CURLOPT_USERNAME_FIRST)
++#define CURLOPT_USERPWD_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_USERPWD \
++	LIBCURL_HAS(CURLOPT_USERPWD_FIRST)
++#define CURLOPT_USE_SSL_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLOPT_USE_SSL \
++	LIBCURL_HAS(CURLOPT_USE_SSL_FIRST)
++#define CURLOPT_AWS_SIGV4_FIRST 0x074b00 /* Added in 7.75.0 */
++#define GIT_CURL_HAVE_CURLOPT_AWS_SIGV4 \
++	LIBCURL_HAS(CURLOPT_AWS_SIGV4_FIRST)
++#define CURLOPT_VERBOSE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_VERBOSE \
++	LIBCURL_HAS(CURLOPT_VERBOSE_FIRST)
++#define CURLOPT_WILDCARDMATCH_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLOPT_WILDCARDMATCH \
++	LIBCURL_HAS(CURLOPT_WILDCARDMATCH_FIRST)
++#define CURLOPT_WRITEDATA_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURLOPT_WRITEDATA \
++	LIBCURL_HAS(CURLOPT_WRITEDATA_FIRST)
++#define CURLOPT_WRITEFUNCTION_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_WRITEFUNCTION \
++	LIBCURL_HAS(CURLOPT_WRITEFUNCTION_FIRST)
++#define CURLOPT_WRITEHEADER_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_WRITEHEADER \
++	LIBCURL_HAS(CURLOPT_WRITEHEADER_FIRST)
++#define CURLOPT_WRITEINFO_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURLOPT_WRITEINFO \
++	LIBCURL_HAS(CURLOPT_WRITEINFO_FIRST)
++#define CURLOPT_XFERINFODATA_FIRST 0x072000 /* Added in 7.32.0 */
++#define GIT_CURL_HAVE_CURLOPT_XFERINFODATA \
++	LIBCURL_HAS(CURLOPT_XFERINFODATA_FIRST)
++#define CURLOPT_XFERINFOFUNCTION_FIRST 0x072000 /* Added in 7.32.0 */
++#define GIT_CURL_HAVE_CURLOPT_XFERINFOFUNCTION \
++	LIBCURL_HAS(CURLOPT_XFERINFOFUNCTION_FIRST)
++#define CURLOPT_XOAUTH2_BEARER_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURLOPT_XOAUTH2_BEARER \
++	LIBCURL_HAS(CURLOPT_XOAUTH2_BEARER_FIRST)
++#define CURLOT_BLOB_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_BLOB \
++	LIBCURL_HAS(CURLOT_BLOB_FIRST)
++#define CURLOT_CBPTR_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_CBPTR \
++	LIBCURL_HAS(CURLOT_CBPTR_FIRST)
++#define CURLOT_FUNCTION_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_FUNCTION \
++	LIBCURL_HAS(CURLOT_FUNCTION_FIRST)
++#define CURLOT_LONG_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_LONG \
++	LIBCURL_HAS(CURLOT_LONG_FIRST)
++#define CURLOT_OBJECT_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_OBJECT \
++	LIBCURL_HAS(CURLOT_OBJECT_FIRST)
++#define CURLOT_OFF_T_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_OFF_T \
++	LIBCURL_HAS(CURLOT_OFF_T_FIRST)
++#define CURLOT_SLIST_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_SLIST \
++	LIBCURL_HAS(CURLOT_SLIST_FIRST)
++#define CURLOT_STRING_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_STRING \
++	LIBCURL_HAS(CURLOT_STRING_FIRST)
++#define CURLOT_VALUES_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLOT_VALUES \
++	LIBCURL_HAS(CURLOT_VALUES_FIRST)
++#define CURLPAUSE_ALL_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_ALL \
++	LIBCURL_HAS(CURLPAUSE_ALL_FIRST)
++#define CURLPAUSE_CONT_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_CONT \
++	LIBCURL_HAS(CURLPAUSE_CONT_FIRST)
++#define CURLPAUSE_RECV_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_RECV \
++	LIBCURL_HAS(CURLPAUSE_RECV_FIRST)
++#define CURLPAUSE_RECV_CONT_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_RECV_CONT \
++	LIBCURL_HAS(CURLPAUSE_RECV_CONT_FIRST)
++#define CURLPAUSE_SEND_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_SEND \
++	LIBCURL_HAS(CURLPAUSE_SEND_FIRST)
++#define CURLPAUSE_SEND_CONT_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPAUSE_SEND_CONT \
++	LIBCURL_HAS(CURLPAUSE_SEND_CONT_FIRST)
++#define CURLPIPE_HTTP1_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLPIPE_HTTP1 \
++	LIBCURL_HAS(CURLPIPE_HTTP1_FIRST)
++#define CURLPIPE_MULTIPLEX_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLPIPE_MULTIPLEX \
++	LIBCURL_HAS(CURLPIPE_MULTIPLEX_FIRST)
++#define CURLPIPE_NOTHING_FIRST 0x072b00 /* Added in 7.43.0 */
++#define GIT_CURL_HAVE_CURLPIPE_NOTHING \
++	LIBCURL_HAS(CURLPIPE_NOTHING_FIRST)
++#define CURLPROTO_ALL_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_ALL \
++	LIBCURL_HAS(CURLPROTO_ALL_FIRST)
++#define CURLPROTO_DICT_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_DICT \
++	LIBCURL_HAS(CURLPROTO_DICT_FIRST)
++#define CURLPROTO_FILE_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_FILE \
++	LIBCURL_HAS(CURLPROTO_FILE_FIRST)
++#define CURLPROTO_FTP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_FTP \
++	LIBCURL_HAS(CURLPROTO_FTP_FIRST)
++#define CURLPROTO_FTPS_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_FTPS \
++	LIBCURL_HAS(CURLPROTO_FTPS_FIRST)
++#define CURLPROTO_GOPHER_FIRST 0x071502 /* Added in 7.21.2 */
++#define GIT_CURL_HAVE_CURLPROTO_GOPHER \
++	LIBCURL_HAS(CURLPROTO_GOPHER_FIRST)
++#define CURLPROTO_GOPHERS_FIRST 0x074b00 /* Added in 7.75.0 */
++#define GIT_CURL_HAVE_CURLPROTO_GOPHERS \
++	LIBCURL_HAS(CURLPROTO_GOPHERS_FIRST)
++#define CURLPROTO_HTTP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_HTTP \
++	LIBCURL_HAS(CURLPROTO_HTTP_FIRST)
++#define CURLPROTO_HTTPS_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_HTTPS \
++	LIBCURL_HAS(CURLPROTO_HTTPS_FIRST)
++#define CURLPROTO_IMAP_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_IMAP \
++	LIBCURL_HAS(CURLPROTO_IMAP_FIRST)
++#define CURLPROTO_IMAPS_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_IMAPS \
++	LIBCURL_HAS(CURLPROTO_IMAPS_FIRST)
++#define CURLPROTO_LDAP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_LDAP \
++	LIBCURL_HAS(CURLPROTO_LDAP_FIRST)
++#define CURLPROTO_LDAPS_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_LDAPS \
++	LIBCURL_HAS(CURLPROTO_LDAPS_FIRST)
++#define CURLPROTO_MQTT_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLPROTO_MQTT \
++	LIBCURL_HAS(CURLPROTO_MQTT_FIRST)
++#define CURLPROTO_POP3_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_POP3 \
++	LIBCURL_HAS(CURLPROTO_POP3_FIRST)
++#define CURLPROTO_POP3S_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_POP3S \
++	LIBCURL_HAS(CURLPROTO_POP3S_FIRST)
++#define CURLPROTO_RTMP_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMP \
++	LIBCURL_HAS(CURLPROTO_RTMP_FIRST)
++#define CURLPROTO_RTMPE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMPE \
++	LIBCURL_HAS(CURLPROTO_RTMPE_FIRST)
++#define CURLPROTO_RTMPS_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMPS \
++	LIBCURL_HAS(CURLPROTO_RTMPS_FIRST)
++#define CURLPROTO_RTMPT_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMPT \
++	LIBCURL_HAS(CURLPROTO_RTMPT_FIRST)
++#define CURLPROTO_RTMPTE_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMPTE \
++	LIBCURL_HAS(CURLPROTO_RTMPTE_FIRST)
++#define CURLPROTO_RTMPTS_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTMPTS \
++	LIBCURL_HAS(CURLPROTO_RTMPTS_FIRST)
++#define CURLPROTO_RTSP_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_RTSP \
++	LIBCURL_HAS(CURLPROTO_RTSP_FIRST)
++#define CURLPROTO_SCP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_SCP \
++	LIBCURL_HAS(CURLPROTO_SCP_FIRST)
++#define CURLPROTO_SFTP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_SFTP \
++	LIBCURL_HAS(CURLPROTO_SFTP_FIRST)
++#define CURLPROTO_SMB_FIRST 0x072800 /* Added in 7.40.0 */
++#define GIT_CURL_HAVE_CURLPROTO_SMB \
++	LIBCURL_HAS(CURLPROTO_SMB_FIRST)
++#define CURLPROTO_SMBS_FIRST 0x072800 /* Added in 7.40.0 */
++#define GIT_CURL_HAVE_CURLPROTO_SMBS \
++	LIBCURL_HAS(CURLPROTO_SMBS_FIRST)
++#define CURLPROTO_SMTP_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_SMTP \
++	LIBCURL_HAS(CURLPROTO_SMTP_FIRST)
++#define CURLPROTO_SMTPS_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURLPROTO_SMTPS \
++	LIBCURL_HAS(CURLPROTO_SMTPS_FIRST)
++#define CURLPROTO_TELNET_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_TELNET \
++	LIBCURL_HAS(CURLPROTO_TELNET_FIRST)
++#define CURLPROTO_TFTP_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROTO_TFTP \
++	LIBCURL_HAS(CURLPROTO_TFTP_FIRST)
++#define CURLPROXY_HTTP_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLPROXY_HTTP \
++	LIBCURL_HAS(CURLPROXY_HTTP_FIRST)
++#define CURLPROXY_HTTPS_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURLPROXY_HTTPS \
++	LIBCURL_HAS(CURLPROXY_HTTPS_FIRST)
++#define CURLPROXY_HTTP_1_0_FIRST 0x071304 /* Added in 7.19.4 */
++#define GIT_CURL_HAVE_CURLPROXY_HTTP_1_0 \
++	LIBCURL_HAS(CURLPROXY_HTTP_1_0_FIRST)
++#define CURLPROXY_SOCKS4_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLPROXY_SOCKS4 \
++	LIBCURL_HAS(CURLPROXY_SOCKS4_FIRST)
++#define CURLPROXY_SOCKS4A_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPROXY_SOCKS4A \
++	LIBCURL_HAS(CURLPROXY_SOCKS4A_FIRST)
++#define CURLPROXY_SOCKS5_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLPROXY_SOCKS5 \
++	LIBCURL_HAS(CURLPROXY_SOCKS5_FIRST)
++#define CURLPROXY_SOCKS5_HOSTNAME_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURLPROXY_SOCKS5_HOSTNAME \
++	LIBCURL_HAS(CURLPROXY_SOCKS5_HOSTNAME_FIRST)
++#define CURLPX_BAD_ADDRESS_TYPE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_BAD_ADDRESS_TYPE \
++	LIBCURL_HAS(CURLPX_BAD_ADDRESS_TYPE_FIRST)
++#define CURLPX_BAD_VERSION_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_BAD_VERSION \
++	LIBCURL_HAS(CURLPX_BAD_VERSION_FIRST)
++#define CURLPX_CLOSED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_CLOSED \
++	LIBCURL_HAS(CURLPX_CLOSED_FIRST)
++#define CURLPX_GSSAPI_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_GSSAPI \
++	LIBCURL_HAS(CURLPX_GSSAPI_FIRST)
++#define CURLPX_GSSAPI_PERMSG_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_GSSAPI_PERMSG \
++	LIBCURL_HAS(CURLPX_GSSAPI_PERMSG_FIRST)
++#define CURLPX_GSSAPI_PROTECTION_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_GSSAPI_PROTECTION \
++	LIBCURL_HAS(CURLPX_GSSAPI_PROTECTION_FIRST)
++#define CURLPX_IDENTD_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_IDENTD \
++	LIBCURL_HAS(CURLPX_IDENTD_FIRST)
++#define CURLPX_IDENTD_DIFFER_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_IDENTD_DIFFER \
++	LIBCURL_HAS(CURLPX_IDENTD_DIFFER_FIRST)
++#define CURLPX_LONG_HOSTNAME_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_LONG_HOSTNAME \
++	LIBCURL_HAS(CURLPX_LONG_HOSTNAME_FIRST)
++#define CURLPX_LONG_PASSWD_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_LONG_PASSWD \
++	LIBCURL_HAS(CURLPX_LONG_PASSWD_FIRST)
++#define CURLPX_LONG_USER_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_LONG_USER \
++	LIBCURL_HAS(CURLPX_LONG_USER_FIRST)
++#define CURLPX_NO_AUTH_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_NO_AUTH \
++	LIBCURL_HAS(CURLPX_NO_AUTH_FIRST)
++#define CURLPX_OK_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_OK \
++	LIBCURL_HAS(CURLPX_OK_FIRST)
++#define CURLPX_RECV_ADDRESS_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_RECV_ADDRESS \
++	LIBCURL_HAS(CURLPX_RECV_ADDRESS_FIRST)
++#define CURLPX_RECV_AUTH_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_RECV_AUTH \
++	LIBCURL_HAS(CURLPX_RECV_AUTH_FIRST)
++#define CURLPX_RECV_CONNECT_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_RECV_CONNECT \
++	LIBCURL_HAS(CURLPX_RECV_CONNECT_FIRST)
++#define CURLPX_RECV_REQACK_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_RECV_REQACK \
++	LIBCURL_HAS(CURLPX_RECV_REQACK_FIRST)
++#define CURLPX_REPLY_ADDRESS_TYPE_NOT_SUPPORTED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_ADDRESS_TYPE_NOT_SUPPORTED \
++	LIBCURL_HAS(CURLPX_REPLY_ADDRESS_TYPE_NOT_SUPPORTED_FIRST)
++#define CURLPX_REPLY_COMMAND_NOT_SUPPORTED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_COMMAND_NOT_SUPPORTED \
++	LIBCURL_HAS(CURLPX_REPLY_COMMAND_NOT_SUPPORTED_FIRST)
++#define CURLPX_REPLY_CONNECTION_REFUSED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_CONNECTION_REFUSED \
++	LIBCURL_HAS(CURLPX_REPLY_CONNECTION_REFUSED_FIRST)
++#define CURLPX_REPLY_GENERAL_SERVER_FAILURE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_GENERAL_SERVER_FAILURE \
++	LIBCURL_HAS(CURLPX_REPLY_GENERAL_SERVER_FAILURE_FIRST)
++#define CURLPX_REPLY_HOST_UNREACHABLE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_HOST_UNREACHABLE \
++	LIBCURL_HAS(CURLPX_REPLY_HOST_UNREACHABLE_FIRST)
++#define CURLPX_REPLY_NETWORK_UNREACHABLE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_NETWORK_UNREACHABLE \
++	LIBCURL_HAS(CURLPX_REPLY_NETWORK_UNREACHABLE_FIRST)
++#define CURLPX_REPLY_NOT_ALLOWED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_NOT_ALLOWED \
++	LIBCURL_HAS(CURLPX_REPLY_NOT_ALLOWED_FIRST)
++#define CURLPX_REPLY_TTL_EXPIRED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_TTL_EXPIRED \
++	LIBCURL_HAS(CURLPX_REPLY_TTL_EXPIRED_FIRST)
++#define CURLPX_REPLY_UNASSIGNED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REPLY_UNASSIGNED \
++	LIBCURL_HAS(CURLPX_REPLY_UNASSIGNED_FIRST)
++#define CURLPX_REQUEST_FAILED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_REQUEST_FAILED \
++	LIBCURL_HAS(CURLPX_REQUEST_FAILED_FIRST)
++#define CURLPX_RESOLVE_HOST_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_RESOLVE_HOST \
++	LIBCURL_HAS(CURLPX_RESOLVE_HOST_FIRST)
++#define CURLPX_SEND_AUTH_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_SEND_AUTH \
++	LIBCURL_HAS(CURLPX_SEND_AUTH_FIRST)
++#define CURLPX_SEND_CONNECT_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_SEND_CONNECT \
++	LIBCURL_HAS(CURLPX_SEND_CONNECT_FIRST)
++#define CURLPX_SEND_REQUEST_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_SEND_REQUEST \
++	LIBCURL_HAS(CURLPX_SEND_REQUEST_FIRST)
++#define CURLPX_UNKNOWN_FAIL_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_UNKNOWN_FAIL \
++	LIBCURL_HAS(CURLPX_UNKNOWN_FAIL_FIRST)
++#define CURLPX_UNKNOWN_MODE_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_UNKNOWN_MODE \
++	LIBCURL_HAS(CURLPX_UNKNOWN_MODE_FIRST)
++#define CURLPX_USER_REJECTED_FIRST 0x074900 /* Added in 7.73.0 */
++#define GIT_CURL_HAVE_CURLPX_USER_REJECTED \
++	LIBCURL_HAS(CURLPX_USER_REJECTED_FIRST)
++#define CURLSHE_BAD_OPTION_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHE_BAD_OPTION \
++	LIBCURL_HAS(CURLSHE_BAD_OPTION_FIRST)
++#define CURLSHE_INVALID_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHE_INVALID \
++	LIBCURL_HAS(CURLSHE_INVALID_FIRST)
++#define CURLSHE_IN_USE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHE_IN_USE \
++	LIBCURL_HAS(CURLSHE_IN_USE_FIRST)
++#define CURLSHE_NOMEM_FIRST 0x070c00 /* Added in 7.12.0 */
++#define GIT_CURL_HAVE_CURLSHE_NOMEM \
++	LIBCURL_HAS(CURLSHE_NOMEM_FIRST)
++#define CURLSHE_NOT_BUILT_IN_FIRST 0x071700 /* Added in 7.23.0 */
++#define GIT_CURL_HAVE_CURLSHE_NOT_BUILT_IN \
++	LIBCURL_HAS(CURLSHE_NOT_BUILT_IN_FIRST)
++#define CURLSHE_OK_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHE_OK \
++	LIBCURL_HAS(CURLSHE_OK_FIRST)
++#define CURLSHOPT_LOCKFUNC_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_LOCKFUNC \
++	LIBCURL_HAS(CURLSHOPT_LOCKFUNC_FIRST)
++#define CURLSHOPT_NONE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_NONE \
++	LIBCURL_HAS(CURLSHOPT_NONE_FIRST)
++#define CURLSHOPT_SHARE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_SHARE \
++	LIBCURL_HAS(CURLSHOPT_SHARE_FIRST)
++#define CURLSHOPT_UNLOCKFUNC_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_UNLOCKFUNC \
++	LIBCURL_HAS(CURLSHOPT_UNLOCKFUNC_FIRST)
++#define CURLSHOPT_UNSHARE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_UNSHARE \
++	LIBCURL_HAS(CURLSHOPT_UNSHARE_FIRST)
++#define CURLSHOPT_USERDATA_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURLSHOPT_USERDATA \
++	LIBCURL_HAS(CURLSHOPT_USERDATA_FIRST)
++#define CURLSOCKTYPE_ACCEPT_FIRST 0x071c00 /* Added in 7.28.0 */
++#define GIT_CURL_HAVE_CURLSOCKTYPE_ACCEPT \
++	LIBCURL_HAS(CURLSOCKTYPE_ACCEPT_FIRST)
++#define CURLSOCKTYPE_IPCXN_FIRST 0x071000 /* Added in 7.16.0 */
++#define GIT_CURL_HAVE_CURLSOCKTYPE_IPCXN \
++	LIBCURL_HAS(CURLSOCKTYPE_IPCXN_FIRST)
++#define CURLSSH_AUTH_AGENT_FIRST 0x071c00 /* Added in 7.28.0 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_AGENT \
++	LIBCURL_HAS(CURLSSH_AUTH_AGENT_FIRST)
++#define CURLSSH_AUTH_ANY_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_ANY \
++	LIBCURL_HAS(CURLSSH_AUTH_ANY_FIRST)
++#define CURLSSH_AUTH_DEFAULT_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_DEFAULT \
++	LIBCURL_HAS(CURLSSH_AUTH_DEFAULT_FIRST)
++#define CURLSSH_AUTH_GSSAPI_FIRST 0x073a00 /* Added in 7.58.0 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_GSSAPI \
++	LIBCURL_HAS(CURLSSH_AUTH_GSSAPI_FIRST)
++#define CURLSSH_AUTH_HOST_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_HOST \
++	LIBCURL_HAS(CURLSSH_AUTH_HOST_FIRST)
++#define CURLSSH_AUTH_KEYBOARD_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_KEYBOARD \
++	LIBCURL_HAS(CURLSSH_AUTH_KEYBOARD_FIRST)
++#define CURLSSH_AUTH_NONE_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_NONE \
++	LIBCURL_HAS(CURLSSH_AUTH_NONE_FIRST)
++#define CURLSSH_AUTH_PASSWORD_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_PASSWORD \
++	LIBCURL_HAS(CURLSSH_AUTH_PASSWORD_FIRST)
++#define CURLSSH_AUTH_PUBLICKEY_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLSSH_AUTH_PUBLICKEY \
++	LIBCURL_HAS(CURLSSH_AUTH_PUBLICKEY_FIRST)
++#define CURLSSLBACKEND_BEARSSL_FIRST 0x074400 /* Added in 7.68.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_BEARSSL \
++	LIBCURL_HAS(CURLSSLBACKEND_BEARSSL_FIRST)
++#define CURLSSLBACKEND_BORINGSSL_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_BORINGSSL \
++	LIBCURL_HAS(CURLSSLBACKEND_BORINGSSL_FIRST)
++#define CURLSSLBACKEND_CYASSL_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_CYASSL \
++	LIBCURL_HAS(CURLSSLBACKEND_CYASSL_FIRST)
++#define CURLSSLBACKEND_GNUTLS_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_GNUTLS \
++	LIBCURL_HAS(CURLSSLBACKEND_GNUTLS_FIRST)
++#define CURLSSLBACKEND_GSKIT_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_GSKIT \
++	LIBCURL_HAS(CURLSSLBACKEND_GSKIT_FIRST)
++#define CURLSSLBACKEND_LIBRESSL_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_LIBRESSL \
++	LIBCURL_HAS(CURLSSLBACKEND_LIBRESSL_FIRST)
++#define CURLSSLBACKEND_MBEDTLS_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_MBEDTLS \
++	LIBCURL_HAS(CURLSSLBACKEND_MBEDTLS_FIRST)
++#define CURLSSLBACKEND_MESALINK_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_MESALINK \
++	LIBCURL_HAS(CURLSSLBACKEND_MESALINK_FIRST)
++#define CURLSSLBACKEND_NONE_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_NONE \
++	LIBCURL_HAS(CURLSSLBACKEND_NONE_FIRST)
++#define CURLSSLBACKEND_NSS_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_NSS \
++	LIBCURL_HAS(CURLSSLBACKEND_NSS_FIRST)
++#define CURLSSLBACKEND_OPENSSL_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_OPENSSL \
++	LIBCURL_HAS(CURLSSLBACKEND_OPENSSL_FIRST)
++#define CURLSSLBACKEND_RUSTLS_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_RUSTLS \
++	LIBCURL_HAS(CURLSSLBACKEND_RUSTLS_FIRST)
++#define CURLSSLBACKEND_SCHANNEL_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_SCHANNEL \
++	LIBCURL_HAS(CURLSSLBACKEND_SCHANNEL_FIRST)
++#define CURLSSLBACKEND_SECURETRANSPORT_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_SECURETRANSPORT \
++	LIBCURL_HAS(CURLSSLBACKEND_SECURETRANSPORT_FIRST)
++#define CURLSSLBACKEND_WOLFSSL_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURLSSLBACKEND_WOLFSSL \
++	LIBCURL_HAS(CURLSSLBACKEND_WOLFSSL_FIRST)
++#define CURLSSLOPT_ALLOW_BEAST_FIRST 0x071900 /* Added in 7.25.0 */
++#define GIT_CURL_HAVE_CURLSSLOPT_ALLOW_BEAST \
++	LIBCURL_HAS(CURLSSLOPT_ALLOW_BEAST_FIRST)
++#define CURLSSLOPT_AUTO_CLIENT_CERT_FIRST 0x074d00 /* Added in 7.77.0 */
++#define GIT_CURL_HAVE_CURLSSLOPT_AUTO_CLIENT_CERT \
++	LIBCURL_HAS(CURLSSLOPT_AUTO_CLIENT_CERT_FIRST)
++#define CURLSSLOPT_NATIVE_CA_FIRST 0x074700 /* Added in 7.71.0 */
++#define GIT_CURL_HAVE_CURLSSLOPT_NATIVE_CA \
++	LIBCURL_HAS(CURLSSLOPT_NATIVE_CA_FIRST)
++#define CURLSSLOPT_NO_PARTIALCHAIN_FIRST 0x074400 /* Added in 7.68.0 */
++#define GIT_CURL_HAVE_CURLSSLOPT_NO_PARTIALCHAIN \
++	LIBCURL_HAS(CURLSSLOPT_NO_PARTIALCHAIN_FIRST)
++#define CURLSSLOPT_NO_REVOKE_FIRST 0x072c00 /* Added in 7.44.0 */
+ /**
+  * CURLSSLOPT_NO_REVOKE was added in 7.44.0, released in August 2015.
+  *
+  * The CURLSSLOPT_NO_REVOKE is, has always been a macro, not an enum
+  * field (checked on curl version 7.78.0)
+  */
+-#if LIBCURL_VERSION_NUM >= 0x072c00
+-#define GIT_CURL_HAVE_CURLSSLOPT_NO_REVOKE 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURLSSLOPT_NO_REVOKE \
++	LIBCURL_HAS(CURLSSLOPT_NO_REVOKE_FIRST)
++#define CURLSSLOPT_REVOKE_BEST_EFFORT_FIRST 0x074600 /* Added in 7.70.0 */
++#define GIT_CURL_HAVE_CURLSSLOPT_REVOKE_BEST_EFFORT \
++	LIBCURL_HAS(CURLSSLOPT_REVOKE_BEST_EFFORT_FIRST)
++#define CURLSSLSET_NO_BACKENDS_FIRST 0x073800 /* Added in 7.56.0 */
+ /**
+- * CURLOPT_PROXY_CAINFO was added in 7.52.0, released in August 2017.
++ * CURLSSLSET_{NO_BACKENDS,OK,TOO_LATE,UNKNOWN_BACKEND} were added in
++ * 7.56.0, released in September 2017.
+  */
+-#if LIBCURL_VERSION_NUM >= 0x073400
+-#define GIT_CURL_HAVE_CURLOPT_PROXY_CAINFO 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURLSSLSET_NO_BACKENDS \
++	LIBCURL_HAS(CURLSSLSET_NO_BACKENDS_FIRST)
++#define CURLSSLSET_OK_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURLSSLSET_OK \
++	LIBCURL_HAS(CURLSSLSET_OK_FIRST)
++#define CURLSSLSET_TOO_LATE_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURLSSLSET_TOO_LATE \
++	LIBCURL_HAS(CURLSSLSET_TOO_LATE_FIRST)
++#define CURLSSLSET_UNKNOWN_BACKEND_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURLSSLSET_UNKNOWN_BACKEND \
++	LIBCURL_HAS(CURLSSLSET_UNKNOWN_BACKEND_FIRST)
++#define CURLSTS_DONE_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLSTS_DONE \
++	LIBCURL_HAS(CURLSTS_DONE_FIRST)
++#define CURLSTS_FAIL_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLSTS_FAIL \
++	LIBCURL_HAS(CURLSTS_FAIL_FIRST)
++#define CURLSTS_OK_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURLSTS_OK \
++	LIBCURL_HAS(CURLSTS_OK_FIRST)
++#define CURLUE_BAD_FILE_URL_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_FILE_URL \
++	LIBCURL_HAS(CURLUE_BAD_FILE_URL_FIRST)
++#define CURLUE_BAD_FRAGMENT_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_FRAGMENT \
++	LIBCURL_HAS(CURLUE_BAD_FRAGMENT_FIRST)
++#define CURLUE_BAD_HANDLE_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_HANDLE \
++	LIBCURL_HAS(CURLUE_BAD_HANDLE_FIRST)
++#define CURLUE_BAD_HOSTNAME_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_HOSTNAME \
++	LIBCURL_HAS(CURLUE_BAD_HOSTNAME_FIRST)
++#define CURLUE_BAD_IPV6_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_IPV6 \
++	LIBCURL_HAS(CURLUE_BAD_IPV6_FIRST)
++#define CURLUE_BAD_LOGIN_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_LOGIN \
++	LIBCURL_HAS(CURLUE_BAD_LOGIN_FIRST)
++#define CURLUE_BAD_PARTPOINTER_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_PARTPOINTER \
++	LIBCURL_HAS(CURLUE_BAD_PARTPOINTER_FIRST)
++#define CURLUE_BAD_PASSWORD_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_PASSWORD \
++	LIBCURL_HAS(CURLUE_BAD_PASSWORD_FIRST)
++#define CURLUE_BAD_PATH_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_PATH \
++	LIBCURL_HAS(CURLUE_BAD_PATH_FIRST)
++#define CURLUE_BAD_PORT_NUMBER_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_PORT_NUMBER \
++	LIBCURL_HAS(CURLUE_BAD_PORT_NUMBER_FIRST)
++#define CURLUE_BAD_QUERY_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_QUERY \
++	LIBCURL_HAS(CURLUE_BAD_QUERY_FIRST)
++#define CURLUE_BAD_SCHEME_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_SCHEME \
++	LIBCURL_HAS(CURLUE_BAD_SCHEME_FIRST)
++#define CURLUE_BAD_SLASHES_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_SLASHES \
++	LIBCURL_HAS(CURLUE_BAD_SLASHES_FIRST)
++#define CURLUE_BAD_USER_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_BAD_USER \
++	LIBCURL_HAS(CURLUE_BAD_USER_FIRST)
++#define CURLUE_MALFORMED_INPUT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_MALFORMED_INPUT \
++	LIBCURL_HAS(CURLUE_MALFORMED_INPUT_FIRST)
++#define CURLUE_NO_FRAGMENT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_FRAGMENT \
++	LIBCURL_HAS(CURLUE_NO_FRAGMENT_FIRST)
++#define CURLUE_NO_HOST_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_HOST \
++	LIBCURL_HAS(CURLUE_NO_HOST_FIRST)
++#define CURLUE_NO_OPTIONS_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_OPTIONS \
++	LIBCURL_HAS(CURLUE_NO_OPTIONS_FIRST)
++#define CURLUE_NO_PASSWORD_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_PASSWORD \
++	LIBCURL_HAS(CURLUE_NO_PASSWORD_FIRST)
++#define CURLUE_NO_PORT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_PORT \
++	LIBCURL_HAS(CURLUE_NO_PORT_FIRST)
++#define CURLUE_NO_QUERY_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_QUERY \
++	LIBCURL_HAS(CURLUE_NO_QUERY_FIRST)
++#define CURLUE_NO_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_SCHEME \
++	LIBCURL_HAS(CURLUE_NO_SCHEME_FIRST)
++#define CURLUE_NO_USER_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_USER \
++	LIBCURL_HAS(CURLUE_NO_USER_FIRST)
++#define CURLUE_NO_ZONEID_FIRST 0x075100 /* Added in 7.81.0 */
++#define GIT_CURL_HAVE_CURLUE_NO_ZONEID \
++	LIBCURL_HAS(CURLUE_NO_ZONEID_FIRST)
++#define CURLUE_OK_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_OK \
++	LIBCURL_HAS(CURLUE_OK_FIRST)
++#define CURLUE_OUT_OF_MEMORY_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_OUT_OF_MEMORY \
++	LIBCURL_HAS(CURLUE_OUT_OF_MEMORY_FIRST)
++#define CURLUE_UNKNOWN_PART_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_UNKNOWN_PART \
++	LIBCURL_HAS(CURLUE_UNKNOWN_PART_FIRST)
++#define CURLUE_UNSUPPORTED_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_UNSUPPORTED_SCHEME \
++	LIBCURL_HAS(CURLUE_UNSUPPORTED_SCHEME_FIRST)
++#define CURLUE_URLDECODE_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_URLDECODE \
++	LIBCURL_HAS(CURLUE_URLDECODE_FIRST)
++#define CURLUE_USER_NOT_ALLOWED_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUE_USER_NOT_ALLOWED \
++	LIBCURL_HAS(CURLUE_USER_NOT_ALLOWED_FIRST)
++#define CURLUPART_FRAGMENT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_FRAGMENT \
++	LIBCURL_HAS(CURLUPART_FRAGMENT_FIRST)
++#define CURLUPART_HOST_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_HOST \
++	LIBCURL_HAS(CURLUPART_HOST_FIRST)
++#define CURLUPART_OPTIONS_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_OPTIONS \
++	LIBCURL_HAS(CURLUPART_OPTIONS_FIRST)
++#define CURLUPART_PASSWORD_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_PASSWORD \
++	LIBCURL_HAS(CURLUPART_PASSWORD_FIRST)
++#define CURLUPART_PATH_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_PATH \
++	LIBCURL_HAS(CURLUPART_PATH_FIRST)
++#define CURLUPART_PORT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_PORT \
++	LIBCURL_HAS(CURLUPART_PORT_FIRST)
++#define CURLUPART_QUERY_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_QUERY \
++	LIBCURL_HAS(CURLUPART_QUERY_FIRST)
++#define CURLUPART_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_SCHEME \
++	LIBCURL_HAS(CURLUPART_SCHEME_FIRST)
++#define CURLUPART_URL_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_URL \
++	LIBCURL_HAS(CURLUPART_URL_FIRST)
++#define CURLUPART_USER_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLUPART_USER \
++	LIBCURL_HAS(CURLUPART_USER_FIRST)
++#define CURLUPART_ZONEID_FIRST 0x074100 /* Added in 7.65.0 */
++#define GIT_CURL_HAVE_CURLUPART_ZONEID \
++	LIBCURL_HAS(CURLUPART_ZONEID_FIRST)
++#define CURLUSESSL_ALL_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLUSESSL_ALL \
++	LIBCURL_HAS(CURLUSESSL_ALL_FIRST)
++#define CURLUSESSL_CONTROL_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLUSESSL_CONTROL \
++	LIBCURL_HAS(CURLUSESSL_CONTROL_FIRST)
++#define CURLUSESSL_NONE_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLUSESSL_NONE \
++	LIBCURL_HAS(CURLUSESSL_NONE_FIRST)
++#define CURLUSESSL_TRY_FIRST 0x071100 /* Added in 7.17.0 */
++#define GIT_CURL_HAVE_CURLUSESSL_TRY \
++	LIBCURL_HAS(CURLUSESSL_TRY_FIRST)
++#define CURLU_ALLOW_SPACE_FIRST 0x074e00 /* Added in 7.78.0 */
++#define GIT_CURL_HAVE_CURLU_ALLOW_SPACE \
++	LIBCURL_HAS(CURLU_ALLOW_SPACE_FIRST)
++#define CURLU_APPENDQUERY_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_APPENDQUERY \
++	LIBCURL_HAS(CURLU_APPENDQUERY_FIRST)
++#define CURLU_DEFAULT_PORT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_DEFAULT_PORT \
++	LIBCURL_HAS(CURLU_DEFAULT_PORT_FIRST)
++#define CURLU_DEFAULT_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_DEFAULT_SCHEME \
++	LIBCURL_HAS(CURLU_DEFAULT_SCHEME_FIRST)
++#define CURLU_DISALLOW_USER_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_DISALLOW_USER \
++	LIBCURL_HAS(CURLU_DISALLOW_USER_FIRST)
++#define CURLU_GUESS_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_GUESS_SCHEME \
++	LIBCURL_HAS(CURLU_GUESS_SCHEME_FIRST)
++#define CURLU_NON_SUPPORT_SCHEME_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_NON_SUPPORT_SCHEME \
++	LIBCURL_HAS(CURLU_NON_SUPPORT_SCHEME_FIRST)
++#define CURLU_NO_AUTHORITY_FIRST 0x074300 /* Added in 7.67.0 */
++#define GIT_CURL_HAVE_CURLU_NO_AUTHORITY \
++	LIBCURL_HAS(CURLU_NO_AUTHORITY_FIRST)
++#define CURLU_NO_DEFAULT_PORT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_NO_DEFAULT_PORT \
++	LIBCURL_HAS(CURLU_NO_DEFAULT_PORT_FIRST)
++#define CURLU_PATH_AS_IS_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_PATH_AS_IS \
++	LIBCURL_HAS(CURLU_PATH_AS_IS_FIRST)
++#define CURLU_URLDECODE_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_URLDECODE \
++	LIBCURL_HAS(CURLU_URLDECODE_FIRST)
++#define CURLU_URLENCODE_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURLU_URLENCODE \
++	LIBCURL_HAS(CURLU_URLENCODE_FIRST)
++#define CURLVERSION_EIGHTH_FIRST 0x074800 /* Added in 7.72.0 */
++#define GIT_CURL_HAVE_CURLVERSION_EIGHTH \
++	LIBCURL_HAS(CURLVERSION_EIGHTH_FIRST)
++#define CURLVERSION_FIFTH_FIRST 0x073900 /* Added in 7.57.0 */
++#define GIT_CURL_HAVE_CURLVERSION_FIFTH \
++	LIBCURL_HAS(CURLVERSION_FIFTH_FIRST)
++#define CURLVERSION_FIRST_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLVERSION_FIRST \
++	LIBCURL_HAS(CURLVERSION_FIRST_FIRST)
++#define CURLVERSION_FOURTH_FIRST 0x071001 /* Added in 7.16.1 */
++#define GIT_CURL_HAVE_CURLVERSION_FOURTH \
++	LIBCURL_HAS(CURLVERSION_FOURTH_FIRST)
++#define CURLVERSION_NINTH_FIRST 0x074b00 /* Added in 7.75.0 */
++#define GIT_CURL_HAVE_CURLVERSION_NINTH \
++	LIBCURL_HAS(CURLVERSION_NINTH_FIRST)
++#define CURLVERSION_NOW_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURLVERSION_NOW \
++	LIBCURL_HAS(CURLVERSION_NOW_FIRST)
++#define CURLVERSION_SECOND_FIRST 0x070b01 /* Added in 7.11.1 */
++#define GIT_CURL_HAVE_CURLVERSION_SECOND \
++	LIBCURL_HAS(CURLVERSION_SECOND_FIRST)
++#define CURLVERSION_SEVENTH_FIRST 0x074600 /* Added in 7.70.0 */
++#define GIT_CURL_HAVE_CURLVERSION_SEVENTH \
++	LIBCURL_HAS(CURLVERSION_SEVENTH_FIRST)
++#define CURLVERSION_SIXTH_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURLVERSION_SIXTH \
++	LIBCURL_HAS(CURLVERSION_SIXTH_FIRST)
++#define CURLVERSION_TENTH_FIRST 0x074d00 /* Added in 7.77.0 */
++#define GIT_CURL_HAVE_CURLVERSION_TENTH \
++	LIBCURL_HAS(CURLVERSION_TENTH_FIRST)
++#define CURLVERSION_THIRD_FIRST 0x070c00 /* Added in 7.12.0 */
++#define GIT_CURL_HAVE_CURLVERSION_THIRD \
++	LIBCURL_HAS(CURLVERSION_THIRD_FIRST)
++#define CURL_CHUNK_BGN_FUNC_FAIL_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_CHUNK_BGN_FUNC_FAIL \
++	LIBCURL_HAS(CURL_CHUNK_BGN_FUNC_FAIL_FIRST)
++#define CURL_CHUNK_BGN_FUNC_OK_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_CHUNK_BGN_FUNC_OK \
++	LIBCURL_HAS(CURL_CHUNK_BGN_FUNC_OK_FIRST)
++#define CURL_CHUNK_BGN_FUNC_SKIP_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_CHUNK_BGN_FUNC_SKIP \
++	LIBCURL_HAS(CURL_CHUNK_BGN_FUNC_SKIP_FIRST)
++#define CURL_CHUNK_END_FUNC_FAIL_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_CHUNK_END_FUNC_FAIL \
++	LIBCURL_HAS(CURL_CHUNK_END_FUNC_FAIL_FIRST)
++#define CURL_CHUNK_END_FUNC_OK_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_CHUNK_END_FUNC_OK \
++	LIBCURL_HAS(CURL_CHUNK_END_FUNC_OK_FIRST)
++#define CURL_CSELECT_ERR_FIRST 0x071003 /* Added in 7.16.3 */
++#define GIT_CURL_HAVE_CURL_CSELECT_ERR \
++	LIBCURL_HAS(CURL_CSELECT_ERR_FIRST)
++#define CURL_CSELECT_IN_FIRST 0x071003 /* Added in 7.16.3 */
++#define GIT_CURL_HAVE_CURL_CSELECT_IN \
++	LIBCURL_HAS(CURL_CSELECT_IN_FIRST)
++#define CURL_CSELECT_OUT_FIRST 0x071003 /* Added in 7.16.3 */
++#define GIT_CURL_HAVE_CURL_CSELECT_OUT \
++	LIBCURL_HAS(CURL_CSELECT_OUT_FIRST)
++#define CURL_DID_MEMORY_FUNC_TYPEDEFS_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURL_DID_MEMORY_FUNC_TYPEDEFS \
++	LIBCURL_HAS(CURL_DID_MEMORY_FUNC_TYPEDEFS_FIRST)
++#define CURL_ERROR_SIZE_FIRST 0x070100 /* Added in 7.1 */
++#define GIT_CURL_HAVE_CURL_ERROR_SIZE \
++	LIBCURL_HAS(CURL_ERROR_SIZE_FIRST)
++#define CURL_FNMATCHFUNC_FAIL_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_FNMATCHFUNC_FAIL \
++	LIBCURL_HAS(CURL_FNMATCHFUNC_FAIL_FIRST)
++#define CURL_FNMATCHFUNC_MATCH_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_FNMATCHFUNC_MATCH \
++	LIBCURL_HAS(CURL_FNMATCHFUNC_MATCH_FIRST)
++#define CURL_FNMATCHFUNC_NOMATCH_FIRST 0x071500 /* Added in 7.21.0 */
++#define GIT_CURL_HAVE_CURL_FNMATCHFUNC_NOMATCH \
++	LIBCURL_HAS(CURL_FNMATCHFUNC_NOMATCH_FIRST)
++#define CURL_GLOBAL_ACK_EINTR_FIRST 0x071e00 /* Added in 7.30.0 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_ACK_EINTR \
++	LIBCURL_HAS(CURL_GLOBAL_ACK_EINTR_FIRST)
++#define CURL_GLOBAL_ALL_FIRST 0x070800 /* Added in 7.8 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_ALL \
++	LIBCURL_HAS(CURL_GLOBAL_ALL_FIRST)
++#define CURL_GLOBAL_DEFAULT_FIRST 0x070800 /* Added in 7.8 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_DEFAULT \
++	LIBCURL_HAS(CURL_GLOBAL_DEFAULT_FIRST)
++#define CURL_GLOBAL_NOTHING_FIRST 0x070800 /* Added in 7.8 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_NOTHING \
++	LIBCURL_HAS(CURL_GLOBAL_NOTHING_FIRST)
++#define CURL_GLOBAL_SSL_FIRST 0x070800 /* Added in 7.8 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_SSL \
++	LIBCURL_HAS(CURL_GLOBAL_SSL_FIRST)
++#define CURL_GLOBAL_WIN32_FIRST 0x070801 /* Added in 7.8.1 */
++#define GIT_CURL_HAVE_CURL_GLOBAL_WIN32 \
++	LIBCURL_HAS(CURL_GLOBAL_WIN32_FIRST)
++#define CURL_HET_DEFAULT_FIRST 0x073b00 /* Added in 7.59.0 */
++#define GIT_CURL_HAVE_CURL_HET_DEFAULT \
++	LIBCURL_HAS(CURL_HET_DEFAULT_FIRST)
++#define CURL_HTTPPOST_BUFFER_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_BUFFER \
++	LIBCURL_HAS(CURL_HTTPPOST_BUFFER_FIRST)
++#define CURL_HTTPPOST_CALLBACK_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_CALLBACK \
++	LIBCURL_HAS(CURL_HTTPPOST_CALLBACK_FIRST)
++#define CURL_HTTPPOST_FILENAME_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_FILENAME \
++	LIBCURL_HAS(CURL_HTTPPOST_FILENAME_FIRST)
++#define CURL_HTTPPOST_LARGE_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_LARGE \
++	LIBCURL_HAS(CURL_HTTPPOST_LARGE_FIRST)
++#define CURL_HTTPPOST_PTRBUFFER_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_PTRBUFFER \
++	LIBCURL_HAS(CURL_HTTPPOST_PTRBUFFER_FIRST)
++#define CURL_HTTPPOST_PTRCONTENTS_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_PTRCONTENTS \
++	LIBCURL_HAS(CURL_HTTPPOST_PTRCONTENTS_FIRST)
++#define CURL_HTTPPOST_PTRNAME_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_PTRNAME \
++	LIBCURL_HAS(CURL_HTTPPOST_PTRNAME_FIRST)
++#define CURL_HTTPPOST_READFILE_FIRST 0x072e00 /* Added in 7.46.0 */
++#define GIT_CURL_HAVE_CURL_HTTPPOST_READFILE \
++	LIBCURL_HAS(CURL_HTTPPOST_READFILE_FIRST)
++#define CURL_HTTP_VERSION_1_0_FIRST 0x070901 /* Added in 7.9.1 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_1_0 \
++	LIBCURL_HAS(CURL_HTTP_VERSION_1_0_FIRST)
++#define CURL_HTTP_VERSION_1_1_FIRST 0x070901 /* Added in 7.9.1 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_1_1 \
++	LIBCURL_HAS(CURL_HTTP_VERSION_1_1_FIRST)
++#define CURL_HTTP_VERSION_2_FIRST 0x072b00 /* Added in 7.43.0 */
+ /**
+- * CURLOPT_PROXY_{KEYPASSWD,SSLCERT,SSLKEY} was added in 7.52.0,
+- * released in August 2017.
++ * CURL_HTTP_VERSION_2 was added in 7.43.0, released in June 2015.
++ *
++ * The CURL_HTTP_VERSION_2 alias (but not CURL_HTTP_VERSION_2_0) has
++ * always been a macro, not an enum field (checked on curl version
++ * 7.78.0)
+  */
+-#if LIBCURL_VERSION_NUM >= 0x073400
+-#define GIT_CURL_HAVE_CURLOPT_PROXY_KEYPASSWD 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2 \
++	LIBCURL_HAS(CURL_HTTP_VERSION_2_FIRST)
++#define CURL_HTTP_VERSION_2TLS_FIRST 0x072f00 /* Added in 7.47.0 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2TLS \
++	LIBCURL_HAS(CURL_HTTP_VERSION_2TLS_FIRST)
++#define CURL_HTTP_VERSION_2_0_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2_0 \
++	LIBCURL_HAS(CURL_HTTP_VERSION_2_0_FIRST)
++#define CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE_FIRST 0x073100 /* Added in 7.49.0 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE \
++	LIBCURL_HAS(CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE_FIRST)
++#define CURL_HTTP_VERSION_3_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_3 \
++	LIBCURL_HAS(CURL_HTTP_VERSION_3_FIRST)
++#define CURL_HTTP_VERSION_NONE_FIRST 0x070901 /* Added in 7.9.1 */
++#define GIT_CURL_HAVE_CURL_HTTP_VERSION_NONE \
++	LIBCURL_HAS(CURL_HTTP_VERSION_NONE_FIRST)
++#define CURL_IPRESOLVE_V4_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURL_IPRESOLVE_V4 \
++	LIBCURL_HAS(CURL_IPRESOLVE_V4_FIRST)
++#define CURL_IPRESOLVE_V6_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURL_IPRESOLVE_V6 \
++	LIBCURL_HAS(CURL_IPRESOLVE_V6_FIRST)
++#define CURL_IPRESOLVE_WHATEVER_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURL_IPRESOLVE_WHATEVER \
++	LIBCURL_HAS(CURL_IPRESOLVE_WHATEVER_FIRST)
++#define CURL_LOCK_ACCESS_NONE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_ACCESS_NONE \
++	LIBCURL_HAS(CURL_LOCK_ACCESS_NONE_FIRST)
++#define CURL_LOCK_ACCESS_SHARED_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_ACCESS_SHARED \
++	LIBCURL_HAS(CURL_LOCK_ACCESS_SHARED_FIRST)
++#define CURL_LOCK_ACCESS_SINGLE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_ACCESS_SINGLE \
++	LIBCURL_HAS(CURL_LOCK_ACCESS_SINGLE_FIRST)
++#define CURL_LOCK_DATA_CONNECT_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_CONNECT \
++	LIBCURL_HAS(CURL_LOCK_DATA_CONNECT_FIRST)
++#define CURL_LOCK_DATA_COOKIE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_COOKIE \
++	LIBCURL_HAS(CURL_LOCK_DATA_COOKIE_FIRST)
++#define CURL_LOCK_DATA_DNS_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_DNS \
++	LIBCURL_HAS(CURL_LOCK_DATA_DNS_FIRST)
++#define CURL_LOCK_DATA_NONE_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_NONE \
++	LIBCURL_HAS(CURL_LOCK_DATA_NONE_FIRST)
++#define CURL_LOCK_DATA_PSL_FIRST 0x073d00 /* Added in 7.61.0 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_PSL \
++	LIBCURL_HAS(CURL_LOCK_DATA_PSL_FIRST)
++#define CURL_LOCK_DATA_SHARE_FIRST 0x070a04 /* Added in 7.10.4 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_SHARE \
++	LIBCURL_HAS(CURL_LOCK_DATA_SHARE_FIRST)
++#define CURL_LOCK_DATA_SSL_SESSION_FIRST 0x070a03 /* Added in 7.10.3 */
++#define GIT_CURL_HAVE_CURL_LOCK_DATA_SSL_SESSION \
++	LIBCURL_HAS(CURL_LOCK_DATA_SSL_SESSION_FIRST)
++#define CURL_MAX_HTTP_HEADER_FIRST 0x071307 /* Added in 7.19.7 */
++#define GIT_CURL_HAVE_CURL_MAX_HTTP_HEADER \
++	LIBCURL_HAS(CURL_MAX_HTTP_HEADER_FIRST)
++#define CURL_MAX_READ_SIZE_FIRST 0x073500 /* Added in 7.53.0 */
++#define GIT_CURL_HAVE_CURL_MAX_READ_SIZE \
++	LIBCURL_HAS(CURL_MAX_READ_SIZE_FIRST)
++#define CURL_MAX_WRITE_SIZE_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURL_MAX_WRITE_SIZE \
++	LIBCURL_HAS(CURL_MAX_WRITE_SIZE_FIRST)
++#define CURL_NETRC_IGNORED_FIRST 0x070908 /* Added in 7.9.8 */
++#define GIT_CURL_HAVE_CURL_NETRC_IGNORED \
++	LIBCURL_HAS(CURL_NETRC_IGNORED_FIRST)
++#define CURL_NETRC_OPTIONAL_FIRST 0x070908 /* Added in 7.9.8 */
++#define GIT_CURL_HAVE_CURL_NETRC_OPTIONAL \
++	LIBCURL_HAS(CURL_NETRC_OPTIONAL_FIRST)
++#define CURL_NETRC_REQUIRED_FIRST 0x070908 /* Added in 7.9.8 */
++#define GIT_CURL_HAVE_CURL_NETRC_REQUIRED \
++	LIBCURL_HAS(CURL_NETRC_REQUIRED_FIRST)
++#define CURL_POLL_IN_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_POLL_IN \
++	LIBCURL_HAS(CURL_POLL_IN_FIRST)
++#define CURL_POLL_INOUT_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_POLL_INOUT \
++	LIBCURL_HAS(CURL_POLL_INOUT_FIRST)
++#define CURL_POLL_NONE_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_POLL_NONE \
++	LIBCURL_HAS(CURL_POLL_NONE_FIRST)
++#define CURL_POLL_OUT_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_POLL_OUT \
++	LIBCURL_HAS(CURL_POLL_OUT_FIRST)
++#define CURL_POLL_REMOVE_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_POLL_REMOVE \
++	LIBCURL_HAS(CURL_POLL_REMOVE_FIRST)
++#define CURL_PREREQFUNC_ABORT_FIRST 0x074f00 /* Added in 7.79.0 */
++#define GIT_CURL_HAVE_CURL_PREREQFUNC_ABORT \
++	LIBCURL_HAS(CURL_PREREQFUNC_ABORT_FIRST)
++#define CURL_PREREQFUNC_OK_FIRST 0x074f00 /* Added in 7.79.0 */
++#define GIT_CURL_HAVE_CURL_PREREQFUNC_OK \
++	LIBCURL_HAS(CURL_PREREQFUNC_OK_FIRST)
++#define CURL_PROGRESSFUNC_CONTINUE_FIRST 0x074400 /* Added in 7.68.0 */
++#define GIT_CURL_HAVE_CURL_PROGRESSFUNC_CONTINUE \
++	LIBCURL_HAS(CURL_PROGRESSFUNC_CONTINUE_FIRST)
++#define CURL_PUSH_DENY_FIRST 0x072c00 /* Added in 7.44.0 */
++#define GIT_CURL_HAVE_CURL_PUSH_DENY \
++	LIBCURL_HAS(CURL_PUSH_DENY_FIRST)
++#define CURL_PUSH_ERROROUT_FIRST 0x074800 /* Added in 7.72.0 */
++#define GIT_CURL_HAVE_CURL_PUSH_ERROROUT \
++	LIBCURL_HAS(CURL_PUSH_ERROROUT_FIRST)
++#define CURL_PUSH_OK_FIRST 0x072c00 /* Added in 7.44.0 */
++#define GIT_CURL_HAVE_CURL_PUSH_OK \
++	LIBCURL_HAS(CURL_PUSH_OK_FIRST)
++#define CURL_READFUNC_ABORT_FIRST 0x070c01 /* Added in 7.12.1 */
++#define GIT_CURL_HAVE_CURL_READFUNC_ABORT \
++	LIBCURL_HAS(CURL_READFUNC_ABORT_FIRST)
++#define CURL_READFUNC_PAUSE_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURL_READFUNC_PAUSE \
++	LIBCURL_HAS(CURL_READFUNC_PAUSE_FIRST)
++#define CURL_REDIR_GET_ALL_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURL_REDIR_GET_ALL \
++	LIBCURL_HAS(CURL_REDIR_GET_ALL_FIRST)
++#define CURL_REDIR_POST_301_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURL_REDIR_POST_301 \
++	LIBCURL_HAS(CURL_REDIR_POST_301_FIRST)
++#define CURL_REDIR_POST_302_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURL_REDIR_POST_302 \
++	LIBCURL_HAS(CURL_REDIR_POST_302_FIRST)
++#define CURL_REDIR_POST_303_FIRST 0x071901 /* Added in 7.25.1 */
++#define GIT_CURL_HAVE_CURL_REDIR_POST_303 \
++	LIBCURL_HAS(CURL_REDIR_POST_303_FIRST)
++#define CURL_REDIR_POST_ALL_FIRST 0x071301 /* Added in 7.19.1 */
++#define GIT_CURL_HAVE_CURL_REDIR_POST_ALL \
++	LIBCURL_HAS(CURL_REDIR_POST_ALL_FIRST)
++#define CURL_RTSPREQ_ANNOUNCE_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_ANNOUNCE \
++	LIBCURL_HAS(CURL_RTSPREQ_ANNOUNCE_FIRST)
++#define CURL_RTSPREQ_DESCRIBE_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_DESCRIBE \
++	LIBCURL_HAS(CURL_RTSPREQ_DESCRIBE_FIRST)
++#define CURL_RTSPREQ_GET_PARAMETER_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_GET_PARAMETER \
++	LIBCURL_HAS(CURL_RTSPREQ_GET_PARAMETER_FIRST)
++#define CURL_RTSPREQ_NONE_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_NONE \
++	LIBCURL_HAS(CURL_RTSPREQ_NONE_FIRST)
++#define CURL_RTSPREQ_OPTIONS_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_OPTIONS \
++	LIBCURL_HAS(CURL_RTSPREQ_OPTIONS_FIRST)
++#define CURL_RTSPREQ_PAUSE_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_PAUSE \
++	LIBCURL_HAS(CURL_RTSPREQ_PAUSE_FIRST)
++#define CURL_RTSPREQ_PLAY_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_PLAY \
++	LIBCURL_HAS(CURL_RTSPREQ_PLAY_FIRST)
++#define CURL_RTSPREQ_RECEIVE_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_RECEIVE \
++	LIBCURL_HAS(CURL_RTSPREQ_RECEIVE_FIRST)
++#define CURL_RTSPREQ_RECORD_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_RECORD \
++	LIBCURL_HAS(CURL_RTSPREQ_RECORD_FIRST)
++#define CURL_RTSPREQ_SETUP_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_SETUP \
++	LIBCURL_HAS(CURL_RTSPREQ_SETUP_FIRST)
++#define CURL_RTSPREQ_SET_PARAMETER_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_SET_PARAMETER \
++	LIBCURL_HAS(CURL_RTSPREQ_SET_PARAMETER_FIRST)
++#define CURL_RTSPREQ_TEARDOWN_FIRST 0x071400 /* Added in 7.20.0 */
++#define GIT_CURL_HAVE_CURL_RTSPREQ_TEARDOWN \
++	LIBCURL_HAS(CURL_RTSPREQ_TEARDOWN_FIRST)
++#define CURL_SEEKFUNC_CANTSEEK_FIRST 0x071305 /* Added in 7.19.5 */
++#define GIT_CURL_HAVE_CURL_SEEKFUNC_CANTSEEK \
++	LIBCURL_HAS(CURL_SEEKFUNC_CANTSEEK_FIRST)
++#define CURL_SEEKFUNC_FAIL_FIRST 0x071305 /* Added in 7.19.5 */
++#define GIT_CURL_HAVE_CURL_SEEKFUNC_FAIL \
++	LIBCURL_HAS(CURL_SEEKFUNC_FAIL_FIRST)
++#define CURL_SEEKFUNC_OK_FIRST 0x071305 /* Added in 7.19.5 */
++#define GIT_CURL_HAVE_CURL_SEEKFUNC_OK \
++	LIBCURL_HAS(CURL_SEEKFUNC_OK_FIRST)
++#define CURL_SOCKET_BAD_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_SOCKET_BAD \
++	LIBCURL_HAS(CURL_SOCKET_BAD_FIRST)
++#define CURL_SOCKET_TIMEOUT_FIRST 0x070e00 /* Added in 7.14.0 */
++#define GIT_CURL_HAVE_CURL_SOCKET_TIMEOUT \
++	LIBCURL_HAS(CURL_SOCKET_TIMEOUT_FIRST)
++#define CURL_SOCKOPT_ALREADY_CONNECTED_FIRST 0x071505 /* Added in 7.21.5 */
++#define GIT_CURL_HAVE_CURL_SOCKOPT_ALREADY_CONNECTED \
++	LIBCURL_HAS(CURL_SOCKOPT_ALREADY_CONNECTED_FIRST)
++#define CURL_SOCKOPT_ERROR_FIRST 0x071505 /* Added in 7.21.5 */
++#define GIT_CURL_HAVE_CURL_SOCKOPT_ERROR \
++	LIBCURL_HAS(CURL_SOCKOPT_ERROR_FIRST)
++#define CURL_SOCKOPT_OK_FIRST 0x071505 /* Added in 7.21.5 */
+ /**
+- * CURL_SSLVERSION_TLSv1_3 was added in 7.53.0, released in February
+- * 2017.
++ * CURL_SOCKOPT_OK was added in 7.21.5, released in April 2011.
+  */
+-#if LIBCURL_VERSION_NUM >= 0x073400
+-#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_3 1
+-#endif
+-
++#define GIT_CURL_HAVE_CURL_SOCKOPT_OK \
++	LIBCURL_HAS(CURL_SOCKOPT_OK_FIRST)
++#define CURL_SSLVERSION_DEFAULT_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_DEFAULT \
++	LIBCURL_HAS(CURL_SSLVERSION_DEFAULT_FIRST)
++#define CURL_SSLVERSION_MAX_DEFAULT_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_DEFAULT \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_DEFAULT_FIRST)
++#define CURL_SSLVERSION_MAX_NONE_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_NONE \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_NONE_FIRST)
++#define CURL_SSLVERSION_MAX_TLSv1_0_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_TLSv1_0 \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_TLSv1_0_FIRST)
++#define CURL_SSLVERSION_MAX_TLSv1_1_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_TLSv1_1 \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_TLSv1_1_FIRST)
++#define CURL_SSLVERSION_MAX_TLSv1_2_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_TLSv1_2 \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_TLSv1_2_FIRST)
++#define CURL_SSLVERSION_MAX_TLSv1_3_FIRST 0x073600 /* Added in 7.54.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_MAX_TLSv1_3 \
++	LIBCURL_HAS(CURL_SSLVERSION_MAX_TLSv1_3_FIRST)
++#define CURL_SSLVERSION_SSLv2_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_SSLv2 \
++	LIBCURL_HAS(CURL_SSLVERSION_SSLv2_FIRST)
++#define CURL_SSLVERSION_SSLv3_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_SSLv3 \
++	LIBCURL_HAS(CURL_SSLVERSION_SSLv3_FIRST)
++#define CURL_SSLVERSION_TLSv1_FIRST 0x070902 /* Added in 7.9.2 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1 \
++	LIBCURL_HAS(CURL_SSLVERSION_TLSv1_FIRST)
++#define CURL_SSLVERSION_TLSv1_0_FIRST 0x072200 /* Added in 7.34.0 */
+ /**
+- * CURLSSLSET_{NO_BACKENDS,OK,TOO_LATE,UNKNOWN_BACKEND} were added in
+- * 7.56.0, released in September 2017.
++ * CURL_SSLVERSION_TLSv1_[012] was added in 7.34.0, released in
++ * December 2013.
+  */
+-#if LIBCURL_VERSION_NUM >= 0x073800
+-#define GIT_CURL_HAVE_CURLSSLSET_NO_BACKENDS
+-#endif
+-
++#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_0 \
++	LIBCURL_HAS(CURL_SSLVERSION_TLSv1_0_FIRST)
++#define CURL_SSLVERSION_TLSv1_1_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_1 \
++	LIBCURL_HAS(CURL_SSLVERSION_TLSv1_1_FIRST)
++#define CURL_SSLVERSION_TLSv1_2_FIRST 0x072200 /* Added in 7.34.0 */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_2 \
++	LIBCURL_HAS(CURL_SSLVERSION_TLSv1_2_FIRST)
++#define CURL_SSLVERSION_TLSv1_3_FIRST 0x073400 /* Added in 7.52.0 */
++/**
++ * CURL_SSLVERSION_TLSv1_3 was added in 7.52.0, released in December
++ * 2016.
++ */
++#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_3 \
++	LIBCURL_HAS(CURL_SSLVERSION_TLSv1_3_FIRST)
++#define CURL_STRICTER_FIRST 0x073202 /* Added in 7.50.2 */
++#define GIT_CURL_HAVE_CURL_STRICTER \
++	LIBCURL_HAS(CURL_STRICTER_FIRST)
++#define CURL_TIMECOND_IFMODSINCE_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURL_TIMECOND_IFMODSINCE \
++	LIBCURL_HAS(CURL_TIMECOND_IFMODSINCE_FIRST)
++#define CURL_TIMECOND_IFUNMODSINCE_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURL_TIMECOND_IFUNMODSINCE \
++	LIBCURL_HAS(CURL_TIMECOND_IFUNMODSINCE_FIRST)
++#define CURL_TIMECOND_LASTMOD_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURL_TIMECOND_LASTMOD \
++	LIBCURL_HAS(CURL_TIMECOND_LASTMOD_FIRST)
++#define CURL_TIMECOND_NONE_FIRST 0x070907 /* Added in 7.9.7 */
++#define GIT_CURL_HAVE_CURL_TIMECOND_NONE \
++	LIBCURL_HAS(CURL_TIMECOND_NONE_FIRST)
++#define CURL_TLSAUTH_NONE_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURL_TLSAUTH_NONE \
++	LIBCURL_HAS(CURL_TLSAUTH_NONE_FIRST)
++#define CURL_TLSAUTH_SRP_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURL_TLSAUTH_SRP \
++	LIBCURL_HAS(CURL_TLSAUTH_SRP_FIRST)
++#define CURL_TRAILERFUNC_ABORT_FIRST 0x074000 /* Added in 7.64.0 */
++#define GIT_CURL_HAVE_CURL_TRAILERFUNC_ABORT \
++	LIBCURL_HAS(CURL_TRAILERFUNC_ABORT_FIRST)
++#define CURL_TRAILERFUNC_OK_FIRST 0x074000 /* Added in 7.64.0 */
++#define GIT_CURL_HAVE_CURL_TRAILERFUNC_OK \
++	LIBCURL_HAS(CURL_TRAILERFUNC_OK_FIRST)
++#define CURL_UPKEEP_INTERVAL_DEFAULT_FIRST 0x073e00 /* Added in 7.62.0 */
++#define GIT_CURL_HAVE_CURL_UPKEEP_INTERVAL_DEFAULT \
++	LIBCURL_HAS(CURL_UPKEEP_INTERVAL_DEFAULT_FIRST)
++#define CURL_VERSION_ALTSVC_FIRST 0x074001 /* Added in 7.64.1 */
++#define GIT_CURL_HAVE_CURL_VERSION_ALTSVC \
++	LIBCURL_HAS(CURL_VERSION_ALTSVC_FIRST)
++#define CURL_VERSION_ASYNCHDNS_FIRST 0x070a07 /* Added in 7.10.7 */
++#define GIT_CURL_HAVE_CURL_VERSION_ASYNCHDNS \
++	LIBCURL_HAS(CURL_VERSION_ASYNCHDNS_FIRST)
++#define CURL_VERSION_BROTLI_FIRST 0x073900 /* Added in 7.57.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_BROTLI \
++	LIBCURL_HAS(CURL_VERSION_BROTLI_FIRST)
++#define CURL_VERSION_CONV_FIRST 0x070f04 /* Added in 7.15.4 */
++#define GIT_CURL_HAVE_CURL_VERSION_CONV \
++	LIBCURL_HAS(CURL_VERSION_CONV_FIRST)
++#define CURL_VERSION_CURLDEBUG_FIRST 0x071306 /* Added in 7.19.6 */
++#define GIT_CURL_HAVE_CURL_VERSION_CURLDEBUG \
++	LIBCURL_HAS(CURL_VERSION_CURLDEBUG_FIRST)
++#define CURL_VERSION_DEBUG_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURL_VERSION_DEBUG \
++	LIBCURL_HAS(CURL_VERSION_DEBUG_FIRST)
++#define CURL_VERSION_GSASL_FIRST 0x074c00 /* Added in 7.76.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_GSASL \
++	LIBCURL_HAS(CURL_VERSION_GSASL_FIRST)
++#define CURL_VERSION_GSSAPI_FIRST 0x072600 /* Added in 7.38.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_GSSAPI \
++	LIBCURL_HAS(CURL_VERSION_GSSAPI_FIRST)
++#define CURL_VERSION_HSTS_FIRST 0x074a00 /* Added in 7.74.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_HSTS \
++	LIBCURL_HAS(CURL_VERSION_HSTS_FIRST)
++#define CURL_VERSION_HTTP2_FIRST 0x072100 /* Added in 7.33.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_HTTP2 \
++	LIBCURL_HAS(CURL_VERSION_HTTP2_FIRST)
++#define CURL_VERSION_HTTP3_FIRST 0x074200 /* Added in 7.66.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_HTTP3 \
++	LIBCURL_HAS(CURL_VERSION_HTTP3_FIRST)
++#define CURL_VERSION_HTTPS_PROXY_FIRST 0x073400 /* Added in 7.52.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_HTTPS_PROXY \
++	LIBCURL_HAS(CURL_VERSION_HTTPS_PROXY_FIRST)
++#define CURL_VERSION_IDN_FIRST 0x070c00 /* Added in 7.12.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_IDN \
++	LIBCURL_HAS(CURL_VERSION_IDN_FIRST)
++#define CURL_VERSION_IPV6_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURL_VERSION_IPV6 \
++	LIBCURL_HAS(CURL_VERSION_IPV6_FIRST)
++#define CURL_VERSION_KERBEROS5_FIRST 0x072800 /* Added in 7.40.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_KERBEROS5 \
++	LIBCURL_HAS(CURL_VERSION_KERBEROS5_FIRST)
++#define CURL_VERSION_LARGEFILE_FIRST 0x070b01 /* Added in 7.11.1 */
++#define GIT_CURL_HAVE_CURL_VERSION_LARGEFILE \
++	LIBCURL_HAS(CURL_VERSION_LARGEFILE_FIRST)
++#define CURL_VERSION_LIBZ_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURL_VERSION_LIBZ \
++	LIBCURL_HAS(CURL_VERSION_LIBZ_FIRST)
++#define CURL_VERSION_MULTI_SSL_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_MULTI_SSL \
++	LIBCURL_HAS(CURL_VERSION_MULTI_SSL_FIRST)
++#define CURL_VERSION_NTLM_FIRST 0x070a06 /* Added in 7.10.6 */
++#define GIT_CURL_HAVE_CURL_VERSION_NTLM \
++	LIBCURL_HAS(CURL_VERSION_NTLM_FIRST)
++#define CURL_VERSION_NTLM_WB_FIRST 0x071600 /* Added in 7.22.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_NTLM_WB \
++	LIBCURL_HAS(CURL_VERSION_NTLM_WB_FIRST)
++#define CURL_VERSION_PSL_FIRST 0x072f00 /* Added in 7.47.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_PSL \
++	LIBCURL_HAS(CURL_VERSION_PSL_FIRST)
++#define CURL_VERSION_SPNEGO_FIRST 0x070a08 /* Added in 7.10.8 */
++#define GIT_CURL_HAVE_CURL_VERSION_SPNEGO \
++	LIBCURL_HAS(CURL_VERSION_SPNEGO_FIRST)
++#define CURL_VERSION_SSL_FIRST 0x070a00 /* Added in 7.10 */
++#define GIT_CURL_HAVE_CURL_VERSION_SSL \
++	LIBCURL_HAS(CURL_VERSION_SSL_FIRST)
++#define CURL_VERSION_SSPI_FIRST 0x070d02 /* Added in 7.13.2 */
++#define GIT_CURL_HAVE_CURL_VERSION_SSPI \
++	LIBCURL_HAS(CURL_VERSION_SSPI_FIRST)
++#define CURL_VERSION_TLSAUTH_SRP_FIRST 0x071504 /* Added in 7.21.4 */
++#define GIT_CURL_HAVE_CURL_VERSION_TLSAUTH_SRP \
++	LIBCURL_HAS(CURL_VERSION_TLSAUTH_SRP_FIRST)
++#define CURL_VERSION_UNICODE_FIRST 0x074800 /* Added in 7.72.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_UNICODE \
++	LIBCURL_HAS(CURL_VERSION_UNICODE_FIRST)
++#define CURL_VERSION_UNIX_SOCKETS_FIRST 0x072800 /* Added in 7.40.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_UNIX_SOCKETS \
++	LIBCURL_HAS(CURL_VERSION_UNIX_SOCKETS_FIRST)
++#define CURL_VERSION_ZSTD_FIRST 0x074800 /* Added in 7.72.0 */
++#define GIT_CURL_HAVE_CURL_VERSION_ZSTD \
++	LIBCURL_HAS(CURL_VERSION_ZSTD_FIRST)
++#define CURL_WAIT_POLLIN_FIRST 0x071c00 /* Added in 7.28.0 */
++#define GIT_CURL_HAVE_CURL_WAIT_POLLIN \
++	LIBCURL_HAS(CURL_WAIT_POLLIN_FIRST)
++#define CURL_WAIT_POLLOUT_FIRST 0x071c00 /* Added in 7.28.0 */
++#define GIT_CURL_HAVE_CURL_WAIT_POLLOUT \
++	LIBCURL_HAS(CURL_WAIT_POLLOUT_FIRST)
++#define CURL_WAIT_POLLPRI_FIRST 0x071c00 /* Added in 7.28.0 */
++#define GIT_CURL_HAVE_CURL_WAIT_POLLPRI \
++	LIBCURL_HAS(CURL_WAIT_POLLPRI_FIRST)
++#define CURL_WIN32_FIRST 0x074500 /* Added in 7.69.0 */
++#define GIT_CURL_HAVE_CURL_WIN32 \
++	LIBCURL_HAS(CURL_WIN32_FIRST)
++#define CURL_WRITEFUNC_PAUSE_FIRST 0x071200 /* Added in 7.18.0 */
++#define GIT_CURL_HAVE_CURL_WRITEFUNC_PAUSE \
++	LIBCURL_HAS(CURL_WRITEFUNC_PAUSE_FIRST)
++#define CURL_ZERO_TERMINATED_FIRST 0x073800 /* Added in 7.56.0 */
++#define GIT_CURL_HAVE_CURL_ZERO_TERMINATED \
++	LIBCURL_HAS(CURL_ZERO_TERMINATED_FIRST)
+ #endif
+-- 
+2.35.1
 
