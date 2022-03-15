@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C9D3C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 21:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A754FC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 21:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351858AbiCOVKx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 17:10:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54870 "EHLO
+        id S1351862AbiCOVK4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 17:10:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343868AbiCOVKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 17:10:52 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAE956233
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:09:39 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id l138-20020a628890000000b004f7cb47178cso325657pfd.12
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:09:39 -0700 (PDT)
+        with ESMTP id S1351860AbiCOVKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 17:10:54 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8DF5676D
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:09:41 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id q9-20020a17090a7a8900b001bf0a7d9dfdso332351pjf.4
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 14:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=9t1/BNUE77HYP2XglXpb8jZe3XGU45Au+67WAcBazbE=;
-        b=hEuEnSZgmJnkDLujLpbxp5q+lNewKIzaPsRo7umOk2qxeJyZLgdiPw8IUmJ7Lcv3oK
-         uZOqyRxVZiW1jJtmWJbv0eNAeMPAhAdsJw9/M3rrANWBaca0YtVvlXq0eCQDl2KMIJJx
-         FXK+s+MKyNFCyTlg9hKo+v9DoU2xhgzTqc7XbrIU9FdCOHG3Hw6ff/EvLj1bymdemBhe
-         vblB6LWOuRo70WumIEILI+nA1idhcsZPs/m+eqntOirfv75zK31xpDvevqxXAQUgJQeq
-         Qlq39/MpKgdefMpF1kXVANCnNUAhz6b8WVVZrepU1EMSJ4UarYhtaUCvVlrErE47Khdn
-         jnGQ==
+        bh=YB/jejylpLRrFQcFwlwyRYDOXZWMA4zVmB898bjUBdY=;
+        b=J0aCjSOT3soEi+PuMrHYP8LsOnnOsFBNcFWlc6f2oM5Md7d6WymCpm5YgAaA90r5zn
+         HJXVsva6qTNdUb/xdZd2fgoX2dUYlrJ70cB1MmREKL3x4mi32A0udcKEIDqC+ZnFeZN4
+         Poml8VWbzO0UphYp6QndqDt4p4FldFJDQuTWD77nBjzEqr2xElsvswR9MoTiWX9elvwZ
+         XE1HRwg3Z6/OBZfnPlB/c54xz0HVGx7N33m4ReXRdOLCOpLYKhp5gnlso4Bo23LDbYei
+         4Ql6dWLu87cWTJDQUp6rmWOY9KBIwDNL3uHSm1ZLraZ0WeaHRgG2pYuHHNN4yJ0oGW53
+         aTsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=9t1/BNUE77HYP2XglXpb8jZe3XGU45Au+67WAcBazbE=;
-        b=aky2zjHUlQ4N3X5BJvZbbN6lxjTEHjm4IbmaORDynvAW3bcr17DisARv5h/0x4qGF/
-         mQrCZhkUXe+Ie4PEFQDxYfYLj8Hk8elcUU8M1OUosZBh+Q4Ef0h6wbFKTfUKLKa9g633
-         eoCBEQalBnlz+w1g0hQDXQecf2Mfd2N14P+dCuMyMFg/ymEYrfq/LYb8FrzNI1KmRTZV
-         GmtK7gVpxU2AUBSBmlTjRH1AlqkdJOcJUd+e3bR/NZqUBhU+DGqhaxpjHXMAlrHNJ4i8
-         WTByBnf7haTjO+QIgWhTd588gP8bx6UwTtEQ2cDxzdRHTxIxr9RKKjGovIjWAbpewv1c
-         4+6A==
-X-Gm-Message-State: AOAM532/txAU60yAm9Gauump7oS4mENByg87+63f84tbn52Jlc4zWrtM
-        rKLxU4/Leu+0p0PWl5YlTBIKKETMJum+w2JGyiKn8L/yazMk1g2/1Lvd8IKas1i5hsf4IOs/fZd
-        OpPAzFgnqFH6gP99oQ/3TbCHumyI1D9uWZ+eL8lzWLksneTp57ZPpKamWlegh7xU=
-X-Google-Smtp-Source: ABdhPJzkSzillZ+sIChXWDI4XlD5VLi/z1xCvrmqbsy4MlRKrtfx4/OioENcnneZ6oYeLXC7pb4zrG6nAqRmaw==
+        bh=YB/jejylpLRrFQcFwlwyRYDOXZWMA4zVmB898bjUBdY=;
+        b=Opibfmsiyrp+lp0a9I14sHr3WQh2UZ+dF5tgc58pd+NaKbTjH2ELij59oS3jYxC0J9
+         7cCKRYWeXX3BFKqNqSYuG2k7yXeBE7S9qQzVKaXmKAmdXNq8HadeEkJha63ckeWh/ZAy
+         rarkw1HBb8rL1mYfdETGLjIqHOY0gkDmqbZo20gpkEmbKQj0XuwI8vr52v5OE+HWosxP
+         SKADspdp9SZ6drhZpZ4YLjA5Pbnabi+FlhyvI1JXGNjKjlHnetEVV6YdkxMK9qlXWoeA
+         yUInguU8Pi7PwfkHPmqOIqINu0m22PEVgJccejjag3uwNIcVh7RbQE8s89+H5oX4l5un
+         EQ0A==
+X-Gm-Message-State: AOAM533gPSub574WL22/jlVmg41w+X2UuyAsGW5uDjWNj0VKSyNaxtOi
+        v6x4Y7r3l4fpZJpdF04yF1dYa9srLkgmHaEj/wzBlda33itW2Z6opXxRoFrk/kG373vSMl86nlR
+        EGZzdtWZtoJ95j1K7QpEdUcxP8yr/2oZJb769veJmcqlRp/8jvG4ih/epZ5Q6yZ0=
+X-Google-Smtp-Source: ABdhPJxGnt9yzSB53q9wFxaDT0gzfJVV9cvcXTEbeElhcSXgNaH77/Y/NArQqxXDPA6NflgU6C72uI25nltUqg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4c84:b0:1c6:573f:145d with SMTP
- id my4-20020a17090b4c8400b001c6573f145dmr1315115pjb.154.1647378578767; Tue,
- 15 Mar 2022 14:09:38 -0700 (PDT)
-Date:   Tue, 15 Mar 2022 14:09:19 -0700
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1943:b0:4cb:79c9:fa48 with SMTP
+ id s3-20020a056a00194300b004cb79c9fa48mr30652372pfk.47.1647378580977; Tue, 15
+ Mar 2022 14:09:40 -0700 (PDT)
+Date:   Tue, 15 Mar 2022 14:09:20 -0700
 In-Reply-To: <20220315210925.79289-1-chooglen@google.com>
-Message-Id: <20220315210925.79289-2-chooglen@google.com>
+Message-Id: <20220315210925.79289-3-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220315210925.79289-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
-Subject: [PATCH 1/7] submodule--helper: run update using child process struct
+Subject: [PATCH 2/7] submodule update: use die_message()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -60,100 +60,121 @@ Cc:     Glen Choo <chooglen@google.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
+        <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Atharva Raykar <raykar.ath@gmail.com>
+Use die_message() to print the "fatal: " prefix instead of doing it in
+git-submodule.sh and remove a now-unnecessary exit code from "git
+submodule--helper run-update-procedure".
 
-We switch to using the run-command API function that takes a
-'struct child process', since we are using a lot of the options. This
-will also make it simple to switch over to using 'capture_command()'
-when we start handling the output of the command completely in C.
+Also, since die_message() adds the newline for us, replace an invocation
+of die_with_status() with printf + exit invocations that do not add a
+newline, but are otherwise identical to die_with_status().
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+This was spun out of
+https://lore.kernel.org/git/patch-v5-9.9-e8e57606ee9-20220128T125206Z-avara=
+b@gmail.com
+
+ builtin/submodule--helper.c | 33 ++++++++++++++-------------------
+ git-submodule.sh            |  9 +++++----
+ 2 files changed, 19 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index bef9ab22d4..95ef113d16 100644
+index 95ef113d16..af1d90af7c 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2325,47 +2325,45 @@ static int fetch_in_submodule(const char *module_pa=
-th, int depth, int quiet, str
-=20
- static int run_update_command(struct update_data *ud, int subforce)
- {
--	struct strvec args =3D STRVEC_INIT;
--	struct strvec child_env =3D STRVEC_INIT;
-+	struct child_process cp =3D CHILD_PROCESS_INIT;
- 	char *oid =3D oid_to_hex(&ud->oid);
- 	int must_die_on_failure =3D 0;
--	int git_cmd;
-=20
- 	switch (ud->update_strategy.type) {
- 	case SM_UPDATE_CHECKOUT:
--		git_cmd =3D 1;
--		strvec_pushl(&args, "checkout", "-q", NULL);
-+		cp.git_cmd =3D 1;
-+		strvec_pushl(&cp.args, "checkout", "-q", NULL);
- 		if (subforce)
--			strvec_push(&args, "-f");
-+			strvec_push(&cp.args, "-f");
- 		break;
- 	case SM_UPDATE_REBASE:
--		git_cmd =3D 1;
--		strvec_push(&args, "rebase");
-+		cp.git_cmd =3D 1;
-+		strvec_push(&cp.args, "rebase");
- 		if (ud->quiet)
--			strvec_push(&args, "--quiet");
-+			strvec_push(&cp.args, "--quiet");
- 		must_die_on_failure =3D 1;
- 		break;
- 	case SM_UPDATE_MERGE:
--		git_cmd =3D 1;
--		strvec_push(&args, "merge");
-+		cp.git_cmd =3D 1;
-+		strvec_push(&cp.args, "merge");
- 		if (ud->quiet)
--			strvec_push(&args, "--quiet");
-+			strvec_push(&cp.args, "--quiet");
- 		must_die_on_failure =3D 1;
- 		break;
- 	case SM_UPDATE_COMMAND:
--		git_cmd =3D 0;
--		strvec_push(&args, ud->update_strategy.command);
-+		cp.use_shell =3D 1;
-+		strvec_push(&cp.args, ud->update_strategy.command);
- 		must_die_on_failure =3D 1;
- 		break;
- 	default:
- 		BUG("unexpected update strategy type: %s",
- 		    submodule_strategy_to_string(&ud->update_strategy));
- 	}
--	strvec_push(&args, oid);
-+	strvec_push(&cp.args, oid);
-=20
--	prepare_submodule_repo_env(&child_env);
--	if (run_command_v_opt_cd_env(args.v, git_cmd ? RUN_GIT_CMD : RUN_USING_SH=
-ELL,
--				     ud->sm_path, child_env.v)) {
-+	cp.dir =3D xstrdup(ud->sm_path);
-+	prepare_submodule_repo_env(&cp.env_array);
-+	if (run_command(&cp)) {
+@@ -2366,40 +2366,35 @@ static int run_update_command(struct update_data *u=
+d, int subforce)
+ 	if (run_command(&cp)) {
  		switch (ud->update_strategy.type) {
  		case SM_UPDATE_CHECKOUT:
- 			printf(_("Unable to checkout '%s' in submodule path '%s'"),
+-			printf(_("Unable to checkout '%s' in submodule path '%s'"),
+-			       oid, ud->displaypath);
++			die_message(_("Unable to checkout '%s' in submodule path '%s'"),
++				    oid, ud->displaypath);
+ 			break;
+ 		case SM_UPDATE_REBASE:
+-			printf(_("Unable to rebase '%s' in submodule path '%s'"),
+-			       oid, ud->displaypath);
++			die_message(_("Unable to rebase '%s' in submodule path '%s'"),
++			    oid, ud->displaypath);
+ 			break;
+ 		case SM_UPDATE_MERGE:
+-			printf(_("Unable to merge '%s' in submodule path '%s'"),
+-			       oid, ud->displaypath);
++			die_message(_("Unable to merge '%s' in submodule path '%s'"),
++			    oid, ud->displaypath);
+ 			break;
+ 		case SM_UPDATE_COMMAND:
+-			printf(_("Execution of '%s %s' failed in submodule path '%s'"),
+-			       ud->update_strategy.command, oid, ud->displaypath);
++			die_message(_("Execution of '%s %s' failed in submodule path '%s'"),
++			    ud->update_strategy.command, oid, ud->displaypath);
+ 			break;
+ 		default:
+ 			BUG("unexpected update strategy type: %s",
+ 			    submodule_strategy_to_string(&ud->update_strategy));
+ 		}
+-		/*
+-		 * NEEDSWORK: We are currently printing to stdout with error
+-		 * return so that the shell caller handles the error output
+-		 * properly. Once we start handling the error messages within
+-		 * C, we should use die() instead.
+-		 */
+ 		if (must_die_on_failure)
+-			return 2;
+-		/*
+-		 * This signifies to the caller in shell that the command
+-		 * failed without dying
+-		 */
++			exit(128);
++
++		/* the command failed, but update must continue */
+ 		return 1;
+ 	}
+=20
++	if (ud->quiet)
++		return 0;
++
+ 	switch (ud->update_strategy.type) {
+ 	case SM_UPDATE_CHECKOUT:
+ 		printf(_("Submodule path '%s': checked out '%s'\n"),
+diff --git a/git-submodule.sh b/git-submodule.sh
+index aa8bdfca9d..a84143daab 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -404,7 +404,7 @@ cmd_update()
+ 		# exit codes for run-update-procedure:
+ 		# 0: update was successful, say command output
+ 		# 1: update procedure failed, but should not die
+-		# 2 or 128: subcommand died during execution
++		# 128: subcommand died during execution
+ 		# 3: no update procedure was run
+ 		res=3D"$?"
+ 		case $res in
+@@ -412,11 +412,12 @@ cmd_update()
+ 			say "$out"
+ 			;;
+ 		1)
+-			err=3D"${err};fatal: $out"
++			err=3D"${err};$out"
+ 			continue
+ 			;;
+-		2|128)
+-			die_with_status $res "fatal: $out"
++		128)
++			printf >&2 "$out"
++			exit $res
+ 			;;
+ 		esac
+=20
 --=20
 2.33.GIT
 
