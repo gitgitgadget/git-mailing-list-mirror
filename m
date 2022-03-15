@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C83FC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3233C433FE
 	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 01:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241538AbiCOBvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Mar 2022 21:51:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49030 "EHLO
+        id S1344307AbiCOBvH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Mar 2022 21:51:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344243AbiCOBu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232835AbiCOBu7 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 Mar 2022 21:50:59 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 586DF10FFB
-        for <git@vger.kernel.org>; Mon, 14 Mar 2022 18:49:48 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so595439wmb.3
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10C31140CE
+        for <git@vger.kernel.org>; Mon, 14 Mar 2022 18:49:49 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id r4-20020a1c4404000000b0038a12987e21so572583wma.4
         for <git@vger.kernel.org>; Mon, 14 Mar 2022 18:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=837qGVpXFZzM+0YUSLB3JsjOQ4eE6KaJGG+jcxv7f0o=;
-        b=fuok133nJCseS2SveuR7EkwZl8C3RlQxR5PvkmzR3eVgi3PH3ej+4MyLVUNt8Shu+f
-         SOfuB55zHO3VxbhL6vnYSv9EfK2UTU6tspCwiyfScihS358Ty2y8X1OfMz6C4YB5b8qc
-         h6f1rP7rNA4dnj0ZampTSU2OIE0kxphJCnpXVucz2g+0PEhirVIt8cAS9q4e/O+wFUdA
-         pG8NnwPVaBcXehN10MyTwHwYHe6JhXTZDQhZhNxcnrV/PUsgcnMA3k3ouwz2m5Pg4hjp
-         ZslSaDSWwCMl+VspuZaRlF8z0l6CoKt15c+3oI7QWuYjg5RLkWUe2JX0eycVhtlrfmKE
-         sm2g==
+        bh=khn7ErIy9kZJToPTZjqCZeka4sIae8cQ3dxGq3E+IF8=;
+        b=YljWvAAWu69eSVmMxltfh+dUHrs12XX1tiv2jPz9EWMNGhVKAqPy/LUKD6X7i207JG
+         xQHjoLtr6lWlq6bdum9O07FyfD2XcHGPsUJEUu92tSLjBSMD2TMmD0yquxITsCfKdWqb
+         +YmcenCCxK1vQbWVo/ciqjruCyY/1FTeNSBqjBbogAMWQiv9ftERP+TSl06Hxx9M+Ow2
+         7tIH1GlEP9ZFyKkGd1ttjJZj2s5DGXkc3QJAaMtY++OPVAf1v0L6dUZm58Wt4jBgGTAZ
+         oNGO8KA5MkUrrzVJMEy1kMVCw4kam6e2xSqt5jec2LAoC78axjkYsl1hia9n9UmDId+T
+         /p8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=837qGVpXFZzM+0YUSLB3JsjOQ4eE6KaJGG+jcxv7f0o=;
-        b=ZlK0g2bOZXtGrwTQNVcc8BVK0N43ZI0jr/IhDkdGDCRrsYab9uvKSTQfhWQaA7iD4E
-         LzluX7UqIpNjUxS1X9lm1byCm41z5yI7H/hZZQvR1+Ee/9oACB509vhRfn26uaqSB1fZ
-         ayXlpCF3Ix1om4P9oc9IVrXkv2EQgS1VE6g3CPX4O/UMmNh0so/rc/5Q3cctU0Lp3wj1
-         m1xxDPWa20jbi8ckkSuKZzLX8hk0znd0WW8JA35RKrV2dD1Ll7rlPy/5lWfjzU3LTctZ
-         XZsEd4rAhLCj2UvXgB74RCEdoKmQNicIjV/JilVf4V4yi3JlecxkPfZWj+T+UG26C5+1
-         Gt7Q==
-X-Gm-Message-State: AOAM531rjaYMFIACAkJqDnL1LenzFr2SGivmPc84N79nCXIJpD2O2EZY
-        fM570dCcjFuWs3nA2A8tmLcOBBKtqGw=
-X-Google-Smtp-Source: ABdhPJx62+2vg6sZHiHvgoLl+ehqLdFkyE6J++rXIuI8+JIUvtgQ612/tvlmCNbuaV+RGN/duc3cwg==
-X-Received: by 2002:a05:600c:5108:b0:389:b089:291 with SMTP id o8-20020a05600c510800b00389b0890291mr1348238wms.109.1647308986638;
-        Mon, 14 Mar 2022 18:49:46 -0700 (PDT)
+        bh=khn7ErIy9kZJToPTZjqCZeka4sIae8cQ3dxGq3E+IF8=;
+        b=fPY9vHM/4SCGW1XfNTSi+1DPyIAiPCb2/whWkn2otiu7fOFs97jLFqlyq5dD4FI/k3
+         DQi75uMAPoB1rzg8Z57aFMWgSIKEK3owbinbL+vdhogMqFkrDPustGCXcw01dZlLk1HS
+         fRLipcYGj4AzOcZ9QfuSk7VEz1n0w455QWY1jFIH9nxYRAfYT+UCVp5SE3GNxH6t2pQm
+         3bpgUXy4yWzWi3mpmf+cw8ZCVRGvGwGigskSDx5q5Rwl2yOokyvlmKBpX0SHbcumWP3G
+         bx5JzQqh0BITPjAfFeBNLPjaTB3ZdF/8YiV+btBBtI4MNug1Ceo5lBuHl3W56PMGCToI
+         DJQw==
+X-Gm-Message-State: AOAM530P/e3vRYDx8xsa6DhQWma4sjh0AKN7rVX1ygNYiPLhyYKb/huO
+        e2KZKU2oukcJpRzSsPvJAgbDQUwxE28=
+X-Google-Smtp-Source: ABdhPJwwIjq7JBMyaQ3Ul7EW3mkVMcalFTR1OjPTf8hG6eLjxJ9fNygIjHHx+JLoLu9JjGaNO+SODA==
+X-Received: by 2002:a05:600c:3203:b0:381:b544:7970 with SMTP id r3-20020a05600c320300b00381b5447970mr1366651wmp.144.1647308987503;
+        Mon, 14 Mar 2022 18:49:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l1-20020a05600c4f0100b00387369f380bsm924035wmq.41.2022.03.14.18.49.46
+        by smtp.gmail.com with ESMTPSA id m128-20020a1ca386000000b003898b148bf0sm884229wme.20.2022.03.14.18.49.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 18:49:46 -0700 (PDT)
-Message-Id: <548c9303c448f85b4c1c5db44886b8b9b7b44db5.1647308982.git.gitgitgadget@gmail.com>
+        Mon, 14 Mar 2022 18:49:47 -0700 (PDT)
+Message-Id: <4c45351a0c4b8b955a9101ed9445a763750ca3c3.1647308982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1170.v3.git.1647308982.gitgitgadget@gmail.com>
 References: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
         <pull.1170.v3.git.1647308982.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Mar 2022 01:49:41 +0000
-Subject: [PATCH v3 4/5] reset: suppress '--no-refresh' advice if logging is
- silenced
+Date:   Tue, 15 Mar 2022 01:49:42 +0000
+Subject: [PATCH v3 5/5] stash: make internal resets quiet and refresh index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,28 +67,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-If using '--quiet' or 'reset.quiet=true', do not print the 'resetnoRefresh'
-advice string. For applications that rely on '--quiet' disabling all
-non-error logs, the advice message should be suppressed accordingly.
+Add the options '-q' and '--refresh' to the 'git reset' executed in
+'reset_head()', and '--refresh' to the 'git reset -q' executed in
+'do_push_stash(...)'.
 
+'stash' is implemented such that git commands invoked  as part of it (e.g.,
+'clean', 'read-tree', 'reset', etc.) have their informational output
+silenced. However, the 'reset' in 'reset_head()' is *not* called with '-q',
+leading to the potential for a misleading printout from 'git stash apply
+--index' if the stash included a removed file:
+
+Unstaged changes after reset: D      <deleted file>
+
+Not only is this confusing in its own right (since, after the reset, 'git
+stash' execution would stage the deletion in the index), it would be printed
+even when the stash was applied with the '-q' option. As a result, the
+messaging is removed entirely by calling 'git status' with '-q'.
+
+Additionally, because the default behavior of 'git reset -q' is to skip
+refreshing the index, but later operations in 'git stash' subcommands expect
+a non-stale index, enable '--refresh' as well.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/stash.c  |  5 +++--
+ t/t3903-stash.sh | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index feab85e03de..c8a356ec5b0 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -535,7 +535,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				refresh_index(&the_index, flags, NULL, NULL,
- 					      _("Unstaged changes after reset:"));
- 				t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
--				if (advice_enabled(ADVICE_RESET_NO_REFRESH_WARNING) && t_delta_in_ms > REFRESH_INDEX_DELAY_WARNING_IN_MS) {
-+				if (!quiet && advice_enabled(ADVICE_RESET_NO_REFRESH_WARNING) && t_delta_in_ms > REFRESH_INDEX_DELAY_WARNING_IN_MS) {
- 					advise(_("It took %.2f seconds to refresh the index after reset.  You can use\n"
- 						 "'--no-refresh' to avoid this.  Set the config setting reset.refresh to false\n"
- 						 "to make this the default."), t_delta_in_ms / 1000.0);
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 3e8af210fde..91407d9bbe0 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -310,7 +310,7 @@ static int reset_head(void)
+ 	 * API for resetting.
+ 	 */
+ 	cp.git_cmd = 1;
+-	strvec_push(&cp.args, "reset");
++	strvec_pushl(&cp.args, "reset", "--quiet", "--refresh", NULL);
+ 
+ 	return run_command(&cp);
+ }
+@@ -1633,7 +1633,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			cp.git_cmd = 1;
+-			strvec_pushl(&cp.args, "reset", "-q", "--", NULL);
++			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
++				     NULL);
+ 			add_pathspecs(&cp.args, ps);
+ 			if (run_command(&cp)) {
+ 				ret = -1;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index f36e121210e..1a5c1bd3109 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -261,6 +261,18 @@ test_expect_success 'apply -q is quiet' '
+ 	test_must_be_empty output.out
+ '
+ 
++test_expect_success 'apply --index -q is quiet' '
++	# Added file, deleted file, modified file all staged for commit
++	echo foo >new-file &&
++	echo test >file &&
++	git add new-file file &&
++	git rm other-file &&
++
++	git stash &&
++	git stash apply --index -q >output.out 2>&1 &&
++	test_must_be_empty output.out
++'
++
+ test_expect_success 'save -q is quiet' '
+ 	git stash save --quiet >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+@@ -291,6 +303,27 @@ test_expect_success 'drop -q is quiet' '
+ 	test_must_be_empty output.out
+ '
+ 
++test_expect_success 'stash push -q --staged refreshes the index' '
++	git reset --hard &&
++	echo test >file &&
++	git add file &&
++	git stash push -q --staged &&
++	git diff-files >output.out &&
++	test_must_be_empty output.out
++'
++
++test_expect_success 'stash apply -q --index refreshes the index' '
++	echo test >other-file &&
++	git add other-file &&
++	echo another-change >other-file &&
++	git diff-files >expect &&
++	git stash &&
++
++	git stash apply -q --index &&
++	git diff-files >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'stash -k' '
+ 	echo bar3 >file &&
+ 	echo bar4 >file2 &&
 -- 
 gitgitgadget
-
