@@ -2,114 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE9ACC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28BFBC433FE
+	for <git@archiver.kernel.org>; Tue, 15 Mar 2022 10:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347033AbiCOKZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Mar 2022 06:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44028 "EHLO
+        id S1345505AbiCOKxv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Mar 2022 06:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347006AbiCOKZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Mar 2022 06:25:08 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A7134BA0
-        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:23:55 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1757118C7D;
-        Tue, 15 Mar 2022 06:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=wTWcKWSuaV6g/kbVMEj0r6VRwVUVkZjT4XfqJaw7sWA=; b=yeNS
-        BNbFHLYQYMK7caVIeezj0rr7oejQCg5jOdcLVWMNaMzF7TINovIzryNS1jfPfJ85
-        vOFdp+pkbB1vRLLszH+QrsZKMjKPxMVFK03rIxvP8FnPGrNILQwu3gf9fruo7s9+
-        +zEGoFgE9Zpzmo7B7lpSIUODzpz32RG25jQ5WBQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9251118C7C;
-        Tue, 15 Mar 2022 06:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 425CE118C7B;
-        Tue, 15 Mar 2022 06:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v3 5/5] stash: make internal resets quiet and refresh index
-References: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
-        <pull.1170.v3.git.1647308982.gitgitgadget@gmail.com>
-        <4c45351a0c4b8b955a9101ed9445a763750ca3c3.1647308982.git.gitgitgadget@gmail.com>
-Date:   Tue, 15 Mar 2022 03:23:53 -0700
-Message-ID: <xmqqee33h5ty.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1347837AbiCOKxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Mar 2022 06:53:04 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E373A70F
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:50:55 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id p9so28280921wra.12
+        for <git@vger.kernel.org>; Tue, 15 Mar 2022 03:50:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=eFfrVPlfEcSQsXQgVc1DV+Q4hVvCVkDbqULAr9ly9+k=;
+        b=mh4ez+ytQAMzWfd3cM/RxHA8GhhIKs4FWEFlZyUBJpVtdnwhJEw5q1q0CWnbyXGQT7
+         NpCnptT356NlEU7iuUbgCkv1pANfJ16yCvxk2YPqtqK1lgL4TCdExPhc2EfbXxGvTnmG
+         jbd2ZuERS69QKIJSX+uYmfKGJT2vYv0uRL2H2a+4yVBydBFdrqxdU6CDUJeTRR31xHpP
+         G8R8O0aOibfD3al+F+W5E6HN2zmjSc039JzB19KhoVPWq/ZaBh58Lh51VDmzsvZ3x/Zh
+         V8fbQiorpDoZEVl4JQKCrDuTQs+YvflWxB2YArSiHDay+EViFtBRzsvGx8TOP3KcnlfZ
+         EgtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=eFfrVPlfEcSQsXQgVc1DV+Q4hVvCVkDbqULAr9ly9+k=;
+        b=PlmpfOyfD9Q/0/lcU99g7eFJxDeFw4JDatl6UNqDXuCwmQBBG9g6bsKxzbyJn8p4kf
+         as3vxppWAyZKwabsTGuwqaub2CnF4w8jzOgsNlIZ7SQKg62WjB+N8JV4BkzBBNVo6ExA
+         PAQ2rOwSbxJ81ZCs9ew+ZZJbxcQPXCINCVwL+L8N/JIAGKPS/7TMvlcBW/iIvErHBaHh
+         XNsH/+swVQXp9g2gQgNEXvw0U6l0ynSHWCiE72RC42NSS+E8q+SQAYaIos571j0eqeuw
+         PKbGhsmqqZl7Xyj7K88fm5xqfrqypp7IE4yjLQp0QRUkS+8oMwqzzm9MVk0BA16hu5L/
+         1UYg==
+X-Gm-Message-State: AOAM533m6fOyuqwcIa8C1FJVCA2BuhqczFwPnrA5Nc/KKLI/oljNEiNv
+        e9Qh9Xk+i/srDu3ifmz78kCeKGgbRTPLnA==
+X-Google-Smtp-Source: ABdhPJziPvWZs0hQBJpDZrUHQgI/Q9o03znfqdqYJ3uxLvRQf68s+X5c42pNa05G7cZ7/UVut9sdPA==
+X-Received: by 2002:a05:6000:1786:b0:1f0:4c5f:63ba with SMTP id e6-20020a056000178600b001f04c5f63bamr19479942wrg.377.1647341453756;
+        Tue, 15 Mar 2022 03:50:53 -0700 (PDT)
+Received: from [192.168.1.201] (217.2.7.51.dyn.plus.net. [51.7.2.217])
+        by smtp.googlemail.com with ESMTPSA id e18-20020adfdbd2000000b001e4bbbe5b92sm16699864wrj.76.2022.03.15.03.50.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Mar 2022 03:50:53 -0700 (PDT)
+Message-ID: <2e5b6c09-b0eb-4e97-0eea-a150e30ad493@gmail.com>
+Date:   Tue, 15 Mar 2022 10:50:52 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 03FA1592-A44A-11EC-987B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/6] builtin/stash: provide a way to export stashes to a
+ ref
+Content-Language: en-US
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+ <20220310173236.4165310-5-sandals@crustytoothpaste.net>
+ <220311.86bkydi65v.gmgdl@evledraar.gmail.com>
+ <2422376f-79aa-2d35-2646-c3611e2ef8d6@gmail.com>
+In-Reply-To: <2422376f-79aa-2d35-2646-c3611e2ef8d6@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 14/03/2022 21:19, Phillip Wood wrote:
+> Hi Brian and Ævar
 
-> +test_expect_success 'apply --index -q is quiet' '
+Sorry brian, I forgot you prefer a lowercase "b"
 
-Hmph.  So being quiet and refreshing index are tested separately in
-different tests, and this one is only about being quiet?
+> Firstly I think this is a useful feature to add to git stash, thanks for 
+> working on it Brian
+> 
+> On 11/03/2022 02:08, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> On Thu, Mar 10 2022, brian m. carlson wrote:
+>>
+>>> +    size_t author_len, committer_len;
+>>> +    struct commit *this = NULL;
+>>> +    const char *orig_author = NULL, *orig_committer = NULL;
+>>> +    char *author = NULL, *committer = NULL;
+>>> +    const char *buffer = NULL;
+>>> +    unsigned long bufsize;
+>>> +    const char *p;
+>>> +    char *msg = NULL;
+>>
+>> These shouldn't be initialized unless they really need to..
+>>
+>>> +    this = lookup_commit_reference(the_repository, &info->w_commit);
+>>
+>> ..and some are clobbered right away here, so all of these should not 
+>> be initializzed.
+>>
+>>> +    buffer = get_commit_buffer(this, &bufsize);
+>>> +    orig_author = find_commit_header(buffer, "author", &author_len);
+>>> +    orig_committer = find_commit_header(buffer, "committer", 
+>>> &committer_len);
+>>> +    p = memmem(buffer, bufsize, "\n\n", 2);
+> 
+> You could start searching from orig_committer rather than buffer but I'm 
+> sure it doesn't make any real difference. The sequencer does something 
+> similar to this to replay commits when rebasing - is there any scope for 
+> sharing code between the two?
 
-I wonder if a single test that checks chattiness and refreshing of
-"git stash -q" and "git apply --index -q" (that's 2x2 which is 4)
-would be sufficient?
+I had a look at sequencer.c this morning and I think the answer is "not 
+easily". In principle it would be nice to have a split_commit_header() 
+function that filled a struct of pointer, length pairs for the author, 
+committer, message and optionally the subject that could be used here, 
+in the sequencer and in fast-export but I think that is more work than 
+is reasonable for this series.
 
-> +	# Added file, deleted file, modified file all staged for commit
-> +	echo foo >new-file &&
-> +	echo test >file &&
-> +	git add new-file file &&
-> +	git rm other-file &&
-> +
-> +	git stash &&
+Best Wishes
 
-As this is only about chattiness about "apply --index -q", this
-command goes unchecked (4 - 2 = 2).
-
-> +	git stash apply --index -q >output.out 2>&1 &&
-
-And this is only about chattiness so we do not test if the index
-gets refreshed after this operation (2 - 1 = 1).
-
-> +	test_must_be_empty output.out
-
-This ensures that "git stash apply --index -q" is silent, as that is
-the main objective of this step: make sure reset won't chatter,
-especially when stash is told to be --quiet, which is good.
-
-But with a few more lines, this set-up can also test the other three
-with minimum additional effort, no?
-
-> +'
-> +
->  test_expect_success 'save -q is quiet' '
->  	git stash save --quiet >output.out 2>&1 &&
->  	test_must_be_empty output.out
-> @@ -291,6 +303,27 @@ test_expect_success 'drop -q is quiet' '
->  	test_must_be_empty output.out
->  '
->  
-> +test_expect_success 'stash push -q --staged refreshes the index' '
-> +	git reset --hard &&
-> +	echo test >file &&
-> +	git add file &&
-> +	git stash push -q --staged &&
-
-"git stash" and "git stash push -q --staged" may do different
-things, so leaving the plain "git stash" untested for refreshing in
-an earlier test, and "git stash" with different options being tested
-for refreshing here, makes me wonder about a gap in test coverage.
-
-The overall theme of the whole topic was that chatty output from
-"git reset" run as an implementation detail seeps through from "git
-stash", IIUC.  So, making sure that our index is refreshed after the
-operation is good, but at the same time, wouldn't we want to see
-what the output of this command says (or be silent)?
+Phillip
