@@ -2,84 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E297C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 19:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A3BAC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 19:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351713AbiCPTkZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 15:40:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56870 "EHLO
+        id S1351077AbiCPTpp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 15:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344624AbiCPTkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 15:40:23 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1C553E01
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:39:08 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 565891280A8;
-        Wed, 16 Mar 2022 15:39:07 -0400 (EDT)
+        with ESMTP id S1346028AbiCPTpp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 15:45:45 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09F1140A7
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:44:30 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2349C11F8C7;
+        Wed, 16 Mar 2022 15:44:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=71tg80srtXlv1MGBPgykKJOGTD1vDNOymAkSCk
-        BmcfE=; b=atBiICPJ1ypdYgiPJ4pjIpChoxm9xw1GKlY4uWbv0WJ7DU+Q31agr/
-        utvwRFwbAgcMIvNNmYDs6EvWQcPe8paAEFu+4IZIo2/9vwXdJRYbgl8ma1gj/rFA
-        bCE+A/M58pIKpWbDcJPgnAAXlANZGWi1AHZkezTVFOR1A3sUOwr+Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 402451280A7;
-        Wed, 16 Mar 2022 15:39:07 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=K5eG1JoaPaKz/jPtIGBLz9UWUNgboPT2nF4irnXyzfI=; b=F5zB
+        aUpcxEP3KwAIX+WXAxzg3jdo7+m/7R0EIqQryAB86pWK/imf/rA9BwlOHQHEV1uP
+        sihB81ZGo7J1TTGoyHxxO6rTqsIDeYjaUbJlgrAxykn8cMhMBJaXL6iMfSppiG/q
+        v9wI6MghgI7V0ftiUUhaLz6xzGspwreS0lBFMIk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A64D11F8C6;
+        Wed, 16 Mar 2022 15:44:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27ACA1280A5;
-        Wed, 16 Mar 2022 15:39:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D6CE11F8C4;
+        Wed, 16 Mar 2022 15:44:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andy Zhang <zhgdrx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: understand Diff Formatting --cc flag?
-References: <CAJcwCMMMm=ZnkV3Xxbf+CpJqhRGx1KrdUzh90W-9dEPJ+i40xg@mail.gmail.com>
-        <xmqq8rt9opd1.fsf@gitster.g>
-        <CAJcwCMN67UMjSNqf2wbb5ZhK1QGicn7+ihneOc1XxJsdDVtvTw@mail.gmail.com>
-Date:   Wed, 16 Mar 2022 12:39:03 -0700
-In-Reply-To: <CAJcwCMN67UMjSNqf2wbb5ZhK1QGicn7+ihneOc1XxJsdDVtvTw@mail.gmail.com>
-        (Andy Zhang's message of "Thu, 17 Mar 2022 03:00:26 +0800")
-Message-ID: <xmqqk0ctlmaw.fsf@gitster.g>
+To:     "Jayati Shrivastava via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Hariom verma <hariom18599@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jayati Shrivastava <gaurijove@gmail.com>
+Subject: Re: [PATCH v3] sequencer.c: use reverse_commit_list() helper
+References: <pull.1177.v2.git.1647427356490.gitgitgadget@gmail.com>
+        <pull.1177.v3.git.1647429623830.gitgitgadget@gmail.com>
+Date:   Wed, 16 Mar 2022 12:44:27 -0700
+Message-ID: <xmqqee31lm1w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BDD975A4-A560-11EC-BDDA-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7DE2404C-A561-11EC-ADAD-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andy Zhang <zhgdrx@gmail.com> writes:
+"Jayati Shrivastava via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->> Among 5 parents, perhaps parent#1 and parent#2 had the same contents,
->> and parent#4 and parent#5 had the same contents, different from what
->> parent#1 and parent#3 had.  You have 3 variants (parent#1's, #3's
->> and #4's; parent#2 has the same contents as #1, parent#5 has the
->> same contents as #4).
->>
+> From: Jayati Shrivastava <gaurijove@gmail.com>
 >
-> [Andy wrote:] as per your comments, The 3 variants are indeed into the
-> following 3 groups.
-> My question is: why can #1 appear inside multiple groups? A and B.
->    <group-A> parent#1, #3, #4;
->    <group-B> parent#2, #1;
->    <group-C> parent#5, #4;
+> Instead of creating a new allocation, reverse the
+> original list in-place by calling the
+> reverse_commit_list() helper.
 
-The three variants in my sample scenario were (A) used by #1, (B)
-used by #3, and (C) used by #4.  #2 uses (A) and #5 uses (C).
+OK.  I recall that v2 wrapped with longer lines that was easier to
+read.
 
-The contents of #1 does appear twice, in #1 itself and also in #2.
-That is what "#2 has the same contents as #1" means.
+> The original code
+> discards the list "bases" after storing its
+> reverse copy in a newly created list "reversed".
+> If the code that followed from here used both
+> "bases" and "reversed", the modification would not
+> have worked, but since the original list "bases"
+> gets discarded, we can simply reverse "bases"
+> in-place with the reverse_commit_list() helper and
+> reuse the same variable in the code that follows.
 
-> [Andy wrote:] can I explain  "--cc" flag as:
-> "--cc lists only either hunks which were modified from all parents, or
-> hunks which were modified from at least two parents and they had
-> different variants"
+I am 30% surprised to see this in the log message ;-).  There is
+nothing incorrect in the description per-se, but it is something I
+would expect in a review that reads a patch and follows along
+thinking aloud to see if the code makes sense, or below "---", but
+it does explain why the patch chose to lose the extra variable, so
+probably it is OK.
 
-I do not have time to see if that matches the official explanation
-found in "git diff --help", which I just re-read and I think it
-gives the right definition.
+> builtin/merge.c has been left unmodified, since in its case, the
+> original list is needed separately from its reverse copy by the
+> code.
+
+Good.
+
+The patch text looks good, too.
+
+Thanks.
