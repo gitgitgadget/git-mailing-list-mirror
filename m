@@ -2,83 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D30AC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 11:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 152F8C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 13:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355438AbiCPLv1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 07:51:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
+        id S241230AbiCPNfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 09:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355419AbiCPLvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 07:51:25 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE175C356
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 04:50:12 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id s42so3792257pfg.0
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 04:50:12 -0700 (PDT)
+        with ESMTP id S229602AbiCPNfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 09:35:39 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998B647048
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 06:34:25 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id 10so1702179qtz.11
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 06:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=A2AI9G48tooHM+Sg4h2QpwwCm8GVn209wIxrbUdw2Ik=;
-        b=CBnuTJwUX5QUrc2ANoJ6blGWhFsonjxIfLCq40kgQHwtPH2fIF7RXzWvdY4h194ab9
-         7OIlc3Qq49gPtvNXeOd5+qQLkx/3Zy3p5ScXGjzwJSyWgpeD7XNY5RETnF/Yr/w5OgSv
-         hfOxjLaGLY7hMLhh3ovucF5ddomQmPEA1G0996GYB8+3GvEyOjOtf56lHqlkdwMlNmyW
-         IfLM3hF55Ig9PqGkJ+fwoACL2GgFj8cB+WD6Q9Dj4VIV8S6r8n8o3bdtJOqc+IjGGAqB
-         7YIKb+kqRDes2JLlCXcACwrGXVK+GAIn1c/m32dLmqPEb7aCseJ5Lr9AKm6XQ6uXKwtx
-         RrbA==
+        bh=YbKvGK1OsbkA9BE51Oc0VLVGWofpmfRsI79I5nx1Uc0=;
+        b=QcnbKfNKu0C6RyGPaDWXo+WRIpdUxvyNogNQlfGL0a5sB38L+AsQiOOQmBNOX+0w4Y
+         62VKnQACcyr2CZcdHwJIWFXSZMdoGpAdgXm08BSemBh1D1Scw3uUugB7R6m2/8Rm6lRq
+         JA819L1Hp9ypTpXNIr2sV+OW1yYrQUDIHq/6AASYIRHtg2LudGEskf+fSy21C4sCM0Es
+         l6WodNWZPw8pLgVivr2V0sRrpF81khklkrS4hwodH247tLd4SXf5gDagzj0N7F5Ug8Li
+         eFJxjdumkoz6bH9QAB1hdtF2CR86rSqFOJyTeJBYAY61LECQeg9hoq3gnCnTW9humUML
+         Io2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=A2AI9G48tooHM+Sg4h2QpwwCm8GVn209wIxrbUdw2Ik=;
-        b=e1NcZBT+aRdhiYQXiIPdCKcO4ex9OE6lAtcrJ5cixPibCf4KF1fQVFvPxmcC5a6yyk
-         4qZNNyZhAKIANXuz58qXS1Q5KV3utcr0s6MQnLP0wlNCu0i+VVcY5I/UHVWb7ViqLJJV
-         ln8B6h68IQB5H600bTjo82oRPV8MHHwl9Cf7Ox2y91n1RjSqBeoRgKmTZWgcC6JekvTY
-         uF6IolV0eviZ5WPxCoDgAwXABK6ti4rfdgf4y1f3oWlwnDI5nBa32yp0AaEyrg4DwKid
-         kW28mf9sAwxQny6lr8LGaHnM7vTSwsFUOY3Cox83NNZCQivk/ffh8Av6yTyu+PPfr2Ug
-         DVyw==
-X-Gm-Message-State: AOAM531lNQQIsP574E/y3SxDtF7vtYrwrRP1iP7aBSavrHvt+uZrTWG+
-        ihBi0Cguw8So5T6D4+lsi+k=
-X-Google-Smtp-Source: ABdhPJxWrRZ4FVpaSVZPYzxTbZRXmDmDi2RrQnatwEUJZsbSLPbxxSVhB+QRvAAEloOAJ9VFWIh2bA==
-X-Received: by 2002:a63:1003:0:b0:378:7d70:2ec5 with SMTP id f3-20020a631003000000b003787d702ec5mr27643962pgl.351.1647431411772;
-        Wed, 16 Mar 2022 04:50:11 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-65.three.co.id. [180.214.232.65])
-        by smtp.gmail.com with ESMTPSA id mt3-20020a17090b230300b001c633aca1e1sm6540690pjb.18.2022.03.16.04.50.08
+        bh=YbKvGK1OsbkA9BE51Oc0VLVGWofpmfRsI79I5nx1Uc0=;
+        b=4Lib75Qpf+t+OdiZbrhIx6q5TiCatfo7CaV4TvE3FGveG8y6eGxe09sz+X7M9R6E59
+         85GvoeleqY/8cE8XFSNGPavmwT50WVOmUc+07RtOlF0EtEGteAPu2bm4UBnl78222WNk
+         K4UPY64vjNnNW2O/dG6R87vTiDusU1F7m7rkX9aTu/7B8DYRn1uzPT0/ZrUewpNbAVZ2
+         EI6k1/qMa3DW2qDm2P7Ii49CyQj7aSP4CgckrLZK8ZKPTHCG55RoiRMUdeA2bTBTjCg9
+         RJ7ewSREMBSTZfkyOVL4JrE5BdSV/RisUKIbK15t+MM5tBH9cYvpBkYpWSkCHJtyMRMB
+         ttNw==
+X-Gm-Message-State: AOAM5328pvJDrYwcZVfUt89W0KDtdHA+knNSI9iQollDZx7ydoHld2n7
+        /GHegrUQEFvnadtruLVrXh7IuhfStAhw
+X-Google-Smtp-Source: ABdhPJwp4dbe+SCV4Uvbms2jNM/KR1LAd2Yq7L4MKxcr6LaeZO5M1C12Au3HJdqWSUmpHUIoZWkqcw==
+X-Received: by 2002:ac8:7d0d:0:b0:2e1:cd83:33d3 with SMTP id g13-20020ac87d0d000000b002e1cd8333d3mr14068387qtb.315.1647437664557;
+        Wed, 16 Mar 2022 06:34:24 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t128-20020a37aa86000000b0060ddf2dc3ecsm888788qke.104.2022.03.16.06.34.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Mar 2022 04:50:11 -0700 (PDT)
-Message-ID: <65998787-15e4-fac4-1343-65df60e971d0@gmail.com>
-Date:   Wed, 16 Mar 2022 18:50:06 +0700
+        Wed, 16 Mar 2022 06:34:24 -0700 (PDT)
+Message-ID: <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
+Date:   Wed, 16 Mar 2022 09:34:22 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH 2/7] core.fsyncmethod: batched disk flushes for
- loose-objects
+Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
 Content-Language: en-US
-To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, nksingh85@gmail.com,
-        ps@pks.im, "Neeraj K. Singh" <neerajsi@microsoft.com>
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <d38f20b4430bada1d0dccc1e600e6f0b098f3767.1647379859.git.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <d38f20b4430bada1d0dccc1e600e6f0b098f3767.1647379859.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Cc:     git@vger.kernel.org
+References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
+ <20220315100145.214054-2-shaoxuan.yuan02@gmail.com>
+ <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
+ <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/03/22 04.30, Neeraj Singh via GitGitGadget wrote:
-> On a filesystem with a singular journal that is updated during name
-> operations (e.g. create, link, rename, etc), such as NTFS, HFS+, or XFS
-> we would expect the fsync to trigger a journal writeout so that this
-> sequence is enough to ensure that the user's data is durable by the time
-> the git command returns.
+On 3/16/2022 6:45 AM, Shaoxuan Yuan wrote:
+> Hi Victoria,
 > 
+> Just found an interesting (probably) behavior.
+> 
+> In the `sparse-checkout` directory created in `init_repos()` in t1092, if I
+> say:
+> 
+> $ mkdir folder3
+> $ touch folder3/a
 
-But what about ext4? Will fsync-ing trigger writing journal?
+The issue here is that this file is "untracked", not just outside
+of the sparse-checkout cone.
 
--- 
-An old man doll... just what I always wanted! - Clara
+> $ git mv folder3/a deep
+> 
+> and git will prompt:
+> 
+> "fatal: not under version control, source=folder3/a, destination=deep/a"
+> 
+> And if I say:
+> 
+> $ git mv folder3 deep
+> 
+> git will prompt:
+> 
+> "fatal: source directory is empty, source=folder3, destination=deep/folder3"
+> 
+> What I am wondering is that file `folder3/a` is outside of sparse-checkout cone,
+> should `git mv` instead prompts with `advise_on_updating_sparse_paths()` or this
+> "not under version control" alarm is acceptable?
+
+Instead, what about
+
+	git mv folder2/a deep/new
+
+since folder2/a is a tracked file, just not in the working tree
+since it is outside the sparse-checkout cone.
+
+(If it fails, then it should fail the same with and without the
+sparse index, which is what "test_sparse_match" is for.)
+
+Thanks,
+-Stolee
