@@ -2,123 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE59C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 14:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8065AC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 14:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243640AbiCPOsS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 10:48:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
+        id S1356772AbiCPOuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 10:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238605AbiCPOsQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 10:48:16 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A7763BCC
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:58 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id j3-20020a9d7683000000b005aeed94f4e9so1561141otl.6
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:58 -0700 (PDT)
+        with ESMTP id S1356896AbiCPOul (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 10:50:41 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E4865A0BC
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:49:26 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id z92so2072003ede.13
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nCq/nxfLFhjj74YyoDQ5E7ODytQNFgToF6CoJg0PpfM=;
-        b=L8f38SbjRyTc7lWVB/ECQ7dgym2Q71uHMR8zDCQwKKvI+oQB7+NcIiMIE3qrgObuKs
-         SfAJMiWb18PRCkeP+kkHvQosMrXroz6wz4Qiyb7Kk/SWxjQc8avnl19sww2T/dPYfnyw
-         3bYDG2esbw9X3MwvULZekVlxmGDmafhI7SGQhkVQtURh9jVaNz6RvfqHbseuxUHHfBCP
-         wxdjHNzbiS7NuY4MKQhnlUGH5XMmdX+IT2C8/dDFftzmQn4KX903Kj6jk8MxG/1Tfiaw
-         mJS71TySY+WCeZuEIPoghSgqOFrtgZ0Afvuly9ISWYhJXTtTsmGlJiDHb4akLGUO3vdF
-         MAxQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=etsH2Z2FQ4/k6Hm8S85g0OU8GjhZVqeMmdg39ne3B5w=;
+        b=JRBQlhOKJrBSg3vQNbAQIGEK0g8f5IvDDzuFwBIf/5z41D1obomXQXTvR/gWP05qAh
+         QUImdD57citCuRrZ18imCHCVNsK/mJRyX+ev404EDCocK6TY9Ol9CdLcLlPbtj5PEEf3
+         mH7N1miPY7dy0fSqYdhI+/8s2Rag+ah4xoq1Tt5hwPIQ15KQkyLgZPS9P3+ZrKAcusKM
+         ksD2wF81geFIi+ENytzo/xUNyFU3n/hQckh+NTj+tQ/Rbe33vdmTKHqgpT/dCoshlgUg
+         XZSg71ZC1SHgbS+iePzhaOSd3b/I1Vwq9KvMbLJhlmJkVNk4M18dFnJJB1JF503C/+5M
+         iAwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nCq/nxfLFhjj74YyoDQ5E7ODytQNFgToF6CoJg0PpfM=;
-        b=EKTEVbW4L3rPohojUzCXVTHpRQGcR2qcrms6BJjAf5erHIuqGAiUgwrYBzIME5h8Rg
-         0vkc2Wr4cBwNth3zwSCu1GHjPT+wny9ltbZnrDSzguUQTpeWjrSe0uO0fEIp0HPNUqdm
-         7jICxmnj6LA6RrfbM6qInsQ3NIqYcFQ6uMSiW76a33V00H0Y5By3NMEe0sL9K9yun4eq
-         3hTYqjyocV6997dnHJ+lX8MJbMemss4LXqjuTQmycfJ+18a1scboCCKw+skCdB7FwaUq
-         HnPvc4bgNJgCg1My+q43T7hPe2VO7kpzoBJcNwsI9EfYRwj1LL5nK/6GHvLvtrzRWB6F
-         bT+A==
-X-Gm-Message-State: AOAM533+prYhepcNrNgCDH3YQOzyVBXdgHXbLblzUZKoTGi4rfwTnwMx
-        UP+cDV/ZSd7eOxYARemttOmITFAi+Yu2BDY8Yqfug1ZDgK4=
-X-Google-Smtp-Source: ABdhPJxRbPYUDaQudAS3lYTMj2UNaj+/QEFHyRc1ogcHJMGIOih7Lj4Fj0jH3xHY4mDW9salZj1E8OTjfu6Q1tQ1Xh0=
-X-Received: by 2002:a9d:162:0:b0:5b2:1c30:a1e6 with SMTP id
- 89-20020a9d0162000000b005b21c30a1e6mr138054otu.26.1647442017870; Wed, 16 Mar
- 2022 07:46:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=etsH2Z2FQ4/k6Hm8S85g0OU8GjhZVqeMmdg39ne3B5w=;
+        b=nXCR/cmoqKILEnc+PdOcaATpdbkH4hyvd2l5RjXCSh6iAOhCAhmo24hussp3RRkhwd
+         MkC7ksaI/vwz+/6Zr5E3Hg+RpoCXr9Wz5oHOySiVBvVc2W4kSvNPuGmRr8OP3cVJxA6v
+         ohcFSPbKnME9ZlPy2skONTWocdtgu71gGIn3OMnqJuFVPhACHVS4vXgco3qXY3mBHVcw
+         o+kIeQsQqdv/czzCjvVkyADXKUmFyDoe3JOvAu24ioGzabdUUiWLZX9v8qzXZNzYOSi+
+         rhPHPBelNNx2Vhtw8rcbTFh4fZjTFwQt+Or4vsS7n0+ckK8tjOfxW8xMEn4Lp646ccs/
+         fMlg==
+X-Gm-Message-State: AOAM531gLscI0+0oFCjATyJ5KZ/P6NW3lY7G5leG8Vn+thY/UoDMq7pL
+        1sdU6H6rouyqjTa055Fim74YUZZl3Lk=
+X-Google-Smtp-Source: ABdhPJzdu+HmWN9xB6BhBLHydFV0EBu8OobJhE8AIU4KLRGvvV8FroqtoVkanopkBY9JPh4hsFTuKQ==
+X-Received: by 2002:aa7:d74d:0:b0:418:e883:b4e1 with SMTP id a13-20020aa7d74d000000b00418e883b4e1mr2988581eds.56.1647442164979;
+        Wed, 16 Mar 2022 07:49:24 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id qk32-20020a1709077fa000b006df6bb30b28sm961122ejc.171.2022.03.16.07.49.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Mar 2022 07:49:24 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nUUxn-001T7S-Kq;
+        Wed, 16 Mar 2022 15:49:23 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 2/2] git-curl-compat.h: addition of all symbols defined
+ by curl
+Date:   Wed, 16 Mar 2022 15:47:17 +0100
+References: <20220316140106.14678-1-gitter.spiros@gmail.com>
+ <20220316140106.14678-3-gitter.spiros@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20220316140106.14678-3-gitter.spiros@gmail.com>
+Message-ID: <220316.86czimdkb0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
- <20220315100145.214054-2-shaoxuan.yuan02@gmail.com> <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
- <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com> <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
-In-Reply-To: <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Wed, 16 Mar 2022 22:46:46 +0800
-Message-ID: <CAJyCBORfAV_TV6DrOxgim4KtU9T-uTibOaQCsJZsi5_FQfci1Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
 
-On Wed, Mar 16, 2022 at 9:34 PM Derrick Stolee <derrickstolee@github.com> wrote:
-> The issue here is that this file is "untracked", not just outside
-> of the sparse-checkout cone.
+On Wed, Mar 16 2022, Elia Pinto wrote:
 
-Thanks for the succinct explanation, it makes much more sense now :)
+Per the comment on v1 I really think we should not do this...
 
-> Instead, what about
+> This file was produced from a modified version of symbols.pl
+> (https://github.com/curl/curl/blob/master/docs/libcurl/symbols.pl) and
+> by manually adding the previous comments describing the dates of release
+> of some curl versions not currently reported in the symbols-in-versions.
 >
->         git mv folder2/a deep/new
+> To do this the symbols are listed in the order defined in the file
+> symbols-in-versions rather than as they were previously inserted based
+> on release dates.
 >
-> since folder2/a is a tracked file, just not in the working tree
-> since it is outside the sparse-checkout cone.
+> Most of these symbols are not used by git today. However, inserting
+> them all starting from an automatic tool makes it largely unnecessary
+> to update this file and therefore reduces the possibility
+> of introducing possible errors in the future.
 >
-> (If it fails, then it should fail the same with and without the
-> sparse index, which is what "test_sparse_match" is for.)
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 
-I tested this and it fails as expected with:
-"fatal: bad source, source=folder2/a, destination=deep/new"
+But more generally, re your reply on v1:
 
-> Thanks,
-> -Stolee
+    In the end I did not understand if you think it is worthwhile that i
+    do a reroll of  the patch[...]
 
-Thanks for the reply above!
-
-Other than that, I also have found another issue (probably), with
-
-$ mkdir folder2
-$ git mv folder2 deep
-
-After these I do:
-
-$ git status
-
-And the output indicates that the index is updated with the following changes:
-
-        renamed:    folder2/0/0/0 -> deep/folder2/0/0/0
-        renamed:    folder2/0/1 -> deep/folder2/0/1
-        renamed:    folder2/a -> deep/folder2/a
-
-Nothing fails, which is not what I expected. What I expect is `git mv` will
-fail because it is being told to update a sparse-directory (which as I read the
-blogs and sparse-index.txt is taken as a sparse-directory entry) outside of the
-sparse-checkout cone. Unless `git mv` is supplied with `--sparse`, the command
-will do nothing but fail, no?
-
-What confuses me more is that the `folder2`, which is present in the index but
-not in the working tree (due to sparse-checkout cone), seems to be "unlocked"
-and re-picked up by Git after `mkdir folder2` and move `folder2` into
-the cone area.
-And still, the files under `deep/folder2` are not present in the
-working tree (might
-be relevant to the previous context).
-
-I haven't run the gdb to see into the process, I just get somehow confused by
-these discrepancies (seemingly to me). I think I should gdb into it though,
-getting some info here from people can also be really helpful :)
-
--- 
-Thanks & Regards,
-Shaoxuan
+Better than a re-roll is replying to outstanding concerns about your
+patches. I.e. this, which still applies here
+https://lore.kernel.org/git/220315.86pmmndmre.gmgdl@evledraar.gmail.com/
