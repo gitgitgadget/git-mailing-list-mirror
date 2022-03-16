@@ -2,147 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7F7AC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 14:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE59C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 14:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239139AbiCPOsG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 10:48:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
+        id S243640AbiCPOsS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 10:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356884AbiCPOr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 10:47:56 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF46E39B9F
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:41 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id m12so2986749edc.12
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:41 -0700 (PDT)
+        with ESMTP id S238605AbiCPOsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 10:48:16 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A7763BCC
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:58 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id j3-20020a9d7683000000b005aeed94f4e9so1561141otl.6
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 07:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=UjMkRE+q9lOymor4AUrH3R50vnoZGq8EumHpV6Wyro4=;
-        b=NH6ufhjwCHO49mFrKVbAxtoStEVAiQg7RPS90nzeLUidq/4JS+Ut/Oqido0PvjUEeA
-         /TpOMI77NVeyO011gUy/TBk2dnAVTvgScHuB7sr4YKh5gG68QDzJI7euQltx/vHuaKXU
-         z2IDql1voHTsxnnj355PWB81Vd5us5kThFgM13wAAGwgV8QzRgWyrfpz+B7PC0hFCXqx
-         HGBHqK7BbqKGVR1/9pcvYY9xHwwjwIu90+epvRQi7LmKw9Udy/0Zps55BSX7eC3edSSS
-         Te121e3x/gSn5OzP9OpdBeeOPgdPqQ6nVPAoxTcUVoV58wxhFCDreaMaxQElMlNlWq3D
-         8lbQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nCq/nxfLFhjj74YyoDQ5E7ODytQNFgToF6CoJg0PpfM=;
+        b=L8f38SbjRyTc7lWVB/ECQ7dgym2Q71uHMR8zDCQwKKvI+oQB7+NcIiMIE3qrgObuKs
+         SfAJMiWb18PRCkeP+kkHvQosMrXroz6wz4Qiyb7Kk/SWxjQc8avnl19sww2T/dPYfnyw
+         3bYDG2esbw9X3MwvULZekVlxmGDmafhI7SGQhkVQtURh9jVaNz6RvfqHbseuxUHHfBCP
+         wxdjHNzbiS7NuY4MKQhnlUGH5XMmdX+IT2C8/dDFftzmQn4KX903Kj6jk8MxG/1Tfiaw
+         mJS71TySY+WCeZuEIPoghSgqOFrtgZ0Afvuly9ISWYhJXTtTsmGlJiDHb4akLGUO3vdF
+         MAxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=UjMkRE+q9lOymor4AUrH3R50vnoZGq8EumHpV6Wyro4=;
-        b=m5DigWiy6hd1JakmTw0vG5Y2AdE8idg9LwnBRlaveitYQhg9ShrataFUc4HCDz1tCP
-         nRzVnDVoDnJ//gLtQzBFSLFmKpLHWBcG/TaioMeL2VIcgnUxsyLouh12GIPPbyedBP6/
-         csYYfKYezda7g+K478D0KhA9PcX7+HWev0g/UAzjBQGeSrOdv0aNLMuNkOieL6gCj93Y
-         L7TrC1pOyhhoaR5HP7Ugfx+RFCIouKABnyMJmgdTBmiXO2rGLtzp+IO8EpiS8Jvxf9bd
-         qFNM/zpqmyT+WkuNsq2/G/BSpeHDUat2zJz0Nm0uACwxD2C5VTFgKrTwpgyPbE29nyGF
-         aWGQ==
-X-Gm-Message-State: AOAM532IhfJw7uVqOgtXqKH7lctO0tKV8M8F2JdmnLVeqrMspgWQvYRW
-        5qCy6YRctXRfmA5kKcWgBQfgyXJpfoA=
-X-Google-Smtp-Source: ABdhPJw8lHLb8Bl4I/95Rvv/WXrzSaaqi/Ib55ZHtm3aONADABugWt1jyymPhE7cgrSnCbjsHcuSxA==
-X-Received: by 2002:aa7:dc0b:0:b0:413:ce06:898e with SMTP id b11-20020aa7dc0b000000b00413ce06898emr30265953edu.244.1647442000163;
-        Wed, 16 Mar 2022 07:46:40 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v2-20020a17090606c200b006a728f4a9bcsm983543ejb.148.2022.03.16.07.46.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Mar 2022 07:46:39 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nUUv8-001Sze-PI;
-        Wed, 16 Mar 2022 15:46:38 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 1/2] curl: streamline conditional compilation
-Date:   Wed, 16 Mar 2022 15:43:09 +0100
-References: <20220316140106.14678-1-gitter.spiros@gmail.com>
- <20220316140106.14678-2-gitter.spiros@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220316140106.14678-2-gitter.spiros@gmail.com>
-Message-ID: <220316.86h77ydkfl.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nCq/nxfLFhjj74YyoDQ5E7ODytQNFgToF6CoJg0PpfM=;
+        b=EKTEVbW4L3rPohojUzCXVTHpRQGcR2qcrms6BJjAf5erHIuqGAiUgwrYBzIME5h8Rg
+         0vkc2Wr4cBwNth3zwSCu1GHjPT+wny9ltbZnrDSzguUQTpeWjrSe0uO0fEIp0HPNUqdm
+         7jICxmnj6LA6RrfbM6qInsQ3NIqYcFQ6uMSiW76a33V00H0Y5By3NMEe0sL9K9yun4eq
+         3hTYqjyocV6997dnHJ+lX8MJbMemss4LXqjuTQmycfJ+18a1scboCCKw+skCdB7FwaUq
+         HnPvc4bgNJgCg1My+q43T7hPe2VO7kpzoBJcNwsI9EfYRwj1LL5nK/6GHvLvtrzRWB6F
+         bT+A==
+X-Gm-Message-State: AOAM533+prYhepcNrNgCDH3YQOzyVBXdgHXbLblzUZKoTGi4rfwTnwMx
+        UP+cDV/ZSd7eOxYARemttOmITFAi+Yu2BDY8Yqfug1ZDgK4=
+X-Google-Smtp-Source: ABdhPJxRbPYUDaQudAS3lYTMj2UNaj+/QEFHyRc1ogcHJMGIOih7Lj4Fj0jH3xHY4mDW9salZj1E8OTjfu6Q1tQ1Xh0=
+X-Received: by 2002:a9d:162:0:b0:5b2:1c30:a1e6 with SMTP id
+ 89-20020a9d0162000000b005b21c30a1e6mr138054otu.26.1647442017870; Wed, 16 Mar
+ 2022 07:46:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
+ <20220315100145.214054-2-shaoxuan.yuan02@gmail.com> <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
+ <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com> <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
+In-Reply-To: <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Wed, 16 Mar 2022 22:46:46 +0800
+Message-ID: <CAJyCBORfAV_TV6DrOxgim4KtU9T-uTibOaQCsJZsi5_FQfci1Q@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Derrick,
 
-On Wed, Mar 16 2022, Elia Pinto wrote:
+On Wed, Mar 16, 2022 at 9:34 PM Derrick Stolee <derrickstolee@github.com> wrote:
+> The issue here is that this file is "untracked", not just outside
+> of the sparse-checkout cone.
 
-[Meta: Please chehck the -vN and --in-reply-to options to
-git-format-patch et al, i.e. make a v2 a v2, and have it reply to the v1
-patch or cover-letter.]
+Thanks for the succinct explanation, it makes much more sense now :)
 
-> Earlier we introduced git-curl-compat.h that defines bunch of
-> GIT_CURL_HAVE_X where X is a feature of cURL library we care about,
-> to make it easily manageable to conditionally compile code against
-> the version of cURL library we are given.
+> Instead, what about
 >
-> There however are two oddball macros.  Instead of checking
-> GIT_CURL_HAVE_CURL_SOCKOPT_OK and using a fallback definition for
-> CURL_SOCKOPT_OK macro, we just defined CURL_SOCKOPT_OK to a safe
-> value when compiling against an old version that lack the symbol.
+>         git mv folder2/a deep/new
+>
+> since folder2/a is a tracked file, just not in the working tree
+> since it is outside the sparse-checkout cone.
+>
+> (If it fails, then it should fail the same with and without the
+> sparse index, which is what "test_sparse_match" is for.)
 
-The way it was being done before was intentional & discused on list.
+I tested this and it fails as expected with:
+"fatal: bad source, source=folder2/a, destination=deep/new"
 
-See my original
-https://lore.kernel.org/git/patch-v3-7.7-93a2775d0ee-20210730T092843Z-avarab@gmail.com/
-which did it pretty much like that, and Junio's subsequent
-follow-up. I.e. this breadcrumb trail:
-https://lore.kernel.org/git/?q=CURL_SOCKOPT_OK
+> Thanks,
+> -Stolee
 
-> -#if LIBCURL_VERSION_NUM < 0x071505
-> -#define CURL_SOCKOPT_OK 0
-> +#if LIBCURL_VERSION_NUM >= 0x071505
-> +#define GIT_CURL_HAVE_CURL_SOCKOPT_OK 1
->  #endif
+Thanks for the reply above!
 
-IOW we should drop this.
+Other than that, I also have found another issue (probably), with
 
->  /**
->   * CURLOPT_TCP_KEEPALIVE was added in 7.25.0, released in March 2012.
->   */
->  #if LIBCURL_VERSION_NUM >= 0x071900
-> -#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
-> +#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
->  #endif
+$ mkdir folder2
+$ git mv folder2 deep
 
-This change is good.
+After these I do:
 
-> diff --git a/http.c b/http.c
-> index 229da4d148..d7ad7db1d6 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -517,7 +517,7 @@ static int has_proxy_cert_password(void)
->  }
->  #endif
->  
-> -#ifdef GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE
-> +#ifdef GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE
->  static void set_curl_keepalive(CURL *c)
->  {
+$ git status
 
-As is this.
+And the output indicates that the index is updated with the following changes:
 
->  	curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
-> @@ -536,7 +536,9 @@ static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
->  	rc = setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, (void *)&ka, len);
->  	if (rc < 0)
->  		warning_errno("unable to set SO_KEEPALIVE on socket");
-> -
-> +#ifndef GIT_CURL_HAVE_CURL_SOCKOPT_OK
-> +#define CURL_SOCKOPT_OK 0
-> +#endif
->  	return CURL_SOCKOPT_OK;
->  }
+        renamed:    folder2/0/0/0 -> deep/folder2/0/0/0
+        renamed:    folder2/0/1 -> deep/folder2/0/1
+        renamed:    folder2/a -> deep/folder2/a
 
-The whole point of git-curl-compat.h and its big-brother
-git-compat-util.h is that we'd prefer not to have such hacks inline if
-at all possible.
+Nothing fails, which is not what I expected. What I expect is `git mv` will
+fail because it is being told to update a sparse-directory (which as I read the
+blogs and sparse-index.txt is taken as a sparse-directory entry) outside of the
+sparse-checkout cone. Unless `git mv` is supplied with `--sparse`, the command
+will do nothing but fail, no?
 
-For most of the GIT_CURL_* stuff we need to since it's conditionally
-using symbols etc., but in this case we can just define a fallback
-centrally and not worry about it in the code.
+What confuses me more is that the `folder2`, which is present in the index but
+not in the working tree (due to sparse-checkout cone), seems to be "unlocked"
+and re-picked up by Git after `mkdir folder2` and move `folder2` into
+the cone area.
+And still, the files under `deep/folder2` are not present in the
+working tree (might
+be relevant to the previous context).
 
-So the pre-image really is much better.
+I haven't run the gdb to see into the process, I just get somehow confused by
+these discrepancies (seemingly to me). I think I should gdb into it though,
+getting some info here from people can also be really helpful :)
+
+-- 
+Thanks & Regards,
+Shaoxuan
