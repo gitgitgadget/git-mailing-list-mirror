@@ -2,105 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E771C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 19:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA72CC433EF
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 19:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344600AbiCPTzF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 15:55:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50702 "EHLO
+        id S243030AbiCPUAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 16:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237645AbiCPTzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 15:55:04 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630D81A399
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:53:49 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B94571282F5;
-        Wed, 16 Mar 2022 15:53:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CIJG1XqdK6Z9lB3cGhtlvisE5Kz6hknbfriA10
-        IVwx8=; b=BYV/QuvtW/ebfHgTvtrg8mrjfhgFUBsggZ+9Z+3D5iEAFM9Ast1kOC
-        QWLV2zu+h21x0Dqhf8Bqignc07hKybIvTKXBu9STxNhNcTE6ZHcF7JgpfQtIZOBS
-        qT/IffJ/0hTblluVdLnAt8IaUt2RK241jZrDwLUjv7ir67bCp45yg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B11DD1282F4;
-        Wed, 16 Mar 2022 15:53:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2174E1282F3;
-        Wed, 16 Mar 2022 15:53:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: gc/recursive-fetch-with-unused-submodules (was Re: What's
- cooking in git.git (Mar 2022, #03; Mon, 14))
-References: <xmqq5yogp6xo.fsf@gitster.g>
-        <kl6l5yodyej3.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Wed, 16 Mar 2022 12:53:47 -0700
-In-Reply-To: <kl6l5yodyej3.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Wed, 16 Mar 2022 10:48:32 -0700")
-Message-ID: <xmqqa6dpllmc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235392AbiCPUAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 16:00:39 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 717B36A03B
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:59:24 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id bn33so4567544ljb.6
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JKvbIXV12uf/qJDU04gNLKb6MmP8Kmp3+kGg9oexd90=;
+        b=FWPFeSqSlwC+vkllJQIieJpFKGfBRxiQScRquIhFwdz1zLP8b645gzHei0/hzrcxZ5
+         QhosH9iKFuFmrj7bSy2TxywY3xxwLJoINiIJnai8TCftnGBBrBsRpXalIT9TRCdgC1XM
+         dC7ywAV4OwzIP9R/vTZ2yqEg/7UCgw2/bxMplbmXfFSXzzKbIKoEoYyojgEzGE8tc5hq
+         i15gsXCuJFwm5yQanAAe5eTkEGuaB68YBINPOmgbwMxDRWyE+/SDebduPJS3Lwa5+WZa
+         OT3hqLwjcwlNJlKhWDFr1fURLuKfhEZyse1l/7WzrIno4sfM+LHaxZcqmbUyAWTEm81S
+         qOBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JKvbIXV12uf/qJDU04gNLKb6MmP8Kmp3+kGg9oexd90=;
+        b=qaAsB9NSsi26icDwAg8q95LzWnPOoy6D4T88UmTQhqBMbeZOaryqDkwv6YvMlWWd/p
+         CsXGC0v1B3nH0+jkTCeIex9k3cOq7+CcgPEIdlDdx7fKzYg1S2dNifxjtMnjOGkH8Twy
+         7Rbp96UUAjUVd/2xKOm89QZj72mAzNb8ZlYrYkNJb3tyosGYZolmvDhTt2hvLRo4otWG
+         HrbwXll3BKlRqH5WcQUYtgv5Fuj/p8x54BT2htQFPiRBGF+5OkzmZb/aD1k/LU3fZM9b
+         EalaU6rSrO7WJBgn2XLWKyRC5YLSXRo5ke7JlugMlhteKwMBSMK93Ty3Ps1FgtvKqeL5
+         RhUQ==
+X-Gm-Message-State: AOAM530xB9pfNmj4k2KZwro7dnWLHsiMWEazL5rftB+CXKWy2Uwu316/
+        C75TqNhf/yGe1/f/HMLGaFwyFUZ87qJzlmSAPZY=
+X-Google-Smtp-Source: ABdhPJzoOb5auabQLjUSPXBVfb7tIF1id6wFVYi6+eU3aPiPafArCvAAw2XNj+Puv6jazmpfTpfaB6jct5o+z2CYLpw=
+X-Received: by 2002:a05:651c:241:b0:23e:42c1:2e4 with SMTP id
+ x1-20020a05651c024100b0023e42c102e4mr779733ljn.406.1647460762552; Wed, 16 Mar
+ 2022 12:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB850EE6-A562-11EC-8714-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
+ <d38f20b4430bada1d0dccc1e600e6f0b098f3767.1647379859.git.gitgitgadget@gmail.com>
+ <65998787-15e4-fac4-1343-65df60e971d0@gmail.com>
+In-Reply-To: <65998787-15e4-fac4-1343-65df60e971d0@gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 16 Mar 2022 12:59:11 -0700
+Message-ID: <CANQDOdcEOb5zJDJ2GdzTPm_ULvhriX5d5p5go=PeQtHvB6mRPQ@mail.gmail.com>
+Subject: Re: [PATCH 2/7] core.fsyncmethod: batched disk flushes for loose-objects
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 16, 2022 at 4:50 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
 >
->> * gc/recursive-fetch-with-unused-submodules (2022-03-07) 10 commits
->>  - submodule: fix latent check_has_commit() bug
->>  - fetch: fetch unpopulated, changed submodules
->>  - submodule: move logic into fetch_task_create()
->>  - submodule: extract get_fetch_task()
->>  - submodule: store new submodule commits oid_array in a struct
->>  - submodule: inline submodule_commits() into caller
->>  - submodule: make static functions read submodules from commits
->>  - t5526: create superproject commits with test helper
->>  - t5526: stop asserting on stderr literally
->>  - t5526: introduce test helper to assert on fetches
->>
->>  When "git fetch --recurse-submodules" grabbed submodule commits
->>  that would be needed to recursively check out newly fetched commits
->>  in the superproject, it only paid attention to submodules that are
->>  in the current checkout of the superproject.  We now do so for all
->>  submodules that have been run "git submodule init" on.
->>
->>  Expecting a reroll.
->>  cf. <kl6ly21p2q00.fsf@chooglen-macbookpro.roam.corp.google.com>
->>  source: <20220308001433.94995-1-chooglen@google.com>
+> On 16/03/22 04.30, Neeraj Singh via GitGitGadget wrote:
+> > On a filesystem with a singular journal that is updated during name
+> > operations (e.g. create, link, rename, etc), such as NTFS, HFS+, or XFS
+> > we would expect the fsync to trigger a journal writeout so that this
+> > sequence is enough to ensure that the user's data is durable by the time
+> > the git command returns.
+> >
 >
-> Is 'Expecting a reroll.' accurate? <xmqqr17dp8s9.fsf@gitster.g>
-> indicated that this topic would be queued.
+> But what about ext4? Will fsync-ing trigger writing journal?
+>
 
-"Queuing" is just that.  It may stay there for a while and be
-dropped unless it sees a decent progress (if it is expected to be
-further worked on).  That's vastly different from merging down to
-'next'.
+That's a good question. So I did an experiment on ext4 which gives me
+some confidence:
 
-I just re-read the message with "will queue" in it, and I only said
-the changes listed as updates from v4 looked all sensible, which
-does not mean the changes listed there are sufficient to correct all
-problems we may already had in v3.
+Here's my ext4 configuration: /dev/sdc on / type ext4
+(rw,relatime,discard,errors=remount-ro,data=ordered)
 
-Downthread in <xmqq4k46nae4.fsf@gitster.g> and its response, I see
-we agree that "reading .gitmodules in a particular superproject
-commit is just as wrong as reading from the working tree---it should
-not be necessary to fetch in the submodule, and the API to get the
-necessary parameter to run fetch in the submodule should be cleaned
-up" and that "fixing that API can be left outside the scope of this
-topic for the sake of expediency".  I would at least expect the two
-decisions are described in an updated log message of relevant steps.
+I added a new mode called core.fsyncMethod=batch-extra-fsync. This
+issues an extra open,fsync,close during migration from the tmp-objdir
+(which I confirmed is really happening using strace).  The added cost
+of this extra operation is relatively small compared to
+core.fsyncMethod=fsync.  That leads me to believe that (barring fs
+bugs), ext4 thinks that the data is already sufficiently durable that
+it doesn't need to issue an extra disk cache flush.  See
+https://github.com/neerajsi-msft/git/commit/131466dd95165efc5c480d971c69ea1e9182657e
+for the test code.  I don't particularly want to add this as a
+built-in mode at this point since it will be somewhat hard to document
+which mode a user should choose.
 
-Thanks.
-
-
+Thanks,
+Neeraj
