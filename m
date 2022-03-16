@@ -2,128 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FAA6C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 22:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3FD5C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 22:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbiCPWZ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 18:25:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34742 "EHLO
+        id S231163AbiCPWi1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 18:38:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbiCPWZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 18:25:53 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F2D17A88
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 15:24:38 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id j7-20020a4ad6c7000000b0031c690e4123so4387375oot.11
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 15:24:38 -0700 (PDT)
+        with ESMTP id S229525AbiCPWiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 18:38:25 -0400
+Received: from mail-ot1-x349.google.com (mail-ot1-x349.google.com [IPv6:2607:f8b0:4864:20::349])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF08A3897
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 15:37:10 -0700 (PDT)
+Received: by mail-ot1-x349.google.com with SMTP id y7-20020a0568302a0700b005c965381211so1897683otu.6
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 15:37:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=M3rCqEDRJtKdkkMabjp/TsNXQG0O66uUln0nE+4PYMs=;
-        b=jLYJDVUAkGFxmRSV/aLiy7kgAJiH/A1duVHcZApQpOf6jhLIGrsNKIilz9SnO1YbiP
-         2GEe9q97ab+bjrIn07kaAYIwI6wXHhlUoD5l4uiTPtG/gsnDh7cP/OdBgAhp+IfVGh6z
-         rqKGt2EmvhNQWft0dLm65NFTJOt/axLTeNDGVxW5C2fI9Q8Aq0FkTkh7I/DY82j6E8kY
-         l88m2wzNSkmmf6JDxADClE08e43Mec4xs9NPs6XBPJQQASezv68aiWiKc/XUMOwgTBu0
-         640NdJmPn+CZkzQCz5WqgW8N/rERmqn+L1HdAevJTwibJjQoV89kkAzI9zGPFTIK9Fzk
-         TRTg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=b3tcYMKudtoVFOJ8WJ+WU4ACp9LGtiySU+3XQK04ius=;
+        b=swRSrUtxQFXrqqBZxJR0liamWAh/WTg0HX24VjqFBnhbnuvO1hZSOKyqQKmL8FVQww
+         l+RT0HSNdjEF9Ey40JnlEMWc8ctISCQVN701JtVEwoEGixG3BxXFicl+2rNHwlGSdEHs
+         P/1PsarKN/IaVeCcHvepBAYER1tEnKHr3Gu/EEK1Eq2mgEzJH0nibOykRKUslBwYfWcF
+         TmbMVi0gj7JjfeF2tTzxHLa5dgR/DMBQlp9/0Bo0/qEu/yglMNaLHJKNJ/vdFzUUBLrQ
+         jghYVWPfav2s+cxrwWOD+v4CKHdn6FEzqlEwWUbpOOGjy8eNqARLxfsMl0RybmH0ikwE
+         v4ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=M3rCqEDRJtKdkkMabjp/TsNXQG0O66uUln0nE+4PYMs=;
-        b=nK6vRFvp0cM4WvDKg8qCKbfBJydJrd3Ier5Yt1FF19jtwbhHhy7wE5MkvYvpgRMBc7
-         +0YmMRMfoxXvr0dl74hAROXXLucQMS0PiR6vxWqf4fIsrH/3L/cV+8m0s74iu3a9bFAE
-         pXcgxjKRPskOfNaaWKaMSorPpo1ReFc+a79I1NwfHg8DHfXZQcJalVlQbJvMkqBg01Qi
-         FJ5LS2cDHzVVUED8CNKsJbj2S4mH7dvhjEhUYfJFkzdrTVIm9jwRMCL7GSSLd5H+U2M/
-         fNPVT4ERf+YSlexOsjoLQhXD829CFLOVJSuK1ba74tzJbwFHBplFSjPYJ96MxSpXxEoa
-         I/ng==
-X-Gm-Message-State: AOAM533y3pnaRUzDsyr1LIR4ZCTlrPxNEYG/HSMMGkyG7rgUNcCESgCv
-        sAoU3X82QUp9K+Os185kI/1i9HSf/1pm3IJwPr8=
-X-Google-Smtp-Source: ABdhPJzYarWZ04cAlcSakzwFWy+i7dbeE8bCBRGbiKtjewI4TaV9seEsD8kHvWrtmHBSxrR1XXP/rgHAJ24w9QrVC98=
-X-Received: by 2002:a05:6870:f71d:b0:dd:a49b:60bd with SMTP id
- ej29-20020a056870f71d00b000dda49b60bdmr696421oab.217.1647469477610; Wed, 16
- Mar 2022 15:24:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220316140106.14678-1-gitter.spiros@gmail.com>
- <20220316140106.14678-3-gitter.spiros@gmail.com> <220316.86czimdkb0.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220316.86czimdkb0.gmgdl@evledraar.gmail.com>
-From:   Elia Pinto <gitter.spiros@gmail.com>
-Date:   Wed, 16 Mar 2022 23:24:26 +0100
-Message-ID: <CA+EOSBmmK0hEfgiYiSgzGmBVuib1rOZsgd8yNPLxonJ0Lj3M_g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-curl-compat.h: addition of all symbols defined by curl
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=b3tcYMKudtoVFOJ8WJ+WU4ACp9LGtiySU+3XQK04ius=;
+        b=YD5u/WWZOvdUxg/l+GXf2n3SyDDmTHdvYT2cO6p3XYxgNhRhkCrfrabjhPRWkyNWmc
+         NVdC46XO85osMP+wviXLamOccib+TNK4vH7knw5c0UEW6rlLx4iFcYcSY0dt5e/CAuRj
+         cL1rq0jAefaL5NtNtOA+8tVqNTAf4D/rt4QOONBZQMw3Sm0U+2rAZa/TRbWGapHLH2s+
+         e8dQTZDwvvHXYZWrm9uFYkk+DsmDf/mioNgTiPbnB+Wnon12Vd5P6YXVgOkD9GcI7Q4N
+         +Sg2koV0dbXpOhZKF9ZaepX+G3d0IluBeaUorRKH/xJXjiAtQHFrqilHfdQfiRRUz5Tr
+         7taQ==
+X-Gm-Message-State: AOAM533XYDzB6ev5KbYdGPznBAR/d+UMnTMHLMW35hMZBwhixs9mqUOl
+        sAlPkuzuJlL34S0uiosmsJu0Udm0Yp28WQ==
+X-Google-Smtp-Source: ABdhPJxUbrCD8HYEcvNIcHYLQXLOe5VzoAAEbzaz8zt/T/JnphFztCvg0TZR1M+ie6rjmk5xQXv/gT6KewBxsg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6870:590:b0:d7:b0:7412 with SMTP id
+ m16-20020a056870059000b000d700b07412mr4193285oap.115.1647470229997; Wed, 16
+ Mar 2022 15:37:09 -0700 (PDT)
+Date:   Wed, 16 Mar 2022 15:37:07 -0700
+In-Reply-To: <xmqqfsnhk0x7.fsf@gitster.g>
+Message-Id: <kl6l7d8tle24.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220304005757.70107-1-chooglen@google.com> <20220308001433.94995-1-chooglen@google.com>
+ <xmqqr17dp8s9.fsf@gitster.g> <kl6lh7885mm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqfsnrkkhd.fsf@gitster.g> <kl6l5yom6h4j.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqq4k46nae4.fsf@gitster.g> <kl6lzgly4vz3.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6la6dplfts.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqfsnhk0x7.fsf@gitster.g>
+Subject: Re: [PATCH v5 00/10] fetch --recurse-submodules: fetch unpopulated submodules
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno mer 16 mar 2022 alle ore 15:49 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarm=
-ason
-<avarab@gmail.com> ha scritto:
->
->
-> On Wed, Mar 16 2022, Elia Pinto wrote:
->
-> Per the comment on v1 I really think we should not do this...
->
-> > This file was produced from a modified version of symbols.pl
-> > (https://github.com/curl/curl/blob/master/docs/libcurl/symbols.pl) and
-> > by manually adding the previous comments describing the dates of releas=
-e
-> > of some curl versions not currently reported in the symbols-in-versions=
-.
-> >
-> > To do this the symbols are listed in the order defined in the file
-> > symbols-in-versions rather than as they were previously inserted based
-> > on release dates.
-> >
-> > Most of these symbols are not used by git today. However, inserting
-> > them all starting from an automatic tool makes it largely unnecessary
-> > to update this file and therefore reduces the possibility
-> > of introducing possible errors in the future.
-> >
-> > Helped-by: Junio C Hamano <gitster@pobox.com>
-> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->
-> But more generally, re your reply on v1:
->
->     In the end I did not understand if you think it is worthwhile that i
->     do a reroll of  the patch[...]
->
-> Better than a re-roll is replying to outstanding concerns about your
-> patches. I.e. this, which still applies here
-> https://lore.kernel.org/git/220315.86pmmndmre.gmgdl@evledraar.gmail.com/
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, sorry, I was going to do this, but it was a tough day at work and
-I could only try to redo the patch. However, I largely agree with your comm=
-ents.
-The biggest work is what you have done previously in trying to
-simplify and rationalize
-dependencies on curl versions.
-My patch only extends your work by adopting the curl maintainer best
-practices for doing the same thing,
-although I had to adapt them to the schema you introduced.
-But I don't see it as a problem. So my patch does not introduce any ad
-hoc version of these dependencies
-but the choice made upstream, which I think may be worth in terms of
-extensibility and future maintenance.
-Initially  I wanted to release the tool I made to produce
-git-curl-compat.h indeed but symbol-in-versions has no information on
-the release dates of the various curl versions and even if a symbol is
-an enum or not: so so i left your comments where they were
+> Glen Choo <chooglen@google.com> writes:
+>
+>> Glen Choo <chooglen@google.com> writes:
+>>
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Glen Choo <chooglen@google.com> writes:
+>>>>
+>>>>> To clarify, does this opinion of "don't use config values that aren't
+>>>>> copied into .git/config" extend to in-tree .gitmodules? Prior to this
+>>>>> series, we always read the in-tree .gitmodules to get the config - the
+>>>>> user does not need to copy the settings to .git/config, but we don't
+>>>>> pick a commit to read .gitmodules from.
+>>>>
+>>>> I think we do, but I also think it was a huge mistake to allow
+>>>> repository data to directly affect the behaviour of local checkout.
+>>>
+>>> I'm inclined to agree.
+>>>
+>>>> Fixing that is most likely outside the scope of this series, though.
+>>>
+>>> Agree. Thanks!
+>>
+>> I thought that this would have been the end of the discussion, but after
+>> reading <xmqqa6dpllmc.fsf@gitster.g>, I guess I had the wrong impression
+>> (oops).
+>>
+>> If I am reading everything correctly, we both agree that it's not
+>> good to read _any_ config values from .gitmodules (even if it's
+>> in-tree), and that we should clean it up outside of this topic. So for
+>> this topic to be merged into 'next', is it enough to say that I will fix
+>> this behavior in a follow up topic?
+>
+> At least we should remember that is something to be fixed.  It may
+> not be you personally who addresses that issue, though ;-)
 
-That the biggest job is what you (or whoever gets to work on it) have
-done working on the git source is no doubt for me. My contribution,
-much smaller, just wanted to enhance what you had done.
+Perhaps squashing in a NEEDSWORK comment into [PATCH v5 09/10] will
+suffice? I can also resend this series if preferred.
 
-If my patch is completely useless or not I leave it to the git
-community, including you, of course.
-Anyway at least the Junio fix I put in the other patch I think is a
-good thing anyway.
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
 
-Thanks and sorry again for the delay in replying.
-
-Elia
+diff --git a/submodule.c b/submodule.c
+index 6e6b2d04e4..93c78a4dc3 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -795,6 +795,21 @@ static const char *default_name_or_path(const char *path_or_name)
+  * superproject commit that points to the submodule, but this is
+  * arbitrary - we can choose any (super_oid, path) that matches the
+  * submodule's name.
++ *
++ * NEEDSWORK: Storing an arbitrary commit is undesirable because we can't
++ * guarantee that we're reading the commit that the user would expect. A better
++ * scheme would be to just fetch a submodule by its name. This requires two
++ * steps:
++ * - Create a function that behaves like repo_submodule_init(), but accepts a
++ *   submodule name instead of treeish_name and path. This should be easy
++ *   because repo_submodule_init() internally uses the submodule's name.
++ *
++ * - Replace most instances of 'struct submodule' (which is the .gitmodules
++ *   config) with just the submodule name. This is OK because we expect
++ *   submodule settings to be stored in .git/config (via "git submodule init"),
++ *   not .gitmodules. This also lets us delete get_non_gitmodules_submodule(),
++ *   which constructs a bogus 'struct submodule' for the sake of giving a
++ *   placeholder name to a gitlink.
+  */
+ struct changed_submodule_data {
+ 	/*
