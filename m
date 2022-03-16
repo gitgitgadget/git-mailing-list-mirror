@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF3D9C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 18:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92C2EC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 19:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243715AbiCPS6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 14:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60064 "EHLO
+        id S1344850AbiCPTBw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 15:01:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233481AbiCPS6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 14:58:37 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F866E4D2
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 11:57:22 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id v130so6062450ybe.13
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 11:57:22 -0700 (PDT)
+        with ESMTP id S232577AbiCPTBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 15:01:51 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3956CA4F
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:00:37 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id l2so6132999ybe.8
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 12:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BIN2FkXxKIO7AUWjsoKu+e+r9Oc0c9BO9LlRCzXEfXc=;
-        b=pK+GEsZaTFO6wExloSc2+B6m5cSDBxixqkBNGz6Yw2MGMvS8rRQSKb49LSRdF4AF6M
-         1qBSGAio2moIQhNShVrCM6FjdqModfE+eLFDlefgezRRv8RoIaZrrTDwNIAlTz1AwXrm
-         uRnPeFQ7M8wCxe/imWKYbNvjUukh2QnUb3bH+RcuWI5Yr+3Ey2DiD5woi+3HYJlRvxSZ
-         RM800fvjM9QYkAd3Y3RSyAbt6D6WDguPoZcKdHUxaK/61zLpAXTC30GzQfwbmt2nkvTn
-         uN/sPa2eoponXZzsZDNgr+i6Bm2xn8pYY8g2L42hwB3f/27WTQF098bGwx9N7XFkJkgW
-         TAPQ==
+        bh=L79EUBY3+LrW31mjR5bJm0UFHpUMSUr5d0+aaI1O80Y=;
+        b=Nwh7ruZZ/UTocvoDVHXq9BQzWyUCcxHIwNMEGiy1bO84Kf92I9JE4ZiGDcKE9AsMbM
+         SvuUY2jBxgrRyixqiPIGhGxArYvBU2rNz1EInMbN7d9w7n2Wvz0Tspo8iSsPvAROtnjo
+         FYHrZksDuX3PJjs1RGnTHQ0O/NUkzwUw3EgZaPl6hzcCN6Y00YjBv1sI9oVq8vOi5F81
+         L5eAJh0XC9FtwmxNN+dHPMZy2PgKppH/TAOS2PjNlv/PDzV8Oh/kWmX+IfN2VmDxyUNL
+         uf+p5C0ueM7Mdpdy89hVVeg+6OObRcr42VgkxHyBNwLeC0hsV16wIs5lWFnULFr7kXvX
+         2ttg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BIN2FkXxKIO7AUWjsoKu+e+r9Oc0c9BO9LlRCzXEfXc=;
-        b=QCYUzsNWt0Vbo6GO97ARg/Hdf6CkqED8uC3v29j5xOjaWJBMqi+ZAVCZTwWPC83tJe
-         BFSAOIAXlrtbFU0yGYwTuzA49l2ZxpUzxJwwy44P6xiu/mvYgCQzwlahjGW7yDKysaVn
-         BmTe0DEVnr1oyPI64nWdNbvrZv1r9wZnLtuEb7zsx2ZDf9Q6iz8AFbJgsG9EcvDRcJ4w
-         2CXygNkNePQ60ZD65dOh5OZQp5iqLw80bckIJLiLBTCfn8wMEjrN47mBxNUVA3t2WLwY
-         Vr9zGdxqZY6yYer9ChPt3Rs40H/JMQelTYBbUYetrcK81TCoNtHpQPQeR4WgRG5wQo40
-         kbMQ==
-X-Gm-Message-State: AOAM5311YofU3UnBJFnGD8RJ7T7Q7RnA0LqsVzKgXQrSx4i1wuhYMrtO
-        Hp1J86qIGpF8nyS3DqjEWjZ3BUs/+C2yWMXR5MRMydJA
-X-Google-Smtp-Source: ABdhPJz1vWo+coD4gNGDZ7DwwAYaQNaH3mLEpf+VNSVdViUcZ1v7No+ev1+BXTe7t10r1ocQHQus989RdyFCVeaQkzw=
-X-Received: by 2002:a05:6902:102d:b0:633:884a:d3bd with SMTP id
- x13-20020a056902102d00b00633884ad3bdmr1389256ybt.171.1647457041714; Wed, 16
- Mar 2022 11:57:21 -0700 (PDT)
+        bh=L79EUBY3+LrW31mjR5bJm0UFHpUMSUr5d0+aaI1O80Y=;
+        b=rFv7t8B0nIT46/sK8MuCw7fX35zEDhaw4yMYQZqfJv9sXbVDYcTbArqmUUquOs2ooi
+         zuYCfUkkzQc5C2YXVbr8ObLsZ7OXyFBQ1z3pTrL3EiY9cPKF7Q3bnsf5RiwPVJIeOj+Y
+         rs7XIa8CgeES/5vKcH4idRWyJ1uFi6LxFPZGwDy+nL1lQGwhR+utTlZ/miMcC5/fb5vF
+         Ke+YsWdz6G0jKJL9mpw9vv4HuR0/3j4UZfxiK43zlBVOcAN4moAsybfr6LWVXUN1fAcR
+         C4DFwKXboQm8HJoimLuDi+OwBMNVS0jGrf6lGbPjaQ8/DwOcBJO4rEesVz9421gWZO+r
+         2xAQ==
+X-Gm-Message-State: AOAM532vXr7shDBy1Lm1JqdMSAj+BqgA55/NtyMUYqXF43ZVaw7gFMLH
+        FguGj8MlUJcmfyzhuT+2YlclJ3w2PJAYv5wG52g=
+X-Google-Smtp-Source: ABdhPJwiUvTFZZ+ylyjJ+TSALga2haGSRWg4wgKrIR+4NbWR9pGDAYA48kX/6gvk4LJU9xVHk/CXRMWyqQX7dKv3nms=
+X-Received: by 2002:a25:e08f:0:b0:633:7d68:f21a with SMTP id
+ x137-20020a25e08f000000b006337d68f21amr1434087ybg.650.1647457236594; Wed, 16
+ Mar 2022 12:00:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAJcwCMMMm=ZnkV3Xxbf+CpJqhRGx1KrdUzh90W-9dEPJ+i40xg@mail.gmail.com>
  <xmqq8rt9opd1.fsf@gitster.g>
 In-Reply-To: <xmqq8rt9opd1.fsf@gitster.g>
 From:   Andy Zhang <zhgdrx@gmail.com>
-Date:   Thu, 17 Mar 2022 02:57:12 +0800
-Message-ID: <CAJcwCMOQnMqqMdR=ZJ-ZgLuZ0wwt9oNxAmXfn4_xpY73rwqFVQ@mail.gmail.com>
+Date:   Thu, 17 Mar 2022 03:00:26 +0800
+Message-ID: <CAJcwCMN67UMjSNqf2wbb5ZhK1QGicn7+ihneOc1XxJsdDVtvTw@mail.gmail.com>
 Subject: Re: understand Diff Formatting --cc flag?
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
@@ -94,8 +94,6 @@ My question is: why can #1 appear inside multiple groups? A and B.
    <group-C> parent#5, #4;
 
 
-
->
 > >    2)what about all the other cases? 0 variants, 1 variants, and 3
 > > variants and even more?
 >
