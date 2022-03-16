@@ -2,215 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A82CFC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 10:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C94C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Mar 2022 10:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355156AbiCPKfE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Mar 2022 06:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50430 "EHLO
+        id S1355177AbiCPKny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Mar 2022 06:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237750AbiCPKfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Mar 2022 06:35:02 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B281BE007
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 03:33:48 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id j83so2007700oih.6
-        for <git@vger.kernel.org>; Wed, 16 Mar 2022 03:33:48 -0700 (PDT)
+        with ESMTP id S1345091AbiCPKnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Mar 2022 06:43:53 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A946540D
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 03:42:39 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so2952223wms.3
+        for <git@vger.kernel.org>; Wed, 16 Mar 2022 03:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/5c6TnuWeaew5vRgKpXwaqLs/alGm68m8+8zMHPTIWs=;
-        b=PkzNf97emYQpMgHZyJILAn+2Rf4f8Dmu50CEyJf6rSkboZHJjwA/7h2PsBWs9gO3jO
-         +gV7QRhnLBnQXLoDy95EJHATeHEbqwsDGww/44DSmfBhSAeqzHxgeNdl6t5noZbngvCd
-         Gim4drPxlFJuVI07BrF10uFn34n78zC4IaCCgVyVKzbhdM+a3fbJoxpB1sTfuwezhu7R
-         7biOzbmy04lAK4g6P4oO+eQ0V9zDY/+Ns0QkEXc8EfzW/NXMiJ/wAJzK0MWeJJN/XV+9
-         FRlP3CHRm5L5dSj4uQdNcRP5ClXOhALbssBVpn/dVmn2EVsTDAyhC7Ol/ZHzp9fo71L1
-         dI5g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fhK+eFo8Lz4gKK+xwU3sLVPXhtx/Z89lViUUqb0u4Hk=;
+        b=fHCXUGm9nOCIM/1hKCGIDbjVHvIUrHVcf90xgqYC2uQh1fUDu0ihSva3AuHmzTZ3MY
+         69IOofU3sPGgGECY9RkKc18DSGClINi8QItNCVbEHhPl/pY2oS+dVDwsDZhGnmrFhnSa
+         rfgdpb4c6XmQSJ9sI7ZTBmQpeP6vx87I0/L1gaeoF1h8wnAhUahSuH8ZuKEo2eNPfNu0
+         81+Pub+0wj1vJdtakWLSncN1yZe8VznSwJrgHhbwrapHiRnQ45yetHmMO1vaD9tb4QPI
+         8NJPxna3Dfqk8YGSEQFhDJKBQZM8uT4WI5EsAPjW1/D20Qc0tcoJV/RuGTKx+ZDb3SJT
+         mzEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/5c6TnuWeaew5vRgKpXwaqLs/alGm68m8+8zMHPTIWs=;
-        b=aKMiZPMTjWij0z3XW2A2APbXN7fYYqtosJXt+PGBte/e+SdtujgO2ZYYl9HDPsd7LO
-         0rk9qTuQjJjnYw0clwJfNqJw/fgnjda5xLKzZD0f47+M984rtrUgIDXXUu4voueHoi4w
-         FY3IcwGpTgLIfBBEOvtyKEOj/rGIvQPytEUt7/F6lObKk6MZi6XGoXKGKhxXXxSpuHaS
-         um1ToFkHfWK16GMed+cjz/x0i12fT6/bB462UnnvfxaFj/i2ib8ntsuzLzBQkzkaWVrB
-         YyvHk+SqwvDI7VL0hpHq2hdj7NcQTdApeh7jc4WzFha9now1LQYFKOGuRNZNsXPGE16J
-         lkXw==
-X-Gm-Message-State: AOAM533h0H9U2p4SJuOGj5Y6gii+HsKMM0PsvBmloCLeQW0+BonprNRl
-        kviW7Bhk7FFhHmMWWbSlconzm5chcZY8+FRvuk5Ff4XTFnE=
-X-Google-Smtp-Source: ABdhPJxnv+5etctXnlZwxaJADaBjRK4gwz7mXiTMZuTXLIIY8DrZ6Q0IZG34wwFu798+GKYBcefrIfQgsG3IyvyHLBw=
-X-Received: by 2002:a05:6808:655:b0:2ec:ce86:303c with SMTP id
- z21-20020a056808065500b002ecce86303cmr3360977oih.217.1647426827662; Wed, 16
- Mar 2022 03:33:47 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=fhK+eFo8Lz4gKK+xwU3sLVPXhtx/Z89lViUUqb0u4Hk=;
+        b=s53ZvPfVuPnTt+S/hEF+Sptn8GEykF7FN6YfKlZPOhMWK+4E9kJ3ejEY9innFFO2Wn
+         fXhP6cHs/YyoawQcwunmAo2m6xtUiMPEm3E4jfrlPSSoKgynvpkETjjyVoUrExo4imFr
+         JtELTolOGhiwaCdFEsj1KvwrXqkA6E+vohghDILLe/tXIT1nf+Y24pLyg0Bc7GPAnQiH
+         IQcKTT0dSm2bLD3Aew65Hhocl58T9Iu2jHhlLhL2nph0o6nw4vs8+RRQu0eFXm80S5Jf
+         WNtrWp1Ywv2/OcYybLJzbozZQ2LyK2giUg0/GpUTZh1uF5MyqZ8fEHUehLRvbwwVxaxP
+         mH3w==
+X-Gm-Message-State: AOAM533iQFjVppVBQ01jQWYYsnUeJlS5UOe0Yz0MhuqWbp1u+TwvDmBE
+        hnxRvtfosx4FDNR2sHNe3eg1bZ3KYc4=
+X-Google-Smtp-Source: ABdhPJwLl271CInlMj+GbFilJbLxRQ85B49jaLWFDsIud9YQPr8iQ1Wtnl8DXb5z9dsjbvQkCcipuw==
+X-Received: by 2002:a05:600c:4c11:b0:383:fae4:41c2 with SMTP id d17-20020a05600c4c1100b00383fae441c2mr6896935wmp.104.1647427357827;
+        Wed, 16 Mar 2022 03:42:37 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c22cb00b00382a960b17csm4641774wmg.7.2022.03.16.03.42.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Mar 2022 03:42:37 -0700 (PDT)
+Message-Id: <pull.1177.v2.git.1647427356490.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1177.git.1647373314457.gitgitgadget@gmail.com>
+References: <pull.1177.git.1647373314457.gitgitgadget@gmail.com>
+From:   "Jayati Shrivastava via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Mar 2022 10:42:36 +0000
+Subject: [PATCH v2] sequencer.c: use reverse_commit_list() helper
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220315131638.924669-1-gitter.spiros@gmail.com> <xmqqzglrfcas.fsf@gitster.g>
-In-Reply-To: <xmqqzglrfcas.fsf@gitster.g>
-From:   Elia Pinto <gitter.spiros@gmail.com>
-Date:   Wed, 16 Mar 2022 11:33:38 +0100
-Message-ID: <CA+EOSBnjYDQCcks-skZLzwDBLsC2-Ri_6eJKXNyrcA-BeeFyEA@mail.gmail.com>
-Subject: Re: [PATCH] git-curl-compat.h: addition of all symbols defined by curl
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Hariom verma <hariom18599@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jayati Shrivastava <gaurijove@gmail.com>,
+        Jayati Shrivastava <gaurijove@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno mar 15 mar 2022 alle ore 16:47 Junio C Hamano
-<gitster@pobox.com> ha scritto:
->
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
-> > This file was produced from a modified version of symbols.pl
-> > (https://github.com/curl/curl/blob/master/docs/libcurl/symbols.pl) and
-> > by manually adding the previous comments describing the dates of release
-> > of some curl versions not currently reported in the symbols-in-versions.
-> >
-> > To do this the symbols are listed in the order defined in the file
-> > symbols-in-versions rather than as they were previously inserted based
-> > on release dates.
-> >
-> > Most of these symbols are not used by git today. However, inserting
-> > them all starting from an automatic tool makes it largely unnecessary
-> > to update this file and therefore reduces the possibility
-> > of introducing possible errors in the future.
-> >
-> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> > ---
-> >  git-curl-compat.h | 2944 +++++++++++++++++++++++++++++++++++++++++++--
-> >  1 file changed, 2875 insertions(+), 69 deletions(-)
->
-> Hmmm.  While the basic idea may be sound, I do not think this alone
-> would be sufficient out of the box.
->
-> > diff --git a/git-curl-compat.h b/git-curl-compat.h
-> > index 56a83b6bbd..dc9086710a 100644
-> > --- a/git-curl-compat.h
-> > +++ b/git-curl-compat.h
-> > @@ -24,25 +24,1228 @@
-> >   * doing so is sufficient to add support for it to older versions that
-> >   * don't have it.
-> >   *
-> > - * Keep any symbols in date order of when their support was
-> > - * introduced, oldest first, in the official version of cURL library.
-> > - */
-> > -
-> > -/**
-> > - * CURL_SOCKOPT_OK was added in 7.21.5, released in April 2011.
-> > - */
-> > -#if LIBCURL_VERSION_NUM < 0x071505
-> > -#define CURL_SOCKOPT_OK 0
-> > -#endif
->
-> Even though you define GIT_HAVE_CURL_SOCKOPT_OK macro below, the
-> existing codebase is not expecting to handle the lack of
-> CURL_SOCKOPT_OK by checking the macro.  Instead, it expects the
-> macro to be defined to be 0 for older versions, exactly like this.
->
-> And you do not give a replacement definition.
->
-> > -#if LIBCURL_VERSION_NUM >= 0x071900
-> > -#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
-> > -#endif
->
-> This is an unfortunate oddball that lacks _ between GIT and CURL.
->
-> $ git grep -e '#define ' --and --not -e GIT_CURL_ git-curl-compat.h
-> > -#if LIBCURL_VERSION_NUM >= 0x071900
-> > -#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
-> > -#endif
->
-> You define GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE but naturally,
-> existing callers do not pay attention to it.  They care about the
-> oddball variant GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE instead.
->
-> Luckily, these two are the only irregulars, it seems.
->
-> $ git grep -e '#define ' --and --not -e GIT_CURL_ git-curl-compat.h
-> git-curl-compat.h:#define CURL_SOCKOPT_OK 0
-> git-curl-compat.h:#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
->
-> So, I think you would need a bit of preliminary clean-up patch
-> inserted before this automated compatibility layer, perhaps like
-> this.
+From: Jayati Shrivastava <gaurijove@gmail.com>
 
-Hi
+Instead of creating a new allocation, reverse the original
+list in-place by calling the reverse_commit_list() helper.
+The original code discards the list "bases" after storing
+its reverse copy in a newly created list "reversed". If the
+code that followed from here used both "bases" and "reversed",
+the modification would not have worked, but since the original
+list "bases" gets discarded, we can simply reverse "bases"
+in-place with the reverse_commit_list() helper and reuse the
+same variable in the code that follows.
 
-In the end I did not understand if you think it is worthwhile that i
-do a reroll of  the patch, making a series of patches that put all the
-preliminary patches like the one you reported.
+Signed-off-by: Jayati Shrivastava <gaurijove@gmail.com>
+---
+    Use reverse_commit_list helper function for in-place list reversal
+    
+    This patch addresses https://github.com/gitgitgadget/git/issues/1156 . I
+    have left builtin/merge.c unmodified since in its case, the original
+    list is needed separately from the reverse copy.
+    
+    (Please excuse if you are receiving this patch again. I had previously
+    sent it using git send-email but for some reason the patches are not
+    getting delivered to the mailing list despite correctly passing the
+    --to/--cc/--in-reply-to options.)
 
-Thank you all
->
-> --- >8 ---
-> Subject: curl: streamline conditional compilation
->
-> Earlier we introduced git-curl-compat.h that defines bunch of
-> GIT_CURL_HAVE_X where X is a feature of cURL library we care about,
-> to make it easily manageable to conditionally compile code against
-> the version of cURL library we are given.
->
-> There however are two oddball macros.  Instead of checking
-> GIT_CURL_HAVE_CURL_SOCKOPT_OK and using a fallback definition for
-> CURL_SOCKOPT_OK macro, we just defined CURL_SOCKOPT_OK to a safe
-> value when compiling against an old version that lack the symbol.
-> Also, the macro to check CURLOPT_TCP_KEEPALIVE (alone) was named
-> GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE.
->
-> Introduce GIT_CURL_HAVE_CURL_SOCKOPT_OK and define it for the
-> versions of cURL where we used to use our fallback definition for
-> CURL_SOCKOPT_OK, and use the fallback definition based on the new
-> GIT_CURL_HAVE_CURL_SOCKOPT_OK symbol at its sole use site.
->
-> To better conform the naming convention of other symbols, rename
-> GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE to GIT_CURL_HAVE_CURL_SOCKOPT_OK
-> and update its sole use site.
->
-> After this, conditional compilation with cURL library is all
-> controlled uniformly with GIT_CURL_HAVE_X mechanism.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  git-curl-compat.h | 2 +-
->  http.c            | 5 ++++-
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git c/git-curl-compat.h w/git-curl-compat.h
-> index 56a83b6bbd..802d11e7be 100644
-> --- c/git-curl-compat.h
-> +++ w/git-curl-compat.h
-> @@ -39,7 +39,7 @@
->   * CURLOPT_TCP_KEEPALIVE was added in 7.25.0, released in March 2012.
->   */
->  #if LIBCURL_VERSION_NUM >= 0x071900
-> -#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
-> +#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
->  #endif
->
->
-> diff --git c/http.c w/http.c
-> index 2f67fbb33c..8d9a66b5ca 100644
-> --- c/http.c
-> +++ w/http.c
-> @@ -517,7 +517,7 @@ static int has_proxy_cert_password(void)
->  }
->  #endif
->
-> -#ifdef GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE
-> +#ifdef GIT_CURL_HAVE_CURLOPT_TCP_KEEPALIVE
->  static void set_curl_keepalive(CURL *c)
->  {
->         curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
-> @@ -537,6 +537,9 @@ static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
->         if (rc < 0)
->                 warning_errno("unable to set SO_KEEPALIVE on socket");
->
-> +#ifndef GIT_CURL_HAVE_CURL_SOCKOPT_OK
-> +#define CURL_SOCKOPT_OK 0
-> +#endif
->         return CURL_SOCKOPT_OK;
->  }
->
->
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1177%2Fvictorphoenix3%2Freverse-list-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1177/victorphoenix3/reverse-list-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1177
+
+Range-diff vs v1:
+
+ 1:  8c3c6c9ed4c ! 1:  f794bcd8bda Use reverse_commit_list helper function for in-place list reversal
+     @@
+       ## Metadata ##
+     -Author: JAYATI SHRIVASTAVA <gaurijove@gmail.com>
+     +Author: Jayati Shrivastava <gaurijove@gmail.com>
+      
+       ## Commit message ##
+     -    Use reverse_commit_list helper function for in-place list reversal
+     +    sequencer.c: use reverse_commit_list() helper
+      
+     -    Here, a reverse copy of a list is being created by iterating
+     -    over the list after which the original list is discarded.
+     -    Instead of creating a new allocation, we can reverse the
+     -    original list in-place using the reverse_commit_list helper
+     -    function.
+     +    Instead of creating a new allocation, reverse the original
+     +    list in-place by calling the reverse_commit_list() helper.
+     +    The original code discards the list "bases" after storing
+     +    its reverse copy in a newly created list "reversed". If the
+     +    code that followed from here used both "bases" and "reversed",
+     +    the modification would not have worked, but since the original
+     +    list "bases" gets discarded, we can simply reverse "bases"
+     +    in-place with the reverse_commit_list() helper and reuse the
+     +    same variable in the code that follows.
+      
+          Signed-off-by: Jayati Shrivastava <gaurijove@gmail.com>
+      
+
+
+ sequencer.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 35006c0cea6..bccbb9e3522 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3749,7 +3749,7 @@ static int do_merge(struct repository *r,
+ 	int run_commit_flags = 0;
+ 	struct strbuf ref_name = STRBUF_INIT;
+ 	struct commit *head_commit, *merge_commit, *i;
+-	struct commit_list *bases, *j, *reversed = NULL;
++	struct commit_list *bases, *j;
+ 	struct commit_list *to_merge = NULL, **tail = &to_merge;
+ 	const char *strategy = !opts->xopts_nr &&
+ 		(!opts->strategy ||
+@@ -3984,9 +3984,7 @@ static int do_merge(struct repository *r,
+ 		      git_path_merge_head(r), 0);
+ 	write_message("no-ff", 5, git_path_merge_mode(r), 0);
+ 
+-	for (j = bases; j; j = j->next)
+-		commit_list_insert(j->item, &reversed);
+-	free_commit_list(bases);
++	bases = reverse_commit_list(bases);
+ 
+ 	repo_read_index(r);
+ 	init_merge_options(&o, r);
+@@ -4002,10 +4000,10 @@ static int do_merge(struct repository *r,
+ 		 * update the index and working copy immediately.
+ 		 */
+ 		ret = merge_ort_recursive(&o,
+-					  head_commit, merge_commit, reversed,
++					  head_commit, merge_commit, bases,
+ 					  &i);
+ 	} else {
+-		ret = merge_recursive(&o, head_commit, merge_commit, reversed,
++		ret = merge_recursive(&o, head_commit, merge_commit, bases,
+ 				      &i);
+ 	}
+ 	if (ret <= 0)
+
+base-commit: b896f729e240d250cf56899e6a0073f6aa469f5d
+-- 
+gitgitgadget
