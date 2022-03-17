@@ -2,142 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BFCBC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 19:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23C4FC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 19:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbiCQTnc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 15:43:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
+        id S229521AbiCQTzO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 15:55:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbiCQTna (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 15:43:30 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198C5238D15
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:42:12 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id kc20so1180322qvb.3
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:42:12 -0700 (PDT)
+        with ESMTP id S229479AbiCQTzN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 15:55:13 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E722156C7
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:53:51 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id a1so7444687wrh.10
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8DNFW4d8Ih1UTpu7YSu0eTfVisusMd3+Ljj1zSiS8dg=;
-        b=YfR4XgWRhikdlbqYXvZoK/5wxHjR7ea+EVABDj8jQLP9qvI+UE9OwI8Fkp0fLoevU5
-         BrwD/Eqyq2ftlvM/+lXvxxH8L2jmADIQVKLMfhELEjhkNnckV1dOQx0PG0+Qno5YvOMr
-         0gONaCoFc8TsL0BqSShNimBIuTQImK+ZGYkalpgGhOTmWIlI42e31Wpux48jMBYJZEiQ
-         LAVQrSmukMtecenjJBN1vxtjoI5BESnbl+fb5She+FtlstPU0UeEZSWpbglvb3WMIkKT
-         e3MhrhD5oZEHzc0L5JrKYpSolge2t7hfvZ+aMBvw67y2hql4WXArGtP9+ycttPtLa1Kv
-         zTPA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8JlIa/0gMgvotxMGaUqa8UOorZrljM2UYznq583Hs/Y=;
+        b=i57UhjSB6Pp4S65P1PP3Vf28hyO4l8T1bO/9iHq1+WV+pWIX8ThO0UxMtGbBbyr8Ce
+         3o6sX6Pdih8mon655uf1CUdVXN+CChAp44QhP9Qt+yEeBJ21hGh7GM6QPVL5ZavivYIk
+         mWx2hGil9ptK57gnibe9CMlUwEokk+AMZ8WAcUQ90/qKimtLp58OdN4AxeSSb1SaIWNf
+         QjOVhMf781GHcb6VNdk1GJYZjMmbFyCVqg13h85cENtA3OdRvMCvdpF5z7bE5W3+fkZ4
+         9ieyVQfBwl5WU8ZEN5ekIx+PMIfhYeG4v638nJcuNkOd4Df83248IPP0p5Xi8WdFvS5a
+         pHSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8DNFW4d8Ih1UTpu7YSu0eTfVisusMd3+Ljj1zSiS8dg=;
-        b=TYo2tB6wry8pa8KjJMyhPt54bUONU+l4CX3EA9EyoILC5l2rhJNK58NGmFK49asLLF
-         OZ12qV1PTBlf3UGjSEKp2M7DBHIMhDrm3yY6crwpFKinWwksTdD4GfFk6jpv7P/pOEjR
-         DlAuqVORd7k8mn2btnyBMSd76OEir2OxWWRGRQEMzqzMuT1+mOpu6fZu7GEtvLY4bCJ7
-         XZb2N7wFQuVOpiodTP2FFbeiqSgSsWZZaGu7FDZpqYItABoJuE6fz3EXXqNmUsfTx+wr
-         HgdKcku0m7ftF06tfPicdqEgJWV8tIEZ8F2ahCvk8QSTuWyTQKYwyiGwLZiTJHJ6Lfhr
-         4myA==
-X-Gm-Message-State: AOAM531tarx2GUt6RgxgfqPY8TULn1uhI3igRAGFnFn0+lAqpBa2udIJ
-        pKZGocjEDY79qEZ6AVQwPdmuqbgkun4=
-X-Google-Smtp-Source: ABdhPJxQW0Mki+D4cYYDt2icdpdKw0/ENbkJjoZVvrj74CmCNeEryMpVQhMpv7FT6QzCcfoR7GbK6w==
-X-Received: by 2002:a05:6214:12b0:b0:440:e023:d2a4 with SMTP id w16-20020a05621412b000b00440e023d2a4mr4891490qvu.75.1647546131923;
-        Thu, 17 Mar 2022 12:42:11 -0700 (PDT)
-Received: from [10.37.129.2] (ool-457faac5.dyn.optonline.net. [69.127.170.197])
-        by smtp.gmail.com with ESMTPSA id p64-20020a37a643000000b0067d9afad07asm2944069qke.76.2022.03.17.12.42.11
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Mar 2022 12:42:11 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] reflog.c: indent argument lists
-Date:   Thu, 17 Mar 2022 15:42:10 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <99CF36A8-B9FD-4E05-A2DA-B4662C530738@gmail.com>
-In-Reply-To: <patch-1.8-5069b3fd0ff-20220317T180439Z-avarab@gmail.com>
-References: <cover-0.8-00000000000-20220317T180439Z-avarab@gmail.com>
- <patch-1.8-5069b3fd0ff-20220317T180439Z-avarab@gmail.com>
-MIME-Version: 1.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8JlIa/0gMgvotxMGaUqa8UOorZrljM2UYznq583Hs/Y=;
+        b=YTxlm0m/MRQUyWRCZje/BP8za/euYxDDdmZ9U516u33vFrd5bo/mzQcn4JjJnNIu/a
+         rnfM+GbL1PVpX9lXj3+nwjvqRS8nfRYN3KYNBqKjajV7efYwwNFB3n7VLifHpfb1vcDQ
+         8Y6eMbepFO+B4tSfTAwpP+svBrAs+sNAmcOK9wwtWtYZt++4Ss724xb2kZnW4jK73aX+
+         Pvxb3AZdsEV+xWw1bZJda1AwhoQAX0OYp7C/ahgBLvV9QD1gTdGef02xf0Z1doPgEDvZ
+         uWQVR+hnQT6da4rnsomBMOMPIP0j5UnjozNUs7J1fIM1ez6NglK20oPoVpcpK+mGHbxh
+         UTzA==
+X-Gm-Message-State: AOAM530ddNI19asuFHF/jFgaGSrjARqI55Iqra8I+bE4D3edaANoCr/G
+        G8XE5VIJ9IC/pCDZP6alAqrjkR64w6g=
+X-Google-Smtp-Source: ABdhPJxd2rvucXG/F2PlpxzyEVZqkUObdQcknPpGYKGBEdOZhjBEUmlVhAUf31t5nX/53ebiKbZBnA==
+X-Received: by 2002:a5d:6311:0:b0:203:dd90:562d with SMTP id i17-20020a5d6311000000b00203dd90562dmr5519200wru.195.1647546830164;
+        Thu, 17 Mar 2022 12:53:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y7-20020a5d4ac7000000b00203e4c8bdf1sm3063343wrs.93.2022.03.17.12.53.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Mar 2022 12:53:49 -0700 (PDT)
+Message-Id: <cac51a949eed0fa593247a593aae2b100be6f4f2.1647546828.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1226.v4.git.git.1647546828.gitgitgadget@gmail.com>
+References: <pull.1226.v3.git.git.1647487001.gitgitgadget@gmail.com>
+        <pull.1226.v4.git.git.1647546828.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 17 Mar 2022 19:53:46 +0000
+Subject: [PATCH v4 1/3] rebase: test showing bug in rebase with non-branch
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, John Cai <johncai86@gmail.com>,
+        John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi =C3=86var
+From: John Cai <johncai86@gmail.com>
 
-On 17 Mar 2022, at 14:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Currently when rebase is used with a non branch, and <oid> is up to
+date with base:
 
-> When reflog.c was lib-ified in 7d3d226e700 (reflog: libify delete
-> reflog function and helpers, 2022-03-02) these previously "static"
-> functions were made non-"static", but the argument lists were not
-> correspondingly indented according to our usual coding style. Let's do
-> that.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  reflog.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/reflog.c b/reflog.c
-> index 333fd8708fe..82e5a935117 100644
-> --- a/reflog.c
-> +++ b/reflog.c
-> @@ -240,8 +240,8 @@ static int unreachable(struct expire_reflog_policy_=
-cb *cb, struct commit *commit
->   * Return true iff the specified reflog entry should be expired.
->   */
->  int should_expire_reflog_ent(struct object_id *ooid, struct object_id =
-*noid,
-> -				    const char *email, timestamp_t timestamp, int tz,
-> -				    const char *message, void *cb_data)
-> +			     const char *email, timestamp_t timestamp, int tz,
-> +			     const char *message, void *cb_data)
->  {
->  	struct expire_reflog_policy_cb *cb =3D cb_data;
->  	struct commit *old_commit, *new_commit;
-> @@ -273,10 +273,10 @@ int should_expire_reflog_ent(struct object_id *oo=
-id, struct object_id *noid,
->  }
->
->  int should_expire_reflog_ent_verbose(struct object_id *ooid,
-> -					    struct object_id *noid,
-> -					    const char *email,
-> -					    timestamp_t timestamp, int tz,
-> -					    const char *message, void *cb_data)
-> +				     struct object_id *noid,
-> +				     const char *email,
-> +				     timestamp_t timestamp, int tz,
-> +				     const char *message, void *cb_data)
->  {
->  	struct expire_reflog_policy_cb *cb =3D cb_data;
->  	int expire;
-> @@ -323,8 +323,8 @@ static int is_head(const char *refname)
->  }
->
->  void reflog_expiry_prepare(const char *refname,
-> -				  const struct object_id *oid,
-> -				  void *cb_data)
-> +			   const struct object_id *oid,
-> +			   void *cb_data)
->  {
->  	struct expire_reflog_policy_cb *cb =3D cb_data;
->  	struct commit_list *elem;
-> @@ -377,8 +377,8 @@ void reflog_expiry_cleanup(void *cb_data)
->  }
->
->  int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
-> -		const char *email, timestamp_t timestamp, int tz,
-> -		const char *message, void *cb_data)
-> +		     const char *email, timestamp_t timestamp, int tz,
-> +		     const char *message, void *cb_data)
->  {
->  	struct cmd_reflog_expire_cb *cb =3D cb_data;
->  	if (!cb->expire_total || timestamp < cb->expire_total)
+git rebase base <oid>
 
-Just wanted to say thanks for fixing these :)
+It will update the ref that HEAD is pointing at to <oid>, and leave HEAD
+unmodified.
 
-> -- =
+This is a bug. The expected behavior is that the branch HEAD points at
+remains unmodified while HEAD is updated to point to <oid> in detached
+HEAD mode.
 
-> 2.35.1.1384.g7d2906948a1
+Signed-off-by: John Cai <johncai86@gmail.com>
+Reported-by: Michael McClimon <michael@mcclimon.org>
+---
+ t/t3400-rebase.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 71b1735e1dd..5c4073f06d6 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -399,6 +399,15 @@ test_expect_success 'switch to branch not checked out' '
+ 	git rebase main other
+ '
+ 
++test_expect_success 'switch to non-branch changes branch HEAD points to' '
++	git checkout main &&
++	old_main=$(git rev-parse HEAD) &&
++	git rebase First Second^0 &&
++	test_cmp_rev HEAD main &&
++	test_cmp_rev main $(git rev-parse Second) &&
++	git symbolic-ref HEAD
++'
++
+ test_expect_success 'refuse to switch to branch checked out elsewhere' '
+ 	git checkout main &&
+ 	git worktree add wt &&
+-- 
+gitgitgadget
+
