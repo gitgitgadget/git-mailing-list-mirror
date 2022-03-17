@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 435F6C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 10:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54683C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 10:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232484AbiCQKPC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 06:15:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59978 "EHLO
+        id S232487AbiCQKPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 06:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbiCQKOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 06:14:51 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C17DBD05
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 03:13:32 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id r190-20020a1c2bc7000000b0038a1013241dso2876403wmr.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 03:13:32 -0700 (PDT)
+        with ESMTP id S232475AbiCQKOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 06:14:54 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC1CDD954
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 03:13:34 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id r6so6641403wrr.2
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 03:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=86bFelr4Vn7SVbZR0wLNSeGkU5UebBPrpSN6VaVPQSE=;
-        b=f3QbMev4ruqr0VOiK+qQ3GzeURg2mUXh2/jdi/4sAjU25XctaBRrWguBgKHthkDLU0
-         cC9gZCH2SEVIOj61mi5nQS/CcH62C4DhLcfW4gffJdDsv3kkTWuW1JQhJJpwXBGn/fm7
-         LzKq0XQ4K4F0Rv4UQb5MSgLdMgK2VSLzceXWRHH67OeolVZI+RgVbYNz6JpeOtIYpM5n
-         xol1jW1sC9NUynAagco6LC6cMcFViKVfGABTrWtelDWHi9P1NRxhuF2w7n3js61Lo9Bg
-         54JK5/lFI5iEfOgRTHjL3idT9TvUru9KX1cOEO6aWNeLIUBDCC0VKPFeagkN1b5kwzgm
-         bD5w==
+        bh=udWjC6vMFs9v4mXs8DYmwYz5wAeEwnXCWnBN0gUDlUg=;
+        b=m8ezQKW6DHe/L/Bn44GncZEkdUmxNOqX3Mudiwr2S61HMdLftN8zFKQLfgwyhdTK/V
+         JmE4K7FHgp6c9hvFM+vw3UdhgX0+5ha7gSCb0bZstBDLmSVVK1zELEuq6u5425yfVQKE
+         eiZ77UmoQ3EYo5FAIvVZ8WHCva0XF7q1/F69Bl0Io1HJDeRQoQgrEfE7VbHs4hj82hPh
+         YsVOlExs8dlE0rWx4uVJMIky2HHOksvqyDSox74PQheOellLUxR2QEA7nSHxRSoEuyo0
+         /TGroAEUMQlWSXo3A7dV7lvt5O+jR2uECaeiUBIOyTvPXkfj5P+Cs+LTxy1Td1gTGtt6
+         4S2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=86bFelr4Vn7SVbZR0wLNSeGkU5UebBPrpSN6VaVPQSE=;
-        b=Mhkbk6mkhaMbC5Vcc842tuREeCAgR5ek0eRjxsbLDcvlrev2chMj9HayjhJyNBa8Zm
-         EN03shmrlL4qfIrKZI/hwDl2DYm48Yo0FiUCKvnJZRiYmLbT5k228qPbGhc83R4uMRUu
-         V9FhD7L/EeSMM7qgLuIHsIO+Cv176EFJ8SSFq7KF2zsxrPKx6L50YHdDdWdt7olBA4w/
-         FDNUlbZtJd24TGT4jqWF1ngBJeNq6OssOmTWbKLf9OlGv9LT5XICpwuwR324VTJpSnAK
-         kxzLWF9Lh//UjizOb1PDQwZkmuOaxKuDznR5ZhbvKhJCBlmV6NgZ94pU8i0zFdOmU3qE
-         Bwcw==
-X-Gm-Message-State: AOAM531MPQBrSY+u6dk9Uh5Xe/BK0Rm0GNIUEd7GLneRHu7UyEnQZNOZ
-        RJHDdbMd0tQ5QwALdyEE+MhQD+dwSdQ=
-X-Google-Smtp-Source: ABdhPJxnPXWQO13/kbnV9tVbD0HmTXo1EHUsr6qzbxOcJ2ZfiSJwOv+kiX5GlZOKh34YQh6u4kxHLA==
-X-Received: by 2002:a7b:c855:0:b0:384:91d1:8120 with SMTP id c21-20020a7bc855000000b0038491d18120mr10685343wml.110.1647512011049;
-        Thu, 17 Mar 2022 03:13:31 -0700 (PDT)
+        bh=udWjC6vMFs9v4mXs8DYmwYz5wAeEwnXCWnBN0gUDlUg=;
+        b=Hz7hlrwo6Tmdur/KUhnyKeRRTt3bm1BbCmKKr00X+JZojISjWdFAipO5GxGAVo/a71
+         wwHNFtMbn07KSZ3I/+ZEuXH9TYZIyeRK8VCBnmYp90kUI1RYC2NUHTuwRxJrM8iDe8A/
+         EVkgqGZ9ouzxL1KzKrd/txY+xqwd/yGK5Ak5YsLszo7jwoA8M9weeJLli5tpsICvMnCY
+         X8xeRZlGgRlIsYxikmi/T+SSXz3LgVcLXbGltM25s8C9jdz1gM++Dbwq+LMyE2FxovDD
+         K00qlqwJHrLjipJpSTt5Xyq7cni58FgXmHk4MaqBpkKf03Eoufu007Qqc9Cn+p4n7Wef
+         RScA==
+X-Gm-Message-State: AOAM531hOAMnF8Q5c/dLOXBoAgooXJ5JQcl3RDnVl463KQcTYH0fPTAu
+        jTxmt5gKFDlQNEOuOeip3V0iXyqZZTg=
+X-Google-Smtp-Source: ABdhPJz3W/sZwBPlgzkGZAN+NSKePLN7ky68YLaz6rbG145U5bTLPtQWODRJOQnYC7LFUc4v7fa2mQ==
+X-Received: by 2002:adf:f8c6:0:b0:203:ea86:2558 with SMTP id f6-20020adff8c6000000b00203ea862558mr1795831wrq.60.1647512012945;
+        Thu, 17 Mar 2022 03:13:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i206-20020a1c3bd7000000b0038bfc3ab76csm3903236wma.48.2022.03.17.03.13.30
+        by smtp.gmail.com with ESMTPSA id i206-20020a1c3bd7000000b0038bfc3ab76csm3903236wma.48.2022.03.17.03.13.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Mar 2022 03:13:30 -0700 (PDT)
+        Thu, 17 Mar 2022 03:13:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 09/13] tests: change "mkdir -p && write_script" to use "test_hook"
-Date:   Thu, 17 Mar 2022 11:13:14 +0100
-Message-Id: <patch-v3-09.13-f908e27da82-20220317T100820Z-avarab@gmail.com>
+Subject: [PATCH v3 11/13] tests: extend "test_hook" for "rm" and "chmod -x", convert "$HOOK"
+Date:   Thu, 17 Mar 2022 11:13:16 +0100
+Message-Id: <patch-v3-11.13-f541b0b2d70-20220317T100820Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1384.g7d2906948a1
 In-Reply-To: <cover-v3-00.13-00000000000-20220317T100820Z-avarab@gmail.com>
 References: <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com> <cover-v3-00.13-00000000000-20220317T100820Z-avarab@gmail.com>
@@ -68,371 +68,666 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change tests that used a "mkdir -p .git/hooks && write_script" pattern
-to use the new "test_hook" helper instead. The new helper does not
-create the .git/hooks directory, rather we assume that the default
-template will do so for us.
+Extend the "test_hook" function to take options to disable and remove
+hooks. Using the wrapper instead of getting the path and running
+"chmod -x" or "rm" will make it easier to eventually emulate the same
+behavior with config-based hooks.
 
-An upcoming series[1] will extend "test_hook" to operate in a
-"--template=" mode, but for now assuming that we have a .git/hooks
-already is a safe assumption. If that assumption becomes false in the
-future we'll only need to change 'test_hook", instead of all of these
-callsites.
-
-1. https://lore.kernel.org/git/cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com/
+Not all of these tests need that new mode, but since the rest are
+either closely related or use the same "$HOOK" pattern let's convert
+them too.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0029-core-unsetenvvars.sh      |  3 +--
- t/t1350-config-hooks-path.sh      |  4 ++--
- t/t3404-rebase-interactive.sh     | 10 ++--------
- t/t3430-rebase-merges.sh          |  6 +++---
- t/t4150-am.sh                     | 24 ++++++------------------
- t/t5403-post-checkout-hook.sh     |  3 +--
- t/t5534-push-signed.sh            | 26 ++++++++------------------
- t/t7113-post-index-change-hook.sh |  7 +++----
- t/t9001-send-email.sh             |  4 +---
- 9 files changed, 27 insertions(+), 60 deletions(-)
+ t/t2400-worktree-add.sh                       |   5 +-
+ t/t5543-atomic-push.sh                        |   5 +-
+ t/t5571-pre-push-hook.sh                      |  38 +++--
+ ...3-pre-commit-and-pre-merge-commit-hooks.sh | 150 +++++++++---------
+ t/t7504-commit-msg-hook.sh                    |  43 +++--
+ t/t7505-prepare-commit-msg-hook.sh            |  43 +++--
+ t/t7520-ignored-hook-warning.sh               |  11 +-
+ t/test-lib-functions.sh                       |  24 +++
+ 8 files changed, 162 insertions(+), 157 deletions(-)
 
-diff --git a/t/t0029-core-unsetenvvars.sh b/t/t0029-core-unsetenvvars.sh
-index b138e1d9cbc..4e8e90dd982 100755
---- a/t/t0029-core-unsetenvvars.sh
-+++ b/t/t0029-core-unsetenvvars.sh
-@@ -12,8 +12,7 @@ then
- fi
- 
- test_expect_success 'setup' '
--	mkdir -p "$TRASH_DIRECTORY/.git/hooks" &&
--	write_script "$TRASH_DIRECTORY/.git/hooks/pre-commit" <<-\EOF
-+	test_hook --setup pre-commit <<-\EOF
- 	echo $HOBBES >&2
- 	EOF
- '
-diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
-index fa9647a7c0b..f6dc83e2aab 100755
---- a/t/t1350-config-hooks-path.sh
-+++ b/t/t1350-config-hooks-path.sh
-@@ -6,11 +6,11 @@ test_description='Test the core.hooksPath configuration variable'
- 
- test_expect_success 'set up a pre-commit hook in core.hooksPath' '
- 	>actual &&
--	mkdir -p .git/custom-hooks .git/hooks &&
-+	mkdir -p .git/custom-hooks &&
- 	write_script .git/custom-hooks/pre-commit <<-\EOF &&
- 	echo CUSTOM >>actual
- 	EOF
--	write_script .git/hooks/pre-commit <<-\EOF
-+	test_hook --setup pre-commit <<-\EOF
- 	echo NORMAL >>actual
- 	EOF
- '
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index a38f2da7691..f31afd4a547 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -619,9 +619,7 @@ test_expect_success 'rebase a detached HEAD' '
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 43139af08fc..2f564d533d0 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -559,10 +559,7 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
  '
  
- test_expect_success 'rebase a commit violating pre-commit' '
--
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-commit <<-\EOF &&
-+	test_hook pre-commit <<-\EOF &&
- 	test -z "$(git diff --cached --check)"
- 	EOF
- 	echo "monde! " >> file1 &&
-@@ -636,8 +634,6 @@ test_expect_success 'rebase a commit violating pre-commit' '
- '
- 
- test_expect_success 'rebase with a file named HEAD in worktree' '
--
--	rm -fr .git/hooks &&
- 	git reset --hard &&
- 	git checkout -b branch3 A &&
- 
-@@ -1688,10 +1684,8 @@ test_expect_success 'valid author header when author contains single quote' '
- '
- 
- test_expect_success 'post-commit hook is called' '
--	test_when_finished "rm -f .git/hooks/post-commit" &&
- 	>actual &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-commit <<-\EOS &&
-+	test_hook post-commit <<-\EOS &&
- 	git rev-parse HEAD >>actual
- 	EOS
+ post_checkout_hook () {
+-	gitdir=${1:-.git}
+-	test_when_finished "rm -f $gitdir/hooks/post-checkout" &&
+-	mkdir -p $gitdir/hooks &&
+-	write_script $gitdir/hooks/post-checkout <<-\EOF
++	test_hook -C "$1" post-checkout <<-\EOF
+ 	{
+ 		echo $*
+ 		git rev-parse --git-dir --show-toplevel
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index bfee461861e..90676365471 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -164,10 +164,7 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
+ 	) &&
  	(
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 43c82d9a33b..f351701fec2 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -292,9 +292,9 @@ test_expect_success 'post-rewrite hook and fixups work for merges' '
- 	git commit --fixup HEAD same2.t &&
- 	fixup="$(git rev-parse HEAD)" &&
+ 		cd upstream &&
+-		HOOKDIR="$(git rev-parse --git-dir)/hooks" &&
+-		HOOK="$HOOKDIR/update" &&
+-		mkdir -p "$HOOKDIR" &&
+-		write_script "$HOOK" <<-\EOF
++		test_hook update <<-\EOF
+ 			# only allow update to main from now on
+ 			test "$1" = "refs/heads/main"
+ 		EOF
+diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
+index 96d6ecc0af7..a11b20e3782 100755
+--- a/t/t5571-pre-push-hook.sh
++++ b/t/t5571-pre-push-hook.sh
+@@ -6,16 +6,11 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
--	mkdir -p .git/hooks &&
--	test_when_finished "rm .git/hooks/post-rewrite" &&
--	echo "cat >actual" | write_script .git/hooks/post-rewrite &&
-+	test_hook post-rewrite <<-\EOF &&
+ . ./test-lib.sh
+ 
+-# Setup hook that always succeeds
+-HOOKDIR="$(git rev-parse --git-dir)/hooks"
+-HOOK="$HOOKDIR/pre-push"
+-mkdir -p "$HOOKDIR"
+-write_script "$HOOK" <<EOF
+-cat >actual
+-exit 0
+-EOF
+-
+ test_expect_success 'setup' '
++	test_hook pre-push <<-\EOF &&
 +	cat >actual
 +	EOF
++
+ 	git config push.default upstream &&
+ 	git init --bare repo1 &&
+ 	git remote add parent1 repo1 &&
+@@ -28,15 +23,16 @@ test_expect_success 'setup' '
+ 	git push parent1 HEAD:foreign &&
+ 	test_cmp expect actual
+ '
+-write_script "$HOOK" <<EOF
+-cat >actual
+-exit 1
+-EOF
  
- 	test_tick &&
- 	git rebase -i --autosquash -r HEAD^^^ &&
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 159fae8d016..cdad4b68807 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -315,12 +315,10 @@ test_expect_success 'am --patch-format=hg applies hg patch' '
+ COMMIT1="$(git rev-parse HEAD)"
+ export COMMIT1
+ 
+ test_expect_success 'push with failing hook' '
++	test_hook pre-push <<-\EOF &&
++	cat >actual &&
++	exit 1
++	EOF
++
+ 	test_commit two &&
+ 	cat >expect <<-EOF &&
+ 	HEAD $(git rev-parse HEAD) refs/heads/main $(test_oid zero)
+@@ -55,13 +51,13 @@ test_expect_success '--no-verify bypasses hook' '
+ COMMIT2="$(git rev-parse HEAD)"
+ export COMMIT2
+ 
+-write_script "$HOOK" <<'EOF'
+-echo "$1" >actual
+-echo "$2" >>actual
+-cat >>actual
+-EOF
+-
+ test_expect_success 'push with hook' '
++	test_hook --setup pre-push <<-\EOF &&
++	echo "$1" >actual
++	echo "$2" >>actual
++	cat >>actual
++	EOF
++
+ 	cat >expect <<-EOF &&
+ 	parent1
+ 	repo1
+@@ -136,7 +132,9 @@ test_expect_success 'set up many-ref tests' '
  '
  
- test_expect_success 'am with applypatch-msg hook' '
--	test_when_finished "rm -f .git/hooks/applypatch-msg" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/applypatch-msg <<-\EOF &&
-+	test_hook applypatch-msg <<-\EOF &&
- 	cat "$1" >actual-msg &&
- 	echo hook-message >"$1"
+ test_expect_success 'sigpipe does not cause pre-push hook failure' '
+-	echo "exit 0" | write_script "$HOOK" &&
++	test_hook --clobber pre-push <<-\EOF &&
++	exit 0
++	EOF
+ 	git push parent1 "refs/heads/b/*:refs/heads/b/*"
+ '
+ 
+diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+index 606d8d0f089..ad1eb64ba0d 100755
+--- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
++++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+@@ -7,37 +7,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
+-HOOKDIR="$(git rev-parse --git-dir)/hooks"
+-PRECOMMIT="$HOOKDIR/pre-commit"
+-PREMERGE="$HOOKDIR/pre-merge-commit"
+-
+-# Prepare sample scripts that write their $0 to actual_hooks
+-test_expect_success 'sample script setup' '
+-	mkdir -p "$HOOKDIR" &&
+-	write_script "$HOOKDIR/success.sample" <<-\EOF &&
+-	echo $0 >>actual_hooks
+-	exit 0
+-	EOF
+-	write_script "$HOOKDIR/fail.sample" <<-\EOF &&
+-	echo $0 >>actual_hooks
+-	exit 1
+-	EOF
+-	write_script "$HOOKDIR/non-exec.sample" <<-\EOF &&
+-	echo $0 >>actual_hooks
+-	exit 1
+-	EOF
+-	chmod -x "$HOOKDIR/non-exec.sample" &&
+-	write_script "$HOOKDIR/require-prefix.sample" <<-\EOF &&
+-	echo $0 >>actual_hooks
+-	test $GIT_PREFIX = "success/"
+-	EOF
+-	write_script "$HOOKDIR/check-author.sample" <<-\EOF
+-	echo $0 >>actual_hooks
+-	test "$GIT_AUTHOR_NAME" = "New Author" &&
+-	test "$GIT_AUTHOR_EMAIL" = "newauthor@example.com"
+-	EOF
+-'
+-
+ test_expect_success 'root commit' '
+ 	echo "root" >file &&
+ 	git add file &&
+@@ -96,10 +65,16 @@ test_expect_success '--no-verify with no hook (merge)' '
+ 	test_path_is_missing actual_hooks
+ '
+ 
++setup_success_hook () {
++	test_when_finished "rm -f actual_hooks expected_hooks" &&
++	echo "$1" >expected_hooks &&
++	test_hook "$1" <<-EOF
++	echo $1 >>actual_hooks
++	EOF
++}
++
+ test_expect_success 'with succeeding hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
+-	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
+-	echo "$PRECOMMIT" >expected_hooks &&
++	setup_success_hook "pre-commit" &&
+ 	echo "more" >>file &&
+ 	git add file &&
+ 	git commit -m "more" &&
+@@ -107,9 +82,7 @@ test_expect_success 'with succeeding hook' '
+ '
+ 
+ test_expect_success 'with succeeding hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" expected_hooks actual_hooks" &&
+-	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
+-	echo "$PREMERGE" >expected_hooks &&
++	setup_success_hook "pre-merge-commit" &&
+ 	git checkout side &&
+ 	git merge -m "merge main" main &&
+ 	git checkout main &&
+@@ -117,17 +90,14 @@ test_expect_success 'with succeeding hook (merge)' '
+ '
+ 
+ test_expect_success 'automatic merge fails; both hooks are available' '
+-	test_when_finished "rm -f \"$PREMERGE\" \"$PRECOMMIT\"" &&
+-	test_when_finished "rm -f expected_hooks actual_hooks" &&
+-	test_when_finished "git checkout main" &&
+-	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
+-	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
++	setup_success_hook "pre-commit" &&
++	setup_success_hook "pre-merge-commit" &&
+ 
+ 	git checkout conflicting-a &&
+ 	test_must_fail git merge -m "merge conflicting-b" conflicting-b &&
+ 	test_path_is_missing actual_hooks &&
+ 
+-	echo "$PRECOMMIT" >expected_hooks &&
++	echo "pre-commit" >expected_hooks &&
+ 	echo a+b >conflicting &&
+ 	git add conflicting &&
+ 	git commit -m "resolve conflict" &&
+@@ -135,8 +105,7 @@ test_expect_success 'automatic merge fails; both hooks are available' '
+ '
+ 
+ test_expect_success '--no-verify with succeeding hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
+-	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
++	setup_success_hook "pre-commit" &&
+ 	echo "even more" >>file &&
+ 	git add file &&
+ 	git commit --no-verify -m "even more" &&
+@@ -144,8 +113,7 @@ test_expect_success '--no-verify with succeeding hook' '
+ '
+ 
+ test_expect_success '--no-verify with succeeding hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" actual_hooks" &&
+-	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
++	setup_success_hook "pre-merge-commit" &&
+ 	git branch -f side side-orig &&
+ 	git checkout side &&
+ 	git merge --no-verify -m "merge main" main &&
+@@ -153,10 +121,19 @@ test_expect_success '--no-verify with succeeding hook (merge)' '
+ 	test_path_is_missing actual_hooks
+ '
+ 
++setup_failing_hook () {
++	test_when_finished "rm -f actual_hooks" &&
++	test_hook "$1" <<-EOF
++	echo $1-failing-hook >>actual_hooks
++	exit 1
++	EOF
++}
++
+ test_expect_success 'with failing hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
+-	cp "$HOOKDIR/fail.sample" "$PRECOMMIT" &&
+-	echo "$PRECOMMIT" >expected_hooks &&
++	setup_failing_hook "pre-commit" &&
++	test_when_finished "rm -f expected_hooks" &&
++	echo "pre-commit-failing-hook" >expected_hooks &&
++
+ 	echo "another" >>file &&
+ 	git add file &&
+ 	test_must_fail git commit -m "another" &&
+@@ -164,8 +141,7 @@ test_expect_success 'with failing hook' '
+ '
+ 
+ test_expect_success '--no-verify with failing hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
+-	cp "$HOOKDIR/fail.sample" "$PRECOMMIT" &&
++	setup_failing_hook "pre-commit" &&
+ 	echo "stuff" >>file &&
+ 	git add file &&
+ 	git commit --no-verify -m "stuff" &&
+@@ -173,9 +149,8 @@ test_expect_success '--no-verify with failing hook' '
+ '
+ 
+ test_expect_success 'with failing hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" expected_hooks actual_hooks" &&
+-	cp "$HOOKDIR/fail.sample" "$PREMERGE" &&
+-	echo "$PREMERGE" >expected_hooks &&
++	setup_failing_hook "pre-merge-commit" &&
++	echo "pre-merge-commit-failing-hook" >expected_hooks &&
+ 	git checkout side &&
+ 	test_must_fail git merge -m "merge main" main &&
+ 	git checkout main &&
+@@ -183,8 +158,8 @@ test_expect_success 'with failing hook (merge)' '
+ '
+ 
+ test_expect_success '--no-verify with failing hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" actual_hooks" &&
+-	cp "$HOOKDIR/fail.sample" "$PREMERGE" &&
++	setup_failing_hook "pre-merge-commit" &&
++
+ 	git branch -f side side-orig &&
+ 	git checkout side &&
+ 	git merge --no-verify -m "merge main" main &&
+@@ -192,9 +167,18 @@ test_expect_success '--no-verify with failing hook (merge)' '
+ 	test_path_is_missing actual_hooks
+ '
+ 
++setup_non_exec_hook () {
++	test_when_finished "rm -f actual_hooks" &&
++	test_hook "$1" <<-\EOF &&
++	echo non-exec >>actual_hooks
++	exit 1
++	EOF
++	test_hook --disable "$1"
++}
++
++
+ test_expect_success POSIXPERM 'with non-executable hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
+-	cp "$HOOKDIR/non-exec.sample" "$PRECOMMIT" &&
++	setup_non_exec_hook "pre-commit" &&
+ 	echo "content" >>file &&
+ 	git add file &&
+ 	git commit -m "content" &&
+@@ -202,8 +186,7 @@ test_expect_success POSIXPERM 'with non-executable hook' '
+ '
+ 
+ test_expect_success POSIXPERM '--no-verify with non-executable hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" actual_hooks" &&
+-	cp "$HOOKDIR/non-exec.sample" "$PRECOMMIT" &&
++	setup_non_exec_hook "pre-commit" &&
+ 	echo "more content" >>file &&
+ 	git add file &&
+ 	git commit --no-verify -m "more content" &&
+@@ -211,8 +194,7 @@ test_expect_success POSIXPERM '--no-verify with non-executable hook' '
+ '
+ 
+ test_expect_success POSIXPERM 'with non-executable hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" actual_hooks" &&
+-	cp "$HOOKDIR/non-exec.sample" "$PREMERGE" &&
++	setup_non_exec_hook "pre-merge" &&
+ 	git branch -f side side-orig &&
+ 	git checkout side &&
+ 	git merge -m "merge main" main &&
+@@ -221,8 +203,7 @@ test_expect_success POSIXPERM 'with non-executable hook (merge)' '
+ '
+ 
+ test_expect_success POSIXPERM '--no-verify with non-executable hook (merge)' '
+-	test_when_finished "rm -f \"$PREMERGE\" actual_hooks" &&
+-	cp "$HOOKDIR/non-exec.sample" "$PREMERGE" &&
++	setup_non_exec_hook "pre-merge" &&
+ 	git branch -f side side-orig &&
+ 	git checkout side &&
+ 	git merge --no-verify -m "merge main" main &&
+@@ -230,10 +211,18 @@ test_expect_success POSIXPERM '--no-verify with non-executable hook (merge)' '
+ 	test_path_is_missing actual_hooks
+ '
+ 
++setup_require_prefix_hook () {
++	test_when_finished "rm -f expected_hooks" &&
++	echo require-prefix >expected_hooks &&
++	test_hook pre-commit <<-\EOF
++	echo require-prefix >>actual_hooks
++	test $GIT_PREFIX = "success/"
++	EOF
++}
++
+ test_expect_success 'with hook requiring GIT_PREFIX' '
+-	test_when_finished "rm -rf \"$PRECOMMIT\" expected_hooks actual_hooks success" &&
+-	cp "$HOOKDIR/require-prefix.sample" "$PRECOMMIT" &&
+-	echo "$PRECOMMIT" >expected_hooks &&
++	test_when_finished "rm -rf actual_hooks success" &&
++	setup_require_prefix_hook &&
+ 	echo "more content" >>file &&
+ 	git add file &&
+ 	mkdir success &&
+@@ -245,9 +234,8 @@ test_expect_success 'with hook requiring GIT_PREFIX' '
+ '
+ 
+ test_expect_success 'with failing hook requiring GIT_PREFIX' '
+-	test_when_finished "rm -rf \"$PRECOMMIT\" expected_hooks actual_hooks fail" &&
+-	cp "$HOOKDIR/require-prefix.sample" "$PRECOMMIT" &&
+-	echo "$PRECOMMIT" >expected_hooks &&
++	test_when_finished "rm -rf actual_hooks fail" &&
++	setup_require_prefix_hook &&
+ 	echo "more content" >>file &&
+ 	git add file &&
+ 	mkdir fail &&
+@@ -259,13 +247,23 @@ test_expect_success 'with failing hook requiring GIT_PREFIX' '
+ 	test_cmp expected_hooks actual_hooks
+ '
+ 
++setup_require_author_hook () {
++	test_when_finished "rm -f expected_hooks actual_hooks" &&
++	echo check-author >expected_hooks &&
++	test_hook pre-commit <<-\EOF
++	echo check-author >>actual_hooks
++	test "$GIT_AUTHOR_NAME" = "New Author" &&
++	test "$GIT_AUTHOR_EMAIL" = "newauthor@example.com"
++	EOF
++}
++
++
+ test_expect_success 'check the author in hook' '
+-	test_when_finished "rm -f \"$PRECOMMIT\" expected_hooks actual_hooks" &&
+-	cp "$HOOKDIR/check-author.sample" "$PRECOMMIT" &&
++	setup_require_author_hook &&
+ 	cat >expected_hooks <<-EOF &&
+-	$PRECOMMIT
+-	$PRECOMMIT
+-	$PRECOMMIT
++	check-author
++	check-author
++	check-author
  	EOF
-@@ -335,12 +333,10 @@ test_expect_success 'am with applypatch-msg hook' '
+ 	test_must_fail git commit --allow-empty -m "by a.u.thor" &&
+ 	(
+diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
+index bba58f04806..a39de8c1126 100755
+--- a/t/t7504-commit-msg-hook.sh
++++ b/t/t7504-commit-msg-hook.sh
+@@ -54,15 +54,11 @@ test_expect_success '--no-verify with no hook (editor)' '
+ 
  '
  
- test_expect_success 'am with failing applypatch-msg hook' '
--	test_when_finished "rm -f .git/hooks/applypatch-msg" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/applypatch-msg <<-\EOF &&
-+	test_hook applypatch-msg <<-\EOF &&
+-# now install hook that always succeeds
+-HOOKDIR="$(git rev-parse --git-dir)/hooks"
+-HOOK="$HOOKDIR/commit-msg"
+-mkdir -p "$HOOKDIR"
+-cat > "$HOOK" <<EOF
+-#!/bin/sh
+-exit 0
+-EOF
+-chmod +x "$HOOK"
++test_expect_success 'setup: commit-msg hook that always succeeds' '
++	test_hook --setup commit-msg <<-\EOF
++	exit 0
++	EOF
++'
+ 
+ test_expect_success 'with succeeding hook' '
+ 
+@@ -98,11 +94,11 @@ test_expect_success '--no-verify with succeeding hook (editor)' '
+ 
+ '
+ 
+-# now a hook that fails
+-cat > "$HOOK" <<EOF
+-#!/bin/sh
+-exit 1
+-EOF
++test_expect_success 'setup: commit-msg hook that always fails' '
++	test_hook --clobber commit-msg <<-\EOF
++	exit 1
++	EOF
++'
+ 
+ commit_msg_is () {
+ 	test "$(git log --pretty=format:%s%b -1)" = "$1"
+@@ -176,8 +172,12 @@ test_expect_success 'merge bypasses failing hook with --no-verify' '
+ 	commit_msg_is "Merge branch '\''main'\'' into newbranch"
+ '
+ 
++test_expect_success 'setup: commit-msg hook made non-executable' '
++	git_dir="$(git rev-parse --git-dir)" &&
++	chmod -x "$git_dir/hooks/commit-msg"
++'
++
+ 
+-chmod -x "$HOOK"
+ test_expect_success POSIXPERM 'with non-executable hook' '
+ 
+ 	echo "content" >file &&
+@@ -212,13 +212,12 @@ test_expect_success POSIXPERM '--no-verify with non-executable hook (editor)' '
+ 
+ '
+ 
+-# now a hook that edits the commit message
+-cat > "$HOOK" <<'EOF'
+-#!/bin/sh
+-echo "new message" > "$1"
+-exit 0
+-EOF
+-chmod +x "$HOOK"
++test_expect_success 'setup: commit-msg hook that edits the commit message' '
++	test_hook --clobber commit-msg <<-\EOF
++	echo "new message" >"$1"
++	exit 0
++	EOF
++'
+ 
+ test_expect_success 'hook edits commit message' '
+ 
+diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
+index e39c809ca42..2128142a61c 100755
+--- a/t/t7505-prepare-commit-msg-hook.sh
++++ b/t/t7505-prepare-commit-msg-hook.sh
+@@ -47,25 +47,19 @@ test_expect_success 'with no hook' '
+ 
+ '
+ 
+-# set up fake editor for interactive editing
+-cat > fake-editor <<'EOF'
+-#!/bin/sh
+-exit 0
+-EOF
+-chmod +x fake-editor
+-
+-## Not using test_set_editor here so we can easily ensure the editor variable
+-## is only set for the editor tests
+-FAKE_EDITOR="$(pwd)/fake-editor"
+-export FAKE_EDITOR
++test_expect_success 'setup fake editor for interactive editing' '
++	write_script fake-editor <<-\EOF &&
++	exit 0
++	EOF
+ 
+-# now install hook that always succeeds and adds a message
+-HOOKDIR="$(git rev-parse --git-dir)/hooks"
+-HOOK="$HOOKDIR/prepare-commit-msg"
+-mkdir -p "$HOOKDIR"
+-echo "#!$SHELL_PATH" > "$HOOK"
+-cat >> "$HOOK" <<'EOF'
++	## Not using test_set_editor here so we can easily ensure the editor variable
++	## is only set for the editor tests
++	FAKE_EDITOR="$(pwd)/fake-editor" &&
++	export FAKE_EDITOR
++'
+ 
++test_expect_success 'setup prepare-commit-msg hook' '
++	test_hook --setup prepare-commit-msg <<\EOF
+ GIT_DIR=$(git rev-parse --git-dir)
+ if test -d "$GIT_DIR/rebase-merge"
+ then
+@@ -103,7 +97,7 @@ else
+ fi
+ exit 0
+ EOF
+-chmod +x "$HOOK"
++'
+ 
+ echo dummy template > "$(git rev-parse --git-dir)/template"
+ 
+@@ -265,10 +259,11 @@ test_expect_success 'with hook and editor (cherry-pick)' '
+ 	test "$(git log -1 --pretty=format:%s)" = merge
+ '
+ 
+-cat > "$HOOK" <<'EOF'
+-#!/bin/sh
+-exit 1
+-EOF
++test_expect_success 'setup: commit-msg hook that always fails' '
++	test_hook --setup --clobber prepare-commit-msg <<-\EOF
++	exit 1
++	EOF
++'
+ 
+ test_expect_success 'with failing hook' '
+ 
+@@ -296,9 +291,9 @@ test_expect_success 'with failing hook (merge)' '
+ 	git checkout -B other HEAD@{1} &&
+ 	echo "more" >> file &&
+ 	git add file &&
+-	rm -f "$HOOK" &&
++	test_hook --remove prepare-commit-msg &&
+ 	git commit -m other &&
+-	write_script "$HOOK" <<-EOF &&
++	test_hook --setup prepare-commit-msg <<-\EOF &&
  	exit 1
  	EOF
- 	test_must_fail git am patch1 &&
-@@ -350,12 +346,10 @@ test_expect_success 'am with failing applypatch-msg hook' '
- '
- 
- test_expect_success 'am with pre-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/pre-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-applypatch <<-\EOF &&
-+	test_hook pre-applypatch <<-\EOF &&
- 	git diff first >diff.actual
- 	exit 0
- 	EOF
-@@ -368,12 +362,10 @@ test_expect_success 'am with pre-applypatch hook' '
- '
- 
- test_expect_success 'am with failing pre-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/pre-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/pre-applypatch <<-\EOF &&
-+	test_hook pre-applypatch <<-\EOF &&
- 	exit 1
- 	EOF
- 	test_must_fail git am patch1 &&
-@@ -383,12 +375,10 @@ test_expect_success 'am with failing pre-applypatch hook' '
- '
- 
- test_expect_success 'am with post-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/post-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	test_hook post-applypatch <<-\EOF &&
- 	git rev-parse HEAD >head.actual
- 	git diff second >diff.actual
- 	exit 0
-@@ -403,12 +393,10 @@ test_expect_success 'am with post-applypatch hook' '
- '
- 
- test_expect_success 'am with failing post-applypatch hook' '
--	test_when_finished "rm -f .git/hooks/post-applypatch" &&
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout first &&
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-applypatch <<-\EOF &&
-+	test_hook post-applypatch <<-\EOF &&
- 	git rev-parse HEAD >head.actual
- 	exit 1
- 	EOF
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index d1181816906..978f240cdac 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -10,8 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	git checkout - &&
+diff --git a/t/t7520-ignored-hook-warning.sh b/t/t7520-ignored-hook-warning.sh
+index 634fb7f23a0..dc57526e6f1 100755
+--- a/t/t7520-ignored-hook-warning.sh
++++ b/t/t7520-ignored-hook-warning.sh
+@@ -5,10 +5,7 @@ test_description='ignored hook warning'
  . ./test-lib.sh
  
  test_expect_success setup '
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-checkout <<-\EOF &&
-+	test_hook --setup post-checkout <<-\EOF &&
- 	echo "$@" >.git/post-checkout.args
+-	hookdir="$(git rev-parse --git-dir)/hooks" &&
+-	hook="$hookdir/pre-commit" &&
+-	mkdir -p "$hookdir" &&
+-	write_script "$hook" <<-\EOF
++	test_hook --setup pre-commit <<-\EOF
+ 	exit 0
  	EOF
- 	test_commit one &&
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 24d374adbae..7c0a148e73c 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -35,8 +35,7 @@ test_expect_success setup '
- 
- test_expect_success 'unsigned push does not send push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -52,8 +51,7 @@ test_expect_success 'unsigned push does not send push certificate' '
- 
- test_expect_success 'talking with a receiver without push certificate support' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -69,22 +67,19 @@ test_expect_success 'talking with a receiver without push certificate support' '
- 
- test_expect_success 'push --signed fails with a receiver without push certificate support' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	test_must_fail git push --signed dst noop ff +noff 2>err &&
- 	test_i18ngrep "the receiving end does not support" err
+ '
+@@ -19,20 +16,20 @@ test_expect_success 'no warning if hook is not ignored' '
  '
  
- test_expect_success 'push --signed=1 is accepted' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	test_must_fail git push --signed=1 dst noop ff +noff 2>err &&
- 	test_i18ngrep "the receiving end does not support" err
+ test_expect_success POSIXPERM 'warning if hook is ignored' '
+-	chmod -x "$hook" &&
++	test_hook --disable pre-commit &&
+ 	git commit --allow-empty -m "even more" 2>message &&
+ 	test_i18ngrep -e "hook was ignored" message
  '
  
- test_expect_success GPG 'no certificate for a signed push with no update' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	if test -n "${GIT_PUSH_CERT-}"
+ test_expect_success POSIXPERM 'no warning if advice.ignoredHook set to false' '
+ 	test_config advice.ignoredHook false &&
+-	chmod -x "$hook" &&
++	test_hook --disable pre-commit &&
+ 	git commit --allow-empty -m "even more" 2>message &&
+ 	test_i18ngrep ! -e "hook was ignored" message
+ '
+ 
+ test_expect_success 'no warning if unset advice.ignoredHook and hook removed' '
+-	rm -f "$hook" &&
++	test_hook --remove pre-commit &&
+ 	test_unconfig advice.ignoredHook &&
+ 	git commit --allow-empty -m "even more" 2>message &&
+ 	test_i18ngrep ! -e "hook was ignored" message
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 6c9c61c79c2..a027f0c409e 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -562,9 +562,15 @@ write_script () {
+ #	Overwrite an existing <hook-name>, if it exists. Implies
+ #	--setup (i.e. the "test_when_finished" is assumed to have been
+ #	set up already).
++#    --disable
++#	Disable (chmod -x) an existing <hook-name>, which must exist.
++#    --remove
++#	Remove (rm -f) an existing <hook-name>, which must exist.
+ test_hook () {
+ 	setup= &&
+ 	clobber= &&
++	disable= &&
++	remove= &&
+ 	indir= &&
+ 	while test $# != 0
+ 	do
+@@ -579,6 +585,12 @@ test_hook () {
+ 		--clobber)
+ 			clobber=t
+ 			;;
++		--disable)
++			disable=t
++			;;
++		--remove)
++			remove=t
++			;;
+ 		-*)
+ 			BUG "invalid argument: $1"
+ 			;;
+@@ -592,6 +604,18 @@ test_hook () {
+ 	git_dir=$(git -C "$indir" rev-parse --absolute-git-dir) &&
+ 	hook_dir="$git_dir/hooks" &&
+ 	hook_file="$hook_dir/$1" &&
++	if test -n "$disable$remove"
++	then
++		test_path_is_file "$hook_file" &&
++		if test -n "$disable"
++		then
++			chmod -x "$hook_file"
++		elif test -n "$remove"
++		then
++			rm -f "$hook_file"
++		fi &&
++		return 0
++	fi &&
+ 	if test -z "$clobber"
  	then
- 		git cat-file blob $GIT_PUSH_CERT >../push-cert
-@@ -96,9 +91,8 @@ test_expect_success GPG 'no certificate for a signed push with no update' '
- 
- test_expect_success GPG 'signed push sends push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -139,10 +133,9 @@ test_expect_success GPG 'signed push sends push certificate' '
- 
- test_expect_success GPGSSH 'ssh signed push sends push certificate' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -223,9 +216,8 @@ test_expect_success GPG 'inconsistent push options in signed push not allowed' '
- 
- test_expect_success GPG 'fail without key and heed user.signingkey' '
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -273,9 +265,8 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
- test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- 	test_config gpg.format x509 &&
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-@@ -326,10 +317,9 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- test_expect_success GPGSSH 'fail without key and heed user.signingkey ssh' '
- 	test_config gpg.format ssh &&
- 	prepare_dst &&
--	mkdir -p dst/.git/hooks &&
- 	git -C dst config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	git -C dst config receive.certnonceseed sekrit &&
--	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	test_hook -C dst post-receive <<-\EOF &&
- 	# discard the update list
- 	cat >/dev/null
- 	# record the push certificate
-diff --git a/t/t7113-post-index-change-hook.sh b/t/t7113-post-index-change-hook.sh
-index a21781d68a1..58e55a7c779 100755
---- a/t/t7113-post-index-change-hook.sh
-+++ b/t/t7113-post-index-change-hook.sh
-@@ -17,8 +17,7 @@ test_expect_success 'setup' '
- '
- 
- test_expect_success 'test status, add, commit, others trigger hook without flags set' '
--	mkdir -p .git/hooks &&
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir is set." >testfailure
- 			exit 1
-@@ -63,7 +62,7 @@ test_expect_success 'test status, add, commit, others trigger hook without flags
- '
- 
- test_expect_success 'test checkout and reset trigger the hook' '
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1 && test "$2" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
- 			exit 1
-@@ -106,7 +105,7 @@ test_expect_success 'test checkout and reset trigger the hook' '
- '
- 
- test_expect_success 'test reset --mixed and update-index triggers the hook' '
--	write_script .git/hooks/post-index-change <<-\EOF &&
-+	test_hook post-index-change <<-\EOF &&
- 		if test "$1" -eq 1 && test "$2" -eq 1; then
- 			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
- 			exit 1
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 84d0f40d76a..42694fe5841 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2288,9 +2288,7 @@ test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
- '
- 
- test_expect_success $PREREQ 'invoke hook' '
--	mkdir -p .git/hooks &&
--
--	write_script .git/hooks/sendemail-validate <<-\EOF &&
-+	test_hook sendemail-validate <<-\EOF &&
- 	# test that we have the correct environment variable, pwd, and
- 	# argument
- 	case "$GIT_DIR" in
+ 		test_path_is_missing "$hook_file"
 -- 
 2.35.1.1384.g7d2906948a1
 
