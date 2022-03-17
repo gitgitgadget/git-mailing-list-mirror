@@ -2,174 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1031C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 18:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BFCBC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 19:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237432AbiCQS0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 14:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50530 "EHLO
+        id S229864AbiCQTnc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 15:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236934AbiCQS0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 14:26:10 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD5A1DBA8C
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 11:24:53 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id bj8-20020a056a02018800b0035ec8c16f0bso2122565pgb.11
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 11:24:53 -0700 (PDT)
+        with ESMTP id S229778AbiCQTna (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 15:43:30 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198C5238D15
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:42:12 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id kc20so1180322qvb.3
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 12:42:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=PXmSmrwgLzxilslh5V+52bAzL0DKVQmbXhQoZ7urNGQ=;
-        b=E550dVaTG7aVhUkr02wM5FAow7gzu1AwQkgH7BbW47/I0EQEJqzNA/iLPpi8f0+o9x
-         uOP0RNZYARgIMrTGevjeabDN7Qk2qgMie/PwYsALxeSElPAiPGEu/Q3OTgmYV4//9ILc
-         iLWKE8NUNgQqFwPYAm0D/bJHeg/VeV98Z0G1pRhQcTUV+8w1+AnSg2UAuKvG1Ly1fHQn
-         zNMIXzesf8TUxVhjPYveGtc5DFejbBeaT9gQG4JycQVVdV/PCbEfJ6NXz1J1E4CH2z5c
-         +aW+xqfIWehQNuvH83smvSarS9sa0Au2q87T/Rja60U6+JbaKBkw2VEr7Hd9Ju/JKNuq
-         QbfQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8DNFW4d8Ih1UTpu7YSu0eTfVisusMd3+Ljj1zSiS8dg=;
+        b=YfR4XgWRhikdlbqYXvZoK/5wxHjR7ea+EVABDj8jQLP9qvI+UE9OwI8Fkp0fLoevU5
+         BrwD/Eqyq2ftlvM/+lXvxxH8L2jmADIQVKLMfhELEjhkNnckV1dOQx0PG0+Qno5YvOMr
+         0gONaCoFc8TsL0BqSShNimBIuTQImK+ZGYkalpgGhOTmWIlI42e31Wpux48jMBYJZEiQ
+         LAVQrSmukMtecenjJBN1vxtjoI5BESnbl+fb5She+FtlstPU0UeEZSWpbglvb3WMIkKT
+         e3MhrhD5oZEHzc0L5JrKYpSolge2t7hfvZ+aMBvw67y2hql4WXArGtP9+ycttPtLa1Kv
+         zTPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=PXmSmrwgLzxilslh5V+52bAzL0DKVQmbXhQoZ7urNGQ=;
-        b=Es9IKKqJdYwgkNjHkTPlhJwsupwMavnSaLCphOYsGNcxrjb2TDjEQsRLIeJ6d1AsPX
-         4/JTiUmDKXT6OpQOXlok1yvVZgYs5V5NtVmjDIJTdkfU9vJvLtmE4bOd8WP5RpEWOwyA
-         XoVI2ogCsyw9hYpYs+hrnMzRxNNRb5iGCPKL2ox9jEoJnIEo0iQoSLB/9616mW4KlJW4
-         9mZrDVCzX+03Y/DzR4jgVxJrgt4i1heIG0A+p8Fm1VZy5lCAMwmHTlaZoPhO1/XXNbfR
-         /A6JlzR403TUevqcg6WcG7KP8tNgahPXJTt5YZoJYJc0JQzLxvRkI7SzBq/F3fQIweQs
-         21hQ==
-X-Gm-Message-State: AOAM531wjm7FaxeTW6xVzZZmHbEDt1mLs8XwpCYx1atd4YhGI9E80kJT
-        DqYGF/k8Hu/dNsO2Gyr4RDZb41vtSJG9M/OhJtKWiBHhyLR2QRGPqO9Q4sjtND5yG6pSxSKioka
-        jlv5/YWY+AaHiOXFqtcPHOrx8go81ItjSBRajO/XhfYZvRVEi40PXubBAh1lwVpHS3VFBD2rmhu
-        MC
-X-Google-Smtp-Source: ABdhPJx2hYwGpcFo6mpUV8tz7ueZXWlZDnlWPmFarf8ZjhOM9/oQ/nUY58QLUTBVR3APUrybqpu3+qadYpwTSccgcXDT
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:cf02:b0:14f:e0c2:1514 with
- SMTP id i2-20020a170902cf0200b0014fe0c21514mr6030171plg.90.1647541492389;
- Thu, 17 Mar 2022 11:24:52 -0700 (PDT)
-Date:   Thu, 17 Mar 2022 11:24:47 -0700
-Message-Id: <20220317182448.1633847-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
-Subject: [PATCH] shallow: reset commit grafts when shallow is reset
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8DNFW4d8Ih1UTpu7YSu0eTfVisusMd3+Ljj1zSiS8dg=;
+        b=TYo2tB6wry8pa8KjJMyhPt54bUONU+l4CX3EA9EyoILC5l2rhJNK58NGmFK49asLLF
+         OZ12qV1PTBlf3UGjSEKp2M7DBHIMhDrm3yY6crwpFKinWwksTdD4GfFk6jpv7P/pOEjR
+         DlAuqVORd7k8mn2btnyBMSd76OEir2OxWWRGRQEMzqzMuT1+mOpu6fZu7GEtvLY4bCJ7
+         XZb2N7wFQuVOpiodTP2FFbeiqSgSsWZZaGu7FDZpqYItABoJuE6fz3EXXqNmUsfTx+wr
+         HgdKcku0m7ftF06tfPicdqEgJWV8tIEZ8F2ahCvk8QSTuWyTQKYwyiGwLZiTJHJ6Lfhr
+         4myA==
+X-Gm-Message-State: AOAM531tarx2GUt6RgxgfqPY8TULn1uhI3igRAGFnFn0+lAqpBa2udIJ
+        pKZGocjEDY79qEZ6AVQwPdmuqbgkun4=
+X-Google-Smtp-Source: ABdhPJxQW0Mki+D4cYYDt2icdpdKw0/ENbkJjoZVvrj74CmCNeEryMpVQhMpv7FT6QzCcfoR7GbK6w==
+X-Received: by 2002:a05:6214:12b0:b0:440:e023:d2a4 with SMTP id w16-20020a05621412b000b00440e023d2a4mr4891490qvu.75.1647546131923;
+        Thu, 17 Mar 2022 12:42:11 -0700 (PDT)
+Received: from [10.37.129.2] (ool-457faac5.dyn.optonline.net. [69.127.170.197])
+        by smtp.gmail.com with ESMTPSA id p64-20020a37a643000000b0067d9afad07asm2944069qke.76.2022.03.17.12.42.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Mar 2022 12:42:11 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/8] reflog.c: indent argument lists
+Date:   Thu, 17 Mar 2022 15:42:10 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <99CF36A8-B9FD-4E05-A2DA-B4662C530738@gmail.com>
+In-Reply-To: <patch-1.8-5069b3fd0ff-20220317T180439Z-avarab@gmail.com>
+References: <cover-0.8-00000000000-20220317T180439Z-avarab@gmail.com>
+ <patch-1.8-5069b3fd0ff-20220317T180439Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When reset_repository_shallow() is called, Git clears its cache of
-shallow information, so that if shallow information is re-requested, Git
-will read fresh data from disk instead of reusing its stale cached data.
-However, the cache of commit grafts is not likewise cleared, even though
-there are commit grafts created from shallow information.
+Hi =C3=86var
 
-This means that if on-disk shallow information were to be updated and
-then a commit-graft-using codepath were run (for example, a revision
-walk), Git would be using stale commit graft information. This can be
-seen from the test in this patch, in which Git performs a revision walk
-(to check for changed submodules) after a fetch with --update-shallow.
+On 17 Mar 2022, at 14:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Therefore, clear the cache of commit grafts whenever
-reset_repository_shallow() is called.
+> When reflog.c was lib-ified in 7d3d226e700 (reflog: libify delete
+> reflog function and helpers, 2022-03-02) these previously "static"
+> functions were made non-"static", but the argument lists were not
+> correspondingly indented according to our usual coding style. Let's do
+> that.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  reflog.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/reflog.c b/reflog.c
+> index 333fd8708fe..82e5a935117 100644
+> --- a/reflog.c
+> +++ b/reflog.c
+> @@ -240,8 +240,8 @@ static int unreachable(struct expire_reflog_policy_=
+cb *cb, struct commit *commit
+>   * Return true iff the specified reflog entry should be expired.
+>   */
+>  int should_expire_reflog_ent(struct object_id *ooid, struct object_id =
+*noid,
+> -				    const char *email, timestamp_t timestamp, int tz,
+> -				    const char *message, void *cb_data)
+> +			     const char *email, timestamp_t timestamp, int tz,
+> +			     const char *message, void *cb_data)
+>  {
+>  	struct expire_reflog_policy_cb *cb =3D cb_data;
+>  	struct commit *old_commit, *new_commit;
+> @@ -273,10 +273,10 @@ int should_expire_reflog_ent(struct object_id *oo=
+id, struct object_id *noid,
+>  }
+>
+>  int should_expire_reflog_ent_verbose(struct object_id *ooid,
+> -					    struct object_id *noid,
+> -					    const char *email,
+> -					    timestamp_t timestamp, int tz,
+> -					    const char *message, void *cb_data)
+> +				     struct object_id *noid,
+> +				     const char *email,
+> +				     timestamp_t timestamp, int tz,
+> +				     const char *message, void *cb_data)
+>  {
+>  	struct expire_reflog_policy_cb *cb =3D cb_data;
+>  	int expire;
+> @@ -323,8 +323,8 @@ static int is_head(const char *refname)
+>  }
+>
+>  void reflog_expiry_prepare(const char *refname,
+> -				  const struct object_id *oid,
+> -				  void *cb_data)
+> +			   const struct object_id *oid,
+> +			   void *cb_data)
+>  {
+>  	struct expire_reflog_policy_cb *cb =3D cb_data;
+>  	struct commit_list *elem;
+> @@ -377,8 +377,8 @@ void reflog_expiry_cleanup(void *cb_data)
+>  }
+>
+>  int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
+> -		const char *email, timestamp_t timestamp, int tz,
+> -		const char *message, void *cb_data)
+> +		     const char *email, timestamp_t timestamp, int tz,
+> +		     const char *message, void *cb_data)
+>  {
+>  	struct cmd_reflog_expire_cb *cb =3D cb_data;
+>  	if (!cb->expire_total || timestamp < cb->expire_total)
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This is the same bug noticed by Glen Choo, as can be seen by the patch
-here [1]. (That patch doesn't seem to be carried forward to subsequent
-versions of the patch set, presumably because it is not needed in that
-patch set.)
+Just wanted to say thanks for fixing these :)
 
-I have verified that Glen's test also works with the fix in this patch.
-But I have written a test in t5537-fetch-shallow instead, as I think
-that this is more about updating shallows than fetching submodules.
+> -- =
 
-[1] https://lore.kernel.org/git/20220215172318.73533-9-chooglen@google.com/
----
- commit.c                 | 10 ++++++++++
- commit.h                 |  1 +
- shallow.c                |  1 +
- submodule.c              |  1 +
- t/t5537-fetch-shallow.sh |  9 +++++++++
- 5 files changed, 22 insertions(+)
-
-diff --git a/commit.c b/commit.c
-index d400f5dfa2..f8405fe46e 100644
---- a/commit.c
-+++ b/commit.c
-@@ -249,6 +249,16 @@ int for_each_commit_graft(each_commit_graft_fn fn, void *cb_data)
- 	return ret;
- }
- 
-+void reset_commit_grafts(struct repository *r)
-+{
-+	int i;
-+
-+	for (i = 0; i < r->parsed_objects->grafts_nr; i++)
-+		free(r->parsed_objects->grafts[i]);
-+	r->parsed_objects->grafts_nr = 0;
-+	r->parsed_objects->commit_graft_prepared = 0;
-+}
-+
- struct commit_buffer {
- 	void *buffer;
- 	unsigned long size;
-diff --git a/commit.h b/commit.h
-index 38cc542661..336e0bfa42 100644
---- a/commit.h
-+++ b/commit.h
-@@ -249,6 +249,7 @@ int commit_graft_pos(struct repository *r, const struct object_id *oid);
- int register_commit_graft(struct repository *r, struct commit_graft *, int);
- void prepare_commit_graft(struct repository *r);
- struct commit_graft *lookup_commit_graft(struct repository *r, const struct object_id *oid);
-+void reset_commit_grafts(struct repository *r);
- 
- struct commit *get_fork_point(const char *refname, struct commit *commit);
- 
-diff --git a/shallow.c b/shallow.c
-index 71e5876f37..e158be58b0 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -90,6 +90,7 @@ static void reset_repository_shallow(struct repository *r)
- {
- 	r->parsed_objects->is_shallow = -1;
- 	stat_validity_clear(r->parsed_objects->shallow_stat);
-+	reset_commit_grafts(r);
- }
- 
- int commit_shallow_file(struct repository *r, struct shallow_lock *lk)
-diff --git a/submodule.c b/submodule.c
-index 5ace18a7d9..7a0515913c 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -22,6 +22,7 @@
- #include "parse-options.h"
- #include "object-store.h"
- #include "commit-reach.h"
-+#include "shallow.h"
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static int initialized_fetch_ref_tips;
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 11d5ea54a9..92948de7a0 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -161,6 +161,15 @@ test_expect_success 'fetch --update-shallow' '
- 	)
- '
- 
-+test_expect_success 'fetch --update-shallow into a repo with submodules' '
-+	git init a-submodule &&
-+	test_commit -C a-submodule foo &&
-+	git init repo-with-sub &&
-+	git -C repo-with-sub submodule add ../a-submodule a-submodule &&
-+	git -C repo-with-sub commit -m "added submodule" &&
-+	git -C repo-with-sub fetch --update-shallow ../shallow/.git refs/heads/*:refs/remotes/shallow/*
-+'
-+
- test_expect_success 'fetch --update-shallow (with fetch.writeCommitGraph)' '
- 	(
- 	cd shallow &&
--- 
-2.35.1.894.gb6a874cedc-goog
-
+> 2.35.1.1384.g7d2906948a1
