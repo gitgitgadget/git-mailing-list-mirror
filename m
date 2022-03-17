@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CACC433EF
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 17:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D25C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 17:27:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236874AbiCQR2z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 13:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55564 "EHLO
+        id S235740AbiCQR25 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 13:28:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234932AbiCQR2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 13:28:53 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCFD1CAF18
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 10:27:36 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id j26so8359987wrb.1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 10:27:36 -0700 (PDT)
+        with ESMTP id S234252AbiCQR2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 13:28:54 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B013211EE8
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 10:27:37 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id t11so8344620wrm.5
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 10:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HbfShQNUk4uT4v86CLRxZMgCp7S/RZXTYzFMLzgaoto=;
-        b=EqtGWy/7oaDvxqmrJ/XmpAfnuZGB8j7UcRR24E3NMEuHwA2VCnasm3ghu0ceVT6w95
-         6HR6bd2fFJOdwuivnBH0JlsS+ZclMKOEdqO2QWGnGog319E/mP6HdWcNqD19nX0rTU6p
-         MoaJgCrCfpTGr8Pi0CDwKil36+BlNClKKlmgEqt3HMJ0VOvEmd+jdVRtH09oZxMmoSrn
-         i9UakBQfTEHcAmout57jeEuFd4T8PMp+uXVZFMPHuFlMZeRglypAuI3hzyylzLzyLYFO
-         LaUv64bue0TGx7ik/RYlPhqjvPpt6uavzKSz+sEquR7UgbURnVDviTelltvPtqO8ezkW
-         Ud8Q==
+        bh=XQojHDXqff2wnMn35vq6vsn/hS5GJSrbd7DTdIvJ8Po=;
+        b=SwD9g0ucx0Cl2tl7BxWKTaE88fm9imm0L9i12bfOYLYQROM7NIwYrtFJHbdQ2AZiDf
+         7INj7jljtvsEEvtgtefvvUYNgWd867E9ta2Ye+n7NXPwl8YgxrzmMo9FZd9G2lquIUnz
+         F6nczMi6tk0kAw+7ppF9qc7cSyEsz9WPjIrO9Mn1PqYAPhQgssaLObtiSzLaNENpO8I+
+         fA718YOqei+zM8Zx6IgkAovINEyYEoiUnkkZfjWgNFbSCGVQ9ow0pAAxsrFlrafriee2
+         GFnmqFFC2PNsaQ+xx8L2jC+o/19t2rK9TAZlX+K0BudGapqVQY9+BJ+UY8IoSDQ+4Ut8
+         M8Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HbfShQNUk4uT4v86CLRxZMgCp7S/RZXTYzFMLzgaoto=;
-        b=YSbfk/NXwxF17bxqCqz9BtwtcqiNUU0HEPxXD3QT3Fjd7XafbIzbSqAioPrQEjh/7j
-         bcx05k9RoUfz4RzjDKrad7sVnP4mxAvn0h8sQap5Y0XXxEfYy94WPcTqI1P87eJw9Alr
-         YMi1WUktGZ50RxoO37mckaF6NO1OYKViXP9L8mkxiPcWLUxT3lKBFpfX57Vek5SK9KaR
-         9z4L/WqpLPeU9jAnLDIFZRTcAclc7tJJrWWNKdC05yaff7M+S19mYpJ+XEw0i8YuwV5+
-         WTM2ckye21T8/NVN28Ivz9S+BdeUC+011y7mYZ8e/5XROGr0x4VRmcjA45srOw7104M3
-         kc/w==
-X-Gm-Message-State: AOAM530y8hBpKvyskh0RLlXuZuYMJJKvFCHD82HEbmXQGeY1cpRzX/p0
-        KEFoVTlPhXWGNxi+INa/3dqIURtXwUdKtw==
-X-Google-Smtp-Source: ABdhPJw3YeOZNLIJvjHgVwLufUWnUXuAiTt1nh2AQo1IZOn3maAfRD/RZUfBh1k9K4GcPm485esV4g==
-X-Received: by 2002:a05:6000:178c:b0:203:8b24:42b7 with SMTP id e12-20020a056000178c00b002038b2442b7mr4879478wrg.352.1647538054631;
-        Thu, 17 Mar 2022 10:27:34 -0700 (PDT)
+        bh=XQojHDXqff2wnMn35vq6vsn/hS5GJSrbd7DTdIvJ8Po=;
+        b=252GMW8/FRQhW+SYxtHme6yAioLB7kwFHbGfb3taJ1tZmQ5es1lpeFTMRVRUHa4O+G
+         +s0C4nFS8BMY4DZuGNny/10BKd8GONABE5I0IfBoIQW8xfstiU2a2xyo0Y1kxiY9A+a4
+         U89cx4nhbqtTw/LTTBuSBf9MUyiLtZEy+qDH22OUFd/BXkuoVbOPV7RLiFn9r8y3rBme
+         oRpXJ/ih3TmJurfK4ubKtAGJvXh+NaIOrihp++ZIdeH2Cgeu5gJqa7v1hRu+agm1LVwY
+         ATM+9yk6F19AddWcJt57t/ZZP2U2ygi62y5/+YTzwZ6tpeZUrTmjJokak6btNaINGbjC
+         d3kQ==
+X-Gm-Message-State: AOAM531MPzSrrE8pVoAQM86rWnfPpbfR8tmGr9PH8rMz1sn/NOFvoIVf
+        OmZC1tbdyCmoOOaovbGK9fP24zCWajT+4g==
+X-Google-Smtp-Source: ABdhPJxvBeAMEyVVEtozTIXjdp8oAdxDiqVFPcMGyXT4GaGmDyAh+kXFodyEIz7yNSB8+J6Wjt3xrw==
+X-Received: by 2002:a5d:6d41:0:b0:1ef:f32c:18ee with SMTP id k1-20020a5d6d41000000b001eff32c18eemr4947801wri.532.1647538055754;
+        Thu, 17 Mar 2022 10:27:35 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f18-20020a5d6652000000b001e669ebd528sm4690693wrw.91.2022.03.17.10.27.33
+        by smtp.gmail.com with ESMTPSA id f18-20020a5d6652000000b001e669ebd528sm4690693wrw.91.2022.03.17.10.27.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 17 Mar 2022 10:27:34 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
         Han-Wen Nienhuys <hanwen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] refs: use designated initializers for "struct ref_storage_be"
-Date:   Thu, 17 Mar 2022 18:27:15 +0100
-Message-Id: <patch-1.5-a5dcca0b41d-20220317T171618Z-avarab@gmail.com>
+Subject: [PATCH 2/5] refs: use designated initializers for "struct ref_iterator_vtable"
+Date:   Thu, 17 Mar 2022 18:27:16 +0100
+Message-Id: <patch-2.5-3f82f24a17d-20220317T171618Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1384.g7d2906948a1
 In-Reply-To: <cover-0.5-00000000000-20220317T171618Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20220317T171618Z-avarab@gmail.com>
@@ -67,212 +67,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the definition of the three refs backends we currently carry to
-use designated initializers.
-
-The "= NULL" assignments being retained here are redundant, and could
-be removed, but let's keep them for clarity. All of these backends
-define almost all fields, so we're not saving much in terms of line
-count by omitting these, but e.g. for "refs_be_debug" it's immediately
-apparent that we're omitting "init" when comparing its assignment to
-the others.
-
-This is a follow-up to similar work merged in bd4232fac33 (Merge
-branch 'ab/struct-init', 2021-07-16), a4b9fb6a5cf (Merge branch
-'ab/designated-initializers-more', 2021-10-18) and a30321b9eae (Merge
-branch 'ab/designated-initializers' into
-ab/designated-initializers-more, 2021-09-27).
-
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/debug.c          | 52 +++++++++++++++++++++----------------------
- refs/files-backend.c  | 52 +++++++++++++++++++++----------------------
- refs/packed-backend.c | 52 +++++++++++++++++++++----------------------
- 3 files changed, 78 insertions(+), 78 deletions(-)
+ refs/debug.c          |  5 +++--
+ refs/files-backend.c  | 12 ++++++------
+ refs/iterator.c       | 18 +++++++++---------
+ refs/packed-backend.c |  6 +++---
+ refs/ref-cache.c      |  6 +++---
+ 5 files changed, 24 insertions(+), 23 deletions(-)
 
 diff --git a/refs/debug.c b/refs/debug.c
-index c590d377200..b03a83258be 100644
+index b03a83258be..b83b5817118 100644
 --- a/refs/debug.c
 +++ b/refs/debug.c
-@@ -418,30 +418,30 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+@@ -220,8 +220,9 @@ static int debug_ref_iterator_abort(struct ref_iterator *ref_iterator)
  }
  
- struct ref_storage_be refs_be_debug = {
--	NULL,
--	"debug",
--	NULL,
--	debug_init_db,
--	debug_transaction_prepare,
--	debug_transaction_finish,
--	debug_transaction_abort,
--	debug_initial_transaction_commit,
--
--	debug_pack_refs,
--	debug_create_symref,
--	debug_delete_refs,
--	debug_rename_ref,
--	debug_copy_ref,
--
--	debug_ref_iterator_begin,
--	debug_read_raw_ref,
--	NULL,
--
--	debug_reflog_iterator_begin,
--	debug_for_each_reflog_ent,
--	debug_for_each_reflog_ent_reverse,
--	debug_reflog_exists,
--	debug_create_reflog,
--	debug_delete_reflog,
--	debug_reflog_expire,
-+	.next = NULL,
-+	.name = "debug",
-+	.init = NULL,
-+	.init_db = debug_init_db,
-+	.transaction_prepare = debug_transaction_prepare,
-+	.transaction_finish = debug_transaction_finish,
-+	.transaction_abort = debug_transaction_abort,
-+	.initial_transaction_commit = debug_initial_transaction_commit,
-+
-+	.pack_refs = debug_pack_refs,
-+	.create_symref = debug_create_symref,
-+	.delete_refs = debug_delete_refs,
-+	.rename_ref = debug_rename_ref,
-+	.copy_ref = debug_copy_ref,
-+
-+	.iterator_begin = debug_ref_iterator_begin,
-+	.read_raw_ref = debug_read_raw_ref,
-+	.read_symbolic_ref = NULL,
-+
-+	.reflog_iterator_begin = debug_reflog_iterator_begin,
-+	.for_each_reflog_ent = debug_for_each_reflog_ent,
-+	.for_each_reflog_ent_reverse = debug_for_each_reflog_ent_reverse,
-+	.reflog_exists = debug_reflog_exists,
-+	.create_reflog = debug_create_reflog,
-+	.delete_reflog = debug_delete_reflog,
-+	.reflog_expire = debug_reflog_expire,
+ static struct ref_iterator_vtable debug_ref_iterator_vtable = {
+-	debug_ref_iterator_advance, debug_ref_iterator_peel,
+-	debug_ref_iterator_abort
++	.advance = debug_ref_iterator_advance,
++	.peel = debug_ref_iterator_peel,
++	.abort = debug_ref_iterator_abort,
  };
+ 
+ static struct ref_iterator *
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0457ecdb42d..f95552f9263 100644
+index f95552f9263..aa4e7182b6e 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3291,30 +3291,30 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
+@@ -822,9 +822,9 @@ static int files_ref_iterator_abort(struct ref_iterator *ref_iterator)
  }
  
- struct ref_storage_be refs_be_files = {
--	NULL,
--	"files",
--	files_ref_store_create,
--	files_init_db,
--	files_transaction_prepare,
--	files_transaction_finish,
--	files_transaction_abort,
--	files_initial_transaction_commit,
--
--	files_pack_refs,
--	files_create_symref,
--	files_delete_refs,
--	files_rename_ref,
--	files_copy_ref,
--
--	files_ref_iterator_begin,
--	files_read_raw_ref,
--	files_read_symbolic_ref,
--
--	files_reflog_iterator_begin,
--	files_for_each_reflog_ent,
--	files_for_each_reflog_ent_reverse,
--	files_reflog_exists,
--	files_create_reflog,
--	files_delete_reflog,
--	files_reflog_expire
-+	.next = NULL,
-+	.name = "files",
-+	.init = files_ref_store_create,
-+	.init_db = files_init_db,
-+	.transaction_prepare = files_transaction_prepare,
-+	.transaction_finish = files_transaction_finish,
-+	.transaction_abort = files_transaction_abort,
-+	.initial_transaction_commit = files_initial_transaction_commit,
-+
-+	.pack_refs = files_pack_refs,
-+	.create_symref = files_create_symref,
-+	.delete_refs = files_delete_refs,
-+	.rename_ref = files_rename_ref,
-+	.copy_ref = files_copy_ref,
-+
-+	.iterator_begin = files_ref_iterator_begin,
-+	.read_raw_ref = files_read_raw_ref,
-+	.read_symbolic_ref = files_read_symbolic_ref,
-+
-+	.reflog_iterator_begin = files_reflog_iterator_begin,
-+	.for_each_reflog_ent = files_for_each_reflog_ent,
-+	.for_each_reflog_ent_reverse = files_for_each_reflog_ent_reverse,
-+	.reflog_exists = files_reflog_exists,
-+	.create_reflog = files_create_reflog,
-+	.delete_reflog = files_delete_reflog,
-+	.reflog_expire = files_reflog_expire
+ static struct ref_iterator_vtable files_ref_iterator_vtable = {
+-	files_ref_iterator_advance,
+-	files_ref_iterator_peel,
+-	files_ref_iterator_abort
++	.advance = files_ref_iterator_advance,
++	.peel = files_ref_iterator_peel,
++	.abort = files_ref_iterator_abort,
  };
+ 
+ static struct ref_iterator *files_ref_iterator_begin(
+@@ -2231,9 +2231,9 @@ static int files_reflog_iterator_abort(struct ref_iterator *ref_iterator)
+ }
+ 
+ static struct ref_iterator_vtable files_reflog_iterator_vtable = {
+-	files_reflog_iterator_advance,
+-	files_reflog_iterator_peel,
+-	files_reflog_iterator_abort
++	.advance = files_reflog_iterator_advance,
++	.peel = files_reflog_iterator_peel,
++	.abort = files_reflog_iterator_abort,
+ };
+ 
+ static struct ref_iterator *reflog_iterator_begin(struct ref_store *ref_store,
+diff --git a/refs/iterator.c b/refs/iterator.c
+index a89d132d4fe..b2e56bae1c6 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -64,9 +64,9 @@ static int empty_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ }
+ 
+ static struct ref_iterator_vtable empty_ref_iterator_vtable = {
+-	empty_ref_iterator_advance,
+-	empty_ref_iterator_peel,
+-	empty_ref_iterator_abort
++	.advance = empty_ref_iterator_advance,
++	.peel = empty_ref_iterator_peel,
++	.abort = empty_ref_iterator_abort,
+ };
+ 
+ struct ref_iterator *empty_ref_iterator_begin(void)
+@@ -201,9 +201,9 @@ static int merge_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ }
+ 
+ static struct ref_iterator_vtable merge_ref_iterator_vtable = {
+-	merge_ref_iterator_advance,
+-	merge_ref_iterator_peel,
+-	merge_ref_iterator_abort
++	.advance = merge_ref_iterator_advance,
++	.peel = merge_ref_iterator_peel,
++	.abort = merge_ref_iterator_abort,
+ };
+ 
+ struct ref_iterator *merge_ref_iterator_begin(
+@@ -378,9 +378,9 @@ static int prefix_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ }
+ 
+ static struct ref_iterator_vtable prefix_ref_iterator_vtable = {
+-	prefix_ref_iterator_advance,
+-	prefix_ref_iterator_peel,
+-	prefix_ref_iterator_abort
++	.advance = prefix_ref_iterator_advance,
++	.peel = prefix_ref_iterator_peel,
++	.abort = prefix_ref_iterator_abort,
+ };
+ 
+ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index f56e2cc635b..47f01fa5c98 100644
+index 47f01fa5c98..03002451f15 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -1667,30 +1667,30 @@ static int packed_reflog_expire(struct ref_store *ref_store,
+@@ -911,9 +911,9 @@ static int packed_ref_iterator_abort(struct ref_iterator *ref_iterator)
  }
  
- struct ref_storage_be refs_be_packed = {
--	NULL,
--	"packed",
--	packed_ref_store_create,
--	packed_init_db,
--	packed_transaction_prepare,
--	packed_transaction_finish,
--	packed_transaction_abort,
--	packed_initial_transaction_commit,
--
--	packed_pack_refs,
--	packed_create_symref,
--	packed_delete_refs,
--	packed_rename_ref,
--	packed_copy_ref,
--
--	packed_ref_iterator_begin,
--	packed_read_raw_ref,
--	NULL,
--
--	packed_reflog_iterator_begin,
--	packed_for_each_reflog_ent,
--	packed_for_each_reflog_ent_reverse,
--	packed_reflog_exists,
--	packed_create_reflog,
--	packed_delete_reflog,
--	packed_reflog_expire
-+	.next = NULL,
-+	.name = "packed",
-+	.init = packed_ref_store_create,
-+	.init_db = packed_init_db,
-+	.transaction_prepare = packed_transaction_prepare,
-+	.transaction_finish = packed_transaction_finish,
-+	.transaction_abort = packed_transaction_abort,
-+	.initial_transaction_commit = packed_initial_transaction_commit,
-+
-+	.pack_refs = packed_pack_refs,
-+	.create_symref = packed_create_symref,
-+	.delete_refs = packed_delete_refs,
-+	.rename_ref = packed_rename_ref,
-+	.copy_ref = packed_copy_ref,
-+
-+	.iterator_begin = packed_ref_iterator_begin,
-+	.read_raw_ref = packed_read_raw_ref,
-+	.read_symbolic_ref = NULL,
-+
-+	.reflog_iterator_begin = packed_reflog_iterator_begin,
-+	.for_each_reflog_ent = packed_for_each_reflog_ent,
-+	.for_each_reflog_ent_reverse = packed_for_each_reflog_ent_reverse,
-+	.reflog_exists = packed_reflog_exists,
-+	.create_reflog = packed_create_reflog,
-+	.delete_reflog = packed_delete_reflog,
-+	.reflog_expire = packed_reflog_expire
+ static struct ref_iterator_vtable packed_ref_iterator_vtable = {
+-	packed_ref_iterator_advance,
+-	packed_ref_iterator_peel,
+-	packed_ref_iterator_abort
++	.advance = packed_ref_iterator_advance,
++	.peel = packed_ref_iterator_peel,
++	.abort = packed_ref_iterator_abort
  };
+ 
+ static struct ref_iterator *packed_ref_iterator_begin(
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index be4aa5e0981..3080ef944d9 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -456,9 +456,9 @@ static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ }
+ 
+ static struct ref_iterator_vtable cache_ref_iterator_vtable = {
+-	cache_ref_iterator_advance,
+-	cache_ref_iterator_peel,
+-	cache_ref_iterator_abort
++	.advance = cache_ref_iterator_advance,
++	.peel = cache_ref_iterator_peel,
++	.abort = cache_ref_iterator_abort
+ };
+ 
+ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
 -- 
 2.35.1.1384.g7d2906948a1
 
