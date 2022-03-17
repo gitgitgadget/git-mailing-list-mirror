@@ -2,111 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E117C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 21:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF2FEC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 21:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbiCQVII (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 17:08:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47588 "EHLO
+        id S230124AbiCQVMN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 17:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230132AbiCQVH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 17:07:59 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2BE12A
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 14:06:42 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id qx21so13223883ejb.13
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 14:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=yMuASkubODM3kteGh8jd76rrMYsyq1BESb14Kl694tY=;
-        b=qSnpLeITO5Fw2FU/itGfwPvtN9uVcS9vy3EJ+g9GxZryU6oRfAc+ukjNrICPm4ZEz5
-         +X2XXNzsgVcedkHkXUToWoOk2/3e9xPfGDa1Rte84eIj+PJLnzl+DWbUrOM9/mfbBivc
-         CqhGUCQG6Z8Q5LjJbcrzJpb5S6suTsrHUJNp+rThr0Cl+4WEctQ1Nnu+Ef1lDS/SAlfC
-         9Q9B5XdoJtzKpc5ZttsyVHBKfQJnY1eug865QHkMucLRrGwjnHlOx7p6PfyhxCeXysQB
-         EcHKd2coTgSpw2upWXKz2jlpfy6qcR7cstMookY+0A08SvNqutRzHQJ8b7l4L2CdQleZ
-         Sg7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=yMuASkubODM3kteGh8jd76rrMYsyq1BESb14Kl694tY=;
-        b=kalk3B1+38KPtCp7u4xHSVsupzoL53bQX1OffTT+lvGZjbk8gdBfnRt77SoTu0+U6m
-         2K+8KE0TUgzw1XYzviu2B5kx97NWubOTnhiPURX3kJiY/Q0gbLq1KUWu+tpUBX2nGn66
-         3nYykCYX6IFnQBCieY2HiLsfyz3XvbxOaKpj/kPR6W4s/BZqcqLMKl9HF4tZdcCOULqd
-         Ok1g1aR/M/aTrFopdtqqYp5b+Yn49lhPCFxkZa2ZXwgG8p/uHPYCkQcUzKG0M5FksOCr
-         VovV69Et2V9+PT9exJLviQ8X8KSWuAt4jsIvptzJ9EVHILSZQYDTSa7UC3rpIJGnijuw
-         nhKA==
-X-Gm-Message-State: AOAM530/mBrBjMsy6Yqsd87I0Iwj/h2R0nQ92rtm5R75sZ0ikNp+OmfD
-        yNu1LFoZVeTSV6wh/MCaV+8=
-X-Google-Smtp-Source: ABdhPJxw0mBqHnfS+eSHez90yZUUqcNKs9I8dNp2gNEdgOK5qa9BYZ7s+bCVocG0CghU4R0BJD/t1w==
-X-Received: by 2002:a17:906:ce23:b0:6cf:7203:ded6 with SMTP id sd3-20020a170906ce2300b006cf7203ded6mr6181401ejb.170.1647551200588;
-        Thu, 17 Mar 2022 14:06:40 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g26-20020a50ee1a000000b0041631c5b1f3sm3184219eds.30.2022.03.17.14.06.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Mar 2022 14:06:39 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nUxKQ-002EXS-GR;
-        Thu, 17 Mar 2022 22:06:38 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/13] tests: add and use a "test_hook" wrapper +
- hook fixes
-Date:   Thu, 17 Mar 2022 22:04:39 +0100
-References: <cover-v2-00.10-00000000000-20220307T123909Z-avarab@gmail.com>
- <cover-v3-00.13-00000000000-20220317T100820Z-avarab@gmail.com>
- <xmqqpmmkh77b.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqpmmkh77b.fsf@gitster.g>
-Message-ID: <220317.86k0cscmqp.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230081AbiCQVMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 17:12:12 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2AF22261FD
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 14:10:55 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 90830185F0D;
+        Thu, 17 Mar 2022 17:10:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=khp0oO164k486N4WMFJmkD0+Yk3KtXDno4nNac
+        6pifo=; b=o+pHxaChGky6qDQfPAxCupol6hwqSvynjz7Dtvn1kCFYoB/LfVNJDe
+        +abuSRL351ttma9aS4wcEAr+uv35zJrlySjeGyRaQDhMt67/voeBvlW+b9YDX9IP
+        f/525Y8nkgiOp/0TYmjNxKwCoCYfZFC8jrKkBo0+XMrVse6ylxBGo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 88C59185F0C;
+        Thu, 17 Mar 2022 17:10:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 00505185EF7;
+        Thu, 17 Mar 2022 17:10:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v4 1/3] rebase: test showing bug in rebase with non-branch
+References: <pull.1226.v3.git.git.1647487001.gitgitgadget@gmail.com>
+        <pull.1226.v4.git.git.1647546828.gitgitgadget@gmail.com>
+        <cac51a949eed0fa593247a593aae2b100be6f4f2.1647546828.git.gitgitgadget@gmail.com>
+Date:   Thu, 17 Mar 2022 14:10:50 -0700
+In-Reply-To: <cac51a949eed0fa593247a593aae2b100be6f4f2.1647546828.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Thu, 17 Mar 2022 19:53:46
+        +0000")
+Message-ID: <xmqqo824e145.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: B9F8D67E-A636-11EC-A84E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, Mar 17 2022, Junio C Hamano wrote:
-
-> Just a quick update before I finish my first integration cycle of
-> today.  t543 has a "test_hook" call inside a subshell, but because
-> the helper runs test_when_finished, a sanity check kicks in and
-> fails the test.
+> From: John Cai <johncai86@gmail.com>
 >
-> I'll continue the integration cycle with this topic kicked out of
-> 'seen' for now.
+> Currently when rebase is used with a non branch, and <oid> is up to
+> date with base:
+>
+> git rebase base <oid>
+>
+> It will update the ref that HEAD is pointing at to <oid>, and leave HEAD
+> unmodified.
+>
+> This is a bug. The expected behavior is that the branch HEAD points at
+> remains unmodified while HEAD is updated to point to <oid> in detached
+> HEAD mode.
 
-Pending a re-roll this fix-up for 11/13 should fix it.
+Never do tests this way.
 
-I do test with /bin/bash before submitting to catch exactly this class
-of issue, but for reasons I haven't looked into this one is odd in not
-failing with --verbose-log, but I see the OSX CI (which I didn't wait
-for) fails on the same issue. Sorry.
+The primary reason why we do not want to write our tests the way
+this patch does is because we do not _care_ how it is broken in the
+behaviour of the original code.  'main' moving out of $old_main is
+the bug we care about.  It is still buggy if it did not move to
+Second, but some other commit.  Yet this patch insists that 'main'
+to move to Second and nothing else.  What we want is 'main' to stay
+at $old_main in the end anyway, and we should directly test that
+condition.
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 90676365471..70431122a40 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -162,13 +162,10 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
- 		test_commit two &&
- 		git push --mirror up
- 	) &&
--	(
--		cd upstream &&
--		test_hook update <<-\EOF
--			# only allow update to main from now on
--			test "$1" = "refs/heads/main"
--		EOF
--	) &&
-+	test_hook -C upstream update <<-\EOF &&
-+	# only allow update to main from now on
-+	test "$1" = "refs/heads/main"
-+	EOF
- 	(
- 		cd workbench &&
- 		git checkout main &&
+If you insist to have two commits (which I strongly recommend
+against in this case), you write a test that makes sure that 'main'
+stays at $old_main, but mark the test with test_expect_failure.  And
+then later in the step that fixes the code, flip "expect_failure" to
+"expect_success".
+
+But it is not ideal, either.  Imagine what you see in "git show"
+output of the commit that fixed the problem.  Most of the test that
+shows the behaviour that the commit _cares_ about will be outside
+post-context of the hunk that flips test_expect_failure to
+test_expect_success.
+
+The best and the simplest way, for a simple case like this, to write
+test is to add the test to expect what we want to see in the end,
+and do so in the same commit as the one that corrects the behaviour
+of the code.  If somebody wants to see what the breakage looks like,
+it is easy to
+
+ (1) checkout the commit that fixes the code and adds such a test,
+
+ (2) tentatively revert everything outside t/, and
+
+ (3) run the test with "-i -v" options.
+
+Then test_expect_success that wants to see 'main' to stay at
+$old_main will show that 'main' moved by a test failure.  Working
+from a patch is the same way, i.e. you can apply only the parts
+inside t/ and run the current code to see the breakage, and then
+apply the rest to see the fix.
+
+> +test_expect_success 'switch to non-branch changes branch HEAD points to' '
+> +	git checkout main &&
+> +	old_main=$(git rev-parse HEAD) &&
+> +	git rebase First Second^0 &&
+
+> +	test_cmp_rev HEAD main &&
+> +	test_cmp_rev main $(git rev-parse Second) &&
+> +	git symbolic-ref HEAD
+
+I already said that the second one should expect main to be at
+$old_main, but the "HEAD and main are the same" and "HEAD is a
+symolic-ref" test can be replaced with a single test that is "HEAD
+is a symbolic-ref to 'main'", which would be more strict.  I.e.
+
+	test "$(git symbolic-ref HEAD)" = refs/heads/main &&
+	test_cmp_rev main "$old_main"
+
+And such a test that expects the correct behaviour we want to have
+in the end should be added in [PATCH 3/3] when the code is fixed,
+not here in a separate commit.
+
+> +'
+
+Thanks.
