@@ -2,228 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 599C7C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 13:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C1FAC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Mar 2022 14:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234537AbiCQNui (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 09:50:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53270 "EHLO
+        id S234323AbiCQO44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 10:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233676AbiCQNuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 09:50:32 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E234DE7295
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 06:49:14 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id w25so6612038edi.11
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 06:49:14 -0700 (PDT)
+        with ESMTP id S233403AbiCQO44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 10:56:56 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADE01DBABC
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 07:55:39 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id h23so7116555wrb.8
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 07:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=TgVneEs8A1VkxosBNqj2d3sSz18Nnakbv3vmSKERHqA=;
-        b=lbsvnyo6MZ7GG+k271qGn59UvpTJ2BNKHhvb62Rb3jLaP5N0QFeZautyaFj2yvrZg2
-         1mYEMRYonFdlf+l0ag1Cohkljh8CMqgJgvbnOIryP83nwTwLZF7WB6fRNhjR1VTeXeno
-         2x7mJvbRf3jz0EsRlRWVSn5jvXrwfzPtGfaSWXVHlrXgJg7jgTRGoMJ0Mt18rK05KITl
-         gw8wbtqHjXbZOw33a3O8Qtvnz7sEKYiIYJDYgS9wWCy6btidrHGctsZWTMu0VS4lOo5+
-         BvF9FqsPZ09NLRKntG0mCmPYrNfqvnxrtkXSWyBpnZxmAaGzalWdn9gLHY+zI41gnN7z
-         uMrA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mDB4AnXjHcWFqhbsl//haqNWHtUFcjyj+S1fUFUvj7U=;
+        b=cx4G6Vel4W2rQiMN5F/tVFfgNcbxrfE/admZeSnFEoB095buNDMEzcm4eAxq6XkG5M
+         +lVCx3u+hst0c8K8WlnXpsvjVaPK+1SSLUz7MM72cVOk2cuXsYZcT68/EGytsMZWM8Yp
+         Ce1UA8AEctfMdcJ/EX/D7DDh+RxqKSqt/MN5r25rLu4xBqr1M23xHS5f9+AsqHRRBECY
+         wQ+/oOc1zHdHrs4n9iQuKbewkxL2n90SyztC348x1FDwAlwP9MuZmcDJfek6hFj2zH1B
+         jyjWUrCtHVW1+SnbH3JoaozmujY6If6qlAzvIvINDxn6CbXuAAsXbJilhmn3zZ+nnlRH
+         pHuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=TgVneEs8A1VkxosBNqj2d3sSz18Nnakbv3vmSKERHqA=;
-        b=qoFp1G+740puCdGemR9tZv38ATU39CXqWMkE8riIntG15iardgJn6GRoASbw4SPTp5
-         WTO/Wu3vdZ4U9QGDb/31Vj6aM8CEiZWg3GarIBYAMwRAJuJVVj6XcwMaSyFnBJfd5MLU
-         y6GhrD5p1BaK54jYOOd9yK3zhKh34bZ61SWNl9NAgiYxUmnyGK+EmG6LY3DNtMaRwa+Z
-         h/B+I4uzvKieYHvNnyfUYXMBgsBoJv/hVrNw3Y9EfUd8ZrpOlxNONpg/Icn2hQiowfmH
-         av8sUpY8lmz+Y09X+osWLTzjDsgNbknebgZFNQb3l6IifijDXNlNaIpJf6O71pA9Mor6
-         lyUg==
-X-Gm-Message-State: AOAM533RKIakuS536WARf1WttadBZ7mtTMXptr2r/M7W251veHAo9gUz
-        /m+/ybIrWVe4MKpzbvnvrIEEO4ASyV9JXg==
-X-Google-Smtp-Source: ABdhPJxT5hR/YdGqjoAY9hxebaxTJRKZG9EmJxRjXIKM7uZQWW+gVyfB/pr4M1r1W9nDBxa/gjmT6g==
-X-Received: by 2002:a05:6402:2714:b0:416:4bcf:89a9 with SMTP id y20-20020a056402271400b004164bcf89a9mr4631472edd.226.1647524952557;
-        Thu, 17 Mar 2022 06:49:12 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bx5-20020a0564020b4500b00418fca53406sm776238edb.27.2022.03.17.06.49.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mDB4AnXjHcWFqhbsl//haqNWHtUFcjyj+S1fUFUvj7U=;
+        b=QBOllKDwHrJx42GDU/KlRMa77nG0LOJqBrFVU66hsRnpT1vCJMgQuMQdwER11tvXaT
+         BAjiPCbzyVkmaqW/0lteqjchptmsxLdnSLUZGnD2Uk3UaiuaCJrnzv9Cdc2oeWHetp0w
+         j/vHX49auvMFOuKPS/e/yqhsGR1jpbTMmYyim/E+29E6xo9cEeP/32tQ9g2K4JE871Oj
+         3+l1jeI1HUt0UN9cEGbw/FYtKBqJw3ZxMv5yhQfdpp1mOHo9heeT+wH84Yvq/Szz3aTO
+         OVOi9nc1y04AtvuVLykjv1P4D+d16m8W4R45ZDriBKi16+ArsKNBt/mu5fvyg/HmsM8T
+         EPqQ==
+X-Gm-Message-State: AOAM531OqGiX/y2rXnGiDvRQm5WzoWxH4MjhRiZOFCpbAVm1Dcx87sE3
+        YrrslnuUpvt76CaWCAjkZId3CWWfkQ1oJA==
+X-Google-Smtp-Source: ABdhPJxjvSTnYs47jQHD4E0xITuB8HEmTwIz2bnivjoHFrizmD2FmbFJ7Cv+mAP45epiePO1O6VQjQ==
+X-Received: by 2002:a05:6000:156a:b0:1f1:f168:69ac with SMTP id 10-20020a056000156a00b001f1f16869acmr4595662wrz.184.1647528937185;
+        Thu, 17 Mar 2022 07:55:37 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l13-20020a5d4bcd000000b001f0620ecb3csm4340071wrt.40.2022.03.17.07.55.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Mar 2022 06:49:12 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nUqV5-0023Eo-FO;
-        Thu, 17 Mar 2022 14:49:11 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v3 2/2] rebase: set REF_HEAD_DETACH in
- checkout_up_to_date()
-Date:   Thu, 17 Mar 2022 14:42:53 +0100
-References: <pull.1226.v2.git.git.1647019492.gitgitgadget@gmail.com>
- <pull.1226.v3.git.git.1647487001.gitgitgadget@gmail.com>
- <bd1c9537ffc503707690ed173b9e6e808d58ce5d.1647487001.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <bd1c9537ffc503707690ed173b9e6e808d58ce5d.1647487001.git.gitgitgadget@gmail.com>
-Message-ID: <220317.86r170d6zs.gmgdl@evledraar.gmail.com>
+        Thu, 17 Mar 2022 07:55:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/2] diff.c: fix a recent memory leak regression
+Date:   Thu, 17 Mar 2022 15:55:33 +0100
+Message-Id: <cover-v2-0.2-00000000000-20220317T144838Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1384.g7d2906948a1
+In-Reply-To: <a5e5cdd4658d457ffbd80f7263e352cbf3141a1a.1647520853.git.git@grubix.eu>
+References: <a5e5cdd4658d457ffbd80f7263e352cbf3141a1a.1647520853.git.git@grubix.eu>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There's a really dumb think-o in a commit of mine in the recently
+landed ccafbbfb4ee (Merge branch 'ab/plug-random-leaks', 2022-03-13),
+sorry about that, and thanks a lot to Michael J Gruber for the report.
 
-On Thu, Mar 17 2022, John Cai via GitGitGadget wrote:
+This "v2" series is re-roll of his addition of a regression test in
+the "v1"[1].
 
-> From: John Cai <johncai86@gmail.com>
->
-> Fixes a bug whereby rebase updates the deferenced reference HEAD points
-> to instead of HEAD directly.
->
-> If HEAD is on main and if the following is a fast-forward operation,
->
-> git rebase $(git rev-parse main) $(git rev-parse topic)
->
-> Instead of HEAD being set to $(git rev-parse topic), rebase erroneously
-> dereferences HEAD and sets main to $(git rev-parse topic). See [1] for
-> the original bug report.
->
-> The callstack from checkout_up_to_date() is the following:
->
-> cmd_rebase() -> checkout_up_to_date() -> reset_head() -> update_refs()
->  -> update_ref()
->
-> When <branch> is not a valid branch but a sha, rebase sets the head_name
+As the range-diff shows I took the libertay of adjusting the commit
+message a bit, mainly noting the regression, re-wording a bit, and
+replacing the (presumably glibc?) output with the better
+SANITIZE=address report.
 
-..but an OID...
+The 2/2 then fixes the issue, and changes the relevant regression
+tests to run under SANITIZE=leak (i.e. the "linux-leaks" job).
 
-> of rebase_options to NULL. This value gets passed down this call chain
-> through the branch member of reset_head_opts also getting set to NULL
-> all the way to update_refs(). update_refs() checks ropts.branch to
-> decide whether or not to switch brancheds. If ropts.branch is NULL, it
+1. https://lore.kernel.org/git/a5e5cdd4658d457ffbd80f7263e352cbf3141a1a.1647520853.git.git@grubix.eu/
 
-brancheds -> branches.
+Michael J Gruber (1):
+  tests: demonstrate "show --word-diff --color-moved" regression
 
-And maybe a new paragraph before "update_refs()"? I.e. "\n\nThen
-update_refs() checks..." ?
+Ævar Arnfjörð Bjarmason (1):
+  diff.c: fix a double-free regression in a18d66cefb
 
-> calls update_ref() to update HEAD. At this point however, from rebase's
-> point of view, we want a detached HEAD. But, since checkout_up_to_date()
-> does not set the RESET_HEAD_DETACH flag, the update_ref() call will
-> deference HEAD and update the branch its pointing to, which in the above
-> example is main.
->
-> The correct behavior is that git rebase should update HEAD to $(git
-> rev-parse topic) without dereferencing it.
->
-> Fix this bug by adding the RESET_HEAD_DETACH flag in checkout_up_to_date
-> if <branch> is not a valid branch. so that once reset_head() calls
-> update_refs(), it calls update_ref() with REF_NO_DEREF which updates
-> HEAD directly intead of deferencing it and updating the branch that HEAD
-> points to.
+ diff.c                     | 11 +++++++++--
+ t/t4015-diff-whitespace.sh | 12 ++++++++++--
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-But on the "tell" v.s. show... (more below)...
->
-> Also add a test to ensure this behavior.
->
-> 1. https://lore.kernel.org/git/xmqqsfrpbepd.fsf@gitster.g/
->
-> Reported-by: Michael McClimon <michael@mcclimon.org>
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  builtin/rebase.c  | 5 ++++-
->  t/t3400-rebase.sh | 9 +++++++++
->  2 files changed, 13 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index b29ad2b65e7..5ae7fa2a169 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -827,8 +827,11 @@ static int checkout_up_to_date(struct rebase_options *options)
->  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
->  		    options->switch_to);
->  	ropts.oid = &options->orig_head;
-> -	ropts.branch = options->head_name;
->  	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-> +	if (options->head_name)
-> +		ropts.branch = options->head_name;
-> +	else
-> +		ropts.flags |=  RESET_HEAD_DETACH;
->  	ropts.head_msg = buf.buf;
->  	if (reset_head(the_repository, &ropts) < 0)
->  		ret = error(_("could not switch to %s"), options->switch_to);
+Range-diff against v1:
+1:  f6e7318b418 ! 1:  7f6a6450259 tests: test show --word-diff --color-moved
+    @@ Metadata
+     Author: Michael J Gruber <git@grubix.eu>
+     
+      ## Commit message ##
+    -    tests: test show --word-diff --color-moved
+    +    tests: demonstrate "show --word-diff --color-moved" regression
+     
+    -    a18d66cefb ("diff.c: free "buf" in diff_words_flush()", 2022-03-04)
+    -    introduced a breakage to `show --word-diff --color-moved` which gives
+    +    Add a failing test which demonstrates a regression in
+    +    a18d66cefb ("diff.c: free "buf" in diff_words_flush()", 2022-03-04),
+    +    the regression is discussed in detail in the subsequent commit. With
+    +    it running `git show --word-diff --color-moved` with SANITIZE=address
+    +    would emit:
+     
+    -    free(): double free detected in tcache 2
+    -    Aborted (core dumped)
+    +            ==31191==ERROR: AddressSanitizer: attempting double-free on 0x617000021100 in thread T0:
+    +                #0 0x49f0a2 in free (git+0x49f0a2)
+    +                #1 0x9b0e4d in diff_words_flush diff.c:2153:3
+    +                #2 0x9aed5d in fn_out_consume diff.c:2354:3
+    +                #3 0xe092ab in consume_one xdiff-interface.c:43:9
+    +                #4 0xe072eb in xdiff_outf xdiff-interface.c:76:10
+    +                #5 0xec7014 in xdl_emit_diffrec xdiff/xutils.c:53:6
+    +                [...]
+     
+    -    on every incarnation. This was not caught by the test suite because we
+    -    test `diff --word-diff --color-moved` only so far.
+    +            0x617000021100 is located 0 bytes inside of 768-byte region [0x617000021100,0x617000021400)
+    +            freed by thread T0 here:
+    +                #0 0x49f0a2 in free (git+0x49f0a2)
+    +                [...(same stacktrace)...]
+     
+    -    Therefore, add a test for `show`, too.
+    +            previously allocated by thread T0 here:
+    +                #0 0x49f603 in __interceptor_realloc (git+0x49f603)
+    +                #1 0xde4da4 in xrealloc wrapper.c:126:8
+    +                #2 0x995dc5 in append_emitted_diff_symbol diff.c:794:2
+    +                #3 0x96c44a in emit_diff_symbol diff.c:1527:3
+    +                [...]
+    +
+    +    This was not caught by the test suite because we test `diff
+    +    --word-diff --color-moved` only so far.
+     
+    -    Reverting a18d66cefb makes the test pass, but there might be a better
+    -    fix.
+    +    Therefore, add a test for `show`, too.
+     
+         Signed-off-by: Michael J Gruber <git@grubix.eu>
+    +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## t/t4015-diff-whitespace.sh ##
+     @@ t/t4015-diff-whitespace.sh: test_expect_success 'cmd option assumes configured colored-moved' '
+-:  ----------- > 2:  cae11491599 diff.c: fix a double-free regression in a18d66cefb
+-- 
+2.35.1.1384.g7d2906948a1
 
-In this case a smaller change of:
-
-    if (!ropts.branch)
-		ropts.flags |=  RESET_HEAD_DETACH;
-
-will do the same.
-
-I wonder if just converting it to a designated initializer while we're
-at it (or a pre-cleanup commit) would be better, i.e.:
-
-	
-	diff --git a/builtin/rebase.c b/builtin/rebase.c
-	index 5ae7fa2a169..bf4fd4d2920 100644
-	--- a/builtin/rebase.c
-	+++ b/builtin/rebase.c
-	@@ -820,18 +820,18 @@ static int rebase_config(const char *var, const char *value, void *data)
-	 static int checkout_up_to_date(struct rebase_options *options)
-	 {
-	 	struct strbuf buf = STRBUF_INIT;
-	-	struct reset_head_opts ropts = { 0 };
-	+	struct reset_head_opts ropts = {
-	+		.oid = &options->orig_head,
-	+		.branch = options->head_name,
-	+		.flags = (RESET_HEAD_RUN_POST_CHECKOUT_HOOK |
-	+			  (options->head_name ? 0 : RESET_HEAD_DETACH)),
-	+	};
-	 	int ret = 0;
-	 
-	 	strbuf_addf(&buf, "%s: checkout %s",
-	 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
-	 		    options->switch_to);
-	-	ropts.oid = &options->orig_head;
-	-	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
-	-	if (options->head_name)
-	-		ropts.branch = options->head_name;
-	-	else
-	-		ropts.flags |=  RESET_HEAD_DETACH;
-	+
-	 	ropts.head_msg = buf.buf;
-	 	if (reset_head(the_repository, &ropts) < 0)
-	 		ret = error(_("could not switch to %s"), options->switch_to);
-
-But in any case the functionality will be the same, so this is just
-bikeshedding.
-	
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 0643d015255..d5a8ee39fc4 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -394,6 +394,15 @@ test_expect_success 'switch to branch not checked out' '
->  	git rebase main other
->  '
->  
-> +test_expect_success 'switch to non-branch detaches HEAD' '
-> +	git checkout main &&
-> +	old_main=$(git rev-parse HEAD) &&
-> +	git rebase First Second^0 &&
-> +	test_cmp_rev HEAD Second &&
-> +	test_cmp_rev main $old_main &&
-> +	test_must_fail git symbolic-ref HEAD
-> +'
-> +
->  test_expect_success 'refuse to switch to branch checked out elsewhere' '
->  	git checkout main &&
->  	git worktree add wt &&
-
-I think it's *much* easier to review these sorts of changes where
-there's a preceding commit that positively asserts what we do now, and
-we'll then in the "fix" commit change the behavior.
-
-So more "show" v.s. "tell".
-
-I.e. in this case do the "test_cmp_rev" to the "wrong" tip with a TODO
-comment or whatever, then in the fix just adjust it, then it's clear
-what we had before/after.
