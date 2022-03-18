@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 152C4C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 00:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93C17C433EF
+	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 00:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbiCRAfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 20:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44314 "EHLO
+        id S231231AbiCRAfp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 20:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231210AbiCRAfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 20:35:36 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC5A247C2F
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:15 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso4052647wmz.4
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:15 -0700 (PDT)
+        with ESMTP id S231217AbiCRAfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 20:35:37 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F012467EE
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:17 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l1-20020a05600c4f0100b00389645443d2so4066896wmq.2
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=te9jPeDd0qITItP5w4s3dApKBm5YVDXmW8yGGhR2wN8=;
-        b=OCMvs+rRL0dlh6iq3WYvGQ6dXthT2cakPXVHI0o5BZh7QiCXJjOgd7JIbhKDua6uFH
-         l0AFWLD5UJOMHbecM1PP/iM9kTmcmgXfQfASk2ARwa9BMIaHQ7F+9pRfc8rqrWedJQ+L
-         OG51j9lzNd0soJjzPpTfOhtdIvYcAL7oI2pn35ThdPS7bjdFofBhUQf9vTqbUVXXq12b
-         99WCHIjITuVJ81TpdB0FN3YrE55PlefVU+svWUDbNdBNqfHCN6q1DusEo1XUnMKa/3nX
-         5LbFjGAaudbc6EDIlB3zo7qkk0+8wz90TDrUgfa4uX7CZSHtkXbN9E2YO+fCUZDvblJ+
-         2ssQ==
+        bh=d+t/ALlpusUnbj2JHTYacqqGaRYeM+B10Cv4w8YZOn4=;
+        b=cmpPjEWy95fkNLOp/bgrxDR7oPR/8f2x7AUWOKxodVT32qcEindHTjoLc6scA8pqwD
+         gThDJbzvwD+wcuKALBOdLP2Q5J8dgKaf43ZhOmPfKBLcHS7we96xCtuZQwyLDCb8CMfq
+         vjQXtJjIR4YZ5gv/uNzZX0W0W/JgJwlExNAL3QzzIsEE/cO1mL5GJAnHz6UOFfwbO2lZ
+         kPVKeCxrIRqn9KfHkQENeLE0+RIe0OMJaIr8QHF1UKqehMz5l4GwiNUrdZjQG81BFr12
+         jfS11PoUtPaGfynJ+axU+ajF51lA6KTg8nKKsUsnXytcihGZqKfQOHLx+32AyAZ8b0TN
+         J/2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=te9jPeDd0qITItP5w4s3dApKBm5YVDXmW8yGGhR2wN8=;
-        b=SERaARw8pt1C70CwKGSAshQHSq4QiZ1UQ3Cyc0V/84UfiuhqgvmUmwHMiKCAldb7pA
-         Km1fEcVV5a+oYfLITdZ5F+D5AxKzxsB2sxfjcD37ffSuV4ySpDb7b7YgVT/jfUQJXMrI
-         7+CMq+KbMy6t/9jXH5Lo2b1tA1ue8ivf6JZ/XumZXqI457Te0J+PKaVuTZIypK5bZent
-         9SMNHBI0M1XZVTMB8gzVtksKqwbb1WOx0TxDLp5sW5PjmO9vo1SYRlcQVoAFarurCHNM
-         qXdHoHHymxI7bVrHrqUKEx1M95Mj4UH0GKnPa33+n6aG2CDTcyfMWmwUwZzVCWShqZnJ
-         uIdg==
-X-Gm-Message-State: AOAM533fZADLYC+C7r6xZeK7CxgzGeiblnmytYrNegb4Wu/39Olx9rdS
-        FKW4pb+ntQBtFFeKUbWKo2xfOFLthp0pZQ==
-X-Google-Smtp-Source: ABdhPJxEd3Ugyp9phd6VJ0/Cse4F2SYYoqkCpSGqMLbWV1pbUKkbDibgfP60reHp6eh0ZX8s/D81rg==
-X-Received: by 2002:a05:600c:4ece:b0:38c:7938:d73c with SMTP id g14-20020a05600c4ece00b0038c7938d73cmr4554886wmq.165.1647563654018;
-        Thu, 17 Mar 2022 17:34:14 -0700 (PDT)
+        bh=d+t/ALlpusUnbj2JHTYacqqGaRYeM+B10Cv4w8YZOn4=;
+        b=Gn4bby6Q20MfCF+TypNZ8nKqu8VUM5Rlrd9VKnwZ7agZF7p6fqdNGxruKyB3OzeinN
+         WJf1kthr+voPHNKipk1e+XzVPnmAfQKWZd28Bvgg3t3b8OAZFSNLLZrMvKuqAV58TApn
+         MPQJIh1d97Cd3kFpI0X/GEGaVPQOZqaabSTRFaVZCkWr/YnEWh2j716sHfQXUBt1xNjo
+         fSZvmyvtJaYv/XLRVTU912pZMSqTQ3WshyIYe6obleY7iAjioHAzqAd6EXdw73lwfjg+
+         S22djxQc8RcRmR7e0y+OoxXAvEkoau0fTFlMxUuPRtfX+h1jzOuSx1aCEwpe19xHEjQG
+         tJnw==
+X-Gm-Message-State: AOAM533ZdQ0O1H2S2oGRAa+aox7fa+2k58LZOguDWMAr9KBrZt+hucfE
+        LZV57GZ2xgd1c/mGd0mDMbq5BD9rkGL18g==
+X-Google-Smtp-Source: ABdhPJyq2xLEC5A2s4f9RwykXlwXc3AQ+NFGQWHnnEE5MYJ0QUiYBq6CAbJ+N7C5nKsHqAy2CGjTbA==
+X-Received: by 2002:a1c:7518:0:b0:37c:7eb:f255 with SMTP id o24-20020a1c7518000000b0037c07ebf255mr13536861wmc.29.1647563655602;
+        Thu, 17 Mar 2022 17:34:15 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l4-20020adff484000000b00203dde8d82bsm5096548wro.88.2022.03.17.17.34.13
+        by smtp.gmail.com with ESMTPSA id l4-20020adff484000000b00203dde8d82bsm5096548wro.88.2022.03.17.17.34.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Mar 2022 17:34:13 -0700 (PDT)
+        Thu, 17 Mar 2022 17:34:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/7] test-lib-functions: add and use a "todo_test_path" helper
-Date:   Fri, 18 Mar 2022 01:34:00 +0100
-Message-Id: <patch-5.7-553670da8a9-20220318T002951Z-avarab@gmail.com>
+Subject: [PATCH 7/7] sparse tests: convert a TODO test to use "test_expect_todo"
+Date:   Fri, 18 Mar 2022 01:34:02 +0100
+Message-Id: <patch-7.7-10677b32b78-20220318T002951Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1436.g756b814e59f
 In-Reply-To: <cover-0.7-00000000000-20220318T002951Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20220318T002951Z-avarab@gmail.com>
@@ -68,90 +68,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new "todo_test_path" helper and convert an additional test added
-in 45bde58ef8f (grep: demonstrate bug with textconv attributes and
-submodules, 2021-09-29) to use it in conjunction with
-"test_expect_todo".
+Change a test that used "test_expect_success" before 49fdd51a235 (add:
+skip tracked paths outside sparse-checkout cone, 2021-09-24) to use
+"test_expect_todo" instead.
 
-Like the "todo_test_cmp" function introduced in a preceding commit,
-this function is a trivial wrapper around "test_todo". Rather than a
-more verbose:
+Now we'll test for the exact current behavior, while documenting what
+behavior we'd like to get instead.
 
-	test_todo \
-		--want "test_path_is_missing" \
-		--expect "test_path_is_file" \
-		-- "$super_textconv_cache"
+This test is a good example of the sort of cases where we benefit most
+from "test_expect_todo". In 49fdd51a235 the only change here (aside
+from the "NEEDSWORK" comment) was changing "test_expect_success" to
+"test_expect_failure".
 
-We can do:
-
-	todo_test_path is_missing is_file "$super_textconv_cache"
+We thus lost test coverage, and would not have noticed if we failed in
+some unexpected place in this rather large test (it's 30 lines of
+setup before getting to the "NEEDSWORK" comment). Now we can get the
+test coverage back, while documenting what is and isn't desired
+behavior.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7814-grep-recurse-submodules.sh |  6 +++---
- t/test-lib-functions.sh            | 25 +++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 3 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 8d9b53ccfed..8df692ee9a0 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -549,7 +549,7 @@ test_expect_todo 'grep --textconv correctly reads submodule .git/info/attributes
- 	todo_test_cmp want expect actual
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 9a900310186..23973bc186b 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -467,7 +467,7 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged stat
+ 	git -C unmerged sparse-checkout disable
  '
  
--test_expect_failure 'grep saves textconv cache in the appropriate repository' '
-+test_expect_todo 'grep saves textconv cache in the appropriate repository' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x_cached.textconv "sed -e \"s/d/x/\"" &&
- 	test_config_global diff.d2x_cached.cachetextconv true &&
-@@ -562,8 +562,8 @@ test_expect_failure 'grep saves textconv cache in the appropriate repository' '
- 	super_textconv_cache="$(git rev-parse --git-path refs/notes/textconv/d2x_cached)" &&
- 	sub_textconv_cache="$(git -C submodule rev-parse \
- 			--path-format=absolute --git-path refs/notes/textconv/d2x_cached)" &&
--	test_path_is_missing "$super_textconv_cache" &&
--	test_path_is_file "$sub_textconv_cache"
-+	todo_test_path is_missing is_file "$super_textconv_cache" &&
-+	todo_test_path is_file is_missing "$sub_textconv_cache"
- '
+-test_expect_failure 'sparse-checkout reapply' '
++test_expect_todo 'sparse-checkout reapply' '
+ 	git clone repo tweak &&
  
- test_expect_success 'grep partially-cloned submodule' '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 4d1eca380e8..3febf4b0811 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1036,6 +1036,31 @@ test_todo () {
- 	BUG "a test_todo didn't pass with either --want ('$want') or --expect ('$expect')"
- }
+ 	echo dirty >tweak/deep/deeper2/a &&
+@@ -501,11 +501,18 @@ test_expect_failure 'sparse-checkout reapply' '
  
-+# todo_test_path is a test_path_* for use in conjunction with
-+# "test_expect_todo".
-+#
-+# It takes "want_fn" and "expect_fn" arguments of e.g. "is_file" or
-+# "is_dir", which will be turned into corresponding "test_file_*"
-+# calls. Use it like:
-+#
-+#	test_expect_todo 'foo should be a directory' '
-+#		>foo &&
-+#		todo_test_path is_dir is_file foo
-+#	'
-+todo_test_path () {
-+	test "$#" -ne 3 && BUG "3 param, not $#"
-+	local want_fn=$1
-+	local expect_fn=$2
-+	local path=$3 &&
-+	shift 3 &&
-+
-+	test_todo \
-+		--want "test_path_$want_fn" \
-+		--expect "test_path_$expect_fn" \
+ 	# NEEDSWORK: We are asking to update a file outside of the
+ 	# sparse-checkout cone, but this is no longer allowed.
+-	git -C tweak add folder1/a &&
++	test_todo test_expect_code \
++		--want 0 \
++		--expect 1 \
 +		-- \
-+		"$path"
-+}
-+
- # test_line_count checks that a file has the number of lines it
- # ought to. For example:
- #
++		git -C tweak add folder1/a &&
+ 	git -C tweak sparse-checkout reapply 2>err &&
+-	test_must_be_empty err &&
+-	test_path_is_missing tweak/deep/deeper2/a &&
+-	test_path_is_missing tweak/folder1/a &&
++	test_todo \
++		--want test_must_be_empty \
++		--expect "grep warning:.*paths.*unmerged" \
++		-- err &&
++	todo_test_path is_file is_missing tweak/deep/deeper2/a &&
++	todo_test_path is_missing is_file tweak/folder1/a &&
+ 
+ 	git -C tweak sparse-checkout disable
+ '
 -- 
 2.35.1.1436.g756b814e59f
 
