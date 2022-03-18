@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E79C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 00:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FC4CC433F5
+	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 00:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbiCRAfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Mar 2022 20:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44102 "EHLO
+        id S231225AbiCRAfl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Mar 2022 20:35:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbiCRAfd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Mar 2022 20:35:33 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF57E2467F1
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:14 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id a1so8308317wrh.10
-        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:14 -0700 (PDT)
+        with ESMTP id S231213AbiCRAfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Mar 2022 20:35:37 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA6EA248786
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:16 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 7-20020a05600c228700b00385fd860f49so4091633wmf.0
+        for <git@vger.kernel.org>; Thu, 17 Mar 2022 17:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CyWtVXGn6WnRp/Hq3UFmejuCjJIyra+FTQAh+1KvyMM=;
-        b=ljKXcUT80ZS/8lJr730TGdCo5tpdW6kADrJDte4Q0WFgz/fD3lC8IQSGHGrLJDMGkG
-         iv7y1oVa8WClqnyA7ckpoGMacincgczYge5H1bY8SQp/nM73U75aqVcLuS5QHEwK2o3G
-         hKAMSGEymx7hivYjAYcVSYD3sGZXV9CCNyuHDHiAIRBYYHIEMC29CJWXPc/OKUBa8BwU
-         +PR8nQDPEe3x5kVbd0STQMG1ML4ha/pK0bk0py63BFQJbd7ArvI7nRkd8C4c3PzvJctk
-         k/R4f0dSPuIm74MgldlwRsmj+6ZtEBGRnLiKpm1YR2X4vcQQ/q8DmOa/boty9C9bjy4h
-         85yw==
+        bh=qSbOsbWVrOFdKCsTEtyep1+U0vfkKtouaI19vMKrna8=;
+        b=K2MM88hnitvD824iv9fYJ+dYjjT9lrcWYao8n54PK0eZ1K5W8p7X4shOZqgF/2rM/u
+         c1PwQECzoMHXzvtoLqBJ1OGYO52Ix5C+HVZ+GFC7rTt7yXWJrQSxjLx/AZ7HpdA9b5kb
+         KeOHfrHNJEjJbp4zCipb9VGHdp2SdNE6h1HETqkbF6Kxw5nGNrWV0Ydvo7ztt5v9ItFd
+         vy6fp99OayEx5zdvzMBKuGyImzZnIvXp5QyLK0nRkmdoxW6yEkbUyoa9Q+IAQEQ2TDc1
+         HxZ92hVKSOzAlDYbLNnVX15fLSmiwzAeDFnDVOOH5gSbc5UPEROh/OFmQP1PF3y+RQBc
+         8MgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CyWtVXGn6WnRp/Hq3UFmejuCjJIyra+FTQAh+1KvyMM=;
-        b=Xij7i2pigxBQAz5aPuxr33b8fKkkKFfUvfIXL2ucXjghUW2KJkGIkPnzvykEigOebD
-         ZP0brnGTWjBuJciEA6sK8evbBXAFs8Ge8bTtk7RjkvoBrcbPmXMnSLoGmDJ3hBYUIDYI
-         eGXgFIApi9eV86pHyM8TaB8MkQsP6o4QQMZxrNJ0OePOHNlJWdmYBywZ8TxWyN/jz8xR
-         ma5Cu9DWQxc76TjCtp38pV2zE74S1NNCFp7Ig2Li+pRZY0IzJioHqzqvaomIMNOl7HF3
-         sgw5P44bbxT9vYKdFLGx6S8Lqw5LM2+nvUD3830jF4g1vWwUwR6X//mWN+HvKoN5sxPg
-         uSMA==
-X-Gm-Message-State: AOAM533sd0wrE1JpDzb0RdNdXoysXHPr+KXsaTl2sxkF9CmfsfC7+suM
-        YimT9HjPLSQ+Hnox04DqmCVPoucbKz1WjA==
-X-Google-Smtp-Source: ABdhPJxl/wXLEAMY9+q1sFbg8L1WpU0yWa4wenUuyk3JNntmGdI6bn6r+hj47xqNWynD4/VUi2+W/g==
-X-Received: by 2002:a05:6000:184e:b0:1f0:3569:ccac with SMTP id c14-20020a056000184e00b001f03569ccacmr6170604wri.680.1647563653146;
-        Thu, 17 Mar 2022 17:34:13 -0700 (PDT)
+        bh=qSbOsbWVrOFdKCsTEtyep1+U0vfkKtouaI19vMKrna8=;
+        b=az0ItdbypV8VOOyGGqWuqZqIghmgMnt2i5tejVTudiupdSZPaI7s5GxzYY9cnsjLsH
+         HL2Mgtjr1MgGPE2lYogz27NvYgyYbkR5QFYNQQGCzGnQ078FR9r844HSUjfSt8sf5hbt
+         0LSqnUuPEyKeS2svb574xmYeklkUuv0RQ+YobokCV3TlgnaFZpnAfWoHvw2qIcOBhsCS
+         y+WAPF5hg+BpWAIHJTHDHgV8cYrgc6OzujFDP8yiaP5Ei2hJdnYWASzGl+szxunpZoB2
+         WucHOMl7Baq6SFJYLyyAQkRKQh47JsfgqAjjj86kxsGxf73YgabQr+NIE0kIj6pWmW6b
+         Bs0A==
+X-Gm-Message-State: AOAM530iq6R5mjF/q+QpdCWab+8EyNcVoyNQMyAlEMmuPZaPEeIWqe8p
+        Sfh6c49ysOZezgWPniCWf+xR5Fxy9z73DQ==
+X-Google-Smtp-Source: ABdhPJzhxAdSSYWQBetdMG2zCoLopm3W7Sokjpu0lLS9dL+xrB9fKslPrHJksOcRFxIIG7wpAG9Pxw==
+X-Received: by 2002:a05:600c:4e4a:b0:38c:801c:2984 with SMTP id e10-20020a05600c4e4a00b0038c801c2984mr3674492wmq.168.1647563654848;
+        Thu, 17 Mar 2022 17:34:14 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l4-20020adff484000000b00203dde8d82bsm5096548wro.88.2022.03.17.17.34.12
+        by smtp.gmail.com with ESMTPSA id l4-20020adff484000000b00203dde8d82bsm5096548wro.88.2022.03.17.17.34.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Mar 2022 17:34:12 -0700 (PDT)
+        Thu, 17 Mar 2022 17:34:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/7] test-lib-functions: add and use a "todo_test_cmp" helper
-Date:   Fri, 18 Mar 2022 01:33:59 +0100
-Message-Id: <patch-4.7-25a4dadd5f3-20220318T002951Z-avarab@gmail.com>
+Subject: [PATCH 6/7] test-lib-functions: make test_todo support a --reset
+Date:   Fri, 18 Mar 2022 01:34:01 +0100
+Message-Id: <patch-6.7-2ee27a7773e-20220318T002951Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1436.g756b814e59f
 In-Reply-To: <cover-0.7-00000000000-20220318T002951Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20220318T002951Z-avarab@gmail.com>
@@ -68,232 +68,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a new "todo_test_cmp" for use with the new
-"test_expect_todo" function. This is a thin wrapper around the
-previously introduced "test_todo". Instead of the more verbose:
+As noted in the preceding commit that introduced "test_todo" we
+couldn't run something like "git rm" since we run both the --want and
+--expect variants, and if --want has removed a file the --expect won't
+succeed.
 
-    test_todo test_cmp --want want --expect expect -- actual
-
-We can now do:
-
-    todo_test_cmp want expect actual
-
-Since it uses "test_todo", this "test_cmp_todo" function will BUG()
-out if "want" and "expect" are the same, and likewise if the "want" is
-equivalent to "actual".
-
-Let's convert most of the tests added in 45bde58ef8f (grep:
-demonstrate bug with textconv attributes and submodules, 2021-09-29)
-to use it, as well as a merge test added in
-6d49de414f9 (t6023-merge-file.sh: fix and mark as broken invalid
-tests, 2014-06-29).
+Let's add a --reset option to the command, this allows us to convert a
+test added in 03415ca8db2 (t3600: document failure of rm across
+symbolic links, 2013-04-04) to a more exact "test_expect_todo".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t6403-merge-file.sh              | 23 +++++++++++--
- t/t7814-grep-recurse-submodules.sh | 54 +++++++++++++++++++++---------
- t/test-lib-functions.sh            | 22 ++++++++++++
- 3 files changed, 81 insertions(+), 18 deletions(-)
+ t/t3600-rm.sh           | 23 ++++++++++++++++++-----
+ t/test-lib-functions.sh | 26 ++++++++++++++++++++++----
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
-index 12b334af85c..d466360c41a 100755
---- a/t/t6403-merge-file.sh
-+++ b/t/t6403-merge-file.sh
-@@ -92,8 +92,27 @@ test_expect_todo "merge without conflict (missing LF at EOF)" '
- 		git merge-file test2.txt orig.txt new4.txt
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index e74a318ac33..42879e9060b 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -790,7 +790,7 @@ test_expect_success SYMLINKS 'rm across a symlinked leading path (no index)' '
+ 	test_path_is_file e/f
  '
  
--test_expect_failure "merge result added missing LF" '
--	test_cmp test.txt test2.txt
-+test_expect_todo "merge result added missing LF" '
-+	cat >expect <<-\EOF &&
-+	Dominus regit me, et nihil mihi deerit.
-+	In loco pascuae ibi me collocavit,
-+	super aquam refectionis educavit me;
-+	animam meam convertit,
-+	deduxit me super semitas jusitiae,
-+	<<<<<<< test2.txt
-+	<<<<<<< test2.txt
-+	propter nomen suum.
-+	Nam et si ambulavero in medio umbrae mortis,
-+	non timebo mala, quoniam tu mecum es:
-+	virga tua et baculus tuus ipsa me consolata sunt.
-+	=======
-+	propter nomen suum.
-+	>>>>>>> new4.txt
-+	=======
-+	propter nomen suum.
-+	>>>>>>> new4.txt
-+	EOF
-+	todo_test_cmp test.txt expect test2.txt
+-test_expect_failure SYMLINKS 'rm across a symlinked leading path (w/ index)' '
++test_expect_todo SYMLINKS 'rm across a symlinked leading path (w/ index)' '
+ 	rm -rf d e &&
+ 	mkdir d &&
+ 	echo content >d/f &&
+@@ -798,10 +798,23 @@ test_expect_failure SYMLINKS 'rm across a symlinked leading path (w/ index)' '
+ 	git commit -m "d/f exists" &&
+ 	mv d e &&
+ 	ln -s e d &&
+-	test_must_fail git rm d/f &&
+-	git rev-parse --verify :d/f &&
+-	test -h d &&
+-	test_path_is_file e/f
++	test_todo \
++		--want "test_must_fail git" \
++		--reset "git reset --hard" \
++		--expect git \
++		-- \
++		rm d/f &&
++	test_todo \
++		--want git \
++		--expect "test_must_fail git" \
++		-- \
++		rev-parse --verify :d/f &&
++	test_todo \
++		--want "test -h" \
++		--expect "test_path_is_missing" \
++		-- \
++		d &&
++	todo_test_path is_file is_missing e/f
  '
  
- test_expect_success "merge without conflict (missing LF at EOF, away from change in the other file)" '
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index a4476dc4922..8d9b53ccfed 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -442,77 +442,98 @@ test_expect_success 'grep --recurse-submodules with --cached ignores worktree mo
- 	test_must_be_empty actual
- '
- 
--test_expect_failure 'grep --textconv: superproject .gitattributes does not affect submodules' '
-+test_expect_todo 'grep --textconv: superproject .gitattributes does not affect submodules' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 	echo "a diff=d2x" >.gitattributes &&
- 
-+	cat >want <<-\EOF &&
-+	a:(1|2)x(3|4)
-+	EOF
- 	cat >expect <<-\EOF &&
- 	a:(1|2)x(3|4)
-+	submodule/a:(1|2)x(3|4)
-+	submodule/sub/a:(1|2)x(3|4)
- 	EOF
- 	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	todo_test_cmp want expect actual
- '
- 
--test_expect_failure 'grep --textconv: superproject .gitattributes (from index) does not affect submodules' '
-+test_expect_todo 'grep --textconv: superproject .gitattributes (from index) does not affect submodules' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 	echo "a diff=d2x" >.gitattributes &&
- 	git add .gitattributes &&
- 	rm .gitattributes &&
- 
-+	cat >want <<-\EOF &&
-+	a:(1|2)x(3|4)
-+	EOF
- 	cat >expect <<-\EOF &&
- 	a:(1|2)x(3|4)
-+	submodule/a:(1|2)x(3|4)
-+	submodule/sub/a:(1|2)x(3|4)
- 	EOF
- 	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	todo_test_cmp want expect actual
- '
- 
--test_expect_failure 'grep --textconv: superproject .git/info/attributes does not affect submodules' '
-+test_expect_todo 'grep --textconv: superproject .git/info/attributes does not affect submodules' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 	super_attr="$(git rev-parse --git-path info/attributes)" &&
- 	test_when_finished "rm -f \"$super_attr\"" &&
- 	echo "a diff=d2x" >"$super_attr" &&
- 
-+	cat >want <<-\EOF &&
-+	a:(1|2)x(3|4)
-+	EOF
- 	cat >expect <<-\EOF &&
- 	a:(1|2)x(3|4)
-+	submodule/a:(1|2)x(3|4)
-+	submodule/sub/a:(1|2)x(3|4)
- 	EOF
- 	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	todo_test_cmp want expect actual
- '
- 
- # Note: what currently prevents this test from passing is not that the
- # .gitattributes file from "./submodule" is being ignored, but that it is being
- # propagated to the nested "./submodule/sub" files.
- #
--test_expect_failure 'grep --textconv correctly reads submodule .gitattributes' '
-+test_expect_todo 'grep --textconv correctly reads submodule .gitattributes' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 	echo "a diff=d2x" >submodule/.gitattributes &&
- 
-+	cat >want <<-\EOF &&
-+	submodule/a:(1|2)x(3|4)
-+	EOF
- 	cat >expect <<-\EOF &&
- 	submodule/a:(1|2)x(3|4)
-+	submodule/sub/a:(1|2)x(3|4)
- 	EOF
- 	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	todo_test_cmp want expect actual
- '
- 
--test_expect_failure 'grep --textconv correctly reads submodule .gitattributes (from index)' '
-+test_expect_todo 'grep --textconv correctly reads submodule .gitattributes (from index)' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 	echo "a diff=d2x" >submodule/.gitattributes &&
- 	git -C submodule add .gitattributes &&
- 	rm submodule/.gitattributes &&
- 
--	cat >expect <<-\EOF &&
-+	cat >want <<-\EOF &&
- 	submodule/a:(1|2)x(3|4)
- 	EOF
--	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	>expect &&
-+
-+	test_might_fail git grep --textconv --recurse-submodules x >actual &&
-+	todo_test_cmp want expect actual
- '
- 
--test_expect_failure 'grep --textconv correctly reads submodule .git/info/attributes' '
-+test_expect_todo 'grep --textconv correctly reads submodule .git/info/attributes' '
- 	reset_and_clean &&
- 	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
- 
-@@ -520,11 +541,12 @@ test_expect_failure 'grep --textconv correctly reads submodule .git/info/attribu
- 	test_when_finished "rm -f \"$submodule_attr\"" &&
- 	echo "a diff=d2x" >"$submodule_attr" &&
- 
--	cat >expect <<-\EOF &&
-+	cat >want <<-\EOF &&
- 	submodule/a:(1|2)x(3|4)
- 	EOF
--	git grep --textconv --recurse-submodules x >actual &&
--	test_cmp expect actual
-+	>expect &&
-+	test_might_fail git grep --textconv --recurse-submodules x >actual &&
-+	todo_test_cmp want expect actual
- '
- 
- test_expect_failure 'grep saves textconv cache in the appropriate repository' '
+ test_expect_success 'setup for testing rm messages' '
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 64b9580f2bc..4d1eca380e8 100644
+index 3febf4b0811..5313ab28e72 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -1263,6 +1263,28 @@ test_cmp () {
- 	eval "$GIT_TEST_CMP" '"$@"'
- }
- 
-+# todo_test_cmp is a "test_cmp" for use in conjunction with
-+# "test_expect_todo".
-+#
-+# It takes a mandatory extra first argument of "want", indicating the
-+# output we'd like to have once we turn that "test_expect_todo" into a
-+# "test_expect_success":
-+#
-+#	test_expect_todo 'foo still doesn't work' '
-+#		echo yay >want &&
-+#		echo error >expect &&
-+#		foo >actual &&
-+#		test_cmp want expect actual
-+#	'
-+todo_test_cmp () {
-+	test "$#" -ne 3 && BUG "3 param, not $#"
-+	local want=$1 &&
-+	local expect=$2 &&
-+	local actual=$3 &&
-+
-+	test_todo test_cmp --want "$want" --expect "$expect" -- "$actual"
-+}
-+
- # Check that the given config key has the expected value.
+@@ -966,6 +966,10 @@ test_path_is_missing () {
+ #	--expect <expect>
+ #		The condition we have now. Injected in the same way as
+ #		the arguments to --want.
++#	--reset <reset>
++#		A command to run between the <want> and <expect>
++#		conditions to reset the repository state. Used e.g. if
++#		both run a "git rm" command that might succeed.
  #
- #    test_cmp_config [-C <dir>] <expected-value>
+ # test_todo is a wrapper for use with "test_expect_todo". It declares
+ # an outcome we want, and one we currently expect:
+@@ -985,8 +989,12 @@ test_path_is_missing () {
+ # Because we run both neither of them can mutate the test
+ # state. I.e. they must be read-only commands such as "wc -l", and not
+ # a state-altering command such as "rm".
++#
++# To run a command that mutates the repository state supply a --reset
++# option, e.g. "git reset --hard" if you need to run "git rm".
+ test_todo () {
+ 	local common_fn= &&
++	local reset= &&
+ 	local have_want= &&
+ 	local want= &&
+ 	local expect= &&
+@@ -1004,6 +1012,10 @@ test_todo () {
+ 			have_expect=t &&
+ 			shift
+ 			;;
++		--reset)
++			reset="$2" &&
++			shift
++			;;
+ 		--)
+ 			shift &&
+ 			break
+@@ -1028,10 +1040,16 @@ test_todo () {
+ 	then
+ 		BUG "a test_todo succeeded with --want ('$want').  Turn it into a test_expect_success + $@ $want?" &&
+ 		return 1
+-	elif $common_fn $expect "$@"
+-	then
+-		say "a test_todo will succeed with --expect ('$expect'), we eventually want '$want' instead" >&3 &&
+-		return 0
++	else
++		if test -n "$reset"
++		then
++			$reset
++		fi &&
++		if $common_fn $expect "$@"
++		then
++			say "a test_todo will succeed with --expect ('$expect'), we eventually want '$want' instead" >&3 &&
++			return 0
++		fi
+ 	fi &&
+ 	BUG "a test_todo didn't pass with either --want ('$want') or --expect ('$expect')"
+ }
 -- 
 2.35.1.1436.g756b814e59f
 
