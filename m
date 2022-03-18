@@ -2,101 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5CC9C433EF
-	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 11:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80073C433EF
+	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 11:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235624AbiCRLJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Mar 2022 07:09:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40896 "EHLO
+        id S235691AbiCRLQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Mar 2022 07:16:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234109AbiCRLJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Mar 2022 07:09:53 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D50B129247
-        for <git@vger.kernel.org>; Fri, 18 Mar 2022 04:08:35 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id j13-20020a05600c1c0d00b0038c8f94aac2so294777wms.3
-        for <git@vger.kernel.org>; Fri, 18 Mar 2022 04:08:34 -0700 (PDT)
+        with ESMTP id S235663AbiCRLQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Mar 2022 07:16:20 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2D419F459
+        for <git@vger.kernel.org>; Fri, 18 Mar 2022 04:15:00 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id u10so11265574wra.9
+        for <git@vger.kernel.org>; Fri, 18 Mar 2022 04:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=R9fxoC/JCFMYvFQNVHwIEjk6s6Z+sZyMpT8kE7Ie4Nw=;
-        b=FS/dqTaG8NGXj1QEPpmdRZHtW4sEupoHfjZ8x2ir/3K2jeRIZ9ahf8lPZExQ/bq6t4
-         rjkj5nt/eAMd5ZMN0F/zYVws1VPz17tG2rXWv3VQAFoWdYdCPNc/yazj8cFFiSukvmAJ
-         59Ubs8rF2Kkn6WIotvzbR8j4Tei8HBkaNm0H68FDztyL3vxWZ/Wqgbhdaubzs0/aRh0P
-         OwZb6m8mPTDIvvxkjg260mlpLpWezz1t2cXJ7dx0qLnMVEqI7MgeOaQL/KQpIpr2H6kP
-         aoDlymmYryTR9ix252l7swOSksDNzQHvstF9juIMr1zL9wqWEhxMMmpGwmDbO42sbqij
-         7S8w==
+        bh=r0rqV5bIGXAzLV3V1QQ1AsKzKlr9/ZrI9F4wVkMpDG4=;
+        b=Kl2Yw6WeDKiVoK6NCtdLS1KuWI3OXm4F2HKqmChoIaYL0aZuYLS0KHoQruRuzJoUUs
+         abUTYHILkrMR22Ub8as3OeZ4244zPoFXdvhVAqmSeEHkaQdR1UcabDh10NhHGHLm9c0H
+         h0m6mIKQrNXLZZqKpv5Sd76VPuLRIYTvV8PDG7r54o6zmm+SExRoK0cuS6WfYkIBxumB
+         OLuqW0tq/X2eLL1GTIStTDDzZyxBt0vr6D9+H9ZLacDLrfgfdXijBcw9KmDqCYc8lDTA
+         J0+7E4Jp4l/ONx8smjvTzyMHtixSQxhf1mybzX/3Sw4dtoYWRW5tayEXPu0N77USATad
+         9A3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=R9fxoC/JCFMYvFQNVHwIEjk6s6Z+sZyMpT8kE7Ie4Nw=;
-        b=y28TaCN3UVXOGER6qX3UTEjGHMVtOAlhirQIJGClLUawtIPa1qsTw9ZHqe9CNuhr7J
-         GTtnMQtP3dklFgvZhwylBXutIryGxzkAiI/HysLX42dyBIr80LGx4IEI06b4XF2rCNoK
-         H0S/jhgeOp8ZsSt4LM6s3JDq8ZabDXxJ/3UGt7VlHrLNBB+Hc0DeIxNdvp5CDPJmzKrD
-         Fl3s5PW/YfCBZb3lti/sITev0eprfEMjNYAaFGcfgb3q4WarTXsB3+Qoee4P1R2z3AaG
-         n8SP3jJMwrV/xyufu9vEP/AY1rcpCNw+hBklTC1HbR3oHkoudm1oP3Y2kSc/YIuFQEfE
-         ze6g==
-X-Gm-Message-State: AOAM530UMbeUsFsP8fXIqLDuhEhMF3JQoSZqzC5owvbKF7P/KtnxReuS
-        A/lzt0m1qDGcRN3Ric6p5go=
-X-Google-Smtp-Source: ABdhPJyon9i6V0jR9tvr/puL1C3sXRd+LZ4ZptrNWQi++jePQ+e5kghZLv6C+UM1d7XD3C4/2W8ZKg==
-X-Received: by 2002:a05:600c:4fcb:b0:389:a82b:8f8a with SMTP id o11-20020a05600c4fcb00b00389a82b8f8amr7516995wmq.167.1647601713527;
-        Fri, 18 Mar 2022 04:08:33 -0700 (PDT)
+        bh=r0rqV5bIGXAzLV3V1QQ1AsKzKlr9/ZrI9F4wVkMpDG4=;
+        b=W5PPIJRDtxELv1oypDUS56VG/0L+M4x3aHEroPH89Y8LGCitRMMDnf1r3TaLG4k5mv
+         SW+P+Fw3cMZW7zuvQ5M9JeeVS+6Qod1K22RFh8EntMdDq4K1sqCxO4m9sFqJPzC6DnsK
+         OMh6ECyNYYZOrraXbXvMTpU/n6l8HPf7064j4TxFWVUs3Y5EU2T01fbZz1gHVeg+e4yR
+         YZFt03uE9pkL2G248UWuZ4j6YmAKLJd8GiBixrkDCHNw7MCXekkqWcJ7rUVkPPM8CLth
+         32+MUSg16RV6rBTl//QtrRpCXuHjOrRfxWXuDPmlgS5TlFwP+iGZyIT9piFPFrL9KNL0
+         1U6A==
+X-Gm-Message-State: AOAM533I50Wu3dnmdMRhIcqh4M9fZqYBRcbs4R3gIlB1CxPBNeRDXth9
+        gsiaCjA4mtE82Y6ERMV+I/MDktXFZtw=
+X-Google-Smtp-Source: ABdhPJyzOQuepNC7g0VjnukfeOBZ8O2ZtVVjJAoSsyCTOJNLvK40RLf1Yb71bHWZLK46RDcUBlSJCA==
+X-Received: by 2002:a05:6000:1a8f:b0:203:7ca5:8dc0 with SMTP id f15-20020a0560001a8f00b002037ca58dc0mr7414051wry.358.1647602099399;
+        Fri, 18 Mar 2022 04:14:59 -0700 (PDT)
 Received: from [192.168.1.201] (31.107.7.51.dyn.plus.net. [51.7.107.31])
-        by smtp.googlemail.com with ESMTPSA id 14-20020a056000154e00b00203f8adde0csm1129435wry.32.2022.03.18.04.08.32
+        by smtp.googlemail.com with ESMTPSA id i10-20020a0560001aca00b00203daf3759asm6629804wry.68.2022.03.18.04.14.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 04:08:33 -0700 (PDT)
-Message-ID: <80a5f411-2ddb-177f-4139-1dfff436deda@gmail.com>
-Date:   Fri, 18 Mar 2022 11:08:31 +0000
+        Fri, 18 Mar 2022 04:14:59 -0700 (PDT)
+Message-ID: <7f76e3e3-20d5-d249-c376-962dcc73869f@gmail.com>
+Date:   Fri, 18 Mar 2022 11:14:58 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/5] reset: introduce --[no-]refresh option to --mixed
+Subject: Re: [PATCH v4 2/3] rebase: use test_commit helper in setup
 Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     derrickstolee@github.com, Victoria Dye <vdye@github.com>
-References: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
- <pull.1170.v3.git.1647308982.gitgitgadget@gmail.com>
- <101cee42dd6d5a4e5f12da647eafab9334d69a2d.1647308982.git.gitgitgadget@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        John Cai <johncai86@gmail.com>
+References: <pull.1226.v3.git.git.1647487001.gitgitgadget@gmail.com>
+ <pull.1226.v4.git.git.1647546828.gitgitgadget@gmail.com>
+ <5c40e116eba00b5b1a64191c6adf211d326e7f96.1647546828.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <101cee42dd6d5a4e5f12da647eafab9334d69a2d.1647308982.git.gitgitgadget@gmail.com>
+In-Reply-To: <5c40e116eba00b5b1a64191c6adf211d326e7f96.1647546828.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria
+Hi John
 
-[replying to v3 rather than v4 as gmail still hasn't delivered that version]
+On 17/03/2022 19:53, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
+> 
+> To prepare for the next commit that will test rebase with oids instead
+> of branch names, update the rebase setup test to add a couple of tags we
+> can use. This uses the test_commit helper so we can replace some lines
+> that add a commit manually.
+> 
+> Setting logAllRefUpdates is not necessary because it's on by default for
+> repositories with a working tree.
+> 
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>   t/t3400-rebase.sh | 18 ++++--------------
+>   1 file changed, 4 insertions(+), 14 deletions(-)
+> 
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 5c4073f06d6..2fb3fabe60e 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -18,10 +18,7 @@ GIT_AUTHOR_EMAIL=bogus@email@address
+>   export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+>   
+>   test_expect_success 'prepare repository with topic branches' '
+> -	git config core.logAllRefUpdates true &&
+> -	echo First >A &&
+> -	git update-index --add A &&
+> -	git commit -m "Add A." &&
+> +	test_commit "Add A." A First First &&
+>   	git checkout -b force-3way &&
+>   	echo Dummy >Y &&
+>   	git update-index --add Y &&
+> @@ -32,17 +29,13 @@ test_expect_success 'prepare repository with topic branches' '
+>   	git mv A D/A &&
+>   	git commit -m "Move A." &&
+>   	git checkout -b my-topic-branch main &&
+> -	echo Second >B &&
+> -	git update-index --add B &&
+> -	git commit -m "Add B." &&
+> +	test_commit "Add B." B Second Second &&
+>   	git checkout -f main &&
+>   	echo Third >>A &&
+>   	git update-index A &&
+>   	git commit -m "Modify A." &&
+>   	git checkout -b side my-topic-branch &&
 
-On 15/03/2022 01:49, Victoria Dye via GitGitGadget wrote:
-> +	/*
-> +	 * If refresh is completely unspecified (either by config or by command
-> +	 * line option), decide based on 'quiet'.
-> +	 */
-> +	if (refresh < 0)
-> +		refresh = !quiet;
-
-This keeps the current behavior of not refreshing when --quiet is given. 
-I wonder how disruptive it would be to take the opportunity to get rid 
-of that hack and go back the the original behavior of refreshing when 
---quiet is given. There are a couple of assumptions that make me think 
-it might be acceptable
-
-1 - anyone using a sparse index wont notice as refreshing the index
-     should be fast for them
-
-2 - the large repositories that are affected exist in managed
-     environments where an admin who reads the release notes could set
-     reset.refresh in a central config so individual users are not
-     inconvenienced.
+This version has added some more conversions that are not mentioned it 
+the commit message. If you want to covert the whole setup to use 
+test_commit then that's great but I think you need to do the whole thing 
+and say in the commit message that you're modernizing everything. As it 
+stands a reader is left wondering why some of the setup that is not used 
+in the next commit  has been converted but other bits such as the 
+"Modify A." above are left as is. I think the two possibilities that 
+make sense are (a) convert only what we need for the next commit, or (b) 
+modernize the test and convert everything.
 
 Best Wishes
 
 Phillip
+
+> -	echo Side >>C &&
+> -	git add C &&
+> -	git commit -m "Add C" &&
+> +	test_commit --no-tag "Add C" C Side &&
+>   	git checkout -f my-topic-branch &&
+>   	git tag topic
+>   '
+> @@ -119,10 +112,7 @@ test_expect_success 'rebase off of the previous branch using "-"' '
+>   test_expect_success 'rebase a single mode change' '
+>   	git checkout main &&
+>   	git branch -D topic &&
+> -	echo 1 >X &&
+> -	git add X &&
+> -	test_tick &&
+> -	git commit -m prepare &&
+> +	test_commit prepare X 1 &&
+>   	git checkout -b modechange HEAD^ &&
+>   	echo 1 >X &&
+>   	git add X &&
+
