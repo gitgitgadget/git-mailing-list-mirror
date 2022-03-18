@@ -2,151 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03C61C433F5
-	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 19:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F00C433EF
+	for <git@archiver.kernel.org>; Fri, 18 Mar 2022 20:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239696AbiCRTUb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Mar 2022 15:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47418 "EHLO
+        id S240659AbiCRUQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Mar 2022 16:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233464AbiCRTUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Mar 2022 15:20:30 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CAD32C57A4
-        for <git@vger.kernel.org>; Fri, 18 Mar 2022 12:19:10 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id c11so5680926pgu.11
-        for <git@vger.kernel.org>; Fri, 18 Mar 2022 12:19:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=qfDc3iSVSw9D4yAHQoeaNJnS60/znff5O4yQOfWlnLY=;
-        b=FwxxYA8QG0/4ec6VtcpWy7puNScM5M2I5Pzj1/5gMsdPdekVf0ylXBtqJd6XmMf+D5
-         cL7lQqnxaY+CtD+0QrBFA6OLFW7lCJoK6ii73TVnQ8MjooSYH+7vl8CMH7dFwqcL4ywU
-         tOU100KM4A+GK6rpSgPVdZ26TO2F5NOFhCEeA3Pyb9R3h/7qjbk0qalduakxnDrt6RA7
-         B0By77qgv8CxB0HLOdL6aySWTTLmt3S+2CecNhjbcYU6rAeW+lkc+45O64Q+1oipNyLw
-         eRBl4fhXusyHie/2nqS3XVPsafkEu8nVrQ43rz0P4sTIrqhze0CjeKTNifqYNM/W330t
-         RWcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=qfDc3iSVSw9D4yAHQoeaNJnS60/znff5O4yQOfWlnLY=;
-        b=zjP2nRraiO16f6mHC0lacZAm08cmoCBk5ASAPHp844r2KX8QOSkC2yq61zYliBguyF
-         QTAgidJFmrP+ROusU+QXFJsGjH4DfmNU7IBvxyyNvj+OLuKC8VS/VUCXpYVydRgTiQWO
-         xHEQTejOIkKuT50YK1eTHdPrvjr89fNpfFsy5gN0dG6mmpaB2LpB1N/KI3Psq0IOZKmA
-         d0ja5sdQlWFvHgV+YWvpIeiCWPp9tdoEb2VIVM5wuZLggS28FWalBG8Qo7We58+20doJ
-         B+7XgywP0pE5LeLel4fQMdIXItqsFDWw661nI0Yca+WnlzFILlNuAHdqNAfWpcjaNgf5
-         qOHg==
-X-Gm-Message-State: AOAM533hfbob3R48TF+CiYDB4ZEJmo+hryQagcZyCs2crLCNNjhO3A3c
-        zA32Jj9562NF6YenNVUo+tVn
-X-Google-Smtp-Source: ABdhPJzEzPVWT+Pjtsw5zJyOg4R30BmUQdX4NPrY2iZ+C33bo3+cb/W2aWmEivbA91DaLS2wnZNj6Q==
-X-Received: by 2002:a05:6a00:230b:b0:4fa:7ca6:b1d5 with SMTP id h11-20020a056a00230b00b004fa7ca6b1d5mr1135268pfh.11.1647631150045;
-        Fri, 18 Mar 2022 12:19:10 -0700 (PDT)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id f10-20020a056a00228a00b004f769b40bd6sm10835872pfe.103.2022.03.18.12.19.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 12:19:09 -0700 (PDT)
-Message-ID: <80a2a5a2-256f-6c3b-2430-10bef99ce1e9@github.com>
-Date:   Fri, 18 Mar 2022 12:19:08 -0700
+        with ESMTP id S240568AbiCRUPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Mar 2022 16:15:42 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446D125CBB6
+        for <git@vger.kernel.org>; Fri, 18 Mar 2022 13:14:08 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4526A5A0CA;
+        Fri, 18 Mar 2022 20:14:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1647634447;
+        bh=yQ9djN1RENCVoXqoQxKeCwhcZ0+9cbZYB2xmmHswyYM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Vtg+XF9kcnMWzbkhmWcWGVbT/m9dnFd3slA5OWY15MLC8RcSzoA1mol0KYGNrR5Rk
+         LdydvOrvUrq2y9IGbVy1uPDDLjA+uM/9UloW7CD1JLTN5jJaBDAdXsgPof4qDIXRqd
+         YPr9MFhybla1LyAXZsGZmbQ7UzhlurP1WEA0UGlK3fL3RXCOLdOiBMjON8ke2wnWeY
+         W9jPdg3fvbHFgmszMLiZVxfpmx8n3eF00fmVIpQsgaZRSqXqZW4IwMSrz4cZSC2sOe
+         HSwmJAgW7bceADOSIkTB8hfQhS/pFM0tsfdGxghmz1L8rCOMCKAbhMA2Z7dtR2BA5a
+         NcD0wgcVKNqtuztVR8Nuagch5IgKZM9LDcHmLREm/DOHbyHwoMMp8fUFQMgPWc1h2s
+         s4oYjRZTycDV0dyf0dXHXmj9UrfpzH7f/GbHdrYc0ZrXcduuaCO0Jq4dRyHSEwtkdx
+         cHTzEQAwq7xTJd93uFcOA140wqTmshxzHbjSBCQjO0uwPGYtujX
+Date:   Fri, 18 Mar 2022 20:14:05 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>
+Cc:     git@vger.kernel.org
+Subject: Re: how to automatically open conflicted files when "git rebase"
+ encounter conflict
+Message-ID: <YjToDb9Mz9Q9z4Bq@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
+References: <bc7b04de-17be-df86-1c93-792903eeec9b@mails.ucas.ac.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [PATCH v3 2/5] reset: introduce --[no-]refresh option to --mixed
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com
-References: <pull.1170.v2.git.1647274230.gitgitgadget@gmail.com>
- <pull.1170.v3.git.1647308982.gitgitgadget@gmail.com>
- <101cee42dd6d5a4e5f12da647eafab9334d69a2d.1647308982.git.gitgitgadget@gmail.com>
- <80a5f411-2ddb-177f-4139-1dfff436deda@gmail.com> <xmqqy2179o3c.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqy2179o3c.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="TuUs7UWM0CBYeIsD"
+Content-Disposition: inline
+In-Reply-To: <bc7b04de-17be-df86-1c93-792903eeec9b@mails.ucas.ac.cn>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> This keeps the current behavior of not refreshing when --quiet is
->> given. I wonder how disruptive it would be to take the opportunity to
->> get rid of that hack and go back the the original behavior of
->> refreshing when --quiet is given. There are a couple of assumptions
->> that make me think it might be acceptable
->>
->> 1 - anyone using a sparse index wont notice as refreshing the index
->>     should be fast for them
->>
->> 2 - the large repositories that are affected exist in managed
->>     environments where an admin who reads the release notes could set
->>     reset.refresh in a central config so individual users are not
->>     inconvenienced.
-> 
-> I would very much prefer to see "--quiet" not making contribution to
-> the decision to refresh or not in the longer term.  Many plumbing
-> commands expect that the calling scripts refresh the index with an
-> explicit use of "update-index --refresh" and leave the index not
-> refreshed, but working on unrefreshed index is a trade-off between
-> performance and correctness.
-> 
->  * Turning "--quiet" not to refresh may incur performance regression
->    for shorter term.  It will not hurt correctness.
-> 
 
-I tend to agree with you and Phillip on this. I took a more conservative
-approach with the intention of preserving as much backward compatibility as
-possible, but having '--quiet' disable refresh (to me) actively hurts its
-correctness. If backwards-compatibility isn't a huge concern, I'll gladly
-make that change.
+--TuUs7UWM0CBYeIsD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->  * Introducing "--no-refresh" to mark "reset --quiet" invocations,
->    where the freshness of the index does not matter for correctness,
->    would help regain performance without breaking scripts.  All
->    "reset --quiet" invocations in scripts written before this series
->    are supposed to be safe (as they lived with their "reset --quiet"
->    that does not refresh), but newly written scripts may start
->    expecting that "reset --quiet" would refresh for correctness.
-> 
->  * If we allow reset.refresh to be set to "no", however, that would
->    affect _all_ uses of "reset --quiet", including the ones in newly
->    written scripts that expect "reset --quiet" to refresh.  They
->    would be forced to say "reset --quiet --refresh", just in case
->    the user has such a configuration; otherwise these scripts will
->    be declared "buggy" for not explicitly saying "--refresh".
-> 
+On 2022-03-18 at 02:00:52, wuzhouhui wrote:
+> Hi
+>=20
+> When "git rebase" stopped due to conflict, I have to manually open
+> conflicted
+> file one by one and resolve conflict, and the typing file path is too
+> boring.
+> So, how to automatically open (e.g. use Vim) conflicted files?
 
-I added the option as a "replacement" for 'reset.quiet' (specifically, its
-ability to summarily disable refresh), but I can definitely see how it would
-lead to issues in the future. I'm happy to remove it, but should
-'reset.quiet' be removed as well? No other commands have a config option for
-'quiet', and it presents a similar issue of potentially suppressing a
-helpful feature (in this case, informational printouts) across all
-invocations unless otherwise specified.
+I agree that in the typical project with a few levels of directories
+this is a hassle.
 
-> I do not think reset.refresh is a good idea, but I very much like
-> the idea to making "reset" (regardless of "--quiet") to refresh by
-> default.
-> 
+Fortunately, there are lots of ways to do this.  The way I happen to do
+it is with an alias:
 
-I was hesitant to go this far because it would force people that were
-comfortably relying on 'reset.quiet' to need to always use '--no-refresh' to
-get the same behavior. But, to Phillip's point earlier, there are other
-options now (like sparse index) that could provide a just-as-substantial (if
-not greater) performance boost without sacrificing the refresh.
+  [alias]
+    conflicted =3D "!f() { git status -s | grep -E '^(DD|AA|.U|U.)' | cut -=
+b4-; };f"
 
-> Thanks.
-> 
-> 
+and then I run this:
 
-Since this is already in 'next' (and, in its current state, I don't think it
-does any more damage than the pre-series state), I'll send a new series on
-top of this that deprecates 'reset.refresh' and 'reset.quiet', and makes
-'--refresh' the default for all of 'reset'.
+  git conflicted | xargs nvim-gtk
 
-Thanks, both!
+To preempt someone pointing this out, you would want to use "git status
+--porcelain" for scripting instead of "git status -s", but I happen to
+know what I'm doing in this particular case (and have reasons for it)
+and can fix things if it breaks.  You should probably use --porcelain.
+
+My approach also works less well if you have files with spaces or other
+characters special to the shell.  That can be fixed with using
+NUL-terminated strings if that's a problem for you (it isn't on the
+projects I work on).
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--TuUs7UWM0CBYeIsD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYjToDAAKCRB8DEliiIei
+gZsyAQCHBkaqCPlM2Kp6bsdvV+SbOLZ8AuKP5+erAp0IU9zx0wD/cDKu2Lt/Zlmg
+SraX7t+wheDiAbpic3FZQZS6AR/Zswg=
+=IRWT
+-----END PGP SIGNATURE-----
+
+--TuUs7UWM0CBYeIsD--
