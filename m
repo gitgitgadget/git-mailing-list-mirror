@@ -2,71 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D3F1C433EF
-	for <git@archiver.kernel.org>; Sat, 19 Mar 2022 09:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D870C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Mar 2022 09:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242549AbiCSJNQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Mar 2022 05:13:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
+        id S242552AbiCSJNY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Mar 2022 05:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242543AbiCSJNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Mar 2022 05:13:15 -0400
+        with ESMTP id S242543AbiCSJNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Mar 2022 05:13:17 -0400
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43DB58EB79
-        for <git@vger.kernel.org>; Sat, 19 Mar 2022 02:11:53 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 55A0832004CE;
-        Sat, 19 Mar 2022 05:11:52 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942148E1B4
+        for <git@vger.kernel.org>; Sat, 19 Mar 2022 02:11:56 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id A32253200E89;
+        Sat, 19 Mar 2022 05:11:55 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Sat, 19 Mar 2022 05:11:52 -0400
+  by compute1.internal (MEProxy); Sat, 19 Mar 2022 05:11:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
         :content-transfer-encoding:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; bh=MZe/aaPybGricXFBQh8at0Vjz86AyE
-        srFg9J2ccCuG0=; b=e+4ZHVsFLUE0v9xRPxJLtpDGagAJJRy8gBhH0G6GdZdoGq
-        m9xtLtGJoEVs1HPCnPmpoiaxrt/pjzrxU69U7nEvThHcMTARagJXp9sFvvaaHNsy
-        LMIykT3o6ODNJTvU2bp9mvu6/P4dz4rqtt/GSRvrmnM/AMR6ziDPRb2IgDSr56UQ
-        8/gWNVy6j4Hj0opBKNcoKZKwUynzCrSGOxMcuirMiK3sVbe3ZWn2A6pml0UwhdYV
-        17xrInLEMZFmrCypvAjPfWLhGfiYKYzy+r2E5yF2J2LZFTu+UvFVQ8nm+b8PpGjv
-        WHWbTs3zGwcRQbgySNQslu3tjGyTnjLYMHWPI3lw==
+        :subject:subject:to:to; s=fm2; bh=UoCxkPUVblncpoxBIQY2LaLhDOrPXN
+        KNHJQv/CtaBOg=; b=wyRgpJaxdZTd8qp/kJL6tuF9DCJThrQDUB8beA2nAHLZMv
+        /7FzTZ3RDHGYeSetPic6aAupYAKDZfc+W6nvrf+mENGqe9FqIEc3oLA3FpXhqqiS
+        cQVvimgLHpCQbI5MHuz6OfjNSzoCJTLZhlpvA8EPtHNjlyifpNrrPKk7vzYHtYX3
+        IOxAqay9RZjLeIBl96yKGh1MwDF5Elw/+inH2TQRBy0ujPQi3ZRWF5bJPlymAipD
+        zbww09JyoY2NOGb5/YW/j4rWeZ3C8YgImGoqv+w/VOTdQvyXX7t9LXgB2BHx4Zoe
+        88TbdHEjxABZ7Bg86lwrxEqaWBZ9B1e+D1TKi2Fg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
         :from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=MZe/aa
-        PybGricXFBQh8at0Vjz86AyEsrFg9J2ccCuG0=; b=Tj46BGTDiTKXB1A6Y3gONG
-        fwzoPdGzhzfGZ47LIRRo2oi2jbAIv/gUdHxHXroOcHbro5Ua01rKZgLKYvVZZ+Nz
-        4tUYXSmZj/HPq7CRe4mIAuMmiNekL1eABg/3Cj/8cC4nHF+3ipzvIhVeCgQcmBVA
-        qA84ttepCUY94TrzBarkWSf9IblrEHqlDqTwHNoMt2Bf4CNNLzSYhyP6NDkoMcZT
-        XyvqVloFS0viSZyvZMc+y7qesOlXuFCjP/OdXE+ZVygLJrg9W9a7PTwGVvL5P8x9
-        a6cLkFswSZ0+f8nyYhDUnT6LhMr9hGx3yH7S133spU3dH115fKWTmi+Nlid2Ol8w
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=UoCxkP
+        UVblncpoxBIQY2LaLhDOrPXNKNHJQv/CtaBOg=; b=nzYr81EBl01vGBcaAhzH0U
+        IYKldLGKhAwflreMlMSg1O9KSKboZREqWoN/99SJcJvd80Sb80HvCnBZfoXczXWZ
+        KnnzkM4R9A/963gdRaGURFizS87bORlFgT+MThClJTK5W8rqszvNa6QDo8D0Az4Y
+        36nismY14IosgrjG9b1R6P+mvwmrRxqrLvBSiRAkFQLCAPJwTXRxN5NTEgKwax9D
+        JJCbz/iK1VVwnRwrEDlfnwUf1UXM+6+AYcx39cV9G+r3sOXnPWY5jk21oiWlGVUt
+        javFy5OgBjsNjY3T79Traa+Rm51g//r3wt+xJ6FEMDEKN2qChAd6fcZp5fyGTSEg
         ==
-X-ME-Sender: <xms:V541YvIcOasCIWPJSnK3IS8a3MqjWlCQL4RneN__7WPSAgMxo_e8tg>
-    <xme:V541YjLbYAqM-fZR5cORrbmpKMPkwdqZp5UPikmNFMqU7zqTVwhO_QF_VkejJIGNn
-    QsCHEJUlCceOCduVA>
-X-ME-Received: <xmr:V541YnuYpNWO_TPiOwDNhOfMmLQ7h7eB4LvYR-1iZfK7OgqbpApj0scai4j8o4pOQEn3fR8>
+X-ME-Sender: <xms:Wp41Yu7lmSoNjivVAkFNGLKbmbXOceE748uPDwlAaL6k42IO9AJebg>
+    <xme:Wp41Yn7WeAtnvDLQH_nW7uSAisRhkkXDzaEpBtY1Ih-E4YIK2WRuv5-n6ycfeKVSg
+    Wkv7nbI5EQsggihRg>
+X-ME-Received: <xmr:Wp41YtffsGq3PL3nQepZ0weKrc1ZppCria5hFErcheHg0BbLIHUOTeHr3OgVlgAB3QzpWHc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudefkecutefuodetggdotefrodftvfcurf
     hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertdertd
     dtnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhel
-    vddrvghuqeenucggtffrrghtthgvrhhnpedvjeffheefiedtleekueeuuddvkeekvdegle
-    dtffegjefhjeetheffhfehueeiueenucffohhmrghinhepghhithhhuhgsrdgtohhmnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvggvnh
-    hfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:V541YobaWljGj9D20QoC_d2EzLFrzgZHVgwU6PmR_JrXSM8yPXzMng>
-    <xmx:V541YmYzzyJsPG-vTVvnaHG8XZ6ogIFhL22eUteJELjWVNnkrSLr_Q>
-    <xmx:V541YsAiVVGQabm13AHCVz1ORTg5Jf72JKcb6ShFdfz2WEmjqZHzRw>
-    <xmx:V541Ytwk2NFiQ9GC-EgD9Nbsm13n1vhhEXsDIGl-ceD2fSSZRkuIiA>
+    vddrvghuqeenucggtffrrghtthgvrhhnpeekleekjedtheejheekfefggeevvdfgueegff
+    euveduhfehueegkeeijedvvdejfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:Wp41YrLkgWfuYfx-WflhPr6JSaMAwa98c2xv3rf1eKIYXl6wz0jJWw>
+    <xmx:Wp41YiIQIjIMfrMcQewHdH6kAw-tAqyzAKXSTwQVWpdRYHjvdIcNFA>
+    <xmx:Wp41YswGPs9UmK0HqaIf2E5fGiVq5_3QM_pZX66vP4c-MAx20bUTZw>
+    <xmx:W541YkjXNEr9-D1fxGdygdmX2fVakcEC4urZpM-w48y0P0kH40DmDA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 19 Mar 2022 05:11:50 -0400 (EDT)
+ 19 Mar 2022 05:11:53 -0400 (EDT)
 From:   Fernando Ramos <greenfoo@u92.eu>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
         seth@eseth.com, levraiphilippeblain@gmail.com,
         rogi@skylittlesystem.org
-Subject: [PATCH v5 1/3] vimdiff: new implementation with layout support
-Date:   Sat, 19 Mar 2022 10:11:39 +0100
-Message-Id: <20220319091141.4911-2-greenfoo@u92.eu>
+Subject: [PATCH v5 2/3] vimdiff: add tool documentation
+Date:   Sat, 19 Mar 2022 10:11:40 +0100
+Message-Id: <20220319091141.4911-3-greenfoo@u92.eu>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220319091141.4911-1-greenfoo@u92.eu>
 References: <20220319091141.4911-1-greenfoo@u92.eu>
@@ -76,613 +75,343 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running 'git mergetool -t vimdiff', a new configuration option
-('mergetool.vimdiff.layout') can now be used to select how the user
-wants the different windows, tabs and buffers to be displayed.
+Running 'git {merge,diff}tool --tool-help' now also prints usage
+information about the vimdiff tool (and its variantes) instead of just
+its name.
 
-If the option is not provided, the layout will be the same one that was
-being used before this commit (ie. two rows with LOCAL, BASE and COMMIT
-in the top one and MERGED in the bottom one).
+Two new functions ('diff_cmd_help()' and 'merge_cmd_help()') have been
+added to the set of functions that each merge tool (ie. scripts found
+inside "mergetools/") can overwrite to provided tool specific
+information.
 
-The 'vimdiff' variants ('vimdiff{1,2,3}') still work but, because they
-represented nothing else than different layouts, are now internally
-implemented as a subcase of 'vimdiff' with the corresponding
-pre-configured 'layout'.
+Right now, only 'mergetools/vimdiff' implements these functions, but
+other tools are encouraged to do so in the future, specially if they
+take configuration options not explained anywhere else (as it is the
+case with the 'vimdiff' tool and the new 'layout' option)
 
 Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
 ---
- mergetools/vimdiff | 548 ++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 521 insertions(+), 27 deletions(-)
+ Documentation/git-difftool--vimdiff.txt  |  40 +++++
+ Documentation/git-mergetool--vimdiff.txt | 195 +++++++++++++++++++++++
+ git-mergetool--lib.sh                    |  14 ++
+ mergetools/vimdiff                       |  12 ++
+ 4 files changed, 261 insertions(+)
+ create mode 100644 Documentation/git-difftool--vimdiff.txt
+ create mode 100644 Documentation/git-mergetool--vimdiff.txt
 
+diff --git a/Documentation/git-difftool--vimdiff.txt b/Documentation/git-difftool--vimdiff.txt
+new file mode 100644
+index 0000000000..5788f8e149
+--- /dev/null
++++ b/Documentation/git-difftool--vimdiff.txt
+@@ -0,0 +1,40 @@
++git-mergetool{litdd}vimdiff(1)
++==============================
++
++NAME
++----
++git-difftool--vimdiff - Helper script to run vim as a diff tool
++
++SYNOPSIS
++--------
++[verse]
++'git difftool' --tool=vimdiff ... (rest of 'git difftool' options)
++
++DESCRIPTION
++-----------
++When specifying '--tool=vimdiff' in 'git difftool', git will open vim with a
++with two vertical windows: LOCAL changes will be placed in the left window and
++REMOTE changes in the right one.
++
++           ------------------------------------------
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           |     LOCAL         |    REMOTE          |
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           ------------------------------------------
++
++VARIANTS
++--------
++Instead of '--tool=vimdiff', you can also use these other variants:
++
++  * '--tool=gvimdiff', to open gvim instead of vim.
++
++  * '--tool=nvimdiff', to open nvim ('neovim') instead of vim.
++
++GIT
++---
++Part of the linkgit:git[1] suite
++
+diff --git a/Documentation/git-mergetool--vimdiff.txt b/Documentation/git-mergetool--vimdiff.txt
+new file mode 100644
+index 0000000000..fb69443d3d
+--- /dev/null
++++ b/Documentation/git-mergetool--vimdiff.txt
+@@ -0,0 +1,195 @@
++git-difftool{litdd}vimdiff(1)
++=============================
++
++NAME
++----
++git-mergetool--vimdiff - Helper script to run vim as a merge tool
++
++SYNOPSIS
++--------
++[verse]
++'git mergetool' --tool=vimdiff ... (rest of 'git mergetool' options)
++
++DESCRIPTION
++-----------
++When specifying '--tool=vimdiff' in 'git mergetool' git will open vim with a 4
++windows layout distributed in the following way:
++
++    ------------------------------------------
++    |             |           |              |
++    |   LOCAL     |   BASE    |   REMOTE     |
++    |             |           |              |
++    ------------------------------------------
++    |                                        |
++    |                MERGED                  |
++    |                                        |
++    ------------------------------------------
++
++"LOCAL", "BASE" and "REMOTE" are read-only buffers showing the contents of the
++conflicting file in a specific git commit ("commit you are merging into",
++"common ancestor commit" and "commit you are merging from" respectively)
++
++"MERGED" is a writable buffer where you have to resolve the conflicts (using the
++other read-only buffers as a reference). Once you are done, save and exit "vim"
++as usual (":wq") or, if you want to abort, exit using ":cq".
++
++LAYOUT CONFIGURATION
++--------------------
++You can change the windows layout used by vim by setting configuration variable
++"mergetool.vimdiff.layout" which accepts a string where the following separators
++have special meaning:
++
++  - "+" is used to "open a new tab"
++  - "," is used to "open a new vertical split"
++  - "/" is used to "open a new horizontal split"
++  - "@" is used to indicate which is the file containing the final version after
++    solving the conflicts. In not present, "MERGED" will be used by default.
++
++The precedence of the operators is this one (you can use parenthesis to change
++it):
++
++    @ > + > / > ,
++
++Let's see some examples to understand how it works:
++
++  * layout = "(LOCAL,BASE,REMOTE)/MERGED"
++
++    This is exactly the same as the default layout we have already seen.
++
++    Note that "/" has precedence over "," and thus the parenthesis are not
++    needed in this case. The next layout definition is equivalent:
++
++        layout = "LOCAL,BASE,REMOTE / MERGED"
++
++  * layout = "LOCAL,MERGED,REMOTE"
++
++    If, for some reason, we are not interested in the "BASE" buffer.
++
++           ------------------------------------------
++           |             |           |              |
++           |             |           |              |
++           |   LOCAL     |   MERGED  |   REMOTE     |
++           |             |           |              |
++           |             |           |              |
++           ------------------------------------------
++
++  * layout = "MERGED"
++
++    Only the "MERGED" buffer will be shown. Note, however, that all the other
++    ones are still loaded in vim, and you can access them with the "buffers"
++    command. 
++
++           ------------------------------------------
++           |                                        |
++           |                                        |
++           |                 MERGED                 |
++           |                                        |
++           |                                        |
++           ------------------------------------------
++
++  * layout = "@LOCAL,REMOTE"
++
++    When "MERGED" is not present in the layout, you must "mark" one of the
++    buffers with an asterisk. That will become the buffer you need to edit and
++    save after resolving the conflicts.
++
++           ------------------------------------------
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           |     LOCAL         |    REMOTE          |
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           ------------------------------------------
++
++  * layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE"
++
++    Three tabs will open: the first one is a copy of the default layout, while
++    the other two only show the differences between "BASE" and "LOCAL" and
++    "BASE" and "REMOTE" respectively.
++ 
++           ------------------------------------------
++           | <TAB #1> |  TAB #2  |  TAB #3  |       |
++           ------------------------------------------
++           |             |           |              |
++           |   LOCAL     |   BASE    |   REMOTE     |
++           |             |           |              |
++           ------------------------------------------
++           |                                        |
++           |                MERGED                  |
++           |                                        |
++           ------------------------------------------
++
++           ------------------------------------------
++           |  TAB #1  | <TAB #2> |  TAB #3  |       |
++           ------------------------------------------
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           |     BASE          |    LOCAL           |
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           ------------------------------------------
++
++           ------------------------------------------
++           |  TAB #1  |  TAB #2  | <TAB #3> |       |
++           ------------------------------------------
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           |     BASE          |    REMOTE          |
++           |                   |                    |
++           |                   |                    |
++           |                   |                    |
++           ------------------------------------------
++
++  * layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"
++
++    Same as the previous example, but adds a fourth tab with the same
++    information as the first tab, with a different layout.
++ 
++           ---------------------------------------------
++           |  TAB #1  |  TAB #2  |  TAB #3  | <TAB #4> |
++           ---------------------------------------------
++           |       LOCAL         |                     |
++           |---------------------|                     |
++           |       BASE          |        MERGED       |
++           |---------------------|                     |
++           |       REMOTE        |                     |
++           ---------------------------------------------
++
++    Note how in the third tab definition we need to use parenthesis to make ","
++    have precedence over "/".
++
++VARIANTS
++--------
++Instead of '--tool=vimdiff', you can also use these other variants:
++
++  * '--tool=gvimdiff', to open gvim instead of vim.
++
++  * '--tool=nvimdiff', to open nvim ('neovim') instead of vim.
++
++When using these variants, in order to specify a custom layout you will have to
++set configuration variables 'mergetool.gvimdiff.layout' and
++'mergetool.nvimdiff.layout' instead of 'mergetool.vimdiff.layout'
++
++In addition, for backwards compatibility with previous git versions, you can
++also append '1', '2' or '3' to either 'vimdiff' or any of the variants (ex:
++'vimdiff3', 'nvimdiff1', etc...) to use a predefined layout.
++In other words, using '--tool=[g,n,]vimdiffx' is the same as using
++'--tool=[g,n,]vimdiff' and setting configuration variable
++'mergetool.[g,n,]vimdiff.layout' to... 
++
++  * x=1 --> "@LOCAL, REMOTE"
++  * x=2 --> "LOCAL, MERGED, REMOTE"
++  * x=3 --> "MERGED"
++
++Example: using '--tool=gvimdiff2' will open 'gvim' with three columns (LOCAL,
++MERGED and REMOTE).
++
++GIT
++---
++Part of the linkgit:git[1] suite
++
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 542a6a75eb..956c276e1d 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -64,6 +64,12 @@ $(list_tool_variants)"
+ 				fi
+ 				shown_any=yes
+ 				printf "%s%s\n" "$per_line_prefix" "$toolname"
++
++				(diff_mode && diff_cmd_help "$toolname" || merge_cmd_help "$toolname") |
++				while read -r line
++				do
++					printf "%s\t%s\n" "$per_line_prefix" "$line"
++				done
+ 			fi
+ 		done
+ 
+@@ -162,10 +168,18 @@ setup_tool () {
+ 		return 1
+ 	}
+ 
++	diff_cmd_help () {
++		return 0
++	}
++
+ 	merge_cmd () {
+ 		return 1
+ 	}
+ 
++	merge_cmd_help () {
++		return 0
++	}
++
+ 	hide_resolved_enabled () {
+ 		return 0
+ 	}
 diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 96f6209a04..5bf77a5388 100644
+index 5bf77a5388..db6cb75728 100644
 --- a/mergetools/vimdiff
 +++ b/mergetools/vimdiff
-@@ -1,48 +1,440 @@
-+# This script can be run in two different contexts:
-+#
-+#   - From git, when the user invokes the "vimdiff" merge tool. In this context
-+#     this script expects the following environment variables (among others) to
-+#     be defined (which is something "git" takes care of):
-+#
-+#       - $BASE
-+#       - $LOCAL
-+#       - $REMOTE
-+#       - $MERGED
-+#
-+#     In this mode, all this script does is to run the next command:
-+#
-+#         vim -f -c ... $LOCAL $BASE $REMOTE $MERGED
-+#
-+#     ...where the "..." string depends on the value of the
-+#     "mergetool.vimdiff.layout" configuration variable and is used to open vim
-+#     with a certain layout of buffers, windows and tabs.
-+#
-+#   - From the unit tests framework ("t" folder) by sourcing this script and
-+#     then manually calling "run_unit_tests", which will run a battery of unit
-+#     tests to make sure nothing breaks.
-+#     In this context this script does not expect any particular environment
-+#     variable to be set.
-+
-+
-+################################################################################
-+## Internal functions (not meant to be used outside this script)
-+################################################################################
-+
-+debug_print() { 
-+	# Send message to stderr if global variable DEBUG is set to "true"
-+
-+	if test -n "$GIT_MERGETOOL_VIMDIFF_DEBUG"
-+	then
-+		>&2 echo "$@"
-+	fi
-+}
-+
-+substring() {
-+	# Return a substring of $1 containing $3 characters starting at
-+	# zero-based offset $2.
-+	# 
-+	# Examples:
-+	#
-+	#   substring "Hello world" 0 4  --> "Hell"
-+	#   substring "Hello world" 3 4  --> "lo w"
-+	#   substring "Hello world" 3 10 --> "lo world"
-+
-+	STRING=$1
-+	START=$2
-+	LEN=$3
-+
-+	echo "$STRING" | cut -c$(( START + 1 ))-$(( START + $LEN))
-+}
-+
-+gen_cmd_aux() {
-+	# Auxiliary function used from "gen_cmd()".
-+	# Read that other function documentation for more details.
-+
-+	LAYOUT=$1 
-+	CMD=$2  # This is a second (hidden) argument used for recursion  
-+
-+	debug_print
-+	debug_print "LAYOUT    : $LAYOUT"
-+	debug_print "CMD       : $CMD"
-+
-+	if test -z "$CMD"
-+	then
-+		CMD="echo" # vim "nop" operator
-+	fi
-+
-+	start=0
-+	end=${#LAYOUT}
-+
-+	nested=0
-+	nested_min=100
-+
-+
-+	# Step 1:
-+	#
-+	# Increase/decrease "start"/"end" indices respectively to get rid of
-+	# outer parenthesis.
-+	#
-+	# Example:
-+	#
-+	#   - BEFORE: (( LOCAL , BASE ) / MERGED )
-+	#   - AFTER :  ( LOCAL , BASE ) / MERGED 
-+
-+	oldIFS=$IFS
-+	IFS=#
-+	for c in $(echo "$LAYOUT" | sed 's:.:&#:g')
-+	do
-+		if test "$c" = " "
-+		then
-+			continue
-+		fi
-+
-+		if test "$c" = "("
-+		then
-+			nested=$(( nested + 1 ))
-+			continue
-+		fi
-+
-+		if test "$c" = ")"
-+		then
-+			nested=$(( nested - 1 ))
-+			continue
-+		fi
-+
-+		if test "$nested" -lt "$nested_min"
-+		then
-+			nested_min=$nested
-+		fi
-+	done
-+	IFS=$oldIFS
-+
-+	debug_print "NESTED MIN: $nested_min"
-+
-+	while test "$nested_min" -gt "0"
-+	do
-+		start=$(( start + 1 ))
-+		end=$(( end - 1 ))
-+
-+		start_minus_one=$(( start - 1 ))
-+
-+		while ! test "$(substring "$LAYOUT" "$start_minus_one" 1)" = "("
-+		do
-+			start=$(( start + 1 ))
-+			start_minus_one=$(( start_minus_one + 1 ))
-+		done
-+
-+		while ! test "$(substring "$LAYOUT" "$end" 1)" = ")"
-+		do
-+			end=$(( end - 1 ))
-+		done
-+
-+		nested_min=$(( nested_min - 1 ))
-+	done
-+
-+	debug_print "CLEAN     : $(substring "$LAYOUT" "$start" "$(( end - start ))")"
-+
-+
-+	# Step 2:
-+	#
-+	# Search for all valid separators ("+", "/" or ",") which are *not*
-+	# inside parenthesis. Save the index at which each of them makes the
-+	# first appearance.
-+
-+	index_new_tab=""
-+	index_horizontal_split=""
-+	index_vertical_split=""
-+
-+	nested=0
-+	i=$(( start - 1 ))
-+
-+	oldIFS=$IFS
-+	IFS=#
-+	for c in $(substring "$LAYOUT" "$start" "$(( end - start ))" | sed 's:.:&#:g');
-+	do
-+		i=$(( i + 1 ))
-+
-+		if test "$c" = " "
-+		then
-+			continue
-+		fi
-+
-+		if test "$c" = "("
-+		then
-+			nested=$(( nested + 1 ))
-+			continue
-+		fi
-+
-+		if test "$c" = ")"
-+		then
-+			nested=$(( nested - 1 ))
-+			continue
-+		fi
-+
-+		if test "$nested" = 0
-+		then
-+			current=$c
-+			
-+			if test "$current" = "+"
-+			then
-+				if test -z "$index_new_tab"
-+				then
-+					index_new_tab=$i
-+				fi
-+
-+			elif test "$current" = "/"
-+			then
-+				if test -z "$index_horizontal_split"
-+				then
-+					index_horizontal_split=$i
-+				fi
-+
-+			elif test "$current" = ","
-+			then
-+				if test -z "$index_vertical_split"
-+				then
-+					index_vertical_split=$i
-+				fi
-+			fi
-+		fi
-+	done
-+	IFS=$oldIFS
-+
-+
-+	# Step 3:
-+	#
-+	# Process the separator with the highest order of precedence
-+	# (";" has the highest precedence and "|" the lowest one).
-+	#
-+	# By "process" I mean recursively call this function twice: the first
-+	# one with the substring at the left of the separator and the second one
-+	# with the one at its right.
-+
-+	terminate="false"
-+
-+	if ! test -z "$index_new_tab"
-+	then
-+		before="-tabnew"
-+		after="tabnext"
-+		index=$index_new_tab
-+		terminate="true"
-+
-+	elif ! test -z "$index_horizontal_split"
-+	then
-+		before="split"
-+		after="wincmd j"
-+		index=$index_horizontal_split
-+		terminate="true"
-+
-+	elif ! test -z "$index_vertical_split"
-+	then
-+		before="vertical split"
-+		after="wincmd l"
-+		index=$index_vertical_split
-+		terminate="true"
-+	fi
-+
-+	if  test "$terminate" = "true"
-+	then
-+		CMD="$CMD | $before"
-+		CMD=$(gen_cmd_aux "$(substring "$LAYOUT" "$start" "$(( index - start ))")" "$CMD")
-+		CMD="$CMD | $after"
-+		CMD=$(gen_cmd_aux "$(substring "$LAYOUT" "$(( index + 1 ))" "$(( ${#LAYOUT} - index ))")" "$CMD")
-+		echo "$CMD"
-+		return
-+	fi
-+
-+
-+	# Step 4:
-+	#
-+	# If we reach this point, it means there are no separators and we just
-+	# need to print the command to display the specified buffer
-+
-+	target=$(substring "$LAYOUT" "$start" "$(( end - start ))" | sed 's:[ @();|-]::g')
-+
-+	if test "$target" = "LOCAL"
-+	then
-+		CMD="$CMD | 1b"
-+
-+	elif test "$target" = "BASE"
-+	then
-+		CMD="$CMD | 2b"
-+
-+	elif test "$target" = "REMOTE"
-+	then
-+		CMD="$CMD | 3b"
-+
-+	elif test "$target" = "MERGED"
-+	then
-+		CMD="$CMD | 4b"
-+
-+	else
-+		CMD="$CMD | ERROR: >$target<"
-+	fi
-+
-+	echo "$CMD"
-+	return
-+}
-+
-+
-+gen_cmd() {
-+	# This function returns (in global variable FINAL_CMD) the string that
-+	# you can use when invoking "vim" (as shown next) to obtain a given
-+	# layout:
-+	#
-+	#   $ vim -f $FINAL_CMD "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-+	#
-+	# It takes one single argument: a string containing the desired layout
-+	# definition.
-+	#
-+	# The syntax of the "layout definitions" is explained in ... (TODO)...
-+	# but you can already intuitively understand how it works by knowing
-+	# that...
-+	#
-+	#   * ";" means "a new vim tab"
-+	#   * "-" means "a new vim horizontal split"
-+	#   * "|" means "a new vim vertical split"
-+	#
-+	# It also returns (in global variable FINAL_TARGET) the name ("LOCAL",
-+	# "BASE", "REMOTE" or "MERGED") of the file that is marked with an "@",
-+	# or "MERGED" if none of them is.
-+	#
-+	# Example:
-+	#
-+	#     gen_cmd "@LOCAL , REMOTE"
-+	#     |
-+	#     `-> FINAL_CMD    == "-c \"echo | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	#         FINAL_TARGET == "LOCAL"
-+
-+	LAYOUT=$1 
-+
-+
-+	# Search for a "@" in one of the files identifiers ("LOCAL", "BASE",
-+	# "REMOTE", "MERGED"). If not found, use "MERGE" as the default file
-+	# where changes will be saved.
-+
-+	if echo "$LAYOUT" | grep @LOCAL >/dev/null
-+	then
-+		FINAL_TARGET="LOCAL"
-+	elif echo "$LAYOUT" | grep @BASE >/dev/null
-+	then
-+		FINAL_TARGET="BASE"
-+	else
-+		FINAL_TARGET="MERGED"
-+	fi
-+
-+
-+	# Obtain the first part of vim "-c" option to obtain the desired layout
-+
-+	CMD=$(gen_cmd_aux "$LAYOUT")
-+
-+
-+	# Adjust the just obtained script depending on whether more than one
-+	# windows are visible or not
-+
-+	if echo "$LAYOUT" | grep ",\|/" >/dev/null
-+	then
-+		CMD="$CMD | tabdo windo diffthis"
-+	else
-+		CMD="$CMD | bufdo diffthis"
-+	fi
-+
-+
-+	# Add an extra "-c" option to move to the first tab (notice that we
-+	# can't simply append the command to the previous "-c" string as
-+	# explained here: https://github.com/vim/vim/issues/9076
-+
-+	FINAL_CMD="-c \"$CMD\" -c \"tabfirst\""
-+}
-+
-+
-+################################################################################
-+## API functions (called from "git-mergetool--lib.sh")
-+################################################################################
-+
- diff_cmd () {
- 	"$merge_tool_path" -R -f -d \
- 		-c 'wincmd l' -c 'cd $GIT_PREFIX' "$LOCAL" "$REMOTE"
+@@ -364,6 +364,12 @@ diff_cmd () {
  }
  
+ 
++diff_cmd_help() {
++	echo "Run 'man git-difftool--vimdiff' for details"
++	return 0
++}
++
 +
  merge_cmd () {
-+	layout=$(git config mergetool.$merge_tool.layout)
-+
- 	case "$1" in
- 	*vimdiff)
--		if $base_present
-+		if test -z "$layout"
- 		then
--			"$merge_tool_path" -f -d -c '4wincmd w | wincmd J' \
--				"$LOCAL" "$BASE" "$REMOTE" "$MERGED"
--		else
--			"$merge_tool_path" -f -d -c 'wincmd l' \
--				"$LOCAL" "$MERGED" "$REMOTE"
-+			# Default layout when none is specified
-+			layout="(LOCAL,BASE,REMOTE)/MERGED"
- 		fi
- 		;;
- 	*vimdiff1)
--		"$merge_tool_path" -f -d \
--			-c 'echon "Resolve conflicts leftward then save. Use :cq to abort."' \
--			"$LOCAL" "$REMOTE"
--		ret="$?"
--		if test "$ret" -eq 0
--		then
--			cp -- "$LOCAL" "$MERGED"
--		fi
--		return "$ret"
-+		layout="@LOCAL,MERGED"
- 		;;
- 	*vimdiff2)
--		"$merge_tool_path" -f -d -c 'wincmd l' \
--			"$LOCAL" "$MERGED" "$REMOTE"
-+		layout="LOCAL,MERGED,REMOTE"
- 		;;
- 	*vimdiff3)
--		if $base_present
--		then
--			"$merge_tool_path" -f -d -c 'hid | hid | hid' \
--				"$LOCAL" "$REMOTE" "$BASE" "$MERGED"
--		else
--			"$merge_tool_path" -f -d -c 'hid | hid' \
--				"$LOCAL" "$REMOTE" "$MERGED"
--		fi
-+		layout="MERGED"
- 		;;
- 	esac
-+
-+	gen_cmd "$layout"
-+
-+	debug_print ""
-+	debug_print "FINAL CMD : $FINAL_CMD"
-+	debug_print "FINAL TAR : $FINAL_TARGET"
-+
-+	if $base_present
-+	then
-+		eval "$merge_tool_path" \
-+			-f "$FINAL_CMD" "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-+	else
-+		# If there is no BASE (example: a merge conflict in a new file
-+		# with the same name created in both braches which didn't exist
-+		# before), close all BASE windows using vim's "quit" command
-+
-+		FINAL_CMD=$(echo "$FINAL_CMD" | \
-+			sed -e 's:2b:quit:g' -e 's:3b:2b:g' -e 's:4b:3b:g')
-+
-+		eval "$merge_tool_path" \
-+			-f "$FINAL_CMD" "$LOCAL" "$REMOTE" "$MERGED"
-+	fi
-+
-+	ret="$?"
-+
-+	if test "$ret" -eq 0
-+	then
-+		case "$FINAL_TARGET" in
-+		LOCAL)
-+			source_path="$LOCAL"
-+			;;
-+		REMOTE)
-+			source_path="$REMOTE"
-+			;;
-+		MERGED|*)
-+			# Do nothing
-+			source_path=
-+			;;
-+		esac
-+
-+		if test -n "$source_path"
-+		then
-+			cp "$source_path" "$MERGED"
-+		fi
-+	fi
-+
-+	return "$ret"
+ 	layout=$(git config mergetool.$merge_tool.layout)
+ 
+@@ -435,6 +441,12 @@ merge_cmd () {
  }
  
+ 
++merge_cmd_help() {
++	echo "Run 'man git-mergetool--vimdiff' for details"
++	return 0
++}
++
 +
  translate_merge_tool_path() {
  	case "$1" in
  	nvimdiff*)
-@@ -57,14 +449,116 @@ translate_merge_tool_path() {
- 	esac
- }
- 
-+
- exit_code_trustable () {
- 	true
- }
- 
-+
- list_tool_variants () {
--	for prefix in '' g n; do
--		for suffix in '' 1 2 3; do
-+	for prefix in '' g n
-+	do
-+		for suffix in '' 1 2 3
-+		do
- 			echo "${prefix}vimdiff${suffix}"
- 		done
- 	done
- }
-+
-+
-+################################################################################
-+## Unit tests (called from scripts inside the "t" folder)
-+################################################################################
-+
-+run_unit_tests() {
-+	# Function to make sure that we don't break anything when modifying this
-+	# script.
-+	#
-+	# This function is automatically executed when you execute this directly
-+	# from the shell
-+
-+	NUMBER_OF_TEST_CASES=16
-+
-+	TEST_CASE_01="LOCAL,MERGED,REMOTE"
-+	TEST_CASE_02="LOCAL/MERGED/REMOTE"
-+	TEST_CASE_03="(LOCAL/REMOTE),MERGED"
-+	TEST_CASE_04="MERGED,(LOCAL/REMOTE)"
-+	TEST_CASE_05="(LOCAL,REMOTE)/MERGED"
-+	TEST_CASE_06="MERGED/(LOCAL,REMOTE)"
-+	TEST_CASE_07="(LOCAL,BASE,REMOTE)/MERGED"
-+	TEST_CASE_08="(LOCAL/BASE/REMOTE),MERGED"
-+	TEST_CASE_09="@LOCAL,REMOTE"
-+	TEST_CASE_10="MERGED"
-+	TEST_CASE_11="(LOCAL,BASE,REMOTE)/MERGED+BASE,LOCAL+BASE,REMOTE+(LOCAL/BASE/REMOTE),MERGED"
-+	TEST_CASE_12="((LOCAL,REMOTE)/BASE),MERGED"
-+	TEST_CASE_13="((LOCAL,REMOTE)/BASE),((LOCAL/REMOTE),MERGED)"
-+	TEST_CASE_14="BASE,REMOTE+BASE,LOCAL"
-+	TEST_CASE_15="  ((  (LOCAL , BASE , REMOTE) / MERGED))   +(BASE)   , LOCAL+ BASE , REMOTE+ (((LOCAL / BASE / REMOTE)) ,    MERGED   )  "
-+	TEST_CASE_16="LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL / BASE / REMOTE),MERGED"
-+
-+	EXPECTED_CMD_01="-c \"echo | vertical split | 1b | wincmd l | vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_02="-c \"echo | split | 1b | wincmd j | split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_03="-c \"echo | vertical split | split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_04="-c \"echo | vertical split | 4b | wincmd l | split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_05="-c \"echo | split | vertical split | 1b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_06="-c \"echo | split | 4b | wincmd j | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_07="-c \"echo | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_08="-c \"echo | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_09="-c \"echo | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_10="-c \"echo | 4b | bufdo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_11="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_12="-c \"echo | vertical split | split | vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_13="-c \"echo | vertical split | split | vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | vertical split | split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_14="-c \"echo | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_15="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_16="-c \"echo | -tabnew | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | vertical split | 2b | wincmd l | 3b | tabnext | vertical split | split | 1b | wincmd j | split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+
-+	EXPECTED_TARGET_01="MERGED"
-+	EXPECTED_TARGET_02="MERGED"
-+	EXPECTED_TARGET_03="MERGED"
-+	EXPECTED_TARGET_04="MERGED"
-+	EXPECTED_TARGET_05="MERGED"
-+	EXPECTED_TARGET_06="MERGED"
-+	EXPECTED_TARGET_07="MERGED"
-+	EXPECTED_TARGET_08="MERGED"
-+	EXPECTED_TARGET_09="LOCAL"
-+	EXPECTED_TARGET_10="MERGED"
-+	EXPECTED_TARGET_11="MERGED"
-+	EXPECTED_TARGET_12="MERGED"
-+	EXPECTED_TARGET_13="MERGED"
-+	EXPECTED_TARGET_14="MERGED"
-+	EXPECTED_TARGET_15="MERGED"
-+	EXPECTED_TARGET_16="MERGED"
-+
-+	at_least_one_ko="false"
-+
-+	for i in $(seq -w 1 99)
-+	do
-+		if test "$i" -gt $NUMBER_OF_TEST_CASES
-+		then
-+			break
-+		fi
-+
-+		gen_cmd "$(eval echo \${TEST_CASE_"$i"})"
-+
-+		if test "$FINAL_CMD" = "$(eval echo \${EXPECTED_CMD_"$i"})" \
-+			&& test "$FINAL_TARGET" = "$(eval echo \${EXPECTED_TARGET_"$i"})"
-+		then
-+			printf "Test Case #%02d: OK\n" "$(echo "$i" | sed 's/^0*//')"
-+		else
-+			printf "Test Case #%02d: KO !!!!\n" "$(echo "$i" | sed 's/^0*//')"
-+			echo "  FINAL_CMD              : $FINAL_CMD"
-+			echo "  FINAL_CMD (expected)   : $(eval echo \${EXPECTED_CMD_"$i"})"
-+			echo "  FINAL_TARGET           : $FINAL_TARGET"
-+			echo "  FINAL_TARGET (expected): $(eval echo \${EXPECTED_TARGET_"$i"})"
-+			at_least_one_ko="true"
-+		fi
-+	done
-+	
-+	if test "$at_least_one_ko" = "true"
-+	then
-+		return 255
-+	else
-+		return 0
-+	fi
-+}
 -- 
 2.35.1
 
