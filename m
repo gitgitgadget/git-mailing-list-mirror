@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B4D9C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8BCAC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232042AbiCUXLO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S232246AbiCUXLO (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 21 Mar 2022 19:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233290AbiCUXIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:08:36 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E4D2FE67
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:22 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so366988wmp.5
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:22 -0700 (PDT)
+        with ESMTP id S233559AbiCUXIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:08:47 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7993F39CEA0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:17 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id a1so21280106wrh.10
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hrqf3sc2tLzo/0SxSSl2f0FvWbdi52hqNZQvOYAGboU=;
-        b=CRmcfez7lL1Sw/RFJZIoOWPg+JE5wDbcbZGmNTfbjf4rBz6vPQsnyRxTQnoi6Mu037
-         5MO+XlVtWpLg2LmwxDb63/lSTwTXhlAdOIf0o0VgqXlxGr8Rv2jRMiHf6FmRbcTxESTq
-         Sym27SilCFs5MTCFg6b0eIRntqQ3P3okFR/r709/kWXsxSClgM05TI++gExMnr/WVLBc
-         tbSiwty4D980nhwj15zF8uT06tVTOBP2e9t4QasJqC+cyoE1UiLy7843eHqfDtiDHVTh
-         s7/IXYUmXQPLa4fwy/n0IoNerVN35ROhAVRlSahIM+vPaokFw+iJarQ4l05wRFfl5Sol
-         Dn1A==
+        bh=wnFuVnVjTWHB7jECLJVH1BpGSkn/m49hn/B0SfIihgk=;
+        b=Zk3gsnqbQnwn+f5jFNwzOT93LJUoIcx41Df66CiUxAQ7A1Ho6BL4Xewc+gvYPZcVTn
+         pU7atPn+r+N8lI4wS6MSmaK0QPiXT6zVLPg1GbvESDaDou2kQFXyCAWChFMrRsLebyOw
+         hoIDWuOZcSQ2yIosh8HXY5Ydq5B4xQmQFZMHgK3xuBfzBb6YaQRQjgmSr0KXfPcntjwA
+         cjSxkZSHBPduYa+qZ55JwtVx2GCPXBYfzAf9eKRG4JuILgcIbbWVOuBpwOdQphq2N8eS
+         JCetDUpQ0JVsoUdeRQE+admGtucxGe4Td7LlMT1p1khc9125eB9wuuKo2BKaWLA7lqaR
+         uEgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hrqf3sc2tLzo/0SxSSl2f0FvWbdi52hqNZQvOYAGboU=;
-        b=a1p1mSGhm/VlEkpzoCgjdbfK7JGPNK+PiiHM5UZYSkLkZN3a6INZBk3IQ+NHYF1+xM
-         WR2j0pS23RQUX81Ia0kKLdCe+XwmIxBam+oOMKxw23t76u6ADeiIBo7TUIDhFN9s6jWT
-         MhhjlnrPeKL9XrRJfXFxlIi5AQMLRcYbVdO453YTFw8jvXKZ/ahddQtBRsA1AK6IYDUm
-         YtjmZzXOpfgJGsm70cBgQEeP803+HWUrUntEqcf/QuwbIkyn5SN4uN/YGX70vFkqnHB8
-         0ylxwXcH0zmkFUtzE5JPqbxoYnvQiz4nHBy0BxO6UxS1MK6sFxSUbV9ZdS0GUE8XCEQR
-         /0Lw==
-X-Gm-Message-State: AOAM531pvnxrYo6LL/veOSbpkV+q3yWBfXDwfWGjWPI8Q+b/KPYNIdLG
-        7rBM/lZmlXPno/K1Y5N03CiIBFOsmEY=
-X-Google-Smtp-Source: ABdhPJxl6esMWi+St0bHQlUPjFl3+qEfsPuzhsm7632kHdQSOLO+2YS9iHVpEkKDNOZggcQMV4ghAg==
-X-Received: by 2002:a05:600c:3c8b:b0:37f:1546:40c9 with SMTP id bg11-20020a05600c3c8b00b0037f154640c9mr1078239wmb.161.1647903372597;
-        Mon, 21 Mar 2022 15:56:12 -0700 (PDT)
+        bh=wnFuVnVjTWHB7jECLJVH1BpGSkn/m49hn/B0SfIihgk=;
+        b=qyhfBLa4vCBC2olmi+h2wJRV47+iyZ2CT+lkFiZt9j0jNov8uvIms6Bgbq/RrXt73q
+         +LogLOFrVaTOEvgVsAKKugGwkSIqxlRi27B6189DFW8Uovl4zyVfyqlPYfZC1zvioM9m
+         +NSW5hcU4s5MI88wVZJCKyDioWTl8bCYeQ0ahb58SMHv4dc/hWMfOvkdZjjWPVvUZHPB
+         uTnH42N9lY2eR2LJj1m1TJ3ahle5LfhLgkALtLuHjedKND0M5FjX6DZvG5h0NH3qOip4
+         2050YoWvSZfaCYrfpTfC/RaSmjkCw6tTwrZDWNk/ufsM+3YZYTxv/EnF/F+Z6QzG1gkx
+         5onA==
+X-Gm-Message-State: AOAM531yS4LaUQMWhAPu+SZSXc28U6LMcn6c9pyN/ibp0FLy8qwtALyh
+        Tc4HzrJpG73ReFVce0PH41+XDVwgHnI=
+X-Google-Smtp-Source: ABdhPJw5miK/mooTgBZ0u6CzMSBgCzLETUlP8XDJfMoHjd5HEVjp0dalepls/lXDdO9MaD4mzPZdHg==
+X-Received: by 2002:a5d:4892:0:b0:1ed:beaa:778a with SMTP id g18-20020a5d4892000000b001edbeaa778amr20000639wrq.35.1647903355307;
+        Mon, 21 Mar 2022 15:55:55 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.56.11
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:56:12 -0700 (PDT)
+        Mon, 21 Mar 2022 15:55:54 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 33/41] run-command.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:55:15 +0000
-Message-Id: <20220321225523.724509-34-gitter.spiros@gmail.com>
+Subject: [PATCH 16/41] rm.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:58 +0000
+Message-Id: <20220321225523.724509-17-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -76,22 +76,22 @@ consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- run-command.c | 2 +-
+ builtin/rm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/run-command.c b/run-command.c
-index a8501e38ce..5a5d865716 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -319,7 +319,7 @@ static void child_die(enum child_errcode err)
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 84a935a16e..4c4546bad8 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -369,7 +369,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		if (get_oid("HEAD", &oid))
+ 			oidclr(&oid);
+ 		if (check_local_mod(&oid, index_only))
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 	}
  
- 	/* write(2) on buf smaller than PIPE_BUF (min 512) is atomic: */
- 	xwrite(child_notifier, &buf, sizeof(buf));
--	_exit(1);
-+	_exit(EXIT_FAILURE);
- }
- 
- static void child_dup2(int fd, int to)
+ 	/*
 -- 
 2.35.1
 
