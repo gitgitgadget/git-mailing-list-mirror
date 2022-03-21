@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85679C433FE
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C394C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231942AbiCUXH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:07:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41178 "EHLO
+        id S231766AbiCUXKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:10:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232127AbiCUXHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:07:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00FC713FBA
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:40 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h16so8854559wmd.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:40 -0700 (PDT)
+        with ESMTP id S233790AbiCUXJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:09:00 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B460450051
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:09 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id m30so12816598wrb.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=34mMrqgBbfnsuYKOqRocmbdX83HR9fyg+7WKRyJQFW0=;
-        b=aXurSz6SlMik2hXi/FI6qz93QD2YFjjttuVM4nsav3RGYNawnxnYmAP8AZCD0HpiYC
-         q0zVDGR2HgyUBqhI2vjPMyrN4crM4x/gmWPC7tTmH9lWqYYWy9rd140IUiCJ6M2lKqUp
-         YFymdSAfHr4SptW7L9w4sCJlMs9PGp1akD52qK42aaX3I1ZillNGRRPm+QKon0CyjMOP
-         P//F86vs4OFsmiGTjjE7xjII4yYxdcScCKQTQcUi04NLiNHZ9vN/Yi5l5De+489MgnWq
-         s8E7JgWVTx1b7WKXai04HigU1XAOO4H6tZTs9SxakTZSoyx2Aiewm4FCp/r/OYsJY0Bl
-         AQ/w==
+        bh=d2p6bfiW5VuLcAUsQl7oKZ4SFXFoVeZ7t5xiC+0hs1s=;
+        b=CF39FG3Rcu+68ymLSsHICiBOSbqziCoo/tidIjOtzJTehztHEnEmB4J7Dyyklwj+tb
+         CsKmiRNMfkGZTIfMk1pTEzeSZk7UwOo5QkPiOrX7KeBSoEi1v1wcxa7tJUgZG1NOr+Rh
+         +h83dx77eb8mTaSgnc3QISxGFwJtiATo5vtfFLCfgQizBfYVo1BG8Ba8BEOIegQ6gXGK
+         ZrcZc9XY7wdPi9eBahpZbXziQkZbuYfmwcHtQAmDiEL3Q0/P8tcfJUaWFtuMLGCPSbSq
+         HaClXCwYd7T+iELbo9GMfEjCI/eL1oo6F2bO23/bQub34G00dPNL3kdaJz30fEcMYXFM
+         WxbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=34mMrqgBbfnsuYKOqRocmbdX83HR9fyg+7WKRyJQFW0=;
-        b=ZePW8GhnO27Mc+PSGL6g/s9ge/XJB/sAW24OLeS/V31VQvGefVlpgLSXrNRPmoolW4
-         X5Xb/fgpLePr/+DuVZLdtXR5RwESB+QR6HuBA5ptKwkmW12YXNn/+mIUYcu5fpT48UQN
-         V4+XbkGbRGirlF52laInXbAspuyOBcv88RNHgxhE643lFKDQlMTqP5NHnJ5Jp8lZV5+5
-         aP3L6gE8cqPqNscmanlIYbg+UTizZKm2JGOd9qMIMRDSlixCl1Hzn1R4WhukXyogj3mJ
-         oYuajGZn0j7A42+jJmtquqNzVLwW7wpcxcPZTGlobJhwe40WcZqEPwidl0wY0MhMqUEq
-         xcVQ==
-X-Gm-Message-State: AOAM532KvZ4bQzEocLiqAXRZBhonXGWPX0Re3KKAHxaqhLnp3HF6r/5e
-        VtEXS4/8pxK31Q2noizgD8IKzeRadBg=
-X-Google-Smtp-Source: ABdhPJxElPQmuepytpj1OtrRKVKjHA11B7Iokvuk0Uy3Uy3wCLwmq3tcfIlX5lAGH1tcPS+GXAlFIQ==
-X-Received: by 2002:a05:600c:3509:b0:38c:b03b:b3c2 with SMTP id h9-20020a05600c350900b0038cb03bb3c2mr1146503wmq.81.1647903373725;
-        Mon, 21 Mar 2022 15:56:13 -0700 (PDT)
+        bh=d2p6bfiW5VuLcAUsQl7oKZ4SFXFoVeZ7t5xiC+0hs1s=;
+        b=UsCqlzHbDhbHiUN1BEMNTJZpQ9Scq3LeMbPLNE+mkV0Z0qEgf7r5A8zfqnLIewQSq/
+         /6sx82ySY+Kk00pvS2ldyv7DCyXQ+XBD7plzP0uPgRkyHeVv5Xl6RykvmkODqPvqG6iP
+         EwrySjgT/d0Hlq9aNeEcVOfl7DYb6Fx2OKqz7/9cJ/5OfNx0+SGtTwkUW5utIrReGI3i
+         NJRfXpCZnEOBneDhQzFkXWRUpzryjfYiimMcfACN/tYwGWSIDVmq96uOP8H55ebrdsrc
+         DjE8Mpg1UMEYvrJk6HxbeI917+ensdkG/IM1BjxR3sLuuNNVN3LeEULiQ4sFoirgrXnl
+         nvhw==
+X-Gm-Message-State: AOAM5308p0u3s6nL0pE5V0yU1e5q166TCPYW/8XZPbzs4sZOb6v8ywOU
+        hi6BGFwVYOsvEzDJ0Aznn9EF+kVHaZY=
+X-Google-Smtp-Source: ABdhPJy/PnrCy6uuetKp/3Fgit0G8KiSHKJ7OpC4bvnWKoJZDSsG9AT+keilsIVLiH+l+srn0HSJAg==
+X-Received: by 2002:a05:6000:1685:b0:204:483:77ab with SMTP id y5-20020a056000168500b00204048377abmr9674197wrd.295.1647903345735;
+        Mon, 21 Mar 2022 15:55:45 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.56.12
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:56:13 -0700 (PDT)
+        Mon, 21 Mar 2022 15:55:45 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 34/41] setup.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:55:16 +0000
-Message-Id: <20220321225523.724509-35-gitter.spiros@gmail.com>
+Subject: [PATCH 05/41] commit.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:47 +0000
+Message-Id: <20220321225523.724509-6-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -76,22 +76,55 @@ consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/commit.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 04ce33cdcd..f5cb3f30a4 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1508,7 +1508,7 @@ int daemonize(void)
- 		case -1:
- 			die_errno(_("fork failed"));
- 		default:
--			exit(0);
-+			exit(EXIT_SUCCESS);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 009a1de0a3..13af49fdd2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -496,7 +496,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
  	}
- 	if (setsid() == -1)
- 		die_errno(_("setsid failed"));
+ 
+ 	if (list_paths(&partial, !current_head ? NULL : "HEAD", &pathspec))
+-		exit(1);
++		exit(EXIT_FAILURE);
+ 
+ 	discard_cache();
+ 	if (read_cache() < 0)
+@@ -1081,7 +1081,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		if (launch_editor(git_path_commit_editmsg(), NULL, env.v)) {
+ 			fprintf(stderr,
+ 			_("Please supply the message using either -m or -F option.\n"));
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 		}
+ 		strvec_clear(&env);
+ 	}
+@@ -1785,12 +1785,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (message_is_empty(&sb, cleanup_mode) && !allow_empty_message) {
+ 		rollback_index_files();
+ 		fprintf(stderr, _("Aborting commit due to empty commit message.\n"));
+-		exit(1);
++		exit(EXIT_FAILURE);
+ 	}
+ 	if (template_untouched(&sb, template_file, cleanup_mode) && !allow_empty_message) {
+ 		rollback_index_files();
+ 		fprintf(stderr, _("Aborting commit; you did not edit the message.\n"));
+-		exit(1);
++		exit(EXIT_FAILURE);
+ 	}
+ 
+ 	if (fixup_message && starts_with(sb.buf, "amend! ") &&
+@@ -1801,7 +1801,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		if (message_is_empty(&body, cleanup_mode)) {
+ 			rollback_index_files();
+ 			fprintf(stderr, _("Aborting commit due to empty commit message body.\n"));
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 		}
+ 		strbuf_release(&body);
+ 	}
 -- 
 2.35.1
 
