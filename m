@@ -2,100 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB7BC433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1E01C433FE
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350101AbiCUUeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:34:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45940 "EHLO
+        id S1353384AbiCUUft (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:35:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238538AbiCUUeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:34:36 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F2E396A8
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:33:09 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA9C9109593;
-        Mon, 21 Mar 2022 16:33:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YuaGFAWC+wlADcvNaELBle6kiPg+eDZG0+i9hF
-        VnviQ=; b=m573BT8b3AZB3H38uZHKX1DwFwFxwpMkVkGjGZN4LTA2M75smb5ebt
-        pDKootjbLvCtJpO4L5U0k/5whZ4KdIFjNg+PhysL0N5abIhIyQvM7874RBO/321L
-        pF8ZUxiHPKW4iajs6fUix0yIZPv/LiC82UzFYdj+Zsq0JwzaDFkjo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0777109592;
-        Mon, 21 Mar 2022 16:33:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80769109590;
-        Mon, 21 Mar 2022 16:33:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] for-each-ref: respect GIT_REF_PARANOIA setting
-References: <7283f826198aaec94c847f0b26e228ace9a38433.1647880211.git.me@ttaylorr.com>
-Date:   Mon, 21 Mar 2022 13:33:04 -0700
-In-Reply-To: <7283f826198aaec94c847f0b26e228ace9a38433.1647880211.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Mon, 21 Mar 2022 12:30:18 -0400")
-Message-ID: <xmqqzgljvyf3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238538AbiCUUfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:35:37 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D878255225
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:08 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id m26-20020a05600c3b1a00b0038c8b999f58so274449wms.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=nls1zqboNWuu5wUJ2DIO+lCelR5/1stGOVoxd1jtrW8=;
+        b=V6wNpd9mVOcpA9dtsMyiNfwo3WNhoerUUjP0Ar54uQfpJuRp6NCF1IH+72rGrYX3ZK
+         5ECfltGvfU51191LfwIRw4HNU2fRBJhIphTlxACEbX+cs/BABQZkcM51dqMsBe/7DKFV
+         Y30GP3TBAwzg/4NGumx/qDbk4olub5AhKGq8ewGSiHlEGAgf8s0yNH48DVOYMerH2Twt
+         wocuAIQBHy+wowS/ni4ze7x1f5KUMVYgGk4id7JLn9D0HE82W+9MZSsbkMpsF8QWxRQD
+         WVUMRR8rbfU3HtFYQOnnr2Ac3roZT5r4u1CVjyrOWbU77GlWHi/xYQKSDrUJTn4CP01X
+         FlgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=nls1zqboNWuu5wUJ2DIO+lCelR5/1stGOVoxd1jtrW8=;
+        b=fTUEhTou8xsdee5nzz8viFGb6wr24ayGhRIpRrY8fgRS2lOtUgn/swB5PPFW6B7Ki6
+         OoM3kJyR9ihWqGqdWJMr+a31xLSS4dgkk4e1dwK+hYoWM6hV5So3KoO7ms9pOb877mV/
+         nQv5CBTVkgkdbcW5oVb9c8Hf0mxyBsjP3fnExOl5JW20ejcIlYT2uYAf6Ta8GUNWMg3t
+         ++Z7B4Hf2b1sLbPl4Gmhwce7GezOIFWTnoUU4ou29yvuBXSNQGWha7SMBpX+cawWbjVd
+         UFJMFx1XhBrd3xvUA1Ywux2yWplNAymhulfJ6wQLuhj8ZgCXa7QRHn95M7d36PN3L2Ot
+         VvdQ==
+X-Gm-Message-State: AOAM5338wewo/8bX/I+XtYOgZNWj8lmjSWWwAsMqesc4h9FmPUwVjc6Z
+        RLR6rXFtJKGaEBWXCKFKOGddKxyWxRE=
+X-Google-Smtp-Source: ABdhPJz9MN5AqnRYAJUlu87R2vjiKB3lv37vD84GFb83W/iLid3RqacTjBwF0Qq9sb7aBOKqVEg4uQ==
+X-Received: by 2002:a05:600c:5024:b0:38c:a426:8ea6 with SMTP id n36-20020a05600c502400b0038ca4268ea6mr728212wmr.193.1647894847188;
+        Mon, 21 Mar 2022 13:34:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b0037bb8df81a2sm514750wmp.13.2022.03.21.13.34.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 13:34:06 -0700 (PDT)
+Message-Id: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Mar 2022 20:34:05 +0000
+Subject: [PATCH] test-lib-functions: fix test_subcommand_inexact
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D53902A-A956-11EC-A274-CB998F0A682E-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, chakrabortyabhradeep79@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+From: Derrick Stolee <derrickstolee@github.com>
 
-> +	ret = filter_refs(&array, &filter, FILTER_REFS_ALL);
-> +	if (ret)
-> +		goto cleanup;
->  	ref_array_sort(sorting, &array);
+The implementation of test_subcommand_inexact() was originally
+introduced in e4d0c11c0 (repack: respect kept objects with '--write-midx
+-b', 2021-12-20) with the intention to allow finding a subcommand based
+on an initial set of arguments. The inexactness was intended as a way to
+allow flexible options beyond that initial set, as opposed to
+test_subcommand() which requires that the full list of options is
+provided in its entirety.
 
-Fixing the "regression" would be a simple matter of removing the
-early return from here, and instead show what we have collected?
+The implementation began by copying test_subcommand() and replaced the
+repeated argument 'printf' statement to append ".*" instead of "," to
+each argument. This has a few drawbacks:
 
->  	if (!maxcount || array.nr < maxcount)
-> @@ -91,11 +93,12 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
->  		putchar('\n');
->  	}
->  
-> +cleanup:
->  	strbuf_release(&err);
->  	strbuf_release(&output);
->  	ref_array_clear(&array);
->  	free_commit_list(filter.with_commit);
->  	free_commit_list(filter.no_commit);
->  	ref_sorting_release(sorting);
-> -	return 0;
-> +	return ret;
->  }
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 7838bd22b8..f9667f6ca4 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2249,7 +2249,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
->  
->  	if (flag & REF_ISBROKEN) {
->  		warning(_("ignoring broken ref %s"), refname);
-> -		return 0;
-> +		return 1;
->  	}
+1. Most importantly, this repeats the use of ".*" within 'expr', so the
+   inexact match is even more flexible than expected. It allows the list
+   of arguments to exist as a subsequence (with any other items included
+   between those arguments).
 
-Ah, no, not really.  This causes us to stop iterating prematurely.
+2. The line 'expr="$(expr%,}"' that previously removed a trailing comma
+   now no longer does anything, since the string ends with ".*".
 
-If we are iterating because we want to find any breakage, such an
-early stop in iteration makes good sense, but most of the time, we
-are not, and it is questionable if such an early return makes much
-sense.
+Both of these issues are fixed by keeping the addition of the comma in
+the printf statement, then adding ".*" after stripping out the trailing
+comma.
 
-I suspect that a handler may need to keep going, while recording a
-bit for each ref it collects.  ref_array_item may or may not have (I
-do not know offhand) already a bit in its flag word to signal a broken
-ref that we can carry this information out to the callers?
+All existing tests continue to pass with this change, since none of them
+were taking advantage of this unintended flexibility.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    test-lib-functions: fix test_subcommand_inexact
+    
+    This fixes a concern discovered by Junio in [1].
+    
+    [1] https://lore.kernel.org/git/xmqq4k41vdwe.fsf@gitster.g/
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1185%2Fderrickstolee%2Ftest-subcommand-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1185/derrickstolee/test-subcommand-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1185
+
+ t/test-lib-functions.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0f439c99d61..8f0e5da8727 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1811,8 +1811,8 @@ test_subcommand_inexact () {
+ 		shift
+ 	fi
+ 
+-	local expr=$(printf '"%s".*' "$@")
+-	expr="${expr%,}"
++	local expr=$(printf '"%s",' "$@")
++	expr="${expr%,}.*"
+ 
+ 	if test -n "$negate"
+ 	then
+
+base-commit: 74cc1aa55f30ed76424a0e7226ab519aa6265061
+-- 
+gitgitgadget
