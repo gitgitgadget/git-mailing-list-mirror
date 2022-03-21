@@ -2,131 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDADCC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20430C433FE
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244245AbiCUUg0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:36:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52220 "EHLO
+        id S1349096AbiCUUg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:36:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353484AbiCUUgT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:36:19 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5002B8AE45
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:53 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id d7so22297941wrb.7
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:53 -0700 (PDT)
+        with ESMTP id S1346553AbiCUUgV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:36:21 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D5E689095
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:55 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so205771wmp.5
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=7a/ISRdLKTdJKt94uWPZW9VeUoJjyTRnbCiilUC3XWA=;
-        b=qNubyY/TyTrVqgds7GPA5DhxaCifVwOH9UvskjcTn9F1EAtg2urel72xqz24CvBcKb
-         xvtNQ0LcgZhQfgXyGxK1JDdDjILSLqOwiXkRrt4ePGgbBQodvQ9kEvOlBaBpl8Sf64sd
-         qRW5P0hwdg/p0AU28oLafnxfaCs4OgtEwMxjdtfqTflM4xLdPiP5UjFJJLK20JJ5Gj+X
-         nTYb/GuwG8Xec54xJo91n8QEJD3wYbJGg3Vjcf16tx6dn6UrDDDz1rRYzDTFTUz5L0y+
-         VzeFg8lqI0fmAiYoP7O/hynRwYrrHVv6WpG57tbIvxVy9qqmAPb8idLoFs30peoEAfoz
-         NIEg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gi4JjWZexXHHxh78V+mPSCA2sBHMdK6G+amZTKC2cfA=;
+        b=GFj/kP9FMM2rWc6vHjnnmHCYpykXJ2oPVmR8vPGS1H9zEcOl+FdfDIjhDhQgmb28RI
+         DTYHHX7LL7nhAEo6cvkn7iK03MlsTkPzgSVKP3Tig0s2IH0EBYFrJA8LyFyKuxasDnl6
+         K6hCFavsRNzsrfREMUIoeYcgg2Bo6YcQCxdMLNXWEMY42GD5yf/SqWDV8/VLgaacMTDJ
+         6SF5xLzpCYwb7hgHkN4SowYx8Id3T7f4eUCqaGRyobShId4bNQapLvoIsUKBblp4O7Tu
+         KehacOVUPBtOfnWxvK1M2qm2ch1/lbzJAkDXC1hRabn9MJM9weBgb9vcjnrcSdE+8p/c
+         PXJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7a/ISRdLKTdJKt94uWPZW9VeUoJjyTRnbCiilUC3XWA=;
-        b=ETgaWzDiIPfY6lWtBSj7X2qtFXPMglwHhAikxeMxVuLLIOpVLp/xetW/5jEDU6k18D
-         D6NUzFCC9qQzcyT3/QufSWbMSQ+AGlNwm44vHg0MZ33E/tIE5BbzCtH7jIqfnnGYqFGK
-         2JsnNXHtOA5tSuRHADkLeHtCw0wI6GjnutY68lPFRQSuHbX3xsKk0nE7M8Z8eDvKztNP
-         xKg/7q2KKTpz2ZjiQFRbdzR9lvciBoH8j9O+BkozymqoMeQ2it7JnAA7e1XE0PhjKY+u
-         kUvf192+4cl3fIfcysNel/iNmyBKQnRFUkhnoOghwedwNfL/Hs2zYGCl6k0HSScjz8nE
-         yMsQ==
-X-Gm-Message-State: AOAM533Q/rIYQWj6g2NI6yUyoSCdYx7KPlQEXUwA3mfGWx7J5qJJEw1O
-        5xdvtrFhjSglZJNxWjjZW9D5Ctc48cI=
-X-Google-Smtp-Source: ABdhPJwU/d/Cg3FW3jMuoKHKg6rndQ21/jWqTAgMJpAA7xbn7oFMJX1nccGJFL4fkVLu4dXmSX1mUg==
-X-Received: by 2002:adf:dd4d:0:b0:203:f178:b78b with SMTP id u13-20020adfdd4d000000b00203f178b78bmr16081432wrm.93.1647894891530;
-        Mon, 21 Mar 2022 13:34:51 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gi4JjWZexXHHxh78V+mPSCA2sBHMdK6G+amZTKC2cfA=;
+        b=gxQD/Ea9zj/mFp/2/doFqPdlnjU7Qn3tVYU/EDpAD/Znna54jQsvIhMNYDVlInUdIm
+         uxY5X+fbf2XUqKE/sk84vFaGJlb8r3YK7KCp7gGR6f6ykQRLDyCmuxpxT6SdEoVNI1BY
+         DEPSstxLpkqme2e3xXhA2ZY7BDyV+pWQYcSSxcezawYV1T+A9uSe74myoPbFs88vBHTA
+         2uNvBD1CnzcUGTZYzKV7IysNfyhZaxXzaBLKFdqWJvbXb4NP+DHRh5exzY5yonagkVXJ
+         XWRTlKMIiSeBybDYAiYh068VzTH1UYim1tAq4D+altnlDAqeAjslc9TlUAdZ7gfMzpAz
+         KPug==
+X-Gm-Message-State: AOAM5329HSFXk03J6yum0F//Mg47fhY7wszCUbghqBep1pCmI8KrKGiI
+        +v0HJhxjS5KXyoOSpoeq1ckKh3R66v0=
+X-Google-Smtp-Source: ABdhPJzczAIaerW+JK3m+L+DWLfPeMG//biOtdNHeWt05StIMZ2K2lY2is73TlGSSLa0cEOD8usesg==
+X-Received: by 2002:a1c:e908:0:b0:38c:782c:2a62 with SMTP id q8-20020a1ce908000000b0038c782c2a62mr723434wmc.135.1647894893786;
+        Mon, 21 Mar 2022 13:34:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6-20020adffc06000000b00203f2828075sm10047498wrr.19.2022.03.21.13.34.50
+        by smtp.gmail.com with ESMTPSA id l13-20020adfbd8d000000b002040daf5dffsm6906631wrh.18.2022.03.21.13.34.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 13:34:50 -0700 (PDT)
-Message-Id: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
+        Mon, 21 Mar 2022 13:34:53 -0700 (PDT)
+Message-Id: <d9bebd4b4e0000850e076ee642b20b09f71db700.1647894889.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
+References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Mar 2022 20:34:45 +0000
-Subject: [PATCH 0/4] reset: make --no-refresh the only way to skip index refresh
+Date:   Mon, 21 Mar 2022 20:34:47 +0000
+Subject: [PATCH 2/4] reset: deprecate 'reset.quiet' config option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
-        Victoria Dye <vdye@github.com>
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Maintainer's note: this is based on vd/stash-silence-reset
+From: Victoria Dye <vdye@github.com>
 
-----------------------------------------------------------------------------
+Remove the 'reset.quiet' config option, remove '--no-quiet' documentation in
+'Documentation/git-reset.txt'. In 4c3abd0551 (reset: add new reset.quiet
+config setting, 2018-10-23), 'reset.quiet' was introduced as a way to
+globally change the default behavior of 'git reset --mixed' to skip index
+refresh.
 
-This is a follow-up to the changes in vd/stash-silence-reset [1], in which
-index refreshing behavior was decoupled from log silencing in the '--quiet'
-option to 'git reset --mixed' by introducing a '--[no-]refresh' option and
-'reset.refresh' config setting.
+However, now that '--quiet' does not affect index refresh, 'reset.quiet'
+would only serve to globally silence logging. This was not the original
+intention of the config setting, and there's no precedent for such a setting
+in other commands with a '--quiet' option, so it appears to be obsolete.
 
-After some discussion [2] on the mailing list, both the
-backward-compatibility and use of global options in that series came into
-question:
+In addition to the options & its documentation, remove 'reset.quiet' from
+the recommended config for 'scalar'.
 
- * '--quiet' still skipped refresh if neither '--[no-]refresh' nor
-   'reset.refresh' were specified, meaning that users could still be left
-   with an incorrect index state after reset.
- * Having 'reset.quiet' and/or 'reset.refresh' potentially disable index
-   refresh by default meant that developers would need to defensively add
-   '--refresh' to all internal uses of 'git reset --mixed'. Without that
-   option, different config setups could cause variability in index
-   correctness from user to user.
-
-In response, this series deprecates all instances of skipping index refresh
-in 'git reset --mixed' except for '--no-refresh' itself:
-
- * Patch [1/4] removes the "fallback" behavior of 'reset.quiet' and
-   '--quiet' implying '--no-refresh' if neither '--[no-]refresh' nor
-   'config.refresh' were specified. In other words, '--quiet' no longer does
-   anything other than log silencing.
- * Patch [2/4] deprecates 'reset.quiet', since its main use was to disable
-   index refresh until it was deprecated in [1/4].
- * Patch [3/4] deprecates 'reset.refresh' to avoid users accidentally ending
-   up with an incorrect index state after all resets as a result of a global
-   setting's passive effects.
- * Patch [4/4] removes the '--refresh' option, leaving only '--no-refresh'.
-   Because nothing but '--no-refresh' can skip the 'reset' index refresh
-   anymore, '--refresh' would never be needed.
-
-[1]
-https://lore.kernel.org/git/pull.1170.v3.git.1647308982.gitgitgadget@gmail.com/
-[2]
-https://lore.kernel.org/git/80a2a5a2-256f-6c3b-2430-10bef99ce1e9@github.com/
-
-Thanks! -Victoria
-
-Victoria Dye (4):
-  reset: do not make '--quiet' disable index refresh
-  reset: deprecate 'reset.quiet' config option
-  reset: deprecate 'reset.refresh' config option
-  reset: deprecate '--refresh', leaving only '--no-refresh'
-
- Documentation/config.txt       |  2 --
- Documentation/config/reset.txt |  2 --
- Documentation/git-reset.txt    | 13 ++-------
- builtin/reset.c                | 18 +++----------
- builtin/stash.c                |  4 +--
- contrib/scalar/scalar.c        |  1 -
- t/t7102-reset.sh               | 48 +++++-----------------------------
- 7 files changed, 15 insertions(+), 73 deletions(-)
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ Documentation/config.txt       | 2 --
+ Documentation/config/reset.txt | 2 --
+ Documentation/git-reset.txt    | 5 +----
+ builtin/reset.c                | 1 -
+ contrib/scalar/scalar.c        | 1 -
+ t/t7102-reset.sh               | 3 +--
+ 6 files changed, 2 insertions(+), 12 deletions(-)
  delete mode 100644 Documentation/config/reset.txt
 
-
-base-commit: 4b8b0f6fa2778c1f9c373620e3f07787543914c6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1184%2Fvdye%2Freset%2Fclean-up-refresh-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1184/vdye/reset/clean-up-refresh-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1184
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f0fb25a371c..43f5e6fd6d3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -495,8 +495,6 @@ include::config/repack.txt[]
+ 
+ include::config/rerere.txt[]
+ 
+-include::config/reset.txt[]
+-
+ include::config/sendemail.txt[]
+ 
+ include::config/sequencer.txt[]
+diff --git a/Documentation/config/reset.txt b/Documentation/config/reset.txt
+deleted file mode 100644
+index 63b7c45aac2..00000000000
+--- a/Documentation/config/reset.txt
++++ /dev/null
+@@ -1,2 +0,0 @@
+-reset.quiet::
+-	When set to true, 'git reset' will default to the '--quiet' option.
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index bc1646c3016..f4aca9dd35c 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -105,10 +105,7 @@ OPTIONS
+ 
+ -q::
+ --quiet::
+---no-quiet::
+-	Be quiet, only report errors. The default behavior is set by the
+-	`reset.quiet` config option. `--quiet` and `--no-quiet` will
+-	override the default behavior.
++	Be quiet, only report errors.
+ 
+ --refresh::
+ --no-refresh::
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 7c3828f6fc5..e824aad3604 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -423,7 +423,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	git_config(git_reset_config, NULL);
+-	git_config_get_bool("reset.quiet", &quiet);
+ 	git_config_get_bool("reset.refresh", &refresh);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 7db2a97416e..58ca0e56f14 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -152,7 +152,6 @@ static int set_recommended_config(int reconfigure)
+ 		{ "pack.useBitmaps", "false", 1 },
+ 		{ "pack.useSparse", "true", 1 },
+ 		{ "receive.autoGC", "false", 1 },
+-		{ "reset.quiet", "true", 1 },
+ 		{ "feature.manyFiles", "false", 1 },
+ 		{ "feature.experimental", "false", 1 },
+ 		{ "fetch.unpackLimit", "1", 1 },
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 8b62bb39b3d..9e4c4deee35 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -488,8 +488,7 @@ test_expect_success '--mixed refreshes the index' '
+ 	# Verify default behavior (without --[no-]refresh or reset.refresh)
+ 	test_reset_refreshes_index &&
+ 
+-	# With --quiet & reset.quiet
+-	test_reset_refreshes_index "-c reset.quiet=true" &&
++	# With --quiet
+ 	test_reset_refreshes_index "" --quiet
+ '
+ 
 -- 
 gitgitgadget
+
