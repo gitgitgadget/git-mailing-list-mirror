@@ -2,118 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E7FC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D95FEC433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348355AbiCUTNi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 15:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44312 "EHLO
+        id S1352472AbiCUTQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 15:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345444AbiCUTNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 15:13:37 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E83EB187B91
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:12:11 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id f3so6558648qvz.10
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:12:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PvOVoBrdHrmSn7Z1h/3XrOekTalX386URZrWpWCctWM=;
-        b=a/GUgsLXZlTZNB+dd6PwcW93YbduLBH8tEAuwea4GX05h0va0QoBYN/4VkZcaT0JHL
-         FCa9gcgPByqshEM5F2ZipMx0/YyVCkgPTcBdZaqpPGT2mSd6eXCzC8BZpRkxIwcHHShk
-         cvez1OjqCe0ukCgtnkLXzcK1F5stkQA4WozcujhNvkhEmHsEUkOHahxOIgTvE/KtM1Fk
-         B3rYkvs5IQmtX1hHebuqqNa43lufblUoub5bp1y9IEndNkrkFl+r6N7JSR8bkfOCu6av
-         Fh6KvpBf8mzG2NEqtU8DyO9t0dvQipdjcJxqCgIExZI8i3kOkYBlEMMs2JtCLXR8eIbM
-         RMSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PvOVoBrdHrmSn7Z1h/3XrOekTalX386URZrWpWCctWM=;
-        b=U7Mt7U2ODdD3SLZmFQIj+H6iQfWHgtUsSDHRd/HNWq5CVT9Dp5sFXmsl995FcVJImR
-         ddpglZ6HdzKgIS9tfA6sYJclAeVj3ps0WxMHJBo9CQYPLUal7J7pRQ6WsXB4UonS4Jtt
-         cK0mJgCo+QuOKNT6OrhrfekgW84V5Nvft5oVYQ3GysHEBwMWcpvX1oGbgZPr16jEgkbi
-         gA0ju82RRBE95a6WkHR4nSfsdYAaaLSk3Go2+0D5Yjf71CzUTqzPz2eJQOi1V1efSiwl
-         mpNvKivSymUmaMkVNvEfWGbTCGgJmJZBPICyrGuk5qAFnguf2WNNix00idz0tDN5AUt+
-         fcrA==
-X-Gm-Message-State: AOAM530VaK1hAhK/DGcIgKDpDaW2pGUxeOfRICdBKoFbKv3OveEamveV
-        VWfVBzrkFPdpKLEyLUGWtF0lrmYIlrE2
-X-Google-Smtp-Source: ABdhPJxlvOwRClcqF1mkrMBPRybnMSPYDw5RfBeQRSRGbC3cBJ0Hf4Fkeem0rW7ZMidZAs7IOs4eeA==
-X-Received: by 2002:a05:6214:caa:b0:441:2e8f:f398 with SMTP id s10-20020a0562140caa00b004412e8ff398mr3153661qvs.61.1647889931109;
-        Mon, 21 Mar 2022 12:12:11 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 22-20020ac85756000000b002e1cabad999sm12739803qtx.89.2022.03.21.12.12.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Mar 2022 12:12:10 -0700 (PDT)
-Message-ID: <b4803b58-018b-fb02-717f-95e48d6f844a@github.com>
-Date:   Mon, 21 Mar 2022 15:12:07 -0400
+        with ESMTP id S1345444AbiCUTQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 15:16:06 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7975948396
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:14:39 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92711108873;
+        Mon, 21 Mar 2022 15:14:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uKk2pOuJnC2MEVN5B8S81iSXvW+0TiHPARWtf1
+        KtER4=; b=pUH16ydSZm7fDqA/KzdfU10LGbAM5ah88sfJogo9ycS4Dfyq24pKN4
+        D3PuTS/7jz+ubb++jaiwI4jP6XMp9l7MqBWogQ2eabFcl9zPRfjFKyGp5D5E3vSC
+        BLU8E32mDnjYGAUvitEJISW+lqXljq8HQhxq/buM4PfjxzW2iSVlE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A177108872;
+        Mon, 21 Mar 2022 15:14:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F0FCB108871;
+        Mon, 21 Mar 2022 15:14:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
+References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
+        <20220315100145.214054-2-shaoxuan.yuan02@gmail.com>
+        <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
+        <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com>
+        <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
+        <CAJyCBORfAV_TV6DrOxgim4KtU9T-uTibOaQCsJZsi5_FQfci1Q@mail.gmail.com>
+        <97a665fe-07c9-c4f6-4ab6-b6c0e1397c31@github.com>
+        <xmqqo824cbxl.fsf@gitster.g>
+        <e127dadb-7b44-55f8-16ea-9fcf94905db8@github.com>
+Date:   Mon, 21 Mar 2022 12:14:36 -0700
+In-Reply-To: <e127dadb-7b44-55f8-16ea-9fcf94905db8@github.com> (Derrick
+        Stolee's message of "Mon, 21 Mar 2022 11:20:08 -0400")
+Message-ID: <xmqq8rt3xgmb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 0/3] Fix use of 'cache_bottom' in sparse index
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, newren@gmail.com, Victoria Dye <vdye@github.com>
-References: <pull.1179.git.1647461522.gitgitgadget@gmail.com>
- <pull.1179.v2.git.1647532536.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1179.v2.git.1647532536.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 26C9C292-A94B-11EC-90E0-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/17/2022 11:55 AM, Victoria Dye via GitGitGadget wrote:
-> To fix this, the 'cache_bottom' advancement is reinstated in
-> 'mark_ce_used(...)', and instead it is disabled in 'unpack_callback(...)' if
-> the tree in question is a sparse directory. This corrects both the
-> non-"cache diff" cases and the 'unpack_index_entry(...)' cases while
-> preventing the double-advancement 17a1bb570b originally intended to avoid
-> (patch [2/3]).
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Thank you for digging deep and finding the root cause here _and_ the
-correct fix.
- 
-> Finally, now that the cache bottom is advanced properly, we can revert the
-> "performance improvement" introduced in f2a454e0a5 (unpack-trees: improve
-> performance of next_cache_entry, 2021-11-29) that mitigated performance
-> issues arising in 'next_cache_entry(...)' from the non-advancing
-> 'cache_bottom' (patch [3/3]). The performance results in
-> 'p2000-sparse-operations.sh' showed expected variability around 0% change in
-> execution time (+/= 0.04s, depending on the command), with example results
-> for potentially-affected commands below.
-> 
-> 'git reset'                      master            this_series                  
-> ------------------------------------------------------------------------
-> full-v3                          0.51(0.21+0.27)   0.50(0.21+0.25) -2.0%
-> full-v4                          0.51(0.22+0.27)   0.50(0.21+0.24) -2.0%
-> sparse-v3                        0.30(0.04+0.55)   0.28(0.04+0.50) -6.7%
-> sparse-v4                        0.31(0.04+0.51)   0.29(0.04+0.51) -6.5%
-> 
-> 'git reset -- does-not-exist'    master            this_series                  
-> ------------------------------------------------------------------------
-> full-v3                          0.54(0.23+0.27)   0.55(0.22+0.28) +1.9%
-> full-v4                          0.56(0.25+0.26)   0.54(0.24+0.26) -3.6%
-> sparse-v3                        0.31(0.04+0.54)   0.31(0.04+0.50) +0.0%
-> sparse-v4                        0.31(0.04+0.52)   0.31(0.04+0.50) +0.0%
-> 
-> 'git diff --cached'              master            this_series    
-> -------------------------------------------------------------------------
-> full-v3                          0.09(0.04+0.04)   0.09(0.04+0.04) +0.0%
-> full-v4                          0.09(0.04+0.04)   0.09(0.04+0.04) +0.0%
-> sparse-v3                        0.05(0.01+0.02)   0.05(0.01+0.03) +0.0%
-> sparse-v4                        0.04(0.01+0.02)   0.04(0.01+0.02) +0.0%
+>>> Another tool that may help you here is 'git ls-files --sparse -t'. It lists
+>>> the files in the index and their "tags" ('H' is "normal" tracked files, 'S'
+>>> is SKIP_WORKTREE, etc. [4]), which can help identify when a file you'd
+>>> expect to be SKIP_WORKTREE is not and vice versa.
+>> 
+>> Wonderful.
+>> 
+>> Quite honestly, because the code will most likely compile correctly
+>> if you just remove the unconditional "we first expand the in-core
+>> index fully" code, and because the "sparse index" makes the existing
+>> index walking code fail in unexpected and surprising ways, I
+>> consider it unsuitably harder for people who are not yet familiar
+>> with the system.  Without a good test coverage (which is hard to
+>> give unless you are familiar with the code being tested X-<), one
+>> can easily get confused and lost.
+>
+> Certainly, 'git mv' is looking to be harder than expected, but there
+> is a lot of interesting exploration happening in the process.
 
-I'm glad this also makes things simpler here. It's interesting that
-it previously manifested only as a performance issue and not a
-correctness issue.
-  
-I carefully read these patches and think they are ready to go.
+Yeah, I know.
 
-Thanks,
--Stolee
+I am suprised that it is harder than expected *to* *you*, though.
+After having seen a few other topics, I thought that you should know
+how deceptively easy to lose "require-full" and how hard to audit
+the code that may expect "a flat list of paths" in the in-core index
+;-).
+
+> Thanks for persisting on this one, Shaoxuan!
+
+Yes, thanks.  And thanks for mentoring Shaoxuan.
