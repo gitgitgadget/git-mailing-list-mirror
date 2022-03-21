@@ -2,154 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2430C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 12:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06028C433FE
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 13:58:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347517AbiCUMow (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 08:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42826 "EHLO
+        id S1348420AbiCUOAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 10:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347079AbiCUMov (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 08:44:51 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC1B35A8C
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 05:43:26 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id j13-20020a05600c1c0d00b0038c8f94aac2so4048958wms.3
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 05:43:26 -0700 (PDT)
+        with ESMTP id S1349042AbiCUN6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 09:58:49 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDC95174B9F
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 06:57:08 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id h13so17951461ede.5
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 06:57:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=P2SifhrRalog8bs8g+5skoONXFDknrUnOXTDEk/b+Fc=;
-        b=FRx/AsGzmp9BwRsYaOIDHCSylqNhBSi0dVKeJSAR0QJwjxer3qQTHhcgh9JBRjMNhh
-         ZRunutAiyWGYrNW2CabP0dnSwtDrWON9Uq51TAXvzUmBl0R+8ri21/eKtAZk2NraDTNE
-         tTxsTyNBcY+T+MWXRYfIrrr74Dvl5ijWr7QZYzww67wLzLwbrWC8r8JIJzRyLG5uKVxO
-         4w4SkTSrqg+6irBvwSyREmH760HrW8StllU+DpY+81xO3L+7loiBIyW31WlLdqhga/F4
-         NSO1hFb0X7BVshfaKDsWOyppJCqQGUNCx4hjur9iqZTNbee3qSjPmQaHZ1w+w776TrmT
-         MZew==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=H2zNazEJwFBd4MRTW/FNr/0GjgOaXydpukDhqhvhA/U=;
+        b=Tyz4SxRvE7J+6fcxIa5BxA0exr6KmP6PW/kCpj1ynDXnEkkpxzM5fsaDviX2E+zY+g
+         MYawzunPTVjSR8ul1VlDufu9ecPXUleBE8iIudY0BhC4EG3jGyMJCiz/jxniKlZcEeZP
+         vIUTRaDLtYpaahElFkC0dwHnTPxGZM+v3XQydIDn4Nc7y43//XSkRGp+A0BGEB3Bx5l/
+         wMxEzE5GTbzSPRhjG4v8QKpSO05msaLwDYdxB00QcI50/AiDuy6/Nv8PC0hhxC7/5eLD
+         0QnlVK8RCxdhRIPWfiOluDYw2jC3Mvcf89YJEWjwhnqD9794+6xibssoRIppTYrjHGRt
+         R/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=P2SifhrRalog8bs8g+5skoONXFDknrUnOXTDEk/b+Fc=;
-        b=bMeArOhntWX1+IH0b95X3HeMH9TzytTWThIrZs07r9uBEOsHDiOby3hH+n/QmAQ0as
-         0jhsclkOPYcBcURBUrbCDNuwaCR5NUJQxLAf/XdWqS7iQgRTKNL2sPfqR02amLnbDaS6
-         Z5qjDKbeReArvnuq2gTwDOIc6t+efmGI1daxD8hmcQJmPMa0yOuKLNmVZHAJwslxdZdn
-         FBL4W+VRkz7hFaXRUsScauScR0++dpihsUq/awyF3Y71Dz/HSe+GNF8QS/70k9oyXmS7
-         JNBFk1Rtj80rqiMnYHKkdkkydQ1nfrZ0JeoMl0D7Qw+vp6bhPwshBwzEuEO9sl7e7UuD
-         DPlQ==
-X-Gm-Message-State: AOAM533DqyIq2aUFK+N+Oav8ThomKWmh68vW0roApxfYAfUB8xCiX7XR
-        0f200kBiiiyUc4Jf0o7sCuNti7AwBOU=
-X-Google-Smtp-Source: ABdhPJyMHv4oFq4V6GGs7mlN3Uu5F7DZbIS8RxIFYVQrRKvdOdSMeq2x48287JFJOe+tF5Dz81TbDQ==
-X-Received: by 2002:a05:600c:1c0e:b0:38c:ae37:c1d2 with SMTP id j14-20020a05600c1c0e00b0038cae37c1d2mr2154462wms.205.1647866604410;
-        Mon, 21 Mar 2022 05:43:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y7-20020a5d4ac7000000b00203e4c8bdf1sm11732751wrs.93.2022.03.21.05.43.23
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=H2zNazEJwFBd4MRTW/FNr/0GjgOaXydpukDhqhvhA/U=;
+        b=MNhw/grpj8kmkHlFRlkLNNcd4xJpl5Ca9LM+r9xGgVeyDTCecLJT+Me5JatP/Ohjeq
+         vQ+li826yt5WZ74NN/PfqDhbsz8V4i+j326rS3PH+cT0Fk9RdSosWbKc9zmanAVqNfOO
+         iPSaC3tXPWnNoSkH9dbJntk9ORiSZYIC5y7zEumfnnN5dR0arDBCNdBQYz5+YqPzLzAx
+         bXMsMrm7t/NS8OxkHWbkQ7w2L4twYmfhizjmZQ08Mf/4KDYK/u9sXY6mcCYEdE66DMb6
+         Ow6aeeKLDxdA6GVwinh1+xvqN1Ut5RLGYiS2kZPnm4PHMlgnM2CJJQNV3cKfEvjzBgf3
+         FQEw==
+X-Gm-Message-State: AOAM532i4VrFW3OKDxYDXKOOftwc7Pitx/pKAi08pkoWzBUN698qmIwy
+        dFmZ7MXy7k0tS8XlanPuxh0=
+X-Google-Smtp-Source: ABdhPJwBXUnmcwC1B2/eWpM2m8yBzJtfcaA5A9oV/YlOi2TG0WYvlWsXJ5hhEfUU3lNmspHuizdd+Q==
+X-Received: by 2002:a05:6402:4391:b0:419:2f2d:a1da with SMTP id o17-20020a056402439100b004192f2da1damr7864052edc.298.1647871027015;
+        Mon, 21 Mar 2022 06:57:07 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dt6-20020a170907728600b006dff778258csm1982123ejc.32.2022.03.21.06.57.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 05:43:23 -0700 (PDT)
-Message-Id: <pull.1180.git.1647866603032.gitgitgadget@gmail.com>
-From:   "Kirill Frolov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Mar 2022 12:43:22 +0000
-Subject: [PATCH] git-p4: fix issue with multiple perforce remotes
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 21 Mar 2022 06:57:06 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nWIWv-000WgI-Sa;
+        Mon, 21 Mar 2022 14:57:05 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH] t3200: fix antipatterns in existing branch tests
+Date:   Mon, 21 Mar 2022 14:47:19 +0100
+References: <pull.1182.git.1647845516517.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <pull.1182.git.1647845516517.gitgitgadget@gmail.com>
+Message-ID: <220321.86mthj9zny.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Joel Holdsworth <jholdsworth@nvidia.com>,
-        Ben Keene <seraphire@gmail.com>,
-        Luke Diamand <luke@diamand.org>,
-        Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Kirill Frolov <k.frolov@samsung.com>,
-        Kirill Frolov <k.frolov@samsung.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kirill Frolov <k.frolov@samsung.com>
 
-Single perforce branch might be sync'ed multiple times with different
-revision numbers, so it will be seen to Git as complete different
-commits. This can be done by the following command:
+On Mon, Mar 21 2022, Tao Klerks via GitGitGadget wrote:
 
-  git p4 sync --branch=NAME //perforce/path...
+> +fetch_if_remote_ref_missing () {
+> +	# this is an anti-pattern: swallows segfault
+> +	#git show-ref -q "refs/remotes/$2/$1" || git fetch "$2"
+> +	# this is slightly slower, up to 1s out of 6s on this set of tests:
+> +	git fetch "$2"
+> +	# this doesn't work
+> +	#test_might_fail git show-ref -q "refs/remotes/$2/$1" || git fetch "$2"
+> +}
 
-It is assumed, that this command applied multiple times and
-peforce repository changes between command invocations.
+Moving the context around a bit, as this refers to this code above:
 
-In such situation, git p4 will see multiple perforce branches with
-same name and different revision numbers. The problem is that to make
-a shelve, git-p4 script will try to find "origin" branch, if not
-specified in command line explicitly. And previously script selected
-any branch with same name and don't mention particular revision number.
-Later this may cause failure of the command "git diff-tree -r $rev^ $rev",
-so shelve can't be created (due to wrong origin branch/commit).
+>     I'm submitting this as RFC because I have a couple of significant
+>     doubts:
+>=20=20=20=20=20
+>      1. Does it make sense to do this? I believe it's a good idea to keep
+>         things "clean" so that newcomers more easily do the right thing t=
+han
+>         the wrong thing, but on the other hand, I've definitely read that=
+ we
+>         have a "don't change things unnecessarily" bias somewhere.
+>      2. What's the right pattern for the "(git show-ref -q
+>         refs/remotes/local/main || git fetch local)" fetch-avoidance
+>         optimization? Removing it adds a second to test runtimes, but =C3=
+=86var
+>         warned it hides segfaults
 
-This commit fixes the heuristic by which git p4 selects origin branch:
-first it tries to select branch with same perforce path and perforce
-revision, and if it fails, then selects branch with only same perforce
-path (ignoring perforce revision number).
+So first, 6s? Is this on Windows? I tried running this v.s. master:
+=20=20=20=20
+    $ git hyperfine -L rev origin/master,HEAD~,HEAD -s 'make' '(cd t && ./t=
+3200-branch.sh)'
+    Benchmark 1: (cd t && ./t3200-branch.sh)' in 'origin/master
+      Time (mean =C2=B1 =CF=83):      1.887 s =C2=B1  0.095 s    [User: 1.5=
+34 s, System: 0.514 s]
+      Range (min =E2=80=A6 max):    1.826 s =E2=80=A6  2.117 s    10 runs
+=20=20=20=20
+    Benchmark 2: (cd t && ./t3200-branch.sh)' in 'HEAD~
+      Time (mean =C2=B1 =CF=83):      2.132 s =C2=B1  0.013 s    [User: 1.7=
+42 s, System: 0.561 s]
+      Range (min =E2=80=A6 max):    2.120 s =E2=80=A6  2.166 s    10 runs
+=20=20=20=20
+    Benchmark 3: (cd t && ./t3200-branch.sh)' in 'HEAD
+      Time (mean =C2=B1 =CF=83):      1.944 s =C2=B1  0.005 s    [User: 1.6=
+20 s, System: 0.495 s]
+      Range (min =E2=80=A6 max):    1.938 s =E2=80=A6  1.953 s    10 runs
+=20=20=20=20
+    Summary
+      '(cd t && ./t3200-branch.sh)' in 'origin/master' ran
+        1.03 =C2=B1 0.05 times faster than '(cd t && ./t3200-branch.sh)' in=
+ 'HEAD'
+        1.13 =C2=B1 0.06 times faster than '(cd t && ./t3200-branch.sh)' in=
+ 'HEAD~'
 
-Signed-off-by: Kirill Frolov <k.frolov@samsung.com>
----
-    git-p4: fix issue with perforce branch synchronized multiple times.
-    
-    Perforce branch might be sync'ed multiple times with different revision
-    numbers (by the command "git p4 sync --branch=NAME //perforce/path...")
-    
-    In such situation, git p4 will see multiple perforce branches with same
-    name and different revision numbers. The problem is that to make a
-    shelve, git-p4 script will try to find "origin" branch, if not specified
-    in command line explicitly. And previously script selected any branch
-    with same name and don't mention particular revision number. Later this
-    may cause failure of the command "git diff-tree -r $rev^ $rev", so
-    shelve can't be created (due to wrong origin branch/commit).
-    
-    This commit fixes the heuristic by which git p4 selects origin branch:
-    first it tries to select branch with same perforce path and perforce
-    revision, and if it fails, then selects branch with only same perforce
-    path (ignoring perforce revision number).
-    
-    Signed-off-by: Kirill Frolov k.frolov@samsung.com
+The HEAD~ there is your patch here, and HEAD is my fix-up. I.e.:
+=09
+	diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+	index 9bd621ed97e..7f7b3b28581 100755
+	--- a/t/t3200-branch.sh
+	+++ b/t/t3200-branch.sh
+	@@ -17,12 +17,14 @@ test_set_remote () {
+	 }
+=09=20
+	 fetch_if_remote_ref_missing () {
+	-	# this is an anti-pattern: swallows segfault
+	-	#git show-ref -q "refs/remotes/$2/$1" || git fetch "$2"
+	-	# this is slightly slower, up to 1s out of 6s on this set of tests:
+	-	git fetch "$2"
+	-	# this doesn't work
+	-	#test_might_fail git show-ref -q "refs/remotes/$2/$1" || git fetch "$2"
+	+	test_when_finished "rm -f ref" &&
+	+	test_might_fail git rev-parse -q --verify "refs/remotes/$2/$1" >ref
+	+	if ! test -s ref
+	+	then
+	+		# Purely an optimization, makes the test run ~10%
+	+		# faster.
+	+		git fetch "$2"
+	+	fi
+	 }
+=09=20
+	 test_expect_success 'prepare a trivial repository' '
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1180%2Fkfrolov%2Fperforce_multi_fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1180/kfrolov/perforce_multi_fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1180
+That's a safe way to do it that won't hide segfaults.
 
- git-p4.py | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+In *general* it's a bit painful to convert some of these, because we
+really should refactor out the whole bit after "exit_code=3D$?" in
+test_must_fail in test-lib-functions.sh into a utility
+function. I.e. have the ability to run an arbitrary command, and then
+after-the-fact ask if its exit code was OK.
 
-diff --git a/git-p4.py b/git-p4.py
-index a9b1f904410..4903e86351d 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -946,8 +946,12 @@ def findUpstreamBranchPoint(head = "HEAD"):
-         log = extractLogMessageFromGitCommit(tip)
-         settings = extractSettingsGitLog(log)
-         if "depot-paths" in settings:
-+            git_branch = "remotes/p4/" + branch
-             paths = ",".join(settings["depot-paths"])
--            branchByDepotPath[paths] = "remotes/p4/" + branch
-+            branchByDepotPath[paths] = git_branch
-+            if "change" in settings:
-+                paths = paths + ";" + settings["change"]
-+                branchByDepotPath[paths] = git_branch
- 
-     settings = None
-     parent = 0
-@@ -957,6 +961,10 @@ def findUpstreamBranchPoint(head = "HEAD"):
-         settings = extractSettingsGitLog(log)
-         if "depot-paths" in settings:
-             paths = ",".join(settings["depot-paths"])
-+            if "change" in settings:
-+                expaths = paths + ";" + settings["change"]
-+                if expaths in branchByDepotPath:
-+                    return [branchByDepotPath[expaths], settings]
-             if paths in branchByDepotPath:
-                 return [branchByDepotPath[paths], settings]
- 
+If you'd like to refactor that that would be most welcome, and it
+*would* help to convert some of these...
 
-base-commit: 74cc1aa55f30ed76424a0e7226ab519aa6265061
--- 
-gitgitgadget
+But in this case we can just use "rev-parse -q --verify", or rather,
+nothing :)
+
+I.e. my bias would be to just not try to optimize this, i.e. just
+convert the users to the equivalent of a:
+
+    git fetch "$2"
+
+I.e. it's also useful to see that we behave correctly in the noop case,
+and as there's no behavior difference it's a marginally more useful test
+as a result.
+
+And if you are trying to optimize this on Windows as I suspect I think
+it's better to not do it. ~5s is the time it takes it just to get out of
+bed in the morning as far as our test runtimes are concerned.
+
+The real underlying issue is presumably its the shelling we'll do in
+"git fetch", which we can eventually fix, and then make it approximately
+the cost of the rev-parse when run locally...
