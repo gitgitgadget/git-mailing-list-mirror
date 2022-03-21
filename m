@@ -2,133 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDC13C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4790C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232263AbiCUXLC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:11:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42420 "EHLO
+        id S232351AbiCUXLG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234520AbiCUXJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:09:34 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 816C33FF252
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 16:00:47 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 491BA3F4816;
-        Mon, 21 Mar 2022 18:59:10 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1398C3F47FB;
-        Mon, 21 Mar 2022 18:59:10 -0400 (EDT)
-Subject: Re: [PATCH v2 00/27] Builtin FSMonitor Part 3
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        ??var Arnfj??r?? Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
- <20220313104230.ctwbskywcq5jxv36@tb-raspi4>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <1a64c0f7-ef54-9d61-f7fd-bd192c408ca0@jeffhostetler.com>
-Date:   Mon, 21 Mar 2022 18:59:09 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S233784AbiCUXJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:09:00 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E91C3B5021
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:15 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id r190-20020a1c2bc7000000b0038a1013241dso374070wmr.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=74Y/pQydY/ksADNHRzSGGxn3AcdvAHVNEsdGZUW+1tk=;
+        b=kIdvIsuxim+LYLabEfC1cI2FYZTOHSxgBZGovey5XJgdBba875rTprqrDJGgXeQlu7
+         AZoebQUw3JeEf9COnsaHXlfxenTn81Fm7XYLosiVv6GBjC0yzZchETZKxMB5casY0yM5
+         htWcVM9g+LynyIGkzCe5hs0of6xpFVyT4F0RCmQNivlKZc51qH9jGSBC/xyp4IzufOgM
+         u/zcIjuggRF7rcOwWFdhnanEF209fkv0c2t3JXu9H0I7OQE4/wIJmVxQKAd6dQbm5iH3
+         DtrJVrMa9JOdEyDGFEamBpHfrpFjIhFBX/1F/5xe+nXBIPwkw0jbUwDxjojeirLzppfz
+         wfpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=74Y/pQydY/ksADNHRzSGGxn3AcdvAHVNEsdGZUW+1tk=;
+        b=r5CdvDB7wNH1YtgnRn4mFdIqJKFqXlheu8C8D5kChZoGucDGeF184ex3SCYTMgTqiD
+         sEEPDd7p31uGZ0RAEXvRIeklmouhDBlHHhbZ/nx660epRzFmMaiKOTe0+od8tSVF+8gb
+         bkLZBAJooj4ETrBOaSRYrvssupkXSxFJkqIvmCX70/r0lAI3kE5v5r7zY8Xu/ihjy8H6
+         7y13D1YwXYTb4O8dCaJeJmu6paI1du7Ay1xdRKKslozZQXNdI6ZU5OAUSyBaE/JxOdDO
+         w3VNc6xrXyKT067AJ+vSw6Y5kl4OCwUQ+ixUQbnm5w+y1pK5hcBIs+sd5Q1sjXFFq1Pt
+         Ja+A==
+X-Gm-Message-State: AOAM532TGEpkD5Taf+LeNVQEqxHTSa4N5df0yyiut0eT3lvbnysTlKfb
+        I4ZcPp05Ca/lGc/85whVOYmtyx6sEjs=
+X-Google-Smtp-Source: ABdhPJzaACq0aVazyh5KJ2PU8/+wd3KZ3wMnNHwkjfaRPNgUf5/L3vSoOhMhKWeJ1bK94TWyed1Ogg==
+X-Received: by 2002:a1c:f604:0:b0:38c:8ffd:dbb6 with SMTP id w4-20020a1cf604000000b0038c8ffddbb6mr1095358wmc.43.1647903356230;
+        Mon, 21 Mar 2022 15:55:56 -0700 (PDT)
+Received: from fedora35.example.com ([151.24.239.1])
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 15:55:55 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 17/41] shortlog.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:59 +0000
+Message-Id: <20220321225523.724509-18-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
+References: <20220321225523.724509-1-gitter.spiros@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20220313104230.ctwbskywcq5jxv36@tb-raspi4>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The C standard specifies two constants, EXIT_SUCCESS and  EXIT_FAILURE, that may
+be  passed  to exit() to indicate successful or unsuccessful termination,
+respectively. The value of status in exit(status) may be EXIT_SUCCESS,
+EXIT_FAILURE, or any other value, though only the least significant 8 bits (that
+is, status & 0377) shall be available to a waiting parent proces. So exit(-1)
+return 255.
 
+Use the C standard EXIT_SUCCESS and EXIT_FAILURE to indicate the program exit
+status instead of "0" or "1", respectively. In <stdlib.h> EXIT_FAILURE has the
+value "1": use EXIT_FAILURE even if the program uses exit(-1), ie 255, for
+consistency.
 
-On 3/13/22 6:42 AM, Torsten Bögershausen wrote:
-> Hej Jeff,
-> 
-[...]
-> 
-> One other thing, I just add it here:
-> There is a new file, t/lib-unicode-nfc-nfd.sh, which helps us with this code:
-> test_lazy_prereq UNICODE_NFC_PRESERVED
-> 
-> The existing code uses a construct called
-> UTF8_NFD_TO_NFC
-> 
-> And now I have 2 questions:
-> - Do we need the UNICODE_NFC_PRESERVED at all ?
-> - And should the UTF8_NFD_TO_NFC better be called UTF8_NFC_TO_NFD,
->    because that is what it checks.
-> - Do we need the UNICODE_NFD_PRESERVED at all ?
-> 
-> As there are no non-UNICODE_NFD_PRESERVED filesystems, as far as I know.
-> And the current code does no tests, just debug prints.
-> I dunno.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ builtin/shortlog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I created t/lib-unicode-nfc-nfd.sh to help me understand
-the issues.  I found the existing UTF8_NFD_TO_NFC prereq
-confusing (and yes it seemed poorly named).
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 26c5c0cf93..0763c94df6 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -381,7 +381,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 		case PARSE_OPT_ERROR:
+ 			exit(129);
+ 		case PARSE_OPT_COMPLETE:
+-			exit(0);
++			exit(EXIT_SUCCESS);
+ 		case PARSE_OPT_DONE:
+ 			goto parse_done;
+ 		}
+-- 
+2.35.1
 
-The existing prereq returned the same answer on APFS, HFS+,
-and FAT32 (a thumbdrive).  I know they behave differently
-and I found it odd that the prereq did not make any distinction.
-
-I was hesitant to rename the existing prereq because it is
-currently used by 5+ different tests and I didn't want to
-expand the scope of my two already very large series.
-
-Also, the existing prereq feels a little sloppy.  It creates
-a file in NFC and does a lstat in the NFD spelling.  There
-are several ways that the OS and/or FS can lie to us.  For
-example, the prereq is satisfied on a FAT32 thumbdrive and
-we know FAT32 doesn't do NFC-->NFD conversions.  So I'd like
-to move away from that prereq definition at some point.
-
-
-My new prereqs try to:
-
-(1) independently confirm whether there is aliasing happening
-     at all (whether at the FS or OS layer).
-
-(2) determine if the actual on-disk spelling is altered by the
-     FS (in both NFC and NFD cases).
-
-
-We know that HFS+ does not preserve NFC spellings, but APFS
-does.  (FAT32 also preserves NFC spelling under MacOS.)
-So the UNICODE_NFC_PRESERVED lets me distinguish between HFS+
-and APFS/FAT32.
-
-I have not heard of any filesystems that convert NFD to NFC,
-so technically we don't need the UNICODE_NFD_PRESERVED prereq,
-but then again until I tested that, it was unclear how MacOS
-did the aliasing on APFS (and FAT32).  On the basis of that
-testing, we can say that MacOS -- at the MacOS layer -- is
-responsible for the aliasing and that both NFC and NFD spellings
-are preserved on APFS and FAT32.
-
-So I'd rather keep the 3 prereqs that I have now.
-
-The ones marked _DOUBLE_ are currently extra.  I have them to
-help study how code points with multiple combining characters
-are handled.  I have prereqs for the basic double chars, but
-there are several opportunities for weird edge cases (non-
-canonical ordering and other collisions) that I don't want to
-get stuck on right now.  So we might make more use of them in
-the future.
-
-
-That's too long of an answer, but hopefully that explains
-some of my paranoia. :-)
-
-Jeff
-
-> 
-> On Tue, Mar 08, 2022 at 10:15:00PM +0000, Jeff Hostetler via GitGitGadget wrote:
->> Here is V2 of part 3 of my builtin FSMonitor series.
-[...]
