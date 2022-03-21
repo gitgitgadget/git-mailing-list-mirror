@@ -2,121 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E315C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 22:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF046C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232079AbiCUXAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:00:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
+        id S230203AbiCUXHY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:07:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233363AbiCUW7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 18:59:06 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA2A36BA11
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:46:42 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id a17so18603053edm.9
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:46:42 -0700 (PDT)
+        with ESMTP id S231766AbiCUXHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:07:16 -0400
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B2C23DEBA
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:47 -0700 (PDT)
+Received: by mail-wr1-f43.google.com with SMTP id q8so11294896wrc.0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2vS48Ma8BAIQC2ntWbne40U6C1Pa5FFdsklf4N64aAM=;
-        b=GFsj0oXWR5RuJQ8qG9SuF8Rs635iLTWy+Z3WNsvYZp0MAPPtwfLB5VdcOI/aXvlwPp
-         5TQ6tEAzG65UELfqaag+nFZPyzCjTB5PYrj4lSspsl3/T5u7UrSa2tXz20CellJg6gJO
-         JINtGzjF/8XCKYS3a1QCAUJ6ey2bTU/cbU7T+O7Uuqo3BvDfTNbJwIcft7m97xbUMoHS
-         /dVlFHVtOBgaHayTS18I+ggrkNVByxpZVLj5PQYLuwHWcbb6JIv+vaDRdCpPZtLVTIr+
-         zeW26wFD5p02lNG0PTmcH7N39fkMmoju8BRhqFXXttvP7gzd3qszCTwAinuUTOIn7kYa
-         5hLA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7S49J4rNMrM1ov2+uazlPh/tM8brvFV6SbkvoU8GTe4=;
+        b=bfCJ4hkTh3y83hUORGEWQ0twxUQThdl9Fqidbae3z9vyVStREdXJSbjeMMA4UfTJsp
+         qAfW2uxiWgI8Z/KCXgbeX9iibZFyPEXXw32Mego3CnNj/ZFvb65/j9Ef/Y6w2qMBB4Dh
+         FasiYaqxIy0vefsoXGOmZtxZcLVzZ2hqCRWtiXi6XjK84+dInmKKtsnBdFgdV+d4aq2m
+         mj6hLpgbieA5IT14cAqTmo922+A3xSle4987CuLYwyCAyrRg6qs0pYtu33TFNYHcakGs
+         4Tk4VE1iX3fBRIFNARuerZKY+vKGNewrqOBIY4XLXpWMCMD5e0JIaXwJZlmS8sM10naI
+         7bgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2vS48Ma8BAIQC2ntWbne40U6C1Pa5FFdsklf4N64aAM=;
-        b=nDQ+DY5BOpXf8uv0QQ50e0b4eMTLgvDgubYUBAMtls/IkrLoWheZ1P6RbCYmUCiuLC
-         js9mCnAmDEfv6xVAufD+OxC5TFijvLJw6ww7aSulg3B9V7OcxR1rYy7km82xQhVwtf6Z
-         42BpbBBz/XR0CFDuGe2NKN+x+Ccb0bNajFPej3lb9CAoElEqJ4NlbfXLm/3YUzcEmZxo
-         f5GyfJRtliR5Oc0yszvTe7wx0qmvL6j1jbfP8mRLBbWyUilelK8h1LnT7oBwu/QC1xwi
-         KXMfVB+k46UyXVCkI59DbAmSZ6GqpDyo+qj0y63SLayhrlRl6F5QDVEhWkvwwytg4366
-         ko4Q==
-X-Gm-Message-State: AOAM5300M5NnxsSuuRhux7d5H/LqvYj/YqbcfnYVucsULC2B2tDvJweO
-        6DeAgf1LOwcUR7ewcaIFEZgulcYg+5MDHs+GyQyPUsaRUiA=
-X-Google-Smtp-Source: ABdhPJwwO0UoNtd1fhDGLHSyCdkBQkr8MFvpvFjrJd7CdFec+3F4jRekWv+G5XDDB0bIUZdRfPfqGDmuqwTrdSemqNY=
-X-Received: by 2002:a2e:9b96:0:b0:249:8705:8f50 with SMTP id
- z22-20020a2e9b96000000b0024987058f50mr4263333lji.73.1647900577230; Mon, 21
- Mar 2022 15:09:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7S49J4rNMrM1ov2+uazlPh/tM8brvFV6SbkvoU8GTe4=;
+        b=KfZ7JSnrJEIpOjiedBxIFBLdkPSmbnf3oxeZWQcSVszrq+N5Pc0zWVs48/omBoCWeG
+         Oylo21Yq9EVufD/eBOM29C0IRrWi/y9J31wuzdk4z5wAh2WPSqP9rJptxCUyvkCs9+V4
+         JpvY/7OSPpM1o9yrOuvaOrgbTejG7xOBFmzGWVtyrtDm8YMVyWhsdLr8esMCgCLa2KbT
+         uREZC4TBbei329qIKJMNu4u++dHw/aVXooZ69/EcohAd3+HanO+nlLGON1kGZ3tp+gaS
+         +f3i0G/Rdr7A+jKlXCq2iYtlZcgbBH7h215GdAK1ip1HWOmZR5ukd4KFZa9OJdcTpgF7
+         E5+g==
+X-Gm-Message-State: AOAM532/IJEKIWMiibaE04dgcN7zTAuGR9LKqUJmYtABfPGuUavvsPsb
+        acK4oWTF9F91nRV/DmEjdfs1/TS0SEQ=
+X-Google-Smtp-Source: ABdhPJzIONCUshG0V24rV3b8kwXTMvT8K18n/yZE1qB6fGou2N2UdeaRQqsWfKoeBzU4SJOhyvHiMQ==
+X-Received: by 2002:a5d:64e5:0:b0:204:147a:5f4d with SMTP id g5-20020a5d64e5000000b00204147a5f4dmr5009769wri.225.1647903347374;
+        Mon, 21 Mar 2022 15:55:47 -0700 (PDT)
+Received: from fedora35.example.com ([151.24.239.1])
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 15:55:47 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 07/41] help.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:49 +0000
+Message-Id: <20220321225523.724509-8-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
+References: <20220321225523.724509-1-gitter.spiros@gmail.com>
 MIME-Version: 1.0
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <54797dbc52060b7fa913642cd5266f7e159a5bc9.1647760561.git.gitgitgadget@gmail.com>
- <220321.865yo79wkf.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220321.865yo79wkf.gmgdl@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Mon, 21 Mar 2022 15:09:25 -0700
-Message-ID: <CANQDOdeox=Wox94SW+oUgbLDdLZ+KOdw6AWdBzwFkR18xmaNtQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] update-index: use the bulk-checkin infrastructure
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Patrick Steinhardt <ps@pks.im>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 21, 2022 at 8:04 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sun, Mar 20 2022, Neeraj Singh via GitGitGadget wrote:
->
-> > From: Neeraj Singh <neerajsi@microsoft.com>
-> >
-> > The update-index functionality is used internally by 'git stash push' t=
-o
-> > setup the internal stashed commit.
-> >
-> > This change enables bulk-checkin for update-index infrastructure to
-> > speed up adding new objects to the object database by leveraging the
-> > batch fsync functionality.
-> >
-> > There is some risk with this change, since under batch fsync, the objec=
-t
-> > files will be in a tmp-objdir until update-index is complete.  This
-> > usage is unlikely, since any tool invoking update-index and expecting t=
-o
-> > see objects would have to synchronize with the update-index process
-> > after passing it a file path.
-> >
-> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
-> > ---
-> >  builtin/update-index.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/builtin/update-index.c b/builtin/update-index.c
-> > index 75d646377cc..38e9d7e88cb 100644
-> > --- a/builtin/update-index.c
-> > +++ b/builtin/update-index.c
-> > @@ -5,6 +5,7 @@
-> >   */
-> >  #define USE_THE_INDEX_COMPATIBILITY_MACROS
-> >  #include "cache.h"
-> > +#include "bulk-checkin.h"
-> >  #include "config.h"
-> >  #include "lockfile.h"
-> >  #include "quote.h"
-> > @@ -1110,6 +1111,9 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
-> >
-> >       the_index.updated_skipworktree =3D 1;
-> >
-> > +     /* we might be adding many objects to the object database */
-> > +     plug_bulk_checkin();
-> > +
->
-> Shouldn't this be after parse_options_start()?
+The C standard specifies two constants, EXIT_SUCCESS and  EXIT_FAILURE, that may
+be  passed  to exit() to indicate successful or unsuccessful termination,
+respectively. The value of status in exit(status) may be EXIT_SUCCESS,
+EXIT_FAILURE, or any other value, though only the least significant 8 bits (that
+is, status & 0377) shall be available to a waiting parent proces. So exit(-1)
+return 255.
 
-Does it make a difference?  Especially if we do the object dir creation laz=
-ily?
+Use the C standard EXIT_SUCCESS and EXIT_FAILURE to indicate the program exit
+status instead of "0" or "1", respectively. In <stdlib.h> EXIT_FAILURE has the
+value "1": use EXIT_FAILURE even if the program uses exit(-1), ie 255, for
+consistency.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ builtin/help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/help.c b/builtin/help.c
+index 222f994f86..e5ca9d4a6e 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -554,7 +554,7 @@ static const char *check_git_cmd(const char* cmd)
+ 		if (!exclude_guides || alias[0] == '!') {
+ 			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
+ 			free(alias);
+-			exit(0);
++			exit(EXIT_SUCCESS);
+ 		}
+ 		/*
+ 		 * Otherwise, we pretend that the command was "git
+-- 
+2.35.1
+
