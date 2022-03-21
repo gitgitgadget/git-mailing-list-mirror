@@ -2,167 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37115C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09334C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348507AbiCUUga (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:36:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
+        id S1347279AbiCUUhj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353393AbiCUUgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:36:23 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 971623EF10
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:57 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id q8so10941178wrc.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FXFnODwAQGM92lVsHZLZ9rNyFqH3iwTVWMY3Uv/MC4c=;
-        b=Wd6AMOPoQ4tS5qnXtIodR3R+5V5mXY1gnD2hIihcpvSqf3wBAp5AJcUL6P9A9u+pRW
-         Fx+vaAtahxo8qqWuHzEhjHKohuuVdud3fh123zo9wLyKoLS0Mte4npr0+ybBhf/IdwQh
-         I8AoBZLs9uxw3bkHZz9DxXpjw7CNAKfnbkaE12oDPK3xyYgTYncTKkczU5QqhtfPjfTZ
-         mvIx1e1tHjmSJef9ZkOpcJVXB0QWEkarsg4xUK2u2S1ywHS+T/z9cGT3Kb9sqrrp7OEW
-         5QeA8sruKBgal2vgPuNVTPG7Au3zzb7DST1zBNjMdPhA5iZC11rb6A1TDaeeN8khOJW2
-         hqtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FXFnODwAQGM92lVsHZLZ9rNyFqH3iwTVWMY3Uv/MC4c=;
-        b=3sZklg3VrogqIIIAB3i2evQaO7w5K6i/qlpWz2nt0LbUx1tH9oBbyWMOwOkgGlfT7v
-         qc0ouxNxSG2DZ3c3u3jVts4F2kQxxn/R22HWkiIR0Bb1lyzZ6LTdCUjuNrxHY1qBwwXL
-         BZKfRNefNWAVaR2ESpv2MR7ZIpFSAmV6pG1rjOtXCIlmiJSCgGfUWiiw8cZSDe46TSeO
-         fFlcOi319MwcCSjodAsovyUGk7B4BfryeOc8mXSpFLB0rFOlYSzNpNVZQ7b985J0i+UV
-         vgA6ejCz0d2tp5tdSoRFvJtS1zjwN5IHh3kkMflFjj1mQLgIbn08ZIJfUf9zaoXzppUZ
-         As7Q==
-X-Gm-Message-State: AOAM530bAbSo1Z9xUZvzoIMWGQa1wrFtqPMhv/r86+sPOHQAFIxcLeS9
-        r9NP7l1evfNuarOOQqVAY085sPrHHSA=
-X-Google-Smtp-Source: ABdhPJwcNEdiqBfnnGgiWO+sG5Q6Q0O3AHhoArlIMUJxUvJZ3h7uHXtIA+S6oYAZXFUPwuhwnmeMjg==
-X-Received: by 2002:a5d:47c1:0:b0:204:1797:2c98 with SMTP id o1-20020a5d47c1000000b0020417972c98mr3967144wrc.502.1647894896074;
-        Mon, 21 Mar 2022 13:34:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2-20020a5d4582000000b00203f51aa12asm9603738wrq.55.2022.03.21.13.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 13:34:55 -0700 (PDT)
-Message-Id: <dbb63c4caa83cc764535a739d20736b706ee44a5.1647894889.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
-References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Mar 2022 20:34:49 +0000
-Subject: [PATCH 4/4] reset: deprecate '--refresh', leaving only '--no-refresh'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S239953AbiCUUhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:37:38 -0400
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 786BD54BD7
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:35:54 -0700 (PDT)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:c2d2:c7d2:a4cd:bda7])
+        (Authenticated sender: jn.avila@free.fr)
+        by smtp5-g21.free.fr (Postfix) with ESMTPSA id 0B4C85FFAD;
+        Mon, 21 Mar 2022 21:35:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1647894953;
+        bh=PZoY98Jrw1DNZ/WutzrKs4ade0IK2c+oVGgNt0hr9As=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=BvE1lMCKao9bGYcfCtk2YtQGQ+/j+SMO6auXcudk6HMeQx/LvGY9AouWeOwKwhhSu
+         Nx/+JXlFRg1E380wGMi1eCNpD2K63y64cBjlKd9F7QlL4OhwdE0v+VfqcJg8MIzWM+
+         dpLIkZ2CVtgISFzG/hj7Z6ekwYU6hq2YWv9xPlIkovMXmUT2NVz6OTte5BJv6VzA1V
+         VFqGPdFI2qWOZh5eZQFF2DsYeJrwtwVK10WZONkkN8OHDDLUj5NN4AVVYU4QhEsJ8q
+         s9J1VA0YUlYET7lNrlocq5NEVKoLKIeBa1DSY9r3DVUdk1l7d27jb5GNV6sKs2IcAI
+         m4nMERu1bI0CQ==
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Johannes Sixt <j6t@kdbg.org>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 0/7] More i18n fixes
+Date:   Mon, 21 Mar 2022 21:35:49 +0100
+Message-ID: <3656471.kQq0lBPeGt@cayenne>
+In-Reply-To: <220321.86ils79z0c.gmgdl@evledraar.gmail.com>
+References: <pull.1181.git.1647813291.gitgitgadget@gmail.com> <e44b6ccf-21a2-72c6-4d40-dc0004895255@kdbg.org> <220321.86ils79z0c.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+On Monday, 21 March 2022 14:59:24 CET =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>=20
+> On Mon, Mar 21 2022, Johannes Sixt wrote:
+>=20
+> > Am 20.03.22 um 22:54 schrieb Jean-No=EBl Avila via GitGitGadget:
+> >> This is another i18n PR (and hopefully the last for a while).
+> >>=20
+> >> As usual, the intent is kept the same: curbing the number of strings to
+> >> translate, remove constant, error prone parts out of the way, trying i=
+n some
+> >> sense to "put a precedent" so that the template strings can be reused =
+later.
+> >
+> > I feel that many of the example conversions look like sentence lego
+> > because there remains only one English word, e.g., "'%s' failed". The
+> > converted code does not leave a hint for the translators what the %s
+> > will be. Is it a command, a function name, somehting else? Even if the
+> > hint was provided, different translations may be required depending on
+> > the substituted entity. Did you investigate the existing translations
+> > whether all of them can be converted to the new scheme?
+> >
+> >> This series has also a RFC status: can "bad argument" messages be merg=
+ed
+> >> with unrecognized argument?
+> >
+> > The cases that patch 7/7 transforms look like they need not keep
+> > "unrecognized argument", but can be converted to "bad argument".
+> >
+> > Disclaimer: neither am I a translator nor a user of a translated Git.
+>=20
+> Just to add to this:
+>=20
+>  - Careful use of sentence lego is OK, but e.g. in my native language a
+>    command-line option would use a male noun article, whereas commands
+>    would be feminine.
+>=20
+>    (I still haven't submitted an Icelandic translation, but this applies
+>    in general).
+>=20
+>    As a result string like "'%s' failed" can be *workable*, i.e. you can
+>    translate it assuming you'll get any arbitrary string, but the
+>    translation will often be rather tortured.
+>=20
+>    So it's much preferred (and this also goes to Johannes's comment) to
+>    instead do e.g.:
+>=20
+>        "failed to run the '%s' command"
+>        "failed to use the '%s' argument"
+>=20
+>    Or whatever, and e.g. for:
+> =09
+> 	-		return strbuf_addf_ret(err, -1, _("%%(objecttype) does not take argum=
+ents"));
+> 	+		return strbuf_addf_ret(err, -1, _("%s does not take arguments"), "%(o=
+bjecttype)");
+>=20
+>    Instead say "the '%s' format does not...", i.e. disambiguate with
+>    "format".
+>=20
+>  - While perfect shouldn't be the enemy of the good, it would be most
+>    welcome to improve some of the warts revealed by these messages,
+>    notably that e.g. the "failed to run X command" don't report
+>    errno. E.g. this in git.c is a good template (except for the "\n" we
+>    should ideally get rid of):
+>=20
+>        _("failed to run command '%s': %s\n")
 
-The explicit '--refresh' option was needed in the past when '--quiet',
-'reset.quiet', and/or 'reset.refresh' disabled the index refresh in 'reset
---mixed'. Those options have since either been deprecated or made to always
-refresh the index by default, leaving only '--[no-]refresh' determining
-whether the index is refreshed or not.
+OK.=20
 
-Because there is nothing other than '--no-refresh' to disable index refresh,
-we do not need a '--refresh' option to counteract some other refresh
-disabling.
+>=20
+>  - On that topic, it would be really useful to see if we can unify some
+>    of these with *existing* po/git.pot messaging, I don't know if that's
+>    part of your workflow, but in some cases I've seen we can either
+>    tweak wording slightly to match an existing message, or could further
+>    unify some existing similar messages.
+>=20
 
-To ensure users don't use what is effectively a no-op, remove '--refresh'
-from the set of 'reset' options, as well as its usage in 'git stash'.
+That's part of the workflow, although not hand-made, but greped. There are =
+two types of factorizations:
+* strings where introducing a placeholder creates duplicates
+* strings that basically mean the same, but expressed differently (require =
+human parsing)
 
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- Documentation/git-reset.txt | 3 +--
- builtin/reset.c             | 6 +++---
- builtin/stash.c             | 4 ++--
- t/t7102-reset.sh            | 5 ++---
- 4 files changed, 8 insertions(+), 10 deletions(-)
+>  - Even if we say "failed to run git-apply" or whatever now we should
+>    really be adding quotes to these as we convert them. In some cases
+>    the changes that (good):
+> =09
+> 	-		die(_("git-http-push failed"));
+> 	+		die(_("'%s' failed"), "git-http-push");
+>=20
+>    But not in others (bad):
+> =09
+> 	-		res =3D error(_("Bad bisect_write argument: %s"), state);
+> 	+		res =3D error(_("bad %s argument: %s"), "bisect_write", state);
+>=20
+>    I.e. that should be 'bad '%s' argument. And also on the "unify" point
+>    above, e.g. grep.c has this:
+>=20
+>        grep.c: die("bad %s argument: %s", opt, arg);
+>=20
+>    So we could covert that one to "bad '%s' argument: '%s"" while we're
+>    at it...
+>=20
+> - In some cases there's ucase to lcase conversions, like Bad->bad above
+>   (good), but others are missed, e.g. (also missing quotes as noted
+>   above):
+>=20
+> 	-		die(_("Server does not support --shallow-since"));
+> 	+		die(_("Server does not support %s"), "--shallow-since");
+>=20
+>  - On quotes, let's consistently use '' quotes, and not e.g.g:
+> =09
+> 	-		die(_("`scalar list` does not take arguments"));
+> 	+		die(_("%s does not take arguments"), "`scalar list`");
+>=20
+>=20
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index df167eaa766..ba8dece0c03 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -107,9 +107,8 @@ OPTIONS
- --quiet::
- 	Be quiet, only report errors.
- 
----refresh::
- --no-refresh::
--	Proactively refresh the index after a mixed reset. Enabled by default.
-+	Disable refreshing the index after a mixed reset.
- 
- --pathspec-from-file=<file>::
- 	Pathspec is passed in `<file>` instead of commandline args. If
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 54324217f93..d9427abc483 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -392,7 +392,7 @@ static int git_reset_config(const char *var, const char *value, void *cb)
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
--	int refresh = -1;
-+	int refresh = 1;
- 	int patch_mode = 0, pathspec_file_nul = 0, unborn;
- 	const char *rev, *pathspec_from_file = NULL;
- 	struct object_id oid;
-@@ -400,8 +400,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	int intent_to_add = 0;
- 	const struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
--		OPT_BOOL(0, "refresh", &refresh,
--				N_("skip refreshing the index after reset")),
-+		OPT_SET_INT(0, "no-refresh", &refresh,
-+				N_("skip refreshing the index after reset"), 0),
- 		OPT_SET_INT(0, "mixed", &reset_type,
- 						N_("reset HEAD and index"), MIXED),
- 		OPT_SET_INT(0, "soft", &reset_type, N_("reset only HEAD"), SOFT),
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 91407d9bbe0..73f2ba88823 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -310,7 +310,7 @@ static int reset_head(void)
- 	 * API for resetting.
- 	 */
- 	cp.git_cmd = 1;
--	strvec_pushl(&cp.args, "reset", "--quiet", "--refresh", NULL);
-+	strvec_pushl(&cp.args, "reset", "--quiet", NULL);
- 
- 	return run_command(&cp);
- }
-@@ -1633,7 +1633,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 			struct child_process cp = CHILD_PROCESS_INIT;
- 
- 			cp.git_cmd = 1;
--			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
-+			strvec_pushl(&cp.args, "reset", "-q", "--",
- 				     NULL);
- 			add_pathspecs(&cp.args, ps);
- 			if (run_command(&cp)) {
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 22477f3a312..7a9b845df8c 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -492,9 +492,8 @@ test_expect_success '--mixed refreshes the index' '
- 	test_reset_refreshes_index "" --quiet
- '
- 
--test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
--	# Verify that --[no-]refresh controls index refresh
--	test_reset_refreshes_index "" --refresh &&
-+test_expect_success '--mixed --no-refresh sets refresh behavior' '
-+	# Verify that --no-refresh controls index refresh
- 	! test_reset_refreshes_index "" --no-refresh
- '
- 
--- 
-gitgitgadget
+OK for disambiguation, lowercasing and quoting all placeholders.
+BTW, disambiguation may have the side effect of revealing where the type of=
+ placeholders may not be matching the types of replaced variables.
+
+
+Will reroll.
+
+Thanks.
+
+
+
