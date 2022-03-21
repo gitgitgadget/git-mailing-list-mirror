@@ -2,121 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B12DC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB7BC433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353358AbiCUUbu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:31:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38754 "EHLO
+        id S1350101AbiCUUeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:34:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348478AbiCUUbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:31:49 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27A982D1A
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:30:23 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id y32-20020a25ad20000000b006339fb8e18cso10310636ybi.9
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=aOJ8eg8FnXupTKcnu+mvbwutZh9uOy7HQsx4nGgJ9Ks=;
-        b=GDrlJHsq1xptrCCHNHu8Gr4zPxnYrnTPjPFvYRPdIeZIdQ0cr7kWWwwXWrkewH9O5D
-         W31rlg5Y/Y7jsQI/vQGEh+D9193V4VSC2l5BN1xJcJshBtN+j9ywaGDINjkNPo+vFYJP
-         oXWx85aYILFwBAfjtOpy2ACghpdLsEg9phUgvFQCy9duvA3h/1WT/9QCkRiTlWJYyQEB
-         53MBjFvTk6E6B1zlS1cAsIpPAaVI0CfCLC6j4GddWePFU8hfvdPRkJVgAD4I3R2KcwdH
-         WGogHXs/bPX/DbnypTOYfLN+DZ0eUUPPDBVNtsRSEIaui7ziqu/GSlnh5FEY5te2/xPU
-         fLTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=aOJ8eg8FnXupTKcnu+mvbwutZh9uOy7HQsx4nGgJ9Ks=;
-        b=A05YQb/OWIMoLoVgQOJo0I1D9icTbFMX/0ttxZokt7ua22jU94ZFsvjV7/4OOh0lMg
-         BhdAnMx0JC1Ief95nQGNzXZoB9nPDMDnx2WRYhDOBUdV9fwCTVMWipzYSMW8CCGq7eB9
-         okhGCLQCyATZBoiHfaCzsBGq5fS0g98Ke7VCa/X0Ab4ZdCv7OaRPFN4BQZY3GuNf59da
-         ff0mgy4gahLrGqoQTjdbAvXNtxtnCa8NZGGW5uSfyXl4uf0MzDaFRz8yD2F8W9U8/Xcj
-         L3RoBt58kaCluNgzbzUyUv9HzMKXZeWQlEVcDXoeVPPOFIg3E2ZY3/samRJxHOBRm63c
-         Burw==
-X-Gm-Message-State: AOAM532ZTg+/+4zWMbzsrmbAY/tcSucbPpSkIX7UUv3o4S9JE0cRxdYn
-        Lu5cKKOZmWRTIlvU6tw7KeBUBbfztvnbeoVrQbBP
-X-Google-Smtp-Source: ABdhPJxRMwsuWX4tVT/p+NjgmQCCRbIK4mrpIkJWjW8wJKG8V8B+Vfh5gIgOj37FmTexK2co4xka7hw3CvdYFdglB3Lk
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:c58b:0:b0:629:5064:894c with
- SMTP id v133-20020a25c58b000000b006295064894cmr24271166ybe.590.1647894622775;
- Mon, 21 Mar 2022 13:30:22 -0700 (PDT)
-Date:   Mon, 21 Mar 2022 13:30:18 -0700
-In-Reply-To: <patch-v2-2.2-9d16984898c-20220307T123244Z-avarab@gmail.com>
-Message-Id: <20220321203019.2614799-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
-Subject: Re: [PATCH v2 2/2] hooks: fix an obscure TOCTOU "did we just run a
- hook?" race
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S238538AbiCUUeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:34:36 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F2E396A8
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:33:09 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA9C9109593;
+        Mon, 21 Mar 2022 16:33:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YuaGFAWC+wlADcvNaELBle6kiPg+eDZG0+i9hF
+        VnviQ=; b=m573BT8b3AZB3H38uZHKX1DwFwFxwpMkVkGjGZN4LTA2M75smb5ebt
+        pDKootjbLvCtJpO4L5U0k/5whZ4KdIFjNg+PhysL0N5abIhIyQvM7874RBO/321L
+        pF8ZUxiHPKW4iajs6fUix0yIZPv/LiC82UzFYdj+Zsq0JwzaDFkjo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0777109592;
+        Mon, 21 Mar 2022 16:33:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80769109590;
+        Mon, 21 Mar 2022 16:33:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] for-each-ref: respect GIT_REF_PARANOIA setting
+References: <7283f826198aaec94c847f0b26e228ace9a38433.1647880211.git.me@ttaylorr.com>
+Date:   Mon, 21 Mar 2022 13:33:04 -0700
+In-Reply-To: <7283f826198aaec94c847f0b26e228ace9a38433.1647880211.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Mon, 21 Mar 2022 12:30:18 -0400")
+Message-ID: <xmqqzgljvyf3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1D53902A-A956-11EC-A274-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 8b8bdad3959..009a1de0a3d 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -726,11 +726,13 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
->  	int clean_message_contents =3D (cleanup_mode !=3D COMMIT_MSG_CLEANUP_NO=
-NE);
->  	int old_display_comment_prefix;
->  	int merge_contains_scissors =3D 0;
-> +	int invoked_hook;
-> =20
->  	/* This checks and barfs if author is badly specified */
->  	determine_author_info(author_ident);
-> =20
-> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit",=
- NULL))
-> +	if (!no_verify && run_commit_hook(use_editor, index_file, &invoked_hook=
-,
-> +					  "pre-commit", NULL))
->  		return 0;
-> =20
->  	if (squash_message) {
-> @@ -1053,10 +1055,10 @@ static int prepare_to_commit(const char *index_fi=
-le, const char *prefix,
->  		return 0;
+Taylor Blau <me@ttaylorr.com> writes:
+
+> +	ret = filter_refs(&array, &filter, FILTER_REFS_ALL);
+> +	if (ret)
+> +		goto cleanup;
+>  	ref_array_sort(sorting, &array);
+
+Fixing the "regression" would be a simple matter of removing the
+early return from here, and instead show what we have collected?
+
+>  	if (!maxcount || array.nr < maxcount)
+> @@ -91,11 +93,12 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>  		putchar('\n');
 >  	}
-> =20
-> -	if (!no_verify && hook_exists("pre-commit")) {
-> +	if (!no_verify && invoked_hook) {
-
-This commit causes Git to fail Valgrind (tested using "cd t && sh
-t5537*.sh -i -v --valgrind-only=3D10"). You can see here that a caller of
-run_commit_hook() expects invoked_hook to be set, but...
-
-> diff --git a/commit.c b/commit.c
-> index d400f5dfa2b..396e14d7b32 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -1713,7 +1713,7 @@ size_t ignore_non_trailer(const char *buf, size_t l=
-en)
+>  
+> +cleanup:
+>  	strbuf_release(&err);
+>  	strbuf_release(&output);
+>  	ref_array_clear(&array);
+>  	free_commit_list(filter.with_commit);
+>  	free_commit_list(filter.no_commit);
+>  	ref_sorting_release(sorting);
+> -	return 0;
+> +	return ret;
 >  }
-> =20
->  int run_commit_hook(int editor_is_used, const char *index_file,
-> -		    const char *name, ...)
-> +		    int *invoked_hook, const char *name, ...)
->  {
->  	struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
->  	va_list args;
-> diff --git a/commit.h b/commit.h
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 7838bd22b8..f9667f6ca4 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2249,7 +2249,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+>  
+>  	if (flag & REF_ISBROKEN) {
+>  		warning(_("ignoring broken ref %s"), refname);
+> -		return 0;
+> +		return 1;
+>  	}
 
-The quoted part is the entire diff of commit.c. You can see that we have
-a new argument "int *invoked_hook", but don't actually do anything with
-it. Could you (=C3=86var) take a look?
+Ah, no, not really.  This causes us to stop iterating prematurely.
+
+If we are iterating because we want to find any breakage, such an
+early stop in iteration makes good sense, but most of the time, we
+are not, and it is questionable if such an early return makes much
+sense.
+
+I suspect that a handler may need to keep going, while recording a
+bit for each ref it collects.  ref_array_item may or may not have (I
+do not know offhand) already a bit in its flag word to signal a broken
+ref that we can carry this information out to the callers?
