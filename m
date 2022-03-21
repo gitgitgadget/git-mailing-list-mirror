@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE23BC433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E487C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbiCUXLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52068 "EHLO
+        id S232218AbiCUXLm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:11:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233754AbiCUXI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233748AbiCUXI6 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Mar 2022 19:08:58 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3CCF4BBA4
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D7A84BFD9
         for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:13 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id p9so22620438wra.12
+Received: by mail-wr1-x42b.google.com with SMTP id h23so22039915wrb.8
         for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MX1goLsm5UdtODGaQviXS6GI4k8Bwq9p8iWNLzhjkk8=;
-        b=hK84w3GeKxdV/+azoi/EoL3oRCMYg1dBHVVv7uxs/C8anzQ7HWHk4roxJHUubKMzaw
-         4L5ii6+kzRC8NVMEGS4omyyIpWgPAF1kyoOHnAjFx4sGZ6kQLKHA8yIRjWZ5tzim9Ayn
-         0lAxdW17dgkv0m4RTC51SR7fhmmY9L3ZEg3baJam9L3M8f1gejouPu9cV9BYsrzSZO6v
-         7g+gFTYkKjce6mdHx+StMidvIX4AgBHiLaiKp9CHkauaVgX1oJKhHmDR7NPkUg3a6UPH
-         XeEXpZzWQt9/4wEl8A7PWBydCYnuni1AJi+4iPcQdzI7DpSlInMgkVFBVardNWfTx0G+
-         EDow==
+        bh=nAdC0fg3NmY/18s0r0twLr8SfiD39z61/dO+DQnlen4=;
+        b=TAq+jZM7MyUaZlQFniqCuatRao3R1jM5z+YqBfwmWcclwRwWG73EAQZWrHJG0uIB8K
+         Y95hFkdaOdLrlA/EO6utiKm749UmYjWUTK7ROv3GvoAiIkvw96Y+MqYU5p2a8m5F5GmE
+         X5Nokm4kFZkED0bSHZTwUmuO+anC1rpW9ppeDYa5Tr0y67T1Tz2JvID27YY5odRGR9Al
+         hQtK7DM7OUzrTY95cZcgY91CipH6bPUWYMbzKav/S/2nvnp3WIJTFmnU8UsX0paOVCg+
+         tIb42MWWP1DkV9Sm79kZ4STPnsSwwmqr6g6+DQqO6QTSUrqOikpnsMI1pJ7o3f5+QWeR
+         TMhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MX1goLsm5UdtODGaQviXS6GI4k8Bwq9p8iWNLzhjkk8=;
-        b=XCxjtg9g942HHskyOpEO7YBF6QJLMHdLNwFAIyRhHST8S7y51eSwPnSfU9TNioPEKX
-         WG1vJVcB6BPRHGpwCCUmkDWwCmsKFa4gqxzrNWAAZhPn3jliGzFWH+AkEho0qNVBbvTn
-         vndum2XPhPkwzOnRLA5i32NC131L9+sVg+Z5oqcqCiO2fZZb5+gQOcmZHRnFODRmiD7M
-         sDV3cAU8KyEPoL+lSOHEDZUmuhU0P7XNOv+y5erwKL/Nc2XLdp/Pvjzf3QDlRuHvn50Z
-         LUFxT8inOpjhIntYfM2ZuYlHZzJzwx+NSDrKRT2KTKNROiwV6zknQ++Y8e/1byieai8D
-         nI/A==
-X-Gm-Message-State: AOAM531c8q7a04NQmWR1Y5Q26NZr2YRvkrY0n4oNl2oRgYJSw6h7G+oZ
-        5ECLqEFgCLy5mfT6vftgeKNcfvFCTLk=
-X-Google-Smtp-Source: ABdhPJwbrffveuPFrIZp34b3Iupickr/hF7/s4YwrtFvK5mIrEeVes5WF94yowWxKTJwvnVQVZhV0A==
-X-Received: by 2002:adf:f14e:0:b0:203:e049:6829 with SMTP id y14-20020adff14e000000b00203e0496829mr19507588wro.386.1647903346560;
-        Mon, 21 Mar 2022 15:55:46 -0700 (PDT)
+        bh=nAdC0fg3NmY/18s0r0twLr8SfiD39z61/dO+DQnlen4=;
+        b=Ed+4DPtq+4/ivUABHMQ2AT6LNrmD3OJQB1ubBvGNWacNyLKIoqa2UIPRdKEDPcQPeZ
+         ZWyUjV76xnK9rLafxFsLB4RxXgZtw+efus+suoMcVp+i0xLxZHyFGogY1NoUaPei6wED
+         uB/knp9JHnOOD4FRxPXry9t2R+Y/M7q1ZCW4AqefM7zbCH9OgwRsFRMzohqZdu+/IbbQ
+         cbSxXikD8YxAihygZddJvv9HIL8kzCePP3Fbeq29tLKAfbEC4oQSofkqZzuF0ivd4vo1
+         +xMZe143BbNpEwPHd/MG2rLxemm6pKfw0w4CF5xmRsxpZz6NXuuysw0BEZU+oy8w1mHl
+         DhHQ==
+X-Gm-Message-State: AOAM530HS80qmFM7Est9kDuf3wSwqPGK0qWykm/VTF0+CAcRPyIV8TPt
+        hFTVUxz3aRKk39cRO7oZ6bPwXhvlLfc=
+X-Google-Smtp-Source: ABdhPJwF+QM/CM3uUR/RYXYFTWF/C5iMRjj/hKCCMkzNNXMIPa2fAZb4kbCXGeX5xj7v7VHNzeY40Q==
+X-Received: by 2002:adf:e18f:0:b0:204:444:dd0d with SMTP id az15-20020adfe18f000000b002040444dd0dmr9574914wrb.678.1647903353627;
+        Mon, 21 Mar 2022 15:55:53 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.45
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:55:46 -0700 (PDT)
+        Mon, 21 Mar 2022 15:55:53 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 06/41] credential-cache--daemon.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:54:48 +0000
-Message-Id: <20220321225523.724509-7-gitter.spiros@gmail.com>
+Subject: [PATCH 14/41] remote-ext.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:56 +0000
+Message-Id: <20220321225523.724509-15-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -76,22 +76,22 @@ consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/credential-cache--daemon.c | 2 +-
+ builtin/remote-ext.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index 4c6c89ab0d..83441cad5e 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -138,7 +138,7 @@ static void serve_one_client(FILE *in, FILE *out)
- 		 * process actually ends, which closes the socket and gives
- 		 * them EOF.
- 		 */
--		exit(0);
-+		exit(EXIT_SUCCESS);
- 	}
- 	else if (!strcmp(action.buf, "erase"))
- 		remove_credential(&c);
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+index fd3538d4f0..3b32d68ed5 100644
+--- a/builtin/remote-ext.c
++++ b/builtin/remote-ext.c
+@@ -172,7 +172,7 @@ static int command_loop(const char *child)
+ 		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
+ 			if (ferror(stdin))
+ 				die("Command input error");
+-			exit(0);
++			exit(EXIT_SUCCESS);
+ 		}
+ 		/* Strip end of line characters. */
+ 		i = strlen(buffer);
 -- 
 2.35.1
 
