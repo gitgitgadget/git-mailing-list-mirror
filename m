@@ -2,89 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AAA4C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 18:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED720C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352299AbiCUSsu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 14:48:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45996 "EHLO
+        id S1352407AbiCUTEf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 15:04:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239977AbiCUSss (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 14:48:48 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F48818CD10
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 11:47:22 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 52C823F413F;
-        Mon, 21 Mar 2022 14:47:21 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 259B93F413E;
-        Mon, 21 Mar 2022 14:47:21 -0400 (EDT)
-Subject: Re: [PATCH 02/16] update-index: convert advise() messages back to
- warning()
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
- <b120972a441d3081519af0e31bb0c639df148287.1647033303.git.gitgitgadget@gmail.com>
- <xmqq5yoht6an.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <3ba50173-8739-3741-7226-0299ea941e00@jeffhostetler.com>
-Date:   Mon, 21 Mar 2022 14:47:20 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S1352410AbiCUTEc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 15:04:32 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 832F1140E7
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:03:06 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id h196so12379605qke.12
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hvfYYkdeUQCrn1XFzvHlRNNma/94okv+hu+Alf2xGhk=;
+        b=GoW31l5+sztqeLGV1ws8zsB3uINuSAc/3gbgaRjadJppPLXYthlAD14eZf16DumMby
+         7nvqAkNO4HJ7wATsjhSuGnzY5Je2GeNiQ4MHGTIdE015otU7MyHHJj7QeBI92HyP4etb
+         OP/I3rKY9iLHdGCO77WtJ1Ipc2LIbbGAocO7Nroa6rJ7ri9vk8Aguy2ckZmdr4fByg/M
+         w3zeLBt1Hb3nNSIj7D7vfAnzCH+uYi8KTPu2UCsyXDHUBcjzC6pWE7jYdXrLUjSiq8xg
+         7xz8omXBUy4nQj4jSVbBehYRG49N2diwf25m5tmwsW7OEVX2N1zB+Afa4LVc+8/jg/Fk
+         ixJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hvfYYkdeUQCrn1XFzvHlRNNma/94okv+hu+Alf2xGhk=;
+        b=c7qS1nNIUHQjb64nz14racu2CA5RAIfF4IGGI7woxk0fsqbrZeJv+rr28zOAlPsBdS
+         ANnqDJiCJ03TuS2z2C5fvqkqv+2hVO8D5V3A0CXElyvqN7HIS6XWrJsBK4jUMh7ztB9y
+         s4FI1f6Il57QeKESoA9VC6W+fxtOncFnpu/7yIorb1w4Z8tGMB2Gc62HjK2T5pYD9Dhn
+         EeenpXkOUd5jEFf3xeiRRzmpefP4eFDEWHTAW9gP+GYKinD3Bzx2NHw0lOvyWIyRaHGI
+         5RQWE9UO9HupjOa99T/sls8NF0Y8v9i69mu4qsYRZPJZat0Pl3nti/kTveHkADSTAX1E
+         w2PA==
+X-Gm-Message-State: AOAM530qu/j4h0yLVa7Dl5aL/FDwTxgwbT9J7A88PG3D2Av2Fzhx5M9b
+        /w7QPAc0RllxrwFlAMnqrQzH
+X-Google-Smtp-Source: ABdhPJyBEkeFAenD5gTHWL56uaJCIihL1qRp8CfFYzdxcLEc1z77wyGemHZQCOluYYclLoFH+//hzA==
+X-Received: by 2002:a05:620a:24d6:b0:67d:b85b:3f5 with SMTP id m22-20020a05620a24d600b0067db85b03f5mr13619332qkn.692.1647889385529;
+        Mon, 21 Mar 2022 12:03:05 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id j18-20020ac85c52000000b002e1b9897ae7sm12085211qtj.10.2022.03.21.12.03.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Mar 2022 12:03:05 -0700 (PDT)
+Message-ID: <df403c7b-5152-492a-96b5-575ccc1520de@github.com>
+Date:   Mon, 21 Mar 2022 15:03:01 -0400
 MIME-Version: 1.0
-In-Reply-To: <xmqq5yoht6an.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 2/3] unpack-trees: increment cache_bottom for sparse
+ directories
 Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com, Victoria Dye <vdye@github.com>
+References: <pull.1179.git.1647461522.gitgitgadget@gmail.com>
+ <pull.1179.v2.git.1647532536.gitgitgadget@gmail.com>
+ <cf8dc50c300a08f54d0cf69c82d4d979922a8143.1647532536.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <cf8dc50c300a08f54d0cf69c82d4d979922a8143.1647532536.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 3/14/22 2:08 AM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 3/17/2022 11:55 AM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
 > 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> fixup! update-index: convert fsmonitor warnings to advise
-> 
-> Same comment as 01/16 applies here.  "convert ... back to ..." in
-> the title refers to the fact that builtin-fsmonitor-part2 topic
-> turned warning() into advise() without a good justification, I
-> think.  Flipping and flopping between warning and advise, without
-> giving any justification going either direction, is not a good move.
+> Correct tracking of the 'cache_bottom' for cases where sparse directories
+> are present in the index.
 
-Sorry for not including the backstory.
+Thank you for the detailed background (that I cut from my reply).
 
-Ben wrote the original warning message back in 2017.
+> CORRECTING CACHE_BOTTOM
+> -----------------------
+> The problems observed in 't1092' come from 'cache_bottom' lagging behind in
+> cases where the cache tree-based advancement doesn't occur. To solve this,
+> then, the fix in 17a1bb570b is "reversed"; rather than skipping
+> 'cache_bottom' advancement in 'mark_ce_used()', we skip the directory
+> contents-based advancement for sparse directories. Now, every index entry
+> can be accounted for in 'cache_bottom':
 
-In my original version of part 2 I added a more detailed warning message
-because of the new `core.useBuiltinFSMonitor` config settings and
-how it interacted with `core.fsmonitor`.  And we talked about making
-that longer message advise rather than a warning.  So I changed them
-to advise().
+I have sufficient background to be confident that you are doing the
+right thing here!
 
-But then we decided to remove `core.useBuiltinFSMonitor` and overload
-`core.fsmonitor` to take a boolean, so the original text of the message
-was sufficient and correct.  So to minimize the diff, I reverted the
-text change and kept the change from warning() to advise().
+> -test_expect_failure 'add outside sparse cone' '
+> +test_expect_success 'add outside sparse cone' '
 
-But then there were comments from AEvar on either changing all of
-the nearby warning() calls to advise() *and* to change them to use
-the `advise_type` enum.  That seemed like a large/disruptive change
-at this point.
+> -test_expect_failure 'status/add: outside sparse cone' '
+> +test_expect_success 'status/add: outside sparse cone' '
 
-Also, I wasn't really sure of the need for Ben's original warning
-message, so I'd rather leave it as is than expand the scope.
+> -test_expect_failure 'reset with pathspecs inside sparse definition' '
+> +test_expect_success 'reset with pathspecs inside sparse definition' '
 
-So I basically reverted the change for this series.  If (in a later
-series) we want to revisit all of the warnings in update-index.c,
-then we can think about this.
+Love to see it.
 
-Jeff
+>  			if (matches) {
+> -				o->cache_bottom += matches;
+> +				/*
+> +				 * Only increment the cache_bottom if the
+> +				 * directory isn't a sparse directory index
+> +				 * entry (if it is, it was already incremented)
+> +				 * in 'mark_ce_used()'
+> +				 */
+> +				if (!src[0] || !S_ISSPARSEDIR(src[0]->ce_mode))
+> +					o->cache_bottom += matches;
+>  				return mask;
+
+Looks great.
+
+Thanks,
+-Stolee
