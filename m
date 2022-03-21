@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9584DC433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37115C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352859AbiCUUg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:36:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52516 "EHLO
+        id S1348507AbiCUUga (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348507AbiCUUgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:36:22 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DAA43F30D
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:56 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id h23so21689250wrb.8
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:56 -0700 (PDT)
+        with ESMTP id S1353393AbiCUUgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:36:23 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 971623EF10
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:57 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id q8so10941178wrc.0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SMZx8dMbZJ+kgfSdPd4xnWcYXhFv65RwZsTARc7yZck=;
-        b=hi5T//F0A4vqdLr3DiWFvT+MnXcQXtqU0gL5nRTf2k32ymnYUKxFuSxue5u28Zu7CG
-         yHPKXBS0FkX8q26JusR2Kxw0BdMXy6claGQk8XNh+R4pf5KBMI7zKsLuEfx4RFRE0NzC
-         ilLfntTFZWe8BlYdgD4khdN7xX9KTiy1aPbXCZHkv7cQs85inyf5cKG1l7SBgMAovm83
-         UL+ch3ZtmKLTwicFBxgEWxtEdkYO/i172V/I9j1kqbbVMM/4zA9CNLwMsXAntTCfNU9L
-         lf6OsDtIG7HEly1BlTZlH0KINsJcFZTPXM7KCtllT+Uw9rlICdnLjqhSaOIbSg3WBAYh
-         X9pQ==
+        bh=FXFnODwAQGM92lVsHZLZ9rNyFqH3iwTVWMY3Uv/MC4c=;
+        b=Wd6AMOPoQ4tS5qnXtIodR3R+5V5mXY1gnD2hIihcpvSqf3wBAp5AJcUL6P9A9u+pRW
+         Fx+vaAtahxo8qqWuHzEhjHKohuuVdud3fh123zo9wLyKoLS0Mte4npr0+ybBhf/IdwQh
+         I8AoBZLs9uxw3bkHZz9DxXpjw7CNAKfnbkaE12oDPK3xyYgTYncTKkczU5QqhtfPjfTZ
+         mvIx1e1tHjmSJef9ZkOpcJVXB0QWEkarsg4xUK2u2S1ywHS+T/z9cGT3Kb9sqrrp7OEW
+         5QeA8sruKBgal2vgPuNVTPG7Au3zzb7DST1zBNjMdPhA5iZC11rb6A1TDaeeN8khOJW2
+         hqtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SMZx8dMbZJ+kgfSdPd4xnWcYXhFv65RwZsTARc7yZck=;
-        b=LE498KqKxSahuQ8YeEWgZQI3Buslx69WNcV0R2/Fl4tkhIo1zGvZBQa5FjgA1K6dpK
-         MAhmy4uLaFvJeOtCB4iZua7lay4RNCo1zT3x5Uxwp36tl3bMnr3EhmJnIyGS66IKIXHJ
-         xm4D6Al0rCQOuazgCsJqAc7Q5PhFS/arZ6TLpwnDnALcQmTiICOIM85nr5q9o90PzIW+
-         2tjJsRR1v5uVgSOf4neunLsqnvZTzDxH+Vg5eTiAHLISTNVvxG/uY/r/KatXtxkKc1/r
-         GN4OWfB58ZvhoCbKxBvl+oX5xBBws/0+EPQ4Kig4vUevrajJBPFwjULtbL2xds3Q5rNj
-         jrpw==
-X-Gm-Message-State: AOAM533Hlm7dWeDu6tfjTjQw5YiXOwclY0+/GPDVEkW5Dtsh0TAJv460
-        EnvD0UDkzG7DiqsmqyTh6esamTDlvs8=
-X-Google-Smtp-Source: ABdhPJy47dbhpRiHer+p+rShjy7gi3cKIEY/TwmYTFJgtOteOa04VYmq0IcEn7DBFheJRQNOdJFP/w==
-X-Received: by 2002:a5d:668e:0:b0:203:d9c5:f475 with SMTP id l14-20020a5d668e000000b00203d9c5f475mr19174665wru.98.1647894894682;
-        Mon, 21 Mar 2022 13:34:54 -0700 (PDT)
+        bh=FXFnODwAQGM92lVsHZLZ9rNyFqH3iwTVWMY3Uv/MC4c=;
+        b=3sZklg3VrogqIIIAB3i2evQaO7w5K6i/qlpWz2nt0LbUx1tH9oBbyWMOwOkgGlfT7v
+         qc0ouxNxSG2DZ3c3u3jVts4F2kQxxn/R22HWkiIR0Bb1lyzZ6LTdCUjuNrxHY1qBwwXL
+         BZKfRNefNWAVaR2ESpv2MR7ZIpFSAmV6pG1rjOtXCIlmiJSCgGfUWiiw8cZSDe46TSeO
+         fFlcOi319MwcCSjodAsovyUGk7B4BfryeOc8mXSpFLB0rFOlYSzNpNVZQ7b985J0i+UV
+         vgA6ejCz0d2tp5tdSoRFvJtS1zjwN5IHh3kkMflFjj1mQLgIbn08ZIJfUf9zaoXzppUZ
+         As7Q==
+X-Gm-Message-State: AOAM530bAbSo1Z9xUZvzoIMWGQa1wrFtqPMhv/r86+sPOHQAFIxcLeS9
+        r9NP7l1evfNuarOOQqVAY085sPrHHSA=
+X-Google-Smtp-Source: ABdhPJwcNEdiqBfnnGgiWO+sG5Q6Q0O3AHhoArlIMUJxUvJZ3h7uHXtIA+S6oYAZXFUPwuhwnmeMjg==
+X-Received: by 2002:a5d:47c1:0:b0:204:1797:2c98 with SMTP id o1-20020a5d47c1000000b0020417972c98mr3967144wrc.502.1647894896074;
+        Mon, 21 Mar 2022 13:34:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7-20020a05600c410700b0038c72ef3f15sm388084wmi.38.2022.03.21.13.34.54
+        by smtp.gmail.com with ESMTPSA id p2-20020a5d4582000000b00203f51aa12asm9603738wrq.55.2022.03.21.13.34.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 13:34:54 -0700 (PDT)
-Message-Id: <ecd3296fd25cc936aeb2f8ae160352a2326441c5.1647894889.git.gitgitgadget@gmail.com>
+        Mon, 21 Mar 2022 13:34:55 -0700 (PDT)
+Message-Id: <dbb63c4caa83cc764535a739d20736b706ee44a5.1647894889.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
 References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Mar 2022 20:34:48 +0000
-Subject: [PATCH 3/4] reset: deprecate 'reset.refresh' config option
+Date:   Mon, 21 Mar 2022 20:34:49 +0000
+Subject: [PATCH 4/4] reset: deprecate '--refresh', leaving only '--no-refresh'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,101 +66,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Remove the 'reset.refresh' option, requiring that users explicitly specify
-'--no-refresh' if they want to skip refreshing the index.
+The explicit '--refresh' option was needed in the past when '--quiet',
+'reset.quiet', and/or 'reset.refresh' disabled the index refresh in 'reset
+--mixed'. Those options have since either been deprecated or made to always
+refresh the index by default, leaving only '--[no-]refresh' determining
+whether the index is refreshed or not.
 
-The 'reset.refresh' option was introduced in 101cee42dd (reset: introduce
---[no-]refresh option to --mixed, 2022-03-11) as a replacement for the
-refresh-skipping behavior originally controlled by 'reset.quiet'.
+Because there is nothing other than '--no-refresh' to disable index refresh,
+we do not need a '--refresh' option to counteract some other refresh
+disabling.
 
-Although 'reset.refresh=false' functionally served the same purpose as
-'reset.quiet=true', it exposed [1] the fact that the existence of a global
-"skip refresh" option could potentially cause problems for users. Allowing a
-global config option to avoid refreshing the index forces scripts using 'git
-reset --mixed' to defensively use '--refresh' if index refresh is expected;
-if that option is missing, behavior of a script could vary from user-to-user
-without explanation.
-
-Furthermore, globally disabling index refresh in 'reset --mixed' was
-initially devised as a passive performance improvement; since the
-introduction of the option, other changes have been made to Git (e.g., the
-sparse index) with a greater potential performance impact without
-sacrificing index correctness. Therefore, we can more aggressively err on
-the side of correctness and limit the cases of skipping index refresh to
-only when a user specifies the '--no-refresh' option.
-
-[1] https://lore.kernel.org/git/xmqqy2179o3c.fsf@gitster.g/
+To ensure users don't use what is effectively a no-op, remove '--refresh'
+from the set of 'reset' options, as well as its usage in 'git stash'.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/git-reset.txt |  4 +---
- builtin/reset.c             |  4 +---
- t/t7102-reset.sh            | 14 ++------------
- 3 files changed, 4 insertions(+), 18 deletions(-)
+ Documentation/git-reset.txt | 3 +--
+ builtin/reset.c             | 6 +++---
+ builtin/stash.c             | 4 ++--
+ t/t7102-reset.sh            | 5 ++---
+ 4 files changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index f4aca9dd35c..df167eaa766 100644
+index df167eaa766..ba8dece0c03 100644
 --- a/Documentation/git-reset.txt
 +++ b/Documentation/git-reset.txt
-@@ -109,9 +109,7 @@ OPTIONS
+@@ -107,9 +107,8 @@ OPTIONS
+ --quiet::
+ 	Be quiet, only report errors.
  
- --refresh::
+---refresh::
  --no-refresh::
--	Proactively refresh the index after a mixed reset. If unspecified, the
--	behavior falls back on the `reset.refresh` config option. If neither
--	`--[no-]refresh` nor `reset.refresh` are set, refresh is enabled.
-+	Proactively refresh the index after a mixed reset. Enabled by default.
+-	Proactively refresh the index after a mixed reset. Enabled by default.
++	Disable refreshing the index after a mixed reset.
  
  --pathspec-from-file=<file>::
  	Pathspec is passed in `<file>` instead of commandline args. If
 diff --git a/builtin/reset.c b/builtin/reset.c
-index e824aad3604..54324217f93 100644
+index 54324217f93..d9427abc483 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -423,7 +423,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	};
+@@ -392,7 +392,7 @@ static int git_reset_config(const char *var, const char *value, void *cb)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
+-	int refresh = -1;
++	int refresh = 1;
+ 	int patch_mode = 0, pathspec_file_nul = 0, unborn;
+ 	const char *rev, *pathspec_from_file = NULL;
+ 	struct object_id oid;
+@@ -400,8 +400,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	int intent_to_add = 0;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+-		OPT_BOOL(0, "refresh", &refresh,
+-				N_("skip refreshing the index after reset")),
++		OPT_SET_INT(0, "no-refresh", &refresh,
++				N_("skip refreshing the index after reset"), 0),
+ 		OPT_SET_INT(0, "mixed", &reset_type,
+ 						N_("reset HEAD and index"), MIXED),
+ 		OPT_SET_INT(0, "soft", &reset_type, N_("reset only HEAD"), SOFT),
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 91407d9bbe0..73f2ba88823 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -310,7 +310,7 @@ static int reset_head(void)
+ 	 * API for resetting.
+ 	 */
+ 	cp.git_cmd = 1;
+-	strvec_pushl(&cp.args, "reset", "--quiet", "--refresh", NULL);
++	strvec_pushl(&cp.args, "reset", "--quiet", NULL);
  
- 	git_config(git_reset_config, NULL);
--	git_config_get_bool("reset.refresh", &refresh);
+ 	return run_command(&cp);
+ }
+@@ -1633,7 +1633,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
  
- 	argc = parse_options(argc, argv, prefix, options, git_reset_usage,
- 						PARSE_OPT_KEEP_DASHDASH);
-@@ -529,8 +528,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
- 				if (!quiet && advice_enabled(ADVICE_RESET_NO_REFRESH_WARNING) && t_delta_in_ms > REFRESH_INDEX_DELAY_WARNING_IN_MS) {
- 					advise(_("It took %.2f seconds to refresh the index after reset.  You can use\n"
--						 "'--no-refresh' to avoid this.  Set the config setting reset.refresh to false\n"
--						 "to make this the default."), t_delta_in_ms / 1000.0);
-+						 "'--no-refresh' to avoid this."), t_delta_in_ms / 1000.0);
- 				}
- 			}
- 		} else {
+ 			cp.git_cmd = 1;
+-			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
++			strvec_pushl(&cp.args, "reset", "-q", "--",
+ 				     NULL);
+ 			add_pathspecs(&cp.args, ps);
+ 			if (run_command(&cp)) {
 diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 9e4c4deee35..22477f3a312 100755
+index 22477f3a312..7a9b845df8c 100755
 --- a/t/t7102-reset.sh
 +++ b/t/t7102-reset.sh
-@@ -493,19 +493,9 @@ test_expect_success '--mixed refreshes the index' '
+@@ -492,9 +492,8 @@ test_expect_success '--mixed refreshes the index' '
+ 	test_reset_refreshes_index "" --quiet
  '
  
- test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
--	# Verify that --[no-]refresh and `reset.refresh` control index refresh
--
--	# Config setting
--	test_reset_refreshes_index "-c reset.refresh=true" &&
--	! test_reset_refreshes_index "-c reset.refresh=false" &&
--
--	# Command line option
-+	# Verify that --[no-]refresh controls index refresh
- 	test_reset_refreshes_index "" --refresh &&
--	! test_reset_refreshes_index "" --no-refresh &&
--
--	# Command line option overrides config setting
--	test_reset_refreshes_index "-c reset.refresh=false" --refresh &&
--	! test_reset_refreshes_index "-c reset.refresh=true" --no-refresh
-+	! test_reset_refreshes_index "" --no-refresh
+-test_expect_success '--mixed --[no-]refresh sets refresh behavior' '
+-	# Verify that --[no-]refresh controls index refresh
+-	test_reset_refreshes_index "" --refresh &&
++test_expect_success '--mixed --no-refresh sets refresh behavior' '
++	# Verify that --no-refresh controls index refresh
+ 	! test_reset_refreshes_index "" --no-refresh
  '
  
- test_expect_success '--mixed preserves skip-worktree' '
 -- 
 gitgitgadget
-
