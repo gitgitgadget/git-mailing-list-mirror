@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF046C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4594C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbiCUXHY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:07:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
+        id S231896AbiCUXH2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:07:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231766AbiCUXHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:07:16 -0400
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B2C23DEBA
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:47 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id q8so11294896wrc.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:47 -0700 (PDT)
+        with ESMTP id S232118AbiCUXHS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:07:18 -0400
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 010F02980F
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:41 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id o7-20020a05600c4fc700b0038c87edc21eso687221wmq.0
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7S49J4rNMrM1ov2+uazlPh/tM8brvFV6SbkvoU8GTe4=;
-        b=bfCJ4hkTh3y83hUORGEWQ0twxUQThdl9Fqidbae3z9vyVStREdXJSbjeMMA4UfTJsp
-         qAfW2uxiWgI8Z/KCXgbeX9iibZFyPEXXw32Mego3CnNj/ZFvb65/j9Ef/Y6w2qMBB4Dh
-         FasiYaqxIy0vefsoXGOmZtxZcLVzZ2hqCRWtiXi6XjK84+dInmKKtsnBdFgdV+d4aq2m
-         mj6hLpgbieA5IT14cAqTmo922+A3xSle4987CuLYwyCAyrRg6qs0pYtu33TFNYHcakGs
-         4Tk4VE1iX3fBRIFNARuerZKY+vKGNewrqOBIY4XLXpWMCMD5e0JIaXwJZlmS8sM10naI
-         7bgQ==
+        bh=syJWHGONhgbM/mz6hF20nLA370dSxhysyv3V9DRQUVQ=;
+        b=mj+muPUtmz40g1CCdng5g29P0gaJmRo0we2dlHgGUsNHnBurGPoTl6qyX+zRqrUIaK
+         MdvFKChLWmQhxoCb558aa75ar0xPk+5yehJPXdmWMG9XMYkq4wRMwxs630HYDZqbc2+d
+         1JaJDGw5eNbCdCB7XgoNFVdHkbIIuZjGXfmr8yQvGhmd6qd9bhGWQrzOlMJWp6p0FaGM
+         YUwDyzoloTFIR7sZPKQG5s1HbnLC6o8sYmElcb9KmoyGVRuSjMI/dC5JbGRDXkKcaTFT
+         LI9ugjnYa0nw6u0yG64wo3bY/84/QpM2A5ENCHvECOsrtoHlOZiN8TGwVnidspTWHLEb
+         6LIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7S49J4rNMrM1ov2+uazlPh/tM8brvFV6SbkvoU8GTe4=;
-        b=KfZ7JSnrJEIpOjiedBxIFBLdkPSmbnf3oxeZWQcSVszrq+N5Pc0zWVs48/omBoCWeG
-         Oylo21Yq9EVufD/eBOM29C0IRrWi/y9J31wuzdk4z5wAh2WPSqP9rJptxCUyvkCs9+V4
-         JpvY/7OSPpM1o9yrOuvaOrgbTejG7xOBFmzGWVtyrtDm8YMVyWhsdLr8esMCgCLa2KbT
-         uREZC4TBbei329qIKJMNu4u++dHw/aVXooZ69/EcohAd3+HanO+nlLGON1kGZ3tp+gaS
-         +f3i0G/Rdr7A+jKlXCq2iYtlZcgbBH7h215GdAK1ip1HWOmZR5ukd4KFZa9OJdcTpgF7
-         E5+g==
-X-Gm-Message-State: AOAM532/IJEKIWMiibaE04dgcN7zTAuGR9LKqUJmYtABfPGuUavvsPsb
-        acK4oWTF9F91nRV/DmEjdfs1/TS0SEQ=
-X-Google-Smtp-Source: ABdhPJzIONCUshG0V24rV3b8kwXTMvT8K18n/yZE1qB6fGou2N2UdeaRQqsWfKoeBzU4SJOhyvHiMQ==
-X-Received: by 2002:a5d:64e5:0:b0:204:147a:5f4d with SMTP id g5-20020a5d64e5000000b00204147a5f4dmr5009769wri.225.1647903347374;
-        Mon, 21 Mar 2022 15:55:47 -0700 (PDT)
+        bh=syJWHGONhgbM/mz6hF20nLA370dSxhysyv3V9DRQUVQ=;
+        b=u3kp7iWKmro3mQSjF44alPKlAeBe96gJNMg8Y7UEUdhH06FIo2htcwUcSnIOu5J8at
+         3n49tlTvLZBHS6lCoIKev+hCvGvjSYes34o5FqXHx/AEuXlWwrLqHSTTuoDpOpJLrWb+
+         ANl5CBz+FVj01RGYcgZgtqq+smkMEqwvZfjwjQU6W/hF4XdMceDWIgEi9pD1QDXHwfFj
+         MxWbYT9bQMEDMZiYrznx1Yv3yGc5HZHrCTYzqxD1bNPwFm1OCjYBGcQ738QFdaKbATqj
+         zxtlg9CcR6lmUFNrXV6r/dp1zgNixGkjPACvA2xrN+qlFcanyz+9nUdK6P6DuuqC3MXw
+         t4Zw==
+X-Gm-Message-State: AOAM531kwRc4gEFzSzd+JSHpnbSCDCQvbikAw5gXQgJ/8qKhDzPFl8cS
+        QvXBxcLQL1/LpBSecq3YXhxuyg4M/6c=
+X-Google-Smtp-Source: ABdhPJxAyaYj1HpSWaTte7pWV/aCFFT1LTtKeddQC8Fd1dlhWGpeKF9kgRPR82R83jXmYEfH+BlI8Q==
+X-Received: by 2002:a7b:ce83:0:b0:37b:f1f1:3a0c with SMTP id q3-20020a7bce83000000b0037bf1f13a0cmr1132132wmj.10.1647903352660;
+        Mon, 21 Mar 2022 15:55:52 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.46
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:55:47 -0700 (PDT)
+        Mon, 21 Mar 2022 15:55:52 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/41] help.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:54:49 +0000
-Message-Id: <20220321225523.724509-8-gitter.spiros@gmail.com>
+Subject: [PATCH 13/41] rebase.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:54:55 +0000
+Message-Id: <20220321225523.724509-14-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -76,22 +76,62 @@ consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/help.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/rebase.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 222f994f86..e5ca9d4a6e 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -554,7 +554,7 @@ static const char *check_git_cmd(const char* cmd)
- 		if (!exclude_guides || alias[0] == '!') {
- 			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
- 			free(alias);
--			exit(0);
-+			exit(EXIT_SUCCESS);
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index b29ad2b65e..cafacc87f8 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -988,7 +988,7 @@ static void NORETURN error_on_missing_default_upstream(void)
+ 			 "\n"),
+ 		       remote, current_branch->name);
+ 	}
+-	exit(1);
++	exit(EXIT_FAILURE);
+ }
+ 
+ static void set_reflog_action(struct rebase_options *options)
+@@ -1266,10 +1266,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (has_unstaged_changes(the_repository, 1)) {
+ 			puts(_("You must edit all merge conflicts and then\n"
+ 			       "mark them as resolved using git add"));
+-			exit(1);
++			exit(EXIT_FAILURE);
  		}
- 		/*
- 		 * Otherwise, we pretend that the command was "git
+ 		if (read_basic_state(&options))
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 		goto run_rebase;
+ 	}
+ 	case ACTION_SKIP: {
+@@ -1285,7 +1285,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			die(_("could not discard worktree changes"));
+ 		remove_branch_state(the_repository, 0);
+ 		if (read_basic_state(&options))
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 		goto run_rebase;
+ 	}
+ 	case ACTION_ABORT: {
+@@ -1297,7 +1297,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		string_list_clear(&merge_rr, 1);
+ 
+ 		if (read_basic_state(&options))
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 		ropts.oid = &options.orig_head;
+ 		ropts.branch = options.head_name;
+ 		ropts.flags = RESET_HEAD_HARD;
+@@ -1388,7 +1388,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 
+ 	for (i = 0; i < exec.nr; i++)
+ 		if (check_exec_cmd(exec.items[i].string))
+-			exit(1);
++			exit(EXIT_FAILURE);
+ 
+ 	if (!(options.flags & REBASE_NO_QUIET))
+ 		strvec_push(&options.git_am_opts, "-q");
 -- 
 2.35.1
 
