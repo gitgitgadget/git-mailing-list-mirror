@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91482C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F15BC433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232073AbiCUXKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
+        id S232096AbiCUXKy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:10:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233789AbiCUXJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:09:00 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFC83B5025
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:15 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id q8so11294965wrc.0
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:15 -0700 (PDT)
+        with ESMTP id S234517AbiCUXJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:09:34 -0400
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1148A324D64
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:59 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id o30-20020a05600c511e00b0038c9cfb79cbso458448wms.1
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9YqNh3kdxe+Wvy/MZM4MclSUNX55FdTMPxhaEFXtHnQ=;
-        b=Z3z9AeBpyeyTIVNV31jMnzUCrlOO+90/BNf2z081RAEJvhWQB61fTJew9zjAdoEeOi
-         jhNcpaDCQ4vBeqdIJDIL9J98SLmBKAuhmEvYkFCRyZ1q88BC3RDrkFCLb21ZvZpNSD+q
-         QHVzcOrxfYTjd7gsKRVFdbFv6dB5rPsQ5xvJNCHigmSXhiVIvbU1Dcce7CqFzKKUDGj2
-         XDJsbJ/Zr8BGJZvlSFb4jrQ5d/LtGXznwNu7JWVj5mQzVq7jsRgVWJaIDHZwXZMQ9cFB
-         Z4MyPVdnr5P38DhyT0ffVAyW/e4yhobDrLOz/QlZhht9r+jB4owuNMeB5i/8W+2ghRCE
-         YCtw==
+        bh=s+6I6EC/7xROz/VXlJztaYqPHV7zcNe0TOOyNlcfuSE=;
+        b=JJwno/tC0+/vYnEiyjztR1S78OxUfXrzZxQ5ylqs2RdgYLEHHZLZNi/MdfAJxhs5+A
+         7z7SvRA7b5qPtpKY1zCztrUfW50CjYinveUrW4lUbS3apoTxonWlEHfKeClQz7P2doUR
+         M3b4/uSZviYuvRpqqZSNxHV+J4tL+rtCWxoGX7Xo9Ouf+0hOtHdy4CUilYLaUO+aZv1Z
+         kFiJPKZqUtiac7sq0/zb96skJFa1mg7tpVPZ+FjXZvDUhLToiwY4GVrp2S94Smpr5JLM
+         7GvVhs/+z83DVF3sdgclft5rOR+o0XIUWRP3IBCWFg97xAWkUyamRsH8LOHn/tWN31k5
+         syVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9YqNh3kdxe+Wvy/MZM4MclSUNX55FdTMPxhaEFXtHnQ=;
-        b=zKB9E24gRwHm1zP1rKUhm1YLWo2lwGFesy3qJ3Xz0Q1I2PHyHeUG7dbfio070sh8mz
-         b75o+KTNekExXb6xvprC7YHfbCe90ECkNsYA1WDJCDypF4xV1wb5W9j48LlTkx8s3nl1
-         sFFy4LM+BwjalN+ivFh4lbNOG3g6sQwAu/vQMgLxIr838Mv0j1P4L421ZXD1Zq7ODU7T
-         B9lGHx0HlUz6CkjPTNMpf+a5w/X3812bObORWQJdtVQqbUflk8nQLhKHeA424zhLK8ax
-         wRbnczz2UF2ian4FVpcbRevZgQOF3JHy8pIvDFIEBvK+l9tX/4mvzkTmZfLKBM6b6jTV
-         w7RQ==
-X-Gm-Message-State: AOAM532n6ICpAXiixKMPzdO5pzupEBVM0MAbROJeG6QSjouHUphZWzAg
-        ogmAOjoO8b7ZqL3nfTR7J+NcCTbbbCE=
-X-Google-Smtp-Source: ABdhPJxT07oob67T+ew21YFwBYySiTpdLv5d8B4nHu2dherluoApx8trPFTK7xYqBKMWs74SpUOOhQ==
-X-Received: by 2002:adf:ef48:0:b0:1f0:47ba:d4e6 with SMTP id c8-20020adfef48000000b001f047bad4e6mr20509460wrp.438.1647903349201;
-        Mon, 21 Mar 2022 15:55:49 -0700 (PDT)
+        bh=s+6I6EC/7xROz/VXlJztaYqPHV7zcNe0TOOyNlcfuSE=;
+        b=QbHldlOLBbr3ggJcIXfI6U/PJRsIU6DnzL25CHM/Aa9FvbclJw9WUFC4hSXh2W9M4f
+         JWZv3sLNAz5U80dcAFq4nFFKDy38G2QriMNwZ+LIuyCzZhg6UONx2p/y3Y+UXqEcinmp
+         Nb5gFrKtMd8YCYCR7OY8Do8Y/58FUXwy9ZO4NePe/R16dTnAh4XTd/USxWo9R6ON3l6T
+         3E3/MDma4wh436Lry5WMNJNdKA5syMZ2Zg+Zn8r0sk7VvJ9q0FxvvPLmFjPOsz35APvr
+         6wEJM5ZN0zseZxXk9x++qpTVIWQBbWUDJwuFk82aCgE9tQZor4Phyogh3lBN0Li6B1ZU
+         71hg==
+X-Gm-Message-State: AOAM533gEi5q8kyAJMiRaV5MtmCBZH7qul8H313pXhGnZzT8/ZHhVn8g
+        dZLvJ5T8nQJZZ3enigG6Wu9j79zOFQo=
+X-Google-Smtp-Source: ABdhPJyQlD7oorMik26Dfjvdaqi4skSWdT/PRNs0CeDtMmONI4K/kOmuO6vo/KlgmKb7sZDq2bszKQ==
+X-Received: by 2002:a1c:7312:0:b0:38c:6f75:ab28 with SMTP id d18-20020a1c7312000000b0038c6f75ab28mr1133332wmb.19.1647903377485;
+        Mon, 21 Mar 2022 15:56:17 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.55.48
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.56.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:55:48 -0700 (PDT)
+        Mon, 21 Mar 2022 15:56:17 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/41] mailsplit.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:54:51 +0000
-Message-Id: <20220321225523.724509-10-gitter.spiros@gmail.com>
+Subject: [PATCH 38/41] test-submodule-config.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:55:20 +0000
+Message-Id: <20220321225523.724509-39-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -76,22 +76,22 @@ consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/mailsplit.c | 2 +-
+ t/helper/test-submodule-config.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-index 7baef30569..9127ac49e3 100644
---- a/builtin/mailsplit.c
-+++ b/builtin/mailsplit.c
-@@ -73,7 +73,7 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
+diff --git a/t/helper/test-submodule-config.c b/t/helper/test-submodule-config.c
+index e2692746df..d4608300d5 100644
+--- a/t/helper/test-submodule-config.c
++++ b/t/helper/test-submodule-config.c
+@@ -8,7 +8,7 @@ static void die_usage(int argc, const char **argv, const char *msg)
+ {
+ 	fprintf(stderr, "%s\n", msg);
+ 	fprintf(stderr, "Usage: %s [<commit> <submodulepath>] ...\n", argv[0]);
+-	exit(1);
++	exit(EXIT_FAILURE);
+ }
  
- 	if (is_bare && !allow_bare) {
- 		fprintf(stderr, "corrupt mailbox\n");
--		exit(1);
-+		exit(EXIT_FAILURE);
- 	}
- 	fd = xopen(name, O_WRONLY | O_CREAT | O_EXCL, 0666);
- 	output = xfdopen(fd, "w");
+ int cmd__submodule_config(int argc, const char **argv)
 -- 
 2.35.1
 
