@@ -2,93 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D95FEC433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D9BC433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352472AbiCUTQH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 15:16:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
+        id S1347957AbiCUT1n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 15:27:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345444AbiCUTQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 15:16:06 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7975948396
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:14:39 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92711108873;
-        Mon, 21 Mar 2022 15:14:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uKk2pOuJnC2MEVN5B8S81iSXvW+0TiHPARWtf1
-        KtER4=; b=pUH16ydSZm7fDqA/KzdfU10LGbAM5ah88sfJogo9ycS4Dfyq24pKN4
-        D3PuTS/7jz+ubb++jaiwI4jP6XMp9l7MqBWogQ2eabFcl9zPRfjFKyGp5D5E3vSC
-        BLU8E32mDnjYGAUvitEJISW+lqXljq8HQhxq/buM4PfjxzW2iSVlE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A177108872;
-        Mon, 21 Mar 2022 15:14:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S233977AbiCUT1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 15:27:41 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5335A12B773
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:26:16 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 6F0463F4802;
+        Mon, 21 Mar 2022 15:26:15 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F0FCB108871;
-        Mon, 21 Mar 2022 15:14:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Victoria Dye <vdye@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
-References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
-        <20220315100145.214054-2-shaoxuan.yuan02@gmail.com>
-        <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
-        <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com>
-        <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
-        <CAJyCBORfAV_TV6DrOxgim4KtU9T-uTibOaQCsJZsi5_FQfci1Q@mail.gmail.com>
-        <97a665fe-07c9-c4f6-4ab6-b6c0e1397c31@github.com>
-        <xmqqo824cbxl.fsf@gitster.g>
-        <e127dadb-7b44-55f8-16ea-9fcf94905db8@github.com>
-Date:   Mon, 21 Mar 2022 12:14:36 -0700
-In-Reply-To: <e127dadb-7b44-55f8-16ea-9fcf94905db8@github.com> (Derrick
-        Stolee's message of "Mon, 21 Mar 2022 11:20:08 -0400")
-Message-ID: <xmqq8rt3xgmb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 38F173F47F9;
+        Mon, 21 Mar 2022 15:26:15 -0400 (EDT)
+Subject: Re: [PATCH 05/16] fsmonitor--daemon: refactor cookie handling for
+ readability
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+ <84df95be620c76afed73d1679722459e2ff32018.1647033303.git.gitgitgadget@gmail.com>
+ <220314.86bky9ezdw.gmgdl@evledraar.gmail.com>
+ <7ddeffc4-3442-b4a1-e6f4-e68b3aa3f5ec@github.com>
+ <xmqqo828s9xw.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <49f2dbd2-b596-7378-ca65-ca5104121af5@jeffhostetler.com>
+Date:   Mon, 21 Mar 2022 15:26:14 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26C9C292-A94B-11EC-90E0-CB998F0A682E-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqo828s9xw.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
 
->>> Another tool that may help you here is 'git ls-files --sparse -t'. It lists
->>> the files in the index and their "tags" ('H' is "normal" tracked files, 'S'
->>> is SKIP_WORKTREE, etc. [4]), which can help identify when a file you'd
->>> expect to be SKIP_WORKTREE is not and vice versa.
->> 
->> Wonderful.
->> 
->> Quite honestly, because the code will most likely compile correctly
->> if you just remove the unconditional "we first expand the in-core
->> index fully" code, and because the "sparse index" makes the existing
->> index walking code fail in unexpected and surprising ways, I
->> consider it unsuitably harder for people who are not yet familiar
->> with the system.  Without a good test coverage (which is hard to
->> give unless you are familiar with the code being tested X-<), one
->> can easily get confused and lost.
->
-> Certainly, 'git mv' is looking to be harder than expected, but there
-> is a lot of interesting exploration happening in the process.
 
-Yeah, I know.
+On 3/14/22 1:47 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
+> 
+>> On 3/14/2022 4:00 AM, Ævar Arnfjörð Bjarmason wrote:
+>>>
+>>> On Fri, Mar 11 2022, Jeff Hostetler via GitGitGadget wrote:
+>>
+>>>> +	/*
+>>>> +	 * Technically, close() and unlink() can fail, but we don't
+>>>> +	 * care here.  We only created the file to trigger a watch
+>>>> +	 * event from the FS to know that when we're up to date.
+>>>> +	 */
+>>>> +	close(fd);
+>>>
+>>> It still seems odd to explicitly want to ignore close() return values.
+>>>
+>>> I realize that we do in (too many) existing places, but why wouldn't we
+>>> want to e.g. catch an I/O error here early?
+>>
+>> What exactly do you propose we do here if there is an I/O error
+>> during close()?
+> 
+> We created the file to trigger a watch event, but now we have a
+> reason to suspect that the wished-for watch event may not come.
+> 
+> We only did so to know that when we're up to date.  Now we may never
+> know?  We may go without realizing we are already up to date a bit
+> longer than the reality?
+> 
+> How much damage would it cause us to miss a watch event in this
+> case?  Very little?  Is it a thing that sysadmins may care if we see
+> too many of, but there is nothing the end user can immediately do
+> about?  If it is, perhaps a trace2 event to report it (and other "we
+> do not care here" syscalls that fail)?
+> 
+> 
+> 
 
-I am suprised that it is harder than expected *to* *you*, though.
-After having seen a few other topics, I thought that you should know
-how deceptively easy to lose "require-full" and how hard to audit
-the code that may expect "a flat list of paths" in the in-core index
-;-).
+The open(... O_CREAT ...) succeeded, so we actually created a
+new file and expect a FS event for it.  That FS event (when seen
+by the FS listener thread) will cause our condition to be
+signaled and allow this thread to wake up and respond to the client.
 
-> Thanks for persisting on this one, Shaoxuan!
+The odds of the close() failing on a plain file (after a successful
+open()) are very slim.  And there's nothing that we can do about
+the failure anyway.  (And we're not relying on an FS event from the
+close() succeeding, so it really doesn't matter.)   Technically, it
+is possible that the daemon could run out of fd's if this close()
+fails often, so at some point the daemon might not be able to create
+new cookie files.  But the daemon currently defaults to sending a
+trivial response to the client -- if this turns out to be a real
+issue, we could have the daemon restart or something, but I'm not
+going to worry about that right now.
 
-Yes, thanks.  And thanks for mentoring Shaoxuan.
+The odds of a failure in unlink() is a little more interesting.
+This would mean that a stale cookie file would be left in the
+cookie directory (and waste a little disk space).  But that is
+not likely either (for a plain file that we just created).
+Since we're not relying on the FS event for the unlink(), the
+failure here won't block the current thread either.  Deleting
+stale cookie files is something that we could try to address
+in the future if it turns out to be a problem.
+
+Jeff
+
