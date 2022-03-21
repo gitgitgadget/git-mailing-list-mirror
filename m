@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA559C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 07:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7619C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 07:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344975AbiCUHfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 03:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38688 "EHLO
+        id S241506AbiCUHgK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 03:36:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344968AbiCUHft (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 03:35:49 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3DFAD10F
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 00:34:23 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id p5so8598638pfo.5
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 00:34:23 -0700 (PDT)
+        with ESMTP id S1344963AbiCUHfu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 03:35:50 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2635517A8B
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 00:34:26 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id o6-20020a17090a9f8600b001c6562049d9so13649826pjp.3
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 00:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Xt4DXtThObflsr/SrL/svQNyy+x2Tjz5S/vXMdKxLsk=;
-        b=XJ9iUbO6iwXcNaTYccJYcJz30s1Ew7CotQNU0xbMcW+LmwzraQjjbgy2cDKj6WwCvA
-         DhAKFrW4udU40pNIjEbiEn4fMTPywXxkncnIMpySVvCoXqHF255tGjE01djNKKUVAnfS
-         ZTLw9zzwBF0NUFY7OBPTcutgIu/oWOiH7iViy2ldRjK+fviS0WhCfQe2RICYPx6xh2gF
-         0hRzdTVTR/6lX4u4cLKa44t5i0ZuToIKuU2/9jk5DZnhkGi/zDw5feOruFidaSjdvr4t
-         rB6oz1/LLz5ZzhloYWLUq045DOq6vVsFV2HYpOoESpaNMN1kiRCpxZ7Ano6bZgHPmWNX
-         l4vg==
+        bh=vNUGGInsboEmmZD6stgtnlSrPjoKjE8Hw9/tjipXSeA=;
+        b=ICGEP1fRI9dZY+yv+HrEeqXJczo84nZiiz/LqKnjdXhc/ITMbqyJnQX3U879zi4xED
+         QoqnXDmwF3RkSzQQBKV4biCI2Dv5UnGA8crcCn9El1xVlGUyf+pnW8SDntsEghcPC1Km
+         TZuZ5EBFyEFeUtbcasKoK6UmFXgx6YoLK+3ZDYP3e+X8weRWnu8A8ZwBZ4YeOv13zI0S
+         +ESiLRrvbmfL5I9iH9kDSXuplTZlDFKJfkBYTfwQwAwLfvywvs0z1JVZTizEsRKRgr6Q
+         fTXBJhoccKOHFDeDF1jbXsIXpFjlM0Vo2YiRIZGLhoXq1Lz72uivCpXyB0Kk/7SyE6j9
+         cAzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Xt4DXtThObflsr/SrL/svQNyy+x2Tjz5S/vXMdKxLsk=;
-        b=np4C/IOSL9DXBRz+4rlwz+Tu34jKvioAduy89U3h4e2go3or2uS3Dah2O0HfELK1Lb
-         DlTlhOfdDEeSyMoNXRzHn2v+nr0KLn/FEHEHhYedokzGzoOWurbbS0WwMtDDQARyWzGH
-         fS4UkdOH2Q3mPpsadADoUee3eNNltlt6aY5S+VuFmWDFS0cPjHphMd+s4m64aBN8M+pJ
-         xKhATgAaRzD8pHalDn0qO44/r2DR2jjIzsyynIryxOkVHt85aYKVvtFGi6lp/P30oBYg
-         jgSiUfhPHkAOHoF/Mg2rPUZ013lpNnF/rHyiru0VAsyECJkcXxW7qrWGe3uTqEEOwkFk
-         aANQ==
-X-Gm-Message-State: AOAM5304nvATgHWdqTCNgHFsvwzwp0wdbvj+MnoWF1Jqj84nXb/PREQb
-        rnP8iIhj/Y3u/UW0pgJalUA=
-X-Google-Smtp-Source: ABdhPJx3P3Be1s1GYeso3FAVwkgsu6ERmakiPkh9bsWrw9jlDLKldl41/bsOX/2g10/b0vwgUCXEKg==
-X-Received: by 2002:a65:45cb:0:b0:380:cf1d:6b7a with SMTP id m11-20020a6545cb000000b00380cf1d6b7amr17312108pgr.495.1647848062646;
-        Mon, 21 Mar 2022 00:34:22 -0700 (PDT)
+        bh=vNUGGInsboEmmZD6stgtnlSrPjoKjE8Hw9/tjipXSeA=;
+        b=TkalnU/XoGcFZhCiybEaHOlRJUJZkHSMgOwpUHRb+nPNiSWVB3x2Ouu+mWtVQ7rbN9
+         f6jqxO5wqn+5c6NAtRZ+gSipeRtRxPnGH51elz8TOgBrwPtlkTODi2bag3Lz1nzJxXK4
+         EWdFKDxIsUCuoI2kxSQtUkgvVEXE4sSPW/hCB+o89rFjpgCYRzhk2va+eOB2bu+Av4Iu
+         cxEfzJlT1rfmVVp8KUKK8xUvXimBsfrz2Uw55NP/9Mj4Bsy85x6NkeS9KMQ0bd1gCheU
+         71IoxT2Nio3Wn8aaWvzhGvRJCCSd7dIgTq6dd7yumQ2VPN5EwhIubtAs+3432QU8NMUr
+         dwzg==
+X-Gm-Message-State: AOAM531QETQMG7Cra2Dq1c0IHguDbUkW26I9nhepq3PSc0HX89dYir2q
+        nAuWopRPLjIp90TA7xVSedidmW+4KNwsmw==
+X-Google-Smtp-Source: ABdhPJxULgz7IQ5ifl8gEUM3ZTAjFpHhMtH76FmcOfnzQaNehg9eUf377a40rrVX6AD/ZID5cG+FNQ==
+X-Received: by 2002:a17:90b:1bc8:b0:1c7:443:3ffb with SMTP id oa8-20020a17090b1bc800b001c704433ffbmr5682375pjb.84.1647848065577;
+        Mon, 21 Mar 2022 00:34:25 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.46])
-        by smtp.gmail.com with ESMTPSA id o6-20020a17090ad20600b001b8d01566ccsm18914422pju.8.2022.03.21.00.34.19
+        by smtp.gmail.com with ESMTPSA id o6-20020a17090ad20600b001b8d01566ccsm18914422pju.8.2022.03.21.00.34.22
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Mar 2022 00:34:22 -0700 (PDT)
+        Mon, 21 Mar 2022 00:34:25 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
         peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v13 15/16] ls-tree: remove FIELD_*, just use MODE_*
-Date:   Mon, 21 Mar 2022 15:33:29 +0800
-Message-Id: <b8afca193ad7edd64612595742929f245cc340f3.1647846935.git.dyroneteng@gmail.com>
+Subject: [PATCH v13 16/16] ls-tree: split up "fast path" callbacks
+Date:   Mon, 21 Mar 2022 15:33:30 +0800
+Message-Id: <010e3c0eceac0a936a447a6df7ba8c9abb7c77b2.1647846935.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.34.1.406.g2e0e55130e
 In-Reply-To: <cover.1647846935.git.dyroneteng@gmail.com>
 References: <cover.1647846935.git.dyroneteng@gmail.com>
@@ -67,207 +67,288 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-When we're picking where we should go in the optimized "show_tree"
-path there's no reason for why we need to convert our "cmdmode" of
-e.g. MODE_LONG into a FIELD_LONG_DEFAULT. Instead we can simply do
-those checks in the show_tree() function itself.
-
-Let's also make this code more future-proof by unrolling the hardcoded
-strmp() if/else if chain into something that checks a new "static
-struct" providing a bidirectional mapping between optimized formats
-and the ls_tree_cmdmode.
+Make the various if/else in the callbacks for the "fast path" a lot
+easier to read by just using common functions for the parts that are
+common, and have per-format callbacks for those parts that are
+different.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- builtin/ls-tree.c | 98 ++++++++++++++++++++++-------------------------
- 1 file changed, 46 insertions(+), 52 deletions(-)
+ builtin/ls-tree.c | 198 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 124 insertions(+), 74 deletions(-)
 
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index a271941540..3e756b5eee 100644
+index 3e756b5eee..52ae71efaa 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
-@@ -23,25 +23,13 @@ static int ls_options;
- static struct pathspec pathspec;
- static int chomp_prefix;
- static const char *ls_tree_prefix;
--#define FIELD_PATH_NAME 1
--#define FIELD_SIZE (1 << 1)
--#define FIELD_OBJECT_NAME (1 << 2)
--#define FIELD_TYPE (1 << 3)
--#define FIELD_MODE (1 << 4)
--#define FIELD_DEFAULT 29 /* 11101 size is not shown to output by default */
--#define FIELD_LONG_DEFAULT  (FIELD_DEFAULT | FIELD_SIZE)
- static const char *format;
--static const char *default_format = "%(objectmode) %(objecttype) %(objectname)%x09%(path)";
--static const char *long_format = "%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)";
--static const char *name_only_format = "%(path)";
--static const char *object_only_format = "%(objectname)";
- struct show_tree_data {
- 	unsigned mode;
- 	enum object_type type;
- 	const struct object_id *oid;
- 	const char *pathname;
- 	struct strbuf *base;
--	unsigned int shown_fields;
- };
- 
- static const  char * const ls_tree_usage[] = {
-@@ -50,7 +38,8 @@ static const  char * const ls_tree_usage[] = {
- };
- 
- static enum ls_tree_cmdmode {
--	MODE_LONG = 1,
-+	MODE_DEFAULT = 0,
-+	MODE_LONG,
- 	MODE_NAME_ONLY,
- 	MODE_NAME_STATUS,
- 	MODE_OBJECT_ONLY,
-@@ -122,25 +111,6 @@ static size_t expand_show_tree(struct strbuf *sb, const char *start,
- 	return len;
- }
- 
--static int parse_shown_fields(unsigned int *shown_fields)
--{
--	if (cmdmode == MODE_NAME_ONLY) {
--		*shown_fields = FIELD_PATH_NAME;
--		return 0;
--	}
--	if (cmdmode == MODE_OBJECT_ONLY) {
--		*shown_fields = FIELD_OBJECT_NAME;
--		return 0;
--	}
--	if (!ls_options || (ls_options & LS_RECURSIVE)
--	    || (ls_options & LS_SHOW_TREES)
--	    || (ls_options & LS_TREE_ONLY))
--		*shown_fields = FIELD_DEFAULT;
--	if (cmdmode == MODE_LONG)
--		*shown_fields = FIELD_LONG_DEFAULT;
--	return 1;
--}
--
- static int show_recursive(const char *base, size_t baselen, const char *pathname)
- {
- 	int i;
-@@ -207,7 +177,7 @@ static int show_default(struct show_tree_data *data)
- {
- 	size_t baselen = data->base->len;
- 
--	if (data->shown_fields & FIELD_SIZE) {
-+	if (cmdmode == MODE_LONG) {
- 		char size_text[24];
- 		if (data->type == OBJ_BLOB) {
- 			unsigned long size;
-@@ -240,14 +210,12 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 	int recurse = 0;
- 	size_t baselen;
- 	enum object_type type = object_type(mode);
--	unsigned int shown_fields = *(unsigned int *)context;
- 	struct show_tree_data data = {
- 		.mode = mode,
- 		.type = type,
- 		.oid = oid,
- 		.pathname = pathname,
- 		.base = base,
--		.shown_fields = shown_fields,
- 	};
- 
- 	if (type == OBJ_BLOB) {
-@@ -260,12 +228,12 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 			return recurse;
- 	}
- 
--	if (shown_fields == FIELD_OBJECT_NAME) {
-+	if (cmdmode == MODE_OBJECT_ONLY) {
- 		printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
- 		return recurse;
- 	}
- 
--	if (shown_fields == FIELD_PATH_NAME) {
-+	if (cmdmode == MODE_NAME_ONLY) {
- 		baselen = base->len;
- 		strbuf_addstr(base, pathname);
- 		write_name_quoted_relative(base->buf,
-@@ -275,12 +243,40 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 		return recurse;
- 	}
- 
--	if (shown_fields>= FIELD_DEFAULT)
-+	if (cmdmode == MODE_LONG ||
-+	    (!ls_options || (ls_options & LS_RECURSIVE)
-+	     || (ls_options & LS_SHOW_TREES)
-+	     || (ls_options & LS_TREE_ONLY)))
- 		show_default(&data);
- 
+@@ -173,108 +173,157 @@ static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
  	return recurse;
  }
  
-+struct ls_tree_cmdmode_to_fmt {
-+	enum ls_tree_cmdmode mode;
-+	const char *const fmt;
-+};
-+
-+static struct ls_tree_cmdmode_to_fmt ls_tree_cmdmode_format[] = {
-+	{
-+		.mode = MODE_DEFAULT,
-+		.fmt = "%(objectmode) %(objecttype) %(objectname)%x09%(path)",
-+	},
-+	{
-+		.mode = MODE_LONG,
-+		.fmt = "%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)",
-+	},
-+	{
-+		.mode = MODE_NAME_ONLY, /* And MODE_NAME_STATUS */
-+		.fmt = "%(path)",
-+	},
-+	{
-+		.mode = MODE_OBJECT_ONLY,
-+		.fmt = "%(objectname)",
-+	},
-+	{ 0 },
-+};
-+
- int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+-static int show_default(struct show_tree_data *data)
++static int show_tree_common(struct show_tree_data *data, int *recurse,
++			    const struct object_id *oid, struct strbuf *base,
++			    const char *pathname, unsigned mode)
  {
- 	struct object_id oid;
-@@ -367,25 +363,23 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	if (!tree)
- 		die("not a tree object");
- 
--	parse_shown_fields(&shown_fields);
+-	size_t baselen = data->base->len;
 -
- 	/*
+-	if (cmdmode == MODE_LONG) {
+-		char size_text[24];
+-		if (data->type == OBJ_BLOB) {
+-			unsigned long size;
+-			if (oid_object_info(the_repository, data->oid, &size) == OBJ_BAD)
+-				xsnprintf(size_text, sizeof(size_text), "BAD");
+-			else
+-				xsnprintf(size_text, sizeof(size_text),
+-					  "%" PRIuMAX, (uintmax_t)size);
+-		} else {
+-			xsnprintf(size_text, sizeof(size_text), "-");
+-		}
+-		printf("%06o %s %s %7s\t", data->mode, type_name(data->type),
+-		find_unique_abbrev(data->oid, abbrev), size_text);
+-	} else {
+-		printf("%06o %s %s\t", data->mode, type_name(data->type),
+-		find_unique_abbrev(data->oid, abbrev));
+-	}
+-	baselen = data->base->len;
+-	strbuf_addstr(data->base, data->pathname);
+-	write_name_quoted_relative(data->base->buf,
+-				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
+-				   line_termination);
+-	strbuf_setlen(data->base, baselen);
+-	return 1;
+-}
+-
+-static int show_tree(const struct object_id *oid, struct strbuf *base,
+-		const char *pathname, unsigned mode, void *context)
+-{
+-	int recurse = 0;
+-	size_t baselen;
+ 	enum object_type type = object_type(mode);
+-	struct show_tree_data data = {
+-		.mode = mode,
+-		.type = type,
+-		.oid = oid,
+-		.pathname = pathname,
+-		.base = base,
+-	};
++	int ret = -1;
++
++	*recurse = 0;
++	data->mode = mode;
++	data->type = type;
++	data->oid = oid;
++	data->pathname = pathname;
++	data->base = base;
+ 
+ 	if (type == OBJ_BLOB) {
+ 		if (ls_options & LS_TREE_ONLY)
+-			return 0;
++			ret = 0;
+ 	} else if (type == OBJ_TREE &&
+ 		   show_recursive(base->buf, base->len, pathname)) {
+-		recurse = READ_TREE_RECURSIVE;
++		*recurse = READ_TREE_RECURSIVE;
+ 		if (!(ls_options & LS_SHOW_TREES))
+-			return recurse;
++			ret = *recurse;
+ 	}
+ 
+-	if (cmdmode == MODE_OBJECT_ONLY) {
+-		printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
+-		return recurse;
+-	}
++	return ret;
++}
+ 
+-	if (cmdmode == MODE_NAME_ONLY) {
+-		baselen = base->len;
+-		strbuf_addstr(base, pathname);
+-		write_name_quoted_relative(base->buf,
+-					   chomp_prefix ? ls_tree_prefix : NULL,
+-					   stdout, line_termination);
+-		strbuf_setlen(base, baselen);
+-		return recurse;
++static void show_tree_common_default_long(struct strbuf *base,
++					  const char *pathname,
++					  const size_t baselen)
++{
++	strbuf_addstr(base, pathname);
++	write_name_quoted_relative(base->buf,
++				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
++				   line_termination);
++	strbuf_setlen(base, baselen);
++}
++
++static int show_tree_default(const struct object_id *oid, struct strbuf *base,
++			     const char *pathname, unsigned mode,
++			     void *context)
++{
++	int early;
++	int recurse;
++	struct show_tree_data data = { 0 };
++
++	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	if (early >= 0)
++		return early;
++
++	printf("%06o %s %s\t", data.mode, type_name(data.type),
++	       find_unique_abbrev(data.oid, abbrev));
++	show_tree_common_default_long(base, pathname, data.base->len);
++	return recurse;
++}
++
++static int show_tree_long(const struct object_id *oid, struct strbuf *base,
++			  const char *pathname, unsigned mode, void *context)
++{
++	int early;
++	int recurse;
++	struct show_tree_data data = { 0 };
++	char size_text[24];
++
++	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	if (early >= 0)
++		return early;
++
++	if (data.type == OBJ_BLOB) {
++		unsigned long size;
++		if (oid_object_info(the_repository, data.oid, &size) == OBJ_BAD)
++			xsnprintf(size_text, sizeof(size_text), "BAD");
++		else
++			xsnprintf(size_text, sizeof(size_text),
++				  "%" PRIuMAX, (uintmax_t)size);
++	} else {
++		xsnprintf(size_text, sizeof(size_text), "-");
+ 	}
+ 
+-	if (cmdmode == MODE_LONG ||
+-	    (!ls_options || (ls_options & LS_RECURSIVE)
+-	     || (ls_options & LS_SHOW_TREES)
+-	     || (ls_options & LS_TREE_ONLY)))
+-		show_default(&data);
++	printf("%06o %s %s %7s\t", data.mode, type_name(data.type),
++	       find_unique_abbrev(data.oid, abbrev), size_text);
++	show_tree_common_default_long(base, pathname, data.base->len);
++	return 1;
++}
+ 
++static int show_tree_name_only(const struct object_id *oid, struct strbuf *base,
++			       const char *pathname, unsigned mode, void *context)
++{
++	int early;
++	int recurse;
++	const size_t baselen = base->len;
++	struct show_tree_data data = { 0 };
++
++	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	if (early >= 0)
++		return early;
++
++	strbuf_addstr(base, pathname);
++	write_name_quoted_relative(base->buf,
++				   chomp_prefix ? ls_tree_prefix : NULL,
++				   stdout, line_termination);
++	strbuf_setlen(base, baselen);
++	return recurse;
++}
++
++static int show_tree_object(const struct object_id *oid, struct strbuf *base,
++			    const char *pathname, unsigned mode, void *context)
++{
++	int early;
++	int recurse;
++	struct show_tree_data data = { 0 };
++
++	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	if (early >= 0)
++		return early;
++
++	printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
+ 	return recurse;
+ }
+ 
+ struct ls_tree_cmdmode_to_fmt {
+ 	enum ls_tree_cmdmode mode;
+ 	const char *const fmt;
++	read_tree_fn_t fn;
+ };
+ 
+ static struct ls_tree_cmdmode_to_fmt ls_tree_cmdmode_format[] = {
+ 	{
+ 		.mode = MODE_DEFAULT,
+ 		.fmt = "%(objectmode) %(objecttype) %(objectname)%x09%(path)",
++		.fn = show_tree_default,
+ 	},
+ 	{
+ 		.mode = MODE_LONG,
+ 		.fmt = "%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)",
++		.fn = show_tree_long,
+ 	},
+ 	{
+ 		.mode = MODE_NAME_ONLY, /* And MODE_NAME_STATUS */
+ 		.fmt = "%(path)",
++		.fn = show_tree_name_only,
+ 	},
+ 	{
+ 		.mode = MODE_OBJECT_ONLY,
+ 		.fmt = "%(objectname)",
++		.fn = show_tree_object
++	},
++	{
++		/* fallback */
++		.fn = show_tree_default,
+ 	},
+-	{ 0 },
+ };
+ 
+ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+@@ -283,7 +332,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	struct tree *tree;
+ 	int i, full_tree = 0;
+ 	unsigned int shown_fields = 0;
+-	read_tree_fn_t fn = show_tree;
++	read_tree_fn_t fn = NULL;
+ 	const struct option ls_tree_options[] = {
+ 		OPT_BIT('d', NULL, &ls_options, N_("only show trees"),
+ 			LS_TREE_ONLY),
+@@ -312,6 +361,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_END()
+ 	};
++	struct ls_tree_cmdmode_to_fmt *m2f = ls_tree_cmdmode_format;
+ 
+ 	git_config(git_default_config, NULL);
+ 	ls_tree_prefix = prefix;
+@@ -367,18 +417,18 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
  	 * The generic show_tree_fmt() is slower than show_tree(), so
  	 * take the fast path if possible.
  	 */
--	if (format && (!strcmp(format, default_format))) {
--		fn = show_tree;
--	} else if (format && (!strcmp(format, long_format))) {
--		shown_fields = shown_fields | FIELD_SIZE;
--		fn = show_tree;
--	} else if (format && (!strcmp(format, name_only_format))) {
--		shown_fields = FIELD_PATH_NAME;
--		fn = show_tree;
--	} else if (format && (!strcmp(format, object_only_format))) {
--		shown_fields = FIELD_OBJECT_NAME;
--		fn = show_tree;
--	} else if (format)
-+	if (format) {
-+		struct ls_tree_cmdmode_to_fmt *m2f;
-+
- 		fn = show_tree_fmt;
-+		for (m2f = ls_tree_cmdmode_format; m2f->fmt; m2f++) {
-+			if (strcmp(format, m2f->fmt))
-+				continue;
-+
-+			cmdmode = m2f->mode;
-+			fn = show_tree;
-+			break;
-+		}
-+	}
+-	if (format) {
+-		struct ls_tree_cmdmode_to_fmt *m2f;
+-
+-		fn = show_tree_fmt;
+-		for (m2f = ls_tree_cmdmode_format; m2f->fmt; m2f++) {
+-			if (strcmp(format, m2f->fmt))
+-				continue;
+-
++	while (m2f++) {
++		if (!m2f->fmt) {
++			fn = format ? show_tree_fmt : show_tree_default;
++		} else if (format && !strcmp(format, m2f->fmt)) {
+ 			cmdmode = m2f->mode;
+-			fn = show_tree;
+-			break;
++			fn = m2f->fn;
++		} else if (!format && cmdmode == m2f->mode) {
++			fn = m2f->fn;
++		} else {
++			continue;
+ 		}
++		break;
+ 	}
  
  	return !!read_tree(the_repository, tree, &pathspec, fn, &shown_fields);
- }
 -- 
 2.34.1.406.g2e0e55130e
 
