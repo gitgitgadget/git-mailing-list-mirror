@@ -2,115 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB4EEC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 18:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C345C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 18:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345259AbiCUSQj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 14:16:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38192 "EHLO
+        id S1351789AbiCUSaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 14:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352049AbiCUSQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 14:16:32 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E259B124C21
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 11:15:06 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 17so6080371ljw.8
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 11:15:06 -0700 (PDT)
+        with ESMTP id S238992AbiCUSaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 14:30:10 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7548F21E39
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 11:28:44 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id q5so21037715ljb.11
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 11:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OkpsltLW6uRdarAKeA23kTUh7VC5J0V++3oHshJkx7k=;
-        b=VlJK55G4Sr6qJ/fcR7o+5bVPBeePLxv/5ENZEXDV0TQqk1joPwNIdwuKeWh3IQIlWd
-         wQtvR8w3FJHRdR6NnBZE+V1pgjjOsQ8Lij1SLHWMC/WyxB8rFjRPonIxtYu8EOqbgFg1
-         KetbSO3zAD7FHzulfyIRyUsLdzk1J4BHSCpS3/8rBlsYGD8ojzNyKUtDf2oS4kUix03X
-         k8YF0QrY3rfhuiqSlGtz0KZQPqNe81Ml+l1lf0Q/rXfhEDzA6vryScGB6LRXgTJ90P/f
-         QZC9Zs8bzsIbVRtAvDBi2m9oGWS7Rqs7bniEwk8SIe+lEaV6F/ySLltrXg4hEEma5m+7
-         9KMQ==
+         :cc:content-transfer-encoding;
+        bh=lKBZM19RTTtzkUnRrCtNFJay5uo+4gtJF0gL4jLbt9U=;
+        b=LoaiPfZM943b6SBh8tLvc6GU9vJmsf3KZ9dx9hGZ85EgbT4IQDxWEhU+zX2P1+OkoV
+         8tgv+C1GHihwo0hHUCS7+CdS+EVa70LU3veGTPD0jMrlWugBGU3FwdYJzQgVRbAqRGSW
+         noWrHQztyU+OEi1QqKdWLcxQxnWnodJFbVx7w8OZ2+wvcvqFHxxedMdojQXuIp12Hwfv
+         e0WCmn7rEd570ALWU50gdoCrFiUslnj+DpC2phroQdDyMcXo7fcTDw348H/UfJss5gif
+         rQhvmS0AR/Dje/4Dn/s/ZsKZwhXo7C+KFjnAU0Q5RjohAo0kC9sg/AUgeJ7K4cmhwHWe
+         H44w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OkpsltLW6uRdarAKeA23kTUh7VC5J0V++3oHshJkx7k=;
-        b=Tl/E347tzb7Sq0hzTuyfMNM2LvzUY6mjjqQmfCNPCFpw/2ECZ2ZxdNYzGTDsV4Ikw2
-         ISh3Q/wP5R76c/SW0JcJNg2+A44fA5pXVc6An1rJ0t8nZAeaG/VoFObDlsX/i6TfKyv4
-         ICi+aYg5i/t+g2nOJftjekHYQlbm+2h7CDTXtd0jYg8U0197CErOhOkQ8lKCjP9KaHOb
-         fCtQgAJsGq/k2sDoCnk8rSxr4ckoc52sYD+tdAk94C+Xf9LBTLS5YnPxtpJnkUtklvKs
-         lAF1W8YS/AtuzONfOgtRsNvXqdN12E5VzJPeRwIhmzX+YeRnL+pgJk7E+jukE/skRxLN
-         FZGg==
-X-Gm-Message-State: AOAM531CsVkObHBeMSZppZW5aFloGt8T88YPEJPpJ3aqeArOg174Gt0p
-        PoSHEWYztuc9eSXbVzqWcMxQIdvFw/k5nwVGbco=
-X-Google-Smtp-Source: ABdhPJyk++z+IGSL4oK7BB7oBbdOezvXsEDPdJ4P3YcqKB88FarNe8b0zo6PhjJ5077xnOTUmJwVw/Js8Ge3qI/5MrM=
-X-Received: by 2002:a05:651c:158e:b0:248:1ce:a2a with SMTP id
- h14-20020a05651c158e00b0024801ce0a2amr16018289ljq.172.1647886504603; Mon, 21
- Mar 2022 11:15:04 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lKBZM19RTTtzkUnRrCtNFJay5uo+4gtJF0gL4jLbt9U=;
+        b=o//pWKRlhkKMVoxdE488R/HLQ3k288hd0iPKZi3uMB2oK1HvvkahT9q0//H5VUjLeD
+         phzOls8U+PMiI2rEgFAmu+TIPOuJf7CpuWGsgDF4JXWk6pSrLw8tctLdRUnKHxrBWkV8
+         Ncm48bFmXwlbEsc6zCO5IjqU/RmyvJoKxK7I+6adUyxNaTaiIEFdvQE0AYpxQ6fRmBuh
+         euQH6tO2EYlfgXuy4N66s2bTV3uS1jVJTi5QI/12SFCdwlNY7rG3eD1aOCudCsvFT5V9
+         RSGsl4QTRkAUyCwS7HEWvd3XpBaYr6JyUDTehNVEVg8ioA1jeAkSo1qRhinmONOtHEf1
+         1tiQ==
+X-Gm-Message-State: AOAM533fHYSVIP4UuU7rhuthL2CqizFG5vYHOmTtQjeFcqPDU6ZVQ0AA
+        OcmZZ2nDXNSdgi3Q71c1y+NdYkxMcsYK5NwAORk=
+X-Google-Smtp-Source: ABdhPJxJvhwxpHaYTb2YPQkYOtrbpBgAKPxnxhlmI+EI0Go9v3G+hgnrzZGEXfCGOqrEeda2v1xJp5TmXJZHV9bB3gU=
+X-Received: by 2002:a05:651c:241:b0:23e:42c1:2e4 with SMTP id
+ x1-20020a05651c024100b0023e42c102e4mr16695803ljn.406.1647887322620; Mon, 21
+ Mar 2022 11:28:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <xmqqpmmf1bm5.fsf@gitster.g>
-In-Reply-To: <xmqqpmmf1bm5.fsf@gitster.g>
+ <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
+ <220321.86a6dj9xja.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220321.86a6dj9xja.gmgdl@evledraar.gmail.com>
 From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Mon, 21 Mar 2022 11:14:53 -0700
-Message-ID: <CANQDOdfCJy68z0bNrhSmwo_uEVa6=y4V1dY0kZDq7JOTUD+6iQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] core.fsyncmethod: add 'batch' mode for faster
- fsyncing of multiple objects
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+Date:   Mon, 21 Mar 2022 11:28:31 -0700
+Message-ID: <CANQDOdcPAb31JY6LdMiCn26192_1wvKkHodpNEBkSh3WbD+e4g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] core.fsyncmethod: batched disk flushes for loose-objects
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
+        Neeraj Singh <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 21, 2022 at 10:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Mar 21, 2022 at 7:43 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> On Sun, Mar 20 2022, Neeraj Singh via GitGitGadget wrote:
+>
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> > [...]
+> > +     if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT)) {
+> > +             bulk_fsync_objdir =3D tmp_objdir_create("bulk-fsync");
+> > +             if (!bulk_fsync_objdir)
+> > +                     die(_("Could not create temporary object director=
+y for core.fsyncobjectfiles=3Dbatch"));
+>
+> Should camel-case the config var, and we should have a die_errno() here
+> which tell us why we couldn't create it (possibly needing to ferry it up
+> from the tempfile API...)
 
-> >  * Rebase onto 'seen' at 0cac37f38f9.
->
-> That's unfortunate.  Having to depend on almost everything in 'seen'
-> is a guaranteed way to ensure that the topic would never graduate to
-> 'next'.
->
-> For this topic, ns/core-fsyncmethod is the only thing outside of
-> 'master' that the previous round needed, so I did an equivalent of
->
->     $ git checkout -b ns/batch-fsync b896f729e2
->     $ git merge ns/core-fsyncmethod
->
-> to prepare fd008b1442 and then queued the patches on top, i.e.
->
->     $ git am -s mbox
->
-> > This work is based on 'seen' at . It's dependent on ns/core-fsyncmethod.
->
-> "at ."?
->
-> In any case, I've applied them on 0cac37f38f9 and then re-applied
-> the result on top of fd008b1442 (i.e. the same base as the previous
-> round was queued), which, with the magic of "am -3", applied
-> cleanly.  Double checking the result was also simple (i.e. the tip of
-> such an application on top of fd008b1442 can be merged with
-> 0cac37f38f9 and the result should be identical to the result of
-> applying them directly on top of 0cac37f38f9) and seems to have
-> produced the right result.
->
-> \Thanks.
+Thanks for noticing the camelCasing.  The config var name was also
+wrong. Now it will read:
+> > +                     die(_("Could not create temporary object director=
+y for core.fsyncMethod=3Dbatch"));
 
-Thanks Junio.  I was worried about how to properly represent the dependency
-between these two in-flight branches without waiting for ns/core-fsyncmethod to
-get into next.   Now ns/core-fsyncmethod appears to be there, so I'm assuming
-that branch should have a stable OID until the end of the cycle.
-
-Should I base future versions of this series on the tip of
-ns/core-fsyncmethod, or
-on the merge point between that branch and 'next'?  I guess it doesn't
-really matter
-if the merge is clean.
+Do you have any recommendations on how to easily ferry the correct
+errno out of tmp_objdir_create?
+It looks like the remerge-diff usage has the same die behavior w/o
+errno, and the builtin/receive-pack.c usage
+doesn't die, but also loses the errno.  I'm concerned about preserving
+the errno across the or tmp_objdir_destroy
+calls.  I could introduce a temp errno var to preserve it across
+those. Is that what you had in mind?
 
 Thanks,
 Neeraj
