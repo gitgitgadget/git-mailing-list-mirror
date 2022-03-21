@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07184C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 846B3C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 23:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbiCUXKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 19:10:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45906 "EHLO
+        id S231346AbiCUXKl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:10:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233036AbiCUXIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:08:20 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CB0E4BFC7
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:29 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id n35so7791794wms.5
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:29 -0700 (PDT)
+        with ESMTP id S232909AbiCUXIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 19:08:14 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F0924D279
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:35 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so407734wme.5
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D6JK1ko3GgXmzBEKlacZFTwKT+j13QTKVT7Pq1rPnC8=;
-        b=KEMcYVDFyQPaj5ceGGBFgUOstwYYJ5oC5ibeo9AxSyo4NJSkV0I3ViOMVx8bkCl4Ar
-         Lv7CKiEf+fWuhtKH4MwsnjuDUEuNMbVMP46McCISoav0M6mzBny9gE/vt8rBE3Pwdrkb
-         44mgGmBTClMcGXMlZJiVAUpwK2B7ANNWr959cYhwFLM7vtrVQ193lb6H9gWVJrtpdFf/
-         aUanobeWHtPEP/rSbJ78aUsvANi3jqfCfNBtel7hdPsyA1dTq3CfWavq8S7G9t7tSIXJ
-         BLt9MP60XTf9cvgQpoPJg0GW4xGDRFcm1KG1DkXyjpa9Af6q2yBxvD8l9UArjQkoRVUs
-         owLA==
+        bh=HWFQNaLQ1qGE9NzpNiAvS9tCCHxkA3GqlMctd4rLrSA=;
+        b=RYilpVycFOjK8Yh46GZ+k9WLM1+IfXHyD4UWxkSsDzHfCtwudRpssnJd2UaAPdloRX
+         lhsrE/jwzX+MIAKuj4DqJsaHJOFDwqLCD6BTkthOvGoT7dh6vInAQx5eFFvDviBFJtar
+         hrE2VgylIfZkMLTRm+fLR5rAUtEduEq8nh2XCM5Jo5k7asmScfb+RmvHAIJgLOArKRy4
+         m6lWyLhflrsXF7XoAEMl543VjXDYw+XFEuyl543xbxenme+Tw9kF+vY34TFskG33NcCQ
+         UqUFOjy/dRugeQPiO/Mo0GLMZkPweWwoFpR8a+mV93ix+So+N7gJA61GfqMuoxPPzwg9
+         HcnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D6JK1ko3GgXmzBEKlacZFTwKT+j13QTKVT7Pq1rPnC8=;
-        b=hPEOWZZ0RT5gEygp5CydqlS27Mh2vv8m/nTtNHNpdujS5AVRaTzGa8NNk/WLfADesC
-         njP3VpoePrao8jYM3a51k8DYl+4K871oKVFlV7dfwKYeW4Pb37RtEQeH0awucsEXppYo
-         TLnLUu4HZJDm1vKQPvCSn2BHZahPpnrhwvmk9IIi1FaKFrHfS4ZiZki5MxQSlT11HjaJ
-         vISEcWlkBHL6641dfHSDfLADQqyg4aDwUIqNxDPu0MuA/m+XjlCnC+XxjBEct70ZjU+l
-         WkgJxk6UhLnPLAZtPOzcBDxrV4Iki1wGrQcU7DAiwq8HhdSsJedDeLFtvgVURC68zlqq
-         Sbdg==
-X-Gm-Message-State: AOAM530HJ/SNLGz+pn98zEe4KtmymmfVJMxE/g/9F3hK5LVPkRCiLbPS
-        StxrD6qUMRAZjoiK2fjjv2fsBWs1h5s=
-X-Google-Smtp-Source: ABdhPJwfgzGpMZHNiTS2QXeY07IZp/KJ9I/W2l4oLlUSe3IM594TbBFGPuOd8k0sCwmTTjnjbjBceg==
-X-Received: by 2002:a05:600c:3516:b0:389:f9aa:f821 with SMTP id h22-20020a05600c351600b00389f9aaf821mr1113232wmq.73.1647903365431;
-        Mon, 21 Mar 2022 15:56:05 -0700 (PDT)
+        bh=HWFQNaLQ1qGE9NzpNiAvS9tCCHxkA3GqlMctd4rLrSA=;
+        b=Rn1VHcutX+i/zN7U59h5h0LT8c/A2EY2uT1s8bddvAkB3U6f5xFrOgDdYbeOAbnAZO
+         HNdWXUGhjpefAadWcrx0SersRyHKHyTsrFaVm2Tav/UNjWDWlmh0FlpEmNG49XtG/Z4D
+         1M53tCST9kT55lyTA/dSqQOp6mLK6UZGo08azDZwIkIZIrA9Mubl0IrSyE2Duw1UAXNS
+         xgcnLlaGJjaM22m+XIq2Gb0eBtPcsVwKslH9obAbr8e4kChd3vQc3ifKaogJJfFDDdGY
+         7Rufxj9I4MF6KTG8HR9HdecrvTt0m/UOtA6h1MtfXitXFQNSXYMFcHQvY0OTyG1UNBkC
+         f03A==
+X-Gm-Message-State: AOAM531KGO7xhv1LVxAuQflkFtJik/RuYiPVXgn8FAu37/zItFuKBcfK
+        o6bpMVBWsmkypLO9FMr3oTKi6BsldfA=
+X-Google-Smtp-Source: ABdhPJyJ4vmdpoReMwk1sqx8N+a0Yn8sl5xuAQchzsRHA9FKIwvrv1Y5q8Q1mzwGQUw8ddMSetb9zQ==
+X-Received: by 2002:a05:600c:4f82:b0:38c:9185:1ecd with SMTP id n2-20020a05600c4f8200b0038c91851ecdmr1127121wmq.130.1647903379961;
+        Mon, 21 Mar 2022 15:56:19 -0700 (PDT)
 Received: from fedora35.example.com ([151.24.239.1])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.56.04
+        by smtp.gmail.com with ESMTPSA id z13-20020a5d440d000000b00203f2b010b1sm10022910wrq.44.2022.03.21.15.56.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 15:56:04 -0700 (PDT)
+        Mon, 21 Mar 2022 15:56:19 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 26/41] daemon.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
-Date:   Mon, 21 Mar 2022 22:55:08 +0000
-Message-Id: <20220321225523.724509-27-gitter.spiros@gmail.com>
+Subject: [PATCH 41/41] exit.cocci: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+Date:   Mon, 21 Mar 2022 22:55:23 +0000
+Message-Id: <20220321225523.724509-42-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
 References: <20220321225523.724509-1-gitter.spiros@gmail.com>
@@ -69,29 +69,47 @@ EXIT_FAILURE, or any other value, though only the least significant 8 bits (that
 is, status & 0377) shall be available to a waiting parent proces. So exit(-1)
 return 255.
 
-Use the C standard EXIT_SUCCESS and EXIT_FAILURE to indicate the program exit
-status instead of "0" or "1", respectively. In <stdlib.h> EXIT_FAILURE has the
-value "1": use EXIT_FAILURE even if the program uses exit(-1), ie 255, for
-consistency.
+Add a coccinelle semantic patch for using the C standard EXIT_SUCCESS and
+EXIT_FAILURE to indicate the program exit status instead of "0" or "1",
+respectively. In <stdlib.h> EXIT_FAILURE has the value "1": use EXIT_FAILURE
+even if the program uses exit(-1), ie 255, for consistency.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- daemon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/coccinelle/exit.cocci | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 contrib/coccinelle/exit.cocci
 
-diff --git a/daemon.c b/daemon.c
-index 94a5b8a364..cd07ae1643 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -134,7 +134,7 @@ static void loginfo(const char *err, ...)
- static void NORETURN daemon_die(const char *err, va_list params)
- {
- 	logreport(LOG_ERR, err, params);
--	exit(1);
-+	exit(EXIT_FAILURE);
- }
- 
- struct expand_path_context {
+diff --git a/contrib/coccinelle/exit.cocci b/contrib/coccinelle/exit.cocci
+new file mode 100644
+index 0000000000..ea5c243061
+--- /dev/null
++++ b/contrib/coccinelle/exit.cocci
+@@ -0,0 +1,24 @@
++@@
++@@
++- exit(0);
+++ exit(EXIT_SUCCESS);
++@@
++@@
++- _exit(0);
+++ _exit(EXIT_SUCCESS);
++@@
++@@
++- exit(1);
+++ exit(EXIT_FAILURE);
++@@
++@@
++- _exit(1);
+++ _exit(EXIT_FAILURE);
++@@
++@@
++- exit(-1);
+++ exit(EXIT_FAILURE);
++@@
++@@
++- _exit(-1);
+++ _exit(EXIT_FAILURE);
 -- 
 2.35.1
 
