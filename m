@@ -2,251 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A006C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B12DC433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 20:30:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353297AbiCUUZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 16:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
+        id S1353358AbiCUUbu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 16:31:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353114AbiCUUZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:25:07 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75FD52B249
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:23:40 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id k21so9958419lfe.4
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:23:40 -0700 (PDT)
+        with ESMTP id S1348478AbiCUUbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 16:31:49 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27A982D1A
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:30:23 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id y32-20020a25ad20000000b006339fb8e18cso10310636ybi.9
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 13:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9PqolmzjR2xj8eEcPBUja57xCmJ1qkcqko7UJR0XcFI=;
-        b=htpEfF5SMifg7t/ZdpHHhzi/eTihthKbk2A7NR9ypAML0Grg1SBDEMocWta5Y8IuRn
-         LxHRpxnJIMTUkH2w8LfT/ncO9FrQogygl69+zFKxroox3krcxgtVZTjWEgFwMVMAh67x
-         jFX0XA2RpmB1ODlhxaSNnSnfrvXfk6M1bLORPyu6F6U5Soln7b4mBbM22uMyDp/nLG3O
-         5UHPwc+JZNQJu6MUYSrHcWyaeFhq69dfefLkSCIpj8zSqLaxMBLXl0X6al/bS4PqCm/o
-         fqiIzqvBzjICx8yp6jhq7OxR4lDM9iIs2OqaeNd/1butFhc5ajwSR6V0CYwJ8PYe0h92
-         g8xA==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=aOJ8eg8FnXupTKcnu+mvbwutZh9uOy7HQsx4nGgJ9Ks=;
+        b=GDrlJHsq1xptrCCHNHu8Gr4zPxnYrnTPjPFvYRPdIeZIdQ0cr7kWWwwXWrkewH9O5D
+         W31rlg5Y/Y7jsQI/vQGEh+D9193V4VSC2l5BN1xJcJshBtN+j9ywaGDINjkNPo+vFYJP
+         oXWx85aYILFwBAfjtOpy2ACghpdLsEg9phUgvFQCy9duvA3h/1WT/9QCkRiTlWJYyQEB
+         53MBjFvTk6E6B1zlS1cAsIpPAaVI0CfCLC6j4GddWePFU8hfvdPRkJVgAD4I3R2KcwdH
+         WGogHXs/bPX/DbnypTOYfLN+DZ0eUUPPDBVNtsRSEIaui7ziqu/GSlnh5FEY5te2/xPU
+         fLTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9PqolmzjR2xj8eEcPBUja57xCmJ1qkcqko7UJR0XcFI=;
-        b=BDlC5sNcVPJGZzDVKoAteYrm13RijZmRutRrSp+8H7l10f+f2T30jfJFuYRluC73V9
-         z1ox/5Hokt2VhFPnwGY1AhO4AeOs/9hJpXDydYhQ/RDeaZGX8jIlZHizSoCARkqPH4Ov
-         n6jjmb73QMJSxeClxl+QMGk2KIhVEfQgKBOPA2aRdA5ePCvRTTTEpJBIoYG1X6G0C40B
-         1Y+BUwIgZ58EiibGVJdwJwD8Kf/MsrcQtmQsGAPyjk8PvSDe8cToMVdqILzFEmiVcg6J
-         hz0+V/JbA5It4mxhHw1W+wyJeGfMxsMGW7O6pCzIT4m8HYtSlwsAz/3Jiz4/e4WWhk7p
-         MxoQ==
-X-Gm-Message-State: AOAM532SasRkdsx7EtvJ/cNrXCSJDQqlkNkJeWLA3WerhJb/6WKnu0pW
-        X5LuZP1/Dv67q+OgCE0YvYDuo6RU9jOwo8eKUcE=
-X-Google-Smtp-Source: ABdhPJwc7egweVYROY1mEmEJq26Celtyyy+kErOO0XjbwAZnYA/NQtDA40deY/Dk+1qCuBsmfr0gsPlCgWaneHW8Cog=
-X-Received: by 2002:a05:6512:3909:b0:44a:2428:3ecb with SMTP id
- a9-20020a056512390900b0044a24283ecbmr6740070lfu.522.1647894219123; Mon, 21
- Mar 2022 13:23:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
- <xmqqee2v1adc.fsf@gitster.g>
-In-Reply-To: <xmqqee2v1adc.fsf@gitster.g>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Mon, 21 Mar 2022 13:23:27 -0700
-Message-ID: <CANQDOdckKac7wfrKhskBV7YCVhX6qG0P44Ej552U+LBsE6Mg-g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] core.fsyncmethod: batched disk flushes for loose-objects
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=aOJ8eg8FnXupTKcnu+mvbwutZh9uOy7HQsx4nGgJ9Ks=;
+        b=A05YQb/OWIMoLoVgQOJo0I1D9icTbFMX/0ttxZokt7ua22jU94ZFsvjV7/4OOh0lMg
+         BhdAnMx0JC1Ief95nQGNzXZoB9nPDMDnx2WRYhDOBUdV9fwCTVMWipzYSMW8CCGq7eB9
+         okhGCLQCyATZBoiHfaCzsBGq5fS0g98Ke7VCa/X0Ab4ZdCv7OaRPFN4BQZY3GuNf59da
+         ff0mgy4gahLrGqoQTjdbAvXNtxtnCa8NZGGW5uSfyXl4uf0MzDaFRz8yD2F8W9U8/Xcj
+         L3RoBt58kaCluNgzbzUyUv9HzMKXZeWQlEVcDXoeVPPOFIg3E2ZY3/samRJxHOBRm63c
+         Burw==
+X-Gm-Message-State: AOAM532ZTg+/+4zWMbzsrmbAY/tcSucbPpSkIX7UUv3o4S9JE0cRxdYn
+        Lu5cKKOZmWRTIlvU6tw7KeBUBbfztvnbeoVrQbBP
+X-Google-Smtp-Source: ABdhPJxRMwsuWX4tVT/p+NjgmQCCRbIK4mrpIkJWjW8wJKG8V8B+Vfh5gIgOj37FmTexK2co4xka7hw3CvdYFdglB3Lk
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:c58b:0:b0:629:5064:894c with
+ SMTP id v133-20020a25c58b000000b006295064894cmr24271166ybe.590.1647894622775;
+ Mon, 21 Mar 2022 13:30:22 -0700 (PDT)
+Date:   Mon, 21 Mar 2022 13:30:18 -0700
+In-Reply-To: <patch-v2-2.2-9d16984898c-20220307T123244Z-avarab@gmail.com>
+Message-Id: <20220321203019.2614799-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
+Subject: Re: [PATCH v2 2/2] hooks: fix an obscure TOCTOU "did we just run a
+ hook?" race
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
+        Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 21, 2022 at 10:30 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +* `batch` enables a mode that uses writeout-only flushes to stage multiple
-> > +  updates in the disk writeback cache and then does a single full fsync of
-> > +  a dummy file to trigger the disk cache flush at the end of the operation.
->
-> It is unfortunate that we have a rather independent "unplug" that is
-> not tied to the "this is the last operation in the batch"---if there
-> were we didn't have to invent a dummy but a single full sync on the
-> real file who happened to be the last one in the batch would be
-> sufficient.  It would not matter, if the batch is any meaningful
-> size, hopefully.
->
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 8b8bdad3959..009a1de0a3d 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -726,11 +726,13 @@ static int prepare_to_commit(const char *index_file=
+, const char *prefix,
+>  	int clean_message_contents =3D (cleanup_mode !=3D COMMIT_MSG_CLEANUP_NO=
+NE);
+>  	int old_display_comment_prefix;
+>  	int merge_contains_scissors =3D 0;
+> +	int invoked_hook;
+> =20
+>  	/* This checks and barfs if author is badly specified */
+>  	determine_author_info(author_ident);
+> =20
+> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit",=
+ NULL))
+> +	if (!no_verify && run_commit_hook(use_editor, index_file, &invoked_hook=
+,
+> +					  "pre-commit", NULL))
+>  		return 0;
+> =20
+>  	if (squash_message) {
+> @@ -1053,10 +1055,10 @@ static int prepare_to_commit(const char *index_fi=
+le, const char *prefix,
+>  		return 0;
+>  	}
+> =20
+> -	if (!no_verify && hook_exists("pre-commit")) {
+> +	if (!no_verify && invoked_hook) {
 
-I'm banking on  a large batch size or the fact that the additional
-cost of creating
-and syncing an empty file to be so small that it wouldn't be
-noticeable event for
-small batches. The current unfortunate scheme at least has a very simple API
-that's easy to apply to any other operation going forward. For instance
-builtin/hash-object.c might be another good operation, but it wasn't clear to me
-if it's used for any mainline scenario.
+This commit causes Git to fail Valgrind (tested using "cd t && sh
+t5537*.sh -i -v --valgrind-only=3D10"). You can see here that a caller of
+run_commit_hook() expects invoked_hook to be set, but...
 
-> > +/*
-> > + * Cleanup after batch-mode fsync_object_files.
-> > + */
-> > +static void do_batch_fsync(void)
-> > +{
-> > +     /*
-> > +      * Issue a full hardware flush against a temporary file to ensure
-> > +      * that all objects are durable before any renames occur.  The code in
-> > +      * fsync_loose_object_bulk_checkin has already issued a writeout
-> > +      * request, but it has not flushed any writeback cache in the storage
-> > +      * hardware.
-> > +      */
-> > +
-> > +     if (needs_batch_fsync) {
-> > +             struct strbuf temp_path = STRBUF_INIT;
-> > +             struct tempfile *temp;
-> > +
-> > +             strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
-> > +             temp = xmks_tempfile(temp_path.buf);
-> > +             fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
-> > +             delete_tempfile(&temp);
-> > +             strbuf_release(&temp_path);
-> > +             needs_batch_fsync = 0;
-> > +     }
-> > +
-> > +     if (bulk_fsync_objdir) {
-> > +             tmp_objdir_migrate(bulk_fsync_objdir);
-> > +             bulk_fsync_objdir = NULL;
->
-> The struct obtained from tmp_objdir_create() is consumed by
-> tmp_objdir_migrate() so the only clean-up left for the caller to do
-> is to clear it to NULL.  OK.
->
-> > +     }
->
-> This initially made me wonder why we need two independent flags.
-> After applying this patch but not any later steps, upon plugging, we
-> create the tentative object directory, and any loose object will be
-> created there, but because nobody calls the writeout-only variant
-> via fsync_loose_object_bulk_checkin() yet, needs_batch_fsync may not
-> be turned on.  But even in that case, any new loose objects are in
-> the tentative object directory and need to be migrated to the real
-> place.
->
-> And we may not cover all the existing code paths at the end of the
-> series, or any new code paths right away after they get introduced,
-> to be aware of the fsync_loose_object_bulk_checkin() when they
-> create a loose object file, so it is most likely that these two if
-> statements will be with us forever.
->
-> OK.
+> diff --git a/commit.c b/commit.c
+> index d400f5dfa2b..396e14d7b32 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1713,7 +1713,7 @@ size_t ignore_non_trailer(const char *buf, size_t l=
+en)
+>  }
+> =20
+>  int run_commit_hook(int editor_is_used, const char *index_file,
+> -		    const char *name, ...)
+> +		    int *invoked_hook, const char *name, ...)
+>  {
+>  	struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+>  	va_list args;
+> diff --git a/commit.h b/commit.h
 
-After Avarb's last feedback, I've changed this to lazily create the objdir, so
-the existence of an objdir is a suitable proxy for there being something worth
-syncing. The potential downside is that the lazy-creation would need to be
-synchronized if the ODB becomes multithreaded.
-
->
-> > @@ -274,6 +311,24 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
-> >       return 0;
-> >  }
-> >
-> > +void fsync_loose_object_bulk_checkin(int fd)
-> > +{
-> > +     /*
-> > +      * If we have a plugged bulk checkin, we issue a call that
-> > +      * cleans the filesystem page cache but avoids a hardware flush
-> > +      * command. Later on we will issue a single hardware flush
-> > +      * before as part of do_batch_fsync.
-> > +      */
-> > +     if (bulk_checkin_plugged &&
-> > +         git_fsync(fd, FSYNC_WRITEOUT_ONLY) >= 0) {
-> > +             assert(bulk_fsync_objdir);
-> > +             if (!needs_batch_fsync)
-> > +                     needs_batch_fsync = 1;
->
-> Except for when we unplug, do we ever flip needs_batch_fsync bit
-> off, once it is set?  If the answer is no, wouldn't it be clearer to
-> unconditionally set it, instead of "set it only for the first time"?
->
-
-This code is now gone. I was stupidly optimizing for a future
-multithreaded world
-which might never come.
-
-> > +     } else {
-> > +             fsync_or_die(fd, "loose object file");
-> > +     }
-> > +}
-> > +
-> >  int index_bulk_checkin(struct object_id *oid,
-> >                      int fd, size_t size, enum object_type type,
-> >                      const char *path, unsigned flags)
-> > @@ -288,6 +343,19 @@ int index_bulk_checkin(struct object_id *oid,
-> >  void plug_bulk_checkin(void)
-> >  {
-> >       assert(!bulk_checkin_plugged);
-> > +
-> > +     /*
-> > +      * A temporary object directory is used to hold the files
-> > +      * while they are not fsynced.
-> > +      */
-> > +     if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT)) {
-> > +             bulk_fsync_objdir = tmp_objdir_create("bulk-fsync");
-> > +             if (!bulk_fsync_objdir)
-> > +                     die(_("Could not create temporary object directory for core.fsyncobjectfiles=batch"));
-> > +
-> > +             tmp_objdir_replace_primary_odb(bulk_fsync_objdir, 0);
-> > +     }
-> > +
-> >       bulk_checkin_plugged = 1;
-> >  }
-> >
-> > @@ -297,4 +365,6 @@ void unplug_bulk_checkin(void)
-> >       bulk_checkin_plugged = 0;
-> >       if (bulk_checkin_state.f)
-> >               finish_bulk_checkin(&bulk_checkin_state);
-> > +
-> > +     do_batch_fsync();
-> >  }
-> > diff --git a/bulk-checkin.h b/bulk-checkin.h
-> > index b26f3dc3b74..08f292379b6 100644
-> > --- a/bulk-checkin.h
-> > +++ b/bulk-checkin.h
-> > @@ -6,6 +6,8 @@
-> >
-> >  #include "cache.h"
-> >
-> > +void fsync_loose_object_bulk_checkin(int fd);
-> > +
-> >  int index_bulk_checkin(struct object_id *oid,
-> >                      int fd, size_t size, enum object_type type,
-> >                      const char *path, unsigned flags);
-> > diff --git a/cache.h b/cache.h
-> > index 3160bc1e489..d1ae51388c9 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -1040,7 +1040,8 @@ extern int use_fsync;
-> >
-> >  enum fsync_method {
-> >       FSYNC_METHOD_FSYNC,
-> > -     FSYNC_METHOD_WRITEOUT_ONLY
-> > +     FSYNC_METHOD_WRITEOUT_ONLY,
-> > +     FSYNC_METHOD_BATCH
-> >  };
->
-> Style.
->
-> These days we allow trailing comma to enum definitions.  Perhaps
-> give a trailing comma after _BATCH so that the next update patch
-> will become less noisy?
->
-
-Fixed.
-
-> Thanks.
-
-Thanks!
--Neeraj
+The quoted part is the entire diff of commit.c. You can see that we have
+a new argument "int *invoked_hook", but don't actually do anything with
+it. Could you (=C3=86var) take a look?
