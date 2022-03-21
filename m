@@ -2,117 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D9BC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 034C4C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 19:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347957AbiCUT1n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 15:27:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39014 "EHLO
+        id S1344392AbiCUTqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 15:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233977AbiCUT1l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 15:27:41 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5335A12B773
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:26:16 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6F0463F4802;
-        Mon, 21 Mar 2022 15:26:15 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 38F173F47F9;
-        Mon, 21 Mar 2022 15:26:15 -0400 (EDT)
-Subject: Re: [PATCH 05/16] fsmonitor--daemon: refactor cookie handling for
- readability
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
- <84df95be620c76afed73d1679722459e2ff32018.1647033303.git.gitgitgadget@gmail.com>
- <220314.86bky9ezdw.gmgdl@evledraar.gmail.com>
- <7ddeffc4-3442-b4a1-e6f4-e68b3aa3f5ec@github.com>
- <xmqqo828s9xw.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <49f2dbd2-b596-7378-ca65-ca5104121af5@jeffhostetler.com>
-Date:   Mon, 21 Mar 2022 15:26:14 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S1351077AbiCUTqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 15:46:43 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C8217307E
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:45:16 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id g8so12521994qke.2
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 12:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kKaHIwYz4kbD9r5bv5BmKVPSeJ6b1zyEUK5HX69Vl90=;
+        b=XS+bFiWzd6pMWB0dOlsuvRnS7LwHK86+BQnPnMgExpRIgL5lpejQ0d7wy7jYO3Y59q
+         ipbqzWcRQNw9hO1/y6Vp98kLK183etsvkGuZKLboQ0cvBiGU8QPLcuYyMVmIVFUKjBMk
+         0VzcSrKmq58g2UfWNFOsPdAw2XVG1JCTP5hOWW40bFsFk/NAJFBtBsvCOUnOsb7ZCtOH
+         w7q2lkDbV0xqaeJpgQbs1MIxBPaCPIAyjqsyDUvqwR/KjeaG0QGjwN4CZ897Us8qKvbJ
+         NBXlY9eAO5CrPXXc1F8t8tB0K8LF3venqRF0R+QVhgetZDu5L6y8kjF4gU4E2XRZSdOG
+         6Uaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=kKaHIwYz4kbD9r5bv5BmKVPSeJ6b1zyEUK5HX69Vl90=;
+        b=hX+EiIY8ok7ZqsLbX42b+uF5LWqv2yPkCo1kzhhvH76F9U5hLZ8z3kQ1LsyFJ7ZMxo
+         YKYU8Ffx/Ee+NoQs8SDDyqYRoGzNKjU+QsgDrNRqvkQWaOtZY/jkzQj8wvolqg/9Wl6V
+         WMKweolD/8t+5KNUs+62f2rwrxWPUjTQTvkm3jlCMZ5FzSyW10s/hWGYpb4XE5E6Fpbo
+         O4wuE4v+69KgtOdQIOGDUmxh6FIwgrECP/JCRLkG/anW4HPduQT8+WgVCQCuY8RnK3hV
+         8Y0wRXor2GxC8v2zCkWZU1sFaIQ9PNBnMcGWszqUE9rzQ3eHIFxtDqQpU4menrc+i6CZ
+         isoA==
+X-Gm-Message-State: AOAM530C+cwyscEmiqK3thNmo2aIuUN3Jh5OJwwOh4UZGzJ/4iZAEZbk
+        9e5b1p1HCCd8+5isrI0T/DCKxlXYM7/i
+X-Google-Smtp-Source: ABdhPJzwQJycXRQCJ7M5IORe00bQAQnY7SUr15Mt9gqEXi6Xr8BgV852Xxw0l8afO4sJKFCQJ8+GmQ==
+X-Received: by 2002:a05:620a:22cf:b0:67e:e43:239d with SMTP id o15-20020a05620a22cf00b0067e0e43239dmr13593560qki.299.1647891915774;
+        Mon, 21 Mar 2022 12:45:15 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id m14-20020a05622a054e00b002e2072cffe6sm6618840qtx.5.2022.03.21.12.45.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Mar 2022 12:45:15 -0700 (PDT)
+Message-ID: <b64c1805-dff9-3fd3-1e5e-84bd68d4b058@github.com>
+Date:   Mon, 21 Mar 2022 15:45:11 -0400
 MIME-Version: 1.0
-In-Reply-To: <xmqqo828s9xw.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [RFC PATCH 1/1] mv: integrate with sparse-index
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+References: <20220315100145.214054-1-shaoxuan.yuan02@gmail.com>
+ <20220315100145.214054-2-shaoxuan.yuan02@gmail.com>
+ <1ab24e4b-1feb-e1bc-4ae4-c28a69f77e05@github.com>
+ <CAJyCBORDOJUwTzOC+hYwGGPUBCXST0_mBdwRLh2N+cA=5k0d4A@mail.gmail.com>
+ <675c7681-c495-727d-1262-ee8c6a5c8ce5@github.com>
+ <CAJyCBORfAV_TV6DrOxgim4KtU9T-uTibOaQCsJZsi5_FQfci1Q@mail.gmail.com>
+ <97a665fe-07c9-c4f6-4ab6-b6c0e1397c31@github.com>
+ <xmqqo824cbxl.fsf@gitster.g>
+ <e127dadb-7b44-55f8-16ea-9fcf94905db8@github.com>
+ <xmqq8rt3xgmb.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8rt3xgmb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 3/14/22 1:47 PM, Junio C Hamano wrote:
+On 3/21/2022 3:14 PM, Junio C Hamano wrote:
 > Derrick Stolee <derrickstolee@github.com> writes:
 > 
->> On 3/14/2022 4:00 AM, Ævar Arnfjörð Bjarmason wrote:
+>>>> Another tool that may help you here is 'git ls-files --sparse -t'. It lists
+>>>> the files in the index and their "tags" ('H' is "normal" tracked files, 'S'
+>>>> is SKIP_WORKTREE, etc. [4]), which can help identify when a file you'd
+>>>> expect to be SKIP_WORKTREE is not and vice versa.
 >>>
->>> On Fri, Mar 11 2022, Jeff Hostetler via GitGitGadget wrote:
+>>> Wonderful.
+>>>
+>>> Quite honestly, because the code will most likely compile correctly
+>>> if you just remove the unconditional "we first expand the in-core
+>>> index fully" code, and because the "sparse index" makes the existing
+>>> index walking code fail in unexpected and surprising ways, I
+>>> consider it unsuitably harder for people who are not yet familiar
+>>> with the system.  Without a good test coverage (which is hard to
+>>> give unless you are familiar with the code being tested X-<), one
+>>> can easily get confused and lost.
 >>
->>>> +	/*
->>>> +	 * Technically, close() and unlink() can fail, but we don't
->>>> +	 * care here.  We only created the file to trigger a watch
->>>> +	 * event from the FS to know that when we're up to date.
->>>> +	 */
->>>> +	close(fd);
->>>
->>> It still seems odd to explicitly want to ignore close() return values.
->>>
->>> I realize that we do in (too many) existing places, but why wouldn't we
->>> want to e.g. catch an I/O error here early?
->>
->> What exactly do you propose we do here if there is an I/O error
->> during close()?
+>> Certainly, 'git mv' is looking to be harder than expected, but there
+>> is a lot of interesting exploration happening in the process.
 > 
-> We created the file to trigger a watch event, but now we have a
-> reason to suspect that the wished-for watch event may not come.
+> Yeah, I know.
 > 
-> We only did so to know that when we're up to date.  Now we may never
-> know?  We may go without realizing we are already up to date a bit
-> longer than the reality?
-> 
-> How much damage would it cause us to miss a watch event in this
-> case?  Very little?  Is it a thing that sysadmins may care if we see
-> too many of, but there is nothing the end user can immediately do
-> about?  If it is, perhaps a trace2 event to report it (and other "we
-> do not care here" syscalls that fail)?
-> 
-> 
-> 
+> I am suprised that it is harder than expected *to* *you*, though.
+> After having seen a few other topics, I thought that you should know
+> how deceptively easy to lose "require-full" and how hard to audit
+> the code that may expect "a flat list of paths" in the in-core index
+> ;-).
 
-The open(... O_CREAT ...) succeeded, so we actually created a
-new file and expect a FS event for it.  That FS event (when seen
-by the FS listener thread) will cause our condition to be
-signaled and allow this thread to wake up and respond to the client.
+I'm particularly surprised in how much 'git mv' doesn't work very
+well in the sparse-checkout environment already, which makes things
+more difficult than "just" doing the normal sparse index things.
 
-The odds of the close() failing on a plain file (after a successful
-open()) are very slim.  And there's nothing that we can do about
-the failure anyway.  (And we're not relying on an FS event from the
-close() succeeding, so it really doesn't matter.)   Technically, it
-is possible that the daemon could run out of fd's if this close()
-fails often, so at some point the daemon might not be able to create
-new cookie files.  But the daemon currently defaults to sending a
-trivial response to the client -- if this turns out to be a real
-issue, we could have the daemon restart or something, but I'm not
-going to worry about that right now.
+It's good that we are discovering them and working to fix them.
 
-The odds of a failure in unlink() is a little more interesting.
-This would mean that a stale cookie file would be left in the
-cookie directory (and waste a little disk space).  But that is
-not likely either (for a plain file that we just created).
-Since we're not relying on the FS event for the unlink(), the
-failure here won't block the current thread either.  Deleting
-stale cookie files is something that we could try to address
-in the future if it turns out to be a problem.
-
-Jeff
-
+Thanks,
+-Stolee
