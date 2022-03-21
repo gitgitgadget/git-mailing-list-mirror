@@ -2,92 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FECC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 22:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E315C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Mar 2022 22:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbiCUWuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 18:50:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34288 "EHLO
+        id S232079AbiCUXAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 19:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbiCUWua (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 18:50:30 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040613FE054
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:30:22 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id EF24A3F481C;
-        Mon, 21 Mar 2022 18:06:02 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A1E593F481B;
-        Mon, 21 Mar 2022 18:06:02 -0400 (EDT)
-Subject: Re: [PATCH v2 00/27] Builtin FSMonitor Part 3
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        ??var Arnfj??r?? Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
- <20220313104230.ctwbskywcq5jxv36@tb-raspi4>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <2bb125d3-cef7-9d47-efa8-61a1aaba5316@jeffhostetler.com>
-Date:   Mon, 21 Mar 2022 18:06:01 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S233363AbiCUW7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 18:59:06 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA2A36BA11
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:46:42 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id a17so18603053edm.9
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 15:46:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2vS48Ma8BAIQC2ntWbne40U6C1Pa5FFdsklf4N64aAM=;
+        b=GFsj0oXWR5RuJQ8qG9SuF8Rs635iLTWy+Z3WNsvYZp0MAPPtwfLB5VdcOI/aXvlwPp
+         5TQ6tEAzG65UELfqaag+nFZPyzCjTB5PYrj4lSspsl3/T5u7UrSa2tXz20CellJg6gJO
+         JINtGzjF/8XCKYS3a1QCAUJ6ey2bTU/cbU7T+O7Uuqo3BvDfTNbJwIcft7m97xbUMoHS
+         /dVlFHVtOBgaHayTS18I+ggrkNVByxpZVLj5PQYLuwHWcbb6JIv+vaDRdCpPZtLVTIr+
+         zeW26wFD5p02lNG0PTmcH7N39fkMmoju8BRhqFXXttvP7gzd3qszCTwAinuUTOIn7kYa
+         5hLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2vS48Ma8BAIQC2ntWbne40U6C1Pa5FFdsklf4N64aAM=;
+        b=nDQ+DY5BOpXf8uv0QQ50e0b4eMTLgvDgubYUBAMtls/IkrLoWheZ1P6RbCYmUCiuLC
+         js9mCnAmDEfv6xVAufD+OxC5TFijvLJw6ww7aSulg3B9V7OcxR1rYy7km82xQhVwtf6Z
+         42BpbBBz/XR0CFDuGe2NKN+x+Ccb0bNajFPej3lb9CAoElEqJ4NlbfXLm/3YUzcEmZxo
+         f5GyfJRtliR5Oc0yszvTe7wx0qmvL6j1jbfP8mRLBbWyUilelK8h1LnT7oBwu/QC1xwi
+         KXMfVB+k46UyXVCkI59DbAmSZ6GqpDyo+qj0y63SLayhrlRl6F5QDVEhWkvwwytg4366
+         ko4Q==
+X-Gm-Message-State: AOAM5300M5NnxsSuuRhux7d5H/LqvYj/YqbcfnYVucsULC2B2tDvJweO
+        6DeAgf1LOwcUR7ewcaIFEZgulcYg+5MDHs+GyQyPUsaRUiA=
+X-Google-Smtp-Source: ABdhPJwwO0UoNtd1fhDGLHSyCdkBQkr8MFvpvFjrJd7CdFec+3F4jRekWv+G5XDDB0bIUZdRfPfqGDmuqwTrdSemqNY=
+X-Received: by 2002:a2e:9b96:0:b0:249:8705:8f50 with SMTP id
+ z22-20020a2e9b96000000b0024987058f50mr4263333lji.73.1647900577230; Mon, 21
+ Mar 2022 15:09:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20220313104230.ctwbskywcq5jxv36@tb-raspi4>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
+ <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <54797dbc52060b7fa913642cd5266f7e159a5bc9.1647760561.git.gitgitgadget@gmail.com>
+ <220321.865yo79wkf.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220321.865yo79wkf.gmgdl@evledraar.gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Mon, 21 Mar 2022 15:09:25 -0700
+Message-ID: <CANQDOdeox=Wox94SW+oUgbLDdLZ+KOdw6AWdBzwFkR18xmaNtQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/7] update-index: use the bulk-checkin infrastructure
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Patrick Steinhardt <ps@pks.im>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 21, 2022 at 8:04 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Sun, Mar 20 2022, Neeraj Singh via GitGitGadget wrote:
+>
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> >
+> > The update-index functionality is used internally by 'git stash push' t=
+o
+> > setup the internal stashed commit.
+> >
+> > This change enables bulk-checkin for update-index infrastructure to
+> > speed up adding new objects to the object database by leveraging the
+> > batch fsync functionality.
+> >
+> > There is some risk with this change, since under batch fsync, the objec=
+t
+> > files will be in a tmp-objdir until update-index is complete.  This
+> > usage is unlikely, since any tool invoking update-index and expecting t=
+o
+> > see objects would have to synchronize with the update-index process
+> > after passing it a file path.
+> >
+> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> > ---
+> >  builtin/update-index.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/builtin/update-index.c b/builtin/update-index.c
+> > index 75d646377cc..38e9d7e88cb 100644
+> > --- a/builtin/update-index.c
+> > +++ b/builtin/update-index.c
+> > @@ -5,6 +5,7 @@
+> >   */
+> >  #define USE_THE_INDEX_COMPATIBILITY_MACROS
+> >  #include "cache.h"
+> > +#include "bulk-checkin.h"
+> >  #include "config.h"
+> >  #include "lockfile.h"
+> >  #include "quote.h"
+> > @@ -1110,6 +1111,9 @@ int cmd_update_index(int argc, const char **argv,=
+ const char *prefix)
+> >
+> >       the_index.updated_skipworktree =3D 1;
+> >
+> > +     /* we might be adding many objects to the object database */
+> > +     plug_bulk_checkin();
+> > +
+>
+> Shouldn't this be after parse_options_start()?
 
-
-On 3/13/22 6:42 AM, Torsten Bögershausen wrote:
-> Hej Jeff,
-> 
-> I tried your patch on both a newer Mac and an older machine (with HFS+)
-> The older machine doesn't have
-> kFSEventStreamEventFlagItemCloned
-> As it is an enum, and not a #define, I ended up here:
-> 
->    diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
->    index 3332d3b779..fa172a05c4 100644
->    --- a/compat/fsmonitor/fsm-listen-darwin.c
->    +++ b/compat/fsmonitor/fsm-listen-darwin.c
->    @@ -169,8 +169,6 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
->                    strbuf_addstr(&msg, "ItemXattrMod|");
->            if (flag & kFSEventStreamEventFlagOwnEvent)
->                    strbuf_addstr(&msg, "OwnEvent|");
->    -       if (flag & kFSEventStreamEventFlagItemCloned)
->    -               strbuf_addstr(&msg, "ItemCloned|");
-> 
->            trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=0x%x %s",
->                             path, flag, msg.buf);
->    @@ -221,8 +219,7 @@ static int ef_ignore_xattr(const FSEventStreamEventFlags ef)
->                    kFSEventStreamEventFlagItemModified |
->                    kFSEventStreamEventFlagItemRemoved |
->                    kFSEventStreamEventFlagItemRenamed |
->    -               kFSEventStreamEventFlagItemXattrMod |
->    -               kFSEventStreamEventFlagItemCloned;
->    +               kFSEventStreamEventFlagItemXattrMod ;
-
-It looks like the ...Cloned bit was added to the SDK in 10.13 [1].
-All the other bits were defined sometime between 10.5 and 10.10.
-
-I'll add something in V7 to guard that bit.  I think 10.10 is old enough
-that we don't need to special case those bits too.
-
-Thanks,
-Jeff
-
-[1] /Applications/Xcode.app/Contents/Developer/Platforms/ \
-     MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/ \
-     Library/Frameworks/CoreServices.framework/Frameworks/ \
-     FSEvents.framework/Versions/Current/Headers/FSEvents.h
-
+Does it make a difference?  Especially if we do the object dir creation laz=
+ily?
