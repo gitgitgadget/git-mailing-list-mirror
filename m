@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F70C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10EA0C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240024AbiCVSDT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:03:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57092 "EHLO
+        id S240071AbiCVSDV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:03:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240137AbiCVSC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:02:58 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC9568304
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:53 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id j18so14920059wrd.6
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:52 -0700 (PDT)
+        with ESMTP id S240032AbiCVSCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:02:22 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D8067D09
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:45 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id a1so23179920wrh.10
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Wukjy/IgKIdk18zB6iNukNft1Jqq3QyRvxJE5oCBOjE=;
-        b=pSSSqxkQ1xCXOXA4MKwy4nOR28ZKJFV31MO4wC/goAq19cwuehrbx/IJFkUuNO1SNz
-         EG0nVMhIyZhdUkRiFJT5x/xM4543q4iiXrMo5ag8lRDnU10Bd/pIyWQ7DJrlXSe7iJZh
-         pNr9T+/VcNu0N5eXpqV0cmBKsLqfwP9uxlrbwGjezlffVcuH1XvCbKBTElGV2HzerfZh
-         OHguN+nzSMUxUXIln1hzGntclDusynkbMCNyeAP7tRK+2tpV888denvavD6daGtwwaWk
-         xLvt/lkvK4z7Ndfa9A8neNlX+7svVDxIePRgprUrOTdaqnuoz/zCo7EcXGhgNL+Q7q3R
-         JDPA==
+        bh=6IMoORViExxPGOqXM0jiWHBPtgaquTlkmrPOCTiquVM=;
+        b=MMOTonpu7htu38RV4R0ZQ+Obdm08pyKeI8BKO6D1HiMBK/fQqvUVdcsikKwsLd2wx6
+         /oczmXz0KDs3FM4DIVhZOyepSZN7YupjVeFHEBJiMgoUXH/9hMYs6DpQo3+KKwdrNtCZ
+         JtOex2T2FH3qQT8X8bCWJsal4M0lxucvcYe3+54RJGQoP2TdQE/ymKw8kTjNq+XKt+SN
+         apHfifQsu5wQiph0ht01J0nyXHGIckqvbU91vOBbDLLhLYOwOkW/ACpde83cBOrTfgWh
+         hhCPinHcG5WcxCSHIQVLwnTrt8QGc6tO+A3TSyf9Rh9UMCTqP3kbF8Sg/qaN8UOLDBOU
+         /UBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Wukjy/IgKIdk18zB6iNukNft1Jqq3QyRvxJE5oCBOjE=;
-        b=FElMo5QWXFZA805iSl0IV/v7Cerc2BTcF1QIIJny0rQpC/HfYbsuvAEgy3m41qVECS
-         0F2SKOc7W8SGGW12/SXlD5lFOkLfaxzBC4fc8pWIBAuHIa7Or2PuZ+GA3YwpJXjsEfUp
-         OHcD6Uhdnz9Lt/uHW8QDiJgLXXw2FyztoQ/Wdn+IGiRuz2uJyOVooZ2VHvHpQSEm6jeJ
-         Vj43mmcNajuwYNdFTGk6c8dwm8KD853vDBqaJhqaMLZh3aGW0fQlmS1zoFm6jE82plHK
-         G3FzZs7LSiHUlTtSp74zvt9A6I1TLkSas+V8rOtWHrTNasGyZpSEgQFkcX/6IpOfXIEQ
-         1MEw==
-X-Gm-Message-State: AOAM5322OHSILHHuFA359nbEqoC2fT+SGtkdd1ImjFyxGXqShtSMj/GF
-        Qfh0cRnSpk/qql2gqGcIrm6/zIx8/nc=
-X-Google-Smtp-Source: ABdhPJyVf9s05YflwKGN2K6+/WUS2HZmwIpXXMQ8QNYIvpZYlvbuCNlQ9u3xzKsqIst2nTst9XBYtQ==
-X-Received: by 2002:adf:ed50:0:b0:203:da73:e0fd with SMTP id u16-20020adfed50000000b00203da73e0fdmr23374291wro.516.1647972051451;
-        Tue, 22 Mar 2022 11:00:51 -0700 (PDT)
+        bh=6IMoORViExxPGOqXM0jiWHBPtgaquTlkmrPOCTiquVM=;
+        b=WuzQuTUi43WjtdbXMSStwPPIQ1D09BydrlVvIzedvUUmeuQPy21zBjSqYXfA3IbXUa
+         eDJv0F03G5Dm+UQyM3SG2Y1IfrCcGSLvhETNNsF3/vYaZZubnDSXqDQDAhTE1hpNnJKL
+         DjBodbFkm0UuP1K1i3fXHKRnQTvO1SGDJNh56KKc3ltZFe37Aoqn3Ktlf/Rz9gZ6Vs6p
+         FWl4IlrpNHaGxs//bXoSfuEQ/8GwaHZgWXV/FzP7pv1tpVLrP5weXhvo0Uh2O2/rh4la
+         VTwFuA+CsNBDvhxLZFMdCucSmBSvKR/cjrmEEW5t/W5GVEDnLPBvnQndBYR9KzwBBIYf
+         IFow==
+X-Gm-Message-State: AOAM532KXZJZQJL6eHaEG4401DAp8NJwdLkdPs2fwLrXLTdrTwzYRPW2
+        Azshh3fqL3dbnOSMZ+dfy5cTKSzDKEg=
+X-Google-Smtp-Source: ABdhPJyKA3SveHy2UsPvfPlbZhC3zeR7gl9Yk4Tk5y+v4wUMpShLiVEFh8AYojFcPRTXYiGb71uFgw==
+X-Received: by 2002:a5d:6092:0:b0:203:f860:a84 with SMTP id w18-20020a5d6092000000b00203f8600a84mr16958344wrt.160.1647972044250;
+        Tue, 22 Mar 2022 11:00:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o16-20020a05600c511000b0038c6d836935sm2283071wms.16.2022.03.22.11.00.50
+        by smtp.gmail.com with ESMTPSA id h9-20020a05600c350900b0038cbcbcf994sm1425293wmq.36.2022.03.22.11.00.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:00:50 -0700 (PDT)
-Message-Id: <803a540cc0022e893a75eae8815b3275a7fac3af.1647972011.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:00:43 -0700 (PDT)
+Message-Id: <8cf62c9fc6f07980d35138b4be9cacbf007cd32a.1647972010.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
 References: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
         <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:00:05 +0000
-Subject: [PATCH v7 24/29] t/perf/p7519: speed up test on Windows
+Date:   Tue, 22 Mar 2022 18:00:00 +0000
+Subject: [PATCH v7 19/29] help: include fsmonitor--daemon feature flag in
+ version info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,105 +74,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Change p7519 to use `test_seq` and `xargs` rather than a `for` loop
-to touch thousands of files.  This takes minutes off of test runs
-on Windows because of process creation overhead.
+Add the "feature: fsmonitor--daemon" message to the output of
+`git version --build-options`.
+
+The builtin FSMonitor is only available on certain platforms and
+even then only when certain Makefile flags are enabled, so print
+a message in the verbose version output when it is available.
+
+This can be used by test scripts for prereq testing.  Granted, tests
+could just try `git fsmonitor--daemon status` and look for a 128 exit
+code or grep for a "not supported" message on stderr, but these
+methods are rather obscure.
+
+The main advantage is that the feature message will automatically
+appear in bug reports and other support requests.
+
+This concept was also used during the development of Scalar for
+similar reasons.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/perf/p7519-fsmonitor.sh | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ help.c        | 4 ++++
+ t/test-lib.sh | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index c8be58f3c76..0611e533951 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -72,7 +72,7 @@ then
- 	fi
- fi
+diff --git a/help.c b/help.c
+index 71444906ddf..9112a51e84b 100644
+--- a/help.c
++++ b/help.c
+@@ -12,6 +12,7 @@
+ #include "refs.h"
+ #include "parse-options.h"
+ #include "prompt.h"
++#include "fsmonitor-ipc.h"
  
--trace_start() {
-+trace_start () {
- 	if test -n "$GIT_PERF_7519_TRACE"
- 	then
- 		name="$1"
-@@ -91,13 +91,20 @@ trace_start() {
- 	fi
- }
- 
--trace_stop() {
-+trace_stop () {
- 	if test -n "$GIT_PERF_7519_TRACE"
- 	then
- 		unset GIT_TRACE2_PERF
- 	fi
- }
- 
-+touch_files () {
-+	n=$1
-+	d="$n"_files
+ struct category_description {
+ 	uint32_t category;
+@@ -695,6 +696,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ 		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+ 		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
 +
-+	(cd $d ; test_seq 1 $n | xargs touch )
-+}
-+
- test_expect_success "one time repo setup" '
- 	# set untrackedCache depending on the environment
- 	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-@@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
- 	fi &&
- 
- 	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
--	for i in $(test_seq 1 10); do touch 10_files/$i || return 1; done &&
--	for i in $(test_seq 1 100); do touch 100_files/$i || return 1; done &&
--	for i in $(test_seq 1 1000); do touch 1000_files/$i || return 1; done &&
--	for i in $(test_seq 1 10000); do touch 10000_files/$i || return 1; done &&
-+	: 1_file directory should be left empty &&
-+	touch_files 10 &&
-+	touch_files 100 &&
-+	touch_files 1000 &&
-+	touch_files 10000 &&
- 	git add 1_file 10_files 100_files 1000_files 10000_files &&
- 	git commit -qm "Add files" &&
- 
-@@ -133,7 +141,7 @@ test_expect_success "one time repo setup" '
- 	fi
- '
- 
--setup_for_fsmonitor() {
-+setup_for_fsmonitor () {
- 	# set INTEGRATION_SCRIPT depending on the environment
- 	if test -n "$INTEGRATION_PATH"
- 	then
-@@ -173,7 +181,7 @@ test_perf_w_drop_caches () {
- 	test_perf "$@"
++		if (fsmonitor_ipc__is_supported())
++			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
+ 	}
  }
  
--test_fsmonitor_suite() {
-+test_fsmonitor_suite () {
- 	if test -n "$INTEGRATION_SCRIPT"; then
- 		DESC="fsmonitor=$(basename $INTEGRATION_SCRIPT)"
- 	else
-@@ -199,15 +207,15 @@ test_fsmonitor_suite() {
- 
- 	# Update the mtimes on upto 100k files to make status think
- 	# that they are dirty.  For simplicity, omit any files with
--	# LFs (i.e. anything that ls-files thinks it needs to dquote).
--	# Then fully backslash-quote the paths to capture any
--	# whitespace so that they pass thru xargs properly.
-+	# LFs (i.e. anything that ls-files thinks it needs to dquote)
-+	# and any files with whitespace so that they pass thru xargs
-+	# properly.
- 	#
- 	test_perf_w_drop_caches "status (dirty) ($DESC)" '
- 		git ls-files | \
- 			head -100000 | \
- 			grep -v \" | \
--			sed '\''s/\(.\)/\\\1/g'\'' | \
-+			grep -v " ." | \
- 			xargs test-tool chmtime -300 &&
- 		git status
- 	'
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e4716b0b867..5d819c1bc11 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1799,3 +1799,10 @@ test_lazy_prereq SHA1 '
+ # Tests that verify the scheduler integration must set this locally
+ # to avoid errors.
+ GIT_TEST_MAINT_SCHEDULER="none:exit 1"
++
++# Does this platform support `git fsmonitor--daemon`
++#
++test_lazy_prereq FSMONITOR_DAEMON '
++	git version --build-options >output &&
++	grep "feature: fsmonitor--daemon" output
++'
 -- 
 gitgitgadget
 
