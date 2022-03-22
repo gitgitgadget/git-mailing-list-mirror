@@ -2,113 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21F72C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 12:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83529C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 14:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233952AbiCVM52 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 08:57:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54824 "EHLO
+        id S235952AbiCVOMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 10:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233412AbiCVM5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 08:57:24 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A248D5BE4E
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 05:55:57 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id yy13so36012493ejb.2
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 05:55:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=G9UvGUpbb6K0hndrgyZGGICDLQet5+jEMNxZWFc+SWY=;
-        b=QI+118J206+/2Y+kYWyIowwMaV+tOB08V+yNsS74+C2lakjINKVu4ONA6J7rpaXH+K
-         lrWCHCVjegZQ5hmimlfGZhmNMOkELHouN0+nmnvItNAFjGVhK9wgip2isk6q1CQnz/FG
-         uV9pdcWKmrMcFUO99HYvPS6TqKBnSAsBi0PGx+3cbz55q9Mo974tELwNr5sWeop25jbM
-         NVQ3OTa0wBsznbB5h+OQrHoHATOuCiMXy+mWh+RSZZCCEo1rEkL013EMaw32te1sjknf
-         UWJzwhwkZA5hL2zbaLS6aWIHJoDaetTuTlz/MCoNmwdhFeHhNl46Rdvx5PZjoK/R3lVE
-         JveA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=G9UvGUpbb6K0hndrgyZGGICDLQet5+jEMNxZWFc+SWY=;
-        b=UUT877k+w3jodYLafurvc05ONpyCOAz/r13J5OoAD1o1Jxq1VVJR4asR4hbhCTr438
-         LpTjQ1/AmHoIMpcxQvQLsd43Qsrxv7VkSNHDrHe0j9Ts/+P1NvYnrkthYdA3TYWcNTjW
-         /2L5OPB1uhaiO9xBXdYXEgMtl9B1mn3IQwbYkECDwUQCVkkYKreppPFOa5JwVXAseHoH
-         UKbEUaTsj8tvgxAMpdxc+2UUvI5indrxwni32Sznv1iuXLxf13a2OJxRPq56YN1TRDc+
-         IEqmSfji3S5a6JhAhKp3Xx4Z0TjHQ2QChNWIIzlG5XgmBfAxB6iEDGR7SFHiTlflAErI
-         sPzQ==
-X-Gm-Message-State: AOAM532cMd8Iu9nH2+GeOrSvhmkFVOw2vlV8c8hdYqaIQNF1tDdfxAwI
-        qbbeNB6HgOZa1dZ0gfaheyvm4qQBn+H36A==
-X-Google-Smtp-Source: ABdhPJxOamMFJC01V3aVvxwyOxUlhw6610chKmIz63XZkRtq3uK/VIICbMpIrMDh+C71iv67jYm8KQ==
-X-Received: by 2002:a17:907:7e96:b0:6da:f7ee:4a25 with SMTP id qb22-20020a1709077e9600b006daf7ee4a25mr24810489ejc.436.1647953755681;
-        Tue, 22 Mar 2022 05:55:55 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id t14-20020a170906608e00b006d1455acc62sm8401883ejj.74.2022.03.22.05.55.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 05:55:55 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nWe3G-00028F-Kt;
-        Tue, 22 Mar 2022 13:55:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] Documentation: simplify synopsis of git-repack(1)
-Date:   Tue, 22 Mar 2022 13:52:43 +0100
-References: <20220312113136.26716-1-bagasdotme@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <20220312113136.26716-1-bagasdotme@gmail.com>
-Message-ID: <220322.86r16up2n9.gmgdl@evledraar.gmail.com>
+        with ESMTP id S234414AbiCVOMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 10:12:19 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048755E14C
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 07:10:50 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 22AB83F4823;
+        Tue, 22 Mar 2022 10:10:50 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C86973F481C;
+        Tue, 22 Mar 2022 10:10:49 -0400 (EDT)
+Subject: Re: [PATCH v2 00/27] Builtin FSMonitor Part 3
+To:     rsbecker@nexbridge.com,
+        =?UTF-8?Q?=27Torsten_B=c3=b6gershausen=27?= <tboegi@web.de>,
+        'Jeff Hostetler via GitGitGadget' <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, 'Derrick Stolee' <derrickstolee@github.com>,
+        '??var Arnfj??r?? Bjarmason' <avarab@gmail.com>,
+        'Jeff Hostetler' <jeffhost@microsoft.com>
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
+ <20220313104230.ctwbskywcq5jxv36@tb-raspi4>
+ <2bb125d3-cef7-9d47-efa8-61a1aaba5316@jeffhostetler.com>
+ <060401d83d79$f2540780$d6fc1680$@nexbridge.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e8ab7689-f6eb-9fda-e7aa-87fc2c4ee601@jeffhostetler.com>
+Date:   Tue, 22 Mar 2022 10:10:49 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <060401d83d79$f2540780$d6fc1680$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Mar 12 2022, Bagas Sanjaya wrote:
 
-> Simplify SYNOPSIS section to only mention [<options>...] placeholder.
-> Redundant options list can now be avoided for aesthetic and clarity.
->
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->
->  Shaoxuan Yuan suggested me to do the simplication, as in [1].
->
->  [1]:
-> https://lore.kernel.org/git/CAJyCBORGGbn6d5UYMdRnfrbn9OONcgMMxaCyJ4qUoQY3+s8-uQ@mail.gmail.com/
->
->  Documentation/git-repack.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-> index ee30edc178..39dac64833 100644
-> --- a/Documentation/git-repack.txt
-> +++ b/Documentation/git-repack.txt
-> @@ -9,7 +9,7 @@ git-repack - Pack unpacked objects in a repository
->  SYNOPSIS
->  --------
->  [verse]
-> -'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
-> +'git repack' [<options>...]
+On 3/21/22 7:18 PM, rsbecker@nexbridge.com wrote:
+> On March 21, 2022 6:06 PM, Jeff Hostetler wrote:
+>> On 3/13/22 6:42 AM, Torsten Bögershausen wrote:
+>>> Hej Jeff,
+>>>
+[...]
+>>
+>> It looks like the ...Cloned bit was added to the SDK in 10.13 [1].
+>> All the other bits were defined sometime between 10.5 and 10.10.
+>>
+>> I'll add something in V7 to guard that bit.  I think 10.10 is old enough that we don't
+>> need to special case those bits too.
+> 
+> I realize it is a bit late in the game, but would you consider a pre-hook and post-hook that automatically run with fsmonitor kicks off/terminates. I am thinking about use cases where this is integrated into more complex processes and it would be nice to have notifications of what fsmonitor is doing and when.
+> 
+> Thanks,
+> Randall
+> 
 
-I've been correcting some of the "git <cmd> -h" output recently, i.e. to
-update some of these, and disagree that we should just have this be
-<options>.
+I hadn't really considered having a pre/post hook for the daemon.
+I'm not opposed to it; I just hadn't thought about it.
 
-The point of this section is to give you a view at a glance of the
-available options without paging through OPTIONS.
+By this I assume you mean something inside the fsmonitor--daemon
+process that invokes the hooks when it is starting/stopping.
+As opposed to something in a client command (like status) before
+it implicitly started a daemon process.  The latter method would
+not give you post-hook events because the daemon usually outlives
+the client command.
 
-This change proposes to basically do away with the section
-entirely. Since most commands take options we might as well remove all
-of the SYNOPSIS sections if we followed this pattern.
+Perhaps you could elaborate on what you would use these hooks for
+or how they would be helpful.  It would be easy to add pre/post
+hooks in the main thread of the daemon.  However, I worry about
+the prehook slowing the startup of the daemon -- since the client
+status command might be waiting for it to become ready.  I also
+have a "health" thread in part3 that would be a candidate for
+pre/post and any other periodic hooks that might be useful.
+But again, before I suggest a design for this, it would be good
+to know what kind of things you would want to do with them.
 
-Now, I don't think we should do that, but I don't see if you do why
-you'd be targeting git-repack in particular. If you think it improves
-asthetics & clarity isn't that something that you'd think would also go
-for the rest of Documentation/git-*.txt, or just git-repack.txt for some
-(unstated) reason?
+Jeff
