@@ -2,105 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 409EDC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 21:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77798C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 21:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235207AbiCVVOQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 17:14:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
+        id S235441AbiCVVTw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 17:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbiCVVOO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 17:14:14 -0400
-Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FE0633F
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 14:12:45 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 48D101600E5;
-        Tue, 22 Mar 2022 14:12:45 -0700 (PDT)
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id uNA81TuDZJvy; Tue, 22 Mar 2022 14:12:44 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 480751600EA;
-        Tue, 22 Mar 2022 14:12:44 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 52GLFsIhSe1Y; Tue, 22 Mar 2022 14:12:44 -0700 (PDT)
-Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id 1364E1600E5;
-        Tue, 22 Mar 2022 14:12:44 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------DtKdgZQ0V6OnFGRQlX1hUm0X"
-Message-ID: <325b7ba6-04a8-0010-a288-a118a820f3c3@cs.ucla.edu>
-Date:   Tue, 22 Mar 2022 14:12:43 -0700
+        with ESMTP id S235458AbiCVVRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 17:17:03 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BF55641F
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 14:15:33 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id b24so23201702edu.10
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 14:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=baKhLhQe71b1qlY1xO3T2IWMMf/a718xeNbETXO9/dw=;
+        b=ILnPGo6V21viy8v1aaaK4G4Ih5cGvqfVu4/WlkN4ntrevqaFuI7WpmySGsbMs01RxH
+         UToDSWnVK7WA3185Uw3MrEhAdPNu2c1oD6hwxccllR0ggF1RGJiPUGD4Af7C8h9AZrmL
+         eHuyWKPVWE4Mb4RTeKv20mYFfZTPvmMslqs1rDwnMA0kftAaF7vxxmlHk4lSefpwbgeT
+         eY6gO6Ybwr1hq6u+TK2fjFYdcz2qoX6sCxdd7Pbpg1fYaYKR719HQmu//2aOrMzTed4a
+         eU2BkbWM2beL3ymD3WY7O3bmMJMBb8lXjxyqv6r5rV5ThvrmBHuK+ZXLKmSZK2YHrsBm
+         ugvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=baKhLhQe71b1qlY1xO3T2IWMMf/a718xeNbETXO9/dw=;
+        b=WXP6TRyUpIxFf14FAZNIvIZ4x6b+gSsH8UFMSWjsVZ29+gBH2hFOqUawD4gA7mw4IJ
+         CUbhonx2+H2BtwBcUmo4byK/dLUN1yo8bOP7Q/8MFKZIyCIBT+3NAL3ixTI1GV0wyUth
+         J+TOA1x/AWUYk5oOmF7Uf+tMOlBmbamIlM7Xo6HQWJN6zUorxwv/9SmK+UVXiuSLdCJU
+         zwqH6jQ+D1YjGXAPzUr2Sj+n3eprH6VQGAwHR2YSjTBvDUyXZmaAuJxlJbg0p6NmLaLL
+         IWCrf7nTVsHS7OVkYeyiUetuGfqw6ta/LPswcdAgAmOhDQUeGYojpyo18z5hWUL+TTN5
+         jEVw==
+X-Gm-Message-State: AOAM5338xaE9UtS6oTHVrW4vL6q9gov4dnicw1G+FoY8LJi7A9279Nqx
+        cyKDwXcWFrcFpUoUBTuLaCM=
+X-Google-Smtp-Source: ABdhPJxmGjG5V++fC1QXrLLiC/6ipueg0yEt1tL4yk46+8o8kfMnDywbpCfynlpzdW9Q2+bE3PDimg==
+X-Received: by 2002:a05:6402:1941:b0:413:2b80:b245 with SMTP id f1-20020a056402194100b004132b80b245mr31097420edz.252.1647983731891;
+        Tue, 22 Mar 2022 14:15:31 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bm24-20020a170906c05800b006d58518e55fsm8821997ejb.46.2022.03.22.14.15.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Mar 2022 14:15:31 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nWlqk-000I7u-Fp;
+        Tue, 22 Mar 2022 22:15:30 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/5] pack-objects: parse --filter directly into revs.filter
+Date:   Tue, 22 Mar 2022 22:15:14 +0100
+References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
+ <97de926904988b89b5663bd4c59c011a1723a8f5.1647970119.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <97de926904988b89b5663bd4c59c011a1723a8f5.1647970119.git.gitgitgadget@gmail.com>
+Message-ID: <220322.861qytpu31.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: improve performance of PCRE2 bug 2642 bug workaround
-Content-Language: en-US
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        GNU grep developers <grep-devel@gnu.org>
-References: <bd751d5c-2f8b-4c52-72ec-f2b7268a30a8@cs.ucla.edu>
- <99b0adb6-26ba-293c-3a8f-679f59e7cb4d@web.de>
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-In-Reply-To: <99b0adb6-26ba-293c-3a8f-679f59e7cb4d@web.de>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------DtKdgZQ0V6OnFGRQlX1hUm0X
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
 
-On 3/22/22 13:26, Ren=C3=A9 Scharfe wrote:
+On Tue, Mar 22 2022, Derrick Stolee via GitGitGadget wrote:
 
-> However, the looser check works around another bug, if only by accident=
-.
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> The previous change moved the 'revs' variable into cmd_pack_objects()
+> and now we can remote the global filter_options in favor of revs.filter.
 
-Thanks for letting me know. In that case, GNU grep should use a looser=20
-check too, like Git grep does. I installed the attached into GNU grep.
---------------DtKdgZQ0V6OnFGRQlX1hUm0X
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-grep-work-around-another-potential-PCRE2-bug.patch"
-Content-Disposition: attachment;
- filename="0001-grep-work-around-another-potential-PCRE2-bug.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBmZjJkMjRiMDgyMjNlNmM3YjcwNGE5MTEyN2JhYzQzOTFhOWI4YWRiIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQYXVsIEVnZ2VydCA8ZWdnZXJ0QGNzLnVjbGEuZWR1
-PgpEYXRlOiBUdWUsIDIyIE1hciAyMDIyIDE0OjA5OjA1IC0wNzAwClN1YmplY3Q6IFtQQVRD
-SF0gZ3JlcDogd29yayBhcm91bmQgYW5vdGhlciBwb3RlbnRpYWwgUENSRTIgYnVnCk1JTUUt
-VmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOApD
-b250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0CgpQb3RlbnRpYWwgcHJvYmxlbSByZXBv
-cnRlZCBieSBSZW7DqSBTY2hhcmZlIGluOgpodHRwczovL2xvcmUua2VybmVsLm9yZy9naXQv
-OTliMGFkYjYtMjZiYS0yOTNjLTNhOGYtNjc5ZjU5ZTdjYjRkQHdlYi5kZS9UCiogc3JjL3Bj
-cmVzZWFyY2guYyAoUGNvbXBpbGUpOiBNaW1pYyBnaXQgZ3JlcOKAmXMgd29ya2Fyb3VuZHMK
-Zm9yIFBDUkUyIGJ1Z3MgbW9yZSBjbG9zZWx5OyB0aGlzIGlzIG1vcmUgY29uc2VydmF0aXZl
-LgotLS0KIHNyYy9wY3Jlc2VhcmNoLmMgfCAxMyArKysrKysrLS0tLS0tCiAxIGZpbGUgY2hh
-bmdlZCwgNyBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3Ny
-Yy9wY3Jlc2VhcmNoLmMgYi9zcmMvcGNyZXNlYXJjaC5jCmluZGV4IDBjZjgwNGQuLjY5NDc4
-MzggMTAwNjQ0Ci0tLSBhL3NyYy9wY3Jlc2VhcmNoLmMKKysrIGIvc3JjL3BjcmVzZWFyY2gu
-YwpAQCAtMTU0LDE1ICsxNTQsMTYgQEAgUGNvbXBpbGUgKGNoYXIgKnBhdHRlcm4sIGlkeF90
-IHNpemUsIHJlZ19zeW50YXhfdCBpZ25vcmVkLCBib29sIGV4YWN0KQogI2lmZGVmIFBDUkUy
-X01BVENIX0lOVkFMSURfVVRGCiAgICAgICAvKiBDb25zaWRlciBpbnZhbGlkIFVURi04IGFz
-IGEgYmFycmllciwgaW5zdGVhZCBvZiBlcnJvci4gICovCiAgICAgICBmbGFncyB8PSBQQ1JF
-Ml9NQVRDSF9JTlZBTElEX1VURjsKLQotIyBpZiAhICgxMCA8IFBDUkUyX01BSk9SICsgKDM2
-IDw9IFBDUkUyX01JTk9SKSkKLSAgICAgIC8qIFdvcmsgYXJvdW5kIFBDUkUyIGJ1ZyAyNjQy
-LiAgKi8KLSAgICAgIGlmIChmbGFncyAmIFBDUkUyX0NBU0VMRVNTKQotICAgICAgICBmbGFn
-cyB8PSBQQ1JFMl9OT19TVEFSVF9PUFRJTUlaRTsKLSMgZW5kaWYKICNlbmRpZgogICAgIH0K
-IAorI2lmIGRlZmluZWQgUENSRTJfTUFUQ0hfSU5WQUxJRF9VVEYgJiYgISgxMCA8IFBDUkUy
-X01BSk9SICsgKDM2IDw9IFBDUkUyX01JTk9SKSkKKyAgLyogV29yayBhcm91bmQgUENSRTIg
-YnVnIDI2NDIsIGFuZCBhbm90aGVyIGJ1ZyByZXBvcnRlZGx5IGZpeGVkIGluCisgICAgIFBD
-UkUyIGNvbW1pdCBlMGM2MDI5YTYyZGI5YzIxNjE5NDFlY2RmNDU5MjA1MzgyZDRkMzc5LiAg
-Ki8KKyAgaWYgKGZsYWdzICYgKFBDUkUyX1VURiB8IFBDUkUyX0NBU0VMRVNTKSkKKyAgICBm
-bGFncyB8PSBQQ1JFMl9OT19TVEFSVF9PUFRJTUlaRTsKKyNlbmRpZgorCiAgIC8qIEZJWE1F
-OiBSZW1vdmUgdGhpcyByZXN0cmljdGlvbi4gICovCiAgIGlmIChyYXdtZW1jaHIgKHBhdHRl
-cm4sICdcbicpICE9IHBhdGxpbSkKICAgICBkaWUgKEVYSVRfVFJPVUJMRSwgMCwgXygidGhl
-IC1QIG9wdGlvbiBvbmx5IHN1cHBvcnRzIGEgc2luZ2xlIHBhdHRlcm4iKSk7Ci0tIAoyLjMy
-LjAKCg==
-
---------------DtKdgZQ0V6OnFGRQlX1hUm0X--
+grammar: s/remote/remove/
