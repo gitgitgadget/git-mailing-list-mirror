@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D478CC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EC1CC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240051AbiCVSDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240099AbiCVSDv (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 22 Mar 2022 14:03:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56878 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240106AbiCVSCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:02:23 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4644B6833A
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:47 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id q8so13191868wrc.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:47 -0700 (PDT)
+        with ESMTP id S240116AbiCVSCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:02:24 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6907C66C94
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:51 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so3814468wmj.0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ekpkFZZsg/xn+/xY3K+YVOvurMdWK/1l1/dNkxZdexU=;
-        b=Py55XCVCoxUxS9b4kGG39xADMQXG1sdXa3yyEYoEs+y0PrdEnug3yseJhIoYeY+KyC
-         i1DufSv1qQiP6UHkzHbGdJwhYMkqnlhaBAgV6T5tEoEBE9wH7Vr87rulE0die1bqfujG
-         qbF+s3Z2X+jBVEqbxdkwPsQs7HOU1nwOaeRx8ldMmyR/5uRBMGalHUFtufIu/IDAoxQt
-         y3Lh2yqQLsPETtAVuEr/QN9ay9Yh+rGwg0GkluLQnhT1gQnhaEl0IfKmt7mRQD1ohGz5
-         nOnaUM02BiaKH9Fgm7vS8hYtsHhu/J9K40jzL3Bt0SOxhv2YI/+NTC1vK7O9W54wEl4d
-         r38Q==
+        bh=MEG3piFdmt+jIkWUnne4CEZ7uXu+O+UAM85s3uqrVgA=;
+        b=KkW0iUPSuY/h5AnXah7VfypN/JY2LN7P3qoECb+2WexPNH/3+5g0v42wzgRmN5kPK9
+         c9AZmqXwf1oDudmyfuzDYYuXlxNqkfH4nJKWmMESNmr5zLSi5qSkGV93z/KvbabO/MkD
+         nf0/FTx9SWYFCRbCbJvgIKlDHNNdrhaJQHH+Vy8fzHYzYoxia8FFXLXzPYQFyJbHpx6x
+         61OAjYMd4zJ6VovTHvST5uVCA3rqW7Krhrx6yk3Phibqs1DBY2l7JFDxPF6DbxSb8uop
+         wXVRhRTouGgEX4wQF9AFyDzJptA4EtJHOH8WuDpeTGOLgP4anC1/jHpjmhiUty7dFmZS
+         OakA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ekpkFZZsg/xn+/xY3K+YVOvurMdWK/1l1/dNkxZdexU=;
-        b=fOr18Mim1pe7umMrmU/1c4Fv/6R1EYc4JwZ4hIcvoUywphae62pc96pdbLL1Vdocuz
-         HxOyTuabBFQn3jobyqFVtabm4HUc/NHryzSDImrG3Jt2Sa0X5Pk4hob9/BAky3rDt8Vk
-         st90EsvisbYnvlLvDMp3+MECmNMkFzantGV0cCUMZoRjPPZitRlz/FuYnnxO4zWNXC59
-         iNSWLQ+4t13kh5dv9EUXFofGx4A1KQmWGf+ijPD/VFNwGwDMllGLEmzD9F4EkzOgcX/+
-         W7givcpP/ttWiZlAjqJ0w855vwE4neYMuf5eTeetyLqwOW0wJpwvxNC2REC0zHj2mYaq
-         W+vA==
-X-Gm-Message-State: AOAM530EU8SKPCsmgiVERSUf/Z5ddWO50vHoOk9p416BInRZkPAAOvNs
-        n0q5KalCoIDl/QMfo0bVyeK++oWgeSI=
-X-Google-Smtp-Source: ABdhPJwEq3dZlcV04SX99fx0DWFB13OxcHuqkhagymypEfESGK5Ot3KnX+Sr3JvNhL0mWuSnOMGk0g==
-X-Received: by 2002:a5d:648f:0:b0:204:14ed:13a5 with SMTP id o15-20020a5d648f000000b0020414ed13a5mr8410261wri.162.1647972045626;
-        Tue, 22 Mar 2022 11:00:45 -0700 (PDT)
+        bh=MEG3piFdmt+jIkWUnne4CEZ7uXu+O+UAM85s3uqrVgA=;
+        b=kN3lZeUCSOmunpzzQlMuVPAYNHcxDBcTae3j+Wptpsg6fiOLUc3kPX7pscYAMQ0FX3
+         /8M/7YyCeCV9ztOI8Kc/ZkHJ7rJ/voFk0LFxYogPK4kbzgCkykhZ3e+BFUYIRaSIyzit
+         S0qWBsxdg/Cc9fhxBNij6ab5hccfYGrpANA5R6KG7br7XacBiVPc06g3RQ3kw0mF3OVL
+         rDE0bf7hRLVK48BT/9vQ93HhaJ1pX2KBaQyn0CJxHmZCmmjvEV7DBfVF2W1cWPdfr2QN
+         4MY6xEFADD//JQ6LDO37vHwgc/iCIwm7LKK+UQUQ98Mn6Ij66nRSta/ZEdPv25sfpLgn
+         3NsQ==
+X-Gm-Message-State: AOAM530mcomBK19wTlA7IWci1SN0gWLsbS7hvVHvwjptkPIPkUDgBIkK
+        b7wyjD7/Bypd1yXYRqU29fi3WlsRRUY=
+X-Google-Smtp-Source: ABdhPJzFMI68c6YAsB5vNDXVmX7bCMLhRFynE7LZTd4TpFeUgA3yfOGehhPGF+6P2ozJMtY7NgtKNg==
+X-Received: by 2002:a05:600c:190e:b0:38c:b1ea:f4ac with SMTP id j14-20020a05600c190e00b0038cb1eaf4acmr5066441wmq.70.1647972049536;
+        Tue, 22 Mar 2022 11:00:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h188-20020a1c21c5000000b0038c6c37efc3sm2337107wmh.12.2022.03.22.11.00.44
+        by smtp.gmail.com with ESMTPSA id v5-20020adfe4c5000000b001edc1e5053esm15877172wrm.82.2022.03.22.11.00.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:00:44 -0700 (PDT)
-Message-Id: <1bd74a815937f6db8fae42afc0d0b780053087b8.1647972010.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:00:48 -0700 (PDT)
+Message-Id: <c925a9a7459a0642180282b41b210defe934e38f.1647972011.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
 References: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
         <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:00:01 +0000
-Subject: [PATCH v7 20/29] t/helper/fsmonitor-client: create IPC client to talk
- to FSMonitor Daemon
+Date:   Tue, 22 Mar 2022 18:00:03 +0000
+Subject: [PATCH v7 22/29] t/perf: avoid copying builtin fsmonitor files into
+ test repo
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,176 +74,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create an IPC client to send query and flush commands to the daemon.
+Do not copy any of the various fsmonitor--daemon files from the .git
+directory of the (GIT_PREF_REPO or GIT_PERF_LARGE_REPO) source repo
+into the test's trash directory.
+
+When perf tests start, they copy the contents of the source repo into
+the test's trash directory.  If fsmonitor is running in the source repo,
+there may be control files, such as the IPC socket and/or fsmonitor
+cookie files.  These should not be copied into the test repo.
+
+Unix domain sockets cannot be copied in the manner used by the test
+setup, so if present, the test setup fails.
+
+Cookie files are harmless, but we should avoid them.
+
+The builtin fsmonitor keeps all such control files/sockets in
+.git/fsmonitor--daemon*, so it is simple to exclude them.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile                         |   1 +
- t/helper/test-fsmonitor-client.c | 116 +++++++++++++++++++++++++++++++
- t/helper/test-tool.c             |   1 +
- t/helper/test-tool.h             |   1 +
- 4 files changed, 119 insertions(+)
- create mode 100644 t/helper/test-fsmonitor-client.c
+ t/perf/perf-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 26567d4f772..daa21bed6c3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -716,6 +716,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-fast-rebase.o
-+TEST_BUILTINS_OBJS += test-fsmonitor-client.o
- TEST_BUILTINS_OBJS += test-genrandom.o
- TEST_BUILTINS_OBJS += test-genzeros.o
- TEST_BUILTINS_OBJS += test-getcwd.o
-diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
-new file mode 100644
-index 00000000000..3062c8a3c2b
---- /dev/null
-+++ b/t/helper/test-fsmonitor-client.c
-@@ -0,0 +1,116 @@
-+/*
-+ * test-fsmonitor-client.c: client code to send commands/requests to
-+ * a `git fsmonitor--daemon` daemon.
-+ */
-+
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "parse-options.h"
-+#include "fsmonitor-ipc.h"
-+
-+#ifndef HAVE_FSMONITOR_DAEMON_BACKEND
-+int cmd__fsmonitor_client(int argc, const char **argv)
-+{
-+	die("fsmonitor--daemon not available on this platform");
-+}
-+#else
-+
-+/*
-+ * Read the `.git/index` to get the last token written to the
-+ * FSMonitor Index Extension.
-+ */
-+static const char *get_token_from_index(void)
-+{
-+	struct index_state *istate = the_repository->index;
-+
-+	if (do_read_index(istate, the_repository->index_file, 0) < 0)
-+		die("unable to read index file");
-+	if (!istate->fsmonitor_last_update)
-+		die("index file does not have fsmonitor extension");
-+
-+	return istate->fsmonitor_last_update;
-+}
-+
-+/*
-+ * Send an IPC query to a `git-fsmonitor--daemon` daemon and
-+ * ask for the changes since the given token or from the last
-+ * token in the index extension.
-+ *
-+ * This will implicitly start a daemon process if necessary.  The
-+ * daemon process will persist after we exit.
-+ */
-+static int do_send_query(const char *token)
-+{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
-+
-+	if (!token || !*token)
-+		token = get_token_from_index();
-+
-+	ret = fsmonitor_ipc__send_query(token, &answer);
-+	if (ret < 0)
-+		die("could not query fsmonitor--daemon");
-+
-+	write_in_full(1, answer.buf, answer.len);
-+	strbuf_release(&answer);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Send a "flush" command to the `git-fsmonitor--daemon` (if running)
-+ * and tell it to flush its cache.
-+ *
-+ * This feature is primarily used by the test suite to simulate a loss of
-+ * sync with the filesystem where we miss kernel events.
-+ */
-+static int do_send_flush(void)
-+{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
-+
-+	ret = fsmonitor_ipc__send_command("flush", &answer);
-+	if (ret)
-+		return ret;
-+
-+	write_in_full(1, answer.buf, answer.len);
-+	strbuf_release(&answer);
-+
-+	return 0;
-+}
-+
-+int cmd__fsmonitor_client(int argc, const char **argv)
-+{
-+	const char *subcmd;
-+	const char *token = NULL;
-+
-+	const char * const fsmonitor_client_usage[] = {
-+		"test-tool fsmonitor-client query [<token>]",
-+		"test-tool fsmonitor-client flush",
-+		NULL,
-+	};
-+
-+	struct option options[] = {
-+		OPT_STRING(0, "token", &token, "token",
-+			   "command token to send to the server"),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, options, fsmonitor_client_usage, 0);
-+
-+	if (argc != 1)
-+		usage_with_options(fsmonitor_client_usage, options);
-+
-+	subcmd = argv[0];
-+
-+	setup_git_directory();
-+
-+	if (!strcmp(subcmd, "query"))
-+		return !!do_send_query(token);
-+
-+	if (!strcmp(subcmd, "flush"))
-+		return !!do_send_flush();
-+
-+	die("Unhandled subcommand: '%s'", subcmd);
-+}
-+#endif
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index e6ec69cf326..0424f7adf5d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -32,6 +32,7 @@ static struct test_cmd cmds[] = {
- 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
- 	{ "example-decorate", cmd__example_decorate },
- 	{ "fast-rebase", cmd__fast_rebase },
-+	{ "fsmonitor-client", cmd__fsmonitor_client },
- 	{ "genrandom", cmd__genrandom },
- 	{ "genzeros", cmd__genzeros },
- 	{ "getcwd", cmd__getcwd },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 20756eefdda..c876e8246fb 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -23,6 +23,7 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
- int cmd__dump_reftable(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
-+int cmd__fsmonitor_client(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__genzeros(int argc, const char **argv);
- int cmd__getcwd(int argc, const char **argv);
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 407252bac70..932105cd12c 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -78,7 +78,7 @@ test_perf_copy_repo_contents () {
+ 	for stuff in "$1"/*
+ 	do
+ 		case "$stuff" in
+-		*/objects|*/hooks|*/config|*/commondir|*/gitdir|*/worktrees)
++		*/objects|*/hooks|*/config|*/commondir|*/gitdir|*/worktrees|*/fsmonitor--daemon*)
+ 			;;
+ 		*)
+ 			cp -R "$stuff" "$repo/.git/" || exit 1
 -- 
 gitgitgadget
 
