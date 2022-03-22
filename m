@@ -2,168 +2,331 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD9F4C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 08:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16B18C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 09:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231868AbiCVIwj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 04:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38442 "EHLO
+        id S232212AbiCVJLi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 05:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbiCVIwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 04:52:38 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57EFC79384
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 01:51:11 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id u26so5220469eda.12
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 01:51:11 -0700 (PDT)
+        with ESMTP id S230440AbiCVJLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 05:11:37 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126817DE32
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 02:10:10 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id w25so20816098edi.11
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 02:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=3lEn+Vrsx+CVlUcZ0ruelLnPU8RKyW730Nk2ZfaNyeE=;
-        b=Kl4SScw8oyuWdLUZAtSvhf5MgU4z0AY+w5Ll3ilz1of0xhHvwXf8hPmZPM5EDxCIvC
-         eGZRLVD++MwuxY8IFJQS3UKmMR16Ri6bmJO56Mgww92MxaJ0FL7jf4sfxl5TYh9v7hzb
-         SRVU8zHv36fkcRUswcsYiPKBIDxnaemK6EMthCZu0qPcn/So9ZFn6yjJTGWise4x1jWP
-         +YChUq4Tr0hC//9WR/GV8o/f8gzzV8Yl3t2dewyzdozureh2vlyRnKd95s4R0AJ5AXNw
-         otIMKGmQWoLjc1McOA6TicZ63b+rn2cdytjA1CDrsW21ex9HP86m4ccgQ/zrTBL89ILP
-         7BRA==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=eQNCSCQyO+FbKAx2FL8xzTCLMUOzD/Mr7ZkuVq2vGGE=;
+        b=NylAnG+foDnHN2rMce7oAfEYBt+/hHK9iFCBKRnyuYDM+dT+ngtzHDLR0jh7gDDFTx
+         FmRpqV0eoBXj6dGlcTHua3bTnBnEilwN84Ua9FZ7Ms3uIp4CeRw7MbnhyGo5WyUq0Lhs
+         Ifdxet4qwq9fq5nyUboBqVaQNywPnXxIPnx3WCAmmjx107/XD0wRQq0dP2RkXrtyLgyi
+         rBJtIw9fsSw5ShT+y7PL7UxdVTM8Z1FlJJghZRLv+wtg6a3xkoje0MTQSSv2QbftR4Xa
+         FSh5vl1VG9cG4Qrnex1EGlW7ZUaAwYFUFsYf0IfKjd3fS9SVH0swmPP/4Wn1N9KIBG4T
+         h2kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=3lEn+Vrsx+CVlUcZ0ruelLnPU8RKyW730Nk2ZfaNyeE=;
-        b=BbtOfvt5VrPzVfnq8VmcM6zftFTT2VCGJ9L4JIUBAUafRPI2KBrIt5IcE7SwWoKDU3
-         9Q4w6xkhqg7YWwDri4NH6+CrnU5U1o/0sInOcsAyL58H0p+3LKkEWcCZA8EvSt/NBoHd
-         BpXU8Q87AOh8RNr3WpBpuWBbOcev+5uCNJvSrC8qwKKEGUXxfMr84B29kHj1mfrokOyT
-         Un82+WsKTQVCwiSAymNq4ympYRScAlYicpzIKppn9qSePcQRHKnNxmRBz5DbGoaVcDyJ
-         rqdQqSKsVVEtFn8MeoX3zfPzQPaQoj4wkFxk2vQOwlzN/VzslbmpBm1H4zUieWH3yxMm
-         qnAA==
-X-Gm-Message-State: AOAM532MTQFw7tp2CEkVNsJrrwiqjD6jl9fkdb+mO2acxJjJLivgqif4
-        ckN40HIh8hIOpuyK8bOYn9ZWEmCa+5KdrQ==
-X-Google-Smtp-Source: ABdhPJyrKb0x1bGiBWbaGBJptgzxPJWaK+CGJrTgfJ+ElgnSHCarjgYJxQuZO4ifVCGeGo0lTK0OzA==
-X-Received: by 2002:a05:6402:3712:b0:416:13bf:4fc5 with SMTP id ek18-20020a056402371200b0041613bf4fc5mr27306239edb.115.1647939069620;
-        Tue, 22 Mar 2022 01:51:09 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z1-20020a05640235c100b004192c7266f5sm3645286edc.16.2022.03.22.01.51.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 01:51:09 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nWaEO-000E0J-Gl;
-        Tue, 22 Mar 2022 09:51:08 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 00/41] use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
- status
-Date:   Tue, 22 Mar 2022 09:26:39 +0100
-References: <20220321225523.724509-1-gitter.spiros@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <20220321225523.724509-1-gitter.spiros@gmail.com>
-Message-ID: <220322.86r16unzer.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eQNCSCQyO+FbKAx2FL8xzTCLMUOzD/Mr7ZkuVq2vGGE=;
+        b=OVjLyG8ipe+fwLFXUw+5o2Q1XGFPpVm97dBAtTs3HgkGLoPx/+uexFBqxfvT22yybZ
+         jYJQxk8AUNq6Dnr07rcgYI3BwjJR25gQa6X6STWdB24AFaZXyh0NXu6VeG27mUs74qN2
+         E9FB27UJ7lvPTfLV9vziq7QRGcOOU706ex6T8w18cfVbFAaFdY7o6xngSPtLwXhP4hFt
+         ZPUlISZoFvHgGuzOQxPv4DR8x7COOZOTRT91dSFV7sv+7g9tlAj7W+Jsela7A5IR8eey
+         7HkWtY8QfsaVPsnY5P6MfHbO5osOhO/Rj4Cq9sVyjVoNsjmHMjgyx6rul6tc7Nc3W0v5
+         V3CA==
+X-Gm-Message-State: AOAM531hh1n1PTLEATKEeuXyZYXCaSk7ldlO7I/U+6tWSX6t9bI1pyOi
+        C090LWdG0jBbSXuG6JxJ6L9W+MnUU9fwmh3PTXM0xvhFR+a5rbMW
+X-Google-Smtp-Source: ABdhPJx4nRDdts6qtaD7cZdBh8JJ1KvBIa6igJyHq9k655YAavUgDxISzwF33ACwXEH1MbXr7MKgpyChyNrcpbjVtJI=
+X-Received: by 2002:a05:6402:2750:b0:416:29dd:1d17 with SMTP id
+ z16-20020a056402275000b0041629dd1d17mr27545629edd.387.1647940208473; Tue, 22
+ Mar 2022 02:10:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1183.git.1647858238144.gitgitgadget@gmail.com> <220321.86ee2v9xzd.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220321.86ee2v9xzd.gmgdl@evledraar.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 22 Mar 2022 10:09:56 +0100
+Message-ID: <CAPMMpohn59X5CWOrhGD8gGiMumUCVcTWL=4dXE92AUsHJaRvoQ@mail.gmail.com>
+Subject: Re: [PATCH] tracking branches: add advice to ambiguous refspec error
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 21, 2022 at 3:33 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Mon, Mar 21 2022, Tao Klerks via GitGitGadget wrote:
+>
+> Re $subject (and you've got another outstanding patch on list that's the
+> same), please add "RFC PATCH" to the subject for RFC patches, doesn't
+> GGG have some way to do that?
+>
 
-On Mon, Mar 21 2022, Elia Pinto wrote:
+Not as far as I can tell, not exactly. What I *could* have done, and
+will do next time, is add the "RFC: " prefix to the commit subject,
+after the "[PATCH]" prefix. The email subject lines are a bit
+surprising (to me): When it is a single commit, the email gets the
+subject line of that commit, and the subject of the "pull request"
+gets buried under the triple dash, whereas a series of several commits
+has the leading 0/N email with the pull request subject as email
+subject.
 
-> EXIT_SUCCESS or EXIT_FAILURE are already used in some functions in git but
-> not everywhere. Also in branch.c there is a returns exit(-1), ie 255, when
-> exit(1) might be more appropriate.
+> >      1. In this proposed patch the advice is emitted before the existin=
+g
+> >         die(), in order to avoid changing the exact error behavior and =
+only
+> >         add extra/new hint lines, but in other advise() calls I see the
+> >         error being emitted before the advise() hint. Given that error(=
+) and
+> >         die() display different message prefixes, I'm not sure whether =
+it's
+> >         possible to follow the existing pattern and avoid changing the =
+error
+> >         itself. Should I just accept that with the new advice, the erro=
+r
+> >         message can and should change?
+>
+> You can and should use die_message() in this case, it's exactly what
+> it's intended for:
+>
+>     int code =3D die_message(...);
+>     /* maybe advice */
+>     return code;
+>
 
-On existing use: That's quite the overstatement :)
+Got it, thx.
 
-We use EXIT_{SUCCESS,FAILURE} only in:
+> >      2. In order to include the names of the conflicting remotes I am
+> >         calling advise() multiple times - this is not a pattern I see
+> >         elsewhere - should I be building a single message and calling
+> >         advise() only once?
+>
+> That would make me very happy, yes :)
+>
+> I have some not-yet-sent patches to make a lot of this advice API less
+> sucky, mainly to ensure that we always have a 1=3D1=3D1 mapping between
+> config=3Ddocs=3Dcode, and to have the API itself emit the "and you can tu=
+rn
+> this off with XYZ config".
+>
+> I recently fixed the only in-tree message where we incrementally
+> constructed advice() because of that, so not having another one sneak in
+> would be good :)
+>
 
- * contrib/credential/ code.
- * sh-i18n--envsubst.c
- * EXIT_FAILURE in one stray test helper
+This is more or less sorted, although the result (the bit I did!) is
+still a bit ugly, I suspect there is a cleaner way.
 
-So out of "real git" that users see only sh-i18n--envsubst.c will ever
-run by default, and the reason it uses these is because it's as-is
-imported GNU code.
+> > diff --git a/advice.c b/advice.c
+> > index 1dfc91d1767..686612590ec 100644
+> > --- a/advice.c
+> > +++ b/advice.c
+> > @@ -39,6 +39,7 @@ static struct {
+> >       [ADVICE_ADD_EMPTY_PATHSPEC]                     =3D { "addEmptyPa=
+thspec", 1 },
+> >       [ADVICE_ADD_IGNORED_FILE]                       =3D { "addIgnored=
+File", 1 },
+> >       [ADVICE_AM_WORK_DIR]                            =3D { "amWorkDir"=
+, 1 },
+> > +     [ADVICE_AMBIGUOUS_FETCH_REFSPEC]                =3D { "ambiguousF=
+etchRefspec", 1 },
+> >       [ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME]  =3D { "checkoutAm=
+biguousRemoteBranchName", 1 },
+> >       [ADVICE_COMMIT_BEFORE_MERGE]                    =3D { "commitBefo=
+reMerge", 1 },
+> >       [ADVICE_DETACHED_HEAD]                          =3D { "detachedHe=
+ad", 1 },
+>
+> This is missing the relevant Documentation/config/advice.txt update
+>
 
-I'd think if anything we'd be better off doing this the other way
-around, and always hardcoding either 0 or 1.
+Argh, thx.
 
-I'm not aware of any platform where EXIT_SUCCESS is non-zero, although
-that's probably left open by the C standard.
+> > diff --git a/advice.h b/advice.h
+> > index 601265fd107..3d68c1a6cb4 100644
+> > --- a/advice.h
+> > +++ b/advice.h
+> > @@ -17,6 +17,7 @@ struct string_list;
+> >       ADVICE_ADD_EMPTY_PATHSPEC,
+> >       ADVICE_ADD_IGNORED_FILE,
+> >       ADVICE_AM_WORK_DIR,
+> > +     ADVICE_AMBIGUOUS_FETCH_REFSPEC,
+> >       ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+> >       ADVICE_COMMIT_BEFORE_MERGE,
+> >       ADVICE_DETACHED_HEAD,
+> > diff --git a/branch.c b/branch.c
+> > index 5d20a2e8484..243f6d8b362 100644
+> > --- a/branch.c
+> > +++ b/branch.c
+> > @@ -12,6 +12,7 @@
+> >  struct tracking {
+> >       struct refspec_item spec;
+> >       struct string_list *srcs;
+> > +     struct string_list *remotes;
+> >
+> > +"There are multiple remotes with fetch refspecs mapping to\n"
+> > +"the tracking ref %s:\n";)
+>
+> "with" and "mapping to" is a bit confusing, should this say:
+>
+>     There are multiple remotes whole fetch refspecs map to the remote
+>     tracking ref '%s'?
 
-For EXIT_FAILURE there *are* platforms where it's non-1, but I don't
-know if we're ported to any of those, e.g. on z/OS it's[1]:
+Works for me.
 
-    The argument status can have a value from 0 to 255 inclusive or be
-    one of the macros EXIT_SUCCESS or EXIT_FAILURE. The value of
-    EXIT_SUCCESS is defined in stdlib.h as 0; the value of EXIT_FAILURE
-    is 8.
+>
+> (Should also have '' quotes for that in any case)
+>
+> >  /*
+> >   * This is called when new_ref is branched off of orig_ref, and tries
+> >   * to infer the settings for branch.<new_ref>.{remote,merge} from the
+> > @@ -227,11 +241,14 @@ static void setup_tracking(const char *new_ref, c=
+onst char *orig_ref,
+> >  {
+> >       struct tracking tracking;
+> >       struct string_list tracking_srcs =3D STRING_LIST_INIT_DUP;
+> > +     struct string_list tracking_remotes =3D STRING_LIST_INIT_DUP;
+> >       int config_flags =3D quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+> > +     struct string_list_item *item;
+> >
+> >       memset(&tracking, 0, sizeof(tracking));
+> >       tracking.spec.dst =3D (char *)orig_ref;
+> >       tracking.srcs =3D &tracking_srcs;
+> > +     tracking.remotes =3D &tracking_remotes;
+> >       if (track !=3D BRANCH_TRACK_INHERIT)
+> >               for_each_remote(find_tracked_branch, &tracking);
+> >       else if (inherit_tracking(&tracking, orig_ref))
+>
+> FWIW I find the flow with something like this a lot clearer, i.e. not
+> adding the new thing to a widely-used struct, just have a CB struct for
+> the one thing that needs it:
+>
+>         diff --git a/branch.c b/branch.c
+>         index 7958a2cb08f..55520eec6bd 100644
+>         --- a/branch.c
+>         +++ b/branch.c
+>         @@ -14,14 +14,19 @@
+>          struct tracking {
+>                 struct refspec_item spec;
+>                 struct string_list *srcs;
+>         -       struct string_list *remotes;
+>                 const char *remote;
+>                 int matches;
+>          };
+>
+>         +struct find_tracked_branch_cb {
+>         +       struct tracking *tracking;
+>         +       struct string_list remotes;
+>         +};
+>         +
+>          static int find_tracked_branch(struct remote *remote, void *priv=
+)
+>          {
+>         -       struct tracking *tracking =3D priv;
+>         +       struct find_tracked_branch_cb *ftb =3D priv;
+>         +       struct tracking *tracking =3D ftb->tracking;
+>
+>                 if (!remote_find_tracking(remote, &tracking->spec)) {
+>                         if (++tracking->matches =3D=3D 1) {
+>         @@ -31,7 +36,7 @@ static int find_tracked_branch(struct remote *r=
+emote, void *priv)
+>                                 free(tracking->spec.src);
+>                                 string_list_clear(tracking->srcs, 0);
+>                         }
+>         -               string_list_append(tracking->remotes, remote->nam=
+e);
+>         +               string_list_append(&ftb->remotes, remote->name);
+>                         tracking->spec.src =3D NULL;
+>                 }
+>
+>         @@ -245,16 +250,18 @@ static void setup_tracking(const char *new_=
+ref, const char *orig_ref,
+>          {
+>                 struct tracking tracking;
+>                 struct string_list tracking_srcs =3D STRING_LIST_INIT_DUP=
+;
+>         -       struct string_list tracking_remotes =3D STRING_LIST_INIT_=
+DUP;
+>                 int config_flags =3D quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+>                 struct string_list_item *item;
+>         +       struct find_tracked_branch_cb ftb_cb =3D {
+>         +               .tracking =3D &tracking,
+>         +               .remotes =3D STRING_LIST_INIT_DUP,
+>         +       };
+>
+>                 memset(&tracking, 0, sizeof(tracking));
+>                 tracking.spec.dst =3D (char *)orig_ref;
+>                 tracking.srcs =3D &tracking_srcs;
+>         -       tracking.remotes =3D &tracking_remotes;
+>                 if (track !=3D BRANCH_TRACK_INHERIT)
+>         -               for_each_remote(find_tracked_branch, &tracking);
+>         +               for_each_remote(find_tracked_branch, &ftb_cb);
+>                 else if (inherit_tracking(&tracking, orig_ref))
+>                         goto cleanup;
+>
+>         @@ -272,7 +279,7 @@ static void setup_tracking(const char *new_re=
+f, const char *orig_ref,
+>                 if (tracking.matches > 1) {
+>                         if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC=
+)) {
+>                                 advise(_(ambiguous_refspec_advice_pre), o=
+rig_ref);
+>         -                       for_each_string_list_item(item, &tracking=
+_remotes) {
+>         +                       for_each_string_list_item(item, &ftb_cb.r=
+emotes) {
+>                                         advise("  %s", item->string);
+>                                 }
+>                                 advise(_(ambiguous_refspec_advice_post));
 
-Now, I don't know z/OS at all, but e.g. if a shellscripts calls a C
-program there would $? be 1 if we hardcode 1, but 8 on EXIT_FAILURE?
+Lovely, applied, thx.
 
-We also document for some of these programs that on failure we'll return
-1 specifically, not whatever EXIT_FAILURE is.
+>
+> Also missing a string_list_clear() before/after this...
 
-These patches also miss cases where we'll set 0 or 1 in a variable, and
-then exit(ret). See e.g. builtin/rm.c. You just changed the hardcoded
-exit(1), but missed where we'll return a hardcoded 0 or 1 via a
-variable.
+Yes, sorry, I looked for "tracking_srcs" because I suspected some
+cleanup was needed, but did not think to look for "tracking.srcs", or
+even just scroll to the end. C takes some getting used to, for me at
+least.
 
-And then there's changing exit(-1) to exit(1). That's existing
-non-portable use that we really should fix. But I know that you missed a
-lot there, since I instrumented git.c recently to intercept those for
-testing (it came up in some thread). We have a lot more than you spotted
-(and some will error if mapped to 1 IIRC). Most of those also want to
-exit 128, not 1.
+>
+> > @@ -248,9 +265,17 @@ static void setup_tracking(const char *new_ref, co=
+nst char *orig_ref,
+> >                       return;
+> >               }
+> >
+> > -     if (tracking.matches > 1)
+> > +     if (tracking.matches > 1) {
+> > +             if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC)) {
+> > +                     advise(_(ambiguous_refspec_advice_pre), orig_ref)=
+;
+> > +                     for_each_string_list_item(item, &tracking_remotes=
+) {
+> > +                             advise("  %s", item->string);
+> > +                     }
+>
+> See:
+>
+>      git show --first-parent 268e6b8d4d9
+>
+> For how you can avoid incrementally constructing the message. I.e. we
+> could just add a strbuf to the callback struct, have the callback add to
+> it.
+>
+> Then on second thought we get rid of the string_list entirely don't we?
+> Since we just need the \n-delimited list of remotes te inject into the
+> message.
 
-Anyway:
+Yep, applied (with some icky argument awkwardness in the final advise() cal=
+l)
 
-All in all I think we should just double down on the hardcoding instead,
-but we should fix the exit(-1) cases, and that's best done with some new
-GIT_TEST_ASSERT_NO_UNPORTABLE_EXIT testing or whatever.
-
-A lot of these codepaths are also paths we should fix, but not because
-we exit(N) with a hardcoded N, but because we invoke exit(N) there at
-all. See 338abb0f045 (builtins + test helpers: use return instead of
-exit() in cmd_*, 2021-06-08) for how some of those should be changed.
-
-I think we'd be much better off with something like this in
-git-compat-util.h:
-
-    #ifndef BYPASS_EXIT_SANITY
-    #ifdef EXIT_SUCCESS
-    #if EXIT_SUCCESS != 0
-    #error "git assumes EXIT_SUCCESS is 0, not whatever yours is, please report this. Build with -DBYPASS_EXIT_SANITY to continue building at your own risk"
-    #endif
-    #endif
-    #ifdef EXIT_FAILURE
-    #if EXIT_FAILURE != 0
-    #error "git assumes EXIT_FAILRE is 1, not whatever yours is, please report this. Build with -DBYPASS_EXIT_SANITY to continue building at your own risk"
-    #endif
-    #endif
-    #endif
-
-Or *if* we're going to pursue this a twist on that (I really don't think
-this is worthwhile, just saying) where we'd re-define EXIT_SUCCESS and
-EXIT_FAILURE to some sentinel values like 123 and 124.
-
-Then run our entire test suite and roundtrip-assert that at least we
-ourselves handled that properly. I.e. whenever run_command() runs and we
-check for success we check 123, not 0, and a "normal failure" is 124,
-not 1.
-
-I know we'll get a *lot of* failures if we do that, so I'm not arguing
-that we *should*, just that it's rather easy for you to test that and
-see the resulting test suite dumpster fire.
-
-So I don't see how a *partial conversion* is really getting us anywhere,
-even if we take the pedantic C portability view of things.
-
-All we'd have accomplished is a false sense of portability on most OS's,
-as these will be 0 and 1 anyway. And on any stray odd OS's like z/OS
-we'll just need to deal with e.g. both 1 and 8 for EXIT_FAILURE, since
-we *will* miss a lot of cases.
-
-1. https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-exit-end-program
+Reroll on the way.
