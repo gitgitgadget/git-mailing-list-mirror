@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 550D9C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAAAC433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240281AbiCVSY6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:24:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39306 "EHLO
+        id S229529AbiCVSZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240287AbiCVSYz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240293AbiCVSYz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 22 Mar 2022 14:24:55 -0400
 Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DC76E4DE
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:16 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so3810098wme.5
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7A98D6B0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:17 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so2469839wmb.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=f7rf5XJgM6jW8M+rq9uT0VeICIGviBdUswkTE7UTxew=;
-        b=REW/s6QoTeKzFg+vOpnsintxevGtVpm5gY9YogExAdgUj5IuJ00WXU1dfN9ibObrxq
-         tD0zPaMipiqWnHSATcYwKKa7u1pHl25qe4Bcu7/ly+UYRqhEPqdp5wD+a4febxYxmAX1
-         r5AOBm9mQgQgYLcO7zjp8GaX6iO71/oBuLKbgCqCeDJ4MtTfGet7P4n8eijFwdSt2Hxb
-         PabM6QGvsgb/hRHvDNHpu9/T3RyZVtbYz4jF+Dz/1xEDVRarSsOOLGjZiHGfGDXgsQK7
-         u+3jIlHbYTaEHMnFgRCDcA0qI7JzyRJGxMHjRszd8g+dcnPX7TbQGbLkgoWiFPeMSf9m
-         +IrQ==
+        bh=77SaOZDqR5GCe8rGTE1gWxph/6mABa7uqFiGsLfjuL0=;
+        b=MIE5c4J9MozwUS7FbnvSS2qpD2yfKj3FXtNuPI6SFIyvPNp5hqqACi4N2wz1WcTA1w
+         N9Dqkj49867YdWtSJX9FSwwvvimqr9cArl3WK0MK50FbmjtaQ99Vu+9xrpBDl1R3m9Gq
+         QekGdGd7VUcQLeFzz4fVt4JbzHyIDchsBpQ5YPdYrZqqQ8cSqEiTK5CNT/lSEzyU/zD/
+         Rsanx8aExLz4Lv6vvNMrCz5AmsD7IvfNYvExZVmhPc+LCA+Oyvhs2ogpjE8cw/OnBgPf
+         XhAFQzUdUNGonpxMVgUAkHsjkJulovbGpOcz9QMTAmnANf6Je42G4yDoGOVsIaXs+0HS
+         p4LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=f7rf5XJgM6jW8M+rq9uT0VeICIGviBdUswkTE7UTxew=;
-        b=j9PJZLWWGP1cOB89cWT7/AzwncDD/ooJWLhTE0IEz9iiWit8+Bf+uSUuqHfGUIUrr+
-         d0AsIY9lanDY2KPAXO60XXLxSwdvyRwQK2V3qYOHanzRTxFiFMrEoszvKICIWO2q7RsO
-         pQ0IbBs9zR6mF3ZkPNRm4/TZTL/sQbHgxbBmG467np/EiaSsAEi9wEU+FI/cTi69Joq6
-         4tnaFSC6wcxRNxQr1N3y08Jd+X1Pxza7D/NzFul5KIDINeczA5U6G0eXwHqIXhNWUyr/
-         0DPKcMbDfleRN5zVaCvPjO8YttvYtWAp5VENeQh7l+o0xKiLkLk2AFttZEtGrKcCCa5L
-         eZOw==
-X-Gm-Message-State: AOAM533FAkr1feUCIwQBNsMllUwywrolMM0ToJNu1Kh0N8BlSh2RMkjL
-        XpFrbeRRFu3tVP8Biow6L151oHrg1nU=
-X-Google-Smtp-Source: ABdhPJzfyfdflDnh06QUVKHaunFq2pr0Ezb5785K+HvtnZsk4U8pMAiR9N1x7FJB3RNjNDf3HcU2TA==
-X-Received: by 2002:a05:600c:3c8b:b0:37f:1546:40c9 with SMTP id bg11-20020a05600c3c8b00b0037f154640c9mr5019530wmb.161.1647973394784;
-        Tue, 22 Mar 2022 11:23:14 -0700 (PDT)
+        bh=77SaOZDqR5GCe8rGTE1gWxph/6mABa7uqFiGsLfjuL0=;
+        b=P1qKRsaofL1J2ExJJi4loYZODjAfRbq8xOvV7lLYVilcbmHyOIzXhdXsIOnrk8R/CG
+         YcG5qaFrNXryVLtTU96RZGbWfyaZ+2npdvVuE5QctvB/Kad4S1fKV8hz6yZrm9VUvWOz
+         9qQWgT6N+YJwS89/uTdZzg7mvKshPQ/wdhtjK1DjyGRoaMGlM8mdiA6MSA7v6htSJJRU
+         LRctF14l/qP6sOfaM8hTOpwHKxFQIR/4SkU3OPVW4b6syFLLlgxdXY8K7OA1Z7Sfgxlz
+         /RSApjxugleQFYLRKiCZU+mCR7JctyWJyc9pw50qw+y0p3BGlQL/BfM++n7pJOYVGvdq
+         qhig==
+X-Gm-Message-State: AOAM531tHUUNy3k/ra0cTACU3snTIYpvGbcnusTLfrRUVWczH7QQiXe+
+        JzYzz12HAT2d4tlFhJRyRp8TQ8USMVk=
+X-Google-Smtp-Source: ABdhPJwTuBlkmhId6D6hkkm7KKR5cSD8eH86db2zQCnQMlrtiDEw1+4krwEIemhrf6E0CxfULeVRug==
+X-Received: by 2002:a1c:f018:0:b0:37b:c13c:3128 with SMTP id a24-20020a1cf018000000b0037bc13c3128mr5067122wmb.157.1647973396172;
+        Tue, 22 Mar 2022 11:23:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u8-20020a5d4348000000b00203dbfa4ff2sm16198635wrr.34.2022.03.22.11.23.12
+        by smtp.gmail.com with ESMTPSA id u11-20020a05600c19cb00b00389efe9c512sm2403498wmq.23.2022.03.22.11.23.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:13 -0700 (PDT)
-Message-Id: <a8f0b2a5256932e02469051ef5aa43445af5fc03.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:15 -0700 (PDT)
+Message-Id: <e32a8a7ea7ab88ab4a202559eba83fb1ad61d639.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:37 +0000
-Subject: [PATCH v3 04/27] fsmonitor-settings: bare repos are incompatible with
- FSMonitor
+Date:   Tue, 22 Mar 2022 18:22:38 +0000
+Subject: [PATCH v3 05/27] fsmonitor-settings: stub in Win32-specific
+ incompatibility checking
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,220 +73,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Bare repos do not have a worktree, so there is nothing for the
-daemon watch.
+Extend generic incompatibility checkout with platform-specific
+mechanism.  Stub in Win32 version.
+
+In the existing fsmonitor-settings code we have a way to mark
+types of repos as incompatible with fsmonitor (whether via the
+hook and IPC APIs).  For example, we do this for bare repos,
+since there are no files to watch.
+
+Extend this exclusion mechanism for platform-specific reasons.
+This commit just creates the framework and adds a stub for Win32.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c |  6 ++++
- builtin/update-index.c      |  4 +++
- fsmonitor-settings.c        | 60 +++++++++++++++++++++++++++++++++++++
- fsmonitor-settings.h        | 12 ++++++++
- t/t7519-status-fsmonitor.sh | 23 ++++++++++++++
- 5 files changed, 105 insertions(+)
+ Makefile                              | 13 +++++++++++++
+ compat/fsmonitor/fsm-settings-win32.c |  9 +++++++++
+ config.mak.uname                      |  4 ++++
+ contrib/buildsystems/CMakeLists.txt   |  3 +++
+ fsmonitor-settings.c                  | 12 ++++++++++++
+ fsmonitor-settings.h                  | 13 +++++++++++++
+ 6 files changed, 54 insertions(+)
+ create mode 100644 compat/fsmonitor/fsm-settings-win32.c
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index a30ecf6cfac..edca8a667ab 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1450,6 +1450,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		die(_("invalid 'ipc-threads' value (%d)"),
- 		    fsmonitor__ipc_threads);
+diff --git a/Makefile b/Makefile
+index daa21bed6c3..93604fe8ef7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -475,6 +475,11 @@ all::
+ # `compat/fsmonitor/fsm-listen-<name>.c` that implements the
+ # `fsm_listen__*()` routines.
+ #
++# If your platform has OS-specific ways to tell if a repo is incompatible with
++# fsmonitor (whether the hook or IPC daemon version), set FSMONITOR_OS_SETTINGS
++# to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
++# that implements the `fsm_os_settings__*()` routines.
++#
+ # Define DEVELOPER to enable more compiler warnings. Compiler version
+ # and family are auto detected, but could be overridden by defining
+ # COMPILER_FEATURES (see config.mak.dev). You can still set
+@@ -1979,6 +1984,11 @@ ifdef FSMONITOR_DAEMON_BACKEND
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
+ endif
  
-+	prepare_repo_settings(the_repository);
-+	fsm_settings__set_ipc(the_repository);
++ifdef FSMONITOR_OS_SETTINGS
++	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
++	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
++endif
 +
-+	if (fsm_settings__error_if_incompatible(the_repository))
-+		return 1;
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+@@ -2901,6 +2911,9 @@ GIT-BUILD-OPTIONS: FORCE
+ ifdef FSMONITOR_DAEMON_BACKEND
+ 	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
+ endif
++ifdef FSMONITOR_OS_SETTINGS
++	@echo FSMONITOR_OS_SETTINGS=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_OS_SETTINGS)))'\' >>$@+
++endif
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+new file mode 100644
+index 00000000000..7fce32a3c5b
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -0,0 +1,9 @@
++#include "cache.h"
++#include "config.h"
++#include "repository.h"
++#include "fsmonitor-settings.h"
 +
- 	if (!strcmp(subcmd, "start"))
- 		return !!try_to_start_background_daemon();
- 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 876112abb21..d29048f16f2 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1237,6 +1237,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 
- 	if (fsmonitor > 0) {
- 		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
++{
++	return FSMONITOR_REASON_OK;
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 501970902da..cf224768ad6 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -450,6 +450,8 @@ ifeq ($(uname_S),Windows)
+ 	# These are always available, so we do not have to conditionally
+ 	# support it.
+ 	FSMONITOR_DAEMON_BACKEND = win32
++	FSMONITOR_OS_SETTINGS = win32
 +
-+		if (fsm_settings__error_if_incompatible(the_repository))
-+			return 1;
+ 	NO_SVN_TESTS = YesPlease
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+@@ -639,6 +641,8 @@ ifeq ($(uname_S),MINGW)
+ 	# These are always available, so we do not have to conditionally
+ 	# support it.
+ 	FSMONITOR_DAEMON_BACKEND = win32
++	FSMONITOR_OS_SETTINGS = win32
 +
- 		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
- 			warning(_("core.fsmonitor is unset; "
- 				"set it if you really want to "
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index ee0d7257b77..16705da2000 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
+ 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
++
++		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
+ 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
 diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 757d230d538..86c09bd35fe 100644
+index 86c09bd35fe..8ff55f8c3fd 100644
 --- a/fsmonitor-settings.c
 +++ b/fsmonitor-settings.c
-@@ -9,9 +9,33 @@
-  */
- struct fsmonitor_settings {
- 	enum fsmonitor_mode mode;
-+	enum fsmonitor_reason reason;
- 	char *hook_path;
- };
+@@ -33,6 +33,18 @@ static int check_for_incompatible(struct repository *r)
+ 		return 1;
+ 	}
  
-+static void set_incompatible(struct repository *r,
-+			     enum fsmonitor_reason reason)
-+{
-+	struct fsmonitor_settings *s = r->settings.fsmonitor;
++#ifdef HAVE_FSMONITOR_OS_SETTINGS
++	{
++		enum fsmonitor_reason reason;
 +
-+	s->mode = FSMONITOR_MODE_INCOMPATIBLE;
-+	s->reason = reason;
-+}
-+
-+static int check_for_incompatible(struct repository *r)
-+{
-+	if (!r->worktree) {
-+		/*
-+		 * Bare repositories don't have a working directory and
-+		 * therefore have nothing to watch.
-+		 */
-+		set_incompatible(r, FSMONITOR_REASON_BARE);
-+		return 1;
++		reason = fsm_os__incompatible(r);
++		if (reason != FSMONITOR_REASON_OK) {
++			set_incompatible(r, reason);
++			return 1;
++		}
 +	}
++#endif
 +
-+	return 0;
-+}
-+
- static void lookup_fsmonitor_settings(struct repository *r)
- {
- 	struct fsmonitor_settings *s;
-@@ -23,6 +47,7 @@ static void lookup_fsmonitor_settings(struct repository *r)
- 
- 	CALLOC_ARRAY(s, 1);
- 	s->mode = FSMONITOR_MODE_DISABLED;
-+	s->reason = FSMONITOR_REASON_OK;
- 
- 	r->settings.fsmonitor = s;
- 
-@@ -86,6 +111,9 @@ void fsm_settings__set_ipc(struct repository *r)
- 
- 	lookup_fsmonitor_settings(r);
- 
-+	if (check_for_incompatible(r))
-+		return;
-+
- 	r->settings.fsmonitor->mode = FSMONITOR_MODE_IPC;
- 	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
+ 	return 0;
  }
-@@ -97,6 +125,9 @@ void fsm_settings__set_hook(struct repository *r, const char *path)
  
- 	lookup_fsmonitor_settings(r);
- 
-+	if (check_for_incompatible(r))
-+		return;
-+
- 	r->settings.fsmonitor->mode = FSMONITOR_MODE_HOOK;
- 	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
- 	r->settings.fsmonitor->hook_path = strdup(path);
-@@ -110,5 +141,34 @@ void fsm_settings__set_disabled(struct repository *r)
- 	lookup_fsmonitor_settings(r);
- 
- 	r->settings.fsmonitor->mode = FSMONITOR_MODE_DISABLED;
-+	r->settings.fsmonitor->reason = FSMONITOR_REASON_OK;
- 	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
- }
-+
-+enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
-+{
-+	if (!r)
-+		r = the_repository;
-+
-+	lookup_fsmonitor_settings(r);
-+
-+	return r->settings.fsmonitor->reason;
-+}
-+
-+int fsm_settings__error_if_incompatible(struct repository *r)
-+{
-+	enum fsmonitor_reason reason = fsm_settings__get_reason(r);
-+
-+	switch (reason) {
-+	case FSMONITOR_REASON_OK:
-+		return 0;
-+
-+	case FSMONITOR_REASON_BARE:
-+		error(_("bare repository '%s' is incompatible with fsmonitor"),
-+		      xgetcwd());
-+		return 1;
-+	}
-+
-+	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
-+	    reason);
-+}
 diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index a4c5d7b4889..8654edf33d8 100644
+index 8654edf33d8..4b35f051fb1 100644
 --- a/fsmonitor-settings.h
 +++ b/fsmonitor-settings.h
-@@ -4,11 +4,20 @@
- struct repository;
+@@ -30,4 +30,17 @@ int fsm_settings__error_if_incompatible(struct repository *r);
  
- enum fsmonitor_mode {
-+	FSMONITOR_MODE_INCOMPATIBLE = -1, /* see _reason */
- 	FSMONITOR_MODE_DISABLED = 0,
- 	FSMONITOR_MODE_HOOK = 1, /* core.fsmonitor=<hook_path> */
- 	FSMONITOR_MODE_IPC = 2,  /* core.fsmonitor=<true> */
- };
- 
-+/*
-+ * Incompatibility reasons.
-+ */
-+enum fsmonitor_reason {
-+	FSMONITOR_REASON_OK = 0, /* no incompatibility or when disbled */
-+	FSMONITOR_REASON_BARE,
-+};
-+
- void fsm_settings__set_ipc(struct repository *r);
- void fsm_settings__set_hook(struct repository *r, const char *path);
- void fsm_settings__set_disabled(struct repository *r);
-@@ -16,6 +25,9 @@ void fsm_settings__set_disabled(struct repository *r);
- enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
- const char *fsm_settings__get_hook_path(struct repository *r);
- 
-+enum fsmonitor_reason fsm_settings__get_reason(struct repository *r);
-+int fsm_settings__error_if_incompatible(struct repository *r);
-+
  struct fsmonitor_settings;
  
++#ifdef HAVE_FSMONITOR_OS_SETTINGS
++/*
++ * Ask platform-specific code whether the repository is incompatible
++ * with fsmonitor (both hook and ipc modes).  For example, if the working
++ * directory is on a remote volume and mounted via a technology that does
++ * not support notification events, then we should not pretend to watch it.
++ *
++ * fsm_os__* routines should considered private to fsm_settings__
++ * routines.
++ */
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
++#endif /* HAVE_FSMONITOR_OS_SETTINGS */
++
  #endif /* FSMONITOR_SETTINGS_H */
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index a6308acf006..9a8e21c5608 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -55,6 +55,29 @@ test_lazy_prereq UNTRACKED_CACHE '
- 	test $ret -ne 1
- '
- 
-+# Test that we detect and disallow repos that are incompatible with FSMonitor.
-+test_expect_success 'incompatible bare repo' '
-+	test_when_finished "rm -rf ./bare-clone actual expect" &&
-+	git init --bare bare-clone &&
-+
-+	test_must_fail \
-+		git -C ./bare-clone -c core.fsmonitor=foo \
-+			update-index --fsmonitor 2>actual &&
-+	grep "bare repository .* is incompatible with fsmonitor" actual &&
-+
-+	test_must_fail \
-+		git -C ./bare-clone -c core.fsmonitor=true \
-+			update-index --fsmonitor 2>actual &&
-+	grep "bare repository .* is incompatible with fsmonitor" actual
-+'
-+
-+test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo' '
-+	test_when_finished "rm -rf ./bare-clone actual" &&
-+	git init --bare bare-clone &&
-+	test_must_fail git -C ./bare-clone fsmonitor--daemon run 2>actual &&
-+	grep "bare repository .* is incompatible with fsmonitor" actual
-+'
-+
- test_expect_success 'setup' '
- 	mkdir -p .git/hooks &&
- 	: >tracked &&
 -- 
 gitgitgadget
 
