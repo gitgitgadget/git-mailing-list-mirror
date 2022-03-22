@@ -2,108 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA582C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 06:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA132C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 06:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236973AbiCVGKJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 02:10:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
+        id S237144AbiCVGvF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 02:51:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236911AbiCVGKE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 02:10:04 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1BAC04
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 23:08:37 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id h11so22638330ljb.2
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 23:08:37 -0700 (PDT)
+        with ESMTP id S237103AbiCVGu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 02:50:58 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 256FE252B9
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 23:49:31 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id k6so7509035plg.12
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 23:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lcRYnFbCzkbGxeUkuBV2QaUhaSLkW1U8pcbvjwcVh1U=;
-        b=jU3HcaFhjktVe89Hx7QX/nYhKXHi/Nkc98/0nTP6gExZghgVypYRhcgJBfbAISmfM4
-         lMsZoV606Fsg2Ls1rlNmrNDoduhZvSNdIUmtIxJwNjX+rqdEp0sFyIhw3gj9zhFzMlaO
-         EdUKsTWnYkvHK1gsq2Q1ZHvVtzWtuwCOJydqq19R5uox7PAxA0ULz1R+s6BLjWPqINgO
-         vL7x7gO7MZWvo/pCp1rRRL0LRa9QGRQW87744ZRVTDxEC48HRaGdffYCDFOI+LF8F/Vi
-         h0D+pU38WTYdvHmpcCIfnOwKGXfpEV+2LDz/mRKyvN7s9un+7d0aurGpnBo5oKi6wUCH
-         N5yQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=Y0SOctRsjig36AZ2hy8j/p+mXAgekrczUkjeI67I84E=;
+        b=NnYDr2FVHGVwYqWP6uA+PC84ySunjBvnkDGMxxz4jqTiiMNYQIgUYjpAXK4Qli2qoS
+         hGUWPcYfmGaiGIMoqlTiXl/DqazuSMfTYtIKFxezGfCDa+kLJIfCsUpBSO9HR+Bimo9W
+         /4QrhGoAb14rO2cv+Ds6TX2p4go0G0KsTtS4JNe/g/oK+XtGy2JYLbkgJP5CDBorqX5u
+         xHRRdZA+pWQnKjQa+l1Q4fg6ZR1T2YqTQhWEYfctvxVCNG1hiNMH1YLwGmFRVqv1zygr
+         tpFQYIp/j1oBsPyRuJFy+DszC+/Osf8AFcIWBqk1tXPMCSi1i8ro3MHSom2cg7gQbfs6
+         5u1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lcRYnFbCzkbGxeUkuBV2QaUhaSLkW1U8pcbvjwcVh1U=;
-        b=dZx5j3w89zNYitVvwbFR7Z5ne7OcPH1YhN/6RL3oVcYKPZxAUUzPfhEk9O5Er3Ufok
-         H6fr+qgR9XqalQ8wg2qprZO2LJ6X61AIbJYpH0zLKwJJo7x7xEAVzKNMwgA9lhwzDBZD
-         fLBSPH3UFaEf69psyFCNeNwm873Fjxjy2MxGDKg2n7AnAf/3K9B7xrXWSkRAxSuh/pSW
-         acV65f3EY6WAlldcKFVvm0yIa9/iWEg/j1Dr56dLdRjCpO+6mfOAKAxiuP+cc5vHgfi4
-         SsZG+SVT1mMizuT/Ut90D1TkN8FMyErKhK0JRovfpesihOI4tLC64n0Jec2ayAV559Ya
-         fkVg==
-X-Gm-Message-State: AOAM5333G02uYRxwBc10hQTTh/cZ+2uwtEp55T2qkGoJQ7Qo+aF9RGkd
-        0Ehuer+k+IuaUQGmLDnDq2AnWUzK+WbI9SuSYD5VdKbmm7Y=
-X-Google-Smtp-Source: ABdhPJzMHZdhoItN8vDqmrqGPTaYIBC5kYAGC/NVETG1pdGFkpXBxGHWfnNQ23/3uRNVr1d0+/KvKzKltUuEoNRn2d4=
-X-Received: by 2002:a2e:54d:0:b0:249:8213:f970 with SMTP id
- 74-20020a2e054d000000b002498213f970mr7583481ljf.315.1647929315263; Mon, 21
- Mar 2022 23:08:35 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Y0SOctRsjig36AZ2hy8j/p+mXAgekrczUkjeI67I84E=;
+        b=MhldtPnapbiHOk5MKwjwMMHdZNf2drbqO5ByhkQaIU9HcLzn5v+/Sj5OC/oLecNSP1
+         VPwpJJij+3Tmax22oe8jxCJfFKDo/7EGKqlcjJJR+LlhT2AbiQac65xtJWXnKEWmck+s
+         k0q0FfCswpICJGmsv8cjv/iZbXRqXBQsCb+0NHd3untQTNs95dt2Zc95Cj7CPcfsovr4
+         izlLFX/xjhT3tFaNja6X1pWsnkrGD64EOd4qHh8lLWkAdNdO6hdrwHbtYUY8IGu4dZnf
+         6htH053vIkU4NqQg6MbMABG6OS87TNUuGPO5MCKZAVzQhw9cOV9EskFlEb8AlMAoxwzg
+         qAFw==
+X-Gm-Message-State: AOAM532slWnRj97pRzfrca2Ca8FpDb9bPqnvpWnMmVczYdobcTjvLqUo
+        AgQrljXYULR3R/mrWPWZEPutrLQqKUw7Eg==
+X-Google-Smtp-Source: ABdhPJwGWhLT+B9gprThNyYXdtH6yWc9rqDDnQ5g2R5PrBmGToludo/CpvOQZXP3lUfIpcwsjXqsZw==
+X-Received: by 2002:a17:902:7049:b0:151:e52e:ae42 with SMTP id h9-20020a170902704900b00151e52eae42mr17309185plt.118.1647931770597;
+        Mon, 21 Mar 2022 23:49:30 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-49.three.co.id. [116.206.28.49])
+        by smtp.gmail.com with ESMTPSA id f8-20020a056a00238800b004f7a066c904sm22839342pfc.96.2022.03.21.23.49.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Mar 2022 23:49:29 -0700 (PDT)
+Message-ID: <5dea325c-c80c-c203-c42e-b55e58b717de@gmail.com>
+Date:   Tue, 22 Mar 2022 13:49:24 +0700
 MIME-Version: 1.0
-References: <87in9ucsbb.fsf@evledraar.gmail.com> <20220318220623.50528-1-gaurijove@gmail.com>
- <CANsrJQdNKiX93GnVXztmvYQQBxr6-HsYNx5UvYXSFg32Op3ZPQ@mail.gmail.com>
- <CANsrJQe1YuggxdBHdSdukXRj3myVCTNwLiiWNLrAzPpzA4FOOA@mail.gmail.com>
- <220319.86ee2yds2f.gmgdl@evledraar.gmail.com> <CANsrJQdJ1wBThUyJ=QSt6NwU8HzQY2VaWc11UfZQ+ktRQs_YTQ@mail.gmail.com>
- <220319.86a6dlewyj.gmgdl@evledraar.gmail.com> <CANsrJQdqoz7mZ9Fj08owgVWGKs25nPzE1g1dLASL=fz9j485hw@mail.gmail.com>
-In-Reply-To: <CANsrJQdqoz7mZ9Fj08owgVWGKs25nPzE1g1dLASL=fz9j485hw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 22 Mar 2022 07:08:22 +0100
-Message-ID: <CAP8UFD1+3FWYWZscMgg13T7tYxgB7HKSFiierehdYhuHq54F-A@mail.gmail.com>
-Subject: Re: Having grep support the -o option
-To:     Jayati Shrivastava <gaurijove@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 00/41] use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+ status
+Content-Language: en-US
+To:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+References: <20220321225523.724509-1-gitter.spiros@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20220321225523.724509-1-gitter.spiros@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 20, 2022 at 8:14 PM Jayati Shrivastava <gaurijove@gmail.com> wr=
-ote:
->
-> On Sat, Mar 19, 2022 at 9:49 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> >
-> > One thing I'd *really* like to see is the bits of %(if) %(then)
-> > etc. extracted from ref-filter.c into some general API other commands
-> > could use with strbuf_expand() and friends.
-> >
-> > I.e. if you could in addition to the strbuf_expand() callback define
-> > what verbs you support for "if" and the like, or have callbacks for
-> > their comparison functions.
-> >
-> > Then have that machinery drive the whole format expansion, which
-> > eventually would expand your %(some-custom-thing) via a callback.
-> >
-> > I.e. the whole "valid_atom" state machine in ref-filter.c.
->
-> So, the end goal is to design a formatting API that can be used by any
-> command that takes --format option?
+On 22/03/22 05.54, Elia Pinto wrote:
+> Elia Pinto (41):
+>    archive.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    branch.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    am.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    blame.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    commit.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    credential-cache--daemon.c: use the stdlib EXIT_SUCCESS or
+>      EXIT_FAILURE exit status
+>    help.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    init-db.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    mailsplit.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    merge-index.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    merge.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    pull.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    rebase.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    remote-ext.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    rev-parse.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    rm.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    shortlog.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    show-branch.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    stash.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    tag.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    unpack-objects.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+>      status
+>    update-index.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+>      status
+>    obstack.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    git-credential-osxkeychain.c: use the stdlib EXIT_SUCCESS or
+>      EXIT_FAILURE exit status
+>    git-credential-wincred.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE
+>      exit status
+>    daemon.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    git.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    help.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    http-backend.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+>      status
+>    parse-options.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+>      status
+>    path.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    remote-curl.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    run-command.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    setup.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    shell.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    test-json-writer.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit
+>      status
+>    test-reach.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    test-submodule-config.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE
+>      exit status
+>    test-submodule-nested-repo-config.c: use the stdlib EXIT_SUCCESS or
+>      EXIT_FAILURE exit status
+>    upload-pack.c: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+>    exit.cocci: use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+> 
 
-It might be nice if we get closer to this after your GSoC project, but
-I don't think it should become the main goal of the GSoC.
+I think we should only have 2 patches in this series: the first is to replace
+with EXIT_SUCCESS, and second is to replace with EXIT_FAILURE.
 
-> Previous interns worked on
-> unifying pretty.c and cat-file.c with ref-filter.c and so the next task c=
-an
-> be to extend "valid_atom" state machine to work with more commands.
-
-Note that performance issues have been a really big issue in unifying
-cat-file.c with ref-filter.c.
-
-> Do you have any suggestions for new atoms/verbs I could add
-> support for or any such similar small exercise to start with?
-
-It would be nice if we first got an idea of the features in pretty.c
-that do not yet have something similar in ref-filter.c. I think Hariom
-used to show how features in pretty.c corresponded to features in
-ref-filter.c, and this helped with deciding about the next steps to
-take.
+-- 
+An old man doll... just what I always wanted! - Clara
