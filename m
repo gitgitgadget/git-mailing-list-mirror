@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7465DC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FE4CC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240368AbiCVSZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41180 "EHLO
+        id S240394AbiCVSZc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:25:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240413AbiCVSZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:25:21 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5489C90FC6
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:46 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id q8so13276783wrc.0
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:46 -0700 (PDT)
+        with ESMTP id S240301AbiCVSZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:25:24 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E90DE83
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:54 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id u16so23631494wru.4
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Mv6D24bMSysj3hV8m09u6C4BPD9U2eW4vus0bJo6UBo=;
-        b=B6Ob0SoY4xPD5YmOdDUhfS7NheQVJqtjlncyLzMtKDw8b2MVLEFSMCVVx1wSJZqycc
-         qICdxoqxpH1NSbJSdv5Koj7PPghObn3HtQcZ4k18TW86gpntvqltIPLqV4zetIKx2T4X
-         PDtexUP6rjxpnJBkJq1vftXkMbN7ONkvoLVSY1WFhGstfK6tJOEM04aE0nTe4idTRH5y
-         oi8cYW3jxhmosappGDxR0QkTOwtueRgAVmLMtAhtKBDqsqN7LJDOfAv+gP3NqZQGHjch
-         4HdHuXFCUlBVrke2HN4JSBqAhzpwOL5+uLeGbyLBbeMbirn8x4VLL0cT9oCqsVjZ6qEX
-         ra4A==
+        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
+        b=HEGgBO7ZpcW2EKj9J0FrwU3eBQ/UCv7k+iKs1sSyiIfbetBeV+wsjKS8XPqoxPw3T7
+         pyUUHXimBmaK67pAj0wLO+pMAb2mU/u4VlYA5mLArOMpVWX/LLY8OW0p3whNnpS3bvGH
+         nPZOgulBrtjOvfpgk4ci31kJamSCJ4xhgDD9s4d3wGxM8E3YCK6IP4XFAw53eYq9Gw15
+         s6O2TfFevcZwJws/sePikuT3zUmtEoqUKHn/dt1Pohakgu+BPO0WNyp/6K0cOvJDACeY
+         3I2kDvjbgwdXTwYklalKqZDnIlmc0TlBmU0GZKIrlvg2ohOjcxu7KhcdusC0axOux3XI
+         iGwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Mv6D24bMSysj3hV8m09u6C4BPD9U2eW4vus0bJo6UBo=;
-        b=n0fWinJve8xOnriisQ41I0Wuk/IAIZuZyOrMgsGnrcopOnmEd3/PBUdV8lObHaSrbg
-         BjB94xdq0dunLLASxZ9UVlKoVduUvkNv0ILkbDyNgFZnti/uWPStZjLdgK+lUCxRills
-         ebWrpu2YiIXpeF8z2LGJRJAAkwGsVzjQuuNI5g0Utpc8bEuS/VkcQ8ctaFxNvgyg2+WY
-         HdDzx1V4TJQsiDK4EZXCibCTFzfTVx0Vv6Zo7o3ZYXl4XAFYQ0JGDUPzF4UExoe75TR/
-         xJ2nZXFcunLogpm5W81BIMYxjCPkRmlD4iVv/bYdRF6YfI/6Mkb6O/01isvDYjHAdBfq
-         3m5Q==
-X-Gm-Message-State: AOAM5321XADzxS2wwpju8qlFOEUSRAXMF+7qS4+zBUcGofPzNOhZpp/W
-        ebh7tUiupL64PojhW71x+r1wRKyiiU4=
-X-Google-Smtp-Source: ABdhPJxsa3IYhRdOBb3qx5zi8GUXdf6pV/YJSY64hTImNDv5KOrFywE9v0UjL/3Y1rFJrmEjxLvEdQ==
-X-Received: by 2002:a05:6000:1acc:b0:204:2ae7:da14 with SMTP id i12-20020a0560001acc00b002042ae7da14mr4412444wry.609.1647973424557;
-        Tue, 22 Mar 2022 11:23:44 -0700 (PDT)
+        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
+        b=EsSLQFPQiq5WF5WI6SDhZUy/OXSp2qsxOJxzMcNxhpPRdV2wew0pV7Yuwke+1tVU3m
+         oew7vjg2F6mWyDuHrw4+HBDbgHtfs+HW9W7gJD6kU5tSCJvowclcJpQTYkqkFfPA51xC
+         W0/1Wwf5UXCgxiRKzNSefO3Ky3JCrEQN5OXAGnpFK5y+kvqH+QmwcTY3ZEuFSUZ0TQWz
+         zZXI5N2fN/5+9pdWJLQjYuRmSfenSTZ1sAYQuFst1YX0k1QarUg54JkgskCQotyci5x3
+         TyT/YInTt96pcs1hiazs4buaJTvkO/PLeqXTnnIOgekcaDeXy9+B0nFGr68jP+/ov0ay
+         SINg==
+X-Gm-Message-State: AOAM5300YFgMr255ZXf0VMEfYdwKl+PC9nH6SuiwmwNKVn3v8WU+g1aT
+        BsNC9vTaDdKeJKkdnLytTmRcsNgtBa0=
+X-Google-Smtp-Source: ABdhPJzH5hGpC46pWeycTxEy9fVdruCYHXAvtuIiqlIFSQ0Pa6fRGfTRhsb9esWaiL9CjN45ncl+QA==
+X-Received: by 2002:a05:6000:2c9:b0:204:1ce4:7c29 with SMTP id o9-20020a05600002c900b002041ce47c29mr6611388wry.51.1647973432508;
+        Tue, 22 Mar 2022 11:23:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az19-20020a05600c601300b0038cadf3aa69sm3376931wmb.36.2022.03.22.11.23.41
+        by smtp.gmail.com with ESMTPSA id e8-20020a056000178800b00203da3bb4d2sm17405632wrg.41.2022.03.22.11.23.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:42 -0700 (PDT)
-Message-Id: <c6b5bdd25e435d4a942ac72f23bb81f4d59861e1.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:50 -0700 (PDT)
+Message-Id: <01c1a38c46243666c8af0556d5d7588cf4203ada.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:50 +0000
-Subject: [PATCH v3 17/27] fsm-health-win32: add polling framework to monitor
- daemon health
+Date:   Tue, 22 Mar 2022 18:22:52 +0000
+Subject: [PATCH v3 19/27] fsm-listen-darwin: shutdown daemon if worktree root
+ is moved/renamed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,123 +73,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Extend the Windows version of the "health" thread to periodically
-inspect the system and shutdown if warranted.
-
-This commit updates the thread's wait loop to use a timeout and
-defines a (currently empty) table of functions to poll the system.
-
-A later commit will add functions to the table to actually
-inspect the system.
+Teach the listener thread to shutdown the daemon if the spelling of the
+worktree root directory changes.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-health-win32.c | 65 ++++++++++++++++++++++++++++-
- 1 file changed, 64 insertions(+), 1 deletion(-)
+ compat/fsmonitor/fsm-listen-darwin.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
-index 94b1d020f25..24fc612bf02 100644
---- a/compat/fsmonitor/fsm-health-win32.c
-+++ b/compat/fsmonitor/fsm-health-win32.c
-@@ -4,6 +4,24 @@
- #include "fsm-health.h"
- #include "fsmonitor--daemon.h"
- 
-+/*
-+ * Every minute wake up and test our health.
-+ */
-+#define WAIT_FREQ_MS (60 * 1000)
-+
-+/*
-+ * State machine states for each of the interval functions
-+ * used for polling our health.
-+ */
-+enum interval_fn_ctx {
-+	CTX_INIT = 0,
-+	CTX_TERM,
-+	CTX_TIMER
-+};
-+
-+typedef int (interval_fn)(struct fsmonitor_daemon_state *state,
-+			  enum interval_fn_ctx ctx);
-+
- struct fsm_health_data
- {
- 	HANDLE hEventShutdown;
-@@ -42,18 +60,61 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
- 	FREE_AND_NULL(state->health_data);
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 07113205a61..83d38e8ac6c 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -106,6 +106,11 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
+ 	strbuf_release(&msg);
  }
  
-+/*
-+ * A table of the polling functions.
-+ */
-+static interval_fn *table[] = {
-+	NULL, /* must be last */
-+};
-+
-+/*
-+ * Call all of the polling functions in the table.
-+ * Shortcut and return first error.
-+ *
-+ * Return 0 if all succeeded.
-+ */
-+static int call_all(struct fsmonitor_daemon_state *state,
-+		    enum interval_fn_ctx ctx)
++static int ef_is_root_changed(const FSEventStreamEventFlags ef)
 +{
-+	int k;
-+
-+	for (k = 0; table[k]; k++) {
-+		int r = table[k](state, ctx);
-+		if (r)
-+			return r;
-+	}
-+
-+	return 0;
++	return (ef & kFSEventStreamEventFlagRootChanged);
 +}
 +
- void fsm_health__loop(struct fsmonitor_daemon_state *state)
+ static int ef_is_root_delete(const FSEventStreamEventFlags ef)
  {
- 	struct fsm_health_data *data = state->health_data;
-+	int r;
-+
-+	r = call_all(state, CTX_INIT);
-+	if (r < 0)
-+		goto force_error_stop;
-+	if (r > 0)
-+		goto force_shutdown;
+ 	return (ef & kFSEventStreamEventFlagItemIsDir &&
+@@ -215,6 +220,26 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			continue;
+ 		}
  
- 	for (;;) {
- 		DWORD dwWait = WaitForMultipleObjects(data->nr_handles,
- 						      data->hHandles,
--						      FALSE, INFINITE);
-+						      FALSE, WAIT_FREQ_MS);
- 
- 		if (dwWait == WAIT_OBJECT_0 + HEALTH_SHUTDOWN)
- 			goto clean_shutdown;
- 
-+		if (dwWait == WAIT_TIMEOUT) {
-+			r = call_all(state, CTX_TIMER);
-+			if (r < 0)
-+				goto force_error_stop;
-+			if (r > 0)
-+				goto force_shutdown;
-+			continue;
++		if (ef_is_root_changed(event_flags[k])) {
++			/*
++			 * The spelling of the pathname of the root directory
++			 * has changed.  This includes the name of the root
++			 * directory itself or of any parent directory in the
++			 * path.
++			 *
++			 * (There may be other conditions that throw this,
++			 * but I couldn't find any information on it.)
++			 *
++			 * Force a shutdown now and avoid things getting
++			 * out of sync.  The Unix domain socket is inside
++			 * the .git directory and a spelling change will make
++			 * it hard for clients to rendezvous with us.
++			 */
++			trace_printf_key(&trace_fsmonitor,
++					 "event: root changed");
++			goto force_shutdown;
 +		}
 +
- 		error(_("health thread wait failed [GLE %ld]"),
- 		      GetLastError());
- 		goto force_error_stop;
-@@ -61,8 +122,10 @@ void fsm_health__loop(struct fsmonitor_daemon_state *state)
- 
- force_error_stop:
- 	state->health_error_code = -1;
-+force_shutdown:
- 	ipc_server_stop_async(state->ipc_server_data);
- clean_shutdown:
-+	call_all(state, CTX_TERM);
- 	return;
- }
- 
+ 		if (ef_ignore_xattr(event_flags[k])) {
+ 			trace_printf_key(&trace_fsmonitor,
+ 					 "ignore-xattr: '%s', flags=0x%x",
 -- 
 gitgitgadget
 
