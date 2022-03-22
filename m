@@ -2,167 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70E0DC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 17:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45BD3C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 17:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239752AbiCVRaZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 13:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35368 "EHLO
+        id S237037AbiCVRtZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 13:49:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239735AbiCVRaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 13:30:17 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57ED1E39
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:47 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so2383892wmb.3
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:47 -0700 (PDT)
+        with ESMTP id S235001AbiCVRtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 13:49:23 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27DB52898A
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:47:55 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id w127so20234083oig.10
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lL7IRR3IAXAd1hNj4pTPG7N19dM5VsQBYzO3xGDzQAg=;
-        b=lBtu910OjSRmMRnKAFe0+iUwygFwRxH4kOTDjuAkov5xMl8nkNkRCNVwgJo5i4B48/
-         +oRsas+2rZralrgVzuQzcPdCJog87vgOFeIez/K68YxChR3VwetEIy2Gx6fnFNIcKMHR
-         GZQCT12SQw52X8beLYKmMYE44mOcoojd+bXWfW6AJ23+0zWTN+TecugmyogrZP8QTNsc
-         Kr1xZhqpdTDX0wtObidAqhy6aww4AymwBf+ohX+YH2y9BDp2iiwePW01G3kShI9Z/dy8
-         gSF9AgzhO3jC+wLWpgovz184WjB2fjO7BGRv1+AFrwFbDk+nAqjJBVHKVroBLB5gsdKI
-         MFWA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gYYPkH2ZJuLHA3flxY8VSPSXX2Pj6L5U1RcV8Bh/qlk=;
+        b=DdG2TAVJ0zKgO3/UBDZfUdn/KOYcI403zbREyj8QHrfX3/Iz4zZRdfs0beRiBlamFA
+         wg3cx3KrcehbJpYHX6iyShPe/Th7259sgSgeatjC4sXM/isOeq42c+i9x9ogchSrq2Da
+         +HNc6CcSyZciN2G+YEJJEPIJgiHcU9R4o59DpCW2X/WMUEEAXpb1aLnVt7RrUPTvFazD
+         bZeQGYT2dQz86yWgW6cn5617lUane5xUEUkCOXHgNG+LzDwMAKrG1S+qwrrsySmWpm7w
+         wGhpo5gd5P3f/Id++SAO9EV1Sf2UR/fVt4JsTHLy7CqZkXW9Bdr0NjI0EoOZ6fqF6XWT
+         zL0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lL7IRR3IAXAd1hNj4pTPG7N19dM5VsQBYzO3xGDzQAg=;
-        b=w6tHSXR4YGLn7gbDzqzG4WrXpcAI4+gLYPywqa6YoiDdX/I91i+L/9le2gRUqjm7oB
-         9Dwq/zwGo2DBCAH97xlhfmt8O2mZYuBhcS7ieaZ7r+5HDzAhxKIlTRIWmZZTrHuoXFnB
-         I776ZUWIrHWZv1gL47U2uIdJfvrbl+BfY770D7uiZ0E0Lbk3AhspnVrj5Z1su9zK784K
-         fhFiMYppNVuoJQt1oK/4eMAgeBAEMeYHfC+SNXiclW+nJtYsp0YF+ZI/57prvH2HHFrL
-         0ghv/PdJvSFhCn69999VvjdT/RWSm1gkue2MihdvrhZixiYqGrNgCnBYU4IDqs9zb6zb
-         n4yg==
-X-Gm-Message-State: AOAM533GXFufwBnG7hF/vJGo6ylnGYueOeK9GN3BR6l0IEJ6i5xRsMim
-        buPSV8Fc+SAcOC0cArWQz42zsjbMi7M=
-X-Google-Smtp-Source: ABdhPJwMHOat20ajSbcvI3dEcZsoPJJKESLWslC94qiJwqNsvxpRGNWAVEEavFmdQJVxUsUfcL4Emw==
-X-Received: by 2002:a05:600c:4f89:b0:38c:bd13:e03f with SMTP id n9-20020a05600c4f8900b0038cbd13e03fmr2797442wmq.117.1647970125490;
-        Tue, 22 Mar 2022 10:28:45 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g5-20020a5d64e5000000b00203914f5313sm16184732wri.114.2022.03.22.10.28.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 10:28:44 -0700 (PDT)
-Message-Id: <1b2130426bd7bd6c0bf5c56be2bf66a4d81f0b27.1647970119.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
-References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 17:28:38 +0000
-Subject: [PATCH 4/5] bundle: move capabilities to end of 'verify'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gYYPkH2ZJuLHA3flxY8VSPSXX2Pj6L5U1RcV8Bh/qlk=;
+        b=j9xOVaZNJtp9tkckbgYzkOwSe52KbfmbcJITJaRza5fkp/UB9airLDVx4W6X0A25lD
+         ayZ6owCWWohPtNi26KSAsKgJcmUmHTj0fXFYRqrQuFexKZScvtqGCjSGD/GHA+3SKNqx
+         sJhM3gdvtSe4eThUwu59GT5h5h2IhjkljsPGN+9LiqFBCllFK/13NjXnfsmivS+/07+q
+         htLmyPd+Jln6lc81SBCURFJ52eFpRmUwgh/Az1KCbK6U/cg/HMXsUVxVoUCaj4zZwIpu
+         s2dQbDytzjVMcvfeeiLkcor7/Fz06NQbrKa/BLr7P9l2b27l+TEUrq5nNwpA/OTOdVQO
+         YiJw==
+X-Gm-Message-State: AOAM531WUieBKcpkcy6WKdJvmOTX5esuaMNjUIyut5PD6JioL3Nt7Xpw
+        6yojhg0nE0S0D1L4Z3fdA0Aa9m03LuG6YAnd4wg=
+X-Google-Smtp-Source: ABdhPJw8RjXxZJClsbzGOV04NLhTg49Bd57wWdsO66QkB3WO6NZBD6bW3rkDYY15YTr6BRNOJtwWF0FIy8XwdqoLLDc=
+X-Received: by 2002:a05:6808:655:b0:2ec:ce86:303c with SMTP id
+ z21-20020a056808065500b002ecce86303cmr2707860oih.217.1647971274356; Tue, 22
+ Mar 2022 10:47:54 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+References: <20220321225523.724509-1-gitter.spiros@gmail.com> <220322.86r16unzer.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220322.86r16unzer.gmgdl@evledraar.gmail.com>
+From:   Elia Pinto <gitter.spiros@gmail.com>
+Date:   Tue, 22 Mar 2022 18:47:47 +0100
+Message-ID: <CA+EOSBmKue=z98NnCPENN3uc6NzXXJ7kBBJB8cJ0k_WRozX1sg@mail.gmail.com>
+Subject: Re: [PATCH 00/41] use the stdlib EXIT_SUCCESS or EXIT_FAILURE exit status
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Il giorno mar 22 mar 2022 alle ore 09:51 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarm=
+ason
+<avarab@gmail.com> ha scritto:
+>
 
-The 'filter' capability was added in 105c6f14a (bundle: parse filter
-capability, 2022-03-09), but was added in a strange place in the 'git
-bundle verify' output.
+First of all, thanks for the review.
 
-The tests for this show output like the following:
+>
+> On Mon, Mar 21 2022, Elia Pinto wrote:
+>
+> > EXIT_SUCCESS or EXIT_FAILURE are already used in some functions in git =
+but
+> > not everywhere. Also in branch.c there is a returns exit(-1), ie 255, w=
+hen
+> > exit(1) might be more appropriate.
+>
+> On existing use: That's quite the overstatement :)
+>
+It was not a quantitative assessment. I just wanted to point out that
+the macros stdlib.h EXIT_SUCCESS and EXIT_FAILURE already exist in the
+git code.
+> We use EXIT_{SUCCESS,FAILURE} only in:
+>
+>  * contrib/credential/ code.
+>  * sh-i18n--envsubst.c
+>  * EXIT_FAILURE in one stray test helper
+>
+> So out of "real git" that users see only sh-i18n--envsubst.c will ever
+> run by default, and the reason it uses these is because it's as-is
+> imported GNU code.
+>
+> I'd think if anything we'd be better off doing this the other way
+> around, and always hardcoding either 0 or 1.
+>
+> I'm not aware of any platform where EXIT_SUCCESS is non-zero, although
+> that's probably left open by the C standard.
+No. It is defined be 0
+https://pubs.opengroup.org/onlinepubs/009604599/basedefs/stdlib.h.html
+>
+> For EXIT_FAILURE there *are* platforms where it's non-1, but I don't
+> know if we're ported to any of those, e.g. on z/OS it's[1]:
+>
+>     The argument status can have a value from 0 to 255 inclusive or be
+>     one of the macros EXIT_SUCCESS or EXIT_FAILURE. The value of
+>     EXIT_SUCCESS is defined in stdlib.h as 0; the value of EXIT_FAILURE
+>     is 8.
+>
+EXIT_FAILURE it is not defined what precise value it has by the standard C.
+However linux, aix, solaris and windows define it as "1". Only Z / OS
+calls it 8 but I'm sure git  doesn't care about it.
+Z/OS
 
-	The bundle contains these 2 refs:
-	<COMMIT1> <REF1>
-	<COMMIT2> <REF2>
-	The bundle uses this filter: blob:none
-	The bundle records a complete history.
+https://www.ibm.com/docs/en/zos/2.1.0?topic=3Dfunctions-exit-end-program
 
-This looks very odd if we have a thin bundle that contains boundary
-commits instead of a complete history:
 
-	The bundle contains these 2 refs:
-	<COMMIT1> <REF1>
-	<COMMIT2> <REF2>
-	The bundle uses this filter: blob:none
-	The bundle requires these 2 refs:
-	<COMMIT3>
-	<COMMIT4>
+SOLARIS
+https://gitlab.anu.edu.au/mu/x-lcc/blob/24be447de544ed06d490ca0b2304a653136=
+2156a/include/sparc/solaris/stdlib.h
 
-This separation between tip refs and boundary refs is unfortunate. Move
-the filter capability output to the end of the output. Update the
-documentation to match.
+AIX
+https://www.rpi.edu/dept/acm/packages/egcs/1.1.2/rs_aix42/lib/gcc-lib/power=
+pc-ibm-aix4.3.1.0/egcs-2.91.66/include/stdlib.h
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- Documentation/git-bundle.txt | 10 +++++-----
- bundle.c                     |  9 ++++-----
- t/t6020-bundle-misc.sh       |  2 +-
- 3 files changed, 10 insertions(+), 11 deletions(-)
+WINDOWS
+https://docs.microsoft.com/it-it/cpp/c-runtime-library/exit-success-exit-fa=
+ilure?view=3Dmsvc-170
+> Now, I don't know z/OS at all, but e.g. if a shellscripts calls a C
+> program there would $? be 1 if we hardcode 1, but 8 on EXIT_FAILURE?
+See the previous answer
+>
+> We also document for some of these programs that on failure we'll return
+> 1 specifically, not whatever EXIT_FAILURE is.
+>
+See the previous answer.
+EXIT_FAILURE is always 1 on all popular platforms that git has been
+ported to. So you don't even have to change the documentation.
+> These patches also miss cases where we'll set 0 or 1 in a variable, and
+> then exit(ret). See e.g. builtin/rm.c. You just changed the hardcoded
+> exit(1), but missed where we'll return a hardcoded 0 or 1 via a
+> variable.
+My patch was just meant to introduce some standardization into git
+using the posix/c standard. No more, No less. As other major projects
+do, I didn't invent anything.
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index ac4c4352aae..7685b570455 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -75,11 +75,11 @@ verify <file>::
- 	cleanly to the current repository.  This includes checks on the
- 	bundle format itself as well as checking that the prerequisite
- 	commits exist and are fully linked in the current repository.
--	Information about additional capabilities, such as "object filter",
--	is printed. See "Capabilities" in link:technical/bundle-format.html
--	for more information. Finally, 'git bundle' prints a list of
--	missing commits, if any. The exit code is zero for success, but
--	will be nonzero if the bundle file is invalid.
-+	Then, 'git bundle' prints a list of missing commits, if any.
-+	Finally, information about additional capabilities, such as "object
-+	filter", is printed. See "Capabilities" in link:technical/bundle-format.html
-+	for more information. The exit code is zero for success, but will
-+	be nonzero if the bundle file is invalid.
- 
- list-heads <file>::
- 	Lists the references defined in the bundle.  If followed by a
-diff --git a/bundle.c b/bundle.c
-index e359370cfcd..276b55f8ce2 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -267,11 +267,6 @@ int verify_bundle(struct repository *r,
- 			  (uintmax_t)r->nr);
- 		list_refs(r, 0, NULL);
- 
--		if (header->filter.choice) {
--			printf_ln("The bundle uses this filter: %s",
--				  list_objects_filter_spec(&header->filter));
--		}
--
- 		r = &header->prerequisites;
- 		if (!r->nr) {
- 			printf_ln(_("The bundle records a complete history."));
-@@ -282,6 +277,10 @@ int verify_bundle(struct repository *r,
- 				  (uintmax_t)r->nr);
- 			list_refs(r, 0, NULL);
- 		}
-+
-+		if (header->filter.choice)
-+			printf_ln("The bundle uses this filter: %s",
-+				  list_objects_filter_spec(&header->filter));
- 	}
- 	return ret;
- }
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index ed95d195427..c4ab1367afc 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -510,8 +510,8 @@ do
- 		<TAG-2> refs/tags/v2
- 		<TAG-3> refs/tags/v3
- 		<COMMIT-P> HEAD
--		The bundle uses this filter: $filter
- 		The bundle records a complete history.
-+		The bundle uses this filter: $filter
- 		EOF
- 		test_cmp expect actual &&
- 
--- 
-gitgitgadget
+SYSTEMD COCCI
+https://github.com/systemd/systemd/blob/main/coccinelle/exit-0.cocci
 
+Lxc cocci
+https://github.com/lxc/lxc/blob/master/coccinelle/exit.cocci
+
+>
+> And then there's changing exit(-1) to exit(1). That's existing
+> non-portable use that we really should fix. But I know that you missed a
+> lot there, since I instrumented git.c recently to intercept those for
+> testing (it came up in some thread). We have a lot more than you spotted
+> (and some will error if mapped to 1 IIRC). Most of those also want to
+> exit 128, not 1.
+In fact, these exit codes are more like shell-specific return codes to
+indicate the "type" of the error.
+I repeat that it was not the purpose of this patch to fix any problems
+that may exist with exit codes. Certainly not using coccinelle. But I
+agree it's a job to do. But not in this patch.
+>
+> Anyway:
+>
+> All in all I think we should just double down on the hardcoding instead,
+> but we should fix the exit(-1) cases, and that's best done with some new
+> GIT_TEST_ASSERT_NO_UNPORTABLE_EXIT testing or whatever.
+>
+> A lot of these codepaths are also paths we should fix, but not because
+> we exit(N) with a hardcoded N, but because we invoke exit(N) there at
+> all. See 338abb0f045 (builtins + test helpers: use return instead of
+> exit() in cmd_*, 2021-06-08) for how some of those should be changed.
+>
+> I think we'd be much better off with something like this in
+> git-compat-util.h:
+>
+>     #ifndef BYPASS_EXIT_SANITY
+>     #ifdef EXIT_SUCCESS
+>     #if EXIT_SUCCESS !=3D 0
+>     #error "git assumes EXIT_SUCCESS is 0, not whatever yours is, please =
+report this. Build with -DBYPASS_EXIT_SANITY to continue building at your o=
+wn risk"
+>     #endif
+>     #endif
+>     #ifdef EXIT_FAILURE
+>     #if EXIT_FAILURE !=3D 0
+>     #error "git assumes EXIT_FAILRE is 1, not whatever yours is, please r=
+eport this. Build with -DBYPASS_EXIT_SANITY to continue building at your ow=
+n risk"
+>     #endif
+>     #endif
+>     #endif
+>
+> Or *if* we're going to pursue this a twist on that (I really don't think
+> this is worthwhile, just saying) where we'd re-define EXIT_SUCCESS and
+> EXIT_FAILURE to some sentinel values like 123 and 124.
+>
+> Then run our entire test suite and roundtrip-assert that at least we
+> ourselves handled that properly. I.e. whenever run_command() runs and we
+> check for success we check 123, not 0, and a "normal failure" is 124,
+> not 1.
+>
+> I know we'll get a *lot of* failures if we do that, so I'm not arguing
+> that we *should*, just that it's rather easy for you to test that and
+> see the resulting test suite dumpster fire.
+>
+> So I don't see how a *partial conversion* is really getting us anywhere,
+> even if we take the pedantic C portability view of things.
+>
+> All we'd have accomplished is a false sense of portability on most OS's,
+> as these will be 0 and 1 anyway. And on any stray odd OS's like z/OS
+> we'll just need to deal with e.g. both 1 and 8 for EXIT_FAILURE, since
+> we *will* miss a lot of cases.
+Z / OS is a false problem. git on z / os runs in a linux partition
+https://medium.com/theropod/git-on-z-os-f9234cd2a89a#:~:text=3DOn%20z%2FOS%=
+2C%20Git%20plays,added%20feature
+% 20of% 20codepage% 20translation.
+However, calling pedantic a solution widely used in other projects and
+provided by standards (EXIT_SUCCESS and EXIT_FAILURE are reported by
+the c/posix standard for generic success / error codes) does not seem
+to me an appropriate term. But YMMV .
+
+Thanks
+>
+> 1. https://www.ibm.com/docs/en/zos/2.1.0?topic=3Dfunctions-exit-end-progr=
+am
