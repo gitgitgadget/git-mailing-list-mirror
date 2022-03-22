@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCE7CC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFED3C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240401AbiCVSZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:25:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40984 "EHLO
+        id S240312AbiCVSZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240348AbiCVSZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:25:19 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA45390CC8
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:38 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id d7so24639141wrb.7
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:38 -0700 (PDT)
+        with ESMTP id S240311AbiCVSY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:24:59 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F88F15FEC
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:29 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id h23so24021632wrb.8
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ej7vjoBKufi5X7KtDia+Ocl0y26c4e3iM4lYXqh6QBQ=;
-        b=L6t+uIHS4oh2vUxOlTRAJ6B6oPAJyoOhEykrUguDAduXQq0ramvHeYP5NOJ3EX+zKZ
-         XV5RBhiA2YZCc4jAvGK+QECs9GYQvzaJTIZTxyCWtW+LD3yXEmVX85WndSasKb0a6qCy
-         WVJhY6HoOwtVGJit/EWyXvhrdUTBd2O7i8oeHJ9SGtXBUOyMbH6NjdcU5lbA/P4FBXm+
-         7lox50YVaVBaUudGZehxvaRH8zKVpHtvQ//Li5HouLiaTq3NJXTz0G7fxM62FqFzK9nF
-         IbqB7N0fqsoTT2cASBhf0ItIjdUbXi2u+jB0pIk/qny2c8iaSz+2S1Tnwea0gyEMJm4d
-         z3Fg==
+        bh=KKDUtqfcz4RAKt3TKC0Ge43bGODedopwH2p3XKXOALk=;
+        b=drdUne9vXfWX3YoU+6pCEAj2TYWwqZYPHGbc4I/QN8IPD3cyh2MAD+tHSanaLdMxYV
+         OPc9st1XBeJBJksVqAGhwgHmZLPFykVO/cHdnI/KWK+Y2muJCluCSgf3eSA0msjzx3K9
+         ne7R8ZOQSJxidH7L6v5JRRnvBKhTQzdTTZ3uGXX5q/gLgJMyUWwQLMigNR69LHVTTor1
+         cYVh32mlb941XvOrKO7WdA9g64NPw+Absu/7dyilElqOwIJuvBn49mMzFa4VVxbFVRxt
+         QhGI1vK3ho42+3s8nepLDTODb8oSAy6X+9P0w+uUdgG2O+7qUc61Vd5eCPcxnYJrxKwW
+         9cEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ej7vjoBKufi5X7KtDia+Ocl0y26c4e3iM4lYXqh6QBQ=;
-        b=g4yP+YjhGthud1rUKvFzHjE8qkUwqojvBTKVKh8Xgb9mKKaKJ+f541zXzManhqVJB8
-         Eod3sclCYRv7KEeYZEjHcS+LHTg0SXTn0y0a1F4jZFvxG63V6wv93oXqUsfp0MQQUH/Y
-         FcxkT4wgsu/9ozkAUWBNoycJeVIGClkzfE7rQnReQQPUutmdX6YVYgP9w5AHAW4u5JeZ
-         0RLT0B/aNBHUMrf4fAiaGCmyTiwxOfus00nCxGhnFS+YTY+BEoRUfvP/ihG2peuc+cxV
-         pJjd5JMC4xWVMtINxFIbgKJULHBIRkT7OieZ2qTzYU/YW1zWPqqkeCOcj6+/8yCoP2KN
-         jvcA==
-X-Gm-Message-State: AOAM530S0d6hHf3KiaZopFUg3rJwAkpH7mVJdhpuP5yvtW7Y2gYi6/0h
-        tgBmofQLP13/ixOCa7e2x+ijSUPOqho=
-X-Google-Smtp-Source: ABdhPJzydzQnz1Fmvo38GENgZHYMADUekqpF48OZ13FdM02n7MBdccYidAkXogq2PEJFpUlCfCVxPA==
-X-Received: by 2002:a5d:5846:0:b0:204:1a79:f1ab with SMTP id i6-20020a5d5846000000b002041a79f1abmr7055805wrf.520.1647973417276;
-        Tue, 22 Mar 2022 11:23:37 -0700 (PDT)
+        bh=KKDUtqfcz4RAKt3TKC0Ge43bGODedopwH2p3XKXOALk=;
+        b=L8HhMA73ybunwzDFLrzC7uZmO5gi61eH22cJLaG5aiQLUKW+7DCsNqn4051mE8/r12
+         xZH0RzuahzVB93f3FzT6pwZvRK1yngEwUxe9dEC5YLB1tISeQmWOqVO+asbhm+xlOTXB
+         /Zm5aYcY1O8z9Y/f+AUs52ftdccQz28eL9R156mQKbGwbhpDnbZTODKbcRegqUcZ811T
+         +9rCLPf/Dz4kxR2vD9ByJVTEkCwF0Q26gHbh30awaJVt8AGwXf8XWJTViT0fT39IHFME
+         sFROO+g+NJRwNHGIukrgwovLzfLPperPOTdbk0iYd/PwgJGy2ocLsCFlRk90IEae6kFs
+         2DgQ==
+X-Gm-Message-State: AOAM5319hviKFQYUwC8fbRuatdL+0StsODRdL6Q0yil+NgWQA+ek0Mj5
+        bLPfGect1gbyxqgP/CRuYZMHwx7WvRs=
+X-Google-Smtp-Source: ABdhPJzG/eTYX76qdtuHwVUiAX7SI/d3OFh4fKJW76D22sO3PbaMmifnJe0coHfqEKXf+DSVcF/56g==
+X-Received: by 2002:adf:d4c2:0:b0:203:da50:12c5 with SMTP id w2-20020adfd4c2000000b00203da5012c5mr24026732wrk.100.1647973408155;
+        Tue, 22 Mar 2022 11:23:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u12-20020a5d6dac000000b00204119d37d0sm5931143wrs.26.2022.03.22.11.23.36
+        by smtp.gmail.com with ESMTPSA id h188-20020a1c21c5000000b0038c6c37efc3sm2374468wmh.12.2022.03.22.11.23.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:36 -0700 (PDT)
-Message-Id: <087af5dfb6315849b0079d8f6df9bc2da7682653.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:27 -0700 (PDT)
+Message-Id: <6715143724586bd53de5070c61dba30dd8fe2bf8.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:47 +0000
-Subject: [PATCH v3 14/27] fsmonitor--daemon: prepare for adding health thread
+Date:   Tue, 22 Mar 2022 18:22:43 +0000
+Subject: [PATCH v3 10/27] fsmonitor-settings: NTFS and FAT32 on MacOS are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,72 +73,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Refactor daemon thread startup to make it easier to start
-a third thread class to monitor the health of the daemon.
+On MacOS mark repos on NTFS or FAT32 volumes as incompatible.
+
+The builtin FSMonitor used Unix domain sockets on MacOS for IPC
+with clients.  These sockets are kept in the .git directory.
+Unix sockets are not supported by NTFS and FAT32, so the daemon
+cannot start up.
+
+Test for this during our compatibility checking so that client
+commands do not keep trying to start the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ compat/fsmonitor/fsm-settings-darwin.c | 20 +++++++++++++++++---
+ fsmonitor-settings.c                   |  5 +++++
+ fsmonitor-settings.h                   |  1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index f17d5ed84c8..8033916aa63 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1175,6 +1175,8 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 		 */
- 		.uds_disallow_chdir = 0
- 	};
-+	int listener_started = 0;
-+	int err = 0;
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index fdd762bf79d..efc732c0f31 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -7,7 +7,7 @@
+ #include <sys/mount.h>
  
- 	/*
- 	 * Start the IPC thread pool before the we've started the file
-@@ -1195,15 +1197,20 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	if (pthread_create(&state->listener_thread, NULL,
- 			   fsm_listen__thread_proc, state) < 0) {
- 		ipc_server_stop_async(state->ipc_server_data);
--		ipc_server_await(state->ipc_server_data);
--
--		return error(_("could not start fsmonitor listener thread"));
-+		err = error(_("could not start fsmonitor listener thread"));
-+		goto cleanup;
- 	}
-+	listener_started = 1;
+ /*
+- * Remote working directories are problematic for FSMonitor.
++ * [1] Remote working directories are problematic for FSMonitor.
+  *
+  * The underlying file system on the server machine and/or the remote
+  * mount type (NFS, SAMBA, etc.) dictates whether notification events
+@@ -40,8 +40,16 @@
+  *
+  * So (for now at least), mark remote working directories as
+  * incompatible.
++ *
++ *
++ * [2] FAT32 and NTFS working directories are problematic too.
++ *
++ * The builtin FSMonitor uses a Unix domain socket in the .git
++ * directory for IPC.  These Windows drive formats do not support
++ * Unix domain sockets, so mark them as incompatible for the daemon.
++ *
+  */
+-static enum fsmonitor_reason check_remote(struct repository *r)
++static enum fsmonitor_reason check_volume(struct repository *r)
+ {
+ 	struct statfs fs;
  
- 	/*
- 	 * The daemon is now fully functional in background threads.
-+	 * Our primary thread should now just wait while the threads
-+	 * do all the work.
-+	 */
-+cleanup:
-+	/*
- 	 * Wait for the IPC thread pool to shutdown (whether by client
--	 * request or from filesystem activity).
-+	 * request, from filesystem activity, or an error).
- 	 */
- 	ipc_server_await(state->ipc_server_data);
+@@ -60,6 +68,12 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+ 	if (!(fs.f_flags & MNT_LOCAL))
+ 		return FSMONITOR_REASON_REMOTE;
  
-@@ -1212,10 +1219,16 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	 * event from the IPC thread pool, but it doesn't hurt to tell
- 	 * it again.  And wait for it to shutdown.
- 	 */
--	fsm_listen__stop_async(state);
--	pthread_join(state->listener_thread, NULL);
-+	if (listener_started) {
-+		fsm_listen__stop_async(state);
-+		pthread_join(state->listener_thread, NULL);
-+	}
- 
--	return state->error_code;
-+	if (err)
-+		return err;
-+	if (state->error_code)
-+		return state->error_code;
-+	return 0;
++	if (!strcmp(fs.f_fstypename, "msdos")) /* aka FAT32 */
++		return FSMONITOR_REASON_NOSOCKETS;
++
++	if (!strcmp(fs.f_fstypename, "ntfs"))
++		return FSMONITOR_REASON_NOSOCKETS;
++
+ 	return FSMONITOR_REASON_OK;
  }
  
- static int fsmonitor_run_daemon(void)
+@@ -67,7 +81,7 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
+ 	enum fsmonitor_reason reason;
+ 
+-	reason = check_remote(r);
++	reason = check_volume(r);
+ 	if (reason != FSMONITOR_REASON_OK)
+ 		return reason;
+ 
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index 0a1811ff004..60d5eaee497 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -194,6 +194,11 @@ int fsm_settings__error_if_incompatible(struct repository *r)
+ 		error(_("virtual repository '%s' is incompatible with fsmonitor"),
+ 		      r->worktree);
+ 		return 1;
++
++	case FSMONITOR_REASON_NOSOCKETS:
++		error(_("repository '%s' is incompatible with fsmonitor due to lack of Unix sockets"),
++		      r->worktree);
++		return 1;
+ 	}
+ 
+ 	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index 34391b583b3..23d5676c8c8 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -19,6 +19,7 @@ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_ERROR, /* FS error probing for compatibility */
+ 	FSMONITOR_REASON_REMOTE,
+ 	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
++	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+ };
+ 
+ void fsm_settings__set_ipc(struct repository *r);
 -- 
 gitgitgadget
 
