@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9734EC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D000DC433FE
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240353AbiCVS0C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:26:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S238421AbiCVS0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237387AbiCVSZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:25:26 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3B715FEC
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:58 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id j18so15004410wrd.6
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:58 -0700 (PDT)
+        with ESMTP id S240345AbiCVSZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:25:29 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 845C58D6B9
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:00 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id h4so6675581wrc.13
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=c9U8uQ8YcJe+AKnqA/7k7C5uEO6mNcd8TsCgZ3bkj2s=;
-        b=CzsvLWT7fRvUNnqhjMcujjBdxX675DlRPzOM+sUNlp6kYO5Mb1Wie0R9e3Z0gDebLa
-         gya5r/dAPM0e7u4NTX4zitO5AlPAGEsNOF07v847b9N37jLmtwAIH8V+KN4ckgEuf5sC
-         g+5H66wYHpAwKVoaLjtWNtFBk7jrHSEUlZjrZqxcXxBkCQJVgTsuBmwIWHlMylGlW9CG
-         SEpctWPI7qgj2qXCwfstU5tRPVP3n9G7npmwTPHTX0EMmEpk4WFPco0/QEqxOy7F5QpG
-         jAnrg7NxHTAYyQ7dwVF77I4kAWFgOCXmc215KMxX50jh6WO9C9baKvbkooE5UNOkwd5O
-         6JNA==
+        bh=3IAiMHgRwhfbvkUdsr17fwV8M0Qk+EnCGfvQEEa+RAk=;
+        b=ZdoPxpf6wKKPp80BSk0zp2U0ZWPCaxghwP7iawLoK5zFOkKJIcMcuyKRSgnXCPQ8/g
+         ZCAbULUcXvwbanhh++xoOdU8yzwTO8ZuIYPAWhQxFueZydIW2Xf2pj5HBgKYyQsmhk7v
+         ObUXw+JIXK9qBPI+ApkxlbY/5W4+eJEwvmge6seFAsHZlnmz2SRa3f/Ep/sS97Nz8xmW
+         qg8oioFPTClhPr+BjRrhoredLAQx4rsw38CGsLy+0r1qX64k30wih02cUbLy8QJjtmBF
+         X8f6LlP1zCQ2jmTh5iZ760stepiuWGwpSPzJZylxhIhyPZDMX6TZTcqfMps1G4fL1uIZ
+         1+nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c9U8uQ8YcJe+AKnqA/7k7C5uEO6mNcd8TsCgZ3bkj2s=;
-        b=bcrvYO+dES4I/GtYH47+M4vfFP9Q0rorrpS4dUDgjEiboRiQ/JJMojrvAnWip2T+Tv
-         t4K/v43F+0BBAzMKeLv6zdLkyM6Fn4SVgH4ogehQwvDMB0acYD6MIY+4PuJcLtlV2VfJ
-         fdQlclLjK0ygnSdcsbZ4PyZD9t045JmnHiB+bfoGaM5q6rXISb33YmrY4r29Y4tsU9Y5
-         rPNuiNcAhc69npag/7Lmoed5pLFcEcvF9+JtHkY4YkPMl2bqRgViHb9ijS4RqaNyUMKH
-         Z5NPCmyqntGHiM3VgwccZqd9+WuYeRN6SYxkqMz88so+mbi8Bu2GmKomwGELWxTDn198
-         OpNQ==
-X-Gm-Message-State: AOAM530sBPusxg+UjwdIbUkhnDV1Dbch46KNKpi8qbeMB+QQAqvxmXeQ
-        RM8JbvybYhDaZczD5TRbLGpfB/ICvSg=
-X-Google-Smtp-Source: ABdhPJxeexjXLhSr8Yg8Qf+Vfa/SDfmhvAApcnimYI4CfbVCJGOiUSFAeuUcqTm7+2FXGL0DSD4cWw==
-X-Received: by 2002:a05:6000:178e:b0:205:7acf:8fb1 with SMTP id e14-20020a056000178e00b002057acf8fb1mr3465031wrg.499.1647973436499;
-        Tue, 22 Mar 2022 11:23:56 -0700 (PDT)
+        bh=3IAiMHgRwhfbvkUdsr17fwV8M0Qk+EnCGfvQEEa+RAk=;
+        b=avd8Ju/HyIiMD7eJyAw2l/uwQ2otosbNW7MQNh/aRYLqpJf6R0yGjkyf2woCrYKqke
+         kTSJqigZOP/lMk7okpDi7hOMBWRP4H8Ha5ncqav/cnczUXKkv5uDaEaSpfqmaY946Zd/
+         rO/s1rmc6jdcHroG3fLmYIUhfG46niStB9Ml5akPefvbpbHp/3cghqGqbE+rn20zrRh0
+         FOVjcQ4Iftm8KPaanG8sEZaVsjHUzahNUx7NjqrTO7Afe8DskiTflV4wwfHH9KT04KWO
+         vX4i6wNBu7SY8FSzSFsxPJz+IFfoa+iYv+GMftXKhBfgcxkSGdejQZiA/pIDQ47McQ6a
+         XW1Q==
+X-Gm-Message-State: AOAM531PYWN/+rY0fI1MeN/TcvgcCTC71BGQUUmCpjZDFOOzqJa7InoI
+        mDDKzoS6xndpfQi7mIqh/9S4/Ee+cxA=
+X-Google-Smtp-Source: ABdhPJysj0XQKmYXpiEButBK/O/UJNC0+ljwLPRl0tweKeQ1CDO7iWq1Ms8ac8AAcamAFaMdY48VXQ==
+X-Received: by 2002:adf:a58a:0:b0:1ef:603f:fb58 with SMTP id g10-20020adfa58a000000b001ef603ffb58mr23301575wrc.472.1647973438711;
+        Tue, 22 Mar 2022 11:23:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g5-20020a5d64e5000000b00203914f5313sm16277535wri.114.2022.03.22.11.23.54
+        by smtp.gmail.com with ESMTPSA id p19-20020a05600c359300b0038c7d1086a7sm2374547wmq.1.2022.03.22.11.23.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:55 -0700 (PDT)
-Message-Id: <d8218d197adb18d2034d21a0881cf05442c32680.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:57 -0700 (PDT)
+Message-Id: <79da369dcce69f14dab19116e23aaec36ca4d92a.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:54 +0000
-Subject: [PATCH v3 21/27] t7527: FSMonitor tests for directory moves
+Date:   Tue, 22 Mar 2022 18:22:55 +0000
+Subject: [PATCH v3 22/27] t/perf/p7527: add perf test for builtin FSMonitor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,82 +72,275 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create unit tests to move a directory.  Verify that `git status`
-gives the same result with and without FSMonitor enabled.
-
-NEEDSWORK: This test exposes a bug in the untracked-cache on
-Windows when FSMonitor is disabled.  These are commented out
-for the moment.
-
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 39 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ t/perf/p7527-builtin-fsmonitor.sh | 257 ++++++++++++++++++++++++++++++
+ 1 file changed, 257 insertions(+)
+ create mode 100755 t/perf/p7527-builtin-fsmonitor.sh
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 429029fcadd..bc66d8285a3 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -281,6 +281,16 @@ test_expect_success 'setup' '
- 	trace*
- 	EOF
- 
-+	mkdir -p T1/T2/T3/T4 &&
-+	echo 1 >T1/F1 &&
-+	echo 1 >T1/T2/F1 &&
-+	echo 1 >T1/T2/T3/F1 &&
-+	echo 1 >T1/T2/T3/T4/F1 &&
-+	echo 2 >T1/F2 &&
-+	echo 2 >T1/T2/F2 &&
-+	echo 2 >T1/T2/T3/F2 &&
-+	echo 2 >T1/T2/T3/T4/F2 &&
+diff --git a/t/perf/p7527-builtin-fsmonitor.sh b/t/perf/p7527-builtin-fsmonitor.sh
+new file mode 100755
+index 00000000000..9338b9ea008
+--- /dev/null
++++ b/t/perf/p7527-builtin-fsmonitor.sh
+@@ -0,0 +1,257 @@
++#!/bin/sh
 +
- 	git -c core.fsmonitor=false add . &&
- 	test_tick &&
- 	git -c core.fsmonitor=false commit -m initial &&
-@@ -363,6 +373,19 @@ directory_to_file () {
- 	echo 1 >dir1
- }
- 
-+move_directory_contents_deeper() {
-+	mkdir T1/_new_ &&
-+	mv T1/[A-Z]* T1/_new_
++test_description="Perf test for the builtin FSMonitor"
++
++. ./perf-lib.sh
++
++if ! test_have_prereq FSMONITOR_DAEMON
++then
++	skip_all="fsmonitor--daemon is not supported on this platform"
++	test_done
++fi
++
++test_lazy_prereq UNTRACKED_CACHE '
++	{ git update-index --test-untracked-cache; ret=$?; } &&
++	test $ret -ne 1
++'
++
++# Lie to perf-lib and ask for a new empty repo and avoid
++# the complaints about GIT_PERF_REPO not being big enough
++# the perf hit when GIT_PERF_LARGE_REPO is copied into
++# the trash directory.
++#
++# NEEDSWORK: It would be nice if perf-lib had an option to
++# "borrow" an existing large repo (especially for gigantic
++# monorepos) and use it in-place.  For now, fake it here.
++#
++test_perf_fresh_repo
++
++
++# Use a generated synthetic monorepo.  If it doesn't exist, we will
++# generate it.  If it does exist, we will put it in a known state
++# before we start our timings.
++#
++PARAM_D=5
++PARAM_W=10
++PARAM_F=9
++
++PARAMS="$PARAM_D"."$PARAM_W"."$PARAM_F"
++
++BALLAST_BR=p0006-ballast
++export BALLAST_BR
++
++TMP_BR=tmp_br
++export TMP_BR
++
++REPO=../repos/gen-many-files-"$PARAMS".git
++export REPO
++
++if ! test -d $REPO
++then
++	(cd ../repos; ./many-files.sh -d $PARAM_D -w $PARAM_W -f $PARAM_F)
++fi
++
++
++enable_uc () {
++	git -C $REPO config core.untrackedcache true
++	git -C $REPO update-index --untracked-cache
++	git -C $REPO status >/dev/null 2>&1
 +}
 +
-+move_directory_up() {
-+	mv T1/T2/T3 T1
++disable_uc () {
++	git -C $REPO config core.untrackedcache false
++	git -C $REPO update-index --no-untracked-cache
++	git -C $REPO status >/dev/null 2>&1
 +}
 +
-+move_directory() {
-+	mv T1/T2/T3 T1/T2/NewT3
++start_fsm () {
++	git -C $REPO fsmonitor--daemon start
++	git -C $REPO fsmonitor--daemon status
++	git -C $REPO config core.fsmonitor true
++	git -C $REPO update-index --fsmonitor
++	git -C $REPO status >/dev/null 2>&1
 +}
 +
- # The next few test cases confirm that our fsmonitor daemon sees each type
- # of OS filesystem notification that we care about.  At this layer we just
- # ensure we are getting the OS notifications and do not try to confirm what
-@@ -645,6 +668,22 @@ do
- 		matrix_try $uc_val $fsm_val file_to_directory
- 		matrix_try $uc_val $fsm_val directory_to_file
- 
-+		# NEEDSWORK: On Windows the untracked-cache is buggy when FSMonitor
-+		# is DISABLED.  Turn off a few test that cause it problems until
-+		# we can debug it.
-+		#
-+		try_moves="true"
-+		test_have_prereq UNTRACKED_CACHE,WINDOWS && \
-+			test $uc_val = true && \
-+			test $fsm_val = false && \
-+			try_moves="false"
-+		if test $try_moves = true
-+		then
-+			matrix_try $uc_val $fsm_val move_directory_contents_deeper
-+			matrix_try $uc_val $fsm_val move_directory_up
-+			matrix_try $uc_val $fsm_val move_directory
-+		fi
++stop_fsm () {
++	git -C $REPO config --unset core.fsmonitor
++	git -C $REPO update-index --no-fsmonitor
++	test_might_fail git -C $REPO fsmonitor--daemon stop 2>/dev/null
++	git -C $REPO status >/dev/null 2>&1
++}
 +
- 		if test $fsm_val = true
- 		then
- 			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
++
++# Ensure that FSMonitor is turned off on the borrowed repo.
++#
++test_expect_success "Setup borrowed repo (fsm+uc)" "
++	stop_fsm &&
++	disable_uc
++"
++
++# Also ensure that it starts in a known state.
++#
++# Because we assume that $GIT_PERF_REPEAT_COUNT > 1, we are not going to time
++# the ballast checkout, since only the first invocation does any work and the
++# subsequent ones just print "already on branch" and quit, so the reported
++# time is not useful.
++#
++# Create a temp branch and do all work relative to it so that we don't
++# accidentially alter the real ballast branch.
++#
++test_expect_success "Setup borrowed repo (temp ballast branch)" "
++	test_might_fail git -C $REPO checkout $BALLAST_BR &&
++	test_might_fail git -C $REPO reset --hard &&
++	git -C $REPO clean -d -f &&
++	test_might_fail git -C $REPO branch -D $TMP_BR &&
++	git -C $REPO branch $TMP_BR $BALLAST_BR &&
++	git -C $REPO checkout $TMP_BR
++"
++
++
++echo Data >data.txt
++
++# NEEDSWORK: We assume that $GIT_PERF_REPEAT_COUNT > 1.  With
++# FSMonitor enabled, we can get a skewed view of status times, since
++# the index MAY (or may not) be updated after the first invocation
++# which will update the FSMonitor Token, so the subsequent invocations
++# may get a smaller response from the daemon.
++#
++do_status () {
++	msg=$1
++
++	test_perf "$msg" "
++		git -C $REPO status >/dev/null 2>&1
++	"
++}
++
++do_matrix () {
++	uc=$1
++	fsm=$2
++
++	t="[uc $uc][fsm $fsm]"
++	MATRIX_BR="$TMP_BR-$uc-$fsm"
++
++	test_expect_success "$t Setup matrix branch" "
++		git -C $REPO clean -d -f &&
++		git -C $REPO checkout $TMP_BR &&
++		test_might_fail git -C $REPO branch -D $MATRIX_BR &&
++		git -C $REPO branch $MATRIX_BR $TMP_BR &&
++		git -C $REPO checkout $MATRIX_BR
++	"
++
++	if test $uc = true
++	then
++		enable_uc
++	else
++		disable_uc
++	fi
++
++	if test $fsm = true
++	then
++		start_fsm
++	else
++		stop_fsm
++	fi
++
++	do_status "$t status after checkout"
++
++	# Modify many files in the matrix branch.
++	# Stage them.
++	# Commit them.
++	# Rollback.
++	#
++	test_expect_success "$t modify tracked files" "
++		find $REPO -name file1 -exec cp data.txt {} \\;
++	"
++
++	do_status "$t status after big change"
++
++	# Don't bother timing the "add" because _REPEAT_COUNT
++	# issue described above.
++	#
++	test_expect_success "$t add all" "
++		git -C $REPO add -A
++	"
++
++	do_status "$t status after add all"
++
++	test_expect_success "$t add dot" "
++		git -C $REPO add .
++	"
++
++	do_status "$t status after add dot"
++
++	test_expect_success "$t commit staged" "
++		git -C $REPO commit -a -m data
++	"
++
++	do_status "$t status after commit"
++
++	test_expect_success "$t reset HEAD~1 hard" "
++		git -C $REPO reset --hard HEAD~1 >/dev/null 2>&1
++	"
++
++	do_status "$t status after reset hard"
++
++	# Create some untracked files.
++	#
++	test_expect_success "$t create untracked files" "
++		cp -R $REPO/ballast/dir1 $REPO/ballast/xxx1
++	"
++
++	do_status "$t status after create untracked files"
++
++	# Remove the new untracked files.
++	#
++	test_expect_success "$t clean -df" "
++		git -C $REPO clean -d -f
++	"
++
++	do_status "$t status after clean"
++
++	if test $fsm = true
++	then
++		stop_fsm
++	fi
++}
++
++# Begin testing each case in the matrix that we care about.
++#
++uc_values="false"
++test_have_prereq UNTRACKED_CACHE && uc_values="false true"
++
++fsm_values="false true"
++
++for uc_val in $uc_values
++do
++	for fsm_val in $fsm_values
++	do
++		do_matrix $uc_val $fsm_val
++	done
++done
++
++cleanup () {
++	uc=$1
++	fsm=$2
++
++	MATRIX_BR="$TMP_BR-$uc-$fsm"
++
++	test_might_fail git -C $REPO branch -D $MATRIX_BR
++}
++
++
++# We're borrowing this repo.  We should leave it in a clean state.
++#
++test_expect_success "Cleanup temp and matrix branches" "
++	git -C $REPO clean -d -f &&
++	test_might_fail git -C $REPO checkout $BALLAST_BR &&
++	test_might_fail git -C $REPO branch -D $TMP_BR &&
++	for uc_val in $uc_values
++	do
++		for fsm_val in $fsm_values
++		do
++			cleanup $uc_val $fsm_val
++		done
++	done
++"
++
++test_done
 -- 
 gitgitgadget
 
