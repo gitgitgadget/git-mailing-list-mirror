@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6164BC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE3FC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240275AbiCVSY4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38702 "EHLO
+        id S240286AbiCVSY5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:24:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240260AbiCVSYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:24:40 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D1CBFA
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:11 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id m30so14799631wrb.1
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:11 -0700 (PDT)
+        with ESMTP id S240282AbiCVSYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:24:55 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B411F623
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:14 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so3810022wme.5
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sCXgYeR36GUqmZmNkmliiej5zTY6qgDP8cvb8xuW+qw=;
-        b=Kg8E0aAyULo0LgPZeaKvqpmuo1dJlqCpvv0gN3sRSmI2zbjHg8cMJ6BE2ow8KQBQiC
-         LjxpJLoka7m2A1FpG7uDUgjLkl+Cyjc6u/DtWyes5ObmN7Y/BQ0WnNBsE+/scEYK2JGI
-         OWuPhRi8TwpwtHlnM1ZntwCWCnaDrx3Fm6z8jPPRnQe1PEYhQj2i08hhCHbRKdmfrjm/
-         nB0hJHRooPYQCljkCz3zezlfq+K1F+EyxDT5c5kXMH6DyVjZQb8YAcaJqfRVVr0F02cx
-         CA3TLYT1IBOUa24S0d0akQdWTF7dURzqIg4F2VdOH9JTs0QBXFb71f+b7OUSaEe1ZKgs
-         YY+w==
+        bh=8V1FoXCb86xqZ2XOaLWrGr4avTXqor6TX1WNeRZ9avw=;
+        b=J42ZzPVvrZZyqS7Bunm/ZXZula4c8FXnn50t4fnm+4IYEnCZpO3haeZSGpzBndt3i/
+         xoWmVNcyEBZMkIaOQCnOlaGJS3TPQjfKh2D22xYkQn9uEUjK3DMaSmfGa8k7hLMjlNnm
+         CoOnMPxlGp+KrxUygs8TC60JCrKZuvFOLNkDgvv9vt5NMVRaAN78DTavyON7DSDJCEqM
+         kI1eAtxphCzVqA6Os7yt38HTSXYT49LeHscQK5i7bOzThK+RSH+BWyMIV6b1+/XDKYmb
+         9BOc62NRHUEKSEqJ++cPn00QJVs0VfyUv4zLvcdv4h8GomX2rqZN0nUrXb+ECYzr2BW1
+         m1zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sCXgYeR36GUqmZmNkmliiej5zTY6qgDP8cvb8xuW+qw=;
-        b=5753yPhu4/OGKPb/Sz1cmTq/5xGQxG55YrQn3kC33pSjZJBGQvjGWLC3eWyJ7Sg0g7
-         C6GhclUlW0IAKN+Y4tj35gcKIyR/iToxVrUSh0BVK40NOMpu5W6pBE20xI3JwXGZUDO9
-         xNWNOddKER72BqVpY1sxikao2LWH5Vad/lqnsM8lFidyleRBAIjpIvUnTYVk+775k4it
-         npdhhBD8uosLv1kr/jzISXv3NCHt49gjNwIIUQ1dTjC7EbwctSIoOJs5Jn//8mSlO4gl
-         BuHtElaoyrisHCUSPr10XNuvzk6ZBV+1VVC2PCw35nd+jTrPpIswUI3wqhmp4FSwlY23
-         EkFg==
-X-Gm-Message-State: AOAM5310m6HjlToeThJv5AkVi4/VbfIkr0Vez57X3+pcj4NgZt/79tEt
-        iTiGJjB4tBBWoPmXHn3GYFtjYoVuq5E=
-X-Google-Smtp-Source: ABdhPJxSVI0SRUMG2oDxmQBfe787q5GcNGjk+knqmYvdtHQq9E9ke+F0d9pUoRh9pBK6yAUdLZ/b1Q==
-X-Received: by 2002:adf:8148:0:b0:203:f970:301c with SMTP id 66-20020adf8148000000b00203f970301cmr17517215wrm.508.1647973389872;
-        Tue, 22 Mar 2022 11:23:09 -0700 (PDT)
+        bh=8V1FoXCb86xqZ2XOaLWrGr4avTXqor6TX1WNeRZ9avw=;
+        b=KHEhEyEdFelI7wCudvC0rpqJCrdUdQvXqG02DgFwXbfsW+t7aJfTrxSIzRzT/48TGk
+         VzD7HEx0nyD4apI940dWjTlFX8Rx1p1lQU0QXeAhqdrpFgxpc/miir0qx3+CWV8IHY4K
+         JFUPVEMeFXtMKOKOGOp6My7yLwWQCIaSC4iXDcGuK3WtdSH5McNwacr9JYHFbpaZ/H7z
+         tPxVO0PE58dWncwS4gHsD6rYSB4LWFiPDxP4DlRn8sZtvPM/FXfhZarX5sISVjaJ4v9L
+         SvncctTClL4zhwdJiwyvyAudnGAHYyFsacKBWSyVK+nsMI1PCpsks260hF1Ueq56FU+L
+         Ydng==
+X-Gm-Message-State: AOAM530vaCRQ0CiF9fqNag832g2D3GfP62HmIku6HltwhX9W3UoNfty2
+        8OJ7MyIcj0MXhfr7j3yroeuIqmEFgLc=
+X-Google-Smtp-Source: ABdhPJxkFiYMMbnzRdXzYLLP38v2nF5myKw8mKK5YqkJPD+JPaIyAEOqqqg3HL1gabh7DB54L0i/tQ==
+X-Received: by 2002:a7b:c8d5:0:b0:38c:9eb9:129 with SMTP id f21-20020a7bc8d5000000b0038c9eb90129mr5264547wml.65.1647973392489;
+        Tue, 22 Mar 2022 11:23:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u12-20020a5d6dac000000b00204119d37d0sm5930342wrs.26.2022.03.22.11.23.06
+        by smtp.gmail.com with ESMTPSA id c24-20020a7bc018000000b0038a18068cf5sm2306801wmb.15.2022.03.22.11.23.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:07 -0700 (PDT)
-Message-Id: <11d4a17b69239bdce17a7b4d76a3491c29976c13.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:11 -0700 (PDT)
+Message-Id: <901fa32f6eacab7ba76aedbb020855c8f9718943.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:35 +0000
-Subject: [PATCH v3 02/27] t7527: test FSMonitor on repos with Unicode root
- paths
+Date:   Tue, 22 Mar 2022 18:22:36 +0000
+Subject: [PATCH v3 03/27] t/helper/fsmonitor-client: create stress test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,49 +72,170 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create some test repos with UTF8 characters in the pathname of the
-root directory and verify that the builtin FSMonitor can watch them.
+Create a stress test to hammer on the fsmonitor daemon.
+Create a client-side thread pool of n threads and have
+each of them make m requests as fast as they can.
 
-This test is mainly for Windows where we need to avoid `*A()`
-routines.
+We do not currently inspect the contents of the response.
+We're only interested in placing a heavy request load on
+the daemon.
+
+This test is useful for interactive testing and various
+experimentation.  For example, to place additional load
+on the daemon while another test is running.  We currently
+do not have a test script that actually uses this helper.
+We might add such a test in the future.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ t/helper/test-fsmonitor-client.c | 106 +++++++++++++++++++++++++++++++
+ 1 file changed, 106 insertions(+)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index d28a74feeb9..429029fcadd 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -656,4 +656,27 @@ do
- 	done
- done
+diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
+index 3062c8a3c2b..54a4856c48c 100644
+--- a/t/helper/test-fsmonitor-client.c
++++ b/t/helper/test-fsmonitor-client.c
+@@ -7,6 +7,8 @@
+ #include "cache.h"
+ #include "parse-options.h"
+ #include "fsmonitor-ipc.h"
++#include "thread-utils.h"
++#include "trace2.h"
  
-+# Test Unicode UTF-8 characters in the pathname of the working
-+# directory root.  Use of "*A()" routines rather than "*W()" routines
-+# on Windows can sometimes lead to odd failures.
-+#
-+u1=$(printf "u_c3_a6__\xC3\xA6")
-+u2=$(printf "u_e2_99_ab__\xE2\x99\xAB")
-+u_values="$u1 $u2"
-+for u in $u_values
-+do
-+	test_expect_success "Unicode in repo root path: $u" '
-+		test_when_finished "stop_daemon_delete_repo $u" &&
+ #ifndef HAVE_FSMONITOR_DAEMON_BACKEND
+ int cmd__fsmonitor_client(int argc, const char **argv)
+@@ -79,20 +81,121 @@ static int do_send_flush(void)
+ 	return 0;
+ }
+ 
++struct hammer_thread_data
++{
++	pthread_t pthread_id;
++	int thread_nr;
 +
-+		git init "$u" &&
-+		echo 1 >"$u"/file1 &&
-+		git -C "$u" add file1 &&
-+		git -C "$u" config core.fsmonitor true &&
++	int nr_requests;
++	const char *token;
 +
-+		start_daemon -C "$u" &&
-+		git -C "$u" status >actual &&
-+		grep "new file:   file1" actual
-+	'
-+done
++	int sum_successful;
++	int sum_errors;
++};
 +
- test_done
++static void *hammer_thread_proc(void *_hammer_thread_data)
++{
++	struct hammer_thread_data *data = _hammer_thread_data;
++	struct strbuf answer = STRBUF_INIT;
++	int k;
++	int ret;
++
++	trace2_thread_start("hammer");
++
++	for (k = 0; k < data->nr_requests; k++) {
++		strbuf_reset(&answer);
++
++		ret = fsmonitor_ipc__send_query(data->token, &answer);
++		if (ret < 0)
++			data->sum_errors++;
++		else
++			data->sum_successful++;
++	}
++
++	strbuf_release(&answer);
++	trace2_thread_exit();
++	return NULL;
++}
++
++/*
++ * Start a pool of client threads that will each send a series of
++ * commands to the daemon.
++ *
++ * The goal is to overload the daemon with a sustained series of
++ * concurrent requests.
++ */
++static int do_hammer(const char *token, int nr_threads, int nr_requests)
++{
++	struct hammer_thread_data *data = NULL;
++	int k;
++	int sum_join_errors = 0;
++	int sum_commands = 0;
++	int sum_errors = 0;
++
++	if (!token || !*token)
++		token = get_token_from_index();
++	if (nr_threads < 1)
++		nr_threads = 1;
++	if (nr_requests < 1)
++		nr_requests = 1;
++
++	CALLOC_ARRAY(data, nr_threads);
++
++	for (k = 0; k < nr_threads; k++) {
++		struct hammer_thread_data *p = &data[k];
++		p->thread_nr = k;
++		p->nr_requests = nr_requests;
++		p->token = token;
++
++		if (pthread_create(&p->pthread_id, NULL, hammer_thread_proc, p)) {
++			warning("failed to create thread[%d] skipping remainder", k);
++			nr_threads = k;
++			break;
++		}
++	}
++
++	for (k = 0; k < nr_threads; k++) {
++		struct hammer_thread_data *p = &data[k];
++
++		if (pthread_join(p->pthread_id, NULL))
++			sum_join_errors++;
++		sum_commands += p->sum_successful;
++		sum_errors += p->sum_errors;
++	}
++
++	fprintf(stderr, "HAMMER: [threads %d][requests %d] [ok %d][err %d][join %d]\n",
++		nr_threads, nr_requests, sum_commands, sum_errors, sum_join_errors);
++
++	free(data);
++
++	/*
++	 * Return an error if any of the _send_query requests failed.
++	 * We don't care about thread create/join errors.
++	 */
++	return sum_errors > 0;
++}
++
+ int cmd__fsmonitor_client(int argc, const char **argv)
+ {
+ 	const char *subcmd;
+ 	const char *token = NULL;
++	int nr_threads = 1;
++	int nr_requests = 1;
+ 
+ 	const char * const fsmonitor_client_usage[] = {
+ 		"test-tool fsmonitor-client query [<token>]",
+ 		"test-tool fsmonitor-client flush",
++		"test-tool fsmonitor-client hammer [<token>] [<threads>] [<requests>]",
+ 		NULL,
+ 	};
+ 
+ 	struct option options[] = {
+ 		OPT_STRING(0, "token", &token, "token",
+ 			   "command token to send to the server"),
++
++		OPT_INTEGER(0, "threads", &nr_threads, "number of client threads"),
++		OPT_INTEGER(0, "requests", &nr_requests, "number of requests per thread"),
++
+ 		OPT_END()
+ 	};
+ 
+@@ -111,6 +214,9 @@ int cmd__fsmonitor_client(int argc, const char **argv)
+ 	if (!strcmp(subcmd, "flush"))
+ 		return !!do_send_flush();
+ 
++	if (!strcmp(subcmd, "hammer"))
++		return !!do_hammer(token, nr_threads, nr_requests);
++
+ 	die("Unhandled subcommand: '%s'", subcmd);
+ }
+ #endif
 -- 
 gitgitgadget
 
