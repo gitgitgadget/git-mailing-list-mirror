@@ -2,155 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A42BC4332F
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 013D9C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240544AbiCVS1I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:27:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48182 "EHLO
+        id S240364AbiCVS3R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240469AbiCVS1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:27:02 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9917C92D16
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:59 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B32AA3F47F4;
-        Tue, 22 Mar 2022 14:24:58 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9188C3F4161;
-        Tue, 22 Mar 2022 14:24:58 -0400 (EDT)
-Subject: Re: What's cooking in git.git (Mar 2022, #04; Thu, 17)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqv8wcizi4.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <eb10fee5-d6ea-b660-e339-d55a4b669c3c@jeffhostetler.com>
-Date:   Tue, 22 Mar 2022 14:24:57 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S239371AbiCVS3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:29:16 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D66B790FF5
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:27:48 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id a17so21704699edm.9
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ChFGlFkos03bdjnYPUDfHF/ayTWWAreO2M42JCxi5k4=;
+        b=WpL1MvzQOnncYwbc6NvD52WMr3+KVao51IY1R0zm7tI4WIv7nrHV7X/f9yh9n+VvKR
+         Fj3oQJKcFJWZnNO6zUorxRWHZvhcCCFql/EI1iaszmtqd6H2q1pIJ6KQt2TZKx35PS/T
+         iGabdVD3sJy8TS30g3oOX18XiM/3zocx7haG6bxX7j1kLbsMD3hmoj8VH7f8PjZgLJMB
+         qwAfauCnAPpE9ns7O44yqR6JS39zqOSSNvByGXGa3avhcPLc1gGfmgOllkEK307gVLJ+
+         xo9WEjEsbcw3UhkHBNjwf+vy86XRbDPnenSsW7qi53PMZoLsF+ocYGWmt9lCfmaX04gx
+         0iEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ChFGlFkos03bdjnYPUDfHF/ayTWWAreO2M42JCxi5k4=;
+        b=VJcuoBxZla91+k4sJmTEeST9bLLtjtMa5pIbyTYPqV0jy43XMvEr7x5AqAURWa0siH
+         JpKwowTrQCGOPHkQzDlCU8LLGagobHIAemKJGdGVWk75SfMlDzHNPsiPllzjTSPUnzf/
+         AqrwLXV1IfHwdreFTZ7WKZUuxjeEs0QXHqK72DblHMdvA4YrWenzHixCjDtHKMgW2Kzr
+         BXpj4Og0Hggqh0wcORy/j2EWpWZBJQZhC+3dd6FFLAYtHztFmIDdlle8AiLQ+zagVuKp
+         VxyKPGFrMLtW4PkdIvKoUduKmJWb5tjRn+uT0++mdjmvZlBtsO5y1H+ju8HeGOPw8M3R
+         x2Bw==
+X-Gm-Message-State: AOAM5331PSGEubW4LdBym4bI8EbV5skHMSS8oSSGuukPC2BBVAndVUwg
+        87VXC++WZ/sLX8en2QUpMOvUEiANhYUSFw==
+X-Google-Smtp-Source: ABdhPJxO5QRYIU1Fa640Qod51mwuHGo+D/t2NdKDTLapmSlXgo7/PJ1gE8qal3DZYzLY3l8ZQ3a0Jg==
+X-Received: by 2002:a05:6402:1107:b0:416:439a:6a9e with SMTP id u7-20020a056402110700b00416439a6a9emr29528915edv.382.1647973666874;
+        Tue, 22 Mar 2022 11:27:46 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b11-20020a170906728b00b006df8494d384sm8463983ejl.122.2022.03.22.11.27.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Mar 2022 11:27:46 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nWjEP-000Bs8-IN;
+        Tue, 22 Mar 2022 19:27:45 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 16/29] compat/fsmonitor/fsm-listen-darwin: add MacOS
+ header files for FSEvent
+Date:   Tue, 22 Mar 2022 19:19:53 +0100
+References: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
+ <14b775e9d8b1a4672f8175a546eb70e2790c1b23.1647972010.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <14b775e9d8b1a4672f8175a546eb70e2790c1b23.1647972010.git.gitgitgadget@gmail.com>
+Message-ID: <220322.86ils5q1um.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqv8wcizi4.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Tue, Mar 22 2022, Jeff Hostetler via GitGitGadget wrote:
 
-On 3/17/22 7:34 AM, Junio C Hamano wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 > 
-> * jh/builtin-fsmonitor-part-2plus (2022-03-13) 16 commits
->   - fsmonitor-settings: simplify initialization of settings data
->   - fsmonitor--daemon: add _() to calls to error()
->   - fsmonitor--daemon: add _() to calls to die()
->   - compat/fsmonitor/fsm-listen-win32: add _() to calls to error()
->   - compat/fsmonitor/fsm-listen-darwin: add _() to calls to error()
->   - fsmonitor-ipc: add _() to calls to die()
->   - t7527: delete unused verify_status() function
->   - t7527: fix && chaining in matrix_try()
->   - t7527: add parameters to start_daemon to handle args and subshell
->   - t/perf/p7519: cleanup coding style
->   - t/perf/p7519: use grep rather than egrep in test
->   - fsmonitor--daemon: refactor cookie handling for readability
->   - t/helper/fsmonitor-client: cleanup call to parse_options()
->   - compat/fsmonitor/fsm-listen-darwin: split out GCC-specific declarations
->   - update-index: convert advise() messages back to warning()
->   - t/test-lib: avoid using git on LHS of pipe
->   (this branch uses jh/builtin-fsmonitor-part2.)
-> 
->   Various small fixes and cleanups on part-2 of the same topic.
-> 
->   Needs review.
->   source: <pull.1174.git.1647033303.gitgitgadget@gmail.com>
+>  compat/fsmonitor/fsm-darwin-gcc.h    | 92 ++++++++++++++++++++++++++++
 
-I have squashed this into part 2 V7, so this series can be
-discarded.  Thanks (and sorry for the mess).
+It's much nicer to have this compat-for-the-compat in its own
+header. Thanks.
 
+>  compat/fsmonitor/fsm-listen-darwin.c | 24 ++++++++
+>  2 files changed, 116 insertions(+)
+>  create mode 100644 compat/fsmonitor/fsm-darwin-gcc.h
+>
+> diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
+> new file mode 100644
+> index 00000000000..1c75c3d48e7
+> --- /dev/null
+> +++ b/compat/fsmonitor/fsm-darwin-gcc.h
+> @@ -0,0 +1,92 @@
+> +#ifndef FSM_DARWIN_GCC_H
+> +#define FSM_DARWIN_GCC_H
+> +
+> +#ifndef __clang__
 
-> * jh/builtin-fsmonitor-part3 (2022-03-09) 28 commits
->   . fsmonitor-settings: NTFS and FAT32 on MacOS are incompatible
->   . t7527: test Unicode NFC/NFD handling on MacOS
->   . t/lib-unicode-nfc-nfd: helper prereqs for testing unicode nfc/nfd
->   . fsmonitor: on macOS also emit NFC spelling for NFD pathname
->   . t7527: test FSMonitor on case insensitive+preserving file system
->   . fsmonitor: never set CE_FSMONITOR_VALID on submodules
->   . t/perf/p7527: add perf test for builtin FSMonitor
->   . t7527: FSMonitor tests for directory moves
->   . fsmonitor: optimize processing of directory events
->   . fsm-listen-darwin: shutdown daemon if worktree root is moved/renamed
->   . fsm-health-win32: force shutdown daemon if worktree root moves
->   . fsm-health-win32: add polling framework to monitor daemon health
->   . fsmonitor--daemon: stub in health thread
->   . fsmonitor--daemon: rename listener thread related variables
->   . fsmonitor--daemon: prepare for adding health thread
->   . fsmonitor--daemon: cd out of worktree root
->   . fsm-listen-darwin: ignore FSEvents caused by xattr changes on macOS
->   . unpack-trees: initialize fsmonitor_has_run_once in o->result
->   . fsmonitor-settings: remote repos on Windows are incompatible
->   . fsmonitor-settings: remote repos on macOS are incompatible
->   . fsmonitor-settings: stub in macOS-specific incompatibility checking
->   . fsmonitor-settings: VFS for Git virtual repos are incompatible
->   . fsmonitor-settings: stub in platform-specific incompatibility checking
->   . fsmonitor-settings: bare repos are incompatible with FSMonitor
->   . t/helper/fsmonitor-client: create stress test
->   . t7527: test FSMonitor on repos with Unicode root paths
->   . fsm-listen-win32: handle shortnames
->   . Merge branch 'jh/builtin-fsmonitor-part2' into jh/builtin-fsmonitor-part3
->   (this branch uses jh/builtin-fsmonitor-part2.)
-> 
->   More fsmonitor--daemon.
->   source: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
+This was surprising, until I remembered that clang tries really hard to
+pretend to be other compilers. I wonder if we should steal the macro
+check from compat/compiler.h into something more generic & use it here,
+probably best as a follow-up...
 
-I just sent a V3 of part 3 that builds upon V7 of part 2.
-The fixups from part 2.5 have been squashed in.
-
-
-> * jh/builtin-fsmonitor-part2 (2022-03-01) 30 commits
->    (merged to 'next' on 2022-03-08 at 5f9d385483)
->   + update-index: convert fsmonitor warnings to advise
->   + t7527: test status with untracked-cache and fsmonitor--daemon
->   + fsmonitor: force update index after large responses
->   + fsmonitor--daemon: use a cookie file to sync with file system
->   + fsmonitor--daemon: periodically truncate list of modified files
->   + t/perf/p7519: add fsmonitor--daemon test cases
->   + t/perf/p7519: speed up test on Windows
->   + t/helper/test-chmtime: skip directories on Windows
->   + t/perf: avoid copying builtin fsmonitor files into test repo
->   + t7527: create test for fsmonitor--daemon
->   + t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
->   + help: include fsmonitor--daemon feature flag in version info
->   + fsmonitor--daemon: implement handle_client callback
->   + compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on MacOS
->   + compat/fsmonitor/fsm-listen-darwin: add MacOS header files for FSEvent
->   + compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on Windows
->   + fsmonitor--daemon: create token-based changed path cache
->   + fsmonitor--daemon: define token-ids
->   + fsmonitor--daemon: add pathname classification
->   + fsmonitor--daemon: implement 'start' command
->   + fsmonitor--daemon: implement 'run' command
->   + compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
->   + compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
->   + fsmonitor--daemon: implement 'stop' and 'status' commands
->   + fsmonitor--daemon: add a built-in fsmonitor daemon
->   + fsmonitor: document builtin fsmonitor
->   + fsmonitor: use IPC to query the builtin FSMonitor daemon
->   + fsmonitor: config settings are repository-specific
->   + fsmonitor-ipc: create client routines for git-fsmonitor--daemon
->   + fsmonitor: enhance existing comments, clarify trivial response handling
->   (this branch is used by jh/builtin-fsmonitor-part-2plus and jh/builtin-fsmonitor-part3.)
-> 
->   Built-in fsmonitor (part 2).
-> 
->   Discarded to be replaced.
->   cf. <33a9f751-6254-9b3e-6eb7-7844ac664e00@jeffhostetler.com>
->   source: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
-
-I just sent V7 of part 2.  This has the fixups from 2.5 squashed in.
-
-
-Jeff
+> [...]
+> +#endif /* !clang */
+> +#endif /* FSM_DARWIN_GCC_H */
+> diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+> index c84e3344ab9..d2ce942cade 100644
+> --- a/compat/fsmonitor/fsm-listen-darwin.c
+> +++ b/compat/fsmonitor/fsm-listen-darwin.c
+> @@ -1,3 +1,27 @@
+> +#ifndef __clang__
+> +#include "fsm-darwin-gcc.h"
+> +#else
+> +#include <CoreFoundation/CoreFoundation.h>
+> +#include <CoreServices/CoreServices.h>
+> +
+> [...]
