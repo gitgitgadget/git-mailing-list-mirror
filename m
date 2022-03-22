@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2E1C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DD96C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240463AbiCVS0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44588 "EHLO
+        id S240373AbiCVS0t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:26:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240375AbiCVS0U (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240381AbiCVS0U (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 22 Mar 2022 14:26:20 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A591490FED
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:09 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id r7so11863679wmq.2
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:09 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2094190FFD
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:11 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id a1so23265248wrh.10
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:24:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=E8xmQ7dYip7SaSRf9IXmrYL6K0sMohTDrDq1DYcKE54=;
-        b=SG5csjTGLJ7Y03TCQusHTZB7T9TtNWpcYrXPGEGe4nBGN+13s/nSjRm3ecUhwdHhH+
-         2yNlF/OjqLnX/kWqECiOGPGGUO9zJiKP7lO6MIfJdQUq+EeONeHr29hfVe2H8haP1EMd
-         O1ZXiLHCt90piZgV3spQOLhEHU4yxXk2YM46lqcD/E5lWU8qQm2W4vVzcSpLWRlFgnAc
-         6OrInUcWZS1urdAQE0mRIvQOlt2yyyDJFQsxMnlFDf4jCEpenWAJ1XUed22coxp3QVST
-         vJk1gpPSFZauFDrbuxgRJYhIZ4JHdDpXQeyCAtO3UwYNxnyT8FsHLxcJQNM0xlmDWV2g
-         h5aw==
+        bh=hFzBo7NPjbtbf/vT0CCaUkDt4/D28hCpl05V0u76UiM=;
+        b=PuAPlyF29vZvmiStQlJCWIVGKCzXfE4SoaVV2eXBKMXOACsOtgnOH6lJch0I/8EEnF
+         JcyWeMMlwOnanbrsilFgMWdIHM8vhmvrJSLz1ukrLwOas7hhhdHXBZ7cnhwudyMyUeqo
+         5m/0bGV3efjwTj8vFTkAoIGoggvSqSfcZC/BSWbWs/P7ckx4Kv8Ym7fZiUU5/HJ6kOxg
+         MiZXB8tH2PgC9IShTXfU9fIw8bjFgRIY61ao8K0TmhPqZF87WEh4qOlJMiWfag5amo5w
+         BG/SDpDI4Qb4xbPoidMF2PwrjRYJj0XKbQIHlga5gNGrZDbBvH4RKZyjEzFH/VOFVk4Z
+         Wv+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E8xmQ7dYip7SaSRf9IXmrYL6K0sMohTDrDq1DYcKE54=;
-        b=7OB/5umwo7XJkMmxk4VatlgloHMXm84WnrEcTZWqhxI8iHDCawweRdV1IoB730KPem
-         QvpSJuMZL+vNiZy4vh+0BdXcWuBuOpFY9wBuJaQRfAr/RbasaHdpT21pn9XhVUQPTSzU
-         knQ7ZzioWCwJcbD8VGC236N0WQpoT3rkpssrFSLlquRpzbVbMzudlYMzoogZCqZ+etOz
-         gHeMzmpSGWcpuCp8ABmGURuWhDJGzr8kHn+3w+ePzDz/JmVDLnvrgWQK2JTCZF+wZxA1
-         si8Ujxtjx4Mumzz37dahiS1SQnXANI3l5d6/Zb+TiO2KxHbU5Y+6BaGrmCk13YClSEBC
-         aU8w==
-X-Gm-Message-State: AOAM531Dtj2TMZuwnJc5YytZZZfZqgOXFsDbd60zLot/NroR9DVycd0U
-        WJ0kd0Nx7hHFRcdMhhBgn17THYvvxdQ=
-X-Google-Smtp-Source: ABdhPJy6Hmu0eRILK0GpRXiBHxpJ3oClQr7iJjgUiBm29TGSBay+/tbwg22aupwILFrHdEfQar9ZBw==
-X-Received: by 2002:a7b:c20b:0:b0:38c:6ed9:f4f with SMTP id x11-20020a7bc20b000000b0038c6ed90f4fmr5287096wmi.131.1647973448035;
-        Tue, 22 Mar 2022 11:24:08 -0700 (PDT)
+        bh=hFzBo7NPjbtbf/vT0CCaUkDt4/D28hCpl05V0u76UiM=;
+        b=pwDvuuUn39pc4U98hFk4IjmoY20BpAJiQRX/VA3EplJoRJAQD4x260fZYZGhn7TApR
+         zNl6jH+SLa+H91IbdYgRQnjeofMs/HUif4uyd5CStv/g9z/P/rj66ooEnZs0BEelZDTZ
+         PfKsFt5whpCNX8m2rAPNNkjyGZ/6j0TzXbgdcz7+nghskffKCDUrcQ2srJr7BgmPmgEp
+         fHgMU27VdnfzZXDQ8J8a/ku+kv44Nny9+W+7vEQV5WBxYqyBVBHgLSwW6VrNY+tvqY/Z
+         +yu66akijPM5G6Xzp7Du4Qr0nrVYUup9xNgK4hkbld9fAwYuZxANTw7v7d1cvfxL13/P
+         wKdw==
+X-Gm-Message-State: AOAM532xHYb0ppOK1d4Hpp3qQAR7HZuSZ6bXvwAaOZpaH+/EB3b2CEdI
+        RPh9EUFrHgflJzrsD/YCqRvSt4YTaWw=
+X-Google-Smtp-Source: ABdhPJw26sfZct5bgkg3cFjj3fiJZ1NbKVeIC34rC7faIe/MIvOiEtPPsBePiWPtjKL/mHv4jeOHAg==
+X-Received: by 2002:a5d:6c68:0:b0:205:80f5:4210 with SMTP id r8-20020a5d6c68000000b0020580f54210mr1562914wrz.512.1647973449496;
+        Tue, 22 Mar 2022 11:24:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g7-20020a5d64e7000000b00204a13925dcsm2277591wri.11.2022.03.22.11.24.06
+        by smtp.gmail.com with ESMTPSA id r13-20020adfbb0d000000b00203e0efdd3bsm16070038wrg.107.2022.03.22.11.24.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:24:06 -0700 (PDT)
-Message-Id: <e6b621fb766706691230631df4b27c64cf7106e8.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:24:08 -0700 (PDT)
+Message-Id: <aa96a849ce44056f142f9972052a2ff7c34e7401.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:59 +0000
-Subject: [PATCH v3 26/27] t/lib-unicode-nfc-nfd: helper prereqs for testing
- unicode nfc/nfd
+Date:   Tue, 22 Mar 2022 18:23:00 +0000
+Subject: [PATCH v3 27/27] t7527: test Unicode NFC/NFD handling on MacOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,189 +72,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a set of prereqs to help understand how file names
-are handled by the filesystem when they contain NFC and NFD
-Unicode characters.
+Confirm that the daemon reports events using the on-disk
+spelling for Unicode NFC/NFD characters.  On APFS we still
+have Unicode aliasing, so we cannot create two files that
+only differ by NFC/NFD, but the on-disk format preserves
+the spelling used to create the file.  On HFS+ we also
+have aliasing, but the path is always stored on disk in
+NFD.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/lib-unicode-nfc-nfd.sh | 167 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 167 insertions(+)
- create mode 100755 t/lib-unicode-nfc-nfd.sh
+ t/t7527-builtin-fsmonitor.sh | 55 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
-new file mode 100755
-index 00000000000..cf9c26d1e22
---- /dev/null
-+++ b/t/lib-unicode-nfc-nfd.sh
-@@ -0,0 +1,167 @@
-+# Help detect how Unicode NFC and NFD are handled on the filesystem.
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 51cdf05e7ec..126bb2dc8de 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -847,4 +847,59 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
+ 	egrep "^event: abc/def/xyz$" ./insensitive.trace
+ '
+ 
++# The variable "unicode_debug" is defined in the following library
++# script to dump information about how the (OS, FS) handles Unicode
++# composition.  Uncomment the following line if you want to enable it.
++#
++# unicode_debug=true
 +
-+# A simple character that has a NFD form.
-+#
-+# NFC:       U+00e9 LATIN SMALL LETTER E WITH ACUTE
-+# UTF8(NFC): \xc3 \xa9
-+#
-+# NFD:       U+0065 LATIN SMALL LETTER E
-+#            U+0301 COMBINING ACUTE ACCENT
-+# UTF8(NFD): \x65  +  \xcc \x81
-+#
-+utf8_nfc=$(printf "\xc3\xa9")
-+utf8_nfd=$(printf "\x65\xcc\x81")
++. "$TEST_DIRECTORY/lib-unicode-nfc-nfd.sh"
 +
-+# Is the OS or the filesystem "Unicode composition sensitive"?
++# See if the OS or filesystem does NFC/NFD aliasing/munging.
 +#
-+# That is, does the OS or the filesystem allow files to exist with
-+# both the NFC and NFD spellings?  Or, does the OS/FS lie to us and
-+# tell us that the NFC and NFD forms are equivalent.
++# The daemon should err on the side of caution and send BOTH the
++# NFC and NFD forms.  It does not know the original spelling of
++# the pathname (how the user thinks it should be spelled), so
++# emit both and let the client decide (when necessary).  This is
++# similar to "core.precomposeUnicode".
 +#
-+# This is or may be independent of what type of filesystem we have,
-+# since it might be handled by the OS at a layer above the FS.
-+# Testing shows on MacOS using APFS, HFS+, and FAT32 reports a
-+# collision, for example.
-+#
-+# This does not tell us how the Unicode pathname will be spelled
-+# on disk, but rather only that the two spelling "collide".  We
-+# will examine the actual on disk spelling in a later prereq.
-+#
-+test_lazy_prereq UNICODE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${utf8_nfc} &&
-+	mkdir trial_${utf8_nfd}
-+'
++test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
++	test_when_finished "stop_daemon_delete_repo test_unicode" &&
 +
-+# Is the spelling of an NFC pathname preserved on disk?
-+#
-+# On MacOS with HFS+ and FAT32, NFC paths are converted into NFD
-+# and on APFS, NFC paths are preserved.  As we have established
-+# above, this is independent of "composition sensitivity".
-+#
-+# 0000000 63 5f c3 a9
-+#
-+# (/usr/bin/od output contains different amount of whitespace
-+# on different platforms, so we need the wildcards here.)
-+#
-+test_lazy_prereq UNICODE_NFC_PRESERVED '
-+	mkdir c_${utf8_nfc} &&
-+	ls | od -t x1 | grep "63 *5f *c3 *a9"
-+'
++	git init test_unicode &&
 +
-+# Is the spelling of an NFD pathname preserved on disk?
-+#
-+# 0000000 64 5f 65 cc 81
-+#
-+test_lazy_prereq UNICODE_NFD_PRESERVED '
-+	mkdir d_${utf8_nfd} &&
-+	ls | od -t x1 | grep "64 *5f *65 *cc *81"
-+'
-+	mkdir c_${utf8_nfc} &&
-+	mkdir d_${utf8_nfd} &&
++	start_daemon -C test_unicode -tf "$PWD/unicode.trace" &&
 +
-+# The following _DOUBLE_ forms are more for my curiosity,
-+# but there may be quirks lurking when there are multiple
-+# combining characters in non-canonical order.
++	# Create a directory using an NFC spelling.
++	#
++	mkdir test_unicode/nfc &&
++	mkdir test_unicode/nfc/c_${utf8_nfc} &&
 +
-+# Unicode also allows multiple combining characters
-+# that can be decomposed in pieces.
-+#
-+# NFC:        U+1f67 GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI
-+# UTF8(NFC):  \xe1 \xbd \xa7
-+#
-+# NFD1:       U+1f61 GREEK SMALL LETTER OMEGA WITH DASIA
-+#             U+0342 COMBINING GREEK PERISPOMENI
-+# UTF8(NFD1): \xe1 \xbd \xa1  +  \xcd \x82
-+#
-+# But U+1f61 decomposes into
-+# NFD2:       U+03c9 GREEK SMALL LETTER OMEGA
-+#             U+0314 COMBINING REVERSED COMMA ABOVE
-+# UTF8(NFD2): \xcf \x89  +  \xcc \x94
-+#
-+# Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
-+#
-+# Note that I've used the canonical ordering of the
-+# combinining characters.  It is also possible to
-+# swap them.  My testing shows that that non-standard
-+# ordering also causes a collision in mkdir.  However,
-+# the resulting names don't draw correctly on the
-+# terminal (implying that the on-disk format also has
-+# them out of order).
-+#
-+greek_nfc=$(printf "\xe1\xbd\xa7")
-+greek_nfd1=$(printf "\xe1\xbd\xa1\xcd\x82")
-+greek_nfd2=$(printf "\xcf\x89\xcc\x94\xcd\x82")
++	# Create a directory using an NFD spelling.
++	#
++	mkdir test_unicode/nfd &&
++	mkdir test_unicode/nfd/d_${utf8_nfd} &&
 +
-+# See if a double decomposition also collides.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE '
-+	mkdir trial_${greek_nfc} &&
-+	mkdir trial_${greek_nfd2}
-+'
-+
-+# See if the NFC spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFC_PRESERVED '
-+	mkdir c_${greek_nfc} &&
-+	ls | od -t x1 | grep "63 *5f *e1 *bd *a7"
-+'
-+
-+# See if the NFD spelling appears on the disk.
-+#
-+test_lazy_prereq UNICODE_DOUBLE_NFD_PRESERVED '
-+	mkdir d_${greek_nfd2} &&
-+	ls | od -t x1 | grep "64 *5f *cf *89 *cc *94 *cd *82"
-+'
-+
-+# The following is for debugging. I found it useful when
-+# trying to understand the various (OS, FS) quirks WRT
-+# Unicode and how composition/decomposition is handled.
-+# For example, when trying to understand how (macOS, APFS)
-+# and (macOS, HFS) and (macOS, FAT32) compare.
-+#
-+# It is rather noisy, so it is disabled by default.
-+#
-+if test "$unicode_debug" = "true"
-+then
-+	if test_have_prereq UNICODE_COMPOSITION_SENSITIVE
-+	then
-+		echo NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo NFC and NFD are aliases on this OS/filesystem.
-+	fi
++	git -C test_unicode fsmonitor--daemon stop &&
 +
 +	if test_have_prereq UNICODE_NFC_PRESERVED
 +	then
-+		echo NFC maintains original spelling.
++		# We should have seen NFC event from OS.
++		# We should not have synthesized an NFD event.
++		egrep    "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace &&
++		egrep -v "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace
 +	else
-+		echo NFC is modified.
-+	fi
++		# We should have seen NFD event from OS.
++		# We should have synthesized an NFC event.
++		egrep "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace &&
++		egrep "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace
++	fi &&
 +
-+	if test_have_prereq UNICODE_NFD_PRESERVED
-+	then
-+		echo NFD maintains original spelling.
-+	else
-+		echo NFD is modified.
-+	fi
++	# We assume UNICODE_NFD_PRESERVED.
++	# We should have seen explicit NFD from OS.
++	# We should have synthesized an NFC event.
++	egrep "^event: nfd/d_${utf8_nfd}/?$" ./unicode.trace &&
++	egrep "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
++'
 +
-+	if test_have_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE
-+	then
-+		echo DOUBLE NFC and NFD are distinct on this OS/filesystem.
-+	else
-+		echo DOUBLE NFC and NFD are aliases on this OS/filesystem.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFC_PRESERVED
-+	then
-+		echo Double NFC maintains original spelling.
-+	else
-+		echo Double NFC is modified.
-+	fi
-+
-+	if test_have_prereq UNICODE_DOUBLE_NFD_PRESERVED
-+	then
-+		echo Double NFD maintains original spelling.
-+	else
-+		echo Double NFD is modified.
-+	fi
-+fi
+ test_done
 -- 
 gitgitgadget
-
