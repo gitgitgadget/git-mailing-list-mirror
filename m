@@ -2,260 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79708C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 00:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10E29C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 01:16:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233737AbiCVARv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Mar 2022 20:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48358 "EHLO
+        id S234606AbiCVBRx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Mar 2022 21:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233838AbiCVARp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Mar 2022 20:17:45 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C7A2E2D5B
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 17:15:12 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id p15so16468411lfk.8
-        for <git@vger.kernel.org>; Mon, 21 Mar 2022 17:15:12 -0700 (PDT)
+        with ESMTP id S234602AbiCVBRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Mar 2022 21:17:53 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF09E095
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 18:16:26 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id i12so7135886ilu.5
+        for <git@vger.kernel.org>; Mon, 21 Mar 2022 18:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zKB/qohjvAUk71SpKxQLsmo+KZVHecdbxu8JUNwRnBo=;
-        b=aeGW2F50zG1+TwffHQtuEXRWfwJ8kUTwuS+gzojlrpiwlMchZ/NjoYvEsvWQRxKx1X
-         omJQ3S9X11XlNz5IwuMQe0s6KuI2Bwt7d0juFvecRnnk9N65fmfxzeKqFuJ1ZyHPmC04
-         IUQCCwF0VIVuwvjxE8bABBx1oIPVlFoUVdgP6eKevDVdxjnCpg2Q6ZkpfmUUo/l5IhF8
-         zltOb9JHNCLrwakxJu6uCDlWdwvqMcDn16ZZuiH1zL4MMa/Dreca6mq5pWXy5/trcSRo
-         pryrki4vAaNbTQDyLlyB4J7LGAgME3S/XBpmnob3lR3fZMfajBkrOSFI1uMazHTBgGIb
-         iHkw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xdxBWLXTB35R9sDAqO3y+jQP2pi29JXn7JUnH4deBP0=;
+        b=20zDs5zN+iEpenc+ckZoFOQ3E8BK7tr/O2WJFL7zgAPK24jCnKYY2awL6LSbfh46+o
+         69L2n5lq+KE7XMDtwjSRLw2XbTaSedb0AAFWf7v4wPYpcJUpkafazSZu2DOQsc73Hgi4
+         vNtaiIWJVW7YJCAU6w5nsPklcKVjhsnEPugQFChneViT5jfPunJftSex9B/2bN0dqG8F
+         EmAzYgwGeU/1gbRcSb0oUFjk9trtuq2fKUOvnjBwrSBMt2fJGh9LK7P0mDuO9cC1mY+U
+         vkJRrA8L8KkZkoRW8vBcAWe7ZNn4Wx2LIvikP7fVIUuEG7Hgss1ZjKN4wvjcZqK8Cm83
+         j5rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zKB/qohjvAUk71SpKxQLsmo+KZVHecdbxu8JUNwRnBo=;
-        b=S4DUh2b6q1DYE9D7toVKlwpe5Bu9cm1HRgVK8gCw3Thyt9WKbxUmLyCIeB9FgEKvQ3
-         PgJ+Rm9mGxCjgoNHGmnF1PAQjZngPYmva1iFmMtV66lWLXqGi26rWTV/rS6FxD7/uhFS
-         6j9LCbYOu6jB9/JcjrQ+ySVQUYzSDIytsiZFN5jVl6MyNxA6Plq/EgK02U8or6x7Mzfq
-         w9FAu609GiwVb48+MIs77XVbr8eRh/P/+S2TIwjHFJP0lhS+K76TYQjholnlhd5NxdGF
-         4LmBvFkNIxuOsuKrEOnv23HwBRP5/Qk42BStFH6oY6XjKeraUSBWuJ4ryDTfa29OLAjO
-         xqHg==
-X-Gm-Message-State: AOAM531rIDECNCnaT94sWDDzJK9f+R1W6HVlCuN/jhXCdLPSXiCyq0wL
-        uJxbLm1igUe0I8pmxrrOThkm6TtzUaA86julvx4=
-X-Google-Smtp-Source: ABdhPJwUTs32QJ7TFxSqwLiYHeEsFh2bpRrrs4ez+BA/78tfRieLOFJ2M3tC2yiJAL/S1bC3eWG4punr4665VXlvJEY=
-X-Received: by 2002:a05:6512:1684:b0:448:a0e6:9fa6 with SMTP id
- bu4-20020a056512168400b00448a0e69fa6mr16566572lfb.592.1647908027957; Mon, 21
- Mar 2022 17:13:47 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xdxBWLXTB35R9sDAqO3y+jQP2pi29JXn7JUnH4deBP0=;
+        b=3Z3/zUdwpb+2kN87s45B8xnRxvD4BYCvRctgvwvTSvcQgOsTH7h++R98IVNKZpgE+w
+         JyoWuEUgGKR1epOujZ+R2ScoE7ZJ2/uYtdmzD2QOb1ywhZk8U4m1RZRaS1X1i2v82Lbt
+         5J5MqYdF6qNla4t+Hu9Zp2qIqwdfXt/l7htsIJQh26FuZJjM5rXnlemgrv4qkWxQlFb2
+         YI74NfyqZ6qfK8EouevSxd+NqYTIpz7/fCHZGtrXc46IkpFi6IGnvfpzNy0xxbORtVem
+         fBRl35iwpi5PtKyNYdUfTXsSkIFbWSVJkeSx/7s+JM4h1B9CSDd8PuAJ/9LaB8+sNRJQ
+         YqMw==
+X-Gm-Message-State: AOAM533eIn1F2aN2ieVqRiVNjQnd8Xi4faFeoQfroUXU05q/YDscMtxZ
+        it9UEhPGIRPWoJjf9Ce3SqaTif98ksxN2PAd
+X-Google-Smtp-Source: ABdhPJzDHvdQthfvCJv7Po1tdqkOEzll0rjSAM27aIpoE1ilXnBdvgjJ8/c+Y+1MClnTl13qPjzG1Q==
+X-Received: by 2002:a05:6e02:154c:b0:2c8:1cb3:9da7 with SMTP id j12-20020a056e02154c00b002c81cb39da7mr5315030ilu.163.1647911785739;
+        Mon, 21 Mar 2022 18:16:25 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x14-20020a927c0e000000b002c244d8dcc8sm9840699ilc.42.2022.03.21.18.16.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 18:16:25 -0700 (PDT)
+Date:   Mon, 21 Mar 2022 21:16:24 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, tytso@mit.edu, derrickstolee@github.com,
+        gitster@pobox.com, larsxschneider@gmail.com
+Subject: Re: [PATCH v3 01/17] Documentation/technical: add cruft-packs.txt
+Message-ID: <YjkjaH61dMLHXr0d@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1646266835.git.me@ttaylorr.com>
+ <784ee7e0eec9ba520ebaaa27de2de810e2f6798a.1646266835.git.me@ttaylorr.com>
+ <YiZI99yeijQe5Jaq@google.com>
 MIME-Version: 1.0
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
- <220321.861qyv9rjr.gmgdl@evledraar.gmail.com> <CANQDOdez2u4oTNeETM0zLQr7Xb6XXbEuoxXPhSqGuurwQWbkHA@mail.gmail.com>
- <220321.86zgljnite.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220321.86zgljnite.gmgdl@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Mon, 21 Mar 2022 17:13:36 -0700
-Message-ID: <CANQDOdc+ENfKLxpQ1HZJPgzgK26DRZi2-qNkkn7B6n9qV_B-gg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] core.fsyncmethod: batched disk flushes for loose-objects
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Patrick Steinhardt <ps@pks.im>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YiZI99yeijQe5Jaq@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 21, 2022 at 1:37 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Mon, Mar 21 2022, Neeraj Singh wrote:
->
-> [Don't have time for a full reply, sorry, just something quick]
->
-> > On Mon, Mar 21, 2022 at 9:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > [...]
-> >> So, my question is still why the temporary object dir migration part o=
-f
-> >> this is needed.
-> >>
-> >> We are writing N loose object files, and we write those to temporary
-> >> names already.
-> >>
-> >> AFAIKT we could do all of this by doing the same
-> >> tmp/rename/sync_file_range dance on the main object store.
-> >>
-> >
-> > Why not the main object store? We want to maintain the invariant that a=
-ny
-> > name in the main object store refers to a file that durably has the
-> > correct contents.
-> > If we do sync_file_range and then rename, and then crash, we now have a=
- file
-> > in the main object store with some SHA name, whose contents may or may =
-not
-> > match the SHA.  However, if we ensure an fsync happens before the renam=
-e,
-> > a crash at any point will leave us either with no file in the main
-> > object store or
-> > with a file that is durable on the disk.
->
-> Ah, I see.
->
-> Why does that matter? If the "bulk" mode works as advertised we might
-> have such a corrupt loose or pack file, but we won't have anything
-> referring to it as far as reachability goes.
->
-> I'm aware that the various code paths that handle OID writing don't deal
-> too well with it in practice to say the least, which one can try with
-> say:
->
->     $ echo foo | git hash-object -w --stdin
->     45b983be36b73c0788dc9cbcb76cbb80fc7bb057
->     $ echo | sudo tee .git/objects/45/b983be36b73c0788dc9cbcb76cbb80fc7bb=
-057
->
-> I.e. "fsck", "show" etc. will all scream bloddy murder, and re-running
-> that hash-object again even returns successful (we see it's there
-> already, and think it's OK).
->
+On Mon, Mar 07, 2022 at 10:03:35AM -0800, Jonathan Nieder wrote:
+> Sorry for the very slow review!  I've mentioned a few times that this
+> overlaps in interesting ways with the gc mechanism described in
+> hash-function-transition.txt, so I'd like to compare and see how they
+> interact.
 
-I was under the impression that in-practice a corrupt loose-object can crea=
-te
-persistent problems in the repo for future commands, since we might not
-aggressively verify that an existing file with a certain OID really is
-valid when
-adding a new instance of the data with the same OID.
+Sorry for my equally-slow reply ;). I was on vacation last week and
+wasn't following the list closely.
 
-If you don't have an fsync barrier before producing the final
-content-addressable
-name, you can't reason about "this operation happened before that operation=
-,"
-so it wouldn't really be valid to say that "we won't have anything
-referring to it as far
-as reachability goes."
+> > +Unreachable objects aren't removed immediately, since doing so could race with
+> > +an incoming push which may reference an object which is about to be deleted.
+> > +Instead, those unreachable objects are stored as loose object and stay that way
+> > +until they are older than the expiration window, at which point they are removed
+> > +by linkgit:git-prune[1].
+> > +
+> > +Git must store these unreachable objects loose in order to keep track of their
+> > +per-object mtimes.
+>
+> It's worth noting that this behavior is already racy.  That is because
+> when an unreachable object becomes newly reachable, we do not update
+> its mtime and the mtimes of every object reachable from it, so if it
+> then becomes transiently unreachable again then it can be wrongly
+> collected.
 
-It's entirely possible that you'd have trees pointing to other trees
-or blobs that aren't
-valid, since data writes can be durable in any order. At this point,
-future attempts add
-the same blobs or trees might silently drop the updates.  I'm betting that'=
-s why
-core.fsyncObjectFiles was added in the first place, since someone
-observed severe
-persistent consequences for this form of corruption.
+Just to be clear, the race here only happens if the object in question
+becomes reachable _after_ a pruning GC determines its mtime. If that's
+the case, then the object will indeed be wrongly collected. This is
+consistent with the existing behavior (which is racy in the exact same
+way).
 
-> But in any case, I think it would me much easier to both review and
-> reason about this code if these concerns were split up.
->
-> I.e. things that want no fsync at all (I'd think especially so) might
-> want to have such updates serialized in this manner, and as Junio
-> pointed out making these things inseparable as you've done creates API
-> concerns & fallout that's got nothing to do with what we need for the
-> performance gains of the bulk checkin fsyncing technique,
-> e.g. concurrent "update-index" consumers not being able to assume
-> reported objects exist as soon as they're reported.
->
+(After re-reading what you wrote and my response, I think we are saying
+the exact same thing, but it doesn't hurt to think aloud).
 
-I want to explicitly not respond to this concern. I don't believe this
-100 line patch
-can be usefully split.
+> > +
+> > +== Cruft packs
+> > +
+> > +A cruft pack eliminates the need for storing unreachable objects in a loose
+> > +state by including the per-object mtimes in a separate file alongside a single
+> > +pack containing all loose objects.
+>
+> Can this doc say a little about how "git prune" handles these files?
+> In particular, does a non cruft pack aware copy of Git (or JGit,
+> libgit2, etc) do the right thing or does it fight with this mechanism?
+> If the latter, do we have a repository extension (extensions.*) to
+> prevent that?
 
-> >> Then instead of the "bulk_fsync" cookie file don't close() the last fi=
-le
-> >> object file we write until we issue the fsync on it.
-> >>
-> >> But maybe this is all needed, I just can't understand from the commit
-> >> message why the "bulk checkin" part is being done.
-> >>
-> >> I think since we've been over this a few times without any success it
-> >> would really help to have some example of the smallest set of syscalls
-> >> to write a file like this safely. I.e. this is doing (pseudocode):
-> >>
-> >>     /* first the bulk path */
-> >>     open("bulk/x.tmp");
-> >>     write("bulk/x.tmp");
-> >>     sync_file_range("bulk/x.tmp");
-> >>     close("bulk/x.tmp");
-> >>     rename("bulk/x.tmp", "bulk/x");
-> >>     open("bulk/y.tmp");
-> >>     write("bulk/y.tmp");
-> >>     sync_file_range("bulk/y.tmp");
-> >>     close("bulk/y.tmp");
-> >>     rename("bulk/y.tmp", "bulk/y");
-> >>     /* Rename to "real" */
-> >>     rename("bulk/x", x");
-> >>     rename("bulk/y", y");
-> >>     /* sync a cookie */
-> >>     fsync("cookie");
-> >>
-> >
-> > The '/* Rename to "real" */' and '/* sync a cookie */' steps are
-> > reversed in your above sequence. It should be
->
-> Sorry.
->
-> > 1: (for each file)
-> >     a) open
-> >     b) write
-> >     c) sync_file_range
-> >     d) close
-> >     e) rename in tmp_objdir  -- The rename step is not required for
-> > bulk-fsync. An earlier version of this series didn't do it, but
-> > Jeff King pointed out that it was required for concurrency:
-> > https://lore.kernel.org/all/YVOrikAl%2Fu5%2FVi61@coredump.intra.peff.ne=
-t/
->
-> Yes we definitely need the rename, I was wondering about why we needed
-> it 2x for each file, but that was answered above.
->
-> >> And I'm asking why it's not:
-> >>
-> >>     /* Rename to "real" as we go */
-> >>     open("x.tmp");
-> >>     write("x.tmp");
-> >>     sync_file_range("x.tmp");
-> >>     close("x.tmp");
-> >>     rename("x.tmp", "x");
-> >>     last_fd =3D open("y.tmp"); /* don't close() the last one yet */
-> >>     write("y.tmp");
-> >>     sync_file_range("y.tmp");
-> >>     rename("y.tmp", "y");
-> >>     /* sync a cookie */
-> >>     fsync(last_fd);
-> >>
-> >> Which I guess is two questions:
-> >>
-> >>  A. do we need the cookie, or can we re-use the fd of the last thing w=
-e
-> >>     write?
-> >
-> > We can re-use the FD of the last thing we write, but that results in a
-> > tricker API which
-> > is more intrusive on callers. I was originally using a lockfile, but
-> > found a usage where
-> > there was no lockfile in unpack-objects.
->
-> Ok, so it's something we could do, but passing down 2-3 functions to
-> object-file.c was a hassle.
->
-> I tried to hack that up earlier and found that it wasn't *too
-> bad*. I.e. we'd pass some "flags" about our intent, and amend various
-> functions to take "don't close this one" and pass up the fd (or even do
-> that as a global).
->
-> In any case, having the commit message clearly document what's needed
-> for what & what's essential & just shortcut taken for the convenience of
-> the current implementation would be really useful.
->
-> Then we can always e.g. change this later to just do the the fsync() on
-> the last of N we write.
->
+I mentioned this in much more detail in [1], but the answer is that the
+cruft pack looks like any other pack, it just happens to have another
+metadata file (the .mtimes one) attached to it. So other implementations
+of Git should treat it as they would any other pack. Like I mentioned in
+[1], cruft packs were designed with the explicit goal of not requiring a
+repository extension.
 
-I left a comment in the (now very long) commit message that indicates the
-dummy file is there to make the API simpler.
+> > +  3. Write the pack out, along with a `.mtimes` file that records the per-object
+> > +     timestamps.
+>
+> As a point of comparison, the design in hash-function-transition uses
+> a single timestamp for the whole pack.  During read operations, objects
+> in a cruft pack are considered present; during writes, they are
+> considered _not present_ so that if we want to make a cruft object
+> newly present then we put a copy of it in a new pack.
+>
+> Advantage of the mtimes file approach:
+> - less duplication of storage: a revived object is only stored once,
+>   in a cruft pack, and then the next gc can "graduate" it out of the
+>   cruft pack and shrink the cruft pack
+> - less affect on non-gc Git code: writes don't need to know that any
+>   cruft objects referenced need to be copied into a new pack
+>
+> Advantages of the mtime per cruft pack approach:
+> - easy expiration: once a cruft pack has reached its expiration date,
+>   it can be deleted as a whole
+> - less I/O churn: a cruft pack stays as-is until combined into another
+>   cruft pack or deleted.  There is no frequently-modified mtimes file
+>   associated to it
+> - informs the storage layer about what is likely to be accessed: cruft
+>   packs can get filesystem attributes to put them in less-optimized
+>   storage since they are likely to be less frequently read
+>
+> [...]
+
+The key advantage of cruft packs is that you can expire unreachable
+objects in piecemeal while still retaining the benefit of being able to
+de-duplicate cruft objects and store them packed against each other.
+
+> > +Notable alternatives to this design include:
+>
+> This doesn't mention the approach described in
+> hash-function-transition.txt (and that's already implemented and has
+> been in use for many years in JGit's DfsRepository).  Does that mean
+> you aren't aware of it?
+
+Implementing the UNREACHABLE_GARBAGE concept from
+hash-function-transition.txt in cruft pack-terms would be equivalent to
+not writing the mtimes file at all. This follows from the fact that a
+pre-cruft packs implementation of Git considers a packed object's mtime
+to be the same as the pack it's contained in. (I'm deliberately
+avoiding any details from the h-f-t document regarding re-writing
+objects contained in a garbage pack here, since this is separate from
+the pack structure itself (and could easily be implemented on top of
+cruft packs)).
+
+So I'm not sure what the alternative we'd list would be, since it
+removes the key feature of the design of cruft packs.
 
 Thanks,
-Neeraj
+Taylor
+
+[1]: https://lore.kernel.org/git/YiZMhuI%2FDdpvQ%2FED@nand.local/
