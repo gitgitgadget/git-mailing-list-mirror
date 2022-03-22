@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB134C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 17:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ED63C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 17:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239739AbiCVRaU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 13:30:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
+        id S239749AbiCVRaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 13:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239718AbiCVRaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 13:30:14 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9516E65EB
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:45 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id u3so1308322wrg.3
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:45 -0700 (PDT)
+        with ESMTP id S239734AbiCVRaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 13:30:17 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FDB365C0
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:48 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id i186so2385477wma.3
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 10:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZZwdbmza6VzHoo8DhGH6ETA/M7qBT77r0dOdZfqRQ1g=;
-        b=b/P1bS+5m8TrBPZ4jZt0AV44RE35UURbnfTye+svhLP4r9Vr43ie6V4xgS/xxN0fe2
-         oZL9UqfvwWD+iccPsgcnTRDivQBJYMcH6tM5BBJlqynWpA4Wu4uLfRcN8D7K5kX1dhdD
-         AJxfo4SNSNOtmHHTWANavHV1Es5ML/eQDDwnPcceOVxqtGFcB+hU9yqRGN5oDlxA2jwf
-         OWHEDWYTMw/gQX+AiXB1kbO4a4LThwcbbC32GEYst2ddJ/78S+YT96K2xYghV1GN/Ao8
-         RQqSdBLaaJFPjTdSHGSpZJeJ1X+GXSD8d9UREgMq4odCjBYHbZBEUKhYCkMbgTIBVt+B
-         o9KQ==
+        bh=xAr9PF28yZSi7PsaTPcsSOpQPfWmKCXhkTZW1DnpfOs=;
+        b=YSYeF+ILqDDviWeT7oa0W55UwFJ13x5JA8mAyctiZXxjNUC4/VKxtuxtwc4plqHjnH
+         Xbo53RrptDvos3uv6+hodYbHqKDVrZNfa/nowlMGb4pkuzyi0Jbw6/cNzfhJHRpoJnD6
+         +/jMQMWZgR4D4p+I27NzlGboSQYitEkCG8RJ/QG/85iru8zz3SWejPBQlw99ZKGsQHJc
+         4YlTrY9l4baogTFRlMQ2GvpTGkGgjPvKT474BwPz95NS7RjU1py0WpzYZjta5HyXxRoX
+         IqJOBkO9Fqwj6tPXAwVYOWoR3cj1tC2KjkScrlfpxomX3IE5jGvrPWa+dseh/Em308ks
+         4rwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZZwdbmza6VzHoo8DhGH6ETA/M7qBT77r0dOdZfqRQ1g=;
-        b=im9BERUjw1+OlTthLeCg5uD6F9yUGCZQbm48ULkuoEBNYCzNEBsS+Yv7F80NRySBLJ
-         JT5KAgzgzZ90RZe3WzogCVUbUJxuO4FAd4bKQuYkmrt/LJDMC0zQUzzCOV1x0S5w43bn
-         CQ9OG0+rkvr040j36906Pa59jeQzuQVWkg0hL4zwiontN/O2LUihPvc2K0BVeflqWcfQ
-         SUKn7WwUnd6UUf/+99YDBsC47D27eZJ1J78qW6wnV5lxpetyER291xUoPAcGDaIbjBsa
-         QLKBBjspR3/jGywVouCYLjdgDWe3flPz6IxqagtbMlTnATbszqUTa1ZZPq/F4/0zNlqt
-         /i4w==
-X-Gm-Message-State: AOAM530+SYepmIKDjgBE4MD6vq8KoTC1iCXP7HYpgdzhVx2Mp8xfXCta
-        2BriB0WTiS9rv7R9GTQ4dziaV9Qqre8=
-X-Google-Smtp-Source: ABdhPJyN/rTPRbdk1sazD/OpT1k4oAj9F1ZeZxKdGcPMtgrFEuB6KQVW6z2m9DMTsULkcSB/NEiJUQ==
-X-Received: by 2002:a05:6000:144e:b0:203:e36c:74b3 with SMTP id v14-20020a056000144e00b00203e36c74b3mr24104660wrx.565.1647970123970;
-        Tue, 22 Mar 2022 10:28:43 -0700 (PDT)
+        bh=xAr9PF28yZSi7PsaTPcsSOpQPfWmKCXhkTZW1DnpfOs=;
+        b=WR+70KQW7C98Gnox55Xoc2CeJIoxGcaCfbMZs6ankfnCYjpmobEL0RXAq0dP3z0fqN
+         +X+d9JVqZr/nVVlSxQndRk9nLi6m26FCjIwETjvl1JqT6sjGhrlDep1h2WGn2cet6IA9
+         5MAkxUfnVAGO51jcWz40/L95+xyRTq2Vqp5z+GTOq5LAC0C+BQz0ozZZq974tldZ/5E3
+         N4M2npWsSDh7+7R345eBNJMBh7bwEj9arRBMY3aaLRRA4Dk9GgTDwzs1DMttqmV1M5U6
+         PDD2e/wyxCfbs0jIyU6sX3bRJE/7C0ZSdTRsfoBCdDxoIvRXPhbpXktJx5DN9D8dalTw
+         rk4g==
+X-Gm-Message-State: AOAM533/skW0FRebMacsCZ7GvIOlFplBEDBqpt1BiGC4J/4t6Kp2aMI5
+        pevokGF4kqCHAt+NEmaUTrKb/I8Nq6c=
+X-Google-Smtp-Source: ABdhPJxbkMGAKwCz5Y0ExfNe1cWjmrwSPHNc6MJiv5ulY998lYMmnp0sgW9BVIWL3KPTwTcA0wtqWQ==
+X-Received: by 2002:a1c:2744:0:b0:382:a9b7:1c8a with SMTP id n65-20020a1c2744000000b00382a9b71c8amr4771786wmn.187.1647970126453;
+        Tue, 22 Mar 2022 10:28:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n124-20020a1ca482000000b0038c9cf6e296sm3259368wme.14.2022.03.22.10.28.43
+        by smtp.gmail.com with ESMTPSA id d1-20020adffbc1000000b00203de0fff63sm16305223wrs.70.2022.03.22.10.28.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 10:28:43 -0700 (PDT)
-Message-Id: <97de926904988b89b5663bd4c59c011a1723a8f5.1647970119.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 10:28:46 -0700 (PDT)
+Message-Id: <b3c9e6523a5466bd8949c77b480c74881edade2f.1647970119.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
 References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 17:28:37 +0000
-Subject: [PATCH 3/5] pack-objects: parse --filter directly into revs.filter
+Date:   Tue, 22 Mar 2022 17:28:39 +0000
+Subject: [PATCH 5/5] bundle: output hash information in 'verify'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,56 +67,166 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change moved the 'revs' variable into cmd_pack_objects()
-and now we can remote the global filter_options in favor of revs.filter.
+The previous change moved the 'filter' capability to the end of the 'git
+bundle verify' output. Now, add the 'object-format' capability to the
+output, when it exists.
+
+This change makes 'git bundle verify' output the hash used in all cases,
+even if the capability is not in the bundle. This means that v2 bundles
+will always output that they use "sha1". This might look noisy to some
+users, but it does simplify the implementation and the test strategy for
+this feature.
+
+Since 'verify' ends early when a prerequisite commit is missing, we need
+to insert this hash message carefully into our expected test output
+throughout t6020.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/pack-objects.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ bundle.c               |  2 ++
+ t/t6020-bundle-misc.sh | 24 +++++++++++++++++-------
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f29bef9d0b6..d39f668ad56 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -237,8 +237,6 @@ static unsigned long cache_max_small_delta_size = 1000;
+diff --git a/bundle.c b/bundle.c
+index 276b55f8ce2..d50cfb5aa7e 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -278,6 +278,8 @@ int verify_bundle(struct repository *r,
+ 			list_refs(r, 0, NULL);
+ 		}
  
- static unsigned long window_memory_limit = 0;
++		printf_ln("The bundle uses this hash algorithm: %s",
++			  header->hash_algo->name);
+ 		if (header->filter.choice)
+ 			printf_ln("The bundle uses this filter: %s",
+ 				  list_objects_filter_spec(&header->filter));
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index c4ab1367afc..833205125ab 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -122,6 +122,8 @@ format_and_save_expect () {
+ 	sed -e 's/Z$//' >expect
+ }
  
--static struct list_objects_filter_options filter_options;
--
- static struct string_list uri_protocols = STRING_LIST_INIT_NODUP;
++HASH_MESSAGE="The bundle uses this hash algorithm: $GIT_DEFAULT_HASH"
++
+ #            (C)   (D, pull/1/head, topic/1)
+ #             o --- o
+ #            /       \                              (L)
+@@ -194,11 +196,12 @@ test_expect_success 'create bundle from special rev: main^!' '
  
- enum missing_action {
-@@ -3723,10 +3721,8 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
- 	int flags = 0;
- 	int save_warning;
+ 	git bundle verify special-rev.bdl |
+ 		make_user_friendly_and_stable_output >actual &&
+-	format_and_save_expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains this ref:
+ 	<COMMIT-P> refs/heads/main
+ 	The bundle requires this ref:
+ 	<COMMIT-O> Z
++	$HASH_MESSAGE
+ 	EOF
+ 	test_cmp expect actual &&
  
--	repo_init_revisions(the_repository, revs, NULL);
- 	save_commit_buffer = 0;
- 	setup_revisions(ac, av, revs, &s_r_opt);
--	list_objects_filter_copy(&revs->filter, &filter_options);
+@@ -215,12 +218,13 @@ test_expect_success 'create bundle with --max-count option' '
  
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
-@@ -3958,7 +3954,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			      &write_bitmap_index,
- 			      N_("write a bitmap index if possible"),
- 			      WRITE_BITMAP_QUIET, PARSE_OPT_HIDDEN),
--		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&revs.filter),
- 		OPT_CALLBACK_F(0, "missing", NULL, N_("action"),
- 		  N_("handling for missing objects"), PARSE_OPT_NONEG,
- 		  option_parse_missing_action),
-@@ -4080,7 +4076,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
- 		unpack_unreachable_expiration = 0;
+ 	git bundle verify max-count.bdl |
+ 		make_user_friendly_and_stable_output >actual &&
+-	format_and_save_expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains these 2 refs:
+ 	<COMMIT-P> refs/heads/main
+ 	<TAG-1> refs/tags/v1
+ 	The bundle requires this ref:
+ 	<COMMIT-O> Z
++	$HASH_MESSAGE
+ 	EOF
+ 	test_cmp expect actual &&
  
--	if (filter_options.choice) {
-+	if (revs.filter.choice) {
- 		if (!pack_to_stdout)
- 			die(_("cannot use --filter without --stdout"));
- 		if (stdin_packs)
+@@ -240,7 +244,7 @@ test_expect_success 'create bundle with --since option' '
+ 
+ 	git bundle verify since.bdl |
+ 		make_user_friendly_and_stable_output >actual &&
+-	format_and_save_expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains these 5 refs:
+ 	<COMMIT-P> refs/heads/main
+ 	<COMMIT-N> refs/heads/release
+@@ -250,6 +254,7 @@ test_expect_success 'create bundle with --since option' '
+ 	The bundle requires these 2 refs:
+ 	<COMMIT-M> Z
+ 	<COMMIT-K> Z
++	$HASH_MESSAGE
+ 	EOF
+ 	test_cmp expect actual &&
+ 
+@@ -267,11 +272,12 @@ test_expect_success 'create bundle 1 - no prerequisites' '
+ 	EOF
+ 	git bundle create stdin-1.bdl --stdin <input &&
+ 
+-	cat >expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains these 2 refs:
+ 	<COMMIT-D> refs/heads/topic/1
+ 	<COMMIT-H> refs/heads/topic/2
+ 	The bundle records a complete history.
++	$HASH_MESSAGE
+ 	EOF
+ 
+ 	# verify bundle, which has no prerequisites
+@@ -308,13 +314,14 @@ test_expect_success 'create bundle 2 - has prerequisites' '
+ 		--stdin \
+ 		release <input &&
+ 
+-	format_and_save_expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains this ref:
+ 	<COMMIT-N> refs/heads/release
+ 	The bundle requires these 3 refs:
+ 	<COMMIT-D> Z
+ 	<COMMIT-E> Z
+ 	<COMMIT-G> Z
++	$HASH_MESSAGE
+ 	EOF
+ 
+ 	git bundle verify 2.bdl |
+@@ -367,13 +374,14 @@ test_expect_success 'create bundle 3 - two refs, same object' '
+ 		--stdin \
+ 		main HEAD <input &&
+ 
+-	format_and_save_expect <<-\EOF &&
++	format_and_save_expect <<-EOF &&
+ 	The bundle contains these 2 refs:
+ 	<COMMIT-P> refs/heads/main
+ 	<COMMIT-P> HEAD
+ 	The bundle requires these 2 refs:
+ 	<COMMIT-M> Z
+ 	<COMMIT-K> Z
++	$HASH_MESSAGE
+ 	EOF
+ 
+ 	git bundle verify 3.bdl |
+@@ -409,12 +417,13 @@ test_expect_success 'create bundle 4 - with tags' '
+ 		--stdin \
+ 		--all <input &&
+ 
+-	cat >expect <<-\EOF &&
++	cat >expect <<-EOF &&
+ 	The bundle contains these 3 refs:
+ 	<TAG-1> refs/tags/v1
+ 	<TAG-2> refs/tags/v2
+ 	<TAG-3> refs/tags/v3
+ 	The bundle records a complete history.
++	$HASH_MESSAGE
+ 	EOF
+ 
+ 	git bundle verify 4.bdl |
+@@ -511,6 +520,7 @@ do
+ 		<TAG-3> refs/tags/v3
+ 		<COMMIT-P> HEAD
+ 		The bundle records a complete history.
++		$HASH_MESSAGE
+ 		The bundle uses this filter: $filter
+ 		EOF
+ 		test_cmp expect actual &&
 -- 
 gitgitgadget
-
