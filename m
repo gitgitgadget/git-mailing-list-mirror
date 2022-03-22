@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC5D9C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D6A4C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Mar 2022 18:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232158AbiCVSZe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Mar 2022 14:25:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
+        id S240395AbiCVSZg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Mar 2022 14:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240330AbiCVSZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:25:24 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50290692A9
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:56 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id r64so11844883wmr.4
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:56 -0700 (PDT)
+        with ESMTP id S240428AbiCVSZX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Mar 2022 14:25:23 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 811FD90247
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:51 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id b19so24619215wrh.11
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 11:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
-        b=GW69XiKo2T/Xo2pKsYW+LWIVSmqjRk4do21ccvdTPZJg7IcbQcpYd/qfst22QPFgUc
-         gJCUl2AGkpry7LLAJLj10AP54Ncs7uvx4Vl2fR2BJafe/4Q7S2XBJPZVXfxTTKDp+3p0
-         yXqmYlLjI9U7D1nXPOPfn5HwcP3wa43ESB8xVAa1UNieiET0RI6KQv9F3FoU7GmEsUmw
-         bMudwMkhCUw9/R4WiKZW0osXcptxc0Atp5knD2pu0gSxO0o8iBJkKUOPixzr+8X0V3nq
-         UnnRgzX5Zik5zqYT9eRgo1b1f9rTthqA1fqQlM6SJVDWg72WXE4SB/pWSBzYQfJhHdH9
-         gNKQ==
+        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
+        b=CY1FswVdVhxakPUVay74MigFgkM9F3I8WOuw6lFKP+ax+/lUAOtxChu2TiJtL+yLwj
+         g6xDNTH+hhNh9XQkIBcShAGRaMBTl4nD5s1n7DOZH2Nv8C0op5n+o+uKdElifwgQtgDB
+         wBwVKWfw7SUpFy4T2xPqpHKAx1b0EPHrDjRz8dxTO0aZSHO/OK/4+alZRiac4vht6leR
+         KtEblyuNar2BHDCddT6nytc2djnPVrwJulDNTFzhNcYfNpX4G6oVEIaCglGv5fR2QvdP
+         3W1Uzq32aEtna0RiMN1DloDPXKB0B3x7ry0uycrR/CjDQvPb+ERv/AmVmASnvbpZPuSk
+         hqyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
-        b=iuNu0h9ZpthW3E2CNmHDJWocQWXHjDvFsGf0NnksZHcbS16IFVB4NutxHbnTYtCSpz
-         lBaT8LrwTdwR2B5hJuqjWGYcXs8YdvzFKtmM0cqGaIH2jJIHZEvwljr0ZvU5tPH7MWbL
-         oCc3jYVa7/4xBda6onT/T6m6bSnTakpis8AFaunuqbtgS4bgDCqTonKUocYmUB7MJmsu
-         OJSQbNiZDNjjvXmaqGRIVUyqDhoDFPra/sk0JijHoRcXYf8vg+fAqjRljjxUenVDfpMI
-         c9jZ6CfgXtgz4s3ws+lAMUiw1mkiX3qzK1r8tyiOFqAqAhdgEe4f6kiQKMyxR3xL6fZd
-         I79w==
-X-Gm-Message-State: AOAM5312Qd3XKhUuWT9PMGdbML8kSfS8I2vZj0wDNwVOuOKfabMIcdzM
-        /pCLr2FBPCVfnBa6QDBee43syT47ibY=
-X-Google-Smtp-Source: ABdhPJx146YANg8jgunnul68Wey41i4Zu/4w4W0eJFjbXgOmRFxWrBNrjwDku/xSK+w8mjoKs+BcHA==
-X-Received: by 2002:a7b:c5d0:0:b0:389:fe85:3d79 with SMTP id n16-20020a7bc5d0000000b00389fe853d79mr5263864wmk.77.1647973434443;
-        Tue, 22 Mar 2022 11:23:54 -0700 (PDT)
+        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
+        b=04405BPmURreMf2N7RaZqMyFpWCyL5ZsBfXxbqT7Zbvi4Q7UqiteQgqJe4IegvS1qi
+         lNqdX82wy1n85Em1TcqrZnHzuPUSdK/0ltZXTu+RohHF2CWyGvR1CGrSW1eh5s20t6lL
+         cmQkyXT7e0cWyaT5Mz0WQ0Yp4eLnoVreHKjBwby8a4gD+GQcU3tGUD+RzOoLaMTS3fk+
+         YVywI0a0hqjrQU5LmRl6RQey/i+//IpByUc+yVMe5ackL88WgU0058FbBT7eC4zel39b
+         G3jdXZCMULvOcKkeuCeIRQhXNpPUA/6eV95iKs+RedaEUGQBjG7WMi43oETCEBqJt39y
+         bFHw==
+X-Gm-Message-State: AOAM530HzYhFpayWTjBa+uLw9H3FnUQ7Cm7YqFFkKgx7LppcwoiF0rf9
+        fwrrzDVhpzULAr/mJIZQmpAcJ7ZHZ+A=
+X-Google-Smtp-Source: ABdhPJxEVuew5E4cDp9rwM+NQU6Vn0Wopcr1qDwAM/Dfl6V8XiBKcbuBGAeiGRgH1wkiMdq0y3vkZw==
+X-Received: by 2002:a5d:47c4:0:b0:1f0:25ca:6d81 with SMTP id o4-20020a5d47c4000000b001f025ca6d81mr23314013wrc.247.1647973429562;
+        Tue, 22 Mar 2022 11:23:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v124-20020a1cac82000000b0037c3d08e0e7sm2358758wme.29.2022.03.22.11.23.52
+        by smtp.gmail.com with ESMTPSA id w7-20020a1cf607000000b00389a5390180sm2348621wmc.25.2022.03.22.11.23.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Mar 2022 11:23:53 -0700 (PDT)
-Message-Id: <0f0a5b5ca1630985b9a91fa0e6c5fc951561679c.1647973380.git.gitgitgadget@gmail.com>
+        Tue, 22 Mar 2022 11:23:47 -0700 (PDT)
+Message-Id: <13d11713a869f62677ca2f281cc527020e616eec.1647973380.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 References: <pull.1143.v2.git.1646777727.gitgitgadget@gmail.com>
         <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Mar 2022 18:22:53 +0000
-Subject: [PATCH v3 20/27] fsmonitor: optimize processing of directory events
+Date:   Tue, 22 Mar 2022 18:22:51 +0000
+Subject: [PATCH v3 18/27] fsm-health-win32: force shutdown daemon if worktree
+ root moves
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,123 +73,206 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach Git to perform binary search over the cache-entries for a directory
-notification and then linearly scan forward to find the immediate children.
+Force shutdown fsmonitor daemon if the worktree root directory
+is moved, renamed, or deleted.
 
-Previously, when the FSMonitor reported a modified directory Git would
-perform a linear search on the entire cache-entry array for all
-entries matching that directory prefix and invalidate them.  Since the
-cache-entry array is already sorted, we can use a binary search to
-find the first matching entry and then only linearly walk forward and
-invalidate entries until the prefix changes.
+Use Windows low-level GetFileInformationByHandle() to get and
+compare the Windows system unique ID for the directory with a
+cached version when we started up.  This lets us detect the
+case where someone renames the directory that we are watching
+and then creates a new directory with the original pathname.
 
-Also, the original code would invalidate anything having the same
-directory prefix.  Since a directory event should only be received for
-items that are immediately within the directory (and not within
-sub-directories of it), only invalidate those entries and not the
-whole subtree.
+This is important because we are listening to a named pipe for
+requests and they are stored in the Named Pipe File System (NPFS)
+which a kernel-resident pseudo filesystem not associated with
+the actual NTFS directory.
+
+For example, if the daemon was watching "~/foo/", it would have
+a directory-watch handle on that directory and a named-pipe
+handle for "//./pipe/...foo".  Moving the directory to "~/bar/"
+does not invalidate the directory handle.  (So the daemon would
+actually be watching "~/bar" but listening on "//./pipe/...foo".
+If the user then does "git init ~/foo" and causes another daemon
+to start, the first daemon will still have ownership of the pipe
+and the second daemon instance will fail to start.  "git status"
+clients in "~/foo" will ask "//./pipe/...foo" about changes and
+the first daemon instance will tell them about "~/bar".
+
+This commit causes the first daemon to shutdown if the system unique
+ID for "~/foo" changes (changes from what it was when the daemon
+started).  Shutdown occurs after a periodic poll.  After the
+first daemon exits and releases the lock on the named pipe,
+subsequent Git commands may cause another daemon to be started
+on "~/foo".  Similarly, a subsequent Git command may cause another
+daemon to be started on "~/bar".
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor.c | 71 ++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 54 insertions(+), 17 deletions(-)
+ compat/fsmonitor/fsm-health-win32.c | 143 ++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 292a6742b4f..e1229c289cf 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -184,30 +184,68 @@ static int query_fsmonitor_hook(struct repository *r,
- static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index 24fc612bf02..2ea08c1d4e8 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -29,8 +29,150 @@ struct fsm_health_data
+ 	HANDLE hHandles[1]; /* the array does not own these handles */
+ #define HEALTH_SHUTDOWN 0
+ 	int nr_handles; /* number of active event handles */
++
++	struct wt_moved
++	{
++		wchar_t wpath[MAX_PATH + 1];
++		BY_HANDLE_FILE_INFORMATION bhfi;
++	} wt_moved;
+ };
+ 
++/*
++ * Lookup the system unique ID for the path.  This is as close as
++ * we get to an inode number, but this also contains volume info,
++ * so it is a little stronger.
++ */
++static int lookup_bhfi(wchar_t *wpath,
++		       BY_HANDLE_FILE_INFORMATION *bhfi)
++{
++	DWORD desired_access = FILE_LIST_DIRECTORY;
++	DWORD share_mode =
++		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
++	HANDLE hDir;
++
++	hDir = CreateFileW(wpath, desired_access, share_mode, NULL,
++			   OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
++	if (hDir == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] health thread could not open '%ls'"),
++		      GetLastError(), wpath);
++		return -1;
++	}
++
++	if (!GetFileInformationByHandle(hDir, bhfi)) {
++		error(_("[GLE %ld] health thread getting BHFI for '%ls'"),
++		      GetLastError(), wpath);
++		CloseHandle(hDir);
++		return -1;
++	}
++
++	CloseHandle(hDir);
++	return 0;
++}
++
++/*
++ * Compare the relevant fields from two system unique IDs.
++ * We use this to see if two different handles to the same
++ * path actually refer to the same *instance* of the file
++ * or directory.
++ */
++static int bhfi_eq(const BY_HANDLE_FILE_INFORMATION *bhfi_1,
++		   const BY_HANDLE_FILE_INFORMATION *bhfi_2)
++{
++	return (bhfi_1->dwVolumeSerialNumber == bhfi_2->dwVolumeSerialNumber &&
++		bhfi_1->nFileIndexHigh == bhfi_2->nFileIndexHigh &&
++		bhfi_1->nFileIndexLow == bhfi_2->nFileIndexLow);
++}
++
++/*
++ * Shutdown if the original worktree root directory been deleted,
++ * moved, or renamed?
++ *
++ * Since the main thread did a "chdir(getenv($HOME))" and our CWD
++ * is not in the worktree root directory and because the listener
++ * thread added FILE_SHARE_DELETE to the watch handle, it is possible
++ * for the root directory to be moved or deleted while we are still
++ * watching it.  We want to detect that here and force a shutdown.
++ *
++ * Granted, a delete MAY cause some operations to fail, such as
++ * GetOverlappedResult(), but it is not guaranteed.  And because
++ * ReadDirectoryChangesW() only reports on changes *WITHIN* the
++ * directory, not changes *ON* the directory, our watch will not
++ * receive a delete event for it.
++ *
++ * A move/rename of the worktree root will also not generate an event.
++ * And since the listener thread already has an open handle, it may
++ * continue to receive events for events within the directory.
++ * However, the pathname of the named-pipe was constructed using the
++ * original location of the worktree root.  (Remember named-pipes are
++ * stored in the NPFS and not in the actual file system.)  Clients
++ * trying to talk to the worktree after the move/rename will not
++ * reach our daemon process, since we're still listening on the
++ * pipe with original path.
++ *
++ * Furthermore, if the user does something like:
++ *
++ *   $ mv repo repo.old
++ *   $ git init repo
++ *
++ * A new daemon cannot be started in the new instance of "repo"
++ * because the named-pipe is still being used by the daemon on
++ * the original instance.
++ *
++ * So, detect move/rename/delete and shutdown.  This should also
++ * handle unsafe drive removal.
++ *
++ * We use the file system unique ID to distinguish the original
++ * directory instance from a new instance and force a shutdown
++ * if the unique ID changes.
++ *
++ * Since a worktree move/rename/delete/unmount doesn't happen
++ * that often (and we can't get an immediate event anyway), we
++ * use a timeout and periodically poll it.
++ */
++static int has_worktree_moved(struct fsmonitor_daemon_state *state,
++			      enum interval_fn_ctx ctx)
++{
++	struct fsm_health_data *data = state->health_data;
++	BY_HANDLE_FILE_INFORMATION bhfi;
++	int r;
++
++	switch (ctx) {
++	case CTX_TERM:
++		return 0;
++
++	case CTX_INIT:
++		if (xutftowcs_path(data->wt_moved.wpath,
++				   state->path_worktree_watch.buf) < 0) {
++			error(_("could not convert to wide characters: '%s'"),
++			      state->path_worktree_watch.buf);
++			return -1;
++		}
++
++		/*
++		 * On the first call we lookup the unique sequence ID for
++		 * the worktree root directory.
++		 */
++		return lookup_bhfi(data->wt_moved.wpath, &data->wt_moved.bhfi);
++
++	case CTX_TIMER:
++		r = lookup_bhfi(data->wt_moved.wpath, &bhfi);
++		if (r)
++			return r;
++		if (!bhfi_eq(&data->wt_moved.bhfi, &bhfi)) {
++			error(_("BHFI changed '%ls'"), data->wt_moved.wpath);
++			return -1;
++		}
++		return 0;
++
++	default:
++		die(_("unhandled case in 'has_worktree_moved': %d"),
++		    (int)ctx);
++	}
++
++	return 0;
++}
++
++
+ int fsm_health__ctor(struct fsmonitor_daemon_state *state)
  {
- 	int i, len = strlen(name);
--	if (name[len - 1] == '/') {
-+	int pos = index_name_pos(istate, name, len);
-+
-+	trace_printf_key(&trace_fsmonitor,
-+			 "fsmonitor_refresh_callback '%s' (pos %d)",
-+			 name, pos);
- 
-+	if (name[len - 1] == '/') {
- 		/*
--		 * TODO We should binary search to find the first path with
--		 * TODO this directory prefix.  Then linearly update entries
--		 * TODO while the prefix matches.  Taking care to search without
--		 * TODO the trailing slash -- because '/' sorts after a few
--		 * TODO interesting special chars, like '.' and ' '.
-+		 * The daemon can decorate directory events, such as
-+		 * moves or renames, with a trailing slash if the OS
-+		 * FS Event contains sufficient information, such as
-+		 * MacOS.
-+		 *
-+		 * Use this to invalidate the entire cone under that
-+		 * directory.
-+		 *
-+		 * We do not expect an exact match because the index
-+		 * does not normally contain directory entries, so we
-+		 * start at the insertion point and scan.
- 		 */
-+		if (pos < 0)
-+			pos = -pos - 1;
- 
- 		/* Mark all entries for the folder invalid */
--		for (i = 0; i < istate->cache_nr; i++) {
--			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID &&
--			    starts_with(istate->cache[i]->name, name))
--				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
-+		for (i = pos; i < istate->cache_nr; i++) {
-+			if (!starts_with(istate->cache[i]->name, name))
-+				break;
-+			istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
- 		}
--		/* Need to remove the / from the path for the untracked cache */
-+
-+		/*
-+		 * We need to remove the traling "/" from the path
-+		 * for the untracked cache.
-+		 */
- 		name[len - 1] = '\0';
-+	} else if (pos >= 0) {
-+		/*
-+		 * We have an exact match for this path and can just
-+		 * invalidate it.
-+		 */
-+		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
- 	} else {
--		int pos = index_name_pos(istate, name, strlen(name));
--
--		if (pos >= 0) {
--			struct cache_entry *ce = istate->cache[pos];
--			ce->ce_flags &= ~CE_FSMONITOR_VALID;
-+		/*
-+		 * The path is not a tracked file -or- it is a
-+		 * directory event on a platform that cannot
-+		 * distinguish between file and directory events in
-+		 * the event handler, such as Windows.
-+		 *
-+		 * Scan as if it is a directory and invalidate the
-+		 * cone under it.  (But remember to ignore items
-+		 * between "name" and "name/", such as "name-" and
-+		 * "name.".
-+		 */
-+		pos = -pos - 1;
-+
-+		for (i = pos; i < istate->cache_nr; i++) {
-+			if (!starts_with(istate->cache[i]->name, name))
-+				break;
-+			if ((unsigned char)istate->cache[i]->name[len] > '/')
-+				break;
-+			if (istate->cache[i]->name[len] == '/')
-+				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
- 		}
- 	}
- 
-@@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- 	 * Mark the untracked cache dirty even if it wasn't found in the index
- 	 * as it could be a new untracked file.
- 	 */
--	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", name);
- 	untracked_cache_invalidate_path(istate, name, 0);
- }
+ 	struct fsm_health_data *data;
+@@ -64,6 +206,7 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
+  * A table of the polling functions.
+  */
+ static interval_fn *table[] = {
++	has_worktree_moved,
+ 	NULL, /* must be last */
+ };
  
 -- 
 gitgitgadget
