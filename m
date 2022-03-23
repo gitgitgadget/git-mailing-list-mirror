@@ -2,98 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A2DAC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 13:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B02EAC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 13:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243556AbiCWN3K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 09:29:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43340 "EHLO
+        id S244303AbiCWNe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 09:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231694AbiCWN3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 09:29:10 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0886352E0A
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 06:27:40 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id r22so2803509ejs.11
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 06:27:39 -0700 (PDT)
+        with ESMTP id S236083AbiCWNe0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 09:34:26 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6240175C2C
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 06:32:56 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id bp39so1102675qtb.6
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 06:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=IYM+U4LpU/F8B+zeWGHIwje4RzfMp3hsb0qenHeoX0w=;
-        b=coK1EXOQM/xO1biOL91r/ZsMnopOaY/oDCnKsVVQEWJ6ca8Lwcswaef7M67vyV4S8n
-         dVuIGvE0xGeCpV+c7md3TY4m674Jq3mgK6K7aod4JI/22nsU7iCMKQEDYpticZMb4rzP
-         S4fODu8OFvKxtyqbItyC7MbVLNuNfrd7Pi2z3xBokDEvwBfKujMHJ/6Gmzd+m+4frpcC
-         NqC07N3nykmlbKI48jlVpOFCxYmLj9KCKc4/uPAVwQ5Svply7EMVDR78K7KrXUdcG2Wf
-         uUbLUwHidZhZevFngwG0tYwirG3um09yKQk/lutcy9ALATZ+V9Ia/PhT9Blq1daMtfc9
-         mHIw==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=tx8L5ai4wsPuHmFCoYQBTzTCiFZ5L9S+2OXZ9iFxV1A=;
+        b=hpinfUXqMrlmi+WVwfaupYOFpwf13Iz8rmdmCHt+N3rxKAHcEPMM/epCRpQOg6XRRM
+         S0u/rH0QFAuWysxgPRNAGLuld/8NsNWTmyMyNhd28rgM6rcdaBSlIlc+vPzS1R2BZ7Or
+         k3PrHf2mTAk3x9eDFFF49ThNRf2uZqH5IdiA8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=IYM+U4LpU/F8B+zeWGHIwje4RzfMp3hsb0qenHeoX0w=;
-        b=kIRZZHKsLuaCVvG7DqmOCdiSgZN1H+LUiG1ZuGIxcXCFMLvVzY5chgI2FlJkriOXaX
-         ewiZyF/mjszYikQjvd6Kwb6sgL0GApl//xdo35gbzsgbbRCsVJZAiseqxW2v8gsR+izW
-         wzeJQ/xXQZTkZbFA+yKOSpUYWZxcuipfHEg9jXPHfdKK2pdF92+fXTubiViud25ugd/8
-         SeMZOIL7p6YyACG4TDPEg72mFZzpmR73KJKYKWpqmgwJJ9nocI8aKPyMVcQo9griT/7X
-         GoweUEpIgWAXznieoLOhtPp1+wm6XzBHGVmjqlsNIH3tBwoV88FGuHdoV5R7gXBe4Po9
-         H9Yw==
-X-Gm-Message-State: AOAM533ttZgOvGWJCvd611bkAFsrh8wygIA/G0vWYtfM1lVpd2U5R4jy
-        73ctbiI7Ir9WViW4WAAykUBPdkgGiD2P/g==
-X-Google-Smtp-Source: ABdhPJzh8Je9kfiFNQLy5aWEMsyh3AIGFDfc+O4T31WoNlShK/gxPHsWJ6Ycv4wd4lTsHdtkMzFciw==
-X-Received: by 2002:a17:906:6a1b:b0:6df:af36:dd43 with SMTP id qw27-20020a1709066a1b00b006dfaf36dd43mr27106948ejc.359.1648042058174;
-        Wed, 23 Mar 2022 06:27:38 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b004162d0b4cbbsm11449701edu.93.2022.03.23.06.27.37
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=tx8L5ai4wsPuHmFCoYQBTzTCiFZ5L9S+2OXZ9iFxV1A=;
+        b=h3L0lMBGDZUE7n9Henl7m3iFaUtCfksmS4HINxEHZYQkVAv8UZos1P9NtPXB0KVtFo
+         /BFdPmm5B7L4veo6DjIByeKmYMcbBPMZX0eXnqbxCB9u12QbqbZv6YA2fOvqTPxuWOgr
+         OF31/GHiB9j8Gk8l9SFOYtWWbjY6iINgz0difCtoGrvTbXfuQCO/p2UNfHfQ6PMHbvd1
+         s7OqJ3s6cDIyBNr9sM9/PaOmTGyob+rThC0G9yRjUmcivBepPp4pqdids/t1Jo7BjQBW
+         dDaB1db2coSZg0SfFhBdzyJK9R0Gj+g7FY3Lo5sIA/ht0qrJ329Sr2jgs9qkIj5Rs71S
+         ACOg==
+X-Gm-Message-State: AOAM531cSsB3KgiTQFuilXLt33JjcJH8isBzDIGv80i4w5ogwGqdQlva
+        8gEodPgEyqymZHWeA0Y/YbNuVxsMLk+4Mg==
+X-Google-Smtp-Source: ABdhPJxnuHi5v6f5PZ2jufARnMWfLEM30apIvcPKp2McEehqTy2DUtF9kha+G4kxW0ZA54FryZ3LZQ==
+X-Received: by 2002:ac8:7ee3:0:b0:2e1:a508:c500 with SMTP id r3-20020ac87ee3000000b002e1a508c500mr23788019qtc.117.1648042375364;
+        Wed, 23 Mar 2022 06:32:55 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
+        by smtp.gmail.com with ESMTPSA id m3-20020a05622a118300b002e1beed4908sm55217qtk.3.2022.03.23.06.32.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 06:27:37 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nX11U-000nbv-V3;
-        Wed, 23 Mar 2022 14:27:36 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        nksingh85@gmail.com, ps@pks.im,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 2/7] core.fsyncmethod: batched disk flushes for
- loose-objects
-Date:   Wed, 23 Mar 2022 14:26:50 +0100
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
- <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
-Message-ID: <220323.86k0ckol2v.gmgdl@evledraar.gmail.com>
+        Wed, 23 Mar 2022 06:32:54 -0700 (PDT)
+Date:   Wed, 23 Mar 2022 09:32:53 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: lei + thunderbird recipe
+Message-ID: <20220323133253.55i4sy5fs2zy5ocj@meerkat.local>
+References: <6cdeed25-9964-909d-376d-024e1385840c@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6cdeed25-9964-909d-376d-024e1385840c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 23, 2022 at 07:55:34PM +0700, Bagas Sanjaya wrote:
+> This thread is inspired by Ævar's recipe [1] and Josef Bacik's recipe
+> [2].
+> 
+> As I know that GMail have issues regarding delayed ML message delivery,
+> I go trying to use lei to fetch ML messages into Thunderbird.
+> 
+> After installing public-inbox (I have to build from public-inbox.org
+> sources because there isn't yet official Debian/Ubuntu packages), I
+> begin fetching Git ML messages up until 18 days ago (within
+> public-inbox sources directory):
+> 
+> 	lei q -o "mboxrd:mbox/git.mbox" -I https://lore.kernel.org/git
+> 	-t 'a:git@vger.kernel.org AND rt:18.days.ago..'
 
-On Sun, Mar 20 2022, Neeraj Singh via GitGitGadget wrote:
+If you are a Thunderbird user, you can also just access
+nntp://nntp.lore.kernel.org/org.kernel.vger.git much to the same effect.
 
-> From: Neeraj Singh <neerajsi@microsoft.com>
-> [..
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-> index 889522956e4..a3798dfc334 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -628,6 +628,13 @@ core.fsyncMethod::
->  * `writeout-only` issues pagecache writeback requests, but depending on the
->    filesystem and storage hardware, data added to the repository may not be
->    durable in the event of a system crash. This is the default mode on macOS.
-> +* `batch` enables a mode that uses writeout-only flushes to stage multiple
-> +  updates in the disk writeback cache and then does a single full fsync of
-> +  a dummy file to trigger the disk cache flush at the end of the operation.
+Lei is best suited when you're doing complex search queries across multiple
+lists.
 
-I think adding a \n\n here would help make this more readable & break
-the flow a bit. I.e. just add a "+" on its own line, followed by
-"Currently...
+Best regards,
+-Konstantin
 
-> +  Currently `batch` mode only applies to loose-object files. Other repository
-> +  data is made durable as if `fsync` was specified. This mode is expected to
-> +  be as safe as `fsync` on macOS for repos stored on HFS+ or APFS filesystems
-> +  and on Windows for repos stored on NTFS or ReFS filesystems.
