@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18AADC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B34BC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242167AbiCWUeS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 16:34:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56342 "EHLO
+        id S1344705AbiCWUeT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 16:34:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344712AbiCWUeI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1344713AbiCWUeI (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Mar 2022 16:34:08 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15668CCCE
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:32:34 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id n35so1624230wms.5
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:32:34 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5FEA8C7FC
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:32:35 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id h4so3750420wrc.13
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kyfbXIsnocwQtxRxzuWjFRihALfqshIgAhJqVWELTUA=;
-        b=R1lqRjWVW3TqIjjX+3A/cGEbOlcS8H5jMipAe7mGSTOCFmmKB7RDDc3PNnOwP9G6IA
-         Q1bQtIdn+yDcMAliBLvwdXXXkLr8dd8618UgK1ywdz1eSNfjG9NIsFMUH9NGv7WNycz+
-         /naS77bXUT4Vc2YXokEoeg2Kx1svNfbsow9d+ZNMroqqUYclrvCqsUel6ymbUVVFj9P7
-         GTNz6/zaC4yhE9WKYiZP/uuSRKU/rQbI8I0cq0dUCE+WPAZfYOvBScQVKEBnXXIHxam5
-         RYfoqMq4ENT/4xpSMsEbc0ywoi87BJSjNavaMt5dfI4IwHLavtZYjvp6kI3Qz+22unfn
-         hgTQ==
+        bh=DujuV37yP5xt7uGsZVUQKTrBVjSeRWX7fRJ3PzQuyo8=;
+        b=BPOZi1TnONzhHeV4NMdADTPdkvZslrK1PLyLLPHuv5ezP8yos7byrQJqrQcuOt86qE
+         0veRPf8k9VKeatC/0vgy8xPw3QSkdVQWu4cYCwZndE0UBTKYuAfDl1LX7gK+YSA/SlAS
+         2/lnRtWmH0GyPFm3YVQWer4C8YOx1WGEXU4bdmjTmpk3QUGME+/9bLWN0z5aZh4JDL1X
+         23aTl4BYMaSf9kfN+hwAsX3RTHE37Kb8h//DE1fiy2H62xbMUlT4aYfYmWLTNjReE+xm
+         31xrnulEKxWhM7RidT58z+bZk6XgS7clYIthbJ3LBQYbwudAZlYqlYatIHsHM/9a9E28
+         oDdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kyfbXIsnocwQtxRxzuWjFRihALfqshIgAhJqVWELTUA=;
-        b=tSSsP60cAzmfkaUMEo8QJrHbpTrULgnFnoYMmpn9CXYfmabtMzEfOvD6aGUI+c+tPR
-         0pD++47/MfSXWZcrNSr39ipJrRic2HeXlxkcYoq9yvuMTTMC7Oc6frLsuF/VoFt/7TXg
-         92NTeLV6Q/1M3uumsKwQha6JFAjkPVA5oHDJOdH95CeboCzLOCeB8BDZaqBPCrWJQ2Sz
-         9jKFHr/sHi0TMxHNregcmWO7safbxmgKib/ybjdaW7ipKr6D05AAxAXKy3msQCM7Li1N
-         Tl5945Twdf20X1alO7DXSu+0iOmkOZelsL57ENXBajz56Kv+JdTAgfFOpY9N1Wkt2MrJ
-         BBwg==
-X-Gm-Message-State: AOAM530FJ4EMMfv5ByeZY1/zX2ZQ991sqs1QTV2DmM7ghd6ioxDG/0B7
-        zti+66cs5ZmOLrQgUVmHjdbHGML/g21rrg==
-X-Google-Smtp-Source: ABdhPJzjPZAPtonUn9qhM0rVFFCkbgmTXXmkb4hInR7BbJEcSDFL42didvXTO0tlrQGQHrdoGkBb6w==
-X-Received: by 2002:a05:600c:4fc4:b0:38c:be2b:2a04 with SMTP id o4-20020a05600c4fc400b0038cbe2b2a04mr1756722wmq.152.1648067552937;
-        Wed, 23 Mar 2022 13:32:32 -0700 (PDT)
+        bh=DujuV37yP5xt7uGsZVUQKTrBVjSeRWX7fRJ3PzQuyo8=;
+        b=Mi9oM9ziYE6PyGpZk8NnGMWjbmrKHxcisd6uSsvkuIqhv+yIlI/4Sqg5Y/yXdRqa/r
+         POdbybANGHescDi1BvORE25L5Ja29Esbq3BNVINIRv3BJeLx/rM2yiT7NrspzIPHIwLs
+         gVT8ypidqs5rDoZSjjwJ0/PuM1pR50zxQHv45Wudd53gLVaxtP093Wxk50KRRLo2/WcT
+         WQLA0sYw2Poh8/JvKZT4Es3+X6QjuofkTZe3DA9pxhwNTNBmVX5F4vzCP+1EroQcI1lP
+         8/kI1JT7zkkTJaT0mz9/E1Cog+TAdulyx0pLkgpi/Xnf8PgJsYvUOnlj+VO4jSKUHUvV
+         JQAw==
+X-Gm-Message-State: AOAM533aR6I8D4X7uEECjwaGfx5aPJNtNXmuNOUXPZXN8ZcwbaP7tes8
+        L+sF0FHb0UnvKc2ZrcWQCpTkqjnPYS53bQ==
+X-Google-Smtp-Source: ABdhPJyGAacovhSf+Zqpx9xiYDSYCb3sSOnnx6NLuFl8neHaMeAurg872dmMFQt7tMA7Rx/hxyKrOA==
+X-Received: by 2002:a05:6000:1561:b0:204:1ba3:3b8b with SMTP id 1-20020a056000156100b002041ba33b8bmr1468213wrz.325.1648067553812;
+        Wed, 23 Mar 2022 13:32:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u12-20020a5d6dac000000b00204119d37d0sm849843wrs.26.2022.03.23.13.32.31
+        by smtp.gmail.com with ESMTPSA id u12-20020a5d6dac000000b00204119d37d0sm849843wrs.26.2022.03.23.13.32.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 13:32:32 -0700 (PDT)
+        Wed, 23 Mar 2022 13:32:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/27] revisions API users: add straightforward release_revisions()
-Date:   Wed, 23 Mar 2022 21:31:57 +0100
-Message-Id: <patch-v2-07.27-3cb36d358d6-20220323T203149Z-avarab@gmail.com>
+Subject: [PATCH v2 08/27] revisions API users: use release_revisions() needing "{ 0 }" init
+Date:   Wed, 23 Mar 2022 21:31:58 +0100
+Message-Id: <patch-v2-08.27-42ad1208934-20220323T203149Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1452.ga7cfc89151f
 In-Reply-To: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
 References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com> <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
@@ -70,454 +70,150 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a release_revisions() to various users of "struct rev_list" in
-those straightforward cases where we only need to add the
-release_revisions() call to the end of a block, and don't need to
-e.g. refactor anything to use a "goto cleanup" pattern.
+Use release_revisions() to various users of "struct rev_list" which
+need to have their "struct rev_info" zero-initialized before we can
+start using it. In all of these cases we might "goto cleanup" (or equivalent),
+
+For the bundle.c code see the early exit case added in
+3bbbe467f29 (bundle verify: error out if called without an object
+database, 2019-05-27).
+
+For the relevant bisect.c code see 45b6370812c (bisect: libify
+`check_good_are_ancestors_of_bad` and its dependents, 2020-02-17).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- add-interactive.c                | 1 +
- bisect.c                         | 2 ++
- builtin/add.c                    | 1 +
- builtin/am.c                     | 3 +++
- builtin/bisect--helper.c         | 2 ++
- builtin/blame.c                  | 1 +
- builtin/checkout.c               | 1 +
- builtin/commit.c                 | 1 +
- builtin/describe.c               | 2 ++
- builtin/fast-export.c            | 1 +
- builtin/merge.c                  | 2 ++
- builtin/pack-objects.c           | 2 ++
- builtin/prune.c                  | 1 +
- builtin/reflog.c                 | 1 +
- builtin/shortlog.c               | 2 ++
- builtin/submodule--helper.c      | 1 +
- fmt-merge-msg.c                  | 1 +
- merge-ort.c                      | 1 +
- merge-recursive.c                | 1 +
- midx.c                           | 1 +
- pack-bitmap-write.c              | 1 +
- ref-filter.c                     | 1 +
- remote.c                         | 1 +
- sequencer.c                      | 3 +++
- shallow.c                        | 1 +
- submodule.c                      | 2 ++
- t/helper/test-revision-walking.c | 1 +
- wt-status.c                      | 1 +
- 28 files changed, 39 insertions(+)
+ bisect.c                    | 18 ++++++++++++------
+ builtin/submodule--helper.c |  3 ++-
+ bundle.c                    | 12 ++++++++----
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 72472103017..54cdfc82017 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -570,6 +570,7 @@ static int get_modified_files(struct repository *r,
- 
- 		if (ps)
- 			clear_pathspec(&rev.prune_data);
-+		release_revisions(&rev);
- 	}
- 	hashmap_clear_and_free(&s.file_map, struct pathname_entry, ent);
- 	if (unmerged_count)
 diff --git a/bisect.c b/bisect.c
-index 9e6a2b7f201..cc6b8b6230d 100644
+index cc6b8b6230d..159a4b644df 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -884,6 +884,7 @@ static int check_ancestors(struct repository *r, int rev_nr,
+@@ -1010,7 +1010,7 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
+  */
+ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ {
+-	struct rev_info revs;
++	struct rev_info revs = { 0 };
+ 	struct commit_list *tried;
+ 	int reaches = 0, all = 0, nr, steps;
+ 	enum bisect_error res = BISECT_OK;
+@@ -1035,7 +1035,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 
+ 	res = check_good_are_ancestors_of_bad(r, prefix, no_checkout);
+ 	if (res)
+-		return res;
++		goto cleanup;
+ 
+ 	bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
+ 
+@@ -1060,14 +1060,16 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		       term_good,
+ 		       term_bad);
+ 
+-		return BISECT_FAILED;
++		res = BISECT_FAILED;
++		goto cleanup;
+ 	}
+ 
+ 	if (!all) {
+ 		fprintf(stderr, _("No testable commit found.\n"
+ 			"Maybe you started with bad path arguments?\n"));
+ 
+-		return BISECT_NO_TESTABLE_COMMIT;
++		res = BISECT_NO_TESTABLE_COMMIT;
++		goto cleanup;
+ 	}
+ 
+ 	bisect_rev = &revs.commits->item->object.oid;
+@@ -1087,7 +1089,8 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		 * for negative return values for early returns up
+ 		 * until the cmd_bisect__helper() caller.
+ 		 */
+-		return BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		res = BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		goto cleanup;
+ 	}
+ 
+ 	nr = all - reaches - 1;
+@@ -1106,7 +1109,10 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
  	/* Clean up objects used, as they will be reused. */
- 	clear_commit_marks_many(rev_nr, rev, ALL_REV_FLAGS);
+ 	repo_clear_commit_marks(r, ALL_REV_FLAGS);
  
+-	return bisect_checkout(bisect_rev, no_checkout);
++	res = bisect_checkout(bisect_rev, no_checkout);
++cleanup:
 +	release_revisions(&revs);
- 	return res;
++	return res;
  }
  
-@@ -964,6 +965,7 @@ static void show_diff_tree(struct repository *r,
- 
- 	setup_revisions(ARRAY_SIZE(argv) - 1, argv, &opt, NULL);
- 	log_tree_commit(&opt, commit);
-+	release_revisions(&opt);
- }
- 
- /*
-diff --git a/builtin/add.c b/builtin/add.c
-index 3ffb86a4338..f507d2191cd 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -340,6 +340,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
- 
- 	unlink(file);
- 	free(file);
-+	release_revisions(&rev);
- 	return 0;
- }
- 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0f4111bafa0..93bec62afa9 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1397,6 +1397,7 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
- 	add_pending_object(&rev_info, &commit->object, "");
- 	diff_setup_done(&rev_info.diffopt);
- 	log_tree_commit(&rev_info, commit);
-+	release_revisions(&rev_info);
- }
- 
- /**
-@@ -1429,6 +1430,7 @@ static void write_index_patch(const struct am_state *state)
- 	add_pending_object(&rev_info, &tree->object, "");
- 	diff_setup_done(&rev_info.diffopt);
- 	run_diff_index(&rev_info, 1);
-+	release_revisions(&rev_info);
- }
- 
- /**
-@@ -1582,6 +1584,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		add_pending_oid(&rev_info, "HEAD", &our_tree, 0);
- 		diff_setup_done(&rev_info.diffopt);
- 		run_diff_index(&rev_info, 1);
-+		release_revisions(&rev_info);
- 	}
- 
- 	if (run_apply(state, index_path))
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 8b2b259ff0d..e4d7b6779ae 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -555,6 +555,7 @@ static int bisect_skipped_commits(struct bisect_terms *terms)
- 	reset_revision_walk();
- 
- 	strbuf_release(&commit_name);
-+	release_revisions(&revs);
- 	fclose(fp);
- 	return 0;
- }
-@@ -1041,6 +1042,7 @@ static enum bisect_error bisect_skip(struct bisect_terms *terms, const char **ar
- 						oid_to_hex(&commit->object.oid));
- 
- 			reset_revision_walk();
-+			release_revisions(&revs);
- 		} else {
- 			strvec_push(&argv_state, argv[i]);
- 		}
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 885b381ab83..24bac822c56 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1203,5 +1203,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 
- cleanup:
- 	cleanup_scoreboard(&sb);
-+	release_revisions(&revs);
- 	return 0;
- }
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4d9e0bd3ac1..7ad4a7113c9 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1082,6 +1082,7 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
- 
- 	/* Clean up objects used, as they will be reused. */
- 	repo_clear_commit_marks(the_repository, ALL_REV_FLAGS);
-+	release_revisions(&revs);
- }
- 
- static int switch_branches(const struct checkout_opts *opts,
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 009a1de0a3d..c7eda9bbb72 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1123,6 +1123,7 @@ static const char *find_author_by_nickname(const char *name)
- 		strbuf_release(&buf);
- 		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
- 		clear_mailmap(&mailmap);
-+		release_revisions(&revs);
- 		return strbuf_detach(&buf, NULL);
- 	}
- 	die(_("--author '%s' is not 'Name <email>' and matches no existing author"), name);
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 42159cd26bd..a76f1a1a7a7 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -517,6 +517,7 @@ static void describe_blob(struct object_id oid, struct strbuf *dst)
- 
- 	traverse_commit_list(&revs, process_commit, process_object, &pcd);
- 	reset_revision_walk();
-+	release_revisions(&revs);
- }
- 
- static void describe(const char *arg, int last_one)
-@@ -667,6 +668,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 				suffix = NULL;
- 			else
- 				suffix = dirty;
-+			release_revisions(&revs);
- 		}
- 		describe("HEAD", 1);
- 	} else if (dirty) {
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index a7d72697fba..f34ae451ee3 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -1275,6 +1275,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		printf("done\n");
- 
- 	refspec_clear(&refspecs);
-+	release_revisions(&revs);
- 
- 	return 0;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index f178f5a3ee1..d9784d4891c 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -443,6 +443,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
- 	}
- 	write_file_buf(git_path_squash_msg(the_repository), out.buf, out.len);
- 	strbuf_release(&out);
-+	release_revisions(&rev);
- }
- 
- static void finish(struct commit *head_commit,
-@@ -998,6 +999,7 @@ static int evaluate_result(void)
- 	 */
- 	cnt += count_unmerged_entries();
- 
-+	release_revisions(&rev);
- 	return cnt;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 829ca359cf9..0aa194f68dc 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3384,6 +3384,7 @@ static void read_packs_list_from_stdin(void)
- 	strbuf_release(&buf);
- 	string_list_clear(&include_packs, 0);
- 	string_list_clear(&exclude_packs, 0);
-+	release_revisions(&revs);
- }
- 
- static void read_object_list_from_stdin(void)
-@@ -3800,6 +3801,7 @@ static void get_object_list(int ac, const char **av)
- 	if (unpack_unreachable)
- 		loosen_unused_packed_objects();
- 
-+	release_revisions(&revs);
- 	oid_array_clear(&recent_objects);
- }
- 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index c2bcdc07db4..df376b2ed1e 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -196,5 +196,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 		prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
- 	}
- 
-+	release_revisions(&revs);
- 	return 0;
- }
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 9407f835cb6..592d5d33442 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -248,6 +248,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		if (verbose)
- 			printf(_("Marking reachable objects..."));
- 		mark_reachable_objects(&revs, 0, 0, NULL);
-+		release_revisions(&revs);
- 		if (verbose)
- 			putchar('\n');
- 	}
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index fcde07c9367..35825f075e3 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -422,6 +422,8 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 	else
- 		get_from_rev(&rev, &log);
- 
-+	release_revisions(&rev);
-+
- 	shortlog_output(&log);
- 	if (log.file != stdout)
- 		fclose(log.file);
+ static inline int log2i(int n)
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2f7c58362b2..0eeced8a10d 100644
+index 0eeced8a10d..e8e20cdcc53 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1259,6 +1259,7 @@ static int compute_summary_module_list(struct object_id *head_oid,
- 		run_diff_files(&rev, 0);
- 	prepare_submodule_summary(info, &list);
- 	strvec_clear(&diff_args);
+@@ -756,7 +756,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ {
+ 	char *displaypath;
+ 	struct strvec diff_files_args = STRVEC_INIT;
+-	struct rev_info rev;
++	struct rev_info rev = { 0 };
+ 	int diff_files_result;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *git_dir;
+@@ -843,6 +843,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ cleanup:
+ 	strvec_clear(&diff_files_args);
+ 	free(displaypath);
 +	release_revisions(&rev);
- 	return 0;
  }
  
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index baca57d5b64..f48f44f9cd1 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -699,6 +699,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 			shortlog(origins.items[i].string,
- 				 origins.items[i].util,
- 				 head, &rev, opts, out);
-+		release_revisions(&rev);
+ static void status_submodule_cb(const struct cache_entry *list_item,
+diff --git a/bundle.c b/bundle.c
+index e359370cfcd..a83d253a815 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -196,14 +196,16 @@ int verify_bundle(struct repository *r,
+ 	 * to be verbose about the errors
+ 	 */
+ 	struct string_list *p = &header->prerequisites;
+-	struct rev_info revs;
++	struct rev_info revs = { 0 };
+ 	const char *argv[] = {NULL, "--all", NULL};
+ 	struct commit *commit;
+ 	int i, ret = 0, req_nr;
+ 	const char *message = _("Repository lacks these prerequisite commits:");
+ 
+-	if (!r || !r->objects || !r->objects->odb)
+-		return error(_("need a repository to verify a bundle"));
++	if (!r || !r->objects || !r->objects->odb) {
++		ret = error(_("need a repository to verify a bundle"));
++		goto cleanup;
++	}
+ 
+ 	repo_init_revisions(r, &revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+@@ -221,7 +223,7 @@ int verify_bundle(struct repository *r,
+ 		error("%s %s", oid_to_hex(oid), name);
  	}
+ 	if (revs.pending.nr != p->nr)
+-		return ret;
++		goto cleanup;
+ 	req_nr = revs.pending.nr;
+ 	setup_revisions(2, argv, &revs, NULL);
  
- 	strbuf_complete_line(out);
-diff --git a/merge-ort.c b/merge-ort.c
-index 8545354dafd..4c0d4eba19b 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1594,6 +1594,7 @@ static int find_first_merges(struct repository *repo,
- 	}
- 
- 	object_array_clear(&merges);
-+	release_revisions(&revs);
- 	return result->nr;
- }
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 32bbba5fbb1..acd13b2b069 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1160,6 +1160,7 @@ static int find_first_merges(struct repository *repo,
- 	}
- 
- 	object_array_clear(&merges);
-+	release_revisions(&revs);
- 	return result->nr;
- }
- 
-diff --git a/midx.c b/midx.c
-index 865170bad05..702c8a9b178 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1061,6 +1061,7 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 	if (indexed_commits_nr_p)
- 		*indexed_commits_nr_p = cb.commits_nr;
- 
-+	release_revisions(&revs);
- 	return cb.commits;
- }
- 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index cab3eaa2acd..ea8e0b51cdf 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -326,6 +326,7 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 	trace2_data_intmax("pack-bitmap-write", the_repository,
- 			   "num_maximal_commits", num_maximal);
- 
-+	release_revisions(&revs);
- 	free_commit_list(reusable);
- }
- 
-diff --git a/ref-filter.c b/ref-filter.c
-index 7838bd22b8d..a91688bbf17 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2392,6 +2392,7 @@ static void reach_filter(struct ref_array *array,
- 		clear_commit_marks(merge_commit, ALL_REV_FLAGS);
- 	}
- 
-+	release_revisions(&revs);
- 	free(to_clear);
- }
- 
-diff --git a/remote.c b/remote.c
-index 42a4e7106e1..fa3152a5d52 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2172,6 +2172,7 @@ static int stat_branch_pair(const char *branch_name, const char *base,
- 	clear_commit_marks(theirs, ALL_REV_FLAGS);
- 
- 	strvec_clear(&argv);
-+	release_revisions(&revs);
- 	return 1;
- }
- 
-diff --git a/sequencer.c b/sequencer.c
-index 84eed9e96bc..29ec201af64 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1347,6 +1347,7 @@ void print_commit_summary(struct repository *r,
- 		log_tree_commit(&rev, commit);
- 	}
- 
-+	release_revisions(&rev);
- 	strbuf_release(&format);
- }
- 
-@@ -3415,6 +3416,7 @@ static int make_patch(struct repository *r,
- 		unuse_commit_buffer(commit, commit_buffer);
- 	}
- 	strbuf_release(&buf);
-+	release_revisions(&log_tree_opt);
- 
- 	return res;
- }
-@@ -4527,6 +4529,7 @@ static int pick_commits(struct repository *r,
- 					      &log_tree_opt.diffopt);
- 				log_tree_diff_flush(&log_tree_opt);
- 			}
-+			release_revisions(&log_tree_opt);
+@@ -283,6 +285,8 @@ int verify_bundle(struct repository *r,
+ 			list_refs(r, 0, NULL);
  		}
- 		flush_rewritten_pending();
- 		if (!stat(rebase_path_rewritten_list(), &st) &&
-diff --git a/shallow.c b/shallow.c
-index 71e5876f377..2552f139f61 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -261,6 +261,7 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
- 		if ((o->flags & both_flags) == both_flags)
- 			o->flags &= ~not_shallow_flag;
  	}
++cleanup:
 +	release_revisions(&revs);
- 	return result;
+ 	return ret;
  }
  
-diff --git a/submodule.c b/submodule.c
-index 5ace18a7d94..0510cb193b6 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -902,9 +902,11 @@ static void collect_changed_submodules(struct repository *r,
- 		diff_rev.diffopt.format_callback_data = &data;
- 		diff_rev.dense_combined_merges = 1;
- 		diff_tree_combined_merge(commit, &diff_rev);
-+		release_revisions(&diff_rev);
- 	}
- 
- 	reset_revision_walk();
-+	release_revisions(&rev);
- }
- 
- static void free_submodules_oids(struct string_list *submodules)
-diff --git a/t/helper/test-revision-walking.c b/t/helper/test-revision-walking.c
-index 625b2dbf822..4a45d5bac2a 100644
---- a/t/helper/test-revision-walking.c
-+++ b/t/helper/test-revision-walking.c
-@@ -43,6 +43,7 @@ static int run_revision_walk(void)
- 	}
- 
- 	reset_revision_walk();
-+	release_revisions(&rev);
- 	return got_revision;
- }
- 
-diff --git a/wt-status.c b/wt-status.c
-index 922cf787f95..f9100621375 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1152,6 +1152,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
- 		rev.diffopt.b_prefix = "w/";
- 		run_diff_files(&rev, 0);
- 	}
-+	release_revisions(&rev);
- }
- 
- static void wt_longstatus_print_tracking(struct wt_status *s)
 -- 
 2.35.1.1452.ga7cfc89151f
 
