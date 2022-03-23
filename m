@@ -2,112 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D93C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D23C9C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244904AbiCWO5L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 10:57:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56566 "EHLO
+        id S240381AbiCWO6i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 10:58:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234970AbiCWO5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 10:57:10 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DBB7DE08
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:55:40 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id b188so1851740oia.13
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:55:40 -0700 (PDT)
+        with ESMTP id S232277AbiCWO6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 10:58:36 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD0782317
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:57:06 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z92so2125182ede.13
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:57:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jY71ZQpYZeZWWhcadppni6BLM5pJwV9/I8PoG3WH7zs=;
-        b=eubWJjjlBe1SCWmxZg5Ta/lSdC55y3dohD4nuVxL1nd/slOysDVZw8Cqq9jm9zAtcL
-         iQv0x1iFFKIJSkr4h4+1HNhn4NKJqDN5e1UWPF5xMz3bwlvELKS1l1unzRaEGZnT2agM
-         J3s4uZpcmL3V1LspiCUSrATBrdei6RZ/ayIfRSPRg2TNjbF87jdJ7LaQ8Dkvql3HYH53
-         L6cqd04I78jcYJb5I53hQoMJC7rK4fMR8EFiXVfoz3HE8MQGrB5sg83C6eC685/E3bHD
-         5tRmhcRY0t4ykXwOgiQi6ZaTM/EbdebmE6HnRE5tmJN6b6IK4pzbf+gpLnk6B9/RXLPl
-         0fyw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pooP9CMRj9xOqwHbEwjkDQn8qBmQcosFZpwTJ9zFCRA=;
+        b=qfES0L29V2NrnmBNUYwWihGEZYIVTkCYhl9NTSAH5zskfEHk9mDEH1nWZUUEE2kPTL
+         hiQTD2Ohii8hl0sNLL4KkmdWIa1k+LXus2gaJ1PI8r1X3tn9UtT85tA//nzEkaXs9fB+
+         qoBljH3xZsgkXSsCXLaAlQ8Dc2sp7m8d31YHA2b8YbEZpp8r8KToD8vpXu3EBAGc0MXn
+         4yCSAGs8Kwq43GJ68+ZnfCO17mTcqL0HvKbhiRWd9/4/NgmRIYNLz0vxFlcurspV98RC
+         /ennefxQ2wdoo3UOD0ZBOM3g7mOXCN+uoENGIpns8YgvZIRHL+WLbtbEhfxPi8BuPi0I
+         r6OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=jY71ZQpYZeZWWhcadppni6BLM5pJwV9/I8PoG3WH7zs=;
-        b=PHTHmAWuBXVprfIJ/NP3P/vJlwbdslOqZKRpnviM21gCSResV6BYIqlDVqcI/G5qlb
-         on4vhTvBfDdZBnVGIQM8azgnDnXtNfMmLb+/4uSD5S7sPWHIcIzRRggrYSSApyuZZ0/A
-         GpnlJ8ELBdqzEvr4gH9DNe/Y4pPO8cU8TtkmglEo/OGFClIF2gnjRBIgREY0DrRogO/B
-         37uH3KYkMAJdqti0NvJrZFxsWucZS9Z1cKpWEhrinfRSMNCEJQZGpCPxRXWsMFw7L9SW
-         Vp5S0NxFW8rAijcI8i/lp1+kO8qG/HySnjCdxq0RTrTyOIDiILYZYjaxC7ovyROeC9Wc
-         Ks3g==
-X-Gm-Message-State: AOAM532kMTGy+u8oCAPwJ6N7CeiKOPVeWjC+mPWFgRdFWUsJosMr+irv
-        3eBE0yVzZY+/RE0T+S+bOMN+
-X-Google-Smtp-Source: ABdhPJxBMSF5rBt5sGupvxn9PePv+heV74dXKD8tcJNCqiM8+/dW+owsoxJEZKVYfkl4aXBqYRQW2w==
-X-Received: by 2002:aca:bd46:0:b0:2ed:16c7:29cb with SMTP id n67-20020acabd46000000b002ed16c729cbmr191516oif.92.1648047339489;
-        Wed, 23 Mar 2022 07:55:39 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 184-20020a4a03c1000000b003240492fc15sm107900ooi.36.2022.03.23.07.55.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Mar 2022 07:55:39 -0700 (PDT)
-Message-ID: <e5331972-512a-c498-6a1b-927f21ef9de2@github.com>
-Date:   Wed, 23 Mar 2022 10:55:37 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=pooP9CMRj9xOqwHbEwjkDQn8qBmQcosFZpwTJ9zFCRA=;
+        b=zmicp1UIfKlMeQuBH6pmo/Da/9bEGkSaPkHdMbQ0PaPSR0l69/MDJ7vru5HG7eoeZC
+         B5Bus0NOVQNzqRDKZb9zyuZMzhE1mHvo6eEZ9wzqVRuMyeQpGu8XmpF9u0ppvOfOfGkH
+         wdZuaJNSc6eMICfp6FS4mID66ysw6JsUXZ+TrAH2pGuxfb9XUgoS/YyxROK3FEIl7shI
+         VxxXagTt8ZBC3Jx0mhnYXpWnBTWG7JpvyYDzTe6GeZ9ej+I+a8y12/mvnqryEXWgyi3/
+         GfHO3bglekPDJ3eZr2lOZMUSclenkWsFMaHKqMQfbtf6FOmh3bcFjLsrGNxoLSl4zpOn
+         VSYQ==
+X-Gm-Message-State: AOAM532fcjCAFoFZeCsvLFYJFZdOM62SmUZhbSbJkSkIjAz3pQtEr4OA
+        vCAoAqPm6AHoAUc2uyWz90wsqMt2TbLiEA==
+X-Google-Smtp-Source: ABdhPJwietAXi6vrg2FKpBkvdhytBsc01I0OGjYs0xlRxwgCNiZeHyAvkTfM0S8hlXM4jOcbUHzXvA==
+X-Received: by 2002:a05:6402:3495:b0:419:1ff6:95d9 with SMTP id v21-20020a056402349500b004191ff695d9mr519311edc.249.1648047424665;
+        Wed, 23 Mar 2022 07:57:04 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id d4-20020a1709067a0400b006d6e3ca9f71sm33028ejo.198.2022.03.23.07.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Mar 2022 07:57:04 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nX2Q3-000qqx-LC;
+        Wed, 23 Mar 2022 15:57:03 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Sebastian Schuberth <sschuberth@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: How to determine the number of unique recent committers on a
+ branch?
+Date:   Wed, 23 Mar 2022 15:47:42 +0100
+References: <CAHGBnuPavzr_gq0ake6bOQETmHBnU2XOWdDz-UtkBP_+rRdYfA@mail.gmail.com>
+ <220323.86o81wonlf.gmgdl@evledraar.gmail.com>
+ <CAHGBnuMRKhsF-xCL944KD5GFPWYe-9cSp6FBZfaZ7bdVTkgjng@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <CAHGBnuMRKhsF-xCL944KD5GFPWYe-9cSp6FBZfaZ7bdVTkgjng@mail.gmail.com>
+Message-ID: <220323.86bkxwogxs.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] test-lib-functions: fix test_subcommand_inexact
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
- <540936ba-7287-77fa-9cee-e257ed3c119d@github.com>
- <xmqqmthgu3e6.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqmthgu3e6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/23/2022 10:53 AM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
-> 
->> So, this patch is incorrect about keeping things working. The
->> options are:
->>
->> 1. Keep the repeated ".*" and be clear about the expectations.
->>    (This could drop the "remove trailing comma" line.)
->>
->> 2. Find another way to test this --write-midx behavior while
->>    keeping the stricter test_subcommand_inexact helper.
->>
->> 3. Something else???
-> 
-> The result of doing #1 is still "inexact" but at that point it is
-> unclear if we are being way too inexact to be useful.  If the
-> looseness bothers us too much, we may decide that #1 is not worth
-> doing.  But obviously the looseness did not bother us that much
-> until last week, so probably an obvious #3, do nothing, letting the
-> sleeping dog lie, might be what we want to do?
-> 
-> If we were to pursue #2, then, would we tightening the test for the
-> write-midx using the "stricter" helper, or would the stricter one be
-> too strict to be useful for that case?  If we are rewriting the
-> write-midx test by not using the "stricter" helper, then we would be
-> creating a stricter one nobody uses, which sounds quite wasteful.
-> 
-> It seems that the only case that could result in a result that is
-> better than "do nothing" is if we can use a different pattern with
-> the "stricter" helper to express what "write-midx" test wanted to
-> do, but because what we need to fuzzily match on the command line in
-> that test includes a generated temporary filename, I do not think
-> it is likely to be easily doable.
-> 
-> So, perhaps #3 ;-)?
 
-I'll default to #3 (do nothing), but if this shows up again
-I'll plan on adding a comment to the helper to be clear on
-how "inexact" the helper really is.
+On Wed, Mar 23 2022, Sebastian Schuberth wrote:
 
-Thanks,
--Stolee
+> On Wed, Mar 23, 2022 at 1:33 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>
+>> I think --since to "rev-list" combined with e.g. "shortlog" is what you
+>> want here, e.g. on git.git:
+>>
+>>         $ git -P shortlog --since=3D2.weeks.ago -sn origin/master
+>
+> But that still interprets "2.weeks.ago" relative to today, right? So,
+> for a repo to which no one committed to in the last 2 weeks, it would
+> show nothing. But what I'd like to get is the number of committers
+> since 2 weeks before the latest commit. Any idea how to get that
+> easily?
+
+Ah, sorry. I managed to (mis)read your question.
+
+Perhaps there's a way to do that in one command, but I don't think so,
+but I may be wrong.
+
+But you *can* do by grabbing the epoch from the tip commit and doing
+some basic shell-math on it:
+
+    git log --since=3D$(($(git log --oneline -1 --date=3Dunix --pretty=3Dfo=
+rmat:%ad origin/master) - $((60*60*24*7*2)) )) origin/master
+
+It would be nice if we had some option to to do that, e.g.:
+
+    git log --since=3D2.weeks.ago --date-now=3DFebruary.2018
+
+Or To get you things in late January 2018. Or even:
+
+    git -c core.time=3D"February.2018" log --since=3D2.weeks.ago
+
+To fool the entirety of git to use a given time() as current (but of
+course it would also need to "adjust back" commit dates for relative
+--since).
+
+I'm 99% sure we don't have that, especially from looking at some of the
+code just now. But in the meantime you can hack it as above.
