@@ -2,87 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8240FC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 07:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A9C4C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 09:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242064AbiCWHKX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 03:10:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57254 "EHLO
+        id S234059AbiCWJEm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 05:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242061AbiCWHKW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 03:10:22 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98AB31D0ED
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 00:08:52 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id e5so711568pls.4
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 00:08:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=caaH0KFcXOVgVWsSga0VCjpy33XPC2KOezpaZwdAglg=;
-        b=nye9wzZO2yWmf3avUdUH+lpSzQ4UYiEHw4sq2+2A9TYwJXwZgH6mdO1P/A1nq0NJzG
-         PcSU6tOoXH4mjS/LLqlS6uxzi7/z3RmSRa4NLbJTLkxGIRVPoF/+acZ8pGsqYBXzJttF
-         Wz/XXJ3iRW1F9ozeabhtjRFHXnIwPhD01YmNjdG5FOpVxaZZgl9YUwWPSymiiUae34Vb
-         Sk7j2SFXoS1MIEhjniR2QPowAFxydH8Hj64Nse+tII3TnSOmxiMxet20xnigtlal5Hnt
-         0lQmvt71By9QiF22oT1rn4EvOianmkp3p1+BeA0Dvso5TMlMIcZqYtKUCxjxP6JO/uXH
-         d34g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=caaH0KFcXOVgVWsSga0VCjpy33XPC2KOezpaZwdAglg=;
-        b=Bz+nSCp6idtLMP3iNT3/eXcgz2oUaZneF7+aS+TWcLpNio6fnEQDe3zoHjNI1aC6RO
-         kRXRulXeSOvymD2KLRAHJmWaG7mNaLLSuQXStOmk2Z8368iTyU9xzMqqP2+tghEmWPDi
-         6asOrnfOml0AVc/RzQCO4KNUtrcId0BbGNe68iikd66kKFqEtvrQ5deHT1KTqL7mubOO
-         LAagnLgLphbgzPyg9jA032YyKZzDud58DyIMlYQdlDMQIcS7reSoh69zTvrvx6FU4ISU
-         hnOEJuYeNFhQ+YAHDdQbEX2CLKZI6FxPTimCVqlmJ54Fovn/P07Qhq11M87h6QviV9He
-         F4pA==
-X-Gm-Message-State: AOAM533ZzdskZU6GA0OW6DUgrgvicjQSx5Uubv+GZNUeBzCAXo7qjDIn
-        vMAcvPA9zauA/kqfo3fUWHXdBpDMaDovqw==
-X-Google-Smtp-Source: ABdhPJzYkerBtcyF8FDtLJPA8CjVSBCT7C//Hyt/0PkimXqkdfHPDWFdRn9dx0YcLI/3ziA1rmTsRQ==
-X-Received: by 2002:a17:90b:1642:b0:1c7:2497:3807 with SMTP id il2-20020a17090b164200b001c724973807mr9672547pjb.176.1648019331829;
-        Wed, 23 Mar 2022 00:08:51 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-86.three.co.id. [180.214.233.86])
-        by smtp.gmail.com with ESMTPSA id z7-20020a056a00240700b004e1cde37bc1sm24785375pfh.84.2022.03.23.00.08.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Mar 2022 00:08:51 -0700 (PDT)
-Message-ID: <29e64add-59ca-df77-a717-58c09c686336@gmail.com>
-Date:   Wed, 23 Mar 2022 14:08:47 +0700
+        with ESMTP id S231246AbiCWJEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 05:04:40 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD942DE8
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:03:10 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B37411CE40;
+        Wed, 23 Mar 2022 05:03:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=mw4KZ2vGwee2yc1qcEbgMe9wQgHwgXX7NENJv9qbAKE=; b=RVD1
+        m0BtZk/eEM/egamlFpSkjJjpLXbHbhqbDz9hencolR0Wxi+PAvbyQYk8AuFRehKg
+        xk4rlH0pDURvC1+6q1OJtQtrUWNhZ+TTNh4JpLaL8Tqbh+q8x8YT8U98Jr9CTGGb
+        EQBerFdXaUPZLcjIu+IjpxNz4Hn1nhJaMXF6dRo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29AEC11CE3F;
+        Wed, 23 Mar 2022 05:03:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1640111CE3E;
+        Wed, 23 Mar 2022 05:03:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/4] a couple of read_key_without_echo() fixes
+References: <pull.1146.git.1645008873.gitgitgadget@gmail.com>
+        <pull.1146.v2.git.1645556015.gitgitgadget@gmail.com>
+        <xmqqv8x5s1w3.fsf@gitster.g>
+        <8d44b509-ff19-0629-30f5-ae785c73c3aa@gmail.com>
+        <CAPUEspg1cJC_UwjJFx-jnzWsascY++S3UgM1UCLRcnK_Mv2wOg@mail.gmail.com>
+Date:   Wed, 23 Mar 2022 02:03:05 -0700
+Message-ID: <xmqqy211t512.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 4/5] bundle: move capabilities to end of 'verify'
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
- <1b2130426bd7bd6c0bf5c56be2bf66a4d81f0b27.1647970119.git.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <1b2130426bd7bd6c0bf5c56be2bf66a4d81f0b27.1647970119.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0EBE95A4-AA88-11EC-9BFF-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/03/22 00.28, Derrick Stolee via GitGitGadget wrote:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> -	Information about additional capabilities, such as "object filter",
-> -	is printed. See "Capabilities" in link:technical/bundle-format.html
-> -	for more information. Finally, 'git bundle' prints a list of
-> -	missing commits, if any. The exit code is zero for success, but
-> -	will be nonzero if the bundle file is invalid.
-> +	Then, 'git bundle' prints a list of missing commits, if any.
-> +	Finally, information about additional capabilities, such as "object
-> +	filter", is printed. See "Capabilities" in link:technical/bundle-format.html
-> +	for more information. The exit code is zero for success, but will
-> +	be nonzero if the bundle file is invalid.
+> On Thu, Feb 24, 2022 at 6:30 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> That sounds good. I've got a couple more patches based on top of these
+>> which hopefully fix the remaining problems (notably the macos poll()
+>> bug). I'll polish and post them next week. Once those are in I hope
+>> we'll be able to enable the builtin "add -p" by default.
+>
+> As this topic just hit master noticed (I apologize for not doing it
+> sooner) the macOS problem (tested in 10.15.7) was gone (suspect fixed
+> with 1/4) and therefore enabling the builtin by default as proposed
+> originally by dscho could proceed without the additional series.
 
-That means, nonzero exit code for corrupted bundle files, right?
+As long as it is a belated success report, nobody would mind.  A
+belated failure report would be a cause of sorrow and grief, but
+even then, it is better to have it late than never.
 
--- 
-An old man doll... just what I always wanted! - Clara
+Thanks for testing.
+
