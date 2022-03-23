@@ -2,66 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F9BC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 21:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 557DBC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 21:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241139AbiCWVjm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 17:39:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
+        id S241152AbiCWVnB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 17:43:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234033AbiCWVjk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 17:39:40 -0400
-X-Greylist: delayed 568 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 23 Mar 2022 14:38:08 PDT
-Received: from mail-out.m-online.net (mail-out.m-online.net [IPv6:2001:a60:0:28:0:1:25:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1CB21A836
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 14:38:08 -0700 (PDT)
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 4KP1gS1x5Wz1s75c;
-        Wed, 23 Mar 2022 22:28:36 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 4KP1gS03vwz1qr2t;
-        Wed, 23 Mar 2022 22:28:35 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id 1J7pcH2oNv4h; Wed, 23 Mar 2022 22:28:35 +0100 (CET)
-X-Auth-Info: a8LZK+RgBHoxksDH3Ym5xau+esOQCKUunYpF+6M32bn1/DSZWCc9DzDBwmB12WIt
-Received: from igel.home (ppp-46-244-163-88.dynamic.mnet-online.de [46.244.163.88])
+        with ESMTP id S234033AbiCWVnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 17:43:00 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3D7885952
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 14:41:30 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 840971885A4;
+        Wed, 23 Mar 2022 17:41:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MKt7DnGNsl9gwDzPurqsG2AScmp/lHtM36rCty
+        hNIXQ=; b=HHkNssnQu3gfXMqV2Z4QwsLvgdV2KfAWOS00FRJu8kGuudUsbEvRsD
+        K/lcO9xhjlbludbB1zEFYdKOdWC/WSBbRpf8cs2nEMFwOmFQy9J+P24/wDD+EdPK
+        5S8vQc9pknUznd7n6T0G1GCtkCKIbu+0T6NudvUovOYxMS+twbHho=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A7851885A3;
+        Wed, 23 Mar 2022 17:41:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Wed, 23 Mar 2022 22:28:35 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-        id C7E012C3A88; Wed, 23 Mar 2022 22:28:34 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     John Garry <john.garry@huawei.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [Question] .git folder file updates for changing head commit
-References: <6fa76f28-063b-8964-c0a2-642dae88f1b3@huawei.com>
-X-Yow:  I used to be a FUNDAMENTALIST, but then I heard about the
- HIGH RADIATION LEVELS and bought an ENCYCLOPEDIA!!
-Date:   Wed, 23 Mar 2022 22:28:34 +0100
-In-Reply-To: <6fa76f28-063b-8964-c0a2-642dae88f1b3@huawei.com> (John Garry's
-        message of "Wed, 23 Mar 2022 15:19:06 +0000")
-Message-ID: <87wngkpddp.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.92 (gnu/linux)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C69541885A2;
+        Wed, 23 Mar 2022 17:41:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 0/3] reset: make --no-refresh the only way to skip
+ index refresh
+References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
+        <pull.1184.v2.git.1648059480.gitgitgadget@gmail.com>
+Date:   Wed, 23 Mar 2022 14:41:26 -0700
+In-Reply-To: <pull.1184.v2.git.1648059480.gitgitgadget@gmail.com> (Victoria
+        Dye via GitGitGadget's message of "Wed, 23 Mar 2022 18:17:57 +0000")
+Message-ID: <xmqq5yo4qrcp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FEADFF0A-AAF1-11EC-AAA3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mär 23 2022, John Garry wrote:
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> For building the linux perf tool we use the git head commit id as part of
-> the tool version sting. To save time in re-building, the Makefile rule has
-> a dependency on .git/HEAD for rebuilding.
+> Changes since V1
+> ================
+>
+>  * Dropped patch that removed '--refresh', again allowing both
+>    '--no-refresh' and '--refresh' as valid options.
 
-There is no guarantee that .git is a directory.  In a separate worktree
-.git is actually a gitfile.
+Makes sense.  Thanks for suggesting this, Phillip.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+>  * Updated documentation of "--refresh" option to remove unnecessary
+>    "proactively".
+
+OK.
+
+>  * Reworded commit titles to change "deprecate" to the more accurate
+>    "remove".
+
+OK.
+
+Will queue.  Thanks.
