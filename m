@@ -2,114 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE06C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 928DFC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244700AbiCWOUr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 10:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42574 "EHLO
+        id S239971AbiCWOdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 10:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244697AbiCWOUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 10:20:20 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3936D7CDC0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:51 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id m30so2377166wrb.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HIwBEui+mBuahqG4gyWGQKaoY0BcWnAnpQS93bYyQrA=;
-        b=NALxmF1I9XcTIbiTUvUzBilyD9Hjncpn7CJs6qsapc9nhzXLdk71BqsxbyQ7wml5pM
-         FyflGjp/6jWGAghA9DwHdQHs50fLKfkyVXwauy+Pnc1pUMmfWXQyi0kKIlv5EV0tfc0X
-         kGu0GJsnpf7wcfqVGlKuVpQfUaiZCY6tyESr6C4IRrVe3DG4ftoFUMKj96kbtINFn7QI
-         de1/W+VRgZQC7FyoZxj78v+L6/5/ZZYM6OXuSs73ByO6BJiXyi/QL1UMqFkbNoEmANfI
-         zF/nj/cEOBnyZ+Dhe+U/kPPMS1MRzOoIKVG177VZ0ihaAaLsxVI4C+j3DvUA1aBrYI+l
-         QAuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HIwBEui+mBuahqG4gyWGQKaoY0BcWnAnpQS93bYyQrA=;
-        b=P64aYmDb2YE5fQEDlankMuCZ9RAebfelGkv/VREmJq19IgC6qEWO/Deqj6ApEt9Zau
-         fFNLVvPifvdQA2kSqwB9Qfy/KCfjKyxmqWtjck0pPEMWu3xN81Mbn+dWmEbJAbQVYxY5
-         Yaz8LIof4Dni0LBAXw4laU59FSkU1oD6W09D+Q0S+fFDdKGOsyPIRL5aLU7MiPLva9K6
-         6MOhd2KMleNTZ9qw+vhJVnp22SpJIM+Rs8GoqDay/zoEZ6ycoMJB+HUdLxRY0JOi2c//
-         JeUf+2g8bInW8iEOo/srpApLch5o3Magd2ubX2KN9lYzG+AYelotf6RA2av9f7p2tS/J
-         KtDA==
-X-Gm-Message-State: AOAM531Qknw5zsq9w/3UxXlVh+NcW6+bWai0dR+HeLO/o7MGI0HVDWNb
-        fzfdiZypuSRvPqzWR5hSAi5TCjPZbCBJgQ==
-X-Google-Smtp-Source: ABdhPJwyBIeRupjT71R+CEr5khJgmvFBGfmuGllL/pP3EcgfHnLLThckxHHKrULrSVjR6CvlD8MbuQ==
-X-Received: by 2002:adf:fa87:0:b0:203:f28e:76c3 with SMTP id h7-20020adffa87000000b00203f28e76c3mr23283665wrr.579.1648045129543;
-        Wed, 23 Mar 2022 07:18:49 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q14-20020a1cf30e000000b0038986a18ec8sm30592wmq.46.2022.03.23.07.18.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 07:18:48 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
+        with ESMTP id S234745AbiCWOdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 10:33:50 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184CB7A9B3
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:32:20 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 3B3303F414D;
+        Wed, 23 Mar 2022 10:32:19 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id EC0023F414B;
+        Wed, 23 Mar 2022 10:32:18 -0400 (EDT)
+Subject: Re: [PATCH v7 16/29] compat/fsmonitor/fsm-listen-darwin: add MacOS
+ header files for FSEvent
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Patrick Steinhardt <ps@pks.im>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH v2 6/7] fsync docs: update for new syncing semantics
-Date:   Wed, 23 Mar 2022 15:18:30 +0100
-Message-Id: <RFC-patch-v2-6.7-c20301d7967-20220323T140753Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1428.g1c1a0152d61
-In-Reply-To: <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com>
-References: <RFC-cover-0.7-00000000000-20220323T033928Z-avarab@gmail.com> <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com>
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
+ <14b775e9d8b1a4672f8175a546eb70e2790c1b23.1647972010.git.gitgitgadget@gmail.com>
+ <220322.86ils5q1um.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <cc9ff6b9-9574-8170-f7de-b3f0e3815edd@jeffhostetler.com>
+Date:   Wed, 23 Mar 2022 10:32:18 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <220322.86ils5q1um.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config/core.txt | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index cf0e9b8b088..f598925b597 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -596,12 +596,23 @@ core.fsyncMethod::
-   filesystem and storage hardware, data added to the repository may not be
-   durable in the event of a system crash. This is the default mode on macOS.
- * `batch` enables a mode that uses writeout-only flushes to stage multiple
--  updates in the disk writeback cache and then does a single full fsync of
--  a dummy file to trigger the disk cache flush at the end of the operation.
--  Currently `batch` mode only applies to loose-object files. Other repository
--  data is made durable as if `fsync` was specified. This mode is expected to
--  be as safe as `fsync` on macOS for repos stored on HFS+ or APFS filesystems
--  and on Windows for repos stored on NTFS or ReFS filesystems.
-+  updates in the disk writeback cache and, before doing a full fsync() of
-+  on the "last" file that to trigger the disk cache flush at the end of the
-+  operation.
-++
-+Other repository data is made durable as if `fsync` was
-+specified. This mode is expected to be as safe as `fsync` on macOS for
-+repos stored on HFS+ or APFS filesystems and on Windows for repos
-+stored on NTFS or ReFS filesystems.
-++
-+The `batch` is currently only applies to loose-object files and will
-+kick in when using the linkgit:git-unpack-objects[1] and
-+linkgit:update-index[1] commands. Note that the "last" file to be
-+synced may be the last object, as in the case of
-+linkgit:git-unpack-objects[1], or relevant "index" (or in the future,
-+"ref") update, as in the case of linkgit:git-update-index[1]. I.e. the
-+batch syncing of the loose objects may be deferred until a subsequent
-+fsync() to a file that makes them "active".
- 
- core.fsyncObjectFiles::
- 	This boolean will enable 'fsync()' when writing object files.
--- 
-2.35.1.1428.g1c1a0152d61
 
+On 3/22/22 2:19 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Mar 22 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+[...]
+>> +++ b/compat/fsmonitor/fsm-darwin-gcc.h
+>> @@ -0,0 +1,92 @@
+>> +#ifndef FSM_DARWIN_GCC_H
+>> +#define FSM_DARWIN_GCC_H
+>> +
+>> +#ifndef __clang__
+> 
+> This was surprising, until I remembered that clang tries really hard to
+> pretend to be other compilers. I wonder if we should steal the macro
+> check from compat/compiler.h into something more generic & use it here,
+> probably best as a follow-up...
+> 
+>> [...]
+
+yeah, V5 had this as an ifdef __GNUC__, I changed it in V6 because
+we were always using the hack local declarations rather than the
+official header files in clang builds.  (Technically, it doesn't
+really matter, since the net result is the same, but it felt
+cleaner (er, less mysterious).)
+
+As for extracting a better macro from compat/compiler.h for more
+general use, maybe, but that's not something I want to think about
+right now.  Doing a quick "git grep __GNUC__" turns up a lot of dark
+magic.  There are only a couple of references to __clang__, so it
+might be that a good comment somewhere (say in compat/compiler.h)
+would be sufficient.
+
+Jeff
