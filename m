@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94CCCC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 010B1C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344613AbiCWU12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 16:27:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41376 "EHLO
+        id S1344629AbiCWUbv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 16:31:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbiCWU11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:27:27 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 228B47E09B
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:25:56 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id bu29so4694543lfb.0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:25:56 -0700 (PDT)
+        with ESMTP id S234460AbiCWUbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 16:31:49 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1034E86E16
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:30:19 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id q5so3483474ljb.11
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=qmhXIyPRx8oIMUC0J2gS1YKVeQOjvxfvNd5Ng0xtA+E=;
-        b=CRSQtiQpmhnBP3T7kcxpmXGJeRHgQpV38L+Vpu5tGTml487L5yhbHNx//jJJ7Ob6PD
-         JM+23wx7RtiKXnJnzyQ8rIB51DY8I/SMpAnZEujIVq4Mqw83Szga+XDx0Y0BM4OKuVdL
-         F4TXIJZL6WOCeYfhQS/jI29cCtblZMpC0iEW7AoNKj3GFPUT/Yq1ZOFH72GxuZKGANMp
-         BXHvAqB6Px+yU7L9f9xiv65jVreQYE33bBrq1iEE8imEVXm5YBYFuhcm0yRYELpeBYjj
-         IFvVQYVH5HwKYS5H7mL5+WMQMTeC5h7c+Apm3pC0wImS381DWhpDWiLV87o0ZX2rqGuB
-         UYGg==
+        bh=lneROlfrTn5wAzv8sbNzmewtf/TxQ1m6/0FK4qjLa5c=;
+        b=O/4/g8ANGJ58xVNfFk6KsmZFDNgY2jPru8eQtnwk7FU6figb5TMLyx7cf/Xjeq/jKx
+         A5e87CEHuHrQqSUr7DdXigPFH0WxtBbOYTBJlKwL7FwcTE2EIOLggFKE0x4iB3O5cKBS
+         wfxtxzfo/pxBoQ0uPp+Z16dMSwPdVLDOXRBE7NNiyFnro1cYj3jVz+G8VQyMky+mEYry
+         yuvvNa5HYVEHvvCDoh+I3q2ow2yOb8s+MYV480mzVGYxaLGGkT7E0m1lwGO2P7Vrzzit
+         7kZUiU4Jnb7V635kmhC+oB/nkHVbcotjgsnRZ0iGOxbcPbgrJhh7t85k73Qz1Bboigg5
+         hbGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qmhXIyPRx8oIMUC0J2gS1YKVeQOjvxfvNd5Ng0xtA+E=;
-        b=11yxyK7d0CMb+Xc6wmnrplfQvnXv0i3SzVpD8Dx13kTZR12kcACLOdCBkN50dZn3GP
-         oPb86PhSijjAbqB9QQiqyTH+G1tzVAPESEjykzOEd/mg2+kvWhvTDUwKPrAZzknfP3fB
-         5swPNABcmfVp0KjZ3MLDo67HMPJXbceq2LTckIGyjmDaMz+ZBJygnSewp96d+/xjMoDk
-         z9LEAgbnM+yOe4MpaOpmLhNaa4Qnxdpcxt9bLdXPrL2VQwT+JXFyMGKeRlBk/Tjww3i5
-         g2XJtKSDX1BtpbB3hHh/KruI10rPXRyS7T8w3Pr3TYXdmswnRUGNnNr/GmFd+Tlx1UVJ
-         w2nQ==
-X-Gm-Message-State: AOAM532ZPQo4W3YB+oZgEYusNq8bdkUQyoIzolBAeOSvp3ym890WCSoo
-        XUJsdh2x4y2u86/K63cYrWnFyxaKfbZBBNHepuU=
-X-Google-Smtp-Source: ABdhPJyLxR4JIunb1hR5Jz+zKXLljdRUHH8BixjBWM1mM3YdK2TF4Du/hCtbbZSyCA1JZ3Kih0XJLW5MQ69ebxmUgKc=
-X-Received: by 2002:a05:6512:1155:b0:448:bcee:3df0 with SMTP id
- m21-20020a056512115500b00448bcee3df0mr1195263lfg.442.1648067154288; Wed, 23
- Mar 2022 13:25:54 -0700 (PDT)
+        bh=lneROlfrTn5wAzv8sbNzmewtf/TxQ1m6/0FK4qjLa5c=;
+        b=uFDRJR+yinu7aPFmdjDmARcfbCPhrf/WJ4KPZTgFnhwVLWCkP0+OPBCfb8327uqp+5
+         i3Ex1Qm/+J2w4Cv04M4c5t00Nm2ij5XtsOpkiwDP6xeUTx/bu8UxLEoPTHB16EtGJYKG
+         NzBX1ZEKcREwLiSTDeKaWtKK84ITOC1iNcQc7w6pEb1sBNj9P5LyNfbx4vlpxHaISBiB
+         08uW8Iy1rMcI8PCUtP8cWkvp2ZhbFCdKk161BYcgvlwmzo0NEW6QCa5POj8lnchNdq3u
+         AeorUeB6lIzlqwXRz1rKL4Rj7bkDJlb1S5n5/LkIAVEchK4bXcUFAYTjNFDF0rXSGM+6
+         nyxA==
+X-Gm-Message-State: AOAM530WM9+kvbCDJ0buX2v7j9Za91bmSXWhGfVufRy+0jn0j0IoewRZ
+        a/ydCbgukkI1rWzYxr993IsSS5kJPQDe8vn6zkM=
+X-Google-Smtp-Source: ABdhPJzUTLaQW9WMTt3TPbJYcpxlwzVByMFKlZKYamYsIhvLVlanjPyUrli3T7KlhDn1Dh/iF0rfNASCxuGnkQKoH78=
+X-Received: by 2002:a05:651c:158e:b0:248:1ce:a2a with SMTP id
+ h14-20020a05651c158e00b0024801ce0a2amr1485057ljq.172.1648067417206; Wed, 23
+ Mar 2022 13:30:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <RFC-cover-0.7-00000000000-20220323T033928Z-avarab@gmail.com>
- <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com> <RFC-patch-v2-2.7-c6f776fc2bc-20220323T140753Z-avarab@gmail.com>
-In-Reply-To: <RFC-patch-v2-2.7-c6f776fc2bc-20220323T140753Z-avarab@gmail.com>
+ <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com> <RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753Z-avarab@gmail.com>
+In-Reply-To: <RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753Z-avarab@gmail.com>
 From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 23 Mar 2022 13:25:43 -0700
-Message-ID: <CANQDOdd6m_xC6Jt41seLBnvjmM_xorFxmzNYCOs6uqGXcvpdqA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/7] object-file: pass down unpack-objects.c flags
- for "bulk" checkin
+Date:   Wed, 23 Mar 2022 13:30:06 -0700
+Message-ID: <CANQDOdffANOvbTBAZs95PxQMgCu1Leww6+a7A960hcYi+4mNDQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 4/7] update-index: have the index fsync() flush the
+ loose objects
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -68,403 +68,212 @@ X-Mailing-List: git@vger.kernel.org
 On Wed, Mar 23, 2022 at 7:18 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
-> Remove much of this as a POC for exploring some of what I mentioned in
-> https://lore.kernel.org/git/220322.86mthinxnn.gmgdl@evledraar.gmail.com/
+> As with unpack-objects in a preceding commit have update-index.c make
+> use of the HASH_N_OBJECTS{,_{FIRST,LAST}} flags. We now have a "batch"
+> mode again for "update-index".
 >
-> This commit is obviously not what we *should* do as end-state, but
-> demonstrates what's needed (I think) for a bare-minimum implementation
-> of just the "bulk" syncing method for loose objects without the part
-> where we do the tmp-objdir.c dance.
+> Adding the t/* directory from git.git on a Linux ramdisk is a bit
+> faster than with the tmp-objdir indirection:
 >
-> Performance with this is already quite promising. Benchmarking with:
->
->         git hyperfine -L rev ns/batched-fsync,HEAD -s 'make CFLAGS=3D-O3'=
- \
->                 -p 'rm -rf r.git && git init --bare r.git' \
->                 './git -C r.git -c core.fsync=3Dloose-object -c core.fsyn=
-cMethod=3Dbatch unpack-objects </tmp/pack-dotfiles.pack'
->
-> I.e. unpacking a small packfile (my dotfiles) yields, on a Linux
-> ramdisk:
->
->         Benchmark 1: ./git -C r.git -c core.fsync=3Dloose-object -c core.=
-fsyncMethod=3Dbatch unpack-objects </tmp/pack-dotfiles.pack' in 'ns/batched=
--fsync
->           Time (mean =C2=B1 =CF=83):     815.9 ms =C2=B1   8.2 ms    [Use=
-r: 522.9 ms, System: 287.9 ms]
->           Range (min =E2=80=A6 max):   805.6 ms =E2=80=A6 835.9 ms    10 =
+>         $ git hyperfine -L rev ns/batched-fsync,HEAD -s 'make CFLAGS=3D-O=
+3 && rm -rf repo && git init repo && cp -R t repo/ && git ls-files -- t >re=
+po/.git/to-add.txt' -p 'rm -rf repo/.git/objects/* repo/.git/index' './git =
+-c core.fsync=3Dloose-object -c core.fsyncMethod=3Dbatch -C repo update-ind=
+ex --add --stdin <repo/.git/to-add.txt' --warmup 1 -r 10Benchmark 1: ./git =
+-c core.fsync=3Dloose-object -c core.fsyncMethod=3Dbatch -C repo update-ind=
+ex --add --stdin <repo/.git/to-add.txt' in 'ns/batched-fsync
+>           Time (mean =C2=B1 =CF=83):     281.1 ms =C2=B1   2.6 ms    [Use=
+r: 186.2 ms, System: 92.3 ms]
+>           Range (min =E2=80=A6 max):   278.3 ms =E2=80=A6 287.0 ms    10 =
 runs
 >
->         Benchmark 2: ./git -C r.git -c core.fsync=3Dloose-object -c core.=
-fsyncMethod=3Dbatch unpack-objects </tmp/pack-dotfiles.pack' in 'HEAD
->           Time (mean =C2=B1 =CF=83):     779.4 ms =C2=B1  15.4 ms    [Use=
-r: 505.7 ms, System: 270.2 ms]
->           Range (min =E2=80=A6 max):   763.1 ms =E2=80=A6 813.9 ms    10 =
+>         Benchmark 2: ./git -c core.fsync=3Dloose-object -c core.fsyncMeth=
+od=3Dbatch -C repo update-index --add --stdin <repo/.git/to-add.txt' in 'HE=
+AD
+>           Time (mean =C2=B1 =CF=83):     265.9 ms =C2=B1   2.6 ms    [Use=
+r: 181.7 ms, System: 82.1 ms]
+>           Range (min =E2=80=A6 max):   262.0 ms =E2=80=A6 270.3 ms    10 =
 runs
 >
 >         Summary
->           './git -C r.git -c core.fsync=3Dloose-object -c core.fsyncMetho=
-d=3Dbatch unpack-objects </tmp/pack-dotfiles.pack' in 'HEAD' ran
->             1.05 =C2=B1 0.02 times faster than './git -C r.git -c core.fs=
-ync=3Dloose-object -c core.fsyncMethod=3Dbatch unpack-objects </tmp/pack-do=
-tfiles.pack' in 'ns/batched-fsync'
+>           './git -c core.fsync=3Dloose-object -c core.fsyncMethod=3Dbatch=
+ -C repo update-index --add --stdin <repo/.git/to-add.txt' in 'HEAD' ran
+>             1.06 =C2=B1 0.01 times faster than './git -c core.fsync=3Dloo=
+se-object -c core.fsyncMethod=3Dbatch -C repo update-index --add --stdin <r=
+epo/.git/to-add.txt' in 'ns/batched-fsync'
 >
-> Doing the same with "strace --summary-only", which probably helps to
-> emulate cases with slower syscalls is ~15% faster than using the
-> tmp-objdir indirection:
+> And as before running that with "strace --summary-only" slows things
+> down a bit (probably mimicking slower I/O a bit). I then get:
 >
 >         Summary
->           'strace --summary-only ./git -C r.git -c core.fsync=3Dloose-obj=
-ect -c core.fsyncMethod=3Dbatch unpack-objects </tmp/pack-dotfiles.pack' in=
- 'HEAD' ran
->             1.16 =C2=B1 0.01 times faster than 'strace --summary-only ./g=
-it -C r.git -c core.fsync=3Dloose-object -c core.fsyncMethod=3Dbatch unpack=
--objects </tmp/pack-dotfiles.pack' in 'ns/batched-fsync'
+>           'strace --summary-only ./git -c core.fsync=3Dloose-object -c co=
+re.fsyncMethod=3Dbatch -C repo update-index --add --stdin <repo/.git/to-add=
+.txt' in 'HEAD' ran
+>             1.19 =C2=B1 0.03 times faster than 'strace --summary-only ./g=
+it -c core.fsync=3Dloose-object -c core.fsyncMethod=3Dbatch -C repo update-=
+index --add --stdin <repo/.git/to-add.txt' in 'ns/batched-fsync'
 >
-> Which makes sense in terms of syscalls. In my case HEAD has ~101k
-> calls, and the parent topic is making ~129k calls, with around 2x the
-> number of unlink(), link() as expected.
+> This one has a twist though, instead of fsync()-ing on the last object
+> we write we'll not do that, and instead defer the fsync() until we
+> write the index itself. This is outlined in [1] (as "METHOD THREE").
 >
-> Of course some users will want to use the tmp-objdir.c method. So a
-> version of this commit could be rewritten to come earlier in the
-> series, with the "bulk" on top being optional.
+> Because of this under FSYNC_METHOD_BATCH we'll do the N
+> objects (possibly only one, because we're lazy) as HASH_N_OBJECTS, and
+> we'll even now support doing this via N arguments on the command-line.
 >
-> It seems to me that it's a much better strategy to do this whole thing
-> in close_loose_object() after passing down the new HASH_N_OBJECTS /
-> HASH_N_OBJECTS_FIRST / HASH_N_OBJECTS_LAST flags.
+> Then we won't fsync() any of it, but we will rename it
+> in-place (which, if we were still using the tmp-objdir, would leave it
+> "staged" in the tmp-objdir).
 >
-> Doing that for the "builtin/add.c" and "builtin/unpack-objects.c" code
-> having its {un,}plug_bulk_checkin() removed here is then just a matter
-> of passing down a similar set of flags indicating whether we're
-> dealing with N objects, and if so if we're dealing with the last one
-> or not.
+> We'll then have the fsync() for the index update "flush" that out, and
+> thus avoid two fsync() calls when one will do.
 >
-> As we'll see in subsequent commits doing it this way also effortlessly
-> integrates with other HASH_* flags. E.g. for "update-index" the code
-> being rm'd here doesn't handle the interaction with
-> "HASH_WRITE_OBJECT" properly, but once we've moved all this sync
-> bootstrapping logic to close_loose_object() we'll never get to it if
-> we're not actually writing something.
+> Running this with the "git hyperfine" command mentioned in a preceding
+> commit with "strace --summary-only" shows that we do 1 fsync() now
+> instead of 2, and have one more sync_file_range(), as expected.
 >
-> This code currently doesn't use the HASH_N_OBJECTS_FIRST flag, but
-> that's what we'd use later to optionally call tmp_objdir_create().
+> We also go from ~51k syscalls to ~39k, with ~2x the number of link()
+> and unlink() in ns/batched-fsync, and of course one fsync() instead of
+> two()>
 >
-> Aside: This also changes logic that was a bit confusing and repetitive
-> in close_loose_object(). Previously we'd first call
-> batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT) which is just as
-> shorthand for:
+> The flow of this code isn't quite set up for re-plugging the
+> tmp-objdir back in. In particular we no longer pass
+> HASH_N_OBJECTS_FIRST (but doing so would be trivial)< and there's no
+> HASH_N_OBJECTS_LAST.
 >
->         fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT &&
->         fsync_method =3D=3D FSYNC_METHOD_BATCH
+> So this and other callers would need some light transaction-y API, or
+> to otherwise pass down a "yes, I'd like to flush it" down to
+> finalize_hashfile(), but doing so will be trivial.
 >
-> We'd then proceed to call
-> fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT) later in the same
-> function, which is just a way of calling fsync_or_die() if:
+> And since we've started structuring it this way it'll become easy to
+> do any arbitrary number of things down the line that would "bulk
+> fsync" before the final fsync(). Now we write some objects and fsync()
+> on the index, but between those two could do any number of other
+> things where we'd defer the fsync().
 >
->         fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT
+> This sort of thing might be especially interesting for "git repack"
+> when it writes e.g. a *.bitmap, *.rev, *.pack and *.idx. In that case
+> we could skip the fsync() on all of those, and only do it on the *.idx
+> before we renamed it in-place. I *think* nothing cares about a *.pack
+> without an *.idx, but even then we could fsync *.idx, rename *.pack,
+> rename *.idx and still safely do only one fsync(). See "git show
+> --first-parent" on 62874602032 (Merge branch
+> 'tb/pack-finalize-ordering' into maint, 2021-10-12) for a good
+> overview of the code involved in that.
 >
-> Now we instead just define a local "fsync_loose" variable by checking
-> "fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT", which shows us that
-> the previous case of fsync_component_or_die(...)" could just be added
-> to the existing "fsync_object_files > 0" branch.
->
-> Note: This commit reverts much of "core.fsyncmethod: batched disk
-> flushes for loose-objects". We'll set up new structures to bring what
-> it was doing back in a different way. I.e. to do the tmp-objdir
-> plug-in in object-file.c
+> 1. https://lore.kernel.org/git/220323.86sfr9ndpr.gmgdl@evledraar.gmail.co=
+m/
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  builtin/unpack-objects.c |  2 --
->  builtin/update-index.c   |  4 ---
->  bulk-checkin.c           | 74 ----------------------------------------
->  bulk-checkin.h           |  3 --
->  cache.h                  |  5 ---
->  object-file.c            | 37 ++++++++++++++------
->  6 files changed, 26 insertions(+), 99 deletions(-)
+>  builtin/update-index.c |  7 ++++---
+>  cache.h                |  1 +
+>  read-cache.c           | 29 ++++++++++++++++++++++++++++-
+>  3 files changed, 33 insertions(+), 4 deletions(-)
 >
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index ec40c6fd966..93da436581b 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -507,7 +507,6 @@ static void unpack_all(void)
->         if (!quiet)
->                 progress =3D start_progress(_("Unpacking objects"), nr_ob=
-jects);
->         CALLOC_ARRAY(obj_list, nr_objects);
-> -       plug_bulk_checkin();
->         oflags =3D nr_objects > 1 ? HASH_N_OBJECTS : 0;
->         for (i =3D 0; i < nr_objects; i++) {
->                 int nth =3D i + 1;
-> @@ -517,7 +516,6 @@ static void unpack_all(void)
->                 unpack_one(i, oflags | f);
->                 display_progress(progress, nth);
->         }
-> -       unplug_bulk_checkin();
->         stop_progress(&progress);
->
->         if (delta_list)
 > diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index cbd2b0d633b..95ed3c47b2e 100644
+> index 34aaaa16c20..6cfec6efb38 100644
 > --- a/builtin/update-index.c
 > +++ b/builtin/update-index.c
-> @@ -1118,8 +1118,6 @@ int cmd_update_index(int argc, const char **argv, c=
+> @@ -1142,7 +1142,7 @@ int cmd_update_index(int argc, const char **argv, c=
 onst char *prefix)
->         parse_options_start(&ctx, argc, argv, prefix,
->                             options, PARSE_OPT_STOP_AT_NON_OPTION);
 >
-> -       /* optimize adding many objects to the object database */
-> -       plug_bulk_checkin();
->         while (ctx.argc) {
->                 if (parseopt_state !=3D PARSE_OPT_DONE)
->                         parseopt_state =3D parse_options_step(&ctx, optio=
-ns,
-> @@ -1194,8 +1192,6 @@ int cmd_update_index(int argc, const char **argv, c=
+>                         setup_work_tree();
+>                         p =3D prefix_path(prefix, prefix_length, path);
+> -                       update_one(p, 0);
+> +                       update_one(p, HASH_N_OBJECTS);
+>                         if (set_executable_bit)
+>                                 chmod_path(set_executable_bit, p);
+>                         free(p);
+> @@ -1187,7 +1187,7 @@ int cmd_update_index(int argc, const char **argv, c=
 onst char *prefix)
->                 strbuf_release(&buf);
+>                                 strbuf_swap(&buf, &unquoted);
+>                         }
+>                         p =3D prefix_path(prefix, prefix_length, buf.buf)=
+;
+> -                       update_one(p, 0);
+> +                       update_one(p, HASH_N_OBJECTS);
+>                         if (set_executable_bit)
+>                                 chmod_path(set_executable_bit, p);
+>                         free(p);
+> @@ -1263,7 +1263,8 @@ int cmd_update_index(int argc, const char **argv, c=
+onst char *prefix)
+>                                 exit(128);
+>                         unable_to_lock_die(get_index_file(), lock_error);
+>                 }
+> -               if (write_locked_index(&the_index, &lock_file, COMMIT_LOC=
+K))
+> +               if (write_locked_index(&the_index, &lock_file,
+> +                                      COMMIT_LOCK | WLI_NEED_LOOSE_FSYNC=
+))
+>                         die("Unable to write new index file");
 >         }
 >
-> -       /* by now we must have added all of the new objects */
-> -       unplug_bulk_checkin();
->         if (split_index > 0) {
->                 if (git_config_get_split_index() =3D=3D 0)
->                         warning(_("core.splitIndex is set to false; "
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index a0dca79ba6a..577b135e39c 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -3,20 +3,15 @@
->   */
->  #include "cache.h"
->  #include "bulk-checkin.h"
-> -#include "lockfile.h"
->  #include "repository.h"
->  #include "csum-file.h"
->  #include "pack.h"
->  #include "strbuf.h"
-> -#include "string-list.h"
-> -#include "tmp-objdir.h"
->  #include "packfile.h"
->  #include "object-store.h"
->
->  static int bulk_checkin_plugged;
->
-> -static struct tmp_objdir *bulk_fsync_objdir;
-> -
->  static struct bulk_checkin_state {
->         char *pack_tmp_name;
->         struct hashfile *f;
-> @@ -85,40 +80,6 @@ static void finish_bulk_checkin(struct bulk_checkin_st=
-ate *state)
->         reprepare_packed_git(the_repository);
->  }
->
-> -/*
-> - * Cleanup after batch-mode fsync_object_files.
-> - */
-> -static void do_batch_fsync(void)
-> -{
-> -       struct strbuf temp_path =3D STRBUF_INIT;
-> -       struct tempfile *temp;
-> -
-> -       if (!bulk_fsync_objdir)
-> -               return;
-> -
-> -       /*
-> -        * Issue a full hardware flush against a temporary file to ensure
-> -        * that all objects are durable before any renames occur. The cod=
-e in
-> -        * fsync_loose_object_bulk_checkin has already issued a writeout
-> -        * request, but it has not flushed any writeback cache in the sto=
-rage
-> -        * hardware or any filesystem logs. This fsync call acts as a bar=
-rier
-> -        * to ensure that the data in each new object file is durable bef=
-ore
-> -        * the final name is visible.
-> -        */
-> -       strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_direct=
-ory());
-> -       temp =3D xmks_tempfile(temp_path.buf);
-> -       fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
-> -       delete_tempfile(&temp);
-> -       strbuf_release(&temp_path);
-> -
-> -       /*
-> -        * Make the object files visible in the primary ODB after their d=
-ata is
-> -        * fully durable.
-> -        */
-> -       tmp_objdir_migrate(bulk_fsync_objdir);
-> -       bulk_fsync_objdir =3D NULL;
-> -}
-> -
->  static int already_written(struct bulk_checkin_state *state, struct obje=
-ct_id *oid)
->  {
->         int i;
-> @@ -313,26 +274,6 @@ static int deflate_to_pack(struct bulk_checkin_state=
- *state,
->         return 0;
->  }
->
-> -void prepare_loose_object_bulk_checkin(void)
-> -{
-> -       if (bulk_checkin_plugged && !bulk_fsync_objdir)
-> -               bulk_fsync_objdir =3D tmp_objdir_create("bulk-fsync");
-> -}
-> -
-> -void fsync_loose_object_bulk_checkin(int fd, const char *filename)
-> -{
-> -       /*
-> -        * If we have a plugged bulk checkin, we issue a call that
-> -        * cleans the filesystem page cache but avoids a hardware flush
-> -        * command. Later on we will issue a single hardware flush
-> -        * before as part of do_batch_fsync.
-> -        */
-> -       if (!bulk_fsync_objdir ||
-> -           git_fsync(fd, FSYNC_WRITEOUT_ONLY) < 0) {
-> -               fsync_or_die(fd, filename);
-> -       }
-> -}
-> -
->  int index_bulk_checkin(struct object_id *oid,
->                        int fd, size_t size, enum object_type type,
->                        const char *path, unsigned flags)
-> @@ -347,19 +288,6 @@ int index_bulk_checkin(struct object_id *oid,
->  void plug_bulk_checkin(void)
->  {
->         assert(!bulk_checkin_plugged);
-> -
-> -       /*
-> -        * A temporary object directory is used to hold the files
-> -        * while they are not fsynced.
-> -        */
-> -       if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT)) {
-> -               bulk_fsync_objdir =3D tmp_objdir_create("bulk-fsync");
-> -               if (!bulk_fsync_objdir)
-> -                       die(_("Could not create temporary object director=
-y for core.fsyncMethod=3Dbatch"));
-> -
-> -               tmp_objdir_replace_primary_odb(bulk_fsync_objdir, 0);
-> -       }
-> -
->         bulk_checkin_plugged =3D 1;
->  }
->
-> @@ -369,6 +297,4 @@ void unplug_bulk_checkin(void)
->         bulk_checkin_plugged =3D 0;
->         if (bulk_checkin_state.f)
->                 finish_bulk_checkin(&bulk_checkin_state);
-> -
-> -       do_batch_fsync();
->  }
-> diff --git a/bulk-checkin.h b/bulk-checkin.h
-> index 181d3447ff9..b26f3dc3b74 100644
-> --- a/bulk-checkin.h
-> +++ b/bulk-checkin.h
-> @@ -6,9 +6,6 @@
->
->  #include "cache.h"
->
-> -void prepare_loose_object_bulk_checkin(void);
-> -void fsync_loose_object_bulk_checkin(int fd, const char *filename);
-> -
->  int index_bulk_checkin(struct object_id *oid,
->                        int fd, size_t size, enum object_type type,
->                        const char *path, unsigned flags);
 > diff --git a/cache.h b/cache.h
-> index 72c91c91286..2f3831fa853 100644
+> index 2f3831fa853..7542e009a34 100644
 > --- a/cache.h
 > +++ b/cache.h
-> @@ -1772,11 +1772,6 @@ void fsync_or_die(int fd, const char *);
->  int fsync_component(enum fsync_component component, int fd);
->  void fsync_component_or_die(enum fsync_component component, int fd, cons=
-t char *msg);
+> @@ -751,6 +751,7 @@ void ensure_full_index(struct index_state *istate);
+>  /* For use with `write_locked_index()`. */
+>  #define COMMIT_LOCK            (1 << 0)
+>  #define SKIP_IF_UNCHANGED      (1 << 1)
+> +#define WLI_NEED_LOOSE_FSYNC   (1 << 2)
 >
-> -static inline int batch_fsync_enabled(enum fsync_component component)
-> -{
-> -       return (fsync_components & component) && (fsync_method =3D=3D FSY=
-NC_METHOD_BATCH);
-> -}
-> -
->  ssize_t read_in_full(int fd, void *buf, size_t count);
->  ssize_t write_in_full(int fd, const void *buf, size_t count);
->  ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
-> diff --git a/object-file.c b/object-file.c
-> index cd0ddb49e4b..dbeb3df502d 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1886,19 +1886,37 @@ void hash_object_file(const struct git_hash_algo =
-*algo, const void *buf,
->         hash_object_file_literally(algo, buf, len, type_name(type), oid);
->  }
->
-> +static void sync_loose_object_batch(int fd, const char *filename,
-> +                                   const unsigned oflags)
-> +{
-> +       const int last =3D oflags & HASH_N_OBJECTS_LAST;
+>  /*
+>   * Write the index while holding an already-taken lock. Close the lock,
+> diff --git a/read-cache.c b/read-cache.c
+> index 3e0e7d41837..275f6308c32 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -2860,6 +2860,33 @@ static int do_write_index(struct index_state *ista=
+te, struct tempfile *tempfile,
+>         int ieot_entries =3D 1;
+>         struct index_entry_offset_table *ieot =3D NULL;
+>         int nr, nr_threads;
+> +       unsigned int wflags =3D FSYNC_COMPONENT_INDEX;
+> +
 > +
 > +       /*
-> +        * We're doing a sync_file_range() (or equivalent) for 1..N-1
-> +        * objects, and then a "real" fsync() for N. On some OS's
-> +        * enabling core.fsync=3Dloose-object && core.fsyncMethod=3Dbatch
-> +        * improves the performance by a lot.
+> +        * TODO: This is abuse of the API recently modified
+> +        * finalize_hashfile() which reveals a shortcoming of its
+> +        * "fsync" design.
+> +        *
+> +        * I.e. It expects a "enum fsync_component component" label,
+> +        * but here we're passing it an OR of the two, knowing that
+> +        * it'll call fsync_component_or_die() which (in
+> +        * write-or-die.c) will do "(fsync_components & wflags)" (to
+> +        * our "wflags" here).
+> +        *
+> +        * But the API really should be changed to explicitly take
+> +        * such flags, because in this case we'd like to fsync() the
+> +        * index if we're in the bulk mode, *even if* our
+> +        * "core.fsync=3Dindex" isn't configured.
+> +        *
+> +        * That's because at this point we've been queuing up object
+> +        * writes that we didn't fsync(), and are going to use this
+> +        * fsync() to "flush" the whole thing. Doing it this way
+> +        * avoids redundantly calling fsync() twice when once will do.
 > +        */
-> +       if (last || (!last && git_fsync(fd, FSYNC_WRITEOUT_ONLY) < 0))
-> +               fsync_or_die(fd, filename);
-> +}
-> +
->  /* Finalize a file on disk, and close it. */
-> -static void close_loose_object(int fd, const char *filename)
-> +static void close_loose_object(int fd, const char *filename,
-> +                              const unsigned oflags)
->  {
-> +       int fsync_loose;
-> +
->         if (the_repository->objects->odb->will_destroy)
->                 goto out;
+> +       if (fsync_method =3D=3D FSYNC_METHOD_BATCH &&
+> +           flags & WLI_NEED_LOOSE_FSYNC)
+> +               wflags |=3D FSYNC_COMPONENT_LOOSE_OBJECT;
 >
-> -       if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
-> -               fsync_loose_object_bulk_checkin(fd, filename);
-> -       else if (fsync_object_files > 0)
-> +       fsync_loose =3D fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT;
-> +
-> +       if (oflags & HASH_N_OBJECTS && fsync_loose &&
-> +           fsync_method =3D=3D FSYNC_METHOD_BATCH)
-> +               sync_loose_object_batch(fd, filename, oflags);
-> +       else if (fsync_object_files > 0 || fsync_loose)
->                 fsync_or_die(fd, filename);
-> -       else
-> -               fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd,
-> -                                      filename);
+>         f =3D hashfd(tempfile->fd, tempfile->filename.buf);
 >
->  out:
->         if (close(fd) !=3D 0)
-> @@ -1962,9 +1980,6 @@ static int write_loose_object(const struct object_i=
-d *oid, char *hdr,
->         static struct strbuf tmp_file =3D STRBUF_INIT;
->         static struct strbuf filename =3D STRBUF_INIT;
+> @@ -3094,7 +3121,7 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+>         if (!alternate_index_output && (flags & COMMIT_LOCK))
+>                 csum_fsync_flag =3D CSUM_FSYNC;
 >
-> -       if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
-> -               prepare_loose_object_bulk_checkin();
-> -
->         loose_object_path(the_repository, &filename, oid);
+> -       finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_INDEX,
+> +       finalize_hashfile(f, istate->oid.hash, wflags,
+>                           CSUM_HASH_IN_STREAM | csum_fsync_flag);
 >
->         fd =3D create_tmpfile(&tmp_file, filename.buf);
-> @@ -2015,7 +2030,7 @@ static int write_loose_object(const struct object_i=
-d *oid, char *hdr,
->                 die(_("confused by unstable object source data for %s"),
->                     oid_to_hex(oid));
->
-> -       close_loose_object(fd, tmp_file.buf);
-> +       close_loose_object(fd, tmp_file.buf, flags);
->
->         if (mtime) {
->                 struct utimbuf utb;
+>         if (close_tempfile_gently(tempfile)) {
 > --
 > 2.35.1.1428.g1c1a0152d61
 >
 
-Fine. Doing this patch series as non-RFC, we could start from prior to
-my fsyncMethod=3Dbatch series.
+In the long run, we should attach the "need to fsync the index" to an
+ongoing 'repo-transaction' so that we can composably sync at the best
+point regardless of what the top-level git operation does.
