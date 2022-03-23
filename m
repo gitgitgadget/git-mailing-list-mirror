@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90BEBC433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2720C433EF
 	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 09:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243087AbiCWJP3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 05:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47214 "EHLO
+        id S242497AbiCWJPa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 05:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243078AbiCWJPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 05:15:24 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A925675E70
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:46 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id n7-20020a17090aab8700b001c6aa871860so1160599pjq.2
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:46 -0700 (PDT)
+        with ESMTP id S243119AbiCWJPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 05:15:25 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A5F7629A
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:49 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id w8so932158pll.10
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Zj9pkTsFlErJXEhnU3DaQ6sNjOOJhZ5dYfJBZ0HaiNw=;
-        b=YX4vt0r5QiTPbcernH11cO3rbUCWzEKCiSeuK3OrHYXJLghqNiH05d2228+oDNLjpI
-         KUN6HG+k+EylnMTfPV975sWRbcn+8Ohb9fKpMNbSPNf/4FVpEa7nAPkhZFPceAE/FCtH
-         SP9xUyIL8DJA8AoC5UIlB5ONYSDSfIms/iNhEljpKdMv72en9ix4PzpK2IZ8YY3DiphS
-         YCxDTVPgNgsYDMu2xSJnthkTJESRyo4wOeNg7m3J2mcT9sYRrc0yhviZCZGnc9Kg/vHF
-         I3s3b4s3pqR+BR8grCcNAqdUCtNFbjG1jz9plerdQSp1eTki6hquUSP+lu4rI83RA2xz
-         iyWQ==
+        bh=i66FOR8tkiHOUzGM260kwQJtPAurnrmyRZzWJuY22hE=;
+        b=PGtYA3JuDXTNMYNi21abHtrQFY0bnbMJ95hfJFaffNBRLaCMmhVz/4rIbCj8dBQXy5
+         dub2NbKOHkBqMKFWtagGmiUmZL/9ud/IyknG3uYfp7z/6TqD3yz6TkTj9e9v9SJBi4QQ
+         tBVELU0AzVWl+daRW4upxmTKtyyiV1csZqg+d0S1PBmBYeloYWYx2UoT3Ognx2ZwlS+r
+         /hcPfgGt8RqPYjrvndORP1Xc4BwSQzfMfWmB+YvuX6Zj6D8Vhfv+OkuR/aEWv9PpVML6
+         BF+OZRdv8L8q6r+KfmtHsW9nZg+tBTneK+TSSOFGTeD8qU20aMH4KNVea6cYeOpVsU4k
+         HzfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Zj9pkTsFlErJXEhnU3DaQ6sNjOOJhZ5dYfJBZ0HaiNw=;
-        b=d0QerILjRLtpWRecSZVfNH1BJ31C2Ng+sO9oStosdc3o2DuPRuFv7We9YhAfeq2wOd
-         350uswpAPSr192gYlrF7Rz6l/YGnEDwByoqvmCfFAVr6InhFaM2mfeB4W6s3UkSfMW29
-         45zv+kjkDSW1rTODvdPiFLIhHmOrQhJ6Vra/kM4fuwfcgzmznF4Sas4uzRuTJ3oWVwk9
-         9RuZ0Jt7jxVFLDzUaQVs85+22a2CTbqz6kNcTwR+GehZx/wfwrfl/p9n2aMttZVgAGfq
-         I1JoOOp9bbD5GbrBefzL6dJd2IZnPpsSv0Y0NGpXbKwQ5qY1vSR5zNLxzclYlGTOXZvH
-         5Jrg==
-X-Gm-Message-State: AOAM533YrOjAHZKtute6HkrYlBoz3rY+9AGiWEUZpefoewXiHeMGOAcx
-        7UXtnSD4Sg+Gz/8gIzpa/lc=
-X-Google-Smtp-Source: ABdhPJyHusehLEZj1D6UAImTIh0NdREbgbmGSWiK+sR10atMLpjvuMGc9IT3t2XK5n39lk/dzO7kVg==
-X-Received: by 2002:a17:902:f643:b0:14d:7b8f:14b3 with SMTP id m3-20020a170902f64300b0014d7b8f14b3mr22610865plg.19.1648026826144;
-        Wed, 23 Mar 2022 02:13:46 -0700 (PDT)
+        bh=i66FOR8tkiHOUzGM260kwQJtPAurnrmyRZzWJuY22hE=;
+        b=hDRihHC97oc4YvMyFFvvUVHTjHwq0UPDAikSFjYbuTCph0u2aIO3KRG3vxTA6olkAz
+         x5LvNYrYg3jM8sqLX6RsHo2fsNbVwzNPe1C9z2VhyvG0EV4Ox6fv58IIH+0Cu/Bij+n6
+         Q60R6OkSA/Gi/yZgP7ER/8hDwbUl4dehMJ0yuAD1jTR/duYc9bMo1DejI5LbXkO1nmJv
+         90I+T9sDRZvFCzxD9CdID0wRZy4IhIcOkSVxPk0zg3RZzP3uxKj2/W0LNT0o4GaFCbsj
+         PAPail2PAoFwkEunlzpyMlwKhwbenl9tMFfKuOhZ7Hh/wccXtxbd9Rnh5lH7HW8C8e9D
+         EbCg==
+X-Gm-Message-State: AOAM533vXsfv1lPyJiUL/4IOgqq1zHVZp7b05t9odHjp4oLFZXdJiWqL
+        6JKsmMT9oz0auqBf3KT+y3o=
+X-Google-Smtp-Source: ABdhPJy+HGoz5lJFS+llotzfr60WxM2Qp2uk62wHWz2dYzYvHz5kV3NHRJ3KYJrsfseBGccnfFe4NQ==
+X-Received: by 2002:a17:902:7141:b0:154:28e0:9720 with SMTP id u1-20020a170902714100b0015428e09720mr21692702plm.116.1648026828693;
+        Wed, 23 Mar 2022 02:13:48 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.39])
-        by smtp.gmail.com with ESMTPSA id s135-20020a63778d000000b0038259e54389sm10224261pgc.19.2022.03.23.02.13.43
+        by smtp.gmail.com with ESMTPSA id s135-20020a63778d000000b0038259e54389sm10224261pgc.19.2022.03.23.02.13.46
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Mar 2022 02:13:45 -0700 (PDT)
+        Wed, 23 Mar 2022 02:13:48 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
         peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v14 09/15] ls-tree: slightly refactor `show_tree()`
-Date:   Wed, 23 Mar 2022 17:13:09 +0800
-Message-Id: <f4fc377dfa8b5c979740d8916a3ed8f8089957bb.1648026472.git.dyroneteng@gmail.com>
+Subject: [PATCH v14 10/15] ls-tree: introduce struct "show_tree_data"
+Date:   Wed, 23 Mar 2022 17:13:10 +0800
+Message-Id: <5131c0dcff7407220d43e1ea507047053f65be39.1648026472.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.34.1.404.g92931a4a2c.dirty
 In-Reply-To: <cover.1648026472.git.dyroneteng@gmail.com>
 References: <cover.1648026472.git.dyroneteng@gmail.com>
@@ -65,158 +65,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a non-functional change, we introduce an enum "ls_tree_cmdmode"
-then use it to mark which columns to output.
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-This has the advantage of making the show_tree logic simpler and more
-readable, as well as making it easier to extend new options (for example,
-if we want to add a "--object-only" option, we just need to add a similar
-"short-circuit logic in "show_tree()").
+"show_tree_data" is a struct that packages the necessary fields for
+"show_tree()". This commit is a pre-prepared commit for supporting
+"--format" option and it does not affect any existing functionality.
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- builtin/ls-tree.c | 98 +++++++++++++++++++++++++++++------------------
- 1 file changed, 61 insertions(+), 37 deletions(-)
+ builtin/ls-tree.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 7be4c13228..173a534e92 100644
+index 173a534e92..edc8bf53a6 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
-@@ -16,10 +16,8 @@
- 
- static int line_termination = '\n';
- #define LS_RECURSIVE 1
--#define LS_TREE_ONLY 2
--#define LS_SHOW_TREES 4
--#define LS_NAME_ONLY 8
--#define LS_SHOW_SIZE 16
-+#define LS_TREE_ONLY (1 << 1)
-+#define LS_SHOW_TREES (1 << 2)
- static int abbrev;
- static int ls_options;
+@@ -23,6 +23,13 @@ static int ls_options;
  static struct pathspec pathspec;
-@@ -31,6 +29,11 @@ static const  char * const ls_tree_usage[] = {
- 	NULL
- };
+ static int chomp_prefix;
+ static const char *ls_tree_prefix;
++struct show_tree_data {
++	unsigned mode;
++	enum object_type type;
++	const struct object_id *oid;
++	const char *pathname;
++	struct strbuf *base;
++};
  
-+static enum ls_tree_cmdmode {
-+	MODE_LONG = 1,
-+	MODE_NAME_ONLY,
-+} cmdmode;
-+
- static int show_recursive(const char *base, size_t baselen, const char *pathname)
- {
- 	int i;
-@@ -61,6 +64,39 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
+ static const  char * const ls_tree_usage[] = {
+ 	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+@@ -64,17 +71,15 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
  	return 0;
  }
  
-+static int show_default(const struct object_id *oid, enum object_type type,
-+			const char *pathname, unsigned mode,
-+			struct strbuf *base)
-+{
-+	size_t baselen = base->len;
-+
-+	if (cmdmode == MODE_LONG) {
-+		char size_text[24];
-+		if (type == OBJ_BLOB) {
-+			unsigned long size;
-+			if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
-+				xsnprintf(size_text, sizeof(size_text), "BAD");
-+			else
-+				xsnprintf(size_text, sizeof(size_text),
-+					  "%" PRIuMAX, (uintmax_t)size);
-+		} else {
-+			xsnprintf(size_text, sizeof(size_text), "-");
-+		}
-+		printf("%06o %s %s %7s\t", mode, type_name(type),
-+		find_unique_abbrev(oid, abbrev), size_text);
-+	} else {
-+		printf("%06o %s %s\t", mode, type_name(type),
-+		find_unique_abbrev(oid, abbrev));
-+	}
-+	baselen = base->len;
-+	strbuf_addstr(base, pathname);
-+	write_name_quoted_relative(base->buf,
-+				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
-+				   line_termination);
-+	strbuf_setlen(base, baselen);
-+	return 1;
-+}
-+
- static int show_tree(const struct object_id *oid, struct strbuf *base,
- 		const char *pathname, unsigned mode, void *context)
+-static int show_default(const struct object_id *oid, enum object_type type,
+-			const char *pathname, unsigned mode,
+-			struct strbuf *base)
++static int show_default(struct show_tree_data *data)
  {
-@@ -78,34 +114,22 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 			return recurse;
- 	}
+-	size_t baselen = base->len;
++	size_t baselen = data->base->len;
  
--	if (!(ls_options & LS_NAME_ONLY)) {
--		if (ls_options & LS_SHOW_SIZE) {
--			char size_text[24];
--			if (type == OBJ_BLOB) {
--				unsigned long size;
--				if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
--					xsnprintf(size_text, sizeof(size_text),
--						  "BAD");
--				else
--					xsnprintf(size_text, sizeof(size_text),
--						  "%"PRIuMAX, (uintmax_t)size);
--			} else {
--				xsnprintf(size_text, sizeof(size_text), "-");
--			}
--			printf("%06o %s %s %7s\t", mode, type_name(type),
--			       find_unique_abbrev(oid, abbrev),
--			       size_text);
--		} else {
--			printf("%06o %s %s\t", mode, type_name(type),
--			       find_unique_abbrev(oid, abbrev));
--		}
-+	if (cmdmode == MODE_NAME_ONLY) {
-+		baselen = base->len;
-+		strbuf_addstr(base, pathname);
-+		write_name_quoted_relative(base->buf,
-+					   chomp_prefix ? ls_tree_prefix : NULL,
-+					   stdout, line_termination);
-+		strbuf_setlen(base, baselen);
-+		return recurse;
+ 	if (cmdmode == MODE_LONG) {
+ 		char size_text[24];
+-		if (type == OBJ_BLOB) {
++		if (data->type == OBJ_BLOB) {
+ 			unsigned long size;
+-			if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
++			if (oid_object_info(the_repository, data->oid, &size) == OBJ_BAD)
+ 				xsnprintf(size_text, sizeof(size_text), "BAD");
+ 			else
+ 				xsnprintf(size_text, sizeof(size_text),
+@@ -82,18 +87,18 @@ static int show_default(const struct object_id *oid, enum object_type type,
+ 		} else {
+ 			xsnprintf(size_text, sizeof(size_text), "-");
+ 		}
+-		printf("%06o %s %s %7s\t", mode, type_name(type),
+-		find_unique_abbrev(oid, abbrev), size_text);
++		printf("%06o %s %s %7s\t", data->mode, type_name(data->type),
++		find_unique_abbrev(data->oid, abbrev), size_text);
+ 	} else {
+-		printf("%06o %s %s\t", mode, type_name(type),
+-		find_unique_abbrev(oid, abbrev));
++		printf("%06o %s %s\t", data->mode, type_name(data->type),
++		find_unique_abbrev(data->oid, abbrev));
  	}
 -	baselen = base->len;
 -	strbuf_addstr(base, pathname);
 -	write_name_quoted_relative(base->buf,
--				   chomp_prefix ? ls_tree_prefix : NULL,
--				   stdout, line_termination);
++	baselen = data->base->len;
++	strbuf_addstr(data->base, data->pathname);
++	write_name_quoted_relative(data->base->buf,
+ 				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
+ 				   line_termination);
 -	strbuf_setlen(base, baselen);
-+
-+	if (cmdmode == MODE_LONG ||
-+		(!ls_options || (ls_options & LS_RECURSIVE)
-+		 || (ls_options & LS_SHOW_TREES)
-+		 || (ls_options & LS_TREE_ONLY)))
-+			 show_default(oid, type, pathname, mode, base);
-+
- 	return recurse;
++	strbuf_setlen(data->base, baselen);
+ 	return 1;
  }
  
-@@ -123,12 +147,12 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 			LS_SHOW_TREES),
- 		OPT_SET_INT('z', NULL, &line_termination,
- 			    N_("terminate entries with NUL byte"), 0),
--		OPT_CMDMODE('l', "long", &ls_options, N_("include object size"),
--			    LS_SHOW_SIZE),
--		OPT_CMDMODE(0, "name-only", &ls_options, N_("list only filenames"),
--			    LS_NAME_ONLY),
--		OPT_CMDMODE(0, "name-status", &ls_options, N_("list only filenames"),
--			    LS_NAME_ONLY),
-+		OPT_CMDMODE('l', "long", &cmdmode, N_("include object size"),
-+			    MODE_LONG),
-+		OPT_CMDMODE(0, "name-only", &cmdmode, N_("list only filenames"),
-+			    MODE_NAME_ONLY),
-+		OPT_CMDMODE(0, "name-status", &cmdmode, N_("list only filenames"),
-+			    MODE_NAME_ONLY),
- 		OPT_SET_INT(0, "full-name", &chomp_prefix,
- 			    N_("use full path names"), 0),
- 		OPT_BOOL(0, "full-tree", &full_tree,
+@@ -103,6 +108,13 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 	int recurse = 0;
+ 	size_t baselen;
+ 	enum object_type type = object_type(mode);
++	struct show_tree_data data = {
++		.mode = mode,
++		.type = type,
++		.oid = oid,
++		.pathname = pathname,
++		.base = base,
++	};
+ 
+ 	if (type == OBJ_BLOB) {
+ 		if (ls_options & LS_TREE_ONLY)
+@@ -128,7 +140,7 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 		(!ls_options || (ls_options & LS_RECURSIVE)
+ 		 || (ls_options & LS_SHOW_TREES)
+ 		 || (ls_options & LS_TREE_ONLY)))
+-			 show_default(oid, type, pathname, mode, base);
++			 show_default(&data);
+ 
+ 	return recurse;
+ }
 -- 
 2.34.1.404.g92931a4a2c.dirty
 
