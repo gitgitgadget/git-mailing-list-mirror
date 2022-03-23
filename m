@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD42BC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 09:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 572BCC433FE
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 09:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240961AbiCWJPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 05:15:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45000 "EHLO
+        id S238816AbiCWJPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 05:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238816AbiCWJO6 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239780AbiCWJO6 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Mar 2022 05:14:58 -0400
 Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AAD75631
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:25 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id h19so43571pfv.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C72B75C02
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:27 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d19so1026426pfv.7
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 02:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kU1r40q4bbAX0HhIyOD0tXPK6t8gwvZYzi4SgPP1uGs=;
-        b=XDCow0Ci8z4mx9LMoL2ZxVneiztivmOpqQAOo8yuZ28a1AXQvZmBEIqnlWaq6HjcBW
-         gaE+rOSdeBS3/SyWiRe+efk61luKT1nSTJR5qcn3SZIcVVscoTuu4nh4f46CgNtJLXK5
-         cA/7MH3C32ColvhkC2AllCe212iLV+utncNXdC7obn1jCvmiycT9MhLE+fAQb2B2X1Vs
-         gBoesqX+fS9NBsx/zqnFW9X3JEYJlo99H4G+AcdTiuz2wc59GxAWd4tCLwu0uDaZ8wC7
-         +ps4zjwcOnHhrEWZR0Lsh0dBlht01P5m2gVWTh5dg8n6sW0yUVlPV11XkvLCLc+D6qv2
-         GLpw==
+        bh=ooJNt+bsWMSp7XCYJM+O8W0comcFHRBzqpGSoo+IqNM=;
+        b=WFkE6Nn+G+vwnBGuf0w0vtlDCtidaRZT/s1t3VhU4bAMLUdIzhtd0fs29VcVghlz5V
+         T9YHMj1ELZothD7niCE6irJeOk3aWJbyaVJsIW9o3hjp/RSQ+W/zYZ+mEjLY5j5BOWJm
+         GvQ3JUwKgk6nL1aRQJojdN1dgyPiCgEGwEBtyNxPk+z6KDqGmAVUhIek0xvLg+6BmO4J
+         EjDksX/24qgwS2Zqmzi0B1SA5KRMSEL2iuwilOGUR8esl36kDw/mpgMgU2jYvWr2PZe+
+         PK0hcKBpUcGYoCMkaD+660zQgqrD+jmqZcxnYIYnAexwBEFryTU2EizqcKQXB4pR7dVK
+         /lkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kU1r40q4bbAX0HhIyOD0tXPK6t8gwvZYzi4SgPP1uGs=;
-        b=lvhBXLM382eQfhz7pqI18EIPvgk/yrrTEsgJDv3ma+cjI6yx9omtaBOKzkgxEm2C9P
-         Urk6YIISzTXlA9Y/cN/DQMihYD1JP3fOWeXhA/GRE5AcdKcZKN7iaH7m/szVfF7BX7SM
-         lA2s8pg73+eUV4s4e+RdKZ4BACLl+CE3nNfgm/Cs9IVRUW6g5crwS7Quj+ECP3KxDXuK
-         b8pfVcWfiweLGJxfhLkBXWx1quvXdvtSCkt3gHrRDAbRlyFbQjCVjyKx1s20CcRMWgPE
-         971BXuwCFu+9LutryunJ03RZU6P/VcYcnzMlDW0iVA+c181X4j23DDXJH2LXtLi7NHhD
-         tkLQ==
-X-Gm-Message-State: AOAM530sZpWDUPjmXjnk7KeA+RboRCYW289GKo8JX6uaUW2WtNuIA2gP
-        nkIdUEgCrBY2rQ1ffK2G/n7QC7jMjjsMzA==
-X-Google-Smtp-Source: ABdhPJzmVLwbyKeTcQTwLrFwlK8Rn1qW7ZW/HUlTK6QInq4I7iq247MY2/HmYWJkKoiR0W4eO1D2VQ==
-X-Received: by 2002:a65:6390:0:b0:376:7f43:e9a1 with SMTP id h16-20020a656390000000b003767f43e9a1mr24972933pgv.480.1648026804497;
-        Wed, 23 Mar 2022 02:13:24 -0700 (PDT)
+        bh=ooJNt+bsWMSp7XCYJM+O8W0comcFHRBzqpGSoo+IqNM=;
+        b=Jbu+c2yncVvnEMgg2radiZzO/0e0qJnoL9AnOzqoai5RpsLh8KP6w+wJ7peTsr4cSM
+         Hh2wmDBQilPFXYdtIZnRD1goJSGdoz85HoG+SwzbuwfwmHpsMvSN5IgovsX7sT9O5dgC
+         anJPLVUEKPFOM1+S9kELm8BRTdapsMYaEQvNVxdA5+wwp/MRqU7taNJFypGbyvk7bBCo
+         XzdtQNF6bMYyeK0LpJJyV8XnbxGrEVbREXAJrmVtt8WMhxtQEc/J0ZHD/HF9mfb8ZYYg
+         0N7QN4xd4pOx8eVwVLyAJIq3RpAGiuVKCmiDqOZ7/18laSwqSqqq291fE1XS08N4grCM
+         YUAQ==
+X-Gm-Message-State: AOAM531J771jcvWsX7IKJOjF08Vepw9v5gSZPsnbecPzXTwXwLYNG6d+
+        lFlkb5Wgj0OB4x4X7LwN6RE=
+X-Google-Smtp-Source: ABdhPJzB915lrm9asPFuK/4Sv2FCgkDomhEveJ3GO77hLWakZdoCm05alk3Anma6MVjUk6oE20t7gA==
+X-Received: by 2002:a63:4d5a:0:b0:381:eef7:33f8 with SMTP id n26-20020a634d5a000000b00381eef733f8mr25464419pgl.193.1648026807147;
+        Wed, 23 Mar 2022 02:13:27 -0700 (PDT)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.39])
-        by smtp.gmail.com with ESMTPSA id s135-20020a63778d000000b0038259e54389sm10224261pgc.19.2022.03.23.02.13.22
+        by smtp.gmail.com with ESMTPSA id s135-20020a63778d000000b0038259e54389sm10224261pgc.19.2022.03.23.02.13.24
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Mar 2022 02:13:24 -0700 (PDT)
+        Wed, 23 Mar 2022 02:13:26 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
         peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v14 01/15] ls-tree tests: add tests for --name-status
-Date:   Wed, 23 Mar 2022 17:13:01 +0800
-Message-Id: <ef1cf83d5ea62cd4ce4dbba403b2eae654f7bc5b.1648026472.git.dyroneteng@gmail.com>
+Subject: [PATCH v14 02/15] ls-tree: remove commented-out code
+Date:   Wed, 23 Mar 2022 17:13:02 +0800
+Message-Id: <02779bfd5d0e9aa216b48ff5f738c75d2882fbd3.1648026472.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.34.1.404.g92931a4a2c.dirty
 In-Reply-To: <cover.1648026472.git.dyroneteng@gmail.com>
 References: <cover.1648026472.git.dyroneteng@gmail.com>
@@ -67,81 +67,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-The --name-status synonym for --name-only added in
-c639a5548a5 (ls-tree: --name-only, 2005-12-01) had no tests, let's
-make sure it works the same way as its sibling.
+Remove code added in f35a6d3bce7 (Teach core object handling functions
+about gitlinks, 2007-04-09), later patched in 7d0b18a4da1 (Add output
+flushing before fork(), 2008-08-04), and then finally ending up in its
+current form in d3bee161fef (tree.c: allow read_tree_recursive() to
+traverse gitlink entries, 2009-01-25). All while being commented-out!
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- t/t3101-ls-tree-dirname.sh | 55 ++++++++++++++++++++------------------
- 1 file changed, 29 insertions(+), 26 deletions(-)
+ builtin/ls-tree.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 05fde64225..217006d1bf 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -201,31 +201,34 @@ EOF
- 	test_cmp expected check
- '
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 3a442631c7..5f7c84950c 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -69,15 +69,6 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 	const char *type = blob_type;
  
--test_expect_success 'ls-tree --name-only' '
--	git ls-tree --name-only $tree >current &&
--	cat >expected <<\EOF &&
--1.txt
--2.txt
--path0
--path1
--path2
--path3
--EOF
--	test_output
--'
--
--test_expect_success 'ls-tree --name-only -r' '
--	git ls-tree --name-only -r $tree >current &&
--	cat >expected <<\EOF &&
--1.txt
--2.txt
--path0/a/b/c/1.txt
--path1/b/c/1.txt
--path2/1.txt
--path3/1.txt
--path3/2.txt
--EOF
--	test_output
--'
-+for opt in --name-only --name-status
-+do
-+	test_expect_success "ls-tree $opt" '
-+		git ls-tree $opt $tree >current &&
-+		cat >expected <<-\EOF &&
-+		1.txt
-+		2.txt
-+		path0
-+		path1
-+		path2
-+		path3
-+		EOF
-+		test_output
-+	'
-+
-+	test_expect_success "ls-tree $opt -r" '
-+		git ls-tree $opt -r $tree >current &&
-+		cat >expected <<-\EOF &&
-+		1.txt
-+		2.txt
-+		path0/a/b/c/1.txt
-+		path1/b/c/1.txt
-+		path2/1.txt
-+		path3/1.txt
-+		path3/2.txt
-+		EOF
-+		test_output
-+	'
-+done
- 
- test_done
+ 	if (S_ISGITLINK(mode)) {
+-		/*
+-		 * Maybe we want to have some recursive version here?
+-		 *
+-		 * Something similar to this incomplete example:
+-		 *
+-		if (show_subprojects(base, baselen, pathname))
+-			retval = READ_TREE_RECURSIVE;
+-		 *
+-		 */
+ 		type = commit_type;
+ 	} else if (S_ISDIR(mode)) {
+ 		if (show_recursive(base->buf, base->len, pathname)) {
 -- 
 2.34.1.404.g92931a4a2c.dirty
 
