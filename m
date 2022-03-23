@@ -2,73 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89E69C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 905F0C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 20:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240710AbiCWUxH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 16:53:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S240774AbiCWUxL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 16:53:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344803AbiCWUwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:52:54 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B5A710C6
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:51:24 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 14B6A122711;
-        Wed, 23 Mar 2022 16:51:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mDjLGBkzlPMJ4g8aHhI6RoITnIXLWmmJMBSwje
-        d8wcU=; b=g+0ONx7yrFdwZ/E5WsUKa4SqAdfy+uCShLhgnHWUOLMgI5WlJKkmc/
-        X+X1htrHhWU6HxlNSb749zmkrbCRHIQu0fyh7wghbmcDUXzH5dsVslUlLd+X5kEK
-        eJ7Paj+L6CzAt+bBIrwNpCvaFnmSZLSpvKNuzg1ELwQmXrUHs+Uns=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D018122710;
-        Wed, 23 Mar 2022 16:51:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 77DE012270E;
-        Wed, 23 Mar 2022 16:51:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, lessleydennington@gmail.com
-Subject: Re: [RFC PATCH] repo-settings: set defaults even when not in a repo
-References: <1b27e0b115f858a422e0a2891688227be8f3db01.1648055915.git.steadmon@google.com>
-Date:   Wed, 23 Mar 2022 13:51:22 -0700
-In-Reply-To: <1b27e0b115f858a422e0a2891688227be8f3db01.1648055915.git.steadmon@google.com>
-        (Josh Steadmon's message of "Wed, 23 Mar 2022 11:03:05 -0700")
-Message-ID: <xmqqtuboqto5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S240731AbiCWUxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 16:53:10 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E4328B6D2
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:51:40 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r13so3825008wrr.9
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 13:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FOz3K+n3nAw1cXK/RrFS9+yn7hc0nMT/zyObh+DIB24=;
+        b=UcZO2/dMVtODdy7+iBBmfcT0nCSAH3CQDojPuJyXoscFgN1HAOMc82dsH3RFIfJ0Us
+         DSw5P+oWaLrgSIuJ812r7F+oAeKaxq1OEJiW7nPIfKGYEhV1RGql421BvbLZ93FYSLw1
+         ApkaLYN5WhLUY7dmOonXBirXB7BzmZ3FZaZApD6uqiDnAoPRCHQ+rkNSOhI63C+JvLAp
+         LLDJafxMfdmq7dvnW/UHJCWsxr+ebESKRxaWCL/7c/M1mTax+NCdhILeC0vwEsegDiv1
+         68ONu1SKgxprdsHJuY40W2BXWuae8L4uoMdvMWpMyBsMMOifyAjmYnGXPP6oBra7Pv6K
+         dY1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FOz3K+n3nAw1cXK/RrFS9+yn7hc0nMT/zyObh+DIB24=;
+        b=oPaRx5qMVdssywkQOvJU++iR469RfvopripjC4dSFd3kWPYNSiFsc4YoY+IOavPGiY
+         PLRVICNTV7JA/HfWnSfcvZfpMjXelKtuzB8l5zGYwPBhqUs0SIUXGLnkJYizG6J3mmXw
+         1DgaXx+daiv1wH2cH1HigWCN/ANVqWrAYufyJ5fmcenjoR/v4OkY56tWRs5lfacQQx7n
+         UUdSSA3UxDQ6xa9UXUObstSZN7mNrhMRWkq7Nk6W+7quPQ/vgAxFjVNHQPcrPt/ovNXj
+         qA+Wohmi0ykdDldsZo898KsqEyRdgtMb58JYjz0JVjfvHVJwtmvMOK7HaijRHj2S3+RQ
+         5F8g==
+X-Gm-Message-State: AOAM532vm8kf/eseAKBc3za+ckJN8n3egEqPzADRecOQKEM0bOzvSTeH
+        cJngTOMp4WTNXKNuKsSvma8oQdHHA+2I8Q==
+X-Google-Smtp-Source: ABdhPJzaHqU9ztJHWw/lo3TEhnTvNiyBc0Ubh9ZxivhmJcIHDcjbdBWZUeXcymEQZ8Vx/jB0+oUBAg==
+X-Received: by 2002:a5d:498b:0:b0:203:e5d5:622c with SMTP id r11-20020a5d498b000000b00203e5d5622cmr1665776wrq.153.1648068698388;
+        Wed, 23 Mar 2022 13:51:38 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z18-20020adfec92000000b00203f04ed4a8sm780166wrn.13.2022.03.23.13.51.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Mar 2022 13:51:37 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] test-lib: have --immediate emit valid TAP on failure
+Date:   Wed, 23 Mar 2022 21:51:31 +0100
+Message-Id: <patch-1.1-47b236139e6-20220323T204410Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1452.ga7cfc89151f
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FFF6FD64-AAEA-11EC-8ACB-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Change the "--immediate" option so that it emits valid TAP on
+failure. Before this it would omit the required plan at the end,
+e.g. under SANITIZE=leak we'd show a "No plan found in TAP output"
+error from "prove":
 
-> prepare_repo_settings() initializes a `struct repository` with various
-> default config options and settings read from a repository-local config
-> file. In 44c7e62 (2021-12-06, repo-settings:prepare_repo_settings only
-> in git repos), prepare_repo_settings was changed to issue a BUG() if it
-> is called by a process whose CWD is not a Git repository. This approach
-> was suggested in [1].
->
-> This breaks fuzz-commit-graph, which attempts to parse arbitrary
-> fuzzing-engine-provided bytes as a commit graph file.
-> commit-graph.c:parse_commit_graph() calls prepare_repo_settings(), but
-> since we run the fuzz tests without a valid repository, we are hitting
-> the BUG() from 44c7e62 for every test case.
+    $ prove t0006-date.sh ::  --immediate
+    t0006-date.sh .. Dubious, test returned 1 (wstat 256, 0x100)
+    Failed 1/22 subtests
 
-I think the right approach for such a breakage is to ensure it is in
-a repository, not to force prepare_repo_settings() to lie.  In the
-day-to-day real code paths the end user uses, we do want to catch
-mistakes in our code that calls prepare_repo_settings() when we are
-not in a repository.
+    Test Summary Report
+    -------------------
+    t0006-date.sh (Wstat: 256 Tests: 22 Failed: 1)
+      Failed test:  22
+      Non-zero exit status: 1
+      Parse errors: No plan found in TAP output
+    Files=1, Tests=22,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.18 cusr  0.06 csys =  0.27 CPU)
+    Result: FAIL
+
+Now we'll emit output that doesn't result in TAP parsing failures:
+
+    $ prove t0006-date.sh ::  --immediate
+    t0006-date.sh .. Dubious, test returned 1 (wstat 256, 0x100)
+    Failed 1/22 subtests
+
+    Test Summary Report
+    -------------------
+    t0006-date.sh (Wstat: 256 Tests: 22 Failed: 1)
+      Failed test:  22
+      Non-zero exit status: 1
+    Files=1, Tests=22,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.19 cusr  0.05 csys =  0.26 CPU)
+    Result: FAIL
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Junio: When this is merged to "seen" there's a conflict like:
+
+	<<<<<<< HEAD
+		if test -n "$immediate"
+		then
+			say_color error "1..$test_count"
+			_error_exit
+		fi
+	=======
+		test "$immediate" = "" || _error_exit
+		finalize_test_case_output failure "$failure_label" "$@"
+	>>>>>>> origin/seen
+
+The "solution" is to end up with:
+
+	test_failure_ () {
+		failure_label=$1
+		test_failure=$(($test_failure + 1))
+		say_color error "not ok $test_count - $1"
+		shift
+		printf '%s\n' "$*" | sed -e 's/^/#	/'
+		if test -n "$immediate"
+		then
+			say_color error "1..$test_count"
+			_error_exit
+		fi
+		finalize_test_case_output failure "$failure_label" "$@"
+	}
+
+Those scare quotes being because the "finalize_test_case_output" is in
+the wrong place both before and after, but that's an existing bug in
+eb53a5b8047 (ci: call `finalize_test_case_output` a little later,
+2022-03-01), i.e. that alternate output mechanism wasn't doing the
+right thing on --immediate output.
+
+But this change and that merge resolution doesn't make that any worse,
+so hopefully this can be queued anyway. Thanks!
+		
+ t/t0000-basic.sh | 13 +++++++++++++
+ t/test-lib.sh    |  6 +++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 9dcbf518a78..17a268ccd1b 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -101,6 +101,19 @@ test_expect_success 'subtest: 2/3 tests passing' '
+ 	EOF
+ '
+ 
++test_expect_success 'subtest: --immediate' '
++	run_sub_test_lib_test_err partial-pass \
++		--immediate &&
++	check_sub_test_lib_test_err partial-pass \
++		<<-\EOF_OUT 3<<-EOF_ERR
++	> ok 1 - passing test #1
++	> not ok 2 - failing test #2
++	> #	false
++	> 1..2
++	EOF_OUT
++	EOF_ERR
++'
++
+ test_expect_success 'subtest: a failing TODO test' '
+ 	write_and_run_sub_test_lib_test failing-todo <<-\EOF &&
+ 	test_expect_success "passing test" "true"
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 515b1af7ed4..4373f7d70b5 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -806,7 +806,11 @@ test_failure_ () {
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+ 	printf '%s\n' "$*" | sed -e 's/^/#	/'
+-	test "$immediate" = "" || _error_exit
++	if test -n "$immediate"
++	then
++		say_color error "1..$test_count"
++		_error_exit
++	fi
+ }
+ 
+ test_known_broken_ok_ () {
+-- 
+2.35.1.1452.ga7cfc89151f
 
