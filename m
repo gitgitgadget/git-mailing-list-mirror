@@ -2,192 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE39EC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 16:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C10F1C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 16:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239053AbiCWQpK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 12:45:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
+        id S238824AbiCWQyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 12:54:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236943AbiCWQpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 12:45:09 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF4DB868
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:43:38 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3292E1286C1;
-        Wed, 23 Mar 2022 12:43:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w8LiL0OJhLiQHLDMci5QrZgv9c8JEt8+Gy+osf
-        3nWAY=; b=HXRhJZHfRx2UaGaRxY+cim1cYpug1jAhohuyFSHdw298PoPvPzEMZ6
-        H9pi43UF4fl2XH0RPZ3meaQUhZuT9SVBYjNRn/QvBnsLmkFZGL/wq7GIbAXXTLN8
-        pMsUwfnJtrGLOauJGHaKtCwpJSrfKn+wV8my31KQdK53/c0MwuBXo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29ED01286C0;
-        Wed, 23 Mar 2022 12:43:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 876541286BF;
-        Wed, 23 Mar 2022 12:43:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org, davvid@gmail.com, sunshine@sunshineco.com,
-        seth@eseth.com, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: Re: [PATCH v5 1/3] vimdiff: new implementation with layout support
-References: <20220319091141.4911-1-greenfoo@u92.eu>
-        <20220319091141.4911-2-greenfoo@u92.eu>
-Date:   Wed, 23 Mar 2022 09:43:34 -0700
-In-Reply-To: <20220319091141.4911-2-greenfoo@u92.eu> (Fernando Ramos's message
-        of "Sat, 19 Mar 2022 10:11:39 +0100")
-Message-ID: <xmqqsfr8sjpl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236920AbiCWQyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 12:54:03 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9816840E47
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:52:32 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id bx5so2285611pjb.3
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:52:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=G1Ul0GfKif+6rSToPONT7T/frptF8eune9jPFCPCm14=;
+        b=GbvNrPhqScaoQcyHHky7QG7JhuVcNI2sBtlzxQYI/UuWvCMrUWIGRUky91IAmMTJMK
+         VBORPmT4b+nn4nizMS2SJNmza5M66Bbaacy5KEfS/pG/f6qHatrtC9Et+hSRAs61482i
+         cCkIol1PDMYX4UWQxsX/xA9978Lcknc0MsVk//SyjeTfLLR6v43o72HZ1D/2OOXTHH9b
+         jGqpTGmYCXhW9g3UpkAw3etInR+WJ230xXus1L250fSxWVduGuYR9yvJxh5Fnqg9Ux7T
+         YfGHWeb5wKOofxjJlFe/n3KVsOAcZv4F7acCtVdg+JCRKx2OGsfiCi56XK+6ZMAl1XK2
+         SQ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=G1Ul0GfKif+6rSToPONT7T/frptF8eune9jPFCPCm14=;
+        b=Fvp9qEymbdN5wmYpsvw28e80PBbtZsytCug/Qo+g1Qepi4vGodCCaGLDL3UqlYTnN1
+         l8/MVur9b4YuX31ddcfnfW/ks6xU4e7uMT5lPzTdSEOfydtXaOqWFya/uLqPaL/BangL
+         fzSI3NeFokhdp4ecGP/e1a2V8zgrJLZrK1gPgoagSlE80oqI7Q/j+nu5jTTgzWVkI40P
+         bUkXDkX94cU+qzraXyMTsUEXFZu94YVkna4UoSUImjf9ph3y+9Ahnpc0mGkAe/gsVidq
+         gy5Sm4uKFwMGHs3Mg0j7NNBTXKlFSDkQnVEWTKqYKYk8a7PVGk4spc71iExc+JwUL7IQ
+         D17w==
+X-Gm-Message-State: AOAM5303nVuCVHgXKBTcpge+Jv2SHlynNwS8H2lUc3P9fq9rx9Tv6fB4
+        qSm4FaXf3yzxq1MOpMJtSLKg
+X-Google-Smtp-Source: ABdhPJzNP/SWfClejc9Rpi5vschwAQPdULNWtHS7w2PMl3F2f3jYWj+2NCJfKjHsAiQDXgG1TEhBJw==
+X-Received: by 2002:a17:903:240f:b0:153:dd42:fd73 with SMTP id e15-20020a170903240f00b00153dd42fd73mr939258plo.173.1648054352005;
+        Wed, 23 Mar 2022 09:52:32 -0700 (PDT)
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id c11-20020a056a000acb00b004f35ee129bbsm478247pfl.140.2022.03.23.09.52.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Mar 2022 09:52:31 -0700 (PDT)
+Message-ID: <96e386f9-01b5-a231-f1f6-4d9ffefc8f8d@github.com>
+Date:   Wed, 23 Mar 2022 09:52:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 61FC3FBA-AAC8-11EC-A45F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: [PATCH 1/4] reset: do not make '--quiet' disable index refresh
+Content-Language: en-US
+To:     phillip.wood@dunelm.org.uk,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
+ <f89e9b4ae24718116d0275333f4ece1d4024ab6b.1647894889.git.gitgitgadget@gmail.com>
+ <355f36d5-7153-42a4-6db8-b9ba5fcac422@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <355f36d5-7153-42a4-6db8-b9ba5fcac422@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fernando Ramos <greenfoo@u92.eu> writes:
+Phillip Wood wrote:
+> Hi Victoria
+> 
+> On 21/03/2022 20:34, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Update '--quiet' to no longer implicitly skip refreshing the index in a
+>> mixed reset. Users now have the ability to explicitly disable refreshing the
+>> index with the '--no-refresh' option, so they no longer need to use
+>> '--quiet' to do so. Moreover, we explicitly remove the refresh-skipping
+>> behavior from '--quiet' because it is completely unrelated to the stated
+>> purpose of the option: "Be quiet, only report errors."
+>>
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+>>   Documentation/git-reset.txt |  5 +----
+>>   builtin/reset.c             |  7 -------
+>>   t/t7102-reset.sh            | 32 +++++---------------------------
+>>   3 files changed, 6 insertions(+), 38 deletions(-)
+>>
+>> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+>> index 89ddc85c2e4..bc1646c3016 100644
+>> --- a/Documentation/git-reset.txt
+>> +++ b/Documentation/git-reset.txt
+>> @@ -114,10 +114,7 @@ OPTIONS
+>>   --no-refresh::
+>>       Proactively refresh the index after a mixed reset. If unspecified, the
+>>       behavior falls back on the `reset.refresh` config option. If neither
+>> -    `--[no-]refresh` nor `reset.refresh` are set, the default behavior is
+>> -    decided by the `--[no-]quiet` option and/or `reset.quiet` config.
+>> -    If `--quiet` is specified or `reset.quiet` is set with no command-line
+>> -    "quiet" setting, refresh is disabled. Otherwise, refresh is enabled.
+>> +    `--[no-]refresh` nor `reset.refresh` are set, refresh is enabled.
+>>     --pathspec-from-file=<file>::
+>>       Pathspec is passed in `<file>` instead of commandline args. If
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index c8a356ec5b0..7c3828f6fc5 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -430,13 +430,6 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>>                           PARSE_OPT_KEEP_DASHDASH);
+>>       parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+>>   -    /*
+>> -     * If refresh is completely unspecified (either by config or by command
+>> -     * line option), decide based on 'quiet'.
+>> -     */
+>> -    if (refresh < 0)
+>> -        refresh = !quiet;
+> 
+> Does this mean we can stop initializing refresh to -1?
+> 
+> Best Wishes
+> 
+> Phillip
 
-> When running 'git mergetool -t vimdiff', a new configuration option
-> ('mergetool.vimdiff.layout') can now be used to select how the user
-> wants the different windows, tabs and buffers to be displayed.
->
-> If the option is not provided, the layout will be the same one that was
-> being used before this commit (ie. two rows with LOCAL, BASE and COMMIT
-> in the top one and MERGED in the bottom one).
->
-> The 'vimdiff' variants ('vimdiff{1,2,3}') still work but, because they
-> represented nothing else than different layouts, are now internally
-> implemented as a subcase of 'vimdiff' with the corresponding
-> pre-configured 'layout'.
->
-> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
-> ---
->  mergetools/vimdiff | 548 ++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 521 insertions(+), 27 deletions(-)
->
-> diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-> index 96f6209a04..5bf77a5388 100644
-> --- a/mergetools/vimdiff
-> +++ b/mergetools/vimdiff
-> @@ -1,48 +1,440 @@
-> +# This script can be run in two different contexts:
-> +#
-> +#   - From git, when the user invokes the "vimdiff" merge tool. In this context
-> +#     this script expects the following environment variables (among others) to
-> +#     be defined (which is something "git" takes care of):
-> +#
-> +#       - $BASE
-> +#       - $LOCAL
-> +#       - $REMOTE
-> +#       - $MERGED
-> +#
-> +#     In this mode, all this script does is to run the next command:
-> +#
-> +#         vim -f -c ... $LOCAL $BASE $REMOTE $MERGED
-> +#
-> +#     ...where the "..." string depends on the value of the
-> +#     "mergetool.vimdiff.layout" configuration variable and is used to open vim
-> +#     with a certain layout of buffers, windows and tabs.
-> +#
-> +#   - From the unit tests framework ("t" folder) by sourcing this script and
-> +#     then manually calling "run_unit_tests", which will run a battery of unit
-> +#     tests to make sure nothing breaks.
-> +#     In this context this script does not expect any particular environment
-> +#     variable to be set.
-> +
-> +
-> +################################################################################
-> +## Internal functions (not meant to be used outside this script)
-> +################################################################################
-> +
-> +debug_print() { 
-> +	# Send message to stderr if global variable DEBUG is set to "true"
-> +
-> +	if test -n "$GIT_MERGETOOL_VIMDIFF_DEBUG"
-> +	then
-> +		>&2 echo "$@"
-> +	fi
-> +}
-
-Do we want to keep this helper, and many calls to it sprinkled in
-this file, or are they leftover cruft?
-
-Style.  "debug_print () {", i.e. SPACE on both sides of "()".
-
-> +substring() {
-> +	# Return a substring of $1 containing $3 characters starting at
-> +	# zero-based offset $2.
-> +	# 
-> +	# Examples:
-> +	#
-> +	#   substring "Hello world" 0 4  --> "Hell"
-> +	#   substring "Hello world" 3 4  --> "lo w"
-> +	#   substring "Hello world" 3 10 --> "lo world"
-> +
-> +	STRING=$1
-> +	START=$2
-> +	LEN=$3
-> +
-> +	echo "$STRING" | cut -c$(( START + 1 ))-$(( START + $LEN))
-> +}
-
-The lack of space before the second closing "))" makes it look
-inconsistent.  We should be able to do this no external commands
-and just two variable substitutions and without relying on
-bash-isms, but the above should do.
-
->  merge_cmd () {
-> +	layout=$(git config mergetool.$merge_tool.layout)
-> +
->  	case "$1" in
->  	*vimdiff)
-> -		if $base_present
-> +		if test -z "$layout"
->  		then
-> -			"$merge_tool_path" -f -d -c '4wincmd w | wincmd J' \
-> -				"$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-> -		else
-> -			"$merge_tool_path" -f -d -c 'wincmd l' \
-> -				"$LOCAL" "$MERGED" "$REMOTE"
-> +			# Default layout when none is specified
-> +			layout="(LOCAL,BASE,REMOTE)/MERGED"
->  		fi
->  		;;
-> ...
-> +	if $base_present
-> +	then
-> +		eval "$merge_tool_path" \
-> +			-f "$FINAL_CMD" "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-> +	else
-> +		# If there is no BASE (example: a merge conflict in a new file
-> +		# with the same name created in both braches which didn't exist
-> +		# before), close all BASE windows using vim's "quit" command
-> +
-> +		FINAL_CMD=$(echo "$FINAL_CMD" | \
-> +			sed -e 's:2b:quit:g' -e 's:3b:2b:g' -e 's:4b:3b:g')
-> +
-> +		eval "$merge_tool_path" \
-> +			-f "$FINAL_CMD" "$LOCAL" "$REMOTE" "$MERGED"
-> +	fi
-
-
-I wonder if there were an easy way to "compare" the $FINAL_CMD this
-new code feeds to $merge_tool_path and what was fed to it by the
-original code to show that we are not regressing what the end user
-sees.
-
-The "run_unit_tests()" only compares the cmd generated for each
-given layout, but the original vimdiff$N didn't express them in
-terms of $layout this patch introduces, so unfortunately that is not
-it.
-
-Ideas?
+Yes, thanks for catching that! It should be initialized to 1 in this patch
+(rather than later in patch 4).
