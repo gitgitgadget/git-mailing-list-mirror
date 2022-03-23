@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 653BEC433FE
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45054C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 14:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244702AbiCWOUZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 10:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42392 "EHLO
+        id S244704AbiCWOU0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 10:20:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244689AbiCWOUS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244692AbiCWOUS (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Mar 2022 10:20:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711FC7C795
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:47 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r190-20020a1c2bc7000000b0038a1013241dso1016097wmr.1
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:47 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6295D7C174
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:48 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id r13so2336706wrr.9
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 07:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FzrDEvrT/Yf3XGyhzV3PfcpHzsagn6QzDf2xficoLuU=;
-        b=cA3wTAMPgraLYl4Ym1l1TDbYD66rPmuDewtCgXwt0MjfWbTPiJdx7hdD3IB11YJrLy
-         +jM4CrYsb1aa/ZWFSXlobIo6VnH8tEH+YEHqVtLF9I6c54LPHbRShPukZzQsrfuWl0CM
-         gLpRiAzM2YORUHAH/1R7bs3Gpr2ou6kH/y3VO30kixk5TwYlTbGE1C6gTDrtoN+cdFp1
-         HzxqM6b+udBmQz0ZOclxXZK+QYkaNIvGf7cPD3xvQyU9SYhTrN0cn+svS1eTRxGMSfzt
-         0cvn2o1nXLZgRLl4pxcXELu9A5/xQfAgVfrPggmPFty1w9v+5NDHpkTqfjyJWHJry8qm
-         Xvsg==
+        bh=WiTfAcJdJXo8A5uaC2Wd1+NkjJOfiwE6jVqaPd2koL0=;
+        b=aBKgYwv6sOUSV4AlP/QNX76uIUaYXRTCb5LfPb0VpHCZxtxj/K44m0iUII1iyVQDyq
+         0oFwRNS4XMFQrYcEAP+BZnj+M6bHanXSXO8TQpm1/1WLpNfzk3I/TQkkvpOJlt6NVXtd
+         9lDQQXb0UCsnjFcAvTX+OidTWZSig4SFH/9yZ+yMKcddRMmagqrx0CNQ8vK9ZcagzxrK
+         b39olKrJkbga9/yaCHkwtGFqhXHeinQJ3ovWpqy09vy8ks3ei8hV1yzJtw8Th4ygzGXU
+         aVviP19xe1P+p1GIV4xfE0AeacoCnVbyKYO83CLd1MXtTomxkzAG4lj7C9zE2s93Y6xb
+         p7wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FzrDEvrT/Yf3XGyhzV3PfcpHzsagn6QzDf2xficoLuU=;
-        b=pKBpnqTcdqy818mxLqq7A0jorKZ4E4nGJuoCULTTyrdNntDD46t/WzMAu885l7LNFy
-         QXWn8gXUBzYQjpqdP7l1IIgslRNjvLRokGSMURfF4WIPe2XiRsZHIlGROQKATtLY++O+
-         xB/2CF8zv/uIOZeGP4ijNoIjcy0aAzB5aAawzHhzh78G0YlPF5DUtCtOzSdnRZXUroH+
-         x2ACwoevrW5lP8IVZ4KdId+BOcf//bLGewP1q5L3byGmZkLmWdeBcAzeDo1Wn4ud9pjA
-         89a9KFgpI4BSRu7VvxnE3IcSKjPvvs5HEKr9JzRedY1jSeqoxCeamiwvGtgKWQy3zxmk
-         iqSg==
-X-Gm-Message-State: AOAM532Ok0oChkHRQxbOJirixkYmZ3y66H6+bi58YLwyhoVOCzG6S+Aw
-        60LDGclCNgiECOqYqGYEjB17OeoFh4nZOw==
-X-Google-Smtp-Source: ABdhPJwRGYvL4zSNOSBFHTobJ4RQyxK88RDP+I2XYrfaSPhF2/Jljm8aDZLpICxBbDZPw+V99rVJbQ==
-X-Received: by 2002:a05:600c:3016:b0:38c:8786:d3b6 with SMTP id j22-20020a05600c301600b0038c8786d3b6mr51783wmh.135.1648045125579;
-        Wed, 23 Mar 2022 07:18:45 -0700 (PDT)
+        bh=WiTfAcJdJXo8A5uaC2Wd1+NkjJOfiwE6jVqaPd2koL0=;
+        b=7nYPN9fcNQLMgyRA7hzwLm5RETMns2jcloyZsOVzEiLvkWyMV1HOKCkfcFNoOjOb0s
+         moTqF+wrFgnjW7piADMaQtSGKQHm10DcOv8K6ZDhDMvFdr/bDPQLy87iE+5AqEjqD09m
+         /iHuNJ93JLEUEigCmI33uQOUPUsHlDoslLNpBCO3RXl17PazzSIwZR3zbCzYfNPrSgqt
+         vCnZbAfBwAvBYHRpStOl1hIYsNm7Zf+L8rGaoAYoLm+YlXQfqMx7qiEWt/PSOk7OaE7U
+         ocajMH3hbpsCDQayJHkVyoI84mCTb5+gzgivNf8cD9i+e2GTX6Habnvk76LbqKuuTu3y
+         Hjmw==
+X-Gm-Message-State: AOAM532KJNCgUFdwBIhsPULuN0XouGMeRiQu/IiRwSWlvNJPQRipZgbs
+        O9AsBiQlp0jN5/W9UMhfYARapDRAymg7oQ==
+X-Google-Smtp-Source: ABdhPJyRxaRUv68L1HcRUvKIOYtOYwqIACuk912ybc0x+3zeYc/pXtE6l4gSNbKT3R3LLC6a4yr/tQ==
+X-Received: by 2002:adf:fac8:0:b0:203:fb08:ff7 with SMTP id a8-20020adffac8000000b00203fb080ff7mr24158wrs.648.1648045126577;
+        Wed, 23 Mar 2022 07:18:46 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q14-20020a1cf30e000000b0038986a18ec8sm30592wmq.46.2022.03.23.07.18.44
+        by smtp.gmail.com with ESMTPSA id q14-20020a1cf30e000000b0038986a18ec8sm30592wmq.46.2022.03.23.07.18.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 07:18:44 -0700 (PDT)
+        Wed, 23 Mar 2022 07:18:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Neeraj Singh <neerajsi@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v2 2/7] object-file: pass down unpack-objects.c flags for "bulk" checkin
-Date:   Wed, 23 Mar 2022 15:18:26 +0100
-Message-Id: <RFC-patch-v2-2.7-c6f776fc2bc-20220323T140753Z-avarab@gmail.com>
+Subject: [RFC PATCH v2 3/7] update-index: pass down skeleton "oflags" argument
+Date:   Wed, 23 Mar 2022 15:18:27 +0100
+Message-Id: <RFC-patch-v2-3.7-4df8012100a-20220323T140753Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1428.g1c1a0152d61
 In-Reply-To: <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com>
 References: <RFC-cover-0.7-00000000000-20220323T033928Z-avarab@gmail.com> <RFC-cover-v2-0.7-00000000000-20220323T140753Z-avarab@gmail.com>
@@ -71,365 +71,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove much of this as a POC for exploring some of what I mentioned in
-https://lore.kernel.org/git/220322.86mthinxnn.gmgdl@evledraar.gmail.com/
-
-This commit is obviously not what we *should* do as end-state, but
-demonstrates what's needed (I think) for a bare-minimum implementation
-of just the "bulk" syncing method for loose objects without the part
-where we do the tmp-objdir.c dance.
-
-Performance with this is already quite promising. Benchmarking with:
-
-	git hyperfine -L rev ns/batched-fsync,HEAD -s 'make CFLAGS=-O3' \
-	    	-p 'rm -rf r.git && git init --bare r.git' \
-		'./git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack'
-
-I.e. unpacking a small packfile (my dotfiles) yields, on a Linux
-ramdisk:
-
-	Benchmark 1: ./git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'ns/batched-fsync
-	  Time (mean ± σ):     815.9 ms ±   8.2 ms    [User: 522.9 ms, System: 287.9 ms]
-	  Range (min … max):   805.6 ms … 835.9 ms    10 runs
-
-	Benchmark 2: ./git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'HEAD
-	  Time (mean ± σ):     779.4 ms ±  15.4 ms    [User: 505.7 ms, System: 270.2 ms]
-	  Range (min … max):   763.1 ms … 813.9 ms    10 runs
-
-	Summary
-	  './git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'HEAD' ran
-	    1.05 ± 0.02 times faster than './git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'ns/batched-fsync'
-
-Doing the same with "strace --summary-only", which probably helps to
-emulate cases with slower syscalls is ~15% faster than using the
-tmp-objdir indirection:
-
-	Summary
-	  'strace --summary-only ./git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'HEAD' ran
-	    1.16 ± 0.01 times faster than 'strace --summary-only ./git -C r.git -c core.fsync=loose-object -c core.fsyncMethod=batch unpack-objects </tmp/pack-dotfiles.pack' in 'ns/batched-fsync'
-
-Which makes sense in terms of syscalls. In my case HEAD has ~101k
-calls, and the parent topic is making ~129k calls, with around 2x the
-number of unlink(), link() as expected.
-
-Of course some users will want to use the tmp-objdir.c method. So a
-version of this commit could be rewritten to come earlier in the
-series, with the "bulk" on top being optional.
-
-It seems to me that it's a much better strategy to do this whole thing
-in close_loose_object() after passing down the new HASH_N_OBJECTS /
-HASH_N_OBJECTS_FIRST / HASH_N_OBJECTS_LAST flags.
-
-Doing that for the "builtin/add.c" and "builtin/unpack-objects.c" code
-having its {un,}plug_bulk_checkin() removed here is then just a matter
-of passing down a similar set of flags indicating whether we're
-dealing with N objects, and if so if we're dealing with the last one
-or not.
-
-As we'll see in subsequent commits doing it this way also effortlessly
-integrates with other HASH_* flags. E.g. for "update-index" the code
-being rm'd here doesn't handle the interaction with
-"HASH_WRITE_OBJECT" properly, but once we've moved all this sync
-bootstrapping logic to close_loose_object() we'll never get to it if
-we're not actually writing something.
-
-This code currently doesn't use the HASH_N_OBJECTS_FIRST flag, but
-that's what we'd use later to optionally call tmp_objdir_create().
-
-Aside: This also changes logic that was a bit confusing and repetitive
-in close_loose_object(). Previously we'd first call
-batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT) which is just as
-shorthand for:
-
-	fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT &&
-	fsync_method == FSYNC_METHOD_BATCH
-
-We'd then proceed to call
-fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT) later in the same
-function, which is just a way of calling fsync_or_die() if:
-
-	fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT
-
-Now we instead just define a local "fsync_loose" variable by checking
-"fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT", which shows us that
-the previous case of fsync_component_or_die(...)" could just be added
-to the existing "fsync_object_files > 0" branch.
-
-Note: This commit reverts much of "core.fsyncmethod: batched disk
-flushes for loose-objects". We'll set up new structures to bring what
-it was doing back in a different way. I.e. to do the tmp-objdir
-plug-in in object-file.c
+As with a preceding change to "unpack-objects" add an "oflags" going
+from cmd_update_index() all the way down to the code in
+object-file.c. Note also how index_mem() will now call
+write_object_file_flags().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/unpack-objects.c |  2 --
- builtin/update-index.c   |  4 ---
- bulk-checkin.c           | 74 ----------------------------------------
- bulk-checkin.h           |  3 --
- cache.h                  |  5 ---
- object-file.c            | 37 ++++++++++++++------
- 6 files changed, 26 insertions(+), 99 deletions(-)
+ builtin/update-index.c | 32 ++++++++++++++++++--------------
+ object-file.c          |  2 +-
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index ec40c6fd966..93da436581b 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -507,7 +507,6 @@ static void unpack_all(void)
- 	if (!quiet)
- 		progress = start_progress(_("Unpacking objects"), nr_objects);
- 	CALLOC_ARRAY(obj_list, nr_objects);
--	plug_bulk_checkin();
- 	oflags = nr_objects > 1 ? HASH_N_OBJECTS : 0;
- 	for (i = 0; i < nr_objects; i++) {
- 		int nth = i + 1;
-@@ -517,7 +516,6 @@ static void unpack_all(void)
- 		unpack_one(i, oflags | f);
- 		display_progress(progress, nth);
- 	}
--	unplug_bulk_checkin();
- 	stop_progress(&progress);
- 
- 	if (delta_list)
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index cbd2b0d633b..95ed3c47b2e 100644
+index 95ed3c47b2e..34aaaa16c20 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -1118,8 +1118,6 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	parse_options_start(&ctx, argc, argv, prefix,
- 			    options, PARSE_OPT_STOP_AT_NON_OPTION);
+@@ -267,10 +267,12 @@ static int process_lstat_error(const char *path, int err)
+ 	return error("lstat(\"%s\"): %s", path, strerror(err));
+ }
  
--	/* optimize adding many objects to the object database */
--	plug_bulk_checkin();
- 	while (ctx.argc) {
- 		if (parseopt_state != PARSE_OPT_DONE)
- 			parseopt_state = parse_options_step(&ctx, options,
-@@ -1194,8 +1192,6 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
+-static int add_one_path(const struct cache_entry *old, const char *path, int len, struct stat *st)
++static int add_one_path(const struct cache_entry *old, const char *path,
++			int len, struct stat *st, const unsigned oflags)
+ {
+ 	int option;
+ 	struct cache_entry *ce;
++	unsigned f;
+ 
+ 	/* Was the old index entry already up-to-date? */
+ 	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
+@@ -283,8 +285,8 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+ 	fill_stat_cache_info(&the_index, ce, st);
+ 	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
+ 
+-	if (index_path(&the_index, &ce->oid, path, st,
+-		       info_only ? 0 : HASH_WRITE_OBJECT)) {
++	f = oflags | (info_only ? 0 : HASH_WRITE_OBJECT);
++	if (index_path(&the_index, &ce->oid, path, st, f)) {
+ 		discard_cache_entry(ce);
+ 		return -1;
  	}
- 
--	/* by now we must have added all of the new objects */
--	unplug_bulk_checkin();
- 	if (split_index > 0) {
- 		if (git_config_get_split_index() == 0)
- 			warning(_("core.splitIndex is set to false; "
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index a0dca79ba6a..577b135e39c 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -3,20 +3,15 @@
+@@ -320,7 +322,8 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+  *  - it doesn't exist at all in the index, but it is a valid
+  *    git directory, and it should be *added* as a gitlink.
   */
- #include "cache.h"
- #include "bulk-checkin.h"
--#include "lockfile.h"
- #include "repository.h"
- #include "csum-file.h"
- #include "pack.h"
- #include "strbuf.h"
--#include "string-list.h"
--#include "tmp-objdir.h"
- #include "packfile.h"
- #include "object-store.h"
- 
- static int bulk_checkin_plugged;
- 
--static struct tmp_objdir *bulk_fsync_objdir;
--
- static struct bulk_checkin_state {
- 	char *pack_tmp_name;
- 	struct hashfile *f;
-@@ -85,40 +80,6 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- 	reprepare_packed_git(the_repository);
- }
- 
--/*
-- * Cleanup after batch-mode fsync_object_files.
-- */
--static void do_batch_fsync(void)
--{
--	struct strbuf temp_path = STRBUF_INIT;
--	struct tempfile *temp;
--
--	if (!bulk_fsync_objdir)
--		return;
--
--	/*
--	 * Issue a full hardware flush against a temporary file to ensure
--	 * that all objects are durable before any renames occur. The code in
--	 * fsync_loose_object_bulk_checkin has already issued a writeout
--	 * request, but it has not flushed any writeback cache in the storage
--	 * hardware or any filesystem logs. This fsync call acts as a barrier
--	 * to ensure that the data in each new object file is durable before
--	 * the final name is visible.
--	 */
--	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
--	temp = xmks_tempfile(temp_path.buf);
--	fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
--	delete_tempfile(&temp);
--	strbuf_release(&temp_path);
--
--	/*
--	 * Make the object files visible in the primary ODB after their data is
--	 * fully durable.
--	 */
--	tmp_objdir_migrate(bulk_fsync_objdir);
--	bulk_fsync_objdir = NULL;
--}
--
- static int already_written(struct bulk_checkin_state *state, struct object_id *oid)
+-static int process_directory(const char *path, int len, struct stat *st)
++static int process_directory(const char *path, int len, struct stat *st,
++			     const unsigned oflags)
  {
- 	int i;
-@@ -313,26 +274,6 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 	return 0;
+ 	struct object_id oid;
+ 	int pos = cache_name_pos(path, len);
+@@ -334,7 +337,7 @@ static int process_directory(const char *path, int len, struct stat *st)
+ 			if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
+ 				return 0;
+ 
+-			return add_one_path(ce, path, len, st);
++			return add_one_path(ce, path, len, st, oflags);
+ 		}
+ 		/* Should this be an unconditional error? */
+ 		return remove_one_path(path);
+@@ -358,13 +361,14 @@ static int process_directory(const char *path, int len, struct stat *st)
+ 
+ 	/* No match - should we add it as a gitlink? */
+ 	if (!resolve_gitlink_ref(path, "HEAD", &oid))
+-		return add_one_path(NULL, path, len, st);
++		return add_one_path(NULL, path, len, st, oflags);
+ 
+ 	/* Error out. */
+ 	return error("%s: is a directory - add files inside instead", path);
  }
  
--void prepare_loose_object_bulk_checkin(void)
--{
--	if (bulk_checkin_plugged && !bulk_fsync_objdir)
--		bulk_fsync_objdir = tmp_objdir_create("bulk-fsync");
--}
--
--void fsync_loose_object_bulk_checkin(int fd, const char *filename)
--{
--	/*
--	 * If we have a plugged bulk checkin, we issue a call that
--	 * cleans the filesystem page cache but avoids a hardware flush
--	 * command. Later on we will issue a single hardware flush
--	 * before as part of do_batch_fsync.
--	 */
--	if (!bulk_fsync_objdir ||
--	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) < 0) {
--		fsync_or_die(fd, filename);
--	}
--}
--
- int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags)
-@@ -347,19 +288,6 @@ int index_bulk_checkin(struct object_id *oid,
- void plug_bulk_checkin(void)
+-static int process_path(const char *path, struct stat *st, int stat_errno)
++static int process_path(const char *path, struct stat *st, int stat_errno,
++			const unsigned oflags)
  {
- 	assert(!bulk_checkin_plugged);
--
--	/*
--	 * A temporary object directory is used to hold the files
--	 * while they are not fsynced.
--	 */
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT)) {
--		bulk_fsync_objdir = tmp_objdir_create("bulk-fsync");
--		if (!bulk_fsync_objdir)
--			die(_("Could not create temporary object directory for core.fsyncMethod=batch"));
--
--		tmp_objdir_replace_primary_odb(bulk_fsync_objdir, 0);
--	}
--
- 	bulk_checkin_plugged = 1;
+ 	int pos, len;
+ 	const struct cache_entry *ce;
+@@ -395,9 +399,9 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
+ 		return process_lstat_error(path, stat_errno);
+ 
+ 	if (S_ISDIR(st->st_mode))
+-		return process_directory(path, len, st);
++		return process_directory(path, len, st, oflags);
+ 
+-	return add_one_path(ce, path, len, st);
++	return add_one_path(ce, path, len, st, oflags);
  }
  
-@@ -369,6 +297,4 @@ void unplug_bulk_checkin(void)
- 	bulk_checkin_plugged = 0;
- 	if (bulk_checkin_state.f)
- 		finish_bulk_checkin(&bulk_checkin_state);
--
--	do_batch_fsync();
+ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
+@@ -446,7 +450,7 @@ static void chmod_path(char flip, const char *path)
+ 	die("git update-index: cannot chmod %cx '%s'", flip, path);
  }
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index 181d3447ff9..b26f3dc3b74 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -6,9 +6,6 @@
  
- #include "cache.h"
+-static void update_one(const char *path)
++static void update_one(const char *path, const unsigned oflags)
+ {
+ 	int stat_errno = 0;
+ 	struct stat st;
+@@ -485,7 +489,7 @@ static void update_one(const char *path)
+ 		report("remove '%s'", path);
+ 		return;
+ 	}
+-	if (process_path(path, &st, stat_errno))
++	if (process_path(path, &st, stat_errno, oflags))
+ 		die("Unable to process path %s", path);
+ 	report("add '%s'", path);
+ }
+@@ -776,7 +780,7 @@ static int do_reupdate(int ac, const char **av,
+ 		 */
+ 		save_nr = active_nr;
+ 		path = xstrdup(ce->name);
+-		update_one(path);
++		update_one(path, 0);
+ 		free(path);
+ 		discard_cache_entry(old);
+ 		if (save_nr != active_nr)
+@@ -1138,7 +1142,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
  
--void prepare_loose_object_bulk_checkin(void);
--void fsync_loose_object_bulk_checkin(int fd, const char *filename);
--
- int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags);
-diff --git a/cache.h b/cache.h
-index 72c91c91286..2f3831fa853 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1772,11 +1772,6 @@ void fsync_or_die(int fd, const char *);
- int fsync_component(enum fsync_component component, int fd);
- void fsync_component_or_die(enum fsync_component component, int fd, const char *msg);
- 
--static inline int batch_fsync_enabled(enum fsync_component component)
--{
--	return (fsync_components & component) && (fsync_method == FSYNC_METHOD_BATCH);
--}
--
- ssize_t read_in_full(int fd, void *buf, size_t count);
- ssize_t write_in_full(int fd, const void *buf, size_t count);
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
+ 			setup_work_tree();
+ 			p = prefix_path(prefix, prefix_length, path);
+-			update_one(p);
++			update_one(p, 0);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+ 			free(p);
+@@ -1183,7 +1187,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 				strbuf_swap(&buf, &unquoted);
+ 			}
+ 			p = prefix_path(prefix, prefix_length, buf.buf);
+-			update_one(p);
++			update_one(p, 0);
+ 			if (set_executable_bit)
+ 				chmod_path(set_executable_bit, p);
+ 			free(p);
 diff --git a/object-file.c b/object-file.c
-index cd0ddb49e4b..dbeb3df502d 100644
+index dbeb3df502d..8999fce2b15 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1886,19 +1886,37 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 	hash_object_file_literally(algo, buf, len, type_name(type), oid);
- }
+@@ -2211,7 +2211,7 @@ static int index_mem(struct index_state *istate,
+ 	}
  
-+static void sync_loose_object_batch(int fd, const char *filename,
-+				    const unsigned oflags)
-+{
-+	const int last = oflags & HASH_N_OBJECTS_LAST;
-+
-+	/*
-+	 * We're doing a sync_file_range() (or equivalent) for 1..N-1
-+	 * objects, and then a "real" fsync() for N. On some OS's
-+	 * enabling core.fsync=loose-object && core.fsyncMethod=batch
-+	 * improves the performance by a lot.
-+	 */
-+	if (last || (!last && git_fsync(fd, FSYNC_WRITEOUT_ONLY) < 0))
-+		fsync_or_die(fd, filename);
-+}
-+
- /* Finalize a file on disk, and close it. */
--static void close_loose_object(int fd, const char *filename)
-+static void close_loose_object(int fd, const char *filename,
-+			       const unsigned oflags)
- {
-+	int fsync_loose;
-+
- 	if (the_repository->objects->odb->will_destroy)
- 		goto out;
- 
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		fsync_loose_object_bulk_checkin(fd, filename);
--	else if (fsync_object_files > 0)
-+	fsync_loose = fsync_components & FSYNC_COMPONENT_LOOSE_OBJECT;
-+
-+	if (oflags & HASH_N_OBJECTS && fsync_loose &&
-+	    fsync_method == FSYNC_METHOD_BATCH)
-+		sync_loose_object_batch(fd, filename, oflags);
-+	else if (fsync_object_files > 0 || fsync_loose)
- 		fsync_or_die(fd, filename);
--	else
--		fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd,
--				       filename);
- 
- out:
- 	if (close(fd) != 0)
-@@ -1962,9 +1980,6 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	static struct strbuf filename = STRBUF_INIT;
- 
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		prepare_loose_object_bulk_checkin();
--
- 	loose_object_path(the_repository, &filename, oid);
- 
- 	fd = create_tmpfile(&tmp_file, filename.buf);
-@@ -2015,7 +2030,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 		die(_("confused by unstable object source data for %s"),
- 		    oid_to_hex(oid));
- 
--	close_loose_object(fd, tmp_file.buf);
-+	close_loose_object(fd, tmp_file.buf, flags);
- 
- 	if (mtime) {
- 		struct utimbuf utb;
+ 	if (write_object)
+-		ret = write_object_file(buf, size, type, oid);
++		ret = write_object_file_flags(buf, size, type, oid, flags);
+ 	else
+ 		hash_object_file(the_hash_algo, buf, size, type, oid);
+ 	if (re_allocated)
 -- 
 2.35.1.1428.g1c1a0152d61
 
