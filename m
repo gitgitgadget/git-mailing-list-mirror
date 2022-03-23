@@ -2,75 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDF6C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 21:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F9BC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 21:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241131AbiCWVjZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 17:39:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51754 "EHLO
+        id S241139AbiCWVjm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 17:39:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240607AbiCWVjY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 17:39:24 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F9AF7D00F
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 14:37:54 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5DEE122C0C;
-        Wed, 23 Mar 2022 17:37:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0QkjDsUdiJz19s26Ya4mWHxjufRlPFe4HXcD3z
-        OVMfc=; b=mtaoVMDy5CBwFxTTO8opebOlYr162SR+dTbvM4zOYUIuBjKooiVx4I
-        KrSM07ps9voEHMjNvxmWr5s9bMQbxKjvVSkLzfE9wKHfoKsTDi20i5iA7mrlTZjj
-        VYXOtwrhwCqsULuXYt/J78kwboWCj6GQv7HZBHJQGLX6jAdj0ceK8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E478122C0B;
-        Wed, 23 Mar 2022 17:37:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
+        with ESMTP id S234033AbiCWVjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 17:39:40 -0400
+X-Greylist: delayed 568 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 23 Mar 2022 14:38:08 PDT
+Received: from mail-out.m-online.net (mail-out.m-online.net [IPv6:2001:a60:0:28:0:1:25:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1CB21A836
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 14:38:08 -0700 (PDT)
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 4KP1gS1x5Wz1s75c;
+        Wed, 23 Mar 2022 22:28:36 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 4KP1gS03vwz1qr2t;
+        Wed, 23 Mar 2022 22:28:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id 1J7pcH2oNv4h; Wed, 23 Mar 2022 22:28:35 +0100 (CET)
+X-Auth-Info: a8LZK+RgBHoxksDH3Ym5xau+esOQCKUunYpF+6M32bn1/DSZWCc9DzDBwmB12WIt
+Received: from igel.home (ppp-46-244-163-88.dynamic.mnet-online.de [46.244.163.88])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EBC4B122C09;
-        Wed, 23 Mar 2022 17:37:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2022, #04; Thu, 17)
-References: <xmqqv8wcizi4.fsf@gitster.g> <YjkloVk0BTqcgIiL@nand.local>
-        <xmqqo81wsewt.fsf@gitster.g> <Yjty9DhYLDfz5Oay@nand.local>
-Date:   Wed, 23 Mar 2022 14:37:51 -0700
-In-Reply-To: <Yjty9DhYLDfz5Oay@nand.local> (Taylor Blau's message of "Wed, 23
-        Mar 2022 15:20:20 -0400")
-Message-ID: <xmqqczicqrio.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Wed, 23 Mar 2022 22:28:35 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id C7E012C3A88; Wed, 23 Mar 2022 22:28:34 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     John Garry <john.garry@huawei.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Question] .git folder file updates for changing head commit
+References: <6fa76f28-063b-8964-c0a2-642dae88f1b3@huawei.com>
+X-Yow:  I used to be a FUNDAMENTALIST, but then I heard about the
+ HIGH RADIATION LEVELS and bought an ENCYCLOPEDIA!!
+Date:   Wed, 23 Mar 2022 22:28:34 +0100
+In-Reply-To: <6fa76f28-063b-8964-c0a2-642dae88f1b3@huawei.com> (John Garry's
+        message of "Wed, 23 Mar 2022 15:19:06 +0000")
+Message-ID: <87wngkpddp.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.92 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E9FB15A-AAF1-11EC-B139-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Mär 23 2022, John Garry wrote:
 
-> On Wed, Mar 23, 2022 at 11:27:14AM -0700, Junio C Hamano wrote:
->> I think <Yjpxd8qhwnAIJJma@nand.local> yesterday is the last message
->> in that thread?
->>
->> Let's see how well it goes.
->
-> Yeah, that is the last message in the thread (at least, at the time of
-> writing this message).
->
-> Jonathan had a few suggestions of things that we could add to
-> Documentation/cruft-packs.txt. I added details in my reply where they
-> were unclear, but I'll focus on touching up the new documentation in a
-> follow-up set of patches to avoid delaying things further.
+> For building the linux perf tool we use the git head commit id as part of
+> the tool version sting. To save time in re-building, the Makefile rule has
+> a dependency on .git/HEAD for rebuilding.
 
-If we cannot come up with a clear description, isn't it a sign that
-our thinking is still not clear and merging things in haste would
-produce a suboptimal waste?  If that is not the case, I'd be happy
-to merge it down.
+There is no guarantee that .git is a directory.  In a separate worktree
+.git is actually a gitfile.
 
-Thanks.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
