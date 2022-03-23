@@ -2,150 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7246EC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 16:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B213EC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 16:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245353AbiCWQEE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 12:04:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58016 "EHLO
+        id S238576AbiCWQYG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 12:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238342AbiCWQEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 12:04:02 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B07097B577
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:02:30 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so5673582wmj.0
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iuuiOkEY4+crb35A1ob5gBzT7IeaVUHdmBF+vUdkus4=;
-        b=BDdncv12eAi5+uSOIh7jdiIPTzHAdaGHHvRQl5ajpPaBVHyR7tOF30t9OtVayUKnVN
-         tu0+azn6gC5oAHMWNYFCj74e6tb4/FKvVSH8dZ3V9ClW5GsB6simEhlYPH/SX0sAn9ku
-         bGUwP3D3BPK5HcGKnTxFsGCPSIFXVfgNdZMCfIMlbHuMPBAVph9CIG1fF6O9xrAuWSUw
-         bo68CKrc6DtzTd5XPphxr5kggTU7J1Ox2u/dpcqEgw+1RrxJTEVpBEFSxEliClfa0JsE
-         vV0Ezg8updR/jNdeo9R7zyri0OKR55vGb4wFfGEMHVlYRcnF5pARTuxpBpad8p3VONcO
-         y0rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iuuiOkEY4+crb35A1ob5gBzT7IeaVUHdmBF+vUdkus4=;
-        b=RTijnsKLR0XIi4LDU1Kpb3hKAPUynko3J8ors+XRgC44RUJj7CgoE/2VPxESvWe2et
-         AUEYB1dq1TIVGoqFKLowkt88KRZ+Rg6FLMvQlXQyPGIHtMDJ3aaE730pM9+ZUhU2lyT5
-         jdlooUI/PHBJJAeTHtzykUpH2sfXG1c2Z169FpqDmIrzJrK6D7QSZRtpvTQIlGy/aTYZ
-         kQqCotdnFDJ5TrENydtvbq9Hjp1ONnX7fIM3L067PZs6xY7Rx+vnLXcEU0g2sUT8kK61
-         oE2Fmhqy9+gl10W5gqry8p+6iOLwj6wG6J38vhHnZ0W4T/t9/2kmXimh0ftOGMeQF+Z1
-         Xe3g==
-X-Gm-Message-State: AOAM5310bP8Ev1bZgkEoLNgoQGjPK4ppPjAJZovjbYwGxpPHhmBV5VvN
-        U9Q9bCn1NhV/SRxOC1k4vNo=
-X-Google-Smtp-Source: ABdhPJy+ETVXnaO67mQLpYsF0OqCDPrz1icfuId+pqef/HJL0mMTjWixG8C6pnrYhw0QWm4iUyg6xA==
-X-Received: by 2002:a05:600c:4f44:b0:38c:b270:f9a0 with SMTP id m4-20020a05600c4f4400b0038cb270f9a0mr624878wmq.16.1648051349328;
-        Wed, 23 Mar 2022 09:02:29 -0700 (PDT)
-Received: from [192.168.1.201] (203.2.7.51.dyn.plus.net. [51.7.2.203])
-        by smtp.googlemail.com with ESMTPSA id y15-20020a056000168f00b002057a9f9f5csm312154wrd.31.2022.03.23.09.02.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Mar 2022 09:02:29 -0700 (PDT)
-Message-ID: <3f8c28c6-5f99-e9ac-e356-48182e269b5c@gmail.com>
-Date:   Wed, 23 Mar 2022 16:02:27 +0000
+        with ESMTP id S235186AbiCWQYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 12:24:04 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5AE7C791
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 09:22:33 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id C2AD43F47EE;
+        Wed, 23 Mar 2022 12:22:32 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 383C43F4161;
+        Wed, 23 Mar 2022 12:22:32 -0400 (EDT)
+Subject: Re: [PATCH v7 21/29] t7527: create test for fsmonitor--daemon
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
+ <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
+ <4a920d0b54a25a442bf52efc171139c698d59dc7.1647972010.git.gitgitgadget@gmail.com>
+ <220322.86a6dhq1a6.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <56a4a545-37b0-0cee-a8c8-1a019b0201c2@jeffhostetler.com>
+Date:   Wed, 23 Mar 2022 12:22:31 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/4] reset: deprecate '--refresh', leaving only
- '--no-refresh'
+In-Reply-To: <220322.86a6dhq1a6.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, Victoria Dye <vdye@github.com>
-References: <pull.1184.git.1647894889.gitgitgadget@gmail.com>
- <dbb63c4caa83cc764535a739d20736b706ee44a5.1647894889.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <dbb63c4caa83cc764535a739d20736b706ee44a5.1647894889.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria
 
-On 21/03/2022 20:34, Victoria Dye via GitGitGadget wrote:
-> From: Victoria Dye <vdye@github.com>
+
+On 3/22/22 2:35 PM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> The explicit '--refresh' option was needed in the past when '--quiet',
-> 'reset.quiet', and/or 'reset.refresh' disabled the index refresh in 'reset
-> --mixed'. Those options have since either been deprecated or made to always
-> refresh the index by default, leaving only '--[no-]refresh' determining
-> whether the index is refreshed or not.
+> On Tue, Mar 22 2022, Jeff Hostetler via GitGitGadget wrote:
 > 
-> Because there is nothing other than '--no-refresh' to disable index refresh,
-> we do not need a '--refresh' option to counteract some other refresh
-> disabling.
-
-'--refresh' could be used to countermand a previous '--no-refresh' 
-(typically when using an alias that includes '--no-refresh'). Usually we 
-have '--foo' even when it is enabled by default e.g. 'commit --verify'. 
-I think the code below does actually support '--refresh' as 
-parse_options() is smart enough to recognize option names beginning with 
-'--no-' and creates an inverse option by removing the prefix rather than 
-adding '--no-' as it normally does.
-
-> To ensure users don't use what is effectively a no-op, remove '--refresh'
-> from the set of 'reset' options, as well as its usage in 'git stash'.
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>   t/t7527-builtin-fsmonitor.sh | 501 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 501 insertions(+)
+>>   create mode 100755 t/t7527-builtin-fsmonitor.sh
+>>
+>> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+>> new file mode 100755
+>> index 00000000000..d79635e7596
+[...]
 > 
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->   Documentation/git-reset.txt | 3 +--
->   builtin/reset.c             | 6 +++---
->   builtin/stash.c             | 4 ++--
->   t/t7102-reset.sh            | 5 ++---
->   4 files changed, 8 insertions(+), 10 deletions(-)
+>> +	while test "$#" -ne 0
+>> +	do
+>> +		case "$1" in
+>> +		-C)
+>> +			shift;
+>> +			test "$#" -ne 0 || BUG "error: -C requires arg"
+>> +			r="-C $1"
+>> +			shift
+>> +			;;
+>> +		-tf)
+>> +			shift;
+>> +			test "$#" -ne 0 || BUG "error: -tf requires arg"
+>> +			tf="$1"
+>> +			shift
+>> +			;;
+>> +		-t2)
+>> +			shift;
+>> +			test "$#" -ne 0 || BUG "error: -t2 requires arg"
+>> +			t2="$1"
+>> +			shift
+>> +			;;
+>> +		-tk)
+>> +			shift;
+>> +			test "$#" -ne 0 || BUG "error: -tk requires arg"
+>> +			tk="$1"
+>> +			shift
+>> +			;;
 > 
-> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-> index df167eaa766..ba8dece0c03 100644
-> --- a/Documentation/git-reset.txt
-> +++ b/Documentation/git-reset.txt
-> @@ -107,9 +107,8 @@ OPTIONS
->   --quiet::
->   	Be quiet, only report errors.
->   
-> ---refresh::
->   --no-refresh::
-> -	Proactively refresh the index after a mixed reset. Enabled by default.
-> +	Disable refreshing the index after a mixed reset.
->   
->   --pathspec-from-file=<file>::
->   	Pathspec is passed in `<file>` instead of commandline args. If
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 54324217f93..d9427abc483 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -392,7 +392,7 @@ static int git_reset_config(const char *var, const char *value, void *cb)
->   int cmd_reset(int argc, const char **argv, const char *prefix)
->   {
->   	int reset_type = NONE, update_ref_status = 0, quiet = 0;
-> -	int refresh = -1;
-> +	int refresh = 1;
->   	int patch_mode = 0, pathspec_file_nul = 0, unborn;
->   	const char *rev, *pathspec_from_file = NULL;
->   	struct object_id oid;
-> @@ -400,8 +400,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->   	int intent_to_add = 0;
->   	const struct option options[] = {
->   		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-> -		OPT_BOOL(0, "refresh", &refresh,
-> -				N_("skip refreshing the index after reset")),
-> +		OPT_SET_INT(0, "no-refresh", &refresh,
-> +				N_("skip refreshing the index after reset"), 0),
+> But (and IIRC I noted this in a previous iteration) if you &&-chain the
+> "shift" here you can lose the more verbose BUG
 
-I'm confused why we need to change the option type here - am I missing 
-something?
+Yeah, I looked at the test_commit() example that you referenced.
+I thought it was too subtle and misleading.
+
+I mean, the "shift" after the "case...esac" will either clobber
+the "--key" or the "value" depending on whether the particular
+case-arm shifted.  The shift error would only be thrown on a
+missing value, since the while loop already tested $# for non-zero,
+but at the point of the error, we'll just have a generic error message
+and not know which key should have had a value -- without reading
+the script in detail.
+
+Also, in the k/v case-arms, it references $2 without confirming
+that it exists.  In test_commit(), it just loads up local variables
+(in advance of the soon-to-be-thrown shift error, so no big deal)
+but if other people copy this as a model, they may do more in their
+case-arms that may be more serious.
 
 
-Best Wishes
+My version on the other hand, shifts away the key immediately,
+tests whether the required value is present and errors with a
+detailed message, and then references the value and shifts away
+the value.
 
-Phillip
+My way (IMHO) feels more straight-forward and easier for casual
+readers to follow.  Yes, it is a bit more wordy, but I think it
+is worth it.
+
+
+FWIW, as I was writing this note I noticed that both test_commit()
+and my start_daemon() examples have a bug where they won't detect
+a missing value.  For example, if someone changes
+    "test_commit -C repo"
+to "test_commit -C --no-tag repo"
+then $indir will be "--no-tag" and "repo" will be unclaimed and
+an error will follow at some point later (when $indir is used
+in a Git command).
+
+
+I think I'll fix my function to handle that error case, but keep
+the basic design that I have.
+
+
+> 
+>> +	start_daemon -tf "$PWD/.git/trace" &&
+> 
+> FWIW having an option parser take -tf to mean --tf is quite unlike our
+> common conventions, usually it means both -t and -f.
+> 
+> In this case every single caller added here does provide -tf
+> argument. Perhaps better as as unconditional $1 then?
+> 
+
+yes, very old-school of me to use single dashes here.  I'll change
+it/them to use double-dashes (or relabel the keys to be single chars).
+There are callers that do not pass the -tf key, so I'd rather keep it
+as a key/value than assume a fixed $1.
+
+Thanks
+Jeff
+
