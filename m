@@ -2,106 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 606C5C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 04:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BEC0C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Mar 2022 05:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbiCWEIL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 00:08:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43018 "EHLO
+        id S240680AbiCWF3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 01:29:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiCWEIK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 00:08:10 -0400
-Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 846356E4D5
-        for <git@vger.kernel.org>; Tue, 22 Mar 2022 21:06:41 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 10A1A160052;
-        Tue, 22 Mar 2022 21:06:41 -0700 (PDT)
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 09V7es879cjW; Tue, 22 Mar 2022 21:06:40 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 0AFB916007E;
-        Tue, 22 Mar 2022 21:06:40 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id PIqbnPfLjUeZ; Tue, 22 Mar 2022 21:06:39 -0700 (PDT)
-Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id C6D6C160052;
-        Tue, 22 Mar 2022 21:06:39 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------Ga5QkJd2iRsm4Fu3ECqu9nx0"
-Message-ID: <3642dffd-2241-9fd4-3ab8-04ce14c0f1a8@cs.ucla.edu>
-Date:   Tue, 22 Mar 2022 21:06:39 -0700
+        with ESMTP id S231261AbiCWF3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 01:29:17 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 802B64FC73
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 22:27:48 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id r22so428449ljd.4
+        for <git@vger.kernel.org>; Tue, 22 Mar 2022 22:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YRmLIoPdRvfWllgHz9atCI+RR+vLnPhvwtBIohqPxp4=;
+        b=I15uEo+AvrMldbbTaqWrab7OBCUUAvwgG6FvKzgtl+cg+u8/hdTDgJ0imc1KqnUTGJ
+         63rbknc8nW6fXLX/zaFSoTDnZaE5TeuIOOvF4oOnRnLo5qcnsuKi6tCZrwlyJn28GoRs
+         KxtEhrQYvVp5wMn2qrLC4Jyp0gvaw4yErW9i30b9Jc2AftQlTPEZjdNCFY6e01igk2L7
+         9bYBVz/8L16wfJNZONMjVe9ES8GE6nao/x3IfFDg4/ZLdXEKUrUuLFEcTHQdM+PeaxAS
+         85lTOFw2HNV+3akeXoSNvt8e8VTTYtQ9SNENbwTtd+tYGwmx/Y8U6Ee56IcdjA2NZRg+
+         7fFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YRmLIoPdRvfWllgHz9atCI+RR+vLnPhvwtBIohqPxp4=;
+        b=cMvPrxdsrfDNO7FF4QXCvS30mpkozA+NJglaMEmCRgsgXjkTwNfD2nNU5F44ma5u6X
+         WvjG+Y15Q/qcyljKzb6hqs8TkNVCX6lhJltdZPHOBKBN5roUvjw73/OW6gW7R3ITCUci
+         XjU1jw5CSKFyExarHyaE3Oj2Mt+QtbwtzpVACokds1jN6T68FIo+D5UGTZg2HRp4yAyp
+         16bw14OCFDgUvHIeT/nMDwuOXwmfjD3XYJhRzw3k7oycTy2p2vfji3PiljmvVKPYNklM
+         vhz6EQCRYydwA5WZ6783X137KfIQt1ExdPnple+xbrud6jZUeH3xjG86qlH0zWAmSUYg
+         PI3Q==
+X-Gm-Message-State: AOAM533xFGAdHE53v8a/XmIZ6bZR6ijT3DMU0aKIK/6V4CYN4qrRgD3I
+        Px4Yj9fMEP0qmx3fzourGtOI8PdZFFwzgNJADaI=
+X-Google-Smtp-Source: ABdhPJxFkJilGvbTUQcsHBH7ON6+GasPTkUDb2oNbH0yL3JI5Txf8Ni2cI3h/logLYOfTtOzHtKI3aVFcLxHsYEPA5Q=
+X-Received: by 2002:a2e:bf05:0:b0:247:b233:cfba with SMTP id
+ c5-20020a2ebf05000000b00247b233cfbamr21810763ljr.131.1648013266633; Tue, 22
+ Mar 2022 22:27:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-US
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        GNU grep developers <grep-devel@gnu.org>
-References: <bd751d5c-2f8b-4c52-72ec-f2b7268a30a8@cs.ucla.edu>
- <99b0adb6-26ba-293c-3a8f-679f59e7cb4d@web.de>
- <20220323010931.jzf7op7hdusdty33@carlos-mbp.lan>
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-Subject: Re: improve performance of PCRE2 bug 2642 bug workaround
-In-Reply-To: <20220323010931.jzf7op7hdusdty33@carlos-mbp.lan>
+References: <CANQDOde2OG8fVSM1hQE3FBmzWy5FkgQCWAUYhFztB8UGFyJELg@mail.gmail.com>
+ <RFC-cover-0.7-00000000000-20220323T033928Z-avarab@gmail.com> <RFC-patch-1.7-e03c119c784-20220323T033928Z-avarab@gmail.com>
+In-Reply-To: <RFC-patch-1.7-e03c119c784-20220323T033928Z-avarab@gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 22 Mar 2022 22:27:34 -0700
+Message-ID: <CANQDOdd6w8d_1sx8Sob3EZ4+hy7m1DBdN4EYFJPExLmTgr5Kqw@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/7] write-or-die.c: remove unused fsync_component() function
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Patrick Steinhardt <ps@pks.im>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------Ga5QkJd2iRsm4Fu3ECqu9nx0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Tue, Mar 22, 2022 at 8:48 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> This function added in 020406eaa52 (core.fsync: introduce granular
+> fsync control infrastructure, 2022-03-10) hasn't been used, and
+> appears not to be used by the follow-up series either?
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  cache.h        | 1 -
+>  write-or-die.c | 7 -------
+>  2 files changed, 8 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 84fafe2ed71..5d863f8c5e8 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1766,7 +1766,6 @@ int copy_file_with_time(const char *dst, const char=
+ *src, int mode);
+>
+>  void write_or_die(int fd, const void *buf, size_t count);
+>  void fsync_or_die(int fd, const char *);
+> -int fsync_component(enum fsync_component component, int fd);
+>  void fsync_component_or_die(enum fsync_component component, int fd, cons=
+t char *msg);
+>
+>  static inline int batch_fsync_enabled(enum fsync_component component)
+> diff --git a/write-or-die.c b/write-or-die.c
+> index c4fd91b5b43..103698450c3 100644
+> --- a/write-or-die.c
+> +++ b/write-or-die.c
+> @@ -76,13 +76,6 @@ void fsync_or_die(int fd, const char *msg)
+>                 die_errno("fsync error on '%s'", msg);
+>  }
+>
+> -int fsync_component(enum fsync_component component, int fd)
+> -{
+> -       if (fsync_components & component)
+> -               return maybe_fsync(fd);
+> -       return 0;
+> -}
+> -
+>  void fsync_component_or_die(enum fsync_component component, int fd, cons=
+t char *msg)
+>  {
+>         if (fsync_components & component)
+> --
+> 2.35.1.1428.g1c1a0152d61
+>
 
-On 3/22/22 18:09, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+This helper was put in for Patrick's patch at
+https://lore.kernel.org/git/f1e8a7bb3bf0f4c0414819cb1d5579dc08fd2a4f.164690=
+5589.git.ps@pks.im/.
 
-> AFAIK the contents of the bugzilla are no longer accessible to anyone (=
-lost in the migration of PCRE2 to github),
-
-Yes, that confused me too.
-
-> the bug will trigger when both PCRE2_UTF and PCRE2_MULTILINE are set (a=
-s shown in the PCRE2 regression added), with the later set by default in =
-git and NEVER set in GNU grep, hence why I later retracted[6] my suggesti=
-on to add the workaround to grep
-
-OK, thanks, I installed the attached to GNU grep and we'll call it a day.
---------------Ga5QkJd2iRsm4Fu3ECqu9nx0
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-grep-Remove-recent-PCRE2-bug-workarounds.patch"
-Content-Disposition: attachment;
- filename="0001-grep-Remove-recent-PCRE2-bug-workarounds.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA3NDNiMWY2ZjVjYTdlZTg2MzQ4ZmEwNTkzZGEyZWZmMDNkZjFhODJhIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQYXVsIEVnZ2VydCA8ZWdnZXJ0QGNzLnVjbGEuZWR1
-PgpEYXRlOiBUdWUsIDIyIE1hciAyMDIyIDIwOjEyOjM4IC0wNzAwClN1YmplY3Q6IFtQQVRD
-SF0gZ3JlcDogUmVtb3ZlIHJlY2VudCBQQ1JFMiBidWcgd29ya2Fyb3VuZHMKTUlNRS1WZXJz
-aW9uOiAxLjAKQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PVVURi04CkNvbnRl
-bnQtVHJhbnNmZXItRW5jb2Rpbmc6IDhiaXQKCiogc3JjL3BjcmVzZWFyY2guYyAoUGNvbXBp
-bGUpOiBSZW1vdmUgcmVjZW50IHdvcmthcm91bmQgZm9yIFBDUkUyCmJ1Z3M7IGFwcGFyZW50
-bHkgaXTigJlzIG5vdCBuZWVkZWQuICBUaGlzIHJldmVydHMgYmFjayB0byB3aGVyZQp0aGlu
-Z3Mgd2VyZSBiZWZvcmUgdG9kYXkuICBTdWdnZXN0ZWQgYnkgQ2FybG8gQXJlbmFzIGluOgpo
-dHRwczovL2xpc3RzLmdudS5vcmcvci9ncmVwLWRldmVsLzIwMjItMDMvbXNnMDAwMDYuaHRt
-bAotLS0KIHNyYy9wY3Jlc2VhcmNoLmMgfCA3IC0tLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA3
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3NyYy9wY3Jlc2VhcmNoLmMgYi9zcmMvcGNy
-ZXNlYXJjaC5jCmluZGV4IDY5NDc4MzguLmYzMzJhNDQgMTAwNjQ0Ci0tLSBhL3NyYy9wY3Jl
-c2VhcmNoLmMKKysrIGIvc3JjL3BjcmVzZWFyY2guYwpAQCAtMTU3LDEzICsxNTcsNiBAQCBQ
-Y29tcGlsZSAoY2hhciAqcGF0dGVybiwgaWR4X3Qgc2l6ZSwgcmVnX3N5bnRheF90IGlnbm9y
-ZWQsIGJvb2wgZXhhY3QpCiAjZW5kaWYKICAgICB9CiAKLSNpZiBkZWZpbmVkIFBDUkUyX01B
-VENIX0lOVkFMSURfVVRGICYmICEoMTAgPCBQQ1JFMl9NQUpPUiArICgzNiA8PSBQQ1JFMl9N
-SU5PUikpCi0gIC8qIFdvcmsgYXJvdW5kIFBDUkUyIGJ1ZyAyNjQyLCBhbmQgYW5vdGhlciBi
-dWcgcmVwb3J0ZWRseSBmaXhlZCBpbgotICAgICBQQ1JFMiBjb21taXQgZTBjNjAyOWE2MmRi
-OWMyMTYxOTQxZWNkZjQ1OTIwNTM4MmQ0ZDM3OS4gICovCi0gIGlmIChmbGFncyAmIChQQ1JF
-Ml9VVEYgfCBQQ1JFMl9DQVNFTEVTUykpCi0gICAgZmxhZ3MgfD0gUENSRTJfTk9fU1RBUlRf
-T1BUSU1JWkU7Ci0jZW5kaWYKLQogICAvKiBGSVhNRTogUmVtb3ZlIHRoaXMgcmVzdHJpY3Rp
-b24uICAqLwogICBpZiAocmF3bWVtY2hyIChwYXR0ZXJuLCAnXG4nKSAhPSBwYXRsaW0pCiAg
-ICAgZGllIChFWElUX1RST1VCTEUsIDAsIF8oInRoZSAtUCBvcHRpb24gb25seSBzdXBwb3J0
-cyBhIHNpbmdsZSBwYXR0ZXJuIikpOwotLSAKMi4zMi4wCgo=
-
---------------Ga5QkJd2iRsm4Fu3ECqu9nx0--
+Thanks,
+Neeraj
