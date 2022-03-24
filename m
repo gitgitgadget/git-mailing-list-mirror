@@ -2,107 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07D18C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 02:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 363E9C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 03:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348091AbiCXCGG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Mar 2022 22:06:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54344 "EHLO
+        id S237004AbiCXDBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Mar 2022 23:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348083AbiCXCGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Mar 2022 22:06:05 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B12616F
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 19:04:34 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id w7so5681324lfd.6
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 19:04:34 -0700 (PDT)
+        with ESMTP id S232209AbiCXDBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Mar 2022 23:01:47 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C94674F7
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 20:00:15 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id bx24-20020a17090af49800b001c6872a9e4eso3791093pjb.5
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 20:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pZQQwjaol8XU3y2NuTfeGtrkA4xiJak10+pA7t20AXo=;
-        b=D4IwWHoCIARY0EsVhJU8Gh/3hhv4BQvrJZDm8InP98YXqY4bHo+cI1flmhXTmbLPFq
-         6fuEBhDPmnEJ6X+zdYcFzYcX2DsIjwjt3gjzu5sORkwHClUn2fJE/SSefwHek3g5aU7w
-         eZR3H6eRq+yfwqY+al5DZN4ckJMPg2cyCu+2u2PDjzoJnNIxJL9ouppurM/4OyMsi3pR
-         NbA1yzxp2SSxbye9YcIJqYVisHyeYC0GyvQbVPAEBLJo1eOO1XgK2NW46bfDQ+OIe87v
-         yqrZcsHhRERZ5jKqRWrtM3w9RAfsCFC5GZ6E4pCErdon09J+Ps7XC2BtOllLi1T9lEEW
-         OxFg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1YtFjFu7Z0sDrKcAR/aY53+G4cqN1og0ZRKNZ5SfajU=;
+        b=gNwHSU4MMzm/rV2PBls31+PERsR54TAMH8lnFbdu5O27j26eo7coqSLnvcxMLAvq0s
+         LxJE1Or4bR3AHHmnnZe3VoxQarrNaKLZDNZx4XmsYgS0Wl517kwJGWFjduS8NHs4dofg
+         uDfNebXWYPuAfGdoDhmmrUHrQVygQSYb+AqTR1Zhy+Mlf+VlY6cbspFeAVCc5ds6RlyU
+         ImGz7lZRMWMlDkIWkgynrjH+YduM1pKGeRC8SWuo36ncGu0uIvrKBkYNXEr7lhIQlixF
+         InY1skClh0ZwHnnxuhu0u9K6iQyyP83jZ87Ug6nbAB4TIFldCq/O2wvy69PGcjXJQJgd
+         +qEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pZQQwjaol8XU3y2NuTfeGtrkA4xiJak10+pA7t20AXo=;
-        b=0MZxVGyJlpLUhWzmLYa5zbXrTl25tO+PpEw0sl4AGFvmlEwKx0aPBN0lnAg+pVkP3C
-         VJ3DOy14lb6OCZ0wQu+BW8tbAsf/QzdJG4GzwgNI2FSKqkf83bk2s+jbISXnocQOyyTZ
-         4gMiGcJagJLU260UZMLummcBRmpVxgrNXlD/FpDVoLTMlvXkm/g0PXAkOcKsNStTzy23
-         zt+MGdYt9zdjyw2D/HsNY1TbUvX2L0esYX3zQAusRXQpkW+Pg4OD78qdgCnpWFzzLDnX
-         TZYCNu4oIWAfMyCZkM1eICC/3WJxd0DjOWtmxdSGrU8c1dDCd5umgM+ENna6pIexfQwR
-         8H/Q==
-X-Gm-Message-State: AOAM53255s+xzvnI7CAPbkcYBIco6Lgbj1WzWyk0874J1SWUqJoWqb5F
-        S48Dewa0aUZdIoDQj3DQE6V1Mskuz/FAM67uflQ=
-X-Google-Smtp-Source: ABdhPJwDJHKFNeus988k8878RLwUVbX/0Z+gs2cZ5skl0nhlxJusRJDH42+iP6gSKy7NeQiWDrmfff1dmlmp6PYXzPk=
-X-Received: by 2002:ac2:5dfa:0:b0:44a:15d4:9e60 with SMTP id
- z26-20020ac25dfa000000b0044a15d49e60mr2119948lfq.241.1648087472282; Wed, 23
- Mar 2022 19:04:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1YtFjFu7Z0sDrKcAR/aY53+G4cqN1og0ZRKNZ5SfajU=;
+        b=RqyQP0s7uLyHR7BCykiwr1PqneL+0pW6zmxfBQF/InBfPL/QH2oa8lvKiqTr4Kjdeg
+         DDOmcssgzzKUZPmwzkE6P5ps6WatJmzIFB4LbnsTt/trerGWRVbmzgM5ifZ0GPfaHyCi
+         Y2tWwCGfOJi6jNtIepn9Weq44umdtm6eVLRN9QiVlMOk3NZqbte/MfeERRYuuLNf2n8s
+         Y7FhQMlonNcJbkZmwtg4wzMQ83pbxYwuzlr0xFhtMDdytUWd0dIg6nLmClaXnNaR/Er+
+         NuVvOFUPN4d9mNKhrir4kTu/uH6NoAty9l5aHLgZVFGTMWPEwLBAwYb4Jt02ZZgXBoGA
+         +now==
+X-Gm-Message-State: AOAM532sYsemybEc12TCC8ki6QrvZ8EtEKhI59DlhhR3RelGa7Sbtjg4
+        NvpltyjUERp2lOskAEAUajnm8c8NNiXlNQ==
+X-Google-Smtp-Source: ABdhPJwam3jTN/u4CNrR/fkXhZal0gvEJjrFEPEpkCtBTOygh4I3A4MXgh4bH6hzBTEtnPoUD7MThg==
+X-Received: by 2002:a17:903:2488:b0:153:8f59:8c03 with SMTP id p8-20020a170903248800b001538f598c03mr3642731plw.54.1648090814984;
+        Wed, 23 Mar 2022 20:00:14 -0700 (PDT)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.57])
+        by smtp.gmail.com with ESMTPSA id j7-20020a056a00130700b004b9f7cd94a4sm1162880pfu.56.2022.03.23.20.00.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Mar 2022 20:00:14 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
+        dyroneteng@gmail.com, git@vger.kernel.org, martin.agren@gmail.com,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v14 00/15] ls-tree: "--object-only" and "--format" opts
+Date:   Thu, 24 Mar 2022 11:00:10 +0800
+Message-Id: <20220324030010.124703-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.35.1.577.g74cc1aa55f.dirty
+In-Reply-To: <xmqqee2ssaut.fsf@gitster.g>
+References: <xmqqee2ssaut.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1134.git.1647379859.gitgitgadget@gmail.com>
- <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com> <3ed1dcd9b9ba9b34f26b3012eaba8da0269ee842.1647760560.git.gitgitgadget@gmail.com>
- <220323.86k0ckol2v.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220323.86k0ckol2v.gmgdl@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 23 Mar 2022 19:04:21 -0700
-Message-ID: <CANQDOdekfyPEZTfzrJ3Una=9Xt-kCcGDtqPskKr=29cicxO-=g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] core.fsyncmethod: batched disk flushes for loose-objects
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Patrick Steinhardt <ps@pks.im>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 6:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sun, Mar 20 2022, Neeraj Singh via GitGitGadget wrote:
->
-> > From: Neeraj Singh <neerajsi@microsoft.com>
-> > [..
-> > diff --git a/Documentation/config/core.txt b/Documentation/config/core.=
-txt
-> > index 889522956e4..a3798dfc334 100644
-> > --- a/Documentation/config/core.txt
-> > +++ b/Documentation/config/core.txt
-> > @@ -628,6 +628,13 @@ core.fsyncMethod::
-> >  * `writeout-only` issues pagecache writeback requests, but depending o=
-n the
-> >    filesystem and storage hardware, data added to the repository may no=
-t be
-> >    durable in the event of a system crash. This is the default mode on =
-macOS.
-> > +* `batch` enables a mode that uses writeout-only flushes to stage mult=
-iple
-> > +  updates in the disk writeback cache and then does a single full fsyn=
-c of
-> > +  a dummy file to trigger the disk cache flush at the end of the opera=
-tion.
->
-> I think adding a \n\n here would help make this more readable & break
-> the flow a bit. I.e. just add a "+" on its own line, followed by
-> "Currently...
->
-> > +  Currently `batch` mode only applies to loose-object files. Other rep=
-ository
-> > +  data is made durable as if `fsync` was specified. This mode is expec=
-ted to
-> > +  be as safe as `fsync` on macOS for repos stored on HFS+ or APFS file=
-systems
-> > +  and on Windows for repos stored on NTFS or ReFS filesystems.
+> I think readers will read "non-functional change" as "we changed it
+> and made it not function anymore", but you meant something else ;-)
 
-Thanks, will fix.
+I tried to translate by Google and the translation is OK, but indeed
+it will bring some little murmur on "function", I will try to avoid
+this like ambiguity words for more improved description.
+
+Thanks.
