@@ -2,70 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0DDC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D2D6C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351908AbiCXQxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
+        id S1351957AbiCXQxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352164AbiCXQxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:53:06 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB029F386
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:31 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id t11so7487534wrm.5
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:31 -0700 (PDT)
+        with ESMTP id S1351954AbiCXQwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:52:53 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE06B18A1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:29 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id r13so7458027wrr.9
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ekJrkqFg1yJzdNh+egoYJeP3EUXrY0TIhPEKqSMHHf8=;
-        b=d/xB9Ojxbo+jDTUQG0e1XDltStQNdNEM884iY6D8UMDmPMLq6DDlfFR9gpZOirvprR
-         LQeNfrav1KGhjTFm8KwQ3PbZL+UJ4fHhXLa+lMkWv/SCVEtwoo4DB5/SJcgWhDvvacLl
-         ggm2+CBrcznBPbmWY80q71llCPR6XYf1bABF2W5xpFrfhdZt4DbPrcCO66/8tkw7jOdQ
-         dTbUwj3qXBKCLmyJ8K8nqpbA1VztLSQl+SCTzIg1i3pyNhu39ZkHL7EzW0RP7OUOT4So
-         dDKWyc95/xEZVIVSgmotfqo4EHj8KAvTTrKi4z5bc+iJ9qWW2Tdk/CvE5Fr/kfyT21EX
-         rPng==
+        bh=fUl1iulHJn6M4DhZIvnlR7KK07qkvc0JZ9TAzGaZ+4M=;
+        b=pJEsXNMIzGLeQf2nzCscTNgYHFiEQ6mHBnl9Nv2qjHwexcQhG0dBE+tgnL7aKQwwzQ
+         tuTIMa5sFtF6Sij0Ct8eqD4PE1hFO3E80l7K+uYNSD8YGmG/e1B3UYulmMuHbPxhNTgY
+         Q8a5JFcum+YSTKHYiIAIolLNY9Ts3htoSoCjfZX7R9P4rnylc6CVarBEEF3zssAGsNXD
+         OYDwbv7qyqBcOGtsQDzhOLZW6bdBHqe39A3+ww21/OGZRitMBatb4+CZEQFODn8f+HHG
+         VcygVjTBx50z9sn/G0akBx/Y0p0hzXC41r8cZnAtNsrSJIceK/dQTrs3XkYVqpbNyoYx
+         q/Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ekJrkqFg1yJzdNh+egoYJeP3EUXrY0TIhPEKqSMHHf8=;
-        b=C3fCgF1REdgETuN57iDGmOvgaaUEPJAnTZueokdcsSIdd/ARPIRQgOJBOyppVpwGI5
-         Y+Gzfo6i6seuA0a4W1Lz5yeyFwzYeEpTPvjb400FOjTxD5hwp9T2k27WFYoInQD0iQ/d
-         PsNU1PYZ8GSsQLXvisocEI4aICqBqMjfxjYs3mq0fcFiOHgA4ivrY9R1XNTcF3fb0wGF
-         uwqYUp+pKHBHlS/0RVTTQR4PZWH3zjkQGlZzDGKyTmBMvBjX5rWSjJrrcR0pdX1aqO7t
-         zzyUOQxIPC5GRe8J7jh7+3lMZ/V6NfDS9t/3dQQE9YS8+cNfbmVSKGORCGPUI4z5xuwo
-         9r1Q==
-X-Gm-Message-State: AOAM531hpdV02gQ/6d6lUplpgfz/u+aDXcp9aaE63DpYnlJ7Kr7UZ7HA
-        Hp1eSr7R0WraJ+o52Vqr+UHQVywKGCE=
-X-Google-Smtp-Source: ABdhPJyKvUnD1OmtqJbOiIdVNAvupaM98HGHxx8HKUdN+ugcbjusEbyvSC5Bh5GuWQlJ9fMCa2LsZw==
-X-Received: by 2002:a5d:618c:0:b0:204:2f:2c1a with SMTP id j12-20020a5d618c000000b00204002f2c1amr5196632wru.709.1648140690146;
-        Thu, 24 Mar 2022 09:51:30 -0700 (PDT)
+        bh=fUl1iulHJn6M4DhZIvnlR7KK07qkvc0JZ9TAzGaZ+4M=;
+        b=5jKSFTwUiNP/1WxCQZtgw03dDeCXLv5yKoDcEikdp+srhQVCpfhwb4Zwy7WQ64w/o+
+         Tw865O7ymBH3MP1lIPzADxlBC6ufRJpiH7inpHHejuB2xcG0b/THp00ublPt2cRkEaZs
+         ED40T3/In3Eikuigrs2Xe6/ZYE+SseetoqCW4X0VHnGCn5k11z/jClh42259UG8fTiNd
+         f8srl+4aNMNnY5M9KJCE5/CSod3b38k/r9x0kuKO8W3jtQH7i9Tpq/h/K4Sd8kNkyf+l
+         NyiGNmH2JKu3J2ItWnLzS5bHxXvk/foPOO+xeO4QlN/Pgw0Vt2g7ocRWPzsFM+em6T96
+         hRCw==
+X-Gm-Message-State: AOAM533NosfktW3ZtbE90xmd0VWxy2GpavIgYjsvdwb1ZzM7VnnfGGDz
+        VuPOtoVzCxG10otFyTqML+we0agbqoU=
+X-Google-Smtp-Source: ABdhPJxY3zYRl1BEj4b22FFHYQjaVeJ2x7ailUSEwyFGFH2bjInTcqZfOnXbWpAqJtDuC4NeGvITDw==
+X-Received: by 2002:adf:fb47:0:b0:1ed:9f2c:492e with SMTP id c7-20020adffb47000000b001ed9f2c492emr5521150wrs.196.1648140627720;
+        Thu, 24 Mar 2022 09:50:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c24-20020a7bc018000000b0038a18068cf5sm6339137wmb.15.2022.03.24.09.51.29
+        by smtp.gmail.com with ESMTPSA id j1-20020a5d6181000000b00203fc0e79a3sm2978571wru.46.2022.03.24.09.50.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:51:29 -0700 (PDT)
-Message-Id: <9ad6d87ccced1020181a80bc7ed92e30d1b23ff3.1648140680.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
-References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
-        <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:26 -0700 (PDT)
+Message-Id: <f87a1eba693b297d049281fa2d0c21b573027347.1648140586.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
+        <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:50:59 +0000
-Subject: [PATCH v4 06/27] fsmonitor-settings: VFS for Git virtual repos are
- incompatible
+Date:   Thu, 24 Mar 2022 16:49:46 +0000
+Subject: [PATCH v8 30/30] t7527: test status with untracked-cache and
+ fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>,
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,112 +74,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-VFS for Git virtual repositories are incompatible with FSMonitor.
-
-VFS for Git is a downstream fork of Git.  It contains its own custom
-file system watcher that is aware of the virtualization.  If a working
-directory is being managed by VFS for Git, we should not try to watch
-it because we may get incomplete results.
-
-We do not know anything about how VFS for Git works, but we do
-know that VFS for Git working directories contain a well-defined
-config setting.  If it is set, mark the working directory as
-incompatible.
+Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
+features and a series of edits and verify that status output is
+identical.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- compat/fsmonitor/fsm-settings-win32.c | 26 ++++++++++++++++++++++++++
- fsmonitor-settings.c                  |  5 +++++
- fsmonitor-settings.h                  |  1 +
- t/t7519-status-fsmonitor.sh           |  9 +++++++++
- 4 files changed, 41 insertions(+)
+ t/t7527-builtin-fsmonitor.sh | 115 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 115 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-index 7fce32a3c5b..ee78bba38e3 100644
---- a/compat/fsmonitor/fsm-settings-win32.c
-+++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -3,7 +3,33 @@
- #include "repository.h"
- #include "fsmonitor-settings.h"
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 3570bf764aa..1c40d8d2035 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -216,6 +216,8 @@ test_expect_success 'setup' '
+ 	.gitignore
+ 	expect*
+ 	actual*
++	flush*
++	trace*
+ 	EOF
  
-+/*
-+ * VFS for Git is incompatible with FSMonitor.
-+ *
-+ * Granted, core Git does not know anything about VFS for Git and we
-+ * shouldn't make assumptions about a downstream feature, but users
-+ * can install both versions.  And this can lead to incorrect results
-+ * from core Git commands.  So, without bringing in any of the VFS for
-+ * Git code, do a simple config test for a published config setting.
-+ * (We do not look at the various *_TEST_* environment variables.)
-+ */
-+static enum fsmonitor_reason check_vfs4git(struct repository *r)
-+{
-+	const char *const_str;
-+
-+	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
-+		return FSMONITOR_REASON_VFS4GIT;
-+
-+	return FSMONITOR_REASON_OK;
-+}
-+
- enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
- {
-+	enum fsmonitor_reason reason;
-+
-+	reason = check_vfs4git(r);
-+	if (reason != FSMONITOR_REASON_OK)
-+		return reason;
-+
- 	return FSMONITOR_REASON_OK;
- }
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 8ff55f8c3fd..1efb6e17a20 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -179,6 +179,11 @@ int fsm_settings__error_if_incompatible(struct repository *r)
- 		error(_("bare repository '%s' is incompatible with fsmonitor"),
- 		      xgetcwd());
- 		return 1;
-+
-+	case FSMONITOR_REASON_VFS4GIT:
-+		error(_("virtual repository '%s' is incompatible with fsmonitor"),
-+		      r->worktree);
-+		return 1;
- 	}
- 
- 	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index 4b35f051fb1..6361fcbf6b0 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -16,6 +16,7 @@ enum fsmonitor_mode {
- enum fsmonitor_reason {
- 	FSMONITOR_REASON_OK = 0, /* no incompatibility or when disbled */
- 	FSMONITOR_REASON_BARE,
-+	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
- };
- 
- void fsm_settings__set_ipc(struct repository *r);
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 9a8e21c5608..156895f9437 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -78,6 +78,15 @@ test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo' '
- 	grep "bare repository .* is incompatible with fsmonitor" actual
+ 	git -c core.fsmonitor=false add . &&
+@@ -502,4 +504,117 @@ test_expect_success 'cleanup worktrees' '
+ 	stop_daemon_delete_repo wt-base
  '
  
-+test_expect_success MINGW,FSMONITOR_DAEMON 'run fsmonitor-daemon in virtual repo' '
-+	test_when_finished "rm -rf ./fake-virtual-clone actual" &&
-+	git init fake-virtual-clone &&
-+	test_must_fail git -C ./fake-virtual-clone \
-+			   -c core.virtualfilesystem=true \
-+			   fsmonitor--daemon run 2>actual &&
-+	grep "virtual repository .* is incompatible with fsmonitor" actual
++# The next few tests perform arbitrary/contrived file operations and
++# confirm that status is correct.  That is, that the data (or lack of
++# data) from fsmonitor doesn't cause incorrect results.  And doesn't
++# cause incorrect results when the untracked-cache is enabled.
++
++test_lazy_prereq UNTRACKED_CACHE '
++	git update-index --test-untracked-cache
 +'
 +
- test_expect_success 'setup' '
- 	mkdir -p .git/hooks &&
- 	: >tracked &&
++test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
++	test_unconfig core.fsmonitor &&
++	git update-index --no-fsmonitor &&
++	test_might_fail git fsmonitor--daemon stop
++'
++
++matrix_clean_up_repo () {
++	git reset --hard HEAD &&
++	git clean -fd
++}
++
++matrix_try () {
++	uc=$1 &&
++	fsm=$2 &&
++	fn=$3 &&
++
++	if test $uc = true && test $fsm = false
++	then
++		# The untracked-cache is buggy when FSMonitor is
++		# DISABLED, so skip the tests for this matrix
++		# combination.
++		#
++		# We've observed random, occasional test failures on
++		# Windows and MacOS when the UC is turned on and FSM
++		# is turned off.  These are rare, but they do happen
++		# indicating that it is probably a race condition within
++		# the untracked cache itself.
++		#
++		# It usually happens when a test does F/D trickery and
++		# then the NEXT test fails because of extra status
++		# output from stale UC data from the previous test.
++		#
++		# Since FSMonitor is not involved in the error, skip
++		# the tests for this matrix combination.
++		#
++		return 0
++	fi &&
++
++	test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
++		matrix_clean_up_repo &&
++		$fn &&
++		if test $uc = false && test $fsm = false
++		then
++			git status --porcelain=v1 >.git/expect.$fn
++		else
++			git status --porcelain=v1 >.git/actual.$fn &&
++			test_cmp .git/expect.$fn .git/actual.$fn
++		fi
++	'
++}
++
++uc_values="false"
++test_have_prereq UNTRACKED_CACHE && uc_values="false true"
++for uc_val in $uc_values
++do
++	if test $uc_val = false
++	then
++		test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
++			git config core.untrackedcache false &&
++			git update-index --no-untracked-cache
++		'
++	else
++		test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
++			git config core.untrackedcache true &&
++			git update-index --untracked-cache
++		'
++	fi
++
++	fsm_values="false true"
++	for fsm_val in $fsm_values
++	do
++		if test $fsm_val = false
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
++				test_unconfig core.fsmonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon stop
++			'
++		else
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
++				git config core.fsmonitor true &&
++				git fsmonitor--daemon start &&
++				git update-index --fsmonitor
++			'
++		fi
++
++		matrix_try $uc_val $fsm_val edit_files
++		matrix_try $uc_val $fsm_val delete_files
++		matrix_try $uc_val $fsm_val create_files
++		matrix_try $uc_val $fsm_val rename_files
++		matrix_try $uc_val $fsm_val file_to_directory
++		matrix_try $uc_val $fsm_val directory_to_file
++
++		if test $fsm_val = true
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
++				test_unconfig core.fsmonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon stop
++			'
++		fi
++	done
++done
++
+ test_done
 -- 
 gitgitgadget
-
