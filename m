@@ -2,122 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B95C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CD0C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351749AbiCXQlg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59212 "EHLO
+        id S1350590AbiCXQqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:46:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351756AbiCXQlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:41:35 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0E0558830
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:40:02 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so5463881fac.7
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:40:02 -0700 (PDT)
+        with ESMTP id S235237AbiCXQqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:46:45 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC4D6FA28
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:45:12 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id a127so5539637vsa.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vGrYn5l1qbtUgkLesVrNII0Q+/G38/JecIZFIc06BpA=;
-        b=KtvNjFnDY4rUCvZFsCRJFKADe90s8RvS0DFSLQE8Y8HDGoDb6mvtjlQ+75IolZ9EeD
-         jTiE3mHPdGW/TKEp+Qbtw3gNABaDYAQjQE+bFVo0cioQZN14QpnaPlSjsXB9AKmJk2qA
-         rVNL94sBQguZLLdD0nAbDXdTE0XPb87WeNosSG2YlPepzTfmdmEA9B/9B1eDT/1RthW9
-         dt2uylgF1A4ExfpCkbwOEbvcanzE1wvtfUiKDh8kJQk3p3WSy9yfK/Iyb+QlCx5qfVDZ
-         XecJDohTAZStTRr3FrlvkEVBRaPFdMs/7iKmctLOG8Z2VDckD5xtYuadTHA3R7MwFmmJ
-         5Ysg==
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=a01spaJjImarfnCBbNEAUsKDHt9XhCx9bFrcssrzomk=;
+        b=RvNB+GoZV9Epm7A+qpS6EurbosQCMqwSgXKjv+AUz1+J+yBvW81zq3zMNzLexK5SbT
+         zNwu2dd8+BxUf3jdjm5Ox4FvRfknFbLnF1xgrxijHAk02MFlVFr6ih8GpauMP3fsWYa9
+         2HXcyMUIk6vU1tmG21cLcoK7Yrm+pdyWNOh7CnabHBTJUqenMlSsYtWkTIa1vlIl0btt
+         VlgXuSC0DEeNqXOvYLPDJBb7cp928xs3vlg2N+49XMQX/vqLfQXHiAnXj8DLDWATou7k
+         htZnO5tYMm0/LySQzHCjz2hWiJ9JhgB1hVISugD8ras+edfx5lD/DPFeCZVyM1PiBjUe
+         IpuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
          :content-transfer-encoding;
-        bh=vGrYn5l1qbtUgkLesVrNII0Q+/G38/JecIZFIc06BpA=;
-        b=MP7hQHVMrmcar1a6ZdejVb2RjcwBPmnhYfN9RTUo9DSQu2M4HY7A4QgLo0caU2vik0
-         zk0FAmaa5dXAGlmJyEMNwIds7XrX+3ewcimWQ2jAtArxPSHyGkgK2jzdAb6z0u/MuK7/
-         zEhMS7YpxO9R2jnw8qLPtG4PWoY3ukBSr9TKJh4r6nyzVNEKSYHEtxYF6xIEJ3tog6NC
-         x+3tSYvFg5ruqbIvWfEqX4vbEfjLcnpETj+ZXuEPL3Ji4U3rhhy83QONS00MjrfB2zw5
-         ZRu62NvUCT5+zjNpEiY9DPofADOzaes2gVrlmfDnut9lX+YDsFz13T2NTzAaXNIXw/lp
-         q9nA==
-X-Gm-Message-State: AOAM5312K4H56XiDieg2KVeHpK4WZjB9EHUW83vGODLUfQtgyL+DbBNg
-        2AnUoKXoQYJpMzumVUjBMFTYSrX/cYsK
-X-Google-Smtp-Source: ABdhPJyk7kyG5XfbtkPgOdJ0AeCQYpE4glctMhQhCgYJJZ+m4ppK4JofLOW6lS8DZM8lubXIaHFCwQ==
-X-Received: by 2002:a05:6871:726:b0:dd:a581:998e with SMTP id f38-20020a056871072600b000dda581998emr3013731oap.128.1648140002008;
-        Thu, 24 Mar 2022 09:40:02 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id m3-20020a4ae3c3000000b00320d7c78b01sm1445067oov.20.2022.03.24.09.40.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Mar 2022 09:40:01 -0700 (PDT)
-Message-ID: <4897c433-92a5-3bfb-ba9f-44000748fcc5@github.com>
-Date:   Thu, 24 Mar 2022 12:39:59 -0400
+        bh=a01spaJjImarfnCBbNEAUsKDHt9XhCx9bFrcssrzomk=;
+        b=UkAfuNrEM6OOGtWpEUrERhxs6AcThyCa/KRl5CgnoWMvo0UiW4EnzyyZcRRsOuPsyZ
+         6Dj/f3MIkmWQaAPr97zh+E2Wpbf5W/GwlMhGf85pyxwPyJYmV3uYcoV18plrf151c598
+         AE671srkeubhhCotzDlzmjGpovCKDInf4pr8USsnVp/t9T0lHq1FW2UqLhmeGcdEa2Lr
+         fxREHZcdBaGdcwDcykBml5JiFejZwIa3U9jmA4GXtvIC2m0Zg72i+bMRrHjfFPjA7lMD
+         HPU2qCQjFLRqu1ehP9nWOEe0SQPAXVL7AMfXqHAMv9vsScvhAO+HQsBOi+kt9nmzlZCw
+         oq2w==
+X-Gm-Message-State: AOAM531pGfbYNcqOcWT3qG/5cYp5c6b3l0CxJawEY67aNTn45lmuyOxY
+        mjGK5MMdsT9WtGGiTeTvr5PBRsLQr20lE7YHmsE1wVYZnqQ=
+X-Google-Smtp-Source: ABdhPJxhK5D2L8wiBwNthkyi8aJrEYwhSH2qyaABU0H89AgQZc9ikKkOCYKn/Ju2Wiaq+PfQCayiYmFJKoPG1Dhcit8=
+X-Received: by 2002:a05:6102:390d:b0:325:26d5:7f73 with SMTP id
+ e13-20020a056102390d00b0032526d57f73mr3245384vsu.29.1648140311911; Thu, 24
+ Mar 2022 09:45:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] test-lib-functions: fix test_subcommand_inexact
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
- <540936ba-7287-77fa-9cee-e257ed3c119d@github.com>
- <xmqqmthgu3e6.fsf@gitster.g>
- <e5331972-512a-c498-6a1b-927f21ef9de2@github.com>
- <YjuVAgjaiqrcT7P1@nand.local> <xmqqfsn8p8nr.fsf@gitster.g>
- <72c54461-8af7-29fc-04da-f435adee9bbe@github.com>
- <YjyWFqjkaGpC8NxQ@nand.local>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <YjyWFqjkaGpC8NxQ@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   =?UTF-8?Q?Honza_Proke=C5=A1?= <proke.j@gmail.com>
+Date:   Thu, 24 Mar 2022 17:45:00 +0100
+Message-ID: <CA+ZGDOUKrNRdf-7+SBoVhPkAmyHEtt==AJ=jBDWGkOUcz=n4BA@mail.gmail.com>
+Subject: bug report: pre-push hook
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/24/2022 12:02 PM, Taylor Blau wrote:
-> On Thu, Mar 24, 2022 at 11:42:44AM -0400, Derrick Stolee wrote:
->> As I'm looking at Taylor's test case example, the one thing I notice
->> is that there is only one pack-file before the repack. It would be
->> good to have a non-kept packfile get repacked in the process, not
->> just the loose objects added by the test_commit. I'll take a look at
->> what can be done here.
-> 
-> I think you are too good at nerd-sniping me ;-). Here's a more robust
-> test, that I think reads a little cleaner than the previous round. Let
-> me know what you think:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Finally, you found my most redeeming quality!
+What did you do before the bug happened? (Steps to reproduce your issue)
+I did setup pre-push hook to run unit tests.
 
-> +		test_commit kept &&
-> +		git repack -ad &&
-> +
-> +		>$packdir/$(basename $packdir/pack-*.pack .pack).keep &&
-> +
-> +		test_commit unkept &&
-> +		git repack -d &&
-> +
-> +		test_commit new &&
-> +
-> +		find $packdir -type f -name "pack-*.idx" | sort >before &&
-> +		git repack --write-midx -a -b -d &&
-> +		find $packdir -type f -name "pack-*.idx" | sort >after &&
-> +
-> +		git rev-list --objects --no-object-names kept.. >expect.raw &&
-> +		sort expect.raw >expect &&
+What did you expect to happen? (Expected behavior)
+Pre-push executes tests, I can see output, and if tests fail, push
+does not happen.
 
-This is an interesting way to get this set of objects without storing
-the original pack name. It might be good to keep consistent with the
-way we get the new objects, though.
+What happened instead? (Actual behavior)
+Tests seem to execute on the background, but I do not see output and
+push happens when tests fail.
 
-> +
-> +		git show-index <$(comm -13 before after) >actual.raw &&
-> +		cut -d" " -f2 actual.raw >actual &&
-> +
-> +		test_cmp expect actual
-> +	)
+What's different between what you expected and what actually happened?
+As above, so:
+Tests seem to execute on the background, but I do not see output and
+push happens when tests fail.
 
-I've got a modification of your original design prepared in my GGG PR
-and will send a v2 including it after it passes all of the builds.
+Anything else you want to add:
+When I run pre-push script directly from terminal, it executes tests,
+I see output and if I ask for last command exit-code, it is non-zero
+if tests fail, so my script is functional. It was working until
+recently, noticed today, but this behavior happened at least two days
+ago. It was working well in past. My fella has the same issue with
+similar script on up-to-date Arch Linux.
 
-Thanks,
--Stolee
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.35.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.105-1-MANJARO #1 SMP PREEMPT Fri Mar 11 14:12:33 UTC
+2022 x86_64
+compiler info: gnuc: 11.1
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /usr/bin/zsh
+
+
+[Enabled Hooks]
+pre-push
+
+S pozdravem / Best regards
+
+Jan Proke=C5=A1
+
+Full stack program=C3=A1tor / Web developer
