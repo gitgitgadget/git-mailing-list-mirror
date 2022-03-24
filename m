@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A088DC433FE
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CAA7C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351870AbiCXQwO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:52:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58766 "EHLO
+        id S237118AbiCXQwQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:52:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351842AbiCXQvr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1351850AbiCXQvr (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Mar 2022 12:51:47 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBBAB0A47
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:13 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id a1so7473806wrh.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:13 -0700 (PDT)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1039996AD
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:14 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id h16so3111354wmd.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=p0teLAsHTxbSC0+vtDh7IakcwEoThRbRMdCYsFOPVt4=;
-        b=hwBISnralMbdrnfkYR+wDxdpgSPRlQSNv2E1A+cpr/WGZYoRjjmFnr9cIiTaXyVvJX
-         4tL4DKDXoAuaCpp4NtDWuqX4t0P+cXoH4eBTH1NrNNnmG90FsyvHpAm5bZvkViECem1y
-         njEKFnjWr0RiLUafMIqIiT6fBEBmY5/XEPTXWWbO0PYuquFVDKFC48TvTtOFWvVnoOrV
-         j4rzk4I9rybX9Nnc4/8SkfkArLosfjXpUDYmViFUZEFmufggdcZ1eqQX4/JArupK8hjn
-         xIRVEjSHRkfh4LILpLHaEF9ocu2ITdz8XseZsk3lh1paJOWxXG+ICBw7Hprz/3h/Q1ir
-         j8JA==
+        bh=6IMoORViExxPGOqXM0jiWHBPtgaquTlkmrPOCTiquVM=;
+        b=MNEMF8clVhq+N5Gwv4+q1/Q/qr7KlURitRVPhHf3o9j6wv6jLe53cI4yCeGTBHKYct
+         FKVflkJNd9Pyka932Dkwf+Yjgmoqg41WjIETgkpb8L+MTbhL+nHNzrF5v7LQgTpRkd3g
+         Q5M21DGmBvXhe4S/pjyPbIeY0ICi3wGbo1gHm+KcT/aLGGCoaAu8c3Ijbe2lLNEsZ953
+         Rz9WEE+FT7qwtvP9lzeBHFKYGF7TjjKrpfOSIrkoF/dgZMdReMRm8tbeJzrB4fHVJElG
+         OD6yWs2hi+qWGTuwDcJ2tgzZPBY1Lv40W/aAMzvB99kX6aP4kBHUfaUwjylSkpqz42fF
+         7X3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p0teLAsHTxbSC0+vtDh7IakcwEoThRbRMdCYsFOPVt4=;
-        b=xzKi9e9tZnBNcNq9AsXD/jOXL7PrRm6Sj6JMzBT714qLtFb3FbAnZlshxSd8e/d0wj
-         4p0AKKXiuRD3j0iCvcmWWW0/xUNJewCExoe50UvMYoX1IfWyabuCLPTLtoozT2po+axk
-         wuHG5AGhym4HSxM00EnyiPczKHXNGYdlnrr+omjfEWO0L7/OwfDUTKtYkTKFboq3Y2Jt
-         J2Ven2aGXXbsUSiwgy6ayLranyMDaf2t2QscSf1yTkkwo5rOdFCtzdN+PcoN100duKDA
-         ZZzz5nUXKQiCR8QmEoE75xk7ri8h4jGCSC85kbqS/RlPpEM5FHtbeEfMfwPBeVSJogAy
-         KJhg==
-X-Gm-Message-State: AOAM531vAIgjkilV3mOxbYOh/I3JtZdiU8jnw/AbCAdv0/dm7fOxlUVW
-        8NABzj9zuI8Ke+DI5WTMQ0FyenoIQ10=
-X-Google-Smtp-Source: ABdhPJxhYIGgTxrMMnBnwOsYJaR5VtE3YKf1Zd6w/rQkwo9GELl8WXNixSFT5PxlpQbU8kw9S2c9XQ==
-X-Received: by 2002:a5d:6b4c:0:b0:1e6:8ece:62e8 with SMTP id x12-20020a5d6b4c000000b001e68ece62e8mr5340497wrw.201.1648140611959;
-        Thu, 24 Mar 2022 09:50:11 -0700 (PDT)
+        bh=6IMoORViExxPGOqXM0jiWHBPtgaquTlkmrPOCTiquVM=;
+        b=XYiDT9Brqb1zLoLzT94CeiqCN/ulexSGlMDTYtIW6bJDzc24YDI93nt0drYmzWr/MT
+         /4QDkOOXShD+xg5+FUN7pv8cJ8KDgwlMyc3IvRvDeNtZVmtoq87uOc+n+niLFonB76bb
+         kPA1xVxR8HKFMf7hJQjps6i0yvn7s16QTzo4Tvzu7NCOwCTNy4Qa/9Cg4ELc0Eop58tc
+         3MsrK+PuA5eRnqxu0jIK/89UVWiWf54DwD+VGv2IDBNvFtINQb6to8qCQrFXrQ3r9R9T
+         RuaI96RfPwGWjGsuoBQWMyOCxmq5OWFWVBftMAgoYPUDfuxNgA1BSmVAsHYqGy0cLjD3
+         ethQ==
+X-Gm-Message-State: AOAM5336u2UPi/MzLPbK33lvn9mXdg1RUOcOXeN4LkaNKkdsXPrJAACN
+        65GtLuOslFAf56gpMyHY0YjistrAIsU=
+X-Google-Smtp-Source: ABdhPJzzprj0rIPHchVsrYYJSaCCHjl3e23A4WYFi9DjMEKyR/Mc3VbuT0FBslusylJR+7P9MkPmNw==
+X-Received: by 2002:a05:600c:1c0e:b0:38c:be20:2990 with SMTP id j14-20020a05600c1c0e00b0038cbe202990mr5431727wms.86.1648140613163;
+        Thu, 24 Mar 2022 09:50:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g7-20020a5d64e7000000b00204a13925dcsm3280040wri.11.2022.03.24.09.50.10
+        by smtp.gmail.com with ESMTPSA id j1-20020a5d6181000000b00203fc0e79a3sm2978137wru.46.2022.03.24.09.50.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:11 -0700 (PDT)
-Message-Id: <c43009124fbb8f10d4919dbaaf38a728789dd395.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:12 -0700 (PDT)
+Message-Id: <ed338777b561ca7c2bb6753b0408da7ea3a64435.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:34 +0000
-Subject: [PATCH v8 18/30] fsmonitor--daemon: implement handle_client callback
+Date:   Thu, 24 Mar 2022 16:49:35 +0000
+Subject: [PATCH v8 19/30] help: include fsmonitor--daemon feature flag in
+ version info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,362 +74,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to respond to IPC requests from client
-Git processes and respond with a list of modified pathnames
-relative to the provided token.
+Add the "feature: fsmonitor--daemon" message to the output of
+`git version --build-options`.
+
+The builtin FSMonitor is only available on certain platforms and
+even then only when certain Makefile flags are enabled, so print
+a message in the verbose version output when it is available.
+
+This can be used by test scripts for prereq testing.  Granted, tests
+could just try `git fsmonitor--daemon status` and look for a 128 exit
+code or grep for a "not supported" message on stderr, but these
+methods are rather obscure.
+
+The main advantage is that the feature message will automatically
+appear in bug reports and other support requests.
+
+This concept was also used during the development of Scalar for
+similar reasons.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 311 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 309 insertions(+), 2 deletions(-)
+ help.c        | 4 ++++
+ t/test-lib.sh | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 69312119b07..eafaafb45b1 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,6 +7,7 @@
- #include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
- #include "khash.h"
-+#include "pkt-line.h"
+diff --git a/help.c b/help.c
+index 71444906ddf..9112a51e84b 100644
+--- a/help.c
++++ b/help.c
+@@ -12,6 +12,7 @@
+ #include "refs.h"
+ #include "parse-options.h"
+ #include "prompt.h"
++#include "fsmonitor-ipc.h"
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
- 	N_("git fsmonitor--daemon start [<options>]"),
-@@ -364,6 +365,310 @@ void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
- 	pthread_mutex_unlock(&state->main_lock);
+ struct category_description {
+ 	uint32_t category;
+@@ -695,6 +696,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ 		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+ 		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
++
++		if (fsmonitor_ipc__is_supported())
++			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
+ 	}
  }
  
-+/*
-+ * Format an opaque token string to send to the client.
-+ */
-+static void with_lock__format_response_token(
-+	struct strbuf *response_token,
-+	const struct strbuf *response_token_id,
-+	const struct fsmonitor_batch *batch)
-+{
-+	/* assert current thread holding state->main_lock */
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e4716b0b867..5d819c1bc11 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1799,3 +1799,10 @@ test_lazy_prereq SHA1 '
+ # Tests that verify the scheduler integration must set this locally
+ # to avoid errors.
+ GIT_TEST_MAINT_SCHEDULER="none:exit 1"
 +
-+	strbuf_reset(response_token);
-+	strbuf_addf(response_token, "builtin:%s:%"PRIu64,
-+		    response_token_id->buf, batch->batch_seq_nr);
-+}
-+
-+/*
-+ * Parse an opaque token from the client.
-+ * Returns -1 on error.
-+ */
-+static int fsmonitor_parse_client_token(const char *buf_token,
-+					struct strbuf *requested_token_id,
-+					uint64_t *seq_nr)
-+{
-+	const char *p;
-+	char *p_end;
-+
-+	strbuf_reset(requested_token_id);
-+	*seq_nr = 0;
-+
-+	if (!skip_prefix(buf_token, "builtin:", &p))
-+		return -1;
-+
-+	while (*p && *p != ':')
-+		strbuf_addch(requested_token_id, *p++);
-+	if (!*p++)
-+		return -1;
-+
-+	*seq_nr = (uint64_t)strtoumax(p, &p_end, 10);
-+	if (*p_end)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
-+
-+static int do_handle_client(struct fsmonitor_daemon_state *state,
-+			    const char *command,
-+			    ipc_server_reply_cb *reply,
-+			    struct ipc_server_reply_data *reply_data)
-+{
-+	struct fsmonitor_token_data *token_data = NULL;
-+	struct strbuf response_token = STRBUF_INIT;
-+	struct strbuf requested_token_id = STRBUF_INIT;
-+	struct strbuf payload = STRBUF_INIT;
-+	uint64_t requested_oldest_seq_nr = 0;
-+	uint64_t total_response_len = 0;
-+	const char *p;
-+	const struct fsmonitor_batch *batch_head;
-+	const struct fsmonitor_batch *batch;
-+	intmax_t count = 0, duplicates = 0;
-+	kh_str_t *shown;
-+	int hash_ret;
-+	int do_trivial = 0;
-+	int do_flush = 0;
-+
-+	/*
-+	 * We expect `command` to be of the form:
-+	 *
-+	 * <command> := quit NUL
-+	 *            | flush NUL
-+	 *            | <V1-time-since-epoch-ns> NUL
-+	 *            | <V2-opaque-fsmonitor-token> NUL
-+	 */
-+
-+	if (!strcmp(command, "quit")) {
-+		/*
-+		 * A client has requested over the socket/pipe that the
-+		 * daemon shutdown.
-+		 *
-+		 * Tell the IPC thread pool to shutdown (which completes
-+		 * the await in the main thread (which can stop the
-+		 * fsmonitor listener thread)).
-+		 *
-+		 * There is no reply to the client.
-+		 */
-+		return SIMPLE_IPC_QUIT;
-+
-+	} else if (!strcmp(command, "flush")) {
-+		/*
-+		 * Flush all of our cached data and generate a new token
-+		 * just like if we lost sync with the filesystem.
-+		 *
-+		 * Then send a trivial response using the new token.
-+		 */
-+		do_flush = 1;
-+		do_trivial = 1;
-+
-+	} else if (!skip_prefix(command, "builtin:", &p)) {
-+		/* assume V1 timestamp or garbage */
-+
-+		char *p_end;
-+
-+		strtoumax(command, &p_end, 10);
-+		trace_printf_key(&trace_fsmonitor,
-+				 ((*p_end) ?
-+				  "fsmonitor: invalid command line '%s'" :
-+				  "fsmonitor: unsupported V1 protocol '%s'"),
-+				 command);
-+		do_trivial = 1;
-+
-+	} else {
-+		/* We have "builtin:*" */
-+		if (fsmonitor_parse_client_token(command, &requested_token_id,
-+						 &requested_oldest_seq_nr)) {
-+			trace_printf_key(&trace_fsmonitor,
-+					 "fsmonitor: invalid V2 protocol token '%s'",
-+					 command);
-+			do_trivial = 1;
-+
-+		} else {
-+			/*
-+			 * We have a V2 valid token:
-+			 *     "builtin:<token_id>:<seq_nr>"
-+			 */
-+		}
-+	}
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (!state->current_token_data)
-+		BUG("fsmonitor state does not have a current token");
-+
-+	if (do_flush)
-+		with_lock__do_force_resync(state);
-+
-+	/*
-+	 * We mark the current head of the batch list as "pinned" so
-+	 * that the listener thread will treat this item as read-only
-+	 * (and prevent any more paths from being added to it) from
-+	 * now on.
-+	 */
-+	token_data = state->current_token_data;
-+	batch_head = token_data->batch_head;
-+	((struct fsmonitor_batch *)batch_head)->pinned_time = time(NULL);
-+
-+	/*
-+	 * FSMonitor Protocol V2 requires that we send a response header
-+	 * with a "new current token" and then all of the paths that changed
-+	 * since the "requested token".  We send the seq_nr of the just-pinned
-+	 * head batch so that future requests from a client will be relative
-+	 * to it.
-+	 */
-+	with_lock__format_response_token(&response_token,
-+					 &token_data->token_id, batch_head);
-+
-+	reply(reply_data, response_token.buf, response_token.len + 1);
-+	total_response_len += response_token.len + 1;
-+
-+	trace2_data_string("fsmonitor", the_repository, "response/token",
-+			   response_token.buf);
-+	trace_printf_key(&trace_fsmonitor, "response token: %s",
-+			 response_token.buf);
-+
-+	if (!do_trivial) {
-+		if (strcmp(requested_token_id.buf, token_data->token_id.buf)) {
-+			/*
-+			 * The client last spoke to a different daemon
-+			 * instance -OR- the daemon had to resync with
-+			 * the filesystem (and lost events), so reject.
-+			 */
-+			trace2_data_string("fsmonitor", the_repository,
-+					   "response/token", "different");
-+			do_trivial = 1;
-+
-+		} else if (requested_oldest_seq_nr <
-+			   token_data->batch_tail->batch_seq_nr) {
-+			/*
-+			 * The client wants older events than we have for
-+			 * this token_id.  This means that the end of our
-+			 * batch list was truncated and we cannot give the
-+			 * client a complete snapshot relative to their
-+			 * request.
-+			 */
-+			trace_printf_key(&trace_fsmonitor,
-+					 "client requested truncated data");
-+			do_trivial = 1;
-+		}
-+	}
-+
-+	if (do_trivial) {
-+		pthread_mutex_unlock(&state->main_lock);
-+
-+		reply(reply_data, "/", 2);
-+
-+		trace2_data_intmax("fsmonitor", the_repository,
-+				   "response/trivial", 1);
-+
-+		goto cleanup;
-+	}
-+
-+	/*
-+	 * We're going to hold onto a pointer to the current
-+	 * token-data while we walk the list of batches of files.
-+	 * During this time, we will NOT be under the lock.
-+	 * So we ref-count it.
-+	 *
-+	 * This allows the listener thread to continue prepending
-+	 * new batches of items to the token-data (which we'll ignore).
-+	 *
-+	 * AND it allows the listener thread to do a token-reset
-+	 * (and install a new `current_token_data`).
-+	 */
-+	token_data->client_ref_count++;
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	/*
-+	 * The client request is relative to the token that they sent,
-+	 * so walk the batch list backwards from the current head back
-+	 * to the batch (sequence number) they named.
-+	 *
-+	 * We use khash to de-dup the list of pathnames.
-+	 *
-+	 * NEEDSWORK: each batch contains a list of interned strings,
-+	 * so we only need to do pointer comparisons here to build the
-+	 * hash table.  Currently, we're still comparing the string
-+	 * values.
-+	 */
-+	shown = kh_init_str();
-+	for (batch = batch_head;
-+	     batch && batch->batch_seq_nr > requested_oldest_seq_nr;
-+	     batch = batch->next) {
-+		size_t k;
-+
-+		for (k = 0; k < batch->nr; k++) {
-+			const char *s = batch->interned_paths[k];
-+			size_t s_len;
-+
-+			if (kh_get_str(shown, s) != kh_end(shown))
-+				duplicates++;
-+			else {
-+				kh_put_str(shown, s, &hash_ret);
-+
-+				trace_printf_key(&trace_fsmonitor,
-+						 "send[%"PRIuMAX"]: %s",
-+						 count, s);
-+
-+				/* Each path gets written with a trailing NUL */
-+				s_len = strlen(s) + 1;
-+
-+				if (payload.len + s_len >=
-+				    LARGE_PACKET_DATA_MAX) {
-+					reply(reply_data, payload.buf,
-+					      payload.len);
-+					total_response_len += payload.len;
-+					strbuf_reset(&payload);
-+				}
-+
-+				strbuf_add(&payload, s, s_len);
-+				count++;
-+			}
-+		}
-+	}
-+
-+	if (payload.len) {
-+		reply(reply_data, payload.buf, payload.len);
-+		total_response_len += payload.len;
-+	}
-+
-+	kh_release_str(shown);
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (token_data->client_ref_count > 0)
-+		token_data->client_ref_count--;
-+
-+	if (token_data->client_ref_count == 0) {
-+		if (token_data != state->current_token_data) {
-+			/*
-+			 * The listener thread did a token-reset while we were
-+			 * walking the batch list.  Therefore, this token is
-+			 * stale and can be discarded completely.  If we are
-+			 * the last reader thread using this token, we own
-+			 * that work.
-+			 */
-+			fsmonitor_free_token_data(token_data);
-+		}
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
-+
-+cleanup:
-+	strbuf_release(&response_token);
-+	strbuf_release(&requested_token_id);
-+	strbuf_release(&payload);
-+
-+	return 0;
-+}
-+
- static ipc_server_application_cb handle_client;
- 
- static int handle_client(void *data,
-@@ -371,7 +676,7 @@ static int handle_client(void *data,
- 			 ipc_server_reply_cb *reply,
- 			 struct ipc_server_reply_data *reply_data)
- {
--	/* struct fsmonitor_daemon_state *state = data; */
-+	struct fsmonitor_daemon_state *state = data;
- 	int result;
- 
- 	/*
-@@ -382,10 +687,12 @@ static int handle_client(void *data,
- 	if (command_len != strlen(command))
- 		BUG("FSMonitor assumes text messages");
- 
-+	trace_printf_key(&trace_fsmonitor, "requested token: %s", command);
-+
- 	trace2_region_enter("fsmonitor", "handle_client", the_repository);
- 	trace2_data_string("fsmonitor", the_repository, "request", command);
- 
--	result = 0; /* TODO Do something here. */
-+	result = do_handle_client(state, command, reply, reply_data);
- 
- 	trace2_region_leave("fsmonitor", "handle_client", the_repository);
- 
++# Does this platform support `git fsmonitor--daemon`
++#
++test_lazy_prereq FSMONITOR_DAEMON '
++	git version --build-options >output &&
++	grep "feature: fsmonitor--daemon" output
++'
 -- 
 gitgitgadget
 
