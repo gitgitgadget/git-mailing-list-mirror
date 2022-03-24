@@ -2,121 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1250C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 18:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0807C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 18:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352727AbiCXSgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 14:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54134 "EHLO
+        id S1346371AbiCXSlk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 14:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352723AbiCXSgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 14:36:36 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449D549CB9
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:03 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id a1so7852761wrh.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Msrw6N6zWhpn6WlfX1IZpiD3eqdVEuOsQYMylnKan4w=;
-        b=FtJLgrKmpgFp4tufho3ZC4GjgYBcjCESqUIunP0DF7htoaw1/Y2OulzB3c4NMM4gNQ
-         wa2cCjXLlovtGczWn/GnnQPhlCg0FHD1expMFSg15dD/xM9FxpOvYv4JTV8wWsZrFTE8
-         kJwByQnLfyUhiJW3H5tQ02gvBQcw4M5p9hCoG6X4cqgTI7aHc7Ymrk0MJ3usdC0MqBNK
-         gOifrJ8vwCY+JwVDMsjEv4rqF9xmdhdaCvh4RyqQY1CZQogIjrtjDfqgaoTDx8LsXZEL
-         BuA/tmw96iSmGy+aI98weJiqN6i8oseniUPwQL/N+/z109VCM9WiNoUu6uCUCaNaGKJR
-         fNew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Msrw6N6zWhpn6WlfX1IZpiD3eqdVEuOsQYMylnKan4w=;
-        b=fcu6dp3pLP/Z+A0zMhnGfzVuuv+GtRGCf+2cP7qo478BRirjGALqAWGw+F3IdZfXB1
-         R3j7zSkquReLFMJLJLLQVnQuYQXn/xQy1omEFsUE+bPX/A/+gOAyNVwaWeh9WJJ0sC2M
-         JqsfaPP3zOYL8khbn+EwaBa4Wj4BppGfxkAZLZQF68p1toBcj+x+aW7aMg3zNChAVVKH
-         q2EJoyotioNsUD3MA1pQ/Uh+4EDOKrpVVkib3wK3YdjYxv5LQi6cKVjXZZNzkr2+OyBj
-         wg4WceZOOzBc9HqqJHICmFBxhZ9qnxenUmaUf/2deGJNrT8bd3O2pG0rZrlFd9XiPv3X
-         rvHw==
-X-Gm-Message-State: AOAM531B2BmbofsKuswbY1oMN66UScVtYGERpvAetMHrhUyptcnryU+/
-        xEiKd2EVQw8ff8fsDyWB6sz0Arolcf8=
-X-Google-Smtp-Source: ABdhPJxtruyE7PBWZxb6kR7s6d4Pt+MJxJ/6RrTaCVCCuXecskTyCGCOx2CP0Rm7WNqpxKH8PcrsrQ==
-X-Received: by 2002:a05:6000:168e:b0:204:f90:de02 with SMTP id y14-20020a056000168e00b002040f90de02mr5871532wrd.108.1648146901554;
-        Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n37-20020a05600c3ba500b0038cc9d6ff5bsm2923881wms.4.2022.03.24.11.35.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
-Message-Id: <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
-        <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 18:34:57 +0000
-Subject: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S242030AbiCXSlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 14:41:39 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E559C55745
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:40:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB423104477;
+        Thu, 24 Mar 2022 14:40:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5iCHk+iHhU0S9p74JMqFeZme1ADLzBhxiYAp7s
+        OAsUc=; b=vTzFE4O/8E3XRIHdSGJZKil6EZzmD7VPQNwR/bxv47TKHEQA8dCsum
+        se2PCQsUPRNUC6XExv6FyqOjPd1Mtc4t3PmfusN4i2fgYiM22t27vkHaUpzc9CmN
+        ezTDx8KcAr+s25nqZdatgXzY7QECjp4KLY1RJoApABgdxJVo4Pr4w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8728E104474;
+        Thu, 24 Mar 2022 14:40:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 202AC104473;
+        Thu, 24 Mar 2022 14:40:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, me@ttaylorr.com,
+        derrickstolee@github.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v1 2/3] pack-bitmap.c: add "break" statement in
+ "open_pack_bitmap()"
+References: <cover.1648119652.git.dyroneteng@gmail.com>
+        <70500b63434f6e454631b3a8fde07c62b5adfef0.1648119652.git.dyroneteng@gmail.com>
+Date:   Thu, 24 Mar 2022 11:40:02 -0700
+In-Reply-To: <70500b63434f6e454631b3a8fde07c62b5adfef0.1648119652.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Thu, 24 Mar 2022 19:44:00 +0800")
+Message-ID: <xmqq7d8ji48t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, chakrabortyabhradeep79@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1EA3000-ABA1-11EC-BE49-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Teng Long <dyroneteng@gmail.com> writes:
 
-The implementation of test_subcommand_inexact() was originally
-introduced in e4d0c11c0 (repack: respect kept objects with '--write-midx
--b', 2021-12-20) with the intention to allow finding a subcommand based
-on an initial set of arguments. The inexactness was intended as a way to
-allow flexible options beyond that initial set, as opposed to
-test_subcommand() which requires that the full list of options is
-provided in its entirety.
+> There will be only one operant ".bitmap" file in repo, so let's
+> add "break" statement in "open_pack_bitmap()" when looping all
+> the packs in repo.
 
-The implementation began by copying test_subcommand() and replaced the
-repeated argument 'printf' statement to append ".*" instead of "," to
-each argument. This has a few drawbacks:
+Googling "operant" only gives a psychology term X-<.
 
-1. Most importantly, this repeats the use of ".*" within 'expr', so the
-   inexact match is even more flexible than expected. It allows the list
-   of arguments to exist as a subsequence (with any other items included
-   between those arguments).
+    : behavior (such as bar pressing by a rat to obtain food) that
+    operates on the environment to produce rewarding and reinforcing
+    effects.
 
-2. The line 'expr="$(expr%,}"' that previously removed a trailing comma
-   now no longer does anything, since the string ends with ".*".
+I do not quite get this.  We expect that there may be more than one
+.pack in the object store, and that is why we iterate over the packs
+get_all_packs() gives us.  Then for each of these packs, we try to
+open pack bitmap.
 
-Both of these issues are fixed by keeping the addition of the comma in
-the printf statement, then adding ".*" after stripping out the trailing
-comma.
+Ah, are you referring to the current limitation that we can have
+only one .bitmap file, even when there are many packs in the object
+store?
 
-All existing tests continue to pass with this change. There was one
-instance from t7700-repack.sh that was taking advantage of this
-flexibility, but it was removed in the previous change.
+I wonder if that limitation is something we need to hardcode here.
 
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- t/test-lib-functions.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+IOW, when we ever extend the feature to allow more than one, we may
+have to extend the "struct bitmap_index" so that we can have bitmap
+info from more than one on-disk files, and the implementation of
+open_pack_bitmap_1() (which is "read bitmap for this one pack" as
+opposed to "read bitmpa for this repository" which is this function)
+would certainly have to change, but would we need to revert this
+change to the function?  If we do not omit this patch, i.e. even if
+we know there can be only one pack that may have a corresponding
+bitmap but if the code does not know it and has to try git_open()
+only to see it fail, how much wasted effort are we talking about?
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 0f439c99d61..8f0e5da8727 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1811,8 +1811,8 @@ test_subcommand_inexact () {
- 		shift
- 	fi
- 
--	local expr=$(printf '"%s".*' "$@")
--	expr="${expr%,}"
-+	local expr=$(printf '"%s",' "$@")
-+	expr="${expr%,}.*"
- 
- 	if test -n "$negate"
- 	then
--- 
-gitgitgadget
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>  pack-bitmap.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 931219adf0..b1357137bf 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -484,8 +484,10 @@ static int open_pack_bitmap(struct repository *r,
+>  	assert(!bitmap_git->map);
+>  
+>  	for (p = get_all_packs(r); p; p = p->next) {
+> -		if (open_pack_bitmap_1(bitmap_git, p) == 0)
+> +		if (open_pack_bitmap_1(bitmap_git, p) == 0) {
+>  			ret = 0;
+> +			break;
+> +		}
+>  	}
+>  
+>  	return ret;
