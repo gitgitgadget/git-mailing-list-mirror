@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49AECC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFAA0C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351949AbiCXQxe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34534 "EHLO
+        id S1351950AbiCXQxi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346302AbiCXQwf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:52:35 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13F80B0D0A
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:21 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h16so3111599wmd.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:21 -0700 (PDT)
+        with ESMTP id S1351925AbiCXQwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:52:42 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D976B0D2A
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:24 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id l9-20020a05600c4f0900b0038ccd1b8642so1438795wmq.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=GBSYoKFMiXxL47tbCdtlqToK9/DpNmOfcvl8sunsaH4=;
-        b=pR+061qBZZto+AR8x06Wbv81hSvjvt0uRMyUq3c2/kJdS8zI8+px+2rIWrTu4N6orV
-         Pecr5+zT7QkqpiboW9Ewat07nR1FHyYBzFV/ElAO0/gP5UVv8ffFBW7vSEnrAy3eerGX
-         0ZzA181fCRLso6/kswRDtj9eM7irWRa7R++JLxptfKJlWCp9a9wF8bi1N+k+aXiqQXTX
-         9X8K+rAimTMJNIEVvdVBepWatM5N9hxtJXS86hd1w8TWMvy4jSZ22xobRGlNb2r6Da6W
-         qkilgot0oA7Vj14gM2JOZuzNBCH2MYyvAK9phtZwt7We1dovfx602PXyLwIJk3vsOXMl
-         qQdw==
+        bh=WTJ7J8sDnh/K0NYj2eZlDClERl3b/H70L1CBaOQEcxo=;
+        b=n4cEWdYcDKiSqj/tIsSMjXhF7klCtC65IzqjrNgzWjnnSnP3LxRBQ1jjmliZe9Z6Ka
+         L2OAxjezjwnUhEd/wQZgPCLTBYTOscJxV4e/xSxdN8W0xVugYzKAZVBigRH5214p96Q4
+         MK5rA9xu2h3gn6OJVaC+fG0eb1bjq9h1FaddXWaHzMF19NcuQDO4alco8cHcTjCmil/3
+         cs46DRSQkla+VoAbETpKwc3GtwHkw2wsv2FoJJZvS5Z/IHsCbX1MRvZtnyW+T76Tq2J1
+         9hMNN1PAHJDiQc05eIf2oQyFvomc7P5kGYYpZmLCMq+M0N6LJXnQEHUSgK9P3FRtV3bB
+         Rh7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GBSYoKFMiXxL47tbCdtlqToK9/DpNmOfcvl8sunsaH4=;
-        b=zx6rVs2hQT1t9YtlmVXch52j4T1E8t/HPjceZnDRozJXD0Z/UCmJimXKAri4ghVMWM
-         JhlAVXddr/zhAdAQ/98xgXp6/L+nNmPoAWei+F8dRIYzyo9DfohWt2IvbOTg8G5U3QND
-         /5he66COkUdlOweCCZDiGqIsIrdfwwByr4E5pG3DUjjfCk6BAyXtfC0vYdb3A0W7yZfd
-         u9OYx1UAinxbJh8fbBWfpleg1YmJ/gq8sf9OrtLXGGZHQX22nM4h+9q+DnVCuX9E9FQz
-         JsqM4L2t9vFP6Ls+0edsY7F4UX79yBrrkdx2KIeHF5Ywhi1Y24jk+yjKjRBMTZhT19D/
-         KhqQ==
-X-Gm-Message-State: AOAM533b83Et2qQPje4kcF0i/Y0D+R25WyEWsYIvl4S+x+Qz6V4Ys8kF
-        uInha5vWheQRbsIlTZEDDdwlBKnOJIM=
-X-Google-Smtp-Source: ABdhPJzKiyZH04HCw5OoXnAQ5eWq0mxhUg9Lj5nOXO69e8ja/WvknL4RPvXDSTPxDR510do84rk7Mg==
-X-Received: by 2002:a05:600c:3482:b0:38c:40:9b30 with SMTP id a2-20020a05600c348200b0038c00409b30mr15140214wmq.68.1648140620301;
-        Thu, 24 Mar 2022 09:50:20 -0700 (PDT)
+        bh=WTJ7J8sDnh/K0NYj2eZlDClERl3b/H70L1CBaOQEcxo=;
+        b=gXPPPCgU4fffzFvvhLWgTro9+xyQijaU1Z7Dr6revKydmE2AnhHT6O2MZx5d9td2up
+         L4k62ysLB0FnlZNeBUNdSlk+Q0L+wA6fcwfz30cYebnmoeVLJZ0LQOrwJJaRQdNlA8TG
+         S60syR0iLOILNAbzntzfMM9lOVKbCoT6XAg6OR3c7vrEBW/6/k33RbvKaMIwI81Uk61L
+         nDrUfO+cGGJiNL0jiVjBdYJVGBohB2DVaBYuzroNuQFuhasASDPWL365lfOX2pPVuBxi
+         AfWQMb9IX5mmAvmov1wpDfE3cMuk+9EuUGMcYTNvPDXfspvs9YvEko+60Vpbhfh7c92R
+         1tvg==
+X-Gm-Message-State: AOAM530493yJwDGvVBoRExmxCi4lqIb+wLjlyYLH+652p+STO9tqH7yF
+        SEoxz1FPSza9lB4LLMNtTPUeFrrS+1U=
+X-Google-Smtp-Source: ABdhPJwh8Mp63qNLsPm7BLKzKuOaC772IAhg6E/81/vFtGsb4FxoSLu9nYF48925xm37CJa0KDwu5Q==
+X-Received: by 2002:a05:600c:3482:b0:38c:40:9b30 with SMTP id a2-20020a05600c348200b0038c00409b30mr15140352wmq.68.1648140622416;
+        Thu, 24 Mar 2022 09:50:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l13-20020adfbd8d000000b002040daf5dffsm4526530wrh.18.2022.03.24.09.50.19
+        by smtp.gmail.com with ESMTPSA id z18-20020a5d6412000000b0020400dde72esm2996412wru.37.2022.03.24.09.50.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:19 -0700 (PDT)
-Message-Id: <2dd06ad2f712752e218de1d512edeedbed563ad4.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:21 -0700 (PDT)
+Message-Id: <30957f3930eb03d1dccbcae711b9e9a4383013e5.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:41 +0000
-Subject: [PATCH v8 25/30] t/perf/p7519: speed up test on Windows
+Date:   Thu, 24 Mar 2022 16:49:43 +0000
+Subject: [PATCH v8 27/30] fsmonitor--daemon: periodically truncate list of
+ modified files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,70 +74,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Change p7519 to use `test_seq` and `xargs` rather than a `for` loop
-to touch thousands of files.  This takes minutes off of test runs
-on Windows because of process creation overhead.
+Teach fsmonitor--daemon to periodically truncate the list of
+modified files to save some memory.
+
+Clients will ask for the set of changes relative to a token that they
+found in the FSMN index extension in the index.  (This token is like a
+point in time, but different).  Clients will then update the index to
+contain the response token (so that subsequent commands will be
+relative to this new token).
+
+Therefore, the daemon can gradually truncate the in-memory list of
+changed paths as they become obsolete (older than the previous token).
+Since we may have multiple clients making concurrent requests with a
+skew of tokens and clients may be racing to the talk to the daemon,
+we lazily truncate the list.
+
+We introduce a 5 minute delay and truncate batches 5 minutes after
+they are considered obsolete.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/perf/p7519-fsmonitor.sh | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ builtin/fsmonitor--daemon.c | 88 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 5241eb6c4e5..a6c2a910e70 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -98,6 +98,13 @@ trace_stop () {
- 	fi
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index eafaafb45b1..ab9cc09f7ce 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -312,6 +312,75 @@ static void fsmonitor_batch__combine(struct fsmonitor_batch *batch_dest,
+ 			batch_src->interned_paths[k];
  }
  
-+touch_files () {
-+	n=$1 &&
-+	d="$n"_files &&
++/*
++ * To keep the batch list from growing unbounded in response to filesystem
++ * activity, we try to truncate old batches from the end of the list as
++ * they become irrelevant.
++ *
++ * We assume that the .git/index will be updated with the most recent token
++ * any time the index is updated.  And future commands will only ask for
++ * recent changes *since* that new token.  So as tokens advance into the
++ * future, older batch items will never be requested/needed.  So we can
++ * truncate them without loss of functionality.
++ *
++ * However, multiple commands may be talking to the daemon concurrently
++ * or perform a slow command, so a little "token skew" is possible.
++ * Therefore, we want this to be a little bit lazy and have a generous
++ * delay.
++ *
++ * The current reader thread walked backwards in time from `token->batch_head`
++ * back to `batch_marker` somewhere in the middle of the batch list.
++ *
++ * Let's walk backwards in time from that marker an arbitrary delay
++ * and truncate the list there.  Note that these timestamps are completely
++ * artificial (based on when we pinned the batch item) and not on any
++ * filesystem activity.
++ *
++ * Return the obsolete portion of the list after we have removed it from
++ * the official list so that the caller can free it after leaving the lock.
++ */
++#define MY_TIME_DELAY_SECONDS (5 * 60) /* seconds */
 +
-+	(cd $d && test_seq 1 $n | xargs touch )
++static struct fsmonitor_batch *with_lock__truncate_old_batches(
++	struct fsmonitor_daemon_state *state,
++	const struct fsmonitor_batch *batch_marker)
++{
++	/* assert current thread holding state->main_lock */
++
++	const struct fsmonitor_batch *batch;
++	struct fsmonitor_batch *remainder;
++
++	if (!batch_marker)
++		return NULL;
++
++	trace_printf_key(&trace_fsmonitor, "Truncate: mark (%"PRIu64",%"PRIu64")",
++			 batch_marker->batch_seq_nr,
++			 (uint64_t)batch_marker->pinned_time);
++
++	for (batch = batch_marker; batch; batch = batch->next) {
++		time_t t;
++
++		if (!batch->pinned_time) /* an overflow batch */
++			continue;
++
++		t = batch->pinned_time + MY_TIME_DELAY_SECONDS;
++		if (t > batch_marker->pinned_time) /* too close to marker */
++			continue;
++
++		goto truncate_past_here;
++	}
++
++	return NULL;
++
++truncate_past_here:
++	state->current_token_data->batch_tail = (struct fsmonitor_batch *)batch;
++
++	remainder = ((struct fsmonitor_batch *)batch)->next;
++	((struct fsmonitor_batch *)batch)->next = NULL;
++
++	return remainder;
 +}
 +
- test_expect_success "one time repo setup" '
- 	# set untrackedCache depending on the environment
- 	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-@@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
- 	fi &&
+ static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
+ {
+ 	if (!token)
+@@ -425,6 +494,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	const char *p;
+ 	const struct fsmonitor_batch *batch_head;
+ 	const struct fsmonitor_batch *batch;
++	struct fsmonitor_batch *remainder = NULL;
+ 	intmax_t count = 0, duplicates = 0;
+ 	kh_str_t *shown;
+ 	int hash_ret;
+@@ -652,11 +722,29 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 			 * that work.
+ 			 */
+ 			fsmonitor_free_token_data(token_data);
++		} else if (batch) {
++			/*
++			 * We are holding the lock and are the only
++			 * reader of the ref-counted portion of the
++			 * list, so we get the honor of seeing if the
++			 * list can be truncated to save memory.
++			 *
++			 * The main loop did not walk to the end of the
++			 * list, so this batch is the first item in the
++			 * batch-list that is older than the requested
++			 * end-point sequence number.  See if the tail
++			 * end of the list is obsolete.
++			 */
++			remainder = with_lock__truncate_old_batches(state,
++								    batch);
+ 		}
+ 	}
  
- 	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
--	for i in $(test_seq 1 10); do touch 10_files/$i || return 1; done &&
--	for i in $(test_seq 1 100); do touch 100_files/$i || return 1; done &&
--	for i in $(test_seq 1 1000); do touch 1000_files/$i || return 1; done &&
--	for i in $(test_seq 1 10000); do touch 10000_files/$i || return 1; done &&
-+	: 1_file directory should be left empty &&
-+	touch_files 10 &&
-+	touch_files 100 &&
-+	touch_files 1000 &&
-+	touch_files 10000 &&
- 	git add 1_file 10_files 100_files 1000_files 10000_files &&
- 	git commit -qm "Add files" &&
+ 	pthread_mutex_unlock(&state->main_lock);
  
-@@ -199,15 +207,15 @@ test_fsmonitor_suite () {
- 
- 	# Update the mtimes on upto 100k files to make status think
- 	# that they are dirty.  For simplicity, omit any files with
--	# LFs (i.e. anything that ls-files thinks it needs to dquote).
--	# Then fully backslash-quote the paths to capture any
--	# whitespace so that they pass thru xargs properly.
-+	# LFs (i.e. anything that ls-files thinks it needs to dquote)
-+	# and any files with whitespace so that they pass thru xargs
-+	# properly.
- 	#
- 	test_perf_w_drop_caches "status (dirty) ($DESC)" '
- 		git ls-files | \
- 			head -100000 | \
- 			grep -v \" | \
--			sed '\''s/\(.\)/\\\1/g'\'' | \
-+			grep -v " ." | \
- 			xargs test-tool chmtime -300 &&
- 		git status
- 	'
++	if (remainder)
++		fsmonitor_batch__free_list(remainder);
++
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
 -- 
 gitgitgadget
 
