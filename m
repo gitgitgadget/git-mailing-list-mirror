@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0462FC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F441C433FE
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351864AbiCXQvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58090 "EHLO
+        id S1351868AbiCXQvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351836AbiCXQvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:51:39 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4D1AF1FF
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:00 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u3so7506623wrg.3
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:00 -0700 (PDT)
+        with ESMTP id S1351860AbiCXQvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:51:40 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772CCAF1F3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:04 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id w21so2927454wra.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sSAmNlfeMp/SuWaNgnRs8TTLxikird+cAhYFRFbfq6s=;
-        b=Q7cEQy5mjDheSur/F8vY+z+dd90J5k96G1D5mp9N9880FEzUI0l9l2VbYV23Ym4ehk
-         prgHxhC2lNvAtzsBIiYLtEyawfO+GhBrSZEUWtr5wA1TXqJhPF4ykjHp2LtC2YGC0GM3
-         ozNyaE7HAEfCxTS/IM4BY0nDj8/tEN/7L52W4bfWseJw+r4STM3mkWGlvFK4wuqS3RbS
-         OAwNOS43Xe3zr/zVfztzEyOEoYdrw5zcMSZ9zNHrVff4iLjtiltev6T6iMJMwrYgC/5F
-         xOWqKI/JaSZKTu3smrtXC24SGydoxXj1szQ5twi0UrK+7Nn6RGcAmng+LJu3SfgjNySr
-         f5AQ==
+        bh=TgVyyzQx+jhjmRIkDS0iZCqgyqnaNEg2KAffy6/1bAM=;
+        b=TTsmpsyL5yRgQaKlrU9PyJYJXNkDmfqbAcR/56YRhcVAXMnyNEUNoDRP4kQVLVAtqt
+         FGrrXH5ED3v8IV7ea7UjPMTmVRxVlKVnU4V4+1ECSudiZjaX4lpC9RIazhc+h05WDGDe
+         BbBCmAryqg7OtR6WNUqduAftrceQqOIpab2V1+4yRPaM30Bhwo1KJtwt9vY2P6MNsIix
+         nxYtz3HTHu2OfFbbQYfYqe/tUbURyDp7tg7lYJjOMb7rCqEAI/pugyv226duPuXu/YJg
+         s/OVR/Nc8AuWR8gLJe3sJwNQjljZOYJo1txGJnzIhvsmInJq2LxeAcXI9Wqhm2BPulKq
+         bT0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sSAmNlfeMp/SuWaNgnRs8TTLxikird+cAhYFRFbfq6s=;
-        b=KKMYeY1G8FsYCpEwYMRB8xdBz59klr6RxQoKgQZphmma9SCnaS5ijWokZTDUdAe3ME
-         HrXakOKQdT/IfTbe8DmfPBcfJXOvcrh25qLqTohTBRFiGH8gxVeA+I7MT3+X3K6AkLvL
-         xT+eoTKZTr6f9xA01/sKExKczhOnkkEJtMjh8/Q0qC3tsQ+nUp7i5L8erzO2USJlKrkl
-         oYhOEpj+R7WfHL+q6GZ2atA6ATUgJL6+H/IqVLc5nqBgvlMeviFNa447C9lqf+RN50Wh
-         Hp3SHHPt+WSqTiyx3edlzV7tMofLfZ9hjm9pR1vSTaPH+OgiM3r7RzfrumSHW3ZJuAoQ
-         EdyQ==
-X-Gm-Message-State: AOAM531NZ4gAlfaW1kqGAuBOyC0K46rsKOWRxRdoAMOSmfuMYl/1yPnh
-        yTZuQrJz0T7cTfNO06CAgUC4E46d7js=
-X-Google-Smtp-Source: ABdhPJz1VLOnZTiivDLowVfTwzN/ib/czD+ILKBOk5PAujsYjhjMAy8PgZ7/G22WqlIeu6NrXNzh3A==
-X-Received: by 2002:adf:d1eb:0:b0:205:81f4:5e0c with SMTP id g11-20020adfd1eb000000b0020581f45e0cmr5520468wrd.381.1648140599120;
-        Thu, 24 Mar 2022 09:49:59 -0700 (PDT)
+        bh=TgVyyzQx+jhjmRIkDS0iZCqgyqnaNEg2KAffy6/1bAM=;
+        b=ZFTNqSwbB31aA0gHLmZB8hCu+yYtKWceUxFm1yF/KwX0/+mWQfXlEDTjwOroB4CrNg
+         WYGPu+8SkN1iQl41oqMufm4klaJnzuwwIFD7Yqjnl4v0wOCiXKXBF8VYQiTJkNNIi24C
+         PDT0pTzuAJZwKdmqwb5/m4lvW+wltWoBFClgEEN9NZ55sbuq3HCm5lB25P75maj1pl2M
+         BbkRhA3SzhsgzhhAcU6T93iALYyLBCqP+nJtmrCOyj96UR7+G/Pa+KiCzkT5IzOr1TaR
+         pbXSR9CkVsmUxGR3SU1nlX/llpuUaT3EXyc7e4UHyj5hbEpCQ4uuooNx7UaqEQlWyLzY
+         pUYA==
+X-Gm-Message-State: AOAM5335mYV/JKOye7CBJsb44a/uzYjnwy1UO03GXO7B/E6OhP2J+Ff5
+        APnAnc+ILMyMqo0WIrHkYLRQ5MnY+lU=
+X-Google-Smtp-Source: ABdhPJz/WqHZXEc8URXSx0GUrijgxvn1pe7xN1CfwgYCSR+Uui6g6/tpDnzNxyn/B2kageFT9/z4Ig==
+X-Received: by 2002:adf:d08a:0:b0:203:d9c0:d9ed with SMTP id y10-20020adfd08a000000b00203d9c0d9edmr5496731wrh.586.1648140602676;
+        Thu, 24 Mar 2022 09:50:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f11-20020a7bcc0b000000b0037e0c362b6dsm2535699wmh.31.2022.03.24.09.49.58
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm3507149wri.48.2022.03.24.09.50.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:49:58 -0700 (PDT)
-Message-Id: <a29fe7266a456d88125ca1f87d4b16370caf486f.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:02 -0700 (PDT)
+Message-Id: <a6a39a3306df2602e06cc3d9a755fa247f8d41b0.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:24 +0000
-Subject: [PATCH v8 08/30] compat/fsmonitor/fsm-listen-win32: stub in backend
- for Windows
+Date:   Thu, 24 Mar 2022 16:49:27 +0000
+Subject: [PATCH v8 11/30] fsmonitor--daemon: implement 'start' command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,199 +73,195 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Stub in empty filesystem listener backend for fsmonitor--daemon on Windows.
+Implement 'git fsmonitor--daemon start' command.  This command starts
+an instance of 'git fsmonitor--daemon run' in the background using
+the new 'start_bg_command()' function.
+
+We avoid the fork-and-call technique on Unix systems in favor of a
+fork-and-exec technique.  This gives us more uniform Trace2 child-*
+events.  It also makes our usage more consistent with Windows usage.
+
+On Windows, teach 'git fsmonitor--daemon run' to optionally call
+'FreeConsole()' to release handles to the inherited Win32 console
+(despite being passed invalid handles for stdin/out/err).  Without
+this, command prompts and powershell terminal windows could hang
+in "exit" until the last background child process exited or released
+their Win32 console handle.  (This was not seen with git-bash shells
+because they don't have a Win32 console attached to them.)
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile                            | 13 ++++++++
- compat/fsmonitor/fsm-listen-win32.c | 21 +++++++++++++
- compat/fsmonitor/fsm-listen.h       | 49 +++++++++++++++++++++++++++++
- config.mak.uname                    | 10 ++++++
- contrib/buildsystems/CMakeLists.txt |  7 +++++
- repo-settings.c                     |  1 +
- 6 files changed, 101 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-listen-win32.c
- create mode 100644 compat/fsmonitor/fsm-listen.h
+ builtin/fsmonitor--daemon.c | 109 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 107 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 5af1d5b112e..26567d4f772 100644
---- a/Makefile
-+++ b/Makefile
-@@ -470,6 +470,11 @@ all::
- # directory, and the JSON compilation database 'compile_commands.json' will be
- # created at the root of the repository.
- #
-+# If your platform supports a built-in fsmonitor backend, set
-+# FSMONITOR_DAEMON_BACKEND to the "<name>" of the corresponding
-+# `compat/fsmonitor/fsm-listen-<name>.c` that implements the
-+# `fsm_listen__*()` routines.
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
-@@ -1968,6 +1973,11 @@ ifdef NEED_ACCESS_ROOT_HANDLER
- 	COMPAT_OBJS += compat/access.o
- endif
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 5591339399a..69dd39121a3 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -9,6 +9,7 @@
+ #include "khash.h"
  
-+ifdef FSMONITOR_DAEMON_BACKEND
-+	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
-+	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
-+endif
+ static const char * const builtin_fsmonitor__daemon_usage[] = {
++	N_("git fsmonitor--daemon start [<options>]"),
+ 	N_("git fsmonitor--daemon run [<options>]"),
+ 	N_("git fsmonitor--daemon stop"),
+ 	N_("git fsmonitor--daemon status"),
+@@ -22,6 +23,9 @@ static const char * const builtin_fsmonitor__daemon_usage[] = {
+ #define FSMONITOR__IPC_THREADS "fsmonitor.ipcthreads"
+ static int fsmonitor__ipc_threads = 8;
+ 
++#define FSMONITOR__START_TIMEOUT "fsmonitor.starttimeout"
++static int fsmonitor__start_timeout_sec = 60;
 +
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -2887,6 +2897,9 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
- 	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
- 	@echo X=\'$(X)\' >>$@+
-+ifdef FSMONITOR_DAEMON_BACKEND
-+	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
-+endif
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-new file mode 100644
-index 00000000000..916cbea254f
---- /dev/null
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -0,0 +1,21 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "fsmonitor.h"
-+#include "fsm-listen.h"
+ #define FSMONITOR__ANNOUNCE_STARTUP "fsmonitor.announcestartup"
+ static int fsmonitor__announce_startup = 0;
+ 
+@@ -36,6 +40,15 @@ static int fsmonitor_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, FSMONITOR__START_TIMEOUT)) {
++		int i = git_config_int(var, value);
++		if (i < 0)
++			return error(_("value of '%s' out of range: %d"),
++				     FSMONITOR__START_TIMEOUT, i);
++		fsmonitor__start_timeout_sec = i;
++		return 0;
++	}
 +
-+void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ 	if (!strcmp(var, FSMONITOR__ANNOUNCE_STARTUP)) {
+ 		int is_bool;
+ 		int i = git_config_bool_or_int(var, value, &is_bool);
+@@ -250,7 +263,7 @@ done:
+ 	return err;
+ }
+ 
+-static int try_to_run_foreground_daemon(void)
++static int try_to_run_foreground_daemon(int detach_console)
+ {
+ 	/*
+ 	 * Technically, we don't need to probe for an existing daemon
+@@ -270,17 +283,106 @@ static int try_to_run_foreground_daemon(void)
+ 		fflush(stderr);
+ 	}
+ 
++#ifdef GIT_WINDOWS_NATIVE
++	if (detach_console)
++		FreeConsole();
++#endif
++
+ 	return !!fsmonitor_run_daemon();
+ }
+ 
++static start_bg_wait_cb bg_wait_cb;
++
++static int bg_wait_cb(const struct child_process *cp, void *cb_data)
 +{
++	enum ipc_active_state s = fsmonitor_ipc__get_state();
++
++	switch (s) {
++	case IPC_STATE__LISTENING:
++		/* child is "ready" */
++		return 0;
++
++	case IPC_STATE__NOT_LISTENING:
++	case IPC_STATE__PATH_NOT_FOUND:
++		/* give child more time */
++		return 1;
++
++	default:
++	case IPC_STATE__INVALID_PATH:
++	case IPC_STATE__OTHER_ERROR:
++		/* all the time in world won't help */
++		return -1;
++	}
 +}
 +
-+void fsm_listen__loop(struct fsmonitor_daemon_state *state)
++static int try_to_start_background_daemon(void)
 +{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	enum start_bg_result sbgr;
++
++	/*
++	 * Before we try to create a background daemon process, see
++	 * if a daemon process is already listening.  This makes it
++	 * easier for us to report an already-listening error to the
++	 * console, since our spawn/daemon can only report the success
++	 * of creating the background process (and not whether it
++	 * immediately exited).
++	 */
++	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
++		die(_("fsmonitor--daemon is already running '%s'"),
++		    the_repository->worktree);
++
++	if (fsmonitor__announce_startup) {
++		fprintf(stderr, _("starting fsmonitor-daemon in '%s'\n"),
++			the_repository->worktree);
++		fflush(stderr);
++	}
++
++	cp.git_cmd = 1;
++
++	strvec_push(&cp.args, "fsmonitor--daemon");
++	strvec_push(&cp.args, "run");
++	strvec_push(&cp.args, "--detach");
++	strvec_pushf(&cp.args, "--ipc-threads=%d", fsmonitor__ipc_threads);
++
++	cp.no_stdin = 1;
++	cp.no_stdout = 1;
++	cp.no_stderr = 1;
++
++	sbgr = start_bg_command(&cp, bg_wait_cb, NULL,
++				fsmonitor__start_timeout_sec);
++
++	switch (sbgr) {
++	case SBGR_READY:
++		return 0;
++
++	default:
++	case SBGR_ERROR:
++	case SBGR_CB_ERROR:
++		return error(_("daemon failed to start"));
++
++	case SBGR_TIMEOUT:
++		return error(_("daemon not online yet"));
++
++	case SBGR_DIED:
++		return error(_("daemon terminated"));
++	}
 +}
 +
-+int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
-+{
-+	return -1;
-+}
-+
-+void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
-+{
-+}
-diff --git a/compat/fsmonitor/fsm-listen.h b/compat/fsmonitor/fsm-listen.h
-new file mode 100644
-index 00000000000..f0539349baf
---- /dev/null
-+++ b/compat/fsmonitor/fsm-listen.h
-@@ -0,0 +1,49 @@
-+#ifndef FSM_LISTEN_H
-+#define FSM_LISTEN_H
-+
-+/* This needs to be implemented by each backend */
-+
-+#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+
-+struct fsmonitor_daemon_state;
-+
-+/*
-+ * Initialize platform-specific data for the fsmonitor listener thread.
-+ * This will be called from the main thread PRIOR to staring the
-+ * fsmonitor_fs_listener thread.
-+ *
-+ * Returns 0 if successful.
-+ * Returns -1 otherwise.
-+ */
-+int fsm_listen__ctor(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * Cleanup platform-specific data for the fsmonitor listener thread.
-+ * This will be called from the main thread AFTER joining the listener.
-+ */
-+void fsm_listen__dtor(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * The main body of the platform-specific event loop to watch for
-+ * filesystem events.  This will run in the fsmonitor_fs_listen thread.
-+ *
-+ * It should call `ipc_server_stop_async()` if the listener thread
-+ * prematurely terminates (because of a filesystem error or if it
-+ * detects that the .git directory has been deleted).  (It should NOT
-+ * do so if the listener thread receives a normal shutdown signal from
-+ * the IPC layer.)
-+ *
-+ * It should set `state->error_code` to -1 if the daemon should exit
-+ * with an error.
-+ */
-+void fsm_listen__loop(struct fsmonitor_daemon_state *state);
-+
-+/*
-+ * Gently request that the fsmonitor listener thread shutdown.
-+ * It does not wait for it to stop.  The caller should do a JOIN
-+ * to wait for it.
-+ */
-+void fsm_listen__stop_async(struct fsmonitor_daemon_state *state);
-+
-+#endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
-+#endif /* FSM_LISTEN_H */
-diff --git a/config.mak.uname b/config.mak.uname
-index 4352ea39e9b..26074f56bed 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -435,6 +435,11 @@ ifeq ($(uname_S),Windows)
- 	# so we don't need this:
- 	#
- 	#   SNPRINTF_RETURNS_BOGUS = YesPlease
-+
-+	# The builtin FSMonitor requires Named Pipes and Threads on Windows.
-+	# These are always available, so we do not have to conditionally
-+	# support it.
-+	FSMONITOR_DAEMON_BACKEND = win32
- 	NO_SVN_TESTS = YesPlease
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
-@@ -619,6 +624,11 @@ ifeq ($(uname_S),MINGW)
- 	NO_STRTOUMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_SVN_TESTS = YesPlease
-+
-+	# The builtin FSMonitor requires Named Pipes and Threads on Windows.
-+	# These are always available, so we do not have to conditionally
-+	# support it.
-+	FSMONITOR_DAEMON_BACKEND = win32
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index e44232f85d3..0963629db7f 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -285,6 +285,13 @@ else()
- 	endif()
- endif()
+ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *subcmd;
++	int detach_console = 0;
  
-+if(SUPPORTS_SIMPLE_IPC)
-+	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-+		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
-+	endif()
-+endif()
+ 	struct option options[] = {
++		OPT_BOOL(0, "detach", &detach_console, N_("detach from console")),
+ 		OPT_INTEGER(0, "ipc-threads",
+ 			    &fsmonitor__ipc_threads,
+ 			    N_("use <n> ipc worker threads")),
++		OPT_INTEGER(0, "start-timeout",
++			    &fsmonitor__start_timeout_sec,
++			    N_("max seconds to wait for background daemon startup")),
 +
- set(EXE_EXTENSION ${CMAKE_EXECUTABLE_SUFFIX})
+ 		OPT_END()
+ 	};
  
- #header checks
-diff --git a/repo-settings.c b/repo-settings.c
-index b4fbd16cdcc..2dfcb2b6542 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -2,6 +2,7 @@
- #include "config.h"
- #include "repository.h"
- #include "midx.h"
-+#include "compat/fsmonitor/fsm-listen.h"
+@@ -296,8 +398,11 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ 		die(_("invalid 'ipc-threads' value (%d)"),
+ 		    fsmonitor__ipc_threads);
  
- static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
- 			  int def)
++	if (!strcmp(subcmd, "start"))
++		return !!try_to_start_background_daemon();
++
+ 	if (!strcmp(subcmd, "run"))
+-		return !!try_to_run_foreground_daemon();
++		return !!try_to_run_foreground_daemon(detach_console);
+ 
+ 	if (!strcmp(subcmd, "stop"))
+ 		return !!do_as_client__send_stop();
 -- 
 gitgitgadget
 
