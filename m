@@ -2,133 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19D33C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AAD1C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344780AbiCXQEI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44856 "EHLO
+        id S1351666AbiCXQ0H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:26:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240098AbiCXQEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:04:05 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94EEB14000
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:02:32 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id 125so5869601iov.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:02:32 -0700 (PDT)
+        with ESMTP id S1351675AbiCXQ0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:26:03 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B26C6D841
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:24:30 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id yy13so10252004ejb.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xLbJFR37MgG/F9TdI0Na7VSc7VFAXu9bGpQRqu6Zbk4=;
-        b=dcwaeCwclb7sjNUzObahcicnrLWy/JHIPRoMuoCh4PdgBGjIJ07XdR1Uh5lH7FfKzT
-         mRL7MP1/MjI6TSm7IfdGQ1mPW05M+jmJg9P/zStjVKciVISdcFcZj3NRSJpOdE8NOLoc
-         8uNuiAbjCaxINFsKJxRakINMJuqI+Z4rY/Rtj1vfrQyOmx5vbl7F0lN5fgulbn01Ton4
-         DLmxgXUcCHmTL2a8sCD+26drW3jeG2FTxpyTvOwzaH7MpQGf8gZo0G0FmVCHbzoYP0Us
-         aDIYp+eGoJ4SjVQtxFY7HaUAGLF1/S1JvOAlEPQnCGj0iiCw7J0ziRrY/EaIYZaz4zLb
-         Movw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=9HfZ/iAiIDDGlObHugsKHGKMHvvHcLwxDWKj7tA0mEA=;
+        b=bjeUDXDtRq/GclVoREyJuDF7E8jELkHaoXtx0VXshnysAXM2tgacsL4YE4wRDXHFjj
+         Pbcz+5ZrhOS8HmIJ16L+V74z3+G57zQuM9T2HXDzLw3oPAM+32jYXZoEsrWlBKUR3MFE
+         ANSNTKJVs0SJ8QVBfIaN8cmMX4rKEBI3ZJbgcgO9jX5fEA54FUI15uw1AIE6v2Ds68He
+         aJvePGTGL7R8pO3Jn06lTwvtk1O6OMlAZ6wZ7UcVcjml/bD6f5mDxK66IaClAFpVGZDL
+         zE6Osi9tfFFiafaJPoBNh6qvhsIwBg/Ij0nYx9Ju/7LWZ9VZ7Ynv42kbT6ueddOjRu06
+         RcBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xLbJFR37MgG/F9TdI0Na7VSc7VFAXu9bGpQRqu6Zbk4=;
-        b=jMTp6MiTlAblI26VNuhb9iQ12xVbvjHxINPLDEK8D63WnoGDSlNfV1UGtD7OeDViRD
-         4spToYbfGfVZ0U12hS7R4dVYZAs1yUWrfP7zGrd/Cbq+e5vFqFMnIKpmcME4BiBUqdVy
-         0skiy//u8xCFyj/qWb0uzy1iB9zIg46UjY4/AE+n9ZusD1Ms5Z4QbhmU2bCplfDMET4I
-         A9fWJjI1zfbdGhQNveMFuvv5LsX7udhj/6/pei5VTUKrxWHp9s+c85O55FC+8RxwiHF2
-         D/sHIJXEK6E3+uZ1i2H5/1jr0Aii2dJ6oFonuWjRJpi5N0yviWLii66jPHnpIW1XckWC
-         +HJw==
-X-Gm-Message-State: AOAM532GELWfm9Znpsb1A4QE0P26LOsAi9r6zU5x/JUZ+kicTgIvaX32
-        jyHhWXMfUsFQOH2F82/qoWxDVMSglxW2BddF
-X-Google-Smtp-Source: ABdhPJzgSNooSHbvvEGDhudwqevmst2PGw6nmWcFqw1WH4TUENJdDG743E/337DdDXvbWbVvqEytJA==
-X-Received: by 2002:a05:6638:1351:b0:31a:299b:6d87 with SMTP id u17-20020a056638135100b0031a299b6d87mr3449677jad.22.1648137751820;
-        Thu, 24 Mar 2022 09:02:31 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o15-20020a6bcf0f000000b00649c4056879sm1582677ioa.50.2022.03.24.09.02.31
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=9HfZ/iAiIDDGlObHugsKHGKMHvvHcLwxDWKj7tA0mEA=;
+        b=lcAIrv1HGz3fC7NgSouMcLRSi5c1G3sD+nKL/+bbGsYBMmnlDJCYbe2b1QP8w/nQyh
+         uyPX+DwFCyNef6X4XaouMUPBTNps27iPxnA8G0Mln2rIIdfBCMWeWkGWIun5+TqYjbzs
+         jTrXznebEOLCfY9w18t0HDO84tIl8XXD7cFrLhMBskLSz+SZekvBi/uDtli97QHMU5Gc
+         X1A11xd4yNVvHlQEviA/q5nGTQxb6GxkMyxlEZgg5FQxcUGmkSP7xXg2bLz1ACLGxvs9
+         zpWQHaph0XSjuvYcfD7rQiwqnNgW1FvoLpHUYz/YhpRLNv0yBXZHE32190/7m3z4d/lT
+         Tyqg==
+X-Gm-Message-State: AOAM533oWlJODCV6eSI5RZGx7JvXPkfEyUWPdfgrD0z4TFoHnziikNrO
+        08ljkvkQWH48yaFLApzc7M6BL6L7ajtaBg==
+X-Google-Smtp-Source: ABdhPJxSJV4rFOcZ6aJdI2kcoISyoSbIc0EKrm/psNVjr6LvSb5LWs18KYqtLvPr6F6hGwtWSlQfnA==
+X-Received: by 2002:a17:907:9602:b0:6df:e82c:f84 with SMTP id gb2-20020a170907960200b006dfe82c0f84mr6642522ejc.590.1648139068371;
+        Thu, 24 Mar 2022 09:24:28 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id z11-20020a50e68b000000b00412ec8b2180sm1634428edm.90.2022.03.24.09.24.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:02:31 -0700 (PDT)
-Date:   Thu, 24 Mar 2022 12:02:30 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com
-Subject: Re: [PATCH] test-lib-functions: fix test_subcommand_inexact
-Message-ID: <YjyWFqjkaGpC8NxQ@nand.local>
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
- <540936ba-7287-77fa-9cee-e257ed3c119d@github.com>
- <xmqqmthgu3e6.fsf@gitster.g>
- <e5331972-512a-c498-6a1b-927f21ef9de2@github.com>
- <YjuVAgjaiqrcT7P1@nand.local>
- <xmqqfsn8p8nr.fsf@gitster.g>
- <72c54461-8af7-29fc-04da-f435adee9bbe@github.com>
+        Thu, 24 Mar 2022 09:24:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nXQGB-001hlu-B8;
+        Thu, 24 Mar 2022 17:24:27 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        nksingh85@gmail.com, ps@pks.im,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH v3 01/11] bulk-checkin: rebrand plug/unplug APIs as 'odb
+ transactions'
+Date:   Thu, 24 Mar 2022 17:10:24 +0100
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+ <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+ <53261f0099d53524155464fe79d10f9605fe93aa.1648097906.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <53261f0099d53524155464fe79d10f9605fe93aa.1648097906.git.gitgitgadget@gmail.com>
+Message-ID: <220324.86y20zmi84.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <72c54461-8af7-29fc-04da-f435adee9bbe@github.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 24, 2022 at 11:42:44AM -0400, Derrick Stolee wrote:
-> As I'm looking at Taylor's test case example, the one thing I notice
-> is that there is only one pack-file before the repack. It would be
-> good to have a non-kept packfile get repacked in the process, not
-> just the loose objects added by the test_commit. I'll take a look at
-> what can be done here.
 
-I think you are too good at nerd-sniping me ;-). Here's a more robust
-test, that I think reads a little cleaner than the previous round. Let
-me know what you think:
+On Thu, Mar 24 2022, Neeraj Singh via GitGitGadget wrote:
 
---- 8< ---
+> From: Neeraj Singh <neerajsi@microsoft.com>
+>
+> Make it clearer in the naming and documentation of the plug_bulk_checkin
+> and unplug_bulk_checkin APIs that they can be thought of as
+> a "transaction" to optimize operations on the object database.
+>
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  builtin/add.c  |  4 ++--
+>  bulk-checkin.c |  4 ++--
+>  bulk-checkin.h | 14 ++++++++++++--
+>  3 files changed, 16 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 3ffb86a4338..9bf37ceae8e 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -670,7 +670,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  		string_list_clear(&only_match_skip_worktree, 0);
+>  	}
+>  
+> -	plug_bulk_checkin();
+> +	begin_odb_transaction();
+>  
+>  	if (add_renormalize)
+>  		exit_status |= renormalize_tracked_files(&pathspec, flags);
+> @@ -682,7 +682,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  
+>  	if (chmod_arg && pathspec.nr)
+>  		exit_status |= chmod_pathspec(&pathspec, chmod_arg[0], show_only);
+> -	unplug_bulk_checkin();
+> +	end_odb_transaction();
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 5922fb5bdd..1ed9a98a36 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -369,10 +369,36 @@ test_expect_success '--write-midx with preferred bitmap tips' '
- 	)
- '
+Aside from anything else we've (dis)agreed on, I found this part really
+odd when hacking on my RFC-on-top, i.e. originally I (wrongly) thought
+the plug_bulk_checkin() was something that originated with this series
+which adds the "bulk" mode.
 
-+packdir=$objdir/pack
-+
- test_expect_success '--write-midx -b packs non-kept objects' '
--	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
--		git repack --write-midx -a -b &&
--	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit kept &&
-+		git repack -ad &&
-+
-+		>$packdir/$(basename $packdir/pack-*.pack .pack).keep &&
-+
-+		test_commit unkept &&
-+		git repack -d &&
-+
-+		test_commit new &&
-+
-+		find $packdir -type f -name "pack-*.idx" | sort >before &&
-+		git repack --write-midx -a -b -d &&
-+		find $packdir -type f -name "pack-*.idx" | sort >after &&
-+
-+		git rev-list --objects --no-object-names kept.. >expect.raw &&
-+		sort expect.raw >expect &&
-+
-+		git show-index <$(comm -13 before after) >actual.raw &&
-+		cut -d" " -f2 actual.raw >actual &&
-+
-+		test_cmp expect actual
-+	)
- '
+But no, on second inspection it's a thing Junio added a long time ago so
+that in this case we "stream to N pack" where we'd otherwise add N loose
+objects.
 
- test_expect_success TTY '--quiet disables progress' '
+Which, and I think Junio brought this up in an earlier round, but I
+didn't fully understand that at the time makes this whole thing quite
+odd to me.
 
---- >8 ---
+So first, shouldn't we add this begin_odb_transaction() as a new thing?
+I.e. surely wanting to do that object target redirection within a given
+begin/end "scope" should be orthagonal to how fsync() happens within
+that "scope", though in this case that happens to correspond.
 
-Thanks,
-Taylor
+And secondly, per the commit message and comment when it was added in
+(568508e7657 (bulk-checkin: replace fast-import based implementation,
+2011-10-28)) is it something we need *for that purpose* with the series
+to unpack-objects without malloc()ing the size of the blob[1].
+
+And, if so and orthagonal to that: If we know how to either stream N
+objects to a PACK (as fast-import does), *and* we now (or SOON) know how
+to stream loose objects without using size(blob) amounts of memory,
+doesn't the "optimize fsync()" rather want to make use of the
+stream-to-pack approach?
+
+I.e. have you tried for the caseses where we create say 1k objects for
+"git stash" tried to stream those to a pack? How does that compare (both
+with/without the fsync changes).
+
+I.e. I do worry (also per [2]) that while the whole "bulk fsync" is neat
+(and I think can use it in either case, to defer object syncs until the
+"index" or "ref" sync, as my RFC does) I worry that we're adding a bunch
+of configuration and complexity for something that:
+
+ 1. Ultimately isn't all that important, as already for part of it we
+    can mostly configure it away. I.e. "git-unpack-objects" v.s. writing
+    a pack, cf. transfer.unpackLimit)
+ 2. We don't have #1 for "add" and "update-index", but if we stream to
+    packs there is there any remaining benefit in practice?
+
+1. https://lore.kernel.org/git/cover-v11-0.8-00000000000-20220319T001411Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/220323.86fsn8ohg8.gmgdl@evledraar.gmail.com/
