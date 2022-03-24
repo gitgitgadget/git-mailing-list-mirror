@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F288C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB10C433EF
 	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351872AbiCXQvv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:51:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58046 "EHLO
+        id S1347700AbiCXQvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351858AbiCXQvk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1351839AbiCXQvk (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Mar 2022 12:51:40 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E6CB0A4D
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:03 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id w4so7455916wrg.12
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:03 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74874AF1F7
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:05 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id p12-20020a05600c430c00b0038cbdf52227so2935150wme.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=27pKE5W50Xq6AWPWel8FWJuFD8Gh8CWrIgNTdeQM9Z0=;
-        b=haNJlQ72A2gnIwlVkMLmVA5KhYuom66B5bBmfuFTHwNjiU+62oClYHvL4HEil9gQPo
-         YyIEfwmXY0X6XxLYSqwAiS/lG/APBxpK/ZQmgPXaNFcPV6E0IJS2TZAepfZa41pVri6O
-         JtrF+M6ekTAkZdY8+oopnkeO2+5J08kvdCanJwdQOBzKJ1zF5qsK4MN8c+WrRYd1z37g
-         HLX5C2TR2MdjmuaJ5u33j9hTWHVZ9w5OSez07dxiraKbPCPNqku6Zzxxf6bVpcAHBGOx
-         PmIfc9om1gl+TsNLX1Q0P+8jLobHW+EkSPPsdGM837UJnlpxLY5SXqenJWhJDSg7JM0j
-         c6dQ==
+        bh=8pCLbO4RGMt9FhNM1rARjgkn1qpV57NBDORbLzqjDVc=;
+        b=mEBwx8NqDsyo5S3QCS2FyuDbutxIOm9ZTyEY5bDeM6XSsDQ2siNstQtRVePES8Pako
+         z7jX9cDQ0fL75EPLqNdir9+R8+I3dJgzAaJlHEUjEnPF5k8Nt14rDN0OG9+74V0gjWBj
+         41BTLDiNG5XrRBEsibivxiDg8YdQJf73r8wkvgnvGozAxmyw6EtRp52FXRkoDV/8Ghvs
+         3Vq1kBNcjOqib0JXJX+MadWXlgN+/3we0cDWJEOSbVLs3tpjsoDV1utSqpEf2FvZrjvR
+         MIm7n3g6Fro39mDawxs676HW85SMkbOLPEyG0MY1td7f3PaAhybglfsINvgm5EICamsK
+         9/xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=27pKE5W50Xq6AWPWel8FWJuFD8Gh8CWrIgNTdeQM9Z0=;
-        b=ACLbdAWt0OfFnmFgShVjGtXwuNqDvig/l07VUOF/g4hMGYOltP3wueQXwhSl6dLBAN
-         NYrqJtW7sul+2tvrvmq3uhilKWQpjyFiD0EGAj3PZai4KvsmVI3kO0m7fEI04vmoovkj
-         aljdANR3CLBMWNr2qYiM2eWyai5gK12x123adNsykzvpRB4XQoC2GCJ+upJwYWGLWh+D
-         jJtxFRJ+Dg+dCrvnEycQKogJIMoyCMatFVCKLEJhhFROUkV1ASPLrps1td1BW6wJoO0E
-         ySXDFKljAblTqoIDFDUMJj6UK8UTRUChO6f3yQ7KbNWSG84EWsXyQt0r1PrZzIDpFQdQ
-         YZ5Q==
-X-Gm-Message-State: AOAM533pczv5tYJ8ksETBRt6K7gqiJB/vZfud657OYPygj3iHv5irZPt
-        kEvD3PHzNXbtvGyrl522PC+jsI1A1Ys=
-X-Google-Smtp-Source: ABdhPJz2MyZfB4UNtfEXXT9ZVWd7Eew4qca1Dvq90yMcQSB6UtIO8ojWXv4gNkwcFdPPaWYJb8HhOg==
-X-Received: by 2002:a05:6000:2a6:b0:203:ebe1:2900 with SMTP id l6-20020a05600002a600b00203ebe12900mr5266509wry.423.1648140601582;
-        Thu, 24 Mar 2022 09:50:01 -0700 (PDT)
+        bh=8pCLbO4RGMt9FhNM1rARjgkn1qpV57NBDORbLzqjDVc=;
+        b=Turzu2dTIihe0s56X6APqHa3eu+PRlbss2b1GwxuBbfnA6Mu67o7FnomZi980gy0pU
+         1HpmdaFal6mu2jjEihiFj5m0+W5/l1/IPz6JTEL/OolAX0OkHHZO1n9wYDJFlh76cujZ
+         84OfNXJdMZs3xbk4OPb5XwNQtvnghLo6335mqSGSOn3BBli9HAaUw3o3i9bzSnJ8c7xY
+         VsMYBbrzDbDFk7U4irJ69PVDOmeovqS/bvSpptBSIoF93rwagOyc0QALYpXCJHC85cc3
+         uJsmqoIRXO3dDtgg0Qk/xtSXV31W/StfHku9vDLtx9cUQnV/kgLhkG91qb7jNnKNKo2/
+         uiUg==
+X-Gm-Message-State: AOAM5301AJFtO/2KyGWy3vvc7caBH5KR9IR8BApbAJ0TdXIno7wLi2nj
+        FvA6uEyvf35pLMNYIXM1QPDr8c09I/o=
+X-Google-Smtp-Source: ABdhPJzJA11uyzVUJf0rcisUU28KT8MDBntP75peK9Jgc1SZ3OXh6EgZyNLvG69pGDPImgFiVc+d7Q==
+X-Received: by 2002:a1c:2904:0:b0:37b:ea53:4cbf with SMTP id p4-20020a1c2904000000b0037bea534cbfmr5486916wmp.46.1648140603764;
+        Thu, 24 Mar 2022 09:50:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f9-20020a0560001a8900b0020582807408sm3135865wry.20.2022.03.24.09.50.00
+        by smtp.gmail.com with ESMTPSA id l13-20020a5d6d8d000000b00203d77cf7b0sm3484315wrs.74.2022.03.24.09.50.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:00 -0700 (PDT)
-Message-Id: <f07800690eeda000271b05435aa032ba17b35086.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:03 -0700 (PDT)
+Message-Id: <d62e338d00829bf3fe08e649ffa298c087a354a9.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:26 +0000
-Subject: [PATCH v8 10/30] fsmonitor--daemon: implement 'run' command
+Date:   Thu, 24 Mar 2022 16:49:28 +0000
+Subject: [PATCH v8 12/30] fsmonitor--daemon: add pathname classification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,335 +73,216 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Implement `run` command to try to begin listening for file system events.
+Teach fsmonitor--daemon to classify relative and absolute
+pathnames and decide how they should be handled.  This will
+be used by the platform-specific backend to respond to each
+filesystem event.
 
-This version defines the thread structure with a single fsmonitor_fs_listen
-thread to watch for file system events and a simple IPC thread pool to
-watch for connection from Git clients over a well-known named pipe or
-Unix domain socket.
+When we register for filesystem notifications on a directory,
+we get events for everything (recursively) in the directory.
+We want to report to clients changes to tracked and untracked
+paths within the working directory proper.  We do not want to
+report changes within the .git directory, for example.
 
-This commit does not actually do anything yet because the platform
-backends are still just stubs.
+This classification will be used in a later commit by the
+different backends to classify paths as events are received.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 228 +++++++++++++++++++++++++++++++++++-
- fsmonitor--daemon.h         |  34 ++++++
- 2 files changed, 261 insertions(+), 1 deletion(-)
- create mode 100644 fsmonitor--daemon.h
+ builtin/fsmonitor--daemon.c | 81 ++++++++++++++++++++++++++++++++++
+ fsmonitor--daemon.h         | 87 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 168 insertions(+)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 5e3178b8bdd..5591339399a 100644
+index 69dd39121a3..1ce00b7c150 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -3,16 +3,52 @@
- #include "parse-options.h"
- #include "fsmonitor.h"
- #include "fsmonitor-ipc.h"
-+#include "compat/fsmonitor/fsm-listen.h"
-+#include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
- #include "khash.h"
- 
- static const char * const builtin_fsmonitor__daemon_usage[] = {
-+	N_("git fsmonitor--daemon run [<options>]"),
- 	N_("git fsmonitor--daemon stop"),
- 	N_("git fsmonitor--daemon status"),
- 	NULL
- };
- 
- #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+/*
-+ * Global state loaded from config.
-+ */
-+#define FSMONITOR__IPC_THREADS "fsmonitor.ipcthreads"
-+static int fsmonitor__ipc_threads = 8;
-+
-+#define FSMONITOR__ANNOUNCE_STARTUP "fsmonitor.announcestartup"
-+static int fsmonitor__announce_startup = 0;
-+
-+static int fsmonitor_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, FSMONITOR__IPC_THREADS)) {
-+		int i = git_config_int(var, value);
-+		if (i < 1)
-+			return error(_("value of '%s' out of range: %d"),
-+				     FSMONITOR__IPC_THREADS, i);
-+		fsmonitor__ipc_threads = i;
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, FSMONITOR__ANNOUNCE_STARTUP)) {
-+		int is_bool;
-+		int i = git_config_bool_or_int(var, value, &is_bool);
-+		if (i < 0)
-+			return error(_("value of '%s' not bool or int: %d"),
-+				     var, i);
-+		fsmonitor__announce_startup = i;
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value, cb);
-+}
-+
- /*
-  * Acting as a CLIENT.
-  *
-@@ -57,15 +93,198 @@ static int do_as_client__status(void)
- 	}
+@@ -134,6 +134,87 @@ static int handle_client(void *data,
+ 	return result;
  }
  
-+static ipc_server_application_cb handle_client;
++#define FSMONITOR_COOKIE_PREFIX ".fsmonitor-daemon-"
 +
-+static int handle_client(void *data,
-+			 const char *command, size_t command_len,
-+			 ipc_server_reply_cb *reply,
-+			 struct ipc_server_reply_data *reply_data)
++enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
++	const char *rel)
 +{
-+	/* struct fsmonitor_daemon_state *state = data; */
-+	int result;
++	if (fspathncmp(rel, ".git", 4))
++		return IS_WORKDIR_PATH;
++	rel += 4;
 +
-+	/*
-+	 * The Simple IPC API now supports {char*, len} arguments, but
-+	 * FSMonitor always uses proper null-terminated strings, so
-+	 * we can ignore the command_len argument.  (Trust, but verify.)
-+	 */
-+	if (command_len != strlen(command))
-+		BUG("FSMonitor assumes text messages");
++	if (!*rel)
++		return IS_DOT_GIT;
++	if (*rel != '/')
++		return IS_WORKDIR_PATH; /* e.g. .gitignore */
++	rel++;
 +
-+	trace2_region_enter("fsmonitor", "handle_client", the_repository);
-+	trace2_data_string("fsmonitor", the_repository, "request", command);
++	if (!fspathncmp(rel, FSMONITOR_COOKIE_PREFIX,
++			strlen(FSMONITOR_COOKIE_PREFIX)))
++		return IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX;
 +
-+	result = 0; /* TODO Do something here. */
-+
-+	trace2_region_leave("fsmonitor", "handle_client", the_repository);
-+
-+	return result;
++	return IS_INSIDE_DOT_GIT;
 +}
 +
-+static void *fsm_listen__thread_proc(void *_state)
++enum fsmonitor_path_type fsmonitor_classify_path_gitdir_relative(
++	const char *rel)
 +{
-+	struct fsmonitor_daemon_state *state = _state;
++	if (!fspathncmp(rel, FSMONITOR_COOKIE_PREFIX,
++			strlen(FSMONITOR_COOKIE_PREFIX)))
++		return IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX;
 +
-+	trace2_thread_start("fsm-listen");
-+
-+	trace_printf_key(&trace_fsmonitor, "Watching: worktree '%s'",
-+			 state->path_worktree_watch.buf);
-+	if (state->nr_paths_watching > 1)
-+		trace_printf_key(&trace_fsmonitor, "Watching: gitdir '%s'",
-+				 state->path_gitdir_watch.buf);
-+
-+	fsm_listen__loop(state);
-+
-+	trace2_thread_exit();
-+	return NULL;
++	return IS_INSIDE_GITDIR;
 +}
 +
-+static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
++static enum fsmonitor_path_type try_classify_workdir_abs_path(
++	struct fsmonitor_daemon_state *state,
++	const char *path)
 +{
-+	struct ipc_server_opts ipc_opts = {
-+		.nr_threads = fsmonitor__ipc_threads,
++	const char *rel;
 +
-+		/*
-+		 * We know that there are no other active threads yet,
-+		 * so we can let the IPC layer temporarily chdir() if
-+		 * it needs to when creating the server side of the
-+		 * Unix domain socket.
-+		 */
-+		.uds_disallow_chdir = 0
-+	};
++	if (fspathncmp(path, state->path_worktree_watch.buf,
++		       state->path_worktree_watch.len))
++		return IS_OUTSIDE_CONE;
 +
-+	/*
-+	 * Start the IPC thread pool before the we've started the file
-+	 * system event listener thread so that we have the IPC handle
-+	 * before we need it.
-+	 */
-+	if (ipc_server_run_async(&state->ipc_server_data,
-+				 fsmonitor_ipc__get_path(), &ipc_opts,
-+				 handle_client, state))
-+		return error_errno(
-+			_("could not start IPC thread pool on '%s'"),
-+			fsmonitor_ipc__get_path());
++	rel = path + state->path_worktree_watch.len;
 +
-+	/*
-+	 * Start the fsmonitor listener thread to collect filesystem
-+	 * events.
-+	 */
-+	if (pthread_create(&state->listener_thread, NULL,
-+			   fsm_listen__thread_proc, state) < 0) {
-+		ipc_server_stop_async(state->ipc_server_data);
-+		ipc_server_await(state->ipc_server_data);
++	if (!*rel)
++		return IS_WORKDIR_PATH; /* it is the root dir exactly */
++	if (*rel != '/')
++		return IS_OUTSIDE_CONE;
++	rel++;
 +
-+		return error(_("could not start fsmonitor listener thread"));
-+	}
-+
-+	/*
-+	 * The daemon is now fully functional in background threads.
-+	 * Wait for the IPC thread pool to shutdown (whether by client
-+	 * request or from filesystem activity).
-+	 */
-+	ipc_server_await(state->ipc_server_data);
-+
-+	/*
-+	 * The fsmonitor listener thread may have received a shutdown
-+	 * event from the IPC thread pool, but it doesn't hurt to tell
-+	 * it again.  And wait for it to shutdown.
-+	 */
-+	fsm_listen__stop_async(state);
-+	pthread_join(state->listener_thread, NULL);
-+
-+	return state->error_code;
++	return fsmonitor_classify_path_workdir_relative(rel);
 +}
 +
-+static int fsmonitor_run_daemon(void)
++enum fsmonitor_path_type fsmonitor_classify_path_absolute(
++	struct fsmonitor_daemon_state *state,
++	const char *path)
 +{
-+	struct fsmonitor_daemon_state state;
-+	int err;
++	const char *rel;
++	enum fsmonitor_path_type t;
 +
-+	memset(&state, 0, sizeof(state));
++	t = try_classify_workdir_abs_path(state, path);
++	if (state->nr_paths_watching == 1)
++		return t;
++	if (t != IS_OUTSIDE_CONE)
++		return t;
 +
-+	pthread_mutex_init(&state.main_lock, NULL);
-+	state.error_code = 0;
-+	state.current_token_data = NULL;
++	if (fspathncmp(path, state->path_gitdir_watch.buf,
++		       state->path_gitdir_watch.len))
++		return IS_OUTSIDE_CONE;
 +
-+	/* Prepare to (recursively) watch the <worktree-root> directory. */
-+	strbuf_init(&state.path_worktree_watch, 0);
-+	strbuf_addstr(&state.path_worktree_watch, absolute_path(get_git_work_tree()));
-+	state.nr_paths_watching = 1;
++	rel = path + state->path_gitdir_watch.len;
 +
-+	/*
-+	 * We create and delete cookie files somewhere inside the .git
-+	 * directory to help us keep sync with the file system.  If
-+	 * ".git" is not a directory, then <gitdir> is not inside the
-+	 * cone of <worktree-root>, so set up a second watch to watch
-+	 * the <gitdir> so that we get events for the cookie files.
-+	 */
-+	strbuf_init(&state.path_gitdir_watch, 0);
-+	strbuf_addbuf(&state.path_gitdir_watch, &state.path_worktree_watch);
-+	strbuf_addstr(&state.path_gitdir_watch, "/.git");
-+	if (!is_directory(state.path_gitdir_watch.buf)) {
-+		strbuf_reset(&state.path_gitdir_watch);
-+		strbuf_addstr(&state.path_gitdir_watch, absolute_path(get_git_dir()));
-+		state.nr_paths_watching = 2;
-+	}
++	if (!*rel)
++		return IS_GITDIR; /* it is the <gitdir> exactly */
++	if (*rel != '/')
++		return IS_OUTSIDE_CONE;
++	rel++;
 +
-+	/*
-+	 * Confirm that we can create platform-specific resources for the
-+	 * filesystem listener before we bother starting all the threads.
-+	 */
-+	if (fsm_listen__ctor(&state)) {
-+		err = error(_("could not initialize listener thread"));
-+		goto done;
-+	}
-+
-+	err = fsmonitor_run_daemon_1(&state);
-+
-+done:
-+	pthread_mutex_destroy(&state.main_lock);
-+	fsm_listen__dtor(&state);
-+
-+	ipc_server_free(state.ipc_server_data);
-+
-+	strbuf_release(&state.path_worktree_watch);
-+	strbuf_release(&state.path_gitdir_watch);
-+
-+	return err;
++	return fsmonitor_classify_path_gitdir_relative(rel);
 +}
 +
-+static int try_to_run_foreground_daemon(void)
-+{
-+	/*
-+	 * Technically, we don't need to probe for an existing daemon
-+	 * process, since we could just call `fsmonitor_run_daemon()`
-+	 * and let it fail if the pipe/socket is busy.
-+	 *
-+	 * However, this method gives us a nicer error message for a
-+	 * common error case.
-+	 */
-+	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
-+		die(_("fsmonitor--daemon is already running '%s'"),
-+		    the_repository->worktree);
-+
-+	if (fsmonitor__announce_startup) {
-+		fprintf(stderr, _("running fsmonitor-daemon in '%s'\n"),
-+			the_repository->worktree);
-+		fflush(stderr);
-+	}
-+
-+	return !!fsmonitor_run_daemon();
-+}
-+
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ static void *fsm_listen__thread_proc(void *_state)
  {
- 	const char *subcmd;
- 
- 	struct option options[] = {
-+		OPT_INTEGER(0, "ipc-threads",
-+			    &fsmonitor__ipc_threads,
-+			    N_("use <n> ipc worker threads")),
- 		OPT_END()
- 	};
- 
--	git_config(git_default_config, NULL);
-+	git_config(fsmonitor_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_fsmonitor__daemon_usage, 0);
-@@ -73,6 +292,13 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_fsmonitor__daemon_usage, options);
- 	subcmd = argv[0];
- 
-+	if (fsmonitor__ipc_threads < 1)
-+		die(_("invalid 'ipc-threads' value (%d)"),
-+		    fsmonitor__ipc_threads);
-+
-+	if (!strcmp(subcmd, "run"))
-+		return !!try_to_run_foreground_daemon();
-+
- 	if (!strcmp(subcmd, "stop"))
- 		return !!do_as_client__send_stop();
- 
+ 	struct fsmonitor_daemon_state *state = _state;
 diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-new file mode 100644
-index 00000000000..3009c1a83de
---- /dev/null
+index 3009c1a83de..8c3a71a48bd 100644
+--- a/fsmonitor--daemon.h
 +++ b/fsmonitor--daemon.h
-@@ -0,0 +1,34 @@
-+#ifndef FSMONITOR_DAEMON_H
-+#define FSMONITOR_DAEMON_H
+@@ -30,5 +30,92 @@ struct fsmonitor_daemon_state {
+ 	struct ipc_server_data *ipc_server_data;
+ };
+ 
++/*
++ * Pathname classifications.
++ *
++ * The daemon classifies the pathnames that it receives from file
++ * system notification events into the following categories and uses
++ * that to decide whether clients are told about them.  (And to watch
++ * for file system synchronization events.)
++ *
++ * The daemon only collects and reports on the set of modified paths
++ * within the working directory (proper).
++ *
++ * The client should only care about paths within the working
++ * directory proper (inside the working directory and not ".git" nor
++ * inside of ".git/").  That is, the client has read the index and is
++ * asking for a list of any paths in the working directory that have
++ * been modified since the last token.  The client does not care about
++ * file system changes within the ".git/" directory (such as new loose
++ * objects or packfiles).  So the client will only receive paths that
++ * are classified as IS_WORKDIR_PATH.
++ *
++ * Note that ".git" is usually a directory and is therefore inside
++ * the cone of the FS watch that we have on the working directory root,
++ * so we will also get FS events for disk activity on and within ".git/"
++ * that we need to respond to or filter from the client.
++ *
++ * But Git also allows ".git" to be a *file* that points to a GITDIR
++ * outside of the working directory.  When this happens, we need to
++ * create FS watches on both the working directory root *and* on the
++ * (external) GITDIR root.  (The latter is required because we put
++ * cookie files inside it and use them to sync with the FS event
++ * stream.)
++ *
++ * Note that in the context of this discussion, I'm using "GITDIR"
++ * to only mean an external GITDIR referenced by a ".git" file.
++ *
++ * The platform FS event backends will receive watch-specific
++ * relative paths (except for those OS's that always emit absolute
++ * paths).  We use the following enum and routines to classify each
++ * path so that we know how to handle it.  There is a slight asymmetry
++ * here because ".git/" is inside the working directory and the
++ * (external) GITDIR is not, and therefore how we handle events may
++ * vary slightly, so I have different enums for "IS...DOT_GIT..." and
++ * "IS...GITDIR...".
++ *
++ * The daemon uses the IS_DOT_GIT and IS_GITDIR internally to mean the
++ * exact ".git" file/directory or GITDIR directory.  If the daemon
++ * receives a delete event for either of these paths, it will
++ * automatically shutdown, for example.
++ *
++ * Note that the daemon DOES NOT explicitly watch nor special case the
++ * index.  The daemon does not read the index nor have any internal
++ * index-relative state, so there are no "IS...INDEX..." enum values.
++ */
++enum fsmonitor_path_type {
++	IS_WORKDIR_PATH = 0,
 +
-+#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++	IS_DOT_GIT,
++	IS_INSIDE_DOT_GIT,
++	IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX,
 +
-+#include "cache.h"
-+#include "dir.h"
-+#include "run-command.h"
-+#include "simple-ipc.h"
-+#include "thread-utils.h"
++	IS_GITDIR,
++	IS_INSIDE_GITDIR,
++	IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX,
 +
-+struct fsmonitor_batch;
-+struct fsmonitor_token_data;
-+
-+struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
-+
-+struct fsmonitor_daemon_state {
-+	pthread_t listener_thread;
-+	pthread_mutex_t main_lock;
-+
-+	struct strbuf path_worktree_watch;
-+	struct strbuf path_gitdir_watch;
-+	int nr_paths_watching;
-+
-+	struct fsmonitor_token_data *current_token_data;
-+
-+	int error_code;
-+	struct fsmonitor_daemon_backend_data *backend_data;
-+
-+	struct ipc_server_data *ipc_server_data;
++	IS_OUTSIDE_CONE,
 +};
 +
-+#endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
-+#endif /* FSMONITOR_DAEMON_H */
++/*
++ * Classify a pathname relative to the root of the working directory.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
++	const char *relative_path);
++
++/*
++ * Classify a pathname relative to a <gitdir> that is external to the
++ * worktree directory.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_gitdir_relative(
++	const char *relative_path);
++
++/*
++ * Classify an absolute pathname received from a filesystem event.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_absolute(
++	struct fsmonitor_daemon_state *state,
++	const char *path);
++
+ #endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
+ #endif /* FSMONITOR_DAEMON_H */
 -- 
 gitgitgadget
 
