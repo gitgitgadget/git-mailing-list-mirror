@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 333ADC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A98AEC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351821AbiCXRDq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 13:03:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
+        id S1351886AbiCXREl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 13:04:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350114AbiCXRDp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 13:03:45 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE7AB0A6F
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:02:13 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id d10so10422444eje.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:02:13 -0700 (PDT)
+        with ESMTP id S243263AbiCXREj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 13:04:39 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B67FF4A
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:03:05 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id r23so6402074edb.0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=PjCF1vRjf2HPqycbOdHHUIYG02qSe2ubIzMJe+wF8RU=;
-        b=OUdDkz0nTteBgpUdcjBgr3zDfukt9a1a9tNaicUXMpK5M8auD1f45aLxE+B87L9iIW
-         2yVQCq77rkuLsROxZV38qBWxbcWZ9IhDBw5D4YawBbtQamTIYGYxPSgiuL0B5+ikrtzz
-         Q/QHATyCY/vgjmcrryq/dXPFoI0I3mYNxp6fmnfEmbpu/wXmNoQB3f6NTGjaZqeRPYKX
-         Nlt1Ekm6958Qx7WfXS1CYovI1M2BDnfHxZLgBMQ8YuGJplnkjFR/0HNwXGPzzXRQI12R
-         iT+MlgtTmfoLZEBqIxjr3UwoBrwZFhi1bLVqCGLYAvbJXGHZjIDrIDGV0Mwz80H4suuv
-         x9Iw==
+        bh=1cO6I5edZGV0f4nbw8Tr7mntyDaDFyF+YuKSx8ME7Xo=;
+        b=QNaGp8aG6BmK49u/TlDg1baG1oGAk8e16dZoQGxTcL77oWHwNjy2nA4c5V1kHAVeGr
+         DEd52dl0AmGduMJwSXil1rU3Xu8v2EoU1jAS636FceY6ZZtmV5QKX2I0Kb3TFLuPpB91
+         j/2Cc7A1c4Yg73rM9SrbG8kBEaU070wayEd3hwBV+hxnbeag75BYBIA1RTfUP8eCxOiB
+         pSgUI5GG7yAAcZlLGpPFpnUNwcKvwHXIwBf39M+z3WW4hfQfCsKx2ezUe0RDEZRrAiNk
+         SNIKoSV8aoA1duzO01kr+UeneCFXDvaTbZ2+s4kJITMjK3t045ntCzH4jZyCLRFrl61G
+         gxWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=PjCF1vRjf2HPqycbOdHHUIYG02qSe2ubIzMJe+wF8RU=;
-        b=0OHGsEbCkcyk56V02BIgC5dzYGieUKMf+FqOo3YNP4hbAOCfOJCm3stfZCB2MKml7K
-         aaLTlW7w966vIfocdSkrY6nYCNRkkTa2nuoq7PrWjT4AgtmjyzwMHRDY/BF1k/mNqJks
-         2Isx5vGiNMZBn5+OUSLChJTQtz8e9TFN3sNLVRYeG6dtE6Lotkvt2tmByUkTu7BrhQwm
-         80iEZLqtYTnlyJS0rPG1bQ8KdAsABHd7SwXpp3SZ6FWtCBQV5uAWmbWX9wwPlvbYLdmu
-         ftUIbWlb5+XlwsGD5f3iUX+gm6P+CdA3dhvJiSk3jBDiFBDs+pJndoDnRls/PXcQE+s8
-         dF6A==
-X-Gm-Message-State: AOAM533SDvym3+pKRTWlV2p2HJPhZsaKcBMcaBTOiFJ+ObMn79oxGe5e
-        fJy1L+IpwedIu5N4GikdzW4=
-X-Google-Smtp-Source: ABdhPJw77TW1HXBY7ymoxH1Ko9FoFHyHNx51RvjNZCWnyp3wDPlgu1mFVeAacUkAR9SEp3UxjVgy7A==
-X-Received: by 2002:a17:906:9e11:b0:6df:a9d8:cbad with SMTP id fp17-20020a1709069e1100b006dfa9d8cbadmr6875550ejc.32.1648141331470;
-        Thu, 24 Mar 2022 10:02:11 -0700 (PDT)
+        bh=1cO6I5edZGV0f4nbw8Tr7mntyDaDFyF+YuKSx8ME7Xo=;
+        b=E9oatfdh8ZZajJylWv6PpDeAF7k5xU3f9SEhTBPx9DDjf3TB/kU/LC8SZERCjUuVrx
+         5b/J/nP3RVazqK+sBTrZZmzwzyktCqLWwkOUiV8ihXNUa7/2wNav3xyKuwixeji8Pl1w
+         TTMAXJO4D/HdleF7XQx85X4NBJnvpbndAAmVsQrvrOwmCQvDi0mhCl8VFlbJgJgE+cxE
+         1lT7aPVyanBR4XsAKqVzYFmERT03/5nIo+lwd+Bp+n/IF4MnXYxTp8dA0Zji/Z7gCIMk
+         p/ZgXy5Vxqc4aQ/PM/3osJJ4y3Pw+QZwoGmsdu+bhk5D/+GoVA4dHT4/ytPBtlXOqRjd
+         XYPw==
+X-Gm-Message-State: AOAM533MiFPKQ9DSxnaY6iWOmNzTQl+AZl8MyIYJ911CfAlebiyU4Z9K
+        xsmwbE/gWNNjMZWVdhROb40=
+X-Google-Smtp-Source: ABdhPJzbZKRB/jmQynqT0ptv39c+Q+zbzAUkN5FmG3UYHGvPDngCIxn3As9CMzPemx/O4PJfsafkgg==
+X-Received: by 2002:a50:d84c:0:b0:418:f176:79df with SMTP id v12-20020a50d84c000000b00418f17679dfmr7643813edj.353.1648141384038;
+        Thu, 24 Mar 2022 10:03:04 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dm11-20020a170907948b00b006cf488e72e3sm1342912ejc.25.2022.03.24.10.02.10
+        by smtp.gmail.com with ESMTPSA id q2-20020a170906144200b006ceb8723de9sm1346508ejc.120.2022.03.24.10.03.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 10:02:10 -0700 (PDT)
+        Thu, 24 Mar 2022 10:03:03 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nXQqf-001jHk-Sa;
-        Thu, 24 Mar 2022 18:02:09 +0100
+        id 1nXQrW-001jJH-Kr;
+        Thu, 24 Mar 2022 18:03:02 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
@@ -58,16 +58,16 @@ Cc:     git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 05/27] revision.[ch]: split freeing of revs->commit
- into a function
-Date:   Thu, 24 Mar 2022 18:01:22 +0100
+Subject: Re: [PATCH v2 06/27] revision.[ch]: provide and start using a
+ release_revisions()
+Date:   Thu, 24 Mar 2022 18:02:26 +0100
 References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
  <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
- <patch-v2-05.27-4c0718b43d7-20220323T203149Z-avarab@gmail.com>
- <xmqqa6dgm0l8.fsf@gitster.g>
+ <patch-v2-06.27-7194aac88e1-20220323T203149Z-avarab@gmail.com>
+ <xmqq4k3om04m.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <xmqqa6dgm0l8.fsf@gitster.g>
-Message-ID: <220324.86h77nmgha.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqq4k3om04m.fsf@gitster.g>
+Message-ID: <220324.86czibmgft.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,45 +80,30 @@ On Wed, Mar 23 2022, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> +static void release_revisions_commit_list(struct rev_info *revs)
+>> diff --git a/revision.c b/revision.c
+>> index 303d1188207..90bac9ada03 100644
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -2933,6 +2933,13 @@ static void release_revisions_commit_list(struct =
+rev_info *revs)
+>>  	revs->commits =3D NULL;
+>>  }
+>>=20=20
+>> +void release_revisions(struct rev_info *revs)
 >> +{
->> +	struct commit_list *commits =3D revs->commits;
->> +
->> +	if (!commits)
+>> +	if (!revs)
 >> +		return;
->> +	free_commit_list(commits);
->> +	revs->commits =3D NULL;
+>> +	object_array_clear(&revs->pending);
 >> +}
 >
-> It makes sense to have this as a separate helper, but the original
-> implementation this was lifted from is much easier to follow than
-> this version with an unnecessary rewrite, I would think.
+> Yay.
 >
->> @@ -4080,10 +4090,7 @@ static void create_boundary_commit_list(struct re=
-v_info *revs)
->>  	 * boundary commits anyway.  (This is what the code has always
->>  	 * done.)
->>  	 */
->> -	if (revs->commits) {
->> -		free_commit_list(revs->commits);
->> -		revs->commits =3D NULL;
->> -	}
->> +	release_revisions_commit_list(revs);
->
-> IOW
->
-> static void release_revisions_commit_list(struct rev_info *revs)
-> {
-> 	if (revs->commits) {
-> 		free_commit_list(revs->commits);
-> 		revs->commits =3D NULL;
-> 	}
-> }
+> It is unclear why we want to allow passing NULL to this, though.  Do
+> we even have any code paths that allocate on-heap rev-info?  Address
+> of an on-stack or global rev_info will never be NULL.
 
-Sure, will change it.
+I'm almost certain it's boilerplate from early testing, and running the
+tests with it removed just now passed.
 
-I think the pre-image is preferrable in context, i.e. to have them all
-use the same early abort pattern, but not enough to argue the point :)
-
-
-
+I'll make a bit more sure sure it's OK (with SANITIZE=3Daddress et al) and
+drop it in a v3.
