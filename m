@@ -2,125 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31C86C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 264B3C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354476AbiCXUuC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 16:50:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
+        id S1354064AbiCXUwR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 16:52:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348813AbiCXUtw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 16:49:52 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05888DF1F
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:48:17 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26B73105B6A;
-        Thu, 24 Mar 2022 16:48:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ibo/9y6xxuZKfxAGddrH4yFJGi9t8h8QpihvjI
-        wBrQA=; b=gVBshJpUz5iWA7oxoPU47b8OeBwOu51Nf9a1Mfzi/9Im2mmGJwrCD5
-        P0mEEKy8WQ/4TN7YbSicrPl1gukf4dujXBs067JxhlKdgLD/n73hFLj4IJLcOqTD
-        hT31CKujSD+t/fEA/NYckCNz9laaydF9c28X5afL4PHso/0lwW+bM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EB48105B68;
-        Thu, 24 Mar 2022 16:48:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DC2D105B66;
-        Thu, 24 Mar 2022 16:48:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
-        <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
-        <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 13:48:15 -0700
-In-Reply-To: <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Thu, 24 Mar 2022
-        18:34:57 +0000")
-Message-ID: <xmqqtubnf568.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1355231AbiCXUwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 16:52:08 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6665539BB7
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:50:35 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id F39555C023C;
+        Thu, 24 Mar 2022 16:50:32 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Thu, 24 Mar 2022 16:50:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm2; bh=+w/NnEAmzT0osd2ZsmK8eIcNY5QDZtBXO60BqZ
+        Eyq8I=; b=SHI65bkz6ilPbyylX1nM8Wh5+oI2DgpKuSNOUiZN30k9izcgL6U0vX
+        ob87T3DW3EoUe5YUoSH/D4jDf14HZh0huXoS3ft7dyroZ7nPlyqkYGz7qbW29Bek
+        DcSZq+Fu2A/FdI1VtOU3Eh0QZMlsJCynJ/R6oYZpHp4Xv/2fM+xr9q8vlBl8xe96
+        z/kIW5ipEqmebn0EPkwu2dS1nKrn74B3vIUP+oqa/j+SScSiYO/2OHDlRcs7AKkw
+        plY0mFczGxK/h1ZU3FwLizIzPE0cEPxD20p1cG87k5XFugqugpv14jDu91AWYMjD
+        JUB+MYlGM6ETLTmqNWn2kp5Fw3qwDRyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=+w/NnEAmzT0osd2Zs
+        mK8eIcNY5QDZtBXO60BqZEyq8I=; b=d7IUe48Fe8M5uDDMKyEdJIsmgBDpHAqXk
+        RLnH6tENQyUiUtevcUNzMXoavpVSr6/Cbu+WV6H/V7CcMnObVCyIEGjBwwp5x1q8
+        P2lJG5kv6wI13zJusV7NFbAV7LtYuJYknWWwjMA8AQFuthi0O9H0ibnRRfDGxxwc
+        PY3j4GQZYqBAeVLUs0ByzcGS7dvEPhvM0U6gf+/6TZLZNSfM1iLnyV0dIy7DUCpJ
+        ZAtsX6PP9A/hd7+hkVt80ukq4tAcOAUUGxGG4ZfhiARJYxtCcrG1v8pOx7dY4RxR
+        ajOXAgSeKXagZtURaYtI2+RFzwRFXuChI9YoyYEkJMIiHk4zGtYcg==
+X-ME-Sender: <xms:mNk8YpeocRz84FxTB5uuSj8fJ4-AlEhdktHDYIzhOP9IVP5u73ntIA>
+    <xme:mNk8YnOOBt8kaZKZw770mhOqvOF-McXrQqC6uDDp8IpOd-Nl_WUFFKNxRUMm4zT-9
+    KiDC2hMyXucedXenQ>
+X-ME-Received: <xmr:mNk8YihRKt2c6WCwsvMT5wSoOS0Ctq1md3JNQBLKjs1xww73KLLHAcvreiGJ0-WxOW3M5fipQ9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudegledgudeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
+    ertddttdejnecuhfhrohhmpefhvghrnhgrnhguohcuoehgrhgvvghnfhhoohesuhelvddr
+    vghuqeenucggtffrrghtthgvrhhnpeffgeetveeuieekvdefffefgfdvtdeuueeiheevie
+    ekfefhgedujeefgfduvedtleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:mNk8Yi_qsfWV0bQjSmu1crzqhm93cLmIh9QrzQcyXT1EmHt-Q0n_RA>
+    <xmx:mNk8Ylu0vlaylIUq-y-VML0aD3RmYfLZejjMpgiRmR-Z3oMV7arPfw>
+    <xmx:mNk8YhEpB_ThHAUKvYRzm3T0pqLPX3pjzzGLpqAZ6oEuMuaz3f-L6A>
+    <xmx:mNk8YjV0MxFg1QxKUYWu-wZ-f_VLxBgGWwhnC2_JwBYT3D_9m3EbAw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Mar 2022 16:50:30 -0400 (EDT)
+Date:   Thu, 24 Mar 2022 21:50:28 +0100
+From:   Fernando <greenfoo@u92.eu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, davvid@gmail.com, sunshine@sunshineco.com,
+        seth@eseth.com, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+Subject: Re: [PATCH v5 1/3] vimdiff: new implementation with layout support
+Message-ID: <YjzZlAqlH6bXh8+4@zacax395.localdomain>
+References: <20220319091141.4911-1-greenfoo@u92.eu>
+ <20220319091141.4911-2-greenfoo@u92.eu>
+ <xmqqsfr8sjpl.fsf@gitster.g>
+ <29c787c2-8916-4d04-85c1-a4c0597b9848@www.fastmail.com>
+ <xmqqee2rl2cg.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BAF8063A-ABB3-11EC-8BFF-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqee2rl2cg.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > In any case, if anyone knows how we could achieve the same without using
+> > external commands, please let me know and I'll change it (in the meantime I'll
+> > keep searching for alternatives too). If after a reasonable amount of time none
+> > of us manages to find a solution I suggest to leave it as it is now.
+> 
+> I already said that this is good enough for now, didn't I?  But see
+> below, and do not use it, it should work but it is uglier than a
+> simple single liner pipe.
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The implementation of test_subcommand_inexact() was originally
-> introduced in e4d0c11c0 (repack: respect kept objects with '--write-midx
-> -b', 2021-12-20) with the intention to allow finding a subcommand based
-> on an initial set of arguments. The inexactness was intended as a way to
-> allow flexible options beyond that initial set, as opposed to
-> test_subcommand() which requires that the full list of options is
-> provided in its entirety.
->
-> The implementation began by copying test_subcommand() and replaced the
-> repeated argument 'printf' statement to append ".*" instead of "," to
-> each argument. This has a few drawbacks:
->
-> 1. Most importantly, this repeats the use of ".*" within 'expr', so the
->    inexact match is even more flexible than expected. It allows the list
->    of arguments to exist as a subsequence (with any other items included
->    between those arguments).
->
-> 2. The line 'expr="$(expr%,}"' that previously removed a trailing comma
->    now no longer does anything, since the string ends with ".*".
->
-> Both of these issues are fixed by keeping the addition of the comma in
-> the printf statement, then adding ".*" after stripping out the trailing
-> comma.
->
-> All existing tests continue to pass with this change. There was one
-> instance from t7700-repack.sh that was taking advantage of this
-> flexibility, but it was removed in the previous change.
+Hats off to the clever usage of "???..." as a regex to remove the characters
+that are not part of the desired substring.
 
-Of course all existing tests continue to pass, as we no longer have
-any user of test_subcommand_inexact after the previous step ;-).
 
-Among
+> > Should this be considered enough test for backwards compatibility?
+> 
+> Yes, with a bit to extend the proposed log message to help #1, and a
+> bit of comments next to the test cases to help #2.
 
- (1) doing nothing,
- (2) removing, and
- (3) clarifying the implementation,
+Good idea. I'll add both to v6.
 
-my preference would be 2 > 1 > 3.  If we add
+Thanks for your feedback!
 
- (4) clarify the implementation and document what kind of inexactness we
-     tolerate with an updated comment"
-
-to the mix, that would come before all 3 others, though.
-
-Perhaps squash something like this in?
-
- t/test-lib-functions.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git i/t/test-lib-functions.sh w/t/test-lib-functions.sh
-index 0f439c99d6..6f6afae847 100644
---- i/t/test-lib-functions.sh
-+++ w/t/test-lib-functions.sh
-@@ -1789,8 +1789,8 @@ test_subcommand () {
- }
- 
- # Check that the given command was invoked as part of the
--# trace2-format trace on stdin, but without an exact set of
--# arguments.
-+# trace2-format trace on stdin, but only require that the
-+# initial arguments are given as specified.
- #
- #	test_subcommand [!] <command> <args>... < <trace>
- #
