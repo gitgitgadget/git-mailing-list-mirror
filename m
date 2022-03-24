@@ -2,129 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A96FBC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 19:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 627BBC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 19:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352854AbiCXTMn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 15:12:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36382 "EHLO
+        id S243950AbiCXTXr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 15:23:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347365AbiCXTMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 15:12:42 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1826CB82E9
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:11:10 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id h63so6515046iof.12
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:11:10 -0700 (PDT)
+        with ESMTP id S239554AbiCXTXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 15:23:46 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C28C6662F
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:22:12 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id p10so3904914lfa.12
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XQh+4r715Dd5my2XXrSoMN9SiQYIKnN5BXQXihumaaI=;
-        b=Fomq8fWjcmCH1zMnM5wMHJEI8VGjzbf7RP9f7FWg5/3uV7PmXJ8zVQtjrQ0aBHB+a8
-         JK+diBIlIMRhk6B/VPqBwRKE6pesntD3c7cmOWD1b+vFe81FQMP6j8bla3Y6czMD5OlL
-         jD1MphS44Tb9YZCmsIE7qQUgBUjDjkdKAE7wEtbMDRfqhs5G2BY2y5OV0R7EnTlYyFd7
-         br7d7zNQF7sp+PFYsNcPaMXlMZt75diMbMky6D7Uks0ai9we+dKJdx4ufPJQPzdcYOZz
-         1I9IjDIfzE5bzKt7CprmoGyDaTlFHyPBOavPd7QsX2r8mLKr00U8KJOMlj94dTYj3+YK
-         GVpQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kJSiEkj9IUorq50YrCSnEnxvfbJb7x3R7afiRTVVJ9Y=;
+        b=K036VEupZkGoQyYYiprn+zXaWnrPxJRlQcvx6nenjScQcVm7DDyLbSDikaynrMqhr5
+         jXcULQayXe306MZept+KykGrIS1p0DvAkFugW9yuRX6q4GlRqKGBYrpywW+pVsrzcsZP
+         vOSa2IjYVbe9f3VTBm4qWiyd1kgb5UYKGt5xPvx5RckGmvxtJ3qZJtd4WkrFoDsF7Dyl
+         04F4f4V/6WT0PMfd20fvIBnSc46Ud2hmuzC2j7Pyr2v5TC8tCGFnPL69N2fc89xvhx0h
+         UfzkkbXFj+Pxs5H6gTzrajMqXpNoehOwU3kXI8b8drn3s1jWHHwOl8FTREEOtcS6s+ZG
+         6dag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XQh+4r715Dd5my2XXrSoMN9SiQYIKnN5BXQXihumaaI=;
-        b=vgO0DTNnMnJkZXmXJ5pyb0ZK+m08HTO3q4p3+asSXaIvEihTMzYpGa4YACo9pW0XiO
-         fscj74/nrdjWY749vJO/jUwl6T3fOptvzFjxDs+xfujrs9iPnPo6gb1g2eFTqF4X4kgg
-         sKV6hnSkyNfXNMaaIjOOu0S3FNj4G6EpaDYfiIEDWhLemeE5epRYc9QadpxD7o+7fUmJ
-         G0MwxTR2KTKT3Aj2Y7r2DVkfyQEe9WmXQ/4WaVqs31KyTYMo5LHHig3zP0gp10WAuEx4
-         mab7BlbG/dLSQ89vOXLxkTqI81OWDpb2DM3VFoZFutei3Hq8khPZTfLxuPG9v1pnrg87
-         d0kA==
-X-Gm-Message-State: AOAM532gaJNFu2gd43SWRY6FP6DZkWhIRcWvx6GMYnr26xVUhnhVeW9m
-        esnhb9khsLOeTqInP6FZkYpS6g==
-X-Google-Smtp-Source: ABdhPJxjuwsLwCDhpsTSl3Wq6sAU5meIojOEZP34jkoO8CiywQRjj8lrunrBLqjOQp/03PI5rKbI2Q==
-X-Received: by 2002:a05:6638:d53:b0:31a:c87:a704 with SMTP id d19-20020a0566380d5300b0031a0c87a704mr3703840jak.207.1648149069413;
-        Thu, 24 Mar 2022 12:11:09 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z17-20020a92da11000000b002c83987c2ffsm1778221ilm.76.2022.03.24.12.11.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 12:11:09 -0700 (PDT)
-Date:   Thu, 24 Mar 2022 15:11:08 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, derrickstolee@github.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v1 1/3] pack-bitmap.c: use "ret" in "open_midx_bitmap()"
-Message-ID: <YjzCTLLDCby+kJrZ@nand.local>
-References: <cover.1648119652.git.dyroneteng@gmail.com>
- <3048b4dd2982932fa11ba8393895fa33a00a5b58.1648119652.git.dyroneteng@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kJSiEkj9IUorq50YrCSnEnxvfbJb7x3R7afiRTVVJ9Y=;
+        b=rb3V+zV1di14Uzc3iMGG4fnoEslAXD3jAHDXX4cjUYJ/iIKK7eCF0HIBYw/WjaP3/n
+         IXEb6wzVxStg7pnGnjzNECHIrvuC58P1+RmV1wkNTwjyW0W2dqQp7JI9bK4gQ4fPd3pf
+         3THJxYw2wlJgBetRQoggQVOT3wbzrS+6d2O7zVIPbfv0sj52LshhBrtpeaEE2u4p7Ale
+         i44faBV0bCVyooC+GBWaAP1IkuBbjXmmHRfW4w7n//bBwffAWv2RzTZGDIajxzWd9Ipp
+         QDx8zUiuVrN7a4s3MCq5++SZjmam8igM4ioj+WHqKV09EAod+TbfU9sa8mEYeTSRo31X
+         x2fw==
+X-Gm-Message-State: AOAM533ZVuCmZpLBHjCO6d7OoSzVaLHlMD6nlUChKqQUtQVchFKPGuU+
+        l9KaLokS2RvOWn0HeNSnAIn7l1+s4YSxbUHNl1CIhbFCr6mJWg==
+X-Google-Smtp-Source: ABdhPJwwnHhjFaw9qi1yUd4agHuAqo6Ovd/RCjop3sScBUTr2Yr8UYPFO4uqEV+Ju2g5K6lvSXjulO43K/n2xM/wHSQ=
+X-Received: by 2002:a05:6512:322f:b0:44a:57a0:6950 with SMTP id
+ f15-20020a056512322f00b0044a57a06950mr4846064lfe.74.1648149730567; Thu, 24
+ Mar 2022 12:22:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3048b4dd2982932fa11ba8393895fa33a00a5b58.1648119652.git.dyroneteng@gmail.com>
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+ <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com> <xmqqo81vi6u7.fsf@gitster.g>
+In-Reply-To: <xmqqo81vi6u7.fsf@gitster.g>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Thu, 24 Mar 2022 12:21:59 -0700
+Message-ID: <CANQDOdfcgaRUkygG9or7VS02uzo9vz1Ve=nkFUs_aYu3vVaCnA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/11] core.fsyncmethod: add 'batch' mode for faster
+ fsyncing of multiple objects
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 24, 2022 at 07:43:59PM +0800, Teng Long wrote:
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 9c666cdb8b..931219adf0 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -494,15 +494,18 @@ static int open_pack_bitmap(struct repository *r,
->  static int open_midx_bitmap(struct repository *r,
->  			    struct bitmap_index *bitmap_git)
->  {
-> +	int ret = -1;
->  	struct multi_pack_index *midx;
+On Thu, Mar 24, 2022 at 10:44 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->  	assert(!bitmap_git->map);
+> "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
->  	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
-> -		if (!open_midx_bitmap_1(bitmap_git, midx))
-> -			return 0;
-> +		if (!open_midx_bitmap_1(bitmap_git, midx)) {
-> +			ret = 0;
-> +			break;
-> +		}
->  	}
-> -	return -1;
-> +	return ret;
+> > V3 changes:
+> >
+> >  * Rebrand plug/unplug-bulk-checkin to "begin_odb_transaction" and
+> >    "end_odb_transaction"
+>
+> OK.  Makes me wonder (not "object", more appropriate verb than
+> "object" being "be curious") how well "odb-transaction" meshes with
+> mechanisms to ensure that the bits hit the disk platter to protect
+> things outside the odb that you may or may not be covering in this
+> series (e.g. the index file, the refs, the working tree files).
+>
 
-This all looks like good clean-up to me, and it indeed preserves the
-behavior before and after this patch is applied.
+As of this series, the odb-transaction will ensure that loose-objects
+(and trivially packs as well, since they're currently eagerly-synced)
+are efficiently made durable by the time the transaction ends.  Other
+parts of the repo (index, refs, etc) need to be updated and synced
+after the odb transaction ends.  Patrick's original ref syncing work
+at [1] also contained a batch mode delimited by the existing ref
+transactions.
 
-But thinking about some of my comments on patch 2/3 here, I think that
-we don't want to break out of that loop until we have visited both the
-MIDX in our repository, as well as any alternates (along with _their_
-alternates, recursively).
+I think larger transactions would be interesting to have, but I'd
+argue that the current patch series is a worthwhile building block for
+that world.  It solves the real-world multiplicative pain of adding N
+objects to the ODB, where each one needs to be fsynced.  Patrick's
+batch mode solves the real-world multiplicative pain of updating R
+refs during a big mirror push.  Even talking just about the ODB, we
+still have O(TreeSize) fsyncs for the updated trees and a few extra
+fsyncs for commits.  We can add odb transactions around those things
+too, which should be easy enough going forward.
 
-That _is_ a behavior change with respect to the existing implementation
-on master, but I think that what's on master is wrong to stop after
-looking at the first MIDX bitmap. At least, it's wrong in the same sense
-of: "we will only load _one_ of these MIDX bitmaps, so if there is more
-than one to choose from, the caller is mistaken".
+[1] https://lore.kernel.org/git/d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im/
 
-I think instead we'd want to do something like this on top:
+> > This work is based on 'seen' at . It's dependent on ns/core-fsyncmethod.
+>
+> "at ."???
+>
 
---- 8< ---
-
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 410020c4d3..0c6640b0f6 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -500,10 +500,8 @@ static int open_midx_bitmap(struct repository *r,
- 	assert(!bitmap_git->map);
-
- 	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
--		if (!open_midx_bitmap_1(bitmap_git, midx)) {
-+		if (!open_midx_bitmap_1(bitmap_git, midx))
- 			ret = 0;
--			break;
--		}
- 	}
- 	return ret;
- }
-
---- >8 ---
-
-Thanks,
-Taylor
+Sorry, to make GGG/Github happy, I had to rebase onto b9f5d0358d2,
+which was the last non-merge commit that's present in next. Then I
+could target next with the PR and get the right set of patches.
+Basing on fd008b1442 didn't work because GGG doesn't want to see a
+merge commit in the set of changes not in the target branch.
