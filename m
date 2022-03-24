@@ -2,111 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31DC3C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C15D4C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 21:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244269AbiCXUyQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 16:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35580 "EHLO
+        id S1350346AbiCXVbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 17:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355393AbiCXUww (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 16:52:52 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C8D43395
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:51:20 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6E5D93F491B;
-        Thu, 24 Mar 2022 16:51:19 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 920133F48FC;
-        Thu, 24 Mar 2022 16:51:18 -0400 (EDT)
-Subject: Re: [PATCH v8 21/30] t7527: create test for fsmonitor--daemon
-To:     rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
-        'Jeff Hostetler via GitGitGadget' <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, 'Bagas Sanjaya' <bagasdotme@gmail.com>,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, 'Eric Sunshine' <sunshine@sunshineco.com>,
-        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-        'Tao Klerks' <tao@klerks.biz>,
-        'Jeff Hostetler' <jeffhost@microsoft.com>
-References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
- <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
- <c8709da9457eb303132b5cad6a204a1de27aabc0.1648140586.git.gitgitgadget@gmail.com>
- <xmqqils3gort.fsf@gitster.g> <075d01d83fb2$1506ded0$3f149c70$@nexbridge.com>
- <0deea44e-b919-81cb-d8bf-ebea4c9ba426@jeffhostetler.com>
- <076101d83fbe$e6ce5e50$b46b1af0$@nexbridge.com>
- <cd5dd46d-fc47-1af8-6ba7-ddf1617a7b2b@jeffhostetler.com>
- <076201d83fc0$4a202140$de6063c0$@nexbridge.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5f2bbcf3-fbaf-b1b4-7e53-b3f48cd971c2@jeffhostetler.com>
-Date:   Thu, 24 Mar 2022 16:51:18 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S242186AbiCXVbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 17:31:05 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B45110
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:29:32 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id x9so4056383ilc.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:29:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AUPlkox8RvE76k6l3P7dUitsKMRJJx4LaLcQLF7h0TA=;
+        b=vK9Wv6BxH23pfNpILewgv2tnqsnomL46w4Dw4kMfHLsEsntA/U1d4lwh3Lk6CEp9eL
+         74v7qLFtCtJYkEPaS5O1YHI7y0WDa03WDEfrdccG4PuF2/x8wF03tB4j7JmTEVm+eI6N
+         QTxbL9Dh8jFuhaNEHMLgocnn/4Q065nF+DzbjipDLUlEUglPfTTzJvTds29wkWqLa013
+         j6Nol5tU3aGWEMvwWJ/sekxbebt4a0ArK44X9LfyMkgUdq4epXYY6zxSwDQyFXcQ+g+9
+         aHQiU3az1wS65CkZTFfMqeW9wpLKv7+JNA6KfFX8tVYhRtLq/5DTZ6uuygUEGyEmXYhC
+         2iuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AUPlkox8RvE76k6l3P7dUitsKMRJJx4LaLcQLF7h0TA=;
+        b=oqGjLbApsy3AC+WPJLPXFKitqTsV9TA5tST7rcJHMrMa3vShTa9dp/gpRFv3Viw5Ml
+         YzV96XUmE3nlFMY/7WjdBeL69axU61VkbpQXba87877ksagVgKeznx3PT8ONq9Rd4s80
+         kCzlvCXxU1Nt6kNdwu0uqrrFBzffGyoCvJMSaBqFN1akAflqyybBKeQSM+OdHnunxBRy
+         H0Wpc3AI44NxKo9Z3YrUVrxHO1Y8RnRtIoYjcib+1ZtRpSx5C/uxPHTEPn/Dtf40z4qQ
+         GCoGhmK/GQ2PHY/jvaya/3yGb+QkGJM/Zu7or1sBXGjxpInoE0VOdEM9v4siqKKMEkNy
+         flAA==
+X-Gm-Message-State: AOAM531ORAhuaTn1VqxVfnwdI7VBpX+wiOQIBK7Z1jfzWLzkPoNDQUjK
+        cmmWgPOzMKqF9PdBE1U/TxFPiNbBPeWf4lUI
+X-Google-Smtp-Source: ABdhPJzQNrmOii/JDyQjWBQCwv9N/MlCGv+65G9BT8SKfGYIxWM49hesgOeAsSIwRui/ruquW+v5Sw==
+X-Received: by 2002:a05:6e02:1b0f:b0:2c7:9a3f:6e84 with SMTP id i15-20020a056e021b0f00b002c79a3f6e84mr3526719ilv.32.1648157372144;
+        Thu, 24 Mar 2022 14:29:32 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t7-20020a5e9907000000b00649d6bd1ec5sm2005953ioj.31.2022.03.24.14.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 14:29:31 -0700 (PDT)
+Date:   Thu, 24 Mar 2022 17:29:31 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Honza =?utf-8?Q?Proke=C5=A1?= <proke.j@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: bug report: pre-push hook
+Message-ID: <Yjziu8nU/SZ7SyH0@nand.local>
+References: <CA+ZGDOUKrNRdf-7+SBoVhPkAmyHEtt==AJ=jBDWGkOUcz=n4BA@mail.gmail.com>
+ <CAJoAoZmo4bJgGdYQeM4XtRJHOpm4z7Gvg=qpUc4xa7Ap=v++UA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <076201d83fc0$4a202140$de6063c0$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJoAoZmo4bJgGdYQeM4XtRJHOpm4z7Gvg=qpUc4xa7Ap=v++UA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Mar 24, 2022 at 11:30:16AM -0700, Emily Shaffer wrote:
+> > What happened instead? (Actual behavior)
+> > Tests seem to execute on the background, but I do not see output
+>
+> I wonder - are you printing your test output to stdout, or stderr?
+> stderr of the hook is printed to stdout of the Git process, so that
+> may be why.
 
+I didn't think that we redirected the pre-push (or any) hook's stderr to
+stdout in the parent process. I wrote a small pre-push hook which is
+just:
 
-On 3/24/22 4:46 PM, rsbecker@nexbridge.com wrote:
-> On: March 24, 2022 4:43 PM, Jeff Hostetler wrote:
->> On 3/24/22 4:36 PM, rsbecker@nexbridge.com wrote:
->>> On March 24, 2022 4:28 PM, Jeff Hostetler wrote:
->>>> On 3/24/22 3:05 PM, rsbecker@nexbridge.com wrote:
->>>>> On March 24, 2022 3:00 PM, Junio C Hamano wrote:
->>>>>> Subject: Re: [PATCH v8 21/30] t7527: create test for
->>>>>> fsmonitor--daemon
->>>>>>
->>>>>> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>>>>
->>>>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>> [...]
->>>>>
->>>>> May I request a bit of extra time on the -rc0 to -rc1 cycle for
->>>>> this? I have a feeling
->>>> that while testing this is probably going to go well, I would like to
->>>> have a bit of extra time for anything that might come up. There are a
->>>> lot of moving parts to this series. Not being critical, but debugging
->>>> scripts on my platforms can be a bit rough at times.
->>>>>
->>>>> Thanks,
->>>>> Randall
->>>>>
->>>>
->>>> I'll simplify the `start_daemon()` function as Junio suggests, so
->>>> hopefully that'll reduce the amount of debugging that you need.
->>> Thanks.
->>>
->>>> BTW, which platforms are you worried about?
->>> I'm worried about NonStop ia64 and x86. It's not just this series but also the
->> fsync series. I think it's going to be a bit of a rid this time, but hoping not.
->>> --Randall
->>>
->>
->> I currently only have drivers/backends for Windows and MacOS for the builtin
->> FSMonitor daemon feature.  Since it relies on platform-specific code to read
->> whatever filesystem journal or event stream that the the platform provides.
->>
->> So t7527 should do a skip_all on NonStop IIUC.
-> 
-> I would have thought this was applicable to Linux also. So use, it should skip. Be in touch when if you do down that path.
-> --Randall
-> 
+    $ cat .git/hooks/pre-push
+    #!/bin/sh
 
-Sorry, yeah, I wanted to do a Linux version too, but there was just too
-much platform-specific stuff to juggle three different backends at
-the same time.  I have the APIs in place between platform-specific and
--independent code so that it shouldn't be hard to add a Linux version.
-I just didn't have the capacity to do all three (and the rest of
-$dayjob....)
+    echo >&2 "hi!"
 
-Jeff
+and then:
 
+    $ git.compile push ttaylorr --dry-run 2>foo
+    $ grep hi foo
+    hi!
+
+But I might be holding it wrong, since I am not a frequent user of
+hooks.
+
+Thanks,
+Taylor
