@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C2BEC433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B32E7C433EF
 	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 04:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346232AbiCXFAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 01:00:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43204 "EHLO
+        id S1346844AbiCXFAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 01:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346052AbiCXFAa (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1345226AbiCXFAa (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Mar 2022 01:00:30 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B542DD4C
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:44 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id j18so4936805wrd.6
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:44 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723882DD6F
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:46 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id t11so4943222wrm.5
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NZ9DwWe8RMi6qei+a97iaf/fWz4PMyQi0ZAFeh+epW8=;
-        b=W8xn27m74ZgiygeP4RLKH1B5NnOrlDq0KEDLj9vZlGLH9FD12QAd7y9IkbRehDRHI4
-         VLg0gFnogo5uSvW7l2qqcKJ1ihQJGPdLI11CUZYVrkFI8QskDR+gAF5GO7BX+k1+wQcY
-         s7pD7JfyTpNjNrFVUtN6jTTw7zVoTzfYPmaHYqhUDMAO6QowgqZtSVheBhTUywDeRPqT
-         504R5NyUqDjG+ZiWIbfgI1QpxJ1zELoZYosXpW31Jjk95nqEXStiJv6uaRkVdK3MfXlq
-         QdRldRLD7kod5AdXBA13jok4Nh8xBYrryN1AR+1YefwxdJ5Ud/Ie+8sVedRMFViF/PiA
-         /17A==
+        bh=/dJLnMNPf593DDA+ox52qw4qYfm4mKhrA2SM6fu1eys=;
+        b=KP4cHSFMBx+l9IVhPuUwBeNIKsyUNAfxdT5j2ZM4IR3Z1meDkaTYeMWbyKhJga9KNo
+         5akPQi1q1ZWKrF12Ja43VPfQAOUSYhHS9dW1yba8uUdITr9yid+vasgUkf0+sYtr2IRe
+         1z/fxtLUrB6FKNU3IN1RKSBlp02GKb6aTRn3tahXTk+rcLNJMl0V/N+BRPHYGTty9G0j
+         sTdLTzTln3XMsJwbwPvbt5O2ijSe5iuwy+O9Xypnlr+NwY+w56mvXkuezZAF6dj50mAt
+         lnMkPytHc18jx4TOTyVOCa0pmy1rZuNg41oos01lhvJlGcqqEY6NygEiofgVyp8ypIcU
+         PWnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NZ9DwWe8RMi6qei+a97iaf/fWz4PMyQi0ZAFeh+epW8=;
-        b=x3VRgb/Cwpej+0Kl+0Bw5PEY07G3JEf/DJRwqEjEKa/nvLCWIhj8qk8ADKhaS8hHPX
-         kGicvW2shUVZaXFS7ERuYgMP/oUpwLZfxZlSmdTi89mRSetdL2JEyB06zXHlO9/JDwzj
-         ugsvwWxG86GDCnJRtolyEFicoU1HYoStRA3eGMzYQqHlycuzBYnvwu7qJDX2qFwcFJL4
-         DDJeCHThdjSEFm+fX8Ed3jDQt8ig0lPMElYniXWL52RhaAQJHQNXZpR/APPBOFiA/AQQ
-         jNppXrTkMJiiWenuyjBtGjQoIpACl7aKI3bczPdB78rVvmBKhnwzoedd4zxUZf5VxX1F
-         yk3g==
-X-Gm-Message-State: AOAM532vCVuZbq2hTfAgGlXyU5LTjWYDt9Dri99p4/TgYQRswkzOhXuC
-        tvb3UTojKSCuepwD7FQrq9Ub4izrwCM=
-X-Google-Smtp-Source: ABdhPJx25c/mX4sw29e+3Vac9qU5ofV70qS+/OvAWDN5/NphhdGi/mHcFwdwObIIuk+KCRxhnSN0Gg==
-X-Received: by 2002:a05:6000:3cb:b0:205:7b9d:cade with SMTP id b11-20020a05600003cb00b002057b9dcademr2905925wrg.239.1648097923190;
-        Wed, 23 Mar 2022 21:58:43 -0700 (PDT)
+        bh=/dJLnMNPf593DDA+ox52qw4qYfm4mKhrA2SM6fu1eys=;
+        b=4L3AxOeFUOMf9lM8sclL5Vwj8wlIKxgLycV3c8qpjiJCZGRQQ0JmNfbmsN8UINmE/j
+         RegKO7h5E6wWlSS4FIc1T2vpT6mLan8ixfcuttoJ/W7yXUFxn5KXgOqYK93f3v7eRJjU
+         tvd+8RjN2F7OLaGLmaQ88feVvBMTQaG1XiyJijkDwx/VAs2xcFq/TwzebvVnMh6GrjZX
+         Gf3G89V0dQQHG8jf79bjPooaX9SYyiPMGCmjEuRy5A/VD8hCs8gW9tXlNiiwEpJK17fj
+         WeADIe5fsY73wFr4vhrvBQ7oL9HN7Uw9H+Vdqc9WgvENu3hP28HW/FxgWakOup3wEjbr
+         zVXA==
+X-Gm-Message-State: AOAM5308Bs/hEQNoMUXuRj7SqukuDWnpFnLw9/VW8m1M8p5REsZ7jwT3
+        VNuOT6q/crLG6rFTyc4a/XEnkzYIGjg=
+X-Google-Smtp-Source: ABdhPJxSVGPbdNW6nR6vanvQu8ggIBRIKI7rXxMDrWrfjr0OdQgqa7fjn34W5EFCy75gBt/DGky1UQ==
+X-Received: by 2002:adf:a302:0:b0:1ed:bf30:40e3 with SMTP id c2-20020adfa302000000b001edbf3040e3mr2854332wrb.270.1648097924626;
+        Wed, 23 Mar 2022 21:58:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n22-20020a05600c4f9600b0038c6ec42c38sm1137854wmq.6.2022.03.23.21.58.42
+        by smtp.gmail.com with ESMTPSA id w7-20020a1cf607000000b00389a5390180sm1109269wmc.25.2022.03.23.21.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 21:58:42 -0700 (PDT)
-Message-Id: <b99b32a469c5bee6e1a4d4e2f374d69aff8db63e.1648097906.git.gitgitgadget@gmail.com>
+        Wed, 23 Mar 2022 21:58:43 -0700 (PDT)
+Message-Id: <6b832e89bc47f00af4bd186b71577409914970f7.1648097906.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
 References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
         <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 04:58:25 +0000
-Subject: [PATCH v3 10/11] core.fsyncmethod: performance tests for add and
- stash
+Date:   Thu, 24 Mar 2022 04:58:26 +0000
+Subject: [PATCH v3 11/11] core.fsyncmethod: correctly camel-case warning
+ message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,151 +70,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Add basic performance tests for "git add" and "git stash" of a lot of
-new objects with various fsync settings. This shows the benefit of batch
-mode relative to full fsync.
+The warning for an unrecognized fsyncMethod was not
+camel-cased.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- t/perf/p3700-add.sh   | 59 ++++++++++++++++++++++++++++++++++++++++
- t/perf/p3900-stash.sh | 62 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 121 insertions(+)
- create mode 100755 t/perf/p3700-add.sh
- create mode 100755 t/perf/p3900-stash.sh
+ config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/perf/p3700-add.sh b/t/perf/p3700-add.sh
-new file mode 100755
-index 00000000000..2ea78c9449d
---- /dev/null
-+++ b/t/perf/p3700-add.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+#
-+# This test measures the performance of adding new files to the object database
-+# and index. The test was originally added to measure the effect of the
-+# core.fsyncMethod=batch mode, which is why we are testing different values
-+# of that setting explicitly and creating a lot of unique objects.
-+
-+test_description="Tests performance of add"
-+
-+# Fsync is normally turned off for the test suite.
-+GIT_TEST_FSYNC=1
-+export GIT_TEST_FSYNC
-+
-+. ./perf-lib.sh
-+
-+. $TEST_DIRECTORY/lib-unique-files.sh
-+
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+dir_count=10
-+files_per_dir=50
-+total_files=$((dir_count * files_per_dir))
-+
-+# We need to create the files each time we run the perf test, but
-+# we do not want to measure the cost of creating the files, so run
-+# the test once.
-+if test "${GIT_PERF_REPEAT_COUNT-1}" -ne 1
-+then
-+	echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
-+	GIT_PERF_REPEAT_COUNT=1
-+fi
-+
-+for m in false true batch
-+do
-+	test_expect_success "create the files for object_fsyncing=$m" '
-+		git reset --hard &&
-+		# create files across directories
-+		test_create_unique_files $dir_count $files_per_dir files
-+	'
-+
-+	case $m in
-+	false)
-+		FSYNC_CONFIG='-c core.fsync=-loose-object -c core.fsyncmethod=fsync'
-+		;;
-+	true)
-+		FSYNC_CONFIG='-c core.fsync=loose-object -c core.fsyncmethod=fsync'
-+		;;
-+	batch)
-+		FSYNC_CONFIG='-c core.fsync=loose-object -c core.fsyncmethod=batch'
-+		;;
-+	esac
-+
-+	test_perf "add $total_files files (object_fsyncing=$m)" "
-+		git $FSYNC_CONFIG add files
-+	"
-+done
-+
-+test_done
-diff --git a/t/perf/p3900-stash.sh b/t/perf/p3900-stash.sh
-new file mode 100755
-index 00000000000..3526f06cef4
---- /dev/null
-+++ b/t/perf/p3900-stash.sh
-@@ -0,0 +1,62 @@
-+#!/bin/sh
-+#
-+# This test measures the performance of adding new files to the object database
-+# and index. The test was originally added to measure the effect of the
-+# core.fsyncMethod=batch mode, which is why we are testing different values
-+# of that setting explicitly and creating a lot of unique objects.
-+
-+test_description="Tests performance of stash"
-+
-+# Fsync is normally turned off for the test suite.
-+GIT_TEST_FSYNC=1
-+export GIT_TEST_FSYNC
-+
-+. ./perf-lib.sh
-+
-+. $TEST_DIRECTORY/lib-unique-files.sh
-+
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+dir_count=10
-+files_per_dir=50
-+total_files=$((dir_count * files_per_dir))
-+
-+# We need to create the files each time we run the perf test, but
-+# we do not want to measure the cost of creating the files, so run
-+# the test once.
-+if test "${GIT_PERF_REPEAT_COUNT-1}" -ne 1
-+then
-+	echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
-+	GIT_PERF_REPEAT_COUNT=1
-+fi
-+
-+for m in false true batch
-+do
-+	test_expect_success "create the files for object_fsyncing=$m" '
-+		git reset --hard &&
-+		# create files across directories
-+		test_create_unique_files $dir_count $files_per_dir files
-+	'
-+
-+	case $m in
-+	false)
-+		FSYNC_CONFIG='-c core.fsync=-loose-object -c core.fsyncmethod=fsync'
-+		;;
-+	true)
-+		FSYNC_CONFIG='-c core.fsync=loose-object -c core.fsyncmethod=fsync'
-+		;;
-+	batch)
-+		FSYNC_CONFIG='-c core.fsync=loose-object -c core.fsyncmethod=batch'
-+		;;
-+	esac
-+
-+	# We only stash files in the 'files' subdirectory since
-+	# the perf test infrastructure creates files in the
-+	# current working directory that need to be preserved
-+	test_perf "stash $total_files files (object_fsyncing=$m)" "
-+		git $FSYNC_CONFIG stash push -u -- files
-+	"
-+done
-+
-+test_done
+diff --git a/config.c b/config.c
+index e9cac5f4707..ae819dee20b 100644
+--- a/config.c
++++ b/config.c
+@@ -1697,7 +1697,7 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 
+ 	if (!strcmp(var, "core.fsyncobjectfiles")) {
+ 		if (fsync_object_files < 0)
+-			warning(_("core.fsyncobjectfiles is deprecated; use core.fsync instead"));
++			warning(_("core.fsyncObjectFiles is deprecated; use core.fsync instead"));
+ 		fsync_object_files = git_config_bool(var, value);
+ 		return 0;
+ 	}
 -- 
 gitgitgadget
-
