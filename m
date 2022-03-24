@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F95C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8951C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351879AbiCXQwA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58342 "EHLO
+        id S1351881AbiCXQwD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:52:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351849AbiCXQvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:51:42 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F2C9F386
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:08 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id a1so7473443wrh.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:08 -0700 (PDT)
+        with ESMTP id S1351852AbiCXQvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:51:39 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B88B0A46
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:01 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id r7so3102296wmq.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CagY9EkHGPSukr9Gcxdb9icbGtAz+5el1oCyBPufJIs=;
-        b=qCbCkYjlLIwkyx8rxuuKmxl0HmeZw6IUqDUcGyNlileKIB/hJP8hZTvBNKCQ44BF4l
-         djkdfx5eJEdjzjiwF3n/nNF2w1j6qK3GsMA9aYfIxTzo3P0r5C38kbi5mBwQRMKWUBxg
-         cWn5ueZkl57HG/miTdHkxrDFRJvYJ429CQ0sXA5OV7fAcrn26ms6QIdCV9Zs98kwBq3G
-         NyZB78jaVNljOuIBC1qhiU6Owy7+BoMXHskTJ0po3IEQyUZprGu3O0iRDSRD/vn6NrlV
-         KUAlhzuU9GPFpb0ADS6TIHvvf1/EePOb7+NnNJVNKZSiFh+3/ua4o59S3J6q3hLp/9Fz
-         sM9w==
+        bh=JoyUcWYc53GOiCIk4ZkiWSvvHTSDt24PFwNxe1AnEQQ=;
+        b=FgUe45bFHOgWcirMC8JGwDfig9kQ1bdgkUMClFx6A4erJUiO7KLYyT3DAOuY6P44kV
+         cIkHqoOo5qBll4eNYM3OI14JuWnHtFqqD6iI02ipefszGOpRZTlgDkEqTk4qu5VnpOnM
+         BNXIRC4KVSS847lVDYUI9XNiAPVRL4X4wEKKgDdWYNGeeRCLOvtuTehK6FtmrO7DW3di
+         Jjd1rJLkjSja56pBprHkisA/SXcDDYWiW18VYj7KLKuPHV6icbousPcFOU4SFf7HdShp
+         Ahmp/4jeCwc7dtXMjqOpN/pOT5qDEszkk5uPL1slwxraseN8NSyuQ104y2yf4+VRhiGW
+         7N/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CagY9EkHGPSukr9Gcxdb9icbGtAz+5el1oCyBPufJIs=;
-        b=yxGSMbwYNgt/Fz8ig0dSVzYuFnwowBLzMpQFwdU/XhBKdh1GBho+QrmT2r7oQEHj4k
-         yi2+gX/clC3eDC046Dx7umh/PWWlqR6pPPidmNy80xxWGEDCxN89lmiEamKJhgEEfLgD
-         2bcbS9RjNRZlMB3/lci3eIZC/2wbUPs5ayiHYzS3a75jOJyJxc3ul0kRxwYLBzaxWNJT
-         Z+DF9yXthq2H4Otsket2511w9CdCz9M3UR8zcsuKMGqFBoqqS6gFEVgn7WIS4HPkCEft
-         aKm8BoY0zcAwYhY/dKZzsttLNmZIVKxq70+eKzQ9pAwOeesIX/TL/xFS0gZXO7ovNgAX
-         15jg==
-X-Gm-Message-State: AOAM530dE1GQNGcR23pmSjPnyx//UVC/Qh2KEn6mdza0AWGw/7KJJOWh
-        qlfw4qqFRFSS7csUKzs/8RpH35HkAYQ=
-X-Google-Smtp-Source: ABdhPJzjPLxBM5AxfYG8BN1p15mNuOyZJVPcRxQmXe3rTtyh/O0oK7aU3fhGT8yWRUeiiAbsGswoiQ==
-X-Received: by 2002:a05:6000:1184:b0:203:ff46:1d72 with SMTP id g4-20020a056000118400b00203ff461d72mr5373582wrx.165.1648140606419;
-        Thu, 24 Mar 2022 09:50:06 -0700 (PDT)
+        bh=JoyUcWYc53GOiCIk4ZkiWSvvHTSDt24PFwNxe1AnEQQ=;
+        b=4RaE6ZyzxEdfAY+MMDEamqZKDAubUY13mdpuJgHslObufUApMsE7Q+t2xu88LSIYgK
+         LRN+Kayb1JtkGBJxou93VDmSC4VxxmodO9EGYXiHHzAWzRmXz/MGeOLKPj0kTk0NPuaa
+         a9XWM5YhExkAgLx2PxoeXtGyhJcO0q2H4tKfz+tlny2j6WSiQ1K1RxNqRKJjetMyvU91
+         tHFzsn2JoIsFYCvm5qWYYKjabBdkDmomHQU00jG3JD42ctP1I73dTCOBzx09ytRzOt+P
+         ZdHMX2Ak6iVPF+MZiEmtLYofb/yZdJHugAyjUkr8CnemE/2g1KYGsiRCI3Qs+p7nf7k5
+         nd9A==
+X-Gm-Message-State: AOAM533wjdoVO/j5R4o81ZG+Ariy2U7oKZNJZI4RijLLyznaAtLfQkP/
+        e+XawQvJEmrgF9sudWpDD89HMYf7Zrk=
+X-Google-Smtp-Source: ABdhPJxyH5Jb5V/gPact6EZKh5Otu8QUmgPc94kqOCUea9TwUAgpXConZrk0SjCvM6JsCQyljcFXcA==
+X-Received: by 2002:a05:600c:3d8d:b0:38c:6f6e:e61a with SMTP id bi13-20020a05600c3d8d00b0038c6f6ee61amr14703330wmb.101.1648140600206;
+        Thu, 24 Mar 2022 09:50:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l10-20020a05600002aa00b0020414b4e75fsm3589662wry.85.2022.03.24.09.50.05
+        by smtp.gmail.com with ESMTPSA id l15-20020a05600c4f0f00b0038cbdf5221dsm5733306wmq.41.2022.03.24.09.49.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:05 -0700 (PDT)
-Message-Id: <39f43fabe024917e6c84b8916197b0dc0add97fc.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:49:59 -0700 (PDT)
+Message-Id: <2f8a42fdb93623053256939fdbb45cf02fb1c5c9.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:30 +0000
-Subject: [PATCH v8 14/30] fsmonitor--daemon: create token-based changed path
- cache
+Date:   Thu, 24 Mar 2022 16:49:25 +0000
+Subject: [PATCH v8 09/30] compat/fsmonitor/fsm-listen-darwin: stub in backend
+ for Darwin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,359 +74,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to build a list of changed paths and associate
-them with a token-id.  This will be used by the platform-specific
-backends to accumulate changed paths in response to filesystem events.
-
-The platform-specific file system listener thread receives file system
-events containing one or more changed pathnames (with whatever
-bucketing or grouping that is convenient for the file system).  These
-paths are accumulated (without locking) by the file system layer into
-a `fsmonitor_batch`.
-
-When the file system layer has drained the kernel event queue, it will
-"publish" them to our token queue and make them visible to concurrent
-client worker threads.  The token layer is free to combine and/or de-dup
-paths within these batches for efficient presentation to clients.
+Stub in empty implementation of fsmonitor--daemon
+backend for Darwin (aka MacOS).
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 230 +++++++++++++++++++++++++++++++++++-
- fsmonitor--daemon.h         |  40 +++++++
- 2 files changed, 268 insertions(+), 2 deletions(-)
+ compat/fsmonitor/fsm-listen-darwin.c | 20 ++++++++++++++++++++
+ config.mak.uname                     | 10 ++++++++++
+ contrib/buildsystems/CMakeLists.txt  |  3 +++
+ 3 files changed, 33 insertions(+)
+ create mode 100644 compat/fsmonitor/fsm-listen-darwin.c
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 1c7c156288d..69312119b07 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -181,17 +181,27 @@ struct fsmonitor_token_data {
- 	uint64_t client_ref_count;
- };
- 
-+struct fsmonitor_batch {
-+	struct fsmonitor_batch *next;
-+	uint64_t batch_seq_nr;
-+	const char **interned_paths;
-+	size_t nr, alloc;
-+	time_t pinned_time;
-+};
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+new file mode 100644
+index 00000000000..c84e3344ab9
+--- /dev/null
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -0,0 +1,20 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "fsm-listen.h"
 +
- static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
- {
- 	static int test_env_value = -1;
- 	static uint64_t flush_count = 0;
- 	struct fsmonitor_token_data *token;
-+	struct fsmonitor_batch *batch;
- 
- 	CALLOC_ARRAY(token, 1);
-+	batch = fsmonitor_batch__new();
- 
- 	strbuf_init(&token->token_id, 0);
--	token->batch_head = NULL;
--	token->batch_tail = NULL;
-+	token->batch_head = batch;
-+	token->batch_tail = batch;
- 	token->client_ref_count = 0;
- 
- 	if (test_env_value < 0)
-@@ -217,9 +227,143 @@ static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
- 		strbuf_addf(&token->token_id, "test_%08x", test_env_value++);
- 	}
- 
-+	/*
-+	 * We created a new <token_id> and are starting a new series
-+	 * of tokens with a zero <seq_nr>.
-+	 *
-+	 * Since clients cannot guess our new (non test) <token_id>
-+	 * they will always receive a trivial response (because of the
-+	 * mismatch on the <token_id>).  The trivial response will
-+	 * tell them our new <token_id> so that subsequent requests
-+	 * will be relative to our new series.  (And when sending that
-+	 * response, we pin the current head of the batch list.)
-+	 *
-+	 * Even if the client correctly guesses the <token_id>, their
-+	 * request of "builtin:<token_id>:0" asks for all changes MORE
-+	 * RECENT than batch/bin 0.
-+	 *
-+	 * This implies that it is a waste to accumulate paths in the
-+	 * initial batch/bin (because they will never be transmitted).
-+	 *
-+	 * So the daemon could be running for days and watching the
-+	 * file system, but doesn't need to actually accumulate any
-+	 * paths UNTIL we need to set a reference point for a later
-+	 * relative request.
-+	 *
-+	 * However, it is very useful for testing to always have a
-+	 * reference point set.  Pin batch 0 to force early file system
-+	 * events to accumulate.
-+	 */
-+	if (test_env_value)
-+		batch->pinned_time = time(NULL);
-+
- 	return token;
- }
- 
-+struct fsmonitor_batch *fsmonitor_batch__new(void)
++int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
 +{
-+	struct fsmonitor_batch *batch;
-+
-+	CALLOC_ARRAY(batch, 1);
-+
-+	return batch;
++	return -1;
 +}
 +
-+void fsmonitor_batch__free_list(struct fsmonitor_batch *batch)
++void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
 +{
-+	while (batch) {
-+		struct fsmonitor_batch *next = batch->next;
-+
-+		/*
-+		 * The actual strings within the array of this batch
-+		 * are interned, so we don't own them.  We only own
-+		 * the array.
-+		 */
-+		free(batch->interned_paths);
-+		free(batch);
-+
-+		batch = next;
-+	}
 +}
 +
-+void fsmonitor_batch__add_path(struct fsmonitor_batch *batch,
-+			       const char *path)
++void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
 +{
-+	const char *interned_path = strintern(path);
-+
-+	trace_printf_key(&trace_fsmonitor, "event: %s", interned_path);
-+
-+	ALLOC_GROW(batch->interned_paths, batch->nr + 1, batch->alloc);
-+	batch->interned_paths[batch->nr++] = interned_path;
 +}
 +
-+static void fsmonitor_batch__combine(struct fsmonitor_batch *batch_dest,
-+				     const struct fsmonitor_batch *batch_src)
++void fsm_listen__loop(struct fsmonitor_daemon_state *state)
 +{
-+	size_t k;
-+
-+	ALLOC_GROW(batch_dest->interned_paths,
-+		   batch_dest->nr + batch_src->nr + 1,
-+		   batch_dest->alloc);
-+
-+	for (k = 0; k < batch_src->nr; k++)
-+		batch_dest->interned_paths[batch_dest->nr++] =
-+			batch_src->interned_paths[k];
 +}
+diff --git a/config.mak.uname b/config.mak.uname
+index 26074f56bed..501970902da 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -157,6 +157,16 @@ ifeq ($(uname_S),Darwin)
+ 			MSGFMT = /usr/local/opt/gettext/bin/msgfmt
+ 		endif
+ 	endif
 +
-+static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
-+{
-+	if (!token)
-+		return;
++	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
++	# Unix domain sockets and PThreads.
++	ifndef NO_PTHREADS
++	ifndef NO_UNIX_SOCKETS
++	FSMONITOR_DAEMON_BACKEND = darwin
++	endif
++	endif
 +
-+	assert(token->client_ref_count == 0);
-+
-+	strbuf_release(&token->token_id);
-+
-+	fsmonitor_batch__free_list(token->batch_head);
-+
-+	free(token);
-+}
-+
-+/*
-+ * Flush all of our cached data about the filesystem.  Call this if we
-+ * lose sync with the filesystem and miss some notification events.
-+ *
-+ * [1] If we are missing events, then we no longer have a complete
-+ *     history of the directory (relative to our current start token).
-+ *     We should create a new token and start fresh (as if we just
-+ *     booted up).
-+ *
-+ * If there are no concurrent threads reading the current token data
-+ * series, we can free it now.  Otherwise, let the last reader free
-+ * it.
-+ *
-+ * Either way, the old token data series is no longer associated with
-+ * our state data.
-+ */
-+static void with_lock__do_force_resync(struct fsmonitor_daemon_state *state)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	struct fsmonitor_token_data *free_me = NULL;
-+	struct fsmonitor_token_data *new_one = NULL;
-+
-+	new_one = fsmonitor_new_token_data();
-+
-+	if (state->current_token_data->client_ref_count == 0)
-+		free_me = state->current_token_data;
-+	state->current_token_data = new_one;
-+
-+	fsmonitor_free_token_data(free_me);
-+}
-+
-+void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
-+{
-+	pthread_mutex_lock(&state->main_lock);
-+	with_lock__do_force_resync(state);
-+	pthread_mutex_unlock(&state->main_lock);
-+}
-+
- static ipc_server_application_cb handle_client;
++	BASIC_LDFLAGS += -framework CoreServices
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 0963629db7f..ee0d7257b77 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
+ 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
++	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
++		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
+ 	endif()
+ endif()
  
- static int handle_client(void *data,
-@@ -329,6 +473,81 @@ enum fsmonitor_path_type fsmonitor_classify_path_absolute(
- 	return fsmonitor_classify_path_gitdir_relative(rel);
- }
- 
-+/*
-+ * We try to combine small batches at the front of the batch-list to avoid
-+ * having a long list.  This hopefully makes it a little easier when we want
-+ * to truncate and maintain the list.  However, we don't want the paths array
-+ * to just keep growing and growing with realloc, so we insert an arbitrary
-+ * limit.
-+ */
-+#define MY_COMBINE_LIMIT (1024)
-+
-+void fsmonitor_publish(struct fsmonitor_daemon_state *state,
-+		       struct fsmonitor_batch *batch,
-+		       const struct string_list *cookie_names)
-+{
-+	if (!batch && !cookie_names->nr)
-+		return;
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (batch) {
-+		struct fsmonitor_batch *head;
-+
-+		head = state->current_token_data->batch_head;
-+		if (!head) {
-+			BUG("token does not have batch");
-+		} else if (head->pinned_time) {
-+			/*
-+			 * We cannot alter the current batch list
-+			 * because:
-+			 *
-+			 * [a] it is being transmitted to at least one
-+			 * client and the handle_client() thread has a
-+			 * ref-count, but not a lock on the batch list
-+			 * starting with this item.
-+			 *
-+			 * [b] it has been transmitted in the past to
-+			 * at least one client such that future
-+			 * requests are relative to this head batch.
-+			 *
-+			 * So, we can only prepend a new batch onto
-+			 * the front of the list.
-+			 */
-+			batch->batch_seq_nr = head->batch_seq_nr + 1;
-+			batch->next = head;
-+			state->current_token_data->batch_head = batch;
-+		} else if (!head->batch_seq_nr) {
-+			/*
-+			 * Batch 0 is unpinned.  See the note in
-+			 * `fsmonitor_new_token_data()` about why we
-+			 * don't need to accumulate these paths.
-+			 */
-+			fsmonitor_batch__free_list(batch);
-+		} else if (head->nr + batch->nr > MY_COMBINE_LIMIT) {
-+			/*
-+			 * The head batch in the list has never been
-+			 * transmitted to a client, but folding the
-+			 * contents of the new batch onto it would
-+			 * exceed our arbitrary limit, so just prepend
-+			 * the new batch onto the list.
-+			 */
-+			batch->batch_seq_nr = head->batch_seq_nr + 1;
-+			batch->next = head;
-+			state->current_token_data->batch_head = batch;
-+		} else {
-+			/*
-+			 * We are free to add the paths in the given
-+			 * batch onto the end of the current head batch.
-+			 */
-+			fsmonitor_batch__combine(head, batch);
-+			fsmonitor_batch__free_list(batch);
-+		}
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+}
-+
- static void *fsm_listen__thread_proc(void *_state)
- {
- 	struct fsmonitor_daemon_state *state = _state;
-@@ -343,6 +562,13 @@ static void *fsm_listen__thread_proc(void *_state)
- 
- 	fsm_listen__loop(state);
- 
-+	pthread_mutex_lock(&state->main_lock);
-+	if (state->current_token_data &&
-+	    state->current_token_data->client_ref_count == 0)
-+		fsmonitor_free_token_data(state->current_token_data);
-+	state->current_token_data = NULL;
-+	pthread_mutex_unlock(&state->main_lock);
-+
- 	trace2_thread_exit();
- 	return NULL;
- }
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 8c3a71a48bd..010fbfe60e9 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -12,6 +12,27 @@
- struct fsmonitor_batch;
- struct fsmonitor_token_data;
- 
-+/*
-+ * Create a new batch of path(s).  The returned batch is considered
-+ * private and not linked into the fsmonitor daemon state.  The caller
-+ * should fill this batch with one or more paths and then publish it.
-+ */
-+struct fsmonitor_batch *fsmonitor_batch__new(void);
-+
-+/*
-+ * Free the list of batches starting with this one.
-+ */
-+void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
-+
-+/*
-+ * Add this path to this batch of modified files.
-+ *
-+ * The batch should be private and NOT (yet) linked into the fsmonitor
-+ * daemon state and therefore not yet visible to worker threads and so
-+ * no locking is required.
-+ */
-+void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
-+
- struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
- 
- struct fsmonitor_daemon_state {
-@@ -117,5 +138,24 @@ enum fsmonitor_path_type fsmonitor_classify_path_absolute(
- 	struct fsmonitor_daemon_state *state,
- 	const char *path);
- 
-+/*
-+ * Prepend the this batch of path(s) onto the list of batches associated
-+ * with the current token.  This makes the batch visible to worker threads.
-+ *
-+ * The caller no longer owns the batch and must not free it.
-+ *
-+ * Wake up the client threads waiting on these cookies.
-+ */
-+void fsmonitor_publish(struct fsmonitor_daemon_state *state,
-+		       struct fsmonitor_batch *batch,
-+		       const struct string_list *cookie_names);
-+
-+/*
-+ * If the platform-specific layer loses sync with the filesystem,
-+ * it should call this to invalidate cached data and abort waiting
-+ * threads.
-+ */
-+void fsmonitor_force_resync(struct fsmonitor_daemon_state *state);
-+
- #endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
- #endif /* FSMONITOR_DAEMON_H */
 -- 
 gitgitgadget
 
