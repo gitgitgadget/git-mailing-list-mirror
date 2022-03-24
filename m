@@ -2,182 +2,329 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6338FC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 14:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D3AC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 14:50:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350769AbiCXOZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 10:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41822 "EHLO
+        id S1348500AbiCXOvf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 10:51:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346276AbiCXOZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 10:25:19 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0CA78FE9
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 07:23:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1648131822;
-        bh=f2l/XYC2duCShGd4PFB/2pVG0a7tkJvdhYd+7KEpGvE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DdLoSjTqqBhxTLOP4HkW+UTnsQ1O1cRHsOpQ79ObiyoWKZUhVNJ9R4myqkBKK5nih
-         mKZsnrqPBa2LIKB0oc8AILgKHaVLPnuSdwQX0ae4nymL/a4+OZQnaN0PbRDaGu8Zyt
-         WtBPWSR0j3aA72EsibN4fQ8TykEwajxSmCWbs7GQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.147.135] ([213.196.212.0]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MkYXs-1nv7zv3JIU-00m0Wy; Thu, 24
- Mar 2022 15:23:41 +0100
-Date:   Thu, 24 Mar 2022 15:23:40 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jan Christoph Uhde <Jan@UhdeJc.com>
-cc:     git@vger.kernel.org
-Subject: Re: `git rebase -i --rebase-merges` formatting
-In-Reply-To: <9c494301-3c52-c953-95ab-48675634ada7@UhdeJc.com>
-Message-ID: <nycvar.QRO.7.76.6.2203241505570.388@tvgsbejvaqbjf.bet>
-References: <9c494301-3c52-c953-95ab-48675634ada7@UhdeJc.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HdFyTLGxe/0BNLmNhbSAX3q1CNHDcMn89hROJiZk4nYUT+/tff2
- ZhLqRsIbo0lc1FGinszjJnvxMgV1zvLJY4fdDwBy8PchIZsl78/etPVtZEQjfyfuzAvIe0j
- OmujbBHEuH5NjtKVAprn57lX9CqSOjq9dcTw2NaSiSMcOMNjbX75eJVfbBSqR5Q2LI/ka1X
- sXpdlaSmYm9AW0yu9OYlg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:N72DF43SvL0=:77y907JvTh8Jc1ciLezgOs
- OLGRlZFaieWDGnZDt5FbwbWZvKNNqVoPsCSO1njcb6y4m+cLlLFhrFwEQMrhFflUGWizVX8GS
- Y5L+xNa7ABXLikIy8AjR8ovzF0tgNTqgaMwBwA7z7cH3ayjCHIUDfAoddRdwGdZcy3ZZ8OeOO
- Hsc1ivq65sPifOqVjsFvrP/z5JZulPX0HGbHkJnoD/4zFfokcLMjWGpvVURt1M/lR/JogP56S
- xhtj7nIPYww/kEoPsNIURj31Dh3cGf1L4MtgnilzLuIXL0HVnU4+r1OAiv5G/KCiybW+Fb4F6
- 90qJfvPVOaAclqr60PApo3TvJBTF/xk9BYu9V8v23pjq1UVJeJGSSgdlno+G53z1CIfN89Z0G
- CXPoJuuTWBvWZs8jvF3onRj3R55Qxsbwj1mfOtCh8aw4UKMjVrZbkrpsdIptvaoF61tgDWC9u
- leusXuwbubF7rZg/WwSIIUCbeCjBoWxW68RUzDazSKMly/Tfh71ItXpSuBjwk1YYvsgy/ckUK
- 7K6d4Wr9fg6i+QWacIQDOjfuLoXzAHG8n/IhbTdriK32TQCjgKkvcLd5k+wmRJ6VwTaZwXuGZ
- f+7mdxG7wW3SDvBtwlTkLqrtdWEtXcDvGx7FUc5KmxwJmDXUU3KQlrF6D/HO2CRhWFgNQ/Hxf
- DHBBgKkJQwzmOfvGqChqPFrepsY6OYf1R661ZRNvMBNkcVgor2h3cRObmPUWVzTxWLSwAQui4
- 02+xPVfzSFmVJRkHX5j/MeY5fQtmGwJueCSrEPcnXM9FQ9yRrLD4Oesx1tJ8CWw60XJD06n4U
- gDggICrVTHoxC3hp0nll2hdgzJU/36RpB4O29ub5f+Dll8mtaiTCLW/3ieEYsjl3TJg4iYn+r
- 114hRrgYies4O9wYnk9xcC9MLKJhaX3LK6ZQ4U/DVkGe04+YCtE4ssOk3W3ZXYzDtDqv9HHIp
- UC3q20ljhIy39n75nUuapHls/FLCI+hVJzAycWD6nz6Cc/3kQgERlRkBJ8HHLom37ZFHw0/lI
- 5Uwqzq4KK/QjJjG8o3Wnox2/GpZCXLbNGw8n4vZfcGg39nDggM4B4GgzxNNcK2DEjFqyIdNN+
- JEEdBJiSh1CgkI=
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S243341AbiCXOve (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 10:51:34 -0400
+X-Greylist: delayed 384 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 24 Mar 2022 07:50:02 PDT
+Received: from ms11p00im-hyfv17281201.me.com (ms11p00im-hyfv17281201.me.com [17.58.38.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41703A775F
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 07:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1648133017;
+        bh=Jd1A9BubGRNn58V5yB7iSmYsW/mXpUjCd91UiAdhuzg=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=uuhTWM9CAi++3Coe66PNuNN5xZrwS1n5HFJFHcx6CvlOZUszt9Z9g1MfmrMI37cc/
+         xKN3pOUzM05aqd3Cd9gJ6fEpy2wL+FxlUoIegNMY4SHCNrcnyFD0Yhlr1SmqU4vvRn
+         l+zZHyLp3WGBTnvQeTugFL3cNZzL6Z6NEcKrhXy7dw28mu6FGgZgupHN3I9ONRoB9n
+         1R4jl8GAP1EeAyexnOwi61x5EJDvIrZqa12BYuBKP2MJN+mFhOER7gKxzZFl37e7F+
+         d9A6IC28eKbjlCuiLUqLSWaqpjS7cbEGCWb1MYnK4+JEpF3V4U40lSc52mhvneaomb
+         1zQOD6llKTIcA==
+Received: from max-mbp-1449.fritz.box (ms11p00im-dlb-asmtpmailmevip.me.com [17.57.154.19])
+        by ms11p00im-hyfv17281201.me.com (Postfix) with ESMTPS id F16AAC8058C
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:43:36 +0000 (UTC)
+From:   Maximilian Reichel <reichemn@icloud.com>
+Content-Type: multipart/mixed;
+        boundary="Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA"
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
+Subject: git reset --merge random behavior
+Message-Id: <84FF8F9A-3A9A-4F2A-8D8E-5D50F2F06203@icloud.com>
+Date:   Thu, 24 Mar 2022 15:43:33 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.21)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxlogscore=985
+ adultscore=0 bulkscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2203240084
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jan,
 
-On Fri, 11 Mar 2022, Jan Christoph Uhde wrote:
+--Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-> for the following commits:
->
-> ``` git log
-> *   4fd94fd  (HEAD -> master) 6 hours ago Jan Christoph Uhde Merge branc=
-h
-> 'b_two'
-> |\
-> |* cc75466  6 hours ago Jan Christoph Uhde b_two
-> |/
-> *   9ad8a2b  6 hours ago Jan Christoph Uhde Merge branch 'b_one'
-> |\
-> |* b23658f  (b_one) 6 hours ago Jan Christoph Uhde one
-> |/
-> * a9d65bc  6 hours ago Jan Christoph Uhde initial commit
-> ```
->
-> I get a this merge script when rebasing onto the initial commit.
->
-> ``` actual merge script
->   1 label onto
->   2
->   3 # Branch b-one
->   4 reset onto
->   5 pick b23658f one
->   6 label b-one
->   7
->   8 # Branch b-two
->   9 reset onto
->  10 merge -C 9ad8a2b b-one # Merge branch 'b_one'
->  11 label branch-point
->  12 pick cc75466 b_two
->  13 label b-two
->  14
->  15 reset branch-point # Merge branch 'b_one'
->  16 merge -C 4fd94fd b-two # Merge branch 'b_two'
->  17
->  18 # Rebase a9d65bc..4fd94fd onto a9d65bc (11 commands)
->  19 #
-> ```
->
-> I think it should be more similar to this:
->
->
-> ``` suggested merge script
->   1 label onto
->   2 reset onto #Could imo go but probably avoids special cases
->   3
->   4 # Branch b-one
->   5 pick b23658f one
->   6 label b-one
->   7 reset onto
->   8 merge -C 9ad8a2b b-one # Merge branch 'b_one'
->   9 label branch-point
->  10
->  11 # Branch b-two
->  12 pick cc75466 b_two
->  13 label b-two
->  14 reset branch-point # Merge branch 'b_one'
->  15 merge -C 4fd94fd b-two # Merge branch 'b_two'
->  16 # add `label branch-point-1` here to avoid special cases?!
->  17
->  18 # Rebase a9d65bc..4fd94fd onto a9d65bc (11 commands)
->  19 #
-> ```
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-The idea of the current format is to facilitate moving branches around.
-Imagine, for example, that you wanted to change the order of b_one and
-b_two, or even base b_two directly on top of b_one instead of the merge
-commit, or base it on the same branch-point as b_one.
+What did you do before the bug happened? (Steps to reproduce your issue)
+Running the following script (test.sh) multiple times:
 
-With the `reset` command being a part of the topic branch's commands, it
-is pretty easy: you move the block starting with the comment and ending in
-the empty line, adjusting the `reset` command if necessary (or removing
-it).
+ ```
+ #!/bin/bash
+GIT_TRACE=3Dtrue
+export GIT_TRACE
 
-With the format you suggested, it would take substantially more mental
-energy to do the same.
+mkdir gitDir0
+cd gitDir0
+env git -c init.defaultBranch=3Dmaster init=20
+echo bar > bar.txt
+env git add -v bar.txt=20
+env git -c user.name=3D"P" -c user.email=3D"e@mail.com" commit -v -m =
+first=20
 
-This is not a hypothetical use case, by the way. We frequently use it to
-clean up Git for Windows' branch thicket, usually when preparing the -rc0
-versions.
+mkdir ../gitDir2
+cd ../gitDir2
+env git -c init.defaultBranch=3Dmaster init=20
+env git pull -v --set-upstream ../gitDir0=20
+echo foo > foo.txt
+env git add -v foo.txt=20
+env git mv -v -f -- foo.txt bar.txt=20
+env git reset --merge HEAD
+```
 
-> Looking at the sequencer.c it might not be worth the invested time
-> to change the format. If it can not be resolved easily I think
-> removing the empty lines and the branch-comments would suffice
-> to reduce the confusion. I think they have been introduced to
-> help people but here they are a hindrance.
->
-> Another unrelated suggestion is to start with `branch-point-0`
-> instead of `onto` and keep counting up. This would make the
-> edit-distances smaller when you fiddle with the first commits.
+What did you expect to happen? (Expected behavior)
+I expect that the script shows the same behavior on every execution.
 
-It is often quite useful to see immediately which topics are branched off
-from `onto`.
+What happened instead? (Actual behavior)
+I encountered two different behaviors (random):
+1. Most of the time the git reset command succeeds and the file =
+gitDir2/bar.txt contains the string "bar" after running the script.
+2. Sometimes the git reset command fails and the file gitDir2/bar.txt =
+contains the string "foo" after running the script.
+In this case, the reset command produces the following output:
+```
+error: Entry 'bar.txt' not uptodate. Cannot merge.
+fatal: Could not reset index file to revision 'HEAD'.
+```
+The full console output of both cases is attached to this mail, but they =
+only really differ in this error message.
 
-Take for example the `ready-for-upstream` sub-thicket of Git for Windows:
-https://github.com/git-for-windows/git/commit/7d77d55f1
+Anything else you want to add:
+I could observe this behavior on git 2.35.1 and 2.34.1.
+The behavior is not affected by whether GIT_TRACE is set.
 
-This is the part of the quite complex set of Git for Windows patches which
-is deemed ready to be contributed to core Git. These contributions usually
-come in via PRs on top of Git for Windows' `main` and need to be moved
-further down, ideally directly on top of `onto` (which corresponds to the
-upstream Git tip commit). That way, they can be contributed as-are.
+I wrote a script that executes this test script repeatedly and keeps =
+track of the possible outcomes of the gitDir2/bar.txt file.
+It will print a line each time the content differs from the previous =
+execution.
+This script is attached to this mail (runner.sh).
+Sample output of this script:
+```
+execution #0 	 hash: c157a79031e1c40f85931829bc5fc552 	 date: =
+Thu Mar 24 13:22:17 UTC 2022
+execution #203 	 hash: d3b07384d113edec49eaa6238ad5ff00 	 date: =
+Thu Mar 24 13:22:29 UTC 2022
+execution #204 	 hash: c157a79031e1c40f85931829bc5fc552 	 date: =
+Thu Mar 24 13:22:29 UTC 2022
+execution #264 	 hash: d3b07384d113edec49eaa6238ad5ff00 	 date: =
+Thu Mar 24 13:22:32 UTC 2022
+execution #265 	 hash: c157a79031e1c40f85931829bc5fc552 	 date: =
+Thu Mar 24 13:22:32 UTC 2022
+execution #432 	 hash: d3b07384d113edec49eaa6238ad5ff00 	 date: =
+Thu Mar 24 13:22:40 UTC 2022
+execution #433 	 hash: c157a79031e1c40f85931829bc5fc552 	 date: =
+Thu Mar 24 13:22:40 UTC 2022
+execution #489 	 hash: d3b07384d113edec49eaa6238ad5ff00 	 date: =
+Thu Mar 24 13:22:43 UTC 2022
+```
 
-However, while moving some of those patches down on top of `onto`,
-build/test failures occasionally indicate a dependency on another topic.
-Obviously, that other topic needs to be upstreamed first.
 
-The mental load of translating `branch-point-0` to mean "this is the new
-starting point" might not sound much, but juggling branch thickets is hard
-enough as it is, there is no need to make it harder.
+[System Info]
+git version:
+git version 2.35.1
+cpu: x86_64
+built from commit: 4c53a8c20f8984adb226293a3ffd7b88c3f4ac1a
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): <unset>
 
-Ciao,
-Johannes
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+--Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA
+Content-Disposition: attachment;
+	filename=runner.sh
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="runner.sh"
+Content-Transfer-Encoding: 7bit
+
+#!/bin/bash
+outputs_dir=outputs
+script=test.sh
+work_dir=workDir
+observed_file=gitDir2/bar.txt
+
+mkdir -p "$work_dir"
+mkdir -p "$outputs_dir"
+i=0
+last_hash=
+trap "exit 0" INT
+while true; do
+    (   # prepare work dir
+        rm -rf $work_dir && 
+        mkdir $work_dir && 
+        cp $script $work_dir/$script &&
+        cd $work_dir &&
+        ./$script # execute script
+    ) > consoleOut.txt 2>&1
+    hash=$(md5sum <${work_dir}/$observed_file | tr -cd '[:alnum:]') # use md5 instead of md5sum on macOS
+    if [ "$hash" != "$last_hash" ]; then
+        # report when file content has changed
+        printf  "execution #%d \t hash: %s \t date: %s\n" $i "$hash" "$(date)"
+        if [ ! -d "${outputs_dir}/${hash}/" ]; then
+            # copy working dir and console output to output dir
+            cp -r ${work_dir} "${outputs_dir}/${hash}"
+            cp ${work_dir}/$observed_file "${outputs_dir}/${hash}.txt"
+            cp consoleOut.txt "${outputs_dir}/${hash}"
+        fi
+    fi
+    last_hash=$hash
+    ((i=i+1))
+done
+--Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA
+Content-Disposition: attachment;
+	filename=case2ConsoleOut.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="case2ConsoleOut.txt"
+Content-Transfer-Encoding: quoted-printable
+
+13:05:42.974156 git.c:458               trace: built-in: git init
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test2/workDir/gitDir0/.git/
+13:05:42.976995 git.c:458               trace: built-in: git add -v =
+bar.txt
+add 'bar.txt'
+13:05:42.979187 git.c:458               trace: built-in: git commit -v =
+-m first
+13:05:42.980431 run-command.c:654       trace: run_command: git =
+maintenance run --auto --no-quiet
+13:05:42.981375 git.c:458               trace: built-in: git maintenance =
+run --auto --no-quiet
+[master (root-commit) 4165aea] first
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar.txt
+13:05:42.984917 git.c:458               trace: built-in: git init
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test2/workDir/gitDir2/.git/
+13:05:42.987933 git.c:458               trace: built-in: git pull -v =
+--set-upstream ../gitDir0
+13:05:42.988098 run-command.c:654       trace: run_command: git fetch =
+--update-head-ok -v --set-upstream ../gitDir0
+13:05:42.989104 git.c:458               trace: built-in: git fetch =
+--update-head-ok -v --set-upstream ../gitDir0
+13:05:42.989301 run-command.c:654       trace: run_command: unset =
+GIT_PREFIX; GIT_PROTOCOL=3Dversion=3D2 'git-upload-pack =
+'\''../gitDir0'\'''
+13:05:42.990794 git.c:458               trace: built-in: git upload-pack =
+../gitDir0
+13:05:42.991782 run-command.c:654       trace: run_command: git =
+pack-objects --revs --thin --stdout --delta-base-offset
+remote: 13:05:42.992962 git.c:458               trace: built-in: git =
+pack-objects --revs --thin --stdout --delta-base-offset       =20
+13:05:42.993799 run-command.c:654       trace: run_command: git =
+unpack-objects -q --pack_header=3D2,3
+13:05:42.995006 git.c:458               trace: built-in: git =
+unpack-objects -q --pack_header=3D2,3
+13:05:42.995872 run-command.c:654       trace: run_command: git rev-list =
+--objects --stdin --not --all --quiet --alternate-refs
+13:05:42.996906 git.c:458               trace: built-in: git rev-list =
+--objects --stdin --not --all --quiet --alternate-refs
+=46rom ../gitDir0
+ * branch            HEAD       -> FETCH_HEAD
+13:05:42.998066 run-command.c:1582      run_processes_parallel: =
+preparing to run up to 1 tasks
+13:05:42.998076 run-command.c:1614      run_processes_parallel: done
+13:05:42.998082 run-command.c:654       trace: run_command: git =
+maintenance run --auto --no-quiet
+13:05:42.999099 git.c:458               trace: built-in: git maintenance =
+run --auto --no-quiet
+13:05:43.002592 git.c:458               trace: built-in: git add -v =
+foo.txt
+add 'foo.txt'
+13:05:43.004882 git.c:458               trace: built-in: git mv -v -f -- =
+foo.txt bar.txt
+warning: overwriting 'bar.txt'
+Renaming foo.txt to bar.txt
+13:05:43.007057 git.c:458               trace: built-in: git reset =
+--merge HEAD
+error: Entry 'bar.txt' not uptodate. Cannot merge.
+fatal: Could not reset index file to revision 'HEAD'.
+
+--Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA
+Content-Disposition: attachment;
+	filename=case1ConsoleOut.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="case1ConsoleOut.txt"
+Content-Transfer-Encoding: quoted-printable
+
+13:05:36.550286 git.c:458               trace: built-in: git init
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test2/workDir/gitDir0/.git/
+13:05:36.553483 git.c:458               trace: built-in: git add -v =
+bar.txt
+add 'bar.txt'
+13:05:36.555923 git.c:458               trace: built-in: git commit -v =
+-m first
+13:05:36.557265 run-command.c:654       trace: run_command: git =
+maintenance run --auto --no-quiet
+13:05:36.558315 git.c:458               trace: built-in: git maintenance =
+run --auto --no-quiet
+[master (root-commit) aea16b2] first
+ 1 file changed, 1 insertion(+)
+ create mode 100644 bar.txt
+13:05:36.561756 git.c:458               trace: built-in: git init
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test2/workDir/gitDir2/.git/
+13:05:36.564497 git.c:458               trace: built-in: git pull -v =
+--set-upstream ../gitDir0
+13:05:36.564679 run-command.c:654       trace: run_command: git fetch =
+--update-head-ok -v --set-upstream ../gitDir0
+13:05:36.565640 git.c:458               trace: built-in: git fetch =
+--update-head-ok -v --set-upstream ../gitDir0
+13:05:36.565830 run-command.c:654       trace: run_command: unset =
+GIT_PREFIX; GIT_PROTOCOL=3Dversion=3D2 'git-upload-pack =
+'\''../gitDir0'\'''
+13:05:36.567311 git.c:458               trace: built-in: git upload-pack =
+../gitDir0
+13:05:36.568164 run-command.c:654       trace: run_command: git =
+pack-objects --revs --thin --stdout --delta-base-offset
+remote: 13:05:36.569156 git.c:458               trace: built-in: git =
+pack-objects --revs --thin --stdout --delta-base-offset       =20
+13:05:36.570130 run-command.c:654       trace: run_command: git =
+unpack-objects -q --pack_header=3D2,3
+13:05:36.571443 git.c:458               trace: built-in: git =
+unpack-objects -q --pack_header=3D2,3
+13:05:36.572322 run-command.c:654       trace: run_command: git rev-list =
+--objects --stdin --not --all --quiet --alternate-refs
+13:05:36.573357 git.c:458               trace: built-in: git rev-list =
+--objects --stdin --not --all --quiet --alternate-refs
+=46rom ../gitDir0
+ * branch            HEAD       -> FETCH_HEAD
+13:05:36.574654 run-command.c:1582      run_processes_parallel: =
+preparing to run up to 1 tasks
+13:05:36.574663 run-command.c:1614      run_processes_parallel: done
+13:05:36.574669 run-command.c:654       trace: run_command: git =
+maintenance run --auto --no-quiet
+13:05:36.575573 git.c:458               trace: built-in: git maintenance =
+run --auto --no-quiet
+13:05:36.578926 git.c:458               trace: built-in: git add -v =
+foo.txt
+add 'foo.txt'
+13:05:36.581235 git.c:458               trace: built-in: git mv -v -f -- =
+foo.txt bar.txt
+warning: overwriting 'bar.txt'
+Renaming foo.txt to bar.txt
+13:05:36.583892 git.c:458               trace: built-in: git reset =
+--merge HEAD
+
+--Apple-Mail=_6E1FDBB5-1FBA-4F6F-8D83-521F102B85AA--
