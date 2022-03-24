@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90310C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 04:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9EDEC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 04:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347009AbiCXFAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 01:00:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43026 "EHLO
+        id S1346180AbiCXFAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 01:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345848AbiCXFAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 01:00:12 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23A02AC68
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:40 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so1940771wmb.3
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:40 -0700 (PDT)
+        with ESMTP id S1346265AbiCXFAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 01:00:16 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC56B2B18D
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:41 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r13so4925102wrr.9
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hg8plsugjefXxhMhSvzABM0c1aAu2C8TxytBC4+PwWI=;
-        b=ElIyKQkVTvLZAPH30rX17lO4UK/VA0bS8CH8nyrkFiqmrWUEPZTXQyqdk7WEfCF+o8
-         j7Eodr1wM3e65Kljzji9mApGh15I+JBth2ekSw1TxcFTN9tFJagNCZas1evoc+wuVISL
-         JKZzEc2RiYiTeZe4B0CxVQbk5HBa1I9YVaEzfVcNY1asqb6YE/N5NXSMibZP2nvoyuJg
-         vNEdBHDjJmJa57Y4Jl472UMknptG+oor4g/FxRH+X6dHkFTQkwpP7Uj50/ISVVneLLX1
-         I+vTWzBxefN+Fhf+6hYsq6Wi4ULXeEsHjgbb4WN1KK3izX9GM2RMMqVgtc7aLbh+G0St
-         lbQQ==
+        bh=f/ZbN5quD6ggV2+4j9lRbjM6zktg3vb1d35PK4/3tT4=;
+        b=V+DDuV+a+prxUkTSHvXDayTX7LEsI92hd/ZeK/3jock+iJNZbdJjCdmpG4kZetD49E
+         0DqxAgFct2PQc8RJ0qm12FxY3Nds0rO0VM/eTwPiibx0UZ3F7tSlyBrLt3d7XFDGfrXW
+         wlR8g0Hq/OJkFa4BiPpO2Yac4oD+ejcS5j8suzY3+VuyktUw53GTl8N6WWG6M1kMuPkz
+         ltWcb9a4iGtD+qkbdpHhrwL6mydgrXcViXK3Ks7z/nl2871agZa/Kehojyw0VF52p3gW
+         tX48wr0xVAjk+a/ZL39HAc9UN0z51c3ukg8qdMV1ZKH0FYQNhceBLuqgPaCblxfH4sTb
+         JqbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hg8plsugjefXxhMhSvzABM0c1aAu2C8TxytBC4+PwWI=;
-        b=S7Qv3AA11xhTLQK2hg/Vk+dQ/FYLbVepi4KPBdgR+4rvxj9GY+xQbvPvgLL0sodBgp
-         2Grk9ZXmH3qZGd8fQQlVzsdf1qGEGHTiVPdsChsc1tLuqAgSe8yuWHXG9LoQ5Bs48v6D
-         eCfvBrGFGwnvMOGcYObGDlK1VUwlkaatPyBTqwKATaqzpQiGUWy9Y3OHDOLMnDZfwwz5
-         HEB4gs+qq3aZbaw6WtOsSaWJvjzUuSSub9c4EoctIpJDsy8ODL+SPzBCBaY89xBqaYUY
-         kgo6jvmFOPrMXEtrSTPXgW6sbTEnMygbZk8p7ttrPnvM1gdRsM+Nl6zfQeHXNF7tzF0V
-         JC7w==
-X-Gm-Message-State: AOAM530Eeq/XH3olR2DmulqCOjbJz4tiL3e2iGHknWjpsLKNphVlnUUO
-        MM1oC2skPj99jE+PDRVG/du3Iq11ccs=
-X-Google-Smtp-Source: ABdhPJx6Dx0egO6gInE/n0JpIi+sLd5yGzI+4vDE1XcdGCq6Jn6HdoP8AhTfjd4QPXc8mkI30m2xdw==
-X-Received: by 2002:a05:600c:3487:b0:38c:9a42:4d49 with SMTP id a7-20020a05600c348700b0038c9a424d49mr3067487wmq.29.1648097919074;
-        Wed, 23 Mar 2022 21:58:39 -0700 (PDT)
+        bh=f/ZbN5quD6ggV2+4j9lRbjM6zktg3vb1d35PK4/3tT4=;
+        b=uKTTl3AFIV37rq/EDAl/hW4iXzmBl+3+n5f+MaZSgMfvn7+iyeyOt1Oj2gV5egQBFG
+         qfHWP2RsY64BLsBjBrGKWbm79kolSwWhQepZHUFFNGeJfDZ6IYq1+lJIinvyArDlFoi8
+         b6pCG4v6HToKUWMq/T+S1KTARyAZfDak3uiwUI9VM+KglAbyA2pmAbH2LaOxQTX7Ommr
+         LTujGpUU3njxq/4BLN7fCQ6sl04E4Gs0r9XUHxcUcRNaq/Rg6LpOwqS4NZhtAlLq8kDv
+         APquy5wjTqUM5gyYlnKL5Vh5FamoybSA8s77nkpZJAAGggs/daXXyAlEkHvXeEPbdxXG
+         2R0w==
+X-Gm-Message-State: AOAM532WmS079NFZMRS6pEmTBOqk7iUuiYyc88++eWmvvUiTs+4bZKwB
+        R/cMa6S0q5FUvCMynE2fk9Ws/NA7np8=
+X-Google-Smtp-Source: ABdhPJxJTzD97ZxwPrdT84gTJ6ncO+prUg6L+3wWt+NtgvfqQ/pD0cuAUUaFXK/B8s6FnaYG/M4Zgg==
+X-Received: by 2002:adf:eb86:0:b0:1e6:8c92:af6b with SMTP id t6-20020adfeb86000000b001e68c92af6bmr2969735wrn.116.1648097920369;
+        Wed, 23 Mar 2022 21:58:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm1719918wri.48.2022.03.23.21.58.37
+        by smtp.gmail.com with ESMTPSA id l13-20020a05600002ad00b00203d64c5289sm1697902wry.112.2022.03.23.21.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 21:58:38 -0700 (PDT)
-Message-Id: <447263e8ef14021714976e489248cdcc48ec0303.1648097906.git.gitgitgadget@gmail.com>
+        Wed, 23 Mar 2022 21:58:39 -0700 (PDT)
+Message-Id: <8f1b01c9ca0aff1412657d230f58fdcd7b3aeade.1648097906.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
 References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
         <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 04:58:22 +0000
-Subject: [PATCH v3 07/11] core.fsync: use batch mode and sync loose objects by
- default on Windows
+Date:   Thu, 24 Mar 2022 04:58:23 +0000
+Subject: [PATCH v3 08/11] test-lib-functions: add parsing helpers for ls-files
+ and ls-tree
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,84 +70,324 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Git for Windows has defaulted to core.fsyncObjectFiles=true since
-September 2017. We turn on syncing of loose object files with batch mode
-in upstream Git so that we can get broad coverage of the new code
-upstream.
+Several tests use awk to parse OIDs from the output of 'git ls-files
+--stage' and 'git ls-tree'. Introduce helpers to centralize these uses
+of awk.
 
-We don't actually do fsyncs in the most of the test suite, since
-GIT_TEST_FSYNC is set to 0. However, we do exercise all of the
-surrounding batch mode code since GIT_TEST_FSYNC merely makes the
-maybe_fsync wrapper always appear to succeed.
+Update t5317-pack-objects-filter-objects.sh to use the new ls-files
+helper so that it has some usages to review. Other updates are left for
+the future.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- cache.h           | 4 ++++
- compat/mingw.h    | 3 +++
- config.c          | 2 +-
- git-compat-util.h | 2 ++
- 4 files changed, 10 insertions(+), 1 deletion(-)
+ t/t5317-pack-objects-filter-objects.sh | 91 +++++++++++++-------------
+ t/test-lib-functions.sh                | 10 +++
+ 2 files changed, 54 insertions(+), 47 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index a5bf15a5131..7f6cbb254b4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1031,6 +1031,10 @@ enum fsync_component {
- 			      FSYNC_COMPONENT_INDEX | \
- 			      FSYNC_COMPONENT_REFERENCE)
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index 33b740ce628..bb633c9b099 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -10,9 +10,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ # Test blob:none filter.
  
-+#ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
-+#define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
-+#endif
+ test_expect_success 'setup r1' '
+-	echo "{print \$1}" >print_1.awk &&
+-	echo "{print \$2}" >print_2.awk &&
+-
+ 	git init r1 &&
+ 	for n in 1 2 3 4 5
+ 	do
+@@ -22,10 +19,13 @@ test_expect_success 'setup r1' '
+ 	done
+ '
+ 
++parse_verify_pack_blob_oid () {
++	awk '{print $1}' -
++}
 +
- /*
-  * A bitmask indicating which components of the repo should be fsynced.
-  */
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6074a3d3ced..afe30868c04 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -332,6 +332,9 @@ int mingw_getpagesize(void);
- int win32_fsync_no_flush(int fd);
- #define fsync_no_flush win32_fsync_no_flush
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
  
-+#define FSYNC_COMPONENTS_PLATFORM_DEFAULT (FSYNC_COMPONENTS_DEFAULT | FSYNC_COMPONENT_LOOSE_OBJECT)
-+#define FSYNC_METHOD_DEFAULT (FSYNC_METHOD_BATCH)
+ 	git -C r1 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -35,7 +35,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -54,12 +54,12 @@ test_expect_success 'verify blob:none packfile has no blobs' '
+ test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >expected &&
+ 
+ 	git -C r1 verify-pack -v ../filter.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -123,8 +123,8 @@ test_expect_success 'setup r2' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -134,7 +134,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r2 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -161,8 +161,8 @@ test_expect_success 'verify blob:limit=1000' '
+ '
+ 
+ test_expect_success 'verify blob:limit=1001' '
+-	git -C r2 ls-files -s large.1000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1001 >filter.pack <<-EOF &&
+@@ -172,15 +172,15 @@ test_expect_success 'verify blob:limit=1001' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=10001' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=10001 >filter.pack <<-EOF &&
+@@ -190,15 +190,15 @@ test_expect_success 'verify blob:limit=10001' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=1k' '
+-	git -C r2 ls-files -s large.1000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1k >filter.pack <<-EOF &&
+@@ -208,15 +208,15 @@ test_expect_success 'verify blob:limit=1k' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify explicitly specifying oversized blob in input' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	echo HEAD >objects &&
+@@ -226,15 +226,15 @@ test_expect_success 'verify explicitly specifying oversized blob in input' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=1m' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1m >filter.pack <<-EOF &&
+@@ -244,7 +244,7 @@ test_expect_success 'verify blob:limit=1m' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -253,12 +253,12 @@ test_expect_success 'verify blob:limit=1m' '
+ test_expect_success 'verify normal and blob:limit packfiles have same commits/trees' '
+ 	git -C r2 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >expected &&
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -289,9 +289,8 @@ test_expect_success 'setup r3' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r3 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -301,7 +300,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r3 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -342,9 +341,8 @@ test_expect_success 'setup r4' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -354,19 +352,19 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r4 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify sparse:oid=OID' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 ls-files -s pattern >staged &&
+-	oid=$(awk -f print_2.awk staged) &&
++	oid=$(test_parse_ls_files_stage_oids <staged) &&
+ 	git -C r4 pack-objects --revs --stdout --filter=sparse:oid=$oid >filter.pack <<-EOF &&
+ 	HEAD
+ 	EOF
+@@ -374,15 +372,15 @@ test_expect_success 'verify sparse:oid=OID' '
+ 
+ 	git -C r4 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify sparse:oid=oid-ish' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 pack-objects --revs --stdout --filter=sparse:oid=main:pattern >filter.pack <<-EOF &&
+@@ -392,7 +390,7 @@ test_expect_success 'verify sparse:oid=oid-ish' '
+ 
+ 	git -C r4 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -402,9 +400,8 @@ test_expect_success 'verify sparse:oid=oid-ish' '
+ # This models previously omitted objects that we did not receive.
+ 
+ test_expect_success 'setup r1 - delete loose blobs' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	for id in `cat expected | sed "s|..|&/|"`
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index a027f0c409e..e6011409e2f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1782,6 +1782,16 @@ test_oid_to_path () {
+ 	echo "${1%$basename}/$basename"
+ }
+ 
++# Parse oids from git ls-files --staged output
++test_parse_ls_files_stage_oids () {
++	awk '{print $2}' -
++}
 +
- struct rlimit {
- 	unsigned int rlim_cur;
- };
-diff --git a/config.c b/config.c
-index 511f4584eeb..e9cac5f4707 100644
---- a/config.c
-+++ b/config.c
-@@ -1342,7 +1342,7 @@ static const struct fsync_component_name {
- 
- static enum fsync_component parse_fsync_components(const char *var, const char *string)
- {
--	enum fsync_component current = FSYNC_COMPONENTS_DEFAULT;
-+	enum fsync_component current = FSYNC_COMPONENTS_PLATFORM_DEFAULT;
- 	enum fsync_component positive = 0, negative = 0;
- 
- 	while (string) {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 0892e209a2f..fffe42ce7c1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1257,11 +1257,13 @@ __attribute__((format (printf, 3, 4))) NORETURN
- void BUG_fl(const char *file, int line, const char *fmt, ...);
- #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
- 
-+#ifndef FSYNC_METHOD_DEFAULT
- #ifdef __APPLE__
- #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_WRITEOUT_ONLY
- #else
- #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_FSYNC
- #endif
-+#endif
- 
- enum fsync_action {
- 	FSYNC_WRITEOUT_ONLY,
++# Parse oids from git ls-tree output
++test_parse_ls_tree_oids () {
++	awk '{print $3}' -
++}
++
+ # Choose a port number based on the test script's number and store it in
+ # the given variable name, unless that variable already contains a number.
+ test_set_port () {
 -- 
 gitgitgadget
 
