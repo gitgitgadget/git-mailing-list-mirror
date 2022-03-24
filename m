@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB064C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A9FEC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351924AbiCXQxx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36140 "EHLO
+        id S1351939AbiCXQx5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350677AbiCXQxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:53:20 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5159D954AF
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:48 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id h4so7461174wrc.13
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:48 -0700 (PDT)
+        with ESMTP id S234892AbiCXQxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:53:21 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D651996AD
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:49 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso2925415wmz.4
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
-        b=O5v0gykJYEyoLOG2mI///+jisIZCTQ0fLt43aF/+sKN3I7Qk2GR+yTt5+DFz3AuIkF
-         16pFTthRkS4eOAfN4snIul1zqVc5GfsO5kgRv9t43zbxq4HSAWaQ40u6m5kxSH/N42Um
-         Zd6dpV0+6IigdiED3gCMRMuC27o7p5RTCEgfGi4sHhETOM/y7HdlhaGYumDUU7hYeqv6
-         p8aVvvAUlmfEjVaim5VfbK6+OGPeqirg7J7mZce6Jw6zDUX2usyU1TYm0HxOdL87lrir
-         SqTlL98SBEZ0+d8kG0YTAEqKsAv129Hs9L1fENx8H+sEIyO5NLM2yaZF1f78hz+NCzKM
-         np6Q==
+        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
+        b=TIeOhv4kTZ1Ooi0AU2Tv+NeqpaXZVCSmZUrczXziu8xHCsx6nnARxFe0SdLatXmem/
+         fub9qIe/BuLteAiuMAlNp4Ix7BKteYoVlxG8Hijlsa+Co20cOoumuSI1jMsHcKRQ7/7F
+         fMd4kvq9kt8YXJT7GqB9yFXhTB8/e+GitnOKXH9l4+Hd94PB38vitHUg+99nIRP0z9w0
+         QT5jzVzrbK9a6t2h1dG69IeT/YayiP1ER1PfSLsI2xoDqHF0KcdEoeSeRNcE9HleJcZz
+         0RttmZs/MIeGc/ctgftKsuDDp+dSbsXerqqQMWniAkOrmpG4M9Q0W5xRAoHNbnDFoiHU
+         oALg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pg+pIfJCewJfl3Uu7fv/1CMTNHr8lfgpM21Z9LQ/57U=;
-        b=1s2pz/6t8AskwtrDSpI3GffrNaM3PokfXUQBq3jw72j7q4EJTeBLBBKZlNM77JF4DR
-         X4/AsMzL4Z4PXswG1EdIy/nmjkwAfkveegmsS8pm4BeLKHSmKMyz7ynWzM327kQ2R0bU
-         zAw5mHKTNM51Cg6bJOTSm8k33WhEqSa/hnzPiRC0CPRgktuhnd1rUHNDfFXtvSU1+r8t
-         QbfhEwLnDnI4E3eSgz+2eXkLkmw7wFLjDSY6CoDargTklzLXrwVbubBU16+Vp3yAS7bx
-         OJOXMqFhDTXzg58BFejNV5YpPJcSvfNM2tYGRtgRFjaRUXtMt6tP1+einMh6VAn56MJv
-         WQgA==
-X-Gm-Message-State: AOAM530WBgXboLIUHVzhfPYttQKANrrcJM8FF1MLUakO8UiRlVYseFTL
-        SpeQ4iXqEQ4soR2uZzPTByq8Dsvyr5w=
-X-Google-Smtp-Source: ABdhPJzW9NR0Eg5u3uT+4EaY/Oc8b+C1ttm2pDAbkxfbnBKfhvdn7xyozOMry8epMXjKXKj7cyHM5g==
-X-Received: by 2002:a5d:64e6:0:b0:204:975:acde with SMTP id g6-20020a5d64e6000000b002040975acdemr5247192wri.466.1648140706616;
-        Thu, 24 Mar 2022 09:51:46 -0700 (PDT)
+        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
+        b=RmbnjQDE4oMwQsNaAPZI1WpH/jysbaEoCsaJ0Mjl/D8T0Kppzl7fMXEK/Y0toFVwRh
+         vvF1jAq5QzmVPB6zJrW8l57d3g/AXadgIqsJb7eqe5QhZPfiOQ12ys/sQMymCOFiEftW
+         6wORS/OYDgDspPd6BQm7BtyYKWyJUlMQSzQuN1lLWKY20R1JJKqX25efln7WsUXjMFzm
+         pp1tRiEoZHKa/LLYFMvld2RPJeLCkyS4eLBuMMOPQ3v91M/DViUVNphQD2Cc0LERUXAr
+         HaHCYm+C+4q6x+4DNljXKtHmZJuc8sHXThSscEwGTKKuvOYFXfaAiqFmmxAAL6YgpZ4W
+         avfA==
+X-Gm-Message-State: AOAM531Q5RCLduwpeOFLRAtf4tmcoel00M7X021YzWwSLYY0in/UTruB
+        KDbuLDwSLXBTIY/StIMdPCf5ROCSy/c=
+X-Google-Smtp-Source: ABdhPJxSDdmMP2v7Y3/B2XgAOxavHeWW9q2qmUlkoOGwU4X7I/foiTJijE5H2X1QoV6zqSPlhgoO1A==
+X-Received: by 2002:a05:600c:1910:b0:38c:bff7:b9db with SMTP id j16-20020a05600c191000b0038cbff7b9dbmr5669063wmq.182.1648140707765;
+        Thu, 24 Mar 2022 09:51:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i5-20020adfaac5000000b00203fd04bf86sm3024103wrc.66.2022.03.24.09.51.45
+        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b00389cc36a3bfsm6899260wmp.6.2022.03.24.09.51.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:51:45 -0700 (PDT)
-Message-Id: <0e95ee0d01b4d00d46c9d33087126746e7e55cab.1648140680.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:51:47 -0700 (PDT)
+Message-Id: <48a590d2026292254f29bc8f691c9397e2c5a33a.1648140680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
         <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:51:11 +0000
-Subject: [PATCH v4 18/27] fsm-health-win32: force shutdown daemon if worktree
- root moves
+Date:   Thu, 24 Mar 2022 16:51:12 +0000
+Subject: [PATCH v4 19/27] fsm-listen-darwin: shutdown daemon if worktree root
+ is moved/renamed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,207 +73,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Force shutdown fsmonitor daemon if the worktree root directory
-is moved, renamed, or deleted.
-
-Use Windows low-level GetFileInformationByHandle() to get and
-compare the Windows system unique ID for the directory with a
-cached version when we started up.  This lets us detect the
-case where someone renames the directory that we are watching
-and then creates a new directory with the original pathname.
-
-This is important because we are listening to a named pipe for
-requests and they are stored in the Named Pipe File System (NPFS)
-which a kernel-resident pseudo filesystem not associated with
-the actual NTFS directory.
-
-For example, if the daemon was watching "~/foo/", it would have
-a directory-watch handle on that directory and a named-pipe
-handle for "//./pipe/...foo".  Moving the directory to "~/bar/"
-does not invalidate the directory handle.  (So the daemon would
-actually be watching "~/bar" but listening on "//./pipe/...foo".
-If the user then does "git init ~/foo" and causes another daemon
-to start, the first daemon will still have ownership of the pipe
-and the second daemon instance will fail to start.  "git status"
-clients in "~/foo" will ask "//./pipe/...foo" about changes and
-the first daemon instance will tell them about "~/bar".
-
-This commit causes the first daemon to shutdown if the system unique
-ID for "~/foo" changes (changes from what it was when the daemon
-started).  Shutdown occurs after a periodic poll.  After the
-first daemon exits and releases the lock on the named pipe,
-subsequent Git commands may cause another daemon to be started
-on "~/foo".  Similarly, a subsequent Git command may cause another
-daemon to be started on "~/bar".
+Teach the listener thread to shutdown the daemon if the spelling of the
+worktree root directory changes.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-health-win32.c | 143 ++++++++++++++++++++++++++++
- 1 file changed, 143 insertions(+)
+ compat/fsmonitor/fsm-listen-darwin.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
-index 24fc612bf02..2ea08c1d4e8 100644
---- a/compat/fsmonitor/fsm-health-win32.c
-+++ b/compat/fsmonitor/fsm-health-win32.c
-@@ -29,8 +29,150 @@ struct fsm_health_data
- 	HANDLE hHandles[1]; /* the array does not own these handles */
- #define HEALTH_SHUTDOWN 0
- 	int nr_handles; /* number of active event handles */
-+
-+	struct wt_moved
-+	{
-+		wchar_t wpath[MAX_PATH + 1];
-+		BY_HANDLE_FILE_INFORMATION bhfi;
-+	} wt_moved;
- };
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 07113205a61..83d38e8ac6c 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -106,6 +106,11 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
+ 	strbuf_release(&msg);
+ }
  
-+/*
-+ * Lookup the system unique ID for the path.  This is as close as
-+ * we get to an inode number, but this also contains volume info,
-+ * so it is a little stronger.
-+ */
-+static int lookup_bhfi(wchar_t *wpath,
-+		       BY_HANDLE_FILE_INFORMATION *bhfi)
++static int ef_is_root_changed(const FSEventStreamEventFlags ef)
 +{
-+	DWORD desired_access = FILE_LIST_DIRECTORY;
-+	DWORD share_mode =
-+		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
-+	HANDLE hDir;
-+
-+	hDir = CreateFileW(wpath, desired_access, share_mode, NULL,
-+			   OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-+	if (hDir == INVALID_HANDLE_VALUE) {
-+		error(_("[GLE %ld] health thread could not open '%ls'"),
-+		      GetLastError(), wpath);
-+		return -1;
-+	}
-+
-+	if (!GetFileInformationByHandle(hDir, bhfi)) {
-+		error(_("[GLE %ld] health thread getting BHFI for '%ls'"),
-+		      GetLastError(), wpath);
-+		CloseHandle(hDir);
-+		return -1;
-+	}
-+
-+	CloseHandle(hDir);
-+	return 0;
++	return (ef & kFSEventStreamEventFlagRootChanged);
 +}
 +
-+/*
-+ * Compare the relevant fields from two system unique IDs.
-+ * We use this to see if two different handles to the same
-+ * path actually refer to the same *instance* of the file
-+ * or directory.
-+ */
-+static int bhfi_eq(const BY_HANDLE_FILE_INFORMATION *bhfi_1,
-+		   const BY_HANDLE_FILE_INFORMATION *bhfi_2)
-+{
-+	return (bhfi_1->dwVolumeSerialNumber == bhfi_2->dwVolumeSerialNumber &&
-+		bhfi_1->nFileIndexHigh == bhfi_2->nFileIndexHigh &&
-+		bhfi_1->nFileIndexLow == bhfi_2->nFileIndexLow);
-+}
-+
-+/*
-+ * Shutdown if the original worktree root directory been deleted,
-+ * moved, or renamed?
-+ *
-+ * Since the main thread did a "chdir(getenv($HOME))" and our CWD
-+ * is not in the worktree root directory and because the listener
-+ * thread added FILE_SHARE_DELETE to the watch handle, it is possible
-+ * for the root directory to be moved or deleted while we are still
-+ * watching it.  We want to detect that here and force a shutdown.
-+ *
-+ * Granted, a delete MAY cause some operations to fail, such as
-+ * GetOverlappedResult(), but it is not guaranteed.  And because
-+ * ReadDirectoryChangesW() only reports on changes *WITHIN* the
-+ * directory, not changes *ON* the directory, our watch will not
-+ * receive a delete event for it.
-+ *
-+ * A move/rename of the worktree root will also not generate an event.
-+ * And since the listener thread already has an open handle, it may
-+ * continue to receive events for events within the directory.
-+ * However, the pathname of the named-pipe was constructed using the
-+ * original location of the worktree root.  (Remember named-pipes are
-+ * stored in the NPFS and not in the actual file system.)  Clients
-+ * trying to talk to the worktree after the move/rename will not
-+ * reach our daemon process, since we're still listening on the
-+ * pipe with original path.
-+ *
-+ * Furthermore, if the user does something like:
-+ *
-+ *   $ mv repo repo.old
-+ *   $ git init repo
-+ *
-+ * A new daemon cannot be started in the new instance of "repo"
-+ * because the named-pipe is still being used by the daemon on
-+ * the original instance.
-+ *
-+ * So, detect move/rename/delete and shutdown.  This should also
-+ * handle unsafe drive removal.
-+ *
-+ * We use the file system unique ID to distinguish the original
-+ * directory instance from a new instance and force a shutdown
-+ * if the unique ID changes.
-+ *
-+ * Since a worktree move/rename/delete/unmount doesn't happen
-+ * that often (and we can't get an immediate event anyway), we
-+ * use a timeout and periodically poll it.
-+ */
-+static int has_worktree_moved(struct fsmonitor_daemon_state *state,
-+			      enum interval_fn_ctx ctx)
-+{
-+	struct fsm_health_data *data = state->health_data;
-+	BY_HANDLE_FILE_INFORMATION bhfi;
-+	int r;
-+
-+	switch (ctx) {
-+	case CTX_TERM:
-+		return 0;
-+
-+	case CTX_INIT:
-+		if (xutftowcs_path(data->wt_moved.wpath,
-+				   state->path_worktree_watch.buf) < 0) {
-+			error(_("could not convert to wide characters: '%s'"),
-+			      state->path_worktree_watch.buf);
-+			return -1;
-+		}
-+
-+		/*
-+		 * On the first call we lookup the unique sequence ID for
-+		 * the worktree root directory.
-+		 */
-+		return lookup_bhfi(data->wt_moved.wpath, &data->wt_moved.bhfi);
-+
-+	case CTX_TIMER:
-+		r = lookup_bhfi(data->wt_moved.wpath, &bhfi);
-+		if (r)
-+			return r;
-+		if (!bhfi_eq(&data->wt_moved.bhfi, &bhfi)) {
-+			error(_("BHFI changed '%ls'"), data->wt_moved.wpath);
-+			return -1;
-+		}
-+		return 0;
-+
-+	default:
-+		die(_("unhandled case in 'has_worktree_moved': %d"),
-+		    (int)ctx);
-+	}
-+
-+	return 0;
-+}
-+
-+
- int fsm_health__ctor(struct fsmonitor_daemon_state *state)
+ static int ef_is_root_delete(const FSEventStreamEventFlags ef)
  {
- 	struct fsm_health_data *data;
-@@ -64,6 +206,7 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
-  * A table of the polling functions.
-  */
- static interval_fn *table[] = {
-+	has_worktree_moved,
- 	NULL, /* must be last */
- };
+ 	return (ef & kFSEventStreamEventFlagItemIsDir &&
+@@ -215,6 +220,26 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			continue;
+ 		}
  
++		if (ef_is_root_changed(event_flags[k])) {
++			/*
++			 * The spelling of the pathname of the root directory
++			 * has changed.  This includes the name of the root
++			 * directory itself or of any parent directory in the
++			 * path.
++			 *
++			 * (There may be other conditions that throw this,
++			 * but I couldn't find any information on it.)
++			 *
++			 * Force a shutdown now and avoid things getting
++			 * out of sync.  The Unix domain socket is inside
++			 * the .git directory and a spelling change will make
++			 * it hard for clients to rendezvous with us.
++			 */
++			trace_printf_key(&trace_fsmonitor,
++					 "event: root changed");
++			goto force_shutdown;
++		}
++
+ 		if (ef_ignore_xattr(event_flags[k])) {
+ 			trace_printf_key(&trace_fsmonitor,
+ 					 "ignore-xattr: '%s', flags=0x%x",
 -- 
 gitgitgadget
 
