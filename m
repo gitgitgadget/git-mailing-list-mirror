@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CBE7C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D3CC433FE
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352015AbiCXQyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35870 "EHLO
+        id S245378AbiCXQyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352165AbiCXQxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:53:06 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E3C954AF
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:30 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l7-20020a05600c1d0700b0038c99618859so7576998wms.2
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:30 -0700 (PDT)
+        with ESMTP id S1352162AbiCXQxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:53:05 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFD10AF1E5
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:27 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so2928320wmb.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=77SaOZDqR5GCe8rGTE1gWxph/6mABa7uqFiGsLfjuL0=;
-        b=mYhTeF6VXbflWdGolHSYPNYElOhV+tjbQAjvs6qEP87Q6pwKFX43QHFWLqdnFTXmK+
-         91NcbJg/vjETsRzGJbpLi1FmeSqlg5Ei4SatBWR0nkP0cdvNCqL2rWGWrSO020D/CrXm
-         Ulw5VQyTFrZSl+j3kQ5yNdsgg9MwIEaXBIvfX24luXOXch7YU8rfkRbhAQQAN4lRZFXa
-         5heTdiJzpAn4nwgTmyQe0KBO+3HUooGbNaV3TsIT9uiYYnhnPhoElRLt78r/0zuQNJ+K
-         7lnb5vrtWgi/X0MTbnO5SvtOs3L3Tz0/Z8yZ583NsuaJ1IDypiMk7xqDriJCKO5FzcDp
-         mciA==
+        bh=8V1FoXCb86xqZ2XOaLWrGr4avTXqor6TX1WNeRZ9avw=;
+        b=qazqeaHJnnHFiM84XlBeB8sYWscstshi2ra7cDmNWoPD5YRLFYodv0hOXzkUC2EKvP
+         bf1WAt/6tBibgX7ywGYxhdkjwDdxRuhqJOsbWi/geix+9VZxWiwUVEEcpGUinQ7WDERM
+         6SN7qyh97aXQp+uVSXHOouxX4XQAdLmiMeJAxd+eBiMZ3h/+KSStZ1U2JvW12zL00vk/
+         ONduAAxdYR9KQRAMlBubmgbCYhmmBLn34HK731paw1Q8hh4986WnJZnCHWiaJvWbUz4H
+         r0YXOAVrE694j3Rq1YI4bap/mj778aYQt1/v2TEFG/M5BVTsK93O+WKv6i39GdUVaaNg
+         Ui/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=77SaOZDqR5GCe8rGTE1gWxph/6mABa7uqFiGsLfjuL0=;
-        b=ddzcxpqqSHLV/Sm7PW6RTtJ8ELuDCi7xfPUpcIdh3diBMN1tzm4qK6oJ5GMraQzjfk
-         5zAROr3FhQBeaRPXMt0tOEOr4+AgdbZ46/07a8JSzvr3TiRgoqGXWcr4kfLDFVls1eCX
-         d3X1RoFYel9axf4yuWyn7U3nWI1hgngOhZtIPuYEq0OkGBetmXVWStSzD9sDR4NXxntA
-         sdLpxtVHRPhPlwdpW4T9kRiRi/U4KLZ26+erVvynO5cp5swqQVJrehCvyKp77MC/8s2x
-         O5bhjfPWz52jg142HbgpVVApg7Wa+Uc5Az2voo7XoKgpXU0TKj0LOpwOqoZOGj6nKp9d
-         mvzg==
-X-Gm-Message-State: AOAM531qWUV0ZTgQ7p7p3lh6AeGI5dj50MTqeHQYH229bry1dUvV0Pyl
-        w+mvSSXcb79+5xJDY77XmuCHxcRWg4I=
-X-Google-Smtp-Source: ABdhPJx87NLRkZL+xlpkWzttH89RfppMIr6BN8s23LKPkDk9tRLN44zAtKi3jcvaRrcw5x9R5O2knA==
-X-Received: by 2002:a7b:c774:0:b0:38c:9f3f:4bdd with SMTP id x20-20020a7bc774000000b0038c9f3f4bddmr15660752wmk.28.1648140688865;
-        Thu, 24 Mar 2022 09:51:28 -0700 (PDT)
+        bh=8V1FoXCb86xqZ2XOaLWrGr4avTXqor6TX1WNeRZ9avw=;
+        b=FFU5lIAV9V8jowUCaQrBsXc4PREGsZdJf9E+ZdFOuC7f6zysdyvmd4zLBXtpQXveda
+         4Y37DRwo6XHl6NEbS1p4olGT+uiQcuoUGpqfnLemxV1qKDpJXKxHseJKg4Rp1V+lcgYn
+         yuMq3F/pzXDN5PpKrmBC0hVv2FMS1mlURA5TEJeRvUPCxspntp4ggTOomlQT+goVwqij
+         AYTSD7lF6ZwooJKN8TZc58ijXJnZJ0cUTSB5Nkee6lc00VgQEUd54+kUX63E/grf62lK
+         7o0X7vOS2WSTDPRGbiVtfJ4q+OFuArQE6y4EhYPxkNrwzpxZIgdH30xzWh0Rg1c1Gq1b
+         yzvg==
+X-Gm-Message-State: AOAM532GQG3+2Q66X/qsA1EQOR1bqNhl09sL6MHc+MQMy/khNC4DSJjv
+        BLeJ6Ta++5S/0XiFZyyTp6E6OCYsW9s=
+X-Google-Smtp-Source: ABdhPJx+Uz00lZkaqjwlf4d1rrS2IXS5xXL8c38m3eTHnE6cK6QHCFYzEmlMGwmztKnLP29o0pLkaA==
+X-Received: by 2002:a7b:c0d3:0:b0:38c:a3fe:5d62 with SMTP id s19-20020a7bc0d3000000b0038ca3fe5d62mr14952777wmh.110.1648140686290;
+        Thu, 24 Mar 2022 09:51:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r13-20020adfbb0d000000b00203e0efdd3bsm3166959wrg.107.2022.03.24.09.51.27
+        by smtp.gmail.com with ESMTPSA id f9-20020a05600c154900b0038cb98076d6sm2827818wmg.10.2022.03.24.09.51.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:51:28 -0700 (PDT)
-Message-Id: <b2599bb9d2e265ab8e1b2b5297356176dad04166.1648140680.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:51:25 -0700 (PDT)
+Message-Id: <4db2370d046875a83ec0c249c2349df61b7ecc3c.1648140680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
         <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:50:58 +0000
-Subject: [PATCH v4 05/27] fsmonitor-settings: stub in Win32-specific
- incompatibility checking
+Date:   Thu, 24 Mar 2022 16:50:56 +0000
+Subject: [PATCH v4 03/27] t/helper/fsmonitor-client: create stress test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,162 +72,170 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Extend generic incompatibility checkout with platform-specific
-mechanism.  Stub in Win32 version.
+Create a stress test to hammer on the fsmonitor daemon.
+Create a client-side thread pool of n threads and have
+each of them make m requests as fast as they can.
 
-In the existing fsmonitor-settings code we have a way to mark
-types of repos as incompatible with fsmonitor (whether via the
-hook and IPC APIs).  For example, we do this for bare repos,
-since there are no files to watch.
+We do not currently inspect the contents of the response.
+We're only interested in placing a heavy request load on
+the daemon.
 
-Extend this exclusion mechanism for platform-specific reasons.
-This commit just creates the framework and adds a stub for Win32.
+This test is useful for interactive testing and various
+experimentation.  For example, to place additional load
+on the daemon while another test is running.  We currently
+do not have a test script that actually uses this helper.
+We might add such a test in the future.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                              | 13 +++++++++++++
- compat/fsmonitor/fsm-settings-win32.c |  9 +++++++++
- config.mak.uname                      |  4 ++++
- contrib/buildsystems/CMakeLists.txt   |  3 +++
- fsmonitor-settings.c                  | 12 ++++++++++++
- fsmonitor-settings.h                  | 13 +++++++++++++
- 6 files changed, 54 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-settings-win32.c
+ t/helper/test-fsmonitor-client.c | 106 +++++++++++++++++++++++++++++++
+ 1 file changed, 106 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index daa21bed6c3..93604fe8ef7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -475,6 +475,11 @@ all::
- # `compat/fsmonitor/fsm-listen-<name>.c` that implements the
- # `fsm_listen__*()` routines.
- #
-+# If your platform has OS-specific ways to tell if a repo is incompatible with
-+# fsmonitor (whether the hook or IPC daemon version), set FSMONITOR_OS_SETTINGS
-+# to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
-+# that implements the `fsm_os_settings__*()` routines.
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
-@@ -1979,6 +1984,11 @@ ifdef FSMONITOR_DAEMON_BACKEND
- 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
- endif
+diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
+index 3062c8a3c2b..54a4856c48c 100644
+--- a/t/helper/test-fsmonitor-client.c
++++ b/t/helper/test-fsmonitor-client.c
+@@ -7,6 +7,8 @@
+ #include "cache.h"
+ #include "parse-options.h"
+ #include "fsmonitor-ipc.h"
++#include "thread-utils.h"
++#include "trace2.h"
  
-+ifdef FSMONITOR_OS_SETTINGS
-+	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
-+	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -2901,6 +2911,9 @@ GIT-BUILD-OPTIONS: FORCE
- ifdef FSMONITOR_DAEMON_BACKEND
- 	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
- endif
-+ifdef FSMONITOR_OS_SETTINGS
-+	@echo FSMONITOR_OS_SETTINGS=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_OS_SETTINGS)))'\' >>$@+
-+endif
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
-diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-new file mode 100644
-index 00000000000..7fce32a3c5b
---- /dev/null
-+++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -0,0 +1,9 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "repository.h"
-+#include "fsmonitor-settings.h"
-+
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
-+{
-+	return FSMONITOR_REASON_OK;
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index 501970902da..cf224768ad6 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -450,6 +450,8 @@ ifeq ($(uname_S),Windows)
- 	# These are always available, so we do not have to conditionally
- 	# support it.
- 	FSMONITOR_DAEMON_BACKEND = win32
-+	FSMONITOR_OS_SETTINGS = win32
-+
- 	NO_SVN_TESTS = YesPlease
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
-@@ -639,6 +641,8 @@ ifeq ($(uname_S),MINGW)
- 	# These are always available, so we do not have to conditionally
- 	# support it.
- 	FSMONITOR_DAEMON_BACKEND = win32
-+	FSMONITOR_OS_SETTINGS = win32
-+
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ee0d7257b77..16705da2000 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
- 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
-+
-+		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
- 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 86c09bd35fe..8ff55f8c3fd 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -33,6 +33,18 @@ static int check_for_incompatible(struct repository *r)
- 		return 1;
- 	}
- 
-+#ifdef HAVE_FSMONITOR_OS_SETTINGS
-+	{
-+		enum fsmonitor_reason reason;
-+
-+		reason = fsm_os__incompatible(r);
-+		if (reason != FSMONITOR_REASON_OK) {
-+			set_incompatible(r, reason);
-+			return 1;
-+		}
-+	}
-+#endif
-+
+ #ifndef HAVE_FSMONITOR_DAEMON_BACKEND
+ int cmd__fsmonitor_client(int argc, const char **argv)
+@@ -79,20 +81,121 @@ static int do_send_flush(void)
  	return 0;
  }
  
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index 8654edf33d8..4b35f051fb1 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -30,4 +30,17 @@ int fsm_settings__error_if_incompatible(struct repository *r);
- 
- struct fsmonitor_settings;
- 
-+#ifdef HAVE_FSMONITOR_OS_SETTINGS
-+/*
-+ * Ask platform-specific code whether the repository is incompatible
-+ * with fsmonitor (both hook and ipc modes).  For example, if the working
-+ * directory is on a remote volume and mounted via a technology that does
-+ * not support notification events, then we should not pretend to watch it.
-+ *
-+ * fsm_os__* routines should considered private to fsm_settings__
-+ * routines.
-+ */
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
-+#endif /* HAVE_FSMONITOR_OS_SETTINGS */
++struct hammer_thread_data
++{
++	pthread_t pthread_id;
++	int thread_nr;
 +
- #endif /* FSMONITOR_SETTINGS_H */
++	int nr_requests;
++	const char *token;
++
++	int sum_successful;
++	int sum_errors;
++};
++
++static void *hammer_thread_proc(void *_hammer_thread_data)
++{
++	struct hammer_thread_data *data = _hammer_thread_data;
++	struct strbuf answer = STRBUF_INIT;
++	int k;
++	int ret;
++
++	trace2_thread_start("hammer");
++
++	for (k = 0; k < data->nr_requests; k++) {
++		strbuf_reset(&answer);
++
++		ret = fsmonitor_ipc__send_query(data->token, &answer);
++		if (ret < 0)
++			data->sum_errors++;
++		else
++			data->sum_successful++;
++	}
++
++	strbuf_release(&answer);
++	trace2_thread_exit();
++	return NULL;
++}
++
++/*
++ * Start a pool of client threads that will each send a series of
++ * commands to the daemon.
++ *
++ * The goal is to overload the daemon with a sustained series of
++ * concurrent requests.
++ */
++static int do_hammer(const char *token, int nr_threads, int nr_requests)
++{
++	struct hammer_thread_data *data = NULL;
++	int k;
++	int sum_join_errors = 0;
++	int sum_commands = 0;
++	int sum_errors = 0;
++
++	if (!token || !*token)
++		token = get_token_from_index();
++	if (nr_threads < 1)
++		nr_threads = 1;
++	if (nr_requests < 1)
++		nr_requests = 1;
++
++	CALLOC_ARRAY(data, nr_threads);
++
++	for (k = 0; k < nr_threads; k++) {
++		struct hammer_thread_data *p = &data[k];
++		p->thread_nr = k;
++		p->nr_requests = nr_requests;
++		p->token = token;
++
++		if (pthread_create(&p->pthread_id, NULL, hammer_thread_proc, p)) {
++			warning("failed to create thread[%d] skipping remainder", k);
++			nr_threads = k;
++			break;
++		}
++	}
++
++	for (k = 0; k < nr_threads; k++) {
++		struct hammer_thread_data *p = &data[k];
++
++		if (pthread_join(p->pthread_id, NULL))
++			sum_join_errors++;
++		sum_commands += p->sum_successful;
++		sum_errors += p->sum_errors;
++	}
++
++	fprintf(stderr, "HAMMER: [threads %d][requests %d] [ok %d][err %d][join %d]\n",
++		nr_threads, nr_requests, sum_commands, sum_errors, sum_join_errors);
++
++	free(data);
++
++	/*
++	 * Return an error if any of the _send_query requests failed.
++	 * We don't care about thread create/join errors.
++	 */
++	return sum_errors > 0;
++}
++
+ int cmd__fsmonitor_client(int argc, const char **argv)
+ {
+ 	const char *subcmd;
+ 	const char *token = NULL;
++	int nr_threads = 1;
++	int nr_requests = 1;
+ 
+ 	const char * const fsmonitor_client_usage[] = {
+ 		"test-tool fsmonitor-client query [<token>]",
+ 		"test-tool fsmonitor-client flush",
++		"test-tool fsmonitor-client hammer [<token>] [<threads>] [<requests>]",
+ 		NULL,
+ 	};
+ 
+ 	struct option options[] = {
+ 		OPT_STRING(0, "token", &token, "token",
+ 			   "command token to send to the server"),
++
++		OPT_INTEGER(0, "threads", &nr_threads, "number of client threads"),
++		OPT_INTEGER(0, "requests", &nr_requests, "number of requests per thread"),
++
+ 		OPT_END()
+ 	};
+ 
+@@ -111,6 +214,9 @@ int cmd__fsmonitor_client(int argc, const char **argv)
+ 	if (!strcmp(subcmd, "flush"))
+ 		return !!do_send_flush();
+ 
++	if (!strcmp(subcmd, "hammer"))
++		return !!do_hammer(token, nr_threads, nr_requests);
++
+ 	die("Unhandled subcommand: '%s'", subcmd);
+ }
+ #endif
 -- 
 gitgitgadget
 
