@@ -2,311 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B86E1C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 13:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68668C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 14:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350548AbiCXNrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 09:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53420 "EHLO
+        id S1350710AbiCXOEs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 10:04:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350546AbiCXNq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 09:46:58 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C19689081
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 06:45:26 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id b24so5654573edu.10
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 06:45:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=1e7Usbc2JpB/EtiX4jVxB/ckEfOrx427p6UAIPrMQBY=;
-        b=bbGdlegYPlJ24J93DFboH/cCRjeKeOuKioBijMdRFLW6WeZGBw1RE2OfdSrEyyM/i2
-         XGacNvkGOct87soshlh1V1inye1WIGI/OzISs/QGWjifQEFDoBYbtF9+fDJIV5+Cryrx
-         12byW0CEP3EQ6Sk8Duvugpkrg98mVD88fIFr2n0qEsearF8uGZJNTiKEiTRmSxS5Eq+5
-         IqY2PsiLcciDaw53IhC1nqjkJ8OgMg3Sl+YpYv2slPQuZOjnmNucr+WzxxVx9Nki/QnS
-         AnKmXtpv4j5yL5DFUjdBRUoGOSrlx9dFjLKSm+wt0H3i4VBUAr2RNKh6arBtNtskz+tW
-         hB5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=1e7Usbc2JpB/EtiX4jVxB/ckEfOrx427p6UAIPrMQBY=;
-        b=aU9asMDWOG/uOtH0/Fppu16uoWkU6CU7bH47shTiDIN2zi0uiRRKHveMI5rmHnKe7A
-         415U9NJgcED85ZgnxVtwu0xDkber5veAglSNW0ORgv4Zx5pc0EQAQPn/+mQMQMPBBdwl
-         qyY8FFEg22evC+W32EZquVFUxkUrT5KdccvtSdlMk3Zho/G4SBFI27pXR3Pc/RcueehW
-         V6z9SilhKrzW1UwjdnVuhdbx/GqWUkytMuGdjMxNpLPog2itAUJdGMHZOlgR2LTTzKuE
-         +fzI+6SgfeEoR7cKXo9V/XhtkEC/RjlcxGmWUvY/mQi1H/7AwQSBXO8PdAlmm6+CNtXH
-         GJxg==
-X-Gm-Message-State: AOAM530hOBGR3M57vq+0xxEPOOHS0wgvwFOHlo3b+Tiln/TKmAk6emhx
-        WlNSLHYR6zsuN3/lwmBGvgI1XuXpmmzfuA==
-X-Google-Smtp-Source: ABdhPJyie4VjkIcv4Z4NRilHktXTDv4p/6+EIcw2L7LsLgnHFkJrmhreLBwM1xUOLaGLgMKPjIwagQ==
-X-Received: by 2002:a05:6402:5202:b0:419:2b9f:7dd3 with SMTP id s2-20020a056402520200b004192b9f7dd3mr6808415edd.224.1648129524193;
-        Thu, 24 Mar 2022 06:45:24 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l20-20020a1709062a9400b006ce71a88bf5sm1121936eje.183.2022.03.24.06.45.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 06:45:23 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nXNmE-001cBO-M9;
-        Thu, 24 Mar 2022 14:45:22 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, derrickstolee@github.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v1 0/3] trace2 output for bitmap decision path
-Date:   Thu, 24 Mar 2022 14:22:17 +0100
-References: <cover.1648119652.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <cover.1648119652.git.dyroneteng@gmail.com>
-Message-ID: <220324.867d8jo45p.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231871AbiCXOEr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 10:04:47 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA32825E8C
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 07:03:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1648130563;
+        bh=8ChLo4DTqvpShAljxcdwiZhZmKGHZYzc+0jeSGe55n8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fdMOUrVpZJ8MKubsEUdcV6LN05PRPn8P68/4eeTzhT5iu5daTX+1ffOueB9E1s5lF
+         PIMKvifWBtTPE2K34vrfF356+/OPaHodcNqmLLDFTIiXipBPjhFma5pgVi3raZBY2Q
+         hIOwJSPzmc/yxFesSbHU8ZC7BH83FVFm9SNi+4R0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.147.135] ([213.196.212.0]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1nJrfQ2ISt-00F9AH; Thu, 24
+ Mar 2022 15:02:43 +0100
+Date:   Thu, 24 Mar 2022 15:02:39 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     phillip.wood@dunelm.org.uk,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 4/6] builtin/stash: provide a way to export stashes to
+ a ref
+In-Reply-To: <YjJbJ9ZXlUAd2evC@camp.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2203241456250.388@tvgsbejvaqbjf.bet>
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net> <20220310173236.4165310-5-sandals@crustytoothpaste.net> <220311.86bkydi65v.gmgdl@evledraar.gmail.com> <2422376f-79aa-2d35-2646-c3611e2ef8d6@gmail.com>
+ <YjJbJ9ZXlUAd2evC@camp.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-597181099-1648130563=:388"
+X-Provags-ID: V03:K1:Jx2vBBwvj7X0C0SIYjYfoZu0qna3PHWcHcGhjQAZc+Bkr6HRRem
+ Ua0rtnvVbCz5mpXIBGFKUAQe8yNrLFxoRSsKTKNgRJmYrkxGofj+/75DI7rZoNQ8gNOOqGw
+ C2TXTsqnSQpq6wkBPl+WPMK2VlThhicdBG9PwFQgOP/no0iKCdI9VAxyxwWvhkCoEdTsPsJ
+ fYQi3WNiLR0pGpuXGxPGA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Kc/O4giwUDw=:N1oe6n4msWZYZ+CHUB1pDG
+ bKEiY/jasb5nuQKsS/QdzLWf0mtlrlzC322FWUXTdMoynQy7uHvnk70BcO9XIVFLCD3YmEq0a
+ z6uppZBndiZki6lAuTCaFZwlEJFDwK41rNY6duPtOxBHQphJhX+H1uN+vveiNxph4kFARqSmR
+ MqX6MvrYALGv6QQcbW2AO4/iCP65J1BB3a6ulsKCKvGadLWYfq959hztsA+MC0rP0k0H9K2Ld
+ RdDiAPrmP/gmSKiHX/C79FD8jgklpGP7zkz9jhSZartb4EQsWv/a7HG6IhYhltWnllqVRfr72
+ lS6VOBOkqvL6mZYbeGC+HEjvOdqPWabjQ9MfRf/n37hnkfbdeAnq85R6cU7DbwK3amgpuFBS8
+ inPy1am0XzFSL7NEOCBqAa83ofwzDUhnO7yqC0n8B+Sek5Gk7KWDPRZL4xjPPlwmQQtdp0PS4
+ C8luxP0+r3rbl4wWBw9g3+doeV4tlJzKwsz8/WmIAt65XVBzHoWPwZZCFV7C/O0ZcGQ2Mit9v
+ R+El55vTZBYJ0eXT8kTJMRAORKZ+Sb9A0eZ6TajZfuE38sLkpuv59AuyJgZu18ewWlnalKRR9
+ zJlA/+nWMHiMWo8ZifjJkrojjzpRLwhe2CB0TdnhBAX0KikC3ZMEsIJ5ImHaGKudMVDC4FJyM
+ TbVtOXAfoFsXw6r1mgcbQNop1KLM1UWdLyNzcsBRdPeb+D5dhfCv/Zc6XbyAW4vfzR73VCR5m
+ EmlvDb5E1s/kkyrLSpNT6p2ZO74fZwsProZ8rJXRogNIryrWdVfrSxNPTtwlHVL9KfwoqeVZV
+ fLLYayF0gMMhi3HzMynWGkvM4qaELuN00KK0Y8Gd8/5ZFJgflral8uSbDdl2ebo2A7K6EIu1f
+ gwMir7LIPLNzH/UzgSIcYjiXrmqSyBtT4CO7QQ0xH577HD9YEVkmyzZzkaZlQLShtQ/TT3//1
+ H3j4VWz3NrdJZo/OcCot9JH7oS0CLaDKdhsB73/XItOzFSGn0vKYQKQIJIptYkDXFleAE1Amu
+ hp+RqnD9k7K5xBL4IvnFbI5Vwbf3VBQHM2rayfTdIiZoFJ1Y9ohYysV1ooNFh219HfDqZONfp
+ ncC8RdyQSfFBNs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, Mar 24 2022, Teng Long wrote:
+--8323328-597181099-1648130563=:388
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> A Git repo can be chosen to use the normal bitmap (before MIDX) and MIDX bitmap.
+Hi brian,
+
+On Wed, 16 Mar 2022, brian m. carlson wrote:
+
+> On 2022-03-14 at 21:19:10, Phillip Wood wrote:
 >
-> I recently tried to understand this part of the MIDX implementation because I found
-> a bug which has been discovered and repaired in community [1].
+> > On 11/03/2022 02:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> > >
+> > > On Thu, Mar 10 2022, brian m. carlson wrote:
+> > >
+> > > > +			}
+> > > > +			snprintf(buf, sizeof(buf), "%zu", i);
+> > >
+> > > Aren't the %z formats unportable (even with our newly found reliance=
+ on
+> > > more C99)? I vaguely recall trying them recently and the windows CI =
+jobs
+> > > erroring...
+> >
+> > According to [1] it has been available since at least 2015. It is cert=
+ainly
+> > much nicer than casting every size_t to uintmax_t and having to use PR=
+IuMAX.
 >
-> I am grateful to Taylor Blau for his help and for introducing me to the testing
-> method according to the `git rev-list --test-bitmap <rev>`.
->
-> In the process of understanding and troubleshooting by using this command, I found
-> when the execution is failed it will output a single line of
-> "fatal: failed to load bitmap indexes", sometimes will be more informations like
-> if the bitmap file is broken, the outputs maybe contain
-> "error: Corrupted bitmap index file (wrong header)".), but most of time are single
-> line output I mentioned above. So, this brings a little obstacle for debugging and
-> troubleshooting I think, because "failed to load bitmap indexes" can represent
-> to much informations (many causes like: midx config turn off, bitmap inexistence, etc.)
->
-> Therefore, as a git repo can be chosen to use the normal bitmap (before MIDX) or
-> MIDX bitmap, or they can both exist and let git make the decision. I think why not add
-> some extra informations based on TRACE2 to help for showing the bitmap decision path
-> clearer and more plentiful, so when the failure occurs the user can use it to debug
-> around bitmap in a quicker way.
->
-> Thanks.
->
-> Links:
-> 	1. https://public-inbox.org/git/cover.1638991570.git.me@ttaylorr.com/)
->
-> Teng Long (3):
->   pack-bitmap.c: use "ret" in "open_midx_bitmap()"
->   pack-bitmap.c: add "break" statement in "open_pack_bitmap()"
->   bitmap: add trace outputs during open "bitmap" file
->
->  midx.c        |  2 ++
->  pack-bitmap.c | 17 +++++++++++++----
->  2 files changed, 15 insertions(+), 4 deletions(-)
->
-> Range-diff against v0:
-> -:  ---------- > 1:  3048b4dd29 pack-bitmap.c: use "ret" in "open_midx_bitmap()"
-> -:  ---------- > 2:  70500b6343 pack-bitmap.c: add "break" statement in "open_pack_bitmap()"
-> -:  ---------- > 3:  9912450fc1 bitmap: add trace outputs during open "bitmap" file
+> If we're relying on a new enough MSVC for C11, then it's much newer than
+> 2015, so we should be fine.  It's mandatory on POSIX systems.
 
-Was there an on-list v0 (RFC?) or is this a range-diff against nothing?
-Best not to include it until a v2 then.
+The MSVCRT we're using in GCC is much, much older, and that won't change
+anytime soon, I don't think.
 
-Comments:
+You _might_ get the code to compile a `%zu` format by playing some macro
+tricks, but executing the result would still not work.
 
-Sometimes it's better to split up patches, but I think these 3x should
-really be squashed together. We make incremental progress to nowhere in
-1/3 and 2/3, and it all comes together in 3/3. The 1-2/3 are trivial
-enough that we can squash them in.
+It sure would be nice if we could use all that POSIX promises... but we
+can't. Sorry...
 
-We then end up with this, with my comments added:
-	
-	 midx.c        |  2 ++
-	 pack-bitmap.c | 17 +++++++++++++----
-	 2 files changed, 15 insertions(+), 4 deletions(-)
-	
-	diff --git a/midx.c b/midx.c
-	index 865170bad05..fda96440287 100644
-	--- a/midx.c
-	+++ b/midx.c
-	@@ -392,6 +392,8 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
-	 	struct multi_pack_index *m_search;
-	 
-	 	prepare_repo_settings(r);
-	+	trace2_data_string("midx", r, "core.multipackIndex",
-	+					   r->settings.core_multi_pack_index ? "true" : "false");
+Ciao,
+Dscho
 
-Weird indentation here.
-
-Also, if we think it's a good idea to log these shouldn't it be in
-repo_cfg_bool() in repo-settings.c, why is core.multipackIndex out of
-all in r->settings special?
-
-	 	if (!r->settings.core_multi_pack_index)
-	 		return 0;
-	 
-	diff --git a/pack-bitmap.c b/pack-bitmap.c
-	index 97909d48da3..cac8d4a978f 100644
-	--- a/pack-bitmap.c
-	+++ b/pack-bitmap.c
-	@@ -484,25 +484,34 @@ static int open_pack_bitmap(struct repository *r,
-	 	assert(!bitmap_git->map);
-	 
-	 	for (p = get_all_packs(r); p; p = p->next) {
-	-		if (open_pack_bitmap_1(bitmap_git, p) == 0)
-	+		if (open_pack_bitmap_1(bitmap_git, p) == 0) {
-
-Aside: If we end up changing this line anyway, it's OK to just change it
-to "if (!open...".
-
-
-	 			ret = 0;
-	+			break;
-	+		}
-	 	}
-	 
-	+	trace2_data_string("bitmap", the_repository, "open bitmap (non-midx)",
-	+					   ret ? "failed" : "ok");
-	 	return ret;
-	 }
-	 
-	 static int open_midx_bitmap(struct repository *r,
-	 			    struct bitmap_index *bitmap_git)
-	 {
-	+	int ret = -1;
-	 	struct multi_pack_index *midx;
-	 
-	 	assert(!bitmap_git->map);
-	 
-	 	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
-	-		if (!open_midx_bitmap_1(bitmap_git, midx))
-	-			return 0;
-	+		if (!open_midx_bitmap_1(bitmap_git, midx)) {
-	+			ret = 0;
-	+			break;
-	+		}
-	 	}
-	-	return -1;
-	+	trace2_data_string("midx", the_repository, "open bitmap (midx)",
-	+					   ret ? "failed" : "ok");
-	+	return ret;
-	 }
-	 
-	 static int open_bitmap(struct repository *r,
-
-It seems odd not to use trace2 regions for this, and to not add add this
-data logging open_bitmap(). I came up with this on top of this when
-testing this:
-	
-	diff --git a/pack-bitmap.c b/pack-bitmap.c
-	index cac8d4a978f..ba71a7ea5cd 100644
-	--- a/pack-bitmap.c
-	+++ b/pack-bitmap.c
-	@@ -318,11 +318,14 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
-	 
-	 	free(idx_name);
-	 
-	-	if (fd < 0)
-	+	if (fd < 0) {
-	+		/* TODO: Log trace2_data_string() here, do we care? */
-	 		return -1;
-	+	}
-	 
-	 	if (fstat(fd, &st)) {
-	 		close(fd);
-	+		/* TODO: Log trace2_data_string() here, do we care? */
-	 		return -1;
-	 	}
-	 
-	@@ -330,6 +333,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
-	 		struct strbuf buf = STRBUF_INIT;
-	 		get_midx_filename(&buf, midx->object_dir);
-	 		/* ignore extra bitmap file; we can only handle one */
-	+		/* NOTE: You'll already get a warning (well, "error") event due to this, and it'll be in your region */
-	 		warning("ignoring extra bitmap file: %s", buf.buf);
-	 		close(fd);
-	 		strbuf_release(&buf);
-	@@ -344,9 +348,11 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
-	 	close(fd);
-	 
-	 	if (load_bitmap_header(bitmap_git) < 0)
-	+		/* TODO: Add trace2_data_string() or warning/error here? */
-	 		goto cleanup;
-	 
-	 	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum))
-	+		/* TODO: Add trace2_data_string() or warning/error here? */
-	 		goto cleanup;
-	 
-	 	if (load_midx_revindex(bitmap_git->midx) < 0) {
-	@@ -479,49 +485,44 @@ static int open_pack_bitmap(struct repository *r,
-	 			    struct bitmap_index *bitmap_git)
-	 {
-	 	struct packed_git *p;
-	-	int ret = -1;
-	-
-	-	assert(!bitmap_git->map);
-	 
-	 	for (p = get_all_packs(r); p; p = p->next) {
-	 		if (open_pack_bitmap_1(bitmap_git, p) == 0) {
-	-			ret = 0;
-	-			break;
-	+			return 0;
-	 		}
-	 	}
-	-
-	-	trace2_data_string("bitmap", the_repository, "open bitmap (non-midx)",
-	-					   ret ? "failed" : "ok");
-	-	return ret;
-	+	return -1;
-	 }
-	 
-	 static int open_midx_bitmap(struct repository *r,
-	 			    struct bitmap_index *bitmap_git)
-	 {
-	-	int ret = -1;
-	 	struct multi_pack_index *midx;
-	 
-	-	assert(!bitmap_git->map);
-	-
-	 	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
-	 		if (!open_midx_bitmap_1(bitmap_git, midx)) {
-	-			ret = 0;
-	-			break;
-	+			return 0;
-	 		}
-	 	}
-	-	trace2_data_string("midx", the_repository, "open bitmap (midx)",
-	-					   ret ? "failed" : "ok");
-	-	return ret;
-	+	return -1;
-	 }
-	 
-	 static int open_bitmap(struct repository *r,
-	 		       struct bitmap_index *bitmap_git)
-	 {
-	+	int ret;
-	+
-	 	assert(!bitmap_git->map);
-	 
-	-	if (!open_midx_bitmap(r, bitmap_git))
-	-		return 0;
-	-	return open_pack_bitmap(r, bitmap_git);
-	+	trace2_region_enter("pack-bitmap", "open_bitmap", r);
-	+	if (!open_midx_bitmap(r, bitmap_git)) {
-	+		ret = 0;
-	+		goto done;
-	+	}
-	+	ret = open_pack_bitmap(r, bitmap_git);
-	+done:
-	+	trace2_region_leave("pack-bitmap", "open_bitmap", r);
-	+	return ret;
-	 }
-	 
-	 struct bitmap_index *prepare_bitmap_git(struct repository *r)
-
-I.e. surely you just want to create a region, and if you care enough to
-log failure shouldn't we log that in open_midx_bitmap_1() if we care,
-and perhaps error() there instead of silently returning -1?
+--8323328-597181099-1648130563=:388--
