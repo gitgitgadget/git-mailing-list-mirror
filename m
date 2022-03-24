@@ -2,228 +2,261 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4050C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AF71C433FE
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352072AbiCXQ4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        id S1352017AbiCXQ4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352104AbiCXQzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:55:54 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FC6B0D0C
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:52:52 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 56E19103266;
-        Thu, 24 Mar 2022 12:52:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=d+TWaADshG64x9Rfyzf7eJlNXd4q2QwkaiZik5
-        /h+v0=; b=fsOo/CYc3lZCZnsPxI0lyS2SlwFJUDz6CIyiLBk/n147G2Hdyze/vZ
-        gjFbL6eAUySIXfrlBD5CeG7Li4Jne9kEVnG/ZCkGeMTADNwA/0mAKSjZRdaiowIG
-        tFM2svlyuPDsQNdlKLRR1EBEq0hUFk3FnAJwBfwE1bzC3Sw0fUazA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CEF7103264;
-        Thu, 24 Mar 2022 12:52:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F255103261;
-        Thu, 24 Mar 2022 12:52:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fernando <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org, davvid@gmail.com, sunshine@sunshineco.com,
-        seth@eseth.com, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: Re: [PATCH v5 1/3] vimdiff: new implementation with layout support
-References: <20220319091141.4911-1-greenfoo@u92.eu>
-        <20220319091141.4911-2-greenfoo@u92.eu> <xmqqsfr8sjpl.fsf@gitster.g>
-        <29c787c2-8916-4d04-85c1-a4c0597b9848@www.fastmail.com>
-Date:   Thu, 24 Mar 2022 09:52:47 -0700
-In-Reply-To: <29c787c2-8916-4d04-85c1-a4c0597b9848@www.fastmail.com>
-        (Fernando's message of "Thu, 24 Mar 2022 13:21:05 +0100")
-Message-ID: <xmqqee2rl2cg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1352112AbiCXQz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:55:57 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C893E10
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:53:02 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h1so6347988edj.1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:53:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=cZhoCK6HuR3987FYCbWbb7s+WP+FMXDZWEQ/de3qNwU=;
+        b=cLpk/c1OpNAh9GRdzoTR6SrGYTAfbxNfSqLX3GYSqBsEmS7BMqUvTQF6oknpt1aal1
+         WBAwN9UJjo2HwGHjtLxLTsQpzg8Tu45Hy9nMgDDDaqiZVfOykGZW2bmMxskSmXtqHAsH
+         me0TkyHeRTf753GrKBh6Bg1uEhkqTl0OPjx8H/3KhyP+DSFqC+R9qBSPgl4LCaQk5+t7
+         572U7lCRXxa/fpYiz2ZyJp39Kodt4DC15xD/SAsLmd2/wWjSv/4c9NX4es9AWnRPmpFn
+         U+09ZvJRZ/QNNYa+7jhKdLYtN3qkAgrZ0/V5a/YixuVV0CocQEpeWhAVDTG/uVsMKHRM
+         t7bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=cZhoCK6HuR3987FYCbWbb7s+WP+FMXDZWEQ/de3qNwU=;
+        b=oMgcJ0mt7wXwu4WZthnTFyB55TgRbCOT9TpJM+EUYFpySRtmVW+dnnO4THGD+GPeLQ
+         MSPCAd8HRCE5PY4wHaa0mtmY3yB4xDbi7It/m6EgolF+q68NCMq6RWVZm05FnvUPL2gW
+         hgN7eE6LlY4r9ahVv1wrEj5k80QTtK5AF6JlrY7MIlsGbBdbJTtOB5rBrVktcVf+DvJb
+         6hS0mwzj23q/Ip3zyEMJAXc/GWnuZOTi8Fj/5r8YyQHbyd959TjPBUZ3bnoXmdIy1GFA
+         +ym875zamsuJ+oqfHyg8ga7o8+4j6vkeAFsMlSu8rzlB8dUjykas/XROlWE6KqfelmYU
+         orUw==
+X-Gm-Message-State: AOAM532IlBh0uL8S7Qx3Ywba5AH6/SuJZWXTNNOsvhqSPzkgupBOTyZx
+        HGs1MyGV6pW5BACguYmeumRLb1w1uVmwyg==
+X-Google-Smtp-Source: ABdhPJyPWxNChaWygEoXu9/ZKXMCYkze0hD+BRRAJRSFJ7vgIlb1u8/WUVWfF+Jk22cHiKpuKtnmOA==
+X-Received: by 2002:a05:6402:d69:b0:418:f7bd:b076 with SMTP id ec41-20020a0564020d6900b00418f7bdb076mr7825383edb.268.1648140780466;
+        Thu, 24 Mar 2022 09:53:00 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id u10-20020a50d94a000000b004131aa2525esm1702979edj.49.2022.03.24.09.52.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 09:52:59 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nXQhn-001ip1-90;
+        Thu, 24 Mar 2022 17:52:59 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        nksingh85@gmail.com, ps@pks.im,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH v3 09/11] core.fsyncmethod: tests for batch mode
+Date:   Thu, 24 Mar 2022 17:29:28 +0100
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+ <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+ <b5f371e97fee69d87da1dccd3180de0691c15834.1648097906.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <b5f371e97fee69d87da1dccd3180de0691c15834.1648097906.git.gitgitgadget@gmail.com>
+Message-ID: <220324.86tubnmgwk.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D611F62C-AB92-11EC-A994-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fernando <greenfoo@u92.eu> writes:
 
->> > +debug_print() { 
->> > +	# Send message to stderr if global variable DEBUG is set to "true"
->> > +
->> > +	if test -n "$GIT_MERGETOOL_VIMDIFF_DEBUG"
->> > +	then
->> > +		>&2 echo "$@"
->> > +	fi
->> > +}
->> 
->> Do we want to keep this helper, and many calls to it sprinkled in
->> this file, or are they leftover cruft?
->
-> I left it in case we ever need to debug this script in the future. But if you
-> think it's not worth it, I can delete it. We have three options:
->
->   A) Leave it
->   B) Completely remove it
->   C) Remove the function and replace the places where it is being called by
->      a commented out "echo" to stderr
->
-> Let me know what you prefer.
+On Thu, Mar 24 2022, Neeraj Singh via GitGitGadget wrote:
 
-If you anticipate that you'd need more debugging sessions as time
-goes and people want to try to come up with different layouts, (A)
-is preferrable, I would think.
-
->> We should be able to do this no external commands
->> and just two variable substitutions and without relying on
->> bash-isms, but the above should do.
+> From: Neeraj Singh <neerajsi@microsoft.com>
 >
-> In v1 of this patch series, instead of this function, I was doing this other
-> thing:
+> Add test cases to exercise batch mode for:
+>  * 'git add'
+>  * 'git stash'
+>  * 'git update-index'
+>  * 'git unpack-objects'
 >
->     X=${Y:a:b}
+> These tests ensure that the added data winds up in the object database.
 >
-> ...but that is a bash-ism, so I replaced it with what you see above ("echo" +
-> "cut")
-
-Yes, I think I was the one who spotted the bash-ism in an earlier
-round, if I am not mistaken.
-
-> I was not able to find another way of doing it using just standard POSIX shell
-> syntax [1] (notice that "cut" is included in IEEE Std 1003.1 [2] so it shouldn't
-> be an issue to rely on it)
-
-Although "echo" is often built-in, "cut" and pipe mean a fork to
-create an extra process, which some folks may want less of.
-
-> In any case, if anyone knows how we could achieve the same without using
-> external commands, please let me know and I'll change it (in the meantime I'll
-> keep searching for alternatives too). If after a reasonable amount of time none
-> of us manages to find a solution I suggest to leave it as it is now.
-
-I already said that this is good enough for now, didn't I?  But see
-below, and do not use it, it should work but it is uglier than a
-simple single liner pipe.
-
->> I wonder if there were an easy way to "compare" the $FINAL_CMD this
->> new code feeds to $merge_tool_path and what was fed to it by the
->> original code to show that we are not regressing what the end user
->> sees.
->> 
->> The "run_unit_tests()" only compares the cmd generated for each
->> given layout, but the original vimdiff$N didn't express them in
->> terms of $layout this patch introduces, so unfortunately that is not
->> it.
->> 
->> Ideas?
+> In this change we introduce a new test helper lib-unique-files.sh. The
+> goal of this library is to create a tree of files that have different
+> oids from any other files that may have been created in the current test
+> repo. This helps us avoid missing validation of an object being added
+> due to it already being in the repo.
 >
-> Before this patch series, this is what each variant fed into "$merge_tool_path":
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  t/lib-unique-files.sh  | 32 ++++++++++++++++++++++++++++++++
+>  t/t3700-add.sh         | 28 ++++++++++++++++++++++++++++
+>  t/t3903-stash.sh       | 20 ++++++++++++++++++++
+>  t/t5300-pack-object.sh | 41 +++++++++++++++++++++++++++--------------
+>  4 files changed, 107 insertions(+), 14 deletions(-)
+>  create mode 100644 t/lib-unique-files.sh
 >
->   - vimdiff:
->       -f -d -c '4wincmd w | wincmd J' $LOCAL $BASE $REMOTE $MERGED
->
->   - vimdiff1:
->       -f -d -c 'echon "..."' $LOCAL $REMOTE
->
->   - vimdiff2:
->       -f -d -c 'wincmd l' $LOCAL $MERGED $REMOTE
->
->   - vimdiff3:
->       -f -d -c 'hid | hid | hid' $LOCAL $REMOTE $BASE $MERGED
->
-> After this patch series, when one of these predefined variants is selected, a
-> fixed layout is chosen and translated into the final string fed into
-> "$merge_tool_path":
->
->   - vimdiff --> (LOCAL,BASE,REMOTE)/MERGED
->       -f -c "echo | split | vertical split | 1b | wincmd l | vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis" -c "tabfirst" $LOCAL $BASE $REMOTE $MERGED
->
->   - vimdiff1 --> @LOCAL,REMOTE
->       -f -c "echo | vertical split | 1b | wincmd l | 3b | tabdo windo diffthis" -c "tabfirst" $LOCAL $BASE $REMOTE $MERGED
->  
->   - vimdiff2 --> LOCAL,MERGED,REMOTE
->       -f -c "echo | vertical split | 1b | wincmd l | vertical split | 4b | wincmd l | 3b | tabdo windo diffthis" -c "tabfirst" $LOCAL $BASE $REMOTE $MERGED
->
->   - vimdiff3 --> MERGED
->       -f -c "echo | 4b | bufdo diffthis" -c "tabfirst" $LOCAL $BASE $REMOTE $MERGED
->
-> Thus, we need to do two things:
->
->   1. Manually check (one time operation) that the *before* and *after* strings
->      are equivalent (from the point of view of vim).
+> diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
+> new file mode 100644
+> index 00000000000..74efca91dd7
+> --- /dev/null
+> +++ b/t/lib-unique-files.sh
+> @@ -0,0 +1,32 @@
+> +# Helper to create files with unique contents
+> +
+> +# Create multiple files with unique contents within this test run. Takes the
+> +# number of directories, the number of files in each directory, and the base
+> +# directory.
+> +#
+> +# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3 files
+> +#					 each in my_dir, all with contents
+> +#					 different from previous invocations
+> +#					 of this command in this run.
+> +
+> +test_create_unique_files () {
+> +	test "$#" -ne 3 && BUG "3 param"
+> +
+> +	local dirs="$1" &&
+> +	local files="$2" &&
+> +	local basedir="$3" &&
+> +	local counter=0 &&
+> +	test_tick &&
+> +	local basedata=$basedir$test_tick &&
+> +	rm -rf "$basedir" &&
+> +	for i in $(test_seq $dirs)
+> +	do
+> +		local dir=$basedir/dir$i &&
+> +		mkdir -p "$dir" &&
+> +		for j in $(test_seq $files)
+> +		do
+> +			counter=$((counter + 1)) &&
+> +			echo "$basedata.$counter">"$dir/file$j.txt"
+> +		done
+> +	done
+> +}
 
-Yes, and it is a good way to convey that the author did sufficient
-due diligence to note in the proposed commit log message (1) these
-two sets of actual vim commands, and (2) the fact that the author
-made sure these "not literally identical" command line options
-produce identical results for these existing modes.
+Having written my own perf tests for this series, I still don't get why
+this is needed, at all.
 
->   2. Add a unit test that verifies that the layout associated to each variant
->      actually produces the string listed above. That way we make sure the
->      functionality does not break in the future.
+tl;dr: the below: I think this whole workaround is because you missed
+that "test_when_finished" exists, and how it excludes perf timings.
 
-Have a comment next to each of these four layout tests what variant
-from pre-layout era it correspnds to, if you haven't done so.
+I.e. I get that if we ran this N times we'd want to wipe our repo
+between tests, as for e.g. "git add" you want it to actually add the
+objects.
 
-> Step (1) is what I have already done (but I encourage others to do the same...
-> the more eyes the better).
->
-> Step (2)... is already done! Notice how, on the "run_unit_tests()" function,
-> these layouts correspond to test cases numbers #07, #09, #01 and #10 :)
->
->   NOTE: While re-reviewing this, I noticed the layout definition for "vimdiff1"
->         was set to "@LOCAL,MERGED" instead of "@LOCAL,REMOTE", which is the
->         correct value. I'll fix this in v6.
->
-> Should this be considered enough test for backwards compatibility?
+It's what I do with the "hyperfine" command in
+https://lore.kernel.org/git/RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753Z-avarab@gmail.com/
+with the "-p" option.
 
-Yes, with a bit to extend the proposed log message to help #1, and a
-bit of comments next to the test cases to help #2.
+I.e. hyperfine has a way to say "this is setup, but don't measure the
+time", which is 1/2 of what you're working around here and in 10/11.
 
-Thanks.
+But as 10/11 shows you're limited to one run with t/perf because you
+want to not include those "setup" numbers, and "test_perf" has no easy
+way to avoid that (but more on that later).
 
+Which b.t.w. I'm really skeptical of as an approach here in any case
+(even if we couldn't exclude it from the numbers).
 
+I.e. yes what "hyperfine" does would be preferrable, but in exchange for
+avoiding that you're comparing samples of 1 runs.
 
+Surely we're better off with N run (even if noisy). Given enough of them
+the difference will shake out, and our estimated +/- will narrow..
 
-#!/bin/sh
-substring () {
-	STRING=$1 START=$2 LEN=$3
-
-	local strip= 
-	while test 0 -lt "$START"
-	do
-		strip="?$strip"
-		START=$(($START - 1))
+But aside from that, why isn't this just:
+	
+	for cfg in true false blah
 	done
-	if test -n "$strip"
-	then
-		STRING=${STRING#$strip}
-	fi
-	strip=
-	COUNT=$(( ${#STRING} - $LEN ))
-	while test 0 -lt "$COUNT"
-	do
-		strip="?$strip"
-		COUNT=$(($COUNT - 1))
+		test_expect_success "setup for $cfg" '
+			git init repo-$cfg &&
+			for f in $(test_seq 1 100)
+			do
+				>repo-$cfg/$f
+			done
+		'
+	
+		test_perf "perf test for $cfg" '
+			git -C repo-$cfg
+		'
 	done
-	if test -n "$strip"
-	then
-		STRING=${STRING%$strip}
-	fi
-	echo "$STRING"
-}
 
-while read string start len
-do
-	substring $string $start $len
-done
+Which surely is going to be more accurate in the context of our limited
+t/perf environment because creating unique files is not sufficient at
+all to ensure that your tests don't interfere with each other.
 
+That's because in the first iteration we'll create N objects in
+.git/objects/aa/* or whatever, which will *still be there* for your
+second test, which will impact performance.
+
+Whereas if you just make N repos you don't need unique files, and you
+won't be introducing that as a conflating variable.
+
+But anyway, reading perf-lib.sh again I haven't tested, but this whole
+workaround seems truly unnecessary. I.e. in test_run_perf_ we do:
+	
+	test_run_perf_ () {
+	        test_cleanup=:
+	        test_export_="test_cleanup"
+	        export test_cleanup test_export_
+	        "$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH" -c ' 
+                	[... code we run and time ...]
+		'
+                [... later ...]
+                test_eval_ "$test_cleanup"
+	}
+
+So can't you just avoid this whole glorious workaround for the low low
+cost of approximately one shellscript string assignment? :)
+
+I.e. if you do:
+
+	setup_clean () {
+		rm -rf repo
+	}
+
+	setup_first () {
+		git init repo &&
+		[make a bunch of files or whatever in repo]
+	}
+
+	setup_next () {
+		test_when_finished "setup_clean" &&
+		setup_first
+	}
+
+	test_expect_success 'setup initial stuff' '
+		setup_first
+	'
+
+	test_perf 'my perf test' '
+		test_when_finished "setup_next" &&
+		[your perf test here]
+	'
+
+	test_expect_success 'cleanup' '
+		# Not really needed, but just for completeness, we are
+                # about to nuke the trash dir anyway...
+		setup_clean
+	'
+
+I haven't tested (and need to run), but i'm pretty sure that does
+exactly what you want without these workarounds, i.e. you'll get
+"trampoline setup" without that setup being included in the perf
+numbers.
+
+Is it pretty? No, but it's a lot less complex than this unique file
+business & workarounds, and will give you just the numbers you want, and
+most importantly you car run it N times now for better samples.
+
+I.e. "what you want" sans a *tiny* bit of noise that we use to just call
+a function to do:
+
+    test_cleanup=setup_next
+
+Which we'll then eval *after* we measure your numbers to setup the next
+test.
