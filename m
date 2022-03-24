@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1264BC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 333ADC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345597AbiCXRC7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 13:02:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
+        id S1351821AbiCXRDq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 13:03:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352103AbiCXRCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 13:02:51 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC6CB0A71
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:01:18 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id j15so10410852eje.9
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:01:18 -0700 (PDT)
+        with ESMTP id S1350114AbiCXRDp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 13:03:45 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE7AB0A6F
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:02:13 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id d10so10422444eje.10
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=4Rimf7gHL8NkdUF0z42LD9dqAg7XoH8QHigDQLA4h/U=;
-        b=LeiZiduKHSzosyDc+oxfFYN7LcEfTTiLSeBuQJzaOkVawId5B7DHZHEXxfCFvA4nP9
-         Sy41guOcfqPv3vdO5v0HDOnwfvXkMbbmPuY+xw77ngvLMOMrNz6fGdYme1QAcnNBrLhL
-         LC4AmKNYp0jNfRk86bijFjpX/z8GBeUiF4H1ICe8+UhNbosJUs3cwuhiCkWaZH+up1D9
-         8RGzoveeURnDTE6Elbpvk4aG25pPxyd15vadRLgGtG+0wT/BRwtEJN6lfCr0QUzRo/TG
-         4ZaMycEHdlftbezEXZUsptlGOHA6Mskk4WV/iLgEAx7RxFeWVgI4TNNEBcr1prkBAq0x
-         MTAg==
+        bh=PjCF1vRjf2HPqycbOdHHUIYG02qSe2ubIzMJe+wF8RU=;
+        b=OUdDkz0nTteBgpUdcjBgr3zDfukt9a1a9tNaicUXMpK5M8auD1f45aLxE+B87L9iIW
+         2yVQCq77rkuLsROxZV38qBWxbcWZ9IhDBw5D4YawBbtQamTIYGYxPSgiuL0B5+ikrtzz
+         Q/QHATyCY/vgjmcrryq/dXPFoI0I3mYNxp6fmnfEmbpu/wXmNoQB3f6NTGjaZqeRPYKX
+         Nlt1Ekm6958Qx7WfXS1CYovI1M2BDnfHxZLgBMQ8YuGJplnkjFR/0HNwXGPzzXRQI12R
+         iT+MlgtTmfoLZEBqIxjr3UwoBrwZFhi1bLVqCGLYAvbJXGHZjIDrIDGV0Mwz80H4suuv
+         x9Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=4Rimf7gHL8NkdUF0z42LD9dqAg7XoH8QHigDQLA4h/U=;
-        b=YaB2hlMsK6ihrw1ZYZYxzTV4KWhOAdbbfsARVzZwMPAfz8xZwOSzTv9o0ELJH/VW4X
-         hC7DZjajhQDMLl3MTSQa1FOIrQM6fzNxzIBUdx5pRyI1iz40oLiWnQGhZRhmDuTkwBar
-         yuj2p2VDWKGS8OSZ5AYqk6SsglQN5qTTaeJMK0gEHTV6964f/tr7Evk/tDl1QP8Ll+HB
-         eAZXTz9Xta3sk7EbjsKz9QqDyLjtga+SsMW1jUA00c5nbrHQxhOJInNeds8ZZlhifZS8
-         1mSfcywXB5gEhRGAIa0rjyuPVlKBsswS2EsBJBfx1eW2BpZZpZciEyUuP9slP6IOXf/H
-         c06A==
-X-Gm-Message-State: AOAM530/SSJRZWUNL8qQl5kHeB8ZwpNXNB49G83hPz8epj0KXZ2qkAGb
-        87CDdTVe2ykGc9VEG8+cssY=
-X-Google-Smtp-Source: ABdhPJwAn74k2WZLVHfZRPcndkNBliSYSwfRaprrnCF+7DqVPCV8rHS4ismUSnk7Gnluwy1LsGHsIg==
-X-Received: by 2002:a17:907:2d93:b0:6db:ab5e:7e0b with SMTP id gt19-20020a1709072d9300b006dbab5e7e0bmr6735781ejc.262.1648141276786;
-        Thu, 24 Mar 2022 10:01:16 -0700 (PDT)
+        bh=PjCF1vRjf2HPqycbOdHHUIYG02qSe2ubIzMJe+wF8RU=;
+        b=0OHGsEbCkcyk56V02BIgC5dzYGieUKMf+FqOo3YNP4hbAOCfOJCm3stfZCB2MKml7K
+         aaLTlW7w966vIfocdSkrY6nYCNRkkTa2nuoq7PrWjT4AgtmjyzwMHRDY/BF1k/mNqJks
+         2Isx5vGiNMZBn5+OUSLChJTQtz8e9TFN3sNLVRYeG6dtE6Lotkvt2tmByUkTu7BrhQwm
+         80iEZLqtYTnlyJS0rPG1bQ8KdAsABHd7SwXpp3SZ6FWtCBQV5uAWmbWX9wwPlvbYLdmu
+         ftUIbWlb5+XlwsGD5f3iUX+gm6P+CdA3dhvJiSk3jBDiFBDs+pJndoDnRls/PXcQE+s8
+         dF6A==
+X-Gm-Message-State: AOAM533SDvym3+pKRTWlV2p2HJPhZsaKcBMcaBTOiFJ+ObMn79oxGe5e
+        fJy1L+IpwedIu5N4GikdzW4=
+X-Google-Smtp-Source: ABdhPJw77TW1HXBY7ymoxH1Ko9FoFHyHNx51RvjNZCWnyp3wDPlgu1mFVeAacUkAR9SEp3UxjVgy7A==
+X-Received: by 2002:a17:906:9e11:b0:6df:a9d8:cbad with SMTP id fp17-20020a1709069e1100b006dfa9d8cbadmr6875550ejc.32.1648141331470;
+        Thu, 24 Mar 2022 10:02:11 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sb31-20020a1709076d9f00b006ceb969822esm1319322ejc.76.2022.03.24.10.01.14
+        by smtp.gmail.com with ESMTPSA id dm11-20020a170907948b00b006cf488e72e3sm1342912ejc.25.2022.03.24.10.02.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 10:01:14 -0700 (PDT)
+        Thu, 24 Mar 2022 10:02:10 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nXQpl-001jEd-D8;
-        Thu, 24 Mar 2022 18:01:13 +0100
+        id 1nXQqf-001jHk-Sa;
+        Thu, 24 Mar 2022 18:02:09 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
@@ -58,16 +58,16 @@ Cc:     git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 04/27] format-patch: don't leak "extra_headers" or
- "ref_message_ids"
-Date:   Thu, 24 Mar 2022 17:59:49 +0100
+Subject: Re: [PATCH v2 05/27] revision.[ch]: split freeing of revs->commit
+ into a function
+Date:   Thu, 24 Mar 2022 18:01:22 +0100
 References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
  <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
- <patch-v2-04.27-64a76629e23-20220323T203149Z-avarab@gmail.com>
- <xmqqfsn8m0la.fsf@gitster.g>
+ <patch-v2-05.27-4c0718b43d7-20220323T203149Z-avarab@gmail.com>
+ <xmqqa6dgm0l8.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <xmqqfsn8m0la.fsf@gitster.g>
-Message-ID: <220324.86lewzmgiu.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqa6dgm0l8.fsf@gitster.g>
+Message-ID: <220324.86h77nmgha.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,27 +80,45 @@ On Wed, Mar 23 2022, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> Fix two memory leaks in "struct rev_info" by freeing that memory in
->> cmd_format_patch(). These two are unusual special-cases in being in
->> the "struct rev_info", but not being "owned" by the code in
->> revision.c. I.e. they're members of the struct so that this code in
->> "builtin/log.c" can pass information code in log-tree.c.
+>> +static void release_revisions_commit_list(struct rev_info *revs)
+>> +{
+>> +	struct commit_list *commits =3D revs->commits;
+>> +
+>> +	if (!commits)
+>> +		return;
+>> +	free_commit_list(commits);
+>> +	revs->commits =3D NULL;
+>> +}
 >
-> Hmph, if we are eventually adding a new API function to clear a
-> rev-info structure, shouldn't these members be released there
-> instead, I wonder.
+> It makes sense to have this as a separate helper, but the original
+> implementation this was lifted from is much easier to follow than
+> this version with an unnecessary rewrite, I would think.
 >
-> This is the only user of this member, so it does not matter too much
-> either way, though.
+>> @@ -4080,10 +4090,7 @@ static void create_boundary_commit_list(struct re=
+v_info *revs)
+>>  	 * boundary commits anyway.  (This is what the code has always
+>>  	 * done.)
+>>  	 */
+>> -	if (revs->commits) {
+>> -		free_commit_list(revs->commits);
+>> -		revs->commits =3D NULL;
+>> -	}
+>> +	release_revisions_commit_list(revs);
+>
+> IOW
+>
+> static void release_revisions_commit_list(struct rev_info *revs)
+> {
+> 	if (revs->commits) {
+> 		free_commit_list(revs->commits);
+> 		revs->commits =3D NULL;
+> 	}
+> }
 
-Ideally, but in practice "struct rev_info" is both before and after this
-change a mixed bag of stuff it "owns" and stuff that others "hand over"
-to it, sometimes permanently, and sometimes just to hold on for a bit.
+Sure, will change it.
 
-So it can't really free() everything in the struct, at least witohut
-some larger refactorings, which I'm trying to avoid here.
+I think the pre-image is preferrable in context, i.e. to have them all
+use the same early abort pattern, but not enough to argue the point :)
 
-The "diffopt" at the end is another such case, which is left for another
-follow-up.
 
-But for now is it OK if we keep this as-is?
+
