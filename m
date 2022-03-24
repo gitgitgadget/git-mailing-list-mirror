@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A9FEC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 169BFC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351939AbiCXQx5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36146 "EHLO
+        id S1351947AbiCXQx7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234892AbiCXQxV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:53:21 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D651996AD
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:49 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso2925415wmz.4
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:49 -0700 (PDT)
+        with ESMTP id S1351887AbiCXQxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:53:22 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723759F386
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:50 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id r13so7463096wrr.9
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
-        b=TIeOhv4kTZ1Ooi0AU2Tv+NeqpaXZVCSmZUrczXziu8xHCsx6nnARxFe0SdLatXmem/
-         fub9qIe/BuLteAiuMAlNp4Ix7BKteYoVlxG8Hijlsa+Co20cOoumuSI1jMsHcKRQ7/7F
-         fMd4kvq9kt8YXJT7GqB9yFXhTB8/e+GitnOKXH9l4+Hd94PB38vitHUg+99nIRP0z9w0
-         QT5jzVzrbK9a6t2h1dG69IeT/YayiP1ER1PfSLsI2xoDqHF0KcdEoeSeRNcE9HleJcZz
-         0RttmZs/MIeGc/ctgftKsuDDp+dSbsXerqqQMWniAkOrmpG4M9Q0W5xRAoHNbnDFoiHU
-         oALg==
+        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
+        b=GRaRZFNS5ZX1aJ0cIVBduAlaXGBzMiTM7avPmftR1csivkgZnPjGQKjuXVa847bsin
+         c1VZ+NsxGNUJ7K4VaXZLkuDppu/oyzMxV9hTH2LcQXyQnqgEz+SRPq2C6seLI/4kcSjV
+         p9lLQgCh34SEj+XzYUwHayXKKUcwvpOJ8CgTZHtOhp9T27S5hcG3agIsdfEFbViodww8
+         fQ+JMOI4DgU0gV5rfAKlZ8M3JiJkI0mW13HrTdODJ6rN66iGTYkMPqXBpwuj/vu05DX4
+         aogpCKTYak6dGhMNRBdYmAJShfYoCh+t8D0ZzpfGPFanoRKCYmsSYUAf2kY/xrF9/cVd
+         Z8Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m/7nmjzQrPWZOZRTUqvWzqRTYtxoxcBSCt/eY/PHK+w=;
-        b=RmbnjQDE4oMwQsNaAPZI1WpH/jysbaEoCsaJ0Mjl/D8T0Kppzl7fMXEK/Y0toFVwRh
-         vvF1jAq5QzmVPB6zJrW8l57d3g/AXadgIqsJb7eqe5QhZPfiOQ12ys/sQMymCOFiEftW
-         6wORS/OYDgDspPd6BQm7BtyYKWyJUlMQSzQuN1lLWKY20R1JJKqX25efln7WsUXjMFzm
-         pp1tRiEoZHKa/LLYFMvld2RPJeLCkyS4eLBuMMOPQ3v91M/DViUVNphQD2Cc0LERUXAr
-         HaHCYm+C+4q6x+4DNljXKtHmZJuc8sHXThSscEwGTKKuvOYFXfaAiqFmmxAAL6YgpZ4W
-         avfA==
-X-Gm-Message-State: AOAM531Q5RCLduwpeOFLRAtf4tmcoel00M7X021YzWwSLYY0in/UTruB
-        KDbuLDwSLXBTIY/StIMdPCf5ROCSy/c=
-X-Google-Smtp-Source: ABdhPJxSDdmMP2v7Y3/B2XgAOxavHeWW9q2qmUlkoOGwU4X7I/foiTJijE5H2X1QoV6zqSPlhgoO1A==
-X-Received: by 2002:a05:600c:1910:b0:38c:bff7:b9db with SMTP id j16-20020a05600c191000b0038cbff7b9dbmr5669063wmq.182.1648140707765;
-        Thu, 24 Mar 2022 09:51:47 -0700 (PDT)
+        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
+        b=rtQFAVw3UY/dh1rKobfQI7aFOp59AD0WOGzncBmi63X5M9q4w0W1bKtS7U6KcVzwe0
+         /+BsV9TIX+e/1N2GNTnG4qICtmeh+S3mBOhEL3ESfa/gsJRPVJR5UeIt2Ri1YwSYeiGo
+         mBUeER2sg/oWf7eLwXO2sov2kQgh9SkXUyExhpFzqxIQkp7cDFq389qFtPhx3PGozME5
+         mT1Lso/uvYhVVjpUDo9hgSsDLO8dLRWV1byeVEJ0WX1awCfn+8OdEoks/KNvYMVcrZP/
+         S0kyfJE6lA2Lcb0jkzTlfBiZtydwGzjsxW2vo1t7mI/rdArYRptfGeUKsqC8Gra3ptJT
+         m3FA==
+X-Gm-Message-State: AOAM530T0abxRivLO6Cv+aqAnFo7ZQuukFT/mr7tc1zktVQUX45i/saw
+        F6eWE8uuoEX6DB809ZTlanPcFw0owro=
+X-Google-Smtp-Source: ABdhPJy0WK/uy32pKNuUwmOZ0oHqj3JFZpQYKr4NjSncnh6aOeHbhVFuAcigA+drsI6WZKUJ/0v4pA==
+X-Received: by 2002:a5d:64a2:0:b0:205:8ab3:4fdc with SMTP id m2-20020a5d64a2000000b002058ab34fdcmr5356823wrp.168.1648140708782;
+        Thu, 24 Mar 2022 09:51:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b00389cc36a3bfsm6899260wmp.6.2022.03.24.09.51.46
+        by smtp.gmail.com with ESMTPSA id n14-20020a5d588e000000b00204064a3800sm3531182wrf.51.2022.03.24.09.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:51:47 -0700 (PDT)
-Message-Id: <48a590d2026292254f29bc8f691c9397e2c5a33a.1648140680.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:51:48 -0700 (PDT)
+Message-Id: <36ab239fd9a2ee98b0ccaaf4d12bdd8950ffafeb.1648140680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
         <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:51:12 +0000
-Subject: [PATCH v4 19/27] fsm-listen-darwin: shutdown daemon if worktree root
- is moved/renamed
+Date:   Thu, 24 Mar 2022 16:51:13 +0000
+Subject: [PATCH v4 20/27] fsmonitor: optimize processing of directory events
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,57 +72,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach the listener thread to shutdown the daemon if the spelling of the
-worktree root directory changes.
+Teach Git to perform binary search over the cache-entries for a directory
+notification and then linearly scan forward to find the immediate children.
+
+Previously, when the FSMonitor reported a modified directory Git would
+perform a linear search on the entire cache-entry array for all
+entries matching that directory prefix and invalidate them.  Since the
+cache-entry array is already sorted, we can use a binary search to
+find the first matching entry and then only linearly walk forward and
+invalidate entries until the prefix changes.
+
+Also, the original code would invalidate anything having the same
+directory prefix.  Since a directory event should only be received for
+items that are immediately within the directory (and not within
+sub-directories of it), only invalidate those entries and not the
+whole subtree.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-listen-darwin.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ fsmonitor.c | 71 ++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 54 insertions(+), 17 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 07113205a61..83d38e8ac6c 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -106,6 +106,11 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
- 	strbuf_release(&msg);
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 292a6742b4f..e1229c289cf 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -184,30 +184,68 @@ static int query_fsmonitor_hook(struct repository *r,
+ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ {
+ 	int i, len = strlen(name);
+-	if (name[len - 1] == '/') {
++	int pos = index_name_pos(istate, name, len);
++
++	trace_printf_key(&trace_fsmonitor,
++			 "fsmonitor_refresh_callback '%s' (pos %d)",
++			 name, pos);
+ 
++	if (name[len - 1] == '/') {
+ 		/*
+-		 * TODO We should binary search to find the first path with
+-		 * TODO this directory prefix.  Then linearly update entries
+-		 * TODO while the prefix matches.  Taking care to search without
+-		 * TODO the trailing slash -- because '/' sorts after a few
+-		 * TODO interesting special chars, like '.' and ' '.
++		 * The daemon can decorate directory events, such as
++		 * moves or renames, with a trailing slash if the OS
++		 * FS Event contains sufficient information, such as
++		 * MacOS.
++		 *
++		 * Use this to invalidate the entire cone under that
++		 * directory.
++		 *
++		 * We do not expect an exact match because the index
++		 * does not normally contain directory entries, so we
++		 * start at the insertion point and scan.
+ 		 */
++		if (pos < 0)
++			pos = -pos - 1;
+ 
+ 		/* Mark all entries for the folder invalid */
+-		for (i = 0; i < istate->cache_nr; i++) {
+-			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID &&
+-			    starts_with(istate->cache[i]->name, name))
+-				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
++		for (i = pos; i < istate->cache_nr; i++) {
++			if (!starts_with(istate->cache[i]->name, name))
++				break;
++			istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 		}
+-		/* Need to remove the / from the path for the untracked cache */
++
++		/*
++		 * We need to remove the traling "/" from the path
++		 * for the untracked cache.
++		 */
+ 		name[len - 1] = '\0';
++	} else if (pos >= 0) {
++		/*
++		 * We have an exact match for this path and can just
++		 * invalidate it.
++		 */
++		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 	} else {
+-		int pos = index_name_pos(istate, name, strlen(name));
+-
+-		if (pos >= 0) {
+-			struct cache_entry *ce = istate->cache[pos];
+-			ce->ce_flags &= ~CE_FSMONITOR_VALID;
++		/*
++		 * The path is not a tracked file -or- it is a
++		 * directory event on a platform that cannot
++		 * distinguish between file and directory events in
++		 * the event handler, such as Windows.
++		 *
++		 * Scan as if it is a directory and invalidate the
++		 * cone under it.  (But remember to ignore items
++		 * between "name" and "name/", such as "name-" and
++		 * "name.".
++		 */
++		pos = -pos - 1;
++
++		for (i = pos; i < istate->cache_nr; i++) {
++			if (!starts_with(istate->cache[i]->name, name))
++				break;
++			if ((unsigned char)istate->cache[i]->name[len] > '/')
++				break;
++			if (istate->cache[i]->name[len] == '/')
++				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 		}
+ 	}
+ 
+@@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 	 * Mark the untracked cache dirty even if it wasn't found in the index
+ 	 * as it could be a new untracked file.
+ 	 */
+-	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", name);
+ 	untracked_cache_invalidate_path(istate, name, 0);
  }
  
-+static int ef_is_root_changed(const FSEventStreamEventFlags ef)
-+{
-+	return (ef & kFSEventStreamEventFlagRootChanged);
-+}
-+
- static int ef_is_root_delete(const FSEventStreamEventFlags ef)
- {
- 	return (ef & kFSEventStreamEventFlagItemIsDir &&
-@@ -215,6 +220,26 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			continue;
- 		}
- 
-+		if (ef_is_root_changed(event_flags[k])) {
-+			/*
-+			 * The spelling of the pathname of the root directory
-+			 * has changed.  This includes the name of the root
-+			 * directory itself or of any parent directory in the
-+			 * path.
-+			 *
-+			 * (There may be other conditions that throw this,
-+			 * but I couldn't find any information on it.)
-+			 *
-+			 * Force a shutdown now and avoid things getting
-+			 * out of sync.  The Unix domain socket is inside
-+			 * the .git directory and a spelling change will make
-+			 * it hard for clients to rendezvous with us.
-+			 */
-+			trace_printf_key(&trace_fsmonitor,
-+					 "event: root changed");
-+			goto force_shutdown;
-+		}
-+
- 		if (ef_ignore_xattr(event_flags[k])) {
- 			trace_printf_key(&trace_fsmonitor,
- 					 "ignore-xattr: '%s', flags=0x%x",
 -- 
 gitgitgadget
 
