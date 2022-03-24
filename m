@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A38DC4332F
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 18:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1250C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 18:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352726AbiCXSgg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 14:36:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54016 "EHLO
+        id S1352727AbiCXSgi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 14:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347496AbiCXSge (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 14:36:34 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14A44A3DA
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n35so3250330wms.5
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
+        with ESMTP id S1352723AbiCXSgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 14:36:36 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449D549CB9
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:03 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a1so7852761wrh.10
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 11:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ggsen9t1DWi2PmRzGFNmuztbaUFwaSCRJRh3trWH464=;
-        b=U0RB2qdVeOKVy9Hz8jWt5GSL+LyEF0heufpsFmUMHWXSKxENDkySHuiySpvsiW7tt0
-         FB9nGS/lm17+zqfucMeRff8FJcw7sgMKl3rf58g4fctnQhkSpZj9NJJ9LTIKebjF20Fh
-         //AC6ufo4SLQ3TUbk0dWqV4Gtc6tErrkmnEgw3F7An5zj0RpJYviiqpuGTrmpbXe7QCC
-         uty9nw9a3fjhW64+ucsQ34S5ghfEbSEi0Ts88RVN9Ish7qZd33V5I3GwUoHfdoJ/7bYM
-         nilL6XwL8oqSG8SJeIf283Hb9dfXnWJFWUOcHC6hYiNjUSa428fbYscfg/AyQfzslgru
-         jlHQ==
+        bh=Msrw6N6zWhpn6WlfX1IZpiD3eqdVEuOsQYMylnKan4w=;
+        b=FtJLgrKmpgFp4tufho3ZC4GjgYBcjCESqUIunP0DF7htoaw1/Y2OulzB3c4NMM4gNQ
+         wa2cCjXLlovtGczWn/GnnQPhlCg0FHD1expMFSg15dD/xM9FxpOvYv4JTV8wWsZrFTE8
+         kJwByQnLfyUhiJW3H5tQ02gvBQcw4M5p9hCoG6X4cqgTI7aHc7Ymrk0MJ3usdC0MqBNK
+         gOifrJ8vwCY+JwVDMsjEv4rqF9xmdhdaCvh4RyqQY1CZQogIjrtjDfqgaoTDx8LsXZEL
+         BuA/tmw96iSmGy+aI98weJiqN6i8oseniUPwQL/N+/z109VCM9WiNoUu6uCUCaNaGKJR
+         fNew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ggsen9t1DWi2PmRzGFNmuztbaUFwaSCRJRh3trWH464=;
-        b=h+QHfnTYelq9KflGHnnpEPTSdOqkBF3c4/bPMJkTPjDP2TowO6MeFAuqJ7Xa7wRhxf
-         ovcBqPGTIJw/A21KP6iAUe1mOsAmFFC+580ioImQ5vSALN2W1ibVBhhcoC1ZZWzvP5Qv
-         bHrgriC/7zyurxhjLH8jAJ9nXEioIz27uhCccJmZcmKU/VwBXE1/QTmMm2dldDpOhTnC
-         /oNNtPO+prHoJEY0/e+hjc1b3vtYA34N1CxPKlOMYqyc9YGsuE8DtRrsXUo02ctZPrcT
-         TF1YF7lLoAePYweZQpL8TXt74R+VrBKE4f+dvHIWlrrKvKgF1ZCzPto1trI4zzA85Tz8
-         qDUw==
-X-Gm-Message-State: AOAM530mBrGO0i/g/1nRS/K2XSZ+5Cj+xzjDI+5HBHzk+XDe81tDf3vO
-        HgiEnxM6Y9SSOoYjf99aoO5uKhvEy6Q=
-X-Google-Smtp-Source: ABdhPJyVzVkO+UrBZEpVtMmCdsAHNWGNo06p7Lm8R6tfXkTT+RHz+XYmN/g+pR7AKp+3a8MA0hfuYg==
-X-Received: by 2002:a05:600c:589:b0:38c:ae43:a941 with SMTP id o9-20020a05600c058900b0038cae43a941mr5883746wmd.14.1648146900390;
-        Thu, 24 Mar 2022 11:35:00 -0700 (PDT)
+        bh=Msrw6N6zWhpn6WlfX1IZpiD3eqdVEuOsQYMylnKan4w=;
+        b=fcu6dp3pLP/Z+A0zMhnGfzVuuv+GtRGCf+2cP7qo478BRirjGALqAWGw+F3IdZfXB1
+         R3j7zSkquReLFMJLJLLQVnQuYQXn/xQy1omEFsUE+bPX/A/+gOAyNVwaWeh9WJJ0sC2M
+         JqsfaPP3zOYL8khbn+EwaBa4Wj4BppGfxkAZLZQF68p1toBcj+x+aW7aMg3zNChAVVKH
+         q2EJoyotioNsUD3MA1pQ/Uh+4EDOKrpVVkib3wK3YdjYxv5LQi6cKVjXZZNzkr2+OyBj
+         wg4WceZOOzBc9HqqJHICmFBxhZ9qnxenUmaUf/2deGJNrT8bd3O2pG0rZrlFd9XiPv3X
+         rvHw==
+X-Gm-Message-State: AOAM531B2BmbofsKuswbY1oMN66UScVtYGERpvAetMHrhUyptcnryU+/
+        xEiKd2EVQw8ff8fsDyWB6sz0Arolcf8=
+X-Google-Smtp-Source: ABdhPJxtruyE7PBWZxb6kR7s6d4Pt+MJxJ/6RrTaCVCCuXecskTyCGCOx2CP0Rm7WNqpxKH8PcrsrQ==
+X-Received: by 2002:a05:6000:168e:b0:204:f90:de02 with SMTP id y14-20020a056000168e00b002040f90de02mr5871532wrd.108.1648146901554;
+        Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k18-20020a5d6d52000000b00203da94cf01sm3228261wri.14.2022.03.24.11.34.59
+        by smtp.gmail.com with ESMTPSA id n37-20020a05600c3ba500b0038cc9d6ff5bsm2923881wms.4.2022.03.24.11.35.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 11:34:59 -0700 (PDT)
-Message-Id: <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 11:35:01 -0700 (PDT)
+Message-Id: <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
 References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
         <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 18:34:56 +0000
-Subject: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
+Date:   Thu, 24 Mar 2022 18:34:57 +0000
+Subject: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,106 +69,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The '--write-midx -b packs non-kept objects' test in t7700-repack.sh
-uses test_subcommand_inexact to check that 'git repack' properly adds
-the '--honor-pack-keep' flag to the 'git pack-objects' subcommand.
-However, the test_subcommand_inexact helper is more flexible than
-initially designed, and this instance is the only one that makes use of
-it: there are additional arguments between 'git pack-objects' and the
-'--honor-pack-keep' flag. In order to make test_subcommand_inexact more
-strict, we need to fix this instance.
+The implementation of test_subcommand_inexact() was originally
+introduced in e4d0c11c0 (repack: respect kept objects with '--write-midx
+-b', 2021-12-20) with the intention to allow finding a subcommand based
+on an initial set of arguments. The inexactness was intended as a way to
+allow flexible options beyond that initial set, as opposed to
+test_subcommand() which requires that the full list of options is
+provided in its entirety.
 
-This test checks that 'git repack --write-midx -a -b -d' will create a
-new pack-file that does not contain the objects within the kept pack.
-This behavior is possible because of the multi-pack-index bitmap that
-will bitmap objects against multiple packs. Without --write-midx, the
-objects in the kept pack would be duplicated so the resulting pack is
-closed under reachability and bitmaps can be created against it. This is
-discussed in more detail in e4d0c11c0 (repack: respect kept objects with
-'--write-midx -b', 2021-12-20) which also introduced this instance of
-test_subcommand_inexact.
+The implementation began by copying test_subcommand() and replaced the
+repeated argument 'printf' statement to append ".*" instead of "," to
+each argument. This has a few drawbacks:
 
-To better verify the intended post-conditions while also removing this
-instance of test_subcommand_inexact, rewrite the test to check the list
-of packed objects in the kept pack and the list of the objects in the
-newly-repacked pack-file _other_ than the kept pack. These lists should
-be disjoint.
+1. Most importantly, this repeats the use of ".*" within 'expr', so the
+   inexact match is even more flexible than expected. It allows the list
+   of arguments to exist as a subsequence (with any other items included
+   between those arguments).
 
-Be sure to include a non-kept pack-file and loose objects to be extra
-careful that this is properly behaving with kept packs and not just
-avoiding repacking all pack-files.
+2. The line 'expr="$(expr%,}"' that previously removed a trailing comma
+   now no longer does anything, since the string ends with ".*".
 
-Co-authored-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Both of these issues are fixed by keeping the addition of the comma in
+the printf statement, then adding ".*" after stripping out the trailing
+comma.
+
+All existing tests continue to pass with this change. There was one
+instance from t7700-repack.sh that was taking advantage of this
+flexibility, but it was removed in the previous change.
+
+Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t7700-repack.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 49 insertions(+), 3 deletions(-)
+ t/test-lib-functions.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 770d1432046..73452e23896 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -369,10 +369,56 @@ test_expect_success '--write-midx with preferred bitmap tips' '
- 	)
- '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0f439c99d61..8f0e5da8727 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1811,8 +1811,8 @@ test_subcommand_inexact () {
+ 		shift
+ 	fi
  
-+get_sorted_objects_from_packs () {
-+	git show-index <$(cat) >raw &&
-+	cut -d" " -f2 raw | sort
-+}
-+
- test_expect_success '--write-midx -b packs non-kept objects' '
--	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
--		git repack --write-midx -a -b &&
--	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		# Create a kept pack-file
-+		test_commit base &&
-+		git repack -ad &&
-+		find $objdir/pack -name "*.idx" >before &&
-+		>$objdir/pack/$(basename $(cat before) .idx).keep &&
-+
-+		# Create a non-kept pack-file
-+		test_commit other &&
-+		git repack &&
-+
-+		# Create loose objects
-+		test_commit loose &&
-+
-+		# Repack everything
-+		git repack --write-midx -a -b -d &&
-+
-+		# There should be two pack-files now, the
-+		# old, kept pack and the new, non-kept pack.
-+		find $objdir/pack -name "*.idx" | sort >after &&
-+		test_line_count = 2 after &&
-+		find $objdir/pack -name "*.keep" >kept &&
-+		test_line_count = 1 kept &&
-+
-+		# Get object list from the kept pack.
-+		get_sorted_objects_from_packs \
-+			<before \
-+			>old.objects &&
-+
-+		# Get object list from the one non-kept pack-file
-+		comm -13 before after >new-pack &&
-+		get_sorted_objects_from_packs \
-+			<new-pack \
-+			>new.objects &&
-+
-+		# None of the objects in the new pack should
-+		# exist within the kept pack.
-+		comm -12 old.objects new.objects >shared.objects &&
-+		test_must_be_empty shared.objects
-+	)
- '
+-	local expr=$(printf '"%s".*' "$@")
+-	expr="${expr%,}"
++	local expr=$(printf '"%s",' "$@")
++	expr="${expr%,}.*"
  
- test_expect_success TTY '--quiet disables progress' '
+ 	if test -n "$negate"
+ 	then
 -- 
 gitgitgadget
-
