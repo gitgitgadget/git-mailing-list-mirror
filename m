@@ -2,71 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFAA0C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5AE8C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351950AbiCXQxi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35014 "EHLO
+        id S1344195AbiCXQxl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351925AbiCXQwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:52:42 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D976B0D2A
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:24 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id l9-20020a05600c4f0900b0038ccd1b8642so1438795wmq.0
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:24 -0700 (PDT)
+        with ESMTP id S1352214AbiCXQxQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:53:16 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCE1954AF
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:44 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id w4so7462073wrg.12
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WTJ7J8sDnh/K0NYj2eZlDClERl3b/H70L1CBaOQEcxo=;
-        b=n4cEWdYcDKiSqj/tIsSMjXhF7klCtC65IzqjrNgzWjnnSnP3LxRBQ1jjmliZe9Z6Ka
-         L2OAxjezjwnUhEd/wQZgPCLTBYTOscJxV4e/xSxdN8W0xVugYzKAZVBigRH5214p96Q4
-         MK5rA9xu2h3gn6OJVaC+fG0eb1bjq9h1FaddXWaHzMF19NcuQDO4alco8cHcTjCmil/3
-         cs46DRSQkla+VoAbETpKwc3GtwHkw2wsv2FoJJZvS5Z/IHsCbX1MRvZtnyW+T76Tq2J1
-         9hMNN1PAHJDiQc05eIf2oQyFvomc7P5kGYYpZmLCMq+M0N6LJXnQEHUSgK9P3FRtV3bB
-         Rh7Q==
+        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
+        b=OK90k9mF6QCi3r6HQ1kIQ+xboPqYtvh/WtSL5V3zxh/5CGyMtAP11W55XcDJlklOSR
+         LEXB614iBxRUxRZnSRZwozINlzHBDsHdWKuiBH1WL/A19ZuJ22Pjv0+DELNMXgeSLvrj
+         CI9CGs9Hqxcj5265E6BqZTSsGWGzFqcH7KNnVjfLdnY7ZPu7ojyma6oCtN6lZVz95WwQ
+         y2pihVAIpiEUp65/Wj9YkKrjBTtg88h5BWOBpvUunaxUps9gnnTCO4ietziqj/e0nmWK
+         JydPmdK3xocZJ5qBuMAyWutfgMG+3mUCd5PuVinHTbZdYPqcDwrEIR1stEXh2U5ocsmT
+         xSBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WTJ7J8sDnh/K0NYj2eZlDClERl3b/H70L1CBaOQEcxo=;
-        b=gXPPPCgU4fffzFvvhLWgTro9+xyQijaU1Z7Dr6revKydmE2AnhHT6O2MZx5d9td2up
-         L4k62ysLB0FnlZNeBUNdSlk+Q0L+wA6fcwfz30cYebnmoeVLJZ0LQOrwJJaRQdNlA8TG
-         S60syR0iLOILNAbzntzfMM9lOVKbCoT6XAg6OR3c7vrEBW/6/k33RbvKaMIwI81Uk61L
-         nDrUfO+cGGJiNL0jiVjBdYJVGBohB2DVaBYuzroNuQFuhasASDPWL365lfOX2pPVuBxi
-         AfWQMb9IX5mmAvmov1wpDfE3cMuk+9EuUGMcYTNvPDXfspvs9YvEko+60Vpbhfh7c92R
-         1tvg==
-X-Gm-Message-State: AOAM530493yJwDGvVBoRExmxCi4lqIb+wLjlyYLH+652p+STO9tqH7yF
-        SEoxz1FPSza9lB4LLMNtTPUeFrrS+1U=
-X-Google-Smtp-Source: ABdhPJwh8Mp63qNLsPm7BLKzKuOaC772IAhg6E/81/vFtGsb4FxoSLu9nYF48925xm37CJa0KDwu5Q==
-X-Received: by 2002:a05:600c:3482:b0:38c:40:9b30 with SMTP id a2-20020a05600c348200b0038c00409b30mr15140352wmq.68.1648140622416;
-        Thu, 24 Mar 2022 09:50:22 -0700 (PDT)
+        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
+        b=JDyRBiPa9uY82XaHsTuP7sVV9mJddMqqJfDJssw5p0oWqEUVVp7Q9TF70/8LwcbKpj
+         auTpChXbBpG1B3uE2oS/gFhkhQWmdmVs+uIeXwpq/sLdwIgMFK4Uxw3rY4O7jtrO+c/7
+         SrxmhbodmYvRG/cvFkSP4FKg/wkcdZtyklUUNJMGlhDAbisTyi4NxEhHKkZWNpli7Qlt
+         jYrKdbrnZyteAqWzi5eCeCmKcze6pK9RGD3ld8jnAkUcJjbDS018Izq5W+SJP/KcU0Um
+         HvsnHhXQKz/jGZRNRxIPbZ2vseOOXuwyzjQ/7YfQZIfZkK8olki6WExKPo6ZVHaTmjw2
+         Kw3A==
+X-Gm-Message-State: AOAM531SBLnePhPr62lF9LYFXFuYRomKYfcPEleUcYAk5dH5Mtgam4rW
+        LkHwxOp0Y0XzivCqUJ7LVChlhAThzH8=
+X-Google-Smtp-Source: ABdhPJyABDcvkutcDQ3+mNuq3cx45Ct8jAU4JHPJLDR80oi7ScidlsUr01R5QeBUVCGTTWky7VOQhg==
+X-Received: by 2002:a5d:6711:0:b0:204:213:ae45 with SMTP id o17-20020a5d6711000000b002040213ae45mr5347725wru.157.1648140702835;
+        Thu, 24 Mar 2022 09:51:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z18-20020a5d6412000000b0020400dde72esm2996412wru.37.2022.03.24.09.50.21
+        by smtp.gmail.com with ESMTPSA id o17-20020a05600c4fd100b0038cd5074c83sm1553761wmq.34.2022.03.24.09.51.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:21 -0700 (PDT)
-Message-Id: <30957f3930eb03d1dccbcae711b9e9a4383013e5.1648140586.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
-        <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:51:41 -0700 (PDT)
+Message-Id: <7fb0795e25e191ae0270eca3672fd3da60c2127b.1648140680.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
+References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
+        <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:43 +0000
-Subject: [PATCH v8 27/30] fsmonitor--daemon: periodically truncate list of
- modified files
+Date:   Thu, 24 Mar 2022 16:51:08 +0000
+Subject: [PATCH v4 15/27] fsmonitor--daemon: rename listener thread related
+ variables
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
+        <avarab@gmail.com>,
+        Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,148 +73,302 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to periodically truncate the list of
-modified files to save some memory.
+Rename platform-specific listener thread related variables
+and data types as we prepare to add another backend thread
+type.
 
-Clients will ask for the set of changes relative to a token that they
-found in the FSMN index extension in the index.  (This token is like a
-point in time, but different).  Clients will then update the index to
-contain the response token (so that subsequent commands will be
-relative to this new token).
-
-Therefore, the daemon can gradually truncate the in-memory list of
-changed paths as they become obsolete (older than the previous token).
-Since we may have multiple clients making concurrent requests with a
-skew of tokens and clients may be racing to the talk to the daemon,
-we lazily truncate the list.
-
-We introduce a 5 minute delay and truncate batches 5 minutes after
-they are considered obsolete.
+[] `struct fsmonitor_daemon_backend_data` becomes `struct fsm_listen_data`
+[] `state->backend_data` becomes `state->listen_data`
+[] `state->error_code` becomes `state->listen_error_code`
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 88 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ builtin/fsmonitor--daemon.c          |  6 +++---
+ compat/fsmonitor/fsm-listen-darwin.c | 30 ++++++++++++++--------------
+ compat/fsmonitor/fsm-listen-win32.c  | 28 +++++++++++++-------------
+ compat/fsmonitor/fsm-listen.h        |  2 +-
+ fsmonitor--daemon.h                  |  6 +++---
+ 5 files changed, 36 insertions(+), 36 deletions(-)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index eafaafb45b1..ab9cc09f7ce 100644
+index 14cd2d5eb52..d5def8faf90 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -312,6 +312,75 @@ static void fsmonitor_batch__combine(struct fsmonitor_batch *batch_dest,
- 			batch_src->interned_paths[k];
+@@ -1225,8 +1225,8 @@ cleanup:
+ 
+ 	if (err)
+ 		return err;
+-	if (state->error_code)
+-		return state->error_code;
++	if (state->listen_error_code)
++		return state->listen_error_code;
+ 	return 0;
  }
  
-+/*
-+ * To keep the batch list from growing unbounded in response to filesystem
-+ * activity, we try to truncate old batches from the end of the list as
-+ * they become irrelevant.
-+ *
-+ * We assume that the .git/index will be updated with the most recent token
-+ * any time the index is updated.  And future commands will only ask for
-+ * recent changes *since* that new token.  So as tokens advance into the
-+ * future, older batch items will never be requested/needed.  So we can
-+ * truncate them without loss of functionality.
-+ *
-+ * However, multiple commands may be talking to the daemon concurrently
-+ * or perform a slow command, so a little "token skew" is possible.
-+ * Therefore, we want this to be a little bit lazy and have a generous
-+ * delay.
-+ *
-+ * The current reader thread walked backwards in time from `token->batch_head`
-+ * back to `batch_marker` somewhere in the middle of the batch list.
-+ *
-+ * Let's walk backwards in time from that marker an arbitrary delay
-+ * and truncate the list there.  Note that these timestamps are completely
-+ * artificial (based on when we pinned the batch item) and not on any
-+ * filesystem activity.
-+ *
-+ * Return the obsolete portion of the list after we have removed it from
-+ * the official list so that the caller can free it after leaving the lock.
-+ */
-+#define MY_TIME_DELAY_SECONDS (5 * 60) /* seconds */
-+
-+static struct fsmonitor_batch *with_lock__truncate_old_batches(
-+	struct fsmonitor_daemon_state *state,
-+	const struct fsmonitor_batch *batch_marker)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	const struct fsmonitor_batch *batch;
-+	struct fsmonitor_batch *remainder;
-+
-+	if (!batch_marker)
-+		return NULL;
-+
-+	trace_printf_key(&trace_fsmonitor, "Truncate: mark (%"PRIu64",%"PRIu64")",
-+			 batch_marker->batch_seq_nr,
-+			 (uint64_t)batch_marker->pinned_time);
-+
-+	for (batch = batch_marker; batch; batch = batch->next) {
-+		time_t t;
-+
-+		if (!batch->pinned_time) /* an overflow batch */
-+			continue;
-+
-+		t = batch->pinned_time + MY_TIME_DELAY_SECONDS;
-+		if (t > batch_marker->pinned_time) /* too close to marker */
-+			continue;
-+
-+		goto truncate_past_here;
-+	}
-+
-+	return NULL;
-+
-+truncate_past_here:
-+	state->current_token_data->batch_tail = (struct fsmonitor_batch *)batch;
-+
-+	remainder = ((struct fsmonitor_batch *)batch)->next;
-+	((struct fsmonitor_batch *)batch)->next = NULL;
-+
-+	return remainder;
-+}
-+
- static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
+@@ -1241,7 +1241,7 @@ static int fsmonitor_run_daemon(void)
+ 	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
+ 	pthread_mutex_init(&state.main_lock, NULL);
+ 	pthread_cond_init(&state.cookies_cond, NULL);
+-	state.error_code = 0;
++	state.listen_error_code = 0;
+ 	state.current_token_data = fsmonitor_new_token_data();
+ 
+ 	/* Prepare to (recursively) watch the <worktree-root> directory. */
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 14105f45c18..07113205a61 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -27,7 +27,7 @@
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ 
+-struct fsmonitor_daemon_backend_data
++struct fsm_listen_data
  {
- 	if (!token)
-@@ -425,6 +494,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	const char *p;
- 	const struct fsmonitor_batch *batch_head;
- 	const struct fsmonitor_batch *batch;
-+	struct fsmonitor_batch *remainder = NULL;
- 	intmax_t count = 0, duplicates = 0;
- 	kh_str_t *shown;
- 	int hash_ret;
-@@ -652,11 +722,29 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 			 * that work.
- 			 */
- 			fsmonitor_free_token_data(token_data);
-+		} else if (batch) {
-+			/*
-+			 * We are holding the lock and are the only
-+			 * reader of the ref-counted portion of the
-+			 * list, so we get the honor of seeing if the
-+			 * list can be truncated to save memory.
-+			 *
-+			 * The main loop did not walk to the end of the
-+			 * list, so this batch is the first item in the
-+			 * batch-list that is older than the requested
-+			 * end-point sequence number.  See if the tail
-+			 * end of the list is obsolete.
-+			 */
-+			remainder = with_lock__truncate_old_batches(state,
-+								    batch);
- 		}
+ 	CFStringRef cfsr_worktree_path;
+ 	CFStringRef cfsr_gitdir_path;
+@@ -158,7 +158,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			     const FSEventStreamEventId event_ids[])
+ {
+ 	struct fsmonitor_daemon_state *state = ctx;
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	char **paths = (char **)event_paths;
+ 	struct fsmonitor_batch *batch = NULL;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -350,11 +350,11 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		NULL,
+ 		NULL
+ 	};
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 	const void *dir_array[2];
+ 
+ 	CALLOC_ARRAY(data, 1);
+-	state->backend_data = data;
++	state->listen_data = data;
+ 
+ 	data->cfsr_worktree_path = CFStringCreateWithCString(
+ 		NULL, state->path_worktree_watch.buf, kCFStringEncodingUTF8);
+@@ -386,18 +386,18 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ failed:
+ 	error(_("Unable to create FSEventStream."));
+ 
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ 	return -1;
+ }
+ 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	if (!state || !state->backend_data)
++	if (!state || !state->listen_data)
+ 		return;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	if (data->stream) {
+ 		if (data->stream_started)
+@@ -407,14 +407,14 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ 		FSEventStreamRelease(data->stream);
  	}
  
- 	pthread_mutex_unlock(&state->main_lock);
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ }
  
-+	if (remainder)
-+		fsmonitor_batch__free_list(remainder);
-+
- 	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
- 	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
- 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 	data->shutdown_style = SHUTDOWN_EVENT;
+ 
+ 	CFRunLoopStop(data->rl);
+@@ -422,9 +422,9 @@ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	data->rl = CFRunLoopGetCurrent();
+ 
+@@ -441,7 +441,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 
+ 	switch (data->shutdown_style) {
+ 	case FORCE_ERROR_STOP:
+-		state->error_code = -1;
++		state->listen_error_code = -1;
+ 		/* fall thru */
+ 	case FORCE_SHUTDOWN:
+ 		ipc_server_stop_async(state->ipc_server_data);
+@@ -453,7 +453,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	return;
+ 
+ force_error_stop_without_loop:
+-	state->error_code = -1;
++	state->listen_error_code = -1;
+ 	ipc_server_stop_async(state->ipc_server_data);
+ 	return;
+ }
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index c43d92b9620..be2d93f47b2 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -54,7 +54,7 @@ struct one_watch
+ 	wchar_t dotgit_shortname[16]; /* for 8.3 name */
+ };
+ 
+-struct fsmonitor_daemon_backend_data
++struct fsm_listen_data
+ {
+ 	struct one_watch *watch_worktree;
+ 	struct one_watch *watch_gitdir;
+@@ -263,7 +263,7 @@ static enum get_relative_result get_relative_longname(
+ 
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
+-	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
++	SetEvent(state->listen_data->hListener[LISTENER_SHUTDOWN]);
+ }
+ 
+ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+@@ -337,7 +337,7 @@ static void destroy_watch(struct one_watch *watch)
+ 	free(watch);
+ }
+ 
+-static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
++static int start_rdcw_watch(struct fsm_listen_data *data,
+ 			    struct one_watch *watch)
+ {
+ 	DWORD dwNotifyFilter =
+@@ -516,7 +516,7 @@ static int process_1_worktree_event(
+  */
+ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	struct one_watch *watch = data->watch_worktree;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -646,7 +646,7 @@ force_shutdown:
+  */
+ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	struct one_watch *watch = data->watch_gitdir;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -704,11 +704,11 @@ skip_this_path:
+ 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	DWORD dwWait;
+ 	int result;
+ 
+-	state->error_code = 0;
++	state->listen_error_code = 0;
+ 
+ 	if (start_rdcw_watch(data, data->watch_worktree) == -1)
+ 		goto force_error_stop;
+@@ -773,7 +773,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	}
+ 
+ force_error_stop:
+-	state->error_code = -1;
++	state->listen_error_code = -1;
+ 
+ force_shutdown:
+ 	/*
+@@ -790,7 +790,7 @@ clean_shutdown:
+ 
+ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+ 	CALLOC_ARRAY(data, 1);
+ 
+@@ -823,7 +823,7 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		data->nr_listener_handles++;
+ 	}
+ 
+-	state->backend_data = data;
++	state->listen_data = data;
+ 	return 0;
+ 
+ failed:
+@@ -836,16 +836,16 @@ failed:
+ 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	if (!state || !state->backend_data)
++	if (!state || !state->listen_data)
+ 		return;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	CloseHandle(data->hEventShutdown);
+ 	destroy_watch(data->watch_worktree);
+ 	destroy_watch(data->watch_gitdir);
+ 
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ }
+diff --git a/compat/fsmonitor/fsm-listen.h b/compat/fsmonitor/fsm-listen.h
+index f0539349baf..41650bf8972 100644
+--- a/compat/fsmonitor/fsm-listen.h
++++ b/compat/fsmonitor/fsm-listen.h
+@@ -33,7 +33,7 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state);
+  * do so if the listener thread receives a normal shutdown signal from
+  * the IPC layer.)
+  *
+- * It should set `state->error_code` to -1 if the daemon should exit
++ * It should set `state->listen_error_code` to -1 if the daemon should exit
+  * with an error.
+  */
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state);
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 223c2131b58..2c6fa1a5d91 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -33,7 +33,7 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
+  */
+ void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
+ 
+-struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
++struct fsm_listen_data; /* opaque platform-specific data for listener thread */
+ 
+ struct fsmonitor_daemon_state {
+ 	pthread_t listener_thread;
+@@ -50,8 +50,8 @@ struct fsmonitor_daemon_state {
+ 	int cookie_seq;
+ 	struct hashmap cookies;
+ 
+-	int error_code;
+-	struct fsmonitor_daemon_backend_data *backend_data;
++	int listen_error_code;
++	struct fsm_listen_data *listen_data;
+ 
+ 	struct ipc_server_data *ipc_server_data;
+ 	struct strbuf path_ipc;
 -- 
 gitgitgadget
 
