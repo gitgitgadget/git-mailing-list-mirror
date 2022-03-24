@@ -2,70 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D562DC4332F
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 04:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B5EAC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 04:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242120AbiCXEyl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 00:54:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
+        id S1345792AbiCXFAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 01:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiCXEyl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 00:54:41 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58BFF3897
-        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:53:08 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9857B12633F;
-        Thu, 24 Mar 2022 00:53:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=B9x75ih1td8wD9OlAr8yrmolP
-        xagKo+uFoYSKUxhtro=; b=jRlgA20swJRMKd042gPJKgHw019MaJx5rQlXdVk+Y
-        auuXl7zCQgRsPoHZ+rxRPCzFLCDjm6YfOkQnpXOuHIFe8zg1ogmZMmQtmCwRKhWh
-        oMwZsPhWyTEPx5GZCqhh4Ma2gnfxRI3aS6ZboCqxnjwSIfb9eebJ4SYrZ868I30K
-        sM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F51312633E;
-        Thu, 24 Mar 2022 00:53:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DFC1412633D;
-        Thu, 24 Mar 2022 00:53:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 08/27] revisions API users: use release_revisions()
- needing "{ 0 }" init
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
-        <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
-        <patch-v2-08.27-42ad1208934-20220323T203149Z-avarab@gmail.com>
-Date:   Wed, 23 Mar 2022 21:53:05 -0700
-Message-ID: <xmqqy210kl3i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1343621AbiCXFAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 01:00:04 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32113286D0
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:32 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so6530930wmb.4
+        for <git@vger.kernel.org>; Wed, 23 Mar 2022 21:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ND2tpn5Fmoo/wXsuMPeg96graaVqxq9HHzoClph6jpc=;
+        b=pZS+ysJ2lxJWermu3BqhWniks3navL4V6ZUsqQ+iRnRC/W+8Vpa9zNTS/XCn3i4q/r
+         QQ1Ug46PEYPIDChdHKPznaqR24jII5M3ZQd41qm5E4c8j55+fuUjGB7nRRXm1XQJKXRz
+         +YNrYqwx409MbK53ABB0GJ1yq7nty3z7+UOWD9k1TDInklP0P48q4jOYgwByGJN01oBI
+         TW3OiYER6diCdf4MO1iPg1apiyBZ19Zf93Ay/LsaqvVD3piefg8TXexIuxybJfxErfXK
+         qd9He4+DFxUd/fb0HR2Ma1a3JbLKefr0wXBNAu6jgMsHBkTooSs/VZTKWlRLVlNlNoX3
+         K06A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ND2tpn5Fmoo/wXsuMPeg96graaVqxq9HHzoClph6jpc=;
+        b=L2lO1o8JZTe0ohmi/Rd9FsQPliaIK5w0xR/GK+t7NWtwKvW6d+GKjjwoImNzZpN6C3
+         G0AEwHzT6ZgXh7XdBtPi5bFHQvYygP1dS7bw1Xxt9hWAqGgMlXEdXQwoNo1V6SKMuR8s
+         rCzr9r3/KS9GWywM9001K2jZXF3PUOZHL6kL4M8pYbvoh9yQ56kwwIBRLqVm6bUi6+t6
+         s8jJCQLHM5nXIHSBH3bTqCr7KJZvFQLPXlnVJwFNOMJQcpbFdqWCZtVWienWVhKgotkM
+         8QrXp16MbuaVQ/jHnuSPscem8WTt2ET/ubDvuY3siFGVIQfIvUx6OZMqDuZ7RZOLsyFu
+         UvBg==
+X-Gm-Message-State: AOAM530XLz1OvtTVbObJIHtjtMnp8D9EnIHmLlDIwZQh25cfIT76Ut5M
+        9QnIdbuALRL2koEXNLnUC9KWVh/L1Xg=
+X-Google-Smtp-Source: ABdhPJzwzBixEjJMreuSFwYPbOqEL7yYaG7YS7rF55IUwBk2jkCYDQ4DSlB+l1y2Ix4dIaUWQxf3SA==
+X-Received: by 2002:a7b:c541:0:b0:38c:b0ed:31c4 with SMTP id j1-20020a7bc541000000b0038cb0ed31c4mr12563845wmk.141.1648097910555;
+        Wed, 23 Mar 2022 21:58:30 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y15-20020a056000168f00b002057a9f9f5csm1776985wrd.31.2022.03.23.21.58.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Mar 2022 21:58:29 -0700 (PDT)
+Message-Id: <53261f0099d53524155464fe79d10f9605fe93aa.1648097906.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+        <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 24 Mar 2022 04:58:16 +0000
+Subject: [PATCH v3 01/11] bulk-checkin: rebrand plug/unplug APIs as 'odb
+ transactions'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4BBFC670-AB2E-11EC-9326-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, nksingh85@gmail.com,
+        ps@pks.im, Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+From: Neeraj Singh <neerajsi@microsoft.com>
 
-> Use release_revisions() to various users of "struct rev_list" which
-> need to have their "struct rev_info" zero-initialized before we can
-> start using it. In all of these cases we might "goto cleanup" (or equiv=
-alent),
+Make it clearer in the naming and documentation of the plug_bulk_checkin
+and unplug_bulk_checkin APIs that they can be thought of as
+a "transaction" to optimize operations on the object database.
 
-I didn't look at the bisect code, but the bundle one looks iffy from
-the point of view of API cleanliness.  If we have not yet called
-repo_init_revisions() on a revs, we should refrain from calling
-release_revisions() on it in the first place, no?
+Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+---
+ builtin/add.c  |  4 ++--
+ bulk-checkin.c |  4 ++--
+ bulk-checkin.h | 14 ++++++++++++--
+ 3 files changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index 3ffb86a4338..9bf37ceae8e 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -670,7 +670,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		string_list_clear(&only_match_skip_worktree, 0);
+ 	}
+ 
+-	plug_bulk_checkin();
++	begin_odb_transaction();
+ 
+ 	if (add_renormalize)
+ 		exit_status |= renormalize_tracked_files(&pathspec, flags);
+@@ -682,7 +682,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	if (chmod_arg && pathspec.nr)
+ 		exit_status |= chmod_pathspec(&pathspec, chmod_arg[0], show_only);
+-	unplug_bulk_checkin();
++	end_odb_transaction();
+ 
+ finish:
+ 	if (write_locked_index(&the_index, &lock_file,
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 6d6c37171c9..a16ae3c629d 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -285,12 +285,12 @@ int index_bulk_checkin(struct object_id *oid,
+ 	return status;
+ }
+ 
+-void plug_bulk_checkin(void)
++void begin_odb_transaction(void)
+ {
+ 	state.plugged = 1;
+ }
+ 
+-void unplug_bulk_checkin(void)
++void end_odb_transaction(void)
+ {
+ 	state.plugged = 0;
+ 	if (state.f)
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index b26f3dc3b74..69a94422ac7 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -10,7 +10,17 @@ int index_bulk_checkin(struct object_id *oid,
+ 		       int fd, size_t size, enum object_type type,
+ 		       const char *path, unsigned flags);
+ 
+-void plug_bulk_checkin(void);
+-void unplug_bulk_checkin(void);
++/*
++ * Tell the object database to optimize for adding
++ * multiple objects. end_odb_transaction must be called
++ * to make new objects visible.
++ */
++void begin_odb_transaction(void);
++
++/*
++ * Tell the object database to make any objects from the
++ * current transaction visible.
++ */
++void end_odb_transaction(void);
+ 
+ #endif
+-- 
+gitgitgadget
+
