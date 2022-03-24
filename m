@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85452C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAA6BC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351834AbiCXQwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58476 "EHLO
+        id S1351862AbiCXQwJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:52:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351838AbiCXQvn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1348641AbiCXQvn (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Mar 2022 12:51:43 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16989AF1EA
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:11 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id j18so7476913wrd.6
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:11 -0700 (PDT)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BB9AF1E5
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:09 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id r7so3102528wmq.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fAa8hrpVrno1BmdEVVVe0xU+KaqvnFCI1tVOqmc3Cac=;
-        b=gzTRkfeYg/6Sjb4OEjLhf8sTMR6wEm7/x5DDUole23jRBgY5RF26U7rxXPmC1Dsomm
-         TmLrU/sTYzoIo2tu9qtF50t4OLnd4p5jzQWpP0xC9Pf4+pnZzdogRmiTYczcotiMbZDU
-         VLQfK9krvACavQoKnM0NEkM+Sc/aeTEQ9+PnTGkWU5n8eL9DheYgLggNvV6oI8LDdATb
-         ZQdyJEpAyaRoI3jfJxZcObWOYO19DBF98TAn/5Vx/zE1AtZrHK9isMgvUPCjOTbKCvYn
-         N5PTH6BiObMkZDIYdGJK5EhyTwk2iwBw94D7FOAEEOyM5UtjpsoQgsIv8aXM5YtRjEgf
-         v7hQ==
+        bh=27EYsw0sQz+mI4HvJWY1VfC1P39Tg+tZZLnW70cporg=;
+        b=ICnl/gIpnOJChLN0y0E/IHHYp8cis0LsjnaXNczrx+WsN3EOQEuRLNFNZigxurMqDW
+         tE82gHK3KvmZ0ReZTPsYw3ZmevJwaKz1yL9ZfGvA9uRrEiJgUJE1QHe01sS7fiHag5MI
+         PzKOPncAiESFslReTiqOHTxZhMGTNRDiIgSCqBNu3uaff1wDTx/51fB07gd5/QFjuQlq
+         qp6h1LQFbwJs+/UVUN7d96A2IvNXnmWGgdpcwgNnfmhnKeVfoR/u9gWpL2PLEX2ymh0m
+         KoLBe7qHf6QN9+8NS9GbdqKwfR3UIFevYtevjTKkWqMrpLJvTYTluTRv7pJafMwXshik
+         nqoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fAa8hrpVrno1BmdEVVVe0xU+KaqvnFCI1tVOqmc3Cac=;
-        b=zVFKzGSVf1ty2tyf9tyNXoT7ZAguYjUjjrlt0P6FtRnXidXARnwdmpz1E317Ec1upT
-         l/xwUdCy1XAyl7WLkSbEeRz6/Fw/w8Qrj3P/vohYekgExLZoo2HKR/A5wulEN+SggZyC
-         /hFFEmHTN4eEG+Z2j42eh7+Fl7hilrkyjPP+SI6Oiio/BFnRUGYyqiI0UEdwUxr6+40M
-         4orwsNTtn+R9Jy1ibHDn+ckSSzYY0EIuPP1E3F4bgxsBEmob9uC5++YR34RRONjDiMOR
-         8Fa8noNYwfUupr9S2e9r4xR4ugZQhHpzenp5FQvJ+uSpl1pIPEmbbnkeQbUJkuWSJL7V
-         12sw==
-X-Gm-Message-State: AOAM532o4CpYqttWHJTXesYs7SU4mVAvhJ6T/SK4mqSvCmjAqJZVNC5z
-        XulF8D72AK9FCKbNIWPuo4E0hdbEYPI=
-X-Google-Smtp-Source: ABdhPJwzkmfzT/nxySwjCUfXypHNLcJjnhjiNla2o86HWgVD3faRMLrC6mdIJ3kbPVJ0mkOdQJMBSA==
-X-Received: by 2002:adf:eb87:0:b0:1ef:85f5:6ab4 with SMTP id t7-20020adfeb87000000b001ef85f56ab4mr5568870wrn.158.1648140609129;
-        Thu, 24 Mar 2022 09:50:09 -0700 (PDT)
+        bh=27EYsw0sQz+mI4HvJWY1VfC1P39Tg+tZZLnW70cporg=;
+        b=UPK41lKCAkQ+uQeeXeYHLxiRSJwAyPmzrfn/9bOUaPZ4FU8zk8mV8kYOeGPrgfERoW
+         CxG7Yt9iSZoaGinKCOQgRN1xd6XVdPb2zj9xs9CxoqjASPNe3O1Y6OcQvNPi4g6+htlq
+         0ZvrPtxfTS2zi4Z7aPQ2br+om32ED42tMWNa7uImjFVVXXJ7tizTYWCvs6ZCBGzAAaTp
+         QKE6zM38g2PGQGr8UTFHk/M24fmEj4wxiB+Nj0+S8y+s/aANxGoQjFPnN2kYDg5sBZoa
+         byhGGHgqsG15t7Fjaz53UPFbKWKkSlMZkK5U5//+XKBqT09b/Imlk8PKefPDx0Fb+Ki6
+         gX5Q==
+X-Gm-Message-State: AOAM532apVC2QOG508rVLBx1W5E/GPcYATt1lENyx+5pd7JpkF+abtzT
+        E/pRgNFbgzphL31RGjURB85kEbufOIE=
+X-Google-Smtp-Source: ABdhPJw6nh2CpsI0/anO/ySc8z0a43QSFEv4DJwh8qdUBFYZJZQCVFx1GbtlqFr76jqdkq8iwkiZZg==
+X-Received: by 2002:a7b:ce04:0:b0:38c:6c34:9aac with SMTP id m4-20020a7bce04000000b0038c6c349aacmr5549178wmc.142.1648140607809;
+        Thu, 24 Mar 2022 09:50:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17-20020adfdb11000000b001f02d5fea43sm3268723wri.98.2022.03.24.09.50.08
+        by smtp.gmail.com with ESMTPSA id x13-20020adfec0d000000b00203ff46f802sm4458963wrn.36.2022.03.24.09.50.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:50:08 -0700 (PDT)
-Message-Id: <14b775e9d8b1a4672f8175a546eb70e2790c1b23.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:50:07 -0700 (PDT)
+Message-Id: <239558e34ffea4240de8699707cd3b404b682488.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:32 +0000
-Subject: [PATCH v8 16/30] compat/fsmonitor/fsm-listen-darwin: add MacOS header
- files for FSEvent
+Date:   Thu, 24 Mar 2022 16:49:31 +0000
+Subject: [PATCH v8 15/30] compat/fsmonitor/fsm-listen-win32: implement
+ FSMonitor backend on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,196 +74,607 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Include MacOS system declarations to allow us to use FSEvent and
-CoreFoundation APIs.  We need different versions of the declarations
-for GCC vs. clang because of compiler and header file conflicts.
+Teach the win32 backend to register a watch on the working tree
+root directory (recursively).  Also watch the <gitdir> if it is
+not inside the working tree.  And to collect path change notifications
+into batches and publish.
 
-While it is quite possible to #include Apple's CoreServices.h when
-compiling C source code with clang, trying to build it with GCC
-currently fails with this error:
-
-In file included
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/Security.framework/Headers/AuthSession.h:32,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/Security.framework/Headers/Security.h:42,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...OSServices.framework/Headers/CSIdentity.h:43,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...OSServices.framework/Headers/OSServices.h:29,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...LaunchServices.framework/Headers/IconsCore.h:23,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...LaunchServices.framework/Headers/LaunchServices.h:23,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Headers/CoreServices.h:45,
-
-     /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-     ...Library/Frameworks/Security.framework/Headers/Authorization.h:193:7:
-     error: variably modified 'bytes' at file scope
-       193 | char bytes[kAuthorizationExternalFormLength];
-           |      ^~~~~
-
-The underlying reason is that GCC (rightfully) objects that an `enum`
-value such as `kAuthorizationExternalFormLength` is not a constant
-(because it is not, the preprocessor has no knowledge of it, only the
-actual C compiler does) and can therefore not be used to define the size
-of a C array.
-
-This is a known problem and tracked in GCC's bug tracker:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082
-
-In the meantime, let's not block things and go the slightly ugly route
-of declaring/defining the FSEvents constants, data structures and
-functions that we need, so that we can avoid above-mentioned issue.
-
-Let's do this _only_ for GCC, though, so that the CI/PR builds (which
-build both with clang and with GCC) can guarantee that we _are_ using
-the correct data types.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- compat/fsmonitor/fsm-darwin-gcc.h    | 92 ++++++++++++++++++++++++++++
- compat/fsmonitor/fsm-listen-darwin.c | 24 ++++++++
- 2 files changed, 116 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-darwin-gcc.h
+ compat/fsmonitor/fsm-listen-win32.c | 565 ++++++++++++++++++++++++++++
+ 1 file changed, 565 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
-new file mode 100644
-index 00000000000..1c75c3d48e7
---- /dev/null
-+++ b/compat/fsmonitor/fsm-darwin-gcc.h
-@@ -0,0 +1,92 @@
-+#ifndef FSM_DARWIN_GCC_H
-+#define FSM_DARWIN_GCC_H
-+
-+#ifndef __clang__
-+/*
-+ * It is possible to #include CoreFoundation/CoreFoundation.h when compiling
-+ * with clang, but not with GCC as of time of writing.
-+ *
-+ * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082 for details.
-+ */
-+typedef unsigned int FSEventStreamCreateFlags;
-+#define kFSEventStreamEventFlagNone               0x00000000
-+#define kFSEventStreamEventFlagMustScanSubDirs    0x00000001
-+#define kFSEventStreamEventFlagUserDropped        0x00000002
-+#define kFSEventStreamEventFlagKernelDropped      0x00000004
-+#define kFSEventStreamEventFlagEventIdsWrapped    0x00000008
-+#define kFSEventStreamEventFlagHistoryDone        0x00000010
-+#define kFSEventStreamEventFlagRootChanged        0x00000020
-+#define kFSEventStreamEventFlagMount              0x00000040
-+#define kFSEventStreamEventFlagUnmount            0x00000080
-+#define kFSEventStreamEventFlagItemCreated        0x00000100
-+#define kFSEventStreamEventFlagItemRemoved        0x00000200
-+#define kFSEventStreamEventFlagItemInodeMetaMod   0x00000400
-+#define kFSEventStreamEventFlagItemRenamed        0x00000800
-+#define kFSEventStreamEventFlagItemModified       0x00001000
-+#define kFSEventStreamEventFlagItemFinderInfoMod  0x00002000
-+#define kFSEventStreamEventFlagItemChangeOwner    0x00004000
-+#define kFSEventStreamEventFlagItemXattrMod       0x00008000
-+#define kFSEventStreamEventFlagItemIsFile         0x00010000
-+#define kFSEventStreamEventFlagItemIsDir          0x00020000
-+#define kFSEventStreamEventFlagItemIsSymlink      0x00040000
-+#define kFSEventStreamEventFlagOwnEvent           0x00080000
-+#define kFSEventStreamEventFlagItemIsHardlink     0x00100000
-+#define kFSEventStreamEventFlagItemIsLastHardlink 0x00200000
-+#define kFSEventStreamEventFlagItemCloned         0x00400000
-+
-+typedef struct __FSEventStream *FSEventStreamRef;
-+typedef const FSEventStreamRef ConstFSEventStreamRef;
-+
-+typedef unsigned int CFStringEncoding;
-+#define kCFStringEncodingUTF8 0x08000100
-+
-+typedef const struct __CFString *CFStringRef;
-+typedef const struct __CFArray *CFArrayRef;
-+typedef const struct __CFRunLoop *CFRunLoopRef;
-+
-+struct FSEventStreamContext {
-+    long long version;
-+    void *cb_data, *retain, *release, *copy_description;
-+};
-+
-+typedef struct FSEventStreamContext FSEventStreamContext;
-+typedef unsigned int FSEventStreamEventFlags;
-+#define kFSEventStreamCreateFlagNoDefer 0x02
-+#define kFSEventStreamCreateFlagWatchRoot 0x04
-+#define kFSEventStreamCreateFlagFileEvents 0x10
-+
-+typedef unsigned long long FSEventStreamEventId;
-+#define kFSEventStreamEventIdSinceNow 0xFFFFFFFFFFFFFFFFULL
-+
-+typedef void (*FSEventStreamCallback)(ConstFSEventStreamRef streamRef,
-+				      void *context,
-+				      __SIZE_TYPE__ num_of_events,
-+				      void *event_paths,
-+				      const FSEventStreamEventFlags event_flags[],
-+				      const FSEventStreamEventId event_ids[]);
-+typedef double CFTimeInterval;
-+FSEventStreamRef FSEventStreamCreate(void *allocator,
-+				     FSEventStreamCallback callback,
-+				     FSEventStreamContext *context,
-+				     CFArrayRef paths_to_watch,
-+				     FSEventStreamEventId since_when,
-+				     CFTimeInterval latency,
-+				     FSEventStreamCreateFlags flags);
-+CFStringRef CFStringCreateWithCString(void *allocator, const char *string,
-+				      CFStringEncoding encoding);
-+CFArrayRef CFArrayCreate(void *allocator, const void **items, long long count,
-+			 void *callbacks);
-+void CFRunLoopRun(void);
-+void CFRunLoopStop(CFRunLoopRef run_loop);
-+CFRunLoopRef CFRunLoopGetCurrent(void);
-+extern CFStringRef kCFRunLoopDefaultMode;
-+void FSEventStreamScheduleWithRunLoop(FSEventStreamRef stream,
-+				      CFRunLoopRef run_loop,
-+				      CFStringRef run_loop_mode);
-+unsigned char FSEventStreamStart(FSEventStreamRef stream);
-+void FSEventStreamStop(FSEventStreamRef stream);
-+void FSEventStreamInvalidate(FSEventStreamRef stream);
-+void FSEventStreamRelease(FSEventStreamRef stream);
-+
-+#endif /* !clang */
-+#endif /* FSM_DARWIN_GCC_H */
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index c84e3344ab9..d2ce942cade 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -1,3 +1,27 @@
-+#ifndef __clang__
-+#include "fsm-darwin-gcc.h"
-+#else
-+#include <CoreFoundation/CoreFoundation.h>
-+#include <CoreServices/CoreServices.h>
-+
-+#ifndef AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER
-+/*
-+ * This enum value was added in 10.13 to:
-+ *
-+ * /Applications/Xcode.app/Contents/Developer/Platforms/ \
-+ *    MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/ \
-+ *    Library/Frameworks/CoreServices.framework/Frameworks/ \
-+ *    FSEvents.framework/Versions/Current/Headers/FSEvents.h
-+ *
-+ * If we're compiling against an older SDK, this symbol won't be
-+ * present.  Silently define it here so that we don't have to ifdef
-+ * the logging or masking below.  This should be harmless since older
-+ * versions of macOS won't ever emit this FS event anyway.
-+ */
-+#define kFSEventStreamEventFlagItemCloned         0x00400000
-+#endif
-+#endif
-+
- #include "cache.h"
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 916cbea254f..5b928ab66e5 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -2,20 +2,585 @@
+ #include "config.h"
  #include "fsmonitor.h"
  #include "fsm-listen.h"
++#include "fsmonitor--daemon.h"
++
++/*
++ * The documentation of ReadDirectoryChangesW() states that the maximum
++ * buffer size is 64K when the monitored directory is remote.
++ *
++ * Larger buffers may be used when the monitored directory is local and
++ * will help us receive events faster from the kernel and avoid dropped
++ * events.
++ *
++ * So we try to use a very large buffer and silently fallback to 64K if
++ * we get an error.
++ */
++#define MAX_RDCW_BUF_FALLBACK (65536)
++#define MAX_RDCW_BUF          (65536 * 8)
++
++struct one_watch
++{
++	char buffer[MAX_RDCW_BUF];
++	DWORD buf_len;
++	DWORD count;
++
++	struct strbuf path;
++	HANDLE hDir;
++	HANDLE hEvent;
++	OVERLAPPED overlapped;
++
++	/*
++	 * Is there an active ReadDirectoryChangesW() call pending.  If so, we
++	 * need to later call GetOverlappedResult() and possibly CancelIoEx().
++	 */
++	BOOL is_active;
++};
++
++struct fsmonitor_daemon_backend_data
++{
++	struct one_watch *watch_worktree;
++	struct one_watch *watch_gitdir;
++
++	HANDLE hEventShutdown;
++
++	HANDLE hListener[3]; /* we don't own these handles */
++#define LISTENER_SHUTDOWN 0
++#define LISTENER_HAVE_DATA_WORKTREE 1
++#define LISTENER_HAVE_DATA_GITDIR 2
++	int nr_listener_handles;
++};
++
++/*
++ * Convert the WCHAR path from the notification into UTF8 and
++ * then normalize it.
++ */
++static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
++				  struct strbuf *normalized_path)
++{
++	int reserve;
++	int len = 0;
++
++	strbuf_reset(normalized_path);
++	if (!info->FileNameLength)
++		goto normalize;
++
++	/*
++	 * Pre-reserve enough space in the UTF8 buffer for
++	 * each Unicode WCHAR character to be mapped into a
++	 * sequence of 2 UTF8 characters.  That should let us
++	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
++	 */
++	reserve = info->FileNameLength + 1;
++	strbuf_grow(normalized_path, reserve);
++
++	for (;;) {
++		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
++					  info->FileNameLength / sizeof(WCHAR),
++					  normalized_path->buf,
++					  strbuf_avail(normalized_path) - 1,
++					  NULL, NULL);
++		if (len > 0)
++			goto normalize;
++		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
++			error(_("[GLE %ld] could not convert path to UTF-8: '%.*ls'"),
++			      GetLastError(),
++			      (int)(info->FileNameLength / sizeof(WCHAR)),
++			      info->FileName);
++			return -1;
++		}
++
++		strbuf_grow(normalized_path,
++			    strbuf_avail(normalized_path) + reserve);
++	}
++
++normalize:
++	strbuf_setlen(normalized_path, len);
++	return strbuf_normalize_path(normalized_path);
++}
+ 
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
++	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
++}
++
++static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
++				      const char *path)
++{
++	struct one_watch *watch = NULL;
++	DWORD desired_access = FILE_LIST_DIRECTORY;
++	DWORD share_mode =
++		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
++	HANDLE hDir;
++	wchar_t wpath[MAX_PATH];
++
++	if (xutftowcs_path(wpath, path) < 0) {
++		error(_("could not convert to wide characters: '%s'"), path);
++		return NULL;
++	}
++
++	hDir = CreateFileW(wpath,
++			   desired_access, share_mode, NULL, OPEN_EXISTING,
++			   FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,
++			   NULL);
++	if (hDir == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] could not watch '%s'"),
++		      GetLastError(), path);
++		return NULL;
++	}
++
++	CALLOC_ARRAY(watch, 1);
++
++	watch->buf_len = sizeof(watch->buffer); /* assume full MAX_RDCW_BUF */
++
++	strbuf_init(&watch->path, 0);
++	strbuf_addstr(&watch->path, path);
++
++	watch->hDir = hDir;
++	watch->hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
++
++	return watch;
++}
++
++static void destroy_watch(struct one_watch *watch)
++{
++	if (!watch)
++		return;
++
++	strbuf_release(&watch->path);
++	if (watch->hDir != INVALID_HANDLE_VALUE)
++		CloseHandle(watch->hDir);
++	if (watch->hEvent != INVALID_HANDLE_VALUE)
++		CloseHandle(watch->hEvent);
++
++	free(watch);
++}
++
++static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
++			    struct one_watch *watch)
++{
++	DWORD dwNotifyFilter =
++		FILE_NOTIFY_CHANGE_FILE_NAME |
++		FILE_NOTIFY_CHANGE_DIR_NAME |
++		FILE_NOTIFY_CHANGE_ATTRIBUTES |
++		FILE_NOTIFY_CHANGE_SIZE |
++		FILE_NOTIFY_CHANGE_LAST_WRITE |
++		FILE_NOTIFY_CHANGE_CREATION;
++
++	ResetEvent(watch->hEvent);
++
++	memset(&watch->overlapped, 0, sizeof(watch->overlapped));
++	watch->overlapped.hEvent = watch->hEvent;
++
++	/*
++	 * Queue an async call using Overlapped IO.  This returns immediately.
++	 * Our event handle will be signalled when the real result is available.
++	 *
++	 * The return value here just means that we successfully queued it.
++	 * We won't know if the Read...() actually produces data until later.
++	 */
++	watch->is_active = ReadDirectoryChangesW(
++		watch->hDir, watch->buffer, watch->buf_len, TRUE,
++		dwNotifyFilter, &watch->count, &watch->overlapped, NULL);
++
++	if (watch->is_active)
++		return 0;
++
++	error(_("ReadDirectoryChangedW failed on '%s' [GLE %ld]"),
++	      watch->path.buf, GetLastError());
++	return -1;
++}
++
++static int recv_rdcw_watch(struct one_watch *watch)
++{
++	DWORD gle;
++
++	watch->is_active = FALSE;
++
++	/*
++	 * The overlapped result is ready.  If the Read...() was successful
++	 * we finally receive the actual result into our buffer.
++	 */
++	if (GetOverlappedResult(watch->hDir, &watch->overlapped, &watch->count,
++				TRUE))
++		return 0;
++
++	gle = GetLastError();
++	if (gle == ERROR_INVALID_PARAMETER &&
++	    /*
++	     * The kernel throws an invalid parameter error when our
++	     * buffer is too big and we are pointed at a remote
++	     * directory (and possibly for other reasons).  Quietly
++	     * set it down and try again.
++	     *
++	     * See note about MAX_RDCW_BUF at the top.
++	     */
++	    watch->buf_len > MAX_RDCW_BUF_FALLBACK) {
++		watch->buf_len = MAX_RDCW_BUF_FALLBACK;
++		return -2;
++	}
++
++	/*
++	 * NEEDSWORK: If an external <gitdir> is deleted, the above
++	 * returns an error.  I'm not sure that there's anything that
++	 * we can do here other than failing -- the <worktree>/.git
++	 * link file would be broken anyway.  We might try to check
++	 * for that and return a better error message, but I'm not
++	 * sure it is worth it.
++	 */
++
++	error(_("GetOverlappedResult failed on '%s' [GLE %ld]"),
++	      watch->path.buf, gle);
++	return -1;
++}
++
++static void cancel_rdcw_watch(struct one_watch *watch)
++{
++	DWORD count;
++
++	if (!watch || !watch->is_active)
++		return;
++
++	/*
++	 * The calls to ReadDirectoryChangesW() and GetOverlappedResult()
++	 * form a "pair" (my term) where we queue an IO and promise to
++	 * hang around and wait for the kernel to give us the result.
++	 *
++	 * If for some reason after we queue the IO, we have to quit
++	 * or otherwise not stick around for the second half, we must
++	 * tell the kernel to abort the IO.  This prevents the kernel
++	 * from writing to our buffer and/or signalling our event
++	 * after we free them.
++	 *
++	 * (Ask me how much fun it was to track that one down).
++	 */
++	CancelIoEx(watch->hDir, &watch->overlapped);
++	GetOverlappedResult(watch->hDir, &watch->overlapped, &count, TRUE);
++	watch->is_active = FALSE;
++}
++
++/*
++ * Process filesystem events that happen anywhere (recursively) under the
++ * <worktree> root directory.  For a normal working directory, this includes
++ * both version controlled files and the contents of the .git/ directory.
++ *
++ * If <worktree>/.git is a file, then we only see events for the file
++ * itself.
++ */
++static int process_worktree_events(struct fsmonitor_daemon_state *state)
++{
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct one_watch *watch = data->watch_worktree;
++	struct strbuf path = STRBUF_INIT;
++	struct string_list cookie_list = STRING_LIST_INIT_DUP;
++	struct fsmonitor_batch *batch = NULL;
++	const char *p = watch->buffer;
++
++	/*
++	 * If the kernel gets more events than will fit in the kernel
++	 * buffer associated with our RDCW handle, it drops them and
++	 * returns a count of zero.
++	 *
++	 * Yes, the call returns WITHOUT error and with length zero.
++	 * This is the documented behavior.  (My testing has confirmed
++	 * that it also sets the last error to ERROR_NOTIFY_ENUM_DIR,
++	 * but we do not rely on that since the function did not
++	 * return an error and it is not documented.)
++	 *
++	 * (The "overflow" case is not ambiguous with the "no data" case
++	 * because we did an INFINITE wait.)
++	 *
++	 * This means we have a gap in coverage.  Tell the daemon layer
++	 * to resync.
++	 */
++	if (!watch->count) {
++		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
++				   "overflow");
++		fsmonitor_force_resync(state);
++		return LISTENER_HAVE_DATA_WORKTREE;
++	}
++
++	/*
++	 * On Windows, `info` contains an "array" of paths that are
++	 * relative to the root of whichever directory handle received
++	 * the event.
++	 */
++	for (;;) {
++		FILE_NOTIFY_INFORMATION *info = (void *)p;
++		const char *slash;
++		enum fsmonitor_path_type t;
++
++		strbuf_reset(&path);
++		if (normalize_path_in_utf8(info, &path) == -1)
++			goto skip_this_path;
++
++		t = fsmonitor_classify_path_workdir_relative(path.buf);
++
++		switch (t) {
++		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++			/* special case cookie files within .git */
++
++			/* Use just the filename of the cookie file. */
++			slash = find_last_dir_sep(path.buf);
++			string_list_append(&cookie_list,
++					   slash ? slash + 1 : path.buf);
++			break;
++
++		case IS_INSIDE_DOT_GIT:
++			/* ignore everything inside of "<worktree>/.git/" */
++			break;
++
++		case IS_DOT_GIT:
++			/* "<worktree>/.git" was deleted (or renamed away) */
++			if ((info->Action == FILE_ACTION_REMOVED) ||
++			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
++				trace2_data_string("fsmonitor", NULL,
++						   "fsm-listen/dotgit",
++						   "removed");
++				goto force_shutdown;
++			}
++			break;
++
++		case IS_WORKDIR_PATH:
++			/* queue normal pathname */
++			if (!batch)
++				batch = fsmonitor_batch__new();
++			fsmonitor_batch__add_path(batch, path.buf);
++			break;
++
++		case IS_GITDIR:
++		case IS_INSIDE_GITDIR:
++		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++		default:
++			BUG("unexpected path classification '%d' for '%s'",
++			    t, path.buf);
++		}
++
++skip_this_path:
++		if (!info->NextEntryOffset)
++			break;
++		p += info->NextEntryOffset;
++	}
++
++	fsmonitor_publish(state, batch, &cookie_list);
++	batch = NULL;
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_HAVE_DATA_WORKTREE;
++
++force_shutdown:
++	fsmonitor_batch__free_list(batch);
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_SHUTDOWN;
++}
++
++/*
++ * Process filesystem events that happened anywhere (recursively) under the
++ * external <gitdir> (such as non-primary worktrees or submodules).
++ * We only care about cookie files that our client threads created here.
++ *
++ * Note that we DO NOT get filesystem events on the external <gitdir>
++ * itself (it is not inside something that we are watching).  In particular,
++ * we do not get an event if the external <gitdir> is deleted.
++ */
++static int process_gitdir_events(struct fsmonitor_daemon_state *state)
++{
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct one_watch *watch = data->watch_gitdir;
++	struct strbuf path = STRBUF_INIT;
++	struct string_list cookie_list = STRING_LIST_INIT_DUP;
++	const char *p = watch->buffer;
++
++	if (!watch->count) {
++		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
++				   "overflow");
++		fsmonitor_force_resync(state);
++		return LISTENER_HAVE_DATA_GITDIR;
++	}
++
++	for (;;) {
++		FILE_NOTIFY_INFORMATION *info = (void *)p;
++		const char *slash;
++		enum fsmonitor_path_type t;
++
++		strbuf_reset(&path);
++		if (normalize_path_in_utf8(info, &path) == -1)
++			goto skip_this_path;
++
++		t = fsmonitor_classify_path_gitdir_relative(path.buf);
++
++		switch (t) {
++		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++			/* special case cookie files within gitdir */
++
++			/* Use just the filename of the cookie file. */
++			slash = find_last_dir_sep(path.buf);
++			string_list_append(&cookie_list,
++					   slash ? slash + 1 : path.buf);
++			break;
++
++		case IS_INSIDE_GITDIR:
++			goto skip_this_path;
++
++		default:
++			BUG("unexpected path classification '%d' for '%s'",
++			    t, path.buf);
++		}
++
++skip_this_path:
++		if (!info->NextEntryOffset)
++			break;
++		p += info->NextEntryOffset;
++	}
++
++	fsmonitor_publish(state, NULL, &cookie_list);
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_HAVE_DATA_GITDIR;
+ }
+ 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	DWORD dwWait;
++	int result;
++
++	state->error_code = 0;
++
++	if (start_rdcw_watch(data, data->watch_worktree) == -1)
++		goto force_error_stop;
++
++	if (data->watch_gitdir &&
++	    start_rdcw_watch(data, data->watch_gitdir) == -1)
++		goto force_error_stop;
++
++	for (;;) {
++		dwWait = WaitForMultipleObjects(data->nr_listener_handles,
++						data->hListener,
++						FALSE, INFINITE);
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_WORKTREE) {
++			result = recv_rdcw_watch(data->watch_worktree);
++			if (result == -1) {
++				/* hard error */
++				goto force_error_stop;
++			}
++			if (result == -2) {
++				/* retryable error */
++				if (start_rdcw_watch(data, data->watch_worktree) == -1)
++					goto force_error_stop;
++				continue;
++			}
++
++			/* have data */
++			if (process_worktree_events(state) == LISTENER_SHUTDOWN)
++				goto force_shutdown;
++			if (start_rdcw_watch(data, data->watch_worktree) == -1)
++				goto force_error_stop;
++			continue;
++		}
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_GITDIR) {
++			result = recv_rdcw_watch(data->watch_gitdir);
++			if (result == -1) {
++				/* hard error */
++				goto force_error_stop;
++			}
++			if (result == -2) {
++				/* retryable error */
++				if (start_rdcw_watch(data, data->watch_gitdir) == -1)
++					goto force_error_stop;
++				continue;
++			}
++
++			/* have data */
++			if (process_gitdir_events(state) == LISTENER_SHUTDOWN)
++				goto force_shutdown;
++			if (start_rdcw_watch(data, data->watch_gitdir) == -1)
++				goto force_error_stop;
++			continue;
++		}
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_SHUTDOWN)
++			goto clean_shutdown;
++
++		error(_("could not read directory changes [GLE %ld]"),
++		      GetLastError());
++		goto force_error_stop;
++	}
++
++force_error_stop:
++	state->error_code = -1;
++
++force_shutdown:
++	/*
++	 * Tell the IPC thead pool to stop (which completes the await
++	 * in the main thread (which will also signal this thread (if
++	 * we are still alive))).
++	 */
++	ipc_server_stop_async(state->ipc_server_data);
++
++clean_shutdown:
++	cancel_rdcw_watch(data->watch_worktree);
++	cancel_rdcw_watch(data->watch_gitdir);
+ }
+ 
+ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	CALLOC_ARRAY(data, 1);
++
++	data->hEventShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
++
++	data->watch_worktree = create_watch(state,
++					    state->path_worktree_watch.buf);
++	if (!data->watch_worktree)
++		goto failed;
++
++	if (state->nr_paths_watching > 1) {
++		data->watch_gitdir = create_watch(state,
++						  state->path_gitdir_watch.buf);
++		if (!data->watch_gitdir)
++			goto failed;
++	}
++
++	data->hListener[LISTENER_SHUTDOWN] = data->hEventShutdown;
++	data->nr_listener_handles++;
++
++	data->hListener[LISTENER_HAVE_DATA_WORKTREE] =
++		data->watch_worktree->hEvent;
++	data->nr_listener_handles++;
++
++	if (data->watch_gitdir) {
++		data->hListener[LISTENER_HAVE_DATA_GITDIR] =
++			data->watch_gitdir->hEvent;
++		data->nr_listener_handles++;
++	}
++
++	state->backend_data = data;
++	return 0;
++
++failed:
++	CloseHandle(data->hEventShutdown);
++	destroy_watch(data->watch_worktree);
++	destroy_watch(data->watch_gitdir);
++
+ 	return -1;
+ }
+ 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	if (!state || !state->backend_data)
++		return;
++
++	data = state->backend_data;
++
++	CloseHandle(data->hEventShutdown);
++	destroy_watch(data->watch_worktree);
++	destroy_watch(data->watch_gitdir);
++
++	FREE_AND_NULL(state->backend_data);
+ }
 -- 
 gitgitgadget
 
