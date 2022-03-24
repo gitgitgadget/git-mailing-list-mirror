@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5571CC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F22DC433FE
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351845AbiCXQvl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57446 "EHLO
+        id S1351856AbiCXQvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351837AbiCXQvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:51:31 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BE090CDA
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:49:57 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id i64-20020a1c3b43000000b0038ce25c870dso158708wma.1
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:49:57 -0700 (PDT)
+        with ESMTP id S1351840AbiCXQvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:51:39 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCF3AF1E5
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:49:58 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id t11so7481615wrm.5
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
-        b=qw1uEUKNqTzXH17+9O6kvbNVZoJRWToidoQ+RBIauJjnHCNV9aqZ5ILnmgkTSy8pEX
-         8NQ5B6799I4vm1VNia/RqTSvKO2Mz84DYr/vUc1zGTUJly75Ezjv3guNvWX8iPbvBdja
-         cYGEd9uu19sYiADRHt0yP0qcisOzQFMoLeNrSdC63YcFgQwmb6wGBHN/4GLGh89tgrlk
-         HU6yqnOJcUl3zmmgLlj3V+1LUvEcEOQheIqcdBcmG860EzGE4uxvb0rClMIsp3s/lk5I
-         wdFRFyxMEllcNkZD3RMsPc0lTWb9zZ73KbwWjSLNOScyicl9taxnb1pZq54/5JX5dyz7
-         xRig==
+        bh=qHwl1k+mT7kL/vCpcTSTxB1s0NWzJtpH1afNGYRMp+8=;
+        b=lrV/YlRoDZyGG+IYJ89U4OccoFW9vbWmTYXIULlyEbZ0Uw+JnafgVOpAAzl+crG8LK
+         Xy7VI/gOjXrKZW0FN7gMPxSj7h1ScvuN2ksyZBCWdMIiDG/nUMsd9dfzvVnYaz4C2q6i
+         7gq+d/WcOnnDvqUMIs1V0xf7yR/U25slvbYa43T7M2MoM7omIG2UbxWfasbzHYa4cBfY
+         2t/H4/2eRXp+tuqSIXGI8d+WMuGy8xemDp1WUDpBQPCxk/AbDk3yYUTy3I+lTfQCLqp4
+         yOjUY+6fkJypWUt6Dj0YACHHJXGGAAipBZW3UoHStKA+Uc5S4o1sjDJocFA/ag5ctqh9
+         Op7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
-        b=EkmINk/aPeXFLLGUIfuF/HUSx85/aZVY4Bd2W3/fCpOAVLX0z1hgniRdKjP8FhRdwq
-         hPc5HivvzV6X/ZroSaZ216w22iAOeyrH04TklQ9xDfMK+pJ8vgwey6I60roVLh56SbaN
-         cvqdYaixJV6+lgiddkdcxX76D0mBY6kVLka+LH75eJRIHsYWh39Tqz6WRw06aoX/+WCi
-         /gXCVrkruBNu7lzaPm//PizXxUCzCTCMP6AABVcTjW+UGB/6OZ9kKF+Sj/NHA3WuGKgv
-         j3o4P06W9RuYS+YDHHBgM6iCHEgqPnK2uWxfuR6t6dKx5EHLLZVUM58Ln2NJpODUNFgI
-         mlQQ==
-X-Gm-Message-State: AOAM530SbZynSF4BQWDs//L0NLBB6QoDlY2DFfsCZ6SoOZaRfO+dIuQa
-        PdY9cotHqeWMvX3PCj0K973sDDAWEZ8=
-X-Google-Smtp-Source: ABdhPJzXZZbW+KJIWeWhNU7PK94nOmheYFUfqE4lVe12t4x+K+xQqWvbGNyhsTCfhucOhfhDpSSRmw==
-X-Received: by 2002:a05:600c:2905:b0:381:67e2:3992 with SMTP id i5-20020a05600c290500b0038167e23992mr15281352wmd.182.1648140595335;
-        Thu, 24 Mar 2022 09:49:55 -0700 (PDT)
+        bh=qHwl1k+mT7kL/vCpcTSTxB1s0NWzJtpH1afNGYRMp+8=;
+        b=P7HNNZK7xgcPF9c8e7MxmroM5wzHB9Y+Tiy4zfNlS6uS5ka1zONLmFXLRdQBjL8mqV
+         KnBMjKvM+hfkqTTZIwXhO6Vv7E8ypi7IvkBnHAFQnn8mo9VfnBYaO6iM/uI+UB9EhtdA
+         3MSdzc/IQn9KRf0AYNIDvgRFdO1WJlNnhi0RNh/dkXXg5AIqnSZBDQqsQ275U/4U0vgG
+         AOcfT3pAxy8iD0zqXe1tYPTslbTKeMUtK+icnp9E7KBaJSKz5/u8FZCj3xh1V0PCWjnU
+         +T1vX8uO9SqNae1dWbRn273/Jktg5q8KasbsjRNvWqpvGtF9qfF7OgxJ8oSfzhSDITUY
+         4VBw==
+X-Gm-Message-State: AOAM5302wANgNqHDS04Ila/K56xnLUkQx/R3wV1v49mu+ieHjb4K9gg3
+        USTXVn47guupmv7ygGrEtsJiU9Rd+/o=
+X-Google-Smtp-Source: ABdhPJzJtDgWQUb8KbAhVPFdORtGFiv49FpezwPLBp8XRh3OarrLKwVZDek3s6JcxwRmmwj1tovu0g==
+X-Received: by 2002:a5d:4892:0:b0:1ed:beaa:778a with SMTP id g18-20020a5d4892000000b001edbeaa778amr5436104wrq.35.1648140596477;
+        Thu, 24 Mar 2022 09:49:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f22-20020a1cc916000000b00380d3e49e89sm2442345wmb.22.2022.03.24.09.49.54
+        by smtp.gmail.com with ESMTPSA id q8-20020a056000136800b00203e740c7desm3044153wrz.71.2022.03.24.09.49.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:49:54 -0700 (PDT)
-Message-Id: <6ab7db9cb769fe44db2c76e82da0b5d898538ec0.1648140586.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:49:56 -0700 (PDT)
+Message-Id: <0ce8ae3f2cf07bfffdb1cb14454768d2b6d84bf2.1648140586.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com>
         <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:49:21 +0000
-Subject: [PATCH v8 05/30] fsmonitor: document builtin fsmonitor
+Date:   Thu, 24 Mar 2022 16:49:22 +0000
+Subject: [PATCH v8 06/30] fsmonitor--daemon: add a built-in fsmonitor daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,203 +73,128 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Document how `core.fsmonitor` can be set to a boolean to enable
-or disable the builtin FSMonitor.
+Create a built-in file system monitoring daemon that can be used by
+the existing `fsmonitor` feature (protocol API and index extension)
+to improve the performance of various Git commands, such as `status`.
 
-Update references to `core.fsmonitor` and `core.fsmonitorHookVersion` and
-pointers to `Watchman` to refer to it.
+The `fsmonitor--daemon` feature builds upon the `Simple IPC` API and
+provides an alternative to hook access to existing fsmonitors such
+as `watchman`.
 
-Create `git-fsmonitor--daemon` manual page and describe its features.
+This commit merely adds the new command without any functionality.
 
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/core.txt           | 60 +++++++++++++++-----
- Documentation/git-fsmonitor--daemon.txt | 75 +++++++++++++++++++++++++
- Documentation/git-update-index.txt      |  8 ++-
- 3 files changed, 126 insertions(+), 17 deletions(-)
- create mode 100644 Documentation/git-fsmonitor--daemon.txt
+ .gitignore                  |  1 +
+ Makefile                    |  1 +
+ builtin.h                   |  1 +
+ builtin/fsmonitor--daemon.c | 46 +++++++++++++++++++++++++++++++++++++
+ git.c                       |  1 +
+ 5 files changed, 50 insertions(+)
+ create mode 100644 builtin/fsmonitor--daemon.c
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index c04f62a54a1..6303c36c7ed 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -62,22 +62,54 @@ core.protectNTFS::
- 	Defaults to `true` on Windows, and `false` elsewhere.
- 
- core.fsmonitor::
--	If set, the value of this variable is used as a command which
--	will identify all files that may have changed since the
--	requested date/time. This information is used to speed up git by
--	avoiding unnecessary processing of files that have not changed.
--	See the "fsmonitor-watchman" section of linkgit:githooks[5].
-+	If set to true, enable the built-in file system monitor
-+	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
-++
-+Like hook-based file system monitors, the built-in file system monitor
-+can speed up Git commands that need to refresh the Git index
-+(e.g. `git status`) in a working directory with many files.  The
-+built-in monitor eliminates the need to install and maintain an
-+external third-party tool.
-++
-+The built-in file system monitor is currently available only on a
-+limited set of supported platforms.  Currently, this includes Windows
-+and MacOS.
-++
-+	Otherwise, this variable contains the pathname of the "fsmonitor"
-+	hook command.
-++
-+This hook command is used to identify all files that may have changed
-+since the requested date/time. This information is used to speed up
-+git by avoiding unnecessary scanning of files that have not changed.
-++
-+See the "fsmonitor-watchman" section of linkgit:githooks[5].
-++
-+Note that if you concurrently use multiple versions of Git, such
-+as one version on the command line and another version in an IDE
-+tool, that the definition of `core.fsmonitor` was extended to
-+allow boolean values in addition to hook pathnames.  Git versions
-+2.35.1 and prior will not understand the boolean values and will
-+consider the "true" or "false" values as hook pathnames to be
-+invoked.  Git versions 2.26 thru 2.35.1 default to hook protocol
-+V2 and will fall back to no fsmonitor (full scan).  Git versions
-+prior to 2.26 default to hook protocol V1 and will silently
-+assume there were no changes to report (no scan), so status
-+commands may report incomplete results.  For this reason, it is
-+best to upgrade all of your Git versions before using the built-in
-+file system monitor.
- 
- core.fsmonitorHookVersion::
--	Sets the version of hook that is to be used when calling fsmonitor.
--	There are currently versions 1 and 2. When this is not set,
--	version 2 will be tried first and if it fails then version 1
--	will be tried. Version 1 uses a timestamp as input to determine
--	which files have changes since that time but some monitors
--	like watchman have race conditions when used with a timestamp.
--	Version 2 uses an opaque string so that the monitor can return
--	something that can be used to determine what files have changed
--	without race conditions.
-+	Sets the protocol version to be used when invoking the
-+	"fsmonitor" hook.
-++
-+There are currently versions 1 and 2. When this is not set,
-+version 2 will be tried first and if it fails then version 1
-+will be tried. Version 1 uses a timestamp as input to determine
-+which files have changes since that time but some monitors
-+like Watchman have race conditions when used with a timestamp.
-+Version 2 uses an opaque string so that the monitor can return
-+something that can be used to determine what files have changed
-+without race conditions.
- 
- core.trustctime::
- 	If false, the ctime differences between the index and the
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
+diff --git a/.gitignore b/.gitignore
+index f817c509ec0..e81de1063a4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -72,6 +72,7 @@
+ /git-format-patch
+ /git-fsck
+ /git-fsck-objects
++/git-fsmonitor--daemon
+ /git-gc
+ /git-get-tar-commit-id
+ /git-grep
+diff --git a/Makefile b/Makefile
+index 707a56d4c11..5af1d5b112e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1114,6 +1114,7 @@ BUILTIN_OBJS += builtin/fmt-merge-msg.o
+ BUILTIN_OBJS += builtin/for-each-ref.o
+ BUILTIN_OBJS += builtin/for-each-repo.o
+ BUILTIN_OBJS += builtin/fsck.o
++BUILTIN_OBJS += builtin/fsmonitor--daemon.o
+ BUILTIN_OBJS += builtin/gc.o
+ BUILTIN_OBJS += builtin/get-tar-commit-id.o
+ BUILTIN_OBJS += builtin/grep.o
+diff --git a/builtin.h b/builtin.h
+index 83379f3832c..40e9ecc8485 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -159,6 +159,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
+ int cmd_for_each_repo(int argc, const char **argv, const char *prefix);
+ int cmd_format_patch(int argc, const char **argv, const char *prefix);
+ int cmd_fsck(int argc, const char **argv, const char *prefix);
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix);
+ int cmd_gc(int argc, const char **argv, const char *prefix);
+ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
+ int cmd_grep(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
 new file mode 100644
-index 00000000000..0fedf5a4565
+index 00000000000..f0498793379
 --- /dev/null
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -0,0 +1,75 @@
-+git-fsmonitor--daemon(1)
-+========================
++++ b/builtin/fsmonitor--daemon.c
+@@ -0,0 +1,46 @@
++#include "builtin.h"
++#include "config.h"
++#include "parse-options.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "simple-ipc.h"
++#include "khash.h"
 +
-+NAME
-+----
-+git-fsmonitor--daemon - A Built-in File System Monitor
++static const char * const builtin_fsmonitor__daemon_usage[] = {
++	NULL
++};
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git fsmonitor--daemon' start
-+'git fsmonitor--daemon' run
-+'git fsmonitor--daemon' stop
-+'git fsmonitor--daemon' status
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
 +
-+DESCRIPTION
-+-----------
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
++{
++	const char *subcmd;
 +
-+A daemon to watch the working directory for file and directory
-+changes using platform-specific file system notification facilities.
++	struct option options[] = {
++		OPT_END()
++	};
 +
-+This daemon communicates directly with commands like `git status`
-+using the link:technical/api-simple-ipc.html[simple IPC] interface
-+instead of the slower linkgit:githooks[5] interface.
++	git_config(git_default_config, NULL);
 +
-+This daemon is built into Git so that no third-party tools are
-+required.
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_fsmonitor__daemon_usage, 0);
++	if (argc != 1)
++		usage_with_options(builtin_fsmonitor__daemon_usage, options);
++	subcmd = argv[0];
 +
-+OPTIONS
-+-------
++	die(_("Unhandled subcommand '%s'"), subcmd);
++}
 +
-+start::
-+	Starts a daemon in the background.
++#else
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
++{
++	struct option options[] = {
++		OPT_END()
++	};
 +
-+run::
-+	Runs a daemon in the foreground.
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_fsmonitor__daemon_usage, options);
 +
-+stop::
-+	Stops the daemon running in the current working
-+	directory, if present.
-+
-+status::
-+	Exits with zero status if a daemon is watching the
-+	current working directory.
-+
-+REMARKS
-+-------
-+
-+This daemon is a long running process used to watch a single working
-+directory and maintain a list of the recently changed files and
-+directories.  Performance of commands such as `git status` can be
-+increased if they just ask for a summary of changes to the working
-+directory and can avoid scanning the disk.
-+
-+When `core.fsmonitor` is set to `true` (see linkgit:git-config[1])
-+commands, such as `git status`, will ask the daemon for changes and
-+automatically start it (if necessary).
-+
-+For more information see the "File System Monitor" section in
-+linkgit:git-update-index[1].
-+
-+CAVEATS
-+-------
-+
-+The fsmonitor daemon does not currently know about submodules and does
-+not know to filter out file system events that happen within a
-+submodule.  If fsmonitor daemon is watching a super repo and a file is
-+modified within the working directory of a submodule, it will report
-+the change (as happening against the super repo).  However, the client
-+will properly ignore these extra events, so performance may be affected
-+but it will not cause an incorrect result.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 2853f168d97..53ea48a04e2 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -498,7 +498,9 @@ FILE SYSTEM MONITOR
- This feature is intended to speed up git operations for repos that have
- large working directories.
- 
--It enables git to work together with a file system monitor (see the
-+It enables git to work together with a file system monitor (see
-+linkgit:git-fsmonitor--daemon[1]
-+and the
- "fsmonitor-watchman" section of linkgit:githooks[5]) that can
- inform it as to what files have been modified. This enables git to avoid
- having to lstat() every file to find modified files.
-@@ -509,8 +511,8 @@ looking for new files.
- 
- If you want to enable (or disable) this feature, it is easier to use
- the `core.fsmonitor` configuration variable (see
--linkgit:git-config[1]) than using the `--fsmonitor` option to
--`git update-index` in each repository, especially if you want to do so
-+linkgit:git-config[1]) than using the `--fsmonitor` option to `git
-+update-index` in each repository, especially if you want to do so
- across all repositories you use, because you can set the configuration
- variable in your `$HOME/.gitconfig` just once and have it affect all
- repositories you touch.
++	die(_("fsmonitor--daemon not supported on this platform"));
++}
++#endif
+diff --git a/git.c b/git.c
+index a25940d72e8..3d8e48cf555 100644
+--- a/git.c
++++ b/git.c
+@@ -537,6 +537,7 @@ static struct cmd_struct commands[] = {
+ 	{ "format-patch", cmd_format_patch, RUN_SETUP },
+ 	{ "fsck", cmd_fsck, RUN_SETUP },
+ 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
++	{ "fsmonitor--daemon", cmd_fsmonitor__daemon, RUN_SETUP },
+ 	{ "gc", cmd_gc, RUN_SETUP },
+ 	{ "get-tar-commit-id", cmd_get_tar_commit_id, NO_PARSEOPT },
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
 -- 
 gitgitgadget
 
