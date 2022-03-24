@@ -2,172 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69446C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 13:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC748C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 13:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350509AbiCXNkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 09:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35912 "EHLO
+        id S1350527AbiCXNoL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 09:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350506AbiCXNkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 09:40:39 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB3AFA776D
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 06:39:06 -0700 (PDT)
+        with ESMTP id S242339AbiCXNoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 09:44:10 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80FAFA94D0
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 06:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1648129139;
-        bh=KChaXUQwU1LW34yEgTNPYhj5AUl2dRZa3BPqFVd6vkM=;
+        s=badeba3b8450; t=1648129353;
+        bh=8Z0CVG/jVv9pXVxaO/oqYibWnNYQ3nJR42e4BN4r4J4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XC6ZdZ3tDPbMCmfDfGrQsAhed4FT3ae+Hl2IniEGC4C7v0CrXBQ+2gTt2ZfBW5J6b
-         ziMTiMcNqwCB6txl13uzrhKlki4iwZ1+/V4ICXQPbPWHb7jPgSXdkCNd4nIRGNUaTQ
-         cy2nJG1Rz/UWnR7qglIIe5n2Zj/NQnaonbEDgkqM=
+        b=T0k3p79cPorfdhohDQczhM0NPors6uzqRTLf0D6ACxmWjBhnkOsbGPVbSnL2cH2CG
+         LwWXjz3RWDEFci9Re4CUHLF0HaoGoLGTbhvZvijwrcsIchm5XNXYi1G5vPSTSxCtJO
+         7WYzoOT5Ex/yCjG2Aj41I/beAkNcMcFrP9CyeVXw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.147.135] ([213.196.212.0]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEFzx-1nNicw2xwz-00AAv3; Thu, 24
- Mar 2022 14:38:59 +0100
-Date:   Thu, 24 Mar 2022 14:38:58 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MBUqF-1nM4wB3mQx-00Cw4k; Thu, 24
+ Mar 2022 14:42:32 +0100
+Date:   Thu, 24 Mar 2022 14:42:31 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-lib: have --immediate emit valid TAP on failure
-In-Reply-To: <patch-1.1-47b236139e6-20220323T204410Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203241434360.388@tvgsbejvaqbjf.bet>
-References: <patch-1.1-47b236139e6-20220323T204410Z-avarab@gmail.com>
+To:     Joel Marshall <joelmdev@gmail.com>
+cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: Possible issue with rebase's --rebase-merges option
+In-Reply-To: <CAK1xKQqGTmgGBH4TY2mpHZLit_49FDoEq2EewDE-v_fc2=ikYA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203241440130.388@tvgsbejvaqbjf.bet>
+References: <CAK1xKQpUFCkv6fopEykKLxAEoG_Hf_Zz+oRR70mR3pWsN5YDDw@mail.gmail.com> <ac3a5871-b009-f84e-d1fe-af4bde1bbabe@gmail.com> <CAK1xKQr1_52n5rAhQh2awsb6SkgUYOMWoLichtBRLvtDXRQarQ@mail.gmail.com> <fc38a32f-91e2-fe49-a7b0-e2e6851271c4@gmail.com>
+ <CAK1xKQppM3oseB=vdXbDbPjDeFxd9kd0jULcaC=ASkMsKiDCmQ@mail.gmail.com> <nycvar.QRO.7.76.6.2008101645410.50@tvgsbejvaqbjf.bet> <CAK1xKQpTUqLLZkYuFEOx7zy8wOib_ohwmiqt89qoj-rK8tnZ4A@mail.gmail.com>
+ <CAK1xKQqGTmgGBH4TY2mpHZLit_49FDoEq2EewDE-v_fc2=ikYA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-987454896-1648129139=:388"
-X-Provags-ID: V03:K1:mgQ9ByJ3pbOj68+bRVde/8fcViO0ZVSya8Xt3DSt/6UoSyH51lr
- 3VVIsHtdr2JCq1ntnwpTZhUI5psAzfgSc2Chr8lyi740WDKvML1q6IQHFGL7v8tMHc9fpS3
- KxWXpbAnC6QJ0SBngFdJlDgoEL01XTL7XogqeQmvmXRMgGpBHHurZ9uCE4ajtRm3qLMaCwC
- sQiPNIeOZ2iVZG4iSUCzg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7NA/87VTJEA=:cGE0JNEXUdIIMpnpcr/HYd
- XTbYboq4G4CQvhcuyGd6ulkIfWOra2njB1tvIGkmQX1JOXtxvL4t3M6OKbHG4MHdOuhqmybxl
- z5wIY4aBsq3e+ejYf81RtHntaaCDIONsKgzLVCNswVFDG5LSh+pajSOApTTNxaxTYY+oV38M8
- OSfk0sQURo/bS0SwlmU8a5C+bpDPd2e/NvwplOpCNW6gbdA8P5XKVZFNfvloExdJQsqruC9HY
- DXFrIL/F2/oQHtIOrxFCVwH22DlxWfjIGbHB8KPyUx2uZWLzZmCZqap2TJxc567IfLOPvI/em
- evieIezXak/aXlSROBX/nISLCVcYLS0EfJSM3kTWalJRZBDb4fSdzCI0vcPnQmQYtXIpuX0iJ
- 6cQGTik1HguMUK8StWjshSK041VIps/wXpJ+pSEcmN31XwHmp+qYuZd6M+KC1Lshq36/kHWiY
- YeIlcL6zd0Mk+Ey1pvmnk36Rq5yLXFJABzkbpy1jmN6OF+qKePoHqixeV0RMe7OD7AL6JriRO
- 8YDI+XNLhs9WgUSXN2cSgzZgbiJ7XE36w/HLUpMf8ORR+P9bVIq3BDcHww6ENKMxoXi2zDTCF
- GUeUEcfgbJsBsjV8jtOFmBgVpCAA5ziOgepW8ErhZgJvqGJPXWs8svYB1QRELK7mwM1F2ImKK
- UacT7danyhm94/SWSyFaetCFKASlgW7QEudtb7UzN5Dt+7og0XU3yRXqLyah1vSoFfc+TX069
- op0GWUJnE7HFDnNlBTXwXj42pqlQa32fqLaH06J6x2jvorcNbB3w0TttwG5m6IvV7EXGLh4UF
- inIUnHqxX4Wf19v+q67gH7cXCHq2GRkrxl7SP0Ay2F0dQVFi6o7ZrA/6qF4Jv/k/0g5utD3xw
- 8raxVJMV5Er5jayc5ArrzvZrvEpMsp7i/zx0xwNnRLengel2jtYvwVpco/QcD0ORobXdLWNgy
- rGu8e0fHe1A27y6Juze19H2kmNeNWW9RV7MwD/1ivHgQ81M6Yf1Zr+0YH4ooUQfVMut0noZfy
- KiknRnXg6dLkkNlc8sSW01BY3D9/BtVH5xPd7T97yV40KU4HWXS3vOUvZt5WloSfQ96KiRQW1
- EWiZ58oiEXYwA0=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WMe6fbua9kjFHq/jMADtmgRSW9giJQR+rUODJwXOWAyOWbKk/hG
+ fVrTapFv2zaoYuVsCWKBHWNhgQEnXo69uG+FhZFP+6SWqAz3mywaJ3a1tNfcWmdDnrXs24G
+ UhtjRZR5NIXE4EjNjfvNz66M6DVZRrBRa9YpHSfxZ1ZVuO+cD/rbjDJA/aykOTY+wDnDsLB
+ Wpn9lEB63hQlDWNvx3xjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vNU7C2SlWGI=:AzUtDpMYYwQZoQZ02oydi0
+ HojINzyV5mCU1uvqToIKk6JREJ67ukqpjrcaqvFbpE5efLrqd8N16PK/1/S67GEBI64oNxn6v
+ LqK5NCtZ6g4V9TdXUjpFsZqrSRam2PMrE+IYGVkAeApohLWqcYDK2pBMLvpMYq6azIesFeN+f
+ waOM8Q0z6/hx5DnH5FeE10dPyshhEmbH2D0iiEy8X54sYOJMvPESZOcplOwcHIKCz/3TCFFEW
+ y452wTQYq0szKKOEweTLyK2Fio2eLsF6m3stpQiUSFy70RfJThL2LNgVy5qjZfjL+7d7pYR16
+ rk0xy6xXxwWYKsYncbGafw2zVnhLD0+lDUfbhMnnTIV+T3EFRH6FSsf4/e3y480lYQKtl2Sjj
+ KEIkxpeDRo/677zUGgltfC80BqFOaqjI6hkfTt9zuQB/txEuWEyQQBhGjXxbarheigDqkVjcK
+ i8p47zcvp/AIp0Vr1ntSqgxP4T3/whAu7RQLVkctkF6CcLTqTqeZv3qumR04R5vYVGYIDyQjE
+ 99A00wTE2xKefaUDix8aa1bPrRNxNlDrSbU81xhMO/e9Ux+6BFQdPKnJLQrghpr36bOXexQ1Y
+ l5brXYQF4+EGw5UZ9YWwROpZgY/prLA/WFelP9RaThXfJuLbtS8QYaF+VXAF9j/PT192wwxtX
+ V0sZnW6WmZJ6zxwG0KJkfrSjTsMstGZKxFvBPS9/cH2npCHf2UpbjKdinFqTmNdUyLHdtsoUe
+ RZgxolG3wUrEgeRjQNbkVJvOVNvZwLCMP52w1TgoRRZk1VCN1HKBw0UQGPqxK6Vngh5Y8CDvw
+ 9DJAtIXByzp0rtFRkPtNREdFmT15x9/EF2EL+QfIWyRs3lHfRQpqciVcqQ4sLkqgTxqzJgbsp
+ o4Z6ocDhkM/DMrZckAZCuCqGHqzZuM8OgezUzY6ZUmZSxiAGYqka2vrvpdCJHaDInlAEkaR7p
+ 9m/sKGeVwpmDxkgBzwOZiAnW9b1+mKNaGIIDZLHliQlOpPKAqrlJ5Ve6ZZHDJwfB/gKVlqrWy
+ agp/ZDJJ3ePsKL/Lv8RCAEkx5O4QuoxhJpHjckygSRuHiT9JBWJAdk2DW+64N83nGJmOt3C0K
+ /0IGRGf6V2Vl5A=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Joel,
 
---8323328-987454896-1648129139=:388
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+please reply inline. What you did is called "top-posting" on this list and
+is regularly discouraged.
 
-Hi =C3=86var,
+On Tue, 22 Mar 2022, Joel Marshall wrote:
 
-On Wed, 23 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> I have confirmed that this is still an issue under certain
+> circumstances. --rebase-merges works as expected if it is being used
+> with simple feature branches, ie one commit after the other, no
+> merges. Where things go off of the rails is when there are branches
+> and merges coming off of and going into a feature branch. At that
+> point using the --rebase-merges flag with rebase will create a similar
+> mess to the images of the logs I attached back in July of 2022.
 
-> Change the "--immediate" option so that it emits valid TAP on
-> failure. Before this it would omit the required plan at the end,
-> e.g. under SANITIZE=3Dleak we'd show a "No plan found in TAP output"
-> error from "prove":
->
->     $ prove t0006-date.sh ::  --immediate
->     t0006-date.sh .. Dubious, test returned 1 (wstat 256, 0x100)
->     Failed 1/22 subtests
->
->     Test Summary Report
->     -------------------
->     t0006-date.sh (Wstat: 256 Tests: 22 Failed: 1)
->       Failed test:  22
->       Non-zero exit status: 1
->       Parse errors: No plan found in TAP output
->     Files=3D1, Tests=3D22,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.1=
-8 cusr  0.06 csys =3D  0.27 CPU)
->     Result: FAIL
->
-> Now we'll emit output that doesn't result in TAP parsing failures:
->
->     $ prove t0006-date.sh ::  --immediate
->     t0006-date.sh .. Dubious, test returned 1 (wstat 256, 0x100)
->     Failed 1/22 subtests
->
->     Test Summary Report
->     -------------------
->     t0006-date.sh (Wstat: 256 Tests: 22 Failed: 1)
->       Failed test:  22
->       Non-zero exit status: 1
->     Files=3D1, Tests=3D22,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.1=
-9 cusr  0.05 csys =3D  0.26 CPU)
->     Result: FAIL
-
-The commit message is strong on the what, very strong in giving verbose
-output that might or might not clarify the intention, and a little weak in
-the why and the greater context.
-
-In the broader story arc, I wonder why we're even bothering with TAP
-anymore because it seems that the world has moved on to more powerful file
-formats to represent test output, such as JUnit XML, that can be parsed,
-rendered and analyzed by powerful special-purpose applications.
-
-Apart from taking reviewer time away from such more powerful avenues to
-make sense of our failing tests, the diff does not really hurt, so I have
-no objections against integrating this patch.
+I wonder what happened to my suggestions to use
+`--rebase-merges=3Drebase-cousins` or `git fast-export --anonymize`. They
+seem to have faded without any echo.
 
 Ciao,
 Johannes
 
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index 9dcbf518a78..17a268ccd1b 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -101,6 +101,19 @@ test_expect_success 'subtest: 2/3 tests passing' '
->  	EOF
->  '
 >
-> +test_expect_success 'subtest: --immediate' '
-> +	run_sub_test_lib_test_err partial-pass \
-> +		--immediate &&
-> +	check_sub_test_lib_test_err partial-pass \
-> +		<<-\EOF_OUT 3<<-EOF_ERR
-> +	> ok 1 - passing test #1
-> +	> not ok 2 - failing test #2
-> +	> #	false
-> +	> 1..2
-> +	EOF_OUT
-> +	EOF_ERR
-> +'
-> +
->  test_expect_success 'subtest: a failing TODO test' '
->  	write_and_run_sub_test_lib_test failing-todo <<-\EOF &&
->  	test_expect_success "passing test" "true"
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 515b1af7ed4..4373f7d70b5 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -806,7 +806,11 @@ test_failure_ () {
->  	say_color error "not ok $test_count - $1"
->  	shift
->  	printf '%s\n' "$*" | sed -e 's/^/#	/'
-> -	test "$immediate" =3D "" || _error_exit
-> +	if test -n "$immediate"
-> +	then
-> +		say_color error "1..$test_count"
-> +		_error_exit
-> +	fi
->  }
+> On Wed, Dec 8, 2021 at 3:46 PM Joel Marshall <joelmdev@gmail.com> wrote:
+> >
+> > Hi all,
+> >
+> > Sorry to drop off on this for so long. I think this is still a
+> > possible outstanding issue, yes? If so I will work on getting you a
+> > copy of the repo as I did archive a copy at the state originally
+> > mentioned in this issue.
+> >
+> > On Mon, Aug 10, 2020 at 10:46 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Hi Joel,
+> > >
+> > > On Thu, 23 Jul 2020, Joel Marshall wrote:
+> > >
+> > > > I saved the state of the repo in a copy so I could come back to it=
+ if
+> > > > additional examples were needed but I had to clean up my live copy=
+ so
+> > > > I could get back to work. I'll get you some additional screenshots=
+ in
+> > > > the next few days. In the meantime, I'll try to give you some cont=
+ext
+> > > > around what I'm doing here. The parent branch is my main dev branc=
+h
+> > > > which consists of a series of clean branches and merges- the dev
+> > > > branch basically looks like what you're seeing in the
+> > > > --preserve-merges screenshot. I've also got a long running feature
+> > > > branch that branches off of dev, and it also consists of many bran=
+ches
+> > > > and merges, each a subtask of the story related to the feature bra=
+nch
+> > > > as a whole. Occasionally to get the feature branch up to date with=
+ the
+> > > > newest features I'll rebase the whole thing on top of dev, which
+> > > > should result in an unbroken chain of branches and merges as seen =
+in
+> > > > the --preserve-merges screenshot. While you can't see it in the
+> > > > --rebase-merges screenshot, those merges show no ancestors when vi=
+ewed
+> > > > in reverse chronological order- they just trail off into oblivion.
+> > >
+> > > I could imagine that you might want to try this rebase with
+> > > `--rebase-merges=3Drebase-cousins`.
+> > >
+> > > Otherwise, you might want to export your use case with `git fast-exp=
+ort
+> > > --anonymize` so that others (such as myself) have a chance of helpin=
+g you.
+> > >
+> > > Ciao,
+> > > Johannes
 >
->  test_known_broken_ok_ () {
-> --
-> 2.35.1.1452.ga7cfc89151f
->
->
-
---8323328-987454896-1648129139=:388--
