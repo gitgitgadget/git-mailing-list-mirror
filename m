@@ -2,92 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 240DFC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31C86C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353857AbiCXUtx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 24 Mar 2022 16:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
+        id S1354476AbiCXUuC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 16:50:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354581AbiCXUsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 16:48:24 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7217CB0A77
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:46:52 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22OKkpwQ012973
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 24 Mar 2022 16:46:51 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jeff Hostetler'" <git@jeffhostetler.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Jeff Hostetler via GitGitGadget'" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>, "'Bagas Sanjaya'" <bagasdotme@gmail.com>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Eric Sunshine'" <sunshine@sunshineco.com>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "'Tao Klerks'" <tao@klerks.biz>,
-        "'Jeff Hostetler'" <jeffhost@microsoft.com>
-References: <pull.1041.v7.git.1647972010.gitgitgadget@gmail.com> <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com> <c8709da9457eb303132b5cad6a204a1de27aabc0.1648140586.git.gitgitgadget@gmail.com> <xmqqils3gort.fsf@gitster.g> <075d01d83fb2$1506ded0$3f149c70$@nexbridge.com> <0deea44e-b919-81cb-d8bf-ebea4c9ba426@jeffhostetler.com> <076101d83fbe$e6ce5e50$b46b1af0$@nexbridge.com> <cd5dd46d-fc47-1af8-6ba7-ddf1617a7b2b@jeffhostetler.com>
-In-Reply-To: <cd5dd46d-fc47-1af8-6ba7-ddf1617a7b2b@jeffhostetler.com>
-Subject: RE: [PATCH v8 21/30] t7527: create test for fsmonitor--daemon
-Date:   Thu, 24 Mar 2022 16:46:45 -0400
-Organization: Nexbridge Inc.
-Message-ID: <076201d83fc0$4a202140$de6063c0$@nexbridge.com>
+        with ESMTP id S1348813AbiCXUtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 16:49:52 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05888DF1F
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:48:17 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26B73105B6A;
+        Thu, 24 Mar 2022 16:48:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ibo/9y6xxuZKfxAGddrH4yFJGi9t8h8QpihvjI
+        wBrQA=; b=gVBshJpUz5iWA7oxoPU47b8OeBwOu51Nf9a1Mfzi/9Im2mmGJwrCD5
+        P0mEEKy8WQ/4TN7YbSicrPl1gukf4dujXBs067JxhlKdgLD/n73hFLj4IJLcOqTD
+        hT31CKujSD+t/fEA/NYckCNz9laaydF9c28X5afL4PHso/0lwW+bM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EB48105B68;
+        Thu, 24 Mar 2022 16:48:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DC2D105B66;
+        Thu, 24 Mar 2022 16:48:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
+References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
+        <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
+        <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
+Date:   Thu, 24 Mar 2022 13:48:15 -0700
+In-Reply-To: <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Thu, 24 Mar 2022
+        18:34:57 +0000")
+Message-ID: <xmqqtubnf568.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKGzDsbg2lz67pgmA1z2cDpXTOUgQHHL5OMAJXlRvoBuEN8YgEapCjIAipY7sICDXG8EwF70lNnqxrK/0A=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: BAF8063A-ABB3-11EC-8BFF-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On: March 24, 2022 4:43 PM, Jeff Hostetler wrote:
->On 3/24/22 4:36 PM, rsbecker@nexbridge.com wrote:
->> On March 24, 2022 4:28 PM, Jeff Hostetler wrote:
->>> On 3/24/22 3:05 PM, rsbecker@nexbridge.com wrote:
->>>> On March 24, 2022 3:00 PM, Junio C Hamano wrote:
->>>>> Subject: Re: [PATCH v8 21/30] t7527: create test for
->>>>> fsmonitor--daemon
->>>>>
->>>>> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>>>
->>>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>> [...]
->>>>
->>>> May I request a bit of extra time on the -rc0 to -rc1 cycle for
->>>> this? I have a feeling
->>> that while testing this is probably going to go well, I would like to
->>> have a bit of extra time for anything that might come up. There are a
->>> lot of moving parts to this series. Not being critical, but debugging
->>> scripts on my platforms can be a bit rough at times.
->>>>
->>>> Thanks,
->>>> Randall
->>>>
->>>
->>> I'll simplify the `start_daemon()` function as Junio suggests, so
->>> hopefully that'll reduce the amount of debugging that you need.
->> Thanks.
->>
->>> BTW, which platforms are you worried about?
->> I'm worried about NonStop ia64 and x86. It's not just this series but also the
->fsync series. I think it's going to be a bit of a rid this time, but hoping not.
->> --Randall
->>
->
->I currently only have drivers/backends for Windows and MacOS for the builtin
->FSMonitor daemon feature.  Since it relies on platform-specific code to read
->whatever filesystem journal or event stream that the the platform provides.
->
->So t7527 should do a skip_all on NonStop IIUC.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I would have thought this was applicable to Linux also. So use, it should skip. Be in touch when if you do down that path.
---Randall
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> The implementation of test_subcommand_inexact() was originally
+> introduced in e4d0c11c0 (repack: respect kept objects with '--write-midx
+> -b', 2021-12-20) with the intention to allow finding a subcommand based
+> on an initial set of arguments. The inexactness was intended as a way to
+> allow flexible options beyond that initial set, as opposed to
+> test_subcommand() which requires that the full list of options is
+> provided in its entirety.
+>
+> The implementation began by copying test_subcommand() and replaced the
+> repeated argument 'printf' statement to append ".*" instead of "," to
+> each argument. This has a few drawbacks:
+>
+> 1. Most importantly, this repeats the use of ".*" within 'expr', so the
+>    inexact match is even more flexible than expected. It allows the list
+>    of arguments to exist as a subsequence (with any other items included
+>    between those arguments).
+>
+> 2. The line 'expr="$(expr%,}"' that previously removed a trailing comma
+>    now no longer does anything, since the string ends with ".*".
+>
+> Both of these issues are fixed by keeping the addition of the comma in
+> the printf statement, then adding ".*" after stripping out the trailing
+> comma.
+>
+> All existing tests continue to pass with this change. There was one
+> instance from t7700-repack.sh that was taking advantage of this
+> flexibility, but it was removed in the previous change.
 
+Of course all existing tests continue to pass, as we no longer have
+any user of test_subcommand_inexact after the previous step ;-).
+
+Among
+
+ (1) doing nothing,
+ (2) removing, and
+ (3) clarifying the implementation,
+
+my preference would be 2 > 1 > 3.  If we add
+
+ (4) clarify the implementation and document what kind of inexactness we
+     tolerate with an updated comment"
+
+to the mix, that would come before all 3 others, though.
+
+Perhaps squash something like this in?
+
+ t/test-lib-functions.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git i/t/test-lib-functions.sh w/t/test-lib-functions.sh
+index 0f439c99d6..6f6afae847 100644
+--- i/t/test-lib-functions.sh
++++ w/t/test-lib-functions.sh
+@@ -1789,8 +1789,8 @@ test_subcommand () {
+ }
+ 
+ # Check that the given command was invoked as part of the
+-# trace2-format trace on stdin, but without an exact set of
+-# arguments.
++# trace2-format trace on stdin, but only require that the
++# initial arguments are given as specified.
+ #
+ #	test_subcommand [!] <command> <args>... < <trace>
+ #
