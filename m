@@ -2,122 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F7BEC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 22:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1229DC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 22:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355285AbiCXWRD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 18:17:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51180 "EHLO
+        id S1355316AbiCXWV0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 18:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbiCXWRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 18:17:01 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7734AA6E14
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:15:24 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id a185-20020a621ac2000000b004fa80e5e1a5so3198131pfa.5
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:15:24 -0700 (PDT)
+        with ESMTP id S242692AbiCXWVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 18:21:24 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8D97CB20
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id 77-20020a621450000000b004fa8868a49eso3203487pfu.3
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=lEwfKdhM4uQloZy1matIboMtyD8WyCBPv/OE3vS2HtY=;
-        b=SIp2UH4GCoMpl/1JDOhz9aI5lRYOZ7QqP8vnXF8Tc7rC8OwPmsX/hcgxp6t53hkWZ6
-         q8NNvzS0rQvUu6lF96MmTB8Jqo/ve9HlBNFqJrconitG3QyvvFxEyvqZqvE8pvBEye04
-         glyuHMxrXsuLsPgxP98HjAdzH5Lu6hrNed2/+Avgmuo4DL+zHQGHQEjbxJFjk9MrPLdB
-         Dq3dlyeWiU36VhbBsqJxPjjkbOPmcO+OWJGinGA8wUhqWF96Zqc8CDOHdnnosbFSrUME
-         VAh5aCJqPkWoiVClfv8GAtpeQh7LRLkJm/C1C7zbitQpQoGcaXMow2nloCZFAyizWmIB
-         OPFA==
+        bh=tigJj70Y6OIVscQooD7mYWM1Mki6i4AhkAuvWDLghZ0=;
+        b=jaSiYuXHOAUfIIVry5AoC45vHzjGx0CMi0+1/9Lldmqdt/PJi+Cof2t/1YxLKDjgQM
+         EqCaO7PME+hxECteaIak3YarjZ7bfG2kvouoeGi3aHgKmYLvU3ajM4ZoNYEaXScEiabY
+         Of1BlxaIrlfLJlLiONnzltWUk+hCpoegEZJ3s1MGIKPXKr3QGCXHar6YzC/JIrON7Xlz
+         MQfA4XMldARq6piXCOUcBzOC8y3W/CVL+crEIth63AF4JtSP/sqHI5625TezEI98KXmZ
+         e9lpzefZw68wW6YA8bULJ5iWsGhg5W3FHOPetiPac0MWjd0+cg4leek43U5s0cciATeS
+         AA3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
          :from:to:cc;
-        bh=lEwfKdhM4uQloZy1matIboMtyD8WyCBPv/OE3vS2HtY=;
-        b=v9288+wkL1qADC3s2Uitc8DdguekOB+mt6VxmqCuBv1AUdmHh6r17BM4xUTJl6zpsc
-         RkWl1U2ZCAASX0ybR9rIaucVWJDQQ9EttiCv0U4OtgrjPDSivn7UmHnRCu3AUCdLZNSI
-         7ZLs2XROetCPDdGX71MHxolmXh99H5GcgQbNYqXSE+rOYFTVzVFa5CGUKFt1FXpEZe1x
-         V+ZgiHa5DueQCjTTlBBkZL5ZOKzfMxfiXW/rv9vdeuJxJQDEF9p3apziJBn0uosCBoXa
-         eiEkurS76kfT88dKRiWhp0ebx36rmRyXu2cYb13DrMl5t3W1S1f6TMyUvL17DDiByyX6
-         L8nw==
-X-Gm-Message-State: AOAM530o7cPulWWS80NqKwyM6fN7IKhJGQRFW5LJ2srTEpGn/kL+H07b
-        a8+1/1VuuKFNacOJs+X9BoockHSrlYAoX1tMG/rr
-X-Google-Smtp-Source: ABdhPJwwF5iw2db24dFKNGvTzotii4PUn1MuYlkka96H1638Jfas7nBxpygvW52MXKGLrounmkoqGRGMzRI1WNlAUQMa
+        bh=tigJj70Y6OIVscQooD7mYWM1Mki6i4AhkAuvWDLghZ0=;
+        b=5pWRqFUwr1wbupuhCt24HrmGG184m512tqUNmUmlOI+8ExMlYCsgk1gjbvVlyJBU7k
+         g6MhVZ02QKaoexQ1Fhv9LwJnnXEhbMGvqGu33VbvX1+kQH/UJZ3yg8rmWBC5Gmess41V
+         2QaSsVPg2tCG1gPvsySyghhOn1hs5/RJSSMUxeFnNUjwuVH3o3+awZSLGQXMQ9frisi5
+         wF/5o94IKvx2yKlPnBzUk0LkuIWXiFJwHrG2XFItoO4lKJKy7IQV/iocj9GOkkzxigMt
+         ypo4xN1v+Nd/nLWetHUyzlToIORxaNpRRLPKuSPp+NY6UR6vapQBavG8giL6uzkfwCw3
+         FLrg==
+X-Gm-Message-State: AOAM531bd1dDJiRl4zZUPx23t/2RNWYGJbPJhVPM+SIM+skikhiUnVIy
+        kvfgbtxZfNsXeCtGFwBgJDtDyrCt4QGzI9sOQ9Wc
+X-Google-Smtp-Source: ABdhPJwzS277e19vFWCKuuLcy2uYtn4VVXoA0f/6cAZEbzgyyz/j+COMWDab08JhwDXuDJfQkjRxeDv2afOQqp9ISrrO
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:f64e:b0:14d:20db:8478 with
- SMTP id m14-20020a170902f64e00b0014d20db8478mr8417677plg.158.1648160123946;
- Thu, 24 Mar 2022 15:15:23 -0700 (PDT)
-Date:   Thu, 24 Mar 2022 15:15:19 -0700
-In-Reply-To: <34da1688-7d94-d54c-6b3a-3106d0f15380@github.com>
-Message-Id: <20220324221519.1324898-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:c85:b0:4fa:f806:10f5 with
+ SMTP id a5-20020a056a000c8500b004faf80610f5mr3680986pfv.43.1648160392014;
+ Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
+Date:   Thu, 24 Mar 2022 15:19:49 -0700
+In-Reply-To: <8f7ed9c5-9be6-55b4-f95c-40bf11d9e9ed@gmail.com>
+Message-Id: <20220324221949.1325809-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
 Subject: Re: [PATCH] commit-reach: do not parse and iterate minima
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         stolee@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
-> On 3/23/2022 7:30 PM, Junio C Hamano wrote:
-> > This sounds quite tricky.  In this case we may know which commit we
-> > need to avoid (re)parsing to avoid the bug, but would it always be
-> > the case?  It feels almost like we want to unparse the commit
-> > objects when we clear the grafts information in the previous patch,
-> > doesn't it?
->  
-> I agree that the adjustment to paint_down_to_common() is a bit too
-> coupled to this scenario, when we should just trust our commits to
-> be valid if they have been parsed. We should always be able to
-> parse our parents.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> What about fetching with --deepen?
+> 
+> Will "unintended" unshallowing with --update-shallow possibly happen
+> if --update-shallow is used, as opposed to --depth/--deepen?
 
-Thanks for the comments from both of you. I think Stolee's comment
-squarely hits the relevant points: it is precisely this scenario
-(revision walk to remove unreachable shallow commits) that must be
-careful of what it parses, and we *must not* parse the shallow boundary
-commit's parents.
-
-I think that there are 2 questions. First, whether we should parse the
-shallow boundary commit's parents, and second, whether we should parse
-the shallow boundary commit itself. In the commit message, I only
-discussed the second (because that implies the first), but perhaps I
-should have discussed both. Anyway, the discussion:
-
-(a) Should we parse the shallow boundary commit's parents? I think the
-    obvious answer is no, because the remote probably wouldn't have sent
-    them. But the code currently does: in paint_down_to_common(), they
-    are parsed before being added to the priority queue (and parsing is
-    necessary because the priority queue requires their date).
-    Incidentally, this results in an error message from
-    repo_parse_commit_internal() being printed, but
-    repo_in_merge_bases_many() swallows the error by not checking the
-    return value (it only checks whether a certain commit has a certain
-    flag, which is true by the time the failing parent parse occurs). So
-    we should have some sort of one_is_at_min_generation anyway, at
-    least so that we can prevent its parents from being parsed.
-
-(b) Should we parse the shallow boundary commit itself? If we don't
-    care, then we should unparse commits when grafts are cleared.
-
-    In this case, though, I think that it is the responsibility of the
-    shallow code to be careful with what it does with the commits. It is
-    performing operations on commits that it alone knows shallow
-    information about (because the shallow information is still being
-    checked and thus not yet written to the repo). As I wrote in the
-    commit message (which is admittedly long and perhaps hard to
-    understand), I think that in the typical case, we only have a commit
-    when its graft information is already present, so we don't need to
-    worry about graft information changing from under it.
-
-> Finding this bug is interesting, but I agree with Junio that a
-> better fix would be to "unparse" a commit when modifying its graft
-> in any way. That will universally fix it for any potential future
-> commit walks that might be hit due to future code changes.
-
-Unparsing also means that code can't rely on commits being already
-parsed, even if they would expect it to be true (for example, a commit
-in a priority queue would be expected to be parsed, since we would have
-needed the date for it to enter the queue in the first place), but maybe
-this is not a big problem in practice.
+This does change the graft status, but from grafted to ungrafted, so
+instead of trying to read parents that are not there, we will not read
+parents that are there. Which is also a problem, but more difficult to
+demonstrate why it is a problem, I think.
