@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5AE8C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0DDC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 16:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344195AbiCXQxl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 12:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36108 "EHLO
+        id S1351908AbiCXQxn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 12:53:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352214AbiCXQxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:53:16 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCE1954AF
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:44 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id w4so7462073wrg.12
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:44 -0700 (PDT)
+        with ESMTP id S1352164AbiCXQxG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 12:53:06 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB029F386
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:31 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id t11so7487534wrm.5
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 09:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
-        b=OK90k9mF6QCi3r6HQ1kIQ+xboPqYtvh/WtSL5V3zxh/5CGyMtAP11W55XcDJlklOSR
-         LEXB614iBxRUxRZnSRZwozINlzHBDsHdWKuiBH1WL/A19ZuJ22Pjv0+DELNMXgeSLvrj
-         CI9CGs9Hqxcj5265E6BqZTSsGWGzFqcH7KNnVjfLdnY7ZPu7ojyma6oCtN6lZVz95WwQ
-         y2pihVAIpiEUp65/Wj9YkKrjBTtg88h5BWOBpvUunaxUps9gnnTCO4ietziqj/e0nmWK
-         JydPmdK3xocZJ5qBuMAyWutfgMG+3mUCd5PuVinHTbZdYPqcDwrEIR1stEXh2U5ocsmT
-         xSBQ==
+        bh=ekJrkqFg1yJzdNh+egoYJeP3EUXrY0TIhPEKqSMHHf8=;
+        b=d/xB9Ojxbo+jDTUQG0e1XDltStQNdNEM884iY6D8UMDmPMLq6DDlfFR9gpZOirvprR
+         LQeNfrav1KGhjTFm8KwQ3PbZL+UJ4fHhXLa+lMkWv/SCVEtwoo4DB5/SJcgWhDvvacLl
+         ggm2+CBrcznBPbmWY80q71llCPR6XYf1bABF2W5xpFrfhdZt4DbPrcCO66/8tkw7jOdQ
+         dTbUwj3qXBKCLmyJ8K8nqpbA1VztLSQl+SCTzIg1i3pyNhu39ZkHL7EzW0RP7OUOT4So
+         dDKWyc95/xEZVIVSgmotfqo4EHj8KAvTTrKi4z5bc+iJ9qWW2Tdk/CvE5Fr/kfyT21EX
+         rPng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
-        b=JDyRBiPa9uY82XaHsTuP7sVV9mJddMqqJfDJssw5p0oWqEUVVp7Q9TF70/8LwcbKpj
-         auTpChXbBpG1B3uE2oS/gFhkhQWmdmVs+uIeXwpq/sLdwIgMFK4Uxw3rY4O7jtrO+c/7
-         SrxmhbodmYvRG/cvFkSP4FKg/wkcdZtyklUUNJMGlhDAbisTyi4NxEhHKkZWNpli7Qlt
-         jYrKdbrnZyteAqWzi5eCeCmKcze6pK9RGD3ld8jnAkUcJjbDS018Izq5W+SJP/KcU0Um
-         HvsnHhXQKz/jGZRNRxIPbZ2vseOOXuwyzjQ/7YfQZIfZkK8olki6WExKPo6ZVHaTmjw2
-         Kw3A==
-X-Gm-Message-State: AOAM531SBLnePhPr62lF9LYFXFuYRomKYfcPEleUcYAk5dH5Mtgam4rW
-        LkHwxOp0Y0XzivCqUJ7LVChlhAThzH8=
-X-Google-Smtp-Source: ABdhPJyABDcvkutcDQ3+mNuq3cx45Ct8jAU4JHPJLDR80oi7ScidlsUr01R5QeBUVCGTTWky7VOQhg==
-X-Received: by 2002:a5d:6711:0:b0:204:213:ae45 with SMTP id o17-20020a5d6711000000b002040213ae45mr5347725wru.157.1648140702835;
-        Thu, 24 Mar 2022 09:51:42 -0700 (PDT)
+        bh=ekJrkqFg1yJzdNh+egoYJeP3EUXrY0TIhPEKqSMHHf8=;
+        b=C3fCgF1REdgETuN57iDGmOvgaaUEPJAnTZueokdcsSIdd/ARPIRQgOJBOyppVpwGI5
+         Y+Gzfo6i6seuA0a4W1Lz5yeyFwzYeEpTPvjb400FOjTxD5hwp9T2k27WFYoInQD0iQ/d
+         PsNU1PYZ8GSsQLXvisocEI4aICqBqMjfxjYs3mq0fcFiOHgA4ivrY9R1XNTcF3fb0wGF
+         uwqYUp+pKHBHlS/0RVTTQR4PZWH3zjkQGlZzDGKyTmBMvBjX5rWSjJrrcR0pdX1aqO7t
+         zzyUOQxIPC5GRe8J7jh7+3lMZ/V6NfDS9t/3dQQE9YS8+cNfbmVSKGORCGPUI4z5xuwo
+         9r1Q==
+X-Gm-Message-State: AOAM531hpdV02gQ/6d6lUplpgfz/u+aDXcp9aaE63DpYnlJ7Kr7UZ7HA
+        Hp1eSr7R0WraJ+o52Vqr+UHQVywKGCE=
+X-Google-Smtp-Source: ABdhPJyKvUnD1OmtqJbOiIdVNAvupaM98HGHxx8HKUdN+ugcbjusEbyvSC5Bh5GuWQlJ9fMCa2LsZw==
+X-Received: by 2002:a5d:618c:0:b0:204:2f:2c1a with SMTP id j12-20020a5d618c000000b00204002f2c1amr5196632wru.709.1648140690146;
+        Thu, 24 Mar 2022 09:51:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o17-20020a05600c4fd100b0038cd5074c83sm1553761wmq.34.2022.03.24.09.51.41
+        by smtp.gmail.com with ESMTPSA id c24-20020a7bc018000000b0038a18068cf5sm6339137wmb.15.2022.03.24.09.51.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:51:41 -0700 (PDT)
-Message-Id: <7fb0795e25e191ae0270eca3672fd3da60c2127b.1648140680.git.gitgitgadget@gmail.com>
+        Thu, 24 Mar 2022 09:51:29 -0700 (PDT)
+Message-Id: <9ad6d87ccced1020181a80bc7ed92e30d1b23ff3.1648140680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
         <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 16:51:08 +0000
-Subject: [PATCH v4 15/27] fsmonitor--daemon: rename listener thread related
- variables
+Date:   Thu, 24 Mar 2022 16:50:59 +0000
+Subject: [PATCH v4 06/27] fsmonitor-settings: VFS for Git virtual repos are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,302 +73,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Rename platform-specific listener thread related variables
-and data types as we prepare to add another backend thread
-type.
+VFS for Git virtual repositories are incompatible with FSMonitor.
 
-[] `struct fsmonitor_daemon_backend_data` becomes `struct fsm_listen_data`
-[] `state->backend_data` becomes `state->listen_data`
-[] `state->error_code` becomes `state->listen_error_code`
+VFS for Git is a downstream fork of Git.  It contains its own custom
+file system watcher that is aware of the virtualization.  If a working
+directory is being managed by VFS for Git, we should not try to watch
+it because we may get incomplete results.
+
+We do not know anything about how VFS for Git works, but we do
+know that VFS for Git working directories contain a well-defined
+config setting.  If it is set, mark the working directory as
+incompatible.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c          |  6 +++---
- compat/fsmonitor/fsm-listen-darwin.c | 30 ++++++++++++++--------------
- compat/fsmonitor/fsm-listen-win32.c  | 28 +++++++++++++-------------
- compat/fsmonitor/fsm-listen.h        |  2 +-
- fsmonitor--daemon.h                  |  6 +++---
- 5 files changed, 36 insertions(+), 36 deletions(-)
+ compat/fsmonitor/fsm-settings-win32.c | 26 ++++++++++++++++++++++++++
+ fsmonitor-settings.c                  |  5 +++++
+ fsmonitor-settings.h                  |  1 +
+ t/t7519-status-fsmonitor.sh           |  9 +++++++++
+ 4 files changed, 41 insertions(+)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 14cd2d5eb52..d5def8faf90 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1225,8 +1225,8 @@ cleanup:
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index 7fce32a3c5b..ee78bba38e3 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -3,7 +3,33 @@
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
  
- 	if (err)
- 		return err;
--	if (state->error_code)
--		return state->error_code;
-+	if (state->listen_error_code)
-+		return state->listen_error_code;
- 	return 0;
++/*
++ * VFS for Git is incompatible with FSMonitor.
++ *
++ * Granted, core Git does not know anything about VFS for Git and we
++ * shouldn't make assumptions about a downstream feature, but users
++ * can install both versions.  And this can lead to incorrect results
++ * from core Git commands.  So, without bringing in any of the VFS for
++ * Git code, do a simple config test for a published config setting.
++ * (We do not look at the various *_TEST_* environment variables.)
++ */
++static enum fsmonitor_reason check_vfs4git(struct repository *r)
++{
++	const char *const_str;
++
++	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
++		return FSMONITOR_REASON_VFS4GIT;
++
++	return FSMONITOR_REASON_OK;
++}
++
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
++	enum fsmonitor_reason reason;
++
++	reason = check_vfs4git(r);
++	if (reason != FSMONITOR_REASON_OK)
++		return reason;
++
+ 	return FSMONITOR_REASON_OK;
  }
- 
-@@ -1241,7 +1241,7 @@ static int fsmonitor_run_daemon(void)
- 	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
- 	pthread_mutex_init(&state.main_lock, NULL);
- 	pthread_cond_init(&state.cookies_cond, NULL);
--	state.error_code = 0;
-+	state.listen_error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 
- 	/* Prepare to (recursively) watch the <worktree-root> directory. */
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 14105f45c18..07113205a61 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -27,7 +27,7 @@
- #include "fsm-listen.h"
- #include "fsmonitor--daemon.h"
- 
--struct fsmonitor_daemon_backend_data
-+struct fsm_listen_data
- {
- 	CFStringRef cfsr_worktree_path;
- 	CFStringRef cfsr_gitdir_path;
-@@ -158,7 +158,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			     const FSEventStreamEventId event_ids[])
- {
- 	struct fsmonitor_daemon_state *state = ctx;
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	char **paths = (char **)event_paths;
- 	struct fsmonitor_batch *batch = NULL;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -350,11 +350,11 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- 		NULL,
- 		NULL
- 	};
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 	const void *dir_array[2];
- 
- 	CALLOC_ARRAY(data, 1);
--	state->backend_data = data;
-+	state->listen_data = data;
- 
- 	data->cfsr_worktree_path = CFStringCreateWithCString(
- 		NULL, state->path_worktree_watch.buf, kCFStringEncodingUTF8);
-@@ -386,18 +386,18 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- failed:
- 	error(_("Unable to create FSEventStream."));
- 
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
- 	return -1;
- }
- 
- void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	if (!state || !state->backend_data)
-+	if (!state || !state->listen_data)
- 		return;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 
- 	if (data->stream) {
- 		if (data->stream_started)
-@@ -407,14 +407,14 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- 		FSEventStreamRelease(data->stream);
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index 8ff55f8c3fd..1efb6e17a20 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -179,6 +179,11 @@ int fsm_settings__error_if_incompatible(struct repository *r)
+ 		error(_("bare repository '%s' is incompatible with fsmonitor"),
+ 		      xgetcwd());
+ 		return 1;
++
++	case FSMONITOR_REASON_VFS4GIT:
++		error(_("virtual repository '%s' is incompatible with fsmonitor"),
++		      r->worktree);
++		return 1;
  	}
  
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
- }
- 
- void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 	data->shutdown_style = SHUTDOWN_EVENT;
- 
- 	CFRunLoopStop(data->rl);
-@@ -422,9 +422,9 @@ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- 
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 
- 	data->rl = CFRunLoopGetCurrent();
- 
-@@ -441,7 +441,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 
- 	switch (data->shutdown_style) {
- 	case FORCE_ERROR_STOP:
--		state->error_code = -1;
-+		state->listen_error_code = -1;
- 		/* fall thru */
- 	case FORCE_SHUTDOWN:
- 		ipc_server_stop_async(state->ipc_server_data);
-@@ -453,7 +453,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 	return;
- 
- force_error_stop_without_loop:
--	state->error_code = -1;
-+	state->listen_error_code = -1;
- 	ipc_server_stop_async(state->ipc_server_data);
- 	return;
- }
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index c43d92b9620..be2d93f47b2 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -54,7 +54,7 @@ struct one_watch
- 	wchar_t dotgit_shortname[16]; /* for 8.3 name */
+ 	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index 4b35f051fb1..6361fcbf6b0 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -16,6 +16,7 @@ enum fsmonitor_mode {
+ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_OK = 0, /* no incompatibility or when disbled */
+ 	FSMONITOR_REASON_BARE,
++	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
  };
  
--struct fsmonitor_daemon_backend_data
-+struct fsm_listen_data
- {
- 	struct one_watch *watch_worktree;
- 	struct one_watch *watch_gitdir;
-@@ -263,7 +263,7 @@ static enum get_relative_result get_relative_longname(
+ void fsm_settings__set_ipc(struct repository *r);
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 9a8e21c5608..156895f9437 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -78,6 +78,15 @@ test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo' '
+ 	grep "bare repository .* is incompatible with fsmonitor" actual
+ '
  
- void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- {
--	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
-+	SetEvent(state->listen_data->hListener[LISTENER_SHUTDOWN]);
- }
- 
- static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
-@@ -337,7 +337,7 @@ static void destroy_watch(struct one_watch *watch)
- 	free(watch);
- }
- 
--static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
-+static int start_rdcw_watch(struct fsm_listen_data *data,
- 			    struct one_watch *watch)
- {
- 	DWORD dwNotifyFilter =
-@@ -516,7 +516,7 @@ static int process_1_worktree_event(
-  */
- static int process_worktree_events(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	struct one_watch *watch = data->watch_worktree;
- 	struct strbuf path = STRBUF_INIT;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -646,7 +646,7 @@ force_shutdown:
-  */
- static int process_gitdir_events(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	struct one_watch *watch = data->watch_gitdir;
- 	struct strbuf path = STRBUF_INIT;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -704,11 +704,11 @@ skip_this_path:
- 
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	DWORD dwWait;
- 	int result;
- 
--	state->error_code = 0;
-+	state->listen_error_code = 0;
- 
- 	if (start_rdcw_watch(data, data->watch_worktree) == -1)
- 		goto force_error_stop;
-@@ -773,7 +773,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 	}
- 
- force_error_stop:
--	state->error_code = -1;
-+	state->listen_error_code = -1;
- 
- force_shutdown:
- 	/*
-@@ -790,7 +790,7 @@ clean_shutdown:
- 
- int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
- 	CALLOC_ARRAY(data, 1);
- 
-@@ -823,7 +823,7 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- 		data->nr_listener_handles++;
- 	}
- 
--	state->backend_data = data;
-+	state->listen_data = data;
- 	return 0;
- 
- failed:
-@@ -836,16 +836,16 @@ failed:
- 
- void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	if (!state || !state->backend_data)
-+	if (!state || !state->listen_data)
- 		return;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 
- 	CloseHandle(data->hEventShutdown);
- 	destroy_watch(data->watch_worktree);
- 	destroy_watch(data->watch_gitdir);
- 
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
- }
-diff --git a/compat/fsmonitor/fsm-listen.h b/compat/fsmonitor/fsm-listen.h
-index f0539349baf..41650bf8972 100644
---- a/compat/fsmonitor/fsm-listen.h
-+++ b/compat/fsmonitor/fsm-listen.h
-@@ -33,7 +33,7 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state);
-  * do so if the listener thread receives a normal shutdown signal from
-  * the IPC layer.)
-  *
-- * It should set `state->error_code` to -1 if the daemon should exit
-+ * It should set `state->listen_error_code` to -1 if the daemon should exit
-  * with an error.
-  */
- void fsm_listen__loop(struct fsmonitor_daemon_state *state);
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 223c2131b58..2c6fa1a5d91 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -33,7 +33,7 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
-  */
- void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
- 
--struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
-+struct fsm_listen_data; /* opaque platform-specific data for listener thread */
- 
- struct fsmonitor_daemon_state {
- 	pthread_t listener_thread;
-@@ -50,8 +50,8 @@ struct fsmonitor_daemon_state {
- 	int cookie_seq;
- 	struct hashmap cookies;
- 
--	int error_code;
--	struct fsmonitor_daemon_backend_data *backend_data;
-+	int listen_error_code;
-+	struct fsm_listen_data *listen_data;
- 
- 	struct ipc_server_data *ipc_server_data;
- 	struct strbuf path_ipc;
++test_expect_success MINGW,FSMONITOR_DAEMON 'run fsmonitor-daemon in virtual repo' '
++	test_when_finished "rm -rf ./fake-virtual-clone actual" &&
++	git init fake-virtual-clone &&
++	test_must_fail git -C ./fake-virtual-clone \
++			   -c core.virtualfilesystem=true \
++			   fsmonitor--daemon run 2>actual &&
++	grep "virtual repository .* is incompatible with fsmonitor" actual
++'
++
+ test_expect_success 'setup' '
+ 	mkdir -p .git/hooks &&
+ 	: >tracked &&
 -- 
 gitgitgadget
 
