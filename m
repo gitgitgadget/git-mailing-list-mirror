@@ -2,103 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 845C4C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3289C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 17:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350416AbiCXRkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 13:40:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
+        id S1348042AbiCXRph (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 13:45:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239345AbiCXRkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 13:40:45 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE00075E5B
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:39:12 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B94F71038DD;
-        Thu, 24 Mar 2022 13:39:11 -0400 (EDT)
+        with ESMTP id S239959AbiCXRph (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 13:45:37 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9947863C1
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 10:44:04 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE3F918FAF6;
+        Thu, 24 Mar 2022 13:44:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=N+lTVeGLrGQh
-        xyawo1FnxSO8kqiC3SJDg88Oh95wTWg=; b=kf7yo2yN++XOCwXz3kPFdMTjVFfY
-        gWio8SNhKyJ+5+FfAaJPTEjfzGI+6WLx2XXRglcA0D7sg9xv4YLQaLSUnD+iPfg3
-        P+TdvDWeCzKa/HPgxBOPcBksGkbJ4lplZK4y0zV0HrBaB6kLrNtfnRAKaO852Uev
-        XbZRSzwq3zdEOL0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF2301038DC;
-        Thu, 24 Mar 2022 13:39:11 -0400 (EDT)
+        :content-type; s=sasl; bh=bOp72RfUi16KfPjePvE5AHWiyLYCcoTnM/xlSg
+        uo8ak=; b=l6sBmsctElCEzqkxWl/qOmkfilR4I1zmY78nhwIWDx+3JmnOQpC+Vu
+        e5vBb/faL2QVlV7YmtIzBtjG43t7eps9EmvgSeIUrW2WjfUA0e9wecjGEOuNpeNN
+        AgA1qI7TQiyyCbYLOOt/7X2WKjdZD+662MvGOo/d3dc5RnvBrJ+mA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A736D18FAF5;
+        Thu, 24 Mar 2022 13:44:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.227.145.180])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17BF81038DB;
-        Thu, 24 Mar 2022 13:39:11 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1632818FAF3;
+        Thu, 24 Mar 2022 13:44:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 08/27] revisions API users: use release_revisions()
- needing "{ 0 }" init
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
-        <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
-        <patch-v2-08.27-42ad1208934-20220323T203149Z-avarab@gmail.com>
-        <xmqqy210kl3i.fsf@gitster.g>
-        <220324.868rszmga6.gmgdl@evledraar.gmail.com>
-Date:   Thu, 24 Mar 2022 10:39:09 -0700
-In-Reply-To: <220324.868rszmga6.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 24 Mar 2022 18:04:34 +0100")
-Message-ID: <xmqqwngji72a.fsf@gitster.g>
+To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, avarab@gmail.com,
+        nksingh85@gmail.com, ps@pks.im,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v3 00/11] core.fsyncmethod: add 'batch' mode for faster
+ fsyncing of multiple objects
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+        <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+Date:   Thu, 24 Mar 2022 10:44:00 -0700
+In-Reply-To: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com> (Neeraj
+        K. Singh via GitGitGadget's message of "Thu, 24 Mar 2022 04:58:15
+        +0000")
+Message-ID: <xmqqo81vi6u7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5089346E-AB99-11EC-91D1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FD62C4F2-AB99-11EC-85DD-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Mar 23 2022, Junio C Hamano wrote:
+> V3 changes:
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->>
->>> Use release_revisions() to various users of "struct rev_list" which
->>> need to have their "struct rev_info" zero-initialized before we can
->>> start using it. In all of these cases we might "goto cleanup" (or equ=
-ivalent),
->>
->> I didn't look at the bisect code, but the bundle one looks iffy from
->> the point of view of API cleanliness.  If we have not yet called
->> repo_init_revisions() on a revs, we should refrain from calling
->> release_revisions() on it in the first place, no?
->
-> It could be avoided, but I'd really prefer not to for this series.
->
-> repo_init_revisions() is a non-trivial function, and changing the
-> various bits in this series that can easily have a "goto" pattern
-> because we assume that { 0 }-init'd is safe to pass to
-> release_revisions() would be a larger change...
->
-> We assume that in a lot of other destructors throughout the codebase, I
-> figured we could leave this for later.
->
-> Is that OK with you?
+>  * Rebrand plug/unplug-bulk-checkin to "begin_odb_transaction" and
+>    "end_odb_transaction"
 
-Not really.  If you introduce "#define REV_INFO_INIT { 0 }",
-perhaps, though.
+OK.  Makes me wonder (not "object", more appropriate verb than
+"object" being "be curious") how well "odb-transaction" meshes with
+mechanisms to ensure that the bits hit the disk platter to protect
+things outside the odb that you may or may not be covering in this
+series (e.g. the index file, the refs, the working tree files).
 
-Without such a mechanism to clearly say "here is what we initialize
-a rev_info", the first call to repo_init_revisions() looks like the
-place that initializes a rev_info, and call to release_revisions()
-on a rev_info that did not go through repo_init_revisions() looks
-like a call to free() of a pointer that hasn't been assigned the
-result from an allocation from the heap.  That is where my "iffy
-from the API cleanliness POV" comes from.
+> This work is based on 'seen' at . It's dependent on ns/core-fsyncmethod.
+
+"at ."???
 
