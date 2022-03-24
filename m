@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 627BBC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 19:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B112AC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 20:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243950AbiCXTXr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 15:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59172 "EHLO
+        id S1353401AbiCXU10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 16:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239554AbiCXTXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 15:23:46 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C28C6662F
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:22:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id p10so3904914lfa.12
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 12:22:12 -0700 (PDT)
+        with ESMTP id S237832AbiCXU1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 16:27:25 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3880B823E
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:25:51 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id r22so7730018ljd.4
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 13:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kJSiEkj9IUorq50YrCSnEnxvfbJb7x3R7afiRTVVJ9Y=;
-        b=K036VEupZkGoQyYYiprn+zXaWnrPxJRlQcvx6nenjScQcVm7DDyLbSDikaynrMqhr5
-         jXcULQayXe306MZept+KykGrIS1p0DvAkFugW9yuRX6q4GlRqKGBYrpywW+pVsrzcsZP
-         vOSa2IjYVbe9f3VTBm4qWiyd1kgb5UYKGt5xPvx5RckGmvxtJ3qZJtd4WkrFoDsF7Dyl
-         04F4f4V/6WT0PMfd20fvIBnSc46Ud2hmuzC2j7Pyr2v5TC8tCGFnPL69N2fc89xvhx0h
-         UfzkkbXFj+Pxs5H6gTzrajMqXpNoehOwU3kXI8b8drn3s1jWHHwOl8FTREEOtcS6s+ZG
-         6dag==
+        bh=0J4Jk8Hx4mu2k3ooFyDKxy8VPTqyoZBP7+wp2rhHXqI=;
+        b=Bp9mlOVUVF6AtFO5F7EebsIAFu4JD/XdV4ol0wLRi7sww3wDPcd8dpTdA5jXt0CkLY
+         ufqcecjE4nv/wQeeGJ/WpP8XGKgrTSEL4u/lK8PoKJEHmOo2oJGnGg3lLKKz2sQOS0vM
+         GBVKPdMaRcx4yDhCH0F4WkmI2zvaXzhM/L27iAZz3yHOq1G4zemBzM+1j+nG9Gv1B8BB
+         CfPMqLm6jD2wwgcl7QarY91gIYsktPV3nU3SIcLAX5Ihd1wZdvj21rJJ41mzOYPOuVt5
+         ZfIxpXEpKdsAVnWvlAxmqpNoB5EcTLK35c2uUbB07O3eSNR/LCntILV7hrGGgnwn/rnL
+         dsGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kJSiEkj9IUorq50YrCSnEnxvfbJb7x3R7afiRTVVJ9Y=;
-        b=rb3V+zV1di14Uzc3iMGG4fnoEslAXD3jAHDXX4cjUYJ/iIKK7eCF0HIBYw/WjaP3/n
-         IXEb6wzVxStg7pnGnjzNECHIrvuC58P1+RmV1wkNTwjyW0W2dqQp7JI9bK4gQ4fPd3pf
-         3THJxYw2wlJgBetRQoggQVOT3wbzrS+6d2O7zVIPbfv0sj52LshhBrtpeaEE2u4p7Ale
-         i44faBV0bCVyooC+GBWaAP1IkuBbjXmmHRfW4w7n//bBwffAWv2RzTZGDIajxzWd9Ipp
-         QDx8zUiuVrN7a4s3MCq5++SZjmam8igM4ioj+WHqKV09EAod+TbfU9sa8mEYeTSRo31X
-         x2fw==
-X-Gm-Message-State: AOAM533ZVuCmZpLBHjCO6d7OoSzVaLHlMD6nlUChKqQUtQVchFKPGuU+
-        l9KaLokS2RvOWn0HeNSnAIn7l1+s4YSxbUHNl1CIhbFCr6mJWg==
-X-Google-Smtp-Source: ABdhPJwwnHhjFaw9qi1yUd4agHuAqo6Ovd/RCjop3sScBUTr2Yr8UYPFO4uqEV+Ju2g5K6lvSXjulO43K/n2xM/wHSQ=
-X-Received: by 2002:a05:6512:322f:b0:44a:57a0:6950 with SMTP id
- f15-20020a056512322f00b0044a57a06950mr4846064lfe.74.1648149730567; Thu, 24
- Mar 2022 12:22:10 -0700 (PDT)
+        bh=0J4Jk8Hx4mu2k3ooFyDKxy8VPTqyoZBP7+wp2rhHXqI=;
+        b=u0fGJQuhEiHa2T5xSGLHGX3oO18zHB2sIzQzjE80fg519yb4jwG+B83uZtAoE+TeW0
+         /kn3gaCaYS96lCmpTCYqKOQ/yFC5zo8m4QwMTvq5sLYGQNb4XbakUUV7sWVqXGWq9r4v
+         36ZtRv46AZ42YWA0pEAXHs2glAeM7wB8GjEXXQqGnJIf5WjCi6sa2rZFaBHNBq1vVvtN
+         KWA0Ja8o1pw+vy4w+QQTc7BVsx0Pfad6ArnLkWif5vcwQs/IO8BzJnjksYgBizUesSUE
+         W5i5dbT99bp2T01ziaAMRpaAHRwqED1GeNoscst3liFvDnAwSvoYNZwpnbCtFT/i3mcU
+         YYxg==
+X-Gm-Message-State: AOAM5325Zs/ZbMw6KXqkwVLffqRy/U2UZEMraws7njr8KgAVlWKUYyQU
+        eyJzTGkvfX0VcofuUBZYUFLGyNBMDbhChjO7yto=
+X-Google-Smtp-Source: ABdhPJySmO6xAxXViiOjUvKWRH72MRuy7Dat0TuhrIx34TWtQH1x+o1jRDbEWFgaonIqCx9mI3Rn17mrJmgjK2wwRAg=
+X-Received: by 2002:a2e:9b96:0:b0:249:8705:8f50 with SMTP id
+ z22-20020a2e9b96000000b0024987058f50mr5617656lji.73.1648153550103; Thu, 24
+ Mar 2022 13:25:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
- <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com> <xmqqo81vi6u7.fsf@gitster.g>
-In-Reply-To: <xmqqo81vi6u7.fsf@gitster.g>
+ <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com> <913ce1b3df9cf273f1572c256dffad1cacc192a6.1648097906.git.gitgitgadget@gmail.com>
+ <xmqqfsn7i594.fsf@gitster.g>
+In-Reply-To: <xmqqfsn7i594.fsf@gitster.g>
 From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Thu, 24 Mar 2022 12:21:59 -0700
-Message-ID: <CANQDOdfcgaRUkygG9or7VS02uzo9vz1Ve=nkFUs_aYu3vVaCnA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/11] core.fsyncmethod: add 'batch' mode for faster
- fsyncing of multiple objects
+Date:   Thu, 24 Mar 2022 13:25:38 -0700
+Message-ID: <CANQDOdcuBRvWx7iMYBvLYEEb6A_=SURLAGumk026ZyDODpfAsQ@mail.gmail.com>
+Subject: Re: [PATCH v3 05/11] update-index: use the bulk-checkin infrastructure
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -66,49 +66,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 24, 2022 at 10:44 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Mar 24, 2022 at 11:18 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > V3 changes:
+> > +static void end_odb_transaction_if_active(void)
+> > +{
+> > +     if (!odb_transaction_active)
+> > +             return;
+> > +
+> > +     end_odb_transaction();
+> > +     odb_transaction_active = 0;
+> > +}
+>
+> >  __attribute__((format (printf, 1, 2)))
+> >  static void report(const char *fmt, ...)
+> >  {
+> > @@ -57,6 +68,16 @@ static void report(const char *fmt, ...)
+> >       if (!verbose)
+> >               return;
 > >
-> >  * Rebrand plug/unplug-bulk-checkin to "begin_odb_transaction" and
-> >    "end_odb_transaction"
+> > +     /*
+> > +      * It is possible, though unlikely, that a caller
+> > +      * could use the verbose output to synchronize with
+> > +      * addition of objects to the object database, so
+> > +      * unplug bulk checkin to make sure that future objects
+> > +      * are immediately visible.
+> > +      */
+> > +
+> > +     end_odb_transaction_if_active();
+> > +
+> >       va_start(vp, fmt);
+> >       vprintf(fmt, vp);
+> >       putchar('\n');
+> > @@ -1116,6 +1137,13 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+> >        */
+> >       parse_options_start(&ctx, argc, argv, prefix,
+> >                           options, PARSE_OPT_STOP_AT_NON_OPTION);
+> > +
+> > +     /*
+> > +      * Allow the object layer to optimize adding multiple objects in
+> > +      * a batch.
+> > +      */
+> > +     begin_odb_transaction();
+> > +     odb_transaction_active = 1;
 >
-> OK.  Makes me wonder (not "object", more appropriate verb than
-> "object" being "be curious") how well "odb-transaction" meshes with
-> mechanisms to ensure that the bits hit the disk platter to protect
-> things outside the odb that you may or may not be covering in this
-> series (e.g. the index file, the refs, the working tree files).
+> This looks strange.  Shouldn't begin/end pair be responsible for
+> knowing if there is a transaction active already?  For that matter,
+> didn't the original unplug in plug/unplug pair automatically turned
+> into no-op when it is already unplugged?
+>
+> IOW, I am not sure end_if_active() should exist in the first place.
+> Shouldn't end_transaction() do that instead?
 >
 
-As of this series, the odb-transaction will ensure that loose-objects
-(and trivially packs as well, since they're currently eagerly-synced)
-are efficiently made durable by the time the transaction ends.  Other
-parts of the repo (index, refs, etc) need to be updated and synced
-after the odb transaction ends.  Patrick's original ref syncing work
-at [1] also contained a batch mode delimited by the existing ref
-transactions.
+Today there's an "assert(bulk_checkin_plugged)" in
+end_odb_transaction. In principle we could just drop the assert and
+allow a transaction to be ended multiple times.  But maybe in the long
+run for composability we'd like to have nested callers to begin/end
+transaction (e.g. we could have a nested transaction around writing
+the cache tree to the ODB to minimize fsyncs there).  In that world,
+having a subsystem not maintain a balanced pairing could be a problem.
+An alternative API here could be to have an "flush_odb_transaction"
+call to make the objects visible at this point.  Lastly, I could take
+your original suggested approach of adding a new flag to update-index.
+I preferred the unplug-on-verbose approach since it would
+automatically optimize most callers to update-index that might exist
+in the wild, without users having to change anything.
 
-I think larger transactions would be interesting to have, but I'd
-argue that the current patch series is a worthwhile building block for
-that world.  It solves the real-world multiplicative pain of adding N
-objects to the ODB, where each one needs to be fsynced.  Patrick's
-batch mode solves the real-world multiplicative pain of updating R
-refs during a big mirror push.  Even talking just about the ODB, we
-still have O(TreeSize) fsyncs for the updated trees and a few extra
-fsyncs for commits.  We can add odb transactions around those things
-too, which should be easy enough going forward.
-
-[1] https://lore.kernel.org/git/d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im/
-
-> > This work is based on 'seen' at . It's dependent on ns/core-fsyncmethod.
->
-> "at ."???
->
-
-Sorry, to make GGG/Github happy, I had to rebase onto b9f5d0358d2,
-which was the last non-merge commit that's present in next. Then I
-could target next with the PR and get the right set of patches.
-Basing on fd008b1442 didn't work because GGG doesn't want to see a
-merge commit in the set of changes not in the target branch.
+Thanks,
+Neeraj
