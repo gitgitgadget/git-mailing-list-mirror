@@ -2,65 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57352C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 21:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8775BC433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 21:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240605AbiCXVwa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 17:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47524 "EHLO
+        id S1353237AbiCXV73 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 17:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbiCXVw3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 17:52:29 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB924AC938
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:50:56 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D8F4106443;
-        Thu, 24 Mar 2022 17:50:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g+AZFnUw0hOZYTKmYUVc7bRcMFrK3qS5Y3QCDY
-        c2bSE=; b=p9SM5IyX6LmkqgL7mjFvs8dKpVv7ta5UeXF7I3nPsovmMlC+qZ3C7n
-        BAlJbM0dRSFv4zSEsZGBlKsXPFfiIvl1Sag5j3ARyU6+xtIXVa6KU671B27knUjQ
-        cvhqmXl79hHdFjDydrCScXiYIleitunHFuSX+egGAv6cNgU7sd6o4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F663106442;
-        Thu, 24 Mar 2022 17:50:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89DF3106441;
-        Thu, 24 Mar 2022 17:50:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 00/27] Builtin FSMonitor Part 3
-References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
-        <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
-Date:   Thu, 24 Mar 2022 14:50:54 -0700
-In-Reply-To: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com> (Jeff
-        Hostetler via GitGitGadget's message of "Thu, 24 Mar 2022 16:50:53
-        +0000")
-Message-ID: <xmqq4k3nf29t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230110AbiCXV72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 17:59:28 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 372E0B8216
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:57:56 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id e18so4096582ilr.2
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 14:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=yvmC5lDucQWQ0/XUj0AIJDcivu+49lqa9cSMh40QVs8=;
+        b=PKJLa/5BYF/jP6p9HLN4kH1mVic1cg+tDH6J69PnXwiv63vB+V1Ic3ovqV5UU5k75K
+         4zf1wOh3HioEIr/NcYLAX8bzZhrvVlqWypXIs4aOO2Av5WV1Y3J3UCW1mMDc3FNAbg8L
+         KDcH0KMU8iAIhePN5kbJYuGuRS5AB5JCsGFEGWIe4aRtRgvlApV7Le/eHTWktfjTq5r2
+         aCh8Bif3PeMSbQRHTsi4c3H/SXdmmBaYuFIkukYl+isAkfbNAO+jMkarbunTbVD0rpd2
+         yti1uW0ncA3GHIS5qz8P8iBBNY2FFCYWJPaX5ZkHwDetA1PvUNOFUZhHB6mF6+XQgllk
+         pyWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=yvmC5lDucQWQ0/XUj0AIJDcivu+49lqa9cSMh40QVs8=;
+        b=M2GZA023PygCNgNOHbREIEQ8DxACGIGdoBIUePRuiSZei0uAySPjFM/fbf0m48EQYG
+         JjQXHgQtNctLKo/FowV+/GEJmeIHsLecVCmLZ1bBRGjSz3LffzRgDE9DKaYoynnYJ3rA
+         MYYuHgMACEHc3UzvCQCsbGHy9qNgoxyNFdfwjO0ndPbt9LO1BeYGv2zx6GuTodX9/vJQ
+         iih5fB2/7SzzAlTqRBhyvNNrmBOs/1BUlKJgZBp99+t3mccPwqVbtHxjZtxpXIHD1Jns
+         awCeKxwoIibA0I8VnabvF/mGW89+rfGoG6QrJ2Wskw1pHxtcLl8lLXiDOe+iBZKFRzWY
+         pyEg==
+X-Gm-Message-State: AOAM532KdNwDP2oBr+b998YGPWpfIQjtjkkQetwcLM1Zqxk/o54Kq+HP
+        DOPeGNNOAy01gW8vKhsZpldNpA==
+X-Google-Smtp-Source: ABdhPJx2mD1oU2B/UscTIxseIQqYNogCv7mGWvipYgUW9eah5pyEGmDWxLuMUYykxeTCM48O3asF2A==
+X-Received: by 2002:a92:c241:0:b0:2c8:7a67:ed5e with SMTP id k1-20020a92c241000000b002c87a67ed5emr1622666ilo.143.1648159075602;
+        Thu, 24 Mar 2022 14:57:55 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id n7-20020a056e021ba700b002c63098855csm2015120ili.23.2022.03.24.14.57.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 14:57:55 -0700 (PDT)
+Date:   Thu, 24 Mar 2022 17:57:54 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: A "why TAP?" manifesto (was: [PATCH] test-lib: have --immediate
+ emit valid TAP on failure)
+Message-ID: <YjzpYic+QaOpqolE@nand.local>
+References: <patch-1.1-47b236139e6-20220323T204410Z-avarab@gmail.com>
+ <nycvar.QRO.7.76.6.2203241434360.388@tvgsbejvaqbjf.bet>
+ <220324.8635j7nyvw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7B7FC94E-ABBC-11EC-BD56-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220324.8635j7nyvw.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Mar 24, 2022 at 02:48:42PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > The commit message is strong on the what, very strong in giving verbose
+> > output that might or might not clarify the intention, and a little weak in
+> > the why and the greater context.
+>
+> I thought "so that it emits valid TAP" was sufficiently
+> self-explaining. I.e. we emit this machine-readable format, but in this
+> edge case our output is invalid TAP, now it's valid.
 
-> Here is V4 of Part 3 of my builtin FSMonitor series. This version has been
-> updated to depend upon V8 of Part 2.
+I agree; if the justification is "something we use not-infrequently is
+broken" and the rest is "and this patch un-breaks it", I do not think we
+should devote much space to justifying why we use that thing in the
+first place.
 
-Thanks.  Queued.
+Our TAP output meets the bar (at least for me, personally) of not
+needing to be rehashed anytime we change it, so I don't have any
+complaints about Ævar's patch message here.
 
+Of course, we should be careful to avoid following that guidance _too_
+much, since if it leaves us in a spot where we never question any past
+decisions, then I think we have gone too far.
+
+Thanks,
+Taylor
