@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1229DC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 22:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F07C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 22:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355316AbiCXWV0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 18:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
+        id S242692AbiCXWWx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 18:22:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242692AbiCXWVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 18:21:24 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8D97CB20
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id 77-20020a621450000000b004fa8868a49eso3203487pfu.3
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
+        with ESMTP id S1355341AbiCXWWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 18:22:52 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92389BA30E
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:21:19 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id n17-20020a17090ac69100b001c77ebd900fso3478918pjt.8
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=tigJj70Y6OIVscQooD7mYWM1Mki6i4AhkAuvWDLghZ0=;
-        b=jaSiYuXHOAUfIIVry5AoC45vHzjGx0CMi0+1/9Lldmqdt/PJi+Cof2t/1YxLKDjgQM
-         EqCaO7PME+hxECteaIak3YarjZ7bfG2kvouoeGi3aHgKmYLvU3ajM4ZoNYEaXScEiabY
-         Of1BlxaIrlfLJlLiONnzltWUk+hCpoegEZJ3s1MGIKPXKr3QGCXHar6YzC/JIrON7Xlz
-         MQfA4XMldARq6piXCOUcBzOC8y3W/CVL+crEIth63AF4JtSP/sqHI5625TezEI98KXmZ
-         e9lpzefZw68wW6YA8bULJ5iWsGhg5W3FHOPetiPac0MWjd0+cg4leek43U5s0cciATeS
-         AA3g==
+        bh=DbhsEiLT/r0x+toR6xSjS6j9Q26uV/iWMYlrNdbPojU=;
+        b=FXkxJpsCx27jvpDBG/noqAYclyeihwUI6gyWDsEem0qgNLc2TuSxIXctMy3NgR3V4V
+         Bb2JT0FgL4p3UfLGWxHzaTqYapqxJW5eCN+pReOZcccbNg+WSzCaHPJNIXcytdbBYcVm
+         JbfrmpL0QdW1E0iKg3Kz4J3bnHaGbe+8/1doqKAKoXk7XzVq5GwAWEZsCDAqbB65tmuU
+         0NtXx0tbsdh/Vu3Pu4CLfdzCva5ZHhyWypvY/rzOAwKkjRGqAFqbt1F7HfOVKHLkt8eZ
+         5sVBPydAnz8Pc9koM2Ruxz++sqd5bCurf2FYU1HclAJwI/neNmAf+1Q9cy14WtGp/wX+
+         PHJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
          :from:to:cc;
-        bh=tigJj70Y6OIVscQooD7mYWM1Mki6i4AhkAuvWDLghZ0=;
-        b=5pWRqFUwr1wbupuhCt24HrmGG184m512tqUNmUmlOI+8ExMlYCsgk1gjbvVlyJBU7k
-         g6MhVZ02QKaoexQ1Fhv9LwJnnXEhbMGvqGu33VbvX1+kQH/UJZ3yg8rmWBC5Gmess41V
-         2QaSsVPg2tCG1gPvsySyghhOn1hs5/RJSSMUxeFnNUjwuVH3o3+awZSLGQXMQ9frisi5
-         wF/5o94IKvx2yKlPnBzUk0LkuIWXiFJwHrG2XFItoO4lKJKy7IQV/iocj9GOkkzxigMt
-         ypo4xN1v+Nd/nLWetHUyzlToIORxaNpRRLPKuSPp+NY6UR6vapQBavG8giL6uzkfwCw3
-         FLrg==
-X-Gm-Message-State: AOAM531bd1dDJiRl4zZUPx23t/2RNWYGJbPJhVPM+SIM+skikhiUnVIy
-        kvfgbtxZfNsXeCtGFwBgJDtDyrCt4QGzI9sOQ9Wc
-X-Google-Smtp-Source: ABdhPJwzS277e19vFWCKuuLcy2uYtn4VVXoA0f/6cAZEbzgyyz/j+COMWDab08JhwDXuDJfQkjRxeDv2afOQqp9ISrrO
+        bh=DbhsEiLT/r0x+toR6xSjS6j9Q26uV/iWMYlrNdbPojU=;
+        b=k8Kid3Hb+MpH6z0t86PI0pDeDGBTND6y2RPWkwN0yRbwJQcFR2kQstO3p9Y8CwCGWJ
+         9IawBOv3KnL4TpBLfXm5HjETPbJX6EU02rCTIr7A8neldr9wHysAFSKbAHcgKC77bQC8
+         YlXgO79MNiCOtEvAnwEqOQLQMZRoJmTvRyb4yzzHm1un4pdxKqI3FIKfKO340AF4CiVN
+         B5m07CRsTRZBZ/BkD9PDSMZ6GIX8VTdYyzI1u6MA2XnbM2weJ0XhdVrHUTTaa4bMvEQX
+         nh7y/Ilkl2uRim2mZ4vB+B+EVabT+r3odcP7Dbbu/KeKZaYDAcOGgAh5dRf/t5gyhjrY
+         rj+g==
+X-Gm-Message-State: AOAM531M2KiAF4S5Yo+d04LPyez1ULqzaI/6fMJ6x1DNipiStLPDLKVL
+        eypvk0zWBvt5jfA5MmIjytf0Wv/In/0vfc7TNWeS
+X-Google-Smtp-Source: ABdhPJzQXGsHPfcci74Afk7on5sqeq7WVr53GhipHEgaZ4nQLO2mDeF0IUxucNi60Cht32AmMY5QJ5ADIGLIs+W/UtOQ
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:c85:b0:4fa:f806:10f5 with
- SMTP id a5-20020a056a000c8500b004faf80610f5mr3680986pfv.43.1648160392014;
- Thu, 24 Mar 2022 15:19:52 -0700 (PDT)
-Date:   Thu, 24 Mar 2022 15:19:49 -0700
-In-Reply-To: <8f7ed9c5-9be6-55b4-f95c-40bf11d9e9ed@gmail.com>
-Message-Id: <20220324221949.1325809-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:f646:b0:151:d5b1:cbb4 with
+ SMTP id m6-20020a170902f64600b00151d5b1cbb4mr8224690plg.150.1648160478406;
+ Thu, 24 Mar 2022 15:21:18 -0700 (PDT)
+Date:   Thu, 24 Mar 2022 15:21:15 -0700
+In-Reply-To: <a4656826-aecb-d752-7ce7-2ce7a37c7b00@github.com>
+Message-Id: <20220324222115.1327778-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
 Subject: Re: [PATCH] commit-reach: do not parse and iterate minima
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         stolee@gmail.com
 Content-Type: text/plain; charset="UTF-8"
@@ -59,13 +59,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
-> What about fetching with --deepen?
+Derrick Stolee <derrickstolee@github.com> writes:
+> On 3/23/2022 5:08 PM, Jonathan Tan wrote:
+> >  test_expect_success 'fetch --update-shallow' '
+> > +	git init a-submodule &&
+> > +	test_commit -C a-submodule foo &&
 > 
-> Will "unintended" unshallowing with --update-shallow possibly happen
-> if --update-shallow is used, as opposed to --depth/--deepen?
+> You add a submodule here so you can trigger the bug in this test, but...
+> 
+> >  test_expect_success 'fetch --update-shallow into a repo with submodules' '
+> > -	git init a-submodule &&
+> > -	test_commit -C a-submodule foo &&
+> 
+> This test was already named to be specific to submodules. The test names
+> could probably use an update to describe what's really the difference
+> between the two tests.
+> 
+> Is there a reason we couldn't trigger the failure only in this second
+> test, allowing us to still test --update-shallow when submodules are NOT
+> present?
+> 
+> Thanks,
+> -Stolee
 
-This does change the graft status, but from grafted to ungrafted, so
-instead of trying to read parents that are not there, we will not read
-parents that are there. Which is also a problem, but more difficult to
-demonstrate why it is a problem, I think.
+I tried but somehow couldn't figure out the correct server and client
+state to trigger this. If I can't think of anything else, I might just
+"cp -r" both repos before the "fetch --update-shallow" and that might do
+the trick.
