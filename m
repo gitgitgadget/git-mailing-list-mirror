@@ -2,274 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A25A4C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 08:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E5BC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 09:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356080AbiCYJAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 05:00:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50576 "EHLO
+        id S1356402AbiCYJPG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 05:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbiCYJAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 05:00:49 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7699848305
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 01:59:15 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id p4-20020a17090ad30400b001c7ca87c05bso3066659pju.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 01:59:15 -0700 (PDT)
+        with ESMTP id S242463AbiCYJPF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 05:15:05 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E4EABF79
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 02:13:29 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id r23so8522737edb.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 02:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=abmyqJndsETiQzWw38YiqeoYipH370K5K9dWFitIP50=;
-        b=OKyAYEavWUiKyDsNM7FSSqW4tpHWkvbd93ezR7lc2eo4G5JhT9myK4Qxaw0+lFhLHZ
-         jtsnIoasrkR4YpgjRojZL4lD9eq/lwmrvrpmY8noqhCC4IZUD7Pz47ZsMpOK9O75RB2K
-         TNyUZ8mBcjty1HLxXxrrnnMU6pjg3mC+SATXmUr4kGyonleWdkeY51c/ENgS5f9+dEhs
-         IQnS3rZ6lKzFWJyc4BR5CY8AKetZGto0LDXxRUTG7WD2QJavCCHvedqop3JkDc98FFwG
-         Ba6PPmjalBKxvP/KVMcEyXQtDxwHKI6mV26zlLVmsnmw6NZQtmiiwmzavMtgITGLAqBR
-         Surw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ElNvT+nPcK7silNWQnB4pd4pTNux6Ny6bcQM3PpQb0M=;
+        b=KLJpSHYXDw5XhMOyJtkAkG0PWPbYJieDi3KU60o0/15GbN+HgSBzWQOmKPeZXwWUyj
+         Bywux8DaHUH7DFiqQBRtGb6fVVm+z6PaSjksKwR0QiJfz9l+eaV78sKVzDqbwCTO9XSi
+         druHbYCNBKGBje48aJSvmEPVWJHhDrN1IBHx+lIGiBlc/o5BfzbdqvZry97UDbcm744f
+         6ea8BtFs/6Q9wqcwny6mxiNBTL8IR8W58PxCVGtKGqT51gBmw0iUivXKDh54I7HhoeHT
+         kC44gmuStayfQLYetKRRIyJdCUflvuGH+bPkJyjUjygDdc3V4AKqNhYio8+VTNoD/uhk
+         vyQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=abmyqJndsETiQzWw38YiqeoYipH370K5K9dWFitIP50=;
-        b=K+dVj8QfQ+boeiaTPs69tf7Sd2FU5NUR+/Gd6cXFE1yVyK4Z5yGYmNjybE6OI9+Qcr
-         86g0TnCeCXQo4Q8V1pj0EjrktDbIJQ/hrw3f+DmEO0cgcBTwN6/ZdpEQhfkVD6428pv4
-         vVssSAkflScbtYl1C1iaLzjsygTaB1ERCeZL/vGhjIpEww93NvoWnSbrscuhXwChFFS6
-         rJ8ATHeI4ASAezB8SA9m2kf/ObCA2Nm1LbJp4EkR1YAatjrIvGPMUf7bui62YSdrug4O
-         xlEFhtzrLTJkCmZ9bayxylNZEJOKhMDSFNBzLPgMuQLklD5CU09HniSu9P9fvhe9WImK
-         a75w==
-X-Gm-Message-State: AOAM533uz4WPQoANguqR0ucznDsxAemwUow65h9/J4hLVe2jqB3ssiA9
-        zbnlZp8sNDBOLZeCwq4l2a0=
-X-Google-Smtp-Source: ABdhPJwQ82f96EaIsAKhz9Oc8VBZ3SXXNo6DBW8mMn46TFsaa1XklOkIYFo7y//1M+GnZNXUAHvGjQ==
-X-Received: by 2002:a17:902:ea09:b0:154:4af3:bb77 with SMTP id s9-20020a170902ea0900b001544af3bb77mr10643343plg.4.1648198754832;
-        Fri, 25 Mar 2022 01:59:14 -0700 (PDT)
-Received: from [192.168.43.80] (subs09a-223-255-225-78.three.co.id. [223.255.225.78])
-        by smtp.gmail.com with ESMTPSA id f4-20020aa782c4000000b004f6f0334a51sm5611788pfn.126.2022.03.25.01.59.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 01:59:14 -0700 (PDT)
-Message-ID: <9c584888-2dd2-139a-cf41-b2974386d1f8@gmail.com>
-Date:   Fri, 25 Mar 2022 15:59:09 +0700
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ElNvT+nPcK7silNWQnB4pd4pTNux6Ny6bcQM3PpQb0M=;
+        b=5Yi94Q4PamsMLdlrrlCUVZZ97RmkzGRD1mqzcQ8eGkgYeiuj4G2zHh7z+wnWeBsxX9
+         5zlOFiCJKH5kLQ0KroovLGeagT4arZtPJQNrEFV8vSuAsV0lC8BbS6wjCgkc6g4rWYS8
+         jRCo6Yc+H3LcYCzFE0C/2nd7O1ek63YPOYUuA3C77Z0c9bkj+xDyGgrFdWzdPRXXstFl
+         Bpc8z3i0FEjiYaAVnSiod7efCkulIMahs11KZzGE65CgKdSt22XINFvizR1v+PbDKzYF
+         c4jOx0DRAOKmAe3x0XwFyc2QpQUqi1I3jdXuBDtjBO9Ebc9p2pYLjIoxUwZSTsjs+HhQ
+         M8zw==
+X-Gm-Message-State: AOAM531RGOZP8Lg+LHZDWTIN7kA3Q3RlQhf5C9XI7tU2Dr2S3DbVdMuP
+        s40HyN5XiAl8tTzTxXlZSio=
+X-Google-Smtp-Source: ABdhPJympmyQczsukYLP2gW5AvOHxkyGSUCiutCMzTGTdjcjWg4/dMIJxOUT56NlCHTB57cNA2UkfA==
+X-Received: by 2002:a05:6402:3549:b0:419:343c:521 with SMTP id f9-20020a056402354900b00419343c0521mr11670522edd.85.1648199607672;
+        Fri, 25 Mar 2022 02:13:27 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2645285eda.59.2022.03.25.02.13.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Mar 2022 02:13:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nXg0c-001rAv-GH;
+        Fri, 25 Mar 2022 10:13:26 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+Date:   Fri, 25 Mar 2022 10:02:07 +0100
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+ <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
+ <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
+In-reply-to: <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>
+Message-ID: <220325.864k3mmm2x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v4 26/27] t/lib-unicode-nfc-nfd: helper prereqs for
- testing unicode nfc/nfd
-Content-Language: en-US
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
- <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
- <bc2d5a7a9306c895f4a1105c08d86f24e5ea542c.1648140680.git.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <bc2d5a7a9306c895f4a1105c08d86f24e5ea542c.1648140680.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/03/22 23.51, Jeff Hostetler via GitGitGadget wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> Create a set of prereqs to help understand how file names
-> are handled by the filesystem when they contain NFC and NFD
-> Unicode characters.
-> 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->   t/lib-unicode-nfc-nfd.sh | 167 +++++++++++++++++++++++++++++++++++++++
->   1 file changed, 167 insertions(+)
->   create mode 100755 t/lib-unicode-nfc-nfd.sh
-> 
-> diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
-> new file mode 100755
-> index 00000000000..cf9c26d1e22
-> --- /dev/null
-> +++ b/t/lib-unicode-nfc-nfd.sh
-> @@ -0,0 +1,167 @@
-> +# Help detect how Unicode NFC and NFD are handled on the filesystem.
-> +
-> +# A simple character that has a NFD form.
-> +#
-> +# NFC:       U+00e9 LATIN SMALL LETTER E WITH ACUTE
-> +# UTF8(NFC): \xc3 \xa9
-> +#
-> +# NFD:       U+0065 LATIN SMALL LETTER E
-> +#            U+0301 COMBINING ACUTE ACCENT
-> +# UTF8(NFD): \x65  +  \xcc \x81
-> +#
-> +utf8_nfc=$(printf "\xc3\xa9")
-> +utf8_nfd=$(printf "\x65\xcc\x81")
-> +
 
-The first nfc-nfd test subject (É) is simple case, right?
+On Thu, Mar 24 2022, Victoria Dye wrote:
 
-> +# Is the OS or the filesystem "Unicode composition sensitive"?
-> +#
-> +# That is, does the OS or the filesystem allow files to exist with
-> +# both the NFC and NFD spellings?  Or, does the OS/FS lie to us and
-> +# tell us that the NFC and NFD forms are equivalent.
-> +#
-> +# This is or may be independent of what type of filesystem we have,
-> +# since it might be handled by the OS at a layer above the FS.
-> +# Testing shows on MacOS using APFS, HFS+, and FAT32 reports a
-> +# collision, for example.
-> +#
-> +# This does not tell us how the Unicode pathname will be spelled
-> +# on disk, but rather only that the two spelling "collide".  We
-> +# will examine the actual on disk spelling in a later prereq.
-> +#
-> +test_lazy_prereq UNICODE_COMPOSITION_SENSITIVE '
-> +	mkdir trial_${utf8_nfc} &&
-> +	mkdir trial_${utf8_nfd}
-> +'
-> +
-> +# Is the spelling of an NFC pathname preserved on disk?
-> +#
-> +# On MacOS with HFS+ and FAT32, NFC paths are converted into NFD
-> +# and on APFS, NFC paths are preserved.  As we have established
-> +# above, this is independent of "composition sensitivity".
-> +#
-> +# 0000000 63 5f c3 a9
-> +#
-> +# (/usr/bin/od output contains different amount of whitespace
-> +# on different platforms, so we need the wildcards here.)
-> +#
-> +test_lazy_prereq UNICODE_NFC_PRESERVED '
-> +	mkdir c_${utf8_nfc} &&
-> +	ls | od -t x1 | grep "63 *5f *c3 *a9"
-> +'
-> +
-> +# Is the spelling of an NFD pathname preserved on disk?
-> +#
-> +# 0000000 64 5f 65 cc 81
-> +#
-> +test_lazy_prereq UNICODE_NFD_PRESERVED '
-> +	mkdir d_${utf8_nfd} &&
-> +	ls | od -t x1 | grep "64 *5f *65 *cc *81"
-> +'
-> +	mkdir c_${utf8_nfc} &&
-> +	mkdir d_${utf8_nfd} &&
-> +
-> +# The following _DOUBLE_ forms are more for my curiosity,
-> +# but there may be quirks lurking when there are multiple
-> +# combining characters in non-canonical order.
-> +
-> +# Unicode also allows multiple combining characters
-> +# that can be decomposed in pieces.
-> +#
-> +# NFC:        U+1f67 GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI
-> +# UTF8(NFC):  \xe1 \xbd \xa7
-> +#
-> +# NFD1:       U+1f61 GREEK SMALL LETTER OMEGA WITH DASIA
-> +#             U+0342 COMBINING GREEK PERISPOMENI
-> +# UTF8(NFD1): \xe1 \xbd \xa1  +  \xcd \x82
-> +#
-> +# But U+1f61 decomposes into
-> +# NFD2:       U+03c9 GREEK SMALL LETTER OMEGA
-> +#             U+0314 COMBINING REVERSED COMMA ABOVE
-> +# UTF8(NFD2): \xcf \x89  +  \xcc \x94
-> +#
-> +# Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
-> +#
-> +# Note that I've used the canonical ordering of the
-> +# combinining characters.  It is also possible to
-> +# swap them.  My testing shows that that non-standard
-> +# ordering also causes a collision in mkdir.  However,
-> +# the resulting names don't draw correctly on the
-> +# terminal (implying that the on-disk format also has
-> +# them out of order).
-> +#
-> +greek_nfc=$(printf "\xe1\xbd\xa7")
-> +greek_nfd1=$(printf "\xe1\xbd\xa1\xcd\x82")
-> +greek_nfd2=$(printf "\xcf\x89\xcc\x94\xcd\x82")
-> +
+> Johannes Schindelin via GitGitGadget wrote:
+> [...]
+>> Is this the best UI we can have for test failures in CI runs? I hope we can
+>> do better. Having said that, this patch series presents a pretty good start,
+>> and offers a basis for future improvements.
+>> 
+>
+> I think these are really valuable improvements over our current state, but I
+> also understand the concerns about performance elsewhere in this thread
+> (it's really slow to load for me as well, and scrolling/expanding the log
+> groups can be a bit glitchy in my browser). That said, I think there are a
+> couple ways you could improve the load time without sacrificing the (very
+> helpful) improvements you've made to error log visibility. I experimented a
+> bit (example result [1]) and came up with some things that may help:
+>
+> * group errors by test file, rather than by test case (to reduce
+>   parsing/rendering time for lots of groups).
+> * print the verbose logs only for the failed test cases (to massively cut
+>   down on the size of the log, particularly when there's only a couple
+>   failures in a test file with a lot of passing tests).
+> * skip printing the full text of the test in 'finalize_test_case_output'
+>   when creating the group, i.e., use '$1' instead of '$*' (in both passing
+>   and failing tests, this information is already printed via some other
+>   means).
+>
+> If you wanted to make sure a user could still access the full failure logs
+> (i.e., including the "ok" test results), you could print a link to the
+> artifacts page as well - that way, all of the information we currently
+> provide to users can still be found somewhere.
+>
+> [1] https://github.com/vdye/git/runs/5666973267
 
-The second test subject (greek) is more complex, right?
+Thanks a lot for trying to address those concerns.
 
-> +# See if a double decomposition also collides.
-> +#
-> +test_lazy_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE '
-> +	mkdir trial_${greek_nfc} &&
-> +	mkdir trial_${greek_nfd2}
-> +'
-> +
-> +# See if the NFC spelling appears on the disk.
-> +#
-> +test_lazy_prereq UNICODE_DOUBLE_NFC_PRESERVED '
-> +	mkdir c_${greek_nfc} &&
-> +	ls | od -t x1 | grep "63 *5f *e1 *bd *a7"
-> +'
-> +
-> +# See if the NFD spelling appears on the disk.
-> +#
-> +test_lazy_prereq UNICODE_DOUBLE_NFD_PRESERVED '
-> +	mkdir d_${greek_nfd2} &&
-> +	ls | od -t x1 | grep "64 *5f *cf *89 *cc *94 *cd *82"
-> +'
-> +
-> +# The following is for debugging. I found it useful when
-> +# trying to understand the various (OS, FS) quirks WRT
-> +# Unicode and how composition/decomposition is handled.
-> +# For example, when trying to understand how (macOS, APFS)
-> +# and (macOS, HFS) and (macOS, FAT32) compare.
-> +#
-> +# It is rather noisy, so it is disabled by default.
-> +#
-> +if test "$unicode_debug" = "true"
-> +then
-> +	if test_have_prereq UNICODE_COMPOSITION_SENSITIVE
-> +	then
-> +		echo NFC and NFD are distinct on this OS/filesystem.
-> +	else
-> +		echo NFC and NFD are aliases on this OS/filesystem.
-> +	fi
-> +
-> +	if test_have_prereq UNICODE_NFC_PRESERVED
-> +	then
-> +		echo NFC maintains original spelling.
-> +	else
-> +		echo NFC is modified.
-> +	fi
-> +
-> +	if test_have_prereq UNICODE_NFD_PRESERVED
-> +	then
-> +		echo NFD maintains original spelling.
-> +	else
-> +		echo NFD is modified.
-> +	fi
-> +
-> +	if test_have_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE
-> +	then
-> +		echo DOUBLE NFC and NFD are distinct on this OS/filesystem.
-> +	else
-> +		echo DOUBLE NFC and NFD are aliases on this OS/filesystem.
-> +	fi
-> +
-> +	if test_have_prereq UNICODE_DOUBLE_NFC_PRESERVED
-> +	then
-> +		echo Double NFC maintains original spelling.
-> +	else
-> +		echo Double NFC is modified.
-> +	fi
-> +
-> +	if test_have_prereq UNICODE_DOUBLE_NFD_PRESERVED
-> +	then
-> +		echo Double NFD maintains original spelling.
-> +	else
-> +		echo Double NFD is modified.
-> +	fi
-> +fi
+I took a look at this and it definitely performs better, although in
+this case the overall output is ~3k lines.
 
-In general, this test is written from Mac OS perspective, but since we have
-Git users also from Linux, Windows, and other OSes, I'd like to see from these
-other perspective.
+I'd be curious to see how it performs on some of the cases discussed in
+earlier threads of >~50k lines, although it looks like in this case that
+would require failures to be really widespread in the test suite.
 
--- 
-An old man doll... just what I always wanted! - Clara
+I just looked at this briefly, but looking at the branch I see you
+removed the "checking known breakage of[...]" etc. from the non-GitHub
+markdown output, I didn't spot how that was related/needed.
+
+>> Johannes Schindelin (9):
+>>   ci: fix code style
+>>   ci/run-build-and-tests: take a more high-level view
+>>   ci: make it easier to find failed tests' logs in the GitHub workflow
+>>   ci/run-build-and-tests: add some structure to the GitHub workflow
+>>     output
+>>   tests: refactor --write-junit-xml code
+>>   test(junit): avoid line feeds in XML attributes
+>>   ci: optionally mark up output in the GitHub workflow
+>>   ci: use `--github-workflow-markup` in the GitHub workflow
+>>   ci: call `finalize_test_case_output` a little later
+>> 
+>
+> The organization of these commits makes the series a bit confusing to read,
+> mainly due to the JUnit changes in the middle. Patches 5-6 don't appear to
+> be dependent on patches 1-4, so they could be moved to the beginning (after
+> patch 1). With that change, I think this series would flow more smoothly:
+> "Cleanup/non-functional change" -> "JUnit XML improvements" -> "Log UX
+> improvements".
+
+Have you had a change to look at the approach my suggestion of an
+alternate approach to the early part of this series takes?:
+https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com/
+
+I.e. to not build up ci/lib.sh to know to group the "build" etc. within
+the "run-build-and-test" step, but instead just to pull those to the
+top-level by running separate build & test steps.
+
