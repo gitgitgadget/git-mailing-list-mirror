@@ -2,87 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD1AC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE16C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbiCYT14 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:27:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58784 "EHLO
+        id S229559AbiCYT2H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:28:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbiCYT1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:27:44 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A123418C0F0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54B2319A2D1;
-        Fri, 25 Mar 2022 14:22:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tMiH8Zdsk8h2p1yEV7g/st+v2fFz+dJANOEDn/
-        ImHxY=; b=Q/0u2BfKKigF+Fs9i3Buu8LU63loTrVdC3ghb9djiFvk9mCdQgr0VS
-        fT3I9YIEavrPlN6nDws/xlXUbXPAZ3WCnVgGQTDY557+xXTdMLrxf/gue3PX+RSQ
-        Yfus8uvG9fOUmGUi/aocL9+WbgVjW1lfebttxWbHtbTfa3i+ApdYE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AE7919A2D0;
-        Fri, 25 Mar 2022 14:22:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AAF7C19A2CF;
-        Fri, 25 Mar 2022 14:22:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com
-Subject: Re: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
-        <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
-        <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
-        <xmqqmthearlz.fsf@gitster.g>
-        <3fab1246-1451-597c-4359-c01f9675e3f1@github.com>
-        <Yj39lEzd/9AwQJaP@nand.local>
-Date:   Fri, 25 Mar 2022 11:22:53 -0700
-In-Reply-To: <Yj39lEzd/9AwQJaP@nand.local> (Taylor Blau's message of "Fri, 25
-        Mar 2022 13:36:20 -0400")
-Message-ID: <xmqq7d8hc2o2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229722AbiCYT1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:27:47 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2093A1E7A43
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:12 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id j83so9143925oih.6
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nWTceHPsH4uJAa62aaFOLBKnie/QHCXB5f2giQ5IVYI=;
+        b=QgNgcGoA2oJF9IZ/vAig7S45v/yePe3D91Vcb3+79z9N+8x967Cetj/qMlkGY5UN2b
+         kXwcdyFz0zMtwdCMg0C3JdV1FrUVah9NpiG+Ykv31TpS9XPMRP4g3oSOERO5H06VOBCp
+         Zemr8PUWACGHy9C1mxncYwaK9lo7J3nUn8MPYH9lI+j/EzZsubcEgACbno1XLVmoqLLL
+         eTZRc7eNVf4V1UnkeKA5nf9oeh/8/tnZ9IIE4kvXb+7M9uMrMrBnAkFpvUsUO/er3uTY
+         OHTKaBW8gah8w2S+RGRwN30xwWpqS5BnLjO0JYcNnGOKESQItoRdJ/Ib4ao3PpW6NfME
+         MDdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nWTceHPsH4uJAa62aaFOLBKnie/QHCXB5f2giQ5IVYI=;
+        b=tiyQzh80F7VN+kBlMlM9uxTZC8YziQmHI3L7dX8usg//GdLXpARTkk7CSYjRE/O5ZF
+         OLNJauh6jkNlAphCUMmJyva0t4jeDRxk3MjKCI/etPaeGqkq+Z/OwdtiZy3GX/PfmBPM
+         UhxXskOf4ngDm7YSFGvIkmt3kUOZSG7k7wr6p+FjOX6iQWszYasLz1swpCDE8OIWasGf
+         nAcXQy3Jba0S2Au1CYLAKOh1V7nI0CzzN7xCuiW0iGM95VMMR7IfFXLROgwy3LKjy/az
+         Cr+kGLg7LTkzUXMS49xewu+gHhyeupxP9dL8FL2jWAUpaWeRjckE3U44sD5May/FqsUt
+         3Sxw==
+X-Gm-Message-State: AOAM5329xlABBHnfz6KiCECSQ1vD8xVDHs1KYp2chQg37/Jeqb9wD1wp
+        f8hCPulR12FjbmZeatS0vZZL
+X-Google-Smtp-Source: ABdhPJwBp+sHa962NBmZdwSnxYdz04Uq5+CMnEh3Xd8G0gZ11YOeSLn/BJxucZp9We3MSocVfLgEWQ==
+X-Received: by 2002:a05:6808:4d2:b0:2ee:f75b:41d9 with SMTP id a18-20020a05680804d200b002eef75b41d9mr5987592oie.20.1648234871422;
+        Fri, 25 Mar 2022 12:01:11 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id j4-20020a9d7384000000b005b23499b66dsm3028921otk.23.2022.03.25.12.01.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 12:01:11 -0700 (PDT)
+Message-ID: <c1f255d7-6637-b6ac-0a64-1f64404a6f6c@github.com>
+Date:   Fri, 25 Mar 2022 15:01:10 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 96BC74DA-AC68-11EC-8087-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: contrib/vscode/: debugging with vscode and gdb
+Content-Language: en-US
+To:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        Jonathan Bressat <git.jonathan.bressat@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Cogoni Guillaume <cogoni.guillaume@gmail.com>
+References: <CANteD_wDSRmwLQiYV1x133WEtVaRK__c584E3CbXN1tPOquitg@mail.gmail.com>
+ <2a7eecb4a0b247ef8f855f1c4fb5d510@SAMBXP02.univ-lyon1.fr>
+ <7a522ccc-0a45-47fa-509c-a7a8b159041d@univ-lyon1.fr>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <7a522ccc-0a45-47fa-509c-a7a8b159041d@univ-lyon1.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 3/25/2022 2:27 PM, Matthieu Moy wrote:
+> On 3/25/22 14:19, Derrick Stolee wrote:
+> 
+>> Jonathan and Guillame reported that flipping this setting to "false"
+>> allows the VS Code debugger to work with Git. I verified that the
+>> debugger did not work by default but now does with this change.
+> 
+> FYI, I got the same problem, and I can reproduce the issue on a hello world program, so "externalConsole": true, is broken at least for me regardless of the Git codebase.
+> 
+> I couldn't understand what exactly the option was supposed to do. If I understand correctly, it should launch another window to show the git program output, but I don't know which window actually (xterm? x-terminal-emulator? a terminal program that isn't installed on my system?).
+> 
+>>   contrib/vscode/init.sh  |  2 +-
+>>   t/test-lib-functions.sh | 34 ----------------------------------
+> 
+> I guess the test-lib-functions.sh part is a leftover from another work?
 
-> On Fri, Mar 25, 2022 at 01:23:27PM -0400, Derrick Stolee wrote:
->> > Since we've made sure "before" is a one-liner earlier, we could just
->> > say
->>
->> > 		test_cmp before kept &&
->> >
->> > instead, no?
->>
->> 'before' contains a .idx name and 'kept' contains a .keep name,
->> so this direct comparison does not work. We could do that
->> additional check like this:
->>
->> 	kept_name=$(cat kept) &&
->> 	echo ${kept_name%.keep}.idx >kept-idx &&
->> 	test_cmp before kept-idx &&
->
-> I think keeping this kind of post-condition check pretty minimal is
-> favorable, since this is functionality of `git repack` (i.e., that `-a`
-> leaves you with one kept) that is already tested thoroughly elsewhere.
+Whoops! Yes I was in the wrong worktree.
 
-It is nice in principle, but for this particular script, whose
-helper function's implementation relies on these "assumptions" to
-work correctly (e.g. imagine what happens when 'before' file had 0
-or 2 lines in it and you called the get_sorted_objects_from_packs
-helper), we should be more defensive, and that is where all my
-suggestions in the thread come from.
+>> -            "externalConsole": true,
+>> +            "externalConsole": false,
+> I'd actually remove the line completely, to mean "let VSCode decide what to do", i.e. either VSCode's default, or the user's configuration ("launch" section in settings.json, see e.g. https://code.visualstudio.com/docs/getstarted/settings ). If some user has a non-broken externalConsole: true VSCode and likes this behavior, then the best place to configure it is in a user-wide config file IHMO.
+
+I confirmed that deleting the line works just fine.
+
+Here's a better patch without the bogus extra changes.
+
+--- >8 ---
+
+From 8d8ac565a9c6631a509f301e7719692bd781f8d2 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Fri, 25 Mar 2022 09:07:11 -0400
+Subject: [PATCH] contrib/vscode: fix interaction with UI debugger
+
+The contrib/vscode/init.sh script helps Git developers using Visual
+Studio Code to hook up the proper settings to work on Git using the UI
+features of that editor environment. This should include the debugger
+integration, but that is currently broken.
+
+One thing this script does is create a .vscode/launch.json file, which
+provides the information for how VS Code should launch the built
+executable. This defaults to the Git executable at the root of the
+repository (with no arguments). Among the initial settings, the
+"externalConsole" setting is set to "true". This has been the case since
+the script was created in 54c06c6013 (contrib: add a script to
+initialize VS Code configuration, 2018-07-30).
+
+Jonathan and Guillame reported that flipping this setting to "false"
+allows the VS Code debugger to work with Git. Matthieu pointed out that
+this is the default, so we can leave it out of the file completely and
+let a user modify that themselves if they want. I validated that both
+the "false" setting and removing the line both work.
+
+The VS Code reference [1] mentions that this setting is only used when
+debugging, so should not affect the "Run Without Debugging" feature.
+Other than making the UI debugger work, this will also change the Git
+output to appear in the "Debug Console" tab instead of a new window.
+
+[1] https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+In cases such as using the Remote SSH capability, this setting is
+necessary to have any success executing Git via the "Run" menu, since
+the external console is not visible at all from the VS Code window.
+
+Reported-by: Jonathan Bressat <git.jonathan.bressat@gmail.com>
+Reported-by: Cogoni Guillaume <cogoni.guillaume@gmail.com>
+Helped-by: Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ contrib/vscode/init.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+index 27de94994b5..f139fd86444 100755
+--- a/contrib/vscode/init.sh
++++ b/contrib/vscode/init.sh
+@@ -271,7 +271,6 @@ cat >.vscode/launch.json.new <<EOF ||
+             "stopAtEntry": false,
+             "cwd": "\${workspaceFolder}",
+             "environment": [],
+-            "externalConsole": true,
+             "MIMode": "gdb",
+             "miDebuggerPath": "$GDBPATH",
+             "setupCommands": [
+-- 
+2.35.1.138.gfc5de29e9e6
+
+
