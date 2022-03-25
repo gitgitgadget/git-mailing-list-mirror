@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD14C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CC66C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230209AbiCYTg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:36:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50576 "EHLO
+        id S230369AbiCYTge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:36:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbiCYTgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:36:18 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C04BF20289A
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:36 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so9535265wmb.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:36 -0700 (PDT)
+        with ESMTP id S230204AbiCYTgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:36:19 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B87B12E5192
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:38 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id o10so17237390ejd.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ka7Tma3fmCJVOY+1cIKCT7sIzxHEuqQZCYWPVUF4A1Y=;
-        b=faPSKxO6D7VOvv1eGFkMbVmI6eJIyecOqNhsYDFsKnfjVRwZFsBDLLAwTx0upOqjLr
-         NuUWbyvEcPcV2e7VWkBZ0AidyS5WgJVqLu2aKH6kKCunJcD1aR6EjdV3F8OvGXldRDJO
-         DL+hlC6/COwQnGTEL+I5zp1lz5EKOdOrR3NUmyDUAPe7ZAMf+i8fUBXmC4T1mD1HhfTB
-         /H2k7RrFG7NscRzbe8q1A+vzeJiaF5HdqOB25Wto8/Bc2+iHT7dYxS1L+qQ724+SqBtL
-         30LJF0oR1vmX1aeVoBF4UJIpWE+odYLmW1lc+FmxyMmT8eFC2MOhIp38DOvDin/OjG98
-         lIZw==
+        bh=vGcgbWXXeFd3fJYSFq7SEjDCou+YIUaGDncV22hDmNQ=;
+        b=mEjp+0R1/LOzlNt+RjuUj1FW1tAaHzEWIDYYV2Lea1qzQhiLYuXoSoDYYuKztWpwqU
+         PvDFkoByq33DmseL3Zh2VRn/Xro0/TBr2RQXArVKnUGjMgyZq8Qco7vTfBMaLrme4Nd8
+         Sa6C66+wdIwdfKa7WjGWusHg+X/BtzXdOuDLZpvfw9EYDAI0hwYACXpnKv9rqv4v12Ej
+         SsCC9qu5yj3rglX7Buw+1pEsaFLFYQ/89W3kSxeh9WFMoetYeea+c9FvKFQYS7O/0kTY
+         h+oq4vjb955hn5gi8FGnz4UKdSIcPRBfyKWF7b3CfctjViLaEL4u7l38LBQYCXtG1PAu
+         S20w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ka7Tma3fmCJVOY+1cIKCT7sIzxHEuqQZCYWPVUF4A1Y=;
-        b=TLmmAOF7UkR2VzXWMethQ5Vze0rrYRVlUmg11mSQK0f8R9AgQEoYHd7bCoHEqTKbi2
-         OO96P5FGbl+lA/MyNLi4nwtB7Uvic/lbhvlG8AqPv6oedHHIzklp8f075i4GsoiAFQYa
-         yd7V5TaiMT2vSmhmeo0ugMrZSgdA4qt9WLF81V6cjk6D51LpF7gOEjaHDmXvX9QxSels
-         wYrg1Ut8RYNOPdqw4a4+js7HY8BCp0//GYAckjiW9/kUaTb1HIDSCbwIVQw4nyjnAfvb
-         okjF4yJ9b4uqQHY9pekG61flnQ7TxvoW5H8YIZljKRR0BqBLOjvjIQ4Sq8WWz1y6wKpI
-         hFTA==
-X-Gm-Message-State: AOAM532K4LWGgeNXgZymp8BeAcvGt0r6bQrbNFSmeFVVyiR/pc1lj/ru
-        TBhJKHeTRBL9v0KNPutoNIoZBJpxnBiJbw==
-X-Google-Smtp-Source: ABdhPJyTO5iPhvEFZBzwsChQMLtsRFacl8usotnkjHHgTUfEcdSrJW6ec0Ujv3ZQGx2NUOGt+nBHnA==
-X-Received: by 2002:a05:600c:40f:b0:38c:be5c:9037 with SMTP id q15-20020a05600c040f00b0038cbe5c9037mr11497587wmb.44.1648233509292;
-        Fri, 25 Mar 2022 11:38:29 -0700 (PDT)
+        bh=vGcgbWXXeFd3fJYSFq7SEjDCou+YIUaGDncV22hDmNQ=;
+        b=Z9O6KWi5wtjcZfMqYeOiCirV0sABeVp+CmeoJGAHbLGkVw40TBxB2HHVRjgC1NXHeH
+         dkv78vujvfZw5JbEIL0TjWRae5frdxil44NDK5iYwpjH2rJjglb1cQQ7pXe7z08M++WF
+         Qdsdld4ucV0VxOhG+FfCE4wW1eT0g8lleYMzZCLPHESjGCxZyuZIUni9yEB4FVlSwyuM
+         hjbJs+DLuRV+M+gIHwRLtd6g79i9RAHi8M6akvj3pLNqhGqRiixL/KFNtdqljDoj+Sq+
+         jkrlreGSEb/56PGoUCyJkfBOdk6ykQNO+Fsl8rhIQDTrtllvNYDz3hLNC8lIE2cK3aoo
+         13oA==
+X-Gm-Message-State: AOAM532Rh4fTmHbMUnmhDOkGBr3L+GOe0U213Dq20KtezOVenypYPRX0
+        7jrrhlxKT5BP4XXUqimKAH+V+45a5EO8cQ==
+X-Google-Smtp-Source: ABdhPJwJDKpQQc4xenBI6ijByDAQXN+hwje2ASzJS5gixilG+EolV4vR6PDgO/F/5rO5iUk07WrNQw==
+X-Received: by 2002:adf:f4ce:0:b0:203:fb72:8709 with SMTP id h14-20020adff4ce000000b00203fb728709mr10642284wrp.28.1648233512330;
+        Fri, 25 Mar 2022 11:38:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.28
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:28 -0700 (PDT)
+        Fri, 25 Mar 2022 11:38:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 11/25] CI: export variables via a wrapper
-Date:   Fri, 25 Mar 2022 19:38:02 +0100
-Message-Id: <patch-v2-11.25-e9c7ba492e8-20220325T182534Z-avarab@gmail.com>
+Subject: [PATCH v2 14/25] CI: invoke "make artifacts-tar" directly in windows-build
+Date:   Fri, 25 Mar 2022 19:38:05 +0100
+Message-Id: <patch-v2-14.25-b1b5b083389-20220325T182534Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
 In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
 References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
@@ -75,177 +75,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add and use a "setenv" wrapper to export the variables set in
-ci/lib.sh.
+Change the windows-build job to invoke the "make artifacts-tar" step
+directly, instead of calling a "ci/make-test-artifacts.sh" script.
 
-For now this merely adds debugging information about what variables
-are set, but in a subsequent commit we'll expand this to set variables
-in $GITHUB_ENV instead of the environment, and thus carry variable
-settings between steps in a job.
+The script was needed because "ci/lib.sh" would set up various
+environment variables for us, but now we can instead use the
+"ci/lib.sh" in its script mode.
 
-We'll also eventually be interested in what type of variable we're
-setting, and when it needs to be used, because we'll prominently
-expose what variables we set in what CI "step", so having only the
-ones we actually use will improve readability.
+The "mkdir -p" added in b819f1d2cec (ci: parallelize testing on
+Windows, 2019-01-29) isn't needed, the same commit added that "mkdir
+-p" to the "artifacts-tar" rule itself, so we can have "make" create
+the directory for us.
 
-To that end call the "setenv" function with optional "--build",
-"--test" and "--all" parameters to indicate whether they're needed for
-building, testing or both.
-
-We currently ignore this parameter, but will make use of it in a
-subsequent commit. Adding it here reduces the needless churn, as we
-won't need to change all these lines again for that subsequent change.
+This also has the benefit of making the "build" step less chatty,
+since it won't start with the verbose "set -x" output, that's now
+contained in the "ci/lib.sh" step.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh                 | 39 ++++++++++++++++++++++++++++-----------
- ci/run-build-and-tests.sh | 34 +++++++++++++++++-----------------
- 2 files changed, 45 insertions(+), 28 deletions(-)
+ .github/workflows/main.yml |  5 ++++-
+ ci/make-test-artifacts.sh  | 10 ----------
+ 2 files changed, 4 insertions(+), 11 deletions(-)
+ delete mode 100755 ci/make-test-artifacts.sh
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 31fe3a476a9..1a1fa0e4bb2 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -13,6 +13,23 @@ then
- 	exit 1
- fi
- 
-+# Helper functions
-+setenv () {
-+	varmode=
-+	case "$1" in
-+	--*)
-+		varmode=$1
-+		shift
-+		;;
-+	esac
-+
-+	key=$1
-+	val=$2
-+	shift 2
-+
-+	eval "export $key=\"$val\""
-+}
-+
- check_unignored_build_artifacts ()
- {
- 	! git ls-files --other --exclude-standard --error-unmatch \
-@@ -24,7 +41,7 @@ check_unignored_build_artifacts ()
- }
- 
- # GitHub Action doesn't set TERM, which is required by tput
--export TERM=${TERM:-dumb}
-+setenv TERM ${TERM:-dumb}
- 
- # Clear MAKEFLAGS that may come from the outside world.
- MAKEFLAGS=
-@@ -34,23 +51,23 @@ then
- 	CI_TYPE=github-actions
- 	CC="${CC:-gcc}"
- 
--	export GIT_PROVE_OPTS="--timer --jobs 10"
-+	setenv --test GIT_PROVE_OPTS "--timer --jobs 10"
- 	GIT_TEST_OPTS="--verbose-log -x"
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- 
--	export GIT_TEST_OPTS
-+	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
- 	exit 1
- fi
- 
--export DEVELOPER=1
--export DEFAULT_TEST_TARGET=prove
--export GIT_TEST_CLONE_2GB=true
--export SKIP_DASHED_BUILT_INS=YesPlease
-+setenv --build DEVELOPER 1
-+setenv --test DEFAULT_TEST_TARGET prove
-+setenv --test GIT_TEST_CLONE_2GB true
-+setenv --build SKIP_DASHED_BUILT_INS YesPlease
- 
- case "$runs_on_pool" in
- ubuntu-latest)
-@@ -66,7 +83,7 @@ ubuntu-latest)
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
- 	fi
- 
--	export GIT_TEST_HTTPD=true
-+	setenv --test GIT_TEST_HTTPD true
- 	;;
- macos-latest)
- 	if [ "$jobname" = osx-gcc ]
-@@ -89,9 +106,9 @@ linux-musl)
- 	MAKEFLAGS="$MAKEFLAGS GIT_TEST_UTF8_LOCALE=C.UTF-8"
- 	;;
- linux-leaks)
--	export SANITIZE=leak
--	export GIT_TEST_PASSING_SANITIZE_LEAK=true
-+	setenv --build SANITIZE leak
-+	setenv --test GIT_TEST_PASSING_SANITIZE_LEAK true
- 	;;
- esac
- 
--export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-+setenv --all MAKEFLAGS "$MAKEFLAGS CC=${CC:-cc}"
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index e5a21985b44..35d45a9373e 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -9,33 +9,33 @@ export MAKE_TARGETS="all test"
- 
- case "$jobname" in
- linux-gcc)
--	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME main
- 	;;
- linux-TEST-vars)
--	export GIT_TEST_SPLIT_INDEX=yes
--	export GIT_TEST_MERGE_ALGORITHM=recursive
--	export GIT_TEST_FULL_IN_PACK_ARRAY=true
--	export GIT_TEST_OE_SIZE=10
--	export GIT_TEST_OE_DELTA_SIZE=5
--	export GIT_TEST_COMMIT_GRAPH=1
--	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
--	export GIT_TEST_MULTI_PACK_INDEX=1
--	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
--	export GIT_TEST_ADD_I_USE_BUILTIN=1
--	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
--	export GIT_TEST_WRITE_REV_INDEX=1
--	export GIT_TEST_CHECKOUT_WORKERS=2
-+	setenv --test GIT_TEST_SPLIT_INDEX yes
-+	setenv --test GIT_TEST_MERGE_ALGORITHM recursive
-+	setenv --test GIT_TEST_FULL_IN_PACK_ARRAY true
-+	setenv --test GIT_TEST_OE_SIZE 10
-+	setenv --test GIT_TEST_OE_DELTA_SIZE 5
-+	setenv --test GIT_TEST_COMMIT_GRAPH 1
-+	setenv --test GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
-+	setenv --test GIT_TEST_MULTI_PACK_INDEX 1
-+	setenv --test GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP 1
-+	setenv --test GIT_TEST_ADD_I_USE_BUILTIN 1
-+	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME master
-+	setenv --test GIT_TEST_WRITE_REV_INDEX 1
-+	setenv --test GIT_TEST_CHECKOUT_WORKERS 2
- 	;;
- linux-clang)
--	export GIT_TEST_DEFAULT_HASH=sha1
-+	setenv --test GIT_TEST_DEFAULT_HASH sha1
- 	;;
- linux-sha256)
--	export GIT_TEST_DEFAULT_HASH=sha256
-+	setenv --test GIT_TEST_DEFAULT_HASH sha256
- 	;;
- pedantic)
- 	# Don't run the tests; we only care about whether Git can be
- 	# built.
--	export DEVOPTS=pedantic
-+	setenv --build DEVOPTS pedantic
- 	export MAKE_TARGETS=all
- 	;;
- esac
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 05c5771e7f6..2c23a19eac2 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -87,12 +87,15 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
++    - run: ci/lib.sh
++      shell: bash
+     - name: build
+       shell: bash
+       env:
+         HOME: ${{runner.workspace}}
+         NO_PERL: 1
+-      run: . /etc/profile && ci/make-test-artifacts.sh artifacts
++      run: . /etc/profile && make artifacts-tar ARTIFACTS_DIRECTORY=artifacts
++      if: success()
+     - run: ci/check-unignored-build-artifacts.sh
+       if: success()
+       shell: bash
+diff --git a/ci/make-test-artifacts.sh b/ci/make-test-artifacts.sh
+deleted file mode 100755
+index 45298562982..00000000000
+--- a/ci/make-test-artifacts.sh
++++ /dev/null
+@@ -1,10 +0,0 @@
+-#!/bin/sh
+-#
+-# Build Git and store artifacts for testing
+-#
+-
+-mkdir -p "$1" # in case ci/lib.sh decides to quit early
+-
+-. ${0%/*}/lib.sh
+-
+-make artifacts-tar ARTIFACTS_DIRECTORY="$1"
 -- 
 2.35.1.1517.g20a06c426a7
 
