@@ -2,155 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83459C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 13:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90213C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 14:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358745AbiCYN5D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 09:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52674 "EHLO
+        id S1353597AbiCYOFN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 10:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358681AbiCYN45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 09:56:57 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97B4D372A
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:55:23 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id v75so8245552oie.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:55:23 -0700 (PDT)
+        with ESMTP id S1359165AbiCYOFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 10:05:10 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFC5469CE3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 07:03:35 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id q129so8255653oif.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 07:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9FW57SOkmOISUwfnpd+W4pW7DAV+9TtvIJHRJav4cUw=;
-        b=aRWmsICgArAq33RqpqAbsd9/ngldvpYSvm+pYk1koTgyD+xxzgHt+waoi/qDaF/1Yc
-         f18xoV8ka0v9e12YNnT0z+szJ/KP1J9V5ccq0oC5hDAp4CjzSU5E7fHbJE/WUtnmFo/b
-         m4Q7Kw8NNn4ntnT9kB1AJHjMU9b4BrHLWVMpvVmz8DHD9j+E67XhpMRWIzd+1220fWJ/
-         62wepFV9nVa3jitfFaPYT6gBouap2L7S29+1jiNxQftoV2e7CZ3d3aa0XYAFSRo3Pf6S
-         EfrefFgxDm2QriG0ECsiqc5PPt4/LEaGyAzwHFD8ZmZgIUmkygXW/3XfY5Mnc8NXyDq2
-         FoIg==
+        bh=Btyx+5yq1MAKawSdRkwLEb+DCwq572b7V4E11lcoOaI=;
+        b=ThOIG8EgEZICjpkxTaEYU5oRbA2nieit1l617waOCSdU3CGUz7KREUr/v5M1dsuPBW
+         UzOREMgOztsJ1bQ1TPoc7L6f1ORyT7EfqvI9s6loYxXVLfFTNzl558zQTiTiJixisJH0
+         5ah0k4KDDPfBmTzwA8MazzLd4IBVQ1TKUCHA/BNAZIYotKM8/9mfm//ggpQLyTY1SnqM
+         TReud+2g+lqZaj4whIqdV+6x5GOTBcX8gWEM5KCtxJsVFxfyDH/WnEE81TLc+uTdw6nK
+         iZ1m9FsfT2eU/81cqun41sHa+IAMY5qUd6/dn27Pe6j0FKRxMBPssO3GFXdjuBwCEapq
+         F+Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=9FW57SOkmOISUwfnpd+W4pW7DAV+9TtvIJHRJav4cUw=;
-        b=XFD4arZEQcCcecRzN6JVWaR07Yx7uXa5WI3LJASwEyT2b1ikYwi7MYCPpBV3bEXfiP
-         577YVFrpF7PTIZ4FoXAyT2+ESA9uq6Ivlu5SDrLyseTDUuebaLkOvaRhts1gi5hEaWhU
-         0777W8oscDHD4gjo4iZoUerT/aIOsMtHn5lNHSBBsoX8pcPxN1VkN0veeYDgmHyzRoOi
-         y11u7U10ahHtuAwq+uicqerEkhiP83ZYbLEH9DInbn9w3Hc3/inAUrkLh4MWdLopOy+P
-         nRi3wanqxspsO5Omv7m1jhW+q1FHFv+D+gY7+DNDcrfTVoLGqim5DvhkbPkU57+8fTdv
-         l6tg==
-X-Gm-Message-State: AOAM533WdkQR7xLgBy2p+LC3EGdaOPNH86mmCT0ftBxEMNijv60Bju26
-        po44hPTSJUxzlrsApyUIGii3
-X-Google-Smtp-Source: ABdhPJxIDdqBwhZTzHPuzRc/dDOgR4rExt3UUZO2/kwM/1TPFpxPndbFFhVjYlJHYXRiweFNeJLQnw==
-X-Received: by 2002:a05:6808:2384:b0:2ec:d134:1e8b with SMTP id bp4-20020a056808238400b002ecd1341e8bmr10020966oib.197.1648216522974;
-        Fri, 25 Mar 2022 06:55:22 -0700 (PDT)
+        bh=Btyx+5yq1MAKawSdRkwLEb+DCwq572b7V4E11lcoOaI=;
+        b=TM9H0CCgnz3T9ohlpaRjlQgRopvRvQu9moC5UIvumBxjBUTSaEAF0mVvilvh3ngCUu
+         6oL8vC+DP2cnQ3k1GpuxrG4eAFSeR+XxabY2oZge4P0jsFJhlUJYoeE/uUgoKv5+B/hF
+         mHuL2v+FeV94ZKQRTkjQ3YJ0BjrY+bR+poZQ6Pbf0tXYH0O0exkr5nZ2V0pu/ApDHseo
+         kjon1cnL6knSEo3M/TDke1axMSxdA0K0bhRcjPF6/RVZh+4E+EYcblehIk2Yrr02CIgx
+         CMv/p7LUahJOBfGp949gKdHVZ14Qz1D2FZlw6JGMaEnsA1evOcZ++hpjE4PlHVegIoEs
+         Rb2g==
+X-Gm-Message-State: AOAM5321DrvNeve9qG5qbBYeSsRt3/Bbv4XcSvVa/8F7DJqo5kgKQUOH
+        ShsWTSp15vQMXLNE4kAgvwr6
+X-Google-Smtp-Source: ABdhPJwl29v33Pdf2RF2FmQzcO9sBpsaDNtf9h6JKIeyLDnF4oXKKPwHG0Qstf5fxPc4n9w5QKTUUA==
+X-Received: by 2002:a05:6808:20a5:b0:2da:7ea7:7f68 with SMTP id s37-20020a05680820a500b002da7ea77f68mr5314079oiw.260.1648217014756;
+        Fri, 25 Mar 2022 07:03:34 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t7-20020a9d5907000000b005afa4058a4csm2630969oth.1.2022.03.25.06.55.22
+        by smtp.gmail.com with ESMTPSA id v24-20020a9d5a18000000b005ad458facbdsm2689426oth.27.2022.03.25.07.03.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 06:55:22 -0700 (PDT)
-Message-ID: <7ea0f7e4-180d-307d-2e2e-d33c3343317c@github.com>
-Date:   Fri, 25 Mar 2022 09:55:21 -0400
+        Fri, 25 Mar 2022 07:03:34 -0700 (PDT)
+Message-ID: <fc1db75c-868c-08c6-7087-b70460653460@github.com>
+Date:   Fri, 25 Mar 2022 10:03:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
+Subject: Re: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
 Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>,
+To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        chakrabortyabhradeep79@gmail.com
+Cc:     git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
+        Taylor Blau <me@ttaylorr.com>
 References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
  <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
- <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
- <Yjy/UIydKw7v+4+7@nand.local>
+ <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
+ <xmqqtubnf568.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Yjy/UIydKw7v+4+7@nand.local>
+In-Reply-To: <xmqqtubnf568.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/24/2022 2:58 PM, Taylor Blau wrote:
-> On Thu, Mar 24, 2022 at 06:34:56PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <derrickstolee@github.com>
+On 3/24/2022 4:48 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
->> index 770d1432046..73452e23896 100755
->> --- a/t/t7700-repack.sh
->> +++ b/t/t7700-repack.sh
->> @@ -369,10 +369,56 @@ test_expect_success '--write-midx with preferred bitmap tips' '
->>  	)
->>  '
->>
->> +get_sorted_objects_from_packs () {
->> +	git show-index <$(cat) >raw &&
+>> All existing tests continue to pass with this change. There was one
+>> instance from t7700-repack.sh that was taking advantage of this
+>> flexibility, but it was removed in the previous change.
 > 
-> It seems a little odd to me to pass the name of a single file as input
-> to get_sorted_objects_from_packs over stdin. I probably would have
-> expected something like `git show-index <"$1" >raw && ...` instead.
+> Of course all existing tests continue to pass, as we no longer have
+> any user of test_subcommand_inexact after the previous step ;-).
 
-Based on the way we are creating a file whose contents is the name
-of the .idx file, we would at least use '$(cat "$1")'. I kind of like
-the symmetry of the input/output redirection when using the helper, but
-I can easily change this.
+Yeah, I definitely should have checked to see if there were other
+uses of this. I thought there was, but I was mistaken.
 
-> We may also want to s/packs/pack, since this function only will handle
-> one index at a time.
-
-Yes.
-
->> +	cut -d" " -f2 raw | sort
+> Among
 > 
-> Having the sort in there is my fault, but after reading this more
-> carefully it's definitely unnecessary, since show-index will give us
-> the results in lexical order by object name already.
-
-Cool. Will drop.
-
->> +}
->> +
->>  test_expect_success '--write-midx -b packs non-kept objects' '
->> -	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
->> -		git repack --write-midx -a -b &&
->> -	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
->> +	git init repo &&
->> +	test_when_finished "rm -fr repo" &&
->> +	(
->> +		cd repo &&
->> +
->> +		# Create a kept pack-file
->> +		test_commit base &&
->> +		git repack -ad &&
->> +		find $objdir/pack -name "*.idx" >before &&
+>  (1) doing nothing,
+>  (2) removing, and
+>  (3) clarifying the implementation,
 > 
-> I thought that here it might be easier to say:
-> 
->     before="$(find $objdir/pack -name "*.idx")"
-> 
->> +		>$objdir/pack/$(basename $(cat before) .idx).keep &&
-> 
-> ...and then replace "$(cat before)" with "$before", along with the
-> other uses of the before file below. But it gets a little funny when
-> you want to discover which is the new pack, where it is more natural to
-> dump the output of comm into a file.
+> my preference would be 2 > 1 > 3.  If we add
 
-For this reason, I'll continue to store the .idx names in files.
-
->> +		# Get object list from the one non-kept pack-file
->> +		comm -13 before after >new-pack &&
+I agree that (2) is the best option here.
+ 
+>  (4) clarify the implementation and document what kind of inexactness we
+>      tolerate with an updated comment"
 > 
-> You could write "new_pack=$(comm -13 before after)", but debugging this
-> test would be difficult if the output of comm there contained more than
-> one line.
->
->> +		get_sorted_objects_from_packs \
->> +			<new-pack \
+> to the mix, that would come before all 3 others, though.
+
+Is there value in fixing the implementation and adding this comment
+if we are to just delete the helper? I suppose that we could prevent
+a future contribution from reintroducing the broken implementation.
+ 
+> Perhaps squash something like this in?
 > 
-> Though we probably want to check that we only get one line anyway here,
-> since get_sorted_objects_from_packs will barf if we had more than one
-> line in file new-pack here, too.
+>  t/test-lib-functions.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git i/t/test-lib-functions.sh w/t/test-lib-functions.sh
+> index 0f439c99d6..6f6afae847 100644
+> --- i/t/test-lib-functions.sh
+> +++ w/t/test-lib-functions.sh
+> @@ -1789,8 +1789,8 @@ test_subcommand () {
+>  }
+>  
+>  # Check that the given command was invoked as part of the
+> -# trace2-format trace on stdin, but without an exact set of
+> -# arguments.
+> +# trace2-format trace on stdin, but only require that the
+> +# initial arguments are given as specified.
 
-Thanks. Easy to add a test_line_count before this check.
+This is an accurate description of what the fixed implementation
+does.
 
+My current feeling is that we should just delete this and refer
+to that deletion if anyone considers needing something like it.
+
+Thanks,
 -Stolee
