@@ -2,123 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A29C433FE
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AD55C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230046AbiCYTbs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51596 "EHLO
+        id S229939AbiCYTbz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230032AbiCYTbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:31:33 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2CC20C1BF
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:22 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id bu29so15008294lfb.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:22 -0700 (PDT)
+        with ESMTP id S230004AbiCYTbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:31:47 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5037F20DB2F
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:34 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id pv16so17245975ejb.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Hni4kvA7GZfcyHzmeDyeZ50b2DxbfF4GyNMXf7yl5g0=;
-        b=LCZVeei/xXfmB9F6dSNnU3HdbfTtr+OBNhbA7mkxGaErp/zYAV9eknpgc0IArH5QMx
-         LoIDULfIfixcI1MPT1rv0Vaz7nVAmabeoQg7fjCVnsnNdQsZnIp3eG6S972k9jC7WIUe
-         J6L9a8gfyOl/cwJSu7FwOmM8ih0XQ7n+3180XBLGHOUDAGHGxZekA9gmd/ZrGfEcAdOJ
-         fczfESlNQ8EtAsM0Fkv1Wzk5Z8xpChSmCMM7gnkrATIgbKIXBxMLvGPvL+1VwepN+36E
-         i6WZpzrkKEn7TPwAnqh5KdvomCwPyRKoHsYpAMA0VQoDwccmubo/rVTYcIcX8AePJx27
-         EIRg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=diJ2kF8fCXK8fuWsFs2qoSTo98Y5oZz+kxAWbs2iN34=;
+        b=pRYQXi2+9XRJ6ar6k5xapqu7x1y7F9D+ZOiuOtG4yNVidyWQsQjuWT6YVwQvD1+mlC
+         GE9VcqmOawBDYslznFGfwt9/hyUoRMi2sTSJH0VTVsaW7WFFDjQwCsks/xiSMXPdbNJW
+         HMaezf2ilxkste4uCAvis2DqkwbdaTFCR/R5DgAwFevJKmVxBPTrW0WagZMfCani7OVB
+         4Vlr4k/uKuiq6LIQNsTNJhPGNr+YLIyAZ+K2nloePUK32KZmudhOF9MN1ecc9D7qLDwO
+         6sqa3PDkDjKPkX7rJBVo2rK3N6Km+LTeOcwZ6f+3+TPTm+wTk9+QgP+0tu8SujYNKBPr
+         uZEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Hni4kvA7GZfcyHzmeDyeZ50b2DxbfF4GyNMXf7yl5g0=;
-        b=307qKhs7TKDzuFl7FzAWiteRRoaaSmv0rrDphzUfEmF4aTR7CorbFo6rehzxI4Nr96
-         4XUyIvoy+1taeyjqxcAc9oREFgJITVqGv6cl/dmyj9no3nQtnygYsj5uAZ/iGwi6DdTG
-         FIvBxnIaAFAGcwcdB94kWrzy7TFY3J+vE4ibnBrNl/ppfVNTjtJCBsOhWvl1PMZCtkfo
-         2yo0MI+37LlXUOWBJ3eLsM70agg5AqBeQbrBcqMD0wEuCHxg0csjv3B18aPFkaEOz94n
-         Ce88bME0V4o9Wi5MZ1xQXPQ3zxwmStFhJfVLI+AwqGhuVxbCSrzaZ4pJE7GwwGwA21+Q
-         cTPA==
-X-Gm-Message-State: AOAM5305UKxKivRlOB2dnQMFYVyP2+sJwXCQAHi6kCThX23utDDpHXsn
-        JD7NsChWx2mbST4NLsyDKxLb1Y4q3dOKlg==
-X-Google-Smtp-Source: ABdhPJxcuxWV9wvfXqTWaNc0e0empaRsf/kEVU3kf6oET/Jd3aUbYfaiRd0d4jDr7AiVC/5+bFAhIQ==
-X-Received: by 2002:adf:eed0:0:b0:203:f2e2:197b with SMTP id a16-20020adfeed0000000b00203f2e2197bmr10817287wrp.604.1648233521410;
-        Fri, 25 Mar 2022 11:38:41 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.40
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=diJ2kF8fCXK8fuWsFs2qoSTo98Y5oZz+kxAWbs2iN34=;
+        b=5HCSlZslVWC9mRD7dabd2hC0OVpPyEnUAlCQi5Q+2IjQPndpb+ObLSDcP6YyiD4mOE
+         69IRWwmu9/xpmlGTVZr0hYgw6Rd8L+YawTwg2E1Vahc05xvc2zillXIV+ELIRo8yOZB8
+         JRKwe40z8GmSdtOKFhQ0WUqtcpxpuxQPcwq7ab3FrMHS/ry3GocomQd4BTDJsOiW071a
+         ray0mxBscQ70WahCmyMzg4gWoDVfdo8E4Z+7GdCmAjkFqKDNvaxmCLnhopVfOzr7savF
+         AKnyBheFoyFQz+HuXKmeYv8HYluaM3T9pbsnwxscIL/VSIkI9vA8d+9KVXQBc2iQQMvF
+         HIPw==
+X-Gm-Message-State: AOAM530IRdEg2HjCD94jt7YECbXfoAdq6qFeyGYcdG20gZRq5nO0Idwa
+        2QizHb/eLG/J7WSnJ6dNjuT/I02+cDU=
+X-Google-Smtp-Source: ABdhPJzCWJSikK/lGO1UYeTf0E1YqrSYdFi3eZkH8kfaHhAyfLa68jRbO/cMgRCB5q5rN+NHascYOg==
+X-Received: by 2002:adf:ba8f:0:b0:1e9:4afb:179b with SMTP id p15-20020adfba8f000000b001e94afb179bmr10366594wrg.57.1648231409296;
+        Fri, 25 Mar 2022 11:03:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f16-20020a05600c155000b0038ced37c182sm1713789wmg.35.2022.03.25.11.03.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:40 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 24/25] CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
-Date:   Fri, 25 Mar 2022 19:38:15 +0100
-Message-Id: <patch-v2-24.25-06bf8d9f61b-20220325T182534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Fri, 25 Mar 2022 11:03:28 -0700 (PDT)
+Message-Id: <53e06b4ae5d0eb1d3c2cb6a61ffd14abc36f6534.1648231393.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:02:56 +0000
+Subject: [PATCH v9 13/30] fsmonitor--daemon: define token-ids
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the setting of "PYTHON_PATH=[...]" to the "$jobname" case
-statement. This partially backs out of my 707d2f2fe86 (CI: use
-"$runs_on_pool", not "$jobname" to select packages & config,
-2021-11-23), now that we have a "osx-{clang,gcc}" anyway for setting
-"$CC" we might as well do away with this part of the "$runs_on_pool"
-case.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Teach fsmonitor--daemon to create token-ids and define the
+overall token naming scheme.
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- ci/lib.sh | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ builtin/fsmonitor--daemon.c | 116 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 115 insertions(+), 1 deletion(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 57c9117a35a..663cbdef9d1 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -99,14 +99,6 @@ ubuntu-latest)
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 1ce00b7c150..1c7c156288d 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -106,6 +106,120 @@ static int do_as_client__status(void)
+ 	}
+ }
  
- 	setenv --test GIT_TEST_HTTPD true
- 	;;
--macos-latest)
--	if [ "$jobname" = osx-gcc ]
--	then
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
--	else
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
--	fi
--	;;
- esac
++/*
++ * Requests to and from a FSMonitor Protocol V2 provider use an opaque
++ * "token" as a virtual timestamp.  Clients can request a summary of all
++ * created/deleted/modified files relative to a token.  In the response,
++ * clients receive a new token for the next (relative) request.
++ *
++ *
++ * Token Format
++ * ============
++ *
++ * The contents of the token are private and provider-specific.
++ *
++ * For the built-in fsmonitor--daemon, we define a token as follows:
++ *
++ *     "builtin" ":" <token_id> ":" <sequence_nr>
++ *
++ * The "builtin" prefix is used as a namespace to avoid conflicts
++ * with other providers (such as Watchman).
++ *
++ * The <token_id> is an arbitrary OPAQUE string, such as a GUID,
++ * UUID, or {timestamp,pid}.  It is used to group all filesystem
++ * events that happened while the daemon was monitoring (and in-sync
++ * with the filesystem).
++ *
++ *     Unlike FSMonitor Protocol V1, it is not defined as a timestamp
++ *     and does not define less-than/greater-than relationships.
++ *     (There are too many race conditions to rely on file system
++ *     event timestamps.)
++ *
++ * The <sequence_nr> is a simple integer incremented whenever the
++ * daemon needs to make its state public.  For example, if 1000 file
++ * system events come in, but no clients have requested the data,
++ * the daemon can continue to accumulate file changes in the same
++ * bin and does not need to advance the sequence number.  However,
++ * as soon as a client does arrive, the daemon needs to start a new
++ * bin and increment the sequence number.
++ *
++ *     The sequence number serves as the boundary between 2 sets
++ *     of bins -- the older ones that the client has already seen
++ *     and the newer ones that it hasn't.
++ *
++ * When a new <token_id> is created, the <sequence_nr> is reset to
++ * zero.
++ *
++ *
++ * About Token Ids
++ * ===============
++ *
++ * A new token_id is created:
++ *
++ * [1] each time the daemon is started.
++ *
++ * [2] any time that the daemon must re-sync with the filesystem
++ *     (such as when the kernel drops or we miss events on a very
++ *     active volume).
++ *
++ * [3] in response to a client "flush" command (for dropped event
++ *     testing).
++ *
++ * When a new token_id is created, the daemon is free to discard all
++ * cached filesystem events associated with any previous token_ids.
++ * Events associated with a non-current token_id will never be sent
++ * to a client.  A token_id change implicitly means that the daemon
++ * has gap in its event history.
++ *
++ * Therefore, clients that present a token with a stale (non-current)
++ * token_id will always be given a trivial response.
++ */
++struct fsmonitor_token_data {
++	struct strbuf token_id;
++	struct fsmonitor_batch *batch_head;
++	struct fsmonitor_batch *batch_tail;
++	uint64_t client_ref_count;
++};
++
++static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
++{
++	static int test_env_value = -1;
++	static uint64_t flush_count = 0;
++	struct fsmonitor_token_data *token;
++
++	CALLOC_ARRAY(token, 1);
++
++	strbuf_init(&token->token_id, 0);
++	token->batch_head = NULL;
++	token->batch_tail = NULL;
++	token->client_ref_count = 0;
++
++	if (test_env_value < 0)
++		test_env_value = git_env_bool("GIT_TEST_FSMONITOR_TOKEN", 0);
++
++	if (!test_env_value) {
++		struct timeval tv;
++		struct tm tm;
++		time_t secs;
++
++		gettimeofday(&tv, NULL);
++		secs = tv.tv_sec;
++		gmtime_r(&secs, &tm);
++
++		strbuf_addf(&token->token_id,
++			    "%"PRIu64".%d.%4d%02d%02dT%02d%02d%02d.%06ldZ",
++			    flush_count++,
++			    getpid(),
++			    tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
++			    tm.tm_hour, tm.tm_min, tm.tm_sec,
++			    (long)tv.tv_usec);
++	} else {
++		strbuf_addf(&token->token_id, "test_%08x", test_env_value++);
++	}
++
++	return token;
++}
++
+ static ipc_server_application_cb handle_client;
  
- case "$jobname" in
-@@ -160,10 +152,12 @@ linux-TEST-vars)
- 	setenv --test GIT_TEST_CHECKOUT_WORKERS 2
- 	;;
- osx-gcc)
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
- 	CC=gcc
- 	CC_PACKAGE=gcc-9
- 	;;
- osx-clang)
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
- 	CC=clang
- 	;;
- linux-clang)
+ static int handle_client(void *data,
+@@ -298,7 +412,7 @@ static int fsmonitor_run_daemon(void)
+ 
+ 	pthread_mutex_init(&state.main_lock, NULL);
+ 	state.error_code = 0;
+-	state.current_token_data = NULL;
++	state.current_token_data = fsmonitor_new_token_data();
+ 
+ 	/* Prepare to (recursively) watch the <worktree-root> directory. */
+ 	strbuf_init(&state.path_worktree_watch, 0);
 -- 
-2.35.1.1517.g20a06c426a7
+gitgitgadget
 
