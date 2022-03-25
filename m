@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DDC8C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 17:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EFCCC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 17:29:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbiCYRae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 13:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56146 "EHLO
+        id S229879AbiCYRag (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 13:30:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238616AbiCYR2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 13:28:46 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC91FD6FC
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:03 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id bi12so16757503ejb.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:03 -0700 (PDT)
+        with ESMTP id S237180AbiCYR2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 13:28:38 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B1FFCBCA
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:02 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so4799418wmb.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kqs7zJbZvXbVRZB14wY492sNVudZQegpH20wNyvylUU=;
-        b=X3sIMiTLuQju47pgzYp7dYEd4XNC5gq0QSXiZnPapKNiznVqPGfh0WW0BZoF+JQoIl
-         kGLvsM4be9qiYZQmPxg/vErSOWeOX1ZlIrQ1Kp6LhaUfg45j72MlgW/xjuG8mHoEEU/T
-         l+YLs7Kwd5pWCAGrh4JDp3T6+pKZodbvoPixVX4JwJ64RqF9xvtGnvnnj02OnqcZHUqW
-         ujsfpulDnd1fHO6mc+NpQ6WyXexODC+HwN1mBqY4PThsaABfXUrBWfu3eF5Q8GqpE2Mo
-         YH7l22sEu7LfG/RrpN5PEKLVltRXnmudZ+HOE4i0XFWPgg6ftTMem4tDcFvFs0omwEg1
-         6q5Q==
+        bh=63gFW+EwKfLK2dxaSv6TaMQf8x5xrbRmTzKRH1+NA+0=;
+        b=AEa4NhKE+972DAoY01+0/53wr1Aw2E8OQbGpntZYhy48cMuIqR6zcKpLMaTMXRCWM6
+         K66VA1MqTywtpxRdVYyUGgcwC4xZ1FYKzUCKJWnY7fW62FVRUZLbDqlzJw89XjOs8F9/
+         gfy0Zor4EhvlFapt0t/CpZ5ZtagsVuFF/EKci6XMaiyyu+DaSOli5Ag+AYhBIYQIv7/j
+         7Ar324pAqxJHOEYUprKJZKIISdV5gKEbUHbckklYCicet2Med9hko1K+PcsxprG0ZQ/a
+         8FhB5bId3QtR+dE5SXq/PKEOcEFyRV4u6xuFW5w3uhz7qoB6PN9Skgb+/LpKwaUXTRcB
+         RENw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kqs7zJbZvXbVRZB14wY492sNVudZQegpH20wNyvylUU=;
-        b=4SKnS+UfOcy2UK0JyjoD55JBW/eOac/dGSKwfdG7ss5cZWrtaoJzwpwQczwLOrYwo9
-         JlGs4s2tUkcp16q8Nknx3bhRAJHX3R4Abd6rL/uQz0y804Xdkox9E0pzJFZJKtMlNIAE
-         RlfEdAdcOz9w7bk6O4EOIV8D4CBtDKJIjsn0gZL6AzREImUBgN+H4BaUxGA2/1YIlbRJ
-         Mis4M+cudZ7IAzjCSV4clyBOwxJ9vIX1a/GefbRhwSbU19/yXzNf6eXorAUYs8ppvM7q
-         BOpKgoHY5cvRvH+5ZGVISWjISJ4BpB0mPfzGHKjvcdksyLtlfwI/IqfcFdK/3kwG2mCt
-         6nww==
-X-Gm-Message-State: AOAM531IX1MHoXUih/BOdvbPtVHVccA6SZ6bo/1PnZNaE8mscFCA0iot
-        7t2+IRnGgIqxYMAyfzexMInN/FcHt/XpQg==
-X-Google-Smtp-Source: ABdhPJzZ/ML6LLaKS1bzj5Rjvnq6JDeUrDDec/gdmbpVUpKzLljd2D4LRADy0+lOyuzzwapxS6pu5g==
-X-Received: by 2002:a05:6000:1d97:b0:204:1b0:74b2 with SMTP id bk23-20020a0560001d9700b0020401b074b2mr10051446wrb.14.1648228793093;
-        Fri, 25 Mar 2022 10:19:53 -0700 (PDT)
+        bh=63gFW+EwKfLK2dxaSv6TaMQf8x5xrbRmTzKRH1+NA+0=;
+        b=pV7Ik1S4otNzLiDt9NW+xQ5C5VimuDzydewbuCkb3Q3qFIIcR4F+YyucKi5Ev+73z1
+         8RkpiYmqKzjT2goG5/ruTC9+568NtAdi1djXJ7lqLOsKfdpg8iQG2DzSiyluWKZFSS3w
+         eQmRrayKMKZPnul/zkhAklQg9z9U9Jg1XjJpZRxeN94YDC21+oVL9AnxsVxCKQ/fYs8x
+         UZZ9fS7SXwYKaf9sJHwlH5bcXW/kK0qKRqr1QnbnfWXqm79sFdqpvXbG9IOELUgp4Phu
+         TRmjDukmE9iZg6TAO09ktSuJPrPKhBtM9Zthsv+WCYDs2roBvFUsxAiOYEn51zOqJ/c5
+         4zig==
+X-Gm-Message-State: AOAM532pToN9vcDk1kkVDPu/4IcIGOCNqpnJ69ydrbSkdK2I8rvdyKpy
+        pjEYojNW3hvMUsW9Z2TUA0nr2Py4Q9swmw==
+X-Google-Smtp-Source: ABdhPJwzMIkE+BrdiAB+6dhrOXJ6hWXmSIkY9mj0cpyhfwnMbkMrQO61q0U8Zd8iv9qrA+r3vVy+Eg==
+X-Received: by 2002:a05:600c:3546:b0:38c:a8ff:843b with SMTP id i6-20020a05600c354600b0038ca8ff843bmr11199489wmq.24.1648228779247;
+        Fri, 25 Mar 2022 10:19:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p16-20020a5d6390000000b00203ffebddf3sm7554165wru.99.2022.03.25.10.19.52
+        by smtp.gmail.com with ESMTPSA id p16-20020a5d6390000000b00203ffebddf3sm7554165wru.99.2022.03.25.10.19.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 10:19:52 -0700 (PDT)
+        Fri, 25 Mar 2022 10:19:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 23/27] revisions API: release "reflog_info" in release revisions()
-Date:   Fri, 25 Mar 2022 18:18:47 +0100
-Message-Id: <patch-v3-23.27-af874c17fbd-20220325T171340Z-avarab@gmail.com>
+Subject: [PATCH v3 08/27] revisions API users: add "goto cleanup" for "rev_info" early exit
+Date:   Fri, 25 Mar 2022 18:18:32 +0100
+Message-Id: <patch-v3-08.27-f8a9443fe6f-20220325T171340Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1509.ge4eeb5bd39e
 In-Reply-To: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
 References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com> <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
@@ -70,159 +70,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a missing reflog_walk_info_release() to "reflog-walk.c" and use it
-in release_revisions().
+Add release_revisions() in various users of "struct rev_info" that can
+mostly use a "goto cleanup" pattern, but also have an early "return"
+before we've called repo_init_revisions(). We need to avoid calling
+release_revisions() with uninitialized memory.
+
+It would be a lot cleaner to be able to initialize "struct rev_info"
+with "{ 0 }" here, or if a "REV_INFO_INIT" existed, we'll hopefully
+get around to making the initialization easier in the future (now it
+can't be done via a macro).
+
+Until then let's leave a "cleanup_no_rev[s]" in place to document the
+intention here. Only status_submodule() in builtin/submodule--helper.c
+strictly speaking needs this, the other ones could keep their "return"
+for the early exit. But let's have them also use the "goto
+cleanup[...]" for consistency, and for the eventual migration to
+simpler initialization.
+
+For the bundle.c code see the early exit case added in
+3bbbe467f29 (bundle verify: error out if called without an object
+database, 2019-05-27).
+
+For the relevant bisect.c code see 45b6370812c (bisect: libify
+`check_good_are_ancestors_of_bad` and its dependents, 2020-02-17).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- reflog-walk.c            | 24 +++++++++++++++++++++++-
- reflog-walk.h            |  1 +
- revision.c               |  1 +
- t/t0100-previous.sh      |  1 +
- t/t1401-symbolic-ref.sh  |  2 ++
- t/t1411-reflog-show.sh   |  1 +
- t/t1412-reflog-loop.sh   |  2 ++
- t/t1415-worktree-refs.sh |  1 +
- 8 files changed, 32 insertions(+), 1 deletion(-)
+ bisect.c                    | 17 ++++++++++++-----
+ builtin/submodule--helper.c |  6 ++++--
+ bundle.c                    | 12 +++++++++---
+ 3 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 8ac4b284b6b..7aa6595a51f 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -8,7 +8,7 @@
+diff --git a/bisect.c b/bisect.c
+index cc6b8b6230d..c2e9f6ca9f6 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -1035,7 +1035,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
  
- struct complete_reflogs {
- 	char *ref;
--	const char *short_ref;
-+	char *short_ref;
- 	struct reflog_info {
- 		struct object_id ooid, noid;
- 		char *email;
-@@ -51,9 +51,16 @@ static void free_complete_reflog(struct complete_reflogs *array)
+ 	res = check_good_are_ancestors_of_bad(r, prefix, no_checkout);
+ 	if (res)
+-		return res;
++		goto cleanup_no_revs;
+ 
+ 	bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
+ 
+@@ -1060,14 +1060,16 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		       term_good,
+ 		       term_bad);
+ 
+-		return BISECT_FAILED;
++		res = BISECT_FAILED;
++		goto cleanup;
  	}
- 	free(array->items);
- 	free(array->ref);
-+	free(array->short_ref);
- 	free(array);
+ 
+ 	if (!all) {
+ 		fprintf(stderr, _("No testable commit found.\n"
+ 			"Maybe you started with bad path arguments?\n"));
+ 
+-		return BISECT_NO_TESTABLE_COMMIT;
++		res = BISECT_NO_TESTABLE_COMMIT;
++		goto cleanup;
+ 	}
+ 
+ 	bisect_rev = &revs.commits->item->object.oid;
+@@ -1087,7 +1089,8 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		 * for negative return values for early returns up
+ 		 * until the cmd_bisect__helper() caller.
+ 		 */
+-		return BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		res = BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		goto cleanup;
+ 	}
+ 
+ 	nr = all - reaches - 1;
+@@ -1106,7 +1109,11 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 	/* Clean up objects used, as they will be reused. */
+ 	repo_clear_commit_marks(r, ALL_REV_FLAGS);
+ 
+-	return bisect_checkout(bisect_rev, no_checkout);
++	res = bisect_checkout(bisect_rev, no_checkout);
++cleanup:
++	release_revisions(&revs);
++cleanup_no_revs:
++	return res;
  }
  
-+static void complete_reflogs_clear(void *util, const char *str)
-+{
-+	struct complete_reflogs *array = util;
-+	free_complete_reflog(array);
-+}
+ static inline int log2i(int n)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 24980863f68..d1b656c0909 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -779,7 +779,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 
+ 	if ((CE_STAGEMASK & ce_flags) >> CE_STAGESHIFT) {
+ 		print_status(flags, 'U', path, null_oid(), displaypath);
+-		goto cleanup;
++		goto cleanup_no_rev;
+ 	}
+ 
+ 	strbuf_addf(&buf, "%s/.git", path);
+@@ -791,7 +791,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 	    !is_git_directory(git_dir)) {
+ 		print_status(flags, '-', path, ce_oid, displaypath);
+ 		strbuf_release(&buf);
+-		goto cleanup;
++		goto cleanup_no_rev;
+ 	}
+ 	strbuf_release(&buf);
+ 
+@@ -851,6 +851,8 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 	}
+ 
+ cleanup:
++	release_revisions(&rev);
++cleanup_no_rev:
+ 	strvec_clear(&diff_files_args);
+ 	free(displaypath);
+ }
+diff --git a/bundle.c b/bundle.c
+index e359370cfcd..9b7c0bc55c4 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -202,8 +202,10 @@ int verify_bundle(struct repository *r,
+ 	int i, ret = 0, req_nr;
+ 	const char *message = _("Repository lacks these prerequisite commits:");
+ 
+-	if (!r || !r->objects || !r->objects->odb)
+-		return error(_("need a repository to verify a bundle"));
++	if (!r || !r->objects || !r->objects->odb) {
++		ret = error(_("need a repository to verify a bundle"));
++		goto cleanup_no_revs;
++	}
+ 
+ 	repo_init_revisions(r, &revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+@@ -221,7 +223,7 @@ int verify_bundle(struct repository *r,
+ 		error("%s %s", oid_to_hex(oid), name);
+ 	}
+ 	if (revs.pending.nr != p->nr)
+-		return ret;
++		goto cleanup;
+ 	req_nr = revs.pending.nr;
+ 	setup_revisions(2, argv, &revs, NULL);
+ 
+@@ -283,6 +285,10 @@ int verify_bundle(struct repository *r,
+ 			list_refs(r, 0, NULL);
+ 		}
+ 	}
 +
- static struct complete_reflogs *read_complete_reflog(const char *ref)
- {
- 	struct complete_reflogs *reflogs =
-@@ -116,6 +123,21 @@ void init_reflog_walk(struct reflog_walk_info **info)
- 	(*info)->complete_reflogs.strdup_strings = 1;
++cleanup:
++	release_revisions(&revs);
++cleanup_no_revs:
+ 	return ret;
  }
  
-+void reflog_walk_info_release(struct reflog_walk_info *info)
-+{
-+	size_t i;
-+
-+	if (!info)
-+		return;
-+
-+	for (i = 0; i < info->nr; i++)
-+		free(info->logs[i]);
-+	string_list_clear_func(&info->complete_reflogs,
-+			       complete_reflogs_clear);
-+	free(info->logs);
-+	free(info);
-+}
-+
- int add_reflog_for_walk(struct reflog_walk_info *info,
- 		struct commit *commit, const char *name)
- {
-diff --git a/reflog-walk.h b/reflog-walk.h
-index e9e00ffd479..8076f10d9fb 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -8,6 +8,7 @@ struct reflog_walk_info;
- struct date_mode;
- 
- void init_reflog_walk(struct reflog_walk_info **info);
-+void reflog_walk_info_release(struct reflog_walk_info *info);
- int add_reflog_for_walk(struct reflog_walk_info *info,
- 			struct commit *commit, const char *name);
- void show_reflog_message(struct reflog_walk_info *info, int,
-diff --git a/revision.c b/revision.c
-index 53b3ab6dc2d..380e6d9fe43 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2960,6 +2960,7 @@ void release_revisions(struct rev_info *revs)
- 	clear_pathspec(&revs->prune_data);
- 	release_revisions_mailmap(revs->mailmap);
- 	free_grep_patterns(&revs->grep_filter);
-+	reflog_walk_info_release(revs->reflog_info);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/t/t0100-previous.sh b/t/t0100-previous.sh
-index 69beb59f627..a16cc3d2983 100755
---- a/t/t0100-previous.sh
-+++ b/t/t0100-previous.sh
-@@ -5,6 +5,7 @@ test_description='previous branch syntax @{-n}'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'branch -d @{-1}' '
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 132a1b885ac..9fb0b90f252 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='basic symbolic-ref tests'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # If the tests munging HEAD fail, they can break detection of
-diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
-index 0bb319b944a..3770ceffafd 100755
---- a/t/t1411-reflog-show.sh
-+++ b/t/t1411-reflog-show.sh
-@@ -4,6 +4,7 @@ test_description='Test reflog display routines'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
-index 977603f7f1c..ff30874f940 100755
---- a/t/t1412-reflog-loop.sh
-+++ b/t/t1412-reflog-loop.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='reflog walk shows repeated commits again'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup commits' '
-diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-index a3e6ea08088..3b531842dd4 100755
---- a/t/t1415-worktree-refs.sh
-+++ b/t/t1415-worktree-refs.sh
-@@ -2,6 +2,7 @@
- 
- test_description='per-worktree refs'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
 -- 
 2.35.1.1509.ge4eeb5bd39e
 
