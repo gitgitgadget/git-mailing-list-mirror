@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17708C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52DC9C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbiCYTeb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:34:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50506 "EHLO
+        id S230356AbiCYTfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbiCYTcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:32:18 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C161164BE2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:57 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so4939918wmb.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:06:57 -0700 (PDT)
+        with ESMTP id S230082AbiCYTe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:34:29 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1D2280C03
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:23 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j18so12121894wrd.6
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=StgURa+QQ7MI9Fz7PRC/Y58g6n0TJrcDd38nLcmRm0c=;
-        b=PMtc5tlSutGIJj8fCLWIa9i+ICUGfEhK9Jw3ZAcvZVKYul3CXITSwZ7nMN+JqNQrzc
-         sxFOuljJLuW2foocZT8fDJjCLmxCElkiRUPCVTafyrocmC9mdGtEAls7Z7GqZ7sGo/zA
-         nnYrQczhhd82mdeD65/giV0UfluPf9KodsuwhaPfzDSYsWOZRhXtCEDE3D2V6MF8J9wb
-         lDB/Aupl60dvNsQxTjYOrezRK5sYCV89ZjaLd7RQkyFa31Bas2aENwJy6JeWM0KCxypr
-         g7/3OqbhwTkO5Ru80qcX09LLm1LZPitMAht+yUJi6rHVZJwbNM+Bc1tcWoaXjIZ2y9oI
-         Rafg==
+        bh=FZI2xxi6PznYWtcgWMwuyCaFV9HWoUmAUdxMgQYduw0=;
+        b=UFQ3Dq4AE87BpyO8R5mY3GXBR1u6mQb7u6GvzwbYDt+l90pnFha3lYyMIu1AqtAu8W
+         sl+kK1JXvOBhwwumwPYeVsNi8NCJIhV0YjKG2hZbU0jto9YSN9164YNi9P49cVv8eOVV
+         uLVZYnA80l+16pBslfPqNU7yse1LYLVoZDKJUNw0JOpde4JvXVldfM0jiCMtkFn9DwoZ
+         KpgGs6kdV5pwk2h/nV78DTkc673MtUt9O9gfuFLbi1tMngvjLwfYSU6+JL7aOgc7i9ra
+         YKJ3yd4TqXgk2pjN6d0XsP+1390vqZTODpaO/ISFFFVO9ekFbhUGtDrsP6yqx8vLqc5G
+         F+gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=StgURa+QQ7MI9Fz7PRC/Y58g6n0TJrcDd38nLcmRm0c=;
-        b=5bYi83Q8nipVCKflxI1OOkV2CjCTzTtnYuhl7jxMVbjOa9yaQRNSXDuh6qVVwekgiM
-         glQjfxrOEczPgdCJX7s4uvl8RQsURpV6/Jq7hefmgIZWl9ElYUDa5Tjt2/RnbNbiGl4m
-         Qz80aaZQIswiFv1NOYPZyqNnbEumwSASmWKHTsj1Tl5LKxWWgMBnxD/JRjcANmOavugF
-         a5DITdkuWCa3WoXCxPlG/84S8QmTpPqhUkefXkL3lJwougXPG+4mg/REiOEelBlPUFsG
-         NTsqeqhMzPYF9AlXm23w7XarsLFdLRFLaugfX/RgDwcEeKCqI3fLDDmE0H7ZzEWxh7T6
-         geoA==
-X-Gm-Message-State: AOAM531XVc+3asgnMfdHZroDmsIAvDPzwMiN4FozVAzcJzENEAGsr/jS
-        1yUvZ4Xr5bBT/Ue2eVJFeEGusC8GivRpIg==
-X-Google-Smtp-Source: ABdhPJzVVWYIZKEH2KX/k7SXaioW2wOB9BO7p4UPJTbyu1DS1lvtu2MG/e1Op9jL7G3HwKcGpIwX9Q==
-X-Received: by 2002:a05:600c:511b:b0:38c:cb1f:b90f with SMTP id o27-20020a05600c511b00b0038ccb1fb90fmr11147204wms.109.1648233505543;
-        Fri, 25 Mar 2022 11:38:25 -0700 (PDT)
+        bh=FZI2xxi6PznYWtcgWMwuyCaFV9HWoUmAUdxMgQYduw0=;
+        b=MQwqt1aqVF38neyvXudld4+KCTQQZulJT2QA8ZsAmug5okXI/zJ0UcZ9ep2YkYBOb+
+         ehdTKtZcV56eigP/s2MsA+21kkA5jZfjq3mth17F4J9jhTk7V1BcZcQRfuaGxscqhr/5
+         f5ZzK7/fY48jkUmynnMlHrCrreuq16SnRJS+w5rk/IYN55f8tP2n21D2K8vpiuqSFVdF
+         IY56s7AENubIlU4iNrX2B+O9nKEpkmYrVto3qj0haxkVzQYEvo6TThhAbJqolR5Vpgpa
+         uzKpHfz1bajQuWL7KVnO3hxW1FK6Ez06fjg5FzzJSrVRTlf8755xHc3pWfEymCaLxCj5
+         zZqw==
+X-Gm-Message-State: AOAM531SdrypdVycieV6SWz1Woghs/WaGEyoOvZZDxrJ13NHTpOvbfNi
+        vipcUF8tAiSphjnB6fQIZZtaEfwey4u79A==
+X-Google-Smtp-Source: ABdhPJzxaAC3cxG7Af4h8jAVu8GOYJeVdEsVT6EAZ3fyW7WoyJ2bGgCrDLNZBxMXA8D8ATZtJp86ag==
+X-Received: by 2002:adf:82b2:0:b0:203:f34d:dff with SMTP id 47-20020adf82b2000000b00203f34d0dffmr10341331wrc.661.1648236261878;
+        Fri, 25 Mar 2022 12:24:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.24
+        by smtp.gmail.com with ESMTPSA id 6-20020a05600c020600b0038cbb21fb00sm4999704wmi.39.2022.03.25.12.24.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:24 -0700 (PDT)
+        Fri, 25 Mar 2022 12:24:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,14 +60,15 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Victoria Dye <vdye@github.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/25] CI: have "static-analysis" run a "make ci-static-analysis" target
-Date:   Fri, 25 Mar 2022 19:37:58 +0100
-Message-Id: <patch-v2-07.25-5d46d5b34c9-20220325T182534Z-avarab@gmail.com>
+Subject: [RFC PATCH v3 4/6] ci: optionally mark up output in the GitHub workflow
+Date:   Fri, 25 Mar 2022 20:24:13 +0100
+Message-Id: <RFC-patch-v3-4.6-429c256ac62-20220325T183946Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+In-Reply-To: <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,145 +76,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make it easier to run the CI logic locally by creating
-"ci-static-analysis" target.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now the "check-coccicheck" logic added in 0860a7641ba (travis-ci: fail
-if Coccinelle static analysis found something to transform,
-2018-07-23) can be easily tested outside of CI, and likewise the
-sanity check added in 0e7696c64db (ci: disallow directional
-formatting, 2021-11-04).
+A couple of commands exist to spruce up the output in GitHub workflows:
+https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions
 
-These targets could be improved, the "hdr-check" target will re-do all
-of its work every time it's run, and could with a change similar to my
-c234e8a0ecf (Makefile: make the "sparse" target non-.PHONY,
-2021-09-23). The same goes for the new
-"ci-check-directional-formatting" target.
+In addition to the `::group::<label>`/`::endgroup::` commands (which we
+already use to structure the output of the build step better), we also
+use `::error::`/`::notice::` to draw the attention to test failures and
+to test cases that were expected to fail but didn't.
 
-But without those improvements being able to easily run a 1=1
-equivalent of the checks we do in CI during a local build is already
-an improvement. Subsequent commits will expand on this ability.
-
-This change will also make the CI check faster, since we can take
-advantage of parallelism. The "make coccicheck" takes a very long
-time, and at the tail end we might only have one job pegging 100% of
-one CPU core for a long time. Now any extra cores will be free to run
-the rest of the targets under "ci-static-analysis".
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  3 +--
- Makefile                   | 28 ++++++++++++++++++++++++++++
- ci/run-static-analysis.sh  | 30 ------------------------------
- shared.mak                 |  1 +
- 4 files changed, 30 insertions(+), 32 deletions(-)
- delete mode 100755 ci/run-static-analysis.sh
+ t/test-lib-functions.sh              |  4 +--
+ t/test-lib-github-workflow-markup.sh | 50 ++++++++++++++++++++++++++++
+ t/test-lib.sh                        |  5 ++-
+ 3 files changed, 56 insertions(+), 3 deletions(-)
+ create mode 100644 t/test-lib-github-workflow-markup.sh
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 309b9141249..ad752010102 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -317,8 +317,7 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/run-static-analysis.sh
--    - run: ci/check-directional-formatting.bash
-+    - run: make ci-static-analysis
-   sparse:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-diff --git a/Makefile b/Makefile
-index 70f0a004e75..d30862a23a2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3007,6 +3007,20 @@ coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
- # See contrib/coccinelle/README
- coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 0f439c99d61..4e86f7d9d0e 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -719,7 +719,7 @@ test_verify_prereq () {
+ }
  
-+.PHONY: check-coccicheck
-+check-coccicheck: coccicheck
-+	$(QUIET_CHECK)for cocci_patch in contrib/coccinelle/*.patch; do \
-+		if test -s "$$cocci_patch"; then \
-+			echo "Coccinelle suggests the following changes in '$$cocci_patch':"; \
-+			cat "$$cocci_patch"; \
-+			fail=UnfortunatelyYes; \
-+		fi \
-+	done; \
-+	if test -n "$$fail"; then \
-+		echo "error: Coccinelle suggested some changes"; \
-+		exit 1; \
-+	fi
-+
- .PHONY: coccicheck coccicheck-pending
+ test_expect_failure () {
+-	test_start_
++	test_start_ "$@"
+ 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
+ 	test "$#" = 2 ||
+ 	BUG "not 2 or 3 parameters to test-expect-failure"
+@@ -739,7 +739,7 @@ test_expect_failure () {
+ }
  
- ### Installation rules
-@@ -3442,3 +3456,17 @@ $(FUZZ_PROGRAMS): all
- 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
- 
- fuzz-all: $(FUZZ_PROGRAMS)
-+
-+### CI "check" targets
+ test_expect_success () {
+-	test_start_
++	test_start_ "$@"
+ 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
+ 	test "$#" = 2 ||
+ 	BUG "not 2 or 3 parameters to test-expect-success"
+diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
+new file mode 100644
+index 00000000000..d8dc969df4a
+--- /dev/null
++++ b/t/test-lib-github-workflow-markup.sh
+@@ -0,0 +1,50 @@
++# Library of functions to mark up test scripts' output suitable for
++# pretty-printing it in GitHub workflows.
 +#
-+# These targets are run from the CI, see .github/workflows/main.yml,
-+# but can also be run manually to run the same assertions locally.
++# Copyright (c) 2022 Johannes Schindelin
++#
++# This program is free software: you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation, either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see http://www.gnu.org/licenses/ .
++#
++# The idea is for `test-lib.sh` to source this file when run in GitHub
++# workflows; these functions will then override (empty) functions
++# that are are called at the appropriate times during the test runs.
 +
-+.PHONY: ci-check-directional-formatting
-+ci-check-directional-formatting:
-+	$(QUIET_CHECK)ci/check-directional-formatting.bash
++start_test_output () {
++	test -n "$GIT_TEST_TEE_OUTPUT_FILE" ||
++	die "--github-workflow-markup requires --verbose-log"
++	github_markup_output="${GIT_TEST_TEE_OUTPUT_FILE%.out}.markup"
++	>$github_markup_output
++	GIT_TEST_TEE_OFFSET=0
++}
 +
-+.PHONY: ci-static-analysis
-+ci-static-analysis: ci-check-directional-formatting
-+ci-static-analysis: check-coccicheck
-+ci-static-analysis: hdr-check
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-deleted file mode 100755
-index 5a87b1cac96..00000000000
---- a/ci/run-static-analysis.sh
-+++ /dev/null
-@@ -1,30 +0,0 @@
--#!/bin/sh
--#
--# Perform various static code analysis checks
--#
--
--. ${0%/*}/lib.sh
--
--make coccicheck
--
--set +x
--
--fail=
--for cocci_patch in contrib/coccinelle/*.patch
--do
--	if test -s "$cocci_patch"
--	then
--		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
--		cat "$cocci_patch"
--		fail=UnfortunatelyYes
--	fi
--done
--
--if test -n "$fail"
--then
--	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
--	exit 1
--fi
--
--make hdr-check ||
--exit 1
-diff --git a/shared.mak b/shared.mak
-index 4e1b62ee99e..0593b3c98be 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -68,6 +68,7 @@ ifndef V
- 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
- 	QUIET_RC       = @echo '   ' RC $@;
- 	QUIET_SPATCH   = @echo '   ' SPATCH $<;
-+	QUIET_CHECK    = @echo '   ' CHECK $@;
++# No need to override start_test_case_output
++
++finalize_test_case_output () {
++	test_case_result=$1
++	shift
++	case "$test_case_result" in
++	failure)
++		echo >>$github_markup_output "::error::failed: $this_test.$test_count $1"
++		;;
++	fixed)
++		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
++		;;
++	esac
++	echo >>$github_markup_output "::group::$test_case_result: $this_test.$test_count $*"
++	test-tool >>$github_markup_output path-utils skip-n-bytes \
++		"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
++	echo >>$github_markup_output "::endgroup::"
++}
++
++# No need to override finalize_test_output
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 65b63359ddb..5ba4051d588 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -204,6 +204,9 @@ parse_option () {
+ 	--write-junit-xml)
+ 		. "$TEST_DIRECTORY/test-lib-junit.sh"
+ 		;;
++	--github-workflow-markup)
++		. "$TEST_DIRECTORY/test-lib-github-workflow-markup.sh"
++		;;
+ 	--stress)
+ 		stress=t ;;
+ 	--stress=*)
+@@ -1077,7 +1080,7 @@ test_start_ () {
+ 	test_count=$(($test_count+1))
+ 	maybe_setup_verbose
+ 	maybe_setup_valgrind
+-	start_test_case_output
++	start_test_case_output "$@"
+ }
  
- ## Used in "Documentation/Makefile"
- 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ test_finish_ () {
 -- 
 2.35.1.1517.g20a06c426a7
 
