@@ -2,99 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B0CCC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Mar 2022 22:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7858C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 00:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355539AbiCXWtr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Mar 2022 18:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47722 "EHLO
+        id S244454AbiCYAeq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Mar 2022 20:34:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238115AbiCXWtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Mar 2022 18:49:46 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820C02E0B3
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:48:11 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id o6so8118319ljp.3
-        for <git@vger.kernel.org>; Thu, 24 Mar 2022 15:48:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/xQ0QbQSpd9HpWS2wAbd8EJInJz2//qgKSjQBB5QzDU=;
-        b=T1qwTYZRxhAP7rXO+4MtQNC70rLM1JQjGPohpkvDgRpX0/4kECbO/fEnbNF0NAJvl8
-         avUyBuY0ZLhl1dAryUNvQnW8RDOHuWRowWV6Dn4GYrmuxcjqao9VEzZJa0kakpCfGvJy
-         HPh5gSDYoAsqJ7mhthEzK2c9x2jo1PPwgT+JyVQyyHZeTl1rsgZgcJQFTtfeVXt1hrG9
-         y+EtM5V5TuZJ2vdHnD/e8XLA/odWrmBaq7UFClvbEzDSSlaOhJ5Wow+mg5xMAytJDCbJ
-         SK2Dv4+hxdUU0Gxn+2dEwIr+LNFmwDq0/a7qXdcPDPlDpSckSJFG+YaVskffEHGQIgSe
-         xjkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/xQ0QbQSpd9HpWS2wAbd8EJInJz2//qgKSjQBB5QzDU=;
-        b=FsQ6KzjrKLQs44WDA9W9ifQsYISncMQcdwIQ7YzFidaoxmJKKRbfzfsY/qihZrtb1N
-         ab0rLQsCzzpxzr9VLeCkAV3hhQn01eosqC0lp6LHXCf2SQREr6moKAkV3+bvekA2+W03
-         MeWIXAhISqXgt8/gw4L+jlI9AjVIgBgv7FZSsIqvlf4etLR+l36311KdMTihwZW6JtS2
-         otGkfsLDwZwpQHfGDcp74HKsAvwqd43v+PHX9ovSmSm5KkmOhIr8PLG9aGgQI7Ieoval
-         biUNPFh4My7U+dk8COONbHuq6Kfip7vBe/UJEvwB9gBJiNom+fdQfS5EfYQyZkOvu5uA
-         kq2g==
-X-Gm-Message-State: AOAM532T8QihE327EhCVI+q+S/A1QiYbkB0BVngU+lC0P32Vw3kC6h6R
-        VqMPIE5ps0gAdOB+iE15GF04abI/tYqi8iuziWvjTFLb17DF2g==
-X-Google-Smtp-Source: ABdhPJzXqDEoGhrPW5wWIMiYNFVyRWCyQZmekHHEFFebE4pfW9nTP9tFNIknLko+SwxPs2QFFCyK6AvsZiMu3SKY7pU=
-X-Received: by 2002:a2e:b88b:0:b0:249:8a0b:ad3d with SMTP id
- r11-20020a2eb88b000000b002498a0bad3dmr5962850ljp.53.1648162090002; Thu, 24
- Mar 2022 15:48:10 -0700 (PDT)
+        with ESMTP id S236404AbiCYAeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Mar 2022 20:34:44 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3D66D7B
+        for <git@vger.kernel.org>; Thu, 24 Mar 2022 17:33:09 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 441D81892D9;
+        Thu, 24 Mar 2022 20:33:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=xUHI7bcq7gBmggoRbzLloZAL3L6X/hzhLzzQHigFbnM=; b=Q/e9
+        kBaX5NCGLIouphUCEjZLgmCGtmBm9LXYbHf2HvMHrET63hQSSwmXVlSPtG8xZja9
+        ZvDQH5qWH8+/ZmGR1as8AViNZsY1/yNtnU5P50iXHY+yaUukfzi6giz61n24EfIm
+        ygRtLJsFOMSpvtI0+4H9ZxR6YkD37z4GWnPDcEA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D4B81892D7;
+        Thu, 24 Mar 2022 20:33:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A3C531892D6;
+        Thu, 24 Mar 2022 20:33:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] test-lib-functions: fix test_subcommand_inexact
+References: <xmqqmthgu3e6.fsf@gitster.g>
+        <20220324181056.53824-1-chakrabortyabhradeep79@gmail.com>
+Date:   Thu, 24 Mar 2022 17:33:05 -0700
+Message-ID: <xmqqy20yeuri.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+ZGDOUKrNRdf-7+SBoVhPkAmyHEtt==AJ=jBDWGkOUcz=n4BA@mail.gmail.com>
- <CAJoAoZmo4bJgGdYQeM4XtRJHOpm4z7Gvg=qpUc4xa7Ap=v++UA@mail.gmail.com> <Yjziu8nU/SZ7SyH0@nand.local>
-In-Reply-To: <Yjziu8nU/SZ7SyH0@nand.local>
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Thu, 24 Mar 2022 15:47:58 -0700
-Message-ID: <CAJoAoZmfLaxTGGQRaR8D0-L3pH563z6_04UUwBo7GY1A14Ebww@mail.gmail.com>
-Subject: Re: bug report: pre-push hook
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?UTF-8?Q?Honza_Proke=C5=A1?= <proke.j@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 23B09902-ABD3-11EC-B6B6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 24, 2022 at 2:29 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Thu, Mar 24, 2022 at 11:30:16AM -0700, Emily Shaffer wrote:
-> > > What happened instead? (Actual behavior)
-> > > Tests seem to execute on the background, but I do not see output
-> >
-> > I wonder - are you printing your test output to stdout, or stderr?
-> > stderr of the hook is printed to stdout of the Git process, so that
-> > may be why.
->
-> I didn't think that we redirected the pre-push (or any) hook's stderr to
-> stdout in the parent process. I wrote a small pre-push hook which is
-> just:
->
->     $ cat .git/hooks/pre-push
->     #!/bin/sh
->
->     echo >&2 "hi!"
->
-> and then:
->
->     $ git.compile push ttaylorr --dry-run 2>foo
->     $ grep hi foo
->     hi!
->
-> But I might be holding it wrong, since I am not a frequent user of
-> hooks.
+Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
 
-Ah, it seems I'm completely mistaken :) Sorry for the misinfo. Urk.
+> Inexact means that the line needs not to be exactly same - there may be
+> some words in between the desired words (in this case, any flags that come
+> between the desired sub-commands). The current behaviour (i.e. 
+> `local expr=$(printf '"%s".*' "$@")`) is justifying the name of the function.
 
-Having a look in 'master', run_pre_push_hook() does not use hook.c
-machinery yet at all; it also seems like it doesn't try to capture
-stdout from the pre-push child process anyways. That makes me ask "how
-did this ever work?" which brings me back to wanting a small hook we
-can try to reproduce with from Honza :)
+The current name may justify what it does, but so does "declare
+match randomly" would.  How much fuzziness we tolerate is something
+that must be made clear to help developers who may potentially want
+to use it, and the phrase "inexact" alone would not help us.
 
- - Emily
