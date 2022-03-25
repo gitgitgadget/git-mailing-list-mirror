@@ -2,122 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C29FC433FE
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C30C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231147AbiCYTki (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:40:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
+        id S230446AbiCYTkl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:40:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232943AbiCYTje (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:39:34 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18DD83F8FE2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:18:30 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id r13so12095503wrr.9
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:18:30 -0700 (PDT)
+        with ESMTP id S232527AbiCYTiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:38:55 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8483124A880
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:19:21 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id n35so4973264wms.5
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=csSTLLvOXXHEVIyF+4iSBIHVXXVa6fmIaZ1XIryAyhM=;
-        b=Kee4e8FBFIsguN6Et2/8ZllSh12te/RsOK2fWq00nysg6wglgx18h1X5JkgeFi17SY
-         +Pmg8ST9lhOveoVEVa6tYsrtPb5Z5Y5NgzDoKpfhNDAlhjTtvEBW7YDKXAW2iI2RY3Gf
-         XUiB59YmsWuacss11MjkTqE5Fkh20G/ozj2pUsXMDD8EjSuJRSo+Q0CSU5+O8+4bkCiv
-         5oEyhPU9Va+MVXwGdW44Uhh0ENqVuPo7s3te524eHP56/KUtqKxdmPx5TAUcu7pHVI4M
-         4egi3VcBrjp7lZJATkQ9QD88kJEMnpDRXD6tWwUK43ucm2qz/uzbAntdr7uGRhrRmh8Y
-         OhNQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=x/x5a5mQdRnOhZMFOTIoDYdHye9mTeJs2yQUdXtB5ZI=;
+        b=jiibVSf/70j2i+NrPaNElUb05GQ2SPkAYqNCAxKy2JgxQurELLenW1yEIX+9RVdh/a
+         gtKYV0VFiRkUd7rV88IlaIVuFIE4XkJfq3i+2SzKjomVqbrxiZL09PxNSh1qmg5DgH4O
+         jnQqj9LCA8D6hQ10f2+L6UnYvYc5UE2xWdVczNa/yzCAG8ePdTC9/U/yyhJ8I4sjEcsm
+         5N4RhWDGP1C0FusG4ksSDVt/WQ9t/HNVoKTB8beFcLz+ef/lD1ZJLk1JIS3WOkMRggAx
+         aaadD8dMhwawerpNYKFl1PKkEpno9G4X9BhVGNHzWpSBmiZUYk1Yy6UvJj3jY1KjnUcX
+         J4eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=csSTLLvOXXHEVIyF+4iSBIHVXXVa6fmIaZ1XIryAyhM=;
-        b=q0frxotejBuETeLsSpXJjNrKYrIOR65xF5gaEyBLy3oPcoYFRh8eFMfoBYROk8yioZ
-         haGksYRUkCQpts2uUHaTbbYSYRC7Gf7mYJPHByYV7ejfZdunI1hm/NajZnDSlDrEvv/Z
-         gC9TKSEaabb6kUNeup9OWL6xWddWl6DbJLqlvwtPXKOhwjYKyW1J/gq5ld3xUb8y9CCv
-         D/8HJyTuMu8fvq30Y87EHTuWrMww1vjcF/Tyw9kAPgDAj6pMdpKLwS6QZAE32xp05/7W
-         3jFbnWWr9sY88xOoOb0IeBoxP8e+nqLixuMo3Kt+1JZQVWbG+innms9IAuRQMpEGvGzX
-         k6UQ==
-X-Gm-Message-State: AOAM532wNAFHdox3a3uCn/qsGOpXe1cYtTDJS3avh93ju/zy9JjNC/kf
-        OWHMC2un4+eHBQ0h5e0pY/EEGZ98xQE=
-X-Google-Smtp-Source: ABdhPJzWoG7NHkjRrHwWY4AVmKDIPYzu6x5Lhz2Fx7uqNTZqKqr7mKnkDCoyuEFZKJta88JvAAS/Mg==
-X-Received: by 2002:a5d:40c8:0:b0:205:2a3b:c2c with SMTP id b8-20020a5d40c8000000b002052a3b0c2cmr10119047wrq.13.1648231421240;
-        Fri, 25 Mar 2022 11:03:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m2-20020a056000024200b00205718e3a3csm5526603wrz.2.2022.03.25.11.03.40
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=x/x5a5mQdRnOhZMFOTIoDYdHye9mTeJs2yQUdXtB5ZI=;
+        b=EosFKWUH5LqF69uZapB7VhAXmib4ho2VMPw2zWsujUpG2lLXjAbfTQ5CAAI64HVp6C
+         Z0dyyMjhNsvEjNetsl0Cfg3A9erEkjvuziFgzNcGpb8uqWiIm6Ft6/u8AjZvme16z4zP
+         ywcQ0iuM4MorIWkuYOwjvVegjuUF7cY/17dyKtQEe08RxZPKncpt8laEA/y2HVHd3Vti
+         xwHzsps/RX6Zwa0uPlYveaNrGMvL0Q4qtMTXwNx7pS/wLLpBO6CIO2POsMfA7SnvHvLM
+         E4TEvYJiJeDmP+BlKnJ2Gw1FWyMrn41p76txjxQCghhtZpQrZdhv6Fu3k8aKbg3lMh4W
+         wx/w==
+X-Gm-Message-State: AOAM532Q/vfN6PDIf7/Lfww2vgqAEctB0yCs3bcOK+oEMxtvJ6bupzMV
+        G9OGCyZSIZ1hin2f/VGDZiXlbvreX14c4w==
+X-Google-Smtp-Source: ABdhPJyfHfKEOyP350HzjuefmJggPH56iH2r6s22jCoehiEO+t8j/Qr5BIlyW4kK46jrkfYEUAOLPw==
+X-Received: by 2002:a7b:cd88:0:b0:38c:9d04:d794 with SMTP id y8-20020a7bcd88000000b0038c9d04d794mr10749681wmj.140.1648228785872;
+        Fri, 25 Mar 2022 10:19:45 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p16-20020a5d6390000000b00203ffebddf3sm7554165wru.99.2022.03.25.10.19.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:40 -0700 (PDT)
-Message-Id: <bb88cddc1379dddd3a65bb2cf9978257fbd7d60d.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:03:07 +0000
-Subject: [PATCH v9 24/30] t/perf/p7519: fix coding style
-Fcc:    Sent
+        Fri, 25 Mar 2022 10:19:45 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 15/27] revisions API users: use release_revisions() for "prune_data" users
+Date:   Fri, 25 Mar 2022 18:18:39 +0100
+Message-Id: <patch-v3-15.27-f8e0eb52957-20220325T171340Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1509.ge4eeb5bd39e
+In-Reply-To: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
+References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com> <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Use release_revisions() for users of "struct rev_list" that reach into
+the "struct rev_info" and clear the "prune_data" already.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+In a subsequent commit we'll teach release_revisions() to clear this
+itself, but in the meantime let's invoke release_revisions() here to
+clear anything else we may have missed, and for reasons of having
+consistent boilerplate.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/perf/p7519-fsmonitor.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/add.c   | 1 +
+ builtin/stash.c | 1 +
+ diff-lib.c      | 1 +
+ wt-status.c     | 1 +
+ 4 files changed, 4 insertions(+)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index c8be58f3c76..5241eb6c4e5 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -72,7 +72,7 @@ then
- 	fi
- fi
- 
--trace_start() {
-+trace_start () {
- 	if test -n "$GIT_PERF_7519_TRACE"
- 	then
- 		name="$1"
-@@ -91,7 +91,7 @@ trace_start() {
- 	fi
+diff --git a/builtin/add.c b/builtin/add.c
+index f507d2191cd..115a26ea633 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -143,6 +143,7 @@ int add_files_to_cache(const char *prefix,
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	clear_pathspec(&rev.prune_data);
++	release_revisions(&rev);
+ 	return !!data.add_errors;
  }
  
--trace_stop() {
-+trace_stop () {
- 	if test -n "$GIT_PERF_7519_TRACE"
- 	then
- 		unset GIT_TRACE2_PERF
-@@ -133,7 +133,7 @@ test_expect_success "one time repo setup" '
- 	fi
- '
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 76d162387e2..a6ee030d4bd 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1060,6 +1060,7 @@ static int check_changes_tracked_files(const struct pathspec *ps)
  
--setup_for_fsmonitor() {
-+setup_for_fsmonitor () {
- 	# set INTEGRATION_SCRIPT depending on the environment
- 	if test -n "$INTEGRATION_PATH"
- 	then
-@@ -173,7 +173,7 @@ test_perf_w_drop_caches () {
- 	test_perf "$@"
+ done:
+ 	clear_pathspec(&rev.prune_data);
++	release_revisions(&rev);
+ 	return ret;
  }
  
--test_fsmonitor_suite() {
-+test_fsmonitor_suite () {
- 	if test -n "$INTEGRATION_SCRIPT"; then
- 		DESC="fsmonitor=$(basename $INTEGRATION_SCRIPT)"
- 	else
+diff --git a/diff-lib.c b/diff-lib.c
+index d6800274bd5..0f16281253f 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -642,6 +642,7 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
+ 	clear_pathspec(&revs.prune_data);
++	release_revisions(&revs);
+ 	return 0;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index f9100621375..a14fad1e03a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -617,6 +617,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_files(&rev, 0);
+ 	clear_pathspec(&rev.prune_data);
++	release_revisions(&rev);
+ }
+ 
+ static void wt_status_collect_changes_index(struct wt_status *s)
 -- 
-gitgitgadget
+2.35.1.1509.ge4eeb5bd39e
 
