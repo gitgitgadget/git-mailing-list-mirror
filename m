@@ -2,164 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E566C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DA42C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbiCYThI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:37:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59488 "EHLO
+        id S230346AbiCYThm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbiCYTg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:36:59 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9783E205964
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:55 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso4940178wmz.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:09:55 -0700 (PDT)
+        with ESMTP id S230338AbiCYThT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:37:19 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0890820824D
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:06 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so9517550wme.5
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3PLwCteJ9y2IKK4YgyfW1TpJLAFrB0rwJ1mFNfWqUuM=;
-        b=XmMONFA/Qg/+RsMZf8jGLI7IZY+EIvoYTBzkq6ObRE/Bf7CcId3pRX25Estf7YgSTE
-         iiFq9puvjsnX2F2QmEcRpiD8Viqe0sSoYEH8XnrNeVddoHBlKrr8ezuMRNQeKvgICnTj
-         uXmP13Qfw1BHRDQrQKhQDwCdeOiP9eUD1E6+VpgzxHuSzsBLNHiC+9Dl9THJTcxYemWw
-         e8ooG93jFhxGKnpmy0369PDvsEg6KqJYc5hoqtZBRn3+oVQD43wkfz/0u3DhCFv8RK7V
-         uZn/jr4lDOnjXYBDpKQHvZ3AhOTRAVnN3mOZhxT4SK/plHpV+JAjNAO3velrCrsa0/T8
-         tqzg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=M8Gdmw/wrOeDER8oUUqdhTg6MJulAML/q9Ev21o2Xhc=;
+        b=P+P0VadLlMXedO8JtUsBBpC+nTE3F3XZVnx6gnK0OTeI9ByMzmWDzpiG/vzcOLEiHs
+         xMuHyjbyVhalhGDE6u1JgVoV/BkGCVkmagg5NmZznh5MohtB/9910y7qjD0Bg9w1dm7I
+         NK291ohKtioglruYTQa+08fgK45/A0JlfoizjvyfSNkrDlFJPMp+R1FjOIbj1pVIjJuU
+         n4KTmu5hD3gFzIfyFkidtwZrLiY3nGQgcSxDW6qVvuvzlT8v+4I8n90cCpaa4m41thIZ
+         AOa1CVpUqM7Zul5WSp+yXmW1IFl/0H55IO4r4yFxuHJE/q50irGJFHWL+61SQ8H0rfxs
+         7smg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3PLwCteJ9y2IKK4YgyfW1TpJLAFrB0rwJ1mFNfWqUuM=;
-        b=pdPBL1iKAnPVnZpHiJa6lbxMsCKykrmjMoT5GTNoct2C7pKxs1cvTIM9j7qXnjZHzd
-         5epGOiIzqVfSMyivVYSEaC1VUyIGkvdFIDO7Ded7s6IhKYBKwhAGo1Or2sPKVRQT45cS
-         rtn+Wdrsyc8L7tlZpCO/lRoBEHWeaKwhyxbGgBoJH5cuZ6w2PLEeqR43nz/ni80DW4uu
-         d5om9uRfWoQCYb4lCnzhoAazHveOd18DtfRaGXYKGdnPYDXAliIOVLnEBKaaMgMd31yI
-         6nVR6XQLgdBtvNCUVxBXffkcHMpSgP6SuWUzlixXcx0apuwitoJPdybZcdWdr4TqTkO4
-         uz6g==
-X-Gm-Message-State: AOAM531uPYZAnEcqqOsVniKN1zkuPVMTQPsUFIK9pHYdv5kas7mLKcN3
-        Dp4D1vAmw933P+pvl8Ud7Mm3zipLC1Y=
-X-Google-Smtp-Source: ABdhPJw6AOZ3SkVIUR+TnZVRj90Dt12qetkSALYHFZNI7q9iZX7M2SS4V7I2eJHccdltUB3uzodDmA==
-X-Received: by 2002:a7b:c841:0:b0:389:864c:e715 with SMTP id c1-20020a7bc841000000b00389864ce715mr11047079wml.72.1648231403187;
-        Fri, 25 Mar 2022 11:03:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m13-20020a05600c3b0d00b0038cda9f92fasm3833846wms.0.2022.03.25.11.03.22
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=M8Gdmw/wrOeDER8oUUqdhTg6MJulAML/q9Ev21o2Xhc=;
+        b=Ol+XH9WPVnNOw8U+OEuImo65XvmmEuhS8fjLR0DKQqbyUgjL//0v95YpH3vlOUY65c
+         RYDhBBM8Ie/2IbBHTeQn9tBEN2X8lXxn3iXcVAfSSzSQ8n20T9u/kTkjhbs15JBmDMOK
+         mSjsPUe020xLsHEG1H7Ct7lKrLj5TPrK1U/kOcc3djvlwRcg240M9vXaVWO40igQEbPg
+         S4vDBB0oRt9WtlMOC9fRFQAAlYV+dndJWj7F8ow8RKblJpD7A+Y3bK0G7u9MjAQX4o0k
+         JzZHFypy6AOv9S6q5W+TYbllImICIP4IQ5+55Abc2f1HRsXhG8sj1tWI6hWaaJ9x23nq
+         rhag==
+X-Gm-Message-State: AOAM5310XVq8j8M1ZJiyrz72BPBWjtENv1/P4LRM3/EMmhHlx22RY8Aj
+        YNF/ldR3C5O/c7GDKCEdxu/+zCDCkaETkw==
+X-Google-Smtp-Source: ABdhPJx88raGbDlvJAYDmOus8ITYzky7X6LtXarz9sjaxN7rSRPPDeR1Vv3Wprv7o9p5V3i2cAwC4A==
+X-Received: by 2002:a05:600c:1d0f:b0:38c:8ff8:e703 with SMTP id l15-20020a05600c1d0f00b0038c8ff8e703mr11426865wms.202.1648233508315;
+        Fri, 25 Mar 2022 11:38:28 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:22 -0700 (PDT)
-Message-Id: <4624ce2fa471b3ebb3a08baf0de2609447eb9fe3.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:50 +0000
-Subject: [PATCH v9 07/30] fsmonitor--daemon: implement 'stop' and 'status'
- commands
-Fcc:    Sent
+        Fri, 25 Mar 2022 11:38:27 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 10/25] CI: consistently use "export" in ci/lib.sh
+Date:   Fri, 25 Mar 2022 19:38:01 +0100
+Message-Id: <patch-v2-10.25-9dc148341ba-20220325T182534Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
+In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Change the "ci/lib.sh" script co consistently use "export", for
+e.g. MAKEFLAGS we were exporting it, and then assigning to it, let's
+do it the other way around.
 
-Implement `stop` and `status` client commands to control and query the
-status of a `fsmonitor--daemon` server process (and implicitly start a
-server process if necessary).
+Right now this doesn't matter, since we in
+e.g. "ci/install-dependencies.sh" source this file, and don't use
+something like "env(1)" to retrieve these variables. But in a
+subsequent commit we'll "export" these variables through a wrapper (to
+additionally write them to a GitHub CI-specific $GITHUB_ENV
+file). This change makes that subsequent change easier to read, as it
+won't need to do any control flow refactoring.
 
-Later commits will implement the actual server and monitor the file
-system.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fsmonitor--daemon.c | 51 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ ci/lib.sh | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index f0498793379..5e3178b8bdd 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,10 +7,55 @@
- #include "khash.h"
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 6b37b10d750..31fe3a476a9 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -27,7 +27,7 @@ check_unignored_build_artifacts ()
+ export TERM=${TERM:-dumb}
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
-+	N_("git fsmonitor--daemon stop"),
-+	N_("git fsmonitor--daemon status"),
- 	NULL
- };
+ # Clear MAKEFLAGS that may come from the outside world.
+-export MAKEFLAGS=
++MAKEFLAGS=
  
- #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+/*
-+ * Acting as a CLIENT.
-+ *
-+ * Send a "quit" command to the `git-fsmonitor--daemon` (if running)
-+ * and wait for it to shutdown.
-+ */
-+static int do_as_client__send_stop(void)
-+{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
-+
-+	ret = fsmonitor_ipc__send_command("quit", &answer);
-+
-+	/* The quit command does not return any response data. */
-+	strbuf_release(&answer);
-+
-+	if (ret)
-+		return ret;
-+
-+	trace2_region_enter("fsm_client", "polling-for-daemon-exit", NULL);
-+	while (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
-+		sleep_millisec(50);
-+	trace2_region_leave("fsm_client", "polling-for-daemon-exit", NULL);
-+
-+	return 0;
-+}
-+
-+static int do_as_client__status(void)
-+{
-+	enum ipc_active_state state = fsmonitor_ipc__get_state();
-+
-+	switch (state) {
-+	case IPC_STATE__LISTENING:
-+		printf(_("fsmonitor-daemon is watching '%s'\n"),
-+		       the_repository->worktree);
-+		return 0;
-+
-+	default:
-+		printf(_("fsmonitor-daemon is not watching '%s'\n"),
-+		       the_repository->worktree);
-+		return 1;
-+	}
-+}
+ if test "$GITHUB_ACTIONS" = "true"
+ then
+@@ -35,10 +35,12 @@ then
+ 	CC="${CC:-gcc}"
  
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- {
-@@ -28,6 +73,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_fsmonitor__daemon_usage, options);
- 	subcmd = argv[0];
- 
-+	if (!strcmp(subcmd, "stop"))
-+		return !!do_as_client__send_stop();
+ 	export GIT_PROVE_OPTS="--timer --jobs 10"
+-	export GIT_TEST_OPTS="--verbose-log -x"
++	GIT_TEST_OPTS="--verbose-log -x"
+ 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+ 	test Windows != "$RUNNER_OS" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
 +
-+	if (!strcmp(subcmd, "status"))
-+		return !!do_as_client__status();
-+
- 	die(_("Unhandled subcommand '%s'"), subcmd);
- }
++	export GIT_TEST_OPTS
+ else
+ 	echo "Could not identify CI type" >&2
+ 	env >&2
+@@ -92,4 +94,4 @@ linux-leaks)
+ 	;;
+ esac
  
+-MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
++export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
 -- 
-gitgitgadget
+2.35.1.1517.g20a06c426a7
 
