@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA957C4332F
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FCCC433FE
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbiCYT2J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
+        id S229780AbiCYT2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbiCYT1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:27:48 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD451C4063
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:16 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id w21so7507250wra.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:16 -0700 (PDT)
+        with ESMTP id S229825AbiCYT20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:28:26 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50011EA5C3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:52 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n35so4951905wms.5
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=p0teLAsHTxbSC0+vtDh7IakcwEoThRbRMdCYsFOPVt4=;
-        b=ViR8XaGfsSMTgPUkDGDjQu6F+kR9jghQew65bpG2OMf8IlMewqWGgK6Pm3xPsIJ9+Y
-         tt0W5QBGBN0Vw+3unuT975OtHLwverMpAEMP5IW7vve5DIpGxCLe8QLezy2nD1gGTTbH
-         aBeS9M2nYzCLp9yZpw3DeM4JupHGT3oS8cwruzHXCDNFdiSLY+Dnh/j0rCZexyBlTkS1
-         YuD6l9j83qLP6U5u79goyQq4QS/+cfPvyl6axIHgNdPFrLjoLpKsphxjVaz9lyRd25r+
-         Ebzn8GGusatpI+e0z8EBhnTXgZcqVa4LcGXZnV6EGI7svYUTrkbNocEyNugFWzADKHUl
-         Htjg==
+        bh=PzYiX4KZSbUNaf88GIbxOE1hs0cGSW6c+HsGJS4mMWY=;
+        b=mrFAtsagPaLDR2LMTSGqfGNLkKId/YluN3oKCrYLc1kniLYBcSpGNLMUz+/qq/6TTY
+         mbVe2tVzeDNjVw9zeFgLnP/SWxR/NwNX31PZj2+bKn23fNfZIbpTKP0RLOwQAAz32Et6
+         NqwEdLiCQNjQI5EhF2pgj6N0+MQrKwBCzFaH1qqwFl+G38ioSLbylqDcpE+QPWnDLbr+
+         /qq8akVU+j39JVSE7o8fKwmG1YGSNFH4ANvPD5s0DF4G8PKAhGHS0ySHZCy0VbyGgnOP
+         fiQoiDnEvZhYkWwq/UCL+oL/Nw/SEu8yMusVOGVVg9bqL/m6YODFVdYr/B1OXFUA0OI4
+         RtAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p0teLAsHTxbSC0+vtDh7IakcwEoThRbRMdCYsFOPVt4=;
-        b=16Gu5h0c6QuyD7UmP9WtZMAMuZ2ovgcxnFvf95PuXL+YHc4aWwKbcc0jMtT5cBUGlI
-         7gV3U6WW1MRmFU8D8yptT0WuRrYbcd6rO0HaipvHlBAxpZvCpsbJML3g+j13fD2wDjbX
-         nhi0VXB+LFSfANwZgcwwMoBVsqJYdeF9vArsrBlXWcE8y8iA8hfEVIMSvQlEyShtLwE6
-         UvobdSSX+helCU1eg5970rp1ZHW90jgDrgKyfZUFHCgkHA0dp6MxRDIIwZThk3uVzwLx
-         grgwJ6pTetfb4P5R/m1K1EiGzP9IyPp9JS2xOmwjqjmiPs5YfHSaeiUIyNCv09U9hm+g
-         xgaw==
-X-Gm-Message-State: AOAM531GUo9THKJw3lyclvPkJL8SrpFdK+VWsg9kj9U4co8NXMfAw6BG
-        p4wpRUn9E7TD1E93AYNR9dXXvNnOmlg=
-X-Google-Smtp-Source: ABdhPJwtiNTI5jqpIqdtT2DlE+2jhx7UasnJdEoM7vxR0JbUi7obZaaIWK4oFLHfK2msZE6BYIU/XQ==
-X-Received: by 2002:a5d:51c5:0:b0:203:decf:8fbf with SMTP id n5-20020a5d51c5000000b00203decf8fbfmr10134531wrv.440.1648231414872;
-        Fri, 25 Mar 2022 11:03:34 -0700 (PDT)
+        bh=PzYiX4KZSbUNaf88GIbxOE1hs0cGSW6c+HsGJS4mMWY=;
+        b=KGMZvvhEwajB4r37QFXVy9e4069my0XqbXaYHZEfhjilAEafjgesMqbcJPr5/DvAOF
+         J0MlemtvaTMEB1v3RAMoRRAkxt8OnIT2tO8QBs48aVFOKKVkPC6W7NTaK4Anz+8fam70
+         aYVZbOZ5yAynuaGgD2t8qj0zAiI+Cw5nQyAVGT0/uMx6tcIg43sUtw+OuV0L67E+6LAJ
+         qaiEOCDgSO4C6YLyTP1NhqWD1cF+/98VbDUUwQ+BeNyGyf3DgXQB/tLWy7ZSrDJ+6xOx
+         Z3uvWQbYRFY1jfYNQnCWZLNKqph3LE7lx3qfJoOlDtsJj/83hAjDStOPbXSiHqYCckuq
+         Eadg==
+X-Gm-Message-State: AOAM531sRJ6IVpZfrts6Id5iU9MHR9+LlfzYaIUvyCo8TkpNZ817Aoj/
+        UvdLdf3OyWOopAofGbIO4EQUoukO7dY=
+X-Google-Smtp-Source: ABdhPJyJEU2VZajejUv5EHzTvUNhjCVNQoNhwQXlSgISl7ISlbtDCnDb3MOS9VnR0XD2v5ft2X5BvA==
+X-Received: by 2002:a05:600c:600a:b0:38c:6c9e:f9c7 with SMTP id az10-20020a05600c600a00b0038c6c9ef9c7mr20229007wmb.26.1648231418259;
+        Fri, 25 Mar 2022 11:03:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l126-20020a1c2584000000b00387d4f35651sm9215312wml.10.2022.03.25.11.03.34
+        by smtp.gmail.com with ESMTPSA id v124-20020a1cac82000000b0037c3d08e0e7sm9020097wme.29.2022.03.25.11.03.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:34 -0700 (PDT)
-Message-Id: <c43009124fbb8f10d4919dbaaf38a728789dd395.1648231393.git.gitgitgadget@gmail.com>
+        Fri, 25 Mar 2022 11:03:37 -0700 (PDT)
+Message-Id: <bc94e379b030da1295b524c8c47159368d7b63ba.1648231393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
         <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:03:01 +0000
-Subject: [PATCH v9 18/30] fsmonitor--daemon: implement handle_client callback
+Date:   Fri, 25 Mar 2022 18:03:04 +0000
+Subject: [PATCH v9 21/30] t7527: create test for fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,362 +73,512 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to respond to IPC requests from client
-Git processes and respond with a list of modified pathnames
-relative to the provided token.
-
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 311 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 309 insertions(+), 2 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 494 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 494 insertions(+)
+ create mode 100755 t/t7527-builtin-fsmonitor.sh
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 69312119b07..eafaafb45b1 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,6 +7,7 @@
- #include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
- #include "khash.h"
-+#include "pkt-line.h"
- 
- static const char * const builtin_fsmonitor__daemon_usage[] = {
- 	N_("git fsmonitor--daemon start [<options>]"),
-@@ -364,6 +365,310 @@ void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
- 	pthread_mutex_unlock(&state->main_lock);
- }
- 
-+/*
-+ * Format an opaque token string to send to the client.
-+ */
-+static void with_lock__format_response_token(
-+	struct strbuf *response_token,
-+	const struct strbuf *response_token_id,
-+	const struct fsmonitor_batch *batch)
-+{
-+	/* assert current thread holding state->main_lock */
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+new file mode 100755
+index 00000000000..062e01c0dfc
+--- /dev/null
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -0,0 +1,494 @@
++#!/bin/sh
 +
-+	strbuf_reset(response_token);
-+	strbuf_addf(response_token, "builtin:%s:%"PRIu64,
-+		    response_token_id->buf, batch->batch_seq_nr);
++test_description='built-in file system watcher'
++
++. ./test-lib.sh
++
++if ! test_have_prereq FSMONITOR_DAEMON
++then
++	skip_all="fsmonitor--daemon is not supported on this platform"
++	test_done
++fi
++
++stop_daemon_delete_repo () {
++	r=$1 &&
++	test_might_fail git -C $r fsmonitor--daemon stop &&
++	rm -rf $1
 +}
 +
-+/*
-+ * Parse an opaque token from the client.
-+ * Returns -1 on error.
-+ */
-+static int fsmonitor_parse_client_token(const char *buf_token,
-+					struct strbuf *requested_token_id,
-+					uint64_t *seq_nr)
-+{
-+	const char *p;
-+	char *p_end;
++start_daemon () {
++	r= tf= t2= tk= &&
 +
-+	strbuf_reset(requested_token_id);
-+	*seq_nr = 0;
++	while test "$#" -ne 0
++	do
++		case "$1" in
++		-C)
++			r="-C ${2?}"
++			shift
++			;;
++		--tf)
++			tf="${2?}"
++			shift
++			;;
++		--t2)
++			t2="${2?}"
++			shift
++			;;
++		--tk)
++			tk="${2?}"
++			shift
++			;;
++		-*)
++			BUG "error: unknown option: '$1'"
++			;;
++		*)
++			BUG "error: unbound argument: '$1'"
++			;;
++		esac
++		shift
++	done &&
 +
-+	if (!skip_prefix(buf_token, "builtin:", &p))
-+		return -1;
++	(
++		if test -n "$tf"
++		then
++			GIT_TRACE_FSMONITOR="$tf"
++			export GIT_TRACE_FSMONITOR
++		fi &&
 +
-+	while (*p && *p != ':')
-+		strbuf_addch(requested_token_id, *p++);
-+	if (!*p++)
-+		return -1;
++		if test -n "$t2"
++		then
++			GIT_TRACE2_PERF="$t2"
++			export GIT_TRACE2_PERF
++		fi &&
 +
-+	*seq_nr = (uint64_t)strtoumax(p, &p_end, 10);
-+	if (*p_end)
-+		return -1;
++		if test -n "$tk"
++		then
++			GIT_TEST_FSMONITOR_TOKEN="$tk"
++			export GIT_TEST_FSMONITOR_TOKEN
++		fi &&
 +
-+	return 0;
++		git $r fsmonitor--daemon start &&
++		git $r fsmonitor--daemon status
++	)
 +}
 +
-+KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
++# Is a Trace2 data event present with the given catetory and key?
++# We do not care what the value is.
++#
++have_t2_data_event () {
++	c=$1 &&
++	k=$2 &&
 +
-+static int do_handle_client(struct fsmonitor_daemon_state *state,
-+			    const char *command,
-+			    ipc_server_reply_cb *reply,
-+			    struct ipc_server_reply_data *reply_data)
-+{
-+	struct fsmonitor_token_data *token_data = NULL;
-+	struct strbuf response_token = STRBUF_INIT;
-+	struct strbuf requested_token_id = STRBUF_INIT;
-+	struct strbuf payload = STRBUF_INIT;
-+	uint64_t requested_oldest_seq_nr = 0;
-+	uint64_t total_response_len = 0;
-+	const char *p;
-+	const struct fsmonitor_batch *batch_head;
-+	const struct fsmonitor_batch *batch;
-+	intmax_t count = 0, duplicates = 0;
-+	kh_str_t *shown;
-+	int hash_ret;
-+	int do_trivial = 0;
-+	int do_flush = 0;
-+
-+	/*
-+	 * We expect `command` to be of the form:
-+	 *
-+	 * <command> := quit NUL
-+	 *            | flush NUL
-+	 *            | <V1-time-since-epoch-ns> NUL
-+	 *            | <V2-opaque-fsmonitor-token> NUL
-+	 */
-+
-+	if (!strcmp(command, "quit")) {
-+		/*
-+		 * A client has requested over the socket/pipe that the
-+		 * daemon shutdown.
-+		 *
-+		 * Tell the IPC thread pool to shutdown (which completes
-+		 * the await in the main thread (which can stop the
-+		 * fsmonitor listener thread)).
-+		 *
-+		 * There is no reply to the client.
-+		 */
-+		return SIMPLE_IPC_QUIT;
-+
-+	} else if (!strcmp(command, "flush")) {
-+		/*
-+		 * Flush all of our cached data and generate a new token
-+		 * just like if we lost sync with the filesystem.
-+		 *
-+		 * Then send a trivial response using the new token.
-+		 */
-+		do_flush = 1;
-+		do_trivial = 1;
-+
-+	} else if (!skip_prefix(command, "builtin:", &p)) {
-+		/* assume V1 timestamp or garbage */
-+
-+		char *p_end;
-+
-+		strtoumax(command, &p_end, 10);
-+		trace_printf_key(&trace_fsmonitor,
-+				 ((*p_end) ?
-+				  "fsmonitor: invalid command line '%s'" :
-+				  "fsmonitor: unsupported V1 protocol '%s'"),
-+				 command);
-+		do_trivial = 1;
-+
-+	} else {
-+		/* We have "builtin:*" */
-+		if (fsmonitor_parse_client_token(command, &requested_token_id,
-+						 &requested_oldest_seq_nr)) {
-+			trace_printf_key(&trace_fsmonitor,
-+					 "fsmonitor: invalid V2 protocol token '%s'",
-+					 command);
-+			do_trivial = 1;
-+
-+		} else {
-+			/*
-+			 * We have a V2 valid token:
-+			 *     "builtin:<token_id>:<seq_nr>"
-+			 */
-+		}
-+	}
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (!state->current_token_data)
-+		BUG("fsmonitor state does not have a current token");
-+
-+	if (do_flush)
-+		with_lock__do_force_resync(state);
-+
-+	/*
-+	 * We mark the current head of the batch list as "pinned" so
-+	 * that the listener thread will treat this item as read-only
-+	 * (and prevent any more paths from being added to it) from
-+	 * now on.
-+	 */
-+	token_data = state->current_token_data;
-+	batch_head = token_data->batch_head;
-+	((struct fsmonitor_batch *)batch_head)->pinned_time = time(NULL);
-+
-+	/*
-+	 * FSMonitor Protocol V2 requires that we send a response header
-+	 * with a "new current token" and then all of the paths that changed
-+	 * since the "requested token".  We send the seq_nr of the just-pinned
-+	 * head batch so that future requests from a client will be relative
-+	 * to it.
-+	 */
-+	with_lock__format_response_token(&response_token,
-+					 &token_data->token_id, batch_head);
-+
-+	reply(reply_data, response_token.buf, response_token.len + 1);
-+	total_response_len += response_token.len + 1;
-+
-+	trace2_data_string("fsmonitor", the_repository, "response/token",
-+			   response_token.buf);
-+	trace_printf_key(&trace_fsmonitor, "response token: %s",
-+			 response_token.buf);
-+
-+	if (!do_trivial) {
-+		if (strcmp(requested_token_id.buf, token_data->token_id.buf)) {
-+			/*
-+			 * The client last spoke to a different daemon
-+			 * instance -OR- the daemon had to resync with
-+			 * the filesystem (and lost events), so reject.
-+			 */
-+			trace2_data_string("fsmonitor", the_repository,
-+					   "response/token", "different");
-+			do_trivial = 1;
-+
-+		} else if (requested_oldest_seq_nr <
-+			   token_data->batch_tail->batch_seq_nr) {
-+			/*
-+			 * The client wants older events than we have for
-+			 * this token_id.  This means that the end of our
-+			 * batch list was truncated and we cannot give the
-+			 * client a complete snapshot relative to their
-+			 * request.
-+			 */
-+			trace_printf_key(&trace_fsmonitor,
-+					 "client requested truncated data");
-+			do_trivial = 1;
-+		}
-+	}
-+
-+	if (do_trivial) {
-+		pthread_mutex_unlock(&state->main_lock);
-+
-+		reply(reply_data, "/", 2);
-+
-+		trace2_data_intmax("fsmonitor", the_repository,
-+				   "response/trivial", 1);
-+
-+		goto cleanup;
-+	}
-+
-+	/*
-+	 * We're going to hold onto a pointer to the current
-+	 * token-data while we walk the list of batches of files.
-+	 * During this time, we will NOT be under the lock.
-+	 * So we ref-count it.
-+	 *
-+	 * This allows the listener thread to continue prepending
-+	 * new batches of items to the token-data (which we'll ignore).
-+	 *
-+	 * AND it allows the listener thread to do a token-reset
-+	 * (and install a new `current_token_data`).
-+	 */
-+	token_data->client_ref_count++;
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	/*
-+	 * The client request is relative to the token that they sent,
-+	 * so walk the batch list backwards from the current head back
-+	 * to the batch (sequence number) they named.
-+	 *
-+	 * We use khash to de-dup the list of pathnames.
-+	 *
-+	 * NEEDSWORK: each batch contains a list of interned strings,
-+	 * so we only need to do pointer comparisons here to build the
-+	 * hash table.  Currently, we're still comparing the string
-+	 * values.
-+	 */
-+	shown = kh_init_str();
-+	for (batch = batch_head;
-+	     batch && batch->batch_seq_nr > requested_oldest_seq_nr;
-+	     batch = batch->next) {
-+		size_t k;
-+
-+		for (k = 0; k < batch->nr; k++) {
-+			const char *s = batch->interned_paths[k];
-+			size_t s_len;
-+
-+			if (kh_get_str(shown, s) != kh_end(shown))
-+				duplicates++;
-+			else {
-+				kh_put_str(shown, s, &hash_ret);
-+
-+				trace_printf_key(&trace_fsmonitor,
-+						 "send[%"PRIuMAX"]: %s",
-+						 count, s);
-+
-+				/* Each path gets written with a trailing NUL */
-+				s_len = strlen(s) + 1;
-+
-+				if (payload.len + s_len >=
-+				    LARGE_PACKET_DATA_MAX) {
-+					reply(reply_data, payload.buf,
-+					      payload.len);
-+					total_response_len += payload.len;
-+					strbuf_reset(&payload);
-+				}
-+
-+				strbuf_add(&payload, s, s_len);
-+				count++;
-+			}
-+		}
-+	}
-+
-+	if (payload.len) {
-+		reply(reply_data, payload.buf, payload.len);
-+		total_response_len += payload.len;
-+	}
-+
-+	kh_release_str(shown);
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (token_data->client_ref_count > 0)
-+		token_data->client_ref_count--;
-+
-+	if (token_data->client_ref_count == 0) {
-+		if (token_data != state->current_token_data) {
-+			/*
-+			 * The listener thread did a token-reset while we were
-+			 * walking the batch list.  Therefore, this token is
-+			 * stale and can be discarded completely.  If we are
-+			 * the last reader thread using this token, we own
-+			 * that work.
-+			 */
-+			fsmonitor_free_token_data(token_data);
-+		}
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
-+
-+cleanup:
-+	strbuf_release(&response_token);
-+	strbuf_release(&requested_token_id);
-+	strbuf_release(&payload);
-+
-+	return 0;
++	grep -e '"event":"data".*"category":"'"$c"'".*"key":"'"$k"'"'
 +}
 +
- static ipc_server_application_cb handle_client;
- 
- static int handle_client(void *data,
-@@ -371,7 +676,7 @@ static int handle_client(void *data,
- 			 ipc_server_reply_cb *reply,
- 			 struct ipc_server_reply_data *reply_data)
- {
--	/* struct fsmonitor_daemon_state *state = data; */
-+	struct fsmonitor_daemon_state *state = data;
- 	int result;
- 
- 	/*
-@@ -382,10 +687,12 @@ static int handle_client(void *data,
- 	if (command_len != strlen(command))
- 		BUG("FSMonitor assumes text messages");
- 
-+	trace_printf_key(&trace_fsmonitor, "requested token: %s", command);
++test_expect_success 'explicit daemon start and stop' '
++	test_when_finished "stop_daemon_delete_repo test_explicit" &&
 +
- 	trace2_region_enter("fsmonitor", "handle_client", the_repository);
- 	trace2_data_string("fsmonitor", the_repository, "request", command);
- 
--	result = 0; /* TODO Do something here. */
-+	result = do_handle_client(state, command, reply, reply_data);
- 
- 	trace2_region_leave("fsmonitor", "handle_client", the_repository);
- 
++	git init test_explicit &&
++	start_daemon -C test_explicit &&
++
++	git -C test_explicit fsmonitor--daemon stop &&
++	test_must_fail git -C test_explicit fsmonitor--daemon status
++'
++
++test_expect_success 'implicit daemon start' '
++	test_when_finished "stop_daemon_delete_repo test_implicit" &&
++
++	git init test_implicit &&
++	test_must_fail git -C test_implicit fsmonitor--daemon status &&
++
++	# query will implicitly start the daemon.
++	#
++	# for test-script simplicity, we send a V1 timestamp rather than
++	# a V2 token.  either way, the daemon response to any query contains
++	# a new V2 token.  (the daemon may complain that we sent a V1 request,
++	# but this test case is only concerned with whether the daemon was
++	# implicitly started.)
++
++	GIT_TRACE2_EVENT="$PWD/.git/trace" \
++		test-tool -C test_implicit fsmonitor-client query --token 0 >actual &&
++	nul_to_q <actual >actual.filtered &&
++	grep "builtin:" actual.filtered &&
++
++	# confirm that a daemon was started in the background.
++	#
++	# since the mechanism for starting the background daemon is platform
++	# dependent, just confirm that the foreground command received a
++	# response from the daemon.
++
++	have_t2_data_event fsm_client query/response-length <.git/trace &&
++
++	git -C test_implicit fsmonitor--daemon status &&
++	git -C test_implicit fsmonitor--daemon stop &&
++	test_must_fail git -C test_implicit fsmonitor--daemon status
++'
++
++test_expect_success 'implicit daemon stop (delete .git)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1" &&
++
++	git init test_implicit_1 &&
++
++	start_daemon -C test_implicit_1 &&
++
++	# deleting the .git directory will implicitly stop the daemon.
++	rm -rf test_implicit_1/.git &&
++
++	# [1] Create an empty .git directory so that the following Git
++	#     command will stay relative to the `-C` directory.
++	#
++	#     Without this, the Git command will override the requested
++	#     -C argument and crawl out to the containing Git source tree.
++	#     This would make the test result dependent upon whether we
++	#     were using fsmonitor on our development worktree.
++	#
++	sleep 1 &&
++	mkdir test_implicit_1/.git &&
++
++	test_must_fail git -C test_implicit_1 fsmonitor--daemon status
++'
++
++test_expect_success 'implicit daemon stop (rename .git)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_2" &&
++
++	git init test_implicit_2 &&
++
++	start_daemon -C test_implicit_2 &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	mv test_implicit_2/.git test_implicit_2/.xxx &&
++
++	# See [1] above.
++	#
++	sleep 1 &&
++	mkdir test_implicit_2/.git &&
++
++	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
++'
++
++test_expect_success 'cannot start multiple daemons' '
++	test_when_finished "stop_daemon_delete_repo test_multiple" &&
++
++	git init test_multiple &&
++
++	start_daemon -C test_multiple &&
++
++	test_must_fail git -C test_multiple fsmonitor--daemon start 2>actual &&
++	grep "fsmonitor--daemon is already running" actual &&
++
++	git -C test_multiple fsmonitor--daemon stop &&
++	test_must_fail git -C test_multiple fsmonitor--daemon status
++'
++
++# These tests use the main repo in the trash directory
++
++test_expect_success 'setup' '
++	>tracked &&
++	>modified &&
++	>delete &&
++	>rename &&
++	mkdir dir1 &&
++	>dir1/tracked &&
++	>dir1/modified &&
++	>dir1/delete &&
++	>dir1/rename &&
++	mkdir dir2 &&
++	>dir2/tracked &&
++	>dir2/modified &&
++	>dir2/delete &&
++	>dir2/rename &&
++	mkdir dirtorename &&
++	>dirtorename/a &&
++	>dirtorename/b &&
++
++	cat >.gitignore <<-\EOF &&
++	.gitignore
++	expect*
++	actual*
++	EOF
++
++	git -c core.fsmonitor=false add . &&
++	test_tick &&
++	git -c core.fsmonitor=false commit -m initial &&
++
++	git config core.fsmonitor true
++'
++
++# The test already explicitly stopped (or tried to stop) the daemon.
++# This is here in case something else fails first.
++#
++redundant_stop_daemon () {
++	test_might_fail git fsmonitor--daemon stop
++}
++
++test_expect_success 'update-index implicitly starts daemon' '
++	test_when_finished redundant_stop_daemon &&
++
++	test_must_fail git fsmonitor--daemon status &&
++
++	GIT_TRACE2_EVENT="$PWD/.git/trace_implicit_1" \
++		git update-index --fsmonitor &&
++
++	git fsmonitor--daemon status &&
++	test_might_fail git fsmonitor--daemon stop &&
++
++	# Confirm that the trace2 log contains a record of the
++	# daemon starting.
++	test_subcommand git fsmonitor--daemon start <.git/trace_implicit_1
++'
++
++test_expect_success 'status implicitly starts daemon' '
++	test_when_finished redundant_stop_daemon &&
++
++	test_must_fail git fsmonitor--daemon status &&
++
++	GIT_TRACE2_EVENT="$PWD/.git/trace_implicit_2" \
++		git status >actual &&
++
++	git fsmonitor--daemon status &&
++	test_might_fail git fsmonitor--daemon stop &&
++
++	# Confirm that the trace2 log contains a record of the
++	# daemon starting.
++	test_subcommand git fsmonitor--daemon start <.git/trace_implicit_2
++'
++
++edit_files () {
++	echo 1 >modified &&
++	echo 2 >dir1/modified &&
++	echo 3 >dir2/modified &&
++	>dir1/untracked
++}
++
++delete_files () {
++	rm -f delete &&
++	rm -f dir1/delete &&
++	rm -f dir2/delete
++}
++
++create_files () {
++	echo 1 >new &&
++	echo 2 >dir1/new &&
++	echo 3 >dir2/new
++}
++
++rename_files () {
++	mv rename renamed &&
++	mv dir1/rename dir1/renamed &&
++	mv dir2/rename dir2/renamed
++}
++
++file_to_directory () {
++	rm -f delete &&
++	mkdir delete &&
++	echo 1 >delete/new
++}
++
++directory_to_file () {
++	rm -rf dir1 &&
++	echo 1 >dir1
++}
++
++# The next few test cases confirm that our fsmonitor daemon sees each type
++# of OS filesystem notification that we care about.  At this layer we just
++# ensure we are getting the OS notifications and do not try to confirm what
++# is reported by `git status`.
++#
++# We run a simple query after modifying the filesystem just to introduce
++# a bit of a delay so that the trace logging from the daemon has time to
++# get flushed to disk.
++#
++# We `reset` and `clean` at the bottom of each test (and before stopping the
++# daemon) because these commands might implicitly restart the daemon.
++
++clean_up_repo_and_stop_daemon () {
++	git reset --hard HEAD &&
++	git clean -fd &&
++	test_might_fail git fsmonitor--daemon stop &&
++	rm -f .git/trace
++}
++
++test_expect_success 'edit some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	edit_files &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dir1/modified$"  .git/trace &&
++	grep "^event: dir2/modified$"  .git/trace &&
++	grep "^event: modified$"       .git/trace &&
++	grep "^event: dir1/untracked$" .git/trace
++'
++
++test_expect_success 'create some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	create_files &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dir1/new$" .git/trace &&
++	grep "^event: dir2/new$" .git/trace &&
++	grep "^event: new$"      .git/trace
++'
++
++test_expect_success 'delete some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	delete_files &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dir1/delete$" .git/trace &&
++	grep "^event: dir2/delete$" .git/trace &&
++	grep "^event: delete$"      .git/trace
++'
++
++test_expect_success 'rename some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	rename_files &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dir1/rename$"  .git/trace &&
++	grep "^event: dir2/rename$"  .git/trace &&
++	grep "^event: rename$"       .git/trace &&
++	grep "^event: dir1/renamed$" .git/trace &&
++	grep "^event: dir2/renamed$" .git/trace &&
++	grep "^event: renamed$"      .git/trace
++'
++
++test_expect_success 'rename directory' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	mv dirtorename dirrenamed &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dirtorename/*$" .git/trace &&
++	grep "^event: dirrenamed/*$"  .git/trace
++'
++
++test_expect_success 'file changes to directory' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	file_to_directory &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: delete$"     .git/trace &&
++	grep "^event: delete/new$" .git/trace
++'
++
++test_expect_success 'directory changes to a file' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	directory_to_file &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	grep "^event: dir1$" .git/trace
++'
++
++# The next few test cases exercise the token-resync code.  When filesystem
++# drops events (because of filesystem velocity or because the daemon isn't
++# polling fast enough), we need to discard the cached data (relative to the
++# current token) and start collecting events under a new token.
++#
++# the 'test-tool fsmonitor-client flush' command can be used to send a
++# "flush" message to a running daemon and ask it to do a flush/resync.
++
++test_expect_success 'flush cached data' '
++	test_when_finished "stop_daemon_delete_repo test_flush" &&
++
++	git init test_flush &&
++
++	start_daemon -C test_flush --tf "$PWD/.git/trace_daemon" --tk true &&
++
++	# The daemon should have an initial token with no events in _0 and
++	# then a few (probably platform-specific number of) events in _1.
++	# These should both have the same <token_id>.
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_0 &&
++	nul_to_q <actual_0 >actual_q0 &&
++
++	>test_flush/file_1 &&
++	>test_flush/file_2 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_1 &&
++	nul_to_q <actual_1 >actual_q1 &&
++
++	grep "file_1" actual_q1 &&
++
++	# Force a flush.  This will change the <token_id>, reset the <seq_nr>, and
++	# flush the file data.  Then create some events and ensure that the file
++	# again appears in the cache.  It should have the new <token_id>.
++
++	test-tool -C test_flush fsmonitor-client flush >flush_0 &&
++	nul_to_q <flush_0 >flush_q0 &&
++	grep "^builtin:test_00000002:0Q/Q$" flush_q0 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
++	nul_to_q <actual_2 >actual_q2 &&
++
++	grep "^builtin:test_00000002:0Q$" actual_q2 &&
++
++	>test_flush/file_3 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_3 &&
++	nul_to_q <actual_3 >actual_q3 &&
++
++	grep "file_3" actual_q3
++'
++
++# The next few test cases create repos where the .git directory is NOT
++# inside the one of the working directory.  That is, where .git is a file
++# that points to a directory elsewhere.  This happens for submodules and
++# non-primary worktrees.
++
++test_expect_success 'setup worktree base' '
++	git init wt-base &&
++	echo 1 >wt-base/file1 &&
++	git -C wt-base add file1 &&
++	git -C wt-base commit -m "c1"
++'
++
++test_expect_success 'worktree with .git file' '
++	git -C wt-base worktree add ../wt-secondary &&
++
++	start_daemon -C wt-secondary \
++		--tf "$PWD/trace_wt_secondary" \
++		--t2 "$PWD/trace2_wt_secondary" &&
++
++	git -C wt-secondary fsmonitor--daemon stop &&
++	test_must_fail git -C wt-secondary fsmonitor--daemon status
++'
++
++# NEEDSWORK: Repeat one of the "edit" tests on wt-secondary and
++# confirm that we get the same events and behavior -- that is, that
++# fsmonitor--daemon correctly watches BOTH the working directory and
++# the external GITDIR directory and behaves the same as when ".git"
++# is a directory inside the working directory.
++
++test_expect_success 'cleanup worktrees' '
++	stop_daemon_delete_repo wt-secondary &&
++	stop_daemon_delete_repo wt-base
++'
++
++test_done
 -- 
 gitgitgadget
 
