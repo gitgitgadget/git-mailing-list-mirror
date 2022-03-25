@@ -2,274 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25112C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E69C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231547AbiCYTpc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40464 "EHLO
+        id S231455AbiCYTvc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:51:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231584AbiCYTot (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:44:49 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A20336BA2C
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso4948669wmz.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
-        b=oqt2QaZKUjP8BWVNQfzKsGQB9qjqOA2aEBZxKy/HULh9LiocsHQ9+I6yI7Qsdi2ykw
-         4CraPXPioY7yFZzZYTxPakHOYlJF9U+LdStup5FLRjDfBtJnDONH65ovwjtt3NCstHz9
-         dxlf6zz1wrdWBWOIzZie0Z5K5A8Vm3I7h43LRXoCreymDhcn0qS3N0BsH8UVgRUNG/z3
-         71CVQS6Tge1NHOLBDQWxZ9BsvGTiwbjkbxua8zbbI7D8+0SkJwPoO7M3t8fl5FMGsY/Z
-         6Vumlga7BLXreEpYiYs0fqYk7GFe4GbPkgYWXRbwR8AVIvMKuC0nx7scYk+hBD9Yxert
-         iiow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
-        b=II0JmW2briqkDps653bUnTCPG5+9JJhq3AJVs3tQD3LB6mr7OwJvGUQdr4H3HxavRQ
-         xldE3t3LbK3p5/PdUHV4apPxojczMcBW4atO8rQKETeY/FMYAY6BbMiU3WAGGAgt7QJl
-         luR73WS+qRZDIp2tc4Wo7xzmSMnz41Wd71Bo+IyMXm/l0ja4vPTa+ib25e+uBABrbDXl
-         zs6pP1g5Ggbq10sUCGu7TyGbSWZiAwjZPMslZrVBvv4Y7FnqBNweTvAgwAVy8QsUX6u+
-         jBL4lEoLJ7stUfMdvDGvElsc/WcPDxmQFq/L2WGaQoW57vuDnrwwbhxaxFwlzZjeNSGy
-         zO7A==
-X-Gm-Message-State: AOAM533H00i4jlU4OPM3gwT0VeudeXD3p8p6pbG3/iIL1q3nYr301KOm
-        Xf6lXAXWhetC8UqPLxh34hM3PXvdYxU=
-X-Google-Smtp-Source: ABdhPJzWWol4t2smtV4PP6qduFWnFN94k9fYYh4Dfs600SdRiXmhA1Si82X/JMHZfsvh2HI5kmPeWw==
-X-Received: by 2002:a7b:ce83:0:b0:37b:f1f1:3a0c with SMTP id q3-20020a7bce83000000b0037bf1f13a0cmr11156411wmj.10.1648231400682;
-        Fri, 25 Mar 2022 11:03:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n8-20020adf8b08000000b001f046cc8891sm5729259wra.24.2022.03.25.11.03.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:20 -0700 (PDT)
-Message-Id: <6ab7db9cb769fe44db2c76e82da0b5d898538ec0.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:48 +0000
-Subject: [PATCH v9 05/30] fsmonitor: document builtin fsmonitor
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S231794AbiCYTvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:51:15 -0400
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2087410F6E
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:35:20 -0700 (PDT)
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none
+X-Ironport-Dmarc-Check-Result: validskip
+X-IronPort-AV: E=Sophos;i="5.90,211,1643670000"; 
+   d="scan'208";a="9642601"
+Received: from unknown (HELO [IPV6:2a04:cec0:111b:84e:2844:68e1:9f1b:727c]) ([80.214.144.111])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2022 19:27:35 +0100
+Message-ID: <7a522ccc-0a45-47fa-509c-a7a8b159041d@univ-lyon1.fr>
+Date:   Fri, 25 Mar 2022 19:27:35 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: contrib/vscode/: debugging with vscode and gdb
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Jonathan Bressat <git.jonathan.bressat@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Cogoni Guillaume <cogoni.guillaume@gmail.com>
+References: <CANteD_wDSRmwLQiYV1x133WEtVaRK__c584E3CbXN1tPOquitg@mail.gmail.com>
+ <2a7eecb4a0b247ef8f855f1c4fb5d510@SAMBXP02.univ-lyon1.fr>
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
+In-Reply-To: <2a7eecb4a0b247ef8f855f1c4fb5d510@SAMBXP02.univ-lyon1.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On 3/25/22 14:19, Derrick Stolee wrote:
 
-Document how `core.fsmonitor` can be set to a boolean to enable
-or disable the builtin FSMonitor.
+> Jonathan and Guillame reported that flipping this setting to "false"
+> allows the VS Code debugger to work with Git. I verified that the
+> debugger did not work by default but now does with this change.
 
-Update references to `core.fsmonitor` and `core.fsmonitorHookVersion` and
-pointers to `Watchman` to refer to it.
+FYI, I got the same problem, and I can reproduce the issue on a hello 
+world program, so "externalConsole": true, is broken at least for me 
+regardless of the Git codebase.
 
-Create `git-fsmonitor--daemon` manual page and describe its features.
+I couldn't understand what exactly the option was supposed to do. If I 
+understand correctly, it should launch another window to show the git 
+program output, but I don't know which window actually (xterm? 
+x-terminal-emulator? a terminal program that isn't installed on my system?).
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/core.txt           | 60 +++++++++++++++-----
- Documentation/git-fsmonitor--daemon.txt | 75 +++++++++++++++++++++++++
- Documentation/git-update-index.txt      |  8 ++-
- 3 files changed, 126 insertions(+), 17 deletions(-)
- create mode 100644 Documentation/git-fsmonitor--daemon.txt
+>   contrib/vscode/init.sh  |  2 +-
+>   t/test-lib-functions.sh | 34 ----------------------------------
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index c04f62a54a1..6303c36c7ed 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -62,22 +62,54 @@ core.protectNTFS::
- 	Defaults to `true` on Windows, and `false` elsewhere.
- 
- core.fsmonitor::
--	If set, the value of this variable is used as a command which
--	will identify all files that may have changed since the
--	requested date/time. This information is used to speed up git by
--	avoiding unnecessary processing of files that have not changed.
--	See the "fsmonitor-watchman" section of linkgit:githooks[5].
-+	If set to true, enable the built-in file system monitor
-+	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
-++
-+Like hook-based file system monitors, the built-in file system monitor
-+can speed up Git commands that need to refresh the Git index
-+(e.g. `git status`) in a working directory with many files.  The
-+built-in monitor eliminates the need to install and maintain an
-+external third-party tool.
-++
-+The built-in file system monitor is currently available only on a
-+limited set of supported platforms.  Currently, this includes Windows
-+and MacOS.
-++
-+	Otherwise, this variable contains the pathname of the "fsmonitor"
-+	hook command.
-++
-+This hook command is used to identify all files that may have changed
-+since the requested date/time. This information is used to speed up
-+git by avoiding unnecessary scanning of files that have not changed.
-++
-+See the "fsmonitor-watchman" section of linkgit:githooks[5].
-++
-+Note that if you concurrently use multiple versions of Git, such
-+as one version on the command line and another version in an IDE
-+tool, that the definition of `core.fsmonitor` was extended to
-+allow boolean values in addition to hook pathnames.  Git versions
-+2.35.1 and prior will not understand the boolean values and will
-+consider the "true" or "false" values as hook pathnames to be
-+invoked.  Git versions 2.26 thru 2.35.1 default to hook protocol
-+V2 and will fall back to no fsmonitor (full scan).  Git versions
-+prior to 2.26 default to hook protocol V1 and will silently
-+assume there were no changes to report (no scan), so status
-+commands may report incomplete results.  For this reason, it is
-+best to upgrade all of your Git versions before using the built-in
-+file system monitor.
- 
- core.fsmonitorHookVersion::
--	Sets the version of hook that is to be used when calling fsmonitor.
--	There are currently versions 1 and 2. When this is not set,
--	version 2 will be tried first and if it fails then version 1
--	will be tried. Version 1 uses a timestamp as input to determine
--	which files have changes since that time but some monitors
--	like watchman have race conditions when used with a timestamp.
--	Version 2 uses an opaque string so that the monitor can return
--	something that can be used to determine what files have changed
--	without race conditions.
-+	Sets the protocol version to be used when invoking the
-+	"fsmonitor" hook.
-++
-+There are currently versions 1 and 2. When this is not set,
-+version 2 will be tried first and if it fails then version 1
-+will be tried. Version 1 uses a timestamp as input to determine
-+which files have changes since that time but some monitors
-+like Watchman have race conditions when used with a timestamp.
-+Version 2 uses an opaque string so that the monitor can return
-+something that can be used to determine what files have changed
-+without race conditions.
- 
- core.trustctime::
- 	If false, the ctime differences between the index and the
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
-new file mode 100644
-index 00000000000..0fedf5a4565
---- /dev/null
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -0,0 +1,75 @@
-+git-fsmonitor--daemon(1)
-+========================
-+
-+NAME
-+----
-+git-fsmonitor--daemon - A Built-in File System Monitor
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git fsmonitor--daemon' start
-+'git fsmonitor--daemon' run
-+'git fsmonitor--daemon' stop
-+'git fsmonitor--daemon' status
-+
-+DESCRIPTION
-+-----------
-+
-+A daemon to watch the working directory for file and directory
-+changes using platform-specific file system notification facilities.
-+
-+This daemon communicates directly with commands like `git status`
-+using the link:technical/api-simple-ipc.html[simple IPC] interface
-+instead of the slower linkgit:githooks[5] interface.
-+
-+This daemon is built into Git so that no third-party tools are
-+required.
-+
-+OPTIONS
-+-------
-+
-+start::
-+	Starts a daemon in the background.
-+
-+run::
-+	Runs a daemon in the foreground.
-+
-+stop::
-+	Stops the daemon running in the current working
-+	directory, if present.
-+
-+status::
-+	Exits with zero status if a daemon is watching the
-+	current working directory.
-+
-+REMARKS
-+-------
-+
-+This daemon is a long running process used to watch a single working
-+directory and maintain a list of the recently changed files and
-+directories.  Performance of commands such as `git status` can be
-+increased if they just ask for a summary of changes to the working
-+directory and can avoid scanning the disk.
-+
-+When `core.fsmonitor` is set to `true` (see linkgit:git-config[1])
-+commands, such as `git status`, will ask the daemon for changes and
-+automatically start it (if necessary).
-+
-+For more information see the "File System Monitor" section in
-+linkgit:git-update-index[1].
-+
-+CAVEATS
-+-------
-+
-+The fsmonitor daemon does not currently know about submodules and does
-+not know to filter out file system events that happen within a
-+submodule.  If fsmonitor daemon is watching a super repo and a file is
-+modified within the working directory of a submodule, it will report
-+the change (as happening against the super repo).  However, the client
-+will properly ignore these extra events, so performance may be affected
-+but it will not cause an incorrect result.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 2853f168d97..53ea48a04e2 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -498,7 +498,9 @@ FILE SYSTEM MONITOR
- This feature is intended to speed up git operations for repos that have
- large working directories.
- 
--It enables git to work together with a file system monitor (see the
-+It enables git to work together with a file system monitor (see
-+linkgit:git-fsmonitor--daemon[1]
-+and the
- "fsmonitor-watchman" section of linkgit:githooks[5]) that can
- inform it as to what files have been modified. This enables git to avoid
- having to lstat() every file to find modified files.
-@@ -509,8 +511,8 @@ looking for new files.
- 
- If you want to enable (or disable) this feature, it is easier to use
- the `core.fsmonitor` configuration variable (see
--linkgit:git-config[1]) than using the `--fsmonitor` option to
--`git update-index` in each repository, especially if you want to do so
-+linkgit:git-config[1]) than using the `--fsmonitor` option to `git
-+update-index` in each repository, especially if you want to do so
- across all repositories you use, because you can set the configuration
- variable in your `$HOME/.gitconfig` just once and have it affect all
- repositories you touch.
+I guess the test-lib-functions.sh part is a leftover from another work?
+
+> -            "externalConsole": true,
+> +            "externalConsole": false,
+I'd actually remove the line completely, to mean "let VSCode decide what 
+to do", i.e. either VSCode's default, or the user's configuration 
+("launch" section in settings.json, see e.g. 
+https://code.visualstudio.com/docs/getstarted/settings ). If some user 
+has a non-broken externalConsole: true VSCode and likes this behavior, 
+then the best place to configure it is in a user-wide config file IHMO.
+
+Cheers,
+
 -- 
-gitgitgadget
-
+Matthieu Moy
+https://matthieu-moy.fr/
