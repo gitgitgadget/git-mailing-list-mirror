@@ -2,210 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E39D4C4332F
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60A9BC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbiCYTdo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54536 "EHLO
+        id S230281AbiCYTdr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230468AbiCYTc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:32:56 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8DE216FB9
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:30 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id r204-20020a1c44d5000000b0038ccb70e239so135675wma.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:30 -0700 (PDT)
+        with ESMTP id S231867AbiCYTd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:33:28 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C956223BC7
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:26 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id q129so9180251oif.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GykMGxH+vcSxKSOuzIgVgE2plWrsxxaHhbdq7JLSrgU=;
-        b=GUs1Y8GTmGubx9lG1XYDb21uEL1LwpQ5SgXwwNvcJ0DgYtW2ditw4hk/AMAVfOfFz4
-         SxRJSrJgadvfuX5s/M5y1c6vkNK2gJDi+RV1f0X7vDxoAyjsl81L/aHweYa+2sGI0Kcu
-         wja0zfZXy+i8Kwz2lqj2xil9dXDThujWgBeiI9cRUwXOp3q7wPyWmRlIWxl7HRJs62Wo
-         d2yiPAbiRAq7Gfz2b8BLqUxbaGUJwN1IJviuIozCiQMcfzLKhG7U2wBe1UIuZ5+QUpIi
-         H5AUR7ltD8z3uzJs6YV46Y5VdpT2LFE7BCX00JwzsJ8yqydKwylOFyAV0p6FIyNydpwL
-         NDrg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=50OKsXb3Hx+vqKuh3+ysdsPm5apUUWiXy6G23pYO/U8=;
+        b=AYJXuZhG9nNOqdeRK4cHM1MraN6nnBl9worQksRQMYeXNlQQNtRBLHrxIMErWOnVhw
+         vD2jr2zrqsJuJUIwtZdGHoyfIprWfEyJTm5O6rMx29++waieEWIRCv3A67KSntl1NWY5
+         pCXOjJWoAqOE1BYkLhD2FsiWFi2sWdYRXh5gXt/zIzC6ycDfrBk7zYOtuvBM5gE5jzCZ
+         EU9tlXz4AJrFKFEOw7oQvvlQNd4cXtQJ3XChj2KvwZpdVL6cyeQXM0jZJRLzXNXg+e8w
+         HzGZgWrvb0qcVYyi3EdSIQkSkwKxWFJBRahID0+wdT2MNJ21Vv+fsqKjXQDoOdOvdpyy
+         Pyhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GykMGxH+vcSxKSOuzIgVgE2plWrsxxaHhbdq7JLSrgU=;
-        b=O6uOTv39Z4MaY6yIz6KjCvfDsXQyj1FiS9unNix7st15vBlU470RFYpEkl12jm1x/C
-         gEc+tcJMzOMQGQ2MPrwKFI6m+PGuz+SryHBdx3USLR35DBCfbAQ61QdRcVHuOktgK6Yd
-         waQXK4ba5j3Dgc9LwbNGbitR1ak2OCJLwAgrgTFz5lC50cg5hsjCfybRik5Q+0COpMGV
-         TnCV8MGRuwm0JItHy1zaAeVqLTDBcdgyzKrd1nZQuwinZdZSFKGl9FKzM9KTiVV7G5n9
-         l2MI+EMF/NUBKfPrNAoTT6k1IraDaTUOUVlNicM/g6L6s7CTFNUXO/igHnhk4+SPYifo
-         PzPA==
-X-Gm-Message-State: AOAM533/B+3XausFuSU6CsE1Pe9hJbzoTUZTqj1okDAtDTyCD0megs0l
-        1VEJveGSqQkWBqftNWS5JDyICu2srks=
-X-Google-Smtp-Source: ABdhPJx89/8i6IWtXFSBmisqvkun0yqR9y+bzYmfxpnCxaOZMPIIlgoE3IYeZCoO85VRpD8JFEZaLA==
-X-Received: by 2002:a7b:c74c:0:b0:38c:7645:9896 with SMTP id w12-20020a7bc74c000000b0038c76459896mr11337272wmk.83.1648231395923;
-        Fri, 25 Mar 2022 11:03:15 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17-20020adfdb11000000b001f02d5fea43sm6096493wri.98.2022.03.25.11.03.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:15 -0700 (PDT)
-Message-Id: <e98373f997f5994a08423b3f42b6ddadb3a2a511.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:44 +0000
-Subject: [PATCH v9 01/30] fsmonitor: enhance existing comments, clarify
- trivial response handling
-Fcc:    Sent
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=50OKsXb3Hx+vqKuh3+ysdsPm5apUUWiXy6G23pYO/U8=;
+        b=WKNBtmW/79hiNxBQiZk1s0s3AT6bn2RALX90a4B755tEmqRSqCasm3slot39SGeIQ2
+         xxHUy/8QTmfaz//6dgMw5odjlIpK8JeSh+WhYrCXsWIB92/ffKCHId9gQzUc0qupL6C9
+         Pe9Y1kFylMq78mDA/T50ZG2JqPfs460iZ4TMaHNYQ252PvLEHPwWnKwn5ZlY1Se859Eb
+         g3yFWnly2raGCLprMi0H+78kKYn0lZJ9L/lEPZ+wHYq5v7EIm1GFKcef7I6qjD9ZBLH8
+         33lh5l16m0GljI+59P3CvS43plxqBcI4fuGio64GL3vnpjeueTRxPNswtCcG2wTl6wAZ
+         2d7A==
+X-Gm-Message-State: AOAM532BapsyxLhu2O1ddKkEHjBN9+k9Iq4Gwc7AeS1d0qz9RKovlxrY
+        ZLvbIt457cwlT8AYJCHeZuXE
+X-Google-Smtp-Source: ABdhPJygcUMd8SgXA4VAhPMIADSpnJX7g/Gh/o1c8nTbrXRpr2rT7X4c7f3TCw2MbhOg10FIg2bYgA==
+X-Received: by 2002:a05:6808:10cb:b0:2da:88e4:e352 with SMTP id s11-20020a05680810cb00b002da88e4e352mr9974562ois.159.1648235305376;
+        Fri, 25 Mar 2022 12:08:25 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id i4-20020a4addc4000000b00324bd261e5fsm2525997oov.11.2022.03.25.12.08.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 12:08:25 -0700 (PDT)
+Message-ID: <d90bb9c8-3155-ca5f-8363-154876a7ad0a@github.com>
+Date:   Fri, 25 Mar 2022 15:08:23 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] pack-objects: lazily set up "struct rev_info", don't leak
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
+ <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
+ <d71fa968-be75-f4ad-ea6c-644f9d2b52d9@github.com>
+ <220325.86r16qkodl.gmgdl@evledraar.gmail.com>
+ <8d368240-dae5-7a66-6c0c-9e0a960ca34c@github.com>
+ <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On 3/25/2022 1:34 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Mar 25 2022, Derrick Stolee wrote:
+> 
+>> On 3/25/2022 12:00 PM, Ævar Arnfjörð Bjarmason wrote:
+>>>> +struct rev_info_maybe_empty {
+>>>> +	int has_revs;
+>>>> +	struct rev_info revs;
+>>>> +};
+>>
+>> Thinking about this a second time, perhaps it would be best to add
+>> an "unsigned initialized:1;" to struct rev_info so we can look at
+>> such a struct and know whether or not repo_init_revisions() has
+>> been run or not. Avoids the custom struct and unifies a few things.
+>>
+>> In particular, release_revisions() could choose to do nothing if
+>> revs->initialized is false.
+> 
+> This plan won't work because that behavior is both undefined per the
+> standard, and something that's wildly undefined in practice.
+> 
+> I.e. we initialize it on the stack, so it'll point to uninitialized
+> memory, sometimes that bit will be 0, sometimes 1...
+> 
+> If you mean just initialize it to { 0 } or whatever that would work,
+> yes, but if we're going to refactor all the callers to do that we might
+> as well refactor the few missing bits that would be needed to initialize
+> it statically, and drop the dynamic by default initialization...
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- fsmonitor.c | 64 ++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 41 insertions(+), 23 deletions(-)
+Yes, I was assuming that we initialize all structs to all-zero,
+but the existing failure to do this will cause such a change too
+large for this issue.
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index ab9bfc60b34..448d0ee33f5 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -168,29 +168,15 @@ static int query_fsmonitor(int version, const char *last_update, struct strbuf *
- 
- 	if (result)
- 		trace2_data_intmax("fsm_hook", NULL, "query/failed", result);
--	else {
-+	else
- 		trace2_data_intmax("fsm_hook", NULL, "query/response-length",
- 				   query_result->len);
- 
--		if (fsmonitor_is_trivial_response(query_result))
--			trace2_data_intmax("fsm_hook", NULL,
--					   "query/trivial-response", 1);
--	}
--
- 	trace2_region_leave("fsm_hook", "query", NULL);
- 
- 	return result;
- }
- 
--int fsmonitor_is_trivial_response(const struct strbuf *query_result)
--{
--	static char trivial_response[3] = { '\0', '/', '\0' };
--
--	return query_result->len >= 3 &&
--		!memcmp(trivial_response,
--			&query_result->buf[query_result->len - 3], 3);
--}
--
- static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- {
- 	int i, len = strlen(name);
-@@ -238,6 +224,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 	struct strbuf last_update_token = STRBUF_INIT;
- 	char *buf;
- 	unsigned int i;
-+	int is_trivial = 0;
- 
- 	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
- 		return;
-@@ -283,6 +270,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 					query_success = 0;
- 				} else {
- 					bol = last_update_token.len + 1;
-+					is_trivial = query_result.buf[bol] == '/';
- 				}
- 			} else if (hook_version < 0) {
- 				hook_version = HOOK_INTERFACE_VERSION1;
-@@ -294,16 +282,38 @@ void refresh_fsmonitor(struct index_state *istate)
- 		if (hook_version == HOOK_INTERFACE_VERSION1) {
- 			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION1,
- 				istate->fsmonitor_last_update, &query_result);
-+			if (query_success)
-+				is_trivial = query_result.buf[0] == '/';
- 		}
- 
-+		if (is_trivial)
-+			trace2_data_intmax("fsm_hook", NULL,
-+					   "query/trivial-response", 1);
-+
- 		trace_performance_since(last_update, "fsmonitor process '%s'", core_fsmonitor);
- 		trace_printf_key(&trace_fsmonitor, "fsmonitor process '%s' returned %s",
- 			core_fsmonitor, query_success ? "success" : "failure");
- 	}
- 
--	/* a fsmonitor process can return '/' to indicate all entries are invalid */
--	if (query_success && query_result.buf[bol] != '/') {
--		/* Mark all entries returned by the monitor as dirty */
-+	/*
-+	 * The response from FSMonitor (excluding the header token) is
-+	 * either:
-+	 *
-+	 * [a] a (possibly empty) list of NUL delimited relative
-+	 *     pathnames of changed paths.  This list can contain
-+	 *     files and directories.  Directories have a trailing
-+	 *     slash.
-+	 *
-+	 * [b] a single '/' to indicate the provider had no
-+	 *     information and that we should consider everything
-+	 *     invalid.  We call this a trivial response.
-+	 */
-+	if (query_success && !is_trivial) {
-+		/*
-+		 * Mark all pathnames returned by the monitor as dirty.
-+		 *
-+		 * This updates both the cache-entries and the untracked-cache.
-+		 */
- 		buf = query_result.buf;
- 		for (i = bol; i < query_result.len; i++) {
- 			if (buf[i] != '\0')
-@@ -318,11 +328,16 @@ void refresh_fsmonitor(struct index_state *istate)
- 		if (istate->untracked)
- 			istate->untracked->use_fsmonitor = 1;
- 	} else {
--
--		/* We only want to run the post index changed hook if we've actually changed entries, so keep track
--		 * if we actually changed entries or not */
-+		/*
-+		 * We failed to get a response or received a trivial response,
-+		 * so invalidate everything.
-+		 *
-+		 * We only want to run the post index changed hook if
-+		 * we've actually changed entries, so keep track if we
-+		 * actually changed entries or not.
-+		 */
- 		int is_cache_changed = 0;
--		/* Mark all entries invalid */
-+
- 		for (i = 0; i < istate->cache_nr; i++) {
- 			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) {
- 				is_cache_changed = 1;
-@@ -330,7 +345,10 @@ void refresh_fsmonitor(struct index_state *istate)
- 			}
- 		}
- 
--		/* If we're going to check every file, ensure we save the results */
-+		/*
-+		 * If we're going to check every file, ensure we save
-+		 * the results.
-+		 */
- 		if (is_cache_changed)
- 			istate->cache_changed |= FSMONITOR_CHANGED;
- 
--- 
-gitgitgadget
+> But FWIW I think a much more obvious thing to do overall would be to
+> skip the whole "filter bust me in rev_info" refactoring part of your
+> series and just add a trivial list_objects_filter_copy_attach() method,
+> or do it inline with memcpy/memset.
+> 
+> I.e. to not touch the "filter" etc. callback stuff at all, still pass it
+> to get_object_list(). Can't 2/5 and 3/5 in your series be replaced by
+> this simpler and smaller change?:
 
+> 	-	list_objects_filter_copy(&revs.filter, &filter_options);
+> 	+	/* attach our CLI --filter to rev_info's filter */
+> 	+	memcpy(&revs.filter, filter, sizeof(*filter));
+> 	+	memset(filter, 0, sizeof(*filter));
+
+Here, you are removing a deep copy with a shallow copy. After this,
+freeing the arrays within revs.filter would cause a double-free when
+freeing the arrays in the original filter_options.
+
+If you went this way, then you could do a s/&filter_options/filter/
+in the existing line.
+
+> 	 	/* make sure shallows are read */
+> 	 	is_repository_shallow(the_repository);
+> 	@@ -3872,6 +3873,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+> 	 	int rev_list_index = 0;
+> 	 	int stdin_packs = 0;
+> 	 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
+> 	+	struct list_objects_filter_options filter_options = { 0 };
+> 	 	struct option pack_objects_options[] = {
+> 	 		OPT_SET_INT('q', "quiet", &progress,
+> 	 			    N_("do not show progress meter"), 0),
+> 	@@ -4154,7 +4156,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+> 	 	} else if (!use_internal_rev_list) {
+> 	 		read_object_list_from_stdin();
+> 	 	} else {
+> 	-		get_object_list(rp.nr, rp.v);
+> 	+		get_object_list(rp.nr, rp.v, &filter_options);
+> 	 	}
+> 	 	cleanup_preferred_base();
+> 	 	if (include_tag && nr_result)
+> 
+> And even most of that could be omitted by not removing the global
+> "static struct" since pack-objects is a one-off anyway ... :)
+
+Even if you fix the deep/shallow copy above, you still need to
+clean up the filter in two places.
+
+Thanks,
+-Stolee
