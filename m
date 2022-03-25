@@ -2,155 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60A9BC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA19AC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbiCYTdr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:33:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50592 "EHLO
+        id S230303AbiCYTd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231867AbiCYTd2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:33:28 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C956223BC7
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:26 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id q129so9180251oif.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:26 -0700 (PDT)
+        with ESMTP id S229838AbiCYTcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:32:35 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC72415B050
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:11 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id h16so4978465wmd.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=50OKsXb3Hx+vqKuh3+ysdsPm5apUUWiXy6G23pYO/U8=;
-        b=AYJXuZhG9nNOqdeRK4cHM1MraN6nnBl9worQksRQMYeXNlQQNtRBLHrxIMErWOnVhw
-         vD2jr2zrqsJuJUIwtZdGHoyfIprWfEyJTm5O6rMx29++waieEWIRCv3A67KSntl1NWY5
-         pCXOjJWoAqOE1BYkLhD2FsiWFi2sWdYRXh5gXt/zIzC6ycDfrBk7zYOtuvBM5gE5jzCZ
-         EU9tlXz4AJrFKFEOw7oQvvlQNd4cXtQJ3XChj2KvwZpdVL6cyeQXM0jZJRLzXNXg+e8w
-         HzGZgWrvb0qcVYyi3EdSIQkSkwKxWFJBRahID0+wdT2MNJ21Vv+fsqKjXQDoOdOvdpyy
-         Pyhw==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=oGDRFTIGvSWmNGonDgOtutzgzNzlHM+LdHJYE6AYmv0=;
+        b=aDBD1My7da2KppfsTSqA+LV5wm8c02H13qLg6Uxy6oCLHGAxp7u0bXmMVL+KlDama8
+         INhuOaPbbWyHSvt+ytQgX6IZVIony+/9hVzzORNDDyPW0ZowES7/T8YzPzP6c8i8DfPn
+         cnh312r3/OmiRvBW2M5AeKr5Dy05LQcYjoKGKk3DY5SxS0V5XaO44SCR06JtCU3fpxxI
+         hxaKbfd6MEpXFudZumojW2qOtJl0WEoDHFe6W6f6l/dKGnCJohQ2uQt3TK8FB3ivGGIr
+         TDpEH9Oanc5rFXluct8jfyb2ALEkSIDr2i6ixc0R6nVQXrnYRXgIkE0ooukAqyaO2rPb
+         erRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=50OKsXb3Hx+vqKuh3+ysdsPm5apUUWiXy6G23pYO/U8=;
-        b=WKNBtmW/79hiNxBQiZk1s0s3AT6bn2RALX90a4B755tEmqRSqCasm3slot39SGeIQ2
-         xxHUy/8QTmfaz//6dgMw5odjlIpK8JeSh+WhYrCXsWIB92/ffKCHId9gQzUc0qupL6C9
-         Pe9Y1kFylMq78mDA/T50ZG2JqPfs460iZ4TMaHNYQ252PvLEHPwWnKwn5ZlY1Se859Eb
-         g3yFWnly2raGCLprMi0H+78kKYn0lZJ9L/lEPZ+wHYq5v7EIm1GFKcef7I6qjD9ZBLH8
-         33lh5l16m0GljI+59P3CvS43plxqBcI4fuGio64GL3vnpjeueTRxPNswtCcG2wTl6wAZ
-         2d7A==
-X-Gm-Message-State: AOAM532BapsyxLhu2O1ddKkEHjBN9+k9Iq4Gwc7AeS1d0qz9RKovlxrY
-        ZLvbIt457cwlT8AYJCHeZuXE
-X-Google-Smtp-Source: ABdhPJygcUMd8SgXA4VAhPMIADSpnJX7g/Gh/o1c8nTbrXRpr2rT7X4c7f3TCw2MbhOg10FIg2bYgA==
-X-Received: by 2002:a05:6808:10cb:b0:2da:88e4:e352 with SMTP id s11-20020a05680810cb00b002da88e4e352mr9974562ois.159.1648235305376;
-        Fri, 25 Mar 2022 12:08:25 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id i4-20020a4addc4000000b00324bd261e5fsm2525997oov.11.2022.03.25.12.08.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 12:08:25 -0700 (PDT)
-Message-ID: <d90bb9c8-3155-ca5f-8363-154876a7ad0a@github.com>
-Date:   Fri, 25 Mar 2022 15:08:23 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] pack-objects: lazily set up "struct rev_info", don't leak
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
- <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
- <d71fa968-be75-f4ad-ea6c-644f9d2b52d9@github.com>
- <220325.86r16qkodl.gmgdl@evledraar.gmail.com>
- <8d368240-dae5-7a66-6c0c-9e0a960ca34c@github.com>
- <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=oGDRFTIGvSWmNGonDgOtutzgzNzlHM+LdHJYE6AYmv0=;
+        b=Jvk1akyqZQQlSYjFzaklnwvPqPKYyLVOZycPZusxkuoLRGKR/JaldyzHmplEp2xzrj
+         AULjlOdnn+Vpf7qcPRkb6oqNUm6WWM1NfnyoWDSi40CEXDVh0whlgG8rrp2hBgVGy+mH
+         7bgoKqNtWqRoPAPMW1yN3PpSp3CLOAoa99ogtXAE/WPBdrTQvpqpu/MLIKSh1z34HXMD
+         4WAn04HEmyK9J7LNmNt2/VrIFJOwuOumIG1c/QivXgoOlO4F4eO7JugkgvcXIb6V3wxc
+         Ca8IHp+EJ2wA5zR418bgeNNCS3eZwLAVYMb7e6VPMeks+XSpTvp1nzwjJH9XRidL7Ka+
+         OLAw==
+X-Gm-Message-State: AOAM532IkLtswxcjh4JHCoSVoGl5vRX5d3pRKxajpQZzHg1jopF20W+J
+        g3r64QBt35aTnErdC0nf1oldmvJj7Js=
+X-Google-Smtp-Source: ABdhPJxaxpUawYuvHrkkONLz5eM+lnYIgKwWjvjLMBdPCmxnMHLKpK7q31t2m72vbWPZIA1ZdSc4Zg==
+X-Received: by 2002:a7b:c922:0:b0:383:e7e2:4a1a with SMTP id h2-20020a7bc922000000b00383e7e24a1amr11362661wml.51.1648231399656;
+        Fri, 25 Mar 2022 11:03:19 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p23-20020a1c5457000000b0038c98c12ea9sm4983399wmi.1.2022.03.25.11.03.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Mar 2022 11:03:19 -0700 (PDT)
+Message-Id: <ea02ba25d8f0e5e76a646d23306eb6a2b312ebe2.1648231393.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:02:47 +0000
+Subject: [PATCH v9 04/30] fsmonitor: use IPC to query the builtin FSMonitor
+ daemon
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/25/2022 1:34 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Fri, Mar 25 2022, Derrick Stolee wrote:
-> 
->> On 3/25/2022 12:00 PM, Ævar Arnfjörð Bjarmason wrote:
->>>> +struct rev_info_maybe_empty {
->>>> +	int has_revs;
->>>> +	struct rev_info revs;
->>>> +};
->>
->> Thinking about this a second time, perhaps it would be best to add
->> an "unsigned initialized:1;" to struct rev_info so we can look at
->> such a struct and know whether or not repo_init_revisions() has
->> been run or not. Avoids the custom struct and unifies a few things.
->>
->> In particular, release_revisions() could choose to do nothing if
->> revs->initialized is false.
-> 
-> This plan won't work because that behavior is both undefined per the
-> standard, and something that's wildly undefined in practice.
-> 
-> I.e. we initialize it on the stack, so it'll point to uninitialized
-> memory, sometimes that bit will be 0, sometimes 1...
-> 
-> If you mean just initialize it to { 0 } or whatever that would work,
-> yes, but if we're going to refactor all the callers to do that we might
-> as well refactor the few missing bits that would be needed to initialize
-> it statically, and drop the dynamic by default initialization...
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Yes, I was assuming that we initialize all structs to all-zero,
-but the existing failure to do this will cause such a change too
-large for this issue.
+Use simple IPC to directly communicate with the new builtin file
+system monitor daemon when `core.fsmonitor` is set to true.
 
-> But FWIW I think a much more obvious thing to do overall would be to
-> skip the whole "filter bust me in rev_info" refactoring part of your
-> series and just add a trivial list_objects_filter_copy_attach() method,
-> or do it inline with memcpy/memset.
-> 
-> I.e. to not touch the "filter" etc. callback stuff at all, still pass it
-> to get_object_list(). Can't 2/5 and 3/5 in your series be replaced by
-> this simpler and smaller change?:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fsmonitor.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-> 	-	list_objects_filter_copy(&revs.filter, &filter_options);
-> 	+	/* attach our CLI --filter to rev_info's filter */
-> 	+	memcpy(&revs.filter, filter, sizeof(*filter));
-> 	+	memset(filter, 0, sizeof(*filter));
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 0e961b74d82..a38b5710eb3 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -241,8 +241,41 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
+ 
+ 	if (fsm_mode == FSMONITOR_MODE_IPC) {
+-		/* TODO */
+-		return;
++		query_success = !fsmonitor_ipc__send_query(
++			istate->fsmonitor_last_update ?
++			istate->fsmonitor_last_update : "builtin:fake",
++			&query_result);
++		if (query_success) {
++			/*
++			 * The response contains a series of nul terminated
++			 * strings.  The first is the new token.
++			 *
++			 * Use `char *buf` as an interlude to trick the CI
++			 * static analysis to let us use `strbuf_addstr()`
++			 * here (and only copy the token) rather than
++			 * `strbuf_addbuf()`.
++			 */
++			buf = query_result.buf;
++			strbuf_addstr(&last_update_token, buf);
++			bol = last_update_token.len + 1;
++			is_trivial = query_result.buf[bol] == '/';
++			if (is_trivial)
++				trace2_data_intmax("fsm_client", NULL,
++						   "query/trivial-response", 1);
++		} else {
++			/*
++			 * The builtin daemon is not available on this
++			 * platform -OR- we failed to get a response.
++			 *
++			 * Generate a fake token (rather than a V1
++			 * timestamp) for the index extension.  (If
++			 * they switch back to the hook API, we don't
++			 * want ambiguous state.)
++			 */
++			strbuf_addstr(&last_update_token, "builtin:fake");
++		}
++
++		goto apply_results;
+ 	}
+ 
+ 	assert(fsm_mode == FSMONITOR_MODE_HOOK);
+@@ -315,6 +348,7 @@ void refresh_fsmonitor(struct index_state *istate)
+ 				 query_success ? "success" : "failure");
+ 	}
+ 
++apply_results:
+ 	/*
+ 	 * The response from FSMonitor (excluding the header token) is
+ 	 * either:
+-- 
+gitgitgadget
 
-Here, you are removing a deep copy with a shallow copy. After this,
-freeing the arrays within revs.filter would cause a double-free when
-freeing the arrays in the original filter_options.
-
-If you went this way, then you could do a s/&filter_options/filter/
-in the existing line.
-
-> 	 	/* make sure shallows are read */
-> 	 	is_repository_shallow(the_repository);
-> 	@@ -3872,6 +3873,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
-> 	 	int rev_list_index = 0;
-> 	 	int stdin_packs = 0;
-> 	 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
-> 	+	struct list_objects_filter_options filter_options = { 0 };
-> 	 	struct option pack_objects_options[] = {
-> 	 		OPT_SET_INT('q', "quiet", &progress,
-> 	 			    N_("do not show progress meter"), 0),
-> 	@@ -4154,7 +4156,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
-> 	 	} else if (!use_internal_rev_list) {
-> 	 		read_object_list_from_stdin();
-> 	 	} else {
-> 	-		get_object_list(rp.nr, rp.v);
-> 	+		get_object_list(rp.nr, rp.v, &filter_options);
-> 	 	}
-> 	 	cleanup_preferred_base();
-> 	 	if (include_tag && nr_result)
-> 
-> And even most of that could be omitted by not removing the global
-> "static struct" since pack-objects is a one-off anyway ... :)
-
-Even if you fix the deep/shallow copy above, you still need to
-clean up the filter in two places.
-
-Thanks,
--Stolee
