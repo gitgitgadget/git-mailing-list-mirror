@@ -2,299 +2,286 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DAF4C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B89C4167E
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230407AbiCYTk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52160 "EHLO
+        id S230469AbiCYTke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232181AbiCYTin (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:38:43 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C0A23DEA7
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:19:48 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 5so14981335lfp.1
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:19:48 -0700 (PDT)
+        with ESMTP id S233182AbiCYTjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:39:44 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EADA154480
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:11 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id k10so10317043edj.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Zzx1J/Q0B/ytOVrDNtBa/aPzfnnlejcsyejTM+gsiE8=;
-        b=P6IpjhiXeakvnwWF1E/7/J6ItK2CJYySM/pTYfG56WnN7Q12Zw11H5l4Hkl8ItxKsp
-         4POWq27a/XZEcZnCuGqyPPCyAmjol7BMZt7rlD5YIDaNwYMZA5W9XmBS0lEZpzYlpmE5
-         flITcF3bzxZCXKxIvu/cLfFDdWnO/AQ99AqLFs/OoeYwG8CZDCH9GHlHAKkQ88e3cZeU
-         tNS0LOkwQx0nwZrse3CGg6+kABsuwJuvpsrj6YEtY6KZLbk8pJ2CceHFRSMI1PConFfp
-         hDgewHLDtzWjFph6SOS83DDn3tIYeZkj0xkkj3cMVf8wtOW5s8DffcLsxtgquL6mL3cr
-         Iclg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GrBOjazPoOy9bBn9XQWMC8zyaup1dZC3OgfdBghoBg8=;
+        b=jumi3t455x3rEsycTdGYCXwheyvIGY2DQ252gYYeR8Zry7933iszJqoQBkX12gCAGo
+         N83H78/3gPHRSFoFMCRtJquCmAYnO2Yh2GrtAaAkLnnbE1ElCl+iGJdLEGMcfdaNdH+4
+         MVeqknAuQyw1mkdlwMKnBc/mupDV2G8gwSuG8LzAWTcptgHf2xoGZDY8fdTW0tgz26bd
+         yx5W5vjV0moAbruzg+/eBNalBlWrF15s0r79ae2s952+Zql6H85eD4ONO8B9a1TBciZl
+         8B4dHzfVOOzaCmz3ENLwJfoG4ZVWzFxkwQLsQuQlDZTN4AYcccU3lA0p1ZQUwRlvKPXH
+         eIGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Zzx1J/Q0B/ytOVrDNtBa/aPzfnnlejcsyejTM+gsiE8=;
-        b=axvU0F02Oea+cto7DuhQJiTo9mnUmbcxAIGTVVH5TKp8rr6eaD3lM/3nNHOkJadnKh
-         KtoqG095Daa0OnqG9w0taL6uijykyr2rtJsWSipJ2eiTGksY6GiFcPCypoKIalk/dvnq
-         cHjuFqYCumSgLh4vLQszg0z0FDyjFGzWrRweVOepdXisIg5RFGTOt7rXJ2aW3FECYyJw
-         4AsF0JbD0BFWVF3bHfcrJ4fbgtEvsEKCLOMpfcy5V9UzkmlfWQrZvf340VmU6ArJ2UHo
-         WauNFFrFvVxJs8hXl/Db6pOatwsUnoBYourcWvSQvAHGiaZ6JSFW2IPY8BlKQv80q0pJ
-         Ug1A==
-X-Gm-Message-State: AOAM532Ew7Gl2q6uMOUWqdLffDi1Jj6OrPw5JMP8y+APTIIXJPG4pVTY
-        44NhLVJ1SnfaS6EwJjysbiE3RuFp5HID3A==
-X-Google-Smtp-Source: ABdhPJyC9vvCvAyX04msC2FKrdo8QoY3ofRqNNoRKsa/S+FHz8kPe+wmyQoR5SGIVM91hAfYh75c9Q==
-X-Received: by 2002:a05:6402:350d:b0:419:5099:1f10 with SMTP id b13-20020a056402350d00b0041950991f10mr14911204edd.144.1648231923986;
-        Fri, 25 Mar 2022 11:12:03 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k12-20020aa7c38c000000b0041939d9ccd0sm3159360edq.81.2022.03.25.11.12.03
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GrBOjazPoOy9bBn9XQWMC8zyaup1dZC3OgfdBghoBg8=;
+        b=I6ULNwrMPpjwPWUnHG/WQ1P3qQvXfhKx8E7viQdLZFTBY2jHg5oFGYCmoJH1fblUPr
+         Nz0LuykvZUpQMIy8adz2vdyZlpZY9aasBFVMkxZo+pIWZwtbO6HsYEIZsR2ustixfynV
+         ENMjiF4qeSPY5/8GyEUbShX3unLQnRSrSB56Woh7hgp4W7VnAYH9uILXznqfqbm4FuMD
+         U9Sf7TMlFX0ACt6nMGRalo1NZAaGMv1QoFnRtAL7Ys5G00gCjFg5MjSTcUvaWzCQtKzT
+         RF/xGaO09bePIOun/Oc5BoGmRJ835Ff41IOx1xYHe8LMIZ3/VnEF/W95kX+q+G9zGOO6
+         zOvA==
+X-Gm-Message-State: AOAM5338w8YIaGb7HqqCXeuK6UW4NZleWxTFa8otq4IMuPJUStwSgASn
+        5G4k2t7U8j7sZtPH80d/XWi9WF7Djp3cOQ==
+X-Google-Smtp-Source: ABdhPJwHbHOUVGMEQyeqw6SOHoPGlHOLB4i9qS4kHT1zj+/Ty/Zzk6607bmVUN66ijGonlqqTwKOFA==
+X-Received: by 2002:a05:6000:1042:b0:203:f651:30ae with SMTP id c2-20020a056000104200b00203f65130aemr10047239wrx.543.1648233498874;
+        Fri, 25 Mar 2022 11:38:18 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:12:03 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nXoPq-0026Tm-Ss;
-        Fri, 25 Mar 2022 19:12:02 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH] pack-objects: lazily set up "struct rev_info", don't leak
-Date:   Fri, 25 Mar 2022 18:34:11 +0100
-References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
- <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
- <d71fa968-be75-f4ad-ea6c-644f9d2b52d9@github.com>
- <220325.86r16qkodl.gmgdl@evledraar.gmail.com>
- <8d368240-dae5-7a66-6c0c-9e0a960ca34c@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <8d368240-dae5-7a66-6c0c-9e0a960ca34c@github.com>
-Message-ID: <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
+        Fri, 25 Mar 2022 11:38:18 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 00/25] CI: run "make [test]" directly, use $GITHUB_ENV
+Date:   Fri, 25 Mar 2022 19:37:51 +0100
+Message-Id: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
+In-Reply-To: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A re-roll of my improvements my series to simplify the CI setup a lot
+(see diffstat), much of it was dealing with constraints that went away
+with Travis et al. CI for this series (OSX runners failing for
+unrelated reasons):
 
-On Fri, Mar 25 2022, Derrick Stolee wrote:
+    https://github.com/avar/git/actions/runs/2040223909
 
-> On 3/25/2022 12:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Fri, Mar 25 2022, Derrick Stolee wrote:
->> [...]
->>>> We could furthermore combine the two get_object_list() invocations
->>>> here by having repo_init_revisions() invoked on &pfd.revs, but I think
->>>> clearly separating the two makes the flow clearer. Likewise
->>>> redundantly but explicitly (i.e. redundant v.s. a "{ 0 }") "0" to
->>>> "have_revs" early in cmd_pack_objects().
->>>
->>> I disagree, especially when you later want to make sure we free
->>> the data from revs using your release_revisions().
->>=20
->> Because we'll need two release_revisions() instead of one?
->
-> And it would be easy to miss one of the two if you are only testing
-> certain paths with leak-check on.
->
->>>> This does add the future constraint to opt_parse_list_objects_filter()
->>>> that we'll need to adjust this wrapper code if it looks at any other
->>>> value of the "struct option" than the "value" member.
->>>
->>> So we are coupling ourselves to the implementation of this method.
->>=20
->> Sure, but aren't all OPT_* where the macro is providing some custom
->> callback coupling themselves to how it's implemented?
->
-> No, I mean that the callback function you are making here is coupling
-> itself to the existing callback function in a novel way.
+For a much more detailed summary of how the output looks before/after
+see v1[].
 
-Yeah, I did start by just copy/pasting its contents, or I could have
-both of them call a semi-"private" wrapper, would you prefer one of
-those instead?
+This series heavily conflicts with Johannes's
+js/ci-github-workflow-markup in "seen", but in the v1 I suggested
+basing that series on top of this one, because it can benefit a lot
+from these simplifications.
 
-> I tried to find another example of a nested callback, but I didn't
-> even find another instance of creating a new 'struct option'.
+I'll reply to this series with a proposed rebasing of that series on
+top of this one, which allows for removing almost all of its changes
+to "ci/" with no harm to its end-goals, i.e. the splitting up of
+"make" and "make test" output is something it'll get for free from
+this series.
 
-I haven't seen a nested one, FWIW OPT_ALIAS() creates a new "struct
-option", but in a completely unrelated way, what I'm doing here is
-probably novel within the codebase...
+Junio: Since that series has been stalled on still-outstanding
+performance issues for a couple of months I was hoping we could queue
+this instead, and perhaps in addition if Johannes approves of the
+proposed re-roll on top of his.
 
->>>> But that regression should be relatively easy to spot. I'm
->>>> intentionally not initializing the "struct wrap" with e.g. "{ 0 }" so
->>>> that various memory sanity checkers would spot that, we just
->>>> initialize the "value" in po_filter_cb(). By doing this e.g. we'll die
->>>> on e.g. this test if we were to use another member of "opt" in
->>>> opt_parse_list_objects_filter()>
->>>
->>> So you are using uninitialized memory as a way to discover any
->>> necessary changes to that coupling. I'm not sure this is super-safe
->>> because we don't necessarily run memory checkers during CI builds.
->>>
->>> I'd rather have a consistently initialized chunk of data that would
->>> behave predictably (and hopefully we'd discover it is behaving
->>> incorrectly with that predictable behavior).
->>=20
->> I'd like to keep this as-is, i.e. if you zero it out it might also
->> behave unpredictably or even in undefined ways (e.g. a NULL ptr
->> dereference). Likewise in my version, but it has the benefit of being
->> caught by some tooling we have.
->
-> I guess by "predictable" I mean "well-defined" or "deterministic".
->
-> I don't want the build options to change how this works (for instance,
-> debug builds sometimes initialize data to zero).
+There's some forward progress on the performance issues (this[2] reply
+of Victoria Dye's from yesterday), but fully resolving those will
+probably take a bit...
 
-Yeah I agree that does suck.
+Whereas even though this one is relatively large I don't think there's
+anything controversial here. The one concern that's been raised has
+been Johannes's objection to removing some of the dead Azure code
+(which was needed to move forward here). I asked how he'd prefer to
+move forward with that in [3], but there hasn't been a reply to that
+in >1 month.
 
-Honestly I don't care that much in this case, I just wanted to resolve
-the topic conflict.
+I think just removing it is OK, we can always bring it back if needed,
+and doing so is actually going to be simpler on top of this since the
+CI is now less special, and leans more heavily on the logic of our
+normal build process.
 
-In the general case though I think it's much better to have a flaky
-failure caught on some platforms, via valgrind or whatever because we
-used uninitialized memory than to have a silent failure (e.g. because
-it's always an int=3D0, but we expected something else...)
+1. https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com
+2. https://lore.kernel.org/git/6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com/
+3. https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
 
->>> +struct rev_info_maybe_empty {
->>> +	int has_revs;
->>> +	struct rev_info revs;
->>> +};
->
-> Thinking about this a second time, perhaps it would be best to add
-> an "unsigned initialized:1;" to struct rev_info so we can look at
-> such a struct and know whether or not repo_init_revisions() has
-> been run or not. Avoids the custom struct and unifies a few things.
->
-> In particular, release_revisions() could choose to do nothing if
-> revs->initialized is false.
+Ævar Arnfjörð Bjarmason (25):
+  CI: run "set -ex" early in ci/lib.sh
+  CI: make "$jobname" explicit, remove fallback
+  CI: remove more dead Travis CI support
+  CI: remove dead "tree skipping" code
+  CI: remove unused Azure ci/* code
+  CI: don't have "git grep" invoke a pager in tree content check
+  CI: have "static-analysis" run a "make ci-static-analysis" target
+  CI: have "static-analysis" run "check-builtins", not "documentation"
+  CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+  CI: consistently use "export" in ci/lib.sh
+  CI: export variables via a wrapper
+  CI: remove "run-build-and-tests.sh", run "make [test]" directly
+  CI: check ignored unignored build artifacts in "win[+VS] build" too
+  CI: invoke "make artifacts-tar" directly in windows-build
+  CI: split up and reduce "ci/test-documentation.sh"
+  CI: combine ci/install{,-docker}-dependencies.sh
+  CI: move "env" definitions into ci/lib.sh
+  ci/run-test-slice.sh: replace shelling out with "echo"
+  CI: pre-select test slice in Windows & VS tests
+  CI: only invoke ci/lib.sh as "steps" in main.yml
+  CI: narrow down variable definitions in --build and --test
+  CI: add more variables to MAKEFLAGS, except under vs-build
+  CI: set CC in MAKEFLAGS directly, don't add it to the environment
+  CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
+  CI: don't use "set -x" in "ci/lib.sh" output
 
-This plan won't work because that behavior is both undefined per the
-standard, and something that's wildly undefined in practice.
+ .github/workflows/main.yml            | 100 +++++---
+ Makefile                              |  31 ++-
+ ci/check-directional-formatting.bash  |   2 +-
+ ci/check-unignored-build-artifacts.sh |  20 ++
+ ci/install-dependencies.sh            |  53 ++++-
+ ci/install-docker-dependencies.sh     |  22 --
+ ci/lib-ci-type.sh                     |  10 +
+ ci/lib-tput.sh                        |   2 +
+ ci/lib.sh                             | 316 +++++++++++++-------------
+ ci/make-test-artifacts.sh             |  12 -
+ ci/mount-fileshare.sh                 |  25 --
+ ci/print-test-failures.sh             |  16 +-
+ ci/run-build-and-tests.sh             |  54 -----
+ ci/run-docker-build.sh                |  66 ------
+ ci/run-docker.sh                      |  47 ----
+ ci/run-static-analysis.sh             |  32 ---
+ ci/run-test-slice.sh                  |  17 --
+ ci/select-test-slice.sh               |  10 +
+ ci/test-documentation.sh              |  37 +--
+ ci/util/extract-trash-dirs.sh         |  50 ----
+ shared.mak                            |   1 +
+ 21 files changed, 346 insertions(+), 577 deletions(-)
+ create mode 100755 ci/check-unignored-build-artifacts.sh
+ delete mode 100755 ci/install-docker-dependencies.sh
+ create mode 100644 ci/lib-ci-type.sh
+ create mode 100644 ci/lib-tput.sh
+ delete mode 100755 ci/make-test-artifacts.sh
+ delete mode 100755 ci/mount-fileshare.sh
+ delete mode 100755 ci/run-build-and-tests.sh
+ delete mode 100755 ci/run-docker-build.sh
+ delete mode 100755 ci/run-docker.sh
+ delete mode 100755 ci/run-static-analysis.sh
+ delete mode 100755 ci/run-test-slice.sh
+ create mode 100755 ci/select-test-slice.sh
+ delete mode 100755 ci/util/extract-trash-dirs.sh
 
-I.e. we initialize it on the stack, so it'll point to uninitialized
-memory, sometimes that bit will be 0, sometimes 1...
+Range-diff against v1:
+ 1:  970849a227f =  1:  4addbd70213 CI: run "set -ex" early in ci/lib.sh
+ 2:  eda7fb18064 =  2:  b23aa99fd37 CI: make "$jobname" explicit, remove fallback
+ 3:  3ee32815cf3 =  3:  eec15a95879 CI: remove more dead Travis CI support
+ 4:  c81c1b3f504 =  4:  73c894f1665 CI: remove dead "tree skipping" code
+ 5:  4738a22a36d =  5:  b5e6d538554 CI: remove unused Azure ci/* code
+ 6:  59e4f41e86c =  6:  a4b9febbdca CI: don't have "git grep" invoke a pager in tree content check
+ 7:  836ef20fdcc !  7:  5d46d5b34c9 CI: have "static-analysis" run a "make ci-static-analysis" target
+    @@ .github/workflows/main.yml: jobs:
+          if: needs.ci-config.outputs.enabled == 'yes'
+     
+      ## Makefile ##
+    -@@ Makefile: ifndef V
+    - 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
+    - 	QUIET_RC       = @echo '   ' RC $@;
+    - 	QUIET_SPATCH   = @echo '   ' SPATCH $<;
+    -+	QUIET_CHECK    = @echo '   ' CHECK $@;
+    - 	QUIET_SUBDIR0  = +@subdir=
+    - 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+    - 			 $(MAKE) $(PRINT_DIR) -C $$subdir
+     @@ Makefile: coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
+      # See contrib/coccinelle/README
+      coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
+    @@ ci/run-static-analysis.sh (deleted)
+     -
+     -make hdr-check ||
+     -exit 1
+    +
+    + ## shared.mak ##
+    +@@ shared.mak: ifndef V
+    + 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
+    + 	QUIET_RC       = @echo '   ' RC $@;
+    + 	QUIET_SPATCH   = @echo '   ' SPATCH $<;
+    ++	QUIET_CHECK    = @echo '   ' CHECK $@;
+    + 
+    + ## Used in "Documentation/Makefile"
+    + 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ 8:  95cd496868e =  8:  81e06f13d84 CI: have "static-analysis" run "check-builtins", not "documentation"
+ 9:  a1d0796259e =  9:  3be91c26d44 CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+10:  b6a61a786c5 = 10:  9dc148341ba CI: consistently use "export" in ci/lib.sh
+11:  f2fcee5d6e4 = 11:  e9c7ba492e8 CI: export variables via a wrapper
+12:  dfd823f2e7d = 12:  86d5a48d59a CI: remove "run-build-and-tests.sh", run "make [test]" directly
+13:  46459fff296 = 13:  649ad1ae249 CI: check ignored unignored build artifacts in "win[+VS] build" too
+14:  aecd3ebaafe = 14:  b1b5b083389 CI: invoke "make artifacts-tar" directly in windows-build
+15:  4f1564af70f = 15:  dfa91ac8938 CI: split up and reduce "ci/test-documentation.sh"
+16:  868613a5b06 = 16:  ba4ed216769 CI: combine ci/install{,-docker}-dependencies.sh
+17:  5d854e8ff36 = 17:  b5e89a33340 CI: move "env" definitions into ci/lib.sh
+18:  a6106525b7f = 18:  571f4d0f441 ci/run-test-slice.sh: replace shelling out with "echo"
+19:  e9c6c4dd293 = 19:  2edea06ee4d CI: pre-select test slice in Windows & VS tests
+20:  40d86e8c1dc = 20:  ef9daa6882f CI: only invoke ci/lib.sh as "steps" in main.yml
+21:  abf9c504740 = 21:  44e3ace5fbe CI: narrow down variable definitions in --build and --test
+22:  9f4c2798a82 = 22:  5f56b922e08 CI: add more variables to MAKEFLAGS, except under vs-build
+23:  8a8b7ecf16b ! 23:  b45b7cec94e CI: stop over-setting the $CC variable
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    CI: stop over-setting the $CC variable
+    +    CI: set CC in MAKEFLAGS directly, don't add it to the environment
+     
+    -    As detailed in 2c8921db2b8 (travis-ci: build with the right compiler,
+    -    2019-01-17) the reason we started using $CC in $MAKEFLAGS as opposed
+    -    to setting it in the environment was due to Travis CI clobbering $CC
+    -    in the environment.
+    +    Rather than pass a "$CC" and "$CC_PACKAGE" in the environment to be
+    +    picked up in ci/lib.sh let's instead have ci/lib.sh itself add it
+    +    directly to MAKEFLAGS.
+     
+    -    We don't need to set it unconditionally to accomplish that, but rather
+    -    just have it set for those jobs that need them. E.g. the "win+VS
+    -    build" job confusingly has CC=gcc set, even though it builds with
+    -    MSVC.
+    +    Setting CC=gcc by default made for confusing trace output, and since a
+    +    preceding change to carry it and others over across "steps" in the
+    +    GitHub CI it's been even more misleading.  E.g. the "win+VS build" job
+    +    confusingly has CC=gcc set, even though it builds with MSVC.
+    +
+    +    Let's instead reply on the Makefile default of CC=cc, and only
+    +    override it for those jobs where it's needed. This does mean that
+    +    we'll need to set it for the "pedantic" job, which previously relied
+    +    on the default CC=gcc in case "clang" become the default on that
+    +    platform.
+     
+         This partially reverts my 707d2f2fe86 (CI: use "$runs_on_pool", not
+         "$jobname" to select packages & config, 2021-11-23), i.e. we're now
+    @@ ci/lib.sh: linux-TEST-vars)
+      	setenv --test GIT_TEST_DEFAULT_HASH sha256
+      	;;
+      pedantic)
+    ++	CC=gcc
+    + 	# Don't run the tests; we only care about whether Git can be
+    + 	# built.
+    + 	setenv --build DEVOPTS pedantic
+     @@ ci/lib.sh: linux-musl)
+      	MAKEFLAGS="$MAKEFLAGS GIT_TEST_UTF8_LOCALE=C.UTF-8"
+      	;;
+24:  d7b472b4a52 = 24:  06bf8d9f61b CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
+25:  08a9776c259 = 25:  6dc96ba8b82 CI: don't use "set -x" in "ci/lib.sh" output
+-- 
+2.35.1.1517.g20a06c426a7
 
-If you mean just initialize it to { 0 } or whatever that would work,
-yes, but if we're going to refactor all the callers to do that we might
-as well refactor the few missing bits that would be needed to initialize
-it statically, and drop the dynamic by default initialization...
-
-> Further, a second repo_init_revisions() could do nothing if
-> revs->initialized is true. This allows us to safely "re-init"
-> without our own "if (has_revs)" checks...
-
-Yeah if you had a previous repo_init_revisions() you could rely on that.
-
->>> 	else {
->>> 		if (!pfd.have_revs) {
->>> 			repo_init_revisions(the_repository, &pfd.revs, NULL);
->>> 			pfd.have_revs =3D 1;
->>> 		}
->>> 		get_object_list(&pfd.revs, rp.nr, rp.v);
->>> 	}
->
-> ...making this just
->
-> 	else {
-> 		repo_init_revisions(the_repository, &revs, NULL);
-> 		get_object_list(&revs. rp.nr, rp.v);
-> 	}
->
->> Conceptually I think the saving of that one line isn't worth it to the
->> reader.
->>=20
->> Then you'd need to read up and see exactly how pfd.revs gets mutated,
->> and its callback etc., only to see we're just doing this to save
->> ourselves a variable deceleration and a call to release_revisions().
->>=20
->>> and then later you can add
->>>
->>> 	if (pfd.have_revs)
->>> 		release_revisions(&pfd.revs);
->
-> And this would just be
->
-> 	release_revisions(&revs);
->
->>> to clear the memory in exactly one place.
->>=20
->> Yeah, it would work. I'd just prefer control flow that's trivial to
->> reason about over saving a couple of lines here.
->
-> I think having multiple revision things that can live at different
-> levels (one embedded in a custom struct, one not) is not trivial to
-> reason about. If we change the "is this initialized" indicator to be
-> within 'struct rev_info', then this gets simpler.
-
-I meant: if you want to read that code through without considering the
-"filter" case it's obvious that you can skip the whole "pfd.revs" part
-in that case, and that it's only something to do with "filter".
-
-> It seems to me that it is easier to track a single struct and release
-> the memory in one place based on its lifespan.
-
-I submitted a patch on top because it looked like your topic was going
-to be merged to "next" soon, and I really didn't care much in this case.
-
-But FWIW I think a much more obvious thing to do overall would be to
-skip the whole "filter bust me in rev_info" refactoring part of your
-series and just add a trivial list_objects_filter_copy_attach() method,
-or do it inline with memcpy/memset.
-
-I.e. to not touch the "filter" etc. callback stuff at all, still pass it
-to get_object_list(). Can't 2/5 and 3/5 in your series be replaced by
-this simpler and smaller change?:
-
-	diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-	index 829ca359cf9..4ce76a378c8 100644
-	--- a/builtin/pack-objects.c
-	+++ b/builtin/pack-objects.c
-	@@ -237,8 +237,6 @@ static unsigned long cache_max_small_delta_size =3D 10=
-00;
-=09=20
-	 static unsigned long window_memory_limit =3D 0;
-=09=20
-	-static struct list_objects_filter_options filter_options;
-	-
-	 static struct string_list uri_protocols =3D STRING_LIST_INIT_NODUP;
-=09=20
-	 enum missing_action {
-	@@ -3714,7 +3712,8 @@ static void mark_bitmap_preferred_tips(void)
-	 	}
-	 }
-=09=20
-	-static void get_object_list(int ac, const char **av)
-	+static void get_object_list(int ac, const char **av,
-	+			    struct list_objects_filter_options *filter)
-	 {
-	 	struct rev_info revs;
-	 	struct setup_revision_opt s_r_opt =3D {
-	@@ -3727,7 +3726,9 @@ static void get_object_list(int ac, const char **av)
-	 	repo_init_revisions(the_repository, &revs, NULL);
-	 	save_commit_buffer =3D 0;
-	 	setup_revisions(ac, av, &revs, &s_r_opt);
-	-	list_objects_filter_copy(&revs.filter, &filter_options);
-	+	/* attach our CLI --filter to rev_info's filter */
-	+	memcpy(&revs.filter, filter, sizeof(*filter));
-	+	memset(filter, 0, sizeof(*filter));
-=09=20
-	 	/* make sure shallows are read */
-	 	is_repository_shallow(the_repository);
-	@@ -3872,6 +3873,7 @@ int cmd_pack_objects(int argc, const char **argv, co=
-nst char *prefix)
-	 	int rev_list_index =3D 0;
-	 	int stdin_packs =3D 0;
-	 	struct string_list keep_pack_list =3D STRING_LIST_INIT_NODUP;
-	+	struct list_objects_filter_options filter_options =3D { 0 };
-	 	struct option pack_objects_options[] =3D {
-	 		OPT_SET_INT('q', "quiet", &progress,
-	 			    N_("do not show progress meter"), 0),
-	@@ -4154,7 +4156,7 @@ int cmd_pack_objects(int argc, const char **argv, co=
-nst char *prefix)
-	 	} else if (!use_internal_rev_list) {
-	 		read_object_list_from_stdin();
-	 	} else {
-	-		get_object_list(rp.nr, rp.v);
-	+		get_object_list(rp.nr, rp.v, &filter_options);
-	 	}
-	 	cleanup_preferred_base();
-	 	if (include_tag && nr_result)
-
-And even most of that could be omitted by not removing the global
-"static struct" since pack-objects is a one-off anyway ... :)
