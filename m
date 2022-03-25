@@ -2,393 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E99A1C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E79C4C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbiCYTlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52278 "EHLO
+        id S231376AbiCYTlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:41:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232362AbiCYTiu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:38:50 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E601DDFC0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:22 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id r7so4974361wmq.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:22 -0700 (PDT)
+        with ESMTP id S233510AbiCYTj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:39:59 -0400
+Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8190120A398
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:31 -0700 (PDT)
+Received: by mail-vk1-xa32.google.com with SMTP id e7so4751813vkh.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cEFTrV61UmUKMl9qHSdtWgyYe4e32EF1y4Q3ASCo4AY=;
-        b=qky+HGtLVGZKvcmMiz5Wpzxo+jnsmGYLErR2t1rMK5EV5mlIM+6V5ZFCeo1XLo71mf
-         qRRvdyH4kJepSLcXmkMtUwhZX50z/bZm+u3eQXwaFbxcrs2wZp/xIlKXyZoVFdJvQK3s
-         9dAW4Qqd626pl5CZGlTX+h9EuL3+oRgKH67Z34z4/fg9wAvYx02AyQEummV0wF9q0rcH
-         lanko91FYTlAlO8FjD6yIFXcvgyGM/PDfZXCcQvOBMC4HLXQN5g/F844USotpInzg8Tv
-         FxHUbI2LUIyMA9nKeHMRUlxvlvqtHMdTVo+1bAbzyHu7hGxVWNl2GG2UDWs34pLuhv/k
-         aGcw==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QtddBMjbwzmEfPyV3H3LssJlmLtJA87LJAVLrHQPKeI=;
+        b=eJWHDttAR1ILKrzm5mdMLXWYdIRSbc0qLP0YDauaCowpRYBxkYcL0q1k22lY8f4bj6
+         dfKjyaKd2p+2JL2jEkL782sqXn5rlKxa35PNeVp+uxMWHJtBENDXS2MrhzHd5clmWA6J
+         8JTMdSthxJGvqKEr6lJsd6FOi02Mwl+vm/ECS0IjFckKNr+46F5Eg3lv5Jrsu8/4YDpz
+         tj3N9Jxg6tL/88rpbZlSS15Dj0CEtYn7PeX3Ol26ewRjOKnUpz22V8xLGMRkQDOOa48Y
+         lm/ijoQjWJfJFw9qA75F4y4PpK1555P5bfdE6kKNE1HTzFT7XGbJ5aj72rEp3mg4yt9P
+         xA3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cEFTrV61UmUKMl9qHSdtWgyYe4e32EF1y4Q3ASCo4AY=;
-        b=5qohCKmLiB6aRNK3jmcERN9T4gpeMp/pUcPOT8HpOxkfiWJz9Zbtp9roQEND0USAIJ
-         PRrZgC008805+ZcJWGCV9vsU7EAAf5h9bFi/nQRXcQ5qQi8WH8jArlxcCbsF5pQJiXzE
-         UUi1s2xArHqKqd501R7NkN4T7cCUlx8RX41iL22gke1A6YGa7PtzpPZPJZltd6iCme2/
-         6Fi3DM0WKaOx/MM5KphFh+FU5N5YGfeMssueELICQRTSxCwkdi6NiXbx0CmQNezKGdki
-         EfdJIugVUVWtRKwtjxXSPF8Q2FcUUomyTDP2mxx77+bshoNwqOqmZOOjxdesAoRSBmtt
-         qRsw==
-X-Gm-Message-State: AOAM531Ne33kMsrMhvTTDmO23M8ne7XEFR6Jdliw+sgVEoZ2i+NDdx7u
-        D9O3GFT9JC7kgVO+rXY5BZ527XMmW0gZpQ==
-X-Google-Smtp-Source: ABdhPJykk311JDiGXmRyPUtWcttcdyq2f7Ic72lvPUz3KOn+HYyzTXQz57FHBkiul5rzqiqOlfo37w==
-X-Received: by 2002:a05:600c:3493:b0:38c:7687:88f1 with SMTP id a19-20020a05600c349300b0038c768788f1mr11338508wmq.106.1648233501544;
-        Fri, 25 Mar 2022 11:38:21 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QtddBMjbwzmEfPyV3H3LssJlmLtJA87LJAVLrHQPKeI=;
+        b=u6HgXpKO/RNLwXHSGzI6898YKb6ynM+hVpRuzHX3///DwUQrZ9BgQ40rJOsaP9L7oN
+         aEzsHHEJcIb5Pt6fk4zA1diY/C97+u/mxPOzf7v50ck6Zqz3XihxM/15jaexhu4pN2jI
+         l+QnDDov2xv7bU96Ldg1Ylv9c9KrchI/kNejJmBG1APEw6E7BI9ID5SyB3cNkc+CrdqQ
+         GbCff3S0htTKwQM6yEqNdxxWv+1iQIRlXnmF1S2ZGCuAcCeVn3SXTj1miQA7ubCZVs7P
+         1DAFmxGL+WLwQvar3K6Qfq1OxhL2byMN4zSm37l2GOZ5D7jQB2R+koXCpdXvYYl039oj
+         7iRQ==
+X-Gm-Message-State: AOAM531kVOq/4b92nt058H0QBH6hR6tKLA37imvOJPUP1e2u0yrxJAKT
+        JNBzej0ShYEa1Q8dxPmasSSaASzSmi4Y
+X-Google-Smtp-Source: ABdhPJypV7ZlSphYvNWjd2HnowWZGqxxqXQXD/Q3w4qIEofO2WceT32P9grlx+LWYPTK+T3spMrCpQ==
+X-Received: by 2002:a05:6a00:3316:b0:4fa:80fd:f3f6 with SMTP id cq22-20020a056a00331600b004fa80fdf3f6mr11302922pfb.65.1648233500089;
         Fri, 25 Mar 2022 11:38:20 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 03/25] CI: remove more dead Travis CI support
-Date:   Fri, 25 Mar 2022 19:37:54 +0100
-Message-Id: <patch-v2-03.25-eec15a95879-20220325T182534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id hg5-20020a17090b300500b001c795eedcffsm8640921pjb.13.2022.03.25.11.38.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 11:38:19 -0700 (PDT)
+Message-ID: <888aa48b-3e1c-9cb7-e51f-0adacaa45118@github.com>
+Date:   Fri, 25 Mar 2022 11:38:18 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: [PATCH v2 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+ <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
+ <6b83bb83-32b9-20c9-fa02-c1c3170351c3@github.com>
+ <220325.864k3mmm2x.gmgdl@evledraar.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <220325.864k3mmm2x.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove code that I missed in 4a6e4b96026 (CI: remove Travis CI
-support, 2021-11-23). This code was only called from or used by the
-now-removed .travis.yml, or needed by the Travis CI environment.
+Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Mar 24 2022, Victoria Dye wrote:
+> 
+>> Johannes Schindelin via GitGitGadget wrote:
+>> [...]
+>>> Is this the best UI we can have for test failures in CI runs? I hope we can
+>>> do better. Having said that, this patch series presents a pretty good start,
+>>> and offers a basis for future improvements.
+>>>
+>>
+>> I think these are really valuable improvements over our current state, but I
+>> also understand the concerns about performance elsewhere in this thread
+>> (it's really slow to load for me as well, and scrolling/expanding the log
+>> groups can be a bit glitchy in my browser). That said, I think there are a
+>> couple ways you could improve the load time without sacrificing the (very
+>> helpful) improvements you've made to error log visibility. I experimented a
+>> bit (example result [1]) and came up with some things that may help:
+>>
+>> * group errors by test file, rather than by test case (to reduce
+>>   parsing/rendering time for lots of groups).
+>> * print the verbose logs only for the failed test cases (to massively cut
+>>   down on the size of the log, particularly when there's only a couple
+>>   failures in a test file with a lot of passing tests).
+>> * skip printing the full text of the test in 'finalize_test_case_output'
+>>   when creating the group, i.e., use '$1' instead of '$*' (in both passing
+>>   and failing tests, this information is already printed via some other
+>>   means).
+>>
+>> If you wanted to make sure a user could still access the full failure logs
+>> (i.e., including the "ok" test results), you could print a link to the
+>> artifacts page as well - that way, all of the information we currently
+>> provide to users can still be found somewhere.
+>>
+>> [1] https://github.com/vdye/git/runs/5666973267
+> 
+> Thanks a lot for trying to address those concerns.
+> 
+> I took a look at this and it definitely performs better, although in
+> this case the overall output is ~3k lines.
+> 
+> I'd be curious to see how it performs on some of the cases discussed in
+> earlier threads of >~50k lines, although it looks like in this case that
+> would require failures to be really widespread in the test suite.
+> 
 
-For the symlinking in ci/run-build-and-tests.sh: Back when
-3c93b829205 (travis-ci: build Git during the 'script' phase,
-2018-01-08) and 4b060a4d973 (ci: use a junction on Windows instead of
-a symlink, 2019-01-27) adjusted this "ln" command, the Windows build
-would use ci/run-build-and-tests.sh.
+Unfortunately, I don't have a direct comparison to that (the longest I found
+elsewhere in the thread was ~33k lines [1], but those failures came from
+strange interactions on the 'shears/seen' branch of Git for Windows that I
+couldn't easily replicate). If it helps, though, here's a 1:1 comparison of
+my "experiment" branch's forced test failures with and without the
+optimizations I tried (without optimization, the total log is ~28k lines):
 
-As seen in 889cacb6897 (ci: configure GitHub Actions for CI/PR,
-2020-04-11) the current windows build uses a different entry point
-under the GitHub CI, which doesn't use this .prove caching. Namely
-"ci/run-test-slice.sh".
+without optimization: https://github.com/vdye/git/runs/5696305589 with
+optimization: https://github.com/vdye/git/runs/5666973267
 
-We can be certain that it's never used in "ci/run-test-slice.sh"
-because to have a ".prove" file we'd need to use "--state=save", which
-we only do in the dead Azure codepath in ci/lib.sh. If it were used it
-would do the wrong thing, because the different test slices would each
-try to clobber the same "t/.prove" file.
+So it's definitely faster - it still takes a couple seconds to load, but not
+so long that my browser struggles with it (which was my main issue with the
+original approach).
 
-If a subsequent run then used the -"-state=failed,slow,save" it would
-defeat the purpose of "ci/run-test-slice.sh", since all slices would
-then run all tests. I.e. behavior of prove's "--state" options is to
-select tests to run from the provided "--state" file, in addition to
-those specified on the command-line.
+[1] https://github.com/dscho/git/runs/4840190622
 
-For ci/run-docker{,-build}.sh: It was likewise last referenced in the
-.travis.yml removed in my 4a6e4b96026. The current "dockerized" run in
-".github/workflows/main.yml" calls the same entry points as the main
-"regular" job.
+> I just looked at this briefly, but looking at the branch I see you
+> removed the "checking known breakage of[...]" etc. from the non-GitHub
+> markdown output, I didn't spot how that was related/needed.
+> 
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ci/lib.sh                     | 10 ++----
- ci/print-test-failures.sh     |  3 --
- ci/run-build-and-tests.sh     |  5 ---
- ci/run-docker-build.sh        | 66 -----------------------------------
- ci/run-docker.sh              | 47 -------------------------
- ci/run-test-slice.sh          |  5 ---
- ci/util/extract-trash-dirs.sh | 50 --------------------------
- 7 files changed, 2 insertions(+), 184 deletions(-)
- delete mode 100755 ci/run-docker-build.sh
- delete mode 100755 ci/run-docker.sh
- delete mode 100755 ci/util/extract-trash-dirs.sh
+It was mostly just another attempt to cut down on extraneous output (since,
+if a test fails, the test definition is printed after the failure, so we
+would end up with the same information twice). 
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index d2a7c33f536..c3c06d66862 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -106,9 +106,6 @@ then
- 	CI_COMMIT="$BUILD_SOURCEVERSION"
- 	CI_JOB_ID="$BUILD_BUILDID"
- 	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
--	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
--	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
--	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
- 	CC="${CC:-gcc}"
- 
- 	# use a subdirectory of the cache dir (because the file share is shared
-@@ -118,16 +115,13 @@ then
- 	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
--	test windows_nt != "$CI_OS_NAME" ||
-+	test Windows_NT != "$AGENT_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- elif test true = "$GITHUB_ACTIONS"
- then
- 	CI_TYPE=github-actions
- 	CI_BRANCH="$GITHUB_REF"
- 	CI_COMMIT="$GITHUB_SHA"
--	CI_OS_NAME="$(echo "$RUNNER_OS" | tr A-Z a-z)"
--	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
--	CI_REPO_SLUG="$GITHUB_REPOSITORY"
- 	CI_JOB_ID="$GITHUB_RUN_ID"
- 	CC="${CC:-gcc}"
- 	DONT_SKIP_TAGS=t
-@@ -137,7 +131,7 @@ then
- 	export GIT_PROVE_OPTS="--timer --jobs 10"
- 	export GIT_TEST_OPTS="--verbose-log -x"
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
--	test windows != "$CI_OS_NAME" ||
-+	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 57277eefcd0..00fcf27b1b2 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -77,9 +77,6 @@ do
- 			fi
- 			combined_trash_size=$new_combined_trash_size
- 
--			# DO NOT modify these two 'echo'-ed strings below
--			# without updating 'ci/util/extract-trash-dirs.sh'
--			# as well.
- 			echo "$(tput setaf 1)Start of trash directory of '$test_name':$(tput sgr0)"
- 			cat "$trash_tgz_b64"
- 			echo "$(tput setaf 1)End of trash directory of '$test_name'$(tput sgr0)"
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 280dda7d285..0a1ec8c2bae 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -5,11 +5,6 @@
- 
- . ${0%/*}/lib.sh
- 
--case "$CI_OS_NAME" in
--windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
--*) ln -s "$cache_dir/.prove" t/.prove;;
--esac
--
- export MAKE_TARGETS="all test"
- 
- case "$jobname" in
-diff --git a/ci/run-docker-build.sh b/ci/run-docker-build.sh
-deleted file mode 100755
-index 6cd832efb9c..00000000000
---- a/ci/run-docker-build.sh
-+++ /dev/null
-@@ -1,66 +0,0 @@
--#!/bin/sh
--#
--# Build and test Git inside container
--#
--# Usage:
--#   run-docker-build.sh <host-user-id>
--#
--
--set -ex
--
--if test $# -ne 1 || test -z "$1"
--then
--	echo >&2 "usage: run-docker-build.sh <host-user-id>"
--	exit 1
--fi
--
--case "$jobname" in
--linux32)
--	switch_cmd="linux32 --32bit i386"
--	;;
--linux-musl)
--	switch_cmd=
--	useradd () { adduser -D "$@"; }
--	;;
--*)
--	exit 1
--	;;
--esac
--
--"${0%/*}/install-docker-dependencies.sh"
--
--# If this script runs inside a docker container, then all commands are
--# usually executed as root. Consequently, the host user might not be
--# able to access the test output files.
--# If a non 0 host user id is given, then create a user "ci" with that
--# user id to make everything accessible to the host user.
--HOST_UID=$1
--if test $HOST_UID -eq 0
--then
--	# Just in case someone does want to run the test suite as root.
--	CI_USER=root
--else
--	CI_USER=ci
--	if test "$(id -u $CI_USER 2>/dev/null)" = $HOST_UID
--	then
--		echo "user '$CI_USER' already exists with the requested ID $HOST_UID"
--	else
--		useradd -u $HOST_UID $CI_USER
--	fi
--fi
--
--# Build and test
--command $switch_cmd su -m -l $CI_USER -c "
--	set -ex
--	export DEVELOPER='$DEVELOPER'
--	export DEFAULT_TEST_TARGET='$DEFAULT_TEST_TARGET'
--	export GIT_PROVE_OPTS='$GIT_PROVE_OPTS'
--	export GIT_TEST_OPTS='$GIT_TEST_OPTS'
--	export GIT_TEST_CLONE_2GB='$GIT_TEST_CLONE_2GB'
--	export MAKEFLAGS='$MAKEFLAGS'
--	export cache_dir='$cache_dir'
--	cd /usr/src/git
--	test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
--	make
--	make test
--"
-diff --git a/ci/run-docker.sh b/ci/run-docker.sh
-deleted file mode 100755
-index af89d1624a4..00000000000
---- a/ci/run-docker.sh
-+++ /dev/null
-@@ -1,47 +0,0 @@
--#!/bin/sh
--#
--# Download and run Docker image to build and test Git
--#
--
--. ${0%/*}/lib.sh
--
--case "$jobname" in
--linux32)
--	CI_CONTAINER="daald/ubuntu32:xenial"
--	;;
--linux-musl)
--	CI_CONTAINER=alpine
--	;;
--*)
--	exit 1
--	;;
--esac
--
--docker pull "$CI_CONTAINER"
--
--# Use the following command to debug the docker build locally:
--# <host-user-id> must be 0 if podman is used as drop-in replacement for docker
--# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/sh "$CI_CONTAINER"
--# root@container:/# export jobname=<jobname>
--# root@container:/# /usr/src/git/ci/run-docker-build.sh <host-user-id>
--
--container_cache_dir=/tmp/container-cache
--
--docker run \
--	--interactive \
--	--env DEVELOPER \
--	--env DEFAULT_TEST_TARGET \
--	--env GIT_PROVE_OPTS \
--	--env GIT_TEST_OPTS \
--	--env GIT_TEST_CLONE_2GB \
--	--env MAKEFLAGS \
--	--env jobname \
--	--env cache_dir="$container_cache_dir" \
--	--volume "${PWD}:/usr/src/git" \
--	--volume "$cache_dir:$container_cache_dir" \
--	"$CI_CONTAINER" \
--	/usr/src/git/ci/run-docker-build.sh $(id -u $USER)
--
--check_unignored_build_artifacts
--
--save_good_tree
-diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
-index f8c2c3106a2..b9a682b4bcd 100755
---- a/ci/run-test-slice.sh
-+++ b/ci/run-test-slice.sh
-@@ -5,11 +5,6 @@
- 
- . ${0%/*}/lib.sh
- 
--case "$CI_OS_NAME" in
--windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
--*) ln -s "$cache_dir/.prove" t/.prove;;
--esac
--
- make --quiet -C t T="$(cd t &&
- 	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
- 	tr '\n' ' ')"
-diff --git a/ci/util/extract-trash-dirs.sh b/ci/util/extract-trash-dirs.sh
-deleted file mode 100755
-index 8e67bec21a2..00000000000
---- a/ci/util/extract-trash-dirs.sh
-+++ /dev/null
-@@ -1,50 +0,0 @@
--#!/bin/sh
--
--error () {
--	echo >&2 "error: $@"
--	exit 1
--}
--
--find_embedded_trash () {
--	while read -r line
--	do
--		case "$line" in
--		*Start\ of\ trash\ directory\ of\ \'t[0-9][0-9][0-9][0-9]-*\':*)
--			test_name="${line#*\'}"
--			test_name="${test_name%\'*}"
--
--			return 0
--		esac
--	done
--
--	return 1
--}
--
--extract_embedded_trash () {
--	while read -r line
--	do
--		case "$line" in
--		*End\ of\ trash\ directory\ of\ \'$test_name\'*)
--			return
--			;;
--		*)
--			printf '%s\n' "$line"
--			;;
--		esac
--	done
--
--	error "unexpected end of input"
--}
--
--# Raw logs from Linux build jobs have CRLF line endings, while OSX
--# build jobs mostly have CRCRLF, except an odd line every now and
--# then that has CRCRCRLF.  'base64 -d' from 'coreutils' doesn't like
--# CRs and complains about "invalid input", so remove all CRs at the
--# end of lines.
--sed -e 's/\r*$//' | \
--while find_embedded_trash
--do
--	echo "Extracting trash directory of '$test_name'"
--
--	extract_embedded_trash |base64 -d |tar xzp
--done
--- 
-2.35.1.1517.g20a06c426a7
+That said, if that were to be incorporated here, it'd need to be smarter
+than what I tried - my change removed it entirely from the '.out' logs, and
+it means that any test that *does* pass wouldn't have its test definition
+logged anywhere (I think). The ideal situation would be the extraneous test
+definition is only removed from the '.markup' files, but that's probably a
+change better saved for a future patch/series.
 
+>>> Johannes Schindelin (9):
+>>>   ci: fix code style
+>>>   ci/run-build-and-tests: take a more high-level view
+>>>   ci: make it easier to find failed tests' logs in the GitHub workflow
+>>>   ci/run-build-and-tests: add some structure to the GitHub workflow
+>>>     output
+>>>   tests: refactor --write-junit-xml code
+>>>   test(junit): avoid line feeds in XML attributes
+>>>   ci: optionally mark up output in the GitHub workflow
+>>>   ci: use `--github-workflow-markup` in the GitHub workflow
+>>>   ci: call `finalize_test_case_output` a little later
+>>>
+>>
+>> The organization of these commits makes the series a bit confusing to read,
+>> mainly due to the JUnit changes in the middle. Patches 5-6 don't appear to
+>> be dependent on patches 1-4, so they could be moved to the beginning (after
+>> patch 1). With that change, I think this series would flow more smoothly:
+>> "Cleanup/non-functional change" -> "JUnit XML improvements" -> "Log UX
+>> improvements".
+> 
+> Have you had a change to look at the approach my suggestion of an
+> alternate approach to the early part of this series takes?:
+> https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com/
+> 
+> I.e. to not build up ci/lib.sh to know to group the "build" etc. within
+> the "run-build-and-test" step, but instead just to pull those to the
+> top-level by running separate build & test steps.
+> 
+
+I looked at it a while ago, but I actually had a similar issue following
+that series as I did this one; it's difficult to tell what's cleanup, what's
+refactoring unrelated to this series, and what's an explicit difference in
+approach compared with this series. 
+
+Revisiting it now, I did the same thing I did with dscho's series: ran your
+branch with some forced test failures and looked at the results [2]. Based
+on that, there are a couple of helpful things I see in your series that
+contribute to the same overarching goal as this dscho's:
+
+* Separating build & test into different steps.
+    * This makes it more immediately obvious to a user whether the issue was
+      a compiler error or a test failure. Since test failures can only even
+      happen if the compilation passes, this doesn't create (another)
+      situation where the relevant failure information is in a different
+      step than the auto-expanded failing one.
+* Separating 'lib.sh --build' and 'make' into different steps. 
+    * I was initially unsure of the value of this (conceptually, wouldn't
+      they both be part of "build"?), but I eventually understood it to be
+      "setup the environment for [build|test]" followed by "run the
+      [build|test]". Since the main thing dscho's series is addressing is
+      information visibility, I like that this similarly "unburies" the
+      environment configuration at the beginning of build/test.
+
+Those changes are great (and they probably have some positive impact on load
+times). But as far as I can tell, nothing else in your series directly
+addresses the main problem dscho is fixing here, which is that the verbose
+failure logs are effectively hidden from the user (unless you know exactly
+where to look). As a result, it doesn't really fit as a "replacement" to
+this one for me. Honestly, my ideal "final form" of all of this may be a
+combination of both series, having the CI steps:
+
+- setup build environment
+- run build (make)
+- setup test environment
+- run test (make test) & print failure logs
+
+You can still pull the 'make' executions out of 'run-build-and-test.sh', but
+I think the "& print failure logs" part of the 'test' step (i.e., the added
+'|| handle_failed_tests') is the critical piece that, although it would slow
+things down to some extent (and, of course, it's subjective where the "too
+slow" line is), it would relevant failure information a whole lot more
+accessible. That's the real "value-add" of this series for me, if only
+because I know it would have helped me a bunch of times in the past - I
+absolutely believe it would similarly help new contributors in the future.
+
+[2] https://github.com/vdye/git/runs/5695895629
