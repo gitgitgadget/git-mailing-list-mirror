@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8AF3C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CB2C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230258AbiCYTeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50506 "EHLO
+        id S230056AbiCYTeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231691AbiCYTdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:33:21 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB48220B02
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:14 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id w21so7527469wra.2
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:13 -0700 (PDT)
+        with ESMTP id S231722AbiCYTdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:33:22 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A21C4199532
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:16 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id q20so4976949wmq.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fAa8hrpVrno1BmdEVVVe0xU+KaqvnFCI1tVOqmc3Cac=;
-        b=ZP0dmdaSysFUOYlITRzQQ3grQA71OffRCR0DWQm+snSfGp/jfIPMveMTcPiwDZohfO
-         rVYW3aGtNofFJ/xuzgU6EYKaJyKmu1+boq56HZEmawcymysRUI6ZWbHPBj48ws3kb1xE
-         ppkLz1pmRA3v65w73wGu047BhMS+F8CvAOcf61BQCXD6dLli5FjEu3w6F4uvjaqRSafk
-         ReuTiSa+R2VMqC4OIX+yMA+BgQR8+8aGNIv0x03aVajMLPfajHZwlyahoQdUyYl9dNZG
-         9bO63/WY6VRKwQ4wEIQI6zbLRHd3qk5cJkRqS5RtZAsoLpgcuoX0ReFCM9MhJxgHaG0y
-         aBAw==
+        bh=JoyUcWYc53GOiCIk4ZkiWSvvHTSDt24PFwNxe1AnEQQ=;
+        b=a+oVr66FK/2EZrWnjOdpNbe4cugLjbu7MslzyO6DxNXWvclfXh2zXTE91LGQGBQGwg
+         THNN/QJe9xGToPqkU/UNmih+Hole0MvGqFsGoMrrvNsFa/1pOJPqIah8xM2q4T/aTwiz
+         eBbyxPPNIzkKEth98YQSbT34XswvirmhDyKaU24DwvXeVYm65meEQuDTIoKjyHRAhg8h
+         PciHT8BsQUeV2xjUw6Ytg/N4sf89nA+ZhvHQwinvuD7zUF542rFrlMR23Ra4zugjG2r7
+         MqJVqw0UvNkiVDCwNn2KilObdjLiya9UT8omBwMBgFQkD72ITPOvGn0zuDqhOy8COsIE
+         TFUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fAa8hrpVrno1BmdEVVVe0xU+KaqvnFCI1tVOqmc3Cac=;
-        b=6aLJflZ1cpF+/yIOc8vO3UjfhbshDC3duBCjFTmjuaVWdtfJaCFlPn1LWaI0+ItKHm
-         u/HVarkemo64QBo0AGWdhgkYh9NBlnXhaJAkIeCRdxyr2owDUC1d/NLDevdMsHl6rXIG
-         B28Rj0MKJhA7/q0e5UEWlJG2dKXYTiQOh45x7Z/zAM5cbnIrFA2L746ElFxoetKUPNZc
-         vDMdcLkrYfnRCWE7I2ZJeqxTDUmeHRc/JtpsDx6WwnwbPFxq65ixJRrlClLkVYlbPF5w
-         /eD7pyD++liTIbAaHyiUsAO/89+xYM9i2JRypqPZagshoH5bSmiWGGI7w/0SnSj5sjME
-         EpMw==
-X-Gm-Message-State: AOAM533g/jpJ1KM41zpcyJMvyNbkowrUSfTadudRQHyrBy4Qu7x8a7pN
-        bM8aqkh9lSjw9PSyYhIm/d4kJGgnAzw=
-X-Google-Smtp-Source: ABdhPJzwbUflr3nQfE22NY1ON+BDDAaDrPFxfPK9A7Ap0p6qqEBGHTV6QFNJi5EHocArsHUBjkA8bw==
-X-Received: by 2002:a5d:59ad:0:b0:205:a66c:3c2a with SMTP id p13-20020a5d59ad000000b00205a66c3c2amr3663577wrr.289.1648231412640;
-        Fri, 25 Mar 2022 11:03:32 -0700 (PDT)
+        bh=JoyUcWYc53GOiCIk4ZkiWSvvHTSDt24PFwNxe1AnEQQ=;
+        b=Oszt/xUrN9KosE/jLOJT47JW5ptUcqMCu5a0y5zEJc8bIWozrsYV1u2gyfSzlH5x6t
+         +eZ35TwdZr4PH5HHq5QkyEr+TLDISPJib0Y4GkB0v2/D3nqFfz1wGtfZuZbTk63Zjqsl
+         kj5qjCqgh3Po6DkDZ3jJn3pamAa96+MaCEkSlPHzyLxT0lN+AgLVK5hNCBkuA6INzfFE
+         ys+v0EAP+Y8XVHoYU55+mjWPPZ9sPKnYpAW7iy6WK+gdnGG47HtpxGvBAHiIrsEy1Lab
+         gA+yWIpM2JUyu4OaA+ZzHT/qJD4CYqyprYoeoBYflnxfCpjcZH1o3FIgT3QK3NErA/j1
+         /kpg==
+X-Gm-Message-State: AOAM530JPUH7iqwyJrhpn+dM/snoD1CqsHb4iDDkKubbCHyebrNMu2Mz
+        wq9FiBc974MMcA4KM8VMWBAr/XIPW7Y=
+X-Google-Smtp-Source: ABdhPJzwrH7lH6upRV1rXL68wjFMqse0jBButbnfscWzr/qeh/NY74vDtgkodEGusuJRX+los3A9hQ==
+X-Received: by 2002:a05:600c:3b02:b0:38c:9148:70dc with SMTP id m2-20020a05600c3b0200b0038c914870dcmr11123419wms.104.1648231405106;
+        Fri, 25 Mar 2022 11:03:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14-20020a1cf30e000000b0038986a18ec8sm4876616wmq.46.2022.03.25.11.03.31
+        by smtp.gmail.com with ESMTPSA id 20-20020a05600c22d400b0038c8dbdc1a3sm4839917wmg.38.2022.03.25.11.03.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:31 -0700 (PDT)
-Message-Id: <14b775e9d8b1a4672f8175a546eb70e2790c1b23.1648231393.git.gitgitgadget@gmail.com>
+        Fri, 25 Mar 2022 11:03:24 -0700 (PDT)
+Message-Id: <2f8a42fdb93623053256939fdbb45cf02fb1c5c9.1648231393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
         <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:59 +0000
-Subject: [PATCH v9 16/30] compat/fsmonitor/fsm-listen-darwin: add MacOS header
- files for FSEvent
+Date:   Fri, 25 Mar 2022 18:02:52 +0000
+Subject: [PATCH v9 09/30] compat/fsmonitor/fsm-listen-darwin: stub in backend
+ for Darwin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,196 +74,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Include MacOS system declarations to allow us to use FSEvent and
-CoreFoundation APIs.  We need different versions of the declarations
-for GCC vs. clang because of compiler and header file conflicts.
+Stub in empty implementation of fsmonitor--daemon
+backend for Darwin (aka MacOS).
 
-While it is quite possible to #include Apple's CoreServices.h when
-compiling C source code with clang, trying to build it with GCC
-currently fails with this error:
-
-In file included
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/Security.framework/Headers/AuthSession.h:32,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/Security.framework/Headers/Security.h:42,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...OSServices.framework/Headers/CSIdentity.h:43,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...OSServices.framework/Headers/OSServices.h:29,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...LaunchServices.framework/Headers/IconsCore.h:23,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Frameworks/...
-   ...LaunchServices.framework/Headers/LaunchServices.h:23,
-   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-   ...Library/Frameworks/CoreServices.framework/Headers/CoreServices.h:45,
-
-     /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/...
-     ...Library/Frameworks/Security.framework/Headers/Authorization.h:193:7:
-     error: variably modified 'bytes' at file scope
-       193 | char bytes[kAuthorizationExternalFormLength];
-           |      ^~~~~
-
-The underlying reason is that GCC (rightfully) objects that an `enum`
-value such as `kAuthorizationExternalFormLength` is not a constant
-(because it is not, the preprocessor has no knowledge of it, only the
-actual C compiler does) and can therefore not be used to define the size
-of a C array.
-
-This is a known problem and tracked in GCC's bug tracker:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082
-
-In the meantime, let's not block things and go the slightly ugly route
-of declaring/defining the FSEvents constants, data structures and
-functions that we need, so that we can avoid above-mentioned issue.
-
-Let's do this _only_ for GCC, though, so that the CI/PR builds (which
-build both with clang and with GCC) can guarantee that we _are_ using
-the correct data types.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- compat/fsmonitor/fsm-darwin-gcc.h    | 92 ++++++++++++++++++++++++++++
- compat/fsmonitor/fsm-listen-darwin.c | 24 ++++++++
- 2 files changed, 116 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-darwin-gcc.h
+ compat/fsmonitor/fsm-listen-darwin.c | 20 ++++++++++++++++++++
+ config.mak.uname                     | 10 ++++++++++
+ contrib/buildsystems/CMakeLists.txt  |  3 +++
+ 3 files changed, 33 insertions(+)
+ create mode 100644 compat/fsmonitor/fsm-listen-darwin.c
 
-diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
-new file mode 100644
-index 00000000000..1c75c3d48e7
---- /dev/null
-+++ b/compat/fsmonitor/fsm-darwin-gcc.h
-@@ -0,0 +1,92 @@
-+#ifndef FSM_DARWIN_GCC_H
-+#define FSM_DARWIN_GCC_H
-+
-+#ifndef __clang__
-+/*
-+ * It is possible to #include CoreFoundation/CoreFoundation.h when compiling
-+ * with clang, but not with GCC as of time of writing.
-+ *
-+ * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082 for details.
-+ */
-+typedef unsigned int FSEventStreamCreateFlags;
-+#define kFSEventStreamEventFlagNone               0x00000000
-+#define kFSEventStreamEventFlagMustScanSubDirs    0x00000001
-+#define kFSEventStreamEventFlagUserDropped        0x00000002
-+#define kFSEventStreamEventFlagKernelDropped      0x00000004
-+#define kFSEventStreamEventFlagEventIdsWrapped    0x00000008
-+#define kFSEventStreamEventFlagHistoryDone        0x00000010
-+#define kFSEventStreamEventFlagRootChanged        0x00000020
-+#define kFSEventStreamEventFlagMount              0x00000040
-+#define kFSEventStreamEventFlagUnmount            0x00000080
-+#define kFSEventStreamEventFlagItemCreated        0x00000100
-+#define kFSEventStreamEventFlagItemRemoved        0x00000200
-+#define kFSEventStreamEventFlagItemInodeMetaMod   0x00000400
-+#define kFSEventStreamEventFlagItemRenamed        0x00000800
-+#define kFSEventStreamEventFlagItemModified       0x00001000
-+#define kFSEventStreamEventFlagItemFinderInfoMod  0x00002000
-+#define kFSEventStreamEventFlagItemChangeOwner    0x00004000
-+#define kFSEventStreamEventFlagItemXattrMod       0x00008000
-+#define kFSEventStreamEventFlagItemIsFile         0x00010000
-+#define kFSEventStreamEventFlagItemIsDir          0x00020000
-+#define kFSEventStreamEventFlagItemIsSymlink      0x00040000
-+#define kFSEventStreamEventFlagOwnEvent           0x00080000
-+#define kFSEventStreamEventFlagItemIsHardlink     0x00100000
-+#define kFSEventStreamEventFlagItemIsLastHardlink 0x00200000
-+#define kFSEventStreamEventFlagItemCloned         0x00400000
-+
-+typedef struct __FSEventStream *FSEventStreamRef;
-+typedef const FSEventStreamRef ConstFSEventStreamRef;
-+
-+typedef unsigned int CFStringEncoding;
-+#define kCFStringEncodingUTF8 0x08000100
-+
-+typedef const struct __CFString *CFStringRef;
-+typedef const struct __CFArray *CFArrayRef;
-+typedef const struct __CFRunLoop *CFRunLoopRef;
-+
-+struct FSEventStreamContext {
-+    long long version;
-+    void *cb_data, *retain, *release, *copy_description;
-+};
-+
-+typedef struct FSEventStreamContext FSEventStreamContext;
-+typedef unsigned int FSEventStreamEventFlags;
-+#define kFSEventStreamCreateFlagNoDefer 0x02
-+#define kFSEventStreamCreateFlagWatchRoot 0x04
-+#define kFSEventStreamCreateFlagFileEvents 0x10
-+
-+typedef unsigned long long FSEventStreamEventId;
-+#define kFSEventStreamEventIdSinceNow 0xFFFFFFFFFFFFFFFFULL
-+
-+typedef void (*FSEventStreamCallback)(ConstFSEventStreamRef streamRef,
-+				      void *context,
-+				      __SIZE_TYPE__ num_of_events,
-+				      void *event_paths,
-+				      const FSEventStreamEventFlags event_flags[],
-+				      const FSEventStreamEventId event_ids[]);
-+typedef double CFTimeInterval;
-+FSEventStreamRef FSEventStreamCreate(void *allocator,
-+				     FSEventStreamCallback callback,
-+				     FSEventStreamContext *context,
-+				     CFArrayRef paths_to_watch,
-+				     FSEventStreamEventId since_when,
-+				     CFTimeInterval latency,
-+				     FSEventStreamCreateFlags flags);
-+CFStringRef CFStringCreateWithCString(void *allocator, const char *string,
-+				      CFStringEncoding encoding);
-+CFArrayRef CFArrayCreate(void *allocator, const void **items, long long count,
-+			 void *callbacks);
-+void CFRunLoopRun(void);
-+void CFRunLoopStop(CFRunLoopRef run_loop);
-+CFRunLoopRef CFRunLoopGetCurrent(void);
-+extern CFStringRef kCFRunLoopDefaultMode;
-+void FSEventStreamScheduleWithRunLoop(FSEventStreamRef stream,
-+				      CFRunLoopRef run_loop,
-+				      CFStringRef run_loop_mode);
-+unsigned char FSEventStreamStart(FSEventStreamRef stream);
-+void FSEventStreamStop(FSEventStreamRef stream);
-+void FSEventStreamInvalidate(FSEventStreamRef stream);
-+void FSEventStreamRelease(FSEventStreamRef stream);
-+
-+#endif /* !clang */
-+#endif /* FSM_DARWIN_GCC_H */
 diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index c84e3344ab9..d2ce942cade 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
+new file mode 100644
+index 00000000000..c84e3344ab9
+--- /dev/null
 +++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -1,3 +1,27 @@
-+#ifndef __clang__
-+#include "fsm-darwin-gcc.h"
-+#else
-+#include <CoreFoundation/CoreFoundation.h>
-+#include <CoreServices/CoreServices.h>
+@@ -0,0 +1,20 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "fsm-listen.h"
 +
-+#ifndef AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER
-+/*
-+ * This enum value was added in 10.13 to:
-+ *
-+ * /Applications/Xcode.app/Contents/Developer/Platforms/ \
-+ *    MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/ \
-+ *    Library/Frameworks/CoreServices.framework/Frameworks/ \
-+ *    FSEvents.framework/Versions/Current/Headers/FSEvents.h
-+ *
-+ * If we're compiling against an older SDK, this symbol won't be
-+ * present.  Silently define it here so that we don't have to ifdef
-+ * the logging or masking below.  This should be harmless since older
-+ * versions of macOS won't ever emit this FS event anyway.
-+ */
-+#define kFSEventStreamEventFlagItemCloned         0x00400000
-+#endif
-+#endif
++int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
++{
++	return -1;
++}
 +
- #include "cache.h"
- #include "fsmonitor.h"
- #include "fsm-listen.h"
++void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
++{
++}
++
++void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
++{
++}
++
++void fsm_listen__loop(struct fsmonitor_daemon_state *state)
++{
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 26074f56bed..501970902da 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -157,6 +157,16 @@ ifeq ($(uname_S),Darwin)
+ 			MSGFMT = /usr/local/opt/gettext/bin/msgfmt
+ 		endif
+ 	endif
++
++	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
++	# Unix domain sockets and PThreads.
++	ifndef NO_PTHREADS
++	ifndef NO_UNIX_SOCKETS
++	FSMONITOR_DAEMON_BACKEND = darwin
++	endif
++	endif
++
++	BASIC_LDFLAGS += -framework CoreServices
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 0963629db7f..ee0d7257b77 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
+ 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
++	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
++		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
+ 	endif()
+ endif()
+ 
 -- 
 gitgitgadget
 
