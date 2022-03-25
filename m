@@ -2,225 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D21EC4332F
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1F38C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbiCYT3h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
+        id S229872AbiCYT3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:29:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiCYT3Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:29:25 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7EE2C77AC
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:03:39 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r64so4958603wmr.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:03:39 -0700 (PDT)
+        with ESMTP id S229885AbiCYT3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:29:35 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA84BF55F8
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:04:02 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id b19so12043517wrh.11
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=A8HmU7DuJgY2c7bdeUwuHeYyRmuCVGGPCGJjqI+W084=;
-        b=WrJKgRhjrELIrh5JdSC0iQLuTzvRQ+QtZdDy8p0bbeYHBmdWnzIi8TtMrVOKOC//DT
-         +UfS+tbyqS1xTdUAH26r8iVUrfxcJepU9SiXfjyL5ls00BfhAWvl/eAcZJvpO8F7FFsF
-         LuazXWuKvfjXix+nnL0dWOGX5j32hbnNAP5MT7KjTpew/FYithdtM0NCS8CwnCqCFM0M
-         s5AFK4V2ZM439bvLmLgw8YMAjj2Q91+vPyI7BcInT1cwF0aYQDUaLMdvtEiDomXyIqB4
-         GZfhirKcyWE/ez1vau91ZJIZ91+inm2lsuueUW7wq+Y4wG886VqEIwS77xLZW4KG+UNl
-         FUTg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tPukjc2YCWWKLgm+y0vzYwCeZbE+rpSJVnltmQJirJA=;
+        b=mUFWqCyOYa6oTUlDM2GjTy+X7vAgEhh/Il/qGrGCVAuV38GDUazHZeqMLdWHF+W+ip
+         HyAigA2x/9/voqtLjPthIYtyC9LCbMyZW/JIjJyVvyQY2/2O3Bj8ZOveEALOm3P1LAQS
+         vZbq/EI1Zd6Xbmc0ZhXVK68t7eAwyMbJIxxgTG5SMFO+00/p8Ur44WVs/Hez41baB27c
+         E5DOLYGgC6CXuYykiop/i+id41MzTsq/P2ZcsZsA5JvYIn1ggkkyLyNPxI03zgkpUJd2
+         3jE588Gy48NGLJVovZq6bqiPJ/sYVkPl+McU+LS6hYkCxnA9wNnv8QBqZv05wU5ct+wp
+         jI7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A8HmU7DuJgY2c7bdeUwuHeYyRmuCVGGPCGJjqI+W084=;
-        b=W9yTrzHm4LSpXK8KLED/SHKyh07zUxcngMkoSsq94P9ntuhqeII4I1pyZ3cUprcuIl
-         2maAa18XO3rIDEpqQOjNUDadu9PC5F7DnYkoPrueTEc753CBb3CsELoI/rwbfmmaWe8P
-         8E5E8hcPJllYxlsxKa3F5zlPxXL0twIkTgrZa+lc2YAJFRMqE9/ZNIAosY1+muSwqXCL
-         pJBAdMfWMyNm95FxtEmnxs/bM9/8sJMkl7N2UuxA6aywJt7KLod+VRYv02awDQW89eem
-         /tNbpKewonQ49Owf6r1EoM9z0sJ4VTAyx/h2DbTDYn7pggpmt/KIw91NOpitbM9a2M6x
-         zHyg==
-X-Gm-Message-State: AOAM532l0BsItZu8imK5rztRFuo4JHisQeJO0fptsdtf2TFjbFVbIRfO
-        2a5bEqNlbdsy8yfvbqzCMTL6mk+7hKRDxA==
-X-Google-Smtp-Source: ABdhPJwbSLELIwGbPC710LfJYKWOeFCIp+M2jIIIlZEc7BuXdqHPbBzzM9M24gYGQTIdoWR/aFgwIQ==
-X-Received: by 2002:a1c:f30b:0:b0:37b:b5de:c804 with SMTP id q11-20020a1cf30b000000b0037bb5dec804mr20838990wmq.166.1648233513161;
-        Fri, 25 Mar 2022 11:38:33 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.32
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tPukjc2YCWWKLgm+y0vzYwCeZbE+rpSJVnltmQJirJA=;
+        b=GL6JlfSGNMehF8sHW0b6LHbotXzop91tHEVIwFLOCOgat94aKzSqZyAed4Q55g/MX2
+         HqUnNRuspyeKnDjFdWJLMYz3Upx31cG3hbm35iwZLnK8XQgTuSsKuXc1bptf+xOMmU1J
+         8xU937eQ+LQC4UEfEDvzRGLRF0MsRjCxuYO6Efw9oQcqBhRLY6wmtmpZRKm5S2KfDAOt
+         P8p2OZav0dseSqm3FqVTpCts9MaXHQW4RZ1gu6cilcSXJOg6WM5Fp2jsR9KlZfpF7IeS
+         KtjoWcBCcs5HsS1Z31aZX8aXQZYSgWFk73vpg0Zt3UJ3sLnERHZje3fMNLBw5ZitHG6n
+         LSWw==
+X-Gm-Message-State: AOAM533pAcHFNn15eGYURd0YIw1PjgPHuVysr5EqiWQRHYGfhM1JFrns
+        7zcoMW4OLPRlsvWLN0S5iGwyYRNmlpA=
+X-Google-Smtp-Source: ABdhPJxgwuOTLgboq4OMf2efZhLbyfkG6YpiX3lll68xNQ1Hl5MtCbGzRK/iY3BBF+DhDgUEAmtX1w==
+X-Received: by 2002:adf:e348:0:b0:1f0:537:1807 with SMTP id n8-20020adfe348000000b001f005371807mr10136376wrj.11.1648231427880;
+        Fri, 25 Mar 2022 11:03:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g6-20020a5d5406000000b001f049726044sm5575743wrv.79.2022.03.25.11.03.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:32 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 15/25] CI: split up and reduce "ci/test-documentation.sh"
-Date:   Fri, 25 Mar 2022 19:38:06 +0100
-Message-Id: <patch-v2-15.25-dfa91ac8938-20220325T182534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Fri, 25 Mar 2022 11:03:47 -0700 (PDT)
+Message-Id: <5eb696daba2fe108d4d9ba2ccf4b357447ef9946.1648231393.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:03:13 +0000
+Subject: [PATCH v9 30/30] t7527: test status with untracked-cache and
+ fsmonitor--daemon
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "ci/test-documentation.sh" script to run the bash-specific
-parts in as one command in the CI job itself, and to run the two "make
-doc" commands at the top-level.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-It'll now be obvious from the title of the step if if we failed in the
-asciidoc or asciidoctor step.
+Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
+features and a series of edits and verify that status output is
+identical.
 
-Since the "check_unignored_build_artifacts()" function is now only
-used in "ci/check-unignored-build-artifacts.sh" move that function
-there.
-
-The recipe for the job in ".github/workflows/main.yml" is now a bit
-verbose because it's effectively the same job twice, with a "make
-clean" in-between. It would be better for the verbosity to run it via
-a matrix as done in the alternate approach in [1] does, but then we'd
-sacrifice overall CPU time for the brevity. It might still be worth
-doing, but let's go for this simpler approach for now.
-
-1. https://lore.kernel.org/git/patch-v2-6.6-7c423c8283d-20211120T030848Z-avarab@gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .github/workflows/main.yml            | 16 +++++++++++++-
- ci/check-unignored-build-artifacts.sh | 10 +++++++++
- ci/lib.sh                             | 10 ---------
- ci/test-documentation.sh              | 31 +++++++++------------------
- 4 files changed, 35 insertions(+), 32 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 115 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 115 insertions(+)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 2c23a19eac2..92b914f16fd 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -365,4 +365,18 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/test-documentation.sh
-+    - run: ci/lib.sh
-+    - run: make check-docs
-+    - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh AsciiDoc
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
-+    - run: make clean
-+    - run: "make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh Asciidoctor
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
-diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
-index 56d04b0db9a..0bc04f32804 100755
---- a/ci/check-unignored-build-artifacts.sh
-+++ b/ci/check-unignored-build-artifacts.sh
-@@ -5,4 +5,14 @@
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 062e01c0dfc..bd0c952a116 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -205,6 +205,8 @@ test_expect_success 'setup' '
+ 	.gitignore
+ 	expect*
+ 	actual*
++	flush*
++	trace*
+ 	EOF
  
- . ${0%/*}/lib.sh
+ 	git -c core.fsmonitor=false add . &&
+@@ -491,4 +493,117 @@ test_expect_success 'cleanup worktrees' '
+ 	stop_daemon_delete_repo wt-base
+ '
  
-+check_unignored_build_artifacts ()
-+{
-+	! git ls-files --other --exclude-standard --error-unmatch \
-+		-- ':/*' 2>/dev/null ||
-+	{
-+		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
-+		false
-+	}
++# The next few tests perform arbitrary/contrived file operations and
++# confirm that status is correct.  That is, that the data (or lack of
++# data) from fsmonitor doesn't cause incorrect results.  And doesn't
++# cause incorrect results when the untracked-cache is enabled.
++
++test_lazy_prereq UNTRACKED_CACHE '
++	git update-index --test-untracked-cache
++'
++
++test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
++	test_unconfig core.fsmonitor &&
++	git update-index --no-fsmonitor &&
++	test_might_fail git fsmonitor--daemon stop
++'
++
++matrix_clean_up_repo () {
++	git reset --hard HEAD &&
++	git clean -fd
 +}
 +
- check_unignored_build_artifacts
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 05f3dd15e27..fc6ce4d3e04 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -39,16 +39,6 @@ setenv () {
- 	fi
- }
- 
--check_unignored_build_artifacts ()
--{
--	! git ls-files --other --exclude-standard --error-unmatch \
--		-- ':/*' 2>/dev/null ||
--	{
--		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
--		false
--	}
--}
--
- # GitHub Action doesn't set TERM, which is required by tput
- setenv TERM ${TERM:-dumb}
- 
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index 6b5cce03bd7..b8a6a6f664e 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -1,10 +1,12 @@
--#!/usr/bin/env bash
-+#!/bin/sh
- #
--# Perform sanity checks on documentation and build it.
-+# Perform sanity checks on "make doc" output and built documentation
- #
- 
- . ${0%/*}/lib.sh
- 
-+generator=$1
++matrix_try () {
++	uc=$1 &&
++	fsm=$2 &&
++	fn=$3 &&
 +
- filter_log () {
- 	sed -e '/^GIT_VERSION = /d' \
- 	    -e "/constant Gem::ConfigMap is deprecated/d" \
-@@ -14,28 +16,15 @@ filter_log () {
- 	    "$1"
- }
- 
--make check-docs
--
--# Build docs with AsciiDoc
--make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
--cat stderr.raw
--filter_log stderr.raw >stderr.log
--test ! -s stderr.log
--test -s Documentation/git.html
--test -s Documentation/git.xml
--test -s Documentation/git.1
--grep '<meta name="generator" content="AsciiDoc ' Documentation/git.html
--
--rm -f stdout.log stderr.log stderr.raw
--check_unignored_build_artifacts
--
--# Build docs with AsciiDoctor
--make clean
--make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
- cat stderr.raw
- filter_log stderr.raw >stderr.log
- test ! -s stderr.log
- test -s Documentation/git.html
--grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
-+if test "$generator" = "Asciidoctor"
-+then
-+	test -s Documentation/git.xml
-+	test -s Documentation/git.1
-+fi
-+grep "<meta name=\"generator\" content=\"$generator " Documentation/git.html
- 
- rm -f stdout.log stderr.log stderr.raw
++	if test $uc = true && test $fsm = false
++	then
++		# The untracked-cache is buggy when FSMonitor is
++		# DISABLED, so skip the tests for this matrix
++		# combination.
++		#
++		# We've observed random, occasional test failures on
++		# Windows and MacOS when the UC is turned on and FSM
++		# is turned off.  These are rare, but they do happen
++		# indicating that it is probably a race condition within
++		# the untracked cache itself.
++		#
++		# It usually happens when a test does F/D trickery and
++		# then the NEXT test fails because of extra status
++		# output from stale UC data from the previous test.
++		#
++		# Since FSMonitor is not involved in the error, skip
++		# the tests for this matrix combination.
++		#
++		return 0
++	fi &&
++
++	test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
++		matrix_clean_up_repo &&
++		$fn &&
++		if test $uc = false && test $fsm = false
++		then
++			git status --porcelain=v1 >.git/expect.$fn
++		else
++			git status --porcelain=v1 >.git/actual.$fn &&
++			test_cmp .git/expect.$fn .git/actual.$fn
++		fi
++	'
++}
++
++uc_values="false"
++test_have_prereq UNTRACKED_CACHE && uc_values="false true"
++for uc_val in $uc_values
++do
++	if test $uc_val = false
++	then
++		test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
++			git config core.untrackedcache false &&
++			git update-index --no-untracked-cache
++		'
++	else
++		test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
++			git config core.untrackedcache true &&
++			git update-index --untracked-cache
++		'
++	fi
++
++	fsm_values="false true"
++	for fsm_val in $fsm_values
++	do
++		if test $fsm_val = false
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
++				test_unconfig core.fsmonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon stop
++			'
++		else
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
++				git config core.fsmonitor true &&
++				git fsmonitor--daemon start &&
++				git update-index --fsmonitor
++			'
++		fi
++
++		matrix_try $uc_val $fsm_val edit_files
++		matrix_try $uc_val $fsm_val delete_files
++		matrix_try $uc_val $fsm_val create_files
++		matrix_try $uc_val $fsm_val rename_files
++		matrix_try $uc_val $fsm_val file_to_directory
++		matrix_try $uc_val $fsm_val directory_to_file
++
++		if test $fsm_val = true
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
++				test_unconfig core.fsmonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon stop
++			'
++		fi
++	done
++done
++
+ test_done
 -- 
-2.35.1.1517.g20a06c426a7
-
+gitgitgadget
