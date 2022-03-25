@@ -2,213 +2,266 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB8AC433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D21E5C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231206AbiCYTk4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:40:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44376 "EHLO
+        id S231221AbiCYTk6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:40:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232055AbiCYTih (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:38:37 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B80C3FE414
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:07 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id d7so12091479wrb.7
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:07 -0700 (PDT)
+        with ESMTP id S232670AbiCYTjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:39:04 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC309150401
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:39 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so4946641wmb.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OqCROC5s98+c4tM5gHnUYLicOFeDXUaj+atK5YqejLE=;
-        b=GKYBNUqsB5dS8tYeLAYdxSe0x+1vomxazwWdjn6QFFibIo1W3OUHwEGneW5bV0eV+p
-         eoRrzbiCH+GrgUfbxjeFl363tMJb35HuKAEf2r9VBVP1d8JxqJ//CeidqPFiD2crkvT8
-         aTQCoAQkb/hgIkqD+I71e1SbEN4+nch6MHHcrVDO9qoufWGzHmbQjt8iXS1oxRnMd5/S
-         C7mhUWt3aLz2pZi/NkOMKqUztiSkRII/rYHfFa9lEjWD8KaP3U1xZX2E6bV53o057g3X
-         gJiYsHzeI4zEsHACWMWvAIe3EaLcfjZrve8/FyB/GQVlheGQffHvvjKrTHO/KEBnB4UG
-         aW3g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Lcfd+U9TlDSYDgR80iZE/9sLC2zccQ4SmRDeuLJfgC4=;
+        b=nF2ugyfUp+dQ2bc/fa91IHDQ5cFs7sDmz0XWEilWWElI41WnvC/QHc1o7JS8B0XH5u
+         rwRuvOu1ZdAW4BVds4+8Fbw/gm7K6ST8BFGGRVHmJGlgQq9LLbk516579XmmYdHYBA08
+         CHoddvyYY7UGJjkV50TnBfnv4jurHybZaCBqOT/E7iRZkPwECUnMMeaok7Q0TJzThWM6
+         9RjaxcwMkyH6OEeCw6HOoRvYRT+r8LLcmNo1Rhg8aFyU0ttkiBvDe2W2cxUM3I6c3bxm
+         r77gLUwolbVfSQRnOlzl8dKYA3LLcKPNDZJ5h7jY1DodgMTLe0RLI/siIyxSn1yW44My
+         Qr4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OqCROC5s98+c4tM5gHnUYLicOFeDXUaj+atK5YqejLE=;
-        b=r3eqSIOb8IVChUcbpWoFZMdGjhbOEWrSmTBTXuAC0PJKK3rhxrDtWaTZQisb6367TY
-         blH5mg8DjFtIFI8U0w1ZUzKJU5p4bGiJ0J1WF6QLukAVQL3WJm/IkGbpvTA8ItpddE9c
-         2YxvmQX8MaZ88dqDP0h1Q5+n3h/X/YasnmrRKr3APzAQR/LEVKBmWQLw7oPsSEVkhH4W
-         z9rBhiTnBuDyi0ZUzLZR8SkGAsTPmd+N/a46OEzyydGty6gTDZoySbQU75BYyIwWcFfj
-         o60zqbLciQXCBg0b7afx3/YrxuGOpO1IuTf3/vw5rLx+wqbVQJSlnDwTM+QsEjwiePdh
-         rGEA==
-X-Gm-Message-State: AOAM532H7ojQrOo/P2JUzHedJ0q7G3+8jA3mQ/EaLVPRimOF5BaWIpFO
-        h5bdKSge1xRPqNDVioPzeiWfugSx7ew=
-X-Google-Smtp-Source: ABdhPJxhLDfBoUQH9wyDhIFdvvaNhkLMvPjlMP6tCfNmPCVVK6J2NgszG9UlWly29cZfRH71fC68Qw==
-X-Received: by 2002:a5d:64c4:0:b0:205:8280:73f6 with SMTP id f4-20020a5d64c4000000b00205828073f6mr10152433wri.358.1648231426713;
-        Fri, 25 Mar 2022 11:03:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p11-20020a5d638b000000b002048a77636dsm5358890wru.97.2022.03.25.11.03.45
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Lcfd+U9TlDSYDgR80iZE/9sLC2zccQ4SmRDeuLJfgC4=;
+        b=BHiOx/QPBnq3AeQfbD/MlvydSVLddBlmBTp8o8rkBDiPeJK0Z2NrHZSPq1w6Jrmkrr
+         iLwIq+3SfjkR8Dh5uA812TXOj3rTu4Jb1BhtsYDukNLK7gQuchFvlNn6ho/jFa3ZCbcF
+         Um+9VrfhxahVmxRRzcOfHLU0++W11gAQEmPfGawr+y43AD8lQ2kpjy2C2lUDX/UmfkA0
+         rd/lHz8DmNH7RjVPiu9XFWK+yyir34q3Fi8Srqf+T90cSDCevtCciEORQCYSMsXc2SIw
+         gsVmldpmYi5md2v+q29g+YQSTNz43JAiDQS/fviex4Sp8tpZAtg37WV0VIfS1wbwEIlI
+         Ybiw==
+X-Gm-Message-State: AOAM530KlRrxRaIOCPG3liwbgAtT8rELkeHPlFDGmOLp1hV6+yMMmtBD
+        ONB4bxQpSYmKRNTHhCnY1lW4Fpu63tOzZA==
+X-Google-Smtp-Source: ABdhPJw0bGJjICWQ+PCttNRdpNuH7SA4RIx8EvvaHjFGefN+A7xP/Umbv1eHvwVrDipCBbi6H823mQ==
+X-Received: by 2002:a7b:cc15:0:b0:38c:8af7:f47c with SMTP id f21-20020a7bcc15000000b0038c8af7f47cmr11344335wmh.177.1648233517718;
+        Fri, 25 Mar 2022 11:38:37 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:46 -0700 (PDT)
-Message-Id: <68a05fd2892b5d3aef6b3e390926e6d3c6b29c2d.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:03:12 +0000
-Subject: [PATCH v9 29/30] fsmonitor: force update index after large responses
-Fcc:    Sent
+        Fri, 25 Mar 2022 11:38:37 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 20/25] CI: only invoke ci/lib.sh as "steps" in main.yml
+Date:   Fri, 25 Mar 2022 19:38:11 +0100
+Message-Id: <patch-v2-20.25-ef9daa6882f-20220325T182534Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
+In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Change the scripts in ci/ to stop using ci/lib.sh as a library, now
+that the only thing it did for them was to "set -ex" and possibly set
+TERM=dumb.
 
-Measure the time taken to apply the FSMonitor query result
-to the index and the untracked-cache.
+Let's create a ci/lib-tput.sh for those that need to use "tput"
+instead, and have these scripts invoke "set -ex" themselves.
 
-Set the `FSMONITOR_CHANGED` bit on `istate->cache_changed` when
-FSMonitor returns a very large repsonse to ensure that the index is
-written to disk.
+This makes their invocation a lot less verbose, since they'll be
+relying on an earlier step in the CI job to have set the variables in
+$GITHUB_ENV, and won't be spewing their own trace output to set those
+variables again.
 
-Normally, when the FSMonitor response includes a tracked file, the
-index is always updated.  Similarly, the index might be updated when
-the response alters the untracked-cache (when enabled).  However, in
-cases where neither of those cause the index to be considered changed,
-the FSMonitor response is wasted.  Subsequent Git commands will make
-requests with the same token and receive the same response.
+Let's also create a ci/lib-ci-type.sh, and have ci/lib.sh and
+ci/print-test-failures.sh share the logic to discover the CI type. We
+could have set the CI_TYPE in the environment with "setenv", but let's
+avoid that verbosity for this purely internal variable.
 
-If that response is very large, performance may suffer.  It would be
-more efficient to force update the index now (and the token in the
-index extension) in order to reduce the size of the response received
-by future commands.
+The "ci/lib.sh" is now no longer a "Library of functions shared by all
+CI scripts", so let's remove that commentary, and the misleading
+comment about "set -ex" being for "installing dependencies", we're now
+no longer using it in "ci/install-dependencies.sh" (but it does its
+own "set -ex").
 
-This was observed on Windows after a large checkout.  On Windows, the
-kernel emits events for the files that are changed as they are
-changed.  However, it might delay events for the containing
-directories until the system is more idle (or someone scans the
-directory (so it seems)).  The first status following a checkout would
-get the list of files.  The subsequent status commands would get the
-list of directories as the events trickled out.  But they would never
-catch up because the token was not advanced because the index wasn't
-updated.
-
-This list of directories caused `wt_status_collect_untracked()` to
-unnecessarily spend time actually scanning them during each command.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsmonitor.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ ci/check-unignored-build-artifacts.sh |  4 +++-
+ ci/install-dependencies.sh            |  2 +-
+ ci/lib-ci-type.sh                     |  8 ++++++++
+ ci/lib-tput.sh                        |  2 ++
+ ci/lib.sh                             | 27 ++++++++++-----------------
+ ci/print-test-failures.sh             |  6 +++---
+ ci/select-test-slice.sh               |  2 +-
+ ci/test-documentation.sh              |  2 +-
+ 8 files changed, 29 insertions(+), 24 deletions(-)
+ create mode 100644 ci/lib-ci-type.sh
+ create mode 100644 ci/lib-tput.sh
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index a38b5710eb3..292a6742b4f 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -219,6 +219,43 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- 	untracked_cache_invalidate_path(istate, name, 0);
+diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
+index 0bc04f32804..c27d6a97f45 100755
+--- a/ci/check-unignored-build-artifacts.sh
++++ b/ci/check-unignored-build-artifacts.sh
+@@ -3,7 +3,9 @@
+ # Check whether the build created anything not in our .gitignore
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
++
++. ${0%/*}/lib-tput.sh
+ 
+ check_unignored_build_artifacts ()
+ {
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 9388289d0ed..ee9af62fc92 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -3,7 +3,7 @@
+ # Install dependencies required to build and test Git on Linux and macOS
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
+ 
+ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+diff --git a/ci/lib-ci-type.sh b/ci/lib-ci-type.sh
+new file mode 100644
+index 00000000000..bd6e093c8f4
+--- /dev/null
++++ b/ci/lib-ci-type.sh
+@@ -0,0 +1,8 @@
++if test "$GITHUB_ACTIONS" = "true"
++then
++	CI_TYPE=github-actions
++else
++	echo "Could not identify CI type" >&2
++	env >&2
++	exit 1
++fi
+diff --git a/ci/lib-tput.sh b/ci/lib-tput.sh
+new file mode 100644
+index 00000000000..baed1892f69
+--- /dev/null
++++ b/ci/lib-tput.sh
+@@ -0,0 +1,2 @@
++# GitHub Action doesn't set TERM, which is required by tput
++export TERM=${TERM:-dumb}
+diff --git a/ci/lib.sh b/ci/lib.sh
+index b882849ed5d..5eadc96de29 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -1,13 +1,9 @@
+ #!/bin/sh
+-
+-# Library of functions shared by all CI scripts
+-
+-# Set 'exit on error' for all CI scripts to let the caller know that
+-# something went wrong.
+-# Set tracing executed commands, primarily setting environment variables
+-# and installing dependencies.
+ set -ex
+ 
++# Helper libraries
++. ${0%/*}/lib-ci-type.sh
++
+ # Starting assertions
+ if test -z "$jobname"
+ then
+@@ -39,15 +35,11 @@ setenv () {
+ 	fi
  }
  
-+/*
-+ * The number of pathnames that we need to receive from FSMonitor
-+ * before we force the index to be updated.
-+ *
-+ * Note that any pathname within the set of received paths MAY cause
-+ * cache-entry or istate flag bits to be updated and thus cause the
-+ * index to be updated on disk.
-+ *
-+ * However, the response may contain many paths (such as ignored
-+ * paths) that will not update any flag bits.  And thus not force the
-+ * index to be updated.  (This is fine and normal.)  It also means
-+ * that the token will not be updated in the FSMonitor index
-+ * extension.  So the next Git command will find the same token in the
-+ * index, make the same token-relative request, and receive the same
-+ * response (plus any newly changed paths).  If this response is large
-+ * (and continues to grow), performance could be impacted.
-+ *
-+ * For example, if the user runs a build and it writes 100K object
-+ * files but doesn't modify any source files, the index would not need
-+ * to be updated.  The FSMonitor response (after the build and
-+ * relative to a pre-build token) might be 5MB.  Each subsequent Git
-+ * command will receive that same 100K/5MB response until something
-+ * causes the index to be updated.  And `refresh_fsmonitor()` will
-+ * have to iterate over those 100K paths each time.
-+ *
-+ * Performance could be improved if we optionally force update the
-+ * index after a very large response and get an updated token into
-+ * the FSMonitor index extension.  This should allow subsequent
-+ * commands to get smaller and more current responses.
-+ *
-+ * The value chosen here does not need to be precise.  The index
-+ * will be updated automatically the first time the user touches
-+ * a tracked file and causes a command like `git status` to
-+ * update an mtime to be updated and/or set a flag bit.
-+ */
-+static int fsmonitor_force_update_threshold = 100;
-+
- void refresh_fsmonitor(struct index_state *istate)
- {
- 	struct strbuf query_result = STRBUF_INIT;
-@@ -362,25 +399,39 @@ apply_results:
- 	 *     information and that we should consider everything
- 	 *     invalid.  We call this a trivial response.
- 	 */
-+	trace2_region_enter("fsmonitor", "apply_results", istate->repo);
-+
- 	if (query_success && !is_trivial) {
- 		/*
- 		 * Mark all pathnames returned by the monitor as dirty.
- 		 *
- 		 * This updates both the cache-entries and the untracked-cache.
- 		 */
-+		int count = 0;
-+
- 		buf = query_result.buf;
- 		for (i = bol; i < query_result.len; i++) {
- 			if (buf[i] != '\0')
- 				continue;
- 			fsmonitor_refresh_callback(istate, buf + bol);
- 			bol = i + 1;
-+			count++;
- 		}
--		if (bol < query_result.len)
-+		if (bol < query_result.len) {
- 			fsmonitor_refresh_callback(istate, buf + bol);
-+			count++;
-+		}
+-# GitHub Action doesn't set TERM, which is required by tput
+-setenv TERM ${TERM:-dumb}
+-
+ # Clear MAKEFLAGS that may come from the outside world.
+ MAKEFLAGS=
  
- 		/* Now mark the untracked cache for fsmonitor usage */
- 		if (istate->untracked)
- 			istate->untracked->use_fsmonitor = 1;
-+
-+		if (count > fsmonitor_force_update_threshold)
-+			istate->cache_changed |= FSMONITOR_CHANGED;
-+
-+		trace2_data_intmax("fsmonitor", istate->repo, "apply_count",
-+				   count);
-+
- 	} else {
- 		/*
- 		 * We failed to get a response or received a trivial response,
-@@ -409,6 +460,8 @@ apply_results:
- 		if (istate->untracked)
- 			istate->untracked->use_fsmonitor = 0;
- 	}
-+	trace2_region_leave("fsmonitor", "apply_results", istate->repo);
-+
- 	strbuf_release(&query_result);
+-if test "$GITHUB_ACTIONS" = "true"
+-then
+-	CI_TYPE=github-actions
++case "$CI_TYPE" in
++github-actions)
+ 	CC="${CC:-gcc}"
  
- 	/* Now that we've updated istate, save the last_update_token */
+ 	setenv --test GIT_PROVE_OPTS "--timer --jobs 10"
+@@ -57,11 +49,12 @@ then
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ 
+ 	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
+-else
+-	echo "Could not identify CI type" >&2
+-	env >&2
++	;;
++*)
++	echo "Unhandled CI type: $CI_TYPE" >&2
+ 	exit 1
+-fi
++	;;
++esac
+ 
+ setenv --build DEVELOPER 1
+ setenv --test DEFAULT_TEST_TARGET prove
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index 0c63b6f7962..452aff35d74 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -3,10 +3,10 @@
+ # Print output of failing tests
+ #
+ 
+-. ${0%/*}/lib.sh
++set -e
+ 
+-# Tracing executed commands would produce too much noise in the loop below.
+-set +x
++. ${0%/*}/lib-ci-type.sh
++. ${0%/*}/lib-tput.sh
+ 
+ cd t/
+ 
+diff --git a/ci/select-test-slice.sh b/ci/select-test-slice.sh
+index ec602f8a053..a0332095bb3 100755
+--- a/ci/select-test-slice.sh
++++ b/ci/select-test-slice.sh
+@@ -3,7 +3,7 @@
+ # Select a portion of the tests for testing Git in parallel
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
+ 
+ tests=$(echo $(cd t && ./helper/test-tool path-utils slice-tests "$1" "$2" \
+ 	t[0-9]*.sh))
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index b8a6a6f664e..64ff212cdaa 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -3,7 +3,7 @@
+ # Perform sanity checks on "make doc" output and built documentation
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
+ 
+ generator=$1
+ 
 -- 
-gitgitgadget
+2.35.1.1517.g20a06c426a7
 
