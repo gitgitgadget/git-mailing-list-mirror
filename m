@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1501C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F24EC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:33:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbiCYTfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59494 "EHLO
+        id S229881AbiCYTfL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:35:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230325AbiCYTfB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230330AbiCYTfB (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 25 Mar 2022 15:35:01 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07EF2806BC
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:20 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h23so12123221wrb.8
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:20 -0700 (PDT)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55F6280EE7
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:21 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id u3so12155446wrg.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OXsvDsz+n/QaiDucHLTg8rTNzXwcPdHqhWsqMmqkRzA=;
-        b=g+3mZjcaovjbLpaKmUCv0s4cFtX0uQ6PlFD1TYbthLNt6IUUgEFnooFeL21mp8+XpN
-         NXFm1+s+I2c/B+Ja43W+iBKl7eZM//4oKe1wRwWsu/ArNW0jLZZPT8mqPgUgJjrWe5u8
-         6jlYUaXoEt9II5y/qGhGKfGcm0fxeq1HYtmcsaf12KbWMVrPLgIgEHMBrcJuvj+ZOswN
-         0g49dzmipyy8Eo8/q+oc6+CUqoZkgcdQDrfj/1C0SpTnKdywNzTji5QPRGwjtT4bCWtt
-         fUXz8VvHtbqBk5dLVVXb+ja3GlKCQ+IHdRXVq01W10dvr4wNGhiutWL4WDFog6INqx3W
-         Qceg==
+        bh=un4TIsyi8AzHb+88PX5qngd/2+qgEVNpUqwtn/Os4uA=;
+        b=qhjTSDen6TKfW1nPWN4ghIjatG0sAme4iCCBbVhzeltUbKhyefFgU34xtxiBlu5pWM
+         HGD9mQsw+KMe0+Z+NIV+DO1s0b/wIfTM8L4UPaDxMgeNeD9Y55SSHcth6ma4VvNadBfN
+         LlH/G4eVMV44i+SObcPLagzjAUxrbx5rPbbE6042c1hb0jQzeUuP9omrVyu4AxMMjCvm
+         gWLbH0rvVY0T0rRAzJf2JRL84EpHF5RsaJfg1ffirPRI43sAoOLLcj/X1P69oKTYXmAK
+         IfmvdpjB2fUj6U4AtEtGWdr6cG/k13W0kpZau1axaVLP6cVGy7A571tZAuiyHebmoSg4
+         xsAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OXsvDsz+n/QaiDucHLTg8rTNzXwcPdHqhWsqMmqkRzA=;
-        b=NrvwOryWL2rSQibr/hsVyX6bZlKB9v8/cxBlkoeRRogzAkIYQNEI2TzOEjclFo8zLg
-         1mKJCHbv34tlvc0+uqPKgnhc96eoTlr5clJRoV7CLOsIPtvSN97/5/EN9VqfeuV7QtzW
-         GGwQF5yKNJQwAAZm3s5nEwbhBJJb9iowebyR418Zrj4t0QwPIrPvVJ0wPKjAzd/zIhDh
-         IsLaMZS0w25JIU8uCrAT5DfhCWYGMmXtjQU0b9o4Wz1/Qv2GmUPyMh8JwhBanhty3BIS
-         u25jRK/HGpMlBPr/qYze1+jTsPKzY3Aqt4VzTcS9Wuj4AJXyKrE5ghrbQSHTvx3ZUwZu
-         OJ2w==
-X-Gm-Message-State: AOAM5338XkMSWmtpuIkCq6BKq6cZNhmBAAHsjEr8id6pb04vSSUuJhcT
-        7syQQgfNnCiGXZ7+8bovbRf70NUqtJAvJQ==
-X-Google-Smtp-Source: ABdhPJzMebATWzpWBtvYrX/PAVpcJ4pGBkiuQ1w9139XuYkTHLEprInn6qbYp0WpzcFNOShmihhjNA==
-X-Received: by 2002:a5d:504d:0:b0:203:e60e:49ef with SMTP id h13-20020a5d504d000000b00203e60e49efmr10642820wrt.546.1648236259052;
+        bh=un4TIsyi8AzHb+88PX5qngd/2+qgEVNpUqwtn/Os4uA=;
+        b=gRu+25sE0KtQN7k11gmv360LLJG764MlEpKxMpYSwTmckOkasPSTYkZZSDo+05LDAC
+         zTgqqNweLdY80zLzxqIJwKAIJSHX0asROysXerHyloGENy1y+AV6tMkZAlrisedqPQiU
+         lT5t/ALMvQznl83R3BAEkE7bEjSPMIAuO53w8Te+yj08Po+WSJycJEnvrVIfaB3T+lzg
+         9Dz+rCb+tHKRS60Idoc7Ey9O518lP+6z2GqHv/1T9KscfkzE+1CNn3SWdrZrnRsCigjr
+         Y56KrP2vPQSs0+EqwFDSxiTdxFKXA1CY6g+QTLzVk2m+gGcxoCGCt6Q8q8MiooTtc++m
+         HPWQ==
+X-Gm-Message-State: AOAM533dddSM7MsAdIhIdulv3iZfFgKcSEoSXiXDgDwMZ6N6ZAOAWtOh
+        Zxx2pF8A2VOXvvt7agraz2q5z+LhR/fX6Q==
+X-Google-Smtp-Source: ABdhPJwhJgmAY1bbaN+8AsJu7O/rhhAYd9XX4SUt78yc2TWFPVrp1gl0Y/q8bjWtAcfATK92fhtEjw==
+X-Received: by 2002:a05:6000:178c:b0:204:670:5b20 with SMTP id e12-20020a056000178c00b0020406705b20mr10769623wrg.637.1648236259984;
         Fri, 25 Mar 2022 12:24:19 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 6-20020a05600c020600b0038cbb21fb00sm4999704wmi.39.2022.03.25.12.24.18
+        by smtp.gmail.com with ESMTPSA id 6-20020a05600c020600b0038cbb21fb00sm4999704wmi.39.2022.03.25.12.24.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 12:24:18 -0700 (PDT)
+        Fri, 25 Mar 2022 12:24:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v3 1/6] ci: make it easier to find failed tests' logs in the GitHub workflow
-Date:   Fri, 25 Mar 2022 20:24:10 +0100
-Message-Id: <RFC-patch-v3-1.6-d88749c60c9-20220325T183946Z-avarab@gmail.com>
+Subject: [RFC PATCH v3 2/6] tests: refactor --write-junit-xml code
+Date:   Fri, 25 Mar 2022 20:24:11 +0100
+Message-Id: <RFC-patch-v3-2.6-ad1e1465a81-20220325T183946Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
 In-Reply-To: <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
@@ -78,143 +78,371 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When investigating a test failure, the time that matters most is the
-time it takes from getting aware of the failure to displaying the output
-of the failing test case.
+The code writing JUnit XML is interspersed directly with all the code in
+`t/test-lib.sh`, and it is therefore not only ill-separated, but
+introducing yet another output format would make the situation even
+worse.
 
-You currently have to know a lot of implementation details when
-investigating test failures in the CI runs. The first step is easy: the
-failed job is marked quite clearly, but when opening it, the failed step
-is expanded, which in our case is the one running
-`ci/run-build-and-tests.sh`. This step, most notably, only offers a
-high-level view of what went wrong: it prints the output of `prove`
-which merely tells the reader which test script failed.
+Let's introduce an abstraction layer by hiding the JUnit XML code behind
+four new functions that are supposed to be called before and after each
+test and test case.
 
-The actually interesting part is in the detailed log of said failed
-test script. But that log is shown in the CI run's step that runs
-`ci/print-test-failures.sh`. And that step is _not_ expanded in the web
-UI by default. It is even marked as "successful", which makes it very
-easy to miss that there is useful information hidden in there.
+This is not just an academic exercise, refactoring for refactoring's
+sake. We _actually_ want to introduce such a new output format, to
+make it substantially easier to diagnose test failures in our GitHub
+workflow, therefore we do need this refactoring.
 
-Let's help the reader by showing the failed tests' detailed logs in the
-step that is expanded automatically, i.e. directly after the test suite
-failed.
-
-This also helps the situation where the _build_ failed and the
-`print-test-failures` step was executed under the assumption that the
-_test suite_ failed, and consequently failed to find any failed tests.
-
-An alternative way to implement this patch would be to source
-`ci/print-test-failures.sh` in the `handle_test_failures` function to
-show these logs. However, over the course of the next few commits, we
-want to introduce some grouping which would be harder to achieve that
-way (for example, we do want a leaner, and colored, preamble for each
-failed test script, and it would be trickier to accommodate the lack of
-nested groupings in GitHub workflows' output).
+This commit is best viewed with `git show --color-moved
+--color-moved-ws=allow-indentation-change <commit>`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml       | 20 ++++--------------
- ci/print-test-failures-github.sh | 35 ++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+), 16 deletions(-)
- create mode 100755 ci/print-test-failures-github.sh
+ t/test-lib-junit.sh | 126 ++++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh       | 124 ++++++-------------------------------------
+ 2 files changed, 142 insertions(+), 108 deletions(-)
+ create mode 100644 t/test-lib-junit.sh
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 6d25ec4ae3b..e55dda807f0 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -129,11 +129,7 @@ jobs:
-       shell: bash
-     - name: test
-       shell: bash
--      run: . /etc/profile && make -C t -e
--    - name: ci/print-test-failures.sh
--      if: failure()
--      shell: bash
--      run: ci/print-test-failures.sh
-+      run: . /etc/profile && make -C t -e || ci/print-test-failures-github.sh
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-       uses: actions/upload-artifact@v2
-@@ -218,11 +214,7 @@ jobs:
-       shell: bash
-     - name: test
-       shell: bash
--      run: . /etc/profile && make -C t -e
--    - name: ci/print-test-failures.sh
--      if: failure()
--      shell: bash
--      run: ci/print-test-failures.sh
-+      run: . /etc/profile && make -C t -e || ci/print-test-failures-github.sh
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-       uses: actions/upload-artifact@v2
-@@ -265,10 +257,8 @@ jobs:
-     - run: ci/lib.sh --build
-     - run: make
-     - run: ci/lib.sh --test
--    - run: make test
-+    - run: make test || ci/print-test-failures-github.sh
-       if: success()
--    - run: ci/print-test-failures.sh
--      if: failure()
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-       uses: actions/upload-artifact@v2
-@@ -301,10 +291,8 @@ jobs:
-     - run: ci/lib.sh --build
-     - run: make
-     - run: ci/lib.sh --test
--    - run: make test
-+    - run: make test || ci/print-test-failures-github.sh
-       if: success() && matrix.vector.skip-tests != 'no'
--    - run: ci/print-test-failures.sh
--      if: failure() && matrix.vector.skip-tests != 'no'
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-       uses: actions/upload-artifact@v1
-diff --git a/ci/print-test-failures-github.sh b/ci/print-test-failures-github.sh
-new file mode 100755
-index 00000000000..218aaf19763
+diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
+new file mode 100644
+index 00000000000..9d55d74d764
 --- /dev/null
-+++ b/ci/print-test-failures-github.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
++++ b/t/test-lib-junit.sh
+@@ -0,0 +1,126 @@
++# Library of functions to format test scripts' output in JUnit XML
++# format, to support Git's test suite result to be presented in an
++# easily digestible way on Azure Pipelines.
++#
++# Copyright (c) 2022 Johannes Schindelin
++#
++# This program is free software: you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation, either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see http://www.gnu.org/licenses/ .
++#
++# The idea is for `test-lib.sh` to source this file when the user asks
++# for JUnit XML; these functions will then override (empty) functions
++# that are are called at the appropriate times during the test runs.
 +
-+. ${0%/*}/lib-ci-type.sh
++start_test_output () {
++	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
++	mkdir -p "$junit_xml_dir"
++	junit_xml_base=${1##*/}
++	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
++	junit_attrs="name=\"${junit_xml_base%.sh}\""
++	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
++		date +%Y-%m-%dT%H:%M:%S)\""
++	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
++	junit_suite_start=$(test-tool date getnanos)
++	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
++	then
++		GIT_TEST_TEE_OFFSET=0
++	fi
++}
 +
-+set -e
++start_test_case_output () {
++	junit_start=$(test-tool date getnanos)
++}
 +
-+case "$CI_TYPE" in
-+github-actions)
-+	handle_failed_tests () {
-+		mkdir -p t/failed-test-artifacts
-+		echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
++finalize_test_case_output () {
++	test_case_result=$1
++	shift
++	case "$test_case_result" in
++	ok)
++		set "$*"
++		;;
++	failure)
++		junit_insert="<failure message=\"not ok $test_count -"
++		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
++		junit_insert="$junit_insert $(xml_attr_encode \
++			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
++			   then
++				test-tool path-utils skip-n-bytes \
++					"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
++			   else
++				printf '%s\n' "$@" | sed 1d
++			   fi)")"
++		junit_insert="$junit_insert</failure>"
++		if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
++		then
++			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
++				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
++		fi
++		set "$1" "      $junit_insert"
++		;;
++	fixed)
++		set "$* (breakage fixed)"
++		;;
++	broken)
++		set "$* (known breakage)"
++		;;
++	skip)
++		message="$(xml_attr_encode "$skipped_reason")"
++		set "$1" "      <skipped message=\"$message\" />"
++		;;
++	esac
 +
-+		for test_exit in t/test-results/*.exit
-+		do
-+			test 0 != "$(cat "$test_exit")" || continue
++	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
++	shift
++	junit_attrs="$junit_attrs classname=\"$this_test\""
++	junit_attrs="$junit_attrs time=\"$(test-tool \
++		date getnanos $junit_start)\""
++	write_junit_xml "$(printf '%s\n' \
++		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
++	junit_have_testcase=t
++}
 +
-+			test_name="${test_exit%.exit}"
-+			test_name="${test_name##*/}"
-+			printf "\\e[33m\\e[1m=== Failed test: ${test_name} ===\\e[m\\n"
-+			cat "t/test-results/$test_name.out"
++finalize_test_output () {
++	if test -n "$junit_xml_path"
++	then
++		test -n "$junit_have_testcase" || {
++			junit_start=$(test-tool date getnanos)
++			write_junit_xml_testcase "all tests skipped"
++		}
 +
-+			trash_dir="t/trash directory.$test_name"
-+			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
-+			tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-+		done
-+		return 1
-+	}
-+	;;
-+*)
-+	echo "Unhandled CI type: $CI_TYPE" >&2
-+	exit 1
-+	;;
-+esac
++		# adjust the overall time
++		junit_time=$(test-tool date getnanos $junit_suite_start)
++		sed -e "s/\(<testsuite.*\) time=\"[^\"]*\"/\1/" \
++			-e "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
++			-e '/^ *<\/testsuite/d' \
++			<"$junit_xml_path" >"$junit_xml_path.new"
++		mv "$junit_xml_path.new" "$junit_xml_path"
 +
-+handle_failed_tests
++		write_junit_xml "  </testsuite>" "</testsuites>"
++		write_junit_xml=
++	fi
++}
++
++write_junit_xml () {
++	case "$1" in
++	--truncate)
++		>"$junit_xml_path"
++		junit_have_testcase=
++		shift
++		;;
++	esac
++	printf '%s\n' "$@" >>"$junit_xml_path"
++}
++
++xml_attr_encode () {
++	printf '%s\n' "$@" | test-tool xml-encode
++}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 515b1af7ed4..65b63359ddb 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -137,6 +137,12 @@ mark_option_requires_arg () {
+ 	store_arg_to=$2
+ }
+ 
++# These functions can be overridden e.g. to output JUnit XML
++start_test_output () { :; }
++start_test_case_output () { :; }
++finalize_test_case_output () { :; }
++finalize_test_output () { :; }
++
+ parse_option () {
+ 	local opt="$1"
+ 
+@@ -196,7 +202,7 @@ parse_option () {
+ 		tee=t
+ 		;;
+ 	--write-junit-xml)
+-		write_junit_xml=t
++		. "$TEST_DIRECTORY/test-lib-junit.sh"
+ 		;;
+ 	--stress)
+ 		stress=t ;;
+@@ -663,7 +669,7 @@ exec 6<&0
+ exec 7>&2
+ 
+ _error_exit () {
+-	finalize_junit_xml
++	finalize_test_output
+ 	GIT_EXIT_OK=t
+ 	exit 1
+ }
+@@ -773,35 +779,13 @@ trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
+ # the test_expect_* functions instead.
+ 
+ test_ok_ () {
+-	if test -n "$write_junit_xml"
+-	then
+-		write_junit_xml_testcase "$*"
+-	fi
++	finalize_test_case_output ok "$@"
+ 	test_success=$(($test_success + 1))
+ 	say_color "" "ok $test_count - $@"
+ }
+ 
+ test_failure_ () {
+-	if test -n "$write_junit_xml"
+-	then
+-		junit_insert="<failure message=\"not ok $test_count -"
+-		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
+-		junit_insert="$junit_insert $(xml_attr_encode \
+-			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+-			   then
+-				test-tool path-utils skip-n-bytes \
+-					"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
+-			   else
+-				printf '%s\n' "$@" | sed 1d
+-			   fi)")"
+-		junit_insert="$junit_insert</failure>"
+-		if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+-		then
+-			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
+-				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
+-		fi
+-		write_junit_xml_testcase "$1" "      $junit_insert"
+-	fi
++	finalize_test_case_output failure "$@"
+ 	test_failure=$(($test_failure + 1))
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+@@ -810,19 +794,13 @@ test_failure_ () {
+ }
+ 
+ test_known_broken_ok_ () {
+-	if test -n "$write_junit_xml"
+-	then
+-		write_junit_xml_testcase "$* (breakage fixed)"
+-	fi
++	finalize_test_case_output fixed "$@"
+ 	test_fixed=$(($test_fixed+1))
+ 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
+ }
+ 
+ test_known_broken_failure_ () {
+-	if test -n "$write_junit_xml"
+-	then
+-		write_junit_xml_testcase "$* (known breakage)"
+-	fi
++	finalize_test_case_output broken "$@"
+ 	test_broken=$(($test_broken+1))
+ 	say_color warn "not ok $test_count - $@ # TODO known breakage"
+ }
+@@ -1099,10 +1077,7 @@ test_start_ () {
+ 	test_count=$(($test_count+1))
+ 	maybe_setup_verbose
+ 	maybe_setup_valgrind
+-	if test -n "$write_junit_xml"
+-	then
+-		junit_start=$(test-tool date getnanos)
+-	fi
++	start_test_case_output
+ }
+ 
+ test_finish_ () {
+@@ -1153,12 +1128,7 @@ test_skip () {
+ 
+ 	case "$to_skip" in
+ 	t)
+-		if test -n "$write_junit_xml"
+-		then
+-			message="$(xml_attr_encode "$skipped_reason")"
+-			write_junit_xml_testcase "$1" \
+-				"      <skipped message=\"$message\" />"
+-		fi
++		finalize_test_case_output skip "$@"
+ 
+ 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
+ 		: true
+@@ -1174,53 +1144,6 @@ test_at_end_hook_ () {
+ 	:
+ }
+ 
+-write_junit_xml () {
+-	case "$1" in
+-	--truncate)
+-		>"$junit_xml_path"
+-		junit_have_testcase=
+-		shift
+-		;;
+-	esac
+-	printf '%s\n' "$@" >>"$junit_xml_path"
+-}
+-
+-xml_attr_encode () {
+-	printf '%s\n' "$@" | test-tool xml-encode
+-}
+-
+-write_junit_xml_testcase () {
+-	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
+-	shift
+-	junit_attrs="$junit_attrs classname=\"$this_test\""
+-	junit_attrs="$junit_attrs time=\"$(test-tool \
+-		date getnanos $junit_start)\""
+-	write_junit_xml "$(printf '%s\n' \
+-		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
+-	junit_have_testcase=t
+-}
+-
+-finalize_junit_xml () {
+-	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+-	then
+-		test -n "$junit_have_testcase" || {
+-			junit_start=$(test-tool date getnanos)
+-			write_junit_xml_testcase "all tests skipped"
+-		}
+-
+-		# adjust the overall time
+-		junit_time=$(test-tool date getnanos $junit_suite_start)
+-		sed -e "s/\(<testsuite.*\) time=\"[^\"]*\"/\1/" \
+-			-e "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
+-			-e '/^ *<\/testsuite/d' \
+-			<"$junit_xml_path" >"$junit_xml_path.new"
+-		mv "$junit_xml_path.new" "$junit_xml_path"
+-
+-		write_junit_xml "  </testsuite>" "</testsuites>"
+-		write_junit_xml=
+-	fi
+-}
+-
+ test_atexit_cleanup=:
+ test_atexit_handler () {
+ 	# In a succeeding test script 'test_atexit_handler' is invoked
+@@ -1243,7 +1166,7 @@ test_done () {
+ 	# removed, so the commands can access pidfiles and socket files.
+ 	test_atexit_handler
+ 
+-	finalize_junit_xml
++	finalize_test_output
+ 
+ 	if test -z "$HARNESS_ACTIVE"
+ 	then
+@@ -1534,22 +1457,7 @@ fi
+ # in subprocesses like git equals our $PWD (for pathname comparisons).
+ cd -P "$TRASH_DIRECTORY" || exit 1
+ 
+-if test -n "$write_junit_xml"
+-then
+-	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
+-	mkdir -p "$junit_xml_dir"
+-	junit_xml_base=${0##*/}
+-	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
+-	junit_attrs="name=\"${junit_xml_base%.sh}\""
+-	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
+-		date +%Y-%m-%dT%H:%M:%S)\""
+-	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
+-	junit_suite_start=$(test-tool date getnanos)
+-	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+-	then
+-		GIT_TEST_TEE_OFFSET=0
+-	fi
+-fi
++start_test_output "$0"
+ 
+ # Convenience
+ # A regexp to match 5 and 35 hexdigits
 -- 
 2.35.1.1517.g20a06c426a7
 
