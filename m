@@ -2,98 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5118FC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 17:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 435B4C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbiCYRnK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 13:43:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45956 "EHLO
+        id S229488AbiCYT0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:26:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiCYRnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 13:43:09 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97CE213F8F4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:41:26 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id 125so9697147iov.10
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:41:26 -0700 (PDT)
+        with ESMTP id S229557AbiCYT0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:26:16 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BC013E7E05
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 11:58:33 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id bq8so3176274ejb.10
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 11:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rHc1/z3z8kE3HgLlChUzizuLqxvmEydhGb7J/bNn1TA=;
-        b=RzoIK0rRshPR7+X3a5iMtt/j6D6PNfzQCME4Oh5RPtEojtK2g7oO+HxWyUohtAqPRO
-         qgcUSNxtdrO1E70RNMnVP2Pko8FLl4Gb7teIO/03jYO81sYscr3efir3Jqij2/bdJGrE
-         lj1W4XjtxsRuzIGJqblwDt//ZqKvPGtKvJV+hWboQLWlnHzVji3lnRTRB+qFjKr2wqv/
-         m7Mz7dtrvM6u16Y18OxaiT8XlkjaIDD8E1o67N9mLbpH0eJnnHI+ENxFfsiFEsUiaLpu
-         yxGhSk0f2rNO6HlbA86TsyS9i+ZbvqUc0Q6/xwkxrDWn99kY6Gote/6PltsC7d8puQaw
-         BSJg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GBSYoKFMiXxL47tbCdtlqToK9/DpNmOfcvl8sunsaH4=;
+        b=MdTUweNTxdVszcXzayefYqy9KQRo9uEkQ7yKpteQmj1GniDl/LT6fPBSbPUI6if2Oz
+         OaolxhIqWNUl5aOaat7lLnH/WwLf+IaiCTXCRGrwIwBdbNN2oCcf35S1HSWjUwO8pwbA
+         T/d1iGVCJYAX3hSUTzd9VFvD2fTGTBrxl5syA3U1vWuQzXSDSjmKMkaD/TZCyb8GaFx0
+         rvmAK+1ny0qmwAEiatmQ5treljdSEWuhOhYPkPlATLc2fdxMp0EsuOKiM89CFdctnorj
+         6VwPH1pWYUn51XwfZ3sMLNB0jKVSzyOfvn5XfBpG3//2LyCWF5AX0HHfZr0nvMsfJ/lk
+         tTng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rHc1/z3z8kE3HgLlChUzizuLqxvmEydhGb7J/bNn1TA=;
-        b=EBW1gUhJSJSGtXam+wDPyUN90ZDuCooHnGyYGNVfnvhCMzo7kX3fnPlnSjULRps8jq
-         qKaMUbKg+sowPdIXrE6a76je4v+RGKeg8xHUGMffAVXn1EMYOQpCUq6TC9Hab2wGiYza
-         SbNrVE7mP+Evvzil2U5bavLCGwie+Y+u+tIgPuLoBuYk2jbgB1rO0zeVmvomaWwF95Y1
-         e5NoypL1FghbUyy/aaMSDx/ZKfljhfkx2/A+kNFeqNbdrBdvbEs4lVI/gfk5C2SgvtsS
-         14DALU5L4+9t9aO/Td3bcKcHKU/HpfTCcR1QHvziwWNoOizOkR3zt/I5LcrFmp01b3QD
-         e9Eg==
-X-Gm-Message-State: AOAM532K17qhb2kj6LIQ4q5v5AFJVZKNBDZ5G+wik0E2yBurt1kydLZO
-        ErNrMg1zh8e5M38FDdLa5W3pqg==
-X-Google-Smtp-Source: ABdhPJzUpdI/dn4RBSwuWhQBl4YchdPiJZyDiAdpm4qQfZXAC1PFOsNLeLZBY5cMSEemhaSJPZVz3Q==
-X-Received: by 2002:a02:cadb:0:b0:317:b785:8ab2 with SMTP id f27-20020a02cadb000000b00317b7858ab2mr6747423jap.108.1648229781507;
-        Fri, 25 Mar 2022 10:36:21 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m8-20020a92d708000000b002c6381d9144sm3179842iln.59.2022.03.25.10.36.21
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=GBSYoKFMiXxL47tbCdtlqToK9/DpNmOfcvl8sunsaH4=;
+        b=71id213jAh42nr6htGB06Lry6P4bCLkViNcHptlnJ2X/a/J5ByRorZeIuLVLizQAiD
+         Z2YOI7m2hkc+7xby7osU3dWViDR87Cs4kGbEKbARIC0Hn2pHKcX9ewF2n1L3YQMaVBiV
+         mbEqTkjRv3XqzJT1eBermLkqV+CRRId5Q2mQhkGkrpCTsea55DfgxcYZ6eqdSimHy1oE
+         kD4Fi0o6SFpXyK+dLfWoNKa1ai4fmo3irMQYr0wF//u/g690O4+86bwP25TKkMoWS5Pk
+         Ak9aIC0kZxaJ8OsQt2SpsOwv6zSjV48Qt2Wz/ECveWwF4sxiBgOs5/+grPFMdxGwiuFy
+         9XaQ==
+X-Gm-Message-State: AOAM5331uIYJ+RdCf00WC6rtKcRqXoO0APTKYRbNyhA41JWgnc+G2wGj
+        Swu5yIcTKLYsN1mm21vOIjg1VNbjluk=
+X-Google-Smtp-Source: ABdhPJzVtoemCJYl7rqMIsnDJsW0mm6GtwHb2TijCqglnKOKFj5YXZqlr+smCasySs/0KKz1juPigA==
+X-Received: by 2002:a5d:4ec7:0:b0:203:de83:6f44 with SMTP id s7-20020a5d4ec7000000b00203de836f44mr10193107wrv.56.1648231422559;
+        Fri, 25 Mar 2022 11:03:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u11-20020a5d6acb000000b002058148822bsm7914537wrw.63.2022.03.25.11.03.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 10:36:21 -0700 (PDT)
-Date:   Fri, 25 Mar 2022 13:36:20 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com
-Subject: Re: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
-Message-ID: <Yj39lEzd/9AwQJaP@nand.local>
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
- <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
- <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
- <xmqqmthearlz.fsf@gitster.g>
- <3fab1246-1451-597c-4359-c01f9675e3f1@github.com>
+        Fri, 25 Mar 2022 11:03:41 -0700 (PDT)
+Message-Id: <50c2afaa49e20f2b19824acb2ff6a64439e9207c.1648231393.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:03:08 +0000
+Subject: [PATCH v9 25/30] t/perf/p7519: speed up test on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3fab1246-1451-597c-4359-c01f9675e3f1@github.com>
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 25, 2022 at 01:23:27PM -0400, Derrick Stolee wrote:
-> > Since we've made sure "before" is a one-liner earlier, we could just
-> > say
->
-> > 		test_cmp before kept &&
-> >
-> > instead, no?
->
-> 'before' contains a .idx name and 'kept' contains a .keep name,
-> so this direct comparison does not work. We could do that
-> additional check like this:
->
-> 	kept_name=$(cat kept) &&
-> 	echo ${kept_name%.keep}.idx >kept-idx &&
-> 	test_cmp before kept-idx &&
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-I think keeping this kind of post-condition check pretty minimal is
-favorable, since this is functionality of `git repack` (i.e., that `-a`
-leaves you with one kept) that is already tested thoroughly elsewhere.
+Change p7519 to use `test_seq` and `xargs` rather than a `for` loop
+to touch thousands of files.  This takes minutes off of test runs
+on Windows because of process creation overhead.
 
-So I'd probably avoid checking the output altogether, but if we did want
-to test it, I think something as quick and cheap as:
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/perf/p7519-fsmonitor.sh | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-    test_line_count = 1 before
+diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+index 5241eb6c4e5..a6c2a910e70 100755
+--- a/t/perf/p7519-fsmonitor.sh
++++ b/t/perf/p7519-fsmonitor.sh
+@@ -98,6 +98,13 @@ trace_stop () {
+ 	fi
+ }
+ 
++touch_files () {
++	n=$1 &&
++	d="$n"_files &&
++
++	(cd $d && test_seq 1 $n | xargs touch )
++}
++
+ test_expect_success "one time repo setup" '
+ 	# set untrackedCache depending on the environment
+ 	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
+@@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
+ 	fi &&
+ 
+ 	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
+-	for i in $(test_seq 1 10); do touch 10_files/$i || return 1; done &&
+-	for i in $(test_seq 1 100); do touch 100_files/$i || return 1; done &&
+-	for i in $(test_seq 1 1000); do touch 1000_files/$i || return 1; done &&
+-	for i in $(test_seq 1 10000); do touch 10000_files/$i || return 1; done &&
++	: 1_file directory should be left empty &&
++	touch_files 10 &&
++	touch_files 100 &&
++	touch_files 1000 &&
++	touch_files 10000 &&
+ 	git add 1_file 10_files 100_files 1000_files 10000_files &&
+ 	git commit -qm "Add files" &&
+ 
+@@ -199,15 +207,15 @@ test_fsmonitor_suite () {
+ 
+ 	# Update the mtimes on upto 100k files to make status think
+ 	# that they are dirty.  For simplicity, omit any files with
+-	# LFs (i.e. anything that ls-files thinks it needs to dquote).
+-	# Then fully backslash-quote the paths to capture any
+-	# whitespace so that they pass thru xargs properly.
++	# LFs (i.e. anything that ls-files thinks it needs to dquote)
++	# and any files with whitespace so that they pass thru xargs
++	# properly.
+ 	#
+ 	test_perf_w_drop_caches "status (dirty) ($DESC)" '
+ 		git ls-files | \
+ 			head -100000 | \
+ 			grep -v \" | \
+-			sed '\''s/\(.\)/\\\1/g'\'' | \
++			grep -v " ." | \
+ 			xargs test-tool chmtime -300 &&
+ 		git status
+ 	'
+-- 
+gitgitgadget
 
-would do the trick.
-
-Thanks,
-Taylor
