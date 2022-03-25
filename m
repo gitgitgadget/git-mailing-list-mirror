@@ -2,102 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E29C433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 13:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83459C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 13:55:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356576AbiCYNuN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 09:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
+        id S1358745AbiCYN5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 09:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353003AbiCYNuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 09:50:12 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B3ED3A183
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:48:37 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id j15so15454966eje.9
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:48:37 -0700 (PDT)
+        with ESMTP id S1358681AbiCYN45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 09:56:57 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97B4D372A
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:55:23 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id v75so8245552oie.1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=I9Sa5lYjrIroLTpkt/+4i6g7cbVNwFMxP+NZ30PX3ig=;
-        b=H/l9xDyQfzn5dPHtO/j9YBievyz3xZ3xsNkgCeL43G8hmN0Ado64ryoNTD+Ga5SinS
-         UAwDRVwEuxJik82S8UASTo3Z1Wlbfy54bfzgjYhQzuoC6OZYRAyJIZk417fim6lVp7a8
-         EvbTu6m97j5HwYJWZafXh39ldgeprz2p4ChrgIygVKIosoVoCOg4flEmyWUPKLUAg+Cy
-         hEJGLg3FVTpAAWIvPkKVB4XcpnxucwkPuw2ABnheiBZxSus5f5d5Qmg5JF5on22WIQtk
-         96/3xgOnU9VCpNHuj1wK/9AbRId5kcy1HTQXlVXbEdgLZbXvjeh2Stk7reeioODumlEt
-         yBBA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9FW57SOkmOISUwfnpd+W4pW7DAV+9TtvIJHRJav4cUw=;
+        b=aRWmsICgArAq33RqpqAbsd9/ngldvpYSvm+pYk1koTgyD+xxzgHt+waoi/qDaF/1Yc
+         f18xoV8ka0v9e12YNnT0z+szJ/KP1J9V5ccq0oC5hDAp4CjzSU5E7fHbJE/WUtnmFo/b
+         m4Q7Kw8NNn4ntnT9kB1AJHjMU9b4BrHLWVMpvVmz8DHD9j+E67XhpMRWIzd+1220fWJ/
+         62wepFV9nVa3jitfFaPYT6gBouap2L7S29+1jiNxQftoV2e7CZ3d3aa0XYAFSRo3Pf6S
+         EfrefFgxDm2QriG0ECsiqc5PPt4/LEaGyAzwHFD8ZmZgIUmkygXW/3XfY5Mnc8NXyDq2
+         FoIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=I9Sa5lYjrIroLTpkt/+4i6g7cbVNwFMxP+NZ30PX3ig=;
-        b=SnJ1PyHg7KUFNVPruBYNKRBGVK2t2QBdMf4vVa7HbBXQCTEbumwAVsS6ABQ+RidpMh
-         kFCj0sPdV/H/9qII98VWTjeJeq+vVyTEGFPGDL73HfSl1nDGCgYQDPcOubMIdkUI1BgG
-         JfbcbMzYxn8AYt1aUDUgRc76Yl4t2tVa4NfwyrTEnH+7UfKBcA+lcfgNd+SUvlvvM6f6
-         vNoJoO6q9xFN6gFPecRLeomtJDhqEpgkXXNEx7kbOqYQfQ3FiUolLzABlhOmczJtW6KP
-         o2PaNydOQZcLz4/UVXvt2ajpZ/7zBrsbhWirt1b0RFrcN4xMyOjtwkiUPbMLJC7xzqFS
-         S/YQ==
-X-Gm-Message-State: AOAM531eof6giAKZCt8QNDE56o0zbOAa1SkRVj/cuX6BHv+iTT8OPdde
-        bPFjn3b3f2jhbozGmaG1iqL705PF3EI=
-X-Google-Smtp-Source: ABdhPJxbrsQCmGC5pBYLw94KEfQ//H11OvZixtdT0uRDPqB6mpsOA43Vidf9j1M7X9iVMOSBoIMNGg==
-X-Received: by 2002:a17:907:3d91:b0:6df:a01c:f7cd with SMTP id he17-20020a1709073d9100b006dfa01cf7cdmr11580225ejc.255.1648216115375;
-        Fri, 25 Mar 2022 06:48:35 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u9-20020a170906124900b006ce88a505a1sm2417554eja.179.2022.03.25.06.48.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 06:48:34 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nXkIs-0020fb-3L;
-        Fri, 25 Mar 2022 14:48:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/commit-plug-leaks (was: What's cooking in git.git (Mar 2022,
- #05; Wed, 23))
-Date:   Fri, 25 Mar 2022 14:38:43 +0100
-References: <xmqqwngkm4am.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <xmqqwngkm4am.fsf@gitster.g>
-Message-ID: <220325.86v8w2kurx.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9FW57SOkmOISUwfnpd+W4pW7DAV+9TtvIJHRJav4cUw=;
+        b=XFD4arZEQcCcecRzN6JVWaR07Yx7uXa5WI3LJASwEyT2b1ikYwi7MYCPpBV3bEXfiP
+         577YVFrpF7PTIZ4FoXAyT2+ESA9uq6Ivlu5SDrLyseTDUuebaLkOvaRhts1gi5hEaWhU
+         0777W8oscDHD4gjo4iZoUerT/aIOsMtHn5lNHSBBsoX8pcPxN1VkN0veeYDgmHyzRoOi
+         y11u7U10ahHtuAwq+uicqerEkhiP83ZYbLEH9DInbn9w3Hc3/inAUrkLh4MWdLopOy+P
+         nRi3wanqxspsO5Omv7m1jhW+q1FHFv+D+gY7+DNDcrfTVoLGqim5DvhkbPkU57+8fTdv
+         l6tg==
+X-Gm-Message-State: AOAM533WdkQR7xLgBy2p+LC3EGdaOPNH86mmCT0ftBxEMNijv60Bju26
+        po44hPTSJUxzlrsApyUIGii3
+X-Google-Smtp-Source: ABdhPJxIDdqBwhZTzHPuzRc/dDOgR4rExt3UUZO2/kwM/1TPFpxPndbFFhVjYlJHYXRiweFNeJLQnw==
+X-Received: by 2002:a05:6808:2384:b0:2ec:d134:1e8b with SMTP id bp4-20020a056808238400b002ecd1341e8bmr10020966oib.197.1648216522974;
+        Fri, 25 Mar 2022 06:55:22 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t7-20020a9d5907000000b005afa4058a4csm2630969oth.1.2022.03.25.06.55.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 06:55:22 -0700 (PDT)
+Message-ID: <7ea0f7e4-180d-307d-2e2e-d33c3343317c@github.com>
+Date:   Fri, 25 Mar 2022 09:55:21 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        chakrabortyabhradeep79@gmail.com
+References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
+ <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
+ <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
+ <Yjy/UIydKw7v+4+7@nand.local>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <Yjy/UIydKw7v+4+7@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/24/2022 2:58 PM, Taylor Blau wrote:
+> On Thu, Mar 24, 2022 at 06:34:56PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <derrickstolee@github.com>
 
-On Wed, Mar 23 2022, Junio C Hamano wrote:
+>> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+>> index 770d1432046..73452e23896 100755
+>> --- a/t/t7700-repack.sh
+>> +++ b/t/t7700-repack.sh
+>> @@ -369,10 +369,56 @@ test_expect_success '--write-midx with preferred bitmap tips' '
+>>  	)
+>>  '
+>>
+>> +get_sorted_objects_from_packs () {
+>> +	git show-index <$(cat) >raw &&
+> 
+> It seems a little odd to me to pass the name of a single file as input
+> to get_sorted_objects_from_packs over stdin. I probably would have
+> expected something like `git show-index <"$1" >raw && ...` instead.
 
-> * ab/commit-plug-leaks (2022-02-16) 2 commits
->  - commit: use strbuf_release() instead of UNLEAK()
->  - commit: fix "author_ident" leak
+Based on the way we are creating a file whose contents is the name
+of the .idx file, we would at least use '$(cat "$1")'. I kind of like
+the symmetry of the input/output redirection when using the helper, but
+I can easily change this.
+
+> We may also want to s/packs/pack, since this function only will handle
+> one index at a time.
+
+Yes.
+
+>> +	cut -d" " -f2 raw | sort
+> 
+> Having the sort in there is my fault, but after reading this more
+> carefully it's definitely unnecessary, since show-index will give us
+> the results in lexical order by object name already.
+
+Cool. Will drop.
+
+>> +}
+>> +
+>>  test_expect_success '--write-midx -b packs non-kept objects' '
+>> -	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
+>> -		git repack --write-midx -a -b &&
+>> -	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
+>> +	git init repo &&
+>> +	test_when_finished "rm -fr repo" &&
+>> +	(
+>> +		cd repo &&
+>> +
+>> +		# Create a kept pack-file
+>> +		test_commit base &&
+>> +		git repack -ad &&
+>> +		find $objdir/pack -name "*.idx" >before &&
+> 
+> I thought that here it might be easier to say:
+> 
+>     before="$(find $objdir/pack -name "*.idx")"
+> 
+>> +		>$objdir/pack/$(basename $(cat before) .idx).keep &&
+> 
+> ...and then replace "$(cat before)" with "$before", along with the
+> other uses of the before file below. But it gets a little funny when
+> you want to discover which is the new pack, where it is more natural to
+> dump the output of comm into a file.
+
+For this reason, I'll continue to store the .idx names in files.
+
+>> +		# Get object list from the one non-kept pack-file
+>> +		comm -13 before after >new-pack &&
+> 
+> You could write "new_pack=$(comm -13 before after)", but debugging this
+> test would be difficult if the output of comm there contained more than
+> one line.
 >
->  Leakfixes in the top-level called-once function.
->
->  Expecting a reroll.
->  I think UNLEAK->strbuf_release() is a regression.
->  source: <cover-0.2-00000000000-20220216T081844Z-avarab@gmail.com>
+>> +		get_sorted_objects_from_packs \
+>> +			<new-pack \
+> 
+> Though we probably want to check that we only get one line anyway here,
+> since get_sorted_objects_from_packs will barf if we had more than one
+> line in file new-pack here, too.
 
-Re our earlier exchange ending in
-https://lore.kernel.org/git/xmqqczjbj0nf.fsf@gitster.g/ I still think it
-makes sense to get rid of the UNLEAK() there.
+Thanks. Easy to add a test_line_count before this check.
 
-One reason not mentioned there (but which I do find useful) is that if
-we actually free the memory then you don't need to build with
--DSUPPRESS_ANNOTATED_LEAKS to suppress these, which is useful e.g. when
-looking at valgrind output, as opposed to SANITIZE=leak where we do add
--DSUPPRESS_ANNOTATED_LEAKS.
-
-And since I submitted this topic our number of UNLEAK() in builtin/ is
-down from 29 to 23 with the queued release_revisions() topic.
-
-But you seem to feel strongly that we should keep these specific
-UNLEAK() for reasons I don't really understand despite re-reading that
-exchange. I.e. the cost of doing the actual release is minuscule, and we
-have a lot of such strbuf_release() in builtin/*.c already.
-
-But if you'd just like to drop this topic I understand, but I think it's
-ready to advance as is, but either way it's probably good to get it out
-of the current status
+-Stolee
