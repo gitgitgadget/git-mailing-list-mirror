@@ -2,117 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA42BC433FE
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 17:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5C0C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 17:29:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232304AbiCYRak (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 13:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56148 "EHLO
+        id S231668AbiCYRao (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 13:30:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238434AbiCYR2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 13:28:45 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 904BCFE424
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:03 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id k124-20020a1ca182000000b0038c9cf6e2a6so4817019wme.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:27:03 -0700 (PDT)
+        with ESMTP id S237322AbiCYR2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 13:28:38 -0400
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86186FDE30
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:26:59 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-de3eda6b5dso8802439fac.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 10:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AblYUYmyG6Os5E02ikHkP4bYaFKzxy1QO/EzepoRnm4=;
-        b=nYZv/9eHiB5/RTnR/g2m9eBSKWzDMYI35WLQ1rk8yjzFqJwGq8H0EBqWU605QugoyU
-         h61eHUFYkf+vgVThBuP3Ck2U25UD4u1g7fZ39aPUgTLf4mJLbRNjrb6vlizshhSAP88M
-         SnkUtHZiEKh2N6z9tcd42IHCahuE2Kjgb6HW4arCBHxRsmc4CIn6WT/dDdqEYVtxu0r2
-         dKmrw78RfWe080UMjsLW3xbQ0NxiWalaYAGkbrqH8KMnvPVMC4B6UH8tnfI0cnCrCeMs
-         QWPeEUaYnLn7sjmIY4QHZXIL6zc32BDufEJyICBCrWEDcAOd90YRpXnggwhP9saZ/qF/
-         7dwA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=l68mApwg+qViUOXSZqxWN/7QEgC+WLEh1rWWO1097ZA=;
+        b=Ed1ISOVGA05L9daeS6kkAqmzH2Dw9bPHcyBQIcJnCqqjJusJim3Srs18Xb45gLofpX
+         rOyci5ID4ahNZzwzsPTzJvjuVo36tQetSCUkeDnMA1X61+MEDAKrqa18ZvqguN1Gfv10
+         AHCqjjSL5cmLF04JnJ0+XdEPaivm4h54iZQgByL7vsfn9CjTV+0I8+YmCnVRpwzIDZlF
+         SBPjwak/uagVB9NJMg/TjD6tW+5Vhtkh21a5mBZWJ+FOXAz7PU2f5rP1EByZQ8BXkiT+
+         rpr3uiieOU4O5DzoIEeUF0db0xp2cx28LLqUe+0clTcN1cUte30QamqB5O6XaYnhTqLP
+         /hUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AblYUYmyG6Os5E02ikHkP4bYaFKzxy1QO/EzepoRnm4=;
-        b=1+34GH7NBCqD3jfqc7oPyUOHEmEKVH4nOi+a69k9XhsaH3jLK3VatSe+6Kw5XO+uSB
-         cSmJhCRNflRDT/gi47EKGN3w+yxovROXuFOK4D5rR5r4v8VvI4iGZm1OTTm36Jg/3FKY
-         VrrYZ642oHHOcDtwByZP9aOZSvfqRI+7eqTPQvN9Io3iS9zkAiMiRdrq89jJoTAmlrFB
-         XaOTO2xZlOlnXLZqDF8ZW41C7mVrmD8awrJXxwakuZepJYFz8qkbAPVpWCUSTGLP82zA
-         Z9YxuVmP9Knw3DWvEdwSAFp2ANbSyP+71aNfTDwAFbW44eMH/jsaPwRXYPsvJOMp8B4s
-         J1Pg==
-X-Gm-Message-State: AOAM531iO6SoB4LSw+wfBk2oaqHzhyAlBHlslzXYz5fHV8hKJTYjtE57
-        6fAQcLVQSD4QC19f2JGySHel13QNw5i0Ag==
-X-Google-Smtp-Source: ABdhPJzBmQMvQZrp2t2gic7mqkuLdhKx12Muj712cLTMMKRyW+rWROE2UEC1xRx3zYBMU2EdpmilWw==
-X-Received: by 2002:a1c:f315:0:b0:381:1f6d:6ca6 with SMTP id q21-20020a1cf315000000b003811f6d6ca6mr20813153wmq.25.1648228785041;
-        Fri, 25 Mar 2022 10:19:45 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p16-20020a5d6390000000b00203ffebddf3sm7554165wru.99.2022.03.25.10.19.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 10:19:44 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 14/27] revisions API users: use release_revisions() with UNLEAK()
-Date:   Fri, 25 Mar 2022 18:18:38 +0100
-Message-Id: <patch-v3-14.27-216eb3b41f7-20220325T171340Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1509.ge4eeb5bd39e
-In-Reply-To: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
-References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com> <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=l68mApwg+qViUOXSZqxWN/7QEgC+WLEh1rWWO1097ZA=;
+        b=JBHcZGp7lYmIZc9xXSNkGZU7UZRJN1FPavjRwUGDvshjzJig9ydm6U3IWcIMeqpura
+         lcwOhGAaUGZ5bGpuWmGKzBvMtoENyvFIUoxiuqV1JcwtWYez2G7Hx8oUe4/OlxsNI0mi
+         OuMW5pDouI4AVuru2/SrucTht/Zn10hRTux3Hgu/cpoI1uv7WLER+jNF9cd6T4UlqxAZ
+         CwrVgzYJELaWSraXbmC/bHBZBUjW3STBwfATsUbdAw2nW4H44YNOcXmdhq3kObPyQy31
+         z0fz4ERk+ubElNAIYd7f7fHsnU0U6GWYNgWi8+UpBnaHXTB4PvJytIhCl8v/J8p8h8eS
+         yh/g==
+X-Gm-Message-State: AOAM533mDG12YcuE8tmXfJtnxOjfafL8TmdkpTyoyk70OmD2iKr7cz1J
+        OoJNTVWf3gJaAgnigKxhFGcr
+X-Google-Smtp-Source: ABdhPJy5cCf7BUs6r6DH/3/3kvy3St3nMEzS4PyafmXDOuhK9ngPLI+6tN18H0y9TIg7SFpSOAXx3A==
+X-Received: by 2002:a05:6870:e30e:b0:de:ab76:eed7 with SMTP id z14-20020a056870e30e00b000deab76eed7mr1764394oad.101.1648229008679;
+        Fri, 25 Mar 2022 10:23:28 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id a10-20020a056808120a00b002d404a71444sm3206349oil.35.2022.03.25.10.23.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 10:23:28 -0700 (PDT)
+Message-ID: <3fab1246-1451-597c-4359-c01f9675e3f1@github.com>
+Date:   Fri, 25 Mar 2022 13:23:27 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 1/2] t7700: check post-condition in kept-pack test
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
+ <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
+ <f2f8d12929bcbd630b2de3ce770a6763989ffcff.1648146897.git.gitgitgadget@gmail.com>
+ <xmqqmthearlz.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqmthearlz.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use a release_revisions() with those "struct rev_list" users which
-already "UNLEAK" the struct. It may seem odd to simultaneously attempt
-to free() memory, but also to explicitly ignore whether we have memory
-leaks in the same.
+On 3/25/2022 1:07 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +get_sorted_objects_from_packs () {
+>> +	git show-index <$(cat) >raw &&
+>> +	cut -d" " -f2 raw | sort
+>> +}
+> 
+> As pointed out by Taylor, this "the standard input gives us the name
+> of a file to be read" looks strange.  It may work, and it may even
+> give the easiest interface to use by all the callers, but if we were
+> designing a more generic helper function suitable to be added to the
+> test-lib*.sh, we wouldn't design it like so---instead it would be
+> either "we read the contents of the .idx file from the standard
+> input" or "the first argument is the name of the .idx file".
 
-As explained in preceding commits this is being done to use the
-built-in commands as a guinea pig for whether the release_revisions()
-function works as expected, we'd like to test e.g. whether we segfault
-as we change it. In subsequent commits we'll then remove these
-UNLEAK() as the function is made to free the memory that caused us to
-add them in the first place.
+Ok. Can do.
+ 
+>>  test_expect_success '--write-midx -b packs non-kept objects' '
+>> +	git init repo &&
+>> +	test_when_finished "rm -fr repo" &&
+>> +	(
+>> +		cd repo &&
+>> +
+>> +		# Create a kept pack-file
+>> +		test_commit base &&
+>> +		git repack -ad &&
+>> +		find $objdir/pack -name "*.idx" >before &&
+>> +		>$objdir/pack/$(basename $(cat before) .idx).keep &&
+> 
+> We probably want to sanity check "repack -a" by insisting "before"
+> has found exactly one .idx file, before using it this way.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/diff-index.c | 4 +++-
- builtin/diff.c       | 1 +
- 2 files changed, 4 insertions(+), 1 deletion(-)
+> 		test_line_count = 1 before &&
+> 		before=$(cat before) &&
+> 		>"${before%.idx}.keep"
 
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 5fd23ab5b6c..3a83183c312 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -71,5 +71,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 	}
- 	result = run_diff_index(&rev, option);
- 	UNLEAK(rev);
--	return diff_result_code(&rev.diffopt, result);
-+	result = diff_result_code(&rev.diffopt, result);
-+	release_revisions(&rev);
-+	return result;
- }
-diff --git a/builtin/diff.c b/builtin/diff.c
-index bb7fafca618..dd48336da56 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -595,6 +595,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
- 	UNLEAK(rev);
-+	release_revisions(&rev);
- 	UNLEAK(ent);
- 	UNLEAK(blob);
- 	return result;
--- 
-2.35.1.1509.ge4eeb5bd39e
+Good idea. This mixture of a file and variable sharing
+a name is a bit muddy for me, though. Using "before_name"
+as the variable would be enough of a differentiator.
 
+>> +		find $objdir/pack -name "*.keep" >kept &&
+>> +		test_line_count = 1 kept &&
+> 
+> Since we've made sure "before" is a one-liner earlier, we could just
+> say
+ 
+> 		test_cmp before kept &&
+> 
+> instead, no?
+
+'before' contains a .idx name and 'kept' contains a .keep name,
+so this direct comparison does not work. We could do that
+additional check like this:
+
+	kept_name=$(cat kept) &&
+	echo ${kept_name%.keep}.idx >kept-idx &&
+	test_cmp before kept-idx &&
+
+Thanks for taking the time to clean this up, as it might become
+a good example for these kinds of post-condition checks of the packs
+directory in the future.
+
+Thanks,
+-Stolee
