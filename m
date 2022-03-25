@@ -2,266 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD28EC43217
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA48CC4321E
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbiCYTk2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46160 "EHLO
+        id S230443AbiCYTka (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231143AbiCYThq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:37:46 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83B121C551E
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:21 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h16so4982370wmd.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:21 -0700 (PDT)
+        with ESMTP id S233398AbiCYTjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:39:54 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 453E31546B8
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:24 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id r204-20020a1c44d5000000b0038ccb70e239so141691wma.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TgVyyzQx+jhjmRIkDS0iZCqgyqnaNEg2KAffy6/1bAM=;
-        b=ncIOj08jymICF19/X1KKE16oFI6hsESDIVKVr9fnI98M+mJzD9SHo6PESXz8oy7dHR
-         sbeWfwRbYZhdRjLSXXLvz8u3aMb/6M/nTuPrIL16i+Ejv26sVsHv3olHYgkGqrPkOvvO
-         +4fhZG3aLyg5wSqhs8jFTSPzWbuYJiVbqkTIbTPz7AmRNSGvWS/P9klCViDD8klyTN32
-         yZeJnxgOxe6A7S0bkZIid0DCxjEcu53SesNF5QIL8fEYK2cFCo3uQ5L/gWfU3Ay5S5X2
-         PjC8ziTwUW0cPgxL1mRUGpjsgcrS4GF9OdfioWIcvnHB0otVSOPt3PpNdgBqydLOOFL7
-         xcrA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=g9dV7fr/jgaSG9b9aqnDQmgcdirx2MCayz5KXa/4his=;
+        b=WxIkDQKVV2Wh1iqNzs/T/LxsC5vm4Kliz/3ZiqRS338iOhevbDBWLp8NHRAo32zPAQ
+         xWJdnIsLI6TECRnjvWFMrKi7zm2XYT1c0VBX79cWy1d/qHgPlQ14wzVna6mWDpRSc2v4
+         LJED+SAl1tvKnoDOdPm89ZvME+lkh/Y52bKTAaE/otCVyKUc8xSimEkpTo3Z9gESJKle
+         3A65FnZ92nTdNwVYoeuA7xEieIGzMGa91CabRKWrLIWOVuG20pOUp96ut8RaLUsjhOR/
+         u1I+bsyulRwyUxw7L6TN0kvcCq/PrqkLnbVyG9J3NfR7Of+POlmz0zPv3jt5zyVkYW9C
+         xgcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TgVyyzQx+jhjmRIkDS0iZCqgyqnaNEg2KAffy6/1bAM=;
-        b=l6UB9z4i8wgUARZmE+zT+jC5m5rArMHJsSfrDidmQNm7WGRAHfYSPJldgwpYxQzSZ/
-         hPqey2K9kxlYYBbPU/0GKzeOnRAln/V5wd+5+/1TzyyLpUmkqS1XuGGH+UpCeM8gO0+m
-         tWW908Iiqv8y4J9Arb0AWFvOx8S2du/vAgyYJMXzmVP6yn9K9x1suDLsttFwFFAF20ja
-         ACRchK84PS1Z2Jkr94ZrgkBXMyVDXGjKPXsG354xf/u8OYMox5zYB6DWlI0Ef3SGAYGf
-         p68MMaaEYfKqPxpVQuwbCbMxnWo2wBAl2Z3OBlvnsBe677J5us/ofpcB0PxFY7ZGq9xK
-         5JwA==
-X-Gm-Message-State: AOAM53365Vm/01i+/OCcqtd64zQjM5NJNsQSgFE9ZY/Wgl1Wu6Obwp0S
-        62bOrH4U7IQhzFtZTVqpoX0VsQRuQHM=
-X-Google-Smtp-Source: ABdhPJwQKHiwrasUaZiQlbl/A1omOqUo5eh6q9agEECy89nsiXCb5u+8FFjxsS77eQ5nBtc1MUQ/Wg==
-X-Received: by 2002:a05:600c:252:b0:38c:cd19:fbff with SMTP id 18-20020a05600c025200b0038ccd19fbffmr10264062wmj.65.1648231407305;
-        Fri, 25 Mar 2022 11:03:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n124-20020a1ca482000000b0038c9cf6e296sm7255949wme.14.2022.03.25.11.03.26
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=g9dV7fr/jgaSG9b9aqnDQmgcdirx2MCayz5KXa/4his=;
+        b=Q2+f7HvsZUeUZCOeBTLqXSLImhxU+x9HF9fLK8Z2f2AwMTQYfsAzpJlgp3QDbleJNQ
+         ny7+hVdzuZGvczVqwCfpY/RGiNtMmPxnd86iHbBGzLcbaB5oV6Gv6phUGzwbPetTIw/H
+         LfxbRD9ojgIR78CgtP6IXTW4IfryrZlcUIHEqmCMwlWFJmclwR8vSOTI/xpkewyc79xN
+         LJ8tPEoMYa6JfXxQ3ziTjHJmtMihmd4/UXcxUpHJ2o8tB6ykSwX98UxlVju0RTTECMng
+         EOISjx8Hx++0sekLd2jjeHa6fzIoiyoq6UzoeTjkengbH4/9OwbxBmEJP5oEmE/7VYTv
+         wsOg==
+X-Gm-Message-State: AOAM533X2gdDNc4YA9qvu4WecoYoFoMEZAOnJ64fHVEyHYLZ/YOlTdq/
+        SLiFz9pm0WiG3x08+DlsGyy5nMNe8QA7WA==
+X-Google-Smtp-Source: ABdhPJwt6UdTieG2YzYF1bx+ew0drWS4yZ5dMo/3PPlyUnYmK1G8PVECmiFPk7DwdVkjtHY3vq8JCQ==
+X-Received: by 2002:a05:600c:4ec8:b0:38c:90fb:d3bf with SMTP id g8-20020a05600c4ec800b0038c90fbd3bfmr11230760wmq.0.1648233518619;
+        Fri, 25 Mar 2022 11:38:38 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:26 -0700 (PDT)
-Message-Id: <a6a39a3306df2602e06cc3d9a755fa247f8d41b0.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:54 +0000
-Subject: [PATCH v9 11/30] fsmonitor--daemon: implement 'start' command
-Fcc:    Sent
+        Fri, 25 Mar 2022 11:38:38 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 21/25] CI: narrow down variable definitions in --build and --test
+Date:   Fri, 25 Mar 2022 19:38:12 +0100
+Message-Id: <patch-v2-21.25-44e3ace5fbe-20220325T182534Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
+In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+In a preceding step the "setvar" function was made to take a
+"--build", "--test" or "--all" argument to indicate where the
+variables it sets were used.
 
-Implement 'git fsmonitor--daemon start' command.  This command starts
-an instance of 'git fsmonitor--daemon run' in the background using
-the new 'start_bg_command()' function.
+Let's make use of that by having the relevant parts of
+".github/workflows/main.yml" invoke "ci/lib.sh" with those options.
 
-We avoid the fork-and-call technique on Unix systems in favor of a
-fork-and-exec technique.  This gives us more uniform Trace2 child-*
-events.  It also makes our usage more consistent with Windows usage.
+By doing this the set of variables shown in build-only steps will be
+fewer, which makes diagnosing anything going on there easier, as we
+won't have to look at a deluge of e.g. GIT_TEST_* variables.
 
-On Windows, teach 'git fsmonitor--daemon run' to optionally call
-'FreeConsole()' to release handles to the inherited Win32 console
-(despite being passed invalid handles for stdin/out/err).  Without
-this, command prompts and powershell terminal windows could hang
-in "exit" until the last background child process exited or released
-their Win32 console handle.  (This was not seen with git-bash shells
-because they don't have a Win32 console attached to them.)
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fsmonitor--daemon.c | 109 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 107 insertions(+), 2 deletions(-)
+ .github/workflows/main.yml | 20 +++++++++++---------
+ ci/lib.sh                  | 17 +++++++++++++++++
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 5591339399a..69dd39121a3 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -9,6 +9,7 @@
- #include "khash.h"
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 1e13718b989..0787cadc76b 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -84,7 +84,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+       shell: bash
+     - name: build
+       shell: bash
+@@ -122,7 +122,7 @@ jobs:
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --test
+       shell: bash
+     - name: select tests
+       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
+@@ -169,7 +169,7 @@ jobs:
+     - name: copy dlls to root
+       shell: cmd
+       run: compat\vcbuild\vcpkg_copy_dlls.bat release
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+       shell: bash
+     - name: generate Visual Studio solution
+       shell: bash
+@@ -211,7 +211,7 @@ jobs:
+     - name: extract tracked files and build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --test
+       shell: bash
+     - name: select tests
+       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
+@@ -275,8 +275,9 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make
++    - run: ci/lib.sh --test
+     - run: make test
+       if: success()
+     - run: ci/print-test-failures.sh
+@@ -310,8 +311,9 @@ jobs:
+     steps:
+     - uses: actions/checkout@v1
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make
++    - run: ci/lib.sh --test
+     - run: make test
+       if: success() && matrix.vector.skip-tests != 'no'
+     - run: ci/print-test-failures.sh
+@@ -331,7 +333,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make ci-static-analysis
+   sparse:
+     needs: ci-config
+@@ -352,7 +354,7 @@ jobs:
+     - uses: actions/checkout@v2
+     - name: Install other dependencies
+       run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make sparse
+   documentation:
+     name: documentation
+@@ -364,7 +366,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make check-docs
+     - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
+       shell: bash
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 5eadc96de29..367d1ee05d5 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -5,6 +5,13 @@ set -ex
+ . ${0%/*}/lib-ci-type.sh
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
-+	N_("git fsmonitor--daemon start [<options>]"),
- 	N_("git fsmonitor--daemon run [<options>]"),
- 	N_("git fsmonitor--daemon stop"),
- 	N_("git fsmonitor--daemon status"),
-@@ -22,6 +23,9 @@ static const char * const builtin_fsmonitor__daemon_usage[] = {
- #define FSMONITOR__IPC_THREADS "fsmonitor.ipcthreads"
- static int fsmonitor__ipc_threads = 8;
+ # Starting assertions
++mode=$1
++if test -z "$mode"
++then
++	echo "need a $0 mode, e.g. --build or --test"
++	exit 1
++fi
++
+ if test -z "$jobname"
+ then
+ 	echo "must set a CI jobname" >&2
+@@ -13,9 +20,14 @@ fi
  
-+#define FSMONITOR__START_TIMEOUT "fsmonitor.starttimeout"
-+static int fsmonitor__start_timeout_sec = 60;
-+
- #define FSMONITOR__ANNOUNCE_STARTUP "fsmonitor.announcestartup"
- static int fsmonitor__announce_startup = 0;
+ # Helper functions
+ setenv () {
++	skip=
+ 	varmode=
+ 	case "$1" in
+ 	--*)
++		if test "$1" != "$mode" && test "$1" != "--all"
++		then
++			skip=t
++		fi
+ 		varmode=$1
+ 		shift
+ 		;;
+@@ -25,6 +37,11 @@ setenv () {
+ 	val=$2
+ 	shift 2
  
-@@ -36,6 +40,15 @@ static int fsmonitor_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, FSMONITOR__START_TIMEOUT)) {
-+		int i = git_config_int(var, value);
-+		if (i < 0)
-+			return error(_("value of '%s' out of range: %d"),
-+				     FSMONITOR__START_TIMEOUT, i);
-+		fsmonitor__start_timeout_sec = i;
-+		return 0;
-+	}
++	if test -n "$skip"
++	then
++		return 0
++	fi
 +
- 	if (!strcmp(var, FSMONITOR__ANNOUNCE_STARTUP)) {
- 		int is_bool;
- 		int i = git_config_bool_or_int(var, value, &is_bool);
-@@ -250,7 +263,7 @@ done:
- 	return err;
- }
- 
--static int try_to_run_foreground_daemon(void)
-+static int try_to_run_foreground_daemon(int detach_console)
- {
- 	/*
- 	 * Technically, we don't need to probe for an existing daemon
-@@ -270,17 +283,106 @@ static int try_to_run_foreground_daemon(void)
- 		fflush(stderr);
- 	}
- 
-+#ifdef GIT_WINDOWS_NATIVE
-+	if (detach_console)
-+		FreeConsole();
-+#endif
-+
- 	return !!fsmonitor_run_daemon();
- }
- 
-+static start_bg_wait_cb bg_wait_cb;
-+
-+static int bg_wait_cb(const struct child_process *cp, void *cb_data)
-+{
-+	enum ipc_active_state s = fsmonitor_ipc__get_state();
-+
-+	switch (s) {
-+	case IPC_STATE__LISTENING:
-+		/* child is "ready" */
-+		return 0;
-+
-+	case IPC_STATE__NOT_LISTENING:
-+	case IPC_STATE__PATH_NOT_FOUND:
-+		/* give child more time */
-+		return 1;
-+
-+	default:
-+	case IPC_STATE__INVALID_PATH:
-+	case IPC_STATE__OTHER_ERROR:
-+		/* all the time in world won't help */
-+		return -1;
-+	}
-+}
-+
-+static int try_to_start_background_daemon(void)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	enum start_bg_result sbgr;
-+
-+	/*
-+	 * Before we try to create a background daemon process, see
-+	 * if a daemon process is already listening.  This makes it
-+	 * easier for us to report an already-listening error to the
-+	 * console, since our spawn/daemon can only report the success
-+	 * of creating the background process (and not whether it
-+	 * immediately exited).
-+	 */
-+	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
-+		die(_("fsmonitor--daemon is already running '%s'"),
-+		    the_repository->worktree);
-+
-+	if (fsmonitor__announce_startup) {
-+		fprintf(stderr, _("starting fsmonitor-daemon in '%s'\n"),
-+			the_repository->worktree);
-+		fflush(stderr);
-+	}
-+
-+	cp.git_cmd = 1;
-+
-+	strvec_push(&cp.args, "fsmonitor--daemon");
-+	strvec_push(&cp.args, "run");
-+	strvec_push(&cp.args, "--detach");
-+	strvec_pushf(&cp.args, "--ipc-threads=%d", fsmonitor__ipc_threads);
-+
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.no_stderr = 1;
-+
-+	sbgr = start_bg_command(&cp, bg_wait_cb, NULL,
-+				fsmonitor__start_timeout_sec);
-+
-+	switch (sbgr) {
-+	case SBGR_READY:
-+		return 0;
-+
-+	default:
-+	case SBGR_ERROR:
-+	case SBGR_CB_ERROR:
-+		return error(_("daemon failed to start"));
-+
-+	case SBGR_TIMEOUT:
-+		return error(_("daemon not online yet"));
-+
-+	case SBGR_DIED:
-+		return error(_("daemon terminated"));
-+	}
-+}
-+
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- {
- 	const char *subcmd;
-+	int detach_console = 0;
- 
- 	struct option options[] = {
-+		OPT_BOOL(0, "detach", &detach_console, N_("detach from console")),
- 		OPT_INTEGER(0, "ipc-threads",
- 			    &fsmonitor__ipc_threads,
- 			    N_("use <n> ipc worker threads")),
-+		OPT_INTEGER(0, "start-timeout",
-+			    &fsmonitor__start_timeout_sec,
-+			    N_("max seconds to wait for background daemon startup")),
-+
- 		OPT_END()
- 	};
- 
-@@ -296,8 +398,11 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		die(_("invalid 'ipc-threads' value (%d)"),
- 		    fsmonitor__ipc_threads);
- 
-+	if (!strcmp(subcmd, "start"))
-+		return !!try_to_start_background_daemon();
-+
- 	if (!strcmp(subcmd, "run"))
--		return !!try_to_run_foreground_daemon();
-+		return !!try_to_run_foreground_daemon(detach_console);
- 
- 	if (!strcmp(subcmd, "stop"))
- 		return !!do_as_client__send_stop();
+ 	if test -n "$GITHUB_ENV"
+ 	then
+ 		echo "$key=$val" >>"$GITHUB_ENV"
 -- 
-gitgitgadget
+2.35.1.1517.g20a06c426a7
 
