@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72323C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25112C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:43:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231523AbiCYTpb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42434 "EHLO
+        id S231547AbiCYTpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231527AbiCYTpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:45:11 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6CE0326ED0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:15:27 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id p189so4981403wmp.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:15:27 -0700 (PDT)
+        with ESMTP id S231584AbiCYTot (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:44:49 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A20336BA2C
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso4948669wmz.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=27EYsw0sQz+mI4HvJWY1VfC1P39Tg+tZZLnW70cporg=;
-        b=bDfPhwbIfOb84Qk2XdrFl3Wjr8XxzIKCdEOLsAR8CfMJfzS8HfpH3jNo7PXhi901Nc
-         YA2ob2x3miLhjP7W9ERhbH/j66uLu+w9U3BryBUXfCbJD5vYZVANhfsK+bDuOUk99ah2
-         c2EWDyKK6nAyCRePUqBSNC5rgtdZ+WXSRCLDAIgwYOsRjBFODrm09aDawO+v66b0xcTx
-         kCrq3Pm50ywJNknhvCcksHqT1EbgBo2Sg1Ada0y8DQ8dP68BH26RKRHzGshNmQFbA04l
-         qPJ1v3neFQ14HxUm1xyWeCFomI9ei7O87tj1xzAkENLzEFilHshCXA0PofoseV5PSaNA
-         oUig==
+        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
+        b=oqt2QaZKUjP8BWVNQfzKsGQB9qjqOA2aEBZxKy/HULh9LiocsHQ9+I6yI7Qsdi2ykw
+         4CraPXPioY7yFZzZYTxPakHOYlJF9U+LdStup5FLRjDfBtJnDONH65ovwjtt3NCstHz9
+         dxlf6zz1wrdWBWOIzZie0Z5K5A8Vm3I7h43LRXoCreymDhcn0qS3N0BsH8UVgRUNG/z3
+         71CVQS6Tge1NHOLBDQWxZ9BsvGTiwbjkbxua8zbbI7D8+0SkJwPoO7M3t8fl5FMGsY/Z
+         6Vumlga7BLXreEpYiYs0fqYk7GFe4GbPkgYWXRbwR8AVIvMKuC0nx7scYk+hBD9Yxert
+         iiow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=27EYsw0sQz+mI4HvJWY1VfC1P39Tg+tZZLnW70cporg=;
-        b=wmin3mNUnLo24tN0o2YQRJochj8bv/fIkRsczrjlnEuGBQTTwvW3wJIUEPFzN6eXed
-         T2fHJnBtJQdcelGAgnzHNRALzNi+qWQSEBpa5bwphyjbNo9N9GNG8AenCJfom7ZtKQTM
-         MHH3NYGsj/7IydYPpnYn4Ug/RSzwfkumhmC4RIEZ/Dvt4N8AYoCBZqEUfz6QLQKgZLqp
-         LbotrMVG9Y3UEHJVfWvvqmkZYDoPRihT+Cr4SIkHDYIcYrSOYGkfDkY08qO/MqmwzC1p
-         CgJBfiy434bJNwKNPzxo2ciC4ZviO9EIbqPr/DcIteH+uoov9goiMTJ8IxPJUbQUmkt/
-         pmeA==
-X-Gm-Message-State: AOAM530ChH7I5HDhhDBS5HI4xpLT/Er8weEsQjp0MuCJKcHhAGOSYsQ+
-        Ke26xYCem3Vf/7uCgbDIYebE1kvCy4A=
-X-Google-Smtp-Source: ABdhPJwb/jvTsXtHhhVIcXVZe/2kVEchQ4tzwIQKZc+zdTvvHB9xqycz/iO5jTku9SIF50vX11KDBQ==
-X-Received: by 2002:a05:600c:4f08:b0:38c:93fd:570f with SMTP id l8-20020a05600c4f0800b0038c93fd570fmr11210777wmq.136.1648231411452;
-        Fri, 25 Mar 2022 11:03:31 -0700 (PDT)
+        bh=C/9cpq+/7LFgJqbFs52lTGJrXKzcUu9HQhf3f89AGVk=;
+        b=II0JmW2briqkDps653bUnTCPG5+9JJhq3AJVs3tQD3LB6mr7OwJvGUQdr4H3HxavRQ
+         xldE3t3LbK3p5/PdUHV4apPxojczMcBW4atO8rQKETeY/FMYAY6BbMiU3WAGGAgt7QJl
+         luR73WS+qRZDIp2tc4Wo7xzmSMnz41Wd71Bo+IyMXm/l0ja4vPTa+ib25e+uBABrbDXl
+         zs6pP1g5Ggbq10sUCGu7TyGbSWZiAwjZPMslZrVBvv4Y7FnqBNweTvAgwAVy8QsUX6u+
+         jBL4lEoLJ7stUfMdvDGvElsc/WcPDxmQFq/L2WGaQoW57vuDnrwwbhxaxFwlzZjeNSGy
+         zO7A==
+X-Gm-Message-State: AOAM533H00i4jlU4OPM3gwT0VeudeXD3p8p6pbG3/iIL1q3nYr301KOm
+        Xf6lXAXWhetC8UqPLxh34hM3PXvdYxU=
+X-Google-Smtp-Source: ABdhPJzWWol4t2smtV4PP6qduFWnFN94k9fYYh4Dfs600SdRiXmhA1Si82X/JMHZfsvh2HI5kmPeWw==
+X-Received: by 2002:a7b:ce83:0:b0:37b:f1f1:3a0c with SMTP id q3-20020a7bce83000000b0037bf1f13a0cmr11156411wmj.10.1648231400682;
+        Fri, 25 Mar 2022 11:03:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2-20020a5d4582000000b00203f51aa12asm5598641wrq.55.2022.03.25.11.03.30
+        by smtp.gmail.com with ESMTPSA id n8-20020adf8b08000000b001f046cc8891sm5729259wra.24.2022.03.25.11.03.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:31 -0700 (PDT)
-Message-Id: <239558e34ffea4240de8699707cd3b404b682488.1648231393.git.gitgitgadget@gmail.com>
+        Fri, 25 Mar 2022 11:03:20 -0700 (PDT)
+Message-Id: <6ab7db9cb769fe44db2c76e82da0b5d898538ec0.1648231393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
         <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:58 +0000
-Subject: [PATCH v9 15/30] compat/fsmonitor/fsm-listen-win32: implement
- FSMonitor backend on Windows
+Date:   Fri, 25 Mar 2022 18:02:48 +0000
+Subject: [PATCH v9 05/30] fsmonitor: document builtin fsmonitor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,607 +73,203 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach the win32 backend to register a watch on the working tree
-root directory (recursively).  Also watch the <gitdir> if it is
-not inside the working tree.  And to collect path change notifications
-into batches and publish.
+Document how `core.fsmonitor` can be set to a boolean to enable
+or disable the builtin FSMonitor.
+
+Update references to `core.fsmonitor` and `core.fsmonitorHookVersion` and
+pointers to `Watchman` to refer to it.
+
+Create `git-fsmonitor--daemon` manual page and describe its features.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- compat/fsmonitor/fsm-listen-win32.c | 565 ++++++++++++++++++++++++++++
- 1 file changed, 565 insertions(+)
+ Documentation/config/core.txt           | 60 +++++++++++++++-----
+ Documentation/git-fsmonitor--daemon.txt | 75 +++++++++++++++++++++++++
+ Documentation/git-update-index.txt      |  8 ++-
+ 3 files changed, 126 insertions(+), 17 deletions(-)
+ create mode 100644 Documentation/git-fsmonitor--daemon.txt
 
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 916cbea254f..5b928ab66e5 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -2,20 +2,585 @@
- #include "config.h"
- #include "fsmonitor.h"
- #include "fsm-listen.h"
-+#include "fsmonitor--daemon.h"
-+
-+/*
-+ * The documentation of ReadDirectoryChangesW() states that the maximum
-+ * buffer size is 64K when the monitored directory is remote.
-+ *
-+ * Larger buffers may be used when the monitored directory is local and
-+ * will help us receive events faster from the kernel and avoid dropped
-+ * events.
-+ *
-+ * So we try to use a very large buffer and silently fallback to 64K if
-+ * we get an error.
-+ */
-+#define MAX_RDCW_BUF_FALLBACK (65536)
-+#define MAX_RDCW_BUF          (65536 * 8)
-+
-+struct one_watch
-+{
-+	char buffer[MAX_RDCW_BUF];
-+	DWORD buf_len;
-+	DWORD count;
-+
-+	struct strbuf path;
-+	HANDLE hDir;
-+	HANDLE hEvent;
-+	OVERLAPPED overlapped;
-+
-+	/*
-+	 * Is there an active ReadDirectoryChangesW() call pending.  If so, we
-+	 * need to later call GetOverlappedResult() and possibly CancelIoEx().
-+	 */
-+	BOOL is_active;
-+};
-+
-+struct fsmonitor_daemon_backend_data
-+{
-+	struct one_watch *watch_worktree;
-+	struct one_watch *watch_gitdir;
-+
-+	HANDLE hEventShutdown;
-+
-+	HANDLE hListener[3]; /* we don't own these handles */
-+#define LISTENER_SHUTDOWN 0
-+#define LISTENER_HAVE_DATA_WORKTREE 1
-+#define LISTENER_HAVE_DATA_GITDIR 2
-+	int nr_listener_handles;
-+};
-+
-+/*
-+ * Convert the WCHAR path from the notification into UTF8 and
-+ * then normalize it.
-+ */
-+static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
-+				  struct strbuf *normalized_path)
-+{
-+	int reserve;
-+	int len = 0;
-+
-+	strbuf_reset(normalized_path);
-+	if (!info->FileNameLength)
-+		goto normalize;
-+
-+	/*
-+	 * Pre-reserve enough space in the UTF8 buffer for
-+	 * each Unicode WCHAR character to be mapped into a
-+	 * sequence of 2 UTF8 characters.  That should let us
-+	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
-+	 */
-+	reserve = info->FileNameLength + 1;
-+	strbuf_grow(normalized_path, reserve);
-+
-+	for (;;) {
-+		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
-+					  info->FileNameLength / sizeof(WCHAR),
-+					  normalized_path->buf,
-+					  strbuf_avail(normalized_path) - 1,
-+					  NULL, NULL);
-+		if (len > 0)
-+			goto normalize;
-+		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
-+			error(_("[GLE %ld] could not convert path to UTF-8: '%.*ls'"),
-+			      GetLastError(),
-+			      (int)(info->FileNameLength / sizeof(WCHAR)),
-+			      info->FileName);
-+			return -1;
-+		}
-+
-+		strbuf_grow(normalized_path,
-+			    strbuf_avail(normalized_path) + reserve);
-+	}
-+
-+normalize:
-+	strbuf_setlen(normalized_path, len);
-+	return strbuf_normalize_path(normalized_path);
-+}
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c04f62a54a1..6303c36c7ed 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -62,22 +62,54 @@ core.protectNTFS::
+ 	Defaults to `true` on Windows, and `false` elsewhere.
  
- void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- {
-+	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
-+}
-+
-+static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
-+				      const char *path)
-+{
-+	struct one_watch *watch = NULL;
-+	DWORD desired_access = FILE_LIST_DIRECTORY;
-+	DWORD share_mode =
-+		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
-+	HANDLE hDir;
-+	wchar_t wpath[MAX_PATH];
-+
-+	if (xutftowcs_path(wpath, path) < 0) {
-+		error(_("could not convert to wide characters: '%s'"), path);
-+		return NULL;
-+	}
-+
-+	hDir = CreateFileW(wpath,
-+			   desired_access, share_mode, NULL, OPEN_EXISTING,
-+			   FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,
-+			   NULL);
-+	if (hDir == INVALID_HANDLE_VALUE) {
-+		error(_("[GLE %ld] could not watch '%s'"),
-+		      GetLastError(), path);
-+		return NULL;
-+	}
-+
-+	CALLOC_ARRAY(watch, 1);
-+
-+	watch->buf_len = sizeof(watch->buffer); /* assume full MAX_RDCW_BUF */
-+
-+	strbuf_init(&watch->path, 0);
-+	strbuf_addstr(&watch->path, path);
-+
-+	watch->hDir = hDir;
-+	watch->hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-+
-+	return watch;
-+}
-+
-+static void destroy_watch(struct one_watch *watch)
-+{
-+	if (!watch)
-+		return;
-+
-+	strbuf_release(&watch->path);
-+	if (watch->hDir != INVALID_HANDLE_VALUE)
-+		CloseHandle(watch->hDir);
-+	if (watch->hEvent != INVALID_HANDLE_VALUE)
-+		CloseHandle(watch->hEvent);
-+
-+	free(watch);
-+}
-+
-+static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
-+			    struct one_watch *watch)
-+{
-+	DWORD dwNotifyFilter =
-+		FILE_NOTIFY_CHANGE_FILE_NAME |
-+		FILE_NOTIFY_CHANGE_DIR_NAME |
-+		FILE_NOTIFY_CHANGE_ATTRIBUTES |
-+		FILE_NOTIFY_CHANGE_SIZE |
-+		FILE_NOTIFY_CHANGE_LAST_WRITE |
-+		FILE_NOTIFY_CHANGE_CREATION;
-+
-+	ResetEvent(watch->hEvent);
-+
-+	memset(&watch->overlapped, 0, sizeof(watch->overlapped));
-+	watch->overlapped.hEvent = watch->hEvent;
-+
-+	/*
-+	 * Queue an async call using Overlapped IO.  This returns immediately.
-+	 * Our event handle will be signalled when the real result is available.
-+	 *
-+	 * The return value here just means that we successfully queued it.
-+	 * We won't know if the Read...() actually produces data until later.
-+	 */
-+	watch->is_active = ReadDirectoryChangesW(
-+		watch->hDir, watch->buffer, watch->buf_len, TRUE,
-+		dwNotifyFilter, &watch->count, &watch->overlapped, NULL);
-+
-+	if (watch->is_active)
-+		return 0;
-+
-+	error(_("ReadDirectoryChangedW failed on '%s' [GLE %ld]"),
-+	      watch->path.buf, GetLastError());
-+	return -1;
-+}
-+
-+static int recv_rdcw_watch(struct one_watch *watch)
-+{
-+	DWORD gle;
-+
-+	watch->is_active = FALSE;
-+
-+	/*
-+	 * The overlapped result is ready.  If the Read...() was successful
-+	 * we finally receive the actual result into our buffer.
-+	 */
-+	if (GetOverlappedResult(watch->hDir, &watch->overlapped, &watch->count,
-+				TRUE))
-+		return 0;
-+
-+	gle = GetLastError();
-+	if (gle == ERROR_INVALID_PARAMETER &&
-+	    /*
-+	     * The kernel throws an invalid parameter error when our
-+	     * buffer is too big and we are pointed at a remote
-+	     * directory (and possibly for other reasons).  Quietly
-+	     * set it down and try again.
-+	     *
-+	     * See note about MAX_RDCW_BUF at the top.
-+	     */
-+	    watch->buf_len > MAX_RDCW_BUF_FALLBACK) {
-+		watch->buf_len = MAX_RDCW_BUF_FALLBACK;
-+		return -2;
-+	}
-+
-+	/*
-+	 * NEEDSWORK: If an external <gitdir> is deleted, the above
-+	 * returns an error.  I'm not sure that there's anything that
-+	 * we can do here other than failing -- the <worktree>/.git
-+	 * link file would be broken anyway.  We might try to check
-+	 * for that and return a better error message, but I'm not
-+	 * sure it is worth it.
-+	 */
-+
-+	error(_("GetOverlappedResult failed on '%s' [GLE %ld]"),
-+	      watch->path.buf, gle);
-+	return -1;
-+}
-+
-+static void cancel_rdcw_watch(struct one_watch *watch)
-+{
-+	DWORD count;
-+
-+	if (!watch || !watch->is_active)
-+		return;
-+
-+	/*
-+	 * The calls to ReadDirectoryChangesW() and GetOverlappedResult()
-+	 * form a "pair" (my term) where we queue an IO and promise to
-+	 * hang around and wait for the kernel to give us the result.
-+	 *
-+	 * If for some reason after we queue the IO, we have to quit
-+	 * or otherwise not stick around for the second half, we must
-+	 * tell the kernel to abort the IO.  This prevents the kernel
-+	 * from writing to our buffer and/or signalling our event
-+	 * after we free them.
-+	 *
-+	 * (Ask me how much fun it was to track that one down).
-+	 */
-+	CancelIoEx(watch->hDir, &watch->overlapped);
-+	GetOverlappedResult(watch->hDir, &watch->overlapped, &count, TRUE);
-+	watch->is_active = FALSE;
-+}
-+
-+/*
-+ * Process filesystem events that happen anywhere (recursively) under the
-+ * <worktree> root directory.  For a normal working directory, this includes
-+ * both version controlled files and the contents of the .git/ directory.
-+ *
-+ * If <worktree>/.git is a file, then we only see events for the file
-+ * itself.
-+ */
-+static int process_worktree_events(struct fsmonitor_daemon_state *state)
-+{
-+	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct one_watch *watch = data->watch_worktree;
-+	struct strbuf path = STRBUF_INIT;
-+	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-+	struct fsmonitor_batch *batch = NULL;
-+	const char *p = watch->buffer;
-+
-+	/*
-+	 * If the kernel gets more events than will fit in the kernel
-+	 * buffer associated with our RDCW handle, it drops them and
-+	 * returns a count of zero.
-+	 *
-+	 * Yes, the call returns WITHOUT error and with length zero.
-+	 * This is the documented behavior.  (My testing has confirmed
-+	 * that it also sets the last error to ERROR_NOTIFY_ENUM_DIR,
-+	 * but we do not rely on that since the function did not
-+	 * return an error and it is not documented.)
-+	 *
-+	 * (The "overflow" case is not ambiguous with the "no data" case
-+	 * because we did an INFINITE wait.)
-+	 *
-+	 * This means we have a gap in coverage.  Tell the daemon layer
-+	 * to resync.
-+	 */
-+	if (!watch->count) {
-+		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
-+				   "overflow");
-+		fsmonitor_force_resync(state);
-+		return LISTENER_HAVE_DATA_WORKTREE;
-+	}
-+
-+	/*
-+	 * On Windows, `info` contains an "array" of paths that are
-+	 * relative to the root of whichever directory handle received
-+	 * the event.
-+	 */
-+	for (;;) {
-+		FILE_NOTIFY_INFORMATION *info = (void *)p;
-+		const char *slash;
-+		enum fsmonitor_path_type t;
-+
-+		strbuf_reset(&path);
-+		if (normalize_path_in_utf8(info, &path) == -1)
-+			goto skip_this_path;
-+
-+		t = fsmonitor_classify_path_workdir_relative(path.buf);
-+
-+		switch (t) {
-+		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
-+			/* special case cookie files within .git */
-+
-+			/* Use just the filename of the cookie file. */
-+			slash = find_last_dir_sep(path.buf);
-+			string_list_append(&cookie_list,
-+					   slash ? slash + 1 : path.buf);
-+			break;
-+
-+		case IS_INSIDE_DOT_GIT:
-+			/* ignore everything inside of "<worktree>/.git/" */
-+			break;
-+
-+		case IS_DOT_GIT:
-+			/* "<worktree>/.git" was deleted (or renamed away) */
-+			if ((info->Action == FILE_ACTION_REMOVED) ||
-+			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
-+				trace2_data_string("fsmonitor", NULL,
-+						   "fsm-listen/dotgit",
-+						   "removed");
-+				goto force_shutdown;
-+			}
-+			break;
-+
-+		case IS_WORKDIR_PATH:
-+			/* queue normal pathname */
-+			if (!batch)
-+				batch = fsmonitor_batch__new();
-+			fsmonitor_batch__add_path(batch, path.buf);
-+			break;
-+
-+		case IS_GITDIR:
-+		case IS_INSIDE_GITDIR:
-+		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
-+		default:
-+			BUG("unexpected path classification '%d' for '%s'",
-+			    t, path.buf);
-+		}
-+
-+skip_this_path:
-+		if (!info->NextEntryOffset)
-+			break;
-+		p += info->NextEntryOffset;
-+	}
-+
-+	fsmonitor_publish(state, batch, &cookie_list);
-+	batch = NULL;
-+	string_list_clear(&cookie_list, 0);
-+	strbuf_release(&path);
-+	return LISTENER_HAVE_DATA_WORKTREE;
-+
-+force_shutdown:
-+	fsmonitor_batch__free_list(batch);
-+	string_list_clear(&cookie_list, 0);
-+	strbuf_release(&path);
-+	return LISTENER_SHUTDOWN;
-+}
-+
-+/*
-+ * Process filesystem events that happened anywhere (recursively) under the
-+ * external <gitdir> (such as non-primary worktrees or submodules).
-+ * We only care about cookie files that our client threads created here.
-+ *
-+ * Note that we DO NOT get filesystem events on the external <gitdir>
-+ * itself (it is not inside something that we are watching).  In particular,
-+ * we do not get an event if the external <gitdir> is deleted.
-+ */
-+static int process_gitdir_events(struct fsmonitor_daemon_state *state)
-+{
-+	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct one_watch *watch = data->watch_gitdir;
-+	struct strbuf path = STRBUF_INIT;
-+	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-+	const char *p = watch->buffer;
-+
-+	if (!watch->count) {
-+		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
-+				   "overflow");
-+		fsmonitor_force_resync(state);
-+		return LISTENER_HAVE_DATA_GITDIR;
-+	}
-+
-+	for (;;) {
-+		FILE_NOTIFY_INFORMATION *info = (void *)p;
-+		const char *slash;
-+		enum fsmonitor_path_type t;
-+
-+		strbuf_reset(&path);
-+		if (normalize_path_in_utf8(info, &path) == -1)
-+			goto skip_this_path;
-+
-+		t = fsmonitor_classify_path_gitdir_relative(path.buf);
-+
-+		switch (t) {
-+		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
-+			/* special case cookie files within gitdir */
-+
-+			/* Use just the filename of the cookie file. */
-+			slash = find_last_dir_sep(path.buf);
-+			string_list_append(&cookie_list,
-+					   slash ? slash + 1 : path.buf);
-+			break;
-+
-+		case IS_INSIDE_GITDIR:
-+			goto skip_this_path;
-+
-+		default:
-+			BUG("unexpected path classification '%d' for '%s'",
-+			    t, path.buf);
-+		}
-+
-+skip_this_path:
-+		if (!info->NextEntryOffset)
-+			break;
-+		p += info->NextEntryOffset;
-+	}
-+
-+	fsmonitor_publish(state, NULL, &cookie_list);
-+	string_list_clear(&cookie_list, 0);
-+	strbuf_release(&path);
-+	return LISTENER_HAVE_DATA_GITDIR;
- }
+ core.fsmonitor::
+-	If set, the value of this variable is used as a command which
+-	will identify all files that may have changed since the
+-	requested date/time. This information is used to speed up git by
+-	avoiding unnecessary processing of files that have not changed.
+-	See the "fsmonitor-watchman" section of linkgit:githooks[5].
++	If set to true, enable the built-in file system monitor
++	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
+++
++Like hook-based file system monitors, the built-in file system monitor
++can speed up Git commands that need to refresh the Git index
++(e.g. `git status`) in a working directory with many files.  The
++built-in monitor eliminates the need to install and maintain an
++external third-party tool.
+++
++The built-in file system monitor is currently available only on a
++limited set of supported platforms.  Currently, this includes Windows
++and MacOS.
+++
++	Otherwise, this variable contains the pathname of the "fsmonitor"
++	hook command.
+++
++This hook command is used to identify all files that may have changed
++since the requested date/time. This information is used to speed up
++git by avoiding unnecessary scanning of files that have not changed.
+++
++See the "fsmonitor-watchman" section of linkgit:githooks[5].
+++
++Note that if you concurrently use multiple versions of Git, such
++as one version on the command line and another version in an IDE
++tool, that the definition of `core.fsmonitor` was extended to
++allow boolean values in addition to hook pathnames.  Git versions
++2.35.1 and prior will not understand the boolean values and will
++consider the "true" or "false" values as hook pathnames to be
++invoked.  Git versions 2.26 thru 2.35.1 default to hook protocol
++V2 and will fall back to no fsmonitor (full scan).  Git versions
++prior to 2.26 default to hook protocol V1 and will silently
++assume there were no changes to report (no scan), so status
++commands may report incomplete results.  For this reason, it is
++best to upgrade all of your Git versions before using the built-in
++file system monitor.
  
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- {
-+	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	DWORD dwWait;
-+	int result;
-+
-+	state->error_code = 0;
-+
-+	if (start_rdcw_watch(data, data->watch_worktree) == -1)
-+		goto force_error_stop;
-+
-+	if (data->watch_gitdir &&
-+	    start_rdcw_watch(data, data->watch_gitdir) == -1)
-+		goto force_error_stop;
-+
-+	for (;;) {
-+		dwWait = WaitForMultipleObjects(data->nr_listener_handles,
-+						data->hListener,
-+						FALSE, INFINITE);
-+
-+		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_WORKTREE) {
-+			result = recv_rdcw_watch(data->watch_worktree);
-+			if (result == -1) {
-+				/* hard error */
-+				goto force_error_stop;
-+			}
-+			if (result == -2) {
-+				/* retryable error */
-+				if (start_rdcw_watch(data, data->watch_worktree) == -1)
-+					goto force_error_stop;
-+				continue;
-+			}
-+
-+			/* have data */
-+			if (process_worktree_events(state) == LISTENER_SHUTDOWN)
-+				goto force_shutdown;
-+			if (start_rdcw_watch(data, data->watch_worktree) == -1)
-+				goto force_error_stop;
-+			continue;
-+		}
-+
-+		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_GITDIR) {
-+			result = recv_rdcw_watch(data->watch_gitdir);
-+			if (result == -1) {
-+				/* hard error */
-+				goto force_error_stop;
-+			}
-+			if (result == -2) {
-+				/* retryable error */
-+				if (start_rdcw_watch(data, data->watch_gitdir) == -1)
-+					goto force_error_stop;
-+				continue;
-+			}
-+
-+			/* have data */
-+			if (process_gitdir_events(state) == LISTENER_SHUTDOWN)
-+				goto force_shutdown;
-+			if (start_rdcw_watch(data, data->watch_gitdir) == -1)
-+				goto force_error_stop;
-+			continue;
-+		}
-+
-+		if (dwWait == WAIT_OBJECT_0 + LISTENER_SHUTDOWN)
-+			goto clean_shutdown;
-+
-+		error(_("could not read directory changes [GLE %ld]"),
-+		      GetLastError());
-+		goto force_error_stop;
-+	}
-+
-+force_error_stop:
-+	state->error_code = -1;
-+
-+force_shutdown:
-+	/*
-+	 * Tell the IPC thead pool to stop (which completes the await
-+	 * in the main thread (which will also signal this thread (if
-+	 * we are still alive))).
-+	 */
-+	ipc_server_stop_async(state->ipc_server_data);
-+
-+clean_shutdown:
-+	cancel_rdcw_watch(data->watch_worktree);
-+	cancel_rdcw_watch(data->watch_gitdir);
- }
+ core.fsmonitorHookVersion::
+-	Sets the version of hook that is to be used when calling fsmonitor.
+-	There are currently versions 1 and 2. When this is not set,
+-	version 2 will be tried first and if it fails then version 1
+-	will be tried. Version 1 uses a timestamp as input to determine
+-	which files have changes since that time but some monitors
+-	like watchman have race conditions when used with a timestamp.
+-	Version 2 uses an opaque string so that the monitor can return
+-	something that can be used to determine what files have changed
+-	without race conditions.
++	Sets the protocol version to be used when invoking the
++	"fsmonitor" hook.
+++
++There are currently versions 1 and 2. When this is not set,
++version 2 will be tried first and if it fails then version 1
++will be tried. Version 1 uses a timestamp as input to determine
++which files have changes since that time but some monitors
++like Watchman have race conditions when used with a timestamp.
++Version 2 uses an opaque string so that the monitor can return
++something that can be used to determine what files have changed
++without race conditions.
  
- int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- {
-+	struct fsmonitor_daemon_backend_data *data;
+ core.trustctime::
+ 	If false, the ctime differences between the index and the
+diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
+new file mode 100644
+index 00000000000..0fedf5a4565
+--- /dev/null
++++ b/Documentation/git-fsmonitor--daemon.txt
+@@ -0,0 +1,75 @@
++git-fsmonitor--daemon(1)
++========================
 +
-+	CALLOC_ARRAY(data, 1);
++NAME
++----
++git-fsmonitor--daemon - A Built-in File System Monitor
 +
-+	data->hEventShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
++SYNOPSIS
++--------
++[verse]
++'git fsmonitor--daemon' start
++'git fsmonitor--daemon' run
++'git fsmonitor--daemon' stop
++'git fsmonitor--daemon' status
 +
-+	data->watch_worktree = create_watch(state,
-+					    state->path_worktree_watch.buf);
-+	if (!data->watch_worktree)
-+		goto failed;
++DESCRIPTION
++-----------
 +
-+	if (state->nr_paths_watching > 1) {
-+		data->watch_gitdir = create_watch(state,
-+						  state->path_gitdir_watch.buf);
-+		if (!data->watch_gitdir)
-+			goto failed;
-+	}
++A daemon to watch the working directory for file and directory
++changes using platform-specific file system notification facilities.
 +
-+	data->hListener[LISTENER_SHUTDOWN] = data->hEventShutdown;
-+	data->nr_listener_handles++;
++This daemon communicates directly with commands like `git status`
++using the link:technical/api-simple-ipc.html[simple IPC] interface
++instead of the slower linkgit:githooks[5] interface.
 +
-+	data->hListener[LISTENER_HAVE_DATA_WORKTREE] =
-+		data->watch_worktree->hEvent;
-+	data->nr_listener_handles++;
++This daemon is built into Git so that no third-party tools are
++required.
 +
-+	if (data->watch_gitdir) {
-+		data->hListener[LISTENER_HAVE_DATA_GITDIR] =
-+			data->watch_gitdir->hEvent;
-+		data->nr_listener_handles++;
-+	}
++OPTIONS
++-------
 +
-+	state->backend_data = data;
-+	return 0;
++start::
++	Starts a daemon in the background.
 +
-+failed:
-+	CloseHandle(data->hEventShutdown);
-+	destroy_watch(data->watch_worktree);
-+	destroy_watch(data->watch_gitdir);
++run::
++	Runs a daemon in the foreground.
 +
- 	return -1;
- }
++stop::
++	Stops the daemon running in the current working
++	directory, if present.
++
++status::
++	Exits with zero status if a daemon is watching the
++	current working directory.
++
++REMARKS
++-------
++
++This daemon is a long running process used to watch a single working
++directory and maintain a list of the recently changed files and
++directories.  Performance of commands such as `git status` can be
++increased if they just ask for a summary of changes to the working
++directory and can avoid scanning the disk.
++
++When `core.fsmonitor` is set to `true` (see linkgit:git-config[1])
++commands, such as `git status`, will ask the daemon for changes and
++automatically start it (if necessary).
++
++For more information see the "File System Monitor" section in
++linkgit:git-update-index[1].
++
++CAVEATS
++-------
++
++The fsmonitor daemon does not currently know about submodules and does
++not know to filter out file system events that happen within a
++submodule.  If fsmonitor daemon is watching a super repo and a file is
++modified within the working directory of a submodule, it will report
++the change (as happening against the super repo).  However, the client
++will properly ignore these extra events, so performance may be affected
++but it will not cause an incorrect result.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 2853f168d97..53ea48a04e2 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -498,7 +498,9 @@ FILE SYSTEM MONITOR
+ This feature is intended to speed up git operations for repos that have
+ large working directories.
  
- void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- {
-+	struct fsmonitor_daemon_backend_data *data;
-+
-+	if (!state || !state->backend_data)
-+		return;
-+
-+	data = state->backend_data;
-+
-+	CloseHandle(data->hEventShutdown);
-+	destroy_watch(data->watch_worktree);
-+	destroy_watch(data->watch_gitdir);
-+
-+	FREE_AND_NULL(state->backend_data);
- }
+-It enables git to work together with a file system monitor (see the
++It enables git to work together with a file system monitor (see
++linkgit:git-fsmonitor--daemon[1]
++and the
+ "fsmonitor-watchman" section of linkgit:githooks[5]) that can
+ inform it as to what files have been modified. This enables git to avoid
+ having to lstat() every file to find modified files.
+@@ -509,8 +511,8 @@ looking for new files.
+ 
+ If you want to enable (or disable) this feature, it is easier to use
+ the `core.fsmonitor` configuration variable (see
+-linkgit:git-config[1]) than using the `--fsmonitor` option to
+-`git update-index` in each repository, especially if you want to do so
++linkgit:git-config[1]) than using the `--fsmonitor` option to `git
++update-index` in each repository, especially if you want to do so
+ across all repositories you use, because you can set the configuration
+ variable in your `$HOME/.gitconfig` just once and have it affect all
+ repositories you touch.
 -- 
 gitgitgadget
 
