@@ -2,129 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DA42C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97AC3C433FE
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230346AbiCYThm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:37:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
+        id S230286AbiCYTk0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbiCYThT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:37:19 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0890820824D
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:06 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so9517550wme.5
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:10:05 -0700 (PDT)
+        with ESMTP id S232642AbiCYTjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:39:03 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8207D2364F2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:18:59 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id t2so7182757pfj.10
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M8Gdmw/wrOeDER8oUUqdhTg6MJulAML/q9Ev21o2Xhc=;
-        b=P+P0VadLlMXedO8JtUsBBpC+nTE3F3XZVnx6gnK0OTeI9ByMzmWDzpiG/vzcOLEiHs
-         xMuHyjbyVhalhGDE6u1JgVoV/BkGCVkmagg5NmZznh5MohtB/9910y7qjD0Bg9w1dm7I
-         NK291ohKtioglruYTQa+08fgK45/A0JlfoizjvyfSNkrDlFJPMp+R1FjOIbj1pVIjJuU
-         n4KTmu5hD3gFzIfyFkidtwZrLiY3nGQgcSxDW6qVvuvzlT8v+4I8n90cCpaa4m41thIZ
-         AOa1CVpUqM7Zul5WSp+yXmW1IFl/0H55IO4r4yFxuHJE/q50irGJFHWL+61SQ8H0rfxs
-         7smg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ZPGzn8GYc7Mm2LhL0Trk5w+WAMLtd5ESXvjPPmgRhOo=;
+        b=HHuYM/YpkHBL1gom+ndB7CQqc6GAboqnCwYLtB86U0oIHkUNaZvnGfUzyWHd9X7PNY
+         6NBVxrho0rgupPX1SEpqww7c4eSeIUNrNYqqRgEyHUWX59G+5NnuC7okTJW6L/3ofYjW
+         3lEBFxOnEL4L7QaigA0F5+ZOUFHdDpxf7AQWKuATp3QrP0cCjUCoHneubPCtT7k5hZgu
+         C5xdAl5kPMkqeZmmE0NXRY7ew+qCTPok8FWhIbj4+8EhemK332lzoPrDBiK7ECEut+Ox
+         N3ZAWvTyt8HgO1S+q37T0Ia7ggmTotrhr6X/m3IoPMbg/TknhoddXBHioKu5U+S+LRuP
+         T+fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M8Gdmw/wrOeDER8oUUqdhTg6MJulAML/q9Ev21o2Xhc=;
-        b=Ol+XH9WPVnNOw8U+OEuImo65XvmmEuhS8fjLR0DKQqbyUgjL//0v95YpH3vlOUY65c
-         RYDhBBM8Ie/2IbBHTeQn9tBEN2X8lXxn3iXcVAfSSzSQ8n20T9u/kTkjhbs15JBmDMOK
-         mSjsPUe020xLsHEG1H7Ct7lKrLj5TPrK1U/kOcc3djvlwRcg240M9vXaVWO40igQEbPg
-         S4vDBB0oRt9WtlMOC9fRFQAAlYV+dndJWj7F8ow8RKblJpD7A+Y3bK0G7u9MjAQX4o0k
-         JzZHFypy6AOv9S6q5W+TYbllImICIP4IQ5+55Abc2f1HRsXhG8sj1tWI6hWaaJ9x23nq
-         rhag==
-X-Gm-Message-State: AOAM5310XVq8j8M1ZJiyrz72BPBWjtENv1/P4LRM3/EMmhHlx22RY8Aj
-        YNF/ldR3C5O/c7GDKCEdxu/+zCDCkaETkw==
-X-Google-Smtp-Source: ABdhPJx88raGbDlvJAYDmOus8ITYzky7X6LtXarz9sjaxN7rSRPPDeR1Vv3Wprv7o9p5V3i2cAwC4A==
-X-Received: by 2002:a05:600c:1d0f:b0:38c:8ff8:e703 with SMTP id l15-20020a05600c1d0f00b0038c8ff8e703mr11426865wms.202.1648233508315;
-        Fri, 25 Mar 2022 11:38:28 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZPGzn8GYc7Mm2LhL0Trk5w+WAMLtd5ESXvjPPmgRhOo=;
+        b=ct87xP+vRAwmtJsBf//IpCjEqEujIzBjUU3yZ/iZoXMWZrr1q7ysgYqx92FJlHn2VU
+         dZsDyKd4+fpDE6D12k7DziP4TobEVYy/nHr/mlyWEvF8WHBnyIjhxfYFQVX58eX/7JMQ
+         UkuUWsccUg8F9evKimJNWQ9vXuvqIOJJQLl0QOWKesJrwkhI1b5nWc8J8si9ri0Zmjt4
+         vcXuIEm+6m5qlZWGehcQmr/qydhLa/SzOUaufCnqsJGs6YOKPrWZJ0n8vvghdnYvvtAg
+         wS669MILc+hZEHhPooSyJDukd2s7NITmExgNrOmGQVUoKyGxSU/YrY372PcNyTYE4t7O
+         wUEA==
+X-Gm-Message-State: AOAM532mfgHwrF6nFJEmWM5nJCdySu9UDBU4HgIP28pYcV9u3rrNoJq8
+        cOGf/5T4bxsn7xG9DKLKdj2X/6n3yVxkyrxk
+X-Google-Smtp-Source: ABdhPJym+0WnpB/FjJVVJ1Jr8X+nfitudaNxdHxVS9T2Qg9Nf6wTCabellKV3V+I1LK/jXmlySxtKA==
+X-Received: by 2002:a05:6602:3787:b0:649:ec10:183b with SMTP id be7-20020a056602378700b00649ec10183bmr6400933iob.117.1648231876233;
+        Fri, 25 Mar 2022 11:11:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id j13-20020a056e02014d00b002c98acb8d32sm462904ilr.45.2022.03.25.11.11.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:27 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 10/25] CI: consistently use "export" in ci/lib.sh
-Date:   Fri, 25 Mar 2022 19:38:01 +0100
-Message-Id: <patch-v2-10.25-9dc148341ba-20220325T182534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+        Fri, 25 Mar 2022 11:11:15 -0700 (PDT)
+Date:   Fri, 25 Mar 2022 14:11:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3] http API: fix dangling pointer issue noted by GCC 12.0
+Message-ID: <Yj4FwuyEW0b5ImEC@nand.local>
+References: <patch-v2-1.1-777838267a5-20220225T090816Z-avarab@gmail.com>
+ <patch-v3-1.1-69190804c67-20220325T143322Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v3-1.1-69190804c67-20220325T143322Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "ci/lib.sh" script co consistently use "export", for
-e.g. MAKEFLAGS we were exporting it, and then assigning to it, let's
-do it the other way around.
+On Fri, Mar 25, 2022 at 03:34:49PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> This isn't the only caller that assigns to "slot->finished", see see
 
-Right now this doesn't matter, since we in
-e.g. "ci/install-dependencies.sh" source this file, and don't use
-something like "env(1)" to retrieve these variables. But in a
-subsequent commit we'll "export" these variables through a wrapper (to
-additionally write them to a GitHub CI-specific $GITHUB_ENV
-file). This change makes that subsequent change easier to read, as it
-won't need to do any control flow refactoring.
+s/see see/see ?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ci/lib.sh | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+> the assignments in http-walker.c:process_alternates_response() and
+> http.c:finish_active_slot().
+>
+> But those assignments are both to the pointer to our local variable
+> here, so this fix is correct. The only way that code in http-walker.c
+> could have done its assignments is to the pointer to this specific
+> variable.
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 6b37b10d750..31fe3a476a9 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -27,7 +27,7 @@ check_unignored_build_artifacts ()
- export TERM=${TERM:-dumb}
- 
- # Clear MAKEFLAGS that may come from the outside world.
--export MAKEFLAGS=
-+MAKEFLAGS=
- 
- if test "$GITHUB_ACTIONS" = "true"
- then
-@@ -35,10 +35,12 @@ then
- 	CC="${CC:-gcc}"
- 
- 	export GIT_PROVE_OPTS="--timer --jobs 10"
--	export GIT_TEST_OPTS="--verbose-log -x"
-+	GIT_TEST_OPTS="--verbose-log -x"
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-+
-+	export GIT_TEST_OPTS
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
-@@ -92,4 +94,4 @@ linux-leaks)
- 	;;
- esac
- 
--MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-+export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
--- 
-2.35.1.1517.g20a06c426a7
+Got it; this is the key piece that I was missing in my earlier review.
+Sorry about that, this looks completely safe to me now.
 
+Thanks,
+Taylor
