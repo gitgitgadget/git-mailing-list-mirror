@@ -2,100 +2,371 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D9FAC433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B434DC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiCYT06 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:26:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58148 "EHLO
+        id S229743AbiCYT1r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbiCYT0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:26:44 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891211E113E
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 11:59:41 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E30A910F3DD;
-        Fri, 25 Mar 2022 13:25:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZGLP8png6nI9nxXVu9DB90aZULd9Y1m16dXQjm
-        x0eOY=; b=kSbQ0eu7/a44/c7JaKfJQ4H4ShWcKNhxHMrahDKoJspl3CHObbCpso
-        MJzzVHiP6IDVn0qGYRQz/1NtJQ9N8u1XM/DSncou4H6GiP8lTFr7gJRrYsOYxJNY
-        pjbja8JJII//2qa/bwN5LlfRyqhecfHOq8onsNfgel/c6CPiWphAo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D954510F3DC;
-        Fri, 25 Mar 2022 13:25:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 43C3510F3DB;
-        Fri, 25 Mar 2022 13:25:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 2/2] test-lib-functions: fix test_subcommand_inexact
-References: <pull.1185.git.1647894845421.gitgitgadget@gmail.com>
-        <pull.1185.v2.git.1648146897.gitgitgadget@gmail.com>
-        <ed67b7489719a01c88d7a6765e7499c1157da32e.1648146897.git.gitgitgadget@gmail.com>
-        <xmqqtubnf568.fsf@gitster.g>
-        <fc1db75c-868c-08c6-7087-b70460653460@github.com>
-Date:   Fri, 25 Mar 2022 10:25:27 -0700
-In-Reply-To: <fc1db75c-868c-08c6-7087-b70460653460@github.com> (Derrick
-        Stolee's message of "Fri, 25 Mar 2022 10:03:33 -0400")
-Message-ID: <xmqqils2aqrc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229744AbiCYT1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:27:21 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C0573E80C1
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:00:47 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so4931952wmb.3
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:00:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MBRii6erQh/tLVnjK958YkuPAQtK43aFISkvaGdULE4=;
+        b=NF0tuHVqrqJOlbPx+kwbvdZItCOfM6xSvJaIC8z46OqBxYk8ttkb5GbJL2GauIWlyw
+         E6kMDgUXLFcNF01CZxxBS1kvn3F2k/wOguWqSV5WNSfijVVhFu+KjNXmk5xm8cKCKpid
+         SzTyjVoMJPbCK0m7+XjqIYQJEZnqYzfjtadsL3l5fqOhtm9djn92UaA20vRqnXrmlQVP
+         UO1UZZ8TIx82JHQr23ciqdG58XOcCKVfPnt9F97yeeql1NjLIu/VxilV17xt1fwyve2X
+         0Sc6VeD0kdgc5MHwYEyKuAmpNer1g7Ncpd277V8n5X1TYeChTIrXLSDT17mN4wAIWS5i
+         EhYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MBRii6erQh/tLVnjK958YkuPAQtK43aFISkvaGdULE4=;
+        b=5yAL72L2Gq/rw/XUPOD0tRdf2oKBr2CYdiOEmcVQzZrDPx59DfcP4A/QkOphXAbJqR
+         02gCLGTYJ+YJ+VJjT48hXjzMwAmwi6VuF1vEFJ1FuAar11ng3TkgStkhLq9tBdqO5QbO
+         iSieM1sIrscUwKwBJ+v/qI9nRTfDmZq/PVkx+Rar+Jv+aalT24dUiu4p99FCLvTS/wUI
+         cSAsExKZPjQv3yogwHcS7jdIdjHSXZcc3rwB4efVbnzM2YCrDucm3ewh+GpUd+eQCOo+
+         BRdth8kyv/p4g6NSGngL87735xGqXqRs5iQdfAhu0nR16WLdgTmAylSNi9y36ZhGcNWc
+         bU6g==
+X-Gm-Message-State: AOAM531IIWmBuUm77bHsmMfrGmBM2N0Ld7NQowE8+90i85CfB7aM8YI8
+        PKGlR2MPZ5RsG96HZd0quo3+wcyfNhE=
+X-Google-Smtp-Source: ABdhPJwiyM9xo5DqPPpg1/tdCIvYyPp0aSjdpau0em7uaXd/UvB7oZJOh/KuQHVCSNo4bDngnGp5Pg==
+X-Received: by 2002:a05:600c:4e91:b0:38c:c1ac:c018 with SMTP id f17-20020a05600c4e9100b0038cc1acc018mr15975367wmq.189.1648231394807;
+        Fri, 25 Mar 2022 11:03:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g1-20020a1c4e01000000b003899c8053e1sm6467243wmh.41.2022.03.25.11.03.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Mar 2022 11:03:14 -0700 (PDT)
+Message-Id: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:02:43 +0000
+Subject: [PATCH v9 00/30] Builtin FSMonitor Part 2
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9082D1A2-AC60-11EC-975F-CB998F0A682E-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Here is V9 of Part 2 of my builtin FSMonitor series. This version addresses
+bash style issues in t7527 raised on V8. These changes do not require a new
+version of Part 3.
 
-> On 3/24/2022 4:48 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>> All existing tests continue to pass with this change. There was one
->>> instance from t7700-repack.sh that was taking advantage of this
->>> flexibility, but it was removed in the previous change.
->> 
->> Of course all existing tests continue to pass, as we no longer have
->> any user of test_subcommand_inexact after the previous step ;-).
->
-> Yeah, I definitely should have checked to see if there were other
-> uses of this. I thought there was, but I was mistaken.
->
->> Among
->> 
->>  (1) doing nothing,
->>  (2) removing, and
->>  (3) clarifying the implementation,
->> 
->> my preference would be 2 > 1 > 3.  If we add
->
-> I agree that (2) is the best option here.
->  
->>  (4) clarify the implementation and document what kind of inexactness we
->>      tolerate with an updated comment"
->> 
->> to the mix, that would come before all 3 others, though.
->
-> Is there value in fixing the implementation and adding this comment
-> if we are to just delete the helper? I suppose that we could prevent
-> a future contribution from reintroducing the broken implementation.
+Here is a range-diff from V8 to V9 relative to 715d08a9e5 (The eighth batch,
+2022-02-25).
 
-That is a good thoguth to take into account.
+ 1:  e98373f997 =  1:  e98373f997 fsmonitor: enhance existing comments, clarify trivial response handling
+ 2:  ab68b94417 =  2:  ab68b94417 fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+ 3:  e04c7301f2 =  3:  e04c7301f2 fsmonitor: config settings are repository-specific
+ 4:  ea02ba25d8 =  4:  ea02ba25d8 fsmonitor: use IPC to query the builtin FSMonitor daemon
+ 5:  6ab7db9cb7 =  5:  6ab7db9cb7 fsmonitor: document builtin fsmonitor
+ 6:  0ce8ae3f2c =  6:  0ce8ae3f2c fsmonitor--daemon: add a built-in fsmonitor daemon
+ 7:  4624ce2fa4 =  7:  4624ce2fa4 fsmonitor--daemon: implement 'stop' and 'status' commands
+ 8:  a29fe7266a =  8:  a29fe7266a compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
+ 9:  2f8a42fdb9 =  9:  2f8a42fdb9 compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
+10:  f07800690e = 10:  f07800690e fsmonitor--daemon: implement 'run' command
+11:  a6a39a3306 = 11:  a6a39a3306 fsmonitor--daemon: implement 'start' command
+12:  d62e338d00 = 12:  d62e338d00 fsmonitor--daemon: add pathname classification
+13:  53e06b4ae5 = 13:  53e06b4ae5 fsmonitor--daemon: define token-ids
+14:  39f43fabe0 = 14:  39f43fabe0 fsmonitor--daemon: create token-based changed path cache
+15:  239558e34f = 15:  239558e34f compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on Windows
+16:  14b775e9d8 = 16:  14b775e9d8 compat/fsmonitor/fsm-listen-darwin: add MacOS header files for FSEvent
+17:  55bd7aee06 = 17:  55bd7aee06 compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on MacOS
+18:  c43009124f = 18:  c43009124f fsmonitor--daemon: implement handle_client callback
+19:  ed338777b5 = 19:  ed338777b5 help: include fsmonitor--daemon feature flag in version info
+20:  c99bac29d4 = 20:  c99bac29d4 t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
+21:  c8709da945 ! 21:  bc94e379b0 t7527: create test for fsmonitor--daemon
+    @@ Commit message
+         t7527: create test for fsmonitor--daemon
+     
+         Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+      ## t/t7527-builtin-fsmonitor.sh (new) ##
+     @@
+    @@ t/t7527-builtin-fsmonitor.sh (new)
+     +    rm -rf $1
+     +}
+     +
+    -+is_value () {
+    -+    test -n "$1" && test "${1::1}" != "-"
+    -+}
+    -+
+     +start_daemon () {
+    -+    r= &&
+    -+    tf= &&
+    -+    t2= &&
+    -+    tk= &&
+    ++    r= tf= t2= tk= &&
+     +
+     +    while test "$#" -ne 0
+     +    do
+     +        case "$1" in
+     +        -C)
+    -+            shift;
+    -+            is_value $1 || BUG "error: -C requires value"
+    -+            r="-C $1"
+    ++            r="-C ${2?}"
+     +            shift
+     +            ;;
+     +        --tf)
+    -+            shift;
+    -+            is_value $1 || BUG "error: --tf requires value"
+    -+            tf="$1"
+    ++            tf="${2?}"
+     +            shift
+     +            ;;
+     +        --t2)
+    -+            shift;
+    -+            is_value $1 || BUG "error: --t2 requires value"
+    -+            t2="$1"
+    ++            t2="${2?}"
+     +            shift
+     +            ;;
+     +        --tk)
+    -+            shift;
+    -+            is_value $1 || BUG "error: --tk requires value"
+    -+            tk="$1"
+    ++            tk="${2?}"
+     +            shift
+     +            ;;
+    -+        *)
+    ++        -*)
+     +            BUG "error: unknown option: '$1'"
+     +            ;;
+    ++        *)
+    ++            BUG "error: unbound argument: '$1'"
+    ++            ;;
+     +        esac
+    ++        shift
+     +    done &&
+     +
+     +    (
+22:  cc39ecf10a = 22:  06d56d3a73 t/perf: avoid copying builtin fsmonitor files into test repo
+23:  2bb3eb8476 = 23:  2dd0215127 t/helper/test-chmtime: skip directories on Windows
+24:  bab9a9b080 = 24:  bb88cddc13 t/perf/p7519: fix coding style
+25:  2dd06ad2f7 = 25:  50c2afaa49 t/perf/p7519: speed up test on Windows
+26:  6eaa5765ae = 26:  5b18e3b692 t/perf/p7519: add fsmonitor--daemon test cases
+27:  30957f3930 = 27:  899c23f63c fsmonitor--daemon: periodically truncate list of modified files
+28:  c8ca2a1727 = 28:  597a7192f9 fsmonitor--daemon: use a cookie file to sync with file system
+29:  4caf1d89b8 = 29:  68a05fd289 fsmonitor: force update index after large responses
+30:  f87a1eba69 = 30:  5eb696daba t7527: test status with untracked-cache and fsmonitor--daemon
 
-> My current feeling is that we should just delete this and refer
-> to that deletion if anyone considers needing something like it.
 
-I am very much in favor of deleting it.
+Jeff Hostetler (30):
+  fsmonitor: enhance existing comments, clarify trivial response
+    handling
+  fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+  fsmonitor: config settings are repository-specific
+  fsmonitor: use IPC to query the builtin FSMonitor daemon
+  fsmonitor: document builtin fsmonitor
+  fsmonitor--daemon: add a built-in fsmonitor daemon
+  fsmonitor--daemon: implement 'stop' and 'status' commands
+  compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
+  compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
+  fsmonitor--daemon: implement 'run' command
+  fsmonitor--daemon: implement 'start' command
+  fsmonitor--daemon: add pathname classification
+  fsmonitor--daemon: define token-ids
+  fsmonitor--daemon: create token-based changed path cache
+  compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on
+    Windows
+  compat/fsmonitor/fsm-listen-darwin: add MacOS header files for FSEvent
+  compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on
+    MacOS
+  fsmonitor--daemon: implement handle_client callback
+  help: include fsmonitor--daemon feature flag in version info
+  t/helper/fsmonitor-client: create IPC client to talk to FSMonitor
+    Daemon
+  t7527: create test for fsmonitor--daemon
+  t/perf: avoid copying builtin fsmonitor files into test repo
+  t/helper/test-chmtime: skip directories on Windows
+  t/perf/p7519: fix coding style
+  t/perf/p7519: speed up test on Windows
+  t/perf/p7519: add fsmonitor--daemon test cases
+  fsmonitor--daemon: periodically truncate list of modified files
+  fsmonitor--daemon: use a cookie file to sync with file system
+  fsmonitor: force update index after large responses
+  t7527: test status with untracked-cache and fsmonitor--daemon
 
-Thanks.
+ .gitignore                              |    1 +
+ Documentation/config/core.txt           |   60 +-
+ Documentation/git-fsmonitor--daemon.txt |   75 ++
+ Documentation/git-update-index.txt      |    8 +-
+ Makefile                                |   17 +
+ builtin.h                               |    1 +
+ builtin/fsmonitor--daemon.c             | 1479 +++++++++++++++++++++++
+ builtin/update-index.c                  |    7 +-
+ cache.h                                 |    1 -
+ compat/fsmonitor/fsm-darwin-gcc.h       |   92 ++
+ compat/fsmonitor/fsm-listen-darwin.c    |  427 +++++++
+ compat/fsmonitor/fsm-listen-win32.c     |  586 +++++++++
+ compat/fsmonitor/fsm-listen.h           |   49 +
+ config.c                                |   14 -
+ config.h                                |    1 -
+ config.mak.uname                        |   20 +
+ contrib/buildsystems/CMakeLists.txt     |   10 +
+ environment.c                           |    1 -
+ fsmonitor--daemon.h                     |  166 +++
+ fsmonitor-ipc.c                         |  171 +++
+ fsmonitor-ipc.h                         |   48 +
+ fsmonitor-settings.c                    |  114 ++
+ fsmonitor-settings.h                    |   21 +
+ fsmonitor.c                             |  216 +++-
+ fsmonitor.h                             |   15 +-
+ git.c                                   |    1 +
+ help.c                                  |    4 +
+ repo-settings.c                         |    1 +
+ repository.h                            |    3 +
+ t/README                                |    4 +-
+ t/helper/test-chmtime.c                 |   15 +
+ t/helper/test-fsmonitor-client.c        |  116 ++
+ t/helper/test-tool.c                    |    1 +
+ t/helper/test-tool.h                    |    1 +
+ t/perf/p7519-fsmonitor.sh               |   68 +-
+ t/perf/perf-lib.sh                      |    2 +-
+ t/t7527-builtin-fsmonitor.sh            |  609 ++++++++++
+ t/test-lib.sh                           |    7 +
+ 38 files changed, 4326 insertions(+), 106 deletions(-)
+ create mode 100644 Documentation/git-fsmonitor--daemon.txt
+ create mode 100644 builtin/fsmonitor--daemon.c
+ create mode 100644 compat/fsmonitor/fsm-darwin-gcc.h
+ create mode 100644 compat/fsmonitor/fsm-listen-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-listen-win32.c
+ create mode 100644 compat/fsmonitor/fsm-listen.h
+ create mode 100644 fsmonitor--daemon.h
+ create mode 100644 fsmonitor-ipc.c
+ create mode 100644 fsmonitor-ipc.h
+ create mode 100644 fsmonitor-settings.c
+ create mode 100644 fsmonitor-settings.h
+ create mode 100644 t/helper/test-fsmonitor-client.c
+ create mode 100755 t/t7527-builtin-fsmonitor.sh
+
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1041%2Fjeffhostetler%2Fbuiltin-fsmonitor-part2-v9
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1041/jeffhostetler/builtin-fsmonitor-part2-v9
+Pull-Request: https://github.com/gitgitgadget/git/pull/1041
+
+Range-diff vs v8:
+
+  1:  e98373f997f =  1:  e98373f997f fsmonitor: enhance existing comments, clarify trivial response handling
+  2:  ab68b944173 =  2:  ab68b944173 fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+  3:  e04c7301f24 =  3:  e04c7301f24 fsmonitor: config settings are repository-specific
+  4:  ea02ba25d8f =  4:  ea02ba25d8f fsmonitor: use IPC to query the builtin FSMonitor daemon
+  5:  6ab7db9cb76 =  5:  6ab7db9cb76 fsmonitor: document builtin fsmonitor
+  6:  0ce8ae3f2cf =  6:  0ce8ae3f2cf fsmonitor--daemon: add a built-in fsmonitor daemon
+  7:  4624ce2fa47 =  7:  4624ce2fa47 fsmonitor--daemon: implement 'stop' and 'status' commands
+  8:  a29fe7266a4 =  8:  a29fe7266a4 compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
+  9:  2f8a42fdb93 =  9:  2f8a42fdb93 compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
+ 10:  f07800690ee = 10:  f07800690ee fsmonitor--daemon: implement 'run' command
+ 11:  a6a39a3306d = 11:  a6a39a3306d fsmonitor--daemon: implement 'start' command
+ 12:  d62e338d008 = 12:  d62e338d008 fsmonitor--daemon: add pathname classification
+ 13:  53e06b4ae5d = 13:  53e06b4ae5d fsmonitor--daemon: define token-ids
+ 14:  39f43fabe02 = 14:  39f43fabe02 fsmonitor--daemon: create token-based changed path cache
+ 15:  239558e34ff = 15:  239558e34ff compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on Windows
+ 16:  14b775e9d8b = 16:  14b775e9d8b compat/fsmonitor/fsm-listen-darwin: add MacOS header files for FSEvent
+ 17:  55bd7aee06c = 17:  55bd7aee06c compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on MacOS
+ 18:  c43009124fb = 18:  c43009124fb fsmonitor--daemon: implement handle_client callback
+ 19:  ed338777b56 = 19:  ed338777b56 help: include fsmonitor--daemon feature flag in version info
+ 20:  c99bac29d42 = 20:  c99bac29d42 t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
+ 21:  c8709da9457 ! 21:  bc94e379b03 t7527: create test for fsmonitor--daemon
+     @@ Commit message
+          t7527: create test for fsmonitor--daemon
+      
+          Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+     -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+      
+       ## t/t7527-builtin-fsmonitor.sh (new) ##
+      @@
+     @@ t/t7527-builtin-fsmonitor.sh (new)
+      +	rm -rf $1
+      +}
+      +
+     -+is_value () {
+     -+	test -n "$1" && test "${1::1}" != "-"
+     -+}
+     -+
+      +start_daemon () {
+     -+	r= &&
+     -+	tf= &&
+     -+	t2= &&
+     -+	tk= &&
+     ++	r= tf= t2= tk= &&
+      +
+      +	while test "$#" -ne 0
+      +	do
+      +		case "$1" in
+      +		-C)
+     -+			shift;
+     -+			is_value $1 || BUG "error: -C requires value"
+     -+			r="-C $1"
+     ++			r="-C ${2?}"
+      +			shift
+      +			;;
+      +		--tf)
+     -+			shift;
+     -+			is_value $1 || BUG "error: --tf requires value"
+     -+			tf="$1"
+     ++			tf="${2?}"
+      +			shift
+      +			;;
+      +		--t2)
+     -+			shift;
+     -+			is_value $1 || BUG "error: --t2 requires value"
+     -+			t2="$1"
+     ++			t2="${2?}"
+      +			shift
+      +			;;
+      +		--tk)
+     -+			shift;
+     -+			is_value $1 || BUG "error: --tk requires value"
+     -+			tk="$1"
+     ++			tk="${2?}"
+      +			shift
+      +			;;
+     -+		*)
+     ++		-*)
+      +			BUG "error: unknown option: '$1'"
+      +			;;
+     ++		*)
+     ++			BUG "error: unbound argument: '$1'"
+     ++			;;
+      +		esac
+     ++		shift
+      +	done &&
+      +
+      +	(
+ 22:  cc39ecf10ae = 22:  06d56d3a733 t/perf: avoid copying builtin fsmonitor files into test repo
+ 23:  2bb3eb84767 = 23:  2dd02151278 t/helper/test-chmtime: skip directories on Windows
+ 24:  bab9a9b0802 = 24:  bb88cddc137 t/perf/p7519: fix coding style
+ 25:  2dd06ad2f71 = 25:  50c2afaa49e t/perf/p7519: speed up test on Windows
+ 26:  6eaa5765ae1 = 26:  5b18e3b6926 t/perf/p7519: add fsmonitor--daemon test cases
+ 27:  30957f3930e = 27:  899c23f63c3 fsmonitor--daemon: periodically truncate list of modified files
+ 28:  c8ca2a17277 = 28:  597a7192f94 fsmonitor--daemon: use a cookie file to sync with file system
+ 29:  4caf1d89b84 = 29:  68a05fd2892 fsmonitor: force update index after large responses
+ 30:  f87a1eba693 = 30:  5eb696daba2 t7527: test status with untracked-cache and fsmonitor--daemon
+
+-- 
+gitgitgadget
