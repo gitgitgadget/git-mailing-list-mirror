@@ -2,207 +2,337 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04FABC433EF
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E6F0C433FE
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbiCYTdf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:33:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52434 "EHLO
+        id S230170AbiCYTdj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbiCYTdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:33:25 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A651C22387F
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:21 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id m3so14897802lfj.11
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:21 -0700 (PDT)
+        with ESMTP id S230426AbiCYTcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:32:53 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC592DC005
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:25 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id r64so4963262wmr.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lgyXwip1A5ETbGMBBZ7S54p6R7mk1sQNL9D8uDJUYmI=;
-        b=P9pQXuvL5IRuL73DisroljbyPLPteoWCn2e4abNL+zaWCcnNjYLfmsDMoAX23T+6rJ
-         mf+Z0pJf+T5P6fB4+Iw5/+/3Sw09SAyUFzcsTZ/45NcRHPfFmsVtT1KWwYewoD+jRLeb
-         E8AAmbnUsqlt/dpedWNtXd8BNTsFlKhIZwo9465af1BM/uUVnmiq2I1gSjq3sHd/D5nl
-         xcRTcq5bP/+c0WCjhLw/abzmc544tvOhlQzxR1eC74gxRCL/rHKbu5SRg8fui5RmoIWH
-         rMeJP3R/ea9QEe8zjC+BkBePvwshMUf8iOwYyBOc8RaMlcf/IAcsBxrOM0Ble0WZxQXO
-         Woog==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tTgHuXtnMPt1qW3RcIDoocZO6h35fSaRPRvfUmgg3B0=;
+        b=RcCBQPQcg4mj9t4Fu2bKFOTwPhEpXvLtUecvXBX9p3gQ72QBsHgeQRhhsNDvfXP+h3
+         qwXfawXhwK49eGdiVXq8s7FmnCv84EmdDmMPkSAoZFfB8OiRAsxEX1OX7lnd/5cUvoGa
+         6PxPN7l2pgk6CvOHL4Vp1JbnJI4/1rfd2uB8Js2ygEfBpp/+i+skQB27QZWtDvER1pYw
+         GjL9oESTo03CsL0EQC5nstfPG6z3SDT1WWveePSWOQd4Pfd98fBO7u0YgrKEas2LN/nw
+         JWR6owMoGiKvRjvy4321WAKwo02tT6VsK6hWnstmX9vjd77oRu+PYmA9oiCz4nmQUhXY
+         sQhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lgyXwip1A5ETbGMBBZ7S54p6R7mk1sQNL9D8uDJUYmI=;
-        b=6OrcJkHqLHHwUijFaKWZgwd3fWAtAIwaaKdyg3PVaxgFe53ooKtv4mapnUfDw6vMXW
-         syooNN9kBoxQvciWNILp+G9ngDMSoNKbOsV13iI4TItHznJmMsSg6m5NVonNOnjuKxgr
-         hV261oV5JpLKZaqPrY2M9Jj4GC/C9HBO900+J4Sm66fcu2rcYr5zpS0lr/lI/Lf/yiiM
-         SA++zSRgxfejPUcHGZ3wt9tW7B125b/KAUttjOgvLxDmMV63UhQy6/UGhDdhrYzLbGce
-         HqyNGLDeZX8NPk2vT6hmYTyOXVuIw35MJdmn/NjltfDlBSh/4dQgabqD3HX8TK73/8YU
-         FRxw==
-X-Gm-Message-State: AOAM531pHcPmWJr+GxVFwsOolp39irt43pJGFGwNLkAbc+9AiYMOOBex
-        TmiRXF2M1zUOT2DHjne5qwkypc0dL/D0sA==
-X-Google-Smtp-Source: ABdhPJwIQAKrC723JPQlp4xpCk3BZQuK0HxIuQTeRrNfVDjADNsDrdS2qKgdrusQxPZBWMSVeB//xA==
-X-Received: by 2002:a5d:6149:0:b0:204:4a17:bf2 with SMTP id y9-20020a5d6149000000b002044a170bf2mr10456502wrt.379.1648233503406;
-        Fri, 25 Mar 2022 11:38:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.22
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tTgHuXtnMPt1qW3RcIDoocZO6h35fSaRPRvfUmgg3B0=;
+        b=b7rkrFWGYgVEollx50/Yp1QNQOfOUOffeJAqMM00p4dMCsa0IDqX21UGV+plPDFPLM
+         wfNeNEo/afBdRZAZfVTiDdIvO1+myoffSlO13pZ4DNxicukjka5O011VRADBO0s+MCk0
+         FIQLr2dCzwVDUMPs4W0AKpBm+Na6hrPJc4WI2q3JAfCmN0m3XS0enA09nVWSmjZ74Q5V
+         7fC7st9WxrD6HWeUWN8mxhceStghmIGnoY0GyvBsVfMsE18IN6vlXGBkTYEweb+vajAg
+         cnl5n9MlfVOK0DxSKvOByfexlQoUXWRrwA68cpASeyQkr2SancSGhE7Hflner7P1IFVQ
+         pDXQ==
+X-Gm-Message-State: AOAM531DFaR2NQnXkTNrHH1Jl7H9sWdR/vSAsPdREMEHUxPSGxYit0KJ
+        NISZcDJ8wqo0e7en2BEaNEjyKaQ05h4=
+X-Google-Smtp-Source: ABdhPJx1/nELUvCZWF5bcM9gyoqz8ZwJi1pSjX7E1Ej6YVUuWn9UTF6XKO4tcpqW02Fh50XZJNBgKg==
+X-Received: by 2002:a7b:c40f:0:b0:389:f3ad:5166 with SMTP id k15-20020a7bc40f000000b00389f3ad5166mr11102849wmi.63.1648231397134;
+        Fri, 25 Mar 2022 11:03:17 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b0037bb8df81a2sm10773643wmp.13.2022.03.25.11.03.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:38:22 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 05/25] CI: remove unused Azure ci/* code
-Date:   Fri, 25 Mar 2022 19:37:56 +0100
-Message-Id: <patch-v2-05.25-b5e6d538554-20220325T182534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Fri, 25 Mar 2022 11:03:16 -0700 (PDT)
+Message-Id: <ab68b944173cb8d4fdc0d7583a3d1dd11e5aef78.1648231393.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
+        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Mar 2022 18:02:45 +0000
+Subject: [PATCH v9 02/30] fsmonitor-ipc: create client routines for
+ git-fsmonitor--daemon
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove Azure-specific code that's been unused since 6081d3898fe (ci:
-retire the Azure Pipelines definition, 2020-04-11). As noted in a
-larger removal of all of the Azure-supporting code in [1] (although
-that missed some of this) there is more of it in-tree, but let's focus
-on only the ci/* code for now.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This is needed because in subsequent commits this unused code would
-either need to be changed to accommodate changes in ci/*, or be
-removed.
+Create fsmonitor_ipc__*() client routines to spawn the built-in file
+system monitor daemon and send it an IPC request using the `Simple
+IPC` API.
 
-As we'll see in those subsequent commits the end-state we're heading
-towards will actually make it easier to add new CI types in the
-future, even though the only one we're left with now is the GitHub
-CI. I.e. the "ci/*" framework will be made to do less, not more. We'll
-be offloading more of what it does to our generic build and test
-system.
+Stub in empty fsmonitor_ipc__*() functions for unsupported platforms.
 
-While I'm at it (since the line needs to be touched anyway) change an
-odd 'if test true == "$GITHUB_ACTIONS"' to the more usual style used
-in other places of 'if test "$GITHUB_ACTIONS" = "true"'.
-
-1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- ci/install-dependencies.sh |  3 ---
- ci/lib.sh                  | 13 +------------
- ci/mount-fileshare.sh      | 25 -------------------------
- ci/print-test-failures.sh  |  7 +------
- 4 files changed, 2 insertions(+), 46 deletions(-)
- delete mode 100755 ci/mount-fileshare.sh
+ Makefile        |   1 +
+ fsmonitor-ipc.c | 171 ++++++++++++++++++++++++++++++++++++++++++++++++
+ fsmonitor-ipc.h |  48 ++++++++++++++
+ 3 files changed, 220 insertions(+)
+ create mode 100644 fsmonitor-ipc.c
+ create mode 100644 fsmonitor-ipc.h
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index dbcebad2fb2..e7ea8799411 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -34,8 +34,6 @@ macos-latest)
- 	export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1
- 	# Uncomment this if you want to run perf tests:
- 	# brew install gnu-time
--	test -z "$BREW_INSTALL_PACKAGES" ||
--	brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
- 	brew install --cask --no-quarantine perforce || {
- 		# Update the definitions and try again
-@@ -69,7 +67,6 @@ Documentation)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
- 
--	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- 	sudo gem install --version 1.5.8 asciidoctor
- 	;;
- linux-gcc-default)
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 5a8938d4b3c..ad1aa59a384 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -29,18 +29,7 @@ export TERM=${TERM:-dumb}
- # Clear MAKEFLAGS that may come from the outside world.
- export MAKEFLAGS=
- 
--if test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
--then
--	CI_TYPE=azure-pipelines
--	# We are running in Azure Pipelines
--	CC="${CC:-gcc}"
--
--	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
--	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
--	MAKEFLAGS="$MAKEFLAGS --jobs=10"
--	test Windows_NT != "$AGENT_OS" ||
--	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
--elif test true = "$GITHUB_ACTIONS"
-+if test "$GITHUB_ACTIONS" = "true"
- then
- 	CI_TYPE=github-actions
- 	CC="${CC:-gcc}"
-diff --git a/ci/mount-fileshare.sh b/ci/mount-fileshare.sh
-deleted file mode 100755
-index 26b58a80960..00000000000
---- a/ci/mount-fileshare.sh
-+++ /dev/null
-@@ -1,25 +0,0 @@
--#!/bin/sh
--
--die () {
--	echo "$*" >&2
--	exit 1
--}
--
--test $# = 4 ||
--die "Usage: $0 <share> <username> <password> <mountpoint>"
--
--mkdir -p "$4" || die "Could not create $4"
--
--case "$(uname -s)" in
--Linux)
--	sudo mount -t cifs -o vers=3.0,username="$2",password="$3",dir_mode=0777,file_mode=0777,serverino "$1" "$4"
--	;;
--Darwin)
--	pass="$(echo "$3" | sed -e 's/\//%2F/g' -e 's/+/%2B/g')" &&
--	mount -t smbfs,soft "smb://$2:$pass@${1#//}" "$4"
--	;;
--*)
--	die "No support for $(uname -s)"
--	;;
--esac ||
--die "Could not mount $4"
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 00fcf27b1b2..0c63b6f7962 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -38,14 +38,9 @@ do
- 		test_name="${TEST_EXIT%.exit}"
- 		test_name="${test_name##*/}"
- 		trash_dir="trash directory.$test_name"
-+		mkdir -p failed-test-artifacts
- 		case "$CI_TYPE" in
--		azure-pipelines)
--			mkdir -p failed-test-artifacts
--			mv "$trash_dir" failed-test-artifacts
--			continue
--			;;
- 		github-actions)
--			mkdir -p failed-test-artifacts
- 			echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
- 			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
- 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
+diff --git a/Makefile b/Makefile
+index 6f0b4b775fe..a19d850e716 100644
+--- a/Makefile
++++ b/Makefile
+@@ -907,6 +907,7 @@ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
++LIB_OBJS += fsmonitor-ipc.o
+ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+new file mode 100644
+index 00000000000..789e7397baa
+--- /dev/null
++++ b/fsmonitor-ipc.c
+@@ -0,0 +1,171 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "simple-ipc.h"
++#include "fsmonitor-ipc.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "trace2.h"
++
++#ifndef HAVE_FSMONITOR_DAEMON_BACKEND
++
++/*
++ * A trivial implementation of the fsmonitor_ipc__ API for unsupported
++ * platforms.
++ */
++
++int fsmonitor_ipc__is_supported(void)
++{
++	return 0;
++}
++
++const char *fsmonitor_ipc__get_path(void)
++{
++	return NULL;
++}
++
++enum ipc_active_state fsmonitor_ipc__get_state(void)
++{
++	return IPC_STATE__OTHER_ERROR;
++}
++
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer)
++{
++	return -1;
++}
++
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer)
++{
++	return -1;
++}
++
++#else
++
++int fsmonitor_ipc__is_supported(void)
++{
++	return 1;
++}
++
++GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
++
++enum ipc_active_state fsmonitor_ipc__get_state(void)
++{
++	return ipc_get_active_state(fsmonitor_ipc__get_path());
++}
++
++static int spawn_daemon(void)
++{
++	const char *args[] = { "fsmonitor--daemon", "start", NULL };
++
++	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
++				    "fsmonitor");
++}
++
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer)
++{
++	int ret = -1;
++	int tried_to_spawn = 0;
++	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++	const char *tok = since_token ? since_token : "";
++	size_t tok_len = since_token ? strlen(since_token) : 0;
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	trace2_region_enter("fsm_client", "query", NULL);
++	trace2_data_string("fsm_client", NULL, "query/command", tok);
++
++try_again:
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++
++	switch (state) {
++	case IPC_STATE__LISTENING:
++		ret = ipc_client_send_command_to_connection(
++			connection, tok, tok_len, answer);
++		ipc_client_close_connection(connection);
++
++		trace2_data_intmax("fsm_client", NULL,
++				   "query/response-length", answer->len);
++		goto done;
++
++	case IPC_STATE__NOT_LISTENING:
++	case IPC_STATE__PATH_NOT_FOUND:
++		if (tried_to_spawn)
++			goto done;
++
++		tried_to_spawn++;
++		if (spawn_daemon())
++			goto done;
++
++		/*
++		 * Try again, but this time give the daemon a chance to
++		 * actually create the pipe/socket.
++		 *
++		 * Granted, the daemon just started so it can't possibly have
++		 * any FS cached yet, so we'll always get a trivial answer.
++		 * BUT the answer should include a new token that can serve
++		 * as the basis for subsequent requests.
++		 */
++		options.wait_if_not_found = 1;
++		goto try_again;
++
++	case IPC_STATE__INVALID_PATH:
++		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
++
++	case IPC_STATE__OTHER_ERROR:
++	default:
++		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
++	}
++
++done:
++	trace2_region_leave("fsm_client", "query", NULL);
++
++	return ret;
++}
++
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer)
++{
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++	int ret;
++	enum ipc_active_state state;
++	const char *c = command ? command : "";
++	size_t c_len = command ? strlen(command) : 0;
++
++	strbuf_reset(answer);
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++	if (state != IPC_STATE__LISTENING) {
++		die(_("fsmonitor--daemon is not running"));
++		return -1;
++	}
++
++	ret = ipc_client_send_command_to_connection(connection, c, c_len,
++						    answer);
++	ipc_client_close_connection(connection);
++
++	if (ret == -1) {
++		die(_("could not send '%s' command to fsmonitor--daemon"), c);
++		return -1;
++	}
++
++	return 0;
++}
++
++#endif
+diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
+new file mode 100644
+index 00000000000..b6a7067c3af
+--- /dev/null
++++ b/fsmonitor-ipc.h
+@@ -0,0 +1,48 @@
++#ifndef FSMONITOR_IPC_H
++#define FSMONITOR_IPC_H
++
++#include "simple-ipc.h"
++
++/*
++ * Returns true if built-in file system monitor daemon is defined
++ * for this platform.
++ */
++int fsmonitor_ipc__is_supported(void);
++
++/*
++ * Returns the pathname to the IPC named pipe or Unix domain socket
++ * where a `git-fsmonitor--daemon` process will listen.  This is a
++ * per-worktree value.
++ *
++ * Returns NULL if the daemon is not supported on this platform.
++ */
++const char *fsmonitor_ipc__get_path(void);
++
++/*
++ * Try to determine whether there is a `git-fsmonitor--daemon` process
++ * listening on the IPC pipe/socket.
++ */
++enum ipc_active_state fsmonitor_ipc__get_state(void);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc
++ * and ask for the set of changed files since the given token.
++ *
++ * Spawn a daemon process in the background if necessary.
++ *
++ * Returns -1 on error; 0 on success.
++ */
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc and
++ * send a command verb.  If no daemon is available, we DO NOT try to
++ * start one.
++ *
++ * Returns -1 on error; 0 on success.
++ */
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer);
++
++#endif /* FSMONITOR_IPC_H */
 -- 
-2.35.1.1517.g20a06c426a7
+gitgitgadget
 
