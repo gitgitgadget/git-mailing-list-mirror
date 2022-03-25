@@ -2,337 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E6F0C433FE
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 317F9C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 19:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbiCYTdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 15:33:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51120 "EHLO
+        id S230188AbiCYTdk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 15:33:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230426AbiCYTcx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:32:53 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC592DC005
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id r64so4963262wmr.4
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:07:25 -0700 (PDT)
+        with ESMTP id S231563AbiCYTdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 15:33:16 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A42421FF64
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:05 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id k21so14936117lfe.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 12:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tTgHuXtnMPt1qW3RcIDoocZO6h35fSaRPRvfUmgg3B0=;
-        b=RcCBQPQcg4mj9t4Fu2bKFOTwPhEpXvLtUecvXBX9p3gQ72QBsHgeQRhhsNDvfXP+h3
-         qwXfawXhwK49eGdiVXq8s7FmnCv84EmdDmMPkSAoZFfB8OiRAsxEX1OX7lnd/5cUvoGa
-         6PxPN7l2pgk6CvOHL4Vp1JbnJI4/1rfd2uB8Js2ygEfBpp/+i+skQB27QZWtDvER1pYw
-         GjL9oESTo03CsL0EQC5nstfPG6z3SDT1WWveePSWOQd4Pfd98fBO7u0YgrKEas2LN/nw
-         JWR6owMoGiKvRjvy4321WAKwo02tT6VsK6hWnstmX9vjd77oRu+PYmA9oiCz4nmQUhXY
-         sQhA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ni/60Mv4uWKLKflXE0xZb42bD94anDEk7EcD3shqoOo=;
+        b=n4kSApmW2pjQmHuEDXtcHfAIGeKYVlXWlhWsayKbtzFeZkgKHQTGD8MI396NbzdJom
+         YEYl3m8z/MFbK/HifmJCV3SC/1Kquen1QP+uWIiKne535s8L5OjkxE/1EsmTwpq3GhjU
+         h+jstjfEkcq75WqknyUnUAY7MPMHiFBx+n2pV34Dxw6cBkOAWpFtuZv2FYwPxr3hMw3G
+         G0XNawYN+2KTJUcPOLoTvLEEVaQWLdE1noyRSTdO5+zvU8WRyKfDwHdd0kdKILIqT46G
+         5Vy476K8eKL/29gxhJU8KYULmrSg8WGoa+Z7U7cHjCKiEwdsbXXCG6CBPLBluVJ15Pcg
+         C0Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tTgHuXtnMPt1qW3RcIDoocZO6h35fSaRPRvfUmgg3B0=;
-        b=b7rkrFWGYgVEollx50/Yp1QNQOfOUOffeJAqMM00p4dMCsa0IDqX21UGV+plPDFPLM
-         wfNeNEo/afBdRZAZfVTiDdIvO1+myoffSlO13pZ4DNxicukjka5O011VRADBO0s+MCk0
-         FIQLr2dCzwVDUMPs4W0AKpBm+Na6hrPJc4WI2q3JAfCmN0m3XS0enA09nVWSmjZ74Q5V
-         7fC7st9WxrD6HWeUWN8mxhceStghmIGnoY0GyvBsVfMsE18IN6vlXGBkTYEweb+vajAg
-         cnl5n9MlfVOK0DxSKvOByfexlQoUXWRrwA68cpASeyQkr2SancSGhE7Hflner7P1IFVQ
-         pDXQ==
-X-Gm-Message-State: AOAM531DFaR2NQnXkTNrHH1Jl7H9sWdR/vSAsPdREMEHUxPSGxYit0KJ
-        NISZcDJ8wqo0e7en2BEaNEjyKaQ05h4=
-X-Google-Smtp-Source: ABdhPJx1/nELUvCZWF5bcM9gyoqz8ZwJi1pSjX7E1Ej6YVUuWn9UTF6XKO4tcpqW02Fh50XZJNBgKg==
-X-Received: by 2002:a7b:c40f:0:b0:389:f3ad:5166 with SMTP id k15-20020a7bc40f000000b00389f3ad5166mr11102849wmi.63.1648231397134;
-        Fri, 25 Mar 2022 11:03:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b0037bb8df81a2sm10773643wmp.13.2022.03.25.11.03.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ni/60Mv4uWKLKflXE0xZb42bD94anDEk7EcD3shqoOo=;
+        b=NKS/cl8ucVxszX9OIYx5T8ozRuLlnK5UAvYct7qCfE2ZQbi8lVCSLNPMuV5hc1Vyqa
+         zXzKi30i1hPlwhEq/WE30GfgETYfzyHUrQK0yrQUcHn+Az628hj0HZz/oDH7eewmUAB4
+         WZn0xyOqUILviZq/NcZ5y0EVFHQM1ETHYZTYexMrCIjijgsEwI5HRCq7bz67325aiEZP
+         11Qunh8MgYsbB7s309jYkIGQbhJpKmhqU8KMPcIxinMuaY3uLiTjNB7yueQqcDjtUxxV
+         E7dI98uxw5T+18RIhm5kRww3pzJ3Qi55mCAjpHKQYYtSBv3X9avp0bhuEec5srmd/IcY
+         ib9w==
+X-Gm-Message-State: AOAM532d3LT5gv51UJyUryjBlN0vbwL7UiaJa4iVD43n/k2O9eTJ4XgA
+        i4Gde3shFGwGkRpEG3Hv00yM04c5SSn7cQ==
+X-Google-Smtp-Source: ABdhPJy9usVQeCeylj2/7fwix7XmF65mTsS9MfLhgh5bpdhshN+PnATwK+nmS/JRLklIDKf6E9BLKQ==
+X-Received: by 2002:a5d:6c6f:0:b0:204:555:73cf with SMTP id r15-20020a5d6c6f000000b00204055573cfmr9939312wrz.24.1648233522392;
+        Fri, 25 Mar 2022 11:38:42 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r15-20020a5d6c6f000000b002040552e88esm6622411wrz.29.2022.03.25.11.38.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 11:03:16 -0700 (PDT)
-Message-Id: <ab68b944173cb8d4fdc0d7583a3d1dd11e5aef78.1648231393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-References: <pull.1041.v8.git.1648140586.gitgitgadget@gmail.com>
-        <pull.1041.v9.git.1648231393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Mar 2022 18:02:45 +0000
-Subject: [PATCH v9 02/30] fsmonitor-ipc: create client routines for
- git-fsmonitor--daemon
-Fcc:    Sent
+        Fri, 25 Mar 2022 11:38:41 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 25/25] CI: don't use "set -x" in "ci/lib.sh" output
+Date:   Fri, 25 Mar 2022 19:38:16 +0100
+Message-Id: <patch-v2-25.25-6dc96ba8b82-20220325T182534Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1517.g20a06c426a7
+In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tao Klerks <tao@klerks.biz>, rsbecker@nexbridge.com,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Remove the "set -x" from the "ci/lib.sh" output. Before preceding
+commits the logic in that file was much more complex, and likely to
+fail in some scenarios.
 
-Create fsmonitor_ipc__*() client routines to spawn the built-in file
-system monitor daemon and send it an IPC request using the `Simple
-IPC` API.
+Now we only task "ci/lib.sh" with setting various variables for
+subsequent steps in our jobs, so we can start emitting more tailored
+debugging output, which makes what it's doing easier to read.
 
-Stub in empty fsmonitor_ipc__*() functions for unsupported platforms.
+This change also changes the output of the "ci/print-test-failures.sh"
+script, since it's the only other user of "ci/lib-ci-type.sh". In that
+case it's also helpful to know what "$CI_TYPE" we're using, as that
+script doesn't "set -x" and will act differently depending on the
+$CI_TYPE.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile        |   1 +
- fsmonitor-ipc.c | 171 ++++++++++++++++++++++++++++++++++++++++++++++++
- fsmonitor-ipc.h |  48 ++++++++++++++
- 3 files changed, 220 insertions(+)
- create mode 100644 fsmonitor-ipc.c
- create mode 100644 fsmonitor-ipc.h
+ ci/lib-ci-type.sh | 2 ++
+ ci/lib.sh         | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 6f0b4b775fe..a19d850e716 100644
---- a/Makefile
-+++ b/Makefile
-@@ -907,6 +907,7 @@ LIB_OBJS += fetch-pack.o
- LIB_OBJS += fmt-merge-msg.o
- LIB_OBJS += fsck.o
- LIB_OBJS += fsmonitor.o
-+LIB_OBJS += fsmonitor-ipc.o
- LIB_OBJS += gettext.o
- LIB_OBJS += gpg-interface.o
- LIB_OBJS += graph.o
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-new file mode 100644
-index 00000000000..789e7397baa
---- /dev/null
-+++ b/fsmonitor-ipc.c
-@@ -0,0 +1,171 @@
-+#include "cache.h"
-+#include "fsmonitor.h"
-+#include "simple-ipc.h"
-+#include "fsmonitor-ipc.h"
-+#include "run-command.h"
-+#include "strbuf.h"
-+#include "trace2.h"
+diff --git a/ci/lib-ci-type.sh b/ci/lib-ci-type.sh
+index bd6e093c8f4..6cfe58596d2 100644
+--- a/ci/lib-ci-type.sh
++++ b/ci/lib-ci-type.sh
+@@ -6,3 +6,5 @@ else
+ 	env >&2
+ 	exit 1
+ fi
 +
-+#ifndef HAVE_FSMONITOR_DAEMON_BACKEND
++echo "CONFIG: CI_TYPE=$CI_TYPE" >&2
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 663cbdef9d1..304380958bd 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-set -ex
++set -e
+ 
+ # Helper libraries
+ . ${0%/*}/lib-ci-type.sh
+@@ -11,12 +11,16 @@ then
+ 	echo "need a $0 mode, e.g. --build or --test"
+ 	exit 1
+ fi
++echo "CONFIG: mode=$mode" >&2
+ 
+ if test -z "$jobname"
+ then
+ 	echo "must set a CI jobname" >&2
+ 	exit 1
+ fi
++echo "CONFIG: jobname=$jobname" >&2
++echo "CONFIG: runs_on_pool=$runs_on_pool" >&2
++echo "CONFIG: GITHUB_ENV=$GITHUB_ENV" >&2
+ 
+ # Helper functions
+ setenv () {
+@@ -39,6 +43,7 @@ setenv () {
+ 
+ 	if test -n "$skip"
+ 	then
++		echo "SKIP '$key=$val'" >&2
+ 		return 0
+ 	fi
+ 
+@@ -50,6 +55,8 @@ setenv () {
+ 		# itself.
+ 		eval "export $key=\"$val\""
+ 	fi
 +
-+/*
-+ * A trivial implementation of the fsmonitor_ipc__ API for unsupported
-+ * platforms.
-+ */
-+
-+int fsmonitor_ipc__is_supported(void)
-+{
-+	return 0;
-+}
-+
-+const char *fsmonitor_ipc__get_path(void)
-+{
-+	return NULL;
-+}
-+
-+enum ipc_active_state fsmonitor_ipc__get_state(void)
-+{
-+	return IPC_STATE__OTHER_ERROR;
-+}
-+
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer)
-+{
-+	return -1;
-+}
-+
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer)
-+{
-+	return -1;
-+}
-+
-+#else
-+
-+int fsmonitor_ipc__is_supported(void)
-+{
-+	return 1;
-+}
-+
-+GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-+
-+enum ipc_active_state fsmonitor_ipc__get_state(void)
-+{
-+	return ipc_get_active_state(fsmonitor_ipc__get_path());
-+}
-+
-+static int spawn_daemon(void)
-+{
-+	const char *args[] = { "fsmonitor--daemon", "start", NULL };
-+
-+	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
-+				    "fsmonitor");
-+}
-+
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer)
-+{
-+	int ret = -1;
-+	int tried_to_spawn = 0;
-+	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
-+	struct ipc_client_connection *connection = NULL;
-+	struct ipc_client_connect_options options
-+		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
-+	const char *tok = since_token ? since_token : "";
-+	size_t tok_len = since_token ? strlen(since_token) : 0;
-+
-+	options.wait_if_busy = 1;
-+	options.wait_if_not_found = 0;
-+
-+	trace2_region_enter("fsm_client", "query", NULL);
-+	trace2_data_string("fsm_client", NULL, "query/command", tok);
-+
-+try_again:
-+	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-+				       &connection);
-+
-+	switch (state) {
-+	case IPC_STATE__LISTENING:
-+		ret = ipc_client_send_command_to_connection(
-+			connection, tok, tok_len, answer);
-+		ipc_client_close_connection(connection);
-+
-+		trace2_data_intmax("fsm_client", NULL,
-+				   "query/response-length", answer->len);
-+		goto done;
-+
-+	case IPC_STATE__NOT_LISTENING:
-+	case IPC_STATE__PATH_NOT_FOUND:
-+		if (tried_to_spawn)
-+			goto done;
-+
-+		tried_to_spawn++;
-+		if (spawn_daemon())
-+			goto done;
-+
-+		/*
-+		 * Try again, but this time give the daemon a chance to
-+		 * actually create the pipe/socket.
-+		 *
-+		 * Granted, the daemon just started so it can't possibly have
-+		 * any FS cached yet, so we'll always get a trivial answer.
-+		 * BUT the answer should include a new token that can serve
-+		 * as the basis for subsequent requests.
-+		 */
-+		options.wait_if_not_found = 1;
-+		goto try_again;
-+
-+	case IPC_STATE__INVALID_PATH:
-+		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
-+			    fsmonitor_ipc__get_path());
-+		goto done;
-+
-+	case IPC_STATE__OTHER_ERROR:
-+	default:
-+		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
-+			    fsmonitor_ipc__get_path());
-+		goto done;
-+	}
-+
-+done:
-+	trace2_region_leave("fsm_client", "query", NULL);
-+
-+	return ret;
-+}
-+
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer)
-+{
-+	struct ipc_client_connection *connection = NULL;
-+	struct ipc_client_connect_options options
-+		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
-+	int ret;
-+	enum ipc_active_state state;
-+	const char *c = command ? command : "";
-+	size_t c_len = command ? strlen(command) : 0;
-+
-+	strbuf_reset(answer);
-+
-+	options.wait_if_busy = 1;
-+	options.wait_if_not_found = 0;
-+
-+	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-+				       &connection);
-+	if (state != IPC_STATE__LISTENING) {
-+		die(_("fsmonitor--daemon is not running"));
-+		return -1;
-+	}
-+
-+	ret = ipc_client_send_command_to_connection(connection, c, c_len,
-+						    answer);
-+	ipc_client_close_connection(connection);
-+
-+	if (ret == -1) {
-+		die(_("could not send '%s' command to fsmonitor--daemon"), c);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+#endif
-diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
-new file mode 100644
-index 00000000000..b6a7067c3af
---- /dev/null
-+++ b/fsmonitor-ipc.h
-@@ -0,0 +1,48 @@
-+#ifndef FSMONITOR_IPC_H
-+#define FSMONITOR_IPC_H
-+
-+#include "simple-ipc.h"
-+
-+/*
-+ * Returns true if built-in file system monitor daemon is defined
-+ * for this platform.
-+ */
-+int fsmonitor_ipc__is_supported(void);
-+
-+/*
-+ * Returns the pathname to the IPC named pipe or Unix domain socket
-+ * where a `git-fsmonitor--daemon` process will listen.  This is a
-+ * per-worktree value.
-+ *
-+ * Returns NULL if the daemon is not supported on this platform.
-+ */
-+const char *fsmonitor_ipc__get_path(void);
-+
-+/*
-+ * Try to determine whether there is a `git-fsmonitor--daemon` process
-+ * listening on the IPC pipe/socket.
-+ */
-+enum ipc_active_state fsmonitor_ipc__get_state(void);
-+
-+/*
-+ * Connect to a `git-fsmonitor--daemon` process via simple-ipc
-+ * and ask for the set of changed files since the given token.
-+ *
-+ * Spawn a daemon process in the background if necessary.
-+ *
-+ * Returns -1 on error; 0 on success.
-+ */
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer);
-+
-+/*
-+ * Connect to a `git-fsmonitor--daemon` process via simple-ipc and
-+ * send a command verb.  If no daemon is available, we DO NOT try to
-+ * start one.
-+ *
-+ * Returns -1 on error; 0 on success.
-+ */
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer);
-+
-+#endif /* FSMONITOR_IPC_H */
++	echo "SET: '$key=$val'" >&2
+ }
+ 
+ # Clear variables that may come from the outside world.
 -- 
-gitgitgadget
+2.35.1.1517.g20a06c426a7
 
