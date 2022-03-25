@@ -2,111 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A79CC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 09:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBE5C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 13:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355167AbiCYJSD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 05:18:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38472 "EHLO
+        id S1352767AbiCYNVU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 09:21:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356924AbiCYJSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 05:18:02 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86DBCF48C
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 02:16:28 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id p15so14081790ejc.7
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 02:16:28 -0700 (PDT)
+        with ESMTP id S244397AbiCYNVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 09:21:19 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70976BF02F
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:19:45 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-de48295467so8105939fac.2
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 06:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TEoz7tYxv5ddKCoo4ezmzOpa6UKSdkzLiPOK2UhT68g=;
-        b=OuAhzSbSVily4BULSUqsrv5YHAJOPdxC3QjUuZkqdLmE/Bh7gQlZBwobzmc1bOjEqS
-         N0W8pUmPvQ8chsqyRtG571NJ2F8mCOJIqJJQ2QcFKadyltpkaxr3xnPjozwuPq0AEtES
-         MOu1r9eOtP8/CDkrYD9Zi5+IIL1x+sCbAyPW3Wd2ZGR7tyJM1Mti2F2cP/t7YpDcY8v8
-         h6vIZxW+NckLmDZxcrLzyBDHfkpvST3riWadGt9Mz0w5T9WUcsEfmAy6E0RL6BMd9k3K
-         pOw2KelHmky8yvpW79rsSG5FDsUtMkUjBQeAebfLJqubC+QhCr0OU+yroyZv2IAgyy90
-         mmUQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vS/LpvGadpTwN1MRWY+A+PivZVlef2lUKgfhJi9x6A0=;
+        b=Xwzpka6FD7xOCUQfIUwZv1wVO4BdW8V4UYhkrJYilzZo7q1vDiZRqAu4gqnen0T3kL
+         Qy9JKlG46JJz6asxEd7A77k2yi8F58wWC5r/b5htJisSSKQ3nSJrLUe9WTxW5TmS9t1A
+         bv3yVAS+lhSfHeTVqWh6Vn1/sBsS9WcXOiKp9dyJBY3qF5UsD8L/228Ds7kZQ5bkSVXV
+         wY6945AoRwZikt7idhOSsL/+9xA6S9oJEKXzktCwHe+Gewikc4Cd8BGxJpf6NZpLp9Ho
+         IbNSGYzqLqJbp2xwsJgaooxr9Q9wxr6SmvuDnN7N9zisB3OZBlrX272Yyv7vToeA8Fkz
+         L4Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=TEoz7tYxv5ddKCoo4ezmzOpa6UKSdkzLiPOK2UhT68g=;
-        b=VPVANy3zXBx8YvYCHa9QVAJUNOp1J05xVak6gU8DyGSGuvEqbYCNZAr0v9xDAUiTRb
-         Iuu3gyvl1AIx2MZOCaa2meKA0ZIz2ZSYa85QZRSVNWXsC5spH0w7X4oumQAE1MTMi9Nv
-         Vipz7fwzSluDlu6NIIRrOE7GMCgLH05KosFdILjJrui4ptFNxL5bcthyABnVbR76iOTa
-         gvGps/tUWqBcYZlo6i4iyupYK7kfGzyA5fb9S3NIEbSU+L5U02sVAuWAIbpPYGic9ziv
-         PtmyJ9FaYMwKo+A0gAtOnwTPG3MKzi57faEkxkFnUuP87Uu+Dog/l2ZK2H6JZGvSfgW7
-         kipQ==
-X-Gm-Message-State: AOAM530CB9fg+1A7OsAU6msdaCaZRcQm5957/hGvlme8C+1Wyfx0bs75
-        vE4Ycfmv0T8JTamm92pkiOo=
-X-Google-Smtp-Source: ABdhPJyvlKfzqXA8BFUma/ssmwOUKwWnoAsaVEDojlW8vLpUIdtOhXhA8Q9EP3ie+P1u8/kZwlX//w==
-X-Received: by 2002:a17:907:7f8a:b0:6e0:c59:f387 with SMTP id qk10-20020a1709077f8a00b006e00c59f387mr6681464ejc.732.1648199787394;
-        Fri, 25 Mar 2022 02:16:27 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m21-20020a17090677d500b006df766974basm2184385ejn.3.2022.03.25.02.16.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 02:16:26 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nXg3W-001rIF-80;
-        Fri, 25 Mar 2022 10:16:26 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 00/27] revision.[ch]: add and use release_revisions()
-Date:   Fri, 25 Mar 2022 10:14:13 +0100
-References: <cover-00.24-00000000000-20220309T123321Z-avarab@gmail.com>
- <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
- <xmqqa6dedd1g.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <xmqqa6dedd1g.fsf@gitster.g>
-Message-ID: <220325.86zglel7di.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vS/LpvGadpTwN1MRWY+A+PivZVlef2lUKgfhJi9x6A0=;
+        b=6jbqjem/R0T6zjgbRNAxceL7Own/GqrPBDS5FOjw82rCWHgK0IlwmpEAVuz2z0f+jb
+         ZsAlRi+4Y2WrqDXDNqMzxTqqKXuT6mFtkzwmM00IR4qYru8ER7XW/3ZSjwPW8ZPlRZV4
+         +rhZsVIfoZtufD8Ec6wk4sqwa/yUSEqLaMvGJHjG1J0n/bcf8fOlcekb55WJzFPwHc7u
+         V4RBHILR2Bv4GFLtNxciIlJKP3IcpxC4jOX5ufvrahDBPVUXBvBqsKHpxsMGnZ7YMChb
+         4nrVWeu/n12AeM6CFgQqG5M8LdBCo5y2PL4ZLsnY3dUXwlWlTuBzufumNais+Q3hua6b
+         FgJA==
+X-Gm-Message-State: AOAM531dynjisMgdRppfb+hfJr+8Em4pzSH9H3VL2B+Gpu7Xl6MjGyPC
+        42XashBG6NpUnpEL/yL3HW3j
+X-Google-Smtp-Source: ABdhPJzWjlSCd+Vugco82X46BjnQdmuF1nj67KBKCIBTkJYXyy7q9m2t8G6s6uvoIYVuaH/6wouHmw==
+X-Received: by 2002:a05:6870:1614:b0:dd:cd0e:d84d with SMTP id b20-20020a056870161400b000ddcd0ed84dmr4765419oae.2.1648214384498;
+        Fri, 25 Mar 2022 06:19:44 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id g25-20020a544f99000000b002da70c710b8sm2754284oiy.54.2022.03.25.06.19.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 06:19:44 -0700 (PDT)
+Message-ID: <f6afa542-cd97-2af9-a07f-6c2a3721a200@github.com>
+Date:   Fri, 25 Mar 2022 09:19:42 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: contrib/vscode/: debugging with vscode and gdb
+Content-Language: en-US
+To:     Jonathan Bressat <git.jonathan.bressat@gmail.com>,
+        git@vger.kernel.org
+Cc:     Cogoni Guillaume <cogoni.guillaume@gmail.com>,
+        matthieu.moy@univ-lyon1.fr
+References: <CANteD_wDSRmwLQiYV1x133WEtVaRK__c584E3CbXN1tPOquitg@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CANteD_wDSRmwLQiYV1x133WEtVaRK__c584E3CbXN1tPOquitg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/24/2022 4:16 AM, Jonathan Bressat wrote:
+> Hello
+> In contrib/vscode/ the script init.sh create launch.json with the
+> option "external console" to true but actually this option make gdb
+> didn't work so we passed to false and then it works.
+> Is there any reasons why it is set to true, do we not use this properly ?
+> Then would it be nice to correct it in contrib/vscode and to talk
+> about it in that doc : https://git-scm.com/docs/MyFirstContribution ?
 
-On Thu, Mar 24 2022, Junio C Hamano wrote:
+Hi Jonathan and Guillaume,
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> This is a re-roll of the v1 of [1] now that 7391ecd338e (Merge branch
->> 'ds/partial-bundles', 2022-03-21) has landed, which it had a conflict
->> with. I believe this v2 addresses all the feedback brought up on v1.
->
-> Thanks.  It was mostly a pleasant read but with a huge caveat---I
-> have no confidence in the code that would not try to release what it
-> did not allocate (simply because I do not have time to audit all
-> allocations to various members of rev-info structure).  But at least
-> if we try to free something we borrowed from say command line, we'd
-> immediately get a crash so with enough cooking and guinea-pig testing,
-> such a bug would be easy to catch.
+I use VS Code to work on Git (using Remote SSH from a Windows machine
+to a Linux machine) but I've always used command-line gdb for debugging.
 
-Yes, especially with SANITIZE=3Daddress and friends.
+However, your request here got me interested. I confirmed that running
+the debugger from the VS Code UI did not show any output or show that
+a breakpoint was hit. Performing the update you recommend made the
+debuggin UI populate with all the necessary info (stack trace, variables,
+showing the breakpoint line in the editor).
 
-> I suspect cmd_show() still is leaky when fed a few commits.
-> [...]
-> There are ways to show different types of objects, but what we are
-> interested in is what happens to commits.
->
->                     case OBJ_COMMIT:
->                             rev.pending.nr =3D rev.pending.alloc =3D 0;
->                             rev.pending.objects =3D NULL;
+Here is a patch that makes the change as you suggest. I tried to research
+the setting appropriately, so please let me know if there is anything you
+think is incorrect here.
 
-Yes, FWIW I know about that one, and will add some passing mention of it
-to a commit message.
+Thanks,
+-Stolee
 
-There's still a bunch of leaks related to the revisions.c code after
-this series, which doesn't address all of them.
+--- >8 ---
 
-But since it's already getting up to ~30 patches I wanted to address the
-most common ones, this and various other tricky edge cases have been
-left for a follow-up.
+From b053b797cf8585d2b0212cd2576fe05c2d1a5432 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Fri, 25 Mar 2022 09:07:11 -0400
+Subject: [PATCH] contrib/vscode: fix interaction with UI debugger
+
+The contrib/vscode/init.sh script helps Git developers using Visual
+Studio Code to hook up the proper settings to work on Git using the UI
+features of that editor environment. This should include the debugger
+integration, but that is currently broken.
+
+One thing this script does is create a .vscode/launch.json file, which
+provides the information for how VS Code should launch the built
+executable. This defaults to the Git executable at the root of the
+repository (with no arguments). Among the initial settings, the
+"externalConsole" setting is set to "true". This has been the case since
+the script was created in 54c06c6013 (contrib: add a script to
+initialize VS Code configuration, 2018-07-30).
+
+Jonathan and Guillame reported that flipping this setting to "false"
+allows the VS Code debugger to work with Git. I verified that the
+debugger did not work by default but now does with this change.
+
+The VS Code reference [1] mentions that this setting is only used when
+debugging, so should not affect the "Run Without Debugging" feature.
+Other than making the UI debugger work, this will also change the Git
+output to appear in the "Debug Console" tab instead of a new window.
+
+[1] https://code.visualstudio.com/docs/cpp/launch-json-reference
+
+In cases such as using the Remote SSH capability, this setting is
+necessary to have any success executing Git via the "Run" menu, since
+the external console is not visible at all from the VS Code window.
+
+Reported-by: Jonathan Bressat <git.jonathan.bressat@gmail.com>
+Reported-by: Cogoni Guillaume <cogoni.guillaume@gmail.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ contrib/vscode/init.sh  |  2 +-
+ t/test-lib-functions.sh | 34 ----------------------------------
+ 2 files changed, 1 insertion(+), 35 deletions(-)
+
+diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+index 27de94994b5..0b7ebc12668 100755
+--- a/contrib/vscode/init.sh
++++ b/contrib/vscode/init.sh
+@@ -271,7 +271,7 @@ cat >.vscode/launch.json.new <<EOF ||
+             "stopAtEntry": false,
+             "cwd": "\${workspaceFolder}",
+             "environment": [],
+-            "externalConsole": true,
++            "externalConsole": false,
+             "MIMode": "gdb",
+             "miDebuggerPath": "$GDBPATH",
+             "setupCommands": [
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 8f0e5da8727..2501fc5706f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1788,40 +1788,6 @@ test_subcommand () {
+ 	fi
+ }
+ 
+-# Check that the given command was invoked as part of the
+-# trace2-format trace on stdin, but without an exact set of
+-# arguments.
+-#
+-#	test_subcommand [!] <command> <args>... < <trace>
+-#
+-# For example, to look for an invocation of "git pack-objects"
+-# with the "--honor-pack-keep" argument, use
+-#
+-#	GIT_TRACE2_EVENT=event.log git repack ... &&
+-#	test_subcommand git pack-objects --honor-pack-keep <event.log
+-#
+-# If the first parameter passed is !, this instead checks that
+-# the given command was not called.
+-#
+-test_subcommand_inexact () {
+-	local negate=
+-	if test "$1" = "!"
+-	then
+-		negate=t
+-		shift
+-	fi
+-
+-	local expr=$(printf '"%s",' "$@")
+-	expr="${expr%,}.*"
+-
+-	if test -n "$negate"
+-	then
+-		! grep "\"event\":\"child_start\".*\[$expr\]"
+-	else
+-		grep "\"event\":\"child_start\".*\[$expr\]"
+-	fi
+-}
+-
+ # Check that the given command was invoked as part of the
+ # trace2-format trace on stdin.
+ #
+-- 
+2.35.1.138.gfc5de29e9e6
+
