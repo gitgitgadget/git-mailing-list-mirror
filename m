@@ -2,296 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63393C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 21:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E0A8C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Mar 2022 22:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233375AbiCYV0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 17:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53814 "EHLO
+        id S233846AbiCYWjT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 18:39:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233363AbiCYV0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 17:26:46 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E73237FD9
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 14:25:10 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id d5so15400543lfj.9
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 14:25:10 -0700 (PDT)
+        with ESMTP id S233827AbiCYWjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 18:39:18 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0F8A0BDE
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 15:37:43 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id q11so9625747pln.11
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 15:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kXVXaFtJbQ/qZo9MHXbnQaOBuGmfhOSEe7Fqdv2sl+s=;
-        b=f8aHPDlJZs5UTyEiV5u79uPq706xcBN+DOOY98pf+/fNBfefPhjPUDZGDRht1AdJzZ
-         YCAx/ORdo17j7agZwPOFBEM55m1ScQWj6GKq/8yg5tLVNUA+NSVXoHG909iwejGLFQKV
-         PEuckvOhlTAxgXDPz6nIbw/DdlQz2ky83rvGpFrT9twFaJ8XN72aBPbL+BtkbvdpMq5a
-         JSsrjzk0uJRm9aq7ZOv40iL+DQgwNHcI3WasbsQ8hMk/eiRp6DuA1DDEW2YiAzdEbVEn
-         HlnRgHJXTOeNGlqAMzO5TxShR+ode8MJkiZH9bOQcpfGxfLSmnvws/+oeV1ym/AKnziC
-         rf7Q==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hbHUP6/V/ZOOW3L7dzqzwygdqKg4JCJ+Q9pKzJqSfMM=;
+        b=Z6bg5yYzZ8ETICDWBPOfaaxq1BCS4J8cBVI1Nf+pLLlOxY95qFcrq8YljKUMyHTPl5
+         1CPusFuUCYM9Dg3MyWgl5XiaT4G1w+ym5hZvSrIcB1xnYE/YtVmKfQmdtZDvVcZkYSLk
+         Yk5I4fLb2+7zgCbBIhN/WTvKrihhsXylg3uWUkNPzV+xeenEJEN4k3TAcyapSYEzeAkX
+         F3X6Qw5myDX39dEnX+O0AiAboGi7pZw3TN429QWLXwNfCoBzoHIu1wJvIEa6XHqzPXVR
+         o6ZVP+bZFca9DWFP6BHWGPmqdmjrHNeH2D9oIL6dM7aiYJ82ycRiD9tYDYO2+5iT2O1P
+         MXmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kXVXaFtJbQ/qZo9MHXbnQaOBuGmfhOSEe7Fqdv2sl+s=;
-        b=Wg9dum4qx8moP4Rc6XK5oLSH5o6g4g0RA0CdSP3PJM6Oa78NxvROoNl63NZpgj24CF
-         DKJAhKG9EvslHBcgZnq53lUvIWkGpU33xhiqno8SyRA55HATPpxvepMuWZiw+UU79S59
-         ks9sFu6p8nmaFyjTfcCycBs0zH8f1zMQ7nxEJ1ebq2RyaDYxUqXWuvxUhsvV9auTocw5
-         RRfvObf/tfa3FSSGxyXNRo5wD2fCfeLDqQu4uLE1FZXA6iQcOy2iltAOqMQwblSzph3x
-         16RhXOAxWSnO3/w5sxya5Y9vVcBLjH65lYzOk4Mh8jfimJGnq9l0XMtvUWfqVaoKtRur
-         7+BQ==
-X-Gm-Message-State: AOAM531Qn1BnctFNCCSYjR8zCgFXZCUKtSMLTnF8lx3J2t3hRBMChl+G
-        C22uPoZ1SGs9WT0DsXS+sVyEbH9iaULV0YfLJ/8wo7YYSUQ=
-X-Google-Smtp-Source: ABdhPJzXn+Ir/vI6pUrYFxvBAkTVXLatU9eAG6y9hM45O46X7PmJiPh1Y0tc3wdq5yzfC+k5sQaKvkQdNV8OOKVevng=
-X-Received: by 2002:a05:6512:1684:b0:448:a0e6:9fa6 with SMTP id
- bu4-20020a056512168400b00448a0e69fa6mr9414638lfb.592.1648243508713; Fri, 25
- Mar 2022 14:25:08 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hbHUP6/V/ZOOW3L7dzqzwygdqKg4JCJ+Q9pKzJqSfMM=;
+        b=u2cy3516p05w4d0+hRAwwArZhg8/6jXtmVSwLsQ4X/CstzP+7Al4yfW0PhK7F8CZOT
+         X1V4VOxcXyHwTUIk965ujdeE8fniR7B4FzaJrVjbTYA01Zy7w3iUbaBWhqdqr9+HgUVI
+         BqQEQ3JxsNM9Rhsf/eJyeYTx4AIsIGQhM/WiIK3E+8bi+8WIxykxQKJ8g/m/W/BKFtaY
+         zRTbeH8fvi7MxRhDQOC6zYtziu8yc6/6IMDc95xwc9NJgmXjogtBvITFepKi2LZzsL5v
+         M5C9UIpejL2tPPNavhUZH/bkeeEj1Gd6Nsb9tDv9r8s0/b9F3WIfsN8+2IT/vfh7hqFB
+         p9MA==
+X-Gm-Message-State: AOAM530iRZ/sYtOOMG0jtqPS2wf0qncSZVgVCHzhfPvQCTY7L7ZUosDr
+        x66CKQ44B8s9s2M1uBGXQTyU
+X-Google-Smtp-Source: ABdhPJweVp/m50WVhkVvBhaqahSreulYEaQw4iBIQglVdF3+s59WyVZb4KrNmEyrFzSMx2P9lsSuBg==
+X-Received: by 2002:a17:903:2406:b0:14d:2f71:2e6d with SMTP id e6-20020a170903240600b0014d2f712e6dmr13704756plo.98.1648247863191;
+        Fri, 25 Mar 2022 15:37:43 -0700 (PDT)
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id me5-20020a17090b17c500b001c63699ff60sm14880713pjb.57.2022.03.25.15.37.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 15:37:42 -0700 (PDT)
+Message-ID: <d03a34e6-d6a7-6ddb-5784-57078e32ab89@github.com>
+Date:   Fri, 25 Mar 2022 15:37:41 -0700
 MIME-Version: 1.0
-References: <7e4cc6e10a5d88f4c6c44efaa68f2325007fd935.1646952205.git.gitgitgadget@gmail.com>
- <20220315191245.17990-1-neerajsi@microsoft.com> <220323.86fsn8ohg8.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220323.86fsn8ohg8.gmgdl@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Fri, 25 Mar 2022 14:24:57 -0700
-Message-ID: <CANQDOdeeP8opTQj-j_j3=KnU99nYTnNYhyQmAojj=FZtZEkCZQ@mail.gmail.com>
-Subject: Re: do we have too much fsync() configuration in 'next'? (was: [PATCH
- v7] core.fsync: documentation and user-friendly aggregate options)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: [PATCH] mv: refresh stat info for moved entry
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     reichemn@icloud.com, gitster@pobox.com
+References: <pull.1187.git.1648173419533.gitgitgadget@gmail.com>
+ <30d20d10-da33-ae41-7887-d73279e14e92@github.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <30d20d10-da33-ae41-7887-d73279e14e92@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 7:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Mar 15 2022, Neeraj Singh wrote:
->
-> I know this is probably 80% my fault by egging you on about initially
-> adding the wildmatch() based thing you didn't go for.
->
-> But having looked at this with fresh eyes quite deeply I really think
-> we're severely over-configuring things here:
->
-> > +core.fsync::
-> > +     A comma-separated list of components of the repository that
-> > +     should be hardened via the core.fsyncMethod when created or
-> > +     modified.  You can disable hardening of any component by
-> > +     prefixing it with a '-'.  Items that are not hardened may be
-> > +     lost in the event of an unclean system shutdown. Unless you
-> > +     have special requirements, it is recommended that you leave
-> > +     this option empty or pick one of `committed`, `added`,
-> > +     or `all`.
-> > ++
-> > +When this configuration is encountered, the set of components starts w=
-ith
-> > +the platform default value, disabled components are removed, and addit=
-ional
-> > +components are added. `none` resets the state so that the platform def=
-ault
-> > +is ignored.
-> > ++
-> > +The empty string resets the fsync configuration to the platform
-> > +default. The default on most platforms is equivalent to
-> > +`core.fsync=3Dcommitted,-loose-object`, which has good performance,
-> > +but risks losing recent work in the event of an unclean system shutdow=
-n.
-> > ++
-> > +* `none` clears the set of fsynced components.
-> > +* `loose-object` hardens objects added to the repo in loose-object for=
-m.
-> > +* `pack` hardens objects added to the repo in packfile form.
-> > +* `pack-metadata` hardens packfile bitmaps and indexes.
-> > +* `commit-graph` hardens the commit graph file.
-> > +* `index` hardens the index when it is modified.
-> > +* `objects` is an aggregate option that is equivalent to
-> > +  `loose-object,pack`.
-> > +* `derived-metadata` is an aggregate option that is equivalent to
-> > +  `pack-metadata,commit-graph`.
-> > +* `committed` is an aggregate option that is currently equivalent to
-> > +  `objects`. This mode sacrifices some performance to ensure that work
-> > +  that is committed to the repository with `git commit` or similar com=
-mands
-> > +  is hardened.
-> > +* `added` is an aggregate option that is currently equivalent to
-> > +  `committed,index`. This mode sacrifices additional performance to
-> > +  ensure that the results of commands like `git add` and similar opera=
-tions
-> > +  are hardened.
-> > +* `all` is an aggregate option that syncs all individual components ab=
-ove.
-> > +
-> >  core.fsyncMethod::
-> >       A value indicating the strategy Git will use to harden repository=
- data
-> >       using fsync and related primitives.
->
-> On top of my
-> https://lore.kernel.org/git/RFC-patch-v2-7.7-a5951366c6e-20220323T140753Z=
--avarab@gmail.com/
-> which makes the tmp-objdir part of your not-in-next-just-seen follow-up
-> series configurable via "fsyncMethod.batch.quarantine" I really think we
-> should just go for something like the belwo patch (note that
-> misspelled/mistook "bulk" for "batch" in that linked-t patch, fixed
-> below.
->
-> I.e. I think we should just do our default fsync() of everything, and
-> probably SOON make the fsync-ing of loose objects the default. Those who
-> care about performance will have "batch" (or "writeout-only"), which we
-> can have OS-specific detections for.
->
-> But really, all of the rest of this is unduly boxing us into
-> overconfiguration that I think nobody really needs.
->
+Derrick Stolee wrote:
+> On 3/24/2022 9:56 PM, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Add 'refresh_cache_entry()' after moving the index entry in
+>> 'rename_index_entry_at()'. Internally, 'git mv' uses
+>> 'rename_index_entry_at()' to move the source index entry to the destination,
+>> overwriting the old entry if '-f' is specified. However, it does not refresh
+>> the stat information on destination index entry, making its 'CE_UPTODATE'
+>> flag out-of-date until the index is refreshed (e.g., by 'git status').
+>>
+>> Some commands, such as 'git reset', assume the 'CE_UPTODATE' information
+>> they read from the index is accurate, and use that information to determine
+>> whether the operation can be done successfully or not. In order to ensure
+>> the index is correct for commands such as these, explicitly refresh the
+>> destination index entry in 'git mv' before exiting.
+> 
+> Good find. Thanks for the fix!
+> 
+>> Reported-by: Maximilian Reichel <reichemn@icloud.com>
+> 
+> Thanks for the report, Maximilian!
+> 
+>> @@ -148,6 +148,7 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+>>  	untracked_cache_remove_from_index(istate, old_entry->name);
+>>  	remove_index_entry_at(istate, nr);
+>>  	add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+>> +	refresh_cache_entry(istate, new_entry, CE_MATCH_REFRESH);
+> 
+> It certainly seems reasonable to add this line. I was unfamiliar
+> with this method, and it is used only twice: when creating a new
+> cache entry in make_cache_entry() and in merge-recursive.c's
+> add_cache_info(). So, it is currently acting in the case of a
+> newly-inserted cache entry in its existing cases, and here in
+> 'git mv' that's essentially what we are doing (deleting the old
+> and adding a new would be more appropriate than just moving the
+> old one).
+> 
+> I took a brief detour thinking about performance, but this is
+> run only once per command-line argument, so any new overhead
+> is minimal.
+>   
+>> +test_expect_success 'mv -f refreshes updated index entry' '
+>> +	echo test >bar &&
+>> +	git add bar &&
+>> +	git commit -m test &&
+>> +
+>> +	echo foo >foo &&
+>> +	git add foo &&
+>> +	git mv -f foo bar &&
+>> +	git reset --merge HEAD
+> 
+> Is there any post-condition on the index that we want to check here?
+> 
+> That is, is there anything that we could notice via 'git status' or
+> similar that would break before this patch (assuming we put a
+> test_might_fail in front of the 'git reset --merge HEAD' line)?
+> 
 
-We've gone over this a few times already, but just wanted to state it
-again.  The really detailed settings are really there for Git hosters
-like GitLab or GitHub. I'd be happy to remove the per-component
-core.fsync values from the documentation and leave just the ones we
-point the user to.
+While looking into this, I realized 1) that I wasn't actually refreshing the
+cache entry because 'refresh_cache_entry' doesn't work in-place (will fix in
+the next version) and 2) the test was only passing because of a race
+condition that (as of right now) I can't quite figure out. 
 
-> If someone really needs this level of detail they can LD_PRELOAD
-> something to have fsync intercept fd's and paths, and act appropriately.
->
-> Worse, as the RFC series I sent
-> (https://lore.kernel.org/git/RFC-cover-v2-0.7-00000000000-20220323T140753=
-Z-avarab@gmail.com/)
-> shows we can and should "batch" up fsync() operations across these
-> configuration boundaries, which this level of configuration would seem
-> to preclude.
->
-> Or, we'd need to explain why "core.fsync=3Dloose-object" won't *actually*
-> call fsync() on a single loose object's fd under "batch" as I had to do
-> on top of this in
-> https://lore.kernel.org/git/RFC-patch-v2-6.7-c20301d7967-20220323T140753Z=
--avarab@gmail.com/
->
+If I add a 'sleep 1' after the 'git add', the test behaves as I expect:
+fails when 'mv' doesn't refresh the entry, passes when it does. However,
+when the sleep *isn't* there and I'm testing 'git mv' without the refresh,
+most of the time the test *doesn't* fail (sometimes it does, but not
+reliably). I'm going to try finding the root cause of that before sending
+V2, in case I'm missing something else that should be fixed.
 
-99.9% of users don't care and won't look.  The ones who do look deeper
-and understand the issues have source code and access to this ML
-discussion to understand why this works this way.
+But to answer your question, yes - 'git diff-files' will produce an empty
+result if the cache is reset properly, and will be non-empty if it is not.
+I'll include that in the re-roll as well. 
 
-> The same is going to apply for almost all of the rest of these
-> configuration categories.
->
-> I.e. a natural follow-up to e.g. batching across objects & index as I'm
-> doing in
-> https://lore.kernel.org/git/RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753Z=
--avarab@gmail.com/
-> is to do likewise for all the PACK-related stuff before we rename it
-> in-place. Or even have "git gc" issue only a single fsync() for all of
-> PACKs, their metadata files, commit-graph etc., and then rename() things
-> in-place as appropriate afterwards.
->
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
-t
-> index 365a12dc7ae..536238e209b 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -548,49 +548,35 @@ core.whitespace::
->    errors. The default tab width is 8. Allowed values are 1 to 63.
->
->  core.fsync::
-> -       A comma-separated list of components of the repository that
-> -       should be hardened via the core.fsyncMethod when created or
-> -       modified.  You can disable hardening of any component by
-> -       prefixing it with a '-'.  Items that are not hardened may be
-> -       lost in the event of an unclean system shutdown. Unless you
-> -       have special requirements, it is recommended that you leave
-> -       this option empty or pick one of `committed`, `added`,
-> -       or `all`.
-> -+
-> -When this configuration is encountered, the set of components starts wit=
-h
-> -the platform default value, disabled components are removed, and additio=
-nal
-> -components are added. `none` resets the state so that the platform defau=
-lt
-> -is ignored.
-> -+
-> -The empty string resets the fsync configuration to the platform
-> -default. The default on most platforms is equivalent to
-> -`core.fsync=3Dcommitted,-loose-object`, which has good performance,
-> -but risks losing recent work in the event of an unclean system shutdown.
-> -+
-> -* `none` clears the set of fsynced components.
-> -* `loose-object` hardens objects added to the repo in loose-object form.
-> -* `pack` hardens objects added to the repo in packfile form.
-> -* `pack-metadata` hardens packfile bitmaps and indexes.
-> -* `commit-graph` hardens the commit graph file.
-> -* `index` hardens the index when it is modified.
-> -* `objects` is an aggregate option that is equivalent to
-> -  `loose-object,pack`.
-> -* `derived-metadata` is an aggregate option that is equivalent to
-> -  `pack-metadata,commit-graph`.
-> -* `committed` is an aggregate option that is currently equivalent to
-> -  `objects`. This mode sacrifices some performance to ensure that work
-> -  that is committed to the repository with `git commit` or similar comma=
-nds
-> -  is hardened.
-> -* `added` is an aggregate option that is currently equivalent to
-> -  `committed,index`. This mode sacrifices additional performance to
-> -  ensure that the results of commands like `git add` and similar operati=
-ons
-> -  are hardened.
-> -* `all` is an aggregate option that syncs all individual components abov=
-e.
-> +       A boolen defaulting to `true`. To ensure data integrity git
-> +       will fsync() its objects, index and refu updates etc. This can
-> +       be set to `false` to disable `fsync()`-ing.
-> ++
-> +Only set this to `false` if you know what you're doing, and are
-> +prepared to deal with data corruption. Valid use-cases include
-> +throwaway uses of repositories on ramdisks, one-off mass-imports
-> +followed by calling `sync(1)` etc.
-> ++
-> +Note that the syncing of loose objects is currently excluded from
-> +`core.fsync=3Dtrue`. To turn on all fsync-ing you'll need
-> +`core.fsync=3Dtrue` and `core.fsyncObjectFiles=3Dtrue`, but see
-> +`core.fsyncMethod=3Dbatch` below for a much faster alternative that's
-> +just as safe on various modern OS's.
-> ++
-> +The default is in flux and may change in the future, in particular the
-> +equivalent of the already-deprecated `core.fsyncObjectFiles` setting
-> +might soon default to `true`, and `core.fsyncMethod`'s default of
-> +`fsync` might default to a setting deemed to be safe on the local OS,
-> +suc has `batch` or `writeout-only`
->
->  core.fsyncMethod::
->         A value indicating the strategy Git will use to harden repository=
- data
->         using fsync and related primitives.
->  +
-> +Defaults to `fsync`, but as discussed for `core.fsync` above might
-> +change to use one of the values below taking advantage of
-> +platform-specific "faster `fsync()`".
-> ++
->  * `fsync` uses the fsync() system call or platform equivalents.
->  * `writeout-only` issues pagecache writeback requests, but depending on =
-the
->    filesystem and storage hardware, data added to the repository may not =
-be
-> @@ -680,8 +666,8 @@ backed up by any standard (e.g. POSIX), but worked in=
- practice on some
->  Linux setups.
->  +
->  Nowadays you should almost certainly want to use
-> -`core.fsync=3Dloose-object` instead in combination with
-> -`core.fsyncMethod=3Dbulk`, and possibly with
-> +`core.fsync=3Dtrue` instead in combination with
-> +`core.fsyncMethod=3Dbatch`, and possibly with
->  `fsyncMethod.batch.quarantine=3Dtrue`, see above. On modern OS's (Linux,
->  OSX, Windows) that gives you most of the performance benefit of
->  `core.fsyncObjectFiles=3Dfalse` with all of the safety of the old
+> Thanks,
+> -Stolee
 
-I'm at the point where I don't want to endlessly revisit this discussion.
-
--Neeraj
