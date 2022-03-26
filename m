@@ -2,76 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A17C9C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 00:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF5D1C433EF
+	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 00:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbiCZAfE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 20:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        id S229493AbiCZAtF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 20:49:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiCZAfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 20:35:03 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F5237BF3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:33:27 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id h4so3165179edr.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:33:27 -0700 (PDT)
+        with ESMTP id S229451AbiCZAtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 20:49:04 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D204425F664
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:47:28 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id r13so18362197ejd.5
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=NPzGiIRIn7GtwjUceUHqu6UK/JReLBRxuE7fDwWF/rI=;
-        b=E1th654J1aenplklz69DRmq+Uhp+n9IXfH8327KcOn3nMlyG1dzKdC7+Jq9bFYiTi4
-         +Qqqzj52v7CIuTgmdRMiqwbOU46JWA9RfqJEPg+dvDgKbTAzNE+4e22QyJdJuLQCSP/v
-         KFAPavEjvN801AYw1KZ31uKsP+X/KgmecJbCe+QKZJFzzwnpga1Iq0Rm1OTL8/8zWpgn
-         JhlQjEJWHWI2cdghTisiF7rSKtOooKn7qhFFwTvkgwP7O/5OSiKBquBYER1DpWafZVc3
-         S2gpQWYE0wqJnBPvdHtxW6VaQ89GKPPd5J7E0MALl2mr9cDd0cQf9tQoOHBW/d4zp6C0
-         LaFQ==
+        bh=66WkhOtKhRQnokakzAg0lTfDpwDWniNKwmd26USJJn8=;
+        b=V3u5TvLK/0BVbEdLGmWmeZjSn3RpQOYfaiZLnSCdbUbBOgFU75tWCRpVzqXpGa0FKu
+         H9avW283JbaISuQ7DBe8hOE5tiX83kVpIf+dXnqCUUWg+2H/Z99/cbPtfJqo9WYnHet5
+         etBEH5Fqn9ero3/7xtNIOC58VwGLRvvpjFeqtB+y4f1QRDJjqAm3EIqt9A7EExp4fPq5
+         pSaFDSLG7heu6P0zE0e4olO9LzHcmmTsusFKeQ8oBYKZJEqXIUmpv+crjRhRD5dKVoap
+         RnBx5py+OnDsZUuWo1vnLUzWNN/dsafGMNB83wP0h50Hhs7ZacApVectb/ZypHNHtT/r
+         CkEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=NPzGiIRIn7GtwjUceUHqu6UK/JReLBRxuE7fDwWF/rI=;
-        b=qESX11TLQ4iHiT7/C6EUHqrCy14dGrHTTRnMQUxsF4yZyvF3Zu1ZPSi1UURFD3JKFA
-         m3WPaBr9qgp5IH7xZicjAb3zsD1Nc2K6njGdeEcs1LK/TiZK5Odd6BLzbnkiZ7ZUmdMA
-         fUk2BlSqYF/jCrPsVrAX+R8AWTncu8IP/oeqYjKO83qj8Nw5fwNv5Ndid439Wwv7/AlZ
-         QGimwbUY/b5PiIRK5bklL0S6eqz1EqphIewpFTcq/VZphdUsUWzxsOn4BhxALL6V1JPo
-         X7H7VURiyGo2sNkCjerhRn0JvdZoYeafO+oF0yg+8Agq00rFq7xlzxcbTonhsOy1F1Cr
-         sGvA==
-X-Gm-Message-State: AOAM530LFIQg7LKcQry4SYNaMiEaDDUAQSFP9mMrMXL9o+ZK/0f0s4SQ
-        64X6FUjMlMKZijlvtMxZ9ao=
-X-Google-Smtp-Source: ABdhPJwjDMtAK6ndNrLItxBs+VZkUeQAIIt8BwLrbScQvxxgMhaD/pwF/csE9PpofP7d3ow2tDturQ==
-X-Received: by 2002:aa7:d70e:0:b0:419:1e2c:e1ea with SMTP id t14-20020aa7d70e000000b004191e2ce1eamr1631855edq.202.1648254805341;
-        Fri, 25 Mar 2022 17:33:25 -0700 (PDT)
+        bh=66WkhOtKhRQnokakzAg0lTfDpwDWniNKwmd26USJJn8=;
+        b=CFHturgjekcoGxY8WyIWP31I5IRorxfb3HMyrTYhYWYiPKreAIXKwjcZlJtYvgAQdz
+         z+mBwVGS0tNCashvErlJ4FLJh9rb9Snd0HmQ68avjZXr8SQEYNNkDMQ6dY/ILTxrmLYJ
+         0IaCP9R32a2wUukZcN2AvMVl0d3aMmdDtiyEc6ohahaTEx948rgbZwdIe7tduqAvLUK9
+         qPfMo/fYXJPp5nkxHqEmG7bw0+ioAoGBcQTrtJjfAokJBKxv+wk1RlHPu8FbQYUHUY9J
+         yG8Ms53SGkSvrBzTp39teHVrqNal613e+No0m4AUNBnJBEYtjJMIm1M2pMFzrwFzWG9y
+         YDCA==
+X-Gm-Message-State: AOAM532yDzPiPejakwEO1AEejFbqUew8jdp+A1IIfidt+LOdrU03E58W
+        tz1KkIOn9sabYs8N/0SoJ64caz3JOlu5PQ==
+X-Google-Smtp-Source: ABdhPJy18VC/iwcHqzzRVFjCZWqs+cWEuDD414p2VLNrJifnhQUdRfEG7eodsR+NZaXeEQnZ1rs7PQ==
+X-Received: by 2002:a17:906:5ad6:b0:6e0:1799:4a15 with SMTP id x22-20020a1709065ad600b006e017994a15mr15191746ejs.594.1648255647104;
+        Fri, 25 Mar 2022 17:47:27 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id mp19-20020a1709071b1300b006dfdfe15cf8sm3052509ejc.196.2022.03.25.17.33.24
+        by smtp.gmail.com with ESMTPSA id c11-20020a056402120b00b004196059efd1sm3417401edw.75.2022.03.25.17.47.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 17:33:24 -0700 (PDT)
+        Fri, 25 Mar 2022 17:47:26 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nXuMt-002JZY-QR;
-        Sat, 26 Mar 2022 01:33:23 +0100
+        id 1nXuaT-002K4K-Qz;
+        Sat, 26 Mar 2022 01:47:25 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Neeraj Singh <neerajsi@microsoft.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: do we have too much fsync() configuration in 'next'? (was:
- [PATCH v7] core.fsync: documentation and user-friendly aggregate options)
-Date:   Sat, 26 Mar 2022 01:24:57 +0100
-References: <7e4cc6e10a5d88f4c6c44efaa68f2325007fd935.1646952205.git.gitgitgadget@gmail.com>
- <20220315191245.17990-1-neerajsi@microsoft.com>
- <220323.86fsn8ohg8.gmgdl@evledraar.gmail.com>
- <CANQDOdeeP8opTQj-j_j3=KnU99nYTnNYhyQmAojj=FZtZEkCZQ@mail.gmail.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 08/27] revisions API users: add "goto cleanup" for
+ "rev_info" early exit
+Date:   Sat, 26 Mar 2022 01:37:50 +0100
+References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
+ <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
+ <patch-v3-08.27-f8a9443fe6f-20220325T171340Z-avarab@gmail.com>
+ <xmqqtubl93n3.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <CANQDOdeeP8opTQj-j_j3=KnU99nYTnNYhyQmAojj=FZtZEkCZQ@mail.gmail.com>
-Message-ID: <220326.86ils1lfho.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqtubl93n3.fsf@gitster.g>
+Message-ID: <220326.86ee2pleua.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,256 +76,72 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Mar 25 2022, Neeraj Singh wrote:
+On Fri, Mar 25 2022, Junio C Hamano wrote:
 
-> On Wed, Mar 23, 2022 at 7:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->>
->> On Tue, Mar 15 2022, Neeraj Singh wrote:
->>
->> I know this is probably 80% my fault by egging you on about initially
->> adding the wildmatch() based thing you didn't go for.
->>
->> But having looked at this with fresh eyes quite deeply I really think
->> we're severely over-configuring things here:
->>
->> > +core.fsync::
->> > +     A comma-separated list of components of the repository that
->> > +     should be hardened via the core.fsyncMethod when created or
->> > +     modified.  You can disable hardening of any component by
->> > +     prefixing it with a '-'.  Items that are not hardened may be
->> > +     lost in the event of an unclean system shutdown. Unless you
->> > +     have special requirements, it is recommended that you leave
->> > +     this option empty or pick one of `committed`, `added`,
->> > +     or `all`.
->> > ++
->> > +When this configuration is encountered, the set of components starts =
-with
->> > +the platform default value, disabled components are removed, and addi=
-tional
->> > +components are added. `none` resets the state so that the platform de=
-fault
->> > +is ignored.
->> > ++
->> > +The empty string resets the fsync configuration to the platform
->> > +default. The default on most platforms is equivalent to
->> > +`core.fsync=3Dcommitted,-loose-object`, which has good performance,
->> > +but risks losing recent work in the event of an unclean system shutdo=
-wn.
->> > ++
->> > +* `none` clears the set of fsynced components.
->> > +* `loose-object` hardens objects added to the repo in loose-object fo=
-rm.
->> > +* `pack` hardens objects added to the repo in packfile form.
->> > +* `pack-metadata` hardens packfile bitmaps and indexes.
->> > +* `commit-graph` hardens the commit graph file.
->> > +* `index` hardens the index when it is modified.
->> > +* `objects` is an aggregate option that is equivalent to
->> > +  `loose-object,pack`.
->> > +* `derived-metadata` is an aggregate option that is equivalent to
->> > +  `pack-metadata,commit-graph`.
->> > +* `committed` is an aggregate option that is currently equivalent to
->> > +  `objects`. This mode sacrifices some performance to ensure that work
->> > +  that is committed to the repository with `git commit` or similar co=
-mmands
->> > +  is hardened.
->> > +* `added` is an aggregate option that is currently equivalent to
->> > +  `committed,index`. This mode sacrifices additional performance to
->> > +  ensure that the results of commands like `git add` and similar oper=
-ations
->> > +  are hardened.
->> > +* `all` is an aggregate option that syncs all individual components a=
-bove.
->> > +
->> >  core.fsyncMethod::
->> >       A value indicating the strategy Git will use to harden repositor=
-y data
->> >       using fsync and related primitives.
->>
->> On top of my
->> https://lore.kernel.org/git/RFC-patch-v2-7.7-a5951366c6e-20220323T140753=
-Z-avarab@gmail.com/
->> which makes the tmp-objdir part of your not-in-next-just-seen follow-up
->> series configurable via "fsyncMethod.batch.quarantine" I really think we
->> should just go for something like the belwo patch (note that
->> misspelled/mistook "bulk" for "batch" in that linked-t patch, fixed
->> below.
->>
->> I.e. I think we should just do our default fsync() of everything, and
->> probably SOON make the fsync-ing of loose objects the default. Those who
->> care about performance will have "batch" (or "writeout-only"), which we
->> can have OS-specific detections for.
->>
->> But really, all of the rest of this is unduly boxing us into
->> overconfiguration that I think nobody really needs.
->>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> We've gone over this a few times already, but just wanted to state it
-> again.  The really detailed settings are really there for Git hosters
-> like GitLab or GitHub. I'd be happy to remove the per-component
-> core.fsync values from the documentation and leave just the ones we
-> point the user to.
-
-I'm prettty sure (but Patrick knows more) that GitLab's plan for this is
-to keep it at whatever the safest setting is, presumably GitHub's as
-well (but I don't know at all on that front).
-
->> If someone really needs this level of detail they can LD_PRELOAD
->> something to have fsync intercept fd's and paths, and act appropriately.
->>
->> Worse, as the RFC series I sent
->> (https://lore.kernel.org/git/RFC-cover-v2-0.7-00000000000-20220323T14075=
-3Z-avarab@gmail.com/)
->> shows we can and should "batch" up fsync() operations across these
->> configuration boundaries, which this level of configuration would seem
->> to preclude.
->>
->> Or, we'd need to explain why "core.fsync=3Dloose-object" won't *actually*
->> call fsync() on a single loose object's fd under "batch" as I had to do
->> on top of this in
->> https://lore.kernel.org/git/RFC-patch-v2-6.7-c20301d7967-20220323T140753=
-Z-avarab@gmail.com/
->>
+>> It would be a lot cleaner to be able to initialize "struct rev_info"
+>> with "{ 0 }" here, or if a "REV_INFO_INIT" existed, we'll hopefully
+>> get around to making the initialization easier in the future (now it
+>> can't be done via a macro).
 >
-> 99.9% of users don't care and won't look.  The ones who do look deeper
-> and understand the issues have source code and access to this ML
-> discussion to understand why this works this way.
-
-Exactly, so we can hopefully have a simpler interface.
-
->> The same is going to apply for almost all of the rest of these
->> configuration categories.
->>
->> I.e. a natural follow-up to e.g. batching across objects & index as I'm
->> doing in
->> https://lore.kernel.org/git/RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753=
-Z-avarab@gmail.com/
->> is to do likewise for all the PACK-related stuff before we rename it
->> in-place. Or even have "git gc" issue only a single fsync() for all of
->> PACKs, their metadata files, commit-graph etc., and then rename() things
->> in-place as appropriate afterwards.
->>
->> diff --git a/Documentation/config/core.txt b/Documentation/config/core.t=
-xt
->> index 365a12dc7ae..536238e209b 100644
->> --- a/Documentation/config/core.txt
->> +++ b/Documentation/config/core.txt
->> @@ -548,49 +548,35 @@ core.whitespace::
->>    errors. The default tab width is 8. Allowed values are 1 to 63.
->>
->>  core.fsync::
->> -       A comma-separated list of components of the repository that
->> -       should be hardened via the core.fsyncMethod when created or
->> -       modified.  You can disable hardening of any component by
->> -       prefixing it with a '-'.  Items that are not hardened may be
->> -       lost in the event of an unclean system shutdown. Unless you
->> -       have special requirements, it is recommended that you leave
->> -       this option empty or pick one of `committed`, `added`,
->> -       or `all`.
->> -+
->> -When this configuration is encountered, the set of components starts wi=
-th
->> -the platform default value, disabled components are removed, and additi=
-onal
->> -components are added. `none` resets the state so that the platform defa=
-ult
->> -is ignored.
->> -+
->> -The empty string resets the fsync configuration to the platform
->> -default. The default on most platforms is equivalent to
->> -`core.fsync=3Dcommitted,-loose-object`, which has good performance,
->> -but risks losing recent work in the event of an unclean system shutdown.
->> -+
->> -* `none` clears the set of fsynced components.
->> -* `loose-object` hardens objects added to the repo in loose-object form.
->> -* `pack` hardens objects added to the repo in packfile form.
->> -* `pack-metadata` hardens packfile bitmaps and indexes.
->> -* `commit-graph` hardens the commit graph file.
->> -* `index` hardens the index when it is modified.
->> -* `objects` is an aggregate option that is equivalent to
->> -  `loose-object,pack`.
->> -* `derived-metadata` is an aggregate option that is equivalent to
->> -  `pack-metadata,commit-graph`.
->> -* `committed` is an aggregate option that is currently equivalent to
->> -  `objects`. This mode sacrifices some performance to ensure that work
->> -  that is committed to the repository with `git commit` or similar comm=
-ands
->> -  is hardened.
->> -* `added` is an aggregate option that is currently equivalent to
->> -  `committed,index`. This mode sacrifices additional performance to
->> -  ensure that the results of commands like `git add` and similar operat=
-ions
->> -  are hardened.
->> -* `all` is an aggregate option that syncs all individual components abo=
-ve.
->> +       A boolen defaulting to `true`. To ensure data integrity git
->> +       will fsync() its objects, index and refu updates etc. This can
->> +       be set to `false` to disable `fsync()`-ing.
->> ++
->> +Only set this to `false` if you know what you're doing, and are
->> +prepared to deal with data corruption. Valid use-cases include
->> +throwaway uses of repositories on ramdisks, one-off mass-imports
->> +followed by calling `sync(1)` etc.
->> ++
->> +Note that the syncing of loose objects is currently excluded from
->> +`core.fsync=3Dtrue`. To turn on all fsync-ing you'll need
->> +`core.fsync=3Dtrue` and `core.fsyncObjectFiles=3Dtrue`, but see
->> +`core.fsyncMethod=3Dbatch` below for a much faster alternative that's
->> +just as safe on various modern OS's.
->> ++
->> +The default is in flux and may change in the future, in particular the
->> +equivalent of the already-deprecated `core.fsyncObjectFiles` setting
->> +might soon default to `true`, and `core.fsyncMethod`'s default of
->> +`fsync` might default to a setting deemed to be safe on the local OS,
->> +suc has `batch` or `writeout-only`
->>
->>  core.fsyncMethod::
->>         A value indicating the strategy Git will use to harden repositor=
-y data
->>         using fsync and related primitives.
->>  +
->> +Defaults to `fsync`, but as discussed for `core.fsync` above might
->> +change to use one of the values below taking advantage of
->> +platform-specific "faster `fsync()`".
->> ++
->>  * `fsync` uses the fsync() system call or platform equivalents.
->>  * `writeout-only` issues pagecache writeback requests, but depending on=
- the
->>    filesystem and storage hardware, data added to the repository may not=
- be
->> @@ -680,8 +666,8 @@ backed up by any standard (e.g. POSIX), but worked i=
-n practice on some
->>  Linux setups.
->>  +
->>  Nowadays you should almost certainly want to use
->> -`core.fsync=3Dloose-object` instead in combination with
->> -`core.fsyncMethod=3Dbulk`, and possibly with
->> +`core.fsync=3Dtrue` instead in combination with
->> +`core.fsyncMethod=3Dbatch`, and possibly with
->>  `fsyncMethod.batch.quarantine=3Dtrue`, see above. On modern OS's (Linux,
->>  OSX, Windows) that gives you most of the performance benefit of
->>  `core.fsyncObjectFiles=3Dfalse` with all of the safety of the old
+> If "struct rev_info" can be initialized with "{ 0 }" here, i.e.
 >
-> I'm at the point where I don't want to endlessly revisit this discussion.
+> -	struct rev_info rev;
+> +	struct rev_info rev =3D { 0 };
+>
+> to give us a valid solution, why wouldn't you be able to do
+>
+> +#define REV_INFO_INIT { 0 }
+>
+> elsewhere in a common *.h file, and then
+>
+> -	struct rev_info rev;
+> +	struct rev_info rev =3D REV_INFO_INIT;
+>
+> to make the fact that "rev" is initialized (and ready to be handed
+> to the releaser) even more explicit?  It's like arguing against
+> fixing a code like this:
+>
+> 	struct char *pointer;
+> 	...
+> 	if (condition)
+> 		pointer =3D malloc(...);
+> 	...
+>         /* pointer leaks */
+>=20=20
+> by initializing
+>
+> 	struct char *pointer =3D NULL;
+> 	...
+> 	if (condition)
+> 		pointer =3D malloc(...);
+> 	...
+>         free(pointer);
+>
+> because for some reason you are against the macro NULL but you are
+> willing to spell it out as "0" (without double-quotes)?
 
-Sorry, my intention isn't to frustrate you, but I do think it's
-important to get this right.
+I was fine with having it be { 0 } and have "release" functions
+everywhere assume that memset-ing structures to zero makes them safe to
+pass to release(), but my reading of your v2 feedback was that you
+didn't like making that assumption, so I changed it in the v3 so we
+wouldn't assume that.
 
-Particularly since this is now in "next", and we're getting closer to a
-release. We can either talk about this now and decide on something, or
-it'll be in a release, and then publicly documented promises will be
-harder to back out of.
+I then took that REV_INFO_INIT suggestion to mean that this series
+could/should be predicated on some cross-codebase refactoring to change
+all of the "struct rev_info" initialization, which would be a rather
+large digression.
 
-I think your suggestion of just hiding the relevant documentation would
-be a good band-aid solution to that.
+Because I don't see how it makes any sense to have a REV_INFO_INIT if it
+doesn't actually give you an init'd "struct rev_info" that's ready for
+use. I.e. if you still need to call repo_init_revisions() it's just a
+misleading interface.
 
-But I also think that given how I was altering this in my RFC series
-that the premise of how this could be structured has been called into
-question in a way that we didn't (or I don't recall) us having discussed
-before.
+I also think the cosmetic issues of initialization here really aren't
+important at all, fixing these leaks is. So whatever idioms you're OK
+with us using here are fine by me, as long as I can be made to clearly
+understand what you want for a re-roll :)
 
-I.e. that we can say "sync loose, but not index", or "sync index, but
-not loose" with this config schema. When with "bulk" we it really isn't
-any more expensive to do both if one is true (even cheaper, actually).
-
+Very preferably something that doesn't require refactoring the entirety
+of "struct rev_info" init across the codebase...
