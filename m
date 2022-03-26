@@ -2,71 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98203C433EF
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 00:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84750C433F5
+	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 01:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbiCZBAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 21:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34962 "EHLO
+        id S229909AbiCZBJP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 21:09:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbiCZBAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 21:00:40 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580CA496BD
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:59:04 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id h4so3202465edr.3
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 17:59:04 -0700 (PDT)
+        with ESMTP id S229437AbiCZBJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 21:09:14 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347F914A6C6
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:07:39 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id pv16so18487916ejb.0
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=yzJkCknHe42c51oePBS5RncL4GMvnudowfXY4nEGw8U=;
-        b=oY8nMbkd4nhhLA/zhw8rM8wXbQfTPsXeqEOmmqgwKtqoakIqHPPZ71flujBkCMlKwq
-         EcyS6MhxPUxg2vH4X2o5ApaX77lJeZwDpEh3tL6L0t4hWk895nD0zFf+mG1GCG7//JCj
-         nBsNDZhFVl9Vzt2YFrwpsJFrMVQLRQoH5mSDahMqrcsbsCYwo8MIZGPBdfShcJEShe3p
-         CGTM9Pk2L0dmYpdOBgvkQpqHlVIHUaO1UxjIQXVBJ6O5z0lsgFZFkbpaao3LWZ2i+EYK
-         kzXt1O2zYDkH9QiL5eL2qc4L7bQ+Gm0b/qwMLgr/rJ5c1lTrD5F86R8krHY/Vptu2OcV
-         hmMg==
+        bh=w85WY7L1hibdu3QBeMxu5A2XYhKpzFUvKuPZXREDaHY=;
+        b=U247HfGE2LZoth/kWNkyVb69/DPH5h26DFtb1e7kWcFkbpmxQd7l2igHERv4IqTqWC
+         ipDWmT6/r/wNBBnPys+qRetY1vBFaH3UZTZcPuGCgkdqZRpXG+f7MaiRC2kkXr45WuM/
+         gqQkemCt63P+K4k12RvDnY45eTqIYQxSz+xzXBBHVveMIfu4kAnpYKmYz/jr5hQtnxOs
+         Wk4SastSDdg2icSAd1n1OjKdbUsJBCxEp028kh5ikBUtlmVuvOEMNYe91rSJMIbomqti
+         EIPF/SJXve4WDhcjA5YUGfrUq92bVBlO1AORB9Pa61G0OvQqeu/i6zxxkmG2ww2lVCRy
+         LRtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=yzJkCknHe42c51oePBS5RncL4GMvnudowfXY4nEGw8U=;
-        b=U2q4nk8rahxVS5uU35XuLm3ulpmn8cf6odfZnVT/m9HpsFC4vwnv9iKXmGPNrqp6Is
-         7hIc/eZPYi3Gc9RY9oRJkzERqKUjZbBPltReN06rzPdyayG+d93u2CN9fYx8UlKrTxjd
-         E8vdtR7rmVXNzVkXMK8CuPaL2Z9h6KS0FjBW74RyRvljuh+Lr3f6hX66Wq/PW2fTCaY/
-         fGoZp758Gmq47Ii0XsK0gTmIouQUhclp4p2iE5Dm1xcTblSZhHjjLMrcEA4YhCu+3W+F
-         Ihzen606rbSDwxHBWymstwnvK1AirRG03iXLfG+ya+5ETpUPHTIYHCRo5o31SXtWuHVu
-         4iDA==
-X-Gm-Message-State: AOAM530QvNQHzIiiOkmRerWdVNnm+4RLgzFgaQqIIhJrX6/DHpDQ90xZ
-        RP9OqUPIYeUU1KJFZmAAeXM=
-X-Google-Smtp-Source: ABdhPJzqpWywCchO5tQ4APQ6f23mnNL5Vgx2ox+d2eScZUkZRM4eUIy1wC3Xvw5NaWeyRTvTJOgP7Q==
-X-Received: by 2002:a50:99cd:0:b0:418:d6c2:2405 with SMTP id n13-20020a5099cd000000b00418d6c22405mr1713975edb.342.1648256342712;
-        Fri, 25 Mar 2022 17:59:02 -0700 (PDT)
+        bh=w85WY7L1hibdu3QBeMxu5A2XYhKpzFUvKuPZXREDaHY=;
+        b=lagA5gN3MV+8StBVHctuUWxnhjaLWBBN4k+LKhCjOihCD6V1BSjI/7/k7jdPm/XQ5f
+         iOF43s0lwjvDUcQkwwY8ThlnnC66EiF3HF5RB4zZCS30zzHJy6uLc/R6UKjiy/LHI6Or
+         1yILAxJQxFwmmXX3FzEOYmiFoOAb2DfHWxyhsZt+o/iYr+L1NrRMfCDH4k1O3CprEvLC
+         IEjpnEdCQb+t9l4Y6tGs6cysA5oG+2nRZaAtuk/2wuM/c/VwzueLut6q+5E+TPdaiEHN
+         dMlme6IagGJtTu3PyUhQS94DXiZO0t0QNQRoq+UVV9iFE59h80rWVGE1WTLvQp1XJWjY
+         r3kw==
+X-Gm-Message-State: AOAM531EMoDLPEXPJSaCOs8NvK5Ocb0F6x+lkoLDcawc2f5iiLpt5znL
+        TfpwWf/gz6bMz7zGiGlkt20=
+X-Google-Smtp-Source: ABdhPJzGBaYG9Dw0YMo9e/D3APcDCMsl86p2oAh3nx7u2ROwdBSqk+AN2hA9Dqu9FgdCexf7WVO7Uw==
+X-Received: by 2002:a17:906:dc8d:b0:6db:572b:df24 with SMTP id cs13-20020a170906dc8d00b006db572bdf24mr14975198ejc.193.1648256857598;
+        Fri, 25 Mar 2022 18:07:37 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bm24-20020a170906c05800b006d58518e55fsm2884173ejb.46.2022.03.25.17.59.01
+        by smtp.gmail.com with ESMTPSA id f3-20020a1709067f8300b006ce051bf215sm2888357ejr.192.2022.03.25.18.07.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 17:59:01 -0700 (PDT)
+        Fri, 25 Mar 2022 18:07:37 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nXulh-002KVC-F1;
-        Sat, 26 Mar 2022 01:59:01 +0100
+        id 1nXuu0-002KoV-D6;
+        Sat, 26 Mar 2022 02:07:36 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
+To:     Victoria Dye <vdye@github.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH] pack-objects: lazily set up "struct rev_info", don't leak
-Date:   Sat, 26 Mar 2022 01:52:42 +0100
-References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
- <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
- <d71fa968-be75-f4ad-ea6c-644f9d2b52d9@github.com>
- <220325.86r16qkodl.gmgdl@evledraar.gmail.com>
- <8d368240-dae5-7a66-6c0c-9e0a960ca34c@github.com>
- <220325.86mthdlx59.gmgdl@evledraar.gmail.com>
- <d90bb9c8-3155-ca5f-8363-154876a7ad0a@github.com>
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v2 00/25] CI: run "make [test]" directly, use $GITHUB_ENV
+Date:   Sat, 26 Mar 2022 01:59:49 +0100
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
+ <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <320b3dde-a84e-0074-bed8-57061293b2b0@github.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <d90bb9c8-3155-ca5f-8363-154876a7ad0a@github.com>
-Message-ID: <220326.865yo1leay.gmgdl@evledraar.gmail.com>
+In-reply-to: <320b3dde-a84e-0074-bed8-57061293b2b0@github.com>
+Message-ID: <220326.861qypldwn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,116 +79,104 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Mar 25 2022, Derrick Stolee wrote:
+On Fri, Mar 25 2022, Victoria Dye wrote:
 
-> On 3/25/2022 1:34 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> A re-roll of my improvements my series to simplify the CI setup a lot
+>> (see diffstat), much of it was dealing with constraints that went away
+>> with Travis et al. CI for this series (OSX runners failing for
+>> unrelated reasons):
 >>=20
->> On Fri, Mar 25 2022, Derrick Stolee wrote:
+>>     https://github.com/avar/git/actions/runs/2040223909
 >>=20
->>> On 3/25/2022 12:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>>> +struct rev_info_maybe_empty {
->>>>> +	int has_revs;
->>>>> +	struct rev_info revs;
->>>>> +};
->>>
->>> Thinking about this a second time, perhaps it would be best to add
->>> an "unsigned initialized:1;" to struct rev_info so we can look at
->>> such a struct and know whether or not repo_init_revisions() has
->>> been run or not. Avoids the custom struct and unifies a few things.
->>>
->>> In particular, release_revisions() could choose to do nothing if
->>> revs->initialized is false.
+>> For a much more detailed summary of how the output looks before/after
+>> see v1[].
 >>=20
->> This plan won't work because that behavior is both undefined per the
->> standard, and something that's wildly undefined in practice.
+>> This series heavily conflicts with Johannes's
+>> js/ci-github-workflow-markup in "seen", but in the v1 I suggested
+>> basing that series on top of this one, because it can benefit a lot
+>> from these simplifications.
 >>=20
->> I.e. we initialize it on the stack, so it'll point to uninitialized
->> memory, sometimes that bit will be 0, sometimes 1...
+>> I'll reply to this series with a proposed rebasing of that series on
+>> top of this one, which allows for removing almost all of its changes
+>> to "ci/" with no harm to its end-goals, i.e. the splitting up of
+>> "make" and "make test" output is something it'll get for free from
+>> this series.
 >>=20
->> If you mean just initialize it to { 0 } or whatever that would work,
->> yes, but if we're going to refactor all the callers to do that we might
->> as well refactor the few missing bits that would be needed to initialize
->> it statically, and drop the dynamic by default initialization...
+>> Junio: Since that series has been stalled on still-outstanding
+>> performance issues for a couple of months I was hoping we could queue
+>> this instead, and perhaps in addition if Johannes approves of the
+>> proposed re-roll on top of his.
+>>=20
+>> There's some forward progress on the performance issues (this[2] reply
+>> of Victoria Dye's from yesterday), but fully resolving those will
+>> probably take a bit...
+>>=20
+>> Whereas even though this one is relatively large I don't think there's
+>> anything controversial here. The one concern that's been raised has
+>> been Johannes's objection to removing some of the dead Azure code
+>> (which was needed to move forward here). I asked how he'd prefer to
+>> move forward with that in [3], but there hasn't been a reply to that
+>> in >1 month.
+>>=20
 >
-> Yes, I was assuming that we initialize all structs to all-zero,
-> but the existing failure to do this will cause such a change too
-> large for this issue.
-
-I don't see how that wouldn't be a regression on the upthread patch in
-the sense that yes, we could of course initialize it, but the whole
-point of not doing so was to have our tooling detect if the downstream
-code assumed it could start using a struct member we hadn't filled in.
-
-By initializing it we'll never know.
-
-But yes, if you consider that a non-goal then init to "{ 0 }" makes the
-most sense.
-
->> But FWIW I think a much more obvious thing to do overall would be to
->> skip the whole "filter bust me in rev_info" refactoring part of your
->> series and just add a trivial list_objects_filter_copy_attach() method,
->> or do it inline with memcpy/memset.
->>=20
->> I.e. to not touch the "filter" etc. callback stuff at all, still pass it
->> to get_object_list(). Can't 2/5 and 3/5 in your series be replaced by
->> this simpler and smaller change?:
+> While the largeness of a series shouldn't necessarily block it, the lack =
+of
+> overarching structure or purpose in this one makes it really difficult for
+> me to review with much confidence (I can't speak for everyone, but it may=
+ be
+> one of the reasons for the general lack of feedback). If you believe all =
+of
+> these patches as thematically-related enough to warrant being in a single
+> series, then it would help a lot if you could:
 >
->> 	-	list_objects_filter_copy(&revs.filter, &filter_options);
->> 	+	/* attach our CLI --filter to rev_info's filter */
->> 	+	memcpy(&revs.filter, filter, sizeof(*filter));
->> 	+	memset(filter, 0, sizeof(*filter));
->
-> Here, you are removing a deep copy with a shallow copy. After this,
-> freeing the arrays within revs.filter would cause a double-free when
-> freeing the arrays in the original filter_options.
+> 1. Clearly describe the purpose of the series (yes they're all CI
+>    improvements, but *why* these particular improvements, and why do they
+>    all need to go together?)=20
+> 2. Outline the "path" these commits take to accomplishing that purpose ("=
+The
+>    first 3 commits do X because Y. Then, the next 4 commits do A because =
+B."
+>    etc. or whatever format fits your writing style, as long as the
+>    information is there).
+> 3. Reorganize commits as necessary to keep the above outline from jumping
+>    back and forth between topics.=20
 
-Yes, and that's what we want, right? I.e. we don't want a copy, but to
-use the &filter for parse_options(), then once that's populated we
-shallow-copy that to "struct rev_info"'s "filter", and forget about our
-own copy (i.e. the memset there is redundant, but just a "let's not use
-this again) marker.
+The v1 summary described it about as clearly as I was able to:
+https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-avarab=
+@gmail.com/
 
-Of course this will leak now, but once merged with my
-release_revisions() patch will work, and we'll free what we allocated
-(once!).
+> Personally, I think this could (should?) be split into at least two serie=
+s:
+> one that breaks up 'run-build-and-tests.sh' (and is more directly relevant
+> to dscho's series), and one that does the cleanup/flag change/other work.
+> The two appear to be independent, and the resulting two series would be a
+> much more manageable 10-15 commits each.=20
 
-> If you went this way, then you could do a s/&filter_options/filter/
-> in the existing line.
->
->> 	 	/* make sure shallows are read */
->> 	 	is_repository_shallow(the_repository);
->> 	@@ -3872,6 +3873,7 @@ int cmd_pack_objects(int argc, const char **argv,=
- const char *prefix)
->> 	 	int rev_list_index =3D 0;
->> 	 	int stdin_packs =3D 0;
->> 	 	struct string_list keep_pack_list =3D STRING_LIST_INIT_NODUP;
->> 	+	struct list_objects_filter_options filter_options =3D { 0 };
->> 	 	struct option pack_objects_options[] =3D {
->> 	 		OPT_SET_INT('q', "quiet", &progress,
->> 	 			    N_("do not show progress meter"), 0),
->> 	@@ -4154,7 +4156,7 @@ int cmd_pack_objects(int argc, const char **argv,=
- const char *prefix)
->> 	 	} else if (!use_internal_rev_list) {
->> 	 		read_object_list_from_stdin();
->> 	 	} else {
->> 	-		get_object_list(rp.nr, rp.v);
->> 	+		get_object_list(rp.nr, rp.v, &filter_options);
->> 	 	}
->> 	 	cleanup_preferred_base();
->> 	 	if (include_tag && nr_result)
->>=20
->> And even most of that could be omitted by not removing the global
->> "static struct" since pack-objects is a one-off anyway ... :)
->
-> Even if you fix the deep/shallow copy above, you still need to
-> clean up the filter in two places.
+To rephrase that a bit, every commit here passes CI and is atomic, so it
+could be split up into 25 parts (at least).
 
-If you "fix" the shallow copying you need to free it twice, but if you
-don't you free it once.
+But it's really not doing different things, it's a single-topic series:
+It's changing CI "step" targets that are shellscripts that do N things
+to instead be single command invocations at the "step" level, driven by
+the CI recipe itself.
 
-I.e. this is conceptually the same as strbuf_detach() + strbuf_attach().
+To do that we need to pass state that we previously re-setup for every
+"step" via $GITHUB_ENV, whose state we then helpfully show (this is just
+a standard GitHub CI feature) in a drop-down at the start of every
+"step".
 
-But maybe I'm missing something...
+So yes, it could be split up in the sense that we could get partway
+there and continue with the rest some other time, but I really think the
+UX experience is *much better* if it's not a partial conversion.
 
-(If I am it's rather worrying that it passed all our tests, both in your
-series + merged with the release_revisions() series).
+I.e. at the tip of this series you can reliably look at that $GITHUB_ENV
+view to see what the full and relevant environment was for that "make",
+"make test" or whatever.
+
+If we just do that partially you might get that for "make" if it failed,
+but if your tests failed we'd have a failure in the proverbial
+ci/load-lib.sh-do-setup-stuff-and-run-make-test-at-some-point.sh.
+
+Which I think makes the UX much less useful, i.e. you really want to
+*always* find this information in the same place.
