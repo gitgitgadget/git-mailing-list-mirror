@@ -2,128 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E53BCC433EF
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 14:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04DBDC433F5
+	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 14:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233212AbiCZOM5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Mar 2022 10:12:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55154 "EHLO
+        id S233252AbiCZOZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Mar 2022 10:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231482AbiCZOM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Mar 2022 10:12:56 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 163F14F9CB
-        for <git@vger.kernel.org>; Sat, 26 Mar 2022 07:11:20 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id pv16so20450555ejb.0
-        for <git@vger.kernel.org>; Sat, 26 Mar 2022 07:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5DvMOACbsHxKDlrFvXlzONBHy478c1/v7MQNDIpDKT8=;
-        b=FBIB/aW1rEzDCa481q5EGW1FiX9UK/SvHulGJ4GORUf/dJhUdgsoNAP9B6+IjX1AD/
-         9pVTuBAcX7dZeT+gZhppTszyNcAftdQZt+nLOwyaIQSZVpc5x75/J/1ONSuG1RSKejpk
-         Sk1Luc/XhaxPkGiFrN3qgMK5WasgeFq4w3szo+MkkJ7V0dK2f7L3P9ntp+aiH80orsvV
-         Pu/oxX7YSLYsi/AnXcECASZObxaMpFNyaEnLLRhh+kI99vmSNNPPxrTR/1RlIzBamGS1
-         rsqrSrbj+5kHLidXLTCwG9QzEBAG+J3kdK/IsP1V/PuAugHtZfGeaufR/q96crAsHpi3
-         zOnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5DvMOACbsHxKDlrFvXlzONBHy478c1/v7MQNDIpDKT8=;
-        b=3/eg6ejWsYt5w8pg27TG/ggVhVbsjS+V8m8a+xYNXkVbnY5enK49Z/9yWszqeKnJOy
-         Cy0TTmeyiWmk6hG4n10nlVFI7GU2xiA/fyMg1BuIW+Kt7DLYzJTya1rL6XYxVm3usMYw
-         PaMOLHX1LW1ARkvYmz+tnx2oPAhIrO/Is3LZAS8SYx7gwDzNQHHJPtNqeZYOmJ9O04tp
-         LGE/ElB1IujS8SkUUGW/tCAFtX+zbCj/OHBNW9GjF9Euy+xiHVLQHU+vfKUjBXZALPvh
-         jlRofLOAWzzMKgp0o2MQyKB53oQJWK6Ek1sb8XFs8NKk5bvPiuzlprSy9bovEre3enrm
-         Mv+A==
-X-Gm-Message-State: AOAM532DjZ2T8Fbi/UMnklB9033an5HlD8R76UHU/UCe2NsxVHk/+yZ+
-        RRJZYJD7bFpAyOa8HMij9D7+IJW44QVCMLOlV4Y=
-X-Google-Smtp-Source: ABdhPJwB+MYVkHhqaV/LjBrSwcSjuwccNULg8FR0ZRsnbgRND7ehqbAb+rzio0BAAtbOruYU9/iuhrggliuYNR/LOm8=
-X-Received: by 2002:a17:907:3ea9:b0:6df:f197:81ae with SMTP id
- hs41-20020a1709073ea900b006dff19781aemr17966015ejc.402.1648303878619; Sat, 26
- Mar 2022 07:11:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <CANteD_wDSRmwLQiYV1x133WEtVaRK__c584E3CbXN1tPOquitg@mail.gmail.com>
- <2a7eecb4a0b247ef8f855f1c4fb5d510@SAMBXP02.univ-lyon1.fr> <7a522ccc-0a45-47fa-509c-a7a8b159041d@univ-lyon1.fr>
- <c1f255d7-6637-b6ac-0a64-1f64404a6f6c@github.com>
-In-Reply-To: <c1f255d7-6637-b6ac-0a64-1f64404a6f6c@github.com>
-From:   Jonathan Bressat <git.jonathan.bressat@gmail.com>
-Date:   Sat, 26 Mar 2022 15:11:07 +0100
-Message-ID: <CANteD_yZ8de2i54EUWW=d6eVzpiKm5NNHGVEKrXOmo5KXnXUVQ@mail.gmail.com>
-Subject: Re: contrib/vscode/: debugging with vscode and gdb
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Cogoni Guillaume <cogoni.guillaume@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231482AbiCZOZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Mar 2022 10:25:06 -0400
+Received: from ms11p00im-qufo17291301.me.com (ms11p00im-qufo17291301.me.com [17.58.38.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F70613D1E
+        for <git@vger.kernel.org>; Sat, 26 Mar 2022 07:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1648304607;
+        bh=arZ1GeT/ApYxSYtjCKSEgmTwuuiUJ0779hl1axTGTbI=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=iuOOzkqDzAfx5fkcnnLroMMpTVRj9SdiC/n9qPhSTmU9YoRJ4Qz66guy1Q/Ob024W
+         bXz/nkdpXLxaet1T2e9mTqHDu69OdzjmowLSdWp6S8NhQjxOkZSz5QT7Q98NP62B7Z
+         eIQkaudU5KTtInJjytqkZ8+BWE5WEcv64fbXIOoEUwBZzSJexVgHLVPdN0vgUIo5CL
+         7rhm7gl7zVmodQdzar0lsJ8JbVYFhbhN+W5x0NiheSOwr6JMv2u1OtWyOu6YnXvxgn
+         4oPmzJW1xT/F9jKoV3sYURJKgnF1JFizUX2EsixwJeWChcgODuS+XkQdYFAp1NfNQD
+         PDzc5CTPrNjyQ==
+Received: from max-mbp-1449.fritz.box (ms11p00im-dlb-asmtpmailmevip.me.com [17.57.154.19])
+        by ms11p00im-qufo17291301.me.com (Postfix) with ESMTPS id 3E9FE940251
+        for <git@vger.kernel.org>; Sat, 26 Mar 2022 14:23:27 +0000 (UTC)
+From:   Maximilian Reichel <reichemn@icloud.com>
+Content-Type: multipart/mixed;
+        boundary="Apple-Mail=_733E63F4-252D-47A2-93F3-DB3AC49531BF"
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
+Subject: fast forward merge anomaly, 'commit' after 'reset --soft' can produce
+ new commit with same hash as before
+Message-Id: <1BD801F4-B2BA-4D6C-A450-5EEB14E8A58A@icloud.com>
+Date:   Sat, 26 Mar 2022 15:23:24 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.21)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.572,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-14=5F01:2022-01-14=5F01,2020-02-14=5F11,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
+ clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2203260092
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/25/2022 2:27 PM, Matthieu Moy wrote:
 
-> I couldn't understand what exactly the option was supposed to do. If I
-> understand correctly, it should launch another window to show the git
-> program output, but I don't know which window actually (xterm?
-> x-terminal-emulator? a terminal program that isn't installed on my system=
-?).
+--Apple-Mail=_733E63F4-252D-47A2-93F3-DB3AC49531BF
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-In VS Code settings, it seems to be x-terminal-emulator.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+Running the following script with and without the sleep command.
+```
+#!/bin/bash
+git -c init.defaultBranch=3Dmaster init
+git config user.email "e@mail.com"
+git config  user.name "Name"
+git commit -m init --allow-empty
+git checkout -b otherBranch
+git commit -a --allow-empty -m first
+git checkout master
+git merge --ff otherBranch
+git notes add -m foo
+# sleep 2
+git reset --soft HEAD~1
+git commit -a --allow-empty -m first
+git notes add -f -m bar
+git log --graph --abbrev-commit --decorate --all
+git checkout otherBranch
+git notes show
+```
+
+What did you expect to happen? (Expected behavior)
+I expected that the sleep command will not affect the behavior of the =
+script.
+
+What happened instead? (Actual behavior)
+Without the sleep command, the note attached to the HEAD of otherBranch =
+contains the message "bar" (most of the time).
+With the sleep command, the note attached to the HEAD of otherBranch =
+contains the message "foo".=20
+
+What's different between what you expected and what actually happened?
+Without the sleep command, the last commit will have the same commit id =
+as the HEAD before the reset.
+Because of this collision, we can not attach notes to HEAD of the master =
+and the HEAD of otherBranch independently.
+
+Anything else you want to add:
+I tested this on git 2.35.1, 2.30.2 and 2.21.0, and they are all =
+affected.=20
+I attached the console output of the script with and without the sleep =
+command to this mail.
+
+[System Info]
+git version:
+git version 2.35.1
+cpu: x86_64
+built from commit: 4c53a8c20f8984adb226293a3ffd7b88c3f4ac1a
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): <unset>
 
 
-On 3/25/2022 8:01 PM, Derrick Stolee <derrickstolee@github.com> wrote :
-> >> - "externalConsole": true,
-> >> + "externalConsole": false,
-> I'd actually remove the line completely, to mean "let VSCode decide what =
-to do", i.e. either VSCode's default, or the user's configuration ("launch"=
- section in settings.json, see e.g. https://code.visualstudio.com/docs/gets=
-tarted/settings ). If some user has a > non-broken externalConsole: true VS=
-Code and likes this behavior, then the best place to configure it is in a u=
-ser-wide config file IHMO.
->
-> I confirmed that deleting the line works just fine.
+[Enabled Hooks]
+not run from a git repository - no hooks to show
 
-Yes, we agree with both of you, remove the line completly is better
-because it let the user choices his preferences.
-And it also work for us.
+--Apple-Mail=_733E63F4-252D-47A2-93F3-DB3AC49531BF
+Content-Disposition: attachment;
+	filename=output-sleep.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="output-sleep.txt"
+Content-Transfer-Encoding: 7bit
 
-> Reported-by: Jonathan Bressat <git.jonathan.bressat@gmail.com>
-> Reported-by: Cogoni Guillaume <cogoni.guillaume@gmail.com>
-> Helped-by: Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
-> contrib/vscode/init.sh | 1 -
-> 1 file changed, 1 deletion(-)
->
-> diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
-> index 27de94994b5..f139fd86444 100755
-> --- a/contrib/vscode/init.sh
-> +++ b/contrib/vscode/init.sh
-> @@ -271,7 +271,6 @@ cat >.vscode/launch.json.new <<EOF ||
-> "stopAtEntry": false,
-> "cwd": "\${workspaceFolder}",
-> "environment": [],
-> - "externalConsole": true,
-> "MIMode": "gdb",
-> "miDebuggerPath": "$GDBPATH",
-> "setupCommands": [
-> --
-> 2.35.1.138.gfc5de29e9e6
->
->
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test/state.ff/.git/
+[master (root-commit) c298c33] init
+Switched to a new branch 'otherBranch'
+[otherBranch ae621d9] first
+Switched to branch 'master'
+Updating c298c33..ae621d9
+Fast-forward
+[master 1681165] first
+* commit 1681165 (HEAD -> master)
+| Author: Name <e@mail.com>
+| Date:   Sat Mar 26 13:35:57 2022 +0000
+| 
+|     first
+| 
+| Notes:
+|     bar
+|   
+| * commit be3204c (refs/notes/commits)
+| | Author: Name <e@mail.com>
+| | Date:   Sat Mar 26 13:35:57 2022 +0000
+| | 
+| |     Notes added by 'git notes add'
+| | 
+| * commit aff6c5b
+|   Author: Name <e@mail.com>
+|   Date:   Sat Mar 26 13:35:55 2022 +0000
+|   
+|       Notes added by 'git notes add'
+|   
+| * commit ae621d9 (otherBranch)
+|/  Author: Name <e@mail.com>
+|   Date:   Sat Mar 26 13:35:55 2022 +0000
+|   
+|       first
+|   
+|   Notes:
+|       foo
+| 
+* commit c298c33
+  Author: Name <e@mail.com>
+  Date:   Sat Mar 26 13:35:55 2022 +0000
+  
+      init
+Switched to branch 'otherBranch'
+foo
 
-https://code.visualstudio.com/docs/editor/debugging
-https://code.visualstudio.com/docs/getstarted/settings
-Maybe, It would be nice to add these two links in
-contrib/vscode/readme.md, this may be relevant to
-help new users that want to use vscode debugger. And add some explanations
-like "How to use it".
+--Apple-Mail=_733E63F4-252D-47A2-93F3-DB3AC49531BF
+Content-Disposition: attachment;
+	filename=output-no-sleep.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="output-no-sleep.txt"
+Content-Transfer-Encoding: quoted-printable
 
-Except that, your patch sounds good for us.
+warning: templates not found in /usr/local/share/git-core/templates
+Initialized empty Git repository in /test/state.ff/.git/
+[master (root-commit) 2cd4638] init
+Switched to a new branch 'otherBranch'
+[otherBranch e803e0a] first
+Switched to branch 'master'
+Updating 2cd4638..e803e0a
+Fast-forward
+[master e803e0a] first
+Overwriting existing notes for object =
+e803e0a4625722bd00efc5ff39b0d70b55ecae30
+* commit e803e0a (HEAD -> master, otherBranch)
+| Author: Name <e@mail.com>
+| Date:   Sat Mar 26 13:35:47 2022 +0000
+|=20
+|     first
+|=20
+| Notes:
+|     bar
+|=20
+* commit 2cd4638
+  Author: Name <e@mail.com>
+  Date:   Sat Mar 26 13:35:47 2022 +0000
+ =20
+      init
+ =20
+* commit 21e0b57 (refs/notes/commits)
+| Author: Name <e@mail.com>
+| Date:   Sat Mar 26 13:35:47 2022 +0000
+|=20
+|     Notes added by 'git notes add'
+|=20
+* commit a3da577
+  Author: Name <e@mail.com>
+  Date:   Sat Mar 26 13:35:47 2022 +0000
+ =20
+      Notes added by 'git notes add'
+Switched to branch 'otherBranch'
+bar
 
-Thanks,
-
-Guillaume and Jonathan.
+--Apple-Mail=_733E63F4-252D-47A2-93F3-DB3AC49531BF--
