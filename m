@@ -2,75 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84750C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 01:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 939EEC433F5
+	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 01:13:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbiCZBJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Mar 2022 21:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
+        id S229972AbiCZBO5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Mar 2022 21:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiCZBJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Mar 2022 21:09:14 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347F914A6C6
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:07:39 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id pv16so18487916ejb.0
-        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:07:39 -0700 (PDT)
+        with ESMTP id S229446AbiCZBO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Mar 2022 21:14:56 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2C9CD8
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:13:18 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id bg10so18449230ejb.4
+        for <git@vger.kernel.org>; Fri, 25 Mar 2022 18:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=w85WY7L1hibdu3QBeMxu5A2XYhKpzFUvKuPZXREDaHY=;
-        b=U247HfGE2LZoth/kWNkyVb69/DPH5h26DFtb1e7kWcFkbpmxQd7l2igHERv4IqTqWC
-         ipDWmT6/r/wNBBnPys+qRetY1vBFaH3UZTZcPuGCgkdqZRpXG+f7MaiRC2kkXr45WuM/
-         gqQkemCt63P+K4k12RvDnY45eTqIYQxSz+xzXBBHVveMIfu4kAnpYKmYz/jr5hQtnxOs
-         Wk4SastSDdg2icSAd1n1OjKdbUsJBCxEp028kh5ikBUtlmVuvOEMNYe91rSJMIbomqti
-         EIPF/SJXve4WDhcjA5YUGfrUq92bVBlO1AORB9Pa61G0OvQqeu/i6zxxkmG2ww2lVCRy
-         LRtg==
+        bh=f4q7jz6UiV0iWNPgbgDRhG+hENySTf4RWZhJQ+Jmqog=;
+        b=GF6bfKGqmhaF5UjT6/bomATPRfGl8LqorakiCbEhZXy5V0TI7iXjlf+e1YfrzFQANN
+         MQpT7ChdRIx6+QtC9cyIaIASHVimtmXAMys0cNBG0FAw4HxCKJ92oe1dGaRjL2X77kcG
+         UW3wRBKohGsB5EAto3DQwS3nmSML4e9V7AD1kJdJnmO/6XspfUg3wuR5BEp2eZHsQWYU
+         ETXlfd25ou2OvusgtTbAjNFvB95Bzys2PYS9ArjjJ55QEO+Iho3t9XL5uFzu+XOLWteK
+         YPOTtbSvbJRywUCJ2NAsJi7Xw6VhYioh5W7+nZ10ruDIkoEP6KZYCO0SLUSzVfhJD6yH
+         gTXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=w85WY7L1hibdu3QBeMxu5A2XYhKpzFUvKuPZXREDaHY=;
-        b=lagA5gN3MV+8StBVHctuUWxnhjaLWBBN4k+LKhCjOihCD6V1BSjI/7/k7jdPm/XQ5f
-         iOF43s0lwjvDUcQkwwY8ThlnnC66EiF3HF5RB4zZCS30zzHJy6uLc/R6UKjiy/LHI6Or
-         1yILAxJQxFwmmXX3FzEOYmiFoOAb2DfHWxyhsZt+o/iYr+L1NrRMfCDH4k1O3CprEvLC
-         IEjpnEdCQb+t9l4Y6tGs6cysA5oG+2nRZaAtuk/2wuM/c/VwzueLut6q+5E+TPdaiEHN
-         dMlme6IagGJtTu3PyUhQS94DXiZO0t0QNQRoq+UVV9iFE59h80rWVGE1WTLvQp1XJWjY
-         r3kw==
-X-Gm-Message-State: AOAM531EMoDLPEXPJSaCOs8NvK5Ocb0F6x+lkoLDcawc2f5iiLpt5znL
-        TfpwWf/gz6bMz7zGiGlkt20=
-X-Google-Smtp-Source: ABdhPJzGBaYG9Dw0YMo9e/D3APcDCMsl86p2oAh3nx7u2ROwdBSqk+AN2hA9Dqu9FgdCexf7WVO7Uw==
-X-Received: by 2002:a17:906:dc8d:b0:6db:572b:df24 with SMTP id cs13-20020a170906dc8d00b006db572bdf24mr14975198ejc.193.1648256857598;
-        Fri, 25 Mar 2022 18:07:37 -0700 (PDT)
+        bh=f4q7jz6UiV0iWNPgbgDRhG+hENySTf4RWZhJQ+Jmqog=;
+        b=QJYenCrucAFzhxJ8S4TIfSY8Q4AqZj2nRbT03ZSo+E5YA7htBKqcZJ0XEKaAc1Unfk
+         3jUGCOkFhifGd3dSCq+HAwXpe+iJmjvfhzcM5p4VeJjpur0j/JnivduCisrjUWHE734s
+         1RoxynKlgeDnxpbDrTBtz19CH76KmEE2gVkNUbASW3FJjQizAOk3OZKDYv9URvqE2J97
+         I2LYy1KTF4GlXytW194g1wxnqx43UDI6F/PA+/MN9cWj0RS20df9eaqYU892jI0jkQ+V
+         xTkPPA6CRjobTGeIwQZ8gUlnaTiPRYFmAn99fl6uKq/TE+na475CEE/HpJUo8eMLEBzi
+         NXTg==
+X-Gm-Message-State: AOAM530OUSzo35FDiW76vJMO2P7mF2eWHOSi+dfZ4N2+ySzmuQLyh/5r
+        saI5VhHCs/dzF+nfqOdlRQ4=
+X-Google-Smtp-Source: ABdhPJwBvTAt5IxsFt8ANqVaFEDxdnywFf0kjBTLh+RCBZBDrDHRT/WQK9+sDiimIY1N0hWtYTNt0Q==
+X-Received: by 2002:a17:906:b052:b0:6ce:88a5:e42a with SMTP id bj18-20020a170906b05200b006ce88a5e42amr15155490ejb.237.1648257197019;
+        Fri, 25 Mar 2022 18:13:17 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f3-20020a1709067f8300b006ce051bf215sm2888357ejr.192.2022.03.25.18.07.37
+        by smtp.gmail.com with ESMTPSA id b7-20020a509f07000000b00418f85deda9sm3402580edf.4.2022.03.25.18.13.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 18:07:37 -0700 (PDT)
+        Fri, 25 Mar 2022 18:13:16 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nXuu0-002KoV-D6;
-        Sat, 26 Mar 2022 02:07:36 +0100
+        id 1nXuzT-002L12-VP;
+        Sat, 26 Mar 2022 02:13:15 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2 00/25] CI: run "make [test]" directly, use $GITHUB_ENV
-Date:   Sat, 26 Mar 2022 01:59:49 +0100
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
- <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
- <320b3dde-a84e-0074-bed8-57061293b2b0@github.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH] pack-objects: lazily set up "struct rev_info", don't leak
+Date:   Sat, 26 Mar 2022 02:09:08 +0100
+References: <pull.1186.git.1647970119.gitgitgadget@gmail.com>
+ <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
+ <xmqqmthdampa.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <320b3dde-a84e-0074-bed8-57061293b2b0@github.com>
-Message-ID: <220326.861qypldwn.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqmthdampa.fsf@gitster.g>
+Message-ID: <220326.86wnghjz2s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -79,104 +71,54 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Mar 25 2022, Victoria Dye wrote:
+On Fri, Mar 25 2022, Junio C Hamano wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> A re-roll of my improvements my series to simplify the CI setup a lot
->> (see diffstat), much of it was dealing with constraints that went away
->> with Travis et al. CI for this series (OSX runners failing for
->> unrelated reasons):
->>=20
->>     https://github.com/avar/git/actions/runs/2040223909
->>=20
->> For a much more detailed summary of how the output looks before/after
->> see v1[].
->>=20
->> This series heavily conflicts with Johannes's
->> js/ci-github-workflow-markup in "seen", but in the v1 I suggested
->> basing that series on top of this one, because it can benefit a lot
->> from these simplifications.
->>=20
->> I'll reply to this series with a proposed rebasing of that series on
->> top of this one, which allows for removing almost all of its changes
->> to "ci/" with no harm to its end-goals, i.e. the splitting up of
->> "make" and "make test" output is something it'll get for free from
->> this series.
->>=20
->> Junio: Since that series has been stalled on still-outstanding
->> performance issues for a couple of months I was hoping we could queue
->> this instead, and perhaps in addition if Johannes approves of the
->> proposed re-roll on top of his.
->>=20
->> There's some forward progress on the performance issues (this[2] reply
->> of Victoria Dye's from yesterday), but fully resolving those will
->> probably take a bit...
->>=20
->> Whereas even though this one is relatively large I don't think there's
->> anything controversial here. The one concern that's been raised has
->> been Johannes's objection to removing some of the dead Azure code
->> (which was needed to move forward here). I asked how he'd prefer to
->> move forward with that in [3], but there hasn't been a reply to that
->> in >1 month.
->>=20
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> While the largeness of a series shouldn't necessarily block it, the lack =
-of
-> overarching structure or purpose in this one makes it really difficult for
-> me to review with much confidence (I can't speak for everyone, but it may=
- be
-> one of the reasons for the general lack of feedback). If you believe all =
-of
-> these patches as thematically-related enough to warrant being in a single
-> series, then it would help a lot if you could:
+>> In the preceding [1] (pack-objects: move revs out of
+>> get_object_list(), 2022-03-22) the "repo_init_revisions()" was moved
+>> to cmd_pack_objects() so that it unconditionally took place for all
+>> invocations of "git pack-objects".
+>>
+>> We'd thus start leaking memory, which is easily reproduced in
+>> e.g. git.git by feeding e83c5163316 (Initial revision of "git", the
+>> information manager from hell, 2005-04-07) to "git pack-objects";
+>> ...
+>> Narrowly fixing that commit would have been easy, just add call
+>> repo_init_revisions() right before get_object_list(), which is
+>> effectively what was done before that commit.
+>>
+>> But an unstated constraint when setting it up early is that it was
+>> needed for the subsequent [2] (pack-objects: parse --filter directly
+>> into revs.filter, 2022-03-22), i.e. we might have a --filter
+>> command-line option, and need to either have the "struct rev_info"
+>> setup when we encounter that option, or later.
+>>
+>> Let's just change the control flow so that we'll instead set up the
+>> "struct rev_info" only when we need it. Doing so leads to a bit more
+>> verbosity, but it's a lot clearer what we're doing and why.
 >
-> 1. Clearly describe the purpose of the series (yes they're all CI
->    improvements, but *why* these particular improvements, and why do they
->    all need to go together?)=20
-> 2. Outline the "path" these commits take to accomplishing that purpose ("=
-The
->    first 3 commits do X because Y. Then, the next 4 commits do A because =
-B."
->    etc. or whatever format fits your writing style, as long as the
->    information is there).
-> 3. Reorganize commits as necessary to keep the above outline from jumping
->    back and forth between topics.=20
+> Is this about "we take it as given that the use of rev_info leaks
+> until we fix revisions API, so let's keep its use limited to avoid
+> unnecessary leaks"?
 
-The v1 summary described it about as clearly as I was able to:
-https://lore.kernel.org/git/cover-00.25-00000000000-20220221T143936Z-avarab=
-@gmail.com/
+Not exactly,. When you use the revisions API to do "filter" stuff in
+this codepath it leaks both before & after Derrick's patches, so nothing
+has changed in that case, but...
 
-> Personally, I think this could (should?) be split into at least two serie=
-s:
-> one that breaks up 'run-build-and-tests.sh' (and is more directly relevant
-> to dscho's series), and one that does the cleanup/flag change/other work.
-> The two appear to be independent, and the resulting two series would be a
-> much more manageable 10-15 commits each.=20
+> If so, it sort-of makes sense, but smells like a roundabout way to
+> address the issue.  An obvious alternative is to wait until both the
+> topic and the "plug revision API" topic graduate and then add a
+> "release" call to release the resource in the same sope as the
+> unconditional call to init_revisions at the end.  I do not quite get
+> what on-demand lazy set-up buys us.  What we need to lazily set-up,
+> when we do lazily set-up, needs to be released either way, no?
 
-To rephrase that a bit, every commit here passes CI and is atomic, so it
-could be split up into 25 parts (at least).
+...We were doing lazy setup of "struct rev_info" before the parent
+series, and as a result it introduces a new memory leak. We do a
+malloc() for some diff.c code that revisions.c uses unconditionally,
+which then don't use at all in some common cases.
 
-But it's really not doing different things, it's a single-topic series:
-It's changing CI "step" targets that are shellscripts that do N things
-to instead be single command invocations at the "step" level, driven by
-the CI recipe itself.
-
-To do that we need to pass state that we previously re-setup for every
-"step" via $GITHUB_ENV, whose state we then helpfully show (this is just
-a standard GitHub CI feature) in a drop-down at the start of every
-"step".
-
-So yes, it could be split up in the sense that we could get partway
-there and continue with the rest some other time, but I really think the
-UX experience is *much better* if it's not a partial conversion.
-
-I.e. at the tip of this series you can reliably look at that $GITHUB_ENV
-view to see what the full and relevant environment was for that "make",
-"make test" or whatever.
-
-If we just do that partially you might get that for "make" if it failed,
-but if your tests failed we'd have a failure in the proverbial
-ci/load-lib.sh-do-setup-stuff-and-run-make-test-at-some-point.sh.
-
-Which I think makes the UX much less useful, i.e. you really want to
-*always* find this information in the same place.
+The patch I've submitted on top just restores the previous state of the
+initialization being lazy, but in a way that has to be adapted for other
+code changes the series made.
