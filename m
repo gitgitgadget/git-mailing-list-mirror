@@ -2,78 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1EFC433EF
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 15:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD50FC433EF
+	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 15:44:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233616AbiCZPgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Mar 2022 11:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
+        id S233627AbiCZPq3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Mar 2022 11:46:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbiCZPgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Mar 2022 11:36:18 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C79DFB04
-        for <git@vger.kernel.org>; Sat, 26 Mar 2022 08:34:40 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id y10so12271873edv.7
-        for <git@vger.kernel.org>; Sat, 26 Mar 2022 08:34:40 -0700 (PDT)
+        with ESMTP id S232713AbiCZPq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Mar 2022 11:46:28 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB2F2BDB
+        for <git@vger.kernel.org>; Sat, 26 Mar 2022 08:44:51 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id dr20so20649027ejc.6
+        for <git@vger.kernel.org>; Sat, 26 Mar 2022 08:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=BKnm6w4kXwkhVz/aXqZULRgpEIlTCRRtJ8xk27EniZw=;
-        b=pN0Q3LsR+qYWiWsJbG4NrRGGwWdPtz/lr1jLMuXMp/oQbuP6T9ZhipxsDLbXPuV651
-         kJ/4QFgPQ6ayj/TRp90pcU5wPq0HpGoLpSAQXgyPtVmElfi1wnbVe8j9LzMX5fCzkEKg
-         C8x+sL/7Toz1qNHNJGE7YtETaJsO3sGxP6IRCckXvsFOqiZYkh2a+hgqttzYLm3AuCQC
-         EGFqmqsWnM8+IsGtcvi2bhk1QM8nNvRlLZH8l8fwf+ZxEerAGaDcmpx2sOs2rZO1D+h+
-         eEu08JkjZGib3OFDz+2biEaVNqFUqsDV34k+94N+g8NR/eqzrcBRXBxOr2BJsJRIBzI7
-         +ccg==
+        bh=zyjyGKlnWZW+4USPPFkWczuHKz+gv7J+Ujb5u2aSMRI=;
+        b=DIPckKJrMkIFZszmsr5D7ru1j2NEfxN7ZAikPbkYe5IG0z8gBH7y8au6F1Yun/j6py
+         EF5DjuWxGRYCrrZwte+bXWWF0pCVJBVO8Zy5h1GC6dxunx7Ho9QEcEJBJIqML/qVSbUc
+         SB9+b+TjZdQwEYfiivGap505WSQEhH/1Bj0Qm/3dU+MIszyibs8ayT4Pvz814UnR5PRd
+         rs45lRHt50EYVgSG9LxdELPRvVPWoAybRjxeAIffJHkhv8iAyfMZ/DypijQSf1AuwbPb
+         ohvN7tgu8JZBkKJVEZdnBJI/+g/DnMAjj8b3+wMN+OqBM+edbQSmvCDzBYIvf6OShNZQ
+         AYWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=BKnm6w4kXwkhVz/aXqZULRgpEIlTCRRtJ8xk27EniZw=;
-        b=DBAvJLS0csGkzxxbMi8Bl7KR1/I69RFVNL4KLmV9lyaxurHcRfeXvc+AtpkVo41Xdl
-         cmB2N51MS5qXyWYDynUfvveHjwrp9X57/DEPItXq599/Yh4xuA/oAuRiWnJKmvbEFPz0
-         BsRPspQJS3makNLiOScORxKRT7PGcYCbTYI/skwxqsslq9/yoFJ1kn2/Mpi0lQotMFA3
-         Zj8WBwq5gcoKxAxmHYOmKqDH3zUKEfgVWOae2lBLhRUAaTzeTUAu15Q1XoUta7CtI/rc
-         iuezK7Tzgp75FGNS4qEYhK6OU7YIlSAioN2O7NWymSG85sILvrY2SKhifKd3za72HKqO
-         7Ktw==
-X-Gm-Message-State: AOAM531fH2SpckblGFfFC7tIuEIfKwwlBF3NpFBCQIuVFaPeyrJVv9y4
-        0ZEjaHvrlIKaLTUUsD4PlEQ=
-X-Google-Smtp-Source: ABdhPJw68Qx/kGwi5D5nJAH2YOW28pWJmH72u1r+EDhtTcj1N1lJBt7cwhcxE3XL35Ov9HF5/Fn8fA==
-X-Received: by 2002:a05:6402:187:b0:415:c784:abe0 with SMTP id r7-20020a056402018700b00415c784abe0mr5249667edv.168.1648308878938;
-        Sat, 26 Mar 2022 08:34:38 -0700 (PDT)
+        bh=zyjyGKlnWZW+4USPPFkWczuHKz+gv7J+Ujb5u2aSMRI=;
+        b=L5pRLryjDVHiEpeg8OsxgE7qY1Gf8QPFOylQcnOfJs0/rbD8w3LykIXEciWLtdCfHW
+         QHO4mQ11Tm57CJCMljySA40uJkJ8wERitUx5THq/wwVVtrb0i1cX3A2UB5YvWgL4k2Zd
+         G4itPmqsfzd9NKPyeKOMsdDa4h/68rqBJoXA85keuhOTPFL21gWVaxMu0B7F5sg/7xzY
+         PfKhNF1qI/WdvHKf6pGXWMw+UUXu6CU4OpwpVFlW05iXuJ+ZRilA9D12ZW43gqie8TIr
+         UVD54prKeLaAUt43bihk7opKdB2l0Prhx7k7g0g6m58W/OpJ/RK0KGlgYhuS3ZwxiUzk
+         6VGg==
+X-Gm-Message-State: AOAM531ezUygr5uVMfxtrCJLx8usdROaUOpw3wE6jBPsKWv4JNemuaGT
+        AhCBqA7hgwOQNhMmHAEPck8TnMqTPFglZA==
+X-Google-Smtp-Source: ABdhPJwFnbI2GqR0CEbKTvuPLvOoq2fVa0moKEEjJCgQtbRT/3AL98Q2dweq4hXG1SKrmwsxMBvZ+Q==
+X-Received: by 2002:a17:906:3ec7:b0:6d6:e52b:b with SMTP id d7-20020a1709063ec700b006d6e52b000bmr18293935ejj.521.1648309489414;
+        Sat, 26 Mar 2022 08:44:49 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k3-20020a05640212c300b0041605b2d9c1sm4357815edx.58.2022.03.26.08.34.38
+        by smtp.gmail.com with ESMTPSA id m21-20020a17090677d500b006df766974basm3761327ejn.3.2022.03.26.08.44.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Mar 2022 08:34:38 -0700 (PDT)
+        Sat, 26 Mar 2022 08:44:48 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nY8R3-002TXm-79;
-        Sat, 26 Mar 2022 16:34:37 +0100
+        id 1nY8at-002TtV-L6;
+        Sat, 26 Mar 2022 16:44:47 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Patrick Steinhardt <ps@pks.im>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: do we have too much fsync() configuration in 'next'? (was:
- [PATCH v7] core.fsync: documentation and user-friendly aggregate options)
-Date:   Sat, 26 Mar 2022 16:31:28 +0100
-References: <7e4cc6e10a5d88f4c6c44efaa68f2325007fd935.1646952205.git.gitgitgadget@gmail.com>
- <20220315191245.17990-1-neerajsi@microsoft.com>
- <220323.86fsn8ohg8.gmgdl@evledraar.gmail.com>
- <CANQDOdeeP8opTQj-j_j3=KnU99nYTnNYhyQmAojj=FZtZEkCZQ@mail.gmail.com>
- <220326.86ils1lfho.gmgdl@evledraar.gmail.com>
- <CANQDOdeduc8bFA_=R-kXmkM+nb__oTxVhjBfFYj70vCFew1EyA@mail.gmail.com>
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH v3 09/11] core.fsyncmethod: tests for batch mode
+Date:   Sat, 26 Mar 2022 16:35:15 +0100
+References: <pull.1134.v2.git.1647760560.gitgitgadget@gmail.com>
+ <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+ <b5f371e97fee69d87da1dccd3180de0691c15834.1648097906.git.gitgitgadget@gmail.com>
+ <220324.86tubnmgwk.gmgdl@evledraar.gmail.com>
+ <CANQDOdfM_XyRa3e8Uo72yRdn6cmQxVSahb8J+7b2-cXogOg9pg@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.10
-In-reply-to: <CANQDOdeduc8bFA_=R-kXmkM+nb__oTxVhjBfFYj70vCFew1EyA@mail.gmail.com>
-Message-ID: <220326.86sfr4k9rm.gmgdl@evledraar.gmail.com>
+In-reply-to: <CANQDOdfM_XyRa3e8Uo72yRdn6cmQxVSahb8J+7b2-cXogOg9pg@mail.gmail.com>
+Message-ID: <220326.86o81sk9ao.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -82,307 +77,250 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Mar 25 2022, Neeraj Singh wrote:
+On Thu, Mar 24 2022, Neeraj Singh wrote:
 
-> On Fri, Mar 25, 2022 at 5:33 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> On Thu, Mar 24, 2022 at 9:53 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 > <avarab@gmail.com> wrote:
 >>
 >>
->> On Fri, Mar 25 2022, Neeraj Singh wrote:
+>> On Thu, Mar 24 2022, Neeraj Singh via GitGitGadget wrote:
 >>
->> > On Wed, Mar 23, 2022 at 7:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> > <avarab@gmail.com> wrote:
->> >>
->> >>
->> >> On Tue, Mar 15 2022, Neeraj Singh wrote:
->> >>
->> >> I know this is probably 80% my fault by egging you on about initially
->> >> adding the wildmatch() based thing you didn't go for.
->> >>
->> >> But having looked at this with fresh eyes quite deeply I really think
->> >> we're severely over-configuring things here:
->> >>
->> >> > +core.fsync::
->> >> > +     A comma-separated list of components of the repository that
->> >> > +     should be hardened via the core.fsyncMethod when created or
->> >> > +     modified.  You can disable hardening of any component by
->> >> > +     prefixing it with a '-'.  Items that are not hardened may be
->> >> > +     lost in the event of an unclean system shutdown. Unless you
->> >> > +     have special requirements, it is recommended that you leave
->> >> > +     this option empty or pick one of `committed`, `added`,
->> >> > +     or `all`.
->> >> > ++
->> >> > +When this configuration is encountered, the set of components star=
-ts with
->> >> > +the platform default value, disabled components are removed, and a=
-dditional
->> >> > +components are added. `none` resets the state so that the platform=
- default
->> >> > +is ignored.
->> >> > ++
->> >> > +The empty string resets the fsync configuration to the platform
->> >> > +default. The default on most platforms is equivalent to
->> >> > +`core.fsync=3Dcommitted,-loose-object`, which has good performance,
->> >> > +but risks losing recent work in the event of an unclean system shu=
-tdown.
->> >> > ++
->> >> > +* `none` clears the set of fsynced components.
->> >> > +* `loose-object` hardens objects added to the repo in loose-object=
- form.
->> >> > +* `pack` hardens objects added to the repo in packfile form.
->> >> > +* `pack-metadata` hardens packfile bitmaps and indexes.
->> >> > +* `commit-graph` hardens the commit graph file.
->> >> > +* `index` hardens the index when it is modified.
->> >> > +* `objects` is an aggregate option that is equivalent to
->> >> > +  `loose-object,pack`.
->> >> > +* `derived-metadata` is an aggregate option that is equivalent to
->> >> > +  `pack-metadata,commit-graph`.
->> >> > +* `committed` is an aggregate option that is currently equivalent =
-to
->> >> > +  `objects`. This mode sacrifices some performance to ensure that =
-work
->> >> > +  that is committed to the repository with `git commit` or similar=
- commands
->> >> > +  is hardened.
->> >> > +* `added` is an aggregate option that is currently equivalent to
->> >> > +  `committed,index`. This mode sacrifices additional performance to
->> >> > +  ensure that the results of commands like `git add` and similar o=
-perations
->> >> > +  are hardened.
->> >> > +* `all` is an aggregate option that syncs all individual component=
-s above.
->> >> > +
->> >> >  core.fsyncMethod::
->> >> >       A value indicating the strategy Git will use to harden reposi=
-tory data
->> >> >       using fsync and related primitives.
->> >>
->> >> On top of my
->> >> https://lore.kernel.org/git/RFC-patch-v2-7.7-a5951366c6e-20220323T140=
-753Z-avarab@gmail.com/
->> >> which makes the tmp-objdir part of your not-in-next-just-seen follow-=
-up
->> >> series configurable via "fsyncMethod.batch.quarantine" I really think=
- we
->> >> should just go for something like the belwo patch (note that
->> >> misspelled/mistook "bulk" for "batch" in that linked-t patch, fixed
->> >> below.
->> >>
->> >> I.e. I think we should just do our default fsync() of everything, and
->> >> probably SOON make the fsync-ing of loose objects the default. Those =
-who
->> >> care about performance will have "batch" (or "writeout-only"), which =
-we
->> >> can have OS-specific detections for.
->> >>
->> >> But really, all of the rest of this is unduly boxing us into
->> >> overconfiguration that I think nobody really needs.
->> >>
+>> > From: Neeraj Singh <neerajsi@microsoft.com>
 >> >
->> > We've gone over this a few times already, but just wanted to state it
->> > again.  The really detailed settings are really there for Git hosters
->> > like GitLab or GitHub. I'd be happy to remove the per-component
->> > core.fsync values from the documentation and leave just the ones we
->> > point the user to.
->>
->> I'm prettty sure (but Patrick knows more) that GitLab's plan for this is
->> to keep it at whatever the safest setting is, presumably GitHub's as
->> well (but I don't know at all on that front).
->>
->> >> If someone really needs this level of detail they can LD_PRELOAD
->> >> something to have fsync intercept fd's and paths, and act appropriate=
-ly.
->> >>
->> >> Worse, as the RFC series I sent
->> >> (https://lore.kernel.org/git/RFC-cover-v2-0.7-00000000000-20220323T14=
-0753Z-avarab@gmail.com/)
->> >> shows we can and should "batch" up fsync() operations across these
->> >> configuration boundaries, which this level of configuration would seem
->> >> to preclude.
->> >>
->> >> Or, we'd need to explain why "core.fsync=3Dloose-object" won't *actua=
-lly*
->> >> call fsync() on a single loose object's fd under "batch" as I had to =
-do
->> >> on top of this in
->> >> https://lore.kernel.org/git/RFC-patch-v2-6.7-c20301d7967-20220323T140=
-753Z-avarab@gmail.com/
->> >>
+>> > Add test cases to exercise batch mode for:
+>> >  * 'git add'
+>> >  * 'git stash'
+>> >  * 'git update-index'
+>> >  * 'git unpack-objects'
 >> >
->> > 99.9% of users don't care and won't look.  The ones who do look deeper
->> > and understand the issues have source code and access to this ML
->> > discussion to understand why this works this way.
->>
->> Exactly, so we can hopefully have a simpler interface.
->>
->> >> The same is going to apply for almost all of the rest of these
->> >> configuration categories.
->> >>
->> >> I.e. a natural follow-up to e.g. batching across objects & index as I=
-'m
->> >> doing in
->> >> https://lore.kernel.org/git/RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140=
-753Z-avarab@gmail.com/
->> >> is to do likewise for all the PACK-related stuff before we rename it
->> >> in-place. Or even have "git gc" issue only a single fsync() for all of
->> >> PACKs, their metadata files, commit-graph etc., and then rename() thi=
-ngs
->> >> in-place as appropriate afterwards.
->> >>
->> >> diff --git a/Documentation/config/core.txt b/Documentation/config/cor=
-e.txt
->> >> index 365a12dc7ae..536238e209b 100644
->> >> --- a/Documentation/config/core.txt
->> >> +++ b/Documentation/config/core.txt
->> >> @@ -548,49 +548,35 @@ core.whitespace::
->> >>    errors. The default tab width is 8. Allowed values are 1 to 63.
->> >>
->> >>  core.fsync::
->> >> -       A comma-separated list of components of the repository that
->> >> -       should be hardened via the core.fsyncMethod when created or
->> >> -       modified.  You can disable hardening of any component by
->> >> -       prefixing it with a '-'.  Items that are not hardened may be
->> >> -       lost in the event of an unclean system shutdown. Unless you
->> >> -       have special requirements, it is recommended that you leave
->> >> -       this option empty or pick one of `committed`, `added`,
->> >> -       or `all`.
->> >> -+
->> >> -When this configuration is encountered, the set of components starts=
- with
->> >> -the platform default value, disabled components are removed, and add=
-itional
->> >> -components are added. `none` resets the state so that the platform d=
-efault
->> >> -is ignored.
->> >> -+
->> >> -The empty string resets the fsync configuration to the platform
->> >> -default. The default on most platforms is equivalent to
->> >> -`core.fsync=3Dcommitted,-loose-object`, which has good performance,
->> >> -but risks losing recent work in the event of an unclean system shutd=
-own.
->> >> -+
->> >> -* `none` clears the set of fsynced components.
->> >> -* `loose-object` hardens objects added to the repo in loose-object f=
-orm.
->> >> -* `pack` hardens objects added to the repo in packfile form.
->> >> -* `pack-metadata` hardens packfile bitmaps and indexes.
->> >> -* `commit-graph` hardens the commit graph file.
->> >> -* `index` hardens the index when it is modified.
->> >> -* `objects` is an aggregate option that is equivalent to
->> >> -  `loose-object,pack`.
->> >> -* `derived-metadata` is an aggregate option that is equivalent to
->> >> -  `pack-metadata,commit-graph`.
->> >> -* `committed` is an aggregate option that is currently equivalent to
->> >> -  `objects`. This mode sacrifices some performance to ensure that wo=
-rk
->> >> -  that is committed to the repository with `git commit` or similar c=
-ommands
->> >> -  is hardened.
->> >> -* `added` is an aggregate option that is currently equivalent to
->> >> -  `committed,index`. This mode sacrifices additional performance to
->> >> -  ensure that the results of commands like `git add` and similar ope=
-rations
->> >> -  are hardened.
->> >> -* `all` is an aggregate option that syncs all individual components =
-above.
->> >> +       A boolen defaulting to `true`. To ensure data integrity git
->> >> +       will fsync() its objects, index and refu updates etc. This can
->> >> +       be set to `false` to disable `fsync()`-ing.
->> >> ++
->> >> +Only set this to `false` if you know what you're doing, and are
->> >> +prepared to deal with data corruption. Valid use-cases include
->> >> +throwaway uses of repositories on ramdisks, one-off mass-imports
->> >> +followed by calling `sync(1)` etc.
->> >> ++
->> >> +Note that the syncing of loose objects is currently excluded from
->> >> +`core.fsync=3Dtrue`. To turn on all fsync-ing you'll need
->> >> +`core.fsync=3Dtrue` and `core.fsyncObjectFiles=3Dtrue`, but see
->> >> +`core.fsyncMethod=3Dbatch` below for a much faster alternative that's
->> >> +just as safe on various modern OS's.
->> >> ++
->> >> +The default is in flux and may change in the future, in particular t=
-he
->> >> +equivalent of the already-deprecated `core.fsyncObjectFiles` setting
->> >> +might soon default to `true`, and `core.fsyncMethod`'s default of
->> >> +`fsync` might default to a setting deemed to be safe on the local OS,
->> >> +suc has `batch` or `writeout-only`
->> >>
->> >>  core.fsyncMethod::
->> >>         A value indicating the strategy Git will use to harden reposi=
-tory data
->> >>         using fsync and related primitives.
->> >>  +
->> >> +Defaults to `fsync`, but as discussed for `core.fsync` above might
->> >> +change to use one of the values below taking advantage of
->> >> +platform-specific "faster `fsync()`".
->> >> ++
->> >>  * `fsync` uses the fsync() system call or platform equivalents.
->> >>  * `writeout-only` issues pagecache writeback requests, but depending=
- on the
->> >>    filesystem and storage hardware, data added to the repository may =
-not be
->> >> @@ -680,8 +666,8 @@ backed up by any standard (e.g. POSIX), but worke=
-d in practice on some
->> >>  Linux setups.
->> >>  +
->> >>  Nowadays you should almost certainly want to use
->> >> -`core.fsync=3Dloose-object` instead in combination with
->> >> -`core.fsyncMethod=3Dbulk`, and possibly with
->> >> +`core.fsync=3Dtrue` instead in combination with
->> >> +`core.fsyncMethod=3Dbatch`, and possibly with
->> >>  `fsyncMethod.batch.quarantine=3Dtrue`, see above. On modern OS's (Li=
-nux,
->> >>  OSX, Windows) that gives you most of the performance benefit of
->> >>  `core.fsyncObjectFiles=3Dfalse` with all of the safety of the old
+>> > These tests ensure that the added data winds up in the object database.
 >> >
->> > I'm at the point where I don't want to endlessly revisit this discussi=
-on.
+>> > In this change we introduce a new test helper lib-unique-files.sh. The
+>> > goal of this library is to create a tree of files that have different
+>> > oids from any other files that may have been created in the current te=
+st
+>> > repo. This helps us avoid missing validation of an object being added
+>> > due to it already being in the repo.
+>> >
+>> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+>> > ---
+>> >  t/lib-unique-files.sh  | 32 ++++++++++++++++++++++++++++++++
+>> >  t/t3700-add.sh         | 28 ++++++++++++++++++++++++++++
+>> >  t/t3903-stash.sh       | 20 ++++++++++++++++++++
+>> >  t/t5300-pack-object.sh | 41 +++++++++++++++++++++++++++--------------
+>> >  4 files changed, 107 insertions(+), 14 deletions(-)
+>> >  create mode 100644 t/lib-unique-files.sh
+>> >
+>> > diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
+>> > new file mode 100644
+>> > index 00000000000..74efca91dd7
+>> > --- /dev/null
+>> > +++ b/t/lib-unique-files.sh
+>> > @@ -0,0 +1,32 @@
+>> > +# Helper to create files with unique contents
+>> > +
+>> > +# Create multiple files with unique contents within this test run. Ta=
+kes the
+>> > +# number of directories, the number of files in each directory, and t=
+he base
+>> > +# directory.
+>> > +#
+>> > +# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3=
+ files
+>> > +#                                     each in my_dir, all with conten=
+ts
+>> > +#                                     different from previous invocat=
+ions
+>> > +#                                     of this command in this run.
+>> > +
+>> > +test_create_unique_files () {
+>> > +     test "$#" -ne 3 && BUG "3 param"
+>> > +
+>> > +     local dirs=3D"$1" &&
+>> > +     local files=3D"$2" &&
+>> > +     local basedir=3D"$3" &&
+>> > +     local counter=3D0 &&
+>> > +     test_tick &&
+>> > +     local basedata=3D$basedir$test_tick &&
+>> > +     rm -rf "$basedir" &&
+>> > +     for i in $(test_seq $dirs)
+>> > +     do
+>> > +             local dir=3D$basedir/dir$i &&
+>> > +             mkdir -p "$dir" &&
+>> > +             for j in $(test_seq $files)
+>> > +             do
+>> > +                     counter=3D$((counter + 1)) &&
+>> > +                     echo "$basedata.$counter">"$dir/file$j.txt"
+>> > +             done
+>> > +     done
+>> > +}
 >>
->> Sorry, my intention isn't to frustrate you, but I do think it's
->> important to get this right.
+>> Having written my own perf tests for this series, I still don't get why
+>> this is needed, at all.
 >>
->> Particularly since this is now in "next", and we're getting closer to a
->> release. We can either talk about this now and decide on something, or
->> it'll be in a release, and then publicly documented promises will be
->> harder to back out of.
->>
->> I think your suggestion of just hiding the relevant documentation would
->> be a good band-aid solution to that.
->>
->> But I also think that given how I was altering this in my RFC series
->> that the premise of how this could be structured has been called into
->> question in a way that we didn't (or I don't recall) us having discussed
->> before.
->>
->> I.e. that we can say "sync loose, but not index", or "sync index, but
->> not loose" with this config schema. When with "bulk" we it really isn't
->> any more expensive to do both if one is true (even cheaper, actually).
+>> tl;dr: the below: I think this whole workaround is because you missed
+>> that "test_when_finished" exists, and how it excludes perf timings.
 >>
 >
-> I want to make a comment about the Index here.  Syncing the index is
-> strictly required for the "added" level of consistency, so that we
-> don't lose stuff that leaves the work tree but is staged.  But my
-> Windows enlistment has an index that's 266MB, which would be painful
-> to sync even with all the optimizations.  Maybe with split-index, this
-> wouldn't be so bad, but I just wanted to call out that some advanced
-> users may really care about the configurability.
+> I actually noticed test_when_finished, but I didn't think of your
+> "setup the next round on cleanup of last" idea.  I was debating at the
+> time adding a "test_perf_setup" helper to do the setup work during
+> each perf iteration.  How about I do that and just create a new repo
+> in each test_perf_setup step?
+>
+>> I.e. I get that if we ran this N times we'd want to wipe our repo
+>> between tests, as for e.g. "git add" you want it to actually add the
+>> objects.
+>>
+>> It's what I do with the "hyperfine" command in
+>> https://lore.kernel.org/git/RFC-patch-v2-4.7-61f4f3d7ef4-20220323T140753=
+Z-avarab@gmail.com/
+>> with the "-p" option.
+>>
+>> I.e. hyperfine has a way to say "this is setup, but don't measure the
+>> time", which is 1/2 of what you're working around here and in 10/11.
+>>
+>> But as 10/11 shows you're limited to one run with t/perf because you
+>> want to not include those "setup" numbers, and "test_perf" has no easy
+>> way to avoid that (but more on that later).
+>>
+>> Which b.t.w. I'm really skeptical of as an approach here in any case
+>> (even if we couldn't exclude it from the numbers).
+>>
+>> I.e. yes what "hyperfine" does would be preferrable, but in exchange for
+>> avoiding that you're comparing samples of 1 runs.
+>>
+>> Surely we're better off with N run (even if noisy). Given enough of them
+>> the difference will shake out, and our estimated +/- will narrow..
+>>
+>> But aside from that, why isn't this just:
+>>
+>>         for cfg in true false blah
+>>         done
+>>                 test_expect_success "setup for $cfg" '
+>>                         git init repo-$cfg &&
+>>                         for f in $(test_seq 1 100)
+>>                         do
+>>                                 >repo-$cfg/$f
+>>                         done
+>>                 '
+>>
+>>                 test_perf "perf test for $cfg" '
+>>                         git -C repo-$cfg
+>>                 '
+>>         done
+>>
+>> Which surely is going to be more accurate in the context of our limited
+>> t/perf environment because creating unique files is not sufficient at
+>> all to ensure that your tests don't interfere with each other.
+>>
+>> That's because in the first iteration we'll create N objects in
+>> .git/objects/aa/* or whatever, which will *still be there* for your
+>> second test, which will impact performance.
+>>
+>> Whereas if you just make N repos you don't need unique files, and you
+>> won't be introducing that as a conflating variable.
+>>
+>> But anyway, reading perf-lib.sh again I haven't tested, but this whole
+>> workaround seems truly unnecessary. I.e. in test_run_perf_ we do:
+>>
+>>         test_run_perf_ () {
+>>                 test_cleanup=3D:
+>>                 test_export_=3D"test_cleanup"
+>>                 export test_cleanup test_export_
+>>                 "$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH=
+" -c '
+>>                         [... code we run and time ...]
+>>                 '
+>>                 [... later ...]
+>>                 test_eval_ "$test_cleanup"
+>>         }
+>>
+>> So can't you just avoid this whole glorious workaround for the low low
+>> cost of approximately one shellscript string assignment? :)
+>>
+>> I.e. if you do:
+>>
+>>         setup_clean () {
+>>                 rm -rf repo
+>>         }
+>>
+>>         setup_first () {
+>>                 git init repo &&
+>>                 [make a bunch of files or whatever in repo]
+>>         }
+>>
+>>         setup_next () {
+>>                 test_when_finished "setup_clean" &&
+>>                 setup_first
+>>         }
+>>
+>>         test_expect_success 'setup initial stuff' '
+>>                 setup_first
+>>         '
+>>
+>>         test_perf 'my perf test' '
+>>                 test_when_finished "setup_next" &&
+>>                 [your perf test here]
+>>         '
+>>
+>>         test_expect_success 'cleanup' '
+>>                 # Not really needed, but just for completeness, we are
+>>                 # about to nuke the trash dir anyway...
+>>                 setup_clean
+>>         '
+>>
+>> I haven't tested (and need to run), but i'm pretty sure that does
+>> exactly what you want without these workarounds, i.e. you'll get
+>> "trampoline setup" without that setup being included in the perf
+>> numbers.
+>>
+>> Is it pretty? No, but it's a lot less complex than this unique file
+>> business & workarounds, and will give you just the numbers you want, and
+>> most importantly you car run it N times now for better samples.
+>>
+>> I.e. "what you want" sans a *tiny* bit of noise that we use to just call
+>> a function to do:
+>>
+>>     test_cleanup=3Dsetup_next
+>>
+>> Which we'll then eval *after* we measure your numbers to setup the next
+>> test.
+>
+> How about I add a new test_perf_setup mechanism to make your idea work
+> in a straightforward way?
 
-So for that use-case you'd like to fsync the loose objects (if any), but
-not the index? So the FS will "flush" up to the index, and then queue
-the index for later syncing to platter?
+Sure, that sounds great.
 
+> I still want the test_create_unique_files thing as a way to make
+> multiple files easily.  And for the non-perf tests it makes sense to
+> have differing contents within a test run.
 
-But even in that case don't the settings need to be tied to one another,
-because in the method=3Dbulk sync=3Dindex && sync=3D!loose case wouldn't we=
- be
-syncing "loose" in any case?
+I think running your perf test on some generated data might still make
+sense, but I think given the above that the *method* really doesn't make
+any sense.
 
-> As Git's various database implementations improve, the fsync stuff
-> will hopefully be more optimal and self-tuning.  But as that happens,
-> Git could just start ignoring settings that lose meaning without tying
-> anyones hands.
+I.e. pretty much the whole structure of t/perf is to write tests that
+can be run on an arbitrary user-provided repo, some of them do make some
+content assumptions (or need no repo), but we've tried to have tests
+there handle arbitrary repos.
 
-Yeah that would alleviate most of my concerns here, but the docs aren't
-saying anything like that. Since you added them & they just landed, do
-you mind doing a small follow-up where we e.g. say that these new
-settings are "EXPERIMENTAL" or whatever, and subject to drastic change?
+You ended up with that "generated random files" to get around the X-Y
+problem of not being able to reset the area without making that part of
+the metrics, but as demo'd above we can use test_when_finished for that.
+
+And once that's resolved it would actually be much more handy to be able
+to run this on an arbitrary repo, as you can see in my "git hyperfine"
+one-liner I grabbed the "t" directory, but we could just make our test
+data all files in the dir (or specify a glob via an env var).
+
+I think it still sounds interesting to have a way to make arbitrary test
+data, but surely that's then better as e.g.:
+
+	cd t/perf
+ 	./make-random-repo /tmp/random-repo &&
+	GIT_PERF_REPO=3D/tmp/random-repo ./run p<your test>
+
+I.e. once we've resolved the metrics/play area issue needing to run this
+on some very specific data is artificial limitation v.s. just being able
+to point it at a given repo.
