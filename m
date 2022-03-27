@@ -2,382 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16AF5C433F5
-	for <git@archiver.kernel.org>; Sun, 27 Mar 2022 11:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B56E2C433F5
+	for <git@archiver.kernel.org>; Sun, 27 Mar 2022 11:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233794AbiC0LZK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Mar 2022 07:25:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33474 "EHLO
+        id S233663AbiC0Lfl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Mar 2022 07:35:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233345AbiC0LZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Mar 2022 07:25:00 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDA764FE
-        for <git@vger.kernel.org>; Sun, 27 Mar 2022 04:23:20 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5300A5C015E;
-        Sun, 27 Mar 2022 07:23:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Sun, 27 Mar 2022 07:23:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-transfer-encoding:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; bh=5BdYip/D5rdkE+gpOgNaCd3o+u7CM7
-        xnR/NzLIFVnlQ=; b=xfl3ZLrwG6IEP60lzp61cIQIVOia2JhImFT4HS90tVkcAy
-        PEMYl8aPP1QbzBM2cuTJlh/V6KXwO3nXCGEufzuspi2gw2XTHIJ1bYwcK/uOAqGt
-        wLImiA0zoQTNOtm3kwC2GuyTpTlFGSN1MKRaGFZN7KaEWaPvzMwidJ1Z6+0yyZAk
-        5Y77X71UXjK3d1I8cVayVdQVPyb42v3QOEoSJ2beebEL9op0asvbpMkExD98vE9Q
-        Y9E3M+shvhz07df2Gc3QYRt0nPx47qQ4gOJVzCbIB51kL1M7Fd4JPpMbwZ4jqRpQ
-        uY2BhbsVvg8TEPZx4fK0cGZIO6j7Ft89mFslcvaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=5BdYip
-        /D5rdkE+gpOgNaCd3o+u7CM7xnR/NzLIFVnlQ=; b=ObEefzs/YVZd85T84bM3JV
-        nPpWUIrF5C1trrWJ7e7Y3b+sa7HzZyv41r+Plt3L8MCcYfOgnAc20+r7ca6l+wpI
-        LyUM6MJ7LTeDo74vXHOqF1ctnzkLRtBy/EYlDyYV9E9TUfVS0s1IckQgY2ooF7c1
-        0Jt4rJENW7razxhdgFiN4UEFNsLEsSfCTBBla2HwTlat/g2dznP9swf8xOAJ7VQz
-        A3PV56F7HPrAJzgw1Jt55nWF5BTC+sf7d+dEwpgd4S9huy9Xf+NQQM9oSDM1ogBh
-        2UfbZUe3m/WClCJZt7riBwC5tM8co3wMyx93X7CZ7E0nkbRTf27B08Nj5VH4/b+w
-        ==
-X-ME-Sender: <xms:KElAYmNFBPOc8bDqxft-tHch8VwNnQYEmkkfll60bOh8AVVpNZ9mQQ>
-    <xme:KElAYk-ZYmhhqG2ux9N6jUIP8WmZUET5oKKXRj8HKpSKtHslTxe5XZ4c29WWaLAW4
-    7ewS9WNE_Y1pS-3Zg>
-X-ME-Received: <xmr:KElAYtSY7NXplpgP8Z5sC9zGVGW58FJceX_PJpVu7mwSXYh0mgPxxmumMDC63itGdE9Mbn0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehhedggedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
-    dtredttdenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohho
-    sehuledvrdgvuheqnecuggftrfgrthhtvghrnhepkeelkeejtdehjeehkeefgfegvedvgf
-    eugeffueevudfhheeugeekieejvddvjeefnecuvehluhhsthgvrhfuihiivgepudenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:KElAYmv2XqehiFLDv969eKzYw7BCqv9zsFWSIJsrTm_WuZheRuDsTg>
-    <xmx:KElAYufRusWqlsW2kZ3_HNmReCHq2M974DrZvnDhPbHJUymIXaY0TQ>
-    <xmx:KElAYq2F-1x-2Rg6qZkOrnh46_emhN58E6QXjtvcSF3MkXhcAxQ6PA>
-    <xmx:KElAYrGLY3pC-SicqayNBf8VD1YcAILrrv47UbGDVt9460vx1n39JA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 27 Mar 2022 07:23:18 -0400 (EDT)
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
-        seth@eseth.com, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: [PATCH v6 3/3] vimdiff: add tool documentation
-Date:   Sun, 27 Mar 2022 13:23:07 +0200
-Message-Id: <20220327112307.151044-4-greenfoo@u92.eu>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220327112307.151044-1-greenfoo@u92.eu>
-References: <20220327112307.151044-1-greenfoo@u92.eu>
+        with ESMTP id S233345AbiC0Lfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Mar 2022 07:35:39 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9532B197
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 04:34:01 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id c10so4959030ejs.13
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 04:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5Bzp3S3V05iGy1hP2gIFZ5pH8hLirbfVu4OUzKPccS8=;
+        b=NnCBCtsB6imRXzrP3dW8VNwT+o+ZCK/v204jyKp16XwjITp27FM0AlL0pomUnAPqUd
+         FG4BYoUuZC8N66HacrXSPVSatLUcDgIxOswm1EoslsSGyTvFdjz2jlw4mdN2+c7cHYNp
+         rr4LWeHP26bPuiRjJZx/NyKZAxyEPTQtQSLRhHa9oKIAU/lBQRBMPQryH9yqhsbgbTUY
+         0ziHianTayppw1oP2ANQtAPNZp4htoUUiphyrje0d1NSMBrojrXJG8NUCT0auZsGZb91
+         BJuBljqAYznNY33YPzOEi2MK6x40kUUo1yjJmzjWNi2qLDA75uI+C5AchalKZoE3Dpeq
+         bf2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=5Bzp3S3V05iGy1hP2gIFZ5pH8hLirbfVu4OUzKPccS8=;
+        b=6QOqRU9DYkWfnBB9+6HyhjxhZ7rEP8H/RKeduXZSWJ/HKZJokL5XrtOa/Vi/ZoIC5S
+         7t/ET30AVpoVdr6TeqAzfXWFdlLNVVpfkDatTKatMShHj9S1aRMDGdCetRvapndd1BAW
+         CZkhiwwFN2h8s5DncaUCb8u7EO9wA+rP1weHhyAgYRwEXjXZOexu1JSbXwGEkDKYCLnn
+         6BJ+2anfjTL3xU9p9r0u4UhvWoC8vZnt7GdFSPT1WBFeFy0R9RYcnRtCsc1DYqn1z1pR
+         ho/wECqE4gny6ojxE7FF8mpGNqtVE2k38+OohanebF+hLPkaXRedEmDhQtw0jTM+U5k+
+         DumQ==
+X-Gm-Message-State: AOAM530JVquuVbaZaF93VOl80SrM5Wnvb3Dl0hc/4GnJKdYvM7sTbNZC
+        JEyeIwA7AQ658FqRtnmvdwY=
+X-Google-Smtp-Source: ABdhPJwOZQ+wVhvGdEzOmRK/js3zf3TYD1TdkbmxWoDt/1S6qXDNfrTYJ5RcM3Q7j4fzyNhgeKe6Vw==
+X-Received: by 2002:a17:907:6d0b:b0:6df:e54c:ad1d with SMTP id sa11-20020a1709076d0b00b006dfe54cad1dmr22326137ejc.734.1648380839479;
+        Sun, 27 Mar 2022 04:33:59 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id c12-20020a05640227cc00b004192114e521sm5699103ede.60.2022.03.27.04.33.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Mar 2022 04:33:58 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nYR9i-002l5A-8x;
+        Sun, 27 Mar 2022 13:33:58 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 7/7] git-sh-setup: don't mark trees not used in-tree
+ for i18n
+Date:   Sun, 27 Mar 2022 13:15:38 +0200
+References: <cover-v2-0.5-00000000000-20211119T202455Z-avarab@gmail.com>
+ <cover-v3-0.7-00000000000-20220326T171200Z-avarab@gmail.com>
+ <patch-v3-7.7-7a82b1fd005-20220326T171200Z-avarab@gmail.com>
+ <2e2d20d6-a33d-b223-d364-ab43d92dd220@kdbg.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.11
+In-reply-to: <2e2d20d6-a33d-b223-d364-ab43d92dd220@kdbg.org>
+Message-ID: <220327.8635j3fx3t.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running 'git {merge,diff}tool --tool-help' now also prints usage
-information about the vimdiff tool (and its variantes) instead of just
-its name.
 
-Two new functions ('diff_cmd_help()' and 'merge_cmd_help()') have been
-added to the set of functions that each merge tool (ie. scripts found
-inside "mergetools/") can overwrite to provided tool specific
-information.
+On Sun, Mar 27 2022, Johannes Sixt wrote:
 
-Right now, only 'mergetools/vimdiff' implements these functions, but
-other tools are encouraged to do so in the future, specially if they
-take configuration options not explained anywhere else (as it is the
-case with the 'vimdiff' tool and the new 'layout' option)
+> Am 26.03.22 um 18:14 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> Partially revert d323c6b6410 (i18n: git-sh-setup.sh: mark strings for
+>> translation, 2016-06-17).
+>>=20
+>> These strings are no longer used in-tree, and we shouldn't be wasting
+>> translator time on them for the benefit of a hypothetical out-of-tree
+>> user of git-sh-setup.sh.
+>
+> There is public documentation for these functions. Hence, you must
+> assume that they are used in scripts outside of Git. Castrating their
+> functionality like this patch does is unacceptable.
 
-In addition, a section has been added to
-"Documentation/git-mergetool.txt" to explain the new "layout"
-configuration option with examples.
+For require_clean_work_tree() the public documentation for this function
+states that it will emit a specific error message in English, and you're
+expected to Lego-interpolate a string that we'll concatenate with it:
 
-Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
----
- Documentation/config/mergetool.txt   |   5 +
- Documentation/git-mergetool.txt      |   7 ++
- Documentation/mergetools/vimdiff.txt | 182 +++++++++++++++++++++++++++
- git-mergetool--lib.sh                |  14 +++
- mergetools/vimdiff                   |   6 +
- 5 files changed, 214 insertions(+)
- create mode 100644 Documentation/mergetools/vimdiff.txt
+	[...]It emits an error message of the form `Cannot
+        <action>: <reason>. <hint>`, and dies.  Example:
+	+
+	----------------
+	require_clean_work_tree rebase "Please commit or stash them."
 
-diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-index cafbbef46a..5973ebd2dc 100644
---- a/Documentation/config/mergetool.txt
-+++ b/Documentation/config/mergetool.txt
-@@ -45,6 +45,11 @@ mergetool.meld.useAutoMerge::
- 	value of `false` avoids using `--auto-merge` altogether, and is the
- 	default value.
- 
-+mergetool.{n,g,}vimdiff.layout::
-+	The vimdiff backend uses this variable to control how its split
-+	windows look like.  See BACKEND SPECIFIC HINTS section of
-+	linkgit:git-mergetool[1] for details.
-+
- mergetool.hideResolved::
- 	During a merge Git will automatically resolve as many conflicts as
- 	possible and write the 'MERGED' file containing conflict markers around
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index e587c7763a..6c6aa29c5a 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -113,6 +113,13 @@ Setting the `mergetool.keepBackup` configuration variable to `false`
- causes `git mergetool` to automatically remove the backup as files
- are successfully merged.
- 
-+BACKEND SPECIFIC HINTS
-+----------------------
-+
-+vimdiff
-+~~~~~~~
-+include::mergetools/vimdiff.txt[]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/mergetools/vimdiff.txt b/Documentation/mergetools/vimdiff.txt
-new file mode 100644
-index 0000000000..296bc76e98
---- /dev/null
-+++ b/Documentation/mergetools/vimdiff.txt
-@@ -0,0 +1,182 @@
-+Description
-+^^^^^^^^^^^
-+
-+When specifying `--tool=vimdiff` in `git mergetool` git will open vim with a 4
-+windows layout distributed in the following way:
-+
-+    ------------------------------------------
-+    |             |           |              |
-+    |   LOCAL     |   BASE    |   REMOTE     |
-+    |             |           |              |
-+    ------------------------------------------
-+    |                                        |
-+    |                MERGED                  |
-+    |                                        |
-+    ------------------------------------------
-+
-+"LOCAL", "BASE" and "REMOTE" are read-only buffers showing the contents of the
-+conflicting file in a specific git commit ("commit you are merging into",
-+"common ancestor commit" and "commit you are merging from" respectively)
-+
-+"MERGED" is a writable buffer where you have to resolve the conflicts (using the
-+other read-only buffers as a reference). Once you are done, save and exit "vim"
-+as usual (":wq") or, if you want to abort, exit using ":cq".
-+
-+Layout configuration
-+^^^^^^^^^^^^^^^^^^^^
-+
-+You can change the windows layout used by vim by setting configuration variable
-+"mergetool.vimdiff.layout" which accepts a string where the following separators
-+have special meaning:
-+
-+  - "+" is used to "open a new tab"
-+  - "," is used to "open a new vertical split"
-+  - "/" is used to "open a new horizontal split"
-+  - "@" is used to indicate which is the file containing the final version after
-+    solving the conflicts. In not present, "MERGED" will be used by default.
-+
-+The precedence of the operators is this one (you can use parenthesis to change
-+it):
-+
-+    @ > + > / > ,
-+
-+Let's see some examples to understand how it works:
-+
-+  * layout = "(LOCAL,BASE,REMOTE)/MERGED"
-+
-+    This is exactly the same as the default layout we have already seen.
-+
-+    Note that "/" has precedence over "," and thus the parenthesis are not
-+    needed in this case. The next layout definition is equivalent:
-+
-+        layout = "LOCAL,BASE,REMOTE / MERGED"
-+
-+  * layout = "LOCAL,MERGED,REMOTE"
-+
-+    If, for some reason, we are not interested in the "BASE" buffer.
-+
-+           ------------------------------------------
-+           |             |           |              |
-+           |             |           |              |
-+           |   LOCAL     |   MERGED  |   REMOTE     |
-+           |             |           |              |
-+           |             |           |              |
-+           ------------------------------------------
-+
-+  * layout = "MERGED"
-+
-+    Only the "MERGED" buffer will be shown. Note, however, that all the other
-+    ones are still loaded in vim, and you can access them with the "buffers"
-+    command. 
-+
-+           ------------------------------------------
-+           |                                        |
-+           |                                        |
-+           |                 MERGED                 |
-+           |                                        |
-+           |                                        |
-+           ------------------------------------------
-+
-+  * layout = "@LOCAL,REMOTE"
-+
-+    When "MERGED" is not present in the layout, you must "mark" one of the
-+    buffers with an asterisk. That will become the buffer you need to edit and
-+    save after resolving the conflicts.
-+
-+           ------------------------------------------
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           |     LOCAL         |    REMOTE          |
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           ------------------------------------------
-+
-+  * layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE"
-+
-+    Three tabs will open: the first one is a copy of the default layout, while
-+    the other two only show the differences between "BASE" and "LOCAL" and
-+    "BASE" and "REMOTE" respectively.
-+ 
-+           ------------------------------------------
-+           | <TAB #1> |  TAB #2  |  TAB #3  |       |
-+           ------------------------------------------
-+           |             |           |              |
-+           |   LOCAL     |   BASE    |   REMOTE     |
-+           |             |           |              |
-+           ------------------------------------------
-+           |                                        |
-+           |                MERGED                  |
-+           |                                        |
-+           ------------------------------------------
-+
-+           ------------------------------------------
-+           |  TAB #1  | <TAB #2> |  TAB #3  |       |
-+           ------------------------------------------
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           |     BASE          |    LOCAL           |
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           ------------------------------------------
-+
-+           ------------------------------------------
-+           |  TAB #1  |  TAB #2  | <TAB #3> |       |
-+           ------------------------------------------
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           |     BASE          |    REMOTE          |
-+           |                   |                    |
-+           |                   |                    |
-+           |                   |                    |
-+           ------------------------------------------
-+
-+  * layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"
-+
-+    Same as the previous example, but adds a fourth tab with the same
-+    information as the first tab, with a different layout.
-+ 
-+           ---------------------------------------------
-+           |  TAB #1  |  TAB #2  |  TAB #3  | <TAB #4> |
-+           ---------------------------------------------
-+           |       LOCAL         |                     |
-+           |---------------------|                     |
-+           |       BASE          |        MERGED       |
-+           |---------------------|                     |
-+           |       REMOTE        |                     |
-+           ---------------------------------------------
-+
-+    Note how in the third tab definition we need to use parenthesis to make ","
-+    have precedence over "/".
-+
-+Variants
-+^^^^^^^^
-+
-+Instead of `--tool=vimdiff`, you can also use one of these other variants:
-+
-+  * `--tool=gvimdiff`, to open gvim instead of vim.
-+
-+  * `--tool=nvimdiff`, to open nvim (`neovim`) instead of vim.
-+
-+When using these variants, in order to specify a custom layout you will have to
-+set configuration variables `mergetool.gvimdiff.layout` and
-+`mergetool.nvimdiff.layout` instead of `mergetool.vimdiff.layout`
-+
-+In addition, for backwards compatibility with previous git versions, you can
-+also append `1`, `2` or `3` to either `vimdiff` or any of the variants (ex:
-+`vimdiff3`, `nvimdiff1`, etc...) to use a predefined layout.
-+In other words, using `--tool=[g,n,]vimdiffx` is the same as using
-+`--tool=[g,n,]vimdiff` and setting configuration variable
-+`mergetool.[g,n,]vimdiff.layout` to... 
-+
-+  * x=1 --> "@LOCAL, REMOTE"
-+  * x=2 --> "LOCAL, MERGED, REMOTE"
-+  * x=3 --> "MERGED"
-+
-+Example: using `--tool=gvimdiff2` will open `gvim` with three columns (LOCAL,
-+MERGED and REMOTE).
-+
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 542a6a75eb..956c276e1d 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -64,6 +64,12 @@ $(list_tool_variants)"
- 				fi
- 				shown_any=yes
- 				printf "%s%s\n" "$per_line_prefix" "$toolname"
-+
-+				(diff_mode && diff_cmd_help "$toolname" || merge_cmd_help "$toolname") |
-+				while read -r line
-+				do
-+					printf "%s\t%s\n" "$per_line_prefix" "$line"
-+				done
- 			fi
- 		done
- 
-@@ -162,10 +168,18 @@ setup_tool () {
- 		return 1
- 	}
- 
-+	diff_cmd_help () {
-+		return 0
-+	}
-+
- 	merge_cmd () {
- 		return 1
- 	}
- 
-+	merge_cmd_help () {
-+		return 0
-+	}
-+
- 	hide_resolved_enabled () {
- 		return 0
- 	}
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index e3f442caf3..0380bff302 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -435,6 +435,12 @@ merge_cmd () {
- }
- 
- 
-+merge_cmd_help () {
-+	echo "Layout can be customized. Run 'git help mergetool' and check the 'BACKEND SPECIFIC HINTS' section."
-+	return 0
-+}
-+
-+
- translate_merge_tool_path () {
- 	case "$1" in
- 	nvimdiff*)
--- 
-2.35.1
+So I think that marking it for translation like this as d323c6b6410 was
+always broken in that it broke that documented promise.
 
+But that's just an argument for keeping the require_clean_work_tree()
+part of this patch, not require_work_tree_exists().
+
+For that one and others in git-sh-setup we've never said that we'd
+provide these translated (and to the extent we've implied anything about
+the rest, have strongly implied the opposite with
+require_clean_work_tree()'s docs).
+
+Nothing will break for out-of-tree users as a result of this
+change. When we added these functions and their documentation their
+output wouldn't be translated, then sometimes it was, now it's not
+again.
+
+We need also need to be mindful of translator time, it's a *lot* of
+strings to go through, and e.g. I've commented in the past on patches
+that marked stuff in t/helper/ for translation.
+
+Some hypothetical out-of-tree user is, I think, a much stronger
+candidate for skipping translation than that.
+
+Also keep in mind that we don't even translate in-tree contrib stuff
+like contrib/subtree/ (the recent "not-really-contrib" scalar being an
+exception).
+
+So I really think this is fine as-is, don't you think that if someone
+out-of-tree had such strong expectations about the human-readable
+strings these emit that they'd have long since stopped using them and
+provided their own replacements?
