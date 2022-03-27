@@ -2,151 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0D94C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Mar 2022 22:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31EADC433F5
+	for <git@archiver.kernel.org>; Sun, 27 Mar 2022 00:29:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbiCZW5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Mar 2022 18:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55792 "EHLO
+        id S231414AbiC0AbO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Mar 2022 20:31:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbiCZW47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Mar 2022 18:56:59 -0400
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59882F3B6
-        for <git@vger.kernel.org>; Sat, 26 Mar 2022 15:55:21 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 153F1320070D;
-        Sat, 26 Mar 2022 18:55:18 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Sat, 26 Mar 2022 18:55:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; bh=8MUWqQcZj6v+7PMSLq1UBB6ZnkR4ubW4mPhwD6
-        f9N0I=; b=XCVi2hoOIc/gG0vOeVu1VKj29a3U7BYFTFIjON9AjmRS1kQhPnlhAL
-        HY18kvo3Tp4XSxA9gwkTg/H5R7YWuV3Bgu2+moD3qXXJ5UIzOzGpDbIa6+HxbWY3
-        YQjwXuQ1sLjVAvbD/z6xrFJ9z7Apxv4YpE5AUNh3pKtZSBjdW8uIPGdjwLbsqNa0
-        MU3mRzAEKUXOAAPtL3wL6dRn41Yod1v61PGHFUebwyme3QMKeXLnkPaIixBXZEsh
-        dd9McXb4FcrWBOh+9sYrFGJ/fihm1AaT0/LS5Bv9u2C7hPlHVng7FdzXIEsC8qiv
-        8WmHGL7XaVsaexv4W1uRAYP4vecOaGFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8MUWqQcZj6v+7PMSL
-        q1UBB6ZnkR4ubW4mPhwD6f9N0I=; b=jXPJNUxq5Per5//bBfK89aHc4h2M/LxB/
-        Un47CBMhsXtg3DCQg4nIURYQNle21m/R8qW196BCfq2gsNU1qoO/9NSK027sVUO6
-        v53SroT+OKiljN91rhCtD51cvpDs9RLmWB3ziDGZI6iZlIMFZNZSwjlYYwJQbu/b
-        t5HqmPiE9JpZfInzOecdUUIuvCrkiMGvkC/yk7i3V1OqlH6wMTnUZ8823siV8Ynz
-        Jd2XRO3y9hjBKBbU8/5jk8TH7CuIfhi9HbVvOb4n19MvlcDCZlZRgf0y/UJyc+Fy
-        yj+8AQNdJnzoucUglE/ZB05c0bUjwz+f0RiFAvvoNddyO/dA9lWKg==
-X-ME-Sender: <xms:1Zk_Ytwqnp5sZbz6IeylOv8ue1FFo3-2u_PyHAo6I85ryY0CKo_oCw>
-    <xme:1Zk_YtQDoDYa-6UUZGjJDksidcunF1T4VX1zNN9J0P9ylvdtCBT2HEB8gLtGngdjq
-    KQlgzQGa3v-pXwyTA>
-X-ME-Received: <xmr:1Zk_YnVxYly0qxFgnwW7fWQDjLHQrN1K2DL_9f2G9CYH1mBm7UjzDq7M2-BlQftAf37d1EzAMfw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehfedgudeikecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
-    ertddttdejnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhho
-    ohesuhelvddrvghuqeenucggtffrrghtthgvrhhnpedvjeeifeelhfetiefhhfdthfefke
-    fhhfeutdetvdfgvefgveefheffgfekjeefheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:1Zk_YvjYmBq4eoKJFSfQG74NpTFP3KgrdNpSK0MSZDvwo5PHhxlEPQ>
-    <xmx:1Zk_YvD15vagk4EDqoW7drffdXlnNURIVLpjZcrH-FKo1HzCTqvAmQ>
-    <xmx:1Zk_YoLzcvtZiHMCgLsWWV7at_hoMM4roskK5Avj16ZNoYdBARs8nA>
-    <xmx:1Zk_Yk4LpdvilTliHglKdq2wBECP9HYF0X1Y5-Z3OkD0EFlP7rsScQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 26 Mar 2022 18:55:16 -0400 (EDT)
-Date:   Sat, 26 Mar 2022 23:55:13 +0100
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: fr/vimdiff-layout (was: What's cooking in git.git (Mar 2022,
- #05; Wed, 23))
-Message-ID: <Yj+Z0T2TShqH99a/@zacax395.localdomain>
+        with ESMTP id S231355AbiC0AbN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Mar 2022 20:31:13 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64784393C0
+        for <git@vger.kernel.org>; Sat, 26 Mar 2022 17:29:36 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BDE1D17E277;
+        Sat, 26 Mar 2022 20:29:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=+x+rDknJHQIY
+        AQZ4CdUulMGI2ScZiAZDi7lJXnNEqTQ=; b=gA0ZmKzvuHiWrQC49RRnA/kFiTk1
+        MQUSmWTZkLptZNhgFrf8x+7ShT/k6EUQZ1A6bocsV2ps8KYS0qgnfWZj+CcmrUz6
+        CzQ5jdG4NvVhUpV6+Nx6P2hXzJbrnpGjogQauXmZhKSFICHVbNJFxnbJXsp1Vub5
+        clKhTX2p7y38tl0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6FB017E276;
+        Sat, 26 Mar 2022 20:29:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2BF0717E275;
+        Sat, 26 Mar 2022 20:29:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fernando Ramos <greenfoo@u92.eu>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: fr/vimdiff-layout
 References: <xmqqwngkm4am.fsf@gitster.g>
- <220326.86k0cgk83t.gmgdl@evledraar.gmail.com>
+        <220326.86k0cgk83t.gmgdl@evledraar.gmail.com>
+        <Yj+Z0T2TShqH99a/@zacax395.localdomain>
+Date:   Sat, 26 Mar 2022 17:29:32 -0700
+In-Reply-To: <Yj+Z0T2TShqH99a/@zacax395.localdomain> (Fernando Ramos's message
+        of "Sat, 26 Mar 2022 23:55:13 +0100")
+Message-ID: <xmqq4k3k6xw3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <220326.86k0cgk83t.gmgdl@evledraar.gmail.com>
+X-Pobox-Relay-ID: F94382F4-AD64-11EC-9AD2-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> It looks like it's emitting a new warning from the "Makefile" in
-> check-docs:
-> 	
-> 	$ (make clean && make check-docs) >/dev/null 2>&1; make check-docs
-> 	make -C Documentation lint-docs
-> 	make[1]: Entering directory '/home/avar/g/git/Documentation'
-> 	make[1]: Nothing to be done for 'lint-docs'.
-> 	make[1]: Leaving directory '/home/avar/g/git/Documentation'
-> 	removed but documented: git-difftool--vimdiff
-> 	removed but documented: git-mergetool--vimdiff
-> 	removed but documented: git-version
+Fernando Ramos <greenfoo@u92.eu> writes:
 
-Looking at how the Makefile works it looks like this error is triggered
-because...
+>> It looks like it's emitting a new warning from the "Makefile" in
+>> check-docs:
+>> =09
+>> 	$ (make clean && make check-docs) >/dev/null 2>&1; make check-docs
+>> 	make -C Documentation lint-docs
+>> 	make[1]: Entering directory '/home/avar/g/git/Documentation'
+>> 	make[1]: Nothing to be done for 'lint-docs'.
+>> 	make[1]: Leaving directory '/home/avar/g/git/Documentation'
+>> 	removed but documented: git-difftool--vimdiff
+>> 	removed but documented: git-mergetool--vimdiff
+>> 	removed but documented: git-version
+>
+> Looking at how the Makefile works it looks like this error is triggered
+> because...
+>
+>   1. I have created these two new files:
+>      - Documentation/git-difftool--vimdiff.txt
+>      - Documentation/git-mergetool--vimdiff.txt
+>
+>   2. None of them are real programs (such as "git-clone") or scripts (s=
+uch as
+>      "git-mergetool--lib.sh")
+>
+> All the other "Documentation/*.txt" files are associated to "something"=
+ that
+> can be executed, but not these two (they are only meant to be accessed =
+from "git
+> help" / "man").
 
-  1. I have created these two new files:
-     - Documentation/git-difftool--vimdiff.txt
-     - Documentation/git-mergetool--vimdiff.txt
+Thanks for noticing and reporting, =C3=86var.
 
-  2. None of them are real programs (such as "git-clone") or scripts (such as
-     "git-mergetool--lib.sh")
+I think the right place to describe how vimdiff or other
+configuration should be configured should live next to configuration
+documentation for other backends.
 
-All the other "Documentation/*.txt" files are associated to "something" that
-can be executed, but not these two (they are only meant to be accessed from "git
-help" / "man").
+Documentation/git-mergetool.txt is the main entry point for those
+who want to learn about "git mergetool", i.e. "git mergetool --help"
+shows what's in there.
 
-Options I can think of:
+The documentation talks about the "mergetool" front-end, and then
+includes config/mergetool.txt for the configuration files.
 
-  A) Ignore the warning message
+After all, the topic adds only one mergetool.<tool>.layout
+configuration variable.  The file config/mergetool.txt would be the
+place to describe that variable, after the entry for
+mergetool.meld.useAutoMerge, which is already is about a variable
+that is specific to a particular backend.  If we can successfully
+can go this route, we do not need any new file added at all.
 
-  B) Remove these two files and add all this documentation to an already
-     existing one (maybe "Documentation/git-mergetool--lib.txt")
+Alternatively, in the longer run, we may want backend specific
+information in the "git mergetool --help" documentation.  Maybe
+vimdiff is the first and currently only such backend that wants
+documentation specific to it, but it does not has to stay that way
+forever.
 
-  C) Create a new variable in the Makefile to contain a list of "documentation
-     aliases" that do not correspond to a "real" command, so that they can be
-     filtered out when testing for documentation problems.
-
-In other to implement (C) we could do something like this:
-
-> diff --git a/Makefile b/Makefile
-> index 70f0a004e7..db8a1c8025 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -597,6 +597,7 @@ TEST_BUILTINS_OBJS =
->  TEST_OBJS =
->  TEST_PROGRAMS_NEED_X =
->  THIRD_PARTY_SOURCES =
-> +DOC_ALIASES =
-> 
->  # Having this variable in your environment would break pipelines because
->  # you cause "cd" to echo its destination to stdout.  It can also take
-> @@ -1228,6 +1229,11 @@ THIRD_PARTY_SOURCES += compat/regex/%
->  THIRD_PARTY_SOURCES += sha1collisiondetection/%
->  THIRD_PARTY_SOURCES += sha1dc/%
-> 
-> +# DOC ALIASES is a list of topics you can call "git help" on but they are no
-> +# real commands or scripts you can execute
-> +DOC_ALIASES += git-difftool--vimdiff
-> +DOC_ALIASES += git-mergetool--vimdiff
-> +
->  # xdiff and reftable libs may in turn depend on what is in libgit.a
->  GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
->  EXTLIBS =
-> @@ -3355,7 +3361,7 @@ check-docs::
->                     -e 's/\.txt//'; \
->         ) | while read how cmd; \
->         do \
-> -               case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS)) " in \
-> +               case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS) $(DOC_ALIASES)) " in \
->                 *" $$cmd "*)    ;; \
->                 *) echo "removed but $$how: $$cmd" ;; \
->                 esac; \
-
-Let me know what you think. Thanks!
+So adding a new section "BACKENDS SPECIFIC HINTS" after "TEMPORARY
+FILES" section, and add "VIMDIFF" as its first (and currently only)
+subsection, would be a reasonable thing to do.  Create a
+Documentation/mergetools/ subdirectory, add vimdiff.txt file in
+there, move the most of what is in git-mergetool--vimdiff.txt, and
+include it from Documentation/git-mergetool.txt, perhaps like the
+attached patch outlines?
 
 
+
+diff --git c/Documentation/config/mergetool.txt w/Documentation/config/me=
+rgetool.txt
+index cafbbef46a..19ca39d43d 100644
+--- c/Documentation/config/mergetool.txt
++++ w/Documentation/config/mergetool.txt
+@@ -45,6 +45,11 @@ mergetool.meld.useAutoMerge::
+ 	value of `false` avoids using `--auto-merge` altogether, and is the
+ 	default value.
+=20
++mergetool.vimdiff.layout::
++	The vimdiff backend uses this variable to control how its split
++	windows look like.  See BACKEND SPECIFIC HINTS section of
++	linkgit:git-mergetool[1] for details.
++
+ mergetool.hideResolved::
+ 	During a merge Git will automatically resolve as many conflicts as
+ 	possible and write the 'MERGED' file containing conflict markers around
+diff --git c/Documentation/git-mergetool.txt w/Documentation/git-mergetoo=
+l.txt
+index e587c7763a..6cf3734544 100644
+--- c/Documentation/git-mergetool.txt
++++ w/Documentation/git-mergetool.txt
+@@ -113,6 +113,16 @@ Setting the `mergetool.keepBackup` configuration var=
+iable to `false`
+ causes `git mergetool` to automatically remove the backup as files
+ are successfully merged.
+=20
++BACKEND SPECIFIC HINTS
++----------------------
++
++Here we'll give backend specific hints.
++
++vimdiff
++~~~~~~~
++include::mergetools/vimdiff.txt[]
++
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git c/Documentation/mergetools/vimdiff.txt w/Documentation/mergeto=
+ols/vimdiff.txt
+new file mode 100644
+index 0000000000..1cac121283
+--- /dev/null
++++ w/Documentation/mergetools/vimdiff.txt
+@@ -0,0 +1,11 @@
++vimdiff
++~~~~~~~
++
++Vimdiff backend allows `mergetools.vimdiff.layout` to specify how
++the split window is used ...
++
++Layout
++^^^^^^
++
++Text.
++
