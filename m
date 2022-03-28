@@ -2,142 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B41D8C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 17:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 274EEC433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 18:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238748AbiC1R5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 13:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
+        id S244957AbiC1SEH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 14:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238219AbiC1R5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 13:57:07 -0400
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACD6111A3C
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 10:55:10 -0700 (PDT)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-dee0378ce7so5679421fac.4
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 10:55:10 -0700 (PDT)
+        with ESMTP id S244897AbiC1SEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 14:04:04 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB52447380
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:02:22 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id dr20so30304171ejc.6
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=XCxvkI6WrzCThlbrTzXQimCe0dz+DyC3ZDBA/4P/UT4=;
-        b=H4XQG3Vns9zsm+l163IqwPW9OBBxdH7RJa1z5FKGdbqk7IL6bxWfiNcd4JK/JzRP4f
-         KQON2UqzVeE5xWt9U7z3IDZ/MJkmvf2xG993kxtuSEj+YNZ36I1P4pmQKagqw0YtRqRi
-         3Txo/VlprXM/JwnFUgZYbM97Y65uXV3aML7bxiKrw5tvJM6Za9PPchigR0ZwSF8ckyEy
-         GtQzGloFfFl/2GTH0n2lvjRBaq8Wm3a0tPHU1mJkDQNlxanxQHs/OshYKLhi9dpvhjz7
-         9fetaWTL1IbJ/nxnE89aXEs+5NjwI8XFGpIcanbPoRL7ZJN7QkZkSGmgIs0mbdC8BUhM
-         fP2g==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uMlSk0bz9irlPdGb6qj3lgvQcYUN5Btz9bNiNnRgEsQ=;
+        b=EPc8dS8rtLTWwcILGttsNl3/kdZR1E0mHepb9HYOndWfydcUB5PaQIPmUWdPfjDXGp
+         JG1mp2VS8fEqs/FzVrVr53escOV631kz3Vm7FpXxFYJy2SBpvKO3z43kmuwZ6KCC6JLs
+         K+1cEVH1zJ+ua9XKj92iDAxEkYjHAqhgAys1nYIofe/2k7AG5Vd3vjLgnDihrVOuKsZr
+         PmUcN18KB5ewOK3lVX5/3SJqWXQ0tSr5NU35a40BamedeSC+YbpH6HdXVGBmzoO9Zllc
+         Dzg5vNLqnkpCqkBkWJgRYrF2AggKtaTPAqxQIw8GNi8USd6aOLq1WQB0rgNiAMRp/PMW
+         bQUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=XCxvkI6WrzCThlbrTzXQimCe0dz+DyC3ZDBA/4P/UT4=;
-        b=hQ1HddFczMPs96H9OSnMdP8GP+hHBXtGdS+3C0mqPwePWOd4IZvdAnA7/FluOjusYX
-         BkH32woVEik63YTaVcskL++rA5z7HmONRX8WeYckAvDoH0IC5SXtN9Dqw7F0AwLSnNjv
-         CPLVmFLwH89jSOIGy4kbC0ObIDTYdHOEKAr/HfLhgMIN3X7bx3CIn+6Coq4zaDovRTRh
-         +gj1GOUchFVTQp9ZGC2SknK8x27+LmOzigrTBfOctv4fI2gjb/PxzpPpbc11ngrl401b
-         vd5+nwu4wznnfpLTSE3T0J74+BYLbW1pxIWG5LZ/cq7hSYdWNicjIpDesDdZZLlbKpq6
-         u8WQ==
-X-Gm-Message-State: AOAM530EDH1ECrnaxNf1fApcIBBzF2mtpKtviYeoilwTUVTRp8CX3uxW
-        DaP5oSw55RYGTHhGox+VbFUm492t6y9I
-X-Google-Smtp-Source: ABdhPJzT7BJretghYl/+5aDXAMsFYIpuvs9zZTGkBr/W3PUzc9UOUy9RLb5sYHy8C8/u4x94I8eo1w==
-X-Received: by 2002:a05:6870:42d2:b0:dd:a35d:2912 with SMTP id z18-20020a05687042d200b000dda35d2912mr180791oah.242.1648490109994;
-        Mon, 28 Mar 2022 10:55:09 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id bm51-20020a0568081ab300b002da5c44e0bdsm7293365oib.28.2022.03.28.10.55.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Mar 2022 10:55:09 -0700 (PDT)
-Message-ID: <3bb95e8b-4977-ddca-225c-5afe28d8ac20@github.com>
-Date:   Mon, 28 Mar 2022 13:55:07 -0400
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uMlSk0bz9irlPdGb6qj3lgvQcYUN5Btz9bNiNnRgEsQ=;
+        b=kF/eFLUs3AsO2f7WwZhohQXEcfONYDJOKeYrTmG3W5bq35DxIHCZytJWps+l8fGJHy
+         KizCT3D/SRP+mr0y6GYsTezxw40I023S7TXUGz0KxFwWkE/C8eMgXAuz6jsd/tJMijU1
+         Huh8ZruWQbX0XyrdI+RK319GZ9hOdvdZJRfPOhd0iY8Tj8BVpimTAubzPoge6G7e6ZcX
+         hM0V02UVJ+xhMQku4+CingTuszciqojIE7Wiwq4IU6jsUKL2PxLrbbvCXRl6RdZwQ49l
+         87491swJWE96M1q/FuisglIt0Es/HXPEBuZSqgQ+k8dK4t77ApkEXh+8doDbXbgBrm0a
+         jmxQ==
+X-Gm-Message-State: AOAM532869OWU/MX2JHJ6csrlqd8Jv28TTIzVV3wf/F/pkJPSJfK8Qu+
+        N2OjPXAHHlM1yIpcbm8gmU+67A413mUF1sHKKwvhgA==
+X-Google-Smtp-Source: ABdhPJwRnc1sdbMvJ9f+ZtTWqq4FU81S+Ikpsu3AnBjzZL1laZwJYEj5zrnZ5orV9YhUkLjN/PoYOvccCL71uOhFstM=
+X-Received: by 2002:a17:906:7d52:b0:6df:a6c7:2c5 with SMTP id
+ l18-20020a1709067d5200b006dfa6c702c5mr30085609ejp.540.1648490541385; Mon, 28
+ Mar 2022 11:02:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3 08/27] revisions API users: add "goto cleanup" for
- "rev_info" early exit
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
+References: <pull.1183.v2.git.1647940686394.gitgitgadget@gmail.com>
+ <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com> <xmqqwnge2ghe.fsf@gitster.g>
+ <kl6l7d8et314.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqilry2dq7.fsf@gitster.g>
+In-Reply-To: <xmqqilry2dq7.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 28 Mar 2022 20:02:10 +0200
+Message-ID: <CAPMMpojYJ9sB7nbAAt1b_yH0Um1O-+TpSRYXTkZ6aDHobhS59A@mail.gmail.com>
+Subject: Re: [PATCH v3] tracking branches: add advice to ambiguous refspec error
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
- <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
- <patch-v3-08.27-f8a9443fe6f-20220325T171340Z-avarab@gmail.com>
- <xmqqtubl93n3.fsf@gitster.g> <220326.86ee2pleua.gmgdl@evledraar.gmail.com>
- <xmqqee2p70c1.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqee2p70c1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/26/2022 1:24 AM, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
->> Because I don't see how it makes any sense to have a REV_INFO_INIT if it
->> doesn't actually give you an init'd "struct rev_info" that's ready for
->> use. I.e. if you still need to call repo_init_revisions() it's just a
->> misleading interface.
-> 
-> You can say
-> 
-> 	struct something *foo = NULL;
-> 
-> 	if (some condition)
-> 		foo = alloc_and_init_foo();
-> 
-> 	...
-> 
-> 	free_and_destruct(foo);
-> 
-> and it is correct that "initialize with NULL" alone would not let
-> you use the thing as full fledged 'foo', but you can still safely
-> pass it to free_and_destruct() (or if "something" does not hold
-> external resources, it could just be free()).  A flow like this:
-> 
-> 	struct rev_info revs = REV_INFO_INIT;
-> 
-> 	if (!some condition)
-> 		goto leave;
-> 	init(&revs);
-> 	... use revs ...
-> leave:
->         release(&revs);
-> 
-> would exactly be the same thing.
-> 
-> In other words, you say "I do not see how it makes any sense" but to
-> me it looks more like what does not make sense is your argument
-> against what was suggested.
+On Mon, Mar 28, 2022 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Glen Choo <chooglen@google.com> writes:
+>
+> > Hm, what do you think of an alternate approach of storing of the
+> > matching remotes in a string_list, something like:
+[...]
+> > then construct the advice message in setup_tracking()? To my untrained
+> > eye, "case 2" requires a bit of extra work to understand.
 
-Ævar has stated in multiple threads that he prefers to not
-initialize data so that static analysis tools can detect a
-use-before-initialization of specific members.
+Interestingly, that was what I had in the original RFC. I started using
+the strbuf later, after =C3=86var confirmed that a single "advise()" call i=
+s
+the way to go. I understood building the string as we go to lead to
+simpler code, as it meant one less loop. On the other hand I
+understand Junio is more concerned about performance than the
+existence of a second loop that we should almost never hit.
 
-However, now that we are intending to free rev_info structs,
-we need them to be initialized with NULL pointers because
-otherwise the release_revisions() method won't know which
-portions were legitimately initialized and which ones were
-not.
+I'm very happy to switch from strbuf-building to string_list-appending,
+but I'm curious to understand how/why the performance of
+strbuf_addf() would be notably worse than that of
+string_list_append().
 
-Maybe this NULL assignment happens as part of
-repo_init_revisions(), but that also assumes that there is no
-code path that would jump to a "leave" or "cleanup" tag before
-running that initialization method (which is the broken case
-that Junio mentions above).
+Is there public doc about this somewhere?
 
-Maybe there are tools that would identify that Junio's example
-would be bad, but it is also likely that a compiler doesn't
-catch that issue and tests don't cover that error condition.
+> Having said that, as long as you do that lazily not to penalize
+> those who have sane setting without the need for advice/error to
+> trigger, I do not particularly care how the list of matching remote
+> names are kept.  Having string_list_append() unconditionally like
+> the above patch has, even for folks with just a single match without
+> need for the advice/error message is suboptimal, I would think.
 
-It's my preference to initialize things to all-zeroes whenever
-there is any chance of complexity, which is why this topic has
-come to my attention on multiple threads.
+Again, I'm new here, and not a great coder to start with, but I'm
+having a hard time understanding why the single extra/gratuitous
+strbuf_addf() or string_list_append() call that we stand to optimize
+(I haven't understood whether there is a significant difference
+between them) would ever be noticeable in the context of creating
+a branch.
 
-Thanks,
--Stolee
- 
+I of course completely understand optimizing anything that will
+end up looping, but this is a max of 1 iteration's savings; I would
+have thought that at these levels, readability/maintainability (and
+succinctness) of the code would trump any marginal performance
+savings.
+
+To that end, I'd understand going back to string_list_append() as
+Glen proposes, and building a formatted string in a single place
+(setup_tracking()) only when required - both for readability, and
+in case some aspect of strbuf_addf() is non-trivially expensive -
+but is the "only append to the string_list() on the rare second
+pass" optimization really worth the increase in amount of code?
+
+Is "performance over succinctness" a general principle that
+could or should be noted somewhere?
