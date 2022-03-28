@@ -2,195 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD83C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 181A3C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242764AbiC1TLw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 15:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
+        id S245233AbiC1TNG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 15:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbiC1TLu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 15:11:50 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0383FD88
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:10:08 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id r7so20632902wrc.0
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:10:08 -0700 (PDT)
+        with ESMTP id S229878AbiC1TNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 15:13:05 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B44966AFD
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:11:24 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id u22-20020a170902a61600b00154adad001bso6407975plq.10
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zelExPNYf3t33hmTFoCFEPJxz6+9R9ToExophi44ikw=;
-        b=LZObYuJtVDbdw6wicZSEvyE1jA+javnYGDE9Vx4S0r+HQjGkMp9wi+mRsKjWrzyn6B
-         RUwClErHxCG3WGTuB/iYGgX257COQhodDUlnGdK/DZNDTc0w9ExgTw3tvgD282ODXozh
-         nbBMgsJYDNHXRm3pX5Usgu45o3TDp+IXiXPnkfu3/4rvjl8oc6pdhFN0XCZ26XrVaQNA
-         6Gbb0C+YmcgVYSpnbRkzRjLpWMlSA6ndqW0kttkQr9Hpua7C84a4GXfaUpcMt4ATHUGN
-         2EciNz6Bq0BmkhhDyC0zEBxZ50833mW+L9YkaWfJxXNCNSzYDtdDt8KVeTqXS7Bzvkbm
-         jxUQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=lBeuIsWUP+123OGlMhB6j5gw11BgmhjFardpzTOS8QI=;
+        b=WU3+VfaIW01WmekgeCqyXp9hFoqDbVN6nrdp9lA+jhYyuIz6qb87fpoXXyNhQ/1n+2
+         9dMNK+HUNTvQ+M/lcCgmy8qtqnPJwOvGVorm2pWEmO0IDhKgHz6N9LXOl17IRISa5DbU
+         9G3dV4D+cFnEa9JWP22bqJl2k8xbHPhE0Y+RN4jIIacNVmp9f3IxB4fJjLayLi9mImbN
+         2kSPrDMbNifhRwWHL7Yyv0G7Fl2p2ju1en3Ep2obw+L3FcjCvmVuLFgXIVlNJ+htiU0i
+         Y/Nj8chgZ33WUeRu/yioDFtBrZekG1nKli9ZqacEq/4UpUDnWs1l7jQVjJURBHz1VXgl
+         IFqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zelExPNYf3t33hmTFoCFEPJxz6+9R9ToExophi44ikw=;
-        b=LE3aHnYlNk6t/DN78QDmJp6J7sZYaiqGWh90BTun5CTKZtg6nO2X/LuGkNyKOFCVeg
-         S3HrT9MjcqePQH9v4qkBdbhok9XAKGKjfEMqE/MjEr4wCJO6K2gwf1igfNQjD5pdXLRh
-         6p/YIDtTOqEef8YeV2v6EVlbRr+OJ5xWah2giSze+yn+OBKCJxsmA7lu/4uN7qKX5azb
-         Qx6KxpeGhOgD0m0cSADvcri2DwDfQSZOF92lvVsJz5FsMlaOa09Bw35hJuDbkVonb0D3
-         5ZT/LvsQFMtup89zqaG4a1XM/I12fAB8XM779J/G3IagzU84bmZ3E5ENKgEcRyRPg+cF
-         1x4g==
-X-Gm-Message-State: AOAM531ZG7TCS39eJipRsA5Lw4DfySFF+5pQiYimuM28pabSXcJIWPvr
-        6ssTvF7IISt3M+CDV8DgwwaVXwqjo+Q+JA==
-X-Google-Smtp-Source: ABdhPJy7r4+AlP75v3LfcPR5GfL0puG4TUYRTTwcS8wTRVKfxpMN02cucqwotJUPfg+z/qUOSkKsyw==
-X-Received: by 2002:a5d:6149:0:b0:204:4a17:bf2 with SMTP id y9-20020a5d6149000000b002044a170bf2mr25937084wrt.379.1648494607083;
-        Mon, 28 Mar 2022 12:10:07 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e12-20020a5d6d0c000000b001a65e479d20sm15698007wrq.83.2022.03.28.12.10.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 12:10:06 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=lBeuIsWUP+123OGlMhB6j5gw11BgmhjFardpzTOS8QI=;
+        b=FElO92/pA3tFpAcgjGmRFzokqjFnX1Sq7c75ZkRpvnYTwdnDGiwX/Cdt3q4TRwNyq7
+         yMC3b4+DoL79fAABmT6K0dhjGry5X8muYz2bYPMeWlvXY74CCRXy4rflbuwFqib0XQvE
+         yo0mPFdTIcK1XKx1C2kmu+QDYkFfAOmFerFhGC37hvyfKFncrG0f3MElNzM175AKJEhc
+         9XJ7k4Dh3ppDVReHWthy6XmmqJIkmhGkCiLy9k4G8DQxCEMBhgBmFO4hdJzL5mhAl1ws
+         zVXU2zSruf88YTocZgklziWdtKx78DW4WAxOK9DFFQMWxDbbL4LnnJJQG5r5CeT6Wg9O
+         reOA==
+X-Gm-Message-State: AOAM533e+UIzsBrBppy2TDOrta6c9UKcYNU1d3E9evPeMFrS/c/KgUEA
+        dRxr7JuKbfU/64TjW7czkGhy1Ui1FzX7lrf9fVMJo3q2NmJkLb87wflqMWMxnsRfHThuQEaSlaE
+        XBeQ6wFIqY98fE2zJU/+CI+g0UJ4sxCFLrSV8P5OYEwjoNDHFeSfOHQJjOUMGoymAMQ==
+X-Google-Smtp-Source: ABdhPJwLyvAVvQ/cZbUEeVPuEtIK2wmZjWb0VUSxthT7c0a+jYNpgWZj/8TCBVl6+Z6nqdjpI3Rr1Bm3950SKe0=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:38d2:b0:1c6:fa94:96bb with SMTP
+ id nn18-20020a17090b38d200b001c6fa9496bbmr637015pjb.206.1648494683304; Mon,
+ 28 Mar 2022 12:11:23 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 19:11:09 +0000
+In-Reply-To: <20220208235631.732466-1-calvinwan@google.com>
+Message-Id: <20220328191112.3092139-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20220208235631.732466-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.33.0.664.g0785eb7698
+Subject: [PATCH v3 0/3] object-info: add option for retrieving object info
+From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] reftable: make assignments portable to AIX xlc v12.01
-Date:   Mon, 28 Mar 2022 21:10:04 +0200
-Message-Id: <patch-1.1-98267695418-20220328T190642Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1548.gaad2ca01774
-In-Reply-To: <c052b97e-e788-f63a-15c5-b1fbb6a480e8@web.de>
-References: <c052b97e-e788-f63a-15c5-b1fbb6a480e8@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     jonathantanmy@google.com, philipoakley@iee.email,
+        johncai86@gmail.com, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the assignment syntax introduced in 66c0dabab5e (reftable: make
-reftable_record a tagged union, 2022-01-20) to be portable to AIX xlc
-v12.1:
+Sometimes it is useful to get information about an object without
+having to download it completely. The server logic has already been
+implemented as =E2=80=9Ca2ba162cda (object-info: support for retrieving obj=
+ect
+info, 2021-04-20)=E2=80=9D. This patch implements the client option for it.
 
-    avar@gcc111:[/home/avar]xlc -qversion
-    IBM XL C/C++ for AIX, V12.1 (5765-J02, 5725-C72)
-    Version: 12.01.0000.0000
+Add =E2=80=98--object-info=E2=80=99 option to fetch. This option allows the=
+ client to
+make an object-info command request to a server that supports protocol
+v2. If the server is v2, but does not allow for the object-info
+command request, the entire object is fetched instead and the relevant
+information is returned.
 
-The error emitted before this was e.g.:
+Patch 1 is a small refactor. Patch 2 adds a config option for
+advertisement of object-info.  Patch 3 is the main implementation of
+fetch object-info.
 
-    "reftable/generic.c", line 133.26: 1506-196 (S) Initialization
-    between types "char*" and "struct reftable_ref_record" is not
-    allowed.
+Major changes since v2:
+ * Added a fallback for servers that do not
+   allow object-info
+ * Refactored the fetch object-info code by moving it to fetch_refs in
+   the vtable rather than having its own function in the vtable. This
+   allows for the code to easily transition to the fallback if
+   object-info fails.
 
-The syntax in the pre-image is supported by e.g. xlc 13.01 on a newer
-AIX version:
+Calvin Wan (3):
+  fetch-pack: refactor how packet is written to be more generic
+  objectinfo.advertise: add config option to advertise object-info
+  object-info: add option for retrieving object info
 
-    avar@gcc119:[/home/avar]xlc -qversion
-    IBM XL C/C++ for AIX, V13.1.3 (5725-C72, 5765-J07)
-    Version: 13.01.0003.0006
-
-But as we've otherwise supported this compiler let's not break it
-entirely if it's easy to work around it.
-
-Suggested-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Sat, Feb 19 2022, René Scharfe wrote:
-
-> Am 19.02.22 um 13:54 schrieb Ævar Arnfjörð Bjarmason:
-> [...]
-> The code is hard to read for me in general due to its many types and
-> function dispatch tables, but this compiler seems to have an even harder
-> time.  Where does it even get that char pointer type from?
-
-Sorry about the very late reply, yes thath first suggestion worked,
-d'oh in retrospect. This patch fixes it.
+ Documentation/config/transfer.txt |   4 +
+ Documentation/fetch-options.txt   |   5 ++
+ Documentation/git-fetch.txt       |   1 +
+ builtin/fetch.c                   |  36 +++++++-
+ fetch-pack.c                      |  66 ++++++++++----
+ fetch-pack.h                      |   9 ++
+ protocol-caps.c                   |  11 +++
+ protocol-caps.h                   |   6 ++
+ serve.c                           |   2 +-
+ t/t5583-fetch-object-info.sh      | 138 ++++++++++++++++++++++++++++++
+ transport-helper.c                |   8 +-
+ transport-internal.h              |   1 +
+ transport.c                       |  75 +++++++++++++++-
+ transport.h                       |   9 ++
+ 14 files changed, 349 insertions(+), 22 deletions(-)
+ create mode 100755 t/t5583-fetch-object-info.sh
 
 
- reftable/generic.c     |  8 ++++++--
- reftable/record_test.c |  4 +++-
- reftable/writer.c      | 12 +++++++++---
- 3 files changed, 18 insertions(+), 6 deletions(-)
-
-diff --git a/reftable/generic.c b/reftable/generic.c
-index b27d152e89a..57f8032db94 100644
---- a/reftable/generic.c
-+++ b/reftable/generic.c
-@@ -130,7 +130,9 @@ int reftable_iterator_next_ref(struct reftable_iterator *it,
- {
- 	struct reftable_record rec = {
- 		.type = BLOCK_TYPE_REF,
--		.u.ref = *ref,
-+		.u = {
-+			.ref = *ref
-+		},
- 	};
- 	int err = iterator_next(it, &rec);
- 	*ref = rec.u.ref;
-@@ -142,7 +144,9 @@ int reftable_iterator_next_log(struct reftable_iterator *it,
- {
- 	struct reftable_record rec = {
- 		.type = BLOCK_TYPE_LOG,
--		.u.log = *log,
-+		.u = {
-+			.log = *log,
-+		},
- 	};
- 	int err = iterator_next(it, &rec);
- 	*log = rec.u.log;
-diff --git a/reftable/record_test.c b/reftable/record_test.c
-index f91ea5e8830..70ae78feca4 100644
---- a/reftable/record_test.c
-+++ b/reftable/record_test.c
-@@ -339,7 +339,9 @@ static void test_reftable_obj_record_roundtrip(void)
- 		};
- 		struct reftable_record in = {
- 			.type = BLOCK_TYPE_OBJ,
--			.u.obj = recs[i],
-+			.u = {
-+				.obj = recs[i],
-+			},
- 		};
- 		struct strbuf key = STRBUF_INIT;
- 		struct reftable_record out = { .type = BLOCK_TYPE_OBJ };
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 6d979e245ff..427f1317c6b 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -257,7 +257,9 @@ int reftable_writer_add_ref(struct reftable_writer *w,
- {
- 	struct reftable_record rec = {
- 		.type = BLOCK_TYPE_REF,
--		.u.ref = *ref,
-+		.u = {
-+			.ref = *ref
-+		},
- 	};
- 	int err = 0;
- 
-@@ -308,7 +310,9 @@ static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
- {
- 	struct reftable_record rec = {
- 		.type = BLOCK_TYPE_LOG,
--		.u.log = *log,
-+		.u = {
-+			.log = *log,
-+		},
- 	};
- 	if (w->block_writer &&
- 	    block_writer_type(w->block_writer) == BLOCK_TYPE_REF) {
-@@ -401,7 +405,9 @@ static int writer_finish_section(struct reftable_writer *w)
- 		for (i = 0; i < idx_len; i++) {
- 			struct reftable_record rec = {
- 				.type = BLOCK_TYPE_INDEX,
--				.u.idx = idx[i],
-+				.u = {
-+					.idx = idx[i],
-+				},
- 			};
- 			if (block_writer_add(w->block_writer, &rec) == 0) {
- 				continue;
--- 
-2.35.1.1548.gaad2ca01774
+base-commit: f01e51a7cfd75131b7266131b1f7540ce0a8e5c1
+--=20
+2.33.0.664.g0785eb7698
 
