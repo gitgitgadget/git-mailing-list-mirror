@@ -2,119 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 274EEC433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 18:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9839C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 18:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244957AbiC1SEH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 14:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39548 "EHLO
+        id S245304AbiC1Ss1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 14:48:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244897AbiC1SEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 14:04:04 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB52447380
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:02:22 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id dr20so30304171ejc.6
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:02:22 -0700 (PDT)
+        with ESMTP id S241837AbiC1Ss0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 14:48:26 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CCF75FF00
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:46:45 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id f3so12536780qvz.10
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 11:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uMlSk0bz9irlPdGb6qj3lgvQcYUN5Btz9bNiNnRgEsQ=;
-        b=EPc8dS8rtLTWwcILGttsNl3/kdZR1E0mHepb9HYOndWfydcUB5PaQIPmUWdPfjDXGp
-         JG1mp2VS8fEqs/FzVrVr53escOV631kz3Vm7FpXxFYJy2SBpvKO3z43kmuwZ6KCC6JLs
-         K+1cEVH1zJ+ua9XKj92iDAxEkYjHAqhgAys1nYIofe/2k7AG5Vd3vjLgnDihrVOuKsZr
-         PmUcN18KB5ewOK3lVX5/3SJqWXQ0tSr5NU35a40BamedeSC+YbpH6HdXVGBmzoO9Zllc
-         Dzg5vNLqnkpCqkBkWJgRYrF2AggKtaTPAqxQIw8GNi8USd6aOLq1WQB0rgNiAMRp/PMW
-         bQUg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W4HXZ6IzZdfZF/8eOtHurQPM8T9xyKLybRjJfyZqM50=;
+        b=PAH2eGCtmMJdHwQCOvp2Jh/+HShndEZRUW3UsJqqZP5rB0XPXwblFFkWTTJi+XOqWY
+         Dk6fLCA5CnJ7m/FbvAUd6T7D/Jx9/dgE552kBI1AMg/Sz+EpBGvH4wYFMFM9pc4B/Tne
+         numhOGVKXV224xkbOvCEAc8qyeMiYA7CrNPyLXRefVWbtdXLhQEuc4QuSVkmB1mRpFU+
+         cgwdA9YUQX2+TXTCs42kIa0CQWVaRMhnLm71taxnFbBSEQvbEOk8zHv1tc3RyE7WM9u+
+         qhzLJPD56xb7yASmCi88hmYv7S6XmXRxoxkktyBcpH9pFTiLNXSGOUI1iiApGRh3Hakh
+         +h9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uMlSk0bz9irlPdGb6qj3lgvQcYUN5Btz9bNiNnRgEsQ=;
-        b=kF/eFLUs3AsO2f7WwZhohQXEcfONYDJOKeYrTmG3W5bq35DxIHCZytJWps+l8fGJHy
-         KizCT3D/SRP+mr0y6GYsTezxw40I023S7TXUGz0KxFwWkE/C8eMgXAuz6jsd/tJMijU1
-         Huh8ZruWQbX0XyrdI+RK319GZ9hOdvdZJRfPOhd0iY8Tj8BVpimTAubzPoge6G7e6ZcX
-         hM0V02UVJ+xhMQku4+CingTuszciqojIE7Wiwq4IU6jsUKL2PxLrbbvCXRl6RdZwQ49l
-         87491swJWE96M1q/FuisglIt0Es/HXPEBuZSqgQ+k8dK4t77ApkEXh+8doDbXbgBrm0a
-         jmxQ==
-X-Gm-Message-State: AOAM532869OWU/MX2JHJ6csrlqd8Jv28TTIzVV3wf/F/pkJPSJfK8Qu+
-        N2OjPXAHHlM1yIpcbm8gmU+67A413mUF1sHKKwvhgA==
-X-Google-Smtp-Source: ABdhPJwRnc1sdbMvJ9f+ZtTWqq4FU81S+Ikpsu3AnBjzZL1laZwJYEj5zrnZ5orV9YhUkLjN/PoYOvccCL71uOhFstM=
-X-Received: by 2002:a17:906:7d52:b0:6df:a6c7:2c5 with SMTP id
- l18-20020a1709067d5200b006dfa6c702c5mr30085609ejp.540.1648490541385; Mon, 28
- Mar 2022 11:02:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W4HXZ6IzZdfZF/8eOtHurQPM8T9xyKLybRjJfyZqM50=;
+        b=kpdEEcZ9Sg2QQGk1SYHkcss6Q9rANC3+2EXDo2B6VA9+OFpEMnoenHszgBjbmUqh3u
+         YCZqR+wNylTJpdkkU3ItnyFCB89bcuZW8xHx4fFCf1eYpfBs9g2UZ1D9019xj/gLGXo4
+         t24Vr6+V9vfO1m8+Zk9NBDrpUFMcAdWaEUi0F0+yHPMpz4h8Kg8qWuvSj5ZO6y2KCf47
+         p+ZZv0ouvIOLr6jf2OOon6yUzmhHfWEr1f1we+Hl+dSyfvrduLTVyft+nfGNU9p/bp1w
+         Nsd9bIPQMcns8aStkWqLpepqSALYk9ZjjUxYMwtAn1cpwXcyBLA3ym1TUgB39RFJFWGR
+         r0RA==
+X-Gm-Message-State: AOAM532O7HXKcQuisjIiCXBTyxz15GMs2kjBRQ1j7KWqbCPJVXnJCJyp
+        7Y71rn0h1hwXL0hy8r7dHtkn8g==
+X-Google-Smtp-Source: ABdhPJxOdp7d0TSleSkmyCNNblwIP5pQNF0UyJy2hzp2JHTWA9YFWsFBrrf73+I0UWYPcBYea12zOA==
+X-Received: by 2002:a05:6214:194e:b0:441:2893:c409 with SMTP id q14-20020a056214194e00b004412893c409mr22508392qvk.48.1648493204573;
+        Mon, 28 Mar 2022 11:46:44 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u20-20020a05620a455400b0067ec0628661sm9420881qkp.110.2022.03.28.11.46.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Mar 2022 11:46:44 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 14:46:42 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, tytso@mit.edu, derrickstolee@github.com,
+        gitster@pobox.com, larsxschneider@gmail.com
+Subject: Re: [PATCH v3 01/17] Documentation/technical: add cruft-packs.txt
+Message-ID: <YkICkpttOujOKeT3@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1646266835.git.me@ttaylorr.com>
+ <784ee7e0eec9ba520ebaaa27de2de810e2f6798a.1646266835.git.me@ttaylorr.com>
+ <YiZI99yeijQe5Jaq@google.com>
+ <YjkjaH61dMLHXr0d@nand.local>
+ <YjpDbHmKY9XA2p0K@google.com>
+ <YjpHbaBspUasDdEy@nand.local>
+ <YjpWFZ95OL7joFa4@google.com>
+ <Yjpxd8qhwnAIJJma@nand.local>
 MIME-Version: 1.0
-References: <pull.1183.v2.git.1647940686394.gitgitgadget@gmail.com>
- <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com> <xmqqwnge2ghe.fsf@gitster.g>
- <kl6l7d8et314.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqilry2dq7.fsf@gitster.g>
-In-Reply-To: <xmqqilry2dq7.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 28 Mar 2022 20:02:10 +0200
-Message-ID: <CAPMMpojYJ9sB7nbAAt1b_yH0Um1O-+TpSRYXTkZ6aDHobhS59A@mail.gmail.com>
-Subject: Re: [PATCH v3] tracking branches: add advice to ambiguous refspec error
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Yjpxd8qhwnAIJJma@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Mar 22, 2022 at 09:01:43PM -0400, Taylor Blau wrote:
+> > >> Can you tell me a little more about why we would want _not_ to have a
+> > >> repository format extension?  To me, it seems like a fairly simple
+> > >> addition that would drastically reduce the cognitive overload for
+> > >> people considering making use of this feature.
+> > >
+> > >There is no reason to prevent a pre-cruft packs version of Git from
+> > > reading/writing a repository that uses cruft packs, since the two
+> > > versions will still function as normal. Since there's no need to prevent
+> > > the old version from interacting with a repository that has cruft packs,
+> > > we wouldn't want to enforce an unnecessary boundary with an extension.
+> >
+> > Does "function as normal" include in repository maintenance operations
+> > like "git maintenance", "git gc", and "git prune"?  If so, this seems
+> > like something very useful to describe in the cruft-packs.txt
+> > document, since what happens when we bounce back and forth between old
+> > and new versions of Git operating on the same NFS mounted repository
+> > would not be obvious without such a discussion.
 >
-> Glen Choo <chooglen@google.com> writes:
+> Yes, all of those commands will simply ignore the .mtimes file and treat
+> the unreachable objects as normal (where "normal" means in the exact
+> same way as they currently do without cruft packs). I think adding a
+> section that summarizes our discussion would be useful.
 >
-> > Hm, what do you think of an alternate approach of storing of the
-> > matching remotes in a string_list, something like:
-[...]
-> > then construct the advice message in setup_tracking()? To my untrained
-> > eye, "case 2" requires a bit of extra work to understand.
+> > I'm still interested in the _downsides_ of using a repository format
+> > extension.  "There is no reason" is not a downside, unless you mean
+> > that it requires adding a line of code. :)  The main downside I can
+> > imagine is that it prevents accessing the repository _that has enabled
+> > this feature_ with an older version of Git, but I (perhaps due to a
+> > failure of imagination) haven't put two and two together yet about
+> > when I would want to do so.
+>
+> Sorry for not being clear; I meant: "There is no reason [to prohibit
+> two versions of Git from interacting with each other when they are
+> compatible to do so]".
 
-Interestingly, that was what I had in the original RFC. I started using
-the strbuf later, after =C3=86var confirmed that a single "advise()" call i=
-s
-the way to go. I understood building the string as we go to lead to
-simpler code, as it meant one less loop. On the other hand I
-understand Junio is more concerned about performance than the
-existence of a second loop that we should almost never hit.
+Jonathan, myself, and others discussed this extensively in today's
+standup.
 
-I'm very happy to switch from strbuf-building to string_list-appending,
-but I'm curious to understand how/why the performance of
-strbuf_addf() would be notably worse than that of
-string_list_append().
+To summarize Jonathan's point (as I think I severely misunderstood it
+before), if two writers are repacking a repository with unreachable
+objects. The following can happen:
 
-Is there public doc about this somewhere?
+  - $NEWGIT packs the repository and writes a cruft pack and .mtimes
+    file.
 
-> Having said that, as long as you do that lazily not to penalize
-> those who have sane setting without the need for advice/error to
-> trigger, I do not particularly care how the list of matching remote
-> names are kept.  Having string_list_append() unconditionally like
-> the above patch has, even for folks with just a single match without
-> need for the advice/error message is suboptimal, I would think.
+  - $OLDGIT packs the repository, exploding unreachable objects from the
+    cruft pack as loose, setting their mtimes to "now".
 
-Again, I'm new here, and not a great coder to start with, but I'm
-having a hard time understanding why the single extra/gratuitous
-strbuf_addf() or string_list_append() call that we stand to optimize
-(I haven't understood whether there is a significant difference
-between them) would ever be noticeable in the context of creating
-a branch.
+This causes the repository to lose information about the unreachable
+mtimes, which would cause the repository to never prune objects (except
+for when`--unpack-unreachable=now` is passed).
 
-I of course completely understand optimizing anything that will
-end up looping, but this is a max of 1 iteration's savings; I would
-have thought that at these levels, readability/maintainability (and
-succinctness) of the code would trump any marginal performance
-savings.
+One approach (that Jonathan suggested) is to prevent the above situation
+by introducing a format extension, so $OLDGIT could not touch the
+repository. But this comes at a (in my view, significant) cost which is
+that $OLDGIT can't touch the repository _at all_. An extension would be
+desirable if cross-version interaction resulted in repository
+corruption, but this scenario does not lead to corruption at all.
 
-To that end, I'd understand going back to string_list_append() as
-Glen proposes, and building a formatted string in a single place
-(setup_tracking()) only when required - both for readability, and
-in case some aspect of strbuf_addf() is non-trivially expensive -
-but is the "only append to the string_list() on the rare second
-pass" optimization really worth the increase in amount of code?
+Another approach (courtesy Stolee, in an off-list discussion) is that we
+could introduce an optional extension available as an opt-in to prevent
+older versions of Git from interacting in a repository that contains
+cruft packs, but is not required to write them.
 
-Is "performance over succinctness" a general principle that
-could or should be noted somewhere?
+A third approach (and probably my preferred direction) is to indicate
+clearly via a combination of updates to Documentation/cruft-packs.txt
+and the release notes that say something along the lines of:
+
+    If you use are repacking a repository using both a pre- and
+    post-cruft packs version of Git, please be aware that you will lose
+    information about the mtimes of unreachable objects.
+
+I imagine that would probably be sufficient, but we could also introduce
+the opt-in extension as an easy alternative to avoid forcing an upgrade
+of Git.
+
+Thanks,
+Taylor
