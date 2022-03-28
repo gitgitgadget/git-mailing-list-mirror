@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2441AC433EF
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 14:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FEDAC433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 14:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243574AbiC1OED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 10:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
+        id S243582AbiC1OEH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 10:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240764AbiC1OEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 10:04:01 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10C55EDE8
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:19 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id a1so20532891wrh.10
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:19 -0700 (PDT)
+        with ESMTP id S243575AbiC1OED (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 10:04:03 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C57225EDDC
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:22 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id b19so20516759wrh.11
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QN4mRAiTxC5fu7XTz9VlYgbA6F2pTz4HHm2IG6o9d0g=;
-        b=HBzoybZxl/KjlWoUFYlLKCn9gra7U7JDqPACWA/BctpcWstI8J7FUXjjObwLZYOVdH
-         StmJ/+WuPFfz8fa9oS5PSVlTtWyyj1uOBVXKwmJ3Cj3JvDuBfvIdjAXxNGhyq2EaDJ4Q
-         fvf8Zz8osvLjPa8NXYToTgr3oFfyyHsIYv0OYG/uZSnnvNPR6Kg/XPe89KCn6pjvgD2c
-         F5p17m9DjBpd/C7t7AUOiF377DINZ2P4uh2/Y4Oiw31UzHbHpXkxN7rp1N93qkyCTPdv
-         3CBzQ65l57iJIN+G0BrZMnTJHyial20uwE7NQu0BxPH2MQJAhgwlq9Xi7IxPyVbhYn/d
-         Wftg==
+        bh=VvuQDNYHi76po3IhgEBr8bIrGEpBU/9nHBLLa49txsA=;
+        b=kBvZ/JSu41wBuLD2iY5skr4iHPZEfJEpWiQP1BsQJk3zGd0O9Tmar3cAorrR8owe52
+         kKIPMpAEbuUXV8cLiXzCtuW+TKQ3RKT0S4JtubqzgWWoXaQGP7Hw4M+M5LkVpQi2w7eB
+         I1gLTpOxtRmpH9geAvFJHxurudDwH9OIH5W3aYGkrI/fuWHE7egWoZdad4uSunjTVnE+
+         Dysx4ydDjbn6VTiuCRUDBwf6Z4rfJ6945zMkWjObI0afku70IDbaaxcG0alC6KPDye2/
+         O+9aT+YgVh6xXRCZTvC1ofVh+LaU0oKhArnBgW2ijpEuTadESSeP1TF9BSnFqsBW8ttf
+         aLpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QN4mRAiTxC5fu7XTz9VlYgbA6F2pTz4HHm2IG6o9d0g=;
-        b=CPiwwp+r+p2WzOGqJGngEWKk5HmbwQEnTpcnJm5jf/Nci94CO8fO5Tdbr4jFGVsnHh
-         SViFLoTIyJLMZVjqUsXmWm9hyEEk7NJc26ImiPExBlTv5xSCnITAQL4NKi+YURAm88fN
-         oe2vHhSNwT/Ez2ogF5n/Stizq7OzplBTB6g//VcUQniJeY7hsBR9xmO8xr8Q6MS4GDrx
-         4EUxGoft6Sp5UcE66GOazZYm2sVGpL2rMxtoL9jLFTR1h2fA3hQMh9sxjf+BCtD3bNNI
-         +8QiCthQIrIMyWGfd4eIXn5H0S3GD6l61ICigT8iOiU65UmD9Ug2zchRkApFkXgcgh9A
-         pOFw==
-X-Gm-Message-State: AOAM531aLrFhcxm0qW00VfxCZaD/RJGfJHGWhuzP7k3Clte+RgX34lzD
-        E8vz3Cf8LSRdqoJC7qVbz1KaJOnUBkY=
-X-Google-Smtp-Source: ABdhPJwh22wVd2jhNJ5zNqRjJeVrXEBoqv0VLETyNQ4Q6sUgat3/nzN8Ce30CjCNZZz7OTeMrIDS3g==
-X-Received: by 2002:a5d:688a:0:b0:204:6e3:f937 with SMTP id h10-20020a5d688a000000b0020406e3f937mr23852329wru.90.1648476137980;
-        Mon, 28 Mar 2022 07:02:17 -0700 (PDT)
+        bh=VvuQDNYHi76po3IhgEBr8bIrGEpBU/9nHBLLa49txsA=;
+        b=AxT/uIU30mZcKUL/nJbEnr0wDwJQOn2B1oY/Xm68Ol6fM9UYYdzRAxvl5nJFoR04NE
+         tlcHtPJTgqM2ZTbR/9FRo6W7YXc6Tq5TFzga3Eay/fdRBA3ROI4hJAohCy2iGKRdqH3V
+         kdUyjsmElqWBQvduOOy04Fc/Ca/QeBsX9R2qrBBRvJpcOn1WksWGRt3qQnn7oo7aa+zT
+         znBCe5NrLvnAlFz6HO/Gi7v1am0ZLCAHUlZSguy94eYsHEhhXYfFcyuAPLgBkoW0TgTD
+         9HW5rX/zo7hhjAUOnN+Fkef8jTcrVLZILMJ7UFeFVDyvXQOqYA9CAx/S6iKxHl4KmsTP
+         Q38g==
+X-Gm-Message-State: AOAM5339D2hhGYsXzLwjDBwAx350Vt3QC7gw2pqHR7mb7+PrbuWOPR9C
+        6j0fqZKC4aHd9TdxHJkmn+fAzJNEOXU=
+X-Google-Smtp-Source: ABdhPJxYbjInNerWq7O0FUKaCTEzz8pdTEXvalvVT+QzjLAZhx5HI3Kj+8OCbpmo8DaoXCVaTPeH3Q==
+X-Received: by 2002:adf:fe4a:0:b0:203:fb08:11d8 with SMTP id m10-20020adffe4a000000b00203fb0811d8mr23693208wrs.356.1648476139644;
+        Mon, 28 Mar 2022 07:02:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11-20020a5d456b000000b0020406ce0e06sm12233993wrc.94.2022.03.28.07.02.16
+        by smtp.gmail.com with ESMTPSA id f1-20020a1c6a01000000b0038c9f6a3634sm15614078wmc.7.2022.03.28.07.02.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 07:02:16 -0700 (PDT)
-Message-Id: <03f0de3d28c00cbfda73f31a21e0fa8f8fe51742.1648476132.git.gitgitgadget@gmail.com>
+        Mon, 28 Mar 2022 07:02:18 -0700 (PDT)
+Message-Id: <f7942344ff897fc064346f283734022fc0ffc540.1648476132.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com>
 References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
         <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com>
 From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Mar 2022 14:02:06 +0000
-Subject: [PATCH v4 2/7] fetch-pack: add refetch
+Date:   Mon, 28 Mar 2022 14:02:07 +0000
+Subject: [PATCH v4 3/7] builtin/fetch-pack: add --refetch option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,124 +74,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Robert Coup <robert@coup.net.nz>
 
-Allow a "refetch" where the contents of the local object store are
-ignored and a full fetch is performed, not attempting to find or
-negotiate common commits with the remote.
-
-A key use case is to apply a new partial clone blob/tree filter and
-refetch all the associated matching content, which would otherwise not
-be transferred when the commit objects are already present locally.
+Add a refetch option to fetch-pack to force a full fetch. Use when
+applying a new partial clone filter to refetch all matching objects.
 
 Signed-off-by: Robert Coup <robert@coup.net.nz>
 ---
- fetch-pack.c | 46 +++++++++++++++++++++++++++++-----------------
- fetch-pack.h |  1 +
- 2 files changed, 30 insertions(+), 17 deletions(-)
+ Documentation/git-fetch-pack.txt | 4 ++++
+ builtin/fetch-pack.c             | 4 ++++
+ remote-curl.c                    | 6 ++++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 87657907e78..4e1e88eea09 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -312,19 +312,21 @@ static int find_common(struct fetch_negotiator *negotiator,
- 		const char *remote_hex;
- 		struct object *o;
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
+index c9758847937..46747d5f429 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -101,6 +101,10 @@ be in a separate packet, and the list must end with a flush packet.
+ 	current shallow boundary instead of from the tip of each
+ 	remote branch history.
  
--		/*
--		 * If that object is complete (i.e. it is an ancestor of a
--		 * local ref), we tell them we have it but do not have to
--		 * tell them about its ancestors, which they already know
--		 * about.
--		 *
--		 * We use lookup_object here because we are only
--		 * interested in the case we *know* the object is
--		 * reachable and we have already scanned it.
--		 */
--		if (((o = lookup_object(the_repository, remote)) != NULL) &&
--				(o->flags & COMPLETE)) {
--			continue;
-+		if (!args->refetch) {
-+			/*
-+			* If that object is complete (i.e. it is an ancestor of a
-+			* local ref), we tell them we have it but do not have to
-+			* tell them about its ancestors, which they already know
-+			* about.
-+			*
-+			* We use lookup_object here because we are only
-+			* interested in the case we *know* the object is
-+			* reachable and we have already scanned it.
-+			*/
-+			if (((o = lookup_object(the_repository, remote)) != NULL) &&
-+					(o->flags & COMPLETE)) {
-+				continue;
-+			}
- 		}
- 
- 		remote_hex = oid_to_hex(remote);
-@@ -692,6 +694,9 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
- 
-+	if (args->refetch)
-+		return;
++--refetch::
++	Skips negotiating commits with the server in order to fetch all matching
++	objects. Use to reapply a new partial clone blob/tree filter.
 +
- 	save_commit_buffer = 0;
+ --no-progress::
+ 	Do not show the progress.
  
- 	trace2_region_enter("fetch-pack", "parse_remote_refs_and_find_cutoff", NULL);
-@@ -1028,7 +1033,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	struct fetch_negotiator *negotiator;
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index c2d96f4c89a..1f8aec97d47 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -153,6 +153,10 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.from_promisor = 1;
+ 			continue;
+ 		}
++		if (!strcmp("--refetch", arg)) {
++			args.refetch = 1;
++			continue;
++		}
+ 		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
+ 			parse_list_objects_filter(&args.filter_options, arg);
+ 			continue;
+diff --git a/remote-curl.c b/remote-curl.c
+index ff44f41011e..67f178b1120 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -43,6 +43,7 @@ struct options {
+ 		/* see documentation of corresponding flag in fetch-pack.h */
+ 		from_promisor : 1,
  
- 	negotiator = &negotiator_alloc;
--	fetch_negotiator_init(r, negotiator);
-+	if (args->refetch) {
-+		fetch_negotiator_init_noop(negotiator);
-+	} else {
-+		fetch_negotiator_init(r, negotiator);
-+	}
- 
- 	sort_ref_list(&ref, ref_compare_name);
- 	QSORT(sought, nr_sought, cmp_ref_by_name);
-@@ -1121,7 +1130,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 
- 	mark_complete_and_common_ref(negotiator, args, &ref);
- 	filter_refs(args, &ref, sought, nr_sought);
--	if (everything_local(args, &ref)) {
-+	if (!args->refetch && everything_local(args, &ref)) {
- 		packet_flush(fd[1]);
- 		goto all_done;
- 	}
-@@ -1587,7 +1596,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	struct strvec index_pack_args = STRVEC_INIT;
- 
- 	negotiator = &negotiator_alloc;
--	fetch_negotiator_init(r, negotiator);
-+	if (args->refetch)
-+		fetch_negotiator_init_noop(negotiator);
-+	else
-+		fetch_negotiator_init(r, negotiator);
- 
- 	packet_reader_init(&reader, fd[0], NULL, 0,
- 			   PACKET_READ_CHOMP_NEWLINE |
-@@ -1613,7 +1625,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 			/* Filter 'ref' by 'sought' and those that aren't local */
- 			mark_complete_and_common_ref(negotiator, args, &ref);
- 			filter_refs(args, &ref, sought, nr_sought);
--			if (everything_local(args, &ref))
-+			if (!args->refetch && everything_local(args, &ref))
- 				state = FETCH_DONE;
- 			else
- 				state = FETCH_SEND_REQUEST;
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 7f94a2a5831..8c7752fc821 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -42,6 +42,7 @@ struct fetch_pack_args {
- 	unsigned update_shallow:1;
- 	unsigned reject_shallow_remote:1;
- 	unsigned deepen:1;
-+	unsigned refetch:1;
- 
- 	/*
- 	 * Indicate that the remote of this request is a promisor remote. The
++		refetch : 1,
+ 		atomic : 1,
+ 		object_format : 1,
+ 		force_if_includes : 1;
+@@ -198,6 +199,9 @@ static int set_option(const char *name, const char *value)
+ 	} else if (!strcmp(name, "from-promisor")) {
+ 		options.from_promisor = 1;
+ 		return 0;
++	} else if (!strcmp(name, "refetch")) {
++		options.refetch = 1;
++		return 0;
+ 	} else if (!strcmp(name, "filter")) {
+ 		options.filter = xstrdup(value);
+ 		return 0;
+@@ -1182,6 +1186,8 @@ static int fetch_git(struct discovery *heads,
+ 		strvec_push(&args, "--deepen-relative");
+ 	if (options.from_promisor)
+ 		strvec_push(&args, "--from-promisor");
++	if (options.refetch)
++		strvec_push(&args, "--refetch");
+ 	if (options.filter)
+ 		strvec_pushf(&args, "--filter=%s", options.filter);
+ 	strvec_push(&args, url.buf);
 -- 
 gitgitgadget
 
