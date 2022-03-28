@@ -2,146 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23470C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B74E6C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245660AbiC1TRm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 15:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43238 "EHLO
+        id S243829AbiC1TVg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 15:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245653AbiC1TRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 15:17:42 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D101F66C9F
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:16:00 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id t2so13609984pfj.10
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:16:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LNstmGnnR3nkpxf44CZy6QMqEGf+1nVOy2JjtDuTfZM=;
-        b=Pa5uct2cgn0rOSaPW9fSVCUv8+3h6gv0l3g7PxxrF8/ekP7Rfazu/VrYYJnCbD/n3m
-         0MF0uN7QQYoUZKNmagx6PyqEJ6yUkTL6ieu3K8AQ48st2moXfu9gRWoTYufgDsKwD0Wy
-         fK2EpQL8bPRD9A0+FbLCzbnzasqnOTg/6b8CEfIJZIMe+TsDN7RaHEfGNbBk7I8HlGrx
-         sH0ZrOOjXCuYXOtIlCQtw9adbBUDBfSp8sOYsaPI/OU4zfQxXaecCs1YDgWeTc3LjMRZ
-         XjV6RISQRar5v8GQsqCPJmrVgiyrbBHUSo+xFg8FwQfLwLJx1IpkqFsF4B4CO9KTxpoJ
-         Bcxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=LNstmGnnR3nkpxf44CZy6QMqEGf+1nVOy2JjtDuTfZM=;
-        b=VUKPOxhhqvIX3jwG4n5fo95agcjV9uPFbK2O3RFeLyRfItTCHZpAVokA4goJOz3YNv
-         ZVTcnUDJdThSlWj6eECzLxCn1SjHRqijDI6V2KsOGbHSIFAxnHQZ0tJXOktVy1AD2FyT
-         00saRby2ojjuiEZDElB/7iT6Xrvv3nRFq0LTWIJBwwi/nt73uomelRrEJJRx8uY7u0Ix
-         HvF8FkrUnNwJuf+4dCUDsQPYzzh+4OC0vQFwboBa9tUKcE4IWmEocP6eF1MtgH5kb+fw
-         VdRue2r8wkEEroLRWzyvQeAQOErwgmpigMXnevTqPHwZbScYzjBu7OlL8OYVkfgJs31C
-         dFnQ==
-X-Gm-Message-State: AOAM531RPusdsMEgVbay5Pzb6u+8OQu9Awkx3RtTWeZnWAavJzk01bfb
-        wgDhGC87qi5dJsffbD+TfZ6iU+JaVmxkiw==
-X-Google-Smtp-Source: ABdhPJyW2J6mu8iz3yGWCjNSlCw80sxxfP2cNa+4ThRLSb0bWctQAxOspIInNuSfOqI0BVvWaavq2A==
-X-Received: by 2002:a05:6a00:1c95:b0:4fa:81f5:b9d4 with SMTP id y21-20020a056a001c9500b004fa81f5b9d4mr3184303pfw.49.1648494960134;
-        Mon, 28 Mar 2022 12:16:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:11a8:5d81:f67f:aef9])
-        by smtp.gmail.com with ESMTPSA id b17-20020a056a000a9100b004e1b7cdb8fdsm18245425pfl.70.2022.03.28.12.15.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 12:15:59 -0700 (PDT)
-Date:   Mon, 28 Mar 2022 12:15:53 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        lessleydennington@gmail.com, gitster@pobox.com, vdye@github.com
-Subject: Re: [RFC PATCH] repo-settings: set defaults even when not in a repo
-Message-ID: <YkIJacCaaqFk1MDa@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        lessleydennington@gmail.com, gitster@pobox.com, vdye@github.com
-References: <1b27e0b115f858a422e0a2891688227be8f3db01.1648055915.git.steadmon@google.com>
- <471ca70d-0da1-8c4f-16bc-3019706931bd@github.com>
- <Yjt6mLIfw0V3aVTO@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yjt6mLIfw0V3aVTO@nand.local>
+        with ESMTP id S234167AbiC1TVe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 15:21:34 -0400
+X-Greylist: delayed 310 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 28 Mar 2022 12:19:52 PDT
+Received: from mout3.freenet.de (mout3.freenet.de [IPv6:2001:748:100:40::2:5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ADC64FC4B
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:19:51 -0700 (PDT)
+Received: from [195.4.92.120] (helo=sub1.freenet.de)
+        by mout3.freenet.de with esmtpa (ID tomritzow@freenet.de) (port 25) (Exim 4.94.2 #2)
+        id 1nYup4-00GxA7-Q6
+        for git@vger.kernel.org; Mon, 28 Mar 2022 21:14:38 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+        s=mjaymdexmjqk; h=To:Date:Message-Id:Subject:Mime-Version:From:
+        Content-Transfer-Encoding:Content-Type:Sender:Reply-To:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=INPZIyyG3/VtFXvYMl8iwMf9URGdkL/C0FJkIlv4a4o=; b=XZ56I2iJBVZ/c79cqN7KsOxco/
+        mpGiJ0uLvRYvfkLJ0RFHCxn7d9r2ceo4S49UOOE3UZInU/StIXUExIJtn7g0Wma5ew92OM5NK1wyK
+        8yZYGMVF4jJNqdU78DuMvodvjxUbNMNcThMZFMee811RuQzJIpfPSZ8FgQGosxPqE95I9wazKb2Bx
+        tSrbg/3lzYLarI1Bp/L3ZebbAPWDbFKKFBBaXLA7iwzPb9ddF7jWdbhDAt2PX0Qtj0v8BUwfsCGWH
+        sWuYRTo/DMpZNghA4V7/+FJJSIh5IwHNd0/OHBrY0EWnSy8/MUWwnnQsPTLBWBx3OPvplyn+aDzXH
+        6xHLEgWA==;
+Received: from [2a02:8108:9ec0:22f9:cc12:f6f4:5d88:3233] (port=52787 helo=smtpclient.apple)
+        by sub1.freenet.de with esmtpsa (ID tomritzow@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (port 587) (Exim 4.94.2 #2)
+        id 1nYup4-00HakB-2r; Mon, 28 Mar 2022 21:14:38 +0200
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Tom Ritzow <tomritzow@freenet.de>
+Mime-Version: 1.0 (1.0)
+Subject: =?utf-8?Q?_About_Documentation_Reference_Book_Videos_External_Li?=
+ =?utf-8?Q?nks_Downloads_Community_English_=E2=96=BETopics_?=
+ =?utf-8?Q?=E2=96=BE_Version_2.35.1_=E2=96=BE_gitglossary_last_up?=
+ =?utf-8?Q?dated_in_2.35.1_NAME_gitglossary_-_A_Git_Glossary__SYN?=
+ =?utf-8?Q?OPSIS_*__DESCRIPTION_alternate_object_database_Via_the?=
+ =?utf-8?Q?_alternates_mechanism,_a_repository_can_inherit_part_o?=
+ =?utf-8?Q?f_its_object_database_from_another_object_database,_wh?=
+ =?utf-8?Q?ich_is_called_an_"alternate".__bare_repository_A_bare_?=
+ =?utf-8?Q?repository_is_normally_an_appropriately_named_director?=
+ =?utf-8?Q?y_with_a_.git_suffix_that_does_not_have_a_locally_chec?=
+ =?utf-8?Q?ked-out_copy_of_any_of_the_files_under_revision_contro?=
+ =?utf-8?Q?l._That_is,_all_of_the_Git_administrative_and_control_?=
+ =?utf-8?Q?files_that_would_normally_be_present_in_the_hidden_.gi?=
+ =?utf-8?Q?t_sub-directory_are_directly_present_in_the_repository?=
+ =?utf-8?Q?.git_directory_instead,_and_no_other_files_are_present?=
+ =?utf-8?Q?_and_checked_out._Usually_publishers_of_public_reposit?=
+ =?utf-8?Q?ories_make_bare_repositories_available.__blob_object_U?=
+ =?utf-8?Q?ntyped_object,_e.g._the_contents_of_a_file.__branch_A_?=
+ =?utf-8?Q?"branch"_is_a_line_of_development._The_most_recent_com?=
+ =?utf-8?Q?mit_?=
+Message-Id: <BD836853-B966-475A-A07F-E1B6ACFE758D@freenet.de>
+Date:   Mon, 28 Mar 2022 21:14:37 +0200
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (19E241)
+X-Originated-At: 2a02:8108:9ec0:22f9:cc12:f6f4:5d88:3233!52787
+X-Scan-TS: Mon, 28 Mar 2022 21:14:38 +0200
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022.03.23 15:52, Taylor Blau wrote:
-> On Wed, Mar 23, 2022 at 03:22:13PM -0400, Derrick Stolee wrote:
-> > On 3/23/2022 2:03 PM, Josh Steadmon wrote:
-> > > prepare_repo_settings() initializes a `struct repository` with various
-> > > default config options and settings read from a repository-local config
-> > > file. In 44c7e62 (2021-12-06, repo-settings:prepare_repo_settings only
-> > > in git repos), prepare_repo_settings was changed to issue a BUG() if it
-> > > is called by a process whose CWD is not a Git repository. This approach
-> > > was suggested in [1].
-> > >
-> > > This breaks fuzz-commit-graph, which attempts to parse arbitrary
-> > > fuzzing-engine-provided bytes as a commit graph file.
-> > > commit-graph.c:parse_commit_graph() calls prepare_repo_settings(), but
-> > > since we run the fuzz tests without a valid repository, we are hitting
-> > > the BUG() from 44c7e62 for every test case.
-> > >
-> > > Fix this by refactoring prepare_repo_settings() such that it sets
-> > > default options unconditionally; if its process is in a Git repository,
-> > > it will also load settings from the local config. This eliminates the
-> > > need for a BUG() when not in a repository.
-> >
-> > I think you have the right idea and this can work.
-> 
-> Hmmm. To me this feels like bending over backwards in
-> `prepare_repo_settings()` to accommodate one particular caller. I'm not
-> necessarily opposed to it, but it does feel strange to make
-> `prepare_repo_settings()` a noop here, since I would expect that any
-> callers who do want to call `prepare_repo_settings()` are likely
-> convinced that they are inside of a repository, and it probably should
-> be a BUG() if they aren't.
-> 
-> I was initially thinking that Josh's alternative of introducing and
-> calling a lower-level version of `prepare_commit_graph()` that doesn't
-> require the use of any repository settings would make sense.
-> 
-> But when I started looking at implementing it, I became confused at how
-> this is supposed to work at all without using a repository. We depend on
-> the values parsed from:
-> 
->   - commitGraph.generationVersion
->   - commitGraph.readChangedPaths
-> 
-> to determine which part(s) of the commit graph we do and don't read.
-> 
-> Looking around, I think I probably inadvertently broke this in
-> ab14d0676c (commit-graph: pass a 'struct repository *' in more places,
-> 2020-09-09). But prior to ab14d0676c, neither of those settings existed,
-> so parsing the commit graph was a pure function of the commit graph's
-> contents alone, and didn't rely on the existence of a repository.
+=EF=BB=BF
 
-Yeah, I have not done a great job keeping the fuzzers up to date with
-commit-graph changes :(.
+Von meinem iPhone gesendet
 
-> We could pretend as if `commitGraph.generationVersion` is always "2" and
-> `commitGraph.readChangedPaths` is always "true", and I think that would
-> still give us good-enough coverage.
 
-It might also be worthwhile for the fuzzer to test each interesting
-combination of settings, using the same arbitrary input.
+Von meinem iPhone gesendet=
 
-> I assume that libFuzzer doesn't give us a convenient way to stub out a
-> repository. Maybe we should have a variant of `parse_commit_graph` that
-> instead takes a `struct repo_settings` filled out with the defaults?
-> 
-> We could use that to teach libFuzzer about additional states that the
-> commit graph parser can be in, too (though probably outside the scope of
-> this patch).
-> 
-> I tried to sketch all of this out, which seems to work. Let me know what
-> you think:
-
-Yes, your patch looks like a much smaller change than I feared would be
-the case for a parse_commit_graph refactor. I'll test it out, and
-probably add some additional fuzzer improvements on top. Thanks for the
-patch!
