@@ -2,122 +2,356 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 331DFC433EF
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 06:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B63F4C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 06:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238321AbiC1GNf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 02:13:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
+        id S238580AbiC1GxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 02:53:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232223AbiC1GNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 02:13:34 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 008E4515A2
-        for <git@vger.kernel.org>; Sun, 27 Mar 2022 23:11:54 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E31418B880;
-        Mon, 28 Mar 2022 02:11:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x5xQApJdYXUJOUs6c69h+PcvwhyHP2cR888QmV
-        Hj9Y8=; b=gv8qP71kcfafJDPg2kzATIyg0zp47aMk7d3n/RW6N0EEt0rlfFfbKb
-        jsiS7z1OF4T0s7wpEATxYHDtdW5W8+GUEg7qBBqODG9BcBmRRzKETOx3LltyzVVk
-        J5fE2sXU0GO/2tJmpoBJb78Sb8vIlHZOZ1Y79+hqh29n9vMofRRms=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8BFC118B87F;
-        Mon, 28 Mar 2022 02:11:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D55D418B87D;
-        Mon, 28 Mar 2022 02:11:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     PMEase <robin@pmease.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to get the original raw commit message without removing
- extra leading/trailing line breaks
-References: <1BEBB3E1-0089-44CD-8D3B-3AA424C90E48@pmease.com>
-        <xmqq5yny62s1.fsf@gitster.g>
-        <5DAF0ABA-7905-491B-A1DC-291A2D7C2BB4@pmease.com>
-Date:   Sun, 27 Mar 2022 23:11:50 -0700
-In-Reply-To: <5DAF0ABA-7905-491B-A1DC-291A2D7C2BB4@pmease.com> (PMEase's
-        message of "Mon, 28 Mar 2022 14:01:06 +0800")
-Message-ID: <xmqqy20u4ndl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238578AbiC1GxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 02:53:01 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1056527E7
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 23:51:11 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso7941200wmz.4
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 23:51:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RaQp3q9GlHZoemD46wckbQ1BEybgH54kO/rIxCDPSN0=;
+        b=KoVzb8+dqPqMB9P1Ak+4jwGQzCSPBRk0xSoqgaXBv3cvHDwCgu2iiEhwOMlByhn3BR
+         BGxcU6U918xMPGu2u3tgLncE3vFq6eqwOjaQ8mRymvLH1AVbL35qbPB2QEylra48f3UR
+         nuDCPyve8q80wO/bqlmOkRCH1508EeuEksDTdIAYOGrsFWXygoyYjK9XCc8d6GmCDIl2
+         4QtDHH8Lt3hGKmuZblSnoyhzES5lxffd2m24hvVwoLSHvOgifwQa84/NOQxnKPYSCMAe
+         RWd99jOM3/q6oQwzHHKoNAk9vT4zBhSq59vGgpNS5bEl2ks117WvMtpMU6TNAlxK7Wbf
+         gX/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=RaQp3q9GlHZoemD46wckbQ1BEybgH54kO/rIxCDPSN0=;
+        b=gpdhLKsi94XwYEVgjIDnzKaW5fNSRHl+GLVIpVEaCS/CNXZrwBzSEakXzU6Olyz+k9
+         xPEBLe28f2HtyUrnn8waTx1XcTULdGacbTKCSmdO7S5YxeXgxlsMUohNYGtKead4auqf
+         b0rEAexE6/2HSgoZC5AY77VjyyI1ApXj0X+5vW4SE36XrG6iG2RDZWCKVlx3LrZleNnF
+         /FIVUQLCUXifsglRUZBeBtQhs+goh2kv1L2KcLQfBKHjVQhFeSqMPdU1tsOFPdHjHJKq
+         C4kOA3nlndGe9+DBy1eIZgVYxkOjlaxkBR/MBIHr67DZRFeGvhTNUWq/Hlr+JoKZj/u2
+         Tjcw==
+X-Gm-Message-State: AOAM533TZWSpMN830ecXolIRitnILA1gLQMKd5qWe3JAjaxTVsvZui7j
+        p3sSWnB07tyYfw/Ymh6cmknPc1xf8SQ=
+X-Google-Smtp-Source: ABdhPJwdA6Csz+iE7CeXFc0J3L6d2ZqrjPEJlXHAk8G/UalTwHoh4+DkCbCn+DhHlkNYuQMrQyH2kg==
+X-Received: by 2002:a05:600c:2c49:b0:38c:6b2d:39fc with SMTP id r9-20020a05600c2c4900b0038c6b2d39fcmr24702055wmg.33.1648450269532;
+        Sun, 27 Mar 2022 23:51:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w5-20020a5d5445000000b00203f8c96bcesm11073975wrv.49.2022.03.27.23.51.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Mar 2022 23:51:09 -0700 (PDT)
+Message-Id: <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1183.v2.git.1647940686394.gitgitgadget@gmail.com>
+References: <pull.1183.v2.git.1647940686394.gitgitgadget@gmail.com>
+From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Mar 2022 06:51:08 +0000
+Subject: [PATCH v3] tracking branches: add advice to ambiguous refspec error
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F5B18F42-AE5D-11EC-A70B-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Tao Klerks <tao@klerks.biz>,
+        Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PMEase <robin@pmease.com> writes:
+From: Tao Klerks <tao@klerks.biz>
 
->> On Mar 28, 2022, at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> PMEase <robin@pmease.com> writes:
->> 
->> [jc: wrapped overly long lines]
->> 
->>> I am using command "git show --format=raw <commit hash>" to get
->>> raw commit object in order to verify the GPG signature in my
->>> program to customize public key loading. However in the raw commit
->>> object, extra line breaks before and after the commit message is
->>> removed, which cause the signature verification failure as git
->>> generates the signature without removing those line breaks.
->> 
->> "git show --format=raw <commit object name>" will not give "raw
->> commit object" to begin with.  It indents the message by four
->> spaces.
->> 
->> "git cat-file commit <commit object name>" is what you want, I
->> think.
+The error "not tracking: ambiguous information for ref" is raised
+when we are evaluating what tracking information to set on a branch,
+and find that the ref to be added as tracking branch is mapped
+under multiple remotes' fetch refspecs.
 
-[jc: wrapped overly long lines, moved response at the end to correct
-top-posting]
+This can easily happen when a user copy-pastes a remote definition
+in their git config, and forgets to change the tracking path.
 
-> Thanks for your response. "git cat-file" prints the commit message
-> without leading space on each line, however extra leading/trailing
-> line breaks of the commit message is still removed.
+Add advice in this situation, explicitly highlighting which remotes
+are involved and suggesting how to correct the situation.
 
-I think you are creating your commit incorrectly.  If a line is
-missing in what cat-file prints, then the line is *NOT* in the
-commit.  If I try the following:
+Signed-off-by: Tao Klerks <tao@klerks.biz>
+---
+    tracking branches: add advice to ambiguous refspec error
+    
+    I believe this third version incorporates all Ævar's suggestions, and
+    might be usable. Removed "RFC" prefix.
 
------ >8 --------- >8 --------- >8 --------- >8 -----
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1183%2FTaoK%2Fadvise-ambiguous-tracking-refspec-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1183/TaoK/advise-ambiguous-tracking-refspec-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1183
 
-C=$(
-        cat <<\EOF | git commit-tree -p HEAD HEAD^{tree}
+Range-diff vs v2:
 
-This "first line" deliberately is on the second line.
-And after the "last line" of the log message, this commit
-has extra blank lines at the end.
+ 1:  6c1cd885dda ! 1:  22ffe81ac26 RFC: tracking branches: add advice to ambiguous refspec error
+     @@ Metadata
+      Author: Tao Klerks <tao@klerks.biz>
+      
+       ## Commit message ##
+     -    RFC: tracking branches: add advice to ambiguous refspec error
+     +    tracking branches: add advice to ambiguous refspec error
+      
+          The error "not tracking: ambiguous information for ref" is raised
+          when we are evaluating what tracking information to set on a branch,
+     @@ Commit message
+      
+       ## Documentation/config/advice.txt ##
+      @@ Documentation/config/advice.txt: advice.*::
+     - 		Advice shown when either linkgit:git-add[1] or linkgit:git-rm[1]
+     - 		is asked to update index entries outside the current sparse
+     - 		checkout.
+     + 	can tell Git that you do not need help by setting these to 'false':
+     + +
+     + --
+      +	ambiguousFetchRefspec::
+      +		Advice shown when branch tracking relationship setup fails due
+      +		to multiple remotes' refspecs mapping to the same remote
+      +		tracking namespace in the repo.
+     - --
+     + 	fetchShowForcedUpdates::
+     + 		Advice shown when linkgit:git-fetch[1] takes a long time
+     + 		to calculate forced updates after ref updates, or to warn
+      
+       ## advice.c ##
+      @@ advice.c: static struct {
+     @@ branch.c: static int find_tracked_branch(struct remote *remote, void *priv)
+       			free(tracking->spec.src);
+       			string_list_clear(tracking->srcs, 0);
+       		}
+     -+		strbuf_addf(&ftb->remotes_advice, "  %s\n", remote->name);
+     ++		/*
+     ++		 * TRANSLATORS: This is a line listing a remote with duplicate
+     ++		 * refspecs, to be later included in advice message
+     ++		 * ambiguousFetchRefspec. For RTL languages you'll probably want
+     ++		 * to swap the "%s" and leading "  " space around.
+     ++		 */
+     ++		strbuf_addf(&ftb->remotes_advice, _("  %s\n"), remote->name);
+       		tracking->spec.src = NULL;
+       	}
+       
+     @@ branch.c: static int inherit_tracking(struct tracking *tracking, const char *ori
+       	return 0;
+       }
+       
+     -+
+     -+static const char ambiguous_refspec_advice_pre[] =
+     -+N_("\n"
+     -+"There are multiple remotes whose fetch refspecs map to the remote\n"
+     -+"tracking ref";)
+     -+static const char ambiguous_refspec_advice_post[] =
+     -+N_("This is typically a configuration error.\n"
+     -+"\n"
+     -+"To support setting up tracking branches, ensure that\n"
+     -+"different remotes' fetch refspecs map into different\n"
+     -+"tracking namespaces.\n");
+      +
+       /*
+     -  * This is called when new_ref is branched off of orig_ref, and tries
+     -  * to infer the settings for branch.<new_ref>.{remote,merge} from the
+     +  * Used internally to set the branch.<new_ref>.{remote,merge} config
+     +  * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
+      @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
+       	struct tracking tracking;
+       	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
+     @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
+      -		for_each_remote(find_tracked_branch, &tracking);
+      +		for_each_remote(find_tracked_branch, &ftb_cb);
+       	else if (inherit_tracking(&tracking, orig_ref))
+     - 		return;
+     + 		goto cleanup;
+       
+      @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
+     - 			return;
+     + 			goto cleanup;
+       		}
+       
+      -	if (tracking.matches > 1)
+     @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
+      +		int status = die_message(_("not tracking: ambiguous information for ref %s"),
+      +					    orig_ref);
+      +		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC))
+     -+			advise("%s %s:\n%s\n%s",
+     -+			       _(ambiguous_refspec_advice_pre),
+     ++			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
+     ++				 "tracking ref %s:\n"
+     ++				 "%s"
+     ++				 "\n"
+     ++				 "This is typically a configuration error.\n"
+     ++				 "\n"
+     ++				 "To support setting up tracking branches, ensure that\n"
+     ++				 "different remotes' fetch refspecs map into different\n"
+     ++				 "tracking namespaces."),
+      +			       orig_ref,
+     -+			       ftb_cb.remotes_advice.buf,
+     -+			       _(ambiguous_refspec_advice_post)
+     ++			       ftb_cb.remotes_advice.buf
+      +			       );
+      +		exit(status);
+      +	}
+       
+       	if (tracking.srcs->nr < 1)
+       		string_list_append(tracking.srcs, orig_ref);
+     +@@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
+     + 		exit(-1);
+     + 
+     + cleanup:
+     ++	strbuf_release(&ftb_cb.remotes_advice);
+     + 	string_list_clear(&tracking_srcs, 0);
+     + }
+     + 
 
 
-EOF
-)
+ Documentation/config/advice.txt |  4 +++
+ advice.c                        |  1 +
+ advice.h                        |  1 +
+ branch.c                        | 44 +++++++++++++++++++++++++++++----
+ 4 files changed, 45 insertions(+), 5 deletions(-)
 
-echo "begin"; git cat-file commit "$C"; echo "end"
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index c40eb09cb7e..90f7dbd03aa 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -4,6 +4,10 @@ advice.*::
+ 	can tell Git that you do not need help by setting these to 'false':
+ +
+ --
++	ambiguousFetchRefspec::
++		Advice shown when branch tracking relationship setup fails due
++		to multiple remotes' refspecs mapping to the same remote
++		tracking namespace in the repo.
+ 	fetchShowForcedUpdates::
+ 		Advice shown when linkgit:git-fetch[1] takes a long time
+ 		to calculate forced updates after ref updates, or to warn
+diff --git a/advice.c b/advice.c
+index 2e1fd483040..18ac8739519 100644
+--- a/advice.c
++++ b/advice.c
+@@ -39,6 +39,7 @@ static struct {
+ 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
+ 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
++	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec", 1 },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
+ 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
+diff --git a/advice.h b/advice.h
+index a3957123a16..2d4c94f38eb 100644
+--- a/advice.h
++++ b/advice.h
+@@ -17,6 +17,7 @@ struct string_list;
+ 	ADVICE_ADD_EMPTY_PATHSPEC,
+ 	ADVICE_ADD_IGNORED_FILE,
+ 	ADVICE_AM_WORK_DIR,
++	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
+ 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+ 	ADVICE_COMMIT_BEFORE_MERGE,
+ 	ADVICE_DETACHED_HEAD,
+diff --git a/branch.c b/branch.c
+index 6b31df539a5..5c28d432103 100644
+--- a/branch.c
++++ b/branch.c
+@@ -18,9 +18,15 @@ struct tracking {
+ 	int matches;
+ };
+ 
++struct find_tracked_branch_cb {
++	struct tracking *tracking;
++	struct strbuf remotes_advice;
++};
++
+ static int find_tracked_branch(struct remote *remote, void *priv)
+ {
+-	struct tracking *tracking = priv;
++	struct find_tracked_branch_cb *ftb = priv;
++	struct tracking *tracking = ftb->tracking;
+ 
+ 	if (!remote_find_tracking(remote, &tracking->spec)) {
+ 		if (++tracking->matches == 1) {
+@@ -30,6 +36,13 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+ 			free(tracking->spec.src);
+ 			string_list_clear(tracking->srcs, 0);
+ 		}
++		/*
++		 * TRANSLATORS: This is a line listing a remote with duplicate
++		 * refspecs, to be later included in advice message
++		 * ambiguousFetchRefspec. For RTL languages you'll probably want
++		 * to swap the "%s" and leading "  " space around.
++		 */
++		strbuf_addf(&ftb->remotes_advice, _("  %s\n"), remote->name);
+ 		tracking->spec.src = NULL;
+ 	}
+ 
+@@ -219,6 +232,7 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
+ 	return 0;
+ }
+ 
++
+ /*
+  * Used internally to set the branch.<new_ref>.{remote,merge} config
+  * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
+@@ -232,12 +246,16 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 	struct tracking tracking;
+ 	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
+ 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
++	struct find_tracked_branch_cb ftb_cb = {
++		.tracking = &tracking,
++		.remotes_advice = STRBUF_INIT,
++	};
+ 
+ 	memset(&tracking, 0, sizeof(tracking));
+ 	tracking.spec.dst = (char *)orig_ref;
+ 	tracking.srcs = &tracking_srcs;
+ 	if (track != BRANCH_TRACK_INHERIT)
+-		for_each_remote(find_tracked_branch, &tracking);
++		for_each_remote(find_tracked_branch, &ftb_cb);
+ 	else if (inherit_tracking(&tracking, orig_ref))
+ 		goto cleanup;
+ 
+@@ -252,9 +270,24 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 			goto cleanup;
+ 		}
+ 
+-	if (tracking.matches > 1)
+-		die(_("not tracking: ambiguous information for ref %s"),
+-		    orig_ref);
++	if (tracking.matches > 1) {
++		int status = die_message(_("not tracking: ambiguous information for ref %s"),
++					    orig_ref);
++		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC))
++			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
++				 "tracking ref %s:\n"
++				 "%s"
++				 "\n"
++				 "This is typically a configuration error.\n"
++				 "\n"
++				 "To support setting up tracking branches, ensure that\n"
++				 "different remotes' fetch refspecs map into different\n"
++				 "tracking namespaces."),
++			       orig_ref,
++			       ftb_cb.remotes_advice.buf
++			       );
++		exit(status);
++	}
+ 
+ 	if (tracking.srcs->nr < 1)
+ 		string_list_append(tracking.srcs, orig_ref);
+@@ -263,6 +296,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 		exit(-1);
+ 
+ cleanup:
++	strbuf_release(&ftb_cb.remotes_advice);
+ 	string_list_clear(&tracking_srcs, 0);
+ }
+ 
 
------ 8< --------- 8< --------- 8< --------- 8< -----
-
-I get:
-
-begin
-tree 5365fd773adaac0f84c4f07532eec8809f3f6f0e
-parent abf474a5dd901f28013c52155411a48fd4c09922
-author Junio C Hamano <gitster@pobox.com> 1648447791 -0700
-committer Junio C Hamano <gitster@pobox.com> 1648447791 -0700
-
-
-This "first line" deliberately is on the second line.
-And after the "last line" of the log message, this commit
-has extra blank lines at the end.
-
-
-end
-
-which is very much what I expect to see.
+base-commit: abf474a5dd901f28013c52155411a48fd4c09922
+-- 
+gitgitgadget
