@@ -2,80 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C075CC433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 20:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC58C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 20:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245226AbiC1UFi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 16:05:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42610 "EHLO
+        id S240423AbiC1UJF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 16:09:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234908AbiC1UFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 16:05:38 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27315F25E
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 13:03:56 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC25710EC9A;
-        Mon, 28 Mar 2022 16:03:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nE4gO9G645yV
-        7kqtGa8bLlGr1qLhR6TRotNuzNuRuU8=; b=AAVUCDpBDG8JWV+gSjnBop1Qj8vS
-        +LdeTvHPSbwu8tLGv06oFHGqVdp6ysRlKtRCM/bOpKgw6G+N3dmH9Ve5Z+Qn4DX3
-        8eL+VFmlm0Z9/khqvCw4tjc7CANh2grCapkxeTzzkVysY8jk5bs+MuQFg/eOiPXa
-        Dub0juAx5YZaX60=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3B6510EC99;
-        Mon, 28 Mar 2022 16:03:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2871B10EC98;
-        Mon, 28 Mar 2022 16:03:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 08/27] revisions API users: add "goto cleanup" for
- "rev_info" early exit
-References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
-        <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
-        <patch-v3-08.27-f8a9443fe6f-20220325T171340Z-avarab@gmail.com>
-        <xmqqtubl93n3.fsf@gitster.g>
-        <220326.86ee2pleua.gmgdl@evledraar.gmail.com>
-        <xmqqee2p70c1.fsf@gitster.g>
-        <3bb95e8b-4977-ddca-225c-5afe28d8ac20@github.com>
-        <220328.86tubh3nmx.gmgdl@evledraar.gmail.com>
-Date:   Mon, 28 Mar 2022 13:03:54 -0700
-In-Reply-To: <220328.86tubh3nmx.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 28 Mar 2022 20:55:31 +0200")
-Message-ID: <xmqq5ynx3kut.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1344415AbiC1UIN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 16:08:13 -0400
+Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E962F5F26D
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 13:06:27 -0700 (PDT)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4KS3cH2TzPz5tl9;
+        Mon, 28 Mar 2022 22:06:23 +0200 (CEST)
+Message-ID: <507e1a83-d266-e832-8f62-e2402c97faa9@kdbg.org>
+Date:   Mon, 28 Mar 2022 22:06:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 324BA43C-AED2-11EC-9D44-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 7/7] git-sh-setup: don't mark trees not used in-tree
+ for i18n
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <cover-v2-0.5-00000000000-20211119T202455Z-avarab@gmail.com>
+ <cover-v3-0.7-00000000000-20220326T171200Z-avarab@gmail.com>
+ <patch-v3-7.7-7a82b1fd005-20220326T171200Z-avarab@gmail.com>
+ <2e2d20d6-a33d-b223-d364-ab43d92dd220@kdbg.org>
+ <220327.8635j3fx3t.gmgdl@evledraar.gmail.com>
+ <63bf6e97-1dca-c2b1-5673-301039e73acf@kdbg.org>
+ <220328.86lewudzw3.gmgdl@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <220328.86lewudzw3.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Am 28.03.22 um 14:16 schrieb Ævar Arnfjörð Bjarmason:
+> On Mon, Mar 28 2022, Johannes Sixt wrote:
+>> What is wrong with
+>> the status quo?
+> 
+> The larger context for why I was looking at this again is that I'm
+> trying to slowly get us to the point where we can remove the
+> i18n-in-shellscript entirtely.
 
-> Junio, would you be OK/prefer to basically have the v2 verison, with
-> just a dummy macro like this in revision.h?:
->
->     #define REV_INFO_INIT { 0 }
+Why? Again: what is wrong with the status quo?
 
-FWIW, I do not see that as "dummy" at all.  We may further extend it
-in the future, but it is what is minimally required to safely pass
-revs to init and release, and what I have been saying since the
-previous round of the review,
-https://lore.kernel.org/git/xmqqwngji72a.fsf@gitster.g/
+> Just like having that "USE_PIC" comment in configure.ac isn't much of a
+> big deal, but it makes sense to clean up unused code, just as we're
+> adding new code.
 
+There is a difference between "clean up unused code" and "change
+observable behavior".
 
+-- Hannes
