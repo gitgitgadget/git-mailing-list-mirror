@@ -2,105 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F90C433EF
-	for <git@archiver.kernel.org>; Sun, 27 Mar 2022 22:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C1EC433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 01:47:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236894AbiC0WTi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Mar 2022 18:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44644 "EHLO
+        id S237367AbiC1BtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Mar 2022 21:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232336AbiC0WTg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Mar 2022 18:19:36 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E38CA4EF53
-        for <git@vger.kernel.org>; Sun, 27 Mar 2022 15:17:56 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 2699A3200C17;
-        Sun, 27 Mar 2022 18:17:54 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Sun, 27 Mar 2022 18:17:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; bh=GK2VbSHJlWgJvwISPqi8Ju/C/ZcGJkx51Q1Kqx
-        Qdrrs=; b=nWF3h6v0wR5ZdPbcIxTj9U/8aO3dnjaMSjtO+aP0uPf6RN0M+LqT7T
-        wk39fho8QPD885YMD3bYgSP+lS2uqFPQ5898G9+AZ9dMyja5DI06whNraZoeBSIB
-        C/oNcCSA3D0KPSQ18/r3FTSE0vLVtKXmzLQSVIy+a1SjdekXVV/HS8zXjbPqv0rt
-        UjDj2AV3YatLI62KiJO72A0CIjG6jP0EGM5Pqvlv5083+SRB+iKSrN20LJsu5BLr
-        aoe/eQcHOHPU6VRRgw305V+xsP1x1ku4J1olF2rZbpfQgmlLrdSna8u0fsE70JgD
-        BwwDPfU6FQUMAS+rdqe0ZE5c1MYAf1YQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=GK2VbSHJlWgJvwISP
-        qi8Ju/C/ZcGJkx51Q1KqxQdrrs=; b=K5HrBaVMRkfLufrH248TCz+BHS2AYPegv
-        vyx2sjRbpz2Aye3zSPEAHtIJLwoV3mXzZJeBd+CroMGcvcqX8yjgwKhjzIMHKbZ7
-        ZOJL1Kw1t4Q3cvFoAkwTHGE2oZRQBh7JntjRN+OBGL1XEigIXRMfE5p3HMelCngL
-        8cAeu85jr/1SqUQhH6XbDIXFnV5oefA1YO+rLg6KP1/DrlVB3om5aqXbKD87xxpq
-        etQoiAL7/zAH/tR3pSYQM2JG+QVT1PBAHEzDdkM5k4YsljyFtzmylj2MoHLgc/RM
-        kAQTz4+EzW84W9dldWGZ+zayf3A5RmZrmHdnYMiv0GQxgji2JT5+g==
-X-ME-Sender: <xms:keJAYk6-0ktkH6BKsw2o61K9ZKBbZc9YfGrkOs9s9Y1dDj1je5S-Ig>
-    <xme:keJAYl43k_tUEVNeGsiZnQFX52ec-cu3W4owS0T2NFGF0ki0dZyE4Dhlr46y1D3RB
-    w9snT0jN3UHLZJ_-w>
-X-ME-Received: <xmr:keJAYjdfdeeAz2LXV516nyuivrybOImta5Jxdfjqn74sfmvMEyXYtLBoRS73D3s6gbQU58gjbbE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehiedgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehttdortddttdejnecuhfhrohhmpefhvghrnhgr
-    nhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtth
-    gvrhhnpeetheevvdejfeevieetjeehtdeiueeujeefheekudfgueefkeelffetjeevleeu
-    veenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
-    gvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:keJAYpJgHL4R9tjy5LtFm2BERtdhDvuod9bIAjxVhsiDsa9z8aEk8A>
-    <xmx:keJAYoIOtE8UQNOjgSqu-tUz54ihmqOT0UkulUOXEtwdcn6PbSxRIA>
-    <xmx:keJAYqyVcVGEv8El9HI-W6ZEQZ5xCZTPGW3dgZxcSSxBPX0ALkBqmQ>
-    <xmx:keJAYiiNbHu_TGjahLcBZu3MvEA5oBWGTo9O1ap27UCEx7_Rgvrm5w>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 27 Mar 2022 18:17:51 -0400 (EDT)
-Date:   Mon, 28 Mar 2022 00:17:49 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        git@vger.kernel.org, davvid@gmail.com, sunshine@sunshineco.com,
-        seth@eseth.com, rogi@skylittlesystem.org
-Subject: Re: [PATCH v6 3/3] vimdiff: add tool documentation
-Message-ID: <YkDijfPgoiVObrFD@zacax395.localdomain>
-References: <20220327112307.151044-1-greenfoo@u92.eu>
- <20220327112307.151044-4-greenfoo@u92.eu>
- <001d3ecd-e1bd-39f4-5123-4a8b1bd1b5a8@gmail.com>
- <YkDS3CJEPYpzRoVG@zacax395.localdomain>
- <xmqqmthb5aw8.fsf@gitster.g>
+        with ESMTP id S236140AbiC1BtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Mar 2022 21:49:06 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C86704FC58
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 18:47:27 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id k25so15372692iok.8
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 18:47:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=245l6+pCwNen9/D+Ny95Gbh5fZsjBnYpXepiNwwlf64=;
+        b=RI8kKvXJeo4mE2GGC5HPeuX9yMB+l+fKptwj6FLmb0Ue2lq7+aqfqwElyhx1Jd4DOx
+         mv78s1vUIvX2Zf8KPf0AgtDND3kg3/v2+CUOHYCdMh7+RXgvwg3sevLE9gEjwzn2DaD3
+         BVJICKbkZwFCpjz/sxYNgess3DUXgdkhph4qPo0doqzNugoZk4nB2kumjYuhNcPMk2qT
+         om6a1ikMAllKBDFoAabLiFDU3Cjg8lUBs23857lRY/TWfU8Xqv1FFx8xbwx5/tiF22w5
+         giA9cmxxYvFuR5Ij7AtojjkI8HGa64z9OWvyqNHvqtP9gXHoyTp0vZd7ZV4RaCBB5u/R
+         hAmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=245l6+pCwNen9/D+Ny95Gbh5fZsjBnYpXepiNwwlf64=;
+        b=LLoWwMbrePw5Zl/2nk7QAGWS4k58TqaxNXO60HLyoFTbjm721fMIeOwDd8vWrc6Z8u
+         85RJ9pYdpI4+LxBWxlMyc7Nn22c37/y0/O0wevj1G+WeAagUYRsusSTa1fM/YMOaVmDl
+         bwIrVbS1ZwBt84RZYVbRVYg29IHvmPnOu2a1vq3k45KRpitoJJnV3DgGMhkrsIeot4+C
+         8Brk3ao89hDb8nskrguwCh+kwpYmHszEDpZO/b5925CABvVEKLI1YXEINmHOPf2K7vK1
+         ZNFyWwAPQhrZIlyZyKB6no+GhZj/Rvz/QZSvSPog9pyWBkW8v7Q7RT/UnkvAiXmVBZyG
+         ZWYQ==
+X-Gm-Message-State: AOAM530YEpxmrYVjypcYmXhx15WtEZ0GciaOeVjlSJPasPbttqgkJYif
+        XTtWlqpVa5UdexCq7zITl2mfVkz8UiBGUyojMk/EuQnv
+X-Google-Smtp-Source: ABdhPJwVlFtRAb9p/+oMq6Ql66v0hcMLALUGAv2qMFlaelVWo6V5o4qGVaoZjxUamhf9o5q3FLrBt825vyzYQpWNeNI=
+X-Received: by 2002:a6b:400b:0:b0:64c:77aa:40a6 with SMTP id
+ k11-20020a6b400b000000b0064c77aa40a6mr1468810ioa.101.1648432046967; Sun, 27
+ Mar 2022 18:47:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmthb5aw8.fsf@gitster.g>
+From:   Labnan Khalid Masum <khalid.masum.92@gmail.com>
+Date:   Mon, 28 Mar 2022 07:47:16 +0600
+Message-ID: <CAABMjtFTy++Rvty+4TVXeEegEMhJ6c0_jW06x=G-pLh8fLPf9Q@mail.gmail.com>
+Subject: [GSoC] Applicant Introduction and Microproject Selection
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Are you signalling the above part that it is (or isn't) included in
-> git-mergetool.txt by defining
-> 
-> 	:git-mergetool: 1
-> 
-> before the piece gets included with
-> 
-> 	include::config/mergetool.txt
-> 
-> See for example how git-rev-list.txt tweaks what gets included from
-> rev-list-description.txt by doing:
-> 
->     'git rev-list' [<options>] <commit>... [[--] <path>...]
-> 
->     DESCRIPTION
->     -----------
-> 
->     :git-rev-list: 1
->     include::rev-list-description.txt[]
-> 
->     'rev-list' is a very essential Git command, since it
-> 
+Hello Everyone,
 
-Thanks for the hint. It is now working as expected. I'll include the fix in v7
-together with the other fixes that prevent `git apply` from executing cleanly.
+I am Khalid Masum Labnan, An undergraduate at Islamic University of
+Technology, Bangladesh, Currently majoring in Software Engineering. I
+would like to get involved in Git development as I want to be part of
+this community and would like to use GSoC as the starting point.
+
+I would like to submit a patch on the microproject "Use test_path_is_*
+functions in test scripts", by changing test t3501, if it is
+available.
+
+Regards,
+Labnan
