@@ -2,138 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FBAC433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 15:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA5B9C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 15:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240577AbiC1QAE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 12:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
+        id S240563AbiC1QBW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 12:01:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236994AbiC1QAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 12:00:02 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D17F221
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 08:58:19 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id p25so11729268qkj.10
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 08:58:19 -0700 (PDT)
+        with ESMTP id S235079AbiC1QBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 12:01:18 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 595B826ADF
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 08:59:37 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a8so29571537ejc.8
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 08:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lMIKFybE/V507bHKvnJn47AdCBULfBqGh0FUSo7zfgc=;
-        b=h7oGMwDF76xC8lwehvHzfxJno+TpmD6kPOpoAJJMAaBr+w3hY1rw1foF01a6egEbXN
-         mxBDCSs7yrBY+/d9KNPq/x7yiF0acorHMJp60BWSWet3WrvkPasYaLJnyrrhPEL3uDMN
-         708iSBXRJeLJQQ80UUe8XiCEy5sNImSQe2VbQ81tvVCyqfRGL3GVdJz9DRB/DI2szL1N
-         9LGyyY+cDlmOeeHncmpM3GlXrM/b3b1Y9Hu/4zq4so8DXS8KefS3EgNYxXR/fXbzBdCw
-         cwi/cgS06Ai63xxyEtRDqPehjjsCNhbiDduP6KLDspx9pAHh7PskOJzSGiY/4rsUGEHn
-         4r7Q==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=RX1xYrkul/JnwLgKbkMpVv99KhDsAPGamDxhMq36qoo=;
+        b=SUs//1IwRdsMnUrwdp1Fh3P1CM7rNQdQJfiCyNHbE2N8GXQjwnBieqhbPekP259CXo
+         rsI5lRt7LFu9pnRA2ssjkfFFTbaYhvCR7MKygh4s4+kD55ujkm+49gb0pvANukz2Yw6y
+         GVK2JBpFKvQjP/oTDhBYbhBRd+svQP2ovAZxiGDOZkKiBzmbAgS8qfSDxF610FmMg4L0
+         qeO+A7E3geV7/szmA3ZefUgeBLnMUAhiWK4jvTnjIQ0qI7rQ0ZlmrhBKEmsmWm3qBWTU
+         RFe7PUhlh5L4ZoMB3x7nZ8vNR8XMlZb1sZx+VDcZyUgB2H+g1YqZoF2PhsPMy22bR/XG
+         2nFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=lMIKFybE/V507bHKvnJn47AdCBULfBqGh0FUSo7zfgc=;
-        b=BaUrSJKdztXJwrSepcCx0RWA2Yz2/1p/RtxOA0w9znw5X6k9tHtXVXNB/pLGHb9ZN7
-         xSbhPEbjfDg5KEDOheD8rJvc9pFA5fEcY4cvGf/czDRG0FmlHosOfxI19tXDB8eO6/na
-         Quds69Lz/WmWSMNiGiUAYWTSo3XHDHG0lmrOLKoE+lKnHOjA9OfTGOEqKt4CULXUhba1
-         Ev4tm0fIvgLpUOFBWofkIFqt6ca/iHYEvWq/7n/hfIvi0dvNuTG6nUVClpX6ft7jCaGN
-         DwjWHL+SFg0v/YYWz6hPyBJyhPjRzodWhLWUTewjEIURe+fQ90+JewFHaceVWKCJV229
-         VZ+A==
-X-Gm-Message-State: AOAM532Q8CKhVwtl8gxukFjWm3735FBY1wluR08znUwUZr7kmOiPB4be
-        gx/jGSw6G0k9/OhjlHBLRoZR0A+xIL21
-X-Google-Smtp-Source: ABdhPJyeFsLl0iKITNk7QrXqTCJc7/MOddtUwWn+HhZTtUGkzqH0hyNt8WhqBIrYiORfl8YFvVc5gg==
-X-Received: by 2002:a05:620a:d96:b0:67a:ee04:d947 with SMTP id q22-20020a05620a0d9600b0067aee04d947mr17122990qkl.237.1648483098563;
-        Mon, 28 Mar 2022 08:58:18 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id k1-20020ac85fc1000000b002e1c6420790sm13660770qta.40.2022.03.28.08.58.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Mar 2022 08:58:18 -0700 (PDT)
-Message-ID: <4781bae6-4ac6-1217-b018-aef286cdca7c@github.com>
-Date:   Mon, 28 Mar 2022 11:58:16 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2] pack-objects: lazily set up "struct rev_info", don't
- leak
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=RX1xYrkul/JnwLgKbkMpVv99KhDsAPGamDxhMq36qoo=;
+        b=bcnvxcbjFzxykeMFojgytS0lblzI/AFQ+awcynyfOxIqtlfkDCRNbrMvLtKQN3o9Ol
+         i2r/oZovmws9PX+xY8kku3LVM3EdkNlexcC0swjTZsIPAa/UZLPoquxuRXTnkkgqNmzo
+         MUFv5kCxomzmkd2qQ10uqvrExzWNzkdiXzHS9ksbcHAY2bisqVlg15yFWfhYCplCcFn0
+         cde2EjOlKO8jW+HtpCpKo3leWi9SPEt25u2HLfOXpxLMp8dawwOqKJmhn3O/y9kxWoGI
+         dS+L3wX5HMQ8t8vMy1q2zwDLXdnmlzVPMzm0eRKJ5PUixtOBwLDO0Kb4KEnUW8HABtwV
+         mdng==
+X-Gm-Message-State: AOAM530+CMXJ6o8C2jeVQkxRZ5Y9cTBF05/R4J1ok1+up6XajoOlXj6n
+        pARylQ1xPynXWopWPmNU3kj39esEiL10/A==
+X-Google-Smtp-Source: ABdhPJyBID97vvupbvAQpCmHs5E/JOcNOicryT0bbk5qvo1P/ZHWKc4MV8bvuHJh3Vvftm140U9vkA==
+X-Received: by 2002:a17:907:1ca4:b0:6da:86a4:1ec7 with SMTP id nb36-20020a1709071ca400b006da86a41ec7mr29083284ejc.556.1648483175668;
+        Mon, 28 Mar 2022 08:59:35 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s4-20020a170906a18400b006db0a78bde8sm6009821ejy.87.2022.03.28.08.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Mar 2022 08:59:34 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nYrmI-003Lfy-46;
+        Mon, 28 Mar 2022 17:59:34 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-References: <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
- <patch-v2-1.1-9951d92176e-20220328T154049Z-avarab@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <patch-v2-1.1-9951d92176e-20220328T154049Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: Re: A "why TAP?" manifesto
+Date:   Mon, 28 Mar 2022 17:50:39 +0200
+References: <patch-1.1-47b236139e6-20220323T204410Z-avarab@gmail.com>
+ <nycvar.QRO.7.76.6.2203241434360.388@tvgsbejvaqbjf.bet>
+ <220324.8635j7nyvw.gmgdl@evledraar.gmail.com> <xmqqczibjm7v.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.11
+In-reply-to: <xmqqczibjm7v.fsf@gitster.g>
+Message-ID: <220328.8635j23w61.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/28/2022 11:43 AM, Ævar Arnfjörð Bjarmason wrote:
-> An earlier version of this commit[3] went behind
-> opt_parse_list_objects_filter()'s back by faking up a "struct option"
-> before calling it. Let's avoid that and instead create a blessed API
-> for this pattern.
 
-...
+On Thu, Mar 24 2022, Junio C Hamano wrote:
 
-> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-> index f02d8df1422..4b25287886d 100644
-> --- a/list-objects-filter-options.c
-> +++ b/list-objects-filter-options.c
-> @@ -285,6 +285,10 @@ int opt_parse_list_objects_filter(const struct option *opt,
->  				  const char *arg, int unset)
->  {
->  	struct list_objects_filter_options *filter_options = opt->value;
-> +	opt_lof_init init = (opt_lof_init)opt->defval;
-> +
-> +	if (init)
-> +		filter_options = init(opt->value);
->  
->  	if (unset || !arg)
->  		list_objects_filter_set_no_filter(filter_options);
-> diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-> index 90e4bc96252..ffc02d77e76 100644
-> --- a/list-objects-filter-options.h
-> +++ b/list-objects-filter-options.h
-> @@ -104,13 +104,31 @@ void parse_list_objects_filter(
->  	struct list_objects_filter_options *filter_options,
->  	const char *arg);
->  
-> +/**
-> + * The opt->value to opt_parse_list_objects_filter() is either a
-> + * "struct list_objects_filter_option *" when using
-> + * OPT_PARSE_LIST_OBJECTS_FILTER().
-> + *
-> + * Or, if using no "struct option" field is used by the callback,
-> + * except the "defval" which is expected to be an "opt_lof_init"
-> + * function, which is called with the "opt->value" and must return a
-> + * pointer to the ""struct list_objects_filter_option *" to be used.
-> + *
-> + * The OPT_PARSE_LIST_OBJECTS_FILTER_INIT() can be used e.g. the
-> + * "struct list_objects_filter_option" is embedded in a "struct
-> + * rev_info", which the "defval" could be tasked with lazily
-> + * initializing. See cmd_pack_objects() for an example.
-> + */
->  int opt_parse_list_objects_filter(const struct option *opt,
->  				  const char *arg, int unset);
-> +typedef struct list_objects_filter_options *(*opt_lof_init)(void *);
-> +#define OPT_PARSE_LIST_OBJECTS_FILTER_INIT(fo, init) \
-> +	{ OPTION_CALLBACK, 0, "filter", (fo), N_("args"), \
-> +	  N_("object filtering"), 0, opt_parse_list_objects_filter, \
-> +	  (intptr_t)(init) }
->  
->  #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
-> -	OPT_CALLBACK(0, "filter", fo, N_("args"), \
-> -	  N_("object filtering"), \
-> -	  opt_parse_list_objects_filter)
-> +	OPT_PARSE_LIST_OBJECTS_FILTER_INIT((fo), NULL)
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> =3D=3D It "can be parsed"
+>> =3D=3D Human readable
+>> =3D=3D It's trivial to produce
+>> =3D=3D It's more flexible
+>> =3D=3D It doesn't matter if nobody else uses it
+>> =3D=3D Everyone uses it
+>
+> I agree with all of what you said above.
+>
+> But do non-human readers really want to read output from an
+> "--immediate" session?  Don't they rather see the whole thing?
 
-I like this way of combining the macros into one implementation
-(guarded with a NULL check).
+That test run will still take longer, especially if you're expecting
+widespread failures.
 
-This version looks good to me.
+The immediate use-case I have for this is that I have unsubmitted
+patches to implement a "check" mode for SANITIZE=3Dleak, where it runs
+with --immediate and "fails" tests that pass under SANITIZE=3Dleak but
+aren't marked with "TEST_PASSES_SANITIZE_LEAK=3Dtrue", and passes (and
+runs to completion completely) those tests that do have
+"TEST_PASSES_SANITIZE_LEAK=3Dtrue" but pass with SANITIZE=3Dleak (and fails
+those that would fail there, no "fail inversion").
 
-Thanks,
--Stolee
+That sort of thing is very useful to for any tests where we mark certain
+other tests as being OK under a given mode, and except there to be a 1=3D1
+correspondance.
+
+The reason for the --immediate there is an optimization, it takes a long
+time to run with SANITIZE=3Dleak, and if any single failure is enough to
+declare the test bad --immediate is useful.
+
+Now, the TAP tooling is quite tolerant of such bad output, another point
+in its favor over something like JUnit (I'm assuming most libraries
+using it would pass it through a generic XML parser, whose error
+handling is either "ok" or "ARGHL!" :).
+
+I.e. it'll give you a full parse, but just have a minor complaint about
+the lacking end marker, getting rid of that output & parse nit is nice.
+
+> The only "Huh?" I had with the original patch that started the
+> thread was that TAP output currently does not work well with the
+> "--verbose" option, and I've never run our tests with the
+> "--immediate" option without the "--verbose" option to see where and
+> how the first breakage happens and what is left behind in the trash
+> directory, i.e. to bootstrap an interactive debugging session.
+>
+> But not being useful for the use case of human reader running
+> interactively to get the leftover state does not mean improvement
+> for other use cases is not welcome.
+
+I was sad to see that ability go away, without the patches I referenced
+running through a TAP parser with --verbose works for almost all ouf our
+test suite, so IMO we were a bit overzelous in adding that early abort
+for it.
+
+But I do have patches to make it pass 100% guaranteed, so depending on
+your interest ... :)
+
+I was planning to queue that behind some of the outstanding test lib
+changes it would conflict with, e.g. this one & the outstanding CI
+topics.
