@@ -2,74 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F44C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 03:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 521D3C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 04:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237869AbiC1DsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Mar 2022 23:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57282 "EHLO
+        id S238074AbiC1Et4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 00:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231152AbiC1DsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Mar 2022 23:48:11 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEEFFD36
-        for <git@vger.kernel.org>; Sun, 27 Mar 2022 20:46:32 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id e25-20020a0568301e5900b005b236d5d74fso9920464otj.0
-        for <git@vger.kernel.org>; Sun, 27 Mar 2022 20:46:32 -0700 (PDT)
+        with ESMTP id S236178AbiC1Ety (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 00:49:54 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8062BDA
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 21:48:14 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id v4so12912954pjh.2
+        for <git@vger.kernel.org>; Sun, 27 Mar 2022 21:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6Zp8DYO2Q1q2Lj/wn+LRdq6GmUZS97J7uWIhvhinLR8=;
-        b=PP+aK/DdnP0vl7lFXcL0SOzVdZ+cEw8zO8KU20c5z7kjsCBLRP6ji7wfdQ4C50fEnf
-         EkmbavvqGgJAnUBsFDtMzvSILhZjuixakHm4s33Uqi8fr1SZ645koqc6OZivNqfkMzmD
-         hO2bMt5Cz/VGKIImlEoeT5PYnt9G38fpqjW2/2tSGsPzUvFV2yT48bPEz8SEmIHY+1ai
-         WqUPPBRdrARVq0TOCdXhbIDll0m/8xSNaFOAexIod7eSU4nggCQycJd6EFXffk4/DDzo
-         8f3zAZr/q82UazpjZ/A+JrpbUcUyLBtAHKoFSqNffcVYZKwt0/7+Av3+pIwW0VZXnPER
-         +bAw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=75j3c0mn6nTZGyHLbNAu23DZHzY1lkhpcEE3f2H9t8M=;
+        b=PkeOurYdizUwfJHMaX7AJSH6Sm87bIqYNnny1TpS0pqGoTKC5uuJP0B34ZjiHxwc7B
+         G8xi55Zz0A7kmYRxceteY85C3A4EA5kdESUdtfqBlPQXo6tdvSusrv3W8JFaB2StRFxo
+         a6YlGAMCSFaW6jzV3WXTjeC/cY5ii/BCztWoQAhHTIiWP+ACbSVNKkitjnavbX3yyXfh
+         2Bw7AFAREANYeYpHfpvHiJpHfNa0fJOxBI9rCGNujhZVGeLOz2Q5yVcgFKI8ih/8Wvdy
+         rY4GbehOh7xryOrlrnStB7DYrHSNdxiA7VIvfYZxa5W1OwfgI4Wu+1RiP/oEaKejIDQy
+         DyJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6Zp8DYO2Q1q2Lj/wn+LRdq6GmUZS97J7uWIhvhinLR8=;
-        b=N9aZkSmB6Txx+POX6u3ZIbxF/LhOt7wc1W5Ih9nl5GLw9mu9REXxr82hUQB1NEHL1Y
-         FVIho6pQ6UAda/YEKOPFIEPGlMixA88o5tPnAxiNxI2dxIUh/oIVKd1KOtUqs7LS0n9Y
-         d+JaSp307ePo8ciHeZ0xzqnbhE4HQtnBL/aaagf4yVXVxHF3qKKC2N3vHxFQjMf5O/or
-         iYcmy02MpXy2wtvFGj/a8Pd1gK92zTnAa4yIi+kcAIRSvl2mT3Kma2SzStqZgJjMEKOE
-         mURpQjHIE7fR7Z6PBY6l4kxZvcVwrE82TcI0qJmjg2JaFJV2gDl/PC3puBC996VFNg7u
-         SaGQ==
-X-Gm-Message-State: AOAM533mzHmKyqgpvLDh2e5bc/DDXgFyHjed3vBHkJpi3YbW88n0+bKZ
-        px7Peieo6Tj7v8GxPBnLEYbn+xQ7yffkIjLS2B2AtRAtQpk=
-X-Google-Smtp-Source: ABdhPJwseQiPuCKkLpXlya1p4gDEO15/fgyVSVcQbMt+fbfM6b8uL1Obo5gqed6hEs9MST30fvrBRwAnbWGgfhc+m9A=
-X-Received: by 2002:a9d:6b89:0:b0:5c9:7b17:7cfc with SMTP id
- b9-20020a9d6b89000000b005c97b177cfcmr9361904otq.359.1648439191078; Sun, 27
- Mar 2022 20:46:31 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=75j3c0mn6nTZGyHLbNAu23DZHzY1lkhpcEE3f2H9t8M=;
+        b=Jf6VFrx7nA2Dj1/zO238ZkQhAun/ACVNYyi/3Dbm57UO142+ZWUK8BEDscuotRXGYQ
+         g1oiFlf4fnh5Xq4PaojvfCltE5iz++tFch8j///NAKj8bRZf2GkT3ZxO+lAG41vnMhRg
+         n2JpDMkuKtrJjRFau5716okEOPtJZ60ftdgdkIAFAwifPVBbh748oV70df5jJqeuaUpM
+         7YTZNg09n5GsEFIpcCuFgSAhnTmTVdo478MxFZh9a7USDQiHBkR9FkYPnz1zo/qKk59/
+         N7/CFXjqrGgu+WgEDFgWjemSl7TwcLJBWUSKLnNiI8lbz8cDZVZ5XmrK2njTBetQ8Jlf
+         gHgw==
+X-Gm-Message-State: AOAM532y0M9ORa+MjJY7d29cLh4/HXsD/M2oEdjI4PN0oCuWGbSeHkJt
+        Yuk8o/t2rXDdST+OvFT9+doUIzWb+N6hPw==
+X-Google-Smtp-Source: ABdhPJzNQU4lrlO9aXo4iDyQeJiUIzQSyXMbzbLaU6jSC0z08IMsGC/L6jx8jH4DaTy7aqZj6znMTQ==
+X-Received: by 2002:a17:903:244b:b0:154:2cb2:86d with SMTP id l11-20020a170903244b00b001542cb2086dmr23935216pls.123.1648442893503;
+        Sun, 27 Mar 2022 21:48:13 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-85.three.co.id. [180.214.233.85])
+        by smtp.gmail.com with ESMTPSA id 96-20020a17090a09e900b001c6dc775159sm19124466pjo.46.2022.03.27.21.48.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Mar 2022 21:48:12 -0700 (PDT)
+Message-ID: <2d1b3c6d-4345-8b7d-b8b8-4baf1edd91f0@gmail.com>
+Date:   Mon, 28 Mar 2022 11:48:08 +0700
 MIME-Version: 1.0
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Mon, 28 Mar 2022 11:46:20 +0800
-Message-ID: <CAJyCBORyNQX7u5=ZTdyHWyb63r-Cus4hb_yZingm4B=J4pjhkA@mail.gmail.com>
-Subject: Add a "remove" subcommand to "git-sparse-checkout"
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v6 3/3] vimdiff: add tool documentation
+Content-Language: en-US
+To:     Fernando Ramos <greenfoo@u92.eu>, git@vger.kernel.org
+Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
+        seth@eseth.com, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+References: <20220327112307.151044-1-greenfoo@u92.eu>
+ <20220327112307.151044-4-greenfoo@u92.eu>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20220327112307.151044-4-greenfoo@u92.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On 27/03/22 18.23, Fernando Ramos wrote:
+> +When using these variants, in order to specify a custom layout you will have to
+> +set configuration variables `mergetool.gvimdiff.layout` and
+> +`mergetool.nvimdiff.layout` instead of `mergetool.vimdiff.layout`
+> +
 
-I'm wondering do we have a plan to add a "remove" subcommand
-to the existing "git-sparse-checkout" command set?
+What about this wording?
 
-Because when I am messing with sparse-checkout, I sometimes want
-to remove a directory from cone, and I have to either go into
-".git/info/sparse-checkout"
-to manually remove it, or "disable" then "init" or "set" the
-directories all over again.
-
-I think it will be nice to "remove" a directory, then "reapply" to get
-the job done.
+"These variants also have corresponding layout configuration named
+  `mergetool.gvimdiff.layout` and `mergetool.nvimdiff.layout`, respectively."
 
 -- 
-Thanks & Regards,
-Shaoxuan
+An old man doll... just what I always wanted! - Clara
