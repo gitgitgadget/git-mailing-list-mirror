@@ -2,110 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40CD6C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 17:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 966EFC433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 17:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244429AbiC1RMU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 13:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35390 "EHLO
+        id S239591AbiC1RNx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 13:13:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236364AbiC1RMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 13:12:19 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC4C62C95
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 10:10:38 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 06FF1190A13;
-        Mon, 28 Mar 2022 13:10:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=5VXgPnmXtyKH
-        LbGuTr6BbdcR3KgEAMUGnV9BTdMlmYo=; b=Ja2AJlQ96/+ceBm2QT9YUPTsZNqE
-        uo52dMBccgV/CBY0/kmkgCq9FkDfW4Wb7nBUgEQjwP/obaWZ6Kg+ew7rQSkzYm0v
-        6sIGTw5QVAckgyy71ODu4yjJxMPaT/j93UsP/Ih7oPesPpy+WCHmmHw3EkucGKPm
-        SeA+DvuW56CbNF8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F3BEA190A12;
-        Mon, 28 Mar 2022 13:10:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67BC0190A11;
-        Mon, 28 Mar 2022 13:10:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2] pack-objects: lazily set up "struct rev_info", don't
- leak
-References: <patch-1.1-193534b0f07-20220325T121715Z-avarab@gmail.com>
-        <patch-v2-1.1-9951d92176e-20220328T154049Z-avarab@gmail.com>
-Date:   Mon, 28 Mar 2022 10:10:34 -0700
-In-Reply-To: <patch-v2-1.1-9951d92176e-20220328T154049Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 28 Mar
- 2022 17:43:18
-        +0200")
-Message-ID: <xmqqmtha2eb9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FB90CC46-AEB9-11EC-84F3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S244450AbiC1RNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 13:13:51 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C5263520
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 10:12:11 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-2e696b18eb4so123237577b3.0
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 10:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=rVFzhNu/ZaPOgbuOPDl14EA6+Tcd+LiArBeW91cIGP8=;
+        b=f6eAW6HLCwQBszl/hm8u+yTeB5bTYBXpRH8cJlbldaJbd9E8VvcA1PgkBq92ev9R9W
+         AS0Uo1NDLdIKNdHLCxWfzhl3wNx12X66/uJqX3iSKgb/LdzZkMtOqGSBG5wHThxmj5G6
+         PaLRK/2dBi6iMn2EEOvsIOE8Jjzl5M9iBOYoyIq+eljY+2Ul0kuxfiRbo/QvSKFMMOBo
+         PT6O3S5iRjsn4PBqs188arnuxOC7Ob/Wi51yx3zrEOVxekrL7rft49cR7kmIDsJXvyG9
+         IkF3nFRkXdRLeEbh9iWCua9Q3SvEcE0n1eyrkOKZqAC+LPpaSEL2HRB1tl3YlbkgZq4A
+         LqmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=rVFzhNu/ZaPOgbuOPDl14EA6+Tcd+LiArBeW91cIGP8=;
+        b=Z4M6nHlpOmqNqMnwzoeZbFwuCN3hlWqdeDA0olJgqi0m/f0czion9tZiV7OjAOkJBx
+         SsenE6EbXHdiF5huoggu81hVqjpdD6CWcvjE410tDcONQOIzwu1BivUsKoCZ0rV0ZDqj
+         mlG+6Jmd4Ld7PS5y5bII3f/pcfBWlG9legW+7ZbL6w2EQ7SQfsQyQDI6zgwVzT9dS4MC
+         NQ8rynH7KB56Yoy3+CWTwYGvEYYIk+ygaL2OJRVG4FQ+cEjoZoYChQ2pog/FlppqQsX7
+         +p+sL7nFDcuF3WYUlWx++JS1XbI/86hJYrNS217Do9rJRbKmRMUqQQGzQZshJ7fNbyUx
+         SnTA==
+X-Gm-Message-State: AOAM530/LxpgFUCQZIsZ+RmXDQyEajAwPJ8QjOqIKtIoxLkZmykxeaHn
+        TgamAHeEUooo8zGHSJUO3vWLln1B+m7AnA==
+X-Google-Smtp-Source: ABdhPJyVfy1hAQHkU/aRKyaKUvOZ7WY20PLBQzrG+HeYqxrW22LnieICPBPJICsbSv1pIspJmBPYcn+Z9d2/Gw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a25:86cf:0:b0:633:8702:1bb3 with SMTP id
+ y15-20020a2586cf000000b0063387021bb3mr23594945ybm.515.1648487530218; Mon, 28
+ Mar 2022 10:12:10 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 10:12:07 -0700
+In-Reply-To: <xmqqwnge2ghe.fsf@gitster.g>
+Message-Id: <kl6l7d8et314.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1183.v2.git.1647940686394.gitgitgadget@gmail.com>
+ <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com> <xmqqwnge2ghe.fsf@gitster.g>
+Subject: Re: [PATCH v3] tracking branches: add advice to ambiguous refspec error
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Tao Klerks <tao@klerks.biz>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/list-objects-filter-options.h b/list-objects-filter-option=
-s.h
-> index 90e4bc96252..ffc02d77e76 100644
-> --- a/list-objects-filter-options.h
-> +++ b/list-objects-filter-options.h
-> @@ -104,13 +104,31 @@ void parse_list_objects_filter(
-> ...
-> +typedef struct list_objects_filter_options *(*opt_lof_init)(void *);
+>> diff --git a/branch.c b/branch.c
+>> index 6b31df539a5..5c28d432103 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -18,9 +18,15 @@ struct tracking {
+>>  	int matches;
+>>  };
+>>  
+>> +struct find_tracked_branch_cb {
+>> +	struct tracking *tracking;
+>> +	struct strbuf remotes_advice;
+>> +};
+>> +
+>>  static int find_tracked_branch(struct remote *remote, void *priv)
+>>  {
+>> -	struct tracking *tracking = priv;
+>> +	struct find_tracked_branch_cb *ftb = priv;
+>> +	struct tracking *tracking = ftb->tracking;
+>>  
+>>  	if (!remote_find_tracking(remote, &tracking->spec)) {
+>>  		if (++tracking->matches == 1) {
+>>  			string_list_append(tracking->srcs, tracking->spec.src);
+>>  			tracking->remote = remote->name;
+>>  		} else {
+>>  			free(tracking->spec.src);
+>>  			string_list_clear(tracking->srcs, 0);
+>>  		}
+>> +		/*
+>> +		 * TRANSLATORS: This is a line listing a remote with duplicate
+>> +		 * refspecs, to be later included in advice message
+>> +		 * ambiguousFetchRefspec. For RTL languages you'll probably want
+>> +		 * to swap the "%s" and leading "  " space around.
+>> +		 */
+>> +		strbuf_addf(&ftb->remotes_advice, _("  %s\n"), remote->name);
+>>  		tracking->spec.src = NULL;
+>>  	}
+>
+> This is wasteful.  remotes_advice does not have to be filled when we
+> are not going to give advice, i.e. there is only one matching remote
+> and no second or subsequent ones, which should be the majority case.
+> And we should not make majority of users who do not make a mistake
+> that needs the advice message pay the cost of giving advice to those
+> who screw up, if we can avoid it.
+>
+> Instead, only when we are looking at the second one, we can stuff
+> tracking->remote (i.e. the first one) to remotes_advice, and then
+> append remote->name there.  Perhaps we can do it like so?
+>
+> 	struct strbuf *names = &ftb->remotes_advice;
+> 	const char *namefmt = N_("  %s\n");
+>
+> 	switch (++tracking->matches) {
+> 	case 1:
+> 		string_list_append(tracking->srcs, tracking->spec.src);
+> 		tracking->remote = remote->name;
+> 		break;
+> 	case 2:
+> 		strbuf_addf(names, _(namefmt), tracking->remote);
+> 		/* fall through */
+> 	default:
+> 		strbuf_addf(names, _(namefmt), remote->name);
+>                 free(tracking->spec.src);
+>                 string_list_clear(tracking->srcs, 0);
+>                 break;
+> 	}
+> 	tracking->spec.src = NULL;
+>
+> For a bonus point, remotes_advice member can be left empty without
+> paying the cost to strbuf_addf() when the advice configuration says
+> we are not going to show the message.
+>
+> Thanks.
 
-Do we want or need to expose this type to anybody outside the
-list_objects_filter_options.c file?  After all, the client has to
-define a function of that type like so:
+Hm, what do you think of an alternate approach of storing of the
+matching remotes in a string_list, something like:
 
-> +static struct list_objects_filter_options *po_filter_revs_init(void *v=
-alue)
-> +{
-> +	struct po_filter_data *data =3D value;
-> +
-> +	repo_init_revisions(the_repository, &data->revs, NULL);
-> +	data->have_revs =3D 1;
-> +
-> +	return &data->revs.filter;
-> +}
+  struct find_tracked_branch_cb {
+  	struct tracking *tracking;
+  	struct string_list matching_remotes;
+  };
+  
+  static int find_tracked_branch(struct remote *remote, void *priv)
+  {
+  	struct tracking *tracking = priv;
+  	struct find_tracked_branch_cb *ftb = priv;
+  	struct tracking *tracking = ftb->tracking;
+  
+  	if (!remote_find_tracking(remote, &tracking->spec)) {
+  		if (++tracking->matches == 1) {
+  			string_list_append(tracking->srcs, tracking->spec.src);
+  			tracking->remote = remote->name;
+  		} else {
+  			free(tracking->spec.src);
+  			string_list_clear(tracking->srcs, 0);
+  		}
+  		string_list_append(&ftb->matching_remotes, remote->name);
+  		tracking->spec.src = NULL;
+  	}
 
-and not
-
-	static opt_lof_init po_filter_revs_init
-	{
-		body of the function
-	}
-
-and the use of it, i.e.=20
-
-> @@ -3954,7 +3969,7 @@ int cmd_pack_objects(int argc, const char **argv,=
- const char *prefix)
->  			      &write_bitmap_index,
->  			      N_("write a bitmap index if possible"),
->  			      WRITE_BITMAP_QUIET, PARSE_OPT_HIDDEN),
-> -		OPT_PARSE_LIST_OBJECTS_FILTER(&revs.filter),
-> +		OPT_PARSE_LIST_OBJECTS_FILTER_INIT(&pfd, po_filter_revs_init),
-
-casts the type away to (intptr_t) so having a handy way to spell the
-type out does not contribute to type safety, either.
-
-Other than that, looks good to me.
-
-Thanks, will queue directly on top of Derrick's partial-bundle
-clean-up series.
-
+then construct the advice message in setup_tracking()? To my untrained
+eye, "case 2" requires a bit of extra work to understand.
