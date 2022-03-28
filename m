@@ -2,85 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23238C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5437EC433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344047AbiC1Tui (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 15:50:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
+        id S1343791AbiC1Tzn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 15:55:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344947AbiC1TtR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 15:49:17 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3652B6C952
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:45:34 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id h11so20657636ljb.2
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:45:34 -0700 (PDT)
+        with ESMTP id S232294AbiC1Tzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 15:55:35 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33E65338BB
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:53:41 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id l4-20020a17090a49c400b001c6840df4a3so524065pjm.0
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TaTouNhkkua23DfeNj3GohMqayjzQcFZ6Pb4dHGoHGc=;
-        b=SFkDocjYKWolHWf1U9OXCrwON3DnR7R4JBUS+R5JflkCZtxJQ8YDlmWpGzTdrTevTy
-         +YexbeBqsM67bmjAOtAIf5Yw4qEvStyygqAzj8ftRRVFBqga3ePkrEUO+GkwTw/QL/ZN
-         75GSVvY/ucKbUH8CBE0DTdfkrpShSVhJzRPSbFhLhpSiXSZoaumRlTry20ICtVFU41WO
-         k+yN9KvpEG2ECKuFsHZiW+D3W1uNoIFA0d6Z5MHerCo64x4rixqrmSad2ueKTC7Lt3BL
-         EPB4EAn/6mVre2KgbFXUWl5Zn1UNjo3uZOEWANvhZ7aVkY30sIEoIn+WHGkXehl4ImRd
-         rBpA==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=fMYdzMsiP+1Bk/6iYa/q2eV0R1ymjfwVHmlSQ19fX/M=;
+        b=EvmI8hCML6qIESBger26GHXS+XGlilq45vezFYZXshLgz3URC6xFuMnUtjcqWy7cQl
+         VKNVDJ0biT9EcAv/9RZFsmBnNJX57KgCsD8+nVsqPub9WgssW+MklWfjb2wUdQaM6+77
+         qU5ied+OL1jktdwP5vvDs82+66/lt/MAZhi2BxUjDzWLYA5pFYyarwIScaHC6yJ5mHBf
+         FPpIVvet9owI18i0XPaOWeDTi8gczzFaY9Zt1sEUx6xLtvDLVT9/zlBUxxQSsIB9juNs
+         VZHz4u5Yw0NS8szOKBSB6Lf1TmSWysYoQSr0ybJQ65a6uiuPxALPkzvSK0VRxUbQHLNg
+         FqEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TaTouNhkkua23DfeNj3GohMqayjzQcFZ6Pb4dHGoHGc=;
-        b=ifaJ4cAMaFlbpYoi9IGMXHjP/6Cj2NqmzoXuz9AjrH7UhPtsZr+hrYzjyEeUuBHUDV
-         IUOS+mHKCU5czCbVnJEWSjES/+ad2tE/wIUaCHsG2jxvSnePVaAJWcbbHa6AFXmGQvef
-         sBVr1qL4XbKqPA0+q5xE/YVucOGV0UfYbG/j8c96eBD09tmpvBIemv3K6eSbdGCswo2f
-         18kMrS7WFIRZG1Q3dslHbCFEjzz59XXJ3RJQniZIC9duRgQun+Es9trm3k3V51FO5txY
-         Jmp442azevy7c0cxjnpYnAApROywBwtTeMCiTjZnx2hvuxU72v1VzEWtmE3TMEx2Ed4w
-         2hSg==
-X-Gm-Message-State: AOAM531Q3D+CU6h3NnMTnNhaJIX09+SyO8v/jdppH63TR7Na4ZBi24D+
-        nWUvnKelxpZKvT3dxABb1nJ2tijVa7yJGiq6VFA=
-X-Google-Smtp-Source: ABdhPJzyPuRNyyjnvAK1arQ7hFZJ2XOamS/B8ti14JBueinF0bv7go0YgJn/feUW4XtY8WuwlmEw8ZAn6ZqHOe5Uvwk=
-X-Received: by 2002:a2e:8186:0:b0:249:9dc2:9ed7 with SMTP id
- e6-20020a2e8186000000b002499dc29ed7mr22335872ljg.406.1648496731931; Mon, 28
- Mar 2022 12:45:31 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=fMYdzMsiP+1Bk/6iYa/q2eV0R1ymjfwVHmlSQ19fX/M=;
+        b=WJ04QhzlOWmEKZ5CsOammLfB+msXHLFCy+Au12wT5kD0cBNiA2So8uEikQHU4zwhIg
+         rB+OaWr5R3v9CAjmA5jzBLvXUwlpmkxKDc/5V0UZx6EqYrq+g7QAkt8T3ibZRtp/w93E
+         N42mElTFMok/bJHNfzsXUWK+oGDQVKv+OPPtYc5BTI1itupdmU8gI5tp6iNgT8m/cT3w
+         /n5xCat5aZlW09glMqIPhjGBN+HzZM3iY3zwtLRonr2S0uOdniy1Ab+DobhWbFpxA3i0
+         4NJlh8Jb5neoUupcTM7VdWzt6fKSZS4MzNmUo7VfOd9fX7ZCdZrMClLcqLlLhZzI3xKR
+         R23Q==
+X-Gm-Message-State: AOAM533zw1rUq+WDk3I2qxloqZ4PzmXqFLR6h8/Iu1S4kcamT+eo5cwm
+        v/y1+luvMyRB6J2UyRgp9I7Z2g==
+X-Google-Smtp-Source: ABdhPJwjLjh3IkCnvumeXc9IBbxZpuXH5xkI57nWrZ1E2OI1Kdh4Z6y0r7S1Yak0WLHLu45cRjMTVw==
+X-Received: by 2002:a17:90a:5d93:b0:1bc:4f9c:8eed with SMTP id t19-20020a17090a5d9300b001bc4f9c8eedmr782253pji.180.1648497220544;
+        Mon, 28 Mar 2022 12:53:40 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:11a8:5d81:f67f:aef9])
+        by smtp.gmail.com with ESMTPSA id o1-20020a637e41000000b003804d0e2c9esm13626330pgn.35.2022.03.28.12.53.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Mar 2022 12:53:40 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 12:53:33 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        lessleydennington@gmail.com, gitster@pobox.com, vdye@github.com
+Subject: Re: [RFC PATCH] repo-settings: set defaults even when not in a repo
+Message-ID: <YkISPUe4NKvzwrjj@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        lessleydennington@gmail.com, gitster@pobox.com, vdye@github.com
+References: <1b27e0b115f858a422e0a2891688227be8f3db01.1648055915.git.steadmon@google.com>
+ <471ca70d-0da1-8c4f-16bc-3019706931bd@github.com>
+ <Yjt6mLIfw0V3aVTO@nand.local>
 MIME-Version: 1.0
-References: <pull.1093.v5.git.1646866998.gitgitgadget@gmail.com>
- <pull.1093.v6.git.1646952204.gitgitgadget@gmail.com> <6adc8dc13852c219763a9830f848fbc8663f2fa9.1646952205.git.gitgitgadget@gmail.com>
- <CANYiYbFjRMV-_opvFn78mq7tgtZFMrfPyDjDa+kyaZZfk_LmWQ@mail.gmail.com>
-In-Reply-To: <CANYiYbFjRMV-_opvFn78mq7tgtZFMrfPyDjDa+kyaZZfk_LmWQ@mail.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Mon, 28 Mar 2022 12:45:20 -0700
-Message-ID: <CANQDOdfJVdCzqk-98i7E7XZN25+0ZLYPjKWOVs9YNUPwx1JDWQ@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] core.fsync: add configuration parsing
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yjt6mLIfw0V3aVTO@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 4:07 AM Jiang Xin <worldhello.net@gmail.com> wrote:
->
-> On Sat, Mar 12, 2022 at 6:25 AM Neeraj Singh via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > @@ -1613,6 +1687,8 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
-> >         }
-> >
-> >         if (!strcmp(var, "core.fsyncobjectfiles")) {
-> > +               if (fsync_object_files < 0)
-> > +                       warning(_("core.fsyncobjectfiles is deprecated; use core.fsync instead"));
->
-> s/core.fsyncobjectfiles/core.fsyncObjectFiles/  to use bumpyCaps for
-> config variable in documentation.
+On 2022.03.23 15:52, Taylor Blau wrote:
+> I tried to sketch all of this out, which seems to work. Let me know what
+> you think:
 
-THanks for pointing this out.  I'll fix it.
+BTW, is it OK if I include your Signed-off-by on this when I send my V2?
