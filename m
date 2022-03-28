@@ -2,188 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A84C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD83C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 19:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245424AbiC1TFg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 15:05:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
+        id S242764AbiC1TLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 15:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243059AbiC1TFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 15:05:34 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5575245B1
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:03:53 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id x34so18031935ede.8
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:03:53 -0700 (PDT)
+        with ESMTP id S229878AbiC1TLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 15:11:50 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0383FD88
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:10:08 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id r7so20632902wrc.0
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 12:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bIv1qzBdafYszEW8TUQHw5ut+P8MqdyAgRzcXvcKrH4=;
-        b=QgdWz4BwRSwll1xBuuZZX/st4PBqXNfEIOr2i5f//OAGKerSs53dzRiPsiregEKlkc
-         3xSiukrMM2XhTeCiH2jydHZCuWH8SWFykcTvm38m5UJA1cITHcPcSnUCy7Pdqqs3s+ST
-         FV6SFqRkBQbJUwWJcmJ1VogByB3cWMafNb/IegclazYB7r5L1yXioVBQ9cplRE0mfMLq
-         hECz+s0aWuh0fCcGAs/TmasZf35TkiUeFJkBZyZKRGnwEkHcO5RRzj//f51mtkRpWtE8
-         61zXqsRArbdnZQX6TBT82sLpUbh+eRouFL/toUFgT80KK6a9NZjyvDBu2iuIlE5XiDMb
-         Y27w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zelExPNYf3t33hmTFoCFEPJxz6+9R9ToExophi44ikw=;
+        b=LZObYuJtVDbdw6wicZSEvyE1jA+javnYGDE9Vx4S0r+HQjGkMp9wi+mRsKjWrzyn6B
+         RUwClErHxCG3WGTuB/iYGgX257COQhodDUlnGdK/DZNDTc0w9ExgTw3tvgD282ODXozh
+         nbBMgsJYDNHXRm3pX5Usgu45o3TDp+IXiXPnkfu3/4rvjl8oc6pdhFN0XCZ26XrVaQNA
+         6Gbb0C+YmcgVYSpnbRkzRjLpWMlSA6ndqW0kttkQr9Hpua7C84a4GXfaUpcMt4ATHUGN
+         2EciNz6Bq0BmkhhDyC0zEBxZ50833mW+L9YkaWfJxXNCNSzYDtdDt8KVeTqXS7Bzvkbm
+         jxUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=bIv1qzBdafYszEW8TUQHw5ut+P8MqdyAgRzcXvcKrH4=;
-        b=TjB8BJ+XZGfzn1DqurYRJRHiu7XT+m8WufAJzSnZttr8jcFmFVSJgjkD6V95Ijqz0x
-         LfIG5lrgqxKHaqODu6A81+hXOph1/QKeIknxgDfyNPQEMyffAJDVA5eswuhdvUAYaOon
-         Hl67W+6jTse2zrFl0P3uqAv+520kXbISbHRbhMia7cQs1uyT0gOimh17awP6t1ytgnMF
-         AJgeOxWl/OrLN0gNR2qGGgtIEQEdRCWH+iUmraNZ2FjQJXm+5U6v9hZNfVwcUs4odx6U
-         qLkRhVWsiV76UZYL0m5kQj+l7D/xubTuSJbfOQ+Q9V/sry3k1HTbnUhTjD5KPaODcYPv
-         kfkg==
-X-Gm-Message-State: AOAM530VsKSJrHIW5s4cDk0WT8fAWBwIeFiElnVDD41J0Nn8h5TrgAYn
-        +ni53JqOtLmvzwh8hykdq5o=
-X-Google-Smtp-Source: ABdhPJyMJylPuKag0rUDOqQNV07q5i7zIIMVFrhYraaLSnDe9iZLz9wZdLN+3Fas39T8fNVKTIB2eQ==
-X-Received: by 2002:a50:eb8b:0:b0:419:a11c:8676 with SMTP id y11-20020a50eb8b000000b00419a11c8676mr18027057edr.267.1648494232015;
-        Mon, 28 Mar 2022 12:03:52 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u3-20020a17090657c300b006d01de78926sm6263614ejr.22.2022.03.28.12.03.51
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zelExPNYf3t33hmTFoCFEPJxz6+9R9ToExophi44ikw=;
+        b=LE3aHnYlNk6t/DN78QDmJp6J7sZYaiqGWh90BTun5CTKZtg6nO2X/LuGkNyKOFCVeg
+         S3HrT9MjcqePQH9v4qkBdbhok9XAKGKjfEMqE/MjEr4wCJO6K2gwf1igfNQjD5pdXLRh
+         6p/YIDtTOqEef8YeV2v6EVlbRr+OJ5xWah2giSze+yn+OBKCJxsmA7lu/4uN7qKX5azb
+         Qx6KxpeGhOgD0m0cSADvcri2DwDfQSZOF92lvVsJz5FsMlaOa09Bw35hJuDbkVonb0D3
+         5ZT/LvsQFMtup89zqaG4a1XM/I12fAB8XM779J/G3IagzU84bmZ3E5ENKgEcRyRPg+cF
+         1x4g==
+X-Gm-Message-State: AOAM531ZG7TCS39eJipRsA5Lw4DfySFF+5pQiYimuM28pabSXcJIWPvr
+        6ssTvF7IISt3M+CDV8DgwwaVXwqjo+Q+JA==
+X-Google-Smtp-Source: ABdhPJy7r4+AlP75v3LfcPR5GfL0puG4TUYRTTwcS8wTRVKfxpMN02cucqwotJUPfg+z/qUOSkKsyw==
+X-Received: by 2002:a5d:6149:0:b0:204:4a17:bf2 with SMTP id y9-20020a5d6149000000b002044a170bf2mr25937084wrt.379.1648494607083;
+        Mon, 28 Mar 2022 12:10:07 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e12-20020a5d6d0c000000b001a65e479d20sm15698007wrq.83.2022.03.28.12.10.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 12:03:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nYuec-003OGx-P4;
-        Mon, 28 Mar 2022 21:03:50 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 08/27] revisions API users: add "goto cleanup" for
- "rev_info" early exit
-Date:   Mon, 28 Mar 2022 20:55:31 +0200
-References: <cover-v2-00.27-00000000000-20220323T203149Z-avarab@gmail.com>
- <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
- <patch-v3-08.27-f8a9443fe6f-20220325T171340Z-avarab@gmail.com>
- <xmqqtubl93n3.fsf@gitster.g> <220326.86ee2pleua.gmgdl@evledraar.gmail.com>
- <xmqqee2p70c1.fsf@gitster.g>
- <3bb95e8b-4977-ddca-225c-5afe28d8ac20@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.11
-In-reply-to: <3bb95e8b-4977-ddca-225c-5afe28d8ac20@github.com>
-Message-ID: <220328.86tubh3nmx.gmgdl@evledraar.gmail.com>
+        Mon, 28 Mar 2022 12:10:06 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] reftable: make assignments portable to AIX xlc v12.01
+Date:   Mon, 28 Mar 2022 21:10:04 +0200
+Message-Id: <patch-1.1-98267695418-20220328T190642Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1548.gaad2ca01774
+In-Reply-To: <c052b97e-e788-f63a-15c5-b1fbb6a480e8@web.de>
+References: <c052b97e-e788-f63a-15c5-b1fbb6a480e8@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change the assignment syntax introduced in 66c0dabab5e (reftable: make
+reftable_record a tagged union, 2022-01-20) to be portable to AIX xlc
+v12.1:
 
-On Mon, Mar 28 2022, Derrick Stolee wrote:
+    avar@gcc111:[/home/avar]xlc -qversion
+    IBM XL C/C++ for AIX, V12.1 (5765-J02, 5725-C72)
+    Version: 12.01.0000.0000
 
-> On 3/26/2022 1:24 AM, Junio C Hamano wrote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>=20
->>> Because I don't see how it makes any sense to have a REV_INFO_INIT if it
->>> doesn't actually give you an init'd "struct rev_info" that's ready for
->>> use. I.e. if you still need to call repo_init_revisions() it's just a
->>> misleading interface.
->>=20
->> You can say
->>=20
->> 	struct something *foo =3D NULL;
->>=20
->> 	if (some condition)
->> 		foo =3D alloc_and_init_foo();
->>=20
->> 	...
->>=20
->> 	free_and_destruct(foo);
->>=20
->> and it is correct that "initialize with NULL" alone would not let
->> you use the thing as full fledged 'foo', but you can still safely
->> pass it to free_and_destruct() (or if "something" does not hold
->> external resources, it could just be free()).  A flow like this:
->>=20
->> 	struct rev_info revs =3D REV_INFO_INIT;
->>=20
->> 	if (!some condition)
->> 		goto leave;
->> 	init(&revs);
->> 	... use revs ...
->> leave:
->>         release(&revs);
->>=20
->> would exactly be the same thing.
->>=20
->> In other words, you say "I do not see how it makes any sense" but to
->> me it looks more like what does not make sense is your argument
->> against what was suggested.
->
+The error emitted before this was e.g.:
 
-[re-arranging a bit]
+    "reftable/generic.c", line 133.26: 1506-196 (S) Initialization
+    between types "char*" and "struct reftable_ref_record" is not
+    allowed.
 
-> However, now that we are intending to free rev_info structs,
-> we need them to be initialized with NULL pointers because
-> otherwise the release_revisions() method won't know which
-> portions were legitimately initialized and which ones were
-> not.
->
-> Maybe this NULL assignment happens as part of
-> repo_init_revisions(), but that also assumes that there is no
-> code path that would jump to a "leave" or "cleanup" tag before
-> running that initialization method (which is the broken case
-> that Junio mentions above).
->
-> Maybe there are tools that would identify that Junio's example
-> would be bad, but it is also likely that a compiler doesn't
-> catch that issue and tests don't cover that error condition.
->
-> It's my preference to initialize things to all-zeroes whenever
-> there is any chance of complexity, which is why this topic has
-> come to my attention on multiple threads.
+The syntax in the pre-image is supported by e.g. xlc 13.01 on a newer
+AIX version:
 
-Mine too, IOW I really don't like the version in my own v3 here, but
-wanted to just use an initialization to { 0 } as in the v2.
+    avar@gcc119:[/home/avar]xlc -qversion
+    IBM XL C/C++ for AIX, V13.1.3 (5725-C72, 5765-J07)
+    Version: 13.01.0003.0006
 
-But I read Junio's reply to
-https://lore.kernel.org/git/220324.868rszmga6.gmgdl@evledraar.gmail.com/
-as objecting to that general assumption, as we do e.g. in some of this
-code:
+But as we've otherwise supported this compiler let's not break it
+entirely if it's easy to work around it.
 
-    git grep 'struct.*=3D.*\{ 0 \}'
+Suggested-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-So the v3 rewrite of those was seeking a way around that which didn't
-require implementing a full init-from-macro of REV_INFO_INIT.
+On Sat, Feb 19 2022, René Scharfe wrote:
 
-Junio, would you be OK/prefer to basically have the v2 verison, with
-just a dummy macro like this in revision.h?:
+> Am 19.02.22 um 13:54 schrieb Ævar Arnfjörð Bjarmason:
+> [...]
+> The code is hard to read for me in general due to its many types and
+> function dispatch tables, but this compiler seems to have an even harder
+> time.  Where does it even get that char pointer type from?
 
-    #define REV_INFO_INIT { 0 }
+Sorry about the very late reply, yes thath first suggestion worked,
+d'oh in retrospect. This patch fixes it.
 
-Which we'd then do something more useful with down the line?
 
-> =C3=86var has stated in multiple threads that he prefers to not
-> initialize data so that static analysis tools can detect a
-> use-before-initialization of specific members.
+ reftable/generic.c     |  8 ++++++--
+ reftable/record_test.c |  4 +++-
+ reftable/writer.c      | 12 +++++++++---
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-Just to be clear, I prefer not doing initialization in cases where the
-compiler is guaranteed to help you by skipping them, i.e. init to NULL
-within a function where say 2 branchesh both init the value, but if you
-were to change that the init to NULL would hide the bug.
+diff --git a/reftable/generic.c b/reftable/generic.c
+index b27d152e89a..57f8032db94 100644
+--- a/reftable/generic.c
++++ b/reftable/generic.c
+@@ -130,7 +130,9 @@ int reftable_iterator_next_ref(struct reftable_iterator *it,
+ {
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_REF,
+-		.u.ref = *ref,
++		.u = {
++			.ref = *ref
++		},
+ 	};
+ 	int err = iterator_next(it, &rec);
+ 	*ref = rec.u.ref;
+@@ -142,7 +144,9 @@ int reftable_iterator_next_log(struct reftable_iterator *it,
+ {
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_LOG,
+-		.u.log = *log,
++		.u = {
++			.log = *log,
++		},
+ 	};
+ 	int err = iterator_next(it, &rec);
+ 	*log = rec.u.log;
+diff --git a/reftable/record_test.c b/reftable/record_test.c
+index f91ea5e8830..70ae78feca4 100644
+--- a/reftable/record_test.c
++++ b/reftable/record_test.c
+@@ -339,7 +339,9 @@ static void test_reftable_obj_record_roundtrip(void)
+ 		};
+ 		struct reftable_record in = {
+ 			.type = BLOCK_TYPE_OBJ,
+-			.u.obj = recs[i],
++			.u = {
++				.obj = recs[i],
++			},
+ 		};
+ 		struct strbuf key = STRBUF_INIT;
+ 		struct reftable_record out = { .type = BLOCK_TYPE_OBJ };
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 6d979e245ff..427f1317c6b 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -257,7 +257,9 @@ int reftable_writer_add_ref(struct reftable_writer *w,
+ {
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_REF,
+-		.u.ref = *ref,
++		.u = {
++			.ref = *ref
++		},
+ 	};
+ 	int err = 0;
+ 
+@@ -308,7 +310,9 @@ static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
+ {
+ 	struct reftable_record rec = {
+ 		.type = BLOCK_TYPE_LOG,
+-		.u.log = *log,
++		.u = {
++			.log = *log,
++		},
+ 	};
+ 	if (w->block_writer &&
+ 	    block_writer_type(w->block_writer) == BLOCK_TYPE_REF) {
+@@ -401,7 +405,9 @@ static int writer_finish_section(struct reftable_writer *w)
+ 		for (i = 0; i < idx_len; i++) {
+ 			struct reftable_record rec = {
+ 				.type = BLOCK_TYPE_INDEX,
+-				.u.idx = idx[i],
++				.u = {
++					.idx = idx[i],
++				},
+ 			};
+ 			if (block_writer_add(w->block_writer, &rec) == 0) {
+ 				continue;
+-- 
+2.35.1.1548.gaad2ca01774
 
-(And I'm sure it's not something I came up with, but got pointed out to
-me repeatedly in review (by Jeff King or Junio?), until I got it...)
-
-But skipping zero-ing out a struct like "struct rev_info" is not such a
-case where the compiler can really help, and we often use that struct at
-a far distance from where it was init'd. So I'd really like to see us
-not do that as a habit, even if say valgrind can sometimes catch it (but
-only if we have 100% test coverage!).
-
-You're probably thinking more of the case of [1]. I consider that a
-pretty clear case of running with scissors, I just figured that one was
-narrow enough to be OK, but it's good to have [2] instead.
-
-1. https://lore.kernel.org/git/patch-1.1-193534b0f07-20220325T121715Z-avara=
-b@gmail.com/
-2. https://lore.kernel.org/git/patch-v2-1.1-9951d92176e-20220328T154049Z-av=
-arab@gmail.com/
