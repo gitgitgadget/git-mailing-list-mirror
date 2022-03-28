@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21B7AC433FE
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 14:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A27C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 14:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243594AbiC1OEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 10:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37304 "EHLO
+        id S243598AbiC1OEO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 10:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243577AbiC1OEG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 10:04:06 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCBA5EDFB
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:24 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id u3so20585149wrg.3
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:24 -0700 (PDT)
+        with ESMTP id S243575AbiC1OEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 10:04:07 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFABE5EDFF
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:26 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so13038914wmb.4
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 07:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zmlhGb4olf/N5HJH20CHN3rdiXTxxKvNcxukIEZpLb8=;
-        b=JxvyH8Vo7Y/czxkxhznjT7LKZ2rNauGdQ0eDM4nprBAbOP/XKftL8syczpvBkircCQ
-         sBCaY00Qthx1Par50P33LooZPyX6Gk6DZN/Zp8HVAjrKApOx3InrzBQa4GI2lUvaKk+o
-         snlKiRlrY58naG5tDkM95+nt4xibgseQSEWbwUbADDMXjelZTTkO4st1Wxl4tslQTs9C
-         EIwIzEOa2ewFbIEj3u6q8vXwsfKSQUbAuLWQ7lGqju1XEOIWltx3e05LQ76c3rO94OhR
-         L0g/Pxx0N55ZwBH3HME1Gw407m9NK7waKHH62QlfuaRQzhot9I3T9RLvSWSh/EphP18K
-         zq/g==
+        bh=YZAsi0B+autmzfzGuxw5aPrHZZWF6NKcxAUhcZiJlOk=;
+        b=YS5hsqlpID1LH3u41LuVnQDq7VjhRRrV9/yiGSU9sPwE1TRX/jD+xNmeMea0Ru8/Nk
+         CRr9s9dOdKkBWb+UeLOA+79rG/xZ1y1FJyjykTqqqTSVekSiY+mSpfBWn0YcOriac2h0
+         p340oHSneyO6yz17EZoqg0xaOaeySVbaM0y3nUrayOJpimZPJuIs7d9+yUGJaKUVL/A5
+         s3cvCfOOIf/AVpwa/m2KnfY2peR9yfzzct9PNQu/FFliKxMhOY0bLRseCNhMcQdn8Q5n
+         /zqth3YjT/p101SbTXgKd66MU4X+tcJR16JfZqo2E7Xs7xopav65Q3cJia9NgUBopWLG
+         9x9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zmlhGb4olf/N5HJH20CHN3rdiXTxxKvNcxukIEZpLb8=;
-        b=t4+h1aPk2Wu6STveAlTrXg7a8Ia+JPVZ/fdFHEO5U2impuynl66x3UW80k74+q/VlN
-         GXm4f6nxOCyYHGU44XOT/GzYZ10dToeZcjFXJAhLduzUifp6seVGrZwCuuY9ApNJtYUm
-         rGgUkRPsvsdH8+WJXbxIQbAHoIGwQznzqEx+nDpShTcidINClBDrGJETEUQyCt7ZV++y
-         IBH9Nr6huk8e1l1LXBAVgc7DuxC0adh9hYK8cmug2PAe/czKrBp6erfBRn6BzhNuS1rN
-         D95TxQ32fJNV5Y99qAZ5JPPpigCOKL0ItB1W3jurDR67XEZTyuAcfLIIldMTNG+hgLF7
-         /BZw==
-X-Gm-Message-State: AOAM531XQgsWNZ61zJ8LX1tQpB1wug1Fl8eLv98HQfsH4v9jLTDMGBht
-        cs+ZooMTItd68vTowt+s+WzexeJSk9I=
-X-Google-Smtp-Source: ABdhPJz9oKdceKfIQdotK2qjxO96fT6wh9EYMBz/5M87Xrd5HSnp/iM21Vvj/6evuEU0eOVZpYMYug==
-X-Received: by 2002:a5d:6c65:0:b0:204:119d:37e2 with SMTP id r5-20020a5d6c65000000b00204119d37e2mr23436001wrz.635.1648476141700;
-        Mon, 28 Mar 2022 07:02:21 -0700 (PDT)
+        bh=YZAsi0B+autmzfzGuxw5aPrHZZWF6NKcxAUhcZiJlOk=;
+        b=sGqaq4xrJBx1sxwqWyRNJ29J7Tqk41WJ4tIW6TCvVEFCYmjMjHl7bir3D4/H7ZeFQ/
+         kwPvN3LC+dbJiH/VkXDFqaB1uBnr7iJueTp/ZSRWXrU+N7Uy06Lg5ZAOksgUVrmHiWUE
+         ecVb5we3q30mtmfItxXNUApNyLfnYbQ+YuHx3xKZT6utlCVSyZgzYXb0kH5SOT5cCd2H
+         fCki44GgAQ1zVJMd/M33t1FRcxO+oZaPmrfwqq5V3OY7s73MjPug1wiBxOyCkAyYAUYe
+         DQtxDD4VrtSpb+fKhOQ55jpD6Q8zCpBabvzbt+Soc2f+u6qkCnTUTZPpsuQQ67Eb16gE
+         kj2Q==
+X-Gm-Message-State: AOAM530U0vTW8fFcTJQs49b1JZjOqhcaSrFOrMwxJzynSoz3rZ72X6Hl
+        8tt8NJ6BoqfA4+vBEeff6iWYzYXVPVo=
+X-Google-Smtp-Source: ABdhPJzxu0HXwwckgjUmVlb9kSk0e1FRRoggHbtTlNVqL1Zoij3S1fFqKc3V+BtM2zcUTVoteyYEgg==
+X-Received: by 2002:a05:600c:1d8e:b0:389:d079:cc0 with SMTP id p14-20020a05600c1d8e00b00389d0790cc0mr26642595wms.98.1648476145133;
+        Mon, 28 Mar 2022 07:02:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f10-20020a0560001b0a00b0020402c09067sm6471640wrz.50.2022.03.28.07.02.20
+        by smtp.gmail.com with ESMTPSA id 185-20020a1c19c2000000b0038a1d06e862sm16766963wmz.14.2022.03.28.07.02.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 07:02:20 -0700 (PDT)
-Message-Id: <78501bbf28105ef252976266abb437a278585609.1648476132.git.gitgitgadget@gmail.com>
+        Mon, 28 Mar 2022 07:02:24 -0700 (PDT)
+Message-Id: <28c07219fd830196af1171320b86bc2a58ba3d79.1648476132.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com>
 References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
         <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com>
 From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Mar 2022 14:02:08 +0000
-Subject: [PATCH v4 4/7] fetch: add --refetch option
+Date:   Mon, 28 Mar 2022 14:02:10 +0000
+Subject: [PATCH v4 6/7] fetch: after refetch, encourage auto gc repacking
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,144 +74,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Robert Coup <robert@coup.net.nz>
 
-Teach fetch and transports the --refetch option to force a full fetch
-without negotiating common commits with the remote. Use when applying a
-new partial clone filter to refetch all matching objects.
+After invoking `fetch --refetch`, the object db will likely contain many
+duplicate objects. If auto-maintenance is enabled, invoke it with
+appropriate settings to encourage repacking/consolidation.
+
+* gc.autoPackLimit: unless this is set to 0 (disabled), override the
+  value to 1 to force pack consolidation.
+* maintenance.incremental-repack.auto: unless this is set to 0, override
+  the value to -1 to force incremental repacking.
 
 Signed-off-by: Robert Coup <robert@coup.net.nz>
 ---
- Documentation/fetch-options.txt |  9 +++++++++
- builtin/fetch.c                 | 15 ++++++++++++++-
- transport-helper.c              |  3 +++
- transport.c                     |  4 ++++
- transport.h                     |  4 ++++
- 5 files changed, 34 insertions(+), 1 deletion(-)
+ Documentation/fetch-options.txt |  3 ++-
+ builtin/fetch.c                 | 19 ++++++++++++++++++-
+ t/t5616-partial-clone.sh        | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 6cdd9d43c5a..d03fce5aae0 100644
+index d03fce5aae0..622bd84768b 100644
 --- a/Documentation/fetch-options.txt
 +++ b/Documentation/fetch-options.txt
-@@ -163,6 +163,15 @@ endif::git-pull[]
- 	behavior for a remote may be specified with the remote.<name>.tagOpt
- 	setting. See linkgit:git-config[1].
+@@ -169,7 +169,8 @@ ifndef::git-pull[]
+ 	associated objects that are already present locally, this option fetches
+ 	all objects as a fresh clone would. Use this to reapply a partial clone
+ 	filter from configuration or using `--filter=` when the filter
+-	definition has changed.
++	definition has changed. Automatic post-fetch maintenance will perform
++	object database pack consolidation to remove any duplicate objects.
+ endif::git-pull[]
  
-+ifndef::git-pull[]
-+--refetch::
-+	Instead of negotiating with the server to avoid transferring commits and
-+	associated objects that are already present locally, this option fetches
-+	all objects as a fresh clone would. Use this to reapply a partial clone
-+	filter from configuration or using `--filter=` when the filter
-+	definition has changed.
-+endif::git-pull[]
-+
  --refmap=<refspec>::
- 	When fetching refs listed on the command line, use the
- 	specified refspec (can be given more than once) to map the
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 9b4018f62c4..e391a5dbc55 100644
+index e391a5dbc55..e3791f09ed5 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -59,7 +59,7 @@ static int prune_tags = -1; /* unspecified */
+@@ -2306,8 +2306,25 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 					     NULL);
+ 	}
  
- static int all, append, dry_run, force, keep, multiple, update_head_ok;
- static int write_fetch_head = 1;
--static int verbosity, deepen_relative, set_upstream;
-+static int verbosity, deepen_relative, set_upstream, refetch;
- static int progress = -1;
- static int enable_auto_gc = 1;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
-@@ -190,6 +190,9 @@ static struct option builtin_fetch_options[] = {
- 	OPT_SET_INT_F(0, "unshallow", &unshallow,
- 		      N_("convert to a complete repository"),
- 		      1, PARSE_OPT_NONEG),
-+	OPT_SET_INT_F(0, "refetch", &refetch,
-+		      N_("re-fetch without negotiating common commits"),
-+		      1, PARSE_OPT_NONEG),
- 	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
- 		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
- 	OPT_CALLBACK_F(0, "recurse-submodules-default",
-@@ -1304,6 +1307,14 @@ static int check_exist_and_connected(struct ref *ref_map)
- 	if (deepen)
- 		return -1;
- 
-+	/*
-+	 * Similarly, if we need to refetch, we always want to perform a full
-+	 * fetch ignoring existing objects.
-+	 */
-+	if (refetch)
-+		return -1;
+-	if (enable_auto_gc)
++	if (enable_auto_gc) {
++		if (refetch) {
++			/*
++			 * Hint auto-maintenance strongly to encourage repacking,
++			 * but respect config settings disabling it.
++			 */
++			int opt_val;
++			if (git_config_get_int("gc.autopacklimit", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				git_config_push_parameter("gc.autoPackLimit=1");
 +
++			if (git_config_get_int("maintenance.incremental-repack.auto", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				git_config_push_parameter("maintenance.incremental-repack.auto=-1");
++		}
+ 		run_auto_maintenance(verbosity < 0);
++	}
+ 
+  cleanup:
+ 	string_list_clear(&list, 0);
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 87ebf4b0b1c..4a3778d04a8 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -216,6 +216,35 @@ test_expect_success 'fetch --refetch works with a shallow clone' '
+ 	test_line_count = 6 observed
+ '
+ 
++test_expect_success 'fetch --refetch triggers repacking' '
++	GIT_TRACE2_CONFIG_PARAMS=gc.autoPackLimit,maintenance.incremental-repack.auto &&
++	export GIT_TRACE2_CONFIG_PARAMS &&
 +
- 	/*
- 	 * check_connected() allows objects to merely be promised, but
- 	 * we need all direct targets to exist.
-@@ -1517,6 +1528,8 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
- 		set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, "yes");
- 	if (update_shallow)
- 		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
-+	if (refetch)
-+		set_option(transport, TRANS_OPT_REFETCH, "yes");
- 	if (filter_options.choice) {
- 		const char *spec =
- 			expand_list_objects_filter_spec(&filter_options);
-diff --git a/transport-helper.c b/transport-helper.c
-index a0297b0986c..b4dbbabb0c2 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -715,6 +715,9 @@ static int fetch_refs(struct transport *transport,
- 	if (data->transport_options.update_shallow)
- 		set_helper_option(transport, "update-shallow", "true");
- 
-+	if (data->transport_options.refetch)
-+		set_helper_option(transport, "refetch", "true");
++	GIT_TRACE2_EVENT="$PWD/trace1.event" \
++	git -C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace1.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace1.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace1.event &&
 +
- 	if (data->transport_options.filter_options.choice) {
- 		const char *spec = expand_list_objects_filter_spec(
- 			&data->transport_options.filter_options);
-diff --git a/transport.c b/transport.c
-index 70e9840a90e..3d64a43ab39 100644
---- a/transport.c
-+++ b/transport.c
-@@ -250,6 +250,9 @@ static int set_git_option(struct git_transport_options *opts,
- 		list_objects_filter_die_if_populated(&opts->filter_options);
- 		parse_list_objects_filter(&opts->filter_options, value);
- 		return 0;
-+	} else if (!strcmp(name, TRANS_OPT_REFETCH)) {
-+		opts->refetch = !!value;
-+		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_REJECT_SHALLOW)) {
- 		opts->reject_shallow = !!value;
- 		return 0;
-@@ -384,6 +387,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.update_shallow = data->options.update_shallow;
- 	args.from_promisor = data->options.from_promisor;
- 	args.filter_options = data->options.filter_options;
-+	args.refetch = data->options.refetch;
- 	args.stateless_rpc = transport->stateless_rpc;
- 	args.server_options = transport->server_options;
- 	args.negotiation_tips = data->options.negotiation_tips;
-diff --git a/transport.h b/transport.h
-index a0bc6a1e9eb..12bc08fc339 100644
---- a/transport.h
-+++ b/transport.h
-@@ -16,6 +16,7 @@ struct git_transport_options {
- 	unsigned update_shallow : 1;
- 	unsigned reject_shallow : 1;
- 	unsigned deepen_relative : 1;
-+	unsigned refetch : 1;
- 
- 	/* see documentation of corresponding flag in fetch-pack.h */
- 	unsigned from_promisor : 1;
-@@ -216,6 +217,9 @@ void transport_check_allowed(const char *type);
- /* Filter objects for partial clone and fetch */
- #define TRANS_OPT_LIST_OBJECTS_FILTER "filter"
- 
-+/* Refetch all objects without negotiating */
-+#define TRANS_OPT_REFETCH "refetch"
++	GIT_TRACE2_EVENT="$PWD/trace2.event" \
++	git -c protocol.version=0 \
++		-c gc.autoPackLimit=0 \
++		-c maintenance.incremental-repack.auto=1234 \
++		-C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace2.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"0\" trace2.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace2.event &&
 +
- /* Request atomic (all-or-nothing) updates when pushing */
- #define TRANS_OPT_ATOMIC "atomic"
- 
++	GIT_TRACE2_EVENT="$PWD/trace3.event" \
++	git -c protocol.version=0 \
++		-c gc.autoPackLimit=1234 \
++		-c maintenance.incremental-repack.auto=0 \
++		-C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace3.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace3.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"0\" trace3.event
++'
++
+ test_expect_success 'partial clone with transfer.fsckobjects=1 works with submodules' '
+ 	test_create_repo submodule &&
+ 	test_commit -C submodule mycommit &&
 -- 
 gitgitgadget
 
