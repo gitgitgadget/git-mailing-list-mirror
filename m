@@ -2,109 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D433FC433F5
-	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 21:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3384C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Mar 2022 22:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbiC1VXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 17:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37562 "EHLO
+        id S229771AbiC1WPQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 18:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiC1VXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 17:23:51 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C80E12D095
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 14:22:02 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id b24so18433279edu.10
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 14:22:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hZgeofnDA5HCaxIR7RnaKqH37oZy28Ex3lQ3Oba6SUQ=;
-        b=D03vbTEED/0AZUWxDKQihKScgbHf8V9fcXcxIKkcQmhC5NP/uf7Ad8xyI1FuwnlZfk
-         glbq0AkuCeD/nTdnTzYy305sPSnVMEUvZhjmG+VcSLApOtRvLqd5dFznHOQ1vFdVXXyO
-         zSNgjJti4lhzTzjK1rnIZFkSHbtnPGmU043h1CSaM1hZdoLILqFWMY98yJPWg/PEZQLk
-         ww01aNM6KtIZ+N4+agqrk9BnGQSocPOWu69ADFnFurpYMd7iD6UTzoaypXOwMLTtBSsp
-         Hj4fhZshljUvyB2yDjFUIZnNu/yrzXKR6PrAYLsZVQkQRoCwEN/QeiQFxd0fc0a2lDyZ
-         tzGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hZgeofnDA5HCaxIR7RnaKqH37oZy28Ex3lQ3Oba6SUQ=;
-        b=GSlMYVCPePEWNlB5kfcNPu8CHOdF1+UNJIYm2tVqo1JPPz/xPw8nRvpEe/Zu2Rx7XM
-         GdB2VTRXJmr6bXaipg5ZhEbKjflrmUuuYSzyWxmYKYJS8dyTAlbVjQKbzdoytqYfDsFg
-         ztH2FN677XrIQ7Z5UTm8rc+bdYK7lUVGyhsyo/FylUHNPG+Ax/WqrCTq8TJmsZwz+uxi
-         e0B9UnhOVRhBkxb/mYePbfckTda8Zw9b7Rf2ACtxUdBWDkK0tNqNBNtETHituNz4AGNK
-         UE34NX/J4rPNF7ID2P8Xd0IwgQuYXtGL3DTVvn5L5AjkgvLdmVGuPY6pSI4PE5iFupt0
-         pUsg==
-X-Gm-Message-State: AOAM530EqSLoy2d5YkehNRFtnyEl9KiRVj1vjlLopG4r7KABpqPvOuWd
-        wstnpf2aK+BI32f4st+ZmkI1xMAublY=
-X-Google-Smtp-Source: ABdhPJxDofYQLnZY087YtpJ02J9wjjWX2/GBJYr3OGizr3rLeE+mMzGUxom7TyHv97Yib9wdiJA0Eg==
-X-Received: by 2002:a05:6402:b63:b0:419:2d75:de88 with SMTP id cb3-20020a0564020b6300b004192d75de88mr18822526edb.389.1648502521036;
-        Mon, 28 Mar 2022 14:22:01 -0700 (PDT)
-Received: from buzz.local (78-131-17-231.pool.digikabel.hu. [78.131.17.231])
-        by smtp.gmail.com with ESMTPSA id u10-20020a50d94a000000b004131aa2525esm7640398edj.49.2022.03.28.14.21.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 14:22:00 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] reflog: fix 'show' subcommand's argv
-Date:   Mon, 28 Mar 2022 23:21:52 +0200
-Message-Id: <20220328212152.589491-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.35.1.1272.g0ee9eb8209
-In-Reply-To: <patch-8.8-618e975f8b2-20220317T180439Z-avarab@gmail.com>
-References: <patch-8.8-618e975f8b2-20220317T180439Z-avarab@gmail.com>
+        with ESMTP id S229692AbiC1WPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 18:15:09 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB888566A
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 15:07:46 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CC5E10FCA9;
+        Mon, 28 Mar 2022 17:53:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+qVYyscoGfQNqOpUInsl+ulnR4F4qA/TCkp/al
+        5dFgw=; b=fDKsn0EqtxydIfPseB0U+gNTRwBVdT/CPbv5p0j697gPY7osh2qnGc
+        DqfSXVssKjNIpjpDuivtf6m41F54mnCstYIdu/Hj/oyFsas+CJf1EKWtxBqBKvlQ
+        oJkE6KRBBp7cmWuWObjH5p/rdE0WRaPpwdF4FyFWnB+83kZoIWIUk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5430A10FCA8;
+        Mon, 28 Mar 2022 17:53:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BEC1B10FCA7;
+        Mon, 28 Mar 2022 17:53:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Danny Lin <danny0838@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git develop <git@vger.kernel.org>
+Subject: Re: [PATCH] git-prompt: fix sequencer/todo detection
+References: <20220325145301.3370-1-danny0838@gmail.com>
+Date:   Mon, 28 Mar 2022 14:53:29 -0700
+In-Reply-To: <20220325145301.3370-1-danny0838@gmail.com> (Danny Lin's message
+        of "Fri, 25 Mar 2022 22:53:01 +0800")
+Message-ID: <xmqqwngdzque.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81AB05FE-AEE1-11EC-8B59-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cmd_reflog() invokes parse_options() with PARSE_OPT_KEEP_ARGV0, but it
-doesn't account for the retained argv[0] before invoking
-cmd_reflog_show() to handle the 'git reflog show' subcommand.
-Consequently, cmd_reflog_show() always gets an 'argv' array starting
-with elements argv[0]="reflog" and argv[1]="show".
+Danny Lin <danny0838@gmail.com> writes:
 
-Strip the name of the git command from the 'argv' array before passing
-it to the function handling the 'show' subcommand.
+> Previous case does not correctly check the "p ..." pattern.
+>
+> Signed-off-by: Danny Lin <danny0838@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index db7c0068fb..8ae341a306 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -315,7 +315,7 @@ __git_sequencer_status ()
+>  	elif __git_eread "$g/sequencer/todo" todo
+>  	then
+>  		case "$todo" in
+> -		p[\ \	]|pick[\ \	]*)
+> +		p[\ \	]*|pick[\ \	]*)
+>  			r="|CHERRY-PICKING"
+>  			return 0
+>  		;;
 
-There is no user-visible bug here, because cmd_reflog_show() doesn't
-have any options or parameters of its own.
+It is obvious that the original code is *not* prepared to see 'p'
+followed by whitespace followed by other things, but I am not sure
+how the code in sequencer.c::todo_list_write_to_file() can choose
+to pass flags & TODO_LIST_ABBREVIATE_CMDS to todo_list_to_strbuf().
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- builtin/reflog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Danny, do you have a reproduction recipe, preferrably one you can
+turn into a new test in t9903-bash-prompt.sh?  Or was this found
+merely by inspecting the code?
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 6c4fe1af40..c943c2aabe 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -225,7 +225,7 @@ static int cmd_reflog_show(int argc, const char **argv, const char *prefix)
- 		      PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0 |
- 		      PARSE_OPT_KEEP_UNKNOWN);
- 
--	return cmd_log_reflog(argc - 1, argv + 1, prefix);
-+	return cmd_log_reflog(argc, argv, prefix);
- }
- 
- static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
-@@ -425,7 +425,7 @@ int cmd_reflog(int argc, const char **argv, const char *prefix)
- 		goto log_reflog;
- 
- 	if (!strcmp(argv[1], "show"))
--		return cmd_reflog_show(argc, argv, prefix);
-+		return cmd_reflog_show(argc - 1, argv + 1, prefix);
- 	else if (!strcmp(argv[1], "expire"))
- 		return cmd_reflog_expire(argc - 1, argv + 1, prefix);
- 	else if (!strcmp(argv[1], "delete"))
--- 
-2.35.1.1272.g0ee9eb8209
+Dscho, as far as I can tell, builtin/rebase.c can set the bit in the
+flags word when rebase.abbreviatecommands configuration is set, but
+that configuration variable is about rebase and it shouldn't affect
+how multi-step cherry-pick would work, should it?  I am wondering if
+an uninitialized "flags" word, whose TODO_LIST_ABBREVIATE_CMDS bit
+randomly was turned on, caused todo_list_to_strbuf() to write an
+abbreviated insn in the todo file.  If so, the insn word being
+abbreviated or fully spelled out would not affect the correctness,
+but the flags word affects other things that are more crucial to
+correctness, so...
+
+Thanks.
+
 
