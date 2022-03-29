@@ -2,362 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81DDDC433FE
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 21:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C961C433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 22:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235312AbiC2Vvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 17:51:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
+        id S237692AbiC2Wge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 18:36:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235045AbiC2Vvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 17:51:37 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC8B47391
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 14:49:52 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S234307AbiC2Wgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 18:36:32 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41BB81FDFDA
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 15:34:49 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C15221973AD;
+        Tue, 29 Mar 2022 18:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Cika7dhEf1QEdyuwTWVn0MJcaXKpDp/UrAtYSD
+        1FgWA=; b=ORVBAup+caN8NLoxgRA4XxQp626pjPAFDEzttLcHqUi8QrQ+slcaE7
+        kg/cpGu/QA2lOq68RYwSccMOTR3oKin/a4fJiQCO9VNfkN4RUbOoPKDYAObJ8dVB
+        HsLZ+NZ+zOykEULNwSGzipEdq8TeEZwkoC3kDJ72udDiv/1/xcBGE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B96A01973AC;
+        Tue, 29 Mar 2022 18:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F2D4F5A3DD;
-        Tue, 29 Mar 2022 21:49:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1648590592;
-        bh=BFFbQUHjxwrhTzSv6oXMeoFUtsKk1DA2f8z0eVzy3EQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=1JqR3gAWwZE32uJgCLLOip1f3c9yaPBLE+R2UvHPY6VzSZBzkII64aoPquO2CogIe
-         jYrVcs8qTCwVaTgh3yb2eHwvzXmEEoKyaDDzN2CeidHetGskruW7nmYk8zdylF0MdV
-         ODay1GT6YjynqkfsFFI2T7coQE8yJj/t05CBKEp20G3bb/CM3rzaTvstv+cZoovV/v
-         MxjpaSZAjhVOdceDy6aUd45dyoDBJPfkcZUXlzJCLp90lNYxynECrK5H6NgXtt0dvl
-         rRnFnLcNZbJKfetKdYa8QtSCTK77fdDhZTCsQXVYJEa04WRSTV3qQgPTq9i/6BAfiU
-         66Nq5oYTO1vdXO4sxpOzVmF2Fb3X/GssrPUGmrOOVLEl6lqZGw4u3Gpia84T5GXzYL
-         T85ue+2SJxE6ckdTQpQlGF94neHPROMvMQioI7bdH9Y3Ue/bvKJSjvCaAc9rKtpL9/
-         nE5UWkY0Kmn6H5zFEo9EgCxIelNCZskvjjVX7BNDKwnB+hrqawQ
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/4] builtin/stash: provide a way to export stashes to a ref
-Date:   Tue, 29 Mar 2022 21:49:40 +0000
-Message-Id: <20220329214941.2018609-4-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
-In-Reply-To: <20220329214941.2018609-1-sandals@crustytoothpaste.net>
-References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
- <20220329214941.2018609-1-sandals@crustytoothpaste.net>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 01DC71973AB;
+        Tue, 29 Mar 2022 18:34:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+Subject: Re: [PATCH v3 2/3] transfer.advertiseObjectInfo: add object-info
+ config
+References: <20220208235631.732466-1-calvinwan@google.com>
+        <20220328191112.3092139-1-calvinwan@google.com>
+        <20220328191112.3092139-3-calvinwan@google.com>
+Date:   Tue, 29 Mar 2022 15:34:45 -0700
+In-Reply-To: <20220328191112.3092139-3-calvinwan@google.com> (Calvin Wan's
+        message of "Mon, 28 Mar 2022 19:11:11 +0000")
+Message-ID: <xmqqy20sqtfe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F6E0C36-AFB0-11EC-9CA6-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A common user problem is how to sync in-progress work to another
-machine.  Users currently must use some sort of transfer of the working
-tree, which poses security risks and also necessarily causes the index
-to become dirty.  The experience is suboptimal and frustrating for
-users.
+Calvin Wan <calvinwan@google.com> writes:
 
-A reasonable idea is to use the stash for this purpose, but the stash is
-stored in the reflog, not in a ref, and as such it cannot be pushed or
-pulled.  This also means that it cannot be saved into a bundle or
-preserved elsewhere, which is a problem when using throwaway development
-environments.
+> Currently, object-info is always advertised by the server. Add a
+> config option to optionally advertise it. A subsequent patch uses this
+> option for testing.
+>
+> ---
+>  Documentation/config/transfer.txt |  4 ++++
+>  protocol-caps.c                   | 11 +++++++++++
+>  protocol-caps.h                   |  6 ++++++
+>  serve.c                           |  2 +-
+>  4 files changed, 22 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
+> index b49429eb4d..14892a3155 100644
+> --- a/Documentation/config/transfer.txt
+> +++ b/Documentation/config/transfer.txt
+> @@ -77,3 +77,7 @@ transfer.unpackLimit::
+>  transfer.advertiseSID::
+>  	Boolean. When true, client and server processes will advertise their
+>  	unique session IDs to their remote counterpart. Defaults to false.
+> +
+> +transfer.advertiseObjectInfo::
+> +	Boolean. When true or not set, server processes will advertise its
+> +	ability to accept `object-info` command requests
+> \ No newline at end of file
 
-Let's solve this problem by allowing the user to export the stash to a
-ref (or, to just write it into the repository and print the hash, à la
-git commit-tree).  Introduce git stash export, which writes a chain of
-commits where the first parent is always a chain to the previous stash,
-or to a single, empty commit (for the final item) and the second is the
-stash commit normally written to the reflog.
+Carefully proofread before sending your changes out ;-)
 
-Iterate over each stash from topmost to bottomost, looking up the data
-for each one, and then create the chain from the single empty commit
-back up in reverse order.  Generate a predictable empty commit so our
-behavior is reproducible.  Create a useful commit message, preserving
-the author and committer information, to help users identify stash
-commits when viewing them as normal commits.
+By mimicking the style of the previous item more closely, i.e.
 
-If the user has specified specific stashes they'd like to export
-instead, use those instead of iterating over all of the stashes.
+	Boolean. When true, ... requests. Defaults to true.
 
-As part of this, specifically request quiet behavior when looking up the
-OID for a revision because we will eventually hit a revision that
-doesn't exist and we don't want to die when that occurs.
+it would make it easier to read, I suspect.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/git-stash.txt |  22 ++++-
- builtin/stash.c             | 183 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 204 insertions(+), 1 deletion(-)
+> diff --git a/protocol-caps.c b/protocol-caps.c
+> index bbde91810a..f290e3cca2 100644
+> --- a/protocol-caps.c
+> +++ b/protocol-caps.c
+> @@ -8,6 +8,9 @@
+>  #include "object-store.h"
+>  #include "string-list.h"
+>  #include "strbuf.h"
+> +#include "config.h"
+> +
+> +static int advertise_object_info = -1;
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 6e15f47525..162110314e 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -20,6 +20,7 @@ SYNOPSIS
- 'git stash' clear
- 'git stash' create [<message>]
- 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
-+'git stash' export ( --print | --to-ref <ref> ) [<stash>...]
- 
- DESCRIPTION
- -----------
-@@ -151,6 +152,12 @@ store::
- 	reflog.  This is intended to be useful for scripts.  It is
- 	probably not the command you want to use; see "push" above.
- 
-+export ( --print | --to-ref <ref> ) [<stash>...]::
-+
-+	Export the specified stashes, or all of them if none are specified, to
-+	a chain of commits which can be transferred using the normal fetch and
-+	push mechanisms, then imported using the `import` subcommand.
-+
- OPTIONS
- -------
- -a::
-@@ -239,6 +246,19 @@ literally (including newlines and quotes).
- +
- Quiet, suppress feedback messages.
- 
-+--print::
-+	This option is only valid for `export`.
-++
-+Create the chain of commits representing the exported stashes without
-+storing it anywhere in the ref namespace and print the object ID to
-+standard output.  This is designed for scripts.
-+
-+--to-ref::
-+	This option is only valid for `export`.
-++
-+Create the chain of commits representing the exported stashes and store
-+it to the specified ref.
-+
- \--::
- 	This option is only valid for `push` command.
- +
-@@ -256,7 +276,7 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- 
- <stash>::
- 	This option is only valid for `apply`, `branch`, `drop`, `pop`,
--	`show` commands.
-+	`show`, and `export` commands.
- +
- A reference of the form `stash@{<revision>}`. When no `<stash>` is
- given, the latest stash is assumed (that is, `stash@{0}`).
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 4c281a5781..6f1fa19172 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -33,6 +33,7 @@ static const char * const git_stash_usage[] = {
- 	   "          [--] [<pathspec>...]]"),
- 	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
- 	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
-+	N_("git stash export (--print | --to-ref <ref>) [<stash>...]"),
- 	NULL
- };
- 
-@@ -89,6 +90,12 @@ static const char * const git_stash_save_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_export_usage[] = {
-+	N_("git stash export (--print | --to-ref <ref>) [<stash>...]"),
-+	NULL
-+};
-+
-+
- static const char ref_stash[] = "refs/stash";
- static struct strbuf stash_index_path = STRBUF_INIT;
- 
-@@ -1773,6 +1780,180 @@ static int save_stash(int argc, const char **argv, const char *prefix)
- 	return ret;
- }
- 
-+static int write_commit_with_parents(struct object_id *out, const struct object_id *oid, struct commit_list *parents)
-+{
-+	size_t author_len, committer_len;
-+	struct commit *this;
-+	const char *orig_author, *orig_committer;
-+	char *author = NULL, *committer = NULL;
-+	const char *buffer;
-+	unsigned long bufsize;
-+	const char *p;
-+	struct strbuf msg = STRBUF_INIT;
-+	int ret = 0;
-+
-+	this = lookup_commit_reference(the_repository, oid);
-+	buffer = get_commit_buffer(this, &bufsize);
-+	orig_author = find_commit_header(buffer, "author", &author_len);
-+	orig_committer = find_commit_header(buffer, "committer", &committer_len);
-+	p = memmem(buffer, bufsize, "\n\n", 2);
-+
-+	if (!orig_author || !orig_committer || !p) {
-+		error(_("cannot parse commit %s"), oid_to_hex(oid));
-+		goto out;
-+	}
-+	/* Jump to message. */
-+	p += 2;
-+	strbuf_addstr(&msg, "git stash: ");
-+	strbuf_add(&msg, p, bufsize - (p - buffer));
-+
-+	author = xmemdupz(orig_author, author_len);
-+	committer = xmemdupz(orig_committer, committer_len);
-+
-+	if (commit_tree_extended(msg.buf, msg.len,
-+				 the_hash_algo->empty_tree, parents,
-+				 out, author, committer,
-+				 NULL, NULL)) {
-+		ret = -1;
-+		error(_("could not write commit"));
-+		goto out;
-+	}
-+out:
-+	strbuf_reset(&msg);
-+	unuse_commit_buffer(this, buffer);
-+	free(author);
-+	free(committer);
-+	return ret;
-+}
-+
-+static int do_export_stash(const char *ref, size_t argc, const char **argv)
-+{
-+	struct object_id base;
-+	struct object_context unused;
-+	struct commit *prev;
-+	struct object_id *items = NULL;
-+	int nitems = 0, nalloc = 0;
-+	int res = 0;
-+	struct strbuf revision;
-+	const char *author, *committer;
-+
-+	/*
-+	 * This is an arbitrary, fixed date, specifically the one used by git
-+	 * format-patch.  The goal is merely to produce reproducible output.
-+	 */
-+	prepare_fallback_ident("git stash", "git@stash");
-+	author = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT, "2001-09-17T00:00:00Z", 0);
-+	committer = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT, "2001-09-17T00:00:00Z", 0);
-+
-+	/* First, we create a single empty commit. */
-+	if (commit_tree_extended(NULL, 0, the_hash_algo->empty_tree, NULL, &base, author, committer, NULL, NULL))
-+		return error(_("unable to write base commit"));
-+
-+	prev = lookup_commit_reference(the_repository, &base);
-+
-+	if (argc) {
-+		/*
-+		 * Find each specified stash, and load data into the array.
-+		 */
-+		for (int i = 0; i < argc; i++) {
-+			ALLOC_GROW_BY(items, nitems, 1, nalloc);
-+			if (parse_revision(&revision, argv[i], 0) ||
-+			    get_oid_with_context(the_repository, revision.buf,
-+						 GET_OID_QUIETLY | GET_OID_GENTLY,
-+						 &items[i], &unused)) {
-+				error(_("unable to find stash entry %s"), argv[i]);
-+				res = -1;
-+				goto out;
-+			}
-+		}
-+	} else {
-+		/*
-+		 * Walk the reflog, finding each stash entry, and load data into the
-+		 * array.
-+		 */
-+		for (int i = 0;; i++) {
-+			char buf[32];
-+			struct object_id oid;
-+
-+			snprintf(buf, sizeof(buf), "%d", i);
-+			if (parse_revision(&revision, buf, 1) ||
-+			    get_oid_with_context(the_repository, revision.buf,
-+						 GET_OID_QUIETLY | GET_OID_GENTLY,
-+						 &oid, &unused))
-+				break;
-+			ALLOC_GROW_BY(items, nitems, 1, nalloc);
-+			oidcpy(&items[i], &oid);
-+		}
-+	}
-+
-+	/*
-+	 * Now, create a set of commits identical to the regular stash commits,
-+	 * but where their first parents form a chain to our original empty
-+	 * base commit.
-+	 */
-+	for (int i = nitems - 1; i >= 0; i--) {
-+		struct commit_list *parents = NULL;
-+		struct commit_list **next = &parents;
-+		struct object_id out;
-+
-+		next = commit_list_append(prev, next);
-+		next = commit_list_append(lookup_commit_reference(the_repository, &items[i]), next);
-+		if (write_commit_with_parents(&out, &items[i], parents)) {
-+			res = -1;
-+			goto out;
-+		}
-+		prev = lookup_commit_reference(the_repository, &out);
-+	}
-+	if (ref)
-+		update_ref(NULL, ref, &prev->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	else
-+		puts(oid_to_hex(&prev->object.oid));
-+out:
-+	free(items);
-+
-+	return res;
-+}
-+
-+enum export_action {
-+	ACTION_NONE,
-+	ACTION_PRINT,
-+	ACTION_TO_REF,
-+};
-+
-+static int export_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int ret = 0;
-+	const char *ref = NULL;
-+	enum export_action action = ACTION_NONE;
-+	struct option options[] = {
-+		OPT_CMDMODE(0, "print", &action,
-+			    N_("print the object ID instead of writing it to a ref"),
-+			    ACTION_PRINT),
-+		OPT_CMDMODE(0, "to-ref", &action,
-+			    N_("save the data to the given ref"),
-+			    ACTION_TO_REF),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_export_usage,
-+			     PARSE_OPT_KEEP_DASHDASH);
-+
-+	if (action == ACTION_NONE) {
-+		return error(_("exactly one of --print and --to-ref is required"));
-+	} else if (action == ACTION_TO_REF) {
-+		if (!argc)
-+			return error(_("--to-ref requires an argument"));
-+		ref = argv[0];
-+		argc--;
-+		argv++;
-+	}
-+
-+
-+	ret = do_export_stash(ref, argc, argv);
-+	return ret;
-+}
-+
- int cmd_stash(int argc, const char **argv, const char *prefix)
- {
- 	pid_t pid = getpid();
-@@ -1816,6 +1997,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 		return !!push_stash(argc, argv, prefix, 0);
- 	else if (!strcmp(argv[0], "save"))
- 		return !!save_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "export"))
-+		return !!export_stash(argc, argv, prefix);
- 	else if (*argv[0] != '-')
- 		usage_msg_optf(_("unknown subcommand: %s"),
- 			       git_stash_usage, options, argv[0]);
+It strikes me somewhat odd that this is the _first_ such capability
+that needs a variable here to control if it is advertised or not
+depending on the configuration file settings.
+
+In other words, "Why doesn't transfer.advertiseSID also have a
+similar thing in this file?" should be the first question that comes
+to any reviewers' mind.
+
+Perhaps we just invented a better way to handle such conditional
+capability, in which case we may want to port the existing ones that
+do not use the same arrangement over to the new way.  Even though it
+would be outside the scope of the series, it would be a good way to
+make sure we won't accumulate too much technical debt to leave some
+hint somewhere near here or in protoco-caps.h where this patch
+touches.  I cannot quite tell what is going on.
+
+> int object_info_advertise(struct repository *r, struct strbuf *value)
+> {
+> 	if (advertise_object_info == -1 &&
+> 	    git_config_get_bool("transfer.advertiseObjectInfo", &advertise_object_info))
+> 		advertise_object_info = 0;
+> 	return advertise_object_info;
+> }
+
+"If unset(yet), try to get_bool() and if it fails, set it to 0"
+
+So advertise_object_info becomes true only if transfer.advertiseObjectInfo
+is set to true?
+
+It is inconsistent with what we read in the documentation, isn't it?
+
+> diff --git a/protocol-caps.h b/protocol-caps.h
+> index 15c4550360..36f7a46b37 100644
+> --- a/protocol-caps.h
+> +++ b/protocol-caps.h
+> @@ -5,4 +5,10 @@ struct repository;
+>  struct packet_reader;
+>  int cap_object_info(struct repository *r, struct packet_reader *request);
+>  
+> +/*
+> + * Advertises object-info capability if "objectinfo.advertise" is either
+> + * set to true or not set
+> + */
+> +int object_info_advertise(struct repository *r, struct strbuf *value);
+> +
+>  #endif /* PROTOCOL_CAPS_H */
+> diff --git a/serve.c b/serve.c
+> index b3fe9b5126..fb4ad367a7 100644
+> --- a/serve.c
+> +++ b/serve.c
+> @@ -133,7 +133,7 @@ static struct protocol_capability capabilities[] = {
+>  	},
+>  	{
+>  		.name = "object-info",
+> -		.advertise = always_advertise,
+> +		.advertise = object_info_advertise,
+>  		.command = cap_object_info,
+>  	},
+>  };
+
+This is a good step to add a test to see if the server does honor
+the (1) lack of (2) true set to and (3) false set to the
+configuration variable and sends (or does not send) the capability.
