@@ -2,303 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A72B8C433FE
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 12:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A87AC433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 13:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236847AbiC2M5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 08:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47454 "EHLO
+        id S237200AbiC2NVV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 09:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236839AbiC2M5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 08:57:02 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DCE2A27A
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 05:54:05 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id 10so15094448qtz.11
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 05:54:05 -0700 (PDT)
+        with ESMTP id S234222AbiC2NVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 09:21:16 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E6A915A22
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 06:19:33 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id o20-20020a9d7194000000b005cb20cf4f1bso12735945otj.7
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 06:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=y9ego1PepFOUPT3KmFXNQHJDxgO3A1CcYqe0ZfPViwY=;
-        b=GH0rGRiyTnk7KOpoBsDo8QXA1OfmFWhI/vSUl47EFu2+/Z7NqGXKXNVjNqoPNvdlfW
-         AUCbMyeMNtVLjpRNnPqSjWjFAYWiwT7Jhhgz0bzHPkVQEGicFcQQvbgtUQEeszEKz2hc
-         2MvefV7ondzavJ5ypZrOn5VZ/C9SW+DWcnd6jnYVM+b9Cj+A6Quv0Hmz3qp/odag98cl
-         vHEsbz1yi0e44Yy9UHed3+nW4hiZdOtgEoeebirXT7AD9ZkRn6GGeoQb/al6TbflH9uf
-         Bi9Ud6xqc0LU88Ia7lrsK09/8jbjBkdFqtDGb5TiqSLtFxy8ZI4NJ9xZn33yX3kELEVh
-         cPww==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/J1wkDzDoEQHMpUq5L3GUyffT3av/45bETC5XlzWuOc=;
+        b=Xgm3rT0nwUsqRcgQFcd9VCkJIqo2+eqMSmBuwEKjHZ7/0g8YjHqK9SCka7S5oUQ50n
+         J34/mwYoq+oFiQiZnUYNSFrKn8DIUAinHSMo+D8ShBpnaBFH10p0mddG3osDuVLM9Jf7
+         hx+JW2sv5zVNpqPdh7Y3AfcEs1sq0ksXrpJ4cg0ax5X0vj5grhwZrQMejV9un9EU+ro8
+         kAmRsye2Smnaj2Yk61yO0fMMk/MW5sqd4pcdUzvmUzDeX+LN99IMbL/Rq0GpT7rxmQR7
+         IvLGq5vE32swWcmnyzatjM/erTUmnn/SN4gk5KtkC8tGTDqEfBZPDiewtm64weNnweLU
+         9CnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=y9ego1PepFOUPT3KmFXNQHJDxgO3A1CcYqe0ZfPViwY=;
-        b=aTuu2+4To/3k1BYmM1sh4cnwJVA2Qw7WH87TOcwo2oDKOlxFwNe5QSRp/PLmKLDJcp
-         SNDV+WgLtGf05OEMjdSdD21KffGQnAUXfXZdXm6qtMSrwh/CvjXGLxYnkAMWKIUNlveG
-         VC8kbZhet2VGK4/6xg8Yi2abMNM/gyBQyRRlbtp5MNb+qtQ/+IjAhOxnTg6NC+5Umf/e
-         UXKzywUzhturts/zUXD7gGu5hES7n9XqmBD9FlLoViMbd/OpVeemHagXUzhboZwQjWu2
-         IGCFDnPYH//jIwLZCJsueo9Lin5c/NS2GhxaJZ8CrtWQWxnpJsW5qBT1mDbAEU4/C/HV
-         huPQ==
-X-Gm-Message-State: AOAM533Ih2nqBJLO6Ujuvak27c65hwoxwKMt7b797lRP7qUr38fetxXH
-        bApp68KDZg7piMSrheprSqTF50vCbj5YSw==
-X-Google-Smtp-Source: ABdhPJzhvSm6qTC2H3M9kpG0jZaAIkwFstPe26gsCDl5hEI7oJ6Hu/swW0qIlUM3KJKGthbANFztVg==
-X-Received: by 2002:a05:622a:148:b0:2e1:cb56:f3ee with SMTP id v8-20020a05622a014800b002e1cb56f3eemr27376038qtw.636.1648558442694;
-        Tue, 29 Mar 2022 05:54:02 -0700 (PDT)
-Received: from localhost.localdomain (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id l8-20020a05622a174800b002e1e3f7d4easm15739714qtk.86.2022.03.29.05.54.01
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 29 Mar 2022 05:54:01 -0700 (PDT)
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Fernando Ramos <greenfoo@u92.eu>, gitster@pobox.com,
-        davvid@gmail.com, sunshine@sunshineco.com, seth@eseth.com,
-        rogi@skylittlesystem.org
-Subject: [PATCH] fixup! vimdiff: add tool documentation
-Date:   Tue, 29 Mar 2022 08:54:00 -0400
-Message-Id: <20220329125400.63337-1-levraiphilippeblain@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <xmqqy20ty3k6.fsf@gitster.g>
-References: <xmqqy20ty3k6.fsf@gitster.g>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/J1wkDzDoEQHMpUq5L3GUyffT3av/45bETC5XlzWuOc=;
+        b=4PfvYO8jiVpzs42ZAzIqAAgf/J5PrcjW6UlCAw1SpIrPsXEM35UPm6gOqSzLouyMZZ
+         JzjlFCaegivOFHFHoLr/vQmraX0XF+H0vQ3XR9gGYLiLH0FUyLiSDQ1X2xqEPruBR7q+
+         L2spvf1lvkQYZnW7fliV10/dZvO3b+sO6PPk0u3fknSq1rJw0L3NYhfiOk7qA95bTHnj
+         +mfQCNHO83T4pT4eXrqlD9rueMfZDIqZaq0NOT1g1oHr57TZazt1QuJm6OXCcJgeTFYZ
+         Ua74AKUlc3KADoawNQA3KnyC0NKkRt4FIccpoN0sax+A0nvN0hbIvrU4hBEyPl1BvMyB
+         W2Ug==
+X-Gm-Message-State: AOAM532eJEDE/6Ou83qSWIc723ZTyIkeyW+wJcGwm1Zs4HsHAoVNokdX
+        4lh38TXGm7SqS/zspd3klWAQgnHHP40R
+X-Google-Smtp-Source: ABdhPJyqHPdgq8S4hLurFiV4lL9bNkynd1PfhteJYa/nbrUL0vbFOgqjaRl4qN9PHYcp8VbGQZJ7aQ==
+X-Received: by 2002:a05:6830:1e9c:b0:5cd:8c15:5799 with SMTP id n28-20020a0568301e9c00b005cd8c155799mr1048635otr.265.1648559972499;
+        Tue, 29 Mar 2022 06:19:32 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id ay5-20020a056820150500b00320f8a179d0sm7303530oob.30.2022.03.29.06.19.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Mar 2022 06:19:32 -0700 (PDT)
+Message-ID: <5ca04e86-6c61-3d4e-88a0-a3c827e19e13@github.com>
+Date:   Tue, 29 Mar 2022 09:19:29 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] mv: refresh stat info for moved entry
+Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     reichemn@icloud.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+References: <pull.1187.git.1648173419533.gitgitgadget@gmail.com>
+ <pull.1187.v2.git.1648516027925.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1187.v2.git.1648516027925.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
+On 3/28/2022 9:07 PM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
+> 
+> Update the stat info of the moved index entry in 'rename_index_entry_at()'
+> if the entry is up-to-date with the index. Internally, 'git mv' uses
+> 'rename_index_entry_at()' to move the source index entry to the destination.
+> However, it directly copies the stat info of the original cache entry, which
+> will not reflect the 'ctime' of the file renaming operation that happened as
+> part of the move. If a file is otherwise up-to-date with the index, that
+> difference in 'ctime' will make the entry appear out-of-date until the next
+> index-refreshing operation (e.g., 'git status').
+> 
+> Some commands, such as 'git reset', use the cached stat information to
+> determine whether a file is up-to-date; if this information is incorrect,
+> the command will fail when it should pass. In order to ensure a moved entry
+> is evaluated as 'up-to-date' when appropriate, refresh the destination index
+> entry's stat info in 'git mv' if and only if the file is up-to-date.
+> 
+> Note that the test added in 't7001-mv.sh' requires a "sleep 1" to ensure the
+> 'ctime' of the file creation will be definitively older than the 'ctime' of
+> the renamed file in 'git mv'.
 
-Hi Junio, Fernando,
+Unfortunate that this is necessary, but it seems to be the only way
+to handle this because of the interaction with the system clock and
+the filesystem. There are several sleeps like this in
+t1701-racy-split-index.sh, for example.
 
-I think the canonical Asciidoc way would be to use a listing block
-(start and end the block with '----', and not indenting the lines
-at all, as is done in a few places in the docs), but in this case
-the parser gets confused about the several dashes in the content of
-the block. So we can use a "literal block" instead [1].
+>  void rename_index_entry_at(struct index_state *istate, int nr, const char *new_name)
+>  {
+> -	struct cache_entry *old_entry = istate->cache[nr], *new_entry;
+> +	struct cache_entry *old_entry = istate->cache[nr], *new_entry, *refreshed;
+>  	int namelen = strlen(new_name);
+>  
+>  	new_entry = make_empty_cache_entry(istate, namelen);
+> @@ -147,7 +147,20 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+>  	cache_tree_invalidate_path(istate, old_entry->name);
+>  	untracked_cache_remove_from_index(istate, old_entry->name);
+>  	remove_index_entry_at(istate, nr);
+> -	add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+> +
+> +	/*
+> +	 * Refresh the new index entry. Using 'refresh_cache_entry' ensures
+> +	 * we only update stat info if the entry is otherwise up-to-date (i.e.,
+> +	 * the contents/mode haven't changed). This ensures that we reflect the
+> +	 * 'ctime' of the rename in the index without (incorrectly) updating
+> +	 * the cached stat info to reflect unstaged changes on disk.
+> +	 */
+> +	refreshed = refresh_cache_entry(istate, new_entry, CE_MATCH_REFRESH);
+> +	if (refreshed && refreshed != new_entry) {
+> +		add_index_entry(istate, refreshed, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+> +		discard_cache_entry(new_entry);
 
-[1] https://docs.asciidoctor.org/asciidoc/latest/verbatim/literal-blocks/
+I'm glad you're checking that both refreshed is non-NULL and not equal
+to new_entry. Both are possible results from refresh_cache_entry().
 
- Documentation/mergetools/vimdiff.txt | 174 ++++++++++++++-------------
- 1 file changed, 90 insertions(+), 84 deletions(-)
+> +test_expect_success 'mv -f refreshes updated index entry' '
+> +	echo test >bar &&
+> +	git add bar &&
+> +	git commit -m test &&
+> +
+> +	echo foo >foo &&
+> +	git add foo &&
+> +
+> +	# Wait one second to ensure ctime of rename will differ from original
+> +	# file creation ctime.
+> +	sleep 1 &&
+> +	git mv -f foo bar &&
+> +	git reset --merge HEAD &&
+> +
+> +	# Verify the index has been reset
+> +	git diff-files >out &&
+> +	test_must_be_empty out
+> +'
+> +
 
-diff --git a/Documentation/mergetools/vimdiff.txt b/Documentation/mergetools/vimdiff.txt
-index f63fc48c29..1cc9c133f9 100644
---- a/Documentation/mergetools/vimdiff.txt
-+++ b/Documentation/mergetools/vimdiff.txt
-@@ -3,17 +3,17 @@ Description
- 
- When specifying `--tool=vimdiff` in `git mergetool` Git will open Vim with a 4
- windows layout distributed in the following way:
--
--    ------------------------------------------
--    |             |           |              |
--    |   LOCAL     |   BASE    |   REMOTE     |
--    |             |           |              |
--    ------------------------------------------
--    |                                        |
--    |                MERGED                  |
--    |                                        |
--    ------------------------------------------
--
-+....
-+------------------------------------------
-+|             |           |              |
-+|   LOCAL     |   BASE    |   REMOTE     |
-+|             |           |              |
-+------------------------------------------
-+|                                        |
-+|                MERGED                  |
-+|                                        |
-+------------------------------------------
-+....
- `LOCAL`, `BASE` and `REMOTE` are read-only buffers showing the contents of the
- conflicting file in specific commits ("commit you are merging into", "common
- ancestor commit" and "commit you are merging from" respectively)
-@@ -56,14 +56,15 @@ needed in this case. The next layout definition is equivalent:
- +
- --
- If, for some reason, we are not interested in the `BASE` buffer.
--
--           ------------------------------------------
--           |             |           |              |
--           |             |           |              |
--           |   LOCAL     |   MERGED  |   REMOTE     |
--           |             |           |              |
--           |             |           |              |
--           ------------------------------------------
-+....
-+------------------------------------------
-+|             |           |              |
-+|             |           |              |
-+|   LOCAL     |   MERGED  |   REMOTE     |
-+|             |           |              |
-+|             |           |              |
-+------------------------------------------
-+....
- --
- * `layout = "MERGED"`
- +
-@@ -71,14 +72,15 @@ If, for some reason, we are not interested in the `BASE` buffer.
- Only the `MERGED` buffer will be shown. Note, however, that all the other
- ones are still loaded in vim, and you can access them with the "buffers"
- command.
--
--           ------------------------------------------
--           |                                        |
--           |                                        |
--           |                 MERGED                 |
--           |                                        |
--           |                                        |
--           ------------------------------------------
-+....
-+------------------------------------------
-+|                                        |
-+|                                        |
-+|                 MERGED                 |
-+|                                        |
-+|                                        |
-+------------------------------------------
-+....
- --
- * `layout = "@LOCAL,REMOTE"`
- +
-@@ -86,16 +88,17 @@ command.
- When `MERGED` is not present in the layout, you must "mark" one of the
- buffers with an asterisk. That will become the buffer you need to edit and
- save after resolving the conflicts.
--
--           ------------------------------------------
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           |     LOCAL         |    REMOTE          |
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           ------------------------------------------
-+....
-+------------------------------------------
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+|     LOCAL         |    REMOTE          |
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+------------------------------------------
-+....
- --
- * `layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE"`
- +
-@@ -103,59 +106,62 @@ save after resolving the conflicts.
- Three tabs will open: the first one is a copy of the default layout, while
- the other two only show the differences between (`BASE` and `LOCAL`) and
- (`BASE` and `REMOTE`) respectively.
--
--           ------------------------------------------
--           | <TAB #1> |  TAB #2  |  TAB #3  |       |
--           ------------------------------------------
--           |             |           |              |
--           |   LOCAL     |   BASE    |   REMOTE     |
--           |             |           |              |
--           ------------------------------------------
--           |                                        |
--           |                MERGED                  |
--           |                                        |
--           ------------------------------------------
--
--           ------------------------------------------
--           |  TAB #1  | <TAB #2> |  TAB #3  |       |
--           ------------------------------------------
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           |     BASE          |    LOCAL           |
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           ------------------------------------------
--
--           ------------------------------------------
--           |  TAB #1  |  TAB #2  | <TAB #3> |       |
--           ------------------------------------------
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           |     BASE          |    REMOTE          |
--           |                   |                    |
--           |                   |                    |
--           |                   |                    |
--           ------------------------------------------
-+....
-+------------------------------------------
-+| <TAB #1> |  TAB #2  |  TAB #3  |       |
-+------------------------------------------
-+|             |           |              |
-+|   LOCAL     |   BASE    |   REMOTE     |
-+|             |           |              |
-+------------------------------------------
-+|                                        |
-+|                MERGED                  |
-+|                                        |
-+------------------------------------------
-+....
-+....
-+------------------------------------------
-+|  TAB #1  | <TAB #2> |  TAB #3  |       |
-+------------------------------------------
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+|     BASE          |    LOCAL           |
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+------------------------------------------
-+....
-+....
-+------------------------------------------
-+|  TAB #1  |  TAB #2  | <TAB #3> |       |
-+------------------------------------------
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+|     BASE          |    REMOTE          |
-+|                   |                    |
-+|                   |                    |
-+|                   |                    |
-+------------------------------------------
-+....
- --
- * `layout = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"`
- +
- --
- Same as the previous example, but adds a fourth tab with the same
- information as the first tab, with a different layout.
--
--           ---------------------------------------------
--           |  TAB #1  |  TAB #2  |  TAB #3  | <TAB #4> |
--           ---------------------------------------------
--           |       LOCAL         |                     |
--           |---------------------|                     |
--           |       BASE          |        MERGED       |
--           |---------------------|                     |
--           |       REMOTE        |                     |
--           ---------------------------------------------
--
-+....
-+---------------------------------------------
-+|  TAB #1  |  TAB #2  |  TAB #3  | <TAB #4> |
-+---------------------------------------------
-+|       LOCAL         |                     |
-+|---------------------|                     |
-+|       BASE          |        MERGED       |
-+|---------------------|                     |
-+|       REMOTE        |                     |
-+---------------------------------------------
-+....
- Note how in the third tab definition we need to use parenthesis to make `,`
- have precedence over `/`.
- --
--- 
-2.29.2
+New test looks good.
 
+Thanks,
+-Stolee
