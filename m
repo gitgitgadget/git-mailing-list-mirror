@@ -2,165 +2,253 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A26D2C433F5
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C66DDC433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240257AbiC2RkW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 13:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53642 "EHLO
+        id S240314AbiC2RpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 13:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234111AbiC2RkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 13:40:20 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC67BF7A
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:38:35 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id bt26so31541398lfb.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:38:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mRXgiEHKxm+yVgu1OJp5V/59rw+txBJRq2Z6rZWMKxY=;
-        b=OEHGb6iW2J2iE76j8iOtSYKadOGedrgm6j9nC02w+w2VW6j87PodkMAqdYKGdy6eN0
-         uZCRvkB+rlCPTJLNvn6gooOfHA2gmF6Gk3n6PLc3Z6AfPNw2JcyMf3K3OrX4euTZdzro
-         Ubm75apHR7jsgj87QSAWcZd7SKKCC8XmSQkV2u5Bj/z7lZyRHaCEhWlGyz08Z6XI0kOV
-         lfubXVFC1snxoonqxHcsvanmk0aOr59ZkGO27UiJNNVGPjZdTRxoKqsz0oZJG9LuZ0eE
-         +f6afVJxURX9JceVm79wpSW3h8a+FTU/9XixO/i7FJQSrrsN91CNrZvsTmGDTRoMl7UI
-         qBhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mRXgiEHKxm+yVgu1OJp5V/59rw+txBJRq2Z6rZWMKxY=;
-        b=DW6KxRdHXGXbx/mVqlyoRPBY2iJ3/RzcCd5y0PzB6BJUgwomyedXVIuP/Us7F6R4pZ
-         WJIYW/hZetucIAh+ajyDH+GKORPsic4Sntw0/ZM0B/6LAOTyyj97anB3Egqu1y+JamXH
-         +fMeVmeoQqR4SSzkYn3JRuipej4hZiXI03Rd4vb7IkDku2DxECQQhYXcE98b/r5D+XBR
-         EAZYVZPd1gWQ/SwzYmV0nuBrVLlwIiJMfV+lMYFz9zCqVZU/aJxnuEqN4+V2ZgN3nqNI
-         i4TCURR8n7TlF192bccwtyK8UugBEHfG+V2j/T2HvSW00b8wG7GbofYIGP8pHDoq7HHQ
-         /RWg==
-X-Gm-Message-State: AOAM5315IQUk6dr+9hpf+f/JECUafGJcPp0EvKujXVHSq8qQJU4cY2bs
-        ToVdnNulX6RDS2QVa4IYgMiMmOKIula55kh2AIE=
-X-Google-Smtp-Source: ABdhPJxIkZfZ1OmCFMP7UCtdh71CBo5Xb4aRBplwctUs3vzr9XqJftWbzp3mSsAuYpk9irKW3bb4rjFuU7PkX9Olqes=
-X-Received: by 2002:a05:6512:1151:b0:44a:6d05:8d2d with SMTP id
- m17-20020a056512115100b0044a6d058d2dmr3756148lfg.442.1648575514076; Tue, 29
- Mar 2022 10:38:34 -0700 (PDT)
+        with ESMTP id S240306AbiC2RpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 13:45:21 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B20FEDEB8
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:43:37 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C8A2C109F55;
+        Tue, 29 Mar 2022 13:43:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vI/cJfUHrlFed1eE96TzYCunqduor9TKk4ymHE
+        RuXnw=; b=KzbPBtxz23QVeGMn/wemNf6Kkf0FjJ5vWDr+FKwG8OWVNaem2kLPQC
+        vlBo5GznFyDLkyd1HlaFjdNkWFTuz2HodWAlea2sTkhGk0HXGAZLUQ1QzecuaI9V
+        h1j5WemVC+flheNe19KYG71Ma+YWIJfXLkzYGfbYbY0m5gJdHmlMM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C03B7109F54;
+        Tue, 29 Mar 2022 13:43:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 20212109F53;
+        Tue, 29 Mar 2022 13:43:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v5 2/2] untracked-cache: support '--untracked-files=all'
+ if configured
+References: <pull.985.v4.git.1645974782256.gitgitgadget@gmail.com>
+        <pull.985.v5.git.1648553134.gitgitgadget@gmail.com>
+        <f60d2c6e36c3218f9b19d7ce62a090d7d6e0e7f6.1648553134.git.gitgitgadget@gmail.com>
+Date:   Tue, 29 Mar 2022 10:43:35 -0700
+In-Reply-To: <f60d2c6e36c3218f9b19d7ce62a090d7d6e0e7f6.1648553134.git.gitgitgadget@gmail.com>
+        (Tao Klerks via GitGitGadget's message of "Tue, 29 Mar 2022 11:25:34
+        +0000")
+Message-ID: <xmqqsfr0u01k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
- <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com> <fdf90d45f52d72cf2ff7fe6b620853da9fafc1b3.1648514553.git.gitgitgadget@gmail.com>
-In-Reply-To: <fdf90d45f52d72cf2ff7fe6b620853da9fafc1b3.1648514553.git.gitgitgadget@gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Tue, 29 Mar 2022 10:38:22 -0700
-Message-ID: <CANQDOdfm9cuP=_+rErsBj97hw6QSyaJ6oQUoVkcaDSqZObGdiQ@mail.gmail.com>
-Subject: Re: [PATCH v4 12/13] core.fsyncmethod: performance tests for add and stash
-To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C29305CA-AF87-11EC-B0C4-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 5:42 PM Neeraj Singh via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Neeraj Singh <neerajsi@microsoft.com>
->
-> Add basic performance tests for "git add" and "git stash" of a lot of
-> new objects with various fsync settings. This shows the benefit of batch
-> mode relative to full fsync.
->
-> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
-> ---
->  t/perf/p3700-add.sh | 59 +++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 59 insertions(+)
->  create mode 100755 t/perf/p3700-add.sh
->
-> diff --git a/t/perf/p3700-add.sh b/t/perf/p3700-add.sh
-> new file mode 100755
-> index 00000000000..ef6024f9897
-> --- /dev/null
-> +++ b/t/perf/p3700-add.sh
-> @@ -0,0 +1,59 @@
-> +#!/bin/sh
-> +#
-> +# This test measures the performance of adding new files to the object d=
-atabase
-> +# and index. The test was originally added to measure the effect of the
-> +# core.fsyncMethod=3Dbatch mode, which is why we are testing different v=
-alues
-> +# of that setting explicitly and creating a lot of unique objects.
-> +
-> +test_description=3D"Tests performance of adding things to the object dat=
-abase"
-> +
-> +# Fsync is normally turned off for the test suite.
-> +GIT_TEST_FSYNC=3D1
-> +export GIT_TEST_FSYNC
-> +
-> +. ./perf-lib.sh
-> +
-> +. $TEST_DIRECTORY/lib-unique-files.sh
-> +
-> +test_perf_fresh_repo
-> +test_checkout_worktree
-> +
-> +dir_count=3D10
-> +files_per_dir=3D50
-> +total_files=3D$((dir_count * files_per_dir))
-> +
-> +for mode in false true batch
-> +do
-> +       case $mode in
-> +       false)
-> +               FSYNC_CONFIG=3D'-c core.fsync=3D-loose-object -c core.fsy=
-ncmethod=3Dfsync'
-> +               ;;
-> +       true)
-> +               FSYNC_CONFIG=3D'-c core.fsync=3Dloose-object -c core.fsyn=
-cmethod=3Dfsync'
-> +               ;;
-> +       batch)
-> +               FSYNC_CONFIG=3D'-c core.fsync=3Dloose-object -c core.fsyn=
-cmethod=3Dbatch'
-> +               ;;
-> +       esac
-> +
-> +       test_perf "add $total_files files (object_fsyncing=3D$mode)" \
-> +               --setup "
-> +               (rm -rf .git || 1) &&
-> +               git init &&
-> +               test_create_unique_files $dir_count $files_per_dir files_=
-$mode
-> +       " "
-> +               git $FSYNC_CONFIG add files_$mode
-> +       "
-> +
-> +       test_perf "stash $total_files files (object_fsyncing=3D$mode)" \
-> +               --setup "
-> +               (rm -rf .git || 1) &&
-> +               git init &&
-> +               test_commit first &&
-> +               test_create_unique_files $dir_count $files_per_dir stash_=
-files_$mode
-> +       " "
-> +               git $FSYNC_CONFIG stash push -u -- stash_files_$mode
-> +       "
-> +done
-> +
-> +test_done
-> --
-> gitgitgadget
->
+"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-=C3=86var suggested that it's a bit funny to have a stash test in a file
-named 'p3700-add.sh'.  So I'm thinking that I'll move these tests to a
-p0008-odb-fsync.sh instead, and add a test for unpack-object and
-git-commit as well.  I'm also going to adopt  =C3=86var's scheme for
-iterating over the configs.
+> From: Tao Klerks <tao@klerks.biz>
+>
+> Untracked cache was originally designed to only work with
+> '--untracked-files=normal', but this causes performance issues for UI
+> tooling that wants to see "all" on a frequent basis. On the other hand,
+> the conditions that prevented applicability to the "all" mode no
+> longer seem to apply.
+
+There is a slight leap in logic flow before ", but this causes" that
+forces readers read the above twice and guess what is missing.  I am
+guessing that
+
+    ... was designed to only work with "--untracked-files=normal",
+    and is bypassed when "--untracked-files=all" request, but this
+    causes ...
+
+is what you meant to say.
+
+The claim in the last sentence "... no longer seem to apply" is
+thrown at the readers without much rationale.  Either justify it
+more solidly or discard the claim?
+
+> The disqualification of untracked cache has a particularly significant
+> impact on Windows with the defaulted fscache, where the introduction
+> of fsmonitor can make the first and costly directory-iteration happen
+> in untracked file detection, single-threaded, rather than in
+> preload-index on multiple threads. Improving the performance of a
+> "normal" 'git status' run with fsmonitor can make
+> 'git status --untracked-files=all' perform much worse.
+
+The last sentence is a bit hard to parse and very hard to reason
+about.  Do you mean to say "--untracked-files=all is slower when the
+untracked cache is in use, so the performance of 'git status' may be
+improved for '--untracked-files=normal' when the untracked cache is
+used, it hurts when 'git status --untracked-files=all' is run"?
+
+> To partially address this, align the supported directory flags for the
+> stored untracked cache data with the git config. If a user specifies
+> an '--untracked-files=' commandline parameter that does not align with
+> their 'status.showuntrackedfiles' config value, then the untracked
+> cache will be ignored - as it is for other unsupported situations like
+> when a pathspec is specified.
+>
+> If the previously stored flags no longer match the current
+> configuration, but the currently-applicable flags do match the current
+> configuration, then discard the previously stored untracked cache
+> data.
+
+Let me follow what actually happens in the patch aloud.
+
+> -static void new_untracked_cache(struct index_state *istate)
+> +static unsigned new_untracked_cache_flags(struct index_state *istate)
+> +{
+> +	struct repository *repo = istate->repo;
+> +	char *val;
+> +
+> +	/*
+> +	 * This logic is coordinated with the setting of these flags in
+> +	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
+> +	 * of the config setting in commit.c#git_status_config()
+> +	 */
+> +	if (!repo_config_get_string(repo, "status.showuntrackedfiles", &val) &&
+> +	    !strcmp(val, "all"))
+> +		return 0;
+> +
+> +	/*
+> +	 * The default, if "all" is not set, is "normal" - leading us here.
+> +	 * If the value is "none" then it really doesn't matter.
+> +	 */
+> +	return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+> +}
+
+This _guesses_ the user preference from the configuration.
+
+> +static void new_untracked_cache(struct index_state *istate, int flags)
+>  {
+>  	struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
+>  	strbuf_init(&uc->ident, 100);
+>  	uc->exclude_per_dir = ".gitignore";
+> -	/* should be the same flags used by git-status */
+> -	uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+> +	uc->dir_flags = flags >= 0 ? flags : new_untracked_cache_flags(istate);
+
+We use unsigned for the flag word unless there is a reason not to,
+but this function wants to use top-bit as a signal to "guess from
+config".  The caller either dictates what bits to set, or we guess.
+
+And the created uc records the flags.
+
+> @@ -2762,11 +2782,11 @@ static void new_untracked_cache(struct index_state *istate)
+>  void add_untracked_cache(struct index_state *istate)
+>  {
+>  	if (!istate->untracked) {
+> -		new_untracked_cache(istate);
+> +		new_untracked_cache(istate, -1);
+
+We are newly creating, so "-1" (guess from config) may be the most
+appropriate (unless the caller of add_untracked_cache() already
+knows what operation it is using for, that is).
+
+>  	} else {
+>  		if (!ident_in_untracked(istate->untracked)) {
+
+Found an existing one but need to recreate.
+
+>  			free_untracked_cache(istate->untracked);
+> -			new_untracked_cache(istate);
+> +			new_untracked_cache(istate, -1);
+
+In this case, is it likely to give us a better guess to read the
+configuration, or copy from the existing untracked file?  My gut
+feeling says it would be the latter, and if that is correct, then
+we might want
+
++	      		int old_flags = istate->untracked->dir_flags;
+ 			free_untracked_cache(istate->untracked);
+-			new_untracked_cache(istate);
++			new_untracked_cache(istate, old_flags);
+
+instead?  I dunno.
+
+> @@ -2781,9 +2801,9 @@ void remove_untracked_cache(struct index_state *istate)
+>  }
+>  
+>  static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+> -						      int base_len,
+> -						      const struct pathspec *pathspec,
+> -						      struct index_state *istate)
+> +							    int base_len,
+> +							    const struct pathspec *pathspec,
+> +							    struct index_state *istate)
+>  {
+>  	struct untracked_cache_dir *root;
+>  	static int untracked_cache_disabled = -1;
+
+Is this just re-indenting?  Not very welcome, but OK.
+
+> @@ -2814,17 +2834,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>  	if (base_len || (pathspec && pathspec->nr))
+>  		return NULL;
+>  
+> -	/* Different set of flags may produce different results */
+> -	if (dir->flags != dir->untracked->dir_flags ||
+> -	    /*
+> -	     * See treat_directory(), case index_nonexistent. Without
+> -	     * this flag, we may need to also cache .git file content
+> -	     * for the resolve_gitlink_ref() call, which we don't.
+> -	     */
+> -	    !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
+> -	    /* We don't support collecting ignore files */
+> -	    (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> -			   DIR_COLLECT_IGNORED)))
+> +	/* We don't support collecting ignore files */
+> +	if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> +			DIR_COLLECT_IGNORED))
+>  		return NULL;
+>  
+>  	/*
+> @@ -2847,6 +2859,41 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>  		return NULL;
+>  	}
+>  
+> +	/*
+> +	 * We don't support using or preparing the untracked cache if
+> +	 * the current effective flags don't match the configured
+> +	 * flags.
+> +	 */
+
+Is that what we want?  What happens when your user does this:
+
+    - set showuntrackedfiles to "normal"
+    - generate the untracked cache
+    - set showuntrackedfiles to "all"
+
+And now the user wants to make a request that wants to see flags
+that are suitable for "normal".
+
+The best case would be for the untracked cache to know what flags
+were in use when it was generated, so that in the above sequence,
+even though the current value of configuration variable and the
+current request from the command line contradict each other, we
+can notice that the untracked cache data is suitable for the current
+request and the right thing happens.
+
+> +	if (dir->flags != new_untracked_cache_flags(istate))
+> +		return NULL;
+
+But this only pays attention to what is in the configuration?  It
+seems to me that it is being too pessimistic, but perhaps it is
+necessary for correctness somehow?
+
+Thanks.
+
