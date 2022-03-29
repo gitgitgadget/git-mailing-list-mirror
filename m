@@ -2,90 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A64BC433EF
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 21:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1BA0C433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 21:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234983AbiC2VrD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 17:47:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
+        id S235088AbiC2Vvi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 17:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234957AbiC2VrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 17:47:01 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FAC343ACD
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 14:45:16 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 8129B3201DFD;
-        Tue, 29 Mar 2022 17:45:13 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 29 Mar 2022 17:45:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; bh=RI90Rr2pdI9C358C8ov5lMD5fBubBiZsQJe5D+
-        Gv2+k=; b=zGwPTnlMoNGgeB8hmX8KNtCfwHZkGkw6nWA00XRDEGb6LEWt2TOTSQ
-        9CenKcg2ll6KpkiymZunxP1rMWV5heWIvRVJGdVdLcL0uKKdayCRfs+Wj3AwsFnD
-        HUO4MRU7y9L0FgjlX7Lo6vhtA5Mm0zKPMCSB+ZC4BSdBbPsqjvLFLl0rTV8oFzcN
-        e+h6P3B5r2ZgvPRxGCdQoLIBrG2hD7RCoL2W+KUcolUvZGOY+VCf0ZLa/CbIF7Ds
-        NxMyXnQj9yolFYSvSAnVy0Om1T/lp/8ZsWV31JSA5+MAnyDh1f+V1wM2QZgoENc4
-        YXxJcld+5OOdUk60RSHF2iS+fXEM1n+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=RI90Rr2pdI9C358C8
-        ov5lMD5fBubBiZsQJe5D+Gv2+k=; b=etnCp3MDD/9LaZCsQ1h02JB8EmRdbm9e6
-        zpURoU3GKpiWXu5ITVBXWmsSIeaX2ncu4YI9gnnBr2b9c8YRYgIqkTTKiIbmy6eR
-        Op+HmhjRKeBUtxHP7BTiYe2dbiiK/9ORbvJS9KSsIhV5eMC3CKwng7q81rbr5jTu
-        CWWiZJAGgJklJ105NEECQcLmWtNx70jZ8MiOCRWr4RYt7bOT+LyhueKb+y65fHIQ
-        8potZ/EK8u6rcVKgZRzXRSqDNYUMxGt2gkdaGdjbR92nK4fJyrpwjjt9O0tVwgqO
-        Zz5RpE7ORkSbjyfZMZ9VGPau2E3jHlUbO8J9a0Pgu/LCVCzw2kCbw==
-X-ME-Sender: <xms:6H1DYnoQbq-jZWiWLH7oC3Fl0f015Vl4hyV4DgN9av7ueTPy0tyo0w>
-    <xme:6H1DYhq8GNkMIOasWt5cc50he4qvN9YO34VE9H31jPpkinmA-SPBtg5aBnTQV3vfp
-    Z1FB1E5OQM6hE836w>
-X-ME-Received: <xmr:6H1DYkPL35PyYnucCdC6uzwmLvzKipvH0KnNZ1Vx5YeLZwtVnDdY9ZssSQ0d13cC-fC-RiBXXVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudeiuddgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghrnhgr
-    nhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtth
-    gvrhhnpedvjeeifeelhfetiefhhfdthfefkefhhfeutdetvdfgvefgveefheffgfekjeef
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
-    gvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:6H1DYq4pj8fuQnMfWWO4YiZ72jOBilGUSkVw1g7pDPW-Zq21a-AUZg>
-    <xmx:6H1DYm7XEiTD0-NTSZzlp_Z-F0eoi-Hi2z_FR3rNPxN36gXl2Qzq6A>
-    <xmx:6H1DYigq4cd-nyt3abCznD-qeEHX-jDZ9sEmOV7-pzwIu5Ml_Z-XIw>
-    <xmx:6X1DYjuIyEmnFWVv5DR0P4dpC2akW4SviMw8k9wULo98boCK-s-6lA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Mar 2022 17:45:10 -0400 (EDT)
-Date:   Tue, 29 Mar 2022 23:45:08 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
-        sunshine@sunshineco.com, seth@eseth.com, rogi@skylittlesystem.org,
-        bagasdotme@gmail.com
-Subject: Re: [PATCH v7 0/4] vimdiff: new implementation with layout support
-Message-ID: <YkN95Lj/WjGilTTy@zacax395.localdomain>
-References: <20220328223019.271270-1-greenfoo@u92.eu>
- <374f45ff-ca55-780c-3b26-8b7c6a761725@gmail.com>
+        with ESMTP id S234905AbiC2Vvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 17:51:37 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA934738F
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 14:49:52 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E2D0C5A3DC;
+        Tue, 29 Mar 2022 21:49:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1648590591;
+        bh=CPomXpIHqKBhTF6pLDNs9s22y3itA/jk84LgRY+Fkc0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=c0swXtFgqNWrZJjErmOFrOMwP8GL+G3f/4hmqDlAXlXhLNSDFPs0eoFWXH1V+0iiU
+         s98RsBcRIluAisZHFmYW4tEB7SQq6cGkANGbOLL+BeMGsAn9XYP+WFmo2SBqskAItz
+         sMyg2YighktY/d72ARgm+ykqvO4CTOfkoEXCnkc8qJSlwD2Aijd5q1X3L+63Hn5yLA
+         FPGl2E62CHqhuJt44BoaY0nbxryaVWHHrt2VJmTVC+/1Trf1xuZmYLvbZ+9ts7r6md
+         tDiipwDNXJCs3/AhF5SrcFSArHRr0jj0qcy0XoriEc93SG4+tmyg/9prco4vf+/CQJ
+         FIWeOFe9nnnkY5Q0+0vgtR9kR9cr6Cd++q/vsq1U8oHQyCWe8bt/1+YmA+L/ihcc8t
+         2dr7H5OEM7nez0/Bt/rPdP+0slKH25N6jn72k64zw3IYjfPlpzl+A7rxTUlC9BTPsZ
+         CbRWOh2v2BM3R5RtzBprVRs6bxHi1ITfa8FiSWB2oK8yf5ZqQP0
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 2/4] builtin/stash: factor out revision parsing into a function
+Date:   Tue, 29 Mar 2022 21:49:39 +0000
+Message-Id: <20220329214941.2018609-3-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
+In-Reply-To: <20220329214941.2018609-1-sandals@crustytoothpaste.net>
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+ <20220329214941.2018609-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <374f45ff-ca55-780c-3b26-8b7c6a761725@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Just a small suggestion, it is customary on this list
-> to send later versions of a series as a reply to the cover
-> letter of the previous iteration. This keeps the whole series
-> in a single thread, and also allows tools like 'b4' [1] to apply
-> the latest iteration when given any message-id in the thread.
+We allow several special forms of stash names in this code.  In the
+future, we'll want to allow these same forms without parsing a stash
+commit, so let's refactor this code out into a function for reuse.
 
-Thanks, I really appreciate this.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/stash.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-It's really hard to find the correct way to interact with different mailing
-lists from different projects.
-
-Maybe a monitoring bot could send an email with all the mailing list rules to
-someone sending a message for the first time?
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 5897febfbe..4c281a5781 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -130,6 +130,24 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
+ 		die(_("'%s' is not a stash-like commit"), revision);
+ }
+ 
++static int parse_revision(struct strbuf *revision, const char *commit, int quiet)
++{
++	strbuf_init(revision, 0);
++	if (!commit) {
++		if (!ref_exists(ref_stash)) {
++			fprintf_ln(stderr, _("No stash entries found."));
++			return -1;
++		}
++
++		strbuf_addf(revision, "%s@{0}", ref_stash);
++	} else if (strspn(commit, "0123456789") == strlen(commit)) {
++		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
++	} else {
++		strbuf_addstr(revision, commit);
++	}
++	return 0;
++}
++
+ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ {
+ 	int ret;
+@@ -157,19 +175,9 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ 	if (argc == 1)
+ 		commit = argv[0];
+ 
+-	strbuf_init(&info->revision, 0);
+-	if (!commit) {
+-		if (!ref_exists(ref_stash)) {
+-			free_stash_info(info);
+-			fprintf_ln(stderr, _("No stash entries found."));
+-			return -1;
+-		}
+-
+-		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
+-	} else if (strspn(commit, "0123456789") == strlen(commit)) {
+-		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
+-	} else {
+-		strbuf_addstr(&info->revision, commit);
++	if (parse_revision(&info->revision, commit, 0)) {
++		free_stash_info(info);
++		return -1;
+ 	}
+ 
+ 	revision = info->revision.buf;
