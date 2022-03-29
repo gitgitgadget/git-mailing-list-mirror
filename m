@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20033C433FE
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 00:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 974B9C433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 00:42:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231661AbiC2AoX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Mar 2022 20:44:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
+        id S231670AbiC2AoY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Mar 2022 20:44:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231651AbiC2AoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Mar 2022 20:44:20 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C670238D1F
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 17:42:38 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id u3so22631702wrg.3
-        for <git@vger.kernel.org>; Mon, 28 Mar 2022 17:42:38 -0700 (PDT)
+        with ESMTP id S231656AbiC2AoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Mar 2022 20:44:21 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B142237FFF
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 17:42:39 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id w21so18045255wra.2
+        for <git@vger.kernel.org>; Mon, 28 Mar 2022 17:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TOI+vuPMSYdUksjZQAWmkRtVe6MxK9DxmcwWwfN9fG4=;
-        b=dDEret9qhIZ1PLqnYpJ53CaWZgpA8yXOtG6HyyKYbntiGl1nhG4FieTxaI9rEKtxYM
-         ktG7t+dZ5NEi37c5ojYTo9FnQfdk2Uv5clIFA4kv8bdhxwMr0caq6tjCwxwq8ZSn7iFl
-         BmJKcA1lynmxWze0zniEAtjZnIQSKldQPy79C0Ti9NZGM3r8Vk/oTs/U7xO4vpBI09cQ
-         HFkV/kzAJGye3uV5EbVWWTYLIJnu0fkPq+y+Tlz9f+AkiEF+mN4TyhDQatUEo29nF/Jb
-         Pxzj4EKKlrfFHV+/z7qu7DLWO5FZ3JcKZD/ctZ01z8erY30gLf9Oq27F4xQwfhxXFmAE
-         GsQQ==
+        bh=W9Vimte0sGyR2DMe0rSIsRe6vitxNiJv2vsesuc0ht0=;
+        b=cd9jXdNIiJZFsZrT8zBQkwPGEoD8Ot2VIXq+u8ggdG4+5XE3g6AhCtYdO9a8Zp3RFf
+         2XIgegBTuQLJB/b6hza8CRQCkb1+xPZ379I4PEHGrymYjXnvRShoDY9+iUYkeRE+2k03
+         NSUU3xc83q7uXX+n+XI3BJ2yT8CjKHY/HJ/cKKMbHhrEI5QSgNfygS2oXW/ogpdsq/h4
+         Qvg63RGon184At10ad6L5M4lHHMmGULu0OIaezj/dfx+aloo/+3SJy1JkM8US89iADbT
+         uPn7IJOhcpRNMpBeMC7NcsX4EpcFQPd97Zk0oHRS/+9orqm42z0SRpiRhNcCzW7pnHfr
+         xaeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TOI+vuPMSYdUksjZQAWmkRtVe6MxK9DxmcwWwfN9fG4=;
-        b=xVCNdJWZiFRvzF//taK9pXJhm4ig2Y0ozIumVfT5V/1v2Pq/wNOuntszLLV3kUrwuP
-         m93ilpDOByrMBh+vEXdDTXJPsrrqxfGzIUsE1JBIVjG/gFk6Bpv1fRafvD+TvRdP5lpg
-         8Q2ycCi6Dk3CKDLKOjsd702wY897eypgaklgp2uywTADNb+KMK1WvJCHmD1Q469vC61Y
-         V5CqTTpWsbUxF/ApLIo+6GMjY1F7q5QNYWUXtHfsdD8ajWXFgzQwiMQjshJLvzEekCky
-         kZw+1PcnrSSBDKvrR2pRptS4s6vToO2cqvNbntHGifyURigbD5aZXHUSPG7AQc6NVMur
-         XXGA==
-X-Gm-Message-State: AOAM532zIK40XFDMEWW27m2hQjFswuqWccKdNIJ1oXpr7mHSCU48mGTL
-        uyWXwjCAlUNeEikrNARDZyMLxgWjmDI=
-X-Google-Smtp-Source: ABdhPJzyd05jC/48y9Q934STxdxYYDtHNIy5TWpSZGyqgRLu8gD4JmYFMOLfJ7CP5f4ZHyO5gwBlew==
-X-Received: by 2002:a5d:6b0d:0:b0:1f0:6497:b071 with SMTP id v13-20020a5d6b0d000000b001f06497b071mr27673079wrw.638.1648514556624;
-        Mon, 28 Mar 2022 17:42:36 -0700 (PDT)
+        bh=W9Vimte0sGyR2DMe0rSIsRe6vitxNiJv2vsesuc0ht0=;
+        b=dRQmYGwQYIPeFWhJH0kv4pKIJi4xUUFyKGS9WGF/7lY+8jtBUYZgWj0eLTJvVuSC+3
+         L/oQTqsjhXxc+syyGKxmDtXBFZke7UaO0UsuNrtEv+m2y+ohrAZbX1pGNL13oN5KE3uA
+         0oyKZ437Tpru9IdkRT7ryZPE2ngEF7k3Xhnk1uhqfj98fw+1y4BOaJS/ljZVoA4t8lZK
+         se0vsDSyNrV8tg4hA498IQNudclFWPr/yVOS5hnWv1JzKki6WBKdk/a9yAuOpcoWZw02
+         r/UQWadttzs/5HG1gYuBrzEeH6EqCRMKny6amamLqr8JmB9uKB9SS5udG9Mi+1KfiyG0
+         UMWQ==
+X-Gm-Message-State: AOAM530qpqIWyBwBED3oepGGTgFBFjhUHdzEoGLfwoSyGL+4GHhxGJRv
+        SLb0PQZPIhHoaDqRPUe3dibzNo1b6zo=
+X-Google-Smtp-Source: ABdhPJwHmuhrU2P2nmApNe7aidNS12Dm7X+VlzLrJcA9SshRb1JyLOVJqv4MIXTFG6A6F97lGCQrFA==
+X-Received: by 2002:adf:ed82:0:b0:205:9cf1:20fe with SMTP id c2-20020adfed82000000b002059cf120femr23663348wro.660.1648514557509;
+        Mon, 28 Mar 2022 17:42:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n22-20020a05600c4f9600b0038c6ec42c38sm738834wmq.6.2022.03.28.17.42.36
+        by smtp.gmail.com with ESMTPSA id r65-20020a1c4444000000b0038c48dd23b9sm1120847wma.5.2022.03.28.17.42.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 17:42:36 -0700 (PDT)
-Message-Id: <d045b13795b38caa27f8e25340212f736b66bb05.1648514552.git.gitgitgadget@gmail.com>
+        Mon, 28 Mar 2022 17:42:37 -0700 (PDT)
+Message-Id: <2d1bc4568ac744f11c886a5f964dbe563c04ce8b.1648514553.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
 References: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
         <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Mar 2022 00:42:19 +0000
-Subject: [PATCH v4 02/13] bulk-checkin: rebrand plug/unplug APIs as 'odb
- transactions'
+Date:   Tue, 29 Mar 2022 00:42:20 +0000
+Subject: [PATCH v4 03/13] object-file: pass filename to fsync_or_die
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,112 +70,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Make it clearer in the naming and documentation of the plug_bulk_checkin
-and unplug_bulk_checkin APIs that they can be thought of as
-a "transaction" to optimize operations on the object database. These
-transactions may be nested so that subsystems like the cache-tree
-writing code can optimize their operations without caring whether the
-top-level code has a transaction active.
+If we die while trying to fsync a loose object file, pass the actual
+filename we're trying to sync. This is likely to be more helpful for a
+user trying to diagnose the cause of the failure than the former
+'loose object file' string. It also sidesteps any concerns about
+translating the die message differently for loose objects versus
+something else that has a real path.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/add.c  |  4 ++--
- bulk-checkin.c | 20 ++++++++++++--------
- bulk-checkin.h | 14 ++++++++++++--
- 3 files changed, 26 insertions(+), 12 deletions(-)
+ object-file.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 3ffb86a4338..9bf37ceae8e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -670,7 +670,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		string_list_clear(&only_match_skip_worktree, 0);
- 	}
- 
--	plug_bulk_checkin();
-+	begin_odb_transaction();
- 
- 	if (add_renormalize)
- 		exit_status |= renormalize_tracked_files(&pathspec, flags);
-@@ -682,7 +682,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	if (chmod_arg && pathspec.nr)
- 		exit_status |= chmod_pathspec(&pathspec, chmod_arg[0], show_only);
--	unplug_bulk_checkin();
-+	end_odb_transaction();
- 
- finish:
- 	if (write_locked_index(&the_index, &lock_file,
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 577b135e39c..8b0fd5c7723 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -10,7 +10,7 @@
- #include "packfile.h"
- #include "object-store.h"
- 
--static int bulk_checkin_plugged;
-+static int odb_transaction_nesting;
- 
- static struct bulk_checkin_state {
- 	char *pack_tmp_name;
-@@ -280,21 +280,25 @@ int index_bulk_checkin(struct object_id *oid,
- {
- 	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
- 				     path, flags);
--	if (!bulk_checkin_plugged)
-+	if (!odb_transaction_nesting)
- 		finish_bulk_checkin(&bulk_checkin_state);
- 	return status;
+diff --git a/object-file.c b/object-file.c
+index b254bc50d70..5ffbf3d4fd4 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1888,16 +1888,16 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
  }
  
--void plug_bulk_checkin(void)
-+void begin_odb_transaction(void)
+ /* Finalize a file on disk, and close it. */
+-static void close_loose_object(int fd)
++static void close_loose_object(int fd, const char *filename)
  {
--	assert(!bulk_checkin_plugged);
--	bulk_checkin_plugged = 1;
-+	odb_transaction_nesting += 1;
- }
+ 	if (the_repository->objects->odb->will_destroy)
+ 		goto out;
  
--void unplug_bulk_checkin(void)
-+void end_odb_transaction(void)
- {
--	assert(bulk_checkin_plugged);
--	bulk_checkin_plugged = 0;
-+	odb_transaction_nesting -= 1;
-+	if (odb_transaction_nesting < 0)
-+		BUG("Unbalanced ODB transaction nesting");
-+
-+	if (odb_transaction_nesting)
-+		return;
-+
- 	if (bulk_checkin_state.f)
- 		finish_bulk_checkin(&bulk_checkin_state);
- }
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index b26f3dc3b74..69a94422ac7 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -10,7 +10,17 @@ int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags);
+ 	if (fsync_object_files > 0)
+-		fsync_or_die(fd, "loose object file");
++		fsync_or_die(fd, filename);
+ 	else
+ 		fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd,
+-				       "loose object file");
++				       filename);
  
--void plug_bulk_checkin(void);
--void unplug_bulk_checkin(void);
-+/*
-+ * Tell the object database to optimize for adding
-+ * multiple objects. end_odb_transaction must be called
-+ * to make new objects visible.
-+ */
-+void begin_odb_transaction(void);
-+
-+/*
-+ * Tell the object database to make any objects from the
-+ * current transaction visible.
-+ */
-+void end_odb_transaction(void);
+ out:
+ 	if (close(fd) != 0)
+@@ -2011,7 +2011,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
  
- #endif
+-	close_loose_object(fd);
++	close_loose_object(fd, tmp_file.buf);
+ 
+ 	if (mtime) {
+ 		struct utimbuf utb;
 -- 
 gitgitgadget
 
