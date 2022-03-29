@@ -2,96 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F084C433EF
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 15:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F21EC433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 15:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238948AbiC2PqD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 29 Mar 2022 11:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36290 "EHLO
+        id S238971AbiC2PvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 11:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238946AbiC2PqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 11:46:01 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6164A1114F
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 08:44:18 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22TFiF17012632
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 29 Mar 2022 11:44:15 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Cc:     "'Fabian Stelzer'" <fs@gigacodes.de>
-References: <036701d83942$e6963ca0$b3c2b5e0$@nexbridge.com> <20220316162711.wfcavqpg2w4u7fat@fs> 
-In-Reply-To: 
-Subject: RE: [RFE] Signing using SSL
-Date:   Tue, 29 Mar 2022 11:44:10 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00b801d84383$d85b0490$89110db0$@nexbridge.com>
+        with ESMTP id S238537AbiC2PvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 11:51:20 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE8262BDC
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 08:49:36 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C73A108BE3;
+        Tue, 29 Mar 2022 11:49:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ETZy8rWTj4cX
+        LeHBNG/vsSTB5xUoUfjdpeycqpqawmw=; b=x72N6i/cu2IXm7G+tFi8Xz+uNXnh
+        JJhsmjO1NysYF0hYXtLQbYhEi8WmiOv/Wh1OYavd3zle0VeZUYfOFsEQw6+MkNCv
+        +1hNhWt7pA/ABwXo/buaCnVF+flSvo0hvkge7MOpbuFv0cX7aHvyLTwVMSErW4YM
+        Oc5JhPZX2DUx9Ys=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54070108BE1;
+        Tue, 29 Mar 2022 11:49:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEA51108BE0;
+        Tue, 29 Mar 2022 11:49:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Tao Klerks <tao@klerks.biz>, Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v4] tracking branches: add advice to ambiguous refspec
+ error
+References: <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com>
+        <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
+Date:   Tue, 29 Mar 2022 08:49:33 -0700
+In-Reply-To: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com> (Tao
+        Klerks via GitGitGadget's message of "Tue, 29 Mar 2022 11:26:48
+        +0000")
+Message-ID: <xmqqh77gyd0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEPHGOlDpxeio8Suw6+ThURSydcNAIyUfJArkLecjCAFFu48A==
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D4C5CD8C-AF77-11EC-9627-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 16, 2022 12:45 PM, I wrote:
->On March 16, 2022 12:27 PM, Fabian Stelzer wrote:
->>On 16.03.2022 10:34, rsbecker@nexbridge.com wrote:
->>>Following up on our IRC discussion on Monday, I have had a request to
->>>support signing git commits and tags with SSL certificates instead of
->>>SSH/GPG. The organization is heavily invested in SSL infrastructure,
->>>so they want to go down that path.
->>>
->>>The basic technique for doing this is, for example:
->>>
->>>openssl dgst -sha256 -sign key -out content.sha256 signature.txt
->>>-passin passphrase
->>>
->>>There is a pre-step to compute the sha256, in this example, into a
->>>file provided to openssl. We could use openssl to compute the hash also.
->>>
->>>Verification is a bit different than what SSH or GPG does:
->>>
->>>openssl dgst -sha256 -verify  <(openssl x509 -in certificate -pubkey
->>>-noout) -signature sign.txt.sha256 signature.txt
->>>
->>>and reports either
->>>
->>>Verified OK
->>>Or
->>>Verification Failure
->>>
->>>It does not look like completion codes are consistently involved.
->>>
->>>This also does look structurally different than both GPG and SSH and
->>>more work to set up. It may be possible to provide wrappers and
->>>pretend we are in SSH, but I'm not sure that is the right path to take.
->>>
->>>Any pointers on how this might be done in existing git infrastructure,
->>>or should I look into making this work in code? Sorry to say that the
->>>documentation is not that clear on this.
->>
->>Why not gpgsm? It can deal with x509 certs and is already supported. I
->>am using this to do s/mime signing/encryption with an yubikey hardware
->>token but static certs/keys should be even simpler. However I'm not
->>sure how good this works on other platforms.
->>
->>Take a look into the GPGSM prereq in t/lib-gpg.sh for a few hints on
->>how to set this up.
+"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Tao Klerks <tao@klerks.biz>
 >
->Good idea but this is a non-starter. I have a limit of GPG 1.4, which only has the
->single legacy object. GPG added a dependency to mmap, which is not available on
->any of my platforms. That was one reason we were so happy to have SSH support.
+> The error "not tracking: ambiguous information for ref" is raised
+> when we are evaluating what tracking information to set on a branch,
+> and find that the ref to be added as tracking branch is mapped
+> under multiple remotes' fetch refspecs.
+>
+> This can easily happen when a user copy-pastes a remote definition
+> in their git config, and forgets to change the tracking path.
+>
+> Add advice in this situation, explicitly highlighting which remotes
+> are involved and suggesting how to correct the situation.
+>
+> Signed-off-by: Tao Klerks <tao@klerks.biz>
+> ---
+>     tracking branches: add advice to ambiguous refspec error
+>    =20
+>     I believe this third version incorporates all =C3=86var's suggestio=
+ns, and
+>     might be usable. Removed "RFC" prefix.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1183%=
+2FTaoK%2Fadvise-ambiguous-tracking-refspec-v4
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1183/Tao=
+K/advise-ambiguous-tracking-refspec-v4
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1183
+>
+> Range-diff vs v3:
+>
+>  1:  22ffe81ac26 =3D 1:  ac6c782f566 tracking branches: add advice to a=
+mbiguous refspec error
+>
+>
+>  Documentation/config/advice.txt |  4 +++
+>  advice.c                        |  1 +
+>  advice.h                        |  1 +
+>  branch.c                        | 44 +++++++++++++++++++++++++++++----
+>  4 files changed, 45 insertions(+), 5 deletions(-)
 
-I have been investigating this capability in more depth. After discussing with OpenSSL, explicitly adding SSL signing to git would introduce CVE-2022-0778 into git and allow a hostile upstream repo to introduce a deliberately defective key that could trigger this CVE unless customers have patched OpenSSL. Given the lack of broad-based adoption of the fixes to this point, I am reluctant to pursue this capability at this time. (Actually referencing my own advice in Git Rev News 82). The impact on git would be looping processes when signatures are evaluated. This would break workflows that depend on signed content and have downloaded keys with the CVE attributes.
+Sent a wrong version?
 
-Does anyone agree/disagree with me on delaying this?
---Randall
-
+The patch text seems to be identical to that of v3 message archived at
+https://lore.kernel.org/git/pull.1183.v3.git.1648450268285.gitgitgadget@g=
+mail.com/
