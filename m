@@ -2,93 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 025C9C433F5
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 22:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27D40C433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 22:54:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238348AbiC2Wwz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 18:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
+        id S238517AbiC2W4E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 18:56:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238290AbiC2Wwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 18:52:54 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C0ECA0BF3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 15:51:10 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id o68-20020a17090a0a4a00b001c686a48263so172073pjo.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 15:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IrjuCuCa64uewGHszZ8Ym/I1/dJIYPnLavmfoDUZBdk=;
-        b=A4QPuUz0S+DFNXu9vmH2i5wAd39WvO8FZ+ajtdsN1vYy3xqn+0vc8lCk0JOxSCe60n
-         nri+oHT7L8pm1FiwWge3AvpKLiZqLz2TzaeOcoiIdAkxlg/fdhzK7j0LtXOmpjKF+yoV
-         otup/hV0yJJlz8lb0pRKkM4SobucfPdWszWMq4Lfa9DJRLtGjYSKaJX+Aj8ZTelmpjm4
-         VeFj1b3Tk01XzHvjXff+jMAEU1P3Vkh34EA0Og9wUvJ4h5LBcdncG8ZOVq7x9wveDQYg
-         aYjQQMuaHjZEdsgLJuFJpXOejuxxN+Ktd9ujtt/Ad3xxZ/SpWKrkH273mCqXVEWaTU2B
-         PBeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IrjuCuCa64uewGHszZ8Ym/I1/dJIYPnLavmfoDUZBdk=;
-        b=RKLKgwf1vAB01p1bNWoPmaEcTY3kT1sbEiDE7Q/bVLIBpEQ7rRo9IUjBYh975pwkqc
-         zqWAkZqVkOqqAXmCnl6UZUXUIJYwBOycDNBMJt+Kp+bo+IRBCWcftQ3QdjL8CS4wHoER
-         U75vWxQDDbeaKWhuFQ08G36xwdGMpKt5tcZ9IAIFuxhJGuCEITqSaH6tQlmqm+5tDOUW
-         9mAa2o30vw1Fm/dmyGbSBomsjEyT3oLRCSF/SY92EcLjTN4I2lAkr84RS/0bRcKTekFj
-         SI0KM6PJiLiT0/GdNufsdHnd/2uCqsFF1dso10uz+8gxzfSYJlQpEEXLEC2Ah07O5SAV
-         HNpQ==
-X-Gm-Message-State: AOAM532FEgHTVdE8TMLwFTl4CCOFnxMrCBHsdSx77CSan72ow8AYjFSp
-        GUUsVPiifj20o1E1T1mSEOyiES4Ei7sxHQ==
-X-Google-Smtp-Source: ABdhPJz+A+MJ5wtrusQ6nEbsiKK4DzqXur41omrMic3ldfF9RfMoe4TarpEO5fl4iIBCDRIVMRZgXQ==
-X-Received: by 2002:a17:902:bd47:b0:154:abdd:929c with SMTP id b7-20020a170902bd4700b00154abdd929cmr32836393plx.63.1648594269893;
-        Tue, 29 Mar 2022 15:51:09 -0700 (PDT)
-Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
-        by smtp.gmail.com with ESMTPSA id p11-20020a17090a4f0b00b001c6e4898a36sm3925645pjh.28.2022.03.29.15.51.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 15:51:09 -0700 (PDT)
-Date:   Tue, 29 Mar 2022 15:51:06 -0700
-From:   Neeraj Singh <nksingh85@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2022, #06; Mon, 28)
-Message-ID: <20220329225106.GA12169@neerajsi-x1.localdomain>
-References: <xmqqo81pxzt4.fsf@gitster.g>
+        with ESMTP id S238481AbiC2W4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 18:56:03 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F4743ACC
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 15:54:19 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5511C11C6AA;
+        Tue, 29 Mar 2022 18:54:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=GXB8javXcdGZ
+        Qf4IgtJUGk+Yivz4M1/fP+VPm7zO5nI=; b=s6VXwOwTpn/N67ciar0xj1CGXaAn
+        /8E4cazQpxQAXlUTaG3fToIDPFKuCGdbZnaj4ccfGPsBPQ3/b5scOv4jREBtQpRz
+        t3IIdQzmyiULytHIV3oVatPUa2UumCiX1SKDu9oi/yjzTQzznKf6wgLqQlxYUVPw
+        qEuQkwsHIRf8sQI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CE5011C6A8;
+        Tue, 29 Mar 2022 18:54:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AFBDE11C6A6;
+        Tue, 29 Mar 2022 18:54:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+Subject: Re: [PATCH v3 3/3] object-info: add option for retrieving object info
+References: <20220208235631.732466-1-calvinwan@google.com>
+        <20220328191112.3092139-1-calvinwan@google.com>
+        <20220328191112.3092139-4-calvinwan@google.com>
+Date:   Tue, 29 Mar 2022 15:54:16 -0700
+In-Reply-To: <20220328191112.3092139-4-calvinwan@google.com> (Calvin Wan's
+        message of "Mon, 28 Mar 2022 19:11:12 +0000")
+Message-ID: <xmqqmth8qsiv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo81pxzt4.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 29D32ABE-AFB3-11EC-8BE5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 07:22:47PM -0700, Junio C Hamano wrote:
-> 
-> * ns/core-fsyncmethod (2022-03-15) 6 commits
->   (merged to 'next' on 2022-03-17 at c8a52f8cbe)
->  + core.fsync: documentation and user-friendly aggregate options
->  + core.fsync: new option to harden the index
->  + core.fsync: add configuration parsing
->  + core.fsync: introduce granular fsync control infrastructure
->  + core.fsyncmethod: add writeout-only mode
->  + wrapper: make inclusion of Windows csprng header tightly scoped
->  (this branch is used by ns/batch-fsync and ps/fsync-refs.)
-> 
->  Replace core.fsyncObjectFiles with two new configuration variables,
->  core.fsync and core.fsyncMethod.
->  source: <pull.1093.v6.git.1646952204.gitgitgadget@gmail.com>
-> 
+Calvin Wan <calvinwan@google.com> writes:
 
-There's a fix for this series at:
-https://lore.kernel.org/git/pull.1191.git.1648590113062.gitgitgadget@gmail.com/
-<pull.1191.git.1648590113062.gitgitgadget@gmail.com>
+> Add =E2=80=98--object-info=E2=80=99 option to fetch. This option allows=
+ the client to
+> make an object-info command request to a server that supports protocol
+> v2. If the server is v2, but does not allow for the object-info
+> command request, fetch the objects as if it were a standard fetch
+> (however without changing any refs). Therefore, hook `fetch
+> object-info` into transport_fetch_refs() to easily fallback if needed.
 
-The net effect of the bug being fixed is that anyone using the default
-core.fsync config is syncing everything except loose objects.
+Sorry, but I do not see anything common between "git fetch" that
+fetches history and associated objects and "retrieving only object
+info".  Other than "the way I happened to have chosen to implement,
+what is used to implement fetch has the most commonality".
 
-Apologies for the bug. I noticed it when revising the perf tests and
-debugging the number of fsyncs. I'm submitting a separate patch to
-log fsync info through trace2.
+If we were to add more "server offloading", say "run blame on the
+server side", are we going to piggy back over fetch-pack, too?
 
-Thanks,
-Neeraj
+It is not necessarily bad way to experiment, to reuse the code to
+establish connection, check if the other side is capable to serve
+us, throw args at them and then retrieve the result, but exposing
+that implemention detail makes a HORRIBLE UX to force users to say
+"git fetch --blame=3D'master Makefile' origin".
+
+Shouldn't we be making the part that we truly need to reuse into a
+separate API out of fetch-pack and either (1) allow new commands be
+easily written reusing the code to create "git remote-object-info"
+and "git remote-blame", or (2) come up with a single "do things on
+remote" command with various subcommands, i.e. "git over-there
+object-info" and "git over-there blame"?
+
+> A previous patch added the `transfer.advertiseObjectInfo` config
+> option, of which this patch utilizes to test the fallback.
+>
+> ---
+
+Missing sign-off.
+
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+> index 550c16ca61..a13d2ba7ad 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -13,6 +13,7 @@ SYNOPSIS
+>  'git fetch' [<options>] <group>
+>  'git fetch' --multiple [<options>] [(<repository> | <group>)...]
+>  'git fetch' --all [<options>]
+> +'git fetch' --object-info=3D[<arguments>] <remote> [<object-ids>]
+
+This is a start of slippery slope of making "fetch" a kitchen sink
+that does not have much to do with "git fetch".  Let's not go this
+route.
+
+> @@ -2087,6 +2094,7 @@ int cmd_fetch(int argc, const char **argv, const =
+char *prefix)
+>  	struct remote *remote =3D NULL;
+>  	int result =3D 0;
+>  	int prune_tags_ok =3D 1;
+> +	struct oid_array object_info_oids =3D OID_ARRAY_INIT;
+> =20
+>  	packet_trace_identity("fetch");
+> =20
+> @@ -2168,7 +2176,19 @@ int cmd_fetch(int argc, const char **argv, const=
+ char *prefix)
+>  	if (dry_run)
+>  		write_fetch_head =3D 0;
+> =20
+> -	if (all) {
+> +	if (object_info_options.nr > 0) {
+> +		if (argc =3D=3D 0 || argc =3D=3D 1) {
+> +			die(_("must supply remote and object ids when using --object-info")=
+);
+> +		} else {
+> +			struct object_id oid;
+> +			remote =3D remote_get(argv[0]);
+> +			for (i =3D 1; i < argc; i++) {
+> +				if (get_oid(argv[i], &oid))
+> +					return error(_("malformed object id '%s'"), argv[i]);
+> +				oid_array_append(&object_info_oids, &oid);
+> +			}
+> +		}
+> +	} else if (all) {
+>  		if (argc =3D=3D 1)
+>  			die(_("fetch --all does not take a repository argument"));
+>  		else if (argc > 1)
+
+Yuck.  Let's read this again, realize how little commonality we have
+in processing args and barf.  That's all because we tried to
+piggy-back on "fetch" because the patch wanted to reuse the parts
+that are not shown in the patch text.  The right way to do so would
+be to factor that "part that do not appear in the patch, because
+they are common" out into callable from new code.  That way, we do
+not have to contaminate this if/else conditional, both arms of which
+is still about running "fetch" to retrieve history and connected
+objects, and has nothing to do with "fetch object info".  The way
+this patch changes this part of the code is an unnecessary risk to
+break the normal "git fetch", and it does not have to be.
+
+I like the idea to give client side a way to ask server to do random
+things.  I do not think I want to see unrelated things piggy-backing
+on existing client programs only because that is an expedient way to
+implement it.
