@@ -2,124 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C59ADC433EF
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A26D2C433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240248AbiC2RiE convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 29 Mar 2022 13:38:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46136 "EHLO
+        id S240257AbiC2RkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 13:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240122AbiC2Rhw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 13:37:52 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1436F1DC9A4
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:36:07 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 22THa4GM017319
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 29 Mar 2022 13:36:05 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Fabian Stelzer'" <fs@gigacodes.de>
-Cc:     <git@vger.kernel.org>
-References: <036701d83942$e6963ca0$b3c2b5e0$@nexbridge.com> <20220316162711.wfcavqpg2w4u7fat@fs> <00b801d84383$d85b0490$89110db0$@nexbridge.com> <20220329172555.wzmhplni3w2guvo5@fs>
-In-Reply-To: <20220329172555.wzmhplni3w2guvo5@fs>
-Subject: RE: [RFE] Signing using SSL
-Date:   Tue, 29 Mar 2022 13:35:59 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00c901d84393$77a67200$66f35600$@nexbridge.com>
+        with ESMTP id S234111AbiC2RkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 13:40:20 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC67BF7A
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:38:35 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id bt26so31541398lfb.3
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:38:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mRXgiEHKxm+yVgu1OJp5V/59rw+txBJRq2Z6rZWMKxY=;
+        b=OEHGb6iW2J2iE76j8iOtSYKadOGedrgm6j9nC02w+w2VW6j87PodkMAqdYKGdy6eN0
+         uZCRvkB+rlCPTJLNvn6gooOfHA2gmF6Gk3n6PLc3Z6AfPNw2JcyMf3K3OrX4euTZdzro
+         Ubm75apHR7jsgj87QSAWcZd7SKKCC8XmSQkV2u5Bj/z7lZyRHaCEhWlGyz08Z6XI0kOV
+         lfubXVFC1snxoonqxHcsvanmk0aOr59ZkGO27UiJNNVGPjZdTRxoKqsz0oZJG9LuZ0eE
+         +f6afVJxURX9JceVm79wpSW3h8a+FTU/9XixO/i7FJQSrrsN91CNrZvsTmGDTRoMl7UI
+         qBhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mRXgiEHKxm+yVgu1OJp5V/59rw+txBJRq2Z6rZWMKxY=;
+        b=DW6KxRdHXGXbx/mVqlyoRPBY2iJ3/RzcCd5y0PzB6BJUgwomyedXVIuP/Us7F6R4pZ
+         WJIYW/hZetucIAh+ajyDH+GKORPsic4Sntw0/ZM0B/6LAOTyyj97anB3Egqu1y+JamXH
+         +fMeVmeoQqR4SSzkYn3JRuipej4hZiXI03Rd4vb7IkDku2DxECQQhYXcE98b/r5D+XBR
+         EAZYVZPd1gWQ/SwzYmV0nuBrVLlwIiJMfV+lMYFz9zCqVZU/aJxnuEqN4+V2ZgN3nqNI
+         i4TCURR8n7TlF192bccwtyK8UugBEHfG+V2j/T2HvSW00b8wG7GbofYIGP8pHDoq7HHQ
+         /RWg==
+X-Gm-Message-State: AOAM5315IQUk6dr+9hpf+f/JECUafGJcPp0EvKujXVHSq8qQJU4cY2bs
+        ToVdnNulX6RDS2QVa4IYgMiMmOKIula55kh2AIE=
+X-Google-Smtp-Source: ABdhPJxIkZfZ1OmCFMP7UCtdh71CBo5Xb4aRBplwctUs3vzr9XqJftWbzp3mSsAuYpk9irKW3bb4rjFuU7PkX9Olqes=
+X-Received: by 2002:a05:6512:1151:b0:44a:6d05:8d2d with SMTP id
+ m17-20020a056512115100b0044a6d058d2dmr3756148lfg.442.1648575514076; Tue, 29
+ Mar 2022 10:38:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEPHGOlDpxeio8Suw6+ThURSydcNAIyUfJAASdJCEwCjsUlFq45qUMQ
-Content-Language: en-ca
+References: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
+ <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com> <fdf90d45f52d72cf2ff7fe6b620853da9fafc1b3.1648514553.git.gitgitgadget@gmail.com>
+In-Reply-To: <fdf90d45f52d72cf2ff7fe6b620853da9fafc1b3.1648514553.git.gitgitgadget@gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 29 Mar 2022 10:38:22 -0700
+Message-ID: <CANQDOdfm9cuP=_+rErsBj97hw6QSyaJ6oQUoVkcaDSqZObGdiQ@mail.gmail.com>
+Subject: Re: [PATCH v4 12/13] core.fsyncmethod: performance tests for add and stash
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On March 29, 2022 1:26 PM, Fabian Stelzer wrote:
->On 29.03.2022 11:44, rsbecker@nexbridge.com wrote:
->>On March 16, 2022 12:45 PM, I wrote:
->>>On March 16, 2022 12:27 PM, Fabian Stelzer wrote:
->>>>On 16.03.2022 10:34, rsbecker@nexbridge.com wrote:
->>>>>Following up on our IRC discussion on Monday, I have had a request
->>>>>to support signing git commits and tags with SSL certificates
->>>>>instead of SSH/GPG. The organization is heavily invested in SSL
->>>>>infrastructure, so they want to go down that path.
->>>>>
->>>>>The basic technique for doing this is, for example:
->>>>>
->>>>>openssl dgst -sha256 -sign key -out content.sha256 signature.txt
->>>>>-passin passphrase
->>>>>
->>>>>There is a pre-step to compute the sha256, in this example, into a
->>>>>file provided to openssl. We could use openssl to compute the hash also.
->>>>>
->>>>>Verification is a bit different than what SSH or GPG does:
->>>>>
->>>>>openssl dgst -sha256 -verify  <(openssl x509 -in certificate -pubkey
->>>>>-noout) -signature sign.txt.sha256 signature.txt
->>>>>
->>>>>and reports either
->>>>>
->>>>>Verified OK
->>>>>Or
->>>>>Verification Failure
->>>>>
->>>>>It does not look like completion codes are consistently involved.
->>>>>
->>>>>This also does look structurally different than both GPG and SSH and
->>>>>more work to set up. It may be possible to provide wrappers and
->>>>>pretend we are in SSH, but I'm not sure that is the right path to take.
->>>>>
->>>>>Any pointers on how this might be done in existing git
->>>>>infrastructure, or should I look into making this work in code?
->>>>>Sorry to say that the documentation is not that clear on this.
->>>>
->>>>Why not gpgsm? It can deal with x509 certs and is already supported.
->>>>I am using this to do s/mime signing/encryption with an yubikey
->>>>hardware token but static certs/keys should be even simpler. However
->>>>I'm not sure how good this works on other platforms.
->>>>
->>>>Take a look into the GPGSM prereq in t/lib-gpg.sh for a few hints on
->>>>how to set this up.
->>>
->>>Good idea but this is a non-starter. I have a limit of GPG 1.4, which
->>>only has the single legacy object. GPG added a dependency to mmap,
->>>which is not available on any of my platforms. That was one reason we were so
->happy to have SSH support.
->>
->>I have been investigating this capability in more depth. After discussing with
->OpenSSL, explicitly adding SSL signing to git would introduce CVE-2022-0778 into git
->and allow a hostile upstream repo to introduce a deliberately defective key that
->could trigger this CVE unless customers have patched OpenSSL. Given the lack of
->broad-based adoption of the fixes to this point, I am reluctant to pursue this
->capability at this time. (Actually referencing my own advice in Git Rev News 82).
->The impact on git would be looping processes when signatures are evaluated. This
->would break workflows that depend on signed content and have downloaded
->keys with the CVE attributes.
->>
->>Does anyone agree/disagree with me on delaying this?
->>--Randall
->>
+On Mon, Mar 28, 2022 at 5:42 PM Neeraj Singh via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
->Do you actually need SSL Signing so you can verify commits with a single CA key?
->Or do you have all the certs public keys anyway?
+> From: Neeraj Singh <neerajsi@microsoft.com>
 >
->I know quite a few setups where every employee is issued an x509 cert (often PIV
->Certs, preferably on a smartcard/token) and a central ldap is available with all
->issued certs. This is usually used for authentication and s/mime.
+> Add basic performance tests for "git add" and "git stash" of a lot of
+> new objects with various fsync settings. This shows the benefit of batch
+> mode relative to full fsync.
 >
->However this can easily be used with ssh signing as well. I do so myself.  I use my
->own s/mime cert loaded into an ssh-agent (pkcs11 smartcard) to sign commits and
->generate an allowed signers file with all the pubkeys extracted from the certs i get
->from the PKIs ldap server.
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  t/perf/p3700-add.sh | 59 +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>  create mode 100755 t/perf/p3700-add.sh
+>
+> diff --git a/t/perf/p3700-add.sh b/t/perf/p3700-add.sh
+> new file mode 100755
+> index 00000000000..ef6024f9897
+> --- /dev/null
+> +++ b/t/perf/p3700-add.sh
+> @@ -0,0 +1,59 @@
+> +#!/bin/sh
+> +#
+> +# This test measures the performance of adding new files to the object d=
+atabase
+> +# and index. The test was originally added to measure the effect of the
+> +# core.fsyncMethod=3Dbatch mode, which is why we are testing different v=
+alues
+> +# of that setting explicitly and creating a lot of unique objects.
+> +
+> +test_description=3D"Tests performance of adding things to the object dat=
+abase"
+> +
+> +# Fsync is normally turned off for the test suite.
+> +GIT_TEST_FSYNC=3D1
+> +export GIT_TEST_FSYNC
+> +
+> +. ./perf-lib.sh
+> +
+> +. $TEST_DIRECTORY/lib-unique-files.sh
+> +
+> +test_perf_fresh_repo
+> +test_checkout_worktree
+> +
+> +dir_count=3D10
+> +files_per_dir=3D50
+> +total_files=3D$((dir_count * files_per_dir))
+> +
+> +for mode in false true batch
+> +do
+> +       case $mode in
+> +       false)
+> +               FSYNC_CONFIG=3D'-c core.fsync=3D-loose-object -c core.fsy=
+ncmethod=3Dfsync'
+> +               ;;
+> +       true)
+> +               FSYNC_CONFIG=3D'-c core.fsync=3Dloose-object -c core.fsyn=
+cmethod=3Dfsync'
+> +               ;;
+> +       batch)
+> +               FSYNC_CONFIG=3D'-c core.fsync=3Dloose-object -c core.fsyn=
+cmethod=3Dbatch'
+> +               ;;
+> +       esac
+> +
+> +       test_perf "add $total_files files (object_fsyncing=3D$mode)" \
+> +               --setup "
+> +               (rm -rf .git || 1) &&
+> +               git init &&
+> +               test_create_unique_files $dir_count $files_per_dir files_=
+$mode
+> +       " "
+> +               git $FSYNC_CONFIG add files_$mode
+> +       "
+> +
+> +       test_perf "stash $total_files files (object_fsyncing=3D$mode)" \
+> +               --setup "
+> +               (rm -rf .git || 1) &&
+> +               git init &&
+> +               test_commit first &&
+> +               test_create_unique_files $dir_count $files_per_dir stash_=
+files_$mode
+> +       " "
+> +               git $FSYNC_CONFIG stash push -u -- stash_files_$mode
+> +       "
+> +done
+> +
+> +test_done
+> --
+> gitgitgadget
+>
 
-I would prefer to use SSH - mostly because I am much more comfortable in that space - but SSH has not been authorized for use at this customer. They are a pure SSL shop with each developer having their own SSL unique cert based on the internal corporate CA (as they explained it). I don't have info at this point on the type of cert they are using. Signing is desired to be done by each developer/operator with their own private cert.
-
-The vulnerability is that if SSL certs are used for signatures and a hostile cert gets in via an SSL path. it can trigger the CVE, according to the OpenSSL team.
-
+=C3=86var suggested that it's a bit funny to have a stash test in a file
+named 'p3700-add.sh'.  So I'm thinking that I'll move these tests to a
+p0008-odb-fsync.sh instead, and add a test for unpack-object and
+git-commit as well.  I'm also going to adopt  =C3=86var's scheme for
+iterating over the configs.
