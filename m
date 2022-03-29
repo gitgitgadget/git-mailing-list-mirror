@@ -2,102 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6BCC433F5
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 23:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E150FC433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 23:08:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235311AbiC2XDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 19:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50828 "EHLO
+        id S239104AbiC2XKN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 19:10:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240229AbiC2XDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 19:03:15 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 624A26C947
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 16:01:31 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id q11so22831721iod.6
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 16:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qYmrGht8a3UzWPHBLnYo4IBNUBjpXOzBDagv9fDE2sA=;
-        b=8ER2wlEBghuVkGJ/wUjZRnVx9m+DHuq+Lg530n5q0cGQ17rr8Kk+T+Hz97ty9vsJqy
-         7bvQhSf+j87Z/QLn95loc/G/OhW9P2uCHjcsqTLdmzf7kXKZ6eJI5FK2EeSbT+KLVAul
-         zPXUEHsPUgHWVKDl3rQPjfTbiSDneJtK22n1/FgsePWRJ8jO3z1D7RKNnxVO75GLhdB8
-         ckZJU3AK/bnugcbk0yQjKNcXXYvZqwhMENPe/4QCVwsu3d1dZBjS9MYTG4nJ29KGn8xt
-         e2YYMJ9rSCMNm3o0zc+nrWPudW0Ms1reZqo00FNGBwNTzRNDmei664ap4S45/zOU208i
-         pQnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qYmrGht8a3UzWPHBLnYo4IBNUBjpXOzBDagv9fDE2sA=;
-        b=vYsgC5AyhfwZEdLU+vEJ4fH31fSfLGLy9r8Dmedx2lQQ1ipCx0lrKc15A3WRCdjqy2
-         lE6akdh5dewt/3pXJAHHgOsLXZ9FAWafdiQQS5slJg1FZKOFjcJDflmaLZcHGE4FM46y
-         KZd0iPviY8qUmxjmkz2jZkBC7oIJYrchvQwZUX/Iov26LDeO0GZa8HFav/bJBb9JTwhT
-         ybY4kcBs3/m9Ebs4mYODLZYAkecKtS+NYQ/vNq9iLL4HDke4Tv+3YWkyopF/il9qUovg
-         EqGlj1PhO6sJe5plGYbCHzwXixaxS3Er1GjKodrl7nUaH+4ycG9gPIYI/8mBwKBg+qkF
-         apFQ==
-X-Gm-Message-State: AOAM532eZMPSi6eYquY1k8Hc2KvgE+bfNErx/+1aeKFM070iabr0oUtd
-        1zw+aM0aYZPgCKykdX/gW8b7US2uQXtMKzkr
-X-Google-Smtp-Source: ABdhPJyvVLfi69RXVEzoyMGyC9Z05B6hffhvHkDa4xPjccmPCF+paJQc7KpAu56uaRI8oLGvdiV8/A==
-X-Received: by 2002:a05:6602:15cf:b0:614:52d4:952 with SMTP id f15-20020a05660215cf00b0061452d40952mr10077856iow.185.1648594890739;
-        Tue, 29 Mar 2022 16:01:30 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j13-20020a056e02014d00b002c98acb8d32sm6618044ilr.45.2022.03.29.16.01.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 16:01:30 -0700 (PDT)
-Date:   Tue, 29 Mar 2022 19:01:29 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com
-Subject: Re: [PATCH v3 1/3] fetch-pack: refactor packet writing and fetch
- options
-Message-ID: <YkOPyc9tUfe2Tozx@nand.local>
-References: <20220208235631.732466-1-calvinwan@google.com>
- <20220328191112.3092139-1-calvinwan@google.com>
- <20220328191112.3092139-2-calvinwan@google.com>
+        with ESMTP id S236528AbiC2XKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 19:10:11 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 801AD14005
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 16:08:26 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8646319780F;
+        Tue, 29 Mar 2022 19:08:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eYiR7O78VHL1ZCcFHmdg5rz97hluHM9NgoGnGC
+        TQ3e0=; b=ueYI7IDKvu8RRJvjWYTw+zyTqD6YIK0dHHNSQO2j031iSts/wckW1T
+        XUUDIM5Aw2VKYsbz5vumjtQ3lk7vHlkOA3nRyRYBAbr0K0G0nb2s+FDPgCj+hNu/
+        SIu/ITD3koiizBOCx1roLLlU+h0yMUdNk+KiqZ4nc/2ER+cG6zzXU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F22419780E;
+        Tue, 29 Mar 2022 19:08:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E912C19780D;
+        Tue, 29 Mar 2022 19:08:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2022, #06; Mon, 28)
+References: <xmqqo81pxzt4.fsf@gitster.g>
+        <20220329225106.GA12169@neerajsi-x1.localdomain>
+Date:   Tue, 29 Mar 2022 16:08:22 -0700
+In-Reply-To: <20220329225106.GA12169@neerajsi-x1.localdomain> (Neeraj Singh's
+        message of "Tue, 29 Mar 2022 15:51:06 -0700")
+Message-ID: <xmqqbkxoqrvd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220328191112.3092139-2-calvinwan@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2238580E-AFB5-11EC-ACF7-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 07:11:10PM +0000, Calvin Wan wrote:
-> A subsequent commit will need to write capabilities for another
-> command, so refactor write_fetch_command_and_capabilities() to be able
-> to used by both fetch and future command.
+Neeraj Singh <nksingh85@gmail.com> writes:
 
-Makes obvious sense, and this was something that jumped out to me when I
-looked at the first and second versions of this patch. I'm glad that
-this is getting factored out.
+> On Mon, Mar 28, 2022 at 07:22:47PM -0700, Junio C Hamano wrote:
+>> 
+>> * ns/core-fsyncmethod (2022-03-15) 6 commits
+>>   (merged to 'next' on 2022-03-17 at c8a52f8cbe)
+>>  + core.fsync: documentation and user-friendly aggregate options
+>>  + core.fsync: new option to harden the index
+>>  + core.fsync: add configuration parsing
+>>  + core.fsync: introduce granular fsync control infrastructure
+>>  + core.fsyncmethod: add writeout-only mode
+>>  + wrapper: make inclusion of Windows csprng header tightly scoped
+>>  (this branch is used by ns/batch-fsync and ps/fsync-refs.)
+>> 
+>>  Replace core.fsyncObjectFiles with two new configuration variables,
+>>  core.fsync and core.fsyncMethod.
+>>  source: <pull.1093.v6.git.1646952204.gitgitgadget@gmail.com>
+>> 
+>
+> There's a fix for this series at:
+> https://lore.kernel.org/git/pull.1191.git.1648590113062.gitgitgadget@gmail.com/
+> <pull.1191.git.1648590113062.gitgitgadget@gmail.com>
+>
+> The net effect of the bug being fixed is that anyone using the default
+> core.fsync config is syncing everything except loose objects.
+>
+> Apologies for the bug. I noticed it when revising the perf tests and
+> debugging the number of fsyncs. I'm submitting a separate patch to
+> log fsync info through trace2.
 
-> Move fetch options set in `FETCH_CHECK_LOCAL` from the fetch state
-> machine to above the state machine so it is set by default. The
-> initial state of the state machine is always `FETCH_CHECK_LOCAL` so
-> this does not affect any current functionality. This change prepares
-> for a subsequent commit that doesn't need to check the local state, but
-> still requires those options to be set before sending the fetch request.
+Thanks.  We should have caught it during the review.
 
-This took a little more thinking, but I agree that this is behaviorally
-equivalent. The key points are (and here I'm basically restating what
-you already wrote):
+Queued.
 
-  - when the state machine in do_fetch_pack_v2() is in
-    FETCH_CHECK_LOCAL, we set a few v2-specific defaults
-
-  - it will be helpful for a future patch to have these defaults set
-    _before_ we enter the main loop
-
-  - and we can safely make that change, since the initial state is
-    always FETCH_CHECK_LOCAL anyway, so we're guaranteed to hit that
-    code whether it's in the loop or not.
-
-So this seems safe to me, too. I'll have to see why this is necessary,
-but I suspect we'll find out in subsequent patches, so let's read on...
-
-Thanks,
-Taylor
