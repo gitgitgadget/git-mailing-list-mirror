@@ -2,242 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8363C433EF
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 11:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F004C433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 11:31:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235757AbiC2L2i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 07:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32918 "EHLO
+        id S235876AbiC2Ldj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 07:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235747AbiC2L2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 07:28:35 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B15BB1DFDD3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 04:26:51 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id a1so24308962wrh.10
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 04:26:51 -0700 (PDT)
+        with ESMTP id S235877AbiC2Ldh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 07:33:37 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294832498B3
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 04:31:55 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id w25so20314589edi.11
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 04:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=G+ho04CruDVQgyRJUESCNl+VzOy8VDtSGmt6XTKe2X4=;
-        b=AikhxoofdhRZsv8bqQk5IIzc2eQ+8quxTlAUDNzIfbeL+Why/lH8TDCUJ198Y+ktWm
-         7W5Q+a+k3Q9wyFA/AwUqPpjq+pj1mMe7q6ITfJe6YRJXFsq43XUMtWfPe9OxUPLCMENq
-         a9siyNR3bNIFtuYNfaCMWzhTZ//lrO7hS9GkyR2GzxsQn29d2E2iqK3CsAk5IsJ1gXQR
-         BBxG2GS9l52cnzOy7CmwXsRrYwftGiUpA1czEvFwr+eOZZemxMJJyahO8i2bQkcdvXcf
-         vfIAXNFnsS6MS97VyQgYzIk3IGPoodQN3mtCiINyDfMZrWIAATFVryFsU5e7RDrlidhu
-         nXIQ==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1F3JrOTohFc9QRHnwMGPsEEHD76ehg65gM7L9zijjZg=;
+        b=GxdSW7HP4D7nmCds9h+AEpjUcXR4kYBnLZ2RvUqfORhkYEfpuPVuWIJKQzliaK4027
+         qzJgXa0q+AHbRslBvHkRX+9nZWfWRP7XpQM2VWaSBaoGagYAeYbm7vMoM3PTtqmWq54w
+         Q/PBSCN0pwRIi/XvPKeJ4WQ4mleyy24VWuPS2SKN3sZ4qir7uL+v7cpn8zig83E9pSvv
+         0/osj2DZkPrPlQuMkSdtd/eC+/qKQooxPffiAd3rOTX8+9uh0H/QymVRiVWnRkLuTrQV
+         uLMs+xTvUOdPsd9rvQ1nFKk/vB4DYndEYCroALm90b3/uq0mPSj7BZHob6Ux0a8jl+rc
+         TpOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=G+ho04CruDVQgyRJUESCNl+VzOy8VDtSGmt6XTKe2X4=;
-        b=zX42x9dXS6K4RQVOGrvVZ4x8oPLST3oz4h5DsMUSpzgXMSf7+tmWeXD6jY24XqiLuW
-         2F//OmxNgrqMu8b67mDznyrJ5h+7GbXoO1CxktToa5VF5RrUbE9p8Vez/uzDizQ2ffA2
-         2CckBnRgoOSFtvikLgemIcBtn3kL84QuvLdw+39yy0Ma2EN5uIKROXtAkkZNt8ZF+Y0Z
-         Dm+axR/DO5dFZpgbbeck5mGhXbmnvSNaFNC+twDNUVl2ouMUb6+Zy0Z5THKT/sZ3Gas1
-         IzLBx4mxtlylWgQ1FwEYS6Db4aECMptQ7SrBiQQzAZFGiu+O+jib+95XW5QeaHA81yUQ
-         9qeA==
-X-Gm-Message-State: AOAM532p46X+fqSl4fGM05s0fY97jrHlL7Gk0Kyzas71I0bBc+G51q+x
-        n2WMCtd0XlgRTzNhInWT7diiPyGCp00=
-X-Google-Smtp-Source: ABdhPJw/hG0kcYHMn2Id1ws1Tc/KsCUQ8JbmcdniSxX7aQdPAKdLBV0eam44PmQQ9S3p5QK5i+qq1A==
-X-Received: by 2002:adf:fd44:0:b0:203:f45f:ce92 with SMTP id h4-20020adffd44000000b00203f45fce92mr30872028wrs.45.1648553210030;
-        Tue, 29 Mar 2022 04:26:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5-20020a05600c1c0500b0038ca4fdf7a5sm3050759wms.9.2022.03.29.04.26.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 04:26:49 -0700 (PDT)
-Message-Id: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com>
-References: <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Mar 2022 11:26:48 +0000
-Subject: [PATCH v4] tracking branches: add advice to ambiguous refspec error
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1F3JrOTohFc9QRHnwMGPsEEHD76ehg65gM7L9zijjZg=;
+        b=xdfNAHWCQ8g8Uxq2oll83zpNxJkCyavJ5mCL7SJNk1Nmx89bAT/+YBQOBxLuNt3ZbS
+         McY78njFvVRORT/+dOw8Uwj3weLVBLcJ2kh8sI+q5igoDI9/hLOSVM8DMC0suauc5De1
+         BH6Tn8rm8NPYkZWelP29XMVW0mFZ/RbfkVYvkUFzZhQW1oCzdMSDlDLTM+x78jLKQT8z
+         dG26tvfjEG+in997JuVWXk2dnsYywFXwWHbBycB3y0GbKQzqWU5rCrfLLIOZEX9YYkUj
+         zTLehLzpdum+T9dT7YQTJaRH8Z4niNBATqWYzH5y5+RFdtDqaEPDH+YhGi9J0JOwcXgh
+         SYfA==
+X-Gm-Message-State: AOAM532556SKc35UTrt0dUl1PVzrUax57/LYJaIS4EFEGY3CDQQKDPr1
+        61fDbKKHXvzQafOxdlDer246Tf4joHPploBP3KTUug==
+X-Google-Smtp-Source: ABdhPJy4eOBfK4DmC8cewHtzjh5iUvqfXQtxQrpI6Ats3Suq1kHbV00oarGY/Lm90ck406jhY0ofAdM95OqhJaF9r74=
+X-Received: by 2002:aa7:cd81:0:b0:410:d64e:aa31 with SMTP id
+ x1-20020aa7cd81000000b00410d64eaa31mr3973367edv.167.1648553513599; Tue, 29
+ Mar 2022 04:31:53 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Tao Klerks <tao@klerks.biz>,
-        Glen Choo <chooglen@google.com>, Tao Klerks <tao@klerks.biz>,
-        Tao Klerks <tao@klerks.biz>
+References: <pull.1183.v3.git.1648450268285.gitgitgadget@gmail.com> <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 29 Mar 2022 13:31:40 +0200
+Message-ID: <CAPMMpojj81UY8-q2Oh6VeTdreoszfcTmLm6Hh+O5hoObaYw8Zg@mail.gmail.com>
+Subject: Re: [PATCH v4] tracking branches: add advice to ambiguous refspec error
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+On Tue, Mar 29, 2022 at 1:26 PM Tao Klerks via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+>     I believe this third version incorporates all =C3=86var's suggestions=
+, and
+>     might be usable. Removed "RFC" prefix.
 
-The error "not tracking: ambiguous information for ref" is raised
-when we are evaluating what tracking information to set on a branch,
-and find that the ref to be added as tracking branch is mapped
-under multiple remotes' fetch refspecs.
-
-This can easily happen when a user copy-pastes a remote definition
-in their git config, and forgets to change the tracking path.
-
-Add advice in this situation, explicitly highlighting which remotes
-are involved and suggesting how to correct the situation.
-
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    tracking branches: add advice to ambiguous refspec error
-    
-    I believe this third version incorporates all Ævar's suggestions, and
-    might be usable. Removed "RFC" prefix.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1183%2FTaoK%2Fadvise-ambiguous-tracking-refspec-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1183/TaoK/advise-ambiguous-tracking-refspec-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1183
-
-Range-diff vs v3:
-
- 1:  22ffe81ac26 = 1:  ac6c782f566 tracking branches: add advice to ambiguous refspec error
-
-
- Documentation/config/advice.txt |  4 +++
- advice.c                        |  1 +
- advice.h                        |  1 +
- branch.c                        | 44 +++++++++++++++++++++++++++++----
- 4 files changed, 45 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index c40eb09cb7e..90f7dbd03aa 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -4,6 +4,10 @@ advice.*::
- 	can tell Git that you do not need help by setting these to 'false':
- +
- --
-+	ambiguousFetchRefspec::
-+		Advice shown when branch tracking relationship setup fails due
-+		to multiple remotes' refspecs mapping to the same remote
-+		tracking namespace in the repo.
- 	fetchShowForcedUpdates::
- 		Advice shown when linkgit:git-fetch[1] takes a long time
- 		to calculate forced updates after ref updates, or to warn
-diff --git a/advice.c b/advice.c
-index 2e1fd483040..18ac8739519 100644
---- a/advice.c
-+++ b/advice.c
-@@ -39,6 +39,7 @@ static struct {
- 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
- 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
- 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
-+	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec", 1 },
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
-diff --git a/advice.h b/advice.h
-index a3957123a16..2d4c94f38eb 100644
---- a/advice.h
-+++ b/advice.h
-@@ -17,6 +17,7 @@ struct string_list;
- 	ADVICE_ADD_EMPTY_PATHSPEC,
- 	ADVICE_ADD_IGNORED_FILE,
- 	ADVICE_AM_WORK_DIR,
-+	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
- 	ADVICE_DETACHED_HEAD,
-diff --git a/branch.c b/branch.c
-index 6b31df539a5..5c28d432103 100644
---- a/branch.c
-+++ b/branch.c
-@@ -18,9 +18,15 @@ struct tracking {
- 	int matches;
- };
- 
-+struct find_tracked_branch_cb {
-+	struct tracking *tracking;
-+	struct strbuf remotes_advice;
-+};
-+
- static int find_tracked_branch(struct remote *remote, void *priv)
- {
--	struct tracking *tracking = priv;
-+	struct find_tracked_branch_cb *ftb = priv;
-+	struct tracking *tracking = ftb->tracking;
- 
- 	if (!remote_find_tracking(remote, &tracking->spec)) {
- 		if (++tracking->matches == 1) {
-@@ -30,6 +36,13 @@ static int find_tracked_branch(struct remote *remote, void *priv)
- 			free(tracking->spec.src);
- 			string_list_clear(tracking->srcs, 0);
- 		}
-+		/*
-+		 * TRANSLATORS: This is a line listing a remote with duplicate
-+		 * refspecs, to be later included in advice message
-+		 * ambiguousFetchRefspec. For RTL languages you'll probably want
-+		 * to swap the "%s" and leading "  " space around.
-+		 */
-+		strbuf_addf(&ftb->remotes_advice, _("  %s\n"), remote->name);
- 		tracking->spec.src = NULL;
- 	}
- 
-@@ -219,6 +232,7 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
- 	return 0;
- }
- 
-+
- /*
-  * Used internally to set the branch.<new_ref>.{remote,merge} config
-  * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
-@@ -232,12 +246,16 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 	struct tracking tracking;
- 	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
-+	struct find_tracked_branch_cb ftb_cb = {
-+		.tracking = &tracking,
-+		.remotes_advice = STRBUF_INIT,
-+	};
- 
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	tracking.srcs = &tracking_srcs;
- 	if (track != BRANCH_TRACK_INHERIT)
--		for_each_remote(find_tracked_branch, &tracking);
-+		for_each_remote(find_tracked_branch, &ftb_cb);
- 	else if (inherit_tracking(&tracking, orig_ref))
- 		goto cleanup;
- 
-@@ -252,9 +270,24 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 			goto cleanup;
- 		}
- 
--	if (tracking.matches > 1)
--		die(_("not tracking: ambiguous information for ref %s"),
--		    orig_ref);
-+	if (tracking.matches > 1) {
-+		int status = die_message(_("not tracking: ambiguous information for ref %s"),
-+					    orig_ref);
-+		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC))
-+			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
-+				 "tracking ref %s:\n"
-+				 "%s"
-+				 "\n"
-+				 "This is typically a configuration error.\n"
-+				 "\n"
-+				 "To support setting up tracking branches, ensure that\n"
-+				 "different remotes' fetch refspecs map into different\n"
-+				 "tracking namespaces."),
-+			       orig_ref,
-+			       ftb_cb.remotes_advice.buf
-+			       );
-+		exit(status);
-+	}
- 
- 	if (tracking.srcs->nr < 1)
- 		string_list_append(tracking.srcs, orig_ref);
-@@ -263,6 +296,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 		exit(-1);
- 
- cleanup:
-+	strbuf_release(&ftb_cb.remotes_advice);
- 	string_list_clear(&tracking_srcs, 0);
- }
- 
-
-base-commit: abf474a5dd901f28013c52155411a48fd4c09922
--- 
-gitgitgadget
+Argh, sorry about the broken cover letter. This *fourth* version
+attempts to address Junio's concerns over unnecessary extra
+error-preparation work being done in the very-vastly-more-common
+"normal" case.
