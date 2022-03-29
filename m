@@ -2,76 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0896C433EF
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED46C433F5
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 17:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240081AbiC2RQo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 13:16:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50546 "EHLO
+        id S239691AbiC2R0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 13:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236314AbiC2RQm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 13:16:42 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6785BD37
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:14:59 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id p15so31443837lfk.8
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:14:59 -0700 (PDT)
+        with ESMTP id S236263AbiC2R0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 13:26:13 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6AA17F3CC
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:24:28 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id a11so15850070qtb.12
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 10:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tRdhPj1GW4CtV0bqLZVKkXI3Nih3WmzzykttfY1Wt2Y=;
-        b=VBYEstyp2HTw6Ueo3F76pIqTLdwrq062Eo+kV6hysfQc7adJ2drkxd6bb2aKtdzkX5
-         1mIoUUZYEoIUfKijWVvXvDFFCaDx5RZRkdQDjstceEdcwirQA5TLc6dBC2gdW0C5M+ol
-         L9dw9z5B6K0cZ9JOwi1ZZLsma2oH0vsGU2MrphoSE7iV+31/g+7gP1soSLgGxMAfrTFF
-         IpmP6PeD4WLM3MebeAmIR6xPT5CYBDKu+jsriaKZjj/psR8Rj2IXpmf45J/QqX3dG5Vl
-         Rx0H45D6d/f5mIgaKxu48TO8R12+qP0ZaTr3i+vEgwojVlKc91ulUXN9GinZ7wSl1wkN
-         P1dA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=aAUtmQVysCrqRfqRwRNxIn4NS102Eq4xKWmATFW4kmE=;
+        b=Su9jWGlLdmyN6oPtQwbsbVjuKAIHAwTsXHSLAixjc2l41wRB2shxpCM6h2yvpor+A9
+         9gDSNdqnsnrAFxlLzuWnBs4hSM+VsFbJcLWE/9ZBBeVaMFYdPtfgovB1PmjcQJbV/3OX
+         GUj2pxJR8+YTEXiwt6erjt6DbFv6/IhdFiJTiuYYzRW0j0qnAGQ71EcK0GSil8LCb3vN
+         LBxN32i/QpC+LJJ0EAp9xVC69ScOwHsH3nlunM2Hs4a5b5R3fxO3VCRq+EBe0md/DyW2
+         INISS/10m+tCM1uR2r2dmWDlR0l9KODjY81Jp6kCaXCJN01WQbEtSzDF8BkBREGDIl2T
+         dvGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tRdhPj1GW4CtV0bqLZVKkXI3Nih3WmzzykttfY1Wt2Y=;
-        b=kTTwqe+ZElEDmt3NfEQIkgKbv3F9jZ76oposqHn8d+yVlyKyKmvvop8kXhsrNVVqU0
-         YSjxNP8HurfuFEHIqNaXrihqDfezh8e8OwpXxJzdEMs9JZbeLUDOx30lAU7Ku10itSkX
-         7AbzSFDzTDc0S4BEJgLFh174Zatz3PyRT3q6Wtdw26inEP3fnI7s+fDYWktjSSUnuRj7
-         brQt/WDatmKR+BJaZCn/2zbhpqc0yPD3taOw6j+g9krxQ64E/OGqtG9dO2nIkF+Ru/zs
-         rDBVAXuyqBwIoxnGgOl8cB4mzKRaohoAYqnAR19j5qvFbmIO1aGdwERG1aoB7lLS+zkX
-         6Vzw==
-X-Gm-Message-State: AOAM532HAB3cPgW2mGHRnAlhTXM6X2QCIw5UE4+5GYiXG6d6Q6hqhjwU
-        Aq/b4B0GkE2Wu37/mEh1YoNm9UXEMmNNctMcA/M=
-X-Google-Smtp-Source: ABdhPJz98T5q4iqwnKJ6XLz5KLJEdtR03PghRs/TcTNHjSjADq/bGHoT8LKjEGZ5/AZyW3RX2NdmBjl4LoxhaTXeA+c=
-X-Received: by 2002:ac2:5dfa:0:b0:44a:15d4:9e60 with SMTP id
- z26-20020ac25dfa000000b0044a15d49e60mr3749873lfq.241.1648574097651; Tue, 29
- Mar 2022 10:14:57 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=aAUtmQVysCrqRfqRwRNxIn4NS102Eq4xKWmATFW4kmE=;
+        b=p/EZInJY3EvcdPt3fIZD7F9YkkiDR5qAON3s/BuXgRwp4ZzzzI+bV1BMXwL17is9Jw
+         CVcQOix0KVfkWxsUTwunrfIANGeS5qNCV6zTRNfj7M/tWGs5qt04k7sFqQCJ8qrZUclf
+         tbsZluCXZMfSjHbcquhcLgu6yXGcWMiW41lrVUWBZ/R350sGlEm4OoPxOQc3tpXbEWUt
+         71W5/aCZdbCwlvoDSuwrJ8lUOS8sTfSlj/AgbJXZrKN23swq40IUETBD00wvMPk/RfWL
+         tw3EuYczXWnHc9PDwbRi+figZthPs7JgtsTzqwkDF2buw73lv0HpmwbgqKoArsO9ezyV
+         ZUKQ==
+X-Gm-Message-State: AOAM5304V/Kgc5TY2eZ3axdfS27GcOkABRrtoOn4oidVJLT9ry8IBEJG
+        R6taTUzBnDAsK07OdUmtmyg=
+X-Google-Smtp-Source: ABdhPJy0iGFzinTMTaBumFAXq9ehP+raBd7pJKUPRZcECmYgPc632BXeBPPhb2FOmVBiJPvgrVgRRA==
+X-Received: by 2002:a05:622a:60c:b0:2e2:7b3:3231 with SMTP id z12-20020a05622a060c00b002e207b33231mr29304318qta.678.1648574667714;
+        Tue, 29 Mar 2022 10:24:27 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id s15-20020a05620a29cf00b00680ca4b3755sm5406886qkp.119.2022.03.29.10.24.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Mar 2022 10:24:27 -0700 (PDT)
+Subject: Re: [PATCH v7 4/4] vimdiff: add description to already existing
+ diff/merge tools
+To:     Junio C Hamano <gitster@pobox.com>,
+        Fernando Ramos <greenfoo@u92.eu>
+Cc:     git@vger.kernel.org, davvid@gmail.com, sunshine@sunshineco.com,
+        seth@eseth.com, rogi@skylittlesystem.org, bagasdotme@gmail.com
+References: <20220328223019.271270-1-greenfoo@u92.eu>
+ <20220328223019.271270-5-greenfoo@u92.eu> <xmqqh77gww6c.fsf@gitster.g>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <f56a7a0b-8525-c4cc-7bc7-5ac4bba59206@gmail.com>
+Date:   Tue, 29 Mar 2022 13:24:25 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <pull.1134.v3.git.1648097906.gitgitgadget@gmail.com>
- <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com> <ee7ecf4cabeff14cc64c979aa77fbb2597a9f986.1648514553.git.gitgitgadget@gmail.com>
-In-Reply-To: <ee7ecf4cabeff14cc64c979aa77fbb2597a9f986.1648514553.git.gitgitgadget@gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Tue, 29 Mar 2022 10:14:45 -0700
-Message-ID: <CANQDOdfjRcTB4=mq869NZrNAk+gapR5i8XHFnBhfH1eONzP0BA@mail.gmail.com>
-Subject: Re: [PATCH v4 11/13] t/perf: add iteration setup mechanism to perf-lib
-To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqh77gww6c.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 5:42 PM Neeraj Singh via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
->  test_wrapper_ () {
-> -       test_wrapper_func_=$1; shift
-> +       local test_wrapper_func_=$1; shift
-> +       local test_title_=$1; shift
+Hi Junio, Fernando,
 
-local with assignment seems to be a bash-ism.  I'll fix this.
+Le 2022-03-29 à 12:38, Junio C Hamano a écrit :
+> Fernando Ramos <greenfoo@u92.eu> writes:
+> 
+>> ---
+> 
+> Missing log message and sign off.  "add description" tells us what
+> it did, which is easily visible in the patch text already.  The log
+> message should say why we are adding them, and the rationale has to
+> be better than "adding is better than not adding".  E.g. "in output
+> of X and Y, we only show the names without explanation on what they
+> are, which is not helpful enough" would be a helpful log message.
+
+I might add that the prefix of the commit message title should be changed
+to 'mergetools: ' 
+
+> 
+> Doesn't the change in [3/4] to include these strings in generated
+> mergetools-*.txt file depend on this in place?
+> 
+> Thanks.
+> 
+
+The list of available values are already generated in the  mergetools-diff.txt and
+mergetools-merge.txt files before this series. After 3/4 we also
+include the description of the values. In 3/4 descriptions are only added for
+vimdiff and friends, so the rest of the tools would simply be listed without 
+descriptions. After 4/4 all tools have a description.
