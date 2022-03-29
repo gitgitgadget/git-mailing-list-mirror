@@ -2,72 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86BC0C433F5
-	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 18:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C59D7C433EF
+	for <git@archiver.kernel.org>; Tue, 29 Mar 2022 18:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240609AbiC2Sis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Mar 2022 14:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44510 "EHLO
+        id S240717AbiC2Sw2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Mar 2022 14:52:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240614AbiC2Sir (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Mar 2022 14:38:47 -0400
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CFAB18EEA2
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 11:37:03 -0700 (PDT)
-Received: by mail-pg1-f174.google.com with SMTP id o8so15542801pgf.9
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 11:37:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9K2VJEL/RYaBuFIPad0ApdmPGIGo/g7vcCWmvM0PR9E=;
-        b=Fa6yHmY1fbe3mZSIfsvJnsD8wVtB+slx2jbGIJn6/IwIpkMIvrpEs/XaADrzp+CZOz
-         Z8g6aElIId1CABf2HTWGUsnKSs6Si+IoeuQSX0V0YcBs8uvP0GtnIpcImuw7RTG7Di/S
-         EPp7uFKpB+5VSL1gAsvBpL10BeSGLZDbj/i/ygu4qPUywN493ok58wONzX9AUdCTPQM/
-         oqYyIpMNLb3LlnCSIbRgwzu1CkAV0XwXK+F6KTOqcoKEgI8EmmGqVS73KRHb3ZPgW7be
-         nRjRaM/9WgJA2Hpgz6+9OJWnexrvloQY9Qy3YXlPaF8i/TpmdjY7yVHEMkTiuA7yc7Sv
-         0DNA==
-X-Gm-Message-State: AOAM531syMtPhTelfQuxga3i6kEVNCPtriJ6Fmx0eXSXJnL9f+CNLJ9U
-        wn4tyAOF8Lgp4Wlolz9e+iUq//3d95n/oVlXp+wNJTCBSulyxA==
-X-Google-Smtp-Source: ABdhPJwoexE6jRHAD8Q4Dffhvw6pbmQU0YpZ5MvMiu/Ag1pABOcUw2NPJER9I2HsVd1ZEcMFNSPGdSoJ3BUiOXOPX6c=
-X-Received: by 2002:a63:d23:0:b0:382:70fa:2f0 with SMTP id c35-20020a630d23000000b0038270fa02f0mr2871729pgl.181.1648579022932;
- Tue, 29 Mar 2022 11:37:02 -0700 (PDT)
+        with ESMTP id S237828AbiC2Sw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Mar 2022 14:52:27 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D74E1EA5C9
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 11:50:43 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7604710ACB8;
+        Tue, 29 Mar 2022 14:50:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=fyeRK+Oj8zGi
+        BRDxVamNOiL5IzHp9UmzjnE3NBR5WVM=; b=fmZ2GFibfEGJAogGBkSnj4hJxTGT
+        1uSva93YmOIyrR4Zfsz8fLtnMeBHXCpY+AbWy36kIJudtCQek+o9EisA40e8G/mn
+        206Bi5DbcFDZBqM+J+VCMSOsWQW2zfd6NOBT00K+ycck6aEN2KFt8sgTbKOVDLE+
+        Y+ajboit7fYMt3M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AC0B10ACB7;
+        Tue, 29 Mar 2022 14:50:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A98710ACAF;
+        Tue, 29 Mar 2022 14:50:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Fernando Ramos <greenfoo@u92.eu>, git@vger.kernel.org,
+        davvid@gmail.com, sunshine@sunshineco.com, seth@eseth.com,
+        rogi@skylittlesystem.org, bagasdotme@gmail.com
+Subject: Re: [PATCH v7 4/4] vimdiff: add description to already existing
+ diff/merge tools
+References: <20220328223019.271270-1-greenfoo@u92.eu>
+        <20220328223019.271270-5-greenfoo@u92.eu> <xmqqh77gww6c.fsf@gitster.g>
+        <f56a7a0b-8525-c4cc-7bc7-5ac4bba59206@gmail.com>
+Date:   Tue, 29 Mar 2022 11:50:40 -0700
+In-Reply-To: <f56a7a0b-8525-c4cc-7bc7-5ac4bba59206@gmail.com> (Philippe
+        Blain's message of "Tue, 29 Mar 2022 13:24:25 -0400")
+Message-ID: <xmqqmth8twxr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqq35j1zi7j.fsf@gitster.g> <48242777-6442-4A4D-BE76-1B9EF2F7175B@gmail.com>
- <xmqq1qykycgc.fsf@gitster.g>
-In-Reply-To: <xmqq1qykycgc.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 29 Mar 2022 14:36:52 -0400
-Message-ID: <CAPig+cSJPoj8jk_JHmpc4=3bupZ98dKmDi+POZQXZxJR+CjhKA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] worktree: accept multiple paths
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Desmond Preston <despreston@gmail.com>,
-        Des Preston via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 21F5EBDC-AF91-11EC-9677-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 29, 2022 at 12:02 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Desmond Preston <despreston@gmail.com> writes:
-> >> The fact that this line was introduced in [PATCH 1/2] and then
-> >> needed to immediately be corrected with this patch means the
-> >> previous patch was suboptimal and this patch is "oops, the last one
-> >> was bad and here is a band-aid fix-up".
-> >>
-> >> Let's not do so.  Instead, you are encouraged to pretend to be a
-> >> more perfect developer who does not make unnecessary mistake ;-)
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
+
+> Hi Junio, Fernando,
 >
-> FYI, I've queued [1/2] with the fix-up in [2/2] squashed in.
+> Le 2022-03-29 =C3=A0 12:38, Junio C Hamano a =C3=A9crit=C2=A0:
+>> Fernando Ramos <greenfoo@u92.eu> writes:
+>>=20
+>>> ---
+>>=20
+>> Missing log message and sign off.  "add description" tells us what
+>> it did, which is easily visible in the patch text already.  The log
+>> message should say why we are adding them, and the rationale has to
+>> be better than "adding is better than not adding".  E.g. "in output
+>> of X and Y, we only show the names without explanation on what they
+>> are, which is not helpful enough" would be a helpful log message.
 >
->         N_("git worktree remove [<options>] <worktree>"),
-> +       N_("git worktree repair [<path>...]"),
->         N_("git worktree unlock <path>"),
+> I might add that the prefix of the commit message title should be chang=
+ed
+> to 'mergetools: '=20
+>
+>>=20
+>> Doesn't the change in [3/4] to include these strings in generated
+>> mergetools-*.txt file depend on this in place?
+>>=20
+>> Thanks.
+>>=20
+>
+> The list of available values are already generated in the  mergetools-d=
+iff.txt and
+> mergetools-merge.txt files before this series. After 3/4 we also
+> include the description of the values. In 3/4 descriptions are only add=
+ed for
+> vimdiff and friends, so the rest of the tools would simply be listed wi=
+thout=20
+> descriptions. After 4/4 all tools have a description.
 
-This version looks good to me and addresses my review comments[*], and
-still has my Acked-by: for what it's worth.
-
-Thanks for putting the finishing touches on this.
-
-[*]: https://lore.kernel.org/git/3f823608-adf4-f717-13d8-8da6f89a9506@sunshineco.com/
+OK.  I wonder how that affects our discussion to switch to the
+description list?  This adds what appears as the description.
+Before this step, it would be <dl>...</dl> inside which <dt> appears
+but not <dd>.
