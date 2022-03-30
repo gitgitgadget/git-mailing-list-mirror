@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F5FC433EF
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E21C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242740AbiC3FHz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 01:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56856 "EHLO
+        id S242787AbiC3FH7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 01:07:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242720AbiC3FH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 01:07:28 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF5266623
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:43 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u3so27596951wrg.3
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:43 -0700 (PDT)
+        with ESMTP id S242761AbiC3FHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 01:07:46 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F7266FBD
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:48 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id w4so27527429wrg.12
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4E3crma7zgCOi3ds7U5p/TJuGKDkbTL9Fu3rj9gxZZo=;
-        b=l2PdaytBMynmT5Baxm+MKxxBN2g+OAWR1bHuB5m0ddDUQpTGARJ2Lne1sTEjcCRHCF
-         Plaa2TFUoZUvEiiQVBMHZ3GINnI83Ld+ClahjDHXXKRi+mfIvus22D0qF0WiameGWduh
-         RoB+Y/SvXTJcr8yOCaNnx4eM7QWXaS1fvDWr5gOnpqjO9iP68AUDGb2I5YLzuBa3HIX3
-         79YLVp8UHT8IlHcMBLdxdIEh3djCJRMVXLeVXCMV1Hpacsd0mF8+yqstIap+jTizyFBv
-         HMbUb320B6ISuNcYIfmxls88XFvqOUAK3uNEU0jiKqyY5QO++G3qoflIUgx3wRuTq6XS
-         EirQ==
+        bh=9wQouNJeYrigvBznmm6/Kim7Siohd+Q9tteLLEpJ8lg=;
+        b=j98Uswoi6xKw7cGZXlcXGr5io8Fcz2yYUcUg8KtTPKV+HVHccb6g/gpCR0Y8mjPI/X
+         7qrPhCIpI69OJPc/czgjI6XknhgM8D6xZqN1TTAWAoR+neXyHuafBH5GJcqt3tJHGZOS
+         rmF2s4ze2jdhlkM6TKvKqTQMwZejFy5xaooBoro90CKtqQKsjFyPxv4DY3MBVLwz+fjZ
+         IUIeHht4sOx69bxPJ4OOYq91CY7BL28kJgJlb7dyLKTp5uvqL4OxOL5kJleht/4WP+NC
+         owofBLEK30FAOPC6nYcBz2c4n6CsQortiTBoUM0i9xDIe+gOswbg2Lp5PZ+G6DB3xrtl
+         liTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4E3crma7zgCOi3ds7U5p/TJuGKDkbTL9Fu3rj9gxZZo=;
-        b=ue0TT7lsCAlsmJedHnSZR3UomS6bkxczIh6c3DYGM45GEeqtwVq8NYmHnKEqqKDyoZ
-         9AyJE2yURIuwIzihAWVxxd8n6ec64EQ/9nUgaZkpyFecnG6T8/32UctzCY2a3c0LwiYX
-         RC6gcCHGozCfallh5iJ4ooxW9kPnbILwaZUn9Mr7e/8evLj0F/pHa5ijn9JhD7Ty2MNN
-         fsLxmELMdpgTDUfv/TEckUaX1Z38cSXtkqMl3fWkcqc0fI5i4dqudFDkAaCaCMvtgXVq
-         xr7Iu67/2h3BcDB1crHU6hvKBK880UTe2a+sQSxi0WaBx69bXRzxIQ+yH33ItTxAqVHe
-         eRQA==
-X-Gm-Message-State: AOAM532txWh/+sQG950kgvwa3LJp6HOZzeNJCAxuzWnx/y8hLAcG7q4l
-        Q2F9gtaGBm4MLtI/yLS/bfP8nK31q1E=
-X-Google-Smtp-Source: ABdhPJzwHAnguen1JiGdUzmUXnAaGii/vFyOi/M0DiwQyvt2zUf6mOrfY8CSJpgZDepJ7s3WjOBShw==
-X-Received: by 2002:adf:d1c9:0:b0:203:c225:d042 with SMTP id b9-20020adfd1c9000000b00203c225d042mr34036424wrd.630.1648616741795;
-        Tue, 29 Mar 2022 22:05:41 -0700 (PDT)
+        bh=9wQouNJeYrigvBznmm6/Kim7Siohd+Q9tteLLEpJ8lg=;
+        b=iPpbglFp0m8s6Glh5WBiP9E36Vs+Xv7nd0zTXeqUF/R/svWaPKt1nKkTtD1p5gYAD9
+         38dh3kcArN1a5/AeZpqkr4Q9q3CWfWp7UEBGeARzR8GxSG68zTJb351yUa70ViFtk2la
+         DO+cryEUUjoj7eOZb1XNQ9fxE6BVuRzdJPeujwYcgd9t89WPrymX5ko67eOaQsK41Sni
+         /UwyM7snJrgAHY0q/LTqeL/JT209I0dpLG26ZHd1lVoMaP4JDWENW7uswJHEv4aZkwvZ
+         EubHaeMr+SzeiADHa95clPowOjrAR7dZ8tnwadqiVnolWdOxDbwKnLh1Sqg9UOVFcTna
+         2osQ==
+X-Gm-Message-State: AOAM530cKmmSB4+bkHR+aU6EZUEjwjMfLaXDkoRPYeU1224bJ5ZYM9py
+        oMqWAOltqs6+Ow6Ob/9K+OjeD3x1tCE=
+X-Google-Smtp-Source: ABdhPJxMoHd+jXuqsTkdOHy6D6yMBUFQ3w+Idl0NZ06c6qrp5CUmnqiYXp/4reyIxC/RjsyXKuMwVA==
+X-Received: by 2002:adf:fa87:0:b0:203:f28e:76c3 with SMTP id h7-20020adffa87000000b00203f28e76c3mr34766420wrr.579.1648616746610;
+        Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e14-20020a5d65ce000000b00205c0cb33e0sm7417769wrw.35.2022.03.29.22.05.41
+        by smtp.gmail.com with ESMTPSA id az19-20020a05600c601300b0038cadf3aa69sm5438312wmb.36.2022.03.29.22.05.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 22:05:41 -0700 (PDT)
-Message-Id: <d514842ad493a819e3640ecb658f702e530d6e85.1648616734.git.gitgitgadget@gmail.com>
+        Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
+Message-Id: <1a4aff8c350b5ffe3c7760faa4accc88c83ce11c.1648616734.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
         <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Mar 2022 05:05:24 +0000
-Subject: [PATCH v5 06/14] builtin/add: add ODB transaction around
- add_files_to_cache
+Date:   Wed, 30 Mar 2022 05:05:29 +0000
+Subject: [PATCH v5 11/14] core.fsyncmethod: tests for batch mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,37 +70,223 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-The add_files_to_cache function is invoked internally by
-builtin/commit.c and builtin/checkout.c for their flags that stage
-modified files before doing the larger operation. These commands
-can benefit from batched fsyncing.
+Add test cases to exercise batch mode for:
+ * 'git add'
+ * 'git stash'
+ * 'git update-index'
+ * 'git unpack-objects'
+
+These tests ensure that the added data winds up in the object database.
+
+In this change we introduce a new test helper lib-unique-files.sh. The
+goal of this library is to create a tree of files that have different
+oids from any other files that may have been created in the current test
+repo. This helps us avoid missing validation of an object being added
+due to it already being in the repo.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/add.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ t/lib-unique-files.sh  | 34 ++++++++++++++++++++++++++++++++++
+ t/t3700-add.sh         | 28 ++++++++++++++++++++++++++++
+ t/t3903-stash.sh       | 20 ++++++++++++++++++++
+ t/t5300-pack-object.sh | 41 +++++++++++++++++++++++++++--------------
+ 4 files changed, 109 insertions(+), 14 deletions(-)
+ create mode 100644 t/lib-unique-files.sh
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 9bf37ceae8e..e39770e4746 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -141,7 +141,16 @@ int add_files_to_cache(const char *prefix,
- 	rev.diffopt.format_callback_data = &data;
- 	rev.diffopt.flags.override_submodule_config = 1;
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
+new file mode 100644
+index 00000000000..34c01a65256
+--- /dev/null
++++ b/t/lib-unique-files.sh
+@@ -0,0 +1,34 @@
++# Helper to create files with unique contents
 +
-+	/*
-+	 * Use an ODB transaction to optimize adding multiple objects.
-+	 * This function is invoked from commands other than 'add', which
-+	 * may not have their own transaction active.
-+	 */
-+	begin_odb_transaction();
- 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
-+	end_odb_transaction();
++# Create multiple files with unique contents within this test run. Takes the
++# number of directories, the number of files in each directory, and the base
++# directory.
++#
++# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3 files
++#					 each in my_dir, all with contents
++#					 different from previous invocations
++#					 of this command in this run.
 +
- 	clear_pathspec(&rev.prune_data);
- 	return !!data.add_errors;
++test_create_unique_files () {
++	test "$#" -ne 3 && BUG "3 param"
++
++	local dirs="$1" &&
++	local files="$2" &&
++	local basedir="$3" &&
++	local counter=0 &&
++	local i &&
++	local j &&
++	test_tick &&
++	local basedata=$basedir$test_tick &&
++	rm -rf "$basedir" &&
++	for i in $(test_seq $dirs)
++	do
++		local dir=$basedir/dir$i &&
++		mkdir -p "$dir" &&
++		for j in $(test_seq $files)
++		do
++			counter=$((counter + 1)) &&
++			echo "$basedata.$counter">"$dir/file$j.txt"
++		done
++	done
++}
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index b1f90ba3250..8979c8a5f03 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -8,6 +8,8 @@ test_description='Test of git add, including the -- option.'
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
++. $TEST_DIRECTORY/lib-unique-files.sh
++
+ # Test the file mode "$1" of the file "$2" in the index.
+ test_mode_in_index () {
+ 	case "$(git ls-files -s "$2")" in
+@@ -34,6 +36,32 @@ test_expect_success \
+     'Test that "git add -- -q" works' \
+     'touch -- -q && git add -- -q'
+ 
++BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
++
++test_expect_success 'git add: core.fsyncmethod=batch' "
++	test_create_unique_files 2 4 files_base_dir1 &&
++	GIT_TEST_FSYNC=1 git $BATCH_CONFIGURATION add -- ./files_base_dir1/ &&
++	git ls-files --stage files_base_dir1/ |
++	test_parse_ls_files_stage_oids >added_files_oids &&
++
++	# We created 2 subdirs with 4 files each (8 files total) above
++	test_line_count = 8 added_files_oids &&
++	git cat-file --batch-check='%(objectname)' <added_files_oids >added_files_actual &&
++	test_cmp added_files_oids added_files_actual
++"
++
++test_expect_success 'git update-index: core.fsyncmethod=batch' "
++	test_create_unique_files 2 4 files_base_dir2 &&
++	find files_base_dir2 ! -type d -print | xargs git $BATCH_CONFIGURATION update-index --add -- &&
++	git ls-files --stage files_base_dir2 |
++	test_parse_ls_files_stage_oids >added_files2_oids &&
++
++	# We created 2 subdirs with 4 files each (8 files total) above
++	test_line_count = 8 added_files2_oids &&
++	git cat-file --batch-check='%(objectname)' <added_files2_oids >added_files2_actual &&
++	test_cmp added_files2_oids added_files2_actual
++"
++
+ test_expect_success \
+ 	'git add: Test that executable bit is not used if core.filemode=0' \
+ 	'git config core.filemode 0 &&
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 4abbc8fccae..20e94881964 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -9,6 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. $TEST_DIRECTORY/lib-unique-files.sh
+ 
+ test_expect_success 'usage on cmd and subcommand invalid option' '
+ 	test_expect_code 129 git stash --invalid-option 2>usage &&
+@@ -1410,6 +1411,25 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
+ 	git rev-parse --verify refs/stash:A.t
+ '
+ 
++
++BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
++
++test_expect_success 'stash with core.fsyncmethod=batch' "
++	test_create_unique_files 2 4 files_base_dir &&
++	GIT_TEST_FSYNC=1 git $BATCH_CONFIGURATION stash push -u -- ./files_base_dir/ &&
++
++	# The files were untracked, so use the third parent,
++	# which contains the untracked files
++	git ls-tree -r stash^3 -- ./files_base_dir/ |
++	test_parse_ls_tree_oids >stashed_files_oids &&
++
++	# We created 2 dirs with 4 files each (8 files total) above
++	test_line_count = 8 stashed_files_oids &&
++	git cat-file --batch-check='%(objectname)' <stashed_files_oids >stashed_files_actual &&
++	test_cmp stashed_files_oids stashed_files_actual
++"
++
++
+ test_expect_success 'git stash succeeds despite directory/file change' '
+ 	test_create_repo directory_file_switch_v1 &&
+ 	(
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index a11d61206ad..f8a0f309e2d 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -161,22 +161,27 @@ test_expect_success 'pack-objects with bogus arguments' '
+ '
+ 
+ check_unpack () {
++	local packname="$1" &&
++	local object_list="$2" &&
++	local git_config="$3" &&
+ 	test_when_finished "rm -rf git2" &&
+-	git init --bare git2 &&
+-	git -C git2 unpack-objects -n <"$1".pack &&
+-	git -C git2 unpack-objects <"$1".pack &&
+-	(cd .git && find objects -type f -print) |
+-	while read path
+-	do
+-		cmp git2/$path .git/$path || {
+-			echo $path differs.
+-			return 1
+-		}
+-	done
++	git $git_config init --bare git2 &&
++	(
++		git $git_config -C git2 unpack-objects -n <"$packname".pack &&
++		git $git_config -C git2 unpack-objects <"$packname".pack &&
++		git $git_config -C git2 cat-file --batch-check="%(objectname)"
++	) <"$object_list" >current &&
++	cmp "$object_list" current
  }
+ 
+ test_expect_success 'unpack without delta' '
+-	check_unpack test-1-${packname_1}
++	check_unpack test-1-${packname_1} obj-list
++'
++
++BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
++
++test_expect_success 'unpack without delta (core.fsyncmethod=batch)' '
++	check_unpack test-1-${packname_1} obj-list "$BATCH_CONFIGURATION"
+ '
+ 
+ test_expect_success 'pack with REF_DELTA' '
+@@ -185,7 +190,11 @@ test_expect_success 'pack with REF_DELTA' '
+ '
+ 
+ test_expect_success 'unpack with REF_DELTA' '
+-	check_unpack test-2-${packname_2}
++	check_unpack test-2-${packname_2} obj-list
++'
++
++test_expect_success 'unpack with REF_DELTA (core.fsyncmethod=batch)' '
++       check_unpack test-2-${packname_2} obj-list "$BATCH_CONFIGURATION"
+ '
+ 
+ test_expect_success 'pack with OFS_DELTA' '
+@@ -195,7 +204,11 @@ test_expect_success 'pack with OFS_DELTA' '
+ '
+ 
+ test_expect_success 'unpack with OFS_DELTA' '
+-	check_unpack test-3-${packname_3}
++	check_unpack test-3-${packname_3} obj-list
++'
++
++test_expect_success 'unpack with OFS_DELTA (core.fsyncmethod=batch)' '
++       check_unpack test-3-${packname_3} obj-list "$BATCH_CONFIGURATION"
+ '
+ 
+ test_expect_success 'compare delta flavors' '
 -- 
 gitgitgadget
 
