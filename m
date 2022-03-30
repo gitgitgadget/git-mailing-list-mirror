@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D550C433EF
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 19:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFAFC433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 19:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350555AbiC3TGw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 15:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44076 "EHLO
+        id S1350609AbiC3TL3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 15:11:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350536AbiC3TGt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 15:06:49 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A30C237C3
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:05:02 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id r22so29010309ljd.4
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:05:02 -0700 (PDT)
+        with ESMTP id S1350636AbiC3TLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 15:11:15 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948D23135D
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:09:20 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id bt26so37486653lfb.3
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=awwkvm796VW/PqHYlxRXiws1vPhwrbGvOx6JzYmylOg=;
-        b=BKqVSG5xSBMpZBJMs5oSiKB57mX96rzo03XzlgX4+LFOtscw80KJdHkkzP9vKxhrE0
-         x179Im33x/QtCkxYsxaiIwCqsmIZYeQ2l6minTX2ARSojRXFEy/eunIl5uE+V9UxvHxq
-         P9jJoc4QWUGEj5sGgnTBjVHSZrcZzJP19LWoy86LRbZUf6mWypzpwdbQ7JgMtg326ORP
-         5ud8bh+xgNZ9LcuS5WXsMWXT/pp6+loN+NLP9BGdiEoFEWl6V+DdRPVgB94Cvym2W3/k
-         MuEpZv8dLf1ullyJAzwrTx1UatNnsS4jVmue1YNIlbwUI8YezTIjrJEu54pP1DUSbLPS
-         V6Gw==
+        bh=TVqFGRkG75zJd7Tcc3fpNlGm0DroU4S5w1Nswx3jq+o=;
+        b=gRTWHDh4i3LUlvWpArMsFZbFT4jGy35K8KAjojNmb2RDn9YGNRIulY0rV2rmArYe2s
+         jR3ceczqBxf1hzfjWMeOdIWJplippZDC8YGfS5Rx+sU8kGwcptGlIbaTgXraKPU6ez5j
+         vXq0OR21f4CoFpq54KGIshvdq6NuKqwDbJ24fUoLDvn+ngAt2bmGQeaZxj01ZQphYA2J
+         M3vrdZagirQt4SV9SdpTNRiGjFyfhFlyuE3f/5Te7xrsa4lmdQs78ztjPNGCeptYJr0+
+         UyjzRr2apy9x6I01ihdQuAnqV5vhvmncJmx4fp8gP2CTznn6CGyQynLnhAiLi+aoVjuR
+         P4oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=awwkvm796VW/PqHYlxRXiws1vPhwrbGvOx6JzYmylOg=;
-        b=6+4Y2kgf6ZylJ9e4swO7MDaK4ZGTXzYklyIjtjrWUd2wMxrzo65oc+M2dPe4X5sztn
-         op1e+lhef2Lw5f7cHn0Stcxu3UABzCisWhYgLIBmwHiYnRyd3t0Ax97wb18tgTjp9gPZ
-         10UGNA3QJGsp1XWDCJEd4G9+K8EmdP2va8Mcs8a1sRVzaGis/GLZqaJHPJb3TLklfFub
-         CJoNUGj9ZjFEB8T6IPMwGUQ/1dulAMOFGsPn5RupTIOpkpaIEV4KbZ5/EkK7enaFefzT
-         SBuhx4/sapbGOotcmwUiu8adfMvAvW8w7AO2GuhTUm88ql/f8b/rdxoG+xoThNXa5Nbv
-         zfow==
-X-Gm-Message-State: AOAM532H3XugYU4gMCkHpEWXmzIJyYwC8sdN3RxQmnEoqw8HNYZCaJqx
-        zxnAE62BFSJbY4LWx9VoEN6FpjMcZTnBCP2zcoc=
-X-Google-Smtp-Source: ABdhPJyoVDewaGKYrJMVWvpCSQCzY0ryEx/hAgHouFTR+neoaCBH6g86AvJ99o/ZVU58xsTFmGyV6sjUJhR3nPxLUts=
-X-Received: by 2002:a2e:9b96:0:b0:249:8705:8f50 with SMTP id
- z22-20020a2e9b96000000b0024987058f50mr7935830lji.73.1648667097928; Wed, 30
- Mar 2022 12:04:57 -0700 (PDT)
+        bh=TVqFGRkG75zJd7Tcc3fpNlGm0DroU4S5w1Nswx3jq+o=;
+        b=v9KttqryJ6H7KgwNR8u6TilLf5cnBJ/1xVhAQHDc9Mlf1eldGRMpQyFyBOcIT6JXd1
+         U/cB/vKGOdz8Pk6H73f6f6oOLVeREcKl9HuT0Np58BfbV5m+W2Xg60uAwb6mkZCz12wA
+         YzNgL+HTtJCzgaG3na3dB1K4na9WimcEtQ0lN4cDGzlGPkH2KdIOfvUHfhhB0dbtfur5
+         bjpvNBshMfyzGn0Rov33cJZh+FjRcChqHyrs4/yZrAe1oLvxKHNKVq9zHDDIMYlg2iWZ
+         gHuUXF43+WiWvRm4oxu8SpyRR7cSoW45/7oYnLWxqUeUgMLDUt348l9wGe4R+ElV905M
+         1m1g==
+X-Gm-Message-State: AOAM533BHAfYntoRl3AlSaIrB1weMyb5Vvxsyi+QNV3TdRbmIYOKH6zP
+        COQDsfPSwfIW/MW42Veqs1z4ub5j62u71m2cgXY=
+X-Google-Smtp-Source: ABdhPJx0yzOQS0U0gy9WsW7WJhqRPXetvH4P8MjQgsSnwZQmdY6kKAWd8AZVsH90a3kFL6+lmLNH0Qw1h19/C1vnD8g=
+X-Received: by 2002:a05:6512:322f:b0:44a:57a0:6950 with SMTP id
+ f15-20020a056512322f00b0044a57a06950mr8241593lfe.74.1648667356343; Wed, 30
+ Mar 2022 12:09:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
- <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com> <83fa4a5f3a5c79fa814932c0705867ff16a584c7.1648616734.git.gitgitgadget@gmail.com>
- <xmqqy20r8h9o.fsf@gitster.g>
-In-Reply-To: <xmqqy20r8h9o.fsf@gitster.g>
+ <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com> <8cac94598a58704d9b625a9d8a593779f7adc30f.1648616734.git.gitgitgadget@gmail.com>
+ <xmqqpmm38h01.fsf@gitster.g>
+In-Reply-To: <xmqqpmm38h01.fsf@gitster.g>
 From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 30 Mar 2022 12:04:46 -0700
-Message-ID: <CANQDOddUQRwq73e9pxxmp8c2JRvLy4YcbDHEQ+h-6uEoauyb2g@mail.gmail.com>
-Subject: Re: [PATCH v5 05/14] cache-tree: use ODB transaction around writing a tree
+Date:   Wed, 30 Mar 2022 12:09:04 -0700
+Message-ID: <CANQDOdf5T9iexGryVfZ1epgEdkiBU5WBCX9rBtpr_JuSvvxjmA@mail.gmail.com>
+Subject: Re: [PATCH v5 07/14] update-index: use the bulk-checkin infrastructure
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -68,61 +68,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 10:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Mar 30, 2022 at 10:52 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > From: Neeraj Singh <neerajsi@microsoft.com>
-> >
-> > Take advantage of the odb transaction infrastructure around writing the
-> > cached tree to the object database.
-> >
-> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
-> > ---
-> >  cache-tree.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/cache-tree.c b/cache-tree.c
-> > index 6752f69d515..8c5e8822716 100644
-> > --- a/cache-tree.c
-> > +++ b/cache-tree.c
-> > @@ -3,6 +3,7 @@
-> >  #include "tree.h"
-> >  #include "tree-walk.h"
-> >  #include "cache-tree.h"
-> > +#include "bulk-checkin.h"
-> >  #include "object-store.h"
-> >  #include "replace-object.h"
-> >  #include "promisor-remote.h"
-> > @@ -474,8 +475,10 @@ int cache_tree_update(struct index_state *istate, int flags)
-> >
-> >       trace_performance_enter();
-> >       trace2_region_enter("cache_tree", "update", the_repository);
->
-> There is no I/O in update_one() when the WRITE_TREE_DRY_RUN bit is
-> set, so we _could_ optimize the begin/end away with
->
->         if (!(flags & WRITE_TREE_DRY_RUN))
->                 begin_odb_transaction()
->
+> > +     /*
+> > +      * Allow the object layer to optimize adding multiple objects in
+> > +      * a batch.
+> > +      */
 > > +     begin_odb_transaction();
-> >       i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
-> >                      "", 0, &skip, flags);
-> > +     end_odb_transaction();
-> >       trace2_region_leave("cache_tree", "update", the_repository);
-> >       trace_performance_leave("cache_tree_update");
-> >       if (i < 0)
+> >       while (ctx.argc) {
+> >               if (parseopt_state != PARSE_OPT_DONE)
+> >                       parseopt_state = parse_options_step(&ctx, options,
+> > @@ -1167,6 +1174,17 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+> >               the_index.version = preferred_index_format;
+> >       }
+> >
+> > +     /*
+> > +      * It is possible, though unlikely, that a caller could use the verbose
+> > +      * output to synchronize with addition of objects to the object
+> > +      * database. The current implementation of ODB transactions leaves
+> > +      * objects invisible while a transaction is active, so end the
+> > +      * transaction here if verbose output is enabled.
+> > +      */
+> > +
+> > +     if (verbose)
+> > +             end_odb_transaction();
+> > +
+> >       if (read_from_stdin) {
+> >               struct strbuf buf = STRBUF_INIT;
+> >               struct strbuf unquoted = STRBUF_INIT;
+> > @@ -1190,6 +1208,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+> >               strbuf_release(&buf);
+> >       }
+> >
+> > +     /*
+> > +      * By now we have added all of the new objects
+> > +      */
+> > +     if (!verbose)
+> > +             end_odb_transaction();
 >
-> I do not know if that is worth it.  If we do not do any object
-> creation inside begin/end, we don't even create the temporary object
-> directory and there is nothing we need to do when we "unplug".  So
-> this would be fine as-is, but I may be overlooking something, so I
-> thought I'd mention it for completeness.
+> If we had "flush" in addition to "begin" and "end", then we could,
+> instead of the above
 >
+>     begin_transaction
+>         do things
+>     if condition:
+>         end_transaction
+>     loop:
+>         do thing
+>     if !condition:
+>         end_transaction
+>
+>
+> which is somewhat hard to follow and maintain, consider using a
+> different flow, which is
+>
+>     begin_transaction
+>         do things
+>     loop:
+>         do thing
+>         if condition:
+>             flush
+>     end_transaction
+>
+> and that might make it easier to follow and maintain.  I am not 100%
+> sure if it is worth it, but I am leaning to say it would be.
+>
+> Thanks.
 
-Yes, with the current series, beginning and ending a transaction will
-just manipulate a few global variables in bulk-checkin.c unless there
-is something real to flush.
-
-Thanks,
-Neeraj
+I thought about this, but I was somewhat worried about the extra cost
+of "flushing" versus just making things visible immediately if the
+top-level update-index command knows it's going to need objects to be
+visible.  I'll go ahead and implement flush in the next iteration.
