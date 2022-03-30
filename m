@@ -2,105 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84106C433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 17:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC2BC433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 17:35:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349307AbiC3Rca (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 13:32:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49320 "EHLO
+        id S1349332AbiC3RhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 13:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349300AbiC3Rc3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 13:32:29 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 528801114D
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 10:30:41 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id h196so17209917qke.12
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 10:30:41 -0700 (PDT)
+        with ESMTP id S1349330AbiC3RhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 13:37:16 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B882A8890
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 10:35:31 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id b24so25273404edu.10
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 10:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=v2LzPYf8NbtHXclE6HHty1u8fqaldW4pVBiaPSlDrPI=;
-        b=JmBZUQNEq4eXMPzmiyqKfacfEGV1XogjtA9JVQWU6D2b5VxVGtDGHAr50NTgvn/WTc
-         0IQF3/DbqlK3WnE+Ok9HL1G5scqVoShzClBalEI06tRKcq8VGCy5/dLfFoACnWBPX4KD
-         yEDqZg0ZPOHvpC2Lmkb3I6GLlsPyCoB1h60Hc/rGcdpk90T13iSVPa1ydqNW2b3sH3Z2
-         3hNF5uNd4SDMGgYL/AGnZX9I7aECk1VWhmCSUgO1SK6ZU1DKr+p9xRSF/bNr1+o/YzAA
-         OT9K11HVTAlmjDdDLgP2U26bFu+is7m2V+e+k2a0SM4Jv7R4hVbmHJc1r9yaO0KUAno1
-         Tbkg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=gXJJJzdGogtQadGo0poO9xUyX1dFOGwIY7AZrsYaiXY=;
+        b=b55/C4a9T5ieFB9gznp7L/2C2kQYkA5AI3/i0crKRpZ9qIEHE6uliJSFPNVunPCwmw
+         prCuHXRawjk5dXP/Nk/ZevRzxYvkrejVEma+Wm5Sr/BnlzzIxRbsvcerv11tbN/e+HSl
+         Gld8pJ+PjArBp5I4x9tpomreSepQ7tj08LnQmzGxDduKmzYgwwvKXBsrZZyy9GnmQVV3
+         MG2jz0vYJ/d4o5QJ5Fnd4Wk68KO+iJBpybpNRlLsWojW4nq9ibnAm4IQYg9lesMUTPIl
+         nTCwragFgU425sw9295IFLWAt0ESUeIh/TeP5bQJrkshbCjQ/CVE/e4TvCE+Y/QbEQyx
+         elGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=v2LzPYf8NbtHXclE6HHty1u8fqaldW4pVBiaPSlDrPI=;
-        b=MjFbC6mXWZ4IALKqAtCx0iwQLXMh0/gUeRN79VowB5Uevf5+uLuTvRWwu7aY1jWsda
-         2orlpnxWqDC1782DFjTuliYQamJLGZ7RQ2qHy/DFgNnAHslDTQBwRiuNrtFY5AUKP4xN
-         5+XIN0kBz+INSHkLLKLRovOQXq0SkpY7xp+UOt3su/a6PVsIii4Jg6j1wPaBc/LlGk0W
-         ARh4NSq0hKr2tMw20hTU3ZqKl0vrj7cdX5hv44jmua3uBsHT8hUngUVkqW1PY93aVmxO
-         ndXsVm0jq4W+TQZtyXQfAIJHAB9V9PxTEGYgBr+KhqjANUsEsfhj4t79yP2W8IUnmZhZ
-         mGiQ==
-X-Gm-Message-State: AOAM532LFynzyzuyIPh8wPZjJcBOcWfMVSwiOTVelNEDsf0PExHKKZWL
-        0lj50fqUDG/NiYxvQcgNpB5vTQ==
-X-Google-Smtp-Source: ABdhPJz+q3i0PBheuQW6FB3KTF+dNIypVjrYKwYUl8kTV3Wy+NtoSTRRSG1rVpBvrSdlAAeDoMTIJw==
-X-Received: by 2002:a05:620a:45aa:b0:680:9ec6:ed42 with SMTP id bp42-20020a05620a45aa00b006809ec6ed42mr549738qkb.179.1648661440383;
-        Wed, 30 Mar 2022 10:30:40 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3-20020a370503000000b0067b03f03589sm11110175qkf.53.2022.03.30.10.30.39
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=gXJJJzdGogtQadGo0poO9xUyX1dFOGwIY7AZrsYaiXY=;
+        b=w21UJEGL84qDrr/sheRFo8apv/zqYiH64B0+6ygEiSke4f7OoxTW8atsE61TIXBcCP
+         Jt6NzTiZqPonfaHMDuek2yva10Or1wvA1OrbBl+fXUp2vgFmS632RH6/4aPRcMMIsk/8
+         hz3iH2bjJelD/eTe/WSYEK50DILcWzhgQCaYF2B+eMWJQDFWVqP2WFrexyEHEmdl5/F3
+         A4obfLQuK67CizMPUjLJj0h/j713jjFm0AGejVXGie1fFvckuuzAAPzsMDQz8XXc88bz
+         CE/ONi80vXgy7oW3LVNxxtalkZ0T2EmRy7FPyOImM+Vd/xz6iwL6WIM5k9khsxphZGmC
+         Oaxw==
+X-Gm-Message-State: AOAM533MEFrs3NN6bgJUpzoyraDazS249oP4ceUsBuRIesAK7OIBN5fU
+        UylzAMagHvRP6WAZ6FMZCbq9iajmC38=
+X-Google-Smtp-Source: ABdhPJzUfsIbipZnIza1tLqHHu3JsuIvB4URZ3wCNw2uNrggcXKvHoDG1TcrP0sGQg2DzddF71bKOw==
+X-Received: by 2002:aa7:c345:0:b0:419:12ae:449c with SMTP id j5-20020aa7c345000000b0041912ae449cmr12055878edr.300.1648661729700;
+        Wed, 30 Mar 2022 10:35:29 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e6-20020a056402190600b00413d03ac4a2sm10773303edz.69.2022.03.30.10.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 10:30:39 -0700 (PDT)
-Date:   Wed, 30 Mar 2022 13:30:38 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        tytso@mit.edu, derrickstolee@github.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v3 01/17] Documentation/technical: add cruft-packs.txt
-Message-ID: <YkSTvr42wFVAgHvp@nand.local>
-References: <YjpDbHmKY9XA2p0K@google.com>
- <YjpHbaBspUasDdEy@nand.local>
- <YjpWFZ95OL7joFa4@google.com>
- <Yjpxd8qhwnAIJJma@nand.local>
- <YkICkpttOujOKeT3@nand.local>
- <xmqq8rst23w0.fsf@gitster.g>
- <YkIm7lnQsUT0JnvS@nand.local>
- <xmqqa6d8yckj.fsf@gitster.g>
- <YkO/P3xgGYmhAz2O@nand.local>
- <xmqq1qyjblxp.fsf@gitster.g>
+        Wed, 30 Mar 2022 10:35:29 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nZcEC-004Nsn-Jl;
+        Wed, 30 Mar 2022 19:35:28 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han Xin <chiyutianyi@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, hanxin.hx@alibaba-inc.com,
+        l.s.r@web.de, neerajsi@microsoft.com, newren@gmail.com,
+        philipoakley@iee.email, stolee@gmail.com, worldhello.net@gmail.com,
+        zhiyou.jx@alibaba-inc.com
+Subject: Re: [PATCH v12 3/8] object-file.c: refactor write_loose_object() to
+ several steps
+Date:   Wed, 30 Mar 2022 19:34:35 +0200
+References: <patch-v12-3.8-3dcaa5d6589-20220329T135446Z-avarab@gmail.com>
+ <20220330071344.25676-1-chiyutianyi@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220330071344.25676-1-chiyutianyi@gmail.com>
+Message-ID: <220330.86mth7ny1r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1qyjblxp.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 06:37:54AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+
+On Wed, Mar 30 2022, Han Xin wrote:
+
+> On Tue, Mar 29, 2022 at 3:56 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+>>=20
+>> +/**
+>> + * Common steps for loose object writers to end writing loose objects:
+>> + *
+>> + * - End the compression of zlib stream.
+>> + * - Get the calculated oid to "oid".
+>> + * - fsync() and close() the "fd"
 >
-> > The thing I think Jonathan seeks to prevent is older versions of Git
-> > gc'ing a repo that has cruft packs. I think I may need you to clarify a
-> > little, sorry :-(.
->
-> By making controlled rollout of the use of "--cruft" option (and the
-> assumption here is that a large organization setting people do not
-> manually say "gc --cruft", and they can ship their maintenance
-> scripts that may be run via cron or whatever with and without
-> "--cruft"), you can control the number of repositories that can
-> potentially see older versions of Git running gc on with cruft
-> packs.  Those users, for whom it is not their turn to start using
-> "--cruft" enabled version of the script, will not have cruft packs,
-> so it does not matter if they keep an older version of Git somewhere
-> hidden in a hermetic build of an IDE that bundles Git and gc kicks
-> in for them.
+> Since we removed close_loose_object() from end_loose_object_common() , I
+> think this comment should also be removed.
 
-Ahh, OK. Thanks for explaining: this is what I was pretty sure you
-meant, but I wanted to make sure before agreeing to it.
+You're right. I adjusted it for the "parano_oid" in this v12, but
+managed to miss that somehow.
 
-Yes, this solution amounts to: "if you have mixed-versions of Git
-mutually gc'ing a repository, then use the same rollout method used for
-controlling Git itself to guard when to start creating cruft packs".
+Will submit a re-roll with those changes, but will wait a bit more to
+see if there's any other comments on this v12 first. Thanks!
 
-I would be very eager to hear if this works for Jonathan's case. It
-should do the trick, I'd think.
-
-Thanks,
-Taylor
