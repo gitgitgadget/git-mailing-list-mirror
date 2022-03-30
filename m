@@ -2,181 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFA9C4332F
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 18:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F39F5C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 18:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350346AbiC3Sii (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 14:38:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50590 "EHLO
+        id S1350376AbiC3SsA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 14:48:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353443AbiC3ShU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 14:37:20 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0967DDAC
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:35:29 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bu29so37465962lfb.0
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:35:27 -0700 (PDT)
+        with ESMTP id S1350667AbiC3Srs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 14:47:48 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE88A55AC
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id kd21so14652872qvb.6
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=owSOgURpp1P1lVTsTXqcmKEQxwJDy1PknHGQMD1MK7Q=;
-        b=Nx9AgCMrHg1zTkD+1DCabJhyk+ZDi3vah0Z6dIzEbptLxstX53g92glT52K6+dKWpn
-         Soary2kSaJgoOdjAofRg5rFjnT3ErPqmjYPHSbHBQzz4ndgHd8NjhH7yezw8tDAgWQZC
-         j5DcG9IyM+VNafheGVMYmwNR9G6ur9lNuYCBRcLK0GkfTCJ6kl5wA7pDMiZrdY+ePB78
-         PVK9i590iKSesAMOTRDpdthG+xpsKek4sqTf68OeDJMIt4Vqr65f54bEvV6IhadBo1xQ
-         OQgvZAkZLFTHoH0cY0QfwNqQxQcD+KwGEPcownxzTdfeFUTlnEHxJbopKWM7j25/3PUf
-         8Mig==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=p+8XQzZffecRtOUeQpznh+0KndrhvI9sceZTSFBW92k=;
+        b=McIPwBvdzXiGDm+5UNZkPzWFyB/rHUHXK40XkaW5drZ9e5PH2OBbFuHUegmWMJiXeA
+         OqSVX/c0jmih3F+EOIPU6y7o5E4QCtFj4arrFPbdgovISWKoabDZu8fzXnkY21yxgyTo
+         fhN/yZEYG/li8vCfCceppLZSdYTl+M/Fq+UBn1sg4dybrCQdPq55WjogzxQGA/lHPtm7
+         tegD4SNOCGqPOXmL5smHio2KkpWO1fHm9Q/hH8f1V6P0MK0xdYgbGO845RLiNEnBNhW5
+         0kqC5+Y/EL728GNxu/KkhEVSXtNAcLYg8HPdtmPzzljdHFV6YWuo7hpQa0ksRP5AAfvU
+         yaVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=owSOgURpp1P1lVTsTXqcmKEQxwJDy1PknHGQMD1MK7Q=;
-        b=XLDf3ZnMvnwJOGGNR8AyWkvJzn0LRldAR/XAVjhXZRrjBo0nTqAjPtIWv0NXBJTepP
-         FyKmyaSUKJeUlGxV19/4O/Q7i4l0Wp0kYcABKE9CZpOXNmVbv94eQRmHtoFANNcN1NTy
-         3iCwbAAW0LyCzhE/yTGTrs6OjkuYy15gNgVe3Fm+ELUDcuXi1oLgm0ErnjHMeR/nyZT+
-         iF3Drwb0uEO0/W+lRPmQR6nDAuhT1MX5Dh91MP+/eF8f6tyUi8Whau/TY3ZXJUqiDcxw
-         zQ5WS2X066juY6fAE9QsUWUlnwuFFeFnNATJd6EZwLG5dMzAgM7ktaBd5NJcnOXE4p9P
-         Lykg==
-X-Gm-Message-State: AOAM532d+8VxjTCaH2qK1FiFdOVoiyvpRFZ87ZSWGLLFF+SzNf+icq6Q
-        Xpt0bnnAwkCntmH6oyzuvzNbVd9qMYAGpB7Suy0=
-X-Google-Smtp-Source: ABdhPJwGQumC0RjjiEoSdY/CFw+mlVT215mcNTB6wm4MwAemU+1RTjsZRm04yjjZxCgMlNAJSKN8f4ums/rjlngXXUA=
-X-Received: by 2002:a05:6512:322f:b0:44a:57a0:6950 with SMTP id
- f15-20020a056512322f00b0044a57a06950mr8123370lfe.74.1648665309812; Wed, 30
- Mar 2022 11:35:09 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=p+8XQzZffecRtOUeQpznh+0KndrhvI9sceZTSFBW92k=;
+        b=hBHOrn2juYk4zoHg1fbrudEE0qa13yHy4QDfH4BM10e7uy21Yf33ikksPA3unQfXxm
+         UNfkK0u+g2K75jhwOM35maQNaQzyROAsFY+KSkA/73fRJqRXcuQ0WSAMM1ewirGCTwdE
+         CyEj+WBMY2CaIKUGFL/Qa89pQ0u08oVEo56qKEO6BbXii01pokQGdJcCM9U6QdWtFhom
+         6eU1i17IVfLVIs1sJbWm7DHEMETipVUQu0S9639q1ySLGOzUuWPsCPCuKb20SkesrUK7
+         3U6GQg0VUfyjQjxPPcgBWcGOuI5x5GPBHuOdhJfn2mbAF3IOOg+mHwHJU6uYxzXpkxRT
+         u8zQ==
+X-Gm-Message-State: AOAM5331ysu6Daw5DEgdj2KjOzXG/iQlEXAo4LVXoD9ui27M8FsNQEAR
+        uNZYl3ieI7285t0pTrY24Ks8ElVxB4UDRg==
+X-Google-Smtp-Source: ABdhPJxqrZjxPpX8djcRLlryzQdWgJZpx1JM1mQUfSoenJ/dH8MjTV1jdyrKyOW8Pgxkq7/3b/6n+A==
+X-Received: by 2002:a05:6214:c29:b0:441:2777:b8bd with SMTP id a9-20020a0562140c2900b004412777b8bdmr861018qvd.37.1648665961055;
+        Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id r17-20020a05620a299100b00680b43004bfsm10145003qkp.45.2022.03.30.11.46.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Mar 2022 11:46:00 -0700 (PDT)
+Subject: Re: [PATCH v8 5/5] mergetools: add tools description to `git help
+ config`
+To:     Fernando Ramos <greenfoo@u92.eu>
+Cc:     git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
+        sunshine@sunshineco.com, seth@eseth.com, rogi@skylittlesystem.org,
+        bagasdotme@gmail.com
+References: <20220328223019.271270-1-greenfoo@u92.eu>
+ <20220329224439.290948-1-greenfoo@u92.eu>
+ <20220329224439.290948-6-greenfoo@u92.eu>
+ <da6472b4-65e6-a3ca-8d8b-892afb6f0fac@gmail.com>
+ <YkSij31hyi29g7v2@zacax395.localdomain>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <de847041-acad-2a01-6a4f-36ed7318e01c@gmail.com>
+Date:   Wed, 30 Mar 2022 14:45:59 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
- <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com> <c7a2a7efe6d532fc7fce1352b1dfce640cc9f2f6.1648616734.git.gitgitgadget@gmail.com>
- <xmqqpmm39xhx.fsf@gitster.g>
-In-Reply-To: <xmqqpmm39xhx.fsf@gitster.g>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 30 Mar 2022 11:34:58 -0700
-Message-ID: <CANQDOdfWTufEn0NRSAOG991JcS4x8GsCC62UCLUTEc3gD6tfGA@mail.gmail.com>
-Subject: Re: [PATCH v5 01/14] bulk-checkin: rename 'state' variable and
- separate 'plugged' boolean
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YkSij31hyi29g7v2@zacax395.localdomain>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 10:11 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Batched fsync will fit into bulk-checkin by taking advantage of the
-> > plug/unplug functionality to determine the appropriate time to fsync
-> > and make newly-added objects available in the primary object database.
-> >
-> > * Rename 'state' variable to 'bulk_checkin_state', since we will later
-> >   be adding 'bulk_fsync_objdir'.  This also makes the variable easier to
-> >   find in the debugger, since the name is more unique.
-> >
-> > * Move the 'plugged' data member of 'bulk_checkin_state' into a separate
-> >   static variable. Doing this avoids resetting the variable in
-> >   finish_bulk_checkin when zeroing the 'bulk_checkin_state'. As-is, we
-> >   seem to unintentionally disable the plugging functionality the first
-> >   time a new packfile must be created due to packfile size limits. While
-> >   disabling the plugging state only results in suboptimal behavior for
-> >   the current code, it would be fatal for the bulk-fsync functionality
-> >   later in this patch series.
->
-> Paraphrasing to make sure I understand your reasoning here...
->
-> In the "plug and then perform as many changes to the repository and
-> finally unplug" flow, before or after this series, the "perform"
-> step in the middle is unaware of which "bulk_checkin_state" instance
-> is being used to keep track of what is done to optimize by deferring
-> some operations until the "unplug" time.  So bulk_checkin_state is
-> not there to allow us to create multiple instances of it, pass them
-> around to different sequences of "plug, perform, unplug".  Each of
-> its members is inherently a singleton, so in the extreme, we could
-> turn these members into separate file-scope global variables if we
-> wanted to.  The "plugged" bit happens to be the only one getting
-> ejected by this patch, because it is inconvenient to "clear" other
-> members otherwise.
->
-> Is that what is going on?
->
+Hi Fernando,
 
-More or less.  The current state is all about creating a single
-packfile for multiple large objects.  That packfile is a singleton
-today (we could have an alternate implementation where there's a
-separate packfile per thread in the future, so it's not inherent to
-the API).  We want to do this if the top-level caller is okay with the
-state being invisible until the "finish" call, and that is conveyed by
-the "plugged" flag.
+Le 2022-03-30 à 14:33, Fernando Ramos a écrit :
+>> This commit is authored by you but is missing your sign off.
+>> Also, I did not give my sign-off on this patch (that can't be assumed,
+>> it always has to be expressively given).
+> 
+> I see, sorry. As this patch is a verbatim copy of the one you provided in the
+> last message I thought it was not appropriate to put my name on it (as it does
+> not contain any line created by me)... but now I know that in these cases the
+> right thing to do is to squash into the commit being commented on and add a
+> "Helped-by:" note. Right?
 
-> If it is, I am mildly opposed to the flow of thought, from at least
-> two reasons.  It makes it hard for the next developer to decide if
-> the new members they are adding should be in or out of the struct.
->
-> More importantly, I think the call of finish_bulk_checkin() we make
-> in deflate_to_pack() you found (and there may possibly other places
-> that we do so; I didn't check) may not appear to be a bug in the
-> original context, but it already is a bug.  And when we change the
-> semantics of plug-unplug to be more "transaction-like", it becomes a
-> more serious bug, as you said.
->
-> There is NO reason to end the ongoing transaction there inside the
-> while() loop that tries to limit the size of the packfile being
-> used.  We may want to flush the "packfile part", which may have been
-> almost synonymous to the entirety of bulk_checkin_state, but as you
-> found out, the "plugged" bit is *outside* the "packfile part", and
-> that makes it a bug to call finish_bulk_checkin() from there.
->
-> We should add a new function, flush_bulk_checking_packfile(), to
-> flush only the packfile part of the bulk_checkin_state without
-> affecting other things---the "plugged" bit is the only one in the
-> current code before this series, but it does not have to stay to be
-> so
+Yes, right. :)
 
-I'm happy to rename the packfile related stuff to end with _packfile
-to make it clear that all of that state and functionality is related
-to batching of packfile additions.
-So from this patch: s/bulk_checkin_state/bulk_checkin_packfile and
-s/finish_bulk_checkin/finish_bulk_checkin_packfile.
+> 
+> I'll fix this in v9.
+> 
+> Just to double check, please confirm this is what you want me to do:
+> 
+>   1. Squash 5/5 into  3/5
 
-My new state will be bulk_fsync_* (as it is already).  Any future
-ODB-related state can go here too (I'm imagining a future
-log-structured 'new objects pack' that we can append to for adding
-small objects, similar to the bulk_checkin_packfile but allowing
-appends from multiple git invocations).
+yes. 
 
-> When you start plugging the loose ref transactions, you may
-> find it handy (this is me handwaving) to have a list of refs that
-> you may have to do something at "unplug" time kept in the struct,
-> and you do not want deflate_to_pack() affecting the ongoing
-> "plugged" ref operations by calling finish_bulk_checkin() and
-> reinitializing that list, for example.
->
+> 
+>   2. Update the commit message to:
+> 
+>      2.1 Explain that the description is also added to the output of `git help
+>          config`
 
-I don't believe ref transactions will go through this part of the
-infrastructure.  Refs already have a good transaction system (that
-partly inspired this rebranding, after I saw how Peter implemented
-batch ref fsync).  I expect this area will remain all about the ODB as
-a subsystem that can enlist in a larger repo->transaction.  So a
-top-level Git command might initiate a repo transaction, which would
-internally initiate an ODB transaction, index transaction, and ref
-transaction. The repo transaction would support flushing each of the
-subtransactions with an optimal number of fsyncs.
+Yes. For example, this is how I would phrase it, be free to copy 
+(maybe as the second-to-last paragraph?):
 
-> And then we should examine existing calls to finish_bulk_checkin()
-> and replace the ones that should not be finishing, i.e. the ones
-> that wanted "flush" but called "finish".
+Note that the function 'show_tool_names', used in the implmentation of
+'git mergetool --tool-help', is also used in Documentation/Makefile to
+generate the list of allowed values for the configuration variables 
+'{diff,merge}.{gui,}tool'. Adjust the rule so its output is an Asciidoc
+"description list" instead of a plain list, with the tool name as the item
+and the newly added tool description as the description.
 
-Sure.  I can fix this, which will only change this file.  The only
-case of "finishing" would be in unplug_bulk_checkin /
-end_odb_transaction.
+> 
+>      2.2 Remove your name from "Signed-off-by:"
+> 
+>      2.3 Keep you name in "Helped-by:"
 
-Thanks,
-Neeraj
+yes and yes.
+
+> 
+> Thanks!
+> 
+> 
+> PS: I must confess this whole process of sending patches to the git mailing
+> list brings me back memories from "Asterix: The 12 Tasks" [1] :) :) :)
+
+Yes, it can be hard. I prefer using Gitgitgadget most of the time [1].
+
+[1] https://gitgitgadget.github.io/
