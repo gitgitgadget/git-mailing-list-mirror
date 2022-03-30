@@ -2,131 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F39F5C433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 18:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D550C433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 19:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350376AbiC3SsA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 14:48:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47332 "EHLO
+        id S1350555AbiC3TGw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 15:06:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350667AbiC3Srs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 14:47:48 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE88A55AC
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id kd21so14652872qvb.6
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
+        with ESMTP id S1350536AbiC3TGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 15:06:49 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A30C237C3
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:05:02 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id r22so29010309ljd.4
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=p+8XQzZffecRtOUeQpznh+0KndrhvI9sceZTSFBW92k=;
-        b=McIPwBvdzXiGDm+5UNZkPzWFyB/rHUHXK40XkaW5drZ9e5PH2OBbFuHUegmWMJiXeA
-         OqSVX/c0jmih3F+EOIPU6y7o5E4QCtFj4arrFPbdgovISWKoabDZu8fzXnkY21yxgyTo
-         fhN/yZEYG/li8vCfCceppLZSdYTl+M/Fq+UBn1sg4dybrCQdPq55WjogzxQGA/lHPtm7
-         tegD4SNOCGqPOXmL5smHio2KkpWO1fHm9Q/hH8f1V6P0MK0xdYgbGO845RLiNEnBNhW5
-         0kqC5+Y/EL728GNxu/KkhEVSXtNAcLYg8HPdtmPzzljdHFV6YWuo7hpQa0ksRP5AAfvU
-         yaVg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=awwkvm796VW/PqHYlxRXiws1vPhwrbGvOx6JzYmylOg=;
+        b=BKqVSG5xSBMpZBJMs5oSiKB57mX96rzo03XzlgX4+LFOtscw80KJdHkkzP9vKxhrE0
+         x179Im33x/QtCkxYsxaiIwCqsmIZYeQ2l6minTX2ARSojRXFEy/eunIl5uE+V9UxvHxq
+         P9jJoc4QWUGEj5sGgnTBjVHSZrcZzJP19LWoy86LRbZUf6mWypzpwdbQ7JgMtg326ORP
+         5ud8bh+xgNZ9LcuS5WXsMWXT/pp6+loN+NLP9BGdiEoFEWl6V+DdRPVgB94Cvym2W3/k
+         MuEpZv8dLf1ullyJAzwrTx1UatNnsS4jVmue1YNIlbwUI8YezTIjrJEu54pP1DUSbLPS
+         V6Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=p+8XQzZffecRtOUeQpznh+0KndrhvI9sceZTSFBW92k=;
-        b=hBHOrn2juYk4zoHg1fbrudEE0qa13yHy4QDfH4BM10e7uy21Yf33ikksPA3unQfXxm
-         UNfkK0u+g2K75jhwOM35maQNaQzyROAsFY+KSkA/73fRJqRXcuQ0WSAMM1ewirGCTwdE
-         CyEj+WBMY2CaIKUGFL/Qa89pQ0u08oVEo56qKEO6BbXii01pokQGdJcCM9U6QdWtFhom
-         6eU1i17IVfLVIs1sJbWm7DHEMETipVUQu0S9639q1ySLGOzUuWPsCPCuKb20SkesrUK7
-         3U6GQg0VUfyjQjxPPcgBWcGOuI5x5GPBHuOdhJfn2mbAF3IOOg+mHwHJU6uYxzXpkxRT
-         u8zQ==
-X-Gm-Message-State: AOAM5331ysu6Daw5DEgdj2KjOzXG/iQlEXAo4LVXoD9ui27M8FsNQEAR
-        uNZYl3ieI7285t0pTrY24Ks8ElVxB4UDRg==
-X-Google-Smtp-Source: ABdhPJxqrZjxPpX8djcRLlryzQdWgJZpx1JM1mQUfSoenJ/dH8MjTV1jdyrKyOW8Pgxkq7/3b/6n+A==
-X-Received: by 2002:a05:6214:c29:b0:441:2777:b8bd with SMTP id a9-20020a0562140c2900b004412777b8bdmr861018qvd.37.1648665961055;
-        Wed, 30 Mar 2022 11:46:01 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id r17-20020a05620a299100b00680b43004bfsm10145003qkp.45.2022.03.30.11.46.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Mar 2022 11:46:00 -0700 (PDT)
-Subject: Re: [PATCH v8 5/5] mergetools: add tools description to `git help
- config`
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org, gitster@pobox.com, davvid@gmail.com,
-        sunshine@sunshineco.com, seth@eseth.com, rogi@skylittlesystem.org,
-        bagasdotme@gmail.com
-References: <20220328223019.271270-1-greenfoo@u92.eu>
- <20220329224439.290948-1-greenfoo@u92.eu>
- <20220329224439.290948-6-greenfoo@u92.eu>
- <da6472b4-65e6-a3ca-8d8b-892afb6f0fac@gmail.com>
- <YkSij31hyi29g7v2@zacax395.localdomain>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <de847041-acad-2a01-6a4f-36ed7318e01c@gmail.com>
-Date:   Wed, 30 Mar 2022 14:45:59 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=awwkvm796VW/PqHYlxRXiws1vPhwrbGvOx6JzYmylOg=;
+        b=6+4Y2kgf6ZylJ9e4swO7MDaK4ZGTXzYklyIjtjrWUd2wMxrzo65oc+M2dPe4X5sztn
+         op1e+lhef2Lw5f7cHn0Stcxu3UABzCisWhYgLIBmwHiYnRyd3t0Ax97wb18tgTjp9gPZ
+         10UGNA3QJGsp1XWDCJEd4G9+K8EmdP2va8Mcs8a1sRVzaGis/GLZqaJHPJb3TLklfFub
+         CJoNUGj9ZjFEB8T6IPMwGUQ/1dulAMOFGsPn5RupTIOpkpaIEV4KbZ5/EkK7enaFefzT
+         SBuhx4/sapbGOotcmwUiu8adfMvAvW8w7AO2GuhTUm88ql/f8b/rdxoG+xoThNXa5Nbv
+         zfow==
+X-Gm-Message-State: AOAM532H3XugYU4gMCkHpEWXmzIJyYwC8sdN3RxQmnEoqw8HNYZCaJqx
+        zxnAE62BFSJbY4LWx9VoEN6FpjMcZTnBCP2zcoc=
+X-Google-Smtp-Source: ABdhPJyoVDewaGKYrJMVWvpCSQCzY0ryEx/hAgHouFTR+neoaCBH6g86AvJ99o/ZVU58xsTFmGyV6sjUJhR3nPxLUts=
+X-Received: by 2002:a2e:9b96:0:b0:249:8705:8f50 with SMTP id
+ z22-20020a2e9b96000000b0024987058f50mr7935830lji.73.1648667097928; Wed, 30
+ Mar 2022 12:04:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YkSij31hyi29g7v2@zacax395.localdomain>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
+ <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com> <83fa4a5f3a5c79fa814932c0705867ff16a584c7.1648616734.git.gitgitgadget@gmail.com>
+ <xmqqy20r8h9o.fsf@gitster.g>
+In-Reply-To: <xmqqy20r8h9o.fsf@gitster.g>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 30 Mar 2022 12:04:46 -0700
+Message-ID: <CANQDOddUQRwq73e9pxxmp8c2JRvLy4YcbDHEQ+h-6uEoauyb2g@mail.gmail.com>
+Subject: Re: [PATCH v5 05/14] cache-tree: use ODB transaction around writing a tree
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Fernando,
+On Wed, Mar 30, 2022 at 10:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> >
+> > Take advantage of the odb transaction infrastructure around writing the
+> > cached tree to the object database.
+> >
+> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> > ---
+> >  cache-tree.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/cache-tree.c b/cache-tree.c
+> > index 6752f69d515..8c5e8822716 100644
+> > --- a/cache-tree.c
+> > +++ b/cache-tree.c
+> > @@ -3,6 +3,7 @@
+> >  #include "tree.h"
+> >  #include "tree-walk.h"
+> >  #include "cache-tree.h"
+> > +#include "bulk-checkin.h"
+> >  #include "object-store.h"
+> >  #include "replace-object.h"
+> >  #include "promisor-remote.h"
+> > @@ -474,8 +475,10 @@ int cache_tree_update(struct index_state *istate, int flags)
+> >
+> >       trace_performance_enter();
+> >       trace2_region_enter("cache_tree", "update", the_repository);
+>
+> There is no I/O in update_one() when the WRITE_TREE_DRY_RUN bit is
+> set, so we _could_ optimize the begin/end away with
+>
+>         if (!(flags & WRITE_TREE_DRY_RUN))
+>                 begin_odb_transaction()
+>
+> > +     begin_odb_transaction();
+> >       i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+> >                      "", 0, &skip, flags);
+> > +     end_odb_transaction();
+> >       trace2_region_leave("cache_tree", "update", the_repository);
+> >       trace_performance_leave("cache_tree_update");
+> >       if (i < 0)
+>
+> I do not know if that is worth it.  If we do not do any object
+> creation inside begin/end, we don't even create the temporary object
+> directory and there is nothing we need to do when we "unplug".  So
+> this would be fine as-is, but I may be overlooking something, so I
+> thought I'd mention it for completeness.
+>
 
-Le 2022-03-30 à 14:33, Fernando Ramos a écrit :
->> This commit is authored by you but is missing your sign off.
->> Also, I did not give my sign-off on this patch (that can't be assumed,
->> it always has to be expressively given).
-> 
-> I see, sorry. As this patch is a verbatim copy of the one you provided in the
-> last message I thought it was not appropriate to put my name on it (as it does
-> not contain any line created by me)... but now I know that in these cases the
-> right thing to do is to squash into the commit being commented on and add a
-> "Helped-by:" note. Right?
+Yes, with the current series, beginning and ending a transaction will
+just manipulate a few global variables in bulk-checkin.c unless there
+is something real to flush.
 
-Yes, right. :)
-
-> 
-> I'll fix this in v9.
-> 
-> Just to double check, please confirm this is what you want me to do:
-> 
->   1. Squash 5/5 into  3/5
-
-yes. 
-
-> 
->   2. Update the commit message to:
-> 
->      2.1 Explain that the description is also added to the output of `git help
->          config`
-
-Yes. For example, this is how I would phrase it, be free to copy 
-(maybe as the second-to-last paragraph?):
-
-Note that the function 'show_tool_names', used in the implmentation of
-'git mergetool --tool-help', is also used in Documentation/Makefile to
-generate the list of allowed values for the configuration variables 
-'{diff,merge}.{gui,}tool'. Adjust the rule so its output is an Asciidoc
-"description list" instead of a plain list, with the tool name as the item
-and the newly added tool description as the description.
-
-> 
->      2.2 Remove your name from "Signed-off-by:"
-> 
->      2.3 Keep you name in "Helped-by:"
-
-yes and yes.
-
-> 
-> Thanks!
-> 
-> 
-> PS: I must confess this whole process of sending patches to the git mailing
-> list brings me back memories from "Asterix: The 12 Tasks" [1] :) :) :)
-
-Yes, it can be hard. I prefer using Gitgitgadget most of the time [1].
-
-[1] https://gitgitgadget.github.io/
+Thanks,
+Neeraj
