@@ -2,63 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42AC9C433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C78C433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233898AbiC3WxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 18:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55824 "EHLO
+        id S233870AbiC3W4U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 18:56:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351736AbiC3Ww4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 18:52:56 -0400
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4159E68F9E
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:51:09 -0700 (PDT)
-DKIM-Signature: a=rsa-sha256; b=cG86M2NDH2B+8dovCVifO/NxJQQXQJtV/fo85S+tokn/JA11tRd4/myYTSmnFs1QGSWxsiS3pV/i5tavAYEZHsrTaorZ0bqh5TmTWpkYfrbIWptYHoZLWfAklbzq/7kc5M05fwYNf+1bGSqOb6Q1FkPup5ofRyelutSk3uwTwoeH3qR5HnaRzyowy0Zl8pMkJl49vf5iVFF2h169jWW76r5h0kh3Hvz7wV5GvAr4mW9e2El9fxxIk6mnuwojkzUMvps1zRXdDC5RaISmztfNL39nSfBbmrQ4mTSw4+xtFYBCnOjP8pD8u51M+nGKDp3oe7SGNHiUMzko2zrfHpwE0w==; s=purelymail1; d=slashdev.space; v=1; bh=PMWs8PtibeoUosHx5zFKqsaNjDnxeVUeRV1uhLViAow=; h=Received:To:From;
-DKIM-Signature: a=rsa-sha256; b=UeazeXwG1imE1EkfqNeGNlI1PfxeHTQbL6gKD7wUwcpU/UN7I0CqZWKuQhwQBIntc5jQK3jK3CR6qjgM+XuG4OshDZd92P2BxxTMt4COLM4cAruwwmRP06Ytmr1/SDPjUvT85lgbK92/JHngtEziHKKy6XCXdOSpOK2Pe5lylRF6kJx/KRY7d9Y/Gio13QUsGd7ZYwGA75i/XC5rgv6IrHp2nu1SaypR85F3/pR+o4KhRP1V24CX+bU6obwNxIXZcRhJTfynaSo9WVrdAT0WMuAzG69rPs3AFzJPxx+hQzIhrfEK+5yHUdhC9Ef30J89BtpeadScskhLuLcaXpQPDg==; s=purelymail1; d=purelymail.com; v=1; bh=PMWs8PtibeoUosHx5zFKqsaNjDnxeVUeRV1uhLViAow=; h=Feedback-ID:Received:To:From;
-Feedback-ID: 6471:1573:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -228430439;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 30 Mar 2022 22:50:58 +0000 (UTC)
-Message-ID: <fb915b91-ead2-ac35-4431-ad35674da463@slashdev.space>
-Date:   Thu, 31 Mar 2022 00:50:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [PATCH v2] cli: add -v and -h shorthands
+        with ESMTP id S233874AbiC3W4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 18:56:18 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2299433E0C
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:54:30 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id c62so26166569edf.5
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:54:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=nXAwes5Jvb16Z/siglemYlOxFsmfIn7An534P+I7p00=;
+        b=DL/pwbN62xqicj86sQrY3XDgOknAA8yDW6sAQ+Mg98oa47YQOaKHjUiAxv68M+U/j2
+         yoT4IdTIaMBSDKqBBzmIoV5JFoUfueDQDj1sB2bz5X0r6VJQZDs/LBSlLikCxPmSFu86
+         UFpP3yrncDSt15UfdhV/oTx9yh5ZQFtMtVQBNddA8IPPYKNIenXupP/+o0GMjOqSdDJK
+         3mahssJQDBwtKZSKY37rEXopcTMYESUSqeecMFnUghL3CVmhbeWqF2qHxV2JgVCmNjkB
+         8ZjKX9JJp3gMdRrpncpsZW3WqE4RNMs/f6cA2H//4bUEYWyR1jagYnofkW62A4s2qFRW
+         V5SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=nXAwes5Jvb16Z/siglemYlOxFsmfIn7An534P+I7p00=;
+        b=7AydCluC5cDCK3BIxSzkdpz4shGoFyaFx9YeWXD05akjz2aRJFdllwiEhSLwkFyS7a
+         pzYJ48tpXea0DoEnM0YrDS3Q+/wXqvKu4i8ajXO2Rx62WTqSANLCd9kqqmNTnqEU4tAJ
+         37+k6n3nc/4KxntGDUOgPwAgBnyRuDgbAD5ye8fl5lmSPULGbTNZMYLOYqLkfv8U+wOv
+         VovRVyKVR/kwXMrwPx5hnpTfJUcNSSoZgQTy/Qrv45KkwzmKCvPTX9+7+iTh9TLt9Wgd
+         LLa8iSdnE6wGsWNsUkmKgdWn+PrQUeduBwPYmY2DWFRM1oDOTpm7bcyQs4F2tc64w9aE
+         mquQ==
+X-Gm-Message-State: AOAM532//6VVYZDNg94fW05YiVo7eF7eoZQ/n3im8HkMRlRVsL5+F97U
+        IxP3twBFvqZcI6DWZ2lp9+c=
+X-Google-Smtp-Source: ABdhPJzAdNooA7F4Vtce/llX6fdt9Hs3xqJY2GBekN8aukDVcyeQz54E8nlPV5tL0LYxCtD4RqJPdQ==
+X-Received: by 2002:a50:9fa5:0:b0:418:e7c4:cf96 with SMTP id c34-20020a509fa5000000b00418e7c4cf96mr13618202edf.30.1648680868640;
+        Wed, 30 Mar 2022 15:54:28 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id hr13-20020a1709073f8d00b006dfcc331a42sm8569412ejc.203.2022.03.30.15.54.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Mar 2022 15:54:28 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nZhCt-0004Ry-2h;
+        Thu, 31 Mar 2022 00:54:27 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20220330190956.21447-1-garrit@slashdev.space>
- <xmqq5ynv6rb4.fsf@gitster.g>
-From:   Garrit Franke <garrit@slashdev.space>
-In-Reply-To: <xmqq5ynv6rb4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH v5] tracking branches: add advice to ambiguous refspec
+ error
+Date:   Thu, 31 Mar 2022 00:51:50 +0200
+References: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
+ <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com>
+ <220330.864k3fpo32.gmgdl@evledraar.gmail.com> <xmqqmth76use.fsf@gitster.g>
+ <220330.86o81nta6k.gmgdl@evledraar.gmail.com> <xmqqzgl75c35.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqzgl75c35.fsf@gitster.g>
+Message-ID: <220331.86y20rrqzg.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
 On Wed, Mar 30 2022, Junio C Hamano wrote:
 
-> Sorry, but it is unclear why it is a good thing.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>>>> +				 "To support setting up tracking branches, ensure that\n"
+>>>>> +				 "different remotes' fetch refspecs map into different\n"
+>>>>> +				 "tracking namespaces."),
+>>>>> +			       orig_ref,
+>>>>> +			       remotes_advice.buf
+>>>>> +			       );
+>>>>
+>>>> Nit: The usual style for multi-line arguments is to "fill" lines until
+>>>> you're at 79 characters, so these last three lines (including the ");")
+>>>> can all go on the "tracking namespaces" line (until they're at 79, then
+>>>> wrap)>
+>>>
+>>> I didn't know about the magic "79" number.  It makes the resulting
+>>> source code extremely hard to read, though, while making it easier
+>>> to grep for specific messages.
+>>
+>> I'm referring to the "80 characters per line", but omitted the \n, but
+>> yeah, I should have just said 80.
+>
+> No, what I meant was that you do not want the rule to be to cut *AT*
+> exactly the column whatever random rule specifies, which would
+> result in funny wrapping in the middle of the word, e.g.
+>
+>         "To support setting up tracking branches, ensure that diff"
+>         "erent remotes' fetch refspecs map into different tracking"
+>         " namespaces."
+>
+> and "at 79, then wrap" somehow sounded to me like that.  I do not
+> think you meant to imply that (instead, I think you meant to suggest
+> "wrap the line so that the string constant is not longer than 79
+> columns"), but it risks to be mistaken by new contributors.
+>
+> FWIW, I'd actually prefer to see both the sources to be readable by
+> wrapping to keep the source code line length under certain limit
+> (the current guideline being 70-something), counting the leading
+> indentation, and at the same time keep it possible and easy to grep
+> messages in the source.
+>
+> That requires us to notice when our code has too deeply nested,
+> resulting in overly indented lines, and maintain the readability
+> (refatoring the code may be a way to help in such cases).
 
-My main motivation behind this change was a standardized user experience 
-across tools. Many users use these shorthands out of habit to get an 
-overview of a program. Seeing the command fail and having to retype it 
-in a longer form creates unnecessary friction between the user and the 
-program.
+Yes, I didn't mean to say it was a hard rule. In particular as this code
+has the strings themselves over 80 characters. It can be good to break
+that guideline when it doesn't help readability.
 
- > Again, it might be safe right now, but it also closes the door for
- > introducing global "verbose" option.  What in exchange are we
- > gaining?  Are these short options worth it?
+I just meant that this made sense as a fix-up, in this case:
 
-I definitely see your concerns. Ultimately it's a question of which of 
-the two flags would be more convinient to have as a shorthand. As stated 
-above, users unfamiliar to the software arguably expect to see the 
-version number printed when using this flag. A user who seeks more 
-verbose output is probably more familiar with the options, so they are 
-more likely to know they have to use the longer "--verbose" form.
+diff --git a/branch.c b/branch.c
+index 5c28d432103..4ccf5f79e83 100644
+--- a/branch.c
++++ b/branch.c
+@@ -282,10 +282,8 @@ static void setup_tracking(const char *new_ref, const =
+char *orig_ref,
+ 				 "\n"
+ 				 "To support setting up tracking branches, ensure that\n"
+ 				 "different remotes' fetch refspecs map into different\n"
+-				 "tracking namespaces."),
+-			       orig_ref,
+-			       ftb_cb.remotes_advice.buf
+-			       );
++				 "tracking namespaces."), orig_ref,
++			       ftb_cb.remotes_advice.buf);
+ 		exit(status);
+ 	}
+=20
 
-Thanks
-Garrit
+Which I'd also be tempted to do as:
+
+diff --git a/branch.c b/branch.c
+index 5c28d432103..b9f6fda980b 100644
+--- a/branch.c
++++ b/branch.c
+@@ -283,9 +283,7 @@ static void setup_tracking(const char *new_ref, const c=
+har *orig_ref,
+ 				 "To support setting up tracking branches, ensure that\n"
+ 				 "different remotes' fetch refspecs map into different\n"
+ 				 "tracking namespaces."),
+-			       orig_ref,
+-			       ftb_cb.remotes_advice.buf
+-			       );
++			       orig_ref, ftb_cb.remotes_advice.buf);
+ 		exit(status);
+ 	}
+=20
+But I find it generally helpful to do it consistently when possible, as
+when running into merge conflicts it makes things easier.
