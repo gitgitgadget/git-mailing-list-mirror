@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E21C433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A836CC433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242787AbiC3FH7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 01:07:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
+        id S242773AbiC3FIB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 01:08:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242761AbiC3FHq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242762AbiC3FHq (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Mar 2022 01:07:46 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F7266FBD
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:48 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id w4so27527429wrg.12
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:48 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F35B674D7
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:49 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id k124-20020a1ca182000000b0038c9cf6e2a6so2735170wme.0
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9wQouNJeYrigvBznmm6/Kim7Siohd+Q9tteLLEpJ8lg=;
-        b=j98Uswoi6xKw7cGZXlcXGr5io8Fcz2yYUcUg8KtTPKV+HVHccb6g/gpCR0Y8mjPI/X
-         7qrPhCIpI69OJPc/czgjI6XknhgM8D6xZqN1TTAWAoR+neXyHuafBH5GJcqt3tJHGZOS
-         rmF2s4ze2jdhlkM6TKvKqTQMwZejFy5xaooBoro90CKtqQKsjFyPxv4DY3MBVLwz+fjZ
-         IUIeHht4sOx69bxPJ4OOYq91CY7BL28kJgJlb7dyLKTp5uvqL4OxOL5kJleht/4WP+NC
-         owofBLEK30FAOPC6nYcBz2c4n6CsQortiTBoUM0i9xDIe+gOswbg2Lp5PZ+G6DB3xrtl
-         liTA==
+        bh=92E+j38GPKUpnVjZkT1Mcgrfcah4Fkc3Z+GCmwZdNoI=;
+        b=fkG4knhtX/wTVe+maOO451SWvLoSdsnaX0+D+57iLj8yc3w3cHUPsrh6mwrsOHwtQt
+         GFsREo+Snnj8+QmqsCzaxJy9fupgyBoEU7epMoWqwf8vKWnEbJQgx6Iv1Nz+VbnlUZa/
+         9kpBpBus1IN0fZsqiR4WuuCIbAf0RG01tQte+cF5vgJU6Go4fveSP1tusrxnkvMoSP03
+         oVKn3W0ZPvY9q6H2ePeLz2eWRJLIBCsh+Yj70eJkjUZY8cmLSYf3i024DliUVkjanZBI
+         W3eEMKJ6NgoMcjfEBfzDfbrs836IfDNsX1F6QHdpJ0pkSqMhsyceddX1DCLV6ZUAPCWg
+         b3ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9wQouNJeYrigvBznmm6/Kim7Siohd+Q9tteLLEpJ8lg=;
-        b=iPpbglFp0m8s6Glh5WBiP9E36Vs+Xv7nd0zTXeqUF/R/svWaPKt1nKkTtD1p5gYAD9
-         38dh3kcArN1a5/AeZpqkr4Q9q3CWfWp7UEBGeARzR8GxSG68zTJb351yUa70ViFtk2la
-         DO+cryEUUjoj7eOZb1XNQ9fxE6BVuRzdJPeujwYcgd9t89WPrymX5ko67eOaQsK41Sni
-         /UwyM7snJrgAHY0q/LTqeL/JT209I0dpLG26ZHd1lVoMaP4JDWENW7uswJHEv4aZkwvZ
-         EubHaeMr+SzeiADHa95clPowOjrAR7dZ8tnwadqiVnolWdOxDbwKnLh1Sqg9UOVFcTna
-         2osQ==
-X-Gm-Message-State: AOAM530cKmmSB4+bkHR+aU6EZUEjwjMfLaXDkoRPYeU1224bJ5ZYM9py
-        oMqWAOltqs6+Ow6Ob/9K+OjeD3x1tCE=
-X-Google-Smtp-Source: ABdhPJxMoHd+jXuqsTkdOHy6D6yMBUFQ3w+Idl0NZ06c6qrp5CUmnqiYXp/4reyIxC/RjsyXKuMwVA==
-X-Received: by 2002:adf:fa87:0:b0:203:f28e:76c3 with SMTP id h7-20020adffa87000000b00203f28e76c3mr34766420wrr.579.1648616746610;
-        Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
+        bh=92E+j38GPKUpnVjZkT1Mcgrfcah4Fkc3Z+GCmwZdNoI=;
+        b=MUn0VeTxyTZQEaWfmMU38on18EFSg9TjzIx76pSJFkEhsbuwpj2H7BpyTC59jOC9Sm
+         LxxApSb2GQr4AnYWNx/YX6RJvRmfkKeHVLCdh9jPx2hvtVXZs/aMelV1irnZuF94TY5y
+         VEd2ifRGUc/dP9yg5tRc2pkCncx6NhhK+aou0QL5xYS/02wBmkaByqFdAhUtpVPsSVqi
+         i3bymW6PAkgYitayIZ8Sasiei/UX47WDgLeE1Yqgg2uph0FOXwGD3ziJOxk/dXn1EAcH
+         rox2I3OMl8olo7P9XLu8+SvRoMJuFrqbXsImSs+fhopGqApA98mZMePZKHhn+aiDhFAz
+         5Wxw==
+X-Gm-Message-State: AOAM531M3IJhT55sr23/Bd/1YhPX1JW+P0kJuQzXh8zCfDzIrT8BWOzD
+        O05WOSv0jVWaUKAFM4genzUe2PCak24=
+X-Google-Smtp-Source: ABdhPJzyqA+zcVRgCwK7EXySzhpNiQACFZGFMLJo8g+kEdDaoDAk8wFZhaVjRhOICbdUDnGGjkY81g==
+X-Received: by 2002:a05:600c:3b24:b0:38c:dbdb:a35c with SMTP id m36-20020a05600c3b2400b0038cdbdba35cmr2581320wms.175.1648616747677;
+        Tue, 29 Mar 2022 22:05:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az19-20020a05600c601300b0038cadf3aa69sm5438312wmb.36.2022.03.29.22.05.46
+        by smtp.gmail.com with ESMTPSA id y15-20020a05600015cf00b00203e324347bsm19081430wry.102.2022.03.29.22.05.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
-Message-Id: <1a4aff8c350b5ffe3c7760faa4accc88c83ce11c.1648616734.git.gitgitgadget@gmail.com>
+        Tue, 29 Mar 2022 22:05:47 -0700 (PDT)
+Message-Id: <47cc63e1dda6fa6417ff6bace4e9e371aaae0d7d.1648616734.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
         <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Mar 2022 05:05:29 +0000
-Subject: [PATCH v5 11/14] core.fsyncmethod: tests for batch mode
+Date:   Wed, 30 Mar 2022 05:05:30 +0000
+Subject: [PATCH v5 12/14] t/perf: add iteration setup mechanism to perf-lib
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,223 +70,258 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Add test cases to exercise batch mode for:
- * 'git add'
- * 'git stash'
- * 'git update-index'
- * 'git unpack-objects'
+Tests that affect the repo in stateful ways are easier to write if we
+can run setup steps outside of the measured portion of perf iteration.
 
-These tests ensure that the added data winds up in the object database.
+This change adds a "--setup 'setup-script'" parameter to test_perf. To
+make invocations easier to understand, I also moved the prerequisites to
+a new --prereq parameter.
 
-In this change we introduce a new test helper lib-unique-files.sh. The
-goal of this library is to create a tree of files that have different
-oids from any other files that may have been created in the current test
-repo. This helps us avoid missing validation of an object being added
-due to it already being in the repo.
+The setup facility will be used in the upcoming perf tests for batch
+mode, but it already helps in some existing tests, like t5302 and t7820.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- t/lib-unique-files.sh  | 34 ++++++++++++++++++++++++++++++++++
- t/t3700-add.sh         | 28 ++++++++++++++++++++++++++++
- t/t3903-stash.sh       | 20 ++++++++++++++++++++
- t/t5300-pack-object.sh | 41 +++++++++++++++++++++++++++--------------
- 4 files changed, 109 insertions(+), 14 deletions(-)
- create mode 100644 t/lib-unique-files.sh
+ t/perf/p4220-log-grep-engines.sh       |  3 +-
+ t/perf/p4221-log-grep-engines-fixed.sh |  3 +-
+ t/perf/p5302-pack-index.sh             | 15 +++----
+ t/perf/p7519-fsmonitor.sh              | 18 ++------
+ t/perf/p7820-grep-engines.sh           |  6 ++-
+ t/perf/perf-lib.sh                     | 62 +++++++++++++++++++++++---
+ 6 files changed, 74 insertions(+), 33 deletions(-)
 
-diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
-new file mode 100644
-index 00000000000..34c01a65256
---- /dev/null
-+++ b/t/lib-unique-files.sh
-@@ -0,0 +1,34 @@
-+# Helper to create files with unique contents
-+
-+# Create multiple files with unique contents within this test run. Takes the
-+# number of directories, the number of files in each directory, and the base
-+# directory.
-+#
-+# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3 files
-+#					 each in my_dir, all with contents
-+#					 different from previous invocations
-+#					 of this command in this run.
-+
-+test_create_unique_files () {
-+	test "$#" -ne 3 && BUG "3 param"
-+
-+	local dirs="$1" &&
-+	local files="$2" &&
-+	local basedir="$3" &&
-+	local counter=0 &&
-+	local i &&
-+	local j &&
-+	test_tick &&
-+	local basedata=$basedir$test_tick &&
-+	rm -rf "$basedir" &&
-+	for i in $(test_seq $dirs)
-+	do
-+		local dir=$basedir/dir$i &&
-+		mkdir -p "$dir" &&
-+		for j in $(test_seq $files)
-+		do
-+			counter=$((counter + 1)) &&
-+			echo "$basedata.$counter">"$dir/file$j.txt"
-+		done
-+	done
-+}
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index b1f90ba3250..8979c8a5f03 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -8,6 +8,8 @@ test_description='Test of git add, including the -- option.'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
-+. $TEST_DIRECTORY/lib-unique-files.sh
-+
- # Test the file mode "$1" of the file "$2" in the index.
- test_mode_in_index () {
- 	case "$(git ls-files -s "$2")" in
-@@ -34,6 +36,32 @@ test_expect_success \
-     'Test that "git add -- -q" works' \
-     'touch -- -q && git add -- -q'
- 
-+BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
-+
-+test_expect_success 'git add: core.fsyncmethod=batch' "
-+	test_create_unique_files 2 4 files_base_dir1 &&
-+	GIT_TEST_FSYNC=1 git $BATCH_CONFIGURATION add -- ./files_base_dir1/ &&
-+	git ls-files --stage files_base_dir1/ |
-+	test_parse_ls_files_stage_oids >added_files_oids &&
-+
-+	# We created 2 subdirs with 4 files each (8 files total) above
-+	test_line_count = 8 added_files_oids &&
-+	git cat-file --batch-check='%(objectname)' <added_files_oids >added_files_actual &&
-+	test_cmp added_files_oids added_files_actual
-+"
-+
-+test_expect_success 'git update-index: core.fsyncmethod=batch' "
-+	test_create_unique_files 2 4 files_base_dir2 &&
-+	find files_base_dir2 ! -type d -print | xargs git $BATCH_CONFIGURATION update-index --add -- &&
-+	git ls-files --stage files_base_dir2 |
-+	test_parse_ls_files_stage_oids >added_files2_oids &&
-+
-+	# We created 2 subdirs with 4 files each (8 files total) above
-+	test_line_count = 8 added_files2_oids &&
-+	git cat-file --batch-check='%(objectname)' <added_files2_oids >added_files2_actual &&
-+	test_cmp added_files2_oids added_files2_actual
-+"
-+
- test_expect_success \
- 	'git add: Test that executable bit is not used if core.filemode=0' \
- 	'git config core.filemode 0 &&
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 4abbc8fccae..20e94881964 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -9,6 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-+. $TEST_DIRECTORY/lib-unique-files.sh
- 
- test_expect_success 'usage on cmd and subcommand invalid option' '
- 	test_expect_code 129 git stash --invalid-option 2>usage &&
-@@ -1410,6 +1411,25 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
- 	git rev-parse --verify refs/stash:A.t
+diff --git a/t/perf/p4220-log-grep-engines.sh b/t/perf/p4220-log-grep-engines.sh
+index 2bc47ded4d1..03fbfbb85d3 100755
+--- a/t/perf/p4220-log-grep-engines.sh
++++ b/t/perf/p4220-log-grep-engines.sh
+@@ -36,7 +36,8 @@ do
+ 		else
+ 			prereq=""
+ 		fi
+-		test_perf $prereq "$engine log$GIT_PERF_4220_LOG_OPTS --grep='$pattern'" "
++		test_perf "$engine log$GIT_PERF_4220_LOG_OPTS --grep='$pattern'" \
++			--prereq "$prereq" "
+ 			git -c grep.patternType=$engine log --pretty=format:%h$GIT_PERF_4220_LOG_OPTS --grep='$pattern' >'out.$engine' || :
+ 		"
+ 	done
+diff --git a/t/perf/p4221-log-grep-engines-fixed.sh b/t/perf/p4221-log-grep-engines-fixed.sh
+index 060971265a9..0a6d6dfc219 100755
+--- a/t/perf/p4221-log-grep-engines-fixed.sh
++++ b/t/perf/p4221-log-grep-engines-fixed.sh
+@@ -26,7 +26,8 @@ do
+ 		else
+ 			prereq=""
+ 		fi
+-		test_perf $prereq "$engine log$GIT_PERF_4221_LOG_OPTS --grep='$pattern'" "
++		test_perf "$engine log$GIT_PERF_4221_LOG_OPTS --grep='$pattern'" \
++			--prereq "$prereq" "
+ 			git -c grep.patternType=$engine log --pretty=format:%h$GIT_PERF_4221_LOG_OPTS --grep='$pattern' >'out.$engine' || :
+ 		"
+ 	done
+diff --git a/t/perf/p5302-pack-index.sh b/t/perf/p5302-pack-index.sh
+index c16f6a3ff69..14c601bbf86 100755
+--- a/t/perf/p5302-pack-index.sh
++++ b/t/perf/p5302-pack-index.sh
+@@ -26,9 +26,8 @@ test_expect_success 'set up thread-counting tests' '
+ 	done
  '
  
-+
-+BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
-+
-+test_expect_success 'stash with core.fsyncmethod=batch' "
-+	test_create_unique_files 2 4 files_base_dir &&
-+	GIT_TEST_FSYNC=1 git $BATCH_CONFIGURATION stash push -u -- ./files_base_dir/ &&
-+
-+	# The files were untracked, so use the third parent,
-+	# which contains the untracked files
-+	git ls-tree -r stash^3 -- ./files_base_dir/ |
-+	test_parse_ls_tree_oids >stashed_files_oids &&
-+
-+	# We created 2 dirs with 4 files each (8 files total) above
-+	test_line_count = 8 stashed_files_oids &&
-+	git cat-file --batch-check='%(objectname)' <stashed_files_oids >stashed_files_actual &&
-+	test_cmp stashed_files_oids stashed_files_actual
-+"
-+
-+
- test_expect_success 'git stash succeeds despite directory/file change' '
- 	test_create_repo directory_file_switch_v1 &&
- 	(
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index a11d61206ad..f8a0f309e2d 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -161,22 +161,27 @@ test_expect_success 'pack-objects with bogus arguments' '
+-test_perf PERF_EXTRA 'index-pack 0 threads' '
+-	rm -rf repo.git &&
+-	git init --bare repo.git &&
++test_perf 'index-pack 0 threads' --prereq PERF_EXTRA \
++	--setup 'rm -rf repo.git && git init --bare repo.git' '
+ 	GIT_DIR=repo.git git index-pack --threads=1 --stdin < $PACK
  '
  
- check_unpack () {
-+	local packname="$1" &&
-+	local object_list="$2" &&
-+	local git_config="$3" &&
- 	test_when_finished "rm -rf git2" &&
--	git init --bare git2 &&
--	git -C git2 unpack-objects -n <"$1".pack &&
--	git -C git2 unpack-objects <"$1".pack &&
--	(cd .git && find objects -type f -print) |
--	while read path
--	do
--		cmp git2/$path .git/$path || {
--			echo $path differs.
--			return 1
--		}
--	done
-+	git $git_config init --bare git2 &&
-+	(
-+		git $git_config -C git2 unpack-objects -n <"$packname".pack &&
-+		git $git_config -C git2 unpack-objects <"$packname".pack &&
-+		git $git_config -C git2 cat-file --batch-check="%(objectname)"
-+	) <"$object_list" >current &&
-+	cmp "$object_list" current
+@@ -36,17 +35,15 @@ for t in $threads
+ do
+ 	THREADS=$t
+ 	export THREADS
+-	test_perf PERF_EXTRA "index-pack $t threads" '
+-		rm -rf repo.git &&
+-		git init --bare repo.git &&
++	test_perf "index-pack $t threads" --prereq PERF_EXTRA \
++		--setup 'rm -rf repo.git && git init --bare repo.git' '
+ 		GIT_DIR=repo.git GIT_FORCE_THREADS=1 \
+ 		git index-pack --threads=$THREADS --stdin <$PACK
+ 	'
+ done
+ 
+-test_perf 'index-pack default number of threads' '
+-	rm -rf repo.git &&
+-	git init --bare repo.git &&
++test_perf 'index-pack default number of threads' \
++	--setup 'rm -rf repo.git && git init --bare repo.git' '
+ 	GIT_DIR=repo.git git index-pack --stdin < $PACK
+ '
+ 
+diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+index c8be58f3c76..5b489c968b8 100755
+--- a/t/perf/p7519-fsmonitor.sh
++++ b/t/perf/p7519-fsmonitor.sh
+@@ -60,18 +60,6 @@ then
+ 	esac
+ fi
+ 
+-if test -n "$GIT_PERF_7519_DROP_CACHE"
+-then
+-	# When using GIT_PERF_7519_DROP_CACHE, GIT_PERF_REPEAT_COUNT must be 1 to
+-	# generate valid results. Otherwise the caching that happens for the nth
+-	# run will negate the validity of the comparisons.
+-	if test "$GIT_PERF_REPEAT_COUNT" -ne 1
+-	then
+-		echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
+-		GIT_PERF_REPEAT_COUNT=1
+-	fi
+-fi
+-
+ trace_start() {
+ 	if test -n "$GIT_PERF_7519_TRACE"
+ 	then
+@@ -167,10 +155,10 @@ setup_for_fsmonitor() {
+ 
+ test_perf_w_drop_caches () {
+ 	if test -n "$GIT_PERF_7519_DROP_CACHE"; then
+-		test-tool drop-caches
++		test_perf "$1" --setup "test-tool drop-caches" "$2"
++	else
++		test_perf "$@"
+ 	fi
+-
+-	test_perf "$@"
  }
  
- test_expect_success 'unpack without delta' '
--	check_unpack test-1-${packname_1}
-+	check_unpack test-1-${packname_1} obj-list
-+'
+ test_fsmonitor_suite() {
+diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
+index 8b09c5bf328..9bfb86842a9 100755
+--- a/t/perf/p7820-grep-engines.sh
++++ b/t/perf/p7820-grep-engines.sh
+@@ -49,13 +49,15 @@ do
+ 		fi
+ 		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
+ 		then
+-			test_perf $prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" "
++			test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" \
++				--prereq "$prereq" "
+ 				git -c grep.patternType=$engine grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine' || :
+ 			"
+ 		else
+ 			for threads in $GIT_PERF_GREP_THREADS
+ 			do
+-				test_perf PTHREADS,$prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern' with $threads threads" "
++				test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern' with $threads threads"
++					--prereq PTHREADS,$prereq "
+ 					git -c grep.patternType=$engine -c grep.threads=$threads grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine.$threads' || :
+ 				"
+ 			done
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 407252bac70..e9cc16d045a 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -189,19 +189,40 @@ exit $ret' >&3 2>&4
+ }
+ 
+ test_wrapper_ () {
++	local test_wrapper_func_ test_title_
+ 	test_wrapper_func_=$1; shift
++	test_title_=$1; shift
+ 	test_start_
+-	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
+-	test "$#" = 2 ||
+-	BUG "not 2 or 3 parameters to test-expect-success"
++	test_prereq=
++	test_perf_setup_=
++	while test $# != 0
++	do
++		case $1 in
++		--prereq)
++			test_prereq=$2
++			shift
++			;;
++		--setup)
++			test_perf_setup_=$2
++			shift
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++	test "$#" = 1 || BUG "test_wrapper_ needs 2 positional parameters"
+ 	export test_prereq
+-	if ! test_skip "$@"
++	export test_perf_setup_
 +
-+BATCH_CONFIGURATION='-c core.fsync=loose-object -c core.fsyncmethod=batch'
++	if ! test_skip "$test_title_" "$@"
+ 	then
+ 		base=$(basename "$0" .sh)
+ 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
+ 		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
+ 		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
+-		"$test_wrapper_func_" "$@"
++		"$test_wrapper_func_" "$test_title_" "$@"
+ 	fi
+ 
+ 	test_finish_
+@@ -214,6 +235,16 @@ test_perf_ () {
+ 		echo "perf $test_count - $1:"
+ 	fi
+ 	for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
++		if test -n "$test_perf_setup_"
++		then
++			say >&3 "setup: $test_perf_setup_"
++			if ! test_eval_ $test_perf_setup_
++			then
++				test_failure_ "$test_perf_setup_"
++				break
++			fi
 +
-+test_expect_success 'unpack without delta (core.fsyncmethod=batch)' '
-+	check_unpack test-1-${packname_1} obj-list "$BATCH_CONFIGURATION"
- '
++		fi
+ 		say >&3 "running: $2"
+ 		if test_run_perf_ "$2"
+ 		then
+@@ -237,11 +268,24 @@ test_perf_ () {
+ 	rm test_time.*
+ }
  
- test_expect_success 'pack with REF_DELTA' '
-@@ -185,7 +190,11 @@ test_expect_success 'pack with REF_DELTA' '
- '
++# Usage: test_perf 'title' [options] 'perf-test'
++#	Run the performance test script specified in perf-test with
++#	optional prerequisite and setup steps.
++# Options:
++#	--prereq prerequisites: Skip the test if prequisites aren't met
++#	--setup "setup-steps": Run setup steps prior to each measured iteration
++#
+ test_perf () {
+ 	test_wrapper_ test_perf_ "$@"
+ }
  
- test_expect_success 'unpack with REF_DELTA' '
--	check_unpack test-2-${packname_2}
-+	check_unpack test-2-${packname_2} obj-list
-+'
+ test_size_ () {
++	if test -n "$test_perf_setup_"
++	then
++		say >&3 "setup: $test_perf_setup_"
++		test_eval_ $test_perf_setup_
++	fi
 +
-+test_expect_success 'unpack with REF_DELTA (core.fsyncmethod=batch)' '
-+       check_unpack test-2-${packname_2} obj-list "$BATCH_CONFIGURATION"
- '
+ 	say >&3 "running: $2"
+ 	if test_eval_ "$2" 3>"$base".result; then
+ 		test_ok_ "$1"
+@@ -250,6 +294,14 @@ test_size_ () {
+ 	fi
+ }
  
- test_expect_success 'pack with OFS_DELTA' '
-@@ -195,7 +204,11 @@ test_expect_success 'pack with OFS_DELTA' '
- '
- 
- test_expect_success 'unpack with OFS_DELTA' '
--	check_unpack test-3-${packname_3}
-+	check_unpack test-3-${packname_3} obj-list
-+'
++# Usage: test_size 'title' [options] 'size-test'
++#	Run the size test script specified in size-test with optional
++#	prerequisites and setup steps. Returns the numeric value
++#	returned by size-test.
++# Options:
++#	--prereq prerequisites: Skip the test if prequisites aren't met
++#	--setup "setup-steps": Run setup steps prior to the size measurement
 +
-+test_expect_success 'unpack with OFS_DELTA (core.fsyncmethod=batch)' '
-+       check_unpack test-3-${packname_3} obj-list "$BATCH_CONFIGURATION"
- '
- 
- test_expect_success 'compare delta flavors' '
+ test_size () {
+ 	test_wrapper_ test_size_ "$@"
+ }
 -- 
 gitgitgadget
 
