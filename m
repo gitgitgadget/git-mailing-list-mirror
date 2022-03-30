@@ -2,149 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B8FC433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0635C433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351575AbiC3WUq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 18:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44966 "EHLO
+        id S1351649AbiC3WdX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 18:33:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351566AbiC3WUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 18:20:41 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9033A286C6
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:18:51 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id bi12so44388222ejb.3
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:18:51 -0700 (PDT)
+        with ESMTP id S1347908AbiC3WdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 18:33:22 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C41585BD2E
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:31:35 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id i11-20020a9d4a8b000000b005cda3b9754aso15915866otf.12
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=BO2tubvdcITZStcqMoUhN7PAaQqOGt7FefsCKbVghRw=;
-        b=MHSXPHOkAMll66v2aRCbI7W8w4aMe4YdM3fJsT0xvBFNVkllj9ZqTHBluv5Z45XE/y
-         tdZ33hIdsvZ+o491+KbZtUlJYnI4K4gX8u+nFecBm5CsAZoQaQLARuuj0iA0zAHtmsvm
-         FAVhbSv16MF+x6rNgG6VT+aPyiOxXZ17N4m9SZOg0wTlrZnMAgVMyQxmmhnOrRBcJeO/
-         ouOS5SKHCt6An43WL/XiXz7fMekyjNrARmvnj/Ki1t2NOFOmNntK/PlhrxnL5YUZJvrs
-         WagUzM8koHDr+zril2tlB4ob8qwsQ4R/JkSs8frRAgbZ20OwQh7/liuIl2qHd4+eaPub
-         KajA==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UnfMly3FOWzodrYUhACU1s+ojNgNTgPZ5Tjpceu8mQ8=;
+        b=OedliNKjpXbL4Z0k6Hl70BNvdabmp/55GHiIZHszIhqgxTNubhLxR03BBZhColQxmN
+         qV1fyyVAxg244E7wh2IvCzaIbe0doBZjka32b7xNzccLgKU6TDJzCHb79tAWrgJeq7/Y
+         /QWkO6REVGxPDRsTPydQ8g4/u+8+PqN3Ac8yQf873nNliwcWMYvB+iFNR5jYTI1y/vIj
+         ZQt858KiFzl0mruaFc3uX7iZGug6CjNWhJOnS7I07mzM/pqBNYGXRcfyu/VpDVC+WgxN
+         TPBi5HaU1q0mBGA4lYvetAJTHVZ1RvwnhEDHht9aQhDLrYY3hLgMWLeGV3XLPioKL2wm
+         ZsTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=BO2tubvdcITZStcqMoUhN7PAaQqOGt7FefsCKbVghRw=;
-        b=76i7Xd0BdWB9UkSPLbkpLugJnnw10MbE/+hHJmXyWRATdBM0fQzmI+DcUtN5eD5lIc
-         aggmbVw7YjZN1SAIY7rNPeFbClKD4O3zT5qTnsmbbzgFbWO8140S60UkhgnifkNSjPiR
-         0b/jYNwV8gP7XljvE7A6jbngKeqCS2RkTk8nU89EUNCLPdaVcjh4jETvhvCJLj8cIip9
-         FF7wTqlICZ4qut7Wtf7R8peYGI7WCGxkRxd+aa8ZQpPMEcpSlz5Q9nuibPBV7x4td6S3
-         C5D4GOkShQ4Me+9XHelUo7LBjB5hhXWfDGx1zeiPKHEhVwXXGTAeAGxRsmHsXI03r2oY
-         912Q==
-X-Gm-Message-State: AOAM531SXKvXPTbV7OVmwUkZu1Pj+D9Ue4d/13dxDsr/a0JGdIs3E39a
-        T4teu8YbpvW5Ab8Dgf5qTqr9gU+3EEw=
-X-Google-Smtp-Source: ABdhPJz58do4krNitadfgQXPCELW41IXundbd07AXEWH+OmoPcpR5oD5GDmowJuj+Ro0Fl9WSuKP9A==
-X-Received: by 2002:a17:907:6d9d:b0:6da:7d4c:287f with SMTP id sb29-20020a1709076d9d00b006da7d4c287fmr1840433ejc.741.1648678729902;
-        Wed, 30 Mar 2022 15:18:49 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sa32-20020a1709076d2000b006df935924c1sm8688299ejc.59.2022.03.30.15.18.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 15:18:49 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nZgeP-0003Pm-1W;
-        Thu, 31 Mar 2022 00:18:49 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Labnan via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Labnann <khalid.masum.92@gmail.com>
-Subject: Re: [PATCH] t3501: use test_path_is_* functions
-Date:   Thu, 31 Mar 2022 00:11:48 +0200
-References: <pull.1195.git.1648676585765.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1195.git.1648676585765.gitgitgadget@gmail.com>
-Message-ID: <220331.86bkxnt77a.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UnfMly3FOWzodrYUhACU1s+ojNgNTgPZ5Tjpceu8mQ8=;
+        b=ThV5qMqDZaTftP7UimBqoW6RZdxW4TcmnLl+288xeZQITlPUF8njF+6MYVsx4w8S/t
+         dCVYsAT0MJOMtKSfD2lqDvyHgohvO7Wk/4zh90bb2gK+rWAR/pz8VmwmMIPdyV240or7
+         bD5J2Gwl0MZvJomnFzJqkfblqSxip7d43zJ3eJv99Hhe9jIDXVEhN5ltishTtEGbfb1m
+         L8btysmbJcmz1gcamoK/2zE8vypHngLusiXkouFTcZK5P3myqFW204eag62/30JCBXDd
+         OHrigp7pMZlNzg+U8XJ2zuJVCDlzcIy4rGB6FvK+SDmBT68pdj8WDizfKcEwytoFD93E
+         iHtA==
+X-Gm-Message-State: AOAM532bzpKNLhHh9yyuJde1ZvhQ1TCBP5Jx8Qe1pqEy846Q673/yy/M
+        7UAZkhJ3BQPgFEf2SjMVRq1pFEioCKEbqrVJXKff5A==
+X-Google-Smtp-Source: ABdhPJyfOxkeKnb/IG8wE1VxaCTibWXxL73mQ1q8eSRroILCEM1lAZYU+evLnuxVoGXjDUqIarUYfietXzMrH+IdQX8=
+X-Received: by 2002:a05:6830:2478:b0:5c9:289c:597f with SMTP id
+ x56-20020a056830247800b005c9289c597fmr4335508otr.130.1648679494937; Wed, 30
+ Mar 2022 15:31:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20220208235631.732466-1-calvinwan@google.com> <20220328191112.3092139-1-calvinwan@google.com>
+ <20220328191112.3092139-4-calvinwan@google.com> <xmqqmth8qsiv.fsf@gitster.g> <xmqq4k3gqn7n.fsf@gitster.g>
+In-Reply-To: <xmqq4k3gqn7n.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 30 Mar 2022 15:31:24 -0700
+Message-ID: <CAFySSZB3hAhUF2ODK5YaPP8VcPa=_LovD82zOm0BHcpQzk_T-Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] object-info: add option for retrieving object info
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Overall, I agree that this option does not belong in fetch. I wouldn't
+say I chose to put it there for the sake of implementation
+convenience, but because "it does what fetch is supposed to do minus
+the object itself". This logic no longer makes any sense to me, and I
+regret not seeing the problems with it as I was coming up with
+workarounds.
 
-On Wed, Mar 30 2022, Labnan via GitGitGadget wrote:
+> I think that "Object 'size' is currently the only one the server
+> knows to emit", combined with the lack of any client side support so
+> far, means that it is not too late to rework the object-info thing
+> and possibly reuse more from "cat-file --batch-check".
 
-> From: Labnann <khalid.masum.92@gmail.com>
+I talked this over with Jonathan Tan and we came to the conclusion
+that this is the next option I should look into, rather than
+separating it out into its own command.
+
+Thank you for the review Junio! I appreciate how straightforward all
+of your comments are.
+
+On Tue, Mar 29, 2022 at 5:49 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Two test -f are present in t3501. They can be replaced with appropriate
-> helper function: test_path_is_file
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Signed-off-by: Labnann <khalid.masum.92@gmail.com>
-
-Thanks for contributing to git, this is a much needed area of
-improvement.
-
-> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-> index 8617efaaf1e..45492a7ed09 100755
-> --- a/t/t3501-revert-cherry-pick.sh
-> +++ b/t/t3501-revert-cherry-pick.sh
-> @@ -67,7 +67,7 @@ test_expect_success 'cherry-pick after renaming branch' '
->  	git checkout rename2 &&
->  	git cherry-pick added &&
->  	test $(git rev-parse HEAD^) = $(git rev-parse rename2) &&
-> -	test -f opos &&
-> +	test_path_is_file opos &&
->  	grep "Add extra line at the end" opos &&
->  	git reflog -1 | grep cherry-pick
-
-While perfect shouldn't be the enemy of the good, I think it would also
-be a very nice use of review bandwidth to end up with some good
-end-state here if possible.
-
-I.e. a pre-existing issue here is:
-
- * We are hiding the exit code of git due to using "test", see
-   c419562860e (checkout tests: don't ignore "git <cmd>" exit code,
-   2022-03-07) for one example of how to fixthat.
-
- * The "test -f" here is really redundant to begin with, because we'd
-   get an error from "grep" if opos didn't exist.
-
- * Ditto ignoring the exit code of "git reflog -1".
-
-> @@ -78,7 +78,7 @@ test_expect_success 'revert after renaming branch' '
->  	git checkout rename1 &&
->  	git revert added &&
->  	test $(git rev-parse HEAD^) = $(git rev-parse rename1) &&
-> -	test -f spoo &&
-> +	test_path_is_file spoo &&
->  	! grep "Add extra line at the end" spoo &&
-
-
-Same issues here, except that the "test -f" aka "test_path_is_file"
-isn't redundant, as the grep is inverted.
-
-It seems to me (other issues aside) that what this test actually wants
-to express is something like this:
-	
-	diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-	index 8617efaaf1e..00096b75376 100755
-	--- a/t/t3501-revert-cherry-pick.sh
-	+++ b/t/t3501-revert-cherry-pick.sh
-	@@ -78,8 +78,9 @@ test_expect_success 'revert after renaming branch' '
-	 	git checkout rename1 &&
-	 	git revert added &&
-	 	test $(git rev-parse HEAD^) = $(git rev-parse rename1) &&
-	-	test -f spoo &&
-	-	! grep "Add extra line at the end" spoo &&
-	+	git rev-parse initial:oops >expect &&
-	+	git rev-parse HEAD:spoo >actual &&
-	+	test_cmp expect actual &&
-	 	git reflog -1 | grep revert
-	 
-	 '
-
-I.e. we did a revert of a file we had so that it's the same as in
-"initial", but now it's at a different path, which we can exhaustively
-do by checking the blob OIDs.
-
->  	git reflog -1 | grep revert
->  
+> > Shouldn't we be making the part that we truly need to reuse into a
+> > separate API out of fetch-pack and either (1) allow new commands be
+> > easily written reusing the code to create "git remote-object-info"
+> > and "git remote-blame", or (2) come up with a single "do things on
+> > remote" command with various subcommands, i.e. "git over-there
+> > object-info" and "git over-there blame"?
 >
-> base-commit: 805e0a68082a217f0112db9ee86a022227a9c81b
-
+> For completeness, we could also make the "git archive" the gold
+> standard.  If we want "git blame" that is mostly executed on the
+> remote site, we could teach "git blame --remote <there>", which may
+> be where a user, who does not know nor care about how things are
+> implemented, would expect to find the feature.  Is "object-info" in
+> principle like executing "cat-file --batch-check" remotely?
+>
+> I think that "Object 'size' is currently the only one the server
+> knows to emit", combined with the lack of any client side support so
+> far, means that it is not too late to rework the object-info thing
+> and possibly reuse more from "cat-file --batch-check".
+>
+> If we can create a system where running things locally and remotely
+> are comparable in feature, that would be great, but I do not think
+> that is a realistic goal to aim for.
+>
+> Thoughts?
+>
+>
+>
