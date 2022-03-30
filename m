@@ -2,186 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8747AC433EF
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 13:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 287D5C433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 14:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346314AbiC3Ntg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 09:49:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48870 "EHLO
+        id S1346777AbiC3OZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 10:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243622AbiC3Ntf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 09:49:35 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDCF5BABB8
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 06:47:49 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id y10so24464407edv.7
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 06:47:49 -0700 (PDT)
+        with ESMTP id S243476AbiC3OZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 10:25:04 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3711DB3C7
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 07:23:19 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id bg10so41862274ejb.4
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 07:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Z7We3xr15w7y43CAQGhhXSb9P3JQYvxv0FoS4zP/X4o=;
-        b=eIIkGMbb3zJg+itKV4kTeSCnK6QA1mEX/DZPZ4mycUdJe40dj2X6bplVbs7IMSPOTQ
-         q7H8iiMJyjTa8et2USeUZm1oNuWuxRuGM99v0GrXwvW8REx+4lk84dhFgpsegMaelr4g
-         kDqyu1TChfqzsswG8BsYEctZbdp3Riy5QIxNUgy1a6EQaTMP3WtKZOTibsNP3qf60AF2
-         uUZWHwo3daYHpdbj7JvrvP0oi/MfOqGk3u80x6UI3sTTjRBG1pJDJYY5CK0tcxVspuNf
-         O9fBxAF5ZH4Qr5Rj+53HdsYwLlbnhmiwB7r9SUQvLw4xg7jJpWjVoDp//YIac47Lj5Jq
-         65WQ==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KcvXzjIL0dONzrCqqX5Fzatzp7MHivqmnN8d77XHKoA=;
+        b=zc21OaaiozXTGnHfrPa+nv9NxKRqNBumx4x2aWGNFdvnMmWz5MSeXQzup9PtGTgUY7
+         zESJvqMEVhFkC6pvUAmxto+mKSd6IEhnIXJS8rFpTx2gqegd9kXOO6NDt4WRpQq/jZzM
+         6Hqj8nvjEvxsDz6typKNUzqul/+ycqhjTIjAG2OUxl3JMCO6JxL04vm8ORC6mH50+yok
+         0NYGpdmLoCsi6SNAMhrUFq02eWhCfS1HKvmi6YymKFry7BhBlsuqzoBCwmcM8cN6UMYN
+         qY191ywk/soGuuq257VrVz49sXy/bnrH9z9vB3bG+adJVhfCvJ8UaSZFM9y5dqkJBjmZ
+         vpKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Z7We3xr15w7y43CAQGhhXSb9P3JQYvxv0FoS4zP/X4o=;
-        b=4xR89OlQEi2o/IVUwtxnZSFbWYkHeMXA/IH8bTcUbpvUbScpo2No5zXg23pZuqJkNv
-         jHdw4gDii2yhg206ZGmLRHehUEy1Rs7DiRPI9MKKXNt9oQix9Wt9Yc+CLLQISadQeG+n
-         8lYcSbH4l497JD3xGG9NvMdFa8aVJoVn0YJ9jVIe7874+FvtQAaC6cWEpEdh8URirkOk
-         huBiDqNzjZnkNSH1sOzrR9cansxsRn+ogFfwMEUMxLLZ3Wv0BcOzx83TnEl0qCZeXa+7
-         e8bQ6LFRPJg6tanFRlsjj6x7z1/2fCdg/rAoq7zzAsHIuurG9aS07FfWMqMj7UHbTONj
-         Zsrg==
-X-Gm-Message-State: AOAM531kHu14Qczzjn1vbsNcFGUFqC+xx0Y8TaZSqgVEVpotbyky2ts4
-        NInYGgVGjO9mVRfLy8r9J6Q=
-X-Google-Smtp-Source: ABdhPJy4+f9JAekvWiL20IEitJgRvHqjBRp1CdshBcaWZWJoWzCqnaTnR61Q+6Kf/sx7ybrC4ruywg==
-X-Received: by 2002:a50:c099:0:b0:415:f5c7:700e with SMTP id k25-20020a50c099000000b00415f5c7700emr10650739edf.205.1648648068282;
-        Wed, 30 Mar 2022 06:47:48 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p14-20020a05640210ce00b00413211746d4sm9833452edu.51.2022.03.30.06.47.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 06:47:47 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nZYfr-004I26-CO;
-        Wed, 30 Mar 2022 15:47:47 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
-        Neeraj Singh <neerajsi@microsoft.com>
-Subject: Re: [PATCH] trace2: add stats for fsync operations
-Date:   Wed, 30 Mar 2022 15:29:10 +0200
-References: <pull.1192.git.1648616800529.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1192.git.1648616800529.gitgitgadget@gmail.com>
-Message-ID: <220330.86zgl7o8l8.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KcvXzjIL0dONzrCqqX5Fzatzp7MHivqmnN8d77XHKoA=;
+        b=EEtwdCpj7OXjQtXEY5/RjIIkEGK6WXF/XJuoh+28Xn6LXFvFJQHjmz/E81/Oejjz21
+         pN9wbenlLmn4Z2SgVmsSvdRqffM6bQnBbgY/Gq8CfhCo+quLXh2AiZb9jdoKBLx/Jusw
+         a4HVRfcmT4b/zHAu9uMC8FgozmfAPiT2zPHZcx1mU6lBSBqMYHH2JLuRg2awNABmmSko
+         AbOCb1aPkXqv/98R5WfWAJmSYAc/hoo4J3l0QZUK4RDzzcdKZU7PI87x7ZYPHZB7OPfa
+         nDFpgpAfUsv6WXUAsfmmsAsij38U+GgIVZOn7nF/FXMcDsdCrKMnylNUuIiT0f8LYZQo
+         IhjQ==
+X-Gm-Message-State: AOAM531SUIqYvVwy0U/al+xVAsHmpWt+A31RKaNEDzO63LZ3gvkP6399
+        JqHrhcbe+/hjXGRDFvNGUbCZKlCj/AQ9vovmVSvUWA==
+X-Google-Smtp-Source: ABdhPJyETZjYTUpaqPjm1RbuKNHrkYS7/aAsiu773jV1v2puPu1aIYxHZbTKCEBq+ebjXay4KU/cm5G/HtIZsg4aCYw=
+X-Received: by 2002:a17:907:94d5:b0:6e0:2924:bd54 with SMTP id
+ dn21-20020a17090794d500b006e02924bd54mr39297554ejc.170.1648650197938; Wed, 30
+ Mar 2022 07:23:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
+ <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com> <220330.864k3fpo32.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220330.864k3fpo32.gmgdl@evledraar.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Wed, 30 Mar 2022 16:23:07 +0200
+Message-ID: <CAPMMpoiNZ8pvrZmMqJsRV2x+Fvq-=hpih1GGSLMe=KX785Dk0A@mail.gmail.com>
+Subject: Re: [PATCH v5] tracking branches: add advice to ambiguous refspec error
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Mar 30 2022, Neeraj K. Singh via GitGitGadget wrote:
-
-> From: Neeraj Singh <neerajsi@microsoft.com>
+On Wed, Mar 30, 2022 at 3:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Add some global trace2 statistics for the number of fsyncs performed
-> during the lifetime of a Git process.
+>
+> On Wed, Mar 30 2022, Tao Klerks via GitGitGadget wrote:
+>
+> Nit: I think it's been Junio's preference not to introduce C99 comments,
 
-This make sense.
+Argh, my apologies, bad habits.
 
-> These stats are printed as part of trace2_cmd_exit_fl, which is
-> presumably where we might want to print any other cross-cutting
-> statistics.
+I wonder whether anyone has any tooling to help catch this kind of
+thing - I'll ask in GitGitGadget, anyway.
 
-[...]
+> > @@ -219,6 +233,7 @@ static int inherit_tracking(struct tracking *tracki=
+ng, const char *orig_ref)
+> >       return 0;
+> >  }
+> >
+> > +
+>
+> Stray whitespace?
 
-> diff --git a/t/t0211/scrub_perf.perl b/t/t0211/scrub_perf.perl
-> index d164b750ff7..299999f0f89 100644
-> --- a/t/t0211/scrub_perf.perl
-> +++ b/t/t0211/scrub_perf.perl
-> @@ -59,6 +59,10 @@ while (<>) {
->  	    # and highly variable.  Just omit them.
->  	    goto SKIP_LINE;
->  	}
-> +	if ($tokens[$col_category] =~ m/fsync/) {
-> +	    # fsync events aren't interesting for the test
-> +	    goto SKIP_LINE;
-> +	}
->      }
->  
->      # t_abs and t_rel are either blank or a float.  Replace the float
+Thx, I will check more carefully next time.
 
-This part doesn't, per the comment at the top of t/t0211/scrub_perf.perl
-and the rest of the code the reason we scrub trace2 output is to get rid
-of variable output, i.e. startup times and the like.
+>
+> >  /*
+> >   * Used internally to set the branch.<new_ref>.{remote,merge} config
+> >   * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
+> > @@ -232,12 +247,16 @@ static void setup_tracking(const char *new_ref, c=
+onst char *orig_ref,
+> >       struct tracking tracking;
+> >       struct string_list tracking_srcs =3D STRING_LIST_INIT_DUP;
+> >       int config_flags =3D quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+> > +     struct find_tracked_branch_cb ftb_cb =3D {
+> > +             .tracking =3D &tracking,
+> > +             .ambiguous_remotes =3D STRING_LIST_INIT_DUP,
+> > +     };
+> >
+> >       memset(&tracking, 0, sizeof(tracking));
+> >       tracking.spec.dst =3D (char *)orig_ref;
+> >       tracking.srcs =3D &tracking_srcs;
+> >       if (track !=3D BRANCH_TRACK_INHERIT)
+> > -             for_each_remote(find_tracked_branch, &tracking);
+> > +             for_each_remote(find_tracked_branch, &ftb_cb);
+> >       else if (inherit_tracking(&tracking, orig_ref))
+> >               goto cleanup;
+> >
+> > @@ -252,9 +271,38 @@ static void setup_tracking(const char *new_ref, co=
+nst char *orig_ref,
+> >                       goto cleanup;
+> >               }
+> >
+> > -     if (tracking.matches > 1)
+> > -             die(_("not tracking: ambiguous information for ref %s"),
+> > -                 orig_ref);
+> > +     if (tracking.matches > 1) {
+> > +             int status =3D die_message(_("not tracking: ambiguous inf=
+ormation for ref %s"),
+> > +                                         orig_ref);
+>
+> This isn't per-se new, but I wonder if while we're at it we shold just
+> quote '%s' here, which we'd usually do. I.e. this message isn't new, but
+> referring again to "ref %s" (and not "ref '%s'") below is.
+>
 
-If I omit this and run the tests only t0211-trace2-perf.sh fails, and in
-exactly the tests it seems we should be updating instead of sweeping
-this new data under the rug.
+I will fix the below, but I would default to not changing the above
+unless someone thinks we should (not sure what the expectations are
+around changing error messages unnecessarily)
 
-Maybe I'm missing something, but your comment/commit message doesn't
-discuss the interesing "why", we can see that the author of the code
-doesn't think "fsync events [are] interesting for the test".
+> > +             if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC)) {
+> > +                     struct strbuf remotes_advice =3D STRBUF_INIT;
+> > +                     struct string_list_item *item;
+> > +
+> > +                     for_each_string_list_item(item, &ftb_cb.ambiguous=
+_remotes) {
+>
+> Nit: drop braces, not needed.
 
-But why? Unlike the platform-specific APIs fsync() is something we'll
-call everywhere, and surely any platform-specific API calls will be
-guarded by the relevant options, and we could skip this there for those
-tests.
+Thx, will do.
 
-Here I'm eliding that git_fsync() we are calling the platform-specific
-APIs, but that's something this logging is explicitly hiding, e.g. if we
-call it in a loop this will log once, so this shouldn't be variable
-based on the OS, we're logging our own git_fsync() and
-FSYNC_WRITEOUT_ONLY v.s. FSYNC_HARDWARE_FLUSH.
+>
+> > +                             /*
+> > +                              * TRANSLATORS: This is a line listing a =
+remote with duplicate
+> > +                              * refspecs in the advice message below. =
+For RTL languages you'll
+> > +                              * probably want to swap the "%s" and lea=
+ding "  " space around.
+> > +                              */
+> > +                             strbuf_addf(&remotes_advice, _("  %s\n"),=
+ item->string);
+> > +                     }
+> > +
+>
+> Per the TRANSLATORS comments in get_short_oid(), it's also good to have
+> one here in front of advice(). E.g.:
+>
+>         /*
+>          * TRANSLATORS: The second argument is a \n-delimited list of
+>          * duplicate refspecs, composed above.
+>         */
+>
 
-> diff --git a/wrapper.c b/wrapper.c
-> index 354d784c034..f512994690b 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -4,6 +4,9 @@
->  #include "cache.h"
->  #include "config.h"
->  
-> +static intmax_t count_fsync_writeout_only;
-> +static intmax_t count_fsync_hardware_flush;
-> +
+Will do, thx.
 
-nit: stray whitespace change.
+> > +                     advise(_("There are multiple remotes whose fetch =
+refspecs map to the remote\n"
+> > +                              "tracking ref %s:\n"
+> > +                              "%s"
+> > +                              "\n"
+> > +                              "This is typically a configuration error=
+.\n"
+> > +                              "\n"
+> > +                              "To support setting up tracking branches=
+, ensure that\n"
+> > +                              "different remotes' fetch refspecs map i=
+nto different\n"
+> > +                              "tracking namespaces."),
+> > +                            orig_ref,
+> > +                            remotes_advice.buf
+> > +                            );
+>
+> Nit: The usual style for multi-line arguments is to "fill" lines until
+> you're at 79 characters, so these last three lines (including the ");")
+> can all go on the "tracking namespaces" line (until they're at 79, then
+> wrap)>
+>
 
->  #ifdef HAVE_RTLGENRANDOM
->  /* This is required to get access to RtlGenRandom. */
->  #define SystemFunction036 NTAPI SystemFunction036
-> @@ -564,6 +567,7 @@ int git_fsync(int fd, enum fsync_action action)
->  {
->  	switch (action) {
->  	case FSYNC_WRITEOUT_ONLY:
-> +		count_fsync_writeout_only += 1;
->  
->  #ifdef __APPLE__
->  		/*
-> @@ -595,6 +599,8 @@ int git_fsync(int fd, enum fsync_action action)
->  		return -1;
->  
->  	case FSYNC_HARDWARE_FLUSH:
-> +		count_fsync_hardware_flush += 1;
-> +
->  		/*
->  		 * On macOS, a special fcntl is required to really flush the
->  		 * caches within the storage controller. As of this writing,
+Yep, another oversight, thx.
 
-Isn't this making this very low-level API thread-unsafe?
+> > +                     strbuf_release(&remotes_advice);
+> > +             }
+> > +             exit(status);
+> > +     }
+>
+> Other than the minor nits noted above this version looks good to me, and
+> I think addresses both the translation concerns I brought up, and the
+> "let's not do advice() work if we don't need it" concern by Junio et al.
+>
 
-I.e. shouldn't you be using something like the tr2tls_locked_increment()
-API to keep track of this instead?
-
-> @@ -610,6 +616,12 @@ int git_fsync(int fd, enum fsync_action action)
->  	}
->  }
->  
-> +void trace_git_fsync_stats(void)
-> +{
-> +	trace2_data_intmax("fsync", the_repository, "fsync/writeout-only", count_fsync_writeout_only);
-> +	trace2_data_intmax("fsync", the_repository, "fsync/hardware-flush", count_fsync_hardware_flush);
-> +}
-> +
-
-Is this logging really all that useful in this form? I.e. if we were to
-log these as they happen they'd be attributed to whatever the open
-region is, and you'd see them "as they happen".
-
-But these sorts of aggregate statistics just seem no give us pretty much
-the same thing that strace and similar tools would give us, i.e. we
-don't log the number of open(), write() and close() calls.
-
-It *does* abstract away the OS-specific syscall though, but for anyone
-looking at the level of detail of "number of fsync's" is that going to
-be that useful (and the same goes for logging this v.s. open() on
-e.g. mingw).
+Awesome, thx!
