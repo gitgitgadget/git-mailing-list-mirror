@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B52C433EF
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2205C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242715AbiC3FHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 01:07:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56590 "EHLO
+        id S242723AbiC3FH3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 01:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242708AbiC3FHX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235117AbiC3FHX (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Mar 2022 01:07:23 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A938266213
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:39 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id d7so27561665wrb.7
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:39 -0700 (PDT)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE21265D32
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:38 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id p189so11514776wmp.3
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TOI+vuPMSYdUksjZQAWmkRtVe6MxK9DxmcwWwfN9fG4=;
-        b=PM2ZfgfmgkRYnWj9rXgXbluxCMIRlegPv604c/Icn9VHL44pgSPp9Ks+9Q/hBdv3TU
-         yXSaTeyRj+pThKOC+y9R1SeJxWYt2j+13KQMYP7mlvdm3q35hgRsp1hxsJCpQ5xtb5rv
-         Hj/+Npmsg51+DRAqDaoszRi2uVKqjMZLce/WdlvYEqt6esVuCe0ECpe0bQirXO9Xrhg+
-         EuWmJeNdemGfMIwg9UR/Y1DqWAB5CyJHzXMhnxP2eN3H8663QfUPbR3lAM0Noz4MvxD8
-         aKaxCwuP/kPCq6yFsOoqDA59We5T0bkoSw6o9s5FCZbyo5a2BrQeG5QLehMZFeHcvhOG
-         G2vQ==
+        bh=VcBruSMhra7Hu3xR7auyp+juizXtAATaYi6To93RDbY=;
+        b=D6PK0v7wWm7l2Oy6scqAXta0jJDYPpR7rvBXueypZCYXitZNTf+/XbS1OVRal0wu9Q
+         dDPC/vym99c97wQlHGfSOXAu76RibZH8wGVO7fD7TJrnFXoNv3foHCBBxvz4v6kHy79W
+         ZMkf9Kg2QCuGeCHe8RmjaRICvsczZTyXlWzJoVuMgTF1rFt2hQEdjlHrZ4+hWL6Qyi58
+         ct4JURoCdArTtAWjLEUaNlVCAi/F+JYeUeuEznioVMJGa/ReGJ5v4fhRGSc5YyCYHHpV
+         A+ZnsOn1kps9FjDDMow4dRKqYqyykdZ0pAwoK9zfYXvL3moGGRu/sMds3MpgI/RDKUGY
+         4wtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TOI+vuPMSYdUksjZQAWmkRtVe6MxK9DxmcwWwfN9fG4=;
-        b=ahi56Nil8GaWM4W5PYiPxst/v+0e31L2VupEvl5G6h98DFBh4VBSvKOJr6C/J/L1pw
-         1HPL0kZisNl+f6poQBra3DiQ7hkqT5CP2bbQulkPTebpLC1PUX6W5mx65JS3uoZx9Pfz
-         nUDrzaOpwvt6JYvP9NKVyl6bijZDWOexHDc+h/ks7I9ZbcpUfNmTuZvzRYnydHNgIRdn
-         B6b2/AO2jxK45cO9pGuB8AUbGxI3LNUxJaVFs6iaqxAAFsiH+wbCnWEXPsdz+IREdGtt
-         3Y21+J2nYkrpPZygtgTe2+JG3R8+ktR1z/ELDYOIPgINIAtcMtQYEAzUyFKMt1WQ7tUK
-         Vv8A==
-X-Gm-Message-State: AOAM531IH/+v/+UedIaV2O+CvpO2IIClGrzBsrpPig1V/ifQzF4M24Pe
-        kzfkD3+LrB5ywKeEEU7G54Z3VoCBwIk=
-X-Google-Smtp-Source: ABdhPJzPuw7+QtulELCsaEiT07sI59usQ85YEMOaoHyEWZIB4nMhq0NZmz7OvVpgCseNzq52ULm5zA==
-X-Received: by 2002:a5d:4a0f:0:b0:1ed:d377:288a with SMTP id m15-20020a5d4a0f000000b001edd377288amr33213129wrq.3.1648616737942;
-        Tue, 29 Mar 2022 22:05:37 -0700 (PDT)
+        bh=VcBruSMhra7Hu3xR7auyp+juizXtAATaYi6To93RDbY=;
+        b=W4gMkh8QotOb4eV5Uq8EdJ9ju9G5oU5VIs4FPAV/ZiZWAMNWmMwJVq+l2vzjg/WMjQ
+         ceVQPVtYHulyMr8hkHM0XCnWPi6c6BwGkXqcFGVeKdIgEnaTFKVhGTzuB4/ntot/fSdn
+         eqLyztsIndvdzbQctaMOOI3BNS7jjlNEaQ1jnagUNdHcUfxjP8RaiFqy4wVL44+za5o9
+         ihDkNEMhj5wB0GFLtRPbpsCxfb7fWPQVMbI5t0xlSUr4/r1ngIHsgyVlZwpdfbkJdhAn
+         K27HxCUOMDG2ofUTpdzc1eiFX+dxX4ik9ZHuDpDk0DPnxF4PMR4cHwjQBk09Dpk3A3Tk
+         hb6A==
+X-Gm-Message-State: AOAM533sBDRUJetEfxjgdWMZIk+/VHafW8DHpBvMjG2ARTYaY6nufwpA
+        NpFHOTdvMBMckfjbfG6efhYUlbqUbm4=
+X-Google-Smtp-Source: ABdhPJy/r4tVODtKs4tTaLiR9hooasSjV6Dlt6d8Oe4BJs4TuzMpKAQc9bpt+pWg4zwusx/yy116ng==
+X-Received: by 2002:a1c:f415:0:b0:37f:ab4d:1df2 with SMTP id z21-20020a1cf415000000b0037fab4d1df2mr2553562wma.75.1648616736830;
+        Tue, 29 Mar 2022 22:05:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p23-20020a1c5457000000b0038c98c12ea9sm3721386wmi.1.2022.03.29.22.05.37
+        by smtp.gmail.com with ESMTPSA id u13-20020a05600c19cd00b0038cb84f4218sm3869791wmq.27.2022.03.29.22.05.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 22:05:37 -0700 (PDT)
-Message-Id: <d045b13795b38caa27f8e25340212f736b66bb05.1648616734.git.gitgitgadget@gmail.com>
+        Tue, 29 Mar 2022 22:05:36 -0700 (PDT)
+Message-Id: <c7a2a7efe6d532fc7fce1352b1dfce640cc9f2f6.1648616734.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
         <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Mar 2022 05:05:20 +0000
-Subject: [PATCH v5 02/14] bulk-checkin: rebrand plug/unplug APIs as 'odb
- transactions'
+Date:   Wed, 30 Mar 2022 05:05:19 +0000
+Subject: [PATCH v5 01/14] bulk-checkin: rename 'state' variable and separate
+ 'plugged' boolean
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,112 +71,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Make it clearer in the naming and documentation of the plug_bulk_checkin
-and unplug_bulk_checkin APIs that they can be thought of as
-a "transaction" to optimize operations on the object database. These
-transactions may be nested so that subsystems like the cache-tree
-writing code can optimize their operations without caring whether the
-top-level code has a transaction active.
+This commit prepares for adding batch-fsync to the bulk-checkin
+infrastructure.
+
+The bulk-checkin infrastructure is currently used to batch up addition
+of large blobs to a packfile. When a blob is larger than
+big_file_threshold, we unconditionally add it to a pack. If bulk
+checkins are 'plugged', we allow multiple large blobs to be added to a
+single pack until we reach the packfile size limit; otherwise, we simply
+make a new packfile for each large blob. The 'unplug' call tells us when
+the series of blob additions is done so that we can finish the packfiles
+and make their objects available to subsequent operations.
+
+Stated another way, bulk-checkin allows callers to define a transaction
+that adds multiple objects to the object database, where the object
+database can optimize its internal operations within the transaction
+boundary.
+
+Batched fsync will fit into bulk-checkin by taking advantage of the
+plug/unplug functionality to determine the appropriate time to fsync
+and make newly-added objects available in the primary object database.
+
+* Rename 'state' variable to 'bulk_checkin_state', since we will later
+  be adding 'bulk_fsync_objdir'.  This also makes the variable easier to
+  find in the debugger, since the name is more unique.
+
+* Move the 'plugged' data member of 'bulk_checkin_state' into a separate
+  static variable. Doing this avoids resetting the variable in
+  finish_bulk_checkin when zeroing the 'bulk_checkin_state'. As-is, we
+  seem to unintentionally disable the plugging functionality the first
+  time a new packfile must be created due to packfile size limits. While
+  disabling the plugging state only results in suboptimal behavior for
+  the current code, it would be fatal for the bulk-fsync functionality
+  later in this patch series.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/add.c  |  4 ++--
- bulk-checkin.c | 20 ++++++++++++--------
- bulk-checkin.h | 14 ++++++++++++--
- 3 files changed, 26 insertions(+), 12 deletions(-)
+ bulk-checkin.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 3ffb86a4338..9bf37ceae8e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -670,7 +670,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		string_list_clear(&only_match_skip_worktree, 0);
- 	}
- 
--	plug_bulk_checkin();
-+	begin_odb_transaction();
- 
- 	if (add_renormalize)
- 		exit_status |= renormalize_tracked_files(&pathspec, flags);
-@@ -682,7 +682,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	if (chmod_arg && pathspec.nr)
- 		exit_status |= chmod_pathspec(&pathspec, chmod_arg[0], show_only);
--	unplug_bulk_checkin();
-+	end_odb_transaction();
- 
- finish:
- 	if (write_locked_index(&the_index, &lock_file,
 diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 577b135e39c..8b0fd5c7723 100644
+index 6d6c37171c9..577b135e39c 100644
 --- a/bulk-checkin.c
 +++ b/bulk-checkin.c
-@@ -10,7 +10,7 @@
+@@ -10,9 +10,9 @@
  #include "packfile.h"
  #include "object-store.h"
  
--static int bulk_checkin_plugged;
-+static int odb_transaction_nesting;
+-static struct bulk_checkin_state {
+-	unsigned plugged:1;
++static int bulk_checkin_plugged;
  
- static struct bulk_checkin_state {
++static struct bulk_checkin_state {
  	char *pack_tmp_name;
-@@ -280,21 +280,25 @@ int index_bulk_checkin(struct object_id *oid,
+ 	struct hashfile *f;
+ 	off_t offset;
+@@ -21,7 +21,7 @@ static struct bulk_checkin_state {
+ 	struct pack_idx_entry **written;
+ 	uint32_t alloc_written;
+ 	uint32_t nr_written;
+-} state;
++} bulk_checkin_state;
+ 
+ static void finish_tmp_packfile(struct strbuf *basename,
+ 				const char *pack_tmp_name,
+@@ -278,21 +278,23 @@ int index_bulk_checkin(struct object_id *oid,
+ 		       int fd, size_t size, enum object_type type,
+ 		       const char *path, unsigned flags)
  {
- 	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
+-	int status = deflate_to_pack(&state, oid, fd, size, type,
++	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
  				     path, flags);
--	if (!bulk_checkin_plugged)
-+	if (!odb_transaction_nesting)
- 		finish_bulk_checkin(&bulk_checkin_state);
+-	if (!state.plugged)
+-		finish_bulk_checkin(&state);
++	if (!bulk_checkin_plugged)
++		finish_bulk_checkin(&bulk_checkin_state);
  	return status;
  }
  
--void plug_bulk_checkin(void)
-+void begin_odb_transaction(void)
+ void plug_bulk_checkin(void)
  {
--	assert(!bulk_checkin_plugged);
--	bulk_checkin_plugged = 1;
-+	odb_transaction_nesting += 1;
+-	state.plugged = 1;
++	assert(!bulk_checkin_plugged);
++	bulk_checkin_plugged = 1;
  }
  
--void unplug_bulk_checkin(void)
-+void end_odb_transaction(void)
+ void unplug_bulk_checkin(void)
  {
--	assert(bulk_checkin_plugged);
--	bulk_checkin_plugged = 0;
-+	odb_transaction_nesting -= 1;
-+	if (odb_transaction_nesting < 0)
-+		BUG("Unbalanced ODB transaction nesting");
-+
-+	if (odb_transaction_nesting)
-+		return;
-+
- 	if (bulk_checkin_state.f)
- 		finish_bulk_checkin(&bulk_checkin_state);
+-	state.plugged = 0;
+-	if (state.f)
+-		finish_bulk_checkin(&state);
++	assert(bulk_checkin_plugged);
++	bulk_checkin_plugged = 0;
++	if (bulk_checkin_state.f)
++		finish_bulk_checkin(&bulk_checkin_state);
  }
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index b26f3dc3b74..69a94422ac7 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -10,7 +10,17 @@ int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags);
- 
--void plug_bulk_checkin(void);
--void unplug_bulk_checkin(void);
-+/*
-+ * Tell the object database to optimize for adding
-+ * multiple objects. end_odb_transaction must be called
-+ * to make new objects visible.
-+ */
-+void begin_odb_transaction(void);
-+
-+/*
-+ * Tell the object database to make any objects from the
-+ * current transaction visible.
-+ */
-+void end_odb_transaction(void);
- 
- #endif
 -- 
 gitgitgadget
 
