@@ -2,148 +2,351 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FBEC433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 19:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA4C8C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 19:59:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbiC3Tmk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 15:42:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
+        id S1350847AbiC3UB2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 16:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbiC3Tmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 15:42:39 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396A7AE77
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:40:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1648669244;
-        bh=rUnletbAdGEbdEHbTQyjhrGPTLxuvoLqY8A8TudjXdQ=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=lHVvbjb/vNFvgVbQwH991ks8JOImQ/FMS8E26+/sq7G9Y6UVAc5dsktYn9TbFAI4D
-         R9iAvvef09KSFInOq6ziVYOr5t/OQCRsYjbef9Bg7TU1dba5RbsaAEQ/p6+Om5E/fv
-         Fa3Cs1NYTDhp4qe56H7MiXb9k6EgPiOSu6rdFK2c=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MbkWK-1oAMuQ0jFu-00d8kh; Wed, 30
- Mar 2022 21:40:44 +0200
-Message-ID: <2f98c63d-f2c9-26fe-cfd3-9eed6b79047a@web.de>
-Date:   Wed, 30 Mar 2022 21:40:43 +0200
+        with ESMTP id S1346894AbiC3UBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 16:01:22 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485762251A
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:59:36 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id j15so43663360eje.9
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 12:59:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a6j1gJvyTJbqftoCcOP48zqzDxKedZIRK/4+RsBV5F0=;
+        b=bx5jnHyZMvlK0FSEVdsRhXI7ORGYNF2yB2x1c4ZQ2USGFCxv8bctzLuiqHNycwuyxa
+         uZTYn6XjxT/yfJLur3e5f/o5xlCj/b5ackG+T9TJVIKrj9zCTfbxKFRnxB4zJnHMLYPB
+         CROVWBltInGnlunKQ3sQbUkIxKTdIvfmh5Y0WLYaZCM2/3i2Fevbnh4wB+LD4YT9ABZ3
+         eYVH6zzTh8xLJ3sKLBwY5lJqrTjtd0zAtydbZYVv6jYvifX1wj8Q9VfMpwkCpfAyqWCu
+         sEcfD4h5XdlXLVrTY5dpUvwEOVBGy5HihMfBCXU1FLnJ2Rgshk9HuBjbmytN1h36nJRb
+         +OpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a6j1gJvyTJbqftoCcOP48zqzDxKedZIRK/4+RsBV5F0=;
+        b=PThta7L5vZDCQHBk2JEdHg1AoLu3WMmOB9x/Ic28FuNKxkWBvyPzum+mJP9QgY40fE
+         lTWkhYvrKLppPhDzWiUAP5sdHSEcbv/btFovrcdMs3tmqLPvziNp4XD0gKsGBjr2EdsF
+         pRC2r+4izTTkCkvZGJFzDAEV+6K1VQ2M1d4IiVmUIsX5vpSa0o57wYzqohoIu2W654Bn
+         gV1qfU8OmBff1Evd2TjNYxC4QrDuwTuh52x8NfGYUsMJmrWOY2J9VJqeP5QfxtM1WgqK
+         Axrqx1C5biaxKzv8xWcvimzbM4e3leqe/ZZ74MO5ska7Aj4NkgYcO7LTYOpKe+YJGZPj
+         1STA==
+X-Gm-Message-State: AOAM531KeRvhWHn3HRp19w+pOkeIWPwc3K4FFDkAHM0QcFFPPBw9gbtN
+        ig1BxRKErbOcUO8PBg41TbM4jxcIhu5zYR+Y5TEhjA==
+X-Google-Smtp-Source: ABdhPJzZoemJFBd0zKywsK1vwy6ig0wGu354UW5ef8QB18CXaEdni/TpNbFHRdek2quFSWiR5HYCHDcWh20zTH4PNX8=
+X-Received: by 2002:a17:907:62a9:b0:6da:7953:4df0 with SMTP id
+ nd41-20020a17090762a900b006da79534df0mr1379867ejc.316.1648670374682; Wed, 30
+ Mar 2022 12:59:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [PATCH v12 7/8] unpack-objects: refactor away
- unpack_non_delta_entry()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-References: <cover-v11-0.8-00000000000-20220319T001411Z-avarab@gmail.com>
- <cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com>
- <patch-v12-7.8-11f7aa026b4-20220329T135446Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-v12-7.8-11f7aa026b4-20220329T135446Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:g1d3zeuqppMw3cdtl95Wpj6wgTA1DUqoy6Ydmx/YSsHpcsQSZ9y
- rkvX7R8ykfNMRfqgexY78+8dAA7ypz9eDGUry9z42jKu1vBp0QGAAWppy6oTmNXdnskn8Xr
- OEPZNx8Ix45E5Y8jG5siPW+9qBxpAvJtaKdIs/FuPiyrghJIdjHVh8NYXZ1RvYy6mhQLmFo
- 7GItTKzG3AF9e0KxoPk1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:y+T4yki9XdY=:3um1A2s/vYMhs0FtIoG7wf
- +kdIZgJhSA9ledVUcz0e+JcLVgv6QCVNtLpU2praVni62utk86JtGHi0MMVsyr2gyic1z8PTU
- CsFYeEVruUBKX1tXiLe42WCn7XMh/Ed4+ppDCOmCKOqes3PvVHcxFPdSTvzwJU4am+sq5sZF+
- F0fY25avRJBpiOcQ21dxdpt9Xbl3lFEZUmq2E7RIcD3nUsL47+suUN9zGZxnqVrL/z/gVe8wl
- 5Vcybe6djeqmTz7NniH+rx4k4FCfOr5Axc+M07ycrTmg3r+BfFlQqqYYDqYJPv128YFpfr445
- JuO/oiljBjLd1AfWo679NAhxd9anp8YQ+ekqTFJE1eGGYDuKpUNVZ3OJor0jFzVUI/1XurCux
- O3Nhh55GO41JLwx4n6pbaQG+wQolYyY34wHyN5+0OwV+AFCknDedr4bRObH7FgpeUaQlzJRMr
- MbosylGqGdU1stlulTIHVkuOG8J9uVsU+JLbfsj5IowGTkamEJtzyxr8sHdBxYdn1Cyr8Ux+0
- D8RZPJkAQYcUCTQplTTdNF75iINdMD1mlzBXDgP5uRqORVP7v1UMfjiAGUCPQm5sq3jaIAH0R
- hPEvi8yIy19B4TlPTQUfCZHAIJBS990hKC/TnQnssrclgSsZ8nzjn8X9JdOxQo3Xb9rBdpsea
- 1FsHubnSnlqtBxviNPkLONwbewdmye0lRY68NiYun9dtQ6cjsejPG4/ZQ5r1TkcNg2slFqFMT
- Pi1KKGRbZGAqxbQAFXpPaGjF+cChBPBXv9zy9Jw43rrR7xoCAde346kOA9fguJj4/zcLcjXrY
- 38Dqg6PdhV83wx3d44g17IVMWmlUpoLdGnT6hi0Tlr+t1D01DTOtZjgDsoCdr5eZcD8DRFb9d
- oKQVUzlwitXSNPcNSAtadIgx3iJ6egQxZ5YGKk1KEhamn4AJRIBc0jhVfEOY8O7XduaYBsojI
- L751ndLbfJUsU1fVP92TohIW8iK9hgTL6fruggG44YDeKoX1YqjcDym10abMoYzemK+CFoZ9S
- HUP3pPYVBUfuHR9Gf+t88+JNovLidEp5K8q5gXoYvHUJo1TV2V9qUbkVm+72KmjC8g==
+References: <pull.985.v4.git.1645974782256.gitgitgadget@gmail.com>
+ <pull.985.v5.git.1648553134.gitgitgadget@gmail.com> <f60d2c6e36c3218f9b19d7ce62a090d7d6e0e7f6.1648553134.git.gitgitgadget@gmail.com>
+ <xmqqsfr0u01k.fsf@gitster.g>
+In-Reply-To: <xmqqsfr0u01k.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Wed, 30 Mar 2022 21:59:23 +0200
+Message-ID: <CAPMMpog4AcDT_TpPxBaOUfT__gSLufF-EBr=c6__2W4NhhsyVw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] untracked-cache: support '--untracked-files=all'
+ if configured
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.03.22 um 15:56 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> The unpack_one() function will call either a non-trivial
-> unpack_delta_entry() or a trivial unpack_non_delta_entry(). Let's
-> inline the latter in the only caller.
->
-> Since 21666f1aae4 (convert object type handling from a string to a
-> number, 2007-02-26) the unpack_non_delta_entry() function has been
-> rather trivial, and in a preceding commit the "dry_run" condition it
-> was handling went away.
->
-> This is not done as an optimization, as the compiler will easily
-> discover that it can do the same, rather this makes a subsequent
-> commit easier to reason about.
+ the
 
-How exactly does inlining the function make the next patch easier to
-understand or discuss?  Plugging in the stream_blob() call to handle the
-big blobs looks the same with or without the unpack_non_delta_entry()
-call to me.
-
-> As it'll be handling "OBJ_BLOB" in a
-> special manner let's re-arrange that "case" in preparation for that
-> change.
+On Tue, Mar 29, 2022 at 7:43 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/unpack-objects.c | 18 +++++++-----------
->  1 file changed, 7 insertions(+), 11 deletions(-)
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Tao Klerks <tao@klerks.biz>
+> >
+> > Untracked cache was originally designed to only work with
+> > '--untracked-files=normal', but this causes performance issues for UI
+> > tooling that wants to see "all" on a frequent basis. On the other hand,
+> > the conditions that prevented applicability to the "all" mode no
+> > longer seem to apply.
+>
+> There is a slight leap in logic flow before ", but this causes" that
+> forces readers read the above twice and guess what is missing.  I am
+> guessing that
+>
+>     ... was designed to only work with "--untracked-files=normal",
+>     and is bypassed when "--untracked-files=all" request, but this
+>     causes ...
+>
+> is what you meant to say.
 
-Reducing the number of lines can be an advantage. *shrug*
+Yep, will fix.
 
 >
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index e3d30025979..d374599d544 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -338,15 +338,6 @@ static void added_object(unsigned nr, enum object_t=
-ype type,
->  	}
->  }
+> The claim in the last sentence "... no longer seem to apply" is
+> thrown at the readers without much rationale.  Either justify it
+> more solidly or discard the claim?
 >
-> -static void unpack_non_delta_entry(enum object_type type, unsigned long=
- size,
-> -				   unsigned nr)
-> -{
-> -	void *buf =3D get_data(size);
-> -
-> -	if (buf)
-> -		write_object(nr, type, buf, size);
-> -}
-> -
->  static int resolve_against_held(unsigned nr, const struct object_id *ba=
-se,
->  				void *delta_data, unsigned long delta_size)
->  {
-> @@ -479,12 +470,17 @@ static void unpack_one(unsigned nr)
->  	}
+
+I can add references to previous conversation threads around the
+topic, and add the word "experimentally".
+
+> > The disqualification of untracked cache has a particularly significant
+> > impact on Windows with the defaulted fscache, where the introduction
+> > of fsmonitor can make the first and costly directory-iteration happen
+> > in untracked file detection, single-threaded, rather than in
+> > preload-index on multiple threads. Improving the performance of a
+> > "normal" 'git status' run with fsmonitor can make
+> > 'git status --untracked-files=all' perform much worse.
 >
->  	switch (type) {
-> +	case OBJ_BLOB:
->  	case OBJ_COMMIT:
->  	case OBJ_TREE:
-> -	case OBJ_BLOB:
->  	case OBJ_TAG:
-> -		unpack_non_delta_entry(type, size, nr);
-> +	{
-> +		void *buf =3D get_data(size);
-> +
-> +		if (buf)
-> +			write_object(nr, type, buf, size);
->  		return;
-> +	}
->  	case OBJ_REF_DELTA:
->  	case OBJ_OFS_DELTA:
->  		unpack_delta_entry(type, size, nr);
+> The last sentence is a bit hard to parse and very hard to reason
+> about.  Do you mean to say "--untracked-files=all is slower when the
+> untracked cache is in use, so the performance of 'git status' may be
+> improved for '--untracked-files=normal' when the untracked cache is
+> used, it hurts when 'git status --untracked-files=all' is run"?
+
+Something like that. The case where untracked cache bypassing (or
+disabling) has a huge impact is on windows, and involves fscache and
+fsmonitor:
+* Untracked cache saves some work under qualifying conditions
+* If qualifying conditions are not met (eg when -uall), we do the work
+anyway as though untracked cache were disabled.
+* fscache optimises directory-iteration on windows, with an N-thread
+preload strategy. This is enabled by default, and improves windows
+"git status" performance transparently from "abominably slow" to just
+"slow".
+* fsmonitor, when combined with untracked cache, eliminates recursive
+directory-iteration in favor of using a persistent in-memory model of
+what's changed on disk (to compare to the index and untracked cache)
+* When fsmonitor is enabled and used, the fscache preload strategy is
+(obviously) disabled
+* When fsmonitor is enabled and untracked cache is disabled or
+bypassed, the otherwise-ubiquitous "fscache preload" does not happen,
+and the untracked file search (directory iteration) takes... forever.
+
+In other words: In windows, where fscache behavior is critical for
+large repos and defaulted-on, when fsmonitor is also enabled which
+generally further improves things but disqualifies fscache preload,
+the bypassing of untracked cache causes a huge performance impact. A
+"-uall" run can take a minute, where a "-unormal" run takes only a
+second, because the enumeration of untracked files without using the
+untracked cache data means a full directory iteration, not optimized
+by fscache. On the other hand, removing fsmonitor and untracked cache
+altogether, and leaving just the fscache optimization to do its job
+consistently, results in consistent middle-of-the-road performance in
+the order of 10 seconds in this example.
+
+Enabling fsmonitor in this situation causes -uall to perform
+pathologically badly, because of untracked cache bypassing
+(interacting with the fscache-preload-bypassing of fsmonitor).
+However, the benefits of dropping status time from 10 seconds to 1
+second make fsmonitor very attractive. On the other hand, the
+pathological performance with -uall is a problem if you use GUIs that
+*require* -uall. Therefore, fixing untracked cache to be compatible
+with -uall is critical to large repos on windows where the ideal
+experience would be fscache working, fsmonitor working, untracked
+cache working, and GUIs able to use -uall without the user waiting a
+minute or more and sometimes timing out.
+
+This problem sounds like an edge-case when I describe the chain of
+interactions, but is actually very common among large-repo windows
+users. Windows users are typically GUI users. GUIs typically use
+-uall, as git's default "hide contents of untracked folders" behavior
+is obviously limiting.
+
+This patch doesn't actually change anything I've described by default
+- but it makes it *possible* to get good/consistent performance with
+-uall (with fscache, with fsmonitor, with untracked cache), *if* you
+configure status.showuntrackedfiles=all.
+
+Now, coming back to the paragraph in question; maybe, instead of
+trying to summarize this windows-fscache-fsmonitor-untrackedcache
+interaction, I should be a little more vague. Would this work?
+
+--
+When 'git status' runs without using the untracked cache, on a large
+repo, on windows, with fsmonitor, it can run very slowly. This can
+make GUIs that need to use "-uall" (and therefore currently bypass
+untracked cache) unusable when fsmonitor is enabled, on such large
+repos.
+--
+
+
+> Let me follow what actually happens in the patch aloud.
+>
+[...]
+> This _guesses_ the user preference from the configuration.
+>
+
+Yes - the proposal, in this patch, is that the untracked cache
+usability/compatibility be aligned with the configuration. We are
+adding an extra meaning to the "status.showuntrackedfiles"
+configuration, such that it not only indicates what you want to have
+happen when you don't specify "-u" to git status, but it *also*
+indicates what kind of status output the untracked cache should be
+targeting/supporting.
+
+> > +static void new_untracked_cache(struct index_state *istate, int flags)
+> >  {
+> >       struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
+> >       strbuf_init(&uc->ident, 100);
+> >       uc->exclude_per_dir = ".gitignore";
+> > -     /* should be the same flags used by git-status */
+> > -     uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+> > +     uc->dir_flags = flags >= 0 ? flags : new_untracked_cache_flags(istate);
+>
+> We use unsigned for the flag word unless there is a reason not to,
+> but this function wants to use top-bit as a signal to "guess from
+> config".  The caller either dictates what bits to set, or we guess.
+>
+> And the created uc records the flags.
+>
+
+Yep - although the word "guess" may be slightly misleading here. The
+proposed semantics are such that if the existing untracked cache flags
+are inconsistent with the config, we *discard* the
+no-longer-consistent-with-config untracked cache; so it's not so much
+a guess as a mandate.
+
+> > @@ -2762,11 +2782,11 @@ static void new_untracked_cache(struct index_state *istate)
+> >  void add_untracked_cache(struct index_state *istate)
+> >  {
+> >       if (!istate->untracked) {
+> > -             new_untracked_cache(istate);
+> > +             new_untracked_cache(istate, -1);
+>
+> We are newly creating, so "-1" (guess from config) may be the most
+> appropriate (unless the caller of add_untracked_cache() already
+> knows what operation it is using for, that is).
+>
+> >       } else {
+> >               if (!ident_in_untracked(istate->untracked)) {
+>
+> Found an existing one but need to recreate.
+>
+> >                       free_untracked_cache(istate->untracked);
+> > -                     new_untracked_cache(istate);
+> > +                     new_untracked_cache(istate, -1);
+>
+> In this case, is it likely to give us a better guess to read the
+> configuration, or copy from the existing untracked file?  My gut
+> feeling says it would be the latter, and if that is correct, then
+> we might want
+>
+> +                       int old_flags = istate->untracked->dir_flags;
+>                         free_untracked_cache(istate->untracked);
+> -                       new_untracked_cache(istate);
+> +                       new_untracked_cache(istate, old_flags);
+>
+> instead?  I dunno.
+>
+
+As I noted above, we later consider that an untracked cache with flags
+that are inconsistent with the current config is an invalid untracked
+cache, and discard it; so setting the flags based on config is the
+right thing (the only useful thing) to do.
+
+
+> > @@ -2781,9 +2801,9 @@ void remove_untracked_cache(struct index_state *istate)
+> >  }
+> >
+> >  static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+> > -                                                   int base_len,
+> > -                                                   const struct pathspec *pathspec,
+> > -                                                   struct index_state *istate)
+> > +                                                         int base_len,
+> > +                                                         const struct pathspec *pathspec,
+> > +                                                         struct index_state *istate)
+> >  {
+> >       struct untracked_cache_dir *root;
+> >       static int untracked_cache_disabled = -1;
+>
+> Is this just re-indenting?  Not very welcome, but OK.
+>
+
+Will fix; I think there was a previous version in which these lines
+actually changed.
+
+> > @@ -2814,17 +2834,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+> >       if (base_len || (pathspec && pathspec->nr))
+> >               return NULL;
+> >
+> > -     /* Different set of flags may produce different results */
+> > -     if (dir->flags != dir->untracked->dir_flags ||
+> > -         /*
+> > -          * See treat_directory(), case index_nonexistent. Without
+> > -          * this flag, we may need to also cache .git file content
+> > -          * for the resolve_gitlink_ref() call, which we don't.
+> > -          */
+> > -         !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
+> > -         /* We don't support collecting ignore files */
+> > -         (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> > -                        DIR_COLLECT_IGNORED)))
+> > +     /* We don't support collecting ignore files */
+> > +     if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> > +                     DIR_COLLECT_IGNORED))
+> >               return NULL;
+> >
+> >       /*
+> > @@ -2847,6 +2859,41 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+> >               return NULL;
+> >       }
+> >
+> > +     /*
+> > +      * We don't support using or preparing the untracked cache if
+> > +      * the current effective flags don't match the configured
+> > +      * flags.
+> > +      */
+>
+> Is that what we want?  What happens when your user does this:
+>
+>     - set showuntrackedfiles to "normal"
+>     - generate the untracked cache
+>     - set showuntrackedfiles to "all"
+>
+> And now the user wants to make a request that wants to see flags
+> that are suitable for "normal".
+>
+> The best case would be for the untracked cache to know what flags
+> were in use when it was generated, so that in the above sequence,
+> even though the current value of configuration variable and the
+> current request from the command line contradict each other, we
+> can notice that the untracked cache data is suitable for the current
+> request and the right thing happens.
+>
+> > +     if (dir->flags != new_untracked_cache_flags(istate))
+> > +             return NULL;
+>
+> But this only pays attention to what is in the configuration?  It
+> seems to me that it is being too pessimistic, but perhaps it is
+> necessary for correctness somehow?
+
+The logic in the current patch is:
+* If the configuration doesn't match the request, ignore untracked
+cache completely (exit the UC logic)
+* If the configuration doesn't match the current untracked cache data,
+discard the existing untracked cache data (and later recreate it if
+everything else works out)
+
+I think your proposal is something like:
+* If the current untracked cache data doesn't match the request
+** If the current untracked cache data doesn't match the
+configuration, then discard the existing untracked cache (and later
+recreate it if everything else works out)
+** Otherwise, ignore untracked cache completely (exit the UC logic)
+* (otherwise, if current untracked cache data *does* match the
+request, assume it's good enough to keep using for now - this is the
+new behavior)
+
+I find the latter slightly harder to understand and explain, but I'm
+reasonably certain it addresses the case you identified above without
+compromising correctness in any other cases - it can only have a
+positive impact on performance. I'll have a go at making that change
+today.
