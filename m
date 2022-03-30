@@ -2,81 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B315DC433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C36C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351692AbiC3Ws0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 18:48:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47238 "EHLO
+        id S1351729AbiC3WtY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 18:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348450AbiC3WsZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 18:48:25 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007272BB18
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:46:38 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id t21so18704646oie.11
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:46:38 -0700 (PDT)
+        with ESMTP id S1351728AbiC3WtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 18:49:23 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60FD0546A2
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:47:35 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id i7so9468975oie.7
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=QIyFaXq1yu/Fpbk+nYXefPfn2oaAWQlQvDu3X4W8O+E=;
-        b=Bm1esmrCPeuPolEt5rog49bX44YO486IuxJ8cf+R1aNRPWO35OLM+i/XDBx9D5Qa4J
-         /YCxcF2C8Xa/gEOrBVZTw5VThAJgZ5Bc6PfTB6cpj7bKhhwquvF0PDM1YKgRc3NVCabb
-         icXAHL2/Gt5ys8oeGq8rS0SfsjIm1iyeivpI21dw9PQdwIIOwTTzJ6rMWI4sigxpNauF
-         qns/7cFZ0X4hYL4hdyNTuca2k+ND+T6RAZ5d4cBnJCSDsWXIR0fr67JCULgwJ3w2hXXt
-         8HzRSAKnZ5Paxiv+AwpfWdkpTqK02vOGk96V8uqzdJ6mYm3NCUyS3evwAvbMD1aljmUS
-         gvZg==
+         :cc:content-transfer-encoding;
+        bh=qFG4cG69EQwstNOFCEwTFFZzVCkVESVXO5ydxZNNzvI=;
+        b=BqFd6Gty/37OC8Dd/fGQ+xSe6hnvR0cRYeufHda4pxcPuvmtRsQBCBjY97YuEfTwgU
+         CM3S2lB4ijRc7wetV1LnLJCAAC6Flp66ZH1U2MMBq9WyijN2KSZYyFXzhZvf3UsXFd34
+         dK5v2RbB5+0h4ijIGe/+ewGLqup/E9vvRycvj7ztdp7f46hpSn1Dl10hLRHNDgKxs9qo
+         SY6fuRYrqrJZStX8S4Mw1xPjzB1ON+djuESbEFJIMPshnCkXFrynuKPTIVAjqHS2S8oT
+         /BfqO8ipkx1SwhL+1HgpTMDZ1uRB/zm/K6m3oXbthKvJdIEnxH1zXPBuime9K0mV8aIF
+         uYDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=QIyFaXq1yu/Fpbk+nYXefPfn2oaAWQlQvDu3X4W8O+E=;
-        b=vgTmzavr9vPiSc2SfVcZ2B8T/lBMt3FQ4XqSt1heyjHGAq0RktvEe1HMO/7wheB9/Z
-         vNXOn+23AMx65evvpbuyfWhborKZ9Ik7bnf5PLKW6nbYMfnneIBhCSnjuDlhJEERDfV1
-         mMeze2pLv5Mjcq2lCjC+zk33u04Ai6XRD75iBZdp9WStCQJthTM9R8OFh4M41Quegad1
-         wH8oYt5IU+KC5V/aLTbFSN8zxSkJ3j31EFAg1ITlwtVvBV50NSzHFjvkA8mvSuBp6Uv0
-         GADOrvW+5Z6SRvxmA7aIagkqajfPMWHbRE15Z6UQSp830CEn/TFt3glnt8yiFuqQfcqK
-         Aa6A==
-X-Gm-Message-State: AOAM5336Kr/adIIKjHwxoCvfltZmCjZdWfyvdZ2t1vB99EzrIDyeWCH7
-        M1B3o476PmMSRz/WP9RFBmq/kVmgc9eU2DhrhVOsHQ==
-X-Google-Smtp-Source: ABdhPJxBH2Au3XE0t7pINv4Ryj1NcHQq2zMMkIByiWpceuaBlBi0wSc0G33Kc1p+P2UaFce4WFuNHOYHGLJaMyIgJco=
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qFG4cG69EQwstNOFCEwTFFZzVCkVESVXO5ydxZNNzvI=;
+        b=irGvjitQl5ed0GEcOwT9qgPCmObY7cGij13GSg47de4rLaVHXWY8s+cnMBaHUCCLMo
+         KM0R4UEIQyjG9AdCJTJr+FVzCu3DAaj7MrTQy3UbrC5LJ1qcUr0iqpd63+t6fnVthe2O
+         KH/Aiej4TApOFEdfvqw+ELoSgCNa1LT4Xkbv1c5I89XkFyR33govv7IC13rQJmlcdiFG
+         FZwy86HoKHk1eSkiFhCWvCRXo8jPlf9tgIZP62lfcraAu80Ksowa2gPg2bSVEnzxqC/R
+         Mk3kLeeCwhR78NRaVhFzMCyMiZdz/B0i7nM8rw1XFyCrNWnQpMzVdgSN3/MAY74iCGGR
+         n6+g==
+X-Gm-Message-State: AOAM532cj/Ra7xcAP1uSiCFvY54XlybPeBPmfYk+Yo1/POoWVS2C/22S
+        Q9oPPaLrwMXovOe2KJp/m74FGv1PNgCQXPmU+uqoOw==
+X-Google-Smtp-Source: ABdhPJxuvjPtmcO359t4qYLdnm3P+ZimKC+QS76kiAyjoAHFRzb9gq+11eweNnq+dI0u6+ghK8VLDmzba2RPqtQIM1c=
 X-Received: by 2002:a05:6808:1386:b0:2d9:a01a:488a with SMTP id
- c6-20020a056808138600b002d9a01a488amr1299060oiw.213.1648680398148; Wed, 30
- Mar 2022 15:46:38 -0700 (PDT)
+ c6-20020a056808138600b002d9a01a488amr1301251oiw.213.1648680454515; Wed, 30
+ Mar 2022 15:47:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220208235631.732466-1-calvinwan@google.com> <20220328191112.3092139-1-calvinwan@google.com>
- <20220328191112.3092139-4-calvinwan@google.com> <YkTV19+eCQNq/C5s@google.com>
-In-Reply-To: <YkTV19+eCQNq/C5s@google.com>
+ <20220328191112.3092139-4-calvinwan@google.com> <YkOT/TCKPK3LT9gh@nand.local>
+In-Reply-To: <YkOT/TCKPK3LT9gh@nand.local>
 From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 30 Mar 2022 15:46:27 -0700
-Message-ID: <CAFySSZDWYN6sKZgm=XKcZUb0OgYBKPwn9OX92m4Ybgr+XZ_8LQ@mail.gmail.com>
+Date:   Wed, 30 Mar 2022 15:47:23 -0700
+Message-ID: <CAFySSZDD4VsQckvuubjZbVwisEbHbCpZK2sA_FQQj_voVF94Pw@mail.gmail.com>
 Subject: Re: [PATCH v3 3/3] object-info: add option for retrieving object info
-To:     Josh Steadmon <steadmon@google.com>,
-        Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, philipoakley@iee.email,
-        johncai86@gmail.com
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> but the oid arguments below have a newline, so we
-> should be consistent one way or the other.
+Thank you for the code hygiene tips, Taylor! All of these sounds like
+good ideas and will follow through
 
-To match what the other packet functions do, I will get rid of the new
-line for the oid loop.
-
-> Rather than die() if we're on protocol V1
-> or V0, can we also return a failure here and let callers fallback to
-> fetch?
-
-Sounds reasonable. Will look into it.
-
-On Wed, Mar 30, 2022 at 3:12 PM Josh Steadmon <steadmon@google.com> wrote:
+On Tue, Mar 29, 2022 at 4:19 PM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> On 2022.03.28 19:11, Calvin Wan wrote:
+> Hi Calvin,
+>
+> Junio took a deeper look below, but here are a few small code-hygiene
+> issues that I noticed while taking a quicker look through this patch.
+>
+> On Mon, Mar 28, 2022 at 07:11:12PM +0000, Calvin Wan wrote:
 > > Sometimes it is useful to get information about an object without
 > > having to download it completely. The server logic has already been
 > > implemented as =E2=80=9Ca2ba162cda (object-info: support for retrieving=
@@ -87,6 +82,11 @@ On Wed, Mar 30, 2022 at 3:12 PM Josh Steadmon <steadmon@google.com> wrote:
 > >
 > > Add =E2=80=98--object-info=E2=80=99 option to fetch. This option allows=
  the client to
+>
+> The single-quotes here look like smart quotes. I don't think we forbid
+> these explicitly within commit messages, but using the standard '
+> (ASCII 0x27) character is more common.
+>
 > > make an object-info command request to a server that supports protocol
 > > v2. If the server is v2, but does not allow for the object-info
 > > command request, fetch the objects as if it were a standard fetch
@@ -109,7 +109,141 @@ On Wed, Mar 30, 2022 at 3:12 PM Josh Steadmon <steadmon@google.com> wrote:
 > >  transport.h                     |   9 +++
 > >  10 files changed, 315 insertions(+), 9 deletions(-)
 > >  create mode 100755 t/t5583-fetch-object-info.sh
+> >
+> > diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-opti=
+ons.txt
+> > index f903683189..f1ca95c32d 100644
+> > --- a/Documentation/fetch-options.txt
+> > +++ b/Documentation/fetch-options.txt
+> > @@ -299,3 +299,8 @@ endif::git-pull[]
+> >  -6::
+> >  --ipv6::
+> >       Use IPv6 addresses only, ignoring IPv4 addresses.
+> > +
+> > +--object-info=3D[<arguments>]::
+> > +     Fetches only the relevant information passed in arguments from a
+> > +     specific remote and set of object ids. Object 'size' is currently
+> > +     the only supported argument.
+> > diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+> > index 550c16ca61..a13d2ba7ad 100644
+> > --- a/Documentation/git-fetch.txt
+> > +++ b/Documentation/git-fetch.txt
+> > @@ -13,6 +13,7 @@ SYNOPSIS
+> >  'git fetch' [<options>] <group>
+> >  'git fetch' --multiple [<options>] [(<repository> | <group>)...]
+> >  'git fetch' --all [<options>]
+> > +'git fetch' --object-info=3D[<arguments>] <remote> [<object-ids>]
+> >
+> >
+> >  DESCRIPTION
+> > diff --git a/builtin/fetch.c b/builtin/fetch.c
+> > index 4d12c2fd4d..0b21bebfca 100644
+> > --- a/builtin/fetch.c
+> > +++ b/builtin/fetch.c
+> > @@ -29,6 +29,9 @@
+> >  #include "commit-graph.h"
+> >  #include "shallow.h"
+> >  #include "worktree.h"
+> > +#include "protocol.h"
+> > +#include "pkt-line.h"
+> > +#include "connect.h"
+> >
+> >  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+> >
+> > @@ -37,6 +40,7 @@ static const char * const builtin_fetch_usage[] =3D {
+> >       N_("git fetch [<options>] <group>"),
+> >       N_("git fetch --multiple [<options>] [(<repository> | <group>)...=
+]"),
+> >       N_("git fetch --all [<options>]"),
+> > +     N_("git fetch --object-info=3D[<arguments>] <remote> [<object-ids=
+>]"),
+> >       NULL
+> >  };
+> >
+> > @@ -86,6 +90,7 @@ static struct string_list negotiation_tip =3D STRING_=
+LIST_INIT_NODUP;
+> >  static int fetch_write_commit_graph =3D -1;
+> >  static int stdin_refspecs =3D 0;
+> >  static int negotiate_only;
+> > +static struct string_list object_info_options =3D STRING_LIST_INIT_NOD=
+UP;
+> >
+> >  static int git_fetch_config(const char *k, const char *v, void *cb)
+> >  {
+> > @@ -221,6 +226,8 @@ static struct option builtin_fetch_options[] =3D {
+> >                N_("write the commit-graph after fetching")),
+> >       OPT_BOOL(0, "stdin", &stdin_refspecs,
+> >                N_("accept refspecs from stdin")),
+> > +     OPT_STRING_LIST(0, "object-info", &object_info_options, N_("optio=
+n"),
+> > +              N_("command request arguments")),
+> >       OPT_END()
+> >  };
+> >
+> > @@ -2087,6 +2094,7 @@ int cmd_fetch(int argc, const char **argv, const =
+char *prefix)
+> >       struct remote *remote =3D NULL;
+> >       int result =3D 0;
+> >       int prune_tags_ok =3D 1;
+> > +     struct oid_array object_info_oids =3D OID_ARRAY_INIT;
+> >
+> >       packet_trace_identity("fetch");
+> >
+> > @@ -2168,7 +2176,19 @@ int cmd_fetch(int argc, const char **argv, const=
+ char *prefix)
+> >       if (dry_run)
+> >               write_fetch_head =3D 0;
+> >
+> > -     if (all) {
+> > +     if (object_info_options.nr > 0) {
 >
+> Small nit; since object_info_options.nr should never be negative, we
+> should instead write "if (object_info_options)".
+>
+> > +             if (argc =3D=3D 0 || argc =3D=3D 1) {
+> > +                     die(_("must supply remote and object ids when usi=
+ng --object-info"));
+> > +             } else {
+> > +                     struct object_id oid;
+> > +                     remote =3D remote_get(argv[0]);
+> > +                     for (i =3D 1; i < argc; i++) {
+> > +                             if (get_oid(argv[i], &oid))
+> > +                                     return error(_("malformed object =
+id '%s'"), argv[i]);
+> > +                             oid_array_append(&object_info_oids, &oid)=
+;
+> > +                     }
+> > +             }
+> > +     } else if (all) {
+> >               if (argc =3D=3D 1)
+> >                       die(_("fetch --all does not take a repository arg=
+ument"));
+> >               else if (argc > 1)
+> > @@ -2199,7 +2219,19 @@ int cmd_fetch(int argc, const char **argv, const=
+ char *prefix)
+> >               }
+> >       }
+> >
+> > -     if (negotiate_only) {
+> > +     if (object_info_options.nr > 0) {
+> > +             if (!remote)
+> > +                     die(_("must supply remote when using --object-inf=
+o"));
+> > +             gtransport =3D prepare_transport(remote, 1);
+> > +             if (gtransport->smart_options) {
+> > +                     gtransport->smart_options->object_info =3D 1;
+> > +                     gtransport->smart_options->object_info_oids =3D &=
+object_info_oids;
+> > +                     gtransport->smart_options->object_info_options =
+=3D &object_info_options;
+> > +             }
+> > +             if (server_options.nr)
+> > +                     gtransport->server_options =3D &server_options;
+> > +             result =3D transport_fetch_refs(gtransport, NULL);
+> > +     } else if (negotiate_only) {
+> >               struct oidset acked_commits =3D OIDSET_INIT;
+> >               struct oidset_iter iter;
+> >               const struct object_id *oid;
 > > diff --git a/fetch-pack.c b/fetch-pack.c
 > > index b709a61baf..36e3d1c5d0 100644
 > > --- a/fetch-pack.c
@@ -124,103 +258,82 @@ s)
 > > +{
 > > +     struct strbuf req_buf =3D STRBUF_INIT;
 > > +     int i;
+>
+> I don't think this would ever be practically exploit-able, since we'd
+> run past the argument limit long before we hit INT_MAX, but this should
+> be a size_t instead of an int to match the type of args->oid->nr.
+>
 > > +
 > > +     write_command_and_capabilities(&req_buf, args->server_options, "o=
 bject-info");
 > > +
 > > +     if (string_list_has_string(args->object_info_options, "size"))
 > > +             packet_buf_write(&req_buf, "size");
->
-> Do we need a newline after "size" here? It's not clear to me that it's
-> necessary; Documentation/technical/protocol-v2.txt just says
-> "command-specific-args are packet line framed arguments defined by each
-> individual command", but the oid arguments below have a newline, so we
-> should be consistent one way or the other.
->
-> It looks like the server-side implementation wants just a bare "size"
-> string (no newline), but I suspect that either is OK because the
-> packet_reader is probably using PACKET_READ_CHOMP_NEWLINE.
->
->
+> > +
 > > +     for (i =3D 0; i < args->oids->nr; i++) {
 > > +             packet_buf_write(&req_buf, "oid %s\n", oid_to_hex(&args->=
 oids->oid[i]));
 > > +     }
-> > +
-> > +     packet_buf_flush(&req_buf);
-> > +     if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> > +             die_errno(_("unable to write request to remote"));
-> > +
-> > +     strbuf_release(&req_buf);
-> > +}
-> > +
 >
-> > diff --git a/transport.c b/transport.c
-> > index 70e9840a90..65a1b1fdb3 100644
-> > --- a/transport.c
-> > +++ b/transport.c
-> > @@ -350,6 +350,67 @@ static struct ref *handshake(struct transport *tra=
-nsport, int for_push,
-> >       return refs;
-> >  }
+> Small nit, the braces around this for-loop are not required.
+>
+> >  static int send_fetch_request(struct fetch_negotiator *negotiator, int=
+ fd_out,
+> >                             struct fetch_pack_args *args,
+> >                             const struct ref *wants, struct oidset *com=
+mon,
+> > @@ -1604,6 +1625,10 @@ static struct ref *do_fetch_pack_v2(struct fetch=
+_pack_args *args,
+> >       if (args->depth > 0 || args->deepen_since || args->deepen_not)
+> >               args->deepen =3D 1;
 > >
-> > +/*
-> > + * Fetches object info if server supports object-info command
-> > + * Make sure to fallback to normal fetch if this fails
-> > + */
-> > +static int fetch_object_info(struct transport *transport)
-> > +{
-> > +     struct git_transport_data *data =3D transport->data;
-> > +     struct object_info_args args;
-> > +     struct packet_reader reader;
+> > +     if (args->object_info) {
+> > +             state =3D FETCH_SEND_REQUEST;
+> > +     }
 > > +
-> > +     memset(&args, 0, sizeof(args));
-> > +     args.server_options =3D transport->server_options;
-> > +     args.object_info_options =3D transport->smart_options->object_inf=
-o_options;
-> > +     args.oids =3D transport->smart_options->object_info_oids;
-> > +
-> > +     connect_setup(transport, 0);
-> > +     packet_reader_init(&reader, data->fd[0], NULL, 0,
-> > +                     PACKET_READ_CHOMP_NEWLINE |
-> > +                     PACKET_READ_DIE_ON_ERR_PACKET);
-> > +     data->version =3D discover_version(&reader);
-> > +
-> > +     transport->hash_algo =3D reader.hash_algo;
-> > +
-> > +     switch (data->version) {
-> > +     case protocol_v2:
-> > +             if (!server_supports_v2("object-info", 0))
-> > +                     return 0;
-> > +             send_object_info_request(data->fd[1], &args);
-> > +             break;
-> > +     case protocol_v1:
-> > +     case protocol_v0:
-> > +             die(_("wrong protocol version. expected v2"));
 >
-> The comment at the top of this function says that callers should be
-> prepared to fallback to normal fetch if this function fails. The only
-> way it can currently fail is if we are using protocol V2 but the server
-> doesn't support object-info. Rather than die() if we're on protocol V1
-> or V0, can we also return a failure here and let callers fallback to
-> fetch?
+> Ditto here.
 >
-> > +     case protocol_unknown_version:
-> > +             BUG("unknown protocol version");
-> > +     }
+> >       while (state !=3D FETCH_DONE) {
+> >               switch (state) {
+> >               case FETCH_CHECK_LOCAL:
+> > @@ -1613,7 +1638,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_=
+pack_args *args,
+> >                       /* Filter 'ref' by 'sought' and those that aren't=
+ local */
+> >                       mark_complete_and_common_ref(negotiator, args, &r=
+ef);
+> >                       filter_refs(args, &ref, sought, nr_sought);
+> > -                     if (everything_local(args, &ref))
+> > +                     if (!args->object_info && everything_local(args, =
+&ref))
+> >                               state =3D FETCH_DONE;
+> >                       else
+> >                               state =3D FETCH_SEND_REQUEST;
+> > @@ -1999,8 +2024,19 @@ struct ref *fetch_pack(struct fetch_pack_args *a=
+rgs,
+> >               }
+> >               args->connectivity_checked =3D 1;
+> >       }
+> > -
+> > -     update_shallow(args, sought, nr_sought, &si);
 > > +
-> > +     if (packet_reader_read(&reader) !=3D PACKET_READ_NORMAL) {
-> > +             die(_("error reading object info header"));
-> > +     }
-> > +     if (strcmp(reader.line, "size")) {
-> > +             die(_("expected 'size', received '%s'"), reader.line);
-> > +     }
-> > +     while (packet_reader_read(&reader) =3D=3D PACKET_READ_NORMAL) {
-> > +             printf("%s\n", reader.line);
-> > +     }
-> > +     check_stateless_delimiter(transport->stateless_rpc, &reader, "sta=
-teless delimiter expected");
-> > +
-> > +     return 1;
-> > +}
-> > +
+> > +     if (args->object_info) {
+> > +             struct ref *ref_cpy_reader =3D ref_cpy;
+> > +             unsigned long size =3D 0;
+> > +             while (ref_cpy_reader) {
+> > +                     oid_object_info(the_repository, &(ref_cpy_reader-=
+>old_oid), &size);
+> > +                     printf("%s %li\n", oid_to_hex(&(ref_cpy_reader->o=
+ld_oid)), size);
+>
+> Both expressions like "&(x)" can be written instead as "&x" without the
+> outer parenthesis.
+>
+> Likewise, we do not use %li, that line should instead read:
+>
+>     printf("%s %"PRIuMAX"\n", oid_to_hex(&ref_cpy_reader->old_oid), (uint=
+max_t)size);
+>
+> Thanks,
+> Taylor
