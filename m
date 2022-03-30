@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB86C433F5
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D1A3C433EF
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 05:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242760AbiC3FHt (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S242798AbiC3FHt (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 30 Mar 2022 01:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58134 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242740AbiC3FHp (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242746AbiC3FHp (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Mar 2022 01:07:45 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B991D66AFE
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:44 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id q20so11523434wmq.1
-        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:44 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFB96622D
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id u16so27568858wru.4
+        for <git@vger.kernel.org>; Tue, 29 Mar 2022 22:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RIF5CAZ9hTXQxe5JpOeXS1KOLlyZ8DHo3e5ICWJYFAY=;
-        b=cg/VnRJVSzjavnMvPA0/sBzx3C/xMKQWwbSgHtMMsqjAXAMVj0iAk6bzo2J4ceFEnZ
-         DrAPIrHQ81d0M7khoYbxhILjvHeayiWYLSCi5a213L7gBPHkz79DRDO3kGq9f7gM8Cui
-         ufQksd8rSokkcQrCRzcPoXZyBTilLMlUGr7qiWGepH4Xp/7mCW7C/Cb3Doqvb8RK9CaR
-         300wM+q82YZmAyW0nivvLAdbP2W2AO7UxQHIti7WxSlRvvFIbRlx5cPYaj7UUKctfnU8
-         kX49HcwkQckCJWHbFo5FKeBMf8hi4t7zowy/9gzRvMqQjg3CRRpeBpqpmcE7tFsK1xuS
-         kNbQ==
+        bh=hg8plsugjefXxhMhSvzABM0c1aAu2C8TxytBC4+PwWI=;
+        b=QizEu2+HroFKYp+23Jz5+0r/DIb/JSLKxwAgToyHL1YJcRuOwexmVweZrUqIEsa3aX
+         I4Ou1CXWxLIZ44/73/idzKMjnzQo3jjKorOHThCfVpJlsBC0tTwv1W6VnDv/cfqY+3q2
+         ELUgxtkksHjtNShpza7kjqtcwKVIBJHqXFQzDiVsBVzYgJde5VI5Q08aL4UnSTCbXOih
+         qBefJY+qFwLSgK4L9Eh74lrwkK8yCKZQtGaXwwaZv1yPZiX3l7/2Jx8rXGv5Opdo+Jg+
+         3OWGjFyQXro7lJDbxYe+AgRLhUjrCJ6KaoOL2kZIal7hdCo8mnD3Y058bLJT5i3JSH4O
+         Qy4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RIF5CAZ9hTXQxe5JpOeXS1KOLlyZ8DHo3e5ICWJYFAY=;
-        b=nbJLPNXFGlqUk+12bESmEBn0yetstvt9oa6riHklY7WjBegDBwJH70vwOCNR/eC0HT
-         dyH4qEd+GfKKXcQsKA0vjs7ujUXsHMTB1QiTEohOe2WFHmWfcmhzWG3r+ABBpc7U6gaf
-         x5cGd9RHoOplcBzOgd/rfsAtL+EtgdFznRJsSoX8qMsHzZ9tJVezwIRfkxnCFZFVA/gN
-         Mt1pq/yBlQGGQpJZyh7HaDOk5u9WtVi2Jcla1qr6zYlbQp9RFCu+27HehuPhVb9LHXJy
-         UErDoAyCIwGUAC+OuYD0dC/qhLYVzmAye16MkJtfNQ3T22Gw9MBpq3zuhR3L3UguynLa
-         5b7g==
-X-Gm-Message-State: AOAM533b8Isf3PDEXLlPpIeLYPAFAO2pCe0n72vt8wWjIS/dpS87z8yh
-        IWdZ5e4KXafEmaxJaO49lxKTk079SO4=
-X-Google-Smtp-Source: ABdhPJzfLqDSyjhxsdal6OCNEUE3nZ8W8MH/83Gq7TzZzOemiQzczj+7ByUUvwtKpmicQwSld9eX1Q==
-X-Received: by 2002:a1c:7219:0:b0:38c:a4f8:484f with SMTP id n25-20020a1c7219000000b0038ca4f8484fmr2537303wmc.99.1648616742893;
-        Tue, 29 Mar 2022 22:05:42 -0700 (PDT)
+        bh=hg8plsugjefXxhMhSvzABM0c1aAu2C8TxytBC4+PwWI=;
+        b=AjUwKEoAQ2k4Sw+Ec/IaJbA+O1/VAWjVbS8iFPTKf/jfRyQM7ftgU7KgCPudn1hxl2
+         nkO4jyvzH6Jg1w37kp13j9/wAyzJwTl5smwZ+M2F276hNGJe4tAjASnWruFnvidbt24P
+         EhEwJOPp3YM4/EF3nnlth3lmnoyVN/OwyHd1gLwp1OaHJHrVrZpK1wXpH+JTuX3Lw4n6
+         BRr8EKV+BwITnqrJa++uZWIfm4idXDYwVKiOP7xikaDWrv32Yqg+1lXm7HJVpglbzmI+
+         ql7V9X551Aww/nOa30St5udw3Q1gW3HV5Rv5PUwo5VSzFXeVhRtOZ0V6nzAJjJ3fZZrC
+         uaow==
+X-Gm-Message-State: AOAM532V8kMrCm1se7HbtySwo/O81XYf7COPzoD13RF8djYy3rpaJpCt
+        cCiKyx9aFU6Fd2uU72Ji2KJPlH1hOLE=
+X-Google-Smtp-Source: ABdhPJxGPGp28QmmEhC3/p8Iw7UoNzjvM0UA3pTFfd7HtZIPmY1lWWVw1MbMygjeSt5OEmGaESi/Ng==
+X-Received: by 2002:adf:da50:0:b0:204:7d8:b654 with SMTP id r16-20020adfda50000000b0020407d8b654mr35044691wrl.607.1648616744824;
+        Tue, 29 Mar 2022 22:05:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q17-20020adff951000000b00205c1b97ac4sm6690967wrr.20.2022.03.29.22.05.42
+        by smtp.gmail.com with ESMTPSA id y5-20020a1c4b05000000b0038cbf571334sm3578152wma.18.2022.03.29.22.05.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 22:05:42 -0700 (PDT)
-Message-Id: <8cac94598a58704d9b625a9d8a593779f7adc30f.1648616734.git.gitgitgadget@gmail.com>
+        Tue, 29 Mar 2022 22:05:44 -0700 (PDT)
+Message-Id: <faacc19aab2ecde1eb4134d1514b65a1f8ea6791.1648616734.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
         <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Mar 2022 05:05:25 +0000
-Subject: [PATCH v5 07/14] update-index: use the bulk-checkin infrastructure
+Date:   Wed, 30 Mar 2022 05:05:27 +0000
+Subject: [PATCH v5 09/14] core.fsync: use batch mode and sync loose objects by
+ default on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,82 +71,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-The update-index functionality is used internally by 'git stash push' to
-setup the internal stashed commit.
+Git for Windows has defaulted to core.fsyncObjectFiles=true since
+September 2017. We turn on syncing of loose object files with batch mode
+in upstream Git so that we can get broad coverage of the new code
+upstream.
 
-This change enables odb-transactions for update-index infrastructure to
-speed up adding new objects to the object database by leveraging the
-batch fsync functionality.
-
-There is some risk with this change, since under batch fsync, the object
-files will be in a tmp-objdir until update-index is complete, so callers
-using the --stdin option will not see them until update-index is done.
-This risk is mitigated by not keeping an ODB transaction open around
---stdin processing if in --verbose mode. Without --verbose mode,
-a caller feeding update-index via --stdin wouldn't know when
-update-index adds an object, event without an ODB transaction.
+We don't actually do fsyncs in the most of the test suite, since
+GIT_TEST_FSYNC is set to 0. However, we do exercise all of the
+surrounding batch mode code since GIT_TEST_FSYNC merely makes the
+maybe_fsync wrapper always appear to succeed.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/update-index.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ cache.h           | 4 ++++
+ compat/mingw.h    | 3 +++
+ config.c          | 2 +-
+ git-compat-util.h | 2 ++
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index aafe7eeac2a..50f9063e1c6 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -5,6 +5,7 @@
+diff --git a/cache.h b/cache.h
+index a5bf15a5131..7f6cbb254b4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1031,6 +1031,10 @@ enum fsync_component {
+ 			      FSYNC_COMPONENT_INDEX | \
+ 			      FSYNC_COMPONENT_REFERENCE)
+ 
++#ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
++#define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
++#endif
++
+ /*
+  * A bitmask indicating which components of the repo should be fsynced.
   */
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
-+#include "bulk-checkin.h"
- #include "config.h"
- #include "lockfile.h"
- #include "quote.h"
-@@ -1116,6 +1117,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	 */
- 	parse_options_start(&ctx, argc, argv, prefix,
- 			    options, PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	/*
-+	 * Allow the object layer to optimize adding multiple objects in
-+	 * a batch.
-+	 */
-+	begin_odb_transaction();
- 	while (ctx.argc) {
- 		if (parseopt_state != PARSE_OPT_DONE)
- 			parseopt_state = parse_options_step(&ctx, options,
-@@ -1167,6 +1174,17 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		the_index.version = preferred_index_format;
- 	}
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 6074a3d3ced..afe30868c04 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -332,6 +332,9 @@ int mingw_getpagesize(void);
+ int win32_fsync_no_flush(int fd);
+ #define fsync_no_flush win32_fsync_no_flush
  
-+	/*
-+	 * It is possible, though unlikely, that a caller could use the verbose
-+	 * output to synchronize with addition of objects to the object
-+	 * database. The current implementation of ODB transactions leaves
-+	 * objects invisible while a transaction is active, so end the
-+	 * transaction here if verbose output is enabled.
-+	 */
++#define FSYNC_COMPONENTS_PLATFORM_DEFAULT (FSYNC_COMPONENTS_DEFAULT | FSYNC_COMPONENT_LOOSE_OBJECT)
++#define FSYNC_METHOD_DEFAULT (FSYNC_METHOD_BATCH)
 +
-+	if (verbose)
-+		end_odb_transaction();
-+
- 	if (read_from_stdin) {
- 		struct strbuf buf = STRBUF_INIT;
- 		struct strbuf unquoted = STRBUF_INIT;
-@@ -1190,6 +1208,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 	}
+ struct rlimit {
+ 	unsigned int rlim_cur;
+ };
+diff --git a/config.c b/config.c
+index 511f4584eeb..e9cac5f4707 100644
+--- a/config.c
++++ b/config.c
+@@ -1342,7 +1342,7 @@ static const struct fsync_component_name {
  
-+	/*
-+	 * By now we have added all of the new objects
-+	 */
-+	if (!verbose)
-+		end_odb_transaction();
-+
- 	if (split_index > 0) {
- 		if (git_config_get_split_index() == 0)
- 			warning(_("core.splitIndex is set to false; "
+ static enum fsync_component parse_fsync_components(const char *var, const char *string)
+ {
+-	enum fsync_component current = FSYNC_COMPONENTS_DEFAULT;
++	enum fsync_component current = FSYNC_COMPONENTS_PLATFORM_DEFAULT;
+ 	enum fsync_component positive = 0, negative = 0;
+ 
+ 	while (string) {
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 0892e209a2f..fffe42ce7c1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1257,11 +1257,13 @@ __attribute__((format (printf, 3, 4))) NORETURN
+ void BUG_fl(const char *file, int line, const char *fmt, ...);
+ #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+ 
++#ifndef FSYNC_METHOD_DEFAULT
+ #ifdef __APPLE__
+ #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_WRITEOUT_ONLY
+ #else
+ #define FSYNC_METHOD_DEFAULT FSYNC_METHOD_FSYNC
+ #endif
++#endif
+ 
+ enum fsync_action {
+ 	FSYNC_WRITEOUT_ONLY,
 -- 
 gitgitgadget
 
