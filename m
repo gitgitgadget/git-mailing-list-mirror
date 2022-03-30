@@ -2,166 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C78C433EF
-	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 22:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DD10C433F5
+	for <git@archiver.kernel.org>; Wed, 30 Mar 2022 23:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233870AbiC3W4U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 18:56:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59972 "EHLO
+        id S1351758AbiC3XHV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 19:07:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233874AbiC3W4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 18:56:18 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2299433E0C
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:54:30 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id c62so26166569edf.5
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 15:54:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=nXAwes5Jvb16Z/siglemYlOxFsmfIn7An534P+I7p00=;
-        b=DL/pwbN62xqicj86sQrY3XDgOknAA8yDW6sAQ+Mg98oa47YQOaKHjUiAxv68M+U/j2
-         yoT4IdTIaMBSDKqBBzmIoV5JFoUfueDQDj1sB2bz5X0r6VJQZDs/LBSlLikCxPmSFu86
-         UFpP3yrncDSt15UfdhV/oTx9yh5ZQFtMtVQBNddA8IPPYKNIenXupP/+o0GMjOqSdDJK
-         3mahssJQDBwtKZSKY37rEXopcTMYESUSqeecMFnUghL3CVmhbeWqF2qHxV2JgVCmNjkB
-         8ZjKX9JJp3gMdRrpncpsZW3WqE4RNMs/f6cA2H//4bUEYWyR1jagYnofkW62A4s2qFRW
-         V5SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=nXAwes5Jvb16Z/siglemYlOxFsmfIn7An534P+I7p00=;
-        b=7AydCluC5cDCK3BIxSzkdpz4shGoFyaFx9YeWXD05akjz2aRJFdllwiEhSLwkFyS7a
-         pzYJ48tpXea0DoEnM0YrDS3Q+/wXqvKu4i8ajXO2Rx62WTqSANLCd9kqqmNTnqEU4tAJ
-         37+k6n3nc/4KxntGDUOgPwAgBnyRuDgbAD5ye8fl5lmSPULGbTNZMYLOYqLkfv8U+wOv
-         VovRVyKVR/kwXMrwPx5hnpTfJUcNSSoZgQTy/Qrv45KkwzmKCvPTX9+7+iTh9TLt9Wgd
-         LLa8iSdnE6wGsWNsUkmKgdWn+PrQUeduBwPYmY2DWFRM1oDOTpm7bcyQs4F2tc64w9aE
-         mquQ==
-X-Gm-Message-State: AOAM532//6VVYZDNg94fW05YiVo7eF7eoZQ/n3im8HkMRlRVsL5+F97U
-        IxP3twBFvqZcI6DWZ2lp9+c=
-X-Google-Smtp-Source: ABdhPJzAdNooA7F4Vtce/llX6fdt9Hs3xqJY2GBekN8aukDVcyeQz54E8nlPV5tL0LYxCtD4RqJPdQ==
-X-Received: by 2002:a50:9fa5:0:b0:418:e7c4:cf96 with SMTP id c34-20020a509fa5000000b00418e7c4cf96mr13618202edf.30.1648680868640;
-        Wed, 30 Mar 2022 15:54:28 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hr13-20020a1709073f8d00b006dfcc331a42sm8569412ejc.203.2022.03.30.15.54.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 15:54:28 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nZhCt-0004Ry-2h;
-        Thu, 31 Mar 2022 00:54:27 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Tao Klerks <tao@klerks.biz>
-Subject: Re: [PATCH v5] tracking branches: add advice to ambiguous refspec
- error
-Date:   Thu, 31 Mar 2022 00:51:50 +0200
-References: <pull.1183.v4.git.1648553209157.gitgitgadget@gmail.com>
- <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com>
- <220330.864k3fpo32.gmgdl@evledraar.gmail.com> <xmqqmth76use.fsf@gitster.g>
- <220330.86o81nta6k.gmgdl@evledraar.gmail.com> <xmqqzgl75c35.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqzgl75c35.fsf@gitster.g>
-Message-ID: <220331.86y20rrqzg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S236212AbiC3XHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 19:07:20 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE0C2D1D8
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 16:05:34 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B23317BC0A;
+        Wed, 30 Mar 2022 19:05:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W8860l4kuJ3kQByUqahqy6ntojNqi9IzeRrHAW
+        jfJWI=; b=fCAXZTV41VHuJivBWUDogRmD2YGTEHBROvHxvrPIwH9k8qKq5vKnQL
+        jSObpJORNlvm8lrOSQ8JCnBfU5iQK1q4O6ZGPpVGQ+ESu83QTbP0hcT/9OYu057/
+        zp4AcL08KNSjhU72gb0LyZQvWZ2ixc3Puj5iKgnHkRQvgpLNA4zA8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 82A1817BC08;
+        Wed, 30 Mar 2022 19:05:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D1B3917BC07;
+        Wed, 30 Mar 2022 19:05:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 3/4] builtin/stash: provide a way to export stashes
+ to a ref
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+        <20220329214941.2018609-1-sandals@crustytoothpaste.net>
+        <20220329214941.2018609-4-sandals@crustytoothpaste.net>
+Date:   Wed, 30 Mar 2022 16:05:28 -0700
+In-Reply-To: <20220329214941.2018609-4-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 29 Mar 2022 21:49:40 +0000")
+Message-ID: <xmqqtubf59dz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E4DCB080-B07D-11EC-A3CD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On Wed, Mar 30 2022, Junio C Hamano wrote:
+> +static int do_export_stash(const char *ref, size_t argc, const char **argv)
+> +{
+> +	struct object_id base;
+> +	struct object_context unused;
+> +	struct commit *prev;
+> +	struct object_id *items = NULL;
+> +	int nitems = 0, nalloc = 0;
+> +	int res = 0;
+> +	struct strbuf revision;
+> +	const char *author, *committer;
+> +
+> +	/*
+> +	 * This is an arbitrary, fixed date, specifically the one used by git
+> +	 * format-patch.  The goal is merely to produce reproducible output.
+> +	 */
+> +	prepare_fallback_ident("git stash", "git@stash");
+> +	author = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT, "2001-09-17T00:00:00Z", 0);
+> +	committer = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT, "2001-09-17T00:00:00Z", 0);
+> +
+> +	/* First, we create a single empty commit. */
+> +	if (commit_tree_extended(NULL, 0, the_hash_algo->empty_tree, NULL, &base, author, committer, NULL, NULL))
+> +		return error(_("unable to write base commit"));
+> +
+> +	prev = lookup_commit_reference(the_repository, &base);
+> +
+> +	if (argc) {
+> +		/*
+> +		 * Find each specified stash, and load data into the array.
+> +		 */
+> +		for (int i = 0; i < argc; i++) {
+> +			ALLOC_GROW_BY(items, nitems, 1, nalloc);
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>>>> +				 "To support setting up tracking branches, ensure that\n"
->>>>> +				 "different remotes' fetch refspecs map into different\n"
->>>>> +				 "tracking namespaces."),
->>>>> +			       orig_ref,
->>>>> +			       remotes_advice.buf
->>>>> +			       );
->>>>
->>>> Nit: The usual style for multi-line arguments is to "fill" lines until
->>>> you're at 79 characters, so these last three lines (including the ");")
->>>> can all go on the "tracking namespaces" line (until they're at 79, then
->>>> wrap)>
->>>
->>> I didn't know about the magic "79" number.  It makes the resulting
->>> source code extremely hard to read, though, while making it easier
->>> to grep for specific messages.
->>
->> I'm referring to the "80 characters per line", but omitted the \n, but
->> yeah, I should have just said 80.
->
-> No, what I meant was that you do not want the rule to be to cut *AT*
-> exactly the column whatever random rule specifies, which would
-> result in funny wrapping in the middle of the word, e.g.
->
->         "To support setting up tracking branches, ensure that diff"
->         "erent remotes' fetch refspecs map into different tracking"
->         " namespaces."
->
-> and "at 79, then wrap" somehow sounded to me like that.  I do not
-> think you meant to imply that (instead, I think you meant to suggest
-> "wrap the line so that the string constant is not longer than 79
-> columns"), but it risks to be mistaken by new contributors.
->
-> FWIW, I'd actually prefer to see both the sources to be readable by
-> wrapping to keep the source code line length under certain limit
-> (the current guideline being 70-something), counting the leading
-> indentation, and at the same time keep it possible and easy to grep
-> messages in the source.
->
-> That requires us to notice when our code has too deeply nested,
-> resulting in overly indented lines, and maintain the readability
-> (refatoring the code may be a way to help in such cases).
+Documentation/CodingGuidelines still says this
 
-Yes, I didn't mean to say it was a hard rule. In particular as this code
-has the strings themselves over 80 characters. It can be good to break
-that guideline when it doesn't help readability.
+ - Declaring a variable in the for loop "for (int i = 0; i < 10; i++)"
+   is still not allowed in this codebase.
 
-I just meant that this made sense as a fix-up, in this case:
+We have been experimenting since we merged 44ba10d6 (revision: use
+C99 declaration of variable in for() loop, 2021-11-14) at 5a4069a1
+(Merge branch 'jc/c99-var-decl-in-for-loop', 2021-12-21), which is
+shipped as a part of v2.35.0 just a few months ago.
 
-diff --git a/branch.c b/branch.c
-index 5c28d432103..4ccf5f79e83 100644
---- a/branch.c
-+++ b/branch.c
-@@ -282,10 +282,8 @@ static void setup_tracking(const char *new_ref, const =
-char *orig_ref,
- 				 "\n"
- 				 "To support setting up tracking branches, ensure that\n"
- 				 "different remotes' fetch refspecs map into different\n"
--				 "tracking namespaces."),
--			       orig_ref,
--			       ftb_cb.remotes_advice.buf
--			       );
-+				 "tracking namespaces."), orig_ref,
-+			       ftb_cb.remotes_advice.buf);
- 		exit(status);
- 	}
-=20
+Let's not add more until we are sure that we do not have to revert
+44ba10d6 (revision: use C99 declaration of variable in for() loop,
+2021-11-14) to limit the potential damage, especially when it is so
+easy to do so.
 
-Which I'd also be tempted to do as:
-
-diff --git a/branch.c b/branch.c
-index 5c28d432103..b9f6fda980b 100644
---- a/branch.c
-+++ b/branch.c
-@@ -283,9 +283,7 @@ static void setup_tracking(const char *new_ref, const c=
-har *orig_ref,
- 				 "To support setting up tracking branches, ensure that\n"
- 				 "different remotes' fetch refspecs map into different\n"
- 				 "tracking namespaces."),
--			       orig_ref,
--			       ftb_cb.remotes_advice.buf
--			       );
-+			       orig_ref, ftb_cb.remotes_advice.buf);
- 		exit(status);
- 	}
-=20
-But I find it generally helpful to do it consistently when possible, as
-when running into merge conflicts it makes things easier.
+Just declare "int i" at the beginning of the funcion and keep
+reusing it would be fine here.
