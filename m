@@ -2,319 +2,277 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47221C433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 16:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 510F0C433FE
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 16:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239459AbiCaQDU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 12:03:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33466 "EHLO
+        id S239478AbiCaQEI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 12:04:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233278AbiCaQDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 12:03:17 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 201045F8E
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:01:29 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id i132-20020a1c3b8a000000b0038ce25c870dso1976523wma.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:01:29 -0700 (PDT)
+        with ESMTP id S239471AbiCaQEG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 12:04:06 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1437CFBA1
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:02:18 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id r9-20020a1c4409000000b0038ccb70e239so1096040wma.3
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EnDUOzBOTT/nkFBDTM+MsdzkU69arEOPGCIMc8vQNFs=;
-        b=C/RXkG9Dzd2lyZcnKFsVaHZlUCn8inb03VR5EBFo34HuEvPYFNcXzyhfW4W2UcZlD9
-         LiBc1jouejILZaHgkiDTQnwuHjdmxmxf4L9M3DTtHChvtTtxb8/g1Sscc3huzJ2glE07
-         AHZoEQUFx14igb2MzaAjwNw+ZrFIAt1okdWI08QKld40i+E5pCjqX/DNv8jwxIlRheBy
-         VJvbGQVti4Nwf/2lBGysO5FETli/pYlDJukV7t4jD7XXB0i0B9R/Yes3SeD+Tm0LmZo8
-         jP+i63nF04MSlR2D8GlaZTnh3gWoxByXnaQmkQf6+dNxXqQytI23GYMJctQxbCsZJ2Es
-         1GXA==
+        bh=MpxVtijbAgUmE+r0Kmm6bxeZOJEDD8BPrPxfw984AQk=;
+        b=YdpHYXIA/rqXsXfH7w2b81GwXhPI0qMmeo6ruhFlzeDI07HincqnNKoOpH/YThlOns
+         tm1f1WId41jkzC94irQFPi+FwbiDX2uiF2zFrJP1gtTyHHG9W7hRbFRvHkUeh5d2hYz+
+         p7Xpqbd4tKTXWW3rVNIgXeJvhfPKfNNxSShcJIo5aooYoOQ8qe06jCr1J953C8ouEEkL
+         3Nz7FmaBzq9JaZtd1eCMpbVzTGrvaf4aVSpIO22N5iMSxVOI/wPngzlMBiy/VOJ3AK4n
+         OzlYkjKfoGNi0Ocr94ndShdnLXq0eO+WGBNvlVHV35Lmrnp0LrAspOg48RBVZNHxmIGH
+         ulcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EnDUOzBOTT/nkFBDTM+MsdzkU69arEOPGCIMc8vQNFs=;
-        b=hyzDwz+mN9VGXe2vxlDR00Ml2n+2dKawRhVeNquYwa3TY7Y6AvSc+EeA/xwPxTue1w
-         CCqaIYzZqXacipzrfRwFwAOIoSne8k5ng61Al5aCYfdBnbAgdKVgOFjaP//mt6s2nb2J
-         Hj2Ni1Q3gPC8vcjImcazvr5/DovKQ2HtvgdQL7G0kgHUCo8g1eHe+jZ8WAmn4z1qWew3
-         BoyenZzzuooxBfzphYXhsr30GGtbIJ6bepijP58s46Cn7Xy1WX3qD8Kopa3gsuCTQawZ
-         E2P9eMvNLs71aVzXEUnqRBl2EdABfb+55EUur5qT3HLcxqVHe0MDAKNL0C6pOp/GoaLC
-         dhxw==
-X-Gm-Message-State: AOAM531/1V8kvIz0DAQ8L4sd/YrR+JkthIMIdF7BlDHY340c122SfBMz
-        buvCgoUCdhSjFTFFeT/uRGwWj7aVuWo=
-X-Google-Smtp-Source: ABdhPJzTt7svjEYHT8YRdIP4nfovMzRyLpvev0zn3TPkjRVzIaNRbIM51Gy0qFK+RVDErKak5FNGiw==
-X-Received: by 2002:a05:600c:4608:b0:38c:6ba3:1c9f with SMTP id m8-20020a05600c460800b0038c6ba31c9fmr5348291wmo.39.1648742487186;
-        Thu, 31 Mar 2022 09:01:27 -0700 (PDT)
+        bh=MpxVtijbAgUmE+r0Kmm6bxeZOJEDD8BPrPxfw984AQk=;
+        b=3KVAh3Hr0kj7ffUy3ckyg3GYqdJlwuuA/vQ5Ij79c+afQJf6sPemYa8YGVOjAtGnnw
+         SXFsZ+gUTDIusBQWcBf3k6tN01yelBL+fMxUrVR2x016cgLcdbNx9YHEm44DwXzQNSib
+         ++F63+hEj35vsUkx5B1ZBi1nzfAHqoXJgaoI1fmToi0jCmKCqRpU6gbQkcnypQhuHKtq
+         UOrac0i/hGGYuUrBQeIiqQQd0fUANP/IBa/RlIRKdt9ymNDSwhuDRyNLzjF7MRmKEnLQ
+         P0JXC65OP7JdqIfFohAozRq6H1V90fZrJoh3PWopO+VLTULqU5X1FCm59Cn4SprNV958
+         4y6g==
+X-Gm-Message-State: AOAM532PogZyWGjWPn1XDq43U7ERlrW7nNcMlTKETPW0BzsKbpSlNMcB
+        oWToXLxwh9hQ/LrF7zS/tVQ3X7il/oA=
+X-Google-Smtp-Source: ABdhPJyi7RLDZChxtGAHrsHbZ8g+cARC9BFXIcT5CHI3qwf9F2aC/GgYKm0FUGlTGFPDWlsQqe10hQ==
+X-Received: by 2002:a05:600c:ac5:b0:38c:9a51:3059 with SMTP id c5-20020a05600c0ac500b0038c9a513059mr5407947wmr.2.1648742536699;
+        Thu, 31 Mar 2022 09:02:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w17-20020a5d4051000000b00205a8bb9c18sm15986849wrp.67.2022.03.31.09.01.26
+        by smtp.gmail.com with ESMTPSA id e15-20020adfe38f000000b00205dc79d5b7sm4172065wrm.30.2022.03.31.09.02.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 09:01:26 -0700 (PDT)
-Message-Id: <pull.1183.v6.git.1648742485887.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com>
-References: <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com>
+        Thu, 31 Mar 2022 09:02:16 -0700 (PDT)
+Message-Id: <pull.985.v6.git.1648742535.gitgitgadget@gmail.com>
+In-Reply-To: <pull.985.v5.git.1648553134.gitgitgadget@gmail.com>
+References: <pull.985.v5.git.1648553134.gitgitgadget@gmail.com>
 From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 31 Mar 2022 16:01:25 +0000
-Subject: [PATCH v6] tracking branches: add advice to ambiguous refspec error
+Date:   Thu, 31 Mar 2022 16:02:13 +0000
+Subject: [PATCH v6 0/2] Support untracked cache with '--untracked-files=all' if configured
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Tao Klerks <tao@klerks.biz>,
-        Glen Choo <chooglen@google.com>, Tao Klerks <tao@klerks.biz>,
-        Tao Klerks <tao@klerks.biz>
+Cc:     Tao Klerks <tao@klerks.biz>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+Make it possible for users of the -uall flag to git status, either by
+preference or by need (eg UI tooling), to benefit from the untracked cache
+when they set their 'status.showuntrackedfiles' config setting to 'all'.
+This is especially useful for large repos in Windows, where without
+untracked cache "git status" times can easily be 5x higher, and GUI tooling
+typically does use -uall.
 
-The error "not tracking: ambiguous information for ref" is raised
-when we are evaluating what tracking information to set on a branch,
-and find that the ref to be added as tracking branch is mapped
-under multiple remotes' fetch refspecs.
+In this sixth version, clarify the main commit message and some of the code
+comments, and adjust the logic slightly such that an existing untracked
+cache structure, when consistent with the requested flags in the current
+run, can be reused even though the current config would set/store/use the
+other set of flags on a new untracked cache structure.
 
-This can easily happen when a user copy-pastes a remote definition
-in their git config, and forgets to change the tracking path.
+I'm comfortable with this patch as-is, but am still interested in any
+thoughts as to whether it makes sense and is likely to be accepted to do
+this as a simple enhancement as proposed here, or whether people be more
+comfortable with a new configuration option, given the potential for worse
+performance under specific (and, I believe, vanishingly rare) circumstances.
 
-Add advice in this situation, explicitly highlighting which remotes
-are involved and suggesting how to correct the situation.
+Tao Klerks (2):
+  untracked-cache: test untracked-cache-bypassing behavior with -uall
+  untracked-cache: support '--untracked-files=all' if configured
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    tracking branches: add advice to ambiguous refspec error
-    
-    v6 addresses some formatting and commenting issues Ævar noticed.
+ dir.c                             |  88 ++++++++++++++++++-----
+ t/t7063-status-untracked-cache.sh | 113 ++++++++++++++++++++++++++++++
+ 2 files changed, 185 insertions(+), 16 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1183%2FTaoK%2Fadvise-ambiguous-tracking-refspec-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1183/TaoK/advise-ambiguous-tracking-refspec-v6
-Pull-Request: https://github.com/gitgitgadget/git/pull/1183
+
+base-commit: 805e0a68082a217f0112db9ee86a022227a9c81b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-985%2FTaoK%2Ftaok-untracked-cache-with-uall-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-985/TaoK/taok-untracked-cache-with-uall-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/985
 
 Range-diff vs v5:
 
- 1:  4478eaed6df ! 1:  2408ab0ccb3 tracking branches: add advice to ambiguous refspec error
-     @@ branch.c: struct tracking {
-      -		} else {
-      +			break;
-      +		case 2:
-     -+			// there are at least two remotes; backfill the first one
-     ++			/* there are at least two remotes; backfill the first one */
-      +			string_list_append(&ftb->ambiguous_remotes, tracking->spec.src);
-      +			/* fall through */
-      +		default:
-     @@ branch.c: struct tracking {
+ 1:  98a4d8f35c5 ! 1:  f27f018493a untracked-cache: test untracked-cache-bypassing behavior with -uall
+     @@ Commit message
+          '--untracked-files=normal', and it gets ignored when
+          '--untracked-files=all' is specified instead.
+      
+     -    Add explicit tests for this behavior.
+     +    Add explicit tests for this known as-designed behavior.
+      
+          Signed-off-by: Tao Klerks <tao@klerks.biz>
+      
+     @@ t/t7063-status-untracked-cache.sh: test_expect_success 'untracked cache after se
+      +?? three
+      +EOF
+      +
+     -+# Bypassing the untracked cache here is not desirable, but it expected
+     -+# in the current implementation
+     ++# Bypassing the untracked cache here is not desirable from an
+     ++# end-user perspective, but is expected in the current design.
+     ++# The untracked cache data stored for a -unormal run cannot be
+     ++# correctly used in a -uall run - it would yield incorrect output.
+      +test_expect_success 'untracked cache is bypassed with -uall' '
+      +	: >../trace.output &&
+      +	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 2:  f60d2c6e36c ! 2:  0095ec49c5f untracked-cache: support '--untracked-files=all' if configured
+     @@ Commit message
+          untracked-cache: support '--untracked-files=all' if configured
+      
+          Untracked cache was originally designed to only work with
+     -    '--untracked-files=normal', but this causes performance issues for UI
+     -    tooling that wants to see "all" on a frequent basis. On the other hand,
+     -    the conditions that prevented applicability to the "all" mode no
+     -    longer seem to apply.
+     +    "--untracked-files=normal", and is bypassed when
+     +    "--untracked-files=all" is requested, but this causes performance
+     +    issues for UI tooling that wants to see "all" on a frequent basis.
+      
+     -    The disqualification of untracked cache has a particularly significant
+     -    impact on Windows with the defaulted fscache, where the introduction
+     -    of fsmonitor can make the first and costly directory-iteration happen
+     -    in untracked file detection, single-threaded, rather than in
+     -    preload-index on multiple threads. Improving the performance of a
+     -    "normal" 'git status' run with fsmonitor can make
+     -    'git status --untracked-files=all' perform much worse.
+     +    On the other hand, the conditions that altogether prevented
+     +    applicability to the "all" mode no longer seem to apply, after
+     +    several major refactors in recent years; this possibility was
+     +    discussed in
+     +    81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com and
+     +    CABPp-BFiwzzUgiTj_zu+vF5x20L0=1cf25cHwk7KZQj2YkVzXw@mail.gmail.com,
+     +    and somewhat confirmed experimentally by several users using a
+     +    version of this patch to use untracked cache with -uall for about a
+     +    year.
+     +
+     +    When 'git status' runs without using the untracked cache, on a large
+     +    repo, on windows, with fsmonitor, it can run very slowly. This can
+     +    make GUIs that need to use "-uall" (and therefore currently bypass
+     +    untracked cache) unusable when fsmonitor is enabled, on such large
+     +    repos.
+      
+          To partially address this, align the supported directory flags for the
+          stored untracked cache data with the git config. If a user specifies
+     @@ dir.c: static void new_untracked_cache(struct index_state *istate)
        		}
-       		tracking->spec.src = NULL;
        	}
-     -@@ branch.c: static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
-     - 	return 0;
+       }
+     -@@ dir.c: void remove_untracked_cache(struct index_state *istate)
      - }
      - 
+     - static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+     --						      int base_len,
+     --						      const struct pathspec *pathspec,
+     --						      struct index_state *istate)
+     -+							    int base_len,
+     -+							    const struct pathspec *pathspec,
+     -+							    struct index_state *istate)
+     - {
+     - 	struct untracked_cache_dir *root;
+     - 	static int untracked_cache_disabled = -1;
+      @@ dir.c: static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+       	if (base_len || (pathspec && pathspec->nr))
+       		return NULL;
+     @@ dir.c: static struct untracked_cache_dir *validate_untracked_cache(struct dir_st
+       		return NULL;
+       	}
+       
+     -+	/*
+     -+	 * We don't support using or preparing the untracked cache if
+     -+	 * the current effective flags don't match the configured
+     -+	 * flags.
+     -+	 */
+     -+	if (dir->flags != new_untracked_cache_flags(istate))
+     -+		return NULL;
      -+
-     - /*
-     -  * Used internally to set the branch.<new_ref>.{remote,merge} config
-     -  * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
-      @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
-       	struct tracking tracking;
-       	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
-     @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
-      -		die(_("not tracking: ambiguous information for ref %s"),
-      -		    orig_ref);
-      +	if (tracking.matches > 1) {
-     -+		int status = die_message(_("not tracking: ambiguous information for ref %s"),
-     ++		int status = die_message(_("not tracking: ambiguous information for ref '%s'"),
-      +					    orig_ref);
-      +		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC)) {
-      +			struct strbuf remotes_advice = STRBUF_INIT;
-      +			struct string_list_item *item;
-      +
-     -+			for_each_string_list_item(item, &ftb_cb.ambiguous_remotes) {
-     ++			for_each_string_list_item(item, &ftb_cb.ambiguous_remotes)
-      +				/*
-      +				 * TRANSLATORS: This is a line listing a remote with duplicate
-      +				 * refspecs in the advice message below. For RTL languages you'll
-      +				 * probably want to swap the "%s" and leading "  " space around.
-      +				 */
-      +				strbuf_addf(&remotes_advice, _("  %s\n"), item->string);
-     -+			}
-      +
+      +	/*
+      +	 * If the untracked structure we received does not have the same flags
+     -+	 * as configured, but the configured flags do match the effective flags,
+     -+	 * then we need to reset / create a new "untracked" structure to match
+     -+	 * the new config.
+     -+	 * Keeping the saved and used untracked cache in-line with the
+     -+	 * configuration provides an opportunity for frequent users of
+     -+	 * "git status -uall" to leverage the untracked cache by aligning their
+     -+	 * configuration (setting "status.showuntrackedfiles" to "all" or
+     -+	 * "normal" as appropriate), where previously this option was
+     -+	 * incompatible with untracked cache and *consistently* caused
+     -+	 * surprisingly bad performance (with fscache and fsmonitor enabled) on
+     -+	 * Windows.
+     -+	 *
+     -+	 * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
+     -+	 * to not be as bound up with the desired output in a given run,
+     -+	 * and instead iterated through and stored enough information to
+     -+	 * correctly serve both "modes", then users could get peak performance
+     -+	 * with or without '-uall' regardless of their
+     -+	 * "status.showuntrackedfiles" config.
+     ++	 * as requested in this run, we're going to need to either discard the
+     ++	 * existing structure (and potentially later recreate), or bypass the
+     ++	 * untracked cache mechanism for this run.
+      +	 */
+      +	if (dir->flags != dir->untracked->dir_flags) {
+     -+		free_untracked_cache(istate->untracked);
+     -+		new_untracked_cache(istate, dir->flags);
+     -+		dir->untracked = istate->untracked;
+     ++		/*
+     ++		 * If the untracked structure we received does not have the same flags
+     ++		 * as configured, then we need to reset / create a new "untracked"
+     ++		 * structure to match the new config.
+     ++		 *
+     ++		 * Keeping the saved and used untracked cache consistent with the
+     ++		 * configuration provides an opportunity for frequent users of
+     ++		 * "git status -uall" to leverage the untracked cache by aligning their
+     ++		 * configuration - setting "status.showuntrackedfiles" to "all" or
+     ++		 * "normal" as appropriate.
+     ++		 *
+     ++		 * Previously using -uall (or setting "status.showuntrackedfiles" to
+     ++		 * "all") was incompatible with untracked cache and *consistently*
+     ++		 * caused surprisingly bad performance (with fscache and fsmonitor
+     ++		 * enabled) on Windows.
+     ++		 *
+     ++		 * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
+     ++		 * to not be as bound up with the desired output in a given run,
+     ++		 * and instead iterated through and stored enough information to
+     ++		 * correctly serve both "modes", then users could get peak performance
+     ++		 * with or without '-uall' regardless of their
+     ++		 * "status.showuntrackedfiles" config.
+     ++		 */
+     ++		if (dir->untracked->dir_flags != new_untracked_cache_flags(istate)) {
+     ++			free_untracked_cache(istate->untracked);
+     ++			new_untracked_cache(istate, dir->flags);
+     ++			dir->untracked = istate->untracked;
+     ++		}
+     ++		else {
      ++			/*
-     ++			 * TRANSLATORS: The second argument is a \n-delimited list of
-     ++			 * duplicate refspecs, composed above.
+     ++			 * Current untracked cache data is consistent with config, but not
+     ++			 * usable in this request/run; just bypass untracked cache.
      ++			 */
-      +			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
-     -+				 "tracking ref %s:\n"
-     ++				 "tracking ref '%s':\n"
-      +				 "%s"
-      +				 "\n"
-      +				 "This is typically a configuration error.\n"
-      +				 "\n"
-      +				 "To support setting up tracking branches, ensure that\n"
-      +				 "different remotes' fetch refspecs map into different\n"
-     -+				 "tracking namespaces."),
-     -+			       orig_ref,
-     -+			       remotes_advice.buf
-     -+			       );
-     ++				 "tracking namespaces."), orig_ref,
-     ++			       remotes_advice.buf);
-      +			strbuf_release(&remotes_advice);
-      +		}
-      +		exit(status);
+     ++			return NULL;
+     ++		}
+      +	}
+      +
+       	if (!dir->untracked->root) {
+     @@ t/t7063-status-untracked-cache.sh: test_expect_success 'untracked cache remains
+      +	test_cmp ../trace.expect ../trace.relevant
+      +'
+      +
+     -+# Bypassing the untracked cache here is not desirable, but it expected
+     -+# in the current implementation
+     ++# Bypassing the untracked cache here is not desirable from an
+     ++# end-user perspective, but is expected in the current design.
+     ++# The untracked cache data stored for a -all run cannot be
+     ++# correctly used in a -unormal run - it would yield incorrect
+     ++# output.
+      +test_expect_success 'if -uall is configured, untracked cache is bypassed with -unormal' '
+      +	test_config status.showuntrackedfiles all &&
+      +	: >../trace.output &&
 
-
- Documentation/config/advice.txt |  4 +++
- advice.c                        |  1 +
- advice.h                        |  1 +
- branch.c                        | 63 +++++++++++++++++++++++++++++----
- 4 files changed, 62 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index c40eb09cb7e..343d271c707 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -4,6 +4,10 @@ advice.*::
- 	can tell Git that you do not need help by setting these to 'false':
- +
- --
-+	ambiguousFetchRefspec::
-+		Advice shown when fetch refspec for multiple remotes map to
-+		the same remote-tracking branch namespace and causes branch
-+		tracking set-up to fail.
- 	fetchShowForcedUpdates::
- 		Advice shown when linkgit:git-fetch[1] takes a long time
- 		to calculate forced updates after ref updates, or to warn
-diff --git a/advice.c b/advice.c
-index 2e1fd483040..18ac8739519 100644
---- a/advice.c
-+++ b/advice.c
-@@ -39,6 +39,7 @@ static struct {
- 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
- 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
- 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
-+	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec", 1 },
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
-diff --git a/advice.h b/advice.h
-index a3957123a16..2d4c94f38eb 100644
---- a/advice.h
-+++ b/advice.h
-@@ -17,6 +17,7 @@ struct string_list;
- 	ADVICE_ADD_EMPTY_PATHSPEC,
- 	ADVICE_ADD_IGNORED_FILE,
- 	ADVICE_AM_WORK_DIR,
-+	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
- 	ADVICE_DETACHED_HEAD,
-diff --git a/branch.c b/branch.c
-index 6b31df539a5..812ceae2d0f 100644
---- a/branch.c
-+++ b/branch.c
-@@ -18,17 +18,31 @@ struct tracking {
- 	int matches;
- };
- 
-+struct find_tracked_branch_cb {
-+	struct tracking *tracking;
-+	struct string_list ambiguous_remotes;
-+};
-+
- static int find_tracked_branch(struct remote *remote, void *priv)
- {
--	struct tracking *tracking = priv;
-+	struct find_tracked_branch_cb *ftb = priv;
-+	struct tracking *tracking = ftb->tracking;
- 
- 	if (!remote_find_tracking(remote, &tracking->spec)) {
--		if (++tracking->matches == 1) {
-+		switch (++tracking->matches) {
-+		case 1:
- 			string_list_append(tracking->srcs, tracking->spec.src);
- 			tracking->remote = remote->name;
--		} else {
-+			break;
-+		case 2:
-+			/* there are at least two remotes; backfill the first one */
-+			string_list_append(&ftb->ambiguous_remotes, tracking->spec.src);
-+			/* fall through */
-+		default:
-+			string_list_append(&ftb->ambiguous_remotes, remote->name);
- 			free(tracking->spec.src);
- 			string_list_clear(tracking->srcs, 0);
-+		break;
- 		}
- 		tracking->spec.src = NULL;
- 	}
-@@ -232,12 +246,16 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 	struct tracking tracking;
- 	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
-+	struct find_tracked_branch_cb ftb_cb = {
-+		.tracking = &tracking,
-+		.ambiguous_remotes = STRING_LIST_INIT_DUP,
-+	};
- 
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	tracking.srcs = &tracking_srcs;
- 	if (track != BRANCH_TRACK_INHERIT)
--		for_each_remote(find_tracked_branch, &tracking);
-+		for_each_remote(find_tracked_branch, &ftb_cb);
- 	else if (inherit_tracking(&tracking, orig_ref))
- 		goto cleanup;
- 
-@@ -252,9 +270,39 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 			goto cleanup;
- 		}
- 
--	if (tracking.matches > 1)
--		die(_("not tracking: ambiguous information for ref %s"),
--		    orig_ref);
-+	if (tracking.matches > 1) {
-+		int status = die_message(_("not tracking: ambiguous information for ref '%s'"),
-+					    orig_ref);
-+		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC)) {
-+			struct strbuf remotes_advice = STRBUF_INIT;
-+			struct string_list_item *item;
-+
-+			for_each_string_list_item(item, &ftb_cb.ambiguous_remotes)
-+				/*
-+				 * TRANSLATORS: This is a line listing a remote with duplicate
-+				 * refspecs in the advice message below. For RTL languages you'll
-+				 * probably want to swap the "%s" and leading "  " space around.
-+				 */
-+				strbuf_addf(&remotes_advice, _("  %s\n"), item->string);
-+
-+			/*
-+			 * TRANSLATORS: The second argument is a \n-delimited list of
-+			 * duplicate refspecs, composed above.
-+			 */
-+			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
-+				 "tracking ref '%s':\n"
-+				 "%s"
-+				 "\n"
-+				 "This is typically a configuration error.\n"
-+				 "\n"
-+				 "To support setting up tracking branches, ensure that\n"
-+				 "different remotes' fetch refspecs map into different\n"
-+				 "tracking namespaces."), orig_ref,
-+			       remotes_advice.buf);
-+			strbuf_release(&remotes_advice);
-+		}
-+		exit(status);
-+	}
- 
- 	if (tracking.srcs->nr < 1)
- 		string_list_append(tracking.srcs, orig_ref);
-@@ -264,6 +312,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 
- cleanup:
- 	string_list_clear(&tracking_srcs, 0);
-+	string_list_clear(&ftb_cb.ambiguous_remotes, 0);
- }
- 
- int read_branch_desc(struct strbuf *buf, const char *branch_name)
-
-base-commit: abf474a5dd901f28013c52155411a48fd4c09922
 -- 
 gitgitgadget
