@@ -2,67 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A7B5C433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2CF6C433EF
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352303AbiCaBPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 21:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38878 "EHLO
+        id S1352359AbiCaBsA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 21:48:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352282AbiCaBOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 21:14:22 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A178D6623D
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:29 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id a1so31530037wrh.10
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:29 -0700 (PDT)
+        with ESMTP id S1349200AbiCaBr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 21:47:59 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E5448887
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:46:12 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id c7so5034613wrd.0
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TkfEt7IgeFvbDfmMc33K/qFX1SFSh2hKKIfwtdzrGmk=;
-        b=RnpBoODk0kJQeM5PyGJ4Hd+DolNtDDZaqrV5Bg24blOVtDkIWn1S0shCFoFZV9Jlem
-         Dqw6H6aJ4ONGCAVw7C3ofuMmOUonFN9lczHznr5Z7tZ7bAKZyZAqdwl3Kol7EEHzMDkT
-         acatSjMrE7Qfc298+Rr+l+5TvyrAQIfLsjsoHSkBj7zrZbc/k/WzWhL0n9SJS7m9OaoD
-         ojtMFTk86RwdieGcOu5y5EcOSRsmYU0VWbb+CfkO1GoA630SE5YfurJbNUQRmq4qesdX
-         EemHFjTeysptnJyiV72pVJJ4DrBbYdPzQ59TC5GS+uxpW15dVkL5S0E+RjYdOyoI+lQr
-         PXFA==
+        bh=k39iHOKWgO3ciMMLmcOIK1DBdi7T5O4eqLeFwuqyqqQ=;
+        b=qjCHbc+V/ZqC0JRN/lFoM/88g138ERmRCLGVF5znhDJHXqTCJe5t47X8bSu8x9Wtva
+         jx1Yk5Lhf3LBI406TGmCRRddCT9BoBpuoNQpTWsq8ZHFbEzj3tFkm2IVD7QWEUi974m+
+         Eph2T+gGCILKSAw8FZ3+mNkc+Nvf86DL9LVns8e8ZTrt4RsH1k7KVUJQ8m8o+rxgPwYH
+         g5YvdBg9YQVQie8cBSqM/pRONtxezBD1UjBw+VJGsAKq19G8dWdw9vS8PaWgDu3IhOxq
+         M5ZH2GyrFdeUsD8Lbhha7ix7P8gl0JhXsGl2xk7HMtTTsQZmR4ccxy1+DIBBz7nV10/9
+         tGRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TkfEt7IgeFvbDfmMc33K/qFX1SFSh2hKKIfwtdzrGmk=;
-        b=qB8xqEpsmwnJBd021FiqqRSzL1g//AuG9UTUY2Gk5oSyjgctAqFKWsa72j9aAD4t7x
-         dc2OtTTuptFlaAmCbdFZtMD5vhcmqcQjde0ePE3QFDVOXr3kvgkpfuoLo42j6T1BAR5/
-         4Yy/hbQBl76Cg6dKGlb68OhSsVgbtrHu/lQIf5DELg8aUYtZBquRcleP2h8SE0u7/y0W
-         c81ECSS6EcYL78uRgzjRr/dEdDTHM6CMhOX/ZnBJ2CyxU/oY2Z2G/9GMgVeXq+8gI6aL
-         XOJUfA65aXVqCBtn5As6d8IUscxhgUuJPrTnikjYGAawjHbp46uKYRvFrcmTkGIieFux
-         U/vw==
-X-Gm-Message-State: AOAM531i3xkHgGtH4J6IWRRKAmKhraZESBa6AvmfS8swNtcjEZBEcUvq
-        eajaKo1i1bgBgLq9OGOlXHiGTMtEboojfg==
-X-Google-Smtp-Source: ABdhPJyLO4Wq6pbBRpYcE1qlNSfwiY08XqXPcrfnVNjjSiI9bcS6TOTeCcpnwkSqHvVlztlr6iWiSA==
-X-Received: by 2002:a05:6000:15cb:b0:203:d94b:bd83 with SMTP id y11-20020a05600015cb00b00203d94bbd83mr2068612wry.113.1648689147990;
-        Wed, 30 Mar 2022 18:12:27 -0700 (PDT)
+        bh=k39iHOKWgO3ciMMLmcOIK1DBdi7T5O4eqLeFwuqyqqQ=;
+        b=zKKYYCyp693nWtafgWlkg7XZw2fHIUw6IKcdpdHaCvmVgaZQ144huBVGkK/3ttIemz
+         wOLoihlrck3DYJcTg8YwK3ixjlqSihwFVxdQVQ0QIk3DEiwV/QWUpJvwdIsSAk6RqmIr
+         oNRXwl8PEthPO0YTL35su7Yb4PVcbLB5sbmRV2/qVZjBnpGItSPFB0pNWN+QRrQgMtGW
+         FToPEZrmjMHsuFsOsu+3m/TiOb3wzLJcRHcha9i1CmB57LrwrQmA4lWE12te9MIuy5KD
+         f+m7dc4MLUyPVkEO4tvAEDdLUGWp5+wCAhJwftlYWQg+gf2YNQiEJSnAMJfTi0myLtDc
+         3hTg==
+X-Gm-Message-State: AOAM531ckYIVrr+UD1aiTPzcEe0HI9bTOzrnA/9HLqOcTGNXiPUQq8/R
+        0nMiF9Lm5/+ZsLUfiFc73WgsRL7/roTG9A==
+X-Google-Smtp-Source: ABdhPJxREBh9REG6Y2zDlCqk8By7/jrFy84EPh1zrpSkIqlEoFM+Apj5OwQBgooEiSnkItCQ2MmdEw==
+X-Received: by 2002:adf:ffc9:0:b0:204:195:4ab0 with SMTP id x9-20020adfffc9000000b0020401954ab0mr2043829wrs.561.1648691171196;
+        Wed, 30 Mar 2022 18:46:11 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm5789218wmv.31.2022.03.30.18.12.27
+        by smtp.gmail.com with ESMTPSA id b15-20020a05600018af00b002057c72d45fsm23603272wri.77.2022.03.30.18.46.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 18:12:27 -0700 (PDT)
+        Wed, 30 Mar 2022 18:46:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 26/27] revisions API: have release_revisions() release "topo_walk_info"
-Date:   Thu, 31 Mar 2022 03:11:31 +0200
-Message-Id: <patch-v4-26.27-b56db37940d-20220331T005325Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1557.g4e3e9cdb5e0
-In-Reply-To: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
-References: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com> <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
+Subject: [PATCH v4 1/6] run-command.h: remove always unused "clean_on_exit_handler_cbdata"
+Date:   Thu, 31 Mar 2022 03:45:50 +0200
+Message-Id: <patch-v4-1.6-fc55b203474-20220331T014349Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1561.ge8eddc63765
+In-Reply-To: <cover-v4-0.6-00000000000-20220331T014349Z-avarab@gmail.com>
+References: <cover-v3-0.7-00000000000-20220326T171200Z-avarab@gmail.com> <cover-v4-0.6-00000000000-20220331T014349Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,79 +66,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the existing reset_topo_walk() into a thin wrapper for a
-release_revisions_topo_walk_info() + resetting the member to "NULL",
-and call release_revisions_topo_walk_info() from release_revisions().
-
-This fixes memory leaks that have been with us ever since
-"topo_walk_info" was added to revision.[ch] in
-f0d9cc4196a (revision.c: begin refactoring --topo-order logic,
-2018-11-01).
-
-Due to various other leaks this makes no tests pass in their entirety,
-but e.g. before this running this on git.git:
-
-    ./git -P log --pretty=tformat:"%P   %H | %s" --parents --full-history --topo-order -3 -- README.md
-
-Would report under SANITIZE=leak:
-
-    SUMMARY: LeakSanitizer: 531064 byte(s) leaked in 6 allocation(s).
-
-Now we'll free all of that memory.
+Remove a "struct child_process" member added in
+ac2fbaa674c (run-command: add clean_on_exit_handler, 2016-10-16), but
+which was never used.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- revision.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ run-command.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/revision.c b/revision.c
-index 31fc5e58da0..33a458d7c0c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2954,6 +2954,8 @@ static void release_revisions_mailmap(struct string_list *mailmap)
- 	free(mailmap);
- }
+diff --git a/run-command.h b/run-command.h
+index 07bed6c31b4..5bd0c933e80 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -142,7 +142,6 @@ struct child_process {
+ 	unsigned clean_on_exit:1;
+ 	unsigned wait_after_clean:1;
+ 	void (*clean_on_exit_handler)(struct child_process *process);
+-	void *clean_on_exit_handler_cbdata;
+ };
  
-+static void release_revisions_topo_walk_info(struct topo_walk_info *info);
-+
- void release_revisions(struct rev_info *revs)
- {
- 	release_revisions_commit_list(revs);
-@@ -2967,6 +2969,7 @@ void release_revisions(struct rev_info *revs)
- 	free_grep_patterns(&revs->grep_filter);
- 	diff_free(&revs->pruning);
- 	reflog_walk_info_release(revs->reflog_info);
-+	release_revisions_topo_walk_info(revs->topo_walk_info);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-@@ -3479,17 +3482,22 @@ static void compute_indegrees_to_depth(struct rev_info *revs,
- 		indegree_walk_step(revs);
- }
- 
--static void reset_topo_walk(struct rev_info *revs)
-+static void release_revisions_topo_walk_info(struct topo_walk_info *info)
- {
--	struct topo_walk_info *info = revs->topo_walk_info;
--
-+	if (!info)
-+		return;
- 	clear_prio_queue(&info->explore_queue);
- 	clear_prio_queue(&info->indegree_queue);
- 	clear_prio_queue(&info->topo_queue);
- 	clear_indegree_slab(&info->indegree);
- 	clear_author_date_slab(&info->author_date);
-+	free(info);
-+}
- 
--	FREE_AND_NULL(revs->topo_walk_info);
-+static void reset_topo_walk(struct rev_info *revs)
-+{
-+	release_revisions_topo_walk_info(revs->topo_walk_info);
-+	revs->topo_walk_info = NULL;
- }
- 
- static void init_topo_walk(struct rev_info *revs)
+ #define CHILD_PROCESS_INIT { \
 -- 
-2.35.1.1557.g4e3e9cdb5e0
+2.35.1.1561.ge8eddc63765
 
