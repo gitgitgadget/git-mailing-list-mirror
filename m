@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0B7C433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 09:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ADBBC433FE
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 09:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233782AbiCaJWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 05:22:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37962 "EHLO
+        id S233790AbiCaJWP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 05:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233779AbiCaJWK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 05:22:10 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC80B147500
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 02:20:23 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id h23-20020a17090a051700b001c9c1dd3acbso3033990pjh.3
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 02:20:23 -0700 (PDT)
+        with ESMTP id S233770AbiCaJWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 05:22:12 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9439A14CD17
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 02:20:25 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id z16so21412082pfh.3
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 02:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=13Glgy9Q+WbRqZOZL75vVU/OVHKbuhWHm2bJJAqXxb0=;
-        b=GkL70rv0hw7ic5XhuVUG0qoXuD9Wm81eumTHg9c1QwrF9EcWejmRXU+8SzQeelKxLO
-         YLWiyJ9Typ47Nwp3NslMmUtGSJZAKWs20uCl2yzLUNPAmH7XwmIckyc4Vss/atq5M8JR
-         aa5CLSmXb2huZIjYHHwcc3jeiBXADeABpL2Pg0GxLAV66uEYIJGld0ZEUzv1+31LZEfn
-         p9Mc7JSdb6u8HYsRL18GBOWIGmuTUX0uICYoOeE6of9RiwCX452sK24hJI/wwgZZg2LB
-         ZU4eDIRGn9whMqZ4UIK2ry8v5n2E+UhymLyIuUavg7qpEoli07rv8Ru4YVfX9xfpTnel
-         kSpw==
+        bh=uhJB/k98NqSAG90wW6/14pz75cm0BLY12sePI0HIllg=;
+        b=kRkAKU6deKz0KRVRPDcDzDT2ldibsZCpCzpwBAbwer6VzokYm06/Y9oeIwjV9D6GYm
+         IRd2AuuRsnkWDTtOvH3mk8iLtm1JORvVi4kZcsUieR/fOupmDZy/HA2Q+PG5y5nM3qT4
+         6dNilEnMAeiH6tAQcBTc/z/Lu8i9wIk5ytfeHmyoXCX5Q7azLps4tAkvAs9Wxk/nrw4s
+         8VoF/RPBw4Jrg1oO4bhZFXYXu7JBnXUaRadI8HjFKLyCUeS4pKjjHsO8mVELjdqPPXj4
+         Fj64aqlhb4WhajNJibdeN4m3R9ZIxPiL4MFgBH4m+uBIPj7AsGMJhXjvnJNHxN2YZJCL
+         kLLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=13Glgy9Q+WbRqZOZL75vVU/OVHKbuhWHm2bJJAqXxb0=;
-        b=Geffu2SRCLjxrRZZalxedEj/q4pdi1CIuGnaI3kS7do5oVqO7A6q/BTlZldeD96gkR
-         mhKlRDzaj8wS/9VrUYQ+FZ2PCl/tJgTq40Ct2VSREGZ47JPl/YBFRRhQqblmTgEqjDv8
-         yFthVXjLFf+AuuNaV0ITpSWK1Mgww5vac5Gdr2RoChhh2v9Onobg/OYXHUfv0q4e+/d3
-         yPWKcdJFQQYU/tDcloTFl9+Gu7ghYqQ4vxlMYQnPIicVGet7Q2FCJlFmkkLesSoA4B1n
-         KaRLGJI5cDtl1BwQTJBMm/OY95DDgM2x8QB/bzH+3tTpisC2v8H9yZ0j1tZqptyV/nut
-         CwUQ==
-X-Gm-Message-State: AOAM5301X8J7+8raKrP3hIAPqG8Pv1jQfYRNx2N+H4/q1YDLH7/3Tovc
-        XUJdd53gwn5LMwdKYqODk+TDv2OK98E=
-X-Google-Smtp-Source: ABdhPJy+F8b6P36pEmLrdzwPaf7bVGkPZ0MmRKVIza0yc6KzbcZWKYM/fZxIB16yHjNF2f/plhSXhA==
-X-Received: by 2002:a17:902:ab8b:b0:156:16c0:dc6d with SMTP id f11-20020a170902ab8b00b0015616c0dc6dmr4465749plr.147.1648718423070;
-        Thu, 31 Mar 2022 02:20:23 -0700 (PDT)
+        bh=uhJB/k98NqSAG90wW6/14pz75cm0BLY12sePI0HIllg=;
+        b=e0iNfJ5vg3j/OomYK2osX1qXRBT11vjppVDw8/wO7fzsObr5MlM4hZRV8XIkWMxUoA
+         HMsI5IbRy4yL+oVLjHJhcvFwboWW47pWoxAK4d2yZUtkpi2Cp1c6ue4+Rq8W2ceZxWGj
+         R6K0NLbmno0L7ya/U9NiiBKP88lFaemjU0P3IBnTAQX3dOsnr/oEae69HQ5ak1hSrxUM
+         zbJFj2yVd5AOCjqqn2/3vGiISH4b7IJ7+Z8Ifn4jsbHIWH35iw7LVg7r1qJECL5R8PgV
+         YJJd5sxYBAaLwwRLTPPxYcdCxeW1rnYfrtvnlys129XuB52xBW4vsJjwZB6U2MHE4j0u
+         4JPg==
+X-Gm-Message-State: AOAM531jyjJHv34EiABbmGd2GKT9YKcyJK2SGkouTvgdzGXPA9t/ZCRH
+        SBn9UOk2ClbfnmoOl0ya5B9PhVTVlK0=
+X-Google-Smtp-Source: ABdhPJxR6uf661nvhoAcP4GjVqdmACV5Crop3r8XBM/1IdQacCPbwTSgU3aUqSLpN2hnKiP8SPhz0g==
+X-Received: by 2002:a05:6a00:1252:b0:4fa:afcc:7d24 with SMTP id u18-20020a056a00125200b004faafcc7d24mr4387839pfi.85.1648718424976;
+        Thu, 31 Mar 2022 02:20:24 -0700 (PDT)
 Received: from ffyuanda.localdomain ([119.131.153.75])
-        by smtp.gmail.com with ESMTPSA id s3-20020a056a00194300b004f6664d26eesm27225931pfk.88.2022.03.31.02.20.21
+        by smtp.gmail.com with ESMTPSA id s3-20020a056a00194300b004f6664d26eesm27225931pfk.88.2022.03.31.02.20.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 02:20:22 -0700 (PDT)
+        Thu, 31 Mar 2022 02:20:24 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
         Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [WIP v1 3/4] mv: add advise_to_reapply hint for moving file into cone
-Date:   Thu, 31 Mar 2022 17:17:54 +0800
-Message-Id: <20220331091755.385961-4-shaoxuan.yuan02@gmail.com>
+Subject: [WIP v1 4/4] t7002: add tests for moving out-of-cone file/directory
+Date:   Thu, 31 Mar 2022 17:17:55 +0800
+Message-Id: <20220331091755.385961-5-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
 References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
@@ -63,62 +63,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally, the SKIP_WORKTREE bit is not removed when moving an out-of-cone
-file into sparse cone, thus the moved file does not show up in the working tree.
-Hint the user to use "git sparse-checkout reapply" to reapply the sparsity rules
-to the working tree, by which the SKIP_WORKTREE bit is removed.
+Add corresponding tests to test following situations:
+
+* 'refuse to move out-of-cone directory without --sparse'
+* 'can move out-of-cone directory with --sparse'
+* 'refuse to move out-of-cone file without --sparse'
+* 'can move out-of-cone file with --sparse'
 
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
-I offered this solution becasue I'm not sure how to turn a cache_entry's 
-ce_flags back to a non-sparse state. I tried directly set it to 0 like this:
+ t/t7002-mv-sparse-checkout.sh | 72 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
 
-	ce->ce_flags = 0;
-
-But the behavior after this seems undefined. The file still won't show up
-in the working tree.
-
-And I found that "git sparse-checkout reapply" seems to be a nice fit for the
-job. But I guess if there is a way (there must be but I don't know) to do it
-direcly in the code, that could also be nice.
-
- builtin/mv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 9da9205e01..5f511fb8da 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -138,6 +138,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- {
- 	int i, flags, gitmodules_modified = 0;
- 	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0, ignore_sparse = 0;
-+	int advise_to_reapply = 0;
- 	struct option builtin_mv_options[] = {
- 		OPT__VERBOSE(&verbose, N_("be verbose")),
- 		OPT__DRY_RUN(&show_only, N_("dry run")),
-@@ -383,6 +384,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		pos = cache_name_pos(src, strlen(src));
- 		assert(pos >= 0);
- 		rename_cache_entry_at(pos, dst);
-+		if (!advise_to_reapply &&
-+			!path_in_sparse_checkout(src, &the_index) &&
-+			path_in_sparse_checkout(dst, &the_index)) {
-+				advise_to_reapply = 1;
-+			}
- 	}
+diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
+index 1d3d2aca21..efb260d015 100755
+--- a/t/t7002-mv-sparse-checkout.sh
++++ b/t/t7002-mv-sparse-checkout.sh
+@@ -206,4 +206,76 @@ test_expect_success 'refuse to move file to non-skip-worktree sparse path' '
+ 	test_cmp expect stderr
+ '
  
- 	if (gitmodules_modified)
-@@ -392,6 +398,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("Unable to write new index file"));
- 
-+	if (advise_to_reapply)
-+		printf(_("Please use \"git sparse-checkout reapply\" to reapply the sparsity.\n"));
++test_expect_success 'refuse to move out-of-cone directory without --sparse' '
++	git sparse-checkout disable &&
++	git reset --hard &&
++	mkdir folder1 &&
++	touch folder1/file1 &&
++	git add folder1 &&
++	git sparse-checkout init --cone &&
++	git sparse-checkout set sub &&
 +
- 	string_list_clear(&src_for_dst, 0);
- 	UNLEAK(source);
- 	UNLEAK(dest_path);
++	test_must_fail git mv folder1 sub 2>stderr &&
++	cat sparse_error_header >expect &&
++	echo folder1/file1 >>expect &&
++	cat sparse_hint >>expect &&
++	test_cmp expect stderr
++'
++
++test_expect_success 'can move out-of-cone directory with --sparse' '
++	git sparse-checkout disable &&
++	git reset --hard &&
++	mkdir folder1 &&
++	touch folder1/file1 &&
++	git add folder1 &&
++	git sparse-checkout init --cone &&
++	git sparse-checkout set sub &&
++
++	git mv --sparse folder1 sub 1>actual 2>stderr &&
++	test_must_be_empty stderr &&
++	echo "Please use \"git sparse-checkout reapply\" to reapply the sparsity."\
++	>expect &&
++	test_cmp actual expect &&
++
++	git sparse-checkout reapply &&
++	test_path_is_dir sub/folder1 &&
++	test_path_is_file sub/folder1/file1
++'
++
++test_expect_success 'refuse to move out-of-cone file without --sparse' '
++	git sparse-checkout disable &&
++	git reset --hard &&
++	mkdir folder1 &&
++	touch folder1/file1 &&
++	git add folder1 &&
++	git sparse-checkout init --cone &&
++	git sparse-checkout set sub &&
++
++	test_must_fail git mv folder1/file1 sub 2>stderr &&
++	cat sparse_error_header >expect &&
++	echo folder1/file1 >>expect &&
++	cat sparse_hint >>expect &&
++	test_cmp expect stderr
++'
++
++test_expect_success 'can move out-of-cone file with --sparse' '
++	git sparse-checkout disable &&
++	git reset --hard &&
++	mkdir folder1 &&
++	touch folder1/file1 &&
++	git add folder1 &&
++	git sparse-checkout init --cone &&
++	git sparse-checkout set sub &&
++
++	git mv --sparse folder1/file1 sub 1>actual 2>stderr &&
++	test_must_be_empty stderr &&
++	echo "Please use \"git sparse-checkout reapply\" to reapply the sparsity."\
++	>expect &&
++	test_cmp actual expect &&
++
++	git sparse-checkout reapply &&
++	! test_path_is_dir sub/folder1 &&
++	test_path_is_file sub/file1
++'
++
+ test_done
 -- 
 2.35.1
 
