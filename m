@@ -2,132 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D99D9C433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 12:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31DF1C433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 13:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236276AbiCaMsm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 08:48:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38896 "EHLO
+        id S233901AbiCaNK2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 09:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236269AbiCaMsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 08:48:41 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A59B211EC2
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 05:46:54 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id c62so28028213edf.5
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 05:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=zyWHvmcTDoKJ0Tkllamjq73wEX727Tyax5uwbgdESRk=;
-        b=Majy0Sw+Uhp4oG5QbvXluE3K7A4jNRa/7lVq3ImpNG81SGWg4QGYs74pRYqpq5Mlca
-         LHBDIHJJMfew0YMIG31U9Jipq8k2fizY2BaQM5V9PqE2qBBL/FFo392B/BQGeoXjf0VC
-         58rYwfPba7dv3mMfAxGijNZQiZ5/I9Xc0rxZ6aXfsPEZbNi15KR8PGHGsUfugsHWXGLp
-         Snv7AcSkfGAjWQzka8x4lEwcyQaU8sPI74zXZ2RHPHzi2x6Ppy9tX+gzIqs1AWJcmWjo
-         cMPvhw9NNOCGZAd3D41BtY2watnMewFQXJJUU+pfX+ACTlq8FTlT6Jzie8OTqmCt8pfh
-         dBVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=zyWHvmcTDoKJ0Tkllamjq73wEX727Tyax5uwbgdESRk=;
-        b=l7HnS+CQDHZOn54JjbWQrxca9ds0MufLrGxaq6KUYIz1cyHq+ge1XQmafy6P/s7Zof
-         ExMap/4PK18/yf0nHM62s2oCn0scg4rUDpr4X9/oV0yykDTC/lsbDGRMS0+FSeA52gr4
-         xEoJ+WkOEnLHmOVvJCy8qxrYqjAQdKygIHtDy/UTLq075MyEKtom8nr2K3CwN0icv2fb
-         ZkM7Ej85ORYM1hCUADsR6Fx+NbWgqjZ/GdXwE8FLd79c+9UhjjsrzaVQOshJ6kDasrP/
-         Sd/SxgAkj+a1qd8acLzvywKClipHRj4PXLGkSiEdfbLJ/+2GSzYgEwEXRHBg70+Z/Csd
-         OW6A==
-X-Gm-Message-State: AOAM533MkkoNpfP4VeHQLW+QfcTMgi55NSGA+2oKE2K882M8PFg80lMz
-        l6pUBUcSzlfr8vqkI0QsriQ=
-X-Google-Smtp-Source: ABdhPJzF69kegGRa1e4lERm6OTZIw4LqGv8Qav6rMgGRF/lWZrt6nry48fqVzXqI0o9AY3kP+EH/9Q==
-X-Received: by 2002:a05:6402:1e88:b0:419:746e:fb05 with SMTP id f8-20020a0564021e8800b00419746efb05mr16085353edf.307.1648730812574;
-        Thu, 31 Mar 2022 05:46:52 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n3-20020a1709061d0300b006da94efcc7esm9224565ejh.204.2022.03.31.05.46.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 05:46:52 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nZuCR-000Raa-GE;
-        Thu, 31 Mar 2022 14:46:51 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Neeraj Singh <neerajsi@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v12 7/8] unpack-objects: refactor away
- unpack_non_delta_entry()
-Date:   Thu, 31 Mar 2022 14:42:34 +0200
-References: <cover-v11-0.8-00000000000-20220319T001411Z-avarab@gmail.com>
- <cover-v12-0.8-00000000000-20220329T135446Z-avarab@gmail.com>
- <patch-v12-7.8-11f7aa026b4-20220329T135446Z-avarab@gmail.com>
- <2f98c63d-f2c9-26fe-cfd3-9eed6b79047a@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <2f98c63d-f2c9-26fe-cfd3-9eed6b79047a@web.de>
-Message-ID: <220331.86wngap9vo.gmgdl@evledraar.gmail.com>
+        with ESMTP id S234387AbiCaNK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 09:10:26 -0400
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ABCF2DA83
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 06:08:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha256; b=RQjV4dfchduwlUrJ/RxXT+FoPhpRE41PnO/JBHVVUBHkJxgOtwY72P99iu9Ck7qekpq9NrLvUiTcd5vf+jSTgzm9YTPKk2FQKePrhYQtb4w6HFbPyLjiYkgGzDA7sbhOVjt3sayCv43L3hL4e8Lsg+p6dj6KwzG9itsvG/jOP0r+SLY3dmIomOfVuOcPnbK3a0s0zlsCbysTK/rHh5LAAJjGAzGz/sQTaQ/5gh8FyssSEIOcqqbmNbOLfvllsn8qi3+g+Tu9WhDKSsm5RE66+IzaiLyoi1Ud75Al3hlPnqXIG14xriiFZoD5aqa9rBmlskw9XnN5gy9IgE9kDJZ6ug==; s=purelymail1; d=slashdev.space; v=1; bh=PoRZNB1/YgPcr+nQbi3L4msjX5QjsOCtDTriiUCgN/g=; h=Received:To:From;
+DKIM-Signature: a=rsa-sha256; b=FZ5O5Zt7zC2N04EQvV9y8W1pR9KafuIQG2XRu76/l5ZNwjiLcMXhYDdyD+N0xcSgw6J7LgYLt6Jfo/VaV4MHG8vZ+mLzEfGbh9BhCePZjeXTytXHkVXTfilo6yNKN2jY+C6WPR95TCkv5AetbBCFtg8gRF7sXOi+j9yrlxrX8Pu9LAnKlzV+VT0U+DKu8f0z87MrbWbCpMvnMS+8UWGxumHrKDq5K6LMPzSTdg5KgKa398GiXXD5dr1A1qCnXWmAkLkLGct8MG+qrdSHkTDEiyIMgHbvoCbTO6KzNYZRG4tczN4aMPYDIzH69qMIEmpZc9fH6227syqZ6lPm6TTUjw==; s=purelymail1; d=purelymail.com; v=1; bh=PoRZNB1/YgPcr+nQbi3L4msjX5QjsOCtDTriiUCgN/g=; h=Feedback-ID:Received:To:From;
+Feedback-ID: 6471:1573:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -960214210;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 31 Mar 2022 13:08:14 +0000 (UTC)
+Message-ID: <f3935840-e2a0-953e-0e7c-ac921d414ddc@slashdev.space>
+Date:   Thu, 31 Mar 2022 15:08:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: [PATCH v2] cli: add -v and -h shorthands
+Content-Language: en-CA
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <ttaylorr@github.com>
+References: <20220330190956.21447-1-garrit@slashdev.space>
+ <xmqq5ynv6rb4.fsf@gitster.g>
+ <fb915b91-ead2-ac35-4431-ad35674da463@slashdev.space>
+ <220331.86tubfrngz.gmgdl@evledraar.gmail.com>
+From:   Garrit Franke <garrit@slashdev.space>
+In-Reply-To: <220331.86tubfrngz.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Mar 30 2022, Ren=C3=A9 Scharfe wrote:
-
-> Am 29.03.22 um 15:56 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> The unpack_one() function will call either a non-trivial
->> unpack_delta_entry() or a trivial unpack_non_delta_entry(). Let's
->> inline the latter in the only caller.
+On 31.03.22 02:07, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Thu, Mar 31 2022, Garrit Franke wrote:
+>=20
+>> On Wed, Mar 30 2022, Junio C Hamano wrote:
 >>
->> Since 21666f1aae4 (convert object type handling from a string to a
->> number, 2007-02-26) the unpack_non_delta_entry() function has been
->> rather trivial, and in a preceding commit the "dry_run" condition it
->> was handling went away.
+>>> Sorry, but it is unclear why it is a good thing.
 >>
->> This is not done as an optimization, as the compiler will easily
->> discover that it can do the same, rather this makes a subsequent
->> commit easier to reason about.
->
-> How exactly does inlining the function make the next patch easier to
-> understand or discuss?  Plugging in the stream_blob() call to handle the
-> big blobs looks the same with or without the unpack_non_delta_entry()
-> call to me.
+>> My main motivation behind this change was a standardized user
+>> experience across tools. Many users use these shorthands out of habit
+>> to get an overview of a program. Seeing the command fail and having to
+>> retype it in a longer form creates unnecessary friction between the
+>> user and the program.
+>=20
+> I think this is a good trade-off in this case. I.e. -v and -h are
+> commonly understood.
 
-The earlier version of it without this prep cleanup can be seen at
-https://lore.kernel.org/git/patch-v10-6.6-6a70e49a346-20220204T135538Z-avar=
-ab@gmail.com/
+An interesting observation I just made is that curl [0] uses both
+"--verbose" and "--version" on the top level [1][2] including=20
+shorthands. "-v" corresponds to "verbose", "-V" corresponds to "version.
 
-So yes, this could be skipped, but I tought with this step it was easier
-to understand.
+Not that I'm a fan of this clutter, but it's a possible path to go down=20
+if we actually needed a second shorthand using this letter.
 
-We previously had to change "void *buf =3D get_data(size);" in the
-function to just "void *buf", and do the assignment after the condition
-that's being checked here.
+[0]: https://github.com/curl/curl
+[1]:
+https://github.com/curl/curl/blob/master/docs/cmdline-opts/version.d
+[2]:
+https://github.com/curl/curl/blob/master/docs/cmdline-opts/verbose.d
 
-I think it's also more obvious in terms of control flow if we're
-checking OBJ_BLOB here to not call a function which has a special-case
-just for OBJ_BLOB, we can just do that here instead.
 
->> As it'll be handling "OBJ_BLOB" in a
->> special manner let's re-arrange that "case" in preparation for that
->> change.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/unpack-objects.c | 18 +++++++-----------
->>  1 file changed, 7 insertions(+), 11 deletions(-)
->
-> Reducing the number of lines can be an advantage. *shrug*
-
-There was also the (admittedly rather small) knock-on-effect on
-8/8. Before this it was 8 lines added / 1 removed when it came to the
-code impacted by this change, now it's a 5 added/0 removed in the below
-"switch".
-
-So I think it's worth keeping.
