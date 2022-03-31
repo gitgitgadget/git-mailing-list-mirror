@@ -2,67 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1006BC433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 10:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B48C433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 10:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234500AbiCaKJZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 06:09:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58034 "EHLO
+        id S234592AbiCaKVm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 06:21:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234238AbiCaKJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 06:09:23 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E37DC202172
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 03:07:34 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id h4so19774614edr.3
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 03:07:34 -0700 (PDT)
+        with ESMTP id S234192AbiCaKVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 06:21:40 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2F813BADC
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 03:19:53 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id g20so27579954edw.6
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 03:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=/xcZ7QS8gmdpQg6BD3d2VVoBuO/KnyjQ/GG02oNG2n0=;
-        b=aJKS1PaiPyprhlmEoX5JTRvRDFE6MUlk1tdkpJXxSjK4WV4ZSKYVaOx/YZWtB/aaPy
-         m3tVl+HjN4ZBWZqqJsjxSzik7H/gpw3CJquI7hv42UFi3LENtw11BOrROx+s85CqZqTi
-         hU8HKgyn+4wrV/P938z9qrwQGYPlfIiho6ZdUkwgyvQND1o5ajiTKMRciRCBPG8+0wYd
-         W3zS70TZUakn/VAmOGLNXRtHbwut/tDwY4d9bLW5kw2yPyKmXwWZ1DeW+VIzxqeNX+4k
-         ae0U06mFs3JiEa4+bxZdfxVLFHkOY7BskJB6LafULSnH2Pm8d+2z+KrqQxpRCnqAhgYF
-         ue7w==
+        bh=oc1DXqiVZ4hfgQsWiu2yXoUBfCPk1G2i3yjP1wMHcwA=;
+        b=T+SKS/Ueu2agsNQ1w2DDxURZG114+Zy99gcE+omijGGS6HZyynTvXz0tUTmA2Rdbut
+         eJZSth3s4SGEfQ+6AF0QQajSz+z0WICD7kv9s10v+Gk8zhlcaLPzTjP50qfsvMiS6kg5
+         AStR97Wbb4xFGy4seiKWv2ryk/mj+eUROL7I4+fOYQZOuNacCtHM1YlS+QTUj2LZEEk/
+         bWAu9zIByWdh2JayqU7r460qJeVGardk2vHKLoJBktOvm5Inega+opU4HTQlrNBr4WNV
+         btAtUDi80bXJ2Vbd8dchfbR8rQKYc2CVUs1eslmzFORATAbw9d/D/2MRDZ0bOKbEuNRR
+         3ldA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=/xcZ7QS8gmdpQg6BD3d2VVoBuO/KnyjQ/GG02oNG2n0=;
-        b=o5IcevqVXD7MprbBEW8cssa3ynTf2EFwHR85hMW66CogmnzZMgg2sFW7F2APq31Y/N
-         gzTUfFTltPMNN/q0vHhfsTCdiUxQaIbNBVT5zGsxe/VtTdgLsANW1jSHfa9L0Zc8YZnn
-         g1oQxH0MVH6mPKZhqV26bhAiiHtwtyZBUWt0G/DYTcZ4TKQ0WtWzAy+do8fdnpZZHE3J
-         OgF6FVA6/60EjsiKBcKq36JHx/b9a56aIGaSbMlNs8qFqA5zlaqsc1JZD7UeoBDOgugv
-         bmlY2oazbq7fdZeKZUMdYAhc1DOmc1iopxhU4Riq5ZJoNwPUWKF0fpyzZZlOhtpiP/Zd
-         ZKJA==
-X-Gm-Message-State: AOAM531s/4OELZtw0jgJ823bWjCIrgHJ84DEDn1O3SF5jxeIr7z9/l3x
-        hyyhjJByL1Gkd5YfpGXXE6Y=
-X-Google-Smtp-Source: ABdhPJxMSMpRb8PdACqCk4ZFOZ8AQb+MoyKuxJg5qSRb9e3ch5vn/QM89l3Jd6yNTyiw+N0rVGhzDA==
-X-Received: by 2002:a05:6402:207a:b0:419:3e9f:494f with SMTP id bd26-20020a056402207a00b004193e9f494fmr15700496edb.397.1648721253362;
-        Thu, 31 Mar 2022 03:07:33 -0700 (PDT)
+        bh=oc1DXqiVZ4hfgQsWiu2yXoUBfCPk1G2i3yjP1wMHcwA=;
+        b=0uSJqpvFEwUSdi97NhpEo0Rt65EQ7v0VF396ZpEsUArHzlOM995uGrfFQrzJs4foN/
+         A1BzJaK/CtRls1RxBNB8hAas5uas6P7LHQ/yq5hz7o6pnjJUVW4fOiYstHtdUeAx8bTf
+         2hym8nch3Kc/JFjzlBwEt26xi2OIoWc8R+H0fb58oJmCY49I/RtXwwttcKwzWVmhxnQW
+         nuHc0GvxLOH+sW009RUsm8/Xlmljhr+fr65+EK3OW4Wq3wNTHMGVfEzkZh8STv8Nkrd2
+         JwxQkfpZgc7Sfw4PO+UXiclN7DySeErWc/YLEnnE1tyGeKdBhzW0EhR29K9/fZRWHaV6
+         Jmhg==
+X-Gm-Message-State: AOAM533v4CZn41UPv9nO8qYHXAm7vGbyXC/ASzN8iJfQ8r/JhUvbB2mH
+        H25UzhUmSkhqqqEmhlVbNQs=
+X-Google-Smtp-Source: ABdhPJxp6AD7pJzArlRLltOWdZ8aiDg63iUbXHnCsAc7khpz9cbqCgheJKoQ49LAvmnRzCms+Ax27A==
+X-Received: by 2002:a50:baa1:0:b0:418:849a:c66a with SMTP id x30-20020a50baa1000000b00418849ac66amr16051871ede.234.1648721991955;
+        Thu, 31 Mar 2022 03:19:51 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d24-20020a1709067a1800b006e021f4c1c3sm9258905ejo.166.2022.03.31.03.07.32
+        by smtp.gmail.com with ESMTPSA id v26-20020a50955a000000b00418ebdb07ddsm11230770eda.56.2022.03.31.03.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 03:07:32 -0700 (PDT)
+        Thu, 31 Mar 2022 03:19:50 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nZriG-000LBz-2p;
-        Thu, 31 Mar 2022 12:07:32 +0200
+        id 1nZruA-000LZ3-E9;
+        Thu, 31 Mar 2022 12:19:50 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-Subject: ab/ci-setup-simplify + ab/ci-github-workflow-markup (was: What's
- cooking in git.git (Mar 2022, #07; Wed, 30))
-Date:   Thu, 31 Mar 2022 11:57:21 +0200
-References: <xmqqee2i50h9.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: give deadline for "for (int i = 0; ..."
+Date:   Thu, 31 Mar 2022 12:10:20 +0200
+References: <xmqqy20r3rv7.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqee2i50h9.fsf@gitster.g>
-Message-ID: <220331.86zgl6qvtn.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqy20r3rv7.fsf@gitster.g>
+Message-ID: <220331.86v8vuqv95.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,86 +69,57 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Mar 30 2022, Junio C Hamano wrote:
 
-> * ab/ci-github-workflow-markup (2022-03-27) 7 commits
->  - ci: call `finalize_test_case_output` a little later
->  - ci: use `--github-workflow-markup` in the GitHub workflow
->  - ci: optionally mark up output in the GitHub workflow
->  - test(junit): avoid line feeds in XML attributes
->  - tests: refactor --write-junit-xml code
->  - ci: make it easier to find failed tests' logs in the GitHub workflow
->  - Merge branch 'ab/ci-setup-simplify' into ab/ci-github-workflow-markup
->  (this branch uses ab/ci-setup-simplify.)
+> We raised the weather balloon to see if we can allow the construct
+> in 44ba10d6 (revision: use C99 declaration of variable in for()
+> loop, 2021-11-14), which was shipped as a part of Git v2.35.
+> Document that fact in the coding guidelines, and more importantly,
+> give ourselves a deadline to revisit and update.
 >
->  Build a moral equivalent of js/ci-github-workflow-markup on top of
->  ab/ci-setup-simplify.
->
->  Waiting for discussion to settle.
->  source: <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
->
-> * ab/ci-setup-simplify (2022-03-27) 25 commits
->  - CI: don't use "set -x" in "ci/lib.sh" output
->  - CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
->  - CI: set CC in MAKEFLAGS directly, don't add it to the environment
->  - CI: add more variables to MAKEFLAGS, except under vs-build
->  - CI: narrow down variable definitions in --build and --test
->  - CI: only invoke ci/lib.sh as "steps" in main.yml
->  - CI: pre-select test slice in Windows & VS tests
->  - ci/run-test-slice.sh: replace shelling out with "echo"
->  - CI: move "env" definitions into ci/lib.sh
->  - CI: combine ci/install{,-docker}-dependencies.sh
->  - CI: split up and reduce "ci/test-documentation.sh"
->  - CI: invoke "make artifacts-tar" directly in windows-build
->  - CI: check ignored unignored build artifacts in "win[+VS] build" too
->  - CI: remove "run-build-and-tests.sh", run "make [test]" directly
->  - CI: export variables via a wrapper
->  - CI: consistently use "export" in ci/lib.sh
->  - CI: move p4 and git-lfs variables to ci/install-dependencies.sh
->  - CI: have "static-analysis" run "check-builtins", not "documentation"
->  - CI: have "static-analysis" run a "make ci-static-analysis" target
->  - CI: don't have "git grep" invoke a pager in tree content check
->  - CI: remove unused Azure ci/* code
->  - CI: remove dead "tree skipping" code
->  - CI: remove more dead Travis CI support
->  - CI: make "$jobname" explicit, remove fallback
->  - CI: run "set -ex" early in ci/lib.sh
->  (this branch is used by ab/ci-github-workflow-markup.)
->
->  Drive more actions done in CI via the Makefile instead of shell
->  commands sprinkled in .github/workflows/main.yml
->
->  Waiting for discussion to settle.
->  source: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+> Let's declare that we will officially adopt the variable declaration
+> in the initializaiton [...]
 
-For these two topics: I think that the discussion to settle was around
-the performance/UX of the smaller topic on top.
+Typo: initialization.
 
-For my larger "base" cleanup topic I think that RFC re-roll on top
-clearly shows that whatever the larger UX changes to CI will look like
-that they clearly don't semantically conflict with unrolling the "make"
-invocations to the CI "step" level, and actually make things there much
-simpler as well.
+> part of "for ()" statement this winter, unless we find that a platform
+> we care about does not grok it.
 
-And, on top of master the diffstat looks really good in itself (and
-e.g. ci/lib.sh is *much* smaller & more easily understood):
+I'd think that waiting a couple of releases would be sufficient for this
+sort of thing. I.e. contributors to this project already have
+access/knowledge about a wide variety of compilers, especially the
+"usual suspects" (mainly MSVC) that have been blockers for using new
+language features in the past.
 
-    21 files changed, 346 insertions(+), 577 deletions(-)
+So I'm in no rush to use this, and the winter deadline sounds fine to
+me in that regard.
 
-So I was hoping that the "base" topic could be merged down sooner than
-later, particularly as aside from two lines of changes to Makefile &
-shared.mak the changes are all in ci/* and .github/*, or in the case of
-~30 lines of top-level Makefile changes to two new targets that are
-exclusively called by the CI:
+But on the other hand I think the likelihood that waiting until November
+v.s. May revealing that a hitherto unknown compiler or platform has
+issues with a new language feature is vanishingly small.
 
-    git diff --stat -p origin/master...gitster/ab/ci-setup-simplify -- ':!ci/' ':!.github/'
+> A separate weather balloon for C99 as a whole was raised separately
+> in 7bc341e2 (git-compat-util: add a test balloon for C99 support,
+> 2021-12-01).  Hopefully, as we find out that all C99 features are OK
+> on all platforms we care about, we can stop probing the features we
+> want one-by-one like this
 
-And unlike changing code that will run on various computers we don't
-have access to, the only target for these (the GitHub CI) is already
-running the changes, and because the nature of these changes is that
-they're going to badly textually conflict with pretty much anything else
-done in the ci/ directory (e.g. addition of new targets, changes to
-flags etc.).
+Unfortunately this really isn't the case at all, the norm is for
+compilers to advertise that they support verison X of the standard via
+these macros when they consider the support "good enough", but while
+there's still a long list of unimplemented features before they're at
+100% support (and most never fully get to 100%).
 
-Thanks!
+We also need to worry about the stdlib implementation, and not just the
+compiler, see e.g. the %zu format and MinGW in the exchange at
+https://lore.kernel.org/git/220318.86bky3cr8j.gmgdl@evledraar.gmail.com/
+and
+https://lore.kernel.org/git/a67e0fd8-4a14-16c9-9b57-3430440ef93c@gmail.com/;
 
+But I think we're thoroughly past needing to worry about basic language
+features in C99 such as these inline variable declarations.
 
+> (it does not necessarily mean that we would automatically start using
+> any and all C99 language features, though).
 
+Yes, particularly those that the standards committee backed out of or
+made optional after C99 would be good candidates for avoiding
+permanently.
