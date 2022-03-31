@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D175C433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B04AC433FE
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352266AbiCaBO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 21:14:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
+        id S1352263AbiCaBOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 21:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352263AbiCaBOF (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1352244AbiCaBOF (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Mar 2022 21:14:05 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BAD66600
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:18 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so849962wmb.4
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:18 -0700 (PDT)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 831976623D
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:19 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id l62-20020a1c2541000000b0038e4570af2fso139735wml.5
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p8o72rRZ3FyCuz0D5G61bdzdVczinb70ARlQbOEFV3g=;
-        b=GuSNDqBtc0vrBJhzHfUnTM0qLOwlAuBmX5g6DIx2RTf76gAY4cr0/5H4kjKjuRFZ4w
-         +uAn0upnZoyI27Zuh3Xsu1tRA06DJX8P1claiWbVeSgKAfTU2s4bNijfPY9IEuDE69u0
-         i683P1w+O8UuwjmnoR5xJGzxd2JExae22TRLOdR84Ls5OTJFUwNFqrTTge0WNYoRXx7y
-         CFUvTkQPsdsvpoU40tu/+L2Lf8RbKnNfvfe+4nJlaWCByKWx2+MdKY0ha/mqJLyWXQ8/
-         5bXxE54257bSXqwG99mjYkdVo9k4IJI3hahgL616LOUgO4BOK+BDUee1+J6IWI9w64P3
-         KTCg==
+        bh=hRK1hdwCkLV56UWP+U/+ujnXiMtKlfgwHf1iqIM8ckg=;
+        b=GJ7EyVlCihk8IShRhEw3DHcaH4hwgtyr93ATWZsulXjXtwOsOqnoKdd+C0IRidW9wo
+         V8aqZbcWjSciG4WkKOJILujRwVSsfnXJC1DS3f3B5fHhbswqlL3B0VxUcriy92zxQppw
+         6YssEs1lOx7cun4gN69WLD5VPYCpgXUM/8ND4GBc2Q0AfRDvnNVScMIdl7xvPY5ZGc8P
+         X97+x4sO2FTFAvZ551DRfp7+Y9t+HuNfIUcR73AsZT1C93iMc/vQcelBW5JWgCy8j1ux
+         kdQroM8/RyQvWG74H8mMdeXrIXpeBtu+3+ur9+jvNm/a14OOFmIaHOnDDK+JxIO363IW
+         zzYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p8o72rRZ3FyCuz0D5G61bdzdVczinb70ARlQbOEFV3g=;
-        b=S4L1RuhzPqV5LJscVFXdhmkzSDnrFwhiftajrljZUgA6svcOwz0nTGtZ1r1eA9CYMg
-         fGEzdc08bHAPPfJn3dR955t5qQjWNSAchGWH1k1VQYmmhzQmMllLv5k/kNqELWZXfQCX
-         y8aHNLLGPwUW2N+CoU81MlJOcMouYBzEjKm5c5aqmcF6pkeRqbh2gXV1ILrQ/Q+/hZh1
-         OabmCNtZz/6vk6eZDp38hL5oAcdMXRxCtyBs4AP5YYm2SSlRbWWD+sm+SvF+oyacVdUZ
-         DRdJymK8hGJXfJ7srn/0sciWqyD7UskCc8Uch3RifrPJbg0PfOzZ1104sA5/YXgA/oax
-         p+2g==
-X-Gm-Message-State: AOAM530DEvzom3XPCqptyo4q13cKeE9K/uaSpkHaJpKsv5gkKr9fWZZ3
-        BMQOEx2ticuELRyIKc1wwVuaBHUXK2/9NQ==
-X-Google-Smtp-Source: ABdhPJwFdw6j3nAVfLDUwNcLsE1OMfzJQkoLkSCb/phPA3AtfWODYfx9WPpj2j2aZ0u+m4YfKBE4Vg==
-X-Received: by 2002:a05:600c:4fd5:b0:38c:ca19:1be2 with SMTP id o21-20020a05600c4fd500b0038cca191be2mr2285534wmq.167.1648689136898;
-        Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
+        bh=hRK1hdwCkLV56UWP+U/+ujnXiMtKlfgwHf1iqIM8ckg=;
+        b=MALZV+/zkDu9vSkSebbDok/bcge9/qkqDwHL81nphtHKaBo/FmeCzRLw9CgJdpdPNo
+         OrEl9/xHUmGMbIwccAz+ZcKofhTzqN5SA+ksCnJ9Nar2m20New6x+uCUfTXfi/Elmyuj
+         d/O3+beKnczhUdFju1ry3oCFETzT35ffJgjRycI9pjK3Q1EQWnpEN8N4ol3Q0OZlKj3o
+         M75PBOmYxqtJtQ1CFH4a8smM9MzQ4AwiSW4FDH6vbP2APPyZk7zHl3mM4qOnmejXZ0fw
+         t3Lohu+e3Jecq70E2QSM5v4QaO7tBgthd95s/0BXjKVR29hDSy3iIo2E/pMAW52lLKzM
+         0oAw==
+X-Gm-Message-State: AOAM532U0gJm04pCddAewmtEJFofS48sJ/Abo4QDE9tn8kbhKmcijM11
+        KeZtmfg6fEtpBJ7kFMdNV7tMgfO5EHVwHw==
+X-Google-Smtp-Source: ABdhPJzSiZouf04b1ZjAAXela7o4tv0amYskJOhZMCt3nha7Z6ZlAkDIjkDmevJRR6A9f/ivaya8sA==
+X-Received: by 2002:a05:600c:a06:b0:37b:fdd8:4f8 with SMTP id z6-20020a05600c0a0600b0037bfdd804f8mr2473770wmp.41.1648689137843;
+        Wed, 30 Mar 2022 18:12:17 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm5789218wmv.31.2022.03.30.18.12.16
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm5789218wmv.31.2022.03.30.18.12.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
+        Wed, 30 Mar 2022 18:12:17 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 13/27] revisions API users: use release_revisions() in builtin/log.c
-Date:   Thu, 31 Mar 2022 03:11:18 +0200
-Message-Id: <patch-v4-13.27-02ca92660af-20220331T005325Z-avarab@gmail.com>
+Subject: [PATCH v4 14/27] revisions API users: use release_revisions() with UNLEAK()
+Date:   Thu, 31 Mar 2022 03:11:19 +0200
+Message-Id: <patch-v4-14.27-1aeb1127f34-20220331T005325Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1557.g4e3e9cdb5e0
 In-Reply-To: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
 References: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com> <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
@@ -70,126 +70,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for having the "log" family of functions make wider use
-of release_revisions() let's have them call it just before
-exiting. This changes the "log", "whatchanged", "show",
-"format-patch", etc. commands, all of which live in this file.
+Use a release_revisions() with those "struct rev_list" users which
+already "UNLEAK" the struct. It may seem odd to simultaneously attempt
+to free() memory, but also to explicitly ignore whether we have memory
+leaks in the same.
 
-The release_revisions() API still only frees the "pending" member, but
-will learn to release more members of "struct rev_info" in subsequent
-commits.
-
-In the case of "format-patch" revert the addition of UNLEAK() in
-dee839a2633 (format-patch: mark rev_info with UNLEAK, 2021-12-16),
-which will cause several tests that previously passed under
-"TEST_PASSES_SANITIZE_LEAK=true" to start failing.
-
-In subsequent commits we'll now be able to use those tests to check
-whether that part of the API is really leaking memory, and will fix
-all of those memory leaks. Removing the UNLEAK() allows us to make
-incremental progress in that direction. See [1] for further details
-about this approach.
-
-Note that the release_revisions() will not be sufficient to deal with
-the code in cmd_show() added in 5d7eeee2ac6 (git-show: grok blobs,
-trees and tags, too, 2006-12-14) which clobbers the "pending" array in
-the case of "OBJ_COMMIT". That will need to be dealt with by some
-future follow-up work.
-
-1. https://lore.kernel.org/git/220218.861r00ib86.gmgdl@evledraar.gmail.com/
+As explained in preceding commits this is being done to use the
+built-in commands as a guinea pig for whether the release_revisions()
+function works as expected, we'd like to test e.g. whether we segfault
+as we change it. In subsequent commits we'll then remove these
+UNLEAK() as the function is made to free the memory that caused us to
+add them in the first place.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/log.c          | 20 ++++++++++++--------
- t/t4126-apply-empty.sh |  2 --
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ builtin/diff-index.c | 4 +++-
+ builtin/diff.c       | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 6f9928fabfe..c40ebe1c3f4 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -295,6 +295,12 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 	cmd_log_init_finish(argc, argv, prefix, rev, opt);
- }
- 
-+static int cmd_log_deinit(int ret, struct rev_info *rev)
-+{
-+	release_revisions(rev);
-+	return ret;
-+}
-+
- /*
-  * This gives a rough estimate for how many commits we
-  * will print out in the list.
-@@ -558,7 +564,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
- 	if (!rev.diffopt.output_format)
- 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
--	return cmd_log_walk(&rev);
-+	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
- }
- 
- static void show_tagger(const char *buf, struct rev_info *rev)
-@@ -677,7 +683,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
- 
- 	if (!rev.no_walk)
--		return cmd_log_walk(&rev);
-+		return cmd_log_deinit(cmd_log_walk(&rev), &rev);
- 
- 	count = rev.pending.nr;
- 	objects = rev.pending.objects;
-@@ -732,8 +738,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 			ret = error(_("unknown type: %d"), o->type);
- 		}
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 5fd23ab5b6c..3a83183c312 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -71,5 +71,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
  	}
--	free(objects);
--	return ret;
-+	return cmd_log_deinit(ret, &rev);
+ 	result = run_diff_index(&rev, option);
+ 	UNLEAK(rev);
+-	return diff_result_code(&rev.diffopt, result);
++	result = diff_result_code(&rev.diffopt, result);
++	release_revisions(&rev);
++	return result;
  }
- 
- /*
-@@ -761,7 +766,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	rev.always_show_header = 1;
- 	cmd_log_init_finish(argc, argv, prefix, &rev, &opt);
- 
--	return cmd_log_walk(&rev);
-+	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
- }
- 
- static void log_setup_revisions_tweak(struct rev_info *rev,
-@@ -792,7 +797,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	opt.revarg_opt = REVARG_COMMITTISH;
- 	opt.tweak = log_setup_revisions_tweak;
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
--	return cmd_log_walk(&rev);
-+	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
- }
- 
- /* format-patch */
-@@ -2289,8 +2294,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (rev.ref_message_ids)
- 		string_list_clear(rev.ref_message_ids, 0);
- 	free(rev.ref_message_ids);
--	UNLEAK(rev);
--	return 0;
-+	return cmd_log_deinit(0, &rev);
- }
- 
- static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index 33860d38290..66a7ba8ab8f 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -2,8 +2,6 @@
- 
- test_description='apply empty'
- 
--
--TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
+diff --git a/builtin/diff.c b/builtin/diff.c
+index bb7fafca618..dd48336da56 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -595,6 +595,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	if (1 < rev.diffopt.skip_stat_unmatch)
+ 		refresh_index_quietly();
+ 	UNLEAK(rev);
++	release_revisions(&rev);
+ 	UNLEAK(ent);
+ 	UNLEAK(blob);
+ 	return result;
 -- 
 2.35.1.1557.g4e3e9cdb5e0
 
