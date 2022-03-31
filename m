@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32053C433FE
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D175C433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 01:12:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352241AbiCaBOW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Mar 2022 21:14:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38482 "EHLO
+        id S1352266AbiCaBO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Mar 2022 21:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352256AbiCaBOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Mar 2022 21:14:04 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC676661C
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id m30so31581682wrb.1
-        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
+        with ESMTP id S1352263AbiCaBOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Mar 2022 21:14:05 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BAD66600
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:18 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so849962wmb.4
+        for <git@vger.kernel.org>; Wed, 30 Mar 2022 18:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IceBfizUS+zHSHYRGbdNN3lIunlU1H5hOWeZkyYgXeI=;
-        b=RU8FYJiD9v8kXxz7YXx/zLm1fLjAP109A/NaDz+x6WrGpMAru5hm4s6VjeWW6TjzDm
-         MXeaOX2QhWUN82M3aYLGVHmKXP2Ll6LRHkJKKul8f/t3U9u6hKXSARRvSZ2jx4LgCsqB
-         +Lbf7R2rucUY+zC//pxs0FWixFV/+8w3M6D+ktTBdVfhKsw+WgKAflSvD5f5R7iyTK72
-         dsqW0J0IcWZDBJsHoAfiSbd+vnLGA6zuQUsSQkCwtT6YgJBCRnN49yy3YjjUB2bWsi7J
-         8SEPZaouOkVpppjl2qM/1y1Z3Fehzq36OM43b7m1htPc0kZ+GqSQy1DeRPqGuKiZ2jHI
-         lDtg==
+        bh=p8o72rRZ3FyCuz0D5G61bdzdVczinb70ARlQbOEFV3g=;
+        b=GuSNDqBtc0vrBJhzHfUnTM0qLOwlAuBmX5g6DIx2RTf76gAY4cr0/5H4kjKjuRFZ4w
+         +uAn0upnZoyI27Zuh3Xsu1tRA06DJX8P1claiWbVeSgKAfTU2s4bNijfPY9IEuDE69u0
+         i683P1w+O8UuwjmnoR5xJGzxd2JExae22TRLOdR84Ls5OTJFUwNFqrTTge0WNYoRXx7y
+         CFUvTkQPsdsvpoU40tu/+L2Lf8RbKnNfvfe+4nJlaWCByKWx2+MdKY0ha/mqJLyWXQ8/
+         5bXxE54257bSXqwG99mjYkdVo9k4IJI3hahgL616LOUgO4BOK+BDUee1+J6IWI9w64P3
+         KTCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IceBfizUS+zHSHYRGbdNN3lIunlU1H5hOWeZkyYgXeI=;
-        b=hxphqsbJYFJuiQIRMf09YTRdbU5XNuZkSRzZU9zhavoyz3bqKscz/pNq9OZKnISPjl
-         TTvBmg3leI80C9kYZmoAKjPBnNYjXgaeDCc0z99b61V1Jiq4LTKsJGYN3CSFXqVlbmma
-         xmVOuLcwJGZkeFcikWHFJFVLW5Zc9qUGA2xSnfFybr1/L14YrL3ezxQB0IGI3sAgs8a+
-         HsIuK2Mc4OwM/twXfgH7KTPK4vNSYTiHPdxXvktfqKkKbN8JQGFWKM3b9SvCEqFFV4eZ
-         IVJZucub9kvtsUM2nM9wGfU13CnBNz74svHIh+59g+mqjdo4r7homnDRWaAQ25vBD/Ed
-         VcOA==
-X-Gm-Message-State: AOAM532X6jR9T37+CYHaAoeBIGV5GAX6QmWW2XJ+zGGW37Jeovcm3HgK
-        vPAoZUuIQhcgfu6uwphdbH5eV2a+iWS5HA==
-X-Google-Smtp-Source: ABdhPJyjAA2Zuytcyi2PMr3VLbvZ/Rh+yyjMgBaVka3h9hce2Y832YFqsASfzHyzxNX6JB8fBOFdhg==
-X-Received: by 2002:a5d:5512:0:b0:1ef:5f08:29fb with SMTP id b18-20020a5d5512000000b001ef5f0829fbmr1909073wrv.653.1648689135124;
-        Wed, 30 Mar 2022 18:12:15 -0700 (PDT)
+        bh=p8o72rRZ3FyCuz0D5G61bdzdVczinb70ARlQbOEFV3g=;
+        b=S4L1RuhzPqV5LJscVFXdhmkzSDnrFwhiftajrljZUgA6svcOwz0nTGtZ1r1eA9CYMg
+         fGEzdc08bHAPPfJn3dR955t5qQjWNSAchGWH1k1VQYmmhzQmMllLv5k/kNqELWZXfQCX
+         y8aHNLLGPwUW2N+CoU81MlJOcMouYBzEjKm5c5aqmcF6pkeRqbh2gXV1ILrQ/Q+/hZh1
+         OabmCNtZz/6vk6eZDp38hL5oAcdMXRxCtyBs4AP5YYm2SSlRbWWD+sm+SvF+oyacVdUZ
+         DRdJymK8hGJXfJ7srn/0sciWqyD7UskCc8Uch3RifrPJbg0PfOzZ1104sA5/YXgA/oax
+         p+2g==
+X-Gm-Message-State: AOAM530DEvzom3XPCqptyo4q13cKeE9K/uaSpkHaJpKsv5gkKr9fWZZ3
+        BMQOEx2ticuELRyIKc1wwVuaBHUXK2/9NQ==
+X-Google-Smtp-Source: ABdhPJwFdw6j3nAVfLDUwNcLsE1OMfzJQkoLkSCb/phPA3AtfWODYfx9WPpj2j2aZ0u+m4YfKBE4Vg==
+X-Received: by 2002:a05:600c:4fd5:b0:38c:ca19:1be2 with SMTP id o21-20020a05600c4fd500b0038cca191be2mr2285534wmq.167.1648689136898;
+        Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm5789218wmv.31.2022.03.30.18.12.14
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm5789218wmv.31.2022.03.30.18.12.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 18:12:14 -0700 (PDT)
+        Wed, 30 Mar 2022 18:12:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 11/27] revisions API users: add "goto cleanup" for release_revisions()
-Date:   Thu, 31 Mar 2022 03:11:16 +0200
-Message-Id: <patch-v4-11.27-c9898a5a96b-20220331T005325Z-avarab@gmail.com>
+Subject: [PATCH v4 13/27] revisions API users: use release_revisions() in builtin/log.c
+Date:   Thu, 31 Mar 2022 03:11:18 +0200
+Message-Id: <patch-v4-13.27-02ca92660af-20220331T005325Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1557.g4e3e9cdb5e0
 In-Reply-To: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
 References: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com> <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
@@ -70,245 +70,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a release_revisions() to various users of "struct rev_info" which
-requires a minor refactoring to a "goto cleanup" pattern to use that
-function.
+In preparation for having the "log" family of functions make wider use
+of release_revisions() let's have them call it just before
+exiting. This changes the "log", "whatchanged", "show",
+"format-patch", etc. commands, all of which live in this file.
+
+The release_revisions() API still only frees the "pending" member, but
+will learn to release more members of "struct rev_info" in subsequent
+commits.
+
+In the case of "format-patch" revert the addition of UNLEAK() in
+dee839a2633 (format-patch: mark rev_info with UNLEAK, 2021-12-16),
+which will cause several tests that previously passed under
+"TEST_PASSES_SANITIZE_LEAK=true" to start failing.
+
+In subsequent commits we'll now be able to use those tests to check
+whether that part of the API is really leaking memory, and will fix
+all of those memory leaks. Removing the UNLEAK() allows us to make
+incremental progress in that direction. See [1] for further details
+about this approach.
+
+Note that the release_revisions() will not be sufficient to deal with
+the code in cmd_show() added in 5d7eeee2ac6 (git-show: grok blobs,
+trees and tags, too, 2006-12-14) which clobbers the "pending" array in
+the case of "OBJ_COMMIT". That will need to be dealt with by some
+future follow-up work.
+
+1. https://lore.kernel.org/git/220218.861r00ib86.gmgdl@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/diff-files.c        |  8 ++++++--
- builtin/rev-list.c          | 19 ++++++++++++-------
- builtin/stash.c             |  1 +
- builtin/submodule--helper.c | 10 +++++++---
- sequencer.c                 | 23 ++++++++++++++++-------
- t/helper/test-fast-rebase.c | 18 +++++++++++++-----
- 6 files changed, 55 insertions(+), 24 deletions(-)
+ builtin/log.c          | 20 ++++++++++++--------
+ t/t4126-apply-empty.sh |  2 --
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 70103c40952..2bfaf9ba7ae 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -77,8 +77,12 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 
- 	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
- 		perror("read_cache_preload");
--		return -1;
-+		result = -1;
-+		goto cleanup;
- 	}
-+cleanup:
- 	result = run_diff_files(&rev, options);
--	return diff_result_code(&rev.diffopt, result);
-+	result = diff_result_code(&rev.diffopt, result);
-+	release_revisions(&rev);
-+	return result;
+diff --git a/builtin/log.c b/builtin/log.c
+index 6f9928fabfe..c40ebe1c3f4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -295,6 +295,12 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	cmd_log_init_finish(argc, argv, prefix, rev, opt);
  }
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 572da1472e5..2f0b6c759e4 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -502,6 +502,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	int use_bitmap_index = 0;
- 	int filter_provided_objects = 0;
- 	const char *show_progress = NULL;
-+	int ret = 0;
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(rev_list_usage);
-@@ -585,7 +586,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!strcmp(arg, "--test-bitmap")) {
- 			test_bitmap_walk(&revs);
--			return 0;
-+			goto cleanup;
- 		}
- 		if (skip_prefix(arg, "--progress=", &arg)) {
- 			show_progress = arg;
-@@ -674,11 +675,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 
- 	if (use_bitmap_index) {
- 		if (!try_bitmap_count(&revs, filter_provided_objects))
--			return 0;
-+			goto cleanup;
- 		if (!try_bitmap_disk_usage(&revs, filter_provided_objects))
--			return 0;
-+			goto cleanup;
- 		if (!try_bitmap_traversal(&revs, filter_provided_objects))
--			return 0;
-+			goto cleanup;
- 	}
- 
- 	if (prepare_revision_walk(&revs))
-@@ -698,8 +699,10 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 
- 		find_bisection(&revs.commits, &reaches, &all, bisect_flags);
- 
--		if (bisect_show_vars)
--			return show_bisect_vars(&info, reaches, all);
-+		if (bisect_show_vars) {
-+			ret = show_bisect_vars(&info, reaches, all);
-+			goto cleanup;
-+		}
- 	}
- 
- 	if (filter_provided_objects) {
-@@ -754,5 +757,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (show_disk_usage)
- 		printf("%"PRIuMAX"\n", (uintmax_t)total_disk_usage);
- 
--	return 0;
-+cleanup:
-+	release_revisions(&revs);
++static int cmd_log_deinit(int ret, struct rev_info *rev)
++{
++	release_revisions(rev);
 +	return ret;
- }
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 891572d807c..76d162387e2 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -916,6 +916,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- cleanup:
- 	strvec_clear(&stash_args);
- 	free_stash_info(&info);
-+	release_revisions(&rev);
- 	return ret;
++}
++
+ /*
+  * This gives a rough estimate for how many commits we
+  * will print out in the list.
+@@ -558,7 +564,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+-	return cmd_log_walk(&rev);
++	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
  }
  
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index cda33ee4d2b..1bd31c85946 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1232,6 +1232,7 @@ static int compute_summary_module_list(struct object_id *head_oid,
- 	struct strvec diff_args = STRVEC_INIT;
- 	struct rev_info rev;
- 	struct module_cb_list list = MODULE_CB_LIST_INIT;
-+	int ret = 0;
+ static void show_tagger(const char *buf, struct rev_info *rev)
+@@ -677,7 +683,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
  
- 	strvec_push(&diff_args, get_diff_cmd(diff_cmd));
- 	if (info->cached)
-@@ -1257,11 +1258,13 @@ static int compute_summary_module_list(struct object_id *head_oid,
- 			setup_work_tree();
- 		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
- 			perror("read_cache_preload");
--			return -1;
-+			ret = -1;
-+			goto cleanup;
+ 	if (!rev.no_walk)
+-		return cmd_log_walk(&rev);
++		return cmd_log_deinit(cmd_log_walk(&rev), &rev);
+ 
+ 	count = rev.pending.nr;
+ 	objects = rev.pending.objects;
+@@ -732,8 +738,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 			ret = error(_("unknown type: %d"), o->type);
  		}
- 	} else if (read_cache() < 0) {
- 		perror("read_cache");
--		return -1;
-+		ret = -1;
-+		goto cleanup;
  	}
- 
- 	if (diff_cmd == DIFF_INDEX)
-@@ -1269,9 +1272,10 @@ static int compute_summary_module_list(struct object_id *head_oid,
- 	else
- 		run_diff_files(&rev, 0);
- 	prepare_submodule_summary(info, &list);
-+cleanup:
- 	strvec_clear(&diff_args);
- 	release_revisions(&rev);
--	return 0;
-+	return ret;
- }
- 
- static int module_summary(int argc, const char **argv, const char *prefix)
-diff --git a/sequencer.c b/sequencer.c
-index f9d7acd1065..41ae5e25278 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5354,6 +5354,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
- 	int reapply_cherry_picks = flags & TODO_LIST_REAPPLY_CHERRY_PICKS;
- 	int skipped_commit = 0;
-+	int ret = 0;
- 
- 	repo_init_revisions(r, &revs, NULL);
- 	revs.verbose_header = 1;
-@@ -5377,14 +5378,20 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	pp.fmt = revs.commit_format;
- 	pp.output_encoding = get_log_output_encoding();
- 
--	if (setup_revisions(argc, argv, &revs, NULL) > 1)
--		return error(_("make_script: unhandled options"));
-+	if (setup_revisions(argc, argv, &revs, NULL) > 1) {
-+		ret = error(_("make_script: unhandled options"));
-+		goto cleanup;
-+	}
- 
--	if (prepare_revision_walk(&revs) < 0)
--		return error(_("make_script: error preparing revisions"));
-+	if (prepare_revision_walk(&revs) < 0) {
-+		ret = error(_("make_script: error preparing revisions"));
-+		goto cleanup;
-+	}
- 
--	if (rebase_merges)
--		return make_script_with_merges(&pp, &revs, out, flags);
-+	if (rebase_merges) {
-+		ret = make_script_with_merges(&pp, &revs, out, flags);
-+		goto cleanup;
-+	}
- 
- 	while ((commit = get_revision(&revs))) {
- 		int is_empty = is_original_commit_empty(commit);
-@@ -5408,7 +5415,9 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	if (skipped_commit)
- 		advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
- 				  _("use --reapply-cherry-picks to include skipped commits"));
--	return 0;
-+cleanup:
-+	release_revisions(&revs);
-+	return ret;
+-	free(objects);
+-	return ret;
++	return cmd_log_deinit(ret, &rev);
  }
  
  /*
-diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
-index 993b90eaedd..4e5553e2024 100644
---- a/t/helper/test-fast-rebase.c
-+++ b/t/helper/test-fast-rebase.c
-@@ -99,6 +99,7 @@ int cmd__fast_rebase(int argc, const char **argv)
- 	struct merge_result result;
- 	struct strbuf reflog_msg = STRBUF_INIT;
- 	struct strbuf branch_name = STRBUF_INIT;
-+	int ret = 0;
+@@ -761,7 +766,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
+ 	rev.always_show_header = 1;
+ 	cmd_log_init_finish(argc, argv, prefix, &rev, &opt);
  
- 	/*
- 	 * test-tool stuff doesn't set up the git directory by default; need to
-@@ -137,13 +138,17 @@ int cmd__fast_rebase(int argc, const char **argv)
- 	revs.topo_order = 1;
- 	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
- 
--	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1)
--		return error(_("unhandled options"));
-+	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
-+		ret = error(_("unhandled options"));
-+		goto cleanup;
-+	}
- 
- 	strvec_clear(&rev_walk_args);
- 
--	if (prepare_revision_walk(&revs) < 0)
--		return error(_("error preparing revisions"));
-+	if (prepare_revision_walk(&revs) < 0) {
-+		ret = error(_("error preparing revisions"));
-+		goto cleanup;
-+	}
- 
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
-@@ -220,7 +225,10 @@ int cmd__fast_rebase(int argc, const char **argv)
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("unable to write %s"), get_index_file());
- 
-+	ret = (result.clean == 0);
-+cleanup:
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_name);
--	return (result.clean == 0);
-+	release_revisions(&revs);
-+	return ret;
+-	return cmd_log_walk(&rev);
++	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
  }
+ 
+ static void log_setup_revisions_tweak(struct rev_info *rev,
+@@ -792,7 +797,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	opt.revarg_opt = REVARG_COMMITTISH;
+ 	opt.tweak = log_setup_revisions_tweak;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
+-	return cmd_log_walk(&rev);
++	return cmd_log_deinit(cmd_log_walk(&rev), &rev);
+ }
+ 
+ /* format-patch */
+@@ -2289,8 +2294,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (rev.ref_message_ids)
+ 		string_list_clear(rev.ref_message_ids, 0);
+ 	free(rev.ref_message_ids);
+-	UNLEAK(rev);
+-	return 0;
++	return cmd_log_deinit(0, &rev);
+ }
+ 
+ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
+diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
+index 33860d38290..66a7ba8ab8f 100755
+--- a/t/t4126-apply-empty.sh
++++ b/t/t4126-apply-empty.sh
+@@ -2,8 +2,6 @@
+ 
+ test_description='apply empty'
+ 
+-
+-TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
 -- 
 2.35.1.1557.g4e3e9cdb5e0
 
