@@ -2,161 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ADDEC433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 16:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CF8AC433EF
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 16:52:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240034AbiCaQls (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 12:41:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
+        id S240268AbiCaQya (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 12:54:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238497AbiCaQlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 12:41:46 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 576211BFDF7
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:39:59 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id gb19so24508947pjb.1
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:39:59 -0700 (PDT)
+        with ESMTP id S236755AbiCaQy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 12:54:29 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A0DA231ADB
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:52:42 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id e15-20020a17090ab38f00b001c9989ae56cso2160927pjr.9
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 09:52:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=32UlDRoOZha/+i9Rx7QVw3ptzTofnYTKgLdUgv0RLlU=;
-        b=ftuBEPYt7ZqY3y7VEcw4iJ4jybEIoVB8LQvMC+Rq4aZM4BcFouaETF+e9gGxGZ95Wx
-         SS4a26IrDKB1Bsg9+I1D8+wlaFEi/GfN0zs6G+/AIPdfh+iv5CXBx8GZgjDtJkr1S2SP
-         R5QFsV9e3Dh+YxGTwKPbbr021B1jl4mcGLxyeWI86ytkmOaETdCnfojEkozRW0o63RiS
-         GkOn9KB9BSzfWvat8jNiE+DnSzvfvo04JoFYKmLmZB0sbshe17Ls8AAzzFYvPFueoW5e
-         /W1+hd/GSXY2gpWlSPUK5MLrfVxehoyhmWOuYu1fu51d6emQTBLOWVZctE8xA1XSQWOl
-         tIFg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=UqE+NxQx2RB66+B5OWkm3DS+ETdxZpjFPNxv++SLqF4=;
+        b=aCkd6m7UReVYQzUh4/Q70x4BYXy+KKXD7xouROT2E87DmuiYDoESRS3iWfMXxUjPXU
+         6d7I1Id+HHCKVLeqkdnEvRIZSg6L4vQLA2PyuPXIFNJiZpdxZczWCnBBRbzFxWnBG6dS
+         yCfQ/lI6DhWnqDJmrQiuosoJKUyHVQkaoBiXRDN+hCcyIvpbipl3c2B1Mb5q3Bo2HyC+
+         H6NVToKFF6i6dujixIFCGfYniV0RyqqWYGfPxuN6gQNiRqoYYabMptFzyyDp3gD6rVNU
+         R1t8UGIUW/3eYQpoOWGEeAx16talzAqdxb8K/HCBIRKpfbNXVYy0WcXedocHCHWNuefw
+         p8dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=32UlDRoOZha/+i9Rx7QVw3ptzTofnYTKgLdUgv0RLlU=;
-        b=H3juy+mNX7Y7d4fIUM5OroZkApsbAh0t5iMx51E+IIG4Q/X88cmC9woiZn7bbcwNVY
-         PeXdJnxi9HAxm8u3anLEBrSCsmt3OIQa32VA0MR8E0hbUgKz+dE+ZE/XG6dgioisj5Ts
-         b13wZyX/RW7xy4EuUd/sU7prrpoOZDnKuscGh6k7UFBdYC66eQwaM9fZ3fPnQVcymxI8
-         X16Nh6tUkn2gD8cNlw4oaN1R4XKLO/Zqd8BgYgEQm2Vn4a1o1hVItUZDQjnhrCXjwHqo
-         wcLH18U+thmBpjro4rD9zlhZSJ6LRuqPXcdgCD+JTO7VEtXo+/8TXKzyHunNrqKUenvT
-         7e2g==
-X-Gm-Message-State: AOAM531Bkk+23lAjEyGLpIQyu8xTE3yCthyeU60pgVAlm0YrlI6IaI8R
-        rO8Zs3nYtzkGh6lN372RtinP
-X-Google-Smtp-Source: ABdhPJy9hP2dko+a8dySvRelddkvj2O5zbiw8XOkN3AoOjEvmuhCfd+OCWPJ0kiLH1EtnKeEn3ZRrw==
-X-Received: by 2002:a17:90b:1e4b:b0:1c6:edfe:70ad with SMTP id pi11-20020a17090b1e4b00b001c6edfe70admr7139893pjb.198.1648744798739;
-        Thu, 31 Mar 2022 09:39:58 -0700 (PDT)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id p10-20020a056a000b4a00b004fd9a6a2a39sm8218374pfo.184.2022.03.31.09.39.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Mar 2022 09:39:58 -0700 (PDT)
-Message-ID: <180efaaf-7bb5-6ed7-2fc6-3c5d5f1304db@github.com>
-Date:   Thu, 31 Mar 2022 09:39:56 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [WIP v1 1/4] mv: check if out-of-cone file exists in index with
- SKIP_WORKTREE bit
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com, gitster@pobox.com
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220331091755.385961-2-shaoxuan.yuan02@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20220331091755.385961-2-shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=UqE+NxQx2RB66+B5OWkm3DS+ETdxZpjFPNxv++SLqF4=;
+        b=FVOsya3uozqZOWMRoWJjP0PIZh/le+cNy80AxXw40QKdydCFqQpSXv7qsPJw9unoSA
+         7gjO2kqYw4YUdIzgHiG0IkvLWG5pDYLwxSchBia7tRX7+qlqozAaSvvNcplkvd4rvGN2
+         d9683Jj0zpY4eq/JbFFbcfOF4C5aD4/tEd+r0J8bTF+UfTEr9R6rXwiAV9ONIHokR1Xw
+         Uqnke7LE9Z1wA+pklqBtqRFOZ1tomhu3odHmgk4bKYbOCNDbh5XpuJPniWFc4Y4tygHA
+         5OHTxJ0kNDT7aIAMnAHNNB9dTyPNDTOdSABlfKEUvTxZtSGYryTHASWTfyhCEVQ9DByG
+         h0zQ==
+X-Gm-Message-State: AOAM532RyizQOdd8TOWDwrF1P7R5oWTRo7rJrKfpsgPO2SBq7Gv3Va+g
+        +Pwnm/yfhPuxePWNM0HS2LE+dLVq8uXHRw==
+X-Google-Smtp-Source: ABdhPJyaL2ObzlOl8r36KJCbmMV5l2SbodlaSpOr9wCKrx7gKkoZns0ayEGyz+MzxhcTR9Nr1KR2xFwVWtNX3Q==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:8d47:0:b0:4f6:a7f9:1ead with SMTP id
+ s7-20020aa78d47000000b004f6a7f91eadmr6363572pfe.42.1648745561604; Thu, 31 Mar
+ 2022 09:52:41 -0700 (PDT)
+Date:   Thu, 31 Mar 2022 09:52:38 -0700
+In-Reply-To: <220331.867d8bt6i6.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6l1qyit67d.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1190.git.1648584079.gitgitgadget@gmail.com>
+ <8e6ea3478b376b24835f3a3fef7fca39bed0afec.1648584079.git.gitgitgadget@gmail.com>
+ <220331.867d8bt6i6.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 3/4] branch --set-upstream-to: be consistent when advising
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan wrote:
-> Originally, moving a <source> file which is not on-disk but exists in
-> index as a SKIP_WORKTREE enabled cache entry, "giv mv" command errors
-> out with "bad source".
-> 
-> Change the checking logic, so that such <source>
-> file makes "giv mv" command warns with "advise_on_updating_sparse_paths()"
-> instead of "bad source"; also user now can supply a "--sparse" flag so
-> this operation can be carried out successfully.
-> 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Good commit message, this clearly explains your changes!
+> On Tue, Mar 29 2022, Glen Choo via GitGitGadget wrote:
+>
+>> From: Glen Choo <chooglen@google.com>
+>>
+>> "git branch --set-upstream-to" behaves differently when advice is
+>> enabled/disabled:
+>>
+>> |                 | error prefix | exit code |
+>> |-----------------+--------------+-----------|
+>> | advice enabled  | error:       |         1 |
+>> | advice disabled | fatal:       |       128 |
+>>
+>> Make both cases consistent by using die_message() when advice is
+>> enabled (this was first proposed in [1]).
+>>
+>> [1] https://lore.kernel.org/git/211210.86ee6ldwlc.gmgdl@evledraar.gmail.=
+com
+>
+> Thanks for following up on this :)
 
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> ---
-> I found a new problem introduced by this patch, it is written in the TODO.
-> I still haven't found a better way to reconcile this conflict. Please enlighten
-> me on this :-)
-> 
->  builtin/mv.c | 26 +++++++++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 83a465ba83..32ad4d5682 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -185,8 +185,32 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->  
->  		length = strlen(src);
->  		if (lstat(src, &st) < 0) {
-> +			/*
-> +			 * TODO: for now, when you try to overwrite a <destination>
-> +			 * with your <source> as a sparse file, if you supply a "--sparse"
-> +			 * flag, then the action will be done without providing "--force"
-> +			 * and no warning.
-> +			 *
-> +			 * This is mainly because the sparse <source>
-> +			 * is not on-disk, and this if-else chain will be cut off early in
-> +			 * this check, thus the "--force" check is ignored. Need fix.
-> +			 */
-> +
+:)
 
-I can clarify this a bit. 'mv' is done in two steps: first the file-on-disk
-rename (in the call to 'rename()'), then the index entry (in
-'rename_cache_entry_at()'). In the case of a sparse file, you're only
-dealing with the latter. However, 'rename_cache_entry_at()' moves the index
-entry with the flag 'ADD_CACHE_OK_TO_REPLACE', since it leaves it up to
-'cmd_mv()' to enforce the "no overwrite" rule. 
+>> Signed-off-by: Glen Choo <chooglen@google.com>
+>> ---
+>>  branch.c | 5 +++--
+>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/branch.c b/branch.c
+>> index 133e6047bc6..4a8796489c7 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -389,9 +389,10 @@ static void dwim_branch_start(struct repository *r,=
+ const char *start_name,
+>>  	if (get_oid_mb(start_name, &oid)) {
+>>  		if (explicit_tracking) {
+>>  			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+>> -				error(_(upstream_missing), start_name);
+>> +				int code =3D die_message(_(upstream_missing),
+>> +						       start_name);
+>>  				advise(_(upstream_advice));
+>> -				exit(1);
+>> +				exit(code);
+>>  			}
+>>  			die(_(upstream_missing), start_name);
+>>  		}
+>
+> This is really close to being much better, i.e. we can now just do this
+> (this is on top of your branch):
+> =09
+> 	diff --git a/branch.c b/branch.c
+> 	index eb231b950bb..5b648cb27ed 100644
+> 	--- a/branch.c
+> 	+++ b/branch.c
+> 	@@ -342,8 +342,6 @@ static int validate_remote_tracking_branch(char *ref=
+)
+> 	=20
+> 	 static const char upstream_not_branch[] =3D
+> 	 N_("cannot set up tracking information; starting point '%s' is not a br=
+anch");
+> 	-static const char upstream_missing[] =3D
+> 	-N_("the requested upstream branch '%s' does not exist");
+> 	 static const char upstream_advice[] =3D
+> 	 N_("\n"
+> 	 "If you are planning on basing your work on an upstream\n"
+> 	@@ -388,13 +386,11 @@ static void dwim_branch_start(struct repository *r=
+, const char *start_name,
+> 	 	real_ref =3D NULL;
+> 	 	if (get_oid_mb(start_name, &oid)) {
+> 	 		if (explicit_tracking) {
+> 	-			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+> 	-				int code =3D die_message(_(upstream_missing),
+> 	-						       start_name);
+> 	-				advise(_(upstream_advice));
+> 	-				exit(code);
+> 	-			}
+> 	-			die(_(upstream_missing), start_name);
+> 	+			int code =3D die_message(_("the requested upstream branch '%s' does =
+not exist"),
+> 	+					       start_name);
+> 	+			advise_if_enabled(ADVICE_SET_UPSTREAM_FAILURE,
+> 	+					  _(upstream_advice));
+> 	+			exit(code);
+> 	 		}
+> 	 		die(_("not a valid object name: '%s'"), start_name);
+> 	 	}
+> =09
+> I.e. the only reason we needed to mention upstream_missing multiple
+> times is because we didn't have something like die_message() before, now
+> we can just skip that other "die" entirely.
 
-So, in the case of moving *to* a SKIP_WORKTREE entry (where a file being
-present won't trigger the failure), you'll want to check that the
-destination *index entry* doesn't exist in addition to the 'lstat()' check.
-It might require some rearranging of if-statements in this block, but I
-think it can be done in 'cmd_mv'. 
+Oh, good point. Yeah I like this better, I'll do that.
 
-> +			int pos = cache_name_pos(src, length);
-> +			if (pos >= 0) {
-> +				const struct cache_entry *ce = active_cache[pos];
-> +
-> +				if (ce_skip_worktree(ce)) {
-> +					if (!ignore_sparse)
-> +						string_list_append(&only_match_skip_worktree, src);
-> +					else
-> +						modes[i] = SPARSE;
-> +				}
-> +				else
-> +					bad = _("bad source");
+> The advise_if_enabled() might be worthwhile to change while at it, maybe
+> not.
 
-This block is good. At first, I thought it was mishandling the
-'!ignore_sparse' case (i.e., that case should have included the "bad source"
-assignment), but using the 'only_match_skip_worktree' list is the
-appropriate way to handle it.
+I think it's worthwhile; this does exactly what we want. I would have
+used it if I had known it existed.
 
-> +			}
->  			/* only error if existence is expected. */
-> -			if (modes[i] != SPARSE)
-> +			else if (modes[i] != SPARSE)
->  				bad = _("bad source");
->  		} else if (!strncmp(src, dst, length) &&
->  				(dst[length] == 0 || dst[length] == '/')) {
+>
+> But also useful, is that we can now simply inline the "upstream_missing"
+> string, which will give us type checks for the printf format. The reason
+> we had a variable before was also because of the lack of die_message()>
+>
+> I notice that we can do likewise with the advice itself, and with
+> "upstream_not_branch" if we either make that a "goto", or add a trivial
+> helper function.
 
-For a change like this, it would be really helpful to include the tests
-showing how sparse file moves should now be treated in this commit. I see
-that you've added some in patch 4 - could you move the ones related to this
-change into this commit?
-
-Another way you could do this is to put your "add tests" commit first in
-this series, changing the condition on the ones that are fixed later in the
-series to "test_expect_failure". Then, in each commit that "fixes" a test's
-behavior, change that test to "test_expect_success". This approach had the
-added benefit of showing that, before this series, the tests would fail and
-that this series explicitly fixes those scenarios.
+Interesting, I hadn't considered type checking. So in general we prefer
+to inline the strings and not use variables? I'll keep that in mind.
