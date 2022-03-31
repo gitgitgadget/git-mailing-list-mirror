@@ -2,95 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FA3C433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 21:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF36CC433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 21:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238918AbiCaVQh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 17:16:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43940 "EHLO
+        id S234908AbiCaVVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 17:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234713AbiCaVQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 17:16:35 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387D4191426
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 14:14:47 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A160187106;
-        Thu, 31 Mar 2022 17:14:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eKpsH4qfEo9b
-        XSQCfkHpZV5Fum8CCqgjIUKGoVW57FE=; b=WP4fLPLWTRnAMV71p6mj8mfpvhdX
-        p8lxAvs0iOzxrZzU1eyxQQ2VebV6xCBhfOOf5vWklxaVu1KMvYJ1SYPVsub1tbsR
-        0bE+kq2/Y2BprbknbZH524zh1r6x3RX3MfS8Et7+9hdD1/UpYTkQLverj/jQiABk
-        O0D3jODpFfDDC6A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 82617187105;
-        Thu, 31 Mar 2022 17:14:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S233592AbiCaVVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 17:21:11 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241FB3FBE9
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 14:19:24 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E15EE187103;
-        Thu, 31 Mar 2022 17:14:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 09/27] revisions API users: use release_revisions()
- needing REV_INFO_INIT
-References: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
-        <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
-        <patch-v4-09.27-2f4e65fb534-20220331T005325Z-avarab@gmail.com>
-Date:   Thu, 31 Mar 2022 14:14:42 -0700
-In-Reply-To: <patch-v4-09.27-2f4e65fb534-20220331T005325Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 31 Mar
- 2022 03:11:14
-        +0200")
-Message-ID: <xmqq1qyh25a5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 23D455A107;
+        Thu, 31 Mar 2022 21:19:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1648761563;
+        bh=GWlWbfZ7P1d+oswJTiDxLmVB1/tg9IXP3wfjJEzyDFs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=WCVAq5orcIQkOcuFtPAm+DaFDd7851ZbglicPdbPM3C+s0d609UjY+uQ7t4x4Cfbp
+         6Yf70yXFs1MSmwrEJmzSCigRH+gCCLQpkDxnLoW+0wfLVK7/P7nIiGZl0dO8L36Jbg
+         BeibXGhxwKDI7hXHi5Rbbjpt4++ZR7r0sI+28bwqOYj7CCQYEWflidgXid6lp7Rqgo
+         Dh9D9U8mVQsGjPEtQu3E7WJx+/hD+8R+2jGpyDWOjPBU4ekpdRPq1KvEmV5AzoyjnB
+         qMaTB/TOw71bNdK+PF02eBUVwiOOKxWJC+jKMTkU3yLRoOcn0cIQ2MUOD9OVjFPsSM
+         hDxFzGJw7hQV458geMS+mWC0Zja3OJjTtLjUP1jeXdUk3Vq1+F7kq7UqUBhRPdW5A+
+         s3zdyRuFa99gCFQPj3AN4o7FGc9EHXURjU5N7ua43FPqBL99QVHMBR8qTsi3G9CyjV
+         ktZeKj4CSj5FFcyclVPHzDROyeLVVuBK1lUqwfSbS18xaIbIzgy
+Date:   Thu, 31 Mar 2022 21:19:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: give deadline for "for (int i = 0; ..."
+Message-ID: <YkYa2NyA6IwIqZ4C@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+References: <xmqqy20r3rv7.fsf@gitster.g>
+ <220331.86v8vuqv95.gmgdl@evledraar.gmail.com>
+ <xmqqo81l286e.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 95FDDC4A-B137-11EC-AB38-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="nIUtN0WH8ABgMvgP"
+Content-Disposition: inline
+In-Reply-To: <xmqqo81l286e.fsf@gitster.g>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Use release_revisions() to various users of "struct rev_list" which
-> need to have their "struct rev_info" zero-initialized before we can
-> start using it.
->
-> To do this add a stub "REV_INFO_INIT" macro, ideally macro would be
-> able to fully initialize a "struct rev_info", but all it does is the
-> equivalent of assigning "{ 0 }" to the struct, the API user will still
-> need to use repo_init_revisions(). In some future follow-up work we'll
-> hopefully make REV_INFO_INIT be a "stand-alone" init likke STRBUF_INIT
-> and other similar macros.
+--nIUtN0WH8ABgMvgP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I do not think we want to leave such a misleading paragraph to
-future developers.
+On 2022-03-31 at 20:12:09, Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>=20
+> >> A separate weather balloon for C99 as a whole was raised separately
+> >> in 7bc341e2 (git-compat-util: add a test balloon for C99 support,
+> >> 2021-12-01).  Hopefully, as we find out that all C99 features are OK
+> >> on all platforms we care about, we can stop probing the features we
+> >> want one-by-one like this
+> >
+> > Unfortunately this really isn't the case at all, the norm is for
+> > compilers to advertise that they support verison X of the standard via
+> > these macros when they consider the support "good enough", but while
+> > there's still a long list of unimplemented features before they're at
+> > 100% support (and most never fully get to 100%).
+> >
+> > We also need to worry about the stdlib implementation, and not just the
+> > compiler, see e.g. the %zu format and MinGW in the exchange at
+> > https://lore.kernel.org/git/220318.86bky3cr8j.gmgdl@evledraar.gmail.com/
+> > and
+> > https://lore.kernel.org/git/a67e0fd8-4a14-16c9-9b57-3430440ef93c@gmail.=
+com/;
+> >
+> > But I think we're thoroughly past needing to worry about basic language
+> > features in C99 such as these inline variable declarations.
+>=20
+> Well, that makes it sound like the C99 weather balloon was almost
+> useless, doesn't it?
 
-Yes, We may want to move some of what init_revisions() does to
-REV_INFO_INIT(), and for that, it helps to start using greppable
-string REV_INFO_INT early rather than { 0 } to ease such transition,
-and that is what we should be stressing, instead of ranting "it does
-not do anything, so why are we stupidly introducing a name, instead
-of writing { 0 }, which is what amounts to it anyway?" without
-explicitly saying so but hinting with words like "stub", "all it
-does is", and "will still need to".
+I think if we were talking about C17, maybe.  But as I said in my commit
+message, C99 is over two decades old and required for the POSIX version
+which came out in 2001.  I'm aware of only two platforms we care about
+that don't support that POSIX version, which are NonStop and Windows.
 
-Is that some kind of passive-aggressive thing?
+I think the likelihood of this being a problem is very low.  And I think
+we can justifiably expect that major syntactic functionality is
+available when the define is set accordingly.  I am also willing to
+simply tell people that a compiler that includes the define and doesn't
+include the requisite features is buggy and ask them to use a modern
+version of GCC or clang.  But, ultimately, given we're talking about
+C99, this is extremely unlikely to ever be a problem in 2022.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-You cannot use get_revision() even after calling init_revisions(),
-and still need to use setup_revisions() before hand, but that does
-not mean init_revisions() is not doing its job.  It may be
-implemented as the zero-initialization right now, but it misses the
-point to put a stress on the fact that it doesn't do much now.
+--nIUtN0WH8ABgMvgP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYkYa1wAKCRB8DEliiIei
+gXG2AQCiiQ83Rzvn1IdLSg+oKbkv+bqHwmzuMzz/FwC68EEAUAEAjBv/WF8z99sU
+ZEc4VwirovR6wZBgrxz3SzFRhokGoQI=
+=pixM
+-----END PGP SIGNATURE-----
+
+--nIUtN0WH8ABgMvgP--
