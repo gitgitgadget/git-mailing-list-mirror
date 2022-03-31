@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A1A2C433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 15:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD97CC433EF
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 15:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238176AbiCaPWa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 11:22:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S238210AbiCaPYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 11:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238175AbiCaPW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 11:22:29 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703A119C83D
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 08:20:42 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id dr20so37865ejc.6
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 08:20:42 -0700 (PDT)
+        with ESMTP id S238170AbiCaPY3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 11:24:29 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF8C220FF9
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 08:22:42 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id b15so28591270edn.4
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 08:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=FmNi3O1GBko5LsPzFLUTzHLJVqHHdvnMy3roPg6wt70=;
-        b=L6xhrCiYc0PfoUQx8WwvlX9opPXtS0rqqw5cyfHAB3JPbUYBHswZBESfygO0t5ynom
-         UQAc295OQ6d0AoMOttiIynhCbS7sXTHLWiS2u5aLfEJ/EJ6guVRWCIsyUBPi808x00Hh
-         +OA5qJNxUE91V74JkwSu9izSZ2Hmdzt4IJHCr0rzWK3CCzrc8UcFunZgotZbAmPQ3OhK
-         apoKxB7nmSGNDNu0468rqWJJuu6NnkDcfKaEqgzrVNIOlGw2frTqePDua8KA0jKlb8hZ
-         qwMmd4wamrCvrEXy5/H4/jcw4wEH+WQSDMhu7UpnSHla6EMkjrLkcFncoo9oPpaFCHhm
-         hh5w==
+        bh=NOJTJiUYwyxC+y9dcxRXzXXfH/MPyw+odGZ6VCiV0L4=;
+        b=fwZbSpnlg7GatRSiKKNyKNgmSbd7e7Mp6Nfm8Ju12ItSg2EqNFO+DX0kEzIQPbrg2U
+         Om4+zFlzIx2wHJFU1SFLrekIIGpC9Tq95rRlj9+AGwtkJX+biVi/1KAJbjoz0l2PVB8P
+         t/gxMxcHQ5a1FweG4/v89jAQrSWRInPCJGL+BFOe51CH+csTF0Pj5B8iCy6QiFs2wEwZ
+         8FuGN1KlW8Cg6c9Q9r5VZaK9criRaFDHqz+RMnQY/9HMClEPNyeyLZzrBmZNujNm+ZZF
+         JpVjZks3+Y+iaci2JUDtsXxg3ZrERrVylaUbXWeFMoMrNwq/q9+i8jafNuVIa3wClUl5
+         +wBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=FmNi3O1GBko5LsPzFLUTzHLJVqHHdvnMy3roPg6wt70=;
-        b=HvVJsBZnu+HOwbYF5k4RGsxBtOV3xkCR2Ng5Gp7+r9GdaEy4bn20UsmejH/UTokhy7
-         e9S6S3YZkWBOMMOys9zwGzSEnP2owM1g2gzlS9u6bqtoXctpvYp1giD1psO2d9LHfmEz
-         b3Zn8zeH01ulpl6K36zsnPVJeRx7rjtn9uZRuzHDmRh88eSVBDpch6z9bcNQFl6DOAyw
-         vuD4DRkCS/iDbHiSzn4UciehgdmeULyM9UMf8WAnZbWqkr2njaq7VDXnns4I7I2qvsp5
-         Sl6uSA4X9hyYiY0CeOTFhYMkIPrAl1uj+ztIaC5XGzagcEneHlwTjkVQ4U/Bl5h3GGq2
-         JCvg==
-X-Gm-Message-State: AOAM530zaVkumy82hT1P7EeUKNayXsMtpUKau7fkBVlscLguFyE+qUuz
-        s0hF53eDpVQyStejHPxQwSIRQd+mf+g4Ww==
-X-Google-Smtp-Source: ABdhPJyyU/gXrOsPohKEYF56AGKHgVM9C7Vp+HhAW9F9fpq1ZMAtwoHT8MDL3r90K2xPqSvaQbL4UQ==
-X-Received: by 2002:a17:907:2daa:b0:6da:924e:955 with SMTP id gt42-20020a1709072daa00b006da924e0955mr5456557ejc.1.1648740040658;
-        Thu, 31 Mar 2022 08:20:40 -0700 (PDT)
+        bh=NOJTJiUYwyxC+y9dcxRXzXXfH/MPyw+odGZ6VCiV0L4=;
+        b=T9Q1aFgvtDzzVuMIikb76yM4xX4A8MjUTs/yqWYfLOVpTjZMVO7nlI5PdPpzYkO45D
+         EWqdm6qIxz2LnHGV+mrPPsXu9rj1IDE6/5YMO3p0sBip0I60X1BM8Cz9yORfXuZAJIQn
+         WxjQxBDxCnT25VqyyR3F7PlxElvRaRfmrZ/ti54XoN8f4Un//MlmAp3s8MSXBAUHFWCU
+         tPGjlWiJnis3XoggDrKDyn3L+CGvCKMjG4Jw2kjBo8ZfyHLUBRfcWpKnrJkanRU8clo7
+         eJkw2xe+uTJF6S2r2LSeaD0v/GkGNn6/s68L6zY0KVCyG7QTLSYTXJBLI2bXsYZEgXn6
+         DveQ==
+X-Gm-Message-State: AOAM532GfDd8ndIyvm0+IO+M0RnK1w9D9wW5xggimD+5uP9CBZzzmnKG
+        QrYHuzMaNgxW9v9lbT+Ync4fRr2FVcOVdw==
+X-Google-Smtp-Source: ABdhPJzM+CKiHrVpwD6rIZDwmpMXqUzxYf9k7mhSuXgbtOXF5I/hTpb/XBNxEzlI+M1vA8PBXaEVYg==
+X-Received: by 2002:a05:6402:3489:b0:419:88f0:4bcd with SMTP id v9-20020a056402348900b0041988f04bcdmr16969210edc.401.1648740160341;
+        Thu, 31 Mar 2022 08:22:40 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v1-20020a1709064e8100b006e07d033572sm9066746eju.33.2022.03.31.08.20.39
+        by smtp.gmail.com with ESMTPSA id r29-20020a50c01d000000b00415fb0dc793sm11528525edb.47.2022.03.31.08.22.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 08:20:39 -0700 (PDT)
+        Thu, 31 Mar 2022 08:22:39 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nZwbH-000VmZ-Cx;
-        Thu, 31 Mar 2022 17:20:39 +0200
+        id 1nZwdD-000VsK-Aj;
+        Thu, 31 Mar 2022 17:22:39 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
@@ -60,14 +60,14 @@ Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Calvin Wan <calvinwan@google.com>,
         Robert Coup <robert@coup.net.nz>
-Subject: Re: [PATCH v4 4/7] fetch: add --refetch option
-Date:   Thu, 31 Mar 2022 17:18:36 +0200
+Subject: Re: [PATCH v4 5/7] t5615-partial-clone: add test for fetch --refetch
+Date:   Thu, 31 Mar 2022 17:20:45 +0200
 References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
  <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com>
- <78501bbf28105ef252976266abb437a278585609.1648476132.git.gitgitgadget@gmail.com>
+ <6c17167ac1edbeea5f6d375a989aa49f5748d099.1648476132.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <78501bbf28105ef252976266abb437a278585609.1648476132.git.gitgitgadget@gmail.com>
-Message-ID: <220331.86k0cap2rc.gmgdl@evledraar.gmail.com>
+In-reply-to: <6c17167ac1edbeea5f6d375a989aa49f5748d099.1648476132.git.gitgitgadget@gmail.com>
+Message-ID: <220331.86fsmyp2o0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,38 +79,77 @@ On Mon, Mar 28 2022, Robert Coup via GitGitGadget wrote:
 
 > From: Robert Coup <robert@coup.net.nz>
 >
-> Teach fetch and transports the --refetch option to force a full fetch
-> without negotiating common commits with the remote. Use when applying a
-> new partial clone filter to refetch all matching objects.
+> Add a test for doing a refetch to apply a changed partial clone filter
+> under protocol v0 and v2.
 >
-> [...]
-> +ifndef::git-pull[]
-> +--refetch::
-> +	Instead of negotiating with the server to avoid transferring commits and
-> +	associated objects that are already present locally, this option fetches
-> +	all objects as a fresh clone would. Use this to reapply a partial clone
-> +	filter from configuration or using `--filter=` when the filter
-> +	definition has changed.
-> +endif::git-pull[]
-
-Re my comment on negotiation specifics in 2/7, this documentation is
-really over-promising depending on what the answer to that is:
-https://lore.kernel.org/git/220331.86o81mp2w1.gmgdl@evledraar.gmail.com/
-
-I.e. instead of saying that we WILL fetch all objects "just like a
-clone" shouldn't we have less focus on implementation details here, and
-assure the user that we'll make their object store "complete" as though
---filter hadn't been used, without going into the specifics of what'll
-happen over the wire?
->  		return -1;
+> Signed-off-by: Robert Coup <robert@coup.net.nz>
+> ---
+>  t/t5616-partial-clone.sh | 52 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 51 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index 34469b6ac10..87ebf4b0b1c 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -166,6 +166,56 @@ test_expect_success 'manual prefetch of missing objects' '
+>  	test_line_count = 0 observed.oids
+>  '
 >  
-> +	/*
-> +	 * Similarly, if we need to refetch, we always want to perform a full
-> +	 * fetch ignoring existing objects.
-> +	 */
-> +	if (refetch)
-> +		return -1;
+> +# create new commits in "src" repo to establish a history on file.4.txt
+> +# and push to "srv.bare".
+> +test_expect_success 'push new commits to server for file.4.txt' '
+> +	for x in a b c d e f
+> +	do
+> +		echo "Mod file.4.txt $x" >src/file.4.txt &&
+> +		if list_contains "a,b" "$x"; then
+> +			printf "%10000s" X >>src/file.4.txt
+> +		fi &&
+> +		if list_contains "c,d" "$x"; then
+> +			printf "%20000s" X >>src/file.4.txt
+> +		fi &&
+> +		git -C src add file.4.txt &&
+> +		git -C src commit -m "mod $x" || return 1
+> +	done &&
+> +	git -C src push -u srv main
+> +'
 > +
+> +# Do partial fetch to fetch smaller files; then verify that without --refetch
+> +# applying a new filter does not refetch missing large objects. Then use
+> +# --refetch to apply the new filter on existing commits. Test it under both
+> +# protocol v2 & v0.
+> +test_expect_success 'apply a different filter using --refetch' '
+> +	git -C pc1 fetch --filter=blob:limit=999 origin &&
+> +	git -C pc1 rev-list --quiet --objects --missing=print \
+> +		main..origin/main >observed &&
+> +	test_line_count = 4 observed &&
 > +
+> +	git -C pc1 fetch --filter=blob:limit=19999 --refetch origin &&
 
-One too many \n here.
+Is 19999 just "arbitrary big number" here?
+
+> +	git -C pc1 rev-list --quiet --objects --missing=print \
+> +		main..origin/main >observed &&
+> +	test_line_count = 2 observed &&
+> +
+> +	git -c protocol.version=0 -C pc1 fetch --filter=blob:limit=29999 \
+> +		--refetch origin &&
+> +	git -C pc1 rev-list --quiet --objects --missing=print \
+> +		main..origin/main >observed &&
+> +	test_line_count = 0 observed
+
+Does this test_line_count *really* want to be = 0, or does this mean
+test_must_be_empty?
+
+I.e. are we expecting content here, just not ending in a \n, or nothing
+at all?
+
+> +'
+> +
+> +test_expect_success 'fetch --refetch works with a shallow clone' '
+> +	git clone --no-checkout --depth=1 --filter=blob:none "file://$(pwd)/srv.bare" pc1s &&
+> +	git -C pc1s rev-list --objects --missing=print HEAD >observed &&
+> +	test_line_count = 6 observed &&
+> +
+> +	GIT_TRACE=1 git -C pc1s fetch --filter=blob:limit=999 --refetch origin &&
+
+Why the GIT_TRACE=1? Seems to not be used.
