@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEC7C433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 18:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 657D7C433EF
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 18:50:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237160AbiCaSv4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 14:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43058 "EHLO
+        id S237236AbiCaSwC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 14:52:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237019AbiCaSvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 14:51:53 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65AE216E7CD
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:05 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id h4so972732wrc.13
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:05 -0700 (PDT)
+        with ESMTP id S237067AbiCaSvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 14:51:54 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 540D616F6FB
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:06 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id j18so1036330wrd.6
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QhIZ6ViwWoJZrXihwgpbUJCt7CyAtmgWKKrcYxuljSY=;
-        b=lYPFDyTEoKuc3WtAhjCfWp4AH8xgoe9VQ0yh9169JMMAbOMlbP/3KlP+9X1Fjn6xgS
-         OXGffMhzBQxzdGeGHQMe+csusYdNewb7m6lEcOCid8xTAaWSSJ/M9evWpL4QQb3O4+PY
-         vvPkRnVTzqrRICmjEWwyov2P+s5TeIgGjq5EjpcDrChRJCFBGhTToRkIDvwPVGlTc56n
-         spavW4EFY9YaLUcJbi4be6rOnpu/52PYd9shmidPA7qbmMl4k/mfmZ2XvJr1/tuDJ9rZ
-         U07JAtIEK8vqgZdqPXEbnNx3uNzP+d+Du5B3pGHnmJ3RZ3bG6nVm0WGOUnhJkPfSYlrs
-         RcLA==
+        bh=WPpANUWFRgXIb3oDOZk37EOayhXJtam8+1zzZzqOzRY=;
+        b=ZPrHilYACx8BGgJTrDyAB3xkfNh1rkrT123o73bhJx9fAFYPNUx/NxBM6ynNKmxYFL
+         IXv5RW/Ixgz7zh06Z7rM6mZZR4Z/p5bciGP5jxh5JJAMI1mfHIRdymPAFZ9koFzY35ov
+         4s7vYYA3XJrMBwzgIMiSJCm2UojhJdR+uUdR559raR70hDtkcwpQ5eex5NO2jJjp5Joo
+         lykArJwqfD+8zBXEsxe52AFBSYA8YkYJikKWZQTDKbhkAnDYSPRgD5nlL4T3BZ+k49wg
+         vkgTkylObnSQDzCTY8sWvIgjRMyFLRgDNiIYLIJIqmSHHJ+ulNNdw1NZ4HNfG+6rbV6N
+         FPLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QhIZ6ViwWoJZrXihwgpbUJCt7CyAtmgWKKrcYxuljSY=;
-        b=UbkKyR9xVb3biwBMaqyRpMRkOlexinyPETZmLd42mVIdGIq7jGUM9q5/EPfgOBiKM9
-         YEASPhEc+dJ7cYgqxTfavNTccHZObGMGYrhQKsErz+Kl+C21BlXGbG2CaBgYL2Bmz1Mz
-         0JmDNHHJituTRBugcDEBdrCShZxfiAX5hSAzFqyJaWBuGU1SYTerzA4Qf5zZNys4J+y3
-         cIsVRlWis0nZMo//NHM7D9JZfH2qrGbYs6LH8pNtp2IcjUdZIxn0sOcbeReDj0EAVhcz
-         TqrYfMEhcxIVVX84rszzf6YNm/DfFqd8noxc1UMR+BhG8wMU4Kw51zLznNMiScM7rZzz
-         xOTA==
-X-Gm-Message-State: AOAM532+WUb+cu/xlmJYprgWMMYkrwA672WEQADXxbAmzah0LwX7lNvL
-        0TDCxNwR0r/ZGWYOvu1J/JV03xXREvg=
-X-Google-Smtp-Source: ABdhPJzEzulQsjBfTxqWMvacEZIx8rrpK/kCKYmWT8Xh/PKx3+yw8QaGTH0RoWWMy2aNUKsR/asXNQ==
-X-Received: by 2002:a05:6000:178a:b0:205:c5e1:df07 with SMTP id e10-20020a056000178a00b00205c5e1df07mr5061464wrg.703.1648752603624;
-        Thu, 31 Mar 2022 11:50:03 -0700 (PDT)
+        bh=WPpANUWFRgXIb3oDOZk37EOayhXJtam8+1zzZzqOzRY=;
+        b=FMkpwjIcNbLcBl71wq4vImdciCeW8NDjUpgw8RA/4dH4Xjomk5wudWz0Vhy/bRNYMg
+         XvBodedlK53QNY+d0TVd7Kjy3JWG3E1oZDDyfdXx+bE7BTYK/bDqTmNBLj0cn2v6UiRd
+         E/zRzFcpZjMb5cQmyL6C2N+4g+iDiBFqeu+JWPazxglzYHlYLrbY8iSvdS1cpZO2nO7I
+         pt3NMBzCRgbj68iGypz27K1dK0XcgsTmp2lD54LAW1c343KD+qG11b8X41Rr1LP3VVCo
+         8vXTJjDHRU32shtP2YNjNc0ui3haut/BOEuFOYDERtq/IKkywWVtqlB3xbuhYW0wex6g
+         sxVw==
+X-Gm-Message-State: AOAM532XDIDNvm5NrXBpsCGceXcZT2gv3gJdxt84S5evCN15xAtLVhuS
+        Ma1fxGHhXYgw7Otn7p5ctEJE09FVvcA=
+X-Google-Smtp-Source: ABdhPJyMC5zNTzLWjer+S+0MNnf+opkpGaH6qCPUV+vGufCUKwJLW2JKIF09pPiwNoRI+yu0XtepNA==
+X-Received: by 2002:a5d:6d8a:0:b0:204:8aa:309f with SMTP id l10-20020a5d6d8a000000b0020408aa309fmr5041255wrs.38.1648752604692;
+        Thu, 31 Mar 2022 11:50:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k5-20020a5d66c5000000b00203fd25f4ecsm184026wrw.16.2022.03.31.11.50.03
+        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b0038d0d8f67e5sm8157992wms.16.2022.03.31.11.50.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 11:50:03 -0700 (PDT)
-Message-Id: <5e96a09199fab0be35d26eab8e73d7cd803032c8.1648752601.git.gitgitgadget@gmail.com>
+        Thu, 31 Mar 2022 11:50:04 -0700 (PDT)
+Message-Id: <74b839bfc4e9503f8b2c62aeab44ba5c07f09f0c.1648752601.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1190.v2.git.1648752601.gitgitgadget@gmail.com>
 References: <pull.1190.git.1648584079.gitgitgadget@gmail.com>
         <pull.1190.v2.git.1648752601.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 31 Mar 2022 18:49:58 +0000
-Subject: [PATCH v2 1/4] branch: support more tracking modes when recursing
+Date:   Thu, 31 Mar 2022 18:49:59 +0000
+Subject: [PATCH v2 2/4] branch: give submodule updating advice before exit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,155 +70,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-"git branch --recurse-submodules" does not propagate "--track=inherit"
-or "--no-track" to submodules, which causes submodule branches to use
-the wrong tracking mode [1]. To fix this, pass the correct options to
-the "submodule--helper create-branch" child process and test for it.
-
-While we are refactoring the same code, replace "--track" with the
-synonymous, but more consistent-looking "--track=direct" option
-(introduced at the same time as "--track=inherit", d3115660b4 (branch:
-add flags and config to inherit tracking, 2021-12-20)).
-
-[1] This bug is partially a timing issue: "branch --recurse-submodules"
- was introduced around the same time as "--track=inherit", and even
- though I rebased "branch --recurse-submodules" on top of that, I had
- neglected to support the new tracking mode. Omitting "--no-track"
- was just a plain old mistake, though.
+Fix a bug where "hint:" was printed _before_ "fatal:" (instead of the
+other way around).
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- branch.c                    | 29 +++++++++++++++++++++++++---
- builtin/submodule--helper.c |  7 ++++---
- t/t3207-branch-submodule.sh | 38 ++++++++++++++++++++++++++++++++++++-
- 3 files changed, 67 insertions(+), 7 deletions(-)
+ branch.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index 6b31df539a5..aac24591d22 100644
+index aac24591d22..1252b17b980 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -233,6 +233,9 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
- 
-+	if (!track)
-+		BUG("asked to set up tracking, but tracking is disallowed");
-+
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	tracking.srcs = &tracking_srcs;
-@@ -534,8 +537,27 @@ static int submodule_create_branch(struct repository *r,
- 		strvec_push(&child.args, "--quiet");
- 	if (reflog)
- 		strvec_push(&child.args, "--create-reflog");
--	if (track == BRANCH_TRACK_ALWAYS || track == BRANCH_TRACK_EXPLICIT)
--		strvec_push(&child.args, "--track");
-+
-+	switch (track) {
-+	case BRANCH_TRACK_NEVER:
-+		strvec_push(&child.args, "--no-track");
-+		break;
-+	case BRANCH_TRACK_ALWAYS:
-+	case BRANCH_TRACK_EXPLICIT:
-+		strvec_push(&child.args, "--track=direct");
-+		break;
-+	case BRANCH_TRACK_OVERRIDE:
-+		BUG("BRANCH_TRACK_OVERRIDE cannot be used when creating a branch.");
-+		break;
-+	case BRANCH_TRACK_INHERIT:
-+		strvec_push(&child.args, "--track=inherit");
-+		break;
-+	case BRANCH_TRACK_UNSPECIFIED:
-+		/* Default for "git checkout". Do not pass --track. */
-+	case BRANCH_TRACK_REMOTE:
-+		/* Default for "git branch". Do not pass --track. */
-+		break;
-+	}
- 
- 	strvec_pushl(&child.args, name, start_oid, tracking_name, NULL);
- 
-@@ -614,7 +636,8 @@ void create_branches_recursively(struct repository *r, const char *name,
- 	 * tedious to determine whether or not tracking was set up in the
- 	 * superproject.
+@@ -607,11 +607,13 @@ void create_branches_recursively(struct repository *r, const char *name,
  	 */
--	setup_tracking(name, tracking_name, track, quiet);
-+	if (track)
-+		setup_tracking(name, tracking_name, track, quiet);
- 
  	for (i = 0; i < submodule_entry_list.entry_nr; i++) {
+ 		if (submodule_entry_list.entries[i].repo == NULL) {
++			int code = die_message(
++				_("submodule '%s': unable to find submodule"),
++				submodule_entry_list.entries[i].submodule->name);
+ 			if (advice_enabled(ADVICE_SUBMODULES_NOT_UPDATED))
+ 				advise(_("You may try updating the submodules using 'git checkout %s && git submodule update --init'"),
+ 				       start_commitish);
+-			die(_("submodule '%s': unable to find submodule"),
+-			    submodule_entry_list.entries[i].submodule->name);
++			exit(code);
+ 		}
+ 
  		if (submodule_create_branch(
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5301612d24b..081c8267c33 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3021,9 +3021,10 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
- 		OPT__FORCE(&force, N_("force creation"), 0),
- 		OPT_BOOL(0, "create-reflog", &reflog,
- 			 N_("create the branch's reflog")),
--		OPT_SET_INT('t', "track", &track,
--			    N_("set up tracking mode (see git-pull(1))"),
--			    BRANCH_TRACK_EXPLICIT),
-+		OPT_CALLBACK_F('t', "track",  &track, "(direct|inherit)",
-+			N_("set branch tracking configuration"),
-+			PARSE_OPT_OPTARG,
-+			parse_opt_tracking_mode),
- 		OPT__DRY_RUN(&dry_run,
- 			     N_("show whether the branch would be created")),
- 		OPT_END()
-diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
-index 0d93f7516c9..cfde6b237f5 100755
---- a/t/t3207-branch-submodule.sh
-+++ b/t/t3207-branch-submodule.sh
-@@ -260,7 +260,7 @@ test_expect_success 'should get fatal error upon branch creation when submodule
- 	)
- '
- 
--test_expect_success 'should set up tracking of remote-tracking branches' '
-+test_expect_success 'should set up tracking of remote-tracking branches by default' '
- 	test_when_finished "reset_remote_test" &&
- 	(
- 		cd super-clone &&
-@@ -289,4 +289,40 @@ test_expect_success 'should not fail when unable to set up tracking in submodule
- 	)
- '
- 
-+test_expect_success '--track=inherit should set up tracking correctly' '
-+	test_when_finished "reset_remote_test" &&
-+	(
-+		cd super-clone &&
-+		git branch --recurse-submodules branch-a origin/branch-a &&
-+		# Set this manually instead of using branch --set-upstream-to
-+		# to circumvent the "nonexistent upstream" check.
-+		git -C sub config branch.branch-a.remote origin &&
-+		git -C sub config branch.branch-a.merge refs/heads/sub-branch-a &&
-+		git -C sub/sub-sub config branch.branch-a.remote other &&
-+		git -C sub/sub-sub config branch.branch-a.merge refs/heads/sub-sub-branch-a &&
-+
-+		git branch --recurse-submodules --track=inherit branch-b branch-a &&
-+		test_cmp_config origin branch.branch-b.remote &&
-+		test_cmp_config refs/heads/branch-a branch.branch-b.merge &&
-+		test_cmp_config -C sub origin branch.branch-b.remote &&
-+		test_cmp_config -C sub refs/heads/sub-branch-a branch.branch-b.merge &&
-+		test_cmp_config -C sub/sub-sub other branch.branch-b.remote &&
-+		test_cmp_config -C sub/sub-sub refs/heads/sub-sub-branch-a branch.branch-b.merge
-+	)
-+'
-+
-+test_expect_success '--no-track should not set up tracking' '
-+	test_when_finished "reset_remote_test" &&
-+	(
-+		cd super-clone &&
-+		git branch --recurse-submodules --no-track branch-a origin/branch-a &&
-+		test_cmp_config "" --default "" branch.branch-a.remote &&
-+		test_cmp_config "" --default "" branch.branch-a.merge &&
-+		test_cmp_config -C sub "" --default "" branch.branch-a.remote &&
-+		test_cmp_config -C sub "" --default "" branch.branch-a.merge &&
-+		test_cmp_config -C sub/sub-sub "" --default "" branch.branch-a.remote &&
-+		test_cmp_config -C sub/sub-sub "" --default "" branch.branch-a.merge
-+	)
-+'
-+
- test_done
 -- 
 gitgitgadget
 
