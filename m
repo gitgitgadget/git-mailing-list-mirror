@@ -2,108 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E872C433EF
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 22:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34036C433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 22:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240844AbiCaWW6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 18:22:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43864 "EHLO
+        id S240230AbiCaWlq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 18:41:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242389AbiCaWW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 18:22:56 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A1218B7A6
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 15:21:08 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id w21so868130pgm.7
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 15:21:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/yYRhtPsbrqyEwmgnjKxQSOwlhfELE0qrF9N73gTLeg=;
-        b=HfXwMLxsvV23TIltqxw7cnuNL95HymgnQX1eaTe8uTo3SPeyvMQhYoiJYDq1TMTUN9
-         hZr4LIvlgAPQN4PTjDsIIY8obUeMMErNPqFU9zRYoEWtCTJ7sPB1lCjr/+m5yDHK9O40
-         I7AbWHL4+Gjhw2l0pzF3pQfZaJaVwxGQ42XT9YhrDY3t/iovanCr2sNC6TcHfF2kYxGB
-         PHipTB5gOTDnBQVe2gOoLJFoABhOk0jk8bDJe0jYN2mNjoRqk/4i0XaLKDzqQEgGyrxe
-         maMR1zeDeWieZJ3LfWjimKgaHwFZm6Zd2w0IG1lLivRqMgW0wF6L/lqUapmhhrjIkpYu
-         dSoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/yYRhtPsbrqyEwmgnjKxQSOwlhfELE0qrF9N73gTLeg=;
-        b=6oolADe0zht0eQuHf6zQWJH2ZRPytDJZFQcwJZld8bFNrfTRWWZudQRLx7Vr23uQ2e
-         v4eKtlfMHRvNSXqKfD9dYs+9Snvw+zgEMlytgR2uDRGavkHG6oZ5DBfqiMNYR2SCeqLD
-         QtLj1rrw+oPQ6LDZfl4GeWOsmn411N0qFtpRMxdt7X/999szLxogXgUPftieG2HiqT7a
-         qcmLug6QW/1hzderGQTla7vEX5XbQOhUZh3nzB4kwYEy7bMSyjinw52WLOfMha+167z7
-         zMjTZV0eK/k7Cpmu0tfBTBdtlBd0hvBqezG4KLi8grb1vlkU6jvtTSy5KQb3xQb7dgtH
-         JGjg==
-X-Gm-Message-State: AOAM532nbvsfuagVVH/zj0BpmHFTFNYiOvnmBDbFnEImMVYH2aSwDZvJ
-        HR4LtwXKtzhrvV1a3SrDOA0sXrNptrJn
-X-Google-Smtp-Source: ABdhPJyeW+XmoYvQhzSlveA4WJlonJlLcgYK05emBXHIBcWabvzaY7xRs0WmlEQwEaOm99YMx/345Q==
-X-Received: by 2002:a65:6e9a:0:b0:382:1804:35c8 with SMTP id bm26-20020a656e9a000000b00382180435c8mr12748162pgb.584.1648765267585;
-        Thu, 31 Mar 2022 15:21:07 -0700 (PDT)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id bx23-20020a056a00429700b004fa79b2cb31sm472826pfb.51.2022.03.31.15.21.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Mar 2022 15:21:07 -0700 (PDT)
-Message-ID: <3c6a562b-d55f-d73e-3547-36ce752fcc6f@github.com>
-Date:   Thu, 31 Mar 2022 15:21:05 -0700
+        with ESMTP id S233865AbiCaWlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 18:41:45 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EAD1C2DAA
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 15:39:57 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9C3F115647;
+        Thu, 31 Mar 2022 18:39:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=A4OM4+9y7jhGkGgFPwrUGaP0g9jQEQDqcKI5Tp
+        mgXjo=; b=ZtkF99QhVvKqm6TJ6RfPKKOVkduVhKe4pIyyRQMTjv40D42J+la8Mh
+        Mi1MIIfwNCwcOw8HAwFCcLul8loItVV7BGQzr+G0DafjBFNVJ5DKtAyGGT+Q9lA9
+        yH3nsfPgH431c0ynRALyt2GDmo0OroP2NbzStTC+6Xm6qW3Ss5mQU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C094F115646;
+        Thu, 31 Mar 2022 18:39:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33B18115644;
+        Thu, 31 Mar 2022 18:39:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v2 0/4] branch --recurse-submodules: Bug fixes and clean
+ ups
+References: <pull.1190.git.1648584079.gitgitgadget@gmail.com>
+        <pull.1190.v2.git.1648752601.gitgitgadget@gmail.com>
+Date:   Thu, 31 Mar 2022 15:39:55 -0700
+In-Reply-To: <pull.1190.v2.git.1648752601.gitgitgadget@gmail.com> (Glen Choo
+        via GitGitGadget's message of "Thu, 31 Mar 2022 18:49:57 +0000")
+Message-ID: <xmqq7d89zqys.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: [WIP v1 0/4] mv: fix out-of-cone file/directory move logic
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com, gitster@pobox.com
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7D276D6A-B143-11EC-929A-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan wrote:
-> Before integrating 'mv' with sparse-index, I still find some possibly buggy
-> UX when 'mv' is interacting with 'sparse-checkout'. 
-> 
-> So I kept sparse-index off in order to sort things out without a sparse index.
-> We can proceed to integrate with sparse-index once these changes are solid.
-> 
-> Note that this patch is tentative, and still have known glitches, but it 
-> illustrates a general approach that I intended to harmonize 'mv' 
-> with 'sparse-checkout'.
-> 
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for working out some ways to make 'mv' behave more nicely with sparse
-checkouts! I did my best to address some of the specific implementation
-questions you had in your commit messages. Beyond that, my main points of
-feedback (beyond some formatting nits and implementation questions) are:
+> Thanks for the feedback, all. This version incorporates most of the
+> suggestions (which were pretty small anyway).
+>
+> == Patch organization
+>
+> Patches 1-2 are bugfixes, 3-4 are clean ups.
+>
+> Patch 1 fixes a bug where "git branch --recurse-submodules" would not
+> propagate the "--track" option if its value was "--no-track" or
+> "--track=inherit".
+>
+> Patch 2 fixes a bug where "git branch --recurse-submodules" would give
+> advice before telling the user what the problem is (instead of the other way
+> around).
+>
+> Patch 3 fixes some old inconsistencies when "git branch --set-upstream-to"
+> gives advice and when it doesn't.
+>
+> Patch 4 replaces exit(-1) with exit(1).
+>
+> == Changes
+>
+> Since v1:
+>
+>  * Patch 1: reword the --track comments to be prescriptive
+>  * Patch 3: remove a now-unnecessary die(). I didn't include a suggestion to
+>    inline the advice string to save reviewers the trouble of proofreading
+>    (and the format string has no placeholders anyway, so I don't think we'd
+>    get much benefit out of typechecking). We can inline it in another
+>    series.
 
-* Patch 2 deals with sparse directories, which won't show up until you
-  enable sparse index; since you can't test that yet, you should save the
-  patch for your "sparse index integration" series.
-* Patch 4 should either be moved to the beginning of the series (with the
-  tests flagged with 'test_expect_failure' until the patch that fixes the
-  associated behavior), or split up with the tests associated with a change
-  moved into the patch that makes that change.
-
-And, as always, I'm happy to answer any questions and/or clarify weird
-behavior you encounter while making changes to this (or subsequent) series!
-
-> Shaoxuan Yuan (4):
->   mv: check if out-of-cone file exists in index with SKIP_WORKTREE bit
->   mv: add check_dir_in_index() and solve general dir check issue
->   mv: add advise_to_reapply hint for moving file into cone
->   t7002: add tests for moving out-of-cone file/directory
-> 
->  builtin/mv.c                  | 76 ++++++++++++++++++++++++++++++++---
->  t/t7002-mv-sparse-checkout.sh | 72 +++++++++++++++++++++++++++++++++
->  2 files changed, 142 insertions(+), 6 deletions(-)
-> 
-> 
-> base-commit: 805e0a68082a217f0112db9ee86a022227a9c81b
+Thanks, but sorry that I've already merged the previous round.  Let
+me turn them into incrementals.
 
