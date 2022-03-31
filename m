@@ -2,115 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3095C433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 18:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FD9C433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 18:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233417AbiCaSH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 14:07:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43488 "EHLO
+        id S237080AbiCaSvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 14:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232396AbiCaSHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 14:07:25 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C241F1276
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:05:36 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F21F112ACB;
-        Thu, 31 Mar 2022 14:05:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VZgqgkG3Aim55wRvMMjB+RDJ8yUFOgQIuEcf1e
-        kFvNY=; b=yQXV8fB9aqIHhIlLIvKzSOpTmfLteTtfQqsMSw/Wu//NxJgkYPX9Cq
-        p+qisnl0TNZVd4ZZuJ1V4CemG7A6Xn2LYNsTLE8jjanZylb0l6kIXCnc1wYJIs9e
-        AOhTeSF3YNvhHBD7c/0FHpLZjnPPiveBZkqn/RIYs2KylvngskMo4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 455F3112ACA;
-        Thu, 31 Mar 2022 14:05:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.227.145.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6B23112AC9;
-        Thu, 31 Mar 2022 14:05:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v5 04/14] core.fsyncmethod: batched disk flushes for
- loose-objects
-References: <pull.1134.v4.git.1648514552.gitgitgadget@gmail.com>
-        <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
-        <9e7ae22fa4a2693fe26659f875dd780080c4cfb2.1648616734.git.gitgitgadget@gmail.com>
-        <xmqq4k3f9w9s.fsf@gitster.g>
-        <CANQDOdd-G0VHOKWjWQL75jAJ7Az4izB33HKzayqnk-F-nkHj_A@mail.gmail.com>
-Date:   Thu, 31 Mar 2022 11:05:34 -0700
-In-Reply-To: <CANQDOdd-G0VHOKWjWQL75jAJ7Az4izB33HKzayqnk-F-nkHj_A@mail.gmail.com>
-        (Neeraj Singh's message of "Wed, 30 Mar 2022 23:28:56 -0700")
-Message-ID: <xmqqtube2e1d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230521AbiCaSvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 14:51:52 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98FF416F04D
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:04 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id b19so1000326wrh.11
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 11:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=OLFYzYoiKBRPdPN8Xb15o07QPKHKMLXN1jdk/4tqNBg=;
+        b=CMybaw+mS/lZULlllgcRVQ9RPbuvQEMrCOvFLi41+Xsy4jxwwdDE+IExP2FEXk6KYH
+         ouuK0DYU8jsPmnzIyg2wnZw6mzhAbb/9jOS2gr2COe3fXPJXnTkn9NFLS/f6GLa+d3qk
+         dkBm8dUBpg/+NpX5qSBiOd+O4XJcfROOKflVCBO66eMpLUCXde6qkj8RNTz3Hp8wMV9k
+         CwSMurk2JZS0l3S5wQ6nR/F24jiTtoS7OwPzwozVYYOEUVRcbGGW3TjKrqXXTA5W2niN
+         gx1sCvqaLP1KTXAEI/1qYQqPM2LLbLuBuQ22JFk/gDRnMmO+OD3gTx/AbPV63gIC2oih
+         G9rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=OLFYzYoiKBRPdPN8Xb15o07QPKHKMLXN1jdk/4tqNBg=;
+        b=fyxZ65JyDgYoOc4WtX6NkynxvZk6drEaGZJem+iX7BFVT7EwnRS+0qWHlCvW9IYgrN
+         XwVlFv7LhaD3avu1yzyHlsrL4Y65gYP97RX16H2AWfUM8wlNKEgD/SPOnliYceezUP9b
+         e8xD8jwDE06eooe/pVdW3jfk0UkgWaf6sIH/Bhbem9cSK/MiVuYrE4iDvECqpTMMOCNe
+         gmoD+abaTPkGmayMlH5fysoB5Fjdzp0VNkNh128mPk/T5011AWQDuXDyOWHSc2eoJemd
+         vBtOlFnzFrx/n6/HLGzUX8/BPXgpTy+3dDc1Iv1aiqAd+lFG0tg6XSEROee2BdKV9hOI
+         qmqw==
+X-Gm-Message-State: AOAM533dW591vA/G7gop6zQuPh0m+Lff6y+qz4BDK1m6iXfAIUEmTAHw
+        WmRLV8swaoCWxMUKMxPtNd7vOTb24Og=
+X-Google-Smtp-Source: ABdhPJxnGG+JK7RwJXP3TpyvFm4sMO4lxqa+2f2wCtXEHzKUDW56xEtpGld9p77R0L8Rc4LEBwPUxg==
+X-Received: by 2002:adf:ee06:0:b0:203:d69f:ee6a with SMTP id y6-20020adfee06000000b00203d69fee6amr5156096wrn.376.1648752602763;
+        Thu, 31 Mar 2022 11:50:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w7-20020a1cf607000000b00389a5390180sm62389wmc.25.2022.03.31.11.50.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Mar 2022 11:50:02 -0700 (PDT)
+Message-Id: <pull.1190.v2.git.1648752601.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1190.git.1648584079.gitgitgadget@gmail.com>
+References: <pull.1190.git.1648584079.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 31 Mar 2022 18:49:57 +0000
+Subject: [PATCH v2 0/4] branch --recurse-submodules: Bug fixes and clean ups
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29E9F40E-B11D-11EC-BC8F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Neeraj Singh <nksingh85@gmail.com> writes:
+Thanks for the feedback, all. This version incorporates most of the
+suggestions (which were pretty small anyway).
 
-> To describe the above if it doesn't render correctly, we have a
-> bulleted list where the batch after the * is bolded.  Other instances
-> of single backtick quoted text just appears as plaintext. The
-> descriptive "Currently `batch` mode..." paragraph is under the bullet
-> point and well-indented.
->
-> In HTML the output looks good as well, except that the descriptive
-> paragraph is in monospace for some reason.
+== Patch organization
 
-The "except" part admits that it does not render well, no?
+Patches 1-2 are bugfixes, 3-4 are clean ups.
 
-What happens if you modify the second and subsequent paragraph after
-the "+" continuation in the way suggested?  Does it make it worse,
-or does it make it worse?
+Patch 1 fixes a bug where "git branch --recurse-submodules" would not
+propagate the "--track" option if its value was "--no-track" or
+"--track=inherit".
 
-> Keeping fsync separate from packfile should help the reader see that
-> the two sets of functions access only their respective global state.
-> If we add another optimization strategy (e.g. appendable pack files),
-> it would get its own separate state and functions that are independent
-> of the large-blob packfile and loose-object fsync optimizations.
+Patch 2 fixes a bug where "git branch --recurse-submodules" would give
+advice before telling the user what the problem is (instead of the other way
+around).
 
-OK.
+Patch 3 fixes some old inconsistencies when "git branch --set-upstream-to"
+gives advice and when it doesn't.
 
->> > +void fsync_loose_object_bulk_checkin(int fd, const char *filename)
->> > +{
->> > +     /*
->> > +      * If we have an active ODB transaction, we issue a call that
->> > +      * cleans the filesystem page cache but avoids a hardware flush
->> > +      * command. Later on we will issue a single hardware flush
->> > +      * before as part of do_batch_fsync.
->> > +      */
->> > +     if (!bulk_fsync_objdir ||
->> > +         git_fsync(fd, FSYNC_WRITEOUT_ONLY) < 0) {
->> > +             fsync_or_die(fd, filename);
->> > +     }
->> > +}
->>
->> Ah, if we have successfully created the temporary directory, we
->> don't do full fsync but just writeout-only one, so there is no need
->> for the worry I mentioned in the previous paragraph.  OK.
->
-> There is the possibility that we might create the objdir when calling
-> prepare_loose_object_bulk_checkin but somehow fail to write the object
-> and yet still make it to end_odb_transaction.  In that case, we'd
-> issue an extra dummy fsync.  I don't think this case is worth extra
-> code to track, since it's a single fsync in a weird failure case.
+Patch 4 replaces exit(-1) with exit(1).
 
-Yup.
+== Changes
+
+Since v1:
+
+ * Patch 1: reword the --track comments to be prescriptive
+ * Patch 3: remove a now-unnecessary die(). I didn't include a suggestion to
+   inline the advice string to save reviewers the trouble of proofreading
+   (and the format string has no placeholders anyway, so I don't think we'd
+   get much benefit out of typechecking). We can inline it in another
+   series.
+
+Glen Choo (4):
+  branch: support more tracking modes when recursing
+  branch: give submodule updating advice before exit
+  branch --set-upstream-to: be consistent when advising
+  branch: remove negative exit code
+
+ branch.c                    | 47 +++++++++++++++++++++++++++----------
+ builtin/submodule--helper.c |  7 +++---
+ t/t3207-branch-submodule.sh | 38 +++++++++++++++++++++++++++++-
+ 3 files changed, 76 insertions(+), 16 deletions(-)
+
+
+base-commit: abf474a5dd901f28013c52155411a48fd4c09922
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1190%2Fchooglen%2Fbranch%2Frecursive-fixes-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1190/chooglen/branch/recursive-fixes-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1190
+
+Range-diff vs v1:
+
+ 1:  0b682c173c8 ! 1:  5e96a09199f branch: support more tracking modes when recursing
+     @@ branch.c: static int submodule_create_branch(struct repository *r,
+      +		strvec_push(&child.args, "--track=inherit");
+      +		break;
+      +	case BRANCH_TRACK_UNSPECIFIED:
+     -+		/* Default for "git checkout". No need to pass --track. */
+     ++		/* Default for "git checkout". Do not pass --track. */
+      +	case BRANCH_TRACK_REMOTE:
+     -+		/* Default for "git branch". No need to pass --track. */
+     ++		/* Default for "git branch". Do not pass --track. */
+      +		break;
+      +	}
+       
+ 2:  f21d283e5ad = 2:  74b839bfc4e branch: give submodule updating advice before exit
+ 3:  8e6ea3478b3 ! 3:  64d9b8e0f44 branch --set-upstream-to: be consistent when advising
+     @@ Commit message
+      
+          [1] https://lore.kernel.org/git/211210.86ee6ldwlc.gmgdl@evledraar.gmail.com
+      
+     +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Glen Choo <chooglen@google.com>
+      
+       ## branch.c ##
+      @@ branch.c: static void dwim_branch_start(struct repository *r, const char *start_name,
+     + 	real_ref = NULL;
+       	if (get_oid_mb(start_name, &oid)) {
+       		if (explicit_tracking) {
+     - 			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+     +-			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+      -				error(_(upstream_missing), start_name);
+     -+				int code = die_message(_(upstream_missing),
+     -+						       start_name);
+     - 				advise(_(upstream_advice));
+     +-				advise(_(upstream_advice));
+      -				exit(1);
+     -+				exit(code);
+     - 			}
+     - 			die(_(upstream_missing), start_name);
+     +-			}
+     +-			die(_(upstream_missing), start_name);
+     ++			int code = die_message(_(upstream_missing), start_name);
+     ++			advise_if_enabled(ADVICE_SET_UPSTREAM_FAILURE,
+     ++					  _(upstream_advice));
+     ++			exit(code);
+       		}
+     + 		die(_("not a valid object name: '%s'"), start_name);
+     + 	}
+ 4:  fb2b472d9ae = 4:  306858373cc branch: remove negative exit code
+
+-- 
+gitgitgadget
