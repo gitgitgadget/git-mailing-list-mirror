@@ -2,122 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF36CC433F5
-	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 21:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1987DC433F5
+	for <git@archiver.kernel.org>; Thu, 31 Mar 2022 21:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234908AbiCaVVN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Mar 2022 17:21:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
+        id S235456AbiCaV35 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Mar 2022 17:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233592AbiCaVVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Mar 2022 17:21:11 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241FB3FBE9
-        for <git@vger.kernel.org>; Thu, 31 Mar 2022 14:19:24 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 23D455A107;
-        Thu, 31 Mar 2022 21:19:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1648761563;
-        bh=GWlWbfZ7P1d+oswJTiDxLmVB1/tg9IXP3wfjJEzyDFs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=WCVAq5orcIQkOcuFtPAm+DaFDd7851ZbglicPdbPM3C+s0d609UjY+uQ7t4x4Cfbp
-         6Yf70yXFs1MSmwrEJmzSCigRH+gCCLQpkDxnLoW+0wfLVK7/P7nIiGZl0dO8L36Jbg
-         BeibXGhxwKDI7hXHi5Rbbjpt4++ZR7r0sI+28bwqOYj7CCQYEWflidgXid6lp7Rqgo
-         Dh9D9U8mVQsGjPEtQu3E7WJx+/hD+8R+2jGpyDWOjPBU4ekpdRPq1KvEmV5AzoyjnB
-         qMaTB/TOw71bNdK+PF02eBUVwiOOKxWJC+jKMTkU3yLRoOcn0cIQ2MUOD9OVjFPsSM
-         hDxFzGJw7hQV458geMS+mWC0Zja3OJjTtLjUP1jeXdUk3Vq1+F7kq7UqUBhRPdW5A+
-         s3zdyRuFa99gCFQPj3AN4o7FGc9EHXURjU5N7ua43FPqBL99QVHMBR8qTsi3G9CyjV
-         ktZeKj4CSj5FFcyclVPHzDROyeLVVuBK1lUqwfSbS18xaIbIzgy
-Date:   Thu, 31 Mar 2022 21:19:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: give deadline for "for (int i = 0; ..."
-Message-ID: <YkYa2NyA6IwIqZ4C@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-References: <xmqqy20r3rv7.fsf@gitster.g>
- <220331.86v8vuqv95.gmgdl@evledraar.gmail.com>
- <xmqqo81l286e.fsf@gitster.g>
+        with ESMTP id S230493AbiCaV3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Mar 2022 17:29:54 -0400
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915DF23F392
+        for <git@vger.kernel.org>; Thu, 31 Mar 2022 14:28:02 -0700 (PDT)
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=F1iPfP6e6TuTOmpVLmMPlEThesXrgKpMIbWpF97lhYF2BmTsJDZoDKekaOxWWXw0ElHchYURP69AIubsYjJveuMysMvURXwE4aZoduwuDxhK01UfgmY0MUcilsDIFxw8WdJPZBlgdrQGch73AAmMsELwiNm3QwKKqeuoG1WaOgSZguZJefSCUmbOF4l1PZMKhqIc+uCRIDZ6zTtek4OLj9Q7uMGTbezGRq3JLTTY6cPlmvQnCVNoCXX9gCryClFDk9Gs+Br433A87ygZd8ySKG1qsQ4Z0RHGYJlp/Lq0VvxaqWNk7xf2HWYA4fqQn50ncoRp96i8HHBjEf0OMZ9m4g==; s=purelymail1; d=slashdev.space; v=1; bh=yj82khhUOH142BUYF3JMt4Nn+ZRT3h0NCuTYesWQ95c=; h=Received:From:To;
+DKIM-Signature: a=rsa-sha256; b=E1wEEjFILQtlnVL1LvBRdbIjutsXvB59LXoHufb8tI85sf2e6m/ampBHNRu5wGQid9EzeJBJzvvwUHrwCCR5semkFmdDIMDQPq5UTBZiRhtV4MEpwB0MJBBMLWMFTVS0Lv24pWyAPxzTQ8apPvyWbYwD0rxFsj91Nk1/PkG1o1LFS57t/Ra9eFCE9VYAq3ctU/gkmkEqw3x2TIighQmtPyXrrzCzrsMKYQjFXrxfHBcrLUWpeuPY92t/FRctL+EeRlYSwLiEOufM8lNJfVfGh0j+ePS7ayuGGOLTwlxq/LoyvHmh8JXvXsG4nd/4uKVssEvkklGo4wnjkbSMnOlTcw==; s=purelymail1; d=purelymail.com; v=1; bh=yj82khhUOH142BUYF3JMt4Nn+ZRT3h0NCuTYesWQ95c=; h=Feedback-ID:Received:From:To;
+Feedback-ID: 6471:1573:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 2089722214;
+          (version=TLSv1.2 cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384);
+          Thu, 31 Mar 2022 21:27:54 +0000 (UTC)
+From:   Garrit Franke <garrit@slashdev.space>
+To:     git@vger.kernel.org
+Cc:     Garrit Franke <garrit@slashdev.space>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] cli: add -v and -h shorthands
+Date:   Thu, 31 Mar 2022 23:27:09 +0200
+Message-Id: <20220331212709.36036-1-garrit@slashdev.space>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220330190956.21447-1-garrit@slashdev.space>
+References: <20220330190956.21447-1-garrit@slashdev.space>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nIUtN0WH8ABgMvgP"
-Content-Disposition: inline
-In-Reply-To: <xmqqo81l286e.fsf@gitster.g>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change the behavior of "git -v" to be synonymous with "--version" /
+"version", and "git -h" to be synonymous with "--help", but not "help".
 
---nIUtN0WH8ABgMvgP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+These shorthands both display the "unknown option" message. Following
+this change, "-v" displays the version, and "-h" displays the help text
+of the "git" command.
 
-On 2022-03-31 at 20:12:09, Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+It should be noted that the "-v" shorthand could be misinterpreted by
+the user to mean "verbose" instead of "version", since some sub-commands
+make use of it in this context. The top-level "git" command does not
+have a "verbose" flag, so it's safe to introduce this shorthand
+unambiguously.
+
+Signed-off-by: Garrit Franke <garrit@slashdev.space>
+---
+On 31.03.22 22:07, Junio C Hamano wrote:
+>> Not that I'm a fan of this clutter, but it's a possible path to go
+>> down if we actually needed a second shorthand using this letter.
 >=20
-> >> A separate weather balloon for C99 as a whole was raised separately
-> >> in 7bc341e2 (git-compat-util: add a test balloon for C99 support,
-> >> 2021-12-01).  Hopefully, as we find out that all C99 features are OK
-> >> on all platforms we care about, we can stop probing the features we
-> >> want one-by-one like this
-> >
-> > Unfortunately this really isn't the case at all, the norm is for
-> > compilers to advertise that they support verison X of the standard via
-> > these macros when they consider the support "good enough", but while
-> > there's still a long list of unimplemented features before they're at
-> > 100% support (and most never fully get to 100%).
-> >
-> > We also need to worry about the stdlib implementation, and not just the
-> > compiler, see e.g. the %zu format and MinGW in the exchange at
-> > https://lore.kernel.org/git/220318.86bky3cr8j.gmgdl@evledraar.gmail.com/
-> > and
-> > https://lore.kernel.org/git/a67e0fd8-4a14-16c9-9b57-3430440ef93c@gmail.=
-com/;
-> >
-> > But I think we're thoroughly past needing to worry about basic language
-> > features in C99 such as these inline variable declarations.
+> Do you mean you want to use "-V" for version, instead of the "-v"
+> used in the patch, so that "-v" can be left for "--verbose"?
 >=20
-> Well, that makes it sound like the C99 weather balloon was almost
-> useless, doesn't it?
+> I am not sure consistency with whom we are aiming for anymore with
+> that mixed to the proposal X-<.
 
-I think if we were talking about C17, maybe.  But as I said in my commit
-message, C99 is over two decades old and required for the POSIX version
-which came out in 2001.  I'm aware of only two platforms we care about
-that don't support that POSIX version, which are NonStop and Windows.
+I think I put this in a wrong way. I don't advocate for curls UI and
+don't think we should mimic it here. It's just a thing to consider if we
+ever find ourselves in this situation. Using the lowercase "-v" for
+"version" as proposed by this patch makes the most sense IMO. If we ever
+need a shorthand for "verbose", "-V" could be the way to go.
 
-I think the likelihood of this being a problem is very low.  And I think
-we can justifiably expect that major syntactic functionality is
-available when the define is set accordingly.  I am also willing to
-simply tell people that a compiler that includes the define and doesn't
-include the requisite features is buggy and ask them to use a modern
-version of GCC or clang.  But, ultimately, given we're talking about
-C99, this is extremely unlikely to ever be a problem in 2022.
+>      (Side note) A tip for reviewers.  Be suspicious of any change
+>      that adds new things _in front_ of existing sequence.  Question
+>      if there is a good justification for it.  If there isn't, see if
+>      it makes it better if you instead append the new stuff to
+>      existing sequence.  If neither results in satisfying code,
+>      perhaps it is good time to totally rewrite it to make both
+>      existing and new stuff fit in the flow.
+
+This is great advice, not just for reviewers. Thanks for taking the time
+to write this.
+
+> We may want to be a bit more explicit and readable, by spelling out
+> the expectation, i.e.
+>=20
+> =09=09if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
+> =09=09=09argv[0] =3D "version";
+> =09=09else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
+> =09=09=09argv[0] =3D "help";
+>=20
+> This makes it clear that these two pseudo-commands, spelled with a
+> dash in front and stand for other commands, are the only thing we
+> care about and what their accepted spelling are.
+
+Nice and precise. I incorporated this into v3.
+
+ Documentation/git.txt |  4 +++-
+ git.c                 | 11 +++++++----
+ t/t0012-help.sh       |  2 +-
+ 3 files changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 13f83a2a3a..302607a496 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -9,7 +9,7 @@ git - the stupid content tracker
+ SYNOPSIS
+ --------
+ [verse]
+-'git' [--version] [--help] [-C <path>] [-c <name>=3D<value>]
++'git' [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<value>]
+     [--exec-path[=3D<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+     [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=3D<name>]
+@@ -39,6 +39,7 @@ or https://git-scm.com/docs.
+=20
+ OPTIONS
+ -------
++-v::
+ --version::
+ =09Prints the Git suite version that the 'git' program came from.
+ +
+@@ -46,6 +47,7 @@ This option is internally converted to `git version ...` =
+and accepts
+ the same options as the linkgit:git-version[1] command. If `--help` is
+ also given, it takes precedence over `--version`.
+=20
++-h::
+ --help::
+ =09Prints the synopsis and a list of the most commonly used
+ =09commands. If the option `--all` or `-a` is given then all
+diff --git a/git.c b/git.c
+index a25940d72e..e2aeb57a35 100644
+--- a/git.c
++++ b/git.c
+@@ -25,7 +25,7 @@ struct cmd_struct {
+ };
+=20
+ const char git_usage_string[] =3D
+-=09N_("git [--version] [--help] [-C <path>] [-c <name>=3D<value>]\n"
++=09N_("git [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<value>=
+]\n"
+ =09   "           [--exec-path[=3D<path>]] [--html-path] [--man-path] [--i=
+nfo-path]\n"
+ =09   "           [-p | --paginate | -P | --no-pager] [--no-replace-object=
+s] [--bare]\n"
+ =09   "           [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=
+=3D<name>]\n"
+@@ -146,7 +146,8 @@ static int handle_options(const char ***argv, int *argc=
+, int *envchanged)
+ =09=09 * commands can be written with "--" prepended
+ =09=09 * to make them look like flags.
+ =09=09 */
+-=09=09if (!strcmp(cmd, "--help") || !strcmp(cmd, "--version"))
++=09=09if (!strcmp(cmd, "--help") || !strcmp(cmd, "--version") ||
++=09=09    !strcmp(cmd, "-h") || !strcmp(cmd, "-v"))
+ =09=09=09break;
+=20
+ =09=09/*
+@@ -892,8 +893,10 @@ int cmd_main(int argc, const char **argv)
+ =09argc--;
+ =09handle_options(&argv, &argc, NULL);
+ =09if (argc > 0) {
+-=09=09/* translate --help and --version into commands */
+-=09=09skip_prefix(argv[0], "--", &argv[0]);
++=09=09if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
++=09=09=09argv[0] =3D "version";
++=09=09else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
++=09=09=09argv[0] =3D "help";=20
+ =09} else {
+ =09=09/* The user didn't specify a command; give them help */
+ =09=09commit_pager_choice();
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 6c3e1f7159..6c33a43690 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -181,7 +181,7 @@ for cmd in git "git help"
+ do
+ =09test_expect_success "'$cmd' section spacing" '
+ =09=09test_section_spacing_trailer git help <<-\EOF &&
+-=09=09usage: git [--version] [--help] [-C <path>] [-c <name>=3D<value>]
++=09=09usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<=
+value>]
+=20
+ =09=09These are common Git commands used in various situations:
+=20
 --=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+2.35.1
 
---nIUtN0WH8ABgMvgP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYkYa1wAKCRB8DEliiIei
-gXG2AQCiiQ83Rzvn1IdLSg+oKbkv+bqHwmzuMzz/FwC68EEAUAEAjBv/WF8z99sU
-ZEc4VwirovR6wZBgrxz3SzFRhokGoQI=
-=pixM
------END PGP SIGNATURE-----
-
---nIUtN0WH8ABgMvgP--
