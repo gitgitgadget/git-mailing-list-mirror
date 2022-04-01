@@ -2,153 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8833C433F5
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 10:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D41D7C433FE
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 10:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345188AbiDAKtu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 06:49:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53614 "EHLO
+        id S1345233AbiDAKyI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 06:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345182AbiDAKtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 06:49:47 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF029269A7E
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 03:47:57 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id yy13so5036559ejb.2
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 03:47:57 -0700 (PDT)
+        with ESMTP id S1345440AbiDAKx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 06:53:56 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D0960DA7
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 03:52:07 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id gb19so2103205pjb.1
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 03:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ZFSOJt0h5wTqlK9v08Oz7HA2GPHTwqhVCx68hN4mE5k=;
-        b=SThFbWfrFRVnMcybab2moZdN6tQTDdYRRd0LYzp+f7q4Y2KZPJmNogeJWVzCsWCiwF
-         +mQmWi46luzStEbYO3qKKwMLKDffu5VkOpXS/UxuFSSrvxBg8DhmfCfKrgRnRT8xFZ/p
-         zQNZbi1IIyQtJFipwDjazTs45rV33l1vavQf5+RMGua52nq+nMfxs4EK60pzBfQwBvai
-         Sd/tANPtwGlR3hftQjDSQggnTWSgNGzfw8n6tiEJraMDJ+8YczmeYN0V1/B22IJmi7li
-         TxrdjhZ2bblLMLWix3u9ltSZy/6jacEEPx+PhWXjkBhayYTFTVOMVj114YrbOfiMIEfj
-         cN5w==
+        d=coup.net.nz; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jC52LNWQ8AVPKNfpPAPkH/GzTpjjTdrh++5uLd18IuA=;
+        b=fEWm7Z4QmAWW6qiyENU7K7tGvFQNnU9N4uZduK1ygU2+qVsL8+5qADIt0eiKbEAV7Y
+         2coYQ6y1ltlK+CGbN0ev3fRWoBV+gY5Jo79TbZ29xmxLqkN4DjHIAf6jTEFdJCkZUCqM
+         8Ol+nPVYTqCXy1bCVZgehu52ObgJsr59YZBSc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ZFSOJt0h5wTqlK9v08Oz7HA2GPHTwqhVCx68hN4mE5k=;
-        b=dM/FnmeU3dOL8P64XJkZIrJF7gr63EIz6ly2t8shKF0FLszrpEQZd+VlE3YAjEGRsb
-         KEy8ZPluQRqllViZgKZvLjQRueH3s9ZUlyXISxLi5TqQ8TG0zl6BVfRD1swQFNhZgnq+
-         Fhu7qxHt1G0TY3ula/tpDrM6Qhe3jA/Fz8doQjEyOER9zYEooNWp4BeOexFmD+Sh4YfK
-         0NucizsagJpk+jPdgEK3PQCCXKj+tNnxbjTIZYEwNVfxj9NtBB0MWWwBo3WDyEM91ub0
-         g2qLbpeBF27imqHtvqlhFillnSSIG97fOAfFp1jX8B7SQInI9a6x/9FZ5zRM7pxLA6HX
-         66LQ==
-X-Gm-Message-State: AOAM532TZxOVIbX3h+w5f/YhIV87TYPk+YgwGbdyVcYSEDGzgPPAUNd3
-        Nv4PJKL6jPsB2JtEG2ralRA=
-X-Google-Smtp-Source: ABdhPJxQaeG5bPlU2fLAWOSmxzEuTPIKicR/LhAR4Yap9ko3C6z4bk/6Zjqav2JOmVQOTy8jculLSA==
-X-Received: by 2002:a17:907:1c20:b0:6e4:b753:93fc with SMTP id nc32-20020a1709071c2000b006e4b75393fcmr5185496ejc.363.1648810076371;
-        Fri, 01 Apr 2022 03:47:56 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b12-20020a056402278c00b004195a50759fsm1036031ede.84.2022.04.01.03.47.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 03:47:55 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1naEot-0012JQ-8K;
-        Fri, 01 Apr 2022 12:47:55 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 09/27] revisions API users: use release_revisions()
- needing REV_INFO_INIT
-Date:   Fri, 01 Apr 2022 12:31:07 +0200
-References: <cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com>
-        <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
-        <patch-v4-09.27-2f4e65fb534-20220331T005325Z-avarab@gmail.com>
-        <xmqq1qyh25a5.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq1qyh25a5.fsf@gitster.g>
-Message-ID: <220401.86h77dnkpw.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jC52LNWQ8AVPKNfpPAPkH/GzTpjjTdrh++5uLd18IuA=;
+        b=WFiB4ewFQZhvF8bRXjEXKBtwvMXWDvNH9uuqm/iRVTpM9+MtIo+OOiuq8U+M4HF8T9
+         fjOroYGQydoSs7ZpmETmKpXYma1QOT9VYXN/53/T3nTCBUWaQ3JP0t/5SoEfUsDGM/f9
+         mxldA5hrCF1ti5qlUQqT/jEjs0WlX/+5qAdmVkwg+/hizp/No6qZoE17cg2NMfcWPxdB
+         0EN6tq7mxxyQQKbn6RHjOw/m8Xb3DJ8xHuYYohHmvLBxxTq4543x8YGPJZYtXy28Ku1z
+         F8oH5e9nPOvcYF/rETRn9VpFuPKDBI8vwgz/e0p9gQ6CtlPrEXo3hKaFpEPT60F58IPo
+         DMoA==
+X-Gm-Message-State: AOAM533uL3jiz61g7V/cFsF0jnSAnXdhNANvl9Ef56LUVP1sFjZ8shOD
+        gP11spSGp1xQ5qI6CKMQvqkZAXOpLSPUOwMwwemiEIuJ/cki3f2zwZ4=
+X-Google-Smtp-Source: ABdhPJz9I4N52EATV4kzjTP6voqmuKVaJopPoj4V/Iklpq2WkamQAYB+322h3xrWwvC00F/2G3rI9Og5vg/lQsE7SLM=
+X-Received: by 2002:a17:90b:4c09:b0:1c6:f64a:dd0 with SMTP id
+ na9-20020a17090b4c0900b001c6f64a0dd0mr11187346pjb.45.1648810327229; Fri, 01
+ Apr 2022 03:52:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
+ <pull.1138.v4.git.1648476131.gitgitgadget@gmail.com> <28c07219fd830196af1171320b86bc2a58ba3d79.1648476132.git.gitgitgadget@gmail.com>
+ <220331.86bkxmp25k.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220331.86bkxmp25k.gmgdl@evledraar.gmail.com>
+From:   Robert Coup <robert@coup.net.nz>
+Date:   Fri, 1 Apr 2022 11:51:56 +0100
+Message-ID: <CACf-nVeTMx8y+8HzQbaTjHq06Ldon+JV+rp0yzhP_RC=6La2gg@mail.gmail.com>
+Subject: Re: [PATCH v4 6/7] fetch: after refetch, encourage auto gc repacking
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        John Cai <johncai86@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi =C3=86var,
 
-On Thu, Mar 31 2022, Junio C Hamano wrote:
+On Thu, 31 Mar 2022 at 16:33, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> > +                     if (git_config_get_int("gc.autopacklimit", &opt_v=
+al))
+> > +                             opt_val =3D -1;
+> > +                     if (opt_val !=3D 0)
 >
->> Use release_revisions() to various users of "struct rev_list" which
->> need to have their "struct rev_info" zero-initialized before we can
->> start using it.
->>
->> To do this add a stub "REV_INFO_INIT" macro, ideally macro would be
->> able to fully initialize a "struct rev_info", but all it does is the
->> equivalent of assigning "{ 0 }" to the struct, the API user will still
->> need to use repo_init_revisions(). In some future follow-up work we'll
->> hopefully make REV_INFO_INIT be a "stand-alone" init likke STRBUF_INIT
->> and other similar macros.
+> nit: don't compare against 0 or null,  just !opt_val
+
+I did this since 0 has a specific meaning ("Setting this to 0
+disables"), it's not just false-y in this context. Tomayto, tomahto?
+
 >
-> I do not think we want to leave such a misleading paragraph to
-> future developers.
+> Isn't this whole thing also clearer as:
 >
-> Yes, We may want to move some of what init_revisions() does to
-> REV_INFO_INIT(), and for that, it helps to start using greppable
-> string REV_INFO_INT early rather than { 0 } to ease such transition,
-> and that is what we should be stressing, instead of ranting "it does
-> not do anything, so why are we stupidly introducing a name, instead
-> of writing { 0 }, which is what amounts to it anyway?" without
-> explicitly saying so but hinting with words like "stub", "all it
-> does is", and "will still need to".
+>         int &forget;
 >
-> Is that some kind of passive-aggressive thing?
+>         if (git_conf...(..., &forget))
+>                 git_config_push_parameter("gc.autoPackLimit=3D1");
+>
+> Maybe I haven't eyeballed this enough, but aren't you ignoring explicit
+> gc.autoPackLimit=3D0 configuration? Whereas what you seem to want is "set
+> this config unlress the user has it set", for which we only need to
+> check the git_config...(...) return value, no?
 
-No, I'm not trying to be a dick. I'm just confused, sorry :)
+What I'm trying to achieve: if the user has not disabled auto-packing
+(autoPackLimit=3D0), then pass autoPackLimit=3D1 to the subprocess to
+encourage repacking.
+Context/why: so we don't 2x the object store size and not even attempt
+to repack it now, rather than at some unspecified point in the future.
+Maybe.
 
-I.e. I didn't grok what you really wanted from that REV_INFO_INIT
-pattern in the beginning, and I largely draft my commit messages as a
-way to adequately explain things to myself.
+How the code achieves it:
+  load autoPackLimit into opt_val
+  if autoPackLimit is not specified in config: set opt_val to -1
+  if opt_val is not 0: pass autoPackLimit=3D1 to the subprocess
 
-The "stub" and "not sufficient (yet!)" part of the docs is a (probably
-too leaky) artifact of having (after the whole thread about
-REV_INFO_INIT started) gotten that mostly working as a "real"
-initializer.
+AFAICT if we just if(git_config_get_int()) then if they haven't set it
+at all in config, we wouldn't encourage repacking in the subprocess.
+Which isn't what I'm trying to achieve.
 
-Which I figured I'd submit at some point after this lands. The grep.c
-case was quite tricky, but the rest look pretty easy, I just didn't
-finish them.
+> hrm, do we really need to set both of these these days (not saying we
+> don't, just surprised). I.e. both gc.* an maintenance.* config.
+>
+> *skims the code*
+>
+> Urgh, yes? too_many_packs() seems to check gc.* only, but
+> incremental_repack_auto_condition() check this variable... :(
 
-I can re-roll & omit this entirely from the commit message, and the
-API docs.
+Yes.
 
-I just thought, and still think, that it's worth drawing the API user's
-attention to the fact that unlike most stand-alone *_INIT macros this
-one isn't sufficient to be up & running with a "struct rev_info".
+>
+> > +test_expect_success 'fetch --refetch triggers repacking' '
+> > +     GIT_TRACE2_CONFIG_PARAMS=3Dgc.autoPackLimit,maintenance.increment=
+al-repack.auto &&
+>
+> Nit: Can we use GIT_CONFIG_KEY_* et al for this these days, or do we
+> still need this trace2 thingy?
 
-Which isn't the case with {STRBUF,STRVEC}_INIT, CHILD_PROCESS_INIT,
-STRING_LIST_INIT_* etc. etc., i.e. if you've used any of these:
+I copied a pattern existing tests are using.
 
-    git grep -h -o '\S+_INIT;' | sort | uniq -c | sort -nr
-
-You're likely to expect them to "flow" a certain way when it comes to
-initializing the struct on the stack, but this one will be a bit of an
-odd case while repo_init_revisions() is still required, which seems to
-me to be worth explaining.
-
-But not enough to argue about it, so whatever you'd prefer...
-
-> You cannot use get_revision() even after calling init_revisions(),
-> and still need to use setup_revisions() before hand, but that does
-> not mean init_revisions() is not doing its job.  It may be
-> implemented as the zero-initialization right now, but it misses the
-> point to put a stress on the fact that it doesn't do much now.
-
-I don't think it's broken, having gotten most of the way towards
-rewriting it to be macro-init'd there are some tricky edge cases where
-we might always need to call a function to fully initialize it.
-
-But per the above I thought it made sense to explain that this
-particular *_INIT is a bit of an odd case if you've gotten used to other
-such macros.
+Thanks, Rob.
