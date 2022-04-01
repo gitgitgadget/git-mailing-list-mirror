@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3E4C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 16:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB345C4332F
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 16:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348512AbiDAQEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 12:04:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33786 "EHLO
+        id S1348800AbiDAQLi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 12:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351947AbiDAQCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 12:02:00 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 063035AA56
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 08:29:45 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id b19so4746433wrh.11
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 08:29:45 -0700 (PDT)
+        with ESMTP id S1350065AbiDAQJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 12:09:14 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3794760DC
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 08:33:26 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id r13so4760230wrr.9
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 08:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=R6AlyPGNhskBrz8NQ7TGSMSIHV+6VLkWZpkD9W89tB4=;
-        b=NHq28yHB0a7rMWohGqFfgzF0sJjc+AONLQE7KIclffr0fxjG9QMpXE8SChMq3IPF0R
-         UmfLQTt6HPb0pWcfFuXQQHreGM5WinBxtKzcpSWYEa1D6mAXumUdmU44DEj2KUuF4A2a
-         HsWGy9zF6fK7jVJg2x0HEuS/69s1Ncp4I4O1qCuZq1i7jQTxud5bKqDOQskMKyYNg8Mw
-         RrQqjKmOgGLMGO2iInOw+ZZABbicbz6eCVpY022Y+ZPGr+oSq5QeiF1NLVzHvK7YjDlg
-         Wbduu2X2+QrL2lCXERF1uLTVmHurGpv0e9e9lbV9Z1gRgU0qVOWWxlHHdY7CVu6fyVvT
-         Qnsg==
+        bh=nM4VQ3XKMzprsooerfpU6opL16VeubydfDQ8TSlQQUA=;
+        b=VFALoHeX5L0u/ziOb1TvrJOLiW49ZhL/8l3+Ro/g/T7l8aCf59b43qDNnV69hQIUz4
+         AOosPvXKCgxafEHfOixdVNv8t+19j++m5maZDJHOO0s6Grjohv9FGV/vB2kIv6UldD4S
+         N4d5Pa3Rw6V2N8yTYKy1j/nOHtI/XQX+GE2UATZmWsIYBKegR+eVAzssXzJ86YtYMIkF
+         HnDpiEMCzQO8qnQJUWlaa6+SVhb5kapBMdlNWW2r4+AGExlMdavmnmzoxurnY6oUQgME
+         BACaP3eJ7T+dmEqbw/6ZbxjPjf7wv00iUA5NWrbjtfjVbqupcdYFFFWcdqG005RSHMyy
+         xvrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=R6AlyPGNhskBrz8NQ7TGSMSIHV+6VLkWZpkD9W89tB4=;
-        b=h6kYc7T9YBdgvaZjyq+l35/m8fZmS6MucqpEaue8khATNGa4qtwN3SWmf3aAUpL7CU
-         Dq4Gj0tNl+pCMcut71f/azAruPXcP5rU5y5OQ9uhY8tH91O7GIprCpxaj3Cv3a0bJx1U
-         ujsGkhTX2eF6HLHpHClP9Lp2b/IxNksluxAcMJet5fK2XX1Y+p5lrw617edN+E5k9dAz
-         8uTgXlzHe5C4N2h12jg3Ry5WFeOGQaH+83aZ+jPjKqpzhM3qonsC0imbi9EUASG5Nd7X
-         cOsEnoftytio2qKm8Sm/ylMKDe+THOOChEHO0ZOUcyhZjxIOycGDlluYAco/Fm3SmZjX
-         lXQQ==
-X-Gm-Message-State: AOAM5314jyjgfMZFAldWcznnrOcb1uimYkddOdE97ysSYi1p43PMa1Wv
-        cWS6wUVGZ7NB2u9bWiQI+rw=
-X-Google-Smtp-Source: ABdhPJwIKtsIS/isOiaNn9KJuGpSJtXywLIUbLfL4ycsomQJzwIpHyKuzudal+WovRia6KbGUfu3OQ==
-X-Received: by 2002:adf:82b2:0:b0:203:f34d:dff with SMTP id 47-20020adf82b2000000b00203f34d0dffmr8061199wrc.661.1648826984432;
-        Fri, 01 Apr 2022 08:29:44 -0700 (PDT)
+        bh=nM4VQ3XKMzprsooerfpU6opL16VeubydfDQ8TSlQQUA=;
+        b=KQBwl2Y/8/UD3q+BuY1JvySKI8vfPxSDRkWk23TrgC6PKX0YILT+gCRtkBdDqTM6mK
+         m+Q95RrXJtAKIe2CLSOXrFHnQZ8fLxMAkBhW9nD3KHasjc2GbRoQ2rZgzscncQkLXO5H
+         mADH/n4XTCFlrMvWOP78oTJ05sNqxwFARK2OnNYO5g/6XHBfQWhVE1RwUQMn24ZG7uKU
+         c+S7v4YzNdfqIqDfR1q8wEH8DDxHunQIeaEMqCC7JqlfTa2sQ+PT6KaALT24qO/5KAHr
+         RWRmiPIF749xPeLQwgf8Wy7owMGEndm1KqBsnTr/E0vA9mvO+Ggoji+lA2KM9Xa6k1xv
+         ocKw==
+X-Gm-Message-State: AOAM5335nW2NRwhCCHtSTUU3f0fftaip0csSJMKyoj7ZcMr5EYNm6Kny
+        4Bu7RcnZtUXO9eUh+4kEVod1GD/cKLI=
+X-Google-Smtp-Source: ABdhPJzUHmPo3Z6kptHlHd/DUXVtaPutl6EeKJPiv3cxUKzcHOlQEMNt9Saw6p6qg+AzPuiaI3GapQ==
+X-Received: by 2002:adf:e604:0:b0:203:d866:f741 with SMTP id p4-20020adfe604000000b00203d866f741mr8061486wrm.391.1648827205279;
+        Fri, 01 Apr 2022 08:33:25 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.224])
-        by smtp.gmail.com with ESMTPSA id w17-20020a5d4051000000b00205a8bb9c18sm2261842wrp.67.2022.04.01.08.29.43
+        by smtp.gmail.com with ESMTPSA id f9-20020a05600c4e8900b0038cc29bb0e1sm12542287wmq.4.2022.04.01.08.33.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Apr 2022 08:29:43 -0700 (PDT)
-Message-ID: <9a487124-ef1e-0644-9585-174343555914@gmail.com>
-Date:   Fri, 1 Apr 2022 16:29:40 +0100
+        Fri, 01 Apr 2022 08:33:24 -0700 (PDT)
+Message-ID: <3b08ab38-0d91-a361-544c-c3af68715e79@gmail.com>
+Date:   Fri, 1 Apr 2022 16:33:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
@@ -76,6 +76,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
 Hi Ævar
 
 On 31/03/2022 02:11, Ævar Arnfjörð Bjarmason wrote:
@@ -99,57 +100,14 @@ On 31/03/2022 02:11, Ævar Arnfjörð Bjarmason wrote:
 > initialize "int ret = -1" at the start of the relevant functions. That
 > would allow us to drop a lot of needless brace verbosity on two-line
 > "if" statements, but let's leave that alone for now.
-
-You seem to have made this change here.
-
->[...]
-> @@ -861,10 +863,8 @@ static int show_stash(int argc, const char **argv, const char *prefix)
->   			strvec_push(&revision_args, argv[i]);
->   	}
->   
-> -	ret = get_stash_info(&info, stash_args.nr, stash_args.v);
-> -	strvec_clear(&stash_args);
-> -	if (ret)
-> -		return -1;
-> +	if (get_stash_info(&info, stash_args.nr, stash_args.v))
-> +		goto cleanup;
->   
->   	/*
->   	 * The config settings are applied only if there are not passed
-> @@ -878,8 +878,8 @@ static int show_stash(int argc, const char **argv, const char *prefix)
->   			rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
->   
->   		if (!show_stat && !show_patch) {
-> -			free_stash_info(&info);
-> -			return 0;
-> +			ret = 0;
-> +			goto cleanup;
->   		}
->   	}
->   
+>[...]   
 > @@ -912,8 +912,11 @@ static int show_stash(int argc, const char **argv, const char *prefix)
 >   	}
 >   	log_tree_diff_flush(&rev);
 >   
 > +	ret = diff_result_code(&rev.diffopt, 0);;
-> +cleanup:
-> +	strvec_clear(&stash_args);
 
-This seems to be fixing a leak that's not mentioned in the commit message.
-
->   	free_stash_info(&info);
-> -	return diff_result_code(&rev.diffopt, 0);
-> +	return ret;
->   }
->[...]
-> @@ -1434,7 +1438,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->   			 int keep_index, int patch_mode, int include_untracked, int only_staged)
->   {
->   	int ret = 0;
-> -	struct stash_info info;
-> +	struct stash_info info = STASH_INFO_INIT;
-
-There doesn't seem to be a call to free_stash_info() in this function.
+Extra ';'
 
 Best Wishes
 
