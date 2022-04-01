@@ -2,258 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5953C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 12:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75BB9C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 13:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345978AbiDAMvP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 08:51:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52468 "EHLO
+        id S237269AbiDAOBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 10:01:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345974AbiDAMvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 08:51:14 -0400
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712843D1D1
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 05:49:24 -0700 (PDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-de3eda6b5dso2625372fac.0
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 05:49:24 -0700 (PDT)
+        with ESMTP id S1346613AbiDAOBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 10:01:02 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 423AB5C641
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 06:59:13 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id h1so3094819edj.1
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 06:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iiKhhd4+AC9ihhpaWY9r89fh/tdEcqK6HSnAuBHyFZU=;
-        b=RDCUtoF+UxHaASdH2ENIgGL9wV1WulgyDRkT5RepLQHGlvffUH3VhBDbBMaWBD0Cbt
-         ePnAJaBo9BH6fyWyphhCRAdxdxNV21LS9xUxwFCF+A6OeGp36qRdGo6SHQtBqD4kZHbp
-         vhsxTCiXkfsSQ6fZSueR+BdlMNT0ZsevpMRpwbLPjQAlayyWj35fCo6VI9IU2l8RdQ9y
-         gV5mHhOap0U4iaBsjzwinvlvZFMOo9AU2nrrhd4bYRXkiHjqQNpuLrEEpxP+wgOYM0qJ
-         ULHWyPme0xLFh8vFxi1E+GBFdpKHZmDttmI6p/Ymts27zhj4uJ9AhPFbF0cyH/2VlQJR
-         gnZg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=swfl4/sEivlMR47DH6unsO1Adgkc/kxQe1VVqhLh4nc=;
+        b=QAQgG0mjoB5PtrPwq5Mq5fTyatu6akl155WoHkRIrCKGU9HGpYQleSdNV7hcMbCgqc
+         EW0kUI+XQoYFxYDzGJBdUxuynb8XyQZKZKxJkcJ05cE4tyN+O174FkMHkO3y5DHX3dbE
+         6kd/70oHltP620Z3EGW7/vFaZKPeWylAVkwotbuTPkBU3TjHKbD9r8KsrErBW3shrsXt
+         waLX75wFxQDVncEqOvx5zRmAYdnkb6v0tU67LL3T5KK6leew8TnGyoekCVMOPcbRZeVX
+         1F6eUwkMk1Qm3TEDsxiCgyOTJch+R+OxEVe1o69OF8w76uHRIUf+sph/VQTSYregMMtG
+         m3pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iiKhhd4+AC9ihhpaWY9r89fh/tdEcqK6HSnAuBHyFZU=;
-        b=8JESfzn3d2w8Sby98ox+2fbUfIA0/B/ZM3jvQ6GBpTmcWb+/cZ3ifhTDyDB7sLsmiz
-         TRZPO/0VdvBgm2z5T3aFJEVWXduFH7+IGCsr2JQLszkKsxXtHlErOboLRQqKF4sgj9ps
-         tvN8MK1VRO9FKqqrbBeFXeUNGoqjoqSabdi9oX1MHd1DxNCybgJ9T1+q/mpPsOgbM+Ro
-         YqEF9xSoaEWY/92I4HhgPXIg4Mr1FHbS0m+b/Y74jIFRiBwI6UqS1vttmENrkKYtPYuF
-         ytrrW8f00Tx7Xqf8BZYeyBt+F8OWCf1VTaeddLYCEf50jZq7kRqa610QbdL6mAJGy/d3
-         Tslg==
-X-Gm-Message-State: AOAM533UxVktkfEUIn7sfjEcwKwwvnxZcH0XAJzVr5rqnK4RJKLgt3FS
-        FqoO6WnxdUleVJou79zYHU8qs1ps+5sE4B+ndtN80DTcbLekNQ==
-X-Google-Smtp-Source: ABdhPJyn0WgnhaTo+vXYEp+n5mUeuQcdTTNh4vZT5peVnFfmNuYArNiV6o+XQT5Wpku1iUph1rYqKET7xqohoTNa4Es=
-X-Received: by 2002:a05:6870:f697:b0:da:b3f:3268 with SMTP id
- el23-20020a056870f69700b000da0b3f3268mr4895925oab.280.1648817362181; Fri, 01
- Apr 2022 05:49:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=swfl4/sEivlMR47DH6unsO1Adgkc/kxQe1VVqhLh4nc=;
+        b=ywnbNl/Tw2QBZS7up7DJUWnbH1W8sjnUjkvlUef/WAVzMBVGC1wxr3NELzOcDt34vo
+         6q0H4XMHR2vtrvv1G2dTFVQL41BS/0O0Bkx1pBHbHH0CgDXCWOY9clJScGO3gXVKxWw2
+         p6aFQ5471sBvaKg5IQSDS2GgkNrv+NQOHW5dp2xgdCEgDLYN1nHJZCADUT9swSa7BMkZ
+         tRFdrg7M2SVRIAPtSf8U0KskkrcgT4Wn5ohsx6qTPa1lKVokl8LjDGY7/D1n1Oali4zq
+         umZs/GVU4D3qeY8L9r6y4vBbhrpuur+t4XsmOBjZJl0+gxjv/LjpDselsIW1vsEAph7e
+         Byqg==
+X-Gm-Message-State: AOAM5303UKQ3KNHfhj4vvJ7P3J42ATw824wy55THjztpjPZamkqQt2cd
+        O8TIvoRsuPbSl0E3eTY4hWqRtjh6uZU=
+X-Google-Smtp-Source: ABdhPJxsSYtk46ZOq6xlqgHF4JFqcQf0U/cbMvZl9rf3mH4xPdO2c/URgceY5dv+XxUaBDUCQEhbJw==
+X-Received: by 2002:a50:d711:0:b0:410:a51a:77c5 with SMTP id t17-20020a50d711000000b00410a51a77c5mr21121945edi.154.1648821551397;
+        Fri, 01 Apr 2022 06:59:11 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b7-20020a170906490700b006b2512921b2sm1071828ejq.48.2022.04.01.06.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Apr 2022 06:59:10 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1naHny-0018tO-6e;
+        Fri, 01 Apr 2022 15:59:10 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Miklos Vajna <vmiklos@vmiklos.hu>
+Cc:     git@vger.kernel.org
+Subject: Re: git log --since to not stop after first old commit?
+Date:   Fri, 01 Apr 2022 15:51:38 +0200
+References: <Yka2GSGs3EIXm6Xt@vmiklos.hu>
+ <220401.86pmm1nmvh.gmgdl@evledraar.gmail.com>
+ <YkbQnnB8GSzuAROh@vmiklos.hu>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <YkbQnnB8GSzuAROh@vmiklos.hu>
+Message-ID: <220401.86czi0oqfl.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220331091755.385961-3-shaoxuan.yuan02@gmail.com> <52784078-c748-a4a0-68b4-db3c133dfa80@github.com>
-In-Reply-To: <52784078-c748-a4a0-68b4-db3c133dfa80@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Fri, 1 Apr 2022 20:49:10 +0800
-Message-ID: <CAJyCBOQmUYe53ahpEXQZAWMoers0o7b1xuCYu_k-LrfvKTkV-g@mail.gmail.com>
-Subject: Re: [WIP v1 2/4] mv: add check_dir_in_index() and solve general dir
- check issue
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 1, 2022 at 5:28 AM Victoria Dye <vdye@github.com> wrote:
+
+On Fri, Apr 01 2022, Miklos Vajna wrote:
+
+> Hi =C3=86var,
 >
-> Shaoxuan Yuan wrote:
-> > Originally, moving a <source> directory which is not on-disk due
-> > to its existence outside of sparse-checkout cone, "giv mv" command
-> > errors out with "bad source".
-> >
-> > Add a helper check_dir_in_index() function to see if a directory
-> > name exists in the index. Also add a SPARSE_DIRECTORY bit to mark
-> > such directories.
-> >
+> On Fri, Apr 01, 2022 at 11:57:33AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason <avarab@gmail.com> wrote:
+>> So (just making sure I understand this) in this case the --since option
+>> is behaving as expected in the sense that the information in the commit
+>> itself matches what it's finding, but what you'd really like for it to
+>> consider some "adjusted" commit date?
+>>=20
+>> I.e. to be smart enough to spot that it should include a commit from
+>> 2021 if all the preceding commits are from 2022, or some other similar
+>> heuristic?
 >
-> Hmm, I think this patch would fit better in your eventual "sparse index
-> integration" series than this "prerequisite fixes to sparse-checkout"
-> series. Sparse directories *only* appear when you're using a sparse index
-> so, theoretically, this shouldn't ever come up (and thus isn't testable)
-> until you're using a sparse index.
-
-After reading your feedback, I realized that I totally misused
-the phrase "sparse directory". Clearly, this patch series does not
-deal with sparse-
-index yet, as "sparse directory" is a cache entry that points to a
-tree, if sparse-index
-is enabled. Silly me ;)
-
-What I was *actually* trying to say is: I want to change the checking
-logic of moving
-a "directory that exists outside of sparse-checkout cone", and I
-apparently misused
-"sparse directory" to reference such a thing.
-
-> Since it's here, though, I'm happy to review what you have (even if you
-> eventually move it to a later series)!
-
-Thanks!
-
-> > diff --git a/builtin/mv.c b/builtin/mv.c
-> > index 32ad4d5682..9da9205e01 100644
-> > --- a/builtin/mv.c
-> > +++ b/builtin/mv.c
-> > @@ -115,6 +115,25 @@ static int index_range_of_same_dir(const char *src, int length,
-> >       return last - first;
-> >  }
-> >
-> > +static int check_dir_in_index(const char *dir)
-> > +{
+> No heuristics. Just a way to not stop at the first commit that doesn't
+> match the --since criteria. Here is an example:
 >
-> This function can be made a lot simpler - you can use `cache_name_pos()` to
-> find the index entry - if it's found, the directory exists as a sparse
-> directory. And, because 'add_slash()' enforces the trailing slash later on,
-> you don't need to worry about adjusting the name before you look for the
-> entry.
-
-Yes, if I correctly used the phrase "sparse directory", but I did not...
-I think I can use 'cache_name_pos()' to
-check a directory *iff* it is a legit sparse directory when using sparse-index?
-
-In my case, I just want to check a regular directory that is not in
-the worktree,
-since the cone pattern excludes it. And in a non-sparse index, cache
-entry points only
-to blobs, not trees, and that's the reason I wrote this weird function
-to look into the
-index. I understand that sounds not compatible with how git manages
-index, but all
-I want to know is "does this directory exist in the index?" (this
-question is also quasi-correct).
-
-I tried to find an existing API for this job, but I failed to find
-any. Though I have a hunch
-that there must be something to do it...
-
-> > +     int ret = 0;
-> > +     int length = sizeof(dir) + 1;
-> > +     char *substr = malloc(length);
-> > +
-> > +     for (int i = 0; i < the_index.cache_nr; i++) {
-> > +             memcpy(substr, the_index.cache[i]->name, length);
-> > +             memset(substr + length - 1, 0, 1);
-> > +
-> > +             if (strcmp(dir, substr) == 0) {
-> > +                     ret = 1;
-> > +                     return ret;
-> > +             }
-> > +     }
-> > +     free(substr);
-> > +     return ret;
-> > +}
-> > +
-> >  int cmd_mv(int argc, const char **argv, const char *prefix)
-> >  {
-> >       int i, flags, gitmodules_modified = 0;
-> > @@ -129,7 +148,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >               OPT_END(),
-> >       };
-> >       const char **source, **destination, **dest_path, **submodule_gitfile;
-> > -     enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE } *modes;
-> > +     enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE,
-> > +     SPARSE_DIRECTORY } *modes;
-> >       struct stat st;
-> >       struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
-> >       struct lock_file lock_file = LOCK_INIT;
-> > @@ -197,6 +217,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                        */
-> >
-> >                       int pos = cache_name_pos(src, length);
-> > +                     const char *src_w_slash = add_slash(src);
-> > +
-> >                       if (pos >= 0) {
-> >                               const struct cache_entry *ce = active_cache[pos];
-> >
-> > @@ -209,6 +231,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                               else
-> >                                       bad = _("bad source");
-> >                       }
-> > +                     else if (check_dir_in_index(src_w_slash) &&
-> > +                     !path_in_sparse_checkout(src_w_slash, &the_index)) {
-> > +                             modes[i] = SPARSE_DIRECTORY;
-> > +                             goto dir_check;
-> > +                     }
+> Given:
 >
-> In if-statements like this, you'll want to line up the statements in
-> parentheses on subsequent lines, like:
+> rm -rf .git file
+> git init
+> echo a > file
+> git add file
+> git commit -m init
+> echo a >> file
+> git add file
+> GIT_COMMITTER_DATE=3D"2021-01-01 0:00" git commit -m second
+> echo a >> file
+> git add file
+> git commit -m third
 >
->         else if (check_dir_in_index(src_w_slash) &&
->                  !path_in_sparse_checkout(src_w_slash, &the_index)) {
+> When I do:
 >
-> ...where the second line is indented 1 (8-space-sized) tab + 1 space.
+> git log --pretty=3Doneline --since=3D"2022-01-01"
 >
-> In general, if you're trying to align code (in this repository), align first
-> with as many tabs as possible, then the "remainder" with spaces. Note that
-> this isn't 100% consistent throughout the repository - older lines might not
-> have been aligned properly - but you should go for this styling on any new
-> lines that you add.
+> Then current I get:
+>
+> 91a24b6ccba6b1d26c3bd5bcea7ff86e6997b599 (HEAD -> master) third
+>
+> And I would like to have an opt-in way to instead get:
+>
+> 91a24b6ccba6b1d26c3bd5bcea7ff86e6997b599 (HEAD -> master) third
+> e259a40784d3d70f3878105adac380c8e8a8ae52 init
+>
+> Arguing that both "init" and "third" was committed this year.
 
-Will do.
+Indeed.
 
->
-> >                       /* only error if existence is expected. */
-> >                       else if (modes[i] != SPARSE)
-> >                               bad = _("bad source");
-> > @@ -219,7 +246,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                               && lstat(dst, &st) == 0)
-> >                       bad = _("cannot move directory over file");
-> >               else if (src_is_dir) {
-> > -                     int first = cache_name_pos(src, length), last;
-> > +                     int first, last;
-> > +dir_check:
-> > +                     first = cache_name_pos(src, length);
-> >
-> >                       if (first >= 0)
-> >                               prepare_move_submodule(src, first,
-> > @@ -230,7 +259,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                       else { /* last - first >= 1 */
-> >                               int j, dst_len, n;
-> >
-> > -                             modes[i] = WORKING_DIRECTORY;
-> > +                             if (!modes[i])
-> > +                                     modes[i] = WORKING_DIRECTORY;
-> >                               n = argc + last - first;
-> >                               REALLOC_ARRAY(source, n);
-> >                               REALLOC_ARRAY(destination, n);
-> > @@ -332,7 +362,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                       printf(_("Renaming %s to %s\n"), src, dst);
-> >               if (show_only)
-> >                       continue;
-> > -             if (mode != INDEX && mode != SPARSE && rename(src, dst) < 0) {
-> > +             if (mode != INDEX && mode != SPARSE && mode != SPARSE_DIRECTORY &&
-> > +              rename(src, dst) < 0) {
-> >                       if (ignore_errors)
-> >                               continue;
-> >                       die_errno(_("renaming '%s' failed"), src);
-> > @@ -346,7 +377,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                                                             1);
-> >               }
-> >
-> > -             if (mode == WORKING_DIRECTORY)
-> > +             if (mode == WORKING_DIRECTORY || mode == SPARSE_DIRECTORY)
->
-> I'm a bit confused - doesn't this mean the sparse dir move will be skipped?
-> In your commit description, you mention that this 'mv' succeeds with the
-> '--sparse' option, but I don't see any place where the sparse directory
-> would be moved.
+> The question is if there is a way to do this already (perhaps I missed
+> something in the docs or didn't notice it while I briefly researched the
+> commit walk code), or in case I want to do this, then would it make
+> sense to have this feature in git or this is more a "run git rev-list
+> and do your own filtering" case?
 
-Well, you know the drill, I did not use "sparse directory" correctly, let alone
-'SPARSE_DIRECTORY' enum bit in this hunk. I think it makes some sense
-if you apply my actual meaning of 'SPARSE_DIRECTORY' here (it should be
-something like OUT_OF_CONE_WORKING_DIRECTORY)? Because such
-directory is not on disk, it cannot be "rename()"d, and should also skip the
-"rename_cache_entry_at()" function. If all the files under the directory are
-moved/renamed, then (in my opinion) the directory is both moved to the
-destination,
-both in the worktree and in the index.
+I think it might make sense to have it as feature, but hopefully we
+could piggy-back on the date adjustment that the commit-graph needs to
+do already, I'm not sure if we save that information anywhere though...
 
--- 
-Thanks & Regards,
-Shaoxuan
+The assumption with --since was that this sort of timestamp drift
+wouldn't be this bad, so mostly it works out. It could be made to work
+like --grep, but then it needs to walk the whole history if no other
+limit is provided.
+
+So it'll be very slow if you just want --since=3D2.weeks.ago, but
+accurate.
+
+I think an alternate solution to this in the meantime is to use "git
+replace" as a band-aid, I haven't tried, but you should be able to
+replace the relevant commit with one that has adjusted dates.
