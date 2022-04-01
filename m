@@ -2,122 +2,273 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20050C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 14:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66B42C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 14:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241817AbiDAOjB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 10:39:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38488 "EHLO
+        id S233311AbiDAOjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 10:39:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347437AbiDAOcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 10:32:33 -0400
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2084.outbound.protection.outlook.com [40.107.220.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249CA1EF5E6
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 07:29:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KO0fSDQUyQjLwXAMKZbSHgwW1Oyv4Ufu2MomJqsAgr2JnHKU5msDgPLIbw9pUg4evFyIQJfhYgMpe9FsaPHrBfzfj4kpuYYCA7cT23qD/ukf7RVKz2BXK7jbfZYsVZZ3jXhU9P+avc8lHj2BesiTHJiQtWWk9KT37PH3bu4mHAzU5Li0KA7mPSCGYWMpSnX0crqSUkxlc1Y7DIhm/5dsWoMUjMUkEQ33NRM909KmQzFUmdoYsNMYoEUPoAQr1UDtqZWxjmMQhbJQXOZ0z0rdoDMeKD3oT6bxQePWWKR2f0D5qSjcLHYM+VN00j1UMBgjjMfXjDn6jywL93P2yiBdLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IvTyRRafp87U4gBbE8OpOFUbPoF6z+1BO9WE9j5+tG0=;
- b=a6qm4iWD4rl24Yaw7sTF1LAj0oUVkdD9isNhSqj8Be+WmgFPrMmY33m+VxJUxKb4WOUj0e38bKSA2+d+u39F+ggXg9kdo9VLe3q7uvClDbCIUDHLIU95ZdLiTR42oEnNBVKPajGC3JrFCEvHmVX+GtDmMFrVDfaHkWLHa9k2/86LTm63tiYwPlDsy9+gQT/pUpEz4TSEX/oFBycZIMyWH7fQ5dmuply92Jl/QxJ9CcSTJ8p0BHaPkyYUhYIASMiRte273dO18NKMfEFbeT9q/GT+9FWfPeitUtDQ1neXq/YbKAxkJwvpZ48geCbG+sm+9W67WA0SZcuIEuDr4PPhkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IvTyRRafp87U4gBbE8OpOFUbPoF6z+1BO9WE9j5+tG0=;
- b=jR6xhiGMS8ooOaojSnPoe5eNdkpiz1udhbcvChXahk3GQccVN8hU9/U8izOM6rnpu8/2Vt7RcHpS67C+mzOwx1GcCDKzJuAXLRniE9ue43mTwaSz6qh/0NutDi0E0khYd/OEvhw7h7StoZp++8HUNCckcczwS9Sm0zCBqBJEiVOzld6Wy0+uhG6ehzDc9q1zsLEZYLz0pkLsRR34kkRN/PedaFsiR4m6p+9sXpjKcD4rDul7rQE67TdzqUfmHjwTXGTmO10fga8f9yxdMneMaEBowHsqMi9qy1biFGXoinO90d+5z93swognpksFtlqmIq0FgFAaxuByPqwAnnDVqg==
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by MN2PR12MB4653.namprd12.prod.outlook.com (2603:10b6:208:1b8::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5102.19; Fri, 1 Apr
- 2022 14:29:08 +0000
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::2830:9ce8:f579:927b]) by BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::2830:9ce8:f579:927b%8]) with mapi id 15.20.5123.028; Fri, 1 Apr 2022
- 14:29:07 +0000
-From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: jh/p4-various-fixups (was: What's cooking in git.git (Mar 2022,
- #07; Wed, 30))
-Thread-Topic: jh/p4-various-fixups (was: What's cooking in git.git (Mar 2022,
- #07; Wed, 30))
-Thread-Index: AQHYROP1gT0GdaPVB0S6JXUW6eEUnazbH5NA
-Date:   Fri, 1 Apr 2022 14:29:07 +0000
-Message-ID: <BL0PR12MB4849859E5291E8204E87BA9AC8E09@BL0PR12MB4849.namprd12.prod.outlook.com>
-References: <xmqqee2i50h9.fsf@gitster.g>
- <220331.86czi2sbg4.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220331.86czi2sbg4.gmgdl@evledraar.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 183f6bc7-6af6-44bd-5bbb-08da13ebfb3e
-x-ms-traffictypediagnostic: MN2PR12MB4653:EE_
-x-microsoft-antispam-prvs: <MN2PR12MB46534873436D2358E842312FC8E09@MN2PR12MB4653.namprd12.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PsT8A4WWxGnBCIkiff/wilELLDR0gtT+/LOQ2+DW2peHaxzh0TwmXotUNBRvJ999CVusZJTBNsLnlB761h1gRr7rwqaie1rR5+VVpgKDoRJOVhHAY/4yLbKHrXQwtOlA6g6r3L7epXXlHLE3P/uDdwWbq1FYsMfN8ciFyCf2rWydCts1l9viSiMPgXLSZB2QN+1tOu3oUNpcsuJF+XUxJjAEIUXYgfu8BZkzQBZSkw1IP6oWUBs/2s2uKHHKUjfFnUY+qHnNDMDNsWJX8rCwWUQOuMmzdhVZAkSfF538EXq958RxDrYBwk9MbCqaiKraQgFErApUeI2vVMqMgjyDEQXF0Ulo+5ir9NGFTM98nsmytyWABlx3Amlwfdbxhl7IDJ0nrh1bAzRCh6S1y9cSLZ+gKqOANg8onUG3nWavTpEQfyN/ttyE8n+VrEaTeUbMazTK3vtZTV9zY4a3aWkbEloc/RFilDfBwumRv5rvosxk4uI8poM/GuPFFXOhOhY42YnEYxoqV/ql5Bl6zBYgQROifoW5lsoMGjtvn/GxPp5dNR3sY+QD7YwqNXD48cIHFeLqaEMKKmCve420zbg/+tj/GT4h6izAMaVW8HsQD8lZDrx0zSMmTSdxiS4FiH8ImAeUsH2SVHdTWWnal3PJi3whnypBD1UWWAsOND3GWsAAM9BfP/lBqjAGeCyNPKj/r9THbVuYl+Tstk7UjT76lw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(71200400001)(122000001)(186003)(110136005)(26005)(38100700002)(9686003)(66556008)(316002)(55016003)(55236004)(86362001)(76116006)(6506007)(7696005)(2906002)(33656002)(558084003)(5660300002)(38070700005)(4326008)(66946007)(508600001)(8676002)(64756008)(8936002)(66446008)(52536014)(66476007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?pJP3nXfF2znCSv0Xo3icBoJlKUc+ElpG+qBeLbAvILgAOUIo9DLxr0REJ9?=
- =?iso-8859-1?Q?ZMLIG246cNgZajMpYL9V+LBQF7cadZLug3CPMFe4mnPjet3AyDfrU2EOWS?=
- =?iso-8859-1?Q?wtSUS5QOoHimBNb1iIdUp7xJMBupRnUci6Ua+sA1ewkpseKz2BPvW9/Jg4?=
- =?iso-8859-1?Q?5nQxPuliu2eJfZJ9Waqfwd53wn/80NsorC+vOg/koOzwKszvIUrcUYdewH?=
- =?iso-8859-1?Q?RfPVb+DLu168Ct7RKLqSE6T5+cKp/+/K7eYsZnsUNg23j4Efd251ePmxfO?=
- =?iso-8859-1?Q?XrjG6ICr2P9AMegF2tmiALunGfiDZU2UtW0nrT96WoshD+g+exMz+T177O?=
- =?iso-8859-1?Q?lIah0rNOvuYesrtt2YVsNL6gRRJE+D/f5pQIpc3alybKYk5XtPiH4+QeQl?=
- =?iso-8859-1?Q?UY9g/DtcgvdxKIL3xBg3EFxLwkvD0v5elsPVEhVs8jCXMjT5bwPCgXUkLm?=
- =?iso-8859-1?Q?GqzoAvpMqfDBUSDum6ReYCoJpf4jaRfbCRIWKi5LNqqux9ICHjWLlOPDKL?=
- =?iso-8859-1?Q?4/q3higTH1FLMCGyNcpWeosBMt0M7rikejxpqZxW898+27elAWGVfmP6/l?=
- =?iso-8859-1?Q?ql5y/gRzRUuqBpe1qaeXZ1aF4xEfwOD+1CTEaUYHox96yqW7wVjudIlklr?=
- =?iso-8859-1?Q?TTG/KGNvPUYWvIa0Ea/yNhM8yUPXNsZHC8R5WYZvh791OW3I5gWXQ63dYv?=
- =?iso-8859-1?Q?s4Z4FaGHbz4cg90LRJ2H6MhdBm4AVBaYDhqkL1I4KeOhmwaXlb0mC5iX6A?=
- =?iso-8859-1?Q?hiOkJiWe860/4wJ/5Bw1LwEVRY0GXO+yQJs5nquohf9/9X7KAVnjlj8kkP?=
- =?iso-8859-1?Q?uzBKAKZtZGXtkdaU6gBGy1MJNiWWae1h6PWCa2R3Wwxk+MWAtSbmKxIDUv?=
- =?iso-8859-1?Q?bHRxdfy4sQlitY9aQd6Os7owj6m248QZ8EBfXwvvmtLg7AcSLk6eSbZxD9?=
- =?iso-8859-1?Q?DLxnuBZlc0UCQwJfwgRIGz8zokLY7ZfiF6OO6cOR8G0EeLn6dQxhFh9+G9?=
- =?iso-8859-1?Q?/5NVWRIrvEDJsBHv2OYD/eWlubDGTgpvds4PY5NnpFfSR6QwnL1O17sWvZ?=
- =?iso-8859-1?Q?sLpfppqH69QUkXBUHqxt4ZSF6nN7oJLLgIYHfkoZQ+r1pI8Tr7tTh/VeFN?=
- =?iso-8859-1?Q?hmBmhniqenxjH0dVp+WdJOZvivRHSYK0eVp8GYfv9ImBoeVuAGcZUDxwif?=
- =?iso-8859-1?Q?kSVh4+mQa8Gt/DItht78kmYs0kPKwqrUEZ/Y4M2L4oY5nTuOqW7NdC7zTD?=
- =?iso-8859-1?Q?T2ctbSvUgKvw5ziTI1Z9icRPPz+0v8R30JWCcyOFSr/4IvxcYoqm7zxsCn?=
- =?iso-8859-1?Q?q+6xXln7T81dwjEUy6x3QRLwKhOfw1TEkYYKarjkHK9frunWMMB/5BGZA+?=
- =?iso-8859-1?Q?BdlTk3bVXU0Pp0+T0ugMAWQ65XteFU5dYNPhYXJxpMesfjT8cl091GQtWv?=
- =?iso-8859-1?Q?/1BMQE4YZbKzq3nlqBByEGIXzWKs6+f09YDA6aGJkPBGGCqoGt4OrhzKRR?=
- =?iso-8859-1?Q?pNNWbRp4mWNQbHYpklCsYqhlQfZvNYB9zQfDpJtXHBFesRcV5mJkLkX/1P?=
- =?iso-8859-1?Q?cj3bR5m5Xwy8NkcKkTAINyxCYvncVZ2BigfU490NrgUEPh8BynotfO1GJj?=
- =?iso-8859-1?Q?9wujD6RRRM4YkZm6+9aQixA9GJTaONoM+ArUct6NN3riQaBYKAftJ5/zSW?=
- =?iso-8859-1?Q?ALrY8fFgHfLKGJJ4yN72Or8CiCPg91WOeSmKQ/pd5Cddy8yxik8J05HDKf?=
- =?iso-8859-1?Q?wS3hmlI9Q19es4TUqh0G7ykjoOcC+M+RVueEIjEgXYEsCAiO2wvYLz9QVI?=
- =?iso-8859-1?Q?2EtlqwZp5Q=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S1347895AbiDAOdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 10:33:36 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CE1F28AC6E
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 07:30:50 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id z6so3423522iot.0
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 07:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3soxtKNQuLe08qPQ8NwV+zHIqB5Fpk6E4aiwI2zi/o8=;
+        b=LkwTaTFoURHrCNI6b2IIMHPUXoumNcR47syRZBf14gbT7CnbSEYe+kofPIOkxY0WKQ
+         ZyS9Tq/cU6geKwsh+lGBk33mkDhO1ZjRWUHRJUhcFIRvrqKp/iaTbPkuht49kiYDIPO8
+         PK38r3NjEP91RyJ43G/pPu3p0mZxTwU51a1pHu1OWN+wXK1ZQA7uhKniDtdN1gGzh073
+         YYM7pdrGhKikwPgAD7qsEeJY8QQJeSCJVT9SwuWu136h7ATiye9LGw7tufl1ZuYT8gha
+         Og+PjZCKK6+9CE7wZWGnGPDE33ILMJ4Lu1ie9rnF/sD2MxqyuqJEBFz608EbVrWsmoSj
+         cXXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3soxtKNQuLe08qPQ8NwV+zHIqB5Fpk6E4aiwI2zi/o8=;
+        b=GnXuysUyj+n16WZkTXutowQhpWqQdCJe/8U1D1+giMUFlr4GTs2mR8yh/2ZFRyCXm4
+         8ThWgjoaLgKM5n/Tn7jSWfHKJtp8/R1PJrf/6/xYV1g/UfYnS6WW7N8xL6giD7O++FxQ
+         4hzUX9bM7ZKLefrNi2XtbdO3RpR9gTUezLnghftJGq6I1JvmliMJ/KNgViotPh5P/xIc
+         aDYY6mAUJKzXRVTYqktXiTyjdNZr2vdgRLrYnEp4vm3cuRcn+cAN2f9+9gxdNvBOSSqp
+         aJzCk14uKNstdZPdg2VRqDREdIOouDlssIbdlZXzGmGBqroxUpHC0D47I4hiak6UX6Ki
+         y+2Q==
+X-Gm-Message-State: AOAM532/dUuh9YeNKkSCtzF7mHopBKHiSnvhOWVhP2wBgQz5xakkGooQ
+        7FLZZiolO/u1BVUlTsF1LZvc
+X-Google-Smtp-Source: ABdhPJy5RMcxcv2voHSKmnGv+qcWcH0q1w5/FHSTMT+5nJSwrQgznQckKfxo3YSeNZWBBhQSEiqH8Q==
+X-Received: by 2002:a05:6638:2646:b0:323:c330:9664 with SMTP id n6-20020a056638264600b00323c3309664mr733282jat.214.1648823449793;
+        Fri, 01 Apr 2022 07:30:49 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id a3-20020a92d583000000b002c9fb55e727sm1384573iln.41.2022.04.01.07.30.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Apr 2022 07:30:49 -0700 (PDT)
+Message-ID: <edbbd81e-2117-c9b9-76a5-4713e6326d2f@github.com>
+Date:   Fri, 1 Apr 2022 10:30:46 -0400
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 183f6bc7-6af6-44bd-5bbb-08da13ebfb3e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2022 14:29:07.8975
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: X5SMIlc2fDbiwXAHR5U6Sb9i88VMUFcHGWj+3035NttSVrmMu0JhHryryDLwAdStLtHruW0UrvgUw6ANkByxIg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4653
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [WIP v1 1/4] mv: check if out-of-cone file exists in index with
+ SKIP_WORKTREE bit
+Content-Language: en-US
+To:     Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
+ <20220331091755.385961-2-shaoxuan.yuan02@gmail.com>
+ <180efaaf-7bb5-6ed7-2fc6-3c5d5f1304db@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <180efaaf-7bb5-6ed7-2fc6-3c5d5f1304db@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The tip here lacks a Signed-Off-By, but this otherwise looks good to me.
+On 3/31/2022 12:39 PM, Victoria Dye wrote:
+> Shaoxuan Yuan wrote:
 
-Thanks for the comments =C6var - I've just resubmitted with the missing Sig=
-ned-off-by tag added.
+>>  		if (lstat(src, &st) < 0) {
+>> +			/*
+>> +			 * TODO: for now, when you try to overwrite a <destination>
+>> +			 * with your <source> as a sparse file, if you supply a "--sparse"
+>> +			 * flag, then the action will be done without providing "--force"
+>> +			 * and no warning.
+>> +			 *
+>> +			 * This is mainly because the sparse <source>
+>> +			 * is not on-disk, and this if-else chain will be cut off early in
+>> +			 * this check, thus the "--force" check is ignored. Need fix.
+>> +			 */
+>> +
+> 
+> I can clarify this a bit. 'mv' is done in two steps: first the file-on-disk
+> rename (in the call to 'rename()'), then the index entry (in
+> 'rename_cache_entry_at()'). In the case of a sparse file, you're only
+> dealing with the latter. However, 'rename_cache_entry_at()' moves the index
+> entry with the flag 'ADD_CACHE_OK_TO_REPLACE', since it leaves it up to
+> 'cmd_mv()' to enforce the "no overwrite" rule. 
+> 
+> So, in the case of moving *to* a SKIP_WORKTREE entry (where a file being
+> present won't trigger the failure), you'll want to check that the
+> destination *index entry* doesn't exist in addition to the 'lstat()' check.
+> It might require some rearranging of if-statements in this block, but I
+> think it can be done in 'cmd_mv'. 
+
+This also explains the issue when going from sparse to non-sparse: the
+file move is the expected way to populate the end-result, but we skip that
+part in the sparse case. We need to do an extra step to populate the file
+from the version in the index (after moving the cache entry).
+
+Related to this chain of if/else if/else blocks, it might be worth
+refactoring them to be sequential "if ()" blocks where we jump to a
+"cleanup:" label via a 'goto' if we know that we are in a failure mode.
+
+The previous organization made sense because any of the if () or else if
+() conditions were a failure mode. However, it might be better to
+rearrange things to be clearer about the situation.
+
+Here is a diff from what I was playing with. It's... unclear if this is a
+better arrangement, but I thought it worth discussing.
+
+--- >8 ---
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 83a465ba831..683a412a3fc 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -186,15 +186,22 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		length = strlen(src);
+ 		if (lstat(src, &st) < 0) {
+ 			/* only error if existence is expected. */
+-			if (modes[i] != SPARSE)
++			if (modes[i] != SPARSE) {
+ 				bad = _("bad source");
+-		} else if (!strncmp(src, dst, length) &&
++				goto checked_move;
++			}
++		}
++		if (!strncmp(src, dst, length) &&
+ 				(dst[length] == 0 || dst[length] == '/')) {
+ 			bad = _("can not move directory into itself");
+-		} else if ((src_is_dir = S_ISDIR(st.st_mode))
+-				&& lstat(dst, &st) == 0)
++			goto checked_move;
++		}
++		if ((src_is_dir = S_ISDIR(st.st_mode))
++				&& lstat(dst, &st) == 0) {
+ 			bad = _("cannot move directory over file");
+-		else if (src_is_dir) {
++			goto checked_move;
++		}
++		if (src_is_dir) {
+ 			int first = cache_name_pos(src, length), last;
+ 
+ 			if (first >= 0)
+@@ -227,11 +234,18 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				}
+ 				argc += last - first;
+ 			}
+-		} else if (!(ce = cache_file_exists(src, length, 0))) {
++
++			goto checked_move;
++		}
++		if (!(ce = cache_file_exists(src, length, 0))) {
+ 			bad = _("not under version control");
+-		} else if (ce_stage(ce)) {
++			goto checked_move;
++		}
++		if (ce_stage(ce)) {
+ 			bad = _("conflicted");
+-		} else if (lstat(dst, &st) == 0 &&
++			goto checked_move;
++		}
++		if (lstat(dst, &st) == 0 &&
+ 			 (!ignore_case || strcasecmp(src, dst))) {
+ 			bad = _("destination exists");
+ 			if (force) {
+@@ -246,34 +260,40 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				} else
+ 					bad = _("Cannot overwrite");
+ 			}
+-		} else if (string_list_has_string(&src_for_dst, dst))
++			goto checked_move;
++		}
++		if (string_list_has_string(&src_for_dst, dst)) {
+ 			bad = _("multiple sources for the same target");
+-		else if (is_dir_sep(dst[strlen(dst) - 1]))
++			goto checked_move;
++		}
++		if (is_dir_sep(dst[strlen(dst) - 1])) {
+ 			bad = _("destination directory does not exist");
+-		else {
+-			/*
+-			 * We check if the paths are in the sparse-checkout
+-			 * definition as a very final check, since that
+-			 * allows us to point the user to the --sparse
+-			 * option as a way to have a successful run.
+-			 */
+-			if (!ignore_sparse &&
+-			    !path_in_sparse_checkout(src, &the_index)) {
+-				string_list_append(&only_match_skip_worktree, src);
+-				skip_sparse = 1;
+-			}
+-			if (!ignore_sparse &&
+-			    !path_in_sparse_checkout(dst, &the_index)) {
+-				string_list_append(&only_match_skip_worktree, dst);
+-				skip_sparse = 1;
+-			}
+-
+-			if (skip_sparse)
+-				goto remove_entry;
++			goto checked_move;
++		}
+ 
+-			string_list_insert(&src_for_dst, dst);
++		/*
++		 * We check if the paths are in the sparse-checkout
++		 * definition as a very final check, since that
++		 * allows us to point the user to the --sparse
++		 * option as a way to have a successful run.
++		 */
++		if (!ignore_sparse &&
++		    !path_in_sparse_checkout(src, &the_index)) {
++			string_list_append(&only_match_skip_worktree, src);
++			skip_sparse = 1;
++		}
++		if (!ignore_sparse &&
++		    !path_in_sparse_checkout(dst, &the_index)) {
++			string_list_append(&only_match_skip_worktree, dst);
++			skip_sparse = 1;
+ 		}
+ 
++		if (skip_sparse)
++			goto remove_entry;
++
++		string_list_insert(&src_for_dst, dst);
++
++checked_move:
+ 		if (!bad)
+ 			continue;
+ 		if (!ignore_errors)
+
+--- >8 --- 
+>> +			}
+>>  			/* only error if existence is expected. */
+>> -			if (modes[i] != SPARSE)
+>> +			else if (modes[i] != SPARSE)
+>>  				bad = _("bad source");
+>>  		} else if (!strncmp(src, dst, length) &&
+>>  				(dst[length] == 0 || dst[length] == '/')) {
+> 
+> For a change like this, it would be really helpful to include the tests
+> showing how sparse file moves should now be treated in this commit. I see
+> that you've added some in patch 4 - could you move the ones related tothis
+> change into this commit?
+
+I completely agree: it's nice to see how behavior is intended to change
+next to your code change.
+
+> Another way you could do this is to put your "add tests" commit first in
+> this series, changing the condition on the ones that are fixed later in the
+> series to "test_expect_failure". Then, in each commit that "fixes" a test's
+> behavior, change that test to "test_expect_success". This approach had the
+> added benefit of showing that, before this series, the tests would fail and
+> that this series explicitly fixes those scenarios.
+
+And this would be easier to adapt your current patch structure to this model:
+move the last commit to be first, but flip the expectation. Then modify the
+expectation for the tests that pass as you go.
+
+This only works as long as you can make an entire test pass with each change.
+If multiple changes are needed to make any one test pass, then we don't get
+the benefit we're looking for. In that case, your test might be covering too
+much behavior in a single test, so it would be worth rewriting the tests to
+check a smaller part of the behavior.
+
+Thanks,
+-Stolee
