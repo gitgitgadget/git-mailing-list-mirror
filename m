@@ -2,124 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AC1BC433F5
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 16:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D938C433F5
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 16:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235870AbiDAQln (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 12:41:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
+        id S1350277AbiDAQwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 12:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346190AbiDAQl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 12:41:29 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3323D674D2
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 09:22:18 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id 9so3772603iou.5
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 09:22:18 -0700 (PDT)
+        with ESMTP id S1350115AbiDAQwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 12:52:33 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43DBBB089
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 09:41:50 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id s16-20020a170902ea1000b00156547b6480so1726203plg.6
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 09:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=from:date:to:subject:message-id:mime-version:content-disposition;
-        bh=9RHhV7zIKbV3lCqWcAa3/vMZpCcfS5KGQD8ZCGdR9mE=;
-        b=Z/9FxPa+B1X+JfjxknrDJMofgr0HSgd0YF2uyu2HvnmBeBtt6mYQxkUhvMPI5eJllK
-         hpD4ew3eBKq3CQ9papj0BpKiKMCnoj0y+aPb5WX8fytHcy7sSiRDGoZW7EGek1aC59Zb
-         k6p7qzXqHrTeM8lO5nCai3Gt3WuGCuqE+njSwGiJOW3cAL62ed/j9b4WfsmGWg3YKIxO
-         ALGKX+ZjbzcAXRR8hZ0aSmUkLuY48uozggqikWpJSNLey1oInJUupI/7lqBM1EOoTxA/
-         MUml2xhVlnaXmGgwoAziEO+HQ3PZoGpdoE7Zj0F4iRiCDjA/n+K1voji9/IA+eFqsEik
-         T0ZA==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=UYa4sLbW/yYrJgymF+WEvBfOjzwg689BUBmoV/tPoZ0=;
+        b=qn5+zkdipEcz+xOR2yecHMKDMJtJ41dmcf8ouOltbGQTCNtGPEbLaZRHVt3REtNbv6
+         T2ft6O4FHNUjG+lndKNq0g3psvbcorVNBz61bmEpwze0T4LH9wvNz8ikPcNvf+idTmBV
+         w13uh/WfFlPF+Dx+oMc07PmlFHZpBdO4CaXDN69uZ8yd/SH4fZ1A8/iag6BxjEz3MokB
+         Gao46UVupScAm424A4nAgQ2Nlav6aLz32pfE8WOdxqoQgNNMPoVs7bz3j5rwaMY2HAPJ
+         qTGf/F5YkbZO/7ozDe2tlFC4k44gpMYZ3Pdl+0yQjM0JnqNma8hO2ha1R/hFQii/L5im
+         8TNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:date:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=9RHhV7zIKbV3lCqWcAa3/vMZpCcfS5KGQD8ZCGdR9mE=;
-        b=NqhxaMJvKt+jRd6ZPMjg9QTyl3p4vpHTUNWcyD/sdN/mg39RRVjqIVbJqTrwWaiCU/
-         NSwWMmDuPky2ssprAurdAFkLGXM9t87qLYsbrnmew6rxqs63VnW/yxu8ofPCg8oeqlj8
-         Y3mUsaiTQe67pxbGj6CQnk0BLQ8Km0XRtfekulng4GELzxmVfjBdHtfjGgyKAze2LCAI
-         oLXHAzOvKS49GMOz0Bbggs+lNWb7p+HHqI2d/1erfw27vdwxeWGydKxM8SNMFzzYx0cY
-         0DubAC3L6Ubw6u16suSvNeYxIFAhwipRTIn3P0ux5v5WJgCLN2jLTOjTT9d0kHHYwoUO
-         rfvw==
-X-Gm-Message-State: AOAM532wuZ8Lgo5zOSxDShJmUFTn28e2gv9IcofZwQ/yuTPSOdUKdLqI
-        ripem5Dj9I21e9Qoa71yWEihejza6VEdXGQXs+7ILq9ihr1XlmGxiMHNR/afqvzD9QgVwwJdK+I
-        buQxxm8xRjQjycpjuC5eLBwUo0KTzex29A6YdiAJawlE981aBKOHnmrCjxjUQsRCt
-X-Google-Smtp-Source: ABdhPJw8Qlf8D8qtoedY5zpMU5DQ/zKjB1/Luh89t9XNVZrWV3Tqa8vv0eAdz4MfFgswES35qgAlvg==
-X-Received: by 2002:a02:93ca:0:b0:319:fca7:7364 with SMTP id z68-20020a0293ca000000b00319fca77364mr5869690jah.182.1648830137045;
-        Fri, 01 Apr 2022 09:22:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f8-20020a056e02168800b002c654e0f592sm1600662ila.58.2022.04.01.09.22.15
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 09:22:16 -0700 (PDT)
-From:   Taylor Blau <ttaylorr@github.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date:   Fri, 1 Apr 2022 12:22:14 -0400
-To:     git@vger.kernel.org
-Subject: [ANNOUNCE] git-scm.com Heroku credits update
-Message-ID: <YkcmtqcFaO7v1jW5@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=UYa4sLbW/yYrJgymF+WEvBfOjzwg689BUBmoV/tPoZ0=;
+        b=5HMAwfIis16ZLUogJ4O3Juz8P//YTgIdby6zPTQUczcnpBhRuMoP0NwGk07sfWpy5o
+         qrmboP5omdfMlPlolgGOL+LLh79ujznX9hEvIJrbpk0CbnbZmYxX2u8rEGR4MJ81J/A4
+         dzFjYAHkQUFEbEfGyXjkdVztq5KcklTGCmLUVqTlf7/mL4d6L3miGaR9El7Myy8wbjfr
+         zcZ56rxseD0OqI39/BK7AUjfFJS3RLjujCGrv16qz1n8Jwh5WE4q8kaeiTUUVxuKgZ8g
+         oVrIC+UE40Zg1S+GQHoNcJiGjzhub2MQ/SyV7LwUaxjsiOkjiYoDNeU990gsEmq3OMBV
+         YccA==
+X-Gm-Message-State: AOAM530HamhTO1dq9wrmtR3RxKbYU6NaGgsPuImRhkxwyw9lT5PxNfBC
+        xnBtKVXr3Ggg0+F6AFWAHlUuStTDYJc2Vg==
+X-Google-Smtp-Source: ABdhPJyd8kHO+laOkmHtgT09VVrcSGCmTPBrzEOZgPLLolEtbqeOEjw2ZoILqMZNVEL44GS+CZYMF9GK/Ja1Eg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:10c2:b0:4fd:a140:d5a9 with SMTP
+ id d2-20020a056a0010c200b004fda140d5a9mr11836235pfu.77.1648831310264; Fri, 01
+ Apr 2022 09:41:50 -0700 (PDT)
+Date:   Fri, 01 Apr 2022 09:41:47 -0700
+In-Reply-To: <CAPMMpojb7-tD2kFNZPiaC0MpB8GNXtYqpJs796pRcM7pE=ksmg@mail.gmail.com>
+Message-Id: <kl6lpmm0sqlw.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1183.v5.git.1648624810866.gitgitgadget@gmail.com>
+ <pull.1183.v6.git.1648742485887.gitgitgadget@gmail.com> <xmqqpmm13okb.fsf@gitster.g>
+ <kl6lsfqxsmj3.fsf@chooglen-macbookpro.roam.corp.google.com> <CAPMMpojb7-tD2kFNZPiaC0MpB8GNXtYqpJs796pRcM7pE=ksmg@mail.gmail.com>
+Subject: Re: [PATCH v6] tracking branches: add advice to ambiguous refspec error
+From:   Glen Choo <chooglen@google.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "=?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason" 
+        <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As some of you know, we have a website at https://git-scm.com, which has
-served as the Git project's de-facto homepage.
+Tao Klerks <tao@klerks.biz> writes:
 
-That site is hosted on Heroku, which has graciously provided the Git
-project with hosting credits for many years. That, combined with support
-from Cloudflare has meant that the maintenance cost for the site is
-effectively $0.
+> On Fri, Apr 1, 2022 at 1:57 AM Glen Choo <chooglen@google.com> wrote:
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> > "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> >
+>> >>      if (!remote_find_tracking(remote, &tracking->spec)) {
+>> >> -            if (++tracking->matches == 1) {
+>> >> +            switch (++tracking->matches) {
+>> >> +            case 1:
+>> >>                      string_list_append(tracking->srcs, tracking->spec.src);
+>> >>                      tracking->remote = remote->name;
+>> >> -            } else {
+>> >> +                    break;
+>> >> +            case 2:
+>> >> +                    /* there are at least two remotes; backfill the first one */
+>> >> +                    string_list_append(&ftb->ambiguous_remotes, tracking->spec.src);
+>> >> +                    /* fall through */
+>> >> +            default:
+>> >> +                    string_list_append(&ftb->ambiguous_remotes, remote->name);
+>> >>                      free(tracking->spec.src);
+>> >>                      string_list_clear(tracking->srcs, 0);
+>> >> +            break;
+>> >
+>> > Just to sanity check this part,
+>> >
+>> >  - During the first iteration, we append tracking->spec.src to
+>> >    tracking->srcs, and set tracking->remote to remote->name;
+>> >
+>> >  - In later iterations, we do not want to touch tracking->srcs, and
+>> >    want to collect remote->name.
+>> >
+>> > And "backfill" assumes that tracking->spec.src at that point in the
+>> > second iteration is the same as what we got in remote->name in the
+>> > first round.  If that were a correct assumption, then it is curious
+>> > that the first iteration uses tracking->spec.src and remote->name
+>> > separately for different purposes, which makes me want to double
+>> > check if the assumption is indeed correct.
+>> >
+>> > If it were tracking->remote (which was assigned the value of
+>> > remote->name during the first iteration) that is used to backfill
+>> > before we append remote->name in the second iteration, I wouldn't
+>> > find it "curious", but the use of tracking->spec.src there makes me
+>> > feel confused.
+>> >
+>> > Thanks.
+>>
+>> Thanks for bringing this up, I also found this unusual when I was
+>> reading v5.
+>
+> If you never hear from me again, please know it's because I crawled
+> back under the rock I had crawled out from. This is clearly a bug from
+> a silly typo, and I've managed to look at the resulting output twice
+> without noticing the wrong thing was printed. I'm guessing the use of
+> the word "unusual" here is a polite euphemism for "you numskull, what
+> you wrote makes no sense!" :)
 
-Unfortunately, Heroku no longer provides free hosting credits to
-organizations and open-source projects. I have been in an ongoing
-support thread with them, and their stance is pretty clear.
+Please don't take it that way! I use it the way I think most others use
+it, which is a more charitable "Hm, I trust the author, but this looks
+confusing to me and let me ask just to be sure that all our bases are
+covered."
 
-To that end, we have a few options about what to do with the website in
-the future:
+After all, even the best of us make mistakes, so I don't think it's a
+big deal. Plus, if the mistake managed to sneak past review, the fault
+is on all of us :)
 
-  - Convert the Rails application into a static site that could be
-    hosted elsewhere for free. The non-static portions of the site would
-    have to become static in one way or another, and we'd have to come
-    up with an alternative search mechanism to replace the existing one.
+> I did not think adding an automated test for advise() output made
+> sense, but I guess I have proved myself wrong.
 
-  - Explore ways to cheapen our Heroku bill (more on this later). Our
-    footprint at Heroku currently is a dyno for the Rails site itself,
-    along with a separate database (Postgres) and cache (Redis). We
-    could explore eliminating the Rails-layer cache, and tune our
-    Cloudflare settings to more aggressively cache parts of the website.
-
-  - Pay Heroku using the Git project's funds held at Conservancy.
-
-  - Find a cheaper Rails host.
-
-Our Heroku bill varies slightly based on usage, but here's last month's
-bill, which is more or less representative:
-
-              | Usage (months)       | Cost $/mo |  Total
-    ----------+----------------------+-----------+---------
-    scheduler | 0.004941199999999998 | $25.00/mo |   $0.12
-    web       | 1                    | $50.00/mo |  $50.00
-    redis     | 1                    | $30.00/mo |  $30.00
-    postgres  | 1                    | $50.00/mo |  $50.00
-    ----------+----------------------+-----------+---------
-                                                   $131.58
-
-(I'm omitting about $1.46 of charges that come from spinning up dynos to
-power "PR previews" when somebody makes a pull request to the
-git/git-scm.com repository on GitHub).
-
-I think we could reasonably get rid of the Rails-layer caching using
-Redis and save some money there, but it may not be possible depending on
-how much content Cloudflare is willing to keep warm in its cache.
-
-In the meantime, Heroku is billing Git's account at Conservancy [1] in
-order to keep the site running while we all figure out what to do next.
-I have some opinions about what a sustainable solution looks like, but
-I'll avoid sharing them just yet in order to avoid tainting the
-discussion.
-
-Thanks,
-Taylor
-
-[1]: I promised[2] an update on our financials, and am still working on
-it. The Git project currently has about ~$70k USD in its account.
-[2]: https://lore.kernel.org/git/Yg%2FsO63nhhtAXWvn@nand.local/
+Heh, nearly every time I think that a test isn't necessary, I find a way
+to prove myself wrong too.
