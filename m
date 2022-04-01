@@ -2,128 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB7F1C433F5
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 08:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F055DC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 08:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344171AbiDAIHi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 04:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
+        id S240197AbiDAIXl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 04:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344170AbiDAIHe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 04:07:34 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 413732675B6
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 01:05:45 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id bg10so4191753ejb.4
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 01:05:45 -0700 (PDT)
+        with ESMTP id S229568AbiDAIXj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 04:23:39 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD1A724A8AE
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 01:21:48 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id y10so2047567edv.7
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 01:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8d1B/E80vSKUrCz3Phw0NLZ+foQaHDh5mudwyXqey6I=;
-        b=lliGJ8RLFaijb1hrH6PgFdsGDbS4zZ6Mo2BN8AWbPu/XwN6ToMYvwVTWrZ5VAtm+DT
-         l1/NHqHysakrRRXj4qbS+9eAwilURRmu4uL1ccM8Qr9tt7yGQnFBC9EG/w8JTLsh07+T
-         PET30E0AofH639mV4Gk7RXCPT8XkBswTydIiGeDYTrkvkk4Y0pA9GSIs2WDXNLtrQLn7
-         MIUlITMHugu+masLGCXTGX2pOAxOgU2lXv1gJdFyMGNW/RuxtkyJp9UlP+ru1R3LktAS
-         5uoDfLjcVHGpvQgfq+FvZCkKHmhYN8AiM4Jzmx3TkRJe3EN6RgVbWH/JN9XrCEqrrcio
-         sNdQ==
+        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=8kWQc5xt7PXtMNNc0GskSvCbWTVgHRun+GPm9Gh63Cs=;
+        b=hP9nh7krf0uKkSOwzvNFyodubx11ZQ7I7gLBw2tAJLdt/YAE4iGNIRkMK/q1vGCH8j
+         BmI93LUwo8OTt4EHopfYPOY4fBgUoDTc7NqSkXDrkUc4kGZz82s+/VQ8azH1bBgdcLUv
+         xr/SmGoyTPY4dNc3lH2Q3Q523gorcde1GQxrc13WsXNAoqZ+T9/3X3V0dXkMHxgdFalP
+         OLy7M1AQHn6HZrqeuZ6ngYWQTWxviKvvsHQ+rywBg4/bhGOJTGk28ZWycVbBX5eWVEOk
+         4cy2RZYqFp57LNhHeMPMZJzzwE9mUx5hZKj3oZpsvg7znaDXmrulU2jNxLXulmbfc8uW
+         y9qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=8d1B/E80vSKUrCz3Phw0NLZ+foQaHDh5mudwyXqey6I=;
-        b=znPNfnEbUZesJrBjixSz3CL3VErjGDLbKA8BWRJ6C+D4XHBe2BQQ+AEXMI4hDiRCfu
-         tuzpTUlo95TTex7CRoss4WgoD7e/uoB0E1vEmpavufeMXf3GRw8oW/YRv57G3O2WwHgt
-         wL//Xx77CMjI7cRzb+LBLQyiD7emolY9pfbZUMUfRnTidGSx4cKzsPV2vKzj1DRN/yeF
-         hxrqcDiVTrzQMiab5/UWBYhaULehXlPO18x9nTJ6w0GzYbdlMuu9FtVsBm1kiO+c8s9Q
-         zARAwgxTL88UiMMwEHB6MCMBkCKNYMs2bCSarr2vfybt4EnHTK3lnpUCxzgNfw1kMw14
-         f1Iw==
-X-Gm-Message-State: AOAM530WVbhZ9xtHZXqccIc6WQvci8idxYlLFR79yH84WpdkZgQe81ZJ
-        CcI5W52Z8ZHPBRTKTnkKefA=
-X-Google-Smtp-Source: ABdhPJyTirApvzLdv7sT184fwU4TzCXQKZcct0TT2i0H8xx9f4giyDCjOXnrbHPqn+RO5lnpMepfLA==
-X-Received: by 2002:a17:907:c00b:b0:6df:cd40:afc4 with SMTP id ss11-20020a170907c00b00b006dfcd40afc4mr8231508ejc.629.1648800343537;
-        Fri, 01 Apr 2022 01:05:43 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g16-20020a170906521000b006d58773e992sm740556ejm.188.2022.04.01.01.05.42
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=8kWQc5xt7PXtMNNc0GskSvCbWTVgHRun+GPm9Gh63Cs=;
+        b=LOXPiLR3yBY+Q2eWAxM+HZ5nzcx9lFfatPqRawb1ybkD93xsdwdGrI9sIlNYPWetAJ
+         wKtUueOnBW4YNoncN846EVCsCaW4iI3OUihfkYeErJUjFzFZnK2ZjrdtPMsjaNZmmfRM
+         fmV4sEXVP/Qis+VEVf7THNktwKcf8WV9FahGiOegqFWAVgmYIKvwmbjV0SE1lZgV9xFE
+         64AEWJHL6KFm4yyK9iXwlln0eaPibpf0t16cExIph9xLd5ArQNT2DdHHAMF2mJtmWbjp
+         jfhhfdGaVFw8TBARvLQ9+D7jB0AL0qthIbUPvGKB9FJ2+kKmcqB/hLb6upeHcJEwkvty
+         TUiQ==
+X-Gm-Message-State: AOAM532jTf8enZa3DGj4ZdNCIwEp97us7VAOWK76T6XGJjQg0Zv/iEMO
+        c6qT4a4s6Mj7RBxHNXMBZ1IR24j3oW5kWQ==
+X-Google-Smtp-Source: ABdhPJx0/65QcPwnV0z+wvvKINdU5yyZcB2x3Kxr9+PoZvMGWqxuhp+5p6VYGRrG/cPIHV+eKPBeYQ==
+X-Received: by 2002:aa7:c345:0:b0:419:12ae:449c with SMTP id j5-20020aa7c345000000b0041912ae449cmr20014616edr.300.1648801307190;
+        Fri, 01 Apr 2022 01:21:47 -0700 (PDT)
+Received: from vmiklos.hu (92-249-130-49.digikabel.hu. [92.249.130.49])
+        by smtp.gmail.com with ESMTPSA id z6-20020a056402274600b004194fc1b7casm889218edd.48.2022.04.01.01.21.46
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 01:05:42 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1naCHu-000w2N-8U;
-        Fri, 01 Apr 2022 10:05:42 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com,
-        gitster@pobox.com, Tao Klerks <tao@klerks.biz>
-Subject: Re: [WIP v1 3/4] mv: add advise_to_reapply hint for moving file
- into cone
-Date:   Fri, 01 Apr 2022 10:02:56 +0200
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220331091755.385961-4-shaoxuan.yuan02@gmail.com>
- <220331.86ilruqup6.gmgdl@evledraar.gmail.com>
- <CAJyCBORNQEN4WNfuYbO264qz0W6d-rbT6z=T_-AZF5jY36c1yQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <CAJyCBORNQEN4WNfuYbO264qz0W6d-rbT6z=T_-AZF5jY36c1yQ@mail.gmail.com>
-Message-ID: <220401.867d89p6sp.gmgdl@evledraar.gmail.com>
+        Fri, 01 Apr 2022 01:21:46 -0700 (PDT)
+Date:   Fri, 1 Apr 2022 10:21:45 +0200
+From:   Miklos Vajna <vmiklos@vmiklos.hu>
+To:     git@vger.kernel.org
+Subject: git log --since to not stop after first old commit?
+Message-ID: <Yka2GSGs3EIXm6Xt@vmiklos.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Fri, Apr 01 2022, Shaoxuan Yuan wrote:
+I wanted to look at commits of a contributor from the last year, and
+noticed that I only see commits from this year, not last year when I use:
 
-> On Thu, Mar 31, 2022 at 6:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> More odd indentation, and the braces aren't needed.
->
-> Got me again :-( Will make a change.
->
->> >       }
->> >
->> >       if (gitmodules_modified)
->> > @@ -392,6 +398,9 @@ int cmd_mv(int argc, const char **argv, const char=
- *prefix)
->> >                              COMMIT_LOCK | SKIP_IF_UNCHANGED))
->> >               die(_("Unable to write new index file"));
->> >
->> > +     if (advise_to_reapply)
->> > +             printf(_("Please use \"git sparse-checkout reapply\" to =
-reapply the sparsity.\n"));
->> > +
->>
->> Please see 93026558512 (tracking branches: add advice to ambiguous
->> refspec error, 2022-03-28) (the OID may change after I send this, as
->> it's in "seen") for how to add new advise, i.e. we use advise(), add an
->> enum field, config var etc.
->
-> I actually did use advise(), but I noticed that it prints to stderr
-> and ... nevermind,
-> I realized that printing to stderr is OK. But can I print to stdout
-> since I think users should
-> be "reminded" instead of "warned"?
->
-> Anyway, I think using advice() is probably better.
+        git log --author="that person" --since="1 year ago"
 
-We've typically used stderr in git not to mean "error", but to
-distinguish "chatty" and non-primary output from non-chatty.
+Digging around in the history, one other contributor pushed a mistake on
+1st Jan, where the author date was supposed to be 2022-01-01, but
+happened to be 2021-01-01. Knowing that, it makes sense that 'git log'
+stopped at that commit by default.
 
-So (leaving aside that we're unlikely to add advice to plumbing) if you
-emitted a warning() or advice from git-ls-tree you should be able to run
-something like:
+I wonder though, is there any option to "force" git log to walk all
+reachable commits from HEAD, but just show the ones which match the
+--since criteria?
 
-    git ls-tree -r HEAD >output-for-a-script
+Or is this need so special that the best is to parse the output of 'git
+rev-list' and do my own filtering for author and date?
 
-And get the advise() on stderr, while the "primary" output is on stdout.
+Thanks,
 
-There's a recent-ish (last year or so) thread where I think Jeff King
-explained this better than I'm doing here, but I couldn't find it with a
-quick search.
-
-In other words, you can just use advise() here, don't worry about it
-writing to stderr.
-
-
+Miklos
