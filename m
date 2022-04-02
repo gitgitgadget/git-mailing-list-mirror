@@ -2,207 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAD4AC433F5
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E0BC433F5
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245135AbiDBKLT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47712 "EHLO
+        id S243994AbiDBKvj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:51:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240000AbiDBKLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:11:17 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D0A82DD62
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:09:19 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id r13so10578953ejd.5
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:09:19 -0700 (PDT)
+        with ESMTP id S230088AbiDBKvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 06:51:39 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E3B1403E6
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:49:47 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id qh7so695944ejb.11
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=r7ObhGA6f5PbirC6g9OLsL9pid5jpW8rnQtjza8sEVY=;
-        b=3MA3hOMjTkFk6WUeQ2F5fDT3lyL4RmAHbqa8BOuLr6gxpyPwsf1KtDXNy/I7PNZor/
-         1GPauYVn2S2y8fVFKf9vQ7fmostiYT/rto1bwzQfwW8nTakTTO6YtwDOZRWK2MR52Ojp
-         ENHF3OxjCMEaLabK/tOfVZ6k0TP6hcazHlC2C+uh+jvrbUQLRK0bIY4Burzgk0FVe1Xo
-         /HcpuHBXcn7Ig3dXod9jZhNtf4/VdrELZsLJ4gwGR6Y/9Z6tXcGVJ0KHjPhZ/znsMyrh
-         Q6v5UPFRfaPYAN0A4CJjRBgfR57IeJfC+njNCJ1YGhtCHz5cfR2LrjsB3b9KI05Zp58F
-         SwsQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=K/ixYaUEFShIUcTGyng3YBJHseEtjibBuuiD9wmL/bw=;
+        b=IsDe7tq+WaXCa2EgoKS0z7XpgGtS+uvkz2JK3SNo7pWaS8OdQST4Inzk5qKrs++bNk
+         XFCcyIYdcBINRTWNjevh4sEqtjWEqLdqocQIWB+SZHRq6fDo0/ps/BcYWzJeyJpOC+td
+         sKnerGDKFatbj1Dsk2H7p0aWuvXbE8nRQ6g/nDsnAdVsPVaySn/DRyJQdOwEIKQnbrzk
+         PQlXO6f4xTDqxroe618Q1ZxFuYaNP4kw7eo352lFYeFhJ8wDF30TzJcDzlMFnZ285Zwx
+         4u0BppVzr56xHJv89kGJGld3IVQdT4s6blBNqpo5qBfwb3WBvfoxv2LVVREINrDwTZ//
+         N6Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=r7ObhGA6f5PbirC6g9OLsL9pid5jpW8rnQtjza8sEVY=;
-        b=OkUTaF8oRQhMIUSYLMtkF8LYatN7tlRXowkTJDfviCZuABySdBBuJ7Cs7mp4440uTG
-         L0MLb+3YgRAIYFHVX2Z7c9JGakVOugE85Ah5trn6+j4auNccQ1r24bsrtYMNKj3LvRIG
-         fTcfQ/Bodp+zF0hUGmStNtkaGJwxvV+SuKvmKdjrfJC1m67hBfGpHPWMMvU4tzLCyOtv
-         C0PzUivbLtDdPoUHkhoytf5otLrsg3sHvzagX+HZMZeMR5DLdIn7rTUBoFxg+4okTd3U
-         JKs4WLdTZ5cHmveQTQiNRAsoSR5stFDV7wOjbzfc/YjUw7JIL+tKK/1/oMInTs5C/AJl
-         Iqiw==
-X-Gm-Message-State: AOAM532HnXTSvPaAP3PLJCTUqMbvj/3p7tpCgtVDM8t8CV+YVbhSeaUH
-        LfJN//A/DbVs9XUCAIhBJv82uw==
-X-Google-Smtp-Source: ABdhPJyXQEfg/tIsnxGA68ybrwlc/0jm6jm7jGfIZwhR6XTiUr4rkZoWFdkYamEpXV0+t6oWVRZyIQ==
-X-Received: by 2002:a17:907:1614:b0:6df:678a:a7d5 with SMTP id hb20-20020a170907161400b006df678aa7d5mr3199516ejc.719.1648894157977;
-        Sat, 02 Apr 2022 03:09:17 -0700 (PDT)
-Received: from vmiklos.hu (92-249-130-49.digikabel.hu. [92.249.130.49])
-        by smtp.gmail.com with ESMTPSA id hp11-20020a1709073e0b00b006dfd53a0e39sm1934994ejc.135.2022.04.02.03.09.17
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=K/ixYaUEFShIUcTGyng3YBJHseEtjibBuuiD9wmL/bw=;
+        b=canYJ57GuTQXAlrndJC3o6hSg4SXtwJDZvid3qzy54fR6Wo9lDkLi3Izm/ZhjbkDYX
+         GpUYQZY8gJmEqhK5NKpwqpTurZLsNx8H63sr2rFj+6y41va8ZRd7uBx56/rAXZ2JRaLP
+         UJp+GpLUmYt6D52RWNt8eCbGAiHSWMp2lhKx/lbgmfYMlNH5YgWx8Wy47aZPV3KmBsyt
+         3KU8Nw6/cQcpDWrOpWtYQu3qxqZHo+yDxBSSpBMXTUbSVijP3SiOdVgy6GWi900bev8a
+         gSyVBIoXzSiXl8ZEczVAiEYQq4VhCgF7CRmJsKJCN5TkIdoG4/ZiWQfCFiv7vGBgYIrB
+         uWNw==
+X-Gm-Message-State: AOAM532s2LZSa6hMfOFzhtSJu3Gq2RR10PteGXio24oq2jz03m+tmGBh
+        3bAib2pUtCcPw+Lcf6tDpqNsBV+pHvejiQ==
+X-Google-Smtp-Source: ABdhPJykLpGQhN8Whw86sdnb7KZfUV0DdCzPWQOmfwHxYtOfGNhm/BPakpqmRPZG0r8jrbECcZE6iw==
+X-Received: by 2002:a17:907:980d:b0:6d6:f910:513a with SMTP id ji13-20020a170907980d00b006d6f910513amr3157072ejc.643.1648896586111;
+        Sat, 02 Apr 2022 03:49:46 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:09:17 -0700 (PDT)
-Date:   Sat, 2 Apr 2022 12:09:15 +0200
-From:   Miklos Vajna <vmiklos@vmiklos.hu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2] git-log: add a --since-as-filter option
-Message-ID: <Ykggy4poryul8uyG@vmiklos.hu>
-References: <xmqq1qygy9nd.fsf@gitster.g>
- <YkdwbUqM45T06R00@vmiklos.hu>
+        Sat, 02 Apr 2022 03:49:45 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 01/27] t/helper/test-fast-rebase.c: don't leak "struct strbuf"
+Date:   Sat,  2 Apr 2022 12:49:15 +0200
+Message-Id: <patch-v5-01.27-e20f951a64c-20220402T102002Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
+In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
+References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YkdwbUqM45T06R00@vmiklos.hu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is similar to --since, but it will filter out not matching commits,
-rather than stopping at the first not matching commit.
+Fix a memory leak that's been with us since f9500261e0a (fast-rebase:
+write conflict state to working tree, index, and HEAD, 2021-05-20)
+changed this code to move these strbuf_release() into an if/else
+block.
 
-This is useful if you e.g. want to list the commits from the last year,
-but one odd commit has a bad commit date and that would hide lots of
-earlier commits in that range.
+We'll also add to "reflog_msg" in the "else" arm of the "if" block
+being modified here, and we'll append to "branch_msg" in both
+cases. But after f9500261e0a only the "if" block would free these two
+"struct strbuf".
 
-The behavior of --since is left unchanged, since it's valid to depend on
-its current behavior.
-
-Signed-off-by: Miklos Vajna <vmiklos@vmiklos.hu>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
+ t/helper/test-fast-rebase.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Hi,
-
-On Fri, Apr 01, 2022 at 11:36:48PM +0200, Miklos Vajna <vmiklos@vmiklos.hu> wrote:
-> Here is a patch that does this.
-
-Oops, forgot the sign-off, fixed now.
-
-Regards,
-
-Miklos
-
- Documentation/rev-list-options.txt |  5 +++++
- revision.c                         | 10 ++++++++++
- revision.h                         |  1 +
- t/t4217-log-limit.sh               | 32 ++++++++++++++++++++++++++++++
- 4 files changed, 48 insertions(+)
- create mode 100755 t/t4217-log-limit.sh
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index fd4f4e26c9..ba01b1ba06 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -25,6 +25,11 @@ ordering and formatting options, such as `--reverse`.
- --after=<date>::
- 	Show commits more recent than a specific date.
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+index fc2d4609043..993b90eaedd 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/t/helper/test-fast-rebase.c
+@@ -201,8 +201,6 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 		}
+ 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
+ 			die(_("unable to update HEAD"));
+-		strbuf_release(&reflog_msg);
+-		strbuf_release(&branch_name);
  
-+--since-as-filter=<date>::
-+	Show all commits more recent than a specific date. This visits all
-+	commits in the range, rather than stopping at the first commit which is older
-+	than a specific date.
+ 		prime_cache_tree(the_repository, the_repository->index,
+ 				 result.tree);
+@@ -221,5 +219,8 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	if (write_locked_index(&the_index, &lock,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 		die(_("unable to write %s"), get_index_file());
 +
- --until=<date>::
- --before=<date>::
- 	Show commits older than a specific date.
-diff --git a/revision.c b/revision.c
-index 2646b78990..ebc95319d6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
- 		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
- 		    !revs->line_level_traverse)
- 			continue;
-+		if (revs->max_age_as_filter != -1 && (commit->date < revs->max_age_as_filter) &&
-+		    !revs->line_level_traverse)
-+			continue;
- 		date = commit->date;
- 		p = &commit_list_insert(commit, p)->next;
- 
-@@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
- 	revs->dense = 1;
- 	revs->prefix = prefix;
- 	revs->max_age = -1;
-+	revs->max_age_as_filter = -1;
- 	revs->min_age = -1;
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
-@@ -2218,6 +2222,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-+	} else if ((argcount = parse_long_opt("since-as-filter", argv, &optarg))) {
-+		revs->max_age_as_filter = approxidate(optarg);
-+		return argcount;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-@@ -3862,6 +3869,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->min_age != -1 &&
- 	    comparison_date(revs, commit) > revs->min_age)
- 			return commit_ignore;
-+	if (revs->max_age_as_filter != -1 &&
-+	    comparison_date(revs, commit) < revs->max_age_as_filter)
-+			return commit_ignore;
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
- 		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
-diff --git a/revision.h b/revision.h
-index 5bc59c7bfe..e80c148b19 100644
---- a/revision.h
-+++ b/revision.h
-@@ -263,6 +263,7 @@ struct rev_info {
- 	int skip_count;
- 	int max_count;
- 	timestamp_t max_age;
-+	timestamp_t max_age_as_filter;
- 	timestamp_t min_age;
- 	int min_parents;
- 	int max_parents;
-diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
-new file mode 100755
-index 0000000000..5b7d30d5ad
---- /dev/null
-+++ b/t/t4217-log-limit.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='git log with filter options limiting the output'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_COMMIT_GRAPH=0
-+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
-+
-+test_expect_success 'setup test' '
-+	git init &&
-+	echo a > file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-02-01 0:00" git commit -m init &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-01-01 0:00" git commit -m second &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-03-01 0:00" git commit -m third
-+'
-+
-+test_expect_success 'git log --since-as-filter' '
-+	git log --since-as-filter="2022-01-01" --pretty="format:%s" > actual &&
-+	test_i18ngrep init actual &&
-+	! test_i18ngrep second actual &&
-+	test_i18ngrep third actual
-+'
-+
-+test_done
++	strbuf_release(&reflog_msg);
++	strbuf_release(&branch_name);
+ 	return (result.clean == 0);
+ }
 -- 
-2.34.1
+2.35.1.1585.gd85f8dcb745
 
