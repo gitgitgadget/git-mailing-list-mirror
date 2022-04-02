@@ -2,212 +2,242 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82613C433F5
-	for <git@archiver.kernel.org>; Fri,  1 Apr 2022 21:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B84B3C433EF
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 01:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352804AbiDAVim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Apr 2022 17:38:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53794 "EHLO
+        id S232492AbiDBBZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Apr 2022 21:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235288AbiDAVik (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Apr 2022 17:38:40 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9741A56235
-        for <git@vger.kernel.org>; Fri,  1 Apr 2022 14:36:49 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id a17so4429317edm.9
-        for <git@vger.kernel.org>; Fri, 01 Apr 2022 14:36:49 -0700 (PDT)
+        with ESMTP id S229819AbiDBBZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Apr 2022 21:25:54 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55D912927B
+        for <git@vger.kernel.org>; Fri,  1 Apr 2022 18:24:02 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id z92so4861587ede.13
+        for <git@vger.kernel.org>; Fri, 01 Apr 2022 18:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to;
-        bh=dpZ9VfAYLpWuoM2cDKk3F/oax/MqZo1ZSgHBvV3/G58=;
-        b=a2ryAWfUbdSoo8TZ6jBx37TNfVavP5BX1smsIKpwv3PtpJftWr47q2vBDlzu7Z/yiv
-         4HpT5aNnLddNg1PDI164gpDsFo0vwvRIlEkXcnZzzKjlCrntOPs9pZrtDBdy6/+qe2ei
-         q0r8K1G9a6a0Jmf1UxgWqhw5euIZ+PeIrsjL2ST2SWfEddG2iC+hv2Jvn/hAp25Jg/C6
-         wlt14JEf5c5mjQGOtc7MGqXQUaP+6BI9vLWC46luKoGvnRUvtkjiMKspOaZy/COrhTTV
-         UDyQbV/V5Z8ztaL+FffS3GAx7DeDpImaXt0w/nSroB8+GCUfnsEtQ8wo7AA956z/mn1N
-         JL7A==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=hVVL/su3ImvqUS9egE1dgJz/2xxgo2SzSErmMzAetjc=;
+        b=EwymB0C2BJPVAJMszbNr3MaXkMZi/TSWvpg780V7ZeP6rUdz7LcFQgfCkdeY5kuVEI
+         P0lcdSDm5VdJHAn8HMy8MVPAuYMYtWImcvLtrjaocy4OQl/CWZJy5rvm1YZLwUaHBA+6
+         ZW3XS413KNd0U+El7XD/JXYHYmgv+1TWbYR54upoXWjQqn0jFZbdLE8JjeW+ZUvf947K
+         lVka9WWVV5PnShO7+S/GYq7mItz8Gvm+AHdab9XlC7/e2kAS9qJOTFEiBd8Aoub0vo+e
+         ZtSgpDjE8wSZDhCA+nffreq3aMaymPln9ZLb9bIyk1c1A/lPPN2LE9pblBriK6+0r0Px
+         Ykeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to;
-        bh=dpZ9VfAYLpWuoM2cDKk3F/oax/MqZo1ZSgHBvV3/G58=;
-        b=n/itUy8aYMIyMtK0RO5EVbv4RhRBHLHq19P9lYpQ5aSA772XfX/J6RwX+Bhrw8ukHO
-         IMu5aeVxBVnpcXc9ZB1k6bYSgKzTScIwOky5Tzjev9MF9zMM4CczxDIlqs7hT4QR7SUm
-         mbTgqQHxQPCZVbhfIwloQFEOnsl1UHMr3qgUmdyD2dgSbs/U+tRrMVGmM48plN/vIqQt
-         PP+WVRl9mghnE7Fu3X0QgkCcd3JpNF0y5OG2mzHzxPrtPsVo189WJsLBku6VdC6X+aJ2
-         IDDJwshqTc+98qngLLjVVgkVQ7cEivNsfLXlbkI5Av2OaEhd4eCHJmEEoiFeDdvY9T1w
-         /WZg==
-X-Gm-Message-State: AOAM531XrYaeDmA5nWRSzvI9y0rKOjQXeUJg88Zckb/hz8N33JrlKOgb
-        gf5/Du64UABoNJrbmMjcJcePnP0ZmJoraIjN
-X-Google-Smtp-Source: ABdhPJwxRrEpUWwYvzosj4kimdyEgFTd2C0ryAeu0eOTiytvQJBd6Uo70LZnMnRWLIhCpijAbda/Ow==
-X-Received: by 2002:a05:6402:22db:b0:419:a146:7ba2 with SMTP id dm27-20020a05640222db00b00419a1467ba2mr22830092edb.399.1648849008058;
-        Fri, 01 Apr 2022 14:36:48 -0700 (PDT)
-Received: from vmiklos.hu (92-249-130-49.digikabel.hu. [92.249.130.49])
-        by smtp.gmail.com with ESMTPSA id v17-20020a170906339100b006e11af84acasm1418194eja.128.2022.04.01.14.36.47
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=hVVL/su3ImvqUS9egE1dgJz/2xxgo2SzSErmMzAetjc=;
+        b=5LtqmxM+fcwgGaMTwHFhKKs/6RkOxIcKDJnshSDjYIu58SzV00ExoU5mipH8oPEilt
+         su5syeFueCHdfEtDnyXj7Q6mGu26zgLOiCpBUPRreOd7rXqN43Ls0ZCJ3K0dcRUtBs5+
+         +pD9+IIrGborrcE0GqJJN3n5JiWDYD92cuC3ZdHlOVkCwdJ2yysgfVhjJYRtg/okFfui
+         Gclmi4jKD62zkxlwxdj5HC5IXO7+DaT9IDg3SLTnOWHr53puXE1ebbYaOp6PEqRpj9Za
+         7AVwGggqbuVQzCqO7iS9BeMtvV6R5AJ4IHsZ6Gx5znIhwN4j8DeORequH1jzbCAQIsMU
+         R7vA==
+X-Gm-Message-State: AOAM533rDpCb7fm3Qb6ESBgCAjUyvUxln+K9GfEdnZz5AjhP0TIiT+Zr
+        KJmFCwtsTBSM7DoCJ169lbbmS7PSZEM=
+X-Google-Smtp-Source: ABdhPJzjhJEp/nR4RBmVDJg+af/EV/wTK2ABXvmegX7bSMNVu7wMkCEKhtjm/dBcqcfj6N+dp238/g==
+X-Received: by 2002:a05:6402:60e:b0:419:d2e:bcea with SMTP id n14-20020a056402060e00b004190d2ebceamr23917446edv.326.1648862641202;
+        Fri, 01 Apr 2022 18:24:01 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ks20-20020a170906f85400b006e091a0cf8bsm1564248ejb.16.2022.04.01.18.24.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 14:36:47 -0700 (PDT)
-Date:   Fri, 1 Apr 2022 23:36:45 +0200
-From:   Miklos Vajna <vmiklos@vmiklos.hu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH] git-log: add a --since-as-filter option
-Message-ID: <YkdwbUqM45T06R00@vmiklos.hu>
+        Fri, 01 Apr 2022 18:24:00 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1naSUi-001YjN-4e;
+        Sat, 02 Apr 2022 03:24:00 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t5510-fetch: upgrade to a more modern style
+Date:   Sat, 02 Apr 2022 03:14:37 +0200
+References: <20220331175412.305968-1-gitter.spiros@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220331175412.305968-1-gitter.spiros@gmail.com>
+Message-ID: <220402.86v8vsmg5r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1qygy9nd.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is similar to --since, but it will filter out not matching commits,
-rather than stopping at the first not matching commit.
 
-This is useful if you e.g. want to list the commits from the last year,
-but one odd commit has a bad commit date and that would hide lots of
-earlier commits in that range.
+On Thu, Mar 31 2022, Elia Pinto wrote:
 
-The behavior of --since is left unchanged, since it's valid to depend on
-its current behavior.
----
+> Clean up the code style so all the tests, and not just a few,
+> that chdir around isolate themselves in a subshell.
 
-Hi,
+Sounds sensible.
 
-On Fri, Apr 01, 2022 at 10:51:34AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> We could add a --since-as-filter= option or something, but then the
-> user needs to be careful when to stop (and digging down to the root
-> of the history, i.e. "never stop", may be an acceptable answer to
-> some projects).
+>  test_expect_success "fetch test" '
+> -	cd "$D" &&
+> -	echo >file updated by origin &&
+> -	git commit -a -m "updated by origin" &&
+> -	cd two &&
+> -	git fetch &&
+> -	git rev-parse --verify refs/heads/one &&
+> -	mine=$(git rev-parse refs/heads/one) &&
+> -	his=$(cd ../one && git rev-parse refs/heads/main) &&
+> -	test "z$mine" = "z$his"
+> +	(
+> +		cd "$D" &&
+> +		echo >file updated by origin &&
+> +		git commit -a -m "updated by origin" &&
+> +		(
+> +			cd two &&
 
-Here is a patch that does this. As a somewhat arbitrary testcase, the
-LibreOffice core.git repo has 474064 commits and --since-as-filter
-finishes in 688 ms for a sample query (and expected output), while I got
-empty output with --since previously. I would argue this is an
-acceptable trade-off.
+Why the two levels of subshelling though? We don't need a new one every
+time we change directories, or do we?
 
-What do you think?
+The point is usually to avoid cd-ing in our main shell, not that each
+level needs a new shell & indentation...
 
-Thanks,
+> -	test_cmp expected actual'
+> +	(
+> +		cd "$D" &&
+> +		(
+> +			cd three &&
 
-Miklos
+ditto..
 
- Documentation/rev-list-options.txt |  5 +++++
- revision.c                         | 10 ++++++++++
- revision.h                         |  1 +
- t/t4217-log-limit.sh               | 32 ++++++++++++++++++++++++++++++
- 4 files changed, 48 insertions(+)
- create mode 100755 t/t4217-log-limit.sh
+> +			git fetch &&
+> +			git rev-parse --verify refs/heads/two &&
+> +			git rev-parse --verify refs/heads/one &&
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index fd4f4e26c9..ba01b1ba06 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -25,6 +25,11 @@ ordering and formatting options, such as `--reverse`.
- --after=<date>::
- 	Show commits more recent than a specific date.
- 
-+--since-as-filter=<date>::
-+	Show all commits more recent than a specific date. This visits all
-+	commits in the range, rather than stopping at the first commit which is older
-+	than a specific date.
-+
- --until=<date>::
- --before=<date>::
- 	Show commits older than a specific date.
-diff --git a/revision.c b/revision.c
-index 2646b78990..ebc95319d6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
- 		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
- 		    !revs->line_level_traverse)
- 			continue;
-+		if (revs->max_age_as_filter != -1 && (commit->date < revs->max_age_as_filter) &&
-+		    !revs->line_level_traverse)
-+			continue;
- 		date = commit->date;
- 		p = &commit_list_insert(commit, p)->next;
- 
-@@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
- 	revs->dense = 1;
- 	revs->prefix = prefix;
- 	revs->max_age = -1;
-+	revs->max_age_as_filter = -1;
- 	revs->min_age = -1;
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
-@@ -2218,6 +2222,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-+	} else if ((argcount = parse_long_opt("since-as-filter", argv, &optarg))) {
-+		revs->max_age_as_filter = approxidate(optarg);
-+		return argcount;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-@@ -3862,6 +3869,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->min_age != -1 &&
- 	    comparison_date(revs, commit) > revs->min_age)
- 			return commit_ignore;
-+	if (revs->max_age_as_filter != -1 &&
-+	    comparison_date(revs, commit) < revs->max_age_as_filter)
-+			return commit_ignore;
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
- 		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
-diff --git a/revision.h b/revision.h
-index 5bc59c7bfe..e80c148b19 100644
---- a/revision.h
-+++ b/revision.h
-@@ -263,6 +263,7 @@ struct rev_info {
- 	int skip_count;
- 	int max_count;
- 	timestamp_t max_age;
-+	timestamp_t max_age_as_filter;
- 	timestamp_t min_age;
- 	int min_parents;
- 	int max_parents;
-diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
-new file mode 100755
-index 0000000000..5b7d30d5ad
---- /dev/null
-+++ b/t/t4217-log-limit.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='git log with filter options limiting the output'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_COMMIT_GRAPH=0
-+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
-+
-+test_expect_success 'setup test' '
-+	git init &&
-+	echo a > file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-02-01 0:00" git commit -m init &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-01-01 0:00" git commit -m second &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-03-01 0:00" git commit -m third
-+'
-+
-+test_expect_success 'git log --since-as-filter' '
-+	git log --since-as-filter="2022-01-01" --pretty="format:%s" > actual &&
-+	test_i18ngrep init actual &&
-+	! test_i18ngrep second actual &&
-+	test_i18ngrep third actual
-+'
-+
-+test_done
--- 
-2.34.1
+FWIW an alternative here is to use git -C "$D/three", but that may end
+up being too verbose..
 
+>  test_expect_success 'fetch --prune handles overlapping refspecs' '
+> -	cd "$D" &&
+> -	git update-ref refs/pull/42/head main &&
+> -	git clone . prune-overlapping &&
+> -	cd prune-overlapping &&
+> -	git config --add remote.origin.fetch refs/pull/*/head:refs/remotes/origin/pr/* &&
+> -
+> -	git fetch --prune origin &&
+> -	git rev-parse origin/main &&
+> -	git rev-parse origin/pr/42 &&
+> -
+> -	git config --unset-all remote.origin.fetch &&
+> -	git config remote.origin.fetch refs/pull/*/head:refs/remotes/origin/pr/* &&
+> -	git config --add remote.origin.fetch refs/heads/*:refs/remotes/origin/* &&
+> -
+> -	git fetch --prune origin &&
+> -	git rev-parse origin/main &&
+> -	git rev-parse origin/pr/42
+> +	(
+> +		cd "$D" &&
+> +		git update-ref refs/pull/42/head main &&
+> +		git clone . prune-overlapping &&
+> +		cd prune-overlapping &&
+> +		git config --add remote.origin.fetch refs/pull/*/head:refs/remotes/origin/pr/* &&
+> +		git fetch --prune origin &&
+> +		git rev-parse origin/main &&
+> +		git rev-parse origin/pr/42 &&
+> +		git config --unset-all remote.origin.fetch &&
+> +		git config remote.origin.fetch refs/pull/*/head:refs/remotes/origin/pr/* &&
+> +		git config --add remote.origin.fetch refs/heads/*:refs/remotes/origin/* &&
+> +		git fetch --prune origin &&
+> +		git rev-parse origin/main &&
+> +		git rev-parse origin/pr/42
+> +	)
+>  '
+
+Please don't lose grouping whitespace while at it.  I.e. the pre-image
+intentionally splits "steps" by \n\n.
+
+>  
+>  test_expect_success 'fetch --prune --tags prunes branches but not tags' '
+> -	cd "$D" &&
+> -	git clone . prune-tags &&
+> -	cd prune-tags &&
+> -	git tag sometag main &&
+> -	# Create what looks like a remote-tracking branch from an earlier
+> -	# fetch that has since been deleted from the remote:
+> -	git update-ref refs/remotes/origin/fake-remote main &&
+> -
+> -	git fetch --prune --tags origin &&
+> -	git rev-parse origin/main &&
+> -	test_must_fail git rev-parse origin/fake-remote &&
+> -	git rev-parse sometag
+> +	(
+> +		cd "$D" &&
+> +		git clone . prune-tags &&
+> +		cd prune-tags &&
+> +		git tag sometag main &&
+> +		# Create what looks like a remote-tracking branch from an earlier
+> +		# fetch that has since been deleted from the remote:
+> +		git update-ref refs/remotes/origin/fake-remote main &&
+> +		git fetch --prune --tags origin &&
+> +		git rev-parse origin/main &&
+> +		test_must_fail git rev-parse origin/fake-remote &&
+> +		git rev-parse sometag
+> +	)
+>  '
+>  
+>  test_expect_success 'fetch --prune --tags with branch does not prune other things' '
+> -	cd "$D" &&
+> -	git clone . prune-tags-branch &&
+> -	cd prune-tags-branch &&
+> -	git tag sometag main &&
+> -	git update-ref refs/remotes/origin/extrabranch main &&
+> -
+> -	git fetch --prune --tags origin main &&
+> -	git rev-parse origin/extrabranch &&
+> -	git rev-parse sometag
+> +	(
+> +		cd "$D" &&
+> +		git clone . prune-tags-branch &&
+> +		cd prune-tags-branch &&
+> +		git tag sometag main &&
+> +		git update-ref refs/remotes/origin/extrabranch main &&
+> +		git fetch --prune --tags origin main &&
+> +		git rev-parse origin/extrabranch &&
+> +		git rev-parse sometag
+> +	)
+>  '
+
+Skimming these these seem like much of the same code over & over again
+with tiny variations. Perhaps even better would be splitting much of
+this into a helper function(s)?
+
+> -	git -C atomic fetch --atomic origin &&
+> -	git -C atomic rev-parse origin/atomic-branch >actual &&
+> -	test_cmp expected actual &&
+> -	test $oid = "$(git -C atomic rev-parse --verify FETCH_HEAD)"
+> +	(
+> +		cd "$D" &&
+> +		git clone . atomic &&
+> +		git branch atomic-branch &&
+> +		oid=$(git rev-parse atomic-branch) &&
+> +		echo "$oid" >expected &&
+> +		git -C atomic fetch --atomic origin &&
+> +		git -C atomic rev-parse origin/atomic-branch >actual &&
+> +		test_cmp expected actual &&
+> +		test $oid = "$(git -C atomic rev-parse --verify FETCH_HEAD)"
+
+speaking of modern style, perhaps it's worth it to fix these exit code
+hiding issues? I.e. use test_cmp, test_cmp_rev etc.
+
+> +		head_oid=$(git rev-parse HEAD) &&
+> +		cat >expected <<-EOF &&
+> +			prepared
+> +			$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
+> +			$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
+> +			committed
+> +			$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-1
+> +			$ZERO_OID $head_oid refs/remotes/origin/atomic-hooks-2
+> +		EOF
+
+There was a discussion on-list the other day about how this particular
+here-doc style is the odd one out, and we'd prefer the content aligned
+with the "cat".
+
+So if we're re-indenting all of these that would be a nice change while
+we're at it, particularly as it would make the diff smaller, they'd
+already be at the "right" indent level.
