@@ -2,121 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57B3AC433F5
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 16:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14956C433EF
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 16:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357855AbiDBQNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 12:13:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50984 "EHLO
+        id S1345070AbiDBQNs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 12:13:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357797AbiDBQMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 12:12:53 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BCC360063
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 09:10:59 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id f6-20020a1c3806000000b0038e4a0fc5easo3110199wma.3
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 09:10:59 -0700 (PDT)
+        with ESMTP id S1357802AbiDBQMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 12:12:54 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8BA164BD5
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 09:11:01 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id h4so8197632wrc.13
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 09:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=MeEzhbEHtTaBVg6MOBhhPaE+R0IoY5wZDi9UCIaHSQg=;
-        b=qQ3mmZGmrwO2VkGXezDqzD2SnKGJgygyFIraTsYqVcBP0Bnca1L1uANe/p+h52d8mu
-         mUVv/IgvsZX6yOTuCg/5mK9fnmHOOcRYRW97HcwxmzMZh5eqU2HxHzostQftPV8nRpm6
-         9N+dwwEQy1Zr0btmsWnCG9cfQo5dHXw8c75t2AV8KECFocLKXy5sy+PpFIvjYptew061
-         7tiNnQf/qeXfLUIQnKwe2JuPQ30J8jfRCiDaeKkDbUIxZT/8whE3G2pW5jzYfKhwGSOa
-         EUqbBytJtMCI+fSUx60JwU5kXv1encO1/n7RrS+fbzgo1zJK5YjWx7KCD7yfGU0PcdHx
-         bjPg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=1R2UzCg28D/ALA1Cki6FHlH7wtdUVpK2izrcgPgAf9I=;
+        b=ktPGmjbfMrzcYNuZoo9GOg9830pQ4Uh/yT4H17xZL0WRrLwM+E8kXSinNMPyhDOw6q
+         qbU82k8Kx4rAhagGlHx5yEm/nekXVEPoX3l0WNylpuDpXJ1LRjxGReEL0FqJPb4nXoZv
+         QUCorxKxri1rhfC8y/GRn9vhWdA7qxWjPsJnEN9jND2hrvIY0NGgNRN3nmNvsGhL5FOI
+         EwogsmIea3YNUb1ul1GWmYXPEnFQb+SMmgV8XQ4LaKYXcNKLFaWwx4vwtOuJ5gTfN6NJ
+         i0YOZoZP53XYQL9LkXnvLtqT2LL64M2ujOAlvuQmXAkqnBq/ZpGWHthJsIVdI2+icFmy
+         A/sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MeEzhbEHtTaBVg6MOBhhPaE+R0IoY5wZDi9UCIaHSQg=;
-        b=p2ov/WU1xGDSPp3UeonIIBIb+00atJJMzJGwGtJXejkCZw1Bh19dCCT/KWp0p2PyUv
-         B6oVjZsEFJDHyrjU34JRTSJ0TjcciJEYSqEK3qOygesSRM3od6QJkxz5AHtHY1hqlbl1
-         4/3NByFpI5mOoP5lGi74iW04HzxM8KlqS0Ap16rsMdnhSyRdEvY2g9DwfDhR8DaMR9nG
-         ia4zvymG0VAVYVwk1ys96kh5KusCj1OAfikPN3FRrXXL/ew/HW2HoV4ZzjIdNyd/eoZK
-         lhBu6CKwp9I8s6aQG0w559cCtQ5DH2rr/3Z5Gbfj68/MNAvz0GHE7g4DTrZkmxlNnee5
-         sDcQ==
-X-Gm-Message-State: AOAM532fKdc627otcpHMe9ftb7y+r9Kbg1P9aGp1d1sVWnmei8b5jvO5
-        i7AWj9DaydRFPNALh/0dlKjqK3eZHws=
-X-Google-Smtp-Source: ABdhPJwwMtgXx9+67ULxuUy9zkX9Iq86V2sUZZ9QVa1y90D5Qud3rBsrTprnOqSBFIDp1oGsJrnlKQ==
-X-Received: by 2002:a05:600c:19cd:b0:38c:b84f:41fb with SMTP id u13-20020a05600c19cd00b0038cb84f41fbmr12898049wmq.137.1648915856795;
-        Sat, 02 Apr 2022 09:10:56 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=1R2UzCg28D/ALA1Cki6FHlH7wtdUVpK2izrcgPgAf9I=;
+        b=6QJreM9JeEUeKLbvC4IC0xwb9df80xufJbQVrkv3RXzt2Y6iWkkMVclgHEAlK7znik
+         8PLcwQzMvpum8Y4We3dp/Df2B/vjht6gkMAPEbptYaFVEzC0njdtWlbLvE4azm/Bn2F6
+         BeEgRQxkuZw63uXwIuuym61gHqIVsG+J+PQyIDC59tQbD20zYfKFRhxBgWUq+gzHWxGV
+         RfEjQCs4wHIFnIKZnQr8tU/Fgcy+u85RIrpwC9+2EQWi3T7tRBwyp9dK3IJ3kckbFLlJ
+         aeIwOtYbBqdgtV0CAYZIQdxRFStb4MA4gg96pA6kPle8s4pgG+ae6CpglnQoGm+4ocu7
+         KoDg==
+X-Gm-Message-State: AOAM532J+7D1XHGZLgOEHU3x9oKRdHsfZsBRaXqScTk10EUJYHe3WK0c
+        kFGa6lnsaMw+dyXo+bZl6RouJOsXBIc=
+X-Google-Smtp-Source: ABdhPJyvXinbJSXZA3mTzFOjLJppbYlKoptUdfe+muyuoPRSWMVuLZtWJZw83lI5lUPZuSV4uWHbIA==
+X-Received: by 2002:adf:d1e5:0:b0:205:85f5:656c with SMTP id g5-20020adfd1e5000000b0020585f5656cmr11316603wrd.65.1648915860034;
+        Sat, 02 Apr 2022 09:11:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n23-20020a05600c3b9700b0038b7c4c0803sm13904268wms.30.2022.04.02.09.10.56
+        by smtp.gmail.com with ESMTPSA id g17-20020a05600c4ed100b0038ca32d0f26sm5202430wmq.17.2022.04.02.09.10.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 09:10:56 -0700 (PDT)
-Message-Id: <03022a2fcd14bad453925c616d86bc2f69926456.1648915853.git.gitgitgadget@gmail.com>
+        Sat, 02 Apr 2022 09:10:59 -0700 (PDT)
+Message-Id: <1888778902aa1d0d2cf118cfb7fe4b2e407953c6.1648915853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
 References: <pull.1181.git.1647813291.gitgitgadget@gmail.com>
         <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
-From:   "Bagas Sanjaya via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 02 Apr 2022 16:10:49 +0000
-Subject: [PATCH v2 2/6] sequencer: factor GIT_AUTHOR_* from message strings
-Fcc:    Sent
+From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Sat, 02 Apr 2022 16:10:52 +0000
+Subject: [PATCH v2 5/6] i18n: factorize read-cache error messages
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>,
         =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Factor messages containing GIT_AUTHOR_* variable.
-
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- sequencer.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ read-cache.c     | 8 ++++----
+ t/t1600-index.sh | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 84eed9e96bc..647f5efa656 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -848,17 +848,17 @@ int read_author_script(const char *path, char **name, char **email, char **date,
- 	for (i = 0; i < kv.nr; i++) {
- 		if (!strcmp(kv.items[i].string, "GIT_AUTHOR_NAME")) {
- 			if (name_i != -2)
--				name_i = error(_("'GIT_AUTHOR_NAME' already given"));
-+				name_i = error(_("'%s' already given"), "GIT_AUTHOR_NAME");
- 			else
- 				name_i = i;
- 		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_EMAIL")) {
- 			if (email_i != -2)
--				email_i = error(_("'GIT_AUTHOR_EMAIL' already given"));
-+				email_i = error(_("'%s' already given"), "GIT_AUTHOR_EMAIL");
- 			else
- 				email_i = i;
- 		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_DATE")) {
- 			if (date_i != -2)
--				date_i = error(_("'GIT_AUTHOR_DATE' already given"));
-+				date_i = error(_("'%s' already given"), "GIT_AUTHOR_DATE");
- 			else
- 				date_i = i;
- 		} else {
-@@ -867,11 +867,11 @@ int read_author_script(const char *path, char **name, char **email, char **date,
+diff --git a/read-cache.c b/read-cache.c
+index 1ad56d02e1d..639765e8ff1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1735,8 +1735,8 @@ static unsigned int get_index_format_default(struct repository *r)
+ 		if (r->settings.index_version >= 0)
+ 			version = r->settings.index_version;
+ 		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+-			warning(_("index.version set, but the value is invalid.\n"
+-				  "Using version %i"), INDEX_FORMAT_DEFAULT);
++			warning(_("'%s' set, but the value is invalid.\n"
++				  "Using version %i"), "index.version", INDEX_FORMAT_DEFAULT);
+ 			return INDEX_FORMAT_DEFAULT;
  		}
+ 		return version;
+@@ -1745,8 +1745,8 @@ static unsigned int get_index_format_default(struct repository *r)
+ 	version = strtoul(envversion, &endp, 10);
+ 	if (*endp ||
+ 	    version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+-		warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
+-			  "Using version %i"), INDEX_FORMAT_DEFAULT);
++		warning(_("'%s' set, but the value is invalid.\n"
++			  "Using version %i"), "GIT_INDEX_VERSION", INDEX_FORMAT_DEFAULT);
+ 		version = INDEX_FORMAT_DEFAULT;
  	}
- 	if (name_i == -2)
--		error(_("missing 'GIT_AUTHOR_NAME'"));
-+		error(_("missing '%s'"), "GIT_AUTHOR_NAME");
- 	if (email_i == -2)
--		error(_("missing 'GIT_AUTHOR_EMAIL'"));
-+		error(_("missing '%s'"), "GIT_AUTHOR_EMAIL");
- 	if (date_i == -2)
--		error(_("missing 'GIT_AUTHOR_DATE'"));
-+		error(_("missing '%s'"), "GIT_AUTHOR_DATE");
- 	if (date_i < 0 || email_i < 0 || date_i < 0 || err)
- 		goto finish;
- 	*name = kv.items[name_i].util;
+ 	return version;
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index 010989f90e6..60339db529f 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -19,7 +19,7 @@ test_expect_success 'bogus GIT_INDEX_VERSION issues warning' '
+ 		git add a 2>err &&
+ 		sed "s/[0-9]//" err >actual.err &&
+ 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+-			warning: GIT_INDEX_VERSION set, but the value is invalid.
++			warning: '\''GIT_INDEX_VERSION'\'' set, but the value is invalid.
+ 			Using version Z
+ 		EOF
+ 		test_cmp expect.err actual.err
+@@ -34,7 +34,7 @@ test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
+ 		git add a 2>err &&
+ 		sed "s/[0-9]//" err >actual.err &&
+ 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+-			warning: GIT_INDEX_VERSION set, but the value is invalid.
++			warning: '\''GIT_INDEX_VERSION'\'' set, but the value is invalid.
+ 			Using version Z
+ 		EOF
+ 		test_cmp expect.err actual.err
+@@ -58,7 +58,7 @@ test_expect_success 'out of bounds index.version issues warning' '
+ 		git add a 2>err &&
+ 		sed "s/[0-9]//" err >actual.err &&
+ 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+-			warning: index.version set, but the value is invalid.
++			warning: '\''index.version'\'' set, but the value is invalid.
+ 			Using version Z
+ 		EOF
+ 		test_cmp expect.err actual.err
 -- 
 gitgitgadget
 
