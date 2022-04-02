@@ -2,193 +2,728 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CBBC433EF
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 14:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80F48C433F5
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 16:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356134AbiDBOSj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 10:18:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53612 "EHLO
+        id S1357800AbiDBQNh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 12:13:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245536AbiDBOSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 10:18:39 -0400
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7ED118F4D
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 07:16:46 -0700 (PDT)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4KVzcV2cJ6z5tl9;
-        Sat,  2 Apr 2022 16:16:42 +0200 (CEST)
-Message-ID: <cc9aaba3-6904-4f96-db50-a368b9d9f0f2@kdbg.org>
-Date:   Sat, 2 Apr 2022 16:16:41 +0200
+        with ESMTP id S1357789AbiDBQMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 12:12:52 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B35275FF
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 09:10:56 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id r10-20020a1c440a000000b0038ccb70e239so136519wma.3
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 09:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=+ABR2IUOcA9JxfSZn840tW3s/Bw2W1BGiZhChM2VdCs=;
+        b=XPxXgnmStUInx4Gp/A7bUj8tQ3COIVi0GA/+9nmi+2UB9DjJ6PLw5VT79vX6AVUZPU
+         eGQDBVzdGRy+IXxroT3QNhbR1a54EJViQhV6FyslxYozCWqaU3vYE1c22sz18eKBYPfX
+         ru9EezrchvAQCtSAQjYRNedi/aAYKjySDYGCx3v3g1c/U1OcTL5dXzsf7iTbJVGaFfMo
+         tFjCBrb7ghHNeltauzn2HDwR1C0+wfv/ImOB5xYZDVPL5by4tt6to+xzHAmfxGoQaQ7m
+         9WyM1FlIbA6rVq6zk/ZX/dw7FN+GsnK+Grl1jYUu7DU55GkY3oXpqfA9DljrmQAx6wjW
+         BRaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=+ABR2IUOcA9JxfSZn840tW3s/Bw2W1BGiZhChM2VdCs=;
+        b=yR7ovrkSXKAnyr/x0QA8chwxaJhiWcmH0Em/mvXypTeziTIMLt9M7xaFbwHVjLZtgQ
+         VkAKmREuCx/v32X+6v8YjeAdWNL8K4FA1HtzZThni+pC+HKUEE+eV2Hu9dmZPMCoJNRV
+         z4fP2AC0kAlomXDM4GFCzKGqdhovARs76YILbBBJZD7JuDuadtk3RjbScslYWgq0vusL
+         ctMzRwRyy0wjpoXTXPG30KfVAbbelPEXrccD62B0CuyMgyg53LFVlPoSG5buKEQuHl28
+         laO5PZ+SfaEA3rknYuzbBbTz6/CdsqCUA0BTp+GlR0VOvjkeOXVzAHHIDkFRddnS5AXf
+         bqSQ==
+X-Gm-Message-State: AOAM532zbOrp0ngEps357dy5Y69+k+ujXD4p9+DvWeptS7o2RZ17DGvG
+        Rl9jF8oKKI5omYHk5e3e9SjHBGnbmK8=
+X-Google-Smtp-Source: ABdhPJw/MxM5iETU7vZeI3aSTZq1f7Nln++bfrjTZmAXTk7XNmdntH3vMymhtftFHmRDx3+Muq1pDg==
+X-Received: by 2002:a7b:cc17:0:b0:38d:af7:3848 with SMTP id f23-20020a7bcc17000000b0038d0af73848mr13073959wmh.41.1648915854727;
+        Sat, 02 Apr 2022 09:10:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m127-20020a1ca385000000b0038e6e7ac0b5sm173159wme.38.2022.04.02.09.10.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Apr 2022 09:10:54 -0700 (PDT)
+Message-Id: <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1181.git.1647813291.gitgitgadget@gmail.com>
+References: <pull.1181.git.1647813291.gitgitgadget@gmail.com>
+From:   "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Sat, 02 Apr 2022 16:10:47 +0000
+Subject: [PATCH v2 0/6] More i18n fixes
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3 7/7] git-sh-setup: don't mark trees not used in-tree
- for i18n
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <cover-v2-0.5-00000000000-20211119T202455Z-avarab@gmail.com>
- <cover-v3-0.7-00000000000-20220326T171200Z-avarab@gmail.com>
- <patch-v3-7.7-7a82b1fd005-20220326T171200Z-avarab@gmail.com>
- <2e2d20d6-a33d-b223-d364-ab43d92dd220@kdbg.org>
- <220327.8635j3fx3t.gmgdl@evledraar.gmail.com>
- <63bf6e97-1dca-c2b1-5673-301039e73acf@kdbg.org>
- <220328.86lewudzw3.gmgdl@evledraar.gmail.com>
- <45c963da-19a5-de51-34d4-5b29f461c9ec@gmail.com>
- <220331.86a6d6qqfe.gmgdl@evledraar.gmail.com>
- <12c7c651-49d2-d38b-122a-3fb5c29e94df@kdbg.org>
- <220402.86r16fn2bx.gmgdl@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <220402.86r16fn2bx.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.04.22 um 12:44 schrieb Ævar Arnfjörð Bjarmason:
-> 
-> On Thu, Mar 31 2022, Johannes Sixt wrote:
-> 
->> Am 31.03.22 um 13:15 schrieb Ævar Arnfjörð Bjarmason:
->>> I do have some WIP changes to tear down most of the *.sh and *.perl i18n
->>> infrastructure (the parts still in use would still have translations),
->>> and IIRC it's at least a 2k line negative diffstat, and enables us to do
->>> more interesting things in i18n (e.g. getting rid of the libintl
->>> dependency).
->>
->> Why? Why? Why? Does the status quo have a problem somewhere? All this
->> sounds like a change for the sake of change.
-> 
-> So this is quite the digression, but, hey, you asked for it.
+This is another i18n PR (and hopefully the last for a while).
 
-Oh, no, this is not a digression *at all*. What your write below is the
-kind of text that is needed to judge the value of a change. Without it,
-a change that does not have an otherwise obvious improvement[*] is just
-for the change's sake.
+As usual, the intent is kept the same: curbing the number of strings to
+translate, remove constant, error prone parts out of the way, trying in some
+sense to "put a precedent" so that the template strings can be reused later.
 
-[*] In my book, getting rid of a libintl dependency is not an obvious
-improvement. I may be biased in this case, because that dependency was
-never a problem for me. Might be because my personal builds all have
-NO_GETTEXT set.
+Changes in v2:
 
-> We don't have translations universally available because libintl is a
-> rather heavy thing to ship.
-> 
-> I don't personally mind linking against it for my own builds, but grep
-> for NO_GETTEXT in our tree & history for some of the workarounds.
-> 
-> We're also heading towards being able to build a stand-alone git binary
-> for most things, which makes shipping in various setups much easier, but
-> libintl is more of an "old-school" *nix library.
-> 
-> You need to ferry around auxilliary *.mo files, and for the *.sh and
-> *.perl translations we need gettext.sh, /usr/bin/gettext and
-> Locale::Messages (and everything that brings in).
-> 
-> I'd like translations for Git to Just Work, including if you're in some
-> random docker image with someone's home-built git. Giving people fewer
-> reasons to enable it improves accessibility. A lot of people who use git
-> are not on their own personal laptop, but on some setup (corporate, CI
-> etc.) that they don't fully control.
-> 
-> The gettext model & libintl is also just bad at various use-cases I
-> think would make sense to support.
-> 
-> E.g. having a configurable option to emit output in two languages at the
-> same time, either because you'd both like to understand the output &
-> e.g. search errors online, or you'd understand more from a union of say
-> German an English than from just one or the other.
-> 
-> For libintl you need'd to juggle setlocale() in the middle of your
-> underlying sprintf implementation to do that, or pull other shenanigans
-> of bypassing its API (e.g. directly reading the *.mo files), which
-> pretty much amounts to the same thing.
-> 
-> So essentially I wanted to hack up something that would just
-> post-process output like this:
-> 
->     msgunfmt --strict -s -w 0 -i -E --color=always po/build/locale/de/LC_MESSAGES/git.mo
-> 
-> And turn it into a lang-de.c file, for which we'd make a lang-de.o that
-> we'd link in. And then either binary search through it, or just generate
-> code we'd compile (one really big switch/case statement).
-> 
-> Now, if you count the number of messages we translate in *.sh land on
-> your digits you won't even need to use all of our toes, and for the
-> *.perl it's similar, especially with add--interactive.perl going away
-> any day now.
-> 
-> There isn't any fundamental obstacle to making such a thing portable to
-> *.sh and *.perl, but having gotten that particular interop working once
-> in the past needing to do that again would bring this (I think
-> worthwhile) project from a "maybe someday" to "nah".
+ * Make the messages clearer as to what the placeholders are.
+ * Generalize the quoting of placeholders
+ * Merge the messages with bad arguments to one
 
-Just to make it clear: I am totally neutral on your goal. It's on others
-to tell whether this is worth doing.
+Bagas Sanjaya (1):
+  sequencer: factor GIT_AUTHOR_* from message strings
 
->>> But I also don't think that such a series is probably not possible in
->>> the near term if we're going to insist that all shellscript output must
->>> byte-for-byte be the same (for boring reasons I won't go into, but it's
->>> mainly to do with sh-i18n--envsubst.c).
->>
->> Such an insistence can easily be lifted if the change is justified
->> sufficiently. I haven't seen such a justification, yet.
-> 
-> Sure, but re the "chicken & egg" problem I might do all the work to do
-> all that, and someone such as yourself might rightly point out that it
-> would break someone's obscure use-case, scuttling the whole thing.
-> 
-> Which isn't an exaggeration b.t.w., if you e.g. look through our
-> remaining gettext.sh usage you'll find that we carry the entirety of
-> sh-i18n--ensubst.c and everything around it (at least ~1k lines) for
-> emitting a single word in a single message in git-sh-setup.sh, that's
-> it.
+Jean-Noël Avila (5):
+  i18n: factorize generic failure messages
+  i18n: factorize server support messages in fetch-pack
+  i18n: factorize "foo does not take arguments" messages
+  i18n: factorize read-cache error messages
+  i18n: factorize "bad argument" messages
 
-See, someone thought it was a good idea to have i18n in shell scripts
-and others agreed that it was worth having ~1k lines of code to do that.
-So the code went in. From then on, these ~1k lines are *not a problem*
-in themselves. From then on, the decision of having ~1k lines or not
-having them can only be based on what effect they have, but no longer on
-"oh, wow, that's 1k lines to write a single word; do we really want that"?
+ add-patch.c                     |  4 ++--
+ builtin/am.c                    |  2 +-
+ builtin/bisect--helper.c        |  2 +-
+ builtin/commit-graph.c          |  2 +-
+ builtin/config.c                |  2 +-
+ builtin/env--helper.c           |  2 +-
+ builtin/gc.c                    |  8 +++----
+ builtin/merge.c                 |  6 ++---
+ builtin/revert.c                |  4 ++--
+ contrib/scalar/scalar.c         |  2 +-
+ diff.c                          |  4 ++--
+ fetch-pack.c                    | 40 ++++++++++++++++-----------------
+ grep.c                          |  2 +-
+ read-cache.c                    |  8 +++----
+ ref-filter.c                    |  8 +++----
+ remote-curl.c                   |  2 +-
+ send-pack.c                     |  2 +-
+ sequencer.c                     | 12 +++++-----
+ setup.c                         |  4 ++--
+ submodule-config.c              |  8 +++----
+ submodule.c                     |  2 +-
+ t/t1300-config.sh               |  2 +-
+ t/t1600-index.sh                |  6 ++---
+ t/t3510-cherry-pick-sequence.sh |  8 +++----
+ t/t6436-merge-overwrite.sh      |  2 +-
+ t/t7900-maintenance.sh          |  4 ++--
+ 26 files changed, 74 insertions(+), 74 deletions(-)
 
-> 
-> Because the whole reason eval_gettext exists, and everything to support
-> it, is to support the use-case of feeding *arbitrary input* into the
-> translation engine, i.e. not the string you yourself have in your source
-> code & trust (it avoids shell "eval").
-> 
-> But if you think that's of paramount importance (that word is "usage"
-> b.t.w., and the equivalent in usage.c isn't even translated) there
-> wouldn't be any way to make forward progress towards the next step of
-> making the remaining shellscript translations call some "git sh--i18n"
-> helper to get their output.
-> 
-> So, to the extent that I was going to pursue the above plan at all I
-> wanted to do it in small steps, especially now as git-submodule.sh et al
-> are going away.
-> 
-> So.
-> 
-> It would be nice to get some leeway in some areas, especially for
-> something like this where I implemented this entire i18n system to begin
-> with, so I'd think it would be clear that it's not some drive-by
-> contribution. I clearly care about the end-goal, and have been sticking
-> with this particular topic for more than a decade.
-> 
-> Not everything can always be a single atomically understood patch that
-> carries all possible reasons to make the change with it, some things are
-> more of a longer term incremental effort.
-> 
-> And since we all have limited time on this spinning ball of mud
-> sometimes it can make sense to trickle in initial changes to see if some
-> larger end-goal is even attainable, or will be blocked due to some
-> unforeseen (or underestimated) reasons.
 
-You can't have leeway for a change whose conclusion is "removes some
-miniscule feature". But if you add "Here is the secret plan to Scrat's
-golden nut; let's start with this change, even though it removes some
-miniscule feature", things are vastly different.
+base-commit: 74cc1aa55f30ed76424a0e7226ab519aa6265061
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1181%2Fjnavila%2Fmore_i18n_fixes-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1181/jnavila/more_i18n_fixes-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1181
 
--- Hannes
+Range-diff vs v1:
+
+ 1:  73a3a8d7d97 ! 1:  4bba3e1f6cb i18n: factorize generic failure messages
+     @@ Metadata
+       ## Commit message ##
+          i18n: factorize generic failure messages
+      
+     -    In these message the command that failed should not be translated. So
+     -    it is simpler to just remove these parts from the message.
+     +    In these message the command or the function that failed should not be
+     +    translated. So it is simpler to just remove these parts from the
+     +    message.
+      
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+     @@ add-patch.c: static int run_apply_check(struct add_p_state *s,
+       	strvec_pushv(&cp.args, s->mode->apply_check_args);
+       	if (pipe_command(&cp, s->buf.buf, s->buf.len, NULL, 0, NULL, 0))
+      -		return error(_("'git apply --cached' failed"));
+     -+		return error(_("'%s' failed"), "git apply --cached");
+     ++		return error(_("the command '%s' failed"), "git apply --cached");
+       
+       	return 0;
+       }
+     @@ add-patch.c: soft_increment:
+       			if (pipe_command(&cp, s->buf.buf, s->buf.len,
+       					 NULL, 0, NULL, 0))
+      -				error(_("'git apply' failed"));
+     -+				error(_("'%s' failed"), "git apply");
+     ++				error(_("the command '%s' failed"), "git apply");
+       		}
+       		if (repo_read_index(s->s.r) >= 0)
+       			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
+     @@ builtin/am.c: static int is_mail(FILE *fp)
+       
+       	if (fseek(fp, 0L, SEEK_SET))
+      -		die_errno(_("fseek failed"));
+     -+		die_errno(_("'%s' failed"), "fseek");
+     ++		die_errno(_("the function '%s' failed"), "fseek");
+       
+       	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
+       		die("invalid pattern: %s", header_regex);
+     @@ builtin/gc.c: static int multi_pack_index_expire(struct maintenance_run_opts *op
+       
+       	if (run_command(&child))
+      -		return error(_("'git multi-pack-index expire' failed"));
+     -+		return error(_("'%s' failed"), "git multi-pack-index expire");
+     ++		return error(_("the command '%s' failed"), "git multi-pack-index expire");
+       
+       	return 0;
+       }
+     @@ builtin/gc.c: static int multi_pack_index_repack(struct maintenance_run_opts *op
+       
+       	if (run_command(&child))
+      -		return error(_("'git multi-pack-index repack' failed"));
+     -+		return error(_("'%s' failed"), "git multi-pack-index repack");
+     ++		return error(_("the command '%s' failed"), "git multi-pack-index repack");
+       
+       	return 0;
+       }
+     @@ builtin/merge.c: static int save_state(struct object_id *stash)
+       
+       	if (finish_command(&cp) || len < 0)
+      -		die(_("stash failed"));
+     -+		die(_("'%s' failed"), "stash");
+     ++		die(_("the command '%s' failed"), "stash");
+       	else if (!len)		/* no changes */
+       		goto out;
+       	strbuf_setlen(&buffer, buffer.len-1);
+     @@ builtin/merge.c: static void read_empty(const struct object_id *oid, int verbose
+       
+       	if (run_command_v_opt(args, RUN_GIT_CMD))
+      -		die(_("read-tree failed"));
+     -+		die(_("'%s' failed"), "read-tree");
+     ++		die(_("the command '%s' failed"), "read-tree");
+       }
+       
+       static void reset_hard(const struct object_id *oid, int verbose)
+     @@ builtin/merge.c: static void reset_hard(const struct object_id *oid, int verbose
+       
+       	if (run_command_v_opt(args, RUN_GIT_CMD))
+      -		die(_("read-tree failed"));
+     -+		die(_("'%s' failed"), "read-tree");
+     ++		die(_("the command '%s' failed"), "read-tree");
+       }
+       
+       static void restore_state(const struct object_id *head,
+     @@ builtin/revert.c: int cmd_revert(int argc, const char **argv, const char *prefix
+       	res = run_sequencer(argc, argv, &opts);
+       	if (res < 0)
+      -		die(_("revert failed"));
+     -+		die(_("'%s' failed"), "revert");
+     ++		die(_("the command '%s' failed"), "revert");
+       	return res;
+       }
+       
+     @@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *p
+       	res = run_sequencer(argc, argv, &opts);
+       	if (res < 0)
+      -		die(_("cherry-pick failed"));
+     -+		die(_("'%s' failed"), "cherry-pick");
+     ++		die(_("the command '%s' failed"), "cherry-pick");
+       	return res;
+       }
+      
+     @@ fetch-pack.c: static int get_pack(struct fetch_pack_args *args,
+       			ret == 0;
+       	else
+      -		die(_("%s failed"), cmd_name);
+     -+		die(_("'%s' failed"), cmd_name);
+     ++		die(_("the command '%s' failed"), cmd_name);
+       	if (use_sideband && finish_async(&demux))
+       		die(_("error in sideband demultiplexer"));
+       
+     @@ remote-curl.c: static int push_dav(int nr_spec, const char **specs)
+       
+       	if (run_command(&child))
+      -		die(_("git-http-push failed"));
+     -+		die(_("'%s' failed"), "git-http-push");
+     ++		die(_("the command '%s' failed"), "git-http-push");
+       	return 0;
+       }
+       
+     @@ setup.c: int daemonize(void)
+       			break;
+       		case -1:
+      -			die_errno(_("fork failed"));
+     -+			die_errno(_("'%s' failed"), "fork");
+     ++			die_errno(_("the function '%s' failed"), "fork");
+       		default:
+       			exit(0);
+       	}
+       	if (setsid() == -1)
+      -		die_errno(_("setsid failed"));
+     -+		die_errno(_("'%s' failed"), "setsid");
+     ++		die_errno(_("the function '%s' failed"), "setsid");
+       	close(0);
+       	close(1);
+       	close(2);
+     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'check advice when we move
+       	hint: have you committed already?
+       	hint: try "git cherry-pick --continue"
+      -	fatal: cherry-pick failed
+     -+	fatal: '\''cherry-pick'\'' failed
+     ++	fatal: the command '\''cherry-pick'\'' failed
+       	EOF
+       	test_must_fail git cherry-pick base..yetanotherpick &&
+       	echo c >foo &&
+     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'selectively advise --skip
+       	error: cherry-pick is already in progress
+       	hint: try "git cherry-pick (--continue | --skip | --abort | --quit)"
+      -	fatal: cherry-pick failed
+     -+	fatal: '\''cherry-pick'\'' failed
+     ++	fatal: the command '\''cherry-pick'\'' failed
+       	EOF
+       	test_must_fail git cherry-pick picked..yetanotherpick &&
+       	test_must_fail git cherry-pick picked..yetanotherpick 2>advice &&
+     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'selectively advise --skip
+       	error: cherry-pick is already in progress
+       	hint: try "git cherry-pick (--continue | --abort | --quit)"
+      -	fatal: cherry-pick failed
+     -+	fatal: '\''cherry-pick'\'' failed
+     ++	fatal: the command '\''cherry-pick'\'' failed
+       	EOF
+       	git reset --merge &&
+       	test_must_fail git cherry-pick picked..yetanotherpick 2>advice &&
+     @@ t/t3510-cherry-pick-sequence.sh: test_expect_success 'allow skipping commit but
+       	cat >expect <<-EOF &&
+       	error: cannot abort from a branch yet to be born
+      -	fatal: cherry-pick failed
+     -+	fatal: '\''cherry-pick'\'' failed
+     ++	fatal: the command '\''cherry-pick'\'' failed
+       	EOF
+       	git checkout --orphan new_disconnected &&
+       	git reset --hard &&
+     @@ t/t6436-merge-overwrite.sh: test_expect_success 'will not be confused by symlink
+       cat >expect <<\EOF
+       error: Untracked working tree file 'c0.c' would be overwritten by merge.
+      -fatal: read-tree failed
+     -+fatal: 'read-tree' failed
+     ++fatal: the command 'read-tree' failed
+       EOF
+       
+       test_expect_success 'will not overwrite untracked file on unborn branch' '
+ 2:  8bdbb32f544 = 2:  03022a2fcd1 sequencer: factor GIT_AUTHOR_* from message strings
+ 3:  c94d5c932f4 < -:  ----------- i18n: factorize "bad argument" messages
+ 4:  bf23e1ebe65 ! 3:  b06b7670516 i18n: factorize "Server does not support foo" messages
+     @@ Metadata
+      Author: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## Commit message ##
+     -    i18n: factorize "Server does not support foo" messages
+     +    i18n: factorize server support messages in fetch-pack
+     +
+     +    The messages "Server supports foo" and "Server does not support bar"
+     +    are uniformized and options are quoted.
+      
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## fetch-pack.c ##
+      @@ fetch-pack.c: static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+     - 		print_verbose(args, _("Server supports %s"), "deepen-since");
+     + 		advertise_sid = 0;
+     + 
+     + 	if (server_supports("shallow"))
+     +-		print_verbose(args, _("Server supports %s"), "shallow");
+     ++		print_verbose(args, _("Server supports '%s'"), "shallow");
+     + 	else if (args->depth > 0 || is_repository_shallow(r))
+     + 		die(_("Server does not support shallow clients"));
+     + 	if (args->depth > 0 || args->deepen_since || args->deepen_not)
+     + 		args->deepen = 1;
+     + 	if (server_supports("multi_ack_detailed")) {
+     +-		print_verbose(args, _("Server supports %s"), "multi_ack_detailed");
+     ++		print_verbose(args, _("Server supports '%s'"), "multi_ack_detailed");
+     + 		multi_ack = 2;
+     + 		if (server_supports("no-done")) {
+     +-			print_verbose(args, _("Server supports %s"), "no-done");
+     ++			print_verbose(args, _("Server supports '%s'"), "no-done");
+     + 			if (args->stateless_rpc)
+     + 				no_done = 1;
+     + 		}
+     + 	}
+     + 	else if (server_supports("multi_ack")) {
+     +-		print_verbose(args, _("Server supports %s"), "multi_ack");
+     ++		print_verbose(args, _("Server supports '%s'"), "multi_ack");
+     + 		multi_ack = 1;
+     + 	}
+     + 	if (server_supports("side-band-64k")) {
+     +-		print_verbose(args, _("Server supports %s"), "side-band-64k");
+     ++		print_verbose(args, _("Server supports '%s'"), "side-band-64k");
+     + 		use_sideband = 2;
+     + 	}
+     + 	else if (server_supports("side-band")) {
+     +-		print_verbose(args, _("Server supports %s"), "side-band");
+     ++		print_verbose(args, _("Server supports '%s'"), "side-band");
+     + 		use_sideband = 1;
+     + 	}
+     + 	if (server_supports("allow-tip-sha1-in-want")) {
+     +-		print_verbose(args, _("Server supports %s"), "allow-tip-sha1-in-want");
+     ++		print_verbose(args, _("Server supports '%s'"), "allow-tip-sha1-in-want");
+     + 		allow_unadvertised_object_request |= ALLOW_TIP_SHA1;
+     + 	}
+     + 	if (server_supports("allow-reachable-sha1-in-want")) {
+     +-		print_verbose(args, _("Server supports %s"), "allow-reachable-sha1-in-want");
+     ++		print_verbose(args, _("Server supports '%s'"), "allow-reachable-sha1-in-want");
+     + 		allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
+     + 	}
+     + 	if (server_supports("thin-pack"))
+     +-		print_verbose(args, _("Server supports %s"), "thin-pack");
+     ++		print_verbose(args, _("Server supports '%s'"), "thin-pack");
+     + 	else
+     + 		args->use_thin_pack = 0;
+     + 	if (server_supports("no-progress"))
+     +-		print_verbose(args, _("Server supports %s"), "no-progress");
+     ++		print_verbose(args, _("Server supports '%s'"), "no-progress");
+     + 	else
+     + 		args->no_progress = 0;
+     + 	if (server_supports("include-tag"))
+     +-		print_verbose(args, _("Server supports %s"), "include-tag");
+     ++		print_verbose(args, _("Server supports '%s'"), "include-tag");
+     + 	else
+     + 		args->include_tag = 0;
+     + 	if (server_supports("ofs-delta"))
+     +-		print_verbose(args, _("Server supports %s"), "ofs-delta");
+     ++		print_verbose(args, _("Server supports '%s'"), "ofs-delta");
+     + 	else
+     + 		prefer_ofs_delta = 0;
+     + 
+     + 	if (server_supports("filter")) {
+     + 		server_supports_filtering = 1;
+     +-		print_verbose(args, _("Server supports %s"), "filter");
+     ++		print_verbose(args, _("Server supports '%s'"), "filter");
+     + 	} else if (args->filter_options.choice) {
+     + 		warning("filtering not recognized by server, ignoring");
+     + 	}
+     + 
+     + 	if (server_supports("deepen-since")) {
+     +-		print_verbose(args, _("Server supports %s"), "deepen-since");
+     ++		print_verbose(args, _("Server supports '%s'"), "deepen-since");
+       		deepen_since_ok = 1;
+       	} else if (args->deepen_since)
+      -		die(_("Server does not support --shallow-since"));
+     -+		die(_("Server does not support %s"), "--shallow-since");
+     ++		die(_("Server does not support '%s'"), "--shallow-since");
+       	if (server_supports("deepen-not")) {
+     - 		print_verbose(args, _("Server supports %s"), "deepen-not");
+     +-		print_verbose(args, _("Server supports %s"), "deepen-not");
+     ++		print_verbose(args, _("Server supports '%s'"), "deepen-not");
+       		deepen_not_ok = 1;
+       	} else if (args->deepen_not)
+      -		die(_("Server does not support --shallow-exclude"));
+     -+		die(_("Server does not support %s"), "--shallow-exclude");
+     ++		die(_("Server does not support '%s'"), "--shallow-exclude");
+       	if (server_supports("deepen-relative"))
+     - 		print_verbose(args, _("Server supports %s"), "deepen-relative");
+     +-		print_verbose(args, _("Server supports %s"), "deepen-relative");
+     ++		print_verbose(args, _("Server supports '%s'"), "deepen-relative");
+       	else if (args->deepen_relative)
+      -		die(_("Server does not support --deepen"));
+     -+		die(_("Server does not support %s"), "--deepen");
+     ++		die(_("Server does not support '%s'"), "--deepen");
+       	if (!server_supports_hash(the_hash_algo->name, NULL))
+       		die(_("Server does not support this repository's object format"));
+       
+ 5:  2e1bd504673 ! 4:  6221c37145c i18n: factorize "foo does not take arguments" messages
+     @@ Metadata
+       ## Commit message ##
+          i18n: factorize "foo does not take arguments" messages
+      
+     +    The messages are split into the ones for ref-filter which deal with
+     +    atoms and scalar which has an option.
+     +
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## contrib/scalar/scalar.c ##
+     @@ contrib/scalar/scalar.c: cleanup:
+       {
+       	if (argc != 1)
+      -		die(_("`scalar list` does not take arguments"));
+     -+		die(_("%s does not take arguments"), "`scalar list`");
+     ++		die(_("the '%s' command does not take arguments"), "scalar list");
+       
+       	if (run_git("config", "--global", "--get-all", "scalar.repo", NULL) < 0)
+       		return -1;
+     @@ ref-filter.c: static int objecttype_atom_parser(struct ref_format *format, struc
+       {
+       	if (arg)
+      -		return strbuf_addf_ret(err, -1, _("%%(objecttype) does not take arguments"));
+     -+		return strbuf_addf_ret(err, -1, _("%s does not take arguments"), "%(objecttype)");
+     ++		return strbuf_addf_ret(err, -1, _("the atom '%s' does not take arguments"), "%(objecttype)");
+       	if (*atom->name == '*')
+       		oi_deref.info.typep = &oi_deref.type;
+       	else
+     @@ ref-filter.c: static int deltabase_atom_parser(struct ref_format *format, struct
+       {
+       	if (arg)
+      -		return strbuf_addf_ret(err, -1, _("%%(deltabase) does not take arguments"));
+     -+		return strbuf_addf_ret(err, -1, _("%s does not take arguments"), "%(deltabase)");
+     ++		return strbuf_addf_ret(err, -1, _("the atom '%s' does not take arguments"), "%(deltabase)");
+       	if (*atom->name == '*')
+       		oi_deref.info.delta_base_oid = &oi_deref.delta_base_oid;
+       	else
+     @@ ref-filter.c: static int body_atom_parser(struct ref_format *format, struct used
+       {
+       	if (arg)
+      -		return strbuf_addf_ret(err, -1, _("%%(body) does not take arguments"));
+     -+		return strbuf_addf_ret(err, -1, _("%s does not take arguments"), "%(body)");
+     ++		return strbuf_addf_ret(err, -1, _("the atom '%s' does not take arguments"), "%(body)");
+       	atom->u.contents.option = C_BODY_DEP;
+       	return 0;
+       }
+     @@ ref-filter.c: static int rest_atom_parser(struct ref_format *format, struct used
+       {
+       	if (arg)
+      -		return strbuf_addf_ret(err, -1, _("%%(rest) does not take arguments"));
+     -+		return strbuf_addf_ret(err, -1, _("%s does not take arguments"), "%(rest)");
+     ++		return strbuf_addf_ret(err, -1, _("the atom '%s' does not take arguments"), "%(rest)");
+       	format->use_rest = 1;
+       	return 0;
+       }
+ 6:  b8f97e6fde8 ! 5:  1888778902a i18n: factorize read-cache error messages
+     @@ read-cache.c: static unsigned int get_index_format_default(struct repository *r)
+       		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+      -			warning(_("index.version set, but the value is invalid.\n"
+      -				  "Using version %i"), INDEX_FORMAT_DEFAULT);
+     -+			warning(_("%s set, but the value is invalid.\n"
+     ++			warning(_("'%s' set, but the value is invalid.\n"
+      +				  "Using version %i"), "index.version", INDEX_FORMAT_DEFAULT);
+       			return INDEX_FORMAT_DEFAULT;
+       		}
+     @@ read-cache.c: static unsigned int get_index_format_default(struct repository *r)
+       	    version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+      -		warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
+      -			  "Using version %i"), INDEX_FORMAT_DEFAULT);
+     -+		warning(_("%s set, but the value is invalid.\n"
+     ++		warning(_("'%s' set, but the value is invalid.\n"
+      +			  "Using version %i"), "GIT_INDEX_VERSION", INDEX_FORMAT_DEFAULT);
+       		version = INDEX_FORMAT_DEFAULT;
+       	}
+       	return version;
+     +
+     + ## t/t1600-index.sh ##
+     +@@ t/t1600-index.sh: test_expect_success 'bogus GIT_INDEX_VERSION issues warning' '
+     + 		git add a 2>err &&
+     + 		sed "s/[0-9]//" err >actual.err &&
+     + 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+     +-			warning: GIT_INDEX_VERSION set, but the value is invalid.
+     ++			warning: '\''GIT_INDEX_VERSION'\'' set, but the value is invalid.
+     + 			Using version Z
+     + 		EOF
+     + 		test_cmp expect.err actual.err
+     +@@ t/t1600-index.sh: test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
+     + 		git add a 2>err &&
+     + 		sed "s/[0-9]//" err >actual.err &&
+     + 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+     +-			warning: GIT_INDEX_VERSION set, but the value is invalid.
+     ++			warning: '\''GIT_INDEX_VERSION'\'' set, but the value is invalid.
+     + 			Using version Z
+     + 		EOF
+     + 		test_cmp expect.err actual.err
+     +@@ t/t1600-index.sh: test_expect_success 'out of bounds index.version issues warning' '
+     + 		git add a 2>err &&
+     + 		sed "s/[0-9]//" err >actual.err &&
+     + 		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+     +-			warning: index.version set, but the value is invalid.
+     ++			warning: '\''index.version'\'' set, but the value is invalid.
+     + 			Using version Z
+     + 		EOF
+     + 		test_cmp expect.err actual.err
+ 7:  ca52567b201 ! 6:  febe64a8a06 i18n: factorize unrecognized options arguments messages
+     @@ Metadata
+      Author: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## Commit message ##
+     -    i18n: factorize unrecognized options arguments messages
+     +    i18n: factorize "bad argument" messages
+     +
+     +    We also quote the placeholders as they replace constant strings.
+      
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+     + ## builtin/bisect--helper.c ##
+     +@@ builtin/bisect--helper.c: static int bisect_write(const char *state, const char *rev,
+     + 	} else if (one_of(state, terms->term_good, "skip", NULL)) {
+     + 		strbuf_addf(&tag, "refs/bisect/%s-%s", state, rev);
+     + 	} else {
+     +-		res = error(_("Bad bisect_write argument: %s"), state);
+     ++		res = error(_("bad '%s' argument: '%s'"), "bisect_write", state);
+     + 		goto finish;
+     + 	}
+     + 
+     +
+       ## builtin/commit-graph.c ##
+      @@ builtin/commit-graph.c: static int write_option_parse_split(const struct option *opt, const char *arg,
+       	else if (!strcmp(arg, "replace"))
+       		*flags = COMMIT_GRAPH_SPLIT_REPLACE;
+       	else
+      -		die(_("unrecognized --split argument, %s"), arg);
+     -+		die(_("unrecognized %s argument '%s'"), "--split", arg);
+     ++		die(_("bad '%s' argument: '%s'"), "--split", arg);
+       
+       	return 0;
+       }
+     @@ builtin/config.c: static int option_parse_type(const struct option *opt, const c
+       			new_type = TYPE_COLOR;
+       		else
+      -			die(_("unrecognized --type argument, %s"), arg);
+     -+			die(_("unrecognized %s argument '%s'"), "--type", arg);
+     ++			die(_("bad '%s' argument: '%s'"), "--type", arg);
+       	}
+       
+       	to_type = opt->value;
+     @@ builtin/env--helper.c: static int option_parse_type(const struct option *opt, co
+       		*cmdmode = ENV_HELPER_TYPE_ULONG;
+       	else
+      -		die(_("unrecognized --type argument, %s"), arg);
+     -+		die(_("unrecognized %s argument '%s'"), "--type", arg);
+     ++		die(_("bad '%s' argument: '%s'"), "--type", arg);
+       
+       	return 0;
+       }
+     @@ builtin/gc.c: static int maintenance_opt_schedule(const struct option *opt, cons
+       
+       	if (!*priority)
+      -		die(_("unrecognized --schedule argument '%s'"), arg);
+     -+		die(_("unrecognized %s argument '%s'"), "--schedule", arg);
+     ++		die(_("bad '%s' argument: '%s'"), "--schedule", arg);
+       
+       	return 0;
+       }
+     @@ builtin/gc.c: static int maintenance_opt_scheduler(const struct option *opt, con
+       	*scheduler = parse_scheduler(arg);
+       	if (*scheduler == SCHEDULER_INVALID)
+      -		return error(_("unrecognized --scheduler argument '%s'"), arg);
+     -+		return error(_("unrecognized %s argument '%s'"), "--scheduler", arg);
+     ++		return error(_("bad '%s' argument: '%s'"), "--scheduler", arg);
+     + 	return 0;
+     + }
+     + 
+     +
+     + ## diff.c ##
+     +@@ diff.c: static int diff_opt_color_moved(const struct option *opt,
+     + 	} else {
+     + 		int cm = parse_color_moved(arg);
+     + 		if (cm < 0)
+     +-			return error(_("bad --color-moved argument: %s"), arg);
+     ++			return error(_("bad '%s' argument: '%s'"), "--color-moved", arg);
+     + 		options->color_moved = cm;
+     + 	}
+       	return 0;
+     +@@ diff.c: static int diff_opt_word_diff(const struct option *opt,
+     + 		else if (!strcmp(arg, "none"))
+     + 			options->word_diff = DIFF_WORDS_NONE;
+     + 		else
+     +-			return error(_("bad --word-diff argument: %s"), arg);
+     ++			return error(_("bad '%s' argument: '%s'"), "--word-diff", arg);
+     + 	} else {
+     + 		if (options->word_diff == DIFF_WORDS_NONE)
+     + 			options->word_diff = DIFF_WORDS_PLAIN;
+     +
+     + ## grep.c ##
+     +@@ grep.c: static int parse_pattern_type_arg(const char *opt, const char *arg)
+     + 		return GREP_PATTERN_TYPE_FIXED;
+     + 	else if (!strcmp(arg, "perl"))
+     + 		return GREP_PATTERN_TYPE_PCRE;
+     +-	die("bad %s argument: %s", opt, arg);
+     ++	die("bad '%s' argument: '%s'", opt, arg);
+     + }
+     + 
+     + define_list_config_array_extra(color_grep_slots, {"match"});
+     +
+     + ## send-pack.c ##
+     +@@ send-pack.c: int option_parse_push_signed(const struct option *opt,
+     + 		*(int *)(opt->value) = SEND_PACK_PUSH_CERT_IF_ASKED;
+     + 		return 0;
+     + 	}
+     +-	die("bad %s argument: %s", opt->long_name, arg);
+     ++	die("bad '%s' argument: '%s'", opt->long_name, arg);
+     + }
+     + 
+     + static void feed_object(const struct object_id *oid, FILE *fh, int negative)
+     +
+     + ## submodule-config.c ##
+     +@@ submodule-config.c: static int parse_fetch_recurse(const char *opt, const char *arg,
+     + 		 * git-completion.bash when you add new options.
+     + 		 */
+     + 		if (die_on_error)
+     +-			die("bad %s argument: %s", opt, arg);
+     ++			die("bad '%s' argument: '%s'", opt, arg);
+     + 		else
+     + 			return RECURSE_SUBMODULES_ERROR;
+     + 	}
+     +@@ submodule-config.c: static int parse_update_recurse(const char *opt, const char *arg,
+     + 		return RECURSE_SUBMODULES_OFF;
+     + 	default:
+     + 		if (die_on_error)
+     +-			die("bad %s argument: %s", opt, arg);
+     ++			die("bad '%s' argument: '%s'", opt, arg);
+     + 		return RECURSE_SUBMODULES_ERROR;
+     + 	}
+       }
+     +@@ submodule-config.c: static int parse_push_recurse(const char *opt, const char *arg,
+     + 	case 1:
+     + 		/* There's no simple "on" value when pushing */
+     + 		if (die_on_error)
+     +-			die("bad %s argument: %s", opt, arg);
+     ++			die("bad '%s' argument: '%s'", opt, arg);
+     + 		else
+     + 			return RECURSE_SUBMODULES_ERROR;
+     + 	case 0:
+     +@@ submodule-config.c: static int parse_push_recurse(const char *opt, const char *arg,
+     + 		 * git-completion.bash when you add new modes.
+     + 		 */
+     + 		else if (die_on_error)
+     +-			die("bad %s argument: %s", opt, arg);
+     ++			die("bad '%s' argument: '%s'", opt, arg);
+     + 		else
+     + 			return RECURSE_SUBMODULES_ERROR;
+     + 	}
+     +
+     + ## submodule.c ##
+     +@@ submodule.c: void handle_ignore_submodules_arg(struct diff_options *diffopt,
+     + 	else if (!strcmp(arg, "dirty"))
+     + 		diffopt->flags.ignore_dirty_submodules = 1;
+     + 	else if (strcmp(arg, "none"))
+     +-		die(_("bad --ignore-submodules argument: %s"), arg);
+     ++		die(_("bad '%s' argument: '%s'"), "--ignore-submodules", arg);
+     + 	/*
+     + 	 * Please update _git_status() in git-completion.bash when you
+     + 	 * add new options
+     +
+     + ## t/t1300-config.sh ##
+     +@@ t/t1300-config.sh: test_expect_success 'unset type specifiers may be reset to conflicting ones' '
+     + 
+     + test_expect_success '--type rejects unknown specifiers' '
+     + 	test_must_fail git config --type=nonsense section.foo 2>error &&
+     +-	test_i18ngrep "unrecognized --type argument" error
+     ++	test_i18ngrep "bad '\''--type'\'' argument" error
+     + '
+     + 
+     + test_expect_success '--replace-all does not invent newlines' '
+     +
+     + ## t/t7900-maintenance.sh ##
+     +@@ t/t7900-maintenance.sh: test_expect_success '--auto and --schedule incompatible' '
+     + 
+     + test_expect_success 'invalid --schedule value' '
+     + 	test_must_fail git maintenance run --schedule=annually 2>err &&
+     +-	test_i18ngrep "unrecognized --schedule" err
+     ++	test_i18ngrep "bad '\''--schedule'\''" err
+     + '
+     + 
+     + test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
+     +@@ t/t7900-maintenance.sh: test_expect_success !MINGW 'register and unregister with regex metacharacters' '
+     + 
+     + test_expect_success 'start --scheduler=<scheduler>' '
+     + 	test_expect_code 129 git maintenance start --scheduler=foo 2>err &&
+     +-	test_i18ngrep "unrecognized --scheduler argument" err &&
+     ++	test_i18ngrep "bad '\''--scheduler'\'' argument" err &&
+       
+     + 	test_expect_code 129 git maintenance start --no-scheduler 2>err &&
+     + 	test_i18ngrep "unknown option" err &&
+
+-- 
+gitgitgadget
