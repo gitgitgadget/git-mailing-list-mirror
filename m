@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 663CFC433F5
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C331AC433EF
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354724AbiDBKwz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33720 "EHLO
+        id S1352038AbiDBKxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354592AbiDBKwh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:52:37 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03B98141D8F
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:13 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id u26so5645244eda.12
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:12 -0700 (PDT)
+        with ESMTP id S1354517AbiDBKwJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 06:52:09 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42594141DA7
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:08 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id h4so5705259edr.3
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sFIt85kmYnkDXzfebX0SbmisLvN8wznrd7mU8m0hAFw=;
-        b=HadnxJMTk7xBCHpcMOgLn8+l5QpuwrVQWDpWDTChV22o3QEqAag9R0Q1E8HMuhoRik
-         L8kX0x1FYej5hFRiOSuwULmWYvHGWs+IWwiwwyJ6yRyaKGO1WRMOdu2IUki/PjQ7827R
-         S524fiBVKti+Bj0poLNtTo+CujN2ysSQhA6jAS+32GPcqwmEKoMeonnmR2sNoQJQcvL3
-         bCd4qn1pm4vCk58VTj+Q4hG7lzkBiExQhAgJR59OMK2QAosrdd59iGiKb84Xgzmkna/e
-         BmUBhMqB2Xzc0+U/rDPnXVVVfDGEgm+QPJiQHDjAm8NiB0hODbuYzukHFfY8dMz2CvyG
-         20/Q==
+        bh=Fq3x08VgcV91DmqOkJyRp5kWmyDXrLuyqHHBxykuYAc=;
+        b=Zpmmy2KKoIcxOXIUkAG6tpOtUu8EEa5t8E4z2MppmMpMw1a3MI8ApvDhO3mHj+Dx9g
+         RlwMfJm78nMlV2qroyRr7N1jWv46jpygDVQStZCl0ry6XDyDeEn5WSMMDyD6tqQ8tVf8
+         JgK2fXdR8sHYApBHMUX3FAoWZzFhfLBXWX4xuevNJREuCc9X3A00fYtEqCpi+IJ3GAZJ
+         2uxRC6yFRjR5nnIc4BtJFv/E3mIkSZ4bydEZ7yUbbqY4BM0oDh/iCz/YCx+1mJTuBuHD
+         7YOHQnPPgIW3e9jNb/kOWDWV9eoydQJ3tWQMFLpQ66SwoiAsOMn3PunwowiM29todAZq
+         /ihw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sFIt85kmYnkDXzfebX0SbmisLvN8wznrd7mU8m0hAFw=;
-        b=PV2dpVUOTB0lvGgBvaxSgQwp6L491bkIiqbvWcI25xsONuQMZ+qA31OoAwBawISHnL
-         j72P9PFRYb2KIFdX6LKJAiWXWeC4A6h1XfX+tIESPjHWf19gM52Dv91zgXwsomQjCL9G
-         94du8yM2ZKW7joQBTV4YIPzq9V8fhNSleRIGkE65YbSJwrJoL3dD6RPQMbmzpLMfyJzK
-         UpjrC3jBtclTDJeEeT78eA/jPL0DJFaxwVUtENXl0MRepNMUI41oKcm12CFgA9o3EAms
-         HCCfoWfwuMMzFYw8KmNeTHk5baMdf0zml8f/TBZeeRUWFl5nMROoqAQyY62A1eXmNoLp
-         R03Q==
-X-Gm-Message-State: AOAM5306GAdDaVDgke2Zqljxf4iuOa55WVZeTS7tkr+gApJXVhlnsWrE
-        0vDM5kcaGDTpDRAFSCUk3nN8pOQwMdJmZg==
-X-Google-Smtp-Source: ABdhPJxOKijtIOwRF+7qp9pIp1I4+AhzlGMdWKmsIjaGSVqDjVQKGlUEUUgVOT1+aa9jEok4vQffGA==
-X-Received: by 2002:a05:6402:26c8:b0:419:2e54:9262 with SMTP id x8-20020a05640226c800b004192e549262mr24532709edd.61.1648896611371;
-        Sat, 02 Apr 2022 03:50:11 -0700 (PDT)
+        bh=Fq3x08VgcV91DmqOkJyRp5kWmyDXrLuyqHHBxykuYAc=;
+        b=3abu91zgIO8obsneI2XBcABdGZU5uz+rglmcpL/Dqou6LdUTc0j8JBgfNcVEDcUj9X
+         8jZUitXmi448La7LVIL53/KCkjp2PZmr8tdYKFdIezeaQwA1JtuJpAVQKA57D4BjpW5K
+         7VxL8PZhm3lXI9VYw4xQU0TbMjQ12c69GsM+OeY9WbBFnJ9NMN6tF7bb3x/OgFu1nlUl
+         BUFJDYNG9OWmvXVBJkOPqQz1qE77kapKLVcuIvZEeQt4sDIuPkWXiXkeV2pXzW92sWgu
+         A77xT7qusLHm8Pbr7Ghl5vUl931HViifTdZMqtmfEL1Myni7CEHAbHvzE1Yb1rwXxs1x
+         03PA==
+X-Gm-Message-State: AOAM531YrL0E8W5jV2BUNTBx8hUTjHda+samt3I+ccpEumeW3x6tgiLU
+        VKIU1bJSDvEjrxANIlOqCkwYgn6JqR062g==
+X-Google-Smtp-Source: ABdhPJwIyZ4uio4/NH3TmLniKcz9XDhfYI1e78JzrlsRyrI0Aftw2w1wfsqZi8rVfKMrH+JfxL/SNw==
+X-Received: by 2002:aa7:c881:0:b0:419:1a3d:4437 with SMTP id p1-20020aa7c881000000b004191a3d4437mr25093349eds.378.1648896606610;
+        Sat, 02 Apr 2022 03:50:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.10
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:50:10 -0700 (PDT)
+        Sat, 02 Apr 2022 03:50:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 27/27] revisions API: add a TODO for diff_free(&revs->diffopt)
-Date:   Sat,  2 Apr 2022 12:49:41 +0200
-Message-Id: <patch-v5-27.27-ec2c77ce869-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 22/27] revisions API: clear "boundary_commits" in release_revisions()
+Date:   Sat,  2 Apr 2022 12:49:36 +0200
+Message-Id: <patch-v5-22.27-d96642d3502-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
 In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
@@ -71,88 +71,139 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a TODO comment indicating that we should release "diffopt" in
-release_revisions(). In a preceding commit we started releasing the
-"pruning" member of the same type, but handling "diffopt" will require
-us to untangle the "no_free" conditions I added in e900d494dcf (diff:
-add an API for deferred freeing, 2021-02-11).
+Clear the "boundary_commits" object_array in release_revisions(). This
+makes a few more tests pass under SANITIZE=leak, including
+"t/t4126-apply-empty.sh" which started failed as an UNLEAK() in
+cmd_format_patch() was removed in a preceding commit.
 
-Let's leave a TODO comment to that effect, and so that we don't forget
-refactor code that was changed to use release_revisions() in earlier
-commits to stop using the "diffopt" member after a call to
-release_revisions(). This works currently, but would become a logic
-error as soon as we started freeing "diffopt". Doing that change now
-doesn't harm anything, and future-proofs us against a later change to
-release_revisions().
+This also re-marks the various tests relying on "git format-patch" as
+passing under "SANITIZE=leak", in the preceding "revisions API users:
+use release_revisions() in builtin/log.c" commit those were marked as
+failing as we removed the UNLEAK(rev) from cmd_format_patch() in
+"builtin/log.c".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diff-lib.c  | 4 +++-
- revision.c  | 1 +
- wt-status.c | 6 ++++--
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ revision.c                           | 1 +
+ t/t4021-format-patch-numbered.sh     | 1 +
+ t/t4028-format-patch-mime-headers.sh | 2 ++
+ t/t4036-format-patch-signer-mime.sh  | 1 +
+ t/t4122-apply-symlink-inside.sh      | 1 +
+ t/t4126-apply-empty.sh               | 1 +
+ t/t6110-rev-list-sparse.sh           | 1 +
+ t/t9001-send-email.sh                | 1 +
+ t/t9116-git-svn-log.sh               | 1 -
+ 9 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 298265e5b54..7eb66a417aa 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -651,6 +651,7 @@ int index_differs_from(struct repository *r,
- {
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
-+	unsigned has_changes;
- 
- 	repo_init_revisions(r, &rev, NULL);
- 	memset(&opt, 0, sizeof(opt));
-@@ -662,8 +663,9 @@ int index_differs_from(struct repository *r,
- 		diff_flags_or(&rev.diffopt.flags, flags);
- 	rev.diffopt.ita_invisible_in_index = ita_invisible_in_index;
- 	run_diff_index(&rev, 1);
-+	has_changes = rev.diffopt.flags.has_changes;
- 	release_revisions(&rev);
--	return (rev.diffopt.flags.has_changes != 0);
-+	return (has_changes != 0);
- }
- 
- static struct strbuf *idiff_prefix_cb(struct diff_options *opt, void *data)
 diff --git a/revision.c b/revision.c
-index 28c3c3ff9b4..812bf709bc3 100644
+index 9fb18924cbf..40f59c441f7 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2958,6 +2958,7 @@ void release_revisions(struct rev_info *revs)
- 	date_mode_release(&revs->date_mode);
- 	release_revisions_mailmap(revs->mailmap);
- 	free_grep_patterns(&revs->grep_filter);
-+	/* TODO (need to handle "no_free"): diff_free(&revs->diffopt) */
- 	diff_free(&revs->pruning);
- 	reflog_walk_info_release(revs->reflog_info);
- 	release_revisions_topo_walk_info(revs->topo_walk_info);
-diff --git a/wt-status.c b/wt-status.c
-index 61e0c1022f5..102d904adcb 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2545,8 +2545,9 @@ int has_unstaged_changes(struct repository *r, int ignore_submodules)
- 	rev_info.diffopt.flags.quick = 1;
- 	diff_setup_done(&rev_info.diffopt);
- 	result = run_diff_files(&rev_info, 0);
-+	result = diff_result_code(&rev_info.diffopt, result);
- 	release_revisions(&rev_info);
--	return diff_result_code(&rev_info.diffopt, result);
-+	return result;
- }
+@@ -2949,6 +2949,7 @@ void release_revisions(struct rev_info *revs)
+ {
+ 	free_commit_list(revs->commits);
+ 	object_array_clear(&revs->pending);
++	object_array_clear(&revs->boundary_commits);
+ 	release_revisions_cmdline(&revs->cmdline);
+ 	list_objects_filter_release(&revs->filter);
+ 	clear_pathspec(&revs->prune_data);
+diff --git a/t/t4021-format-patch-numbered.sh b/t/t4021-format-patch-numbered.sh
+index 9be65fd4440..1219aa226dc 100755
+--- a/t/t4021-format-patch-numbered.sh
++++ b/t/t4021-format-patch-numbered.sh
+@@ -5,6 +5,7 @@
  
- /**
-@@ -2578,8 +2579,9 @@ int has_uncommitted_changes(struct repository *r,
+ test_description='Format-patch numbering options'
  
- 	diff_setup_done(&rev_info.diffopt);
- 	result = run_diff_index(&rev_info, 1);
-+	result = diff_result_code(&rev_info.diffopt, result);
- 	release_revisions(&rev_info);
--	return diff_result_code(&rev_info.diffopt, result);
-+	return result;
- }
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- /**
+ test_expect_success setup '
+diff --git a/t/t4028-format-patch-mime-headers.sh b/t/t4028-format-patch-mime-headers.sh
+index 204ba673cb5..60cb819c42e 100755
+--- a/t/t4028-format-patch-mime-headers.sh
++++ b/t/t4028-format-patch-mime-headers.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='format-patch mime headers and extra headers do not conflict'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'create commit with utf-8 body' '
+diff --git a/t/t4036-format-patch-signer-mime.sh b/t/t4036-format-patch-signer-mime.sh
+index 98d9713d8b2..48655bcc789 100755
+--- a/t/t4036-format-patch-signer-mime.sh
++++ b/t/t4036-format-patch-signer-mime.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='format-patch -s should force MIME encoding as needed'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4122-apply-symlink-inside.sh b/t/t4122-apply-symlink-inside.sh
+index aa52de401b9..96965373036 100755
+--- a/t/t4122-apply-symlink-inside.sh
++++ b/t/t4122-apply-symlink-inside.sh
+@@ -4,6 +4,7 @@ test_description='apply to deeper directory without getting fooled with symlink'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
+index 66a7ba8ab8f..ece9fae207d 100755
+--- a/t/t4126-apply-empty.sh
++++ b/t/t4126-apply-empty.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='apply empty'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t6110-rev-list-sparse.sh b/t/t6110-rev-list-sparse.sh
+index 13c1da53528..ddefc7f24ee 100755
+--- a/t/t6110-rev-list-sparse.sh
++++ b/t/t6110-rev-list-sparse.sh
+@@ -4,6 +4,7 @@ test_description='operations that cull histories in unusual ways'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 42694fe5841..01c74b8b075 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -4,6 +4,7 @@ test_description='git send-email'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # May be altered later in the test
+diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
+index 34f6c80dea3..d74d7b2de68 100755
+--- a/t/t9116-git-svn-log.sh
++++ b/t/t9116-git-svn-log.sh
+@@ -5,7 +5,6 @@
+ 
+ test_description='git svn log tests'
+ 
+-TEST_FAILS_SANITIZE_LEAK=true
+ . ./lib-git-svn.sh
+ 
+ test_expect_success 'setup repository and import' '
 -- 
 2.35.1.1585.gd85f8dcb745
 
