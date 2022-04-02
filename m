@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FDCC433EF
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 16:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B62BFC433EF
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 16:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357806AbiDBQNi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 12:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50928 "EHLO
+        id S1357838AbiDBQNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 12:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357791AbiDBQMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 12:12:52 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D47D960AA5
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 09:10:57 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id f6-20020a1c3806000000b0038e4a0fc5easo3110183wma.3
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 09:10:57 -0700 (PDT)
+        with ESMTP id S1357799AbiDBQMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 12:12:53 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11E2C2BB04
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 09:11:00 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n63-20020a1c2742000000b0038d0c31db6eso3128303wmn.1
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 09:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=6DaPrcjxVMvvzmMZmrPrzIEb2xqD07AEYgYG0ai+j0Y=;
-        b=OZpz/BU80G7uOWaq4DaxExzVk21wSxGJlIciVujli4on/+67kGWjZTVLBdUZJQvQaV
-         8eUL8yw9Ji+XNqeHkzUh4xJV3U+QTOfn/T0wPTbJrXhX2YrET846j+sm3GmWAjxlvk8u
-         izPUf4KlvafhcLfsSPd1KvlVc1s0W4xFyKtByrO2rwDldvF/RvZdLd6bs1NRWvVcgfwJ
-         aYw1FksOvc/VyYwe7vYb2vXmhjUCNE/559pDgjNKydvQF7PCaN9yBs0j6Pt/Cb/9XvEN
-         uGZiDfkbaq84LWUfjpq7EnuZJdVvfMoVe0CxguCBbWohOqmmtqlZ/SzriMWQClTfpSBs
-         39sQ==
+        bh=EwPq+9rE7e8zBOOW8EY1TMYNsoLygqEpgTGSLz2TGu8=;
+        b=JDGMNaWv8x7DtrGNfHvugeMfvSj/h+3CiHqyI/2EAOF068HIAxFT+fqWHFeQNSRgaw
+         LBcw15TfS6TUSsycnfI3GJZ9l27EeDszaebptwEM0tQmQghBOvuPNiIMdQMHlDa5XLHc
+         uw8aE6gaFNIXQIC3dAzm/ot0d/qZjcxykYo1E7h1ALwmuDRMZ/JUynd5k0i38t7cmMZS
+         c25WMD8w5SiC05Lm+gw8Hb4RUq1siocrRSeVUGmjw9A/UldSGJH/6Ne6g9aYw7kF+o/8
+         BZoJUr8lrGSbrLzwDGT6gkGTe4nyEk+Db8WlyQcwjEtrq9zUBdhIJvX6hz63tejj3jcD
+         Ny6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=6DaPrcjxVMvvzmMZmrPrzIEb2xqD07AEYgYG0ai+j0Y=;
-        b=o/Ww9N6SwmTxn5ZS4+gEHeJSMwzkQeqMsRKgJuYw9LhV3+UAnO6PE7NaMfBghFXvOD
-         5HJRDd6jI7SCzhUBlwFTcKnoGj+JB8WWeOHb0t7E9gxZYiS5dxwpqZvvgaiPC3vPXMRf
-         a8AH6EAHTflaEFRSbsttzXyLicJE1CbslYuJV84pPnyeCr8zWf02XCbJMbPWgYzgJon7
-         kHCSkWytKQiOf3ts/b06H9BSjW1tUhGXRR1j2K5+hBhOsVpw14YR38K0cOmK6UwbOzYF
-         oNGQmYscfxgKtL61phsj8Efl+fIKrbuU1H+BYpOJF3OrE0SG+tVQUIddRuRefODTwZ3p
-         E5Og==
-X-Gm-Message-State: AOAM532V96lHFBMWo5ZYdIs33GSWcfmkzau0OuL62fYHCnToX/m2onnP
-        TyJ0pzJA01eTa/xOalOyXxVJV1ECyJA=
-X-Google-Smtp-Source: ABdhPJw39/Yf+u0b6n9iEmTimD4NbliuIs08b8sg7eWZcaen+PuMOH33Ic3smSkWtkIZINtxISiQBA==
-X-Received: by 2002:a1c:f705:0:b0:37d:f2e5:d8ec with SMTP id v5-20020a1cf705000000b0037df2e5d8ecmr13192222wmh.21.1648915855983;
-        Sat, 02 Apr 2022 09:10:55 -0700 (PDT)
+        bh=EwPq+9rE7e8zBOOW8EY1TMYNsoLygqEpgTGSLz2TGu8=;
+        b=766KLi12IisOayGd7xjN0+DGSs5x6aDmxFijTB2eu6ffX945RJ8JSCTVw/mYxQGFE4
+         AQcnxG5lCZ+U0XjF8TajqDT7dfG8boBZW1Mx7/7bUuhSc+fpzVuV5H3FfG33XTy/JeiN
+         07uRW/lfyWGg2e92CQfTAKz40ZzsmA16dQBuqy1b1NcJDIamt5+m0dvQnYYQT7u0HlVF
+         vKw7Mb3/GXRd35e2mIpwCONj/Nxxu1qbIKNZMhNh49yv/ojeq3w4OpM7jcqLUVkIkzLh
+         KWNhBo0RukqRPkCGE/GJOx35BjHhQpedvokNkZeuM5kfpEJub5GaXNJ6rC6AvmIJbpKb
+         9dZg==
+X-Gm-Message-State: AOAM531gz97kAHIirOyXrv4wjkifjHYbNsDa54P3DiVTf0K05bdhwBAQ
+        bXyYYbsFtYBoT15AI7BiI9PIGSnpmso=
+X-Google-Smtp-Source: ABdhPJzKXD83I0o4jvbSUXe1fE+tZrCarCmBx4oTjdkEBkKUUzSU6kralfWFV0rNCZ8BRVT7lHk5cw==
+X-Received: by 2002:a7b:c381:0:b0:37b:e01f:c1c0 with SMTP id s1-20020a7bc381000000b0037be01fc1c0mr13333739wmj.98.1648915858373;
+        Sat, 02 Apr 2022 09:10:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e13-20020a05600c4e4d00b0038e44e316c1sm6777631wmq.6.2022.04.02.09.10.55
+        by smtp.gmail.com with ESMTPSA id b5-20020adfde05000000b00205bdc6bd57sm5146430wrm.95.2022.04.02.09.10.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 09:10:55 -0700 (PDT)
-Message-Id: <4bba3e1f6cb9cdc35b0dc8da440e38de256b4d2b.1648915853.git.gitgitgadget@gmail.com>
+        Sat, 02 Apr 2022 09:10:58 -0700 (PDT)
+Message-Id: <b06b76705163e49fe69680ceb3bf925fcfe8dc58.1648915853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
 References: <pull.1181.git.1647813291.gitgitgadget@gmail.com>
         <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Sat, 02 Apr 2022 16:10:48 +0000
-Subject: [PATCH v2 1/6] i18n: factorize generic failure messages
+Date:   Sat, 02 Apr 2022 16:10:50 +0000
+Subject: [PATCH v2 3/6] i18n: factorize server support messages in fetch-pack
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,231 +71,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-In these message the command or the function that failed should not be
-translated. So it is simpler to just remove these parts from the
-message.
+The messages "Server supports foo" and "Server does not support bar"
+are uniformized and options are quoted.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- add-patch.c                     | 4 ++--
- builtin/am.c                    | 2 +-
- builtin/gc.c                    | 4 ++--
- builtin/merge.c                 | 6 +++---
- builtin/revert.c                | 4 ++--
- fetch-pack.c                    | 2 +-
- remote-curl.c                   | 2 +-
- setup.c                         | 4 ++--
- t/t3510-cherry-pick-sequence.sh | 8 ++++----
- t/t6436-merge-overwrite.sh      | 2 +-
- 10 files changed, 19 insertions(+), 19 deletions(-)
+ fetch-pack.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/add-patch.c b/add-patch.c
-index 55d719f7845..8c9e81ec78e 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1181,7 +1181,7 @@ static int run_apply_check(struct add_p_state *s,
- 			    "apply", "--check", NULL);
- 	strvec_pushv(&cp.args, s->mode->apply_check_args);
- 	if (pipe_command(&cp, s->buf.buf, s->buf.len, NULL, 0, NULL, 0))
--		return error(_("'git apply --cached' failed"));
-+		return error(_("the command '%s' failed"), "git apply --cached");
- 
- 	return 0;
- }
-@@ -1683,7 +1683,7 @@ soft_increment:
- 			strvec_pushv(&cp.args, s->mode->apply_args);
- 			if (pipe_command(&cp, s->buf.buf, s->buf.len,
- 					 NULL, 0, NULL, 0))
--				error(_("'git apply' failed"));
-+				error(_("the command '%s' failed"), "git apply");
- 		}
- 		if (repo_read_index(s->s.r) >= 0)
- 			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
-diff --git a/builtin/am.c b/builtin/am.c
-index 0f4111bafa0..a0a57049510 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -586,7 +586,7 @@ static int is_mail(FILE *fp)
- 	int ret = 1;
- 
- 	if (fseek(fp, 0L, SEEK_SET))
--		die_errno(_("fseek failed"));
-+		die_errno(_("the function '%s' failed"), "fseek");
- 
- 	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
- 		die("invalid pattern: %s", header_regex);
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ffaf0daf5d9..c062d7bceeb 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1104,7 +1104,7 @@ static int multi_pack_index_expire(struct maintenance_run_opts *opts)
- 		strvec_push(&child.args, "--no-progress");
- 
- 	if (run_command(&child))
--		return error(_("'git multi-pack-index expire' failed"));
-+		return error(_("the command '%s' failed"), "git multi-pack-index expire");
- 
- 	return 0;
- }
-@@ -1163,7 +1163,7 @@ static int multi_pack_index_repack(struct maintenance_run_opts *opts)
- 				  (uintmax_t)get_auto_pack_size());
- 
- 	if (run_command(&child))
--		return error(_("'git multi-pack-index repack' failed"));
-+		return error(_("the command '%s' failed"), "git multi-pack-index repack");
- 
- 	return 0;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index f178f5a3ee1..78468ff43a4 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -325,7 +325,7 @@ static int save_state(struct object_id *stash)
- 	close(cp.out);
- 
- 	if (finish_command(&cp) || len < 0)
--		die(_("stash failed"));
-+		die(_("the command '%s' failed"), "stash");
- 	else if (!len)		/* no changes */
- 		goto out;
- 	strbuf_setlen(&buffer, buffer.len-1);
-@@ -352,7 +352,7 @@ static void read_empty(const struct object_id *oid, int verbose)
- 	args[i] = NULL;
- 
- 	if (run_command_v_opt(args, RUN_GIT_CMD))
--		die(_("read-tree failed"));
-+		die(_("the command '%s' failed"), "read-tree");
- }
- 
- static void reset_hard(const struct object_id *oid, int verbose)
-@@ -369,7 +369,7 @@ static void reset_hard(const struct object_id *oid, int verbose)
- 	args[i] = NULL;
- 
- 	if (run_command_v_opt(args, RUN_GIT_CMD))
--		die(_("read-tree failed"));
-+		die(_("the command '%s' failed"), "read-tree");
- }
- 
- static void restore_state(const struct object_id *head,
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 51776abea63..d293036e790 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -238,7 +238,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
--		die(_("revert failed"));
-+		die(_("the command '%s' failed"), "revert");
- 	return res;
- }
- 
-@@ -251,6 +251,6 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
--		die(_("cherry-pick failed"));
-+		die(_("the command '%s' failed"), "cherry-pick");
- 	return res;
- }
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 87657907e78..2e6795cd439 100644
+index 2e6795cd439..da3075f61f2 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -989,7 +989,7 @@ static int get_pack(struct fetch_pack_args *args,
- 			args->check_self_contained_and_connected &&
- 			ret == 0;
- 	else
--		die(_("%s failed"), cmd_name);
-+		die(_("the command '%s' failed"), cmd_name);
- 	if (use_sideband && finish_async(&demux))
- 		die(_("error in sideband demultiplexer"));
+@@ -1044,78 +1044,78 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		advertise_sid = 0;
  
-diff --git a/remote-curl.c b/remote-curl.c
-index ff44f41011e..8393f56652b 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1287,7 +1287,7 @@ static int push_dav(int nr_spec, const char **specs)
- 		strvec_push(&child.args, specs[i]);
- 
- 	if (run_command(&child))
--		die(_("git-http-push failed"));
-+		die(_("the command '%s' failed"), "git-http-push");
- 	return 0;
- }
- 
-diff --git a/setup.c b/setup.c
-index 04ce33cdcd4..30a4b81257d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1506,12 +1506,12 @@ int daemonize(void)
- 		case 0:
- 			break;
- 		case -1:
--			die_errno(_("fork failed"));
-+			die_errno(_("the function '%s' failed"), "fork");
- 		default:
- 			exit(0);
+ 	if (server_supports("shallow"))
+-		print_verbose(args, _("Server supports %s"), "shallow");
++		print_verbose(args, _("Server supports '%s'"), "shallow");
+ 	else if (args->depth > 0 || is_repository_shallow(r))
+ 		die(_("Server does not support shallow clients"));
+ 	if (args->depth > 0 || args->deepen_since || args->deepen_not)
+ 		args->deepen = 1;
+ 	if (server_supports("multi_ack_detailed")) {
+-		print_verbose(args, _("Server supports %s"), "multi_ack_detailed");
++		print_verbose(args, _("Server supports '%s'"), "multi_ack_detailed");
+ 		multi_ack = 2;
+ 		if (server_supports("no-done")) {
+-			print_verbose(args, _("Server supports %s"), "no-done");
++			print_verbose(args, _("Server supports '%s'"), "no-done");
+ 			if (args->stateless_rpc)
+ 				no_done = 1;
+ 		}
  	}
- 	if (setsid() == -1)
--		die_errno(_("setsid failed"));
-+		die_errno(_("the function '%s' failed"), "setsid");
- 	close(0);
- 	close(1);
- 	close(2);
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 3b0fa66c33d..141d217dc3f 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -193,7 +193,7 @@ test_expect_success 'check advice when we move HEAD by committing' '
- 	error: there is nothing to skip
- 	hint: have you committed already?
- 	hint: try "git cherry-pick --continue"
--	fatal: cherry-pick failed
-+	fatal: the command '\''cherry-pick'\'' failed
- 	EOF
- 	test_must_fail git cherry-pick base..yetanotherpick &&
- 	echo c >foo &&
-@@ -208,7 +208,7 @@ test_expect_success 'selectively advise --skip while launching another sequence'
- 	cat >expect <<-EOF &&
- 	error: cherry-pick is already in progress
- 	hint: try "git cherry-pick (--continue | --skip | --abort | --quit)"
--	fatal: cherry-pick failed
-+	fatal: the command '\''cherry-pick'\'' failed
- 	EOF
- 	test_must_fail git cherry-pick picked..yetanotherpick &&
- 	test_must_fail git cherry-pick picked..yetanotherpick 2>advice &&
-@@ -216,7 +216,7 @@ test_expect_success 'selectively advise --skip while launching another sequence'
- 	cat >expect <<-EOF &&
- 	error: cherry-pick is already in progress
- 	hint: try "git cherry-pick (--continue | --abort | --quit)"
--	fatal: cherry-pick failed
-+	fatal: the command '\''cherry-pick'\'' failed
- 	EOF
- 	git reset --merge &&
- 	test_must_fail git cherry-pick picked..yetanotherpick 2>advice &&
-@@ -227,7 +227,7 @@ test_expect_success 'allow skipping commit but not abort for a new history' '
- 	pristine_detach initial &&
- 	cat >expect <<-EOF &&
- 	error: cannot abort from a branch yet to be born
--	fatal: cherry-pick failed
-+	fatal: the command '\''cherry-pick'\'' failed
- 	EOF
- 	git checkout --orphan new_disconnected &&
- 	git reset --hard &&
-diff --git a/t/t6436-merge-overwrite.sh b/t/t6436-merge-overwrite.sh
-index c0b7bd7c3fe..c714ac2cbc5 100755
---- a/t/t6436-merge-overwrite.sh
-+++ b/t/t6436-merge-overwrite.sh
-@@ -166,7 +166,7 @@ test_expect_success 'will not be confused by symlink in leading path' '
+ 	else if (server_supports("multi_ack")) {
+-		print_verbose(args, _("Server supports %s"), "multi_ack");
++		print_verbose(args, _("Server supports '%s'"), "multi_ack");
+ 		multi_ack = 1;
+ 	}
+ 	if (server_supports("side-band-64k")) {
+-		print_verbose(args, _("Server supports %s"), "side-band-64k");
++		print_verbose(args, _("Server supports '%s'"), "side-band-64k");
+ 		use_sideband = 2;
+ 	}
+ 	else if (server_supports("side-band")) {
+-		print_verbose(args, _("Server supports %s"), "side-band");
++		print_verbose(args, _("Server supports '%s'"), "side-band");
+ 		use_sideband = 1;
+ 	}
+ 	if (server_supports("allow-tip-sha1-in-want")) {
+-		print_verbose(args, _("Server supports %s"), "allow-tip-sha1-in-want");
++		print_verbose(args, _("Server supports '%s'"), "allow-tip-sha1-in-want");
+ 		allow_unadvertised_object_request |= ALLOW_TIP_SHA1;
+ 	}
+ 	if (server_supports("allow-reachable-sha1-in-want")) {
+-		print_verbose(args, _("Server supports %s"), "allow-reachable-sha1-in-want");
++		print_verbose(args, _("Server supports '%s'"), "allow-reachable-sha1-in-want");
+ 		allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
+ 	}
+ 	if (server_supports("thin-pack"))
+-		print_verbose(args, _("Server supports %s"), "thin-pack");
++		print_verbose(args, _("Server supports '%s'"), "thin-pack");
+ 	else
+ 		args->use_thin_pack = 0;
+ 	if (server_supports("no-progress"))
+-		print_verbose(args, _("Server supports %s"), "no-progress");
++		print_verbose(args, _("Server supports '%s'"), "no-progress");
+ 	else
+ 		args->no_progress = 0;
+ 	if (server_supports("include-tag"))
+-		print_verbose(args, _("Server supports %s"), "include-tag");
++		print_verbose(args, _("Server supports '%s'"), "include-tag");
+ 	else
+ 		args->include_tag = 0;
+ 	if (server_supports("ofs-delta"))
+-		print_verbose(args, _("Server supports %s"), "ofs-delta");
++		print_verbose(args, _("Server supports '%s'"), "ofs-delta");
+ 	else
+ 		prefer_ofs_delta = 0;
  
- cat >expect <<\EOF
- error: Untracked working tree file 'c0.c' would be overwritten by merge.
--fatal: read-tree failed
-+fatal: the command 'read-tree' failed
- EOF
+ 	if (server_supports("filter")) {
+ 		server_supports_filtering = 1;
+-		print_verbose(args, _("Server supports %s"), "filter");
++		print_verbose(args, _("Server supports '%s'"), "filter");
+ 	} else if (args->filter_options.choice) {
+ 		warning("filtering not recognized by server, ignoring");
+ 	}
  
- test_expect_success 'will not overwrite untracked file on unborn branch' '
+ 	if (server_supports("deepen-since")) {
+-		print_verbose(args, _("Server supports %s"), "deepen-since");
++		print_verbose(args, _("Server supports '%s'"), "deepen-since");
+ 		deepen_since_ok = 1;
+ 	} else if (args->deepen_since)
+-		die(_("Server does not support --shallow-since"));
++		die(_("Server does not support '%s'"), "--shallow-since");
+ 	if (server_supports("deepen-not")) {
+-		print_verbose(args, _("Server supports %s"), "deepen-not");
++		print_verbose(args, _("Server supports '%s'"), "deepen-not");
+ 		deepen_not_ok = 1;
+ 	} else if (args->deepen_not)
+-		die(_("Server does not support --shallow-exclude"));
++		die(_("Server does not support '%s'"), "--shallow-exclude");
+ 	if (server_supports("deepen-relative"))
+-		print_verbose(args, _("Server supports %s"), "deepen-relative");
++		print_verbose(args, _("Server supports '%s'"), "deepen-relative");
+ 	else if (args->deepen_relative)
+-		die(_("Server does not support --deepen"));
++		die(_("Server does not support '%s'"), "--deepen");
+ 	if (!server_supports_hash(the_hash_algo->name, NULL))
+ 		die(_("Server does not support this repository's object format"));
+ 
 -- 
 gitgitgadget
 
