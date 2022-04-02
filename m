@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 081ABC433EF
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 062D4C433F5
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354490AbiDBKwK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33592 "EHLO
+        id S1354521AbiDBKwN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:52:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354512AbiDBKv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1354514AbiDBKv7 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 2 Apr 2022 06:51:59 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69826140767
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:00 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id i27so3560392ejd.9
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:00 -0700 (PDT)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63738140754
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:01 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y10so5682314edv.7
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C5L0FrsIduO7fVZcb92ii8iUNtKfOS+FYzvv3S9IkP8=;
-        b=CT8OzeMUACTqlMbJinNEPOTLmEucW1JXNL4P6yBDYiDuDFwywfieiTAGCn1xN6Wuh9
-         zUEh7naSkNgVVqAEv5ldAhryly9zOwEblcFdFPc3apyrdNrJXdzjCi7BtzlmU4TQRO2m
-         b8ig0H4SMyvifkRctPZl9ua6B2C5fQ+EOTCxKYiqVzMBytUU8t7SpkfoXJqXm6ap3+rU
-         N/nz+OzHfILpQDWa4g/PybMyrzGu8g+gkgXkah68e6Wt2Z8ljOosNBMUtD9tGPlmCvm/
-         JjpJWrKDNwgJpKdgxvs/K5Ft+ED5ThF+OvcVjkf2KWx+wOXgQqpxN8Z0HrJwTXUz3qLF
-         iR/A==
+        bh=P1sTAUu5Atuw13TSGFlVIp0Oo+YGkAJEDZ3Gigm/BVA=;
+        b=pewyRpG2zvxdlf5ExS+r20hJyq2mlgsjFcShLvfRA6T0rWf9pFB4IzQ3mmfNLFLaZO
+         Cl/pKq7A3yOzv4YAxciuPTUkzMsTPPpO1s3ScPGIfRn8huPvsFFjSt691g2LWN9lTNif
+         D/eSnSaWisrcSX2HsHoNuZIWnMVKMQVjjW2GwZwi/ty7jRHX0SPqqNm6894li/zHXBIC
+         Dqc6j6aiVO/VEhDwKHPYG3T2OBEq2MNdz3OqsSRFThuPbZ+K7IP1F4AftOxeipqtCuae
+         7yb0QxD6qI7DZgMMu1gUQe3+EeXtTwhmYllt+SNssQZWXgoJrETUFa2R1BBWQhf4eTw8
+         uTPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C5L0FrsIduO7fVZcb92ii8iUNtKfOS+FYzvv3S9IkP8=;
-        b=3PHNaHWCceyK4eSMyX97MEIi0IaqeKAHLNfy8BcieeB5ODTbzXX6SIT8SrAN+qn/P1
-         +4fm2uETttWQvn3mYPZ7G35595ZwjRc56jTCgD6NoVTBdyUerxuR87Sx3rE0xd6Ds+yG
-         7TJ6FbsDplfm8U55LDrTgxpjtzuYW+/efukUlVzkj/zPrHmw/gmkcawpBduiUWFFARKg
-         h33dRKUiUJFmFmLVEzrUxvCvIBAxbxnxCFCFXHqUBUq2e9IbOJgxKzCG/dShZauHoaqf
-         9BeqqzXBvNG+yx9wnAzBUBjZCWQiF0M/gbuSMDJcvR/Cy+ZqVlCCbiaDy2TLC7A4NMO4
-         pqUQ==
-X-Gm-Message-State: AOAM533NMQWoT6eZ+rV+jmIVopqi/XV6seeL9zStKiWgF5HMlI0B9rWW
-        W6hGOAJ6wJU1Ojle4bDnOgDBdB02bXicFg==
-X-Google-Smtp-Source: ABdhPJwC+Eo0T/MIRSd0UM5oLz+gkjKsMDQM7jZIihH13wWrWuRuK7WvUQlnG6lgVqDuN4vDj1u4Mw==
-X-Received: by 2002:a17:906:58d2:b0:6da:b635:fbf3 with SMTP id e18-20020a17090658d200b006dab635fbf3mr3334338ejs.40.1648896598726;
-        Sat, 02 Apr 2022 03:49:58 -0700 (PDT)
+        bh=P1sTAUu5Atuw13TSGFlVIp0Oo+YGkAJEDZ3Gigm/BVA=;
+        b=QY3sPXaiT2XQ3Eoc252LUyFu2UMXkBrGihFgcRYbNQ1erlLNV4DgPI5z4OSu1y94iw
+         ZaPQ0pE1k/QZiEw8La8wZml06HT7o2boy5vom05CmTbd1j1LH1VrjA4G0ZsEzy9utLn/
+         IXQzrn+hUnafwN6G5G7QC4oJfrY8CDcIMGXfBnZbDIZMDWUscR0zoWVJ9n5Rvsw/PeEA
+         NvmHgYxKqmUF50yrD19OCq0cBePTB+dxz6vduapzmD1wM1+I4GUweQSDcg5VUuMOHGdp
+         UPofos1ZsEDagizDwdZLF1s4bbhptHR1LyRsoCDcbBQydSWSvTGXVQF15TutvWwOOkcI
+         olfA==
+X-Gm-Message-State: AOAM5335o+0mb45K9Ed5iRT1i5JJCZ0rTL6qaRJuxOXNyY54oTZzlIg+
+        hN9sggQ4sxgOiFcJSWGLXRmrUWfCsXH2Bw==
+X-Google-Smtp-Source: ABdhPJw4hZEritC2GX8Aj7cN0FvnAFJCJOKtVxS4dG0nlq45mF7PtwvA5ysDNDdRRkeE1Jg86DI1sw==
+X-Received: by 2002:aa7:c683:0:b0:418:f5f3:9684 with SMTP id n3-20020aa7c683000000b00418f5f39684mr24896724edq.184.1648896599644;
+        Sat, 02 Apr 2022 03:49:59 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.57
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:49:58 -0700 (PDT)
+        Sat, 02 Apr 2022 03:49:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 14/27] revisions API users: use release_revisions() with UNLEAK()
-Date:   Sat,  2 Apr 2022 12:49:28 +0200
-Message-Id: <patch-v5-14.27-ddc7402b054-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 15/27] revisions API users: use release_revisions() for "prune_data" users
+Date:   Sat,  2 Apr 2022 12:49:29 +0200
+Message-Id: <patch-v5-15.27-03e9bd73d4b-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
 In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
@@ -71,49 +71,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use a release_revisions() with those "struct rev_list" users which
-already "UNLEAK" the struct. It may seem odd to simultaneously attempt
-to free() memory, but also to explicitly ignore whether we have memory
-leaks in the same.
+Use release_revisions() for users of "struct rev_list" that reach into
+the "struct rev_info" and clear the "prune_data" already.
 
-As explained in preceding commits this is being done to use the
-built-in commands as a guinea pig for whether the release_revisions()
-function works as expected, we'd like to test e.g. whether we segfault
-as we change it. In subsequent commits we'll then remove these
-UNLEAK() as the function is made to free the memory that caused us to
-add them in the first place.
+In a subsequent commit we'll teach release_revisions() to clear this
+itself, but in the meantime let's invoke release_revisions() here to
+clear anything else we may have missed, and for reasons of having
+consistent boilerplate.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/diff-index.c | 4 +++-
- builtin/diff.c       | 1 +
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ builtin/add.c | 1 +
+ diff-lib.c    | 1 +
+ wt-status.c   | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 5fd23ab5b6c..3a83183c312 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -71,5 +71,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 	}
- 	result = run_diff_index(&rev, option);
- 	UNLEAK(rev);
--	return diff_result_code(&rev.diffopt, result);
-+	result = diff_result_code(&rev.diffopt, result);
+diff --git a/builtin/add.c b/builtin/add.c
+index f507d2191cd..115a26ea633 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -143,6 +143,7 @@ int add_files_to_cache(const char *prefix,
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	clear_pathspec(&rev.prune_data);
 +	release_revisions(&rev);
-+	return result;
+ 	return !!data.add_errors;
  }
-diff --git a/builtin/diff.c b/builtin/diff.c
-index bb7fafca618..dd48336da56 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -595,6 +595,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
- 	UNLEAK(rev);
+ 
+diff --git a/diff-lib.c b/diff-lib.c
+index d6800274bd5..0f16281253f 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -642,6 +642,7 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
+ 	clear_pathspec(&revs.prune_data);
++	release_revisions(&revs);
+ 	return 0;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index f9100621375..a14fad1e03a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -617,6 +617,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_files(&rev, 0);
+ 	clear_pathspec(&rev.prune_data);
 +	release_revisions(&rev);
- 	UNLEAK(ent);
- 	UNLEAK(blob);
- 	return result;
+ }
+ 
+ static void wt_status_collect_changes_index(struct wt_status *s)
 -- 
 2.35.1.1585.gd85f8dcb745
 
