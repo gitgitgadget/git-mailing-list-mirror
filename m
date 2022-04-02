@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29694C433EF
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EC8FC433FE
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353617AbiDBKwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34374 "EHLO
+        id S240361AbiDBKws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:52:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354564AbiDBKwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:52:08 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B194A14144B
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:06 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id p15so10674566ejc.7
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:06 -0700 (PDT)
+        with ESMTP id S1354573AbiDBKwf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 06:52:35 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3916B140749
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:10 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id a17so5659402edm.9
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XrXpQIOmFSyzGKtnFgmghoZHdpHRM6E+wH9Ng2v9LzE=;
-        b=To/He+Svym7xdTI0/qagNLp02kBxJ/ueiWIkTVgR8xKVWZN/cExkzdEI6sDWaa6Aqb
-         VLW/Ubaq1rVOnDLJzwTS2uLL0ecfXCOFhKyocGin2zV0O7pLj0VMgCathGaleai3s16e
-         Ci1PPq14QDOWsaMgVmY3ceXigKh+szPXfK2FsoJ3McxW/UPon4A2xN/1pIrPLg5wpcsh
-         qa0i/9ZzluKDH989ZSF1ZCaLgfQlL4btP/yvtOaomHMqi/arV1lkLPmX0WVESjZQb1VC
-         4Alo6A+klZq4878PYtxbqRZAqGjvEhMiyThpi0SHR/nl7aeP5ZCHYTfQ0hs6xAahFGbl
-         QRwA==
+        bh=AnHM35yB8X/bMfdbrxf8ttWv/VeaHGM1cz+6+ojs2rE=;
+        b=ByrSEQOkHsYh7reqIH6n+4FMr6Sa0ow4ebL3DH3/e8xhN7Ip7E6huK83OHOCozveDM
+         FDbFfW8U7ViNZdbk84OUALcj1EZl6OyMaj9MVVaRd6eEmqhlh1Ome8Q5xqNqg3e0OZt9
+         N+ldJ3kMKUOBHF9chqL/IiuSjf4dWxXjJs4Upn4q+yxJjqeGGj0Sbih7SU0Yaz9zBWc8
+         Kp39VY7bQzo1HmSAxmPu2efnWmp4TKYnmy/a+2aL/ihG0RBHfzmaigkrwYdXGlmGSdXF
+         eyvn73WF1A3nRH04AuyyPIyHt4siAJL1a8Ha3x7XBog1gZ4adBjGZOOweq+DgfiWQOlX
+         TpFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XrXpQIOmFSyzGKtnFgmghoZHdpHRM6E+wH9Ng2v9LzE=;
-        b=khhP/gvtO2+OVtdLZ/PQURqaPv+8+QJi6CoSq2L9DwovXx6NHqmSv0jsOO9u22afSM
-         cIOUL7mc7mw4aBlt2cs80wgFNC6Qv6ek2f5g4ygd3n1CITBhqD+K4k8IFiqzYxlhz8nw
-         1PNPByOaPApDn5yYpAMzeJ3fIoak8vKf8LOpj1u3QYi8+ESuBitmbUZ/ISGUSZMulcq8
-         AILnfE9OjBHsPOFdOrUXdox7UCRPnYUp/YEees3vBkH3299P+fhfZgstmUy7sJOWALF9
-         FJrDTOWXe7+LOTSQRU2LYrOjweXMOrePDEVGqfwFm75zdbvq0e+Kv31qTuXkprEAWH8z
-         WQtg==
-X-Gm-Message-State: AOAM5338sMvDc5haljGMPbO9P3cvTe8NS2tYgUwKYlBC8a7Eb8iQ7UzJ
-        5KG+rTx7AeRedN3XLcS3IQDxOXXcroPx5Q==
-X-Google-Smtp-Source: ABdhPJyj+uk6d7O54zqrWonhKqJKY5ql234DfQ69a//nEc+WAzZTQAN8bc8LqQCvF7CH3CTBChy6sw==
-X-Received: by 2002:a17:906:1f11:b0:685:d50e:3bf9 with SMTP id w17-20020a1709061f1100b00685d50e3bf9mr3563545ejj.275.1648896604802;
-        Sat, 02 Apr 2022 03:50:04 -0700 (PDT)
+        bh=AnHM35yB8X/bMfdbrxf8ttWv/VeaHGM1cz+6+ojs2rE=;
+        b=N5Kn97aB6H1msEfsbhrbB1kVj9DILttWZD81f2jrtLaYnU5nFRQ+zoai/LrZ6FKpxH
+         FUVzaRE58Rd7XsBB/K2/WeNfpYz7jtUbRbyj+dWdXeqY2v8nWdjg8mid2HuSuPPyrUkP
+         ymGPM8jX/1lDeBNsuUjkxoiy0VA4eU/AVqPNpbYYTFlBT2397EL/7MbQ4TaJ9HpNnJgB
+         JWcxicpP9qyFSVVvgV0YPB0ZKZClvsFY71gwqnjwEyGWruXJtZ7jojKQzvjoqwCzHO/+
+         A7gOoG3q/yAcXds3wPMMxglLMtoesI3ED1YcSBooelPSDcF9QdekegAQZrNN2EU5BGYz
+         g3HA==
+X-Gm-Message-State: AOAM530yHnO7a4NwgFPpuQwS1uFnrtGueJc3kYmEHLzGInux1W3IworS
+        dbuiheSqHGhW91gC2OR7C+BTFHK0iDhZ4w==
+X-Google-Smtp-Source: ABdhPJz/dWem7wxpAKmx9EeKpl6ws8tTE4v8xMbWB6hHvQayykcVktjCA+Mux6MLurfS0x7Yk+6BZA==
+X-Received: by 2002:a50:ec18:0:b0:419:3af:5736 with SMTP id g24-20020a50ec18000000b0041903af5736mr24806916edr.215.1648896608304;
+        Sat, 02 Apr 2022 03:50:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.03
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:50:04 -0700 (PDT)
+        Sat, 02 Apr 2022 03:50:07 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 20/27] revisions API: have release_revisions() release "grep_filter"
-Date:   Sat,  2 Apr 2022 12:49:34 +0200
-Message-Id: <patch-v5-20.27-ebdcdc88d79-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 24/27] revisions API: call diff_free(&revs->pruning) in revisions_release()
+Date:   Sat,  2 Apr 2022 12:49:38 +0200
+Message-Id: <patch-v5-24.27-c7f3e92a8d1-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
 In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
@@ -71,40 +71,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the the release_revisions() function so that it frees the
-"grep_filter" in the "struct rev_info".This allows us to mark a test
-as passing under "TEST_PASSES_SANITIZE_LEAK=true".
+Call diff_free() on the "pruning" member of "struct rev_info".  Doing
+so makes several tests pass under SANITIZE=leak.
+
+This was also the last missing piece that allows us to remove the
+UNLEAK() in "cmd_diff" and "cmd_diff_index", which allows us to use
+those commands as a canary for general leaks in the revisions API. See
+[1] for further rationale, and 886e1084d78 (builtin/: add UNLEAKs,
+2017-10-01) for the commit that added the UNLEAK() there.
+
+1. https://lore.kernel.org/git/220218.861r00ib86.gmgdl@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- revision.c               | 1 +
- t/t9151-svn-mergeinfo.sh | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ builtin/diff-index.c                | 1 -
+ builtin/diff.c                      | 1 -
+ revision.c                          | 1 +
+ t/t1001-read-tree-m-2way.sh         | 1 +
+ t/t1002-read-tree-m-u-2way.sh       | 1 +
+ t/t2200-add-update.sh               | 1 +
+ t/t4039-diff-assume-unchanged.sh    | 1 +
+ t/t4206-log-follow-harder-copies.sh | 2 ++
+ t/t6131-pathspec-icase.sh           | 2 ++
+ 9 files changed, 9 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 3a83183c312..7d158af6b6d 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -70,7 +70,6 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 		return -1;
+ 	}
+ 	result = run_diff_index(&rev, option);
+-	UNLEAK(rev);
+ 	result = diff_result_code(&rev.diffopt, result);
+ 	release_revisions(&rev);
+ 	return result;
+diff --git a/builtin/diff.c b/builtin/diff.c
+index dd48336da56..f539132ac68 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -594,7 +594,6 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	result = diff_result_code(&rev.diffopt, result);
+ 	if (1 < rev.diffopt.skip_stat_unmatch)
+ 		refresh_index_quietly();
+-	UNLEAK(rev);
+ 	release_revisions(&rev);
+ 	UNLEAK(ent);
+ 	UNLEAK(blob);
 diff --git a/revision.c b/revision.c
-index 2484e14d26b..2c23de60093 100644
+index e972addd8fc..8bc777da828 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2952,6 +2952,7 @@ void release_revisions(struct rev_info *revs)
- 	release_revisions_cmdline(&revs->cmdline);
- 	list_objects_filter_release(&revs->filter);
+@@ -2955,6 +2955,7 @@ void release_revisions(struct rev_info *revs)
+ 	clear_pathspec(&revs->prune_data);
  	release_revisions_mailmap(revs->mailmap);
-+	free_grep_patterns(&revs->grep_filter);
+ 	free_grep_patterns(&revs->grep_filter);
++	diff_free(&revs->pruning);
+ 	reflog_walk_info_release(revs->reflog_info);
  }
  
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
-index 85221d439bd..c93a5beab25 100755
---- a/t/t9151-svn-mergeinfo.sh
-+++ b/t/t9151-svn-mergeinfo.sh
-@@ -5,7 +5,6 @@
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index 0710b1fb1e9..516a6112fdc 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -21,6 +21,7 @@ In the test, these paths are used:
+ 	yomin   - not in H or M
+ '
  
- test_description='git-svn svn mergeinfo properties'
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
  
--TEST_FAILS_SANITIZE_LEAK=true
- . ./lib-git-svn.sh
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+index 46cbd5514a6..bd5313caec9 100755
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -9,6 +9,7 @@ This is identical to t1001, but uses -u to update the work tree as well.
  
- test_expect_success 'load svn dump' "
+ '
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
+ 
+diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+index 0c38f8e3569..be394f1131a 100755
+--- a/t/t2200-add-update.sh
++++ b/t/t2200-add-update.sh
+@@ -14,6 +14,7 @@ only the updates to dir/sub.
+ Also tested are "git add -u" without limiting, and "git add -u"
+ without contents changes, and other conditions'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4039-diff-assume-unchanged.sh b/t/t4039-diff-assume-unchanged.sh
+index 0eb0314a8b3..78090e6852d 100755
+--- a/t/t4039-diff-assume-unchanged.sh
++++ b/t/t4039-diff-assume-unchanged.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='diff with assume-unchanged entries'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # external diff has been tested in t4020-diff-external.sh
+diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
+index 4871a5dc92f..33ecf82c7f9 100755
+--- a/t/t4206-log-follow-harder-copies.sh
++++ b/t/t4206-log-follow-harder-copies.sh
+@@ -6,6 +6,8 @@
+ test_description='Test --follow should always find copies hard in git log.
+ 
+ '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+diff --git a/t/t6131-pathspec-icase.sh b/t/t6131-pathspec-icase.sh
+index 39fc3f6769b..770cce026cb 100755
+--- a/t/t6131-pathspec-icase.sh
++++ b/t/t6131-pathspec-icase.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test case insensitive pathspec limiting'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ if test_have_prereq CASE_INSENSITIVE_FS
 -- 
 2.35.1.1585.gd85f8dcb745
 
