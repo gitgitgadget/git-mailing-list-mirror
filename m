@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D54AC433EF
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C37CC433F5
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354496AbiDBKvu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60286 "EHLO
+        id S1354498AbiDBKvv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:51:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354475AbiDBKvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:51:42 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2171403EB
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:49:51 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id b24so5658678edu.10
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:49:51 -0700 (PDT)
+        with ESMTP id S1354477AbiDBKvo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 06:51:44 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ACAD1403E9
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:49:52 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id s8so153273edi.1
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mLGYQg3ylXDMwVJtYaP9VqtGSTKZZVpzngu+i3xfZWQ=;
-        b=AoxRkUkggPg3xZb9WThuemgwUyE1hrm+Etpqcb9y31hJa85ij0l1xSk85jP4JLHu0r
-         ZmaxNrgTempErm01Bs7NQYEFyaUPP7QsTIdhI3Yb1DFZEi1MfelIYOAWMf/xd3tiOBTW
-         mW72CEKPnNCyT4ZvXiwF+QdSWFtKYSRKe9B9W1TlDfVsGV4UbKfyB4MCxsykXeIR0/P/
-         VMZQdFMwiS2gGwgXuqfV9GSmwDyeoDxxIoybeaGKQK4bnwq230Gs0EKxGGFPEAbcC/jB
-         ZpEAEP+xFMD6U9El42dSfUehRwbl3Yp1lmyJtOJMBYFQllVJW5Ykswtnyijk06cEofxR
-         ubww==
+        bh=oCDDJcavfq2JcCGDtdxL3HECY+nJ6s5KWxpA/uFFn8o=;
+        b=ORvf8+4gONLaGHLsJpuvXq2xQtZXtgadQL89Fz184+nq4RA9FzvpA/bakzbWnua1BK
+         BqoPqRpzqbGREx+C+ixxhu1rX+5JaYER0xq/+cRZnwkSD07p2oLFr1sWHLFAjPQxv2X4
+         LjXW/qlRq66fhNosUQ+hL1XtXTHqPciY6fU2MK9UMRqXUOsPpR1F6sZzDcfqS9yY+84N
+         MnHAVNlxZ0yQpqYTwvQpxd5n4HxJ/j7BNJkcljbjVDl9a959MGQEwSZUnUfgcqR0pSMY
+         NV1opwrNhpKWTmccTeu5nTgRo+6TWxiP1gH/0vh0D7HpS8Ah0ywd7jk5TzDQGFUD3u+g
+         9Qqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mLGYQg3ylXDMwVJtYaP9VqtGSTKZZVpzngu+i3xfZWQ=;
-        b=T6m/C2xrbnx1FxF5lfylvURhKoYBPyOa7JNcQO5Um0zSosEoI3LGl11a2IWhloX51Q
-         1ajpCjYxtPuk60cpAGUyDwF1Pq5kXlBCareuiFk+/PT4FUkA/MaHoMIPsi5jflWdCWXV
-         OxH5YciaN48XdtOZpW1p3qcCfcPK1iOBFKX1FARrMx6DW0hzWlMy3ZJuE2HROmhOgMc7
-         8KzS/5fbCk7AufCpq8AC9qx3tgZt7d+hx160xW6uepKfTi80PEtuFstmmU1mvJAkASE+
-         +ZN9R82Wzk5mV40VpHjKL1A7TNLQJvbyp0R4RrvhxBJz3rbt04vNG9k+T4mM4JSBexaL
-         Oq8w==
-X-Gm-Message-State: AOAM531zqdnKKs/xfzSRGy62+L5o8LyG2zxfC2vtXZs3YbOiHPMR+P4w
-        1PNg9IY2hyZ0sFOhI+1z5kzBXYeBpnzhtQ==
-X-Google-Smtp-Source: ABdhPJyW4Enhsjwx0G9AgOZ023xZ8xxl/bF5u+j3mV4kaxbSetq2wW2cxkUE50QCKujLcAqhXpbmeA==
-X-Received: by 2002:a05:6402:5243:b0:419:4ce2:cb5c with SMTP id t3-20020a056402524300b004194ce2cb5cmr24946152edd.151.1648896589774;
-        Sat, 02 Apr 2022 03:49:49 -0700 (PDT)
+        bh=oCDDJcavfq2JcCGDtdxL3HECY+nJ6s5KWxpA/uFFn8o=;
+        b=cjv4MWT3ZINqXfi1otEs7O1mdZzMXmxaGjiqVgCyBs+G9HaZcIlxiHrK67IHoOObeb
+         GnESbtgTbd8zqcdzsbwnsl5BQarFIdlgfJGlwS4R6HDjf9umENfa2zjwhEJWRFwjzJ+U
+         V2bt8O7LC8+HyhNg36mTHOgoU8n2jwml+UY0fAEUKMDfiqfRjGvQrpjTy0mHkzDrN1y/
+         vPvrhEkbx2gq+qY6SsCGjaO1oy9HWiJ356onQc0v31owdBSsXsHBvJVw+Rx8GcyWWCT7
+         LRbnQSRtl+nkbf55cHVh1Stwd8j9C0fi57GNW0xZhLMAaPGARHRhw5bJGUVzlxMahRbC
+         CCjA==
+X-Gm-Message-State: AOAM533lFoTReNH1gRd5dvr2wMJ8yf8iBUmoqc+ttzJa0iWB73I12GIN
+        CJCwrBOvR/e5KJZd24A3ahC3n+ele4rnkw==
+X-Google-Smtp-Source: ABdhPJyCkmdNmkkcIb7zI8VVamHkRHVjY6MMr8ZwRBUr6txIHE50aAHsxMzSpM4g0b49xBXKIJ3MdQ==
+X-Received: by 2002:a05:6402:64d:b0:41c:b920:aa57 with SMTP id u13-20020a056402064d00b0041cb920aa57mr441293edx.389.1648896590697;
+        Sat, 02 Apr 2022 03:49:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.48
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:49:49 -0700 (PDT)
+        Sat, 02 Apr 2022 03:49:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 05/27] cocci: add and apply free_commit_list() rules
-Date:   Sat,  2 Apr 2022 12:49:19 +0200
-Message-Id: <patch-v5-05.27-c38db28f920-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 06/27] revision.[ch]: provide and start using a release_revisions()
+Date:   Sat,  2 Apr 2022 12:49:20 +0200
+Message-Id: <patch-v5-06.27-b99f96599bb-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
 In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
@@ -71,192 +71,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add and apply coccinelle rules to remove "if (E)" before
-"free_commit_list(E)", the function can accept NULL, and further
-change cases where "E = NULL" followed to also be unconditionally.
+The users of the revision.[ch] API's "struct rev_info" are a major
+source of memory leaks in the test suite under SANITIZE=leak, which in
+turn adds a lot of noise when trying to mark up tests with
+"TEST_PASSES_SANITIZE_LEAK=true".
 
-The code changes in this commit were entirely made by the coccinelle
-rule being added here, and applied with:
+The users of that API are largely one-shot, e.g. "git rev-list" or
+"git log", or the "git checkout" and "git stash" being modified here
 
-    make contrib/coccinelle/free.cocci.patch
-    patch -p1 <contrib/coccinelle/free.cocci.patch
+For these callers freeing the memory is arguably a waste of time, but
+in many cases they've actually been trying to free the memory, and
+just doing that in a buggy manner.
 
-The only manual intervention here is that the the relevant code in
-commit.c has been manually re-indented.
+Let's provide a release_revisions() function for these users, and
+start migrating them over per the plan outlined in [1]. Right now this
+only handles the "pending" member of the struct, but more will be
+added in subsequent commits.
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Even though we only clear the "pending" member now, let's not leave a
+trap in code like the pre-image of index_differs_from(), where we'd
+start doing the wrong thing as soon as the release_revisions() learned
+to clear its "diffopt". I.e. we need to call release_revisions() after
+we've inspected any state in "struct rev_info".
+
+This leaves in place e.g. clear_pathspec(&rev.prune_data) in
+stash_working_tree() in builtin/stash.c, subsequent commits will teach
+release_revisions() to free "prune_data" and other members that in
+some cases are individually cleared by users of "struct rev_info" by
+reaching into its members. Those subsequent commits will remove the
+relevant calls to e.g. clear_pathspec().
+
+We avoid amending code in index_differs_from() in diff-lib.c as well
+as wt_status_collect_changes_index(), has_unstaged_changes() and
+has_uncommitted_changes() in wt-status.c in a way that assumes that we
+are already clearing the "diffopt" member. That will be handled in a
+subsequent commit.
+
+1. https://lore.kernel.org/git/87a6k8daeu.fsf@evledraar.gmail.com/
+
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/rev-list.c            |  6 ++----
- commit.c                      | 19 ++++++++-----------
- contrib/coccinelle/free.cocci | 27 +++++++++++++++++++++++++++
- revision.c                    | 17 ++++++-----------
- submodule.c                   |  6 ++----
- 5 files changed, 45 insertions(+), 30 deletions(-)
+ builtin/checkout.c | 2 +-
+ builtin/stash.c    | 5 ++---
+ diff-lib.c         | 2 +-
+ range-diff.c       | 2 +-
+ revision.c         | 5 +++++
+ revision.h         | 6 ++++++
+ wt-status.c        | 5 +++--
+ 7 files changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 572da1472e5..07c0ad11d8d 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -213,10 +213,8 @@ static void show_commit(struct commit *commit, void *data)
- 
- static void finish_commit(struct commit *commit)
- {
--	if (commit->parents) {
--		free_commit_list(commit->parents);
--		commit->parents = NULL;
--	}
-+	free_commit_list(commit->parents);
-+	commit->parents = NULL;
- 	free_commit_buffer(the_repository->parsed_objects,
- 			   commit);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 797681481d1..4d9e0bd3ac1 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -629,7 +629,7 @@ static void show_local_changes(struct object *head,
+ 	diff_setup_done(&rev.diffopt);
+ 	add_pending_object(&rev, head, NULL);
+ 	run_diff_index(&rev, 0);
+-	object_array_clear(&rev.pending);
++	release_revisions(&rev);
  }
-diff --git a/commit.c b/commit.c
-index 59b6c3e4552..9628716bf2f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -407,17 +407,14 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
  
- 	if (item->object.parsed)
- 		return 0;
--
--	if (item->parents) {
--		/*
--		 * Presumably this is leftover from an earlier failed parse;
--		 * clear it out in preparation for us re-parsing (we'll hit the
--		 * same error, but that's good, since it lets our caller know
--		 * the result cannot be trusted.
--		 */
--		free_commit_list(item->parents);
--		item->parents = NULL;
--	}
-+	/*
-+	 * Presumably this is leftover from an earlier failed parse;
-+	 * clear it out in preparation for us re-parsing (we'll hit the
-+	 * same error, but that's good, since it lets our caller know
-+	 * the result cannot be trusted.
-+	 */
-+	free_commit_list(item->parents);
-+	item->parents = NULL;
- 
- 	tail += size;
- 	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
-diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
-index 4490069df96..6fb9eb6e883 100644
---- a/contrib/coccinelle/free.cocci
-+++ b/contrib/coccinelle/free.cocci
-@@ -2,13 +2,21 @@
- expression E;
- @@
- - if (E)
-+(
-   free(E);
-+|
-+  free_commit_list(E);
-+)
- 
- @@
- expression E;
- @@
- - if (!E)
-+(
-   free(E);
-+|
-+  free_commit_list(E);
-+)
- 
- @@
- expression E;
-@@ -16,3 +24,22 @@ expression E;
- - free(E);
- + FREE_AND_NULL(E);
- - E = NULL;
-+
-+@@
-+expression E;
-+@@
-+- if (E)
-+- {
-+  free_commit_list(E);
-+  E = NULL;
-+- }
-+
-+@@
-+expression E;
-+statement S;
-+@@
-+- if (E) {
-++ if (E)
-+  S
-+  free_commit_list(E);
-+- }
-diff --git a/revision.c b/revision.c
-index 7d435f80480..4963ba7def8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1456,10 +1456,9 @@ static int limit_list(struct rev_info *revs)
- 	if (revs->left_only || revs->right_only)
- 		limit_left_right(newlist, revs);
- 
--	if (bottom) {
-+	if (bottom)
- 		limit_to_ancestry(bottom, newlist);
--		free_commit_list(bottom);
--	}
-+	free_commit_list(bottom);
- 
- 	/*
- 	 * Check if any commits have become TREESAME by some of their parents
-@@ -4080,10 +4079,8 @@ static void create_boundary_commit_list(struct rev_info *revs)
- 	 * boundary commits anyway.  (This is what the code has always
- 	 * done.)
- 	 */
--	if (revs->commits) {
--		free_commit_list(revs->commits);
--		revs->commits = NULL;
--	}
-+	free_commit_list(revs->commits);
-+	revs->commits = NULL;
- 
- 	/*
- 	 * Put all of the actual boundary commits from revs->boundary_commits
-@@ -4220,10 +4217,8 @@ struct commit *get_revision(struct rev_info *revs)
- 		graph_update(revs->graph, c);
- 	if (!c) {
- 		free_saved_parents(revs);
--		if (revs->previous_parents) {
--			free_commit_list(revs->previous_parents);
--			revs->previous_parents = NULL;
--		}
-+		free_commit_list(revs->previous_parents);
-+		revs->previous_parents = NULL;
+ static void describe_detached_head(const char *msg, struct commit *commit)
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0c7b6a95882..74fa810cf8c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1047,7 +1047,6 @@ static int check_changes_tracked_files(const struct pathspec *ps)
+ 		goto done;
  	}
- 	return c;
- }
-diff --git a/submodule.c b/submodule.c
-index 86c8f0f89db..9b715b4a5cb 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -645,8 +645,7 @@ void show_submodule_diff_summary(struct diff_options *o, const char *path,
- 	print_submodule_diff_summary(sub, &rev, o);
  
- out:
--	if (merge_bases)
--		free_commit_list(merge_bases);
-+	free_commit_list(merge_bases);
- 	clear_commit_marks(left, ~0);
- 	clear_commit_marks(right, ~0);
- 	if (sub) {
-@@ -735,8 +734,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+-	object_array_clear(&rev.pending);
+ 	result = run_diff_files(&rev, 0);
+ 	if (diff_result_code(&rev.diffopt, result)) {
+ 		ret = 1;
+@@ -1056,6 +1055,7 @@ static int check_changes_tracked_files(const struct pathspec *ps)
  
  done:
- 	strbuf_release(&sb);
--	if (merge_bases)
--		free_commit_list(merge_bases);
-+	free_commit_list(merge_bases);
- 	if (left)
- 		clear_commit_marks(left, ~0);
- 	if (right)
+ 	clear_pathspec(&rev.prune_data);
++	release_revisions(&rev);
+ 	return ret;
+ }
+ 
+@@ -1266,9 +1266,8 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ 
+ done:
+ 	discard_index(&istate);
+-	UNLEAK(rev);
+-	object_array_clear(&rev.pending);
+ 	clear_pathspec(&rev.prune_data);
++	release_revisions(&rev);
+ 	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+diff --git a/diff-lib.c b/diff-lib.c
+index ca085a03efc..d6800274bd5 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -662,7 +662,7 @@ int index_differs_from(struct repository *r,
+ 		diff_flags_or(&rev.diffopt.flags, flags);
+ 	rev.diffopt.ita_invisible_in_index = ita_invisible_in_index;
+ 	run_diff_index(&rev, 1);
+-	object_array_clear(&rev.pending);
++	release_revisions(&rev);
+ 	return (rev.diffopt.flags.has_changes != 0);
+ }
+ 
+diff --git a/range-diff.c b/range-diff.c
+index b72eb9fdbee..39cc010c628 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -596,6 +596,6 @@ int is_range_diff_range(const char *arg)
+ 	}
+ 
+ 	free(copy);
+-	object_array_clear(&revs.pending);
++	release_revisions(&revs);
+ 	return negative > 0 && positive > 0;
+ }
+diff --git a/revision.c b/revision.c
+index 4963ba7def8..5dd4b2e910c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2922,6 +2922,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	return left;
+ }
+ 
++void release_revisions(struct rev_info *revs)
++{
++	object_array_clear(&revs->pending);
++}
++
+ static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
+ {
+ 	struct commit_list *l = xcalloc(1, sizeof(*l));
+diff --git a/revision.h b/revision.h
+index 5bc59c7bfe1..61c780fc4cd 100644
+--- a/revision.h
++++ b/revision.h
+@@ -377,6 +377,12 @@ void repo_init_revisions(struct repository *r,
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ 		    struct setup_revision_opt *);
+ 
++/**
++ * Free data allocated in a "struct rev_info" after it's been
++ * initialized with repo_init_revisions().
++ */
++void release_revisions(struct rev_info *revs);
++
+ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const struct option *options,
+ 			const char * const usagestr[]);
+diff --git a/wt-status.c b/wt-status.c
+index d33f9272b72..922cf787f95 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -662,7 +662,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_index(&rev, 1);
+-	object_array_clear(&rev.pending);
++	release_revisions(&rev);
+ 	clear_pathspec(&rev.prune_data);
+ }
+ 
+@@ -2545,6 +2545,7 @@ int has_unstaged_changes(struct repository *r, int ignore_submodules)
+ 	rev_info.diffopt.flags.quick = 1;
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_files(&rev_info, 0);
++	release_revisions(&rev_info);
+ 	return diff_result_code(&rev_info.diffopt, result);
+ }
+ 
+@@ -2577,7 +2578,7 @@ int has_uncommitted_changes(struct repository *r,
+ 
+ 	diff_setup_done(&rev_info.diffopt);
+ 	result = run_diff_index(&rev_info, 1);
+-	object_array_clear(&rev_info.pending);
++	release_revisions(&rev_info);
+ 	return diff_result_code(&rev_info.diffopt, result);
+ }
+ 
 -- 
 2.35.1.1585.gd85f8dcb745
 
