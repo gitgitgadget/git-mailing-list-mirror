@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BEABC4332F
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE23EC433EF
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354589AbiDBKwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:52:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36352 "EHLO
+        id S1350684AbiDBKx6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:53:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354580AbiDBKwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:52:36 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4AC141D86
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:11 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id yy13so10742704ejb.2
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:10 -0700 (PDT)
+        with ESMTP id S1354567AbiDBKwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Apr 2022 06:52:08 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6BD141D93
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:50:07 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id k23so7241369ejd.3
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=k0A4tpYlR2mITnLl3It5BKrIhMqbrVBSpv8XWkqVpoc=;
-        b=lA94DVUX8HdaAeNNo7WzTy1+OGVOQcYXyRyAvNBN1Y7SY/38x0X3PSIXsJLfxeJvU0
-         HWuWMomDuFvk5RbaArSji4l+BZWOXve1xyd9mp1qjObn+uaLvm/FGGNN9HHp0L+34Qsf
-         UC7TbQ4NfkUAxHWrql5gTkiwyFyjEszr82gHzAMhSChn3MZz9bdYbhPcUDbgFj2aD2uf
-         7l61XosN4YcKNL1zCJS+92/wczELhUePCZnhfdDeKyjYol39E4QfZXGi9ekpolnnd2i9
-         FYyRg7dMWIn3wEOc4e07bj2neFDdAif+IjiFzrmfmsFEOrGKoT8YVnWBjZQrYaAr4RM+
-         kxPw==
+        bh=EQ8zO4Ds5+Pm+JZ6ih5V9HSQ2n3TlV5KpNJAgwvgJsQ=;
+        b=f5f2gqnlv6US2mWBJdS3hGjr3ODrTDpPTfELH15mHdBk0V6RO1fmr0TWDWw1V0WJ2s
+         KFKgGsziyPkCDtmHGi2cv4lojaFxyD7/tl6k8OvfkGywu879kuCS8o12k6XJs0dLxfxF
+         JvffQFkOvKpa4QFmPm+haFlpBWQOSq2pQFeh3tpyBPRysSGAUR1QcqTB2n2JqpjdlB+5
+         OSIVHToeU2PNCRdSF/TCrgQmHtEGYXHdOqOJIRjusMLyD5V6Zl+6Yjbx/caG8wp4oBy2
+         Q5sk4mureNniHNLPuQOdaPUXWQIRlfVKgwzGl2pjs0al1t4WcwN9jgYyZZyaovSI70Si
+         VIiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=k0A4tpYlR2mITnLl3It5BKrIhMqbrVBSpv8XWkqVpoc=;
-        b=SpWGSzidLfRkBogQ9ZJzQ0fuIDvfDD9/Vbs/XyZh1kGP9YhuRR84YmxKyCOU/p+YEs
-         SJDdoycRHujTk7bRKy+eqQqpJ/MxNd6YaK/zymDhL6JIAWyvOQbCfCG2cPfleHNcJnbI
-         BKF5cXdMICMglF38sC/Wj+8dA+OtBgcZS/5wY7/c5TlWoxOMBAyWN+KVHmhoh8oUyCnE
-         U2cOkHAdpqhbp0IhnPfmX9hfY5Hz5ReqwwJQVP1A6enaCy+7+fQPH43KBRN1aRu/E0/B
-         LWYny20+SDB4Whi1QkkOt5yqA9bg7fpX7+TwP2dAP1ZArReLVx23BzMTVDJUbOLOt5q9
-         EMgw==
-X-Gm-Message-State: AOAM532Odh5OEX2ZFHljzxc7Dz4KgZxAZWGRpvPUxEdd2WZxaJsr96Qt
-        FgKt9o8t2wM/i4+KVEsqAUG5AiB9gblKBw==
-X-Google-Smtp-Source: ABdhPJwoC8QGeig4PkBV9fRRLNNQ0cdWNuzWUHJG1mtAl8dP0sxEhKPr8jzr4VIeqFB1NT8qnOT7MQ==
-X-Received: by 2002:a17:907:3f8c:b0:6e0:6970:dc87 with SMTP id hr12-20020a1709073f8c00b006e06970dc87mr3368156ejc.236.1648896609347;
-        Sat, 02 Apr 2022 03:50:09 -0700 (PDT)
+        bh=EQ8zO4Ds5+Pm+JZ6ih5V9HSQ2n3TlV5KpNJAgwvgJsQ=;
+        b=ERRu5x3/JkTQina5lLzvpj3crVCjY2KibfrwvMZ50rdwsz8FjVuW47HUBZ+rsxQIgi
+         lmYcVeXmr2FX7L08cexqTyEPy7ALD63Sn+/PaQzPLNRKYwdWudjfkwhmmp/cwOIzV6R+
+         9tMvgPCRbbFlcqeF84KgAUqasa71ajf9oM2hpn18G1/1RDSDeP/LPIkmeDFL3t9NJa7c
+         KY+aXu4kXjvwTDfb+WFb+D61AaFmpicAlHxaYajvpZ+6wMRJt7sUvFpAGt/oTrUFviEk
+         Qu0yf9QUX4SZwWZDV+Y7uz+Rwkbty44sXllfIrhpPiDWdLLtwlKdQ+BEd1n72uwXFCJZ
+         7J7g==
+X-Gm-Message-State: AOAM5333Rh66Hh2QKbGPd2CF7aXQPg4xxm6rBX5Y3u4pvChs6NuIwuDS
+        oyq5T62/LPbYKnoHYqphoPFU8twZl9ONcw==
+X-Google-Smtp-Source: ABdhPJxosu1ddFqbY5t/LbpvA4yyGmLGpo0Jt/A8vMDthnp3aucDs+FyDfMj6ddSN3HEKAjopGpU7Q==
+X-Received: by 2002:a17:907:1623:b0:6df:c9da:a6a8 with SMTP id hb35-20020a170907162300b006dfc9daa6a8mr3297776ejc.303.1648896605716;
+        Sat, 02 Apr 2022 03:50:05 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.08
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.50.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:50:08 -0700 (PDT)
+        Sat, 02 Apr 2022 03:50:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 25/27] revisions API: have release_revisions() release "date_mode"
-Date:   Sat,  2 Apr 2022 12:49:39 +0200
-Message-Id: <patch-v5-25.27-d428d752462-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 21/27] revisions API: have release_revisions() release "prune_data"
+Date:   Sat,  2 Apr 2022 12:49:35 +0200
+Message-Id: <patch-v5-21.27-84c8714571a-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
 In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
@@ -72,31 +72,109 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Extend the the release_revisions() function so that it frees the
-"date_mode" in the "struct ref_info".
-
-This uses the date_mode_release() function added in 974c919d36d (date
-API: add and use a date_mode_release(), 2022-02-16). As that commit
-notes "t7004-tag.sh" tests for the leaks that are being fixed
-here. That test now fails "only" 44 tests, instead of the 46 it failed
-before this change.
+"prune_data" in the "struct rev_info". This means that any code that
+calls "release_revisions()" already can get rid of adjacent calls to
+clear_pathspec().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- revision.c | 1 +
- 1 file changed, 1 insertion(+)
+ add-interactive.c | 2 --
+ builtin/add.c     | 1 -
+ builtin/stash.c   | 2 --
+ diff-lib.c        | 1 -
+ revision.c        | 1 +
+ wt-status.c       | 2 --
+ 6 files changed, 1 insertion(+), 8 deletions(-)
 
+diff --git a/add-interactive.c b/add-interactive.c
+index 54cdfc82017..6047e8f6489 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -568,8 +568,6 @@ static int get_modified_files(struct repository *r,
+ 			run_diff_files(&rev, 0);
+ 		}
+ 
+-		if (ps)
+-			clear_pathspec(&rev.prune_data);
+ 		release_revisions(&rev);
+ 	}
+ 	hashmap_clear_and_free(&s.file_map, struct pathname_entry, ent);
+diff --git a/builtin/add.c b/builtin/add.c
+index 115a26ea633..fc729e14c17 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -142,7 +142,6 @@ int add_files_to_cache(const char *prefix,
+ 	rev.diffopt.flags.override_submodule_config = 1;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	return !!data.add_errors;
+ }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index fce4393d123..16aad4b4d35 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1064,7 +1064,6 @@ static int check_changes_tracked_files(const struct pathspec *ps)
+ 	}
+ 
+ done:
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	return ret;
+ }
+@@ -1276,7 +1275,6 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ 
+ done:
+ 	discard_index(&istate);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ 	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
+diff --git a/diff-lib.c b/diff-lib.c
+index 0f16281253f..298265e5b54 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -641,7 +641,6 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ 
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
+-	clear_pathspec(&revs.prune_data);
+ 	release_revisions(&revs);
+ 	return 0;
+ }
 diff --git a/revision.c b/revision.c
-index 8bc777da828..ef98e4711f3 100644
+index 2c23de60093..9fb18924cbf 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2953,6 +2953,7 @@ void release_revisions(struct rev_info *revs)
+@@ -2951,6 +2951,7 @@ void release_revisions(struct rev_info *revs)
+ 	object_array_clear(&revs->pending);
  	release_revisions_cmdline(&revs->cmdline);
  	list_objects_filter_release(&revs->filter);
- 	clear_pathspec(&revs->prune_data);
-+	date_mode_release(&revs->date_mode);
++	clear_pathspec(&revs->prune_data);
  	release_revisions_mailmap(revs->mailmap);
  	free_grep_patterns(&revs->grep_filter);
- 	diff_free(&revs->pruning);
+ }
+diff --git a/wt-status.c b/wt-status.c
+index a14fad1e03a..61e0c1022f5 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -616,7 +616,6 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_files(&rev, 0);
+-	clear_pathspec(&rev.prune_data);
+ 	release_revisions(&rev);
+ }
+ 
+@@ -664,7 +663,6 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	copy_pathspec(&rev.prune_data, &s->pathspec);
+ 	run_diff_index(&rev, 1);
+ 	release_revisions(&rev);
+-	clear_pathspec(&rev.prune_data);
+ }
+ 
+ static int add_file_to_list(const struct object_id *oid,
 -- 
 2.35.1.1585.gd85f8dcb745
 
