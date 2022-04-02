@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00476C433FE
-	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B074FC433F5
+	for <git@archiver.kernel.org>; Sat,  2 Apr 2022 10:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354479AbiDBKvp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Apr 2022 06:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60072 "EHLO
+        id S1354486AbiDBKvq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Apr 2022 06:51:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbiDBKvk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353356AbiDBKvk (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 2 Apr 2022 06:51:40 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 836D51403E3
-        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:49:47 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id p15so10673565ejc.7
-        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:49:47 -0700 (PDT)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D1B1403E6
+        for <git@vger.kernel.org>; Sat,  2 Apr 2022 03:49:49 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id y10so5682008edv.7
+        for <git@vger.kernel.org>; Sat, 02 Apr 2022 03:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=29CGYGRL8ow1bd2xg+gKwDi4WR+cdaSZgPMF3PoQFDM=;
-        b=JHaw8UgTRqW5vGWfsdPlSv19yR+/dngfMyspx5KLLKPYd7VXVb0ZaefIAYNCQicBkG
-         EyugYmlzPIuw9i/pNjM4ezeeF0prnKysAY/Al+/0GZGnuSTUj8GYH12ZeHEJLjvAHZ+I
-         WSn/QBf9snkfx5KhLgEprs0I0sadhJzzolnznMe73AupbOFCGffHMt8tBedKfoJb5BTk
-         2xb5Mu14OR0uQ8LqLZvfou1NJ4KmI0yHJrc+RPLXi/IMP9unEmUAwa2lVMAA2KwAZkWz
-         FGuPvw6UmGZiLFoyd/FLXDqYqzlVPOmfGiKGXrEy0AyY2ID8sPMOdAveGDUilrSlSWfz
-         6qkQ==
+        bh=b519pg8kwKE9L+rwYFXR5PkvGHLbEd634aF0KUanQF0=;
+        b=MVWNmmDhHfoenfdhkYD5KAuw3yEtmis/7aSrwxEqyDwQzZesKXf+j9/Jb0IadbIkqe
+         a5wo6Y35dNeF3ecgzpMlNECgdKQ1YNSeKqyJuMK2zaYTXp+nVwARthmW0NZ+l+O1OZjS
+         jDPJ2RSf9YLozeKDXjwUq6J7IIrNDpJvMZeVjZvMUWzdKGnCTniUFeiJ5qx80zRFSPxH
+         rlnHXm6R4XLhrnVQHcQyDti0f2dFUdG+tM9D757ntAOQ8/HgMHB3+BOAXhs2DgTlTpTh
+         nh9wimtrLcDCkINI7hUyR/qOwW5igvmFdeqigETFl4khZnRAiySr+4yXYR/WvlzXUu56
+         OPWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=29CGYGRL8ow1bd2xg+gKwDi4WR+cdaSZgPMF3PoQFDM=;
-        b=VUOtEKrX0sIGixa4hgDqKBeHoDElE9po3mLnUKOCz3tKaK/hAzDUpoaBx1P6cYasce
-         OeJjGPJF//uo5wszYpVzXix+B51y7da8T4EavUW6FnmSiBtVIaUzEB7JH7HODINhlw5v
-         WmcnmzQd/+iyc6EDrZIRThKlxZPgb6im31NZOkYuIkHORRIFjqzwe0yiQY6DMlc6Mi/M
-         8zA+3FerRsB6hz7p4iWtQbIdEYPIKjx6PxReOIwNPBvtnpIP2NCEIiP8ewEFjeUxCY88
-         WTVrP+ePGl9rkrNz4SYskt9kSLl0HmsY/kEI+YJGqVJQ/Pwt0abu9QJAjxFE2GkgkHjI
-         uShA==
-X-Gm-Message-State: AOAM53020atODKEGN4t8W8aYL4T8wYC66fPxoyp1c4i5C3WNTamA7XFT
-        xZL5LIObpkWxGaOWJFdKupIhquTk1wOF6Q==
-X-Google-Smtp-Source: ABdhPJy142XLT9hOR8mW13zhSdeydnNs8qTJ85O4QtZorEEvl8PxkosINZkXCwmfWCXD9S9L7tDbwQ==
-X-Received: by 2002:a17:906:99c4:b0:6df:f7c9:27f9 with SMTP id s4-20020a17090699c400b006dff7c927f9mr3350519ejn.465.1648896585371;
-        Sat, 02 Apr 2022 03:49:45 -0700 (PDT)
+        bh=b519pg8kwKE9L+rwYFXR5PkvGHLbEd634aF0KUanQF0=;
+        b=MGgpa5GpjaEN42ARMrYScikjTTe03B+z772YWmmaUIvXdGp9tPS2ZVDiH2rgtgSQKS
+         JzvTmSNZv7qI3fgN5tncSlW/dwuV/4CxhJhXbN7PFdO5V7NYSEiLlMynlGsMg1BLoREN
+         zgcXbvbF3xAu7mWK2nqXq4ytlzXfguSVtw/eJ7xEzjTuAWAJXUIzXY8XLU5zfrG9Lmlq
+         RybLR3OWUbu+6txFVq1bNGYmRuPJ3d/Mlgm62Hx9w9pWkzOHr40zE+/2nm2ELh7JGsPv
+         8hOEked4C6pUQYUfZ/hqKTNboXV2/eI5Imso887cUS8AJYwHA/ppTrFSVMb9B+3CFDE/
+         LYLw==
+X-Gm-Message-State: AOAM5310zvAxFcZ+QwnpTH/7VaF4F5pkz6LfqGv2hKCXa0z4v6RNF0Gr
+        UPRcHZ18hJv04yl00N7WrgcPAIKT76/Ouw==
+X-Google-Smtp-Source: ABdhPJz8YJK2cz1mY+s/8py5V+Xc+zRoiUtxcjIy8ymrIfo+cdhWJKoG8OA7wNYZZ8iwBfRpSIEzZQ==
+X-Received: by 2002:a50:eb8b:0:b0:419:a11c:8676 with SMTP id y11-20020a50eb8b000000b00419a11c8676mr24702577edr.267.1648896587852;
+        Sat, 02 Apr 2022 03:49:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.44
+        by smtp.gmail.com with ESMTPSA id r23-20020a056402235700b00419171bc571sm2366137eda.59.2022.04.02.03.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 03:49:44 -0700 (PDT)
+        Sat, 02 Apr 2022 03:49:47 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 00/27] revision.[ch]: add and use release_revisions()
-Date:   Sat,  2 Apr 2022 12:49:14 +0200
-Message-Id: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
+Subject: [PATCH v5 03/27] string_list API users: use string_list_init_{no,}dup
+Date:   Sat,  2 Apr 2022 12:49:17 +0200
+Message-Id: <patch-v5-03.27-364aa7d8990-20220402T102002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1584.g2aeb20a6519
-In-Reply-To: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
-References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
+In-Reply-To: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
+References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com> <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,627 +71,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series reduces the memory leaks spotted by our tests by at least
-half, see v3[1] for a more general overview.
+Follow-up on the introduction of string_list_init_nodup() and
+string_list_init_dup() in the series merged in bd4232fac33 (Merge
+branch 'ab/struct-init', 2021-07-16) and convert code that implicitly
+relied on xcalloc() being equivalent to the initializer to use
+xmalloc() and string_list_init_{no,}dup() instead.
 
-Thanks a lot to Phillip Wood and Junio for the v4 review! I think this
-v5 should address all of the things brought up in v4 in one way or
-another, changes:
+In the case of get_unmerged() in merge-recursive.c we used the
+combination of xcalloc() and assigning "1" to "strdup_strings" to get
+what we'd get via string_list_init_dup(), let's use that instead.
 
- * The "extra_headers" or "ref_message_ids" freeing is the same, but
-   the commit message is altered to explain that commit.
+Adjacent code in cmd_format_patch() will be changed in a subsequent
+commit, since we're changing that let's change the other in-tree
+patterns that do the same. Let's also convert a "x == NULL" to "!x"
+per our CodingGuidelines, as we need to change the "if" line anyway.
 
- * The "revision.[ch]: split freeing of revs->commit into a function"
-   is gone, instead I applied a coccinelle rule to free_commit_list()
-   as suggested by Phillip Wood (well, the change in pattern, not the
-   rule was the suggestion).
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/log.c      | 9 ++++++---
+ builtin/shortlog.c | 6 ++++--
+ merge-recursive.c  | 4 ++--
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
- * The release_revisions() is now simply using free_commit_list()
-   without a NULL assignment to the member, and I changed some
-   FREE_AND_NULL() that I'd added (for e.g. cmdline) to just free().
-
-   The "and NULL" was just cargo-culted from elswhere, but for
-   release_revisions() we not only aren't using the struct again (it's
-   not a "reset"), but it it wouldn't have worked as a reset before
-   anyway (some things free'd without NULL-ing).
-
-   We could trivially have a "reset" variant of release_revisions(),
-   but since no current API user wanted it let's leave it, leving the
-   memory uninitialized will help to catch any invalid API usage.
-
- * I missed a object_array_clear() in builtin/stash.c that
-   could/should be free'd by release_revisions().
-
- * An obscure memory leak in stash.c (on "master") around
-   assert_stash_ref() has been fixed.
-
- * Add a "goto usage" pattern for a memory leak new in stash.c that
-   this series introduced, i.e. because strvec_clear() was moved to a
-   "cleanup" block if we invoked usage_with_options() between the two
-   we'd exit without the cleanup. Now we'll cleanup on "usage" too.
-
- * Updated commit message & docs around REV_INFO_INIT, hopefully
-   addressing the thread left off at
-   https://lore.kernel.org/git/220401.86h77dnkpw.gmgdl@evledraar.gmail.com/
-
-1. https://lore.kernel.org/git/cover-v3-00.27-00000000000-20220325T171340Z-avarab@gmail.com/
-
-Ævar Arnfjörð Bjarmason (27):
-  t/helper/test-fast-rebase.c: don't leak "struct strbuf"
-  blame: use "goto cleanup" for cleanup_scoreboard()
-  string_list API users: use string_list_init_{no,}dup
-  format-patch: don't leak "extra_headers" or "ref_message_ids"
-  cocci: add and apply free_commit_list() rules
-  revision.[ch]: provide and start using a release_revisions()
-  revisions API users: add straightforward release_revisions()
-  revision.[ch]: document and move code declared around "init"
-  revisions API users: use release_revisions() needing REV_INFO_INIT
-  stash: always have the owner of "stash_info" free it
-  revisions API users: add "goto cleanup" for release_revisions()
-  revisions API users: use release_revisions() in http-push.c
-  revisions API users: use release_revisions() in builtin/log.c
-  revisions API users: use release_revisions() with UNLEAK()
-  revisions API users: use release_revisions() for "prune_data" users
-  revisions API: have release_revisions() release "commits"
-  revisions API: have release_revisions() release "mailmap"
-  revisions API: have release_revisions() release "cmdline"
-  revisions API: have release_revisions() release "filter"
-  revisions API: have release_revisions() release "grep_filter"
-  revisions API: have release_revisions() release "prune_data"
-  revisions API: clear "boundary_commits" in release_revisions()
-  revisions API: release "reflog_info" in release revisions()
-  revisions API: call diff_free(&revs->pruning) in revisions_release()
-  revisions API: have release_revisions() release "date_mode"
-  revisions API: have release_revisions() release "topo_walk_info"
-  revisions API: add a TODO for diff_free(&revs->diffopt)
-
- add-interactive.c                          |   3 +-
- bisect.c                                   |  20 ++--
- builtin/add.c                              |   3 +-
- builtin/am.c                               |   3 +
- builtin/bisect--helper.c                   |   2 +
- builtin/blame.c                            |   4 +-
- builtin/checkout.c                         |   3 +-
- builtin/commit.c                           |   6 +-
- builtin/describe.c                         |   2 +
- builtin/diff-files.c                       |   8 +-
- builtin/diff-index.c                       |   5 +-
- builtin/diff.c                             |   2 +-
- builtin/fast-export.c                      |   1 +
- builtin/log.c                              |  36 ++++---
- builtin/merge.c                            |   2 +
- builtin/pack-objects.c                     |   2 +
- builtin/prune.c                            |   1 +
- builtin/reflog.c                           |   1 +
- builtin/rev-list.c                         |  25 +++--
- builtin/shortlog.c                         |   8 +-
- builtin/stash.c                            | 115 +++++++++++----------
- builtin/submodule--helper.c                |  14 ++-
- bundle.c                                   |  12 ++-
- commit.c                                   |  19 ++--
- contrib/coccinelle/free.cocci              |  27 +++++
- diff-lib.c                                 |   8 +-
- fmt-merge-msg.c                            |   1 +
- http-push.c                                |   3 +-
- merge-ort.c                                |   1 +
- merge-recursive.c                          |   5 +-
- midx.c                                     |   1 +
- pack-bitmap-write.c                        |   1 +
- range-diff.c                               |   2 +-
- ref-filter.c                               |   1 +
- reflog-walk.c                              |  24 ++++-
- reflog-walk.h                              |   1 +
- remote.c                                   |   1 +
- revision.c                                 |  72 ++++++++++---
- revision.h                                 |  73 ++++++++-----
- sequencer.c                                |  26 +++--
- shallow.c                                  |   1 +
- submodule.c                                |  11 +-
- t/helper/test-fast-rebase.c                |  23 +++--
- t/helper/test-revision-walking.c           |   1 +
- t/lib-git-svn.sh                           |   4 +
- t/t0056-git-C.sh                           |   1 +
- t/t0062-revision-walking.sh                |   1 +
- t/t0100-previous.sh                        |   1 +
- t/t0101-at-syntax.sh                       |   2 +
- t/t1001-read-tree-m-2way.sh                |   1 +
- t/t1002-read-tree-m-u-2way.sh              |   1 +
- t/t1060-object-corruption.sh               |   2 +
- t/t1401-symbolic-ref.sh                    |   2 +
- t/t1411-reflog-show.sh                     |   1 +
- t/t1412-reflog-loop.sh                     |   2 +
- t/t1415-worktree-refs.sh                   |   1 +
- t/t2015-checkout-unborn.sh                 |   1 +
- t/t2200-add-update.sh                      |   1 +
- t/t3302-notes-index-expensive.sh           |   1 +
- t/t3303-notes-subtrees.sh                  |   1 +
- t/t3305-notes-fanout.sh                    |   1 +
- t/t3408-rebase-multi-line.sh               |   1 +
- t/t4021-format-patch-numbered.sh           |   1 +
- t/t4027-diff-submodule.sh                  |   1 +
- t/t4028-format-patch-mime-headers.sh       |   2 +
- t/t4036-format-patch-signer-mime.sh        |   1 +
- t/t4039-diff-assume-unchanged.sh           |   1 +
- t/t4055-diff-context.sh                    |   1 +
- t/t4066-diff-emit-delay.sh                 |   1 +
- t/t4122-apply-symlink-inside.sh            |   1 +
- t/t4126-apply-empty.sh                     |   1 -
- t/t4128-apply-root.sh                      |   1 +
- t/t4206-log-follow-harder-copies.sh        |   2 +
- t/t4207-log-decoration-colors.sh           |   1 +
- t/t4212-log-corrupt.sh                     |   1 +
- t/t5301-sliding-window.sh                  |   2 +
- t/t5313-pack-bounds-checks.sh              |   2 +
- t/t5316-pack-delta-depth.sh                |   2 +
- t/t5320-delta-islands.sh                   |   2 +
- t/t5322-pack-objects-sparse.sh             |   1 +
- t/t5506-remote-groups.sh                   |   1 +
- t/t5513-fetch-track.sh                     |   1 +
- t/t5515-fetch-merge-logic.sh               |   1 +
- t/t5518-fetch-exit-status.sh               |   1 +
- t/t5532-fetch-proxy.sh                     |   2 +
- t/t5600-clone-fail-cleanup.sh              |   1 +
- t/t5900-repo-selection.sh                  |   2 +
- t/t6002-rev-list-bisect.sh                 |   1 +
- t/t6003-rev-list-topo-order.sh             |   1 +
- t/t6005-rev-list-count.sh                  |   1 +
- t/t6018-rev-list-glob.sh                   |   1 +
- t/t6100-rev-list-in-order.sh               |   1 +
- t/t6101-rev-parse-parents.sh               |   1 +
- t/t6110-rev-list-sparse.sh                 |   1 +
- t/t6114-keep-packs.sh                      |   2 +
- t/t6131-pathspec-icase.sh                  |   2 +
- t/t7008-filter-branch-null-sha1.sh         |   1 +
- t/t7702-repack-cyclic-alternate.sh         |   2 +
- t/t9001-send-email.sh                      |   1 +
- t/t9100-git-svn-basic.sh                   |   1 +
- t/t9101-git-svn-props.sh                   |   2 +
- t/t9104-git-svn-follow-parent.sh           |   2 +
- t/t9106-git-svn-commit-diff-clobber.sh     |   2 +
- t/t9115-git-svn-dcommit-funky-renames.sh   |   1 +
- t/t9116-git-svn-log.sh                     |   1 +
- t/t9122-git-svn-author.sh                  |   2 +
- t/t9127-git-svn-partial-rebuild.sh         |   1 +
- t/t9129-git-svn-i18n-commitencoding.sh     |   1 +
- t/t9132-git-svn-broken-symlink.sh          |   1 +
- t/t9139-git-svn-non-utf8-commitencoding.sh |   1 +
- t/t9146-git-svn-empty-dirs.sh              |   2 +
- t/t9148-git-svn-propset.sh                 |   1 +
- t/t9160-git-svn-preserve-empty-dirs.sh     |   1 +
- t/t9162-git-svn-dcommit-interactive.sh     |   2 +
- t/t9164-git-svn-dcommit-concurrent.sh      |   2 +
- t/t9501-gitweb-standalone-http-status.sh   |   1 +
- wt-status.c                                |  15 +--
- 117 files changed, 502 insertions(+), 190 deletions(-)
-
-Range-diff against v4:
- 1:  b99a07f98ee =  1:  e20f951a64c t/helper/test-fast-rebase.c: don't leak "struct strbuf"
- 2:  da5be507c0f =  2:  de2e08a14e6 blame: use "goto cleanup" for cleanup_scoreboard()
- 3:  243f7c8df96 =  3:  364aa7d8990 string_list API users: use string_list_init_{no,}dup
- 4:  69f0aabe38f !  4:  5d4ad92d47b format-patch: don't leak "extra_headers" or "ref_message_ids"
-    @@ Commit message
-         cmd_format_patch(). These two are unusual special-cases in being in
-         the "struct rev_info", but not being "owned" by the code in
-         revision.c. I.e. they're members of the struct so that this code in
-    -    "builtin/log.c" can pass information code in log-tree.c.
-    +    "builtin/log.c" can conveniently pass information code in
-    +    "log-tree.c".
-    +
-    +    See e.g. the make_cover_letter() caller of log_write_email_headers()
-    +    here in "builtin/log.c", and [1] for a demonstration of where the
-    +    "extra_headers" and "ref_message_ids" struct members are used.
-     
-         See 20ff06805c6 (format-patch: resurrect extra headers from config,
-         2006-06-02) and d1566f7883f (git-format-patch: Make the second and
-    @@ Commit message
-         variable to hold it, to avoid the eventual cast from "const char *"
-         when we free() it.
-     
-    +    1. https://lore.kernel.org/git/220401.868rsoogxf.gmgdl@evledraar.gmail.com/
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/log.c ##
- 5:  2d0ed57ec2e <  -:  ----------- revision.[ch]: split freeing of revs->commit into a function
- -:  ----------- >  5:  c38db28f920 cocci: add and apply free_commit_list() rules
- 6:  b9beaba16bf !  6:  b99f96599bb revision.[ch]: provide and start using a release_revisions()
-    @@ Commit message
-         turn adds a lot of noise when trying to mark up tests with
-         "TEST_PASSES_SANITIZE_LEAK=true".
-     
-    -    The users of that API are largely one-shot, e.g. "git log", so
-    -    arguably freeing the memory is a waste of time, but in many cases
-    -    they've actually been trying to free the memory, and just doing that
-    -    in a buggy manner.
-    +    The users of that API are largely one-shot, e.g. "git rev-list" or
-    +    "git log", or the "git checkout" and "git stash" being modified here
-    +
-    +    For these callers freeing the memory is arguably a waste of time, but
-    +    in many cases they've actually been trying to free the memory, and
-    +    just doing that in a buggy manner.
-     
-         Let's provide a release_revisions() function for these users, and
-         start migrating them over per the plan outlined in [1]. Right now this
-    @@ builtin/checkout.c: static void show_local_changes(struct object *head,
-      static void describe_detached_head(const char *msg, struct commit *commit)
-     
-      ## builtin/stash.c ##
-    +@@ builtin/stash.c: static int check_changes_tracked_files(const struct pathspec *ps)
-    + 		goto done;
-    + 	}
-    + 
-    +-	object_array_clear(&rev.pending);
-    + 	result = run_diff_files(&rev, 0);
-    + 	if (diff_result_code(&rev.diffopt, result)) {
-    + 		ret = 1;
-    +@@ builtin/stash.c: static int check_changes_tracked_files(const struct pathspec *ps)
-    + 
-    + done:
-    + 	clear_pathspec(&rev.prune_data);
-    ++	release_revisions(&rev);
-    + 	return ret;
-    + }
-    + 
-     @@ builtin/stash.c: static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
-      
-      done:
-    @@ range-diff.c: int is_range_diff_range(const char *arg)
-      }
-     
-      ## revision.c ##
-    -@@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-    - 	}
-    +@@ revision.c: int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-    + 	return left;
-      }
-      
-     +void release_revisions(struct rev_info *revs)
- 7:  80ec9a131c0 =  7:  521f6967b64 revisions API users: add straightforward release_revisions()
- 8:  086cec742b4 !  8:  003b507e0b7 revision.[ch]: document and move code declared around "init"
-    @@ revision.h: void mark_trees_uninteresting_sparse(struct repository *r, struct oi
-      void show_object_with_name(FILE *, struct object *, const char *);
-      
-     +/**
-    -+ * Helpers to check if a "struct string_list" item matches wild
-    ++ * Helpers to check if a "struct string_list" item matches with
-     + * wildmatch().
-     + */
-     +int ref_excluded(struct string_list *, const char *path);
- 9:  2f4e65fb534 !  9:  240307bc3c6 revisions API users: use release_revisions() needing REV_INFO_INIT
-    @@ Commit message
-         need to have their "struct rev_info" zero-initialized before we can
-         start using it.
-     
-    -    To do this add a stub "REV_INFO_INIT" macro, ideally macro would be
-    -    able to fully initialize a "struct rev_info", but all it does is the
-    -    equivalent of assigning "{ 0 }" to the struct, the API user will still
-    -    need to use repo_init_revisions(). In some future follow-up work we'll
-    -    hopefully make REV_INFO_INIT be a "stand-alone" init likke STRBUF_INIT
-    -    and other similar macros.
-    -
-         For the bundle.c code see the early exit case added in
-         3bbbe467f29 (bundle verify: error out if called without an object
-         database, 2019-05-27).
-    @@ revision.h: struct rev_info {
-     +/**
-     + * Initialize the "struct rev_info" structure with a macro.
-     + *
-    -+ * This is not sufficient (yet!) to initialize a "struct rev_info",
-    -+ * but it's OK (but redundant) to use it before a call to
-    -+ * repo_init_revisions(), which does the real initialization. By using
-    -+ * this it's safe to call release_revisions() on the "struct rev_info"
-    -+ * without having called repo_init_revisions().
-    ++ * This will not fully initialize a "struct rev_info", the
-    ++ * repo_init_revisions() function needs to be called before
-    ++ * setup_revisions() and any revision walking takes place.
-    ++ *
-    ++ * Use REV_INFO_INIT to make the "struct rev_info" safe for passing to
-    ++ * release_revisions() when it's inconvenient (e.g. due to a "goto
-    ++ * cleanup" pattern) to arrange for repo_init_revisions() to be called
-    ++ * before release_revisions() is called.
-    ++ *
-    ++ * Initializing with this REV_INFO_INIT is redundant to invoking
-    ++ * repo_init_revisions(). If repo_init_revisions() is guaranteed to be
-    ++ * called before release_revisions() the "struct rev_info" can be left
-    ++ * uninitialized.
-     + */
-     +#define REV_INFO_INIT { 0 }
-     +
-    @@ submodule.c: void show_submodule_diff_summary(struct diff_options *o, const char
-      	struct commit_list *merge_bases = NULL;
-      	struct repository *sub;
-     @@ submodule.c: void show_submodule_diff_summary(struct diff_options *o, const char *path,
-    - 	print_submodule_diff_summary(sub, &rev, o);
-      
-      out:
-    + 	free_commit_list(merge_bases);
-     +	release_revisions(&rev);
-    - 	if (merge_bases)
-    - 		free_commit_list(merge_bases);
-      	clear_commit_marks(left, ~0);
-    + 	clear_commit_marks(right, ~0);
-    + 	if (sub) {
-10:  145a0f74b6a ! 10:  4c5404912e9 stash: always have the owner of "stash_info" free it
-    @@ Commit message
-         pattern we'd otherwise free() uninitialized memory in some cases, as
-         we only strbuf_init() the string in get_stash_info().
-     
-    -    So while it's the smallest possible change, let's convert all users of
-    -    this pattern in the file while we're at it.
-    +    So while it's not the smallest possible change, let's convert all
-    +    users of this pattern in the file while we're at it.
-     
-         A good follow-up to this change would be to change all the "ret = -1;
-         goto done;" in this file to instead use a "goto cleanup", and
-    @@ Commit message
-         would allow us to drop a lot of needless brace verbosity on two-line
-         "if" statements, but let's leave that alone for now.
-     
-    +    To ensure that there's a 1=1 mapping between owners of the "struct
-    +    stash_info" and free_stash_info() change the assert_stash_ref()
-    +    function to be a trivial get_stash_info_assert() wrapper. The caller
-    +    will call free_stash_info(), and by returning -1 we'll eventually (via
-    +    !!ret) exit with status 1 anyway.
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/stash.c ##
-    @@ builtin/stash.c: static int apply_stash(int argc, const char **argv, const char
-      	free_stash_info(&info);
-      	return ret;
-      }
-    -@@ builtin/stash.c: static void assert_stash_ref(struct stash_info *info)
-    +@@ builtin/stash.c: static int do_drop_stash(struct stash_info *info, int quiet)
-    + 	return 0;
-    + }
-    + 
-    +-static void assert_stash_ref(struct stash_info *info)
-    ++static int get_stash_info_assert(struct stash_info *info, int argc,
-    ++				 const char **argv)
-    + {
-    +-	if (!info->is_stash_ref) {
-    +-		error(_("'%s' is not a stash reference"), info->revision.buf);
-    +-		free_stash_info(info);
-    +-		exit(1);
-    +-	}
-    ++	int ret = get_stash_info(info, argc, argv);
-    ++
-    ++	if (ret < 0)
-    ++		return ret;
-    ++
-    ++	if (!info->is_stash_ref)
-    ++		return error(_("'%s' is not a stash reference"), info->revision.buf);
-    ++
-    ++	return 0;
-    + }
-      
-      static int drop_stash(int argc, const char **argv, const char *prefix)
-      {
-    @@ builtin/stash.c: static void assert_stash_ref(struct stash_info *info)
-      		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-      		OPT_END()
-     @@ builtin/stash.c: static int drop_stash(int argc, const char **argv, const char *prefix)
-    + 	argc = parse_options(argc, argv, prefix, options,
-      			     git_stash_drop_usage, 0);
-      
-    - 	if (get_stash_info(&info, argc, argv))
-    +-	if (get_stash_info(&info, argc, argv))
-     -		return -1;
-    +-
-    +-	assert_stash_ref(&info);
-    ++	if (get_stash_info_assert(&info, argc, argv))
-     +		goto cleanup;
-      
-    - 	assert_stash_ref(&info);
-    - 
-      	ret = do_drop_stash(&info, quiet);
-     +cleanup:
-      	free_stash_info(&info);
-    @@ builtin/stash.c: static int drop_stash(int argc, const char **argv, const char *
-      		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-      		OPT_BOOL(0, "index", &index,
-     @@ builtin/stash.c: static int pop_stash(int argc, const char **argv, const char *prefix)
-    + 	argc = parse_options(argc, argv, prefix, options,
-      			     git_stash_pop_usage, 0);
-      
-    - 	if (get_stash_info(&info, argc, argv))
-    +-	if (get_stash_info(&info, argc, argv))
-     -		return -1;
-    ++	if (get_stash_info_assert(&info, argc, argv))
-     +		goto cleanup;
-      
-    - 	assert_stash_ref(&info);
-    +-	assert_stash_ref(&info);
-      	if ((ret = do_apply_stash(prefix, &info, index, quiet)))
-    -@@ builtin/stash.c: static int pop_stash(int argc, const char **argv, const char *prefix)
-    + 		printf_ln(_("The stash entry is kept in case "
-    + 			    "you need it again."));
-      	else
-      		ret = do_drop_stash(&info, quiet);
-      
-    @@ builtin/stash.c: static void diff_include_untracked(const struct stash_info *inf
-      	struct rev_info rev;
-      	struct strvec stash_args = STRVEC_INIT;
-      	struct strvec revision_args = STRVEC_INIT;
-    +@@ builtin/stash.c: static int show_stash(int argc, const char **argv, const char *prefix)
-    + 			      UNTRACKED_ONLY, PARSE_OPT_NONEG),
-    + 		OPT_END()
-    + 	};
-    ++	int do_usage = 0;
-    + 
-    + 	init_diff_ui_defaults();
-    + 	git_config(git_diff_ui_config, NULL);
-     @@ builtin/stash.c: static int show_stash(int argc, const char **argv, const char *prefix)
-      			strvec_push(&revision_args, argv[i]);
-      	}
-    @@ builtin/stash.c: static int show_stash(int argc, const char **argv, const char *
-      		}
-      	}
-      
-    + 	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, NULL);
-    +-	if (argc > 1) {
-    +-		free_stash_info(&info);
-    +-		usage_with_options(git_stash_show_usage, options);
-    +-	}
-    ++	if (argc > 1)
-    ++		goto usage;
-    + 	if (!rev.diffopt.output_format) {
-    + 		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-    + 		diff_setup_done(&rev.diffopt);
-     @@ builtin/stash.c: static int show_stash(int argc, const char **argv, const char *prefix)
-      	}
-      	log_tree_diff_flush(&rev);
-      
-    -+	ret = diff_result_code(&rev.diffopt, 0);;
-    ++	ret = diff_result_code(&rev.diffopt, 0);
-     +cleanup:
-     +	strvec_clear(&stash_args);
-      	free_stash_info(&info);
-     -	return diff_result_code(&rev.diffopt, 0);
-    ++	if (do_usage)
-    ++		usage_with_options(git_stash_show_usage, options);
-     +	return ret;
-    ++usage:
-    ++	do_usage = 1;
-    ++	goto cleanup;
-      }
-      
-      static int do_store_stash(const struct object_id *w_commit, const char *stash_msg,
-    @@ builtin/stash.c: static int do_push_stash(const struct pathspec *ps, const char
-      	struct strbuf patch = STRBUF_INIT;
-      	struct strbuf stash_msg_buf = STRBUF_INIT;
-      	struct strbuf untracked_files = STRBUF_INIT;
-    +@@ builtin/stash.c: static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
-    + 	}
-    + 
-    + done:
-    ++	free_stash_info(&info);
-    + 	strbuf_release(&stash_msg_buf);
-    + 	return ret;
-    + }
-11:  c9898a5a96b ! 11:  4210232e3a1 revisions API users: add "goto cleanup" for release_revisions()
-    @@ builtin/stash.c: static int show_stash(int argc, const char **argv, const char *
-      	strvec_clear(&stash_args);
-      	free_stash_info(&info);
-     +	release_revisions(&rev);
-    + 	if (do_usage)
-    + 		usage_with_options(git_stash_show_usage, options);
-      	return ret;
-    - }
-    - 
-     
-      ## builtin/submodule--helper.c ##
-     @@ builtin/submodule--helper.c: static int compute_summary_module_list(struct object_id *head_oid,
-12:  6e41d666223 = 12:  1918ca0a85d revisions API users: use release_revisions() in http-push.c
-13:  02ca92660af = 13:  6a02b7aae4e revisions API users: use release_revisions() in builtin/log.c
-14:  1aeb1127f34 = 14:  ddc7402b054 revisions API users: use release_revisions() with UNLEAK()
-15:  c12b3d5a035 ! 15:  03e9bd73d4b revisions API users: use release_revisions() for "prune_data" users
-    @@ builtin/add.c: int add_files_to_cache(const char *prefix,
-      }
-      
-     
-    - ## builtin/stash.c ##
-    -@@ builtin/stash.c: static int check_changes_tracked_files(const struct pathspec *ps)
-    - 
-    - done:
-    - 	clear_pathspec(&rev.prune_data);
-    -+	release_revisions(&rev);
-    - 	return ret;
-    - }
-    - 
-    -
-      ## diff-lib.c ##
-     @@ diff-lib.c: int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
-      	if (diff_cache(&revs, tree_oid, NULL, 1))
-16:  2e351702677 <  -:  ----------- revisions API: have release_revisions() release "commits"
- -:  ----------- > 16:  285673e40bf revisions API: have release_revisions() release "commits"
-17:  f67f1f5a575 ! 17:  ca659940ee5 revisions API: have release_revisions() release "mailmap"
-    @@ builtin/commit.c: static const char *find_author_by_nickname(const char *name)
-      	}
-     
-      ## revision.c ##
-    -@@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-    - 	}
-    +@@ revision.c: int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-    + 	return left;
-      }
-      
-     +static void release_revisions_mailmap(struct string_list *mailmap)
-    @@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-     +
-      void release_revisions(struct rev_info *revs)
-      {
-    - 	release_revisions_commit_list(revs);
-    + 	free_commit_list(revs->commits);
-      	object_array_clear(&revs->pending);
-     +	release_revisions_mailmap(revs->mailmap);
-      }
-18:  1df61550e5a ! 18:  7987c748ba4 revisions API: have release_revisions() release "cmdline"
-    @@ Commit message
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## revision.c ##
-    -@@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-    - 	}
-    +@@ revision.c: int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-    + 	return left;
-      }
-      
-     +static void release_revisions_cmdline(struct rev_cmdline_info *cmdline)
-    @@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-     +		return;
-     +	for (i = 0; i < cmdline->nr; i++)
-     +		free((char *)cmdline->rev[i].name);
-    -+	FREE_AND_NULL(cmdline->rev);
-    ++	free(cmdline->rev);
-     +}
-     +
-      static void release_revisions_mailmap(struct string_list *mailmap)
-    @@ revision.c: static void release_revisions_commit_list(struct rev_info *revs)
-      	if (!mailmap)
-     @@ revision.c: void release_revisions(struct rev_info *revs)
-      {
-    - 	release_revisions_commit_list(revs);
-    + 	free_commit_list(revs->commits);
-      	object_array_clear(&revs->pending);
-     +	release_revisions_cmdline(&revs->cmdline);
-      	release_revisions_mailmap(revs->mailmap);
-19:  065c3cc91b2 ! 19:  e6e87ce3608 revisions API: have release_revisions() release "filter"
-    @@ Commit message
-     
-      ## revision.c ##
-     @@ revision.c: void release_revisions(struct rev_info *revs)
-    - 	release_revisions_commit_list(revs);
-    + 	free_commit_list(revs->commits);
-      	object_array_clear(&revs->pending);
-      	release_revisions_cmdline(&revs->cmdline);
-     +	list_objects_filter_release(&revs->filter);
-20:  806fef06b87 = 20:  ebdcdc88d79 revisions API: have release_revisions() release "grep_filter"
-21:  fabbe452a14 = 21:  84c8714571a revisions API: have release_revisions() release "prune_data"
-22:  cb201fa1914 ! 22:  d96642d3502 revisions API: clear "boundary_commits" in release_revisions()
-    @@ Commit message
-      ## revision.c ##
-     @@ revision.c: void release_revisions(struct rev_info *revs)
-      {
-    - 	release_revisions_commit_list(revs);
-    + 	free_commit_list(revs->commits);
-      	object_array_clear(&revs->pending);
-     +	object_array_clear(&revs->boundary_commits);
-      	release_revisions_cmdline(&revs->cmdline);
-23:  0363a69073c = 23:  0e9745d9ee1 revisions API: release "reflog_info" in release revisions()
-24:  bad359b2983 = 24:  c7f3e92a8d1 revisions API: call diff_free(&revs->pruning) in revisions_release()
-25:  9a51c1ae1d1 = 25:  d428d752462 revisions API: have release_revisions() release "date_mode"
-26:  b56db37940d ! 26:  fbf233ec768 revisions API: have release_revisions() release "topo_walk_info"
-    @@ revision.c: static void release_revisions_mailmap(struct string_list *mailmap)
-     +
-      void release_revisions(struct rev_info *revs)
-      {
-    - 	release_revisions_commit_list(revs);
-    + 	free_commit_list(revs->commits);
-     @@ revision.c: void release_revisions(struct rev_info *revs)
-      	free_grep_patterns(&revs->grep_filter);
-      	diff_free(&revs->pruning);
-27:  b02cb8fcded = 27:  ec2c77ce869 revisions API: add a TODO for diff_free(&revs->diffopt)
+diff --git a/builtin/log.c b/builtin/log.c
+index c211d66d1d0..634dc782cce 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -231,7 +231,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	}
+ 
+ 	if (mailmap) {
+-		rev->mailmap = xcalloc(1, sizeof(struct string_list));
++		rev->mailmap = xmalloc(sizeof(struct string_list));
++		string_list_init_nodup(rev->mailmap);
+ 		read_mailmap(rev->mailmap);
+ 	}
+ 
+@@ -2173,8 +2174,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		prepare_bases(&bases, base, list, nr);
+ 	}
+ 
+-	if (in_reply_to || thread || cover_letter)
+-		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
++	if (in_reply_to || thread || cover_letter) {
++		rev.ref_message_ids = xmalloc(sizeof(*rev.ref_message_ids));
++		string_list_init_nodup(rev.ref_message_ids);
++	}
+ 	if (in_reply_to) {
+ 		const char *msgid = clean_message_id(in_reply_to);
+ 		string_list_append(rev.ref_message_ids, msgid);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 26c5c0cf935..fcde07c9367 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -81,8 +81,10 @@ static void insert_one_record(struct shortlog *log,
+ 		format_subject(&subject, oneline, " ");
+ 		buffer = strbuf_detach(&subject, NULL);
+ 
+-		if (item->util == NULL)
+-			item->util = xcalloc(1, sizeof(struct string_list));
++		if (!item->util) {
++			item->util = xmalloc(sizeof(struct string_list));
++			string_list_init_nodup(item->util);
++		}
+ 		string_list_append(item->util, buffer);
+ 	}
+ }
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1ee6364e8b1..32bbba5fbb1 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -522,10 +522,10 @@ static struct stage_data *insert_stage_data(struct repository *r,
+  */
+ static struct string_list *get_unmerged(struct index_state *istate)
+ {
+-	struct string_list *unmerged = xcalloc(1, sizeof(struct string_list));
++	struct string_list *unmerged = xmalloc(sizeof(struct string_list));
+ 	int i;
+ 
+-	unmerged->strdup_strings = 1;
++	string_list_init_dup(unmerged);
+ 
+ 	/* TODO: audit for interaction with sparse-index. */
+ 	ensure_full_index(istate);
 -- 
 2.35.1.1585.gd85f8dcb745
 
