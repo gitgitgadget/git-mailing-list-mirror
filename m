@@ -2,70 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C316C433EF
-	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 14:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E01D7C433F5
+	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 14:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359120AbiDCOeV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Apr 2022 10:34:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47318 "EHLO
+        id S236202AbiDCOjW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Apr 2022 10:39:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359051AbiDCOeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Apr 2022 10:34:09 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1395D39B85
-        for <git@vger.kernel.org>; Sun,  3 Apr 2022 07:32:08 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id i27so7907755ejd.9
-        for <git@vger.kernel.org>; Sun, 03 Apr 2022 07:32:08 -0700 (PDT)
+        with ESMTP id S231869AbiDCOjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Apr 2022 10:39:19 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B111A3298C
+        for <git@vger.kernel.org>; Sun,  3 Apr 2022 07:37:24 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id u9so3082135edd.11
+        for <git@vger.kernel.org>; Sun, 03 Apr 2022 07:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=b+EjRsFODdslocqWYLuLT/Yrs4NvG/AP9jcjtZy3IXM=;
-        b=gvTnQ5cvxkwAmGo2vfrincXtXbGPK4k9y/JOCKFK/S7DEZ1vwrRTupbSUP9DdLH6c5
-         TUHst2+oxzFKpKPC2fYiptjTgi02WLpfjFcNDihwzYR1JEjGANXu7tPozJuuYXeQe5Qj
-         ThSz/wq8uf2smoBl59hCFt0alu7FjnC/A+pw4+QSU9cqSu8nCGyrEaGRyQaqL2AhYGbX
-         3JaDuspdftFNmTxHXF/zJ1mhVswqao6ILwH6ivu3bM0Tfq4NMCc/81r/zhlrOKJ9HPCy
-         aB8zlMcst61Sj8TcbOzHon3HsLH1wAYmj/f+FxgQBuOBMn2UKJZSVUAXXq+o296icrXT
-         JIcA==
+        bh=0nv6zpk2uXf51T7rLuXBIvVrg9p++Wfl0LbR7exPlgI=;
+        b=aJJpxjnJMG4c7VjOdWQ4vNqe7+fORbp7e58kgZU2vuneBeDl5qHk56U/UZkkZgHIYe
+         gpirifSpi91VB/OLKKMd9/kpyqVtY7dYxRInOsgsyyUskWidBO+/PWU3MxJcY8BP41mf
+         v6UN7bwBb1zqH25M2m7hb0uCMvqJxr4W5xr3adCy1s5f0Pa0gHu6hUSx5I2u65wackQc
+         SDTpxZ2TrFdi0Y1F/WAifwUztN4lTUdiTx62xHg9cMhbFf7yfBKMOFy49a8tdqKRZQ03
+         m1OXu+EvUsWZUNnIcV/Ylx6Wh4jBoF0SAOraSud5oSrC/NcJeJCy7WcJALRKWWs6FQqw
+         j/mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=b+EjRsFODdslocqWYLuLT/Yrs4NvG/AP9jcjtZy3IXM=;
-        b=aaiA2+w+6EQ0R7hP33cjgsd54vJ2HSYzY0qZPdzFFO1DkrBre4TOlKoQ5mzHIK/lY3
-         eNZrZWQTS9eaPShYm9299jXB66E3X5ZsroZ1oE940z3gfrWx/F4EVhlwUNqgQkM7p9AW
-         5eegS26EADxWUi+kKOaHIN9Aygf7WVNwLduIdJzNHp59F+5+beFo/RwR8fR54jZWRLAs
-         HOHUfzYWZyLDsNbiBjE46WcnB01c+TRoaW5TRishbgB2FjLPeD3bVnZkrjRiQ+9YQ42Y
-         qNhLtWWes5NpVpWjSCzgsxgz8CmlYAmDySpJkgfW5flHAilqROhM/8voFOvBQKJ/wSsu
-         fMaw==
-X-Gm-Message-State: AOAM531uBTXwgVhBr/SjTWgcahe5Jc30+SPorWoysNFw1tzqxu518nhl
-        5b30kxvPNawVOXc3SRmLv1y7zNUxW+c=
-X-Google-Smtp-Source: ABdhPJxuTWmH1fkz+IpM73ofC+04RIP7ViUIgXiPthwZdi7aPrmpZliCC1K2+S0HfGB/IXOFK4eW4A==
-X-Received: by 2002:a17:907:971c:b0:6e0:dd95:9fc6 with SMTP id jg28-20020a170907971c00b006e0dd959fc6mr7446454ejc.256.1648996327000;
-        Sun, 03 Apr 2022 07:32:07 -0700 (PDT)
+        bh=0nv6zpk2uXf51T7rLuXBIvVrg9p++Wfl0LbR7exPlgI=;
+        b=CY9J4ACIKvGbXMy+VmTYXoTFQ/DKPCMWtxEixCENW5FwFg6ZGCVPgwNkmqcvo8WvEH
+         Xkh6z6WQGhSFlIC5TPQsKFjMqSqJkPpXCnl6AKtdJBbkTGwZvTmS0rWANy8xKdObJNtS
+         MXkv4Vk5sbwJm0rMc7dfwoC/GClhAbkIiXDAqUGEJLy9yynWlybjOuyRO70cqA7dMjuH
+         Ec2Ek/iLmHlwLhZn+yZVNIzySo7mk0HF1lxs5s7heYaxvGyUo8BrUZmaaFE4Z1zctQkf
+         XQrxUXp4ZbqXjt4rh8R77nBqWZqWkwO2MQyFBPmItQj8US7w6yd7l/Hm3cuJa5A7dOtR
+         Ey5w==
+X-Gm-Message-State: AOAM530k0CJWu15+uV0QrfxS045EaqpwJfQbnqEAaXTLVMHvm9KgzO1C
+        bjOV54yuWwCzO0lwtosyRdc=
+X-Google-Smtp-Source: ABdhPJyluUu/ZU0UOPeAIo7av2ES85Sg0vrfj/mYC+ktDbj1RaBCnIpYRxxdKFBxxqq4wY34YGRipw==
+X-Received: by 2002:a05:6402:2219:b0:418:ed4e:f999 with SMTP id cq25-20020a056402221900b00418ed4ef999mr28896450edb.121.1648996643208;
+        Sun, 03 Apr 2022 07:37:23 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v17-20020a17090651d100b006dfa26428bcsm3276850ejk.108.2022.04.03.07.32.06
+        by smtp.gmail.com with ESMTPSA id o12-20020a50c90c000000b0041907e62024sm3891753edh.85.2022.04.03.07.37.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 07:32:06 -0700 (PDT)
+        Sun, 03 Apr 2022 07:37:22 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nb1Gv-002Ei2-PE;
-        Sun, 03 Apr 2022 16:32:05 +0200
+        id 1nb1M1-002EsN-QS;
+        Sun, 03 Apr 2022 16:37:21 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v5 00/27] revision.[ch]: add and use release_revisions()
-Date:   Sun, 03 Apr 2022 16:18:09 +0200
-References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
-        <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
-        <5d3345d9-3c7c-a761-9c7a-03468a653e48@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?Jean-No?= =?utf-8?Q?=C3=ABl?= Avila 
+        <jn.avila@free.fr>
+Subject: Re: [PATCH v2 1/6] i18n: factorize generic failure messages
+Date:   Sun, 03 Apr 2022 16:34:31 +0200
+References: <pull.1181.git.1647813291.gitgitgadget@gmail.com>
+ <pull.1181.v2.git.1648915853.gitgitgadget@gmail.com>
+ <4bba3e1f6cb9cdc35b0dc8da440e38de256b4d2b.1648915853.git.gitgitgadget@gmail.com>
+ <4b46ba19-3a39-7317-42fb-4fd4bba09b36@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <5d3345d9-3c7c-a761-9c7a-03468a653e48@gmail.com>
-Message-ID: <220403.861qyeme56.gmgdl@evledraar.gmail.com>
+In-reply-to: <4b46ba19-3a39-7317-42fb-4fd4bba09b36@gmail.com>
+Message-ID: <220403.86wng6kzby.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,36 +75,40 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Apr 03 2022, Phillip Wood wrote:
+On Sun, Apr 03 2022, Bagas Sanjaya wrote:
 
-> Hi =C3=86var
+> On 02/04/22 23.10, Jean-No=C3=ABl Avila via GitGitGadget wrote:
+> [...]
+>> index 04ce33cdcd4..30a4b81257d 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -1506,12 +1506,12 @@ int daemonize(void)
+>>   		case 0:
+>>   			break;
+>>   		case -1:
+>> -			die_errno(_("fork failed"));
+>> +			die_errno(_("the function '%s' failed"), "fork");
+>>   		default:
+>>   			exit(0);
+>>   	}
+>>   	if (setsid() =3D=3D -1)
+>> -		die_errno(_("setsid failed"));
+>> +		die_errno(_("the function '%s' failed"), "setsid");
+>>   	close(0);
+>>   	close(1);
+>>   	close(2);
 >
-> I've left a few comments on this series for the patches that I had not
-> looked at in v4. There's nothing major, the changes mostly make sense
-> to me (though I'm not familiar with the revisions api)
+> Why not simply "'%s' failed"?
 
-Thanks a lot. I'll re-roll a v6 in response, but will wait a bit for any
-other comments.
+I think saying what failed is helpful in any case, a user who knows
+nothing about *nix APIs might be quite perplexed at their source control
+telling them their fork failed, why not the spoon? :)
 
-> On 02/04/2022 11:49, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> This series reduces the memory leaks spotted by our tests by at least
->> half, see v3[1] for a more general overview.
->> Thanks a lot to Phillip Wood and Junio for the v4 review! I think
->> this
->> v5 should address all of the things brought up in v4 in one way or
->> another, changes:
->>   * The "extra_headers" or "ref_message_ids" freeing is the same,
->> but
->>     the commit message is altered to explain that commit.
->
-> I'm still not that convinced that these are owned by the code in
-> builtin/log.c but lets leave that for now.
+So including more context helps.
 
-Thanks.
+But also because there's languages where adjectives like "failed" are
+different depending on the grammatical gender of the subject.
 
-> The rest of the changes
-> look good. Thanks for working on this, when I use LSAN on my patches
-> before submitting them I often see a lot of existing leaks coming from
-> struct rev_info.
-
-Yeah it'll become a lot more useful now.
+So even if the original and translation would be needlessly terse in any
+case, the message would also become imppossible to translate in a
+gramatically correct way.
