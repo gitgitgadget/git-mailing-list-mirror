@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C435C433F5
-	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 12:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6652C433F5
+	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 13:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349461AbiDCM4n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Apr 2022 08:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34294 "EHLO
+        id S1350848AbiDCNCZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Apr 2022 09:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235429AbiDCM4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Apr 2022 08:56:42 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C69531FCF6
-        for <git@vger.kernel.org>; Sun,  3 Apr 2022 05:54:47 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id m30so10645838wrb.1
-        for <git@vger.kernel.org>; Sun, 03 Apr 2022 05:54:47 -0700 (PDT)
+        with ESMTP id S235429AbiDCNCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Apr 2022 09:02:22 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA0521E0D
+        for <git@vger.kernel.org>; Sun,  3 Apr 2022 06:00:28 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id m30so10657598wrb.1
+        for <git@vger.kernel.org>; Sun, 03 Apr 2022 06:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=sMULGgKSLCpcP8kqXWyr6mNFITaQ4HI/BjQlbDU9IVM=;
-        b=Y+38QVGQ+q52eT11K4XzyhDnv5suo6Pb7Yr5h1F0KMA6LSpYToLD1YhyrEPDdZDqVE
-         0OiS2v3vqJI7qJrFED/TtOUZxKPzrePZhvrBk9vBGpE5oM5sllnYPN2E/kleaJreRCJU
-         17pZU1AB7EVL3FDyOdw3BoWAUPqlyy/vrzH3mPaKzTMxQSpaY2UzmojSoq7W1yfLhBnv
-         J8xEjHo6XS/9XhU2qJ8RWlyqTbpnvP676pHXDKLVVAhf8f2j+9pbZ43xxLJQnvO0eRsE
-         CxUdfvwQbFtNixHAyWGy9OdgLdwRWSUg85voxBQ2IAv1wJDRVqNnuJp7n8cxD69QQuAp
-         gw3A==
+        bh=ncASUml5jdZf9RxN1SdlNe+ynS5uRpd/CmVI6+quiyM=;
+        b=RFjQ85MUBUS0jynUl6ZwbdCyWi7xQPWpueK1iCwq2A7ZE9SCRHbHLtcJLv4IEGFV6R
+         dFd6P+C6MyP/6f6itTJLb2V3gi8434j9gzlccye8XhYJoKIq2wxchQx3L2X6mx4yw2hw
+         upXPINBma9kmCUqyHhpPLTUywMBKALyTmMFrdqu7EFVh0gakwL1pljE/OdbqSCYRY9/j
+         zNWIeifiLnAX3mNwRiB15MtafZAQywARsJDbvelzEk7X6+o4FyB+qqIyX3yVq3NFNrzd
+         nfGV6thYzvnfmAWKS+B3WThEKJcLCUYRAKDw2UqH9cEl5MKTqzaqTfHzZ3NRIJU11JVo
+         6N/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=sMULGgKSLCpcP8kqXWyr6mNFITaQ4HI/BjQlbDU9IVM=;
-        b=i8VnNCudsuXgjVrVrd7FVjVCz6zeTsqh7ll6sLOGct9hxHN9ivLjoRH3q4ah30+sSp
-         hCso/F0c3zPX48Fs1GwFAejo1txLEMLIVo8SE8CbawJYlCSTxMh5GS8KWjWnfnLRqMXU
-         OjWkI5hJjNXHWM1gizDl+zu6pfQ9AALKol3swp4EQjV7sNUDRsPrUJPzXw8HaWlI0CB8
-         oWJNCyx8c2XR8sF+bZmcSRACTZJZVLpW30ObuBduXZTBdqB1bG/zRa0QeXqtoI/ehOFc
-         LxHe4Gt0gUZ3de6bGTAtzjKVF5GxVDWWHarc2eMcayLWKe/d3dikEMTAjsjgflvCAz+P
-         ssag==
-X-Gm-Message-State: AOAM532qp7B/yw2/yYUlpzvTJdSyVGpplaD1Wct4Dz/Iw6WMP2Z0776h
-        2Sxrdrfa3781AoiJsmqi/9M=
-X-Google-Smtp-Source: ABdhPJzspNJF0ca/VvO1cqvU4EN7y1md+3cgpDafmd2i33ucG86S8ZFOaSSqgSzqnugmqfrDqSrE8Q==
-X-Received: by 2002:a05:6000:1044:b0:1eb:f72c:7f25 with SMTP id c4-20020a056000104400b001ebf72c7f25mr13757331wrx.155.1648990486149;
-        Sun, 03 Apr 2022 05:54:46 -0700 (PDT)
+        bh=ncASUml5jdZf9RxN1SdlNe+ynS5uRpd/CmVI6+quiyM=;
+        b=bgRMLHAvx6uasPAm1ozrH6fKlW74MQ7TMwB+n7lOBdO1d4Kr8TnI/suHxoEEO7l3tl
+         /dwmdmc0J1PrSizaW8sLOutJlDF6EBLokF8Rs+EOJHnzcrnG33bPLP3HeHqASb7P9etc
+         hnGODQ+/EBgwIDVJP40PoGVIGXiYhavs1xAnx1qyT6VfCNRe90aAXPmonKM0kGk9SQhB
+         M/CBgsFs3EgbHuurPxcEQ9RiNsjrHZkACK0ajeEbuPwMzLK+Ec0ghswgqxZ+VsCdemGM
+         kmM9MTDgjGwtaah0i2m0LvoyHefGFZ8NAPKLTW3v35we+45EE7z88ZssDk7ZEnmhAOTt
+         rc+w==
+X-Gm-Message-State: AOAM532isdDBcn1q7m7Pi8lWrPOuwy9iC8IJ65eN1725aB3b+6NGRUse
+        Le1ScehtvXSRh6QLfz3ICHRearIN2/k=
+X-Google-Smtp-Source: ABdhPJwRXfj41DBmJOQ/weHHZfYWrnfsbGF4fH+N3TTFEyJDSNjcDyA/lvUlKF/avZ9qhNPF3DSOeg==
+X-Received: by 2002:adf:dd4d:0:b0:203:f178:b78b with SMTP id u13-20020adfdd4d000000b00203f178b78bmr13834490wrm.93.1648990826500;
+        Sun, 03 Apr 2022 06:00:26 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.224])
-        by smtp.gmail.com with ESMTPSA id m3-20020a5d64a3000000b00203ed35b0aesm11052190wrp.108.2022.04.03.05.54.44
+        by smtp.gmail.com with ESMTPSA id j16-20020a05600c191000b0038ca3500494sm23660810wmq.27.2022.04.03.06.00.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Apr 2022 05:54:45 -0700 (PDT)
-Message-ID: <02da5550-3137-b579-93c5-bf245a8cbc2a@gmail.com>
-Date:   Sun, 3 Apr 2022 13:54:34 +0100
+        Sun, 03 Apr 2022 06:00:26 -0700 (PDT)
+Message-ID: <5b93870c-39eb-39eb-e6a5-92b4e1cf8f12@gmail.com>
+Date:   Sun, 3 Apr 2022 14:00:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 18/27] revisions API: have release_revisions() release
- "cmdline"
+Subject: Re: [PATCH v5 24/27] revisions API: call diff_free(&revs->pruning) in
+ revisions_release()
 Content-Language: en-GB-large
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
  <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
- <patch-v5-18.27-7987c748ba4-20220402T102002Z-avarab@gmail.com>
+ <patch-v5-24.27-c7f3e92a8d1-20220402T102002Z-avarab@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <patch-v5-18.27-7987c748ba4-20220402T102002Z-avarab@gmail.com>
+In-Reply-To: <patch-v5-24.27-c7f3e92a8d1-20220402T102002Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -79,556 +79,144 @@ X-Mailing-List: git@vger.kernel.org
 Hi Ævar
 
 On 02/04/2022 11:49, Ævar Arnfjörð Bjarmason wrote:
-> Extend the the release_revisions() function so that it frees the
-> "cmdline" in the "struct rev_info". This in combination with a
-> preceding change to free "commits" and "mailmap" means that we can
-> whitelist another test under "TEST_PASSES_SANITIZE_LEAK=true".
+> Call diff_free() on the "pruning" member of "struct rev_info".  Doing
+> so makes several tests pass under SANITIZE=leak.
 > 
-> There was a proposal in [1] to do away with xstrdup()-ing this
-> add_rev_cmdline(), perhaps that would be worthwhile, but for now let's
-> just free() it.
-> 
-> We could also make that a "char *" in "struct rev_cmdline_entry"
-> itself, but since we own it let's expose it as a constant to outside
-> callers. I proposed that in [2] but have since changed my mind. See
-> 14d30cdfc04 (ref-filter: fix memory leak in `free_array_item()`,
-> 2019-07-10), c514c62a4fd (checkout: fix leak of non-existent branch
-> names, 2020-08-14) and other log history hits for "free((char *)" for
-> prior art.
-> 
-> This includes the tests we had false-positive passes on before my
-> 6798b08e848 (perl Git.pm: don't ignore signalled failure in
-> _cmd_close(), 2022-02-01), now they pass for real.
-> 
-> Since there are 66 tests matching t/t[0-9]*git-svn*.sh it's easier to
-> list those that don't pass than to touch most of those 66. So let's
-> introduce a "TEST_FAILS_SANITIZE_LEAK=true", which if set in the tests
-> won't cause lib-git-svn.sh to set "TEST_PASSES_SANITIZE_LEAK=true.
-> 
-> This change also marks all the tests that we removed
-> "TEST_FAILS_SANITIZE_LEAK=true" from in an earlier commit due to
-> removing the UNLEAK() from cmd_format_patch(), we can now assert that
-> its API use doesn't leak any "struct rev_info" memory.
-> 
-> This change also made commit "t5503-tagfollow.sh" pass on current
-> master, but that would regress when combined with
-> ps/fetch-atomic-fixup's de004e848a9 (t5503: simplify setup of test
-> which exercises failure of backfill, 2022-03-03) (through no fault of
-> that topic, that change started using "git clone" in the test, which
-> has an outstanding leak). Let's leave that test out for now to avoid
-> in-flight semantic conflicts.
-> 
-> 1. https://lore.kernel.org/git/YUj%2FgFRh6pwrZalY@carlos-mbp.lan/
-> 2. https://lore.kernel.org/git/87o88obkb1.fsf@evledraar.gmail.com/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   revision.c                                 | 12 ++++++++++++
->   t/lib-git-svn.sh                           |  4 ++++
->   t/t0062-revision-walking.sh                |  1 +
->   t/t0101-at-syntax.sh                       |  2 ++
->   t/t1060-object-corruption.sh               |  1 +
->   t/t3303-notes-subtrees.sh                  |  1 +
->   t/t3305-notes-fanout.sh                    |  1 +
->   t/t3408-rebase-multi-line.sh               |  1 +
->   t/t4027-diff-submodule.sh                  |  1 +
->   t/t4128-apply-root.sh                      |  1 +
->   t/t4212-log-corrupt.sh                     |  1 +
->   t/t5515-fetch-merge-logic.sh               |  1 +
->   t/t5518-fetch-exit-status.sh               |  1 +
->   t/t6002-rev-list-bisect.sh                 |  1 +
->   t/t6003-rev-list-topo-order.sh             |  1 +
->   t/t6005-rev-list-count.sh                  |  1 +
->   t/t6018-rev-list-glob.sh                   |  1 +
->   t/t6100-rev-list-in-order.sh               |  1 +
->   t/t9100-git-svn-basic.sh                   |  1 +
->   t/t9101-git-svn-props.sh                   |  2 ++
->   t/t9104-git-svn-follow-parent.sh           |  2 ++
->   t/t9106-git-svn-commit-diff-clobber.sh     |  2 ++
->   t/t9115-git-svn-dcommit-funky-renames.sh   |  1 +
->   t/t9116-git-svn-log.sh                     |  2 ++
->   t/t9122-git-svn-author.sh                  |  2 ++
->   t/t9127-git-svn-partial-rebuild.sh         |  2 ++
->   t/t9129-git-svn-i18n-commitencoding.sh     |  1 +
->   t/t9132-git-svn-broken-symlink.sh          |  1 +
->   t/t9139-git-svn-non-utf8-commitencoding.sh |  1 +
->   t/t9146-git-svn-empty-dirs.sh              |  2 ++
->   t/t9148-git-svn-propset.sh                 |  1 +
->   t/t9151-svn-mergeinfo.sh                   |  1 +
->   t/t9160-git-svn-preserve-empty-dirs.sh     |  1 +
->   t/t9162-git-svn-dcommit-interactive.sh     |  2 ++
->   t/t9164-git-svn-dcommit-concurrent.sh      |  2 ++
->   t/t9501-gitweb-standalone-http-status.sh   |  1 +
->   36 files changed, 60 insertions(+)
-> 
-> diff --git a/revision.c b/revision.c
-> index 622f0faecc4..c81506fa22f 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2926,6 +2926,17 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->   	return left;
->   }
->   
-> +static void release_revisions_cmdline(struct rev_cmdline_info *cmdline)
-> +{
-> +	unsigned int i;
-> +
-> +	if (!cmdline)
-> +		return;
+> This was also the last missing piece that allows us to remove the
+> UNLEAK() in "cmd_diff" and "cmd_diff_index", which allows us to use
+> those commands as a canary for general leaks in the revisions API. See
+> [1] for further rationale, and 886e1084d78 (builtin/: add UNLEAKs,
+> 2017-10-01) for the commit that added the UNLEAK() there.
 
-I don't think we need this guard, the only instances of struct 
-rev_cmdline_info exist within struct rev_info, as far as I can see it is 
-never created on its own.
-
-> +	for (i = 0; i < cmdline->nr; i++)
-> +		free((char *)cmdline->rev[i].name);
-> +	free(cmdline->rev);
-
-This could just be in release_revisions()
+Oh is the the answer to my confusion about patch 14? I wonder if the 
+change could come earlier so we can remove the UNLEAK()s all at once?
 
 Best Wishes
 
 Phillip
-> +}
-> +
->   static void release_revisions_mailmap(struct string_list *mailmap)
->   {
->   	if (!mailmap)
-> @@ -2938,6 +2949,7 @@ void release_revisions(struct rev_info *revs)
->   {
->   	free_commit_list(revs->commits);
->   	object_array_clear(&revs->pending);
-> +	release_revisions_cmdline(&revs->cmdline);
+
+> 1. https://lore.kernel.org/git/220218.861r00ib86.gmgdl@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   builtin/diff-index.c                | 1 -
+>   builtin/diff.c                      | 1 -
+>   revision.c                          | 1 +
+>   t/t1001-read-tree-m-2way.sh         | 1 +
+>   t/t1002-read-tree-m-u-2way.sh       | 1 +
+>   t/t2200-add-update.sh               | 1 +
+>   t/t4039-diff-assume-unchanged.sh    | 1 +
+>   t/t4206-log-follow-harder-copies.sh | 2 ++
+>   t/t6131-pathspec-icase.sh           | 2 ++
+>   9 files changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+> index 3a83183c312..7d158af6b6d 100644
+> --- a/builtin/diff-index.c
+> +++ b/builtin/diff-index.c
+> @@ -70,7 +70,6 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+>   		return -1;
+>   	}
+>   	result = run_diff_index(&rev, option);
+> -	UNLEAK(rev);
+>   	result = diff_result_code(&rev.diffopt, result);
+>   	release_revisions(&rev);
+>   	return result;
+> diff --git a/builtin/diff.c b/builtin/diff.c
+> index dd48336da56..f539132ac68 100644
+> --- a/builtin/diff.c
+> +++ b/builtin/diff.c
+> @@ -594,7 +594,6 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>   	result = diff_result_code(&rev.diffopt, result);
+>   	if (1 < rev.diffopt.skip_stat_unmatch)
+>   		refresh_index_quietly();
+> -	UNLEAK(rev);
+>   	release_revisions(&rev);
+>   	UNLEAK(ent);
+>   	UNLEAK(blob);
+> diff --git a/revision.c b/revision.c
+> index e972addd8fc..8bc777da828 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2955,6 +2955,7 @@ void release_revisions(struct rev_info *revs)
+>   	clear_pathspec(&revs->prune_data);
 >   	release_revisions_mailmap(revs->mailmap);
+>   	free_grep_patterns(&revs->grep_filter);
+> +	diff_free(&revs->pruning);
+>   	reflog_walk_info_release(revs->reflog_info);
 >   }
 >   
-> diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-> index 2fde2353fd3..ea28971e8ee 100644
-> --- a/t/lib-git-svn.sh
-> +++ b/t/lib-git-svn.sh
-> @@ -1,3 +1,7 @@
-> +if test -z "$TEST_FAILS_SANITIZE_LEAK"
-> +then
-> +	TEST_PASSES_SANITIZE_LEAK=true
-> +fi
->   . ./test-lib.sh
->   
->   if test -n "$NO_SVN_TESTS"
-> diff --git a/t/t0062-revision-walking.sh b/t/t0062-revision-walking.sh
-> index 8e215867b8c..b9480c81781 100755
-> --- a/t/t0062-revision-walking.sh
-> +++ b/t/t0062-revision-walking.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='Test revision walking api'
+> diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+> index 0710b1fb1e9..516a6112fdc 100755
+> --- a/t/t1001-read-tree-m-2way.sh
+> +++ b/t/t1001-read-tree-m-2way.sh
+> @@ -21,6 +21,7 @@ In the test, these paths are used:
+>   	yomin   - not in H or M
+>   '
 >   
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
+>   . "$TEST_DIRECTORY"/lib-read-tree.sh
 >   
->   cat >run_twice_expected <<-EOF
-> diff --git a/t/t0101-at-syntax.sh b/t/t0101-at-syntax.sh
-> index a1998b558f9..878aadd64c9 100755
-> --- a/t/t0101-at-syntax.sh
-> +++ b/t/t0101-at-syntax.sh
-> @@ -1,6 +1,8 @@
->   #!/bin/sh
+> diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+> index 46cbd5514a6..bd5313caec9 100755
+> --- a/t/t1002-read-tree-m-u-2way.sh
+> +++ b/t/t1002-read-tree-m-u-2way.sh
+> @@ -9,6 +9,7 @@ This is identical to t1001, but uses -u to update the work tree as well.
 >   
->   test_description='various @{whatever} syntax tests'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'setup' '
-> diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-> index bc89371f534..e8a58b15897 100755
-> --- a/t/t1060-object-corruption.sh
-> +++ b/t/t1060-object-corruption.sh
-> @@ -1,6 +1,7 @@
->   #!/bin/sh
->   
->   test_description='see how we handle various forms of corruption'
-> +
->   . ./test-lib.sh
->   
->   # convert "1234abcd" to ".git/objects/12/34abcd"
-> diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
-> index eac193757bf..bc9b791d1b9 100755
-> --- a/t/t3303-notes-subtrees.sh
-> +++ b/t/t3303-notes-subtrees.sh
-> @@ -5,6 +5,7 @@ test_description='Test commit notes organized in subtrees'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>   '
 >   
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
+>   . "$TEST_DIRECTORY"/lib-read-tree.sh
 >   
->   number_of_commits=100
-> diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-> index 9976d787f47..64a9915761a 100755
-> --- a/t/t3305-notes-fanout.sh
-> +++ b/t/t3305-notes-fanout.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='Test that adding/removing many notes triggers automatic fanout restructuring'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   path_has_fanout() {
-> diff --git a/t/t3408-rebase-multi-line.sh b/t/t3408-rebase-multi-line.sh
-> index cde3562e3a6..7b4607d72f2 100755
-> --- a/t/t3408-rebase-multi-line.sh
-> +++ b/t/t3408-rebase-multi-line.sh
-> @@ -5,6 +5,7 @@ test_description='rebasing a commit with multi-line first paragraph.'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
+> index 0c38f8e3569..be394f1131a 100755
+> --- a/t/t2200-add-update.sh
+> +++ b/t/t2200-add-update.sh
+> @@ -14,6 +14,7 @@ only the updates to dir/sub.
+>   Also tested are "git add -u" without limiting, and "git add -u"
+>   without contents changes, and other conditions'
 >   
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
 >   
 >   test_expect_success setup '
-> diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-> index 295da987cce..40164ae07d2 100755
-> --- a/t/t4027-diff-submodule.sh
-> +++ b/t/t4027-diff-submodule.sh
+> diff --git a/t/t4039-diff-assume-unchanged.sh b/t/t4039-diff-assume-unchanged.sh
+> index 0eb0314a8b3..78090e6852d 100755
+> --- a/t/t4039-diff-assume-unchanged.sh
+> +++ b/t/t4039-diff-assume-unchanged.sh
 > @@ -2,6 +2,7 @@
 >   
->   test_description='difference in submodules'
+>   test_description='diff with assume-unchanged entries'
 >   
+> +TEST_PASSES_SANITIZE_LEAK=true
+>   . ./test-lib.sh
+>   
+>   # external diff has been tested in t4020-diff-external.sh
+> diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
+> index 4871a5dc92f..33ecf82c7f9 100755
+> --- a/t/t4206-log-follow-harder-copies.sh
+> +++ b/t/t4206-log-follow-harder-copies.sh
+> @@ -6,6 +6,8 @@
+>   test_description='Test --follow should always find copies hard in git log.
+>   
+>   '
+> +
 > +TEST_PASSES_SANITIZE_LEAK=true
 >   . ./test-lib.sh
 >   . "$TEST_DIRECTORY"/lib-diff.sh
 >   
-> diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
-> index f6db5a79dd9..ed94c90204e 100755
-> --- a/t/t4128-apply-root.sh
-> +++ b/t/t4128-apply-root.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='apply same filename'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'setup' '
-> diff --git a/t/t4212-log-corrupt.sh b/t/t4212-log-corrupt.sh
-> index 0244888a5a7..30a219894bb 100755
-> --- a/t/t4212-log-corrupt.sh
-> +++ b/t/t4212-log-corrupt.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='git log with invalid commit headers'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'setup' '
-> diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
-> index 320d26796d2..c100a809c5e 100755
-> --- a/t/t5515-fetch-merge-logic.sh
-> +++ b/t/t5515-fetch-merge-logic.sh
-> @@ -14,6 +14,7 @@ export GIT_TEST_PROTOCOL_VERSION
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   build_script () {
-> diff --git a/t/t5518-fetch-exit-status.sh b/t/t5518-fetch-exit-status.sh
-> index 5c4ac2556e7..c13120088fa 100755
-> --- a/t/t5518-fetch-exit-status.sh
-> +++ b/t/t5518-fetch-exit-status.sh
-> @@ -8,6 +8,7 @@ test_description='fetch exit status test'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success setup '
-> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
-> index b95a0212adf..162cf50778d 100755
-> --- a/t/t6002-rev-list-bisect.sh
-> +++ b/t/t6002-rev-list-bisect.sh
-> @@ -4,6 +4,7 @@
->   #
->   test_description='Tests git rev-list --bisect functionality'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   . "$TEST_DIRECTORY"/lib-t6000.sh # t6xxx specific functions
->   
-> diff --git a/t/t6003-rev-list-topo-order.sh b/t/t6003-rev-list-topo-order.sh
-> index 24d1836f417..1f7d7dd20c1 100755
-> --- a/t/t6003-rev-list-topo-order.sh
-> +++ b/t/t6003-rev-list-topo-order.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='Tests git rev-list --topo-order functionality'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   . "$TEST_DIRECTORY"/lib-t6000.sh # t6xxx specific functions
->   
-> diff --git a/t/t6005-rev-list-count.sh b/t/t6005-rev-list-count.sh
-> index e960049f647..0729f800c3c 100755
-> --- a/t/t6005-rev-list-count.sh
-> +++ b/t/t6005-rev-list-count.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='git rev-list --max-count and --skip test'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'setup' '
-> diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-> index 24b34add833..e1abc5c2b32 100755
-> --- a/t/t6018-rev-list-glob.sh
-> +++ b/t/t6018-rev-list-glob.sh
-> @@ -5,6 +5,7 @@ test_description='rev-list/rev-parse --glob'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   commit () {
-> diff --git a/t/t6100-rev-list-in-order.sh b/t/t6100-rev-list-in-order.sh
-> index e934bc239c5..88ed7bd75a7 100755
-> --- a/t/t6100-rev-list-in-order.sh
-> +++ b/t/t6100-rev-list-in-order.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='rev-list testing in-commit-order'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'setup a commit history with trees, blobs' '
-> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-> index fea41b3c360..7c5b847f584 100755
-> --- a/t/t9100-git-svn-basic.sh
-> +++ b/t/t9100-git-svn-basic.sh
-> @@ -8,6 +8,7 @@ test_description='git svn basic tests'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   prepare_utf8_locale
-> diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-> index 8b5681dd68a..d043e80fc34 100755
-> --- a/t/t9101-git-svn-props.sh
-> +++ b/t/t9101-git-svn-props.sh
-> @@ -4,6 +4,8 @@
->   #
->   
->   test_description='git svn property tests'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   mkdir import
-> diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-> index c7d8e0bf00f..5cf2ef4b8b0 100755
-> --- a/t/t9104-git-svn-follow-parent.sh
-> +++ b/t/t9104-git-svn-follow-parent.sh
-> @@ -4,6 +4,8 @@
->   #
->   
->   test_description='git svn fetching'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize repo' '
-> diff --git a/t/t9106-git-svn-commit-diff-clobber.sh b/t/t9106-git-svn-commit-diff-clobber.sh
-> index aec45bca3b7..3cab0b9720a 100755
-> --- a/t/t9106-git-svn-commit-diff-clobber.sh
-> +++ b/t/t9106-git-svn-commit-diff-clobber.sh
-> @@ -2,6 +2,8 @@
->   #
->   # Copyright (c) 2006 Eric Wong
->   test_description='git svn commit-diff clobber'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize repo' '
-> diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
-> index 743fbe1fe46..419f055721d 100755
-> --- a/t/t9115-git-svn-dcommit-funky-renames.sh
-> +++ b/t/t9115-git-svn-dcommit-funky-renames.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='git svn dcommit can commit renames of files with ugly names'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'load repository with strange names' '
-> diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
-> index 0a9f1ef366d..34f6c80dea3 100755
-> --- a/t/t9116-git-svn-log.sh
-> +++ b/t/t9116-git-svn-log.sh
-> @@ -4,6 +4,8 @@
->   #
->   
->   test_description='git svn log tests'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'setup repository and import' '
-> diff --git a/t/t9122-git-svn-author.sh b/t/t9122-git-svn-author.sh
-> index 9e8fe38e7ef..527ba3d2932 100755
-> --- a/t/t9122-git-svn-author.sh
-> +++ b/t/t9122-git-svn-author.sh
+> diff --git a/t/t6131-pathspec-icase.sh b/t/t6131-pathspec-icase.sh
+> index 39fc3f6769b..770cce026cb 100755
+> --- a/t/t6131-pathspec-icase.sh
+> +++ b/t/t6131-pathspec-icase.sh
 > @@ -1,6 +1,8 @@
 >   #!/bin/sh
 >   
->   test_description='git svn authorship'
+>   test_description='test case insensitive pathspec limiting'
 > +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'setup svn repository' '
-> diff --git a/t/t9127-git-svn-partial-rebuild.sh b/t/t9127-git-svn-partial-rebuild.sh
-> index 2e4789d061f..90b1b30dde5 100755
-> --- a/t/t9127-git-svn-partial-rebuild.sh
-> +++ b/t/t9127-git-svn-partial-rebuild.sh
-> @@ -4,6 +4,8 @@
->   #
->   
->   test_description='git svn partial-rebuild tests'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize svnrepo' '
-> diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
-> index 01e1e8a8f76..185248a4cd7 100755
-> --- a/t/t9129-git-svn-i18n-commitencoding.sh
-> +++ b/t/t9129-git-svn-i18n-commitencoding.sh
-> @@ -4,6 +4,7 @@
->   
->   test_description='git svn honors i18n.commitEncoding in config'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   compare_git_head_with () {
-> diff --git a/t/t9132-git-svn-broken-symlink.sh b/t/t9132-git-svn-broken-symlink.sh
-> index aeceffaf7b0..4d8d0584b79 100755
-> --- a/t/t9132-git-svn-broken-symlink.sh
-> +++ b/t/t9132-git-svn-broken-symlink.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='test that git handles an svn repository with empty symlinks'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   test_expect_success 'load svn dumpfile' '
->   	svnadmin load "$rawsvnrepo" <<EOF
-> diff --git a/t/t9139-git-svn-non-utf8-commitencoding.sh b/t/t9139-git-svn-non-utf8-commitencoding.sh
-> index 22d80b0be2b..b7f756b2b7f 100755
-> --- a/t/t9139-git-svn-non-utf8-commitencoding.sh
-> +++ b/t/t9139-git-svn-non-utf8-commitencoding.sh
-> @@ -4,6 +4,7 @@
->   
->   test_description='git svn refuses to dcommit non-UTF8 messages'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   # ISO-2022-JP can pass for valid UTF-8, so skipping that in this test
-> diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs.sh
-> index 80cb55fee70..79c26ed69c1 100755
-> --- a/t/t9146-git-svn-empty-dirs.sh
-> +++ b/t/t9146-git-svn-empty-dirs.sh
-> @@ -3,6 +3,8 @@
->   # Copyright (c) 2009 Eric Wong
->   
->   test_description='git svn creates empty directories'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize repo' '
-> diff --git a/t/t9148-git-svn-propset.sh b/t/t9148-git-svn-propset.sh
-> index aebb28995e5..6cc76a07b39 100755
-> --- a/t/t9148-git-svn-propset.sh
-> +++ b/t/t9148-git-svn-propset.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='git svn propset tests'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'setup propset via import' '
-> diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
-> index c93a5beab25..85221d439bd 100755
-> --- a/t/t9151-svn-mergeinfo.sh
-> +++ b/t/t9151-svn-mergeinfo.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='git-svn svn mergeinfo properties'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'load svn dump' "
-> diff --git a/t/t9160-git-svn-preserve-empty-dirs.sh b/t/t9160-git-svn-preserve-empty-dirs.sh
-> index 36c6b1a12ff..9cf7a1427ab 100755
-> --- a/t/t9160-git-svn-preserve-empty-dirs.sh
-> +++ b/t/t9160-git-svn-preserve-empty-dirs.sh
-> @@ -9,6 +9,7 @@ This test uses git to clone a Subversion repository that contains empty
->   directories, and checks that corresponding directories are created in the
->   local Git repository with placeholder files.'
->   
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   GIT_REPO=git-svn-repo
-> diff --git a/t/t9162-git-svn-dcommit-interactive.sh b/t/t9162-git-svn-dcommit-interactive.sh
-> index e38d9fa37b5..e2aa8ed88a9 100755
-> --- a/t/t9162-git-svn-dcommit-interactive.sh
-> +++ b/t/t9162-git-svn-dcommit-interactive.sh
-> @@ -3,6 +3,8 @@
->   # Copyright (c) 2011 Frédéric Heitzmann
->   
->   test_description='git svn dcommit --interactive series'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize repo' '
-> diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommit-concurrent.sh
-> index 8466269bf50..1465156072e 100755
-> --- a/t/t9164-git-svn-dcommit-concurrent.sh
-> +++ b/t/t9164-git-svn-dcommit-concurrent.sh
-> @@ -4,6 +4,8 @@
->   #
->   
->   test_description='concurrent git svn dcommit'
-> +
-> +TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   
-> diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
-> index 32814e75df5..c900231079c 100755
-> --- a/t/t9501-gitweb-standalone-http-status.sh
-> +++ b/t/t9501-gitweb-standalone-http-status.sh
-> @@ -13,6 +13,7 @@ code and message.'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
 > +TEST_PASSES_SANITIZE_LEAK=true
->   . ./lib-gitweb.sh
+>   . ./test-lib.sh
 >   
->   #
+>   if test_have_prereq CASE_INSENSITIVE_FS
