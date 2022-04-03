@@ -2,118 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B30BC433F5
-	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 16:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E35C4C433EF
+	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 17:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359556AbiDCQzY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Apr 2022 12:55:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40446 "EHLO
+        id S1346397AbiDCRhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Apr 2022 13:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359506AbiDCQzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Apr 2022 12:55:20 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F093917A
-        for <git@vger.kernel.org>; Sun,  3 Apr 2022 09:53:21 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id g22so8456833edz.2
-        for <git@vger.kernel.org>; Sun, 03 Apr 2022 09:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8kIM0hkVZpUmwNhFMPAda8nfmexLAW0akh/cpJ/cag8=;
-        b=n+4U4I5c9V4srhrU0MJ+zrQGJ7f+EI0T9R2JOL3wYRK7PaYgP6Gs8uAJqx4APT95dP
-         aoKDusoIylxNRJacV0wzVAOK9aHK7XjiY8HnNfDMWI+sl4Kq6LLxs8t2q7vkXX30eMHn
-         deNmcLCmh4EBJLR0gY5Lne1ASIvXUMg5YiqHrIWMKoodkB6JoTMA5Lj7kNiPubbhAVA9
-         60TBoXB+0aHhkoMHQj8STXMbnWIWAok1LoDkugioKGZfvh4K+jno8gh3RYc99CkVrGpd
-         5fdNT88MOyJFP2xHX73PZGEX3dVyNkiktuOCbnO17yliu/rvJBoHCNcv1JzgiEwmowHz
-         huiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8kIM0hkVZpUmwNhFMPAda8nfmexLAW0akh/cpJ/cag8=;
-        b=EUer/zS1X1tTigjqS5f5yN4zSSkSGxb/DVhqDkH3LGLXqaGNWGempqHDUQsY677z5Y
-         B58CpFFL2NHGo8L3JZVssEwt+oO0LtOPghc4PMqYCgn6SUlcdMHUm7K6PrDJWKJDkrg2
-         ZqblVcVAG7/E3XoqM/wDzZxAaipoaoK4VDxeJ9U5ET36bTaygUUOBtWBFgWzF+VRJJjn
-         fGR8GDMlUfJiebfb+VDhNmWa8ow6uFLvBHTsuP0xxPL9wFlJvNmb2NAplheLBLzOCbgt
-         52D9hk8fAsEBO1bEohA/JOQkyQoiFxdtzFsoDh3lLIXADlEXnuB/WpHmEGYiAJeWSfOs
-         xepA==
-X-Gm-Message-State: AOAM530RUbpTEQY4aKilGP8L6CG20n7NDw6D+eBlS9NGCdJXQRHMFBe9
-        I6TK4FybswQkr9E4adOd2BGdHoOvCe+rpQ==
-X-Google-Smtp-Source: ABdhPJySdlhU9kynwL7Sg6zORbTcRWdQQHoxUamOcmex+cjG8FPInd2+85YBw0YGB8HLm4shixFk1w==
-X-Received: by 2002:aa7:d619:0:b0:41c:ac48:4ebb with SMTP id c25-20020aa7d619000000b0041cac484ebbmr5613747edr.316.1649004799519;
-        Sun, 03 Apr 2022 09:53:19 -0700 (PDT)
-Received: from linuxerio.localdomain (j109098.upc-j.chello.nl. [24.132.109.98])
-        by smtp.gmail.com with ESMTPSA id a18-20020a170906671200b006e05929e66csm3389720ejp.20.2022.04.03.09.53.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 09:53:19 -0700 (PDT)
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To:     gitster@pobox.com, whydoubt@gmail.com, git@vger.kernel.org
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH] blame: report correct number of lines in progress when using ranges
-Date:   Sun,  3 Apr 2022 18:50:38 +0200
-Message-Id: <20220403165038.52803-1-eantoranz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        with ESMTP id S235651AbiDCRhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Apr 2022 13:37:40 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0CC1A3B6
+        for <git@vger.kernel.org>; Sun,  3 Apr 2022 10:35:46 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6E2E35A3E0;
+        Sun,  3 Apr 2022 17:35:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1649007345;
+        bh=P3IspwMwE65pz+9uAhMgju6nbFH5B5wqSwNCVaeZNzY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Mm8m9xXG0JDzSwpFZ0ydR/t1SfYTfSwgzQ4vO5odkO7KCESHXQKRZ3NivAFNB8ujz
+         US4sR+vn9er2jKUiqcwAZnX5EBamFYUm1BgksA5FP6OZELi0c5yQx54fP4ZDcxpUD6
+         Kw3HDEQDYm0kDk/38G6/eWCJP0G8t/51nHGKR55GYmTN61WC6l1imD/RUQkZVIzZnB
+         nbcoAzGniohp1QC8wFVvl7v8oRDgVcZVxh16ZsJOZlKn7BZaqsjuriZWfuMMn4wFhn
+         2l7+ToeZVS/KdcAZnB+jDyCiq/Nx7qjXTgj0OYv9w7NEmsTrnLIg96xTIeyemEWXAn
+         o4nYQPzCK/ChnIb2wR98zqSSn7nNcifzmjFzuwsJNkXJo33pBjP9UjGPh4Z41nNxSK
+         /CkwAYXyqENjT2jDK8C3Dd1T0LGGkzPCZheNZOxjkv+hBBCR+PkcBqdVOYojgsH9F5
+         f2n7o0PdPe+LW8B3rqdT7AaU+sISD+U+WqYtjEvVwk4ksSXt24j
+Date:   Sun, 3 Apr 2022 17:35:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: any real-world SHA-256 repo users out there?
+Message-ID: <Ykna7sJP8ktvNLor@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>, git@vger.kernel.org
+References: <20220403084258.GA27999@dcvr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Eduyw98XGWN+q62R"
+Content-Disposition: inline
+In-Reply-To: <20220403084258.GA27999@dcvr>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using ranges, use their sizes as the limit for progress
-instead of the size of the full file.
 
-Before:
-$ git blame --progress builtin/blame.c > /dev/null
-Blaming lines: 100% (1210/1210), done.
-$ git blame --progress -L 100,120 -L 200,300 builtin/blame.c > /dev/null
-Blaming lines:  10% (122/1210), done.
-$
+--Eduyw98XGWN+q62R
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-After:
-$ ./git blame --progress builtin/blame.c > /dev/null
-Blaming lines: 100% (1210/1210), done.
-$ ./git blame --progress -L 100,120 -L 200,300 builtin/blame.c > /dev/null
-Blaming lines: 100% (122/122), done.
-$
+On 2022-04-03 at 08:42:58, Eric Wong wrote:
+> Hey all, just wondering if it's something I should prioritize
+> adding support for in some git-using project I hack on...
+>=20
+> Of course, I'm not dropping SHA-1 support.  So I'm wondering if
+> I should wait for (or hack on :P) git to handle both SHA-256 and
+> SHA-1 in one process; or if it's something I'd be better off
+> managing via multiple (git cat-file --batch) processes.  No OIDs
+> are abbreviated, so it's just 20/40 vs 32/64.
 
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
----
- builtin/blame.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Git can already use one binary to handle SHA-1 and SHA-256 repositories
+and has been able to since Git 2.29 (although 2.30 has some fixes you
+should use). It just doesn't provide interop at this point, and I'm only
+working on it as I find time, so I wouldn't hold your breath for it.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 8d15b68afc..e33372c56b 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -898,6 +898,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	unsigned int range_i;
- 	long anchor;
- 	const int hexsz = the_hash_algo->hexsz;
-+	long num_lines = 0;
- 
- 	setup_default_color_by_age();
- 	git_config(git_blame_config, &output_option);
-@@ -1129,7 +1130,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	for (range_i = ranges.nr; range_i > 0; --range_i) {
- 		const struct range *r = &ranges.ranges[range_i - 1];
- 		ent = blame_entry_prepend(ent, r->start, r->end, o);
-+		num_lines += (r->end - r->start);
- 	}
-+	if (!num_lines)
-+		num_lines = sb.num_lines;
- 
- 	o->suspects = ent;
- 	prio_queue_put(&sb.commits, o->commit);
-@@ -1158,7 +1162,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	sb.found_guilty_entry = &found_guilty_entry;
- 	sb.found_guilty_entry_data = &pi;
- 	if (show_progress)
--		pi.progress = start_delayed_progress(_("Blaming lines"), sb.num_lines);
-+		pi.progress = start_delayed_progress(_("Blaming lines"), num_lines);
- 
- 	assign_blame(&sb, opt);
- 
--- 
-2.35.1
+I have some indefinite plans to improve the support for SHA-1/SHA-256
+interop in the future, as well as port SHA-256 support to libgit2, but
+those are dependent on some things which are not certain (but very
+likely) to occur.
 
+I strongly encourage folks to add SHA-256 repository support to tooling
+since it's likely going to become more popular in the future.  I have
+some local SHA-256 repositories on my systems and they appear to work
+fine.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--Eduyw98XGWN+q62R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYkna7gAKCRB8DEliiIei
+gaFyAP0S/QiFg5Z4hnQA9dEDzSK/DSQQInxoYU3TZhBxizP05gD+I7d1tG4V3h2a
+B4SiYLFU+Uwo0MB3CCUeSN31Xa/0xgc=
+=me9/
+-----END PGP SIGNATURE-----
+
+--Eduyw98XGWN+q62R--
