@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88807C433F5
-	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 13:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A11CEC433EF
+	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 14:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356418AbiDCN7F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Apr 2022 09:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43234 "EHLO
+        id S1358981AbiDCOC5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Apr 2022 10:02:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233681AbiDCN7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Apr 2022 09:59:04 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7CD366BA
-        for <git@vger.kernel.org>; Sun,  3 Apr 2022 06:57:10 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id yy13so14986286ejb.2
-        for <git@vger.kernel.org>; Sun, 03 Apr 2022 06:57:10 -0700 (PDT)
+        with ESMTP id S237059AbiDCOCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Apr 2022 10:02:46 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEB037A3B
+        for <git@vger.kernel.org>; Sun,  3 Apr 2022 07:00:51 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id q26so509256edc.7
+        for <git@vger.kernel.org>; Sun, 03 Apr 2022 07:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=gMnJeTewaJZjx47FqFVK9aqpgyNmoVQ0mlW2zIaW/ro=;
-        b=qO8fNgKsd4pzuM4fdPFbW/guLsH81W6u/CvGZwABkUqVRNr1c1pekrCw++d5jC6THu
-         Ow/0OHYo1STEj4Wio5qfbHTGgdpmK0oOKFym21UZk8BXYzIfOdP2Btrww/DDeSF4ETu1
-         njynWZSS7rcKecOxoXPZ8uueSCUBYDj3x8WVG/wZ+jWOS3+etIIQA1gcg6Sbs35jUndT
-         hgtfzrcSDhGQUG1wAjtE+t2fjkbges68rfCNcSzS9YFqGWLsyy3SN8G0acgAlO9RBl4C
-         bg7MZmG/cjJ7t7at6Wpj7ecKPuZ0hhKOXO+AZ8JElNRR0ecESjxQADlHP55onqQrHZFl
-         A5+w==
+        bh=AvrYjWAywaP8EtfJlAa0VsVWsktXSSjpQUE2LtVmgCw=;
+        b=pOBK8m5xcDzEJplCYcNorBH1ZpHz2vBZsu+qVW1y4OKAIfkkl+5G9iJKdoO2+JJLrg
+         pPw6d7SynTPKEnVZKWjJq0J275+5e5LsA0aTnE8lDwvwbqKfOgEk+W0SKQx9KRtiB8of
+         7iNmoagPHn7h2VDPvDQspDyNFJVjMGjguwEn8JPDswMth3sK9gh0t5Kb6zawvBZCDmBf
+         tVQGjqyoMMyqqei7P7to5aSFSEyfr/kKXLJ/bL98E5xtArp898KYrV74T6EH5VuAJs0a
+         RnAF9CFP0EwHcGHSLCfYaKMYsHWe2WSmmIcUQU6t3rYgWl5QeolyePDyK7+g/DbGoqC6
+         tSyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=gMnJeTewaJZjx47FqFVK9aqpgyNmoVQ0mlW2zIaW/ro=;
-        b=O0ywJVZF81sa3BENdRPUMkmaYtriw9+vALYi9uTxXdeyTjXSpoAsXtDlkmwza5cFJu
-         vZM2OTF2AInImu96GASiNuEZO6AXVxRteZ1zWcnKLRzONBbbbYhcE6v57uhaTFc5j0+n
-         NPWQeCSmfda66SZcBkumFL7j4TBrfKIUIsOknglYWf/defUaEqpEZfKEdOdu5ew6iJ2M
-         DMrwBjVi6HSUU0oOtRB3K0huXJpJ3NnclaL1wu6msNJ7JeQUIioOayui+mTa+5iB/5TU
-         sYJRH6KCIwRAXBObxNcItlNssRO+wWLLibMEPQayvku7gVALRkHut8zmhqxjr2VjD8GE
-         IEbQ==
-X-Gm-Message-State: AOAM531Uf15hcu65lyoTCo1eCDEe2NpXi3UvIMXdujMjEvxDMY3ELg1p
-        Mc9CKoXbvmc2gc5RLjztAR6hu04f0pw=
-X-Google-Smtp-Source: ABdhPJzrdklPxTKidtk4rl/WqRUCXh72jP/7u143NbdEyljpbKiz6u+98ZuUWnTpYB3ez2X6P7emLA==
-X-Received: by 2002:a17:907:970e:b0:6df:9b6f:8a52 with SMTP id jg14-20020a170907970e00b006df9b6f8a52mr7059433ejc.761.1648994228270;
-        Sun, 03 Apr 2022 06:57:08 -0700 (PDT)
+        bh=AvrYjWAywaP8EtfJlAa0VsVWsktXSSjpQUE2LtVmgCw=;
+        b=vjLIWyxL6/1som9fDy4rBiY1XaPmioBrIXDQyF4DotOkuQqp8ZzP0ePllTgqFFwvzW
+         D7utqzfrtvkwPWxyXGhU/Q1+GRYLSuvMUO9aez8MFLbBSRgZlg4PvuxEqAukxPBpX4jS
+         Ai6O9CYZw6okLot69fS1RfFPpaZRm6sC+zeoJsEl+4dmdHHPG7YIRbwnMynszs159Vwm
+         xLhPEVQWnxVNtrA4Mboy1oHWd9zig6vHyy9ugMkugl/j+XjPf7uDplBpq8kF/dWFJqbv
+         ETUXNEDvdI//RrEBI+AomBqbbyCxLrhPIhTDHFIKI2+KED0dW2hCM84GDYdqv/b7h8D/
+         ZamA==
+X-Gm-Message-State: AOAM532sIspCCwDSAXuXjEV6dnT85tdMF/5jyhNCB5rKqBXs/KHuQz25
+        n+GSEKkgBJKW78LwKjUnB8vsBH3+HPo=
+X-Google-Smtp-Source: ABdhPJyUs/E+fU5+vjPl/LtBoX9yKZBWKPiNPl6OYw+0pEfkKeslSGjkPQqwZwQqIQDyAMx5mOE4bg==
+X-Received: by 2002:aa7:d9d1:0:b0:41c:bd61:b076 with SMTP id v17-20020aa7d9d1000000b0041cbd61b076mr4035395eds.41.1648994449911;
+        Sun, 03 Apr 2022 07:00:49 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id do8-20020a170906c10800b006dfe680dbfcsm3279874ejc.43.2022.04.03.06.57.07
+        by smtp.gmail.com with ESMTPSA id y14-20020a056402440e00b00416046b623csm4019020eda.2.2022.04.03.07.00.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 06:57:07 -0700 (PDT)
+        Sun, 03 Apr 2022 07:00:49 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nb0j4-002Df3-HT;
-        Sun, 03 Apr 2022 15:57:06 +0200
+        id 1nb0me-002Dm2-PG;
+        Sun, 03 Apr 2022 16:00:48 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Phillip Wood <phillip.wood123@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -58,16 +58,16 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v5 14/27] revisions API users: use release_revisions()
- with UNLEAK()
-Date:   Sun, 03 Apr 2022 15:55:10 +0200
+Subject: Re: [PATCH v5 17/27] revisions API: have release_revisions()
+ release "mailmap"
+Date:   Sun, 03 Apr 2022 15:57:48 +0200
 References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
  <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
- <patch-v5-14.27-ddc7402b054-20220402T102002Z-avarab@gmail.com>
- <2e75adb7-e52d-62a9-0304-4076816f82e1@gmail.com>
+ <patch-v5-17.27-ca659940ee5-20220402T102002Z-avarab@gmail.com>
+ <5044b964-0605-356c-3e03-1aad8cbbe619@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <2e75adb7-e52d-62a9-0304-4076816f82e1@gmail.com>
-Message-ID: <220403.86mth2mfrh.gmgdl@evledraar.gmail.com>
+In-reply-to: <5044b964-0605-356c-3e03-1aad8cbbe619@gmail.com>
+Message-ID: <220403.86ilrqmflb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,66 +80,119 @@ On Sun, Apr 03 2022, Phillip Wood wrote:
 
 > Hi =C3=86var
 >
-> [continuing with v5 from where I left off with v4]
->
 > On 02/04/2022 11:49, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Use a release_revisions() with those "struct rev_list" users which
->> already "UNLEAK" the struct. It may seem odd to simultaneously attempt
->> to free() memory, but also to explicitly ignore whether we have memory
->> leaks in the same.
->> As explained in preceding commits this is being done to use the
->> built-in commands as a guinea pig for whether the release_revisions()
->> function works as expected, we'd like to test e.g. whether we segfault
->> as we change it. In subsequent commits we'll then remove these
->> UNLEAK() as the function is made to free the memory that caused us to
->> add them in the first place.
+>> Extend the the release_revisions() function so that it frees the
+>> "mailmap" in the "struct rev_info".
+>> The log family of functions now calls the clear_mailmap() function
+>> added in fa8afd18e5a (revisions API: provide and use a
+>> release_revisions(), 2021-09-19), allowing us to whitelist some tests
+>> with "TEST_PASSES_SANITIZE_LEAK=3Dtrue".
+>> Unfortunately having a pointer to a mailmap in "struct rev_info"
+>> instead of an embedded member that we "own" get a bit messy, as can be
+>> seen in the change to builtin/commit.c.
+>> When we free() this data we won't be able to tell apart a pointer to
+>> a
+>> "mailmap" on the heap from one on the stack. As seen in
+>> ea57bc0d41b (log: add --use-mailmap option, 2013-01-05) the "log"
+>> family allocates it on the heap, but in the find_author_by_nickname()
+>> code added in ea16794e430 (commit: search author pattern against
+>> mailmap, 2013-08-23) we allocated it on the stack instead.
+>> Ideally we'd simply change that member to a "struct string_list
+>> mailmap" and never free() the "mailmap" itself, but that would be a
+>> much larger change to the revisions API.
 >
-> I'm a bit confused by this, the previous commit argued in favor of
-> removing UNLEAK() so would could see the leaks and fix them, this is=20
-> saying we should hide the leaks.
-
-..until the UNLEAK() is removed later in the sier.s
-
-All commits in this series pass with the SANITIZE=3Dleak CI check. In this
-case it would result in too much churn to remove the UNLEAK() before we
-have this solving some of the more meaningful leaks, and if we do this
-later we don't have all codepaths that can use release_revisions() using
-it as we free things one at a time.
-
-> Best Wishes
+> I agree it makes sense to leave that for now
 >
-> Phillip
->
+>> We have code that needs to hand an existing "mailmap" to a "struct
+>> rev_info", while we could change all of that, let's not go there
+>> now.
+>> The complexity isn't in the ownership of the "mailmap" per-se, but
+>> that various things assume a "rev_info.mailmap =3D=3D NULL" means "doesn=
+'t
+>> want mailmap", if we changed that to an init'd "struct string_list
+>> we'd need to carefully refactor things to change those assumptions.
+>> Let's instead always free() it, and simply declare that if you add
+>> such a "mailmap" it must be allocated on the heap. Any modern libc
+>> will correctly panic if we free() a stack variable, so this should be
+>> safe going forward.
 >> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 >> ---
->>   builtin/diff-index.c | 4 +++-
->>   builtin/diff.c       | 1 +
->>   2 files changed, 4 insertions(+), 1 deletion(-)
->> diff --git a/builtin/diff-index.c b/builtin/diff-index.c
->> index 5fd23ab5b6c..3a83183c312 100644
->> --- a/builtin/diff-index.c
->> +++ b/builtin/diff-index.c
->> @@ -71,5 +71,7 @@ int cmd_diff_index(int argc, const char **argv, const =
-char *prefix)
->>   	}
->>   	result =3D run_diff_index(&rev, option);
->>   	UNLEAK(rev);
->> -	return diff_result_code(&rev.diffopt, result);
->> +	result =3D diff_result_code(&rev.diffopt, result);
->> +	release_revisions(&rev);
->> +	return result;
->>   }
->> diff --git a/builtin/diff.c b/builtin/diff.c
->> index bb7fafca618..dd48336da56 100644
->> --- a/builtin/diff.c
->> +++ b/builtin/diff.c
->> @@ -595,6 +595,7 @@ int cmd_diff(int argc, const char **argv, const char=
- *prefix)
->>   	if (1 < rev.diffopt.skip_stat_unmatch)
->>   		refresh_index_quietly();
->>   	UNLEAK(rev);
->> +	release_revisions(&rev);
->>   	UNLEAK(ent);
->>   	UNLEAK(blob);
->>   	return result;
+>>   builtin/commit.c                   | 5 ++---
+>>   revision.c                         | 9 +++++++++
+>>   t/t0056-git-C.sh                   | 1 +
+>>   t/t3302-notes-index-expensive.sh   | 1 +
+>>   t/t4055-diff-context.sh            | 1 +
+>>   t/t4066-diff-emit-delay.sh         | 1 +
+>>   t/t7008-filter-branch-null-sha1.sh | 1 +
+>>   7 files changed, 16 insertions(+), 3 deletions(-)
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index c7eda9bbb72..cd6cebcf8c8 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -1100,7 +1100,6 @@ static const char *find_author_by_nickname(const c=
+har *name)
+>>   	struct rev_info revs;
+>>   	struct commit *commit;
+>>   	struct strbuf buf =3D STRBUF_INIT;
+>> -	struct string_list mailmap =3D STRING_LIST_INIT_NODUP;
+>>   	const char *av[20];
+>>   	int ac =3D 0;
+>>   @@ -1111,7 +1110,8 @@ static const char
+>> *find_author_by_nickname(const char *name)
+>>   	av[++ac] =3D buf.buf;
+>>   	av[++ac] =3D NULL;
+>>   	setup_revisions(ac, av, &revs, NULL);
+>> -	revs.mailmap =3D &mailmap;
+>> +	revs.mailmap =3D xmalloc(sizeof(struct string_list));
+>> +	string_list_init_nodup(revs.mailmap);
+>
+> This is a common pattern in one of the previous patches, is it worth
+> adding helpers to allocate and initialize a struct string_list? Maybe=20
+> string_list_new_nodup() and string_list_new_dup().
 
+Maybe, but generally in the git codebase things malloc and then init(),
+if we're going to add something like this *_new() that would be a change
+for a lot more APIs than just mailmap.
+
+And if it's just for mailmap I don't see how the inconsistency with
+other code would be worth it.
+
+>>   	read_mailmap(revs.mailmap);
+>>     	if (prepare_revision_walk(&revs))
+>> @@ -1122,7 +1122,6 @@ static const char *find_author_by_nickname(const c=
+har *name)
+>>   		ctx.date_mode.type =3D DATE_NORMAL;
+>>   		strbuf_release(&buf);
+>>   		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
+>> -		clear_mailmap(&mailmap);
+>>   		release_revisions(&revs);
+>>   		return strbuf_detach(&buf, NULL);
+>>   	}
+>> diff --git a/revision.c b/revision.c
+>> index 553f7de8250..622f0faecc4 100644
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -2926,10 +2926,19 @@ int setup_revisions(int argc, const char **argv,=
+ struct rev_info *revs, struct s
+>>   	return left;
+>>   }
+>>   +static void release_revisions_mailmap(struct string_list
+>> *mailmap)
+>> +{
+>> +	if (!mailmap)
+>> +		return;
+>> +	clear_mailmap(mailmap);
+>> +	free(mailmap);
+>> +}
+>
+> It's not a big issue but if there are no other users of this then it
+> could just go inside release_revisions, my impression is that this=20
+> series builds a collection of very small functions whose only caller
+> is release_revisions()
+
+Yes, these are just trivial static helpers so that each line in
+release_revisions() corresponds to a member of the struct, without
+loops, indentation for "don't free this" etc.
+
+To the machine code it makes no difference at higher optimization
+levels.
