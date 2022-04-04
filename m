@@ -2,67 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B944C433F5
-	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 10:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F06C433F5
+	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 10:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345519AbiDDKg2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Apr 2022 06:36:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44766 "EHLO
+        id S1344691AbiDDK6I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Apr 2022 06:58:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236134AbiDDKg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Apr 2022 06:36:26 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 581F52E699
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 03:34:30 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id d10so5699532edj.0
-        for <git@vger.kernel.org>; Mon, 04 Apr 2022 03:34:30 -0700 (PDT)
+        with ESMTP id S1358950AbiDDK55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Apr 2022 06:57:57 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88FBC3389C
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 03:56:01 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id d10so5766401edj.0
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 03:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=0nGHyv5nAQZS4XPZO7ZQcONyraEYiWfYyZObVR+Ojn8=;
-        b=P2jddiswrQi4t2G+PrrT/uvAyIpdr2y/wvBdUS4GHqPncCByuZzLvVu0aCGsWEX795
-         6IwpMMVg+JngAuiftRMPV0fSySNcMay26tFEscT9FLcrlSMfgT0usvV2/I9K9jLtzRBF
-         vw2BYFLYVSnSDCWWNkQbuL8PhzMezhDiTnTEhq1zhRKfsq8jBiDKLDfev0/rTanHReX4
-         wbhffMcPWYBQWmFoFQdDEX3Yty47wK1OQQQFZj5zAB1MgbPVwPJfeFg41+G+F+GY4m7q
-         xzrD9dh5/Z2vpg+sOgjVMaQQPxigJDvDy3OvGwlS4ZoOpGvN8L1tLUAnEGHHE7I74VKq
-         K81A==
+        bh=Ec6QWaolrRF+0sms/rn4/xPx81+ReZGC2llzEf9fJdg=;
+        b=KO8BA1Nt3OHzBBxf8O+BW0XOIBW7Y9X+p7jIT5IF5aiA1iyjqRGUGVJ0Le2cSzx1B4
+         TNq4E7V+UnDyXLmXno/ryt9FrPYrj+/Rc/enoY8nqYLackm2H9Z2xpLEGQ6MyfcnbDJ2
+         XcYnaunRSkHFyKWFxCzBirgCe4G/P2J/TiGtp+xxDLHLhOnxGZzIghAbVrxikWesM0BR
+         ObNdSeMmTGZlgGYG3LR5U2BmtWKCP9nqTgKNfnRvJYjZt2DEWWP+11i0HZdAV9Sf4m+C
+         qQpFkyqmzfc5DCBZuZVVa1zRu0VJetXYCWCD2ZU0udctFA3fK/u2fmmh5IbD5miw+LNz
+         9Ypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=0nGHyv5nAQZS4XPZO7ZQcONyraEYiWfYyZObVR+Ojn8=;
-        b=RuP3WYXoQtrhvYQcS+cASi2POVnTSa+XjtXYvHXtRSRKskmJgsf3q3/dGiYTfSUe9G
-         WLA9K1UI/fQ5OJJENoC1j/+S4BvZWMzURD98hitJQmBOeNfv2L+NoHInjA4bIJP2GASj
-         mlK/2otpRNO5hWsY06IVHD8ua6pqnoVwzf/dxql7TwMrEfmJTyHepFrM/8eA516lWUwi
-         3Mdd2JiyU8JzugNMVfbm3SbCwU5WUcfhHNi81thh3h8JFGcaCi/ZVB7eIxxURsYyWpaD
-         xHh24DBM5kj+Mt+ShnEfbAPHhfizgdZ7Elx/tJHhkJWyrJMYqOb2VcaJdCkt5J2I6Wwk
-         +iJg==
-X-Gm-Message-State: AOAM5313+ek/p3K/2+6hhSJNjw7TNcBDq8Rm+JiB1/ZhKSbtPo/Ued1v
-        Xb8kauhMwuiP4lpcdKDm0e6S3wMOa9U=
-X-Google-Smtp-Source: ABdhPJwfJyoAXyrPcZj1kv01bf3lQuPCx1iRN4MNeKioY2qUpJaeCGhavj5G3mvA0IPUSbJlNGj42g==
-X-Received: by 2002:a05:6402:254e:b0:418:d759:dc48 with SMTP id l14-20020a056402254e00b00418d759dc48mr32697213edb.104.1649068468591;
-        Mon, 04 Apr 2022 03:34:28 -0700 (PDT)
+        bh=Ec6QWaolrRF+0sms/rn4/xPx81+ReZGC2llzEf9fJdg=;
+        b=0t/13oDNtVWW3QQ5LQ23e0CoxiwyLX4o4kRFZbfIS52mMcoqx8MhBx0rIahtPwi9e8
+         vrQkw/TXrFeKb+Q5g6OUeJuU7CTYsdlkL4HSV3tl4mz5wX5WSiJExVY7gBBAC2ETAxL1
+         4rLr/gWJ6z3gFJ0cXhCa1iXNWzNNHr2cIVVUIMxH2/jOXxDEMGNkLam10/norjyi5Vzk
+         V563EBqymdOYItvGYbslODQfrSG1zRj/ajCiPrCAFx/brexhErqkELiCkwtfTcTaCAzq
+         uYDlAyOMLav/A7fS5JoZEJaiqz3w3PdvoJeXPGVX8XDypEN1mI1xvxVeccxhjKyknSuv
+         zIUQ==
+X-Gm-Message-State: AOAM531YzA7aLUNAgkDqhBgsXSbd2N9S+ufskS+zX7/k7x9cYUB0yOj9
+        +RJ1qk3QNNuXAh59k5zN3dA=
+X-Google-Smtp-Source: ABdhPJw18vG6ZIaqtyjF8AExvU32hliWXWXkKMqPJhcc5jdZKSgBP2/iVy/t3+SSssG9wgAwoliLDA==
+X-Received: by 2002:a50:9d0f:0:b0:416:95a3:1611 with SMTP id v15-20020a509d0f000000b0041695a31611mr32488666ede.77.1649069759948;
+        Mon, 04 Apr 2022 03:55:59 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ka6-20020a170907990600b006ce54c95e3csm4191197ejc.161.2022.04.04.03.34.28
+        by smtp.gmail.com with ESMTPSA id a5-20020aa7cf05000000b0041919e52a38sm5130616edy.46.2022.04.04.03.55.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 03:34:28 -0700 (PDT)
+        Mon, 04 Apr 2022 03:55:59 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nbK2V-002SgW-HX;
-        Mon, 04 Apr 2022 12:34:27 +0200
+        id 1nbKNK-002TR3-F6;
+        Mon, 04 Apr 2022 12:55:58 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Theodore Ts'o <tytso@mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Markus Vervier <markus.vervier@x41-dsec.de>,
-        git@vger.kernel.org
-Subject: Re: Covierty Integration / Improvement
-Date:   Mon, 04 Apr 2022 12:14:54 +0200
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
- <xmqqbkxhvoh5.fsf@gitster.g> <Ykoqxx40Fk0DiF9i@mit.edu>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 4/4] builtin/stash: provide a way to import stashes
+ from a ref
+Date:   Mon, 04 Apr 2022 12:38:53 +0200
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+ <20220403182250.904933-1-sandals@crustytoothpaste.net>
+ <20220403182250.904933-5-sandals@crustytoothpaste.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <Ykoqxx40Fk0DiF9i@mit.edu>
-Message-ID: <220404.86h779jfws.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220403182250.904933-5-sandals@crustytoothpaste.net>
+Message-ID: <220404.86czhxjewx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,66 +71,156 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-COVID19 is spreading via E-Mail now? It's $subject =~
-s/Covierty/Coverity/g :)
+On Sun, Apr 03 2022, brian m. carlson wrote:
 
-On Sun, Apr 03 2022, Theodore Ts'o wrote:
 
-> On Sun, Apr 03, 2022 at 02:36:22PM -0700, Junio C Hamano wrote:
->> I have old e-mails from the scan-admin@coverity.com but the last one
->> seems to be from late June 2018, which is ages ago in Git timescale.
->> I do not recall us paying for such a service so I am guessing that
->> they had some program that open source projects can enroll, get our
->> public sources scanned and get the result sent back?
->
-> Yep, that's the way it works.  Someone has to use tools provided by
-> them to build the open source project and upload the results for them
-> to analyze.  Coverity predates github, so it's not new-fangled enough
-> to automatically pull sources from repositories; besides, their paying
-> customers tend to be using their tool for their proprietary software,
-> so they haven't had any incentive to create an auto-analyze tool that
-> pulls from an open source repository.
->
-> Some folks at Red Hat do have scripts run out of crontab, that will
-> monitor git branches on projects that they are interested in and when
-> they notice that the branch has been updated, they will build and
-> upload the raw material used by Coverity to their dashboard.  Eric
-> Sandeen has been doing this for e2fsprogs, and a few other file system
-> related repo's, and I suspect if someone asked, he would probably be
-> willing to provide the scripts that he uses.
->
-> You do need to be the project admin, or someone authorized by the
-> project admin, to upload new data for Coverity, or to look at the
-> analysis of the Coverity results.  I have no idea who the project
-> admin is for git, but I'm sure if you, as the Git maintainer showed up
-> and requested to be added as one of the project admin, the open source
-> ombudsperson (I don't remember the exact title, but they do have
-> someone who interfaces with OSS projects), would be happy to oblige.
+> +	struct object_id *items = NULL;
 
-Per
-https://lore.kernel.org/git/YarO3nkrutmWF7nb@coredump.intra.peff.net/
-Jeff ran this from his fork, I'm not sure if that was because he set
-something up in the git/git organization, or if by project admin you
-mean that any fork of it can set this up on their own.
+Is there a reason for why this...
 
->> https://scan.coverity.com/projects/git/ (visible without signing in)
->> seems to match my recollection. They haven't been scanning since
->> late June 2018.  I wasn't the primary developer who registered us or
->> who has been reading these reports but if I recall correctly, we
->> weren't doing anything custom, and fell somewhere between just "we
->> are curious to see how well Coverity works" and "Yay, a free
->> offering. We have nothing to lose, other than our time, to sign
->> ourselves up and if it comes up with useful scan result that would
->> be good".
->
-> My experience with e2fsprogs is that it does have a fair amount of
-> false positives, but I've been willing to wade through the false
-> positives, and mark them as such in their web dashboard, because the
-> early warnings it gives when we've pushed new code that has a
-> potential security problem is worth it.  But make no mistake, it
-> definitely requires a certain amount of maintainer time work with the
-> tool.
+> [...]
+> +		ALLOC_GROW_BY(items, nitems, 1, nalloc);
+> +		oidcpy(&items[i], &oid);
+> [...]
+> +	for (i = nitems - 1; i >= 0; i--) {
+> [...]
+> +		this = lookup_commit_reference(the_repository, &items[i]);
+> +	free(msg);
 
-Yes, also per the linked-above output it's quite noise, but there looked
-to be some legitimate and hard-to find issues in those reports. It would
-be nice to get them running with some regularity on our main branches.
+...can't just use the existing "oid_array" APi?
+
+> [...]
+> +static int import_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	int ret = 0;
+> +	struct option options[] = {
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash_import_usage,
+> +			     PARSE_OPT_KEEP_DASHDASH);
+> +
+> +	if (argc != 1)
+> +		return error(_("a revision to import from is required"));
+
+I think you want to use usage_with_options() here instead.
+
+In any case, I think you can de-init "ret" above I think, as the
+compiler will then spot a future logic error if we don't reach this:
+
+> +	ret = do_import_stash(argv[0]);
+> +	return ret;
+> +}
+> +
+>  static int do_export_stash(const char *ref, size_t argc, const char **argv)
+>  {
+>  	struct object_id base;
+> @@ -2000,6 +2106,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+>  		return !!save_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "export"))
+>  		return !!export_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "import"))
+> +		return !!import_stash(argc, argv, prefix);
+>  	else if (*argv[0] != '-')
+>  		usage_msg_optf(_("unknown subcommand: %s"),
+>  			       git_stash_usage, options, argv[0]);
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index b149e2af44..d2ddede9be 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1295,6 +1295,58 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
+>  	test_path_is_missing to-remove
+>  '
+>  
+> +test_expect_success 'stash export and import round-trip stashes' '
+> +	git reset &&
+> +	>untracked &&
+> +	>tracked1 &&
+> +	>tracked2 &&
+> +	git add tracked* &&
+> +	git stash -- &&
+> +	>subdir/untracked &&
+> +	>subdir/tracked1 &&
+> +	>subdir/tracked2 &&
+> +	git add subdir/tracked* &&
+> +	git stash -- subdir/ &&
+> +	stash0=$(git rev-parse --verify stash@{0}) &&
+> +	stash1=$(git rev-parse --verify stash@{1}) &&
+> +	simple=$(git stash export --print) &&
+> +	git stash clear &&
+> +	git stash import "$simple" &&
+> +	imported0=$(git rev-parse --verify stash@{0}) &&
+> +	imported1=$(git rev-parse --verify stash@{1}) &&
+> +	test "$imported0" = "$stash0" &&
+> +	test "$imported1" = "$stash1" &&
+> +	git stash export --to-ref refs/heads/foo &&
+> +	git stash clear &&
+> +	git stash import foo &&
+> +	imported0=$(git rev-parse --verify stash@{0}) &&
+> +	imported1=$(git rev-parse --verify stash@{1}) &&
+> +	test "$imported0" = "$stash0" &&
+> +	test "$imported1" = "$stash1"
+
+This whole variable assignment/test/manual rev-parse would be better as
+just feeding tags you created earlier to test_cmp_rev, should be a lot
+fewer lines that way, I.e. these last 4 lines become:
+
+	git tag t-stash0 # earlier
+	test_cmp_rev t-stash0 stash@{0} &&
+	test_cmp_rev t-stash stash@{1}
+
+Perhaps adding N files in one commit isn't critical, then you could even
+piggy-back on "test_commit"....
+
+> +test_expect_success 'stash import appends commits' '
+> +	git log --format=oneline -g refs/stash >actual &&
+> +	echo $(cat actual | wc -l) >count &&
+
+Hrm...
+
+> +	git stash import refs/heads/foo &&
+> +	git log --format=oneline -g refs/stash >actual &&
+> +	test_line_count = $(($(cat count) * 2)) actual
+
+FWIW I think I'd save myself the trivial disk space here and less shell
+trickery with:
+
+	git log >out &&
+	cat out out >out2
+
+Then:
+
+	test_line_count = $(wc -l <out2) actual
+
+Or just:
+
+	test_line_count = $(cat log-out log-out | wc -l) actual
+
+I.e. parts of this are presumably working around the $(()) operation not
+jiving with a whitespace-padded $count, so you're doing the echo instead
+of a more obvious redirection to avoid that.
+
+Which, I'd think is made more obvious by just cat-ing the earlier output
+twice. Just my 0.02...
+
+> +test_expect_success 'stash export can accept specified stashes' '
+> +	git stash clear &&
+
+This looks like it belongs as a test_when_finished line of an earlier
+test that should be cleaning up after itself.
+
+> +	git stash import foo &&
+> +	git stash export --to-ref bar stash@{1} stash@{0} &&
+> +	git stash clear &&
+> +	git stash import bar &&
+> +	imported0=$(git rev-parse --verify stash@{0}) &&
+> +	imported1=$(git rev-parse --verify stash@{1}) &&
+> +	test "$imported1" = "$stash0" &&
+> +	test "$imported0" = "$stash1" &&
+
+This test has an implicit dependency on your earlier test and will break
+if it's not defining stash0, e.g. if you use --run=N or use other skip
+test features of test-lib.sh.
+
+Just factor that into a setup function & have the rest call it?
