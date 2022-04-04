@@ -2,149 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE8F3C433F5
-	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 15:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D37E8C433EF
+	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 15:47:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378704AbiDDPqK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Apr 2022 11:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58948 "EHLO
+        id S1354301AbiDDPtT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Apr 2022 11:49:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378703AbiDDPqG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Apr 2022 11:46:06 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA1AF67
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 08:44:07 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id q19so8209941wrc.6
-        for <git@vger.kernel.org>; Mon, 04 Apr 2022 08:44:06 -0700 (PDT)
+        with ESMTP id S240217AbiDDPtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Apr 2022 11:49:16 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89430BB5
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 08:47:20 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id m30so15180997wrb.1
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 08:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=xMLn0/49nTG8oUj87Ke+WUzwfzpBvGvfZNJa0EvCRh8=;
-        b=KpDy/N24ZcY/KxQLha3f1CLg6DEGPWJcjYHdiZjNUmJsZUwHBKmpDqXGTzc8FrC1at
-         +yk3QfNqlH1BQEeVHLJiSXnCESjChdgFyWVx6JMA35YzDAagLX6G/B9uEDgvDRUzU1Aq
-         cssrHuw7dYuon/r+Gk4mFan6DCKvFCgCnz1SoUNBaPDRI4JtO2Xv0ns32tPsaCHX/+lg
-         KDZU2TOS/ph9AziNzuJtqKVocssGc+tWbh2jsZI97Qz9GYHd0C5S6fDVTqDhrgltF+2J
-         yFUZx+uSXwAgIvNoKSrGpt25Ptc1wgyVNn1CRc42huXJjDJ7P5QF+inJQnVeK+HiXWcg
-         FszQ==
+        bh=rAnGy+LzzkbAE42vgNAfrf9PGQYBpRQq/GxB+qsGEtQ=;
+        b=Lab442J/zBKo07Fjd6LcSrMDzGimszCo1NqG3fX4GKTMl0cA3F7axTDQuKChUjdA1J
+         PnvAyB3cqrjOwMXfAGDfF84Zt558PjPtTdz7kzcR2RfiMrg3PWLw1InRiHoOYfpE2dZh
+         6VSNciFIWAVY3hZZeIyX0YNPTuZthxpRBb5FxVkpWNYdDL0KKsGkLtMORz5sbJ3a9Qnm
+         mdvLXsNfFvg9gC+aRH1aeWo608wdKdu37ZHn6HvtoIH/SjU2+VnZfxJZ4iOl7ixz45ik
+         3b/og+KU17hGH1GwGAgPoRLGOjSJtDnzadPOcDHdlgOVIDDgHugKxMLU65DFuBysjhfu
+         7SyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=xMLn0/49nTG8oUj87Ke+WUzwfzpBvGvfZNJa0EvCRh8=;
-        b=7Duwv1DnVwM0bod8azqu7cSaSLWrgmg5PSW2UehijQAVn0Cr28wJmbFl4ZGSLjPk9b
-         JVGv8A4uhM5ljcEaGh9RZA5E+l5kjqj5mG8Vrmoq1yjiCmRdUCrAL6MhnPvEDuDy6l7n
-         oUPE0ek9dKHjS6yIi5dGLQXWQdacO3xu0BQcYWmir2WZ66WX2rTk30HL3dVTrZ4HkbSi
-         YcBBLHPexgJw5Aqse6tsSt6snprcdZ2pjH7hPMCeU9ncJ2u26hCEHwGC2rvu7w1jfpZ5
-         jqvjV3BCWinTUyJpFt7FerV8ydFdQJUCeoCPSUvzhFM/8O4OgywixrElIAs7cHdjcuHF
-         d7xQ==
-X-Gm-Message-State: AOAM533XU7xvSlHZsla+KzsTPkRgt2kWGz6fEVNVVNfskHN5R7+P0lZa
-        zWNGr6UDNAq17ygXn/f2Ics=
-X-Google-Smtp-Source: ABdhPJxbo+03AeR2At3d7jfzV4051wyRCIPHxjl1iA7au3ejv+M5VDldRyojbsry/xqjG/gwgYnYzw==
-X-Received: by 2002:a05:6000:1052:b0:206:895:80f3 with SMTP id c18-20020a056000105200b00206089580f3mr271014wrx.698.1649087045529;
-        Mon, 04 Apr 2022 08:44:05 -0700 (PDT)
+        bh=rAnGy+LzzkbAE42vgNAfrf9PGQYBpRQq/GxB+qsGEtQ=;
+        b=tV8N07Hp/xZUWnsCEXV3A4LImPapl2IV8/IG/A3WeuKjGt95079OxsVAX+QQC5gNtS
+         nsjkEInTsviWxNHdQae7Fbvgj1wflfPEHNUJVZQ49jtn6uZ5OoKU5/soCTFropKsM80X
+         oVTeGQdLbTANQtnbQ3OqaEkDya4rrKEfNmpQAZE9pNDI1Cx9CGvhsZzJR3O6L0Hmo2cg
+         cTPNcdnmbiQlmjM09r9FP+LNFTjielAFhuxMytK4J47THCenug2qAuhta7LU5KXu7y9x
+         Z9aDuJEzNfhen3DXlR++oE/Jq7frfgU1ebow3NBuBrFlVPHY37VUYo+Nih98UMCKi9Iu
+         m+8w==
+X-Gm-Message-State: AOAM532CcyV3XE1s0t93D7ET+QklMq1aRO2XsoUyK+jHuK6eIhIeQdez
+        xZthhK9H4cxnr+lpZBr/dyc=
+X-Google-Smtp-Source: ABdhPJx/YNbZyTjFNC0WXguxAJDbYnIYntuEEzz2LpcHQHiV8btAYnu9FsIxX+4cCCvC/tJ9K5rR2A==
+X-Received: by 2002:adf:e848:0:b0:206:19e1:fa07 with SMTP id d8-20020adfe848000000b0020619e1fa07mr331330wrn.32.1649087239066;
+        Mon, 04 Apr 2022 08:47:19 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.224])
-        by smtp.gmail.com with ESMTPSA id i1-20020a05600c400100b0038cf3371208sm9867698wmm.22.2022.04.04.08.44.04
+        by smtp.gmail.com with ESMTPSA id w12-20020adf8bcc000000b002060e3da33fsm4490724wra.66.2022.04.04.08.47.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Apr 2022 08:44:05 -0700 (PDT)
-Message-ID: <e73dc9f4-ad32-d49b-9767-c23c78a7e681@gmail.com>
-Date:   Mon, 4 Apr 2022 16:44:03 +0100
+        Mon, 04 Apr 2022 08:47:18 -0700 (PDT)
+Message-ID: <d0622cca-245a-ac98-cc96-201a9c28c3cb@gmail.com>
+Date:   Mon, 4 Apr 2022 16:47:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/4] builtin/stash: factor out revision parsing into a
- function
+Subject: Re: [PATCH v2] worktree: add -z option for list subcommand
 Content-Language: en-GB-large
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
- <20220403182250.904933-1-sandals@crustytoothpaste.net>
- <20220403182250.904933-3-sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1164.git.1645801727732.gitgitgadget@gmail.com>
+ <pull.1164.v2.git.1648743688825.gitgitgadget@gmail.com>
+ <xmqqk0c926zf.fsf@gitster.g>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20220403182250.904933-3-sandals@crustytoothpaste.net>
+In-Reply-To: <xmqqk0c926zf.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian
+Hi Junio
 
-On 03/04/2022 19:22, brian m. carlson wrote:
-> We allow several special forms of stash names in this code.  In the
-> future, we'll want to allow these same forms without parsing a stash
-> commit, so let's refactor this code out into a function for reuse.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->   builtin/stash.c | 34 +++++++++++++++++++++-------------
->   1 file changed, 21 insertions(+), 13 deletions(-)
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 5897febfbe..4c281a5781 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -130,6 +130,24 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
->   		die(_("'%s' is not a stash-like commit"), revision);
->   }
->   
-> +static int parse_revision(struct strbuf *revision, const char *commit, int quiet)
-> +{
-> +	strbuf_init(revision, 0);
+On 31/03/2022 21:37, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+ >
+> It also made me wonder if "-z" alone should be made to imply
+> "--porcelain" (in other words, is there a good reason to ask for
+> NUL-terminated output when you are producing a human-readable
+> output?), but we can start stricter like this patch does; we can
+> later loosen it if needed.
 
-I think this should become strbuf_reset() and the caller should call 
-strbuf_init() once before calling this function (or use STASH_INFO_INIT 
-from ab/plug-leak-in-revisions). That should fix one of the leaks Ævar 
-was talking about, otherwise we reallocate the strbuf each time this 
-function is called and leak the previous allocation.
+That's a good point about "-z" implying "--porcelain" we do something 
+similar for "git status -z" I think.
 
 Best Wishes
 
 Phillip
 
-> +	if (!commit) {
-> +		if (!ref_exists(ref_stash)) {
-> +			fprintf_ln(stderr, _("No stash entries found."));
-> +			return -1;
-> +		}
-> +
-> +		strbuf_addf(revision, "%s@{0}", ref_stash);
-> +	} else if (strspn(commit, "0123456789") == strlen(commit)) {
-> +		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
-> +	} else {
-> +		strbuf_addstr(revision, commit);
-> +	}
-> +	return 0;
-> +}
-> +
->   static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->   {
->   	int ret;
-> @@ -157,19 +175,9 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->   	if (argc == 1)
->   		commit = argv[0];
->   
-> -	strbuf_init(&info->revision, 0);
-> -	if (!commit) {
-> -		if (!ref_exists(ref_stash)) {
-> -			free_stash_info(info);
-> -			fprintf_ln(stderr, _("No stash entries found."));
-> -			return -1;
-> -		}
-> -
-> -		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
-> -	} else if (strspn(commit, "0123456789") == strlen(commit)) {
-> -		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
-> -	} else {
-> -		strbuf_addstr(&info->revision, commit);
-> +	if (parse_revision(&info->revision, commit, 0)) {
-> +		free_stash_info(info);
-> +		return -1;
->   	}
->   
->   	revision = info->revision.buf;
+
