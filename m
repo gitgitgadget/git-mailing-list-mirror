@@ -2,100 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4485EC433F5
-	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 07:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 008FDC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 09:20:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347554AbiDDHvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Apr 2022 03:51:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44548 "EHLO
+        id S1353160AbiDDJV6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Apr 2022 05:21:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377817AbiDDHvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Apr 2022 03:51:51 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2792611D
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 00:49:55 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-de48295467so9741723fac.2
-        for <git@vger.kernel.org>; Mon, 04 Apr 2022 00:49:54 -0700 (PDT)
+        with ESMTP id S235429AbiDDJV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Apr 2022 05:21:56 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0DC12E091
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 02:20:00 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id p26-20020a05600c1d9a00b0038ccbff1951so5825480wms.1
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 02:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hp3oJ55EIkGTfNjS8dShWVcNvg+fA+omEN0oabLh6qw=;
-        b=ZFyyEBygd4rCid7s7HxscuE53BiHjkVABqjfmIaJsu0AkxNs2mXhvYxu9SfoUTGAuW
-         oyjZhwfacdFz2jaxsqo2k0HgEQvrq6oPxA4t4117B3nQa4AtBhRh2ci+dCEsMccRMA9i
-         EY/rXGiPidUJeQm49TMQ3+w+ZMjSUFmv7lzKaCbih80uyQTqwJ4rqousR8gu5Ir6kj+O
-         0HzfuMqUZzXtLUNrn0bbH8+ghOl7W+YcURd7VjDv25Cb2S7chezWNxB1vVVgXyr1/QI2
-         7PMl+tK/h5BkDz7PmMb5LcZF+8iNw+pEa6ner4dnRZgZXxHRYGaBY6tIJlP8QAolykm7
-         x8HA==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Wdegqf9p7Wtzb+cULSh+IGNdzJXpRLaGSNzMnAL1rFg=;
+        b=SHIl+e1BPaBN0gZ9aILfKZhBwQ+695AiwohB9s1T7m/rgsekMVKFw79TXIW2z4CXg/
+         83V+oCY2eVhRn8qC2Tmu30tMptf7vmMCn1qRkxbaKkuyrCkK4H87d9MKNLUm4r8qcq+3
+         +rUrIdlnQrURfGVQDe+C/wUgeXkMS23gtGhMh1ltsJj4/Xi9nn3NgrYixEhKPpW5lx/+
+         zvP3ppRHd8j5h8TORQSEzjZVcLIXMHrDaxbxHnLOWmAkKVUsVInl2wAIKjOaVprRV32h
+         z1Q0AcvqGPPjVBc5uYOn5WUHihuq3OMDdd/erWvO5m3vGOUL7UxZkPBbl/rwhZiB5Ea7
+         YkBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hp3oJ55EIkGTfNjS8dShWVcNvg+fA+omEN0oabLh6qw=;
-        b=73GpMl3d7lHxdvu+PyIR41uNLVZ3u/gsCexEN1qOmLbFvPKWZFp2JDjYzd7dSqPjuo
-         pLmhQv6GVn4Um3YTy2cCu7OotkJtmG563G689s+7cSoXF+e2t/CHDKQUgnhgmjSFA/0f
-         +xPrVdXnj1A4kqvdLXZt5F/a5SNYkWZacyknN5LjNYBn32Xa7hCHbgD6sxXA00TJFrGn
-         CHw6LP91IqO7pVIMDkjKVCW0hmVQm1Phvux8inG+L0iP5XpXyWeanQzYV1ooBv5JVFG+
-         LXphrFGVUi1wyz5NYeLl/LiVwJrggHHFA/lD0Ne6FzAWMnpRbdhT63Bz0ckvXqfB1Tfe
-         QCNQ==
-X-Gm-Message-State: AOAM530uah/Io87Bc+4s/HqlPPQ881voYwXxG1t93jkX7LO1rTEI5f9g
-        5VGCBHL716Aq4OJdMjtRvJWatlvaYSuMyssRqAc=
-X-Google-Smtp-Source: ABdhPJwL1+ODaOP4j+NHEsv1vnhl8Sn/qp8H8FjyAmHy3o1Qfciaake9wUTwHja8SIj/CetERuLK0dmlCBY8xoj6XSY=
-X-Received: by 2002:a05:6870:f697:b0:da:b3f:3268 with SMTP id
- el23-20020a056870f69700b000da0b3f3268mr10169501oab.280.1649058594249; Mon, 04
- Apr 2022 00:49:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Wdegqf9p7Wtzb+cULSh+IGNdzJXpRLaGSNzMnAL1rFg=;
+        b=oB09XHIL4P/TFK4Hj+oEMdu6siBFRLpmxaMe0W0lERmG7Ir2RjX6yVJ7ZRXhYBTlP/
+         BRCpEEj2ltKAtepZRJQYu6yx5iaypor6m+Fvq3DrKPd6OgkkKvVrMaiI2vKhQpnkcNLq
+         6FNrAs/bdW/qvrWgxDEnZ+2NLki6tO8fZsWg3nj41DVbUsoe1vHyt2MJ7j5Yyrd3TCsd
+         uNop9BxdvMl8pC3VPWF7AojJYdI6SUssjB9pzivsUcQU2kt5wDTFK+kLEVY9C9DSAZux
+         UWf+B4hqwRqOvjW/pTza9vObRXpInMJRUwW8qRfLmxN0KlACtNhKyljMMKcnwz8oYRfW
+         7Mag==
+X-Gm-Message-State: AOAM533XEnE4XOD/ev1roGpgXyKB/XcL+S7IKJNwy99wn5BSQTvO0K4I
+        GXZ5Q2X7/O6W/hDeJd8ku9c=
+X-Google-Smtp-Source: ABdhPJwEevylvdtsn9m2NF2ODqhkl7sHavrVOzdG4NxaOVSbrVmL8yDBMmvx7DiCqfDaqh3ax72igg==
+X-Received: by 2002:a05:600c:354d:b0:38c:e71a:c230 with SMTP id i13-20020a05600c354d00b0038ce71ac230mr18339300wmq.86.1649063999361;
+        Mon, 04 Apr 2022 02:19:59 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.224])
+        by smtp.gmail.com with ESMTPSA id e9-20020a5d5009000000b002060f7faa02sm3147944wrt.116.2022.04.04.02.19.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Apr 2022 02:19:58 -0700 (PDT)
+Message-ID: <ce2c72e5-f172-b017-e62d-2eebc5ba1631@gmail.com>
+Date:   Mon, 4 Apr 2022 10:19:57 +0100
 MIME-Version: 1.0
-References: <20220331091755.385961-1-shaoxuan.yuan02@gmail.com>
- <20220331091755.385961-3-shaoxuan.yuan02@gmail.com> <52784078-c748-a4a0-68b4-db3c133dfa80@github.com>
- <CAJyCBOQmUYe53ahpEXQZAWMoers0o7b1xuCYu_k-LrfvKTkV-g@mail.gmail.com>
- <22aadea2-9330-aa9e-7b6a-834585189144@github.com> <CAJyCBOSQVA5oEW7_iKZW895ycQ4T=XAx422s4m+6VFDSDVeNMA@mail.gmail.com>
-In-Reply-To: <CAJyCBOSQVA5oEW7_iKZW895ycQ4T=XAx422s4m+6VFDSDVeNMA@mail.gmail.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Mon, 4 Apr 2022 15:49:43 +0800
-Message-ID: <CAJyCBOREzrGSwzjAz_89q1+O2X-qqa-qB2ywPVGU=q37O-QdzQ@mail.gmail.com>
-Subject: Re: [WIP v1 2/4] mv: add check_dir_in_index() and solve general dir
- check issue
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Victoria Dye <vdye@github.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 17/27] revisions API: have release_revisions() release
+ "mailmap"
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <cover-v4-00.27-00000000000-20220331T005325Z-avarab@gmail.com>
+ <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
+ <patch-v5-17.27-ca659940ee5-20220402T102002Z-avarab@gmail.com>
+ <5044b964-0605-356c-3e03-1aad8cbbe619@gmail.com>
+ <220403.86ilrqmflb.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <220403.86ilrqmflb.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 4, 2022 at 3:25 PM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
-> I read and think about this part a few times, but I'm still confused.
->
-> As Victoria pointed out earlier, and I quote, "Sparse directories *only* appear
-> when you're using a sparse index, so, theoretically, this shouldn't ever
-> come up (and thus isn't testable) until you're using a sparse index."
-> So I'm not so sure what do you mean by putting "full index" and "sparse
-> directory" together.
->
-> Thus, I go ahead and try to detect a directory that is outside of
-> sparse-checkout cone, without sparse-index enabled.
->
-> I found a problem that if you use cache_name_pos() to do this
-> detection, I imagined the following example (I'm trying to imitate an
-> output of "git ls-files -t"):
->
-> H a
-> H b
-> S d/file1
-> H e/file1
->
-> So in this index, I use cache_name_pos() to find a directory "c/". I imagine the
-> the value returned would be -3, which indicates this directory would be inserted
-> at index position 2. However, the cache entry at position 2 is
-> "d/file1", which is
-> marked with SKIP_WORKTREE, and this fact cannot guarantee that "c/" is
-> a sparse directory, since ''c/" is not in the index per se.
->
-> Probably I'm missing something, or I'm just dumb.
+Hi Ævar
 
-Though I think doing a strncmp() after the cache_name_pos()
-can get the job done :)
+On 03/04/2022 14:57, Ævar Arnfjörð Bjarmason wrote:
+> [...]
+>>>    	av[++ac] = buf.buf;
+>>>    	av[++ac] = NULL;
+>>>    	setup_revisions(ac, av, &revs, NULL);
+>>> -	revs.mailmap = &mailmap;
+>>> +	revs.mailmap = xmalloc(sizeof(struct string_list));
+>>> +	string_list_init_nodup(revs.mailmap);
+>>
+>> This is a common pattern in one of the previous patches, is it worth
+>> adding helpers to allocate and initialize a struct string_list? Maybe
+>> string_list_new_nodup() and string_list_new_dup().
+> 
+> Maybe, but generally in the git codebase things malloc and then init(),
+> if we're going to add something like this *_new() that would be a change
+> for a lot more APIs than just mailmap.
+> 
+> And if it's just for mailmap I don't see how the inconsistency with
+> other code would be worth it.
 
--- 
-Thanks & Regards,
-Shaoxuan
+It's for struct string_list not for mailmap and could be used for all 
+the conversions in patch 3. In general the split between allocation and 
+initialization is useful because it allows us to allocate structures on 
+the stack where possible or embed them in other structures. However if 
+there is a structure that is often allocated on the heap then I don't 
+think there is anything wrong with having a combined 
+allocate-and-initialize helper function which makes the code shorter and 
+eliminates the possibility of passing the wrong size to malloc().
+
+>>> diff --git a/revision.c b/revision.c
+>>> index 553f7de8250..622f0faecc4 100644
+>>> --- a/revision.c
+>>> +++ b/revision.c
+>>> @@ -2926,10 +2926,19 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>>>    	return left;
+>>>    }
+>>>    +static void release_revisions_mailmap(struct string_list
+>>> *mailmap)
+>>> +{
+>>> +	if (!mailmap)
+>>> +		return;
+>>> +	clear_mailmap(mailmap);
+>>> +	free(mailmap);
+>>> +}
+>>
+>> It's not a big issue but if there are no other users of this then it
+>> could just go inside release_revisions, my impression is that this
+>> series builds a collection of very small functions whose only caller
+>> is release_revisions()
+> 
+> Yes, these are just trivial static helpers so that each line in
+> release_revisions() corresponds to a member of the struct, without
+> loops, indentation for "don't free this" etc.
+
+Fair enough
+
+> To the machine code it makes no difference at higher optimization
+> levels.
+
+Indeed, not that these functions are particularly performance sensitive 
+in the first place.
+
+Best Wishes
+
+Phillip
