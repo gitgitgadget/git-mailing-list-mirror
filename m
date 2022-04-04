@@ -2,111 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCE2C3A5A3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D94C3A59D
 	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 21:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350815AbiDDVVP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Apr 2022 17:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35880 "EHLO
+        id S1348374AbiDDVVI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Apr 2022 17:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380573AbiDDUb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Apr 2022 16:31:29 -0400
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9763436E2D
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 13:29:32 -0700 (PDT)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4KXMnk4VtBz5tlF;
-        Mon,  4 Apr 2022 22:29:30 +0200 (CEST)
-Message-ID: <660d068f-1c8c-7057-0a92-5100791daf80@kdbg.org>
-Date:   Mon, 4 Apr 2022 22:29:30 +0200
+        with ESMTP id S1380624AbiDDUlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Apr 2022 16:41:04 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69DD201B1
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 13:39:06 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id q20so6694675wmq.1
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 13:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=2ewTHjw5622+LDp6wHIOLz+5ubN45Hfq9qi7hTEmOy0=;
+        b=dzlAsJcHx6fc+wOesav91fSvyhq+YMsgOcWIwwH10AncnC8pa16jFWfZ7IAuy19fnO
+         7Pj9HAu3EVTQMCu/jTDP8Mwfx/rKU9lW0re6X9SBuaUQfDdYCey+PORIIpZd13GfWAZw
+         jVRKlWCx4rJx9Lqlfv2Ix9Ce1DmKJod1vsneLz4LLvdVXkHUI877TLVbMWIe9ga61rHT
+         OHK6oyVtbal3sjjEWE1pGPPK6PKAfJCjfngRjYFHIrkoSVL5BagsBosMSsh6VNG4uHn1
+         Yte8Rqb1ysPrajLDO41FbmsB4VGtJ4d+44evuNHIpF9wKnJJg6ATnNcQcf766oFkY8Ju
+         wl2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=2ewTHjw5622+LDp6wHIOLz+5ubN45Hfq9qi7hTEmOy0=;
+        b=Q7Xxp+NPWUAyLDkPckIc+UrzjUhbz4kJBCYtsrLiHNiq0l4sNlCRjkKDePgyWkXtgR
+         n8Qyqtx2RSDoZkcoW3+xMRpaYsV2Qc/GcdXpafKOoq8IEzl+N0oV/ndLYCVZouId3UAa
+         PJ1vxLa4soa1elGWEHFssGeqZfJ6+rUt+wxP5x+3ZfIF57LU9JJk4YyqNb9ywXMEqeGE
+         OnLu6bOTTof8GE380HWERuFK+dbHxmwOihtJgDXf3lwONbU4xqqRuGsiPuLRqtC2vWWk
+         e0doSJihZTpnk4epVcnGx4Ct/4CV00cAPwu2oj7WPYXv/Rpy7QwNycTVWrGOCsRHpSLE
+         /DkQ==
+X-Gm-Message-State: AOAM530SUuTzWc4j33Xt9SeU1HimFhcOGDAkvJ55j9FiMMnQwJkniA1C
+        TrBYHVEW4/1AG4QIUfBIR6c=
+X-Google-Smtp-Source: ABdhPJwKCYJwAYi9FawiAjAhS+PUwNxtVPJCnY7gCmAfAtTxWil/d3XZukUWACWdRZf0XAyrfMIYrg==
+X-Received: by 2002:a05:600c:40f:b0:38c:be5c:9037 with SMTP id q15-20020a05600c040f00b0038cbe5c9037mr769880wmb.44.1649104745149;
+        Mon, 04 Apr 2022 13:39:05 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.224])
+        by smtp.gmail.com with ESMTPSA id i19-20020a05600c355300b0038e1d69af52sm80640wmq.7.2022.04.04.13.39.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Apr 2022 13:39:04 -0700 (PDT)
+Message-ID: <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
+Date:   Mon, 4 Apr 2022 21:39:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [GSoC][PATCH v3] Add a diff driver for JavaScript languages.
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        xing zhi jiang <a97410985new@gmail.com>
-Cc:     git@vger.kernel.org, chooglen@google.com
-References: <20220304130854.857746-1-a97410985new@gmail.com>
- <20220403132508.28196-1-a97410985new@gmail.com>
- <220404.86lewljovj.gmgdl@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <220404.86lewljovj.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] test-lib.sh: Use GLIBC_TUNABLES instead of
+ MALLOC_CHECK_ on glibc >= 2.34
+Content-Language: en-GB-large
+To:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20220304133702.26706-1-gitter.spiros@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220304133702.26706-1-gitter.spiros@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.04.22 um 09:12 schrieb Ævar Arnfjörð Bjarmason:
-> While we don't use helper macros for these currently there's no reason
-> we can't, I thin the above might be more readable with e.g.:
+On 04/03/2022 13:37, Elia Pinto wrote:
+> In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
+> variables have been replaced by GLIBC_TUNABLES.  Also the new
+> glibc requires that you preload a library called libc_malloc_debug.so
+> to get these features.
 > 
-> 	#define JS_AA "[$_[:alpha:]][$_[:alnum:]]"
-
-Please consider including "identifier" somehow in the macro name. And
-add the trailing '*', which...
-
-> Which would make this:
-> 	
-> 	+PATTERNS("javascript",
-> 	+	 /* don't match the expression may contain parenthesis, because it is not a function declaration */
-> 	+	 "!^[ \t]*(if|do|while|for|with|switch|catch|import|return)\n"
-> 	+	 /* don't match statement */
-> 	+	 "!;\n"
-> 	+	 /* match normal function or named export for function in ECMA2015 */
-> 	+	 "^((export[\t ]+)?(async[\t ]+)?function[\t ]*[\t *]*" JS_AA "*[\t ]*\\(.*)\n"
-> 	+	 /* match JavaScript variable declaration with a lambda expression at top level */
-> 	+	 "^((const|let|var)[\t ]*" JS_AA "*[\t ]*=[\t ]*"
-> 	+		"(\\(.*\\)|" JS_AA "*)[\t ]*=>[\t ]*\\{?)\n"
-> 	+	 /* match object's property assignment by anonymous function and CommonJS exports for named function */
-> 	+	 "^((module\\.)?" JS_AA "*\\." JS_AA "*[\t ]*=[\t ]*(async[\t ]+)?(\\(.*\\)|" JS_AA "*)[\t ]*=>.*)\n"
-> 	+	 /* match assign function to LHS with explicit function keyword */
-> 	+	 "^(.*=[\t ]*function[\t ]*([$_[:alnum:]]+[\t ]*)?\\(.*)\n"
-> 	+	 /* popular unit testing framework test case pattern. Most of framework pattern is match by regex for "function in class" */
+> Using the ordinary glibc system variable detect if this is glibc >= 2.34 and
+> use GLIBC_TUNABLES and the new library.
 > 
-> Wry try to stick to wrapping at 80 characters, so some of these comments
-> should really be wrapped (see CodingGuidelines for the multi-line
-> comment style we use).
+> This patch was inspired by a Richard W.M. Jones ndbkit patch
 > 
-> 	+	 "^[\t ]*(QUnit.test\\(.*)\n"
-> 	+	 /* don't match the function in class or in object literal, which has more than one ident level */
-> 	+	 "!^(\t{2,}|[ ]{5,})\n"
-> 	+	 /* match normal function in object literal */
-> 	+	 "^[\t ]*(" JS_AA "*[\t ]*:[\t ]*function.*)\n"
-> 	+	 /* don't match chained method call */
-> 	+	 "!^[\t ]*" JS_AA "[\t ]*\\(.*\\)\\.\n"
-
-... which makes me wonder why it is not present here. If that's an
-oversight: nice catch!
-
-> 	+	 /* match function in class and ES5 method shorthand */
-> 	+	 "^[\t ]*((static[\t ]+)?((async|get|set)[\t ]+)?" JS_AA "*[\t ]*\\(.*)",
-> 	+	 /* word regex */
-> 	+	 /* hexIntegerLiteral, octalIntegerLiteral, binaryIntegerLiteral, and its big version */
-> 	+	 "0[xXoObB][_0-9a-fA-F]+n?"
-> 	+	 /* DecimalLiteral and its big version*/
-> 	+	 "|[0-9][_0-9]*(\\.[0-9][_0-9]*|n)?([eE][+-]?[_0-9]+)?"
-> 	+	 "|\\.[0-9][_0-9]*([eE][+-]?[_0-9]+)?"
-> 	+	 /* punctuations */
-> 	+	 "|\\.{3}|<=|>=|==|!=|={3}|!==|\\*{2}|\\+{2}|--|<<|>>"
-> 	+	 "|>>>|&&|\\|{2}|\\?{2}|\\+=|-=|\\*=|%=|\\*{2}="
-> 	+	 "|<<=|>>=|>>>=|&=|\\|=|\\^=|&&=|\\|{2}=|\\?{2}=|=>"
-> 	+	 /* identifiers */
-> 	+	 "|" JS_AA "*"),
-> 	
-> Just a thought, I wonder how much line-noisy we could make this thing in
-> general if we defined some common patterns with such helpers.
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+> This is the third version of the patch.
 > 
-> Anyway, insted of :alnum:and :alpha: don't you really mean [a-zA-Z0-9]
-> and [a-zA-Z]. I.e. do you *really* want to have this different depending
-> on the user's locale?
-
-That's worth considering.
-
+> Compared to the second version[1], the code is further simplified,
+> eliminating a case statement and modifying a string statement.
 > 
-> I haven't tested, but see the LC_CTYPE in gettext.c, so I'm fairly sure
-> that'll happen...
+> [1] https://www.spinics.net/lists/git/msg433917.html
 > 
+>   t/test-lib.sh | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 9af5fb7674..4d10646015 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -550,9 +550,25 @@ else
+>   	setup_malloc_check () {
+>   		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+>   		export MALLOC_CHECK_ MALLOC_PERTURB_
+> +		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
+> +		_GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
+> +		expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
+> +		then
+> +			g=
+> +			LD_PRELOAD="libc_malloc_debug.so.0"
 
--- Hannes
+When compiling with "SANITIZE = address,leak" this use of LD_PRELOAD 
+makes the tests fail with
+
+==9750==ASan runtime does not come first in initial library list; you 
+should either link runtime to your application or manually preload it 
+with LD_PRELOAD.
+
+because libc_malloc_debug.so is being loaded before libasan.so. If I set 
+TEST_NO_MALLOC_CHECK=1 when I run the tests then ASAN does not complain 
+but it would be nicer if I did not have to do that. I'm confused as to 
+why the CI leak tests are running fine - am I missing something with my 
+setup?
+
+Best Wishes
+
+Phillip
