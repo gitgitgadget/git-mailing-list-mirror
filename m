@@ -2,91 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B028CC433EF
-	for <git@archiver.kernel.org>; Sun,  3 Apr 2022 23:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CA7AC433EF
+	for <git@archiver.kernel.org>; Mon,  4 Apr 2022 00:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376649AbiDCXS3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Apr 2022 19:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50432 "EHLO
+        id S1376782AbiDDAIA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Apr 2022 20:08:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376646AbiDCXSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Apr 2022 19:18:24 -0400
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A3F36179
-        for <git@vger.kernel.org>; Sun,  3 Apr 2022 16:16:27 -0700 (PDT)
-Received: from cwcc.thunk.org (pool-108-7-220-252.bstnma.fios.verizon.net [108.7.220.252])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 233NGN7I013898
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 3 Apr 2022 19:16:23 -0400
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-        id 30AB815C003E; Sun,  3 Apr 2022 19:16:23 -0400 (EDT)
-Date:   Sun, 3 Apr 2022 19:16:23 -0400
-From:   "Theodore Ts'o" <tytso@mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Markus Vervier <markus.vervier@x41-dsec.de>, git@vger.kernel.org
-Subject: Re: Covierty Integration / Improvement
-Message-ID: <Ykoqxx40Fk0DiF9i@mit.edu>
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
- <xmqqbkxhvoh5.fsf@gitster.g>
+        with ESMTP id S1376776AbiDDAH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Apr 2022 20:07:58 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A953733A23
+        for <git@vger.kernel.org>; Sun,  3 Apr 2022 17:06:03 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8740E11E109;
+        Sun,  3 Apr 2022 20:06:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mEQqNEXG3KTNVbSJfLv3HSffvYzZlWMc/80RHg
+        L/H40=; b=l8BGGz/0A/SsXXr3BODxk1p3EeTcZvEs4kd8+5z3Puut8zJXJdcEZ5
+        FmFKblu+21iYqkg92+uXINgtvuqJKigAZNsVZARQsSXGUP9ityEaKadyyaM3/WfI
+        ZiF3rkJIjzBEl/S+vByCvGgmZpWmGaJXg7uJ01h/y/SIvtKHZGTic=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F5F811E108;
+        Sun,  3 Apr 2022 20:06:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.227.145.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B90D11E106;
+        Sun,  3 Apr 2022 20:06:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 0/4] Importing and exporting stashes to refs
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+        <20220403182250.904933-1-sandals@crustytoothpaste.net>
+Date:   Sun, 03 Apr 2022 17:05:59 -0700
+In-Reply-To: <20220403182250.904933-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 3 Apr 2022 18:22:46 +0000")
+Message-ID: <xmqqtub9soew.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbkxhvoh5.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 030603C4-B3AB-11EC-BBBE-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 03, 2022 at 02:36:22PM -0700, Junio C Hamano wrote:
-> I have old e-mails from the scan-admin@coverity.com but the last one
-> seems to be from late June 2018, which is ages ago in Git timescale.
-> I do not recall us paying for such a service so I am guessing that
-> they had some program that open source projects can enroll, get our
-> public sources scanned and get the result sent back?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Yep, that's the way it works.  Someone has to use tools provided by
-them to build the open source project and upload the results for them
-to analyze.  Coverity predates github, so it's not new-fangled enough
-to automatically pull sources from repositories; besides, their paying
-customers tend to be using their tool for their proprietary software,
-so they haven't had any incentive to create an auto-analyze tool that
-pulls from an open source repository.
+> Changes from v2:
+> * Fix uninitialized strbuf.
+> * Avoid C99-style initializations.
 
-Some folks at Red Hat do have scripts run out of crontab, that will
-monitor git branches on projects that they are interested in and when
-they notice that the branch has been updated, they will build and
-upload the raw material used by Coverity to their dashboard.  Eric
-Sandeen has been doing this for e2fsprogs, and a few other file system
-related repo's, and I suspect if someone asked, he would probably be
-willing to provide the scripts that he uses.
+Thanks.
 
-You do need to be the project admin, or someone authorized by the
-project admin, to upload new data for Coverity, or to look at the
-analysis of the Coverity results.  I have no idea who the project
-admin is for git, but I'm sure if you, as the Git maintainer showed up
-and requested to be added as one of the project admin, the open source
-ombudsperson (I don't remember the exact title, but they do have
-someone who interfaces with OSS projects), would be happy to oblige.
+[1] is a CI run of 'seen' without this topic, while [2] is the same
+but with this topic.
 
-> https://scan.coverity.com/projects/git/ (visible without signing in)
-> seems to match my recollection. They haven't been scanning since
-> late June 2018.  I wasn't the primary developer who registered us or
-> who has been reading these reports but if I recall correctly, we
-> weren't doing anything custom, and fell somewhere between just "we
-> are curious to see how well Coverity works" and "Yay, a free
-> offering. We have nothing to lose, other than our time, to sign
-> ourselves up and if it comes up with useful scan result that would
-> be good".
+t3903.115-117 (stash export) are not very happy in the latter.
 
-My experience with e2fsprogs is that it does have a fair amount of
-false positives, but I've been willing to wade through the false
-positives, and mark them as such in their web dashboard, because the
-early warnings it gives when we've pushed new code that has a
-potential security problem is worth it.  But make no mistake, it
-definitely requires a certain amount of maintainer time work with the
-tool.
+e.g. https://github.com/git/git/runs/5808828105?check_suite_focus=true#step:7:6623
 
-Cheers,
+[References]
 
-						- Ted
+*1* https://github.com/git/git/actions/runs/2086776970 
+*2* https://github.com/git/git/actions/runs/2086887176 
