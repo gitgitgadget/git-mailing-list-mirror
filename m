@@ -2,188 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1CC2C433EF
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E216C43219
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245554AbiDEVoT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47122 "EHLO
+        id S1383687AbiDEVpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1457932AbiDERAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 13:00:21 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C0C70F55
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 09:58:22 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id p23so8100023edi.8
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 09:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SvkLYCBphUuQ+HoXHcA6wWZTJYRjEhfjpxzMD8rMwDE=;
-        b=j16euXePPv562Sj0hAvMOza/SGv0YvPhdrSVKeQf5SYfO9diXtCABWAg2A6DjZCEd8
-         wyCMAmd5AS05XVX9Dx+nSovAk7Kph7RaC9PtA99sLb1WDgA1X/jZP7qmm//xS6ORYe1i
-         xqnrsjEnMi0/Rm1niwKQvXs+xeVV/1heEXr4kABIZfvYLVcYGvzT4amoO3QwbRj1zQLk
-         sJmQsDetJ/6eCX9xN2gWHK/hEWZWUOMqByCZRVc2CQxv+zqA6V2k5LBuWI+t5uk+k/X6
-         stxmLJELoB48qH55EEXZ7jRbL0TnGekU5zMnrjGFJQW/PP+xQMHkT8wLg5+9PMZP23hJ
-         tp/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SvkLYCBphUuQ+HoXHcA6wWZTJYRjEhfjpxzMD8rMwDE=;
-        b=6v/8vymKzghqyKvie/vsithvDYVVuxznmu2FxNJ+ouRMbVNyyM6hDShGzeCSAD0K7N
-         KrA9XZ7h7kIowA0eFPhzM2TPXzgxbFmD4+oFwovn46UL8eBQGBwYoI8fFxmEj1fuV3j4
-         guz4CV2C7Eoh1MVhCLQrFPjgLyJECS/ayXKraG+MQU5C1BiqsBCt4jux/QQHf5TjQYSe
-         p1s2Rc604bF7fRxKjJTlllZ0h/8uP0TMcE5SHby5+WhYemEVIYwwNYYUpY9R9eFr2QTG
-         4ukkHGzUW+jGKORTGjtrVlNwapqZOTsfgyVDwt7c2gbEdqpLkCDYKQ6UhlaffuZv+EWd
-         3N4A==
-X-Gm-Message-State: AOAM5337ttHMyN9NjkMCOe2l8fBfSc2UOKxLDp77n15+yLkKTuJJaB4F
-        o1GkfQwDeduUpT2eNLjH3cM=
-X-Google-Smtp-Source: ABdhPJwKzEJmTd5wJN8W+8//Pck64WWroWk/Cj2koc3GafDQGTxpLA8FQmbsGqTe3Ss93Nf4KzYwcg==
-X-Received: by 2002:aa7:d8d6:0:b0:41c:e20b:dd10 with SMTP id k22-20020aa7d8d6000000b0041ce20bdd10mr4716445eds.99.1649177901110;
-        Tue, 05 Apr 2022 09:58:21 -0700 (PDT)
-Received: from linuxerio.localdomain (j109098.upc-j.chello.nl. [24.132.109.98])
-        by smtp.gmail.com with ESMTPSA id qp27-20020a170907207b00b006e66a4e924bsm4248589ejb.201.2022.04.05.09.58.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 09:58:20 -0700 (PDT)
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To:     gitster@pobox.com, whydoubt@gmail.com, git@vger.kernel.org
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH v3] blame: report correct number of lines in progress when using ranges
-Date:   Tue,  5 Apr 2022 18:58:06 +0200
-Message-Id: <20220405165806.842520-1-eantoranz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        with ESMTP id S1449921AbiDEPuz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 11:50:55 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5830C16BF40
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 07:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649169373;
+        bh=cM+yFhNylxvwIUuuDyXshDYg+DE3KOIZoC01wtj+fJQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DQHbNLjqhKwUtdWHf0JA7NrkTVVg8Hh10fjOLmu8ACOYpwIiJubiFFmAChb2LWBiF
+         LXVN68wMBhx/cRpZRpyn2UxmvK4FWLE4xk/hSXv1rWBs28LLYuN/FMg18t0KgCC5Wr
+         N2P2DlaOxjgXKUALMS9tQ0m7WpCU/3zRF7icjOhk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.56.235] ([89.1.212.158]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1o7B0x2VMo-014l6U; Tue, 05
+ Apr 2022 16:36:13 +0200
+Date:   Tue, 5 Apr 2022 16:36:11 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v2 00/25] CI: run "make [test]" directly, use
+ $GITHUB_ENV
+In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203301430540.379@tvgsbejvaqbjf.bet>
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; BOUNDARY="8323328-1880103203-1648643861=:379"
+Content-ID: <nycvar.QRO.7.76.6.2204051623010.379@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:4LBZZvi6x4jpJXLPqJaoHSI96WiKLUH/m09Zf/3E2npk6uwcIhy
+ iiRa8QXGli0aW37wHMsfBIQkske/gc2NJTdWIT7H0WoLuUbcEFrV27qPD9n7v3e+R9SRJfi
+ QhgwcUrzahq4i63NX9C3sZscRLvVG2HZA0kAfJgo8xXs6epziMZNlyZO6AmIbCw/FfyWzXp
+ SQ9BH3Dc06oK1YxshhTaw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uxP4Eg1FNIY=:lHySliO02yZhOPOceJKudi
+ BFRvYHe9zW8d7NqyCQLONBdP3UdwoG11id7Wudjyj6goiuA3xjVa1P2qoZDnlnYcOpYVjQqDV
+ hsNa/BWbp58aAySKYRi69tp/4gpE6K9jEh1SWnSbI9BUfTM+O1/hgJpXaQAy3za1q4UWCX8kf
+ /9DDQp+BcTkq6Xn+ltx3mjlqX8DsjJ71zKp26JI1OoY/geCpg3xo1n4wNmF7FJt6RoEuR5znu
+ yQOBxMVgBuzUGfPkNXcOPcyvhvzVA1VPhrAH7Jruzm45wMrBwSKk1abvzBqStsfaX7bKKo/uH
+ 4anSPI56EWgCFABtegwtKakbeT3vd27ISuPhuaTQV0UVzpselKTMoHjUA4z1Bl+sbDSI/DGfb
+ ViGxKnEoe9EI0ILFlUKTb5zr0Imfc7PJ974bZ3UCXvAzJFaAd8Lw5kmDiSTXIvqpTlvVJq3Xl
+ IqzcHsD2IPe3q03PkyT4K8qnjOPdEi7u1UKiTlj+af7KZIYnZDuE3vZ9MI4MWoceFS49yJ4xs
+ 5f9iZgIfWs0YabgqnU1vVBp8+XhQeosbYR8F9+Euj1KWPs35K8r+VcvDu/tjJQngtP1AYsrvB
+ kpSCAh6W8k4DL6thsH1iUpzu5MEGHikQHF1vnMrs7gHNGHIhbBR/TJcX9cddWCcD6kQmMIgd9
+ VY6RlI6sexgoe6ahVUGW+1XjI83udoIzv5AFWUykymzQkxqdKkjJgUAIrdhi7K4zT8Eize2B1
+ gHOOlqdMVOtGDSqE8DRAopsswY7Xlu/vuGUK4X4bQQ4gBGXIAmhQ1KVhpvH6OcWyTaG3sez+T
+ LhuK5qqkSQ+RD8FfEJgUBbX4aLuCQT623HaRrUEudDuO6MWj9qkjbd73euN+8HXyFCrb+Ye+S
+ H12KvxMnbKahSJpDfYJ3nc45lf/lh2yZJa3H/BDzKZxLWEw5XkmxSo0596S5QBUf65p0pwTo/
+ bjRhsVLRczOBAp0G4QUQLbQ4ECDNVjFJvR4cuDpoQ+pjguLxWnclPZZmlzAXDAP4aXDoSE5p8
+ K4QRxNtCFoK63Ym9jCu80sDYAiYPtKiTb9QxuxqaWruraIosSVoC8YAVUiW5oC7u8Tk157Nsd
+ olBqMzfQcE0sk8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using ranges, use the range sizes as the limit for progress
-instead of the size of the full file.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Before:
-$ git blame --progress builtin/blame.c > /dev/null
-Blaming lines: 100% (1210/1210), done.
-$ git blame --progress -L 100,120 -L 200,300 builtin/blame.c > /dev/null
-Blaming lines:  10% (122/1210), done.
-$
+--8323328-1880103203-1648643861=:379
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2204051623011.379@tvgsbejvaqbjf.bet>
 
-After:
-$ ./git blame --progress builtin/blame.c > /dev/null
-Blaming lines: 100% (1210/1210), done.
-$ ./git blame --progress -L 100,120 -L 200,300 builtin/blame.c > /dev/null
-Blaming lines: 100% (122/122), done.
-$
+Hi =C3=86var,
 
-Note: Shamelessly copied show_cr from t0500-progress-display.sh
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
----
- builtin/blame.c     |  6 ++++-
- t/annotate-tests.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 1 deletion(-)
+On Fri, 25 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 8d15b68afc..e33372c56b 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -898,6 +898,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	unsigned int range_i;
- 	long anchor;
- 	const int hexsz = the_hash_algo->hexsz;
-+	long num_lines = 0;
- 
- 	setup_default_color_by_age();
- 	git_config(git_blame_config, &output_option);
-@@ -1129,7 +1130,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	for (range_i = ranges.nr; range_i > 0; --range_i) {
- 		const struct range *r = &ranges.ranges[range_i - 1];
- 		ent = blame_entry_prepend(ent, r->start, r->end, o);
-+		num_lines += (r->end - r->start);
- 	}
-+	if (!num_lines)
-+		num_lines = sb.num_lines;
- 
- 	o->suspects = ent;
- 	prio_queue_put(&sb.commits, o->commit);
-@@ -1158,7 +1162,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	sb.found_guilty_entry = &found_guilty_entry;
- 	sb.found_guilty_entry_data = &pi;
- 	if (show_progress)
--		pi.progress = start_delayed_progress(_("Blaming lines"), sb.num_lines);
-+		pi.progress = start_delayed_progress(_("Blaming lines"), num_lines);
- 
- 	assign_blame(&sb, opt);
- 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 09e86f9ba0..90932e304b 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -12,6 +12,10 @@ else
-   }
- fi
- 
-+show_cr () {
-+	tr '\015' Q | sed -e "s/Q/<CR>\\$LF/g"
-+}
-+
- check_count () {
- 	head= &&
- 	file='file' &&
-@@ -604,3 +608,52 @@ test_expect_success 'blame -L X,-N (non-numeric N)' '
- test_expect_success 'blame -L ,^/RE/' '
- 	test_must_fail $PROG -L1,^/99/ file
- '
-+
-+test_expect_success 'blame progress on a full file' '
-+	cat >expect <<-\EOF &&
-+	Blaming lines:  10% (1/10)<CR>
-+	Blaming lines:  50% (5/10)<CR>
-+	Blaming lines:  60% (6/10)<CR>
-+	Blaming lines:  90% (9/10)<CR>
-+	Blaming lines: 100% (10/10)<CR>
-+	Blaming lines: 100% (10/10), done.
-+	EOF
-+
-+	GIT_PROGRESS_DELAY=0 \
-+	git blame --progress hello.c 2>stderr &&
-+
-+	show_cr <stderr >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'blame progress on a single range' '
-+	cat >expect <<-\EOF &&
-+	Blaming lines:  25% (1/4)<CR>
-+	Blaming lines:  75% (3/4)<CR>
-+	Blaming lines: 100% (4/4)<CR>
-+	Blaming lines: 100% (4/4), done.
-+	EOF
-+
-+	GIT_PROGRESS_DELAY=0 \
-+	git blame --progress -L 3,6 hello.c 2>stderr &&
-+
-+	show_cr <stderr >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'blame progress on multiple ranges' '
-+	cat >expect <<-\EOF &&
-+	Blaming lines:  42% (3/7)<CR>
-+	Blaming lines:  57% (4/7)<CR>
-+	Blaming lines:  85% (6/7)<CR>
-+	Blaming lines: 100% (7/7)<CR>
-+	Blaming lines: 100% (7/7), done.
-+	EOF
-+
-+	GIT_PROGRESS_DELAY=0 \
-+	git blame --progress -L 3,6 -L 8,10 hello.c 2>stderr &&
-+
-+	cp stderr /home/antoranz/proyectos/git/git/stderr &&
-+	show_cr <stderr >actual &&
-+	test_cmp expect actual
-+'
--- 
-2.35.1
+> A re-roll of my improvements my series to simplify the CI setup a lot
+> (see diffstat), much of it was dealing with constraints that went away
+> with Travis et al.
 
+This type of work causes me a lot of follow-up work e.g. many merge
+conflicts in the latest Git for Windows rebases.
+
+Perhaps it is worth taking a step back and evaluating the return on this
+investment in the CI setup. While this can be characterized as a
+simplification taking the diffstat as proof, one could challenge that the
+diffstat does not actually measure whether the code is simple or not, it
+just measures whether there are less lines in the end.
+
+If the diffstat was a good measure, then the optimum would be one 0-byte
+`.c` file (which some C compilers compile without error). Another obvious
+way to optimize the diffstat would be to remove all code comments. Would I
+suggest to do either? Of course not.
+
+The reduction in code size of this patch series also comes at quite a
+steep cost: After all, the way Lars and G=C3=A1bor set things up was alrea=
+dy
+easy to reuse with Azure Pipeline and GitHub Actions.
+
+Removing this type of generic, easily-to-adapt code can remove a lot of
+lines at the expense of making the code less generic and harder to adapt,
+and leads us directly to CI lock-in.
+
+A better approach would be to use the already-generic code and adapt it
+e.g. to extend to the CirrusCI definition we have.
+
+Even if you do not care about extending our FreeBSD coverage, I would like
+to ask to slow down on refactoring as it is done in this patch series. As
+indicated in my comment above, these types of refactorings lead to a lot
+of complications in Git for Windows's processes, which are time-consuming
+to resolve. I understand your motivation, but if you wouldn't mind taking
+some time to weigh the criticality of these changes against the overhead
+incurred for maintainers, it would be appreciated.
+
+> I think just removing it is OK, we can always bring it back if needed,
+> and doing so is actually going to be simpler on top of this since the CI
+> is now less special, and leans more heavily on the logic of our normal
+> build process.
+
+Removing and re-adding things does take time, though. Again, I think it
+would be helpful to step back and try to understand the value of this
+removal versus the projected time it would take (from all involved) to
+re-add.
+
+Besides, given how much is shuffled around in this patch series (e.g. some
+files in ci/ are removed altogether and their equivalent code is moved
+into various other places), doubt must be cast on the idea that it would
+be simple to bring back anything here.
+
+Ciao,
+Johannes
+
+--8323328-1880103203-1648643861=:379--
