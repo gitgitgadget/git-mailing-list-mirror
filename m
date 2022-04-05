@@ -2,129 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5531DC35276
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B98C4707E
 	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383964AbiDEVqh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44914 "EHLO
+        id S1384113AbiDEVqy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:46:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1457460AbiDEQDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 12:03:15 -0400
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A44BEB6C
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 08:46:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1649173596;
-    s=strato-dkim-0002; d=pdev.de;
-    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=vDboeccZovY6RHuosKMb2lg2jKkGuYoWjL6hCEAjzBc=;
-    b=adWjwjNaeispVNxT2J49ASr2TIUuSEYGBmLvvT8YNftKqbeLYpPutaMNsP6XwZqIGh
-    Fvhn6+oApuQ+S6MHZ8gJh1qGvm8aASvXWdVTzKnBQQIT8nHhvX61X2rP+4vpTcXlsgnG
-    CGsjD/hXaMuWXQfJuiUJe0sxhOKmXnFuB298QmpNapwR9J/oxxWnFghU75eCD4X47Ysk
-    Jl3UcMA3QKq1NT5Ou7fYmbLluSvowPjk+wkBN1Tx7Rgw8PAcAqxNOxCsvbdJ+RWsUGYG
-    bQSOH5ZPenSVqqAJg+VJg4eY3/oIvxY03uD7tD2svr8XU1YhgVWxiBNuaz0PP09R+6kx
-    9+gg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":Pm0UfUGtd9+G9p9stmxCE5ta4sApnuCD7TPTMbzWv5S/n05T6lsuXw4AMKWDFNaqqYSr1DzDfJaGHICUU2yIlESdigyw"
-X-RZG-CLASS-ID: mo00
-Received: from dragonbox..
-    by smtp.strato.de (RZmta 47.42.2 AUTH)
-    with ESMTPSA id I70750y35FkaR5D
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 5 Apr 2022 17:46:36 +0200 (CEST)
-From:   Raphael Bauer <raphael@pdev.de>
-To:     git@vger.kernel.org
-Cc:     Raphael Bauer <raphael@pdev.de>
-Subject: [PATCH] pretty format: fix colors on %+ placeholder newline
-Date:   Tue,  5 Apr 2022 17:45:29 +0200
-Message-Id: <20220405154529.966434-1-raphael@pdev.de>
+        with ESMTP id S1572906AbiDERQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 13:16:50 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AC725DA
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649178888;
+        bh=G5LEFhLRJBV4CgiNT3358un+9yp4AUCaMg1wcyUunXo=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=U+OkSAqcwUP+qE7O1HW1CfXwek3oRKXXF4U70Ys38Ww+yBUGx8BSAZeetCUzFuknu
+         Tk1j0H9eyDhQ54dtlo5E38QXBr85WHJd/LXG52pEbVVnEypwKmDt0RSorgRhsPcw8C
+         PgjCxGItevzNOJ6nhIRNmSrnUS/STDSj8I4uv28M=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from
+ fv-az196-296.m3u5ga3utehe1jm44gvey0miob.gx.internal.cloudapp.net
+ ([52.176.40.144]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MAfUe-1niLHU1nE8-00B0f1; Tue, 05 Apr 2022 19:14:48 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.36.0-rc0
+Date:   Tue,  5 Apr 2022 17:14:45 +0000
+Message-Id: <20220405171445.4177-1-johannes.schindelin@gmx.de>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <e8417ad5-f9f2-c1de-75f6-45be49f0011b@pdev.de>
-References: <e8417ad5-f9f2-c1de-75f6-45be49f0011b@pdev.de>
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+X-Provags-ID: V03:K1:/7rMyOT+GBzB2rfzcjbWX0GlZSDIYwT71uoLumhJOU5njrcZlsH
+ TNOBuZze3Se5+Le+0wceWP5Ix8+yzRWfXoTBJdte5gP6j3r2U3yh+/AA3eIjyyMpGjHuLve
+ 8ymNXHADmDwO1w082pi/wDa3NgA93M/sc4hKS21ihYv8G+wgEkmTYo2Nhnt8t6pNzn/Or2i
+ 0ghcTvEnfs02AOWm67X/w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:d9PvU7cKogE=:fqsoaq6nU7kI109YJ+4do8
+ AkvWTkZB3qir2qEl9PxBF5oXLKZxrteRaJ8/qRfazWz27whpQxaPxxEjM8YsmmgbpBRsKDaV6
+ ZYsvIOant6XIWPILvGZyQpMjsxZ4IGkibAGl93muNJP2tryFb9zHK2niyc3v7I/5S2y6SaDVs
+ oFFkOAO0+Pw7YikDs6/BjV/s9plXQrUgtrJtrVGORMxnQBPGr3W8aKz7vvGGe85eVo2BuIkzt
+ UvnElNRYtY7anlYmmIFEXtPRKslj5zbx6VAIeNUz3q9iNQ3BWbU70oaQvrdZFBz/vjz8vpeHj
+ uy9uR/xtNwucsqynIQsfjYTS6hGKUxONyUjIhm0/JEmHp7lVFFuHaezyrFQTKf3dI+QYXXurC
+ 6nYXy3PfJj88ftG/0PK8cpjCqOagJ+6BmpLB+XNw6EPJOi6bwVo7vYMJnYgmBCc5SUb/GSr8Z
+ W7WljBXbGNkhe/BuAa/KloDCsKm2cn84ue3xH3KyQxsH28789EkAcZWfETw6qUAw2I7+gQpMC
+ qSJRA0Kpkz6ebCGZz6uWNKxbbvvllepany6opa0e45cp51MmO84AkZAZDQ9jo14rPTxQ2De/q
+ U1KwJ/pu40SNsxWoZB+CUEIeFAag7jODObWjTL0leKZAJyGttv5IZeTAhP9MxwNHApVAj1Qsy
+ 1CzD0fXhonnLhRr50BdngPpUHXvT/C2tYevjO3hapFm39Ky4G9KeKUNe2zfFVCTO+sS1Bi/KY
+ bNMdQAfYeUk1RBQq2Lvr4sgfe+AlUnUgymj5fQkcR/pygZ9c3jjsnU24EFHrPnbHRF4IM+tA/
+ F0tr4VsDOku+w8zTR2Ua1paAG66ohH7gYLa3MMnI343KXUFR/Kbh2pz6XmIvTDvrR/z3+lVv/
+ 9JjU/qhtMVTn+SrYMsJAc4RDoi2daXBBiyrwRXmoDn4mA3TX+TdWyHzBDuS4KdpIf4KKEL6uw
+ hp7grH0TKe60viMw3OVq1CrikJqF2MYI2ZVFM9ypnmKpqcb08YBda6Flm+IYsGCVvIyTf/qr/
+ Ia574Qzj0rgte5Iu6gfAPq/KrbH4fMj4+jxNzVT3rVFwaxV4gM4mWr0LELMXuKJvjypIPshKh
+ FyjxozZml/7iTw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, the color escape codes were not printed again when a %+
-placeholder was expanded, which could lead to missing colors.
+Dear Git users,
 
-In particular, the following command on any commit history exercised the
-problem:
+I hereby announce that Git for Windows 2.36.0-rc0 is available from:
 
-git log --pretty=format:'%h%Cred%+d test' --graph
+    https://github.com/git-for-windows/git/releases/tag/v2.36.0-rc0.windows.1
 
-The string 'test' should always be in red, but is not when commits have
-ref names associated and the %+d placeholder is expanded.
-This is also not a problem of any pager since the --graph option adds a
-colored pipe symbol at the beginning of the line, which makes re-setting
-the color again afterwards necessary.
----
- pretty.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+Changes since Git for Windows v2.35.1(2) (February 1st 2022)
 
-diff --git a/pretty.c b/pretty.c
-index ee6114e3f0..0aabba89ca 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -863,6 +863,7 @@ struct format_commit_context {
- 	size_t width, indent1, indent2;
- 	int auto_color;
- 	int padding;
-+	char curr_color_escape[COLOR_MAXLEN];
- 
- 	/* These offsets are relative to the start of the commit message. */
- 	struct chunk author;
-@@ -1050,6 +1051,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 		if (color_parse_mem(begin, end - begin, color) < 0)
- 			die(_("unable to parse --pretty format"));
- 		strbuf_addstr(sb, color);
-+		strlcpy(c->curr_color_escape, color, COLOR_MAXLEN);
- 		return end - placeholder + 1;
- 	}
- 
-@@ -1067,8 +1069,10 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 	else if (skip_prefix(placeholder + 1, "reset", &rest))
- 		basic_color = GIT_COLOR_RESET;
- 
--	if (basic_color && want_color(c->pretty_ctx->color))
-+	if (basic_color && want_color(c->pretty_ctx->color)) {
- 		strbuf_addstr(sb, basic_color);
-+		strlcpy(c->curr_color_escape, basic_color, COLOR_MAXLEN);
-+	}
- 
- 	return rest - placeholder;
- }
-@@ -1360,8 +1364,10 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	case 'C':
- 		if (starts_with(placeholder + 1, "(auto)")) {
- 			c->auto_color = want_color(c->pretty_ctx->color);
--			if (c->auto_color && sb->len)
-+			if (c->auto_color && sb->len) {
- 				strbuf_addstr(sb, GIT_COLOR_RESET);
-+				c->curr_color_escape[0] = 0;
-+			}
- 			return 7; /* consumed 7 bytes, "C(auto)" */
- 		} else {
- 			int ret = parse_color(sb, placeholder, c);
-@@ -1813,9 +1819,11 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
- 		while (sb->len && sb->buf[sb->len - 1] == '\n')
- 			strbuf_setlen(sb, sb->len - 1);
- 	} else if (orig_len != sb->len) {
--		if (magic == ADD_LF_BEFORE_NON_EMPTY)
-+		if (magic == ADD_LF_BEFORE_NON_EMPTY) {
- 			strbuf_insertstr(sb, orig_len, "\n");
--		else if (magic == ADD_SP_BEFORE_NON_EMPTY)
-+			strbuf_insertstr(sb, orig_len + 1,
-+				((struct format_commit_context *)context)->curr_color_escape);
-+		} else if (magic == ADD_SP_BEFORE_NON_EMPTY)
- 			strbuf_insertstr(sb, orig_len, " ");
- 	}
- 	return consumed + 1;
--- 
-2.35.1
+New Features
 
+  * Comes with Git v2.36.0-rc0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.3.4.
+  * Comes with Git LFS v3.1.2.
+  * Comes with OpenSSH v8.9p1.
+  * Comes with cURL v7.82.0.
+  * Comes with OpenSSL v1.1.1n.
+  * Comes with GNU TLS v3.7.4.
+
+Git-2.36.0-rc0-64-bit.exe | 4895e6873773cc3501251399af3de3793bdb3024b0e1a509ff25aaea7b4c6e45
+Git-2.36.0-rc0-32-bit.exe | f60f00b376ef437e770b13dfc7bbf54ec2b131d5aad99e3c1e133bb5359aa07d
+PortableGit-2.36.0-rc0-64-bit.7z.exe | 2a31582c86835288fea5a7c6cb9ddcfbe61b272cd5a2514ad1a98417fccbfebb
+PortableGit-2.36.0-rc0-32-bit.7z.exe | 7cb3f5f691859201f48f9e659cebd51c99876f1bd8b50772783feaeaff589e54
+MinGit-2.36.0-rc0-64-bit.zip | 9975e4d55e931ee2a402eeb942e1cecf4df22e8e0ebebdafb977aeb0a59dc5c2
+MinGit-2.36.0-rc0-32-bit.zip | ab8baf9061622610f494ecdbdb148ef3e333ae991a4e6ef890db3074881b9536
+MinGit-2.36.0-rc0-busybox-64-bit.zip | aaad29348eeae17b0d5cd29ea05cfdef0358208d709e835d0317b3f87977b3c1
+MinGit-2.36.0-rc0-busybox-32-bit.zip | 4c62bbf36ec870ad5354754597fc16d3816d0bce53826bcf88ae69b7674d999f
+Git-2.36.0-rc0-64-bit.tar.bz2 | 7e8528a5b22444afaa631d793421c4b248c4453215f9c60ee0cde250e60a1600
+Git-2.36.0-rc0-32-bit.tar.bz2 | 3d1c927c69cef6c134bf4b15318e3fb374e2f151ce95ff62acbca4357d05b3ba
+
+Ciao,
+Johannes
