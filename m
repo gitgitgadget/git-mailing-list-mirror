@@ -2,96 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9B36C4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA727C43217
 	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 05:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347251AbiDFFFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 01:05:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43844 "EHLO
+        id S240823AbiDFFFP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 01:05:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1455610AbiDEWky (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 18:40:54 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E102B1FCD4
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 14:30:54 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id b17so756208lfv.3
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 14:30:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ZApnDznKQ2uSuPnW4nqLo0qZXc6MpAezgwAh4TGNrVg=;
-        b=URLTGbGRphorZyIf4sdGRmsSjhjVHndWyxo5iXUBtTxSZawxSCdpT9ewr87EODEF5L
-         it/LEtSAs36C0tFzZ/9Np/sZdZFKJC9TzwZb2sSWE3QEpkgKW4ywnotNFAaoFau2mrg8
-         GRLp17eRC49jpLvDxjAszGx/EvGwJKuIvXw/Rufw4SJ4eQs7eAT9A4qbPuUyhE7kjMf6
-         BawRpRvkZXwf+Ktl2YDYYDPd7PYFlv4Q7HF9RATD7httq2nFMkJX93t//RhNmq4ppTBW
-         zuAXNju37gDCjomRpZrFDkXGf4U9rmmQqTj/y+i9UxJRH0wKQmRD8mE1oPeUzFStxniU
-         yI6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZApnDznKQ2uSuPnW4nqLo0qZXc6MpAezgwAh4TGNrVg=;
-        b=TCVxNN+vHTPQmLG7OOlsV9HCdNBDBCu4DrM7mD17ia470xZGH5ZmLNso6TFj22GYGu
-         wCuF9XQyVzmdiohP8grpHQDfHnT/xYtuwB7K09ooKEvBhzVjSSsd5XZ/sp+xLqnKWZnU
-         tXye4IzPRmIaeGQmuQwVBlqDV+F1ltN/cFtUf4dhsh/s1cQE6khlClkKzMWFDEz9X+mO
-         rGIAN4jyNjNQKw0UEz79VV84eZvvkX4mHCv51TS7t8KS8cinJWffLSzUtQhi/QLmUsO3
-         BkWDmrKgzMNEhM/PujnXRdO+28J4CnyDyyq28rThbc7Dsl4ywnHk0ZY5p4aBccdY0oxM
-         Beig==
-X-Gm-Message-State: AOAM5328VXh9cW4i3W0SfFw4zO4v/sNR/PBY3Du5Kteb3khstzG7K4qv
-        dSgbhfqbWo6rBsV21HKgSm2dvB82ATH1h6UvpOn1qJ5RgOA=
-X-Google-Smtp-Source: ABdhPJzoYyLWcqp6yqhVKpJkSV3QNG8JCmRtdLziOIHPSfyTmpe4WUxOboyliTrkO5kJEnYIPOz98VVtweOuIoRdrhA=
-X-Received: by 2002:a05:6512:15a4:b0:44a:96c:b7c0 with SMTP id
- bp36-20020a05651215a400b0044a096cb7c0mr3909555lfb.366.1649194252523; Tue, 05
- Apr 2022 14:30:52 -0700 (PDT)
+        with ESMTP id S1585402AbiDEX7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 19:59:54 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277A53AA43
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 15:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649197032;
+        bh=gezuDgECNvpy0mgzR/vu7cBGZkOsX8aIoRhm4oEpITI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=GMykfa05xX/UsmeS+uRpNYfRvZmN4wZdicF/l2WEMjcbROe6U88DDMZDyC9FajCW+
+         ElsbOb/eDbHPQQoHk+/GvmWAFqMFULe6cEkUq1akzipeT5GREBVtBn469TrcaocOCK
+         acFQQ97GxJYec4TnztcCMZ5EllRJHg8SdDVhq3J8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.56.235] ([213.196.213.50]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4s51-1nbZyJ2n9b-001x0H; Wed, 06
+ Apr 2022 00:17:12 +0200
+Date:   Wed, 6 Apr 2022 00:17:12 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Markus Vervier <markus.vervier@x41-dsec.de>
+cc:     git@vger.kernel.org
+Subject: Re: Covierty Integration / Improvement
+In-Reply-To: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
+Message-ID: <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet>
+References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Plato Kiorpelidis <kioplato@gmail.com>
-Date:   Wed, 6 Apr 2022 00:30:26 +0300
-Message-ID: <CAO2gv83m_WuWVAzomT-cBcuXoB=inf-oQORgP1o-yY4Ei0Lcvg@mail.gmail.com>
-Subject: [GSoC] Contributor candidate introduction
-To:     git@vger.kernel.org, shivam828787@gmail.com, me@ttaylorr.com,
-        kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-1429005-1649197032=:379"
+X-Provags-ID: V03:K1:JHkvKwlRrl6lbAyiK5EyQCIPnej83gXk6wTHKYGlmBVz0HLHJf8
+ TvDRMfEmg+/fBlg+aZoLaBz2xqBLh21IlX1fvrO0Aw60iCfkImJwAseMyP0/6S6tcil4irR
+ CLeI4PcAmB82Kt1GnpY+llzVmuKjSXoqVqdJW8G7ENHLlMWdOzEHLGMP4q1GuYqXsoCAokV
+ KtdBgux3aEIzSWS73FZPw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:z1WxodC25uk=:En8QU3mmZeAYY3fusFQK99
+ q+BwBO9PLPRKQB3LwHjNqJyhZIFLkQ0grbla2/OU+YcGlVQk8L5q0lYZmQeUWgIWmyAT9qp5d
+ p6TprOtxRfEma6p+r00Pus1B2K13Yx8grUnEoktiwR0dX2TRpjS/aNEINzdt7UgttvD20EU61
+ SLcCGCCSAt2txDt3zZ4DfyLfrerKzo0uWSUiaxxv0PCl0l08C2EoN9Fbgnub1kWxawNgBaXyF
+ vFmUzsOSOvzV0kGH5uLiyWczwcT98GzyVXWWJOkBd6nCS/xpzXA0UhfhnwyC8xF9ESDlvAIkp
+ awU+Bt33UpyJbteSEmH3MRQVGxLx0m01EtMuI4mow728TM1SmwSyKu7rqdLxyE5MO4NZeoGkZ
+ cggzo1jHuUIZs2O3vkNnsG/pXuW+MrZRM3AVdkuMiJuc0h3SN0i0eWJM226Rg9juSaT5pq7DY
+ 3B98Sykxx2rYJR21P/vj8o03QY+ZvfwptiHBPT3Tj1p13J+/oJj33ALt79fKG8AcleNNDbyWB
+ MHJG2Nq5qf0FCRDQ+rxTOSZ5WM+/Fa1M8zmTuHwj2WvLaDTCTRiacygGuKG8bTChBLvHLmF5D
+ upqdYIcKYbfzJdCSGN3KgU3pujMTpOBF5u+4phrxoLDl9FSWWeT9DGCaWwauhV0xN7oRW4w8s
+ T89tdEYM4BQX0WIczgM15Arh6D98XNfrrl4TjAyXa41GgmhE21Mt/Z8WmZ1Y7MyEV1HHq6MDU
+ avsdl75Ytj548MMD6N9ygnPoYXNc4P0rP2WWyqGlu5G8PhwvYORmoofg6/W98Y7E143tWtfzg
+ HOMDR/SZAWS9TrqA7cRwPXPUG3qWqf4gfLaQsM4Ooilc4N3liCUeyZNLTK/BCTS+QGXe6kGhQ
+ Ygwl1b6qy4LUaN72nsDGLZFSpO6ZoJ+qh06//zpqD+IcFRfZZcEw3cLMeRW6dLRLcD27PxM/N
+ hOtFTO8yQBr0nRuVSS8ziyi6M1JSg4oX6Hmh3mUaOny8nMbzpUZuC/lHcMg0HmCckolObggu1
+ IWJcOZveB6zDdHNM8Rz+b6mVMRJfsTnn6I6J5vo3aXFTpWZwTrfToxQws8v4sGDeWqmifWmLo
+ /mrUl5c2EvJaQk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'm interested in participating as contributor for the project
-"Reachability bitmap improvements".
-The area I'm interested in, the most, is the alternate compression scheme
-e.g. Roaring+Run, however I'm ecstatic about any bitmap performance improvement.
-Expected project size I'm targeting for is large (350 hours).
-I've already completed my micro-project and I will submit it in a few hours.
-I wanted to be sure I could submit v1 of it before committing to
-introducing myself.
+--8323328-1429005-1649197032=:379
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I'm Plato Kiorpelidis, undergraduate student from Greece, studying
-Computer Science.
-I've been developing software systems for academic purposes and Greek
-universities
-for the previous 1.5 year inside my university department as full time job.
+Hi Markus,
 
-The idea of reading and implementing ideas proposed in academic papers, then
-running performance tests to compare and evaluate them, thrills me and peaks my
-interest. I've been browsing the git source code on and off for two years as an
-undergraduate, thinking it would be awesome if I could contribute, influence and
-become actively involved in a widely used tool such as git. The opportunity
-given by GSoC provides the environment and support for it to actually happen.
+On Fri, 1 Apr 2022, Markus Vervier wrote:
 
-I've gone through the mailing list and looked for other candidates that could
-also be interested in this project. Shubham Mishra is also interested.
-- Could we collaborate on this project considering how broad it is or only one
-can be selected?
-He/she already has experience in open source and has participated in
-GSoC before.
-- Does that make me a better fit considering GSoC is for introducing someone to
-open source and their communities or should I strive for a different
-project instead?
-I should note that the best case scenario for me is if we are both selected,
-probably on different bitmap performance areas under "Reachability bitmap
-improvements" project, however I don't know if it's possible. It probably
-depends on the mentors listed for this project and the work load involved.
-- Has this happened in a previous GSoC? Did it work?
+> Dear git developer team,
+>
+> X41 is processing the current RfP
 
-Thanks,
-Plato Kiorpelidis
+would you kindly provide a bit more context? This seems to come right out
+of left field. Is "RfP" a "Request for Proposals"? If so, I am not aware
+that the git developer team submitted one...
+
+> and some questions came up regarding the
+> improvement / integration of Coverity Scans for git and the estimation o=
+f the
+> required work:
+>
+> - Was there a special purpose for the Coverity integration (e.g. custom
+> queries for variant analysis or regression testing?) or did you try to
+> integrate it as a best practice / general security hygiene tool?
+
+There has been talk about integrating Coverity into our regular CI builds,
+but nothing actionable has materialized yet.
+
+Git for Windows has such a CI build, but it is currently broken due to a
+backwards-incompatible change in Coverity that will require a human to
+adjust the CI definition, which has not yet happened due to lack of time.
+
+> - Could you tell us more about the amount and types of false positives a=
+nd
+> problems you've faced trying to eliminate them? This will help us to
+> understand the expectations / requirements for a successful integration =
+of
+> Coverity.
+
+=46rom the top of my head, I would estimate about 60-70% of the results to
+be false positives.
+
+As Junio pointed out, we do not consider memory to be leaked in one-shot
+processes where memory is allocated, once, in the equivalent of a `main()`
+function. Sure, we could add a slew of `free()` calls right before exiting
+the process, but that's kind of pointless.
+
+Another major source of false positives is our string data structure,
+which offers a small-ish static, read-only buffer to get started, but
+replaces that with something `malloc()`ed/`realloc()`ed as soon as the
+string is about to be manipulated. Yet Coverity insists that we're writing
+into a read-only buffer, and get out of bounds, which is simply not true.
+
+Similar issues are reported with our `strvec` data structure that has the
+same allocation pattern.
+
+Since the false positives outnumber the valid issues reported by Coverity,
+we have not been very eager to sift through new reports.
+
+The list of categories of false positives listed above is not exhaustive,
+of course, but combined with how cumbersome it is to get access to the
+reports (they cannot be viewed anonymously), you get an idea why we do not
+pay all that much attention to Coverity.
+
+> - Could we get access to a sample of the scan results?
+
+Sure, if you direct your web browser to
+https://scan.coverity.com/projects/git, there is a button "Add me to
+project".
+
+Ciao,
+Johannes
+
+>
+> Many Thanks
+>
+> Markus
+> --
+> Markus Vervier (Managing Director)
+> X41 D-Sec GmbH, Dennewartstr. 25-27, D-52068 Aachen
+> T: +49 241 9809418-0, Fax: -9
+> Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+> Gesch=C3=A4ftsf=C3=BChrer: Markus Vervier
+>
+
+--8323328-1429005-1649197032=:379--
