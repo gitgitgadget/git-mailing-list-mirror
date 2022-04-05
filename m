@@ -2,104 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4071CC35273
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 13:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D92FC43217
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 13:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235233AbiDENPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 09:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53352 "EHLO
+        id S239811AbiDENBC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 09:01:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377276AbiDENMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 09:12:54 -0400
-X-Greylist: delayed 7800 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Apr 2022 05:13:06 PDT
-Received: from 12.mo583.mail-out.ovh.net (12.mo583.mail-out.ovh.net [46.105.39.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D9C1210B0
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 05:13:05 -0700 (PDT)
-Received: from player699.ha.ovh.net (unknown [10.110.208.202])
-        by mo583.mail-out.ovh.net (Postfix) with ESMTP id 0405124B49
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 09:47:42 +0000 (UTC)
-Received: from microej.com (lmontsouris-656-1-14-223.w92-154.abo.wanadoo.fr [92.154.86.223])
-        (Authenticated sender: benjamin.alix@microej.com)
-        by player699.ha.ovh.net (Postfix) with ESMTPSA id B3A40291ED822
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 09:47:42 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass (GARM-107S0016f1192ce-b0bc-47d7-96b2-35b8f15b4bcc,
-                    C0A3871EF66D4954F7837FBC32A57F26AC916614) smtp.auth=benjamin.alix@microej.com
-X-OVh-ClientIp: 92.154.86.223
-Message-ID: <b3193359-4625-820e-3968-bbdcc6a82ebf@microej.com>
-Date:   Tue, 5 Apr 2022 11:47:42 +0200
+        with ESMTP id S1382828AbiDEMRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 08:17:00 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D8EBAB8B
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 04:30:02 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id r10so8796817eda.1
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 04:30:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+1kwBSq0BzSRJIUWpjZGfJCzegoKBf0Lk+BzBCbMwlQ=;
+        b=ko5SHTGzGTaiFMtD5VM7F3L6LPiOkfGIAcMUA8/1t+0nBNaCTEq4sLrOAF/7MhI/76
+         1rxUkzteWLfPnmQcwcN9RH/eb1UM+R1ng8VI+51BTKdghxgFeRjtTNQAJg/0/Kc1vMBd
+         Dl8RQ2naSIdNsYAzB79DNZeNOfo9QqG13fCwRvr1okSjBTvlQ63oWnVrT3xTg963AN2B
+         HZQheAmOHdQRVzKik+5H8kq8mXy8gbMtWB59axoocvQG5d9hsGPsYLAIYqlAE4metjJE
+         kp/4FkUQlzyYZalk8dh3sqVMpVqmLJYWsUVtz7wqm/IYPxVItpc68cK6gHD5SFLay9Ll
+         GJIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+1kwBSq0BzSRJIUWpjZGfJCzegoKBf0Lk+BzBCbMwlQ=;
+        b=sFI+7OS9/0Zu1YcNjxn27UXNdNZZJZaEHp8pHXcNKb8zXg97ur6RK95/We3B6s5mwj
+         IdIBE5EBdQ8haaOwziI4NV1L2Bmq4ZjnsTnJSMotvSysn2BfhpysTNLTKZyd3D/ZgOTH
+         3/JgxtX5+tFHSUa0sl2IH8o3asGwa71XxM2+KwnYRPIja9bGq49fZJgaCpf26wTnH7Rc
+         q4ExuO7NS65yQ5Olj6G23ZvMMV6PlIDRs428zfQ1medEn6EluWs8XsyXq4QRGMyD30D+
+         UkpPj8GtF2WGcBI/H7bgfKhVI147Ufo2LeRDmyv9CN1GAfW37wID/5daOEsIVClqDlyu
+         U1Ag==
+X-Gm-Message-State: AOAM531OyGrOJAyMpPSlG/4sZ15jwg7sI5vCQOzYmrIG3w3BwCqLgwWb
+        dS5q/h+wQfTs6ZZN4UWWLmXAbrz+kplgTLUDgdK1BA==
+X-Google-Smtp-Source: ABdhPJx0IHWf2I9hE++el06F8Rub21f6kGiUN/Ecawtkpv8ZIu4Ug4iYf2jIQPxopkYqP2KJNNkecNKK4fx8KZQz3bo=
+X-Received: by 2002:aa7:d148:0:b0:41c:df0f:194a with SMTP id
+ r8-20020aa7d148000000b0041cdf0f194amr3137545edo.42.1649158200627; Tue, 05 Apr
+ 2022 04:30:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Content-Language: fr
-To:     git@vger.kernel.org
-From:   Benjamin Alix <benjamin.alix@microej.com>
-Subject: commit.gpgsign is overwritten
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Ovh-Tracer-Id: 1170372953310830331
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudejgedgudeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefkffggfgfvhffutgfgsehtjeertddtfeejnecuhfhrohhmpeeuvghnjhgrmhhinhcutehlihiguceosggvnhhjrghmihhnrdgrlhhigiesmhhitghrohgvjhdrtghomheqnecuggftrfgrthhtvghrnhepkeeigfffvedtjeehgffgffevkeduhfetgeeugfetleejffehjeefffeghfevteevnecuffhomhgrihhnpehmihgtrhhovghjrdgtohhmpdhtfihithhtvghrrdgtohhmpdhlihhnkhgvughinhdrtghomhdphihouhhtuhgsvgdrtghomhenucfkpheptddrtddrtddrtddpledvrdduheegrdekiedrvddvfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepphhlrgihvghrieelledrhhgrrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegsvghnjhgrmhhinhdrrghlihigsehmihgtrhhovghjrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+References: <20220210164627.279520-1-jholdsworth@nvidia.com>
+ <CAPMMpohZxpMFc-rVE96QbeGzN6NdF5CdYVp6FLrHD6Ngi=mu4A@mail.gmail.com>
+ <BL0PR12MB484938E9950EBCA08315544CC8E59@BL0PR12MB4849.namprd12.prod.outlook.com>
+ <CAPMMpoggSvPox5tM3B_NZ0GwLzg7LtHkXGhby1mZqpkehZ1G0Q@mail.gmail.com>
+In-Reply-To: <CAPMMpoggSvPox5tM3B_NZ0GwLzg7LtHkXGhby1mZqpkehZ1G0Q@mail.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 5 Apr 2022 13:29:49 +0200
+Message-ID: <CAPMMpohm74nVbi-dR=YOLoT+CbPiHGuVo35EoufKGKHP9Urexg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/22] git-p4: Various code tidy-ups
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, Apr 5, 2022 at 6:27 AM Tao Klerks <tao@klerks.biz> wrote:
+>
+> On Mon, Apr 4, 2022 at 4:46 PM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+> >
+> >
+> > Can you give me a bit more information about this, because I was going to try and push for the git-p4 to discard Python 2 support later this year in a bid to simplify the code, reduce the testing burden, and move toward cleaner pylint output.
+> >
+>
+> I'll try to look into this and see whether git-p4 itself can be made
+> to be more forgiving under python3, or whether there is an even better
+> solution where inconsistently-encoded Perforce metadata can somehow be
+> harmonized. Either way, I'll try to contribute some
+> test_expect_failure tests.
 
-My git global configuration is set to always sign commits 
-(commit.gpgsign=true) but every once in a while it seems to be 
-overwritten and this configuration is set to false.
-
-I looked at other levels of configuration (system and local) to see if 
-it was set to false elsewhere but it does not seem to be the case.
-
-I don't understand why it would change and how, would there be any other 
-configuration in git that would cause such a thing?
-
-Please find below system informations about my git installation.
-
-Regards,
-
-Benjamin
-
-[System Info]
-git version:
-git version 2.31.1.windows.1
-cpu: x86_64
-built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19043
-compiler info: gnuc: 10.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-commit-msg
-
--- 
-MicroEJ <http://www.microej.com> 	
-
-Benjamin ALIX
-/Software Engineer/
-
-11 rue du Chemin Rouge - Bat. D 44373 Nantes Cedex 3, France
-
-Twitter <https://twitter.com/microej> LinkedIn 
-<https://www.linkedin.com/company/microej> Youtube 
-<https://www.youtube.com/user/IS2Tsa>
-
-event <https://www.microej.com/event/>
-
-This email (and all attachments) may contain information that is 
-proprietary privileged, and/or confidential. If you received this e-mail 
-in error or if it was improperly forwarded to you, the information 
-contained in the e-mail should, at all times, remain confidential. 
-Please notify the sender immediately by e-mail, and delete or destroy 
-the original and any copies. Any unauthorized use, disclosure, 
-reproduction, retention or distribution by any person other than the 
-intended recipient is strictly prohibited.
-
+So, an initial test suggests that a recent version of git-p4 at least
+doesn't fail in the same way under python3, in the face of at least
+some of these encoding issues. I don't know yet whether failures will
+occur in other places, nor whether the not-failing behavior is better,
+worse or the same as I had under python2, but it seems plausible that
+I won't be filing any test_expect_failure tests after all, and will
+instead say "yay, python3 ftw!"
