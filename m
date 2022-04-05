@@ -2,242 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C518FC433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC494C433EF
 	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384353AbiDEVrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:47:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59656 "EHLO
+        id S1384462AbiDEVrQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:47:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345212AbiDEUVw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 16:21:52 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B727F1A383
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 13:04:05 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id bg10so29027675ejb.4
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 13:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Y4WzwX+yYczZvNPLDGsd5+RBWDjzt+yiKaUPGfUmGW4=;
-        b=Nxn15sQORLcFBZoSvo+DEGsEudfUFXWfMKFymZwK7kn1MUULOBh15e/MG1HvZrXkN0
-         yLcn7RPV/QFXBcHbaiHDlvV9VUB5lVZtbo/1hTP480bbd75P2N2xaRmF97c4kxDlokH5
-         2eRQs9/dnpx8W9xYuZ1ZYhFOx8gHp9pFX/I6x3SYmg3rCzSd52Le9ZTajcSvO5RI9br7
-         m55k+NYcnEa8PV2yt8HMwuzs1HBWAShB7GSDLEdpsYKMNXJ3EgzW2jrN8hIbrji+2T7i
-         GB90Duo+4uZpzI6FU1iquwy1iHBd97RcotxSn9EIhkau3sGKO7rgP8y89ecs+e3c+Q88
-         EWOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Y4WzwX+yYczZvNPLDGsd5+RBWDjzt+yiKaUPGfUmGW4=;
-        b=dYvjLG8BkzXqsrHqLyc8YHQqfzIigmzh3hTNW+BB5sM+Lo63ZD++PoSTusB71lBxb/
-         Y9S3zYwC2rwghlzMCTkFzsIxBYQ3fM2nP22OyvWisfr/PjpNx3UE3ku+lx+J3qWUtrWa
-         JiMXgNP8Jhl2OgkTT+rmDHvHaXMQ9WKhBQotlLp2HiSs9pZXOV9HA3C3+UnCb/5Q8X/5
-         1vaENsBdr+NT/aLLJHD3jeBedWbaH6GGl6qb0MZjIAQNEXKS2heaNzLBmUBYoGwIuUo7
-         KiSJ9GlE2Ov5d3PRFKlnoogP8EEkeiSpTdYy6oELTsu1MQV6JC9guhWl7oNimb4YStL7
-         Z39Q==
-X-Gm-Message-State: AOAM530hF85uQUfdioFlPXbv3/eR/VbRFfKTULSRswOw1sy7+is679z2
-        MxGG9+MKhJi/wjGj4P+kbOnplXIylrS01g==
-X-Google-Smtp-Source: ABdhPJwNchnc2GitpW6VZZCNxg1pLa7E0NNPkGCLpL4Ct1uNz9anAQ5COc8Un/v7zqK8+hjPz6mjwg==
-X-Received: by 2002:a17:907:1b0e:b0:6da:81ae:a798 with SMTP id mp14-20020a1709071b0e00b006da81aea798mr5177466ejc.699.1649189043867;
-        Tue, 05 Apr 2022 13:04:03 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i11-20020a05640242cb00b0041922d3ce3bsm7188974edc.26.2022.04.05.13.04.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 13:04:03 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nbpPG-000HE8-Nd;
-        Tue, 05 Apr 2022 22:04:02 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: Making the tests ~2.5x faster (was: [PATCH v3] test-lib.sh: Use
- GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34)
-Date:   Tue, 05 Apr 2022 21:59:53 +0200
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
- <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
- <57c85e88-93af-acbe-f1ee-22c28dbec602@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <57c85e88-93af-acbe-f1ee-22c28dbec602@gmail.com>
-Message-ID: <220405.86ilrnfgb1.gmgdl@evledraar.gmail.com>
+        with ESMTP id S1452334AbiDEPyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 11:54:47 -0400
+X-Greylist: delayed 2220 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Apr 2022 07:53:01 PDT
+Received: from lucy.dinwoodie.org (b.8.0.0.8.9.b.0.2.f.0.9.2.a.d.b.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:de15:20ad:bda2:90f2:b98:8b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A247131979
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 07:53:01 -0700 (PDT)
+Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1nbjyK-000GBG-A5; Tue, 05 Apr 2022 15:15:52 +0100
+Date:   Tue, 5 Apr 2022 15:15:52 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v5 5/8] Makefile: move ".SUFFIXES" rule to shared.mak
+Message-ID: <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
+References: <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com>
+ <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
+ <patch-v5-5.8-18e0a6985f1-20220303T160155Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v5-5.8-18e0a6985f1-20220303T160155Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Mar 03, 2022 at 05:04:16PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> This was added in 30248886ce8 (Makefile: disable default implicit
+> rules, 2010-01-26), let's move it to the top of "shared.mak" so it'll
+> apply to all our Makefiles.
+> 
+> This doesn't benefit the main Makefile at all, since it already had
+> the rule, but since we're including shared.mak in other Makefiles
+> starts to benefit them. E.g. running the 'man" target is now faster:
+> 
+>     $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make -C Documentation man' 'make -C Documentation -j1 man'
+>     Benchmark 1: make -C Documentation -j1 man' in 'HEAD~1
+>       Time (mean ± σ):     121.7 ms ±   8.8 ms    [User: 105.8 ms, System: 18.6 ms]
+>       Range (min … max):   112.8 ms … 148.4 ms    26 runs
+> 
+>     Benchmark 2: make -C Documentation -j1 man' in 'HEAD~0
+>       Time (mean ± σ):      97.5 ms ±   8.0 ms    [User: 80.1 ms, System: 20.1 ms]
+>       Range (min … max):    89.8 ms … 111.8 ms    32 runs
+> 
+>     Summary
+>       'make -C Documentation -j1 man' in 'HEAD~0' ran
+>         1.25 ± 0.14 times faster than 'make -C Documentation -j1 man' in 'HEAD~1'
+> 
+> The reason for that can be seen when comparing that run with
+> "--debug=a". Without this change making a target like "git-status.1"
+> will cause "make" to consider not only "git-status.txt", but
+> "git-status.txt.o", as well as numerous other implicit suffixes such
+> as ".c", ".cc", ".cpp" etc. See [1] for a more detailed before/after
+> example.
+> 
+> So this is causing us to omit a bunch of work we didn't need to
+> do. For making "git-status.1" the "--debug=a" output is reduced from
+> ~140k lines to ~6k.
+> 
+> 1. https://lore.kernel.org/git/220222.86bkyz875k.gmgdl@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  Makefile   | 2 --
+>  shared.mak | 5 +++++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 1ac924bd844..ce362720947 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2580,8 +2580,6 @@ ASM_SRC := $(wildcard $(OBJECTS:o=S))
+>  ASM_OBJ := $(ASM_SRC:S=o)
+>  C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
+>  
+> -.SUFFIXES:
+> -
+>  $(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+>  	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+>  $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+> diff --git a/shared.mak b/shared.mak
+> index 29f0e69ecb9..1dda948df09 100644
+> --- a/shared.mak
+> +++ b/shared.mak
+> @@ -9,6 +9,11 @@
+>  %:: s.%
+>  %:: SCCS/s.%
+>  
+> +## Likewise delete default $(SUFFIXES). See:
+> +##
+> +##     info make --index-search=.SUFFIXES
+> +.SUFFIXES:
+> +
+>  ### Flags affecting all rules
+>  
+>  # A GNU make extension since gmake 3.72 (released in late 1994) to
 
-On Tue, Apr 05 2022, Phillip Wood wrote:
+I confess I really don't understand why, but as part of testing
+v2.36.0-rc0 on Cygwin, I've started getting errors building the info
+pages, and bisect points to this commit as the culprit.
 
-> On 05/04/2022 11:03, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Mon, Apr 04 2022, Phillip Wood wrote:
->>=20
->>> On 04/03/2022 13:37, Elia Pinto wrote:
->>>> In glibc >=3D 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
->>>> variables have been replaced by GLIBC_TUNABLES.  Also the new
->>>> glibc requires that you preload a library called libc_malloc_debug.so
->>>> to get these features.
->>>> Using the ordinary glibc system variable detect if this is glibc >=3D
->>>> 2.34 and
->>>> use GLIBC_TUNABLES and the new library.
->>>> This patch was inspired by a Richard W.M. Jones ndbkit patch
->>>> Helped-by: Junio C Hamano <gitster@pobox.com>
->>>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->>>> ---
->>>> This is the third version of the patch.
->>>> Compared to the second version[1], the code is further simplified,
->>>> eliminating a case statement and modifying a string statement.
->>>> [1] https://www.spinics.net/lists/git/msg433917.html
->>>>    t/test-lib.sh | 16 ++++++++++++++++
->>>>    1 file changed, 16 insertions(+)
->>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
->>>> index 9af5fb7674..4d10646015 100644
->>>> --- a/t/test-lib.sh
->>>> +++ b/t/test-lib.sh
->>>> @@ -550,9 +550,25 @@ else
->>>>    	setup_malloc_check () {
->>>>    		MALLOC_CHECK_=3D3	MALLOC_PERTURB_=3D165
->>>>    		export MALLOC_CHECK_ MALLOC_PERTURB_
->>>> +		if _GLIBC_VERSION=3D$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
->>>> +		_GLIBC_VERSION=3D${_GLIBC_VERSION#"glibc "} &&
->>>> +		expr 2.34 \<=3D "$_GLIBC_VERSION" >/dev/null
->>>> +		then
->>>> +			g=3D
->>>> +			LD_PRELOAD=3D"libc_malloc_debug.so.0"
->>>
->>> When compiling with "SANITIZE =3D address,leak" this use of LD_PRELOAD
->>> makes the tests fail with
->>>
->>> =3D=3D9750=3D=3DASan runtime does not come first in initial library lis=
-t; you
->>> should either link runtime to your application or manually preload it
->>> with LD_PRELOAD.
->>>
->>> because libc_malloc_debug.so is being loaded before libasan.so. If I
->>> set TEST_NO_MALLOC_CHECK=3D1 when I run the tests then ASAN does not
->>> complain but it would be nicer if I did not have to do that. I'm
->>> confused as to why the CI leak tests are running fine - am I missing
->>> something with my setup?
->> Perhaps they have an older glibc? They're on Ubunt, and e.g. my
->> Debian
->> version is on 2.33.
->
-> Good point, I'd not realized quite how new glibc 2.34 was
->
->> But more generally, I'd somehow managed to not notice for all my time in
->> hacking on git (including on SANITIZE=3Dleak, another tracing mode!) that
->> this check was being enabled *by default*, which could have saved me
->> some time waiting for tests...:
->>=20=09
->> 	$ git hyperfine -L rev HEAD~0 -L off yes, -s 'make CFLAGS=3D-O3' '(cd t=
- && TEST_NO_MALLOC_CHECK=3D{off} ./t3070-wildmatch.sh)' --warmup 1 -r 3
->> 	Benchmark 1: (cd t && TEST_NO_MALLOC_CHECK=3Dyes ./t3070-wildmatch.sh)'=
- in 'HEAD~0
->> 	  Time (mean =C2=B1 =CF=83):      4.191 s =C2=B1  0.012 s    [User: 3.6=
-00 s, System: 0.746 s]
->> 	  Range (min =E2=80=A6 max):    4.181 s =E2=80=A6  4.204 s    3 runs
->>=20=09
->> 	Benchmark 2: (cd t && TEST_NO_MALLOC_CHECK=3D ./t3070-wildmatch.sh)' in=
- 'HEAD~0
->> 	  Time (mean =C2=B1 =CF=83):      5.945 s =C2=B1  0.101 s    [User: 4.9=
-89 s, System: 1.146 s]
->> 	  Range (min =E2=80=A6 max):    5.878 s =E2=80=A6  6.062 s    3 runs
->>=20=09
->> 	Summary
->> 	  '(cd t && TEST_NO_MALLOC_CHECK=3Dyes ./t3070-wildmatch.sh)' in 'HEAD~=
-0' ran
->> 	    1.42 =C2=B1 0.02 times faster than '(cd t && TEST_NO_MALLOC_CHECK=
-=3D ./t3070-wildmatch.sh)' in 'HEAD~0'
->> I.e. I get that it's catching actual issues, but I was also doing
->> runs
->> with SANITIZE=3Daddress, which I believe are going to catch a superset of
->> issues that this check does, so...
->
-> I assumed SANITIZE=3Daddress would catch a superset of issues as well
-> but I haven't actually checked the glibc tunables documentation. We
-> disable MALLOC_PERTURB_ when running under valgrind so perhaps we
-> should do the same when compiling with SANITIZE=3Daddress.
+Specifically, I've been running
 
-I'm not sure either, but given how exhaustive SANITIZE=3Daddress is I'd be
-surprised if not.
+    git clean -dffx && make configure && ./configure && make -j4 info
 
-> I just noticed that setup_malloc_check() is called by
-> test_expect_success() and test_when_finished() so it really should be=20
-> caching the result of the check rather than forking getconf and expr
-> each time it is called. Overwriting LD_PRELOAD is not very friendly=20
-> either, it would be better if it appended the debug library if the
-> variable is already set.
+Without this commit, that gets me a successful build; there's a bunch of
+noisy warnings that have been hanging around for a long time, and I think
+are fundamentally due to the slightly mismatched documentation libraries
+that Cygwin has.  With this commit, I get the same noisy warnings, but I
+also get the error "could not open .texi: No such file or directory".
 
-We really should just be checking this when building, we even have C
-code already that detects glibc and its version, I have some local (but
-semi-unrelated) patches. Anyway...
-
->> Whatever we do with this narrow patch it would be a really nice
->> improvement if the test-lib.sh could fold all of these
->> "instrumentations" behind a single flag, and that both it and "make
->> test" would make it clear that you're testing in a slower "tracing" or
->> "instrumentation" mode.
->> Ditto things like chain lint and the bin-wrappers, e.g.:
->
-> I sometimes wish there was a way to only chain lint the tests that
-> have changed since the last run.
-
-Mm, perhaps some make-based solution... :)
-
-I had some experiments to go even further, and have "make test" only run
-the tests relevant to the code that just changed, which with trace2's
-filenames and GCC/clang's -MF option you can bridge that gap.
-
->>      $ git hyperfine -L rev HEAD~0 -L off yes, -L cl 0,1 -L nbw --no-bin=
--wrappers, -s 'make CFLAGS=3D-O3' '(cd t && GIT_TEST_CHAIN_LINT=3D{cl} TEST=
-_NO_MALLOC_CHECK=3D{off} ./t3070-wildmatch.sh {nbw})' -r 1
->>      [...]=09
->> 	Summary
->> 	  '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MALLOC_CHECK=3Dyes ./t3070-=
-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0' ran
->> 	    1.23 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MA=
-LLOC_CHECK=3Dyes ./t3070-wildmatch.sh )' in 'HEAD~0'
->> 	    1.30 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MA=
-LLOC_CHECK=3Dyes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
->> 	    1.54 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MA=
-LLOC_CHECK=3Dyes ./t3070-wildmatch.sh )' in 'HEAD~0'
->> 	    1.63 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MA=
-LLOC_CHECK=3D ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
->> 	    1.87 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MA=
-LLOC_CHECK=3D ./t3070-wildmatch.sh )' in 'HEAD~0'
->> 	    1.92 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MA=
-LLOC_CHECK=3D ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
->> 	    2.24 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MA=
-LLOC_CHECK=3D ./t3070-wildmatch.sh )' in 'HEAD~0'
->> I.e. between this, chain lint and bin wrappers we're coming up on
->> our
->> tests running almost 3x as slow as they otherwise could *by default*.
->> But right now knowing which things you need to chase around to turn
->> off
->> if you're just looking to test the semantics of your code without all
->> this instrumentation is a matter of archane knowledge, I'm not even sure
->> I remembered all the major ones (I didn't know about this one until
->> today).
->
-> That is quite a difference in run time - I wonder how much scope there
-> is for optimizing some of these features like the chain-lint vs=20
-> disabling them completely.
-
-Per my series at
-https://lore.kernel.org/git/cover-v2-00.25-00000000000-20220325T182534Z-ava=
-rab@gmail.com/
-I'd much rather see us go in the direction of mainly piggy-backing on CI
-for such extended testing, and just having easy to use targets for "do
-exhaustive tests please".
-
-E.g. so you could run "make test-like-ci" or whatever, and it would do
-all the N permutations we do in CI locally.
-
-
-
+I have to confess, I don't really understand this aspect of GNU Make, so
+I'm not sure if this is a problem with Cygwin having a bad toolset or
+there being something about my environment that means this doesn't work,
+but regardless, it's currently causing the Cygwin Git builds to fail.
