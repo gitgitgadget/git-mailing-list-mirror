@@ -2,143 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E216C43219
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEDD9C433FE
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383687AbiDEVpl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:45:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37860 "EHLO
+        id S1383592AbiDEVp0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:45:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1449921AbiDEPuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:50:55 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5830C16BF40
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 07:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649169373;
-        bh=cM+yFhNylxvwIUuuDyXshDYg+DE3KOIZoC01wtj+fJQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DQHbNLjqhKwUtdWHf0JA7NrkTVVg8Hh10fjOLmu8ACOYpwIiJubiFFmAChb2LWBiF
-         LXVN68wMBhx/cRpZRpyn2UxmvK4FWLE4xk/hSXv1rWBs28LLYuN/FMg18t0KgCC5Wr
-         N2P2DlaOxjgXKUALMS9tQ0m7WpCU/3zRF7icjOhk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.21.56.235] ([89.1.212.158]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1o7B0x2VMo-014l6U; Tue, 05
- Apr 2022 16:36:13 +0200
-Date:   Tue, 5 Apr 2022 16:36:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v2 00/25] CI: run "make [test]" directly, use
- $GITHUB_ENV
-In-Reply-To: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2203301430540.379@tvgsbejvaqbjf.bet>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S1389515AbiDEPV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 11:21:29 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C78D1CD7
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 06:36:38 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id w21so19386272wra.2
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 06:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RZOi9t1b0n14Yugr3XwApSwlD1qVKv85gwjuWZcAGr8=;
+        b=WHB0uJCJC9KbmYJHUBG5AwiqOBdiP1FCtESur2FFzMMlp1Yxi2RPTIR8D/GXG1YVFZ
+         7y8obFYhNJQu0/SFI0v6BnuB8ttfue6qHkQ96ngvPuYg4YMan40IGnrZR774HR4bhnDo
+         6+v0ugLC0u5kuhp0vYB5vuwOHI1hE0zziFfmlxpRq1p+XgZG01yHuggRk6r30CppSXE1
+         p59VZ6ueIPgd/s282ndqfib49LoSwPqzIwwi2GRXHY1lSysFafoSEhUJd2gVqJ6NGaNE
+         YrVO8bvqcZ7/PEy3CiGvfZMGLd4jB7aox4SRu/wo5RLnjxhY69+ULUn/OmEiX/L0EVv3
+         8uHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RZOi9t1b0n14Yugr3XwApSwlD1qVKv85gwjuWZcAGr8=;
+        b=hTCuMzxMDNNYmFaLsrPzqMY1PnyWAgE/Hygs8PmWWn+upF9Y8Cef7qPSnVWIdNEvfv
+         oeub1otilqBp+7afu4KQGc+kk40/LEFqoeYurPtyhneUKpFpgMnD0lEay0Y/OmgwZtxb
+         tWRSK6AvEh01sotjNAqF3QrzsfzI8tx0v8JbhjR5w807hilJ0jmHZo/CbT8GpKo5pBzH
+         I5XxE5vmZ1KLtZqZx4Zc4rkHN0VSnpTV00zU3eM99I+GWs13bohsauY7KIiTkofOPSYU
+         TRwZVjfDaMU7SBUfCowtsbNJZIQhTWaJ0me1109IbgxIdD1KpEf922RSA95EZxa8xi9B
+         cW8w==
+X-Gm-Message-State: AOAM5325+R/DgIY8MqhNvgube22XRxva2/bT8cxTak/yETi5d70+S5ND
+        2EFf5HRl7nM0cip4WGWC1hA=
+X-Google-Smtp-Source: ABdhPJyD4OB6CQlKy2g4xF5PFCxuco9bMNlpXgFD3iOvYL9ZR885emiYJ6SUjwdl6KK3MCuIH9p3ZA==
+X-Received: by 2002:a5d:4a82:0:b0:206:a38:51d6 with SMTP id o2-20020a5d4a82000000b002060a3851d6mr2781828wrq.384.1649165796593;
+        Tue, 05 Apr 2022 06:36:36 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.224])
+        by smtp.gmail.com with ESMTPSA id q66-20020a1c4345000000b0038e69dd940esm2149685wma.29.2022.04.05.06.36.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Apr 2022 06:36:36 -0700 (PDT)
+Message-ID: <57c85e88-93af-acbe-f1ee-22c28dbec602@gmail.com>
+Date:   Tue, 5 Apr 2022 14:36:33 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1880103203-1648643861=:379"
-Content-ID: <nycvar.QRO.7.76.6.2204051623010.379@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:4LBZZvi6x4jpJXLPqJaoHSI96WiKLUH/m09Zf/3E2npk6uwcIhy
- iiRa8QXGli0aW37wHMsfBIQkske/gc2NJTdWIT7H0WoLuUbcEFrV27qPD9n7v3e+R9SRJfi
- QhgwcUrzahq4i63NX9C3sZscRLvVG2HZA0kAfJgo8xXs6epziMZNlyZO6AmIbCw/FfyWzXp
- SQ9BH3Dc06oK1YxshhTaw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uxP4Eg1FNIY=:lHySliO02yZhOPOceJKudi
- BFRvYHe9zW8d7NqyCQLONBdP3UdwoG11id7Wudjyj6goiuA3xjVa1P2qoZDnlnYcOpYVjQqDV
- hsNa/BWbp58aAySKYRi69tp/4gpE6K9jEh1SWnSbI9BUfTM+O1/hgJpXaQAy3za1q4UWCX8kf
- /9DDQp+BcTkq6Xn+ltx3mjlqX8DsjJ71zKp26JI1OoY/geCpg3xo1n4wNmF7FJt6RoEuR5znu
- yQOBxMVgBuzUGfPkNXcOPcyvhvzVA1VPhrAH7Jruzm45wMrBwSKk1abvzBqStsfaX7bKKo/uH
- 4anSPI56EWgCFABtegwtKakbeT3vd27ISuPhuaTQV0UVzpselKTMoHjUA4z1Bl+sbDSI/DGfb
- ViGxKnEoe9EI0ILFlUKTb5zr0Imfc7PJ974bZ3UCXvAzJFaAd8Lw5kmDiSTXIvqpTlvVJq3Xl
- IqzcHsD2IPe3q03PkyT4K8qnjOPdEi7u1UKiTlj+af7KZIYnZDuE3vZ9MI4MWoceFS49yJ4xs
- 5f9iZgIfWs0YabgqnU1vVBp8+XhQeosbYR8F9+Euj1KWPs35K8r+VcvDu/tjJQngtP1AYsrvB
- kpSCAh6W8k4DL6thsH1iUpzu5MEGHikQHF1vnMrs7gHNGHIhbBR/TJcX9cddWCcD6kQmMIgd9
- VY6RlI6sexgoe6ahVUGW+1XjI83udoIzv5AFWUykymzQkxqdKkjJgUAIrdhi7K4zT8Eize2B1
- gHOOlqdMVOtGDSqE8DRAopsswY7Xlu/vuGUK4X4bQQ4gBGXIAmhQ1KVhpvH6OcWyTaG3sez+T
- LhuK5qqkSQ+RD8FfEJgUBbX4aLuCQT623HaRrUEudDuO6MWj9qkjbd73euN+8HXyFCrb+Ye+S
- H12KvxMnbKahSJpDfYJ3nc45lf/lh2yZJa3H/BDzKZxLWEw5XkmxSo0596S5QBUf65p0pwTo/
- bjRhsVLRczOBAp0G4QUQLbQ4ECDNVjFJvR4cuDpoQ+pjguLxWnclPZZmlzAXDAP4aXDoSE5p8
- K4QRxNtCFoK63Ym9jCu80sDYAiYPtKiTb9QxuxqaWruraIosSVoC8YAVUiW5oC7u8Tk157Nsd
- olBqMzfQcE0sk8=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Making the tests ~2.5x faster (was: [PATCH v3] test-lib.sh: Use
+ GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34)
+Content-Language: en-GB-large
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, Eric Sunshine <ericsunshine@gmail.com>
+References: <20220304133702.26706-1-gitter.spiros@gmail.com>
+ <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
+ <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 05/04/2022 11:03, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Apr 04 2022, Phillip Wood wrote:
+> 
+>> On 04/03/2022 13:37, Elia Pinto wrote:
+>>> In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
+>>> variables have been replaced by GLIBC_TUNABLES.  Also the new
+>>> glibc requires that you preload a library called libc_malloc_debug.so
+>>> to get these features.
+>>> Using the ordinary glibc system variable detect if this is glibc >=
+>>> 2.34 and
+>>> use GLIBC_TUNABLES and the new library.
+>>> This patch was inspired by a Richard W.M. Jones ndbkit patch
+>>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>>> ---
+>>> This is the third version of the patch.
+>>> Compared to the second version[1], the code is further simplified,
+>>> eliminating a case statement and modifying a string statement.
+>>> [1] https://www.spinics.net/lists/git/msg433917.html
+>>>    t/test-lib.sh | 16 ++++++++++++++++
+>>>    1 file changed, 16 insertions(+)
+>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>>> index 9af5fb7674..4d10646015 100644
+>>> --- a/t/test-lib.sh
+>>> +++ b/t/test-lib.sh
+>>> @@ -550,9 +550,25 @@ else
+>>>    	setup_malloc_check () {
+>>>    		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+>>>    		export MALLOC_CHECK_ MALLOC_PERTURB_
+>>> +		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
+>>> +		_GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
+>>> +		expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
+>>> +		then
+>>> +			g=
+>>> +			LD_PRELOAD="libc_malloc_debug.so.0"
+>>
+>> When compiling with "SANITIZE = address,leak" this use of LD_PRELOAD
+>> makes the tests fail with
+>>
+>> ==9750==ASan runtime does not come first in initial library list; you
+>> should either link runtime to your application or manually preload it
+>> with LD_PRELOAD.
+>>
+>> because libc_malloc_debug.so is being loaded before libasan.so. If I
+>> set TEST_NO_MALLOC_CHECK=1 when I run the tests then ASAN does not
+>> complain but it would be nicer if I did not have to do that. I'm
+>> confused as to why the CI leak tests are running fine - am I missing
+>> something with my setup?
+> 
+> Perhaps they have an older glibc? They're on Ubunt, and e.g. my Debian
+> version is on 2.33.
 
---8323328-1880103203-1648643861=:379
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2204051623011.379@tvgsbejvaqbjf.bet>
+Good point, I'd not realized quite how new glibc 2.34 was
 
-Hi =C3=86var,
+> But more generally, I'd somehow managed to not notice for all my time in
+> hacking on git (including on SANITIZE=leak, another tracing mode!) that
+> this check was being enabled *by default*, which could have saved me
+> some time waiting for tests...:
+> 	
+> 	$ git hyperfine -L rev HEAD~0 -L off yes, -s 'make CFLAGS=-O3' '(cd t && TEST_NO_MALLOC_CHECK={off} ./t3070-wildmatch.sh)' --warmup 1 -r 3
+> 	Benchmark 1: (cd t && TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh)' in 'HEAD~0
+> 	  Time (mean ± σ):      4.191 s ±  0.012 s    [User: 3.600 s, System: 0.746 s]
+> 	  Range (min … max):    4.181 s …  4.204 s    3 runs
+> 	
+> 	Benchmark 2: (cd t && TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh)' in 'HEAD~0
+> 	  Time (mean ± σ):      5.945 s ±  0.101 s    [User: 4.989 s, System: 1.146 s]
+> 	  Range (min … max):    5.878 s …  6.062 s    3 runs
+> 	
+> 	Summary
+> 	  '(cd t && TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh)' in 'HEAD~0' ran
+> 	    1.42 ± 0.02 times faster than '(cd t && TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh)' in 'HEAD~0'
+> 
+> I.e. I get that it's catching actual issues, but I was also doing runs
+> with SANITIZE=address, which I believe are going to catch a superset of
+> issues that this check does, so...
 
-On Fri, 25 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+I assumed SANITIZE=address would catch a superset of issues as well but 
+I haven't actually checked the glibc tunables documentation. We disable 
+MALLOC_PERTURB_ when running under valgrind so perhaps we should do the 
+same when compiling with SANITIZE=address.
 
-> A re-roll of my improvements my series to simplify the CI setup a lot
-> (see diffstat), much of it was dealing with constraints that went away
-> with Travis et al.
+I just noticed that setup_malloc_check() is called by 
+test_expect_success() and test_when_finished() so it really should be 
+caching the result of the check rather than forking getconf and expr 
+each time it is called. Overwriting LD_PRELOAD is not very friendly 
+either, it would be better if it appended the debug library if the 
+variable is already set.
 
-This type of work causes me a lot of follow-up work e.g. many merge
-conflicts in the latest Git for Windows rebases.
+> Whatever we do with this narrow patch it would be a really nice
+> improvement if the test-lib.sh could fold all of these
+> "instrumentations" behind a single flag, and that both it and "make
+> test" would make it clear that you're testing in a slower "tracing" or
+> "instrumentation" mode.
+> 
+> Ditto things like chain lint and the bin-wrappers, e.g.:
 
-Perhaps it is worth taking a step back and evaluating the return on this
-investment in the CI setup. While this can be characterized as a
-simplification taking the diffstat as proof, one could challenge that the
-diffstat does not actually measure whether the code is simple or not, it
-just measures whether there are less lines in the end.
+I sometimes wish there was a way to only chain lint the tests that have 
+changed since the last run.
 
-If the diffstat was a good measure, then the optimum would be one 0-byte
-`.c` file (which some C compilers compile without error). Another obvious
-way to optimize the diffstat would be to remove all code comments. Would I
-suggest to do either? Of course not.
+>      $ git hyperfine -L rev HEAD~0 -L off yes, -L cl 0,1 -L nbw --no-bin-wrappers, -s 'make CFLAGS=-O3' '(cd t && GIT_TEST_CHAIN_LINT={cl} TEST_NO_MALLOC_CHECK={off} ./t3070-wildmatch.sh {nbw})' -r 1
+>      [...]	
+> 	Summary
+> 	  '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0' ran
+> 	    1.23 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh )' in 'HEAD~0'
+> 	    1.30 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
+> 	    1.54 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh )' in 'HEAD~0'
+> 	    1.63 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
+> 	    1.87 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh )' in 'HEAD~0'
+> 	    1.92 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
+> 	    2.24 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh )' in 'HEAD~0'
+> 
+> I.e. between this, chain lint and bin wrappers we're coming up on our
+> tests running almost 3x as slow as they otherwise could *by default*.
+> 
+> But right now knowing which things you need to chase around to turn off
+> if you're just looking to test the semantics of your code without all
+> this instrumentation is a matter of archane knowledge, I'm not even sure
+> I remembered all the major ones (I didn't know about this one until
+> today).
 
-The reduction in code size of this patch series also comes at quite a
-steep cost: After all, the way Lars and G=C3=A1bor set things up was alrea=
-dy
-easy to reuse with Azure Pipeline and GitHub Actions.
+That is quite a difference in run time - I wonder how much scope there 
+is for optimizing some of these features like the chain-lint vs 
+disabling them completely.
 
-Removing this type of generic, easily-to-adapt code can remove a lot of
-lines at the expense of making the code less generic and harder to adapt,
-and leads us directly to CI lock-in.
+Best Wishes
 
-A better approach would be to use the already-generic code and adapt it
-e.g. to extend to the CirrusCI definition we have.
-
-Even if you do not care about extending our FreeBSD coverage, I would like
-to ask to slow down on refactoring as it is done in this patch series. As
-indicated in my comment above, these types of refactorings lead to a lot
-of complications in Git for Windows's processes, which are time-consuming
-to resolve. I understand your motivation, but if you wouldn't mind taking
-some time to weigh the criticality of these changes against the overhead
-incurred for maintainers, it would be appreciated.
-
-> I think just removing it is OK, we can always bring it back if needed,
-> and doing so is actually going to be simpler on top of this since the CI
-> is now less special, and leans more heavily on the logic of our normal
-> build process.
-
-Removing and re-adding things does take time, though. Again, I think it
-would be helpful to step back and try to understand the value of this
-removal versus the projected time it would take (from all involved) to
-re-add.
-
-Besides, given how much is shuffled around in this patch series (e.g. some
-files in ci/ are removed altogether and their equivalent code is moved
-into various other places), doubt must be cast on the idea that it would
-be simple to bring back anything here.
-
-Ciao,
-Johannes
-
---8323328-1880103203-1648643861=:379--
+Phillip
