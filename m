@@ -2,108 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E345C433EF
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 07:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC620C433EF
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 07:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbiDEHgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 03:36:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43372 "EHLO
+        id S232128AbiDEHt0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 03:49:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiDEHgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 03:36:13 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE9C6AE56
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 00:34:14 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id g15-20020a17090adb0f00b001caa9a230c7so1689110pjv.5
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 00:34:14 -0700 (PDT)
+        with ESMTP id S231941AbiDEHsr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 03:48:47 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ACEDD66
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 00:46:43 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id dr20so24757729ejc.6
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 00:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=BUL3gxA4GWNLtg6CzqIYWGnOh6fLe361R5JawiKohNs=;
-        b=GldJVTBriRVT72F0p5RaXdT2bsi/9lKmwcso6aGBYrS45e5qShWLBOjoW3RQuxk8t4
-         TzbbHB6tbULDOxGJV2SepA/vIDIrlBhCEco2kMG1D9tVKFlsW8s36p+cJC4PPi+iO8m9
-         PzA50LYDPxTaQgwfF2u/9g/oY7cO2gb9ejxcJ64JnbNNdIIYdiS8VuaywOxZrAaRCl7y
-         zQnBIUnK1Auffor4iQEiwdNNU/EUId1fcPsz/I/YEMBT6Wfhck67aTfiZqyNEh0dyQNc
-         CSWj1P/qbQ6Q3k44C+DlbVIODcYGNvn6DSFPsq+MwTw5p/lYl1w/5FvD9vjO7Hq8XEn1
-         Qv1Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=uRppzkHzzyFdl+RbxW3NuJfIykIbyydrLV8qf9Nxf6I=;
+        b=j0Z3of2a9dSG65tnqW+TgDTAepGXWsH728n1GcBnfl6YbjnEd0flsK9RMZG+jF5TNQ
+         O6ovPFZOVHFQS95+yhSBfsxBgg9cYaRI0Uwjudt5jw/1sJ8PPj0Qq9FXBfOMAIP1Nwv8
+         aMUutqgsLZWJSi3CqBSQjFsSVZKK7osPD0G4PZNkntUYZIbumJ2JlXftltRTEjHb5bgK
+         f6G8JRI0Ma+hfl6Ig1KWbIvX06aLBVqkBRU9AaKPdV0BsKe5yM0bGatnpUBME+TlCnpQ
+         kN+jdgd+R/ScLVZ75NMVAQk5WSKqZTIGQgtLWJ9ycF2N6YzTsOAksS0dj9CUzMKs+ZTN
+         vd+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BUL3gxA4GWNLtg6CzqIYWGnOh6fLe361R5JawiKohNs=;
-        b=pk1aMTlbvOWXR4oIWQ4tUF00laRp995Q4FdGzOhu0wKvKJieYhO09LyzQ5WSX0A83r
-         EVBOcD9b+I9PEULgrZJGNaczpxhrFaCg2wMKTy+Ydv/UPcN8WYmx3RdeKmhwKIs9Kuf7
-         v+whuwAfexFA0FTMcqs5bx2E1OInvZPZcY0ryQl/KpfiudDeq9ixqIvaVjS08OS4ewQs
-         WbNYQshYCQyixq1QJfwAUDnZ8d9DHs33ITXowYSaR0de4rX7C0GrXyJYFRRYswaoeZ1H
-         hfMcdsonjkeDLN9HTiu6VV1pHUDO7LVCQrTALfA7oNu0LkYWKCmr/ifGBPFZnDsILpt4
-         hDpg==
-X-Gm-Message-State: AOAM530XsIahpluIHWofPRiA/u554gH6z88ZmMRs3KbpxmDbR4/EYR1j
-        Wz6ytsowAFqWg9Ai6EBTmtQ=
-X-Google-Smtp-Source: ABdhPJy7t16peqTaoow7v9kP8DR9KLp9JyCwrNdD6+D+SROI/RZ7uLCG82mvikyvG5WAxbQEjOUavw==
-X-Received: by 2002:a17:902:bf07:b0:14f:a3a7:97a0 with SMTP id bi7-20020a170902bf0700b0014fa3a797a0mr2175163plb.105.1649144054323;
-        Tue, 05 Apr 2022 00:34:14 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-39.three.co.id. [116.206.12.39])
-        by smtp.gmail.com with ESMTPSA id nv11-20020a17090b1b4b00b001c71b0bf18bsm1440834pjb.11.2022.04.05.00.34.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 00:34:13 -0700 (PDT)
-Message-ID: <b2f5d6af-8da1-3a3a-cc21-848c14a8fb98@gmail.com>
-Date:   Tue, 5 Apr 2022 14:34:05 +0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2] blame: report correct number of lines in progress when
- using ranges
-Content-Language: en-US
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>, gitster@pobox.com,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=uRppzkHzzyFdl+RbxW3NuJfIykIbyydrLV8qf9Nxf6I=;
+        b=u+C3db52HjSXO4iI+4+faJQ5HX2kkILg1zTUhGn+HiJRZdWf8MYvmC1pac9tFfZ0In
+         MJHQNLZqdQtqwlkk+R3ETPf1reLc3cejc9oXskMpm1q4ZbhRsV2vb1DejN8HfW0Jn7bV
+         8ns5CHMAqjmXFpH0kPMASM6E67Fcj32DDJdxSqJuprHPZQlBFMnxymIQGYt3KyXtbhkz
+         PsBdlousr4YCFagPei6ZN5g7KozP8B/eF/K53WVi//5Z6pmERExby9uZRNDozDM92T0q
+         8SOI2C2VIfpqb5bBcX8+r0aK0/xGvx5vR1wzzNBLz2ReVIPaVthPppg6PiwQiIRKE18r
+         9+8Q==
+X-Gm-Message-State: AOAM5314TkWj3tvKKntuMjJVJnUqe0tMjttVDACbu0/xgna+hr5jCy6i
+        5imeEyK2nBoAu66eU57EWUlqbL7YIVt8Qg==
+X-Google-Smtp-Source: ABdhPJyBpY1hFDdcp1VOO9oHismEiZ+QGoCvU1SkbIcjlH2CSq743nCPxjfIE81180N8ZdjdhjOiRA==
+X-Received: by 2002:a17:906:a057:b0:6cf:2736:ba65 with SMTP id bg23-20020a170906a05700b006cf2736ba65mr2196500ejb.171.1649144801431;
+        Tue, 05 Apr 2022 00:46:41 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bp11-20020a170907918b00b006e6d451dc36sm3571512ejb.49.2022.04.05.00.46.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 00:46:40 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nbdtg-002p06-1E;
+        Tue, 05 Apr 2022 09:46:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>, gitster@pobox.com,
         whydoubt@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v2] blame: report correct number of lines in progress
+ when using ranges
+Date:   Tue, 05 Apr 2022 09:46:10 +0200
 References: <20220404182129.33992-1-eantoranz@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <20220404182129.33992-1-eantoranz@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <b2f5d6af-8da1-3a3a-cc21-848c14a8fb98@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <b2f5d6af-8da1-3a3a-cc21-848c14a8fb98@gmail.com>
+Message-ID: <220405.86wng4km5c.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/04/22 01.21, Edmundo Carmona Antoranz wrote:
-> When using ranges, use their sizes as the limit for progress
-> instead of the size of the full file.
-> 
 
-The progress limit is defined by number of affected lines, right?
+On Tue, Apr 05 2022, Bagas Sanjaya wrote:
 
-> +test_expect_success 'blame progress on a full file' '
-> +	cat >progress.txt <<-\EOF &&
-> +	a simple test file
-> +
-> +	no relevant content is expected here
-> +
-> +	If the file is too short, we cannot test ranges
-> +
-> +	EOF
-> +	git add progress.txt &&
-> +	git commit -m "add a file for testing progress" &&
-> +	GIT_PROGRESS_DELAY=0 \
-> +	git blame --progress progress.txt > /dev/null 2> full_progress.txt &&
-> +	grep "Blaming lines: 100% (6/6), done." full_progress.txt
-> +'
-> +
-> +test_expect_success 'blame progress on a single range' '
-> +	GIT_PROGRESS_DELAY=0 \
-> +	git blame --progress -L 2,5 progress.txt > /dev/null 2> range_progress.txt &&
-> +	grep "Blaming lines: 100% (4/4), done." range_progress.txt
-> +'
-> +
-> +test_expect_success 'blame progress on multiple ranges' '
-> +	GIT_PROGRESS_DELAY=0 \
-> +	git blame --progress -L 1,2 -L 4,6 progress.txt > /dev/null 2> range_progress.txt &&
-> +	grep "Blaming lines: 100% (5/5), done." range_progress.txt
-> +'
-> +
+> On 05/04/22 01.21, Edmundo Carmona Antoranz wrote:
+>> When using ranges, use their sizes as the limit for progress
+>> instead of the size of the full file.
+>> 
+>
+> The progress limit is defined by number of affected lines, right?
+>
+>> +test_expect_success 'blame progress on a full file' '
+>> +	cat >progress.txt <<-\EOF &&
+>> +	a simple test file
+>> +
+>> +	no relevant content is expected here
+>> +
+>> +	If the file is too short, we cannot test ranges
+>> +
+>> +	EOF
+>> +	git add progress.txt &&
+>> +	git commit -m "add a file for testing progress" &&
+>> +	GIT_PROGRESS_DELAY=0 \
+>> +	git blame --progress progress.txt > /dev/null 2> full_progress.txt &&
+>> +	grep "Blaming lines: 100% (6/6), done." full_progress.txt
+>> +'
+>> +
+>> +test_expect_success 'blame progress on a single range' '
+>> +	GIT_PROGRESS_DELAY=0 \
+>> +	git blame --progress -L 2,5 progress.txt > /dev/null 2> range_progress.txt &&
+>> +	grep "Blaming lines: 100% (4/4), done." range_progress.txt
+>> +'
+>> +
+>> +test_expect_success 'blame progress on multiple ranges' '
+>> +	GIT_PROGRESS_DELAY=0 \
+>> +	git blame --progress -L 1,2 -L 4,6 progress.txt > /dev/null 2> range_progress.txt &&
+>> +	grep "Blaming lines: 100% (5/5), done." range_progress.txt
+>> +'
+>> +
+>
+> Why not using test_i18ngrep?
 
-Why not using test_i18ngrep?
-
--- 
-An old man doll... just what I always wanted! - Clara
+Nothing should be using test_i18ngrep nowadays, just grep is better. We
+no longer test with the gettext "poison" mode which necessitated it.
