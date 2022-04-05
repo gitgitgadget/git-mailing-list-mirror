@@ -2,214 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE49AC43217
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C12EC3527E
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384576AbiDEVrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38400 "EHLO
+        id S1384520AbiDEVr0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:47:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1573052AbiDERuN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 13:50:13 -0400
-Received: from st43p00im-ztdg10073201.me.com (st43p00im-ztdg10073201.me.com [17.58.63.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09A25D1111
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:48:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1649180893;
-        bh=Rexh88WOZDsqnD9rW7/nR0OKHe2W/XEFsMtvF6Bry3E=;
-        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
-        b=IDgOD2YAoFJ0WMQWoX80x8UfnsSGJFodc+42w8Z0ff9ofgxXSa4d15DS8yODL6yXb
-         dP0T84VhXvrlDGvSyr7Qgn7H64sPmqw+vWJlYIQzZF+tOUWRMzTafC8AMmWwewMVxC
-         sgm2D2S2WZGej/cpp3HUw2cRDD3A423R5Oi7msPMoqfLtY8uPcGE1xLHJFumJ8WI7V
-         fb6M/8O95t/PNPFHOAQz+iE+ZsqQNGYgBKGAecRQZ+1po2c27LApKhwp1N7vVuNt1R
-         rpvr8adOZgGHrRvqILKiNzWysQ+spWO9PyJYYBCdLTPWt8w8jbOb2+UPWv4Lr7C7Uw
-         ehFTL1uoFx5/g==
-Received: from max-mbp-1449.fritz.box (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-        by st43p00im-ztdg10073201.me.com (Postfix) with ESMTPS id 1D9A89A07E1
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 17:48:12 +0000 (UTC)
-From:   Maximilian Reichel <reichemn@icloud.com>
-Content-Type: multipart/mixed;
-        boundary="Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19"
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
-Subject: file loss by git stash push --staged --keep-index
-Message-Id: <111D7753-AE53-4906-A7AF-F39EA7455CA3@icloud.com>
-Date:   Tue, 5 Apr 2022 19:48:11 +0200
+        with ESMTP id S1445892AbiDEUIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 16:08:47 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409E6EFF90
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 12:56:26 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id d3so105959wrb.7
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 12:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=l2gKb9z9aHOpdwHYwoQuWDeYZFpeH2lEFtz+g8qSsj8=;
+        b=fq4BqHDRwS17e3yBf1UKlZOntB9eIwSNeerkjPg9Na7LhlASH5tuHVPn53JIMT3pl+
+         WRmcAdvCq+h0vSQDg4rwpw73ghxY82hCSEPphp5TjLI5OMJ5rK5eqDG4tIN/zxb2Y1JS
+         lHb2w95/HgMoZZRl8vSXXUvcu0/qiDmYwYBGp+7S2kAF/iYA4LKOcrF4sGTxDG2eVTyS
+         wB7a2/Ycr//dpa76FXe9UGDeYrDPrHTIrTcPIor4Qe2RGSGxaeIlrJFmM3uep+jMVS/r
+         fs1hZJlky7iAiRUnNwwyz0S41D561IwaQrEZZwB2MoIOjWOiu693XXTZNj7lFYnTHFLc
+         QRTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=l2gKb9z9aHOpdwHYwoQuWDeYZFpeH2lEFtz+g8qSsj8=;
+        b=XKQw+0+BOMwGzB8ZV031YsZFsjKxCGR791k6jnELcS5TTg3/XIAtqI83/iPP6AigYF
+         afJTdUXt6LyX4uGOYJu3AYOpEpdqcSEo5tNhO/OK3EgbLZ4qT8B135dPYa0Lvgyu0mfo
+         7uqMyJZHKbyGDv1NkChSjPEycaPvEH89eWFtTQ0ZsKXo/QLj8lWzGHVGydyZt0i9PDzq
+         aOtHkMW0cFDVFzSp8biMBqE1h6n24VlN2zdsoD9p7MFB1owuiahKtAJSXMy+1cRzeH/L
+         HW8RzYKCu4Q+HtcOSKhutb9X9v/TOqky9VBYpPpOSERKdmX8Li9Arm9Gx6gbFj3o1ZtK
+         hzrQ==
+X-Gm-Message-State: AOAM532nVKjZl5mHj7O+k3dR6QY/Lcf00WE82mklwfeg4+zhdTJiBMox
+        7vGCq2KdLXm8juBCOmxlcXB2Rg+RcLtGRg==
+X-Google-Smtp-Source: ABdhPJzxBrIotBBEvrHiHO4aDV6fVE1sT3bOUwXEVLvIiw3NH6WkrnIEmtv2wmiv0f63giPMZsKRSw==
+X-Received: by 2002:a05:6000:18ac:b0:205:a73f:8288 with SMTP id b12-20020a05600018ac00b00205a73f8288mr4032993wri.172.1649188584289;
+        Tue, 05 Apr 2022 12:56:24 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e9-20020a5d6d09000000b00203ecdca5b7sm14126567wrq.33.2022.04.05.12.56.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 12:56:23 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.104.21)
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
- =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
- =?UTF-8?Q?=5F02_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 clxscore=1015
- spamscore=0 mlxscore=0 bulkscore=0 mlxlogscore=925 phishscore=0
- malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2009150000 definitions=main-2204050100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Documentation/Makefile: fix "make info" regression in dad9cd7d518
+Date:   Tue,  5 Apr 2022 21:56:20 +0200
+Message-Id: <patch-1.1-e700d372e0c-20220405T195425Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1604.g35dc6517170
+In-Reply-To: <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
+References: <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix a regression in my dad9cd7d518 (Makefile: move ".SUFFIXES" rule to
+shared.mak, 2022-03-03). As explained in the GNU make documentation
+for the $* variable, available at:
 
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
+	info make --index-search='$*'
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+This rule relied on ".texi" being in the default list of suffixes, as
+seen at:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Running the following script:
-```
-#!/bin/bash
-git init workDir
-cd workDir
-git commit -m first --allow-empty
-echo b > b
-git add b
-GIT_TRACE=TRUE git stash push --staged --keep-index
-git stash pop
-cat b
-```
+	make -f/dev/null -p | grep -v -e ^# -e ^$|grep -F .SUFFIXES
 
-What did you expect to happen? (Expected behavior)
-I expect file `b` to be present after running the script.
-If I run the script with only `git stash push --staged` or 
-`git stash push --keep-index`, the file is present afterward.
+The documentation explains what was going on here:
 
-What happened instead? (Actual behavior)
-The file is not present after running the script.
-`cat b` will report that the file does not exist.
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
-Content-Disposition: attachment;
-	filename=output--staged.txt
-Content-Type: text/plain;
-	x-unix-mode=0644;
-	name="output--staged.txt"
-Content-Transfer-Encoding: quoted-printable
+	In an explicit rule, there is no stem; so '$*' cannot be determined
+	in that way.  Instead, if the target name ends with a recognized
+	suffix (*note Old-Fashioned Suffix Rules: Suffix Rules.), '$*' is
+	set to the target name minus the suffix.  For example, if the
+	target name is 'foo.c', then '$*' is set to 'foo', since '.c' is a
+	suffix.  GNU 'make' does this bizarre thing only for compatibility
+	with other implementations of 'make'.  You should generally avoid
+	using '$*' except in implicit rules or static pattern rules.
 
-Initialized empty Git repository in /test/workDir/.git/
-[master (root-commit) 5ebd5d0] first
-17:28:10.379881 git.c:459               trace: built-in: git stash push =
---staged
-17:28:10.381318 run-command.c:654       trace: run_command: git =
-diff-tree -p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
-17:28:10.382374 git.c:459               trace: built-in: git diff-tree =
--p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
-17:28:10.383488 run-command.c:654       trace: run_command: git apply -R
-Saved working directory and index state WIP on master: 5ebd5d0 first
-17:28:10.384517 git.c:459               trace: built-in: git apply -R
-17:28:10.384942 run-command.c:654       trace: run_command: git reset -q =
---refresh --
-17:28:10.386018 git.c:459               trace: built-in: git reset -q =
---refresh --
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   b
+	If the target name in an explicit rule does not end with a
+	recognized suffix, '$*' is set to the empty string for that rule.
 
-Dropped refs/stash@{0} (546ccd88cdcd416cd0bfa5b0c63600b64011da53)
-b
+I.e. this rule added back in 5cefc33bffd (Documentation: add
+gitman.info target, 2007-12-10) was resolving gitman.texi from
+gitman.info. We can instead just use the more obvious $< variable
+referring to the prerequisite.
 
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
-Content-Disposition: attachment;
-	filename=output--keep-index.txt
-Content-Type: text/plain;
-	x-unix-mode=0644;
-	name="output--keep-index.txt"
-Content-Transfer-Encoding: quoted-printable
+This was the only use of $* in our Makefiles in an explicit rule, the
+three remaining ones are all implicit rules, and therefore didn't
+depend on the ".SUFFIXES" list.
 
-Initialized empty Git repository in /test/workDir/.git/
-[master (root-commit) e972d48] first
-17:26:07.021096 git.c:459               trace: built-in: git stash push =
---keep-index
-17:26:07.022721 run-command.c:654       trace: run_command: =
-GIT_INDEX_FILE=3D.git/index.stash.101 git update-index =
---ignore-skip-worktree-entries -z --add --remove --stdin
-17:26:07.023845 git.c:459               trace: built-in: git =
-update-index --ignore-skip-worktree-entries -z --add --remove --stdin
-17:26:07.024747 run-command.c:654       trace: run_command: git reset =
---hard -q --no-recurse-submodules
-Saved working directory and index state WIP on master: e972d48 first
-17:26:07.025846 git.c:459               trace: built-in: git reset =
---hard -q --no-recurse-submodules
-17:26:07.026947 run-command.c:654       trace: run_command: git checkout =
---no-overlay 6be660545b31f61a82a87d2b1915f0b88bb9f16f -- :/
-17:26:07.028043 git.c:459               trace: built-in: git checkout =
---no-overlay 6be660545b31f61a82a87d2b1915f0b88bb9f16f -- :/
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   b
+Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-Dropped refs/stash@{0} (3ed20e369087861f1dd3089342a656217e537d34)
-b
+On Tue, Apr 05 2022, Adam Dinwoodie wrote:
 
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
-Content-Disposition: attachment;
-	filename=output--keep-index--staged.txt
-Content-Type: text/plain;
-	x-unix-mode=0644;
-	name="output--keep-index--staged.txt"
-Content-Transfer-Encoding: quoted-printable
+> With this commit, I get the same noisy warnings, but I also get the
+> error "could not open .texi: No such file or directory".
 
-Initialized empty Git repository in /test/workDir/.git/
-[master (root-commit) b3f6a1b] first
-17:26:28.802913 git.c:459               trace: built-in: git stash push =
---keep-index --staged
-17:26:28.804521 run-command.c:654       trace: run_command: git =
-diff-tree -p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
-17:26:28.805602 git.c:459               trace: built-in: git diff-tree =
--p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
-17:26:28.806705 run-command.c:654       trace: run_command: git apply -R
-Saved working directory and index state WIP on master: b3f6a1b first
-17:26:28.807796 git.c:459               trace: built-in: git apply -R
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   b
+Sorry about the regression. This fixes it, and as noted above I'm
+pretty sure this was the only fallout of the change.
 
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	deleted:    b
+(I didn't have building the full extended documentation as part of my
+local build, but I'll be adding it now).
 
-Dropped refs/stash@{0} (0314f565bf7ae2738cece5d41045fd4dcf32aac2)
-cat: b: No such file or directory
+ Documentation/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 1eb9192dae8..44c080e3e5b 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -390,7 +390,7 @@ gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+ 	$(RM) $@+
+ 
+ gitman.info: gitman.texi
+-	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $*.texi
++	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $<
+ 
+ $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+ 	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@
+-- 
+2.35.1.1604.g35dc6517170
 
-
-`git status` reports a staged change with the created file and 
-an unstaged change that the file is deleted.
-
-What's different between what you expected and what actually happened?
-git stash pop does not recreate the file when stashing with
-`--staged` and `--keep-index`.
-
-Anything else you want to add:
-I got the same behavior on git 2.35.1 and the latest master.
-I attached to output of the script for all three variants:
-stash push with `--staged --keep-index`, `--staged` and `--keep-index`.
-
-[System Info]
-git version:
-git version 2.36.0.rc0
-cpu: x86_64
-built from commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
-
---Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19--
