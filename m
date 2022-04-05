@@ -2,111 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19ACCC41535
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A4EBC4167D
 	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 05:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1453894AbiDFFG3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 01:06:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34368 "EHLO
+        id S1445845AbiDFFGH convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 6 Apr 2022 01:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1587842AbiDFAKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 20:10:34 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50F7C6279
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 15:35:39 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id d29so551591wra.10
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 15:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=2F38Oa4d8OKw43i/RePxE8AGUSzTx4W5BJUncoWI7Y4=;
-        b=B/Y/CY7M/XtHsKHiW/t2zgNZ3y2GqhJMgR82Eeh6z7Hovmw2jfgzDIy6JCpoT4CZip
-         UIb2rthu7arFFfgxoNt7tU9w6l89Jgkc2HZkrs1kL5wqNxZChp+I0l+rDSQWX/3ll252
-         R/FBnZrqrhjnJQAuFwapPSiIuoLRVH4hG8AVsT9mh9U6b7gkBZT2HX36/hpDboZFQUlV
-         mi0FIgJ7VOU8MVFuDo+RFtGjMqECIbi4zobKiPRvYMBdUC/n3i0cGDWihLWZ7Lv6qFn+
-         ptKBkWQkPoSFghlu4Zl5EpNrMHkhj2+9FGjMkDuE16GOP7WinEzX7XqSNxHQgX4/BGDn
-         5jaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2F38Oa4d8OKw43i/RePxE8AGUSzTx4W5BJUncoWI7Y4=;
-        b=O1d423BelAhyKnfOjYfVU2cOm4fJqyWp57I11aJMNy7AFnsPlBph3XKtYwCRWl3385
-         od/7p8FWoNCn1tF3TUksBSj7rVWgP31F4iHa51j+05nirOMcV+gks0O7lesnUIOnz1fS
-         PAuCtLoLfn/oToyJ4yONIF2zhRhoWtHd8k/AB2UNIa7LIaIoe0/lALEsVr/sPYT8kML7
-         SyoJLNmhN67h3Ubn5e5vb3YYv6FEIXovtz/qtWUkDqq4SOKQDRDuLKnhlEyKQDT2M8z+
-         FeAHeMbFig085IZBC6hCfAfv0S1Jv7LTpeC67xfefAU42/fWmJR5FypsUCNuC/7wz5qU
-         fwmw==
-X-Gm-Message-State: AOAM530vrUTb4kA/k773mkhtF4hguniu83KE7OhaV5nB4iSGLclXGAhR
-        94mBKCcBRmHd7MwIcoXGA1vSiHJi0TM=
-X-Google-Smtp-Source: ABdhPJyNg49zf2arOchGgJPA1RAJuq/vmwV03phm2ublwTEcEelNh7dCgLgcw+AHSsoH/+3rbHXKyQ==
-X-Received: by 2002:a05:6000:10c7:b0:206:135e:c84e with SMTP id b7-20020a05600010c700b00206135ec84emr4149394wrx.12.1649198137783;
-        Tue, 05 Apr 2022 15:35:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n66-20020a1ca445000000b0038e785baac7sm3206431wme.11.2022.04.05.15.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 15:35:37 -0700 (PDT)
-Message-Id: <pull.1205.git.1649198136190.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 05 Apr 2022 22:35:36 +0000
-Subject: [PATCH] contrib/scalar: fix 'all' target in Makefile
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1453990AbiDFBRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 21:17:03 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A068B4FC62
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 16:09:43 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.251.39] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 235N9XD5086589
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 5 Apr 2022 19:09:33 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Carlo Arenas'" <carenas@gmail.com>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Git Mailing List'" <git@vger.kernel.org>,
+        <git-packagers@googlegroups.com>
+References: <034101d84873$993f96f0$cbbec4d0$@nexbridge.com> <CAPc5daWSDYSexkSeUUpfYDyT-M_F8d-rSMko5pqw140iLwBc_w@mail.gmail.com> <034701d84875$030bfb40$0923f1c0$@nexbridge.com> <20220405002610.27sgjva5wfryrcio@carlos-mbp.lan> <20220405005418.3s2zayr3dmpxg45q@carlos-mbp.lan> <035b01d84899$3cdc5b20$b6951160$@nexbridge.com> <20220405042826.56vyilttx3lo4scv@carlos-mbp.lan> <Ykv5dCEv/gl7aHMq@camp.crustytoothpaste.net> <CAPUEspjAiXKz00VgP16RRA+ZKYpG0QjpU4XxwJXYnZm+MQwwqg@mail.gmail.com>
+In-Reply-To: <CAPUEspjAiXKz00VgP16RRA+ZKYpG0QjpU4XxwJXYnZm+MQwwqg@mail.gmail.com>
+Subject: RE: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
+Date:   Tue, 5 Apr 2022 19:09:28 -0400
+Organization: Nexbridge Inc.
+Message-ID: <03f101d84942$36be25d0$a43a7170$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE87yXqDmaysdJkpyH6/spM26GbOgJ005kMAt5RIzwA5EjRSgHvWmbNAtNurRQBhZlANgH7TbPpAYaJAh2tmJgRkA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+On April 5, 2022 6:48 PM, Carlo Arenas wrote:
+>To: brian m. carlson <sandals@crustytoothpaste.net>; Carlo Marcelo Arenas Belón
+><carenas@gmail.com>; rsbecker@nexbridge.com; Junio C Hamano
+><gitster@pobox.com>; Git Mailing List <git@vger.kernel.org>; git-
+>packagers@googlegroups.com
+>Subject: Re: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
+>
+>On Tue, Apr 5, 2022 at 1:10 AM brian m. carlson <sandals@crustytoothpaste.net>
+>wrote:
+>> I didn't consider the case that we had NO_OPENSSL=1 because it seems a
+>> bit bizarre to say, "No, I don't want OpenSSL—oh, wait, I do want
+>> OpenSSL!"
+>
+>NO_OPENSSL is definitely strange, for example in macOS it means: do not link with
+>openssl if it comes from homebrew or macports, but maybe use the one that
+>comes with the system, which happens to be based on openssl anyway (based on
+>libressl, boringssl, or even a really old version of openssl, depending on which
+>version of the OS you got).
+>
+>Either way, the choice of using the openssl function this requires could work with
+>any of those if provided with the right linker settings, but it doesn't seem worth
+>the trouble to do, especially not for rc0.
+>
+>> This patch also didn't seem necessary for me on Linux when I tested,
+>> but of course it might be necessary on some systems, so if it fixes
+>> things, I'm in favour.
+>
+>Not sure if the required changes got somehow dropped in one of the rebases
+>after your tests, but it definitely didn't work for me when tested on Linux (using
+>debian stable or sid) and I can't see how it would work unless the crypto library is
+>pulled in some other way, and even in that case the lack of the header should
+>break, at least with DEVELOPER=1.
 
-Add extra ':' to second 'all' target definition to allow 'scalar' to build.
-Without this fix, the 'all:' and 'all::' targets together cause a build
-failure when 'scalar' build is enabled with 'INCLUDE_SCALAR':
+I had to be explicit and override the LDFLAGS to include -lcrypto and -lssl at least for git-daemon with the wrapper.c patch. Testing is still going - currently at t5531 on the ia64 NonStop variant without problems. I deliberately picked the more finicky of the two systems since x86 uses a slightly simpler OpenSSL with the x86 hardware randomizer.
 
-    Makefile:14: *** target file `all' has both : and :: entries.  Stop.
-
-Signed-off-by: Victoria Dye <vdye@github.com>
----
-    contrib/scalar: fix 'all' target in Makefile
-    
-    This patch fixes an issue introduced in a36b575aab (scalar Makefile: use
-    "The default target of..." pattern, 2022-03-03) in which an 'all::'
-    target was added without converting the existing 'all:' (single-colon)
-    target into an 'all::' (double-colon) target. This causes a build error,
-    but only when compiling with 'INCLUDE_SCALAR' enabled. As a result, I
-    only just found it when building 'scalar' on the 'microsoft/git' fork.
-    
-    Although 'INCLUDE_SCALAR' isn't enabled by default, we should fix the
-    build error for anyone that may intentionally build with it. If
-    possible, it would be nice to have this merged before the final v2.36.0
-    so that users don't run into the error in the next release.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1205%2Fvdye%2Fbugfix%2Fscalar-all-target-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1205/vdye/bugfix/scalar-all-target-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1205
-
- contrib/scalar/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/scalar/Makefile b/contrib/scalar/Makefile
-index 5e86d78e19b..37f283f35d7 100644
---- a/contrib/scalar/Makefile
-+++ b/contrib/scalar/Makefile
-@@ -11,7 +11,7 @@ include ../../config.mak.uname
- TARGETS = scalar$(X) scalar.o
- GITLIBS = ../../common-main.o ../../libgit.a ../../xdiff/lib.a
- 
--all: scalar$(X) ../../bin-wrappers/scalar
-+all:: scalar$(X) ../../bin-wrappers/scalar
- 
- $(GITLIBS):
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(subst ../../,,$@)
-
-base-commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
--- 
-gitgitgadget
