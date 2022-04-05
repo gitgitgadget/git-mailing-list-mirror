@@ -2,32 +2,32 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5BF0C433F5
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 12:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDA1C433F5
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 13:23:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbiDENAo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 09:00:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34710 "EHLO
+        id S240103AbiDENBb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 09:01:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236258AbiDEMdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 08:33:51 -0400
+        with ESMTP id S1358016AbiDEMfG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 08:35:06 -0400
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3AFA8CD8F
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 04:46:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77770B2474
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 04:46:31 -0700 (PDT)
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=EsAtwbdd8AUZxHYvM4rzuge8a2zgF0Nx0KevaK1P3AQ8icjuU3DPLcTu0YX9tnxDbxtBwCtSI7xLtYOR4sJiFejXn120X3zD0b721yVqcjcGWmVIBO753CBAJGC/TnjszMdyEQHNWIP6X2N1TOC2pzWn2WPOhB9WH0Z7+C2P3MDNjlBxvJ6ykW6C0i5TishYIyJKLA9tN536+5rlud8vt8mat4mw/VNier5JmiFb9sGTkdnV2KQmGZ08qV2a59aQ/K68N9awx8uw7aGoSmsfii7I5H2rhsDdd1HoOlo0M5P+EG48fopd+m3miBWT/DIQWviy4wyR8FL5yQ9ASESI1A==; s=purelymail1; d=slashdev.space; v=1; bh=FwEUmAjT/+EnsRAKAjZBB/GOjoyBrMcsIjptlB7dqR0=; h=Received:From:To;
-DKIM-Signature: a=rsa-sha256; b=bJFNCwTT0yqcqCzVQplhBmBWAgMmh4VVPHIpntPprO82/Wi2AuN84OEuJziwEQCrimmNjUK8Ln36nlu6Yje54c3evf/WZ4947K/XjsaQCC560NQIO/mak6agvsgOu6f787GjeQI7Cbz1idyUInsey8PP2jJo0Q1eZqRTxJ2aujixbfIGo7VS/WShZju1ovvLuU8kEwk2vTMsAJgrw0ssbY3cUY/98436A8J7m/J+0Q4sptKCcIOb25UWyb+gNmN/Pd9f78lmH/PkdPF6zgzCSBaPtCc4Djg7o1UetXLZSD3nOi/jHJmxCp6YUGn7ifR4W8fEdJ6xdAZzAOqgCMDTVA==; s=purelymail1; d=purelymail.com; v=1; bh=FwEUmAjT/+EnsRAKAjZBB/GOjoyBrMcsIjptlB7dqR0=; h=Feedback-ID:Received:From:To;
+DKIM-Signature: a=rsa-sha256; b=oct+ClOWslXI4pvGmgPz0vpwFM+Mh5/tMjKt9X4oukff1sX86JpJ6DjrZpT0dYRmzQgeq7439sU1bto/13tB80cpERFW2otL8w01+vA5MiDOdoGH0l6ZGuFgRe5Mn6S+9dB8GKkVmEEkLhEBHFViIm3PIrJy+NLWQeVzxJbhqJqs5Vu8XSyEnrgCozAVf+Pnh2eENwUbt7helko8631F2InyloecoTzUvRr8EkcuJWHshal2ln2yCuTOhJMRWlCdVA2DDf8bKqTiUK9a1tqcS4vFakt0ZA1/ECvGZGq0Ht9Ot9IUi4ofA2L46IwJlY9IfFawbal7i8jMoNq21ZkLow==; s=purelymail1; d=slashdev.space; v=1; bh=I74dogiLLRXzqjRgyFG4iBHB6jWtAFe56Oou1CE9Eh8=; h=Received:From:To;
+DKIM-Signature: a=rsa-sha256; b=KDEI1HccWP60ReblKhI0SJWy4xC43sFxBWchWQSTglDGGvvpooTVzY/fKk3GCuXdBoiwDwblNEMMq+cM1yLGXyEv61uJZ+/gDbSRyO5zTWzvA2R2IGrGNX4tp65Hv1bbHPQUNTftq36o+MsfsSiJxOEecKF36AzqY1tmsXECxa3Wk5TT9NJLKXtEz1mtypawv/6RftrLPc1sc7IuL5HHNghDqvzWqm8tC31sWet8Kl0QZQ2yOnptMirlelIEx0zFGqr9RBAY/yt8T54Q+JrYdD8V1o4eYSYe/5JO1OD5ouaKN1Ff4qWIhCJo+7DkHAk0FoLtVI6xQ2xyvF8PpGlB0g==; s=purelymail1; d=purelymail.com; v=1; bh=I74dogiLLRXzqjRgyFG4iBHB6jWtAFe56Oou1CE9Eh8=; h=Feedback-ID:Received:From:To;
 Feedback-ID: 6471:1573:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 981976735;
           (version=TLSv1.2 cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384);
-          Tue, 05 Apr 2022 11:46:14 +0000 (UTC)
+          Tue, 05 Apr 2022 11:46:21 +0000 (UTC)
 From:   Garrit Franke <garrit@slashdev.space>
 To:     avarab@gmail.com
 Cc:     garrit@slashdev.space, git@vger.kernel.org, gitster@pobox.com
-Subject: [PATCH v2 1/4] contrib: add iwyu script
-Date:   Tue,  5 Apr 2022 13:45:04 +0200
-Message-Id: <20220405114505.24389-2-garrit@slashdev.space>
+Subject: [PATCH v2 2/4] bisect.c: remove unnecessary include
+Date:   Tue,  5 Apr 2022 13:45:06 +0200
+Message-Id: <20220405114505.24389-3-garrit@slashdev.space>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220331194436.58005-1-garrit@slashdev.space>
 References: <20220331194436.58005-1-garrit@slashdev.space>
@@ -39,73 +39,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-add include-what-you-use helper.
+Remove include "hash-lookup.h".
 
 Signed-off-by: Garrit Franke <garrit@slashdev.space>
 ---
- contrib/iwyu/README  | 33 +++++++++++++++++++++++++++++++++
- contrib/iwyu/iwyu.sh |  2 ++
- 2 files changed, 35 insertions(+)
- create mode 100644 contrib/iwyu/README
- create mode 100755 contrib/iwyu/iwyu.sh
+ bisect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/contrib/iwyu/README b/contrib/iwyu/README
-new file mode 100644
-index 0000000000..5e2d218602
---- /dev/null
-+++ b/contrib/iwyu/README
-@@ -0,0 +1,33 @@
-+Include What You Use
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+Include what you use (iwyu) [1] is a tool that points out which headers a =
-file
-+should include. Moreover, it can point out includes that are not used by a=
- file,
-+which makes it especially handy for cleanup tasks.
-+
-+To run this script, you will need iwyu to be installed on your system.
-+
-+The "iwyu.sh" script runs iwyu on a given object and omits mandatory heade=
-rs
-+defined in "Documentation/CodingGuidelines".
-+
-+Example usage:
-+
-+    ./contrib/iwyu/iwyu.sh diff.o
-+
-+This yields:
-+
-+    diff.c should remove these lines:
-+    - #include "attr.h"  // lines 13-13
-+    - #include "submodule-config.h"  // lines 18-18
-+
-+In its current form, this script should not be used to auto-generate patch=
-es,
-+since there are still some false-positives that only a human can resolve. =
-It is
-+meant as a starting point for further cleanups. It could be nice to integr=
-ate
-+this as a step in our CI, but we're not quite there yet.
-+
-+The inspiration for this script came from this [2] email-thread.
-+
-+Garrit Franke <garrit@slashdev.space>
-+
-+[1]: https://github.com/include-what-you-use/include-what-you-use
-+[2]: https://lore.kernel.org/all/220401.8635ixp3f4.gmgdl@evledraar.gmail.c=
-om/#t
-\ No newline at end of file
-diff --git a/contrib/iwyu/iwyu.sh b/contrib/iwyu/iwyu.sh
-new file mode 100755
-index 0000000000..3ef8639eae
---- /dev/null
-+++ b/contrib/iwyu/iwyu.sh
-@@ -0,0 +1,2 @@
-+make $1 CC=3Dinclude-what-you-use CFLAGS=3D"-Xiwyu --verbose=3D1" 2>&1 \
-+| grep -v -E -e '^#include <' -e '^#include "(cache|git-compat-util|gettex=
-t)\.h"'=20
-\ No newline at end of file
+diff --git a/bisect.c b/bisect.c
+index 9e6a2b7f20..1aced76257 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -6,7 +6,6 @@
+ #include "refs.h"
+ #include "list-objects.h"
+ #include "quote.h"
+-#include "hash-lookup.h"
+ #include "run-command.h"
+ #include "log-tree.h"
+ #include "bisect.h"
 --=20
 2.35.1
 
