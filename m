@@ -2,96 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 164F4C433F5
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 03:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9749DC433EF
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 03:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbiDEDKq convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 4 Apr 2022 23:10:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
+        id S230175AbiDEDUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Apr 2022 23:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231531AbiDEDKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Apr 2022 23:10:38 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BDAFA76E6
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 20:00:03 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.251.39] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 2352xxh4010486
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 4 Apr 2022 22:59:59 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'Carlo_Marcelo_Arenas_Bel=C3=B3n'?=" <carenas@gmail.com>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Git Mailing List'" <git@vger.kernel.org>,
-        <git-packagers@googlegroups.com>
-References: <034101d84873$993f96f0$cbbec4d0$@nexbridge.com> <CAPc5daWSDYSexkSeUUpfYDyT-M_F8d-rSMko5pqw140iLwBc_w@mail.gmail.com> <034701d84875$030bfb40$0923f1c0$@nexbridge.com> <20220405002610.27sgjva5wfryrcio@carlos-mbp.lan> <20220405005418.3s2zayr3dmpxg45q@carlos-mbp.lan>
-In-Reply-To: <20220405005418.3s2zayr3dmpxg45q@carlos-mbp.lan>
-Subject: RE: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
-Date:   Mon, 4 Apr 2022 22:59:54 -0400
-Organization: Nexbridge Inc.
-Message-ID: <035b01d84899$3cdc5b20$b6951160$@nexbridge.com>
+        with ESMTP id S230220AbiDEDUN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Apr 2022 23:20:13 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DB8333890
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 20:18:15 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id p8so10849807pfh.8
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 20:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:user-agent:in-reply-to:references
+         :message-id:mime-version:content-transfer-encoding;
+        bh=yvNenF4pxh6LmQuBm1efQVviCVYytNnAx+g1HFROfSY=;
+        b=ST3X15CjGgAhr+YWuPhm7zt++AKgtqO0IXZZz5Ks6MKAKjcn+FVzsocz6LxhifNXEx
+         +eiP5zs5OHE/bOLe2DHClIekFTdIocos8vzld6VguhUgL8bAfJ5pQAdEsIj+4j0//1kv
+         fQDELfYUiLyLGGe3FKRZHXEN8a3FENp19uSQY9dnQ6de6g9MbBxHc1cAyCSmso6OyPGh
+         t4lRMCIolb4R1Ue6ZveFtZps0+6TAinZImmAmmbZw7bL82aKq3LDnR0/DCGRN8VXKGUU
+         9/5SKw/+36/EgB3JZq8tw3aqWPZynkhg+WACAsWoT72QwTZsu+JE3vS2a61OhWBbAv1I
+         QE1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
+         :references:message-id:mime-version:content-transfer-encoding;
+        bh=yvNenF4pxh6LmQuBm1efQVviCVYytNnAx+g1HFROfSY=;
+        b=Zsz3pxPg4R3onW8Yzl4Mnjc+OR1KrIddasXgOaGj8z6hl8TrE8xyOmCzT3JTymDEpl
+         X7Prh/xwbQZ9pj6NrZ9LYSkd/60+PTAKkf84OQrjceIrLqLi+pALJNeOgfrRqmiyzvse
+         H+zimiRCrDg0srdS5Xxcqj6N4kJzjBB3ehIam3vJE2/hX2WtsP4qTm2y46cReQOBX8P6
+         vyO1B6Doz0sqQGzk/goTOdl2mdJIQDtX8xLxVqPSntcZ6pXyY67yDqkM0QoBAM1rUdG9
+         p+p2zv+4ipr5+avmvYPN8u+lkxPwZjESNSCN1+5rYeW5hKaBHLjYTX1w1CV09eJ2SEXF
+         CYdA==
+X-Gm-Message-State: AOAM531cBwqJzU6fzzZv620NEm+nWCZAbDktUlxQ8d7XslxQjP+WIcRx
+        xhXkaR/HiTp3CASaoKDm6ZmHjMmNP6E=
+X-Google-Smtp-Source: ABdhPJxN/HID/qwXFfFqggH4wTfoXjtRnQaGuHlkvU1TXZm99ZIOS1dMcdhKEnSWrOWBZMwawPL9xw==
+X-Received: by 2002:aa7:88d4:0:b0:4fd:ad26:c52f with SMTP id k20-20020aa788d4000000b004fdad26c52fmr1361022pff.25.1649128695075;
+        Mon, 04 Apr 2022 20:18:15 -0700 (PDT)
+Received: from [127.0.0.1] ([49.204.131.145])
+        by smtp.gmail.com with ESMTPSA id f15-20020a056a0022cf00b004fb32b9e000sm14044323pfj.1.2022.04.04.20.18.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Apr 2022 20:18:14 -0700 (PDT)
+Date:   Tue, 05 Apr 2022 08:44:31 +0530
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+CC:     Dan Moore <dan@fusionauth.io>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] git-scm.com Heroku credits update
+User-Agent: K-9 Mail for Android
+In-Reply-To: <Ykt6lPF0JC1Mg2Tx@nand.local>
+References: <YkcmtqcFaO7v1jW5@nand.local> <Ykt6lPF0JC1Mg2Tx@nand.local>
+Message-ID: <6BD35402-7646-4B00-8831-A186C0E7CC02@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE87yXqDmaysdJkpyH6/spM26GbOgJ005kMAt5RIzwA5EjRSgHvWmbNrdYUsJA=
-Content-Language: en-ca
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 4, 2022 8:54 PM, Carlo Marcelo Arenas Belón wrote:
->On Mon, Apr 04, 2022 at 05:26:10PM -0700, Carlo Marcelo Arenas Belón wrote:
->> On Mon, Apr 04, 2022 at 06:40:35PM -0400, rsbecker@nexbridge.com wrote:
->> > On April 4, 2022 6:33 PM, Junio C Hamano wrote:
->> > >To: Randall S. Becker <rsbecker@nexbridge.com>
->> > >Cc: Git Mailing List <git@vger.kernel.org>;
->> > >git-packagers@googlegroups.com
->> > >Subject: Re: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
->> > >
->> > >CSPRNG_METHOD?
->> >
->> > We already have
->> >
->> >         CSPRNG_METHOD = openssl
->> >
->> > In the config for NonStop. Should that not have worked?
->>
->> only if you are not telling your openssl to hide that function[1]
->>
->> Carlo
->>
->> [1] https://www.openssl.org/docs/manmaster/man3/RAND_bytes.html
+
+
+On 5 April 2022 4:39:08 am IST, Taylor Blau <me@ttaylorr=2Ecom> wrote:
 >
->neverming, it seems we forgot to track this header somehow, so will need
->something like (untested and likely to need changes to support NO_OPENSSL)
+>Dan: thank you very much for your gracious offer=2E Does anybody have
+>objections to having some external support? I think the only change to
+>the site would be adding an entry to the "Sponsors" section of the about
+>page [2]=2E
 >
->Carlo
->--- >8 ---
->diff --git a/git-compat-util.h b/git-compat-util.h index 4d444dca274..68a9b9cd975
->100644
->--- a/git-compat-util.h
->+++ b/git-compat-util.h
->@@ -525,6 +525,10 @@ void warning_errno(const char *err, ...)
->__attribute__((format (printf, 1, 2)));  #include <openssl/x509v3.h>  #endif /*
->NO_OPENSSL */
->
->+#ifdef HAVE_OPENSSL_CSPRNG
->+#include <openssl/rand.h>
->+#endif
->+
-> /*
->  * Let callers be aware of the constant return value; this can help
->  * gcc with -Wuninitialized analysis. We restrict this trick to gcc, though,
 
-I was able to make the build work, adding the above patch and libcrypto.so and libssl.so to our LDFLAGS. This patch is probably required. What confuses me somewhat is why RAND_bytes is required for anything in the fsync series, but it is what it is.
+If that's all the change that's required, I would be in favour=2E
 
-If there is a knob for force -lcrypto and -lssl in config.mak.uname, it would help. The CSPRNG_METHOD=openssl should be forcing these two libraries into the link, I would think. The DLLs do show up in other links, so I am suspecting there is an omission somewhere that includes the git-daemon link.
+Thank you for offering to sponsor the git-scm site, Dan!
 
-The test cycle has begun, but that will take at least 40 hours on an ia64 to get complete results.
+--=20
+Sivaraam
 
---Randall
-
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
