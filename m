@@ -2,191 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3981C3527E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BC1BC35274
 	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 11:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238716AbiDELfC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 07:35:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49552 "EHLO
+        id S237737AbiDELex (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 07:34:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349757AbiDELKE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 07:10:04 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 834634A90C
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 03:31:50 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id yy13so25795114ejb.2
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 03:31:50 -0700 (PDT)
+        with ESMTP id S1354555AbiDEKOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 06:14:39 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB936B0BC
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 03:00:56 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id h4so18424870wrc.13
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 03:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=9Kb9x82BNpIOlHIVtn9VVu/7UA+TDcLVp5SIwaN8Nlw=;
-        b=jpvQPRSZeW1LSxjQjtIWUL4HZC+e4gK7Xfbke+pROy35BlqE9NFAFs5uh+y5SngHPH
-         X42QFmDpcE+2++pmOWIFBZLukRpykdAE0C6FPXoHEPBNqP0vqImGDxgxvl+uGZUZPwgz
-         xnJtAsQX+8uLbAfVJ9Fy2+SGlz/bE6vluWFF7GcCjLAZCgeam7qO2AALjL43tTB7AhWE
-         lvr8vox3rL0BVDj+pQNPq4CwuJyJxF59+fGiZHq+CoPYXbWlzRts2Mskwu06zZUmN+Uk
-         7oGpdvuBL185sMAcyTzcsidCQbGeK4LMjSvuefsR43UkTCG0fUKTGcSJd1Z7BqnNUwKH
-         CLVA==
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RtMX/gwoMvbP+ZN/ppzk+M7hwtXEoHbDEAgE0NeikKY=;
+        b=cRSgQDhOQC9/IOLnZByngJVb5SRUvK9mitevIL2yDpHzhlPRWPxHQV8g3uZtf+yCoA
+         DZ0V13m+4ap8u6MP9VqR+Ll9bzu0+22aMdBOvMVbj8yyxOOrVSw0eFxO8r/ui9glGwto
+         ROj0/wiJkz0Bs903k80RqtALrHe8vbOkcXMww=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=9Kb9x82BNpIOlHIVtn9VVu/7UA+TDcLVp5SIwaN8Nlw=;
-        b=OXixnjYuJsskMSlby5Rli0P6gDcvC/b8Cfqn1ifbJjPjtCcWmP21UrlN1JBWz0icRL
-         hgdLzDNgylU5GN1ExBwQHT6izkmPfRp8iLMC2GBidsoF8Y0ts6UZ9Otg1Z9so697L60r
-         r0K/QZ/I/5nPoYvywIDDiAz8jwQ1UiygnCcC7Up5i3lYnwkfGbf2F1tVUod8Xw5flAlC
-         ve3KTvxtMkBjmEz9xBayiZfxoCQ1jMiLKvHH0c79YM54Su/zlA4xq8WxEnJtZMwaPTFI
-         wZY7y3TUvFa99ndkUw+l7z487uvseSXTZUjFsLm38NLi4k4qkoq3kMNVZfBp/p/HoSmK
-         wMrA==
-X-Gm-Message-State: AOAM532ufab3aQz/1iSJzUa9qadlgT9ta+88u+H0jVmp3K3PjPW2DH6U
-        TTZiut0LzBNfkWB8d/geZkqVhIZKtED9CA==
-X-Google-Smtp-Source: ABdhPJxSraWfojHnLiEJokXUMSo9KbywdL7IHklPx0NX7gMYbZ3gIiTqeg2+O7hrLf0EVJmrgMjAHw==
-X-Received: by 2002:a17:906:69c5:b0:6cf:d164:8b32 with SMTP id g5-20020a17090669c500b006cfd1648b32mr2764814ejs.233.1649154708254;
-        Tue, 05 Apr 2022 03:31:48 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z23-20020a170906435700b006b0e62bee84sm5369889ejm.115.2022.04.05.03.31.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RtMX/gwoMvbP+ZN/ppzk+M7hwtXEoHbDEAgE0NeikKY=;
+        b=VaWCEOfZ8r7QkNsk0bYUqj4Z89IaIINKhHyIc0RsD4132J7QgJ8muvPBaAYEu+wNiu
+         PJ7G0FtDMH0VQ8PTKPuKC/k/zbUCgacrnndtAxHpNaQAcwITIoVNSAmeAbJmFBBvQOxC
+         6c5Akc+bbZ1IzmXX22d1qkIJUo+XKftj0X4Qt4O+FCYUaIERbOEcIzNX4L0+9gtb/T2j
+         cVgzuPKU8DkweOcyZZ3jh3BSXfJjkc/tuarweyr8ZePZhik99bDgzd1fEfr1FC2Tl+Aq
+         eNxa0mRXYNdPGrMsmTlkIkk5he/DVlhLZfHWzuNVT70FAAR9ffwNv8iiKGLhGJ5cNUt8
+         5Paw==
+X-Gm-Message-State: AOAM530s1cNG2XS+pDwRiYa4u7RNFAO35PnoE5W1Pw2+4lkxLjMGttfU
+        nXAyVPiw5FEUYiHoDTb+ivBnZ1oybgcWvRnM
+X-Google-Smtp-Source: ABdhPJzWo5f49oUcbmz9u25KYhgkG4rqhOgVD2EPG+TJI/OVirwyuB5rHorDANNeq9BE2Jm3Uwf4WQ==
+X-Received: by 2002:adf:f881:0:b0:203:f9b1:a6ab with SMTP id u1-20020adff881000000b00203f9b1a6abmr2039292wrp.410.1649152855133;
+        Tue, 05 Apr 2022 03:00:55 -0700 (PDT)
+Received: from localhost.localdomain (2.8.b.4.e.9.0.f.c.e.f.7.5.4.1.7.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa. [2001:8b0:de15:20ad:7145:7fec:f09e:4b82])
+        by smtp.gmail.com with ESMTPSA id s17-20020adfdb11000000b001f02d5fea43sm11927916wri.98.2022.04.05.03.00.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 03:31:47 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nbgTT-002tmJ-1f;
-        Tue, 05 Apr 2022 12:31:47 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, Eric Sunshine <ericsunshine@gmail.com>
-Subject: Making the tests ~2.5x faster (was: [PATCH v3] test-lib.sh: Use
- GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34)
-Date:   Tue, 05 Apr 2022 12:03:46 +0200
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
-Message-ID: <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
+        Tue, 05 Apr 2022 03:00:54 -0700 (PDT)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Neeraj Singh <neerajsi@microsoft.com>
+Subject: [PATCH] configure.ac: fix HAVE_SYNC_FILE_RANGE definition
+Date:   Tue,  5 Apr 2022 11:00:20 +0100
+Message-Id: <20220405100020.48663-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If sync_file_range is not available when building the configure script,
+there is a cosmetic bug when running that script reporting
+"HAVE_SYNC_FILE_RANGE: command not found".  Remove that error message by
+defining HAVE_SYNC_FILE_RANGE to an empty string, rather than generating
+a script where that appears as a bare command.
 
-On Mon, Apr 04 2022, Phillip Wood wrote:
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On 04/03/2022 13:37, Elia Pinto wrote:
->> In glibc >=3D 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
->> variables have been replaced by GLIBC_TUNABLES.  Also the new
->> glibc requires that you preload a library called libc_malloc_debug.so
->> to get these features.
->> Using the ordinary glibc system variable detect if this is glibc >=3D
->> 2.34 and
->> use GLIBC_TUNABLES and the new library.
->> This patch was inspired by a Richard W.M. Jones ndbkit patch
->> Helped-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->> ---
->> This is the third version of the patch.
->> Compared to the second version[1], the code is further simplified,
->> eliminating a case statement and modifying a string statement.
->> [1] https://www.spinics.net/lists/git/msg433917.html
->>   t/test-lib.sh | 16 ++++++++++++++++
->>   1 file changed, 16 insertions(+)
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 9af5fb7674..4d10646015 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -550,9 +550,25 @@ else
->>   	setup_malloc_check () {
->>   		MALLOC_CHECK_=3D3	MALLOC_PERTURB_=3D165
->>   		export MALLOC_CHECK_ MALLOC_PERTURB_
->> +		if _GLIBC_VERSION=3D$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
->> +		_GLIBC_VERSION=3D${_GLIBC_VERSION#"glibc "} &&
->> +		expr 2.34 \<=3D "$_GLIBC_VERSION" >/dev/null
->> +		then
->> +			g=3D
->> +			LD_PRELOAD=3D"libc_malloc_debug.so.0"
->
-> When compiling with "SANITIZE =3D address,leak" this use of LD_PRELOAD
-> makes the tests fail with
->
-> =3D=3D9750=3D=3DASan runtime does not come first in initial library list;=
- you
-> should either link runtime to your application or manually preload it=20
-> with LD_PRELOAD.
->
-> because libc_malloc_debug.so is being loaded before libasan.so. If I
-> set TEST_NO_MALLOC_CHECK=3D1 when I run the tests then ASAN does not
-> complain but it would be nicer if I did not have to do that. I'm
-> confused as to why the CI leak tests are running fine - am I missing
-> something with my setup?
+diff --git a/configure.ac b/configure.ac
+index 6bd6bef1c4..316a31d231 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1087,7 +1087,7 @@ GIT_CONF_SUBST([HAVE_CLOCK_MONOTONIC])
+ # Define HAVE_SYNC_FILE_RANGE=YesPlease if sync_file_range is available.
+ GIT_CHECK_FUNC(sync_file_range,
+ 	[HAVE_SYNC_FILE_RANGE=YesPlease],
+-	[HAVE_SYNC_FILE_RANGE])
++	[HAVE_SYNC_FILE_RANGE=])
+ GIT_CONF_SUBST([HAVE_SYNC_FILE_RANGE])
+ 
+ #
+-- 
+2.35.1
 
-Perhaps they have an older glibc? They're on Ubunt, and e.g. my Debian
-version is on 2.33.
-
-But more generally, I'd somehow managed to not notice for all my time in
-hacking on git (including on SANITIZE=3Dleak, another tracing mode!) that
-this check was being enabled *by default*, which could have saved me
-some time waiting for tests...:
-=09
-	$ git hyperfine -L rev HEAD~0 -L off yes, -s 'make CFLAGS=3D-O3' '(cd t &&=
- TEST_NO_MALLOC_CHECK=3D{off} ./t3070-wildmatch.sh)' --warmup 1 -r 3
-	Benchmark 1: (cd t && TEST_NO_MALLOC_CHECK=3Dyes ./t3070-wildmatch.sh)' in=
- 'HEAD~0
-	  Time (mean =C2=B1 =CF=83):      4.191 s =C2=B1  0.012 s    [User: 3.600 =
-s, System: 0.746 s]
-	  Range (min =E2=80=A6 max):    4.181 s =E2=80=A6  4.204 s    3 runs
-=09=20
-	Benchmark 2: (cd t && TEST_NO_MALLOC_CHECK=3D ./t3070-wildmatch.sh)' in 'H=
-EAD~0
-	  Time (mean =C2=B1 =CF=83):      5.945 s =C2=B1  0.101 s    [User: 4.989 =
-s, System: 1.146 s]
-	  Range (min =E2=80=A6 max):    5.878 s =E2=80=A6  6.062 s    3 runs
-=09=20
-	Summary
-	  '(cd t && TEST_NO_MALLOC_CHECK=3Dyes ./t3070-wildmatch.sh)' in 'HEAD~0' =
-ran
-	    1.42 =C2=B1 0.02 times faster than '(cd t && TEST_NO_MALLOC_CHECK=3D .=
-/t3070-wildmatch.sh)' in 'HEAD~0'
-
-I.e. I get that it's catching actual issues, but I was also doing runs
-with SANITIZE=3Daddress, which I believe are going to catch a superset of
-issues that this check does, so...
-
-Whatever we do with this narrow patch it would be a really nice
-improvement if the test-lib.sh could fold all of these
-"instrumentations" behind a single flag, and that both it and "make
-test" would make it clear that you're testing in a slower "tracing" or
-"instrumentation" mode.
-
-Ditto things like chain lint and the bin-wrappers, e.g.:
-
-    $ git hyperfine -L rev HEAD~0 -L off yes, -L cl 0,1 -L nbw --no-bin-wra=
-ppers, -s 'make CFLAGS=3D-O3' '(cd t && GIT_TEST_CHAIN_LINT=3D{cl} TEST_NO_=
-MALLOC_CHECK=3D{off} ./t3070-wildmatch.sh {nbw})' -r 1
-    [...]=09
-	Summary
-	  '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MALLOC_CHECK=3Dyes ./t3070-wil=
-dmatch.sh --no-bin-wrappers)' in 'HEAD~0' ran
-	    1.23 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MALLO=
-C_CHECK=3Dyes ./t3070-wildmatch.sh )' in 'HEAD~0'
-	    1.30 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MALLO=
-C_CHECK=3Dyes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-	    1.54 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MALLO=
-C_CHECK=3Dyes ./t3070-wildmatch.sh )' in 'HEAD~0'
-	    1.63 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MALLO=
-C_CHECK=3D ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-	    1.87 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D0 TEST_NO_MALLO=
-C_CHECK=3D ./t3070-wildmatch.sh )' in 'HEAD~0'
-	    1.92 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MALLO=
-C_CHECK=3D ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-	    2.24 times faster than '(cd t && GIT_TEST_CHAIN_LINT=3D1 TEST_NO_MALLO=
-C_CHECK=3D ./t3070-wildmatch.sh )' in 'HEAD~0'
-
-I.e. between this, chain lint and bin wrappers we're coming up on our
-tests running almost 3x as slow as they otherwise could *by default*.
-
-But right now knowing which things you need to chase around to turn off
-if you're just looking to test the semantics of your code without all
-this instrumentation is a matter of archane knowledge, I'm not even sure
-I remembered all the major ones (I didn't know about this one until
-today).
