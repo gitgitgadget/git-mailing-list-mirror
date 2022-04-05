@@ -2,95 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B98C4707E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E1BC3527D
 	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384113AbiDEVqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:46:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45952 "EHLO
+        id S1384248AbiDEVrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1572906AbiDERQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 13:16:50 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AC725DA
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:14:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649178888;
-        bh=G5LEFhLRJBV4CgiNT3358un+9yp4AUCaMg1wcyUunXo=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=U+OkSAqcwUP+qE7O1HW1CfXwek3oRKXXF4U70Ys38Ww+yBUGx8BSAZeetCUzFuknu
-         Tk1j0H9eyDhQ54dtlo5E38QXBr85WHJd/LXG52pEbVVnEypwKmDt0RSorgRhsPcw8C
-         PgjCxGItevzNOJ6nhIRNmSrnUS/STDSj8I4uv28M=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az196-296.m3u5ga3utehe1jm44gvey0miob.gx.internal.cloudapp.net
- ([52.176.40.144]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MAfUe-1niLHU1nE8-00B0f1; Tue, 05 Apr 2022 19:14:48 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.36.0-rc0
-Date:   Tue,  5 Apr 2022 17:14:45 +0000
-Message-Id: <20220405171445.4177-1-johannes.schindelin@gmx.de>
+        with ESMTP id S1454961AbiDEP70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 11:59:26 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E0C14924B
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 08:07:13 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id z19so11506033qtw.2
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 08:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HzOQf8XX8yHzxzCM6w5S6DFj2cSDoEheA1mueGUqqg4=;
+        b=AX473G5nj1zio41Ccb+Zt4i+8DKZSqo9QDFMY8OTmhaxsEXaQmavjEGiikDhIMgIyf
+         u5738E2Gwip0UMuRDDX4HUeqhiz67NkXr3GNbnKyF90Mo0la0ICtjf3wqRs9b9/IlM/P
+         RiQA5NRShy0XzJA+rDEheP8vvmXPSWi5PlYrtxFtE4laJzvkqjaFzFvl24PBhXZxSxPR
+         yJ6DO79Ck/RPZmV8rRFfIZSxZINW2jYosRViHHQtfEjSRKasjMUcY4n+oDGeWcyWtls0
+         ub9qbD4EJ+ALP2R3WOU9kSrUUDqv3lGf9PHNPykojwOLnszfK+wssLQxT/Q2hflUNqDf
+         lXig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HzOQf8XX8yHzxzCM6w5S6DFj2cSDoEheA1mueGUqqg4=;
+        b=hFWukoxloszIe3TvXQMc7EeyNlKvPxeFi+ju1OtFoMBS2g7SGBtXzvybugRCa0YIdg
+         TZIpmEujc/x2/SZbHnFg9iJZ5bChWY3W+PyGgIb8dsbUb6nxlfX21i4q6vauu2kHPRhz
+         CaCM4oX2tEQExImMaTM0k8jUw03TU7JdXDfHavhDUCVQ864cGRchFl9YjooLK+qDP6pO
+         paWI6Dk24yXT9LfZoM4KvZ+mYylFujJ2zTDdFeF+0wrW8aa7ij3fETaxfzlb1Q19kspZ
+         7E31vGXtNnkirq2C5xXyHgVRzmGEs4VSv5+IgVa36T03meFGyH56zispHQ2hJDBpyZhR
+         6LVg==
+X-Gm-Message-State: AOAM533tGBK4zfp8L1bDzlOz0wuEJZMT8ZFr0258cbrsyUTqWGGcSsGt
+        fN1WTLY848z9HI7EzBqf7N0=
+X-Google-Smtp-Source: ABdhPJxsu9D+s8PXkDgftAT4oaYdOUAdiZq5sDPlDQznVTwovqXY/kEio/wk5LGwzuZjmLVb9IdqtQ==
+X-Received: by 2002:a05:622a:2289:b0:2eb:aabd:e554 with SMTP id ay9-20020a05622a228900b002ebaabde554mr3318215qtb.623.1649171232621;
+        Tue, 05 Apr 2022 08:07:12 -0700 (PDT)
+Received: from e4a2938d721e.us-east4-c.c.codatalab-user-runtimes.internal (42.11.86.34.bc.googleusercontent.com. [34.86.11.42])
+        by smtp.gmail.com with ESMTPSA id u20-20020a05620a455400b0067ec0628661sm9465508qkp.110.2022.04.05.08.07.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 08:07:12 -0700 (PDT)
+From:   Khalid Masum <khalid.masum.92@gmail.com>
+To:     khalid.masum.92@gmail.com
+Cc:     avarab@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
+        gitster@pobox.com, khalidmasum@iut-dhaka.edu
+Subject: [PATCH v4 1/1] t3501: remove test -f and stop ignoring git <cmd> exit code
+Date:   Tue,  5 Apr 2022 15:06:57 +0000
+Message-Id: <20220405150657.19801-2-khalid.masum.92@gmail.com>
 X-Mailer: git-send-email 2.35.1
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20220405150657.19801-1-khalid.masum.92@gmail.com>
+References: <20220402192415.19023-1-khalid.masum.92@gmail.com>
+ <20220405150657.19801-1-khalid.masum.92@gmail.com>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:/7rMyOT+GBzB2rfzcjbWX0GlZSDIYwT71uoLumhJOU5njrcZlsH
- TNOBuZze3Se5+Le+0wceWP5Ix8+yzRWfXoTBJdte5gP6j3r2U3yh+/AA3eIjyyMpGjHuLve
- 8ymNXHADmDwO1w082pi/wDa3NgA93M/sc4hKS21ihYv8G+wgEkmTYo2Nhnt8t6pNzn/Or2i
- 0ghcTvEnfs02AOWm67X/w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d9PvU7cKogE=:fqsoaq6nU7kI109YJ+4do8
- AkvWTkZB3qir2qEl9PxBF5oXLKZxrteRaJ8/qRfazWz27whpQxaPxxEjM8YsmmgbpBRsKDaV6
- ZYsvIOant6XIWPILvGZyQpMjsxZ4IGkibAGl93muNJP2tryFb9zHK2niyc3v7I/5S2y6SaDVs
- oFFkOAO0+Pw7YikDs6/BjV/s9plXQrUgtrJtrVGORMxnQBPGr3W8aKz7vvGGe85eVo2BuIkzt
- UvnElNRYtY7anlYmmIFEXtPRKslj5zbx6VAIeNUz3q9iNQ3BWbU70oaQvrdZFBz/vjz8vpeHj
- uy9uR/xtNwucsqynIQsfjYTS6hGKUxONyUjIhm0/JEmHp7lVFFuHaezyrFQTKf3dI+QYXXurC
- 6nYXy3PfJj88ftG/0PK8cpjCqOagJ+6BmpLB+XNw6EPJOi6bwVo7vYMJnYgmBCc5SUb/GSr8Z
- W7WljBXbGNkhe/BuAa/KloDCsKm2cn84ue3xH3KyQxsH28789EkAcZWfETw6qUAw2I7+gQpMC
- qSJRA0Kpkz6ebCGZz6uWNKxbbvvllepany6opa0e45cp51MmO84AkZAZDQ9jo14rPTxQ2De/q
- U1KwJ/pu40SNsxWoZB+CUEIeFAag7jODObWjTL0leKZAJyGttv5IZeTAhP9MxwNHApVAj1Qsy
- 1CzD0fXhonnLhRr50BdngPpUHXvT/C2tYevjO3hapFm39Ky4G9KeKUNe2zfFVCTO+sS1Bi/KY
- bNMdQAfYeUk1RBQq2Lvr4sgfe+AlUnUgymj5fQkcR/pygZ9c3jjsnU24EFHrPnbHRF4IM+tA/
- F0tr4VsDOku+w8zTR2Ua1paAG66ohH7gYLa3MMnI343KXUFR/Kbh2pz6XmIvTDvrR/z3+lVv/
- 9JjU/qhtMVTn+SrYMsJAc4RDoi2daXBBiyrwRXmoDn4mA3TX+TdWyHzBDuS4KdpIf4KKEL6uw
- hp7grH0TKe60viMw3OVq1CrikJqF2MYI2ZVFM9ypnmKpqcb08YBda6Flm+IYsGCVvIyTf/qr/
- Ia574Qzj0rgte5Iu6gfAPq/KrbH4fMj4+jxNzVT3rVFwaxV4gM4mWr0LELMXuKJvjypIPshKh
- FyjxozZml/7iTw=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+In the test 'cherry-pick after renaming branch', stop checking for
+the presence of a file (opos) because we are going to "grep" in it in
+the same test and the lack of it will be noticed as a failure anyway.
 
-I hereby announce that Git for Windows 2.36.0-rc0 is available from:
+In the test 'revert after renaming branch', instead of allowing any
+random contents as long as a known phrase is not there in it, we can
+expect the exact outcome---after the successful revert of "added", the
+contents of file "spoo" should become identical to what was in file
+"oops" in the "initial" commit. This test also contains 'test -f' that
+verifies presence of a file, but we have a helper function to do the same
+thing. Replace it with appropriate helper function 'test_path_is_file'
+for better readability and better error messages.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.36.0-rc0.windows.1
+In both tests, we will not notice when "git rev-parse" starts segfaulting
+without emitting any output.  The 'test' command will end up being just
+"test =", which yields success. Use the 'test_cmp_rev' helper to make
+sure we will notice such a breakage.
 
-Changes since Git for Windows v2.35.1(2) (February 1st 2022)
+Signed-off-by: Khalid Masum <khalid.masum.92@gmail.com>
+---
+ t/t3501-revert-cherry-pick.sh | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-New Features
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 8617efaaf1..9eb19204ac 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -66,8 +66,7 @@ test_expect_success 'cherry-pick after renaming branch' '
+ 
+ 	git checkout rename2 &&
+ 	git cherry-pick added &&
+-	test $(git rev-parse HEAD^) = $(git rev-parse rename2) &&
+-	test -f opos &&
++	test_cmp_rev rename2 HEAD^ &&
+ 	grep "Add extra line at the end" opos &&
+ 	git reflog -1 | grep cherry-pick
+ 
+@@ -77,9 +76,9 @@ test_expect_success 'revert after renaming branch' '
+ 
+ 	git checkout rename1 &&
+ 	git revert added &&
+-	test $(git rev-parse HEAD^) = $(git rev-parse rename1) &&
+-	test -f spoo &&
+-	! grep "Add extra line at the end" spoo &&
++	test_cmp_rev rename1 HEAD^ &&
++	test_path_is_file spoo &&
++	test_cmp_rev initial:oops HEAD:spoo &&
+ 	git reflog -1 | grep revert
+ 
+ '
+-- 
+2.35.1.windows.2
 
-  * Comes with Git v2.36.0-rc0.
-  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-    3.3.4.
-  * Comes with Git LFS v3.1.2.
-  * Comes with OpenSSH v8.9p1.
-  * Comes with cURL v7.82.0.
-  * Comes with OpenSSL v1.1.1n.
-  * Comes with GNU TLS v3.7.4.
-
-Git-2.36.0-rc0-64-bit.exe | 4895e6873773cc3501251399af3de3793bdb3024b0e1a509ff25aaea7b4c6e45
-Git-2.36.0-rc0-32-bit.exe | f60f00b376ef437e770b13dfc7bbf54ec2b131d5aad99e3c1e133bb5359aa07d
-PortableGit-2.36.0-rc0-64-bit.7z.exe | 2a31582c86835288fea5a7c6cb9ddcfbe61b272cd5a2514ad1a98417fccbfebb
-PortableGit-2.36.0-rc0-32-bit.7z.exe | 7cb3f5f691859201f48f9e659cebd51c99876f1bd8b50772783feaeaff589e54
-MinGit-2.36.0-rc0-64-bit.zip | 9975e4d55e931ee2a402eeb942e1cecf4df22e8e0ebebdafb977aeb0a59dc5c2
-MinGit-2.36.0-rc0-32-bit.zip | ab8baf9061622610f494ecdbdb148ef3e333ae991a4e6ef890db3074881b9536
-MinGit-2.36.0-rc0-busybox-64-bit.zip | aaad29348eeae17b0d5cd29ea05cfdef0358208d709e835d0317b3f87977b3c1
-MinGit-2.36.0-rc0-busybox-32-bit.zip | 4c62bbf36ec870ad5354754597fc16d3816d0bce53826bcf88ae69b7674d999f
-Git-2.36.0-rc0-64-bit.tar.bz2 | 7e8528a5b22444afaa631d793421c4b248c4453215f9c60ee0cde250e60a1600
-Git-2.36.0-rc0-32-bit.tar.bz2 | 3d1c927c69cef6c134bf4b15318e3fb374e2f151ce95ff62acbca4357d05b3ba
-
-Ciao,
-Johannes
