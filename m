@@ -2,74 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C5CFC433EF
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 08:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54309C433EF
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 08:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232877AbiDEIEW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 04:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43948 "EHLO
+        id S234367AbiDEIZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 04:25:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235612AbiDEH7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 03:59:53 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA1D17E07
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 00:56:10 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id 125so14194713iov.10
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 00:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vJiC7IPqCwBwsedFMGXM0mPvNc/k6Qq2qX/yNlQBW84=;
-        b=DGblxN2C+MbTD3LXGlbJl3eJJnHzDw2jNJtoSWTXOZGSjJjEMW5NEtv64EfRlDQN7+
-         dNOy/k6QHS6ALmw329W+Tgvs8R6eFpo2800Cl4lgp+mCsJb2rVw8Kl/qI6kOTSq1zGXi
-         03Gvd2+lehSfc74hb9gma/5Kfom1JVmcZrckDFY4qjEPQpXeWTlmisRnVwor56Y0l6/O
-         mKCP86O3SX6UNUsAPDmA2mqJhrNOlo+O82oRC4loX6z6kaMDgOwwr/5lB6I0HOFlwko9
-         GEz6iTuNhvqEnHh+9EfHSO3W/pimBWi/0NEtOjL8D+r/9EnaY0rqtCWsAW8ywwOC88Zq
-         Pqew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vJiC7IPqCwBwsedFMGXM0mPvNc/k6Qq2qX/yNlQBW84=;
-        b=bfwwOKfIVyWWjcF6H8UB9j9BTXyzpsLMtLBP0POX1ysop9XZljLK8wKx+fx+YWaEm6
-         eJBmmF2tkxHsAsmOyUsGaGhM2Kuh1nLr9asD+m3EMKdKts0mNVpuVZY0lxz/qRli6c8h
-         bmRQ28fZ2GQMmesbaFgwU2T6rK4j0TGKzB4eCQ3O41cLL6yvfZEv7Jv0lj2oxf3CxN4j
-         C5oFtC6frx7Mf4EF6nr7+RlIK+MrYxYg71qCIwk2Hr8e/npMiFHNLdvf43q/MgEwdWnN
-         S0SZBCyA+CAm1kydrrVIQ+RUcT/EBLgA/GakW/+Fv5K0eftAgLxqdexUvgSBVOE29nMJ
-         ff5g==
-X-Gm-Message-State: AOAM530qC7aRApgywjgxC1jYm3zlwrmbNSWx62ht90cQGsL6nPRK3dFn
-        xuDJ61jt8lYjvyx+xFllc1+uCyJNJSmgrLveGnW8Vapsfq8=
-X-Google-Smtp-Source: ABdhPJzfaaHqyXU1WpWfDbbvV/+OCcpMVnOnTT363noWDn9qWSu9v+f9HxIrT4MAb60ttG0eLx/VxYCGVjts5LbW514=
-X-Received: by 2002:a05:6638:1384:b0:323:a81f:666a with SMTP id
- w4-20020a056638138400b00323a81f666amr1346665jad.39.1649145370106; Tue, 05 Apr
- 2022 00:56:10 -0700 (PDT)
+        with ESMTP id S239229AbiDEITz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 04:19:55 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E2F57C166
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 01:10:31 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 806105A3DE;
+        Tue,  5 Apr 2022 08:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1649146230;
+        bh=TWKdl3mC1i/HY4fmknk25Og6ddcqrcvuyFn8gelsHi0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fNbhzlNa2gh4oFUYLQfMcakJv58c8yFMocQFbfqtX6XWaltaxZGVQ7yNBk4gXJJaj
+         qjD/knvR7KU4QWwrm0T40UJImV2z113bbeHAFraadGzkkozQQsXFb/jRLaMu1dHgWs
+         jhAZvFBQqgb2fI29vxHie940iWCi2k5xcDt7MC2H1KX7FFgNTYweZUFteSOE9AbSdP
+         IbOoVnhKL7saJTA3e/zXnzYzGf+406oiT3c3o8ABgcuOOEMxMo6Riypf5R9qlBTQMg
+         O2H3w1FsjT2+ltvGOMt8dCPBiCyVCYDkqL0lAwJJ3MpWWE0GooJnaJ6ab1RkJHRfef
+         sNMcy/U/NeuBz2bGtv+5kVJAA0FpSXfl9wWnibpCBNQFf6KeI6E7q5FuZekQKhK6tG
+         9u8McDejYs6/Ema3LxcbdfiLRP38WUEsxSvGCZjba+9nlcd07fRdA9Ux+jLwNxFdjj
+         8w/WmPu6ysWyMd3Oa/J7hnr6GMv+iqlsXu4SSSglKFlv0/rK5QF
+Date:   Tue, 5 Apr 2022 08:10:28 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+        'Git Mailing List' <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
+Message-ID: <Ykv5dCEv/gl7aHMq@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+        'Git Mailing List' <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+References: <034101d84873$993f96f0$cbbec4d0$@nexbridge.com>
+ <CAPc5daWSDYSexkSeUUpfYDyT-M_F8d-rSMko5pqw140iLwBc_w@mail.gmail.com>
+ <034701d84875$030bfb40$0923f1c0$@nexbridge.com>
+ <20220405002610.27sgjva5wfryrcio@carlos-mbp.lan>
+ <20220405005418.3s2zayr3dmpxg45q@carlos-mbp.lan>
+ <035b01d84899$3cdc5b20$b6951160$@nexbridge.com>
+ <20220405042826.56vyilttx3lo4scv@carlos-mbp.lan>
 MIME-Version: 1.0
-References: <20220404182129.33992-1-eantoranz@gmail.com> <b2f5d6af-8da1-3a3a-cc21-848c14a8fb98@gmail.com>
- <220405.86wng4km5c.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220405.86wng4km5c.gmgdl@evledraar.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Tue, 5 Apr 2022 09:55:59 +0200
-Message-ID: <CAOc6etYOHeiLU_u-WxEiZSszXRHfn6h32dcXHQtEQqu=d-87hQ@mail.gmail.com>
-Subject: Re: [PATCH v2] blame: report correct number of lines in progress when
- using ranges
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, whydoubt@gmail.com,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kKNL1QRAZwr1rBOv"
+Content-Disposition: inline
+In-Reply-To: <20220405042826.56vyilttx3lo4scv@carlos-mbp.lan>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 5, 2022 at 9:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
->
->
-> Nothing should be using test_i18ngrep nowadays, just grep is better. We
-> no longer test with the gettext "poison" mode which necessitated it.
 
-Taking a closer look at the already defined tests/files. Thank you all
-for your feedback.
+--kKNL1QRAZwr1rBOv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2022-04-05 at 04:28:26, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> Subject: [PATCH] git-compat-util: really support openssl as a source of e=
+ntropy
+>=20
+> 05cd988dce5 (wrapper: add a helper to generate numbers from a CSPRNG,
+> 2022-01-17), configure openssl as the source for entropy in NON-STOP
+> but doesn't add the needed header or link options.
+>=20
+> Since the only system that is configured to use openssl as a source
+> of entropy is NON-STOP, add the header unconditionally, and -lcrypto
+> to the list of external libraries.
+>=20
+> An additional change is required to make sure a NO_OPENSSL=3D1 build
+> will be able to work as well (tested on Linux with a modified value
+> of CSPRNG_METHOD =3D openssl), and the more complex logic that allows
+> for compatibility with APPLE_COMMON_CRYPTO or allowing for simpler
+> ways to link (without libssl) has been punted for now.
+
+I didn't consider the case that we had NO_OPENSSL=3D1 because it seems a
+bit bizarre to say, "No, I don't want OpenSSL=E2=80=94oh, wait, I do want
+OpenSSL!"
+
+This patch also didn't seem necessary for me on Linux when I tested, but
+of course it might be necessary on some systems, so if it fixes things,
+I'm in favour.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--kKNL1QRAZwr1rBOv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYkv5cwAKCRB8DEliiIei
+gU3PAQD/EPMCId6lWtS+XLLyU9Zud4xTAwKG3RKHyQvJL+VJRAEAyIHkoVHbdqnz
+8jWV/WIeOpWX8hh3TuFeGqSMsQ9dBQI=
+=qTLD
+-----END PGP SIGNATURE-----
+
+--kKNL1QRAZwr1rBOv--
