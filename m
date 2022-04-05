@@ -2,201 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEDD9C433FE
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D0EC43217
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383592AbiDEVp0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:45:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50226 "EHLO
+        id S239485AbiDEVoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389515AbiDEPV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:21:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C78D1CD7
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 06:36:38 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id w21so19386272wra.2
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 06:36:38 -0700 (PDT)
+        with ESMTP id S1572908AbiDERSf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 13:18:35 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB1F25DA
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:16:36 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id l26so11789830ejx.1
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 10:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RZOi9t1b0n14Yugr3XwApSwlD1qVKv85gwjuWZcAGr8=;
-        b=WHB0uJCJC9KbmYJHUBG5AwiqOBdiP1FCtESur2FFzMMlp1Yxi2RPTIR8D/GXG1YVFZ
-         7y8obFYhNJQu0/SFI0v6BnuB8ttfue6qHkQ96ngvPuYg4YMan40IGnrZR774HR4bhnDo
-         6+v0ugLC0u5kuhp0vYB5vuwOHI1hE0zziFfmlxpRq1p+XgZG01yHuggRk6r30CppSXE1
-         p59VZ6ueIPgd/s282ndqfib49LoSwPqzIwwi2GRXHY1lSysFafoSEhUJd2gVqJ6NGaNE
-         YrVO8bvqcZ7/PEy3CiGvfZMGLd4jB7aox4SRu/wo5RLnjxhY69+ULUn/OmEiX/L0EVv3
-         8uHA==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/GMEjH0GVtzBbwHl/Tkc+hryrCWuQ9VmxbasnAeeyLM=;
+        b=cHmXFe9E0P8ll/+n2eLnf+mu+XqUBpK1tYgCNff08qEDlHh1y1qV+6gdLYw6JBvYSk
+         yqBM6lNQlsNczNEXSq/U6FcPs0TeefwsgYbyTjUvLWP2c/6/PM5pw+gfahlmIAUWTg0l
+         g1+HQd5wLfvvcfInUufAkgQ69KSNCKlSJsXOyxv9WHRRx/OQ7iAwa9BPuIl1l//3y/8M
+         ANdJkJU1xeQwWWNaDOmxu0KwHzlXZHEGoNp0xBFnWmjmPKcR3K2j4oOhmh0YTlwotKip
+         48mEE4EtDtbXA4Fic9VxlZlDYCGfEzN0CmbATPqgRYFeHilXyzt0+SSDL456Cr9u5VhT
+         3tcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RZOi9t1b0n14Yugr3XwApSwlD1qVKv85gwjuWZcAGr8=;
-        b=hTCuMzxMDNNYmFaLsrPzqMY1PnyWAgE/Hygs8PmWWn+upF9Y8Cef7qPSnVWIdNEvfv
-         oeub1otilqBp+7afu4KQGc+kk40/LEFqoeYurPtyhneUKpFpgMnD0lEay0Y/OmgwZtxb
-         tWRSK6AvEh01sotjNAqF3QrzsfzI8tx0v8JbhjR5w807hilJ0jmHZo/CbT8GpKo5pBzH
-         I5XxE5vmZ1KLtZqZx4Zc4rkHN0VSnpTV00zU3eM99I+GWs13bohsauY7KIiTkofOPSYU
-         TRwZVjfDaMU7SBUfCowtsbNJZIQhTWaJ0me1109IbgxIdD1KpEf922RSA95EZxa8xi9B
-         cW8w==
-X-Gm-Message-State: AOAM5325+R/DgIY8MqhNvgube22XRxva2/bT8cxTak/yETi5d70+S5ND
-        2EFf5HRl7nM0cip4WGWC1hA=
-X-Google-Smtp-Source: ABdhPJyD4OB6CQlKy2g4xF5PFCxuco9bMNlpXgFD3iOvYL9ZR885emiYJ6SUjwdl6KK3MCuIH9p3ZA==
-X-Received: by 2002:a5d:4a82:0:b0:206:a38:51d6 with SMTP id o2-20020a5d4a82000000b002060a3851d6mr2781828wrq.384.1649165796593;
-        Tue, 05 Apr 2022 06:36:36 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.224])
-        by smtp.gmail.com with ESMTPSA id q66-20020a1c4345000000b0038e69dd940esm2149685wma.29.2022.04.05.06.36.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 06:36:36 -0700 (PDT)
-Message-ID: <57c85e88-93af-acbe-f1ee-22c28dbec602@gmail.com>
-Date:   Tue, 5 Apr 2022 14:36:33 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/GMEjH0GVtzBbwHl/Tkc+hryrCWuQ9VmxbasnAeeyLM=;
+        b=v270Vfnr5/4SQ913uPGGona5GYPjUTXaeD9SjPSLr6qZHjQzhcHslT6bmakDq0Bapb
+         yJl6hR7Zl5UEx2x2QOm1nSeSh+vncPPzZv/BCQPaUTqGSoa4j0h8ctHNB7GpjEj/5B6s
+         vW0DKQjvsb/M39pJ+guFQhWgSFW6NWyYg4IetDaweyEtB6k7kBows5TcVZw4io/k27YJ
+         CFtF7+/Hdgn5wKDZ8vI3JWq2lggI7UhP4b3OeUU2uCiG66DSapD1hvZeNUSe+DYYy6BJ
+         rdoxI6WZLtkYpghLpZeEER6J2z1yOs9TwTmxLS2MwoMmKFzkFwK3ltrEtpaOrp3H/dlZ
+         nDzw==
+X-Gm-Message-State: AOAM530T9RzgN+Yj33b39hXGYV/7Qc8CXIuUNXsV/wR9L9a1M5Z+fjIk
+        v7P/QFhwuIxrXQM5ZF3ELnqR7LEiMUe3Iu1QjfFx/w==
+X-Google-Smtp-Source: ABdhPJy8YH0bQc1wfYHO8TobIQWpmwzOX6EB6Sbzycx9Yd8MFpnqObanCGmrTLTD1/tTTMEM9HzIs565AAmxY7HNFQY=
+X-Received: by 2002:a17:907:94d5:b0:6e0:2924:bd54 with SMTP id
+ dn21-20020a17090794d500b006e02924bd54mr4477500ejc.170.1649178995015; Tue, 05
+ Apr 2022 10:16:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Making the tests ~2.5x faster (was: [PATCH v3] test-lib.sh: Use
- GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34)
-Content-Language: en-GB-large
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, Eric Sunshine <ericsunshine@gmail.com>
-References: <20220304133702.26706-1-gitter.spiros@gmail.com>
- <975e203d-6bd3-f5ea-c21b-3e7518a04bb9@gmail.com>
- <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220405.86k0c3lt2l.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220210164627.279520-1-jholdsworth@nvidia.com>
+ <CAPMMpohZxpMFc-rVE96QbeGzN6NdF5CdYVp6FLrHD6Ngi=mu4A@mail.gmail.com>
+ <BL0PR12MB484938E9950EBCA08315544CC8E59@BL0PR12MB4849.namprd12.prod.outlook.com>
+ <CAPMMpoggSvPox5tM3B_NZ0GwLzg7LtHkXGhby1mZqpkehZ1G0Q@mail.gmail.com>
+ <CAPMMpohm74nVbi-dR=YOLoT+CbPiHGuVo35EoufKGKHP9Urexg@mail.gmail.com> <BL0PR12MB4849BAE614E63BBB0B77EC29C8E49@BL0PR12MB4849.namprd12.prod.outlook.com>
+In-Reply-To: <BL0PR12MB4849BAE614E63BBB0B77EC29C8E49@BL0PR12MB4849.namprd12.prod.outlook.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 5 Apr 2022 19:16:23 +0200
+Message-ID: <CAPMMpojFrDL9v=fWfyBx-Ko7fdZkd0yroC058n0+KAvL8SPiYA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/22] git-p4: Various code tidy-ups
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/04/2022 11:03, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Apr 04 2022, Phillip Wood wrote:
-> 
->> On 04/03/2022 13:37, Elia Pinto wrote:
->>> In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
->>> variables have been replaced by GLIBC_TUNABLES.  Also the new
->>> glibc requires that you preload a library called libc_malloc_debug.so
->>> to get these features.
->>> Using the ordinary glibc system variable detect if this is glibc >=
->>> 2.34 and
->>> use GLIBC_TUNABLES and the new library.
->>> This patch was inspired by a Richard W.M. Jones ndbkit patch
->>> Helped-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->>> ---
->>> This is the third version of the patch.
->>> Compared to the second version[1], the code is further simplified,
->>> eliminating a case statement and modifying a string statement.
->>> [1] https://www.spinics.net/lists/git/msg433917.html
->>>    t/test-lib.sh | 16 ++++++++++++++++
->>>    1 file changed, 16 insertions(+)
->>> diff --git a/t/test-lib.sh b/t/test-lib.sh
->>> index 9af5fb7674..4d10646015 100644
->>> --- a/t/test-lib.sh
->>> +++ b/t/test-lib.sh
->>> @@ -550,9 +550,25 @@ else
->>>    	setup_malloc_check () {
->>>    		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
->>>    		export MALLOC_CHECK_ MALLOC_PERTURB_
->>> +		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
->>> +		_GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
->>> +		expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
->>> +		then
->>> +			g=
->>> +			LD_PRELOAD="libc_malloc_debug.so.0"
->>
->> When compiling with "SANITIZE = address,leak" this use of LD_PRELOAD
->> makes the tests fail with
->>
->> ==9750==ASan runtime does not come first in initial library list; you
->> should either link runtime to your application or manually preload it
->> with LD_PRELOAD.
->>
->> because libc_malloc_debug.so is being loaded before libasan.so. If I
->> set TEST_NO_MALLOC_CHECK=1 when I run the tests then ASAN does not
->> complain but it would be nicer if I did not have to do that. I'm
->> confused as to why the CI leak tests are running fine - am I missing
->> something with my setup?
-> 
-> Perhaps they have an older glibc? They're on Ubunt, and e.g. my Debian
-> version is on 2.33.
+On Tue, Apr 5, 2022 at 2:04 PM Joel Holdsworth <jholdsworth@nvidia.com> wro=
+te:
+>
+> > So, an initial test suggests that a recent version of git-p4 at least d=
+oesn't fail in
+> > the same way under python3, in the face of at least some of these encod=
+ing
+> > issues. I don't know yet whether failures will occur in other places, n=
+or
+> > whether the not-failing behavior is better, worse or the same as I had =
+under
+> > python2, but it seems plausible that I won't be filing any test_expect_=
+failure
+> > tests after all, and will instead say "yay, python3 ftw!"
+>
+> That would be fabulous.
+>
 
-Good point, I'd not realized quite how new glibc 2.34 was
+Indeed, but completely untrue in the end. I had simply lost my
+"python3" override in the update (and failed to notice). It works just
+like before, unfortunately, so I'm back on track to try to reproduce
+under controlled conditions, and propose fixes.
 
-> But more generally, I'd somehow managed to not notice for all my time in
-> hacking on git (including on SANITIZE=leak, another tracing mode!) that
-> this check was being enabled *by default*, which could have saved me
-> some time waiting for tests...:
-> 	
-> 	$ git hyperfine -L rev HEAD~0 -L off yes, -s 'make CFLAGS=-O3' '(cd t && TEST_NO_MALLOC_CHECK={off} ./t3070-wildmatch.sh)' --warmup 1 -r 3
-> 	Benchmark 1: (cd t && TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh)' in 'HEAD~0
-> 	  Time (mean ± σ):      4.191 s ±  0.012 s    [User: 3.600 s, System: 0.746 s]
-> 	  Range (min … max):    4.181 s …  4.204 s    3 runs
-> 	
-> 	Benchmark 2: (cd t && TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh)' in 'HEAD~0
-> 	  Time (mean ± σ):      5.945 s ±  0.101 s    [User: 4.989 s, System: 1.146 s]
-> 	  Range (min … max):    5.878 s …  6.062 s    3 runs
-> 	
-> 	Summary
-> 	  '(cd t && TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh)' in 'HEAD~0' ran
-> 	    1.42 ± 0.02 times faster than '(cd t && TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh)' in 'HEAD~0'
-> 
-> I.e. I get that it's catching actual issues, but I was also doing runs
-> with SANITIZE=address, which I believe are going to catch a superset of
-> issues that this check does, so...
+> I myself have a repository that has a variety of such issues. A common ca=
+se is CP-1252 Smart Quote characters produced on Windows which are incompat=
+ible with UTF-8, without explicit conversion.
+>
 
-I assumed SANITIZE=address would catch a superset of issues as well but 
-I haven't actually checked the glibc tunables documentation. We disable 
-MALLOC_PERTURB_ when running under valgrind so perhaps we should do the 
-same when compiling with SANITIZE=address.
+I was perplexed as to how you could still have these issues, if they
+had magically cleared up for me. Now I know - they had not.
 
-I just noticed that setup_malloc_check() is called by 
-test_expect_success() and test_when_finished() so it really should be 
-caching the result of the check rather than forking getconf and expr 
-each time it is called. Overwriting LD_PRELOAD is not very friendly 
-either, it would be better if it appended the debug library if the 
-variable is already set.
+> However, a lot of these problems can be avoided by simply avoiding conver=
+sion to text in the first place. In many cases the incoming data doesn't ne=
+ed to be converted and can be passed around as binary.
 
-> Whatever we do with this narrow patch it would be a really nice
-> improvement if the test-lib.sh could fold all of these
-> "instrumentations" behind a single flag, and that both it and "make
-> test" would make it clear that you're testing in a slower "tracing" or
-> "instrumentation" mode.
-> 
-> Ditto things like chain lint and the bin-wrappers, e.g.:
+That's certainly the behavior in git-p4 under python2, but I'm pretty
+sure it's not "right". Git has a formal and coherent strategy for
+encoding - commit (meta)data is interpreted as utf-8 unless an
+"encoding" header is present in the commit. Git's output is utf-8
+(with on-the-fly re-encoding if commits do have a different encoding
+specified), unless you explicitly ask it to output in a different
+encoding. These processes are "forgiving", in that a set of bytes that
+cannot be interpreted as utf-8, in a commit that does not explicitly
+specify an encoding, will be output as-is rather than being rejected
+or warned about... But there is a "right way" to store data. When
+CP-1252 (high-range) bytes are simply "passed through" into the git
+data by python2, the resulting git commits cannot be displayed
+correctly by most or any git clients - they expect utf-8.
 
-I sometimes wish there was a way to only chain lint the tests that have 
-changed since the last run.
+On the other hand, in Perforce that does not appear to be the case at
+all: as far as I can tell, p4v in windows is simply using windows's
+active "legacy codepage", and reading or writing bytes accordingly
+(CP1252 in my case); in windows cmd, same thing by default; in linux,
+where utf8 is the norm nowadays, I get "unprintable character" output
+when something was submitted from a CP-1252 environment (same as I do
+for the python2-imported git commits, on any platform). If I switch a
+windows cmd terminal to utf8 ("chcp 65001"), it behaves the same. If I
+create a pending changelist with non-ANSI characters in Linux they get
+submitted as utf8-encoded, and when I view the same pending changelist
+in windows (from the command-line in its default legacy codepage, or
+in p4v which also seems to use the legacy codepage), I see the classic
+utf8-interpreted-as-CP1252 artifact "=C3=83=E2=80=A0" instead of "=C3=86".
 
->      $ git hyperfine -L rev HEAD~0 -L off yes, -L cl 0,1 -L nbw --no-bin-wrappers, -s 'make CFLAGS=-O3' '(cd t && GIT_TEST_CHAIN_LINT={cl} TEST_NO_MALLOC_CHECK={off} ./t3070-wildmatch.sh {nbw})' -r 1
->      [...]	
-> 	Summary
-> 	  '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0' ran
-> 	    1.23 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh )' in 'HEAD~0'
-> 	    1.30 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-> 	    1.54 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK=yes ./t3070-wildmatch.sh )' in 'HEAD~0'
-> 	    1.63 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-> 	    1.87 times faster than '(cd t && GIT_TEST_CHAIN_LINT=0 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh )' in 'HEAD~0'
-> 	    1.92 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh --no-bin-wrappers)' in 'HEAD~0'
-> 	    2.24 times faster than '(cd t && GIT_TEST_CHAIN_LINT=1 TEST_NO_MALLOC_CHECK= ./t3070-wildmatch.sh )' in 'HEAD~0'
-> 
-> I.e. between this, chain lint and bin wrappers we're coming up on our
-> tests running almost 3x as slow as they otherwise could *by default*.
-> 
-> But right now knowing which things you need to chase around to turn off
-> if you're just looking to test the semantics of your code without all
-> this instrumentation is a matter of archane knowledge, I'm not even sure
-> I remembered all the major ones (I didn't know about this one until
-> today).
+I don't see any sort of "codepage selection" configuration either in
+the perforce clients, or in the connection / server relationship.
+Perforce tooling seems to simply assume that the Operating Systems of
+all users will be configured with the same codepage - the bytes are
+the bytes, clients encode and decode them however they will, and there
+is simply no encoding metadata. US/western Windows clients, modern
+linux clients, older mac clients, and cyrillic-configured clients, etc
+will all have produced mutually-unintelligible content in the same
+repo over the years.
 
-That is quite a difference in run time - I wonder how much scope there 
-is for optimizing some of these features like the chain-lint vs 
-disabling them completely.
+In *my* environment, a majority of users have been using Windows over
+the years to write commit messages, and most will have had CP-1252
+configured, so I believe the most reasonable behavior would be "try
+interpreting the bytes as utf-8, and if that fails then fall back to
+interpreting as CP-1252, and either way, store the result in git as
+utf-8" - but I don't know whether that is the right strategy for a
+majority of environments. This strategy makes sense for me because
+it's very rare for something that *can* be correctly read as utf-8 to,
+in fact, not be intended to be utf-8; that was kind of the point in
+the standard's development - so starting by *trying* to interpret as
+utf-8 is a safe bet, and has value if *any* of your clients are likely
+to have used it. In my environment there are linux users, and in fact
+p4 user management happens in linux, so user names/descriptions are
+also utf-8.
 
-Best Wishes
+For other environments I suspect the "fallback codepage" should be
+configurable (I don't know how codepage identifiers work
+cross-platform in python, that sounds like it might be fun). You could
+imagine having an "auto-detect" fallback option, but for the reasons
+identified above this would need to operate on a per-string basis to
+have high value, and I think CL descriptions (and user names) are
+simply too short for autodetection to be a viable option.
 
-Phillip
+Another reasonable strategy (less optimal for my environment) would be
+to follow the "python2" approach of writing the bytes into git as they
+were read from p4, but also additionally *telling* git what the
+encoding is expected to be, by setting the "encoding" header
+accordingly in the fast-import data. In my case that wouldn't work
+well because, again, author names are utf-8, but commit messages are
+more commonly CP-1252. Git expects all the strings in the commit to
+use the same encoding (unless I've missed something).
+
+
+> I'm slowly working toward this goal, and once this patch-set it merged I =
+have a couple of other decoding patches in the pipeline. If you have any ot=
+her failure cases, please do submit them as test cases, or bug reports at l=
+east.
+>
+
+I'd love to know what approach you're looking at!
+
+I only use git-p4 for mirroring p4 activity into git, and not the
+other way around, so my perspective on this whole topic might be a bit
+skewed or short-sighted. For example, if we do end up storing the data
+in git as utf-8, as git expects, then when someone comes to create and
+submit p4 changelists from git activity, they might presumably want
+that stuff to be output-encoded as CP-1252, if that is the more common
+convention on their Perforce server...?
+
+> I would prefer the script to discard Python 2 support, but even if the co=
+nsensus is to retain it, Python 3 forces us to address these issues which i=
+s a great step in the right direction.
+>
+
+Right - discontinuing python 2 forces the elaboration of *some* sort
+of strategy, besides the python2 default of "oh, just import
+effectively-corrupt bytestreams into the git repo". That sounds like a
+good thing :)
