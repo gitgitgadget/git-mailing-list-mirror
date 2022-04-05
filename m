@@ -2,205 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D0EC43217
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DCAFC4167D
 	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239485AbiDEVoA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:44:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48986 "EHLO
+        id S1383740AbiDEVpu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1572908AbiDERSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 13:18:35 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB1F25DA
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:16:36 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id l26so11789830ejx.1
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 10:16:36 -0700 (PDT)
+        with ESMTP id S1457543AbiDEQIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 12:08:39 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155C225CD
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 09:06:40 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id bg10so27747409ejb.4
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 09:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/GMEjH0GVtzBbwHl/Tkc+hryrCWuQ9VmxbasnAeeyLM=;
-        b=cHmXFe9E0P8ll/+n2eLnf+mu+XqUBpK1tYgCNff08qEDlHh1y1qV+6gdLYw6JBvYSk
-         yqBM6lNQlsNczNEXSq/U6FcPs0TeefwsgYbyTjUvLWP2c/6/PM5pw+gfahlmIAUWTg0l
-         g1+HQd5wLfvvcfInUufAkgQ69KSNCKlSJsXOyxv9WHRRx/OQ7iAwa9BPuIl1l//3y/8M
-         ANdJkJU1xeQwWWNaDOmxu0KwHzlXZHEGoNp0xBFnWmjmPKcR3K2j4oOhmh0YTlwotKip
-         48mEE4EtDtbXA4Fic9VxlZlDYCGfEzN0CmbATPqgRYFeHilXyzt0+SSDL456Cr9u5VhT
-         3tcw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Rft2OtqvT/A/gKzmm/CnF/zc2YbPJWxar8u8sAMi8D4=;
+        b=jnvkuWMMJTIglf6WNrKwzQtx8wdTCu7TQIE3QHFj3zlWxlZYwGzikO5G3YSQiHpliG
+         Z8KQaEdpURn7th1IlQC0x+xTaJTZOR6nKC1jn5MQIqadHMr6s7j/oyBqZR7TcMxf2ALX
+         PUcLD3VLldI/CdxcJdRynqUsrBsLfuomk3zgoix4tPgt8UWwmTUgQAW5Uf0F+eUilPiP
+         +PjrtZXMaZGb4GfS9UyiG4klkQGf9dq1YtbEYKvlTYxaLxwHZS/88tMEYIcfyT8K1Ldp
+         e72zSZeb0r5aYt5VkDmYfrJTS+3YsTWSb9+FsmMT2HRymHYFtBaIDku0TsiA/DDUdhIS
+         s5hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/GMEjH0GVtzBbwHl/Tkc+hryrCWuQ9VmxbasnAeeyLM=;
-        b=v270Vfnr5/4SQ913uPGGona5GYPjUTXaeD9SjPSLr6qZHjQzhcHslT6bmakDq0Bapb
-         yJl6hR7Zl5UEx2x2QOm1nSeSh+vncPPzZv/BCQPaUTqGSoa4j0h8ctHNB7GpjEj/5B6s
-         vW0DKQjvsb/M39pJ+guFQhWgSFW6NWyYg4IetDaweyEtB6k7kBows5TcVZw4io/k27YJ
-         CFtF7+/Hdgn5wKDZ8vI3JWq2lggI7UhP4b3OeUU2uCiG66DSapD1hvZeNUSe+DYYy6BJ
-         rdoxI6WZLtkYpghLpZeEER6J2z1yOs9TwTmxLS2MwoMmKFzkFwK3ltrEtpaOrp3H/dlZ
-         nDzw==
-X-Gm-Message-State: AOAM530T9RzgN+Yj33b39hXGYV/7Qc8CXIuUNXsV/wR9L9a1M5Z+fjIk
-        v7P/QFhwuIxrXQM5ZF3ELnqR7LEiMUe3Iu1QjfFx/w==
-X-Google-Smtp-Source: ABdhPJy8YH0bQc1wfYHO8TobIQWpmwzOX6EB6Sbzycx9Yd8MFpnqObanCGmrTLTD1/tTTMEM9HzIs565AAmxY7HNFQY=
-X-Received: by 2002:a17:907:94d5:b0:6e0:2924:bd54 with SMTP id
- dn21-20020a17090794d500b006e02924bd54mr4477500ejc.170.1649178995015; Tue, 05
- Apr 2022 10:16:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220210164627.279520-1-jholdsworth@nvidia.com>
- <CAPMMpohZxpMFc-rVE96QbeGzN6NdF5CdYVp6FLrHD6Ngi=mu4A@mail.gmail.com>
- <BL0PR12MB484938E9950EBCA08315544CC8E59@BL0PR12MB4849.namprd12.prod.outlook.com>
- <CAPMMpoggSvPox5tM3B_NZ0GwLzg7LtHkXGhby1mZqpkehZ1G0Q@mail.gmail.com>
- <CAPMMpohm74nVbi-dR=YOLoT+CbPiHGuVo35EoufKGKHP9Urexg@mail.gmail.com> <BL0PR12MB4849BAE614E63BBB0B77EC29C8E49@BL0PR12MB4849.namprd12.prod.outlook.com>
-In-Reply-To: <BL0PR12MB4849BAE614E63BBB0B77EC29C8E49@BL0PR12MB4849.namprd12.prod.outlook.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 5 Apr 2022 19:16:23 +0200
-Message-ID: <CAPMMpojFrDL9v=fWfyBx-Ko7fdZkd0yroC058n0+KAvL8SPiYA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/22] git-p4: Various code tidy-ups
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Rft2OtqvT/A/gKzmm/CnF/zc2YbPJWxar8u8sAMi8D4=;
+        b=lwV6yHtO3JMtoAulKnQqsfyMCErBTWIXG9UaQZPgfdUTsI4hcNpa4684YnVlT2BacQ
+         y2wmzQ9xtg2L56hyZSxcRLicKt++2Q8HQQWcYfZRYwSJQp8Ka/IIUA5juCz86IkLHcIj
+         U8AiC15ykXguaLO3K5UVgJyyX3xEtGz1otYBg+C/miBsl4zdhsL566UCUiuYcLJ6LEFb
+         fsZftJk1684hpSB1pAfUPi1Z5Mc8yoA563soAuHt8qncWfyHJZg2Y0RxwCmWybZURi1T
+         PK0siD1ecUXerZqIiIctkuLsgWoZ4rfmqKLCM5wGy63Jx917If8ZQtS6ESGi0JMed23f
+         QFqg==
+X-Gm-Message-State: AOAM530EFQ+85Iv0nAL0sA7q0GGKexHwbXVXGQo/wQGS9ke7rF4iLcGR
+        p9BQWv47z3k3k/xeJ6h2UXE=
+X-Google-Smtp-Source: ABdhPJw2K9JnPVYCfJWCYZlhVG1eGgcvwQzCbx9FbewrfxvVqCQevBJJ9zTvY59FMqF+l/nS2OaMJA==
+X-Received: by 2002:a17:907:3e16:b0:6df:b4f0:5cc2 with SMTP id hp22-20020a1709073e1600b006dfb4f05cc2mr4316878ejc.285.1649174798365;
+        Tue, 05 Apr 2022 09:06:38 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p3-20020a1709060e8300b006d0e8ada804sm5637530ejf.127.2022.04.05.09.06.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 09:06:37 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nblhU-000CSo-Ny;
+        Tue, 05 Apr 2022 18:06:36 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-Content-Type: text/plain; charset="UTF-8"
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v5 5/8] Makefile: move ".SUFFIXES" rule to shared.mak
+Date:   Tue, 05 Apr 2022 18:04:35 +0200
+References: <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com>
+ <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
+ <patch-v5-5.8-18e0a6985f1-20220303T160155Z-avarab@gmail.com>
+ <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
+Message-ID: <220405.86r16bfrar.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 5, 2022 at 2:04 PM Joel Holdsworth <jholdsworth@nvidia.com> wro=
-te:
+
+On Tue, Apr 05 2022, Adam Dinwoodie wrote:
+
+> On Thu, Mar 03, 2022 at 05:04:16PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> This was added in 30248886ce8 (Makefile: disable default implicit
+>> rules, 2010-01-26), let's move it to the top of "shared.mak" so it'll
+>> apply to all our Makefiles.
+>>=20
+>> This doesn't benefit the main Makefile at all, since it already had
+>> the rule, but since we're including shared.mak in other Makefiles
+>> starts to benefit them. E.g. running the 'man" target is now faster:
+>>=20
+>>     $ git -c hyperfine.hook.setup=3D hyperfine -L rev HEAD~1,HEAD~0 -s '=
+make -C Documentation man' 'make -C Documentation -j1 man'
+>>     Benchmark 1: make -C Documentation -j1 man' in 'HEAD~1
+>>       Time (mean =C2=B1 =CF=83):     121.7 ms =C2=B1   8.8 ms    [User: =
+105.8 ms, System: 18.6 ms]
+>>       Range (min =E2=80=A6 max):   112.8 ms =E2=80=A6 148.4 ms    26 runs
+>>=20
+>>     Benchmark 2: make -C Documentation -j1 man' in 'HEAD~0
+>>       Time (mean =C2=B1 =CF=83):      97.5 ms =C2=B1   8.0 ms    [User: =
+80.1 ms, System: 20.1 ms]
+>>       Range (min =E2=80=A6 max):    89.8 ms =E2=80=A6 111.8 ms    32 runs
+>>=20
+>>     Summary
+>>       'make -C Documentation -j1 man' in 'HEAD~0' ran
+>>         1.25 =C2=B1 0.14 times faster than 'make -C Documentation -j1 ma=
+n' in 'HEAD~1'
+>>=20
+>> The reason for that can be seen when comparing that run with
+>> "--debug=3Da". Without this change making a target like "git-status.1"
+>> will cause "make" to consider not only "git-status.txt", but
+>> "git-status.txt.o", as well as numerous other implicit suffixes such
+>> as ".c", ".cc", ".cpp" etc. See [1] for a more detailed before/after
+>> example.
+>>=20
+>> So this is causing us to omit a bunch of work we didn't need to
+>> do. For making "git-status.1" the "--debug=3Da" output is reduced from
+>> ~140k lines to ~6k.
+>>=20
+>> 1. https://lore.kernel.org/git/220222.86bkyz875k.gmgdl@evledraar.gmail.c=
+om/
+>>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  Makefile   | 2 --
+>>  shared.mak | 5 +++++
+>>  2 files changed, 5 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/Makefile b/Makefile
+>> index 1ac924bd844..ce362720947 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -2580,8 +2580,6 @@ ASM_SRC :=3D $(wildcard $(OBJECTS:o=3DS))
+>>  ASM_OBJ :=3D $(ASM_SRC:S=3Do)
+>>  C_OBJ :=3D $(filter-out $(ASM_OBJ),$(OBJECTS))
+>>=20=20
+>> -.SUFFIXES:
+>> -
+>>  $(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+>>  	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $=
+(EXTRA_CPPFLAGS) $<
+>>  $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_di=
+r)
+>> diff --git a/shared.mak b/shared.mak
+>> index 29f0e69ecb9..1dda948df09 100644
+>> --- a/shared.mak
+>> +++ b/shared.mak
+>> @@ -9,6 +9,11 @@
+>>  %:: s.%
+>>  %:: SCCS/s.%
+>>=20=20
+>> +## Likewise delete default $(SUFFIXES). See:
+>> +##
+>> +##     info make --index-search=3D.SUFFIXES
+>> +.SUFFIXES:
+>> +
+>>  ### Flags affecting all rules
+>>=20=20
+>>  # A GNU make extension since gmake 3.72 (released in late 1994) to
 >
-> > So, an initial test suggests that a recent version of git-p4 at least d=
-oesn't fail in
-> > the same way under python3, in the face of at least some of these encod=
-ing
-> > issues. I don't know yet whether failures will occur in other places, n=
-or
-> > whether the not-failing behavior is better, worse or the same as I had =
-under
-> > python2, but it seems plausible that I won't be filing any test_expect_=
-failure
-> > tests after all, and will instead say "yay, python3 ftw!"
+> I confess I really don't understand why, but as part of testing
+> v2.36.0-rc0 on Cygwin, I've started getting errors building the info
+> pages, and bisect points to this commit as the culprit.
 >
-> That would be fabulous.
+> Specifically, I've been running
 >
-
-Indeed, but completely untrue in the end. I had simply lost my
-"python3" override in the update (and failed to notice). It works just
-like before, unfortunately, so I'm back on track to try to reproduce
-under controlled conditions, and propose fixes.
-
-> I myself have a repository that has a variety of such issues. A common ca=
-se is CP-1252 Smart Quote characters produced on Windows which are incompat=
-ible with UTF-8, without explicit conversion.
+>     git clean -dffx && make configure && ./configure && make -j4 info
 >
-
-I was perplexed as to how you could still have these issues, if they
-had magically cleared up for me. Now I know - they had not.
-
-> However, a lot of these problems can be avoided by simply avoiding conver=
-sion to text in the first place. In many cases the incoming data doesn't ne=
-ed to be converted and can be passed around as binary.
-
-That's certainly the behavior in git-p4 under python2, but I'm pretty
-sure it's not "right". Git has a formal and coherent strategy for
-encoding - commit (meta)data is interpreted as utf-8 unless an
-"encoding" header is present in the commit. Git's output is utf-8
-(with on-the-fly re-encoding if commits do have a different encoding
-specified), unless you explicitly ask it to output in a different
-encoding. These processes are "forgiving", in that a set of bytes that
-cannot be interpreted as utf-8, in a commit that does not explicitly
-specify an encoding, will be output as-is rather than being rejected
-or warned about... But there is a "right way" to store data. When
-CP-1252 (high-range) bytes are simply "passed through" into the git
-data by python2, the resulting git commits cannot be displayed
-correctly by most or any git clients - they expect utf-8.
-
-On the other hand, in Perforce that does not appear to be the case at
-all: as far as I can tell, p4v in windows is simply using windows's
-active "legacy codepage", and reading or writing bytes accordingly
-(CP1252 in my case); in windows cmd, same thing by default; in linux,
-where utf8 is the norm nowadays, I get "unprintable character" output
-when something was submitted from a CP-1252 environment (same as I do
-for the python2-imported git commits, on any platform). If I switch a
-windows cmd terminal to utf8 ("chcp 65001"), it behaves the same. If I
-create a pending changelist with non-ANSI characters in Linux they get
-submitted as utf8-encoded, and when I view the same pending changelist
-in windows (from the command-line in its default legacy codepage, or
-in p4v which also seems to use the legacy codepage), I see the classic
-utf8-interpreted-as-CP1252 artifact "=C3=83=E2=80=A0" instead of "=C3=86".
-
-I don't see any sort of "codepage selection" configuration either in
-the perforce clients, or in the connection / server relationship.
-Perforce tooling seems to simply assume that the Operating Systems of
-all users will be configured with the same codepage - the bytes are
-the bytes, clients encode and decode them however they will, and there
-is simply no encoding metadata. US/western Windows clients, modern
-linux clients, older mac clients, and cyrillic-configured clients, etc
-will all have produced mutually-unintelligible content in the same
-repo over the years.
-
-In *my* environment, a majority of users have been using Windows over
-the years to write commit messages, and most will have had CP-1252
-configured, so I believe the most reasonable behavior would be "try
-interpreting the bytes as utf-8, and if that fails then fall back to
-interpreting as CP-1252, and either way, store the result in git as
-utf-8" - but I don't know whether that is the right strategy for a
-majority of environments. This strategy makes sense for me because
-it's very rare for something that *can* be correctly read as utf-8 to,
-in fact, not be intended to be utf-8; that was kind of the point in
-the standard's development - so starting by *trying* to interpret as
-utf-8 is a safe bet, and has value if *any* of your clients are likely
-to have used it. In my environment there are linux users, and in fact
-p4 user management happens in linux, so user names/descriptions are
-also utf-8.
-
-For other environments I suspect the "fallback codepage" should be
-configurable (I don't know how codepage identifiers work
-cross-platform in python, that sounds like it might be fun). You could
-imagine having an "auto-detect" fallback option, but for the reasons
-identified above this would need to operate on a per-string basis to
-have high value, and I think CL descriptions (and user names) are
-simply too short for autodetection to be a viable option.
-
-Another reasonable strategy (less optimal for my environment) would be
-to follow the "python2" approach of writing the bytes into git as they
-were read from p4, but also additionally *telling* git what the
-encoding is expected to be, by setting the "encoding" header
-accordingly in the fast-import data. In my case that wouldn't work
-well because, again, author names are utf-8, but commit messages are
-more commonly CP-1252. Git expects all the strings in the commit to
-use the same encoding (unless I've missed something).
-
-
-> I'm slowly working toward this goal, and once this patch-set it merged I =
-have a couple of other decoding patches in the pipeline. If you have any ot=
-her failure cases, please do submit them as test cases, or bug reports at l=
-east.
+> Without this commit, that gets me a successful build; there's a bunch of
+> noisy warnings that have been hanging around for a long time, and I think
+> are fundamentally due to the slightly mismatched documentation libraries
+> that Cygwin has.  With this commit, I get the same noisy warnings, but I
+> also get the error "could not open .texi: No such file or directory".
 >
+> I have to confess, I don't really understand this aspect of GNU Make, so
+> I'm not sure if this is a problem with Cygwin having a bad toolset or
+> there being something about my environment that means this doesn't work,
+> but regardless, it's currently causing the Cygwin Git builds to fail.
 
-I'd love to know what approach you're looking at!
-
-I only use git-p4 for mirroring p4 activity into git, and not the
-other way around, so my perspective on this whole topic might be a bit
-skewed or short-sighted. For example, if we do end up storing the data
-in git as utf-8, as git expects, then when someone comes to create and
-submit p4 changelists from git activity, they might presumably want
-that stuff to be output-encoded as CP-1252, if that is the more common
-convention on their Perforce server...?
-
-> I would prefer the script to discard Python 2 support, but even if the co=
-nsensus is to retain it, Python 3 forces us to address these issues which i=
-s a great step in the right direction.
->
-
-Right - discontinuing python 2 forces the elaboration of *some* sort
-of strategy, besides the python2 default of "oh, just import
-effectively-corrupt bytestreams into the git repo". That sounds like a
-good thing :)
+Hi. I can reproduce this locally, will look at it and fix it, sorry.
