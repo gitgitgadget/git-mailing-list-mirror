@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17539C433FE
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 05:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BBB6C433EF
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 05:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbiDEFWt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 01:22:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53278 "EHLO
+        id S229776AbiDEFWv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 01:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbiDEFWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 01:22:34 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D34EF6F
-        for <git@vger.kernel.org>; Mon,  4 Apr 2022 22:20:37 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id o20so4247698pla.13
-        for <git@vger.kernel.org>; Mon, 04 Apr 2022 22:20:37 -0700 (PDT)
+        with ESMTP id S229783AbiDEFWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 01:22:33 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DBAA203
+        for <git@vger.kernel.org>; Mon,  4 Apr 2022 22:20:34 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id p8so11053815pfh.8
+        for <git@vger.kernel.org>; Mon, 04 Apr 2022 22:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tzwj0MPh8XM1pXNQAEBm1HAa9mV3A7ktmPBd86yNLys=;
-        b=R2oiNa6o/KUE3g97glGvO55V+sk3nIY8ZFPSAeq6hi+VseWwMdU9u7ErLqzhMsSDOL
-         RuecSP1Fum76rTXVzzUG6jilSCTVWRHKUyOPE3gE4Su8PPE63lOyV+hrFSYVdzV07Fm5
-         LBPN2ChQsTYnZFzvVWGNV+d3zYtbx9CgDEo0mVQjOldeBRubFQ6zW20yCLbSA9gN/9Fe
-         9KfaJCZG3SRdqnblaGQJrazotCkgDFGxxSxwpmJl1VukXXj2PbpCZbGM23Zv9UVqcmua
-         zLU8fQeAd5tkAfZ4xqgWUlIDY+t/+HwMQbFhX2TP+oMcchYL+AziREG/uinAj6S9yyV1
-         dS8Q==
+        bh=TGSvFkAXH9tGqO4RDzpiOdb/LjAKqIyU7jw+pplVEPc=;
+        b=QRXQTMLrifnCVnbMoHVH7dhm9pi8UjW1/JclUFlCQcYnN7rotSen11paPV6+p7ITUp
+         ly7yWK7RMAkQJAbWmV1oaBA1XQj/TRGjH8VLDe4c1V+YuZHak8VC/A5LehhxyAOqizL+
+         sx0tJbMt7DTX0ubaYgz/koTfSA64aeg0fwIaOu6HnNcPmWcyhBY5435uxTPpdvnelb7r
+         FlblwmP/Nxj+YONIqo9sNfkpiIri/yO8MPFLXgNYcyoqWHT19D8FLp4pkEjAW5JagfRB
+         S+Zh/3c/4hBhjpzCA5gcYDnJrjnMeeUDuLO98oIBd/fR3Ig2XqNZGd4Vzj8GXfVyVwNy
+         KHaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tzwj0MPh8XM1pXNQAEBm1HAa9mV3A7ktmPBd86yNLys=;
-        b=fAkMBf2dlIMLimD/JBZXL73CtCN2IzDskdRi/tSVk4+N9RayS9qKVRaOZoW3j4gltB
-         UXukBS0bJnkgmsLWpFgYETepm7MHFDyN0Rb9vHUMhOhyDI2pgRBbjjfhLxsuEsrde8Um
-         Uux0Y87sOIQyC6ysPz3FsxUuybqU59uk95bpmLOhfE+EeS6OEtX5Wor+sHuXD4elfJPt
-         qXRPqvwmH1dGWmQjEub5TByUvqplp/oxfJfEJN00BwIHszgp8qLPwcsAxAUoTco2JcsV
-         PiBp17utMd8ULZIU1b+ROzmvTuidrekLv0xQDUJa1cv/b/SFYA7mdkqjl03plWTGrYqq
-         M6tQ==
-X-Gm-Message-State: AOAM532yOLhdNaznBHEIh1mbVVlsc5J3AH1CSxTtFb4f/UcX07498UCt
-        kAiafsYKQNLIUvG8mOzsbmY=
-X-Google-Smtp-Source: ABdhPJwdaGi7O8TEb4a6yaPRdKfbjUdH2VTnXoKiAP8WXMX2MqTUiPDL2+LFEdNB4v3HRGel9p/fcQ==
-X-Received: by 2002:a17:90b:3b8f:b0:1c7:b62e:8e87 with SMTP id pc15-20020a17090b3b8f00b001c7b62e8e87mr2112016pjb.156.1649136036578;
-        Mon, 04 Apr 2022 22:20:36 -0700 (PDT)
+        bh=TGSvFkAXH9tGqO4RDzpiOdb/LjAKqIyU7jw+pplVEPc=;
+        b=yZq3LPH9VrplGYil9rIPhnZ8Br0hjRZ2nPt3iUVTMGspTWt9rEHpeAUzGrRKIQsYM3
+         t/19KsrNAdyQmkmq/TeZwXPckRLCl+sEWAELEf9zaYF9Pqs+wv/Vn1oGhUq0NsAFM4sw
+         wLHrDtxt082C16v0ONnz6nclPhSR7kxZG/2PyXcZt/GZwD67bXESR/Pi3n4dwve3MDP/
+         5Jc0azAtS9EfMCk56sVm7PcRecZ2KllewkOT2U8dJCxe0wYxwOzfCWjnDtd7um2USuqG
+         YdOZxMSeESETQucai0BOy370I/X16TyqiR0HBcaSFFcGCmEhHR49tJxnO8iJ1ILDVsOw
+         mJfg==
+X-Gm-Message-State: AOAM533lLjl4W5pGyXhevJA0+QxzBbskJWVaN3UuId9zY1PxW9ihw1G1
+        DN4rq3qCNNyEfjbPAfkKlZZBlPUMo6q2sg==
+X-Google-Smtp-Source: ABdhPJxRkluBYhDxiYKeDA1HUSgy+MlV1hGPzar4kx0tzZ5fR6XTfQnriEXpkeYtSVVhojnIa5jTlQ==
+X-Received: by 2002:aa7:88d6:0:b0:4fa:ba98:4f5d with SMTP id k22-20020aa788d6000000b004faba984f5dmr1827107pff.5.1649136033992;
+        Mon, 04 Apr 2022 22:20:33 -0700 (PDT)
 Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
-        by smtp.gmail.com with ESMTPSA id g3-20020a17090a708300b001c7e8ae7637sm808859pjk.8.2022.04.04.22.20.35
+        by smtp.gmail.com with ESMTPSA id g3-20020a17090a708300b001c7e8ae7637sm808859pjk.8.2022.04.04.22.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 22:20:35 -0700 (PDT)
+        Mon, 04 Apr 2022 22:20:33 -0700 (PDT)
 From:   nksingh85@gmail.com
 X-Google-Original-From: neerajsi@microsoft.com
 To:     gitgitgadget@gmail.com
@@ -54,9 +54,9 @@ Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, bagasdotme@gmail.com,
         git@vger.kernel.org, jeffhost@microsoft.com,
         neerajsi@microsoft.com, nksingh85@gmail.com, ps@pks.im,
         worldhello.net@gmail.com
-Subject: [PATCH v6 11/12] t/perf: add iteration setup mechanism to perf-lib
-Date:   Mon,  4 Apr 2022 22:20:17 -0700
-Message-Id: <20220405052018.11247-12-neerajsi@microsoft.com>
+Subject: [PATCH v6 09/12] test-lib-functions: add parsing helpers for ls-files and ls-tree
+Date:   Mon,  4 Apr 2022 22:20:15 -0700
+Message-Id: <20220405052018.11247-10-neerajsi@microsoft.com>
 X-Mailer: git-send-email 2.34.1.78.g86e39b8f8d
 In-Reply-To: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
 References: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
@@ -68,258 +68,324 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Tests that affect the repo in stateful ways are easier to write if we
-can run setup steps outside of the measured portion of perf iteration.
+Several tests use awk to parse OIDs from the output of 'git ls-files
+--stage' and 'git ls-tree'. Introduce helpers to centralize these uses
+of awk.
 
-This change adds a "--setup 'setup-script'" parameter to test_perf. To
-make invocations easier to understand, I also moved the prerequisites to
-a new --prereq parameter.
-
-The setup facility will be used in the upcoming perf tests for batch
-mode, but it already helps in some existing tests, like t5302 and t7820.
+Update t5317-pack-objects-filter-objects.sh to use the new ls-files
+helper so that it has some usages to review. Other updates are left for
+the future.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- t/perf/p4220-log-grep-engines.sh       |  3 +-
- t/perf/p4221-log-grep-engines-fixed.sh |  3 +-
- t/perf/p5302-pack-index.sh             | 15 +++---
- t/perf/p7519-fsmonitor.sh              | 18 ++------
- t/perf/p7820-grep-engines.sh           |  6 ++-
- t/perf/perf-lib.sh                     | 63 +++++++++++++++++++++++---
- 6 files changed, 74 insertions(+), 34 deletions(-)
+ t/t5317-pack-objects-filter-objects.sh | 91 +++++++++++++-------------
+ t/test-lib-functions.sh                | 10 +++
+ 2 files changed, 54 insertions(+), 47 deletions(-)
 
-diff --git a/t/perf/p4220-log-grep-engines.sh b/t/perf/p4220-log-grep-engines.sh
-index 2bc47ded4d1..03fbfbb85d3 100755
---- a/t/perf/p4220-log-grep-engines.sh
-+++ b/t/perf/p4220-log-grep-engines.sh
-@@ -36,7 +36,8 @@ do
- 		else
- 			prereq=""
- 		fi
--		test_perf $prereq "$engine log$GIT_PERF_4220_LOG_OPTS --grep='$pattern'" "
-+		test_perf "$engine log$GIT_PERF_4220_LOG_OPTS --grep='$pattern'" \
-+			--prereq "$prereq" "
- 			git -c grep.patternType=$engine log --pretty=format:%h$GIT_PERF_4220_LOG_OPTS --grep='$pattern' >'out.$engine' || :
- 		"
- 	done
-diff --git a/t/perf/p4221-log-grep-engines-fixed.sh b/t/perf/p4221-log-grep-engines-fixed.sh
-index 060971265a9..0a6d6dfc219 100755
---- a/t/perf/p4221-log-grep-engines-fixed.sh
-+++ b/t/perf/p4221-log-grep-engines-fixed.sh
-@@ -26,7 +26,8 @@ do
- 		else
- 			prereq=""
- 		fi
--		test_perf $prereq "$engine log$GIT_PERF_4221_LOG_OPTS --grep='$pattern'" "
-+		test_perf "$engine log$GIT_PERF_4221_LOG_OPTS --grep='$pattern'" \
-+			--prereq "$prereq" "
- 			git -c grep.patternType=$engine log --pretty=format:%h$GIT_PERF_4221_LOG_OPTS --grep='$pattern' >'out.$engine' || :
- 		"
- 	done
-diff --git a/t/perf/p5302-pack-index.sh b/t/perf/p5302-pack-index.sh
-index c16f6a3ff69..14c601bbf86 100755
---- a/t/perf/p5302-pack-index.sh
-+++ b/t/perf/p5302-pack-index.sh
-@@ -26,9 +26,8 @@ test_expect_success 'set up thread-counting tests' '
- 	done
- '
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index 33b740ce628..bb633c9b099 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -10,9 +10,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ # Test blob:none filter.
  
--test_perf PERF_EXTRA 'index-pack 0 threads' '
--	rm -rf repo.git &&
--	git init --bare repo.git &&
-+test_perf 'index-pack 0 threads' --prereq PERF_EXTRA \
-+	--setup 'rm -rf repo.git && git init --bare repo.git' '
- 	GIT_DIR=repo.git git index-pack --threads=1 --stdin < $PACK
- '
- 
-@@ -36,17 +35,15 @@ for t in $threads
- do
- 	THREADS=$t
- 	export THREADS
--	test_perf PERF_EXTRA "index-pack $t threads" '
--		rm -rf repo.git &&
--		git init --bare repo.git &&
-+	test_perf "index-pack $t threads" --prereq PERF_EXTRA \
-+		--setup 'rm -rf repo.git && git init --bare repo.git' '
- 		GIT_DIR=repo.git GIT_FORCE_THREADS=1 \
- 		git index-pack --threads=$THREADS --stdin <$PACK
- 	'
- done
- 
--test_perf 'index-pack default number of threads' '
--	rm -rf repo.git &&
--	git init --bare repo.git &&
-+test_perf 'index-pack default number of threads' \
-+	--setup 'rm -rf repo.git && git init --bare repo.git' '
- 	GIT_DIR=repo.git git index-pack --stdin < $PACK
- '
- 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 0b9129ca7bc..b1cb23880fb 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -60,18 +60,6 @@ then
- 	esac
- fi
- 
--if test -n "$GIT_PERF_7519_DROP_CACHE"
--then
--	# When using GIT_PERF_7519_DROP_CACHE, GIT_PERF_REPEAT_COUNT must be 1 to
--	# generate valid results. Otherwise the caching that happens for the nth
--	# run will negate the validity of the comparisons.
--	if test "$GIT_PERF_REPEAT_COUNT" -ne 1
--	then
--		echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
--		GIT_PERF_REPEAT_COUNT=1
--	fi
--fi
+ test_expect_success 'setup r1' '
+-	echo "{print \$1}" >print_1.awk &&
+-	echo "{print \$2}" >print_2.awk &&
 -
- trace_start () {
- 	if test -n "$GIT_PERF_7519_TRACE"
- 	then
-@@ -175,10 +163,10 @@ setup_for_fsmonitor_hook () {
+ 	git init r1 &&
+ 	for n in 1 2 3 4 5
+ 	do
+@@ -22,10 +19,13 @@ test_expect_success 'setup r1' '
+ 	done
+ '
  
- test_perf_w_drop_caches () {
- 	if test -n "$GIT_PERF_7519_DROP_CACHE"; then
--		test-tool drop-caches
-+		test_perf "$1" --setup "test-tool drop-caches" "$2"
-+	else
-+		test_perf "$@"
- 	fi
--
--	test_perf "$@"
- }
- 
- test_fsmonitor_suite () {
-diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
-index 8b09c5bf328..9bfb86842a9 100755
---- a/t/perf/p7820-grep-engines.sh
-+++ b/t/perf/p7820-grep-engines.sh
-@@ -49,13 +49,15 @@ do
- 		fi
- 		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
- 		then
--			test_perf $prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" "
-+			test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" \
-+				--prereq "$prereq" "
- 				git -c grep.patternType=$engine grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine' || :
- 			"
- 		else
- 			for threads in $GIT_PERF_GREP_THREADS
- 			do
--				test_perf PTHREADS,$prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern' with $threads threads" "
-+				test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern' with $threads threads"
-+					--prereq PTHREADS,$prereq "
- 					git -c grep.patternType=$engine -c grep.threads=$threads grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine.$threads' || :
- 				"
- 			done
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 932105cd12c..ab3687c28d4 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -189,19 +189,39 @@ exit $ret' >&3 2>&4
- }
- 
- test_wrapper_ () {
--	test_wrapper_func_=$1; shift
-+	local test_wrapper_func_="$1"; shift
-+	local test_title_="$1"; shift
- 	test_start_
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	BUG "not 2 or 3 parameters to test-expect-success"
-+	test_prereq=
-+	test_perf_setup_=
-+	while test $# != 0
-+	do
-+		case $1 in
-+		--prereq)
-+			test_prereq=$2
-+			shift
-+			;;
-+		--setup)
-+			test_perf_setup_=$2
-+			shift
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		shift
-+	done
-+	test "$#" = 1 || BUG "test_wrapper_ needs 2 positional parameters"
- 	export test_prereq
--	if ! test_skip "$@"
-+	export test_perf_setup_
++parse_verify_pack_blob_oid () {
++	awk '{print $1}' -
++}
 +
-+	if ! test_skip "$test_title_" "$@"
- 	then
- 		base=$(basename "$0" .sh)
- 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
- 		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
- 		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
--		"$test_wrapper_func_" "$@"
-+		"$test_wrapper_func_" "$test_title_" "$@"
- 	fi
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
  
- 	test_finish_
-@@ -214,6 +234,16 @@ test_perf_ () {
- 		echo "perf $test_count - $1:"
- 	fi
- 	for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
-+		if test -n "$test_perf_setup_"
-+		then
-+			say >&3 "setup: $test_perf_setup_"
-+			if ! test_eval_ $test_perf_setup_
-+			then
-+				test_failure_ "$test_perf_setup_"
-+				break
-+			fi
+ 	git -C r1 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -35,7 +35,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -54,12 +54,12 @@ test_expect_success 'verify blob:none packfile has no blobs' '
+ test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
+ 	git -C r1 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >expected &&
+ 
+ 	git -C r1 verify-pack -v ../filter.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -123,8 +123,8 @@ test_expect_success 'setup r2' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -134,7 +134,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r2 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -161,8 +161,8 @@ test_expect_success 'verify blob:limit=1000' '
+ '
+ 
+ test_expect_success 'verify blob:limit=1001' '
+-	git -C r2 ls-files -s large.1000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1001 >filter.pack <<-EOF &&
+@@ -172,15 +172,15 @@ test_expect_success 'verify blob:limit=1001' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=10001' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=10001 >filter.pack <<-EOF &&
+@@ -190,15 +190,15 @@ test_expect_success 'verify blob:limit=10001' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=1k' '
+-	git -C r2 ls-files -s large.1000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1k >filter.pack <<-EOF &&
+@@ -208,15 +208,15 @@ test_expect_success 'verify blob:limit=1k' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify explicitly specifying oversized blob in input' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	echo HEAD >objects &&
+@@ -226,15 +226,15 @@ test_expect_success 'verify explicitly specifying oversized blob in input' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify blob:limit=1m' '
+-	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r2 ls-files -s large.1000 large.10000 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r2 pack-objects --revs --stdout --filter=blob:limit=1m >filter.pack <<-EOF &&
+@@ -244,7 +244,7 @@ test_expect_success 'verify blob:limit=1m' '
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -253,12 +253,12 @@ test_expect_success 'verify blob:limit=1m' '
+ test_expect_success 'verify normal and blob:limit packfiles have same commits/trees' '
+ 	git -C r2 verify-pack -v ../all.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >expected &&
+ 
+ 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+ 	grep -E "commit|tree" verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -289,9 +289,8 @@ test_expect_success 'setup r3' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r3 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -301,7 +300,7 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r3 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -342,9 +341,8 @@ test_expect_success 'setup r4' '
+ '
+ 
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -354,19 +352,19 @@ test_expect_success 'verify blob count in normal packfile' '
+ 
+ 	git -C r4 verify-pack -v ../all.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify sparse:oid=OID' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 ls-files -s pattern >staged &&
+-	oid=$(awk -f print_2.awk staged) &&
++	oid=$(test_parse_ls_files_stage_oids <staged) &&
+ 	git -C r4 pack-objects --revs --stdout --filter=sparse:oid=$oid >filter.pack <<-EOF &&
+ 	HEAD
+ 	EOF
+@@ -374,15 +372,15 @@ test_expect_success 'verify sparse:oid=OID' '
+ 
+ 	git -C r4 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+ '
+ 
+ test_expect_success 'verify sparse:oid=oid-ish' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	git -C r4 pack-objects --revs --stdout --filter=sparse:oid=main:pattern >filter.pack <<-EOF &&
+@@ -392,7 +390,7 @@ test_expect_success 'verify sparse:oid=oid-ish' '
+ 
+ 	git -C r4 verify-pack -v ../filter.pack >verify_result &&
+ 	grep blob verify_result |
+-	awk -f print_1.awk |
++	parse_verify_pack_blob_oid |
+ 	sort >observed &&
+ 
+ 	test_cmp expected observed
+@@ -402,9 +400,8 @@ test_expect_success 'verify sparse:oid=oid-ish' '
+ # This models previously omitted objects that we did not receive.
+ 
+ test_expect_success 'setup r1 - delete loose blobs' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
+-		>ls_files_result &&
+-	awk -f print_2.awk ls_files_result |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
++	test_parse_ls_files_stage_oids |
+ 	sort >expected &&
+ 
+ 	for id in `cat expected | sed "s|..|&/|"`
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 93c03380d44..50970d3e03e 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1782,6 +1782,16 @@ test_oid_to_path () {
+ 	echo "${1%$basename}/$basename"
+ }
+ 
++# Parse oids from git ls-files --staged output
++test_parse_ls_files_stage_oids () {
++	awk '{print $2}' -
++}
 +
-+		fi
- 		say >&3 "running: $2"
- 		if test_run_perf_ "$2"
- 		then
-@@ -237,11 +267,24 @@ test_perf_ () {
- 	rm test_time.*
- }
- 
-+# Usage: test_perf 'title' [options] 'perf-test'
-+#	Run the performance test script specified in perf-test with
-+#	optional prerequisite and setup steps.
-+# Options:
-+#	--prereq prerequisites: Skip the test if prequisites aren't met
-+#	--setup "setup-steps": Run setup steps prior to each measured iteration
-+#
- test_perf () {
- 	test_wrapper_ test_perf_ "$@"
- }
- 
- test_size_ () {
-+	if test -n "$test_perf_setup_"
-+	then
-+		say >&3 "setup: $test_perf_setup_"
-+		test_eval_ $test_perf_setup_
-+	fi
++# Parse oids from git ls-tree output
++test_parse_ls_tree_oids () {
++	awk '{print $3}' -
++}
 +
- 	say >&3 "running: $2"
- 	if test_eval_ "$2" 3>"$base".result; then
- 		test_ok_ "$1"
-@@ -250,6 +293,14 @@ test_size_ () {
- 	fi
- }
- 
-+# Usage: test_size 'title' [options] 'size-test'
-+#	Run the size test script specified in size-test with optional
-+#	prerequisites and setup steps. Returns the numeric value
-+#	returned by size-test.
-+# Options:
-+#	--prereq prerequisites: Skip the test if prequisites aren't met
-+#	--setup "setup-steps": Run setup steps prior to the size measurement
-+
- test_size () {
- 	test_wrapper_ test_size_ "$@"
- }
+ # Choose a port number based on the test script's number and store it in
+ # the given variable name, unless that variable already contains a number.
+ test_set_port () {
 -- 
 2.34.1.78.g86e39b8f8d
 
