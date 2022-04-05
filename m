@@ -2,134 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC494C433EF
-	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE49AC43217
+	for <git@archiver.kernel.org>; Tue,  5 Apr 2022 21:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384462AbiDEVrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Apr 2022 17:47:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37892 "EHLO
+        id S1384576AbiDEVrh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Apr 2022 17:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1452334AbiDEPyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:54:47 -0400
-X-Greylist: delayed 2220 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Apr 2022 07:53:01 PDT
-Received: from lucy.dinwoodie.org (b.8.0.0.8.9.b.0.2.f.0.9.2.a.d.b.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:de15:20ad:bda2:90f2:b98:8b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A247131979
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 07:53:01 -0700 (PDT)
-Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
-        (envelope-from <adam@dinwoodie.org>)
-        id 1nbjyK-000GBG-A5; Tue, 05 Apr 2022 15:15:52 +0100
-Date:   Tue, 5 Apr 2022 15:15:52 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
-        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v5 5/8] Makefile: move ".SUFFIXES" rule to shared.mak
-Message-ID: <20220405141552.qgl6t2urtbeilsmp@lucy.dinwoodie.org>
-References: <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com>
- <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
- <patch-v5-5.8-18e0a6985f1-20220303T160155Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v5-5.8-18e0a6985f1-20220303T160155Z-avarab@gmail.com>
+        with ESMTP id S1573052AbiDERuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Apr 2022 13:50:13 -0400
+Received: from st43p00im-ztdg10073201.me.com (st43p00im-ztdg10073201.me.com [17.58.63.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09A25D1111
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 10:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1649180893;
+        bh=Rexh88WOZDsqnD9rW7/nR0OKHe2W/XEFsMtvF6Bry3E=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=IDgOD2YAoFJ0WMQWoX80x8UfnsSGJFodc+42w8Z0ff9ofgxXSa4d15DS8yODL6yXb
+         dP0T84VhXvrlDGvSyr7Qgn7H64sPmqw+vWJlYIQzZF+tOUWRMzTafC8AMmWwewMVxC
+         sgm2D2S2WZGej/cpp3HUw2cRDD3A423R5Oi7msPMoqfLtY8uPcGE1xLHJFumJ8WI7V
+         fb6M/8O95t/PNPFHOAQz+iE+ZsqQNGYgBKGAecRQZ+1po2c27LApKhwp1N7vVuNt1R
+         rpvr8adOZgGHrRvqILKiNzWysQ+spWO9PyJYYBCdLTPWt8w8jbOb2+UPWv4Lr7C7Uw
+         ehFTL1uoFx5/g==
+Received: from max-mbp-1449.fritz.box (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-ztdg10073201.me.com (Postfix) with ESMTPS id 1D9A89A07E1
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 17:48:12 +0000 (UTC)
+From:   Maximilian Reichel <reichemn@icloud.com>
+Content-Type: multipart/mixed;
+        boundary="Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19"
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
+Subject: file loss by git stash push --staged --keep-index
+Message-Id: <111D7753-AE53-4906-A7AF-F39EA7455CA3@icloud.com>
+Date:   Tue, 5 Apr 2022 19:48:11 +0200
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.104.21)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 clxscore=1015
+ spamscore=0 mlxscore=0 bulkscore=0 mlxlogscore=925 phishscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2009150000 definitions=main-2204050100
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 03, 2022 at 05:04:16PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> This was added in 30248886ce8 (Makefile: disable default implicit
-> rules, 2010-01-26), let's move it to the top of "shared.mak" so it'll
-> apply to all our Makefiles.
-> 
-> This doesn't benefit the main Makefile at all, since it already had
-> the rule, but since we're including shared.mak in other Makefiles
-> starts to benefit them. E.g. running the 'man" target is now faster:
-> 
->     $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make -C Documentation man' 'make -C Documentation -j1 man'
->     Benchmark 1: make -C Documentation -j1 man' in 'HEAD~1
->       Time (mean ± σ):     121.7 ms ±   8.8 ms    [User: 105.8 ms, System: 18.6 ms]
->       Range (min … max):   112.8 ms … 148.4 ms    26 runs
-> 
->     Benchmark 2: make -C Documentation -j1 man' in 'HEAD~0
->       Time (mean ± σ):      97.5 ms ±   8.0 ms    [User: 80.1 ms, System: 20.1 ms]
->       Range (min … max):    89.8 ms … 111.8 ms    32 runs
-> 
->     Summary
->       'make -C Documentation -j1 man' in 'HEAD~0' ran
->         1.25 ± 0.14 times faster than 'make -C Documentation -j1 man' in 'HEAD~1'
-> 
-> The reason for that can be seen when comparing that run with
-> "--debug=a". Without this change making a target like "git-status.1"
-> will cause "make" to consider not only "git-status.txt", but
-> "git-status.txt.o", as well as numerous other implicit suffixes such
-> as ".c", ".cc", ".cpp" etc. See [1] for a more detailed before/after
-> example.
-> 
-> So this is causing us to omit a bunch of work we didn't need to
-> do. For making "git-status.1" the "--debug=a" output is reduced from
-> ~140k lines to ~6k.
-> 
-> 1. https://lore.kernel.org/git/220222.86bkyz875k.gmgdl@evledraar.gmail.com/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  Makefile   | 2 --
->  shared.mak | 5 +++++
->  2 files changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 1ac924bd844..ce362720947 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2580,8 +2580,6 @@ ASM_SRC := $(wildcard $(OBJECTS:o=S))
->  ASM_OBJ := $(ASM_SRC:S=o)
->  C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
->  
-> -.SUFFIXES:
-> -
->  $(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
->  	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
->  $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-> diff --git a/shared.mak b/shared.mak
-> index 29f0e69ecb9..1dda948df09 100644
-> --- a/shared.mak
-> +++ b/shared.mak
-> @@ -9,6 +9,11 @@
->  %:: s.%
->  %:: SCCS/s.%
->  
-> +## Likewise delete default $(SUFFIXES). See:
-> +##
-> +##     info make --index-search=.SUFFIXES
-> +.SUFFIXES:
-> +
->  ### Flags affecting all rules
->  
->  # A GNU make extension since gmake 3.72 (released in late 1994) to
 
-I confess I really don't understand why, but as part of testing
-v2.36.0-rc0 on Cygwin, I've started getting errors building the info
-pages, and bisect points to this commit as the culprit.
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
-Specifically, I've been running
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-    git clean -dffx && make configure && ./configure && make -j4 info
+What did you do before the bug happened? (Steps to reproduce your issue)
+Running the following script:
+```
+#!/bin/bash
+git init workDir
+cd workDir
+git commit -m first --allow-empty
+echo b > b
+git add b
+GIT_TRACE=TRUE git stash push --staged --keep-index
+git stash pop
+cat b
+```
 
-Without this commit, that gets me a successful build; there's a bunch of
-noisy warnings that have been hanging around for a long time, and I think
-are fundamentally due to the slightly mismatched documentation libraries
-that Cygwin has.  With this commit, I get the same noisy warnings, but I
-also get the error "could not open .texi: No such file or directory".
+What did you expect to happen? (Expected behavior)
+I expect file `b` to be present after running the script.
+If I run the script with only `git stash push --staged` or 
+`git stash push --keep-index`, the file is present afterward.
 
-I have to confess, I don't really understand this aspect of GNU Make, so
-I'm not sure if this is a problem with Cygwin having a bad toolset or
-there being something about my environment that means this doesn't work,
-but regardless, it's currently causing the Cygwin Git builds to fail.
+What happened instead? (Actual behavior)
+The file is not present after running the script.
+`cat b` will report that the file does not exist.
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
+Content-Disposition: attachment;
+	filename=output--staged.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="output--staged.txt"
+Content-Transfer-Encoding: quoted-printable
+
+Initialized empty Git repository in /test/workDir/.git/
+[master (root-commit) 5ebd5d0] first
+17:28:10.379881 git.c:459               trace: built-in: git stash push =
+--staged
+17:28:10.381318 run-command.c:654       trace: run_command: git =
+diff-tree -p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
+17:28:10.382374 git.c:459               trace: built-in: git diff-tree =
+-p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
+17:28:10.383488 run-command.c:654       trace: run_command: git apply -R
+Saved working directory and index state WIP on master: 5ebd5d0 first
+17:28:10.384517 git.c:459               trace: built-in: git apply -R
+17:28:10.384942 run-command.c:654       trace: run_command: git reset -q =
+--refresh --
+17:28:10.386018 git.c:459               trace: built-in: git reset -q =
+--refresh --
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   b
+
+Dropped refs/stash@{0} (546ccd88cdcd416cd0bfa5b0c63600b64011da53)
+b
+
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
+Content-Disposition: attachment;
+	filename=output--keep-index.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="output--keep-index.txt"
+Content-Transfer-Encoding: quoted-printable
+
+Initialized empty Git repository in /test/workDir/.git/
+[master (root-commit) e972d48] first
+17:26:07.021096 git.c:459               trace: built-in: git stash push =
+--keep-index
+17:26:07.022721 run-command.c:654       trace: run_command: =
+GIT_INDEX_FILE=3D.git/index.stash.101 git update-index =
+--ignore-skip-worktree-entries -z --add --remove --stdin
+17:26:07.023845 git.c:459               trace: built-in: git =
+update-index --ignore-skip-worktree-entries -z --add --remove --stdin
+17:26:07.024747 run-command.c:654       trace: run_command: git reset =
+--hard -q --no-recurse-submodules
+Saved working directory and index state WIP on master: e972d48 first
+17:26:07.025846 git.c:459               trace: built-in: git reset =
+--hard -q --no-recurse-submodules
+17:26:07.026947 run-command.c:654       trace: run_command: git checkout =
+--no-overlay 6be660545b31f61a82a87d2b1915f0b88bb9f16f -- :/
+17:26:07.028043 git.c:459               trace: built-in: git checkout =
+--no-overlay 6be660545b31f61a82a87d2b1915f0b88bb9f16f -- :/
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   b
+
+Dropped refs/stash@{0} (3ed20e369087861f1dd3089342a656217e537d34)
+b
+
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
+Content-Disposition: attachment;
+	filename=output--keep-index--staged.txt
+Content-Type: text/plain;
+	x-unix-mode=0644;
+	name="output--keep-index--staged.txt"
+Content-Transfer-Encoding: quoted-printable
+
+Initialized empty Git repository in /test/workDir/.git/
+[master (root-commit) b3f6a1b] first
+17:26:28.802913 git.c:459               trace: built-in: git stash push =
+--keep-index --staged
+17:26:28.804521 run-command.c:654       trace: run_command: git =
+diff-tree -p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
+17:26:28.805602 git.c:459               trace: built-in: git diff-tree =
+-p -U1 HEAD 6be660545b31f61a82a87d2b1915f0b88bb9f16f --
+17:26:28.806705 run-command.c:654       trace: run_command: git apply -R
+Saved working directory and index state WIP on master: b3f6a1b first
+17:26:28.807796 git.c:459               trace: built-in: git apply -R
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   b
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    b
+
+Dropped refs/stash@{0} (0314f565bf7ae2738cece5d41045fd4dcf32aac2)
+cat: b: No such file or directory
+
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
+
+
+`git status` reports a staged change with the created file and 
+an unstaged change that the file is deleted.
+
+What's different between what you expected and what actually happened?
+git stash pop does not recreate the file when stashing with
+`--staged` and `--keep-index`.
+
+Anything else you want to add:
+I got the same behavior on git 2.35.1 and the latest master.
+I attached to output of the script for all three variants:
+stash push with `--staged --keep-index`, `--staged` and `--keep-index`.
+
+[System Info]
+git version:
+git version 2.36.0.rc0
+cpu: x86_64
+built from commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+
+--Apple-Mail=_F5BF5684-111C-48EE-836F-F90A1AE71F19--
