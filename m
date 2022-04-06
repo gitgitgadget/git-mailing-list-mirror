@@ -2,77 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52DA7C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEEEC433FE
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237048AbiDFVk2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 17:40:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55574 "EHLO
+        id S237081AbiDFVkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 17:40:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238307AbiDFVi5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 17:38:57 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1AB419028
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 14:10:02 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id n6-20020a17090a670600b001caa71a9c4aso4092069pjj.1
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 14:10:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/Q2VxlbyqSiWEllIwGgcc+KNg6/HLc+tacK46OBGgvc=;
-        b=jJbmfor9oPE5h2k1uZsDv+kZnwRjEDen07R4K6xpbbmgtYMUjOUnaL8hqN4jjoSTqx
-         46fBYelK4yWu5l5UihIe9/xhrXhny81v1zdaurubWKSFYN9K9/RWKPaPTWiJ+4J57gOu
-         y/+tKfoejBmmneIf6SgS9iiQsM2DnnkODn86QlnpxpDjR1OpI0s+4oVRkw2Si+6cQ3lh
-         irnm/v4JlwgyiBlNZ0/BKfKCnCAiSIEz5MebCdGVOaecrE4Mavy35dDodI6SgLJ+UT90
-         GJFaEd5Tc8t1N2pfUHrdIpWZ4OaG2W+z/XXWT6Is2brHHKqCF5Rl4sOHplyuf/ipr7Ca
-         II6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/Q2VxlbyqSiWEllIwGgcc+KNg6/HLc+tacK46OBGgvc=;
-        b=eBuBtMEAEbkTO6it0DkGKWE85xv61ueui5+Tk5KWLs1ca8l9KiPSezwLGYRLxQ8fwS
-         9SItDTbWXph5P+6quoY/X7/f8mED8N8S+HEFDgANaw1Oopb0/WBEB86y38KczzhFqjLN
-         Hyv+iIt6pdVBfm2Fh0hu+qsjrTEoxNCoC5pallRX+N8Vn8rnt0HmE7Q1A9KGQKAPc15v
-         1ho9tHnr72qL5pZ7UUDLjwfPC1cwRTbmTjDB0w/09pXcfq06YJ5vEGpxe+yeFNmw2fP8
-         cx9X5vCRC2fS7om3UEUn8Uz1e4vtlMgohsWMBQcmtCPNHrzwzdhyXxdp1Ke6Jep3hMAu
-         yC4A==
-X-Gm-Message-State: AOAM532iPzal1tt+b4k4B6XWkwS0AYJOXJUPsb9zHxcUIDvaf4tlIsPW
-        J/xli5AGB1BFqmcgbeb11aA=
-X-Google-Smtp-Source: ABdhPJwnGOaO7s8XGOYK13HJ74KV3S/3F7xw1Xk8ksG3Iz1+2M5RtHe3YNCROTubUeKRUO8YeijhFg==
-X-Received: by 2002:a17:90b:224f:b0:1c9:949e:2202 with SMTP id hk15-20020a17090b224f00b001c9949e2202mr12006655pjb.56.1649279402150;
-        Wed, 06 Apr 2022 14:10:02 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:2c00:1377:21af:a46a:d6a7:f39f])
-        by smtp.gmail.com with ESMTPSA id b13-20020a056a000ccd00b004fadb6f0299sm20447602pfv.191.2022.04.06.14.09.58
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 06 Apr 2022 14:10:01 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        vdye@github.com, gitster@pobox.com
-Subject: Re: [GSoC v1 0/1] GSoC 2022 proposal rough draft
-Date:   Thu,  7 Apr 2022 02:39:38 +0530
-Message-Id: <20220406210938.27565-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <CAJyCBOTHT+oLQ5Z0rKhj7tfiA97_rpXAU3mVjokUV09DB9bkvg@mail.gmail.com>
-References: <CAJyCBOTHT+oLQ5Z0rKhj7tfiA97_rpXAU3mVjokUV09DB9bkvg@mail.gmail.com>
+        with ESMTP id S238710AbiDFVjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 17:39:09 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC60CB7C
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 14:16:42 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 125B5132365;
+        Wed,  6 Apr 2022 17:16:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=wCyxA2TZaN9d0cXhuQtS23vF6NReMt0BvD0vItezhAE=; b=fb1O
+        iInRqG1pDx31OBpMVpiBRK0LBjuJY8yn8Ajs0/IAmhvp9NkZNBIcfHRFJQxwccJs
+        gr7gZmSzdu9sH5V5ZdnLhWnPHzXwM9lYpOi5Q1UqvXHULfz58k7pBjRSqTGahBva
+        eza/9kMPMF40bqwHxf+R537cq+GRHOx4rOFA9gY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03AA7132364;
+        Wed,  6 Apr 2022 17:16:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57253132363;
+        Wed,  6 Apr 2022 17:16:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Raphael Bauer <raphael@pdev.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pretty format: fix colors on %+ placeholder newline
+References: <e8417ad5-f9f2-c1de-75f6-45be49f0011b@pdev.de>
+        <20220405154529.966434-1-raphael@pdev.de>
+Date:   Wed, 06 Apr 2022 14:16:40 -0700
+Message-ID: <xmqq8rshx687.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DA772F46-B5EE-11EC-A31E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
+Raphael Bauer <raphael@pdev.de> writes:
 
-> Not sure why, seems that the previous email does not show up on the
-> mailing list.
+> Previously, the color escape codes were not printed again when a %+
+> placeholder was expanded, which could lead to missing colors.
 
+It is very good to start the proposed log message by describing the
+current behaviour, highlighting what problem it has.  Because the
+message is merely _proposing_ to make this change, which may or may
+not be accepted into the codebase, however, please describe the
+status quo in the present tense.  "We behave this way", not "we used
+to behave this way".  There is no need to say "Currently" (and it is
+simply misleading to say "Previously").
 
-Same for me. I am also trying to send the proposal. But for some
-reason, it is not showing on the public mailing list.
+> In particular, the following command on any commit history exercised the
+> problem:
+>
+> git log --pretty=format:'%h%Cred%+d test' --graph
+>
+> The string 'test' should always be in red, but is not when commits have
+> ref names associated and the %+d placeholder is expanded.
+> This is also not a problem of any pager since the --graph option adds a
+> colored pipe symbol at the beginning of the line, which makes re-setting
+> the color again afterwards necessary.
 
+Isn't it the problem with the "--graph" codepath, then?
 
-Thanks :)
+It is unclear from the proposed log message why it is a good idea to
+add the new behaviour to the code that handles "%+" unconditionally.
+It also is unclear why the new behaviour to save only one "color
+escape" is sufficient.  For example, if we used
 
+    git log --pretty='format:%h%C(green)%C(reverse)%+d test' --graph
+
+wouldn't the effects of these two add up?  Would it be sufficient to
+remember the last one we saw and re-enable it?
+
+Combining the above two together, it makes me wonder if the right
+approach is instead to (1) stop resetting at the end of --graph, and
+(2) instead "save" the attribute before starting to draw --graph,
+draw the --graph in color, and then "restore" the attribute.
+
+Whatever approach we decide to take to solve this issue, let's have
+a test case or two added to the test suite to better document the
+issue.
+
+Thanks.
