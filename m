@@ -2,127 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4AD1C433FE
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 09:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B18C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 10:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237368AbiDFKAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 06:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44836 "EHLO
+        id S234731AbiDFKbP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 06:31:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237428AbiDFJ4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 05:56:36 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD4A49DE8F
-        for <git@vger.kernel.org>; Tue,  5 Apr 2022 23:25:42 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id 7so1562149pfu.13
-        for <git@vger.kernel.org>; Tue, 05 Apr 2022 23:25:42 -0700 (PDT)
+        with ESMTP id S1379669AbiDFK3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 06:29:05 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE01F3479AA
+        for <git@vger.kernel.org>; Tue,  5 Apr 2022 23:52:40 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d15so1151300pll.10
+        for <git@vger.kernel.org>; Tue, 05 Apr 2022 23:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=30AyJYEtXU39AbhmHfOh7bBj38UvL1r07o3XjOtBiDM=;
-        b=kf5WF2un+nJkEdOynj4hNW5p2ou4rWENA8mhWwKX6tVAeZtUeQKotLvYC+ia826juY
-         bPzEt+MvYEM9xls73uFUFgESIJyZydifOVmr5gv6mZTEV4xj2HrBhghVPIdYjkk9KxLf
-         kURuAS4jSEywHB/ThHSwRkCcF6mFzzWBQI/Sc0Z6uMKIxg4sw9yivghdDohNNRjghKVf
-         30v0Pet1Nfw17ffJsxTfwuR8fQK8k7LoxXkZArLJHUaOK1h3TjwLYMiaA8HroLcQWkU/
-         uQXkT4Sjr8cKd3M6QBD9dfTlZKIg6GK50guRmHbMnfwPANdZmmLFum+tleJ6FCMXH9NM
-         iQdg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2LKv+9jhy+/kt4X6v+Y9ThscWQt4KGgW1puS3d4DwWQ=;
+        b=DERUwSKUdzzlMECpBAllnO+R0zmajoGY6x6FiIaqF2OtdVybtK5N2VP8zqurGeu0p/
+         yzP028Q21vyvmLeqZNDIjhYMzjBF7/YID9Ug4ljIiOs3qEhkC2AZNoquiRnyDSYjsQG5
+         0CLqtmS0tvVTRl0wynlT5Jq0w2/zKuu8l1YRTKVcyJpQBGx4WyFtIkQSHASMJ7/o1z1K
+         L9vLGDUtHt0rB9FNUsovVOwFTxFJmx624Oxm81ks5BXuRIG2mfdH3PT9Cmdx/77YxGzQ
+         h1DAOV2SnAm3Wn7ktItEErFzZQBdUUX/dVhjxK+gi9hQRlXr4HaFrwIWQVP7q/i5FTNL
+         fHiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=30AyJYEtXU39AbhmHfOh7bBj38UvL1r07o3XjOtBiDM=;
-        b=b39p7DwRuqGRri5GA0cDKZc5KaMDp/5JupTmpx9bbmS/DEy+h6asYz2bRGFX1OBLcg
-         G32eFKtoQIqjDTQF28cPmlB7GWZEV6bbAbhumb0vZsvgKzB/XaB3eb4N9S5XGXQb3Vv/
-         ztfU+0OXjTX80TivEdF+FxXT9McJ988K9XBF6aIGmz9SM2TEZFLHmX9jbvXQDRe4sMic
-         5b21NCHSqPensJ3F9PBiqkM7MxIpm0y99kSnlsM1ZNO3R+QP9p/OlMwitq45lXNp81oZ
-         1ru8eTQpvZzWAbBbJO5OUibMJUp0/h97f+BxgKPpseFSWS5JcG0P4AIAJSe3fX+uoJhv
-         XQxw==
-X-Gm-Message-State: AOAM531qjVaiFLCdYJv3zAsWCAkHSEJZoETC/cDuDQHB9oAp2CtT/XtI
-        GjioXu1qztQf3OppeXzWY8yMqEK/4ww+gGkyMBA=
-X-Google-Smtp-Source: ABdhPJycJOWyRaaM+rwuF+0xfTSiP8ieEvjfXeioSeSf0YUDo2xlGYiqj4hB6ZrfMNYRLP2GGdTu/OBpc5MpMi/w+aw=
-X-Received: by 2002:a63:c10e:0:b0:381:6a51:6231 with SMTP id
- w14-20020a63c10e000000b003816a516231mr5844737pgf.189.1649226341342; Tue, 05
- Apr 2022 23:25:41 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2LKv+9jhy+/kt4X6v+Y9ThscWQt4KGgW1puS3d4DwWQ=;
+        b=KWBOPWSjA5m208g3kcNkRKDE2+kPJVFPFUxTCMAeYCHY+7h8a1lnudRHJZsAWjv/fK
+         AFfnoQLTxLcTd2/JO+hRCZktURmyIeKsdAE9LyXta/fsuYi5EaCi+LOxMrdQwNzuEzRa
+         avlGG5OQrw7YMGur/JZiQVaNduQ1Kclj8hU+luKP65QVQ3dQ8W4prZQ2OyDNGw58dkdv
+         gJeM94VVH5N+c8ykH2FtdsCsdTm8Ftd3qiclEq91Bvi4O7NWjKLjXteCoZ68evtFxqLa
+         nOCbZOk6XrWMjmnKRch4fOjRCdro+4D0fnJQgqLNTPLGTl/ohZ2W/wLjdgrIdL7yfrSz
+         qEWA==
+X-Gm-Message-State: AOAM532+T9A1krCrYZjWqzpNFT1ibX8Er1Jn9eO7KgM5PX6iRlfKwj9j
+        p3oO8asvuzKtY3Gc91Ch6fhogUrt+zE=
+X-Google-Smtp-Source: ABdhPJzzk4y6uz4AKD4LRBesAbEl/e1Jk77Vue8PhWDLX7sLHwwdYIqfXD68zNDmcbmudLYdcbeETA==
+X-Received: by 2002:a17:90b:124c:b0:1bc:369b:7db5 with SMTP id gx12-20020a17090b124c00b001bc369b7db5mr8258117pjb.179.1649227959976;
+        Tue, 05 Apr 2022 23:52:39 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id y30-20020a056a001c9e00b004fa9246adcbsm16923424pfw.144.2022.04.05.23.52.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Apr 2022 23:52:38 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.36.0 round #1
+Date:   Wed,  6 Apr 2022 14:51:51 +0800
+Message-Id: <20220406065151.14954-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
- <Yky7xb7nQRR8Vqtj@nand.local>
-In-Reply-To: <Yky7xb7nQRR8Vqtj@nand.local>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 6 Apr 2022 08:25:29 +0200
-Message-ID: <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
-Subject: Re: [GSoC] Contributor candidate introduction
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Plato Kiorpelidis <kioplato@gmail.com>, git <git@vger.kernel.org>,
-        Shubham Mishra <shivam828787@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor, Plato and all,
+Hi,
 
-On Tue, Apr 5, 2022 at 11:59 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> Hi Plato,
->
-> On Wed, Apr 06, 2022 at 12:43:59AM +0300, Plato Kiorpelidis wrote:
-> > Hello,
-> >
-> > I'm interested in participating as contributor for the project
-> > "Reachability bitmap improvements".
-> > The area I'm interested in, the most, is the alternate compression scheme
-> > e.g. Roaring+Run, however I'm ecstatic about any bitmap performance improvement.
-> > Expected project size I'm targeting for is large (350 hours).
-> > I've already completed my micro-project and I will submit it in a few hours.
-> > I wanted to be sure I could submit v1 of it before committing to
-> > introducing myself.
+Git v2.36.0-rc0 has been released, and it's time to start new round of
+git l10n.  This time there are 192 updated messages need to be translated
+since last update.  Let's start a new round of git l10n based on commit:
 
-Though we appreciate it, we don't require introducing yourself. And if
-you choose to do it, you can do it whenever you want.
+    66593217ec (l10n: git.pot: v2.36.0 round 1 (192 new, 106 removed), 2022-04-06)
 
-> Hooray! I'm delighted to hear that you're interested.
->
-> > I've gone through the mailing list and looked for other candidates that could
-> > also be interested in this project. Shubham Mishra is also interested.
-> > - Could we collaborate on this project considering how broad it is or only one
-> > can be selected?
-> > He/she already has experience in open source and has participated in
-> > GSoC before.
->
-> I think there are a couple of options here, since we have a handful of
-> bitmap-related projects that are all up for grabs. If Shubham is also
-> interested in working on implementing Roaring+Run compression, then I
-> would be happy for the two of you to work together.
+You can get it from the usual place:
 
-Unfortunately, GSoC rules forbid contributors from working together.
+    https://github.com/git-l10n/git-po/
 
-> Alternatively, if you each want to focus on different sub-projects, I
-> would be happy to work with multiple students on different areas within
-> the reachability bitmaps subsystem.
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
 
-I think this would require creating different independent project ideas.
+You can also keep track of the changes in the "po/git.pot" file from
+the "pot/master" and "pot/next" branches, and prepare for translation
+in advance. See:
 
-> > I should note that the best case scenario for me is if we are both selected,
-> > probably on different bitmap performance areas under "Reachability bitmap
-> > improvements" project, however I don't know if it's possible. It probably
-> > depends on the mentors listed for this project and the work load involved.
->
-> Yeah. Even though I'd be happy to work with as many students as I have
-> time for, I'm not sure whether it's possible within GSoC's own rules,
-> much less whether or not it's been done before.
->
-> Christian (cc'd) may have more information. Christian: is it possible to
-> accept multiple students for the same GSoC project?
+ - https://github.com/git-l10n/git-po/tree/pot/master 
+ - https://github.com/git-l10n/git-po/tree/pot/next
 
-Unfortunately, I think there needs to be a different project for each
-GSoC contributor and GSoC rules ask for each contributor to work
-independently from other GSoC contributors. It's possible to have the
-same mentors for different projects though, so if the mentors for a
-project are OK with splitting it into different independent projects
-and mentoring all the independent projects, I think it could work.
+A helper program hosted on https://github.com/git-l10n/git-po-helper can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions for each
+pull request for "git-l10n/git-po" repository.
 
-Best,
-Christian.
+** Please note: The update window will close on Sun, Apr 17, 2022. **
+
+
+--
+Jiang Xin
