@@ -2,97 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEEEC433FE
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DC1DC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:53:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237081AbiDFVkj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 17:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
+        id S236579AbiDFVzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 17:55:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238710AbiDFVjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 17:39:09 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC60CB7C
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 14:16:42 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 125B5132365;
-        Wed,  6 Apr 2022 17:16:42 -0400 (EDT)
+        with ESMTP id S235298AbiDFVzT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 17:55:19 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F04B8
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 14:51:32 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5FB1312DF5E;
+        Wed,  6 Apr 2022 17:51:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=wCyxA2TZaN9d0cXhuQtS23vF6NReMt0BvD0vItezhAE=; b=fb1O
-        iInRqG1pDx31OBpMVpiBRK0LBjuJY8yn8Ajs0/IAmhvp9NkZNBIcfHRFJQxwccJs
-        gr7gZmSzdu9sH5V5ZdnLhWnPHzXwM9lYpOi5Q1UqvXHULfz58k7pBjRSqTGahBva
-        eza/9kMPMF40bqwHxf+R537cq+GRHOx4rOFA9gY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03AA7132364;
-        Wed,  6 Apr 2022 17:16:42 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=6zUivpOaWbRW
+        BaBVf/sigoJfHOQV7hUX68/NenY/KLs=; b=gz+FMeA/oKD2nkWSsaK2dbnIsUwF
+        SpPGYcKAhTJ0bajrBmvVc96mTv75Bpu7SfANNBxNp9eFmbSuvfNMSwTRMuDk17nw
+        hO9OoWpUdaQM8bfK2+CTeoshcHj6Te8QdsEFHn4oudq9z23GU5NGNGDBwrnAcyP6
+        ZCoggNwNsqCkiWY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56B0312DF5D;
+        Wed,  6 Apr 2022 17:51:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.185.214.157])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57253132363;
-        Wed,  6 Apr 2022 17:16:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BD38C12DF5C;
+        Wed,  6 Apr 2022 17:51:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Raphael Bauer <raphael@pdev.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] pretty format: fix colors on %+ placeholder newline
-References: <e8417ad5-f9f2-c1de-75f6-45be49f0011b@pdev.de>
-        <20220405154529.966434-1-raphael@pdev.de>
-Date:   Wed, 06 Apr 2022 14:16:40 -0700
-Message-ID: <xmqq8rshx687.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
+        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v2] ls-tree: fix --long implying -r regression in
+ 9c4d58ff2c3
+References: <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
+        <patch-v2-1.1-ed83b3b74ab-20220404T234507Z-avarab@gmail.com>
+        <xmqqwng2xfi8.fsf@gitster.g>
+        <220406.8635iqdjzl.gmgdl@evledraar.gmail.com>
+Date:   Wed, 06 Apr 2022 14:51:29 -0700
+In-Reply-To: <220406.8635iqdjzl.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 06 Apr 2022 22:36:20 +0200")
+Message-ID: <xmqq4k35x4m6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DA772F46-B5EE-11EC-A31E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B7DB3F2C-B5F3-11EC-A116-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Raphael Bauer <raphael@pdev.de> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Previously, the color escape codes were not printed again when a %+
-> placeholder was expanded, which could lead to missing colors.
-
-It is very good to start the proposed log message by describing the
-current behaviour, highlighting what problem it has.  Because the
-message is merely _proposing_ to make this change, which may or may
-not be accepted into the codebase, however, please describe the
-status quo in the present tense.  "We behave this way", not "we used
-to behave this way".  There is no need to say "Currently" (and it is
-simply misleading to say "Previously").
-
-> In particular, the following command on any commit history exercised the
-> problem:
+>>> +	cat >expect &&
+>>> +	cat <&6 >expect.-d &&
+>>> +	cat <&7 >expect.-r &&
+>>> +	cat <&8 >expect.-t &&
+>>
+>> Let's not go too cute like this.  This forces the caller to remember
+>> which among 6, 7, and 8 corresponds to which option.  It is too ugly
+>> to live.
 >
-> git log --pretty=format:'%h%Cred%+d test' --graph
+> I think it's rather elegant actually, but to be fair it would, per:
 >
-> The string 'test' should always be in red, but is not when commits have
-> ref names associated and the %+d placeholder is expanded.
-> This is also not a problem of any pager since the --graph option adds a
-> colored pipe symbol at the beginning of the line, which makes re-setting
-> the color again afterwards necessary.
+> 	git grep '<&[1-9]| [1-9]<<-'
+>
+> Be the user with the most FD's using this sort of pattern.
 
-Isn't it the problem with the "--graph" codepath, then?
+Please give a clear explanation why "-d" has to be 6, "-r" 7 and
+"-t" 8, that can be used by developers as a memory aid to help them
+write new tests using the helper.
 
-It is unclear from the proposed log message why it is a good idea to
-add the new behaviour to the code that handles "%+" unconditionally.
-It also is unclear why the new behaviour to save only one "color
-escape" is sufficient.  For example, if we used
+Or justify why the developers have to memorize such a meaningless
+correspondence, if there is no any good reason.
 
-    git log --pretty='format:%h%C(green)%C(reverse)%+d test' --graph
-
-wouldn't the effects of these two add up?  Would it be sufficient to
-remember the last one we saw and re-enable it?
-
-Combining the above two together, it makes me wonder if the right
-approach is instead to (1) stop resetting at the end of --graph, and
-(2) instead "save" the attribute before starting to draw --graph,
-draw the --graph in color, and then "restore" the attribute.
-
-Whatever approach we decide to take to solve this issue, let's have
-a test case or two added to the test suite to better document the
-issue.
-
-Thanks.
+Alternatively, you can stop abusing the word "elegant".  It is not a
+synonym to "what I wrote" ;-).
