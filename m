@@ -2,79 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36920C433EF
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 20:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A0EDC433F5
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 20:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232614AbiDFUVK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 16:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36354 "EHLO
+        id S234753AbiDFUZt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 16:25:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234119AbiDFUUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 16:20:33 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49191277961
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 10:57:19 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id t4so2439401ilo.12
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 10:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BV7Db6Ou6k+winGvooYEa2ujn71469a06XHSfmkBCBw=;
-        b=gxAD53yaLxGA8PQShmuy7EB9aIvxeLZOkSIAWT9N5mpOaS/dvCzTkDQMD8YC57uA2p
-         2mFiqIq9KBU1gpnT1nBnTxHWIlirYkT3zm47vBXYPj6n0W+Aei22pvcyh2WsdeAuObbw
-         eHb99KmiX/h9Lbwe9sxtfue1EF0uJjBdkcoZGV3ppc19B1LFhaa7CvDXw05DiC/tWYHY
-         jXsHIUrz6HYxYD0fX10Osci7zMsK5G8MpnY01QCC1kGegOLGx7ev0P4aLhmjJQrBw3m2
-         mgHa+UZ6LYWIsJFcoNh20p4ezQjD+EIHqfU2RZVaFPXNMa3rx4sjQZKfJpqIX7fB/0je
-         k/JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BV7Db6Ou6k+winGvooYEa2ujn71469a06XHSfmkBCBw=;
-        b=x8++wwY/LGs/EwNviRKGTfqf0bO3WRuZYdgpkLT+jDEtNpDSbPGyFeEjkNew4RxGo+
-         qjAseJwtHog7qh+X+a/utkF6L0CcQH6G67REr78yE7YZuebDsfxjk5CZQc6lmQgoeYrk
-         yJK5pY/QOEIeGfl9YEVDxms7OXR4HTq5fZKtjRp2TnS9bhZ8x60eY0EAw4PSZODz7wuf
-         nf67jXZ2qF88k2ItbZ2q5FmIB1n1LGeLv0Y28eSdDNqLLiSnEBQ5nEb6x4P8q8BOf3bM
-         Nw1NmHQxiOxpGNOdjbfevhwX81o5CBcPk4RnW8dY2HD61d1ooSXxoGeRDddn8ovyKwv4
-         JQLw==
-X-Gm-Message-State: AOAM531n7Lt1MoFAp1Zf4Jsx4+5gIoCYPybhnfDQThRgQINDXtuQ4fsi
-        VRlX2O79lXc+YX68nSrpshSqecPsoJFiNH/fFI8=
-X-Google-Smtp-Source: ABdhPJyOcRjoZ4OCcOrWm6DGUffc68koe8bUVXdJgGecI0M6Kl2MJzaf2xXdH4wQ1VT3Dh3k51t2Oth/ufdmswMCCwU=
-X-Received: by 2002:a92:cbc3:0:b0:2c6:78fa:41e9 with SMTP id
- s3-20020a92cbc3000000b002c678fa41e9mr4613125ilq.112.1649267838416; Wed, 06
- Apr 2022 10:57:18 -0700 (PDT)
+        with ESMTP id S234119AbiDFUYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 16:24:50 -0400
+X-Greylist: delayed 192 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 06 Apr 2022 11:44:39 PDT
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F07245050
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 11:44:39 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F328912C920;
+        Wed,  6 Apr 2022 14:41:26 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-transfer-encoding;
+         s=sasl; bh=0ZM4DjC1jipNI0BEJ66VU7K7lQBZRYnXCGO/CvWpJ3o=; b=j4dQ
+        WjiOXC6ULTVaNzmrvgMqh6w5p8hELPlIj2hnusVkTMokIb2KZuNUK68XEDX5vPvg
+        eOlqd3dK5JvKDy8BsgC8kuAmCxyqlpsAwfDHLHW5EU6Moopj+G2QSfrjCHfGqUnu
+        cwbqmPLu3l2SQsYiunZ9niMm6sOT1ae5qTD/qeY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D53F412C91F;
+        Wed,  6 Apr 2022 14:41:26 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.204.117.214])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 019EE12C91E;
+        Wed,  6 Apr 2022 14:41:25 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH] doc: replace "--" with {litdd} in credential-cache/fsmonitor
+Date:   Wed,  6 Apr 2022 14:41:22 -0400
+Message-Id: <20220406184122.4126898-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220405165806.842520-1-eantoranz@gmail.com> <220406.86wng2eh0l.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220406.86wng2eh0l.gmgdl@evledraar.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Wed, 6 Apr 2022 19:57:07 +0200
-Message-ID: <CAOc6etbgsgb6J+0RW-y6HrOvPzpt1daNOeuMnSc8oiRwXbCcnQ@mail.gmail.com>
-Subject: Re: [PATCH v3] blame: report correct number of lines in progress when
- using ranges
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, whydoubt@gmail.com,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Pobox-Relay-ID: 2A267B3E-B5D9-11EC-9D4E-CB998F0A682E-09356542!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 6, 2022 at 10:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> Hint: use --in-reply-to on re-rolls, this is in reply to v2 here:
-> https://lore.kernel.org/git/20220404182129.33992-1-eantoranz@gmail.com/
->
-> Also the --range-diff option to git-format-patch is really helpful,
-> it'll make a diff between v2 and this v3 and attach it after "--".
->
-> Anyway...
->
+Asciidoc renders `--` as em-dash.  This is not appropriate for command
+names.  It also breaks linkgit links to these commands.
 
-Thanks for the tips. I realized I left a garbage line in the v3 patch
-that I would like to never see moving forward so I will send a clean
-patch for v4 just like the previous ones, hope that's not a problem. I
-will keep the tips in mind for a future time.
+Fix git-credential-cache--daemon and git-fsmonitor--daemon.  The latter
+was added 3248486920 (fsmonitor: document builtin fsmonitor, 2022-03-25)
+and included several links.  A check for broken links in the HTML docs
+turned this up.
+
+Manually inspecting the other Documentation/git-*--*.txt files turned up
+the issue in git-credential-cache--daemon.
+
+While here, quote `git credential-cache--daemon` in the synopsis to
+match the vast majority of our other documentation.
+
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ Documentation/config/core.txt                  |  2 +-
+ Documentation/git-credential-cache--daemon.txt |  6 +++---
+ Documentation/git-fsmonitor--daemon.txt        | 12 ++++++------
+ Documentation/git-update-index.txt             |  2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
+t
+index 889522956e..e67392cc83 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -63,7 +63,7 @@ core.protectNTFS::
+=20
+ core.fsmonitor::
+ 	If set to true, enable the built-in file system monitor
+-	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
++	daemon for this working directory (linkgit:git-fsmonitor{litdd}daemon[1=
+]).
+ +
+ Like hook-based file system monitors, the built-in file system monitor
+ can speed up Git commands that need to refresh the Git index
+diff --git a/Documentation/git-credential-cache--daemon.txt b/Documentati=
+on/git-credential-cache--daemon.txt
+index 7051c6bdf8..01e1c214dd 100644
+--- a/Documentation/git-credential-cache--daemon.txt
++++ b/Documentation/git-credential-cache--daemon.txt
+@@ -1,5 +1,5 @@
+-git-credential-cache--daemon(1)
+-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
++git-credential-cache{litdd}daemon(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
+ NAME
+ ----
+@@ -8,7 +8,7 @@ git-credential-cache--daemon - Temporarily store user cre=
+dentials in memory
+ SYNOPSIS
+ --------
+ [verse]
+-git credential-cache--daemon [--debug] <socket>
++'git credential-cache{litdd}daemon' [--debug] <socket>
+=20
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-=
+fsmonitor--daemon.txt
+index 0fedf5a456..cc142fb861 100644
+--- a/Documentation/git-fsmonitor--daemon.txt
++++ b/Documentation/git-fsmonitor--daemon.txt
+@@ -1,5 +1,5 @@
+-git-fsmonitor--daemon(1)
+-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++git-fsmonitor{litdd}daemon(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+=20
+ NAME
+ ----
+@@ -8,10 +8,10 @@ git-fsmonitor--daemon - A Built-in File System Monitor
+ SYNOPSIS
+ --------
+ [verse]
+-'git fsmonitor--daemon' start
+-'git fsmonitor--daemon' run
+-'git fsmonitor--daemon' stop
+-'git fsmonitor--daemon' status
++'git fsmonitor{litdd}daemon' start
++'git fsmonitor{litdd}daemon' run
++'git fsmonitor{litdd}daemon' stop
++'git fsmonitor{litdd}daemon' status
+=20
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-updat=
+e-index.txt
+index 64315e2e8c..5ea2f2c60e 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -528,7 +528,7 @@ This feature is intended to speed up git operations f=
+or repos that have
+ large working directories.
+=20
+ It enables git to work together with a file system monitor (see
+-linkgit:git-fsmonitor--daemon[1]
++linkgit:git-fsmonitor{litdd}daemon[1]
+ and the
+ "fsmonitor-watchman" section of linkgit:githooks[5]) that can
+ inform it as to what files have been modified. This enables git to avoid
