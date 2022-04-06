@@ -2,102 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5FEC433FE
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 19:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85757C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 20:02:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232484AbiDFTmJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 15:42:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41046 "EHLO
+        id S233105AbiDFUEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 16:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbiDFTlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 15:41:55 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BFB32F3D33
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 11:30:15 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id k21so5608541lfe.4
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 11:30:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rLOup0GOEqhoaMMZhAdevax8ZIbsgxqeUb1VEioLBZc=;
-        b=bTcyTpY/Ae71k99TGRsmBHcMQFLkjPBZKN/0+eRQIpANw5NsPRfPFFXnw5sTs9bi4u
-         6H/VekbzdEYEIccGRTPZtTeDOqpQfgQUmOMVzJy7jGDJkBan+3ge1mRDiNo5zRCj5OKP
-         s1vnYHvzXKUkC1X/90+glYyv/jl+WynQCbUi1z59qruqCUHGEtj9u0isRFjFWYF7QcPH
-         tu1+nwIm8fFTFN0iYvRDi3C6uEHIARXIIC/8cJSmfjHnvlVC8bI02ugfpn3icgFG/li6
-         Gg1xsrlers2ngs3nv+A3/jK/BAH5UxANjVuKZZYRE9rvlGhT0QtOp7z2ilO/+is1wNCC
-         iVjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rLOup0GOEqhoaMMZhAdevax8ZIbsgxqeUb1VEioLBZc=;
-        b=YuCsPnvFvwofpxila26/AizHPLPc579Wu3mcgJh4vpU4l03TizuUSWPmuzCv++AU0C
-         4Bxu7S++Sa+nnMN9gYKKSo8HSRkO9Pj+5NIok7euf+zkggh/yYDu+S2Xsvj0KfbRP4bu
-         Gbuw1ba9QfD/frND/kCjBdNFkLW6gFrWlEUjiBjIQW6+YPCwXpsUPSAKwkMA6D/7rjyg
-         YghwOYT4/dtm6BMUIJzPXZPpGWYIBbUyfXlgOvSZO1hvqc8Rl9wHdv2V7HqXIHLFLPor
-         L//elPEJ6/GfxtCMgUvAzT0znl1F0DWQYqvvUP20JcHMpv0+6K2zn+gT8z2DRTPFBqxI
-         aj+Q==
-X-Gm-Message-State: AOAM530Nvh3nGV/xyoG1d9PconUz1k0DU6axcjx/F+nyTsFlow6YpuaJ
-        K5ymyijK9xDT1FPSO0PywW1SG/sKtPdKC5rJN30=
-X-Google-Smtp-Source: ABdhPJxlaJX+AnG1PKHgIZfPsq8WdQ++t3ceIPPrT3cna/egCXmxEEEIB9l47AD1rDMvUcwPtSYgcyDFLCDezeFXAO0=
-X-Received: by 2002:a05:6512:1322:b0:44b:75d:ac8 with SMTP id
- x34-20020a056512132200b0044b075d0ac8mr6558009lfu.213.1649269813965; Wed, 06
- Apr 2022 11:30:13 -0700 (PDT)
+        with ESMTP id S235125AbiDFUDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 16:03:44 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8616A2571AE
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 10:56:18 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94AD912C4AF;
+        Wed,  6 Apr 2022 13:56:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Ve3xwtOKo79c
+        /gYoeqfB1AzqL+kD4+tiphNLxreBjfA=; b=VpqAcLNatcaMWpFl3KmYT6ZWcaIP
+        LSaINa17ZHEvPnSwbqmBb0dh4WocdAUXCc4ycrmNa8CEp4s8x6cpLTuavkZeU8By
+        bySP/W3gveMYFPYmJ8eXGu5EpavvfYbgTB9R71qrb+S+IhaJQp+dbwcZpihB14Ef
+        82Cju39bPSAMjy8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C4E212C4AE;
+        Wed,  6 Apr 2022 13:56:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBB8B12C4AC;
+        Wed,  6 Apr 2022 13:56:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
+        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v2] ls-tree: fix --long implying -r regression in
+ 9c4d58ff2c3
+References: <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
+        <patch-v2-1.1-ed83b3b74ab-20220404T234507Z-avarab@gmail.com>
+Date:   Wed, 06 Apr 2022 10:56:15 -0700
+In-Reply-To: <patch-v2-1.1-ed83b3b74ab-20220404T234507Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 5 Apr
+ 2022 01:45:30
+        +0200")
+Message-ID: <xmqqwng2xfi8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220405053559.1072115-1-alexhenrie24@gmail.com>
- <20220406180434.4zlb2bwpu6cfumta@tb-raspi4> <CAPMMpohYRTSaTcRVTJ6y=Q7+FSOcSNjHjwDvUMhVv4JO7QDB_g@mail.gmail.com>
-In-Reply-To: <CAPMMpohYRTSaTcRVTJ6y=Q7+FSOcSNjHjwDvUMhVv4JO7QDB_g@mail.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Wed, 6 Apr 2022 12:30:02 -0600
-Message-ID: <CAMMLpeRw2SMaPhesXn7Q5CGq2Kmk=eJrPBnFBnJex8-OvfSz5w@mail.gmail.com>
-Subject: Re: [PATCH v2] convert: clarify line ending conversion warning
-To:     Tao Klerks <tao@klerks.biz>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, prohaska@zib.de,
-        eyvind.bernhardsen@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DB40BC1A-B5D2-11EC-9F6D-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 6, 2022 at 12:18 PM Tao Klerks <tao@klerks.biz> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> Haing written them I guess we could do them post-release, since the
+> important thing is to validate the changes. As noted in the commit
+> message we're now testing all combinations of the "mode" and "format"
+> options.
 >
-> On Wed, Apr 6, 2022 at 8:04 PM Torsten B=C3=B6gershausen <tboegi@web.de> =
-wrote:
+>  builtin/ls-tree.c         |   2 +-
+>  t/t3104-ls-tree-format.sh | 126 +++++++++++++++++++++++++++++++++++---
+>  2 files changed, 119 insertions(+), 9 deletions(-)
 >
-> > May be we can use "updates" instead of "touches" ?
-> >
-> > "In '%s', CRLF will be replaced by LF the next time Git updates it"
->
-> Makes sense to me.
+> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+> index 5dac9ee5b9d..e279be8bb63 100644
+> --- a/builtin/ls-tree.c
+> +++ b/builtin/ls-tree.c
+> @@ -255,7 +255,7 @@ static int show_tree_long(const struct object_id *o=
+id, struct strbuf *base,
+>  	printf("%06o %s %s %7s\t", data.mode, type_name(data.type),
+>  	       find_unique_abbrev(data.oid, abbrev), size_text);
+>  	show_tree_common_default_long(base, pathname, data.base->len);
+> -	return 1;
+> +	return recurse;
+>  }
 
-I don't like this wording as much because "update" could more easily
-be taken to mean something that happens in the index or in a commit,
-not in the working directory. But maybe it needs more clarification
-anyway, e.g. "In the working copy of '%s'..."
+OK, two people by happenstance wrote the same fix is reassuring ;-)
 
-=C3=86var, would the phrase "In the working copy" resolve your concern
-about the new message "[not offering] the working directory advice at
-all"?
+> +	cat >expect &&
+> +	cat <&6 >expect.-d &&
+> +	cat <&7 >expect.-r &&
+> +	cat <&8 >expect.-t &&
 
-> > Or may be
-> >
-> > "In '%s', CRLF will be replaced by LF the next time a `git checkout` up=
-dates it"
-> >
->
-> I believe we should stay away from the word "checkout" because it's
-> neither accurate nor clear, for at least a couple of reasons:
-> 1. We have long, in principle, been promoting the use of "git switch",
-> and it's not obvious in a message like this one that this is
-> considered to be equivalent.
-> 2. Files can be touched/updated by other commands/processes, like "git
-> pull" (and "rebase", and probably others I can't think of)
+Let's not go too cute like this.  This forces the caller to remember
+which among 6, 7, and 8 corresponds to which option.  It is too ugly
+to live.
 
-I agree: Talking about the `git checkout` command is too specific.
+>  test_ls_tree_format \
+>  	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
+> -	""
+> +	"" \
+> +	<<-OUT 6<<-OUT_D 7<<-OUT_R 8<<-OUT_T
+> +	040000 tree $(git rev-parse HEAD:dir)	dir
+> +	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+> +	OUT
+> +	040000 tree $(git rev-parse HEAD:dir)	dir
+> +	OUT_D
+> +	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
+> +	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+> +	OUT_R
+> +	040000 tree $(git rev-parse HEAD:dir)	dir
+> +	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+> +	OUT_T
 
--Alex
+I do not actually mind if it were more like this:
+
+	test_ls_tree_format \
+		"%(objectmode) %(objecttype) %(objectname)%x09%(path)" <<-EXPECT
+	git ls-tree HEAD
+	040000 tree $(git rev-parse HEAD:dir)	dir
+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+	git ls-tree -d HEAD
+	040000 tree $(git rev-parse HEAD:dir)	dir
+	git ls-tree -r HEAD
+	100644 blob $(git rev-parse HEAD:dir/sub-file.t)	dir/sub-file.t
+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+	git ls-tree -t HEAD
+	040000 tree $(git rev-parse HEAD:dir)	dir
+	100644 blob $(git rev-parse HEAD:top-file.t)	top-file.t
+	EXPECT
+
+that is, we only read from the standard input, each section begins
+with "git ls-tree" command invocation that gets tested, followed by
+its expected output, and ends at either the end of the input or the
+beginning of the next section.
