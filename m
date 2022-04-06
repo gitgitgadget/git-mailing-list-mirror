@@ -2,100 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22C40C433EF
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 17:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F4CCC433F5
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 17:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239223AbiDFRex (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 13:34:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38302 "EHLO
+        id S239275AbiDFRfv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 13:35:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239169AbiDFRen (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 13:34:43 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334101C2A16
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 08:41:14 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91EF712B542;
-        Wed,  6 Apr 2022 11:41:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yQ/8plFEV6L1JSj2S+Dc4MysiidqyCkvpbcKQK
-        edKi8=; b=X0/FE38nWvGY6Vzb2MtRowulrYbEtxiZ3cK5gOOxFJyjo5Kg28uN/u
-        z4zo9Bq6NcLRJpZWE0A1KK0nPERZ+jM1pJ5kPYczEGn9BUYXBuXmcl/LKKUijtQ1
-        T+0ihoZ/TOtBpD62yCMR03ftZNEhOF8N1e0Nl/pukT9Ghbu7Vcgss=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8952812B541;
-        Wed,  6 Apr 2022 11:41:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E80AA12B540;
-        Wed,  6 Apr 2022 11:41:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, avarab@gmail.com,
-        congdanhqx@gmail.com, dyroneteng@gmail.com, martin.agren@gmail.com,
-        peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [RFC PATCH] ls-tree: `-l` should not imply recursive listing
-References: <YktP0LltNKq7JZZs@google.com>
-        <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
-Date:   Wed, 06 Apr 2022 08:41:11 -0700
-In-Reply-To: <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
-        (Josh Steadmon's message of "Mon, 4 Apr 2022 15:42:24 -0700")
-Message-ID: <xmqq8rsi1ap4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239365AbiDFRff (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 13:35:35 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FA730F0F8
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 08:43:36 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id c4so5003760qtx.1
+        for <git@vger.kernel.org>; Wed, 06 Apr 2022 08:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zd+njoNVxYGD4URX7rkcGoYE1wGcqCwES1rbzyqb2uw=;
+        b=2EPz+y4QW/0Zpo0HUOz9VgkdbQoFb+ThDDq7cTaYtrjxPLLBpP/jyMAirIgsa2AdrR
+         WqzCkA8/o0czGlBUs/xIqhM4pj4i6oXrXUKqF3seVMFc8yiH5re90vXCAv53MVgKjJSk
+         ANd1USbzknqAy5JkRqnrEPPOqK/H09GvuOPFjE0/qYIYiJbV3MOXCTpd2vmq8T2tlDEh
+         3L3Z6MesvSrVZ/dAhTArM7lYBaXk8Fd5Pvp4f9nKlFyMRtBLih2hr9l7hN+662fl2hp0
+         EpLl05sZpFznmcnrQgQegtgQHv8LBYVg3ddecd9QlCxoUWJ731OtassarHTTLMUTIIF2
+         VEUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zd+njoNVxYGD4URX7rkcGoYE1wGcqCwES1rbzyqb2uw=;
+        b=OjLZxYkqyqT5XljXzXtk8dswAJ707KjfkVaVhgoTzF/HbfF5niwCvv+lJGkUQL+2Bl
+         XrOkLaqO0EzMrrESdQCRCQCpYSMArSElXAUJamrPFDdEpBojkHt9t+ZYWL+tMxDc7fjF
+         osplT2Tptsz5dvEJQ2zIUR0P1DR8ReJquSvFY941/6zWmsnehnOR1QcoC739XvlKBp+9
+         etB/OxCWR3nTOLrm4E0QO63hozq7DWYBLl21mj9gEh5P7S+MhTopAlYETV3MFxftqii1
+         ohIQ42S3zflDn/rVclmAhY/jK2kntcUhNukVLZIYDXMe0CKL6u3w2KzSWKTmNtaluuYm
+         RBdw==
+X-Gm-Message-State: AOAM531KeetXN2Y4eYU6VQBZz1/VOFoabKJA1aGvFF3/PpMwWGucMS4V
+        a2buxkepsnKQL2S/KxGaS96mZA==
+X-Google-Smtp-Source: ABdhPJxixemnavpQNgihnWnBALpvjWb8yT9aX5vSPjzYp+CbU+JcGS+uCfrU5ShmFP/vAErim7scgQ==
+X-Received: by 2002:a37:9dca:0:b0:67b:8dfb:6835 with SMTP id g193-20020a379dca000000b0067b8dfb6835mr5818374qke.638.1649259815528;
+        Wed, 06 Apr 2022 08:43:35 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id e13-20020ac85dcd000000b002eb9458498esm13003879qtx.95.2022.04.06.08.43.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Apr 2022 08:43:35 -0700 (PDT)
+Date:   Wed, 6 Apr 2022 11:43:34 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Plato Kiorpelidis <kioplato@gmail.com>,
+        git <git@vger.kernel.org>,
+        Shubham Mishra <shivam828787@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [GSoC] Contributor candidate introduction
+Message-ID: <Yk21JvirO6FyQ3Va@nand.local>
+References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
+ <Yky7xb7nQRR8Vqtj@nand.local>
+ <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FD00A7C4-B5BF-11EC-A212-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
-
-> In 9c4d58ff2c (ls-tree: split up "fast path" callbacks, 2022-03-23), a
-> refactoring of the various read_tree_at() callbacks caused us to
-> unconditionally recurse into directories if `-l` (long format) was
-> passed on the command line, regardless of whether or not we also pass
-> the `-r` (recursive) flag.
+On Wed, Apr 06, 2022 at 08:25:29AM +0200, Christian Couder wrote:
+> > Christian (cc'd) may have more information. Christian: is it possible to
+> > accept multiple students for the same GSoC project?
 >
-> Fix this by making show_tree_long() return the value of `recurse`,
-> rather than always returning 1. This value is interpreted by
-> read_tree_at() to be a signal on whether or not to recurse.
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
-> I believe this is the correct fix for the change in `git ls-tree -l`
-> output. I would also like to add tests in a future fix, but I do not
-> have time to add them today.
+> Unfortunately, I think there needs to be a different project for each
+> GSoC contributor and GSoC rules ask for each contributor to work
+> independently from other GSoC contributors. It's possible to have the
+> same mentors for different projects though, so if the mentors for a
+> project are OK with splitting it into different independent projects
+> and mentoring all the independent projects, I think it could work.
 
-It's rather an obvious bug and it is sad that existing tests did not
-find (and no, I do not think lower-level unit testing would have
-helped us in any way, either).
+Thanks for this information, it's exactly the sort of thing that I was
+hoping for from your response ;-).
 
-Will queue.
+Like I said in my other message, let's play it by ear whether or not we
+need to split the project. If we get closer to the next deadline and we
+have >1 potential GSoC students interested, then I'm happy to split it
+up.
 
-Thanks for a quick fix.
+One thing that I worry about a little bit is that I think a new on-disk
+.bitmap format will be necessary for both of the projects that Plato and
+Shubham are interested in (though I could be wrong). Since GSoC forbids
+students from working together, it may be difficult to feasibly split
+the bitmaps project into multiple, smaller ones.
 
+That said, if we do end up splitting the bitmaps GSoC project in two,
+when would we need to do it by?
 
->  builtin/ls-tree.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index 5dac9ee5b9..e279be8bb6 100644
-> --- a/builtin/ls-tree.c
-> +++ b/builtin/ls-tree.c
-> @@ -255,7 +255,7 @@ static int show_tree_long(const struct object_id *oid, struct strbuf *base,
->  	printf("%06o %s %s %7s\t", data.mode, type_name(data.type),
->  	       find_unique_abbrev(data.oid, abbrev), size_text);
->  	show_tree_common_default_long(base, pathname, data.base->len);
-> -	return 1;
-> +	return recurse;
->  }
->  
->  static int show_tree_name_only(const struct object_id *oid, struct strbuf *base,
->
-> base-commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
+Taylor
