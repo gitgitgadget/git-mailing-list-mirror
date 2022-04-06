@@ -2,102 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C28EC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 17:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20EECC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 17:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239422AbiDFRvp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 13:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42206 "EHLO
+        id S239611AbiDFRzO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 13:55:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239468AbiDFRvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 13:51:25 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D7A211EC9
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 09:23:17 -0700 (PDT)
-Received: from Mazikeen (cpe788df74d2cc1-cm788df74d2cc0.cpe.net.cable.rogers.com [72.138.27.250] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 236GNEcq043513
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 6 Apr 2022 12:23:15 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Git Mailing List'" <git@vger.kernel.org>,
-        <git-packagers@googlegroups.com>
-References: <034101d84873$993f96f0$cbbec4d0$@nexbridge.com>     <CAPc5daWSDYSexkSeUUpfYDyT-M_F8d-rSMko5pqw140iLwBc_w@mail.gmail.com>    <034701d84875$030bfb40$0923f1c0$@nexbridge.com> <xmqqv8vmyysp.fsf@gitster.g>
-In-Reply-To: <xmqqv8vmyysp.fsf@gitster.g>
-Subject: RE: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
-Date:   Wed, 6 Apr 2022 12:23:09 -0400
-Organization: Nexbridge Inc.
-Message-ID: <046001d849d2$9daf2290$d90d67b0$@nexbridge.com>
+        with ESMTP id S239587AbiDFRzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 13:55:09 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21181107830
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 09:04:23 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DC2F12B6EF;
+        Wed,  6 Apr 2022 12:04:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=zd9sq71dPQLO
+        4VLQVT/a/r6L2CjnQ/xB8hPjmWT5r1Q=; b=hmdkNpuvA3YcVZOp4YwNi8qakUD2
+        VVESb7rY7WSEy7eCo8mSbyjHfwT0Rg1CmeSx8O4wqBhg+Yvw3Td8E/XhUpmBTFy2
+        fNJp6njMLIsXnhaSuA4mYiw3XduEgLr76z2qlHnh2LN2x/J1d/TN5k9rdcJH6H3J
+        ZMMPkhoF59J5TRo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7420B12B6EE;
+        Wed,  6 Apr 2022 12:04:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D3A8F12B6ED;
+        Wed,  6 Apr 2022 12:04:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        rsbecker@nexbridge.com, 'Git Mailing List' <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
+References: <034101d84873$993f96f0$cbbec4d0$@nexbridge.com>
+        <CAPc5daWSDYSexkSeUUpfYDyT-M_F8d-rSMko5pqw140iLwBc_w@mail.gmail.com>
+        <034701d84875$030bfb40$0923f1c0$@nexbridge.com>
+        <20220405002610.27sgjva5wfryrcio@carlos-mbp.lan>
+        <20220405005418.3s2zayr3dmpxg45q@carlos-mbp.lan>
+        <035b01d84899$3cdc5b20$b6951160$@nexbridge.com>
+        <20220405042826.56vyilttx3lo4scv@carlos-mbp.lan>
+        <Ykv5dCEv/gl7aHMq@camp.crustytoothpaste.net>
+Date:   Wed, 06 Apr 2022 09:04:20 -0700
+In-Reply-To: <Ykv5dCEv/gl7aHMq@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Tue, 5 Apr 2022 08:10:28 +0000")
+Message-ID: <xmqqzgkyyz97.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE87yXqDmaysdJkpyH6/spM26GbOgJ005kMAt5RIzwBs7vyta3hjcLw
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 38DC1F8C-B5C3-11EC-ACA7-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 6, 2022 12:14 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->> On April 4, 2022 6:33 PM, Junio C Hamano wrote:
->>>To: Randall S. Becker <rsbecker@nexbridge.com>
->>>Cc: Git Mailing List <git@vger.kernel.org>;
->>>git-packagers@googlegroups.com
->>>Subject: Re: [ANNOUNCE] Git v2.36.0-rc0 - Build failure on NonStops
->>>
->>>CSPRNG_METHOD?
->>
->> We already have
->>
->>         CSPRNG_METHOD = openssl
->>
->> In the config for NonStop. Should that not have worked?
->
->In your original report, you said
->
->>> I thought we did not have a direct reference to OpenSSL. What do I
->>> need here to resolve this?
->
->I misread it as "I did not directly ask to use OpenSSL---why am I seeing
-breakage
->from RAND_bytes() that is an OpenSSL thing?", and where my suggestion to
-look
->for CSPRNG_METHOD came from.
->
->Downthread, folks seem to have figured out that OpenSSL support failed to
->include a necessary header and link with libraries, while I was offline
-yesterday, so
->hopefully all is well?
->
->Since d073bdc6 (Merge branch 'bc/csprng-mktemps', 2022-02-11) the CSPRNG
->code has been in 'master/main' and the topic was merged to 'next' much
-earlier,
->at 2e32375c (Merge branch 'bc/csprng-mktemps'
->into next, 2022-02-04).  I was puzzled why it took this long for your
-report to come,
->as I somehow thought you've been quite good at reporting portability issues
-to
->your platform quickly, and was wondering if we broke something between the
->time we merged it to 'next' and -rc0, but it seems that it was not working
-from the
->beginning X-<.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I have no explanation on why this and the PATH issue showed up at 2.36.0-rc0
-and not at 2.35.1. 2.35.0. Our build/test cycles are thorough but only on
-the releases and rc* notices because it takes 50+ hours to run the whole
-test cycle. The CSPRNG_METHOD was already set in the platform config, so we
-did not have to change that. wrapper.c had an issue that was missing the
-required includes on more than just our platform - adding that in did help.
-t6200 did not previously fail but we are looking into whether an OpenSSH
-install caused that. I think we will have to selectively modify the path in
-config.mak.uname for each build going forward for tests to pass.
+> I didn't consider the case that we had NO_OPENSSL=3D1 because it seems =
+a
+> bit bizarre to say, "No, I don't want OpenSSL=E2=80=94oh, wait, I do wa=
+nt
+> OpenSSL!"
 
-I am sorry that I do not have better or more clear info.
---Randall
+Indeed ;-).
+
+> This patch also didn't seem necessary for me on Linux when I tested, bu=
+t
+> of course it might be necessary on some systems, so if it fixes things,
+> I'm in favour.
+
+I think I've seen the breakage myself when I tried to force
+CSPRNG_METHOD =3D openssl in my build.  Let's take the patch as-is for
+now.
+
 
