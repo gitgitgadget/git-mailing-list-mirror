@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3181C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64F7AC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 21:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235094AbiDFVRw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 17:17:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36492 "EHLO
+        id S235618AbiDFVUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 17:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236023AbiDFVRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 17:17:42 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76BA6FA19
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 13:05:02 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id m12-20020a17090b068c00b001cabe30a98dso6834143pjz.4
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 13:05:02 -0700 (PDT)
+        with ESMTP id S235619AbiDFVTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 17:19:49 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7FE32B30F
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 13:10:32 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id bx5so3571874pjb.3
+        for <git@vger.kernel.org>; Wed, 06 Apr 2022 13:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=yExH4iT73zjVWHwAnpBwinh+Zzc0qXrLtGD4EOKPoPQ=;
-        b=qODvzHyPnSUQKNzWq644yIzAtMQ5lt6jGETLg8D596AfQMVOQy4/Vf4l8Tz4MEJJqv
-         LB2dbzfEsHuceu6JtiyBp2h9Vbyf9xohL9ktCTCYgQISa4sx5UaWVCcybpsrTMs6fM18
-         eZL5YgjOtmRZUsx0lWbb6Jp2pV3EKDr8QQMd1Pl74Nsas8/vRZX5wcR0OYvyN7C9i06Y
-         OvbdE6i5zcIV8j3qBNgqVWTU5XiSBCUDtMzYOCLxQwp7Yf0CVQVnx44xgYK378+pWTtn
-         UzfgdT6PU6IJuc6r4Bul07I4pq/9TQULzPQ+GEm+x2E0GRHY9zIkt0DprhAlTr9VvCuj
-         YHlA==
+        b=bHWs8LZ6YHJnN8TnBMwQYUbDR1GCgaVA/oJeCTVJ0pZ0t3ChkvJ9KG0xXZygJMdwro
+         nXODRRu45ihY7RGK8MwVjGgrm7xYnNgurLM4GQonQU39hTQm0/ow+BW65/KtTT0kn2ub
+         84NfZbwNk0TXUZl+FliKD0GseGL5duE2KVCWrKowfSZ/9PeTPzYOFzewJlWdce32oxkK
+         HSRWf95dqoookhm6e8sCkko2hUigrSAoyY0LrX8abu0Ut27n7klc3ZCdN/GB5NCOAnc3
+         sIoN3L2HpGFobmxKwC5x/XtfbvSr2y3tNmppIFMIBA3Y2b84eo8HrRRkbK620tA2DjRC
+         DTUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=yExH4iT73zjVWHwAnpBwinh+Zzc0qXrLtGD4EOKPoPQ=;
-        b=Xd3YwgbZsa+zpRLNJACGACRat3WUHdXUrZ1JoxgkHfbWGahr+fRxcBLBSdkOWoCAHh
-         qCb2Yda7laX4Gqn+CWtu/ZhhfEVpSAD2wUFmvRfJS4F3EUE+rsw6mAEFNJQBBVA5AdfH
-         /3narpwr+huIHilrOlvdE0mvALtsyldinJUZhvYOB5v7VXPmA+ZwhxVatKsaJquwbGP5
-         AqVRHKVWivSns1zWq2hT0b/IpWhvzFgTzPL8FqZs9FDfEQfimy1aiTRD0+DQtUc+hOyw
-         Lazom2dCjH2PIQFaxFZIi5dmBYpwscX8mOnSO1sAvE5xZD5UEL6mzU2GYlCCS2++0FoB
-         v6/Q==
-X-Gm-Message-State: AOAM530Ap87KDTPd94RrX4g89xr/Gx2t9QRPmrirEEELH80qDA6BTfJw
-        Xb+vMEIQAUB0IAtA9skm439AD+kek8mdzQ==
-X-Google-Smtp-Source: ABdhPJybXBO48W6cTAUdRj74tsPvPiKoNNBEBJ6dgZ7T1kvzIjynPM3Lq68f4UAaw/bMw/dBRm3zQw==
-X-Received: by 2002:a17:902:da90:b0:154:4737:a3f with SMTP id j16-20020a170902da9000b0015447370a3fmr10292120plx.73.1649275501358;
-        Wed, 06 Apr 2022 13:05:01 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:2c00:1377:98bb:35b5:20dc:6954])
-        by smtp.gmail.com with ESMTPSA id o3-20020a056a0015c300b004fb24adc4b8sm20233103pfu.159.2022.04.06.13.04.58
+        b=EYY1Br5I+IERTSH3sU0aAASy90++s488tmVakqEPrFQiWI5K+wzkmbYSB9+asvwGow
+         fyDyL1/UmIv82QC5WnNFYIOxAkImmJAEHEG1H3D2Yen74/5TeKkTQrK0gD3I7F43pCGk
+         QhWEYVEdT4T7K952CGrBgiltnm9WvwETUZc6y5oSP5Ibal2BoksnHpuP1l6NoJpcnalF
+         kdcRDonQkaq7E1nqaHD+ulELnJ+0mlg27cN8Bg+Nejhhdr0TiLkNPDtcd+PY1Ki7Ae/G
+         4AN83kest/jqzv2mZTcAQqYBdb/aUS+C4li2XtlWqmfNGCrodAO9e0LP4BJ5QsxOvhph
+         93kw==
+X-Gm-Message-State: AOAM530fV+N2MGvlcHw2k4Qj8QJxogYFjO57EDdz6k9pxltM0Nond8TR
+        YKtF+083PMhDARybB/GPSAGgsL19tTiYCw==
+X-Google-Smtp-Source: ABdhPJwFb8J1CtiK7138ijQIuqg/UACKCB6vbFHk9r4Jpb2Xcu8MZUz9vbuApmec5zITM3jag5nkfQ==
+X-Received: by 2002:a17:902:ce0a:b0:156:72e2:f191 with SMTP id k10-20020a170902ce0a00b0015672e2f191mr10093973plg.76.1649275831245;
+        Wed, 06 Apr 2022 13:10:31 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:2c00:1377:21af:a46a:d6a7:f39f])
+        by smtp.gmail.com with ESMTPSA id p64-20020a622943000000b004fdd5c07d0bsm18175131pfp.63.2022.04.06.13.10.27
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 06 Apr 2022 13:05:00 -0700 (PDT)
+        Wed, 06 Apr 2022 13:10:30 -0700 (PDT)
 From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 To:     git <git@vger.kernel.org>
 Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Subject: [GSoC][RFC][PROPOSAL] Reachability bitmap improvements
-Date:   Thu,  7 Apr 2022 01:34:40 +0530
-Message-Id: <20220406200440.27010-1-chakrabortyabhradeep79@gmail.com>
+Date:   Thu,  7 Apr 2022 01:39:59 +0530
+Message-Id: <20220406200959.27096-1-chakrabortyabhradeep79@gmail.com>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
