@@ -2,67 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B729C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 12:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B71AC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 12:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbiDFMvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 08:51:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
+        id S229694AbiDFMwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 08:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231582AbiDFMum (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 08:50:42 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4805F184268
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 01:54:07 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id bg10so2843130ejb.4
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 01:54:07 -0700 (PDT)
+        with ESMTP id S230247AbiDFMwD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 08:52:03 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C64B1460A3D
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 01:59:12 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id ot30so2776110ejb.12
+        for <git@vger.kernel.org>; Wed, 06 Apr 2022 01:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=dycLZeYDtAS8Pmqb6jbd6EICs7j3zunSoCa0S5G5wCw=;
-        b=h0jey8R8wj27VtTyQ5zucwbWM63j9Sh34O/gL348oDvjvoPt4fmUx0l3ZmNqdCUfqU
-         L18bWsS84PB/ZeMH//gshff1iGaOx5bcTaQf9kqyvH1uBniYuFgPjhOj/+FrllOEhlmj
-         Kv4TWIOFLk4eUxY15fl9ITv9HsdeBWzP4cx5JYR0e9vMk60yewyIyNdrQSY4YaCQbPgs
-         TBEUQHWtoA86EnDK1Na/MoQ5AJ6oNREs0MfMLCPc0W2oL3r56DDZOcxlEzUxC6+Ld+XZ
-         +eNSorf0bH9++x7yX3Vz7WNJjossYuObRTs+N98KWdQMFF7DyE+2ik4jrPZJ74JrsEaV
-         veFQ==
+        bh=qJNYOByCrFdj9JT8Cq64iv411BnbdLu6WQ0sH95scFQ=;
+        b=W+tPApOEwJHvkOysX1XO0vSrPHuT/t1wUmW82/d3wx8DWG8Nl6xcoUc4JE36b3vj0w
+         TB8Fh/unPai9kWsQlF+s4tAbWNGXdohGurgry7IDsq6OUNmFMYHNfROuoLLZLj42RMG9
+         L211kHsjwegbzN4m3qSIFjPhJduZbKZmq3ULXAivBgL7124a11PUVkvj4PdR2W7MJ0BU
+         VCxtAqMOblWaJJVsY9NMhiV/Phr2MCteIiRRnzqMI2QR3K0wqU+5NRnLSofbb/fi4whj
+         tFT4WlUVeQXx2tFuS0GwdxREPCKdWL0p0uYbbzcQMuC4LCTNSuoawuvuVS7Bc/ydtYeB
+         CUBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=dycLZeYDtAS8Pmqb6jbd6EICs7j3zunSoCa0S5G5wCw=;
-        b=XnaGDpbkdoTQgRYNfjLDuZDffh4SsD4BE+Xv7u+xC4sjwRT0gdUcLGacelohgIOqgR
-         APNEGD4tklR/xFUfs0+Ju5FUL4jSXEg9+dh+VUpPrwd4gI06mJQlg9Mo/k4eNyiWmSXR
-         5lzNXt1oFETU6nLOitXcDri0ONgDNDihzUzv/5YetSYi07afywxZZhkjHwggxakUtWGO
-         P6cSr7tVbzbCdsU4Ee72O3oP6HThp9Ue2i/JeLZeWfYYbYQ1J7pwC//uWK79Ha0coh3j
-         morbGVMlARFcy7jYegcDJ9fgYIKgxPPLbMMIu5MdjJA1543csANB+EFQIMlvZoIsI2+b
-         k3zA==
-X-Gm-Message-State: AOAM531nM6q3V5TRefvcYTaKv6/smP+PgudpdMASNFIDrywKcjIaKzo5
-        cEfVRX6AA+f5cRG64rEvpdQ=
-X-Google-Smtp-Source: ABdhPJygRT8zFERxdoOF6IsSk/PM0jSf8rqI8wrHs6a8mL25kJ7WU574/3/VFcbfNH4hKyMxZLvivw==
-X-Received: by 2002:a17:906:40da:b0:6ce:51b:a593 with SMTP id a26-20020a17090640da00b006ce051ba593mr7383262ejk.604.1649235245728;
-        Wed, 06 Apr 2022 01:54:05 -0700 (PDT)
+        bh=qJNYOByCrFdj9JT8Cq64iv411BnbdLu6WQ0sH95scFQ=;
+        b=3nbGB/uvyh+rms6KQL4frPqc1PUt3BcLJNVJEG9r05RPckUvNKGY4dRzF1u9xgvB0r
+         sQyMUeV/DE4PHwPlByGdP4sf2kEHNRBlL1dJst7dOmOg6i6l6JM6XqTKWeycebybbghx
+         JxYwemUBpZTFQ1GVGxf8IT4la3rwg1evWnE7K7ydimA1GCGkxnXgI2L7UWE71ot5qCkg
+         jCcuDF3tX97o+TvGIG1rs0pyTu9dK6f39t0U93V/MfZNtmxn5beOngMBHdtz3ZG4K0Z9
+         pj4b8THacktgUqjAkRZGiME5YWxP8UusfYFx/kP+CsOVUM8IpDLLrMKcF9sS1SPLdZwD
+         jodw==
+X-Gm-Message-State: AOAM532/SpWNbSHNPzf247eH8iv/ZmbFFYT2vm32GQYHCKkfx9IY3iHS
+        b3wrSFH1xlBYe8ECcMV3h4D/s/z86TdhQw==
+X-Google-Smtp-Source: ABdhPJxuXeEPc5/Z3rkL0Gdxir/s+zCgH7ew8r3n6Iog6Ih1L8ziRj9OKbRwjecWcBe2LLkoBfTOOw==
+X-Received: by 2002:a17:906:2bcb:b0:6e7:f655:3b96 with SMTP id n11-20020a1709062bcb00b006e7f6553b96mr7105069ejg.175.1649235550477;
+        Wed, 06 Apr 2022 01:59:10 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e11-20020a50becb000000b0041b64129200sm7939311edk.50.2022.04.06.01.54.05
+        by smtp.gmail.com with ESMTPSA id nd31-20020a170907629f00b006dff863d41asm6399076ejc.156.2022.04.06.01.59.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Apr 2022 01:54:05 -0700 (PDT)
+        Wed, 06 Apr 2022 01:59:09 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nc1QS-000aVX-A0;
-        Wed, 06 Apr 2022 10:54:04 +0200
+        id 1nc1VN-000adp-GD;
+        Wed, 06 Apr 2022 10:59:09 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     COGONI Guillaume <cogoni.guillaume@gmail.com>
-Cc:     derrickstolee@github.com, git.jonathan.bressat@gmail.com,
-        git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-Subject: Re: [PATCH V1 1/1] contrib/vscode/: debugging with VS Code and gdb
-Date:   Wed, 06 Apr 2022 10:47:16 +0200
-References: <6f4b924d-0a13-b267-6766-a3620936b686@univ-lyon1.fr>
- <20220405224502.38544-1-cogoni.guillaume@gmail.com>
- <20220405224502.38544-2-cogoni.guillaume@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Garrit Franke <garrit@slashdev.space>
+Subject: gf/shorthand-version-and-help (was: What's cooking in git.git (Apr
+ 2022, #01; Mon, 4))
+Date:   Wed, 06 Apr 2022 10:56:02 +0200
+References: <xmqqilropo3z.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220405224502.38544-2-cogoni.guillaume@gmail.com>
-Message-ID: <220406.86sfqqegnn.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqilropo3z.fsf@gitster.g>
+Message-ID: <220406.86o81eegf6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,53 +68,17 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Apr 06 2022, COGONI Guillaume wrote:
+On Mon, Apr 04 2022, Junio C Hamano wrote:
 
-> +Using the integrate debugger can be particularly helpful to understand how Git works internally.
-> +It can be used to isolate some parts of code, with this you may be able to ask more precises
-> +question when you are stuck. (See getting-help sections).
-> +A script that creates the configuration files is available in contrib/vscode/init.sh. Useful links
-> +and explanation of how to use the script are available in contrib/vscode/README.md.
-> diff --git a/contrib/vscode/README.md b/contrib/vscode/README.md
-> index 8202d62035..f383c95e1f 100644
-> --- a/contrib/vscode/README.md
-> +++ b/contrib/vscode/README.md
-> @@ -6,7 +6,11 @@ code editor which runs on your desktop and is available for
->  [Windows](https://code.visualstudio.com/docs/setup/windows),
->  [macOS](https://code.visualstudio.com/docs/setup/mac) and
->  [Linux](https://code.visualstudio.com/docs/setup/linux). Among other languages,
-> -it has [support for C/C++ via an extension](https://github.com/Microsoft/vscode-cpptools).
-> +it has [support for C/C++ via an extension](https://github.com/Microsoft/vscode-cpptools) with
-> +[debugging support](https://code.visualstudio.com/docs/editor/debugging)
-> +
-> +To get help about "how to personalize your settings" read:
-> +[How to set up your settings](https://code.visualstudio.com/docs/getstarted/settings)
->  
+> * gf/shorthand-version-and-help (2022-03-31) 1 commit
+>  - cli: add -v and -h shorthands
+>
+>  "git -v" and "git -h" are now understood as "git --version" and
+>  "git --help".
+>
+>  Will merge to 'next'?
+>  source: <20220331212709.36036-1-garrit@slashdev.space>
 
-The upthread "How did you generate this patch" question from Matthieu
-still seems to apply. I.e.:
-
->  To start developing Git with VS Code, simply run the Unix shell script called
->  `init.sh` in this directory, which creates the configuration files in
-
-This context is something that's not there in the file on "master".
-
-I really don't mind having some guide for VSCode in our developer
-documentation, but I think if we (as a free software project) are
-recommending proprietary software we should put that in some context
-where we explain if/why it's needed, and if free alternatives are also
-suitable.
-
-I haven't used the VSCode integration you're documenting, but from the
-diff and the "gdb" mention I gather that this isn't using some "native"
-debugger of MSVC/VS's, but just using the VSCode editor as a wrapper for
-gdb?
-
-If that's the case wouldn't it suffice to link to some generic getting
-started guide for debuggers? And e.g. recommend the GDB manual, maybe
-there's a better online reference (I read it locally), but e.g.:
-https://www.sourceware.org/gdb/current/onlinedocs/gdb.html
-
-Then if we're recommending GUI wrappers those are a dime a dozen,
-e.g. Emacs's GUD mode:
-https://www.gnu.org/software/emacs/manual/html_node/emacs/Debuggers.html
+I've reviewed it and it looks good to me, and per my reply in the thread
+I don't think we need to worry about squatting on a potential top-level
+--verbose short flag.
