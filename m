@@ -2,102 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFBFBC433F5
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 16:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76D04C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 16:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238055AbiDFQod (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 12:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43832 "EHLO
+        id S238005AbiDFQti (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 12:49:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238459AbiDFQmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 12:42:49 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DB32153AA
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 08:02:43 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CC7A19FC2D;
-        Wed,  6 Apr 2022 11:02:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/c3l3Cw8ijN6NcOmpFOEX6M4+O5M00ei40H9jc
-        iPwrI=; b=Ice7ygu8jdxhTgUWcFcZJYSmUZQKO+NVx3OTW8f26cbeY+AuAjk4hs
-        oR/qedd5NujAyDCMgmNashCjnNs1qIFsKWLMxF5qe3ge7YGI2lvExSQ5Q7g3aT+7
-        fS3VtRHHNxNCcnm5vksX2V7vJp/oIW1rgfgugFeBa5pjEVGkDgw+c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3524819FC2C;
-        Wed,  6 Apr 2022 11:02:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8AFF519FC2B;
-        Wed,  6 Apr 2022 11:02:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     "'Neeraj Singh'" <nksingh85@gmail.com>,
-        "'Git List'" <git@vger.kernel.org>
-Subject: Re: ns/batch-fsync (Mon Apr 4, 2022)
-References: <xmqqilropo3z.fsf@gitster.g>
-        <20220404232014.GA75@neerajsi-x1.localdomain>
-        <034a01d8487c$0e067b40$2a1371c0$@nexbridge.com>
-        <CANQDOdemQOTLRVkEHBcWtVLPxE_ujzeO0idutD4Zi3zOPzah7A@mail.gmail.com>
-        <038101d848e9$a921e3e0$fb65aba0$@nexbridge.com>
-Date:   Wed, 06 Apr 2022 08:02:39 -0700
-In-Reply-To: <038101d848e9$a921e3e0$fb65aba0$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Tue, 5 Apr 2022 08:35:35 -0400")
-Message-ID: <xmqq1qya2r1s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S237930AbiDFQtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 12:49:21 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 167BC400FED
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 07:11:49 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id p15so4527729ejc.7
+        for <git@vger.kernel.org>; Wed, 06 Apr 2022 07:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=N0a/rQibpM0dWhfp/lSNcm6CcI12F4Pf9Rq/F+M59FI=;
+        b=CenfYuVex/Vi4DT3Q8VhP83dTShYanEtkEgATL99Y+qkSVQT8Dt8AaeITQkT/60un0
+         lCdlDpghDmYhkh60Pt9ZXodbtk78S624eI6NfsOoVQ++Dd34ZSXwyDByB2VBiVR4OIRh
+         yL83jR8gh1D4VcdGzg2yHINGIxyv2aRZhyTOjW+evUH1JHYMqOQwo3clQwpiCCSm2nse
+         YDd3T4/kLQhCoTt8b0BdlZoxQ9iWNkVpGElD1eTVgT82qWB4UBq7bRijkLTeahkduz3Y
+         SsyC+a4CAuqRYoYxlptvh0kIx2Uxt9t+d7bnoNyM39QnyQ9J7awN4dynmtjYq7WTWsI0
+         T7fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N0a/rQibpM0dWhfp/lSNcm6CcI12F4Pf9Rq/F+M59FI=;
+        b=WOjLxBxaclD6ucJ08DaEJKrba6138XHUNEtUmRFjiN1eo+2ZcxzjgMsqUQGzQZeaer
+         aWcPgfbkzFpYbHz+9GxP21Vkw63nP578RbJFbFtj67122B3QeqImaCMw0vAJNstwM8bx
+         NuUoxM50iAMgv7qR+/2mhKQJUOXfyFiVarKwKmuvlZD8+hK/IeKgDJ9VjFl/Es7QkKL6
+         PzX49GkUy1rO5qJz5YTSftMNhrrDbnk/lE/l2Di26gD2h0bCITOXBQmwpLVx9PS/R//+
+         62qqOUJlKRFtFMh/8HKpGNIHn0kbZUPNy211yyrs8BYmrcfYvW8OCJRMiIOIx5h3Q/A0
+         +7CA==
+X-Gm-Message-State: AOAM5312cU0aMbotSz5JyoiJr+vurjJAyiopiViINuub01gnk0Zu1HzY
+        3s6A35YSjaHMRSqMR4S8fGAnQpL+J1JTo1DncFq8bttADw0=
+X-Google-Smtp-Source: ABdhPJyYetYaljOy/AE/PrFdkYhpIAa+1M47X3tuYIcWzzm3iadul6ew7d77aQnXJrrEifrhRbt/ofYVymijgAbKSco=
+X-Received: by 2002:a17:907:94ca:b0:6da:b785:f067 with SMTP id
+ dn10-20020a17090794ca00b006dab785f067mr8556999ejc.654.1649254307126; Wed, 06
+ Apr 2022 07:11:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9AB6A230-B5BA-11EC-A244-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
+ <Yky7xb7nQRR8Vqtj@nand.local> <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
+In-Reply-To: <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
+From:   Shubham Mishra <shivam828787@gmail.com>
+Date:   Wed, 6 Apr 2022 19:41:35 +0530
+Message-ID: <CAC316V6mDowYpptox3KxYycpwpiQhW+LSmNOx8_F_8LKBG2gUw@mail.gmail.com>
+Subject: Re: [GSoC] Contributor candidate introduction
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Plato Kiorpelidis <kioplato@gmail.com>,
+        git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+Hi,
 
-> On April 5, 2022 12:36 AM, Neeraj Singh wrote:
->>On Mon, Apr 4, 2022 at 4:31 PM <rsbecker@nexbridge.com> wrote:
->>> On April 4, 2022 7:20 PM, Neeraj Singh wrote:
->>> >On Mon, Apr 04, 2022 at 01:53:04PM -0700, Junio C Hamano wrote:
->>> >> * ns/batch-fsync (2022-03-30) 14 commits
->>> >>  - core.fsyncmethod: performance tests for batch mode
->>> >>  - t/perf: add iteration setup mechanism to perf-lib
->>> >>  - core.fsyncmethod: tests for batch mode
->>> >>  - test-lib-functions: add parsing helpers for ls-files and ls-tree
->>> >>  - core.fsync: use batch mode and sync loose objects by default on
->>> >> Windows
->>> >>  - unpack-objects: use the bulk-checkin infrastructure
->>> >>  - update-index: use the bulk-checkin infrastructure
->>> >>  - builtin/add: add ODB transaction around add_files_to_cache
->>> >>  - cache-tree: use ODB transaction around writing a tree
->>> >>  - core.fsyncmethod: batched disk flushes for loose-objects
->>> >>  - object-file: pass filename to fsync_or_die
->>> >>  - bulk-checkin: rebrand plug/unplug APIs as 'odb transactions'
->>> >>  - bulk-checkin: rename 'state' variable and separate 'plugged'
->>> >> boolean
->>> >>  - Merge branch 'ns/core-fsyncmethod' into ns/batch-fsync
->>> >>
->>> >>  Introduce a filesystem-dependent mechanism to optimize the way the
->>> >> bits for many loose object files are ensured to hit the disk  platter.
->>> >>
->>> >>  Will merge to 'next'?
->>> >>  source: <pull.1134.v5.git.1648616734.gitgitgadget@gmail.com>
->>> >
->>> >Please expect a reroll today to address the remaining issues in that
->>> thread.
->>>
->>> Does this relate to why I cannot compile with the new fsync code at
->>> 2.36.0-rc0?
->>>
->>
->>I'm sorry I missed the error report.  Could you please share the compiler errors
->>you observed?
+As the topic begans, I think I should also give my updates. Last week
+I spend time around "Croaring" library and right now, I start working
+on the initial version of proposal which I am planning to share by end
+of this week. I think if it's possible to split it into two, We can
+look forward to it with I am okay with picking other project involving
+bitmap too but only issue, I have to start again from scratch :)
+
+Thanks,
+Shubham
+
+On Wed, Apr 6, 2022 at 11:55 AM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> Please see this thread: https://public-inbox.org/git/034101d84873$993f96f0$cbbec4d0$@nexbridge.com/
-
-The sentence with the question mark wonders if we want to merge the
-topic to 'next' (hinting that it is not even in 'next' yet right
-now).  I do not think it affects anybody's build of -rc0.
+> Hi Taylor, Plato and all,
+>
+> On Tue, Apr 5, 2022 at 11:59 PM Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > Hi Plato,
+> >
+> > On Wed, Apr 06, 2022 at 12:43:59AM +0300, Plato Kiorpelidis wrote:
+> > > Hello,
+> > >
+> > > I'm interested in participating as contributor for the project
+> > > "Reachability bitmap improvements".
+> > > The area I'm interested in, the most, is the alternate compression scheme
+> > > e.g. Roaring+Run, however I'm ecstatic about any bitmap performance improvement.
+> > > Expected project size I'm targeting for is large (350 hours).
+> > > I've already completed my micro-project and I will submit it in a few hours.
+> > > I wanted to be sure I could submit v1 of it before committing to
+> > > introducing myself.
+>
+> Though we appreciate it, we don't require introducing yourself. And if
+> you choose to do it, you can do it whenever you want.
+>
+> > Hooray! I'm delighted to hear that you're interested.
+> >
+> > > I've gone through the mailing list and looked for other candidates that could
+> > > also be interested in this project. Shubham Mishra is also interested.
+> > > - Could we collaborate on this project considering how broad it is or only one
+> > > can be selected?
+> > > He/she already has experience in open source and has participated in
+> > > GSoC before.
+> >
+> > I think there are a couple of options here, since we have a handful of
+> > bitmap-related projects that are all up for grabs. If Shubham is also
+> > interested in working on implementing Roaring+Run compression, then I
+> > would be happy for the two of you to work together.
+>
+> Unfortunately, GSoC rules forbid contributors from working together.
+>
+> > Alternatively, if you each want to focus on different sub-projects, I
+> > would be happy to work with multiple students on different areas within
+> > the reachability bitmaps subsystem.
+>
+> I think this would require creating different independent project ideas.
+>
+> > > I should note that the best case scenario for me is if we are both selected,
+> > > probably on different bitmap performance areas under "Reachability bitmap
+> > > improvements" project, however I don't know if it's possible. It probably
+> > > depends on the mentors listed for this project and the work load involved.
+> >
+> > Yeah. Even though I'd be happy to work with as many students as I have
+> > time for, I'm not sure whether it's possible within GSoC's own rules,
+> > much less whether or not it's been done before.
+> >
+> > Christian (cc'd) may have more information. Christian: is it possible to
+> > accept multiple students for the same GSoC project?
+>
+> Unfortunately, I think there needs to be a different project for each
+> GSoC contributor and GSoC rules ask for each contributor to work
+> independently from other GSoC contributors. It's possible to have the
+> same mentors for different projects though, so if the mentors for a
+> project are OK with splitting it into different independent projects
+> and mentoring all the independent projects, I think it could work.
+>
+> Best,
+> Christian.
