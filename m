@@ -2,349 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B59BC433F5
-	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 22:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF971C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 23:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237184AbiDFWpV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 18:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51476 "EHLO
+        id S233250AbiDFXYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 19:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237200AbiDFWpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 18:45:17 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59601877E4
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 15:43:18 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-2e689dfe112so33338737b3.20
-        for <git@vger.kernel.org>; Wed, 06 Apr 2022 15:43:18 -0700 (PDT)
+        with ESMTP id S232191AbiDFXYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 19:24:40 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414A263BF
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 16:22:43 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id e2-20020a17090301c200b001545acd89c9so1846370plh.3
+        for <git@vger.kernel.org>; Wed, 06 Apr 2022 16:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=DyjZlCLiW9uVFyHfHbu2JEBMupYvsWs+vA8iKOC8ca4=;
-        b=X1Z78WP7yLnuE0S9HmsCSZonPTiVcKmyBNdhbOsXtDK1v96PI/f9oTOYgt3bKPIzKx
-         OKI/z7025uhTOTqCsgsma1HimL2RY/fsy8+yW98r5C89+UI6c8HpeF4KCu60SvLfFXHk
-         qE12lYiN8NWdnXG2Il6DTHiaWmZiLbA9kBWiAqwVSSXlM6VUEZfVpulnX4bSlPbe2Erg
-         jBP99cxgVmxWlneYPEV3xFuw5Ft6CubgbdMQ7n2pyOssX+b55h8A9t7MVDtTvIzqENru
-         GD2GJajJAK61w7Toi3vP0z3Mp1CroJv4HCb5S74zikI6Dd3JKuGDW84ocIT5//MiizXo
-         +ICg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=kqTweM9xZMPaxqFTwmJFToDna0FWAV6mbYyHgLIPjIE=;
+        b=ktJSBldiiDgob5OnZ/0XqKkdnGZl9ziPGcp7e8najDeMPNrFHbXaHingopKH4j71Yh
+         zmKod1/yaispVaqAS4nb+i9JCluH9ZTHg7RfK+Fg7gjjmfYSSUcMSc85oV9sFB9JhurP
+         gYJtKE+OcUBarB+jUKAGPD/ZpNI8A0rA6o7jg0yV0fU6jHo2eDwNIX8zjIN3Adt7EjD2
+         wpN7HwkstnHbH9ibzFFTmCLdpnktWeueRTJ9zbwXccUgb7KWFgXg6L2TPWshgoULtgP7
+         CK8LYi0Q9F6qMFexZDY8mB020A7S9IK2djcuFRTBzTiQNokWvcbzItdVVL6IM/QOl1Ul
+         GKHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=DyjZlCLiW9uVFyHfHbu2JEBMupYvsWs+vA8iKOC8ca4=;
-        b=k2B2DMTG8xJ+6ZYtkEmflQ8WsQNwCp2ZbZOjMqZvwmldxwIyga/mqqNMiGZqpCezwf
-         lCkcR/maOLZ7JEHi1Y6+W7HqcyLmw/wnKk4JnwZ7Pq7DOb5+iBTaVKZ6A0qG41LiQjUF
-         WGHIGKGaFBSWaTm7b4TBx1tBjrfJIi2f6uf9XJSEkqyydu5kSNBq2ZXZHvBt737pUVMZ
-         U96c3ipIf2ol97n/sF5IhWRL8RO5YeCiSsdESL7g4n/1Yhi0HsEQXgU1jPHR7QW2c9K2
-         n8GDxgEyt/4nZFjB779e3KAChDPsk5mtxhvAYQtPyqV8KJiF9tYHayJehoHtjKayILo0
-         lG1g==
-X-Gm-Message-State: AOAM533ypeZB4buGtNP44pX9FMEso+kY4XzR/D5kcfMZMVPPVShz/tUW
-        5OlZn0u8iTMtv10wJPvJZesZ3H88DbePsUbySTK+i029WEkXZuDf+LHjN25iKP4Ulib8kW6ZPeH
-        D09F0FiVzFoeupzV8CADFaC52oLqMRINJY0jQRIt8PXhUCL8Pp/00pa3YpppnbTs=
-X-Google-Smtp-Source: ABdhPJxR9NIvU+OHzyqkqs3VKLtmwgkYrOBaYhRJlbYVt86GUcao8A4fP7iTWc1KKRxuatsS9ExLx7xzry2L1w==
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=kqTweM9xZMPaxqFTwmJFToDna0FWAV6mbYyHgLIPjIE=;
+        b=ykLtn6OjNwQhCRHD8a4qq1i8jUTTLwRp3HGBMp5STSctTx3zN49aQ/XxJ3vLr+ujyW
+         U39eQ/WzZSBLFD9mLciiG0dhpsmUeI63YFfeYrtuTRx5QstN+8pTW9uXWe88x4RmyTwS
+         GFUvqLEVowuJgQkuFH9OACtJMUV9MM/iYenudbpm5TSb0Oy/6qkPkH23pHQnBaMbLeYj
+         WWkkJuiSEiXVW/CwxCmSq/775PljmP/HNCCZqBzIjbK8NglUo8ldyt6vBYJFb8QgfPvr
+         MvSOcEsG7NhAw0BE2xLql/pUfV3I2WukiWgKy8BxK2pObKkzIcci0Uwdld+Pl3YynRu1
+         BPlg==
+X-Gm-Message-State: AOAM533HcaKWHFNs1REXYXKF3Q5gpyqzuRrKWXO69UeYchpryJhDk9QA
+        UbhJB8mne//SqqOTsIRRF/EAanwG+ZA1Jz1S6yrW1STooOL6E9qdn3/lVlU2Ptx3sUWDGz5yh+7
+        OGpPe0qe9zCBmfkvIKKbELHQZvdM9guJAPrVFIMhg0Aw4fkNd00ZTPkll5DTOnhk=
+X-Google-Smtp-Source: ABdhPJzPZE8FUGGKc7Z36Asa5GWUBpnvQCoonvoOvuD404l+r7dLtF/2613QbropVZzP2P8yep9m/11s0WUP3w==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a25:360f:0:b0:634:7083:12a5 with SMTP id
- d15-20020a25360f000000b00634708312a5mr8505020yba.404.1649284997885; Wed, 06
- Apr 2022 15:43:17 -0700 (PDT)
-Date:   Wed, 06 Apr 2022 15:43:08 -0700
-Message-Id: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90b:1bc6:b0:1c7:3229:652a with SMTP
+ id oa6-20020a17090b1bc600b001c73229652amr12779320pjb.65.1649287362600; Wed,
+ 06 Apr 2022 16:22:42 -0700 (PDT)
+Date:   Wed,  6 Apr 2022 16:22:31 -0700
+In-Reply-To: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <20220406232231.47714-1-chooglen@google.com>
 Mime-Version: 1.0
-Subject: Bare repositories in the working tree are a security risk
+References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
+Subject: [PATCH] fsck: detect bare repos in trees and warn
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>, justin@justinsteven.com,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="utf-8"
+Cc:     Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="kjj whjj"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Git tries not to distribute configs in-repo because they are a security
+risk. However, an attacker can do exactly this if they embed a bare
+repo inside of another repo.
 
-Hi all,
+Teach fsck to detect whether a tree object contains a bare repo (as
+determined by setup.c) and warn. This will help hosting sites detect and
+prevent transmission of such malicious repos.
 
-My Google colleagues and I would like to address what we think is a securit=
-y
-risk - namely that Git repositories can contain valid bare repositories in =
-their
-working trees. This is based on an excellent article by Justin Steven [1] (=
-CC-ed
-here).
+See [1] for a more in-depth discussion, including future steps and
+alternatives.
 
-Below is a discussion of:
+[1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.c=
+orp.google.com/
 
-* The risky behavior - what Git does and why it is risky
-* Possible responses to this risk
-* A proposed approach
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ fsck.c          | 19 +++++++++++++++++++
+ fsck.h          |  1 +
+ setup.c         |  4 ++++
+ t/t1450-fsck.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+)
 
-The proposed changes are nontrivial, so I=E2=80=99d really appreciate any f=
-eedback here.
-Unfortunately, I will be out of the office and won=E2=80=99t respond to ema=
-ils for the
-next 7 days or so, but there will still be at least one Google Git team mem=
-ber
-keeping tabs on the discussion :)
-
-=3D TL;DR
-
-Git repositories should not be allowed to contain bare repositories in thei=
-r
-working trees because:
-
-* Such bare repositories can have maliciously crafted config files that cau=
-se
-  `git` to execute arbitrary code.
-* Git itself can distribute the malicious repo via `git clone`; no need to
-  distribute repos out of band e.g. via tarballs [2].
-* Many `git` commands can be affected by malicious config files, and many u=
-sers
-  have tools that will run `git` in the current directory or the subdirecto=
-ries
-  of a repo. Once the malicious repo has been cloned, very little social
-  engineering is needed; the user might only need to open the repo in an ed=
-itor
-  or `cd` into the correct subdirectory.
-
-=3D Background
-
-(This section is primarily a summary of [1]. I highly, highly recommend rea=
-ding
-that as it describes the issue in much more detail and is extremely readabl=
-e
-regardless of Git experience.)
-
-Certain Git configuration options are particularly enticing targets for
-attackers, e.g. core.fsmonitor can execute arbitrary commands and is invoke=
-d
-on many innocuous-looking `git` commands (like `git status`). This is even =
-more
-risky when one considers that many tools (like shell prompts and IDEs) will=
- run
-`git` opportunistically inside a repository - so many users won't even need=
- to
-explicitly run `git` to be affected [3].
-
-Since config files are such an enticing target for attackers, Git intention=
-ally
-avoids distributing config files with repos - a user shouldn't be able to `=
-git
-clone` a repo with a config file (or really, any files inside .git). Howeve=
-r,
-one can 'trick' Git into doing this by embedding a bare repository inside o=
-f
-another, containing repository: a repository can contain subdirectories tha=
-t are
-valid bare repositories, and any `git` operations run in such a subdirector=
-y
-will then use the bare repository=E2=80=99s config file instead of the "mai=
-n"
-repository=E2=80=99s.
-
-An attack might look like this:
-
-* Attacker creates a repository where subdirectory "Documentation/" is a ba=
-re
-  repository i.e. it contains "HEAD", "refs/" and "objects/" [4]. Attacker
-  also adds "config" with a malicious setting for core.fsmonitor.
-* Attacker convinces User to read their project's documentation by `git
-  clone`-ing their repository and inspecting the "Documentation/" directory=
-.
-* User cd-s into "Documentation/" and their shell prompt runs `git status`,
-  executing the core.fsmonitor command defined by Attacker.
-
-=3D What can we do about it?
-
-Each subsection is an alternative and an analysis (+/- are pros/cons).
-
-=3D=3D 1. Prevent users from checking out bare repos
-
-This is similar to an existing mitigation where we prevent repository entri=
-es
-that can be confused for ".git" (like ".GIT"). but it requires checking mul=
-tiple
-entries instead of a single entry. I suspect that we could accomplish this =
+diff --git a/fsck.c b/fsck.c
+index 3ec500d707..11c11c348a 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -573,6 +573,9 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 	int has_bad_modes =3D 0;
+ 	int has_dup_entries =3D 0;
+ 	int not_properly_sorted =3D 0;
++	int has_head =3D 0;
++	int has_refs_entry =3D 0;
++	int has_objects_entry =3D 0;
+ 	struct tree_desc desc;
+ 	unsigned o_mode;
+ 	const char *o_name;
+@@ -602,6 +605,12 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 		has_dotdot |=3D !strcmp(name, "..");
+ 		has_dotgit |=3D is_hfs_dotgit(name) || is_ntfs_dotgit(name);
+ 		has_zero_pad |=3D *(char *)desc.buffer =3D=3D '0';
++		has_head |=3D !strcasecmp(name, "HEAD")
++			&& (S_ISLNK(mode) || S_ISREG(mode));
++		has_refs_entry |=3D !strcasecmp(name, "refs")
++			&& (S_ISLNK(mode) || S_ISDIR(mode));
++		has_objects_entry |=3D !strcasecmp(name, "objects")
++			&& (S_ISLNK(mode) || S_ISDIR(mode));
+=20
+ 		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
+ 			if (!S_ISLNK(mode))
+@@ -739,6 +748,16 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 		retval +=3D report(options, tree_oid, OBJ_TREE,
+ 				 FSCK_MSG_TREE_NOT_SORTED,
+ 				 "not properly sorted");
++	/*
++	 * Determine if this tree looks like a bare repository according
++	 * to the rules of setup.c. If those are changed, this should be
++	 * changed too.
++	 */
++	if (has_head && has_refs_entry && has_objects_entry)
++		retval +=3D report(options, tree_oid, OBJ_TREE,
++				 FSCK_MSG_EMBEDDED_BARE_REPO,
++				 "contains bare repository");
++
+ 	return retval;
+ }
+=20
+diff --git a/fsck.h b/fsck.h
+index d07f7a2459..3f0f73b0f3 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -65,6 +65,7 @@ enum fsck_msg_type {
+ 	FUNC(NULL_SHA1, WARN) \
+ 	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+ 	FUNC(NUL_IN_COMMIT, WARN) \
++	FUNC(EMBEDDED_BARE_REPO, WARN) \
+ 	/* infos (reported as warnings, but ignored by default) */ \
+ 	FUNC(GITMODULES_PARSE, INFO) \
+ 	FUNC(GITIGNORE_SYMLINK, INFO) \
+diff --git a/setup.c b/setup.c
+index 04ce33cdcd..2600548776 100644
+--- a/setup.c
++++ b/setup.c
+@@ -336,6 +336,10 @@ int get_common_dir_noenv(struct strbuf *sb, const char=
+ *gitdir)
+  *  - either a HEAD symlink or a HEAD file that is formatted as
+  *    a proper "ref:", or a regular file HEAD that has a properly
+  *    formatted sha1 object name.
++ *
++ * fsck.c checks for bare repositories in trees using similar rules, but a
++ * duplicated implementation. If these are changed, the correspnding code =
 in
-one of two ways:
++ * fsck.c should change too.
+  */
+ int is_git_directory(const char *suspect)
+ {
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index de50c0ea01..a65827bc03 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -563,6 +563,42 @@ dot-backslash-case .\\\\.GIT\\\\foobar
+ dotgit-case-backslash .git\\\\foobar
+ EOF
+=20
++test_expect_success "fsck notices bare repo" '
++(
++	mkdir -p embedded-bare-repo/bare &&
++	git init embedded-bare-repo &&
++	(
++		cd embedded-bare-repo/bare &&
++		echo content >HEAD &&
++		mkdir refs/ objects/ &&
++		echo content >refs/foo &&
++		echo content >objects/foo &&
++		git add . &&
++		git commit -m base &&
++		bad_tree=3D$(git rev-parse HEAD:bare) &&
++		git fsck 2>out &&
++		test_i18ngrep "warning.*tree $bad_tree: embeddedBareRepo: contains bare =
+repository" out
++	)
++)'
++
++test_expect_success "fsck notices bare repo with odd casing" '
++(
++	mkdir -p embedded-bare-repo-case/bare &&
++	git init embedded-bare-repo-case &&
++	(
++		cd embedded-bare-repo-case/bare &&
++		echo content >heAD &&
++		mkdir Refs/ objectS/ &&
++		echo content >Refs/foo &&
++		echo content >objectS/foo &&
++		git add . &&
++		git commit -m base &&
++		bad_tree=3D$(git rev-parse HEAD:bare) &&
++		git fsck 2>out &&
++		test_i18ngrep "warning.*tree $bad_tree: embeddedBareRepo: contains bare =
+repository" out
++	)
++)'
++
+ test_expect_success 'fsck allows .=C5=87it' '
+ 	(
+ 		git init not-dotgit &&
 
-a. Prevent bare repos from entering the index.
-b. Prevent writing bare repos to the working tree.
+base-commit: 805e0a68082a217f0112db9ee86a022227a9c81b
+--=20
+2.33.GIT
 
-+ Relatively robust protection - because the malicious repo never enters th=
-e
-  working tree, we even protect other tools (e.g. JGit) from doing dangerou=
-s
-  things in the embedded repo (provided the checkout is done with `git`, of
-  course).
-- This breaks some 'valid' workflows (e.g. someone embedding a bare repo as=
- a
-  more convenient alternative to submodules), but it seems reasonable to le=
-t
-  users opt out of this behavior.
-- (1a) is difficult to do in practice because many code paths add entries t=
-o
-  the index, and checking a combination of new entry and existing entries i=
-s
-  much trickier than checking just the new entry.
-- (1b) might also be difficult, though not as difficult as 1a because we
-  already have a complete list of entries we will write. I don=E2=80=99t th=
-ink there
-  are existing facilities that do this sort of checking of multiple entries=
-.
-   =20
-=3D=3D 2. Detect and reject bare repos using `git fsck` and `transfer.fsckO=
-bjects`.
-
-This entails checking for the markers of a bare repository (HEAD, refs/,
-objects/) in tree objects. This shares a precedent with (1), since `git fsc=
-k`
-will also detect ".GIT".
-
-+ Most reputable hosting sites set `transfer.fsckObjects`, which allows the=
-m to
-  detect and prevent this kind of transmission.
-+ Confers some protection to users even without them doing anything.
-+ Easy to visualize and to write.
-- This won=E2=80=99t directly protect most users because they don=E2=80=99t=
- typically set
-  `transfer.fsckObjects` (in fact, `transfer.fsckObjects` will render many
-  projects, like linux.git, uncloneable without additional config)
-- Won=E2=80=99t guard against malicious/poorly configured hosts.
-
-=3D=3D 3. Detect that we are in an embedded bare repo and ignore the embedd=
-ed bare
- repository in favor of the containing repo.
-
-For example, if setup.c detects that we are in a bare repo, it could then w=
-alk
-up the directory hierarchy to see if there is a containing repo that tracks=
- the
-bare one. If so, setup.c chooses to use the containing repo instead.
-
-+ Extremely robust; this even protects against a checkout by an earlier Git
-  version.
-+ Users who don=E2=80=99t use bare repos won=E2=80=99t even notice the diff=
-erence.
-- The change in rules breaks some legitimate workflows e.g. a user with a r=
-epo
-  at HOME and bare repos underneath.
-- Potentially very expensive for bare repo users because setup.c will likel=
-y
-  walk up to the root directory; we=E2=80=99d be essentially *forcing* thos=
-e users to
-  set GIT_CEILING_DIRECTORIES.
-- Doesn=E2=80=99t protect users who use other tools e.g. JGit.
-   =20
-=3D=3D 4. Educate users about this risk without making code changes.
-
-Some risks fall into this category e.g. "Avoid unarchiving repositories bec=
-ause
-.git/config might be poisoned." [2].
-
-+ We don=E2=80=99t break any users.
-- Breaks the trust that users have in `git clone`.
-- IMO "Inspect every repo in its entirety before cloning it" is too much of=
- a
-  burden to put on users.
-
-=3D Next steps
-
-I propose that we prevent repositories from containing bare repositories by
-doing the following (in order):
-
-* Implement (2) by adding a new fsck message "embeddedBareRepo".
-  * When this is done, hosting sites can hopefully use this capability to
-    prevent transmission, and help us understand the prevalence of such att=
-acks.
-* Implement (1b) by teaching unpack_trees.c to check whether the tree conta=
-ins
-  an entire bare repo, and die() if so. This will be guarded by a
-  defaults-to-true config value.
-  * This would only block a bare repo from being written in a single operat=
-ion.
-    It wouldn=E2=80=99t stop a user from writing a bare repo entry-by-entry=
- using "git
-    checkout <path>", but the amount of social engineering required probabl=
-y
-    renders this attack infeasible.
-  * As I noted earlier, I foresee some difficulty actually implementing thi=
-s
-    because I don=E2=80=99t think we have facilities for checking multiple =
-tree entries
-    at once.
-
-I am particularly interested in hearing feedback about (1b), namely:
-
-* How to actually teach unpack_trees.c to detect bare repos.
-* Whether preventing bare repos in unpack_trees.c is a good enough mitigati=
-on
-  (e.g. Are there other code paths that should block bare repos? Should we =
-be
-  checking the index instead of the tree?).
-
-I have a patch that does (2); I will send that out and we can leave feedbac=
-k on
-that separately.
-
-=3D Demonstration
-
-This is based on a script by Taylor Blau (thanks!). [1] also contains a
-demonstration that runs in Docker.
-
-  #!/bin/sh
-
-  rm -fr malicious cloned &&git init malicious &&
-
-  (
-  cd malicious &&
-
-  mkdir -p bare &&
-  cd bare &&
-
-  echo 'ref: refs/heads/main' >HEAD &&
-  cat >config <<-EOF
-  [core]
-  repositoryformatversion =3D 0
-  filemode =3D true
-  bare =3D false
-  worktree =3D "worktree"
-  fsmonitor =3D "echo pwned >&2; false"
-  EOF
-
-  mkdir objects refs worktree &&
-  touch worktree/.gitkeep &&
-
-  git add . &&
-  git commit -m ".gitkeep" &&
-
-  cd .. &&
-  git add bare &&
-  git commit -m 'initial commit'
-  ) &&
-
-  git clone --no-local malicious cloned &&
-  cd cloned/bare &&
-  git status # pwned
-
-=3D Footnotes
-
-[1] https://github.com/justinsteven/advisories/blob/main/2022_git_buried_ba=
-re_repos_and_fsmonitor_various_abuses.md.=20
-[2] Archived repositories with malicious .git directories are a known risk.=
- See
- https://lore.kernel.org/git/20171003123239.lisk43a2goxtxkro@sigill.intra.p=
-eff.net/
- for an on-list discussion. This is also described in
- https://blog.sonarsource.com/securing-developer-tools-git-integrations
- (referenced in [1]).
-[3] We even ship such a tool - contrib/completion/git-prompt.sh. A user can=
- pwn
- themselves with tab completion even if they don=E2=80=99t have a prompt co=
-nfigured
-[4] Any directory containing these entries will be recognized as a bare rep=
-o, so
- an attacker could add arbitrary entries to the directory to obfuscate the =
-fact
- that it is a bare repo.
-[*] https://offensi.com/2019/12/16/4-google-cloud-shell-bugs-explained-bug-=
-3/ is
- similar to [1], but uses hooks instead of core.fsmonitor.
