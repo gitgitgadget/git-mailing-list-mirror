@@ -2,87 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08262C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E9EC4332F
 	for <git@archiver.kernel.org>; Wed,  6 Apr 2022 20:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233857AbiDFUOU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Apr 2022 16:14:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S233997AbiDFUO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Apr 2022 16:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234569AbiDFUMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Apr 2022 16:12:47 -0400
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA6C23ACA9
-        for <git@vger.kernel.org>; Wed,  6 Apr 2022 10:55:19 -0700 (PDT)
-Received: from cwcc.thunk.org (pool-108-7-220-252.bstnma.fios.verizon.net [108.7.220.252])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 236HtFQd007933
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 6 Apr 2022 13:55:15 -0400
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-        id 096B315C3EC0; Wed,  6 Apr 2022 13:55:15 -0400 (EDT)
-Date:   Wed, 6 Apr 2022 13:55:15 -0400
-From:   "Theodore Ts'o" <tytso@mit.edu>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Markus Vervier <markus.vervier@x41-dsec.de>, git@vger.kernel.org
-Subject: Re: Covierty Integration / Improvement
-Message-ID: <Yk3UAz3sn9KhMnyf@mit.edu>
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
- <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2204061620110.379@tvgsbejvaqbjf.bet>
+        with ESMTP id S235684AbiDFUN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Apr 2022 16:13:26 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FC2B18B2
+        for <git@vger.kernel.org>; Wed,  6 Apr 2022 10:39:08 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B722C130ABA;
+        Wed,  6 Apr 2022 13:39:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FgK2xMazI6ocnQOpuukCK+2BY+FFJzkHyX/2I8
+        fdeXk=; b=GE5+1jRZ7hUF4yRFb3zyvL5trLGkXv5eD9BflXDCKmjzK8MZxRB5jz
+        Yvk15rQY7B1NhlddeLrxVeOarprrTx5XxTZsoGv+IYlGlbwibrpnzYb4s6/8yKro
+        cNB3J9OLMtkaWipY5IbwWC4vjybQAW2gw0+j+r8LPoV2o0TCiGH7k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD520130AB9;
+        Wed,  6 Apr 2022 13:39:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3329130AB8;
+        Wed,  6 Apr 2022 13:39:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [BUG] git-2.36.0-rc0 - t6200 fails due to library/path issues
+References: <041601d849a8$1441ce60$3cc56b20$@nexbridge.com>
+Date:   Wed, 06 Apr 2022 10:39:04 -0700
+In-Reply-To: <041601d849a8$1441ce60$3cc56b20$@nexbridge.com>
+        (rsbecker@nexbridge.com's message of "Wed, 6 Apr 2022 07:18:39 -0400")
+Message-ID: <xmqq35iqyuvb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2204061620110.379@tvgsbejvaqbjf.bet>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74C9E4FE-B5D0-11EC-A7C8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 06, 2022 at 05:08:37PM +0200, Johannes Schindelin wrote:
-> I have fixed Git for Windows' Coverity build and started to sift through
-> the 154 new defects reported as of v2.36.0-rc0.
-> 
-> Sadly, there is now a new class of overwhelming false positives: Coverity
-> claims that "strbuf_addstr does not [NUL-]terminate", which is of course
-> false.
+<rsbecker@nexbridge.com> writes:
 
-It should be possible to suppress this by uploading a Coverity model
-file.  See[1] for more details:
+> t6200 makes assumptions that ssh-keygen to be used is located in
+> /usr/local/bin. This causes problems when we have multiple OpenSSL
+> installations - which we do - 3 of them. Our environment supplies OpenSSL
+> 1.1 in /usr/local-ssl1.1, with a corresponding version of ssh-agent in a
+> different directory. There needs to be a mechanism to override the
+> ssh-keygen so that tests will work in this situation.
+>
+> *** RLD ERROR ***: Unresolved Text Symbol OPENSSL_add_all_algorithms_noconf
+> in file /usr/local/bin/ssh-keygen.
+>
+> *** RLD ERROR ***: Unresolved Text Symbol EVP_MD_CTX_cleanup in file
+> /usr/local/bin/ssh-keygen.
+>
+> *** RLD ERROR ***: Unresolved Text Symbol SSLeay in file
+> /usr/local/bin/ssh-keygen.
+>
+> *** RLD ERROR ***: Unresolved Text Symbol EVP_MD_block_size in file
+> /usr/local/bin/ssh-keygen.
+>
+> *** RLD ERROR ***: Unresolved Text Symbol EVP_MD_CTX_init in file
+> /usr/local/bin/ssh-keygen.
+>
+> I do not know why the test is forcing SSH in /usr/local/bin - it is not
+> something coming from our environment, which has PATH set correctly.
 
-[1] https://community.synopsys.com/s/article/practical-example-of-coverity-function-model
+Indeed that is curious, as the only hits to usr/local in t/ is this one:
 
-I've suppressed a similar issue by using the attribute __nonstring,
-but I don't think that will work for git, because strbuf->buf really
-*is* a NUL-terminated string, where as in ext4 we have some fields
-which are designed to be NUL padded, but it is *not* guaranteed to be
-NUL-terminated:
+    $ git grep usr/local t/
+    t/test-lib.sh:test FreeBSD != $uname_s || GIT_UNZIP=${GIT_UNZIP:-/usr/local/bin/unzip}
 
-#ifndef __nonstring
-#ifdef __has_attribute
-#if __has_attribute(__nonstring__)
-#define __nonstring                    __attribute__((__nonstring__))
-#else
-#define __nonstring
-#endif /* __has_attribute(__nonstring__) */
-#else
-# define __nonstring
-#endif /* __has_attribute */
-#endif /* __nonstring */
-
-struct ext2_super_block {
-       ...
-/*068*/	__u8	s_uuid[16] __nonstring;		/* 128-bit uuid for volume */
-/*078*/	__u8	s_volume_name[EXT2_LABEL_LEN] __nonstring;	/* volume name */
-       ...
-};
-
-(This is needed to suppress warnings by Clang as well.)
-
-Using __nonstring will result in attempts to use s_volume_name in "C"
-string context to give a warning, which is why this isn't right for
-strbuf->buf.
-
-Cheers,
-
-						- Ted
