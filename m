@@ -2,137 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E9AC433EF
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 07:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29800C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 08:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234966AbiDGHai (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 03:30:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50740 "EHLO
+        id S243499AbiDGJBP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 05:01:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbiDGHah (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 03:30:37 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4364FC57
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 00:28:37 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id p15so8956447ejc.7
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 00:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=BMMahf2HCu8DpXUAG0ZrO1HTBCHSqEUYvG6EHCeyfMQ=;
-        b=FA2KmWqDKhc6+jQ2kAPD+HzfE8q2IgmmMSvYJm2lekN/FkXSsqxbY8UOZeGMGqYs7S
-         oOj42IjSXSuu3T3OP/xCXlFB7kTzWLb/vTPmr1ubkf9oOlz/Eq+aI5tx2JwqeJmpxgCS
-         N5KU1KIwhsqaUOCIsz6PzTs42x6wgsJJ3oC13Ic7uYMpKYaSBY18HF/MaFjDVYScccFN
-         9/7wlDcG1sm9GReDVtb/jjxw5svyFuL2+GAOXyPnDnog+X6Sfdr7uSexTZJzeKyFbpbT
-         MFZTD+xEG6bg+0BvEh2wfK5QHhL1/p+s2k5wa0fPgP9P+f2ogPqk+3eR9gl+veOzQzOT
-         XFbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=BMMahf2HCu8DpXUAG0ZrO1HTBCHSqEUYvG6EHCeyfMQ=;
-        b=jRccwHVK0kbCYpK7pwvX2sTufS5cZGDIZZlilRxF62zRUDQ9A+HgbN2SPL3bu0+5ng
-         LMg1EKTl4nWf9+JTH7UH4kG3DC/VNHn8ImfafDN+A2/Z+1i5sDWVLXPXoA12Fj/rUPWF
-         NEqkteAhwQwFomze6J8aYJv789mNuGjDRPr9UWAcKnhMto9j/31Ttw3BvN2j7Dbd5nmc
-         8xUPlvVn6MQLyWoM++0seH3hqNXM0WIJX2qrJL6dqQ63+PvNAIfH8VjOTjNLlY6gdgUC
-         DeMg7PlzbTL8k1ZJFc2/i0NBk9eeKE2VavIjQUlR8D6JLR0CR7BLnU2bbH9yl5J6yEEq
-         Ne+w==
-X-Gm-Message-State: AOAM5332ExwpSabJKhquN8Dmv2MCub80/iXcpagsY5FvfmkK5wTIkNbC
-        akSdGaXiMVDcuVNBOfgQPvg=
-X-Google-Smtp-Source: ABdhPJyOhJ62USCjWuM258vOTCEkjhlKPSYVuHfX6k0gjV5N2wquI3rZS2EXrCYZcU9fkN9lGpWCgQ==
-X-Received: by 2002:a17:906:dc8d:b0:6db:572b:df24 with SMTP id cs13-20020a170906dc8d00b006db572bdf24mr12088073ejc.193.1649316516201;
-        Thu, 07 Apr 2022 00:28:36 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e19-20020a056402105300b004162d0b4cbbsm8815416edu.93.2022.04.07.00.28.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 00:28:35 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ncMZG-000mEP-Vl;
-        Thu, 07 Apr 2022 09:28:34 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
-        Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
-        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com, Fabian Stelzer <fs@gigacodes.de>,
-        Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: Re: [PATCH v2] ls-tree: fix --long implying -r regression in
- 9c4d58ff2c3
-Date:   Thu, 07 Apr 2022 09:14:40 +0200
-References: <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
- <patch-v2-1.1-ed83b3b74ab-20220404T234507Z-avarab@gmail.com>
- <xmqqwng2xfi8.fsf@gitster.g> <220406.8635iqdjzl.gmgdl@evledraar.gmail.com>
- <xmqq4k35x4m6.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqq4k35x4m6.fsf@gitster.g>
-Message-ID: <220407.86y20hcpy5.gmgdl@evledraar.gmail.com>
+        with ESMTP id S243491AbiDGJBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 05:01:10 -0400
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9158B939D0
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 01:59:08 -0700 (PDT)
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none
+X-Ironport-Dmarc-Check-Result: validskip
+X-IronPort-AV: E=Sophos;i="5.90,241,1643670000"; 
+   d="scan'208";a="10835888"
+Received: from nautfst12.univ-lyon1.fr (HELO [134.214.142.79]) ([134.214.142.79])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 10:59:08 +0200
+Message-ID: <6a5152c1-7bb4-220c-cdce-33e93ea9c7c6@univ-lyon1.fr>
+Date:   Thu, 7 Apr 2022 10:59:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH V1 1/1] contrib/vscode/: debugging with VS Code and gdb
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        COGONI Guillaume <cogoni.guillaume@gmail.com>
+Cc:     "derrickstolee@github.com" <derrickstolee@github.com>,
+        "git.jonathan.bressat@gmail.com" <git.jonathan.bressat@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <6f4b924d-0a13-b267-6766-a3620936b686@univ-lyon1.fr>
+ <20220405224502.38544-1-cogoni.guillaume@gmail.com>
+ <20220405224502.38544-2-cogoni.guillaume@gmail.com>
+ <66f08cb2e81647e29a080af05d7c867e@SAMBXP02.univ-lyon1.fr>
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
+In-Reply-To: <66f08cb2e81647e29a080af05d7c867e@SAMBXP02.univ-lyon1.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/6/22 10:47, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Apr 06 2022, COGONI Guillaume wrote:
+> 
+> I really don't mind having some guide for VSCode in our developer
+> documentation, but I think if we (as a free software project) are
+> recommending proprietary software we should put that in some context
+> where we explain if/why it's needed, and if free alternatives are also
+> suitable.
 
-On Wed, Apr 06 2022, Junio C Hamano wrote:
+Note that VS Code is mostly open source (the pre-compiled binaries are 
+proprietary, but the source code is MIT licenced, 
+https://github.com/Microsoft/vscode). Not to be confused with Visual 
+Studio, which is fully proprietary, but is a totally different tool 
+(AFAIK, they only share the name).
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>>> +	cat >expect &&
->>>> +	cat <&6 >expect.-d &&
->>>> +	cat <&7 >expect.-r &&
->>>> +	cat <&8 >expect.-t &&
->>>
->>> Let's not go too cute like this.  This forces the caller to remember
->>> which among 6, 7, and 8 corresponds to which option.  It is too ugly
->>> to live.
->>
->> I think it's rather elegant actually, but to be fair it would, per:
->>
->> 	git grep '<&[1-9]| [1-9]<<-'
->>
->> Be the user with the most FD's using this sort of pattern.
->
-> Please give a clear explanation why "-d" has to be 6, "-r" 7 and
-> "-t" 8, that can be used by developers as a memory aid to help them
-> write new tests using the helper.
+> I haven't used the VSCode integration you're documenting, but from the
+> diff and the "gdb" mention I gather that this isn't using some "native"
+> debugger of MSVC/VS's, but just using the VSCode editor as a wrapper for
+> gdb?
 
-It's documented when test-lib.sh does the redirection, since Fabian
-Stelzer's a6714088e0c (test-lib: make BAIL_OUT() work in tests and
-prereq, 2021-12-01).
+Yes (gdb or lldb under the hood). As usual, it adds a GUI layer, but 
+also a configuration layer where you specify how to launch the debugger 
+in a launch.json file, and this is where the little script in contrib/ 
+is handy to generate a launch.json adapted for Git.
 
-I guess a bit of archane knowledge not documented there is that FD #5 is
-used for the test-lib.sh itself, e.g. BUG(), so if you want that to work
-properly you can't touch it.
+> If that's the case wouldn't it suffice to link to some generic getting
+> started guide for debuggers? And e.g. recommend the GDB manual, maybe
+> there's a better online reference (I read it locally), but e.g.:
+> https://www.sourceware.org/gdb/current/onlinedocs/gdb.html
 
-But everything as of #6 is generally fair game, secondary helpers like
-"test_pause" won't work properly, but as far as the test framork is
-concerned 6-9 is good.
+To me the point of the doc within Git's repo is to document git-specific 
+aspects, and I agree that pointing to a generic doc is better than 
+re-writing one. If I had written the patch I'd have made the general 
+paragraph on debugger benefits a bit shorter, but it's already rather 
+short so I'm OK with the patch in its current state.
 
-So I don't really have a better explanation the same on as why pick "int
-i" rather than "int x", it's just the prevailing pattern.
+> Then if we're recommending GUI wrappers those are a dime a dozen,
+> e.g. Emacs's GUD mode:
+> https://www.gnu.org/software/emacs/manual/html_node/emacs/Debuggers.html
 
-> Or justify why the developers have to memorize such a meaningless
-> correspondence, if there is no any good reason.
+To me this is out of the scope of the patch (the real point to me was to 
+increase the discoverability of contrib/vscode), but sure, documenting 
+other GUI wrappers would be nice.
 
-Explained above, I think.
-
-> Alternatively, you can stop abusing the word "elegant".  It is not a
-> synonym to "what I wrote" ;-).
-
-The "elegant" part is getting away with passing structured data into a
-shell function, which it's generally resistant to.
-
-As much as I'd like to take credit from it I just picked it up from code
-Ilya wrote in 0445e6f0a12 (test-lib: '--run' to run only specific tests,
-2014-04-30). I didn't know about it before then.
-
-In any case, you merged down Josh's version without these tests for rc1,
-so I'm assuming that's a "no" to the upthread "if you'd like to pick
-this up with the version with the tests at all" in the context of the RC
-period.
-
-So I think we can table this for now, or would you like a version of
-this without (a)use of these file descriptors to pass in arguments?
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
