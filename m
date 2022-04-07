@@ -2,128 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DBAC433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 13:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A28FC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 13:33:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233128AbiDGNXk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 09:23:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
+        id S243239AbiDGNfn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 09:35:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232781AbiDGNXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 09:23:36 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332D76C951
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 06:21:37 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id i23-20020a9d6117000000b005cb58c354e6so3842607otj.10
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 06:21:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OgSbUAAY3s+YlQJXVe9AUFg6gt1wYPM+47Ye5FZ2PQQ=;
-        b=GYeI0EQidXsY9xZ3aWQKoDCKXAMU2MdTtDdjItiLj2gpKZhji8gkfg2l04/YdjbE35
-         TA4eQaxiY6QGlKwHpS1zT4YyL8s4Bd3/BiqLIlyGT3DwrqkyqRCDtBFioRTS9FNb/VbP
-         NCu2JkmaWCMdFD7LmWYxZQ3fzYMqqBzDsCd2IyHlfmq3FYq/N5gAucad717OBZ7CC+WV
-         F+z978eZ5udwZwUrYF/jmAPe800sHhbr7uwvO92Byit8DGSFGom6j7wlpeawcR+KeJxj
-         gDP192uiRiGG5vRXzhs07ehNIqHURvO0tZfmcrgEBH/xHw36krIP6o6M9dISagGRvKoX
-         JkHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=OgSbUAAY3s+YlQJXVe9AUFg6gt1wYPM+47Ye5FZ2PQQ=;
-        b=bKX/QpJhLmQyBCV+1imjZEV03usRHOhpCzWLgFW9FXaTWnx6uc7ECbIjtx+RZnRNsy
-         7NVYdWE1FJiP33XUYbmS15djEZr72yqco/tbZecZ7YAh3eoILontnBSC3Jcxlcrl2N1n
-         PU67D6pqUX2cE2sA9fOnxIDvVSekx3XQgboVbI2vF11dnORpF6ZbL84SE8dEBJBK401O
-         o1FxwZSKq/oQ/H1IZ5fBAUUTtrREB40omrH7+ZJ9LcjGf6W0cwQmJkFXG1uGC2MLgRJh
-         Q4SRBaJSupxdoCNYoDkyoztp56Fl9vS9WCNDnAwBYHY12QXbfiIJFDI8VYaO9ZQq+H4J
-         MxHA==
-X-Gm-Message-State: AOAM532tMkqDbQAE9Pn+pG5tF+8+McSUnhDI0CQ9PmIm/EBAKCHeMVEh
-        ClWpcpSUeiHjmczJ7LKpAlcBZcxifCXz
-X-Google-Smtp-Source: ABdhPJwphYbDdMjQuyQjNrl4c0BVfP2B6/pP5/muBZr3hZ3mzAngNWvD/uAgGR23X68a1WfiCZz+ig==
-X-Received: by 2002:a05:6830:138d:b0:5b2:4b0a:a4fa with SMTP id d13-20020a056830138d00b005b24b0aa4famr4810029otq.380.1649337696461;
-        Thu, 07 Apr 2022 06:21:36 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id w4-20020a4adec4000000b0032109de628esm7072327oou.6.2022.04.07.06.21.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Apr 2022 06:21:36 -0700 (PDT)
-Message-ID: <e81cdc6e-da42-d1d1-5d66-7d5e2a8aebbe@github.com>
-Date:   Thu, 7 Apr 2022 09:21:35 -0400
+        with ESMTP id S236713AbiDGNfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 09:35:42 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FB22467FF
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 06:33:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649338410;
+        bh=fExQRY69Imc1ra2WFVQ1GtIfYTkKVu7E/WnvEPQMpJQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WS8XB+uUMeMDyxpQ/rjaNxBwKeRV5qUXMAe4h0h51wx7lpzG1fUZ+ipWRvZ0tmcAd
+         UD0+4qxUjfqIh1RW9pKXsKnztd/FMNURDSKqZ24BU+/zwwEZhoJzVjU49lRSJncmP/
+         UMq6/MAhWtl+nT5+r7gYExs5bw5zK56Ac5bAcyTE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3KTy-1o247M2Auw-010Oxm; Thu, 07
+ Apr 2022 15:33:30 +0200
+Date:   Thu, 7 Apr 2022 15:33:28 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Todd Zullinger <tmz@pobox.com>
+cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] doc: replace "--" with {litdd} in
+ credential-cache/fsmonitor
+In-Reply-To: <20220406184122.4126898-1-tmz@pobox.com>
+Message-ID: <nycvar.QRO.7.76.6.2204071528590.347@tvgsbejvaqbjf.bet>
+References: <20220406184122.4126898-1-tmz@pobox.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] fsck: detect bare repos in trees and warn
-Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <20220406232231.47714-1-chooglen@google.com>
- <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TEI5Oq807X1T8IQNAQRGrqWtYqMsfuEisa38Xh5jtFAG6PheBGH
+ fPxBUupW4zmbJf7UYJ/7IFfiUdtDcXYaXFxG4Y2q2ljZtnJaYbAuCsfum3Mm+ukJ41Jan8Y
+ IIuTgzqoECTXIG2xQAyCBq41rNFOvNw+FcwGlMiqs375lev/YP647FLNgT0BIh5Thi8fFH3
+ KGMPZ1gfgRJqZwndAgbIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TESfZTb2KM0=:kGDAGuwTfOiPjohpYLks4b
+ 4hdSDWa9nU0V4Sk/5zDY3Qv5FRF02HzGU341dUia85OTlt9EXTT3ifkHreU+VlBCE350lHE0T
+ SqaTMIZx6BdO8JOT5DIY15S/pwCe4hHgXXvOa7S/0AjM5ulf5X4NSxcRdcjGTU/I7+RHYoR0r
+ Bp+bdxwItBrr7hn9S7eHirZpTADjRJIN9M0kCwItseiGvx1lE34VLgkS+iZGzem4qcB7dGSwi
+ d+4DTUCJZEFx9OTr4lLQdKKrrld7Z/i+IaT2LXe5VRPbdYqAxVB+xsSbT5rXvThK17+oP2I4G
+ 5A08hA1e6B7OTTJsmzBa0Jx/u3U6gIBjCx4hczQTdCe7jK4/7jeHXPPXkdghrHS2Eq6VKAYw9
+ mOwiqDJy3lL/vXcG4Rf0g6nGnql5idHDXbkASPpMLKPRGsK0RbR0GQGwXFwwXtNN+uVnsTkPH
+ Leb71J/EIPEIAKdTlKyoRnbnHvXZjIrMK4dRZhcklO/w7OLiT3JBxkODugdylU7j63yfbFQhg
+ qtl1RQz02d7TNF9Zwwj0MkZopUXwN8KVV+1xhx25yiyrnQaYZEzMJFv/WVzFrgh0JJy9vQ0uD
+ aWM8Z3AC5KtAsx2HxuKdTC6quvyhG+3QPU3Gop9bTp0+bSUCCvwV4u+5NE8MzT7QHFWKvq/K1
+ sZgRsgVrrN+ghr/ZmL5XQqxkvbJFXYkq96iu7/+5GOO3l/wvhbrO0IR40SLp7zAQWoPtBn3Rz
+ JXg9MwTZ2mTpwE6flic6W+THA/1ET9p6lzCwXpKqEC0PqWlVCKWDquUwhvyirrCmrsvavLd5Z
+ fvPvFE7YuSIaeLEazmXKFnDF2gzT9eKS7Q7APoEem1lIa4sc97gAo8lXsXc/KEdgeiMfKBZQq
+ lBT1rzrNDTuaM5fdzC2D9GigtrVhDMskNLioxSvYPpseq9tvmvPV5iF4UvITjCCxwiaY1NQrt
+ OVPYNvyGvofrVLADVWQeLzUm/fwmayJ+ld01eYY0N5w8asF3vlysKU7HQ2YgdbegrYC+q/2xZ
+ A6ngpfuVLPAQHLjAPjNzr47V/HVE8XeeTGd3Y1Us9TtqEkaRQxvqo3+HwVVouHhiwxy66SIPt
+ EZgi5y9HPMOXBs=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/7/2022 8:42 AM, Johannes Schindelin wrote:
-> Hi Glen,
-> 
-> On Wed, 6 Apr 2022, Glen Choo wrote:
-> 
->> Git tries not to distribute configs in-repo because they are a security
->> risk. However, an attacker can do exactly this if they embed a bare
->> repo inside of another repo.
->>
->> Teach fsck to detect whether a tree object contains a bare repo (as
->> determined by setup.c) and warn. This will help hosting sites detect and
->> prevent transmission of such malicious repos.
->>
->> See [1] for a more in-depth discussion, including future steps and
->> alternatives.
->>
->> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
-> 
-> Out of curiosity: does this new check trigger with
-> https://github.com/libgit2/libgit2? AFAIR it has embedded repositories
-> that are used in its test suite. In other words, libgit2 has a legitimate
-> use case for embedded bare repositories, I believe.
+Hi Todd,
 
-It is definitely good to keep in mind that other repositories have
-included bare repositories for convenience. I'm not sure that the behavior
-of some good actors should outweigh the benefits of protecting against
-this attack vector.
+On Wed, 6 Apr 2022, Todd Zullinger wrote:
 
-The trouble here is: how could the libgit2 repo change their project to
-not trigger this warning? These bare repos are in their history forever if
-they don't do go through significant work and pain to remove them from
-their history. We would want to have a way to make the warnings less
-severe for special cases like this.
+> Asciidoc renders `--` as em-dash.  This is not appropriate for command
+> names.  It also breaks linkgit links to these commands.
+>
+> Fix git-credential-cache--daemon and git-fsmonitor--daemon.  The latter
+> was added 3248486920 (fsmonitor: document builtin fsmonitor, 2022-03-25)
+> and included several links.  A check for broken links in the HTML docs
+> turned this up.
+>
+> Manually inspecting the other Documentation/git-*--*.txt files turned up
+> the issue in git-credential-cache--daemon.
+>
+> While here, quote `git credential-cache--daemon` in the synopsis to
+> match the vast majority of our other documentation.
 
-Simultaneously, we wouldn't want to bless all _forks_ of libgit2.
+Looks very sensible.
 
-Finally, the real thing we want to avoid is having the Git client write
-these trees to disk, for example during a 'git checkout', unless the user
-gives an override. (We would want 'git bisect' to still work on the
-libgit2 repo, for example.)
+While the credential--cache fix is technically not due to a regression in
+the 2.36.0 cycle, the fsmonitor--daemon one is, and it does not make sense
+to do only one during the -rc phase.
 
-A more complete protection here would be:
+FWIW I just looked at
+https://git-scm.com/docs/git-credential-cache--daemon to verify that it
+indeed renders the double-dash as a long dash.
 
- 1. Warn when finding a bare repo as a tree (this patch).
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+>  Documentation/config/core.txt                  |  2 +-
+>  Documentation/git-credential-cache--daemon.txt |  6 +++---
+>  Documentation/git-fsmonitor--daemon.txt        | 12 ++++++------
+>  Documentation/git-update-index.txt             |  2 +-
+>  4 files changed, 11 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.t=
+xt
+> index 889522956e..e67392cc83 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -63,7 +63,7 @@ core.protectNTFS::
+>
+>  core.fsmonitor::
+>  	If set to true, enable the built-in file system monitor
+> -	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
+> +	daemon for this working directory (linkgit:git-fsmonitor{litdd}daemon[=
+1]).
 
- 2. Suppress warnings on trusted repos, scoped to a specific set of known
-    trees _or_ based on some set of known commits (in case the known trees
-    are too large).
+I am not quite certain that using `{litdd}` in a `linkgit` construct works
+both in AsciiDoc and AsciiDoctor, but I trust that you have verified that
+this works.
 
- 3. Prevent writing a bare repo to the worktree, unless the user provided
-    an opt-in to that behavior.
+Thank you for doing this,
+Johannes
 
-Since your patch is moving in the right direction here, I don't think
-steps (2) and (3) are required to move forward with your patch. However,
-it is a good opportunity to discuss the full repercussions of this issue.
-
-Thanks,
--Stolee
+>  +
+>  Like hook-based file system monitors, the built-in file system monitor
+>  can speed up Git commands that need to refresh the Git index
+> diff --git a/Documentation/git-credential-cache--daemon.txt b/Documentat=
+ion/git-credential-cache--daemon.txt
+> index 7051c6bdf8..01e1c214dd 100644
+> --- a/Documentation/git-credential-cache--daemon.txt
+> +++ b/Documentation/git-credential-cache--daemon.txt
+> @@ -1,5 +1,5 @@
+> -git-credential-cache--daemon(1)
+> -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> +git-credential-cache{litdd}daemon(1)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+>  NAME
+>  ----
+> @@ -8,7 +8,7 @@ git-credential-cache--daemon - Temporarily store user cr=
+edentials in memory
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -git credential-cache--daemon [--debug] <socket>
+> +'git credential-cache{litdd}daemon' [--debug] <socket>
+>
+>  DESCRIPTION
+>  -----------
+> diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git=
+-fsmonitor--daemon.txt
+> index 0fedf5a456..cc142fb861 100644
+> --- a/Documentation/git-fsmonitor--daemon.txt
+> +++ b/Documentation/git-fsmonitor--daemon.txt
+> @@ -1,5 +1,5 @@
+> -git-fsmonitor--daemon(1)
+> -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+> +git-fsmonitor{litdd}daemon(1)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>
+>  NAME
+>  ----
+> @@ -8,10 +8,10 @@ git-fsmonitor--daemon - A Built-in File System Monitor
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git fsmonitor--daemon' start
+> -'git fsmonitor--daemon' run
+> -'git fsmonitor--daemon' stop
+> -'git fsmonitor--daemon' status
+> +'git fsmonitor{litdd}daemon' start
+> +'git fsmonitor{litdd}daemon' run
+> +'git fsmonitor{litdd}daemon' stop
+> +'git fsmonitor{litdd}daemon' status
+>
+>  DESCRIPTION
+>  -----------
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-upda=
+te-index.txt
+> index 64315e2e8c..5ea2f2c60e 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -528,7 +528,7 @@ This feature is intended to speed up git operations =
+for repos that have
+>  large working directories.
+>
+>  It enables git to work together with a file system monitor (see
+> -linkgit:git-fsmonitor--daemon[1]
+> +linkgit:git-fsmonitor{litdd}daemon[1]
+>  and the
+>  "fsmonitor-watchman" section of linkgit:githooks[5]) that can
+>  inform it as to what files have been modified. This enables git to avoi=
+d
+>
