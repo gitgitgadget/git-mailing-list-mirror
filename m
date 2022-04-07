@@ -2,189 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DCE9C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 11:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F757C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 11:58:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242208AbiDGLwD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 07:52:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55658 "EHLO
+        id S239271AbiDGMAj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 08:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238919AbiDGLwC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 07:52:02 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC18D7
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 04:50:00 -0700 (PDT)
+        with ESMTP id S233421AbiDGMAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 08:00:37 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 732EF44A06
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 04:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649332194;
-        bh=wzjtn/AwIDk4v9TMNP3/+3HgnlhO0+36aFmRuY5mSB0=;
+        s=badeba3b8450; t=1649332713;
+        bh=bzvodwnBdTgLsPlg+/WN1RfwXxy4trA/63h1iw7YiAM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JuIFf6lHVCx7rW0Rp9oilyAcmWo632HOQNvOH8RYEzz+SE2687P3Kmi06rS1uJ5iV
-         QWqoVV1yRUitseerTbYFQZINR3kgr3W1Q3ocDgGmh6wHcSq/gtq1lpKSYBaZGwf52Q
-         ndG+u7y4ZEqFB7MCYec/ms/jjYmUQoUkQjt993hY=
+        b=Zl3EFsOnfGVsUzr8KlXpEVE+x49N//GpjEy4uglPJ5W6UAjH/zZOQ1lXsPY/ynCIc
+         1x2VQ0Jw6t4R3OSaqp61kdxvttGxnCZqGDzY5szK8lnv1j/lKEvHjmH7KSC+Xh3/CP
+         +8R8xragJAloS3dRoIDx4rRrcc83mZQwoik+7LKg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTzfG-1nT2h93aza-00R4Fa; Thu, 07
- Apr 2022 13:49:53 +0200
-Date:   Thu, 7 Apr 2022 13:49:52 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVeMG-1nSV8H18YG-00RcIj; Thu, 07
+ Apr 2022 13:58:33 +0200
+Date:   Thu, 7 Apr 2022 13:58:31 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Theodore Ts'o <tytso@mit.edu>
-cc:     Markus Vervier <markus.vervier@x41-dsec.de>, git@vger.kernel.org
+To:     Markus Vervier <markus.vervier@x41-dsec.de>
+cc:     git@vger.kernel.org, Derek Zimmer <derek@ostif.org>
 Subject: Re: Covierty Integration / Improvement
-In-Reply-To: <Yk3UAz3sn9KhMnyf@mit.edu>
-Message-ID: <nycvar.QRO.7.76.6.2204071344210.347@tvgsbejvaqbjf.bet>
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de> <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2204061620110.379@tvgsbejvaqbjf.bet> <Yk3UAz3sn9KhMnyf@mit.edu>
+In-Reply-To: <6cb10d5e-d8f2-0d7e-a15a-4728466e0c21@x41-dsec.de>
+Message-ID: <nycvar.QRO.7.76.6.2204071350080.347@tvgsbejvaqbjf.bet>
+References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de> <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet> <6cb10d5e-d8f2-0d7e-a15a-4728466e0c21@x41-dsec.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZIPv9KURJ/AKNpP3ZiiQ77tSRZBWeFupcT8L+vvBcBqdJ4U9/7z
- tkQE8GpvtBQ3yPABjJDJWX1cipxPX7MJVIYfUGWs/6Xdh/ou1IyuU+o7r9D4Oem/PsNZQ/H
- LVSxlLUlU9m92ScZ4T0oHjoBtbbf2BzG1kTMUXtSl1hP8j5Ctlpr+2ncR8I+7pJ9PPGF+Tl
- mJTh3lRNuN3hoiSVjJTww==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ar6Ba2nlTHw=:EotVJBvd1+v+mzM/WeJfnY
- 8+32ENBUqjuO3SbIJ1KTZYrh7YaXHwA9tz4M+AU4vtwK52jeeITq1h40xCmIo8q2W7e8VOAQt
- 1aB3e54qf0Nar3eo2d8bi7/qW6OTwxAL5UpYdxlSOPVqKgDFTLedzYZyOrksB7N3elXymRwDI
- xMH/pCZlQIctLLKwON45otLhWo1qW7fYyUj6HhDRq67jQMiIkkguPEALetcBTeqLeAQAmIG0h
- F4eJEjxJwgNZVDtwMC/WYGbLH+GsnoeViIR2yKGJ/5JSvgf5u8oQLTeO4kD76LMoRElyNxNEW
- Yo9981dijcJDJ2v+ormhjLulDgpiGwycMc+KDY6nPZxT6AIk0yA7Wd9ZL8cbMp6iK5OSctq7b
- 5ZbUjB+JOAGm3denQ4atND5lpKnav01Ev23PtnhooME7YVmT0Xtjaiz948iFHqL9g4vW6cPIN
- PC1jKV5PkUhlbpWw7fmEBL/c50Vp2+bmsro+JuyBxB2+tZ/yEae2TCCjlIQHQ9Vn2uYSPTXxI
- /JjTFig4J6z+Dx/Z+fVMN0eIv9TcldcIWyK84rDr7ZN7y4xpuwLj+sxeN9dYBcnI/2riYu7Q9
- zUP6wuNuyvMWnZHHt0r1k6dKkuUriIUsxq5WMvdxZIVipi/UgultUsfHyZmGcOVJjuMc34bzi
- zSQqqvuPH39JFpM3wNM965oCnyE2VAmZqHZt6aTt2jroUaFCvpa/aeYPPfYzefQrI/NblWyoD
- R7fWdOQYjpyHvUYy+MANCp7NG27l9kyNd8xBHQnM0SxN015AOUaW4aPlDx9M+67cFWK1MoWVz
- xVTHetpQ7rbwV8Skp5lb0GFWgi5uiBG53BUyH4IYFZcMaOFbxFpQjE5oILad0Cu2UB2PS3/rg
- TbHuh2D6kpn6uFyydlT46atG+2RDcMaovXZSlrnX75EjVQ6y+w5NIndNjyfapzVsViQXmYx/t
- T6c6ej1ZrArrFlnpug3QShFNVG7tC4gKsRlQCW1gf7EuJ5A/nMUk//vSYK3u+JyYIS/ce8GiI
- ucOOhSDYV/JjjFIdWbqUGkB7hFo2G9cl4mmehoaekxASSUzsDYBlA8GY0UFEfGDaLczQOrrWG
- JPeFnMMeFgRzeI=
+X-Provags-ID: V03:K1:IZrvYkJaJrqDfdZQk7lU3atDXW/HKgnuYdtW8dhprCCuco1j2kQ
+ e/sf76bVhBN00FlqFDXEGRrupvRQhTSC5rKwerUt1A2eMqumJ2A5V+/JudyNO5SwOkI0riX
+ CygA3V2jdE17QX78gAZ/D8TC3bdRrbH5ScrrLTI0L4GxErQZB0hTj5V+14/Oyl5gnLefGcZ
+ k2fNkUvlrip3ayaE9dq+w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0py0eSORFco=:9QDRbD5ABfyN3cJhpndeK/
+ INxjiN75WxwuSfGg5PiXorp4xrEYggYrJ74SOLw2gHuW3IJrFeiISyxYQYA5NEoazSq3UyPaC
+ RaR3/X3RgfMFlF3YjI68e5AJLPbFxMPu0jyZzW5GGwSsNFXBWKZLeGfPjmU3r7xQQgQtwk90z
+ nbI4Z1WNLxTyMCtF5havbTo4TZYXkW9OH/6PglSfpVJK4TImGyU5waSeJPOssqHHsQQ/xnrGN
+ ArRCxkxs5vBWQ/E0nM0/VOjbJXHoZKJqFratjwyhlufx1HxmNlLQcgawg4FnzkgJ9E/CB/rGF
+ dJx1uQ8kO02PmH3dL2a4PYjxN6guLShKa2cdcHUSI+gPXhRwIl5d39nG2JfLHLDpZayYZ/GvW
+ eXbeSwXBKU3Tsuzad3De0opMBvmjnOjpaCGmPDkQ6dewcDSLA5mjiyX5h6F1O0O9Q5TjpISa6
+ 68Zti8g1RKKrf12MhgUv6IyAsgdbOAYFw/J/r/AFt8BrhF7noX5tCiMmXPy9jkD2ZFyuGnqye
+ CBWT+o8LS2JSA2UWdkZMH8mrKBNcgjvmYe1SxwJyTPiMyqpcCU9GR612UFphWxj/keZ2YBvAp
+ M1Z9jqKI+QMe/woccKNKTdTKjSFbbzmkgebl6Y2cG0KMjD/LfDRFIoT6/MdsrxEn4A9FDcKOB
+ 5McKZpxf2XHC8995XAyE5O/vHLhT6UkDjQ/zOAXvOfpJKs7uf8VNKKJ6XXxyTkNwaFcGnuldJ
+ 6ZSQKdgOEGf3IMdHRhNW7fzgnYnEqspqmolmlfM6LiHnyaW9utYDC0TC6lAqhDdK0xrPfisOj
+ oyCKdrX8Di8nMo3AK2Bvn6C+EkP2kl1kxgkMEGsvSW9B3dYrKkv6uFQvQc1T7LZ3xS3MwAMA4
+ wDfwCrmOf4Ownmf2CyjKYIwoWif42NJeGC60g9sJjN+/ph3nn60EcpAfuO6Cs8RwmTPoSN2mb
+ 7rHaDe849lzJWLExe9/dodx13AAiztbVIYCAgYC5q+lrhTHCEqgSc24K39M2gVfXCdoVoDblB
+ OJXgjtDdXF2LDUmzN9adkYGsKLNE9m4ZWpQWuczE9ab8Cq4Wq9YDG4M+1NSpwyzixx05Pnz0n
+ AkV2kpD2FZJLBg=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Theodore,
+Hi Markus,
 
-On Wed, 6 Apr 2022, Theodore Ts'o wrote:
+On Thu, 7 Apr 2022, Markus Vervier wrote:
 
-> On Wed, Apr 06, 2022 at 05:08:37PM +0200, Johannes Schindelin wrote:
-> > I have fixed Git for Windows' Coverity build and started to sift throu=
-gh
-> > the 154 new defects reported as of v2.36.0-rc0.
-> >
-> > Sadly, there is now a new class of overwhelming false positives: Cover=
-ity
-> > claims that "strbuf_addstr does not [NUL-]terminate", which is of cour=
-se
-> > false.
+> On 4/6/22 00:17, Johannes Schindelin wrote:
+> > On Fri, 1 Apr 2022, Markus Vervier wrote:
+> > > X41 is processing the current RfP
+> > would you kindly provide a bit more context? This seems to come right =
+out
+> > of left field. Is "RfP" a "Request for Proposals"? If so, I am not awa=
+re
+> > that the git developer team submitted one...
 >
-> It should be possible to suppress this by uploading a Coverity model
-> file.  See[1] for more details:
+> thank you and everyone else for their comments. To clear up the context:
 >
-> [1] https://community.synopsys.com/s/article/practical-example-of-coveri=
-ty-function-model
+> The OSTIF (https://ostif.org) is organizing a security audit for git
+> and one of the questions was about Coverity and if the results it gave i=
+n the
+> past could be verified and/or improved.
 
-Right, I know about this, my apologies for being too succinct. For the
-record, here is how we submit the Coverity builds in Git for Windows:
+Thank you for the context!
 
-https://github.com/git-for-windows/build-extra/blob/bea0c37bdc3737843b7808=
-269b077b30e51c67fb/please.sh#L1793-L1925
+If OSTIF can help us get better support from Coverity (as you can see at
+https://github.com/git-for-windows/build-extra/commit/23eea104 I could
+have wished for a better experience there), I am all for it!
 
-Unfortunately, you cannot see the model file because that is not provided
-per build, but globally for the entire project. Here is the model file we
-currently use:
+Out of curiosity: are you (or is OSTIF) affiliated with Synopsys somehow?
 
-=2D- snip --
-/* modelfile for git */
+If not, have you considered if you could help us getting a comprehensive
+CodeQL coverage instead? Theoretically, CodeQL should be able to do the
+same as Coverity, while allowing us to tweak the analysis in a lot more
+powerful ways than Coverity (most notably, it should allow us to reduce
+the number of false positives rather dramatically).
 
-char strbuf_slopbuf[64];
+It is the number of knobs CodeQL allows that has looked too daunting for
+me to give it more than a cursory try [*1*].
 
-void *malloc(size_t);
-void *calloc(size_t, size_t);
-void *realloc(void *, size_t);
-void free(void *);
-
-void *xrealloc(void *ptr, size_t size)
-{
-	void *ret =3D realloc(ptr, size);
-	if (!ret) __coverity_panic__();
-	return ret;
-}
-
-void *xmalloc(size_t size)
-{
-	void *mem =3D malloc(size);
-	if (!mem) __coverity_panic__();
-	return mem;
-}
-
-void xcalloc(size_t num, size_t size)
-{
-	void *ret =3D calloc(num, size);
-	if (!ret)  __coverity_panic__();
-	return ret;
-}
-
-void usage(const char *err) {
-  __coverity_panic__();
-}
-
-void usagef(const char *err, ...) {
-  __coverity_panic__();
-}
-
-void die(const char *err, ...)  {
-  __coverity_panic__();
-}
-
-void die_errno(const char *err, ...) {
-  __coverity_panic__();
-}
-=2D- snap --
-
-I _guess_ we could "help" Coverity by providing some alternative
-implementation of `strbuf_add()` that does not use `memcpy()` but instead
-a loop that explicitly NUL-terminates the string.
-
-But it feels wrong to do that because that would weaken the analysis
-because Coverity would not actually analyze the code that is executed
-anymore.
-
-> I've suppressed a similar issue by using the attribute __nonstring,
-> but I don't think that will work for git, because strbuf->buf really
-> *is* a NUL-terminated string, where as in ext4 we have some fields
-> which are designed to be NUL padded, but it is *not* guaranteed to be
-> NUL-terminated:
->
-> #ifndef __nonstring
-> #ifdef __has_attribute
-> #if __has_attribute(__nonstring__)
-> #define __nonstring                    __attribute__((__nonstring__))
-> #else
-> #define __nonstring
-> #endif /* __has_attribute(__nonstring__) */
-> #else
-> # define __nonstring
-> #endif /* __has_attribute */
-> #endif /* __nonstring */
->
-> struct ext2_super_block {
->        ...
-> /*068*/	__u8	s_uuid[16] __nonstring;		/* 128-bit uuid for volume */
-> /*078*/	__u8	s_volume_name[EXT2_LABEL_LEN] __nonstring;	/* volume name *=
-/
->        ...
-> };
->
-> (This is needed to suppress warnings by Clang as well.)
->
-> Using __nonstring will result in attempts to use s_volume_name in "C"
-> string context to give a warning, which is why this isn't right for
-> strbuf->buf.
-
-Correct. I guess we could fool around with the model file until those
-false positives are gone, but I have to admit that I cannot justify the
-time to work on this.
-
-Ciao,
+Thank you,
 Johannes
+
+Footnote *1*: I had played with CodeQL last year but was called away to a
+more pressing project, therefore this is woefully incomplete:
+https://github.com/git-for-windows/git/compare/main...dscho:codeql
