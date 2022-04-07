@@ -2,93 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29800C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 08:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB8CC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 09:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243499AbiDGJBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 05:01:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
+        id S243754AbiDGJ2a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 05:28:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243491AbiDGJBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 05:01:10 -0400
-Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9158B939D0
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 01:59:08 -0700 (PDT)
-Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none
-X-Ironport-Dmarc-Check-Result: validskip
-X-IronPort-AV: E=Sophos;i="5.90,241,1643670000"; 
-   d="scan'208";a="10835888"
-Received: from nautfst12.univ-lyon1.fr (HELO [134.214.142.79]) ([134.214.142.79])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 10:59:08 +0200
-Message-ID: <6a5152c1-7bb4-220c-cdce-33e93ea9c7c6@univ-lyon1.fr>
-Date:   Thu, 7 Apr 2022 10:59:06 +0200
+        with ESMTP id S241295AbiDGJ22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 05:28:28 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D662E002
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 02:26:28 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id y10so4920950pfa.7
+        for <git@vger.kernel.org>; Thu, 07 Apr 2022 02:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JjlJi54BMHH82Ynj+H4wy3lx84iYoXSxLBNP2w4Wh3I=;
+        b=XMDYFemQSKeDrefzQuktriUC9MFaRZYpvHQHXRtBqvVJ7jFmOO6MRgNh0hExaOVy5R
+         nZuvezCNYTYzpk+fL0LOhV4UClqBUs5wwmqss6GOpa4Ukmp62NlvOQBmdiYojatqUyX3
+         w7b1ChNDDhkeOQMijgEKc4EvADyFpAiq2fQakxQyLXJ7iRSfcUeaceUKvppSsXA97B5B
+         sNMnZ7gZSPUK/l/5gHosHRCcdYekxubcMMl70sfnH7UaNRQhys/pGoiXbAwKBXMWKqun
+         m5WkiN3fmDuC+SXddw4///DW+00hbXVWH5gq4lpTJbDkVTVYnoHzhGj6mXhMamAPs0sz
+         SU2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JjlJi54BMHH82Ynj+H4wy3lx84iYoXSxLBNP2w4Wh3I=;
+        b=tEf9IaHLTdBnFYzGc7wlyh2gy8Pya7U9a9O2rEkHvWVc4Tpb6Qo8/yXE4ULsz1kPCy
+         q6oywKHfCsElX41Vbc9DMxwHbPYUO2/IxlX8GZOFAFjFSHTirdI1fb1Cx3cROo/Wesix
+         qcKBIPUNZkyd1bPHe+8FtH2l8lUhcFh9KQb0diH9o1ZnZYyNM6A/+G1jvtH2QTCX8fSL
+         GtHpB7RK1NHnxTCWbGqtNDCwUacAcga50fTo4SjEji/+VCI77u6Gkj+CJnBpdcKOuKI/
+         /X4vOnyMG/83I7DfdAJ/Ev1r+TG5jlnqHFhw463l3pwlH0FlvPg2vEU40eNxvhXWa/Bj
+         Fqmw==
+X-Gm-Message-State: AOAM531CZpAvYpMa5X71mUe8Jyv0kWJvFoR6ZNhG90OCAVl3wkJv0/TZ
+        G5wlyduzhEMEUSNed3877Op/6HiKAsqwjg==
+X-Google-Smtp-Source: ABdhPJzYKiGuJVulR5wKBOWlsEmaLnUn34Hp3eLVWXcGd7jWBPfRROWndGxC5Jp9I/oBKax07EV72Q==
+X-Received: by 2002:a05:6a00:114e:b0:4c8:55f7:faad with SMTP id b14-20020a056a00114e00b004c855f7faadmr13503944pfm.86.1649323587769;
+        Thu, 07 Apr 2022 02:26:27 -0700 (PDT)
+Received: from localhost.localdomain ([47.11.31.17])
+        by smtp.gmail.com with ESMTPSA id s4-20020a056a00194400b004fb358ffe84sm21927106pfk.104.2022.04.07.02.26.22
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 07 Apr 2022 02:26:27 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Plato Kiorpelidis <kioplato@gmail.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        git@vger.kernel.org, shivam828787@gmail.com,
+        kaartic.sivaraam@gmail.com, Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [GSoC] Contributor candidate introduction
+Date:   Thu,  7 Apr 2022 14:55:07 +0530
+Message-Id: <20220407092507.1450-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <CAP8UFD1x-JEX8MAmpabK4RbKgmVm1VQYNJdX3fP8Op5WMfUgVg@mail.gmail.com>
+References: <CAP8UFD1x-JEX8MAmpabK4RbKgmVm1VQYNJdX3fP8Op5WMfUgVg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH V1 1/1] contrib/vscode/: debugging with VS Code and gdb
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        COGONI Guillaume <cogoni.guillaume@gmail.com>
-Cc:     "derrickstolee@github.com" <derrickstolee@github.com>,
-        "git.jonathan.bressat@gmail.com" <git.jonathan.bressat@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <6f4b924d-0a13-b267-6766-a3620936b686@univ-lyon1.fr>
- <20220405224502.38544-1-cogoni.guillaume@gmail.com>
- <20220405224502.38544-2-cogoni.guillaume@gmail.com>
- <66f08cb2e81647e29a080af05d7c867e@SAMBXP02.univ-lyon1.fr>
-From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-In-Reply-To: <66f08cb2e81647e29a080af05d7c867e@SAMBXP02.univ-lyon1.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/6/22 10:47, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Apr 06 2022, COGONI Guillaume wrote:
-> 
-> I really don't mind having some guide for VSCode in our developer
-> documentation, but I think if we (as a free software project) are
-> recommending proprietary software we should put that in some context
-> where we explain if/why it's needed, and if free alternatives are also
-> suitable.
+Plato Kiorpelidis <kioplato@gmail.com>  wrote:
 
-Note that VS Code is mostly open source (the pre-compiled binaries are 
-proprietary, but the source code is MIT licenced, 
-https://github.com/Microsoft/vscode). Not to be confused with Visual 
-Studio, which is fully proprietary, but is a totally different tool 
-(AFAIK, they only share the name).
+> I've gone through the mailing list and looked for other candidates that could
+> also be interested in this project. Shubham Mishra is also interested.
 
-> I haven't used the VSCode integration you're documenting, but from the
-> diff and the "gdb" mention I gather that this isn't using some "native"
-> debugger of MSVC/VS's, but just using the VSCode editor as a wrapper for
-> gdb?
+Hello Plato, nice to meet you :) :)
 
-Yes (gdb or lldb under the hood). As usual, it adds a GUI layer, but 
-also a configuration layer where you specify how to launch the debugger 
-in a launch.json file, and this is where the little script in contrib/ 
-is handy to generate a launch.json adapted for Git.
+I am also interested in it and has already submitted a proposal[1]
+on it (For some network related issue, I mistakenly sent three mails
+of the same proposal; please ignore the other two)
 
-> If that's the case wouldn't it suffice to link to some generic getting
-> started guide for debuggers? And e.g. recommend the GDB manual, maybe
-> there's a better online reference (I read it locally), but e.g.:
-> https://www.sourceware.org/gdb/current/onlinedocs/gdb.html
+I saw Taylor is willing to split the project into sub parts. I have
+no problem with it. I will change the proposal accordingly.
 
-To me the point of the doc within Git's repo is to document git-specific 
-aspects, and I agree that pointing to a generic doc is better than 
-re-writing one. If I had written the patch I'd have made the general 
-paragraph on debugger benefits a bit shorter, but it's already rather 
-short so I'm OK with the patch in its current state.
+Thanks :)
 
-> Then if we're recommending GUI wrappers those are a dime a dozen,
-> e.g. Emacs's GUD mode:
-> https://www.gnu.org/software/emacs/manual/html_node/emacs/Debuggers.html
+[1] https://lore.kernel.org/git/20220406200440.27010-1-chakrabortyabhradeep79@gmail.com/T/#u
 
-To me this is out of the scope of the patch (the real point to me was to 
-increase the discoverability of contrib/vscode), but sure, documenting 
-other GUI wrappers would be nice.
+Thanks :)
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
