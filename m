@@ -2,101 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 885FBC433EF
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 13:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DBAC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 13:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343620AbiDGNRc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 09:17:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43010 "EHLO
+        id S233128AbiDGNXk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 09:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343605AbiDGNRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 09:17:30 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13E91BBE19
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 06:15:28 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a6so10891231ejk.0
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 06:15:28 -0700 (PDT)
+        with ESMTP id S232781AbiDGNXg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 09:23:36 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 332D76C951
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 06:21:37 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id i23-20020a9d6117000000b005cb58c354e6so3842607otj.10
+        for <git@vger.kernel.org>; Thu, 07 Apr 2022 06:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=yTQvRmfh/FeY066IcoBX5NPNeoEa5q1NWLreWmzUErU=;
-        b=ANkhhYeYDZkjInhoxijUvJC5wEdaQ/1Rv7m+/tGH3MpiBk2FqhWj4ES9YxY4MVvmox
-         KqVl6jtuMP/FNV9+4s1IVZ49JsmFKNNCmQXl3ZnPTnQfnoPrnoS+TIk956ZQd6ZhR7r1
-         pnQDxnL9XYAVMnilVq5xoPFuyo9MM2EIX+25EYT+mozplGJLyashrrleHvngFy0BHXN1
-         sOupl7abiXsBW5WlTF2KjGSwEZjRIBWzxMml7D8wl0MsOhQHqQud6LQaTdVCh3D+K86N
-         YA8wBExkBT9eb8aKp+MwhJ8+WmxFua/Ndsa8GzC6p9BEQ/gxINjhwa4QbkBuR1G6M3O1
-         uCuQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=OgSbUAAY3s+YlQJXVe9AUFg6gt1wYPM+47Ye5FZ2PQQ=;
+        b=GYeI0EQidXsY9xZ3aWQKoDCKXAMU2MdTtDdjItiLj2gpKZhji8gkfg2l04/YdjbE35
+         TA4eQaxiY6QGlKwHpS1zT4YyL8s4Bd3/BiqLIlyGT3DwrqkyqRCDtBFioRTS9FNb/VbP
+         NCu2JkmaWCMdFD7LmWYxZQ3fzYMqqBzDsCd2IyHlfmq3FYq/N5gAucad717OBZ7CC+WV
+         F+z978eZ5udwZwUrYF/jmAPe800sHhbr7uwvO92Byit8DGSFGom6j7wlpeawcR+KeJxj
+         gDP192uiRiGG5vRXzhs07ehNIqHURvO0tZfmcrgEBH/xHw36krIP6o6M9dISagGRvKoX
+         JkHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=yTQvRmfh/FeY066IcoBX5NPNeoEa5q1NWLreWmzUErU=;
-        b=6Obm/nU46e/Q1DsyVYWJTzER+aGJcK7cNkS+bOjtC8obl9Mcqqrn3lrIVALOa/tEzt
-         yUweK+npx9WJSvBRRAc+Mkj0KBwmrx3YIfZ9CcwmdlUNV6wunY1wy48OOQTg71vjd2IV
-         rfVy83art+YErrX15jw/S94dCTH7RSo9JIB+3w/7DA2+8gzSRELkakvJzwJnfQZn75cB
-         dkPcXEo62bLB+hDrayoKVesHjb8v30xlu9MOYhISVSHXWSRHe+b/Qe/Q3wRRtnGTfPRV
-         kS9uf9S1U4OLOlUSxym5trRA6K4aIHLQ0H6et8HjvnAMs6fmbXlrHyZELgSyX0s/N5ls
-         1o5g==
-X-Gm-Message-State: AOAM531ojd7HnrcBpCZyoktkvpdhXBm1SX+fgk40ZRTsJXEPaNHteRYv
-        BBCgiiVg1gBsa5ttNcPV5qzzbQZ2uCU=
-X-Google-Smtp-Source: ABdhPJxh7VMStINtNf6FGIA1awORJCBRrVhQOeluWDXLJNSk8BGUtg5iP50Vm+XsZG55fu9BhHK16A==
-X-Received: by 2002:a17:906:19c6:b0:6ce:98a4:5ee6 with SMTP id h6-20020a17090619c600b006ce98a45ee6mr12996596ejd.567.1649337325940;
-        Thu, 07 Apr 2022 06:15:25 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id t14-20020a1709063e4e00b006e73392e592sm5706240eji.209.2022.04.07.06.15.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 06:15:24 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ncRyu-000zC5-Bg;
-        Thu, 07 Apr 2022 15:15:24 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=OgSbUAAY3s+YlQJXVe9AUFg6gt1wYPM+47Ye5FZ2PQQ=;
+        b=bKX/QpJhLmQyBCV+1imjZEV03usRHOhpCzWLgFW9FXaTWnx6uc7ECbIjtx+RZnRNsy
+         7NVYdWE1FJiP33XUYbmS15djEZr72yqco/tbZecZ7YAh3eoILontnBSC3Jcxlcrl2N1n
+         PU67D6pqUX2cE2sA9fOnxIDvVSekx3XQgboVbI2vF11dnORpF6ZbL84SE8dEBJBK401O
+         o1FxwZSKq/oQ/H1IZ5fBAUUTtrREB40omrH7+ZJ9LcjGf6W0cwQmJkFXG1uGC2MLgRJh
+         Q4SRBaJSupxdoCNYoDkyoztp56Fl9vS9WCNDnAwBYHY12QXbfiIJFDI8VYaO9ZQq+H4J
+         MxHA==
+X-Gm-Message-State: AOAM532tMkqDbQAE9Pn+pG5tF+8+McSUnhDI0CQ9PmIm/EBAKCHeMVEh
+        ClWpcpSUeiHjmczJ7LKpAlcBZcxifCXz
+X-Google-Smtp-Source: ABdhPJwphYbDdMjQuyQjNrl4c0BVfP2B6/pP5/muBZr3hZ3mzAngNWvD/uAgGR23X68a1WfiCZz+ig==
+X-Received: by 2002:a05:6830:138d:b0:5b2:4b0a:a4fa with SMTP id d13-20020a056830138d00b005b24b0aa4famr4810029otq.380.1649337696461;
+        Thu, 07 Apr 2022 06:21:36 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id w4-20020a4adec4000000b0032109de628esm7072327oou.6.2022.04.07.06.21.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 06:21:36 -0700 (PDT)
+Message-ID: <e81cdc6e-da42-d1d1-5d66-7d5e2a8aebbe@github.com>
+Date:   Thu, 7 Apr 2022 09:21:35 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
 Subject: Re: [PATCH] fsck: detect bare repos in trees and warn
-Date:   Thu, 07 Apr 2022 15:12:24 +0200
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
 References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
  <20220406232231.47714-1-chooglen@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220406232231.47714-1-chooglen@google.com>
-Message-ID: <220407.86pmltc9w3.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+ <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/7/2022 8:42 AM, Johannes Schindelin wrote:
+> Hi Glen,
+> 
+> On Wed, 6 Apr 2022, Glen Choo wrote:
+> 
+>> Git tries not to distribute configs in-repo because they are a security
+>> risk. However, an attacker can do exactly this if they embed a bare
+>> repo inside of another repo.
+>>
+>> Teach fsck to detect whether a tree object contains a bare repo (as
+>> determined by setup.c) and warn. This will help hosting sites detect and
+>> prevent transmission of such malicious repos.
+>>
+>> See [1] for a more in-depth discussion, including future steps and
+>> alternatives.
+>>
+>> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
+> 
+> Out of curiosity: does this new check trigger with
+> https://github.com/libgit2/libgit2? AFAIR it has embedded repositories
+> that are used in its test suite. In other words, libgit2 has a legitimate
+> use case for embedded bare repositories, I believe.
 
-On Wed, Apr 06 2022, Glen Choo wrote:
+It is definitely good to keep in mind that other repositories have
+included bare repositories for convenience. I'm not sure that the behavior
+of some good actors should outweigh the benefits of protecting against
+this attack vector.
 
-> @@ -602,6 +605,12 @@ static int fsck_tree(const struct object_id *tree_oid,
->  		has_dotdot |= !strcmp(name, "..");
->  		has_dotgit |= is_hfs_dotgit(name) || is_ntfs_dotgit(name);
->  		has_zero_pad |= *(char *)desc.buffer == '0';
-> +		has_head |= !strcasecmp(name, "HEAD")
-> +			&& (S_ISLNK(mode) || S_ISREG(mode));
-> +		has_refs_entry |= !strcasecmp(name, "refs")
-> +			&& (S_ISLNK(mode) || S_ISDIR(mode));
-> +		has_objects_entry |= !strcasecmp(name, "objects")
-> +			&& (S_ISLNK(mode) || S_ISDIR(mode));
+The trouble here is: how could the libgit2 repo change their project to
+not trigger this warning? These bare repos are in their history forever if
+they don't do go through significant work and pain to remove them from
+their history. We would want to have a way to make the warnings less
+severe for special cases like this.
 
-Doesn't this code need to use is_hfs_dot_str() instead of strcasecmp()
-like the other similar checks?
+Simultaneously, we wouldn't want to bless all _forks_ of libgit2.
 
-> @@ -336,6 +336,10 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
->   *  - either a HEAD symlink or a HEAD file that is formatted as
->   *    a proper "ref:", or a regular file HEAD that has a properly
->   *    formatted sha1 object name.
-> + *
-> + * fsck.c checks for bare repositories in trees using similar rules, but a
-> + * duplicated implementation. If these are changed, the correspnding code in
-> + * fsck.c should change too.
->   */
+Finally, the real thing we want to avoid is having the Git client write
+these trees to disk, for example during a 'git checkout', unless the user
+gives an override. (We would want 'git bisect' to still work on the
+libgit2 repo, for example.)
 
-Probably took much hassle to factor these so it can be re-used. Typo:
-correspnding.
+A more complete protection here would be:
 
-> +		test_i18ngrep "warning.*tree $bad_tree: embeddedBareRepo: contains bare repository" out
+ 1. Warn when finding a bare repo as a tree (this patch).
 
-s/test_i18ngrep/grep/
+ 2. Suppress warnings on trusted repos, scoped to a specific set of known
+    trees _or_ based on some set of known commits (in case the known trees
+    are too large).
+
+ 3. Prevent writing a bare repo to the worktree, unless the user provided
+    an opt-in to that behavior.
+
+Since your patch is moving in the right direction here, I don't think
+steps (2) and (3) are required to move forward with your patch. However,
+it is a good opportunity to discuss the full repercussions of this issue.
+
+Thanks,
+-Stolee
