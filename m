@@ -2,96 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93FC2C46467
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 17:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 920A8C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 17:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346290AbiDGRaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 13:30:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51082 "EHLO
+        id S1346645AbiDGRy4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 13:54:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346530AbiDGR1k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 13:27:40 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C758C100A64
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 10:23:50 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id f18so7233893edc.5
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 10:23:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=c8KZywB8tHWpouuWq9rQfQJGUZw7nHEOuaJ8VP8S7a4=;
-        b=QTt0/sa4UP5LurDlzCMNwnI4JxouSCywKGpkEW6jtAb416/KHT5OsTs+4FvR/J+OxA
-         mm+RX5gEmmjhmOa2hJzYguUHD6FVG/hPFGqI1k4y3PCNMAQuxLeMG8nPnZ/DIW2AzQ8I
-         Jdw0QCfpQ/u4bxAN2Z5qRG2hlEYGYIZsvUryLiT42ri1sQZ0PYurHJk6IRstqGwpmvi4
-         eCbM6cy+Buh6xpsx2dlkjhZfGHjfSAwLKVAf+8Uubwo7lGuuEbRiDcLdZJC2ZU97usTV
-         rX4jszAfHvKlBakC3saJ6FDb5fYPyo8Jrbc38mMoPkUykK9HiZtSeSwZFSU1HHDsCQDO
-         VlEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=c8KZywB8tHWpouuWq9rQfQJGUZw7nHEOuaJ8VP8S7a4=;
-        b=BFV/RwRD75eP5pw+VieBjpQAA+X06iRiUZ1trG4+bqD4oFs1a/uKDjVZ4QQXMBNVFh
-         mzmoWrn4TULG7lklj74veegO7IOz1p6X25e4fdqF0PiDQX3xkZSud9VOInQxYp9QjQ/o
-         95RKPJ4bCHRqlcCW+Epn+ZA4TjRVEKykcXSNg6Da5LWaS6FmrO0WKVFF3GmQIiqTWD5X
-         TANcHHqoOKzbvbWAqu3uy3eKhRHgUSkPiDVp1bcKQkUf/gpW5CujOQ6pEU01eA1lsBWi
-         XuAwN4jyWu4MCbmg4C+7OKn87WHLFPNtVonq+jniiPli0+c1mRlbZj5//7JYGy+LDvpL
-         nIlw==
-X-Gm-Message-State: AOAM530hTus9vy5eB53sU0dKkfkBrjzHuJV7d6veowcJHLxsF33nJUHd
-        ugGMGE8PY+Zu82k+70YL1Vo=
-X-Google-Smtp-Source: ABdhPJxyLXfYdmw5m1x2LbNv4XxL+O2ObIPNFOORx2VZyqYCRuDTmHpjHxcZI3Ui3wR25eDY/zcQ7w==
-X-Received: by 2002:a05:6402:350c:b0:419:3d18:7dd2 with SMTP id b12-20020a056402350c00b004193d187dd2mr15673107edd.148.1649352228756;
-        Thu, 07 Apr 2022 10:23:48 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id lj20-20020a170906f9d400b006e7f1e1f4a0sm4688138ejb.60.2022.04.07.10.23.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 10:23:48 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ncVrH-0017wF-Jh;
-        Thu, 07 Apr 2022 19:23:47 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] doc: replace "--" with {litdd} in
- credential-cache/fsmonitor
-Date:   Thu, 07 Apr 2022 19:23:26 +0200
-References: <20220406184122.4126898-1-tmz@pobox.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220406184122.4126898-1-tmz@pobox.com>
-Message-ID: <220407.86h774dcyk.gmgdl@evledraar.gmail.com>
+        with ESMTP id S1346008AbiDGRyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 13:54:54 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48BA922EBFE
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 10:52:53 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6740017CE04;
+        Thu,  7 Apr 2022 13:52:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uQEgvSEXCJ/4ekrh6yTCimjS+6FYWR5llZn7iB
+        nUKLM=; b=A2oNnMExiCFNHiiL4Pocbup56KkVo+UuUknnMfxnha/ze6hniF9lsi
+        DkH5HrxqVVl6hb86hoXusfSFxMFk7g958I0MNiNkpeuPL6nvhwNeCwAHrK25zaAZ
+        w6NyIJN58XAjoDnRJZ4+6ATEpFao9PE8j5YBC/Ei93wkSlMEJPnCc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FEDC17CE02;
+        Thu,  7 Apr 2022 13:52:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B3E6317CE00;
+        Thu,  7 Apr 2022 13:52:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Enzo Matsumiya <ematsumiya@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/3] run-command.h: rename "env_array" to "env"
+References: <Ybtb6Shdj56ACdub@coredump.intra.peff.net>
+        <cover-0.3-00000000000-20220406T104134Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2204071407160.347@tvgsbejvaqbjf.bet>
+        <xmqqilrku9ef.fsf@gitster.g>
+Date:   Thu, 07 Apr 2022 10:52:48 -0700
+In-Reply-To: <xmqqilrku9ef.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        07 Apr 2022 09:48:40 -0700")
+Message-ID: <xmqqpmlssrv3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 8A43EF66-B69B-11EC-AFFD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, Apr 06 2022, Todd Zullinger wrote:
+>> Good thinking about the first batch after release. However, please do send
+>> such cleanups really only after the release. The reason for the patch
+>> slowdown is that we want to be able to focus on making a rock-solid
+>> v2.36.0. This here patch series is very much a distraction at this point.
+>
+> OK.
+>
+> FWIW, I have it near the tip of 'seen', but if any fix that is more
+> urgent than these changes need to be added to 'next' and down to
+> 'master' makes the version queued no longer apply, I will drop it
+> immediately, instead of spending cycles to figure out if it is worth
+> resolving the conflict and requeuing it in 'seen' during the -rc
+> period ;-)
 
-> Asciidoc renders `--` as em-dash.  This is not appropriate for command
-> names.  It also breaks linkgit links to these commands.
+To be fair, I actually do appreciate an early heads-up to warn
+against other contributors to think twice before adding more uses of
+the env-array and consider if a different approach without using the
+env-array would result in better code.  It would have been better to
+stress on such an early warning aspect of the series by marking the
+series explicitly "not for application during -rc".
 
-Looks good, for the linkgit case let's check it in "make check-docs":
+The true -rc freeze where nothing goes into 'next' (unless it is a
+regression fix for this cycle) starts tomorrow at -rc1; I think I've
+picked up everything relevant that have been posted in the past few
+days.
 
-diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
-index 1c61dd9512b..2f46b261282 100755
---- a/Documentation/lint-gitlink.perl
-+++ b/Documentation/lint-gitlink.perl
-@@ -46,6 +46,7 @@ sub report {
- 		my ($target, $page, $section) = ($1, $2, $3);
- 
- 		# De-AsciiDoc
-+		my $raw_page = $page;
- 		$page =~ s/{litdd}/--/g;
- 
- 		if (!exists $TXT{$page}) {
-@@ -61,6 +62,7 @@ sub report {
- 			report($pos, $line, $target, "wrong section (should be $real_section)");
- 			next;
- 		}
-+		report($pos, $line, $target, "should link '--' as '{litdd}')") if $raw_page =~ /--/;
- 	}
- 	# this resets our $. for each file
- 	close ARGV if eof;
+Thanks.
