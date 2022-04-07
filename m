@@ -2,100 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B83C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 22:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A20E9C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 22:09:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231903AbiDGWKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 18:10:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47976 "EHLO
+        id S231874AbiDGWLZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 18:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231688AbiDGWKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 18:10:24 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672E5140FC
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 14:54:00 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D93C95A0EC;
-        Thu,  7 Apr 2022 21:53:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1649368439;
-        bh=yJTWw9tvFYua+6PdJ4af7Xj6hWutQi46AiKn/G2At8M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=bGDSjJoaxGa5UowZViOoAS4V5PriH4fZMKf8JcbEc/3uDLpezON99ptRXPxfiPFXJ
-         tX6sB1KvshCkiNukK3YSegCeLnzIgrpyOyf3ERg+vmvWADCei4/3lgEAitWqv8VYoR
-         r8KG9wo5YMBXYa5Vb+/ac4+NaZoSANrthKIwdM+L4gglUK8HB+HwRAL/G9Cy2Z3oST
-         bQC1X3VFll9H9vjzDYxQJxc5GVGN8c1XCLpJXOWrq+fkTZUFzfMAAi0wW3oaId2oPg
-         ZT7aqprGxfd5opoquL3QayPy4/KTTKKUte3Ox+wwBhVu5lo/6d95dQWN1S7Ys6GF61
-         0uWCIi5jKML//TRm4yjJHzY9VmDyFb57t1AAH0Gnx0nGmVyr+dFz5L59GmMGgiHBmA
-         ZklHYXR+chPoeZIE74eyqb7mu7roNotpnOpfRDPwzNNjgFbwLHf/dKP4zOTPJKTGz7
-         nvaux0FLQY2ArPb8IEQnT1dgOg4n6Szj0J4Eafv2WpxR5DJMJeH
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 0/4] Importing and exporting stashes to refs
-Date:   Thu,  7 Apr 2022 21:53:48 +0000
-Message-Id: <20220407215352.3491567-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
-In-Reply-To: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
-References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+        with ESMTP id S231920AbiDGWK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 18:10:26 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 074CF10C1
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 14:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649368460;
+        bh=C5mlsy34jAa18iw2uvOuTGWjZUizrPZ8CAwcZqKscTg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZfQSSad2sC9sqALfs9IuIjrfIo2JDGM8XBRfJtq3wEMC5Q+a0b4W8D4iStsMPp265
+         Kyb64wtpH20VPspbS7bWrm5UJ6oFSYgpKMrjuwAFqvidNS46FaMJcruugUfq6AOCM7
+         whzlhvQ9rOC0zCYVpeflcndIlLbaU6u2m1DV/IUU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.255.204] ([89.1.212.208]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6lpG-1nd6Ru01jq-008Gis; Thu, 07
+ Apr 2022 23:54:20 +0200
+Date:   Thu, 7 Apr 2022 23:54:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Taylor Blau <ttaylorr@github.com>
+cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] git-scm.com Heroku credits update
+In-Reply-To: <YkcmtqcFaO7v1jW5@nand.local>
+Message-ID: <nycvar.QRO.7.76.6.2204072346410.347@tvgsbejvaqbjf.bet>
+References: <YkcmtqcFaO7v1jW5@nand.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CgA5FO2P46qKDLQX4Sx2g13Dy7XKCmR4bK5EwJliV7M/znBeKN9
+ Z07wTox16UO85wTo5JnaVPSYDFWl2wVSw3CY7PBYcQfzPu+Gb0FTaCEyBG2EIPD9Lmiy0cq
+ w0AXiKz62++y0t5GFKQepARGXRgSy8IgY4lHWZT6/6ViDFN8oHMcpV7etH+IkrFzO2ffr+g
+ eF0N/oNUAJqXFKWmOuxDg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kJwP5uTqZqo=:RiRBhjVXL1gcAxgzxwHCDT
+ boJATGHzBv741p48wp9799deZHPgZKbEM7YuurNvLeRtjfvRPb4F3yEbG6g7AYSljEGcsk7tZ
+ lU+W/7ne08si0VtC+JLUKscSS8vKMoCMQlUN2e/ZPSBBvy5NWF91FSg3akukpYy9iaPc2cYx5
+ jh2v9p50u+u7FS7C0/REf4vayMBgl8GkItoNGkEeeJ9u0P7SVaXJ3GZVzcnSM/ttc2sQkcAV1
+ AM8VIKNym6Lh7mTXW/BDQ5Qd/WzwwrutZc/j+tQVXxX+HU4vVbCpJaH9pifb+Qf4o9qWEvakT
+ tJc/fFFHNXrcuDXzK2m/BZeqxlFWXLHJ8jjhsxHbn92Ffk4zFlDeyA18Fyjrf5gVvdai7Dm2m
+ V0ki8SvzgkS1KgtA56K1by/xfShRE/TsIEo7nC1HfEfs/VZfhZJt9Fb6WWliECIvInQoKUtN8
+ YDVmeOQO0EISv3tb90hEL5uFgY3lNbRkFQIFb6dgS/4chXh+e8A5mYNObMzvGbJ8JhNBm+qFw
+ 8EfkTypOYFsVC5juh9K1O7507b09R82ZqMN7AXgpD910oIs/MDL+g5JKiuRkU8HmustXSF0sq
+ Ug1otzwgEACLeCLjh4jRigBGuB8d7tyhlPCEpA84wW9AQzOJNgeVXto3I55B6+GEAceXzHqQ/
+ kDWbm7pB0n/m+BfofZTRgBe2XwPmgHmMYPODwzBWP7XhFgicY9OZNBbMjCTDpwhq4VvONE8HF
+ 9GYVE1SF2WV/4aR/Y6+18vGM01oS1rS2h6LMnr2LTdVdLEb8cq7qWjcy7rdx0NdiqwoSICdtB
+ ZnTkO2lnpwjwx2PoSlPauqQxeVB0+ewDHi0C6twHAA8a4+cSa8+gMlz+WxQV872XGHxmpZ5Tr
+ APG3Lc5Im9jxaBb2ILLnLetwi/aNnFS5vN8Evn7wiSZbHBXbep6wk0IiYbBAw/M3RaZx8JKCv
+ C1ipeAtfc9x+IewRi+4vvMcdblVXIYzhSdihnzjm3Wl1SxYtoO8RtkpEEnroHnrePDehiHU/J
+ iZqV8om1XYsJUbg2h3ZmuM40gx1fSGdHAyL8Ic0CMAusRBzyppSJoI7l70H+pWZg5ln+Z2tb8
+ MQeVRZhiKt7zCY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stashes are currently stored using the reflog in a given repository.
-This is an interesting and novel way to handle them, but there is no way
-to easily move a stash across machines.  For example, stashes cannot be
-bundled, pushed, or fetched.
+Hi Taylor,
 
-Let's solve this problem by allowing users to import and export stashes
-to a chain of commits.  The commits used in a stash export contain two
-parents: one which is the pointer to the next exported stash (or to an
-empty commit with no parents if there are no more) and the second is the
-stash commit that would normally be stored in the reflog.
+On Fri, 1 Apr 2022, Taylor Blau wrote:
 
-Changes from v3:
-* Fix strbuf handling to avoid leaks and generally be more sensible.
-* Make use of the error return code more often.
-* Use oid_array.
-* Tidy various parts of the code and fix long lines.
-* Simplify tests using git tag.
-* Shorten and tidy tests.
-* Add an additional test covering the base commit OID and importing and
-  exporting empty stashes.
+> As some of you know, we have a website at https://git-scm.com, which has
+> served as the Git project's de-facto homepage.
+>
+> That site is hosted on Heroku, which has graciously provided the Git
+> project with hosting credits for many years. That, combined with support
+> from Cloudflare has meant that the maintenance cost for the site is
+> effectively $0.
+>
+> Unfortunately, Heroku no longer provides free hosting credits to
+> organizations and open-source projects. I have been in an ongoing
+> support thread with them, and their stance is pretty clear.
 
-Changes from v2:
-* Fix uninitialized strbuf.
-* Avoid C99-style initializations.
+Thank you for all your efforts. I frequently point users to git-scm.com,
+be it for the manual pages or for other resources, and appreciate that you
+keep it running so smoothly. While it is understandable that the free tier
+is going away, it is nevertheless an unplanned work for us, and I thank
+you for doing it.
 
-Changes from v1:
-* Change storage format as suggested by Junio.
-* Rename to GIT_OID_GENTLY.
-* Remove unnecessary initializations.
-* Use ALLOC_GROW_BY.
-* Ensure completely reproducible exports.
-* Avoid size_t.
-* Various other code cleanups.
+> To that end, we have a few options about what to do with the website in
+> the future:
+>
+>   - Convert the Rails application into a static site that could be
+>     hosted elsewhere for free. The non-static portions of the site would
+>     have to become static in one way or another, and we'd have to come
+>     up with an alternative search mechanism to replace the existing one.
 
-brian m. carlson (4):
-  object-name: make get_oid quietly return an error
-  builtin/stash: factor out revision parsing into a function
-  builtin/stash: provide a way to export stashes to a ref
-  builtin/stash: provide a way to import stashes from a ref
+This is my preference (and I would love to contribute the time, but am
+quite short on that resource to help much).
 
- Documentation/git-stash.txt |  29 +++-
- builtin/stash.c             | 321 ++++++++++++++++++++++++++++++++++--
- cache.h                     |   1 +
- object-name.c               |   6 +-
- t/t3903-stash.sh            |  63 +++++++
- 5 files changed, 406 insertions(+), 14 deletions(-)
+It looks to me as if the only blocker is the site-search, and there are
+ways to pre-generate an index e.g. in a Jekyll site (which we could host
+on GitHub Pages, incidentally, which would be a very nice setup indeed).
 
+The other thing the Rails app does is to regularly poll for updated
+versions, e.g. Git for Windows and Git for Mac. This strikes me as
+something that would benefit from the transparency provided by having a
+GitHub workflow to perform said polling instead of the opaque Rails app on
+Heroku with no public log of when it ran and whether it was successful.
+
+Please let me know what you think, and whether you already looked into how
+automatable/parallelizable this conversion would be. Hopefully I _can_ be
+of use in bringing that about.
+
+Thanks,
+Dscho
