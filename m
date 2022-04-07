@@ -2,383 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90200C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 18:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11D3BC4332F
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 18:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244339AbiDGSkr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 14:40:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34664 "EHLO
+        id S1346889AbiDGSml (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 14:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232900AbiDGSkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 14:40:46 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E189181D99
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 11:38:45 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id o18so1668911qtk.7
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 11:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yvhz9OPcA7FLr+8PjNwOHY1tinAMCvpGWBNiBKnXDaU=;
-        b=DA9gOo/jFfmRfdVAuvpurTv5SU0ulSx25OqsABXL8eb77dFOOUB2OC9E5t6Jf0KDig
-         FR7IibZXPz4tjQDHLZcPhlOPjCtBLEUNbbbXO+r3QBh/KMTCPJVSqmw/9q/zI7ylq3kU
-         KwVGY3G2p7Pn+NpoQ8F+Y/7vuxqbJfFEgWewe0XjNsF/SWpdmOPLPaJVZe3/XaDco7wR
-         3iQiCxgSf2tomJRzIoWX6/i50Z44KVpS1UTbIOMgxLRTWwNoTpybO20oFHGF8vGmIBcr
-         zFwSXo+zFHhqnIW/oituMC27xmcO3l3HAnLwJImdDskTNcoUfHCMBeiTSlzqNQA4PRWt
-         i7TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yvhz9OPcA7FLr+8PjNwOHY1tinAMCvpGWBNiBKnXDaU=;
-        b=xh4xe7DCNBvHw7DlvXyNWeAIot3a+htivGc58i43Z3u8aV4gdtOH4r2uJhWgic4zdW
-         gpLSs5k7iE+gx3oNdIA/eb1YO2Robp5UPDIsAfGjKoxt6+72UcFSgXRdzMK0qMFrVDZc
-         MQkktGr9FOAL8f35RABEjSVdSmc6CAQyjhTTKACdMl6raO6PRohZmHLzGzEkw8y14MqE
-         8/nDVSKZkeXlylcIsYdgT9TDH8GCfZurkTkj7OFPuPLrot0G9HxP5MArtPIt0/SyuCeT
-         2bXgF6rpCGky+umlI/XlJGkFT2w7t42Uvl5StBo/QeCmo3HjEEneyeFQA7fCmtGlirY1
-         saHA==
-X-Gm-Message-State: AOAM530zj1mRoDry43VxvodDt+vS5s1E0Qr+Aj83ILcpa3HpUWdCiZ0y
-        J1tyzqknsEmovJW41zgXYHU=
-X-Google-Smtp-Source: ABdhPJyVx/bf8mLzzvq3H75rCMraJk/T8Q6LNKeoZHKAGKOmssfOaS9QsB64rzMw2UVvtowC1Hs6pw==
-X-Received: by 2002:ac8:5743:0:b0:2e1:cee6:f15 with SMTP id 3-20020ac85743000000b002e1cee60f15mr12951412qtx.634.1649356722960;
-        Thu, 07 Apr 2022 11:38:42 -0700 (PDT)
-Received: from [10.37.129.2] (ool-ad03998c.dyn.optonline.net. [173.3.153.140])
-        by smtp.gmail.com with ESMTPSA id v9-20020a05620a0a8900b0067db9cc46a9sm11577588qkg.62.2022.04.07.11.38.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Apr 2022 11:38:42 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-Date:   Thu, 07 Apr 2022 14:38:41 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <FF4B21A6-A8B6-4142-B325-B9C9193BD885@gmail.com>
-In-Reply-To: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+        with ESMTP id S1346904AbiDGSmh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 14:42:37 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098F5DEB3
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 11:40:36 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 63A2F135D63;
+        Thu,  7 Apr 2022 14:40:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=6ef+/kfjuhFgv2wAtFAUtqn7Y
+        X55FVq0jftpvUS8Xas=; b=RUQM7V9v0nHDsamyVp0yWS6t6cX5ztP8GbcrhoQNq
+        1wN+L8UOPj46bO92VkmiVo/gszpIn4UZdAYgnl9zmYWld0/qFY+ot/BK8kf3jsUJ
+        El9zhEM/6lZoThEQUIeiiZtlBDIOe+12wBe+ZInWz7hmvN9/pQ3krewwwIRPr+8X
+        84=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A695135D62;
+        Thu,  7 Apr 2022 14:40:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BED66135D61;
+        Thu,  7 Apr 2022 14:40:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
+        dyroneteng@gmail.com, martin.agren@gmail.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com, Fabian Stelzer <fs@gigacodes.de>,
+        Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [PATCH v2] ls-tree: fix --long implying -r regression in
+ 9c4d58ff2c3
+References: <9ce4dadf140204e934f7025bb91385c376118940.1649111831.git.steadmon@google.com>
+        <patch-v2-1.1-ed83b3b74ab-20220404T234507Z-avarab@gmail.com>
+        <xmqqwng2xfi8.fsf@gitster.g>
+        <220406.8635iqdjzl.gmgdl@evledraar.gmail.com>
+        <xmqq4k35x4m6.fsf@gitster.g>
+        <220407.86y20hcpy5.gmgdl@evledraar.gmail.com>
+Date:   Thu, 07 Apr 2022 11:40:33 -0700
+Message-ID: <xmqqee28spni.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 36901410-B6A2-11EC-BF56-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Glen,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-This is an interesting find. Thanks for writing it up.
+>>>> Let's not go too cute like this.  This forces the caller to remember
+>>>> which among 6, 7, and 8 corresponds to which option.  It is too ugly
+>>>> to live.
+>>>
+>>> I think it's rather elegant actually, but to be fair it would, per:
+>>>
+>>> 	git grep '<&[1-9]| [1-9]<<-'
+>>>
+>>> Be the user with the most FD's using this sort of pattern.
+>>
+>> Please give a clear explanation why "-d" has to be 6, "-r" 7 and
+>> "-t" 8, that can be used by developers as a memory aid to help them
+>> write new tests using the helper.
+>
+> It's documented when test-lib.sh does the redirection, since Fabian
+> Stelzer's a6714088e0c (test-lib: make BAIL_OUT() work in tests and
+> prereq, 2021-12-01).
 
-On 6 Apr 2022, at 18:43, Glen Choo wrote:
+Sorry, but that is not what I asked.  I know what we use lower file
+descriptors for, and I didn't ask why we start from 6 (as opposed to
+3).
 
-> Hi all,
->
-> My Google colleagues and I would like to address what we think is a sec=
-urity
-> risk - namely that Git repositories can contain valid bare repositories=
- in their
-> working trees. This is based on an excellent article by Justin Steven [=
-1] (CC-ed
-> here).
->
-> Below is a discussion of:
->
-> * The risky behavior - what Git does and why it is risky
-> * Possible responses to this risk
-> * A proposed approach
->
-> The proposed changes are nontrivial, so I=E2=80=99d really appreciate a=
-ny feedback here.
-> Unfortunately, I will be out of the office and won=E2=80=99t respond to=
- emails for the
-> next 7 days or so, but there will still be at least one Google Git team=
- member
-> keeping tabs on the discussion :)
->
-> =3D TL;DR
->
-> Git repositories should not be allowed to contain bare repositories in =
-their
-> working trees because:
->
-> * Such bare repositories can have maliciously crafted config files that=
- cause
->   `git` to execute arbitrary code.
-> * Git itself can distribute the malicious repo via `git clone`; no need=
- to
->   distribute repos out of band e.g. via tarballs [2].
-> * Many `git` commands can be affected by malicious config files, and ma=
-ny users
->   have tools that will run `git` in the current directory or the subdir=
-ectories
->   of a repo. Once the malicious repo has been cloned, very little socia=
-l
->   engineering is needed; the user might only need to open the repo in a=
-n editor
->   or `cd` into the correct subdirectory.
->
-> =3D Background
->
-> (This section is primarily a summary of [1]. I highly, highly recommend=
- reading
-> that as it describes the issue in much more detail and is extremely rea=
-dable
-> regardless of Git experience.)
->
-> Certain Git configuration options are particularly enticing targets for=
+The updated helper forces our developers to know that the expected
+result for "-d" has to go to #6 (not #7 or #8), and "-r" to #7 (not
+#6 or #8), etc., in order to write new tests using it, and in order
+to spot a mistake while reviewing such new tests.
 
-> attackers, e.g. core.fsmonitor can execute arbitrary commands and is in=
-voked
-> on many innocuous-looking `git` commands (like `git status`). This is e=
-ven more
-> risky when one considers that many tools (like shell prompts and IDEs) =
-will run
-> `git` opportunistically inside a repository - so many users won't even =
-need to
-> explicitly run `git` to be affected [3].
->
-> Since config files are such an enticing target for attackers, Git inten=
-tionally
-> avoids distributing config files with repos - a user shouldn't be able =
-to `git
-> clone` a repo with a config file (or really, any files inside .git). Ho=
-wever,
-> one can 'trick' Git into doing this by embedding a bare repository insi=
-de of
-> another, containing repository: a repository can contain subdirectories=
- that are
-> valid bare repositories, and any `git` operations run in such a subdire=
-ctory
-> will then use the bare repository=E2=80=99s config file instead of the =
-"main"
-> repository=E2=80=99s.
->
-> An attack might look like this:
->
-> * Attacker creates a repository where subdirectory "Documentation/" is =
-a bare
->   repository i.e. it contains "HEAD", "refs/" and "objects/" [4]. Attac=
-ker
->   also adds "config" with a malicious setting for core.fsmonitor.
-> * Attacker convinces User to read their project's documentation by `git=
-
->   clone`-ing their repository and inspecting the "Documentation/" direc=
-tory.
-> * User cd-s into "Documentation/" and their shell prompt runs `git stat=
-us`,
-
-This might be obvious to most reading this, but for those trying this out=
- at home,
-you'll need to create a worktree that points to the bare repository and t=
-hen run
-`git status` in there.
-
->   executing the core.fsmonitor command defined by Attacker.
-
-This is easily reproduceable.
-
->
-> =3D What can we do about it?
->
-> Each subsection is an alternative and an analysis (+/- are pros/cons).
->
-> =3D=3D 1. Prevent users from checking out bare repos
->
-> This is similar to an existing mitigation where we prevent repository e=
-ntries
-> that can be confused for ".git" (like ".GIT"). but it requires checking=
- multiple
-> entries instead of a single entry. I suspect that we could accomplish t=
-his in
-> one of two ways:
->
-> a. Prevent bare repos from entering the index.
-> b. Prevent writing bare repos to the working tree.
->
-> + Relatively robust protection - because the malicious repo never enter=
-s the
->   working tree, we even protect other tools (e.g. JGit) from doing dang=
-erous
->   things in the embedded repo (provided the checkout is done with `git`=
-, of
->   course).
-> - This breaks some 'valid' workflows (e.g. someone embedding a bare rep=
-o as a
->   more convenient alternative to submodules), but it seems reasonable t=
-o let
->   users opt out of this behavior.
-> - (1a) is difficult to do in practice because many code paths add entri=
-es to
->   the index, and checking a combination of new entry and existing entri=
-es is
->   much trickier than checking just the new entry.
-> - (1b) might also be difficult, though not as difficult as 1a because w=
-e
->   already have a complete list of entries we will write. I don=E2=80=99=
-t think there
->   are existing facilities that do this sort of checking of multiple ent=
-ries.
->
-> =3D=3D 2. Detect and reject bare repos using `git fsck` and `transfer.f=
-sckObjects`.
->
-> This entails checking for the markers of a bare repository (HEAD, refs/=
-,
-> objects/) in tree objects. This shares a precedent with (1), since `git=
- fsck`
-> will also detect ".GIT".
->
-> + Most reputable hosting sites set `transfer.fsckObjects`, which allows=
- them to
->   detect and prevent this kind of transmission.
-> + Confers some protection to users even without them doing anything.
-> + Easy to visualize and to write.
-> - This won=E2=80=99t directly protect most users because they don=E2=80=
-=99t typically set
->   `transfer.fsckObjects` (in fact, `transfer.fsckObjects` will render m=
-any
->   projects, like linux.git, uncloneable without additional config)
-> - Won=E2=80=99t guard against malicious/poorly configured hosts.
->
-> =3D=3D 3. Detect that we are in an embedded bare repo and ignore the em=
-bedded bare
->  repository in favor of the containing repo.
->
-> For example, if setup.c detects that we are in a bare repo, it could th=
-en walk
-> up the directory hierarchy to see if there is a containing repo that tr=
-acks the
-> bare one. If so, setup.c chooses to use the containing repo instead.
->
-> + Extremely robust; this even protects against a checkout by an earlier=
- Git
->   version.
-> + Users who don=E2=80=99t use bare repos won=E2=80=99t even notice the =
-difference.
-> - The change in rules breaks some legitimate workflows e.g. a user with=
- a repo
->   at HOME and bare repos underneath.
-> - Potentially very expensive for bare repo users because setup.c will l=
-ikely
->   walk up to the root directory; we=E2=80=99d be essentially *forcing* =
-those users to
->   set GIT_CEILING_DIRECTORIES.
-> - Doesn=E2=80=99t protect users who use other tools e.g. JGit.
->
-> =3D=3D 4. Educate users about this risk without making code changes.
->
-> Some risks fall into this category e.g. "Avoid unarchiving repositories=
- because
-> .git/config might be poisoned." [2].
->
-> + We don=E2=80=99t break any users.
-> - Breaks the trust that users have in `git clone`.
-> - IMO "Inspect every repo in its entirety before cloning it" is too muc=
-h of a
->   burden to put on users.
->
-> =3D Next steps
->
-> I propose that we prevent repositories from containing bare repositorie=
-s by
-> doing the following (in order):
->
-> * Implement (2) by adding a new fsck message "embeddedBareRepo".
->   * When this is done, hosting sites can hopefully use this capability =
-to
->     prevent transmission, and help us understand the prevalence of such=
- attacks.
-> * Implement (1b) by teaching unpack_trees.c to check whether the tree c=
-ontains
->   an entire bare repo, and die() if so. This will be guarded by a
->   defaults-to-true config value.
->   * This would only block a bare repo from being written in a single op=
-eration.
->     It wouldn=E2=80=99t stop a user from writing a bare repo entry-by-e=
-ntry using "git
->     checkout <path>", but the amount of social engineering required pro=
-bably
->     renders this attack infeasible.
->   * As I noted earlier, I foresee some difficulty actually implementing=
- this
->     because I don=E2=80=99t think we have facilities for checking multi=
-ple tree entries
->     at once.
->
-> I am particularly interested in hearing feedback about (1b), namely:
->
-> * How to actually teach unpack_trees.c to detect bare repos.
-> * Whether preventing bare repos in unpack_trees.c is a good enough miti=
-gation
->   (e.g. Are there other code paths that should block bare repos? Should=
- we be
->   checking the index instead of the tree?).
->
-> I have a patch that does (2); I will send that out and we can leave fee=
-dback on
-> that separately.
->
-> =3D Demonstration
->
-> This is based on a script by Taylor Blau (thanks!). [1] also contains a=
-
-> demonstration that runs in Docker.
->
->   #!/bin/sh
->
->   rm -fr malicious cloned &&git init malicious &&
->
->   (
->   cd malicious &&
->
->   mkdir -p bare &&
->   cd bare &&
->
->   echo 'ref: refs/heads/main' >HEAD &&
->   cat >config <<-EOF
->   [core]
->   repositoryformatversion =3D 0
->   filemode =3D true
->   bare =3D false
->   worktree =3D "worktree"
->   fsmonitor =3D "echo pwned >&2; false"
->   EOF
->
->   mkdir objects refs worktree &&
->   touch worktree/.gitkeep &&
->
->   git add . &&
->   git commit -m ".gitkeep" &&
->
->   cd .. &&
->   git add bare &&
->   git commit -m 'initial commit'
->   ) &&
->
->   git clone --no-local malicious cloned &&
->   cd cloned/bare &&
->   git status # pwned
->
-> =3D Footnotes
->
-> [1] https://github.com/justinsteven/advisories/blob/main/2022_git_burie=
-d_bare_repos_and_fsmonitor_various_abuses.md.
-> [2] Archived repositories with malicious .git directories are a known r=
-isk. See
->  https://lore.kernel.org/git/20171003123239.lisk43a2goxtxkro@sigill.int=
-ra.peff.net/
->  for an on-list discussion. This is also described in
->  https://blog.sonarsource.com/securing-developer-tools-git-integrations=
-
->  (referenced in [1]).
-> [3] We even ship such a tool - contrib/completion/git-prompt.sh. A user=
- can pwn
->  themselves with tab completion even if they don=E2=80=99t have a promp=
-t configured
-> [4] Any directory containing these entries will be recognized as a bare=
- repo, so
->  an attacker could add arbitrary entries to the directory to obfuscate =
-the fact
->  that it is a bare repo.
-> [*] https://offensi.com/2019/12/16/4-google-cloud-shell-bugs-explained-=
-bug-3/ is
->  similar to [1], but uses hooks instead of core.fsmonitor.
+It is an invitation to unmaintainable mess.  Don't encourage it.
