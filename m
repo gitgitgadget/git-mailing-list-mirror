@@ -2,107 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F757C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 11:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B6CC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 12:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239271AbiDGMAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 08:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37638 "EHLO
+        id S238463AbiDGML6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 08:11:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233421AbiDGMAh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 08:00:37 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 732EF44A06
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 04:58:36 -0700 (PDT)
+        with ESMTP id S234562AbiDGML4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 08:11:56 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321121D0
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 05:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649332713;
-        bh=bzvodwnBdTgLsPlg+/WN1RfwXxy4trA/63h1iw7YiAM=;
+        s=badeba3b8450; t=1649333368;
+        bh=HHizSyKJY2GsttnP3RuqtJlEt0MdxzbT5JoLCynLN7k=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Zl3EFsOnfGVsUzr8KlXpEVE+x49N//GpjEy4uglPJ5W6UAjH/zZOQ1lXsPY/ynCIc
-         1x2VQ0Jw6t4R3OSaqp61kdxvttGxnCZqGDzY5szK8lnv1j/lKEvHjmH7KSC+Xh3/CP
-         +8R8xragJAloS3dRoIDx4rRrcc83mZQwoik+7LKg=
+        b=A31EfmH2VihM7hk6mGsHg7ZZH2aNE9Xi5i4RM98Z20iDOpyh6OhsjNf0deZQyImHS
+         5LOUIiQBjUSSHaaO8ptYZmA1IiljeM5S1H6c1tXlH8P+Bm+eiOl1BvfxPzWND0br6X
+         ATgryJqnYmtj9iIUGncJ8jbRD2oGBv/Ub84dM2C8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVeMG-1nSV8H18YG-00RcIj; Thu, 07
- Apr 2022 13:58:33 +0200
-Date:   Thu, 7 Apr 2022 13:58:31 +0200 (CEST)
+Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mel81-1oAfNN2ouz-00akd9; Thu, 07
+ Apr 2022 14:09:28 +0200
+Date:   Thu, 7 Apr 2022 14:09:26 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Markus Vervier <markus.vervier@x41-dsec.de>
-cc:     git@vger.kernel.org, Derek Zimmer <derek@ostif.org>
-Subject: Re: Covierty Integration / Improvement
-In-Reply-To: <6cb10d5e-d8f2-0d7e-a15a-4728466e0c21@x41-dsec.de>
-Message-ID: <nycvar.QRO.7.76.6.2204071350080.347@tvgsbejvaqbjf.bet>
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de> <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet> <6cb10d5e-d8f2-0d7e-a15a-4728466e0c21@x41-dsec.de>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Enzo Matsumiya <ematsumiya@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/3] run-command.h: rename "env_array" to "env"
+In-Reply-To: <cover-0.3-00000000000-20220406T104134Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2204071407160.347@tvgsbejvaqbjf.bet>
+References: <Ybtb6Shdj56ACdub@coredump.intra.peff.net> <cover-0.3-00000000000-20220406T104134Z-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:IZrvYkJaJrqDfdZQk7lU3atDXW/HKgnuYdtW8dhprCCuco1j2kQ
- e/sf76bVhBN00FlqFDXEGRrupvRQhTSC5rKwerUt1A2eMqumJ2A5V+/JudyNO5SwOkI0riX
- CygA3V2jdE17QX78gAZ/D8TC3bdRrbH5ScrrLTI0L4GxErQZB0hTj5V+14/Oyl5gnLefGcZ
- k2fNkUvlrip3ayaE9dq+w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0py0eSORFco=:9QDRbD5ABfyN3cJhpndeK/
- INxjiN75WxwuSfGg5PiXorp4xrEYggYrJ74SOLw2gHuW3IJrFeiISyxYQYA5NEoazSq3UyPaC
- RaR3/X3RgfMFlF3YjI68e5AJLPbFxMPu0jyZzW5GGwSsNFXBWKZLeGfPjmU3r7xQQgQtwk90z
- nbI4Z1WNLxTyMCtF5havbTo4TZYXkW9OH/6PglSfpVJK4TImGyU5waSeJPOssqHHsQQ/xnrGN
- ArRCxkxs5vBWQ/E0nM0/VOjbJXHoZKJqFratjwyhlufx1HxmNlLQcgawg4FnzkgJ9E/CB/rGF
- dJx1uQ8kO02PmH3dL2a4PYjxN6guLShKa2cdcHUSI+gPXhRwIl5d39nG2JfLHLDpZayYZ/GvW
- eXbeSwXBKU3Tsuzad3De0opMBvmjnOjpaCGmPDkQ6dewcDSLA5mjiyX5h6F1O0O9Q5TjpISa6
- 68Zti8g1RKKrf12MhgUv6IyAsgdbOAYFw/J/r/AFt8BrhF7noX5tCiMmXPy9jkD2ZFyuGnqye
- CBWT+o8LS2JSA2UWdkZMH8mrKBNcgjvmYe1SxwJyTPiMyqpcCU9GR612UFphWxj/keZ2YBvAp
- M1Z9jqKI+QMe/woccKNKTdTKjSFbbzmkgebl6Y2cG0KMjD/LfDRFIoT6/MdsrxEn4A9FDcKOB
- 5McKZpxf2XHC8995XAyE5O/vHLhT6UkDjQ/zOAXvOfpJKs7uf8VNKKJ6XXxyTkNwaFcGnuldJ
- 6ZSQKdgOEGf3IMdHRhNW7fzgnYnEqspqmolmlfM6LiHnyaW9utYDC0TC6lAqhDdK0xrPfisOj
- oyCKdrX8Di8nMo3AK2Bvn6C+EkP2kl1kxgkMEGsvSW9B3dYrKkv6uFQvQc1T7LZ3xS3MwAMA4
- wDfwCrmOf4Ownmf2CyjKYIwoWif42NJeGC60g9sJjN+/ph3nn60EcpAfuO6Cs8RwmTPoSN2mb
- 7rHaDe849lzJWLExe9/dodx13AAiztbVIYCAgYC5q+lrhTHCEqgSc24K39M2gVfXCdoVoDblB
- OJXgjtDdXF2LDUmzN9adkYGsKLNE9m4ZWpQWuczE9ab8Cq4Wq9YDG4M+1NSpwyzixx05Pnz0n
- AkV2kpD2FZJLBg=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-795814729-1649333368=:347"
+X-Provags-ID: V03:K1:ysFFCTONx627FWV+nS1RVLsJreJghcfVY7zrbP8GGA39j7Xqmny
+ VzpZ1mzzGQ2zZA0w0b+XZpc2ZUGKlgTMcKiqnMR2e0JpMtMTi51cLDJTVostYQvvXgg/+5W
+ 1GaLYcjbRRXle3P7AJU17Wf5m+9JmUer0q/81au3GWT5LZ46UjhPD1msNQafT22Ogv6NI8+
+ z2hoiyhrESDbOQSGhNUEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E/r2C50SIbM=:v5zsbqq8t0KhGxcohcvCV1
+ Ig5IJB1dRPhWzyO1QxMksJZrl9jJuE2R4oRyGJXcuZB/nqztP6rBM9rNiVr9Ma3v4xbYoz87y
+ 9JD8vV8gfsMJcMdIL2fydTQkFbOR5TSIhRwFxR2Zhs7DR+isEc5Zg4X1Hom+RoL07OlR75d6w
+ LnklTFym8FA+ATR4qK2MZ7fDhwUmz43BJWkOm10zSfX/F9L5zN+wofkLFS8oK2OxqcE1sJArk
+ i1NKm8JNCYTChDtNGKi1hmqzMIEVplO55rC4PSdgkkJEXbrlae8tMfz55S4a6aQ6Mufgc69Hf
+ Mmzsjsk/2p4rphAhoWAfOZ5egTookOOTigfN9vrRcxnsNPzg79ouWHZVa/O7Fs296m+98vwVe
+ cUQO3VOu/IuIXVdIkTgdmEx4QZCt/xT3cE8Pw2iqtRSs5400vaJH3EaenTZKfUSEsc88nEsGZ
+ PrVNbpUqg2zEv51K28dx5UPQYAi71/46mNMdT7tktl0eOsdMb53GdW1V2pTbBeIP/6X98EgMQ
+ kRG5+RAa3HuSpwyAWM9aEJWv/DEu5NZ0tvSZ7nJfwKu5HRNj3O0ttTHYc11W7uGh5RBloEhDp
+ kTVc3BgCa1iKrHwr7b6XjbvP78v+9j+VXF9/FcwRWs4SRI4XPTEISzCMfZlq/7X7M1ZFLn3XW
+ TqRybUHXHt4zpSPpHW/7p7246/kQSg1PoVcwj7ZhZh4fBvkSM/j1ljg4MXXdAXsfNX2vg0bG1
+ 4yKCajzNEF7deXo24dhurfLqa3C9JgPR5FVFCa853hAE0GRIKprTmrLlTDREn1RewKCZWTf56
+ 9KCee4TolyAQu3hjacgcHwu3W+ulUIs2/YDPjQFr+UQ3Esosa5Rtkk59ygnM423Fjavc5R2JA
+ xfoeqkJd3c1jN7Ivbn9OV5Sqij6baSrHIbZ1UrH8ovMQBg2zXE1oPu/ZJa2mJRFxg3EkTDJrL
+ Ff0EM4OzNLKqvJei3633X0VWj1Qvnt8chtE3HpLlJytUHzgsHE7CUeObFeS1sZ5jkVvR+xK37
+ DpwBwhe7PlQswreG2cgsvFAW1pY1SdkBfjz/9EIrHcaRu9uMRwZthLQ3il7pbi5xsbqQioepx
+ oc3E6Jjg0LL7HI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Markus,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 7 Apr 2022, Markus Vervier wrote:
+--8323328-795814729-1649333368=:347
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On 4/6/22 00:17, Johannes Schindelin wrote:
-> > On Fri, 1 Apr 2022, Markus Vervier wrote:
-> > > X41 is processing the current RfP
-> > would you kindly provide a bit more context? This seems to come right =
-out
-> > of left field. Is "RfP" a "Request for Proposals"? If so, I am not awa=
-re
-> > that the git developer team submitted one...
->
-> thank you and everyone else for their comments. To clear up the context:
->
-> The OSTIF (https://ostif.org) is organizing a security audit for git
-> and one of the questions was about Coverity and if the results it gave i=
-n the
-> past could be verified and/or improved.
+Hi =C3=86var,
 
-Thank you for the context!
+On Wed, 6 Apr 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-If OSTIF can help us get better support from Coverity (as you can see at
-https://github.com/git-for-windows/build-extra/commit/23eea104 I could
-have wished for a better experience there), I am all for it!
+> Junio: We're in the RC period, but perhaps this change if we're ever
+> going to make it would be good to make around that time of patch
+> slowdown. I.e. for the first batch after release.
 
-Out of curiosity: are you (or is OSTIF) affiliated with Synopsys somehow?
-
-If not, have you considered if you could help us getting a comprehensive
-CodeQL coverage instead? Theoretically, CodeQL should be able to do the
-same as Coverity, while allowing us to tweak the analysis in a lot more
-powerful ways than Coverity (most notably, it should allow us to reduce
-the number of false positives rather dramatically).
-
-It is the number of knobs CodeQL allows that has looked too daunting for
-me to give it more than a cursory try [*1*].
+Good thinking about the first batch after release. However, please do send
+such cleanups really only after the release. The reason for the patch
+slowdown is that we want to be able to focus on making a rock-solid
+v2.36.0. This here patch series is very much a distraction at this point.
 
 Thank you,
 Johannes
 
-Footnote *1*: I had played with CodeQL last year but was called away to a
-more pressing project, therefore this is woefully incomplete:
-https://github.com/git-for-windows/git/compare/main...dscho:codeql
+--8323328-795814729-1649333368=:347--
