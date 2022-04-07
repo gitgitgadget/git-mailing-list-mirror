@@ -2,118 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCACC433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 12:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08CC3C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 12:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245283AbiDGMjU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 08:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+        id S245369AbiDGMop (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 08:44:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233132AbiDGMjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 08:39:19 -0400
+        with ESMTP id S233879AbiDGMon (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 08:44:43 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1BD32571CE
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 05:37:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902B39BB99
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 05:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649335034;
-        bh=O9f1FI2A/nb0Nbk2DvbFEEi93cezTd5OgSryMtcH2HA=;
+        s=badeba3b8450; t=1649335361;
+        bh=lFmHBLY0WtFbzK12LBnzE7pDIZuaQWpzxq+6PNCyBWs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZPwFvEikwoKpTcbfoPIZVk4dJKsUfD8y4IJM6f5VZf+xZeDcfijocZfxM+kAhSr9P
-         FrjA5BQTvs8Hyu1KZaWh/R7CWGYQ8/Jf41KTLk8gqHWC5W0U4L/SzPo5PeQtlMJwks
-         p/DHVYe/f0MYqUBOZrnPHSQwCTgWCpoFxh7Bf/i4=
+        b=DYaM8Mdrf2gtXFrXxDkWLfDJ0MgAhvkYJLODB8voqD+ndYww91MOQX+BnIj5TpVWB
+         RJ/JgjBhh7q0xToo9QOlz5rp6MIMnjg1PuXDtUwnKryRBbW4hhhCn9Bk3aIgOTTzNS
+         0gIc8tF7jJBtUhcrtEEU9XXQ6TTr/eXrwrByCM5M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N63Ra-1o4q9a1lU0-016Py5; Thu, 07
- Apr 2022 14:37:14 +0200
-Date:   Thu, 7 Apr 2022 14:37:12 +0200 (CEST)
+Received: from [172.19.255.204] ([89.1.214.127]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MxUnz-1nwHkG0dgH-00xuLx; Thu, 07
+ Apr 2022 14:42:41 +0200
+Date:   Thu, 7 Apr 2022 14:42:39 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Teng Long <dyroneteng@gmail.com>
-cc:     bturner@atlassian.com, avarab@gmail.com, git@vger.kernel.org
-Subject: Re: Git 2.36, ls-tree submodule regression?
-In-Reply-To: <20220407022207.12542-1-dyroneteng@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2204071436150.347@tvgsbejvaqbjf.bet>
-References: <CAGyf7-FjqrGYTUwdS=a6nsUnbn0qD9=Pf2Nx=gy6g8KGVRJivw@mail.gmail.com> <20220407022207.12542-1-dyroneteng@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fsck: detect bare repos in trees and warn
+In-Reply-To: <20220406232231.47714-1-chooglen@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
+References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com> <20220406232231.47714-1-chooglen@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1170198910-1649335034=:347"
-X-Provags-ID: V03:K1:aoQ3ffyMfBFekGhBmEUINEC6hLWqwqhjlXPJzHXLiglH9nmkn1p
- QdkGorlBiwe3Bw5MCY6j4++xIUVMPFSEQCjPmQr1Bgqj7QNduHh3iUSpPlApkh8v4ClH5Cw
- +1CThSrN7/S5qzBRvk3oq+6DfAe7shN120BdHNHb1dQgwE5PwD/jpuop30ZDHPrR/V/+ouL
- n25P22F7l0UL3DtQm74lw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vjeN+44alxQ=:KsOzIdtSi5w1pKr7+v+ja6
- Cg1DxbAtZZebHdlQWSVaIfOUSHdRxEjS86dHqQKsBwptqCy+hnVuwiQtuYvKJtbs5xb8sHS3l
- DyskVgD5YKolVILsJZasA8f+nmRSKJ9g4xTxoNG/DIZFr+vLDcEauJPOI58o/5QTyUYIWuSY2
- ZIKoUiQOj5NvXOtH8G2j1kg1VXEjC08mATtl4vq1vqivhKt3pTHUYl1GcdxCMc55cytIDEciK
- aAnpJ+LnQmvgJWo9vKnMwpDnePQSv6dHaZyyUo5rCMSKmTzYhlbnHS7pgKIszB6NUigt/IGZ1
- q3aoa4EIFn1V52yodY0ffaKe8+ykR0cCavYTt1etBRXIM/lrMDDG6o2GOl8EXN4rm6BZOs/Bw
- WthF3ezpTIz14X/02LxgzuGyq32yk9kZagIDzkLjzoaEHjc2KoxNbUR5LFKaWpy9m2G3O/4EH
- upOpj03QXgLg81Otci1e8i9kA1hXI4bI4LsrdM2/TiRiiqmHLf1aLnjv4MONx3JyV2j5XnDTs
- tfjsG1/5GJHFQnM1AUEuB7vC7X2TWQvKW2R1UfxS8pljwL2tXcKIsLSFkxHaBhxESyXsOGl7s
- sdCFEb4yr7X+GjhbbgOwNcOQPrITWC0wa/E3kiSTfH/K2W0Hry+bjYw0ejo27jLmnsKOilxrb
- qe9eWIE05DDZEE/gdFFAjz5v38YNKldqFDmFhnNTYNb+F34C1oB9/Zhdx6cUWE70ZzL2WqiF+
- 6NECrsMm/AingU0bDy2yLkv+eoGlpt2q52gYYjq92EthmPoM6TAdkkhA3ZPrsGwdnCSQUpDLN
- DZu27qXr8mdi6BNW9QUi1SQJZP7m0cduTcJr/T8KvClOv2McLUM78om4S4ZM6Lbts6CJafH+Y
- ECCsU4sBAAZIxqGvYhvi3pBf2rnh/tMBo8HkKlbW974ryMaJVFZI3xUuH45ajEse+j4XIHv46
- gzv8x/gwp4jIOlfcKfpfOO9pWF88xGHF7TomV+YWi886oXv5tfQ1KmvATjFRgJbiBekGdHtbU
- rhcx6LNzsBvO9cnFyRRB+Xgglk9fuPYBtoLDdrOHOdTphl9A5YphalaE395cv0/8FHVKYT+Zn
- sKAg+il3ZwgTec=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cro/TS4fBT17VAxaPEVqrdp25oWqFQkPpq6zDxoxaOkGaAozLmz
+ DersZfZc+hvoHZUxvx0IgQb9v8Rh/NcXGh+mENHowcFDiUaKpqscEWgmolvMUEYCIWKblNB
+ TBs/SgA2P+Mabw6vH1/GNxmUeVXds0RwnzrWsBVpuMGv8rTVUmif4VrHltLOpzf3Tt19LX+
+ Ha4mMtYiHEQnCaLxifnZA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mrumNNu0ypE=:hh2zSw1KwNTOCHL4vzBtj9
+ pjHGktBq2x4NF4ziBR1z+MAZquqZS9EQYdcWT9pDGqA5ea0aBcWr0/ebEGqK/ERBnEOpsI3/G
+ VhAI/ChB0f7Zr5ULCQcSyJNJcnY1BXjT3+kCJMfbyHevZCbSA8fClFMNTHVBCLR3DgPhNj8ft
+ 5JmrvV7caYr3BOKFn1L2to84awFAc0LIp2o8hOPW6yttGtRDysqJ5zj1D7lfWrFor1ibZPyCL
+ YvnD+gHpo3dCSscW0U7/owm2eO9qXgxnRhSfHpkXB8WPhJMtP5FQsqu4Ua4aj1zLlaqQt7tDn
+ zTDz/jIUWCLD5usoK3xninKy8ZMTJ1FvhGvhHOZNyGQMTJdDPhcXEa4nnlbBAVT3yWb7PV/fQ
+ lyqYSgSVccyIZ5EjoBEocfB7FFTtUXq3k6oTdwE3e8ENfmITziNN/+vhNOHuWIu8B5IIg4e+R
+ LIqQSBiIgRk5VFSH8sNSGizcMCsvfzolj04+ggZWw8QqTgvQKbigEhUIfA15fWynqK0oNU9rj
+ 8a8G4vltcWqU1uuFhBzQtAlueOXLhes0B8/TI5X9tWecff7x0qzVDBGIrUuKyZ2HT4nizMTzl
+ h2WR6pDt/0aO6sZGumGeZ7QD7htv+LpJhmpyuOFC9fAiHFimotlXz3w2vXCsnQ4wjV9EHFayE
+ ykzi3vGhRZQ57aKckthGSciSkeqdxcavnPqwDZ1QnqnwA00d1ulxrkfbdLnqKx6ddAHz8hR94
+ RPrstrnYK5GuklKR4VLcYOi2ILg5IJMOr5XF6GFzDuy4m24yq0I21/prJAvZmePjwApRktGLY
+ LawduUlxh8DAl0xlsjPWYHoicau+Hz5Co+d7Kxk3fovO8GUqyt05lBuBZj7VYUCfjdJjGhyYT
+ 3arhbqDMLSTCPCGP9lIhIDPo1ZPOWGRWNWLt2XcdahuRWE9bDZUZn/YPDBpZbug/eFx3CWnzs
+ 6F+CfpXCdLRMJ2x1fag3oZlE/h+AolSYUdOnQLDPbYDDLOD7g2hty+KJaBNU+6bzFaFXPEnZ6
+ nPv1rO6z8iZKph/Bs3YMjo0rg09Mm2j/DpqcsvxgZ5oIFBsLHrB08ZHhpmUrF+Br/Zb5JZia4
+ 0BlcB2shn/dF6o=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Glen,
 
---8323328-1170198910-1649335034=:347
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 6 Apr 2022, Glen Choo wrote:
 
-Hi,
-
-On Thu, 7 Apr 2022, Teng Long wrote:
-
-> > Bisecting the error selects:
-> >
-> > $ git bisect good
-> > 9c4d58ff2c385f49585197c8650356955e1fa02e is the first bad commit
-> > commit 9c4d58ff2c385f49585197c8650356955e1fa02e
-> > Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> > Date:   Wed Mar 23 17:13:15 2022 +0800
-> >
-> >     ls-tree: split up "fast path" callbacks
-> >
-> >     Make the various if/else in the callbacks for the "fast path" a lo=
-t
-> >     easier to read by just using common functions for the parts that a=
-re
-> >     common, and have per-format callbacks for those parts that are
-> >     different.
-> >
-> >     Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmai=
-l.com>
-> >     Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> >     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >
-> >  builtin/ls-tree.c | 199 ++++++++++++++++++++++++++++++++++-----------=
----------
-> >  1 file changed, 125 insertions(+), 74 deletions(-)
-> >
-> > (I've CC'd =C3=86var and Teng on this message.)
-> >
-> > Looking at the changes in that commit I see differences in the
-> > handling for long listings, so I tried removing the -l. At that point,
-> > the command works again:
+> Git tries not to distribute configs in-repo because they are a security
+> risk. However, an attacker can do exactly this if they embed a bare
+> repo inside of another repo.
 >
-> Yes, it's a bug but already found and fixed by =C3=86var Arnfj=C3=B6r=C3=
-=B0 Bjarmason.
+> Teach fsck to detect whether a tree object contains a bare repo (as
+> determined by setup.c) and warn. This will help hosting sites detect and
+> prevent transmission of such malicious repos.
+>
+> See [1] for a more in-depth discussion, including future steps and
+> alternatives.
+>
+> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roa=
+m.corp.google.com/
 
-Correction, it was fixed by Josh Steadmon, and =C3=86var proposed an
-alternative, but Josh's version made it into the `main` branch:
+Out of curiosity: does this new check trigger with
+https://github.com/libgit2/libgit2? AFAIR it has embedded repositories
+that are used in its test suite. In other words, libgit2 has a legitimate
+use case for embedded bare repositories, I believe.
 
-https://github.com/git/git/commit/350296cc78912c245847ec65e55143053450cce1
-
-Ciao,
+Thank you,
 Johannes
 
---8323328-1170198910-1649335034=:347--
+>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  fsck.c          | 19 +++++++++++++++++++
+>  fsck.h          |  1 +
+>  setup.c         |  4 ++++
+>  t/t1450-fsck.sh | 36 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 60 insertions(+)
+>
+> diff --git a/fsck.c b/fsck.c
+> index 3ec500d707..11c11c348a 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -573,6 +573,9 @@ static int fsck_tree(const struct object_id *tree_oi=
+d,
+>  	int has_bad_modes =3D 0;
+>  	int has_dup_entries =3D 0;
+>  	int not_properly_sorted =3D 0;
+> +	int has_head =3D 0;
+> +	int has_refs_entry =3D 0;
+> +	int has_objects_entry =3D 0;
+>  	struct tree_desc desc;
+>  	unsigned o_mode;
+>  	const char *o_name;
+> @@ -602,6 +605,12 @@ static int fsck_tree(const struct object_id *tree_o=
+id,
+>  		has_dotdot |=3D !strcmp(name, "..");
+>  		has_dotgit |=3D is_hfs_dotgit(name) || is_ntfs_dotgit(name);
+>  		has_zero_pad |=3D *(char *)desc.buffer =3D=3D '0';
+> +		has_head |=3D !strcasecmp(name, "HEAD")
+> +			&& (S_ISLNK(mode) || S_ISREG(mode));
+> +		has_refs_entry |=3D !strcasecmp(name, "refs")
+> +			&& (S_ISLNK(mode) || S_ISDIR(mode));
+> +		has_objects_entry |=3D !strcasecmp(name, "objects")
+> +			&& (S_ISLNK(mode) || S_ISDIR(mode));
+>
+>  		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
+>  			if (!S_ISLNK(mode))
+> @@ -739,6 +748,16 @@ static int fsck_tree(const struct object_id *tree_o=
+id,
+>  		retval +=3D report(options, tree_oid, OBJ_TREE,
+>  				 FSCK_MSG_TREE_NOT_SORTED,
+>  				 "not properly sorted");
+> +	/*
+> +	 * Determine if this tree looks like a bare repository according
+> +	 * to the rules of setup.c. If those are changed, this should be
+> +	 * changed too.
+> +	 */
+> +	if (has_head && has_refs_entry && has_objects_entry)
+> +		retval +=3D report(options, tree_oid, OBJ_TREE,
+> +				 FSCK_MSG_EMBEDDED_BARE_REPO,
+> +				 "contains bare repository");
+> +
+>  	return retval;
+>  }
+>
+> diff --git a/fsck.h b/fsck.h
+> index d07f7a2459..3f0f73b0f3 100644
+> --- a/fsck.h
+> +++ b/fsck.h
+> @@ -65,6 +65,7 @@ enum fsck_msg_type {
+>  	FUNC(NULL_SHA1, WARN) \
+>  	FUNC(ZERO_PADDED_FILEMODE, WARN) \
+>  	FUNC(NUL_IN_COMMIT, WARN) \
+> +	FUNC(EMBEDDED_BARE_REPO, WARN) \
+>  	/* infos (reported as warnings, but ignored by default) */ \
+>  	FUNC(GITMODULES_PARSE, INFO) \
+>  	FUNC(GITIGNORE_SYMLINK, INFO) \
+> diff --git a/setup.c b/setup.c
+> index 04ce33cdcd..2600548776 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -336,6 +336,10 @@ int get_common_dir_noenv(struct strbuf *sb, const c=
+har *gitdir)
+>   *  - either a HEAD symlink or a HEAD file that is formatted as
+>   *    a proper "ref:", or a regular file HEAD that has a properly
+>   *    formatted sha1 object name.
+> + *
+> + * fsck.c checks for bare repositories in trees using similar rules, bu=
+t a
+> + * duplicated implementation. If these are changed, the correspnding co=
+de in
+> + * fsck.c should change too.
+>   */
+>  int is_git_directory(const char *suspect)
+>  {
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index de50c0ea01..a65827bc03 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -563,6 +563,42 @@ dot-backslash-case .\\\\.GIT\\\\foobar
+>  dotgit-case-backslash .git\\\\foobar
+>  EOF
+>
+> +test_expect_success "fsck notices bare repo" '
+> +(
+> +	mkdir -p embedded-bare-repo/bare &&
+> +	git init embedded-bare-repo &&
+> +	(
+> +		cd embedded-bare-repo/bare &&
+> +		echo content >HEAD &&
+> +		mkdir refs/ objects/ &&
+> +		echo content >refs/foo &&
+> +		echo content >objects/foo &&
+> +		git add . &&
+> +		git commit -m base &&
+> +		bad_tree=3D$(git rev-parse HEAD:bare) &&
+> +		git fsck 2>out &&
+> +		test_i18ngrep "warning.*tree $bad_tree: embeddedBareRepo: contains ba=
+re repository" out
+> +	)
+> +)'
+> +
+> +test_expect_success "fsck notices bare repo with odd casing" '
+> +(
+> +	mkdir -p embedded-bare-repo-case/bare &&
+> +	git init embedded-bare-repo-case &&
+> +	(
+> +		cd embedded-bare-repo-case/bare &&
+> +		echo content >heAD &&
+> +		mkdir Refs/ objectS/ &&
+> +		echo content >Refs/foo &&
+> +		echo content >objectS/foo &&
+> +		git add . &&
+> +		git commit -m base &&
+> +		bad_tree=3D$(git rev-parse HEAD:bare) &&
+> +		git fsck 2>out &&
+> +		test_i18ngrep "warning.*tree $bad_tree: embeddedBareRepo: contains ba=
+re repository" out
+> +	)
+> +)'
+> +
+>  test_expect_success 'fsck allows .??it' '
+>  	(
+>  		git init not-dotgit &&
+>
+> base-commit: 805e0a68082a217f0112db9ee86a022227a9c81b
+> --
+> 2.33.GIT
+>
+>
