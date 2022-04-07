@@ -2,89 +2,361 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AC88C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 21:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFCBC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Apr 2022 22:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231842AbiDGVzm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 17:55:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57774 "EHLO
+        id S231883AbiDGWKZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 18:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiDGVzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 17:55:41 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A81F173B0F
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 14:53:39 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id p15so13586784ejc.7
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 14:53:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=justinsteven-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=NUX5jruMt6hKYe4DdBVqps7I4uOWw+PXMqnjs5KuvA8=;
-        b=BGreG1g0bw+xml5eg/OFTVi84HTpMEizMEJN/tTrrJwvcEszlTq2i8ee7ekg3tKWg0
-         eCzhvLT6K3eUbpWMnXEM+86eCXbrXh/BzaYClUPwQUj5UIWXIfsH55J8E9BwCdhLeR08
-         friC74/fCN1fH5UVflRq+Kk96VcFDHJBmj6Pr0FM8nnmlF0Nk4Gq5Jfyp8uMGjVu7DNu
-         qAPZGWy0HA3TMiqCHc/AlFw9SZGKC/EhON9V1U15Oea6RBQaHm6VklqJTiypTDTTaGac
-         RiQv6ZF3UF7ojjUn3/lUJR71EkS9CKxlU20cRb49kd0097FnOgsIZ7fpy5VuXtzyI/pV
-         rQOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=NUX5jruMt6hKYe4DdBVqps7I4uOWw+PXMqnjs5KuvA8=;
-        b=ZYkMFCeqIybix8AhXoRc2dpW27Bc6YsqQUpT3s6h0aIVLOlHQG6sLMAG8y9i3P95CM
-         M6Nz0tSDojy8UDF3zo1jvSC0yIEK4Z3Xn/4VNAzOWcVZFzYyR0MbQo+Dj3RYqsaaSDu9
-         APYB4yoKppwM31RbQKs++mEfiIE7lnBThIPLrxuNqEG3l0O2BegmzQXvROn8bG/bJguv
-         QxGjM/vrpy/o1Swrg4fHudI6VmfcTwExwTxJCSb5+CYJ790+LfD8YUgUSrCPk32f3cNE
-         xSmt698M2cJxYWlLTyHCet2hncX1qYJQb+SeLYdBZtJ/G6WLAZJwvGu++MQI28Rdfqlh
-         yUug==
-X-Gm-Message-State: AOAM531tbQtslqJQicjMB6+jGHbVxcaLPgZCOkQFM1aCk8hKnauzuR5i
-        6//2mIHd5VmZiv8oziHNO07PDT+5Uafxtv1lIyE+qA==
-X-Google-Smtp-Source: ABdhPJxP9bKerUROSh8dqS+/JT1f2Pq5ccGbV56NttYOyjdvzJz4UDh6tsUrEH0HHruElXTJrnX4upx4U6QkUI0bAqs=
-X-Received: by 2002:a17:907:94cf:b0:6e4:a60b:bae5 with SMTP id
- dn15-20020a17090794cf00b006e4a60bbae5mr15303347ejc.476.1649368417659; Thu, 07
- Apr 2022 14:53:37 -0700 (PDT)
+        with ESMTP id S230128AbiDGWKY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 18:10:24 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E047FE0BC
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 14:54:00 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 0AF815A3F1;
+        Thu,  7 Apr 2022 21:54:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1649368440;
+        bh=mDGuLV8bLSKzdfGvYq1Uk8ncGktMtJirKeEWCm2o+Aw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=Xk+tQDLdJKsDcH2t2qJhfMnkzlOkSpi2s9BK/r53r8m4TxkCCps+YukgD1WN9UCvV
+         InW+f+2QoaiYmfGuxeKZrZPWOBjm9oQeaKnlqb/iLh6v4aqA1IX7xBnxFTZ1z7DkQ6
+         JlyJbA3+aRh9pku+TJjBQ359sorndliANUKKBpH49u49ztz2OtatWdXHw8pVXVGDlN
+         r7yCpH7VuNge3MsKG/Lc6d00uKLGo18Wexvf3cX2PqYN0dXxbD0FpF3BOLK8RrDj4Z
+         A7IysOomqoX2SAvFro1kkhAAf6oNYARwAbLAlHEvi7fgCptZlLj0hP5PF8WtUMGIqf
+         jo7ZdnqBs4dWhh7d/CjBAR0oNEU285VMbhwIenZlNCVMjIcYDafdCEkROAkeni0KIK
+         IH+2JIK3GQ+DAdePqIBU9zCynHMOy2OeEWr43E2YHbLmP22nWIBWrC7Iof2TebyBp4
+         /8ZZpVm3nszHj51ON+Lz+rTCQh2zpbO4WRnG1HBcyzsCt92Jpcm
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 3/4] builtin/stash: provide a way to export stashes to a ref
+Date:   Thu,  7 Apr 2022 21:53:51 +0000
+Message-Id: <20220407215352.3491567-4-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.35.1.473.g83b2b277ed
+In-Reply-To: <20220407215352.3491567-1-sandals@crustytoothpaste.net>
+References: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+ <20220407215352.3491567-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com> <Yk9Wcr74gvhtyOi7@camp.crustytoothpaste.net>
-In-Reply-To: <Yk9Wcr74gvhtyOi7@camp.crustytoothpaste.net>
-From:   Justin Steven <justin@justinsteven.com>
-Date:   Fri, 8 Apr 2022 07:53:26 +1000
-Message-ID: <CAHZU0ySHqc7f9qB0+ZrMWHHJiWsS-_hsUzomwNrGNMTF6qwcOw@mail.gmail.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Glen Choo <chooglen@google.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+A common user problem is how to sync in-progress work to another
+machine.  Users currently must use some sort of transfer of the working
+tree, which poses security risks and also necessarily causes the index
+to become dirty.  The experience is suboptimal and frustrating for
+users.
 
-I'm the author of one of the articles linked in Glen's mail. Thank you
-Glen for summarising the problem beautifully and pushing this forward.
+A reasonable idea is to use the stash for this purpose, but the stash is
+stored in the reflog, not in a ref, and as such it cannot be pushed or
+pulled.  This also means that it cannot be saved into a bundle or
+preserved elsewhere, which is a problem when using throwaway development
+environments.
 
-Brian said:
-> As mentioned elsewhere, git status doesn't work without a working tree.
+Let's solve this problem by allowing the user to export the stash to a
+ref (or, to just write it into the repository and print the hash, à la
+git commit-tree).  Introduce git stash export, which writes a chain of
+commits where the first parent is always a chain to the previous stash,
+or to a single, empty commit (for the final item) and the second is the
+stash commit normally written to the reflog.
 
-This is correct. However, it is possible to embed a bare repo that has
-its own core.worktree which points to a directory within the
-containing repo, satisfying the requirement of having a working tree.
-This is covered in the article [1] and looks to be accounted for in
-Taylor's reproducer script which admittedly I haven't run.
+Iterate over each stash from topmost to bottomost, looking up the data
+for each one, and then create the chain from the single empty commit
+back up in reverse order.  Generate a predictable empty commit so our
+behavior is reproducible.  Create a useful commit message, preserving
+the author and committer information, to help users identify stash
+commits when viewing them as normal commits.
 
-> Instead, I'd rather see us avoid executing any program from the config
-> or any hooks in a bare repository without a working tree (except for
-> pushes).  I think that would avoid breaking things while still improving
-> security.
+If the user has specified specific stashes they'd like to export
+instead, use those instead of iterating over all of the stashes.
 
-Due to the fact that the embedded bare repo can be made to have a
-working tree, this won't be an effective fix.
+As part of this, specifically request quiet behavior when looking up the
+OID for a revision because we will eventually hit a revision that
+doesn't exist and we don't want to die when that occurs.
 
-I'm not dismissing your examples of uses of Git which would break
-under Glen's suggestions. Thank you for describing these.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/git-stash.txt |  22 ++++-
+ builtin/stash.c             | 182 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 203 insertions(+), 1 deletion(-)
 
-[1] https://github.com/justinsteven/advisories/blob/main/2022_git_buried_bare_repos_and_fsmonitor_various_abuses.md#poc---regular-vs-bare-repos-and-adding-a-corefsmonitor-payload-to-a-bare-repo
-
---
-Justin
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 6e15f47525..162110314e 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -20,6 +20,7 @@ SYNOPSIS
+ 'git stash' clear
+ 'git stash' create [<message>]
+ 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
++'git stash' export ( --print | --to-ref <ref> ) [<stash>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -151,6 +152,12 @@ store::
+ 	reflog.  This is intended to be useful for scripts.  It is
+ 	probably not the command you want to use; see "push" above.
+ 
++export ( --print | --to-ref <ref> ) [<stash>...]::
++
++	Export the specified stashes, or all of them if none are specified, to
++	a chain of commits which can be transferred using the normal fetch and
++	push mechanisms, then imported using the `import` subcommand.
++
+ OPTIONS
+ -------
+ -a::
+@@ -239,6 +246,19 @@ literally (including newlines and quotes).
+ +
+ Quiet, suppress feedback messages.
+ 
++--print::
++	This option is only valid for `export`.
+++
++Create the chain of commits representing the exported stashes without
++storing it anywhere in the ref namespace and print the object ID to
++standard output.  This is designed for scripts.
++
++--to-ref::
++	This option is only valid for `export`.
+++
++Create the chain of commits representing the exported stashes and store
++it to the specified ref.
++
+ \--::
+ 	This option is only valid for `push` command.
+ +
+@@ -256,7 +276,7 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+ 
+ <stash>::
+ 	This option is only valid for `apply`, `branch`, `drop`, `pop`,
+-	`show` commands.
++	`show`, and `export` commands.
+ +
+ A reference of the form `stash@{<revision>}`. When no `<stash>` is
+ given, the latest stash is assumed (that is, `stash@{0}`).
+diff --git a/builtin/stash.c b/builtin/stash.c
+index b677739bcd..07b0897eda 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -33,6 +33,7 @@ static const char * const git_stash_usage[] = {
+ 	   "          [--] [<pathspec>...]]"),
+ 	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
++	N_("git stash export (--print | --to-ref <ref>) [<stash>...]"),
+ 	NULL
+ };
+ 
+@@ -89,6 +90,12 @@ static const char * const git_stash_save_usage[] = {
+ 	NULL
+ };
+ 
++static const char * const git_stash_export_usage[] = {
++	N_("git stash export (--print | --to-ref <ref>) [<stash>...]"),
++	NULL
++};
++
++
+ static const char ref_stash[] = "refs/stash";
+ static struct strbuf stash_index_path = STRBUF_INIT;
+ 
+@@ -1775,6 +1782,179 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
++static int write_commit_with_parents(struct object_id *out, const struct object_id *oid, struct commit_list *parents)
++{
++	size_t author_len, committer_len;
++	struct commit *this;
++	const char *orig_author, *orig_committer;
++	char *author = NULL, *committer = NULL;
++	const char *buffer;
++	unsigned long bufsize;
++	const char *p;
++	struct strbuf msg = STRBUF_INIT;
++	int ret = 0;
++
++	this = lookup_commit_reference(the_repository, oid);
++	buffer = get_commit_buffer(this, &bufsize);
++	orig_author = find_commit_header(buffer, "author", &author_len);
++	orig_committer = find_commit_header(buffer, "committer", &committer_len);
++	p = memmem(buffer, bufsize, "\n\n", 2);
++
++	if (!orig_author || !orig_committer || !p) {
++		ret = error(_("cannot parse commit %s"), oid_to_hex(oid));
++		goto out;
++	}
++	/* Jump to message. */
++	p += 2;
++	strbuf_addstr(&msg, "git stash: ");
++	strbuf_add(&msg, p, bufsize - (p - buffer));
++
++	author = xmemdupz(orig_author, author_len);
++	committer = xmemdupz(orig_committer, committer_len);
++
++	if (commit_tree_extended(msg.buf, msg.len,
++				 the_hash_algo->empty_tree, parents,
++				 out, author, committer,
++				 NULL, NULL)) {
++		ret = error(_("could not write commit"));
++		goto out;
++	}
++out:
++	strbuf_release(&msg);
++	unuse_commit_buffer(this, buffer);
++	free(author);
++	free(committer);
++	return ret;
++}
++
++static int do_export_stash(const char *ref, int argc, const char **argv)
++{
++	struct object_id base;
++	struct object_context unused;
++	struct commit *prev;
++	struct object_id *items = NULL;
++	int nitems = 0, nalloc = 0;
++	int res = 0;
++	int i;
++	struct strbuf revision = STRBUF_INIT;
++	const char *author, *committer;
++
++	/*
++	 * This is an arbitrary, fixed date, specifically the one used by git
++	 * format-patch.  The goal is merely to produce reproducible output.
++	 */
++	prepare_fallback_ident("git stash", "git@stash");
++	author = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT,
++			   "2001-09-17T00:00:00Z", 0);
++	committer = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT,
++			      "2001-09-17T00:00:00Z", 0);
++
++	/* First, we create a single empty commit. */
++	if (commit_tree_extended(NULL, 0, the_hash_algo->empty_tree, NULL,
++				 &base, author, committer, NULL, NULL))
++		return error(_("unable to write base commit"));
++
++	prev = lookup_commit_reference(the_repository, &base);
++
++	if (argc) {
++		/*
++		 * Find each specified stash, and load data into the array.
++		 */
++		for (i = 0; i < argc; i++) {
++			ALLOC_GROW_BY(items, nitems, 1, nalloc);
++			if (parse_revision(&revision, argv[i], 1) ||
++			    get_oid_with_context(the_repository, revision.buf,
++						 GET_OID_QUIETLY | GET_OID_GENTLY,
++						 &items[i], &unused)) {
++				res = error(_("unable to find stash entry %s"), argv[i]);
++				goto out;
++			}
++		}
++	} else {
++		/*
++		 * Walk the reflog, finding each stash entry, and load data into the
++		 * array.
++		 */
++		for (i = 0;; i++) {
++			char buf[32];
++			struct object_id oid;
++
++			snprintf(buf, sizeof(buf), "%d", i);
++			if (parse_revision(&revision, buf, 1) ||
++			    get_oid_with_context(the_repository, revision.buf,
++						 GET_OID_QUIETLY | GET_OID_GENTLY,
++						 &oid, &unused))
++				break;
++			ALLOC_GROW_BY(items, nitems, 1, nalloc);
++			oidcpy(&items[i], &oid);
++		}
++	}
++
++	/*
++	 * Now, create a set of commits identical to the regular stash commits,
++	 * but where their first parents form a chain to our original empty
++	 * base commit.
++	 */
++	for (i = nitems - 1; i >= 0; i--) {
++		struct commit_list *parents = NULL;
++		struct commit_list **next = &parents;
++		struct object_id out;
++
++		next = commit_list_append(prev, next);
++		next = commit_list_append(lookup_commit_reference(the_repository, &items[i]), next);
++		res = write_commit_with_parents(&out, &items[i], parents);
++		if (res)
++			goto out;
++		prev = lookup_commit_reference(the_repository, &out);
++	}
++	if (ref)
++		update_ref(NULL, ref, &prev->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
++	else
++		puts(oid_to_hex(&prev->object.oid));
++out:
++	strbuf_release(&revision);
++	free(items);
++
++	return res;
++}
++
++enum export_action {
++	ACTION_NONE,
++	ACTION_PRINT,
++	ACTION_TO_REF,
++};
++
++static int export_stash(int argc, const char **argv, const char *prefix)
++{
++	const char *ref = NULL;
++	enum export_action action = ACTION_NONE;
++	struct option options[] = {
++		OPT_CMDMODE(0, "print", &action,
++			    N_("print the object ID instead of writing it to a ref"),
++			    ACTION_PRINT),
++		OPT_CMDMODE(0, "to-ref", &action,
++			    N_("save the data to the given ref"),
++			    ACTION_TO_REF),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_stash_export_usage,
++			     PARSE_OPT_KEEP_DASHDASH);
++
++	if (action == ACTION_NONE) {
++		return error(_("exactly one of --print and --to-ref is required"));
++	} else if (action == ACTION_TO_REF) {
++		if (!argc)
++			return error(_("--to-ref requires an argument"));
++		ref = argv[0];
++		argc--;
++		argv++;
++	}
++
++	return do_export_stash(ref, argc, argv);
++}
++
+ int cmd_stash(int argc, const char **argv, const char *prefix)
+ {
+ 	pid_t pid = getpid();
+@@ -1818,6 +1998,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 		return !!push_stash(argc, argv, prefix, 0);
+ 	else if (!strcmp(argv[0], "save"))
+ 		return !!save_stash(argc, argv, prefix);
++	else if (!strcmp(argv[0], "export"))
++		return !!export_stash(argc, argv, prefix);
+ 	else if (*argv[0] != '-')
+ 		usage_msg_optf(_("unknown subcommand: %s"),
+ 			       git_stash_usage, options, argv[0]);
