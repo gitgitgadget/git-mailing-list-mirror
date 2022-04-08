@@ -2,149 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E6F2C433F5
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 07:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C880DC433F5
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 08:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbiDHHri (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Apr 2022 03:47:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52610 "EHLO
+        id S230412AbiDHIEz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Apr 2022 04:04:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiDHHrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Apr 2022 03:47:37 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588B61DD3F9
-        for <git@vger.kernel.org>; Fri,  8 Apr 2022 00:45:34 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id v2so691120wrv.13
-        for <git@vger.kernel.org>; Fri, 08 Apr 2022 00:45:34 -0700 (PDT)
+        with ESMTP id S230526AbiDHIEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Apr 2022 04:04:44 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 903A666CBE
+        for <git@vger.kernel.org>; Fri,  8 Apr 2022 01:02:34 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id j17so6270286pfi.9
+        for <git@vger.kernel.org>; Fri, 08 Apr 2022 01:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZZuEASKp7Y0N/rMdoW7RfUbV+4BJmvOBD0pyNPTdM3A=;
-        b=mchIJQw1xlMLofTx2faMqz/XNeCg0xCoLppoJPPZloQw1cXL5OOznOOlZHktYdpSRm
-         0bnZPDiJPZ2jzKeYkXKOtMlwD1UdFS7SspO6uinTDMXY9JtL6EajaKNPCihFwi0++//r
-         46KntrLgCY4bzbs8VKGC6MQ6hMjbmTF1sKiYNe5EwIAgzvt5ClVrNuwsy9w3AvsFctPO
-         vGssHbZtvKL5BZZlfGi3UigQZhNwxSaNUzUonXTPmtVmaA0H5CeQ4F+gYBAzI+2tQrWp
-         3kGVtzlAotu2YmgAbFUUEowvYK2vSQyWPsmakJgqN5jeHp+zA1KzKxYeLRzgM1kBc6xQ
-         B6cg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vhUIodTx0PDVY7kk7yXrRy6kczUx0FbS/wVlnOZQHkE=;
+        b=E97LMeoqMyf5FZdmKeQb/4iv2x4Ut7TAgIIR74nU7k9zt3pe5qJlgDr7j8MjZr4jat
+         N9qaFMl2cmuk2Vvc7xQiXrY+6NvK8dDdirzmrtaFsh1thrfTnU4YoAKzKFeTEWfeW9XK
+         tllg+WQGgKkdnH/L74jUZAy541gw7DdqvPx21MuqJJTe3m9qw3qbRRR3tBxsCQO23gCH
+         BAFqBw8DXOmmMJHS0GanWs8PPKBUzXmkBHuiSpUSo7PidmQ1hTCHPZYjcH3cD2QzmUjP
+         boFDJrWu52LuJNmnoeCL6hcN9ZTICrfdZ1ENdT7yw7Up/88JqBnO06oSu33apRjgkv4b
+         YWhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZZuEASKp7Y0N/rMdoW7RfUbV+4BJmvOBD0pyNPTdM3A=;
-        b=Op+eE1CdqFTpwld6HYnCYh9KvVY43rGlp2dwovt/vvL+8oWuatAI27mod0wm2siELn
-         c6w6wzQBmvB+cNzFtG1ygq5OPqzXaM/XO5bLAUNaYyYPc11Y9VJYh1EFG1Wnoiy2JIpZ
-         DxbsKzL5jUvS6wWFx+lpbNEdNjeD+guvXozMkkFIAbwC5y81G0bBuLUalzonSyowX47r
-         AevLowsoXfOHpxGO82lgIlx4e7sXIpXeWDL2GB+SnAe5RGHmUx8nJgcdaajGwEufdE+e
-         jHRoK5ugytUDJ+7ou/fF4J4xl0tWgucWzD4uA37NQB9UKO0u4/VXgh8sT8fUUKvKjLqk
-         VBOQ==
-X-Gm-Message-State: AOAM530GT/ydnqeVaPNJOG6ZqfXvpSd6L9VdFNYNaanpflU/G5LU+W/C
-        YNPfqRsuzVSXMh24aojizhASz/JAz5k=
-X-Google-Smtp-Source: ABdhPJzJn3VGkpOcY1SmrDZezozlbs1oFbd6fwB8zZw4AUVMOn0dIiTS2JqLCIfJUTdakA8u4rWCoA==
-X-Received: by 2002:a05:6000:156e:b0:206:1205:166c with SMTP id 14-20020a056000156e00b002061205166cmr13906125wrz.37.1649403932372;
-        Fri, 08 Apr 2022 00:45:32 -0700 (PDT)
-Received: from fedora35.example.com ([151.24.233.140])
-        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b0038cb8b38f9fsm10120625wmq.21.2022.04.08.00.45.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Apr 2022 00:45:31 -0700 (PDT)
-From:   Elia Pinto <gitter.spiros@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] Makefile: add help target
-Date:   Fri,  8 Apr 2022 07:45:24 +0000
-Message-Id: <20220408074524.156165-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vhUIodTx0PDVY7kk7yXrRy6kczUx0FbS/wVlnOZQHkE=;
+        b=i7uudf73u5wK0pZjvx/si/EiIAEI0Fpba/gluSFDBeIwBHHZE7sAsC5y/RKlTCJkHM
+         44hPTc0BTGHmESAFTosBnI9MfvuNIEGM7otr5d+aUd5IYl+phlfEO2w3ii+VlOhffh3y
+         bfd0bbqp4q1BKNQqduW/voLqcyC84xhtlNeVCDjIvNIaFmQOmyUj4R6Ki+VScjpgcrZV
+         g9oGKw/cgzi+c/tdvxgC6995u5Qw1E6pfRg1M89PFVMvyaIA+r4tLnDVh5TfHnT3kIAz
+         pp5H+2yu14XrTz5o4dL2WJc57yNRN+TSpOJdbU/ro0VL1SvoiD0ewxBqxxTMtkVxHlyO
+         Rb0Q==
+X-Gm-Message-State: AOAM530cS6h0EwVw3OjXCXu6VA4ZE7WAx3Zxhz7d2w5H/AfXTCX+BETG
+        j3CDA6SVBfPNJcvD46Yo/jtOaTV7eu34CNq3k5oyuheaZAU=
+X-Google-Smtp-Source: ABdhPJxyyqzgdOo+KRq2a4uh2sbizVbwmtQN4khx3HRUDHUcQIABRtMOnYlD/XPbR2j0LZ7RWNpKc346AhLpjO6WkrQ=
+X-Received: by 2002:a63:4421:0:b0:385:d870:d598 with SMTP id
+ r33-20020a634421000000b00385d870d598mr14525183pga.361.1649404953523; Fri, 08
+ Apr 2022 01:02:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
+In-Reply-To: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 8 Apr 2022 10:02:21 +0200
+Message-ID: <CAP8UFD2Tk-FuGcFN0DEKK6g3O8G=SGuU99FPRRqPM_-39i9t0A@mail.gmail.com>
+Subject: Re: Make commit messages optional
+To:     jurgen_gjoncari@icloud.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a help target to the Makefile to be able to run make help, in the same way
-does the Makefiles self-generated by some build systems.
+On Fri, Apr 8, 2022 at 6:10 AM <jurgen_gjoncari@icloud.com> wrote:
+>
+> I think that often commit messages are unnecessary. I propose that by default a user should be able to commit without a message.
 
-The target list has been statically extracted from the git Makefile with a
-script and the results have been filtered in an essentially arbitrary way to
-leave the ones that i imagines most interesting and frequent for a developer.
+We prefer to encourage users to do the right thing by default and
+provide a commit message. We think that good software development
+practices should be encouraged and that providing a good commit
+message is good software development practice.
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-The toy script I used is here
-https://gist.github.com/devzero2000/cb887a6ba2764f7234191e560b64b7c8#file-list_targets_makefile-sh
- Makefile | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+> I don't think this would be a problem from the UX point of view, because a user could get a lot of information about a change, from the history of the GitHub repository, such as from the time of change, and seeing the diff.
 
-diff --git a/Makefile b/Makefile
-index e8aba291d7..f6d6de2eb9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3448,3 +3448,66 @@ $(FUZZ_PROGRAMS): all
- 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
- 
- fuzz-all: $(FUZZ_PROGRAMS)
-+
-+# Help Target
-+help:
-+	@echo "The following are some of the valid targets for this Makefile:"
-+	@echo "... all (the default if no target is provided)"
-+	@echo "... build-perl-script"
-+	@echo "... build-python-script"
-+	@echo "... build-sh-script"
-+	@echo "... check"
-+	@echo "... check-builtins"
-+	@echo "... check-docs"
-+	@echo "... check-sha1"
-+	@echo "... clean"
-+	@echo "... clean-perl-script"
-+	@echo "... clean-python-script"
-+	@echo "... clean-sh-script"
-+	@echo "... coccicheck"
-+	@echo "... coccicheck-pending"
-+	@echo "... cocciclean"
-+	@echo "... configure"
-+	@echo "... coverage"
-+	@echo "... coverage-clean"
-+	@echo "... coverage-clean-results"
-+	@echo "... coverage-compile"
-+	@echo "... coverage-prove"
-+	@echo "... coverage-report"
-+	@echo "... coverage-test"
-+	@echo "... coverage-untested-functions"
-+	@echo "... cover_db"
-+	@echo "... cover_db_html"
-+	@echo "... cscope"
-+	@echo "... dist"
-+	@echo "... distclean"
-+	@echo "... dist-doc"
-+	@echo "... doc"
-+	@echo "... fuzz-all"
-+	@echo "... fuzz-commit-graph"
-+	@echo "... fuzz-objs"
-+	@echo "... fuzz-pack-headers"
-+	@echo "... fuzz-pack-idx"
-+	@echo "... html"
-+	@echo "... info"
-+	@echo "... install"
-+	@echo "... man"
-+	@echo "... pdf"
-+	@echo "... perf"
-+	@echo "... profile"
-+	@echo "... profile-clean"
-+	@echo "... profile-fast"
-+	@echo "... profile-fast-install"
-+	@echo "... profile-install"
-+	@echo "... quick-install-doc"
-+	@echo "... quick-install-html"
-+	@echo "... quick-install-man"
-+	@echo "... reconfigure"
-+	@echo "... rpm"
-+	@echo "... sparse"
-+	@echo "... strip"
-+	@echo "... style"
-+	@echo "... tags"
-+	@echo "... TAGS"
-+	@echo "... test"
-+.PHONY : help
--- 
-2.35.1
+What about `git log --oneline`?
 
+> I think that making commit messages options wouldn't even be a problem for retro compatibility because the feature would remain still functional for those who would want to use it.
+
+Yeah, there is no compatibility issue because `git commit` already has
+an `--allow-empty-message` option, so empty commit messages are
+already supported. That's not a good reason to make it the default
+though.
