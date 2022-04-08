@@ -2,79 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1F9DC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 06:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E6F2C433F5
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 07:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233962AbiDHGf3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Apr 2022 02:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60342 "EHLO
+        id S229513AbiDHHri (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Apr 2022 03:47:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229566AbiDHGf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Apr 2022 02:35:26 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42AB73204A
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 23:33:23 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id n9so7068350plc.4
-        for <git@vger.kernel.org>; Thu, 07 Apr 2022 23:33:23 -0700 (PDT)
+        with ESMTP id S229471AbiDHHrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Apr 2022 03:47:37 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588B61DD3F9
+        for <git@vger.kernel.org>; Fri,  8 Apr 2022 00:45:34 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id v2so691120wrv.13
+        for <git@vger.kernel.org>; Fri, 08 Apr 2022 00:45:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Z1VlXnXXTtVcCpn10QET3ekWpOK+Amz0SmMHvclNGak=;
-        b=mYRXBVlyOwHtba1DgJwfi3B6dwCSS0huGi8mPNj/yxLrqAmASykxhc7xMAnvrHXHkk
-         S1d+dGQhusiDnboC2JYz8mBPShdHostFQrBTThYxzThuKnt+atGsnpGvF9vIsoUW61kL
-         GLaWIvCvqYmVyQQ7N8EwfOQARw7n947Jw99+tyg03Z0O5Wx+5eailWKJDQ2O41dtkriB
-         Nevfh1jClGL4ni5CGx2+vQgKnbCO7GySBRhmdeofPqmioJomGKeKpZ/lFTWkuLROBmU9
-         3qY49FYo98R1OeTAo/Eyim0iE46VLi0A/bGcqmRfZHRqYaWRXZbSFxxASo1KrxGPG7Hm
-         06Cg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZZuEASKp7Y0N/rMdoW7RfUbV+4BJmvOBD0pyNPTdM3A=;
+        b=mchIJQw1xlMLofTx2faMqz/XNeCg0xCoLppoJPPZloQw1cXL5OOznOOlZHktYdpSRm
+         0bnZPDiJPZ2jzKeYkXKOtMlwD1UdFS7SspO6uinTDMXY9JtL6EajaKNPCihFwi0++//r
+         46KntrLgCY4bzbs8VKGC6MQ6hMjbmTF1sKiYNe5EwIAgzvt5ClVrNuwsy9w3AvsFctPO
+         vGssHbZtvKL5BZZlfGi3UigQZhNwxSaNUzUonXTPmtVmaA0H5CeQ4F+gYBAzI+2tQrWp
+         3kGVtzlAotu2YmgAbFUUEowvYK2vSQyWPsmakJgqN5jeHp+zA1KzKxYeLRzgM1kBc6xQ
+         B6cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Z1VlXnXXTtVcCpn10QET3ekWpOK+Amz0SmMHvclNGak=;
-        b=RiXvJ9ZUpaX8hNVp0vXV8xv8DP3djXLANFLzyYf4dq46A8iaGsVEB9jYjvj5h5rwY/
-         Sk2x/B72nOK0EpOtLhtsFI2NA2V0WpENA8+RLxPDGlxnkdE5VntrGSx9XCbk8VZu4+Dx
-         iT1HyUNYB2X6bPobRg6Tv+uOHSBBrlL2iG0UBkeT8MbMSMury1ki3WZu38Ff/BTdWU3F
-         +bQ9XPsfGiLypCjePC1suknoT1HuJ14Gl4mvGOPiyQb/dwmjN0G71ewmhrh+w0L9WRVW
-         SOORaZBke67m/7oeWomziIjVA7JR8MVJJOsGKF4Bw4jG0kknAKSN4P5c2S5SqORNNRv7
-         l2bQ==
-X-Gm-Message-State: AOAM531tqjekbBWtXDWpNNG9Fja5ctndiWXb7+xyV4uvgin+QPa7EWaS
-        PycfFKrsixsEZYKGB/BDu7s=
-X-Google-Smtp-Source: ABdhPJy/kdwupFn1gVaMUKrhly4vog7Hbl+oy7MHBIeo8FOIIaMuNXP1vdRmLrh+7BylRPLGG3/vBw==
-X-Received: by 2002:a17:90a:fac:b0:1ca:5eb8:f3b2 with SMTP id 41-20020a17090a0fac00b001ca5eb8f3b2mr20327422pjz.37.1649399602577;
-        Thu, 07 Apr 2022 23:33:22 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-1.three.co.id. [180.214.232.1])
-        by smtp.gmail.com with ESMTPSA id p10-20020a056a000b4a00b004fd9a6a2a39sm25569523pfo.184.2022.04.07.23.33.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Apr 2022 23:33:22 -0700 (PDT)
-Message-ID: <e93e9bb1-8bd1-a70f-f671-ca322c14c7a1@gmail.com>
-Date:   Fri, 8 Apr 2022 13:33:18 +0700
+        bh=ZZuEASKp7Y0N/rMdoW7RfUbV+4BJmvOBD0pyNPTdM3A=;
+        b=Op+eE1CdqFTpwld6HYnCYh9KvVY43rGlp2dwovt/vvL+8oWuatAI27mod0wm2siELn
+         c6w6wzQBmvB+cNzFtG1ygq5OPqzXaM/XO5bLAUNaYyYPc11Y9VJYh1EFG1Wnoiy2JIpZ
+         DxbsKzL5jUvS6wWFx+lpbNEdNjeD+guvXozMkkFIAbwC5y81G0bBuLUalzonSyowX47r
+         AevLowsoXfOHpxGO82lgIlx4e7sXIpXeWDL2GB+SnAe5RGHmUx8nJgcdaajGwEufdE+e
+         jHRoK5ugytUDJ+7ou/fF4J4xl0tWgucWzD4uA37NQB9UKO0u4/VXgh8sT8fUUKvKjLqk
+         VBOQ==
+X-Gm-Message-State: AOAM530GT/ydnqeVaPNJOG6ZqfXvpSd6L9VdFNYNaanpflU/G5LU+W/C
+        YNPfqRsuzVSXMh24aojizhASz/JAz5k=
+X-Google-Smtp-Source: ABdhPJzJn3VGkpOcY1SmrDZezozlbs1oFbd6fwB8zZw4AUVMOn0dIiTS2JqLCIfJUTdakA8u4rWCoA==
+X-Received: by 2002:a05:6000:156e:b0:206:1205:166c with SMTP id 14-20020a056000156e00b002061205166cmr13906125wrz.37.1649403932372;
+        Fri, 08 Apr 2022 00:45:32 -0700 (PDT)
+Received: from fedora35.example.com ([151.24.233.140])
+        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b0038cb8b38f9fsm10120625wmq.21.2022.04.08.00.45.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Apr 2022 00:45:31 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Makefile: add help target
+Date:   Fri,  8 Apr 2022 07:45:24 +0000
+Message-Id: <20220408074524.156165-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] stash: disable literal treatment when passing top
- pathspec
-Content-Language: en-US
-To:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, joostkremers@fastmail.fm
-References: <20220408031228.782547-1-kyle@kyleam.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <20220408031228.782547-1-kyle@kyleam.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/04/22 10.12, Kyle Meyer wrote:
-> +test_expect_success 'stash -u works with --literal-pathspecs' '
-> +	>untracked &&
-> +	git --literal-pathspecs stash -u &&
-> +	test_path_is_missing untracked
-> +'
+Add a help target to the Makefile to be able to run make help, in the same way
+does the Makefiles self-generated by some build systems.
 
-Why not "touch untracked" instead?
+The target list has been statically extracted from the git Makefile with a
+script and the results have been filtered in an essentially arbitrary way to
+leave the ones that i imagines most interesting and frequent for a developer.
 
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+The toy script I used is here
+https://gist.github.com/devzero2000/cb887a6ba2764f7234191e560b64b7c8#file-list_targets_makefile-sh
+ Makefile | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index e8aba291d7..f6d6de2eb9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3448,3 +3448,66 @@ $(FUZZ_PROGRAMS): all
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
++
++# Help Target
++help:
++	@echo "The following are some of the valid targets for this Makefile:"
++	@echo "... all (the default if no target is provided)"
++	@echo "... build-perl-script"
++	@echo "... build-python-script"
++	@echo "... build-sh-script"
++	@echo "... check"
++	@echo "... check-builtins"
++	@echo "... check-docs"
++	@echo "... check-sha1"
++	@echo "... clean"
++	@echo "... clean-perl-script"
++	@echo "... clean-python-script"
++	@echo "... clean-sh-script"
++	@echo "... coccicheck"
++	@echo "... coccicheck-pending"
++	@echo "... cocciclean"
++	@echo "... configure"
++	@echo "... coverage"
++	@echo "... coverage-clean"
++	@echo "... coverage-clean-results"
++	@echo "... coverage-compile"
++	@echo "... coverage-prove"
++	@echo "... coverage-report"
++	@echo "... coverage-test"
++	@echo "... coverage-untested-functions"
++	@echo "... cover_db"
++	@echo "... cover_db_html"
++	@echo "... cscope"
++	@echo "... dist"
++	@echo "... distclean"
++	@echo "... dist-doc"
++	@echo "... doc"
++	@echo "... fuzz-all"
++	@echo "... fuzz-commit-graph"
++	@echo "... fuzz-objs"
++	@echo "... fuzz-pack-headers"
++	@echo "... fuzz-pack-idx"
++	@echo "... html"
++	@echo "... info"
++	@echo "... install"
++	@echo "... man"
++	@echo "... pdf"
++	@echo "... perf"
++	@echo "... profile"
++	@echo "... profile-clean"
++	@echo "... profile-fast"
++	@echo "... profile-fast-install"
++	@echo "... profile-install"
++	@echo "... quick-install-doc"
++	@echo "... quick-install-html"
++	@echo "... quick-install-man"
++	@echo "... reconfigure"
++	@echo "... rpm"
++	@echo "... sparse"
++	@echo "... strip"
++	@echo "... style"
++	@echo "... tags"
++	@echo "... TAGS"
++	@echo "... test"
++.PHONY : help
 -- 
-An old man doll... just what I always wanted! - Clara
+2.35.1
+
