@@ -2,90 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75CC1C433F5
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 05:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1F9DC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 06:33:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbiDHF5G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Apr 2022 01:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
+        id S233962AbiDHGf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Apr 2022 02:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiDHF5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Apr 2022 01:57:00 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8844215F1A
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 22:54:57 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EC241182925;
-        Fri,  8 Apr 2022 01:54:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YudJcQtPfTtdosj/POrQDKcPi3G5kI5W0uwWPb
-        8ZMsk=; b=jCW3AHJqFSrTvq3X0gFllzGml8VRblN8CDqihY0Nwcv45bzrps1Oul
-        oF8CUM8yYPlRigBLs0I3SXJP4yNKNfr6fnw2KbTHutHZbDwgMRWKfCsfsUBBHJx0
-        YJUyokrZFWmseik1XXiXFnMyd1AF1Ts+GfrB1TykEAJAdK6eCfcmI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E4B16182924;
-        Fri,  8 Apr 2022 01:54:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4F473182923;
-        Fri,  8 Apr 2022 01:54:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Justin Steven <justin@justinsteven.com>,
-        Glen Choo <chooglen@google.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <Yk9Wcr74gvhtyOi7@camp.crustytoothpaste.net>
-        <CAHZU0ySHqc7f9qB0+ZrMWHHJiWsS-_hsUzomwNrGNMTF6qwcOw@mail.gmail.com>
-        <Yk9hONuCIVIq6ieV@camp.crustytoothpaste.net>
-Date:   Thu, 07 Apr 2022 22:54:53 -0700
-In-Reply-To: <Yk9hONuCIVIq6ieV@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Thu, 7 Apr 2022 22:10:00 +0000")
-Message-ID: <xmqqmtgwp1aq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229566AbiDHGf0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Apr 2022 02:35:26 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42AB73204A
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 23:33:23 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id n9so7068350plc.4
+        for <git@vger.kernel.org>; Thu, 07 Apr 2022 23:33:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Z1VlXnXXTtVcCpn10QET3ekWpOK+Amz0SmMHvclNGak=;
+        b=mYRXBVlyOwHtba1DgJwfi3B6dwCSS0huGi8mPNj/yxLrqAmASykxhc7xMAnvrHXHkk
+         S1d+dGQhusiDnboC2JYz8mBPShdHostFQrBTThYxzThuKnt+atGsnpGvF9vIsoUW61kL
+         GLaWIvCvqYmVyQQ7N8EwfOQARw7n947Jw99+tyg03Z0O5Wx+5eailWKJDQ2O41dtkriB
+         Nevfh1jClGL4ni5CGx2+vQgKnbCO7GySBRhmdeofPqmioJomGKeKpZ/lFTWkuLROBmU9
+         3qY49FYo98R1OeTAo/Eyim0iE46VLi0A/bGcqmRfZHRqYaWRXZbSFxxASo1KrxGPG7Hm
+         06Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Z1VlXnXXTtVcCpn10QET3ekWpOK+Amz0SmMHvclNGak=;
+        b=RiXvJ9ZUpaX8hNVp0vXV8xv8DP3djXLANFLzyYf4dq46A8iaGsVEB9jYjvj5h5rwY/
+         Sk2x/B72nOK0EpOtLhtsFI2NA2V0WpENA8+RLxPDGlxnkdE5VntrGSx9XCbk8VZu4+Dx
+         iT1HyUNYB2X6bPobRg6Tv+uOHSBBrlL2iG0UBkeT8MbMSMury1ki3WZu38Ff/BTdWU3F
+         +bQ9XPsfGiLypCjePC1suknoT1HuJ14Gl4mvGOPiyQb/dwmjN0G71ewmhrh+w0L9WRVW
+         SOORaZBke67m/7oeWomziIjVA7JR8MVJJOsGKF4Bw4jG0kknAKSN4P5c2S5SqORNNRv7
+         l2bQ==
+X-Gm-Message-State: AOAM531tqjekbBWtXDWpNNG9Fja5ctndiWXb7+xyV4uvgin+QPa7EWaS
+        PycfFKrsixsEZYKGB/BDu7s=
+X-Google-Smtp-Source: ABdhPJy/kdwupFn1gVaMUKrhly4vog7Hbl+oy7MHBIeo8FOIIaMuNXP1vdRmLrh+7BylRPLGG3/vBw==
+X-Received: by 2002:a17:90a:fac:b0:1ca:5eb8:f3b2 with SMTP id 41-20020a17090a0fac00b001ca5eb8f3b2mr20327422pjz.37.1649399602577;
+        Thu, 07 Apr 2022 23:33:22 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-1.three.co.id. [180.214.232.1])
+        by smtp.gmail.com with ESMTPSA id p10-20020a056a000b4a00b004fd9a6a2a39sm25569523pfo.184.2022.04.07.23.33.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 23:33:22 -0700 (PDT)
+Message-ID: <e93e9bb1-8bd1-a70f-f671-ca322c14c7a1@gmail.com>
+Date:   Fri, 8 Apr 2022 13:33:18 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 69BB3EC4-B700-11EC-8C92-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] stash: disable literal treatment when passing top
+ pathspec
+Content-Language: en-US
+To:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, joostkremers@fastmail.fm
+References: <20220408031228.782547-1-kyle@kyleam.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20220408031228.782547-1-kyle@kyleam.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 08/04/22 10.12, Kyle Meyer wrote:
+> +test_expect_success 'stash -u works with --literal-pathspecs' '
+> +	>untracked &&
+> +	git --literal-pathspecs stash -u &&
+> +	test_path_is_missing untracked
+> +'
 
-> Then we'd probably be better off just walking up the entire hierarchy
-> and excluding worktrees from embedded bare repositories, or otherwise
-> restricting the config we read.  That will probably mean we'll need to
-> walk the entire directory hierarchy to see if it's embedded (or at least
-> to the root of the device) in such a case, but that should be relatively
-> uncommon.
+Why not "touch untracked" instead?
 
-I find this direction to notice iffy "user data" and disable it
-quite reasonable.  A configuration file can define alias, and it
-would be yet another attack vector to overload common ones users
-likely use ("git co", "git st", ...).  There may also be a hooks/
-directory.
-
-I wonder if it is an acceptable defence to deliberately "corrupt"
-such user data when we notice that they smell fishy, perhaps by
-renaming "config" and "hooks", when they are found next to "HEAD"
-and "objects" and "refs", to "config.disabled" and "hooks.disabled"?
-I am just thinking aloud without assessing if it is sensible or
-feasible at ths point.
-
-I am not sure if "walking the hierarchy up" is an effective enough
-defence offhand.  Do we consider it too much social engineering to
-make the user follow cloning instruction of the malicious project to
-prepare a repository, with core.worktree set to elsewhere, and pull
-into it?  Since walking up from any subdirectory of the directory
-the core.worktree points at will never see a directory, with ".git/"
-subdirectory that is the malicious project, "git status" run in the
-"embedded" place in such a scenario will not notice that it is a
-repository lookalike that came from outside.  But we can write it
-off as an approach needing too much  social engineering, that's OK.
+-- 
+An old man doll... just what I always wanted! - Clara
