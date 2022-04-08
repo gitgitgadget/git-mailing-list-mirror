@@ -2,126 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 228C7C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 22:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D47C0C433EF
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 23:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235592AbiDHWcb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Apr 2022 18:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42520 "EHLO
+        id S240027AbiDHX2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Apr 2022 19:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231455AbiDHWcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Apr 2022 18:32:22 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8907413F67
-        for <git@vger.kernel.org>; Fri,  8 Apr 2022 15:30:17 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 98E1F5A0E9;
-        Fri,  8 Apr 2022 22:30:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1649457016;
-        bh=O3PQzmMX0liwE4mOcjtQuGuSm5DzdfbFfZPQKFBpZWE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=kvDHqQTHUdzU54d9H5XWcNg5lOHgkT1QaUg56dghnYHaOhAJEc+YuBlsf2Kx6v5Yd
-         OZJn9T1Xq+15vxwYTyB8btfVVgsSFzxOZWLeKTc33XzMAbF9kYK7odiabp/cEnBAn/
-         ljjcrieSPRCDkfrwisK6kh1MCXdMmGsfO5H8d6c1XCg4Bta1vIDlxK09n6hQgKrLlR
-         T4gIO9FKiDUZY7BwCVvYAJdG6HQ0pLSw+QwBkvtAl0ASFKNFSDA81FMjQgBeGbnfKU
-         mxEtbtO9Hl3L3CF38Q5i6hqNpUuJ1Gg2pfugaTQN7hBE5Egkj/DOsLC9flJk+3LiHO
-         RUPO1Q7liE7bEedncH5LfhgJHS+56arNhNA2y64v6o2kwBBNZOXfOWym3mm/2m+LEe
-         dhM5W7S+8YpSykJ0wqo3ZYNj/EohZPqdOnflSmjP75LtNgYwkEcVT9cXsjlqVkHmsM
-         QRIwdHBLdwULFW/9LnIAoPnMZgx7pDsOcgaYW0lV+3wMbX7YcFb
-Date:   Fri, 8 Apr 2022 22:30:13 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     jurgen_gjoncari@icloud.com
-Cc:     git@vger.kernel.org
-Subject: Re: Make commit messages optional
-Message-ID: <YlC3devsgmv17PnQ@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        jurgen_gjoncari@icloud.com, git@vger.kernel.org
-References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
+        with ESMTP id S240023AbiDHX23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Apr 2022 19:28:29 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B7D3BA61
+        for <git@vger.kernel.org>; Fri,  8 Apr 2022 16:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1649460379;
+        bh=gxoZwOE6BT6EPv6nxufg9NoZOprVLsD24RaNhNRkaZY=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=IxsnUQn5/0PUW5ibQ3hZjgWCOp/VAe86Nhgd9/e84i4Fft7KfYE+mutg3F7aJJLgA
+         /qt53VB7n/7Ej1vMWX9N8Ps3Ux5oMR+JkZN2JEMODpMvWzYDLo3KnCSEhBTLS3RlTC
+         cPxxPyyn1ZuoIBplRHEr5wQGLENHH6H5Z6S/TOCE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az92-378.nbrkuvepa5puroylvvx1wzp50h.ex.internal.cloudapp.net
+ ([20.241.23.119]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1Ml6mE-1oOAFj0sFo-00lSiO; Sat, 09 Apr 2022 01:26:19 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.36.0-rc1
+Date:   Fri,  8 Apr 2022 23:26:16 +0000
+Message-Id: <20220408232616.4125-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.35.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5yM6CXtnnGtWW0Ti"
-Content-Disposition: inline
-In-Reply-To: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Fcc:    Sent
+X-Provags-ID: V03:K1:qgyHPR4je4FZkKc5jRMZSNG+XnXErswvFrLkgopTsHQz1G1LeG9
+ VA5A/dzkoWM8DF/n8MjwtkJ8DDQ6fb8dp1bpCR2xKxLoBqP26wGtWQMHXgigDmF+UmoLayD
+ RJskmlVDpxSGfsXeKfqQYUe8GQxTTpwz/ElfLV8Te7jjpKg2dt8lr5Low1m564/I9m9/OWY
+ Ck3d2hA5GFyHsv6aHbb7Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AlIpJF4up3I=:J+6HTx+GfLp3kOA5lse3Lc
+ V/6CmtEbMqU9zBMcq/su63bCYIMg8lmIPCGxBwdnc2fg0elBjwJyiV4zA+p1A/3M6il8cJuEn
+ Izv4k/hByhZ3JWWb9x/gpTjW9Q3r6F+aOfWuErP3D4huWDxxLRAQlsVA/nyp4Gp8zg2+y84dz
+ hFQKUjwVDPlPRQ7E8T4lHmVKAxU2wo/8ijXkqxqnTdTU3G6rA3LTh8+qa1dOqewMxKtt2Bqql
+ JSc9ifwPjeMUrSvvObxOR7PERTr3ldh01/c/JZvUDi+3Du5EMI16JwDa6zB/jWRX9XpJ5jPWt
+ RLNmYqB6Z0IuN3SP0Spl7Nnum8JNim5kek/6IFI6Qe6sE5YewvliZo2dAzViBmHTJgwHFR9xq
+ /PdnCy2D3Ur6zRvlvj6WvYBOfcsvFic19zXUyNhiTXfmIgiemnOBd8TgiixCWIfcLVJsF2PXR
+ JzMuhQkXsBHPDHbWobqegeLqdlHt+Ot5N+xCOfwtsvbEPSg0kOaEescvUcvrq65lV8vszermX
+ 6FBDT/zl14/rjeICz3QqRwCL5Hxcssg+4vl8AwbImSU3ZBb6UBQl7AYj2bCsX8tVbKBYhzN7Q
+ SNAzzCb8x0ZUWXpx5q2kupijUS9gTRgZzp9MIMizdXFx8wUtKaKHYxWXfeER9P/ZYbQwCFjAI
+ 2C0C5UD0BcpfcmF1lCK9FavFDPF2V4l/vpFqf1SaRSZxt6TxbT4e8FU2YCbZNJFdP9CF+6L5M
+ xLWDbcbZHwffbVq+bOlsDlNxdXfYWCtE914jtgon2Mvn00mBvx338zMsdb4cwlkb/quupsDJa
+ dpRyq6SeTF2fsWceCAffWm+zsVMcFtIWRGIBNTA9p3ho1P+eviJhdd+A8YsohTJxN/nAcWwGH
+ urOw/WskrdDIYIT1QhjCdhBmJg8K1ZiMRpoO8eH2EVo0MWmSV051D86h71K4ETiYyPsjOsqxl
+ 6SotLX0vMdRq6Pl4FqMEdSChDSj5Q1gfBeCUiGNoHEZ1jfPj403bsqHrL0D1proTUrnZVlp2h
+ b26ttY20ftoUTfbZmcHqzOAq5+DxvkHLVwi2RtqbelfD7ObmPcuPs4ILs0CwwzJOMu5Y2LCq/
+ hBG8BU/og92kiA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Git users,
 
---5yM6CXtnnGtWW0Ti
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I hereby announce that Git for Windows 2.36.0-rc1 is available from:
 
-On 2022-04-08 at 03:35:04, jurgen_gjoncari@icloud.com wrote:
-> I think that often commit messages are unnecessary. I propose that by
-> default a user should be able to commit without a message.=20
+    https://github.com/git-for-windows/git/releases/tag/v2.36.0-rc1.windows.1
 
-This topic comes up from time to time and you can see the previous
-discussion in the archives.  The reasons we haven't done this are
-roughly as follows.
+Changes since Git for Windows v2.35.1(2) (February 1st 2022)
 
-First, writing commit messages is a way of communicating to others about
-your changes, as well as to future you.  In my experience, it is
-substantially more important in software engineering to communicate
-clearly and effectively than it is to write code.  The computer will
-accept anything that runs, but when you write code others must read it
-and change it, and they must have the appropriate context behind those
-changes to evaluate your changes and to make their own in the future.
-We want to encourage good software engineering practices.
+Upcoming breaking changes
 
-Tools like git log use the commit message, and empty commit messages
-mean that viewing the list of commits is completely useless without
-viewing a diff.  This means that functionality such as `git log --graph`
-is just completely broken.  Writing even one line in the commit summary
-makes a massive difference in the usability of these tools.
+We plan to update the included bash to version 5.1 (currently 4.4) soon
+after Git for Windows 2.36.0 is released. Please check your shell
+scripts for potential compatibility issues.
 
-Users who want this behaviour can use --allow-empty-message or create an
-alias with that option.  The functionality already exists.  I use
-aliases extensively in my development and I know others do as well, so
-this shouldn't be an impediment if you're working on projects where this
-is acceptable.
+Git for Windows will also stop supporting Windows Vista soon after Git
+for Windows 2.36.0 is released. Around the beginning of 2023, Git for
+Windows will drop support for Windows 7 and for Windows 8, following
+Cygwin's and MSYS2's lead (Git for Windows relies on MSYS2 for
+components such as Bash and Perl).
 
-> I don't think this would be a problem from the UX point of view,
-> because a user could get a lot of information about a change, from the
-> history of the GitHub repository, such as from the time of change, and
-> seeing the diff.=20
+New Features
 
-I certainly hope when you are writing code that you explain your changes
-somewhere.  I know some people who use pull requests prefer to do so in
-the pull request rather than the commit message, but I for one would
-never accept a change that doesn't contain some sort of explanation
-about why it's valuable or relevant somewhere.  I am, unfortunately, not
-omniscient, so I need people to communicate their intentions and
-decisions to me, and the best way to do that is with words.
+  * Comes with Git v2.36.0-rc1.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.3.4.
+  * Comes with Git LFS v3.1.2.
+  * Comes with OpenSSH v8.9p1.
+  * Comes with cURL v7.82.0.
+  * Comes with OpenSSL v1.1.1n.
+  * Comes with Git Credential Manager Core v2.0.696.
+  * Comes with GNU TLS v3.7.4.
 
-I should also point out that the GitHub UI is specifically designed to
-show the commit summary in the history view, so GitHub intends for you
-to write at least one line of helpful text (the summary) in this
-context.
+Git-2.36.0-rc1-64-bit.exe | 1faa20a778afb06a1fb00f30801ff5bd9000596f886b0740b0ccb7fd189ae45a
+Git-2.36.0-rc1-32-bit.exe | c3c798f05e93776bdb4b99bd4b048993264c69481be2d05ca01062f88beedca8
+PortableGit-2.36.0-rc1-64-bit.7z.exe | 408f82478f89b7ca505d7f47d920993493c07f39caf1bde4bf8ebb00a8faed8e
+PortableGit-2.36.0-rc1-32-bit.7z.exe | 1494df620c93177be430c460644cdd5297a8611e5a9d53d511550b2508dd61d1
+MinGit-2.36.0-rc1-64-bit.zip | 05ba2f96ea1e04380aa8bfe06af86adf687c3f14ac44e72905a3f18b4b8d1ebb
+MinGit-2.36.0-rc1-32-bit.zip | 94a52db4c1391618d6e65a5e60447b853e455b136d9540c24c73fc054b016815
+MinGit-2.36.0-rc1-busybox-64-bit.zip | 9ff27015cc2c91695281828ec83ab3c8b0c12745b8f2184754b8b7930d128fe1
+MinGit-2.36.0-rc1-busybox-32-bit.zip | 675dca2fd1379329838f5523efc5d0e16e370e32a9aae0e0b414549708f1a15b
+Git-2.36.0-rc1-64-bit.tar.bz2 | d4d762d0d6925a4f1bfb2e9f4f46efe27a937b11f3875455bd15d6692eeaacae
+Git-2.36.0-rc1-32-bit.tar.bz2 | 644470cdae2f5778a6b7534e17365d3fc572d7c1fdb5b693ce2f8fff98fd6b5e
 
-Overall, I don't believe your proposal is likely to gain traction here
-for the reasons I mentioned above, and I personally don't support it.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---5yM6CXtnnGtWW0Ti
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYlC3cwAKCRB8DEliiIei
-gT2wAP9STZU0FiRf0jD1fi7infYnTmCyR9zELTXaM4ae848gogEA35AbkjMFQXfA
-xiJ4Jyvyty+z6SZT64eLXukVxEGoCQs=
-=UnXd
------END PGP SIGNATURE-----
-
---5yM6CXtnnGtWW0Ti--
+Ciao,
+Johannes
