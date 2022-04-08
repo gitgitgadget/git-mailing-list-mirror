@@ -2,38 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7958DC433F5
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 14:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD2D1C433F5
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 15:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236951AbiDHOe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Apr 2022 10:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
+        id S237014AbiDHPcU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Apr 2022 11:32:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233422AbiDHOe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Apr 2022 10:34:58 -0400
-Received: from vps.thesusis.net (vps.thesusis.net [34.202.238.73])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2C722C8EC
-        for <git@vger.kernel.org>; Fri,  8 Apr 2022 07:32:55 -0700 (PDT)
-Received: by vps.thesusis.net (Postfix, from userid 1000)
-        id 55D7BBD30E; Fri,  8 Apr 2022 10:32:54 -0400 (EDT)
-References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
-User-agent: mu4e 1.7.0; emacs 27.1
-From:   Phillip Susi <phill@thesusis.net>
-To:     jurgen_gjoncari@icloud.com
+        with ESMTP id S235244AbiDHPcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Apr 2022 11:32:19 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B41D1E8143
+        for <git@vger.kernel.org>; Fri,  8 Apr 2022 08:30:15 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id p135so5110949iod.2
+        for <git@vger.kernel.org>; Fri, 08 Apr 2022 08:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hanZ9aFXI3E0GWAnkHFbFjXmAWm4cJDR+RL9qlasE/A=;
+        b=RrbG0o5nI6Qd1qGepJeB9CZx8EeSqLFmNNmQt8ef8if3m+/ZOqRRN0A+nsa9zSewNp
+         7ReZ2y9nGl4Bso8Mmb1f9RJhBOxslYygUXaTboLYW6JxxAyJON2M6cDk46sADk9Ybdmf
+         c3tsc1m9OhnUehDKRxJdIrKVqgY7OqIljS/qAg/XiP72Tnfe/jtGmMYOG/0QGV/Mex/s
+         U5mYBKTmq9O5c8hRXzYGouVtFYlQN5hHAY5mWfSaEPOt7YdHSLwFP06VCIkcCTfnKRn0
+         B97OxazyOcuqTLK/F78bLlAOe4l4Zxc1qZfgAb2CDjOcFfabMzoDEc/RSvvRGxMc8KtF
+         oWrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hanZ9aFXI3E0GWAnkHFbFjXmAWm4cJDR+RL9qlasE/A=;
+        b=0iVZG0RWUdASNi0GOtavQx2vv92nK6fNe52dHRHh7xd2+bvAEJefAqQDWzL5kKkHWo
+         iO4lsYF0hDHic1rnm63qSCV7q4vLTrnMJ62bEU35OzwqfDGE+OhyTjrQIsD4Vc2pFttT
+         qMbl2Lb74S2DFwUqYFw1phbr7VZqXAKwfAvQKKIJD/IpWg0FKbmxlNRVMuVB4I/lFc8D
+         lams4yq8hMgs1Zjvur9NB5qi3D1oiuYkuV9sARv4kqzCn416/heo2Mh6NhBNS6HvIr08
+         1pGRPwH4r9krKZ8NnWS2f+JonsoKlN8csfTEj4fRngAm691Mms7Wcsfvwdo2H5DXlsvB
+         G/Jw==
+X-Gm-Message-State: AOAM532M/9NCS5kDphfIrRVCnFBQPkinZnyc8t0MIgSmXPo9BDHoxlKP
+        piP9K8uF4FyEvcIpPF/2LxCaCdzBEt4mHcXL
+X-Google-Smtp-Source: ABdhPJwgjEm4rLXMVnCoH/XRt5ep8DC5fpen0WNYt43lX4BxAZap9J2iUAA6qW5xoRlGQ38RpT+wDw==
+X-Received: by 2002:a02:c995:0:b0:324:2e15:bb7c with SMTP id b21-20020a02c995000000b003242e15bb7cmr3148730jap.21.1649431814987;
+        Fri, 08 Apr 2022 08:30:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x8-20020a92d648000000b002ca2dc1a74esm11011416ilp.58.2022.04.08.08.30.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Apr 2022 08:30:14 -0700 (PDT)
+Date:   Fri, 8 Apr 2022 11:30:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Make commit messages optional
-Date:   Fri, 08 Apr 2022 10:32:23 -0400
-In-reply-to: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
-Message-ID: <877d7zfxwp.fsf@vps.thesusis.net>
+Subject: Re: [PATCH] Makefile: add help target
+Message-ID: <YlBVBlwNVc8mEjn5@nand.local>
+References: <20220408074524.156165-1-gitter.spiros@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220408074524.156165-1-gitter.spiros@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 08, 2022 at 07:45:24AM +0000, Elia Pinto wrote:
+> Add a help target to the Makefile to be able to run make help, in the same way
+> does the Makefiles self-generated by some build systems.
+>
+> The target list has been statically extracted from the git Makefile with a
+> script and the results have been filtered in an essentially arbitrary way to
+> leave the ones that i imagines most interesting and frequent for a developer.
 
-jurgen_gjoncari@icloud.com writes:
+I could definitely see something like "make help" being helpful, since
+make itself doesn't have a convenient way to list all of a Makefile's
+targets.
 
-> I think that often commit messages are unnecessary. I propose that by
+I worry about this list getting stale, though. If we add a new target,
+will we remember to update the "help" list here? It would be nice if we
+could dynamically generate this list, but I think that loses out on the
+filtering you've done here.
 
-You would be wrong :)
+Thanks,
+Taylor
