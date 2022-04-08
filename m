@@ -2,77 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E3FC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 02:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3504BC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Apr 2022 03:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233755AbiDHCcm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Apr 2022 22:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48690 "EHLO
+        id S233860AbiDHDOs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Apr 2022 23:14:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233752AbiDHCck (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Apr 2022 22:32:40 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A9E234068
-        for <git@vger.kernel.org>; Thu,  7 Apr 2022 19:30:37 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 611491811A4;
-        Thu,  7 Apr 2022 22:30:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=Z+4+PBV8kjpU34LLhdG/YcpoW4Pkj7hdDqabtnz+M4s=; b=KGCp
-        dGnXF+0bty7Kxm+l/kzEEtg2QLYXS6emX1v1ecYd/ao7rguoRkckG6q0RFQgwHNj
-        vYCq/cycKvVH9e7UZVirDELFPH/+XFFXah9yGg97Bs1UtBvAjOkDHQt1V0V7RuFn
-        jP8Ha1ESbI0hCn0DHrY63NWEciF6WV4tjiea/0A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A0D71811A3;
-        Thu,  7 Apr 2022 22:30:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B73751811A2;
-        Thu,  7 Apr 2022 22:30:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Miklos Vajna <vmiklos@vmiklos.hu>
-Cc:     git@vger.kernel.org
-Subject: Re: git log --since to not stop after first old commit?
-References: <Yka2GSGs3EIXm6Xt@vmiklos.hu> <xmqq1qygy9nd.fsf@gitster.g>
-        <Yk8Gvf/fjVca9hDB@vmiklos.hu>
-Date:   Thu, 07 Apr 2022 19:30:33 -0700
-Message-ID: <xmqqv8vkpara.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233776AbiDHDOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Apr 2022 23:14:44 -0400
+Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58067101F2B
+        for <git@vger.kernel.org>; Thu,  7 Apr 2022 20:12:41 -0700 (PDT)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
+        t=1649387556;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=+av01Ge8SHiXxlz/OsV5dn3Ll6GkLeui3i+vyTNY0ig=;
+        b=GIc1+pv5r7OEN9B5zjM284TPKc0SrapcpUFm7oS5+qmBypWC75HhGLMSBeeXIYLF7qZHFX
+        QM2UOY2bhEahZcHHXBNxLEa4qkBK242yHYhZE9VpLDz8gx6sbHX3MtXbso7AvQIOcxRFrV
+        2ZUHVueFW89uTPtWi4LI7w/ZwiGHn/W7LGRwE3WUfMAw6xvJIhOIGsAoMoyEqDq/Jagc5L
+        1JRmXPhIcUYCXlcHPbIRCNAetK/xs5lB9zNNJPjUrqvo2mnMm5uz8MARXK4Azp2rSh3zAg
+        ycNnWuDJTndxUlrd0pcpZahLGELt5m2UVhmK4fwom7LCwlfSu4s+/o2YqbvMmw==
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, joostkremers@fastmail.fm
+Subject: [PATCH] stash: disable literal treatment when passing top pathspec
+Date:   Thu,  7 Apr 2022 23:12:28 -0400
+Message-Id: <20220408031228.782547-1-kyle@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DE7495FC-B6E3-11EC-BBD3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: kyleam.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miklos Vajna <vmiklos@vmiklos.hu> writes:
+do_push_stash() passes ":/" as the pathspec to two subprocess calls.
+When pathspecs are interpreted literally for the main process, these
+subprocess calls do not behave as intended:
 
-> On Fri, Apr 01, 2022 at 10:51:34AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->> We could add a --since-as-filter= option or something, but then the
->> user needs to be careful when to stop (and digging down to the root
->> of the history, i.e. "never stop", may be an acceptable answer to
->> some projects).
->
-> I sent a patch to add such an option (which picks the "never stop"
-> behavior) on 1st, did you see that?
->
-> If the idea is OK in principle, but the patch needs tweaking, please let
-> me know.
+ * the 'git clean' call, triggered by --include-untracked, does not
+   remove untracked files from the working tree
 
-As a single-shot change, "--since-as-filter" is certainly an easy to
-explain approach of least resistance.
+ * the 'git checkout' call, triggered by --keep-index, fails with a
+   message about ":/" not matching any known files, and the main
+   command exits with a non-zero status
 
-But when viewed from a higher level as a general design problem, I
-am unsure if it is a good direction to go in.
+Fix both of these spots by passing --no-literal-pathspecs to the
+subprocess commands.
 
-Giving "--since" the "as-filter" variant sets a precedent, and
-closes the door for a better UI that we can extend more generally
-without having to add "--X-as-filter" for each and every conceivable
-"--X" that is a traversal stopper into a filtering kind.
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ builtin/stash.c                    | 5 ++++-
+ t/t3903-stash.sh                   | 5 +++++
+ t/t3905-stash-include-untracked.sh | 5 +++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0c7b6a9588..afc8400c5d 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1529,7 +1529,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 					     GIT_WORK_TREE_ENVIRONMENT,
+ 					     the_repository->worktree);
+ 			}
+-			strvec_pushl(&cp.args, "clean", "--force",
++			strvec_pushl(&cp.args, "--no-literal-pathspecs",
++				     "clean", "--force",
+ 				     "--quiet", "-d", ":/", NULL);
+ 			if (include_untracked == INCLUDE_ALL_FILES)
+ 				strvec_push(&cp.args, "-x");
+@@ -1592,6 +1593,8 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			cp.git_cmd = 1;
++			if (!ps->nr)
++				strvec_push(&cp.args, "--no-literal-pathspecs");
+ 			strvec_pushl(&cp.args, "checkout", "--no-overlay",
+ 				     oid_to_hex(&info.i_tree), "--", NULL);
+ 			if (!ps->nr)
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 4abbc8fcca..f85c3a06cb 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1383,6 +1383,11 @@ test_expect_success 'stash --keep-index with file deleted in index does not resu
+ 	test_path_is_missing to-remove
+ '
+ 
++test_expect_success 'stash --keep-index succeeds with --literal-pathspecs' '
++	echo modified >file &&
++	git --literal-pathspecs stash --keep-index
++'
++
+ test_expect_success 'stash apply should succeed with unmodified file' '
+ 	echo base >file &&
+ 	git add file &&
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+index 5390eec4e3..2f216274b2 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -427,5 +427,10 @@ test_expect_success 'stash -u ignores sub-repository' '
+ 	git init sub-repo &&
+ 	git stash -u
+ '
++test_expect_success 'stash -u works with --literal-pathspecs' '
++	>untracked &&
++	git --literal-pathspecs stash -u &&
++	test_path_is_missing untracked
++'
+ 
+ test_done
+
+base-commit: bf23fe5c37d62f37267d31d4afa1a1444f70cdac
+-- 
+2.34.0
 
