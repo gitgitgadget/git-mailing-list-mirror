@@ -2,170 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E448C433EF
-	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 11:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73859C433EF
+	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 11:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241503AbiDILe4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Apr 2022 07:34:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47306 "EHLO
+        id S241665AbiDILrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Apr 2022 07:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232971AbiDILey (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Apr 2022 07:34:54 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067129F6CF
-        for <git@vger.kernel.org>; Sat,  9 Apr 2022 04:32:46 -0700 (PDT)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id A0AA7212C2;
-        Sat,  9 Apr 2022 11:32:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1649503965; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=aD3ZB1afckktm7IJ5DABjDSiy9sjON0jAvDtZu2qdS8=;
-        b=aMrTzStqrwtVulquBAByrlLvbn2y0t9VT3Y2BfIQ1qL7QbIzSx/MCxDhilYdCtlIP7ucOQ
-        sNMxGomvQ7QGrhQdOxfSK7t8QpB9MvF6wov+Vjo4+aJCoR+VQ1P9AixacVMm+DYBIWVMjq
-        ZnErTtAXQdoFO0ZQ+8uIeZxYf5ZJey0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1649503965;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=aD3ZB1afckktm7IJ5DABjDSiy9sjON0jAvDtZu2qdS8=;
-        b=y23itH0Juk5R1nt6ZX+2NYHInC23uTvXMSJD/Ox9XZbN2cnzGSqeG/U0QAMSPX6MmSQjgO
-        TDqdEw1r/x6rwsBA==
-Received: from kunlun.suse.cz (unknown [10.100.128.76])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id 80D9EA3B83;
-        Sat,  9 Apr 2022 11:32:45 +0000 (UTC)
-Date:   Sat, 9 Apr 2022 13:32:44 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     rsbecker@nexbridge.com
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        jurgen_gjoncari@icloud.com, git@vger.kernel.org
-Subject: Re: Make commit messages optional
-Message-ID: <20220409113244.GX163591@kunlun.suse.cz>
-References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
- <YlC3devsgmv17PnQ@camp.crustytoothpaste.net>
- <00ca01d84ba0$dd7ee0c0$987ca240$@nexbridge.com>
+        with ESMTP id S241681AbiDILrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Apr 2022 07:47:41 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50756151
+        for <git@vger.kernel.org>; Sat,  9 Apr 2022 04:45:31 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id k13so4882523plk.12
+        for <git@vger.kernel.org>; Sat, 09 Apr 2022 04:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zzrwKLq4zvMLxL99onuOLMqbb1vAO7uqzxJE3jxGpRk=;
+        b=MZax7uz7ym+XzRJIKfD7/qEdAU7LePnuwf8JWlLtRRsqRwoyhTFZHX1vLPXVFPRPGC
+         lVbsQhrwLM0LBdSQdCHPv035aw7erWk1vy/PqEbF6iHR0dyTS1lkfye/5M4JTzHAZHfn
+         Uiuqw9EVejFQnXieTZg5ra7I8VlpabDxFWMCu4XW7We9C7HO4gJ8M8+Z7sFKXxl4Y/ab
+         9f+DCiz+YolpOv5Js1Eh+vMNuZDGnViWOCVdUvfQ+0Y3tVmG2PARESVzLCVfn54wAdSi
+         JDdx1eZZYBBY/yforZuOYdBXbrfViRw4WEQNepMmYnTKTtCehGeiQ3I2ejWj4HnKHBWE
+         NZuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zzrwKLq4zvMLxL99onuOLMqbb1vAO7uqzxJE3jxGpRk=;
+        b=sfEs3wsSelPOsB4c0YOSb06bvF1rLjDTPNyEa3r1M5mMJLBpruTjAWfjsJH+bqXvjc
+         Yn1AWpFYtrmzUoriwI8J7iS1IsK326k8/spPubbeEFojM0jXOp9VhuvO4iAA6oac93wv
+         3rGhwxLiAP/RLFnZJuhcLwL8P11cIGUeQGBgYm9ZRGBU4uUkTUwy0hAJCYatM3C88qdP
+         8tnsmLVC4fxb/IvfKjR+wv0f2SMkwNTlO3bMr06A4+Qgsrn7i83quxEClgiSjv4f9PA5
+         kzhotpYiNHAQ1GUmHhbebZaGGNiU4YcclgZktIaxFX52GeuZC2JtKq2B9PsxrIK2NSIG
+         5LOA==
+X-Gm-Message-State: AOAM532bS9stl9os5eZsJtZU8jASKf1JkuEvCrrgH4G08eBSbUmKg6Cz
+        NuEkdg/zB8w7eWPEObtAcCnq/zxT8Ha2F8YT
+X-Google-Smtp-Source: ABdhPJwEOLZuRW97mWx21TYPZh1NjG5+InUYqzKEQEEzu45eSoGZfBEQkx7TTitoqhFVDe5Qgsb7Zg==
+X-Received: by 2002:a17:90b:4b02:b0:1c7:1bc3:690b with SMTP id lx2-20020a17090b4b0200b001c71bc3690bmr26736832pjb.174.1649504730760;
+        Sat, 09 Apr 2022 04:45:30 -0700 (PDT)
+Received: from HB2.. ([2409:4043:610:cded:b187:7dac:77d7:3420])
+        by smtp.gmail.com with ESMTPSA id u17-20020a056a00159100b004faef351ebcsm28326099pfk.45.2022.04.09.04.45.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 09 Apr 2022 04:45:30 -0700 (PDT)
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [GSoC] [PATCH] t1011: replace test -f with test_path_is_file
+Date:   Sat,  9 Apr 2022 17:14:56 +0530
+Message-Id: <20220409114458.23435-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <00ca01d84ba0$dd7ee0c0$987ca240$@nexbridge.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 08, 2022 at 07:32:03PM -0400, rsbecker@nexbridge.com wrote:
-> On April 8, 2022 6:30 PM, brian m. carlson wrote:
-> >On 2022-04-08 at 03:35:04, jurgen_gjoncari@icloud.com wrote:
-> >> I think that often commit messages are unnecessary. I propose that by
-> >> default a user should be able to commit without a message.
-> >
-> >This topic comes up from time to time and you can see the previous discu=
-ssion in
-> >the archives.  The reasons we haven't done this are roughly as follows.
-> >
-> >First, writing commit messages is a way of communicating to others about=
- your
-> >changes, as well as to future you.  In my experience, it is substantiall=
-y more
-> >important in software engineering to communicate clearly and effectively=
- than it is
-> >to write code.  The computer will accept anything that runs, but when yo=
-u write
-> >code others must read it and change it, and they must have the appropria=
-te
-> >context behind those changes to evaluate your changes and to make their =
-own in
-> >the future.
-> >We want to encourage good software engineering practices.
-> >
-> >Tools like git log use the commit message, and empty commit messages mea=
-n that
-> >viewing the list of commits is completely useless without viewing a diff=
-=2E  This
-> >means that functionality such as `git log --graph` is just completely br=
-oken.  Writing
-> >even one line in the commit summary makes a massive difference in the us=
-ability
-> >of these tools.
-> >
-> >Users who want this behaviour can use --allow-empty-message or create an=
- alias
-> >with that option.  The functionality already exists.  I use aliases exte=
-nsively in my
-> >development and I know others do as well, so this shouldn't be an impedi=
-ment if
-> >you're working on projects where this is acceptable.
-> >
-> >> I don't think this would be a problem from the UX point of view,
-> >> because a user could get a lot of information about a change, from the
-> >> history of the GitHub repository, such as from the time of change, and
-> >> seeing the diff.
-> >
-> >I certainly hope when you are writing code that you explain your changes
-> >somewhere.  I know some people who use pull requests prefer to do so in =
-the pull
-> >request rather than the commit message, but I for one would never accept=
- a
-> >change that doesn't contain some sort of explanation about why it's valu=
-able or
-> >relevant somewhere.  I am, unfortunately, not omniscient, so I need peop=
-le to
-> >communicate their intentions and decisions to me, and the best way to do=
- that is
-> >with words.
-> >
-> >I should also point out that the GitHub UI is specifically designed to s=
-how the
-> >commit summary in the history view, so GitHub intends for you to write a=
-t least
-> >one line of helpful text (the summary) in this context.
-> >
-> >Overall, I don't believe your proposal is likely to gain traction here f=
-or the reasons I
-> >mentioned above, and I personally don't support it.
->=20
-> The commit message is an essential part of why a change was made, in part=
-icular for forensics when something goes wrong, or when you are trying to f=
-igure out why you did something. Without a commit message, you are saying, =
-"yeah, ok, something happened." It's up there with reporting a bug saying, =
-"It doesn't work", with no additional details - I have customers who do tha=
-t, and it is not helpful. To be harsh about it, if someone commits somethin=
-g with no or a useless message, I will reject the change with impunity. Not=
- explaining yourself is not helpful to those who come after. It's up there =
-with "Why did you not document your code, when you used single letter varia=
-bles and strung the whole program on one line because C (or APL) allows it,=
-" with an answer along the lines of "Any decent developer should be able to=
- figure out the code." Sorry, but I feel very strongly on the subject that =
-this is not a good idea. If you want to put junk in your commit, that is yo=
-ur business, but expect a
->   significant segment of the population looking at your repo on GitHub to=
- judge harshly. This sounds more like "I don't want to use a version contro=
-l system, but I have to for some reason, like HR metrics." I know I am bein=
-g harsh on this, and I apologize in advance for it if I offended anyone, bu=
-t I would want a way to disable (potentially at build time) this if it ever=
- went forward.
+Use test_path_is_file() instead of 'test -f' for better debugging
+information.
+---
+ t/t1011-read-tree-sparse-checkout.sh | 46 ++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-There is nothing stopping you using '.' as the commit message which is
-as informative as when it is empty. Hence this enforcement of non-empty
-commit message does not serve the stated purpose.
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+index dd957be1b7..c0b97a622e 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -57,8 +57,8 @@ test_expect_success 'read-tree with .git/info/sparse-checkout but disabled' '
+ 	read_tree_u_must_succeed -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt result &&
+-	test -f init.t &&
+-	test -f sub/added
++	test_path_is_file init.t &&
++	test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'read-tree --no-sparse-checkout with empty .git/info/sparse-checkout and enabled' '
+@@ -67,8 +67,8 @@ test_expect_success 'read-tree --no-sparse-checkout with empty .git/info/sparse-
+ 	read_tree_u_must_succeed --no-sparse-checkout -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt result &&
+-	test -f init.t &&
+-	test -f sub/added
++	test_path_is_file init.t &&
++	test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'read-tree with empty .git/info/sparse-checkout' '
+@@ -85,8 +85,8 @@ test_expect_success 'read-tree with empty .git/info/sparse-checkout' '
+ 	S subsub/added
+ 	EOF
+ 	test_cmp expected.swt result &&
+-	! test -f init.t &&
+-	! test -f sub/added
++	! test_path_is_file init.t &&
++	! test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'match directories with trailing slash' '
+@@ -101,8 +101,8 @@ test_expect_success 'match directories with trailing slash' '
+ 	read_tree_u_must_succeed -m -u HEAD &&
+ 	git ls-files -t > result &&
+ 	test_cmp expected.swt-noinit result &&
+-	test ! -f init.t &&
+-	test -f sub/added
++	! test_path_is_file init.t &&
++	test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'match directories without trailing slash' '
+@@ -110,8 +110,8 @@ test_expect_success 'match directories without trailing slash' '
+ 	read_tree_u_must_succeed -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt-noinit result &&
+-	test ! -f init.t &&
+-	test -f sub/added
++	! test_path_is_file init.t &&
++	test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'match directories with negated patterns' '
+@@ -129,9 +129,9 @@ EOF
+ 	git read-tree -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt-negation result &&
+-	test ! -f init.t &&
+-	test ! -f sub/added &&
+-	test -f sub/addedtoo
++	! test_path_is_file init.t &&
++	! test_path_is_file sub/added &&
++	test_path_is_file sub/addedtoo
+ '
+ 
+ test_expect_success 'match directories with negated patterns (2)' '
+@@ -150,9 +150,9 @@ EOF
+ 	git read-tree -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt-negation2 result &&
+-	test -f init.t &&
+-	test -f sub/added &&
+-	test ! -f sub/addedtoo
++	test_path_is_file init.t &&
++	test_path_is_file sub/added &&
++	! test_path_is_file sub/addedtoo
+ '
+ 
+ test_expect_success 'match directory pattern' '
+@@ -160,8 +160,8 @@ test_expect_success 'match directory pattern' '
+ 	read_tree_u_must_succeed -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt-noinit result &&
+-	test ! -f init.t &&
+-	test -f sub/added
++	! test_path_is_file init.t &&
++	test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'checkout area changes' '
+@@ -176,15 +176,15 @@ test_expect_success 'checkout area changes' '
+ 	read_tree_u_must_succeed -m -u HEAD &&
+ 	git ls-files -t >result &&
+ 	test_cmp expected.swt-nosub result &&
+-	test -f init.t &&
+-	test ! -f sub/added
++	test_path_is_file init.t &&
++	! test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'read-tree updates worktree, absent case' '
+ 	echo sub/added >.git/info/sparse-checkout &&
+ 	git checkout -f top &&
+ 	read_tree_u_must_succeed -m -u HEAD^ &&
+-	test ! -f init.t
++	! test_path_is_file init.t
+ '
+ 
+ test_expect_success 'read-tree will not throw away dirty changes, non-sparse' '
+@@ -229,7 +229,7 @@ test_expect_success 'read-tree adds to worktree, absent case' '
+ 	echo init.t >.git/info/sparse-checkout &&
+ 	git checkout -f removed &&
+ 	read_tree_u_must_succeed -u -m HEAD^ &&
+-	test ! -f sub/added
++	! test_path_is_file sub/added
+ '
+ 
+ test_expect_success 'read-tree adds to worktree, dirty case' '
+@@ -248,7 +248,7 @@ test_expect_success 'index removal and worktree narrowing at the same time' '
+ 	echo init.t >.git/info/sparse-checkout &&
+ 	git checkout removed &&
+ 	git ls-files sub/added >result &&
+-	test ! -f sub/added &&
++	! test_path_is_file sub/added &&
+ 	test_must_be_empty result
+ '
+ 
+-- 
+2.35.1
 
-Sure, if you are merging someone's pull request you can enforce that the
-changes are intelliginle by human review but that's not something git
-can do automatically.
-
-Also I have an auto-generated git repository of web pages in which every
-single commit message is the same. It is not empty because I was too
-lazy to figure out how to do that but the effective information value is
-the same. And it's in git because the publication system uses git as
-backend so there it goes.
-
-Thanks
-
-Michal
