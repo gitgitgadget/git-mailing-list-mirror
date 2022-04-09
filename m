@@ -2,155 +2,328 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A897C433EF
-	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 12:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6696C433EF
+	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 15:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239663AbiDIMat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Apr 2022 08:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45796 "EHLO
+        id S242507AbiDIPin (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Apr 2022 11:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbiDIMas (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Apr 2022 08:30:48 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C2986245
-        for <git@vger.kernel.org>; Sat,  9 Apr 2022 05:28:41 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id z1so16570453wrg.4
-        for <git@vger.kernel.org>; Sat, 09 Apr 2022 05:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=zRD4jqsG/KRFdORdvTzEYyQdrniiHZsO1KtEATTFAHg=;
-        b=i9Q46JRjMyQE4ku+jxzMLS4UxKk14GZICGZ1uTemnxv66FaFrkB+5kFnUWCIi6FhW8
-         iJ41eOu5BhlxsF0OaSCc66s3Le0jsXmMmY0dMFp+FfN5JZ285CEQp90yMAv+tbTtX1yl
-         8N6w3+zi2k68cno7urGOfZ0D/EdYMM0RWheZApUgY+Ju136I0PtIAnAbI/EJdxDnQf+S
-         DNpHFviGlmIq5OFKfWSfKA98BhRxLg0yUZsU0nhc2UZnNDIgmNxVmPopJsvpLM5n1bpo
-         c1D7qhkzJX5wgdPE6AegLGubIPwDGdG495oQ8zmmBO2zoa6wA45c5vvhF3MJtfGHJXO4
-         KnLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=zRD4jqsG/KRFdORdvTzEYyQdrniiHZsO1KtEATTFAHg=;
-        b=LIDU8NyECVjXMjV02o6F2A2itehnQHukcY4uRvlBRxPwF5oXtTSbg/cmLMobMI9zSf
-         1V0jw1hHy46OkL5WU8RHh9lWKklHvljtTz8RPEUklgbQy9lypfcz/UPAdNlNInwm4JWJ
-         hNpAs++fAvSy6DBVP2PW1uA3SgFZuqiSS60pCEHdc3lEI7LBvaivztp8hZ31dnHI+WR0
-         d/D6kmheRCTKaHyqekY8oFEgt3qBhY7sxUcT6c1TDixFMJ4uF/dg2hsdvbyCXvH9kzgH
-         FonjzHf/HPGssqH7XuJY0dsbTQSywuOxZ3mAVxL3weHy9oBa3DZxhFFcjrUT/eVfCBqn
-         lYWw==
-X-Gm-Message-State: AOAM531G79RChfji4OA1gg3l9AXHaCuF5dgRQg/Y6yKypGGes9fch7IV
-        rntqdZB2s3dQwFVYOKM1OPq1G4rwD9Y=
-X-Google-Smtp-Source: ABdhPJxRxHRUllZKVWvazN3KP7uRKuOd/okreygFtNy6MD72B0C6fzeOC6g3CGBEB62S3Cc15YGsjw==
-X-Received: by 2002:a05:6000:15c5:b0:207:8fed:f1f1 with SMTP id y5-20020a05600015c500b002078fedf1f1mr7536358wry.316.1649507319471;
-        Sat, 09 Apr 2022 05:28:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p19-20020a05600c359300b0038c7d1086a7sm13874974wmq.1.2022.04.09.05.28.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Apr 2022 05:28:38 -0700 (PDT)
-Message-Id: <pull.1210.git.1649507317350.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 09 Apr 2022 12:28:37 +0000
-Subject: [PATCH] tests: make SANITIZE=address imply TEST_NO_MALLOC_CHECK
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S242515AbiDIPil (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Apr 2022 11:38:41 -0400
+Received: from lucy.dinwoodie.org (b.8.0.0.8.9.b.0.2.f.0.9.2.a.d.b.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:de15:20ad:bda2:90f2:b98:8b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FB427B1B
+        for <git@vger.kernel.org>; Sat,  9 Apr 2022 08:36:28 -0700 (PDT)
+Received: from adam by lucy.dinwoodie.org with local (Exim 4.94.2)
+        (envelope-from <adam@dinwoodie.org>)
+        id 1ndD8U-003k99-2a; Sat, 09 Apr 2022 16:36:26 +0100
+Date:   Sat, 9 Apr 2022 16:36:26 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] t9902: split test to run on appropriate systems
+Message-ID: <20220409153626.qqn23c7vsw4ftges@lucy.dinwoodie.org>
+References: <20220408095353.11183-1-adam@dinwoodie.org>
+ <220408.86v8vjbzen.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elia Pinto <gitter.spiros@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220408.86v8vjbzen.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Fri, Apr 08, 2022 at 12:56:30PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Apr 08 2022, Adam Dinwoodie wrote:
+> 
+> > The "FUNNYNAMES" test prerequisite passes on Cygwin, as the Cygwin
+> > file system interface has a workaround for the underlying operating
+> > system's lack of support for tabs, newlines or quotes.  However, it does
+> > not add support for backslash, which is treated as a directory
+> > separator, meaning one of the tests added by 48803821b1 ("completion:
+> > handle unusual characters for sparse-checkout", 2022-02-07) will fail on
+> > Cygwin.
+> >
+> > To avoid this failure while still getting maximal test coverage, split
+> > that test into two: test handling of paths that include tabs on anything
+> > that has the FUNNYNAMES prerequisite, but skip testing handling of paths
+> > that include backslashes unless both FUNNYNAMES is set and the system is
+> > not Cygwin.
+> >
+> > It might be nice to have more granularity than "FUNNYNAMES" and its
+> > sibling "FUNNIERNAMES" provide, so that tests could be run based on
+> > specific individual characters supported by the file system being
+> > tested, but that seems like it would make the prerequisite checks in
+> > this area much more verbose for very little gain.
+> 
+> For getting the release out the door this seems like a sensible isolated
+> fix, but I don't see why we wouldn't get more granularity here,
+> i.e. something like the below.
+> 
+> I converted all the straightforward cases, where these tests were either
+> a bit misleading, or we'd actually skip testing on some systems
+> needlessly e.g. if they supported \t in a name but not \n.
+> 
+> This leaves only 8 remaining cases of FUNNYNAMES, all of those similarly
+> seem like subtle potential issues. I.e. we're creating files with
+> characters like "?" or "*" in the name.
+> 
+> But the prerequisite never checks for that, we're just implicitly
+> assuming that a FS that can do [\t\n"] an also do [*?+] or whatever.
+> 
+> In the case of the "rm" test we'd unconditionally create a file with a
+> space in its name, but then conditional on FUNNYNAMES remove it.
+> 
+> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+> index e74a318ac33..7714fc4852f 100755
+> --- a/t/t3600-rm.sh
+> +++ b/t/t3600-rm.sh
+> @@ -17,12 +17,7 @@ test_expect_success 'Initialize test directory' '
+>  	git commit -m "add normal files"
+>  '
+>  
+> -if test_have_prereq !FUNNYNAMES
+> -then
+> -	say 'Your filesystem does not allow tabs in filenames.'
+> -fi
+> -
+> -test_expect_success FUNNYNAMES 'add files with funny names' '
+> +test_expect_success FS_NAME_TAB,FS_NAME_NEWLINE 'add files with funny names' '
+>  	touch -- "tab	embedded" "newline${LF}embedded" &&
+>  	git add -- "tab	embedded" "newline${LF}embedded" &&
+>  	git commit -m "add files with tabs and newlines"
+> @@ -94,8 +89,12 @@ test_expect_success 'Test that "git rm -- -q" succeeds (remove a file that looks
+>  	git rm -- -q
+>  '
+>  
+> -test_expect_success FUNNYNAMES 'Test that "git rm -f" succeeds with embedded space, tab, or newline characters.' '
+> -	git rm -f "space embedded" "tab	embedded" "newline${LF}embedded"
+> +test_expect_success FS_NAME_TAB,FS_NAME_NEWLINE 'Test that "git rm -f" succeeds with embedded tab or newline characters.' '
+> +	git rm -f "tab	embedded" "newline${LF}embedded"
+> +'
+> +
+> +test_expect_success 'Test that "git rm -f" succeeds with embedded space.' '
+> +	git rm -f "space embedded"
+>  '
+>  
+>  test_expect_success SANITY 'Test that "git rm -f" fails if its rm fails' '
+> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+> index 9a292bac70c..5dbe688ab10 100755
+> --- a/t/t4038-diff-combined.sh
+> +++ b/t/t4038-diff-combined.sh
+> @@ -482,7 +482,7 @@ test_expect_success '--combined-all-paths and --cc' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success FUNNYNAMES 'setup for --combined-all-paths with funny names' '
+> +test_expect_success FS_NAME_TAB 'setup for --combined-all-paths with funny names' '
+>  	git branch side1d &&
+>  	git branch side2d &&
+>  	git checkout side1d &&
+> @@ -507,7 +507,7 @@ test_expect_success FUNNYNAMES 'setup for --combined-all-paths with funny names'
+>  	head=$(git rev-parse HEAD)
+>  '
+>  
+> -test_expect_success FUNNYNAMES '--combined-all-paths and --raw and funny names' '
+> +test_expect_success FS_NAME_TAB '--combined-all-paths and --raw and funny names' '
+>  	cat <<-EOF >expect &&
+>  	::100644 100644 100644 $side1df $side2df $headf RR	"file\twith\ttabs"	"i\tam\ttabbed"	"fickle\tnaming"
+>  	EOF
+> @@ -516,13 +516,13 @@ test_expect_success FUNNYNAMES '--combined-all-paths and --raw and funny names'
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success FUNNYNAMES '--combined-all-paths and --raw -and -z and funny names' '
+> +test_expect_success FS_NAME_TAB '--combined-all-paths and --raw -and -z and funny names' '
+>  	printf "$head\0::100644 100644 100644 $side1df $side2df $headf RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
+>  	git diff-tree -c -M --raw --combined-all-paths -z HEAD >actual &&
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success FUNNYNAMES '--combined-all-paths and --cc and funny names' '
+> +test_expect_success FS_NAME_TAB '--combined-all-paths and --cc and funny names' '
+>  	cat <<-\EOF >expect &&
+>  	--- "a/file\twith\ttabs"
+>  	--- "a/i\tam\ttabbed"
+> diff --git a/t/t4135-apply-weird-filenames.sh b/t/t4135-apply-weird-filenames.sh
+> index 6bc3fb97a75..582666c691b 100755
+> --- a/t/t4135-apply-weird-filenames.sh
+> +++ b/t/t4135-apply-weird-filenames.sh
+> @@ -53,9 +53,9 @@ try_filename() {
+>  
+>  try_filename 'plain'            'postimage.txt'
+>  try_filename 'with spaces'      'post image.txt'
+> -try_filename 'with tab'         'post	image.txt' FUNNYNAMES
+> +try_filename 'with tab'         'post	image.txt' FS_NAME_TAB
+>  try_filename 'with backslash'   'post\image.txt' BSLASHPSPEC
+> -try_filename 'with quote'       '"postimage".txt' FUNNYNAMES success failure success
+> +try_filename 'with quote'       '"postimage".txt' FS_NAME_QUOTE success failure success
+>  
+>  test_expect_success 'whitespace-damaged traditional patch' '
+>  	echo postimage >expected &&
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index 69356011713..5b880552a05 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -82,7 +82,7 @@ test_expect_success setup '
+>  	# Still a no-op.
+>  	function dummy() {}
+>  	EOF
+> -	if test_have_prereq FUNNYNAMES
+> +	if test_have_prereq FS_NAME_QUOTE
+>  	then
+>  		echo unusual >"\"unusual\" pathname" &&
+>  		echo unusual >"t/nested \"unusual\" pathname"
+> @@ -525,7 +525,7 @@ do
+>  		test_cmp expected actual
+>  	'
+>  
+> -	test_expect_success FUNNYNAMES "grep $L should quote unusual pathnames" '
+> +	test_expect_success FS_NAME_QUOTE "grep $L should quote unusual pathnames" '
+>  		cat >expected <<-EOF &&
+>  		${HC}"\"unusual\" pathname":unusual
+>  		${HC}"t/nested \"unusual\" pathname":unusual
+> @@ -534,7 +534,7 @@ do
+>  		test_cmp expected actual
+>  	'
+>  
+> -	test_expect_success FUNNYNAMES "grep $L in subdir should quote unusual relative pathnames" '
+> +	test_expect_success FS_NAME_QUOTE "grep $L in subdir should quote unusual relative pathnames" '
+>  		cat >expected <<-EOF &&
+>  		${HC}"nested \"unusual\" pathname":unusual
+>  		EOF
+> @@ -545,7 +545,7 @@ do
+>  		test_cmp expected actual
+>  	'
+>  
+> -	test_expect_success FUNNYNAMES "grep -z $L with unusual pathnames" '
+> +	test_expect_success FS_NAME_QUOTE "grep -z $L with unusual pathnames" '
+>  		cat >expected <<-EOF &&
+>  		${HC}"unusual" pathname:unusual
+>  		${HC}t/nested "unusual" pathname:unusual
+> @@ -555,7 +555,7 @@ do
+>  		test_cmp expected actual-replace-null
+>  	'
+>  
+> -	test_expect_success FUNNYNAMES "grep -z $L in subdir with unusual relative pathnames" '
+> +	test_expect_success FS_NAME_QUOTE "grep -z $L in subdir with unusual relative pathnames" '
+>  		cat >expected <<-EOF &&
+>  		${HC}nested "unusual" pathname:unusual
+>  		EOF
+> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+> index bbd513bab0f..014f822a089 100755
+> --- a/t/t9903-bash-prompt.sh
+> +++ b/t/t9903-bash-prompt.sh
+> @@ -66,11 +66,11 @@ test_expect_success 'prompt - unborn branch' '
+>  	test_cmp expected "$actual"
+>  '
+>  
+> -if test_have_prereq !FUNNYNAMES; then
+> +if test_have_prereq !FS_NAME_NEWLINE; then
+>  	say 'Your filesystem does not allow newlines in filenames.'
+>  fi
+>  
+> -test_expect_success FUNNYNAMES 'prompt - with newline in path' '
+> +test_expect_success FS_NAME_NEWLINE 'prompt - with newline in path' '
+>      repo_with_newline="repo
+>  with
+>  newline" &&
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 531cef097db..3b2fcd8afdf 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1700,20 +1700,29 @@ test_lazy_prereq CASE_INSENSITIVE_FS '
+>  	test "$(cat CamelCase)" != good
+>  '
+>  
+> -test_lazy_prereq FUNNYNAMES '
+> -	test_have_prereq !MINGW &&
+> -	touch -- \
+> -		"FUNNYNAMES tab	embedded" \
+> -		"FUNNYNAMES \"quote embedded\"" \
+> -		"FUNNYNAMES newline
+> +test_lazy_prereq FS_NAME_TAB '
+> +	touch -- "FUNNYNAMES tab	embedded" 2>/dev/null &&
+> +	rm -- "FUNNYNAMES tab	embedded"  2>/dev/null
+> +'
+> +test_lazy_prereq FS_NAME_QUOTE '
+> +	touch -- "FUNNYNAMES \"quote embedded\"" 2>/dev/null &&
+> +	rm -- "FUNNYNAMES \"quote embedded\""  2>/dev/null
+> +'
+> +test_lazy_prereq FS_NAME_NEWLINE '
+> +	touch -- "FUNNYNAMES newline
+>  embedded" 2>/dev/null &&
+> -	rm -- \
+> -		"FUNNYNAMES tab	embedded" \
+> -		"FUNNYNAMES \"quote embedded\"" \
+> -		"FUNNYNAMES newline
+> +	rm -- "FUNNYNAMES newline
+>  embedded" 2>/dev/null
+>  '
+>  
+> +# Please use a more specific FS_NAME_* check if possible.
+> +test_lazy_prereq FUNNYNAMES '
+> +	test_have_prereq !MINGW &&
+> +	test_have_prereq FS_NAME_TAB &&
+> +	test_have_prereq FS_NAME_QUOTE &&
+> +	test_have_prereq FS_NAME_NEWLINE
+> +'
+> +
+>  test_lazy_prereq UTF8_NFD_TO_NFC '
+>  	# check whether FS converts nfd unicode to nfc
+>  	auml=$(printf "\303\244")
 
-As the address sanitizer checks for a superset of the issues detected
-by setting MALLOC_CHECK_ (which tries to detect things like double
-frees and off-by-one errors) there is no need to set the latter when
-compiling with -fsanitize=address.
+That's a significantly neater patch than I was expecting!  I can see
+Junio's added my quick fix for the v2.36.0 rc; what's the process from
+here in this circumstance?  Wait for v2.36.0 to be released properly,
+then submit the patches?
 
-This fixes a regression introduced by 131b94a10a ("test-lib.sh: Use
-GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34", 2022-03-04)
-which causes all the tests to fail with the message
+Fixing t9902 using the same scheme as above adds the diff below, after
+applying the patch above to the v2.36.0-rc1 tag; I've confirmed this
+works as expected on Cygwin, with the test gated by FS_NAME_TAB passing
+and the test gated by FS_NAME_BACKSLASH being skipped.
 
-    ASan runtime does not come first in initial library list;
-    you should either link runtime to your application or
-    manually preload it with LD_PRELOAD.
-
-when git is compiled with SANITIZE=address on systems with glibc >=
-2.34. I have tested SANITIZE=leak and SANITIZE=undefined and they do
-not suffer from this regression so the fix in this patch should be
-sufficient.
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-    tests: make SANITIZE=address imply TEST_NO_MALLOC_CHECK
-    
-    I'm submitting this now as it fixes a regression introduced in the
-    current cycle. Having said that there is an easy workaround (once one
-    has discovered GIT_TEST_NO_MALLOC_CHECK) so I'd be happy to wait until
-    the start of the next cycle given I've just missed -rc1.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1210%2Fphillipwood%2Fwip%2Ftest-malloc-asan-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1210/phillipwood/wip/test-malloc-asan-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1210
-
- Makefile      | 5 ++++-
- t/test-lib.sh | 5 +++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 91738485626..76d187991d2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1267,8 +1267,9 @@ PTHREAD_CFLAGS =
- SPARSE_FLAGS ?= -std=gnu99
- SP_EXTRA_FLAGS = -Wno-universal-initializer
- 
--# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak target
-+# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
- SANITIZE_LEAK =
-+SANITIZE_ADDRESS =
- 
- # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
- # usually result in less CPU usage at the cost of higher peak memory.
-@@ -1314,6 +1315,7 @@ SANITIZE_LEAK = YesCompiledWithIt
- endif
- ifneq ($(filter address,$(SANITIZERS)),)
- NO_REGEX = NeededForASAN
-+SANITIZE_ADDRESS = YesCompiledWithIt
- endif
- endif
- 
-@@ -2861,6 +2863,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
- 	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
-+	@echo SANITIZE_ADDRESS=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_ADDRESS)))'\' >>$@+
- 	@echo X=\'$(X)\' >>$@+
- ifdef FSMONITOR_DAEMON_BACKEND
- 	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 531cef097db..f09e8f3efce 100644
+index 3b2fcd8afd..3e4ca53f61 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -535,9 +535,10 @@ case $GIT_TEST_FSYNC in
- 	;;
- esac
+@@ -1714,6 +1714,10 @@ embedded" 2>/dev/null &&
+ 	rm -- "FUNNYNAMES newline
+ embedded" 2>/dev/null
+ '
++test_lazy_prereq FS_NAME_BACKSLASH '
++	touch -- "FUNNYNAMES backslash\\embedded" 2>/dev/null &&
++	rm -- "FUNNYNAMES backslash\\embedded" 2>/dev/null
++'
  
--# Add libc MALLOC and MALLOC_PERTURB test
--# only if we are not executing the test with valgrind
-+# Add libc MALLOC and MALLOC_PERTURB test only if we are not executing
-+# the test with valgrind and have not compiled with SANITIZE=address.
- if test -n "$valgrind" ||
-+   test -n "$SANITIZE_ADDRESS" ||
-    test -n "$TEST_NO_MALLOC_CHECK"
- then
- 	setup_malloc_check () {
-
-base-commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
--- 
-gitgitgadget
+ # Please use a more specific FS_NAME_* check if possible.
+ test_lazy_prereq FUNNYNAMES '
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 31526e6b64..4a3771e914 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1529,8 +1529,7 @@ test_expect_success 'cone mode sparse-checkout completes directory names with sp
+ 	)
+ '
+ 
+-# use FUNNYNAMES to avoid running on Windows, which doesn't permit tabs in paths
+-test_expect_success FUNNYNAMES 'cone mode sparse-checkout completes directory names with tabs' '
++test_expect_success FS_NAME_TAB 'cone mode sparse-checkout completes directory names with tabs' '
+ 	# reset sparse-checkout
+ 	git -C sparse-checkout sparse-checkout disable &&
+ 	(
+@@ -1550,8 +1549,7 @@ test_expect_success FUNNYNAMES 'cone mode sparse-checkout completes directory na
+ 	)
+ '
+ 
+-# use FUNNYNAMES to avoid running on Windows, and !CYGWIN for Cygwin, as neither permit backslashes in paths
+-test_expect_success FUNNYNAMES,!CYGWIN 'cone mode sparse-checkout completes directory names with backslashes' '
++test_expect_success FS_NAME_BACKSLASH 'cone mode sparse-checkout completes directory names with backslashes' '
+ 	# reset sparse-checkout
+ 	git -C sparse-checkout sparse-checkout disable &&
+ 	(
