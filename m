@@ -2,104 +2,285 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3214EC433EF
-	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 06:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D52CEC433F5
+	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 06:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232107AbiDIGfm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Apr 2022 02:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56598 "EHLO
+        id S240225AbiDIGyW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Apr 2022 02:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiDIGfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Apr 2022 02:35:41 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4174A23AC9D
-        for <git@vger.kernel.org>; Fri,  8 Apr 2022 23:33:35 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id h5so8671079pgc.7
-        for <git@vger.kernel.org>; Fri, 08 Apr 2022 23:33:35 -0700 (PDT)
+        with ESMTP id S233423AbiDIGyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Apr 2022 02:54:21 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8D41AF20
+        for <git@vger.kernel.org>; Fri,  8 Apr 2022 23:52:13 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id b6-20020a5b0b46000000b0063dcbfa6dd3so8357843ybr.2
+        for <git@vger.kernel.org>; Fri, 08 Apr 2022 23:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=qRWhSZh+fVwP6q4IyfwGhW7O3tAl/uD0zEMLWtoQSRw=;
-        b=Yd+vi/Lbjo70aWkY+xwUU+unLejSpgfXFEue2CE0v/jyFJXaTRFEbaKx8JT772lC2e
-         XMQ/vKcphykR8GRbUdYlVhIVmI/oU4BBve7OIO93V1X6h0UwybyJ/mJq0ulf/p41T1Vr
-         rl6X6zFDiBnMEE5sR5UMtDNvb4oFyGejSG6WiVtIkhwBYPc4Q9EpK42avQjaUsawBmdG
-         AjagDHY/cozmU8wi7fWEfNdOL1Tr4aYxZ3pwPpcku3H/+Gh1NVnZKbg1cdKd3EhPbo4T
-         qPNHZ7ZN29pzYz9Ywkl5B4KUU/skdTd6Ym47YocyM7BxIV9u3Boo2ySQVm9ub9l/FGpD
-         hQVw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=6dYUx2asI7cA8qzViFkAOjF68cIvKw0NvgaE8quVxEM=;
+        b=Z2khKXSlGHh0tA+m31i3kVwQEE6pEnGXM4TzfuhF7QQGbsmsfdy6XcD9qzyuGy65/S
+         hpD29tAzQ3cr/ol9tVSJ20qKb2YXQonW3fwHkwt8x7/Zy4P0Ty8jEAoKrd8KO/BEf1aM
+         dRNE6KMlgJ0dZhkH83KGdKYs5ziLXGiimLJK1vJRQmMRu4VmPw5nwU+cOB91jrMb+dcH
+         Tqs+cFicgcn1GDzhUtji7lUHGpbOZMSt5R0HNzz2clY6vKJf8a1DTLsoIqy7x3vvR/23
+         tQs5Dt6EXg0xvCkqHqEGof03Rh1MznKd0/WlmvtdFK1OPaHeEanQ3qYCIj1TFDXYBxFf
+         oMxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=qRWhSZh+fVwP6q4IyfwGhW7O3tAl/uD0zEMLWtoQSRw=;
-        b=roHRBsGAox2qy8gVtd63iRT4VWK/KId6+z7LLuiOZIGJHgHRHeUDj4ZB3Jhhe4ftO0
-         WJvgh/z4EVnOYo9PwFLdDsUUZllxBpFiqe5oTIFbvr+ABMyMqrnsGJZWs7l5ZxQVAitK
-         ZbOTza2z1VG5qnpbo2dkO0Qk1vCSAhZIanj6erGT7LUcFT66jPMwyD7gugW9tZEMzCGy
-         zl07hmx7QU9S1yI9VbiIUUTesypvBxysDC4GaP5BdRTytcttN5JtuVRB38hU2uf3ul6V
-         T6NGY2xZCKOESauhmIuSy4sOuU6Sve0p4OVtzwNymshDk/QaND21EQj2jNDfw0ArhM9G
-         mzXA==
-X-Gm-Message-State: AOAM532nWNk5WEiFZndo3dyAHVtIbzNs6RGBLxCTfeBpqpxBVZ+c8QdA
-        3qIT8OWpyevuxkD1ml8nShACYg==
-X-Google-Smtp-Source: ABdhPJznyMgEGjIiuD+xmUVwj7QYNXhHf+efZV2PvZ+2Y+uxps7COSk1TExVS12zpainbcHVKrlpZw==
-X-Received: by 2002:a63:d342:0:b0:381:fd6f:4792 with SMTP id u2-20020a63d342000000b00381fd6f4792mr18182212pgi.101.1649486014562;
-        Fri, 08 Apr 2022 23:33:34 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:e11f:3ca:fe42:191e])
-        by smtp.gmail.com with ESMTPSA id q14-20020aa7960e000000b0050595cd0238sm1759677pfg.99.2022.04.08.23.33.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Apr 2022 23:33:33 -0700 (PDT)
-Date:   Fri, 8 Apr 2022 23:33:26 -0700
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=6dYUx2asI7cA8qzViFkAOjF68cIvKw0NvgaE8quVxEM=;
+        b=Z/ViC1EHRVSZ4ASZQD79cDW+4YY7xEGqOypvzoZxc83ybF3sOKwWH/9KdAknXp8FYb
+         RdsKr5SFUskk2AI1k7KIwpDcBs7iYMnH3cuqkmrbmqddgmipGdVLoFCqqxuf8DFXSmHY
+         CpHQVNAVp2kHRJs+LawZBpVI/RrqAjkejX+7yv0dKDRZGnDM/QMOnvNbHaqRB4HqZ37M
+         INqSO1l+8VkvROPyrircKaQpwc3RvILlOdyUp2te1H8v4+SSH+B7dYmFYxvzZQC0qpWp
+         wYW+uBbJ6vxJlIx2P8ukrWpI644+hdCq/U5NYD3FXi6KnV7dHtgqgIew9En92B5nF7R0
+         C7QA==
+X-Gm-Message-State: AOAM5335Ft22cfu6+qSxYj1nUo9clfM2/2qB9L0Oda52AC0BHaKgck2P
+        n6548wgsLf57wWkKopp5KT+0+ickj6fWcaFgVHZ1PhmZ6dC3t1MemyKQrhlGBiH/gRWq/3Avhqs
+        dpvkAaVps8Aei1/4qKANWZqT4oA0r+dJdxgZ4g8kcVfAnfY93gm0XzmCu7KfwiWM=
+X-Google-Smtp-Source: ABdhPJzZhY9eVzcibqDv88ckwFtclPoFPopGxJGfJ/JZT2mZ4a4or9jzbz0hvvIq8T7Vq7rfpP3Y7eWOAE7HrA==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:e11f:3ca:fe42:191e])
+ (user=steadmon job=sendgmr) by 2002:a81:5215:0:b0:2eb:572a:939a with SMTP id
+ g21-20020a815215000000b002eb572a939amr18971567ywb.137.1649487132423; Fri, 08
+ Apr 2022 23:52:12 -0700 (PDT)
+Date:   Fri,  8 Apr 2022 23:52:10 -0700
+In-Reply-To: <Yjt6mLIfw0V3aVTO@nand.local>
+Message-Id: <2c2bfc7b43c92dc7c0a4c47a2c88dadeb39c763b.1649486398.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <Yjt6mLIfw0V3aVTO@nand.local>
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
+Subject: [RFC PATCH v2] commit-graph: refactor to avoid prepare_repo_settings
 From:   Josh Steadmon <steadmon@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        lessleydennington@gmail.com, gitster@pobox.com
-Subject: Re: [RFC PATCH] repo-settings: set defaults even when not in a repo
-Message-ID: <YlEotqSn/3Ie6FzD@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        lessleydennington@gmail.com, gitster@pobox.com
-References: <1b27e0b115f858a422e0a2891688227be8f3db01.1648055915.git.steadmon@google.com>
- <471ca70d-0da1-8c4f-16bc-3019706931bd@github.com>
- <Yjt6mLIfw0V3aVTO@nand.local>
- <220329.86lewt2kqp.gmgdl@evledraar.gmail.com>
- <YkO/5/TVQvqyVQly@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YkO/5/TVQvqyVQly@nand.local>
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, derrickstolee@github.com,
+        lessleydennington@gmail.com, gitster@pobox.com, vdye@github.com,
+        avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022.03.29 22:26, Taylor Blau wrote:
-> On Tue, Mar 29, 2022 at 11:03:14AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >
-> > On Wed, Mar 23 2022, Taylor Blau wrote:
-> >
-> > >  	/* Boolean config or default, does not cascade (simple)  */
-> > >  	repo_cfg_bool(r, "core.commitgraph", &r->settings.core_commit_graph, 1);
-> > > +	repo_cfg_int(r, "commitgraph.generationversion", &r->settings.commit_graph_generation_version, 2);
-> >
-> > If this ends up being kept let's add it to its own commented "section",
-> > the comment 2-lines above it is now incorrect.
-> 
-> Thanks for pointing it out; indeed that comment is definitely stale with
-> respect to the newer code. This patch was just a sketch of an
-> alternative approach for Josh to consider, so I can't guarantee that it
-> isn't immune to nit-picks ;).
-> 
-> I think that Josh is planning on picking this up, so hopefully he
-> doesn't mind applying these and any other touch-ups locally before
-> resubmitting.
-> 
-> (Josh, if you do: thank you very much in advance!)
-> 
-> Thanks,
-> Taylor
+From: Taylor Blau <me@ttaylorr.com>
 
-Done in V2, to be sent out shortly.
+Prior to ab14d0676c (commit-graph: pass a 'struct repository *' in more
+places, 2020-09-09), parsing a commit-graph was a pure function
+depending only on the contents of the commit-graph itself. Commit
+ab14d0676c introduced a dependency on a `struct repository` pointer, and
+later commits such as b66d84756f (commit-graph: respect
+'commitGraph.readChangedPaths', 2020-09-09) added dependencies on config
+settings, which were accessed through the `settings` field of the
+repository pointer. This field was initialized via a call to
+`prepare_repo_settings()`.
+
+In 44c7e62 (2021-12-06, repo-settings:prepare_repo_settings only in git
+repos), prepare_repo_settings was changed to issue a BUG() if it is
+called by a process whose CWD is not a Git repository.
+
+This series of changes broke fuzz-commit-graph, which attempts to parse
+arbitrary fuzzing-engine-provided bytes as a commit graph file.
+commit-graph.c:parse_commit_graph() calls prepare_repo_settings(), but
+since we run the fuzz tests without a valid repository, we are hitting
+the BUG() from 44c7e62 for every test case.
+
+Fix this by moving the majority of the implementaiton of
+`parse_commit_graph()` into a new function,
+`parse_commit_graph_settings()` that accepts a repo_settings pointer.
+This allows fuzz-commit-graph to continue to test the commit-graph
+parser implementation without relying on prepare_repo_settings().
+
+Additionally, properly initialize the
+repo_settings.commit_graph_generation_version field in
+prepare_repo_settings(). Load the value from the config if present, and
+default to version 2 otherwise.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+I've taken the diff from Taylor's message Yjt6mLIfw0V3aVTO@nand.local
+with a small tweak to the fuzzer: I didn't see that the commit graph
+settings were being initialized anywhere outside of
+prepare_repo_settings(), so I manually initialized them in
+fuzz-commit-graph. I've also moved the commit-graph settings in
+prepare_repo_settings() to their own section, as suggested by =C3=86var.
+
+I've tried to combine Taylor's explanation from his email with the
+commit message from my original patch. Taylor, if you feel like anything
+needs to be changed please let me know or feel free to resend with your
+changes. Thanks again for providing this fix!
+
+ commit-graph.c      | 22 ++++++++++------------
+ commit-graph.h      |  2 ++
+ fuzz-commit-graph.c |  8 +++++++-
+ repo-settings.c     | 12 +++++++++++-
+ repository.h        |  1 +
+ 5 files changed, 31 insertions(+), 14 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 265c010122..c54a734619 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -96,13 +96,6 @@ define_commit_slab(commit_graph_data_slab, struct commit=
+_graph_data);
+ static struct commit_graph_data_slab commit_graph_data_slab =3D
+ 	COMMIT_SLAB_INIT(1, commit_graph_data_slab);
+=20
+-static int get_configured_generation_version(struct repository *r)
+-{
+-	int version =3D 2;
+-	repo_config_get_int(r, "commitgraph.generationversion", &version);
+-	return version;
+-}
+-
+ uint32_t commit_graph_position(const struct commit *c)
+ {
+ 	struct commit_graph_data *data =3D
+@@ -335,6 +328,13 @@ static int graph_read_bloom_data(const unsigned char *=
+chunk_start,
+=20
+ struct commit_graph *parse_commit_graph(struct repository *r,
+ 					void *graph_map, size_t graph_size)
++{
++	prepare_repo_settings(r);
++	return parse_commit_graph_settings(&r->settings, graph_map, graph_size);
++}
++
++struct commit_graph *parse_commit_graph_settings(struct repo_settings *s,
++						 void *graph_map, size_t graph_size)
+ {
+ 	const unsigned char *data;
+ 	struct commit_graph *graph;
+@@ -371,8 +371,6 @@ struct commit_graph *parse_commit_graph(struct reposito=
+ry *r,
+ 		return NULL;
+ 	}
+=20
+-	prepare_repo_settings(r);
+-
+ 	graph =3D alloc_commit_graph();
+=20
+ 	graph->hash_len =3D the_hash_algo->rawsz;
+@@ -402,14 +400,14 @@ struct commit_graph *parse_commit_graph(struct reposi=
+tory *r,
+ 	pair_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES, &graph->chunk_extra_edges);
+ 	pair_chunk(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs);
+=20
+-	if (get_configured_generation_version(r) >=3D 2) {
++	if (s->commit_graph_generation_version >=3D 2) {
+ 		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
+ 			&graph->chunk_generation_data);
+ 		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
+ 			&graph->chunk_generation_data_overflow);
+ 	}
+=20
+-	if (r->settings.commit_graph_read_changed_paths) {
++	if (s->commit_graph_read_changed_paths) {
+ 		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
+ 			   &graph->chunk_bloom_indexes);
+ 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
+@@ -2288,7 +2286,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	ctx->split =3D flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+ 	ctx->opts =3D opts;
+ 	ctx->total_bloom_filter_data_size =3D 0;
+-	ctx->write_generation_data =3D (get_configured_generation_version(r) =3D=
+=3D 2);
++	ctx->write_generation_data =3D (r->settings.commit_graph_generation_versi=
+on =3D=3D 2);
+ 	ctx->num_generation_data_overflows =3D 0;
+=20
+ 	bloom_settings.bits_per_entry =3D git_env_ulong("GIT_TEST_BLOOM_SETTINGS_=
+BITS_PER_ENTRY",
+diff --git a/commit-graph.h b/commit-graph.h
+index 04a94e1830..0f0d28b129 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -95,6 +95,8 @@ struct commit_graph *read_commit_graph_one(struct reposit=
+ory *r,
+ 					   struct object_directory *odb);
+ struct commit_graph *parse_commit_graph(struct repository *r,
+ 					void *graph_map, size_t graph_size);
++struct commit_graph *parse_commit_graph_settings(struct repo_settings *s,
++					void *graph_map, size_t graph_size);
+=20
+ /*
+  * Return 1 if and only if the repository has a commit-graph
+diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
+index e7cf6d5b0f..e53a2635f6 100644
+--- a/fuzz-commit-graph.c
++++ b/fuzz-commit-graph.c
+@@ -11,7 +11,13 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t s=
+ize)
+ 	struct commit_graph *g;
+=20
+ 	initialize_the_repository();
+-	g =3D parse_commit_graph(the_repository, (void *)data, size);
++	/*
++	 * Manually initialize commit-graph settings, to avoid the need to run
++	 * in an actual repository.
++	 */
++	the_repository->settings.commit_graph_generation_version =3D 2;
++	the_repository->settings.commit_graph_read_changed_paths =3D 1;
++	g =3D parse_commit_graph_settings(&the_repository->settings, (void *)data=
+, size);
+ 	repo_clear(the_repository);
+ 	free_commit_graph(g);
+=20
+diff --git a/repo-settings.c b/repo-settings.c
+index b4fbd16cdc..26241c1c2c 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -10,6 +10,13 @@ static void repo_cfg_bool(struct repository *r, const ch=
+ar *key, int *dest,
+ 		*dest =3D def;
+ }
+=20
++static void repo_cfg_int(struct repository *r, const char *key, int *dest,
++			 int def)
++{
++	if (repo_config_get_int(r, key, dest))
++		*dest =3D def;
++}
++
+ void prepare_repo_settings(struct repository *r)
+ {
+ 	int experimental;
+@@ -41,11 +48,14 @@ void prepare_repo_settings(struct repository *r)
+ 		r->settings.core_untracked_cache =3D UNTRACKED_CACHE_WRITE;
+ 	}
+=20
+-	/* Boolean config or default, does not cascade (simple)  */
++	/* Commit graph config or default, does not cascade (simple) */
+ 	repo_cfg_bool(r, "core.commitgraph", &r->settings.core_commit_graph, 1);
++	repo_cfg_int(r, "commitgraph.generationversion", &r->settings.commit_grap=
+h_generation_version, 2);
+ 	repo_cfg_bool(r, "commitgraph.readchangedpaths", &r->settings.commit_grap=
+h_read_changed_paths, 1);
+ 	repo_cfg_bool(r, "gc.writecommitgraph", &r->settings.gc_write_commit_grap=
+h, 1);
+ 	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commi=
+t_graph, 0);
++
++	/* Boolean config or default, does not cascade (simple)  */
+ 	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
+ 	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_inde=
+x, 1);
+ 	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
+diff --git a/repository.h b/repository.h
+index ca837cb9e9..4f8275f97c 100644
+--- a/repository.h
++++ b/repository.h
+@@ -29,6 +29,7 @@ struct repo_settings {
+ 	int initialized;
+=20
+ 	int core_commit_graph;
++	int commit_graph_generation_version;
+ 	int commit_graph_read_changed_paths;
+ 	int gc_write_commit_graph;
+ 	int fetch_write_commit_graph;
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+--=20
+2.35.1.1178.g4f1659d476-goog
+
