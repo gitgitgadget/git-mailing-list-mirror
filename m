@@ -2,151 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD121C433F5
-	for <git@archiver.kernel.org>; Sat,  9 Apr 2022 21:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AD9EC433F5
+	for <git@archiver.kernel.org>; Sun, 10 Apr 2022 07:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232240AbiDIVfM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Apr 2022 17:35:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52058 "EHLO
+        id S234202AbiDJHey (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Apr 2022 03:34:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbiDIVfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Apr 2022 17:35:10 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AEE363DD
-        for <git@vger.kernel.org>; Sat,  9 Apr 2022 14:33:01 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id c4so13461371qtx.1
-        for <git@vger.kernel.org>; Sat, 09 Apr 2022 14:33:01 -0700 (PDT)
+        with ESMTP id S234164AbiDJHex (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Apr 2022 03:34:53 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A66AB546A9
+        for <git@vger.kernel.org>; Sun, 10 Apr 2022 00:32:43 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id bg10so25007328ejb.4
+        for <git@vger.kernel.org>; Sun, 10 Apr 2022 00:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=dMgXV/mptx8DT3CUXX7rLIlXsug8K2ZXfOazsa5OLD4=;
-        b=C+3luBvzuxY0r3uKmsrS5+fkEnq4v4U84FNEfArislzCOqhGJd7qZbZ7NGQWHZeKsN
-         pL+f5dktUVVh2WrvKeq9GBe7166X94KmqIxM7r8ZYqEetfzQVZ7nmlYR+di/jQ8dmhqH
-         MJjDBwhyIvQiZ2X1RbWBbuwjkb79uI08xiyAMV3oXt/8dmQszTq/FUlnNTVXg3X4YGXi
-         YF0UwOSHiFVXqQxV0j4JBI9mK79HVchgkl7ScRZMvh+s4PDgsLnfYz6BLMADa/aq7e/j
-         LuTX/YQ5lXL2iWZr3uvLfmYjJrPp1+fg4/m9wIhe/1b2OFESrOIokoSEy2IXXy2N9fsI
-         KbTg==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ky9yQGtC2eDpp8RW7suGsfPREmlYHoJSOwcK05Z8m68=;
+        b=6aiJ1XqfoEKK/Cpjqe+K3Mk8Eu9n2NCIsQM5kh50SVnq7ES5Lr2ih0Ik3Kz9TsjZBH
+         MzejJw+qBGJlcuREEkZOmdRC8vXv98kAaAmLyT92e/uaircanuGUtQsrd5CMlbndFsEq
+         /5pnLMHB+Uiwc7zBapHfncDpHmI8bnq2RXnMJ7AgdLr7iBqryA2tUKdGFbrMyT7uqILK
+         wtVcapMLropUbLApvMJ9cYTJJvachtm4Ye9LOU5jAnyblqtR8ilbSg4h6acWAiyYWx5F
+         PRX05ew/XBHQtIHb6vRWtIl517WWLRKhz49BNZN7dgAAIAi34s6CMFAb/jFDkZuhkuvv
+         C7YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=dMgXV/mptx8DT3CUXX7rLIlXsug8K2ZXfOazsa5OLD4=;
-        b=yOPfoLXjoE0TBHSkOiOd4ocpnzMFrBKzIB+Nhnpvkuy6QueD54c4vKjlqJMKWsC4kf
-         zn830ZCQzskNfoMtCUhCTRcf3DRRLfrPgMjsj2JICvKmjrO9/UEHaGwDXkMutesquuBC
-         h/hMJtFdcxYOl03PcHc8YR+cwZZF+cwCB8Iootm9f0tzqm319PwE10FtyCRGW9urncak
-         XQEai82wfBgkwqcSD90K/9/efkskm1Qu31sAQDAtwN2R/ZzFdrp5QQbAowc5HPb/yIlg
-         r9BeaRJfE3t5bd1+fu6bVRTQ8Uq73VqOun1A/p2rvWNMohD2yvN+4QKrWjik4Rhbet46
-         UtHg==
-X-Gm-Message-State: AOAM530U1L4j0r8RRKKt31RyAf7TPjcJ8nXzhxQPWHY/wBGac0RmZAUv
-        FyYiPuYxEmmsy5IWF1ALlmggf7+79iU=
-X-Google-Smtp-Source: ABdhPJzpzw0CLElan2U1DU/bE5clFQPgnIgPioNDNwqK2PhRw/Xr06NtxjVpFqBfpWnY3mnVQAOKjw==
-X-Received: by 2002:ac8:4695:0:b0:2eb:db81:4be0 with SMTP id g21-20020ac84695000000b002ebdb814be0mr10168051qto.220.1649539980267;
-        Sat, 09 Apr 2022 14:33:00 -0700 (PDT)
-Received: from smtpclient.apple ([2601:184:4980:1190:81cc:6131:5ef0:ae9e])
-        by smtp.gmail.com with ESMTPSA id h6-20020a05620a10a600b0069a14a5858csm4443766qkk.50.2022.04.09.14.32.59
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Apr 2022 14:32:59 -0700 (PDT)
-From:   Trevor Burnham <trevorburnham@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: git push --tags failed silently when attempting to push a large
- number of tags
-Message-Id: <E7B246D2-5B72-4BA1-97DB-5300A9074C42@gmail.com>
-Date:   Sat, 9 Apr 2022 17:32:58 -0400
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ky9yQGtC2eDpp8RW7suGsfPREmlYHoJSOwcK05Z8m68=;
+        b=gIbvDXVXjRJCucLoN+8zRZRXVgGhZrkMXvCK0EWYVF5eloWCQM8Tj+g06DRbjjAgV7
+         bVIqZtysQ7CB2q/JdlRbj9ycGkqmmSo5bI3rck3ADMYzKFTssMU9IYJQQb/CubAC3hlB
+         lvvoz041SCPbmJpfFAlnCcemenu5YIvZy+og1YsTINUTLXP40XRRRTdlXKc4U4w+isS5
+         X754u2l35xhVIKFlun6bf90ulOo+GI4oyPO+JHYOvPBLYD/Iw4dcmtqqHwuc8g5hdyhS
+         ySvTNJ8BuDpVHsQSCoYiOtl2aLVw89SxTLv+OtASNa009UhAdyHg0c4H/wqmTIAUBg23
+         j5/g==
+X-Gm-Message-State: AOAM532pt85Uf09esWvPnK8P1mu7tIX9bKjBEWk8uo05JIyxGpwNjxAJ
+        Vs+gDnnPc5uPAj3EDbkBv0G5Ofk3SSIlw2ASzd/4Vg==
+X-Google-Smtp-Source: ABdhPJyitJV5fibYc3GWRTujHXyDr6+HvzboI5j8GGh8z8Y2DIyzdzXerI1WukKQ9eX2QhL2UORcFbWvSfmP2PvANUE=
+X-Received: by 2002:a17:906:4ad9:b0:6cf:93f:f77e with SMTP id
+ u25-20020a1709064ad900b006cf093ff77emr25691123ejt.558.1649575962235; Sun, 10
+ Apr 2022 00:32:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220401142504.58995-1-jholdsworth@nvidia.com>
+In-Reply-To: <20220401142504.58995-1-jholdsworth@nvidia.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Sun, 10 Apr 2022 09:32:29 +0200
+Message-ID: <CAPMMpoh769htwJZ65FRHeLx=KEbxGPKo8CFJCQ5phCXNaNEhDQ@mail.gmail.com>
+Subject: Re: [PATCH v5 00/22] git-p4: Various code tidy-ups
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-# What did you do before the bug happened? (Steps to reproduce your =
-issue)
+On Fri, Apr 1, 2022 at 5:04 PM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+>
+> This patch set contains multiple patches to improve consistency and
+> tidyness of the git-p4 script's code style.
+>
 
-I ran into this issue when trying to create a mirror of a repo with =
-approximately 129,000 tags. I created a fresh clone of the existing =
-remote (origin), created the new remote (new-remote), then pushed the =
-main branch up to the new remote. (This initially failed with `fatal: =
-pack exceeds maximum allowed size`, so I pushed the branch in chunks of =
-500 commits.) Here=E2=80=99s where things became strange:
+I'm not sure my review counts for much, but everything I see in this
+patch makes sense to me, and I've tested it under python2 and python3.
 
-```
-$ git push new-remote --tags
-```
-
-That command ran without error but emitted no output, even with =
-`--verbose`. The command `git push new-remote --refs/tags/\*` had the =
-same result, as expected. No tags were pushed. I also tried `git push =
-new-remote --follow-tags`, which failed after several hours due to a =
-connection timeout.
-
-I tried pushing some tags individually, and that worked fine. So did =
-pushing up smaller subsets of tags:
-
-```
-# push all tags that start with the letter a
-$ git push new-remote +refs/tags/a\*
-# push all tags that start with the letter b
-$ git push new-remote +refs/tags/b\*
-...
-```
-
-Those worked fine, until I tried pushing up a subset with approximately =
-62,000 tags, which failed:
-
-```
-# push all 62,000 tags that start with the letter c
-$ git push new-remote +refs/tags/c\*
-Pushing to github.com:my-org/new-remote.git
-remote: fatal error in commit_refs
-To github.com:my-org/new-remote.git
- ! [remote rejected]         c1 -> c1 (failure)
- ! [remote rejected]         c2 -> c2 (failure)
-```
-
-As I understand it, the error message `fatal error in commit_refs` is =
-generated by GitHub. I was able to push those tags up by splitting the =
-subset further, so it seems that GitHub is rejecting pushes that contain =
-too many tags/too much data at once. I was eventually able to push all =
-of my tags up in this way.
-
-So to sum up:
-
-1. Trying to push 62,000 tags at once failed with the error `remote: =
-fatal error in commit_refs`.
-2. Trying to push 129,000 tags at once had no effect but did not trigger =
-any error (or any output of any kind).
-
-# What did you expect to happen? (Expected behavior)
-
-Since `git push new-remote --tags` did not succeed in pushing my tags =
-(presumably due to an unexpected response from the remote), it should =
-exit with a non-zero status code and emit an error message.
-
-It would also be helpful for `git push --verbose` to include more =
-output, to better identify which step failed.
-
-# What happened instead? (Actual behavior)
-
-The `git push new-remote --tags` command did not push any tags, but =
-returned with status 0 and did not emit any output to stdout or stderr.
-
-# System info from `git bugreport`
-
-git version:
-git version 2.35.1
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 21.4.0 Darwin Kernel Version 21.4.0: Fri Mar 18 00:46:32 =
-PDT 2022; root:xnu-8020.101.4~15/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 13.0.0 (clang-1300.0.29.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
+Reviewed-by: Tao Klerks <tao@klerks.biz>
