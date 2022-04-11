@@ -2,818 +2,233 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 339F4C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 09:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 269C4C433F5
+	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 09:54:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239726AbiDKJpP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Apr 2022 05:45:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52168 "EHLO
+        id S1344029AbiDKJ4f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Apr 2022 05:56:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231818AbiDKJpO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Apr 2022 05:45:14 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEB637A11
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:42:58 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id m67-20020a1ca346000000b0038e6a1b218aso9651737wme.2
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:42:58 -0700 (PDT)
+        with ESMTP id S1344880AbiDKJ4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Apr 2022 05:56:32 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B36163C1
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:54:17 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id d10so17713685edj.0
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=W5ROCHycf3nXNuR0mRZjHtgwu2AyderN6tqwLEiuVdY=;
-        b=ms7SCk2jzZYdImQbW4DV54cG8WPggRT6Ui1E7Pgtf3knGAXU6j/rSGUnUDcNiU5VBP
-         3okJn9oxao5BOJASuR4m+uQHB+BBD+3O4l3b9VuoACtvg8hwbA5SgKKFXJ+ch38h2XzU
-         4Y034285pbu6sLzOFWliSn7uVoRz6mFiKPWXesyiQLIypP1nS8tpomVogulPFoUR7CdL
-         /wHC1nFXormc29IjopgWTuZpyPMynKfiPjqJHm9SHnWg/xIklZeMXoqN1nCOZhVD54It
-         PhGNqDbuzYDVUmyuK7qkcldgEBeaJUvZwPVPG0Ka0g/tqu4eCbmZcKysURudmB7LDszs
-         XQkA==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lO9rtDsuyCA4kNVijI5X01zWBBBvW9Cyv5r85T37f8k=;
+        b=8UPnSO5i89hyZ6A+nATeddhMIod1feJSwi8z2It///6esUP3igPOZcWRSC6JwHWiXe
+         ZrsSIg1q+KgO9D8M+f2QUmbycPE1Uouk4xJ7gXB7UpjNaA3E9KEJKk8nziHaS60HcEfM
+         5LPq2cjJHO2VRLrDAisYhTIKtK1ZG1D3vpUyl19JqZD1BTsJqOP6d0KH5bBNFCaW2qtW
+         CVgxLkpOLjqytVwhLhZEKa9HPu4VBNNovCHwutMGDTZJDwYuuzkcrMeoNE3Itq0KiqLS
+         8hhke1BRfXl4TRbPtFNwK+ma8nfWqm7sn8cvUyiyBen6ZQ4L8j/jdAJgJHIL2fhgkLTt
+         HGsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=W5ROCHycf3nXNuR0mRZjHtgwu2AyderN6tqwLEiuVdY=;
-        b=Alrg1uE+A0vf18/uisLs64VWzMcdVes1JoBtROpi43fYNO41TarfPeBNbP9/i/twA6
-         9hSjht8zZaWM30kxsnRGw9SxKosrCA9hpTDBXQdIBoaiN8Jw3u5VTBgi2oqkWtNGAApE
-         HMyskBy3FNLS1S2GPhjV7E0gMgM7FVlb9L7ZyT13W619OidkRMjMGNtRPH3fUjlsAhIH
-         llgI8pa8pE6dcZ0OdqriVpBbUURh9/Vc8behvRJ66kf7Uda1MKM5SJn7n7n5EIb60u0p
-         yX4vWko6xnz9BcMavpX1hM3D5wnxMPItRhk+dZ45VqjYQKe6cu0Ew2ZYxkquQ3b/UoXI
-         GE9g==
-X-Gm-Message-State: AOAM530+D67HNJbTfOLoFwp3HJx8+0Nj7bsj/eZrpzP9+Wt7i/i0BlYf
-        ZF0KhY4tFxhpIBDGhvvuBjA6QpCC5eA=
-X-Google-Smtp-Source: ABdhPJxkYAzzgASzDVKnh5AQU+PYhYWvga0MA1MwfqmGu5ZtgolTqJJ61dKUtW0wSE8JE6y26eSdMw==
-X-Received: by 2002:a05:600c:4fc4:b0:38c:d622:f445 with SMTP id o4-20020a05600c4fc400b0038cd622f445mr28266462wmq.73.1649670176618;
-        Mon, 11 Apr 2022 02:42:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u23-20020a7bcb17000000b0037bdfa1665asm21711435wmj.18.2022.04.11.02.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Apr 2022 02:42:55 -0700 (PDT)
-Message-Id: <pull.1206.git.1649670174972.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Apr 2022 09:42:54 +0000
-Subject: [PATCH] [RFC] git-p4: improve encoding handling to support
- inconsistent encodings
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lO9rtDsuyCA4kNVijI5X01zWBBBvW9Cyv5r85T37f8k=;
+        b=JiRaQHFC07sgBGhmd502LkAYaqC1nYgz9GfhLLQgE+fAYEl8rYiPOelay2Oc3qoKBJ
+         XO87VWY6yFCBU/pxiz9pwT/YzpXMkHxK0UrFXwhiuHEJThrJ6RQIhYE+ne+kWnUjMW7N
+         LjetZRwZeMIcwbF4cYAgNFZrGk43+k1vT9ybjvow6FJ3WKhvkacj6/jIMH7SgyoFZxA2
+         68OO2xWLBOZ+Rk5XPYKZbWtr3yi5y8+hXbgTIhi+RuTN+n4+0gbtubOE7GQTC190umGM
+         A/d+hclolLSZ1HzSMKmxqVqMz0x0AlsaXGQzY/eRVJzPovF6WLHjG0NnZj0imzKtI5SG
+         lnJg==
+X-Gm-Message-State: AOAM533mV8pvQ/1bIsmdUXJpNh6V8tLWxCDfdplFlPKbdOA6Xuj4WFJv
+        A53hsXrus3MqrFU2RRkl6sc0ExoP6EwvL/8U3TR/Ww==
+X-Google-Smtp-Source: ABdhPJzN7FI3abCEFwD8nT0h1ZYAub+9vWEzJc9/AVoUWyd0aOcSJUvNiN69fSpWAtwpfl6PhH8l2ix2cZ4s+91E8FA=
+X-Received: by 2002:a05:6402:298c:b0:41d:6b63:aa67 with SMTP id
+ eq12-20020a056402298c00b0041d6b63aa67mr10638336edb.42.1649670855813; Mon, 11
+ Apr 2022 02:54:15 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
+References: <20220210164627.279520-1-jholdsworth@nvidia.com>
+ <CAPMMpohZxpMFc-rVE96QbeGzN6NdF5CdYVp6FLrHD6Ngi=mu4A@mail.gmail.com>
+ <BL0PR12MB484938E9950EBCA08315544CC8E59@BL0PR12MB4849.namprd12.prod.outlook.com>
+ <CAPMMpoggSvPox5tM3B_NZ0GwLzg7LtHkXGhby1mZqpkehZ1G0Q@mail.gmail.com>
+ <CAPMMpohm74nVbi-dR=YOLoT+CbPiHGuVo35EoufKGKHP9Urexg@mail.gmail.com>
+ <BL0PR12MB4849BAE614E63BBB0B77EC29C8E49@BL0PR12MB4849.namprd12.prod.outlook.com>
+ <CAPMMpojFrDL9v=fWfyBx-Ko7fdZkd0yroC058n0+KAvL8SPiYA@mail.gmail.com>
+In-Reply-To: <CAPMMpojFrDL9v=fWfyBx-Ko7fdZkd0yroC058n0+KAvL8SPiYA@mail.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 11 Apr 2022 11:54:06 +0200
+Message-ID: <CAPMMpoiMtGVUv9yHhEWno+eySfiDTgrRZ7SdJLmfOwSk=tLfdg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/22] git-p4: Various code tidy-ups
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+On Tue, Apr 5, 2022 at 7:16 PM Tao Klerks <tao@klerks.biz> wrote:
+>
+> On Tue, Apr 5, 2022 at 2:04 PM Joel Holdsworth <jholdsworth@nvidia.com> w=
+rote:
+> >
+> > > So, an initial test suggests that a recent version of git-p4 at least=
+ doesn't fail in
+> > > the same way under python3, in the face of at least some of these enc=
+oding
+> > > issues. I don't know yet whether failures will occur in other places,=
+ nor
+> > > whether the not-failing behavior is better, worse or the same as I ha=
+d under
+> > > python2, but it seems plausible that I won't be filing any test_expec=
+t_failure
+> > > tests after all, and will instead say "yay, python3 ftw!"
+> >
+> > That would be fabulous.
+> >
+>
 
-git-p4 is designed to run correctly under python2.7 and python3, but
-its functional behavior wrt importing user-entered text differs across
-these environments:
+I went a little further in the end, and implemented a full "fix" that
+I believe makes sense. I've just submitted as RFC.
 
-Under python2, git-p4 "naively" writes the Perforce bytestream into git
-metadata (and does not set an "encoding" header on the commits); this
-means that any non-utf-8 byte sequences end up creating invalidly-encoded
-data in git.
+> > I myself have a repository that has a variety of such issues. A common =
+case is CP-1252 Smart Quote characters produced on Windows which are incomp=
+atible with UTF-8, without explicit conversion.
+> >
+>
 
-Under python3, git-p4 attempts to decode the Perforce bytestream as utf-8
-data, and fails badly (with an unhelpful error) when non-utf-8 data is
-encountered.
+I'd love to know how the proposed patch works for you.
 
-Perforce clients (esp. p4v) encourage user entry of changelist
-descriptions (and user full names) in OS-local encoding, and store the
-resulting bytestream to the server unmodified - such that different
-clients can end up creating mutually-unintelligible messages. The most
-common inconsistency, in many Perforce environments, is likely to be utf-8
-(typical in linux) vs cp-1252 (typical in windows).
+> > However, a lot of these problems can be avoided by simply avoiding conv=
+ersion to text in the first place. In many cases the incoming data doesn't =
+need to be converted and can be passed around as binary.
+>
+> That's certainly the behavior in git-p4 under python2, but I'm pretty
+> sure it's not "right". Git has a formal and coherent strategy for
+> encoding - commit (meta)data is interpreted as utf-8 unless an
+> "encoding" header is present in the commit. Git's output is utf-8
+> (with on-the-fly re-encoding if commits do have a different encoding
+> specified), unless you explicitly ask it to output in a different
+> encoding. These processes are "forgiving", in that a set of bytes that
+> cannot be interpreted as utf-8, in a commit that does not explicitly
+> specify an encoding, will be output as-is rather than being rejected
+> or warned about... But there is a "right way" to store data. When
+> CP-1252 (high-range) bytes are simply "passed through" into the git
+> data by python2, the resulting git commits cannot be displayed
+> correctly by most or any git clients - they expect utf-8.
+>
+> On the other hand, in Perforce that does not appear to be the case at
+> all: as far as I can tell, p4v in windows is simply using windows's
+> active "legacy codepage", and reading or writing bytes accordingly
+> (CP1252 in my case); in windows cmd, same thing by default; in linux,
+> where utf8 is the norm nowadays, I get "unprintable character" output
+> when something was submitted from a CP-1252 environment (same as I do
+> for the python2-imported git commits, on any platform). If I switch a
+> windows cmd terminal to utf8 ("chcp 65001"), it behaves the same. If I
+> create a pending changelist with non-ANSI characters in Linux they get
+> submitted as utf8-encoded, and when I view the same pending changelist
+> in windows (from the command-line in its default legacy codepage, or
+> in p4v which also seems to use the legacy codepage), I see the classic
+> utf8-interpreted-as-CP1252 artifact "=C3=83=E2=80=A0" instead of "=C3=86"=
+.
+>
+> I don't see any sort of "codepage selection" configuration either in
+> the perforce clients, or in the connection / server relationship.
+> Perforce tooling seems to simply assume that the Operating Systems of
+> all users will be configured with the same codepage - the bytes are
+> the bytes, clients encode and decode them however they will, and there
+> is simply no encoding metadata. US/western Windows clients, modern
+> linux clients, older mac clients, and cyrillic-configured clients, etc
+> will all have produced mutually-unintelligible content in the same
+> repo over the years.
+>
+> In *my* environment, a majority of users have been using Windows over
+> the years to write commit messages, and most will have had CP-1252
+> configured, so I believe the most reasonable behavior would be "try
+> interpreting the bytes as utf-8, and if that fails then fall back to
+> interpreting as CP-1252, and either way, store the result in git as
+> utf-8" - but I don't know whether that is the right strategy for a
+> majority of environments. This strategy makes sense for me because
+> it's very rare for something that *can* be correctly read as utf-8 to,
+> in fact, not be intended to be utf-8; that was kind of the point in
+> the standard's development - so starting by *trying* to interpret as
+> utf-8 is a safe bet, and has value if *any* of your clients are likely
+> to have used it. In my environment there are linux users, and in fact
+> p4 user management happens in linux, so user names/descriptions are
+> also utf-8.
+>
+> For other environments I suspect the "fallback codepage" should be
+> configurable (I don't know how codepage identifiers work
+> cross-platform in python, that sounds like it might be fun). You could
+> imagine having an "auto-detect" fallback option, but for the reasons
+> identified above this would need to operate on a per-string basis to
+> have high value, and I think CL descriptions (and user names) are
+> simply too short for autodetection to be a viable option.
+>
+> Another reasonable strategy (less optimal for my environment) would be
+> to follow the "python2" approach of writing the bytes into git as they
+> were read from p4, but also additionally *telling* git what the
+> encoding is expected to be, by setting the "encoding" header
+> accordingly in the fast-import data. In my case that wouldn't work
+> well because, again, author names are utf-8, but commit messages are
+> more commonly CP-1252. Git expects all the strings in the commit to
+> use the same encoding (unless I've missed something).
+>
 
-Make the changelist-description- and user-fullname-handling code
-python-runtime-agnostic, introducing three "strategies" selectable via
-config:
-- 'legacy', behaving as previously under python2,
-- 'strict', behaving as previously under python3, and
-- 'fallback', favoring utf-8 but supporting a secondary encoding when
-utf-8 decoding fails.
+After working through this, I decided there was no practical value in
+using the "encoding" header, *given* that the real encodings are
+technically unknowable. There doesn't seem to be any advantage to
+keeping the original bytes and slapping an "encoding" header into
+place, over simply converting the original bytes into utf-8 following
+an assumed (overridable) fallback encoding.
 
-Keep the python2 default behavior as-is ('legacy' strategy), but switch
-the python3 default strategy to 'fallback' with fallback encoding
-'cp1252'.
+That said, I did keep the original python2 "just copy the bytes over"
+strategy in place, and made it available under python3, in case anyone
+(you?) prefer that over the attempt to convert to utf-8.
 
-Also include tests exercising these encoding strategies, documentation for
-the new config, and improve the user-facing error messages when decoding
-does fail.
+>
+> > I'm slowly working toward this goal, and once this patch-set it merged =
+I have a couple of other decoding patches in the pipeline. If you have any =
+other failure cases, please do submit them as test cases, or bug reports at=
+ least.
+> >
+>
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    RFC: Git p4 encoding strategy
-    
-    git-p4 is designed to run correctly under python2.7 and python3, but its
-    functional behavior wrt importing user-entered text differs across these
-    environments:
-    
-    Under python2, git-p4 "naively" writes the Perforce bytestream into git
-    metadata (and does not set an "encoding" header on the commits); this
-    means that any non-utf-8 byte sequences end up creating
-    invalidly-encoded data in git.
-    
-    Under python3, git-p4 attempts to decode the Perforce bytestream as
-    utf-8 data, and fails badly (with an unhelpful error) when non-utf-8
-    data is encountered.
-    
-    Perforce clients (esp. p4v) encourage user entry of changelist
-    descriptions (and user full names) in OS-local encoding, and store the
-    resulting bytestream to the server unmodified - such that different
-    clients can end up creating mutually-unintelligible messages. The most
-    common inconsistency, in many Perforce environments, is likely to be
-    utf-8 (typical in linux) vs cp-1252 (typical in windows).
-    
-    Make the changelist-description- and user-fullname-handling code
-    python-runtime-agnostic, introducing three "strategies" selectable via
-    config: 'legacy', behaving as previously under python2, 'strict',
-    behaving as previously under python3, and 'fallback', favoring utf-8 but
-    supporting a secondary encoding when utf-8 decoding fails.
-    
-    Keep the python2 default behavior as-is ('legacy' strategy), but switch
-    the python3 default strategy to 'fallback' with fallback encoding
-    'cp1252'.
-    
-    Also include tests exercising these encoding strategies, documentation
-    for the new config, and improve the user-facing error messages when
-    decoding does fail.
-    
-    OPEN QUESTIONS:
-    
-     * Does it make sense to make "fallback" the default decoding strategy
-       in python3? This is definitely a change in behavior, but I believe
-       for the better; failing with "we defaulted to strict, but you can run
-       again with this other option if you want it to work" seems unkind,
-       only making sense if we thought fallback to cp1252 would be wrong in
-       a substantial proportion of cases...
-     * Is it OK to duplicate the bulk of the testing code across
-       t9835-git-p4-metadata-encoding-python2.sh and
-       t9836-git-p4-metadata-encoding-python3.sh?
-     * Is it OK to explicitly call "git-p4.py" in tests, rather than the
-       build output "git-p4", in order to be able to select the python
-       runtime on a per-test basis?
-     * Is it OK to look for python2 and python3 in /usr/bin/ (in testing),
-       or would it be better to find them with "which"?
+I did not find any issues and did mark "Reviewed-By" for your "git-p4:
+Various code tidy-ups" v5 patchset, fwiw. (when I eventually found it
+in my gmail spam...:( )
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1206%2FTaoK%2Fgit-p4-encoding-strategy-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1206/TaoK/git-p4-encoding-strategy-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1206
+Examples of my problem cases are included in my new "[RFC] git-p4:
+improve encoding handling to support inconsistent encodings" patch.
+This patch has minor conflicts with your code tidy-ups, but if I'm
+reading Junio's latest updates correctly, the tidy-ups are headed to
+"next" so I will re-roll when they get there.
 
- Documentation/git-p4.txt                    |  36 +++-
- git-p4.py                                   | 104 +++++++++--
- t/lib-git-p4.sh                             |   3 +-
- t/t9835-git-p4-metadata-encoding-python2.sh | 185 +++++++++++++++++++
- t/t9836-git-p4-metadata-encoding-python3.sh | 186 ++++++++++++++++++++
- 5 files changed, 496 insertions(+), 18 deletions(-)
- create mode 100755 t/t9835-git-p4-metadata-encoding-python2.sh
- create mode 100755 t/t9836-git-p4-metadata-encoding-python3.sh
+>
+> > I would prefer the script to discard Python 2 support, but even if the =
+consensus is to retain it, Python 3 forces us to address these issues which=
+ is a great step in the right direction.
+> >
+>
 
-diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-index e21fcd8f712..43b6f54a7d7 100644
---- a/Documentation/git-p4.txt
-+++ b/Documentation/git-p4.txt
-@@ -636,7 +636,41 @@ git-p4.pathEncoding::
- 	Git expects paths encoded as UTF-8. Use this config to tell git-p4
- 	what encoding Perforce had used for the paths. This encoding is used
- 	to transcode the paths to UTF-8. As an example, Perforce on Windows
--	often uses "cp1252" to encode path names.
-+	often uses "cp1252" to encode path names. If this option is passed
-+	into a p4 clone request, it is persisted in the resulting new git
-+	repo.
-+
-+git-p4.metadataDecodingStrategy::
-+	Perforce keeps the encoding of a changelist descriptions and user
-+	full names as stored by the client on a given OS. The p4v client
-+	uses the OS-local encosing, and so different users can end up storing
-+	different changelist descriptions or user full names in different
-+	encodings, in the same depot.
-+	Git tolerates inconsistent/incorrect encodings in commit messages
-+	and author names, but expects them to be specified in utf-8.
-+	git-p4 can use three different decoding strategies in handling the
-+	encoding uncertainty in Perforce: 'legacy' simply passes the original
-+	bytes through from Perforce to git, creating usable but
-+	incorrectly-encoded data when the Perforce data is encoded as
-+	anything other than utf-8. 'strict' expects the Perforce data to be
-+	encoded as utf-8, and fails to import when this is not true.
-+	'fallback' attempts to interpret the data as utf-8, and otherwise
-+	falls back to using a secondary encoding - by default the common
-+	windows encoding 'cp-1252'.
-+	Under python2 the default strategy is 'legacy' for historical
-+	reasons, and under python3 the default is 'fallback'.
-+	When 'strict' is selected and decoding fails, the error message will
-+	propose changing this config parameter as a workaround. If this
-+	option is passed into a p4 clone request, it is persisted into the
-+	resulting new git repo.
-+
-+git-p4.metadataFallbackEncoding::
-+	Specify the fallback encoding to use when decoding Perforce author
-+	names and changelists descriptions using the 'fallback' strategy
-+	(see git-p4.metadataDecodingStrategy). The fallback encoding will
-+	only be used when decoding as utf-8 fails. This option defaults to
-+	cp1252, a common windows encoding. If this option is passed into a
-+	p4 clone request, it is persisted into the resulting new git repo.
- 
- git-p4.largeFileSystem::
- 	Specify the system that is used for large (binary) files. Please note
-diff --git a/git-p4.py b/git-p4.py
-index a9b1f904410..a2149dd38ae 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -54,6 +54,9 @@ defaultLabelRegexp = r'[a-zA-Z0-9_\-.]+$'
- # The block size is reduced automatically if required
- defaultBlockSize = 1<<20
- 
-+defaultMetadataDecodingStrategy = 'legacy' if sys.version_info.major == 2 else 'fallback'
-+defaultFallbackMetadataEncoding = 'cp1252'
-+
- p4_access_checked = False
- 
- re_ko_keywords = re.compile(br'\$(Id|Header)(:[^$\n]+)?\$')
-@@ -203,6 +206,52 @@ else:
-     def encode_text_stream(s):
-         return s.encode('utf_8') if isinstance(s, unicode) else s
- 
-+class MetadataDecodingException(Exception):
-+    def __init__(self, input_string, fallback_encoding, fallback_error):
-+        self.input_string = input_string
-+        self.fallback_encoding = fallback_encoding
-+        self.fallback_error = fallback_error
-+
-+    def __str__(self):
-+        error_message = """Decoding returned data failed!
-+The failing string was:
-+---
-+{}
-+---""".format(self.input_string)
-+
-+        if not self.fallback_error:
-+            error_message += """
-+Consider setting the git-p4.metadataDecodingStrategy config option to
-+'fallback', to allow metadata to be decoded using a fallback encoding,
-+defaulting to cp1252."""
-+        else:
-+            error_message += """
-+The conversion failed while using the fallback encoding '{}';
-+consider using a more forgiving one. Conversion error text:
-+{}
-+""".format(self.fallback_encoding, self.fallback_error)
-+
-+        return error_message
-+
-+def metadata_stream_to_writable_bytes(s):
-+    encodingStrategy = gitConfig('git-p4.metadataDecodingStrategy') or defaultMetadataDecodingStrategy
-+    fallbackEncoding = gitConfig('git-p4.metadataFallbackEncoding') or defaultFallbackMetadataEncoding
-+    if not isinstance(s, bytes):
-+        return s.encode('utf_8')
-+    if encodingStrategy == 'legacy':
-+        return s
-+    try:
-+        s.decode('utf_8')
-+        return s
-+    except UnicodeDecodeError:
-+        fallback_error = None
-+        if encodingStrategy == 'fallback' and fallbackEncoding:
-+            try:
-+                return s.decode(fallbackEncoding).encode('utf_8')
-+            except Exception as e:
-+                fallback_error = e
-+        raise MetadataDecodingException(s, fallbackEncoding, fallback_error)
-+
- def decode_path(path):
-     """Decode a given string (bytes or otherwise) using configured path encoding options
-     """
-@@ -702,11 +751,12 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-             if bytes is not str:
-                 # Decode unmarshalled dict to use str keys and values, except for:
-                 #   - `data` which may contain arbitrary binary data
--                #   - `depotFile[0-9]*`, `path`, or `clientFile` which may contain non-UTF8 encoded text
-+                #   - `desc` or `FullName` which may contain non-UTF8 encoded text handled below, eagerly converted to bytes
-+                #   - `depotFile[0-9]*`, `path`, or `clientFile` which may contain non-UTF8 encoded text, handled by decode_path()
-                 decoded_entry = {}
-                 for key, value in entry.items():
-                     key = key.decode()
--                    if isinstance(value, bytes) and not (key in ('data', 'path', 'clientFile') or key.startswith('depotFile')):
-+                    if isinstance(value, bytes) and not (key in ('data', 'desc', 'FullName', 'path', 'clientFile') or key.startswith('depotFile')):
-                         value = value.decode()
-                     decoded_entry[key] = value
-                 # Parse out data if it's an error response
-@@ -716,6 +766,10 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-             if skip_info:
-                 if 'code' in entry and entry['code'] == 'info':
-                     continue
-+            if 'desc' in entry:
-+                entry['desc'] = metadata_stream_to_writable_bytes(entry['desc'])
-+            if 'FullName' in entry:
-+                entry['FullName'] = metadata_stream_to_writable_bytes(entry['FullName'])
-             if cb is not None:
-                 cb(entry)
-             else:
-@@ -1435,7 +1489,13 @@ class P4UserMap:
-         for output in p4CmdList(["users"]):
-             if "User" not in output:
-                 continue
--            self.users[output["User"]] = output["FullName"] + " <" + output["Email"] + ">"
-+            # "FullName" is bytes. "Email" on the other hand might be bytes
-+            # or unicode string depending on whether we are running under
-+            # python2 or python3. To support
-+            # git-p4.metadataDecodingStrategy=legacy, self.users dict values
-+            # are always bytes, ready to be written to git.
-+            emailbytes = metadata_stream_to_writable_bytes(output["Email"])
-+            self.users[output["User"]] = output["FullName"] + b" <" + emailbytes + b">"
-             self.emails[output["Email"]] = output["User"]
- 
-         mapUserConfigRegex = re.compile(r"^\s*(\S+)\s*=\s*(.+)\s*<(\S+)>\s*$", re.VERBOSE)
-@@ -1445,26 +1505,28 @@ class P4UserMap:
-                 user = mapUser[0][0]
-                 fullname = mapUser[0][1]
-                 email = mapUser[0][2]
--                self.users[user] = fullname + " <" + email + ">"
-+                fulluser = fullname + " <" + email + ">"
-+                self.users[user] = metadata_stream_to_writable_bytes(fulluser)
-                 self.emails[email] = user
- 
--        s = ''
-+        s = b''
-         for (key, val) in self.users.items():
--            s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
-+            keybytes = metadata_stream_to_writable_bytes(key)
-+            s += b"%s\t%s\n" % (keybytes.expandtabs(1), val.expandtabs(1))
- 
--        open(self.getUserCacheFilename(), 'w').write(s)
-+        open(self.getUserCacheFilename(), 'wb').write(s)
-         self.userMapFromPerforceServer = True
- 
-     def loadUserMapFromCache(self):
-         self.users = {}
-         self.userMapFromPerforceServer = False
-         try:
--            cache = open(self.getUserCacheFilename(), 'r')
-+            cache = open(self.getUserCacheFilename(), 'rb')
-             lines = cache.readlines()
-             cache.close()
-             for line in lines:
--                entry = line.strip().split("\t")
--                self.users[entry[0]] = entry[1]
-+                entry = line.strip().split(b"\t")
-+                self.users[entry[0].decode('utf_8')] = entry[1]
-         except IOError:
-             self.getUserMapFromPerforceServer()
- 
-@@ -3020,7 +3082,8 @@ class P4Sync(Command, P4UserMap):
-         if userid in self.users:
-             return self.users[userid]
-         else:
--            return "%s <a@b>" % userid
-+            userid_bytes = metadata_stream_to_writable_bytes(userid)
-+            return b"%s <a@b>" % userid_bytes
- 
-     def streamTag(self, gitStream, labelName, labelDetails, commit, epoch):
-         """ Stream a p4 tag.
-@@ -3043,9 +3106,10 @@ class P4Sync(Command, P4UserMap):
-             email = self.make_email(owner)
-         else:
-             email = self.make_email(self.p4UserId())
--        tagger = "%s %s %s" % (email, epoch, self.tz)
- 
--        gitStream.write("tagger %s\n" % tagger)
-+        gitStream.write("tagger ")
-+        gitStream.write(email)
-+        gitStream.write(" %s %s\n" % (epoch, self.tz))
- 
-         print("labelDetails=",labelDetails)
-         if 'Description' in labelDetails:
-@@ -3138,12 +3202,12 @@ class P4Sync(Command, P4UserMap):
-         self.gitStream.write("commit %s\n" % branch)
-         self.gitStream.write("mark :%s\n" % details["change"])
-         self.committedChanges.add(int(details["change"]))
--        committer = ""
-         if author not in self.users:
-             self.getUserMapFromPerforceServer()
--        committer = "%s %s %s" % (self.make_email(author), epoch, self.tz)
- 
--        self.gitStream.write("committer %s\n" % committer)
-+        self.gitStream.write("committer ")
-+        self.gitStream.write(self.make_email(author))
-+        self.gitStream.write(" %s %s\n" % (epoch, self.tz))
- 
-         self.gitStream.write("data <<EOT\n")
-         self.gitStream.write(details["desc"])
-@@ -4055,6 +4119,14 @@ class P4Clone(P4Sync):
-         if self.useClientSpec_from_options:
-             system(["git", "config", "--bool", "git-p4.useclientspec", "true"])
- 
-+        # persist any git-p4 encoding-handling config options passed in for clone:
-+        if gitConfig('git-p4.metadataDecodingStrategy'):
-+            system(["git", "config", "git-p4.metadataDecodingStrategy", gitConfig('git-p4.metadataDecodingStrategy')])
-+        if gitConfig('git-p4.metadataFallbackEncoding'):
-+            system(["git", "config", "git-p4.metadataFallbackEncoding", gitConfig('git-p4.metadataFallbackEncoding')])
-+        if gitConfig('git-p4.pathEncoding'):
-+            system(["git", "config", "git-p4.pathEncoding", gitConfig('git-p4.pathEncoding')])
-+
-         return True
- 
- class P4Unshelve(Command):
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index 5aff2abe8b5..2a5b8738ea3 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -142,10 +142,11 @@ start_p4d () {
- 
- p4_add_user () {
- 	name=$1 &&
-+	fullname="${2:-Dr. $1}"
- 	p4 user -f -i <<-EOF
- 	User: $name
- 	Email: $name@example.com
--	FullName: Dr. $name
-+	FullName: $fullname
- 	EOF
- }
- 
-diff --git a/t/t9835-git-p4-metadata-encoding-python2.sh b/t/t9835-git-p4-metadata-encoding-python2.sh
-new file mode 100755
-index 00000000000..09a13d54d2b
---- /dev/null
-+++ b/t/t9835-git-p4-metadata-encoding-python2.sh
-@@ -0,0 +1,185 @@
-+#!/bin/sh
-+
-+test_description='git p4 metadata encoding
-+
-+This test checks that the import process handles inconsistent text
-+encoding in p4 metadata (author names, commit messages, etc) without
-+failing, and produces maximally sane output in git.'
-+
-+. ./lib-git-p4.sh
-+
-+python_target_version='2'
-+
-+###############################
-+## SECTION REPEATED IN t9836 ##
-+###############################
-+
-+# HORRIBLE HACK TO ENSURE PYTHON VERSION!
-+# Weirdnesses:
-+#  - Looking for python2 and python3 in a very specific path (/usr/bin/)
-+#  - Code is inelegant
-+#  - Code is duplicated (like most of this test script)
-+#  - Test calls "git-p4.py" rather than "git-p4", because the latter references a specific path
-+
-+python_major_version=$(python -V 2>&1 | cut -c  8)
-+python_target_exists=$(/usr/bin/python$python_target_version -V 2>&1)
-+if ! test "$python_major_version" = "$python_target_version" && test "$python_target_exists"
-+then
-+	mkdir temp_python
-+	PATH="$(pwd)/temp_python:$PATH" && export PATH
-+	ln -s /usr/bin/python$python_target_version temp_python/python
-+fi
-+
-+python_major_version=$(python -V 2>&1 | cut -c  8)
-+if ! test "$python_major_version" = "$python_target_version"
-+then
-+	skip_all="skipping python$python_target_version-specific git p4 tests; python$python_target_version not available"
-+	test_done
-+fi
-+
-+remove_user_cache () {
-+	rm "$HOME/.gitp4-usercache.txt" || true
-+}
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+
-+		p4_add_user "utf8_author" "ǣuthor" &&
-+		P4USER=utf8_author &&
-+		touch file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "first CL has some utf-8 tǣxt" &&
-+
-+		p4_add_user "latin1_author" "$(echo æuthor |
-+			iconv -f utf8 -t latin1)" &&
-+		P4USER=latin1_author &&
-+		touch file2 &&
-+		p4 add file2 &&
-+		p4 submit -d "$(echo second CL has some latin-1 tæxt |
-+			iconv -f utf8 -t latin1)" &&
-+
-+		p4_add_user "cp1252_author" "$(echo æuthœr |
-+			iconv -f utf8 -t cp1252)" &&
-+		P4USER=cp1252_author &&
-+		touch file3 &&
-+		p4 add file3 &&
-+		p4 submit -d "$(echo third CL has sœme cp-1252 tæxt |
-+		  iconv -f utf8 -t cp1252)"
-+	)
-+'
-+
-+test_expect_success 'clone non-utf8 repo with strict encoding' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4.py clone --dest="$git" //depot@all 2>err &&
-+	grep "Decoding returned data failed!" err
-+'
-+
-+test_expect_success 'check utf-8 contents with legacy strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=legacy p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some utf-8 tǣxt" actual &&
-+		grep "ǣuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check latin-1 contents corrupted in git with legacy strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=legacy p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		badly_encoded_in_git=$(echo "some latin-1 tæxt" | iconv -f utf8 -t latin1) &&
-+		grep "$badly_encoded_in_git" actual &&
-+		bad_author_in_git="$(echo æuthor | iconv -f utf8 -t latin1)" &&
-+		grep "$bad_author_in_git" actual
-+	)
-+'
-+
-+test_expect_success 'check utf-8 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some utf-8 tǣxt" actual &&
-+		grep "ǣuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check latin-1 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some latin-1 tæxt" actual &&
-+		grep "æuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check cp-1252 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "sœme cp-1252 tæxt" actual &&
-+		grep "æuthœr" actual
-+	)
-+'
-+
-+test_expect_success 'check cp-1252 contents on later sync after clone with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$cli" &&
-+		P4USER=cp1252_author &&
-+		touch file4 &&
-+		p4 add file4 &&
-+		p4 submit -d "$(echo fourth CL has sœme more cp-1252 tæxt |
-+			iconv -f utf8 -t cp1252)"
-+	) &&
-+	(
-+		cd "$git" &&
-+
-+		git p4.py sync --branch=master &&
-+
-+		git log p4/master >actual &&
-+		cat actual &&
-+		grep "sœme more cp-1252 tæxt" actual &&
-+		grep "æuthœr" actual
-+	)
-+'
-+
-+############################
-+## / END REPEATED SECTION ##
-+############################
-+
-+test_expect_success 'legacy (latin-1 contents corrupted in git) is the default with python2' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=legacy p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		badly_encoded_in_git=$(echo "some latin-1 tæxt" | iconv -f utf8 -t latin1) &&
-+		grep "$badly_encoded_in_git" actual
-+	)
-+'
-+
-+test_done
-diff --git a/t/t9836-git-p4-metadata-encoding-python3.sh b/t/t9836-git-p4-metadata-encoding-python3.sh
-new file mode 100755
-index 00000000000..ee2f707218b
---- /dev/null
-+++ b/t/t9836-git-p4-metadata-encoding-python3.sh
-@@ -0,0 +1,186 @@
-+#!/bin/sh
-+
-+test_description='git p4 metadata encoding
-+
-+This test checks that the import process handles inconsistent text
-+encoding in p4 metadata (author names, commit messages, etc) without
-+failing, and produces maximally sane output in git.'
-+
-+. ./lib-git-p4.sh
-+
-+python_target_version='3'
-+
-+###############################
-+## SECTION REPEATED IN t9835 ##
-+###############################
-+
-+# HORRIBLE HACK TO ENSURE PYTHON VERSION!
-+# Weirdnesses:
-+#  - Looking for python2 and python3 in a very specific path (/usr/bin/)
-+#  - Code is inelegant
-+#  - Code is duplicated (like most of this test script)
-+#  - Test calls "git-p4.py" rather than "git-p4", because the latter references a specific path
-+
-+python_major_version=$(python -V 2>&1 | cut -c  8)
-+python_target_exists=$(/usr/bin/python$python_target_version -V 2>&1)
-+if ! test "$python_major_version" = "$python_target_version" && test "$python_target_exists"
-+then
-+	mkdir temp_python
-+	PATH="$(pwd)/temp_python:$PATH" && export PATH
-+	ln -s /usr/bin/python$python_target_version temp_python/python
-+fi
-+
-+python_major_version=$(python -V 2>&1 | cut -c  8)
-+if ! test "$python_major_version" = "$python_target_version"
-+then
-+	skip_all="skipping python$python_target_version-specific git p4 tests; python$python_target_version not available"
-+	test_done
-+fi
-+
-+remove_user_cache () {
-+	rm "$HOME/.gitp4-usercache.txt" || true
-+}
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+
-+		p4_add_user "utf8_author" "ǣuthor" &&
-+		P4USER=utf8_author &&
-+		touch file1 &&
-+		p4 add file1 &&
-+		p4 submit -d "first CL has some utf-8 tǣxt" &&
-+
-+		p4_add_user "latin1_author" "$(echo æuthor |
-+			iconv -f utf8 -t latin1)" &&
-+		P4USER=latin1_author &&
-+		touch file2 &&
-+		p4 add file2 &&
-+		p4 submit -d "$(echo second CL has some latin-1 tæxt |
-+			iconv -f utf8 -t latin1)" &&
-+
-+		p4_add_user "cp1252_author" "$(echo æuthœr |
-+			iconv -f utf8 -t cp1252)" &&
-+		P4USER=cp1252_author &&
-+		touch file3 &&
-+		p4 add file3 &&
-+		p4 submit -d "$(echo third CL has sœme cp-1252 tæxt |
-+		  iconv -f utf8 -t cp1252)"
-+	)
-+'
-+
-+test_expect_success 'clone non-utf8 repo with strict encoding' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4.py clone --dest="$git" //depot@all 2>err &&
-+	grep "Decoding returned data failed!" err
-+'
-+
-+test_expect_success 'check utf-8 contents with legacy strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=legacy p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some utf-8 tǣxt" actual &&
-+		grep "ǣuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check latin-1 contents corrupted in git with legacy strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=legacy p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		badly_encoded_in_git=$(echo "some latin-1 tæxt" | iconv -f utf8 -t latin1) &&
-+		grep "$badly_encoded_in_git" actual &&
-+		bad_author_in_git="$(echo æuthor | iconv -f utf8 -t latin1)" &&
-+		grep "$bad_author_in_git" actual
-+	)
-+'
-+
-+test_expect_success 'check utf-8 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some utf-8 tǣxt" actual &&
-+		grep "ǣuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check latin-1 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "some latin-1 tæxt" actual &&
-+		grep "æuthor" actual
-+	)
-+'
-+
-+test_expect_success 'check cp-1252 contents with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "sœme cp-1252 tæxt" actual &&
-+		grep "æuthœr" actual
-+	)
-+'
-+
-+test_expect_success 'check cp-1252 contents on later sync after clone with fallback strategy' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$cli" &&
-+		P4USER=cp1252_author &&
-+		touch file4 &&
-+		p4 add file4 &&
-+		p4 submit -d "$(echo fourth CL has sœme more cp-1252 tæxt |
-+			iconv -f utf8 -t cp1252)"
-+	) &&
-+	(
-+		cd "$git" &&
-+
-+		git p4.py sync --branch=master &&
-+
-+		git log p4/master >actual &&
-+		cat actual &&
-+		grep "sœme more cp-1252 tæxt" actual &&
-+		grep "æuthœr" actual
-+	)
-+'
-+
-+############################
-+## / END REPEATED SECTION ##
-+############################
-+
-+
-+test_expect_success 'fallback (both utf-8 and cp-1252 contents handled) is the default with python3' '
-+	test_when_finished cleanup_git &&
-+	test_when_finished remove_user_cache &&
-+	git p4.py clone --dest="$git" //depot@all &&
-+	(
-+		cd "$git" &&
-+		git log >actual &&
-+		grep "sœme cp-1252 tæxt" actual &&
-+		grep "æuthœr" actual
-+	)
-+'
-+
-+test_done
+Given the (unintentional, but significant) behavior differences
+between running under python2 and python3, I decided that it would be
+best to support existing behaviors either way - be able to test the
+new fallback behavior under python2, be able to maintain the old
+behavior under python3, and be able to maintain python3's strict
+behavior as well if desired (if, for example, cp1252 is likely to be a
+bad guess, and you want to handle problems explicitly).
 
-base-commit: 07330a41d66a2c9589b585a3a24ecdcf19994f19
--- 
-gitgitgadget
+Obviously, the submitted patch is RFC - please let me know if you see
+a better path forward!
+
+Thanks,
+Tao
