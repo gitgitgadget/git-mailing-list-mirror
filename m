@@ -2,129 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9BEC433EF
-	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 14:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FD2C433F5
+	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 15:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347473AbiDKOuh convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 11 Apr 2022 10:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
+        id S1347859AbiDKPT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Apr 2022 11:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbiDKOue (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Apr 2022 10:50:34 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Apr 2022 07:48:14 PDT
-Received: from dia.uberspace.de (dia.uberspace.de [185.26.156.221])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD2BE222BA
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 07:48:14 -0700 (PDT)
-Received: (qmail 2772 invoked by uid 989); 11 Apr 2022 14:41:32 -0000
-Authentication-Results: dia.uberspace.de;
-        auth=pass (plain)
-From:   Christoph Groth <christoph@grothesque.org>
-To:     git@vger.kernel.org
-Subject: git-bisect behaves differently when started in equivalent ways
-Date:   Mon, 11 Apr 2022 16:41:28 +0200
-Message-ID: <878rsbof6v.fsf@drac>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S1347783AbiDKPTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Apr 2022 11:19:11 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B893BA4E
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 08:16:54 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id x20so4197934qvl.10
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 08:16:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=z8cfX+cYiB5QKdL0ThlA0XiqTdniPVzlWTB83IZQ6/s=;
+        b=hSsGrV/hnAT+mr4o7OOxJNJWymJwahva574UXwTF0o3A7JzQnTt5a+0Jom8ped5NRd
+         M1kYB3FBosiRHM/xkageT87Tktn+9e4F+eV8iw6464+buwPIQOb83ts9IKSQaiDQ5ymw
+         oBnP4G+/2Xk2/4M+KkLuaP5+sjAyXv6FaaL28u6Y2CKuWTBr6Kk66GxHwRLqhDkugah9
+         5C7z1b9/zz56W0WIwbTtk3Aun3CJKuVYgDbBXd1Xti3HAYvrNQTT1Uyo77+cD2Xasqkz
+         kJlsG5eF51B0A+bSonMtri+a0/OBewH2KyF8TPlisjGksSdwceRDL2jT1NbJzuCqy4D6
+         ydZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=z8cfX+cYiB5QKdL0ThlA0XiqTdniPVzlWTB83IZQ6/s=;
+        b=xSKGfdQEuOPaNuhEFX4G7IA98vHVk+uWHaD5ybp0SIev6+0I7Xt0bor7RR99QmYU0B
+         FAcILv6eanvMRYNA/35kVqQA9jBQpSxxjceJjWdf0EZjAlcjUNiw+wHYacY9TxPv46AD
+         Ap4+7V9sZWzb4AwlomVl7Z2BtT1wboNAdBvOvKJEnLlRKMoIl59z8I3qelLagZMUHoY6
+         t6kBq4JznQ/Jj++bX4bEcQfRCRXOLjQRsygNWgCNllwegk/Xos6W5LEFHVEeGP1fuxfy
+         dJl/fBB6dpBbtKSlAhpOkXUsKeaK9sNQQKSDWqm3HlcQLXD6v7MYDI4F7urYiWTMkF7w
+         gAog==
+X-Gm-Message-State: AOAM531vcr2Vqz9/im4QVJJz7z3VluqiXPI9FvAOC4k2i3QMWT6Bw4x6
+        De2eIqRf2y6Y7+A+xccOuowP/H6xRll1f5wW
+X-Google-Smtp-Source: ABdhPJyI3Gtp5HuaKpi//MssObIIQ5Of+oTbCKiEiGKnEMtFOUR+0XgPUPKEhNr47o4rwEZ4ELU+RQ==
+X-Received: by 2002:a05:6214:4104:b0:42c:1db0:da28 with SMTP id kc4-20020a056214410400b0042c1db0da28mr27616209qvb.67.1649690213632;
+        Mon, 11 Apr 2022 08:16:53 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c10-20020ac87dca000000b002e1db1b7b10sm25327820qte.25.2022.04.11.08.16.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Apr 2022 08:16:52 -0700 (PDT)
+Date:   Mon, 11 Apr 2022 11:16:51 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Taylor Blau <ttaylorr@github.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] git-scm.com Heroku credits update
+Message-ID: <YlRGY4j/YQ4zJiM9@nand.local>
+References: <YkcmtqcFaO7v1jW5@nand.local>
+ <nycvar.QRO.7.76.6.2204072346410.347@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Rspamd-Bar: --
-X-Rspamd-Report: MIME_GOOD(-0.1) MID_RHS_NOT_FQDN(0.5) BAYES_HAM(-2.996749)
-X-Rspamd-Score: -2.596749
-Received: from unknown (HELO unkown) (::1)
-        by dia.uberspace.de (Haraka/2.8.28) with ESMTPSA; Mon, 11 Apr 2022 16:41:32 +0200
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2204072346410.347@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Thu, Apr 07, 2022 at 11:54:18PM +0200, Johannes Schindelin wrote:
+> > To that end, we have a few options about what to do with the website in
+> > the future:
+> >
+> >   - Convert the Rails application into a static site that could be
+> >     hosted elsewhere for free. The non-static portions of the site would
+> >     have to become static in one way or another, and we'd have to come
+> >     up with an alternative search mechanism to replace the existing one.
+>
+> This is my preference (and I would love to contribute the time, but am
+> quite short on that resource to help much).
+>
+> It looks to me as if the only blocker is the site-search, and there are
+> ways to pre-generate an index e.g. in a Jekyll site (which we could host
+> on GitHub Pages, incidentally, which would be a very nice setup indeed).
 
-I found a puzzling behavior with git-bisect for which I was unable to
-find any explanation.  Since this might be a bug, I report it here.
+There are a few other smaller-ish things that we are using Rails for.
+But most of them are limited to "fetch this list of things from Postgres
+and format it in HTML" which could easily be automated and checked into
+the static version of git-scm.com's repo.
 
-cheers
-Christoph
+> The other thing the Rails app does is to regularly poll for updated
+> versions, e.g. Git for Windows and Git for Mac. This strikes me as
+> something that would benefit from the transparency provided by having a
+> GitHub workflow to perform said polling instead of the opaque Rails app on
+> Heroku with no public log of when it ran and whether it was successful.
 
+Yeah, agreed. Another "behind the scenes" task is running:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+    heroku run -a git-scm rake preindex
+    heroku run -a git-scm rake downloads
+    heroku run -a git-scm rake search_index
 
-While bisecting a regression caused by a backwards-incompatible change
-in the sympy project, I noticed that “git bisect” can behave
-differently when started in different but supposedly equivalent ways.
+, which I do after Junio pushes new tags. (FWIW, these jobs should run
+on a timer, too, but I like to update the site with new links around the
+time a release is tagged as opposed to having to wait for the automated
+job to kick off).
 
-The following complete log demonstrates the issue.
+I imagine that this would be replaced with some kind of GitHub workflow,
+and the result (any new pages, updated search indexes, etc.) would be
+committed into the repository transparently. That workflow could be
+automated as well and get kicked off when new tags are pushed to git/git
+(I think).
 
-For the first run, I clone the “sympy” repository and start bisect with
-“git bisect start” (as shown in the first example of the git bisect
-manpage).  I declare a good and a bad commit and am asked to estimate
-a specific commit.  I declare this one to be good (which it is for my
-particular problem), but this causes git to remark that a commit is
-“both good and bad”.
-
-For the second run, I provide the bad and the good commit to git-bisect
-start right away.  I am asked to examine the same commit as before to
-which I give the same assessment.  This time, git-bisect accepts this.
-
-# Preparation
-/tmp% git clone https://github.com/sympy/sympy.git
-Cloning into 'sympy'...
-(...)
-/tmp% cd sympy 
-/tmp/sympy% git checkout sympy-1.7.1
-Note: switching to 'sympy-1.7.1'.
-(...)
-HEAD is now at 9e8f62e059 Merge pull request #20592 from oscarbenjamin/pr_latex_filename
-
-# First run
-/tmp/sympy% git bisect start
-/tmp/sympy% git bisect good
-/tmp/sympy% git bisect bad sympy-1.10.1
-Bisecting: a merge base must be tested
-[da03c3227771953b0dd175b5b2ef65ebb937b0df] Merge pull request #20228 from sidhu1012/perf
-/tmp/sympy% git describe
-sympy-1.6-2010-gda03c32277
-/tmp/sympy% git bisect good
-f5bba2a7147ef8a6980ff043e93dd038c14bb9bc was both good and bad
-
-# Second run
-/tmp/sympy% git bisect reset
-Previous HEAD position was da03c32277 Merge pull request #20228 from sidhu1012/perf
-HEAD is now at 9e8f62e059 Merge pull request #20592 from oscarbenjamin/pr_latex_filename
-/tmp/sympy% git bisect start sympy-1.10.1 sympy-1.7.1
-Bisecting: a merge base must be tested
-[da03c3227771953b0dd175b5b2ef65ebb937b0df] Merge pull request #20228 from sidhu1012/perf
-/tmp/sympy% git describe
-sympy-1.6-2010-gda03c32277
-/tmp/sympy% git bisect good
-Bisecting: 2606 revisions left to test after this (roughly 11 steps)
-[b335cf582f4a789b725cc37822d6eed42c8d9e71] add test and fix space
-
-What did you expect to happen? (Expected behavior)
-
-I expected git-bisect to behave in the same way both times.
-
-What happened instead? (Actual behavior)
-
-One time it complains that a commit is “both good and bad”, one time it
-does not.
-
-Anything else you want to add:
-
-I could not find any explanation for the difference.  If it is
-intentional I suggest documenting it more clearly.
-
-
-[System Info]
-git version:
-git version 2.30.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.0-13-amd64 #1 SMP Debian 5.10.106-1 (2022-03-17) x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
+Thanks,
+Taylor
