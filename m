@@ -2,67 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BBFC433EF
-	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 13:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0153C433F5
+	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 13:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346394AbiDKNSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Apr 2022 09:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
+        id S238641AbiDKN3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Apr 2022 09:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232830AbiDKNSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Apr 2022 09:18:42 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDCB73AA48
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 06:16:27 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id bv19so7783110ejb.6
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 06:16:27 -0700 (PDT)
+        with ESMTP id S1346513AbiDKN25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Apr 2022 09:28:57 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E48C3BBD9
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 06:26:38 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id h16so9925917wmd.0
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 06:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=x/qs09DwUGgcUfu9/X1p1OGPU62cBATMoPuiVLxZ+AQ=;
-        b=R8smVg8SWruSPkkM2mz7EjINC104FAOyJQXQCZtQUqqOX88rMfcNcmhRAGjzDFEkqL
-         JWJ4uhrnlclrfrGOGwtHdrFMq7BI4UFb4T0zq58UAt4z8fgKh3NsNyhxsEL9RAgnSGpy
-         sS7M7qL/vprVNZp0aaMhaIWrqeGCNJq3XOFyE/LhFWLw4+JX0Vuhcw6ye45Rdtf/zeAA
-         GiUHjrynrZzy7vi2OhV/mCCLqiL3zUT4hpNZpPHURAeVUsdJO+sGZYCfYOKUG5i3kABP
-         sM6aQTjN6VqnnAk70lCoe5msn0LvDZy6wdQzf6j58XnSH5NpXH1VrVmN+ul5M+F9raeQ
-         zzvQ==
+        bh=LczNiIwvAF5unFylLBECQQ7PgCGAQqXaBiP0V1YzzhM=;
+        b=VUJDoc/Zx2NhGfHUXwqOXignJflQqXQPlV1o2k4xwEtFS0wU1V5hSEGNqpm2qjBbjn
+         ThlYMBL/KNmMCmqjEDYa7J9ZC9xKiBOHzk2wo2xcJW9+Y323TWeKeAyFtWKulIO0ZE7H
+         LMpfcsSgoMkgSnIufLq7ttOC+NuZmgEfy+eLytRsK7csr7beYxrlsAcxrpvh8GBNLY3M
+         uBG5+XN7Z7GARpOuXG7VrEpY1vbqG3JCZhE7/jIukJqn5W8Mly4s3mMmzzcqli2jc+V6
+         GRUpYD01Sdaxw2v1TedoDnrTSAM3Y+VFJy463k7QZLIcKJmdqOLO10noUTO4gT9B4+wg
+         l15w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=x/qs09DwUGgcUfu9/X1p1OGPU62cBATMoPuiVLxZ+AQ=;
-        b=H6OP2vCc5UYveZs2JusJUh3OZTXD9E+vrqirLQ9K/VAE7gNFKBhazZ0RK/SvKefLeV
-         WYy6Z9g8uYARDMqphxkDmIl1bJAdU2UHHm0F8dKOu+EDzYyIcWr0OTNa1wZF/+ib24a4
-         tis7CWogwxyUWsjk00ETWwPbqfrZFtcAx+/F9tLeo6GnAWnrziJ97D+YnM4vSc4huNUn
-         f+rJmE9cjTiplviAkcodrShzoXQBL0Fl6c/7yF1Rj1Yy3xA894HJ+sZOvWXN2M+E4cXF
-         k7nOrevqs4soaZc63DIcmu7P7w/h5XEl9RUX5LAKs/Wo1J2jUUbqWZfi7kOjtx3jm41p
-         x1fg==
-X-Gm-Message-State: AOAM530wMC78I4fBsKoSI0F85blSyRiK4aI9M0cwqU1OA4B+Fj6UVrmh
-        NIp4QR8QFWCHwsGFiJpa4gbPviLk/D4=
-X-Google-Smtp-Source: ABdhPJw3Go8/66wX4m55S6gZ0WMPNaRQezzKHfO7oUQYy5/pMhsRHBZctGk6siQredUWZ/sWpTWauQ==
-X-Received: by 2002:a17:907:7205:b0:6e7:ee50:ea94 with SMTP id dr5-20020a170907720500b006e7ee50ea94mr30161343ejc.351.1649682986269;
-        Mon, 11 Apr 2022 06:16:26 -0700 (PDT)
+        bh=LczNiIwvAF5unFylLBECQQ7PgCGAQqXaBiP0V1YzzhM=;
+        b=VDVU8oypILb41drBtsp2g3bo4LVUtHlBNDovl11c1AR3S9XLxi/v9jihw/cjBa58o9
+         Q5OAaYUiF4VfMaD/yefwwnHudT4El1Rsmf47+5+6GOz5fa+aB0PfAHjsclnsiUibs1bX
+         Zd+uEecVyjocsPakNhXUBLKofr1FolkjPwrFHnksGGFYzaHzub7IQ/ZM0ZJwM4K4+VtQ
+         6WIBWfTdsXOevjZfrh9bKCngJBwEYcNZn9aywtq6ZHaqUuJRRyMle4RzEvFiLirbrnMS
+         rrb/LIEpd2kVFdo4f9PWnBjAy3Ljwiu20j97FdJpcCJhYryrp+b6Ize+fb5gWcFVvrNJ
+         v2gA==
+X-Gm-Message-State: AOAM532eQesT1rQKjQp86RWiTkZkdAiMdlY42rhLBhzXd6aaL6kx+he1
+        Bj1eNRiwl9BXgbvf8cuMmhs=
+X-Google-Smtp-Source: ABdhPJx7Q5uYm2MDxdHBvS7Pked2dH+H7wp7CyGTJC0Myd0JTpjsTXrpK9uu5dCzY+Kgaj77DXvSGw==
+X-Received: by 2002:a1c:f005:0:b0:38c:b6d5:5c2a with SMTP id a5-20020a1cf005000000b0038cb6d55c2amr29297614wmb.89.1649683596282;
+        Mon, 11 Apr 2022 06:26:36 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.224])
-        by smtp.gmail.com with ESMTPSA id q16-20020a056402519000b0041d77e14005sm2774210edd.82.2022.04.11.06.16.24
+        by smtp.gmail.com with ESMTPSA id p8-20020a5d59a8000000b00204178688d3sm30289160wrr.100.2022.04.11.06.26.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Apr 2022 06:16:25 -0700 (PDT)
-Message-ID: <ed6656e0-a865-319e-0f56-23ab1da3eef3@gmail.com>
-Date:   Mon, 11 Apr 2022 14:16:19 +0100
+        Mon, 11 Apr 2022 06:26:35 -0700 (PDT)
+Message-ID: <35160d46-d337-2110-f968-238abb7e9f0e@gmail.com>
+Date:   Mon, 11 Apr 2022 14:26:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 1/6] t0066: improve readablity of dir-iterator tests
+Subject: Re: [RFC PATCH 3/6] dir-iterator: refactor dir_iterator_advance()
 Content-Language: en-GB-large
 To:     Plato Kiorpelidis <kioplato@gmail.com>, git@vger.kernel.org
-Cc:     matheus.bernardino@usp.br, mhagger@alum.mit.edu
+Cc:     matheus.bernardino@usp.br, mhagger@alum.mit.edu,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 References: <20220410111852.2097418-1-kioplato@gmail.com>
- <20220410111852.2097418-2-kioplato@gmail.com>
+ <20220410111852.2097418-4-kioplato@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20220410111852.2097418-2-kioplato@gmail.com>
+In-Reply-To: <20220410111852.2097418-4-kioplato@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -72,29 +73,28 @@ X-Mailing-List: git@vger.kernel.org
 Hi Plato
 
 On 10/04/2022 12:18, Plato Kiorpelidis wrote:
-> Be consistent throughout the dir-iterator tests regarding the order in
-> which we:
->    * create test directories
->    * create expected outputs
->    * test if actual and expected outputs differ
+> Simplify dir_iterator_advance by switch from iterative to recursive
+> implementation. In each recursive step one action is performed.
+> 
+> This makes dir-iterator easier to work with, understand and introduce
+> new functionality.
 
-When writing a commit message it is important to explain why you are 
-making the changes in the patch, rather than just describe the changes 
-themselves.
+I think that this message could explain a bit more about why it is 
+necessary to use a recursive approach. As we are implementing an 
+iterator we cannot keep state in the stack between iterations so how 
+does using recursive approach help us?
 
-In general modernizing or standardizing existing tests before adding new 
-ones is a good idea. However it is important to do it in a way that lets 
-reviewers see there are no unintended changes. In this patch so much is 
-changed it's really hard to tell if you have changed any of the tests or 
-not. It would be much easier if you had not renamed all the directories 
-and files that are created and renamed the tests as well.
+I reviewed this series as a way to learn the directory iterator code as 
+I'd not looked at it before. Having read the existing code I think the 
+it is fairly easy to follow. I'm not sure the changes here improve that. 
+I also found these changes harder to follow because they renamed 
+existing functions and variables in addition to moving the code around.
 
-I think that having separate setup tests makes sense as we're going to 
-want to test different iteration schemes over the same hierarchy but it 
-would be helpful to have the "expect" files written in the same test 
-that calls test_cmp. That way it is much easier to debug test failures 
-in the CI as it one can see the contents of "expect" as well as the diff 
-from test_cmp in the CI output.
+In order in implement returning the directory name after its contents I 
+think all we need is to remember whether we've returned the name when we 
+readdir() returns NULL so we don't pop it too soon. It's not clear that 
+we need a lot of refactoring to do that, especially as the patches you 
+linked to in the cover letter seem to avoid that.
 
 Best Wishes
 
@@ -102,275 +102,343 @@ Phillip
 
 > Signed-off-by: Plato Kiorpelidis <kioplato@gmail.com>
 > ---
->   t/t0066-dir-iterator.sh | 227 +++++++++++++++++++++-------------------
->   1 file changed, 118 insertions(+), 109 deletions(-)
+>   dir-iterator.c          | 225 ++++++++++++++++++++++++++--------------
+>   t/t0066-dir-iterator.sh |   4 +-
+>   2 files changed, 148 insertions(+), 81 deletions(-)
 > 
+> diff --git a/dir-iterator.c b/dir-iterator.c
+> index b17e9f970a..0f9ed95958 100644
+> --- a/dir-iterator.c
+> +++ b/dir-iterator.c
+> @@ -7,8 +7,7 @@ struct dir_iterator_level {
+>   	DIR *dir;
+>   
+>   	/*
+> -	 * The length of the directory part of path at this level
+> -	 * (including a trailing '/'):
+> +	 * The length of the directory part of path at this level.
+>   	 */
+>   	size_t prefix_len;
+>   };
+> @@ -34,8 +33,9 @@ struct dir_iterator_int {
+>   	size_t levels_alloc;
+>   
+>   	/*
+> -	 * A stack of levels. levels[0] is the uppermost directory
+> -	 * that will be included in this iteration.
+> +	 * A stack of levels. levels[0] is the root directory.
+> +	 * It won't be included in the iteration, but iteration will happen
+> +	 * inside it's subdirectories.
+>   	 */
+>   	struct dir_iterator_level *levels;
+>   
+> @@ -45,34 +45,53 @@ struct dir_iterator_int {
+>   
+>   /*
+>    * Push a level in the iter stack and initialize it with information from
+> - * the directory pointed by iter->base->path. It is assumed that this
+> - * strbuf points to a valid directory path. Return 0 on success and -1
+> - * otherwise, setting errno accordingly and leaving the stack unchanged.
+> + * the directory pointed by iter->base->path. Don't open the directory.
+> + *
+> + * Return 1 on success.
+> + * Return 0 when `iter->base->path` isn't a directory.
+>    */
+>   static int push_level(struct dir_iterator_int *iter)
+>   {
+>   	struct dir_iterator_level *level;
+>   
+> +	if (!S_ISDIR(iter->base.st.st_mode)) return 0;
+> +
+>   	ALLOC_GROW(iter->levels, iter->levels_nr + 1, iter->levels_alloc);
+>   	level = &iter->levels[iter->levels_nr++];
+>   
+> -	if (!is_dir_sep(iter->base.path.buf[iter->base.path.len - 1]))
+> -		strbuf_addch(&iter->base.path, '/');
+> +	level->dir = NULL;
+> +
+>   	level->prefix_len = iter->base.path.len;
+>   
+> -	level->dir = opendir(iter->base.path.buf);
+> -	if (!level->dir) {
+> -		int saved_errno = errno;
+> -		if (errno != ENOENT) {
+> -			warning_errno("error opening directory '%s'",
+> -				      iter->base.path.buf);
+> -		}
+> -		iter->levels_nr--;
+> +	return 1;
+> +}
+> +
+> +/*
+> + * Activate most recent pushed level.
+> + *
+> + * Return 1 on success.
+> + * Return -1 on failure when errno == ENOENT, leaving the stack unchanged.
+> + * Return -2 on failure when errno != ENOENT, leaving the stack unchanged.
+> + */
+> +static int activate_level(struct dir_iterator_int *iter)
+> +{
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+> +	int saved_errno;
+> +
+> +	if (level->dir)
+> +		return 1;
+> +
+> +	if ((level->dir = opendir(iter->base.path.buf)) != NULL)
+> +		return 1;
+> +
+> +	saved_errno = errno;
+> +	if (errno != ENOENT) {
+> +		warning_errno("error opening directory '%s'", iter->base.path.buf);
+>   		errno = saved_errno;
+> -		return -1;
+> +		return -2;
+>   	}
+> -
+> -	return 0;
+> +	errno = saved_errno;
+> +	return -1;
+>   }
+>   
+>   /*
+> @@ -81,12 +100,10 @@ static int push_level(struct dir_iterator_int *iter)
+>    */
+>   static int pop_level(struct dir_iterator_int *iter)
+>   {
+> -	struct dir_iterator_level *level =
+> -		&iter->levels[iter->levels_nr - 1];
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+>   
+>   	if (level->dir && closedir(level->dir))
+> -		warning_errno("error closing directory '%s'",
+> -			      iter->base.path.buf);
+> +		warning_errno("error closing directory '%s'", iter->base.path.buf);
+>   	level->dir = NULL;
+>   
+>   	return --iter->levels_nr;
+> @@ -94,82 +111,121 @@ static int pop_level(struct dir_iterator_int *iter)
+>   
+>   /*
+>    * Populate iter->base with the necessary information on the next iteration
+> - * entry, represented by the given dirent de. Return 0 on success and -1
+> - * otherwise, setting errno accordingly.
+> + * entry, represented by the given relative path to the lowermost directory,
+> + * d_name.
+> + *
+> + * Return values:
+> + * 1 on successful exposure of the provided entry.
+> + * -1 on failed exposure because entry does not exist.
+> + * -2 on failed exposure because of error other than ENOENT.
+>    */
+> -static int prepare_next_entry_data(struct dir_iterator_int *iter,
+> -				   struct dirent *de)
+> +static int expose_entry(struct dir_iterator_int *iter, char *d_name)
+>   {
+> -	int err, saved_errno;
+> +	int stat_err;
+>   
+> -	strbuf_addstr(&iter->base.path, de->d_name);
+> -	/*
+> -	 * We have to reset these because the path strbuf might have
+> -	 * been realloc()ed at the previous strbuf_addstr().
+> -	 */
+> -	iter->base.relative_path = iter->base.path.buf +
+> -				   iter->levels[0].prefix_len;
+> -	iter->base.basename = iter->base.path.buf +
+> -			      iter->levels[iter->levels_nr - 1].prefix_len;
+> +	strbuf_addch(&iter->base.path, '/');
+> +	strbuf_addstr(&iter->base.path, d_name);
+>   
+>   	if (iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS)
+> -		err = stat(iter->base.path.buf, &iter->base.st);
+> +		stat_err = stat(iter->base.path.buf, &iter->base.st);
+>   	else
+> -		err = lstat(iter->base.path.buf, &iter->base.st);
+> +		stat_err = lstat(iter->base.path.buf, &iter->base.st);
+>   
+> -	saved_errno = errno;
+> -	if (err && errno != ENOENT)
+> +	if (stat_err && errno != ENOENT) {
+>   		warning_errno("failed to stat '%s'", iter->base.path.buf);
+> +		return -2;  // Stat failed not with ENOENT.
+> +	} else if (stat_err && errno == ENOENT)
+> +		return -1;  // Stat failed with ENOENT.
+>   
+> -	errno = saved_errno;
+> -	return err;
+> +	/*
+> +	 * We have to reset relative path and basename because the path strbuf
+> +	 * might have been realloc()'ed at the previous strbuf_addstr().
+> +	 */
+> +
+> +	iter->base.relative_path =
+> +		iter->base.path.buf + iter->levels[0].prefix_len + 1;
+> +	iter->base.basename =
+> +		iter->base.path.buf + iter->levels[iter->levels_nr - 1].prefix_len + 1;
+> +
+> +	return 1;
+>   }
+>   
+>   int dir_iterator_advance(struct dir_iterator *dir_iterator)
+>   {
+> -	struct dir_iterator_int *iter =
+> -		(struct dir_iterator_int *)dir_iterator;
+> -
+> -	if (S_ISDIR(iter->base.st.st_mode) && push_level(iter)) {
+> -		if (errno != ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
+> -			goto error_out;
+> -		if (iter->levels_nr == 0)
+> -			goto error_out;
+> +	struct dir_iterator_int *iter = (struct dir_iterator_int *)dir_iterator;
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+> +
+> +	struct dirent *dir_entry = NULL;
+> +
+> +	int expose_err, activate_err;
+> +
+> +	/* For shorter code width-wise, more readable */
+> +	unsigned int PEDANTIC = iter->flags & DIR_ITERATOR_PEDANTIC;
+> +
+> +	/*
+> +	 * Attempt to open the directory of the last level if not opened yet.
+> +	 *
+> +	 * Remember that we ignore ENOENT errors so that the user of this API
+> +	 * can remove entries between calls to `dir_iterator_advance()`.
+> +	 * We care for errors other than ENOENT only when PEDANTIC is enabled.
+> +	 */
+> +
+> +	activate_err = activate_level(iter);
+> +
+> +	if (activate_err == -2 && PEDANTIC)
+> +		goto error_out;
+> +	else if (activate_err == -2 || activate_err == -1) {
+> +		/*
+> +		 * We activate the root level at `dir_iterator_begin()`.
+> +		 * Therefore, there isn't any case to run out of levels.
+> +		 */
+> +
+> +		--iter->levels_nr;
+> +
+> +		return dir_iterator_advance(dir_iterator);
+>   	}
+>   
+> -	/* Loop until we find an entry that we can give back to the caller. */
+> -	while (1) {
+> -		struct dirent *de;
+> -		struct dir_iterator_level *level =
+> -			&iter->levels[iter->levels_nr - 1];
+> +	strbuf_setlen(&iter->base.path, level->prefix_len);
+> +
+> +	errno = 0;
+> +	dir_entry = readdir(level->dir);
+>   
+> -		strbuf_setlen(&iter->base.path, level->prefix_len);
+> -		errno = 0;
+> -		de = readdir(level->dir);
+> -
+> -		if (!de) {
+> -			if (errno) {
+> -				warning_errno("error reading directory '%s'",
+> -					      iter->base.path.buf);
+> -				if (iter->flags & DIR_ITERATOR_PEDANTIC)
+> -					goto error_out;
+> -			} else if (pop_level(iter) == 0) {
+> +	if (dir_entry == NULL) {
+> +		if (errno) {
+> +			warning_errno("errno reading dir '%s'", iter->base.path.buf);
+> +			if (iter->flags & DIR_ITERATOR_PEDANTIC) goto error_out;
+> +			return dir_iterator_advance(dir_iterator);
+> +		} else {
+> +			/*
+> +			 * Current directory has been iterated through.
+> +			 */
+> +
+> +			if (pop_level(iter) == 0)
+>   				return dir_iterator_abort(dir_iterator);
+> -			}
+> -			continue;
+> +
+> +			return dir_iterator_advance(dir_iterator);
+>   		}
+> +	}
+>   
+> -		if (is_dot_or_dotdot(de->d_name))
+> -			continue;
+> +	if (is_dot_or_dotdot(dir_entry->d_name))
+> +		return dir_iterator_advance(dir_iterator);
+>   
+> -		if (prepare_next_entry_data(iter, de)) {
+> -			if (errno != ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
+> -				goto error_out;
+> -			continue;
+> -		}
+> +	/*
+> +	 * Successfully read entry from current directory level.
+> +	 */
+>   
+> -		return ITER_OK;
+> -	}
+> +	expose_err = expose_entry(iter, dir_entry->d_name);
+> +
+> +	if (expose_err == -2 && PEDANTIC)
+> +		goto error_out;
+> +
+> +	if (expose_err == 1)
+> +		push_level(iter);
+> +
+> +	if (expose_err == -1)
+> +		return dir_iterator_advance(dir_iterator);
+> +
+> +	return ITER_OK;
+>   
+>   error_out:
+>   	dir_iterator_abort(dir_iterator);
+> @@ -207,6 +263,7 @@ struct dir_iterator *dir_iterator_begin(const char *path, unsigned int flags)
+>   
+>   	strbuf_init(&iter->base.path, PATH_MAX);
+>   	strbuf_addstr(&iter->base.path, path);
+> +	strbuf_trim_trailing_dir_sep(&iter->base.path);
+>   
+>   	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+>   	iter->levels_nr = 0;
+> @@ -226,6 +283,16 @@ struct dir_iterator *dir_iterator_begin(const char *path, unsigned int flags)
+>   		goto error_out;
+>   	}
+>   
+> +	if (push_level(iter) != 1) {
+> +		saved_errno = ENOTDIR;
+> +		goto error_out;
+> +	}
+> +
+> +	if (activate_level(iter) != 1) {
+> +		saved_errno = errno;
+> +		goto error_out;
+> +	}
+> +
+>   	return dir_iterator;
+>   
+>   error_out:
 > diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
-> index 63a1a45cd3..fb20219487 100755
+> index 0a98dd54ba..2437ab21c4 100755
 > --- a/t/t0066-dir-iterator.sh
 > +++ b/t/t0066-dir-iterator.sh
-> @@ -5,145 +5,154 @@ test_description='Test the dir-iterator functionality'
->   TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
-> -test_expect_success 'setup' '
-> -	mkdir -p dir &&
-> -	mkdir -p dir/a/b/c/ &&
-> -	>dir/b &&
-> -	>dir/c &&
-> -	mkdir -p dir/d/e/d/ &&
-> -	>dir/a/b/c/d &&
-> -	>dir/a/e &&
-> -	>dir/d/e/d/a &&
-> -
-> -	mkdir -p dir2/a/b/c/ &&
-> -	>dir2/a/b/c/d
-> +test_expect_success 'setup -- dir w/ three nested dirs w/ file' '
-> +	mkdir -p dir6/a/b/c &&
-> +	>dir6/a/b/c/d &&
-> +
-> +
-> +	cat >expected-out <<-EOF
-> +	[d] (a) [a] ./dir6/a
-> +	[d] (a/b) [b] ./dir6/a/b
-> +	[d] (a/b/c) [c] ./dir6/a/b/c
-> +	[f] (a/b/c/d) [d] ./dir6/a/b/c/d
-> +	EOF
-> +'
-> +test_expect_success 'iteration of dir w/ three nested dirs w/ file' '
-> +	test-tool dir-iterator ./dir6 >actual-out &&
-> +	test_cmp expected-out actual-out
+> @@ -285,7 +285,7 @@ test_expect_success 'iteration of dir w/ complex structure w/o symlinks' '
 >   '
 >   
-> -test_expect_success 'dir-iterator should iterate through all files' '
-> -	cat >expected-iteration-sorted-output <<-EOF &&
-> -	[d] (a) [a] ./dir/a
-> -	[d] (a/b) [b] ./dir/a/b
-> -	[d] (a/b/c) [c] ./dir/a/b/c
-> -	[d] (d) [d] ./dir/d
-> -	[d] (d/e) [e] ./dir/d/e
-> -	[d] (d/e/d) [d] ./dir/d/e/d
-> -	[f] (a/b/c/d) [d] ./dir/a/b/c/d
-> -	[f] (a/e) [e] ./dir/a/e
-> -	[f] (b) [b] ./dir/b
-> -	[f] (c) [c] ./dir/c
-> -	[f] (d/e/d/a) [a] ./dir/d/e/d/a
-> +test_expect_success 'setup -- dir w/ complex structure w/o symlinks' '
-> +	mkdir -p dir11/a/b/c/ &&
-> +	>dir11/b &&
-> +	>dir11/c &&
-> +	>dir11/a/e &&
-> +	>dir11/a/b/c/d &&
-> +	mkdir -p dir11/d/e/d/ &&
-> +	>dir11/d/e/d/a &&
-> +
-> +
-> +	cat >expected-sorted-out <<-EOF
-> +	[d] (a) [a] ./dir11/a
-> +	[d] (a/b) [b] ./dir11/a/b
-> +	[d] (a/b/c) [c] ./dir11/a/b/c
-> +	[d] (d) [d] ./dir11/d
-> +	[d] (d/e) [e] ./dir11/d/e
-> +	[d] (d/e/d) [d] ./dir11/d/e/d
-> +	[f] (a/b/c/d) [d] ./dir11/a/b/c/d
-> +	[f] (a/e) [e] ./dir11/a/e
-> +	[f] (b) [b] ./dir11/b
-> +	[f] (c) [c] ./dir11/c
-> +	[f] (d/e/d/a) [a] ./dir11/d/e/d/a
->   	EOF
-> +'
-> +test_expect_success 'iteration of dir w/ complex structure w/o symlinks' '
-> +	test-tool dir-iterator ./dir11 >actual-out &&
-> +	sort actual-out >actual-sorted-out &&
+>   test_expect_success POSIXPERM,SANITY \
+> -'dir_iterator_advance() should fail on root dir w/o perms' '
+> +'dir_iterator_begin() should fail on root dir w/o perms' '
 >   
-> -	test-tool dir-iterator ./dir >out &&
-> -	sort out >./actual-iteration-sorted-output &&
-> +	test_cmp expected-sorted-out actual-sorted-out
-> +'
+>   	mkdir -p dir12/a &&
+>   	>dir12/a/b &&
+> @@ -293,7 +293,7 @@ test_expect_success POSIXPERM,SANITY \
 >   
-> -	test_cmp expected-iteration-sorted-output actual-iteration-sorted-output
-> +test_expect_success 'dir_iterator_begin() should fail upon inexistent paths' '
-> +	echo "dir_iterator_begin failure: ENOENT" >expected-inexistent-path-out &&
-> +
-> +	test_must_fail test-tool dir-iterator ./inexistent-path >actual-out &&
-> +	test_cmp expected-inexistent-path-out actual-out
->   '
 >   
-> -test_expect_success 'dir-iterator should list files in the correct order' '
-> -	cat >expected-pre-order-output <<-EOF &&
-> -	[d] (a) [a] ./dir2/a
-> -	[d] (a/b) [b] ./dir2/a/b
-> -	[d] (a/b/c) [c] ./dir2/a/b/c
-> -	[f] (a/b/c/d) [d] ./dir2/a/b/c/d
-> -	EOF
-> +test_expect_success 'dir_iterator_begin() should fail upon non directory paths' '
-> +	>some-file &&
->   
-> -	test-tool dir-iterator ./dir2 >actual-pre-order-output &&
->   
-> -	test_cmp expected-pre-order-output actual-pre-order-output
-> -'
-> +	echo "dir_iterator_begin failure: ENOTDIR" >expected-non-dir-out &&
->   
-> -test_expect_success 'begin should fail upon inexistent paths' '
-> -	test_must_fail test-tool dir-iterator ./inexistent-path \
-> -		>actual-inexistent-path-output &&
-> -	echo "dir_iterator_begin failure: ENOENT" >expected-inexistent-path-output &&
-> -	test_cmp expected-inexistent-path-output actual-inexistent-path-output
-> -'
-> +	test_must_fail test-tool dir-iterator ./some-file >actual-out &&
-> +	test_cmp expected-non-dir-out actual-out &&
->   
-> -test_expect_success 'begin should fail upon non directory paths' '
-> -	test_must_fail test-tool dir-iterator ./dir/b >actual-non-dir-output &&
-> -	echo "dir_iterator_begin failure: ENOTDIR" >expected-non-dir-output &&
-> -	test_cmp expected-non-dir-output actual-non-dir-output
-> +	test_must_fail test-tool dir-iterator --pedantic ./some-file >actual-out &&
-> +	test_cmp expected-non-dir-out actual-out
->   '
->   
-> -test_expect_success POSIXPERM,SANITY 'advance should not fail on errors by default' '
-> -	cat >expected-no-permissions-output <<-EOF &&
-> -	[d] (a) [a] ./dir3/a
-> -	EOF
-> +test_expect_success POSIXPERM,SANITY \
-> +'dir_iterator_advance() should not fail on errors by default' '
->   
-> -	mkdir -p dir3/a &&
-> -	>dir3/a/b &&
-> -	chmod 0 dir3/a &&
-> +	mkdir -p dir13/a &&
-> +	>dir13/a/b &&
-> +	chmod 0 dir13/a &&
->   
-> -	test-tool dir-iterator ./dir3 >actual-no-permissions-output &&
-> -	test_cmp expected-no-permissions-output actual-no-permissions-output &&
-> -	chmod 755 dir3/a &&
-> -	rm -rf dir3
-> -'
->   
-> -test_expect_success POSIXPERM,SANITY 'advance should fail on errors, w/ pedantic flag' '
-> -	cat >expected-no-permissions-pedantic-output <<-EOF &&
-> -	[d] (a) [a] ./dir3/a
+>   	cat >expected-no-permissions-out <<-EOF &&
 > -	dir_iterator_advance failure
-> +	cat >expected-no-permissions-out <<-EOF &&
-> +	[d] (a) [a] ./dir13/a
+> +	dir_iterator_begin failure: ESOMETHINGELSE
 >   	EOF
 >   
-> -	mkdir -p dir3/a &&
-> -	>dir3/a/b &&
-> -	chmod 0 dir3/a &&
-> +	test-tool dir-iterator ./dir13 >actual-out &&
-> +	test_cmp expected-no-permissions-out actual-out &&
->   
-> -	test_must_fail test-tool dir-iterator --pedantic ./dir3 \
-> -		>actual-no-permissions-pedantic-output &&
-> -	test_cmp expected-no-permissions-pedantic-output \
-> -		actual-no-permissions-pedantic-output &&
-> -	chmod 755 dir3/a &&
-> -	rm -rf dir3
-> +	chmod 755 dir13/a &&
-> +	rm -rf dir13
->   '
->   
-> -test_expect_success SYMLINKS 'setup dirs with symlinks' '
-> -	mkdir -p dir4/a &&
-> -	mkdir -p dir4/b/c &&
-> -	>dir4/a/d &&
-> -	ln -s d dir4/a/e &&
-> -	ln -s ../b dir4/a/f &&
-> -
-> -	mkdir -p dir5/a/b &&
-> -	mkdir -p dir5/a/c &&
-> -	ln -s ../c dir5/a/b/d &&
-> -	ln -s ../ dir5/a/b/e &&
-> -	ln -s ../../ dir5/a/b/f
-> -'
-> +test_expect_success POSIXPERM,SANITY \
-> +'dir_iterator_advance() should fail on errors, w/ pedantic flag' '
->   
-> -test_expect_success SYMLINKS 'dir-iterator should not follow symlinks by default' '
-> -	cat >expected-no-follow-sorted-output <<-EOF &&
-> -	[d] (a) [a] ./dir4/a
-> -	[d] (b) [b] ./dir4/b
-> -	[d] (b/c) [c] ./dir4/b/c
-> -	[f] (a/d) [d] ./dir4/a/d
-> -	[s] (a/e) [e] ./dir4/a/e
-> -	[s] (a/f) [f] ./dir4/a/f
-> +	mkdir -p dir13/a &&
-> +	>dir13/a/b &&
-> +	chmod 0 dir13/a &&
-> +
-> +
-> +	cat >expected-no-permissions-pedantic-out <<-EOF &&
-> +	[d] (a) [a] ./dir13/a
-> +	dir_iterator_advance failure
->   	EOF
->   
-> -	test-tool dir-iterator ./dir4 >out &&
-> -	sort out >actual-no-follow-sorted-output &&
-> +	test_must_fail test-tool dir-iterator --pedantic ./dir13 >actual-out &&
-> +	test_cmp expected-no-permissions-pedantic-out actual-out &&
->   
-> -	test_cmp expected-no-follow-sorted-output actual-no-follow-sorted-output
-> +	chmod 755 dir13/a &&
-> +	rm -rf dir13
->   '
->   
-> -test_expect_success SYMLINKS 'dir-iterator should follow symlinks w/ follow flag' '
-> -	cat >expected-follow-sorted-output <<-EOF &&
-> -	[d] (a) [a] ./dir4/a
-> -	[d] (a/f) [f] ./dir4/a/f
-> -	[d] (a/f/c) [c] ./dir4/a/f/c
-> -	[d] (b) [b] ./dir4/b
-> -	[d] (b/c) [c] ./dir4/b/c
-> -	[f] (a/d) [d] ./dir4/a/d
-> -	[f] (a/e) [e] ./dir4/a/e
-> +test_expect_success SYMLINKS 'setup -- dir w/ symlinks w/o cycle' '
-> +	mkdir -p dir14/a &&
-> +	mkdir -p dir14/b/c &&
-> +	>dir14/a/d &&
-> +	ln -s d dir14/a/e &&
-> +	ln -s ../b dir14/a/f &&
-> +
-> +
-> +	cat >expected-dont-follow-sorted-out <<-EOF &&
-> +	[d] (a) [a] ./dir14/a
-> +	[d] (b) [b] ./dir14/b
-> +	[d] (b/c) [c] ./dir14/b/c
-> +	[f] (a/d) [d] ./dir14/a/d
-> +	[s] (a/e) [e] ./dir14/a/e
-> +	[s] (a/f) [f] ./dir14/a/f
->   	EOF
-> +	cat >expected-follow-sorted-out <<-EOF
-> +	[d] (a) [a] ./dir14/a
-> +	[d] (a/f) [f] ./dir14/a/f
-> +	[d] (a/f/c) [c] ./dir14/a/f/c
-> +	[d] (b) [b] ./dir14/b
-> +	[d] (b/c) [c] ./dir14/b/c
-> +	[f] (a/d) [d] ./dir14/a/d
-> +	[f] (a/e) [e] ./dir14/a/e
-> +	EOF
-> +'
-> +test_expect_success SYMLINKS \
-> +'dont-follow-symlinks of dir w/ symlinks w/o cycle' '
-> +
-> +	test-tool dir-iterator ./dir14 >actual-out &&
-> +	sort actual-out >actual-sorted-out &&
-> +
-> +	test_cmp expected-dont-follow-sorted-out actual-sorted-out
-> +'
-> +test_expect_success SYMLINKS \
-> +'follow-symlinks of dir w/ symlinks w/o cycle' '
->   
-> -	test-tool dir-iterator --follow-symlinks ./dir4 >out &&
-> -	sort out >actual-follow-sorted-output &&
-> +	test-tool dir-iterator --follow-symlinks ./dir14 >actual-out &&
-> +	sort actual-out >actual-sorted-out &&
->   
-> -	test_cmp expected-follow-sorted-output actual-follow-sorted-output
-> +	test_cmp expected-follow-sorted-out actual-sorted-out
->   '
->   
->   test_done
+>   	test_must_fail test-tool dir-iterator ./dir12 >actual-out &&
 
