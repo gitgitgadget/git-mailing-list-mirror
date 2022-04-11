@@ -2,95 +2,318 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E06EC433EF
-	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 07:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D8A9C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Apr 2022 09:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243031AbiDKHEi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Apr 2022 03:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57546 "EHLO
+        id S1344100AbiDKJHF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Apr 2022 05:07:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233719AbiDKHEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Apr 2022 03:04:35 -0400
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BF333A00
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 00:02:20 -0700 (PDT)
-Date:   Mon, 11 Apr 2022 07:02:14 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=palard.fr;
-        s=protonmail3; t=1649660537;
-        bh=uZy7G0zii4IUFS0C93P8irfI5z9MTOajAIvD6imM/Us=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc:Date:
-         Subject:Reply-To:Feedback-ID:Message-ID;
-        b=Tc0xFC3fG+Tmra1Z8zu6BXj/SaMduU/y0TtwHaJDUMMNMYg0ZgPb4ucfu20Tm1BPh
-         Bf54jy0y1fl806YZa6o6KZ9980TaEArgGBI09T5yvP8Fdrm9Wbmk2qYYGFiQOuBMLL
-         CipbAEG34aHVO3KVaZg6CrOQgoMcHJOPgYhSzpvimQakI1zXKS+fmZ3Y+KwfuH67Kv
-         kZ6bQGkIlR9OC/GpjryVL7G8uazaeewtyjm4UnhfNxKM/RPUEEhw/I1sfbiTwlroLD
-         R/RsryFYe76kORsGIlWrkeV0ru0DPglsT9iTUvoRNl7boQ9qaSD7obGsu50EqfmJXO
-         rvyKSBslD1MTg==
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Julien Palard <julien@palard.fr>
-Cc:     =?utf-8?Q?S=C3=A9bastien_Helleu?= <flashcode@flashtux.org>,
-        =?utf-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Reply-To: Julien Palard <julien@palard.fr>
-Subject: [PATCH] Make a colon translatable
-Message-ID: <-9xEw4skKJRhRp5v7WmxeS2n5xv-xmM0HWqmoiameagKhpiDOP9y3Yxj7WFy6M-jztxqug8DKopXIr_op09VlGPkUC7iG5V6xXjKh_SxHEg=@palard.fr>
+        with ESMTP id S231960AbiDKJHD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Apr 2022 05:07:03 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD37E1A
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:04:48 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id 75so7259969qkk.8
+        for <git@vger.kernel.org>; Mon, 11 Apr 2022 02:04:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fcrhuTQt1j5IfKgEv+4R+Cf4fwRWnQRYVowwU8ZQvL4=;
+        b=K6YKstHE5FzjYLEJ2tiDqMNMkS9tLJx7BdSDy22T1Utykamq++MLf7zgUHnWvhFem1
+         QWsr8bNxPHtyABUWM4VsLLkBjb/Ybq2XMjt2jJ5hMRj5yyAgoIFxDVF1r5jQWA24Qnap
+         MpVkChaUrxSQNHeUr7Mrnoe3UqJno/S1km7c+zeg93xMlUxF8gLUdxqeOIUlmrKYx7q9
+         QXF03Msu5jMGNaufK/5kHhUKzwulPBOj6Ez86A8jBrIQEQqsof1FpPpYN8IcxsJOnZKC
+         9Cg22s9meAb6/9AARQWIyCtyK9zrlwxyYYKlFs1F9Yaj/4iCoFtN0rYjQiPlgCmQtK4X
+         774g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fcrhuTQt1j5IfKgEv+4R+Cf4fwRWnQRYVowwU8ZQvL4=;
+        b=qOv7zIbouGCKq+uOX/WCu6n1vcvOiKYlhoTT6hQTe5vTA0mS7RVeZRjfpxJ1KQJZ8p
+         UZji7M8Z3u3Mmgfo5VgrdCapulWpgrlyTEqoPmpQMpCIYoZobM+41THxMadbW5TrMsBt
+         CbeAZQeBmMn+uzVplm4AylkqS1XBkLBJSAi93vky9vyEknZYrroINnbEjjtGYXpBpLPy
+         4Q5M8p3pVJGw4L/EL/PZB0h/vM8I+jx/RT1N7kqWlD5SByo36FB1l5p9Y4nDX0vTTIXV
+         6FwcqqQUIaSQ+bm9Otbshv+d3R6rINY3zaqtkfxLsVQQR+m2VieRFxh6u7eev49PxlOl
+         HxyA==
+X-Gm-Message-State: AOAM531v4jEf/OdLWsnDnEjVeR7sqTGux762tzWycI3daWtJFNfL2K3d
+        t50Y5b1rDU0zTBQVRoF6cCJh7YOnh/IOsAsUmk8=
+X-Google-Smtp-Source: ABdhPJyOfIwRA0a2JkmixmtGP4y3m02Pt+uGzDLOMZFztxkQnffz/RPewnKHcWbF8Uz2TvIsqIcMq/89EpQQyi6rc3c=
+X-Received: by 2002:a05:620a:2787:b0:69c:2fb0:4abf with SMTP id
+ g7-20020a05620a278700b0069c2fb04abfmr421136qkp.551.1649667887737; Mon, 11 Apr
+ 2022 02:04:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
+ <YlC3devsgmv17PnQ@camp.crustytoothpaste.net> <00ca01d84ba0$dd7ee0c0$987ca240$@nexbridge.com>
+ <20220409113244.GX163591@kunlun.suse.cz> <CAPMMpoi50j7MzrsokQAcBWBgj8qGPN=j68PuEsppv629Oh7GHg@mail.gmail.com>
+ <013101d84ceb$afaa51b0$0efef510$@nexbridge.com>
+In-Reply-To: <013101d84ceb$afaa51b0$0efef510$@nexbridge.com>
+From:   demerphq <demerphq@gmail.com>
+Date:   Mon, 11 Apr 2022 11:04:36 +0200
+Message-ID: <CANgJU+UPOOiDiErtht3T3GEhU+6HbkouZ4NUqPdk4o7X03kwpQ@mail.gmail.com>
+Subject: Re: Make commit messages optional
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Tao Klerks <tao@klerks.biz>,
+        =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        jurgen_gjoncari@icloud.com, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In french we use a no-break space before colon, so with formatting
-like:
+On Mon, 11 Apr 2022 at 09:27, <rsbecker@nexbridge.com> wrote:
+>
+> On April 10, 2022 10:00 AM, Tao Klerks wrote:
+> >To: Michal Such=C3=A1nek <msuchanek@suse.de>
+> >Cc: rsbecker@nexbridge.com; brian m. carlson <sandals@crustytoothpaste.n=
+et>;
+> >jurgen_gjoncari@icloud.com; git@vger.kernel.org
+> >Subject: Re: Make commit messages optional
+> >
+> >On Sat, Apr 9, 2022 at 1:32 PM Michal Such=C3=A1nek <msuchanek@suse.de> =
+wrote:
+> >>
+> >> On Fri, Apr 08, 2022 at 07:32:03PM -0400, rsbecker@nexbridge.com wrote=
+:
+> >> > On April 8, 2022 6:30 PM, brian m. carlson wrote:
+> >> > >On 2022-04-08 at 03:35:04, jurgen_gjoncari@icloud.com wrote:
+> >> > >> I think that often commit messages are unnecessary. I propose
+> >> > >> that by default a user should be able to commit without a message=
+.
+> >[...]
+> >> > >We want to encourage good software engineering practices.
+> >> > >
+> >[...]
+> >> > >
+> >> > >Users who want this behaviour can use --allow-empty-message or
+> >> > >create an alias with that option.  The functionality already
+> >> > >exists.  I use aliases extensively in my development and I know
+> >> > >others do as well, so this shouldn't be an impediment if you're wor=
+king on
+> >projects where this is acceptable.
+> >> > >
+> >[...]
+> >>
+> >> There is nothing stopping you using '.' as the commit message which is
+> >> as informative as when it is empty. Hence this enforcement of
+> >> non-empty commit message does not serve the stated purpose.
+> >
+> >My apologies if this proposal has already been made in this or prior dis=
+cussions -
+> >the list server and gmail are having another disagreement, so I think I'=
+m a few
+> >hours out of date.
+> >
+> >I believe the main argument *for* allowing empty commit messages by defa=
+ult is
+> >"we shouldn't make it hard to do what you want to do, if you can fix it =
+later", and
+> >the main argument *against* is "for most people (non-advanced users), wh=
+at you
+> >do initially is what you end up pushing, or at least trying to push, and=
+ fixing things
+> >later is *hard*
+> >- it requires a much deeper understanding of git than most people otherw=
+ise
+> >necessarily need to develop".
+>
+> Adding commit messages has been part of SCM systems since virtually the b=
+eginning, at least on UNIX in the early 1970 and likely before. Adding a si=
+mple commit message is not onerous or difficult. "Fixing it later" will req=
+uire the commit and any signature you put on at the time is lost. You also =
+invalidate any signatures more recent in history. This does not corrupt you=
+r repo, but it does reduce its value. If you insist on doing this, use a si=
+ngle non-breaking space symbol in the -m option, which you can script or al=
+ias. Note that none of that will work on any git clients anyway.
+>
+> The main argument against is that this violates the basic principles of a=
+ well managed DevSecOps environment that requires who, what, where, when, w=
+hy for every change, not just the ones you publish. The key point here of h=
+aving comments in commits is that it allows organizations to pull in projec=
+ts like OpenSSL that ends up in production and must have the accountability=
+ for the installation to be allowed. Otherwise, just give up on the concept=
+ of Open-Source because corporate auditors will reject any request to use y=
+our project. You will never get into a PCI environment without a full set o=
+f commit comments, not just the Pull Requests.
+>
+> Granted my requirements come from regulated industries around the globe, =
+and if you are making toys, so be it. My teams are making production-harden=
+ed applications.
 
-    printf("... %s: ...", _("some string"))
+First off, git already allows empty commit messages. If you aren't
+already validating the commits that are being pushed to your central
+repo then you are already allowing commits with no commit message.
+Have your auditors noticed or complained?
 
-We can't cleanly add our no-break space, so I think:
+Second, I think you really did not understand Avar's point. Let me try
+to restate it in simple terms.
 
-    printf("... %s ...", _("some string:"))
+One of the things that separates git from most other SCM's, especially
+legacy SCM's, is that it separates the act of creating a commit and
+that of pushing it to the upstream repo.
 
-is better for translators.
+Advanced git users make very heavy use of git rebase --interactive and
+similar tools to modify, reorder, reword, merge, split, and otherwise
+munge the commits they have created *locally* before they push them
+upstream.
 
-Signed-off-by: Julien Palard <julien@palard.fr>
----
- wt-status.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+What Avar is saying is that there really is no reason to require a
+commit message *locally* when a user is likely to be doing such
+activities. Instead what should happen is that the upstream should be
+taught to refuse commits pushed to it which do not comply with
+whatever audit rules you wish to enforce.
 
-diff --git a/wt-status.c b/wt-status.c
-index d33f9272b7..ef0c276c3d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -248,7 +248,7 @@ static void wt_longstatus_print_other_header(struct wt_=
-status *s,
- =09=09=09=09=09     const char *how)
- {
- =09const char *c =3D color(WT_STATUS_HEADER, s);
--=09status_printf_ln(s, c, "%s:", what);
-+=09status_printf_ln(s, c, "%s", what);
- =09if (!s->hints)
- =09=09return;
- =09status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in wha=
-t will be committed)"), how);
-@@ -1863,9 +1863,9 @@ static void wt_longstatus_print(struct wt_status *s)
- =09=09wt_longstatus_print_submodule_summary(s, 1);  /* unstaged */
- =09}
- =09if (s->show_untracked_files) {
--=09=09wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "a=
-dd");
-+=09=09wt_longstatus_print_other(s, &s->untracked, _("Untracked files:"), "=
-add");
- =09=09if (s->show_ignored_mode)
--=09=09=09wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "ad=
-d -f");
-+=09=09=09wt_longstatus_print_other(s, &s->ignored, _("Ignored files:"), "a=
-dd -f");
- =09=09if (advice_enabled(ADVICE_STATUS_U_OPTION) && 2000 < s->untracked_in=
-_ms) {
- =09=09=09status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
- =09=09=09status_printf_ln(s, GIT_COLOR_NORMAL,
---
-2.35.1
+For instance, your audit rules could require that every commit
+includes verbiage like "I understand that I am responsible for the
+content of this commit, I understand the rules which this commit must
+comply with, and that I will be held accountable for any deviations
+from those rules."  Would there be any point in enforcing this locally
+on commits which are intended to be thrown away and squashed before
+they are sent? I would say no, for a bunch of reasons, not least being
+that preventative controls cannot be relied on in an uncontrolled
+environment like someone's laptop, and if you weren't *also*
+validating those rules upstream then your protections would be as
+secure as using client side JS to validate entry to a web-form - that
+is not secure *at all*.
 
---=C2=A0
-Julien Palard
-https://mdk.fr
+The only way to be really sure that no commits end up in your master
+repository that do not comply with your rules is to validate the rules
+on push to the master repository, and to reject any attempt to push
+commits which do not comply.
+
+I often create dozens of tiny commits with the words "WIP" (work in
+progress), which I then later reorder, and then squash together into a
+nice logical and well explained series of commits, at which time I
+give them nice detailed commit messages. Requiring me to type 'WIP"
+every time is really unnecessary and not particularly helpful to
+anyone. I dont use --allow-empty-mesage because -m'WIP' is less to
+type than --allow-empty-message, but that is besides the point 'WIP'
+is not an acceptable commit message to an auditor and should not be
+merged.
+
+> >In that sense, allowing people to create empty commit messages when they
+> >shouldn't, is often "trapping" them into a commit history that is less v=
+aluable (or
+> >even acceptable) than they might otherwise have achieved.
+> >
+> >While I therefore disagree with Aevar's proposal to "allow empty, and ad=
+vise", I do
+> >think the notion of giving advice makes perfect sense - let's do it the =
+other way
+> >around, with an advice message something
+> >like:
+> >
+> >---
+> >Empty commit messages aren't normally allowed, as they reduce the
+> >understandability of the commit history. If you do need to create a comm=
+it with an
+> >empty message, you can do so by providing the '--allow-empty-message'
+> >argument to 'git commit'.
+> >---
+> >
+> >Has this already been considered/discussed? Would it meet the objectives=
+ of
+> >those folks saying "the rejection of empty messages wasted my time", whi=
+le also
+> >keeping the spirit of "we should make it easy to do the right thing and =
+harder to do
+> >the wrong thing, especially for beginners"?
+>
+
+> I am not personally going to be convinced of any of this - forgive me but=
+, I think this reduces git's value and credibility as the leading SCM solut=
+ion on the planet (and off) and see no justification for enabling comment-l=
+ess repositories other than laziness. Even if that were the case, it is gro=
+unds for termination in my company and most of my customers to deliberately=
+ bypass audit practices, so if git moves forward with this, we might have t=
+o move elsewhere.
+
+With respect I dont think you actually understand how the audit
+process works; a developers laptop is not a controlled environment
+which is trustable by an auditor.  As has already been stated by
+several posters git *already* allows empty commits messages, and if
+you are not implementing controls in your master repository that all
+pushed commits to controlled branches comply with your rules then you
+*already* have a vector to allow such commits into your master
+repository and you are probably not in compliance with your auditors
+requirements.
+
+Preventive controls can *only* be effective and relied on when
+executed inside of a completely controlled context. A dev's local
+working context is NOT a completely controlled context. Think about
+it, they have a compiler on hand, they can do anything their skills
+allow them to do. Even if git did not *already* allow empty messages a
+suitably skilled dev could always hack git to allow them. If you did
+not have preventive controls upstream at the master repo you are using
+for audit controls then whatever policy might be baked into the
+current git client is moot. Someone could hand roll a commit that
+violated them and send them using something other than git. This is
+all just software after all.
+
+If you are concerned about the audit practices that your company needs
+to comply with then you should be looking at server-side hooks
+(pre-receive hooks) in your master repository, not client side rules
+in the git executable your devs use, those rules are ineffective and
+ultimately should be deemed unreliable by any competent auditor.
+
+Note that most auditors do *not* require every control to be
+preventive, they strongly prefer preventive controls for obvious
+reasons, but they also understand that not every rule can be
+implemented as a preventive control, so they also allow *detective*
+controls, eg, a daily report showing that all commits in the master
+repo comply with their requirements. You may be able to work with your
+auditor to implement detective controls instead. However, given that
+git absolutely does have the ability to implement upstream preventive
+controls it seems that you should focus your concerns there.
+
+BTW, I am saying this as someone who has had extensive experience
+working with auditors on git controls for many years. Nothing you do
+client side is relevant to the auditor and if it is you should hire a
+new auditor yours is not competent. If you dont verify things in a
+controlled environment then you haven't controlled things at all.
+
+Consider if one of your devs writes a commit with an empty message and
+that commit is never pushed upstream have they broken a rule? I bet
+not. Consider a common audit policy of requiring "two head approval",
+eg two people need to approve that a commit is reasonable to be
+merged. In corporate context most auditors will consider the author of
+the commit to be one, head, but usually some upstream tool, say github
+or gitlab, is responsible for managing the approval process for the
+second head. Since every commit created locally cannot have two
+approvers at its time of creation this means that every commit is
+created in violation of the audit rules.  But auditors don't have any
+concern with this because they know that the real concern is ensuring
+a robust controls process is applied before that commit can be pushed
+upstream and merged into the central repository.
+
+So with respect, I think you really don't understand how the audit
+process works and you really haven't thought through your concern.
+Whatever happens locally on the developers box is immaterial to the
+auditor, they only care about the upstream master repo. Heck they
+might not even care about that and only care about the commits that
+are actually compiled or deployed to a production environment. So you
+could have your preventive controls in the build stage and not in the
+SCM at all. But most companies would prefer to implement such controls
+relatively close to the person/subject being controlled and would
+prefer to see proper well implemented and strong preventive controls
+in your master repo's pre-receive hooks.
+
+In my former job we used a combination of preventive and detective
+controls. It is a web shop where a deployment could happen at any
+time, and some controls can interfere with outage resolution and
+fire-fighting, so we had a magic phrase that could be used to bypass
+the preventive controls but would trigger a detective control to
+review what happened and ensure that it was all above board. I was one
+of the people who would have to review the use of the bypass. No
+auditor had any issue with this. Auditors are usually pretty
+reasonable people.
+
+cheers,
+Yves
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
