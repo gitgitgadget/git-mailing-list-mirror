@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B6EBC4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B989C4321E
 	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 10:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350689AbiDLKA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 06:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42756 "EHLO
+        id S1351510AbiDLKBF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 06:01:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380576AbiDLIW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 04:22:26 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D1847AF8
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 00:50:34 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id p15so35599497ejc.7
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 00:50:34 -0700 (PDT)
+        with ESMTP id S1383822AbiDLIiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 04:38:22 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1BDA580FA
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:02:39 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id g18so10723268ejc.10
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=keK8NMSbT96wPLdqXLmlj8inOZFqZQ51Zw9V7fYxcB8=;
-        b=pyG7em0JWS4B4x+Tj6hCoQdHQ2RJB+YwZrl5vhPX1TZb+WOVA+86QfJVL2ZJ6+4wih
-         AzumuYsKTYs/HBkY0J0be2xqmsbf9lT4pKe9IcsPEr+pqw252wJEvmkDh/fFvcB1CsoY
-         uTpB/OXma8nXqYH1PdS9iAFeduSef7sTzQKvgSWb/NWeKirU9Ccpf51atrTYpP4E04Gh
-         Qj4fe4F68/Ft4EoFTiGCXI0lD5uDCZhak56CWNguFPtCwzhcjALkCPyM+CZIcNJp1xF/
-         XTU1CZTO3IhOcqvIBHznaCaQsJhkrM9SAHuRDHV+7CUafMzerFL1aC9LHsH0C/TR35/Y
-         cHlw==
+        bh=YD1IVGzB6sIc0JdXKIHLejd3xH6PNCBMKGfpN7MrdZs=;
+        b=KWps6XN/rpMUIIvtI2OhbHSD9MfOkMJCWKm9d4iMzOrXYbIB0uKw/+qrqr/qsLeN+b
+         PINq8i474atf+qYeEhzOX6eF5e3TCFTSa1PWhMEVr0mJ2tPqY72b/tfWzbJOJkUghTHL
+         epxPq3/ML31fT4EdEKh88mU+MiSXfU7SN+FWpMq6Sq2lXBfP2Xa3hlTy5NoW1zzF23Oe
+         8MeRBjj2QFMjBWN/9rhqUH7z+/3Sbjwln4KkubwFbiKVg2lql0C/awxrDNianSTj1DUd
+         LSjH2RmZlvK3ClEU+7iHZp+2EPuPSVNRcXzmYD5dSlZwkBmZmYG7U/GZsgu2GpK7RHIW
+         9GjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=keK8NMSbT96wPLdqXLmlj8inOZFqZQ51Zw9V7fYxcB8=;
-        b=FavuKiQJp+oOnmP8jeA7R5LO9UDDZD7OZE9I7RkR6A8OP90WGKE/j4ehNllEd0h3if
-         jnSWPKJfcKKx6A1SK3rHUr3aiGknP/c8lNZ4ZL0OvMMu+gQ0TDhBOWlMZ1wKnxg6qzUa
-         PDnSdtaTQ4/Np+xBw7Bp90DNbLXFCWjgsYulvnFNSiWoGUzry2W7d7B2bZZgSSEDynIu
-         hu9MM/VlGZgvaCqQ6hdiMYv2uIQqRzm3o5p/9yb4M3yaMZmKk6f2MzqeioEub4I0XfdH
-         DDdzFg1hJAOmPlbEolJ4sy8OSUKKgnjYZj6Sv6czKe4u/YHONWN8EZWlgVJMg8OynFAv
-         koxA==
-X-Gm-Message-State: AOAM5303R4udTYvJuFBxOIA0QNCRLYVH3Bolt6SXRwdOfmanNLy5P/3J
-        BwZVoWDb9nt5BLgiDayN8iQ=
-X-Google-Smtp-Source: ABdhPJyM1OW+VCd2pVASJ3tGx0YSSWQOwgfJNsk3MahuUShhkDqjUKO73/6p972ojOFd4R6gVeY2WA==
-X-Received: by 2002:a17:907:d1a:b0:6e8:b4fd:d566 with SMTP id gn26-20020a1709070d1a00b006e8b4fdd566mr1288627ejc.104.1649749832350;
-        Tue, 12 Apr 2022 00:50:32 -0700 (PDT)
+        bh=YD1IVGzB6sIc0JdXKIHLejd3xH6PNCBMKGfpN7MrdZs=;
+        b=x21GaFObW5GZ5+bJvuFkglPMGzrerJ8WRZw2W15AlTv56TnhXnLJcNewyjX/xpM7mu
+         iFWpPwDw1VrfFZAdFUrgBWzQqcVbrBTmOOFP29K71fvAoMOJLOml97jgBEjiW/DlMeuF
+         mIbuPj9TND3asuA63X1Au0ja3+A/WjMjAXFZSVbzfbeQfQ+QpilQEexCHO/ZrPSNd3at
+         0DCpa/3Wh0gc4Dyxo4vfXGzxs3njEfaxDMugQKzmKrxAkxoWqD6F2f3+mcfUSM8GftpR
+         ybd6/xlqN8P2JdFePcjmnzkx49X/lUy1nsYini6i6R0CgXMOSYj2Big+m60vH5omz9vG
+         iKEA==
+X-Gm-Message-State: AOAM533ORri+6oupkromzDw1A5K1ILJvF9VS+QYefBz0ehPVERNtF0TS
+        ynp/W9XYrDh23pu96antjblz/GFNpW8=
+X-Google-Smtp-Source: ABdhPJyMUWE6ZeYK/uP8TqpD937zzmc9RQeUG1MC6T4gK3EELpKJn9vmhvZrpOnhw/pM4tc4NkLHcA==
+X-Received: by 2002:a17:906:3a04:b0:6d0:8d78:2758 with SMTP id z4-20020a1709063a0400b006d08d782758mr34307944eje.685.1649750558177;
+        Tue, 12 Apr 2022 01:02:38 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i22-20020a1709063c5600b006e8a8a48baesm1028310ejg.99.2022.04.12.00.50.31
+        by smtp.gmail.com with ESMTPSA id d7-20020a170906174700b006e80a7e3111sm8406856eje.17.2022.04.12.01.02.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 00:50:31 -0700 (PDT)
+        Tue, 12 Apr 2022 01:02:37 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1neBIE-004VCg-Vx;
-        Tue, 12 Apr 2022 09:50:30 +0200
+        id 1neBTx-004Vc9-6o;
+        Tue, 12 Apr 2022 10:02:37 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] tests: make SANITIZE=address imply TEST_NO_MALLOC_CHECK
-Date:   Tue, 12 Apr 2022 09:44:01 +0200
-References: <pull.1210.git.1649507317350.gitgitgadget@gmail.com>
- <220411.86bkx7i8qi.gmgdl@evledraar.gmail.com> <xmqqk0bvfcd6.fsf@gitster.g>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] i18n: fix some badly formatted i18n strings
+Date:   Tue, 12 Apr 2022 09:59:59 +0200
+References: <pull.1212.git.1649705011178.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqk0bvfcd6.fsf@gitster.g>
-Message-ID: <220412.867d7uivuh.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1212.git.1649705011178.gitgitgadget@gmail.com>
+Message-ID: <220412.86y20ahgpu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -71,38 +70,81 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Apr 11 2022, Junio C Hamano wrote:
+On Mon, Apr 11 2022, Jean-No=C3=ABl Avila via GitGitGadget wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
 >
->> I wonder why we have to justify that we'll only turn on
->> TEST_NO_MALLOC_CHECK if it's SANITIZE=3Daddress.
->>
->> I.e. we also have SANITIZE=3Dundefined, wouldn't it be more future-proof
->> to just say that these analysis options are mutually exclusive by
->> default?
+> String in submodule--helper is not correctly formatting
+> placeholders. The string in git-send-email is partial.
 >
-> Given that the SANITIZE mechanism itself allows more than one to be
-> requested at the same time, it is unclear to me why other checks
-> like undefined needs to exclude checks done by other mechanisms like
-> MALLOC_CHECK_ by default.  If I correctly read under-the-three-dash
-> commentary Phillip wrote, it's not like that use of MALLOC_CHECK_
-> inherently interferes with the way SANITIZE=3Dundefined wants to work,
-> no?
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> ---
+>     V2.36 i18n fixes
+>=20=20=20=20=20
+>     While translating the latest version of the messages, I encountered a
+>     few errors of formatting or management.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1212%2F=
+jnavila%2Fv2.36_i18n_fixes-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1212/jnavi=
+la/v2.36_i18n_fixes-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1212
+>
+>  builtin/submodule--helper.c | 2 +-
+>  git-send-email.perl         | 7 +++----
+>  2 files changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 0b8b226c8ff..2c87ef9364f 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -3082,7 +3082,7 @@ static int module_create_branch(int argc, const cha=
+r **argv, const char *prefix)
+>  		OPT_END()
+>  	};
+>  	const char *const usage[] =3D {
+> -		N_("git submodule--helper create-branch [-f|--force] [--create-reflog]=
+ [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start_oid> <start_name>"),
+> +		N_("git submodule--helper create-branch [-f|--force] [--create-reflog]=
+ [-q|--quiet] [-t|--track] [-n|--dry-run] <name> <start-oid> <start-name>"),
 
-Because:
+Okey, so s/_/-/g here.
 
- * It makes it slower, and part of the utility of these checks is that
-   they run in a timely fashion.
+>  		NULL
+>  	};
+>=20=20
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index a98460bdb96..5861e99a6eb 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -2096,10 +2096,9 @@ sub validate_patch {
+>  			chdir($cwd_save) or die("chdir: $!");
+>  		}
+>  		if ($hook_error) {
+> -			$hook_error =3D sprintf(__("fatal: %s: rejected by %s hook\n" .
+> -						 $hook_error . "\n" .
+> -						 "warning: no patches were sent\n"),
+> -					      $fn, $hook_name);
+> +			$hook_error =3D sprintf(
+> +			    __("fatal: %s: rejected by %s hook\n%s\nwarning: no patches were =
+sent\n"),
+> +			    $fn, $hook_name, $hook_error);
 
- * We add these glibc checks because we'd like to catch malloc()/free()
-   issues, and run the test suite with them by default.
-
-   Someone using the SANITIZE=3D* feature is almost certain to be also
-   doing a "normal" test run, so I don't think we're getting anything
-   extra by combining the two, except needlessly slowing it down.
-
- * Even though SANITIZE=3Dleak,address & valgrind are strictly speaking
-   incompatible with the glibc check, having inject itself into other
-   sanitize modes is surely going to make debugging harder until you
-   discover that we're also injecting the custom malloc.
+Isn't this much narrower change going to do the same thing?:
+=09
+	diff --git a/git-send-email.perl b/git-send-email.perl
+	index a98460bdb96..5adb7593ce3 100755
+	--- a/git-send-email.perl
+	+++ b/git-send-email.perl
+	@@ -2097,9 +2097,9 @@ sub validate_patch {
+	 		}
+	 		if ($hook_error) {
+	 			$hook_error =3D sprintf(__("fatal: %s: rejected by %s hook\n" .
+	-						 $hook_error . "\n" .
+	+						 "%s\n" .
+	 						 "warning: no patches were sent\n"),
+	-					      $fn, $hook_name);
+	+					      $fn, $hook_name, $hook_error);
+	 			die $hook_error;
+	 		}
+	 	}
