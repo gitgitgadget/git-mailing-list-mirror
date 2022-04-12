@@ -2,223 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E1CC433EF
-	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 19:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5F85C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 19:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245692AbiDLT0V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 15:26:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50142 "EHLO
+        id S1354252AbiDLT3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 15:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233281AbiDLT0V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 15:26:21 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0F41E9
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:24:02 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id v4so10062760edl.7
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:24:02 -0700 (PDT)
+        with ESMTP id S1356450AbiDLT3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 15:29:30 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED88852E58
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:27:06 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id mm4-20020a17090b358400b001cb93d8b137so4002574pjb.2
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=g4HFGi6XHpL88QfpFKYx9nbvvBZg6Sy36RQ7Oqeo8Vk=;
-        b=iZTtVcpdOwCm9RGRPfCqpzE0z7doaZh9MCK366gtsH1lT4OtGrRFHNR+faavARNBid
-         cdos8zZBg8xveyqzKT1eSBAjNWmCLY+zRj1gZBSbMUM03YBwoy+6iW7rRxTnDKYgPdsJ
-         IMZvxOZQcpGzReseeVuKa1QAwm0EuAzmRZLb5no4G1b7VMfdvoViqK4jjOk+6mZSwXrO
-         YW2y023JpBG8OCT4TgAnyU1lUDfp3sWwBAqJs/Csb8i/nOjtBgydt7ha/nVuErGul8Sy
-         +CGCN+L+39/RGnlg3jE6cND9++7an3UOEDDFhkkJvW/d+79j1cw6Ccv3IWp4onsPuTSW
-         pvag==
+        h=message-id:date:mime-version:user-agent:from:subject:to:references
+         :content-language:cc:in-reply-to:content-transfer-encoding;
+        bh=NSC9GsKGz8iRec+8Ein34chDs5c4dsKYaMy0Tv7PjOI=;
+        b=T5MWg3XspCass86t/X/2Prdizmh/feqhZMlpWZlolVyCjXjUkUDgLdL+r1zxBI1/HD
+         yeH8Ds5yKq25UhKzQI04x4pEdPLv3Zf3mnBGOPHwGMI9TqVZS5pd5h1IULymHLjHRKmx
+         1F78UWf6XjwgEOpogxwmFLPz3n1ei85qQzd6XkyVVF6j4j/abWVGYegyy5gmUSy9XPMC
+         3v0ig43inz2wMkppwLf0n/uqhcI1EZDnQCDzXYkhClJZoDMDcOFad8zGd6oH8NV8sf4G
+         T3BeOBpMfImS75P6Qhu7xESDKJhGgq6HIKy3kTavP9/OMtraW/DihhDLpgaStXwqV6ct
+         1ZJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=g4HFGi6XHpL88QfpFKYx9nbvvBZg6Sy36RQ7Oqeo8Vk=;
-        b=19DAEyhQi2pXCtEm4/YEjVKaqiIFuFTUjDeuuigDLI+vAxjpue7llP4qNRAp6C/UfX
-         5bsKWH0iN58pO01riguTWEETnXaU+bz/W/vDpc13Jk+13JzNKpcj59qwCJzINSerA4Pu
-         oW+NguUzRbabUpW+gdSCfDMVapUwBChGx/hGLSW96y2Vg7e9Dzof+qudaR0EoolVf6JJ
-         ewg5L1kjT2C4QYfvt4q1qPa9hEllujlJ0dni8+hmGp/2nUKoQP5+dxjYOg6ekKEqtfx1
-         TVvzmBl9JfKAhfQ1KeUBk+g3p4R/QeXeZIY+mstmnucLDwJJZcIgu1GXwbTIiBFHvJ5l
-         Y2mQ==
-X-Gm-Message-State: AOAM530v2AnjkOCa9VbChCXtGtNMjDVLqAj7gIZWmI6HnUGX9Mjrp3Nb
-        0tssoe5swA3/xnKlDQCfea4=
-X-Google-Smtp-Source: ABdhPJxz7zMG4Dx8a6fzBVQxd21iwj2ZvAFo8KQkGbMeAiJLl55nTEOApPDNyPpTMq2iYJOxlEAtxA==
-X-Received: by 2002:a50:9986:0:b0:413:bbdd:d5a1 with SMTP id m6-20020a509986000000b00413bbddd5a1mr40764230edb.26.1649791440530;
-        Tue, 12 Apr 2022 12:24:00 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n13-20020a170906724d00b006cedd6d7e24sm13527349ejk.119.2022.04.12.12.23.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 12:23:59 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1neM7L-004nL7-ES;
-        Tue, 12 Apr 2022 21:23:59 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan <git.jonathan.bressat@gmail.com>
-Cc:     cogoni.guillaume@gmail.com, Matthieu.Moy@univ-lyon1.fr,
-        git@vger.kernel.org, guillaume.cogoni@gmail.com,
-        Jonathan <Jonathan.bressat@etu.univ-lyon1.fr>
-Subject: Re: [PATCH 1/1] Merge with untracked file that are the same without
- failure and test
-Date:   Tue, 12 Apr 2022 21:21:39 +0200
-References: <CAA0Qn1sBF=PAduCQCXbYkeu4cphw7O+AnvwFNMWijuKYskaT8g@mail.gmail.com>
- <20220412191556.21135-1-Jonathan.bressat@etu.univ-lyon1.fr>
- <20220412191556.21135-2-Jonathan.bressat@etu.univ-lyon1.fr>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220412191556.21135-2-Jonathan.bressat@etu.univ-lyon1.fr>
-Message-ID: <220412.86czhmgl68.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
+         :subject:to:references:content-language:cc:in-reply-to
+         :content-transfer-encoding;
+        bh=NSC9GsKGz8iRec+8Ein34chDs5c4dsKYaMy0Tv7PjOI=;
+        b=PxgO3U0BHi0hmYH+ItvEGTDueLeXcTz+hzfyZS6UTWitEH1by/j6QpDRy2aDmu2tKw
+         viz+27d+o6ujsY5vYbxWJc2Dme6+/30/h3OubWwHhG44Y/sdrWBkfS0P49ua27LM6U8r
+         Nqx7claz3LloyfyvP45eEQpO2siJ7PdoXEDYCSBzl7Avns6uNYoeYmLZ4tne3P8hS2Rt
+         UMO76Ggv8sLjziAz6MHUBeiv+PeP9TXoKiwPENr/MdookOR3sw1h6hMeSqdgxahtZmWz
+         CnxyEtBINi8VC40xGnBsRaqE0cLCOlOcnJ63QOiGp6ozy9ne9oK/oFBqkPkUiGaqEiI8
+         3CnA==
+X-Gm-Message-State: AOAM530/pNn4FeH4DinmOqFUkpXovTvJX+9pbcSsxi5B0YWha6NWguv9
+        5ozDQWx4E+Ev4mKe/JzQysC/EiTx8DU=
+X-Google-Smtp-Source: ABdhPJx6nlOyYDRMWhVRh68rKdLhAdhJCAxv9VQoYwPMEDHqakospUTJ7QaVlVU/SPY2JmPD9iNPVQ==
+X-Received: by 2002:a17:90b:4b42:b0:1cb:a213:65d9 with SMTP id mi2-20020a17090b4b4200b001cba21365d9mr6771843pjb.138.1649791626378;
+        Tue, 12 Apr 2022 12:27:06 -0700 (PDT)
+Received: from [192.168.208.37] ([49.204.141.17])
+        by smtp.gmail.com with ESMTPSA id i2-20020a17090a138200b001cb6512b579sm266335pja.44.2022.04.12.12.27.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Apr 2022 12:27:05 -0700 (PDT)
+Message-ID: <f939ebd9-b801-0961-ffad-b87c94096f5d@gmail.com>
+Date:   Wed, 13 Apr 2022 00:57:02 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: Issue when using the fsmonitor-watchman hook?
+To:     Derrick Stolee <derrickstolee@github.com>
+References: <3ce82619-6305-69b6-b4e5-bbbc91c17530@gmail.com>
+ <edea2223-a9e1-c026-089f-80ea36cf97c2@github.com>
+Content-Language: en-US
+Cc:     Git Community <git@vger.kernel.org>
+In-Reply-To: <edea2223-a9e1-c026-089f-80ea36cf97c2@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stolee,
 
-On Tue, Apr 12 2022, Jonathan wrote:
+On 11/04/22 19:16, Derrick Stolee wrote:
+>   
+>> I recently installed v2.36.0-rc1 and started getting the warning about
+>> the deprecation of core.useBuiltinFSMonitor configuration. It appeared
+>> for each 'git' invocation which was a bit annoying. Fortunately, I had
+>> some spare time so I went the route of actually applying the suggested
+>> alternative rather than suppressing the warning.
+> 
+> So, the new alternative is to set core.fsmonitor=true, which continues
+> to use the builtin FS Monitor. What advice did you see that was
+> different?
+> 
 
-> When doing a merge while there is untracked files with the same name
-> as merged files, git refuses to proceed. This commit change this
-> behavior and make git overwrite files if their contents are the same.
-> This new behaviour is more pleasant for a user and will never be a
-> frustrating moment.
+Ah ha. I should've guessed that. The actual advice I saw was the following:
+
+   hint: core.useBuiltinFSMonitor will be deprecated soon; use 
+core.fsmonitor instead
+   hint: Disable this message with "git config 
+advice.useCoreFSMonitorConfig false"
+
+Rather than trying out configuring 'core.fsmonitor' to 'true', I went
+and took a look at the documentation for it in git-config [doc] which
+read as follows:
+
+   If set, the value of this variable is used as a command which will
+   identify all files that may have changed since the requested
+   date/time.
+
+That made me think the value could only be a command. So, it never
+occurred to me that it could be a boolean. I just checked the local
+doc that shows up when running `git config --help` in Windows and that
+seems to clearly mention the behaviour that setting to `true` would
+enable the built-in file system monitor. Looks like I made a mistake
+and referred to the doc for v2.35.2 when trying out the v2.36.0-rc2 x-<
+
+[doc]: 
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-corefsmonitor
+
+> (Also, this thread will only apply to Git for Windows, since core Git
+> did not include core.useBuiltinFSMonitor. Feel free to move this
+> discussion to [1] if you'd rather talk there.)
+> 
+> [1] https://github.com/git-for-windows/git/discussions/3251
+> 
+> Hopefully using core.fsmonitor=true solves your issue.
 >
-> Add a if statement that check if the file has the same content as the
-> merged file thanks to the function ie_modified() (read-cache.c).
-> ie_modified () checks the status of both files, if they are different,
-> it verifies their contents.
+
+Yeah. That works fine and suppresses the warning properly. Thanks!
+
+> 
+> If you really want to use the Watchman-based hook solution, then
+> here's the rest of my response:
 >
-> Add new tests that need to pass to confirm that the new feature works.
->
-> Co-authored-by: COGONI Guillaume <cogoni.guillaume@gmail.com>
-> ---
->  t/t7615-merge-untracked.sh | 79 ++++++++++++++++++++++++++++++++++++++
->  unpack-trees.c             |  4 ++
->  2 files changed, 83 insertions(+)
->  create mode 100755 t/t7615-merge-untracked.sh
->
-> diff --git a/t/t7615-merge-untracked.sh b/t/t7615-merge-untracked.sh
-> new file mode 100755
-> index 0000000000..71a34041d2
-> --- /dev/null
-> +++ b/t/t7615-merge-untracked.sh
-> @@ -0,0 +1,79 @@
-> +#!/bin/sh
-> +
-> +test_description='test when merge with untracked file'
-> +
-> +. ./test-lib.sh
-> +
-> +
+ > ...
 
-Too much whitespace.
-
-> +test_expect_success 'overwrite the file when fastforward and the same content' '
-> +    echo content >README.md &&
-
-The coding style in this project is TAB-indent, not 4 spaces
-> +    test_commit "init" README.md &&
-> +    git branch A &&
-> +    git checkout -b B &&
-> +    echo content >file &&
-> +    git add file &&
-> +    git commit -m "tracked" &&
+I do wish to try out Watchman but not right now. For now, I suppose
+I'm fine with whatever the builtin fsmonitor does. Anyways, thanks
+for the details!
 
 
-Can't these and a lot of the test also just use test_commit, you can do
-this sort of thing with its multi-param invocation, if you're trying to
-specifically avoid tags there's an option for that.
-
-> +    git switch A &&
-> +    echo content >file &&
-> +    git merge B
-> +'
-> +
-> +test_expect_success 'merge fail with fastforward and different content' '
-> +    rm * &&
-> +    rm -r .git &&
-
-Can we just set this up in a "git init repo" or whatever instead?
-
-> +    git init &&
-> +    echo content >README.md &&
-> +    test_commit "init" README.md &&
-> +    git branch A &&
-> +    git checkout -b B &&
-> +    echo content >file &&
-> +    git add file &&
-> +    git commit -m "tracked" &&
-> +    git switch A &&
-> +    echo dif >file &&
-> +    test_must_fail git merge B
-
-And thendo this in a sub-shell?
-
-> +'
-> +
-> +test_expect_success 'normal merge with untracked with the same content' '
-> +    rm * &&
-> +    rm -r .git &&
-
-Please use test_when_finished in the tests themselves for teardown,
-rather than having the "next test" do the cleanup after the last one.
-
-> +    git init &&
-> +    echo content >README.md &&
-> +    test_commit "init" README.md &&
-> +    git branch A &&
-> +    git checkout -b B &&
-> +    echo content >fileB &&
-> +    echo content >file &&
-> +    git add fileB &&
-> +    git add file &&
-> +    git commit -m "tracked" &&
-> +    git switch A &&
-> +    echo content >fileA &&
-> +    git add fileA &&
-> +    git commit -m "exA" &&
-> +    echo content >file &&
-> +    git merge B -m "merge"
-> +'
-> +
-> +test_expect_success 'normal merge fail when untracked with different content' '
-> +    rm * &&
-> +    rm -r .git &&
-> +    git init &&
-> +    echo content >README.md &&
-> +    test_commit "init" README.md &&
-> +    git branch A &&
-> +    git checkout -b B &&
-> +    echo content >fileB &&
-> +    echo content >file &&
-> +    git add fileB &&
-> +    git add file &&
-> +    git commit -m "tracked" &&
-> +    git switch A &&
-> +    echo content >fileA &&
-> +    git add fileA &&
-> +    git commit -m "exA" &&
-> +    echo dif >file &&
-> +    test_must_fail git merge B -m "merge"
-> +'
-> +
-> +test_done
-> \ No newline at end of file
-
-Git's telling you something here... :)
-
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 360844bda3..834aca0da9 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -2259,6 +2259,10 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
->  			return 0;
->  	}
->  
-> +	if (!ie_modified(&o->result, ce, st, 0))
-> +		return 0;
-> +
-> +
-
-Too much whitespace.
-
->  	return add_rejected_path(o, error_type, name);
->  }
-
+-- 
+Sivaraam
