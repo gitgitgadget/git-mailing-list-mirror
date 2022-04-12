@@ -2,65 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF6CC433FE
-	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 09:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3365FC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 10:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343771AbiDLKAr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 06:00:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58484 "EHLO
+        id S1347324AbiDLKAx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 06:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357499AbiDLJtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 05:49:19 -0400
+        with ESMTP id S1359866AbiDLItN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 04:49:13 -0400
 Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8706472D
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:55:48 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id l7so30502747ejn.2
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:55:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3794062A32
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:12:03 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id p15so35710331ejc.7
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=JQQY3d7Wvb3hkato2Q+mTrgt7xfnBkcsdkE8Q7mp0Zk=;
-        b=nNkct8MTIYi/8CqvSBnHJQATs8ZXpjoqnLx7VzowglbNnw6foJtfCgUFts/C185pQl
-         ZY8M+f3NMIT06VQgT+Cv8R7da0hBXGTlNRghbXV7e2+Xtw9Ca0OVJNtLPo9yevooi21h
-         yAz4bcqzqis88i2BJVUo9wZMlS9kRW/D/JCDUtTjhwG6SYenfzoDQJNgyBwwhOcacyT0
-         M8e4mD4hDZDBBO+G4yaR/kUz22PNbPB/4IfdEUvsGk6tsK+duT1iDJoDCv1OmeQ/it12
-         zyZyDXueRSc/kL3buSKfGokyOfL2xne/bfo4/PsC5p78TaeHMN6nAFFquTBMitVcf612
-         lRZg==
+        bh=3Vq44remPcaiWwD9CW8PLvCFm795bGsA4gVxLpau0f0=;
+        b=ni8PjAmtJr/hyve5IFI1oY3JGefeeL7unZv7BDLmt2G/uAtmVJj17BRFcz6mRlOKKa
+         Vb2v2LWwG4cX/t4ucmZ7GttIKHMhXAVZCF7XoohodrdgW6cN9+MJoieS+kql4ol2+JTm
+         4G6Vs97m9oe4VJbAM5U8Hc0SYcB7w1aKW2Yb02VEVXKnOHC/XM8/Wde+jACShzyhD1Ph
+         Jv/1NZTL7nRdPYwOOKGbyZTuzhKG6gwuASqGOaaPXchwOR6/k0ZUOLre6wTrD6RAXhOw
+         sdXhiqMxFoUN833X274/EvLFGOSlrBJccpeHf47Mf1znsKeUtl76+b5ebJQf77mSDJlR
+         YwwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=JQQY3d7Wvb3hkato2Q+mTrgt7xfnBkcsdkE8Q7mp0Zk=;
-        b=3pGcvJFYJoffU1BcAtj3IQaPYKBPF5Zpp+AovL0a4ngu+QkqeVmK2tEaWUUss0iMTB
-         iICCOS07NIKQfjhp8bWG1yEUJXsOfF8DM3ApM9ZXVRPj6/Zprw7bbWUq2RlKjP5xXhi1
-         Qg/loq8hXTl2/SAc9obOQV9DidbnETwHcapWiZKWiynmXNOYY+jbm+ZR8Ue1zz4jiszU
-         KsSGrQw2B600xnYUdK8+U/0sGQdDuU1d7jxRn1wR6nyoIMJnPY58MjL5O2iLemN5Mu/3
-         tTLmmWFESV5afYUXuLSDFEEyMeQF8hrazAGey9RwCMC9ivrXhIbLfcbyYtPtxkvZGkst
-         tIOw==
-X-Gm-Message-State: AOAM5338g/f+w57XnHoIHidX+/tOyYeN3coM/XZuJ8NgVgUaQC4LUA+5
-        H/DJ5urHdb8byzunFY9bE4g=
-X-Google-Smtp-Source: ABdhPJzoIAmL5QCRVqvP4wodUflp9/QNOxzwe5BU4n3aIjwC9kjw4MOWbwgDyYJUvRk3G57UDY0x4w==
-X-Received: by 2002:a17:906:9c82:b0:6df:baa2:9f75 with SMTP id fj2-20020a1709069c8200b006dfbaa29f75mr33544280ejc.762.1649753746320;
-        Tue, 12 Apr 2022 01:55:46 -0700 (PDT)
+        bh=3Vq44remPcaiWwD9CW8PLvCFm795bGsA4gVxLpau0f0=;
+        b=hvmASrKCxhJGUFQzNVmfiANR0YJZI7Djgnip8R5HjIe8nZSpRicb/4spqjqRyvrMfF
+         c/jLVK7hIwswd4+/ragwX57Eb5+DjpBo6cN7vHBkdqjyYkVUxXGTsnPBn2bZgVEcq07h
+         c8621ksl+fte4gkmcyi1/fhJFPewG3g4kYZFyJ1agUAAB/zgR4JalPHlO9oUAdF8cBzl
+         HyWaUFVszH3aFkP2FLSdCfKw6/loZ9kM1QqHoyEfcoOjiBsLkENvf+a/ld/B4DX6dpJ8
+         BgT2MBCs4D1f4xOwa2gmXlpT9hmKfgj+t/Ak5HYE9kJ/1r3LIWyK6/eFPPG3yFEONqk/
+         +aVg==
+X-Gm-Message-State: AOAM533ZetTJKAQF/RlNPz39tl3hB+GNPqjnRaLhqxavL0x/txc7NfN+
+        4ABWg2mjiacItIDW+fmTVu8=
+X-Google-Smtp-Source: ABdhPJx3H2htLgV4lcovYeTUw3em0yaOUP6ISBUO/hAEB4grm5TkQD81so1ymEl8HWe83OB/hKKSEg==
+X-Received: by 2002:a17:906:dc89:b0:6db:a789:7563 with SMTP id cs9-20020a170906dc8900b006dba7897563mr32839788ejc.471.1649751121429;
+        Tue, 12 Apr 2022 01:12:01 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v21-20020a1709064e9500b006e8973a14d0sm1992498eju.174.2022.04.12.01.55.45
+        by smtp.gmail.com with ESMTPSA id kw5-20020a170907770500b006db075e5358sm12608151ejc.66.2022.04.12.01.12.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 01:55:45 -0700 (PDT)
+        Tue, 12 Apr 2022 01:12:00 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1neCJN-004XNQ-11;
-        Tue, 12 Apr 2022 10:55:45 +0200
+        id 1neBd2-004VvU-Dd;
+        Tue, 12 Apr 2022 10:12:00 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Miklos Vajna <vmiklos@vmiklos.hu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] git-log: add a --since=... --as-filter option
-Date:   Tue, 12 Apr 2022 10:47:15 +0200
-References: <xmqqtub3moa0.fsf@gitster.g> <xmqqv8vkpara.fsf@gitster.g>
- <YlCiqgO6rL908Zsi@vmiklos.hu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Julien Palard <julien@palard.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?Q?S=C3=A9bastien?= Helleu <flashcode@flashtux.org>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] Make a colon translatable
+Date:   Tue, 12 Apr 2022 10:03:48 +0200
+References: <-9xEw4skKJRhRp5v7WmxeS2n5xv-xmM0HWqmoiameagKhpiDOP9y3Yxj7WFy6M-jztxqug8DKopXIr_op09VlGPkUC7iG5V6xXjKh_SxHEg=@palard.fr>
+ <xmqq5ynfh101.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YlCiqgO6rL908Zsi@vmiklos.hu>
-Message-ID: <220412.86pmlmhe9a.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqq5ynfh101.fsf@gitster.g>
+Message-ID: <220412.86tuayhga7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -68,195 +71,93 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Apr 08 2022, Miklos Vajna wrote:
+On Mon, Apr 11 2022, Junio C Hamano wrote:
 
-> On Thu, Apr 07, 2022 at 07:30:33PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
->> As a single-shot change, "--since-as-filter" is certainly an easy to
->> explain approach of least resistance.
->> 
->> But when viewed from a higher level as a general design problem, I
->> am unsure if it is a good direction to go in.
->> 
->> Giving "--since" the "as-filter" variant sets a precedent, and
->> closes the door for a better UI that we can extend more generally
->> without having to add "--X-as-filter" for each and every conceivable
->> "--X" that is a traversal stopper into a filtering kind.
+> Julien Palard <julien@palard.fr> writes:
 >
-> I like the idea of doing this mode as "--since=... --as-filter". I can
-> still implement it just for --since=... initially, but it can be
-> extended for other flags as well in the future if there is a need.
-
-Yes, I think this is much better.
-
->> If we pursue the possibility further, perhaps we may realize that
->> there isn't much room for us to add too many "traversal stoppers" in
->> the future, in which case giving "as-filter" to a very limited few
->> traversal stoppers may not be too bad.  I just do not think we have
->> explored that enough to decide that "--since-as-filter" is a good UI
+>> In french we use a no-break space before colon, so with formatting
+>> like:
+>>
+>>     printf("... %s: ...", _("some string"))
+>>
+>> We can't cleanly add our no-break space, so I think:
+>>
+>>     printf("... %s ...", _("some string:"))
 >
-> My understanding is that get_revision_1() has a special-case for the max
-> age case to be a "traversal stopper", and all other options are just 
-> filtering in limit_range(). But perhaps I missed something.
-> [...]
->  Documentation/rev-list-options.txt |  5 +++++
->  revision.c                         | 14 +++++++++++--
->  revision.h                         |  1 +
->  t/t4217-log-limit.sh               | 32 ++++++++++++++++++++++++++++++
->  4 files changed, 50 insertions(+), 2 deletions(-)
->  create mode 100755 t/t4217-log-limit.sh
+> Sorry, but I do not quite buy this.  The above is a representative
+> example of what we call "sentence lego", which is what we absolutely
+> want to avoid, isn't it?
 >
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index fd4f4e26c9..8565299264 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -25,6 +25,11 @@ ordering and formatting options, such as `--reverse`.
->  --after=<date>::
->  	Show commits more recent than a specific date.
->  
-> +--as-filter::
-> +	When combined with `--since=<date>`, show all commits more recent than
-> +	a specific date. This visits all commits in the range, rather than stopping at
-> +	the first commit which is older than a specific date.
+> We'd rather want to see
+>
+> 	printf_like_function(_("Use 'git %s' ...", "string"));
+>
+> when "string" is something that should not be translated to begin
+> with (e.g. "add" to form "git add"), and different languages can use
+> different conventions for quoting the command name (a translation
+> may want to use something other than single-quotes, for example).
+>
+> And in a less optimal case,
+>
+> 	printf_like_function(_("%s: ...", _("string")));
+>
+> would be needed, when "string" is something that is to be translated
+> (e.g. a phrase used as a label, like "Untracked files" in the code
+> this patch touches).  I think the case you have is the latter one.
 
-I wonder if we should be more future-proof here and say that we'll run
-anything as a filter, and that --since is the one option currently
-affected.
+You're right, but wt-status.c is sentence lego galore, and that's been a
+TODO since the i18n effort was started.
 
-But maybe there's no reason to do so...
+It's particularly hard to peel it apart, and doing so would require
+e.g. having translators translate a string with embedded color formats,
+or even git-for-each-ref embedded %(if...) formats.
 
-In any case these docs are inaccurate because they cover --since, but if
-you check revision.c we'll set "max_age" on other options too
-(synonyms?).
+But in lieu of that I don't see a reson for not taking this much more
+narrow change, since it solves a practical issue for a major language...
 
-All in all I wonder if this wouldn't be much more understandable if we
-advertised is as another option to do "HISTORY SIMPLIFICATION", which
-looking at e.g. get_commit_action() and "prune" is kind of what we're
-doing with the existing --since behavior.
+>> diff --git a/wt-status.c b/wt-status.c
+>> index d33f9272b7..ef0c276c3d 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -248,7 +248,7 @@ static void wt_longstatus_print_other_header(struct wt_status *s,
+>>  					     const char *how)
+>>  {
+>>  	const char *c = color(WT_STATUS_HEADER, s);
+>> -	status_printf_ln(s, c, "%s:", what);
+>> +	status_printf_ln(s, c, "%s", what);
+>
+> I.e. this one is better handled by
+>
+> 	status_printf_ln(s, c, _("%s:"), what);
+>
+> as _(...) in C-locale is original-language centric, where we want
+> the label to be <phrase> immediately followed by a colon.  And that
+> allows French translation to have nbsp before the colon.
 
->  --until=<date>::
->  --before=<date>::
->  	Show commits older than a specific date.
-> diff --git a/revision.c b/revision.c
-> index 7d435f8048..41ea72e516 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
->  		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
->  		    !revs->line_level_traverse)
->  			continue;
-> +		if (revs->max_age != -1 && revs->as_filter && (commit->date < revs->max_age) &&
-> +		    !revs->line_level_traverse)
-> +			continue;
->  		date = commit->date;
->  		p = &commit_list_insert(commit, p)->next;
->  
-> @@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
->  	revs->dense = 1;
->  	revs->prefix = prefix;
->  	revs->max_age = -1;
-> +	revs->as_filter = 0;
->  	revs->min_age = -1;
->  	revs->skip_count = -1;
->  	revs->max_count = -1;
-> @@ -2218,6 +2222,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
->  		revs->max_age = approxidate(optarg);
->  		return argcount;
-> +	} else if (!strcmp(arg, "--as-filter")) {
-> +		revs->as_filter = 1;
-> +		return argcount;
->  	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
->  		revs->max_age = approxidate(optarg);
->  		return argcount;
-> @@ -3365,7 +3372,7 @@ static void explore_walk_step(struct rev_info *revs)
->  	if (revs->sort_order == REV_SORT_BY_AUTHOR_DATE)
->  		record_author_date(&info->author_date, c);
->  
-> -	if (revs->max_age != -1 && (c->date < revs->max_age))
-> +	if (revs->max_age != -1 && !revs->as_filter && (c->date < revs->max_age))
->  		c->object.flags |= UNINTERESTING;
->  
->  	if (process_parents(revs, c, NULL, NULL) < 0)
-> @@ -3862,6 +3869,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
->  	if (revs->min_age != -1 &&
->  	    comparison_date(revs, commit) > revs->min_age)
->  			return commit_ignore;
-> +	if (revs->max_age != -1 && revs->as_filter &&
-> +	    comparison_date(revs, commit) < revs->max_age)
-> +			return commit_ignore;
->  	if (revs->min_parents || (revs->max_parents >= 0)) {
->  		int n = commit_list_count(commit->parents);
->  		if ((n < revs->min_parents) ||
-> @@ -4019,7 +4029,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
->  		 * that we'd otherwise have done in limit_list().
->  		 */
->  		if (!revs->limited) {
-> -			if (revs->max_age != -1 &&
-> +			if (revs->max_age != -1 && !revs->as_filter &&
->  			    comparison_date(revs, commit) < revs->max_age)
->  				continue;
+In this case I think the change as suggested is better, translators get
+zero context from "%s:", whereas "Untracked files:" being status output
+is immediately obvious.
 
-I think it's good to do this as a general mechanism, but if you now
-remove the "max_age" field from "struct rev_info" and:
+>>  	if (s->show_untracked_files) {
+>> -		wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "add");
+>> +		wt_longstatus_print_other(s, &s->untracked, _("Untracked files:"), "add");
+>
+> Then this <phrase>, to be used in the label above, can be without colon.
+>
+>>  		if (s->show_ignored_mode)
+>> -			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
+>> +			wt_longstatus_print_other(s, &s->ignored, _("Ignored files:"), "add -f");
 
-	make -k
+It's a good rule of thumb to give translators the "whole thing", in this
+case that's a heading, so despite other issues with lego'd "status"
+output this particular string is following best-practices after this
+change by Julien.
 
-You'll see a bunch of callers who check "max_age" outside of revision.c,
-since those will accept these revision options are they doing the right
-thing now too?
+His commit message also doesn't mention it, but for existing "headings"
+we already do this, e.g.:
 
-...
+    status_printf_ln(s, c, _("Changes to be committed:"));
+    status_printf_ln(s, c, _("Changes not staged for commit:"));
 
-> diff --git a/revision.h b/revision.h
-> index 5bc59c7bfe..fe37ebd83d 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -263,6 +263,7 @@ struct rev_info {
->  	int skip_count;
->  	int max_count;
->  	timestamp_t max_age;
-> +	int as_filter;
->  	timestamp_t min_age;
->  	int min_parents;
->  	int max_parents;
-> diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
-> new file mode 100755
-> index 0000000000..a66830e3d7
-> --- /dev/null
-> +++ b/t/t4217-log-limit.sh
-> @@ -0,0 +1,32 @@
-> +#!/bin/sh
-> +
-> +test_description='git log with filter options limiting the output'
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +. ./test-lib.sh
-> +
-> +GIT_TEST_COMMIT_GRAPH=0
-> +GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
-> +
-> +test_expect_success 'setup test' '
-> +	git init &&
-> +	echo a > file &&
-> +	git add file &&
-> +	GIT_COMMITTER_DATE="2022-02-01 0:00" git commit -m init &&
-> +	echo a >> file &&
-> +	git add file &&
-> +	GIT_COMMITTER_DATE="2021-01-01 0:00" git commit -m second &&
-> +	echo a >> file &&
-> +	git add file &&
-> +	GIT_COMMITTER_DATE="2022-03-01 0:00" git commit -m third
-> +'
-> +
-> +test_expect_success 'git log --since-as-filter' '
-> +	git log --since="2022-01-01" --as-filter --pretty="format:%s" > actual &&
-> +	test_i18ngrep init actual &&
-> +	! test_i18ngrep second actual &&
-> +	test_i18ngrep third actual
-> +'
-> +
-> +test_done
-
-In any case we should have tests for those callers, i.e. blame, bundle
-etc.
+etc., grep for status_printf_ln.*" in that file, so this is making
+things consistent with that other code.
