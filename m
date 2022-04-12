@@ -2,139 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B68C433FE
-	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 19:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99081C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 20:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352626AbiDLTdS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 15:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
+        id S230272AbiDLUTI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 16:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358719AbiDLTdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 15:33:12 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B5F4830E
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:30:54 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id u15so20677822ejf.11
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 12:30:54 -0700 (PDT)
+        with ESMTP id S233806AbiDLUTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 16:19:00 -0400
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CE2BD2D8
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 13:16:34 -0700 (PDT)
+Received: by mail-pl1-f202.google.com with SMTP id z5-20020a170902ccc500b0015716eaec65so5977450ple.14
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 13:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=NXujprYKJhSajiubVWqGznCVDOf0bG4SjHF3OkzH+bQ=;
-        b=MHrLaZ7AbM8EOxOrgGXWCCc8PKjwpv7QKPAB+7JN67RWtjSoOAcTabqHIoKmTU3izq
-         55qts+zJDQEttphey067QHtzhEUU0RsaKDQyGF02XvAVMsgKUMjtsPx7OjaxuKjln8im
-         B9JvELCLeOFViZXFFWLY3oU6/NTXc7oyeiIT7+RChVD/bXocx0xSAI2yAL/YBRky9cD/
-         rl/JRy/QYR/axD+XUoqDAK5G6JDj6Yt6LWufAroCn9L7EsoPDk2Hn5JZiahL+dT48zyM
-         99CbKOHK8IbbxTaLSdOTO1IpyyI0vnM/NWaVM9G7t9sl2tRPCMPiCaC6rYeOGhW0xnQv
-         rZWw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=4aBIKyoL+SSj83TvWhcgDx/3LJUatTIVizOAgravpLY=;
+        b=oFsORFETMHJ5G42ai/koCcq2DyVPnMyuEV3oyTnWkX05Auk5QSNE5RaStwv+cd/Dsp
+         cu/e01IJzrPUVmz5JqWwTcTIq7C/I2bZIUWTkcSSwD366nz+zC0bSgn/cfg1C4L1oEMw
+         o7oWHOgIpKy9boj8CXgHdMmLLLfZnKNfyDhP8QK0nmQ0pQRnulpPHi+WaBH7kkGtfpOI
+         iJ+0hMqsWdoBgdybidLCMSx8sjtbcySyeM8m2UtO9fl6F03/OycSQrx0Eifmiid6otBE
+         chCXmHkJ0fnWXOxaZn73VPxD5kqsl3AOr3xm4X/eS0ilAxWgFAljQhZ+zccpWmiYUr0C
+         Tl6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=NXujprYKJhSajiubVWqGznCVDOf0bG4SjHF3OkzH+bQ=;
-        b=AH6HyvRVjgzU/NAFi1i+QCv3SNhB+O85s9ulgZGPHEkERc/jkOihzFUDP7KnVZg5SN
-         py48hVT4GGlWXRq36IO2jpDSWyNFD3byY1NA3ZLWfl/aQNm+jwxDYCFg66cM1P3xd1L1
-         HsGwhydYBL3e3n17yfh2UUXgzp2YL98plVR81mVeIbNyF77DAgutbH9Lfs10VsXN1eh4
-         p3DvH1wWI36XryulO03wX3aYxWAWkadFB8n0DkN7axF9+1izwrDXVMt63fO8hCNWTraq
-         uBf3zYXITGbQ1GRWsRtWoyCHCZhVG52nuM5losW/NJMC7s424n9IbWCQAi4NLN6dCTt5
-         ulrg==
-X-Gm-Message-State: AOAM531GuvpS1G2G5vLcKb5+KhQTKpG6iABvc8OKvUy4DmfVW1+O+J/L
-        G1awXQ46ywTX8AeA17NN/OR8dTU2TvU=
-X-Google-Smtp-Source: ABdhPJyvoTZP/8ejsGm67qec1cta2ppit0aoMEpaU7Qp34V/WPAz3FpiVLEmwAd5GL3uCxnaz1AyuA==
-X-Received: by 2002:a17:907:6e19:b0:6e8:9104:246b with SMTP id sd25-20020a1709076e1900b006e89104246bmr11132911ejc.15.1649791852544;
-        Tue, 12 Apr 2022 12:30:52 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s5-20020a170906284500b006cc551d6cabsm13487621ejc.63.2022.04.12.12.30.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 12:30:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1neMDz-004ncg-Gm;
-        Tue, 12 Apr 2022 21:30:51 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan <git.jonathan.bressat@gmail.com>
-Cc:     cogoni.guillaume@gmail.com, Matthieu.Moy@univ-lyon1.fr,
-        git@vger.kernel.org, guillaume.cogoni@gmail.com,
-        Jonathan <Jonathan.bressat@etu.univ-lyon1.fr>
-Subject: Re: [PATCH 0/1] Be nicer to the user on tracked/untracked merge
- conflicts
-Date:   Tue, 12 Apr 2022 21:24:34 +0200
-References: <CAA0Qn1sBF=PAduCQCXbYkeu4cphw7O+AnvwFNMWijuKYskaT8g@mail.gmail.com>
- <20220412191556.21135-1-Jonathan.bressat@etu.univ-lyon1.fr>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220412191556.21135-1-Jonathan.bressat@etu.univ-lyon1.fr>
-Message-ID: <220412.868rsagkus.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=4aBIKyoL+SSj83TvWhcgDx/3LJUatTIVizOAgravpLY=;
+        b=icVKpnWomUnCJzxZ0nswYqhHxHowJlDtWb3985Pq+xpTOEX6eM+D+dZw3mGALC0Vhu
+         xR/yIj0V0x9Nh6rb9L06wqxwGbHHE2XpV0TdfQhnf7S9ez2lawTf5uDVRZMp+TZMSyxA
+         wawAuWCh6Vo69ruXBc5L/U43tL75z8+E3j1fPMg5QqAD8IgKoP4fRrLlzdkh2CkqJpU3
+         n7FSggPlhTL1zrgfVjRC29+ewYqpYipCqB8w6axcVNWCsyKsiTdfiX+hBI62ljjenFvF
+         u9E0S9CtoirY7w0L1RE52tnwtK/+PU/qNGOSZ5pSOTPnHzLEn/b/VlXDje2QVSi3jwKn
+         rpTA==
+X-Gm-Message-State: AOAM533b9I3qYj1Nu77YgqfWenGP9RVQv3BFp5/93k2jxmFNvyysKIIT
+        eDoM6zJShy2kLXie+fGKOdOx5/14J5U4Yk01umQQ
+X-Google-Smtp-Source: ABdhPJz5uge8maApVY4zaYOKis4PNmwRK4a7toI4L2qQ7kRCxESAvkuuwzfd9X1OKiO9ZBIEcHM6VyqRO8WwxTtdZmJA
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:3083:0:b0:505:f7ac:c4a6 with
+ SMTP id w125-20020a623083000000b00505f7acc4a6mr5573710pfw.66.1649794478903;
+ Tue, 12 Apr 2022 13:14:38 -0700 (PDT)
+Date:   Tue, 12 Apr 2022 13:14:34 -0700
+In-Reply-To: <20220407215352.3491567-5-sandals@crustytoothpaste.net>
+Message-Id: <20220412201435.803424-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
+Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
+ from a ref
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> Now that we have a way to export stashes to a ref, let's provide a way
+> +	/*
+> +	 * Now, walk each entry, adding it to the stash as a normal stash
+> +	 * commit.
+> +	 */
+> +	for (i = items.nr - 1; i >= 0; i--) {
+> +		unsigned long bufsize;
+> +		const char *p;
+> +		const struct object_id *oid = items.oid + i;
+> +
+> +		this = lookup_commit_reference(the_repository, oid);
+> +		buffer = get_commit_buffer(this, &bufsize);
+> +		if (!buffer) {
+> +			res = -1;
+> +			error(_("cannot read commit buffer for %s"), oid_to_hex(oid));
+> +			goto out;
+> +		}
+> +
+> +		p = memmem(buffer, bufsize, "\n\n", 2);
+> +		if (!p) {
+> +			res = -1;
+> +			error(_("cannot parse commit %s"), oid_to_hex(oid));
+> +			goto out;
+> +		}
+> +
+> +		p += 2;
+> +		msg = xmemdupz(p, bufsize - (p - buffer));
+> +		unuse_commit_buffer(this, buffer);
+> +		buffer = NULL;
+> +
+> +		if (do_store_stash(oid, msg, 1)) {
 
-On Tue, Apr 12 2022, Jonathan wrote:
+This seems like you're using the commit message as the reflog message -
+is this necessary? For what it's worth, all tests still pass if I
+replace "msg" with "NULL".
 
-> When doing a merge while there is untracked files with the same name
-> as merged files, git refuses to proceed. This patch make git overwrite
-> files if their content are the same.
->
-> We added a statement to check_ok_to_remove() (unpack-trees.c) 
-> with ie_modified() (read-cache.c) to test if the untracked file 
-> has the same content as the merged one. It seems to work well 
-> with all three o->result, o->dst_index and o->src_index,
-> We are not sure of what is the usage of those three, did we used it
-> properly?
->
-> Our tests need some improvement, for example using test_commit,
-> and testing more possibilities, it's not a real patch, just 
-> to comfirm if we are on the right track.
->
-> The next idea is when it's a fastforward, attempt to merge the
-> untracked file and the upstream version (like if the file had
-> just been committed, but without introducing an extra commit).
->
-> you can see this idea here: 
-> https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#Be_nicer_to_the_user_on_tracked.2Funtracked_merge_conflicts
+Other than that, everything looks good to me.
 
-I left some comments on the patch itself, but structurally it wolud be
-really nice to make this and similar changes:
-
- 1. Test for current behavior
- 2. Change behavior and relevant (new) tests
-
-Rather than the current one-step, that would also communicate that wiki
-link (and better) via code.
-
-> Questions:
-> The old behaviour was here for technical reasons?
-> The new behavior that we introduce here become the default one?
-> If the old behavior was important for some people or for some reasons,
-> we can set a global variable to switch between the old and the new one.
-> And if we define a global variable, should we print a warning to let 
-> users know that there is a new behavior when a merge is called and that
-> he can switch between the old and new one.
-
-I don't know if we need a config etc., but FWIW my first reaction to
-this is that it's a bit iffy/fragile, i.e. before this we'd basically
-error out and say "fix your index/working tree".
-
-But now just because the newly merged content happens to be identical
-we'll silently merge it over that "staged" content?
-
-Anyway, I can also see how that would be useful for some people.
-
-I've personally been annoyed by a subset of this behavior in the past, I
-can't remember if it's with merge or rebase that we'll refuse to do
-anything because we have a locally modified/staged (can't remember) file
-"X", even though "X" won't be touched at all if the merge/rebase
-happens.
-
-But I haven't wanted git to have quite this level of DWYM behavior in
-this area, just my 0.02.
-
-> For some reason, test_commit make the merge not working like if it's the
-> old behaviour of merge, I dont understand why ?
-
-Ah, I left some comments on "why not test_commit"...
-
-Do you have an example of such a non-working case? I'm not sure why it
-wouldn't work.
+It might be worth adding tests that check that the exported stashes are
+in the expected format (to ensure that we can read stashes exported from
+another Git version) but I don't think that has to block the submission
+of this patch set.
