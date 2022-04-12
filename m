@@ -2,109 +2,261 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 467C0C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 06:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF6CC433FE
+	for <git@archiver.kernel.org>; Tue, 12 Apr 2022 09:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348882AbiDLGfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 02:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50580 "EHLO
+        id S1343771AbiDLKAr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 06:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241763AbiDLGfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 02:35:19 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF74735857
-        for <git@vger.kernel.org>; Mon, 11 Apr 2022 23:33:02 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4479711B66E;
-        Tue, 12 Apr 2022 02:33:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HPs/Xuqc3AN/OB7Y1K1TlMP3QYGzMe0Q072dq3
-        JRB3I=; b=aUJc5jo1OBh5kCp7R0zqRrpmWFikADrrBty5Y+0UN6A0U8YHsbeceN
-        ISlhWRSKg9tI5g4NU+NM5crFOIovCJrdT7HLZJ8mhLwg1apBNu+ah4mrefT2eMr/
-        w2jmKV8kDxa++TtDTjZbdvtpu06ftQ64eNI/AJ5R+rEbVlxf9VJ88=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB59811B66D;
-        Tue, 12 Apr 2022 02:33:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D15511B66B;
-        Tue, 12 Apr 2022 02:32:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, shaoxuan.yuan02@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 4/4] object-name: diagnose trees in index properly
-References: <pull.1207.git.1649349442.gitgitgadget@gmail.com>
-        <99c09ccc2406e4f54c620bd7fb2d1205386e23a6.1649349442.git.gitgitgadget@gmail.com>
-Date:   Mon, 11 Apr 2022 23:32:58 -0700
-In-Reply-To: <99c09ccc2406e4f54c620bd7fb2d1205386e23a6.1649349442.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Thu, 07 Apr 2022
-        16:37:22 +0000")
-Message-ID: <xmqqlewaerqd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1357499AbiDLJtT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 05:49:19 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8706472D
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:55:48 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id l7so30502747ejn.2
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 01:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=JQQY3d7Wvb3hkato2Q+mTrgt7xfnBkcsdkE8Q7mp0Zk=;
+        b=nNkct8MTIYi/8CqvSBnHJQATs8ZXpjoqnLx7VzowglbNnw6foJtfCgUFts/C185pQl
+         ZY8M+f3NMIT06VQgT+Cv8R7da0hBXGTlNRghbXV7e2+Xtw9Ca0OVJNtLPo9yevooi21h
+         yAz4bcqzqis88i2BJVUo9wZMlS9kRW/D/JCDUtTjhwG6SYenfzoDQJNgyBwwhOcacyT0
+         M8e4mD4hDZDBBO+G4yaR/kUz22PNbPB/4IfdEUvsGk6tsK+duT1iDJoDCv1OmeQ/it12
+         zyZyDXueRSc/kL3buSKfGokyOfL2xne/bfo4/PsC5p78TaeHMN6nAFFquTBMitVcf612
+         lRZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=JQQY3d7Wvb3hkato2Q+mTrgt7xfnBkcsdkE8Q7mp0Zk=;
+        b=3pGcvJFYJoffU1BcAtj3IQaPYKBPF5Zpp+AovL0a4ngu+QkqeVmK2tEaWUUss0iMTB
+         iICCOS07NIKQfjhp8bWG1yEUJXsOfF8DM3ApM9ZXVRPj6/Zprw7bbWUq2RlKjP5xXhi1
+         Qg/loq8hXTl2/SAc9obOQV9DidbnETwHcapWiZKWiynmXNOYY+jbm+ZR8Ue1zz4jiszU
+         KsSGrQw2B600xnYUdK8+U/0sGQdDuU1d7jxRn1wR6nyoIMJnPY58MjL5O2iLemN5Mu/3
+         tTLmmWFESV5afYUXuLSDFEEyMeQF8hrazAGey9RwCMC9ivrXhIbLfcbyYtPtxkvZGkst
+         tIOw==
+X-Gm-Message-State: AOAM5338g/f+w57XnHoIHidX+/tOyYeN3coM/XZuJ8NgVgUaQC4LUA+5
+        H/DJ5urHdb8byzunFY9bE4g=
+X-Google-Smtp-Source: ABdhPJzoIAmL5QCRVqvP4wodUflp9/QNOxzwe5BU4n3aIjwC9kjw4MOWbwgDyYJUvRk3G57UDY0x4w==
+X-Received: by 2002:a17:906:9c82:b0:6df:baa2:9f75 with SMTP id fj2-20020a1709069c8200b006dfbaa29f75mr33544280ejc.762.1649753746320;
+        Tue, 12 Apr 2022 01:55:46 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v21-20020a1709064e9500b006e8973a14d0sm1992498eju.174.2022.04.12.01.55.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Apr 2022 01:55:45 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1neCJN-004XNQ-11;
+        Tue, 12 Apr 2022 10:55:45 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Miklos Vajna <vmiklos@vmiklos.hu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3] git-log: add a --since=... --as-filter option
+Date:   Tue, 12 Apr 2022 10:47:15 +0200
+References: <xmqqtub3moa0.fsf@gitster.g> <xmqqv8vkpara.fsf@gitster.g>
+ <YlCiqgO6rL908Zsi@vmiklos.hu>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <YlCiqgO6rL908Zsi@vmiklos.hu>
+Message-ID: <220412.86pmlmhe9a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 65C8F6E4-BA2A-11EC-BB9E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Derrick Stolee <derrickstolee@github.com>
+On Fri, Apr 08 2022, Miklos Vajna wrote:
+
+> On Thu, Apr 07, 2022 at 07:30:33PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> As a single-shot change, "--since-as-filter" is certainly an easy to
+>> explain approach of least resistance.
+>> 
+>> But when viewed from a higher level as a general design problem, I
+>> am unsure if it is a good direction to go in.
+>> 
+>> Giving "--since" the "as-filter" variant sets a precedent, and
+>> closes the door for a better UI that we can extend more generally
+>> without having to add "--X-as-filter" for each and every conceivable
+>> "--X" that is a traversal stopper into a filtering kind.
 >
-> When running 'git show :<path>' where '<path>' is a directory, then
-> there is a subtle difference between a full checkout and a sparse
-> checkout. The error message from diagnose_invalid_index_path() reports
-> whether the path is on disk or not. The full checkout will have the
-> directory on disk, but the path will not be in the index. The sparse
-> checokut could have the directory not exist, specifically when that
-> directory is outside of the sparse-checkout cone.
+> I like the idea of doing this mode as "--since=... --as-filter". I can
+> still implement it just for --since=... initially, but it can be
+> extended for other flags as well in the future if there is a need.
+
+Yes, I think this is much better.
+
+>> If we pursue the possibility further, perhaps we may realize that
+>> there isn't much room for us to add too many "traversal stoppers" in
+>> the future, in which case giving "as-filter" to a very limited few
+>> traversal stoppers may not be too bad.  I just do not think we have
+>> explored that enough to decide that "--since-as-filter" is a good UI
 >
-> In the case of a sparse index, we have yet another state: the path can
-> be a sparse directory in the index. In this case, the error message from
-> diagnose_invalid_index_path() would erroneously say "path '<path>' is in
-> the index, but not at stage 0", which is false.
+> My understanding is that get_revision_1() has a special-case for the max
+> age case to be a "traversal stopper", and all other options are just 
+> filtering in limit_range(). But perhaps I missed something.
+> [...]
+>  Documentation/rev-list-options.txt |  5 +++++
+>  revision.c                         | 14 +++++++++++--
+>  revision.h                         |  1 +
+>  t/t4217-log-limit.sh               | 32 ++++++++++++++++++++++++++++++
+>  4 files changed, 50 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t4217-log-limit.sh
 >
-> Add special casing around sparse directory entries so we get to the
-> correct error message. This requires two checks in order to get parity
-> with the normal sparse-checkout case.
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index fd4f4e26c9..8565299264 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -25,6 +25,11 @@ ordering and formatting options, such as `--reverse`.
+>  --after=<date>::
+>  	Show commits more recent than a specific date.
+>  
+> +--as-filter::
+> +	When combined with `--since=<date>`, show all commits more recent than
+> +	a specific date. This visits all commits in the range, rather than stopping at
+> +	the first commit which is older than a specific date.
 
-That all makes sense, but let me ask a more basic (and possibly
-stupid) question and a half. 
+I wonder if we should be more future-proof here and say that we'll run
+anything as a filter, and that --since is the one option currently
+affected.
 
- - When running 'git cmd :<path>' where '<path>' is a directory,
-   even before the "sparse-index" or "sparse-checkout" world, I
-   sometimes wished that ":<path>" resolved to the object name of
-   the tree recorded in the cache-tree, if we have one.  If we are
-   living in the "sparse-index" world, and the paths underneath
-   '<path>' are not in the index (because we are not interested in
-   them), we should be able answer "git rev-parse :<path>" with the
-   name of the tree object.  It is a "new feature" regardless of
-   sparse-index, but I wonder if it is sensible to add more code to
-   engrave in stone that we would not support it and keep treating
-   the index as if it is a flat list of paths to blobs (and commits,
-   for submodules)?
+But maybe there's no reason to do so...
 
- - When running 'git cmd :<path>' where '<path>' is *not* a
-   directory but is not in the index because of "sparse-index"
-   (i.e. a leading directory of '<path>' is represented as a tree in
-   the index), should ":<path>" index expand the "tree" index entry
-   on-demand, so that <path> has its own entry in the index, as if
-   no "sparse-index" is in effect?  The tests I saw in the series
-   were mostly asserted with test_sparse_match, not test_all_match,
-   so I couldn't tell what the expectations are.
+In any case these docs are inaccurate because they cover --since, but if
+you check revision.c we'll set "max_age" on other options too
+(synonyms?).
 
- - More generally, if <leading> path is represented as a
-   "sparse-dir" entry, should ":<leading>/<lower>" cause the index
-   entry for <leading> path to be expanded on-demand?  I am guessing
-   that the answer is yes, as we wouldn't be able to even tell if
-   such a path <leading>/<lower> would exist in the index if the
-   index were converted to full upfront.
+All in all I wonder if this wouldn't be much more understandable if we
+advertised is as another option to do "HISTORY SIMPLIFICATION", which
+looking at e.g. get_commit_action() and "prune" is kind of what we're
+doing with the existing --since behavior.
 
-Thanks.
+>  --until=<date>::
+>  --before=<date>::
+>  	Show commits older than a specific date.
+> diff --git a/revision.c b/revision.c
+> index 7d435f8048..41ea72e516 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
+>  		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
+>  		    !revs->line_level_traverse)
+>  			continue;
+> +		if (revs->max_age != -1 && revs->as_filter && (commit->date < revs->max_age) &&
+> +		    !revs->line_level_traverse)
+> +			continue;
+>  		date = commit->date;
+>  		p = &commit_list_insert(commit, p)->next;
+>  
+> @@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
+>  	revs->dense = 1;
+>  	revs->prefix = prefix;
+>  	revs->max_age = -1;
+> +	revs->as_filter = 0;
+>  	revs->min_age = -1;
+>  	revs->skip_count = -1;
+>  	revs->max_count = -1;
+> @@ -2218,6 +2222,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
+>  		revs->max_age = approxidate(optarg);
+>  		return argcount;
+> +	} else if (!strcmp(arg, "--as-filter")) {
+> +		revs->as_filter = 1;
+> +		return argcount;
+>  	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
+>  		revs->max_age = approxidate(optarg);
+>  		return argcount;
+> @@ -3365,7 +3372,7 @@ static void explore_walk_step(struct rev_info *revs)
+>  	if (revs->sort_order == REV_SORT_BY_AUTHOR_DATE)
+>  		record_author_date(&info->author_date, c);
+>  
+> -	if (revs->max_age != -1 && (c->date < revs->max_age))
+> +	if (revs->max_age != -1 && !revs->as_filter && (c->date < revs->max_age))
+>  		c->object.flags |= UNINTERESTING;
+>  
+>  	if (process_parents(revs, c, NULL, NULL) < 0)
+> @@ -3862,6 +3869,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+>  	if (revs->min_age != -1 &&
+>  	    comparison_date(revs, commit) > revs->min_age)
+>  			return commit_ignore;
+> +	if (revs->max_age != -1 && revs->as_filter &&
+> +	    comparison_date(revs, commit) < revs->max_age)
+> +			return commit_ignore;
+>  	if (revs->min_parents || (revs->max_parents >= 0)) {
+>  		int n = commit_list_count(commit->parents);
+>  		if ((n < revs->min_parents) ||
+> @@ -4019,7 +4029,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
+>  		 * that we'd otherwise have done in limit_list().
+>  		 */
+>  		if (!revs->limited) {
+> -			if (revs->max_age != -1 &&
+> +			if (revs->max_age != -1 && !revs->as_filter &&
+>  			    comparison_date(revs, commit) < revs->max_age)
+>  				continue;
+
+I think it's good to do this as a general mechanism, but if you now
+remove the "max_age" field from "struct rev_info" and:
+
+	make -k
+
+You'll see a bunch of callers who check "max_age" outside of revision.c,
+since those will accept these revision options are they doing the right
+thing now too?
+
+...
+
+> diff --git a/revision.h b/revision.h
+> index 5bc59c7bfe..fe37ebd83d 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -263,6 +263,7 @@ struct rev_info {
+>  	int skip_count;
+>  	int max_count;
+>  	timestamp_t max_age;
+> +	int as_filter;
+>  	timestamp_t min_age;
+>  	int min_parents;
+>  	int max_parents;
+> diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
+> new file mode 100755
+> index 0000000000..a66830e3d7
+> --- /dev/null
+> +++ b/t/t4217-log-limit.sh
+> @@ -0,0 +1,32 @@
+> +#!/bin/sh
+> +
+> +test_description='git log with filter options limiting the output'
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+> +. ./test-lib.sh
+> +
+> +GIT_TEST_COMMIT_GRAPH=0
+> +GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
+> +
+> +test_expect_success 'setup test' '
+> +	git init &&
+> +	echo a > file &&
+> +	git add file &&
+> +	GIT_COMMITTER_DATE="2022-02-01 0:00" git commit -m init &&
+> +	echo a >> file &&
+> +	git add file &&
+> +	GIT_COMMITTER_DATE="2021-01-01 0:00" git commit -m second &&
+> +	echo a >> file &&
+> +	git add file &&
+> +	GIT_COMMITTER_DATE="2022-03-01 0:00" git commit -m third
+> +'
+> +
+> +test_expect_success 'git log --since-as-filter' '
+> +	git log --since="2022-01-01" --as-filter --pretty="format:%s" > actual &&
+> +	test_i18ngrep init actual &&
+> +	! test_i18ngrep second actual &&
+> +	test_i18ngrep third actual
+> +'
+> +
+> +test_done
+
+In any case we should have tests for those callers, i.e. blame, bundle
+etc.
