@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1404C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5384EC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238677AbiDMUFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:05:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
+        id S238679AbiDMUFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238631AbiDMUE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238639AbiDMUE7 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 13 Apr 2022 16:04:59 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF367B55C
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:22 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id r64so1763345wmr.4
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:22 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE54F7DA80
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:24 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id r64so1763417wmr.4
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hSkBur+QTC5OUIv+TFHm8crGorFFVGJrGuB5Jbg6kRY=;
-        b=euKYGPXXs1WGNFdxD0jxF6aMahrwCadDiXoshIvcTH7dlg2OLJ0vW3WldSqAnVw7iU
-         Y6dq5F8+u+78ATxFYnMDfQwXR5G+mwX7BdYLa6hv151ZUUCUGc4GEWEN4aIFjrEJQhml
-         I47NLtxy2f4rmGJNsw5ciw9jaBpfGSN1CTR4g8muSH/sp6rH5EzjIx4iF7zkv7mTQYIH
-         MazlA3dZsdx7eW+wAyi60qDjfKy23PaaM7Xfg2iEgkKlpm7XAlaNkAB03B9CzYRc5kvT
-         foVJUE1dzSMf0GQ7OoU7ambZ+5HdDY/bASD35QzCL+bK1lkp5zcGCCP2STw0gEiiWbnE
-         JK+w==
+        bh=e2kCKOXeROM1QT7hkTHbQ2MCROG15/goV1dWalxaf/c=;
+        b=dz5VELKiJH3RXtmume7YVBFJYRTCAa/fGmKZIEptCJ5lIwohwxuYQJ3c6aL8R/q0KX
+         yJMM1YSC4mgBYEtUcngDKuIcT0CSwdNLoBWinkZneR36fnThxbvs/xZG5UIXsTx4RuQ2
+         fyTXCtenftpi7wBZGeedZZ3B2JCeYaTbtV7VBzsAQttH6hYarzezPDdwobnI+tiTvtRJ
+         6jSJ2eVG/rnYaBdDWWn4qKuzSvEHjynbZJ2EFdKkvSZjbu4I9cqxCE6b6QlWhqeWEKtI
+         hUm3Uji1ZJL6pjsvMHnPZrJzUQ7b04NCQF3LNz3H9XcA7IPmm0l1eMoOBnhZiEeZT9tn
+         TdAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hSkBur+QTC5OUIv+TFHm8crGorFFVGJrGuB5Jbg6kRY=;
-        b=0dEHpd/M8IVDRh1FFsCfeter5tfExORGyeHg/dFrQpBVafJOE1PcijPhHrnAHTo4ea
-         UTbUIH9bSfQrtJpjx8mg6P0pCNJSYPHE5Redxs8x/IFpiOf7eZmXVjo+PCwRsjGVw1wd
-         j22dEHytdJsCDz6Tu9CNdnAs2ta3lJHTp9/Lr1YQ1/AuqV4rudEUFv26WybraMIuzOvC
-         EAxMaR85wX6DJJ550b7Tx2mVXbe4MqCxV4fBfZCzQ62q+qLj6oBVMxyIDDNQo86A6A0f
-         3D+GJqAofTe4CULdNh0Uh/j0QzpbFsYLg2NEM/68jjdPkQByL7c6EmQ5cGZHprZ40GU9
-         rCSw==
-X-Gm-Message-State: AOAM531L4dMRVVXUmnhBL4+2IP2sZVezHqRHexP572yVRqV30gFDvL2s
-        cqgfi/Mvr3XZ4vbW27qXijD0gu+c1dEx8Q==
-X-Google-Smtp-Source: ABdhPJw1nOStHr8GDAqd8gbwoYrGXEQdpTAVZGdY8+araleODgIevdcsGtOUIeNW50j0elUB1+Pqiw==
-X-Received: by 2002:a05:600c:4e12:b0:38b:b715:18a6 with SMTP id b18-20020a05600c4e1200b0038bb71518a6mr297559wmq.17.1649880140664;
-        Wed, 13 Apr 2022 13:02:20 -0700 (PDT)
+        bh=e2kCKOXeROM1QT7hkTHbQ2MCROG15/goV1dWalxaf/c=;
+        b=GICnfsBUF0YvYOn0ZjPU2/zaMnmFBefv1XZlFuPUpsyjodkChNAhTDpB6+aF+XZd2+
+         zIU8NtQGorYQCaOCPkVfNyVQWlr2K+byyHAexsMYpnemxZh9JB7PX7hrAa0IIiVhaPuq
+         qJtdELRymjqW2M9FZHQfdv36ndqHkxW2V6jfcrODFNy17yQFkjUMht4+4f1MhEhPEMH6
+         RsFhGHv/4pu6XCHbFrA459pk5ayJs3HN2Lyr6tQzkv4enNQFn2c5ezg55G/EDOXa7MQ5
+         E392wi5YhEAKInMAGQGWHJKLgscuU7qjUyioad0cBwDti/uc/586g0axRzUtkPh5c5rm
+         8Zkw==
+X-Gm-Message-State: AOAM531+kdC1hr4XP18MGZ9sNE0VMbTOhyOdhEMQIpSMDTQPWWfIkMz4
+        axtaNe7adOSgpSWfVdAyLTWCSerr/ctxQg==
+X-Google-Smtp-Source: ABdhPJzFqgYIn28kGwZYRHMkgMlywmAGzEj1R/bU5FgHdvCMwOGngDUFUKXa//tGGnTWbRwRYwCJ0w==
+X-Received: by 2002:a7b:c8cd:0:b0:38e:c2c1:520a with SMTP id f13-20020a7bc8cd000000b0038ec2c1520amr284126wml.139.1649880142840;
+        Wed, 13 Apr 2022 13:02:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.19
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 13:02:20 -0700 (PDT)
+        Wed, 13 Apr 2022 13:02:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 21/27] revisions API: have release_revisions() release "prune_data"
-Date:   Wed, 13 Apr 2022 22:01:50 +0200
-Message-Id: <patch-v6-21.27-54514a01096-20220413T195935Z-avarab@gmail.com>
+Subject: [PATCH v6 23/27] revisions API: release "reflog_info" in release revisions()
+Date:   Wed, 13 Apr 2022 22:01:52 +0200
+Message-Id: <patch-v6-23.27-87ba9572b10-20220413T195935Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
 References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com> <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
@@ -71,110 +71,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the the release_revisions() function so that it frees the
-"prune_data" in the "struct rev_info". This means that any code that
-calls "release_revisions()" already can get rid of adjacent calls to
-clear_pathspec().
+Add a missing reflog_walk_info_release() to "reflog-walk.c" and use it
+in release_revisions().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- add-interactive.c | 2 --
- builtin/add.c     | 1 -
- builtin/stash.c   | 2 --
- diff-lib.c        | 1 -
- revision.c        | 1 +
- wt-status.c       | 2 --
- 6 files changed, 1 insertion(+), 8 deletions(-)
+ reflog-walk.c            | 24 +++++++++++++++++++++++-
+ reflog-walk.h            |  1 +
+ revision.c               |  1 +
+ t/t0100-previous.sh      |  1 +
+ t/t1401-symbolic-ref.sh  |  2 ++
+ t/t1411-reflog-show.sh   |  1 +
+ t/t1412-reflog-loop.sh   |  2 ++
+ t/t1415-worktree-refs.sh |  1 +
+ 8 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 54cdfc82017..6047e8f6489 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -568,8 +568,6 @@ static int get_modified_files(struct repository *r,
- 			run_diff_files(&rev, 0);
- 		}
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 8ac4b284b6b..7aa6595a51f 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -8,7 +8,7 @@
  
--		if (ps)
--			clear_pathspec(&rev.prune_data);
- 		release_revisions(&rev);
+ struct complete_reflogs {
+ 	char *ref;
+-	const char *short_ref;
++	char *short_ref;
+ 	struct reflog_info {
+ 		struct object_id ooid, noid;
+ 		char *email;
+@@ -51,9 +51,16 @@ static void free_complete_reflog(struct complete_reflogs *array)
  	}
- 	hashmap_clear_and_free(&s.file_map, struct pathname_entry, ent);
-diff --git a/builtin/add.c b/builtin/add.c
-index 115a26ea633..fc729e14c17 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -142,7 +142,6 @@ int add_files_to_cache(const char *prefix,
- 	rev.diffopt.flags.override_submodule_config = 1;
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
- 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
--	clear_pathspec(&rev.prune_data);
- 	release_revisions(&rev);
- 	return !!data.add_errors;
+ 	free(array->items);
+ 	free(array->ref);
++	free(array->short_ref);
+ 	free(array);
  }
-diff --git a/builtin/stash.c b/builtin/stash.c
-index fce4393d123..16aad4b4d35 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1064,7 +1064,6 @@ static int check_changes_tracked_files(const struct pathspec *ps)
- 	}
  
- done:
--	clear_pathspec(&rev.prune_data);
- 	release_revisions(&rev);
- 	return ret;
++static void complete_reflogs_clear(void *util, const char *str)
++{
++	struct complete_reflogs *array = util;
++	free_complete_reflog(array);
++}
++
+ static struct complete_reflogs *read_complete_reflog(const char *ref)
+ {
+ 	struct complete_reflogs *reflogs =
+@@ -116,6 +123,21 @@ void init_reflog_walk(struct reflog_walk_info **info)
+ 	(*info)->complete_reflogs.strdup_strings = 1;
  }
-@@ -1276,7 +1275,6 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
  
- done:
- 	discard_index(&istate);
--	clear_pathspec(&rev.prune_data);
- 	release_revisions(&rev);
- 	strbuf_release(&diff_output);
- 	remove_path(stash_index_path.buf);
-diff --git a/diff-lib.c b/diff-lib.c
-index 0f16281253f..298265e5b54 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -641,7 +641,6 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
++void reflog_walk_info_release(struct reflog_walk_info *info)
++{
++	size_t i;
++
++	if (!info)
++		return;
++
++	for (i = 0; i < info->nr; i++)
++		free(info->logs[i]);
++	string_list_clear_func(&info->complete_reflogs,
++			       complete_reflogs_clear);
++	free(info->logs);
++	free(info);
++}
++
+ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		struct commit *commit, const char *name)
+ {
+diff --git a/reflog-walk.h b/reflog-walk.h
+index e9e00ffd479..8076f10d9fb 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -8,6 +8,7 @@ struct reflog_walk_info;
+ struct date_mode;
  
- 	if (diff_cache(&revs, tree_oid, NULL, 1))
- 		exit(128);
--	clear_pathspec(&revs.prune_data);
- 	release_revisions(&revs);
- 	return 0;
- }
+ void init_reflog_walk(struct reflog_walk_info **info);
++void reflog_walk_info_release(struct reflog_walk_info *info);
+ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 			struct commit *commit, const char *name);
+ void show_reflog_message(struct reflog_walk_info *info, int,
 diff --git a/revision.c b/revision.c
-index 1db58c3e4db..6f444eaaeba 100644
+index 5aa6dec4532..8cd849aa2b9 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2949,6 +2949,7 @@ void release_revisions(struct rev_info *revs)
- 	object_array_clear(&revs->pending);
- 	release_revisions_cmdline(&revs->cmdline);
- 	list_objects_filter_release(&revs->filter);
-+	clear_pathspec(&revs->prune_data);
+@@ -2953,6 +2953,7 @@ void release_revisions(struct rev_info *revs)
+ 	clear_pathspec(&revs->prune_data);
  	release_revisions_mailmap(revs->mailmap);
  	free_grep_patterns(&revs->grep_filter);
- }
-diff --git a/wt-status.c b/wt-status.c
-index a14fad1e03a..61e0c1022f5 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -616,7 +616,6 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
- 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_files(&rev, 0);
--	clear_pathspec(&rev.prune_data);
- 	release_revisions(&rev);
++	reflog_walk_info_release(revs->reflog_info);
  }
  
-@@ -664,7 +663,6 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_index(&rev, 1);
- 	release_revisions(&rev);
--	clear_pathspec(&rev.prune_data);
- }
+ static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
+diff --git a/t/t0100-previous.sh b/t/t0100-previous.sh
+index 69beb59f627..a16cc3d2983 100755
+--- a/t/t0100-previous.sh
++++ b/t/t0100-previous.sh
+@@ -5,6 +5,7 @@ test_description='previous branch syntax @{-n}'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- static int add_file_to_list(const struct object_id *oid,
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'branch -d @{-1}' '
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index 132a1b885ac..9fb0b90f252 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='basic symbolic-ref tests'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # If the tests munging HEAD fail, they can break detection of
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index 975c4ea83a8..da581ec19ac 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -4,6 +4,7 @@ test_description='Test reflog display routines'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
+index 977603f7f1c..ff30874f940 100755
+--- a/t/t1412-reflog-loop.sh
++++ b/t/t1412-reflog-loop.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='reflog walk shows repeated commits again'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup commits' '
+diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+index a3e6ea08088..3b531842dd4 100755
+--- a/t/t1415-worktree-refs.sh
++++ b/t/t1415-worktree-refs.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='per-worktree refs'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
