@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46405C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FD71C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232808AbiDMTyc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58110 "EHLO
+        id S238505AbiDMTye (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:54:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238470AbiDMTyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:54:23 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB892FFED
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:01 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id i20so4096212wrb.13
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:01 -0700 (PDT)
+        with ESMTP id S238480AbiDMTyY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 15:54:24 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EFD424A7
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:02 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k22so4153199wrd.2
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/yGc/HrvdckN1BUvUV+axxJi8hTlsjJOnGca9LoC2ck=;
-        b=Ap6btNONvszB0zRzMUidDHMZ0qeLO9urqFUpG6knMt3aRsKrr7gBUUQoQF/zK4+mbz
-         XCdCjRRh5chOLsf49Oy13aYJnfqOYXsTXzutozQ2Vp5KgYLqxKJIEaMCywQGq3e59Ga9
-         DiClBvwc7o/1yGzrehn8KMsHKKzVI4milbpmGZ+5CePMgPvbJatiEmaBGWwYvoXGyPuY
-         Aiw20W9tUfOJmsdJ6YqRZ7z01UnpVTyUopwN3QthdpC7UyzcpcTn+/6D3xWZbsxPTcAP
-         shtAoa8IrCT+gtIItf6Meln3nWB4hmd7jlE7Or7DGq8wRwaHBmeQQodfEnnSdHylBkwZ
-         YTFw==
+        bh=rrxN0Vogdsk0Cdc8ZI8CjlHpPUqJD2QXpwX7utfRL+o=;
+        b=TGF1P8sxbPMOqmpzX0UMNE1yuWP/ZzY1mtXYOloJ+HPyz75zSIQDB7pxHgnCjnqsyk
+         tb6nsmOJ/mgKR0wgckhkd6YSJfd7pI8GfYdnWgYSVps57SwSGl5AOwxLLLr52dxEfg8m
+         s1faOnZJCTGGGd/DpL17AlOFdnh9nnDbmlgZyeKMKGerNVf2/L3CKDf1kRcBzt4xLX5O
+         SYn5Oh/jesP4zJdo0bP5NkIL5wNy/ZfSWWeOlE8bxHnS2R/TY9Q9TvQo0JpEOGLrpPJP
+         TV4wsgli0ZseT9uv+yTWxc4BoPpVLMaBXtKGWKrSfeAMV9RIiwP8B3nfflRq/yo+hdl7
+         82tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/yGc/HrvdckN1BUvUV+axxJi8hTlsjJOnGca9LoC2ck=;
-        b=n0az3aeciWE2pwskrUBsrM9rjjjQ+xa6B3LcLiRxWgXm6T47NtQNkTmlI0H5e9BS1c
-         JBrrtgnmPJ5qF/sTfClfGqCUv4TjKOso4KfySrGzPeVFqB6qTdMrrZllsTSEFBkT+jav
-         ikj1UbKeHPfJXANmUQzjjlAMdKZ8nOa+ptHWSpL2jOcXsquXtiJ3WEVKqh6iIOYE24TF
-         AaL3jJ3aRxCQgGIET9EL6Vk+tgMsK+CANIDib7O5HJLjplnzxDmK3iKK3dIydBgwdhwU
-         /8SN/MLIUMVuInmFsbunbWl2QeU3+uYB6zIssNB9zXo6v349OiF8LFP/SDW42lrbV7/v
-         zfTQ==
-X-Gm-Message-State: AOAM5302hvm4vn8xbLgqQuBl0sbIcAwwzGLFD+ZOJMkSWhHXtKNgPiCP
-        L2MvX52N0QZ5SgLqV8mp9gljyvYsDTAdhw==
-X-Google-Smtp-Source: ABdhPJz7amvG2x2NIwVQM8mVRCXuhy56bf3VDQE75K3cSCxNRBuq9a5fmmzYyHBCI8jnYNaUD1WhSg==
-X-Received: by 2002:adf:9bd5:0:b0:207:a2a6:636a with SMTP id e21-20020adf9bd5000000b00207a2a6636amr343384wrc.480.1649879519627;
-        Wed, 13 Apr 2022 12:51:59 -0700 (PDT)
+        bh=rrxN0Vogdsk0Cdc8ZI8CjlHpPUqJD2QXpwX7utfRL+o=;
+        b=XXbpAT49xryV/dHd1CInnDWtl8hPdBIVK0Y7g3J1ri/1Jdlzdj/tiC+s5+AfU7dBe8
+         srKZW5gqjm6gNftV/bxNKUYswpCPH5enhDS0UWkvfgukGzjFbeCyS4W8l8W4pUBlT5dH
+         VfezsXZXcYA4ij0YXveOhq/XTQyqYHJRHQZCC598SPlLXVMaOwpjoR6KJJI4jWg7OTuR
+         aOkfDCBFij2Y1wrr3Bq7F6Uh3UCThqROSUILlkE2uwFRpGoPfu90KitkiqP1eP+p8oqf
+         lBda7lnQucRo2Kuix0lJq8f0bu+D51wQfVnQLjoUtbiWepvpbnEOstcsp4cAQDY3hB+2
+         Se9g==
+X-Gm-Message-State: AOAM532oHv564TjPYb5Nx2RTJrxXvGfsLxEgmSmXN7rI/t+yI/gb13gC
+        2N3A3qOptJ5gwLOuZuNrxHPwVuKH+mu9Zw==
+X-Google-Smtp-Source: ABdhPJzA/xFoGnsl1c/34qGvReWz9o3yEict1bW2kwyNw+qAlkUHlZR7H+DWoIrzY7f4MxBbKxNMxw==
+X-Received: by 2002:adf:c14d:0:b0:207:a28f:f5dd with SMTP id w13-20020adfc14d000000b00207a28ff5ddmr307002wre.679.1649879520538;
+        Wed, 13 Apr 2022 12:52:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.51.58
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.51.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 13 Apr 2022 12:51:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 06/29] CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
-Date:   Wed, 13 Apr 2022 21:51:19 +0200
-Message-Id: <patch-v3-06.29-30968e36bdd-20220413T194847Z-avarab@gmail.com>
+Subject: [PATCH v3 07/29] CI: don't have "git grep" invoke a pager in tree content check
+Date:   Wed, 13 Apr 2022 21:51:20 +0200
+Message-Id: <patch-v3-07.29-cc81b9fe37e-20220413T194847Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
@@ -75,49 +75,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a8c51f77d16 (ci: clear and mark MAKEFLAGS exported just once,
-2019-02-07) the assignment of MAKEFLAGS was done up-front to
-future-proof this code for the bug fixed in 406f93ae488 (ci: make sure
-we build Git parallel, 2019-02-07).
+Fix the omission of not adding "-P" (a.k.a. "--no-pager") to the "git"
+invocation that spaws "git grep", added in 0e7696c64db (ci: disallow
+directional formatting, 2021-11-04).
 
-But since 4a6e4b96026 (CI: remove Travis CI support, 2021-11-23) the
---jobs=10 has been an invariant here, so let's assign --jobs=$NPROC to
-the MAKEFLAGS right away, this gets rid of the leading whitespace from
-the $MAKEFLAGS variable, as it would previously be empty on the first
-assignment.
+This didn't matter for the GitHub CI, but does when running the check
+locally. A subsequent commit will start invoking it via a new check
+from the top-level Makefile, and without this we'd visibly spawn a
+pager when doing so.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ ci/check-directional-formatting.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c4b829c1eed..21c009757f4 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -26,17 +26,19 @@ check_unignored_build_artifacts ()
- # GitHub Action doesn't set TERM, which is required by tput
- export TERM=${TERM:-dumb}
+diff --git a/ci/check-directional-formatting.bash b/ci/check-directional-formatting.bash
+index e6211b141aa..de8e6e486f0 100755
+--- a/ci/check-directional-formatting.bash
++++ b/ci/check-directional-formatting.bash
+@@ -23,5 +23,5 @@
+ # U+2066..U+2069: LRI, RLI, FSI and PDI
+ regex='(\u202a|\u202b|\u202c|\u202d|\u202e|\u2066|\u2067|\u2068|\u2069)'
  
-+# How many jobs to run in parallel?
-+NPROC=10
-+
- # Clear MAKEFLAGS that may come from the outside world.
--export MAKEFLAGS=
-+export MAKEFLAGS=--jobs=$NPROC
- 
- if test "$GITHUB_ACTIONS" = "true"
- then
- 	CI_TYPE=github-actions
- 	CC="${CC:-gcc}"
- 
--	export GIT_PROVE_OPTS="--timer --jobs 10"
-+	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
- 	export GIT_TEST_OPTS="--verbose-log -x"
--	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
+-! LC_CTYPE=C git grep -El "$(LC_CTYPE=C.UTF-8 printf "$regex")" \
++! LC_CTYPE=C git -P grep -El "$(LC_CTYPE=C.UTF-8 printf "$regex")" \
+ 	-- ':(exclude,attr:binary)' ':(exclude)*.po'
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
