@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD397C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5289EC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238578AbiDMUEf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40684 "EHLO
+        id S238580AbiDMUEg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:04:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238149AbiDMUE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:04:28 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325687521D
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:06 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso4664106wme.5
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:06 -0700 (PDT)
+        with ESMTP id S234447AbiDMUE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 16:04:29 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DEEB7B10B
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:07 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso4664130wme.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7SPqvZdYHZt5Nxmnf5XURbVO1MvBp/Z62eGn0dbICqk=;
-        b=XYfKS2VY3YULxUdGhgc2XOaglsA9LrCwX7spGMcqXSPi/N0GSPLyKrtZWYBMOBJV/9
-         SqHF8TxuA7h4zapdQpf3YtrXUzSzw4Fapm4+6JBr0NXNHZAC/QB+XWr1/UJV8R7CVxOR
-         k1rkUJbsE7/8RAqenvCC8Smi7542LLockSWSOQkvoxA6ygIYpKekgBOBOny6FAp3yRAS
-         SI+McIyMGEz8kzcJ63K4v6LJn3Q6vPFb6EH+8RqD7uR4DellC4cSZDr1bgEq+VhDx5I2
-         xkYlGZVmGaWp1yhtMzX7NpESvEgSICEaujWrCkx2CqtfpNHGwmbyqe7vAllmr+MrP9S9
-         HZJA==
+        bh=dFI3cRmC6pe0JsWsXgxWU9gQmpy/VHl2mdKujlQOz30=;
+        b=UY28qlR+w6K4RBeocjpBoDJmZP3eTWxo2eG7EhzWWqyqM8BtGuN3Qc+NFeyOfrUsJv
+         9xHlvOmfuteJ+ClIm4HwmBRMw5Ao+r6DrBOv4ov65c3HAyUMacnpn7248AgsqPnacrw2
+         e+kVoRBWEqVttNGagT4T5ycpbFivt6o6/DfnpxWmVRVSQbrfp0cuHAKkU8n/8ceoDOi3
+         nsP0AFYJ4aje7Y6VGBLQUSTNTdoVaZfoUtH+H64O/xMJGcDu7jse2kcDvWhlMZcNmLoo
+         lLqYI2u3JG0vltAQAuxDYrOaEbzBRsK8c0BWnIOvC/19d0KV1FbLi59ZFgwffJkFwyji
+         v2Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7SPqvZdYHZt5Nxmnf5XURbVO1MvBp/Z62eGn0dbICqk=;
-        b=klmw16ODJWAgfm+zHXq9i2sownAV0G/IVH1dWDnymZSkBh4rN1bOAGdJH4c9my6Epm
-         ykRKtFjeZAhiC+V9P9Szi2XsAD0c2hxcDR7X/ZYgQnYGfduDyimVGx1Q4QbLQbDqL6D7
-         Hqd9TydgKcpl1ZSG0Gk5WToDSyQcoTDs+D8BRnPgPYbFuFUGNUIXgcpY9giyIt7W1l4r
-         vljRQdmqAB+PPl6j1hgohQgFh7+7q9jYs5Dl5OO8sDtbPIsUckexlhrSuZijYPD2Li98
-         XGyJhxIYbs0OqKoPl2psvpXsZMm/0T7RAI/clDb5rkZmTyxZhQ6jH0nt8qA1LkikiAMk
-         WiXA==
-X-Gm-Message-State: AOAM530M7/QkdSMRMWTB6MMkNJGBCAcKpuAdJ4cly1OSVvoyV2lsQRI9
-        0McGORyWozzPbfQ6SNFduQAICkzTqiUI/Q==
-X-Google-Smtp-Source: ABdhPJyu7XUgAHJhiUtfDnbhLit7pKXTGe8uB0B3A7h2oTC49hvWiR4kg6A30MPpLNRWGKmsfKyTUQ==
-X-Received: by 2002:a05:600c:3ba9:b0:38e:c8c6:ae0d with SMTP id n41-20020a05600c3ba900b0038ec8c6ae0dmr316693wms.120.1649880124493;
-        Wed, 13 Apr 2022 13:02:04 -0700 (PDT)
+        bh=dFI3cRmC6pe0JsWsXgxWU9gQmpy/VHl2mdKujlQOz30=;
+        b=3AhEh9DMjBn4lvEE7SmPDYlzVvF0PfpRlDDPYAJGAfwm6bd1bCxm261ukbPlI/KqAO
+         mW5HaY9ruPl/aVpClQD2zpSjwzqI209Fw4ZCKE4j0e5BQJ0vh3IQwEq0vI42GCeaaoiK
+         TWX/S5EYTQGbMIzsYW2al34jCNjJmSTEBop0AvMFWhtfhEJg3T0FZK9FYHJrYBAs2n9M
+         ghFaohvoJUyXEQxSLAiTbv//33/wFaqIg0+D45Aw4U+ZZc22vvs7jFsiTW43RYCublwX
+         Vvdp3nSme4MjdQbne3lKmcq4Ww/N+he0qJb8bgFG1vuuwCyrWstKWUcZimHGfJqP+OGc
+         1mdQ==
+X-Gm-Message-State: AOAM532DwOP8agzBITiqX8WCqT4YBwfvkpI/TPwr8pj9vxrCBER80+9r
+        cFjKI45Zc7J61yNE2aQI83xjyUsUCcuoEg==
+X-Google-Smtp-Source: ABdhPJy62hS26ZtqJugFHeS8ra+5b4Kk3cPMgS7phhQkCGpAzm/dpu1KREDadXN5Qe6isxxa/CSFFQ==
+X-Received: by 2002:a05:600c:1e85:b0:38c:ef05:ba5d with SMTP id be5-20020a05600c1e8500b0038cef05ba5dmr284192wmb.119.1649880125454;
+        Wed, 13 Apr 2022 13:02:05 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.03
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 13:02:03 -0700 (PDT)
+        Wed, 13 Apr 2022 13:02:04 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 04/27] format-patch: don't leak "extra_headers" or "ref_message_ids"
-Date:   Wed, 13 Apr 2022 22:01:33 +0200
-Message-Id: <patch-v6-04.27-f7fb26752b9-20220413T195935Z-avarab@gmail.com>
+Subject: [PATCH v6 05/27] cocci: add and apply free_commit_list() rules
+Date:   Wed, 13 Apr 2022 22:01:34 +0200
+Message-Id: <patch-v6-05.27-9eada36dacf-20220413T195935Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
 References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com> <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
@@ -71,67 +71,192 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix two memory leaks in "struct rev_info" by freeing that memory in
-cmd_format_patch(). These two are unusual special-cases in being in
-the "struct rev_info", but not being "owned" by the code in
-revision.c. I.e. they're members of the struct so that this code in
-"builtin/log.c" can conveniently pass information code in
-"log-tree.c".
+Add and apply coccinelle rules to remove "if (E)" before
+"free_commit_list(E)", the function can accept NULL, and further
+change cases where "E = NULL" followed to also be unconditionally.
 
-See e.g. the make_cover_letter() caller of log_write_email_headers()
-here in "builtin/log.c", and [1] for a demonstration of where the
-"extra_headers" and "ref_message_ids" struct members are used.
+The code changes in this commit were entirely made by the coccinelle
+rule being added here, and applied with:
 
-See 20ff06805c6 (format-patch: resurrect extra headers from config,
-2006-06-02) and d1566f7883f (git-format-patch: Make the second and
-subsequent mails replies to the first, 2006-07-14) for the initial
-introduction of "extra_headers" and "ref_message_ids".
+    make contrib/coccinelle/free.cocci.patch
+    patch -p1 <contrib/coccinelle/free.cocci.patch
 
-We can count on repo_init_revisions() memset()-ing this data to 0
-however, so we can count on it being either NULL or something we
-allocated. In the case of "extra_headers" let's add a local "char *"
-variable to hold it, to avoid the eventual cast from "const char *"
-when we free() it.
+The only manual intervention here is that the the relevant code in
+commit.c has been manually re-indented.
 
-1. https://lore.kernel.org/git/220401.868rsoogxf.gmgdl@evledraar.gmail.com/
-
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/log.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ builtin/rev-list.c            |  6 ++----
+ commit.c                      | 19 ++++++++-----------
+ contrib/coccinelle/free.cocci | 27 +++++++++++++++++++++++++++
+ revision.c                    | 17 ++++++-----------
+ submodule.c                   |  6 ++----
+ 5 files changed, 45 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 634dc782cce..6f9928fabfe 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1747,6 +1747,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct commit *commit;
- 	struct commit **list = NULL;
- 	struct rev_info rev;
-+	char *to_free = NULL;
- 	struct setup_revision_opt s_r_opt;
- 	int nr = 0, total, i;
- 	int use_stdout = 0;
-@@ -1947,7 +1948,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		strbuf_addch(&buf, '\n');
- 	}
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 572da1472e5..07c0ad11d8d 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -213,10 +213,8 @@ static void show_commit(struct commit *commit, void *data)
  
--	rev.extra_headers = strbuf_detach(&buf, NULL);
-+	rev.extra_headers = to_free = strbuf_detach(&buf, NULL);
- 
- 	if (from) {
- 		if (split_ident_line(&rev.from_ident, from, strlen(from)))
-@@ -2284,6 +2285,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&rdiff1);
- 	strbuf_release(&rdiff2);
- 	strbuf_release(&rdiff_title);
-+	free(to_free);
-+	if (rev.ref_message_ids)
-+		string_list_clear(rev.ref_message_ids, 0);
-+	free(rev.ref_message_ids);
- 	UNLEAK(rev);
- 	return 0;
+ static void finish_commit(struct commit *commit)
+ {
+-	if (commit->parents) {
+-		free_commit_list(commit->parents);
+-		commit->parents = NULL;
+-	}
++	free_commit_list(commit->parents);
++	commit->parents = NULL;
+ 	free_commit_buffer(the_repository->parsed_objects,
+ 			   commit);
  }
+diff --git a/commit.c b/commit.c
+index 59b6c3e4552..9628716bf2f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -407,17 +407,14 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
+ 
+ 	if (item->object.parsed)
+ 		return 0;
+-
+-	if (item->parents) {
+-		/*
+-		 * Presumably this is leftover from an earlier failed parse;
+-		 * clear it out in preparation for us re-parsing (we'll hit the
+-		 * same error, but that's good, since it lets our caller know
+-		 * the result cannot be trusted.
+-		 */
+-		free_commit_list(item->parents);
+-		item->parents = NULL;
+-	}
++	/*
++	 * Presumably this is leftover from an earlier failed parse;
++	 * clear it out in preparation for us re-parsing (we'll hit the
++	 * same error, but that's good, since it lets our caller know
++	 * the result cannot be trusted.
++	 */
++	free_commit_list(item->parents);
++	item->parents = NULL;
+ 
+ 	tail += size;
+ 	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
+diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+index 4490069df96..6fb9eb6e883 100644
+--- a/contrib/coccinelle/free.cocci
++++ b/contrib/coccinelle/free.cocci
+@@ -2,13 +2,21 @@
+ expression E;
+ @@
+ - if (E)
++(
+   free(E);
++|
++  free_commit_list(E);
++)
+ 
+ @@
+ expression E;
+ @@
+ - if (!E)
++(
+   free(E);
++|
++  free_commit_list(E);
++)
+ 
+ @@
+ expression E;
+@@ -16,3 +24,22 @@ expression E;
+ - free(E);
+ + FREE_AND_NULL(E);
+ - E = NULL;
++
++@@
++expression E;
++@@
++- if (E)
++- {
++  free_commit_list(E);
++  E = NULL;
++- }
++
++@@
++expression E;
++statement S;
++@@
++- if (E) {
+++ if (E)
++  S
++  free_commit_list(E);
++- }
+diff --git a/revision.c b/revision.c
+index 7d435f80480..4963ba7def8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1456,10 +1456,9 @@ static int limit_list(struct rev_info *revs)
+ 	if (revs->left_only || revs->right_only)
+ 		limit_left_right(newlist, revs);
+ 
+-	if (bottom) {
++	if (bottom)
+ 		limit_to_ancestry(bottom, newlist);
+-		free_commit_list(bottom);
+-	}
++	free_commit_list(bottom);
+ 
+ 	/*
+ 	 * Check if any commits have become TREESAME by some of their parents
+@@ -4080,10 +4079,8 @@ static void create_boundary_commit_list(struct rev_info *revs)
+ 	 * boundary commits anyway.  (This is what the code has always
+ 	 * done.)
+ 	 */
+-	if (revs->commits) {
+-		free_commit_list(revs->commits);
+-		revs->commits = NULL;
+-	}
++	free_commit_list(revs->commits);
++	revs->commits = NULL;
+ 
+ 	/*
+ 	 * Put all of the actual boundary commits from revs->boundary_commits
+@@ -4220,10 +4217,8 @@ struct commit *get_revision(struct rev_info *revs)
+ 		graph_update(revs->graph, c);
+ 	if (!c) {
+ 		free_saved_parents(revs);
+-		if (revs->previous_parents) {
+-			free_commit_list(revs->previous_parents);
+-			revs->previous_parents = NULL;
+-		}
++		free_commit_list(revs->previous_parents);
++		revs->previous_parents = NULL;
+ 	}
+ 	return c;
+ }
+diff --git a/submodule.c b/submodule.c
+index 86c8f0f89db..9b715b4a5cb 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -645,8 +645,7 @@ void show_submodule_diff_summary(struct diff_options *o, const char *path,
+ 	print_submodule_diff_summary(sub, &rev, o);
+ 
+ out:
+-	if (merge_bases)
+-		free_commit_list(merge_bases);
++	free_commit_list(merge_bases);
+ 	clear_commit_marks(left, ~0);
+ 	clear_commit_marks(right, ~0);
+ 	if (sub) {
+@@ -735,8 +734,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 
+ done:
+ 	strbuf_release(&sb);
+-	if (merge_bases)
+-		free_commit_list(merge_bases);
++	free_commit_list(merge_bases);
+ 	if (left)
+ 		clear_commit_marks(left, ~0);
+ 	if (right)
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
