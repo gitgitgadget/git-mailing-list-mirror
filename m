@@ -2,249 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB54FC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3141C433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231805AbiDMTzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:55:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60070 "EHLO
+        id S238539AbiDMT4W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238567AbiDMTzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:55:15 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05157B545
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:24 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id x3so1745729wmj.5
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:24 -0700 (PDT)
+        with ESMTP id S238588AbiDMTzQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 15:55:16 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB257C788
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:31 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-de3eda6b5dso3166266fac.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IumLz8zjxTQlcfRdQHq8uFmPHRTJczvPdPUKXWE7Nyo=;
-        b=dn1QVVHvOEukJmmOZ9KlW14gntWtVqF2o7dFRrwT9Iq87qdVh0QduHREV87PEJJvfY
-         dBPYlNLZK7lAZ/pMsJEXaeh2MEnr8k/u8nqMv7CKHPmD5JeL7fyUZMA39vvFYyw+OY3P
-         5/ZXX4bUVWdbm2MV/Q+W+jx7eJgrr6FkMmP9XFg5zBNwhvNscG0bggGy9o/Npn1u/rHB
-         JOVn3TbU28hi84RyGi6t4WtS5fDOMjiURqI9bsy5Uwh550fbWAlcFB1USD6RnEW4dmTt
-         XfBOpZIJsMwIIwPIedRFcZFFY3Ehz3XsBVvnyedi3+N828INhUAlpiGSIu1ujZqCPHsC
-         6BIg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+ZanESfOidvmtBtvm8xDYOQCg4i5tAoD3br9e1XKSmE=;
+        b=GGkn9X+U7VhqagiooXvm0VZxuScXGKTXO67MbzKaIL6R5Scrvfp5NxQfY4ZkFyADEx
+         CBbkYL8/ZtcfpGWvDRfTAADAuGRay+oXc2H+gm1PoIm8jwQaS4cGJAKA9Z/eKziE4YZa
+         t8980aJ7qfJEABZnDfLOq8j7cYhOZjVaGkzhe3cXxrGGv+HQZ7B+mp6xs0lvk8g5mXC2
+         fEqTPb266jQ0fpLY+iZYI2+PwcmZstDhJrtri+tjYbCTPTgcK1VewxKvvW9S6f/Wf9Am
+         Zk837SK1vgwGJ3Qm3AzA18rtna16MY8xI0UUV9a1jtxny0zkXRWYNYeM4KcSRZww+MHg
+         rEQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IumLz8zjxTQlcfRdQHq8uFmPHRTJczvPdPUKXWE7Nyo=;
-        b=VU70AYrsNEe+r9sGD8POYLyq4A4vADlSDVs3hr4ViIgy+wbM/sugQF1jdMv4FZJZSi
-         HWZ0NZNq5EQWKfGTWwwzW2Zq2mAKCvFAB0jj3t3W5qWieOUq4hS+ddWYJte51aMGPyk7
-         lzXopXd5BSYPy4jLmI0AT4Be857YXyLuQVXiGLU5Rf5QmzYuA2/Uiz/Qn/PTIShxLSm8
-         G0apGk72At+clz9ZhaTsrad0fWr5EsgKpJZTiAgrJt89mbb66e2Asa+bBiu1E2nbtu5x
-         7kbuxofNKes4qJ3ehZPvlZhK6hFeLNMWJp1jbuv+8z6OV+A/m4YlHd2Khz1Ofk8XeUPq
-         Qd6w==
-X-Gm-Message-State: AOAM532BVhbh7Krwf1EUoz1LgL4M2DkBKARemCHGS4IV2U4Ur+GRII/Z
-        5kEyAxHy2/dL96QH4MTrmJsdFjjnO1rqhw==
-X-Google-Smtp-Source: ABdhPJy27FRXpU1n2VCyaFOkW6FHv4dfHdh0s2c8N35g9Icf0nNPw1q+4C1X5l4cF5BE2RmqAdAQzw==
-X-Received: by 2002:a05:600c:3547:b0:38c:ac1c:53e9 with SMTP id i7-20020a05600c354700b0038cac1c53e9mr256766wmq.159.1649879542272;
-        Wed, 13 Apr 2022 12:52:22 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 12:52:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 29/29] CI: make it easy to use ci/*.sh outside of CI
-Date:   Wed, 13 Apr 2022 21:51:42 +0200
-Message-Id: <patch-v3-29.29-2e3c02fa0df-20220413T194847Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
-In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
-References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+ZanESfOidvmtBtvm8xDYOQCg4i5tAoD3br9e1XKSmE=;
+        b=Budh2gfPBHceX0bVaknXwALOS/X1V4Ie3jHHjeMOU6CeT7a4mnbbqYKZZHADfWvcu/
+         byhROSh5zvF473RB/YtUNzXT8bxskoFngDsFb7S61RP8QfCoN/3Ogr8zki4/QSeIMBwp
+         h/q+CoapvwLp/3PFoF6z/3Jcg3wIM/rX47GRoQfrCqONA1ZM4oB3tluSLfmQJlzL72qg
+         ibGVPcsS2kJxEs9rBwK2+jzcXwkkRheWikeOvjdyKYrUrgd9+ZPtMIFX6KsDJbn6i/dD
+         Jlu4lqT6HiW78gXW10ALRpB3SEP0l0aBYeOHuvJpHrXpcydXFIzajmC3xXV/nHF3MTWB
+         SIdA==
+X-Gm-Message-State: AOAM532EIM948EHuHCXSThvRXAW0zOplb6k0dJLjWnQ/G/7zOAYeg0CN
+        cUXHcfUD5VQ8VmJGGwPWtjXV
+X-Google-Smtp-Source: ABdhPJy1dYj4SjVb2c+/Sl6IXb8TjDryKLTGisCwcWSQRibscSJMM/ucFKI0PPdXUlxiVeBIK8BPlw==
+X-Received: by 2002:a05:6870:3112:b0:ce:c0c9:62b with SMTP id v18-20020a056870311200b000cec0c9062bmr149056oaa.125.1649879550763;
+        Wed, 13 Apr 2022 12:52:30 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id d3-20020a9d2903000000b005cda765f578sm14819674otb.0.2022.04.13.12.52.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 12:52:30 -0700 (PDT)
+Message-ID: <6b778cfe-2549-854a-7b77-58f815412ca1@github.com>
+Date:   Wed, 13 Apr 2022 15:52:29 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 1/3] t0033: add tests for safe.directory
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        johannes.schindelin@gmx.de
+References: <pull.1215.git.1649863951.gitgitgadget@gmail.com>
+ <5b18bd1852d673ab5c62a67f873987d74294cd70.1649863951.git.gitgitgadget@gmail.com>
+ <220413.86k0bseqq8.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220413.86k0bseqq8.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preceding commits the ci/.sh scripts have lost most of their
-CI-specific assumptions. Let's go even further and explicitly support
-running ci/lib.sh outside of CI.
+On 4/13/2022 3:16 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Apr 13 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> It is difficult to change the ownership on a directory in our test
+>> suite, so insert a new GIT_TEST_ASSUME_DIFFERENT_OWNER environment
+>> variable to trick Git into thinking we are in a differently-owned
+>> directory. This allows us to test that the config is parsed correctly.
+> 
+> I think this is a good trade-off, but FWIW I'd think we could test also
+> without the git_env_bool() by having the test depend on !NOT_ROOT, then
+> check the owner of t/test-lib.sh, and chown to that user (i.e. the
+> "real" user).
+> 
+> But that's all sorts of more fragile than just this test variable..
+>> +test_description='verify safe.directory checks'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +GIT_TEST_ASSUME_DIFFERENT_OWNER=1
+>> +export GIT_TEST_ASSUME_DIFFERENT_OWNER
+> 
+> Instead of this "export" perhaps just add it in front of the "git
+> status"?
 
-This was possible before by faking up enough CI-specific variables,
-but as shown in the new "help" output being added here using the
-ci/lib.sh to provide "CI-like" has now become trivial.
+If the only runs were in this helper below, then yes.
 
-The ci/print-test-failures.sh scripts can now be used outside of CI as
-well, the only GitHub CI-specific part is now guarded by a check that
-we'll pass if outside of GitHub CI.
+>> +expect_rejected_dir () {
+>> +	test_must_fail git status 2>err &&
+>> +	grep "safe.directory" err
+>> +}
 
-There's also a special-case here to not clobber $MAKEFLAGS in the
-environment if we're outside of CI, in case the user has e.g. "jN" or
-other flags to "make" that they'd prefer configured already.
+Later patches add more success cases that run 'git status'
+as its verification that the match works. I didn't think it
+was good to have this environment variable set for each of
+those invocations.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ci/lib-ci-type.sh         |  3 --
- ci/lib.sh                 | 61 ++++++++++++++++++++++++++++++++++++---
- ci/print-test-failures.sh | 11 ++-----
- 3 files changed, 60 insertions(+), 15 deletions(-)
+This script has one purpose, and this environment variable
+is required to make any of the checks work. Setting it
+globally seems the best way to do that.
 
-diff --git a/ci/lib-ci-type.sh b/ci/lib-ci-type.sh
-index 6f01fd9e5d9..09acab7aaec 100644
---- a/ci/lib-ci-type.sh
-+++ b/ci/lib-ci-type.sh
-@@ -3,7 +3,4 @@
- if test "$GITHUB_ACTIONS" = "true"
- then
- 	CI_TYPE=github-actions
--else
--	echo "Could not identify CI type" >&2
--	exit 1
- fi
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 94f83069884..3fd5291bc80 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -1,6 +1,30 @@
- #!/bin/sh
- set -e
- 
-+#  Usage
-+CI_TYPE_HELP_COMMANDS='
-+	# run "make all test" like the "linux-leaks" job
-+	(eval $(jobname=linux-leaks ci/lib.sh --all) && make test)
-+
-+	# run "make all test" like the "linux-musl" job
-+	(eval $(jobname=linux-musl ci/lib.sh --all) && make test)
-+
-+	# run "make test" like the "linux-TEST-vars" job (uses various GIT_TEST_* modes)
-+	make && (eval $(jobname=linux-TEST-vars ci/lib.sh --test) && make test)
-+
-+	# run "make test" like the "linux-sha256" job
-+	make && (eval $(jobname=linux-sha256 ci/lib.sh --test) && make test)
-+'
-+
-+CI_TYPE_HELP="
-+running $0 outside of CI? You can use ci/lib.sh to set up your
-+environment like a given CI job. E.g.:
-+$CI_TYPE_HELP_COMMANDS
-+
-+note that some of these (e.g. the linux-musl one) may not work as
-+expected due to the CI job configuring a platform that may not match
-+yours."
-+
- # Helper libraries
- . ${0%/*}/lib-ci-type.sh
- 
-@@ -9,6 +33,10 @@ mode=$1
- if test -z "$mode"
- then
- 	echo "need a $0 mode, e.g. --build or --test" >&2
-+	if test -z "$CI_TYPE"
-+	then
-+		echo "$CI_TYPE_HELP" >&2
-+	fi
- 	exit 1
- fi
- 
-@@ -35,7 +63,7 @@ setenv () {
- 	do
- 		case "$1" in
- 		--build | --test)
--			if test "$1" != "$mode"
-+			if test "$1" != "$mode" && test "$mode" != "--all"
- 			then
- 				skip=t
- 			fi
-@@ -65,6 +93,10 @@ setenv () {
- 	if test -n "$GITHUB_ENV"
- 	then
- 		echo "$key=$val" >>"$GITHUB_ENV"
-+	elif test -z "$CI_TYPE"
-+	then
-+		echo "$key=\"$val\""
-+		echo "export $key"
- 	fi
- 
- 	echo "SET: '$key=$val'" >&2
-@@ -76,10 +108,29 @@ CC_PACKAGE=
- 
- # How many jobs to run in parallel?
- NPROC=10
-+case "$CI_TYPE" in
-+'')
-+	if command -v nproc >/dev/null
-+	then
-+		NPROC=$(nproc)
-+	else
-+		NPROC=1
-+	fi
-+
-+	if test -n "$MAKEFLAGS"
-+	then
-+		COMMON_MAKEFLAGS="$MAKEFLAGS"
-+	else
-+		COMMON_MAKEFLAGS=--jobs=$NPROC
-+	fi
-+	;;
-+*)
-+	# For "--test" we carry the MAKEFLAGS over from earlier steps, except
-+	# in stand-alone jobs which will use $COMMON_MAKEFLAGS.
-+	COMMON_MAKEFLAGS=--jobs=$NPROC
-+	;;
-+esac
- 
--# For "--test" we carry the MAKEFLAGS over from earlier steps, except
--# in stand-alone jobs which will use $COMMON_MAKEFLAGS.
--COMMON_MAKEFLAGS=--jobs=$NPROC
- 
- # Clear MAKEFLAGS that may come from the outside world.
- MAKEFLAGS=$COMMON_MAKEFLAGS
-@@ -99,6 +150,8 @@ github-actions)
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- 	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
- 	;;
-+'')
-+	;;
- *)
- 	echo "Unhandled CI type: $CI_TYPE" >&2
- 	exit 1
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 2405f65650a..ba8428ad484 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -38,19 +38,14 @@ do
- 		test_name="${TEST_EXIT%.exit}"
- 		test_name="${test_name##*/}"
- 		trash_dir="trash directory.$test_name"
--		case "$CI_TYPE" in
--		github-actions)
-+		if test "$CI_TYPE" = "github-actions"
-+		then
- 			mkdir -p failed-test-artifacts
- 			echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
- 			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
- 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
- 			continue
--			;;
--		*)
--			echo "Unhandled CI type: $CI_TYPE" >&2
--			exit 1
--			;;
--		esac
-+		fi
- 		trash_tgz_b64="trash.$test_name.base64"
- 		if [ -d "$trash_dir" ]
- 		then
--- 
-2.36.0.rc2.843.g193535c2aa7
+>> +test_expect_success 'safe.directory matches' '
+>> +	git config --global --add safe.directory "$(pwd)" &&
+> 
+> nit: $PWD instead of $(pwd)
 
+Historically, $PWD doesn't work properly across platforms,
+so I have used $(pwd) consistently across many contributions.
+
+Thanks,
+-Stolee
