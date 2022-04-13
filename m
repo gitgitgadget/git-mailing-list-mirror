@@ -2,100 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0ECAC433F5
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 21:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57EAEC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 22:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233663AbiDMVsa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 17:48:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47126 "EHLO
+        id S237109AbiDMW1I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 18:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232056AbiDMVs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 17:48:28 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B6342EFB
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 14:46:05 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id r2so3418688iod.9
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 14:46:05 -0700 (PDT)
+        with ESMTP id S233713AbiDMW1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 18:27:07 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75801286C8
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 15:24:44 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id p4-20020a631e44000000b00399598a48c5so1761640pgm.1
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 15:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4Sgf3qE4qWofn9NZsqPnnydn/BYSQWaYijKEooTsr38=;
-        b=vXvrpqXVTBgWxrNzziBMpEI6gHEpsOPlGvZFnDtyRuH2604R40s8YXnS4jOzmVIXc2
-         nDJF9/vto+yP+18hXYC9gpZXKBftj11Ehn5MteSX+wLFo9x0v1lQdw0ibJ05/lC2X+J5
-         p/jF5vDfDWkvQ6h1ymWTfSE7V+kk8g3dtQjb2wNcD7uU6f2vYl6UP6tjkSk4mriyPctw
-         puBGAVOiQzK0h7Cug4Qyyf6Ir2+MN2qKhdmKr3Sc7U4T5LVCigndfrPZmqmEgYoNdB6A
-         WgLyIJ3WQ4+OMojHmVWZyVc3pW696Bwbst+V/CYKPFMc9TRYlwciwRWE7ynjp14yt65W
-         5Feg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8N3t/pI0zJd/Y+Gcqg7NZDm05gyhLtOdCv+TDcQV1pk=;
+        b=GN4ivQMtn8fjwk1bsdbpx7DgKzaHD+wM1sFMK5sCnP/A4pOMj2RVuqK9298dF8u/tD
+         uUulP3S+yGlzJXTs2446Ugmq8Mq63NvtgAbYbjJ7QWSe/3jf5IabeQZftY7UzGwnYuzI
+         +vu/x1ZL9+KbiBdhdd8flXwT80yyQhdun0nbLRFLVJkcOE+IoE3Ng4jvefPYZDSBM/KI
+         v4/Myx2A+TtkmzaHvLtl1UeePgxzP1jgQbRpPJyjc6XYfBdnGRR0qJwbklIxquB4tL2n
+         JzWJ49iSfCG8/zufbe5LtOMtD9SPBTKS2aia1Zn3jNoppghXswuKepLhRH4nuzr6NcX6
+         RDhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4Sgf3qE4qWofn9NZsqPnnydn/BYSQWaYijKEooTsr38=;
-        b=p90ME466iB3LSmUTHNMC5Pv0B5TK1+PHFH3GsHNYj4PhnyTQo47x/4KkGlGd1msunb
-         0MhrPDlxNTZQlntqNvmfd3Wi3IjgKA5iSX4JcLNOJmLiJ5Zyq5o5w+Bgff656qclT+Ns
-         SjwyqgDyZkCikWHK2cUgNe/rYK4hPqoxz6DcbleXk7E93kuznbJkCMJ+Qb3oNiyq/ecJ
-         0A6VJX0D2TBUbuUnIZYjSimEqyUbtVs34sDhZazk79olDjJx4Tx+QSpXkLrtoRMZ9DxT
-         4/hRHkpBh4VBWtOcxDn2/JOLZ4k7n77UW76DqQXLMR71Wp+WDJHg9uS4oubluwJiOAUO
-         GJ/g==
-X-Gm-Message-State: AOAM533ZgnDzN0ckHCzbrVz47wVV5FxHVJ3U84S1ZKoMfa+av7jlLeRp
-        FXpjGHjsM3lEXc2mqEH15PTle3Gl0tegwLhD
-X-Google-Smtp-Source: ABdhPJz2julcSEGVjX3IflSCDujFO+3MmWZ537PYmdhNMWcApxGBFkCcMef26ckLQoHOgo2sTN23PQ==
-X-Received: by 2002:a05:6638:24d6:b0:323:cda4:170d with SMTP id y22-20020a05663824d600b00323cda4170dmr21494343jat.269.1649886364663;
-        Wed, 13 Apr 2022 14:46:04 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e4-20020a056e020b2400b002ca9ffbb8fesm70139ilu.72.2022.04.13.14.46.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 14:46:04 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 17:46:03 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8N3t/pI0zJd/Y+Gcqg7NZDm05gyhLtOdCv+TDcQV1pk=;
+        b=Gva0wG5umDMAvyvffKrTXdmyU0Cw3Gs6elrDPVzr6ta8MmsPz+SOrWru2fQGOEhnwE
+         4mhyT45xr92YkRb3Cv4iZ9k0oWFKdT3dfcrsOOn3v5JsajlFlUa2LFo2l0CPD57S5PHt
+         h74TlQVFzBkOs1fN8C7qdhJhwwttYW7xQUysdZ9etd2VL807AhiMGeUooNZffqWrT65v
+         61eBsufQCnRHcQ0wmRil3FSVRDUIUazT5kU/A92vY9qKpPBRlJb9Kh2I/kyF3WFy/SZR
+         vEbgnhJW2aBE0KE1oJ643POCMsqqeVxIO74iLMBjz0IP1ztNuJsucrvH7ouzPxeogAZR
+         ZzZw==
+X-Gm-Message-State: AOAM530BuFVEqmU129TBvfzSGdP9BriRwFIx0ccnG1AN+E5Liy2pp/mV
+        Zbrb3TSr5w3dlGC0ki3VhgeSx1UF6TxzSQ==
+X-Google-Smtp-Source: ABdhPJwzNuFNdjTRd8wwpm2+y55rRXGAUSbRh5Nbjgp3tZ4l0fVCZ5KbWDOgANioDTObhdva1aKRx9pJET/vCA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:4d0d:b0:1cb:9dac:7ed0 with SMTP
+ id c13-20020a17090a4d0d00b001cb9dac7ed0mr960839pjg.198.1649888683862; Wed, 13
+ Apr 2022 15:24:43 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 15:24:42 -0700
+In-Reply-To: <e81cdc6e-da42-d1d1-5d66-7d5e2a8aebbe@github.com>
+Message-Id: <kl6lsfqg8vv9.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <20220406232231.47714-1-chooglen@google.com> <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
+ <e81cdc6e-da42-d1d1-5d66-7d5e2a8aebbe@github.com>
+Subject: Re: [PATCH] fsck: detect bare repos in trees and warn
+From:   Glen Choo <chooglen@google.com>
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation/RelNotes: fix a typo in 2.36's relnotes
-Message-ID: <YldEmwQfLo2LbDGZ@nand.local>
-References: <d23e51b8dc78651dbd751473c0f8b3dcd6bc3ac6.1649883760.git.me@ttaylorr.com>
- <xmqqczhk7klg.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqczhk7klg.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 02:13:31PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+
+Derrick Stolee <derrickstolee@github.com> writes:
+
+> On 4/7/2022 8:42 AM, Johannes Schindelin wrote:
+>> Hi Glen,
+>> 
+>> On Wed, 6 Apr 2022, Glen Choo wrote:
+>> 
+>>> Git tries not to distribute configs in-repo because they are a security
+>>> risk. However, an attacker can do exactly this if they embed a bare
+>>> repo inside of another repo.
+>>>
+>>> Teach fsck to detect whether a tree object contains a bare repo (as
+>>> determined by setup.c) and warn. This will help hosting sites detect and
+>>> prevent transmission of such malicious repos.
+>>>
+>>> See [1] for a more in-depth discussion, including future steps and
+>>> alternatives.
+>>>
+>>> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
+>> 
+>> Out of curiosity: does this new check trigger with
+>> https://github.com/libgit2/libgit2? AFAIR it has embedded repositories
+>> that are used in its test suite. In other words, libgit2 has a legitimate
+>> use case for embedded bare repositories, I believe.
 >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> > Noticed while reading the RelNotes for GitHub's release highlights blog
-> > post.
+> It is definitely good to keep in mind that other repositories have
+> included bare repositories for convenience. I'm not sure that the behavior
+> of some good actors should outweigh the benefits of protecting against
+> this attack vector.
 >
-> Thanks as always for highlighting more interesting bits from the
-> flat-and-bland-list-of-changes which is what I prepare as the
-> release notes.
-
-It's a pleasure to do. Thanks for maintaining the release notes in the
-meantime which make my job much easier to do.
-
-> > - * A not-so-common mistake is to write a script to feed "git bisect
-> > + * A not-so-uncommon mistake is to write a script to feed "git bisect
-> >     run" without making it executable, in which case all tests will
+> The trouble here is: how could the libgit2 repo change their project to
+> not trigger this warning? These bare repos are in their history forever if
+> they don't do go through significant work and pain to remove them from
+> their history. We would want to have a way to make the warnings less
+> severe for special cases like this.
 >
-> I actually meant that this is "not a common mistake that deserves our
-> bandwidth but because a change was already made to help such a case,
-> why not take it".
+> Simultaneously, we wouldn't want to bless all _forks_ of libgit2.
 
-Ha! I wasn't sure if that's what you meant or not. I think your
-suggestion below is an appropriate way to remove the ambiguity. Thanks.
+Yes, that makes sense. Thanks for the thoughtful reply.
 
-> We can probably rewrite _without_ mentioning our expectation of how
-> common it would be.
->
->     A user can forget to make a script file executable before giving
->     it to "git bisect run".  In such a case, all tests will exit ...
+>  2. Suppress warnings on trusted repos, scoped to a specific set of known
+>     trees _or_ based on some set of known commits (in case the known trees
+>     are too large).
 
-Looks good to me.
+Since Junio mentioned downthread that we'd need (2), I'll focus on this.
+I'm not sure I follow, though, so let me try to verbalize my thought
+process to see what I'm not understanding...
 
-Thanks,
-Taylor
+By "Suppress warnings on trusted repos", I assume this is done on the
+hosting side? (Since I can't imagine a built-in Git feature that could
+selectively trust repos.)
+
+"scoped to a specific set of known trees" sounds like fsck.skipList
+i.e. as a host, I can configure a list of "good" libgit2 trees that I
+will trust and those will be skipped by fsck.
+
+So from my _very_ naive reading of (2), it seems like we already have
+all of the pieces in place for hosts to do (2) on their own, _unless_
+we think that fsck.skipList is inadequate for this use case. e.g. I
+personally can't imagine any way to list every "good" tree and still
+have a cloneable fork of libgit2, so we might to teach fsck to do
+something smarter like "skip any objects reachable by these commits".
+
