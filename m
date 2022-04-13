@@ -2,95 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D19F4C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48481C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235942AbiDMTSS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34102 "EHLO
+        id S237919AbiDMTVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:21:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238642AbiDMTRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:17:55 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0DE21ADB1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:14:25 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id l6-20020a637006000000b003811a27370aso1567885pgc.2
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:14:25 -0700 (PDT)
+        with ESMTP id S236758AbiDMTVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 15:21:37 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03284993A
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:19:14 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id u15so5907650ejf.11
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:19:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=6p7uLvwCvGwVWDrW9L2O7oRaf3+V1YXuxQ7Entvdic4=;
-        b=hdUOlnXEPV0yw/GcvpJ3FImXB30VJsa7MEmvstWUn5tHSPe8bAhuSanJYoPuVP8phY
-         qJVPCkz2ZJFnTagnXuCVXsJP247q8ST3DjHFeJvgG3FspWtAKCPkvbWKjcAFYjyKLWgr
-         Kj+n8FRhDgdVnjdozAUBlum6MmAJdXjKfHH78RMs+J7LL+ddm43NPQjn06yTN0+3OQ7D
-         kuN4Z2rtaL+vQt+yoTvPcaUPJUXkXC3rTaKTNYTFAynOCOXzfDZFZCYOQBuT/kwfgaEb
-         AACnRhURWzA0w8RzdM5eneNn5rXpgoddZqgufmQ3/KDRPAX+CmI3EvVe5YyY9z0K5mKW
-         isgQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ieBjededwBT/8CxkqWBlo+D080ApBD/w0WSBG7d1Gf0=;
+        b=lRFLpSBknExnO9EmDuNWohB14OagtSTJvh9cfQBS0gyaKSIn1W7Zpte2C2fs3RES2I
+         B13x51DR3vIsTMC9hZFPz2d6uwKT53g1OzHkCNO4p4DK5AELrHbVH86oylwYHQxeZAuR
+         w/OFhzBfYJ3haYgg5iGklUMgL4ms7xKc3CWBA462EDbwFUFzF+gD51EopBuix6ZbOBef
+         V6TpXPm8G39RAtiTGhHvsXh/lzhxXYcBWZBehyFw2iBRv056wMfWdOg8GVkoAzFC+ZIS
+         6Gywkfff19Hfy+V5D0+sLVchpn8shwIq+BY3V6HD9MjNYLYIVfW2TmS8PedQ09n9ZmML
+         552w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=6p7uLvwCvGwVWDrW9L2O7oRaf3+V1YXuxQ7Entvdic4=;
-        b=i4FD0ffDTmNibG0gUzk1WG8RRHUUeHtQtfTNY7NU5U9Jyd1j2QOsKKeERkGBkpWJpb
-         35dIeCJBOpnvqPDwqMQx2uF5UlZCTIg2HEOb8Afivk5S5OftwaX6vCAFpzgEit48QATO
-         SwhHQGpiK7QdAO9sgHnov4EauVZt3swN7w0Fpu64jmJWgTQmRzIoyliOJ8XPkj/PHcmi
-         fIJ2+l831/7KPj9asOjUfdHz01BgMJDOlCWFXzV0BMX0VmdF4QID8rgLhtU4AqmORLw8
-         cEaH+jeqHSGR+PWlll0eXXtiZUokpTh1UnJxfAxjO5Fp95ZzlkuqHDHGt/UqlN5zqwuI
-         BWEQ==
-X-Gm-Message-State: AOAM531M8FHE04ImtPzzwBUoA4ScXXtZVR15WnmP7NVsFpV0NF6Xg9ci
-        96Ma9NUb2UxF65cw0B3F3Fpmutqy4kd3fcpyZH0p
-X-Google-Smtp-Source: ABdhPJzuuJycH5vvIMh0wk02WE4wqs48vcFiOh6VNsF22v4gwrdYl2lUzLlYf+cPihOy0NigX3hblSsqP89q2vSXaWJE
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:96db:0:b0:506:1fcc:75a8 with
- SMTP id h27-20020aa796db000000b005061fcc75a8mr4060041pfq.12.1649877265439;
- Wed, 13 Apr 2022 12:14:25 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 12:14:21 -0700
-In-Reply-To: <220413.865yncg7et.gmgdl@evledraar.gmail.com>
-Message-Id: <20220413191421.984299-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
-Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
- from a ref
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ieBjededwBT/8CxkqWBlo+D080ApBD/w0WSBG7d1Gf0=;
+        b=ikiiVPVpv8LHV1DhSWiw6Z20kye/qEDdLtZtayWIIwoMVO9kL6jPgxvn0aPpX7ScnF
+         V8a9tt+J8ZEqwEMVu0mgbnSczGiin5gSOmUiYE4VDEAluOar2mdasyfH/gergHeDfPVU
+         +VAQR6blWyOZiEPkvuj3Nxx97jHnTZG/reLtEHgEPV0JNa/6pjr0Vn1NWKrpTiHdJ6+H
+         +M5ZHUR3ZMawcWPpI/LEKSasWRMEP7XqmWrxbYaXC4aqnKXA5Pw7JTM5Jy26LoCBoEc3
+         A7dLlroGbX8SgJBrOnjYuNc0cFqVltzaZF2HOhBv3vl7wt3MV1Y6twbeRK9TCEN2YH8f
+         3y3A==
+X-Gm-Message-State: AOAM533AtuHtEGOyP/bKtlej2REa7gsfArjieqy5SYfF/SWPu5TwGuMh
+        wJ6jhpUxIuHzozLCLfUXf+FdYvG+Ezs=
+X-Google-Smtp-Source: ABdhPJzlpDfGhVk29KjhylJTswyAD7SeK9J7Uo6FbQK3UbXlGhcSvXFNPbhlI28Fr5UtZpv6/4li8A==
+X-Received: by 2002:a17:907:6093:b0:6e0:dabf:1a9f with SMTP id ht19-20020a170907609300b006e0dabf1a9fmr40490252ejc.424.1649877553417;
+        Wed, 13 Apr 2022 12:19:13 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id n11-20020a50cc4b000000b0041d8bc4f076sm1568657edi.79.2022.04.13.12.19.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 12:19:12 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1neiWG-005AK6-12;
+        Wed, 13 Apr 2022 21:19:12 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        johannes.schindelin@gmx.de,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/3] t0033: add tests for safe.directory
+Date:   Wed, 13 Apr 2022 21:16:20 +0200
+References: <pull.1215.git.1649863951.gitgitgadget@gmail.com>
+ <5b18bd1852d673ab5c62a67f873987d74294cd70.1649863951.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <5b18bd1852d673ab5c62a67f873987d74294cd70.1649863951.git.gitgitgadget@gmail.com>
+Message-ID: <220413.86k0bseqq8.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->=20
-> On Wed, Apr 13 2022, brian m. carlson wrote:
->=20
-> > [[PGP Signed Part:Undecided]]
-> > On 2022-04-12 at 20:14:34, Jonathan Tan wrote:
-> >> This seems like you're using the commit message as the reflog message =
--
-> >> is this necessary? For what it's worth, all tests still pass if I
-> >> replace "msg" with "NULL".
-> >
-> > I think that's what the existing stash code does, and so I did the same
-> > here.  It's not strictly necessary, but it's a nice to have.
->=20
-> In any case: Jonathan changed the code to omit the commit message & the
-> tests still passed? Is that to do with:
->=20
->     We specifically rely on the fact that we'll produce identical stash
->     commits on both sides in our tests.
->=20
-> I.e. that they're checking round-tripping, but not known correctness?
 
-To clarify: I omitted something in the reflog message, not in any of the
-commit messages. The round-tripping only checks commit messages (which I
-agree is the important thing). I still do think that the correctness of
-what's being exported is important, but brian has already said that he
-can send a followup as part of a new series [1].
+On Wed, Apr 13 2022, Derrick Stolee via GitGitGadget wrote:
 
-[1] https://lore.kernel.org/git/YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net/
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> It is difficult to change the ownership on a directory in our test
+> suite, so insert a new GIT_TEST_ASSUME_DIFFERENT_OWNER environment
+> variable to trick Git into thinking we are in a differently-owned
+> directory. This allows us to test that the config is parsed correctly.
+
+I think this is a good trade-off, but FWIW I'd think we could test also
+without the git_env_bool() by having the test depend on !NOT_ROOT, then
+check the owner of t/test-lib.sh, and chown to that user (i.e. the
+"real" user).
+
+But that's all sorts of more fragile than just this test variable..
+> +test_description='verify safe.directory checks'
+> +
+> +. ./test-lib.sh
+> +
+> +GIT_TEST_ASSUME_DIFFERENT_OWNER=1
+> +export GIT_TEST_ASSUME_DIFFERENT_OWNER
+
+Instead of this "export" perhaps just add it in front of the "git
+status"?
+
+These tests also pass with SANITIZE=leak, so please add
+TEST_PASSES_SANITIZE_LEAK=true at the top.
+
+> +expect_rejected_dir () {
+> +	test_must_fail git status 2>err &&
+> +	grep "safe.directory" err
+> +}
+> +
+> +test_expect_success 'safe.directory is not set' '
+> +	expect_rejected_dir
+> +'
+> +
+> +test_expect_success 'safe.directory does not match' '
+> +	git config --global safe.directory bogus &&
+> +	expect_rejected_dir
+> +'
+> +
+> +test_expect_success 'safe.directory matches' '
+> +	git config --global --add safe.directory "$(pwd)" &&
+
+nit: $PWD instead of $(pwd)
