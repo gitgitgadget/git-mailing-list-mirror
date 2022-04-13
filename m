@@ -2,105 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB70FC433F5
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 22:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D52EC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 22:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235592AbiDMWf0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 18:35:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33942 "EHLO
+        id S238010AbiDMWq7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 18:46:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiDMWfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 18:35:24 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3CC349928
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 15:33:01 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S234784AbiDMWq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 18:46:57 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB203D4AF
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 15:44:34 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AB4891773BD;
+        Wed, 13 Apr 2022 18:44:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Hd9GRRpSAm4m
+        cgrmAp7vBQmG5N6nXcqJkxL0RSwsgLg=; b=X+UDlQa4BksyvG4hg76nbS9XMJVG
+        pYeZLB36uS/z689lszzvzvMnhgLEa6iJlthgECIx/ireQx4S4ZEMdIVDu4yR2p7X
+        QOoPuG97sT6j6PdsZD386B0mnFSm5ArXap3rY5h1nxsrjvbsAZIgb/w30Oo3hZxy
+        ypSQg7gM6R8nGaI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A3DC21773BC;
+        Wed, 13 Apr 2022 18:44:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 073CA5A0CA
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 22:33:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1649889181;
-        bh=hfeJhDVjrZEJqYjoLEYws6+0WKpN3ryWukmsMiF0jb4=;
-        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=yukethdxSYw/CHSfW6IiqkqU7uTg7uIOxpEQaM3qYtIgdvTRuBldWvPPikdfjkEsD
-         7wlTadhISEkdEK70eJgkeTU7QCS5jS+aBOvrrkWpO3DfhG6LqK7/yFxu9cwlvFFwA/
-         1UCZXOZ4G8SoUwHKVQrju/IbzU8U25a5YTERYSiekUGx3MpK0vB2XC1mmga72ap0ZU
-         nHFfieMSJ/JNOLF6x1ObQtXeUq1rX65A3Ivt6ZBw5rWWcPYwwZEUnTJ+mAh66ZStgX
-         JB4mFDfV/1r6Q+vDSscp03GOz8zRpRpvMXP56T8ZkioGY0pPa+RL2DUg8JDnPcZ5Fc
-         PojkRsIPS2vqkM2ZQb0kY77UziAnPoHmoN4hEROqnn4Osw0SLTfHlH/QMF+vvrJpwH
-         Liz9pcypOdKZ46vvzFEdvdlwxEAfYWyJ/sHDLFw+i83VIKwutHn8boWGOjDL7N8ffZ
-         xV1v9qBqZlw2D1uOqcyFFbHUfr9KnJlVDzzKUtbXptQen4lRo9V
-Date:   Wed, 13 Apr 2022 22:32:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: Pathological performance with git remote rename and many tracking
- refs
-Message-ID: <YldPmUskbU+bOU2n@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 09C611773BB;
+        Wed, 13 Apr 2022 18:44:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: reference-transaction regression in 2.36.0-rc1
+References: <CAGyf7-GYYA2DOnAVYW--=QEc2WjSHzUhp2OQyuyOr3EOtFDm6g@mail.gmail.com>
+        <CAGyf7-GaoBarXD2xKG3KUXwGZgbhKgv-4Mz45achbr6G9ihTBQ@mail.gmail.com>
+        <220413.86r161f3qp.gmgdl@evledraar.gmail.com>
+        <xmqq4k2w92xo.fsf@gitster.g>
+Date:   Wed, 13 Apr 2022 15:44:29 -0700
+In-Reply-To: <xmqq4k2w92xo.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        13 Apr 2022 12:52:03 -0700")
+Message-ID: <xmqqilrc61te.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="WpH6/3HkziuP/SjL"
-Content-Disposition: inline
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 485536A2-BB7B-11EC-80CD-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---WpH6/3HkziuP/SjL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> This does look lik a series regression.
+>
+> Yes.
+>
+>> I haven't had time to bisect this, but I suspect that it'll come down =
+to
+>> something in the 991b4d47f0a (Merge branch
+>> 'ps/avoid-unnecessary-hook-invocation-with-packed-refs', 2022-02-18)
+>> series.
+>
+> With the issue that /var/tmp/.git can cause trouble to those who
+> work in /var/tmp/$USER/playpen being taken reasonably good care of
+> already, it seems this is the issue with the highest priority at
+> this point.
+>
+>> I happen to know that Patrick is OoO until after the final v2.36.0 is
+>> scheduled (but I don't know for sure that we won't spot this thread &
+>> act on it before then).
 
-In my day-to-day work, I have the occasion to use GitHub Codespaces on a
-repository with about 20,000 refs on the server.  The environment is set
-up to pre-clone the repository, but I use a different default remote
-name than "origin" ("def", to be particular), and thus, one of the things
-I do when I set up that environment is to run "git remote rename origin
-def".
+Reverting the merge 991b4d47f0a as a whole is an option.  It might
+be the safest thing to do, if we do not to want to extend the cycle
+and add a few more -rc releases before the final.
 
-This process takes 35 minutes, which is extremely pathological.  I
-believe what's happening is that all of the refs are packed, and
-renaming the ref causes a loose ref to be created and the old ref to be
-deleted (necessitating a rewrite of the packed-refs file).  This is
-essentially O(N^2) in the order of refs.
-
-We recently added a --progress option, but I think this performance is
-bad enough that that's not going to suffice here, and we should try to
-do better.
-
-I found that using "git for-each-ref" and "git update-ref --stdin" in a
-pipeline to create and delete the refs as a single transaction takes a
-little over 2 seconds.  This is greater than a 99.9% improvement and is
-much more along the line of what I'd expect.
-
-I thought about porting this code to use a ref transaction, but I
-realized that we don't rename reflogs in that situation, which might be
-a problem for some people.  In my case, since it's a freshly cloned repo
-and the reflogs aren't interesting, I don't care.
-
-I think a possible way forward may be to either teach ref transactions
-about ref renames, or simply to add a --no-reflogs option, which omits
-the reflogs in case the user doesn't care.  I'm interested to hear ideas
-=66rom others, though, about the best way forward.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---WpH6/3HkziuP/SjL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYldPmAAKCRB8DEliiIei
-gTF5AQCKeroa21eeaJThSiGs2+IN61Qi1gY+K49cyOYNjSGAtQD/T53YZJvXE8z4
-6Glhs6YpQrvqoKlV8dzJ6eBZGqNRPg0=
-=m9eD
------END PGP SIGNATURE-----
-
---WpH6/3HkziuP/SjL--
+Thanks.
