@@ -2,95 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE253C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F286C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238691AbiDMUMq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:12:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57670 "EHLO
+        id S233242AbiDMUNb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:13:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237193AbiDMUMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:12:35 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C2138D9A
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:10:12 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 078DF127163;
-        Wed, 13 Apr 2022 16:10:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F/+7jmMoUPuFROjV80BD3f5D/g8uPIIz967qNH
-        VzJA8=; b=xIGZduVhsQCZhjWf9MCp+HSthNZOnSJwvgiffiBmSy7PdJBXEWcLlj
-        qeitvIEqpklHdE9uI/7stXkpt+FjZV0WWtkU9i6pgIXR8f0j5ryS88CRxXrG+msL
-        Ex2R2eiV5odeqkPURhoddzuOC9Gshpqh0KehGBv9jydDzbMyvLKlA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E57D5127162;
-        Wed, 13 Apr 2022 16:10:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9333127161;
-        Wed, 13 Apr 2022 16:10:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
- from a ref
-References: <20220407215352.3491567-5-sandals@crustytoothpaste.net>
-        <20220412201435.803424-1-jonathantanmy@google.com>
-        <YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net>
-Date:   Wed, 13 Apr 2022 13:10:07 -0700
-In-Reply-To: <YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Wed, 13 Apr 2022 01:12:32 +0000")
-Message-ID: <xmqqzgko7nj4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232589AbiDMUNb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 16:13:31 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660DB38DBF
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:11:08 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id r13so6211273ejd.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=jKoyc/JhkDffbOFF7HogFGJp4kdysPRE17ifvAStHB8=;
+        b=Xe11pm0WtowKy+MbdPDtfWCCIGfFaggzi9vYfbKq9y0gj8NySqXKvC5qLkxQJaHs2c
+         LKWcN18qAqZtvPEj68nNEd2ss12TB6rEH2TdocSF0VZtReQ3hstxxLc0V53cWXuPTvRt
+         p5xayz5VqhrR2moIZy1J5zlRa3+7aqsy+8GywygsxZ9NS5V0kvD093OpG/6thlspxyLn
+         otnnDXkphY6vraaz8ndP+1VjM2+QjUIcO2BIDX8zaBX5pWonbvBOC9c0aR+6PiV7JaKi
+         zNgwF4KCR7EPedV3X83uZdwP049cYuRze/LrCU2feoYJ93kpCEjyXTsc8TWD6n8o2iNs
+         dwlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=jKoyc/JhkDffbOFF7HogFGJp4kdysPRE17ifvAStHB8=;
+        b=rWoYsIHmKeP+2hy0nixCFc0VsZvwuysjFb3s3uYO9ThIoBym9QSdgA1US6ekO/f1ZZ
+         9mdcJFQ7lz3jBXn7PktFeijg9z/8eon6bt2NON67e5+VN7eIxVPYGIzViJp4nB8nIHkH
+         tS3bjdjzFM3fR+Y9vjvGzJ9k84QTEWD+WMuxoJvTNBraHFTYLvcWFYHizyDSa5WJsE90
+         Z4c+auU6H7yoaDxheHlHrazDkFuddCatx1TG8efUUrc0Xb9gW9dLZ1sItheB+7i2RmGu
+         PY7ND6XTdaT13juAcn8qZpYngQgMty1Rt97QY4q4BM3g50Fe87rzdKMUZbDTXJ8jEMb+
+         Bv5g==
+X-Gm-Message-State: AOAM530yh4HZhNUye6QZTIhVK8iorZxltNf0FT8Zd2hteYnwD6lv8wJq
+        fZuIH9j6Xm9I36NFsaai810=
+X-Google-Smtp-Source: ABdhPJzyEx0ATFZ6qBnTOBBfGSMo+1DLuz+2hWVBnokhJcfzaufrEKgqzYLNhzzDdpaGnYr4uSLZiw==
+X-Received: by 2002:a17:907:216f:b0:6ce:d85f:35cf with SMTP id rl15-20020a170907216f00b006ced85f35cfmr41702876ejb.517.1649880666486;
+        Wed, 13 Apr 2022 13:11:06 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bs2-20020a056402304200b0041fc40eeb91sm938103edb.49.2022.04.13.13.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 13:11:06 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nejKT-005C51-0A;
+        Wed, 13 Apr 2022 22:11:05 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: ab/plug-leak-in-revisions (was: What's cooking in git.git (Apr
+ 2022, #03; Tue, 12))
+Date:   Wed, 13 Apr 2022 22:08:54 +0200
+References: <xmqq8rsab5do.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqq8rsab5do.fsf@gitster.g>
+Message-ID: <220413.86bkx4eobr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B8D42D2C-BB65-11EC-8564-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2022-04-12 at 20:14:34, Jonathan Tan wrote:
->> This seems like you're using the commit message as the reflog message -
->> is this necessary? For what it's worth, all tests still pass if I
->> replace "msg" with "NULL".
+On Tue, Apr 12 2022, Junio C Hamano wrote:
+
+> * ab/plug-leak-in-revisions (2022-04-03) 28 commits
+>  - revisions API: add a TODO for diff_free(&revs->diffopt)
+>  - revisions API: have release_revisions() release "topo_walk_info"
+>  - revisions API: have release_revisions() release "date_mode"
+>  - revisions API: call diff_free(&revs->pruning) in revisions_release()
+>  - revisions API: release "reflog_info" in release revisions()
+>  - revisions API: clear "boundary_commits" in release_revisions()
+>  - revisions API: have release_revisions() release "prune_data"
+>  - revisions API: have release_revisions() release "grep_filter"
+>  - revisions API: have release_revisions() release "filter"
+>  - revisions API: have release_revisions() release "cmdline"
+>  - revisions API: have release_revisions() release "mailmap"
+>  - revisions API: have release_revisions() release "commits"
+>  - revisions API users: use release_revisions() for "prune_data" users
+>  - revisions API users: use release_revisions() with UNLEAK()
+>  - revisions API users: use release_revisions() in builtin/log.c
+>  - revisions API users: use release_revisions() in http-push.c
+>  - revisions API users: add "goto cleanup" for release_revisions()
+>  - stash: always have the owner of "stash_info" free it
+>  - revisions API users: use release_revisions() needing REV_INFO_INIT
+>  - revision.[ch]: document and move code declared around "init"
+>  - revisions API users: add straightforward release_revisions()
+>  - revision.[ch]: provide and start using a release_revisions()
+>  - cocci: add and apply free_commit_list() rules
+>  - format-patch: don't leak "extra_headers" or "ref_message_ids"
+>  - string_list API users: use string_list_init_{no,}dup
+>  - blame: use "goto cleanup" for cleanup_scoreboard()
+>  - t/helper/test-fast-rebase.c: don't leak "struct strbuf"
+>  - Merge branch 'ds/partial-bundle-more' into ab/plug-leak-in-revisions
 >
-> I think that's what the existing stash code does, and so I did the same
-> here.  It's not strictly necessary, but it's a nice to have.
+>  Plug the memory leaks from the trickiest API of all, the revision
+>  walker.
 >
-> I didn't think it worth testing, because I don't think we test it
-> elsewhere, either.
->
->> It might be worth adding tests that check that the exported stashes are
->> in the expected format (to ensure that we can read stashes exported from
->> another Git version) but I don't think that has to block the submission
->> of this patch set.
->
-> There's a tiny patch for that for the base commit, but you're right that
-> some more tests wouldn't hurt.  I can send a followup patch or two as
-> part of a new series.
+>  Will merge to 'next'?
+>  source: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com>
 
-Is this about the log messages recorded in the throw-away commits
-that are only used to form a single backbone chain, to which the
-commits used to represent stash entries are linked to?
-
-Are these messages meant to be used in any way?  I do not think
-these messages contribute anything to the end result (they are just
-discarded once they serve their purpose of transferring the
-underlying stash entries, if I recall the design discussion
-correctly), so I am not sure if we would even want to cast in stone
-what they would say.
-
-If on the other hand they are meant to be read by something (either
-programs or end-user humans), it does make sense to ensure that we
-are recording what we think we are recording.
-
-Thanks.
+I think it should be ready with my just-submitted re-roll, which fixes a
+trivial nit spotted by Phillip Wood by removing a useless NULL check:
+https://lore.kernel.org/git/cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com/
