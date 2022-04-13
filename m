@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88CE2C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE81C433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238567AbiDMUAK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36790 "EHLO
+        id S238570AbiDMUAM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:00:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238564AbiDMUAG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238562AbiDMUAG (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 13 Apr 2022 16:00:06 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 551837893F
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:57:38 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso4657759wme.5
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:57:38 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250D978917
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:57:37 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id b19so4125914wrh.11
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:57:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WoqTf6Sb1mCn+wDyRrkMVwa1Ih51AjSZ25Uaz2v1YZs=;
-        b=nCrdwWHKweoJmCWCBWeNmDM0KeA68DYJXUSFgUtkDMRmv2MkA3pOLtRv0B1Xz9UKtd
-         DH41Cea+B3Q5S6qkQtBsk+5oy4uzeSzTBFokORldwKD2bfPY6V1VjBCazBaZFLTD+FHJ
-         ULShm8gYSl4k3iwjwGkyXpSBrZRvANQCbMfuP0mgWiPiubblKrYaCZqvjq69Ek/YN6D3
-         CpKR+roUr16AM1Qrz1pMm8DDfTl4XjumwsHUANoT1jmOn3A2W3YJf5z1foUK+m3o8bX7
-         9+yxs3Ga4wmhaWfhO/k8c3ZvvhZRM6cUxeQbXYX7ONg20ZBEuYWjDBOqaOadg1PeO6wJ
-         lBWQ==
+        bh=8uVe9d8sAvjxx0iHyXXOFQnVr6Rp4yrkKQdMc44jdq8=;
+        b=dIoUCeitEvS2mQCmPcD/4JJNr0n4veKDnRSudrhRE5E4B9CpSgqojDvzKzPIxI+Yrt
+         cb61Lto8M8jZua6jg7Fo8D6cx88rP26FGtBhJSefxp/a38MfVVwBYZuIixkjmfLGUKUf
+         /WCRZMaPqXCr7MyC1AfY7cib3hc1gsnwQynRBwnXIF/YXZASyiSl4Uu7t/5lu61awIFe
+         0nTwDDA5xvTu4RD+7pImhNGpt3lZSCKDLd6XyF0Bt/r3h+UzgL1q+GPZMMousv0omqot
+         pY/mNrCRvdl+dm0rEZx/rw9EdyJyk6h8k+GMvpMzlA9m9b0BXVPpMwfNT1fnDOyhWNpx
+         RcNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WoqTf6Sb1mCn+wDyRrkMVwa1Ih51AjSZ25Uaz2v1YZs=;
-        b=MqDOX/Us0UfB5HqkfPXTifbmv2ZMdk47qbyLrgpCThJfHCs3xJair+/igjxm7XpNJa
-         mXHn3H/0uwtjrDnCUeivIMt5H9n0t8QbrzoSqDKv1VkeSXwd93gYgTFHClGCYHId5cZf
-         hGF/RKHq0mNnSgPFAuzF7KOdpoQJAnoUSXzRNka5tgUOgNRRlpbuU3Ho1+PoPtKZGHHv
-         rJAdg3RAoK2HIG/H5kKyQpK/USR9adVmWnZX7Y87ARwnuhTzygIKhlBijo4POz6bocjy
-         DFV+tk7iY7tFcov2SPLwU932ZZCEI4A8uaVOlR9hSTXyGowD9smIqu20soMTB+WkUHie
-         1tvw==
-X-Gm-Message-State: AOAM533E6iwTBdLJHmcg+rX7tjfe8PKYflcYmxD8SLNdNh7f1kbWC4Br
-        lbcs6onhls2ZVB08ALuVz+3iah7X6qkxpw==
-X-Google-Smtp-Source: ABdhPJz/3qm03n9iBUmQNuL89WG6R4orbmMpgQtl5I+GlNmqFIYxyun4rAaNZIrKD5Y6wS3Ohde5QA==
-X-Received: by 2002:a05:600c:1c10:b0:38f:f033:b665 with SMTP id j16-20020a05600c1c1000b0038ff033b665mr281530wms.85.1649879856536;
-        Wed, 13 Apr 2022 12:57:36 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j16-20020a05600c191000b0038ca3500494sm4547802wmq.27.2022.04.13.12.57.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=8uVe9d8sAvjxx0iHyXXOFQnVr6Rp4yrkKQdMc44jdq8=;
+        b=vQm5Z3w5CIFg8UDpnO/CfwwzKaPzTP+0IO8YUryz0u7XVh8FaG43ufUUSwXSqQf4XG
+         UEzOrBYyhyNZ5aHXKfbJy92oUYmb2d3WelpNrk6H9Jel7B82zS5KBxHjwXSJsg/wvE78
+         Tblsn4d5zyjp7prtOWs1kW7L2TwYqwJxsxvps/0/M69TFdPOiu6DCeExlkQQ2JUVkNQj
+         P4z5UyaBgupKlYc/rTk0t34I1COzI8N50B2wvNc68W3xyR8oS9dDEwNjozQ40Lyzsdz4
+         n4HZ9MLZfftzdePI6J8QJHDQaicybUXX2BNrEptYV6kN0y8g+5y7mRwxG8IMpZ6cPCXg
+         CJZQ==
+X-Gm-Message-State: AOAM531FC+YOznsAV/VcNBBMj+QelBBK6duL8nOCy2y/hPzcbACfKJu+
+        HN2f7te132I8BHIMZl07034L51OChYnpow==
+X-Google-Smtp-Source: ABdhPJwAxCW4kV+Yajdzv0GQAqo54grVL6NrzLFyR9MQWw0MRrT2Z6nAoSF7SNFSnKFBEVwkn9y60g==
+X-Received: by 2002:adf:ebc7:0:b0:1ee:945a:ffb4 with SMTP id v7-20020adfebc7000000b001ee945affb4mr319421wrn.641.1649879855336;
         Wed, 13 Apr 2022 12:57:35 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j16-20020a05600c191000b0038ca3500494sm4547802wmq.27.2022.04.13.12.57.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 12:57:34 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v4 6/6] ci: call `finalize_test_case_output` a little later
-Date:   Wed, 13 Apr 2022 21:57:28 +0200
-Message-Id: <RFC-patch-v4-6.6-b291f64821c-20220413T195514Z-avarab@gmail.com>
+Subject: [RFC PATCH v4 5/6] ci: use `--github-workflow-markup` in the GitHub workflow
+Date:   Wed, 13 Apr 2022 21:57:27 +0200
+Message-Id: <RFC-patch-v4-5.6-4499f743dd1-20220413T195514Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com>
 References: <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com> <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com>
@@ -78,71 +78,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We used to call that function already before printing the final verdict.
-However, now that we added grouping to the GitHub workflow output, we
-will want to include even that part in the collapsible group for that
-test case.
+[Ævar: due to re-structuring on top of my series the {begin,end}_group
+in CI isn't needed at all to get "group" output for the test
+suite. This commit includes the now-squashed "ci/run-build-and-tests:
+add some structure to the GitHub workflow output":]
+
+The current output of Git's GitHub workflow can be quite confusing,
+especially for contributors new to the project.
+
+To make it more helpful, let's introduce some collapsible grouping.
+Initially, readers will see the high-level view of what actually
+happened (did the build fail, or the test suite?). To drill down, the
+respective group can be expanded.
+
+Note: sadly, workflow output currently cannot contain any nested groups
+(see https://github.com/actions/runner/issues/802 for details),
+therefore we take pains to ensure to end any previous group before
+starting a new one.
+
+[Ævar: The above comment isn't true anymore, as that limitation has
+been removed by basing this on my patches to run "make" and "make
+test" directly from the top-level of main.yml.
+
+Those are now effectively their own "group", effectively giving this
+stage another group "level" to use. This means that the equivalent of
+"make test" won't be on the same level as an individual test failure.
+
+We no longer take any pains to ensure balanced group output as a
+result (which was a caveat the previous ci/lib.sh implementation had
+to deal with., We just need to "cat" the generated *.markup]
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib.sh | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ ci/lib.sh                        | 3 ++-
+ ci/print-test-failures-github.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 8a63b4b64c9..1ceba46215f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -782,13 +782,13 @@ trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
- # the test_expect_* functions instead.
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 3fd5291bc80..718c3252789 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -145,7 +145,8 @@ MAKEFLAGS="$MAKEFLAGS SKIP_DASHED_BUILT_INS=$SKIP_DASHED_BUILT_INS"
+ case "$CI_TYPE" in
+ github-actions)
+ 	setenv --test GIT_PROVE_OPTS "--timer --jobs $NPROC"
+-	GIT_TEST_OPTS="--verbose-log -x"
++	GIT_TEST_OPTS="--verbose-log -x --github-workflow-markup"
++	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+ 	test Windows != "$RUNNER_OS" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ 	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
+diff --git a/ci/print-test-failures-github.sh b/ci/print-test-failures-github.sh
+index 218aaf19763..e432a601621 100755
+--- a/ci/print-test-failures-github.sh
++++ b/ci/print-test-failures-github.sh
+@@ -17,7 +17,7 @@ github-actions)
+ 			test_name="${test_exit%.exit}"
+ 			test_name="${test_name##*/}"
+ 			printf "\\e[33m\\e[1m=== Failed test: ${test_name} ===\\e[m\\n"
+-			cat "t/test-results/$test_name.out"
++			cat "t/test-results/$test_name.markup"
  
- test_ok_ () {
--	finalize_test_case_output ok "$@"
- 	test_success=$(($test_success + 1))
- 	say_color "" "ok $test_count - $@"
-+	finalize_test_case_output ok "$@"
- }
- 
- test_failure_ () {
--	finalize_test_case_output failure "$@"
-+	failure_label=$1
- 	test_failure=$(($test_failure + 1))
- 	say_color error "not ok $test_count - $1"
- 	shift
-@@ -798,18 +798,19 @@ test_failure_ () {
- 		say_color error "1..$test_count"
- 		_error_exit
- 	fi
-+	finalize_test_case_output failure "$failure_label" "$@"
- }
- 
- test_known_broken_ok_ () {
--	finalize_test_case_output fixed "$@"
- 	test_fixed=$(($test_fixed+1))
- 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
-+	finalize_test_case_output fixed "$@"
- }
- 
- test_known_broken_failure_ () {
--	finalize_test_case_output broken "$@"
- 	test_broken=$(($test_broken+1))
- 	say_color warn "not ok $test_count - $@ # TODO known breakage"
-+	finalize_test_case_output broken "$@"
- }
- 
- test_debug () {
-@@ -1135,10 +1136,10 @@ test_skip () {
- 
- 	case "$to_skip" in
- 	t)
--		finalize_test_case_output skip "$@"
- 
- 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
-+		finalize_test_case_output skip "$@"
- 		;;
- 	*)
- 		false
+ 			trash_dir="t/trash directory.$test_name"
+ 			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
