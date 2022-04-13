@@ -2,103 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2D84C433F5
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 01:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51DC5C433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 03:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbiDMBO4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Apr 2022 21:14:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59132 "EHLO
+        id S229491AbiDMDNJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Apr 2022 23:13:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiDMBOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Apr 2022 21:14:54 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1A81FA76
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 18:12:35 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B7AB25A0CA;
-        Wed, 13 Apr 2022 01:12:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1649812353;
-        bh=lYpP8HKJaEbpoDLvO6SebLxuYk68ahU4U4BTZ5gwHPc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=cFW4vZ3vJ+kQeXOMH/Tm15k0SRxxNF54b/okrnag0n1XMkwma0fBj9CqyniPjMksx
-         o3K4B0E5nVJZ2Rz1ZAF7AtcMGW0sdr27a8rE8V8WlVri8OjpjDnygapTiiLu2idUmQ
-         MIFCNUXpmMdZxuBoJ+LoLaL33kNSZdnreAyUttGSUk1EQWfRDAR3GF8rHIp+x7dwri
-         sxHPk/SuqYtTj977QRQTWTwXfdzxLsu95V7muslBta2E2T8WRg4CPleFw/nSQvSdp7
-         uUvSEP4j0CgZDMGZClmL7920Atwkkz11zlwG0b7ouqEITwa+R5OKfrsvMeTcjRc+9x
-         SBzZLfpp8Fqqc7jnDI7mEdVkHQDmut6/kVdI8jJ8ml8xeQaFFVxNxDG3KcVt/jyNQ4
-         ivr8AIj9MaqX2U1cnXukSWBUkIOF6AEyMrsIYmDGPh5ZyJVFsgsJIRresNB/LJTg7j
-         /M7ynz1xDIQzvrMpmjMYVeFuUeqNpD8mYc8lkdneGrEzANLT8K8
-Date:   Wed, 13 Apr 2022 01:12:32 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
- from a ref
-Message-ID: <YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20220407215352.3491567-5-sandals@crustytoothpaste.net>
- <20220412201435.803424-1-jonathantanmy@google.com>
+        with ESMTP id S231965AbiDMDMn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Apr 2022 23:12:43 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6235524F09
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 20:10:23 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id e10so462068qka.6
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 20:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ExW216xp9vV1ZNaWtLTzFJu5rGcPB4XR7OOds4Gqxaw=;
+        b=pLIvQR+6UodGLb5jZFsacwRP3Nj7vCi1v1W7wPXFGti5qRPURtntGkArsoaLf/BXF0
+         rod5Vuk5Bc5RWxq4mFam8YyNg+Gb1Px0bq1lzl1PSOxpDTYTQZwEhBKtLn5qW9OdmbDW
+         7s6ju7deG0bl7PpjxJ0cA+gsh1elKL+phIupqtRo3mbgmJCclfH9+4P3EbQJQghWD0N0
+         MMdEfMd0ztV5v9x/nWIaNJgTgJHA+GquCf4mWX9KPZqjdNPyxID3FfLV42K1YeSNFNjc
+         glo/xQIqF45ViRSIDCfABLlE+aWCnQFVmkeHxIXmY9f+jNE6n6iSvzXImT/QEgELVQz9
+         LZxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ExW216xp9vV1ZNaWtLTzFJu5rGcPB4XR7OOds4Gqxaw=;
+        b=kKypT3BYjenXOYF3fLpBgdXNB2rRknWnbzPmaWjrPDZMXqmFEtXCrRHspbD/cs5z8X
+         qmRkWjjIdotctYt+Nbg4g4Uhxpdl7KTGHg454IO8w4gSpgPzBxjx7FJNn4iyeIQyK801
+         46dv4sRvuSlLe8jeKBX+6MiEzUQXaw+9nhOWfJ+Ccm72w8S1LUhO22DrypFHbMtkuvUT
+         kdIgz/bqiW6yaZmWsdmeiqaxqfytsgAfQVTChhb6uyUMaR58jgKcOrMaQ5xsLyhIeeel
+         bp6BYM20J/GtfkkR+gsTcGUxUF9YL2oWZcxEGP//MkFOhLROR7HjpErxTao1nOucwcyB
+         qb0w==
+X-Gm-Message-State: AOAM530Wj0D43VKVdM7YnhiZ51sSAiX4HmBmFJmjxnzDdI7cJRrRBRSb
+        NHeFp8eEyA7aSLCG6s8d3BssdFkA5/LCdebqI8w=
+X-Google-Smtp-Source: ABdhPJwVGq7s1GNEUKetze9B5muvc78omY4OGslqhOzmqDbnv8/oMW5UoK34vkh0iyqjboEtgVn4TM8uzdYqWWJxWMA=
+X-Received: by 2002:a05:620a:3196:b0:69c:188c:a702 with SMTP id
+ bi22-20020a05620a319600b0069c188ca702mr5347796qkb.702.1649819422568; Tue, 12
+ Apr 2022 20:10:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Tfsrd9c9OEfi2nTr"
-Content-Disposition: inline
-In-Reply-To: <20220412201435.803424-1-jonathantanmy@google.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+References: <xmqq8rsab5do.fsf@gitster.g> <8698e468-5552-77a3-10c7-933affd98832@gmail.com>
+ <220412.86h76yglfe.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220412.86h76yglfe.gmgdl@evledraar.gmail.com>
+From:   demerphq <demerphq@gmail.com>
+Date:   Wed, 13 Apr 2022 05:10:11 +0200
+Message-ID: <CANgJU+XU_j2Ge-c34qqKMZRjM5k4OBYMiJa4t7WJcPsdABWHiQ@mail.gmail.com>
+Subject: Re: CVE-2022-24765 and core.sharedRepository (was: What's cooking in
+ git.git (Apr 2022, #03; Tue, 12))
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 12 Apr 2022 at 21:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
+>
+>
+> On Tue, Apr 12 2022, Philippe Blain wrote:
+>
+> [A change of $subject seems in order]
+>
+> > Le 2022-04-12 =C3=A0 13:04, Junio C Hamano a =C3=A9crit :
+> >>
+> >>
+> >> Security releases for the 2.30-2.35 maintenance tracks have been
+> >> tagged to address CVE-2022-24765, which allows a user to trick other
+> >> users into running a command of their choice easily on multi-user
+> >> machines with a shared "mob" directory.  The fix has been also
+> >> merged to Git 2.36-rc2 and to all integration branches.
+> >>
+> >
+> > This is quite a big behaviour change for some environments [1], so I wo=
+uld think maybe it
+> > deserves to be fully spelled out in the release notes for 2.36.0,
+> > instead of just referring readers to the release notes for the maintena=
+nce
+> > release, where they can read a full description only in the release not=
+es
+> > for 2.30.3 ?
+>
+> Yes, I think it deserves to be noted very prominently, and also that we
+> had some mechanism for publishing relevant git-security@ discussions
+> (possibly with some parts redacted) after the issues become public.
+>
+> Non knowing if others involved are OK with being quoted I'll just say
+> that this issue was discussed at some length on the list, in particular
+> that it'll severely hinder some core.sharedRepository workflows.
+>
+> Quoting (part of) my own reply from one of those exchanges (this is in
+> reply to Johannes Schindelin):
+>
+>         But I don't understand why we need to immediately die() when we d=
+etect
+>         this situation in setup.c.
 
---Tfsrd9c9OEfi2nTr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Would I be right in thinking this explains new breakage we are seeing
+in CI jobs we (the Perl project) have hosted on GitHub:
 
-On 2022-04-12 at 20:14:34, Jonathan Tan wrote:
-> This seems like you're using the commit message as the reflog message -
-> is this necessary? For what it's worth, all tests still pass if I
-> replace "msg" with "NULL".
+https://github.com/Perl/perl5/runs/6000831257?check_suite_focus=3Dtrue#step=
+:5:1
 
-I think that's what the existing stash code does, and so I did the same
-here.  It's not strictly necessary, but it's a nice to have.
+Run git remote set-url origin "***github.com/$GITHUB_REPOSITORY"
+fatal: unsafe repository ('/__w/perl5/perl5' is owned by someone else)
+To add an exception for this directory, call:
 
-I didn't think it worth testing, because I don't think we test it
-elsewhere, either.
+git config --global --add safe.directory /__w/perl5/perl5
+Process completed with exit code 128.
 
-> It might be worth adding tests that check that the exported stashes are
-> in the expected format (to ensure that we can read stashes exported from
-> another Git version) but I don't think that has to block the submission
-> of this patch set.
-
-There's a tiny patch for that for the base commit, but you're right that
-some more tests wouldn't hurt.  I can send a followup patch or two as
-part of a new series.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Tfsrd9c9OEfi2nTr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYlYjfgAKCRB8DEliiIei
-gV0+AP90BWN3c0bH61dwLbtsal0Zz6fCscTPtOAH82W27bbLFQEA37Rx9KOU5pdC
-jBtOIG0YUIcfBnzC7EPFhTOPBV8Q3go=
-=wAxi
------END PGP SIGNATURE-----
-
---Tfsrd9c9OEfi2nTr--
+Cheers,
+Yves
