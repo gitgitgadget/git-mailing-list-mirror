@@ -2,209 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B717C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 048EDC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238682AbiDMUFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:05:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41526 "EHLO
+        id S234092AbiDMUGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238640AbiDMUE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:04:59 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA3C7DA86
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:25 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id p189so1762913wmp.3
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:25 -0700 (PDT)
+        with ESMTP id S231280AbiDMUGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 16:06:23 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF337C7B3
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:03:59 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id h15-20020a17090a054f00b001cb7cd2b11dso3438522pjf.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=d2yQIEwRAwEivwnAQvEvNV1VKOW1ww7xFR1QNZS1anY=;
-        b=S4KV/fMedW91pUidJDLRLCVVk2IR6Ne0HCPxoTGNdq9CneutdLYyYstUxnSBJMHtQc
-         qmZa51lxvCtBl/p17rklEzsPDBTPi55cV32REGaPprZ5p/DuhtApQG8g//oBmzITQSjE
-         NhgtrOZI0bJhiS1ueUi+G1ChSUXuIfwd5/LT2KgsHzDmLJN7uscHvCdSSoLttOi2WcXf
-         dBz3a0QVWnPrAl3+HgdsJ9jPVuvvgyMLSl/va4c3+d/geMi2xEGcbGF7K8Nj332T25Zc
-         zhxEF0oQyJSRgJAdm343/9rCS+C8QZkzI39zvyK5N+kNwb8pfTEj+2XxLFggd7bEHEDF
-         xPaw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Vopg88BHxKw+CemO/3C1/eNUcCjkv8Ks1RB8YNpFr7s=;
+        b=BOJR297egKwVfucuP0Ifvrico8aqh7K0+V7wo+pIRbnsKVFLXyKDTyzeGZO9wjn5a5
+         gTkjwVsgMbypJewW4+DGnjWwtcuhdHQKZCcgmKMoCZpo4XFBatN5w8BH7/ZE1GcLHcWC
+         O+hd58CrS2aq9dFgnaU8Z2oQzLPOwOn/xeFT6fFQF5eWVYm/l99wtNN+gQmpJemnGoC9
+         BjgomRXgCD67pPf7GDYqmo3sh57BhjMWYNm50UT+ufVzRLrOmcMXEqdRZT6ljTpPJ/K7
+         Ctr4ju+aFQqvYXSe4Xg6AliTAa/GUAXqFKU8tBhDoAIAWcQfotob9kQJdgv0uNMqXi9i
+         vN6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=d2yQIEwRAwEivwnAQvEvNV1VKOW1ww7xFR1QNZS1anY=;
-        b=UP3qM7qv/e5FZsVm/wtnhcnMcJm461Q/aswg/dzhYjEgQCLMuJck4T10RHfhNBaakr
-         KufArlRtZZ94KntYRLxg9vjSuGx2iQyfLGcbo2NXBEPZAB1F/jC1i26Mm3M6naERZTa7
-         MjqTndMJTeNP7az7EgZ9fOwigxdi/KlnuqsXPaSO9ohmd7w0kBAwx3KOtePK2pGIM9JC
-         BFQ2KQJjl7ugpaFynSQ7PUJmPhfA4RjqFyI+ckhqruDmWvil7Tt5Q1+g/s0q8xbCHY4e
-         m5/4ROZdpDO+DWkw2HBqZxGuYUGaN+wUi3BcKMbHH8MErkR0hl7Vm3f+LYr0c1fKUtxK
-         FmRQ==
-X-Gm-Message-State: AOAM532ATZWQStBaE/kuhQMDSMaV7neG9PJ3Lmiw/UL8Www6wpP6wMco
-        Tla95j2o0F/DcAmz6wr3GFD5OHoXdiAevg==
-X-Google-Smtp-Source: ABdhPJxa0z3SHZSTLLmYkasb/bEls06rEs/ymPb5qeOrDY4R1xwZAMDxJiEH//SEoTVRed98PRx9ug==
-X-Received: by 2002:a05:600c:a03:b0:37b:daff:6146 with SMTP id z3-20020a05600c0a0300b0037bdaff6146mr293485wmp.85.1649880143850;
-        Wed, 13 Apr 2022 13:02:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 13:02:23 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 24/27] revisions API: call diff_free(&revs->pruning) in revisions_release()
-Date:   Wed, 13 Apr 2022 22:01:53 +0200
-Message-Id: <patch-v6-24.27-79279864c42-20220413T195935Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
-In-Reply-To: <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
-References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com> <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Vopg88BHxKw+CemO/3C1/eNUcCjkv8Ks1RB8YNpFr7s=;
+        b=zg8+Tn6jVT0e44+0nFsVEWC7AAgcJwGHL5qkdwJxNxxxYxv9k6Q7MvoRcCR3rD5Gfn
+         /5yXwNEJuSM8qtnU3HVjYaBNXWHn9ZRFEbX4moF5F8cUF3gcadjEjKUbFGhPxeEjXS+r
+         nKG8CcSaNfoMjTJY0HMEk/W06ENdPG6GjCpnIwZFS2FluCDiCEi6bP7R4/is3ohrjZz1
+         AY/Whiv5Lh2whr6fSVaD8sAcIvHJNd2WQRdldQBe0DyJg2DHHXOeo/qWoqxWGteLCSoA
+         tGZOv9RMErWxsYDJotjGxW6uDsWcmuhNduLmlEpqa3SwYFvzisJQ5Z9S2zybQS18emJn
+         vymw==
+X-Gm-Message-State: AOAM53227Pr6OVVkobssTjQtBn+IxsmH1RxmcKcg4jJztrcGBDSrYZDY
+        YQXKBV5ROmntH1qKpHPDQUpWLP1AZlU=
+X-Google-Smtp-Source: ABdhPJwDynjNdiWt7+NYIbmpYZBgz7WiPFqnhxTmbY9tD0hEk1ZoxoZ1DaY7hAp896GumYTLEP2S1Q==
+X-Received: by 2002:a17:90b:4b0e:b0:1cd:a983:6aac with SMTP id lx14-20020a17090b4b0e00b001cda9836aacmr402641pjb.33.1649880239038;
+        Wed, 13 Apr 2022 13:03:59 -0700 (PDT)
+Received: from [192.168.208.37] ([49.204.137.177])
+        by smtp.gmail.com with ESMTPSA id q17-20020aa79831000000b0050566040330sm25169153pfl.126.2022.04.13.13.03.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Apr 2022 13:03:58 -0700 (PDT)
+Message-ID: <c2190b9c-3393-730d-1bed-d793c1d32275@gmail.com>
+Date:   Thu, 14 Apr 2022 01:33:55 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [GSoC][RFC][PROPOSAL] Reachability bitmap improvements
+Content-Language: en-US
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
+References: <20220406200959.27096-1-chakrabortyabhradeep79@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20220406200959.27096-1-chakrabortyabhradeep79@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call diff_free() on the "pruning" member of "struct rev_info".  Doing
-so makes several tests pass under SANITIZE=leak.
+Hi Abhradeep,
 
-This was also the last missing piece that allows us to remove the
-UNLEAK() in "cmd_diff" and "cmd_diff_index", which allows us to use
-those commands as a canary for general leaks in the revisions API. See
-[1] for further rationale, and 886e1084d78 (builtin/: add UNLEAKs,
-2017-10-01) for the commit that added the UNLEAK() there.
+Thanks for drafting your initial GSoC proposal. Some thoughts inline:
 
-1. https://lore.kernel.org/git/220218.861r00ib86.gmgdl@evledraar.gmail.com/
+On 07-04-2022 01:39, Abhradeep Chakraborty wrote:
+>
+> I am Abhradeep Chakraborty, currently pursuing B.Tech in Information
+> Technology (now in my 3rd year) at Jalpaiguri Government Engineering
+> College, India.
+> 
+> In the last two years, I mainly concentrated on learning and building
+> web development things. I mainly use Django, React for my projects. But
+> for the past 6 months, I have been learning about devops, cloud technologies
+> ( e.g. docker, Kubernetes, AWS etc.), computer networking and core
+> technologies (such as git, linux, gcc etc.). I also have an interest in
+> some research based technologies like WebRTC, Web3 etc.
+>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/diff-index.c                | 1 -
- builtin/diff.c                      | 1 -
- revision.c                          | 1 +
- t/t1001-read-tree-m-2way.sh         | 1 +
- t/t1002-read-tree-m-u-2way.sh       | 1 +
- t/t2200-add-update.sh               | 1 +
- t/t4039-diff-assume-unchanged.sh    | 1 +
- t/t4206-log-follow-harder-copies.sh | 2 ++
- t/t6131-pathspec-icase.sh           | 2 ++
- 9 files changed, 9 insertions(+), 2 deletions(-)
+That's good to know. Do let us know if you have any experience with C
+and shell programming outside of your contributions to Git.
 
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 3a83183c312..7d158af6b6d 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -70,7 +70,6 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 		return -1;
- 	}
- 	result = run_diff_index(&rev, option);
--	UNLEAK(rev);
- 	result = diff_result_code(&rev.diffopt, result);
- 	release_revisions(&rev);
- 	return result;
-diff --git a/builtin/diff.c b/builtin/diff.c
-index dd48336da56..f539132ac68 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -594,7 +594,6 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	result = diff_result_code(&rev.diffopt, result);
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
--	UNLEAK(rev);
- 	release_revisions(&rev);
- 	UNLEAK(ent);
- 	UNLEAK(blob);
-diff --git a/revision.c b/revision.c
-index 8cd849aa2b9..63f17c085c9 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2953,6 +2953,7 @@ void release_revisions(struct rev_info *revs)
- 	clear_pathspec(&revs->prune_data);
- 	release_revisions_mailmap(revs->mailmap);
- 	free_grep_patterns(&revs->grep_filter);
-+	diff_free(&revs->pruning);
- 	reflog_walk_info_release(revs->reflog_info);
- }
- 
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 0710b1fb1e9..516a6112fdc 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -21,6 +21,7 @@ In the test, these paths are used:
- 	yomin   - not in H or M
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-read-tree.sh
- 
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index 46cbd5514a6..bd5313caec9 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -9,6 +9,7 @@ This is identical to t1001, but uses -u to update the work tree as well.
- 
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-read-tree.sh
- 
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 0c38f8e3569..be394f1131a 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -14,6 +14,7 @@ only the updates to dir/sub.
- Also tested are "git add -u" without limiting, and "git add -u"
- without contents changes, and other conditions'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4039-diff-assume-unchanged.sh b/t/t4039-diff-assume-unchanged.sh
-index 0eb0314a8b3..78090e6852d 100755
---- a/t/t4039-diff-assume-unchanged.sh
-+++ b/t/t4039-diff-assume-unchanged.sh
-@@ -2,6 +2,7 @@
- 
- test_description='diff with assume-unchanged entries'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # external diff has been tested in t4020-diff-external.sh
-diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
-index 4871a5dc92f..33ecf82c7f9 100755
---- a/t/t4206-log-follow-harder-copies.sh
-+++ b/t/t4206-log-follow-harder-copies.sh
-@@ -6,6 +6,8 @@
- test_description='Test --follow should always find copies hard in git log.
- 
- '
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh
- 
-diff --git a/t/t6131-pathspec-icase.sh b/t/t6131-pathspec-icase.sh
-index 39fc3f6769b..770cce026cb 100755
---- a/t/t6131-pathspec-icase.sh
-+++ b/t/t6131-pathspec-icase.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='test case insensitive pathspec limiting'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- if test_have_prereq CASE_INSENSITIVE_FS
--- 
-2.36.0.rc2.843.g193535c2aa7
+> My ultimate objective is to be a dedicated and active contributor to all
+> of these technologies. So, I want to start this contribution journey with
+> `git` and therefore I want to be a part of this GSoC program.
+> 
+> ## Me & Git
+> 
+> I have started exploring the Git codebase since Sept 2021. At first, I
+> mainly focused on knowing the git internals. During this time I read
+> documentations (Under `Documentation` directory). `MyFirstContribution.txt`[1],
+> `MyFirstObjectWalk.txt`[2] and `Hacking Git`[3] helped me to learn about the git
+> contribution workflow, how `git log` ( in other words `object walk`) works
+> internally.
+> 
+> Though I had read many documentations, I was still not able to fully
+> understand the terminologies (like `refs`, `packfiles`, `blobs`, `trees`
+> etc.). (ProGit)[https://git-scm.com/book/en/v2] helped me tremendously here.
+> I read the full book and it cleared almost every doubt that came into my mind.
+> 
+> I have provided my git involvement history below. Activities are sorted
+> by timeline from top to bottom.
+> 
+> ==============================
+> PRs, Commits & Discussion Participations
+> ==============================
+ >
+ > [ ... snip ... ]
 
+Good to see your various contributions to Git so far. Good work!
+
+> ## Proposed Project
+> 
+> ### Abstract
+> 
+> While sending large repositories, git has to decide what needs to be
+> sent, how to be sent. For large repositories, git creates pack files
+> where it packs all the related commits, trees, blobs( in the form of
+> deltas and bases ), tags etc. Now, finding the related objects among
+> all the objects might be very expensive.
+> 
+> As git only knows about the branch tips, it is very expensive to find
+> the related objects from all the objects if we try to traverse down
+> from the branch tips to all their respective related objects. It becomes
+> more expensive as the number of objects (i.e. commits, trees, blobs
+> etc.) increases. Ultimately resulting in slow fetching from the git
+> daemon.
+> 
+> To counter that, reachability bitmaps were introduced. It uses bitmap
+> data structure (an array of bits) to detect if an object is reachable
+> from a particular commit or not. The commit messages of this
+> (patch series)[https://lore.kernel.org/git/1372116193-32762-1-git-send-email-tanoku@gmail.com/]
+> are itself a documentation of how it is achieved. All the bitmap
+> indexes for selected commits (in a EWAH compressed form) are stored in
+> a `.bitmap` file which has the same name of its respective packfile.
+>
+
+s/indexes/indices/
+
+> [ ... snip ... ]
+ >> ## Estimated Timeline
+>
+ > [ ... snip ... ]
+
+Taylor has shared feedback on the proposal and timeline which I hope are 
+helpful to you. Specifically, Taylor said:
+
+> 
+> So I think it makes sense to try and find a way you can dip your toes
+> into 2-3 of the sub-projects and get a sense for what feels most doable
+> and interesting, then focus on that before allocating time for more
+> projects in the future.
+ >
+
+I agree with this. It's better to be practical than ambituous when 
+planning the proposal.
+
+> 
+> ## Availability
+> 
+> I intentionally freed my summer slot for GSoC. So, there wouldn’t
+> be much disturbance/inactive days while working on my project.
+> Generally, I can spend nearly 35-40 hours a week on this project.
+> If the college gets closed for some reason, then the amount of
+> available time will increase. Smart India Hackathon finale would
+> be held in July. So, I may be inactive for a few days. But overall,
+> I will be available most of the time.
+>
+
+Thanks for letting us know of possible things that would interfere with 
+GSoC! Do make sure to keep us posted in case you come to know of 
+anything else.
+
+> ## Post GSoC
+> 
+> Once the GSoC finishes, I would look into other issues/tickets and
+> would send PRs solving those issues. As I said before, I want to
+> be a long term contributor to git - I would definitely maintain the
+> flow and continue to work on improving the overall git tool.
+>
+
+That's nice.
+
+--
+Sivaraam
