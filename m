@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9F51C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFE7C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238502AbiDMTyk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58306 "EHLO
+        id S238516AbiDMTyn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:54:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238501AbiDMTy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238494AbiDMTy3 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 13 Apr 2022 15:54:29 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 525DA5F4F3
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:06 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id g18so4115374wrb.10
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:06 -0700 (PDT)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D3656220
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:04 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id e21so4121259wrc.8
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=95G+ydbQyhJHHHkhIbeovRa95gH5GpdV/tUGZfCYYDg=;
-        b=Rh7tP1Si/3h73NrgJzGOiHiOFLgrGyiWnAvy3LfqYxyzD3QbMYLmNurxfyNIRzvOnK
-         VofGLuBPcdD4+rQFsFFU8yT5W/k+OSaV7QwDQl1Vmd+1xx9YT9XqLtXx+Ricrd/bYPqS
-         NaxpYh/9ZdUL9Tw7QWM+tEW9aJ81HYNkjFCunJ8xRI77Df6zGEOJbcbiMpwYDhUvRRKj
-         SwNNWBsBIy997fvzQHk3A5qAKFMWTQ1baUzU3F7E8ad5H5Pd8KLJopa1GY9sCGZVn+em
-         qi22JAJXJsUuReoEkoPtoLev0I0UANWugDFfHCVFjsBnH3ItgWbiaYOjZB7Vsqrcdd1G
-         xQPQ==
+        bh=VS0qqJ+MyHkAenOD1VJx9zPTY3FrInp30v7m+6spciM=;
+        b=YpSwndtl8jVansfCgpxd7RB1qCBFXoo4CeCfu48UGi4R9ASfUL7/Juzy9ISc/fGvJj
+         r1y7zOu6JASHSKMzklQLslVDZJ26BAbtF9XUO6m2otkZJf6WI7GkMHqlIG4arvLcgJph
+         8dc7xjzfG0xOyHKT6uPZRi73Qm0i28yww0ec8hpD3G9GEBHHU1rz1VXGWGETj4hMG4Du
+         PmI6RLqFl0rbXCjk7x8H++0jDZMYuZv9WfgPGEkRP9dXIqMP5VRs+GokxHg12YigFSC2
+         WbdkPbm7HJsxiwxW73o/vPXRVXmF9HKwTC/F2U7oX05MJ9MS+vhXekLR/bEpMYgDrIXY
+         wiEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=95G+ydbQyhJHHHkhIbeovRa95gH5GpdV/tUGZfCYYDg=;
-        b=2ZOpMrEusi9bCRWqzAtxXDzsmT9aqKjJu6DAQVJsqcXJEcP2Bw9QqoEFFVWViZZ8LK
-         Qi16UWwHuarxoRLmXG7u4bTMV/VGrPP9W52LSMA4NEPKKGiVe9KtN7mahTZ6TpHa621l
-         O3o3AahQpT9Mug+PvfjLHGOkw1O3Sq4YhVSjodHJDLcdREcrZIdMTYqPN74uIFi1XSL1
-         NnQX7ieqsN2HGmqMYl3M4kvdItAA0dVGDfNSkLVIowFGwU6+NvX6mq0jPjEjidaj3aqE
-         vQkMu8bTVoI8RTfSH1OOKjOPIQwVDjIk10qqgo+w7j5uOTI9ccUUeXaPnMOHSFcG8Onk
-         jXZw==
-X-Gm-Message-State: AOAM530rcbO/VFZRom+ZwuEh+ccXDuBx6YUvF4EtUPPhCorwp+S9pUL9
-        x1k/ZFVlMqhzM5y/nxVtcjE8PgeCuC0wIA==
-X-Google-Smtp-Source: ABdhPJyQ34KJ5l6ssIIhOi5CPWMK964K8FG5pxQOTBIHBM0o1A69J/3SOOQuOcyflxy7y3DAU4i9CA==
-X-Received: by 2002:a05:6000:15c1:b0:204:7e75:1eb1 with SMTP id y1-20020a05600015c100b002047e751eb1mr347462wry.482.1649879524689;
-        Wed, 13 Apr 2022 12:52:04 -0700 (PDT)
+        bh=VS0qqJ+MyHkAenOD1VJx9zPTY3FrInp30v7m+6spciM=;
+        b=SwM//t+zG7Rs5DpRgsXQQG6T37R7jexC0k4bpz9FbsqMjy7qeHSZIuQzqfSDXTEoSq
+         t3ZOh9vnV244h5FU7zQ8+gBFxmF7i408p+vlXPJmHFYK30896a5amJqei0fe6i2Nuz40
+         AV4jT4alzweddUa4KY1kfqtLNEfbp14V8smsgeA+9x7iLoKtbs3T4H1fttWmnabHqAWL
+         e/1phzJsnvl2fEtVJg5FQ0jh85nHpmk92K2pfLV/smvAZSLNLkIHH43XQuJURYPD5x2U
+         99rCMap7rCPvJmpYAw/QnETC+ivBqxxuEFdbzBi2eQH0Xg2n3Wh70TV5bKuXICm9KdtN
+         97qw==
+X-Gm-Message-State: AOAM531+BfUvW79vke7Hz3KBaRFJ2HdMuNlQKdca9abmmFnVBNqFzrex
+        BmvpZJAcLg4fTar96dcWTPPzlSB0tEnClw==
+X-Google-Smtp-Source: ABdhPJwW6VUYtGm+bO8+EJa5CYZNm6zkhBjr60+coURJO5SuUMIXuhcFbj8fHXTCd5SVO0yS0qX7+g==
+X-Received: by 2002:adf:fb4d:0:b0:207:a376:7585 with SMTP id c13-20020adffb4d000000b00207a3767585mr309946wrs.489.1649879522641;
+        Wed, 13 Apr 2022 12:52:02 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.03
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 12:52:03 -0700 (PDT)
+        Wed, 13 Apr 2022 12:52:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 11/29] CI: consistently use "export" in ci/lib.sh
-Date:   Wed, 13 Apr 2022 21:51:24 +0200
-Message-Id: <patch-v3-11.29-8ab4e81e1ca-20220413T194847Z-avarab@gmail.com>
+Subject: [PATCH v3 09/29] CI: have "static-analysis" run "check-builtins", not "documentation"
+Date:   Wed, 13 Apr 2022 21:51:22 +0200
+Message-Id: <patch-v3-09.29-54a4d79bf8d-20220413T194847Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
@@ -75,54 +75,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "ci/lib.sh" script co consistently use "export", for
-e.g. MAKEFLAGS we were exporting it, and then assigning to it, let's
-do it the other way around.
+Move the "make check-builtins" check from the "documentation" job to
+the "static-analysis" job.
 
-Right now this doesn't matter, since we in
-e.g. "ci/install-dependencies.sh" source this file, and don't use
-something like "env(1)" to retrieve these variables. But in a
-subsequent commit we'll "export" these variables through a wrapper (to
-additionally write them to a GitHub CI-specific $GITHUB_ENV
-file). This change makes that subsequent change easier to read, as it
-won't need to do any control flow refactoring.
+The "check-builtins" target added in c74390e4a1d (cherry is built-in,
+do not ship git-cherry.sh, 2006-11-05) is unrelated to the
+documentation, so it's odd that b98712b9aa9 (travis-ci: build
+documentation, 2016-05-04) added it to the "documentation" job.
+
+Let's just move it to the "ci-static-analysis" target, and while we're
+at it improve the output with $(QUIET_CHECK).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Makefile                 | 3 ++-
+ ci/test-documentation.sh | 1 -
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 5736a4d2e04..5783eed1b20 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -30,7 +30,7 @@ export TERM=${TERM:-dumb}
- NPROC=10
+diff --git a/Makefile b/Makefile
+index 8717ea7e745..2e1ae6c6067 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3402,7 +3402,7 @@ check-docs::
+ ### Make sure built-ins do not have dups and listed in git.c
+ #
+ check-builtins::
+-	./check-builtins.sh
++	$(QUIET_CHECK)./check-builtins.sh
  
- # Clear MAKEFLAGS that may come from the outside world.
--export MAKEFLAGS=--jobs=$NPROC
-+MAKEFLAGS=--jobs=$NPROC
+ ### Test suite coverage testing
+ #
+@@ -3492,5 +3492,6 @@ ci-check-directional-formatting:
  
- if test "$GITHUB_ACTIONS" = "true"
- then
-@@ -38,9 +38,10 @@ then
- 	CC="${CC:-gcc}"
+ .PHONY: ci-static-analysis
+ ci-static-analysis: ci-check-directional-formatting
++ci-static-analysis: check-builtins
+ ci-static-analysis: check-coccicheck
+ ci-static-analysis: hdr-check
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index 9e0652c30dd..41e2b126311 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -14,7 +14,6 @@ filter_log () {
+ 	    "$1"
+ }
  
- 	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
--	export GIT_TEST_OPTS="--verbose-log -x"
-+	GIT_TEST_OPTS="--verbose-log -x"
- 	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-+	export GIT_TEST_OPTS
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
-@@ -94,4 +95,4 @@ linux-leaks)
- 	;;
- esac
+-make check-builtins
+ make check-docs
  
--MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-+export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+ # Build docs with AsciiDoc
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
