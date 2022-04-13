@@ -2,75 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 417E8C433F5
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 17:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E00C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 17:34:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237365AbiDMRdR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 13:33:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39964 "EHLO
+        id S237393AbiDMRg4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 13:36:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237361AbiDMRdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 13:33:16 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F024A33E8A
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:30:54 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id x4so2673553iop.7
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:30:54 -0700 (PDT)
+        with ESMTP id S235898AbiDMRgy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 13:36:54 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D78A64E3
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:34:33 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 7-20020a250c07000000b0064137917a4eso2237521ybm.12
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VQgnh+wvYaqELT5rUkWKnJqK3oyY8HtlaBSwedACfpg=;
-        b=HkR24jkJA6Tr1KxfDbCT7ZT4bgSf+xZA7vc/0PvRYcnCS9Auq9q2D7dvrb9qYqXbIB
-         QeRsqYVr4Irvfo4nPACVm9gzvNqc51b7hutStCD0ls+Yv4SQY4RpzPYCzaRDSCHpC4Qp
-         g46QeVFcOafkqXHnsF/viVnCdfMn8n3h1+D8WaQAstB8FXhsHL0YOg7M5h/rh73oQu2D
-         DgKNWqoZ0/BqY4eD0P01NrhH85liCFgHtxWsioQEpL87eJSgxnEMOfH6UVK6/rzJpdDR
-         xdJFmlu7LMXPg2tx3X5JaOcD0t8y5Ft599V1ysplXSrjTtgN8J0CHB0Bt7OSuvmaBsb2
-         7qng==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=veYYA353vci8ORIxi/1ytUVIftkzp4zmMi02wycdzQk=;
+        b=oPo5sRQCPHjrxh41LCFw5xN5ib9eauyyYDbNA4BUl0T2M4khlxa11Cln11mnV/MrM1
+         WOb63ivmb/JfwIY8sn+ZkJ3+XS+Qnto5hvBT2VSKQHvkPf2whjAWo1d4w0bSZmZy/52C
+         xwFlcsnfcNa1TWpK4m8O6ka0aMU14YbXEJg0F/DKytBZ6TZlWTeB6yTafRNFeiR1H9l/
+         YBi+JeksnT5cvmpuJInWLKnTYahYssUMSSyRtDsBE/NxXc3UtKzbxL3yWvl1aS1HP97F
+         dHe8/2Yvc1SUfuusVP2dw4PutDLaIXiApQ4cpGmebHlPRX0KG1NTcvySN82QyMByFkx7
+         j4ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VQgnh+wvYaqELT5rUkWKnJqK3oyY8HtlaBSwedACfpg=;
-        b=KHn05WUqrg4g2jgRSp9layWqQREXT5xsHYMPaFeZDuipvJFX/U6DH95oQGfQLtAm4E
-         siMQHRTTXAZnB/EUXaKFm1201Kd2gzlZ+QIOR+Y0lRjSiLXCW/1vbemUsJDMiC1qOkBQ
-         bQHAAGbsP5ASstimXgYr1yYcUv8daNTkt80L0LhyR9cTGV+esTdLVfFkGxhRksz0lc8r
-         PQNNCRQk8oiUcA14TJ1uP8TVj1PA6oAXpfvDnvnd8Pb+urCe3TxKt1x2f2ArAF3JA/Qw
-         yk0T2ScVdNKLlEEgxvyjbnFeT0caWP/HIAdDASKC6EstvyiO283RZ+++4ZZR/3kuVYp4
-         pZtw==
-X-Gm-Message-State: AOAM530JoegpPnM7tmKKD3MY3GWkN1A+lVgkfEKYyUlKMEgHeKwvWC6h
-        MGtGUH086ebUpoNq751HD6apedCAPpvXBixc+RI/00e8TzKRL8/+
-X-Google-Smtp-Source: ABdhPJzBuKaxtXXuz3WXgh+QxsjTf+J7/X+EKpN+Kg6e4LLtmuNYIUduJmNF5nUO1lfRp3IwcuMtZiiCIsYNRyRN2EQ=
-X-Received: by 2002:a05:6638:22a2:b0:324:2e2d:d39a with SMTP id
- z2-20020a05663822a200b003242e2dd39amr15638287jas.271.1649871054405; Wed, 13
- Apr 2022 10:30:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220413164336.101390-1-eantoranz@gmail.com> <033701d84f5b$ad167ce0$074376a0$@nexbridge.com>
-In-Reply-To: <033701d84f5b$ad167ce0$074376a0$@nexbridge.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Wed, 13 Apr 2022 19:30:42 +0200
-Message-ID: <CAOc6etY0fyBnT9kMSm+s1LqfCsSV4RRppokuE5igme-M-cvW6g@mail.gmail.com>
-Subject: Re: [RFC] introducing git replay
-To:     rsbecker@nexbridge.com
-Cc:     Git List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=veYYA353vci8ORIxi/1ytUVIftkzp4zmMi02wycdzQk=;
+        b=IpxpusSyhIYDMrEL6nwr7+uQsMNo99vAepofyOsK+yh6jadxtjzz/0bPpoBZGGNv9M
+         OOOBzF5Ix/I/NqSKuxBi7R4J5P0tnv0C2mXLbr2Ud6QrjIybrLJXD5X0MPjP6L9CWiDX
+         BZap3ZP0ZmMGgioOxIh3lTiTNGpsROwyhlzTYROF4idUJEiOgSYWjJqV3sE4y+rkvLk0
+         im03IwsfFaqLGXDwGXYim/jrN6ButvV48JDMZAH2SlKtP6jOy1kyz4ydg/Sbff51K0pp
+         eVKpSsVzc94rCn3iisxRM8jp6+Z2Os8jDmnGPRzhp0nZNsIDX1j2h6AxxHa/lUX5UnRY
+         aNwg==
+X-Gm-Message-State: AOAM531cQq4gv3t76Megq/Ma33O3Bb44p1NunIKLEvAIw6UuUrfC4Ett
+        TShyEYRfut+d3bBtZTVSrNY61L1LG5QEjUQQvUzO
+X-Google-Smtp-Source: ABdhPJyi+cYYdvWuJrgetjM76j6qvG/OoeNtJw4luUyY9+2+0TUZj3KUApdvevlIm8TvDGB+vYhzzPu1yUvFFlPCuw9H
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:13:b0:2dc:50bc:c975 with
+ SMTP id bc19-20020a05690c001300b002dc50bcc975mr37782796ywb.173.1649871272611;
+ Wed, 13 Apr 2022 10:34:32 -0700 (PDT)
+Date:   Wed, 13 Apr 2022 10:34:28 -0700
+In-Reply-To: <YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net>
+Message-Id: <20220413173429.971159-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
+Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
+ from a ref
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 7:26 PM <rsbecker@nexbridge.com> wrote:
->
-> >2.35.1
->
-> I'm sorry if I'm missing something here but how is this different from
-> cherry-pick A..B?
-> --Randall
->
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> On 2022-04-12 at 20:14:34, Jonathan Tan wrote:
+> > This seems like you're using the commit message as the reflog message -
+> > is this necessary? For what it's worth, all tests still pass if I
+> > replace "msg" with "NULL".
+> 
+> I think that's what the existing stash code does, and so I did the same
+> here.  It's not strictly necessary, but it's a nice to have.
+> 
+> I didn't think it worth testing, because I don't think we test it
+> elsewhere, either.
+> 
+> > It might be worth adding tests that check that the exported stashes are
+> > in the expected format (to ensure that we can read stashes exported from
+> > another Git version) but I don't think that has to block the submission
+> > of this patch set.
+> 
+> There's a tiny patch for that for the base commit, but you're right that
+> some more tests wouldn't hurt.  I can send a followup patch or two as
+> part of a new series.
 
-Good question, but cherry-pick has troubles with merges:
-
-(same example, after amending):
-$ git cherry-pick v2.35.0..v2.36.0-rc1
-error: commit bb4921cf45e11d063e7bbe55f594adf8f0077d5d is a merge but
-no -m option was given.
-fatal: cherry-pick failed
+OK, these sound good to me.
