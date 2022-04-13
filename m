@@ -2,129 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA040C433F5
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 05:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6740C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 05:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232411AbiDMF2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 01:28:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35216 "EHLO
+        id S229516AbiDMFmw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 01:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbiDMF2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 01:28:31 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D821402D
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 22:26:10 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id q3so1032627plg.3
-        for <git@vger.kernel.org>; Tue, 12 Apr 2022 22:26:10 -0700 (PDT)
+        with ESMTP id S232513AbiDMFmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 01:42:40 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B7F205F9
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 22:40:20 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id h23-20020a17090a051700b001c9c1dd3acbso1012351pjh.3
+        for <git@vger.kernel.org>; Tue, 12 Apr 2022 22:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rinP4XoY5Dl2jsDW23WIcV9qAhIJLtB1YqcZlOs4vu8=;
-        b=oaLCtRZKlsB0bcWam1khaApKeXqoyhlglY4agaTocVKYSu56mK6KwGuixecb3WJlS2
-         V+VfvWbGVZWFfLFpZsxRfVG1eyGioYDZX5s/gPBtf3/EhP2icz85Ua8j6JabFej3uiqq
-         HHY8c8t/TIeqcebKQqZn3K5QX8z5Hnd0XcCv5SuGRgK7L3hXyZK+sq69IUlbdy4x7GVP
-         AxdYtvqouxlHweuP74lv2QY8GuC8lPPGup7lX1uG/CkrwbqdH9kyYB8CTmiPpE9G8sls
-         qVUMZ9J0mJWzRcqMd3Ph9BBf8g3E4yKQH/eRKT5Lzl4h6dV8BDVWE1SU1mi08AMdt33Z
-         6WcA==
+        bh=bYVeFuxQZdCx1TDrlb/8P+DH7E9if5Te+PeZDfHiZb4=;
+        b=k8gIuImaImce7zEI368BLZdc1KqujExtydz9feOoM3zmDcdgpkah2yrug45w0IWFf5
+         kEXYAo7kS9/LYMremrIPvNeZ8RGDTwZCh7gHmEFUY3QDJIeEmKeAqGHlUoezIcbECjSR
+         RQRs3jPSnQ0b1c/38Q/+rSzX4Q+8P3oVnAgikERHRsMlkejDla/KZIL5CfGTU6YTcXn7
+         kUUALgkeg8dUK9OL7bCWylii1ZryZN6y6PwGXdzYGgNkVAPLEbQcE5E1IUAkI8GDEN2M
+         MxFq+hMMQAp6KYTtlmNjJJHKV9e9QaU+t7D+sHG219p1i8WR8TVJ9vDBg1V4oqqyw35e
+         wXIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rinP4XoY5Dl2jsDW23WIcV9qAhIJLtB1YqcZlOs4vu8=;
-        b=CIyEodBhZUIvFttXxIvsYnGg8p8RtX79b8oj7ccosaP9ylszl3YYYqR2kxhu7agr4l
-         zFrL6ojGllM+MDQgGTy/NSIFGR8U8YZmR3+xDUwRXhlTiKcXQuKsno0/2eB9qv5so307
-         tecyyNAPNX0ZuzSNjvhNpz3todiRh8CSmK6065ac0yrHtgtPBq+n6i7xW9wJ8Rh2ryiT
-         IVj5bV8y8p4O0FtBEz5aiXW+xn/EmK/0uSjORWUp3M2fS3TAR2ulqXQwdAM1BbF+mcFP
-         rQ7ZjgTBFYEMN8WRzf45UgXL6/Ed8OiFkPP71tM1FvvslbUtXvO5vJJ5HBsdN9a445pB
-         xBzw==
-X-Gm-Message-State: AOAM530+LH+ugsxEMO662ICGMWP7BheKrOUB+HxgdWS6wqxPbp1pYu7d
-        cBVGfU0PisKyuUvg2SW8ZGs=
-X-Google-Smtp-Source: ABdhPJy8CzHmAhERU+gXLRs+CQP+iDAWPQXMDms39tjn5ihR6L0Iyh1QREplx+wswGoV8Yb8Hxcd2Q==
-X-Received: by 2002:a17:902:c451:b0:158:7729:f240 with SMTP id m17-20020a170902c45100b001587729f240mr10169689plm.17.1649827570297;
-        Tue, 12 Apr 2022 22:26:10 -0700 (PDT)
+        bh=bYVeFuxQZdCx1TDrlb/8P+DH7E9if5Te+PeZDfHiZb4=;
+        b=bYEMLVPgAkBF+RyeaGETMwPRK6pUj2VHrvfasXp6i4VMWE0TFehDyZIk+UqkQ8R2aM
+         3XJQX5yq9yxWanzBaT0YWJwyoOYRAITq0TaIyZ1Av/upmzLCBvWzfVuqWhKclPYaJjWJ
+         LwWpddIJHsS/l2MJDHNZfJLssr8yuFgd+KmS447Kg7KMUEQ8pRmUZizLR6Tq2MaJl3/g
+         Y8ZXkRBcqZ1lWKA9rNqzeHVglyDtirfBP+FqEtsN9W7TX15w0jXL3h7CQO5AxzIHOUBc
+         TYiA/PJJ4D7Xh3mO9LcPHhdxJNLxvF9RQ4tNrZ7BnTCBf2xWsv7BdCYoRbZ2dszEY3zk
+         u5wQ==
+X-Gm-Message-State: AOAM531Qvv8JuR9JoVQvZqQ0Ktf+8DZInzr7p/ONeJIkTFe9mCmsRp/U
+        2JJ9itwOqfEbU7g0z1XMslI=
+X-Google-Smtp-Source: ABdhPJxRZN8PocNBZQX7snE7cCfGEy14hMmgN2ovXANT0myNK93yJUOYKHeQ9IqmF/nEdzthGxh3aQ==
+X-Received: by 2002:a17:90a:6781:b0:1cb:11f0:9c51 with SMTP id o1-20020a17090a678100b001cb11f09c51mr8851795pjj.243.1649828419499;
+        Tue, 12 Apr 2022 22:40:19 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:1f54:1578:a9b9:677d])
-        by smtp.gmail.com with ESMTPSA id d14-20020a656b8e000000b0039cc54c9e89sm4177925pgw.12.2022.04.12.22.26.09
+        by smtp.gmail.com with ESMTPSA id gt14-20020a17090af2ce00b001c701e0a129sm1391484pjb.38.2022.04.12.22.40.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 22:26:09 -0700 (PDT)
-Date:   Tue, 12 Apr 2022 22:26:07 -0700
+        Tue, 12 Apr 2022 22:40:19 -0700 (PDT)
+Date:   Tue, 12 Apr 2022 22:40:17 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Too-loose checks for applying safe.directory rules?
-Message-ID: <YlZe766xu9mHWNdy@google.com>
-References: <YlZJGbcNzSp5yNN1@nand.local>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     rsbecker@nexbridge.com,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        jurgen_gjoncari@icloud.com, git@vger.kernel.org
+Subject: Re: Make commit messages optional
+Message-ID: <YlZiQemrAuryF0vv@google.com>
+References: <7ED89912-2E10-4356-9C61-14B90EC0719C@icloud.com>
+ <YlC3devsgmv17PnQ@camp.crustytoothpaste.net>
+ <00ca01d84ba0$dd7ee0c0$987ca240$@nexbridge.com>
+ <20220409113244.GX163591@kunlun.suse.cz>
+ <CAPMMpoi50j7MzrsokQAcBWBgj8qGPN=j68PuEsppv629Oh7GHg@mail.gmail.com>
+ <013101d84ceb$afaa51b0$0efef510$@nexbridge.com>
+ <013201d84cee$3e8d88a0$bba899e0$@nexbridge.com>
+ <CAPMMpohnwTTwTEjr9u29O_qVJtQNuG29G3Ta+-rXz-De8zvMCQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YlZJGbcNzSp5yNN1@nand.local>
+In-Reply-To: <CAPMMpohnwTTwTEjr9u29O_qVJtQNuG29G3Ta+-rXz-De8zvMCQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+cc: git@vger, git-security -> bcc)
 Hi,
 
-Taylor Blau wrote:
+Tao Klerks wrote:
+> On Sun, Apr 10, 2022 at 5:18 PM <rsbecker@nexbridge.com> wrote:
 
-> Hi all,
+>> And I still don't get why the --allow-empty-message is not
+>> sufficient to meet your use case. git supports what is being
+>> requested already, not that it is allowed where I am. Are we
+>> talking about setting --allow-empty-message as the default? That is
+>> a major behavioural change. You could create a git command alias to
+>> always specify this option. So what is the point of this?
+>>
 >
-> I was skimming the Hacker News comments on my blog post covering the
-> latest pair of CVEs, and this[1] comment stuck out to me.
->
-> Looking at 8959555cee (setup_git_directory(): add an owner check for the
-> top-level directory, 2022-03-02), I wonder why the `safe_directory_cb()`
-> callback doesn't bother to check that `key` is `safe.directory`.
->
-> Indeed, our checks seem too loose here. Initializing a repository as
-> root:
->
->     $ su
->     # git init repo
->
-> Then trying to run "git status" inside of that repo as my normal user
-> gives the expected error:
->
->     $ git status
->     fatal: unsafe repository ('/home/repo' is owned by someone else)
->     To add an exception for this directory, call:
->
->       git config --global --add safe.directory /home/repo
->
-> But doing the following:
->
->     $ git config --global --add foo.bar /home/repo
->
-> tricks Git into thinking that _any_ value which looks like a path in the
-> "early config" scope can be interpreted as if the key were
-> safe.directory, even when it is not:
->
->     $ git status
->     On branch master
->
->     No commits yet
->
->     nothing to commit (create/copy files and use "git add" to track)
->
-> The author of [1] sent a PR to the git/git repo on GitHub [2], so I
-> don't think there's any value in doing another coordinated release here.
+> My proposal is that it absolutely is enough, functionally - but the
+> abundance of "we should change something" concerns in this thread and
+> elsewhere suggest, to me, that it might not be sufficiently
+> discoverable; hence the "advice" proposal.
 
-Thanks, Taylor.  I'm taking the liberty of moving to the main Git list.
+Thanks for this point.  I find it to be a very reasonable one.  I'd be
+happy to review a patch adding an advice item when people use options
+like '-m ""'.
 
-> We should certainly fix this before 2.36 is released, but should
-> probably apply those patches down to the suite of minor versions
-> released today, too.
->
-> It's entirely possible I'm holding it wrong and/or missing something
-> here, and I'd be happy to be wrong here.
->
-> Thanks,
-> Taylor
->
-> [1]: https://news.ycombinator.com/item?id=31010604
-> [2]: https://github.com/git/git/pull/1235
-
-Thanks,
+Sincerely,
 Jonathan
