@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBF2C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE65C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 20:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238586AbiDMUEt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 16:04:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
+        id S237152AbiDMUEu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 16:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238573AbiDMUEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 16:04:34 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB017B55C
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:12 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id t1so4174540wra.4
+        with ESMTP id S238571AbiDMUEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 16:04:33 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1517B555
         for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:11 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id p18so3346435wru.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 13:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VpbpPQKFIE0wFb0og0ybwM3qs+6CJgaQ9z76sf4JktY=;
-        b=YxC+UC0dec0i8Z8Zfu9hm2q0vOPKOu1Mm4bPyXZxLQyFYoMyFWscHVbkKKdQrzjpZE
-         fEjyL1eLVjbD/ZHxfaUK7lGlcRJFMUmdaA+9PaQ+gb1ZJTfK/wq/iPt4HP1uaWNOivCd
-         aoRUvOIQgC1uYG0PEhdi93bSYKLhNGpwy17pJwmu4cyf4jnrA7yZwEC3a6lvJO/pntcV
-         N0Gs4Tb7j5Ff8ChLPnOi4JJMt2WY0uaCDzjeMuPmZm6IuJw8hwuYryZyEpkPlnwKLxAc
-         C/M0NnjM2ZdCczlSzr+lTF3WlE0ioDlGCwJGM9EpU2qMh2ekP514upNYD2pIh8kkUpoe
-         HclA==
+        bh=G5zn1P5xNSELRY2uCUjZnOEDoIK3Lpq9Z8bka99vUKI=;
+        b=iQAV9UcWQFJMLKl4q/mr98pdzRhtakmbZF3xQoyvJA0i3anf+YYQKzw5DEh+LIT2Is
+         btScPgObXqbkybgJqamQoQqEZDEEU0CeEMMJ17QCbGGFmfOkoxk0gXJlh4WmSl+qIRtA
+         SmNSa9NKOcEQTTtHh/8CBHvQbIJot3hlMcBbprx/wl4ycsfXUi/FZbLl0tN1mzmZpVCI
+         BOxl4Inxs45QRbPlB/Wq5ppLDbN/QH+nRinD+KJUN+mB9ZohtYD00HS6zzbbZodpmTjS
+         dT5pVDEr/FCyXZCRx0Nms1k+3nKuPEQMWe8R4m0iK9fhxC8W6UnJ55Ck5zAOhWd65TKt
+         OPfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VpbpPQKFIE0wFb0og0ybwM3qs+6CJgaQ9z76sf4JktY=;
-        b=2+0c1Du1ci0eKNizJOgUqHBPHg7QrHVs51/wospHJTHPOS0BO/Cui+pcs2ctEIHh55
-         X4GB/+2TuBeliPIUmDf5jgNYNmZukAZm1ySBcLoOBY+Ugd7HKpbqzjbCWieULQsP2SB+
-         CAet2VW2NvmfIW6552yQVQm2lbrnOTmeA4bvr9geO1IXySu7AeZELbTsazcOhhx0eqAb
-         IeHxk18CL7SCbPCTc5m9MflZEDndNNVh2m1XThWw71/Vb1kezfMsjahlS/iaq6YfcBOe
-         VxmM6BkNgNwF4zkGy12oC+5quJILSsQLGFIsejuaNRIfs8hyo5UfJh3/kOem5+DRJDOJ
-         5cZQ==
-X-Gm-Message-State: AOAM531ELnYFY2GKKDH4Tu1lMtc+aVt5EQ42zLJweGGHr97IT0aXhOqr
-        ZeKFTdWx5jhizzmNO3NiEqDpVzaLcwqmUg==
-X-Google-Smtp-Source: ABdhPJwRld55Sc1mLyzaVbfRffqrm6SSccf+yPvaKMeoGPX8LLZhDbF/nKMzzJAZDXuQNLGOkC5tzw==
-X-Received: by 2002:adf:fb01:0:b0:205:c3e1:7980 with SMTP id c1-20020adffb01000000b00205c3e17980mr327496wrr.639.1649880130265;
-        Wed, 13 Apr 2022 13:02:10 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=G5zn1P5xNSELRY2uCUjZnOEDoIK3Lpq9Z8bka99vUKI=;
+        b=A/FjhUVsZzu5GAwQjheZvlYAYrd1L2f1vBAbpteL5z9eZZA32ZL3q2KnLOIRbYErvr
+         XmzcX1hJtyWGmpe+zMCcQYd9cpgfLCwTDdw0881cbeFbVa24mXWtPoWNDN/2nZCMGfy4
+         eS4A9e/cTItkNqQZYJXNYU1aN0gruUM9Szur9gFiSObTuuQieV6iTqAokMGhxfIMZkkD
+         64ti9dQ2rcMt4woQ/icR/7UQDK6542liVng+5HNV4cML9JfeHJMLovpBTSjkCJPWc5C0
+         +TXRtbqdv9nJFo4+BUULnrx9qSHaoAmLfLBYl+iCQ/vX2RE7l+9oFKlbDmvAIWTO2dFs
+         HV2w==
+X-Gm-Message-State: AOAM530yUBgxxdmncBgGcw3hvCsDAv6eDoHW3nmgH29nqh3vpeZ5vbnZ
+        0DJBtTBAZPNSScuB3ko2jMK+SQQFCVEZqg==
+X-Google-Smtp-Source: ABdhPJwOLH7BhFw20LGOgOtF8cFVzKDVx3e4tpLF/zyLjnbo12TJskWipzEP0cMG0QqZydHn7X7oHQ==
+X-Received: by 2002:a5d:6d0b:0:b0:207:81ec:93ff with SMTP id e11-20020a5d6d0b000000b0020781ec93ffmr339424wrq.239.1649880129234;
         Wed, 13 Apr 2022 13:02:09 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d6484000000b002057ad822d4sm35220498wri.48.2022.04.13.13.02.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 13:02:08 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 10/27] stash: always have the owner of "stash_info" free it
-Date:   Wed, 13 Apr 2022 22:01:39 +0200
-Message-Id: <patch-v6-10.27-f0c3d274fb5-20220413T195935Z-avarab@gmail.com>
+Subject: [PATCH v6 09/27] revisions API users: use release_revisions() needing REV_INFO_INIT
+Date:   Wed, 13 Apr 2022 22:01:38 +0200
+Message-Id: <patch-v6-09.27-2bfa8640b6b-20220413T195935Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
 References: <cover-v5-00.27-00000000000-20220402T102002Z-avarab@gmail.com> <cover-v6-00.27-00000000000-20220413T195935Z-avarab@gmail.com>
@@ -71,332 +71,216 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the initialization of the "revision" member of "struct
-stash_info" to be initialized vi a macro, and more importantly that
-that initializing function be tasked to free it, usually via a "goto
-cleanup" pattern.
+Use release_revisions() to various users of "struct rev_list" which
+need to have their "struct rev_info" zero-initialized before we can
+start using it.
 
-Despite the "revision" name (and the topic of the series containing
-this commit) the "stash info" has nothing to do with the "struct
-rev_info". I'm making this change because in the subsequent commit
-when we do want to free the "struct rev_info" via a "goto cleanup"
-pattern we'd otherwise free() uninitialized memory in some cases, as
-we only strbuf_init() the string in get_stash_info().
+For the bundle.c code see the early exit case added in
+3bbbe467f29 (bundle verify: error out if called without an object
+database, 2019-05-27).
 
-So while it's not the smallest possible change, let's convert all
-users of this pattern in the file while we're at it.
+For the relevant bisect.c code see 45b6370812c (bisect: libify
+`check_good_are_ancestors_of_bad` and its dependents, 2020-02-17).
 
-A good follow-up to this change would be to change all the "ret = -1;
-goto done;" in this file to instead use a "goto cleanup", and
-initialize "int ret = -1" at the start of the relevant functions. That
-would allow us to drop a lot of needless brace verbosity on two-line
-"if" statements, but let's leave that alone for now.
-
-To ensure that there's a 1=1 mapping between owners of the "struct
-stash_info" and free_stash_info() change the assert_stash_ref()
-function to be a trivial get_stash_info_assert() wrapper. The caller
-will call free_stash_info(), and by returning -1 we'll eventually (via
-!!ret) exit with status 1 anyway.
+For the submodule.c code see the "goto" on "(!left || !right || !sub)"
+added in 8e6df65015f (submodule: refactor show_submodule_summary with
+helper function, 2016-08-31).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/stash.c | 107 ++++++++++++++++++++++++++----------------------
- 1 file changed, 59 insertions(+), 48 deletions(-)
+ bisect.c                    | 18 ++++++++++++------
+ builtin/submodule--helper.c |  3 ++-
+ bundle.c                    | 12 ++++++++----
+ revision.h                  | 21 ++++++++++++++++++++-
+ submodule.c                 |  3 ++-
+ 5 files changed, 44 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 74fa810cf8c..ba030238939 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -116,6 +116,10 @@ struct stash_info {
- 	int has_u;
+diff --git a/bisect.c b/bisect.c
+index cc6b8b6230d..b63669cc9d7 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -1010,7 +1010,7 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
+  */
+ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ {
+-	struct rev_info revs;
++	struct rev_info revs = REV_INFO_INIT;
+ 	struct commit_list *tried;
+ 	int reaches = 0, all = 0, nr, steps;
+ 	enum bisect_error res = BISECT_OK;
+@@ -1035,7 +1035,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 
+ 	res = check_good_are_ancestors_of_bad(r, prefix, no_checkout);
+ 	if (res)
+-		return res;
++		goto cleanup;
+ 
+ 	bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
+ 
+@@ -1060,14 +1060,16 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		       term_good,
+ 		       term_bad);
+ 
+-		return BISECT_FAILED;
++		res = BISECT_FAILED;
++		goto cleanup;
+ 	}
+ 
+ 	if (!all) {
+ 		fprintf(stderr, _("No testable commit found.\n"
+ 			"Maybe you started with bad path arguments?\n"));
+ 
+-		return BISECT_NO_TESTABLE_COMMIT;
++		res = BISECT_NO_TESTABLE_COMMIT;
++		goto cleanup;
+ 	}
+ 
+ 	bisect_rev = &revs.commits->item->object.oid;
+@@ -1087,7 +1089,8 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 		 * for negative return values for early returns up
+ 		 * until the cmd_bisect__helper() caller.
+ 		 */
+-		return BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		res = BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++		goto cleanup;
+ 	}
+ 
+ 	nr = all - reaches - 1;
+@@ -1106,7 +1109,10 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
+ 	/* Clean up objects used, as they will be reused. */
+ 	repo_clear_commit_marks(r, ALL_REV_FLAGS);
+ 
+-	return bisect_checkout(bisect_rev, no_checkout);
++	res = bisect_checkout(bisect_rev, no_checkout);
++cleanup:
++	release_revisions(&revs);
++	return res;
+ }
+ 
+ static inline int log2i(int n)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5d6b43fe3c0..9a65985b418 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -766,7 +766,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ {
+ 	char *displaypath;
+ 	struct strvec diff_files_args = STRVEC_INIT;
+-	struct rev_info rev;
++	struct rev_info rev = REV_INFO_INIT;
+ 	int diff_files_result;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *git_dir;
+@@ -853,6 +853,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ cleanup:
+ 	strvec_clear(&diff_files_args);
+ 	free(displaypath);
++	release_revisions(&rev);
+ }
+ 
+ static void status_submodule_cb(const struct cache_entry *list_item,
+diff --git a/bundle.c b/bundle.c
+index d50cfb5aa7e..6a870a6edb7 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -196,14 +196,16 @@ int verify_bundle(struct repository *r,
+ 	 * to be verbose about the errors
+ 	 */
+ 	struct string_list *p = &header->prerequisites;
+-	struct rev_info revs;
++	struct rev_info revs = REV_INFO_INIT;
+ 	const char *argv[] = {NULL, "--all", NULL};
+ 	struct commit *commit;
+ 	int i, ret = 0, req_nr;
+ 	const char *message = _("Repository lacks these prerequisite commits:");
+ 
+-	if (!r || !r->objects || !r->objects->odb)
+-		return error(_("need a repository to verify a bundle"));
++	if (!r || !r->objects || !r->objects->odb) {
++		ret = error(_("need a repository to verify a bundle"));
++		goto cleanup;
++	}
+ 
+ 	repo_init_revisions(r, &revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+@@ -221,7 +223,7 @@ int verify_bundle(struct repository *r,
+ 		error("%s %s", oid_to_hex(oid), name);
+ 	}
+ 	if (revs.pending.nr != p->nr)
+-		return ret;
++		goto cleanup;
+ 	req_nr = revs.pending.nr;
+ 	setup_revisions(2, argv, &revs, NULL);
+ 
+@@ -284,6 +286,8 @@ int verify_bundle(struct repository *r,
+ 			printf_ln("The bundle uses this filter: %s",
+ 				  list_objects_filter_spec(&header->filter));
+ 	}
++cleanup:
++	release_revisions(&revs);
+ 	return ret;
+ }
+ 
+diff --git a/revision.h b/revision.h
+index b9070e43428..2621eb6d65a 100644
+--- a/revision.h
++++ b/revision.h
+@@ -329,6 +329,25 @@ struct rev_info {
+ 	struct tmp_objdir *remerge_objdir;
  };
  
-+#define STASH_INFO_INIT { \
-+	.revision = STRBUF_INIT, \
-+}
++/**
++ * Initialize the "struct rev_info" structure with a macro.
++ *
++ * This will not fully initialize a "struct rev_info", the
++ * repo_init_revisions() function needs to be called before
++ * setup_revisions() and any revision walking takes place.
++ *
++ * Use REV_INFO_INIT to make the "struct rev_info" safe for passing to
++ * release_revisions() when it's inconvenient (e.g. due to a "goto
++ * cleanup" pattern) to arrange for repo_init_revisions() to be called
++ * before release_revisions() is called.
++ *
++ * Initializing with this REV_INFO_INIT is redundant to invoking
++ * repo_init_revisions(). If repo_init_revisions() is guaranteed to be
++ * called before release_revisions() the "struct rev_info" can be left
++ * uninitialized.
++ */
++#define REV_INFO_INIT { 0 }
 +
- static void free_stash_info(struct stash_info *info)
+ /**
+  * Initialize a rev_info structure with default values. The third parameter may
+  * be NULL or can be prefix path, and then the `.prefix` variable will be set
+@@ -363,7 +382,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ 
+ /**
+  * Free data allocated in a "struct rev_info" after it's been
+- * initialized with repo_init_revisions().
++ * initialized with repo_init_revisions() or REV_INFO_INIT.
+  */
+ void release_revisions(struct rev_info *revs);
+ 
+diff --git a/submodule.c b/submodule.c
+index 7b5d7753930..7923e951e1c 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -619,7 +619,7 @@ void show_submodule_diff_summary(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule)
  {
- 	strbuf_release(&info->revision);
-@@ -157,10 +161,8 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
- 	if (argc == 1)
- 		commit = argv[0];
+-	struct rev_info rev;
++	struct rev_info rev = REV_INFO_INIT;
+ 	struct commit *left = NULL, *right = NULL;
+ 	struct commit_list *merge_bases = NULL;
+ 	struct repository *sub;
+@@ -646,6 +646,7 @@ void show_submodule_diff_summary(struct diff_options *o, const char *path,
  
--	strbuf_init(&info->revision, 0);
- 	if (!commit) {
- 		if (!ref_exists(ref_stash)) {
--			free_stash_info(info);
- 			fprintf_ln(stderr, _("No stash entries found."));
- 			return -1;
- 		}
-@@ -174,11 +176,8 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
- 
- 	revision = info->revision.buf;
- 
--	if (get_oid(revision, &info->w_commit)) {
--		error(_("%s is not a valid reference"), revision);
--		free_stash_info(info);
--		return -1;
--	}
-+	if (get_oid(revision, &info->w_commit))
-+		return error(_("%s is not a valid reference"), revision);
- 
- 	assert_stash_like(info, revision);
- 
-@@ -197,7 +196,7 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
- 		info->is_stash_ref = !strcmp(expanded_ref, ref_stash);
- 		break;
- 	default: /* Invalid or ambiguous */
--		free_stash_info(info);
-+		break;
- 	}
- 
- 	free(expanded_ref);
-@@ -598,10 +597,10 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 
- static int apply_stash(int argc, const char **argv, const char *prefix)
- {
--	int ret;
-+	int ret = -1;
- 	int quiet = 0;
- 	int index = 0;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_BOOL(0, "index", &index,
-@@ -613,9 +612,10 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
- 			     git_stash_apply_usage, 0);
- 
- 	if (get_stash_info(&info, argc, argv))
--		return -1;
-+		goto cleanup;
- 
- 	ret = do_apply_stash(prefix, &info, index, quiet);
-+cleanup:
- 	free_stash_info(&info);
- 	return ret;
- }
-@@ -651,20 +651,25 @@ static int do_drop_stash(struct stash_info *info, int quiet)
- 	return 0;
- }
- 
--static void assert_stash_ref(struct stash_info *info)
-+static int get_stash_info_assert(struct stash_info *info, int argc,
-+				 const char **argv)
- {
--	if (!info->is_stash_ref) {
--		error(_("'%s' is not a stash reference"), info->revision.buf);
--		free_stash_info(info);
--		exit(1);
--	}
-+	int ret = get_stash_info(info, argc, argv);
-+
-+	if (ret < 0)
-+		return ret;
-+
-+	if (!info->is_stash_ref)
-+		return error(_("'%s' is not a stash reference"), info->revision.buf);
-+
-+	return 0;
- }
- 
- static int drop_stash(int argc, const char **argv, const char *prefix)
- {
--	int ret;
-+	int ret = -1;
- 	int quiet = 0;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_END()
-@@ -673,22 +678,21 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_stash_drop_usage, 0);
- 
--	if (get_stash_info(&info, argc, argv))
--		return -1;
--
--	assert_stash_ref(&info);
-+	if (get_stash_info_assert(&info, argc, argv))
-+		goto cleanup;
- 
- 	ret = do_drop_stash(&info, quiet);
-+cleanup:
- 	free_stash_info(&info);
- 	return ret;
- }
- 
- static int pop_stash(int argc, const char **argv, const char *prefix)
- {
--	int ret;
-+	int ret = -1;
- 	int index = 0;
- 	int quiet = 0;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_BOOL(0, "index", &index,
-@@ -699,25 +703,25 @@ static int pop_stash(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_stash_pop_usage, 0);
- 
--	if (get_stash_info(&info, argc, argv))
--		return -1;
-+	if (get_stash_info_assert(&info, argc, argv))
-+		goto cleanup;
- 
--	assert_stash_ref(&info);
- 	if ((ret = do_apply_stash(prefix, &info, index, quiet)))
- 		printf_ln(_("The stash entry is kept in case "
- 			    "you need it again."));
- 	else
- 		ret = do_drop_stash(&info, quiet);
- 
-+cleanup:
- 	free_stash_info(&info);
- 	return ret;
- }
- 
- static int branch_stash(int argc, const char **argv, const char *prefix)
- {
--	int ret;
-+	int ret = -1;
- 	const char *branch = NULL;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct option options[] = {
- 		OPT_END()
-@@ -734,7 +738,7 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
- 	branch = argv[0];
- 
- 	if (get_stash_info(&info, argc - 1, argv + 1))
--		return -1;
-+		goto cleanup;
- 
- 	cp.git_cmd = 1;
- 	strvec_pushl(&cp.args, "checkout", "-b", NULL);
-@@ -746,8 +750,8 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
- 	if (!ret && info.is_stash_ref)
- 		ret = do_drop_stash(&info, 0);
- 
-+cleanup:
- 	free_stash_info(&info);
--
- 	return ret;
- }
- 
-@@ -825,8 +829,8 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
- static int show_stash(int argc, const char **argv, const char *prefix)
- {
- 	int i;
--	int ret = 0;
--	struct stash_info info;
-+	int ret = -1;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct rev_info rev;
- 	struct strvec stash_args = STRVEC_INIT;
- 	struct strvec revision_args = STRVEC_INIT;
-@@ -844,6 +848,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 			      UNTRACKED_ONLY, PARSE_OPT_NONEG),
- 		OPT_END()
- 	};
-+	int do_usage = 0;
- 
- 	init_diff_ui_defaults();
- 	git_config(git_diff_ui_config, NULL);
-@@ -861,10 +866,8 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 			strvec_push(&revision_args, argv[i]);
- 	}
- 
--	ret = get_stash_info(&info, stash_args.nr, stash_args.v);
--	strvec_clear(&stash_args);
--	if (ret)
--		return -1;
-+	if (get_stash_info(&info, stash_args.nr, stash_args.v))
-+		goto cleanup;
- 
- 	/*
- 	 * The config settings are applied only if there are not passed
-@@ -878,16 +881,14 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 			rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
- 
- 		if (!show_stat && !show_patch) {
--			free_stash_info(&info);
--			return 0;
-+			ret = 0;
-+			goto cleanup;
- 		}
- 	}
- 
- 	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, NULL);
--	if (argc > 1) {
--		free_stash_info(&info);
--		usage_with_options(git_stash_show_usage, options);
--	}
-+	if (argc > 1)
-+		goto usage;
- 	if (!rev.diffopt.output_format) {
- 		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
- 		diff_setup_done(&rev.diffopt);
-@@ -912,8 +913,16 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 	}
- 	log_tree_diff_flush(&rev);
- 
-+	ret = diff_result_code(&rev.diffopt, 0);
-+cleanup:
-+	strvec_clear(&stash_args);
- 	free_stash_info(&info);
--	return diff_result_code(&rev.diffopt, 0);
-+	if (do_usage)
-+		usage_with_options(git_stash_show_usage, options);
-+	return ret;
-+usage:
-+	do_usage = 1;
-+	goto cleanup;
- }
- 
- static int do_store_stash(const struct object_id *w_commit, const char *stash_msg,
-@@ -1409,9 +1418,9 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 
- static int create_stash(int argc, const char **argv, const char *prefix)
- {
--	int ret = 0;
-+	int ret;
- 	struct strbuf stash_msg_buf = STRBUF_INIT;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct pathspec ps;
- 
- 	/* Starting with argv[1], since argv[0] is "create" */
-@@ -1426,6 +1435,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
- 	if (!ret)
- 		printf_ln("%s", oid_to_hex(&info.w_commit));
- 
-+	free_stash_info(&info);
- 	strbuf_release(&stash_msg_buf);
- 	return ret;
- }
-@@ -1434,7 +1444,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 			 int keep_index, int patch_mode, int include_untracked, int only_staged)
- {
- 	int ret = 0;
--	struct stash_info info;
-+	struct stash_info info = STASH_INFO_INIT;
- 	struct strbuf patch = STRBUF_INIT;
- 	struct strbuf stash_msg_buf = STRBUF_INIT;
- 	struct strbuf untracked_files = STRBUF_INIT;
-@@ -1633,6 +1643,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 	}
- 
- done:
-+	free_stash_info(&info);
- 	strbuf_release(&stash_msg_buf);
- 	return ret;
- }
+ out:
+ 	free_commit_list(merge_bases);
++	release_revisions(&rev);
+ 	clear_commit_marks(left, ~0);
+ 	clear_commit_marks(right, ~0);
+ 	if (sub) {
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
