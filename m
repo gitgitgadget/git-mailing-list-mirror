@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E98CDC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B133DC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237427AbiDMTzE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:55:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58548 "EHLO
+        id S238534AbiDMTzF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238409AbiDMTyh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:54:37 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE78B7628B
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:13 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id q3so3499643wrj.7
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:13 -0700 (PDT)
+        with ESMTP id S238519AbiDMTyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 15:54:38 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C128976299
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:14 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id x3so1745490wmj.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fphnWiFu3yAnTqygU3drfwoWeRkHow1VfNgzONBkwyk=;
-        b=Ki9wVCWrk/uclrldHu+xWcZzlHrsup5lJVu8qSngtYnx2CTsncnQBQsdCpcwC4tkB4
-         B6TqswIYpjHuH7btLvsfLz1AT5AaHKXuUXGmF6YGnYPI6RSKZxSjtCu0qL+l8ewtIJoP
-         yhI8/VS1hAChK9prDb8O6O9cTu+XMnr88m7R7hQuniaBMIAtg62Q5fZ1YdfKrKZznai9
-         MPLChll4kFpprZc0W43c1e/w+aFbuuT7CvGhNdOTNks9F0s0aklso/52E8feFkbadV6X
-         5XBfJGGl6gWOwyJrvPC+nwVJEyGqRDnz4ddwYT2TWqnU/rx5Alquf6mBnHRmNR/fCELC
-         TG4A==
+        bh=e6Xr85s3oTXiyDfFmVol9APEkxHmQBUqETlBj+rzYRc=;
+        b=echgYLPv3m+S7jCigML1W+ymMywtrmDdwFNjAXL4cde+CxVpuWbYQhdV1+BcIpofPL
+         Lja6eppW/TTbNwhAFa5TBZjIdo7jIXOEpZyAMlnQsiMj0hT7nXMPJh01rvMlwr2KrOV2
+         K7xuxubYy5hwk1J2zhSelEehmmmF6or7xQX8MU/p9Hk+bxr5SWZamVrj0M2U8tcd8qmI
+         zHdM/0kDKbnjebTDqsKWXLC7thetaiCcGjA7TIOPCbXBXQWbfbLA0cCseKHWlahJAF8E
+         k/5MpHntje6RuWs9ySZp+MhWRWvlqdYgodQ6KZnjbewi3p4moyi6TtXCSDSd1sHD9Rbq
+         qwDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fphnWiFu3yAnTqygU3drfwoWeRkHow1VfNgzONBkwyk=;
-        b=ylFrgtFDHQyHoN2eXDeuOo5WABx9Xck7Tlzt+R3sk9frsAgELRO04H/5JGk3fJzDFc
-         3NFonPhh+50MGFwCJ3NYPTlyannkiD3BXtHDL8SzKJeTAcJ/bNLBaxWX/sGsUbKhRh9I
-         8SMm9uuiPpdQBustVQ3zP5euXcVrTjKEYwQfJmg0s44y+U+u+ZlFeCP43uY1Z7Bp0bwW
-         k93WYFjFCTxU8dZeUlq1xD6F7q3SpDc61PjJ9zkPZWpbqKu3PBpWy9BoSuIvdKiF0W9E
-         x5cvCin6ljcFwy+4FasV5Ck/4ZiQW2LsA+2QYPPKhn82t0pLErxJrnCH5f6GHgH7QYzZ
-         p4lw==
-X-Gm-Message-State: AOAM531ER1VqoR0FAt47B396hxeIlPS2uUflY4GKExOM19/zWB/a+VUX
-        jOmPDib/4JJocEhwcg4LE1RInKn36FA0sQ==
-X-Google-Smtp-Source: ABdhPJynZ0+ahaQOyZifnBNBSuzt1YhOGXDh5Bw8CFKGwm3/XfwWzkInIZW9iJNgR66mTgbbMeK1KA==
-X-Received: by 2002:adf:9bd5:0:b0:207:a2a6:636a with SMTP id e21-20020adf9bd5000000b00207a2a6636amr343770wrc.480.1649879531713;
-        Wed, 13 Apr 2022 12:52:11 -0700 (PDT)
+        bh=e6Xr85s3oTXiyDfFmVol9APEkxHmQBUqETlBj+rzYRc=;
+        b=2wDUffV4rbrqWyJyLhfCbDVbQ+/IAuBfuzQtnL9o9AzHKXfEW0ekunYhkUu9dR4mR+
+         GyYMxuPgFM/DpFwUOnnMKtkQuUNncGxt8GZo/xnIIVMXGVcrFfQ1JsloNIKzAM5l5NIt
+         XbGu3u+tiql9jfHxTc+OOD6qQ5H5RMa0uTg1u0bxr7GTUQZKU7czqGY5lmD8p0gd/P2m
+         dSRQPn3X8eSj+C4kGjIeVLJawPiJG0gY8oE2I5S1GJHX3aAg1WDEquCZOowthhKmQpJH
+         uvZCknc6Gin9CFLOjqcogBLVe6FLAyuhLm8PfzjgBETwKWIxZdgnkit92Xn57PGpd9U7
+         LATQ==
+X-Gm-Message-State: AOAM5302NhCQ1oVp5CMzDrcL82hP5pVs/THCUae5LlxlgXhLwrcCp3xN
+        yGrS8TjP92S2XB41NcMaOejP34T6smi7aA==
+X-Google-Smtp-Source: ABdhPJxnNPapUNtMQD5b/VKTovoCw5Vuwr+TdK3pE4l+LZUHz4mpYtRM3evWVa2UATg1Y7Vp0VRSdA==
+X-Received: by 2002:a05:600c:3789:b0:38c:bd93:77d6 with SMTP id o9-20020a05600c378900b0038cbd9377d6mr307691wmr.12.1649879532843;
+        Wed, 13 Apr 2022 12:52:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.10
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 12:52:11 -0700 (PDT)
+        Wed, 13 Apr 2022 12:52:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 18/29] CI: combine ci/install{,-docker}-dependencies.sh
-Date:   Wed, 13 Apr 2022 21:51:31 +0200
-Message-Id: <patch-v3-18.29-aa491990c1a-20220413T194847Z-avarab@gmail.com>
+Subject: [PATCH v3 19/29] CI: move "env" definitions into ci/lib.sh
+Date:   Wed, 13 Apr 2022 21:51:32 +0200
+Message-Id: <patch-v3-19.29-39b13298425-20220413T194847Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
@@ -75,127 +75,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Combine the "ci/install-dependencies.sh" and
-"ci/install-docker-dependencies.sh" into one script. The "case"
-statement in the latter only cared about "$jobname", and can be folded
-into the same "case" statement in the former.
+Have the GitHub CI jobs use the "ci/lib".sh as a source of truth for
+environment variables that affect their builds and tests. This brings
+them in line with the rest of the jobs, and make it easier to see the
+entire CI configuration per jobname at a glance.
 
-The reason they split up is historical, and because the
-"ci/install-dependencies.sh" used "ci/lib.sh", which requires
-"bash". At least one of the docker containers doesn't have "bash". To
-make the existing code POSIX-compatible we need to replace pushd/popd
-with a sub-shell, but no other changes were needed.
+To do this we need to add a ci/lib.sh "step" to the remaining jobs
+that didn't have it added in preceding commits.
 
-This also fixes issue in "ci/install-docker-dependencies.sh" where
-we'd hide errors due to not using "set -e". Now that we include
-"ci/lib.sh" we won't have that potential issue.
+The Makefile parameters are luckily all accepted via the environment,
+so we can export these instead of adding them to MAKEFLAGS.
+
+Let's also use the documented GIT_CONIFG_* mechanism for setting
+config instead of the internal GIT_CONFIG_PARAMETERS variable. This
+adjusts code added in 889cacb6897 (ci: configure GitHub Actions for
+CI/PR, 2020-04-11), we could probably use the GIT_AUTHOR_NAME etc, but
+let's keep setting this via config, just with the documented
+mechanism.
+
+By setting "ARTIFACTS_DIRECTORY=artifacts" once we don't need to
+repeat it in various places, let's get it from the environment
+instead.
+
+Finally, the "DEVELOPER: 1" was only needed by the "sparse" job, which
+wasn't using "ci/lib.sh" (and which sets DEVELOPER=1). Let's instead
+have the "sparse" job use the "ci/lib.sh" and remove DEVELOPER=1 from
+".github/workflows/main.yml".
+
+This substantially speeds up the "sparse" job, since it'll now pick up
+the "--jobs" setting in MAKEFLAGS that we use everywhere else. Before
+it ran in around 4m30s, now in around 2m30s.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml        |  2 +-
- ci/install-dependencies.sh        | 27 ++++++++++++++++++++++-----
- ci/install-docker-dependencies.sh | 22 ----------------------
- 3 files changed, 23 insertions(+), 28 deletions(-)
- delete mode 100755 ci/install-docker-dependencies.sh
+ .github/workflows/main.yml | 29 +++++++++++------------------
+ ci/lib.sh                  | 21 +++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 18 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 92b914f16fd..3fd3e4f873c 100644
+index 3fd3e4f873c..fe37e0f1b36 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -311,7 +311,7 @@ jobs:
-     container: ${{matrix.vector.image}}
+@@ -2,9 +2,6 @@ name: CI
+ 
+ on: [push, pull_request]
+ 
+-env:
+-  DEVELOPER: 1
+-
+ jobs:
+   ci-config:
+     name: config
+@@ -93,8 +90,7 @@ jobs:
+       shell: bash
+       env:
+         HOME: ${{runner.workspace}}
+-        NO_PERL: 1
+-      run: . /etc/profile && make artifacts-tar ARTIFACTS_DIRECTORY=artifacts
++      run: . /etc/profile && make artifacts-tar
+       if: success()
+     - run: ci/check-unignored-build-artifacts.sh
+       if: success()
+@@ -105,7 +101,7 @@ jobs:
+       uses: actions/upload-artifact@v2
+       with:
+         name: windows-artifacts
+-        path: artifacts
++        path: ${{env.ARTIFACTS_DIRECTORY}}
+   windows-test:
+     name: win test
+     env:
+@@ -126,6 +122,8 @@ jobs:
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
++    - run: ci/lib.sh
++      shell: bash
+     - name: test
+       shell: bash
+       run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
+@@ -145,9 +143,6 @@ jobs:
+       jobname: vs-build
+     needs: ci-config
+     if: needs.ci-config.outputs.enabled == 'yes'
+-    env:
+-      NO_PERL: 1
+-      GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
+     runs-on: windows-latest
      steps:
-     - uses: actions/checkout@v1
--    - run: ci/install-docker-dependencies.sh
-+    - run: ci/install-dependencies.sh
-     - run: ci/lib.sh
-     - run: make
-     - run: make test
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 01006379fd0..9388289d0ed 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -1,4 +1,4 @@
--#!/usr/bin/env bash
-+#!/bin/sh
- #
- # Install dependencies required to build and test Git on Linux and macOS
- #
-@@ -34,18 +34,20 @@ ubuntu-latest)
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
- 		$UBUNTU_COMMON_PKGS $CC_PACKAGE
- 	mkdir --parents "$P4_PATH"
--	pushd "$P4_PATH"
-+	(
-+		cd "$P4_PATH"
- 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
- 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4"
- 		chmod u+x p4d
- 		chmod u+x p4
--	popd
-+	)
- 	mkdir --parents "$GIT_LFS_PATH"
--	pushd "$GIT_LFS_PATH"
-+	(
-+		cd "$GIT_LFS_PATH"
- 		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
- 		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
- 		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
--	popd
-+	)
- 	;;
- macos-latest)
- 	export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1
-@@ -90,6 +92,21 @@ linux-gcc-default)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
- 	;;
-+linux32)
-+	linux32 --32bit i386 sh -c '
-+		apt update >/dev/null &&
-+		apt install -y build-essential libcurl4-openssl-dev \
-+			libssl-dev libexpat-dev gettext python >/dev/null
-+	'
-+	;;
-+linux-musl)
-+	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
-+		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
-+	;;
-+pedantic)
-+	dnf -yq update >/dev/null &&
-+	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
-+	;;
+     - uses: actions/checkout@v2
+@@ -171,6 +166,8 @@ jobs:
+     - name: copy dlls to root
+       shell: cmd
+       run: compat\vcbuild\vcpkg_copy_dlls.bat release
++    - run: ci/lib.sh
++      shell: bash
+     - name: generate Visual Studio solution
+       shell: bash
+       run: |
+@@ -181,21 +178,16 @@ jobs:
+     - name: bundle artifact tar
+       shell: bash
+       env:
+-        MSVC: 1
+         VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
+       run: |
+-        mkdir -p artifacts &&
+-        eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts NO_GETTEXT=YesPlease 2>&1 | grep ^tar)"
+-    - run: ci/check-unignored-build-artifacts.sh
+-      if: success()
+-      shell: bash
++        eval "$(make -n artifacts-tar 2>&1 | grep -e ^mkdir -e ^tar)"
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+       uses: actions/upload-artifact@v2
+       with:
+         name: vs-artifacts
+-        path: artifacts
++        path: ${{env.ARTIFACTS_DIRECTORY}}
+   vs-test:
+     name: win+VS test
+     env:
+@@ -216,10 +208,10 @@ jobs:
+     - name: extract tracked files and build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
++    - run: ci/lib.sh
++      shell: bash
+     - name: test
+       shell: bash
+-      env:
+-        NO_SVN_TESTS: 1
+       run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
+     - name: ci/print-test-failures.sh
+       if: failure()
+@@ -354,6 +346,7 @@ jobs:
+     - uses: actions/checkout@v2
+     - name: Install other dependencies
+       run: ci/install-dependencies.sh
++    - run: ci/lib.sh
+     - run: make sparse
+   documentation:
+     name: documentation
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 35a972fa3f5..8c574b21a67 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -104,6 +104,27 @@ macos-latest)
  esac
  
- if type p4d >/dev/null && type p4 >/dev/null
-diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
-deleted file mode 100755
-index 78b7e326da6..00000000000
---- a/ci/install-docker-dependencies.sh
-+++ /dev/null
-@@ -1,22 +0,0 @@
--#!/bin/sh
--#
--# Install dependencies required to build and test Git inside container
--#
--
--case "$jobname" in
--linux32)
--	linux32 --32bit i386 sh -c '
--		apt update >/dev/null &&
--		apt install -y build-essential libcurl4-openssl-dev \
--			libssl-dev libexpat-dev gettext python >/dev/null
--	'
--	;;
--linux-musl)
--	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
--		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
--	;;
--pedantic)
--	dnf -yq update >/dev/null &&
--	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
--	;;
--esac
+ case "$jobname" in
++windows-build)
++	setenv --build NO_PERL NoThanks
++	setenv --build ARTIFACTS_DIRECTORY artifacts
++	;;
++vs-build)
++	setenv --build NO_PERL NoThanks
++	setenv --build NO_GETTEXT NoThanks
++	setenv --build ARTIFACTS_DIRECTORY artifacts
++	setenv --build INCLUDE_DLLS_IN_ARTIFACTS YesPlease
++	setenv --build MSVC YesPlease
++
++	setenv --build GIT_CONFIG_COUNT 2
++	setenv --build GIT_CONFIG_KEY_0 user.name
++	setenv --build GIT_CONFIG_VALUE_0 CI
++	setenv --build GIT_CONFIG_KEY_1 user.emailname
++	setenv --build GIT_CONFIG_VALUE_1 ci@git
++	setenv --build GIT_CONFIG_VALUE_1 ci@git
++	;;
++vs-test)
++	setenv --test NO_SVN_TESTS YesPlease
++	;;
+ linux-gcc)
+ 	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME main
+ 	;;
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
