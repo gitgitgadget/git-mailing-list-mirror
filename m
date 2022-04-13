@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78A90C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9F51C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238485AbiDMTyi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:54:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58326 "EHLO
+        id S238502AbiDMTyk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:54:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238496AbiDMTy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238501AbiDMTy3 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 13 Apr 2022 15:54:29 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50C05F4D0
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:05 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id c10so4156761wrb.1
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:05 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 525DA5F4F3
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:06 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id g18so4115374wrb.10
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kYZ5DqbSSL4w0iww5+QZypYcPXBnFvdTFkv3iMHxxeg=;
-        b=aHPwY4i1p/eSnkPRmwczdWSApVYSfRpM1JCW48dBneY3lLduVsE6Ha/lHOBEKlhvbh
-         4xwmZ+OP9iNDDtgcHsEg4KnaytPy82gmLUgNwQMh5WAMFQ2gYe8JJHkVM0Nd8dhvsHLI
-         TrGMr2d618oAtztichPufdy91tmOvWzPC49tJ4N3Jy8fYDHiMXX1//kbtHiYa7NM9PBv
-         01RWOBCQdBYgZYRVfZ0OAOMh/ywsk4weEp3ng9SLz1LrkU03dh6lIgAJJAG4s4cOqMCS
-         d2CaqYbf2+e7N2ipYV7US/2nAmpV+fR5SS+HxShD59uOBAlCU5SnXM4ajp2rmquRPtPU
-         QYXg==
+        bh=95G+ydbQyhJHHHkhIbeovRa95gH5GpdV/tUGZfCYYDg=;
+        b=Rh7tP1Si/3h73NrgJzGOiHiOFLgrGyiWnAvy3LfqYxyzD3QbMYLmNurxfyNIRzvOnK
+         VofGLuBPcdD4+rQFsFFU8yT5W/k+OSaV7QwDQl1Vmd+1xx9YT9XqLtXx+Ricrd/bYPqS
+         NaxpYh/9ZdUL9Tw7QWM+tEW9aJ81HYNkjFCunJ8xRI77Df6zGEOJbcbiMpwYDhUvRRKj
+         SwNNWBsBIy997fvzQHk3A5qAKFMWTQ1baUzU3F7E8ad5H5Pd8KLJopa1GY9sCGZVn+em
+         qi22JAJXJsUuReoEkoPtoLev0I0UANWugDFfHCVFjsBnH3ItgWbiaYOjZB7Vsqrcdd1G
+         xQPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kYZ5DqbSSL4w0iww5+QZypYcPXBnFvdTFkv3iMHxxeg=;
-        b=kcm5xgMQAMceng/4z39mn435MgazknIC7KbHlem4t5apxUkjWKVyv+K7HEZJpxuonc
-         qLE/SKP1NkSOAM19SRLt5maMvwjkYQQ6bwY32kGI4BoBvXaQD0dGjlM4O5zt6UvXZBZ2
-         iHf66UapiORWhGY74hgOjJ+6dZ12m1tpqY4kxF2EqcoWTLCIuesT5cOuVD5XNog8Ad94
-         qvG9RDQGk8QbzQqILMxQWpqt1SCOy0VBdYs3NZ+iDDFqFr3LKRfp6sTWD5XTQIypDV72
-         H0wSBIBg3IpOX9lVOQK0vsIhqgf/T7kz8tlHiDSZQJ33blTFt6hNjY1+8VkjsVF3IwnR
-         8rCg==
-X-Gm-Message-State: AOAM530R73yLMYMkSNQoC53poWuq3QjSsTFXhdeBvcryao21S756Iwe3
-        C20nxcGYz2XVIE98ihyPFeEmAu2R3RtVjw==
-X-Google-Smtp-Source: ABdhPJysRhKR7kt9dXb1MIkwcvAYSYwTi7qhyb6i/VYGUbJNwkvBDN+2J8CpZz6WzToehJYfM4/GFQ==
-X-Received: by 2002:adf:9581:0:b0:1ed:c341:4ed1 with SMTP id p1-20020adf9581000000b001edc3414ed1mr310646wrp.299.1649879523679;
-        Wed, 13 Apr 2022 12:52:03 -0700 (PDT)
+        bh=95G+ydbQyhJHHHkhIbeovRa95gH5GpdV/tUGZfCYYDg=;
+        b=2ZOpMrEusi9bCRWqzAtxXDzsmT9aqKjJu6DAQVJsqcXJEcP2Bw9QqoEFFVWViZZ8LK
+         Qi16UWwHuarxoRLmXG7u4bTMV/VGrPP9W52LSMA4NEPKKGiVe9KtN7mahTZ6TpHa621l
+         O3o3AahQpT9Mug+PvfjLHGOkw1O3Sq4YhVSjodHJDLcdREcrZIdMTYqPN74uIFi1XSL1
+         NnQX7ieqsN2HGmqMYl3M4kvdItAA0dVGDfNSkLVIowFGwU6+NvX6mq0jPjEjidaj3aqE
+         vQkMu8bTVoI8RTfSH1OOKjOPIQwVDjIk10qqgo+w7j5uOTI9ccUUeXaPnMOHSFcG8Onk
+         jXZw==
+X-Gm-Message-State: AOAM530rcbO/VFZRom+ZwuEh+ccXDuBx6YUvF4EtUPPhCorwp+S9pUL9
+        x1k/ZFVlMqhzM5y/nxVtcjE8PgeCuC0wIA==
+X-Google-Smtp-Source: ABdhPJyQ34KJ5l6ssIIhOi5CPWMK964K8FG5pxQOTBIHBM0o1A69J/3SOOQuOcyflxy7y3DAU4i9CA==
+X-Received: by 2002:a05:6000:15c1:b0:204:7e75:1eb1 with SMTP id y1-20020a05600015c100b002047e751eb1mr347462wry.482.1649879524689;
+        Wed, 13 Apr 2022 12:52:04 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.02
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.52.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 13 Apr 2022 12:52:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/29] CI: move p4 and git-lfs variables to ci/install-dependencies.sh
-Date:   Wed, 13 Apr 2022 21:51:23 +0200
-Message-Id: <patch-v3-10.29-9a31b7d5011-20220413T194847Z-avarab@gmail.com>
+Subject: [PATCH v3 11/29] CI: consistently use "export" in ci/lib.sh
+Date:   Wed, 13 Apr 2022 21:51:24 +0200
+Message-Id: <patch-v3-11.29-8ab4e81e1ca-20220413T194847Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
@@ -75,77 +75,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the declaration of variables that are only used by the
-"ubuntu-latest" block in "ci/install-dependencies.sh" there from
-"ci/lib.sh".
+Change the "ci/lib.sh" script co consistently use "export", for
+e.g. MAKEFLAGS we were exporting it, and then assigning to it, let's
+do it the other way around.
 
-This makes the code easier to follow, and changes "ci/lib.sh" to a
-library that only exports CI variables for general use, we didn't need
-to export these $P4_PATH and $GIT_LFS_PATH variables.
+Right now this doesn't matter, since we in
+e.g. "ci/install-dependencies.sh" source this file, and don't use
+something like "env(1)" to retrieve these variables. But in a
+subsequent commit we'll "export" these variables through a wrapper (to
+additionally write them to a GitHub CI-specific $GITHUB_ENV
+file). This change makes that subsequent change easier to read, as it
+won't need to do any control flow refactoring.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/install-dependencies.sh | 17 +++++++++++++++--
- ci/lib.sh                  | 12 ------------
- 2 files changed, 15 insertions(+), 14 deletions(-)
+ ci/lib.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index e7ea8799411..34b4400f38b 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -5,14 +5,27 @@
- 
- . ${0%/*}/lib.sh
- 
--P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
--LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
- UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
-  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
-  libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
- 
- case "$runs_on_pool" in
- ubuntu-latest)
-+	# The Linux build installs the defined dependency versions below.
-+	# The OS X build installs much more recent versions, whichever
-+	# were recorded in the Homebrew database upon creating the OS X
-+	# image.
-+	# Keep that in mind when you encounter a broken OS X build!
-+	LINUX_P4_VERSION="16.2"
-+	LINUX_GIT_LFS_VERSION="1.5.2"
-+
-+	P4_PATH="$HOME/custom/p4"
-+	GIT_LFS_PATH="$HOME/custom/git-lfs"
-+	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
-+
-+	P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
-+	LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
-+
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
- 		$UBUNTU_COMMON_PKGS $CC_PACKAGE
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 21c009757f4..5736a4d2e04 100755
+index 5736a4d2e04..5783eed1b20 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -67,18 +67,6 @@ ubuntu-latest)
- 	fi
+@@ -30,7 +30,7 @@ export TERM=${TERM:-dumb}
+ NPROC=10
  
- 	export GIT_TEST_HTTPD=true
--
--	# The Linux build installs the defined dependency versions below.
--	# The OS X build installs much more recent versions, whichever
--	# were recorded in the Homebrew database upon creating the OS X
--	# image.
--	# Keep that in mind when you encounter a broken OS X build!
--	export LINUX_P4_VERSION="16.2"
--	export LINUX_GIT_LFS_VERSION="1.5.2"
--
--	P4_PATH="$HOME/custom/p4"
--	GIT_LFS_PATH="$HOME/custom/git-lfs"
--	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
+ # Clear MAKEFLAGS that may come from the outside world.
+-export MAKEFLAGS=--jobs=$NPROC
++MAKEFLAGS=--jobs=$NPROC
+ 
+ if test "$GITHUB_ACTIONS" = "true"
+ then
+@@ -38,9 +38,10 @@ then
+ 	CC="${CC:-gcc}"
+ 
+ 	export GIT_PROVE_OPTS="--timer --jobs $NPROC"
+-	export GIT_TEST_OPTS="--verbose-log -x"
++	GIT_TEST_OPTS="--verbose-log -x"
+ 	test Windows != "$RUNNER_OS" ||
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
++	export GIT_TEST_OPTS
+ else
+ 	echo "Could not identify CI type" >&2
+ 	env >&2
+@@ -94,4 +95,4 @@ linux-leaks)
  	;;
- macos-latest)
- 	if [ "$jobname" = osx-gcc ]
+ esac
+ 
+-MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
++export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
