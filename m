@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D482FC433FE
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 970F2C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 19:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238481AbiDMTyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 15:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58064 "EHLO
+        id S238488AbiDMTy1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 15:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238403AbiDMTyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 15:54:21 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B93E2C116
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:51:58 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o20-20020a05600c511400b0038ebbbb2ad8so1856608wms.0
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:51:58 -0700 (PDT)
+        with ESMTP id S238409AbiDMTyW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 15:54:22 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EFF72FFED
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:51:59 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id q8so1527106wmc.0
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 12:51:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b9olFUC0AWUbDYJyxX9MLBskz31rkDJErfp4kOIteAw=;
-        b=b0Nx2p6Qq8KD8FVWKbuLd61PAi6WP9gsiM6r/wtF/fSQtjhWjtC00vy+Y1NFWdXSea
-         n90mz6I0ZN4evJIqJyLpZaN8iEQo3L/lhLujAm8SmngYC/2bL99FDLCAzgimMU7ztLO8
-         BXTPvUby0bm6BvsvLTzDExJSuqB4voTE9AIl1Z95jZ0FNZgTBGvE5sXoxGBI3YImNUPn
-         Aab/F4KGaGms6r42sIhtfEW2Zf606RgzWxnJI/Zz+XYh0k8N6mdfYlAlH5loQStcrw5Z
-         0L7nD8eK8GBP8HKbTzfyUnS1fzKVfu2MjFe5+OiXvEPuZ6ANW1jzqCOQK/vhRbWAHLNz
-         U7Hg==
+        bh=/s5v66zOZ+5QGI07R+eOf0ZGz76UFQUzVwEZcUsMTFw=;
+        b=U8I5V/AmKNPsHE3025HBxxY3maPAfRk61fnRSGMP+KRIqeMCasDzrAwnrHUU6tekLF
+         Flu9DbdvFPEtQHltZn0Omb+VAz/FT7TnJPe3QliYN2AZvryWaTD7nWdxGNG7cRYZvYmQ
+         nX2iGq2aK6hngh306Nb9lmt6BjTtu67s9R3hnq5FRymUEyS32c4Uw9Q56mqi/7HxNM5J
+         0uwGtd71dZLhrP8qh4IgPM8zCYl0vaQezOckFUYyn/42ivD4gELb61Rg3/FbITRjRQPf
+         tbnJ7sMU1ganc62HSpW9O+Zl3ZxecNEwUUjizOPcTrFI8qUyOAGZUYanafIlVRXU1NrS
+         KRlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b9olFUC0AWUbDYJyxX9MLBskz31rkDJErfp4kOIteAw=;
-        b=fyprSq0Ov4NTZNN7lua4GuN8VmNDJ7jx+LCrMp5hJxAEy0/bM5886MlyE42ADh74Xs
-         bTHBS1GzKiYXkKgEt1KcvyiYPB7cCl4/pzxFhrupdcLih1hwXCO67wAorbUI0/548flb
-         3VnPHKIxGtRqqku57hb0zyZEQ3afj3SR/1BgUeAthjIadcgmDQc8LBEq5nNtkPaxaI3A
-         T+4WZ4hzjAFdS19io8oMBvEzFVUaL2PGnrtIh9vTwA/a9lUEul6baVTWsEUBXRit7rsE
-         pIfRTkctbJ0diwINv/OuD3kj8EHF9/k3rv4tqbry5StXK76u2zFvIWxz3b/2Sb40J+8P
-         vU2A==
-X-Gm-Message-State: AOAM533iOLcJR+01rjTYoFN+6VV/9lYeMiXvkSdtuHI89bQb7TZLBJqY
-        6dlmu6XE/wp4ivHegJkfg/cMYRv+QoADww==
-X-Google-Smtp-Source: ABdhPJwGN+LwjnRQsoeNXL+0eDk9i2Yr6AO977pQXgfk58IV6Duqb1qWxHpMIF9rdGlKDdaRq6ds5g==
-X-Received: by 2002:a05:600c:35d4:b0:38f:6799:a386 with SMTP id r20-20020a05600c35d400b0038f6799a386mr284071wmq.196.1649879516417;
-        Wed, 13 Apr 2022 12:51:56 -0700 (PDT)
+        bh=/s5v66zOZ+5QGI07R+eOf0ZGz76UFQUzVwEZcUsMTFw=;
+        b=5sP1ha7N/9Pj4QDuf5p1pQULwSdFrYIhHRZfbTQj2aY/wH4iHk/bqAWLeOeNpGmFwN
+         YQwTvF7MfDiUTAgGPiq9BpbEPYcmqb8mLSaVtvm+cGnjKNanx0KV27a0P3KwLfAAMWiw
+         RQ7jMxI+KeWygYDW0z7kJlwjKriG93raCIlYZWw2oz0LXnsuEBvL5Zv/TPNM5rxGPhpT
+         mC53eGj3HuwD7iovY0uzBASr1VLmvuSD4dD5I2m50z1tMj9Aym6bSjJuKcFxnVrcOyTz
+         It1HClXMcllpp64vJV78OK9oKtcM8guhiMqvQztd+yHjk5mHQfy0A6eR/50foJxUb0P+
+         5xwQ==
+X-Gm-Message-State: AOAM533Pc3Q4gHzxVAU4CAVAWQSsxXX4+aSVfjUyyRlJXNJggZCjDzqL
+        H126PVOdpkb2OYGGcGRTy4ztGdHD7XUmSQ==
+X-Google-Smtp-Source: ABdhPJy/pFNNfjFFU8XW7+52InOS25uQgoRC2v+ipOM4mYmfBjQakstKpDiq5Un3ipNxAH5tM64hlw==
+X-Received: by 2002:a1c:f413:0:b0:37b:d1de:5762 with SMTP id z19-20020a1cf413000000b0037bd1de5762mr293258wma.108.1649879517492;
+        Wed, 13 Apr 2022 12:51:57 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.51.55
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm3432484wms.35.2022.04.13.12.51.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 12:51:55 -0700 (PDT)
+        Wed, 13 Apr 2022 12:51:56 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/29] CI: remove more dead Travis CI support
-Date:   Wed, 13 Apr 2022 21:51:16 +0200
-Message-Id: <patch-v3-03.29-820c4e551d9-20220413T194847Z-avarab@gmail.com>
+Subject: [PATCH v3 04/29] CI: remove dead "tree skipping" code
+Date:   Wed, 13 Apr 2022 21:51:17 +0200
+Message-Id: <patch-v3-04.29-914e81118b8-20220413T194847Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.843.g193535c2aa7
 In-Reply-To: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com> <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
@@ -75,320 +75,209 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove code that I missed in 4a6e4b96026 (CI: remove Travis CI
-support, 2021-11-23). This code was only called from or used by the
-now-removed .travis.yml, or needed by the Travis CI environment.
+Remove the code related to skipping CI runs if the tree was
+successfully tested before. With the GitHub CI this is done with the
+"ci-config" step, see e76eec35540 (ci: allow per-branch config for
+GitHub Actions, 2020-05-07) and 7d78d5fc1a9 (ci: skip GitHub workflow
+runs for already-tested commits/trees, 2020-10-08).
 
-For the symlinking in ci/run-build-and-tests.sh: Back when
-3c93b829205 (travis-ci: build Git during the 'script' phase,
-2018-01-08) and 4b060a4d973 (ci: use a junction on Windows instead of
-a symlink, 2019-01-27) adjusted this "ln" command, the Windows build
-would use ci/run-build-and-tests.sh.
+This code hasn't been used since 4a6e4b96026 (CI: remove Travis CI
+support, 2021-11-23), and before that for the retired Azure pipeline
+support removed in 6081d3898fe (ci: retire the Azure Pipelines
+definition, 2020-04-11).
 
-As seen in 889cacb6897 (ci: configure GitHub Actions for CI/PR,
-2020-04-11) the current windows build uses a different entry point
-under the GitHub CI, which doesn't use this .prove caching. Namely
-"ci/run-test-slice.sh".
+This change is needed because this and subsequent commits are turning
+"ci/lib.sh" into a dumber library that'll only be tasked with setting
+variables for CI jobs, or for specific steps within those jobs. Now we
+don't need to worry about it potentially skipping the run on its own.
 
-We can be certain that it's never used in "ci/run-test-slice.sh"
-because to have a ".prove" file we'd need to use "--state=save", which
-we only do in the dead Azure codepath in ci/lib.sh. If it were used it
-would do the wrong thing, because the different test slices would each
-try to clobber the same "t/.prove" file.
+This change also removes a subtle potential logic error introduced in
+0e7696c64db (ci: disallow directional formatting, 2021-11-04). The
+"ci/check-directional-formatting.bash" script would have been made to
+run after the "save_good_tree" in invoked in
+"ci/run-static-analysis.sh". So if e.g. the "make coccicheck" failed
+we'd still mark the tree as good.
 
-If a subsequent run then used the -"-state=failed,slow,save" it would
-defeat the purpose of "ci/run-test-slice.sh", since all slices would
-then run all tests. I.e. behavior of prove's "--state" options is to
-select tests to run from the provided "--state" file, in addition to
-those specified on the command-line.
+I.e. the addition of "ci/check-directional-formatting.bash" didn't
+take into account that the various users of the "save_good_tree"
+function in ci/*.sh made a hard assumption that they're the only
+ci/*.sh script that's being run (and they use "set -e").
 
-For ci/run-docker{,-build}.sh: It was likewise last referenced in the
-.travis.yml removed in my 4a6e4b96026. The current "dockerized" run in
-".github/workflows/main.yml" calls the same entry points as the main
-"regular" job.
+This is entirely academic since we weren't actually running this code,
+but is something to be careful of if anyone ever needs to resurrect
+parts of this.
+
+Finally, the cache_dir="$HOME/none" added in a3f2eec862b (ci/lib:
+allow running in GitHub Actions, 2020-04-08) for the GitHub CI can be
+removed. It appears to have been added to appease the subsequent
+'mkdir -p "$cache_dir"', which wasn't needed in GitHub CI.
+
+1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/lib.sh                     | 10 ++----
- ci/print-test-failures.sh     |  3 --
- ci/run-build-and-tests.sh     |  5 ---
- ci/run-docker-build.sh        | 66 -----------------------------------
- ci/run-docker.sh              | 47 -------------------------
- ci/run-test-slice.sh          |  5 ---
- ci/util/extract-trash-dirs.sh | 50 --------------------------
- 7 files changed, 2 insertions(+), 184 deletions(-)
- delete mode 100755 ci/run-docker-build.sh
- delete mode 100755 ci/run-docker.sh
- delete mode 100755 ci/util/extract-trash-dirs.sh
+ ci/lib.sh                 | 91 ---------------------------------------
+ ci/run-build-and-tests.sh |  2 -
+ ci/run-static-analysis.sh |  2 -
+ ci/test-documentation.sh  |  2 -
+ 4 files changed, 97 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 5fda166ad47..510b20726ab 100755
+index 510b20726ab..d12eaf338f9 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -106,9 +106,6 @@ then
- 	CI_COMMIT="$BUILD_SOURCEVERSION"
- 	CI_JOB_ID="$BUILD_BUILDID"
- 	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
--	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
--	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
--	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
+@@ -13,75 +13,6 @@ then
+ 	exit 1
+ fi
+ 
+-skip_branch_tip_with_tag () {
+-	# Sometimes, a branch is pushed at the same time the tag that points
+-	# at the same commit as the tip of the branch is pushed, and building
+-	# both at the same time is a waste.
+-	#
+-	# When the build is triggered by a push to a tag, $CI_BRANCH will
+-	# have that tagname, e.g. v2.14.0.  Let's see if $CI_BRANCH is
+-	# exactly at a tag, and if so, if it is different from $CI_BRANCH.
+-	# That way, we can tell if we are building the tip of a branch that
+-	# is tagged and we can skip the build because we won't be skipping a
+-	# build of a tag.
+-
+-	if TAG=$(git describe --exact-match "$CI_BRANCH" 2>/dev/null) &&
+-		test "$TAG" != "$CI_BRANCH"
+-	then
+-		echo "$(tput setaf 2)Tip of $CI_BRANCH is exactly at $TAG$(tput sgr0)"
+-		exit 0
+-	fi
+-}
+-
+-# Save some info about the current commit's tree, so we can skip the build
+-# job if we encounter the same tree again and can provide a useful info
+-# message.
+-save_good_tree () {
+-	echo "$(git rev-parse $CI_COMMIT^{tree}) $CI_COMMIT $CI_JOB_NUMBER $CI_JOB_ID" >>"$good_trees_file"
+-	# limit the file size
+-	tail -1000 "$good_trees_file" >"$good_trees_file".tmp
+-	mv "$good_trees_file".tmp "$good_trees_file"
+-}
+-
+-# Skip the build job if the same tree has already been built and tested
+-# successfully before (e.g. because the branch got rebased, changing only
+-# the commit messages).
+-skip_good_tree () {
+-	if test true = "$GITHUB_ACTIONS"
+-	then
+-		return
+-	fi
+-
+-	if ! good_tree_info="$(grep "^$(git rev-parse $CI_COMMIT^{tree}) " "$good_trees_file")"
+-	then
+-		# Haven't seen this tree yet, or no cached good trees file yet.
+-		# Continue the build job.
+-		return
+-	fi
+-
+-	echo "$good_tree_info" | {
+-		read tree prev_good_commit prev_good_job_number prev_good_job_id
+-
+-		if test "$CI_JOB_ID" = "$prev_good_job_id"
+-		then
+-			cat <<-EOF
+-			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
+-			This commit has already been built and tested successfully by this build job.
+-			To force a re-build delete the branch's cache and then hit 'Restart job'.
+-			EOF
+-		else
+-			cat <<-EOF
+-			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
+-			This commit's tree has already been built and tested successfully in build job $prev_good_job_number for commit $prev_good_commit.
+-			The log of that build job is available at $SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$prev_good_job_id
+-			To force a re-build delete the branch's cache and then hit 'Restart job'.
+-			EOF
+-		fi
+-	}
+-
+-	exit 0
+-}
+-
+ check_unignored_build_artifacts ()
+ {
+ 	! git ls-files --other --exclude-standard --error-unmatch \
+@@ -102,16 +33,8 @@ if test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+ then
+ 	CI_TYPE=azure-pipelines
+ 	# We are running in Azure Pipelines
+-	CI_BRANCH="$BUILD_SOURCEBRANCH"
+-	CI_COMMIT="$BUILD_SOURCEVERSION"
+-	CI_JOB_ID="$BUILD_BUILDID"
+-	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
  	CC="${CC:-gcc}"
  
- 	# use a subdirectory of the cache dir (because the file share is shared
-@@ -118,16 +115,13 @@ then
+-	# use a subdirectory of the cache dir (because the file share is shared
+-	# among *all* phases)
+-	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
+-
  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
  	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
  	MAKEFLAGS="$MAKEFLAGS --jobs=10"
--	test windows_nt != "$CI_OS_NAME" ||
-+	test Windows_NT != "$AGENT_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+@@ -120,13 +43,7 @@ then
  elif test true = "$GITHUB_ACTIONS"
  then
  	CI_TYPE=github-actions
- 	CI_BRANCH="$GITHUB_REF"
- 	CI_COMMIT="$GITHUB_SHA"
--	CI_OS_NAME="$(echo "$RUNNER_OS" | tr A-Z a-z)"
--	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
--	CI_REPO_SLUG="$GITHUB_REPOSITORY"
- 	CI_JOB_ID="$GITHUB_RUN_ID"
+-	CI_BRANCH="$GITHUB_REF"
+-	CI_COMMIT="$GITHUB_SHA"
+-	CI_JOB_ID="$GITHUB_RUN_ID"
  	CC="${CC:-gcc}"
- 	DONT_SKIP_TAGS=t
-@@ -137,7 +131,7 @@ then
+-	DONT_SKIP_TAGS=t
+-
+-	cache_dir="$HOME/none"
+ 
  	export GIT_PROVE_OPTS="--timer --jobs 10"
  	export GIT_TEST_OPTS="--verbose-log -x"
- 	MAKEFLAGS="$MAKEFLAGS --jobs=10"
--	test windows != "$CI_OS_NAME" ||
-+	test Windows != "$RUNNER_OS" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 57277eefcd0..00fcf27b1b2 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -77,9 +77,6 @@ do
- 			fi
- 			combined_trash_size=$new_combined_trash_size
+@@ -139,14 +56,6 @@ else
+ 	exit 1
+ fi
  
--			# DO NOT modify these two 'echo'-ed strings below
--			# without updating 'ci/util/extract-trash-dirs.sh'
--			# as well.
- 			echo "$(tput setaf 1)Start of trash directory of '$test_name':$(tput sgr0)"
- 			cat "$trash_tgz_b64"
- 			echo "$(tput setaf 1)End of trash directory of '$test_name'$(tput sgr0)"
+-good_trees_file="$cache_dir/good-trees"
+-
+-mkdir -p "$cache_dir"
+-
+-test -n "${DONT_SKIP_TAGS-}" ||
+-skip_branch_tip_with_tag
+-skip_good_tree
+-
+ export DEVELOPER=1
+ export DEFAULT_TEST_TARGET=prove
+ export GIT_TEST_CLONE_2GB=true
 diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 280dda7d285..0a1ec8c2bae 100755
+index 0a1ec8c2bae..e5a21985b44 100755
 --- a/ci/run-build-and-tests.sh
 +++ b/ci/run-build-and-tests.sh
-@@ -5,11 +5,6 @@
- 
- . ${0%/*}/lib.sh
- 
--case "$CI_OS_NAME" in
--windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
--*) ln -s "$cache_dir/.prove" t/.prove;;
--esac
--
- export MAKE_TARGETS="all test"
- 
- case "$jobname" in
-diff --git a/ci/run-docker-build.sh b/ci/run-docker-build.sh
-deleted file mode 100755
-index 6cd832efb9c..00000000000
---- a/ci/run-docker-build.sh
-+++ /dev/null
-@@ -1,66 +0,0 @@
--#!/bin/sh
--#
--# Build and test Git inside container
--#
--# Usage:
--#   run-docker-build.sh <host-user-id>
--#
--
--set -ex
--
--if test $# -ne 1 || test -z "$1"
--then
--	echo >&2 "usage: run-docker-build.sh <host-user-id>"
--	exit 1
--fi
--
--case "$jobname" in
--linux32)
--	switch_cmd="linux32 --32bit i386"
--	;;
--linux-musl)
--	switch_cmd=
--	useradd () { adduser -D "$@"; }
--	;;
--*)
--	exit 1
--	;;
--esac
--
--"${0%/*}/install-docker-dependencies.sh"
--
--# If this script runs inside a docker container, then all commands are
--# usually executed as root. Consequently, the host user might not be
--# able to access the test output files.
--# If a non 0 host user id is given, then create a user "ci" with that
--# user id to make everything accessible to the host user.
--HOST_UID=$1
--if test $HOST_UID -eq 0
--then
--	# Just in case someone does want to run the test suite as root.
--	CI_USER=root
--else
--	CI_USER=ci
--	if test "$(id -u $CI_USER 2>/dev/null)" = $HOST_UID
--	then
--		echo "user '$CI_USER' already exists with the requested ID $HOST_UID"
--	else
--		useradd -u $HOST_UID $CI_USER
--	fi
--fi
--
--# Build and test
--command $switch_cmd su -m -l $CI_USER -c "
--	set -ex
--	export DEVELOPER='$DEVELOPER'
--	export DEFAULT_TEST_TARGET='$DEFAULT_TEST_TARGET'
--	export GIT_PROVE_OPTS='$GIT_PROVE_OPTS'
--	export GIT_TEST_OPTS='$GIT_TEST_OPTS'
--	export GIT_TEST_CLONE_2GB='$GIT_TEST_CLONE_2GB'
--	export MAKEFLAGS='$MAKEFLAGS'
--	export cache_dir='$cache_dir'
--	cd /usr/src/git
--	test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
--	make
--	make test
--"
-diff --git a/ci/run-docker.sh b/ci/run-docker.sh
-deleted file mode 100755
-index af89d1624a4..00000000000
---- a/ci/run-docker.sh
-+++ /dev/null
-@@ -1,47 +0,0 @@
--#!/bin/sh
--#
--# Download and run Docker image to build and test Git
--#
--
--. ${0%/*}/lib.sh
--
--case "$jobname" in
--linux32)
--	CI_CONTAINER="daald/ubuntu32:xenial"
--	;;
--linux-musl)
--	CI_CONTAINER=alpine
--	;;
--*)
--	exit 1
--	;;
--esac
--
--docker pull "$CI_CONTAINER"
--
--# Use the following command to debug the docker build locally:
--# <host-user-id> must be 0 if podman is used as drop-in replacement for docker
--# $ docker run -itv "${PWD}:/usr/src/git" --entrypoint /bin/sh "$CI_CONTAINER"
--# root@container:/# export jobname=<jobname>
--# root@container:/# /usr/src/git/ci/run-docker-build.sh <host-user-id>
--
--container_cache_dir=/tmp/container-cache
--
--docker run \
--	--interactive \
--	--env DEVELOPER \
--	--env DEFAULT_TEST_TARGET \
--	--env GIT_PROVE_OPTS \
--	--env GIT_TEST_OPTS \
--	--env GIT_TEST_CLONE_2GB \
--	--env MAKEFLAGS \
--	--env jobname \
--	--env cache_dir="$container_cache_dir" \
--	--volume "${PWD}:/usr/src/git" \
--	--volume "$cache_dir:$container_cache_dir" \
--	"$CI_CONTAINER" \
--	/usr/src/git/ci/run-docker-build.sh $(id -u $USER)
--
--check_unignored_build_artifacts
+@@ -45,5 +45,3 @@ esac
+ # start running tests.
+ make $MAKE_TARGETS
+ check_unignored_build_artifacts
 -
 -save_good_tree
-diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
-index f8c2c3106a2..b9a682b4bcd 100755
---- a/ci/run-test-slice.sh
-+++ b/ci/run-test-slice.sh
-@@ -5,11 +5,6 @@
+diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+index 65bcebda41a..5a87b1cac96 100755
+--- a/ci/run-static-analysis.sh
++++ b/ci/run-static-analysis.sh
+@@ -28,5 +28,3 @@ fi
  
- . ${0%/*}/lib.sh
+ make hdr-check ||
+ exit 1
+-
+-save_good_tree
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index de41888430a..9e0652c30dd 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -41,5 +41,3 @@ grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
  
--case "$CI_OS_NAME" in
--windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
--*) ln -s "$cache_dir/.prove" t/.prove;;
--esac
+ rm -f stdout.log stderr.log stderr.raw
+ check_unignored_build_artifacts
 -
- make --quiet -C t T="$(cd t &&
- 	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
- 	tr '\n' ' ')"
-diff --git a/ci/util/extract-trash-dirs.sh b/ci/util/extract-trash-dirs.sh
-deleted file mode 100755
-index 8e67bec21a2..00000000000
---- a/ci/util/extract-trash-dirs.sh
-+++ /dev/null
-@@ -1,50 +0,0 @@
--#!/bin/sh
--
--error () {
--	echo >&2 "error: $@"
--	exit 1
--}
--
--find_embedded_trash () {
--	while read -r line
--	do
--		case "$line" in
--		*Start\ of\ trash\ directory\ of\ \'t[0-9][0-9][0-9][0-9]-*\':*)
--			test_name="${line#*\'}"
--			test_name="${test_name%\'*}"
--
--			return 0
--		esac
--	done
--
--	return 1
--}
--
--extract_embedded_trash () {
--	while read -r line
--	do
--		case "$line" in
--		*End\ of\ trash\ directory\ of\ \'$test_name\'*)
--			return
--			;;
--		*)
--			printf '%s\n' "$line"
--			;;
--		esac
--	done
--
--	error "unexpected end of input"
--}
--
--# Raw logs from Linux build jobs have CRLF line endings, while OSX
--# build jobs mostly have CRCRLF, except an odd line every now and
--# then that has CRCRCRLF.  'base64 -d' from 'coreutils' doesn't like
--# CRs and complains about "invalid input", so remove all CRs at the
--# end of lines.
--sed -e 's/\r*$//' | \
--while find_embedded_trash
--do
--	echo "Extracting trash directory of '$test_name'"
--
--	extract_embedded_trash |base64 -d |tar xzp
--done
+-save_good_tree
 -- 
 2.36.0.rc2.843.g193535c2aa7
 
