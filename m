@@ -2,86 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E00C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 17:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DBF8C433F5
+	for <git@archiver.kernel.org>; Wed, 13 Apr 2022 17:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237393AbiDMRg4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Apr 2022 13:36:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43932 "EHLO
+        id S235879AbiDMRrR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Apr 2022 13:47:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235898AbiDMRgy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Apr 2022 13:36:54 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D78A64E3
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:34:33 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 7-20020a250c07000000b0064137917a4eso2237521ybm.12
-        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:34:33 -0700 (PDT)
+        with ESMTP id S233587AbiDMRrQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Apr 2022 13:47:16 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F972CE39
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:44:54 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id 9so2732732iou.5
+        for <git@vger.kernel.org>; Wed, 13 Apr 2022 10:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=veYYA353vci8ORIxi/1ytUVIftkzp4zmMi02wycdzQk=;
-        b=oPo5sRQCPHjrxh41LCFw5xN5ib9eauyyYDbNA4BUl0T2M4khlxa11Cln11mnV/MrM1
-         WOb63ivmb/JfwIY8sn+ZkJ3+XS+Qnto5hvBT2VSKQHvkPf2whjAWo1d4w0bSZmZy/52C
-         xwFlcsnfcNa1TWpK4m8O6ka0aMU14YbXEJg0F/DKytBZ6TZlWTeB6yTafRNFeiR1H9l/
-         YBi+JeksnT5cvmpuJInWLKnTYahYssUMSSyRtDsBE/NxXc3UtKzbxL3yWvl1aS1HP97F
-         dHe8/2Yvc1SUfuusVP2dw4PutDLaIXiApQ4cpGmebHlPRX0KG1NTcvySN82QyMByFkx7
-         j4ng==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kXE6DZdmnEXKChJutyG4ABLQUguqeeNxXWf7oWp0YbQ=;
+        b=DUln5/G0xWjtgGjpKZmq2EvAoEbCgZe6VdhQBcGAiYvWzsarAngAi/H2KEAyVBLKBz
+         7ccSTDzAe4poGz30pxHlNtw1ekrHKz+7CW1OuROBeJblyQYKxhRq3SGk+tAiONX/Vah3
+         ASwS7d0tTKL6RHm+gFCLSi9o/XSazyYz/9leysLMdr7xfRGuXtcBu+BZFficLCOFLAD0
+         IKh5aLd5Uo5gb42bv1yJQukzo1eALeFTsWjtsI3fAZy4ljtLcmE1ntGS8fxkcddItPSj
+         EVqM8DZHYwdxZkKCAt03vTKNgm5IMq6VIluo6m7pP1rGpVnw7aF28EUZ0Rsle/qDxQnH
+         ufmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=veYYA353vci8ORIxi/1ytUVIftkzp4zmMi02wycdzQk=;
-        b=IpxpusSyhIYDMrEL6nwr7+uQsMNo99vAepofyOsK+yh6jadxtjzz/0bPpoBZGGNv9M
-         OOOBzF5Ix/I/NqSKuxBi7R4J5P0tnv0C2mXLbr2Ud6QrjIybrLJXD5X0MPjP6L9CWiDX
-         BZap3ZP0ZmMGgioOxIh3lTiTNGpsROwyhlzTYROF4idUJEiOgSYWjJqV3sE4y+rkvLk0
-         im03IwsfFaqLGXDwGXYim/jrN6ButvV48JDMZAH2SlKtP6jOy1kyz4ydg/Sbff51K0pp
-         eVKpSsVzc94rCn3iisxRM8jp6+Z2Os8jDmnGPRzhp0nZNsIDX1j2h6AxxHa/lUX5UnRY
-         aNwg==
-X-Gm-Message-State: AOAM531cQq4gv3t76Megq/Ma33O3Bb44p1NunIKLEvAIw6UuUrfC4Ett
-        TShyEYRfut+d3bBtZTVSrNY61L1LG5QEjUQQvUzO
-X-Google-Smtp-Source: ABdhPJyi+cYYdvWuJrgetjM76j6qvG/OoeNtJw4luUyY9+2+0TUZj3KUApdvevlIm8TvDGB+vYhzzPu1yUvFFlPCuw9H
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:13:b0:2dc:50bc:c975 with
- SMTP id bc19-20020a05690c001300b002dc50bcc975mr37782796ywb.173.1649871272611;
- Wed, 13 Apr 2022 10:34:32 -0700 (PDT)
-Date:   Wed, 13 Apr 2022 10:34:28 -0700
-In-Reply-To: <YlYjgLcnNH8V1yj0@camp.crustytoothpaste.net>
-Message-Id: <20220413173429.971159-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
-Subject: Re: [PATCH v4 4/4] builtin/stash: provide a way to import stashes
- from a ref
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kXE6DZdmnEXKChJutyG4ABLQUguqeeNxXWf7oWp0YbQ=;
+        b=eJVktxERiBUHLU/i6haDeA4Wrq4EylfbpfYdJImUD3Aw1iusK+9INck8Ovnkp6bFqz
+         51SxkjMV5vl7iv3xdS5P6K6A1CLEWNnDGlWBVIe5qWw57OhEBSBDYwwOLu8R7Soh0paw
+         xN5qx2JiWgw7CWOU4Km8a4IKBQIGFSrP1UBR8lpZ7ITUWaR5D0LwDlYwlff9IbN6gYDF
+         3FzddGyoUJ385AyEE5Njy3kwPXBXzOSOt4EmkSZ96hm6i9fn3RNfcNU6ngWD05n8VBgB
+         EhBgqU6Yv/W7tr/hyenlWHBYi1ffIN5+zk0uRsdrrUqblufQtaZNIU1WZzTFxXExGVDJ
+         tWNw==
+X-Gm-Message-State: AOAM532yHgyYRn6uwEA8gEv/oVurJJtm2ShbDTysw5Me5i5eOc5DsT6g
+        YPiOFynFME01mEWhff/H1/2hRlOP0v5Q4FrxyYuK4EzA/y8nFg==
+X-Google-Smtp-Source: ABdhPJz98wR+kb+GphlGmUCpVNkG67Azbd0jolTUZfBstmI+7LuHDwe99uIQkqc3g9DzXEkkGdAQyUKLqCo6ExhEDIY=
+X-Received: by 2002:a05:6602:2a45:b0:648:b21c:6f49 with SMTP id
+ k5-20020a0566022a4500b00648b21c6f49mr18705599iov.206.1649871893726; Wed, 13
+ Apr 2022 10:44:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220413164336.101390-1-eantoranz@gmail.com> <033701d84f5b$ad167ce0$074376a0$@nexbridge.com>
+ <CAOc6etY0fyBnT9kMSm+s1LqfCsSV4RRppokuE5igme-M-cvW6g@mail.gmail.com>
+In-Reply-To: <CAOc6etY0fyBnT9kMSm+s1LqfCsSV4RRppokuE5igme-M-cvW6g@mail.gmail.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Wed, 13 Apr 2022 19:44:42 +0200
+Message-ID: <CAOc6eta7-ZieTnTjmCicXoqf-j=d1SmfRT=PS+cAZUxKw+ti=Q@mail.gmail.com>
+Subject: Re: [RFC] introducing git replay
+To:     rsbecker@nexbridge.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> On 2022-04-12 at 20:14:34, Jonathan Tan wrote:
-> > This seems like you're using the commit message as the reflog message -
-> > is this necessary? For what it's worth, all tests still pass if I
-> > replace "msg" with "NULL".
-> 
-> I think that's what the existing stash code does, and so I did the same
-> here.  It's not strictly necessary, but it's a nice to have.
-> 
-> I didn't think it worth testing, because I don't think we test it
-> elsewhere, either.
-> 
-> > It might be worth adding tests that check that the exported stashes are
-> > in the expected format (to ensure that we can read stashes exported from
-> > another Git version) but I don't think that has to block the submission
-> > of this patch set.
-> 
-> There's a tiny patch for that for the base commit, but you're right that
-> some more tests wouldn't hurt.  I can send a followup patch or two as
-> part of a new series.
+On Wed, Apr 13, 2022 at 7:30 PM Edmundo Carmona Antoranz
+<eantoranz@gmail.com> wrote:
+>
+> On Wed, Apr 13, 2022 at 7:26 PM <rsbecker@nexbridge.com> wrote:
+> >
+> > >2.35.1
+> >
+> > I'm sorry if I'm missing something here but how is this different from
+> > cherry-pick A..B?
+> > --Randall
+> >
+>
+> Good question, but cherry-pick has troubles with merges:
+>
+> (same example, after amending):
+> $ git cherry-pick v2.35.0..v2.36.0-rc1
+> error: commit bb4921cf45e11d063e7bbe55f594adf8f0077d5d is a merge but
+> no -m option was given.
+> fatal: cherry-pick failed
 
-OK, these sound good to me.
+By the way, Randall, it's not just _merges_. Correct me if I'm wrong
+but cherry-pick (or rebase) will run merges (in all their glory) to get code
+cherry-picked. What I want to do is skip merges/conflicts altogether
+by using the information of existing revisions (the ones we want to
+cherry-pick) just adjusting their parents to get the new revisions.
+
+Let me know!
