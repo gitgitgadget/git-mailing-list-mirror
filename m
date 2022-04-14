@@ -2,98 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DCE0C433FE
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 17:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA38AC433F5
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 17:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242369AbiDNREW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 13:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51022 "EHLO
+        id S241440AbiDNRFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 13:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243664AbiDNREN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 13:04:13 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C4AAB7C6D
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 09:41:39 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id b6-20020a62a106000000b0050564d6fd75so3380932pff.22
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 09:41:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=AecAA5wNMrsPxCLDRuG4hBx6M6AjU41Q2xZCvxK8sn4=;
-        b=sBwwYMASXWTHZCKaYn1EKp36G7UU+Qvhry6oJi8iIHbkjAW2gxj78Ox54GQXtKAXxz
-         PHrMAXoUsP8AZka3YEGWYqrPAeGMI7pum7pLXVY0gnXLCubXNgnzK0LFI7FysUpN6q/i
-         fYjYcog5C91OPjl6HMvZ7hmyDA4ptE9/jx8BQAKpK9ulOTsz6nXykzOrXCF9oPhN8ob/
-         KpiXS96odzGINLtI6p6uVyx2lAWqT7ceWj7qzKE8CkpsDsT7SmtG/DQyInW9JIFoZwar
-         Ybe1Wx2yNYZsncGhRE338jd2IwhfTAJMRzO5w4CpheJkcTBC+wXo4cN6hqctAkC5nSPu
-         UFYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=AecAA5wNMrsPxCLDRuG4hBx6M6AjU41Q2xZCvxK8sn4=;
-        b=2Khu+b4QuFdH6O/HktjF32paFVazJp7k8I9hQl1ptzUHrc8c/WcPiuA4mDLxoVTOzF
-         khTGpNDJ+SSWDqAV3QwQp3RH3pLpqT8kYIdHRy/e9Qwas+dtKYRH/5m/D60sPNTpF7p+
-         Lyq6h6lCg76BnO5TBr9FrsiiN514BEkkUbUBtJTwKjNq9KPJiluerRvdq/3BGuEFaqHA
-         yfX9JqDGYMrjtROuk2BYen+cosDqvfDVCD2vYNK6wGTisL3xwJ9b8wqClpjaWgl3fRaL
-         pVA0m3jgmflHkC/CoRJU+YXNYIZ/3ywZPW/Qj7Ekt2vLUh0RA36bCXF0YCJ5drPGbzzI
-         JCOg==
-X-Gm-Message-State: AOAM530pq1AglCqLaxltkQ4208xEtcdzkpuw6QrmeUnwvDvkWqmdiWU2
-        wPS/S6ZsmlElMQMCzDcHuDh8htDE/eOOKQ==
-X-Google-Smtp-Source: ABdhPJwZJB4LH4yiPQffPReXiRoOUb6KG4M5ymGHWB8G0IT80tylGOG6A+Wp5C/yg1x2Kl2fApCQWUDEdiGhrQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a65:4c4e:0:b0:39d:21c4:2381 with SMTP id
- l14-20020a654c4e000000b0039d21c42381mr2994206pgr.566.1649954498592; Thu, 14
- Apr 2022 09:41:38 -0700 (PDT)
-Date:   Thu, 14 Apr 2022 09:41:36 -0700
-In-Reply-To: <xmqqwnfs4kud.fsf@gitster.g>
-Message-Id: <kl6lh76v8vnj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lv8vc90ts.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqwnfs4kud.fsf@gitster.g>
-Subject: Re: Bare repositories in the working tree are a security risk
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com, Taylor Blau <me@ttaylorr.com>,
-        martinvonz@google.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S242122AbiDNREt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 13:04:49 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C33FFDE29
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 09:42:39 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 753CE12F9EC;
+        Thu, 14 Apr 2022 12:42:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0AXG6LadwkE28oK9w86LDNrYpT9e2KN+xcKVBu
+        iX5e4=; b=e3wGW8z9OtKQ07Pbx20pUREaCxTRDUpL6GdbsUwVD17ouA4fwuRnms
+        2H2seXG5NL1S51PRLBWCJfPz7cEKU+wQIH4rUIemmTe2vVKgJuNJ1zjll5taZ6BQ
+        a/f7ggcpeie02sGStcppQx7fL0XBvVILSLaHslE8odyqT1/vqKNAg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C08212F9EB;
+        Thu, 14 Apr 2022 12:42:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CC59512F9EA;
+        Thu, 14 Apr 2022 12:42:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        git <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [GSoC] [PATCH v2] t1011: replace test -f with test_path_is_file
+References: <xmqq1qy3igif.fsf@gitster.g>
+        <20220412203722.10484-1-siddharthasthana31@gmail.com>
+        <CAP8UFD3RtQecxOQWVeapH1CYsMiY2+MoHeugb9bvOsFVnozy=w@mail.gmail.com>
+Date:   Thu, 14 Apr 2022 09:42:34 -0700
+In-Reply-To: <CAP8UFD3RtQecxOQWVeapH1CYsMiY2+MoHeugb9bvOsFVnozy=w@mail.gmail.com>
+        (Christian Couder's message of "Thu, 14 Apr 2022 10:19:07 +0200")
+Message-ID: <xmqqy2071urp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E37A37EA-BC11-11EC-A55B-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
->
->> Martin observed that, viability aside, there's another approach that I
->> haven't discussed:
->>
->>   == 5 Disable bare repo discovery
->>
->>   We could introduce a config value that disables bare repo discovery
->>   altogether. This would only disable _discovery_; a user can still use
->>   the bare repo by specifying the gitdir (e.g. via `--git-dir=.` or
->>   GIT_DIR).
->
-> Does it or does it not count as "allowing discovery to do its job"
-> if you go to the directory, knowing that the directory is a bare
-> one, and expect Git to work in it?
->
-> I am guessing that your definition of "discovery" is not even
-> consider if the current directory is a repository and always force
-> the user to tell us with --git-dir or GIT_DIR.
+> In the commit message it might be nice if there were some explanations
+> about why `test_path_is_missing PATH` should be used instead of `!
+> test_path_is_file PATH` or `test ! -f PATH` or `! test -f PATH`.
 
-Yes, I mean that even the current directory will be ignored when
-discovery is disabled.
+Meaning "the original used '! test -f foo' but what it meant was
+that it did not want to see 'foo' on the filesystem, regardless of
+its type, so it should have been '!test -e foo' to begin with"?
 
->                                                I am not sure that
-> is realistically feasible (I am thinking of cases like "git fetch"
-> going to the remote repository on the local disk that is bare to run
-> "git upload-pack"), but if the fallout is not too bad, it may be a
-> good heuristics.
+I guess it does not hurt, as the original would have passed by
+mistake if these paths were on the filesystem as directories, but
+the new code would behave differently, and even if it is a "bugfix",
+it still is a behaviour change that may be worth explaining.
 
-Good detail - I hadn't considered the impact on our own child processes.
-I suspect this might be a huge undertaking. Unless there is significant
-interest in this option, I probably won't pursue it further.
+> The diff part of the patch looks good to me. Thanks!
