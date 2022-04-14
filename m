@@ -2,216 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D82A3C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 08:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6923C433F5
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 08:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239279AbiDNIDD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 04:03:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49056 "EHLO
+        id S239810AbiDNIDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 04:03:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229911AbiDNIDB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 04:03:01 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 064743E5FC
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:37 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id mm4-20020a17090b358400b001cb93d8b137so8601317pjb.2
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:37 -0700 (PDT)
+        with ESMTP id S229911AbiDNIDM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 04:03:12 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C2740A38
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:48 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id p135so4576744iod.2
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=S85jCb6sHrRdwSMlweoO8hGDoLAxNhiaJjlsXMnmI+A=;
-        b=QD3BRKGP22ZoKkr1S7CwCwwrRWhLEO8xB5UZobvMN5CAwO1oeVlQNA0apwQgXqWXUH
-         PVw4GuB5FdWdh5W9DA2ACRX6GQAunpxCwjRUoEyc5NxpbCypKdI0Wk4pp6J9hFdrFxnh
-         dZDj34cdCk0xy+YeXDTTfDxgDYXZAfS6gORtci6Qc0If2hVvjkl/OCOJGK38ggVRW4MD
-         6XdgnnVFOXOXG0IZgwwXdDbEd1SWL+niheIzFDgIVJGu/pnIPZtVIPp29R8CH8i7J9cI
-         pm6+r5MILJkxP75z2zGPwCsu9glw1WqCAKi3QJ+POtXWYdel6D4JuNYD/+GhQVkgl+0A
-         bspg==
+        h=sender:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=sReVga0zpk5AUvGCoCn5LVMSPk7V8J1bJsqoQW7k8ew=;
+        b=RBV9GRVjEd6FRRKZH4Od8Ow+Z5PJ40/FDkOrqyUuo3EJcKtkLXyx8J+9THPwLjGHJB
+         UuPaym4eiKgE6QmLZCVxiC0xt2B9F31PslFGpyaYEbg7Bncfx2Lfq1yVkvmbpiflOMXC
+         eR0MsZjsCLsHy6c3Ll0MUTgT1zrW4qhvg4y8TejXAa7zz6BJ+Uw1vMNfuVW9oZk5JlJf
+         vnR95OJLyI1OprYtaxF1bcd2kGJRIm2P74xlSCWokQ88LrahNZbogvh/Q8B3eMYqX5Lv
+         ZiCVnMLPnklzAFIRJECUQcUiexByr/FhULEJnW5CvSOOItJsYgIYnswUAwxHxo93boOZ
+         3ONQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=S85jCb6sHrRdwSMlweoO8hGDoLAxNhiaJjlsXMnmI+A=;
-        b=FL4Pt30TLto+FipPNyL2EcnrQppY+g/bPHQ9tZmtAMsjlbNb9nuWmlt1ZZ5JzbFITO
-         ur2ph+8T/oM9sOXc2Tx0wnjXfw6/ubkkzaVQj1WiBn6sl2I6HYtrXx2qDFJIy1Oyoij0
-         fjIZOEvVo26i7B2kY1C5Cuc3M+7nMixv5DjifimxVT19/Mlj0v4Aqs4bnQvndTxGhpgf
-         wgkSzTQvP3zTwoQaCXLADsFG1545RzfGbzoNbaRCpuhNdJn5AJvMjWMJeNCrjdFTgbHz
-         +tUz9/QMN/8SEcgVhV6lq+SoarBOy8Psdg8vPeRzEmUEKtZckMhMwqlN3PAhfXsU+KDr
-         u/0A==
-X-Gm-Message-State: AOAM530DAxFiCE7KD2whr0K/o6fWxS69QVgy3W9+tQrPziZcJcsB2XRq
-        BRKB3L63PiffoGfgzINIAXg=
-X-Google-Smtp-Source: ABdhPJyixhWrHFqM64Mt3s3csCUd2z7jfQeQWa5zc0aUpZKOMnFdgzgl73IS2AHAR9vuE3xzUOrLWA==
-X-Received: by 2002:a17:90b:17c3:b0:1c6:b0ff:abf with SMTP id me3-20020a17090b17c300b001c6b0ff0abfmr2406583pjb.24.1649923236166;
-        Thu, 14 Apr 2022 01:00:36 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4060:209f:3abe:ccb:90ec:502c:d6b3])
-        by smtp.gmail.com with ESMTPSA id y6-20020a626406000000b005060889f2cdsm1272144pfb.191.2022.04.14.01.00.32
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 14 Apr 2022 01:00:35 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][RFC][PROPOSAL] Reachability bitmap improvements
-Date:   Thu, 14 Apr 2022 13:28:46 +0530
-Message-Id: <20220414075846.14059-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <YlckmDHRAYnE1J5t@nand.local>
-References: <YlckmDHRAYnE1J5t@nand.local>
+        h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=sReVga0zpk5AUvGCoCn5LVMSPk7V8J1bJsqoQW7k8ew=;
+        b=V5TxxxjgzgdHRT+3ixMOEHdNccpoS55Y8FweOOUzsSm/mI9O66GvP6GK+tc2QAXSYq
+         lIwCAgVTd3rqKUsnX7+wbCAwUTnb7Vs1NJs1iOLLF6lUVOpxjBKvhXOwgrTjFBXOPEX/
+         8yIQe+nJKIe1X9vJrFgJix83D0czace7ommLEnn131cX9RZMDwYrKIoH9THaPkA8UiwJ
+         XFTrbNNS+/7/LVhLBssalNseWiVXsoTdoVlroMV/ONOhWSbaay+MadvckUm6zA4kI9EL
+         TI6IlW3dWw+62ELo8B2wkiZRFjzoN35thHtG1XilQY+9Z4ML9ktKwyKlWiH1UEKECcN/
+         k+og==
+X-Gm-Message-State: AOAM533yoWE1K4xUywlD/vbdT1nwMWUH7F8CgTxNwfP8EBH/IVadxpQP
+        y+/fAxthE7/iJjvrWs3ChNM=
+X-Google-Smtp-Source: ABdhPJzUVy5rRz71N1LKNigmfVFOhwEzr0lqyhhJwPZAnw3atYy2TmdFL0P3yI9eq5GskaSBxE3d3A==
+X-Received: by 2002:a05:6638:2386:b0:326:4047:9648 with SMTP id q6-20020a056638238600b0032640479648mr733846jat.120.1649923247890;
+        Thu, 14 Apr 2022 01:00:47 -0700 (PDT)
+Received: from [10.11.12.100] (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id 12-20020a92190c000000b002ca07342072sm684545ilz.50.2022.04.14.01.00.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Apr 2022 01:00:47 -0700 (PDT)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+Message-ID: <214f8670-91d5-f4b6-efa1-76966c3ab1ee@sunshineco.com>
+Date:   Thu, 14 Apr 2022 04:00:46 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.0
+Subject: Re: [PATCH v3 29/29] CI: make it easy to use ci/*.sh outside of CI
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <patch-v3-29.29-2e3c02fa0df-20220413T194847Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+In-Reply-To: <patch-v3-29.29-2e3c02fa0df-20220413T194847Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> wrote:
+On 4/13/22 3:51 PM, Ævar Arnfjörð Bjarmason wrote:
+ > In preceding commits the ci/.sh scripts have lost most of their
+ > CI-specific assumptions. Let's go even further and explicitly support
+ > running ci/lib.sh outside of CI.
+ >
+ > This was possible before by faking up enough CI-specific variables,
+ > but as shown in the new "help" output being added here using the
+ > ci/lib.sh to provide "CI-like" has now become trivial.
+ >
+ > The ci/print-test-failures.sh scripts can now be used outside of CI as
+ > well, the only GitHub CI-specific part is now guarded by a check that
+ > we'll pass if outside of GitHub CI.
+ >
+ > There's also a special-case here to not clobber $MAKEFLAGS in the
+ > environment if we're outside of CI, in case the user has e.g. "jN" or
+ > other flags to "make" that they'd prefer configured already.
+ >
+ > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+ > ---
+ > diff --git a/ci/lib.sh b/ci/lib.sh
+ > @@ -1,6 +1,30 @@
+ > +#  Usage
+ > +CI_TYPE_HELP_COMMANDS='
+ > +	# run "make all test" like the "linux-leaks" job
+ > +	(eval $(jobname=linux-leaks ci/lib.sh --all) && make test)
+ > +
+ > +	# run "make all test" like the "linux-musl" job
+ > +	(eval $(jobname=linux-musl ci/lib.sh --all) && make test)
+ > +
+ > +	# run "make test" like the "linux-TEST-vars" job (uses various 
+GIT_TEST_* modes)
+ > +	make && (eval $(jobname=linux-TEST-vars ci/lib.sh --test) && make test)
+ > +
+ > +	# run "make test" like the "linux-sha256" job
+ > +	make && (eval $(jobname=linux-sha256 ci/lib.sh --test) && make test)
+ > +'
+ > +
+ > +CI_TYPE_HELP="
+ > +running $0 outside of CI? You can use ci/lib.sh to set up your
+ > +environment like a given CI job. E.g.:
+ > +$CI_TYPE_HELP_COMMANDS
+ > +
+ > +note that some of these (e.g. the linux-musl one) may not work as
+ > +expected due to the CI job configuring a platform that may not match
+ > +yours."
+ > +
+ > @@ -9,6 +33,10 @@ mode=$1
+ >   if test -z "$mode"
+ >   then
+ >   	echo "need a $0 mode, e.g. --build or --test" >&2
+ > +	if test -z "$CI_TYPE"
+ > +	then
+ > +		echo "$CI_TYPE_HELP" >&2
+ > +	fi
+ >   	exit 1
+ >   fi
 
-> Thanks so much for submitting this proposal! I have been excited to look
-> through it, and am sorry for not getting to it sooner. Let me take a
-> look now and give some of my thoughts.
+It would never occur to me to try running a script named ci/lib.sh in
+the first place, and I'm not sure I would even think to poke around in
+the `ci` directory with the idea of being able to run CI tasks
+locally. Would it make sense to aid discovery by mentioning this new
+feature in the "GitHub CI" section of SubmittingPatches as a follow up
+to this series? (If so, perhaps the "GitHub CI" section should be
+renamed to "CI".)
 
-Thanks so much Taylor for reviewing my proposal. It's my pleasure!
+ > @@ -76,10 +108,29 @@ CC_PACKAGE=
+ >   # How many jobs to run in parallel?
+ >   NPROC=10
+ > +case "$CI_TYPE" in
+ > +'')
+ > +	if command -v nproc >/dev/null
 
-> Great! It sounds like working on Git would give you some new experience
-> in a different domain than some of your past projects, and help you
-> learn more about how it works and is developed.
+You need to redirect stderr too in order to avoid a scary error
+message on platforms lacking `nproc`:
 
-Yeah, definitely! Looking forward to explore more in this domain :)
+     if command -v nproc >/dev/null 2>&1
 
-> Terrific! I am really glad that the MyFirst... documents were helpful
-> and made it easier for you to contribute. The ProGit book is a great
-> resource, too.
+ > +	then
+ > +		NPROC=$(nproc)
+ > +	else
+ > +		NPROC=1
+ > +	fi
 
-Thanks :)
+Neither macOS nor BSD has an `nproc` command, however, they do have
+`sysctl`:
 
-> If you are looking for more resources, I would encourage you to search
-> around for blog posts written by Git contributors, particularly related
-> to reachability bitmaps (at least for this GSoC project). Some helpful
-> places to start there would be:
->
->     https://github.blog/2015-09-22-counting-objects/
->     https://github.blog/2021-04-29-scaling-monorepo-maintenance/
+     elif command -v sysctl >/dev/null 2>&1
+     then # macOS & BSD
+         NPROC=$(sysctl -n hw.ncpu 2>/dev/null)
 
-I have read the "counting objects" article already. It is a very good
-article to understand the reachability bitmaps in git. I would surely
-go through the other article you shared.
+and Windows provides a suitable environment variable:
 
-> Note that commits and trees can be stored as deltas against other
-> commits and trees (which themselves might be packed as deltas) and so
-> on. But we only consider a pair of objects to be delta candidates for
-> one another when they share a common type (e.g., we would never delta a
-> tree object against a blob or vice-versa).
+     elif test -n "$NUMBER_OF_PROCESSORS"
+     then # Windows
+         NPROC="$NUMBER_OF_PROCESSORS"
 
-Oops. That is new to me. I didn't know that commits and trees can also
-be delta-ed. Thanks for this info!!
+ > +	if test -n "$MAKEFLAGS"
+ > +	then
+ > +		COMMON_MAKEFLAGS="$MAKEFLAGS"
+ > +	else
+ > +		COMMON_MAKEFLAGS=--jobs=$NPROC
+ > +	fi
+ > +	;;
 
-> Exactly; though note that since that series we now have multi-pack
-> bitmaps, too, which use a slightly different ordering called the
-> "pseudo-pack" order, which (more or less) looks like all of the objects
-> in a MIDX first sorted by which pack they came from, and then sorted by
-> their order within the pack, removing duplicates in favor of the
-> "preferred" pack.
->
-> More thorough documentation on this can be found in the
-> "multi-pack reverse indexes" section of
-> "Documentation/technical/pack-format.txt".
-
-Thanks. Will look into it :)
-
-> But I want to be careful about the word "slow" here. They might be slow,
-> or it might be really fast to decompress a given bitmap, depending on
-> the disk performance, CPU pressure, how large the bitmaps are, and so
-> on. So I think a good first step here is to validate our assumption that
-> EWAH decompression is even slow to begin with.
->
-> (Of course, the literature on newer formats will readily tell you that
-> the old stuff is slower, but I think it's worth reevaluating those
-> statements in the context of a practical application instead of in
-> theory / benchmarks).
-
-I think, it is "conceptually/theoritically" slow approach. Because as
-you said -
-> we can't begin to interpret the bitmaps until after decompressing them
-
-It has to decompress the whole thing instead of evaluating the target
-bitmap. Hardwares can make it fast but theoritically the time complexity
-is slow.
-
-I will validate whether it is practically slow or not though.
-
-> Same comments here about whether or not this is slow to begin with. From
-> my experimental patches in this area earlier, I found that we could get
-> a significant speed-up in some cases, but that the speed-up was
-> basically obliterated whenever we had to do any follow-on traversal if
-> the bitmap coverage wasn't completely up-to-date.
-
-True. But atleast it is faster(hopefully) when bitmap coverage is up-to-date.
-We may optimize/improve it to make it fast overall.
-
-> Arguably we could do this whether or not we solve the above, but doing
-> some combination of the above may make it easier (e.g., if we wanted to
-> change the bitmap selection to store dramatically more commits, then we
-> may want to investigate how much of a bottleneck the sequential read
-> requirement of .bitmap files would become for different numbers of
-> selected commits).
-
-True.
-
-> For bitmaps, the number one thing we care about is correctness. I have
-> never thought about using Bloom filters before; even though the
-> one-sided nature of their errors means that we would never forget to
-> send an object that we should have, having an absolute result is vastly
-> preferred.
->
-> After that, I think we mostly care about how quickly they can be
-> decompressed. And after that, I think we care about things like "how
-> fast can they be written", and "how large are they".
-
-That's obvious. I had included those probabilistic approaches because
-I thought we could have a check whether the obtained result is right
-or wrong. In case of wrong answers (2% chance for Hyperloglog), we can
-follow another approach that alters only the wrong results. But I
-think, it will become complex. More research is needed to check whether
-it can be done or not.
-
-For other approaches ( i.e. Roaring+run and sroar), I think these two
-fits the criteria you listed in your comment. Though, I need to work
-more to fully understand the sroar methodology.
-
-> This all sounds very good and ambitious. Keep in mind, though, that
-> these projects have a tendency to take much more time than expected ;-).
-> If we get one done, I'll be thrilled! (The goal with suggesting a few
-> potential directions to go in is not to say: "let's do all of these
-> things", but rather to give you some options in terms of what you find
-> most interesting and exciting to work on).
->
-> So I think it makes sense to try and find a way you can dip your toes
-> into 2-3 of the sub-projects and get a sense for what feels most doable
-> and interesting, then focus on that before allocating time for more
-> projects in the future.
->
-> > ## Estimated Timeline
->
-> Like I said, I'm fine if you spend your entire GSoC project working on
-> just one of these projects. So I don't want to get hung up on specific
-> timelines just yet. If you end up working on this, I would suggest
-> budgeting a week or so to try out a couple of different sub-projects,
-> and then decide where to spend your time from there.
-
-If that is the case, then I would go for the first sub-project i.e.
-"Think of an better alternative of EWAH". It interests me a lot. Though
-I will do what you suggested i.e. "try and find a way you can dip your
-toes into 2-3 of the sub-projects and get a sense for what feels most
-doable and interesting".
-
-Should I remove "Estimated Timeline" ( or/and point 2, 3 from "The Plan"
-section) for now then?
-
-> Thanks very much for your interest and the time you spent putting this
-> proposal together. I hope that some of my comments were helpful in
-> refining it, and that you didn't mind my slow response too much.
-
-The comments and suggestions are indeed helpful! I even didn't mind
-anything.
-
-Thanks :)
