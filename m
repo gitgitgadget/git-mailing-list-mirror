@@ -2,160 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A23C433F5
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 09:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C55C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 10:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232369AbiDNKAH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 06:00:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54380 "EHLO
+        id S239041AbiDNK3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 06:29:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiDNKAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 06:00:06 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823B0120BE
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:57:41 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id lc2so8964773ejb.12
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x7mWm04cULY0H6w7dSwezek5nBWxdT0IrMGzz3YjzJU=;
-        b=QGvT4w0UPpcvCcjdCKuz1GcrN0jIsNFRQxgyGzjDqmevddlNNfbBrLXY1iI/Rp5VvY
-         +H7WYEZ5C44txwov0dHuwrafUmcj3RE/EDHyN+QF5NsyWjKm+8yyMEobg57oCnLbpbYu
-         tvtVnEI8iumncwiko+N5KULP2NXrf94GztJ/M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x7mWm04cULY0H6w7dSwezek5nBWxdT0IrMGzz3YjzJU=;
-        b=SaxlQI/0lEzVE0qBHMRAT0ODsA8ZBMvd7OtbKYD5LAPvnTzYdKDDHQaY2OzbVXnd0t
-         yOk7CDte43R4cHpiehogMOvHg34V3CR0gvZv/7aQWcpVjmhggt5m02f3gB5Ix3HASedo
-         OrAg+FrTI0bf+Oy1PLgbu+hTDi2FdatF6/pHkVRiZ3PmbxuevPuXtfqacRRkzi0uPvbi
-         DeEz2XJgEBk9D3a+BuHggs0ZB5LgcEXEIEp7VpF7pcbORkggSmd1H6R6TIcaJxwhCExl
-         Y5cglb4zissLvwzOMsmx88m7NschdsBVi3t5GZfxyz3rUtjh88PMQ3G4RBlf4er55PPZ
-         bB8A==
-X-Gm-Message-State: AOAM5302GfYZiTLvtugjVlrkhnefRbEitbW9Ne3N2NWn836VBhZIGJiB
-        7YzmsjFoMZIYdEqzRM91r4SrSZxfS0LnqD8GTyx/61psf8+a+oKzfUE=
-X-Google-Smtp-Source: ABdhPJwoySQ40Z6RJvJW52pBGMJ9R0dJgGXYORJRKsUhvtZ42uNC89IhnipTscunMK70tXzC29DUQEaiav8BFpe/uP4=
-X-Received: by 2002:a17:907:1c9a:b0:6e8:da0a:f788 with SMTP id
- nb26-20020a1709071c9a00b006e8da0af788mr1602665ejc.170.1649930259894; Thu, 14
- Apr 2022 02:57:39 -0700 (PDT)
+        with ESMTP id S235379AbiDNK26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 06:28:58 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94EFF716D0
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 03:26:33 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79CCB179904;
+        Thu, 14 Apr 2022 06:26:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=RB/YAtkS4OYM3noKZQ1qj4bel
+        T/Uq4EPDFpL/mEeWsU=; b=El+kUNCkyFCbdA7VS8s6CA47oZfReV00PQO4Mj5Fs
+        f7AKQcoziE+NTWU9nQh4QptpShHubVZOTQh9fTzhqKIocOyrqBFWtbEURTlH0Ejq
+        oTY0ZzI/UASAAdB7yr7c6H2SuTeViUYURZ9HvVF0EulS0ncLDVTFUQ7lgNaWJ/FV
+        D4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 71DD0179903;
+        Thu, 14 Apr 2022 06:26:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.214.157])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 72F99179902;
+        Thu, 14 Apr 2022 06:26:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [RFC PATCH v4 0/6] CI: js/ci-github-workflow-markup rebased on
+ "use $GITHUB_ENV"
+References: <RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com>
+        <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com>
+Date:   Thu, 14 Apr 2022 03:26:26 -0700
+Message-ID: <xmqq35ig2c6l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1206.git.1649670174972.gitgitgadget@gmail.com>
- <pull.1206.v2.git.1649831069578.gitgitgadget@gmail.com> <20220413214109.48097ac1@ado-tr.dyn.home.arpa>
-In-Reply-To: <20220413214109.48097ac1@ado-tr.dyn.home.arpa>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 14 Apr 2022 11:57:29 +0200
-Message-ID: <CAPMMpoiXNKNnARhJ2n+nzOj==-27YA68OvMmUyYnSaoLbfE4xw@mail.gmail.com>
-Subject: Re: [PATCH v2] [RFC] git-p4: improve encoding handling to support
- inconsistent encodings
-To:     Andrew Oakley <andrew@adoakley.name>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 584737A6-BBDD-11EC-B2EE-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 10:41 PM Andrew Oakley <andrew@adoakley.name> wrote=
-:
->
-> On Wed, 13 Apr 2022 06:24:29 +0000
-> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> wrote:
-> > Make the changelist-description- and user-fullname-handling code
-> > python-runtime-agnostic, introducing three "strategies" selectable via
-> > config:
-> > - 'legacy', behaving as previously under python2,
-> > - 'strict', behaving as previously under python3, and
-> > - 'fallback', favoring utf-8 but supporting a secondary encoding when
-> > utf-8 decoding fails, and finally replacing remaining unmappable
-> > bytes.
->
-> I was thinking about making the config option be a list of encodings to
-> try.  So the options you've given map something like this:
-> - "legacy" -> "raw"
-> - "strict" -> "utf8"
-> - "fallback" -> "utf8 cp1252" (or whatever is configured)
->
-> This doesn't handle the case of using a replacement character, but in
-> reality I suspect that fallback encoding will always be a legacy 8bit
-> codec anyway.
->
-> I think what you've proposed is fine too, I'm not sure what would end
-> up being easier to understand.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I'm not sure I understand the proposal... Specifically, I don't
-understand how "raw" would work in that scheme.
+> 6:  1d2b94436fc ! 6:  b291f64821c ci: call `finalize_test_case_output` =
+a little later
+>     @@ t/test-lib.sh: trap '{ code=3D$?; set +x; } 2>/dev/null; exit $c=
+ode' INT TERM HUP
+>       	test_failure=3D$(($test_failure + 1))
+>       	say_color error "not ok $test_count - $1"
+>       	shift
+>     - 	printf '%s\n' "$*" | sed -e 's/^/#	/'
+>     - 	test "$immediate" =3D "" || _error_exit
+>     +@@ t/test-lib.sh: test_failure_ () {
+>     + 		say_color error "1..$test_count"
+>     + 		_error_exit
+>     + 	fi
+>      +	finalize_test_case_output failure "$failure_label" "$@"
+>       }
 
-In "my" current scheme, there is a big difference between "legacy" and
-the other two strategies: the legacy strategy reads "raw", but also
-*writes* "raw".
+This part, specifically the following from [6/6], looks iffy. =20
 
-The other schemes read whatever encoding, and then write utf-8. In the
-case of strict, that actually works out the same as "raw", as long as
-the input bytes were valid utf-8 (and otherwise nothing happens
-anyway). In the case of fallback, that's a completely different
-behavior to legacy's read-raw write-raw.
+@@ -782,13 +782,13 @@ trap '{ code=3D$?; set +x; } 2>/dev/null; exit $cod=
+e' INT TERM HUP
+ # the test_expect_* functions instead.
+=20
+ test_ok_ () {
+-	finalize_test_case_output ok "$@"
+ 	test_success=3D$(($test_success + 1))
+ 	say_color "" "ok $test_count - $@"
++	finalize_test_case_output ok "$@"
+ }
+=20
+ test_failure_ () {
+-	finalize_test_case_output failure "$@"
++	failure_label=3D$1
+ 	test_failure=3D$(($test_failure + 1))
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+@@ -798,18 +798,19 @@ test_failure_ () {
+ 		say_color error "1..$test_count"
+ 		_error_exit
+ 	fi
++	finalize_test_case_output failure "$failure_label" "$@"
+ }
+=20
 
-Is your proposal to independently specify the read encodings *and* the
-write encoding, as separate parameters? That was actually my original
-approach, but it turned out to, in my opinion, be harder to understand
-(and implement :) )
 
->
-> >      * Does it make sense to make "fallback" the default decoding
-> > strategy in python3? This is definitely a change in behavior, but I
-> > believe for the better; failing with "we defaulted to strict, but you
-> > can run again with this other option if you want it to work" seems
-> > unkind, only making sense if we thought fallback to cp1252 would be
-> > wrong in a substantial proportion of cases...
->
-> The only issue I can see with changing the default is that it might
-> lead to a surprising loss of data for someone migrating to git.  Maybe
-> print a warning the first time git-p4 encounters something that can't be
-> decoded as UTF-8, but then continue with the fallback to cp1252?
+With the other 29-patch series applied on the same base as before,
+test_failure_ does not have such "fi" inside.  Misapplication of
+rebase or something?
 
-Honestly, I'm not sure how much a warning does. In my perforce repo,
-for example, any new warnings during the import would get drowned out
-by the mac metadata ignoring warnings.
+In any case, I've wiggled both series in and rebuilt 'seen'.
+Looking good as before.
 
-I understand and share the data loss concern.
+Thanks.
 
-As I just answered =C3=86var, I *think* I'd like to address the data loss
-concern by escaping all x80+ bytes if something cannot be interpreted
-even using the fallback encoding. In a commit message there could also
-be a suffix explaining what happened, although I suspect that's
-pointless complexity. The advantage of this approach is that it makes
-it *possible* to reconstruct the original bytestream precisely, but
-without creating badly-encoded git commit messages that need to be
-skirted around.
-
->
-> >      * Is it OK to duplicate the bulk of the testing code across
-> >        t9835-git-p4-metadata-encoding-python2.sh and
-> >        t9836-git-p4-metadata-encoding-python3.sh?
-> >      * Is it OK to explicitly call "git-p4.py" in tests, rather than
-> > the build output "git-p4", in order to be able to select the python
-> >        runtime on a per-test basis? Is there a better approach?
->
-> I tried to find a nicer way to do this and failed.
-
-OK thx.
-
->
-> >      * Is the naming of the strategies appropriate? Should the default
-> >        python2 strategy be called something less opinionated, like
-> >        "passthrough"?
->
-> I think that "passthrough" or "raw" would be more descriptive names.
->
-
-OK thx, I'll take "passthrough" as it feels slightly less positive
-than "raw", for some reason that I can't put my finger on :)
-
-> The changes to git-p4 itself look good to me.  I think that dealing
-> with bytes more and strings less will be good going forward.
-
-Thx for your feedback!
