@@ -2,103 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEF97C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 21:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8515EC433EF
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 22:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343697AbiDNVRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 17:17:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39912 "EHLO
+        id S1347010AbiDNWae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 18:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237304AbiDNVRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 17:17:01 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047716331
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 14:14:33 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A6BEC18AA87;
-        Thu, 14 Apr 2022 17:14:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u9vpCGaybbB/P+luyAUTc7zWcvvNlwpqPbiCi8
-        uxvkQ=; b=OgaEuL2Hv2O4NKEc+LhuSzPMwSbqhTRK8a/ytdwrZLYgI7IMx0lwCO
-        ylslA3YOrTqiBXLxudE+XQY6bI5dKOQu31ZbjN80cnaGO3wn636ewYhCFKvDtm4F
-        Q9MJ233h0QWd3JDaaxhjLwlbmUUvwZqGqpiZcw1faxgVUww/vWCT8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F97618AA86;
-        Thu, 14 Apr 2022 17:14:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1FD618AA83;
-        Thu, 14 Apr 2022 17:14:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        vdye@github.com, shaoxuan.yuan02@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/4] Sparse index integration with 'git show'
-References: <pull.1207.git.1649349442.gitgitgadget@gmail.com>
-        <Ylhp+q96KOt2+OGZ@google.com>
-Date:   Thu, 14 Apr 2022 14:14:24 -0700
-In-Reply-To: <Ylhp+q96KOt2+OGZ@google.com> (Josh Steadmon's message of "Thu,
-        14 Apr 2022 11:37:46 -0700")
-Message-ID: <xmqqk0brz7tb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1347006AbiDNWad (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 18:30:33 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE022C3353
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 15:28:06 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id bi26so11459778lfb.2
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 15:28:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=P4nJjGi4ldSjeyhdg8mK5TKr5cu/QnTyeqggoOkHFSQ=;
+        b=L+04Ym6RIim+QuPXpEL/Bs+oFaWNdifKzPUx3S99LhGuCjuSOKpzu+Z1NU9y6ONuLU
+         ti9pnaDUAC2vgTCCUgbqb4fAEZnp6vllp9Ia65rk7FcVig4F7r/x8ZZeo3ocX2hYdLyX
+         1BEhbyRBTQe+l4O52fuDAjl7lhvcEpKCYBPSI4iRgMLpqs5DYzScpDk1/bgrufG3ae8B
+         L2WQePjFyQmB92ZBu3smCsc6Wg8MPiKoc0eB6gI7ad1sdKiASRrO/6O8HPiuWymiYCiF
+         xurpkTBbk3SCu+xhUDsta0mmPoTDYqA9Kw3KmGB9hlcexBY6+/pXtlmOmkV/pPc8B3zf
+         mIcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=P4nJjGi4ldSjeyhdg8mK5TKr5cu/QnTyeqggoOkHFSQ=;
+        b=cw1uOjpzeTBs0JVTR/oJdkodllFhGMnZO3+LC3PrXUD2lD9HC3sNZmcskBMCUDxBzr
+         zA28DkLKxNm/yGisjLnDTCshaktLf84VBIrPDKbr11WnHFzNpgRrl7HvyCa+EimxXLxv
+         HSkU6ajI+K++TZPEzJvW1UxGrUrWG4vEyuf4+pGgWS0PrQrY+2sNE4wUt5c4cCe+esDZ
+         DjqkPeXfGllkFP10TapmqT1ExKVCqb04WfyCpmWEdwEHzzWnAtJFc2G2aYognnrQp5NP
+         +91vC3ok2Tt+TnA60ftyVTzZ+ZHHPWLtXSoZGu9mF4CxDlUXs6vZd4WRa/bvNsVb4D15
+         /ZCQ==
+X-Gm-Message-State: AOAM533ed7Ym1oa1cD1eqhi20uNrvd+6iigYr/JxqVrOPx4aCV6ZT55D
+        1Rh4fepw9XCKoHRXu6h3aTK1UoLLeZ2zRiyv7RFmJcKlZK0=
+X-Google-Smtp-Source: ABdhPJwMrB9ob2k1lNlrwfKHzzczILnMb0ACqJgd0PGq00h4WK8+lu+EXMkr4ZUlKnSp4mWqkHELnmA5JYT3u1CSKII=
+X-Received: by 2002:a05:6512:12c3:b0:44a:27c2:b0a2 with SMTP id
+ p3-20020a05651212c300b0044a27c2b0a2mr3201636lfg.325.1649975284860; Thu, 14
+ Apr 2022 15:28:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DD7C7A94-BC37-11EC-AE27-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <CAK-fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com>
+In-Reply-To: <CAK-fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Thu, 14 Apr 2022 15:27:53 -0700
+Message-ID: <CAJoAoZkqz=jy94fm8E7aaMWO_qCannOiVJCYMft3K5O=fX=2GA@mail.gmail.com>
+Subject: Re: Git user experience workshop
+To:     Jorawar Singh <jorawarsingh12@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+On Mon, Apr 11, 2022 at 3:18 AM Jorawar Singh <jorawarsingh12@gmail.com> wrote:
+> Anytime between mid-April to April-end.
 
->> 'git show' is relatively simple to get working in a way that doesn't fail
->> when it would previously succeed, but there are some sutbleties when the
->> user passes a directory path. If that path happens to be a sparse directory
->> entry, we suddenly start succeeding and printing the tree information!
->>
->> Since this behavior can change depending on the sparse checkout definition
->> and the state of index entries within that directory, this new behavior
->> would be more likely to confuse users than help them.
->
-> The two paragraphs above did not really convey to me on first
-> read-through what the problem was. IIUC the main points are:
->
-> * git-show does not currently work with the sparse index.
-> * A simple change fixes the above, but causes us to sometimes print
->   unexpected information about trees.
-> * We can use the simple change in our implementation, but must do
->   additional work to make sure we only print the expected information.
->
-> I think this could be clarified by:
-> * Including examples of the unhelpful output from the simple
->   implementation.
-> * Describing in more detail the situations that trigger this.
-> * Describing why those situations don't currently happen without support
->   for sparse indexes.
+FYI - I spoke with Alice today and we decided to add a few more dates
+in early May to give us a little more room; I think trying to have the
+workshop next week would be too short of notice for Alice to prep.
+Folks who already filled the spreadsheet may want to update responses;
+anybody who's interested in participating but haven't filled out the
+spreadsheet yet, please do so!
 
-I think the issues patches 2-4 addresses are not limited to any
-specific command, but how ":<path-in-the-index>" syntax is resolved
-to an object name (including the way how error messages are issued
-when the given path is not found in the index).
+Thanks very much Jorawar for your help putting the sheet together!
 
-But the title of the series and presentation place undue stress on
-"git show", which I suspect may be confusing to some readers.
-
-For example, with these patches, wouldn't "git rev-parse" start
-working better, even though the proposed log message for no commit
-in the series talks about "rev-parse" and no tests are done with the
-"rev-parse" command?
-
-I am not suggesting that commands other than "show" should be also
-discussed in detail or tested.  It would help readers if we said
-that we are using 'show' merely as an example to demonstrate how
-":<path-in-the-index>" syntax interacts with the sparse index
-entries (1) before the series, and (2) how well the improved
-object-name parsing logic works after the series.
-
-
+ - Emily
