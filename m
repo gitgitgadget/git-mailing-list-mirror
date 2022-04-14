@@ -2,107 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E411C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 07:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BDECC433EF
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 07:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239350AbiDNHZD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 03:25:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46352 "EHLO
+        id S240167AbiDNHZg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 03:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232027AbiDNHZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 03:25:02 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C5F193DF
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:22:39 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-2ec42eae76bso46082857b3.10
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:22:39 -0700 (PDT)
+        with ESMTP id S229527AbiDNHZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 03:25:34 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A131A329AA
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:23:10 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id t25so5201271edt.9
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=s1fEUe8Gd6FRExXXbAtBSmSM+O0w+LwglS7MIutVpI8=;
-        b=hp2D0dSK5nHX2ONPmZli0dVBTh2UoCQ39vuR7MLoxWuySn4YlRo1jPqPrQTQZ9kx/e
-         bbiLaYVcyLLLN4yT5H0QrL4wVpPlhxbrS5lVaxIXndYNh6aamjzi+m6rdyUPd69CWKwE
-         nQUNQNYv2k7eFe0EmbOXFyjrAiGfwF+FU5TD7IYqy4nsdauFR80h4Zmd5bJ0Fb55lqc8
-         +IiJI/njehrPfgcnZcIk7OH5gizEFC0P5nJ/m79/JXoiDlQORBG9sXTHcw0dfhW2V6K2
-         c7pbhYU+a6zsXSF5RyHnkOzOZ6q1cMWz8Rkq20FS50ggovlb2Q+CNZjxDQiEJbRysGcn
-         SgVQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LXrY8Y5/PuvhhHoeOC2wVldQBg6AwL3J4b+usgy+SCc=;
+        b=herqYEkVWRnNzvph3Kdnl7+Edf1WuUR+WvD5WZJ5gxEKaZqaNZYOXXhapPeM5Pc5+v
+         loQBtDuMmpYADAln2Dvrudr5I3rPHeIqEwl8sph0Yd85oK78jgmeSZXh3hHi+KHs/1E8
+         PCFXIwlv+UwK2chgVBbJ5S0gDp/pbP+kEgtxKTqVy7o31O0bXU7uAEX/N5y3Kwyl3NYS
+         6MWGqeFhARMFZfCne1ahH1GovL/kFFOuwT6HuWU1YNm8yATufvbK4HooWacSIB90NFUn
+         7PcNPnSnP06lsrcopydNxN21BaqNg897qnWvWtJFWuRmzunJlV5/gtQuL168e8Lw5joC
+         Q/WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=s1fEUe8Gd6FRExXXbAtBSmSM+O0w+LwglS7MIutVpI8=;
-        b=zFY78LaPAszbg/pWOi4qW/aRfObEfuLvOieG1lsg1cljyky0WvMWd6mvrFoT6SnmHE
-         gVv7XIH0sBvOjczWUh40MlJtXVcARKYQxxI+gDTZFpIuzh9iL/SXx6MXX6RB5qHs24oP
-         45RqigxzdM/m05SFcimFTW8G3WGRzLrB0DEVhmLQGAVh0FgyuqSfndDzuIffBvZtVTWu
-         Ztt3iHjOr4BxPG9wuF0STK7AbcOlwdRBcndEW5vvXinMs4vpUkns8vD6++dT7XE6hRgR
-         0dVyL5z8bX/CsUlxpvqVdVh7wkuIBC5mdbAczPl7p9wIaTKQDFzoHsiO5sF7XzATILC+
-         opog==
-X-Gm-Message-State: AOAM532rNf/v6OLmgcRJxXqWGmMPnBTb+9tRLzF5K9ZAKcwdwfAAP0UN
-        p9m6ivZe8M8JKsiVoxaZcD8yh5NMMMoimhgroiea6Kq0qj1umNR2
-X-Google-Smtp-Source: ABdhPJwL2kOX0Pbd5HQXGSeuPSLZ2kWrLl22S8mDHNrWiS90HgkejWsVJmLUztu5W+eOQ/SMm//PWmP6lsuVxu1H2s0=
-X-Received: by 2002:a81:ff06:0:b0:2e6:d7bc:c812 with SMTP id
- k6-20020a81ff06000000b002e6d7bcc812mr956472ywn.122.1649920958224; Thu, 14 Apr
- 2022 00:22:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=LXrY8Y5/PuvhhHoeOC2wVldQBg6AwL3J4b+usgy+SCc=;
+        b=0fNG7EKWAuq+3vtiyJbOncYR8+D7WJvNBhKDt03ThI7nGgSNIC8OXg2iOWpz/TUAC+
+         1t98o9sAtrhMCUe1gZax6/P52HnEVgF19RojXNsA5lR0VhhEvla+FM9alqTpqtsoxGH8
+         M7eQgL3+LL7cnK8XE306aFZeatarIuwIImwKiMTYcJj/IqG1IjN4kCYCmXWAEM1FkUG+
+         I87TorwJE2IXjx8zXwKcJgxyhS+L4EW+TDo+9iTul8PsvGs/U3MgpTXnfnpIXSxU3ZeS
+         jlvEUxLB8XH/bxtws/ZRTX+yfXCXpAgcZK4jLdJm6yzYv/JL/qrgx95nrIKs0f0d+zNs
+         1z5Q==
+X-Gm-Message-State: AOAM530Y88qFk50uBUeQzmCSkLJnwo8jXGg3iCWqEeROyNElTnwF3T+4
+        F9FzkfcGWnczHDM+FFVsbhNo+FU8hXECkg==
+X-Google-Smtp-Source: ABdhPJxyNFVvUlSQCR9tdTv97BdNc6/sdMZEmry/xVuMy15SP6CIo7jWlNp/Z6zLfRAGX5Zlk4TP8g==
+X-Received: by 2002:a05:6402:d4:b0:418:7193:da1 with SMTP id i20-20020a05640200d400b0041871930da1mr1532905edu.57.1649920989091;
+        Thu, 14 Apr 2022 00:23:09 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ce21-20020a170906b25500b006e89869cbf9sm364022ejb.105.2022.04.14.00.23.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 00:23:08 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1netoq-005G59-4Z;
+        Thu, 14 Apr 2022 09:23:08 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: ab/plug-leak-in-revisions
+Date:   Thu, 14 Apr 2022 09:22:31 +0200
+References: <xmqq8rsab5do.fsf@gitster.g>
+ <220413.86bkx4eobr.gmgdl@evledraar.gmail.com> <xmqq35ig5zlf.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqq35ig5zlf.fsf@gitster.g>
+Message-ID: <220414.86y208cen7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Randall Alfaro <ra.kamuk@gmail.com>
-Date:   Thu, 14 Apr 2022 01:22:27 -0600
-Message-ID: <CACuRj-gYKw0Qc6utRFNoRtKR8NrFeuaSoH-fbQpqfHQ+fxomKQ@mail.gmail.com>
-Subject: Git Bug Report
-To:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000009f7b5405dc9828ac"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---0000000000009f7b5405dc9828ac
-Content-Type: text/plain; charset="UTF-8"
 
-Hello Git Community.
+On Wed, Apr 13 2022, Junio C Hamano wrote:
 
-While using the Git tool on windows and a custom path for a private
-SSH (due to some policies and guidelines I've got to follow), I
-encountered a particular issue.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> I think it should be ready with my just-submitted re-roll, which fixes a
+>> trivial nit spotted by Phillip Wood by removing a useless NULL check:
+>> https://lore.kernel.org/git/cover-v6-00.27-00000000000-20220413T195935Z-=
+avarab@gmail.com/
+>
+> Last time I checked, the last three patches haven't made to the lore
+> archive yet.  We have other things to do while waiting for them, so
+> there is no need to rush or resend ;-)
 
-I think this is related to a bug, I attach the template generated by
-git bugreport down below.
-Regards!
-Randall Alfaro
-
---0000000000009f7b5405dc9828ac
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2022-04-14-0107.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2022-04-14-0107.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_l1yobnoa0>
-X-Attachment-Id: f_l1yobnoa0
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpClIvIFNldCB1cCBHSVRfU1NIX0NPTU1BTkQgb3IgY29yZS5zc2hD
-b21tYW5kCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
-KQpSLyBUbyBiZSBhYmxlIHRvIGZldGNoL3B1bGwvcHVzaAoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFk
-PyAoQWN0dWFsIGJlaGF2aW9yKQpSLyAiRGlzYWxsb3dlZCBjb21tYW5kIiB3YXMgb2J0YWluZWQg
-YnkgdGhlIHNlcnZlcgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVk
-IGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpSLyBBbnkgR0lUIGNvbW1hbmQgd29ya2VkLgoK
-QW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6CldoaWxlIGRlYnVnZ2luZyBhbmQgdHJvdWJs
-ZXNob290aW5nLCBJIG5vdGljZWQgdGhhdCB0aGUgY29tbWFuZCAiZ2l0LXVwbG9hZC1wYWNrIiB3
-YXMgZ2V0dGluZyBzZW50IHR3byB0aW1lcy4gVGhpcyBpcyB0aGUKY29tbWFuZCBzZW50IHRvIHRo
-ZSBzZXJ2ZXIgYWZ0ZXIgY29ubmVjdGluZyB0byBzc2ggKHdpdGggLXZ2dikKZ2l0LXVwbG9hZC1w
-YWNrICc8UFJJVkFURSBQQVRIPicgLW8gU2VuZEVudj1HSVRfUFJPVE9DT0wgLXAgPFBSSVZBVEVf
-UE9SVD4gZ2l0QDxQUklWQVRFIFVSTD4gZ2l0LXVwbG9hZC1wYWNrICc8UFJJVkFURSBQQVRIPicK
-CkFmdGVyIGRlYnVnZ2luZyBhcyB3ZWxsIHRoZSBub3JtYWwgYmVoYXZpb3Igd2hlbiBzc2ggaXMg
-dXNlZCBidXQgd2l0aG91dCBHSVRfU1NIX0NPTU1BTkQgb3IgY29yZS5zc2hDb21tYW5kIChieSB1
-c2luZyB0aGUgLnNzaCBmb2xkZXIgYW5kIGNvbmZpZyksCnRoZSBjb21tYW5kIGlzIGluZGVlZCBv
-bmx5IHNlbnQgb25lIHRpbWUuCgpNeSBoeXBvdGhlc2lzIGlzIHRoYXQgdGhpcyBtaWdodCBiZSBh
-IGJ1ZywgYW5kIHNlbmRpbmcgdGhlIGNvbW1hbmQgdHdvIHRpbWVzIG1pZ2h0IGJlIGNhdXNpbmcg
-R2l0TGFiIHRvIHJlc3BvbmQgd2l0aCB0aGUgIkRpc2FsbG93ZWQgY29tbWFuZCIKZXJyb3IuCgpQ
-bGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3UgY2FuIGRl
-bGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJbmZvXQpn
-aXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi4zNS4yLndpbmRvd3MuMQpjcHU6IHg4Nl82NApidWls
-dCBmcm9tIGNvbW1pdDogNTE4Y2NiYTIzNTJjZTcyMWNhYmJiZjI5MzM4NjljM2MzMzEzZDFjMwpz
-aXplb2YtbG9uZzogNApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKZmVhdHVy
-ZTogZnNtb25pdG9yLS1kYWVtb24KdW5hbWU6IFdpbmRvd3MgMTAuMCAxOTA0MiAKY29tcGlsZXIg
-aW5mbzogZ251YzogMTEuMgpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxl
-CiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IDx1bnNldD4KCgpbRW5hYmxl
-ZCBIb29rc10K
---0000000000009f7b5405dc9828ac--
+git-send-email died at the end of that send, I picked up where I left
+off and sent the remaining three.
