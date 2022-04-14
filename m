@@ -2,239 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E25F0C433F5
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 07:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D82A3C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 08:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240451AbiDNHnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 03:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59600 "EHLO
+        id S239279AbiDNIDD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 04:03:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240596AbiDNHnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 03:43:08 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B76A553723
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:40:44 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r13so5697726wrr.9
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 00:40:44 -0700 (PDT)
+        with ESMTP id S229911AbiDNIDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 04:03:01 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 064743E5FC
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:37 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id mm4-20020a17090b358400b001cb93d8b137so8601317pjb.2
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 01:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=p1sec-com.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:autocrypt:organization:in-reply-to;
-        bh=yEklcjyGWchEhVA7HbrOADs/j/Deks4JagMjcxjM4m8=;
-        b=oqY7/n0x0Cfv/i/LbzwkY9cAwXujPYBye12S/7XvDmU3mZtbcYIm2C+iRWfuJUIOEr
-         U2KiK6fEbmKYDnN/0X5fFidBpP+H3/5aXTjsDaffNZrjJ78UGlJOHFvhq8PeXwyP1DoS
-         NQ71PK2Q0/ZxYfK00uRIS9ag7SxttEVgx2Bagqs3ZJFSk+wFWIyWz84cdSS2GC2UYveJ
-         L6i+1Chf0Yq0Lx0NEOyhj7H5h3A1ueRC/0ZqsRhYE+gNbMO3oId6QR+TDnyQ5u/6k10W
-         gElMcH+LuSNxd3VQQp4mx+cPVIaH/tCtvWFe2YtpOQzNahmRmCqskp9FYUJtE154Qp3T
-         3C0w==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=S85jCb6sHrRdwSMlweoO8hGDoLAxNhiaJjlsXMnmI+A=;
+        b=QD3BRKGP22ZoKkr1S7CwCwwrRWhLEO8xB5UZobvMN5CAwO1oeVlQNA0apwQgXqWXUH
+         PVw4GuB5FdWdh5W9DA2ACRX6GQAunpxCwjRUoEyc5NxpbCypKdI0Wk4pp6J9hFdrFxnh
+         dZDj34cdCk0xy+YeXDTTfDxgDYXZAfS6gORtci6Qc0If2hVvjkl/OCOJGK38ggVRW4MD
+         6XdgnnVFOXOXG0IZgwwXdDbEd1SWL+niheIzFDgIVJGu/pnIPZtVIPp29R8CH8i7J9cI
+         pm6+r5MILJkxP75z2zGPwCsu9glw1WqCAKi3QJ+POtXWYdel6D4JuNYD/+GhQVkgl+0A
+         bspg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:autocrypt:organization
-         :in-reply-to;
-        bh=yEklcjyGWchEhVA7HbrOADs/j/Deks4JagMjcxjM4m8=;
-        b=jUaYHAm6denFRL0ppjJwYqPaV+WPGWDMSFjJWb+6vtZLbEKqFsAugl9FiNO90kzjy5
-         pwmPWPb1v7r/fBfKhJnFd8LYErHfuefBTcPKzqZuLrcJ52rd8kQOoEnN3vs35vYHdTDb
-         tizVvvkuR+TzFOtzfjiVOCESmAN9dXSCDyIWRD52UCvmTtptZMUSf0FB/ZIMygYjrhJz
-         V2lLNrdLR6cSfMry65oefTJ3a59xmJU1cf+iQwecy1EBZpv3qncuSxgSlr3vEUjbysSB
-         Clgh2HVtF9cShwM5XjqS9T+ekvR8AK184c9x0piU2g81QFQsxUqENUPJV04CHGERFfIu
-         YvMA==
-X-Gm-Message-State: AOAM5334LFtL3PYvnRL/rKwVQA5bex5szP9UrvP6PWTz3McyMd1CSWJ7
-        9HctFkDeZi9bJX1dN1MBj2muKZJMHDU7Jw==
-X-Google-Smtp-Source: ABdhPJwZC3LMLz22S1Dg12r4LUVESNDXKMCpkQwvzq7FQxo4zRB2DdBeg4yjGPURqz1i7cd5dlMIxQ==
-X-Received: by 2002:adf:c14d:0:b0:207:a28f:f5dd with SMTP id w13-20020adfc14d000000b00207a28ff5ddmr1036605wre.679.1649922043300;
-        Thu, 14 Apr 2022 00:40:43 -0700 (PDT)
-Received: from [10.0.95.166] (lmontsouris-655-1-76-245.w90-63.abo.wanadoo.fr. [90.63.128.245])
-        by smtp.gmail.com with ESMTPSA id f9-20020a05600c4e8900b0038cc29bb0e1sm5547210wmq.4.2022.04.14.00.40.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Apr 2022 00:40:42 -0700 (PDT)
-Message-ID: <1e5d4562-8fa2-431f-fc8b-ecdddff640cd@p1sec.com>
-Date:   Thu, 14 Apr 2022 07:40:40 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=S85jCb6sHrRdwSMlweoO8hGDoLAxNhiaJjlsXMnmI+A=;
+        b=FL4Pt30TLto+FipPNyL2EcnrQppY+g/bPHQ9tZmtAMsjlbNb9nuWmlt1ZZ5JzbFITO
+         ur2ph+8T/oM9sOXc2Tx0wnjXfw6/ubkkzaVQj1WiBn6sl2I6HYtrXx2qDFJIy1Oyoij0
+         fjIZOEvVo26i7B2kY1C5Cuc3M+7nMixv5DjifimxVT19/Mlj0v4Aqs4bnQvndTxGhpgf
+         wgkSzTQvP3zTwoQaCXLADsFG1545RzfGbzoNbaRCpuhNdJn5AJvMjWMJeNCrjdFTgbHz
+         +tUz9/QMN/8SEcgVhV6lq+SoarBOy8Psdg8vPeRzEmUEKtZckMhMwqlN3PAhfXsU+KDr
+         u/0A==
+X-Gm-Message-State: AOAM530DAxFiCE7KD2whr0K/o6fWxS69QVgy3W9+tQrPziZcJcsB2XRq
+        BRKB3L63PiffoGfgzINIAXg=
+X-Google-Smtp-Source: ABdhPJyixhWrHFqM64Mt3s3csCUd2z7jfQeQWa5zc0aUpZKOMnFdgzgl73IS2AHAR9vuE3xzUOrLWA==
+X-Received: by 2002:a17:90b:17c3:b0:1c6:b0ff:abf with SMTP id me3-20020a17090b17c300b001c6b0ff0abfmr2406583pjb.24.1649923236166;
+        Thu, 14 Apr 2022 01:00:36 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4060:209f:3abe:ccb:90ec:502c:d6b3])
+        by smtp.gmail.com with ESMTPSA id y6-20020a626406000000b005060889f2cdsm1272144pfb.191.2022.04.14.01.00.32
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 14 Apr 2022 01:00:35 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [GSoC][RFC][PROPOSAL] Reachability bitmap improvements
+Date:   Thu, 14 Apr 2022 13:28:46 +0530
+Message-Id: <20220414075846.14059-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <YlckmDHRAYnE1J5t@nand.local>
+References: <YlckmDHRAYnE1J5t@nand.local>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: bugreport - SEGFAULT on 'git show-branch --current --reflog=3'
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-References: <b6113b91-6613-42b5-ca85-1004099b65c4@p1sec.com>
- <220413.864k2xgk51.gmgdl@evledraar.gmail.com>
- <6d510d78-9b0b-c463-889b-cd3855ccdd1b@p1sec.com>
- <220413.86wnfses7c.gmgdl@evledraar.gmail.com>
-From:   Gregory David <gregory.david@p1sec.com>
-Autocrypt: addr=gregory.david@p1sec.com; keydata=
- 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
- v1dxvY4f2F5nhrZWkn5Rw95Qk2jIp0JB7GLzRSg=
-Organization: P1 security
-In-Reply-To: <220413.86wnfses7c.gmgdl@evledraar.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ThXKAhlH3XRFBI4vgwigERBa"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ThXKAhlH3XRFBI4vgwigERBa
-Content-Type: multipart/mixed; boundary="------------wJUCY7lk8NtK4wApVjZuxoDK";
- protected-headers="v1"
-From: Gregory David <gregory.david@p1sec.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc: git@vger.kernel.org
-Message-ID: <1e5d4562-8fa2-431f-fc8b-ecdddff640cd@p1sec.com>
-Subject: Re: bugreport - SEGFAULT on 'git show-branch --current --reflog=3'
-References: <b6113b91-6613-42b5-ca85-1004099b65c4@p1sec.com>
- <220413.864k2xgk51.gmgdl@evledraar.gmail.com>
- <6d510d78-9b0b-c463-889b-cd3855ccdd1b@p1sec.com>
- <220413.86wnfses7c.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220413.86wnfses7c.gmgdl@evledraar.gmail.com>
+Taylor Blau <me@ttaylorr.com> wrote:
 
---------------wJUCY7lk8NtK4wApVjZuxoDK
-Content-Type: multipart/mixed; boundary="------------s0VkT5LxtyC04SUiKVuGO4qz"
+> Thanks so much for submitting this proposal! I have been excited to look
+> through it, and am sorry for not getting to it sooner. Let me take a
+> look now and give some of my thoughts.
 
---------------s0VkT5LxtyC04SUiKVuGO4qz
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks so much Taylor for reviewing my proposal. It's my pleasure!
 
-Sorry, my last answer is totally garbage.
+> Great! It sounds like working on Git would give you some new experience
+> in a different domain than some of your past projects, and help you
+> learn more about how it works and is developed.
 
-On 13/04/2022 18:46, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
-> On Wed, Apr 13 2022, Gregory David wrote:
->=20
->> [[PGP Signed Part:Undecided]]
->> Thanks a lot Aevar!
->>
->> Don't you mean this:
->>
->> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
->> index 330b0553b9..2a5c31729d 100644
->> --- a/builtin/show-branch.c
->> +++ b/builtin/show-branch.c
->> @@ -881,7 +881,7 @@ int cmd_show_branch(int ac, const char **av, const=
+Yeah, definitely! Looking forward to explore more in this domain :)
 
->> char *prefix)
->>                                        get_color_reset_code(), ref_nam=
-e[i]);
->>                         }
->>
->> -                       if (!reflog) {
->> +                       if (!reflog || !rev[i]) {
->>                                 /* header lines never need name */
->>                                 show_one_commit(rev[i], 1);
->=20
-> No, but my "suggested" fix was just enough to compile and get past the
-> segfault, i.e. we don't reach the puts(reflog_msg[i]) branch, but of
-> course rev[i] may be NULL too, I didn't check.
->=20
-> For this one though: I haven't tried it, but reading show_one_commit()
-> one of the first things we do is dereference the 1st argument, so surel=
-y
-> that will segfault too...
+> Terrific! I am really glad that the MyFirst... documents were helpful
+> and made it easier for you to contribute. The ProGit book is a great
+> resource, too.
 
---=20
-Gregory David
-Security Engineer
-https://www.p1sec.com
---------------s0VkT5LxtyC04SUiKVuGO4qz
-Content-Type: application/pgp-keys; name="OpenPGP_0xA6DF37692E5DE2F7.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xA6DF37692E5DE2F7.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Thanks :)
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+> If you are looking for more resources, I would encourage you to search
+> around for blog posts written by Git contributors, particularly related
+> to reachability bitmaps (at least for this GSoC project). Some helpful
+> places to start there would be:
+>
+>     https://github.blog/2015-09-22-counting-objects/
+>     https://github.blog/2021-04-29-scaling-monorepo-maintenance/
 
-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
-v1dxvY4f2F5nhrZWkn5Rw95Qk2jIp0JB7GLzRSg=3D
-=3Du6yb
------END PGP PUBLIC KEY BLOCK-----
+I have read the "counting objects" article already. It is a very good
+article to understand the reachability bitmaps in git. I would surely
+go through the other article you shared.
 
---------------s0VkT5LxtyC04SUiKVuGO4qz--
+> Note that commits and trees can be stored as deltas against other
+> commits and trees (which themselves might be packed as deltas) and so
+> on. But we only consider a pair of objects to be delta candidates for
+> one another when they share a common type (e.g., we would never delta a
+> tree object against a blob or vice-versa).
 
---------------wJUCY7lk8NtK4wApVjZuxoDK--
+Oops. That is new to me. I didn't know that commits and trees can also
+be delta-ed. Thanks for this info!!
 
---------------ThXKAhlH3XRFBI4vgwigERBa
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+> Exactly; though note that since that series we now have multi-pack
+> bitmaps, too, which use a slightly different ordering called the
+> "pseudo-pack" order, which (more or less) looks like all of the objects
+> in a MIDX first sorted by which pack they came from, and then sorted by
+> their order within the pack, removing duplicates in favor of the
+> "preferred" pack.
+>
+> More thorough documentation on this can be found in the
+> "multi-pack reverse indexes" section of
+> "Documentation/technical/pack-format.txt".
 
------BEGIN PGP SIGNATURE-----
+Thanks. Will look into it :)
 
-wsD5BAABCAAjFiEEgTMgz/uZophfcP0Opt83aS5d4vcFAmJXz/gFAwAAAAAACgkQpt83aS5d4vfm
-pQv/UQF5B7yzcIvClEF3krEYXEotaReiQHFkwn7fR40kAH55C8aE+in4R1CirRxEfJHRWAO3AFZU
-kcka3SHBkXrB25JE6gEgKw84iquS3sHpyp8TK6GJN6UHnWpLemGQZyXYcc9vT6w3ETC4z+Gf4Kc5
-gzoYgCaD/FndaZbm19/m8HgKgJcngIz2Uy6IkOMGCQj03RiLAnlFUKWaecbu67AaBc931U7Zk0Xa
-HgU2gLUlBLkER2Q32epghlfkCfmlXEW8C9aVkXBYzcI1hzEYtQAKgUWKqgw78ha/fRlWwUszmo1p
-IECvvyQQ53kpsTY9yoWgIs2ZeZgmv5nH21nvrf4PXrKUJpO704gxSPdj1gcWemHYP1M/i1sntFtr
-WZA/1qxpWz6H+5laJsObGmMMMVqQtA32M3cTIpYAck/imYzY7d6zCdiClF0m1xV3G1koTXB0BPma
-9YYUZsKBfgGzlbaxcTQGQ6H3XtqRp05kN0g42YZKIU1fVaMGdCDVP35TmQZ1
-=rExI
------END PGP SIGNATURE-----
+> But I want to be careful about the word "slow" here. They might be slow,
+> or it might be really fast to decompress a given bitmap, depending on
+> the disk performance, CPU pressure, how large the bitmaps are, and so
+> on. So I think a good first step here is to validate our assumption that
+> EWAH decompression is even slow to begin with.
+>
+> (Of course, the literature on newer formats will readily tell you that
+> the old stuff is slower, but I think it's worth reevaluating those
+> statements in the context of a practical application instead of in
+> theory / benchmarks).
 
---------------ThXKAhlH3XRFBI4vgwigERBa--
+I think, it is "conceptually/theoritically" slow approach. Because as
+you said -
+> we can't begin to interpret the bitmaps until after decompressing them
+
+It has to decompress the whole thing instead of evaluating the target
+bitmap. Hardwares can make it fast but theoritically the time complexity
+is slow.
+
+I will validate whether it is practically slow or not though.
+
+> Same comments here about whether or not this is slow to begin with. From
+> my experimental patches in this area earlier, I found that we could get
+> a significant speed-up in some cases, but that the speed-up was
+> basically obliterated whenever we had to do any follow-on traversal if
+> the bitmap coverage wasn't completely up-to-date.
+
+True. But atleast it is faster(hopefully) when bitmap coverage is up-to-date.
+We may optimize/improve it to make it fast overall.
+
+> Arguably we could do this whether or not we solve the above, but doing
+> some combination of the above may make it easier (e.g., if we wanted to
+> change the bitmap selection to store dramatically more commits, then we
+> may want to investigate how much of a bottleneck the sequential read
+> requirement of .bitmap files would become for different numbers of
+> selected commits).
+
+True.
+
+> For bitmaps, the number one thing we care about is correctness. I have
+> never thought about using Bloom filters before; even though the
+> one-sided nature of their errors means that we would never forget to
+> send an object that we should have, having an absolute result is vastly
+> preferred.
+>
+> After that, I think we mostly care about how quickly they can be
+> decompressed. And after that, I think we care about things like "how
+> fast can they be written", and "how large are they".
+
+That's obvious. I had included those probabilistic approaches because
+I thought we could have a check whether the obtained result is right
+or wrong. In case of wrong answers (2% chance for Hyperloglog), we can
+follow another approach that alters only the wrong results. But I
+think, it will become complex. More research is needed to check whether
+it can be done or not.
+
+For other approaches ( i.e. Roaring+run and sroar), I think these two
+fits the criteria you listed in your comment. Though, I need to work
+more to fully understand the sroar methodology.
+
+> This all sounds very good and ambitious. Keep in mind, though, that
+> these projects have a tendency to take much more time than expected ;-).
+> If we get one done, I'll be thrilled! (The goal with suggesting a few
+> potential directions to go in is not to say: "let's do all of these
+> things", but rather to give you some options in terms of what you find
+> most interesting and exciting to work on).
+>
+> So I think it makes sense to try and find a way you can dip your toes
+> into 2-3 of the sub-projects and get a sense for what feels most doable
+> and interesting, then focus on that before allocating time for more
+> projects in the future.
+>
+> > ## Estimated Timeline
+>
+> Like I said, I'm fine if you spend your entire GSoC project working on
+> just one of these projects. So I don't want to get hung up on specific
+> timelines just yet. If you end up working on this, I would suggest
+> budgeting a week or so to try out a couple of different sub-projects,
+> and then decide where to spend your time from there.
+
+If that is the case, then I would go for the first sub-project i.e.
+"Think of an better alternative of EWAH". It interests me a lot. Though
+I will do what you suggested i.e. "try and find a way you can dip your
+toes into 2-3 of the sub-projects and get a sense for what feels most
+doable and interesting".
+
+Should I remove "Estimated Timeline" ( or/and point 2, 3 from "The Plan"
+section) for now then?
+
+> Thanks very much for your interest and the time you spent putting this
+> proposal together. I hope that some of my comments were helpful in
+> refining it, and that you didn't mind my slow response too much.
+
+The comments and suggestions are indeed helpful! I even didn't mind
+anything.
+
+Thanks :)
