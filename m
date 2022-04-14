@@ -2,56 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4423AC433EF
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 09:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A23C433F5
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 09:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241871AbiDNJlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 05:41:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37448 "EHLO
+        id S232369AbiDNKAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 06:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241861AbiDNJlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 05:41:20 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1795470CFE
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:38:55 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id g20so5604687edw.6
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:38:55 -0700 (PDT)
+        with ESMTP id S229599AbiDNKAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 06:00:06 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823B0120BE
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:57:41 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id lc2so8964773ejb.12
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 02:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks.biz; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=rNr7pmafAGNmbta21cWSnW/PtsEFtz1ZaEXCuuL6N20=;
-        b=Sf4Xw/cVJX2ipAoABre1Z/R54salNa9gK+IAQsMzoxf5N3fa+CTzatIzAuuf9OAi39
-         x1lZYOGcVrPV6wW/TylRAQ4vmltRTIeZTG1cDQ804QPKBL9uppKaeuNfInqPCpOmXFCL
-         EyMCkr+6DB96c7yLyINuy7CsGiciWM0byDDgU=
+        bh=x7mWm04cULY0H6w7dSwezek5nBWxdT0IrMGzz3YjzJU=;
+        b=QGvT4w0UPpcvCcjdCKuz1GcrN0jIsNFRQxgyGzjDqmevddlNNfbBrLXY1iI/Rp5VvY
+         +H7WYEZ5C44txwov0dHuwrafUmcj3RE/EDHyN+QF5NsyWjKm+8yyMEobg57oCnLbpbYu
+         tvtVnEI8iumncwiko+N5KULP2NXrf94GztJ/M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rNr7pmafAGNmbta21cWSnW/PtsEFtz1ZaEXCuuL6N20=;
-        b=u1v7h1kGvMNq1V8+hS2f6qHnJkqXr5XHZ2XhVlzCun2D2W8zkc0I5HUVVh8M1ypXjI
-         4uKBCC+E+EDlIUAcMuzeiFodDqJwdMTTqskGb+W01flv/DKp8I3FeOQsXkp1bU39y2hP
-         TcCKJdOtn0s81jGZPpIfa2aEz/vET+SvpU8UV1B4ZLkyWQnHaV3CQvUpOfReR9N1Xgyf
-         dDrC+kC5w6Kq7v55/34nQYMOaua+yrti6fkrWBv5/eJaY9WSdTSzVADGhfivUe1T+EHf
-         cSoSaVae+GP3gK2eVWNMqNiYGobVtKm/dPLUIvQygYr33eKBsUq5h7AgLMJj8AvSbErP
-         45TQ==
-X-Gm-Message-State: AOAM5318BKQXjA3Dt2iyv8+0C0RD3caZHK76oJEVhX//qPSa9sKr9qjM
-        4kh69S4ZCQNhdCUOnvT5BuGnmTj01qocTV3CM+3fRVebK9EypGQE
-X-Google-Smtp-Source: ABdhPJyF7qH5z3aC2NRGVTpKVlybWz+GH61c1p/Exb1HN3JKxTbcUp3rhnmpK6R6eJYVcnO1UA+jqhqHwTIEKu5hMRo=
-X-Received: by 2002:aa7:cad3:0:b0:410:b188:a49a with SMTP id
- l19-20020aa7cad3000000b00410b188a49amr1993743edt.416.1649929133567; Thu, 14
- Apr 2022 02:38:53 -0700 (PDT)
+        bh=x7mWm04cULY0H6w7dSwezek5nBWxdT0IrMGzz3YjzJU=;
+        b=SaxlQI/0lEzVE0qBHMRAT0ODsA8ZBMvd7OtbKYD5LAPvnTzYdKDDHQaY2OzbVXnd0t
+         yOk7CDte43R4cHpiehogMOvHg34V3CR0gvZv/7aQWcpVjmhggt5m02f3gB5Ix3HASedo
+         OrAg+FrTI0bf+Oy1PLgbu+hTDi2FdatF6/pHkVRiZ3PmbxuevPuXtfqacRRkzi0uPvbi
+         DeEz2XJgEBk9D3a+BuHggs0ZB5LgcEXEIEp7VpF7pcbORkggSmd1H6R6TIcaJxwhCExl
+         Y5cglb4zissLvwzOMsmx88m7NschdsBVi3t5GZfxyz3rUtjh88PMQ3G4RBlf4er55PPZ
+         bB8A==
+X-Gm-Message-State: AOAM5302GfYZiTLvtugjVlrkhnefRbEitbW9Ne3N2NWn836VBhZIGJiB
+        7YzmsjFoMZIYdEqzRM91r4SrSZxfS0LnqD8GTyx/61psf8+a+oKzfUE=
+X-Google-Smtp-Source: ABdhPJwoySQ40Z6RJvJW52pBGMJ9R0dJgGXYORJRKsUhvtZ42uNC89IhnipTscunMK70tXzC29DUQEaiav8BFpe/uP4=
+X-Received: by 2002:a17:907:1c9a:b0:6e8:da0a:f788 with SMTP id
+ nb26-20020a1709071c9a00b006e8da0af788mr1602665ejc.170.1649930259894; Thu, 14
+ Apr 2022 02:57:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1206.git.1649670174972.gitgitgadget@gmail.com>
- <pull.1206.v2.git.1649831069578.gitgitgadget@gmail.com> <220413.86zgkpf5g7.gmgdl@evledraar.gmail.com>
- <CAPMMpoj3xZfKnH456AbiHatbBx98yXuj=yWBA8tdHhHdqn_H3Q@mail.gmail.com> <220413.86sfqgerf7.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220413.86sfqgerf7.gmgdl@evledraar.gmail.com>
+ <pull.1206.v2.git.1649831069578.gitgitgadget@gmail.com> <20220413214109.48097ac1@ado-tr.dyn.home.arpa>
+In-Reply-To: <20220413214109.48097ac1@ado-tr.dyn.home.arpa>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 14 Apr 2022 11:38:42 +0200
-Message-ID: <CAPMMpojSp0kdAC7JD10kv+rODKV3eYdt0W1cNva3tzF3sLru+A@mail.gmail.com>
+Date:   Thu, 14 Apr 2022 11:57:29 +0200
+Message-ID: <CAPMMpoiXNKNnARhJ2n+nzOj==-27YA68OvMmUyYnSaoLbfE4xw@mail.gmail.com>
 Subject: Re: [PATCH v2] [RFC] git-p4: improve encoding handling to support
  inconsistent encodings
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To:     Andrew Oakley <andrew@adoakley.name>
 Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -60,91 +59,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 9:04 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Wed, Apr 13, 2022 at 10:41 PM Andrew Oakley <andrew@adoakley.name> wrote=
+:
 >
+> On Wed, 13 Apr 2022 06:24:29 +0000
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> wrote:
+> > Make the changelist-description- and user-fullname-handling code
+> > python-runtime-agnostic, introducing three "strategies" selectable via
+> > config:
+> > - 'legacy', behaving as previously under python2,
+> > - 'strict', behaving as previously under python3, and
+> > - 'fallback', favoring utf-8 but supporting a secondary encoding when
+> > utf-8 decoding fails, and finally replacing remaining unmappable
+> > bytes.
 >
-> AFAICT we only allow selecting between encodings, not "no idea what this
-> is, but here's some raw sequence of bytes", except by omitting the
-> header.
+> I was thinking about making the config option be a list of encodings to
+> try.  So the options you've given map something like this:
+> - "legacy" -> "raw"
+> - "strict" -> "utf8"
+> - "fallback" -> "utf8 cp1252" (or whatever is configured)
 >
+> This doesn't handle the case of using a replacement character, but in
+> reality I suspect that fallback encoding will always be a legacy 8bit
+> codec anyway.
+>
+> I think what you've proposed is fine too, I'm not sure what would end
+> up being easier to understand.
 
-I don't understand what you mean here. My reading of the docs is that
-omitting the header *does not* imply "no idea what this is" - it
-implies "this is utf-8".
+I'm not sure I understand the proposal... Specifically, I don't
+understand how "raw" would work in that scheme.
 
-Git will do the best it can (convert to utf-8 at output time if the
-bytes are parseable in the specified or implied encoding, and return
-the raw bytes otherwise), *regardless* of whether an encoding is
-explicitly specified or utf-8 is implied.
+In "my" current scheme, there is a big difference between "legacy" and
+the other two strategies: the legacy strategy reads "raw", but also
+*writes* "raw".
 
-> It seems to me that between legacy/strict/fallback there's a 4th setting
-> missing here. I.e. a "try-encoding". One where if your data is valid
-> utf8 (or cp1252 if we want to get fancy and combine it with "fallback")
-> you get an encoding header, but having tried that we'll just write
-> whatever raw data we found, but *not* munge it.
+The other schemes read whatever encoding, and then write utf-8. In the
+case of strict, that actually works out the same as "raw", as long as
+the input bytes were valid utf-8 (and otherwise nothing happens
+anyway). In the case of fallback, that's a completely different
+behavior to legacy's read-raw write-raw.
 
-For utf-8 specifically, the "legacy" strategy achieves this effect
-with less overhead: It copies the bytes over raw, and in git the
-implied encoding is utf-8. So if the bytes were utf-8 in the first
-place, then they're good (we didn't need to munge them in any way),
-and if they weren't utf-8 we copied them over anyway, which is the
-"tried and failed" behavior you propose also.
-
-For cp1252 or another encoding, the behavior you propose is an
-enhancement/modification of the current "fallback" behavior, I guess:
-Currently if the fallback encoding doesn't wash, any remaining "bad
-bytes" get replaced out of existence. This leads to data loss of those
-individual bytes, and it also means that if the data really wasn't
-cp1252 in the first place, you might just have garbled up the data
-something awful. Of course, you might have done that without any
-errors anyway - cp1252 only leaves 4 unmapped bytes, so most arbitrary
-text data will be successfully "interpreted", no matter how
-erroneously.
-
-The advantage of the current "replace" behavior is that you *always*
-end up with valid utf-8 data in your commit text. The disadvantage is
-that you can suffer (minor) unrecoverable data loss.
-
-I think your proposal is that (optionally?) the fallback-or-raw
-behavior would simply spit out / leave the original bytes in this
-situation, not making any attempt to interpret them or convert them to
-utf-8, but simply bring them to git as-is. This would make that
-particular commit message "invalidly encoded", in the sense that any
-git client or git-caller would need to "do what it can" with that
-sequence of bytes.
-
-This tradeoff between avoidance of data loss, and type/encoding
-coherence, is not one I'm comfortable deciding on. I would ideally
-prefer a third route, where the data *is* interpreted and converted,
-but in a fully reversible way.
-
-What would you think of a scheme where, *if* the fallback encoding
-fails to decode successfully, we simply take all x80+ bytes and escape
-them to a form like "\x8c", so a commit message might end up like
-"solve the problem with the japanese character: \8f\c4."? Would this
-way of preserving the bytes, without breaking out of having a known
-(utf-8) encoding in the git commits, make sense to you? We could even
-add a suffix to the message like "[original data contained bytes that
-could not be mapped in targeted encoding cp1252; bytes at or over x80
-were escaped as \xNN, and backslashes were escaped as \\ to avoid
-ambiguity]", or something less horrendously verbose :)
+Is your proposal to independently specify the read encodings *and* the
+write encoding, as separate parameters? That was actually my original
+approach, but it turned out to, in my opinion, be harder to understand
+(and implement :) )
 
 >
-> I haven't worked with p4, but having done some legacy SCM imports it was
-> nice to be able to map data 1=3D1 to git in those "odd encoding" cases, o=
-r
-> even cases where there was raw binary in a commit message or whatever...
+> >      * Does it make sense to make "fallback" the default decoding
+> > strategy in python3? This is definitely a change in behavior, but I
+> > believe for the better; failing with "we defaulted to strict, but you
+> > can run again with this other option if you want it to work" seems
+> > unkind, only making sense if we thought fallback to cp1252 would be
+> > wrong in a substantial proportion of cases...
+>
+> The only issue I can see with changing the default is that it might
+> lead to a surprising loss of data for someone migrating to git.  Maybe
+> print a warning the first time git-p4 encounters something that can't be
+> decoded as UTF-8, but then continue with the fallback to cp1252?
+
+Honestly, I'm not sure how much a warning does. In my perforce repo,
+for example, any new warnings during the import would get drowned out
+by the mac metadata ignoring warnings.
+
+I understand and share the data loss concern.
+
+As I just answered =C3=86var, I *think* I'd like to address the data loss
+concern by escaping all x80+ bytes if something cannot be interpreted
+even using the fallback encoding. In a commit message there could also
+be a suffix explaining what happened, although I suspect that's
+pointless complexity. The advantage of this approach is that it makes
+it *possible* to reconstruct the original bytestream precisely, but
+without creating badly-encoded git commit messages that need to be
+skirted around.
+
+>
+> >      * Is it OK to duplicate the bulk of the testing code across
+> >        t9835-git-p4-metadata-encoding-python2.sh and
+> >        t9836-git-p4-metadata-encoding-python3.sh?
+> >      * Is it OK to explicitly call "git-p4.py" in tests, rather than
+> > the build output "git-p4", in order to be able to select the python
+> >        runtime on a per-test basis? Is there a better approach?
+>
+> I tried to find a nicer way to do this and failed.
+
+OK thx.
+
+>
+> >      * Is the naming of the strategies appropriate? Should the default
+> >        python2 strategy be called something less opinionated, like
+> >        "passthrough"?
+>
+> I think that "passthrough" or "raw" would be more descriptive names.
 >
 
-My problem here, again, is that these "badly encoded commit messages"
-endure forever in your commit history: any tool that wants to parse
-your history will have to deal with them, skirt around them, etc. That
-just seems like bad discipline. If the intent is to ensure that you
-*can* reconstruct those bytes if/when you need to, we should find a
-way to store them safely, in a way that won't randomly trip others up.
+OK thx, I'll take "passthrough" as it feels slightly less positive
+than "raw", for some reason that I can't put my finger on :)
 
-> Anyway, all of this is fine with me as-is, I just had a drive-by
-> question after some admittedly not very careful reading, sorry.
+> The changes to git-p4 itself look good to me.  I think that dealing
+> with bytes more and strings less will be good going forward.
 
-Thanks for looking into it!
+Thx for your feedback!
