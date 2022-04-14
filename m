@@ -2,83 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E183C433F5
-	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 18:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF26C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Apr 2022 18:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344267AbiDNSfm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 14:35:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55388 "EHLO
+        id S244745AbiDNSkB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 14:40:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242401AbiDNSfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 14:35:42 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29AA4EA749
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 11:33:16 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6295710E780;
-        Thu, 14 Apr 2022 14:33:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wzhPZUx0F1VM
-        TfNDYN+XEjnRi72Ti7el3OxJSXjcZjc=; b=fMuz8rZmTTaWjMEl4/9/Ub66wzOQ
-        4uejybO793fJhptj/KneyTkW5nuZJW9T6Z94f2S9xVFWY5Ly23povt+FFVzdiqHE
-        GmOC4YKUPAgrLontnNukObIn/r8GELXlh5rN4VnSb4RBSb/ejti+jhCobtQfIQwQ
-        ddHrM/NDdGeKc8I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5867010E77F;
-        Thu, 14 Apr 2022 14:33:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.214.157])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8A9D10E77E;
-        Thu, 14 Apr 2022 14:33:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: ab/plug-leak-in-revisions
-References: <xmqq8rsab5do.fsf@gitster.g>
-        <220413.86bkx4eobr.gmgdl@evledraar.gmail.com>
-        <xmqq35ig5zlf.fsf@gitster.g>
-        <220414.86y208cen7.gmgdl@evledraar.gmail.com>
-Date:   Thu, 14 Apr 2022 11:33:12 -0700
-In-Reply-To: <220414.86y208cen7.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 14 Apr 2022 09:22:31 +0200")
-Message-ID: <xmqqv8vbzf9z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233548AbiDNSkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 14:40:00 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB62A4FC7C
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 11:37:34 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id t4so5517445pgc.1
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 11:37:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=H2Paec4y9kAwWl7y5fvt4lAMi056jAfZeAdY9PXQg0A=;
+        b=Co/O3FyKs9dzDGlXwKoDBf/pBNQ4w5osWCy8VTdMO8ZbS3VzzTdRr7h6TJHSZuqdWa
+         BP1us99t/neJAnQikGJnDuQ49Q4qcm0RQYe11NwmhcTSRqb8AZ6kzPohi57/pATupzjd
+         X6goc8yN6pK7pJh+2CVoYfx4OpEj15x8X1Vd9FxhUflDHpIyLbXCaMedTxfUW+SYRKNC
+         PC0gYtKBl32/pP8+ppdmJu/27fiQ1JukraVEK6mWweHJQady/i1kXn7bQdKBb48WUu8q
+         5o6kTrqTJtxVeG8v0YFWa7yCPKG8eqKNwAD0IYW8LoMu3WceNWF//oVs4TI7+0Dtsa+Q
+         wJGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=H2Paec4y9kAwWl7y5fvt4lAMi056jAfZeAdY9PXQg0A=;
+        b=03pt6YcSKoTcVXNeDTX7wIWuUaeBFNVfjQpvLXTwNWTRDgz5QPSecBAzJSUWRtqO73
+         o3E3nn/qnAre5V7O7bq2/pQ6Y0vhYkIcMtj6FoqpkU28JyunyV9gYEMXrDkvPVop22In
+         OSSJfgoo5p3Sd6vtzztGflsZZjTGtOoCHE1lM52QzBzHmVS9KqMNEUQwVRVWanTe6yoj
+         hdjvXOJg2p7c1IOr4/i0xQxeAxyFoHe2z0VzpiNLvoAseF7zT7SSwY1gVXpc7iACtAuL
+         W6vtHkAR+Czmux5P2jeP6kSPYPjj4nO3eOGSKd9p3WQUvFwFXgYQsj2IH9v+cI27pqqo
+         7D7A==
+X-Gm-Message-State: AOAM530JwAEk2Np0mo2Iyz/XHm7KeAgUzReaCx0ovryYrcgRqqZjgcfX
+        Iq80bW3c5RRAbQqDOw6zADm9zw==
+X-Google-Smtp-Source: ABdhPJz52nUTSFbM8aJLJi2ic3GdbXcHv0JcxuMHj95dmIo3+8lqGweymUzFJwZzdUajH2pvoGSuQw==
+X-Received: by 2002:aa7:9019:0:b0:4fa:7532:9551 with SMTP id m25-20020aa79019000000b004fa75329551mr5342892pfo.26.1649961454029;
+        Thu, 14 Apr 2022 11:37:34 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:c26e:8dc1:2f6e:26bc])
+        by smtp.gmail.com with ESMTPSA id l13-20020a056a00140d00b004e13da93eaasm569742pfu.62.2022.04.14.11.37.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 11:37:33 -0700 (PDT)
+Date:   Thu, 14 Apr 2022 11:37:26 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
+        shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/4] t1092: add compatibility tests for 'git show'
+Message-ID: <Ylhp5ubNco+oATOD@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
+        shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1207.git.1649349442.gitgitgadget@gmail.com>
+ <8c2fdb5a4fc3317c05324da54692036e36fc15f3.1649349442.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 57FBD344-BC21-11EC-BD94-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8c2fdb5a4fc3317c05324da54692036e36fc15f3.1649349442.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 2022.04.07 16:37, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  t/t1092-sparse-checkout-compatibility.sh | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 236ab530284..74792b5ebbc 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1151,6 +1151,22 @@ test_expect_success 'clean' '
+>  	test_sparse_match test_path_is_dir folder1
+>  '
+>  
+> +test_expect_success 'show (cached blobs/trees)' '
+> +	init_repos &&
+> +
+> +	test_all_match git show :a &&
+> +	test_all_match git show :deep/a &&
+> +	test_sparse_match git show :folder1/a &&
+> +
+> +	# Asking "git show" for directories in the index
+> +	# does not work as implemented. The error message is
+> +	# different for a full checkout and a sparse checkout
+> +	# when the directory is outside of the cone.
+> +	test_all_match test_must_fail git show :deep/ &&
+> +	test_must_fail git -C full-checkout show :folder1/ &&
+> +	test_sparse_match test_must_fail git show :folder1/
+> +'
 
-> On Wed, Apr 13 2022, Junio C Hamano wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->>> I think it should be ready with my just-submitted re-roll, which fixe=
-s a
->>> trivial nit spotted by Phillip Wood by removing a useless NULL check:
->>> https://lore.kernel.org/git/cover-v6-00.27-00000000000-20220413T19593=
-5Z-avarab@gmail.com/
->>
->> Last time I checked, the last three patches haven't made to the lore
->> archive yet.  We have other things to do while waiting for them, so
->> there is no need to rush or resend ;-)
->
-> git-send-email died at the end of that send, I picked up where I left
-> off and sent the remaining three.
+A reminder that directories are not present in a non-sparse index would
+help those of us unfamiliar with the differences between
+sparse/non-sparse indexes to understand why the full-checkout cases fail
+here. Initially I was confused why any of these lookups would fail
+because my mental model was "a sparse-index is a proper subset of the
+non-sparse index".
 
-Thanks.  All replaced and the change from the previous round was as
-expected.
-
-Looking great.
-
-
+> +
+>  test_expect_success 'submodule handling' '
+>  	init_repos &&
+>  
+> -- 
+> gitgitgadget
+> 
