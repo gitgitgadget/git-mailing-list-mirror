@@ -2,62 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 987B0C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 10:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A77FC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 11:43:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241048AbiDOKYn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 06:24:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
+        id S1352702AbiDOLp6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 07:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232381AbiDOKYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 06:24:41 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD41BB939
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:22:12 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id z16so7010684pfh.3
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=fe4FH4/Ag0MQCaasEXtFS6YNtVqjWJDMA9dnJQt2lVE=;
-        b=ckjoNYanfJ3jxnFg9qTXepS1gotXsvcPBlFvKFa1OQeOaz5FD9tHtsLpmG8ZiH7O1y
-         3jNq3TT1mAszVcLhd2YcmkhYxH1VcPCW/yHwagjR5CW11cl12xa9uSx3Iwmvk19QS30c
-         Dv0HYuXxeIuWBFWD/r/RpsaWpSw2XYFS+3q3GURkAlFUUNGgOG7fg6NAZLpp1GwoiaXC
-         HeS0IBWQAAaDLeF33p5PKb4PgmUqn/CHEIfdbHCmbsYfqdJWEtEfm4P2TWC6ceK9qmTm
-         4A4YY9Vo0RbdK0z2qwCdeI/WDwCQVAqfln29E9PRfSsjFc24C+Z1DUB77py5bGVgwwB8
-         wT8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=fe4FH4/Ag0MQCaasEXtFS6YNtVqjWJDMA9dnJQt2lVE=;
-        b=fRlLYZ+6I8SDIGYgkrFJ0L89M1vH5WW8HEkHFZ46TYK8kr8BM6gAZiykRuzywbq9i8
-         xYBJkIr1Ty5iHwiCXSn4w3QkXQBMsEPuk7ajooweeJ82MWOZhIgbqykyb0c1QxcpDbBC
-         pk+aAzKJEEJOEmSGD+ksp1Ee2kjre+dj6Fve6Ovlad4jGIzyvNHSaMfm9q6Gzi3cWg2w
-         7IydtwJroLvs3uPPrEccHKc3SCJF7jC5D3/bwBsoG4/ENZSjhACoDGg5c7Xh9Xp1tsYt
-         juBwso3Ra+hOo2OoyePxCwURGpkvpmAwGgrU+WVY7W3me0ldfQ0LhEGUThhxZLa8PdHz
-         O8hw==
-X-Gm-Message-State: AOAM531akgZGe9QuLhRxF2+zSZr9mKzTgF4g2iO9ebfDM3Y+4VQNqV0q
-        VWagAG1di2MGb71D0BefpzOLp1eZhU3wRL1KGMBv4+oQJzU=
-X-Google-Smtp-Source: ABdhPJyjeD2qgqJy6HVP7Wx3NvXPvOvHlErsR74TAZBEfGPvk7VHfZ5LKZUP7+LyTDLpFR8WO5TNKqdvyRaQ8dtnpMc=
-X-Received: by 2002:aa7:8888:0:b0:505:a3e1:d246 with SMTP id
- z8-20020aa78888000000b00505a3e1d246mr8220187pfe.76.1650018131861; Fri, 15 Apr
- 2022 03:22:11 -0700 (PDT)
+        with ESMTP id S236334AbiDOLp5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 07:45:57 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5568B644D0
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 04:43:28 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nfKMI-000AJ6-8T;
+        Fri, 15 Apr 2022 12:43:26 +0100
+Message-ID: <3a02bf6c-54c1-39c8-5f3e-9f246c9e87b8@iee.email>
+Date:   Fri, 15 Apr 2022 12:43:26 +0100
 MIME-Version: 1.0
-From:   Danny Lin <danny0838@gmail.com>
-Date:   Fri, 15 Apr 2022 18:21:54 +0800
-Message-ID: <CAMbsUu7fqECH1b7-POot0mD4kwmT0pzAMJrXznSPgv9wfv1OwA@mail.gmail.com>
-Subject: Arguments for git update-index --refresh
-To:     git develop <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: safe directory on shared drives
+Content-Language: en-GB
+To:     Andrew Noblet <andrewbnoblet@gmail.com>, git@vger.kernel.org
+References: <CAO=QCg5+M-=dOf=AFTDL8z9-LrK-7vau+=JV-7QJfVOhdFp1Aw@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAO=QCg5+M-=dOf=AFTDL8z9-LrK-7vau+=JV-7QJfVOhdFp1Aw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to the manual of git-update-index
-(https://git-scm.com/docs/git-update-index), --ignore-submodules must
-be passed before --refresh to take effect. However, a real test shows
-that -q and --ignore-missing also don't take effect when passed after
---refresh. I wonder if --refresh must be passed after all other
-arguments, and the documentation may need a revision. I also wonder
-what is the reason that --refresh must be passed after, and can't we
-make it more flexible?
+Hi Andrew,
+
+On 15/04/2022 11:14, Andrew Noblet wrote:
+> The new git security rules creates an issue on Windows systems where
+> the git repository is hosted in a shared folder.
+>
+> $ git status
+>
+> ```
+> fatal: unsafe repository ('//192.168.0.120/config/' is owned by someone else)
+> To add an exception for this directory, call:
+>
+>         git config --global --add safe.directory //192.168.0.120/config/
+> ```
+>
+> $ git config --global --add safe.directory //192.168.0.120/config/
+> $ git status
+>
+> ```
+> warning: encountered old-style '//192.168.0.120/config/' that should
+> be '%(prefix)//192.168.0.120/config/'
+> fatal: unsafe repository ('//192.168.0.120/config/' is owned by someone else)
+> To add an exception for this directory, call:
+>
+>         git config --global --add safe.directory //192.168.0.120/config/
+> ```
+>
+> There seems to be no way to add a shared drive path to the safe directory list.
+
+This (instruction clarification) is being discussed / sorted at
+[git-for-windows/git] Include trailing slash in prefix migration
+instructions (PR #3790)
+https://github.com/git-for-windows/git/pull/3790
+
+The key point being that for a `//server` path you will need three
+slashes. (IIUC) One for magic prefix string, and then two as part of the
+server name.
+
+There is now also the `*` option that permits all as safe directories. 
+Worth checking how the user and group security is being handled locally,
+especially for accidental failures.
+Philip
+
+
