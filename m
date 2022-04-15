@@ -2,330 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82402C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 20:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14351C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 21:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351281AbiDOUmT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 16:42:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48934 "EHLO
+        id S236984AbiDOVE3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 17:04:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351342AbiDOUmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 16:42:17 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4D12B1A2
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:39:46 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id g18so16995501ejc.10
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:39:46 -0700 (PDT)
+        with ESMTP id S1351066AbiDOVEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 17:04:12 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2AFBDEB93
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 14:01:35 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id m8so10612793ljc.7
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 14:01:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=p93smVSDeBofASqNfsE53Ozf7bY87egiaeoY3P43GqM=;
-        b=74G1ds0UxBbDqfvfY32YKwdBBtmhh5LN84/Ppdb09cBxOAopt/Zfcds+cuKJqMvWYu
-         PJTn63KitQEGlGCsS8IkjNzkmh7zNc7nHXbeMgFK8FwFhTDYwOOXUdjCI3JyQTZ4aQ0M
-         IOZXA5Wsqp96Jbcq+mP2Tl2HDvan4xec1sAzvwSfNjP2DbFJ91WDD7bbbGMbHFuVxHHO
-         I3UQT73fmELvaL3pTouI6rLYZmi607cdlYZQ0wmtT3PPYXGUujK9S3wpCezJOWkERj0A
-         5shm657V6/AMJcMN8aG0H/ameAGxFdK5HZRxYtCO1wwN6CWnGjVEvz+Phy3fXRbvrQXB
-         bG+g==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z8qcdACtXSn0Dzo0nb6fYXDqNyeZ2rVrnapOMEvPDeM=;
+        b=adO9rJNnJ1u+5XCN4jzrLp68qiWPuYn/i/2PSRithrhtrR4KlBwVzFF/YsBEqxSAsS
+         QyObNb5tLMxi2uR1SxwKyYAM0i1vuSSE+cKaTBJ7tugIIVwOvy+qU8G6KCeQkK/8KK//
+         rPvxOvR832ToGw9jeMwTOMJI6dTEH2qKmYFwn0S0m0lXSun+/oGAFy5DszSe/MFWo32P
+         m0WRcfikSHGWiaorVzbVIqDCYyAnAsfMhjX2geZTjZWA2J+VDMQfXUJJjOHy8280xWCW
+         npaFC5ySKncgYSRMWAH9J87xO8BMvd12r15ML5/SfsC95Zm+B0KRHIWFEOiJ5+s71fNY
+         fEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=p93smVSDeBofASqNfsE53Ozf7bY87egiaeoY3P43GqM=;
-        b=Lq81atm4vV1xhuxNUUZ2GwFJTtiC8tvG7YWe0EuI7teSRPWryhrEbEpRPh4i+08ftQ
-         GGyW7gDaRUIz8pYmLR/FVhPR+Db3zqtolRY78n5eSaugb4A4hOC0c2Ipaj6cGtEkyZ8g
-         1Ei0Jf1GljxFnYij17B3UkD1gUxDRyS7d0RYmct0TplV6pyWBmYzlg58VXot1bUMekPR
-         i9m2ILIpxchYiq3xFPacpNCU+QksjZCSBCIcI9gYl8Tzh0BLQgvQPhapX5EAWzdoRKIz
-         eBEIN81bcLGEzWh3HObjMenU+e771NtwNheC4dO4OepTZNNG0HbnQgz3FUPsCHA3hQCE
-         YfVw==
-X-Gm-Message-State: AOAM530kk3bxC+SRAA/qLsZ6xHD0YbbhVJSP7wwhqAS7ZJuOcOwLvSsB
-        XvR9zUrGfXZexShsi9HLLTsuvQ==
-X-Google-Smtp-Source: ABdhPJyPwMlFPUFH9Lb3Jt7GEfhwOaFukVc2jFFFK4SOp8NluV4tzEk84hMVhGu8QVLy6E1jvNG5cQ==
-X-Received: by 2002:a17:906:301a:b0:6e8:a0b2:340a with SMTP id 26-20020a170906301a00b006e8a0b2340amr597600ejz.248.1650055184828;
-        Fri, 15 Apr 2022 13:39:44 -0700 (PDT)
-Received: from vmiklos.hu (94-21-185-252.pool.digikabel.hu. [94.21.185.252])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05640243c900b0041facb9ac9esm2952176edc.1.2022.04.15.13.39.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 13:39:44 -0700 (PDT)
-Date:   Fri, 15 Apr 2022 22:39:42 +0200
-From:   Miklos Vajna <vmiklos@vmiklos.hu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: [PATCH v4] git-log: add a --since=... --as-filter option
-Message-ID: <YlnYDgZRzDI87b/z@vmiklos.hu>
-References: <xmqqtub3moa0.fsf@gitster.g>
- <xmqqv8vkpara.fsf@gitster.g>
- <YlCiqgO6rL908Zsi@vmiklos.hu>
- <220412.86pmlmhe9a.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z8qcdACtXSn0Dzo0nb6fYXDqNyeZ2rVrnapOMEvPDeM=;
+        b=iEhV7t0MBwy0/Xqew1Vi3yJmRzZ53JsVczH/FAzzYjq1QlMkBQ9Zp6caO7/8153zKe
+         Da/KAWOWZh5rh5pZtBZXrvWjdMVOtRLmdSeawGHaO2sLspXnvYCmhQTSRY9oRzJFs43L
+         3skGuh0duYF9fbo5Tosw9DrfZqpXJOHDIKsbw5MbfIJ6tDCYn3MPHGJaqh8KPSSXJlHJ
+         TkAfMtGK1YFoLt05o7NNmQnVhqJMAdop7pBUGcMrjOY+K9EngKbEK6XI+HdB0KM9NeCU
+         1VJHqZLntRX8bNFfycLfLLglwmauapxRepeXTmSVInqodGGXPdHNTMJLZheDRB2R6mIm
+         DhMA==
+X-Gm-Message-State: AOAM5339qLdxweKM+6VEejuckUiSM+3rouLzsM0ZXnI8k28LeTDCCS47
+        tsVn6/y8k9vny6gYAeiF5nWnW7qabXdXDntfEWg=
+X-Google-Smtp-Source: ABdhPJxiCtzwGp3xSjwh45ZzqLiWfwCZuZey4fbRa0Ss2u9LiMGeOrN0ULBIMJQ7t0k0svfU7epvalneykdA81XP1gA=
+X-Received: by 2002:a2e:5d6:0:b0:24d:a502:240e with SMTP id
+ 205-20020a2e05d6000000b0024da502240emr480620ljf.22.1650056494003; Fri, 15 Apr
+ 2022 14:01:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220412.86pmlmhe9a.gmgdl@evledraar.gmail.com>
+References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
+ <Yky7xb7nQRR8Vqtj@nand.local> <CAP8UFD1Y+4XDARoK_T_c2eMUou4senhQLnjJE4zyz2KHuZGsFw@mail.gmail.com>
+ <Yk21JvirO6FyQ3Va@nand.local> <e312b18b-f0d6-8980-9cad-74602043a1db@gmail.com>
+ <CAP8UFD1x-JEX8MAmpabK4RbKgmVm1VQYNJdX3fP8Op5WMfUgVg@mail.gmail.com>
+ <YlCcQw6FuWufLe74@nand.local> <Ylc4rWZf380FlEbj@nand.local>
+In-Reply-To: <Ylc4rWZf380FlEbj@nand.local>
+From:   Plato Kiorpelidis <kioplato@gmail.com>
+Date:   Sat, 16 Apr 2022 00:01:08 +0300
+Message-ID: <CAO2gv83WXPmABfVu_YR57rJg8sJ7mv-pUuXDpxYw644gcRCtYw@mail.gmail.com>
+Subject: Re: [GSoC] Contributor candidate introduction
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        git <git@vger.kernel.org>,
+        Shubham Mishra <shivam828787@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is similar to --since, but it will filter out not matching commits,
-rather than stopping at the first not matching commit.
+On Wed, Apr 13, 2022 at 11:55 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Plato,
 
-This is useful if you e.g. want to list the commits from the last year,
-but one odd commit has a bad commit date and that would hide lots of
-earlier commits in that range.
+Hey Taylor,
 
-The behavior of --since is left unchanged, since it's valid to depend on
-its current behavior.
+>
+> On Fri, Apr 08, 2022 at 04:34:11PM -0400, Taylor Blau wrote:
+> > Instead, let's keep the project as-is, and have the accepted student
+> > focus on one of the first two bullet points, taking into account that
+> > we'll first want to spend some time thinking about whether or not the
+> > current .bitmap format is appropriate given the proposed changes.
+>
+> If this sounds interesting to you, I would encourage you to submit a
+> proposal similar to the ones in
 
-Signed-off-by: Miklos Vajna <vmiklos@vmiklos.hu>
----
+Yes, it does sound interesting to me because it's an experimental
+project. I'm working exclusively on my proposal for the past week
+reading papers and benchmarks, while writing digests about them
+to include in my proposal, in favor of roaring method. As you also
+said, having a proposal with references and digests about previous
+work, discussions and papers does help regardless of being selected.
 
-Hi Ævar,
+Technical question: will roaring bitmaps' random access feature help
+with introducing the "table of contents" feature? Or is it bitmap
+compression agnostic?
 
-On Tue, Apr 12, 2022 at 10:47:15AM +0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> > +--as-filter::
-> > +	When combined with `--since=<date>`, show all commits more recent than
-> > +	a specific date. This visits all commits in the range, rather than stopping at
-> > +	the first commit which is older than a specific date.
-> 
-> I wonder if we should be more future-proof here and say that we'll run
-> anything as a filter, and that --since is the one option currently
-> affected.
-> 
-> But maybe there's no reason to do so...
+>
+>     https://lore.kernel.org/git/20220406200440.27010-1-chakrabortyabhradeep79@gmail.com/
+>     https://lore.kernel.org/git/20220409184350.1124-3-shivam828787@gmail.com/
 
-My understanding is that in practice --since is the only option that
-terminates the revision walk on the first match, so I would argue there
-is no need for this.
+Thanks, I've already read both of them and used them as guideline for
+my proposal.
 
-> In any case these docs are inaccurate because they cover --since, but if
-> you check revision.c we'll set "max_age" on other options too
-> (synonyms?).
+>
+> Feel free to take a look at mine and Kaartic's responses to each of
+> those, two, since they may influence your planning / which sub-project
+> sounds most interesting / etc.
 
-Good catch, I've added --max-age and --after as well.
+I saw your and Kaartic's reviews and incorporated them into my proposal.
 
-> All in all I wonder if this wouldn't be much more understandable if we
-> advertised is as another option to do "HISTORY SIMPLIFICATION", which
-> looking at e.g. get_commit_action() and "prune" is kind of what we're
-> doing with the existing --since behavior.
-
-Makes sense, we kind of simplify history by default here & then this
-option could be documented as one that modifies this terminating
-behavior.
-
-> I think it's good to do this as a general mechanism, but if you now
-> remove the "max_age" field from "struct rev_info" and:
-> 
-> 	make -k
-> 
-> You'll see a bunch of callers who check "max_age" outside of revision.c,
-> since those will accept these revision options are they doing the right
-> thing now too?
-
-I found the following callers:
-
-- some builtins that want to make sure that no history limiting is used,
-  an additional --as-filter doesn't change behavior there
-
-- blame: this has its own commit walking loop, so --as-filter doesn't
-  change any behavior here unintentionally.
-
-- bundle: --since is not used for revision walking here, just to check
-  what tags to include/exclude, so this is already not terminating
-
-> In any case we should have tests for those callers, i.e. blame, bundle
-> etc.
-
-t/t5607-clone-bundle.sh already tests bundle --since. I've added a new
-t/t4218-blame-limit.sh to test blame --since, it seems there were no
-tests for this so far.
+>
+> Thanks,
+> Taylor
 
 Thanks,
-
-Miklos
-
- Documentation/rev-list-options.txt |  6 +++++
- revision.c                         | 13 +++++++++--
- revision.h                         |  1 +
- t/t4217-log-limit.sh               | 36 ++++++++++++++++++++++++++++++
- t/t4218-blame-limit.sh             | 36 ++++++++++++++++++++++++++++++
- 5 files changed, 90 insertions(+), 2 deletions(-)
- create mode 100755 t/t4217-log-limit.sh
- create mode 100755 t/t4218-blame-limit.sh
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index fd4f4e26c9..354bd29f10 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -350,6 +350,12 @@ The following options select the commits to be shown:
- <paths>::
- 	Commits modifying the given <paths> are selected.
- 
-+--as-filter::
-+	When combined with `--max-age=<date>`, `--since=<date>` or
-+	`--after=<date>`, show all commits more recent than a specific date. This
-+	visits all commits in the range, rather than stopping at the first commit
-+	which is older than a specific date.
-+
- --simplify-by-decoration::
- 	Commits that are referred by some branch or tag are selected.
- 
-diff --git a/revision.c b/revision.c
-index 7d435f8048..ff018c3976 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
- 		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
- 		    !revs->line_level_traverse)
- 			continue;
-+		if (revs->max_age != -1 && revs->as_filter && (commit->date < revs->max_age) &&
-+		    !revs->line_level_traverse)
-+			continue;
- 		date = commit->date;
- 		p = &commit_list_insert(commit, p)->next;
- 
-@@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
- 	revs->dense = 1;
- 	revs->prefix = prefix;
- 	revs->max_age = -1;
-+	revs->as_filter = 0;
- 	revs->min_age = -1;
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
-@@ -2218,6 +2222,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-+	} else if (!strcmp(arg, "--as-filter")) {
-+		revs->as_filter = 1;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-@@ -3365,7 +3371,7 @@ static void explore_walk_step(struct rev_info *revs)
- 	if (revs->sort_order == REV_SORT_BY_AUTHOR_DATE)
- 		record_author_date(&info->author_date, c);
- 
--	if (revs->max_age != -1 && (c->date < revs->max_age))
-+	if (revs->max_age != -1 && !revs->as_filter && (c->date < revs->max_age))
- 		c->object.flags |= UNINTERESTING;
- 
- 	if (process_parents(revs, c, NULL, NULL) < 0)
-@@ -3862,6 +3868,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->min_age != -1 &&
- 	    comparison_date(revs, commit) > revs->min_age)
- 			return commit_ignore;
-+	if (revs->max_age != -1 && revs->as_filter &&
-+	    comparison_date(revs, commit) < revs->max_age)
-+			return commit_ignore;
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
- 		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
-@@ -4019,7 +4028,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 		 * that we'd otherwise have done in limit_list().
- 		 */
- 		if (!revs->limited) {
--			if (revs->max_age != -1 &&
-+			if (revs->max_age != -1 && !revs->as_filter &&
- 			    comparison_date(revs, commit) < revs->max_age)
- 				continue;
- 
-diff --git a/revision.h b/revision.h
-index 5bc59c7bfe..fe37ebd83d 100644
---- a/revision.h
-+++ b/revision.h
-@@ -263,6 +263,7 @@ struct rev_info {
- 	int skip_count;
- 	int max_count;
- 	timestamp_t max_age;
-+	int as_filter;
- 	timestamp_t min_age;
- 	int min_parents;
- 	int max_parents;
-diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
-new file mode 100755
-index 0000000000..2a3705c714
---- /dev/null
-+++ b/t/t4217-log-limit.sh
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+
-+test_description='git log with filter options limiting the output'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_COMMIT_GRAPH=0
-+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
-+
-+test_expect_success 'setup test' '
-+	git init &&
-+	echo a > file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-02-01 0:00" git commit -m init &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-02-01 0:00" git commit -m first &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-03-01 0:00" git commit -m second &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-03-01 0:00" git commit -m third
-+'
-+
-+test_expect_success 'git log --since=... --as-filter' '
-+	git log --since="2022-01-01" --as-filter --pretty="format:%s" > actual &&
-+	! test_i18ngrep init actual &&
-+	test_i18ngrep first actual &&
-+	! test_i18ngrep second actual &&
-+	test_i18ngrep third actual
-+'
-+
-+test_done
-diff --git a/t/t4218-blame-limit.sh b/t/t4218-blame-limit.sh
-new file mode 100755
-index 0000000000..03f513f331
---- /dev/null
-+++ b/t/t4218-blame-limit.sh
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+
-+test_description='git blame with filter options limiting the output'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+GIT_TEST_COMMIT_GRAPH=0
-+GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
-+
-+test_expect_success 'setup test' '
-+	git init &&
-+	echo a > file &&
-+	git add file &&
-+	GIT_AUTHOR_DATE="2020-01-01 0:00" GIT_COMMITTER_DATE="2020-01-01 0:00" git commit -m init &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_AUTHOR_DATE="2020-02-01 0:00" GIT_COMMITTER_DATE="2020-02-01 0:00" git commit -m first &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_AUTHOR_DATE="2020-03-01 0:00" GIT_COMMITTER_DATE="2020-03-01 0:00" git commit -m second &&
-+	echo a >> file &&
-+	git add file &&
-+	GIT_AUTHOR_DATE="2020-04-01 0:00" GIT_COMMITTER_DATE="2020-04-01 0:00" git commit -m third
-+'
-+
-+test_expect_success 'git blame --since=...' '
-+	git blame --since="2020-02-15" file > actual &&
-+	! test_i18ngrep 2020-01-01 actual &&
-+	test_i18ngrep 2020-02-01 actual &&
-+	test_i18ngrep 2020-03-01 actual &&
-+	test_i18ngrep 2020-04-01 actual
-+'
-+
-+test_done
--- 
-2.34.1
-
+Plato
