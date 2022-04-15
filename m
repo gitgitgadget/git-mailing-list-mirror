@@ -2,111 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F162C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 01:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06369C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 02:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348347AbiDOBLO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 21:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
+        id S1348633AbiDOCYg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 22:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348342AbiDOBLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 21:11:13 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 213685DA4B
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 18:08:47 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 36D1D5A407;
-        Fri, 15 Apr 2022 01:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1649984926;
-        bh=5+PeOHnahIsczgAZ7unPihUB9ti/Eaqr5n2fgT3Vn7w=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=m0ReREuPglSFfbKa5X5KDqfS6k7ST+vxHMk7lirWltze9pQIlElgB2y4wL5smaS5o
-         Doz7uLuvO4FvS6SINVIWzSTg3eqlIhF73BWUJWv97/prdGwotXf0gQbhpiM4Ya0QyA
-         OpfewgsyXQXQx9pMLucdQUHv/Z7Alb8EKVLAfy9I5eoZh8/VKd+8g+NP8E7MYFEoAL
-         wwQgrkT9weH4be5aLQQyoUszPOMgoM7PSBop5eopbfiDAal9/ESWNr4UTf+VugHhh1
-         UeU/PpT/jQIRdUnqvkt7mUnX615GIf+20EatD6FyVrOQ+pTAuvKRe4SXPhMAGOZdRJ
-         B7X0FPplNpgWNkNUbWYP/tqqgF+IIXY6pwbv9oONCTbdMp4u4QBQRUUzCFT3teugE9
-         4v37Hwuy9haABEWJG7xv/IBW8QYBvcbAiIlF0TjJwxx2+0ocVEzPuYptYuUGH4HI8G
-         2yFO+B01dVXJ5JlvyznT7PksVZ92M4E7TjIRHw4kYhtAMkxfz2P
-Date:   Fri, 15 Apr 2022 01:08:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Pathological performance with git remote rename and many
- tracking refs
-Message-ID: <YljFnJk55WYLKd6Y@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <YldPmUskbU+bOU2n@camp.crustytoothpaste.net>
- <220414.8635igdtfn.gmgdl@evledraar.gmail.com>
+        with ESMTP id S239639AbiDOCYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 22:24:34 -0400
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664CE4091F
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 19:22:08 -0700 (PDT)
+Received: by mail-vk1-xa2e.google.com with SMTP id c4so3066624vkq.9
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 19:22:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xEgEyTQuiMFY4mGWMr6V0MX/+ourL9mlLfpFOk7n+Ec=;
+        b=E2zVEJwvrEMMHWPB/s1fKJ5/lLc2wM1ShKDzva1crXt79k/amViAaDMwOTGQmqD4wl
+         FVeupZB1ycPCbC/PzDnOUU+pSj4GvgMkVcT+gw4PrKMi5wIqpS6TvPPD1lyv+PjHHIgc
+         pzEzjxIhfWeUvVvAZLE4TtDWc91114TQin+8WJytxm887mj7DarWSB9sVxttVYCFr8ph
+         rmxK4B62Vl9SWdFU73w9lkGBN/wkjH82VaF2MBffYgCVU+I2HFdNYPBchfzIx1tg3b5I
+         JLBNFMYXE0DJ9GAI7mO9phYX21IgmYqII8tfWZm5n/+KsUaCD+UJdEq43d0DFzEI9uQM
+         HLVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xEgEyTQuiMFY4mGWMr6V0MX/+ourL9mlLfpFOk7n+Ec=;
+        b=NU5pRJGdwPOPBf3qI6MDtVsfCETvYdh+uyCNshVXyYwfFfLkOQ1Ra3b0SI1CiqYdvJ
+         Li7gNpmdlWrF/Z7zLT108okmXTh8PD2hQgGRDW8kF/wIK7NZOq9EeWFqtRe5PeE71JZ7
+         HeJUYJhRxV+I44CD6pPHvT+V918GBmwaFoNkn5t8CQcqKgZKuTtqL7Y2P4Wh5sxPBzAP
+         782r3Q/4P1K4JKr/XoEBQ+T8xj+sW+hMza89Xdsz52cNvKuGkD2Jvu7G3YF3USJ+9CR2
+         ZUC5PKE6sDPE3ikKcQIRvz87paRov+sb9+iO5VcqDFk/UWlX1nZ2qjGKZjiVtTVqLPM1
+         u1RA==
+X-Gm-Message-State: AOAM530yKNNRj6EY34FNbzEco34RZz9f5lTiTCKNNZM526jKdxvv5u3/
+        Zk1ndCkvbSiiECZyVusKYdvC13YBiPU+N6iLtDY=
+X-Google-Smtp-Source: ABdhPJwgmAgWNL3Cia3kFdpl8XCG1HJYoMz9hhxAEkjRZ0xjIGxxCH5YPxxqvGgFOvmxtO8Ny6XsPxPGOcReD9WSx8w=
+X-Received: by 2002:a05:6122:118f:b0:348:f961:5814 with SMTP id
+ x15-20020a056122118f00b00348f9615814mr2372346vkn.14.1649989327386; Thu, 14
+ Apr 2022 19:22:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="vGQQ3ZyLdvF7Y9ZQ"
-Content-Disposition: inline
-In-Reply-To: <220414.8635igdtfn.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com> <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
+In-Reply-To: <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 14 Apr 2022 19:21:56 -0700
+Message-ID: <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
+Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
+ to the environment
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Apr 13, 2022 at 12:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> @@ -160,13 +169,23 @@ linux-TEST-vars)
+>         setenv --test GIT_TEST_WRITE_REV_INDEX 1
+>         setenv --test GIT_TEST_CHECKOUT_WORKERS 2
+>         ;;
+> +osx-gcc)
+> +       CC=3Dgcc
+> +       CC_PACKAGE=3Dgcc-9
 
---vGQQ3ZyLdvF7Y9ZQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+not sure when this was broken since there were too many refactorings
+around this code, but this is definitely wrong.
 
-On 2022-04-14 at 07:12:20, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> Aside from how we'd do renames with transactions, do you know about
-> clone.defaultRemoteName and --origin?
+macos' gcc is really clang, so if we really want to build with gcc
+instead (and there are 9, 10 and 11 versions installed) need to use
+instead (for version 9, which was what was used originally and what
+CC_PACKAGE was installing if needed)
 
-Yes, I do know about that.  However, in my case, the repository is
-cloned before I even get a chance to touch it, so these options have no
-effect.  My dotfiles aren't even on the machine at that point.
+CC=3Dgcc-9
 
-> There was a (small) thread as a follow-up to that "rename --progress"
-> patch at the time, did you spot/read that?:
-> https://lore.kernel.org/git/220302.865yow6u8a.gmgdl@evledraar.gmail.com/
+Right now both macos jobs are using clang, regardless of what the
+nicely named label says.
 
-Yeah, I remember reading it at the time.
-
-> More generally, probably:
->=20
->  1. Teach transactions about N operations on the same refname, which
->     they'll currently die on, renames are one case.
->=20
->  2. Be able to "hook in" to them, updating reflogs is one special-case,
->     but we have the same inherent issue with updating config in lockstep
->     with transactions.
-
-Yeah, that's one of the reasons I was thinking of implementing
---no-reflogs: because in that case, the operation really is a
-create/delete operation and it doesn't require any additional logic in
-the transaction.
-
-My goal here is specifically not to rearchitect ref transactions and to
-implement a relatively simple solution.  Your response is indicating to
-me that updating reflogs is going to be the former and not the latter.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---vGQQ3ZyLdvF7Y9ZQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYljFmgAKCRB8DEliiIei
-gZ3xAP9b6XD7WRgcVRKh0vT7H2O9PA1A0oTiIDb+GR+UGlsh2QD5ATmkh1spGnTK
-MIc+oI7L+/B4lVMln3xqa0zZBfBSxwg=
-=xndr
------END PGP SIGNATURE-----
-
---vGQQ3ZyLdvF7Y9ZQ--
+Carlo
