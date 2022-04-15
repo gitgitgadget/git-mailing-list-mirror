@@ -2,177 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B65EBC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 16:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09C4FC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 16:23:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355726AbiDOQJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 12:09:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47046 "EHLO
+        id S1355814AbiDOQZ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 12:25:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355719AbiDOQJi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 12:09:38 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E4F8C7C4
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 09:07:09 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id bv19so16077400ejb.6
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 09:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=tgKG8L4TV38RfDD1K7bHkpbJ36RQg3y3jZDqAlHQVkw=;
-        b=fjfdISOsugxbJW0YKNeV1yGha/+AX0WFeleoNgHRrjmEDzf/FRnSgHTrHrDz/RXilj
-         uv5dZ+Uo7mZ9fcRxADvlJ4qEmGvkmW8jeU/W506Ee/vO45azYEOEQONN8chRjAr2TDUG
-         +ZMJYKVnQds1uEPwWiYBSA7YnZ7TC5g7tNuDsxnKt+rOunTTh3TGjy92EEtFTd7xn4qV
-         kbbUcKJqSfvJg0An6QLAE6woYhzqVzlJiPuCw21MQ++6sICdTF3KvrfCmcf+BzWZBMD5
-         xiOyO/POuRPV8xp/eWnJyF4XC+zjhBh4DW3U5p7Hj/SRoC2F/QPocNliYLP0K3mYheH0
-         kpCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=tgKG8L4TV38RfDD1K7bHkpbJ36RQg3y3jZDqAlHQVkw=;
-        b=8FdjYDILYywt0kgdJGLDaROwzRDwEe0bOfKj0luF+bXmm8/7DKp7o5xl9BZJ5KkFf2
-         Mpj7Uq/+hEeUEaZcW3g7JVfDu+DHoTyOMNIzz7ERpng8b+8ijW2Z5mThRGQ4PjBgwmYh
-         3yMCQwD3BmzGlgdWB3feRWKQub7CJw09Ns0O/cxWi1UrKz/M6B0u2vw1Gm1pjrg5bC16
-         nybwPI7jBByuCXUHi1WnL8STLIyspv6GzWcD6TtAtYkLEpMWFQO38dVSt1wswGRnbP59
-         kPjHzBvUZQ078nRsrWCtT6+pdHf/d7ODYKt4N1m7LNg9GI8lCg/39LUocW0/9q7A5GD4
-         8pFQ==
-X-Gm-Message-State: AOAM533WMmSthL9kyNbcf6kdkjNNPELJiWaRpTz29WSwHPGHcSY7Mcna
-        Wcy7rd8VIV1vv55BXD8xCF2n0FGeAQxJew==
-X-Google-Smtp-Source: ABdhPJxIUwhaGc6xCGNU9ofB2VeeTlSHA5LOMdKJjHf5gR8OZpCHccsvxA+W4VTidVQz9LDABF6HCw==
-X-Received: by 2002:a17:906:408c:b0:6e8:d649:5e41 with SMTP id u12-20020a170906408c00b006e8d6495e41mr6889137ejj.519.1650038827726;
-        Fri, 15 Apr 2022 09:07:07 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s4-20020a170906bc4400b006e893908c4csm1813016ejv.60.2022.04.15.09.07.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 09:07:07 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nfOTS-005j9N-H1;
-        Fri, 15 Apr 2022 18:07:06 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Edward Thomson <ethomson@edwardthomson.com>
-Cc:     Git ML <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] xdiff: provide indirection to git functions
-Date:   Fri, 15 Apr 2022 17:55:07 +0200
-References: <20220209012951.GA7@abe733c6e288>
- <20220209013354.GB7@abe733c6e288>
- <220216.86wnhvvgeh.gmgdl@evledraar.gmail.com>
- <7e6385f8-f25d-69f5-edae-6f5d6f785046@gmail.com>
- <220216.86leybszht.gmgdl@evledraar.gmail.com>
- <20220217012847.GA8@e5e602f6ad40>
- <220217.86ee41izpq.gmgdl@evledraar.gmail.com>
- <20220217225804.GC7@edef91d97c94>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220217225804.GC7@edef91d97c94>
-Message-ID: <220415.867d7qbaad.gmgdl@evledraar.gmail.com>
+        with ESMTP id S241274AbiDOQZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 12:25:55 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42139E9CC
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 09:23:25 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED09A119BFC;
+        Fri, 15 Apr 2022 12:23:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=+lOF68PpofCl
+        3xsDFP0vs5I0siGBj3+TP0TJ/+pWsAY=; b=Qd6jQTP5RW08RhJNihT6KkqOh5pC
+        l2VNy+RyFm4vH6IV0Z8YiDabAn5RXz9lGI838Vx/hDfQ1vqXgA4WO9EuTEPpdHi4
+        mtRtZk2mLeLi0V3FYXzkYTNqCNU5sKWIST73pnhRbmcfeJusacTKS+NJL1vk6JL/
+        zfjdgSBF3aM8b3A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E418F119BFB;
+        Fri, 15 Apr 2022 12:23:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 46889119BFA;
+        Fri, 15 Apr 2022 12:23:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [RFC PATCH 2/2] reftable: don't memset() a NULL from failed
+ malloc()
+References: <20220415083058.29495-1-carenas@gmail.com>
+        <RFC-cover-0.2-00000000000-20220415T101740Z-avarab@gmail.com>
+        <RFC-patch-2.2-364d1194a95-20220415T101740Z-avarab@gmail.com>
+        <4321a9dd-bb82-e2fe-5449-395f998378c5@web.de>
+        <220415.86fsmebgds.gmgdl@evledraar.gmail.com>
+        <23138e2b-436a-0990-cefc-0662674373c3@talktalk.net>
+        <220415.86bkx2bb0p.gmgdl@evledraar.gmail.com>
+Date:   Fri, 15 Apr 2022 09:23:23 -0700
+In-Reply-To: <220415.86bkx2bb0p.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 15 Apr 2022 17:20:53 +0200")
+Message-ID: <xmqq1qxyfh8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5F8473AC-BCD8-11EC-ADB4-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Thu, Feb 17 2022, Edward Thomson wrote:
-
-> On Thu, Feb 17, 2022 at 10:29:23AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>=20
->> [I'm assuming that dropping the list from CC was a mistake, re-CC-ing]
+>> Does it? I just quickly scanned the output of
+>>
+>> git grep -e 'reftable_[mc]alloc' -e 'reftable_realloc' -A2 origin/mast=
+er
+>>
+>> and I didn't see a single NULL check
 >
-> It was; many apologies, I don't use mutt very often any more.  Thanks!
+> I think you're right, I retrieved that information from wetware. Lookin=
+g
+> again I think I was confusing it with the if (x) free(x) fixes in
+> 34230514b83 (Merge branch 'hn/reftable-coverity-fixes', 2022-02-16).
 
-No worries. Also, late reply but I remembered & referenced this thread
-in
-https://lore.kernel.org/git/220415.86bkx2bb0p.gmgdl@evledraar.gmail.com/,
-and saw that I'd left this hanging...
+True.  Initially I hoped that these RFC changes gives us a better
+solution that comes from stepping back and rethinking the issues
+around the original "why are we calling memset() with NULL?", and
+if it were only "well, in _return_block() functions, we clear the
+block before calling _free()---that shouldn't be necessary, if the
+calling custom malloc-free pair cares, they can do the clearing, and
+plain vanilla free() certainly doesn't, so let's stop calling
+memset()", it certainly would have fallen into that category, but
+everything these RFC patches do beyond that seems "oh, it does not
+look important to me, so let's rip it out to simplify", without
+knowing enough to say if that is sensible.
 
->> As for the "new person to our codebase..." I don't think you're wrong
->> there, but that's an asthetic preference, not something that's required
->> for the stated aims of this series of dropping in compatibility shims.
+But ...
+
+>> Isn't it there so the same code can be used by libgit2 and other
+>> things that let the caller specify a custom allocator?
 >
-> Sure, but avoiding a prefix is also not a technical decision but an
-> aesthetic and ergonomic one.
+> I don't think so, but I may be wrong. I think it's a case of
+> over-generalization where we'd be better off with something simpler,
+> i.e. just using our normal allocation functions.
 
-Yes, I see that, but this code is maintained in git.git, not
-libgit2.git, and having to remember to use custom malloc()/free()
-per-namespace is very much negative asthetics & ergonomics in that
-context.
+... many points that was raised on the reftable code in this thread
+may deserve response to explain the rationale behind the current
+code and design, as nobody can improve, without breaking the
+intended way to be used, without knowing what it is.  Thanks for
+marking the patches with RFC.  I think the "patch" is a bit too
+dense a form to point out the issues in the existing code, but the
+discussion that follows by quoting the points in the original code
+and suggested changes is a good way to think about the code before
+these RFC patches.
 
-So if the linker solution works...
+Ideally, it would have been much better if these points were raised
+during the review before the code was accepted to the code base, but
+it is better to have one now, rather than never ;-)
 
-> Is using a prefix here great?  No, it's not great, it's shit.  But it's
-> shit that's easy to reason about.
-
-I really don't see that, as noted in the linked newer reply above we
-have bugs due to this sort of pattern where someone uses
-mycustom_malloc(), forgets that, and then calls free() instead of
-mycustom_free().
-
-Which is a bug and potential segfault that's entirely preventable by not
-using such wrappers at the per-file level (some one-off "this is where
-we provide a custom malloc" file might of course have such complexity).
-
-> If somebody sees a call to `xdl_free` in some code, they say "wtf is
-> this `xdl_free` nonsense?"  And they grep around and figure it out and
-> understand the way that this project handles heap allocations.  It's
-> very transparent.
->
-> If somebody sees a call to `free` in their code, they say "great,
-> `free`".  But it merely *appears* very transparent; in fact, there's
-> some magic behind the scenes that turns a `free` into a `git__free`
-> without you knowing it.  You've not learned the way that this project
-> handles heap allocations, but you also don't know that there's anything
-> that you needed to learn.  These are the sorts of things that you think
-> you understand but only discover when you _need_ to discover it because
-> something's gone very wrong.
-
-Because the reader assumed that when they saw malloc/free that it was
-The Canonical Libc version, as opposed to whatever custom malloc the
-library linked to?
-
-> In my experience, calling a function what it _isn't_ is the sort of thing
-> that a developer discovers the hard way, and that often leads to them
-> not trusting the codebase because it doesn't do what it says it does.
-
-But they aren't anything until you link to something that provides them.
-
-Anyway, I think I see your point, you'd like names to always reflect
-their different-ness, no linker shenanigans.
-
-Anyway, since per [1] it seemed Junio was also more partial to sticking
-with malloc/free *and* we're talking about a thing that gets
-one-off-imported into libgit2 (not as a submodule, presumably) I don't
-think there's any reason to really argue about this.
-
-I.e. instead of importing the sources as-is why not just search-replace
-malloc to mymalloc and free to myfree?
-
-Which can be either a dumb "sed" script, or even better the same (and
-guaranteed to understand C syntax) thing with coccinelle/spatch.
-
-Which wouldn't require libgit2 to have a dependency on that, just
-whatever dev runs that one-off import occasionally. The semantic patch
-is just:
-=09
-	@@
-	expression E;
-	@@
-	- free(E);
-	+ myfree(E);
-=09
-	@@
-	expression E;
-	@@
-	- malloc(E);
-	+ mymalloc(E);
-
-etc.
-
-Wouldn't that also give you exactly what you want? Or was the plan to
-have libgit2 have some option to build this *directly* from git.git
-sources?
-
-1. https://lore.kernel.org/git/xmqqfsohbdre.fsf@gitster.g/
+THanks.
