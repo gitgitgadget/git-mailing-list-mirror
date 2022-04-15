@@ -2,95 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA09C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 20:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAF6C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 20:33:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350871AbiDOUbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 16:31:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
+        id S243002AbiDOUfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 16:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233989AbiDOUbf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 16:31:35 -0400
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DDD5DD96B
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:29:06 -0700 (PDT)
-Received: by mail-vs1-xe33.google.com with SMTP id d9so7860933vsh.10
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oOBkL8NXSuYSI58XWPWZpTezFwStZaUdMXkiRh78ABE=;
-        b=h4Zbhy9F3qQOjCouUXIV2ZYBEF0QYiX68giXF6siona9UY2rUox8DbI+m+gO3tVA+m
-         1MwQAHbP/tZGfLeh2l6l5EkIxN82bOwH6emMlTjL0ozkB1bcWRj74WIzAefZo06kkmJz
-         zSpoRyjuVMjo1AssE7+MQ/NeIubFJpqb6ZNuLTS4DjWplHWx3mvBFrCSGJ+MeafBaIgC
-         ScD6TRIsVyNJUDZvQUT28h7DQamlJ3bH7Hsnrk0GKBx4ajIhWHULBw2PvLFL1oyyo6gY
-         HMtO/zTBIc70H2TaQ5qFy8GFAsu4oD2A23Wpy0+z45SDOihb7KeRLL2pDR3cmhkuQ7lY
-         Ar3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oOBkL8NXSuYSI58XWPWZpTezFwStZaUdMXkiRh78ABE=;
-        b=0DzkVcTYnH1GnYJZlbHGzG8MssKnIgREcignXVcDdQc8rAaUCGTOKbGP3CWWtQ2DUe
-         p9aIVuOH2nU51dyOfSnQCymkhtXhLBykvip/PgNj4DjUjAblsrQZ+xLK+oIAz+x9sMHp
-         caF5sf1amvhcDsPRJx0ZfyRRArQs2QzT/iXyr/Gi1eVhrd6ul9gAuy2LWdiqJwWzeYHm
-         G41aACY/M8NgmyRAsYR0JjBNJsjheb7mdtL29Y32JNhu924W/FVQKPJd8fMGc+rjU14j
-         bqegYXOy7lJZXNN9iyxHQHfCjQppL2VpGwkfDFmlIPLSnWrwDoJimVyse55SEI8phOz8
-         MIZw==
-X-Gm-Message-State: AOAM530wk177j2HOtKqtBSo6iDGkDFOy+Iyzkx/g0MdcOHPSNgp2k5v1
-        q+s0HTLsM7w5V9YuQNtRo6tzP2OES8OAII7ijg4=
-X-Google-Smtp-Source: ABdhPJwJ/GuYnTTusGZNz4tNpd7TepguAdyi830qsT24LEwnHDwZ3MUnN7OoLzl4ByX1gp+0rtIsO16TsVrw/LEd3Q4=
-X-Received: by 2002:a67:cb11:0:b0:324:fa43:1408 with SMTP id
- b17-20020a67cb11000000b00324fa431408mr197751vsl.5.1650054545270; Fri, 15 Apr
- 2022 13:29:05 -0700 (PDT)
+        with ESMTP id S232478AbiDOUfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 16:35:51 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F0B4D9CA
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:33:22 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9934F10BED0;
+        Fri, 15 Apr 2022 16:33:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z7jo4b+OHrQAF4SmlZ68kDC9Ak23/Z7khHks73
+        TEmBo=; b=Xowydsn0JbQWhdGBL4p+Je2MxszvuYsktuoyD1TsSMxxGx8YhnlKlD
+        /JRwbDo5RkeoUlH6H7uXDp6VpDyZ/qnjtT1SXje+0LveD9HBkvTsuMNC0Rsp0YKj
+        cYXUmHModEDqsR9FGB9NhDrWoto9nx/ee7o0WD8CmM/HzhoQkyJDI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 90F4010BECF;
+        Fri, 15 Apr 2022 16:33:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EBC6310BECE;
+        Fri, 15 Apr 2022 16:33:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [RFC] introducing git replay
+References: <20220413164336.101390-1-eantoranz@gmail.com>
+        <xmqq4k2wap8g.fsf@gitster.g>
+        <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
+Date:   Fri, 15 Apr 2022 13:33:19 -0700
+In-Reply-To: <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
+        (Edmundo Carmona Antoranz's message of "Fri, 15 Apr 2022 20:46:12
+        +0200")
+Message-ID: <xmqqbkx2ccj4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
- <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
- <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
- <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
- <220415.86k0bqbgin.gmgdl@evledraar.gmail.com> <CAPUEspiE3HBkkBzNgz8Gb6=fc2NPnfbGzzn2SEiGGG+zVo9DLA@mail.gmail.com>
-In-Reply-To: <CAPUEspiE3HBkkBzNgz8Gb6=fc2NPnfbGzzn2SEiGGG+zVo9DLA@mail.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 15 Apr 2022 13:28:54 -0700
-Message-ID: <CAPUEspgWTk0wjmomo2g9TVHZny7stCt=B8D=HA2=gk_SEC5vnQ@mail.gmail.com>
-Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
- to the environment
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4A3B5AF6-BCFB-11EC-BE5A-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 15, 2022 at 12:03 PM Carlo Arenas <carenas@gmail.com> wrote:
->
-> On Fri, Apr 15, 2022 at 6:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > But unless I'm missing something that's already been the case on
-> > "master" for a while, i.e. this is the master run showing that we'll
-> > invoke "gcc":
-> > https://github.com/git/git/runs/6031562726?check_suite_focus=3Dtrue#ste=
-p:3:6
->
-> That would be unfortunate, considering the code in next (and all other
-> not yet affected) branches still have the definition added in
-> 176441bfb58 (ci: build Git with GCC 9 in the 'osx-gcc' build job,
-> 2019-11-27) and which survived your travis-ci removal series.
+Edmundo Carmona Antoranz <eantoranz@gmail.com> writes:
 
-Nevermind, my test was flawed, this[1] updated run does show this code
-was indeed refactored away and the bug also introduced to next and
-beyond.
+> But I am probably wrong in terms of what I understand that you meant.
+> Can you expand a little bit, if you don't mind?
 
-Carlo
+What I had in mind is what I have to do every day multiple times.
+'master'..'seen' is a series of merges of tips of different topic
+branches.
 
-[1] https://github.com/carenas/git/runs/6042506530
+                 ---T topic
+                     \
+       \    \    \    \
+  --M---o----o----o----S seen
+    ^
+    master
+
+
+Some of the topic branches may get updated and 'master' may gain
+more commits by merging some topics.  Now it is time to update the
+'master'..'seen' chain.
+
+                 ---T---P topic (updated)
+                     \
+       \    \    \    \
+  --M---o----o----o----S seen
+     \
+      o
+       \
+        N
+       master
+
+It would be wonderful if a single command like replay can be used to
+say "In the old history master..seen I have bunch of merges.  master
+used to be M but now it is at N.  Rebuild M..S on top of N _but_
+with a bit of twist.  Some of the topics in M...S may have been
+merged to 'master' between M..N and the replayed history on top of N
+does not want to have a merge from such 'already graduated' topics.
+Many topics are updated, either by adding a new commit on top or
+completely rewritten, and we want an updated tip of these topic
+branches, not the old tip that I merged when I created M..S chain,
+when replaying the history on top of N."
+
+That kind of operation is quite different from what "rebase" does,
+and deserves to be under a different name.
+
+Compared to that, "replay exactly the same set of commits in the
+same shape on top of a different commit whose tree happens to be the
+same as the original", is a mere special case of "rebase" that is
+not all that interesting.  It may be a worthwhile thing to do to
+teach "rebase" capable of doing so reliably and more efficiently,
+but that still falls into "improving rebase" category, not meriting
+a separate command.
+
+
