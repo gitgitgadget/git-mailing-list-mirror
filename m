@@ -2,94 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BF6CC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 02:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0053CC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 02:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237337AbiDOCtT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Apr 2022 22:49:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52322 "EHLO
+        id S1348992AbiDOCvA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Apr 2022 22:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234375AbiDOCtR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Apr 2022 22:49:17 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CE7A76D6
-        for <git@vger.kernel.org>; Thu, 14 Apr 2022 19:46:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1649990807;
-        bh=lDT1rU7m1JqKChfgq9VBVjdbgRn5u4TXRAa20Rzq8mA=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=g2LDW/9qVKbJqMaBehSUd7vMgl/w0slEnNPusGehCsOyI8mtRodUjfaGzITLE1vAK
-         FVwAs+Ty36VP1CsX71HMR6IiVJV1fVyEBgklCG6MUi3ZfnhZgDsNrr3niMdLdsir+K
-         SGusmOrLX56v7rKx5GYx6iulHmdzpwjG+qYthPV4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az92-249.nbrkuvepa5puroylvvx1wzp50h.ex.internal.cloudapp.net
- ([20.25.255.126]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MMGN2-1nPAlV0G4E-00JNEJ; Fri, 15 Apr 2022 04:46:47 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.35.3
-Date:   Fri, 15 Apr 2022 02:46:44 +0000
-Message-Id: <20220415024644.4908-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.35.3
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S1348988AbiDOCuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Apr 2022 22:50:21 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08EAB6449
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 19:47:44 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id v15so8502503edb.12
+        for <git@vger.kernel.org>; Thu, 14 Apr 2022 19:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RSuimEDAosFtS10Yfs9huUCawiyZfdk/qguGrwfZMGs=;
+        b=KZxFHXCCUE0RM/oBW5KadeQ/ltJ0VMxvkz7244IKK58WcI1Jbc80vfntKAIDyfCvAR
+         bgrag+SZUJxs6RX8SOahXVYx28sd2Ik5M3U0wECxJqAn9RL40z9D5E/6sNCG6GhPdSh0
+         FsCPzeUs7KnZaprzlRkgU180ijlUpE37IhX4B933KXFbw4vxr3n6X5L5SUltd272CAqv
+         YrEcMCTw+QZyHEOJGUOHgD5YqvA8bohZzOZHGEUtJNBFotv0xZC1/UAt6lVfBNye8stB
+         QOChn+xf/mQG1ftrP1lXiPWvEzw/bFke8B1DgdNxnhFsBKIZyIAlshYb9Txn3G9y7yzu
+         aLZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RSuimEDAosFtS10Yfs9huUCawiyZfdk/qguGrwfZMGs=;
+        b=W6k/OgNwPf6viW2IVgbfVnViTlVdHs33azxfW9E3Qo1ciTgyQGH6iTHZT9VxXiXA9D
+         UoZCOp5nHg55F2a2ujtuiR5myc0Ng3992yeQUhnSRZdEmaAzBzV97JN9aRZ20E6YbaIa
+         ANAFvpzjJEe9Ov3zptuRPgVWXtrNLfJ4Q+MudtZPyJexqE/4ITCw0n7u1EoXGZrJHonI
+         wvb8Ah+qSgknvV6kKdq38CIA1oou14VfzMJAUukPNe1usawCL5+ENVF92SMiKExKdJtE
+         Dp5HM6mlY0JWm57eZkqeDR3hDrMNv3yJLfjNJM+/5KroWoz6uGxheoDl3xJ4lay04mmG
+         0JKA==
+X-Gm-Message-State: AOAM530FlrQ3wKXZ0N24IJKP3hkmTsksa4Yvvkmn0tACQHMf0WKJvyQc
+        M4wLyJenrzKQRB0HxvMV5QOR1nBhbvI=
+X-Google-Smtp-Source: ABdhPJypzdhn6jr6htlo/veYALiRZTU/sZIPuSWYcXYMjVB0vO4pFowQHeNMrxRftjPX2mN/OIbVEQ==
+X-Received: by 2002:a05:6402:350d:b0:41d:675f:ea96 with SMTP id b13-20020a056402350d00b0041d675fea96mr6203952edd.297.1649990863059;
+        Thu, 14 Apr 2022 19:47:43 -0700 (PDT)
+Received: from fedora35.example.com ([151.27.151.62])
+        by smtp.gmail.com with ESMTPSA id lb26-20020a170907785a00b006ea4d2928e5sm1212561ejc.218.2022.04.14.19.47.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Apr 2022 19:47:42 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH v4 1/1] Makefile: add a prerequisite to the coverage-report target
+Date:   Fri, 15 Apr 2022 02:47:38 +0000
+Message-Id: <20220415024738.9239-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:hXizgkxy0d6MHmoaO1SR4+2sqRnnpeHU0Ik9Y+r0a0Eu+hqKghV
- kaEIE3AYfld2BuX/s3xREl84O0XCDV1VoJPUjdcodipgzRSheFcQsZt6rJK5zF5x7BaT49C
- eclvM4DJk9Dsj5IwnbmhWO3KSu+r+MYhSyodpRE0nfVwM6EjkVWr8BQK0axkvIKjeGGgaj7
- X4lKGoLIxfLkNmIyO/7HQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4SG2CnqthTc=:qB9BsHK1h5QWIDOaR8CgsG
- 3N5F++ACBeDT3k53ZKZReFPtJfi56n8WfVyXE0YIEDMp3xlmbLa65/2KJU9YRduJudm+lrWHK
- 4saP6AKbXxbx+Soe0PZkubNTjy7HG+3BCyQrgb9/RXW3j3TIofozxINEh9DpnmTHT3z6Y9p5X
- ReUs3JVKpo/nPOiHjTOcuSraKe/tHDcgJGdJwbH09m7wIVUG1J/pbht3h+xZ+kAUpJH7hlKTv
- BoRpya1ylRdcf/kfXDBkAsP3ZqAkQCUCXBRWE/4JsGFAUFFyniVT/r1A54VhpzNm4/iBsxnnI
- DGtMX2kN+8kOj78mK0JOEFjYds6HTDiWL1DrzeR4CZXp37g+G26doZ2g2ec3NWvy1mLvXITpw
- BZceLG38q1KCUJey9HHXdCwUsJZyGb58eVQGYNzflbhhYLzGWcst+Oj9vfz66+U0qqv4m9eZI
- cCC47xczkFtMsW7eHGifz1dCSOZjy2ASddkC5Zalxdm+Va10CeBjMq8lGRqYU9BzInXr4uz2v
- Ls78oleLlBbWbNJ9D9mAJTvzClRtt0L/IpU/o3U9oA4Pt2t5xk2bDbh8jsuK0PryEwHhBQTyA
- 5watl0xK0ZpXfLaMq2kEvRRteqsm4JZYK40CBbDnIbZYSJ9FxGs0uB/foIWJ5fqXr1+7LWhZ9
- jGRWQUrR1l0xXMdzuBuSsacp/7HHXPpU7dbEKVxnhpADV7jY9PZNtZqi1nc+EFxpKBqq/f3/7
- bZhhB3gtecGlJUoHP54BIAWThF61GQZbZ1kh6p/ytawJzzy0zc7/JgN9vTuJJQNDbvrhdiUup
- 3kv8tHf9eS6jm8be4/xc6KUi2DfusWnI0BKV/UkBjQrd1f/rCBZX5oMlmuJke6lxnkJaZ0bWu
- CZKWu8dInySmc1MclV0QFQ+MNCbVIcY0GTeJAJFpGeF6Pxzj4PflVtMpsUV3seaF4wmE3EIjR
- 9t+1f5fFyctdNHwGVZ4+kXhOBPE7XrWJFEC4lb3Nst7et7+MSxaeTlfMM/x3s/KveeUpRR4qO
- XfrCqdh0uaCC4WXxSD5uHASj0ruOnJitId3xcGuiILYHiRx9dWzHIYrVUupu/cTBQhyxs164d
- NSu+rSZ6cZ3BK8=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Directly invoking make coverage-report as a target results in an error because
+its prerequisites are missing,
 
-I hereby announce that Git for Windows 2.35.3 is available from:
+This patch adds the compile-test prerequisite, which is run only once each time
+the compile-report target is invoked. In practice, the developer may decide to
+review the coverage-report results without necessarily rerunning for this
+coverage-test, if it has already been run.
 
-    https://gitforwindows.org/
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+This is the fourth revision of the patch. Compared to the third:
 
-Changes since Git for Windows v2.35.2 (April 12th 2022)
+- @make -> $ (MAKE)
+- drop touch coverage-test.made from the coverage-test.made target
 
-New Features
+ Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-  * Comes with Git v2.35.3.
+diff --git a/Makefile b/Makefile
+index f8bccfab5e..3740a3a4e7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3407,6 +3407,7 @@ coverage-clean-results:
+ 	$(RM) coverage-untested-functions
+ 	$(RM) -r cover_db/
+ 	$(RM) -r cover_db_html/
++	$(RM) coverage-test.made
+ 
+ coverage-clean: coverage-clean-results
+ 	$(RM) $(addsuffix *.gcno,$(object_dirs))
+@@ -3421,13 +3422,17 @@ coverage-compile:
+ coverage-test: coverage-clean-results coverage-compile
+ 	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
+ 		DEFAULT_TEST_TARGET=test -j1 test
++	touch coverage-test.made
++
++coverage-test.made:
++	$(MAKE) coverage-test
+ 
+ coverage-prove: coverage-clean-results coverage-compile
+ 	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
+ 		DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS="$(GIT_PROVE_OPTS) -j1" \
+ 		-j1 test
+ 
+-coverage-report:
++coverage-report: coverage-test.made
+ 	$(QUIET_GCOV)for dir in $(object_dirs); do \
+ 		$(GCOV) $(GCOVFLAGS) --object-directory=$$dir $$dir*.c || exit; \
+ 	done
+-- 
+2.35.1
 
-Bug Fixes
-
-  * The advice indicating how to use the %(prefix) with a network share
-    path was updated to use the appropriate number of slashes.
-  * Various fixes for usage of the safe.directory and %(prefix) when
-    using Windows Subsystem for Linux (WSL).
-
-Git-2.35.3-64-bit.exe | 5862bd6f4f4619d3bfeb4f9c2cdfdf62fd45658650debd535c6af10a8695e181
-Git-2.35.3-32-bit.exe | d6b2bb64f264b5edf014f356ec4f1532128f43ab0c1ecbf43f0d19912d81d0b8
-PortableGit-2.35.3-64-bit.7z.exe | 53091932db9ed386a667a4b11b5760bb8eb2d44d556b67cb94fa2766daa37182
-PortableGit-2.35.3-32-bit.7z.exe | be28dea2619f0d71872adf3c3f0859838773b3785b7c36f520005e93e4fc1190
-MinGit-2.35.3-64-bit.zip | 9b88c81ad796acf9969825e8736b953cb0e0bfb4717be57fd59336ae94d521e4
-MinGit-2.35.3-32-bit.zip | 1ad43122a8a7dc1633beeabcfa14aec5c35c211be8f3594431046ce3e60fc542
-MinGit-2.35.3-busybox-64-bit.zip | 2b257cdbae25253034fb3f38e13118d951c85e476c32719b0a0d4f1cd7516d69
-MinGit-2.35.3-busybox-32-bit.zip | daf08717875ce64fff84cc0ad755ebe209066a02c238eec47994f7b0a8023b1d
-Git-2.35.3-64-bit.tar.bz2 | a81ac00b01de762920500b58a631c51be0574d2df50d7a089ef9195a57358a42
-Git-2.35.3-32-bit.tar.bz2 | 69a6880ac0171918bd333421141f79bc14097097e35b1f9aacc483f4300c8e08
-
-Ciao,
-Johannes
