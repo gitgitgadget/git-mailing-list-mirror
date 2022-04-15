@@ -2,76 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB07C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D00EAC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354174AbiDONzG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 09:55:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
+        id S1354200AbiDON6C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 09:58:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354169AbiDONzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 09:55:04 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B34BD2C9
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:52:35 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id u15so15426836ejf.11
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:52:35 -0700 (PDT)
+        with ESMTP id S1354197AbiDON6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 09:58:00 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C6A2DA9D
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:55:30 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id g18so15457989ejc.10
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=x8YGIVWmVPYxgZU4DOipD7q/8qBC5wWRH+OC/TE1KLc=;
-        b=U7kgyH5EXtS+T9EUY1U2vB2LLWqOrQQ35DcqBALIkXDPCykjeMuYfTAAWlNYNCY3tM
-         3cESEb6k9iVPDbSFlT3SNnFAxIW5KiWjVIbQYsUm+bwksqWwqCJGO5XIsqIlTK99axPc
-         4qtasVLE+2vsOdg1ABSQ8IR4sM3WihBusJPrhfmroNc6rz4wo4DGQ3wRH+GgpDsZxkFi
-         lXWo0Itm1vhCfAB2U3w6Af7q5vLSbIFzPNpyA3Gs0ZFBlOTfQN/clnoF5O4CGhap37bv
-         YYFyROeURC04y3QlI36MyZVfbCN7Pknhs8Oh5fI8u8/15xWP/Xuk22ZCmr6SY7UGpNjF
-         IX6A==
+        bh=Qp7F9mOSjzSGinvTJ9Bdi5GiVjbDGMlEas28Y/f6qTI=;
+        b=g0OKL34H6/OdHkWFGrt7kZ2Y7KQf27qdSmU3e2aaXSOMRKPcpbQ2g87ZYrIwPspqg3
+         eoBjlF6ntcKwnr7ynWNy/peFI0nb+R9Ha0gJZBSyXoyrStb8TZg1Rt05eXDq5d1ab0Xc
+         waP7Tzp/a0Y3P7sB/6mxZza8QGGFtCk4oxwj+1TcEYvuCodDOaKduZsDahehqsb/5Uub
+         1NmuofmVgVchJ+ehdye+gViDy0EBXlgp3Z1npdyI42uonAB/udqps7us84/tnqj2Aazw
+         tNKp6e/IMPh9CzCwdl98noAugekuhKxJGRQ0qhDPvzhop9rpi4xvN8jV02V6dMxCka0H
+         a2tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=x8YGIVWmVPYxgZU4DOipD7q/8qBC5wWRH+OC/TE1KLc=;
-        b=cMECWeWMyl0ZXgj3VV03iqZyz3tIeE17SriWkhB0xfA98L7Hc2Iu6cI9mMrtpGsUZ1
-         Exgq1jlb/AwnVGKN6D71QUavxQR1kBQkDk1paBOKW8elLuIzqxi/Q55vjrYv+yQzeJyM
-         no4MTMlCM+63mY4WPyi5JVrWLbd2kxrV3kCREx9wPJVrTuWnQrNvR8qWTT1g8sOoROnD
-         H1XUUDSFPWAew+DCnnrGOv0dQOqyYB6X9uugORXCZWfYSQ4tnkYHhuNEY5ADe3pQfw9M
-         xza0eqnu7nI6fd01ksRPLuHBqIo6vEXoTgm9OTDJk2UGWWwL/BJF2v6r1N58zqVinAzI
-         6J4g==
-X-Gm-Message-State: AOAM532j+ZgTocEt81VgpOdfxaIv2s8IfDwbH33EbfKi9r8z7sMIFx+R
-        AUR9qIDNEB26swS2ptPC1xEJ5FqM1c9v/A==
-X-Google-Smtp-Source: ABdhPJzSTf0eBAu++84mtrKXy6BMMfp3zUf7357zP4WvhNfE0jw6QcpTMw+rwlXO7ok9zr2XQEMtbg==
-X-Received: by 2002:a17:906:c151:b0:6e8:9cbc:ac04 with SMTP id dp17-20020a170906c15100b006e89cbcac04mr6380579ejc.423.1650030753448;
-        Fri, 15 Apr 2022 06:52:33 -0700 (PDT)
+        bh=Qp7F9mOSjzSGinvTJ9Bdi5GiVjbDGMlEas28Y/f6qTI=;
+        b=Ij+EKtxunXCX07sMRsViu5CtKB0bJ9r9QEETIdKM+e1gSaLSLH33rWx0Ohgbe24jEj
+         WR4iYTjTbimrfg/IsO5qvSha6R2futPSLR2ZcyRjvoeXTslJ18Ux6ZmzjanY7ZdPB4G6
+         T8Zcj61Pk0jGeur+xTID7tPhXyn1rMkKcuRzpiHJiI45Vkg7KWDo5IBc7J2iOzhZtcy/
+         h1t7kO0Bp8uY4qXPW7JZyPBdyqtZr+5w0M7TjnVO37At27cqJqE5HyetQrdKbHrAw3jy
+         IC+1k8QpafL4kM2o4AZp/pxdPfuZqAw6+XBMVom584Db63msa4tpz/7BHg5HvdkpZv0K
+         vY/w==
+X-Gm-Message-State: AOAM5339j6NKOnDNss+dn0STmAgzB0SXwGKquJjD8lBHp7tIC8RYcpSx
+        7sYldYMXudIV1JpSNcda6p8=
+X-Google-Smtp-Source: ABdhPJy70r2TNhmKLAe7VU+3STl7o6/c4SjdPREpJrXm+mtmGxMFeA9RFeFTSBdqbS62fDFSFJnh2g==
+X-Received: by 2002:a17:907:97c8:b0:6ef:6a79:6285 with SMTP id js8-20020a17090797c800b006ef6a796285mr823676ejc.231.1650030929138;
+        Fri, 15 Apr 2022 06:55:29 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id j2-20020a056402238200b0041f351a8b83sm2623235eda.43.2022.04.15.06.52.32
+        by smtp.gmail.com with ESMTPSA id fq6-20020a1709069d8600b006e891c0b7e0sm1689448ejc.129.2022.04.15.06.55.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 06:52:32 -0700 (PDT)
+        Fri, 15 Apr 2022 06:55:28 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nfMNE-005fXB-8Z;
-        Fri, 15 Apr 2022 15:52:32 +0200
+        id 1nfMQ4-005fe7-1u;
+        Fri, 15 Apr 2022 15:55:28 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
- to the environment
-Date:   Fri, 15 Apr 2022 15:47:22 +0200
-References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
- <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
- <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
- <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [RFC PATCH 2/2] reftable: don't memset() a NULL from failed
+ malloc()
+Date:   Fri, 15 Apr 2022 15:53:43 +0200
+References: <20220415083058.29495-1-carenas@gmail.com>
+ <RFC-cover-0.2-00000000000-20220415T101740Z-avarab@gmail.com>
+ <RFC-patch-2.2-364d1194a95-20220415T101740Z-avarab@gmail.com>
+ <4321a9dd-bb82-e2fe-5449-395f998378c5@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
-Message-ID: <220415.86k0bqbgin.gmgdl@evledraar.gmail.com>
+In-reply-to: <4321a9dd-bb82-e2fe-5449-395f998378c5@web.de>
+Message-ID: <220415.86fsmebgds.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,46 +74,67 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Apr 14 2022, Carlo Arenas wrote:
+On Fri, Apr 15 2022, Ren=C3=A9 Scharfe wrote:
 
-> On Wed, Apr 13, 2022 at 12:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> @@ -160,13 +169,23 @@ linux-TEST-vars)
->>         setenv --test GIT_TEST_WRITE_REV_INDEX 1
->>         setenv --test GIT_TEST_CHECKOUT_WORKERS 2
->>         ;;
->> +osx-gcc)
->> +       CC=3Dgcc
->> +       CC_PACKAGE=3Dgcc-9
+> Am 15.04.22 um 12:21 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> Return NULL instead of possibly feeding a NULL to memset() in
+>> reftable_calloc(). This issue was noted by GCC 12's -fanalyzer:
+>>
+>> 	reftable/publicbasics.c: In function =E2=80=98reftable_calloc=E2=80=99:
+>> 	reftable/publicbasics.c:43:9: error: use of possibly-NULL =E2=80=98p=E2=
+=80=99 where non-null expected [CWE-690] [-Werror=3Danalyzer-possible-null-=
+argument]
+>> 	   43 |         memset(p, 0, sz);
+>> 	      |         ^~~~~~~~~~~~~~~~
+>> 	[...]
+>>
+>> This bug has been with us ever since this code was added in
+>> ef8a6c62687 (reftable: utility functions, 2021-10-07).
 >
-> not sure when this was broken since there were too many refactorings
-> around this code, but this is definitely wrong.
+> Not sure it's a bug, or limited to this specific location.  AFAICS it's
+> more a general lack of handling of allocation failures in the reftable
+> code.  Perhaps it was a conscious decision to let the system deal with
+> them via segfaults?
+
+I think it's just buggy, it tries to deal with malloc returning NULL in
+other contexts.
+
+> When the code is used by Git eventually it should use xmalloc and
+> xrealloc instead of calling malloc(3) and realloc(3) directly, to
+> handle allocation failures explicitly, and to support GIT_ALLOC_LIMIT.
+> This will calm down the analyzer and extend the safety to the rest of
+> the reftable code, not just this memset call.
+
+Yeah, its whole custom malloc handling should go away.
+
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  reftable/publicbasics.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+>> index 0ad7d5c0ff2..a18167f5ab7 100644
+>> --- a/reftable/publicbasics.c
+>> +++ b/reftable/publicbasics.c
+>> @@ -40,6 +40,8 @@ void reftable_free(void *p)
+>>  void *reftable_calloc(size_t sz)
+>>  {
+>>  	void *p =3D reftable_malloc(sz);
+>> +	if (!p)
+>> +		return NULL;
+>>  	memset(p, 0, sz);
 >
-> macos' gcc is really clang, so if we really want to build with gcc
-> instead (and there are 9, 10 and 11 versions installed) need to use
-> instead (for version 9, which was what was used originally and what
-> CC_PACKAGE was installing if needed)
->
-> CC=3Dgcc-9
->
-> Right now both macos jobs are using clang, regardless of what the
-> nicely named label says.
+> This function is calloc(3) reimplemented, except it can't make use of
+> pre-zero'd blocks of memory and doesn't multiply element size and count
+> for the caller while checking for overflow, making it slower and harder
+> to use securely. :-/
 
-I didn't know gcc on OSX was clang, that does seem broken.
+*nod*, this is really just re-arranging the deck chairs.
 
-But unless I'm missing something that's already been the case on
-"master" for a while, i.e. this is the master run showing that we'll
-invoke "gcc":
-https://github.com/git/git/runs/6031562726?check_suite_focus=3Dtrue#step:3:6
+Maybe Han-Wen had something in mind, but I really don't see the point of
+having it use malloc wrappers at all, as opposed to just having the
+linker point it to the right "malloc".
 
-And "seen", with this change, which shows that we'll do the same:
-https://github.com/git/git/runs/6031564900?check_suite_focus=3Dtrue#step:5:7
-
-If I understand you correctly both are effectively a NOOP and we don't
-use that "gcc-9", but we should.
-
-It looks like it was broken in my 707d2f2fe86 (CI: use "$runs_on_pool",
-not "$jobname" to select packages & config, 2021-11-23).
-
-I'll fix that as along with any small follow-ups after this series,
-sound good?
+So if it needs to be used outside of git.git it would just need the
+trivial xmalloc() etc. wrappers.
