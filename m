@@ -2,151 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 888FFC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB07C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354155AbiDONyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 09:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59020 "EHLO
+        id S1354174AbiDONzG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 09:55:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231714AbiDONyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 09:54:22 -0400
-X-Greylist: delayed 60 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 15 Apr 2022 06:51:52 PDT
-Received: from smtp-out-3.talktalk.net (smtp-out-3.talktalk.net [62.24.135.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C06BB0AA
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:51:52 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.talktalk.net with SMTP
-        id fMLZniD0VXnPffMLanhnWl; Fri, 15 Apr 2022 14:50:50 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1650030650;
-        bh=BuAVaiM1yAK5DXtHP++2OcjnybmNIA4t+kN0I2ZB4Zo=;
-        h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To;
-        b=REsLs998oaErjRmSCHxQwNgduqz5AvlOUAML4GVuhfj1Mtk5zaWbAchfptaaXdFFV
-         YADagNnrnD0f1nyPT3C2tZKQaUl94DQhegrIzCEFbbNyrAr3H5879DJi1e3k+sM/qQ
-         Q+dHSPPl45ZlaLizO8466q9eXGpIRh1BsFk+rdqI=
-X-Originating-IP: [31.185.185.192]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ufgvt5aN c=1 sm=1 tr=0 a=BhDTt+XCViy/yeGwkgzVOQ==:117
- a=BhDTt+XCViy/yeGwkgzVOQ==:17 a=IkcTkHD0fZMA:10 a=20KFwNOVAAAA:8
- a=VwQbUJbxAAAA:8 a=PKzvZo6CAAAA:8 a=pGLkceISAAAA:8 a=fkdCdCRrCurIfpaszyEA:9
- a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22 a=q92HNjYiIAC_jH7JDaYf:22
-Message-ID: <e9e491d3-eec9-0a30-2e9d-99f1b0d25519@talktalk.net>
-Date:   Fri, 15 Apr 2022 14:50:49 +0100
+        with ESMTP id S1354169AbiDONzE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 09:55:04 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B34BD2C9
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:52:35 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id u15so15426836ejf.11
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=x8YGIVWmVPYxgZU4DOipD7q/8qBC5wWRH+OC/TE1KLc=;
+        b=U7kgyH5EXtS+T9EUY1U2vB2LLWqOrQQ35DcqBALIkXDPCykjeMuYfTAAWlNYNCY3tM
+         3cESEb6k9iVPDbSFlT3SNnFAxIW5KiWjVIbQYsUm+bwksqWwqCJGO5XIsqIlTK99axPc
+         4qtasVLE+2vsOdg1ABSQ8IR4sM3WihBusJPrhfmroNc6rz4wo4DGQ3wRH+GgpDsZxkFi
+         lXWo0Itm1vhCfAB2U3w6Af7q5vLSbIFzPNpyA3Gs0ZFBlOTfQN/clnoF5O4CGhap37bv
+         YYFyROeURC04y3QlI36MyZVfbCN7Pknhs8Oh5fI8u8/15xWP/Xuk22ZCmr6SY7UGpNjF
+         IX6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=x8YGIVWmVPYxgZU4DOipD7q/8qBC5wWRH+OC/TE1KLc=;
+        b=cMECWeWMyl0ZXgj3VV03iqZyz3tIeE17SriWkhB0xfA98L7Hc2Iu6cI9mMrtpGsUZ1
+         Exgq1jlb/AwnVGKN6D71QUavxQR1kBQkDk1paBOKW8elLuIzqxi/Q55vjrYv+yQzeJyM
+         no4MTMlCM+63mY4WPyi5JVrWLbd2kxrV3kCREx9wPJVrTuWnQrNvR8qWTT1g8sOoROnD
+         H1XUUDSFPWAew+DCnnrGOv0dQOqyYB6X9uugORXCZWfYSQ4tnkYHhuNEY5ADe3pQfw9M
+         xza0eqnu7nI6fd01ksRPLuHBqIo6vEXoTgm9OTDJk2UGWWwL/BJF2v6r1N58zqVinAzI
+         6J4g==
+X-Gm-Message-State: AOAM532j+ZgTocEt81VgpOdfxaIv2s8IfDwbH33EbfKi9r8z7sMIFx+R
+        AUR9qIDNEB26swS2ptPC1xEJ5FqM1c9v/A==
+X-Google-Smtp-Source: ABdhPJzSTf0eBAu++84mtrKXy6BMMfp3zUf7357zP4WvhNfE0jw6QcpTMw+rwlXO7ok9zr2XQEMtbg==
+X-Received: by 2002:a17:906:c151:b0:6e8:9cbc:ac04 with SMTP id dp17-20020a170906c15100b006e89cbcac04mr6380579ejc.423.1650030753448;
+        Fri, 15 Apr 2022 06:52:33 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j2-20020a056402238200b0041f351a8b83sm2623235eda.43.2022.04.15.06.52.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Apr 2022 06:52:32 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nfMNE-005fXB-8Z;
+        Fri, 15 Apr 2022 15:52:32 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
+ to the environment
+Date:   Fri, 15 Apr 2022 15:47:22 +0200
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
+ <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
+Message-ID: <220415.86k0bqbgin.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] ci: lock "pedantic" job into fedora 35 and other cleanup
-Content-Language: en-GB-large
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com
-References: <20220415123922.30926-1-carenas@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-In-Reply-To: <20220415123922.30926-1-carenas@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEyUptBQq3yT2en9YiOk+fUV2F/YIKZOWfuGpokUi2HPeXt0av2TwsKA3E8kAbaFzGIoEVain2QHYoPUCqO00622j3yytNNzqYv8HmGAUlOncZZijV/G
- yfYYQMVmspiedZnb0iOnpNlXkxsTGcgQJtX8yoHpTEbwfA+08Ha6uBduc0yE5wVkfh1KGw1sgPtRN3bjnE75tltIixLIGJgSHx1BbeTnwH4c2pJX/sc4teHg
- Hv624NozBl28TUQm5VzXKiRZ+QhuhKAG29QyFIl3qCY=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo
 
-On 15/04/2022 13:39, Carlo Marcelo Arenas Belón wrote:
-> Fedora 36 is scheduled to be released in Apr 19th, but it includes
-> a prerelease of gcc 12 that has known issues[1]
+On Thu, Apr 14 2022, Carlo Arenas wrote:
 
-I was confused as that thread seems to be about errors when compiling 
-with -O3 rather than -O2 but your fedora bug report[1] indicates that 
-there are in fact problems when compiling with -O2 which will affect our ci.
+> On Wed, Apr 13, 2022 at 12:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> @@ -160,13 +169,23 @@ linux-TEST-vars)
+>>         setenv --test GIT_TEST_WRITE_REV_INDEX 1
+>>         setenv --test GIT_TEST_CHECKOUT_WORKERS 2
+>>         ;;
+>> +osx-gcc)
+>> +       CC=3Dgcc
+>> +       CC_PACKAGE=3Dgcc-9
+>
+> not sure when this was broken since there were too many refactorings
+> around this code, but this is definitely wrong.
+>
+> macos' gcc is really clang, so if we really want to build with gcc
+> instead (and there are 9, 10 and 11 versions installed) need to use
+> instead (for version 9, which was what was used originally and what
+> CC_PACKAGE was installing if needed)
+>
+> CC=3Dgcc-9
+>
+> Right now both macos jobs are using clang, regardless of what the
+> nicely named label says.
 
-> with our codebase
-> and therefore requires extra changes to not break a DEVELOPER=1
-> build.
-> 
-> Lock the CI job to the current release image, and while at it rename
-> the job to better reflect what it is currently doing, instead of its
-> original objective.
-> 
-> Finally add git which was a known[2] issue for a while.
+I didn't know gcc on OSX was clang, that does seem broken.
 
-It would be useful to explain what the issue is, that email also 
-mentions running the tests under this job but we're not doing that here.
+But unless I'm missing something that's already been the case on
+"master" for a while, i.e. this is the master run showing that we'll
+invoke "gcc":
+https://github.com/git/git/runs/6031562726?check_suite_focus=3Dtrue#step:3:6
 
-Thanks for fixing this before it breaks everyone's ci runs
+And "seen", with this change, which shows that we'll do the same:
+https://github.com/git/git/runs/6031564900?check_suite_focus=3Dtrue#step:5:7
 
-Phillip
+If I understand you correctly both are effectively a NOOP and we don't
+use that "gcc-9", but we should.
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=2075786
+It looks like it was broken in my 707d2f2fe86 (CI: use "$runs_on_pool",
+not "$jobname" to select packages & config, 2021-11-23).
 
-> [1] https://lore.kernel.org/git/YZQhLh2BU5Hquhpo@coredump.intra.peff.net/
-> [2] https://lore.kernel.org/git/xmqqeeb1dumx.fsf@gitster.g/
-> 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
-> This merges fine to master, maint and next but will need some work to
-> get into seen.
-> 
-> Alternatively, the fixes to fix the build could be merged instead, but
-> it will still require at least one temporary change to disable a flag
-> as the underlying bug[3] is yet to be addressed in gcc (or somewhere
-> else in Fedora).
-> 
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=2075786
-> 
->   .github/workflows/main.yml        | 4 ++--
->   ci/install-docker-dependencies.sh | 4 ++--
->   ci/run-build-and-tests.sh         | 3 +--
->   3 files changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index c35200defb9..48e212f4110 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -282,8 +282,8 @@ jobs:
->           - jobname: linux32
->             os: ubuntu32
->             image: daald/ubuntu32:xenial
-> -        - jobname: pedantic
-> -          image: fedora
-> +        - jobname: fedora
-> +          image: fedora:35
->       env:
->         jobname: ${{matrix.vector.jobname}}
->       runs-on: ubuntu-latest
-> diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
-> index 78b7e326da6..660e25d1d26 100755
-> --- a/ci/install-docker-dependencies.sh
-> +++ b/ci/install-docker-dependencies.sh
-> @@ -15,8 +15,8 @@ linux-musl)
->   	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
->   		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
->   	;;
-> -pedantic)
-> +fedora)
->   	dnf -yq update >/dev/null &&
-> -	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
-> +	dnf -yq install make gcc git findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
->   	;;
->   esac
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 280dda7d285..de0f8d36d7c 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -37,10 +37,9 @@ linux-clang)
->   linux-sha256)
->   	export GIT_TEST_DEFAULT_HASH=sha256
->   	;;
-> -pedantic)
-> +fedora)
->   	# Don't run the tests; we only care about whether Git can be
->   	# built.
-> -	export DEVOPTS=pedantic
->   	export MAKE_TARGETS=all
->   	;;
->   esac
-
+I'll fix that as along with any small follow-ups after this series,
+sound good?
