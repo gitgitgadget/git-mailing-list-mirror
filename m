@@ -2,123 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FCD9C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 22:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4988DC433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 22:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356375AbiDOW40 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 18:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
+        id S1353051AbiDOW5S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 18:57:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbiDOW4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 18:56:21 -0400
+        with ESMTP id S1344955AbiDOW5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 18:57:16 -0400
 Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89865443F8
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 15:53:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69B51CFE8
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 15:54:45 -0700 (PDT)
 Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
         (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 23FMrkjf038634
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 23FMsbkv038643
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 15 Apr 2022 18:53:46 -0400 (EDT)
+        Fri, 15 Apr 2022 18:54:37 -0400 (EDT)
         (envelope-from rsbecker@nexbridge.com)
 Reply-To: <rsbecker@nexbridge.com>
 From:   <rsbecker@nexbridge.com>
-To:     "'Emily Shaffer'" <emilyshaffer@google.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <xmqq8rs7yzul.fsf@gitster.g> <YlnzGecOaayPM6ve@google.com>
-In-Reply-To: <YlnzGecOaayPM6ve@google.com>
-Subject: RE: What's cooking in git.git (Apr 2022, #04; Thu, 14)
-Date:   Fri, 15 Apr 2022 18:53:41 -0400
+To:     "'Philip Oakley'" <philipoakley@iee.email>,
+        "'Emily Shaffer'" <emilyshaffer@google.com>,
+        "'Jorawar Singh'" <jorawarsingh12@gmail.com>
+Cc:     "'Git List'" <git@vger.kernel.org>
+References: <CAK-fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com> <CAJoAoZkqz=jy94fm8E7aaMWO_qCannOiVJCYMft3K5O=fX=2GA@mail.gmail.com> <002a01d85050$58d8d240$0a8a76c0$@nexbridge.com> <e97f6919-dbcb-8a08-0345-538af7876ae8@iee.email>
+In-Reply-To: <e97f6919-dbcb-8a08-0345-538af7876ae8@iee.email>
+Subject: RE: Git user experience workshop
+Date:   Fri, 15 Apr 2022 18:54:32 -0400
 Organization: Nexbridge Inc.
-Message-ID: <00a001d8511b$aa547c20$fefd7460$@nexbridge.com>
+Message-ID: <00a101d8511b$c880a2f0$5981e8d0$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
-        charset="us-ascii"
+        charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHNGCtW5muXFQTzdE46MaZuFF64AwH+UTOirPgUIeA=
+Thread-Index: AQJboeIchdIeIu8O5V145pGGdO7faQIpBrlSAXyknHQAk4MoqqvJKjUA
 Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 15, 2022 6:35 PM, Emily Shaffer wrote:
->After quite some time, I'll provide an update on the "submodules UX rework"
->effort Google has been working on.
-
-I'm looking forward to being able to test this extensively. This has
-interest in my community.
-
->On Thu, Apr 14, 2022 at 05:06:26PM -0700, Junio C Hamano wrote:
->> [Stalled]
->> * es/superproject-aware-submodules (2022-03-09) 3 commits  .
->> rev-parse: short-circuit superproject worktree when config unset  .
->> introduce submodule.hasSuperproject record  . t7400-submodule-basic:
->> modernize inspect() helper
+On April 15, 2022 6:32 PM, Philip Oakley wrote:
+>On 14/04/2022 23:38, rsbecker@nexbridge.com wrote:
+>> On April 14, 2022 6:28 PM, Emily Shaffer wrote:
+>>> On Mon, Apr 11, 2022 at 3:18 AM Jorawar Singh
+>>> <jorawarsingh12@gmail.com>
+>>> wrote:
+>>>> Anytime between mid-April to April-end.
+>>> FYI - I spoke with Alice today and we decided to add a few more dates
+>>> in early May to give us a little more room; I think trying to have
+>>> the workshop next week would be too short of notice for Alice to prep.
+>>> Folks who already filled the spreadsheet may want to update
+>>> responses; anybody who's interested in participating but haven't
+>>> filled out the spreadsheet yet, please do so!
+>>>
+>>> Thanks very much Jorawar for your help putting the sheet together!
+>> Would you mind reposting the link to the spreadsheet, please?
 >>
->>  A configuration variable in a repository tells if it is (or is not)
->> a submodule of a superproject.
->>
->>  Expecting a reroll.
->>  cf. <kl6l4k45s7cb.fsf@chooglen-macbookpro.roam.corp.google.com>
->>  source: <20220310004423.2627181-1-emilyshaffer@google.com>
+>'twas in
+><CAK-
+>fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com>
 >
->Yes, a reroll is planned. The most recent attempt (locally) also rerolled a
-follow-on
->series adding a shared "config.superproject" readable by both a
-superproject and
->its submodules, in order to demonstrate some real-world application and an
->example of how to use this config telling us whether or not we're a
-submodule.
->The series has gotten away from me
->- as I've been working on internal team planning type things.
->
->Beyond this work, there is some other work in progress, still in design
-stages
->downstream:
->
->Glen Choo is continuing work on design for 'git checkout -b'/'git switch
--c' when
->submodules are involved and 'submodule.recurse' is set.
->
->Glen Choo sent an update to continue converting 'git submodule update'
->into C; this appears to have no reviews.
->https://lore.kernel.org/git/20220315210925.79289-1-chooglen%40google.com
->
->Josh Steadmon is working on design for 'git pull --rebase
---recurse-submodules' in
->basic (non-conflicting) cases; this means he's also working on 'git rebase
---recurse-
->submodules' in these same basic cases. This work is still fairly early in
-the design
->stage, but will be something to look forward to.
->
->Beyond those pieces, I thought it might be interesting for me to share
-what's
->coming up for my team from April through June. So here's a grab bag of
-what's
->next for us:
-> - Improving 'git fetch --recurse-submodules':
->   * To retry a failed submodule more than once (in fact, the existing
->     behavior seems to have a bug: if we fail to clone a submodule in
->     the "retry queue", we give up and don't try to clone any of the
->     other retryable submodules after that one)
->   * Cloning submodules that were added in a commit which is newly
->     fetched with 'git fetch'
-> - Parallelizing 'git checkout --recurse-submodules' (at least when
->   partial clones are involved). Without this change, we see that the
->   initial checkout of a partial-cloned repo with many submodules takes
->   a long, long, long time.
-> - Parallelizing 'git status --recurse-submodules' when many submodules
->   are involved (and probably tidying the output)
->
->And some more odds and ends. After those few bits, and the in-progress work
->already seen on the list, we have some users lined up to try the workflow,
->because we're pretty sure that puts us in a position to try out basic Git
-usage with
->many submodules. So hopefully we have some interesting feedback and bug
-fixes
->coming from that, as well.
->
-> - Emily
+>[1] https://lore.kernel.org/git/CA+Yb-VSaeKy-g_ywkZzQuEX=k3EXM+Ky-
+>rHOb2az0SHGVbdaVw@mail.gmail.com/
+>[2]
+>https://docs.google.com/spreadsheets/d/1Z2QEveILRG9HEDlMhf50jTVhxaPFh8q
+>_yK7K8RUsvdM/edit?usp=sharing
+>Philip
+
+Thanks. I've added my prefs.
 
