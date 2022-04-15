@@ -2,153 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7E20C4332F
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A49CC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354038AbiDONkY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 09:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46964 "EHLO
+        id S1354085AbiDONkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 09:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354039AbiDONkI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1354023AbiDONkI (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 15 Apr 2022 09:40:08 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81ADB2DEA
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:37:05 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id b15so9952371edn.4
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=LBN3uKyLD0diekh8TmG+4aCESoUkq22a57EjFHP08i0=;
-        b=CEfu4NwQoGh+aCAypXh7jAf2J4LCnyFDOh0suuRJh9867XrcUOuGcvpRjAimjfLf9C
-         vBr344o7QAvBpcn5F1/syHREtlo8wpvt+KuFsMo6aHBfWyZBVrmFuucJXXlk56QHKK1t
-         mMo8Co+nl8+BBOqivYekbNJ2eIzjFsyA7kGOn7+T3VUcrGgpL0+kycFFhcDAH4Bb1X3o
-         yxIFqxL5YwFJ+rnFHx3UGyCJGKLM9uvIVx7Jw6ruB3/sbqp+qoeOZ4lc3cTHjX5UJZC1
-         2FzlUEqlI6MXTBgm/XKFavF1+G3yMeay2besKdVJNBL/BdLPQfhd5MZs9vd63WNJ3FnL
-         3Nhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=LBN3uKyLD0diekh8TmG+4aCESoUkq22a57EjFHP08i0=;
-        b=qK3SL6HRgxBEHvwaqEsA/8DsZuO4OW2lUBjirTAxH7LH4SQW9HvsYEADIPjBw3VF4S
-         GaEdccYVpVWSSsvDtcSg0IhTOoEZUNFg/RF344PTqboDzkonqFC5epJc3r6xplIs4QSf
-         odlR0dBddhj2LBduLr19Gl39vIDxJE3TLt1HIr1r5Gw7EdvpsOtqgrFMGEBkdO2eAxYx
-         JcEzxjUQdx05sZcw5kiD9M9X2BZTHtTmBNzQBp+NMcZEF+nvjcb0yKAL7KBjNUXRlrbB
-         H7yQD/nJmAlhPyY6rV7hvm/SE3WrUgwcV8RdDqVodnP4hnZi0h1yVgQplaw1xuiVu22U
-         3N4g==
-X-Gm-Message-State: AOAM530wILtRNl4edjzT3cYPipiBAXBlPIsIXeb3Q9mm2dfUcttepVWd
-        eYLrFjTFy/fXoo0KpU/1UfbB/P/hBZ7IHA==
-X-Google-Smtp-Source: ABdhPJwpbOs5ETJtGmClie5gb+F3++MDQzn06B9rCZx1kFgwoGUZHLDyP32j1zYNjqNaeZS+5pJBCw==
-X-Received: by 2002:a05:6402:11d4:b0:419:5a50:75a4 with SMTP id j20-20020a05640211d400b004195a5075a4mr8328815edw.226.1650029823942;
-        Fri, 15 Apr 2022 06:37:03 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dd6-20020a1709069b8600b006df08710d00sm1696279ejc.85.2022.04.15.06.37.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 06:37:03 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nfM8E-005f5U-Qy;
-        Fri, 15 Apr 2022 15:37:02 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] http API: fix dangling pointer issue noted by GCC 12.0
-Date:   Fri, 15 Apr 2022 15:30:42 +0200
-References: <patch-v2-1.1-777838267a5-20220225T090816Z-avarab@gmail.com>
- <patch-v3-1.1-69190804c67-20220325T143322Z-avarab@gmail.com>
- <Yj4FwuyEW0b5ImEC@nand.local> <xmqqy20x7eqv.fsf@gitster.g>
- <220414.86h76vd69t.gmgdl@evledraar.gmail.com> <xmqqo8131tr8.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqo8131tr8.fsf@gitster.g>
-Message-ID: <220415.86o812bh8h.gmgdl@evledraar.gmail.com>
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF6826D
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1650029847;
+        bh=qLIgrnVWaPyIA8XAunw16ErgW5ZbyebPNU5dOftwsWQ=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=hfZi7EOn4kWR5mFQb3+dBnn9czWBoT5EaMED9sZbt4yDunQukQKEvwjkkY6H6VB0f
+         KSSOJvchJb/FfrKVK5Edfz79cDStvXgZUFnne0BxK4m/r1vDzrlmihWtirP/Fk+RfN
+         4WXSXgHN3fB22RKw+i7GMIIDaJIdw0J0P4Yvx5us=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N62yi-1nzBJW3pPs-016arv; Fri, 15
+ Apr 2022 15:37:26 +0200
+Message-ID: <a1b7d41f-561f-6806-1d53-2c15d4a22fdc@web.de>
+Date:   Fri, 15 Apr 2022 15:37:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.0
+Subject: Re: [RFC PATCH 1/2] reftable: remove the "return_block" abstraction
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+References: <20220415083058.29495-1-carenas@gmail.com>
+ <RFC-cover-0.2-00000000000-20220415T101740Z-avarab@gmail.com>
+ <RFC-patch-1.2-76ed86bf88c-20220415T101740Z-avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <RFC-patch-1.2-76ed86bf88c-20220415T101740Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:C6pRw9if5z/cI/nwUyvej5GH8hyOtcfzXZs5RCt3njFqJzgHqHJ
+ xlpsTcs7mmIGoX2YIlWve32seBF9UYdSX1kM6QOgPIMVC5oc17ccT82jvhtcFxAp9iavnDG
+ xoC7r/1SfripBgWhVu7Vld+1E02Ce8FNfcNLQJ6zQRVlQEFki9jPTIDWqPah/TN16Ca3u8u
+ GKmNLgxQmdP+0u55RCz9g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zUgd5qDaZjM=:Uc/ond0eE+8cefhgZaKKe6
+ SkPTRwWtnYDfNnvuOPxbIwhXAwwmwo71dno+l80QpJR7ZX5MVJyqtux05xPhIVjH9EZ9pkIfy
+ H4SKyJirNjMDVyi1+vSFYntfrOwebheSHROmA/v2Y4gke6cImanbnfEyHLuPUKjKC+Lc7XTu1
+ I1X9J/2xGwBcbKg2/aMS4uKc4dSFFL56WL7Mk1GmujUkK4DsR2kpR8qilHYPR/kzK+5+vDUYx
+ ftRJXPxDAc9I41dICzobGsHqw81IKtSLKFcEYeRPDYKGP9744xZ3E5pnNurkmmdCqUwfzlwha
+ 7P1lRgDXzrdOIiLRgvWUDFPRzQbrCVbCzDo4kl8T6B4fmhLyoql0xT/cHL31/keSTS5cEcFgm
+ f7eXkhuIjOc/CnNCrRjF8z1OkPSjxCIESgYusWmmVvjSkTUHruEvDOqYAOGv+tIJoWx/qc0nH
+ FE2TdEDUikVadphDFF9dRSLfnFK4DIQYfWt3f9e/Hon7ksD/uHYk0/ShtV3OpLP5fCxLQMYZy
+ ymFs87Cp7AeL2L2+vssDpEGIiLmZWqeUO0OYPKj8elGDwXfiE7MEnqakvRqI6FSo2CA+XnWku
+ v4FO/mJjSP0W0ICN3aQ7t0dLwU0fwiq2Zo+dspo458DOFdiRtA191X3sqEdnPHJEGBW49lC3K
+ tkZuYgqPW5DhmUDuva90F5KAtRpuivpYFUuhK3+yIgDqBe3BcLRv66ilBEFw9BR2YjjbDGhiR
+ gnjDiPWoXMpWD+JGmIQh1puLhNwoDZBVPCQsX6I873rrUPYbZLxEghGAYU54eXHdaoHZGBAox
+ LqJioRIPBw5g/vJDeP9UgatzWOdanBxR32hT5WA2SyaSJMInlZsbKW6ZJsbXNCBqUTNxjdGA+
+ 9cWzIjmqV0ZueiCAw61A8eMnnfQ1EbElyNYxST4HK6ACXgnYTIOz7jNUS7cnyQVDo720frb2S
+ dtj4Nvw9hZMzqXNpdrgYfO98ehviMbQZQc00YUce3dMIBnr0N9zS97i6iPfGklqPF0TXK/2B3
+ rN7QKw8l/BtQMgzLHslyXH/0nwbn1rWqxoVSp6/zSin+A0KoiNGtfgjViAwPhTYdR7Zaw/pZ6
+ GaBtyChsUA2b7Y=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Apr 14 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Am 15.04.22 um 12:21 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> This abstraction added in 1214aa841bc (reftable: add blocksource, an
+> abstraction for random access reads, 2021-10-07) has the caller
+> provide a "blockp->data", so there's not point in having the vtable
+> have a custom free() function.
 >
->> Having spelunked in the GCC docs, source, commits involved & in their
->> bugtracker I don't think they'd consider this broken. It's working as
->> designed.
->>
->> Now, of course as with any new compiler warning you might argue that
->> it's too overzealous, but in this case it's included it a -Wall in GCC
->> 12.0.
+> In addition this had what looked like a poor man's SANITIZE=3Daddress
+> doing a memset() to 0xff just before the data was free'd.
 >
-> Whatever.  I do not care if this is a broken or wai from GCC's point
-> of view.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  reftable/block.c                |  4 +---
+>  reftable/blocksource.c          | 28 +---------------------------
+>  reftable/reftable-blocksource.h |  2 --
+>  3 files changed, 2 insertions(+), 32 deletions(-)
 >
-> I care more about the correct operation of the production code of
-> ours, than a workaround to squelch a warning, overzealous or not, by
-> a compiler, and if it is not clear that the workaround is obviously
-> free of negative side effect, we do not want to deliberately introduce
-> potential breakage in our code base just for that.
+> diff --git a/reftable/block.c b/reftable/block.c
+> index 34d4d073692..bb17cc32372 100644
+> --- a/reftable/block.c
+> +++ b/reftable/block.c
+> @@ -442,9 +442,7 @@ void block_writer_release(struct block_writer *bw)
 >
-> And I still do not see how it is safe to unconditionally clearing
-> the pointer in the slot instance to NULL.  It was asked late January
-> in https://lore.kernel.org/git/xmqqv8y52g3a.fsf@gitster.g/
+>  void reftable_block_done(struct reftable_block *blockp)
+>  {
+> -	struct reftable_block_source source =3D blockp->source;
+> -	if (blockp && source.ops)
+> -		source.ops->return_block(source.arg, blockp);
 
-The v3 re-roll at
-https://lore.kernel.org/git/patch-v3-1.1-69190804c67-20220325T143322Z-avara=
-b@gmail.com/
-(see range diff) was intended to address both your question there &
-Taylor's at https://lore.kernel.org/git/YhprAb1f1WYIktCV@nand.local/.
+I don't understand this interface.  Why is source.arg passed to the
+function?  Is this perhaps done in preparation for some kind of backend
+that is planned to be added later which makes use of it?  I suspect we'd
+better postpone cleanups until the full functionality is integrated.
 
-> In other words, what we should have been spelunking is *not* in the
-> GCC docs and code, but the http codepath in our code that depends on
-> the slot not being cleared when we didn't set up the pointer in the
-> current recursion of that function.  With a clear description on how
-> this change is safe, with a clear understanding on why the pointer
-> member "finished" was added in the first place to avoid the same
-> mistake as an earlier round of this patch [*1*], it would become an
-> acceptable patch, with or without GCC warning.
+> +	FREE_AND_NULL(blockp->data);
+
+If you do that...
+
+>  	blockp->data =3D NULL;
+
+... then this line becomes redundant.
+
+>  	blockp->len =3D 0;
+>  	blockp->source.ops =3D NULL;
+> diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+> index 2605371c28d..d9e47cc316b 100644
+> --- a/reftable/blocksource.c
+> +++ b/reftable/blocksource.c
+> @@ -13,12 +13,6 @@ license that can be found in the LICENSE file or at
+>  #include "reftable-blocksource.h"
+>  #include "reftable-error.h"
 >
-> Namely, the finding in this part of a review comment [*2*]
+> -static void strbuf_return_block(void *b, struct reftable_block *dest)
+> -{
+> -	memset(dest->data, 0xff, dest->len);
+> -	reftable_free(dest->data);
+> -}
+> -
+>  static void strbuf_close(void *b)
+>  {
+>  }
+> @@ -42,7 +36,6 @@ static uint64_t strbuf_size(void *b)
+>  static struct reftable_block_source_vtable strbuf_vtable =3D {
+>  	.size =3D &strbuf_size,
+>  	.read_block =3D &strbuf_read_block,
+> -	.return_block =3D &strbuf_return_block,
+>  	.close =3D &strbuf_close,
+>  };
 >
->     The only way the separation could make a difference is while
->     step_active_slots(), the current slot is completed, our local
->     "finished" gets marked as such thanks to the pointer-ness of the
->     finished member, and then another pending request is started
->     reusing the same slot object (properly initialized for that new
->     request).  In such a case, the while loop we want to see exit
->     will see that slot->in_use member is _still_ true, even though
->     it is true only because it is now about a separate and unrelated
->     request that is still waiting for completion, and the original
->     request the caller is waiting for has already finished.
+> @@ -54,19 +47,7 @@ void block_source_from_strbuf(struct reftable_block_s=
+ource *bs,
+>  	bs->arg =3D buf;
+>  }
 >
-> that was made to explain why the pointer member is there, and a
-> possible case that the code before the introduction of the pointer
-> would misbehave and today's code would behave better, worries me the
-> most, as unconditionally assigning NULL there like this patch does
-> without any guard would mean that we are breaking the code exactly
-> in such a case, I would think.
-
-I think that accurately describes a logic error in the v1 of this patch,
-i.e. we can't remove the "finished" member, but per the v3 explanation I
-believe (re-)setting it to NULL is safe.
-
-> In short, I do not care who takes the credit, I care more about the
-> correctness of the code than a warning by a version of a compiler, I
-> do not care at all if the compiler writers considers the warning a
-> bug, and I worry that the change proposed, while it may certainly
-> squelch the bug, may break the code that has been working happily,
-> and I haven't seen a clear explanation why it is not the case.
+> -static void malloc_return_block(void *b, struct reftable_block *dest)
+> -{
+> -	memset(dest->data, 0xff, dest->len);
+> -	reftable_free(dest->data);
+> -}
+> -
+> -static struct reftable_block_source_vtable malloc_vtable =3D {
+> -	.return_block =3D &malloc_return_block,
+> -};
+> -
+> -static struct reftable_block_source malloc_block_source_instance =3D {
+> -	.ops =3D &malloc_vtable,
+> -};
+> +static struct reftable_block_source malloc_block_source_instance =3D { =
+0 };
 >
-> As long as the same slot is never passed to run_active_slot()
-> recursively, clearing the member unconditionally when the control
-> leaves the function should not break the code.  Nobody seems to have
-> explained how it is the case.
+>  struct reftable_block_source malloc_block_source(void)
+>  {
+> @@ -83,12 +64,6 @@ static uint64_t file_size(void *b)
+>  	return ((struct file_block_source *)b)->size;
+>  }
+>
+> -static void file_return_block(void *b, struct reftable_block *dest)
+> -{
+> -	memset(dest->data, 0xff, dest->len);
+> -	reftable_free(dest->data);
+> -}
+> -
+>  static void file_close(void *b)
+>  {
+>  	int fd =3D ((struct file_block_source *)b)->fd;
+> @@ -115,7 +90,6 @@ static int file_read_block(void *v, struct reftable_b=
+lock *dest, uint64_t off,
+>  static struct reftable_block_source_vtable file_vtable =3D {
+>  	.size =3D &file_size,
+>  	.read_block =3D &file_read_block,
+> -	.return_block =3D &file_return_block,
+>  	.close =3D &file_close,
+>  };
+>
+> diff --git a/reftable/reftable-blocksource.h b/reftable/reftable-blockso=
+urce.h
+> index 5aa3990a573..7b7cb280b73 100644
+> --- a/reftable/reftable-blocksource.h
+> +++ b/reftable/reftable-blocksource.h
+> @@ -35,8 +35,6 @@ struct reftable_block_source_vtable {
+>  	   beyond the end of the block */
+>  	int (*read_block)(void *source, struct reftable_block *dest,
+>  			  uint64_t off, uint32_t size);
+> -	/* mark the block as read; may return the data back to malloc */
+> -	void (*return_block)(void *source, struct reftable_block *blockp);
+>
+>  	/* release all resources associated with the block source */
+>  	void (*close)(void *source);
 
-I tried to explain that in the v3, but that was part of what you
-edited/amended in your applied version of it.
-
-I don't know how to answer your concerns/questions other than as I've
-already done there.
