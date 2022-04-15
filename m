@@ -2,79 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 802E6C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 10:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3498BC433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 10:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239572AbiDOKRN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 06:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47482 "EHLO
+        id S1345677AbiDOKYJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 06:24:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352156AbiDOKRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 06:17:10 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FF836B60
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:14:38 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id ks6so14691433ejb.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:14:38 -0700 (PDT)
+        with ESMTP id S243818AbiDOKYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 06:24:08 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8144BB0A1
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:21:40 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id i20so10137126wrb.13
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 03:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=LClz0hHDGlSp5YV26yGJlEa1vNgfpQXeWY/BrLaxF5A=;
-        b=Z7Nn5F8f8kEC5enzI0wcri9Adc+LsIzsLid11I9gik+M3J8gWdD39J/1grYDJgHFt/
-         K8UDTGEf5SE7chwHt3c/w3FACWOHykUo+XOA/Cxkyh3T4Lz/sMBD9zBiMQ//EAExY8vu
-         D9NIcM8igkm5BGRiTSlhnrdAU1qpwpyJye9O2/GGWAHaH+Kit7IoTOGe8y5Pxx+QUmkM
-         SSf5QxWsWYaprXwJqRBU4pFy825NCdOYnSZ9XGva8vFjZi0W6XCJudnfphejJ+GKPNzY
-         Z/Nu4LWxaDiwoDaKy0CIU5jsDHwsYLzlarZfpY4wfrecCV8BlmXiVc5jn9jJqcLv2Ul6
-         IZig==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fczvw9W+VSgm70tBsHUgR082mKuD0qsI7aG7wUVioh0=;
+        b=X5dVKdaek81ZZdPkb2N0+hG4OWjqXxnSG3VikuUlQLBrRiRZZJ2kvmeO/YwFxbnBGZ
+         61m7g74JUsFsfwerK6PQxTCc9k05lUyGZKAYZaQGsVZcuqDvlfIw6NAsJ1dtjUGo/Nia
+         YkpBnslECHEIn3PJN96YAyYUVR5YYZJkMP72kFbtfGvl04/zGO2tf8k7hXLbmCT7C2ks
+         CppR6mpu4c/YMuDYjVeSzYKZLAbQYKKhYQDHIfMTmBDDo56REBjRxryzwCZUL886LYkv
+         Vygt5X58+1D0iRQAL6xgWGxBaQHTZ/k681GrwXjZs/JZwA3xjB6nLP0ygRQCVlovCx8q
+         STHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=LClz0hHDGlSp5YV26yGJlEa1vNgfpQXeWY/BrLaxF5A=;
-        b=vuawr52jGv+I5PWjQuT2LHkuhRkvt3+86BCnZ4DwF3dpfBnH9eCTjkB07+aSKJAhXK
-         uvLl7Xgvm3Ks2E1fdw9laUvzzXUF9Lo851EGUtp9djRPB3wXuoQXdZZc5oAkreDWXIEW
-         2rmwoJnkh0cKADENyWleLGkLnCPO9ZhONx9o2YeI1RiEwf2TI4FRCTU/nq/ffeTVU4LJ
-         1TSJo/arUksiT4NzQGaLuKoUgjET8GqlpMrr0vGtlsuEKozqRAi8ImKQDC3euePP1f+Q
-         38IEAWm03pV4KD471DMN96rUveltU7y8E6sJgWAjkScmtbQWif3GOvRRIwELTSbrfbES
-         ELgw==
-X-Gm-Message-State: AOAM531bQl2FRLb2Bs7KY3dnP4I9ryNqFfO1YERTqiH7oBJxEuEsnghh
-        hBGXndsoGSbrDfmz0VSKMwfUfuajol0tNp25xv8NdtGGPSM=
-X-Google-Smtp-Source: ABdhPJxvQA+wxwq1BNK9T26ySaZHsHaD2y5RQ4nGztwdtaVTEOzhrZI1am62HZvZHWmb4clF38fEYbQ9J7HvSpJa+pM=
-X-Received: by 2002:a17:906:478b:b0:6db:8b6e:d5de with SMTP id
- cw11-20020a170906478b00b006db8b6ed5demr5916881ejc.161.1650017676850; Fri, 15
- Apr 2022 03:14:36 -0700 (PDT)
-MIME-Version: 1.0
-From:   Andrew Noblet <andrewbnoblet@gmail.com>
-Date:   Fri, 15 Apr 2022 06:14:25 -0400
-Message-ID: <CAO=QCg5+M-=dOf=AFTDL8z9-LrK-7vau+=JV-7QJfVOhdFp1Aw@mail.gmail.com>
-Subject: safe directory on shared drives
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fczvw9W+VSgm70tBsHUgR082mKuD0qsI7aG7wUVioh0=;
+        b=MRd6wdqcXuQ/Yg2rFQqjrI77zuVw5a7+0eUO3/YtvO0ahb/y1I3t3/BxxXIv9+5++K
+         aC9qNAuF3QLNGXikKV8040eeFGGoCrsz34aN/nqJU4IozYFz3cwDq5NCRqTZcM6Jsg7c
+         iFnHX6/ZiKse6X9zY//AlD7DZBv4+92L/myFqnLnXpoJKk0OIb2l1B0rifXj/CdP48PN
+         72LiEE6EeKlAszJD1+AQuvaREQEUCLKXo9umkMD2GFAih/TOAc6Ye2pwQbCe/2Y0+WY4
+         U/tu1Q2vz6jNWxYpCC6e1jHuJPHGgWud8t86tZ8jtRZ4bPNJwswCQuKZCZdP07H7qpyb
+         czAg==
+X-Gm-Message-State: AOAM530CeOaueFEO5fycUlz1XZMBOwCqZreMNAUVYgyuzr4bQjRqAEQL
+        NR4sVl552U014Oy9az/9CYPgaTnraik=
+X-Google-Smtp-Source: ABdhPJzMtTUpuKg4rM/vAvEAkgVkiv3bEhh+DiA6j9HjSZGhvPkzR86UFroe3BSsIf6qlTXau7OV/A==
+X-Received: by 2002:a5d:5503:0:b0:207:a2dc:7fe1 with SMTP id b3-20020a5d5503000000b00207a2dc7fe1mr5020486wrv.129.1650018098871;
+        Fri, 15 Apr 2022 03:21:38 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c186-20020a1c35c3000000b0038e6c6fc860sm4585791wma.37.2022.04.15.03.21.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Apr 2022 03:21:38 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH 0/2] reftable: remove poor man's SANITIZE=address, fix a memset() bug
+Date:   Fri, 15 Apr 2022 12:21:34 +0200
+Message-Id: <RFC-cover-0.2-00000000000-20220415T101740Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.0.rc2.863.gfc2c14e3b91
+In-Reply-To: <20220415083058.29495-1-carenas@gmail.com>
+References: <20220415083058.29495-1-carenas@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new git security rules creates an issue on Windows systems where
-the git repository is hosted in a shared folder.
+On Fri, Apr 15 2022, Carlo Marcelo Arenas Belón wrote:
 
-$ git status
+> 1214aa841bc (reftable: add blocksource, an abstraction for random
+> access reads, 2021-10-07), makes the assumption that it is ok to
+> free a reftable_block pointing to NULL if the size is also set to
+> 0, but implements that using a memset call that at least in glibc
+> based system will trigger a runtime exception if called with a
+> NULL pointer as its first parameter.
 
-```
-fatal: unsafe repository ('//192.168.0.120/config/' is owned by someone else)
-To add an exception for this directory, call:
+FWIW I've been carrying 1/2 here for a while in my local tree,
+i.e. reftable/* has various abstractions and indirections that aren't
+really needed. In this case we can just get rid of that & free them,
+so the memset()s you fixed can just be removed.
 
-        git config --global --add safe.directory //192.168.0.120/config/
-```
+The 2/2 is then another memset() issue I spotted when looking at this
+again, -fanalyzer notes the bug related to it.
 
-$ git config --global --add safe.directory //192.168.0.120/config/
-$ git status
+Ævar Arnfjörð Bjarmason (2):
+  reftable: remove the "return_block" abstraction
+  reftable: don't memset() a NULL from failed malloc()
 
-```
-warning: encountered old-style '//192.168.0.120/config/' that should
-be '%(prefix)//192.168.0.120/config/'
-fatal: unsafe repository ('//192.168.0.120/config/' is owned by someone else)
-To add an exception for this directory, call:
+ reftable/block.c                |  4 +---
+ reftable/blocksource.c          | 28 +---------------------------
+ reftable/publicbasics.c         |  2 ++
+ reftable/reftable-blocksource.h |  2 --
+ 4 files changed, 4 insertions(+), 32 deletions(-)
 
-        git config --global --add safe.directory //192.168.0.120/config/
-```
+-- 
+2.36.0.rc2.863.gfc2c14e3b91
 
-There seems to be no way to add a shared drive path to the safe directory list.
