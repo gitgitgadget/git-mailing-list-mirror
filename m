@@ -2,105 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB93C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 18:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 186B5C4332F
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 19:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347153AbiDOSsy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 14:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
+        id S1347875AbiDOTGn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 15:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346923AbiDOSsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 14:48:53 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C128D66616
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 11:46:24 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id n134so4024259iod.5
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 11:46:24 -0700 (PDT)
+        with ESMTP id S1347938AbiDOTGk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 15:06:40 -0400
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CECE4DA0B9
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 12:04:08 -0700 (PDT)
+Received: by mail-vs1-xe2e.google.com with SMTP id c7so4835146vsq.13
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 12:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fSewBR1FgaKIvn5NF87tr88rVAW1SOImmCCuy7N95uo=;
-        b=TEXIWstbWVoa2LveLWtqryTE4FztcALpuhlxlLLPLy6bhawLxoUiXcXHa7lrdI1hD5
-         WcDXIf+dZJq0wUM0KodZWFTQv+80YT8i80SZjmbASXXT/RIixEugsD49YIM7+312bB73
-         al39oJrR0Ol7h+LfG5sk2X+ZWcYCRURaNLSDN2hYhIR58iHLrV/lZuV125zc7a1b9yaD
-         R6RUFXVx91YmB8+t6C0MObZemEhSsCbXLPGzVOeKX38fDuOC+my7BRDFoi415oEo6tli
-         zAxG3n7KXwpiUWnvYuCy3sQ7dHEVjeIrqAtrhQeOB67xNCdiracJYy2JvquYxQR6ewSM
-         /HuQ==
+         :cc:content-transfer-encoding;
+        bh=GDjmC1thUmvy0V3hUbkDNI/dAO9FbckjJHSwF4/JUzY=;
+        b=blzq3/ta894b7Sklwabs40ClKX3qCDuYGujptrw5cLmSWq2V0TD60uA1pOnLckJ3Da
+         rtOAGX3l33JSa5OH2yR0MB5q+uiFSDaOQV4NOOMAGGfoRcIF6pDVEstel2WiLhXStIal
+         AFfd/kte37F5kQpBPoLFlOsHqSAPNiqyVfN61bQpsk9MXW2FNZOaGmnyZrXUZXz61hMF
+         xJtC1n6QEwLY22LwM3PsYcBnfvcN1OhrVitkwjvpS42vPZ8mkIQxNmTYeR4AIYYjP+BC
+         hICfS2D6NxhC71QHejCNJ+FhgeLZO4pp7FCjyXfgZl7yZkT4lAYTzZ+sipdXmhjKmoDD
+         XqYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fSewBR1FgaKIvn5NF87tr88rVAW1SOImmCCuy7N95uo=;
-        b=387d3QY/vU/elt0csd28fvIYjIWRgk5pqr9QH5nM9vBOnnfLhRhTT1+3yAq8vObg3p
-         9BMucsx906RwBYda1F6Ug8AFzQE7pB09ttUH7vbf8g8LWoXnovYy58R9W/2BpjBpO44B
-         J+pRG7vIPL5wkRx5bvCneYDv2fwkObu/9UKnY6T8Xds6Vzphox5ZYuLx5b6KOiEeeQRW
-         ZOphF5UwqZYiGecjjkAzCVM2Ww2S9cz8/kU8OJgkYERS/bykaQIcFQSa/uV03OiCO042
-         UfeuQSyDyBTm7rRFopwCAOpUtYvI4Tps44udS+5ZCJ9roxJKxi/O/0hCdRFpa7rtSPkm
-         tRHw==
-X-Gm-Message-State: AOAM532aQT36av53HzbCGwH0zzEmcB8EOR+cqYjlh7GCjX/zKQzJOF/H
-        ycJH78Q//PcmcDiZlbXSSiJsONrpySk4IHECh0I=
-X-Google-Smtp-Source: ABdhPJwElt4P6HlTNqfBMHJou5Eg9e4WLyE8h8BP+SspKbXGo2vvcWCWegWMwe3SRoTbOHDh0/4UAya5Q5SzhPtK3p4=
-X-Received: by 2002:a05:6638:3589:b0:326:4caf:7b64 with SMTP id
- v9-20020a056638358900b003264caf7b64mr237586jal.160.1650048383725; Fri, 15 Apr
- 2022 11:46:23 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GDjmC1thUmvy0V3hUbkDNI/dAO9FbckjJHSwF4/JUzY=;
+        b=QexB6659jBpZ8slPwxTiDgFEMihm+0hhavOYxrUyhdVYpsTct3Nykqbhv+ZTh5GWys
+         TxnTRcCr5MawoAmB1GtsY09hSpl6ccY0pKbWT0vHnAVaJM8H5OTPsTSn55Hr9a7xYSW4
+         DF6GJKD7NlqO5dgXcDL8evBssmGp+5mnm65LVNIGd9/SMk1LXTZMUUFfanqGvp6jlOVx
+         6+J/9g23Lj6JPsF/Zf4pLXB6vND8JCI8sSbioFFGCA1g03zsPrQvSOH5fbbV+/852FW5
+         ZpHCK77LhUv0FkY/xFZLfOPmla1Bc5ni3VZWhV9wPM12gPv6fVpUMAt3JPlpAs9COX3T
+         ul1Q==
+X-Gm-Message-State: AOAM532kHwIJz5ig26+c+BzGuzy+OqL9+FkEVtbhCHcuCb9AYSLvUFuo
+        WhrrcPiV/X88/vOnAEyXvouok8j8/gznrNXzci0=
+X-Google-Smtp-Source: ABdhPJxOKFd6PaRaYzpc6ANUibbMXAJ2jHHSw25SpOkyCcAVc2zLtPA6/9KeCkoo3T9OUzKJlM/ZbcAURS4b57Av1p4=
+X-Received: by 2002:a05:6102:a4c:b0:325:a8cd:f2a5 with SMTP id
+ i12-20020a0561020a4c00b00325a8cdf2a5mr120682vss.76.1650049447969; Fri, 15 Apr
+ 2022 12:04:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220413164336.101390-1-eantoranz@gmail.com> <xmqq4k2wap8g.fsf@gitster.g>
-In-Reply-To: <xmqq4k2wap8g.fsf@gitster.g>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Fri, 15 Apr 2022 20:46:12 +0200
-Message-ID: <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
-Subject: Re: [RFC] introducing git replay
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
+ <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com> <220415.86k0bqbgin.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220415.86k0bqbgin.gmgdl@evledraar.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 15 Apr 2022 12:03:57 -0700
+Message-ID: <CAPUEspiE3HBkkBzNgz8Gb6=fc2NPnfbGzzn2SEiGGG+zVo9DLA@mail.gmail.com>
+Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
+ to the environment
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 13, 2022 at 7:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Apr 15, 2022 at 6:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->
-> Also, if this _were_ to allow recreating the shape of the history,
-> using updated tips of branches that were merged in the original
-> history, perhaps taking hints from "Merge branch X into Y" in the
-> original merge commit's log messages, that would be quite useful
-> addition to the rebase mechanism, but this is not that.
+> But unless I'm missing something that's already been the case on
+> "master" for a while, i.e. this is the master run showing that we'll
+> invoke "gcc":
+> https://github.com/git/git/runs/6031562726?check_suite_focus=3Dtrue#step:=
+3:6
 
-Ok.... I have taken some time to read it through in calm and this part
-is making my head scratch because it sounds like the stuff that I had
-in mind in replay (or if we move  it into rebase or any other place).
-So, to clarify what you are asking, when replaying _a given commit_:
+That would be unfortunate, considering the code in next (and all other
+not yet affected) branches still has the definition added in
+176441bfb58 (ci: build Git with GCC 9 in the 'osx-gcc' build job,
+2019-11-27) and which survived your travis-ci removal series.
 
-- If a parent is included in the history of the _old_ base, you would
-like to see it included as is (no changes) as a parent of the replayed
-commit.
-- If a parent is not included in the history of the _old base_, it
-means it has been replayed and we need to take the equivalent replayed
-commit of the parent.
+Note that the value of CC is only relevant when the code is built, and
+GitHub actions provides its own for all tasks and at least this "mock"
+run (which adds `$CC --version` before make) with next seems to
+indicate the right compiler is still being used there and hopefully
+also in all other unaffected runs from all stable branches:
 
-So, coming back to the example:
+  https://github.com/carenas/git/runs/6041742809
 
-git replay HEAD v2.35.0 v2.36.0-rc1
+Eitherway, making sure that we really use gcc in the jobs that are
+tagged as such will make these extra runs (and their additional CPU
+time) less wasteful and should be corrected ASAP.
 
-We would replay all commits that make up the range v2.35.0..v2.36.0-rc1
-
-Now, for any given commit being replayed, if a parent is in that
-range, it would use the replayed commit of the parent. If the parent
-is not in that range (which means that it's part of the history of
-v2.35.0, which is not being replayed) then we need to take it as-is
-straight no changes which means that _the original_ parent commit will
-be  linked in the resulting replayed commit that we are working on at
-the time therefore linking the original history. (sorry if it sounds a
-little bit reiterative).
-
-Is that what you mean? Because, if that is the case, that is what
-replay does as of this patch.
-
-If you gave it a try like in the eample, you should end up with a
-commit (the one reported at the end of the execution) that has the
-_exact same_ history shape of v2.36.0-rc1 (even linking to  commits
-that are part of the history of v2.35.0).
-
-But I am probably wrong in terms of what I understand that you meant.
-Can you expand a little bit, if you don't mind?
+Carlo
