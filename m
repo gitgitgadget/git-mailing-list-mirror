@@ -2,119 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F47EC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 22:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FCD9C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 22:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356377AbiDOWpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 18:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53770 "EHLO
+        id S1356375AbiDOW40 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 18:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231616AbiDOWpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 18:45:54 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B50AB9F398
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 15:43:24 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 64-20020a630843000000b0039d909676d5so4676285pgi.16
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 15:43:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Orh1Hf2EvVd5O1dwhD3Ubxz/Uw9MS4MgkYWUG2Ak5JE=;
-        b=Oc2Gg9to0hfkMNUuzEif6vDiYVqtrH92fUBMQ1xWC+VpqeFEGIAINhJS/gwPZ3uTql
-         2AZuOGiSZHEYeiNfafh2fQpdLvB+fCte4Y0I3wlYcYaUF5ayS4ZELmSroPM2J7s5rTDL
-         y1HvFZcAtzevvOPcGjct34DI1VuY46aQTEnZl7xIU+0xONnxbR4SqwfTdAr4vprFwt26
-         cjPvdFYzDvQat5y9DadYRkNyNLPlrbQ32K6/K2LIuJqAnWpocNi1CwBgvKHoC2VTGAim
-         KLlIwdnwQaO6UWz3Tx7w2D3gBWdthU6NBSUFlL1qrAvP8mQ9DGWqVTydLBjRxtA7Pwj1
-         +1Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Orh1Hf2EvVd5O1dwhD3Ubxz/Uw9MS4MgkYWUG2Ak5JE=;
-        b=rlbIk6MVmH9cp6Lid5NoESzPzydVn2Vm93o03bmrvMWck6MMbjOEO2qngK/3Mnwha/
-         09jH0BPwfycR/ASVzF9Ds3zHCIeyjBL552R/I3Hr9oD5J9Q17YsCZy4F1d6ESY1ZKKaq
-         w2YGQmI+TDuanqLJvffSLBer5Mlc8GkXp3FHVRuV1qSkDnkCITWL0YF4pvZ0eaVeFV6P
-         neKOzaWsG89loqA24nVnphVyntlgirKBgrOEU8qgmhravbblx2o1ri/yT5bADz4Jzlcs
-         fIxjmsTH90o+lI9i6BCjOgUsVF8/Wp10l8090xED7spE//MYdnoB9hp1ZhOcgZwClGto
-         mb9g==
-X-Gm-Message-State: AOAM530ckG2GC/utdRyftVpGkx8Te9iDMl3Acxv/Ab0txzLc6wtFtayS
-        GVLcheajs1ctgyKu9+NLSy6yexkChnd2PA==
-X-Google-Smtp-Source: ABdhPJwH+VbqecKgf6ted6Op/+/teUWUSj0RGaHW/V1BMmfU2zyXY4EElBjEfro9uYwgxPm/uSicTsUYkvoJDA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:1c8b:b0:1ca:1ff6:607b with SMTP
- id oo11-20020a17090b1c8b00b001ca1ff6607bmr6422972pjb.244.1650062604193; Fri,
- 15 Apr 2022 15:43:24 -0700 (PDT)
-Date:   Fri, 15 Apr 2022 15:43:15 -0700
-In-Reply-To: <kl6lbkx2821q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6l8rs67yt8.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lv8vc90ts.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqwnfs4kud.fsf@gitster.g> <kl6lh76v8vnj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqbkx31sc0.fsf@gitster.g> <kl6lbkx2821q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com, Taylor Blau <me@ttaylorr.com>,
-        martinvonz@google.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231388AbiDOW4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 18:56:21 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89865443F8
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 15:53:51 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 23FMrkjf038634
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 15 Apr 2022 18:53:46 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Emily Shaffer'" <emilyshaffer@google.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <xmqq8rs7yzul.fsf@gitster.g> <YlnzGecOaayPM6ve@google.com>
+In-Reply-To: <YlnzGecOaayPM6ve@google.com>
+Subject: RE: What's cooking in git.git (Apr 2022, #04; Thu, 14)
+Date:   Fri, 15 Apr 2022 18:53:41 -0400
+Organization: Nexbridge Inc.
+Message-ID: <00a001d8511b$aa547c20$fefd7460$@nexbridge.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHNGCtW5muXFQTzdE46MaZuFF64AwH+UTOirPgUIeA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On April 15, 2022 6:35 PM, Emily Shaffer wrote:
+>After quite some time, I'll provide an update on the "submodules UX rework"
+>effort Google has been working on.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Glen Choo <chooglen@google.com> writes:
->>
->>> Yes, I mean that even the current directory will be ignored when
->>> discovery is disabled.
->>
->> OK.
->>
->>>>                                                I am not sure that
->>>> is realistically feasible (I am thinking of cases like "git fetch"
->>>> going to the remote repository on the local disk that is bare to run
->>>> "git upload-pack"), but if the fallout is not too bad, it may be a
->>>> good heuristics.
->>>
->>> Good detail - I hadn't considered the impact on our own child processes.
->>> I suspect this might be a huge undertaking. Unless there is significant
->>> interest in this option, I probably won't pursue it further.
->>
->> I do not necessarily think so.  The entry points to transport on the
->> server side are quite limited (and the client side is dealing with
->> your own repositories anyway), and they already know which directory
->> in the server filesystem to hand to the upload-pack and friends, so
->> it would be a matter of passing GIT_DIR=$there when they call into the
->> run_command() API, if they are not already doing so.
->
-> FWIW I experimented with turning off bare repo recognition altogether
-> and seeing what breaks.
->
-> CI Run: https://github.com/chooglen/git/runs/6042600953?check_suite_focus=true
->
-> AFAICT, most of the test failures are what we'd expect if we stopped
-> recognizing bare repos altogether. One stands out to me in particular
-> though - in t5550-http-fetch-dumb.sh, 
->
->     git clone $HTTPD_URL/dumb/repo.git clone-tmpl
->
-> yields 
->
->     ++ git clone http://127.0.0.1:5550/dumb/repo.git clone-tmpl
->     Cloning into 'clone-tmpl'...
->     fatal: repository 'http://127.0.0.1:5550/dumb/repo.git/' not found
->
-> This sounds to me like Git isn't recognizing the static http files as a
-> remote Git repo, and if so, --git-dir doesn't sound like it'll save us.
-> But I'm not that familiar with the transport code so I don't know if
-> this is a big deal or just a quirk with our httpd tests.
+I'm looking forward to being able to test this extensively. This has
+interest in my community.
 
-Ok I think this is a false alarm - the previous test does some setup on
-the server, which is a bare repo. It was the _setup_ that was broken,
-not the actual `git clone`.
+>On Thu, Apr 14, 2022 at 05:06:26PM -0700, Junio C Hamano wrote:
+>> [Stalled]
+>> * es/superproject-aware-submodules (2022-03-09) 3 commits  .
+>> rev-parse: short-circuit superproject worktree when config unset  .
+>> introduce submodule.hasSuperproject record  . t7400-submodule-basic:
+>> modernize inspect() helper
+>>
+>>  A configuration variable in a repository tells if it is (or is not)
+>> a submodule of a superproject.
+>>
+>>  Expecting a reroll.
+>>  cf. <kl6l4k45s7cb.fsf@chooglen-macbookpro.roam.corp.google.com>
+>>  source: <20220310004423.2627181-1-emilyshaffer@google.com>
+>
+>Yes, a reroll is planned. The most recent attempt (locally) also rerolled a
+follow-on
+>series adding a shared "config.superproject" readable by both a
+superproject and
+>its submodules, in order to demonstrate some real-world application and an
+>example of how to use this config telling us whether or not we're a
+submodule.
+>The series has gotten away from me
+>- as I've been working on internal team planning type things.
+>
+>Beyond this work, there is some other work in progress, still in design
+stages
+>downstream:
+>
+>Glen Choo is continuing work on design for 'git checkout -b'/'git switch
+-c' when
+>submodules are involved and 'submodule.recurse' is set.
+>
+>Glen Choo sent an update to continue converting 'git submodule update'
+>into C; this appears to have no reviews.
+>https://lore.kernel.org/git/20220315210925.79289-1-chooglen%40google.com
+>
+>Josh Steadmon is working on design for 'git pull --rebase
+--recurse-submodules' in
+>basic (non-conflicting) cases; this means he's also working on 'git rebase
+--recurse-
+>submodules' in these same basic cases. This work is still fairly early in
+the design
+>stage, but will be something to look forward to.
+>
+>Beyond those pieces, I thought it might be interesting for me to share
+what's
+>coming up for my team from April through June. So here's a grab bag of
+what's
+>next for us:
+> - Improving 'git fetch --recurse-submodules':
+>   * To retry a failed submodule more than once (in fact, the existing
+>     behavior seems to have a bug: if we fail to clone a submodule in
+>     the "retry queue", we give up and don't try to clone any of the
+>     other retryable submodules after that one)
+>   * Cloning submodules that were added in a commit which is newly
+>     fetched with 'git fetch'
+> - Parallelizing 'git checkout --recurse-submodules' (at least when
+>   partial clones are involved). Without this change, we see that the
+>   initial checkout of a partial-cloned repo with many submodules takes
+>   a long, long, long time.
+> - Parallelizing 'git status --recurse-submodules' when many submodules
+>   are involved (and probably tidying the output)
+>
+>And some more odds and ends. After those few bits, and the in-progress work
+>already seen on the list, we have some users lined up to try the workflow,
+>because we're pretty sure that puts us in a position to try out basic Git
+usage with
+>many submodules. So hopefully we have some interesting feedback and bug
+fixes
+>coming from that, as well.
+>
+> - Emily
+
