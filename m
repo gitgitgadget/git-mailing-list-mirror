@@ -2,67 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A27B2C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 12:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE10C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 13:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351470AbiDOMpq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 08:45:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47368 "EHLO
+        id S243708AbiDONNr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 09:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241937AbiDOMpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 08:45:45 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9522C31D7
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 05:43:16 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id ks6so15236644ejb.1
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 05:43:16 -0700 (PDT)
+        with ESMTP id S236317AbiDONNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 09:13:42 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 291A292D19
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:11:11 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id t11so15266872eju.13
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 06:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=xZiKJC1kXHfIcy82s1DvymHB4r76Dy0Q6AYJS8vN0b8=;
-        b=bTsc52l2z1G8i92d4y29sLsFby6ad+4V1a0t9dQyv2eJgyvjcFLBy46hiSDvlwyY2B
-         TEy4P6ybzfCi6IAnaQzN19obaqm09YYfrm38QCurL4EPcBEri7gOAOrX808B//ChVZNm
-         mbJ2JuUPAgIIjeYCwO0eSXG7VIQ2ftRtLcADEByBX6XWvbM2nFY3NuhyWJEAvpwGN3ZF
-         zqq5JA1Pzf/3HsQDbPdXOZbx3JjSzF9foroNnVK3jruYQDKl5lknn/mcNkG0CPXl9O4e
-         r6Lp6UL5THw27qOIdb4NNwWyCqvyHImml57EPDVhkuRyaBKZLDsNVfMMWsiWZh1DHRTT
-         Mc/w==
+        bh=qT4SzJd9RG3lWB2Ao7oJnH7lj/GzAdAW57hTXwUGQmE=;
+        b=gjFJai5UIe0xvQfFYBixgMey8xJ9LbzFUlIb7+6v1J4I/Xabguie5h8TIcKJg/2S7T
+         fKHLv3PA3XjNpC4fOt7Lk/9diO9LmtImlbNS2JcWeSG7kuiXiyFYIxdwOsw1f2BWupll
+         0OBLy8S2xhhJo4cd4qGoOh/vLPSDzw5+fhHYiV4+fg1CSYtX3U3jaDQ8KNZqvICjpWF+
+         k2SjeJlIghOlBhruzTRLgVpWHlwF9pQhUOmq6kxIM7aYqrlyfdPTIGYD29vGocZZB0vZ
+         EQxCWu0hB1mQdv+qt6Omo0tK+hsLYR9ZfbZATLsSFdXVyJhAF7OUWs9WK9AquT8RKvZS
+         J+ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=xZiKJC1kXHfIcy82s1DvymHB4r76Dy0Q6AYJS8vN0b8=;
-        b=TRCqieGle22LxOqbdPmIlDbz4pUhnfzMBvWmzg1RCa1yvE0gMOzbshIkglZr3jeR0e
-         Ft2sYt7F64tkGqZ6ohxg1ul1cuBJScNXSoXUt3w5D0B5HeXsgwFXCkQ+25FNmvKriuao
-         LDnywlYPVFLXLuzzFYsteXG/Jkyd4oXWwJRoT+k8oejYU3g9SPpfLdPdhphjM+HlMY7N
-         HUMU77IkGw37UCuyjrI9EDiqrxUpTNEBZzgxjqv/f4dSY+LtJe4s2LrEsFZLwXxLOGav
-         VAOBiePa/pCQ8cCoq0c8JzcYw0yNxdKcVzK1xPc2OZuZPCH5j3AdvHo5PnG2H2vTWcMH
-         1NaQ==
-X-Gm-Message-State: AOAM533LRIYLSjHYxq7ShaKVkZKHkV071y6JPPPiJhrokvkqpBZJ5IEd
-        kdlRUm2ZUyy+Pxp0l2JAJkRFlCvHTAVxTA==
-X-Google-Smtp-Source: ABdhPJwrS2GskosNJk30WxE3RF4Rqjr9FUFsRbz8MBlx7ofubAISAIPOG+TAGTtncO+9TWUxgAryHA==
-X-Received: by 2002:a17:907:2cc7:b0:6df:b76d:940d with SMTP id hg7-20020a1709072cc700b006dfb76d940dmr6100784ejc.742.1650026595127;
-        Fri, 15 Apr 2022 05:43:15 -0700 (PDT)
+        bh=qT4SzJd9RG3lWB2Ao7oJnH7lj/GzAdAW57hTXwUGQmE=;
+        b=W+/xpqywAOR1vGuqII3Mq4HrKKp5FuoGl6EESLw48AkQiEprBrAGYutfBCYJB+zx7r
+         9QEykWySuZtjxWh9KSM+kM02Y5e6O8/RLFITRs4K1heMb/owrj6gDBBwK2YD2NfUSouh
+         lFzhdJZk3ai9RvX7WkV4XoutQ+6J0ZtP9tXGOUOWWHmkVJF3C1gCbzU/u4dRAFMMJa0u
+         GenYbmS5aW7gsOUwstVNrfgeZT9+NHbP7VIpjBScVmdzd3fKiilwdm3N8olijr9MnIU3
+         Q3qqyKtjd4E33u6t8g99Yc8KT28evM+VtYifPCqNQRTA5sVRmonaFeYTFlaBF7+PzANn
+         vq9A==
+X-Gm-Message-State: AOAM530JAaPFI9IXEjmTI6zjFaNGpPtuQpQD0vE50NZ7Pw04Cjv+KmeX
+        bo6LoMCbDoHaTuTQ7kYK4vM=
+X-Google-Smtp-Source: ABdhPJxoVlQ1AxxX9cBGrOPYxo7O71NWv/r9nX//OIOOHQj2BAy2PcQXCPYr8ax3o4aiOh+viHvsUg==
+X-Received: by 2002:a17:907:96a9:b0:6e0:db4a:ba8d with SMTP id hd41-20020a17090796a900b006e0db4aba8dmr6353736ejc.87.1650028269496;
+        Fri, 15 Apr 2022 06:11:09 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id q7-20020a170906540700b006d5eca5c9cfsm1670926ejo.191.2022.04.15.05.43.14
+        by smtp.gmail.com with ESMTPSA id jl28-20020a17090775dc00b006e05cdf3a95sm1696486ejc.163.2022.04.15.06.11.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Apr 2022 05:43:14 -0700 (PDT)
+        Fri, 15 Apr 2022 06:11:08 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nfLIA-005dTL-3D;
-        Fri, 15 Apr 2022 14:43:14 +0200
+        id 1nfLjA-005eIb-7s;
+        Fri, 15 Apr 2022 15:11:08 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Pathological performance with git remote rename and many
- tracking refs
-Date:   Fri, 15 Apr 2022 14:26:16 +0200
-References: <YldPmUskbU+bOU2n@camp.crustytoothpaste.net>
- <220414.8635igdtfn.gmgdl@evledraar.gmail.com>
- <YljFnJk55WYLKd6Y@camp.crustytoothpaste.net>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] fsck: detect bare repos in trees and warn
+Date:   Fri, 15 Apr 2022 14:46:15 +0200
+References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <20220406232231.47714-1-chooglen@google.com>
+ <nycvar.QRO.7.76.6.2204071440520.347@tvgsbejvaqbjf.bet>
+ <e81cdc6e-da42-d1d1-5d66-7d5e2a8aebbe@github.com>
+ <220407.86lewhc6bz.gmgdl@evledraar.gmail.com>
+ <kl6lee1z8mcm.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YljFnJk55WYLKd6Y@camp.crustytoothpaste.net>
-Message-ID: <220415.868rs6cyal.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6lee1z8mcm.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220415.861qxycx03.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -71,106 +75,147 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Apr 15 2022, brian m. carlson wrote:
+On Thu, Apr 14 2022, Glen Choo wrote:
 
-> [[PGP Signed Part:Undecided]]
-> On 2022-04-14 at 07:12:20, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Aside from how we'd do renames with transactions, do you know about
->> clone.defaultRemoteName and --origin?
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Yes, I do know about that.  However, in my case, the repository is
-> cloned before I even get a chance to touch it, so these options have no
-> effect.  My dotfiles aren't even on the machine at that point.
-
-*nod*
-
->> There was a (small) thread as a follow-up to that "rename --progress"
->> patch at the time, did you spot/read that?:
->> https://lore.kernel.org/git/220302.865yow6u8a.gmgdl@evledraar.gmail.com/
+>> On Thu, Apr 07 2022, Derrick Stolee wrote:
+>>
+>>> A more complete protection here would be:
+>>>
+>>>  1. Warn when finding a bare repo as a tree (this patch).
+>>>
+>>>  2. Suppress warnings on trusted repos, scoped to a specific set of kno=
+wn
+>>>     trees _or_ based on some set of known commits (in case the known tr=
+ees
+>>>     are too large).
+>>>
+>>>  3. Prevent writing a bare repo to the worktree, unless the user provid=
+ed
+>>>     an opt-in to that behavior.
+>>>
+>>> Since your patch is moving in the right direction here, I don't think
+>>> steps (2) and (3) are required to move forward with your patch. However,
+>>> it is a good opportunity to discuss the full repercussions of this issu=
+e.
+>>
+>> Isn't a gentler solution here to:
+>>
+>>  1. In setup.c, we detect a repo
+>>  2. Walk up a directory
+>>  3. Do we find a repo?
+>>  4. Does that repo "contain" the first one?
+>>     If yes: die on setup
+>>     If no: it's OK
+>>
+>> It also seems to me that there's pretty much perfect overlap between
+>> this and the long-discussed topic of marking a submodule with config
+>> v.s. detecting it on the fly.
 >
-> Yeah, I remember reading it at the time.
+> Your suggestion seems similar to:
 >
->> More generally, probably:
->>=20
->>  1. Teach transactions about N operations on the same refname, which
->>     they'll currently die on, renames are one case.
->>=20
->>  2. Be able to "hook in" to them, updating reflogs is one special-case,
->>     but we have the same inherent issue with updating config in lockstep
->>     with transactions.
+>   =3D=3D 3. Detect that we are in an embedded bare repo and ignore the em=
+bedded bare
+>   repository in favor of the containing repo.
 >
-> Yeah, that's one of the reasons I was thinking of implementing
-> --no-reflogs: because in that case, the operation really is a
-> create/delete operation and it doesn't require any additional logic in
-> the transaction.
->
-> My goal here is specifically not to rearchitect ref transactions and to
-> implement a relatively simple solution.  Your response is indicating to
-> me that updating reflogs is going to be the former and not the latter.
+> which I also think is a simple, robust mitigation if we put aside the
+> problem of walking up to the root in too many situations. I seem to
+> recall that this problem has come up before in [1] (and possibly other
+> topics? I wasn't really able to locate them through a cursory search..),
+> so I assume that's what you're referring to by "long-discussed topic".
 
-Yes, I think it would be nicer to solve the general problem, because
-we'd otherwise end up with no-reflogs and have-reflogs paths through
-these functions.
+Yes, I mean the submodule.superprojectGitDir topic.
 
-I'd also think you'd be stuck trying to instrument transactions in some
-new way anyway, because wouldn't this thing be racy if reflogs for one
-of the remotes appeared after you started you'd need to abort or deal
-with them?
+> (Forgive me if I'm asking you to repeat yourself yet another time) I
+> seem to recall that we weren't able to reach consensus on whether it's
+> okay for Git to opportunistically walk up the directory hierarchy during
+> setup, especially since There are some situations where this is
+> extremely expensive (VFS, network mount).
 
-Or was the plan to:
+I'm not sure, but I think per the later
+https://lore.kernel.org/git/220204.86pmo34d2m.gmgdl@evledraar.gmail.com/
+and
+https://lore.kernel.org/git/220311.8635joj0lf.gmgdl@evledraar.gmail.com/
+that any optimization concerns were likely just "this is slow in
+shellscript" and not at the FS level.
 
- 1. Create lock files for them all
- 2. No reflogs?
- 3. Rename..
+There were also passing references to some internal Google-specific
+NFS-ish implementation that I know nothing about (but you might),
+i.e. what I asked about in:
+https://lore.kernel.org/git/220212.864k53yfws.gmgdl@evledraar.gmail.com/
 
-Maybe that was what we did in any case, I'm rather rusty on the exact
-procedure at the moment. I.e. did we do the mass-lock first?
+But given the v9 superprojectGitDir becoming a boolean instead of a path
+in v9 I'm not sure/have no idea.
 
-Anyway.
+The only thing I'm sure of is if past iterations of the series were
+addressing such a problem as an optimization that doesn't seem to be a
+current goal.
 
-I actually wonder if this wouldn't be that hard, because if we have any
-reflogs we could simply "replay" them by turning (again, I'm a bit rusty
-on the exact lock dance);
+As noted in those past exchanges I have tested this method on e.g. AIX
+whose FS is unbelievably slow, and I couldn't even tell the differenc.
 
-    lock(refs/remotes/origin/master);
-    lock(refs/remotes/def/master);
-    create(refs/remotes/def/master, refs/remotes/origin/master^{});
-    delete(refs/remotes/origin/master);
-    unlock(refs/remotes/origin/master);
-    unlock(refs/remotes/def/master);
+That's because if you look at the total FS syscalls even for an
+uninitialized repo just traversing .git, getting config etc. is going to
+dwarf "walking up" in terms of number of calls.
 
-Into instead doing:
+Of course not all calls are going to be equal, and there's that
+potential "I'm not NFS-y, but a parent is" case etc.
 
-    lock(refs/remotes/origin/master);
-    lock(refs/remotes/def/master);
-    for from, to, msg ref_update(refs/remotes/origin/master):
-    update(refs/remotes/def/master, from, to, msg);
-    delete(refs/remotes/origin/master);
-    unlock(refs/remotes/origin/master);
-    unlock(refs/remotes/def/master);
+In any case, I think even *if* we had such a case somewhere that this
+plan would still make sense. Such users could simply set
+GIT_CEILING_DIRECTORIES or something similar if they cared about the
+performance.
 
-I.e. simply replay each individual item in the reflog, basically using
-the code in your builtin/stash.c series.
+But for everyone else we'd do the right thing, and not prematurely
+optimize. I.e. we actually *are* concerned not with "does it look like a
+bare repo?" but "is this thing that looks like a bare repo within our
+current actual repo or not?".
 
-I didn't think of that before, and just thought of some
-extra-transactional way to copy the reflog over as-is.
+> I actually like this option quite a lot, but I don't see how we could
+> implement this without imposing a big penalty to all bare repo users -
+> they'd either be forced to set GIT_DIR or GIT_CEILING_DIRECTORIES, or
+> take a (potentially big) performance hit. Hopefully I'm just framing
+> this too narrowly and you're approaching this differently.
 
-I think that multi-copy approach would run into
-ref_update_reject_duplicates(), i.e. you can't have multiple updates
-now, but that's a sanity assertion to make sure the transaction is
-internally consistent.
+As noted in the [1] you quoted (link below) I tried to quantify that
+potential penalty, and it seems to be a complete non-issue.
 
-In this case the N update() calls are semnatically the same as a
-create() call in terms of aborting the transaction, i.e. we'd "fold"
-them away, i.e. turn the sanity check into pretending N such updates
-were the same as a single create(), so we'd delete on rollback.
+Of course there may be other scenarios where it matters, but I haven't
+seen any concrete data to support that.
 
-Maybe that would work? Hrm...
+Doesn't pretty everyone who cares about the performance of bare in any
+capacity do so because they're running a server that's using
+git-upload-pack and the like? Those require you to specify the exact
+.git directory you want.
 
-Anyway, depending on the answer to if your --no-reflogs plan would have
-any lock issues etc, perhaps an alternate plan would be:
+I.e. wouldn't this *only* apply to those doing the equivalent of "git -C
+some-dir" to "cd" to a bare repo?
 
-    git remote rename --unsafe
+> PS: As an aside, wouldn't this also break libgit2? We could make this
+> opt-out behavior, though that requires us to read system config _before_
+> discovering the gitdir (as I discussed in [2]).
 
-Where we'd just "mv" the 1-2 relevant refs/remotes/X and
-log/refs/remotes/X folders, followed by updating refs...
+No it wouldn't? I don't use libgit2, but upthread there's concern that
+banning things that look-like-a-repo from being tracked would break it.
+
+Whereas I'm pointing out that we don't need to do that, we can just keep
+searching upwards.
+
+But yes, it would "break" anything that assumed you could cd to that
+tracked-looks-like-or-is--a-gitdir and have e.g. "git config" pick up
+its config instead of our "real repo" config, but that's exactly what we
+want in this case isn't it?
+
+I'm just pointing out that we can do it on the fly in setup.c, instead
+of forbidding such content from ever being tracked within the
+repository, which we'd be doing because we know we're doing the wrong
+thing in that setup.c codepath.
+
+Let's just fix that bit in setup.c instead.
+
+> [1] https://lore.kernel.org/git/211109.86v912dtfw.gmgdl@evledraar.gmail.c=
+om/
+> [2] https://lore.kernel.org/git/kl6lv8vc90ts.fsf@chooglen-macbookpro.roam=
+.corp.google.com
+
