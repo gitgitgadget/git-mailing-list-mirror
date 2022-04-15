@@ -2,120 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF01C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 14:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DF2DC433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 14:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354222AbiDOOD1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 10:03:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39118 "EHLO
+        id S1354233AbiDOOFn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 10:05:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244827AbiDOOD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 10:03:26 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4628DB714B
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 07:00:58 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r13so10752253wrr.9
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 07:00:58 -0700 (PDT)
+        with ESMTP id S1354243AbiDOOFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 10:05:42 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1DC3BF32C
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 07:03:13 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id g18so10757286wrb.10
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 07:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=B2lhbzRa0RyMT4X1PHspHqsvNT0zqgEoOPskZJggGZ0=;
-        b=gQ3I1TZYbn8bZ0sj2VEqg5ZUEDsCFYg7/Zg6FulEpOXzwvYVizEsw5WeWkUrIjmj2b
-         7M1/OYBLWWlLHtOXANv0Kq+mPptCVV7KpcmsTAA9wRGXYdjD8epV3cVmVf8pJUhKJXzq
-         Wrj6GZ1jJlAK3JgaMqtm7n4I1B+ZljOnf3TTxbduhdtdOe9AsWrPPN60bysIaYZdCzyG
-         ehhAnloBelUcOkkdIHEVyzItyaiSntsGILDGyiDiChWDFhvaSh3Y7VFioivqZv6mBglr
-         qPcsaIG5+voyIjKfxOUZBg1j7NG18NWYGaDhILK8TZSDBR76XMUuIJCIuXpv2mko3FSs
-         1uPQ==
+        bh=Smj9JUK/4LflYGQBlm3pKgkAdy1JGdLqo8RHwQu5E/o=;
+        b=NcU3DckgSyi546VSeDeWQ6FTgg5Uzia8dhP5KJriTG5woU5GwkES93go4IMHHQdaRF
+         VBS7MWrkms6zy40bPZjctM8zbEqDAcuU1l13NDsWID9la/IpjUzuLyJXnov8n8SZmplW
+         Bbmu+7BNnq6z9FsFqHPZpMRX7ldtU4LnktayTwnjqeiO+O8haAeLTf2lUlWfsrWYF81A
+         yP5FnzjKH4bKr15FfGYFbE0sDRcIvQxhONQeFeWWt/Wk1ctIqUPL7PKxmQZmf8CkUneG
+         dF5Rstp5TWMx0JOX+Fo9pxImzsplDpqAhuEl0X0jPRJkNA2HQ7JCdtZo5Toq33JM91/n
+         fSmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=B2lhbzRa0RyMT4X1PHspHqsvNT0zqgEoOPskZJggGZ0=;
-        b=Zchexl0ulYr9ICYfBA4usauH4t8ZbcnFuzfGtbOQXC7GiN95wpEGEreywHCxHqxAGt
-         2cUC7roHP6vjzUWZFKJnNW8SdcQpSvCMI1LKXsmbmCkBZ75PgUGvQymTiDfd68yxNaZE
-         mzL7C92I/85Sjlhia6wFKTOJvOMp5Doqix/pZcOaeNvquIlCofs0Z5gdz0SHyr+knfiS
-         +Z5WnZqKhxeR8VwGC1xqs8rHnoSfQv8XI/pe/1QaAK24xFn3kX2Vd2EmtlX8bCyBVmoT
-         hVXkVQr68hHnA0Gex5tqz1igaHHeeTySD61ABMHSzDf8TAjcFJ+ve6EvA97/XB6JhcBm
-         9jCA==
-X-Gm-Message-State: AOAM532zpLgBV+yKOTlHXe87YeJ1tDAXgtXcYJbuqN78SrA02h7am6oD
-        h2c9GSabvdWwLcMQOwrOCRDVHIJ3Ri0=
-X-Google-Smtp-Source: ABdhPJxbLQ8vYAGSTHJw1QHS3y6+ZYzpYN8S4HpZo2J8VcC4G+GX5fgIDj81+RKr4f8M4iWpIEs/ng==
-X-Received: by 2002:adf:f00d:0:b0:207:a6a6:a0c9 with SMTP id j13-20020adff00d000000b00207a6a6a0c9mr5424919wro.459.1650031256713;
-        Fri, 15 Apr 2022 07:00:56 -0700 (PDT)
+        bh=Smj9JUK/4LflYGQBlm3pKgkAdy1JGdLqo8RHwQu5E/o=;
+        b=G8jS1POj4GGIfuKJWAzW4LhEJM6sM0eMmDlC2+SkdIs4xhlEL9bHJh79X5Fl2xp7le
+         XZvWHcX/UW3QuokyCVwEAfUqYGQtvrvBIMjq3U195NXsxcyDbqZQ7d5IpP47fQEAT7/8
+         n+a7XctZLJzh+aEIgUnrWwPmhQTSK3Kj350xfEn33Sz2FbomNKcYiwQMrZVpqbsQ6oay
+         aHkeMH94G1K9xNupeTBkznz8IreNFbfY7QGDSe2j9xckvwDsfwSjxhrrmAUHzpwfuXKl
+         RYPFOpSc5uxBhu1zs7Er854WmWTfXcdb/tl8uWqH0mhuJw/yNh/16EqHyxjqUSYCA2a7
+         yoHw==
+X-Gm-Message-State: AOAM531+xMQfigifFANpjaWn5gt1Zhe0xa5Y7CHaZEUhvtOufxcXiOKO
+        uUaie/DnyQBJjBaexv67fITz6tQovrA=
+X-Google-Smtp-Source: ABdhPJwINRhb9Aq8Qp50OP/9QWlK/ZGIlFYZPLtNxsOvmHWVTjULAhoT3Oj6epL3SMqsVWle05XLJA==
+X-Received: by 2002:a5d:4b52:0:b0:207:a53e:fe56 with SMTP id w18-20020a5d4b52000000b00207a53efe56mr5576642wrs.22.1650031392310;
+        Fri, 15 Apr 2022 07:03:12 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id u5-20020adfed45000000b00207a480e6aasm4250131wro.116.2022.04.15.07.00.56
+        by smtp.gmail.com with ESMTPSA id ay41-20020a05600c1e2900b0038e75fda4edsm4682843wmb.47.2022.04.15.07.03.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Apr 2022 07:00:56 -0700 (PDT)
-Message-ID: <cde32b70-2f01-925c-2456-8f45fa8c5188@gmail.com>
-Date:   Fri, 15 Apr 2022 15:00:55 +0100
+        Fri, 15 Apr 2022 07:03:12 -0700 (PDT)
+Message-ID: <ef186379-7d59-36e4-068f-b15375e42789@gmail.com>
+Date:   Fri, 15 Apr 2022 15:03:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/7] rebase --merge: fix reflog when continuing
+Subject: Re: [PATCH 4/7] rebase --apply: respect GIT_REFLOG_ACTION
 Content-Language: en-GB-large
 To:     Christian Couder <christian.couder@gmail.com>,
         Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git <git@vger.kernel.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <pull.1150.git.1645441854.gitgitgadget@gmail.com>
- <493254ffbb8b11f325f5995790341d70198b5c97.1645441854.git.gitgitgadget@gmail.com>
- <CAP8UFD0+V38FC8HZenFVRUputH+eD5cfXAQUZug3RWWMv==LBw@mail.gmail.com>
+ <58c560d0e19a3fa6dd5de547821c9642089de3fb.1645441854.git.gitgitgadget@gmail.com>
+ <CAP8UFD3dx_Mv=X1y11LDy6NOcV0eDq5s92PqdC3LnbBFCi1kxg@mail.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAP8UFD0+V38FC8HZenFVRUputH+eD5cfXAQUZug3RWWMv==LBw@mail.gmail.com>
+In-Reply-To: <CAP8UFD3dx_Mv=X1y11LDy6NOcV0eDq5s92PqdC3LnbBFCi1kxg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chirstian
+Hi Christian
 
-Thanks for taking a look at this series
-
-On 07/04/2022 14:49, Christian Couder wrote:
-> On Tue, Feb 22, 2022 at 6:12 AM Phillip Wood via GitGitGadget
+On 07/04/2022 14:59, Christian Couder wrote:
+> On Tue, Feb 22, 2022 at 6:41 AM Phillip Wood via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
 >>
 >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> The reflog message for a conflict resolution committed by "rebase
->> --continue" looks like
->>
->>          rebase (continue): commit subject line
->>
->> Unfortunately the reflog message each subsequent pick look like
->>
->>          rebase (continue) (pick): commit subject line
->>
->> Fix this by setting the reflog message for "rebase --continue" in
->> sequencer_continue() so it does not affect subsequent commits. This
->> introduces a memory leak similar to the one leaking GIT_REFLOG_ACTION
->> in pick_commits(). Both of these will be fixed in a future series that
->> stops the sequencer calling setenv().
+>> The reflog messages when finishing a rebase hard code "rebase" rather
+>> than using GIT_REFLOG_ACTION.
 > 
-> Yeah, it looks like we will leak only a small string.
-> 
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   builtin/rebase.c          |   2 -
->>   sequencer.c               |   5 ++
->>   t/t3406-rebase-message.sh | 120 +++++++++++++++++++++++++-------------
-> 
-> The changes to the test script look a bit involved and aren't
-> explained in the commit message. I wonder if some of those changes
-> could have been made in a preparatory commit.
+> Yeah, but GIT_REFLOG_ACTION is something like "pick" or "continue" ...
 
-That's a good point. For some reason when I put the series together I 
-thought it would be tricky to do that without the fixes in this commit 
-but that is not actually the case so I'll split the test changes out.
+GIT_REFLOG_ACTION can be set in the environment by the user (or more 
+likely a script) to change the command name in reflog messages created 
+by rebase. At the moment we respect that for all the messages apart from 
+the ones being changed here.
 
 Best Wishes
 
 Phillip
 
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>   builtin/rebase.c          | 7 ++++---
+>>   t/t3406-rebase-message.sh | 2 +-
+>>   2 files changed, 5 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 36863117fba..e50361fc2a9 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -580,10 +580,11 @@ static int move_to_original_branch(struct rebase_options *opts)
+>>          if (!opts->onto)
+>>                  BUG("move_to_original_branch without onto");
+>>
+>> -       strbuf_addf(&branch_reflog, "rebase finished: %s onto %s",
+>> +       strbuf_addf(&branch_reflog, "%s finished: %s onto %s",
+>> +                   getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
+>>                      opts->head_name, oid_to_hex(&opts->onto->object.oid));
 > 
->>   3 files changed, 86 insertions(+), 41 deletions(-)
+> ... so this will say "pick finished..." instead of "rebase
+> finished..." while it may be better to have something like "rebase
+> (pick) finished...", or am I missing something?
+> 
+>> -       strbuf_addf(&head_reflog, "rebase finished: returning to %s",
+>> -                   opts->head_name);
+>> +       strbuf_addf(&head_reflog, "%s finished: returning to %s",
+>> +                   getenv(GIT_REFLOG_ACTION_ENVIRONMENT), opts->head_name);
+> 
+> In patch 2/7 GIT_REFLOG_ACTION, instead of
+> GIT_REFLOG_ACTION_ENVIRONMENT, is used.
+> 
+> It looks like GIT_REFLOG_ACTION_ENVIRONMENT is defined in reset.h
+> while GIT_REFLOG_ACTION is defined in sequencer.c. Maybe we could get
+> rid of one of these two, and use the same everywhere?
+> 
+>>          ropts.branch = opts->head_name;
+>>          ropts.flags = RESET_HEAD_REFS_ONLY;
+>>          ropts.branch_msg = branch_reflog.buf;
