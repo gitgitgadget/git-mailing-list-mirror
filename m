@@ -2,255 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D8BDC433F5
-	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 20:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA09C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Apr 2022 20:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240148AbiDOUQK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Apr 2022 16:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42768 "EHLO
+        id S1350871AbiDOUbh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Apr 2022 16:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239141AbiDOUQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Apr 2022 16:16:02 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38CBADD959
-        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:13:32 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3250A10BAF2;
-        Fri, 15 Apr 2022 16:13:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LkdIeiGXExD04sWdyoqNp3IN47eU1gqCQf3Iwt
-        Fy2Oc=; b=pD4BlfGXtGbOelDMT8VJuIzmSCVmm+GFb6CS0irMOR1UehEisSd4SV
-        L9ArCRG0PVTrLTbjKsXT3KMhjcfJui0a+SUukuNuO3ZqmlzGtPcQBQwsM1G7TZJK
-        9v+RitSqtE7ocJxOJpzMBK3OqN65Fj9DVn3i0HNWaoLiWtoR1V8Ow=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2754510BAF1;
-        Fri, 15 Apr 2022 16:13:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89ECC10BAEF;
-        Fri, 15 Apr 2022 16:13:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com, Taylor Blau <me@ttaylorr.com>,
-        martinvonz@google.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Bare repositories in the working tree are a security risk
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <kl6lv8vc90ts.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqwnfs4kud.fsf@gitster.g>
-        <kl6lh76v8vnj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Fri, 15 Apr 2022 13:13:29 -0700
-In-Reply-To: <kl6lh76v8vnj.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Thu, 14 Apr 2022 09:41:36 -0700")
-Message-ID: <xmqqh76ucdg6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233989AbiDOUbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Apr 2022 16:31:35 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DDD5DD96B
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:29:06 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id d9so7860933vsh.10
+        for <git@vger.kernel.org>; Fri, 15 Apr 2022 13:29:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oOBkL8NXSuYSI58XWPWZpTezFwStZaUdMXkiRh78ABE=;
+        b=h4Zbhy9F3qQOjCouUXIV2ZYBEF0QYiX68giXF6siona9UY2rUox8DbI+m+gO3tVA+m
+         1MwQAHbP/tZGfLeh2l6l5EkIxN82bOwH6emMlTjL0ozkB1bcWRj74WIzAefZo06kkmJz
+         zSpoRyjuVMjo1AssE7+MQ/NeIubFJpqb6ZNuLTS4DjWplHWx3mvBFrCSGJ+MeafBaIgC
+         ScD6TRIsVyNJUDZvQUT28h7DQamlJ3bH7Hsnrk0GKBx4ajIhWHULBw2PvLFL1oyyo6gY
+         HMtO/zTBIc70H2TaQ5qFy8GFAsu4oD2A23Wpy0+z45SDOihb7KeRLL2pDR3cmhkuQ7lY
+         Ar3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oOBkL8NXSuYSI58XWPWZpTezFwStZaUdMXkiRh78ABE=;
+        b=0DzkVcTYnH1GnYJZlbHGzG8MssKnIgREcignXVcDdQc8rAaUCGTOKbGP3CWWtQ2DUe
+         p9aIVuOH2nU51dyOfSnQCymkhtXhLBykvip/PgNj4DjUjAblsrQZ+xLK+oIAz+x9sMHp
+         caF5sf1amvhcDsPRJx0ZfyRRArQs2QzT/iXyr/Gi1eVhrd6ul9gAuy2LWdiqJwWzeYHm
+         G41aACY/M8NgmyRAsYR0JjBNJsjheb7mdtL29Y32JNhu924W/FVQKPJd8fMGc+rjU14j
+         bqegYXOy7lJZXNN9iyxHQHfCjQppL2VpGwkfDFmlIPLSnWrwDoJimVyse55SEI8phOz8
+         MIZw==
+X-Gm-Message-State: AOAM530wk177j2HOtKqtBSo6iDGkDFOy+Iyzkx/g0MdcOHPSNgp2k5v1
+        q+s0HTLsM7w5V9YuQNtRo6tzP2OES8OAII7ijg4=
+X-Google-Smtp-Source: ABdhPJwJ/GuYnTTusGZNz4tNpd7TepguAdyi830qsT24LEwnHDwZ3MUnN7OoLzl4ByX1gp+0rtIsO16TsVrw/LEd3Q4=
+X-Received: by 2002:a67:cb11:0:b0:324:fa43:1408 with SMTP id
+ b17-20020a67cb11000000b00324fa431408mr197751vsl.5.1650054545270; Fri, 15 Apr
+ 2022 13:29:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 84B33788-BCF8-11EC-B5FF-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com>
+ <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <patch-v3-25.29-1268792233f-20220413T194847Z-avarab@gmail.com>
+ <CAPUEspjT23rqBwkgARf90me1n0dd4pjS4i+ya=Vo=xCBCTjp4g@mail.gmail.com>
+ <220415.86k0bqbgin.gmgdl@evledraar.gmail.com> <CAPUEspiE3HBkkBzNgz8Gb6=fc2NPnfbGzzn2SEiGGG+zVo9DLA@mail.gmail.com>
+In-Reply-To: <CAPUEspiE3HBkkBzNgz8Gb6=fc2NPnfbGzzn2SEiGGG+zVo9DLA@mail.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 15 Apr 2022 13:28:54 -0700
+Message-ID: <CAPUEspgWTk0wjmomo2g9TVHZny7stCt=B8D=HA2=gk_SEC5vnQ@mail.gmail.com>
+Subject: Re: [PATCH v3 25/29] CI: set CC in MAKEFLAGS directly, don't add it
+ to the environment
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-
-> Yes, I mean that even the current directory will be ignored when
-> discovery is disabled.
+On Fri, Apr 15, 2022 at 12:03 PM Carlo Arenas <carenas@gmail.com> wrote:
 >
->>                                                I am not sure that
->> is realistically feasible (I am thinking of cases like "git fetch"
->> going to the remote repository on the local disk that is bare to run
->> "git upload-pack"), but if the fallout is not too bad, it may be a
->> good heuristics.
+> On Fri, Apr 15, 2022 at 6:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+> >
+> > But unless I'm missing something that's already been the case on
+> > "master" for a while, i.e. this is the master run showing that we'll
+> > invoke "gcc":
+> > https://github.com/git/git/runs/6031562726?check_suite_focus=3Dtrue#ste=
+p:3:6
 >
-> Good detail - I hadn't considered the impact on our own child processes.
-> I suspect this might be a huge undertaking. Unless there is significant
-> interest in this option, I probably won't pursue it further.
+> That would be unfortunate, considering the code in next (and all other
+> not yet affected) branches still have the definition added in
+> 176441bfb58 (ci: build Git with GCC 9 in the 'osx-gcc' build job,
+> 2019-11-27) and which survived your travis-ci removal series.
 
-So, I was doing a bit of experiment.  The change to the set-up
-essentially means that working in either a bare repository or in the
-.git/ subdirectory of a non-bare repository that you used to be able
-to do with
+Nevermind, my test was flawed, this[1] updated run does show this code
+was indeed refactored away and the bug also introduced to next and
+beyond.
 
-    cd bare.git && git cmd
-    cd .git/ && git cmd
+Carlo
 
-is now forbidden, unless you explicitly say which directory you want
-to use as the GIT_DIR, i.e.
-
-    cd bare.git && GIT_DIR=. git cmd
-    cd .git/ && GIT_DIR=. git cmd
-
-The required change to the code is surprisingly small, but the
-fallout is very big.  Partial patches to two tests are attached with
-some commentary at the end.
-
- setup.c          | 9 +++++++--
-
-diff --git c/setup.c w/setup.c
-index a7b36f3ffb..52304ae57e 100644
---- c/setup.c
-+++ w/setup.c
-@@ -1203,12 +1203,15 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 	 * Test in the following order (relative to the dir):
- 	 * - .git (file containing "gitdir: <path>")
- 	 * - .git/
--	 * - ./ (bare)
-+	 * - ./ (bare) --- not
- 	 * - ../.git
- 	 * - ../.git/
--	 * - ../ (bare)
-+	 * - ../ (bare) --- not
- 	 * - ../../.git
- 	 *   etc.
-+	 * we used to test the directory itself as a bare one
-+	 * after checking if the directory has .git/ that is a repository
-+	 * and before moving up the hierarchy, but no longer do so.
- 	 */
- 	one_filesystem = !git_env_bool("GIT_DISCOVERY_ACROSS_FILESYSTEM", 0);
- 	if (one_filesystem)
-@@ -1238,12 +1241,14 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 			return GIT_DIR_DISCOVERED;
- 		}
- 
-+#if 0
- 		if (is_git_directory(dir->buf)) {
- 			if (!ensure_valid_ownership(dir->buf))
- 				return GIT_DIR_INVALID_OWNERSHIP;
- 			strbuf_addstr(gitdir, ".");
- 			return GIT_DIR_BARE;
- 		}
-+#endif
- 
- 		if (offset <= min_offset)
- 			return GIT_DIR_HIT_CEILING;
-
-
-THe above is all it takes to disable the recognition of a bare
-repository during the repositiry discovery.  The code to handle
-explicitly specified GIT_DIR is way before the loop being touched
-here and works OK as before.
-
-Interestingly, many breakages in tests are not due to "clone"
-failing to operate in "the other side".  For example, this one tries
-to inspect a bare repository that was created by a clone operation,
-and we need to tell "git" where the GIT_DIR is, even after we chdir
-to it.  I do not think this is so common but with our popularity,
-not-so-common population is still an absolute large number of users
-that we do not want to hurt.
-
-diff --git c/t/t5601-clone.sh w/t/t5601-clone.sh
-index 4a61f2c901..822ee3164a 100755
---- c/t/t5601-clone.sh
-+++ w/t/t5601-clone.sh
-@@ -111,9 +111,9 @@ test_expect_success 'clone --mirror' '
- 	git clone --mirror src mirror &&
- 	test -f mirror/HEAD &&
- 	test ! -f mirror/file &&
--	FETCH="$(cd mirror && git config remote.origin.fetch)" &&
-+	FETCH="$(cd mirror && GIT_DIR=. git config remote.origin.fetch)" &&
- 	test "+refs/*:refs/*" = "$FETCH" &&
--	MIRROR="$(cd mirror && git config --bool remote.origin.mirror)" &&
-+	MIRROR="$(cd mirror && GIT_DIR=. git config --bool remote.origin.mirror)" &&
- 	test "$MIRROR" = true
- 
- '
-@@ -151,7 +151,7 @@ test_expect_success 'clone --mirror does not repeat tags' '
- 	 git tag some-tag HEAD) &&
- 	git clone --mirror src mirror2 &&
- 	(cd mirror2 &&
--	 git show-ref 2> clone.err > clone.out) &&
-+	 GIT_DIR=. git show-ref 2>clone.err >clone.out) &&
- 	! grep Duplicate mirror2/clone.err &&
- 	grep some-tag mirror2/clone.out
- 
-
-
-The next example is "init" test, which seems to reveal that refusing
-to discover a bare repository is not exactly an approach that is
-workable.
-
-The first two hunks just show the same pattern as above.  The
-check_config helper is given a directory, under which 'config' and
-'refs' should exist (in other words, the first part of the helper
-emulates setup.c::is_git_directory()).  Then it tries to read from
-the configuration file found in that directory.  Be it a bare
-repository or .git/ subdirectory of a non-bare repository the caller
-has given us, we need to do the same GIT_DIR=. dance as the above.
-
-The last hunk does not really fix.  The scenario is this:
-
-    * A bare repository bare-ancestor-aliased.git is prepared
-
-    * Its config file says "[alias] aliasedinit=init" in it
-
-    * In that bare repository (next to 'refs', 'config'), we create
-      a subdirectory 'plain-nested'.
-
-    * We go to that bare-ancestor-aliased.git/plain-nested/
-      directory and say "git aliasedinit".
-
-This wants to be able to create a subdirectory in this bare
-repository and make that subdirectory an independent repository (it
-happens to be a non-bare repository, but a bare repository should
-also work---think of .git/modules/name/ bare repository that is
-designed to be pointed at with gitfile: link from a submodule
-working tree).
-
-Now, in order for the last step to be able to even _use_ the alias,
-it has to treat the bare-ancestor-aliased.git directory as a bare
-repository and read its configuration.  But by explicitly setting
-GIT_DIR to that location, the behaviour of "git init" itself is
-changed.  It no longer initializes the current directory,
-i.e. plain-nested subdirectory of the bare-ancestor-aliased.git;
-GIT_DIR tells us to (re)initialize it instead.
-
-This fundamentally does not work.
-
-It is a separate matter if it makes sense to allow creating a new
-repository inside a bare repository (it does---that is what the
-modern submodule layout uses), or to allow an alias to help doing so
-defined in the top-level bare repository (it probably does---the
-end-user may want to have a handy way to customize how submodules
-are configured).  But it seems to tell us that with today's external
-interface we have for "git init", we cannot take configuration from
-a shallower level and use it to drive "git init" to create a new
-repository at a deeper level.
-
-diff --git c/t/t0001-init.sh w/t/t0001-init.sh
-index d479303efa..57f2eedac0 100755
---- c/t/t0001-init.sh
-+++ w/t/t0001-init.sh
-@@ -6,6 +6,7 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- check_config () {
-+	# NEEDSWORK: refs could be a file in post reftable world.
- 	if test_path_is_dir "$1" &&
- 	   test_path_is_file "$1/config" && test_path_is_dir "$1/refs"
- 	then
-@@ -21,8 +22,8 @@ check_config () {
- 		return 1
- 	fi
- 
--	bare=$(cd "$1" && git config --bool core.bare)
--	worktree=$(cd "$1" && git config core.worktree) ||
-+	bare=$(cd "$1" && GIT_DIR=. git config --bool core.bare)
-+	worktree=$(cd "$1" && GIT_DIR=. git config core.worktree) ||
- 	worktree=unset
- 
- 	test "$bare" = "$2" && test "$worktree" = "$3" || {
-@@ -84,7 +85,7 @@ test_expect_success 'plain nested in bare through aliased command' '
- 		echo "[alias] aliasedinit = init" >>config &&
- 		mkdir plain-nested &&
- 		cd plain-nested &&
--		git aliasedinit
-+		GIT_DIR=.. git aliasedinit ;# does not work
- 	) &&
- 	check_config bare-ancestor-aliased.git/plain-nested/.git false unset
- '
+[1] https://github.com/carenas/git/runs/6042506530
