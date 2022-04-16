@@ -2,133 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD19C433EF
-	for <git@archiver.kernel.org>; Sat, 16 Apr 2022 12:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8667DC433F5
+	for <git@archiver.kernel.org>; Sat, 16 Apr 2022 12:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231920AbiDPMh3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Apr 2022 08:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58200 "EHLO
+        id S231990AbiDPMuI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Apr 2022 08:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231575AbiDPMh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Apr 2022 08:37:27 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3553397
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 05:34:52 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id p18so12617269wru.5
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 05:34:52 -0700 (PDT)
+        with ESMTP id S230085AbiDPMuH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Apr 2022 08:50:07 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187AD40E4F
+        for <git@vger.kernel.org>; Sat, 16 Apr 2022 05:47:35 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id bg10so19579157ejb.4
+        for <git@vger.kernel.org>; Sat, 16 Apr 2022 05:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=O8fTrlB4zSYVL3fLW75IXmiGyluadqsE4996lrazbfs=;
-        b=k00h5mXD8nDgM65JEE/+uA2S2g5mawnwCOPtsyZnxnY+awGr7YL6FySxVqVyCu/ZeE
-         0alce+h4G2q0bCs0K7IgHsHDHPEyFOM6ICOGkcYDAQYRjd0I3yz69MHvv+hS2KtKcGQW
-         VPd+qeWIW1+rKOGIp80i+yHLHSYhX0327nx7p25guHlmxwvjUwLaiXQUCrUvIqz5eDws
-         fCvBJJ2t2AgIv9jAPMF05DMgMADlS6WWOz9aQ3V0c+Ia4eldCEt/CC2y56465Xu6IHRq
-         Ekxw1O4hj49WO0EOkM2vWnlq4gD1cIWAR+8NxS60FwkVn5zvXFXcvlsPvdUN4/0b+Lmg
-         Y5HA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WKE8pZomuiE/SxUSGAm3plkyaJ7vv64ZjA5aRGow4J4=;
+        b=fmv5z3kbSX0HwVi7kDYNibwAEJ+5OrD7TGlDOiqLeUewhfwiLqy/gMuusg+Cr7yksc
+         YtLCiIYg32GWutJSTH0mqx3bfZpin0LjitgrKdiiIitHtGRk5RFN+U9+5jEQvVhsSH5i
+         XVkKykLSGOTZeuhs/RBJ4N6fQX7/Xg26NmsuTFS/3NkiGgt+RFXf7CWHfzD2Rw9tw1pX
+         yp2r6kqHPuIssk1WaGauZw89VAisZcQm6PvlgHcr9EqaAfWEDdXXBw5AX+B2EdrIQtGJ
+         nERtX5nIxSyym7XYNzBNojHKAGlzvY57WIRJ+6GaiW3HHVLOHUKPbCfZJstzAs/rHw+t
+         u6WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=O8fTrlB4zSYVL3fLW75IXmiGyluadqsE4996lrazbfs=;
-        b=elFqZIqQAASDcD0TVDBYsQHg99bDIkW4Z5khFaMyZkGhJ7oIoB4RiLoXhYOF1yDhlM
-         stIJqCx8DIymHHyIMOBnrYfm8RIVzE2dv36tZDU83/I75FFaYd24zGUJI8C9634oyi80
-         Ws4QAaOJYgBIPVVmPCS5lXAqXwCrz6a0vNRgS3fGyrtVL/coWw9z5hC63NMERvFW+aY1
-         NWxzzY6tah3E9qSOXVCUsmdISiEIlXaaItIkd7unPEYSciNljqImeHYIW5x39WA54LCp
-         BjVHvvjHDYRvrNOZLcu41xdbDhudnfwgiA/GL36FM17b8Fj28QXppwK1/npyFsHWqFSj
-         2hzg==
-X-Gm-Message-State: AOAM533tO/Jn+1CLGPJ4aEtSTn4z2R9AA3ZxzwGMXEbDu3DjmvnWiJGp
-        H/Nz1yJBCT/oiv/q+moGaoj4dIeZiLHQi0Ba
-X-Google-Smtp-Source: ABdhPJytdmFsLGnTLL0P73IvTVz9f64fq01MghFbTlh/LJ4WCjvtWBN5bTLeOdYBFetKtNxOeOZ3pA==
-X-Received: by 2002:adf:f307:0:b0:207:b0b5:999b with SMTP id i7-20020adff307000000b00207b0b5999bmr2468398wro.694.1650112491232;
-        Sat, 16 Apr 2022 05:34:51 -0700 (PDT)
-Received: from localhost.localdomain (176.248.7.93.rev.sfr.net. [93.7.248.176])
-        by smtp.gmail.com with ESMTPSA id z6-20020a056000110600b00207aa9eec98sm6022430wrw.30.2022.04.16.05.34.50
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=WKE8pZomuiE/SxUSGAm3plkyaJ7vv64ZjA5aRGow4J4=;
+        b=5uvWCEPjj6321ErwgqL3QabVFlujkJ4DLHOEwNEbhGHPNk22kvybNAtozHBG6S7g3l
+         T+Vsbz91c5ewxOf3LHPFeSyA2+Pl6NYQhF5SICk9+pqQABslse4omNij9gq7rvqsRHNY
+         vel1OQ286bcfuHheeue7wkRlNR/Mnco9Kp4LI6IcrcHagBj8qzHAnCplxMJm2dTUYHsZ
+         CzLqhyofOCzW3voEKjmuESh1iea1S57P+SsO9H25q25Pv1RdDcpq9ur/NgG1+LV+UIvB
+         Q5sz3qFGViwDHxOcfwVDvOQLLgkAGElYJdURGPsadN+lKpXBZrhXO0MURRbeKcDKxLKm
+         I8NA==
+X-Gm-Message-State: AOAM530ks9FNMLKeg/1oEUJ3ZQWfiBkESRhvQ4tqF0+0uma9/fzGIkLc
+        G1VLOHmNVoHN+l8SSzKla/g=
+X-Google-Smtp-Source: ABdhPJxSCWjBrpob/3jxZh6WjsvGq5lR0wT/bsg4600tA+bGuU2jQWaJUiuyfQMXG6XSdP/fRkOFgA==
+X-Received: by 2002:a17:907:3e8b:b0:6e8:c7b7:a3c3 with SMTP id hs11-20020a1709073e8b00b006e8c7b7a3c3mr2715989ejc.337.1650113253089;
+        Sat, 16 Apr 2022 05:47:33 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id y26-20020a1709063a9a00b006e0c272e263sm2662197ejd.71.2022.04.16.05.47.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Apr 2022 05:34:50 -0700 (PDT)
-From:   COGONI Guillaume <cogoni.guillaume@gmail.com>
-To:     cogoni.guillaume@gmail.com
-Cc:     Matthieu.Moy@univ-lyon1.fr, derrickstolee@github.com,
-        git.jonathan.bressat@gmail.com, git@vger.kernel.org,
-        guillaume.cogoni@gmail.com, shaoxuan.yuan02@gmail.com
-Subject: [PATCH v1 1/1] Documentation/ToolsOnGit.txt: gather information about tools
-Date:   Sat, 16 Apr 2022 14:34:33 +0200
-Message-Id: <20220416123433.28391-2-cogoni.guillaume@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220416123433.28391-1-cogoni.guillaume@gmail.com>
-References: <CAA0Qn1tZxGR0cUi2JSJtTFYe2Nk9xoGuHkruji1-53-Fhokmig@mail.gmail.com>
- <20220416123433.28391-1-cogoni.guillaume@gmail.com>
+        Sat, 16 Apr 2022 05:47:32 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nfhpr-006FS9-Vf;
+        Sat, 16 Apr 2022 14:47:31 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        phillip.wood@talktalk.net
+Subject: Re: [PATCH 1/2] config.mak.dev: workaround gcc 12 bug affecting
+ "pedantic" CI job
+Date:   Sat, 16 Apr 2022 14:33:09 +0200
+References: <20220415123922.30926-1-carenas@gmail.com>
+ <20220415231342.35980-1-carenas@gmail.com>
+ <20220415231342.35980-2-carenas@gmail.com>
+ <220416.8635idc3mk.gmgdl@evledraar.gmail.com>
+ <CAPUEspgYU_797VSsdLWVqLXjSYsKfJhUb7M=jdouF01kHcKQyA@mail.gmail.com>
+ <220416.86tuatalmf.gmgdl@evledraar.gmail.com> <xmqqo8117er2.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqo8117er2.fsf@gitster.g>
+Message-ID: <220416.86czhh9ov0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This document aims to gather tools that have a README and/or scripts in
-the GIT project in order to simplify the search of information for a
-particular tool.
 
-Signed-off-by: COGONI Guillaume <cogoni.guillaume@gmail.com>
----
- Documentation/Makefile       |  1 +
- Documentation/ToolsOnGit.txt | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
- create mode 100644 Documentation/ToolsOnGit.txt
+On Fri, Apr 15 2022, Junio C Hamano wrote:
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 44c080e3e5..2fd73078f7 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -93,6 +93,7 @@ SP_ARTICLES += $(API_DOCS)
- TECH_DOCS += MyFirstContribution
- TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
-+TECH_DOCS += ToolsOnGit
- TECH_DOCS += technical/bundle-format
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
-diff --git a/Documentation/ToolsOnGit.txt b/Documentation/ToolsOnGit.txt
-new file mode 100644
-index 0000000000..a33b369a06
---- /dev/null
-+++ b/Documentation/ToolsOnGit.txt
-@@ -0,0 +1,35 @@
-+Tools on GIT
-+============
-+:sectanchors:
-+
-+[[summary]]
-+== Summary
-+
-+This document aims to gather tools that have a README and/or scripts in
-+the GIT project.
-+
-+[[author]]
-+=== Author
-+
-+The Git community.
-+
-+[[table_of_contents]]
-+== Table of contents
-+
-+- <<vscode>>
-+- <<emacs>>
-+
-+[[vscode]]
-+=== Visual Studio Code (VS Code)
-+
-+The contrib/vscode/init.sh script creates configuration files that enable
-+several valuable VS Code features. See contrib/vscode/README.md for more
-+information on using the script.
-+
-+In particular, this script enables using the VS Code visual debugger, including
-+setting breakpoints, logpoints, conditional breakpoints and more in the editor.
-+
-+[[emacs]]
-+=== Emacs
-+
-+See contrib/emacs/README for more information.
--- 
-2.25.1
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Fri, Apr 15 2022, Carlo Arenas wrote:
+>>
+>>>> > +# https://bugzilla.redhat.com/show_bug.cgi?id=3D2075786
+>>>> > +ifneq ($(filter gcc12,$(COMPILER_FEATURES)),)
+>>>> > +DEVELOPER_CFLAGS +=3D -Wno-error=3Dstringop-overread
+>>>> > +endif
+>>>>
+>>>> What I meant with "just set -Wno-error=3Dstringop-overread on gcc12 for
+>>>> dir.(o|s|sp)?" was that you can set this per-file:
+>>>
+>>> of course, but that change goes in the Makefile and therefore affects
+>>> ...
+>> I mean it can go in config.mak.dev, it doesn't need to be in the
+>> Makefile itself.
+>> ...
+>>>>         dir.sp dir.s dir.o: EXTRA_CPPFLAGS +=3D -Wno-error=3Dstringop-=
+overread
+>>>
+>>> I know at least one developer that will then rightfully complain that
+>>> the git build doesn't work in AIX with xl after this.
+>>
+>> Yes, it would break if it were in the Makfile, but not if it's in
+>> config.mak.dev.
+>
+> I do not think you can blame Carlo for poor reading/comprehension in
+> this case---I too (mis)read what you wrote, and didn't realize that
+> you were suggesting to add the "for these target, EXTRA_CPPFLAGS
+> additionally gets this value" inside the ifneq/endif Carlo added to
+> hold the DEVELOPER_CFLAGS thing.
 
+Indeed, I don't think I would have understood myself, I didn't mean to
+imply any fault (except my own for not elaborating). Just claifying that
+we can use that trick.
+
+I.e. my own config.mak has had this (or a form thereof) for a while:
+
+	http.sp http.s http.o: EXTRA_CPPFLAGS +=3D -Wno-error=3Ddangling-pointer=3D
+	dir.sp dir.s dir.o: EXTRA_CPPFLAGS +=3D -Wno-error=3Dstringop-overread=20
+
+> For now, let's stick to the simpler form, though.
+
+Sure, works for me.
+
+Note though that one important difference between this solution and the
+patch I had for http.c is that the patch will fix things for all builds,
+whereas a config.mak.dev change (whether it's Carlos's global addition,
+or my per-file) can only do so for cases where DEVELOPER=3D1.
+
+Although in practice that's probably fine, anyone turning on -Werror is
+likely to do so through DEVELOPER=3D1, and fore those that don't it's
+"just a warning".
+
+So yeah, it's probably better to do that for now.
+
+But FWIW I did write up and test the below monstrosity as a replacement
+just now, it's guaranteed to work with/without DEVELOPER, and squashes
+only that specific warning, and only on GCC:
+=09
+	diff --git a/dir.c b/dir.c
+	index f2b0f242101..e7a5acb126f 100644
+	--- a/dir.c
+	+++ b/dir.c
+	@@ -3089,6 +3089,13 @@ char *git_url_basename(const char *repo, int is_bun=
+dle, int is_bare)
+	 	 * result in a dir '2222' being guessed due to backwards
+	 	 * compatibility.
+	 	 */
+	+#ifdef __clang__
+	+#elif defined(__GNUC__)
+	+#if __GNUC__ >=3D 12
+	+#pragma GCC diagnostic push
+	+#pragma GCC diagnostic ignored "-Wstringop-overread"
+	+#endif
+	+#endif
+	 	if (memchr(start, '/', end - start) =3D=3D NULL
+	 	    && memchr(start, ':', end - start) !=3D NULL) {
+	 		ptr =3D end;
+	@@ -3097,6 +3104,12 @@ char *git_url_basename(const char *repo, int is_bun=
+dle, int is_bare)
+	 		if (start < ptr && ptr[-1] =3D=3D ':')
+	 			end =3D ptr - 1;
+	 	}
+	+#ifdef __clang__
+	+#elif defined(__GNUC__)
+	+#if __GNUC__ >=3D 12
+	+#pragma GCC diagnostic pop
+	+#endif
+	+#endif
+=09=20
+	 	/*
+	 	 * Find last component. To remain backwards compatible we
+	diff --git a/http.c b/http.c
+	index 229da4d1488..e63d4ab9527 100644
+	--- a/http.c
+	+++ b/http.c
+	@@ -1329,7 +1329,21 @@ void run_active_slot(struct active_request_slot *sl=
+ot)
+	 	struct timeval select_timeout;
+	 	int finished =3D 0;
+=09=20
+	+#ifdef __clang__
+	+#elif defined(__GNUC__)
+	+#if __GNUC__ >=3D 12
+	+#pragma GCC diagnostic push
+	+#pragma GCC diagnostic ignored "-Wdangling-pointer=3D"
+	+#endif
+	+#endif
+	 	slot->finished =3D &finished;
+	+#ifdef __clang__
+	+#elif defined(__GNUC__)
+	+#if __GNUC__ >=3D 12
+	+#pragma GCC diagnostic pop
+	+#endif
+	+#endif
+	+
+	 	while (!finished) {
+	 		step_active_slots();
+=09=20
+But yeah, between us not having -Werror by default and DEVELOPER
+handling it it's probably not worth it just to be able to selectively
+suppress the warnings involved.
