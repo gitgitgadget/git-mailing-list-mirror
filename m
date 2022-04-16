@@ -2,254 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40659C433EF
-	for <git@archiver.kernel.org>; Sat, 16 Apr 2022 11:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F419C43217
+	for <git@archiver.kernel.org>; Sat, 16 Apr 2022 11:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbiDPLkn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Apr 2022 07:40:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54096 "EHLO
+        id S231891AbiDPL6E convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 16 Apr 2022 07:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbiDPLkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Apr 2022 07:40:41 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75313F327
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 04:38:09 -0700 (PDT)
-Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1nfgkg-0008GR-5m
-        for git@vger.kernel.org;
-        Sat, 16 Apr 2022 12:38:07 +0100
-Message-ID: <c5a5b7a6-33fe-2dc7-ab18-b9b22d59c2c8@iee.email>
-Date:   Sat, 16 Apr 2022 12:38:06 +0100
+        with ESMTP id S231882AbiDPL6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Apr 2022 07:58:02 -0400
+Received: from mta-out-03.alice.it (mta-out-03.alice.it [217.169.118.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7995A3631A
+        for <git@vger.kernel.org>; Sat, 16 Apr 2022 04:55:26 -0700 (PDT)
+X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedvvddrudeljedggeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuvffgnffgvefqoffkvfetnffktedpqfgfvfenuceurghilhhouhhtmecufedtudenucenucfjughrpegtggfguffvhfffrhesthhqtddttddtudenucfhrhhomhepfdetlhhlvghnucfufdcuoegrlhhirgesihhnrgihrghtihhorhguvghrrdhorhhgqeenucggtffrrghtthgvrhhnpeffvdelkeduleevkefgkefhffejtdevfedtleejtdevudetiedufeeuvdelvefgvdenucfkphepudeliedrfedvrddvudejrdefnecuvehluhhsthgvrhfuihiivgepuddtnecurfgrrhgrmhephhgvlhhopegludelgedrfedurdelkedrudduudgnpdhinhgvthepudeliedrfedvrddvudejrdefpdhmrghilhhfrhhomheprghlihgrsehinhgrhigrthhiohhruggvrhdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-RazorGate-Vade-Verdict: clean 0
+X-RazorGate-Vade-Classification: clean
+Received: from [194.31.98.111] (196.32.217.3) by mta-out-03.alice.it (5.8.807.04) (authenticated as adrianotovo2@alice.it)
+        id 624D72EF02487BF9 for git@vger.kernel.org; Sat, 16 Apr 2022 13:55:23 +0200
+Message-ID: <624D72EF02487BF9@mta-out-03.alice.it> (added by
+            postmaster@alice.it)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Setting up `send-email` for SSL, and then using GCM (Git Credential
- Manager)
-Content-Language: en-GB
-References: <10919180-85ea-2172-28df-b718cdbdf783@iee.email>
-To:     Git List <git@vger.kernel.org>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <10919180-85ea-2172-28df-b718cdbdf783@iee.email>
-X-Forwarded-Message-Id: <10919180-85ea-2172-28df-b718cdbdf783@iee.email>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: opportunity
+To:     git@vger.kernel.org
+From:   "Allen S" <alia@inayatiorder.org>
+Date:   Sat, 16 Apr 2022 04:55:18 -0700
+Reply-To: allens@cheapnet.it
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This maybe a wXYz-Problem. But I'm stuck at getting SSL to work with
-`send-email`.
+Hello,
 
-I'm trying to update both my home Windows PC (win10) and my Ubuntu
-travel laptop (an old-Acer-i5) `send-email` setup/config to use my
-personal email domain (with authentication), rather than my old home ISP
-locked (no auth) connection, but I'm struggling.
+I lead family investment vehicles who want to invest a proportion of their funds with a trust party .
 
-Z) Does the GCM (Git Credential Manager) integrate well with send-email,
-and what guidance is available for setting up and debugging the
-`send-email` configuration?
+Please if you are interested in discussing investment in your sector?
 
-Y) It's not clear what I should see in the terminal window in either
-Git-for-Windows or Ubuntu when testing the `git send-email` command -
-without/with using GCM.
+Please email, or simply write to me here. I value promptness and will make every attempt to respond within a short time.
 
-w) Some back story. I set up my existing telephone-line-locked home
-send-email config many years ago around the time of dial-up/ADSL. My
-router logs into my ISP giving me an open port 25 for SMTP (though
-doesn't advertise that any more). My config for the ISP is simple,
-needing only the `smtpServer, smtpServerPort`, and my `from,
-suppressfrom, & chainreplyto` settings. It works for both the Win PC and
-my Ubuntu laptop, but I can only use this when at home.
-
-I also have a personal email domain (iee.email) whose authentication
-works with Thunderbird for the WinPC at home, and the Ubuntu laptop at
-home and when away from home.  I'd like to be able to use ` send-email`
-via the personal email domain on the laptop when away from home (final
-goal), and also match that `send-email` use on the Win PC (which would
-also allow easy switching ISP when needed).
-
-X) Where I've reached. I've discovered `sendemail.identity`, so at least
-I can have both configurations available for selection [7]. I've added
-the --smtp-debug=1` with little insight. I've hit a brick wall with
-respect to establishing the connection (I think). It's not clear if any
-authentication (password stuff) has started.
-
-I fail to get the "<<<220 xxxxx   server ready" reply that my ISP
-identity gives, rather I get "Net::SMTP: Net::Cmd::getline(): unexpected
-EOF on command channel: Connection reset by peer ... Unable to
-initialize SMTP properly. Check config and use --smtp-debug. VALUES:
-server=smtp.hosts.co.uk encryption= hello=localhost.localdomain port=465"
-
-I've added below the terminal responses [1,3] and extracts of the config
-[2,4] for my test 'cover-letter'. Plus my Thunderbird settings [5] for
-comparison. Git build [6]. Domain provider advice [8].
-
-Thoughts: Maybe the setting I need for `git-end-email` don't match those
-used by Thunderbird; Is there extra debug info if I set some extra
-parameters. Maybe some other tool can provide insight into what's failing?
-
-Any suggestions?
---
-Philip
-
-[1] Failing case
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git (die_preserve_ggg)
-$ git send-email --identity=Names   --to="Philip Oakley
-<philipoakley@iee.email>" --smtp-debug=1  0000*.patch
-0000-cover-letter.patch
-Net::SMTP>>> Net::SMTP(3.13)
-Net::SMTP>>>   Net::Cmd(3.13)
-Net::SMTP>>>     Exporter(5.76)
-Net::SMTP>>>   IO::Socket::IP(0.41)
-Net::SMTP>>>     IO::Socket(1.46)
-Net::SMTP>>>       IO::Handle(1.46)
-Net::SMTP: Net::Cmd::getline(): unexpected EOF on command channel:
-Connection reset by peer at C:/Program
-Files/Git/mingw64/libexec/git-core\git-send-email line 1698.
-Unable to initialize SMTP properly. Check config and use --smtp-debug.
-VALUES: server=smtp.hosts.co.uk encryption= hello=localhost.localdomain
-port=465 at C:/Program Files/Git/mingw64/libexec/git-core\git-send-email
-line 1725.
-
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git (die_preserve_ggg)
-
----
-[2]
-[sendemail "Names"]
-    chainreplyto = false
-    from = Philip Oakley <philipoakley@iee.email>
-    suppressfrom = true
-    smtpServer = smtp.hosts.co.uk
-    smtpServerPort = 465
-    smptEncryption = ssl
-    smtpUser = iee.email
-
-    smtpPass = <password>
-
-----------------------
-[3] Existing (passing) case
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git (die_preserve_ggg)
-$ git send-email --identity=TalkTalk   --to="Philip Oakley
-<philipoakley@iee.email>" --smtp-debug=1  0000*.patch
-0000-cover-letter.patch
-Net::SMTP>>> Net::SMTP(3.13)
-Net::SMTP>>>   Net::Cmd(3.13)
-Net::SMTP>>>     Exporter(5.76)
-Net::SMTP>>>   IO::Socket::IP(0.41)
-Net::SMTP>>>     IO::Socket(1.46)
-Net::SMTP>>>       IO::Handle(1.46)
-Net::SMTP=GLOB(0x800c16240)<<< 220 cm4nec smtp.talktalk.net ESMTP server
-ready
-Net::SMTP=GLOB(0x800c16240)>>> EHLO localhost.localdomain
-Net::SMTP=GLOB(0x800c16240)<<< 250-cm4nec hello [84.13.159.41], pleased
-to meet you
-Net::SMTP=GLOB(0x800c16240)<<< 250-HELP
-Net::SMTP=GLOB(0x800c16240)<<< 250-SIZE 30000000
-Net::SMTP=GLOB(0x800c16240)<<< 250-ENHANCEDSTATUSCODES
-Net::SMTP=GLOB(0x800c16240)<<< 250-8BITMIME
-Net::SMTP=GLOB(0x800c16240)<<< 250 OK
-Net::SMTP=GLOB(0x800c16240)>>> MAIL FROM:<philipoakley@iee.email>
-Net::SMTP=GLOB(0x800c16240)<<< 250 2.1.0 <philipoakley@iee.email> sender ok
-Net::SMTP=GLOB(0x800c16240)>>> RCPT TO:<philipoakley@iee.email>
-Net::SMTP=GLOB(0x800c16240)<<< 250 2.1.5 <philipoakley@iee.email>
-recipient ok
-Net::SMTP=GLOB(0x800c16240)>>> DATA
-Net::SMTP=GLOB(0x800c16240)<<< 354 OK
-Net::SMTP=GLOB(0x800c16240)>>> From: Philip Oakley <philipoakley@iee.email>
-Net::SMTP=GLOB(0x800c16240)>>> To: Philip Oakley <philipoakley@iee.email>
-Net::SMTP=GLOB(0x800c16240)>>> Subject: [PATCH 0/1] *** Test Names ***
-Net::SMTP=GLOB(0x800c16240)>>> Date: Sat, 16 Apr 2022 09:54:00 +0100
-Net::SMTP=GLOB(0x800c16240)>>> Message-Id:
-<20220416085400.277-1-philipoakley@iee.email>
-Net::SMTP=GLOB(0x800c16240)>>> X-Mailer: git-send-email 2.36.0.rc0.windows.1
-Net::SMTP=GLOB(0x800c16240)>>> MIME-Version: 1.0
-Net::SMTP=GLOB(0x800c16240)>>> Content-Transfer-Encoding: 8bit
-Net::SMTP=GLOB(0x800c16240)>>> *** Test BLURB  ***
-[...]
-Net::SMTP=GLOB(0x800c16240)>>> 2.36.0.rc0.windows.1
-Net::SMTP=GLOB(0x800c16240)>>> .
-Net::SMTP=GLOB(0x800c16240)<<< 250 2.0.0 feC1ntahZW5NofeC1ntcj4 mail
-accepted for delivery
-OK. Log says:
-Server: smtp.talktalk.net
-MAIL FROM:<philipoakley@iee.email>
-RCPT TO:<philipoakley@iee.email>
-From: Philip Oakley <philipoakley@iee.email>
-To: Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH 0/1] *** Test Names ***
-Date: Sat, 16 Apr 2022 09:54:00 +0100
-Message-Id: <20220416085400.277-1-philipoakley@iee.email>
-X-Mailer: git-send-email 2.36.0.rc0.windows.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-Result: 250
-Net::SMTP=GLOB(0x800c16240)>>> QUIT
-Net::SMTP=GLOB(0x800c16240)<<< 221 2.0.0 cm4nec smtp.talktalk.net
-closing connection
-
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git (die_preserve_ggg)
-
----
-[4]
-[sendemail "TalkTalk"]
-    chainreplyto = false
-    from = Philip Oakley <philipoakley@iee.email>
-    suppressfrom = true
-    smtpServer = smtp.talktalk.net
-    smtpServerPort = 25
-
-[5] Thunderbird (IMAP) Server Settings (gui)
-ServerName: imap.hosts.co.uk
-ServerPort: 993
-UserName: iee.email
-ConnectionSecurity: SSL/TLS    [None|StartTLS|Ssl/tls]
-AuthMethod: NormalPass     
-[Normal|Encrypted|Kerebos/Gssapi|NTLM|TLScert|Oath2]
---
-Thunderbird Outgoing SMPTP Server
-smtp.hosts.co.uk
-465
-SSL/TLS
-NormalPassword
-iee.email
-
-[6] Git Build details
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git
-$ git --version --build-options
-git version 2.36.0.rc0.windows.1
-cpu: x86_64
-built from commit: c61dcf9cfa725959a79a3fb61d63bc05cc13ac7a
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-
-phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src/git
-$ cat /etc/install-options.txt
-Editor Option: Notepad++
-Custom Editor Path:
-Default Branch Option: main
-Path Option: Cmd
-SSH Option: OpenSSH
-Tortoise Option: false
-CURL Option: OpenSSL
-CRLF Option: CRLFAlways
-Bash Terminal Option: MinTTY
-Git Pull Behavior Option: Merge
-Use Credential Manager: Enabled
-Performance Tweaks FSCache: Enabled
-Enable Symlinks: Disabled
-Enable Pseudo Console Support: Disabled
-Enable FSMonitor: Disabled
-
-[7] sendemail.identity now comes straight after the new safe.directory
-entry - serendipity ..
-
-[8] Names domain smtp advice
-https://www.names.co.uk/support/articles/sending-emails-via-alternate-smtp-ports/
-[Use SSL/465]
-
-
+Thank you.
+Allen S.
