@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6683CC433F5
-	for <git@archiver.kernel.org>; Sun, 17 Apr 2022 02:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60404C433F5
+	for <git@archiver.kernel.org>; Sun, 17 Apr 2022 02:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233257AbiDQCJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Apr 2022 22:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37010 "EHLO
+        id S233260AbiDQCKo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Apr 2022 22:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231488AbiDQCJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Apr 2022 22:09:57 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C8DF31539
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 19:07:23 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 21so14080628edv.1
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 19:07:23 -0700 (PDT)
+        with ESMTP id S231488AbiDQCKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Apr 2022 22:10:41 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0F731539
+        for <git@vger.kernel.org>; Sat, 16 Apr 2022 19:08:07 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id v15so13993422edb.12
+        for <git@vger.kernel.org>; Sat, 16 Apr 2022 19:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wnhQX6x3x3T7KyxwRpXN61JmM0aSU6DTm+dMFIWx0qg=;
-        b=B7taj70std3AMhUt5Gg7upiqwFhAFfufTf2rMpjiLnLjvsLkWnuztdtWXOMaVIQwDV
-         KwfNZhUHQrK+FvsPKvUdBUgpwfDgVNwzLOZjJp47UAS9JrsCrq7qutL+oT8iitGx31qk
-         YwAm7CA9ap5oDygQzZnNlb6aC7+LBrVyp/ueUP+KJHxIVZRHdCafsrH4Oee6dN5JHqTz
-         QfG5IBoGsURRdizM9liHGOGWkYVHoj/XSqOKjHOG+3HweH4yg+3oLrvefSIqUji346Bh
-         SASYvvHX1akwLxI0QAF4SxS4G6eLbUT3FwCJBjZb33C/X1FN5qyrjHykNUHtdG+VMvWx
-         xbJQ==
+        bh=vUjjYz114s9XKFfM464L2Tr8CowsCQHQQuY97O6TVaQ=;
+        b=msKOYg1TPQn+bMZ/qEr7LINx/3xo74xBjYPxpteQMy51CM4UbgdBs9n2APyS8j/GGs
+         kTn6kPGYlIoDPJ6YxkTFo27drAt08nfqaoW9DQeSWg0naD+miCyJiUzz0QnzHmwqWt+f
+         chN3WHvFa72TjAr38aAKPUS0V74TUsEEjSGthIzY/C8sgV9uzBjTKS0CHXNUBaN5+qjV
+         N6oe9O9hc3oRd0Eklp2zTeOSiOQ7ySHdvNWlBvWUJtVf6wf4/I8SCxukipCyZP+n/Zxv
+         R9HY1tuZ5giLDiXwuTQWZ62ICtETJgqKexl9Zma1IGbkzaSo6N5kqNwcmrXX16Df4CWp
+         ydNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wnhQX6x3x3T7KyxwRpXN61JmM0aSU6DTm+dMFIWx0qg=;
-        b=4P6iRPvE4G9cmT/e5ijLir5DqUkLJx896UXLd2XxgU2eVzvlFUXHI5MofmaOVjLHOl
-         BPuiTFUCsrcPp0l9jYe//i7q+mgzzLfFYzpSchEaE1BG1SrogUtorY9d0E8ukerBfuZv
-         Y0l97aAY9/F9ThOBCcqIt8R61Tt0Oy+59OoWYt3ywD3KLms6s+Fr+2PUVkt3i3UTRg1z
-         6B/CcClhatI++n+9lhT+2d78lv6R3mo/r4tVRSTWl0yXkisuoKiVLco6VMG41hcktjBV
-         dMlp3y4hXL7U/Qppeq9o40Mfuq/wQasYj4OW1zDS3MG30JlCgZ+ipc9Mywq/nloSqdtX
-         Z3EQ==
-X-Gm-Message-State: AOAM530VcbS6CyKeggyrSoB5w2NaLk0FaY5DD6JuowqEKlMO23s/iFNL
-        XmEFZCnsT5j4HsihTlLWviAnsCtWZ1QhVQ95XPY=
-X-Google-Smtp-Source: ABdhPJwUavB5YE4hijSMXSzrf/smSkgdQNGHRmRsFZNKdQOQlOd2v27wgHwg4Z1bArIg1nHCa5LglSjVr51T4j87Umw=
-X-Received: by 2002:aa7:cc82:0:b0:410:d2b0:1a07 with SMTP id
- p2-20020aa7cc82000000b00410d2b01a07mr6080312edt.359.1650161242011; Sat, 16
- Apr 2022 19:07:22 -0700 (PDT)
+        bh=vUjjYz114s9XKFfM464L2Tr8CowsCQHQQuY97O6TVaQ=;
+        b=udliSU0EfDVnGpph+53UarxsnNqLWVrob/ebSGbXIW41smxL//v355Ggy9Y1OKoeyQ
+         CUFssqyd48pzyvVnU622ZCxgtuYBhXjZe+B0oc/yIi0LWITHygBNPfcMVxlOAOFYovCL
+         TaACnR6BdkNShm8OYK9tfPZo5dUzkqQCWbC0Kyx5zbC2lGypPrglGjbti+CRIQBu+Or5
+         4LmsI/JRbnQKkBrNqv3X5H94Eiv0ewipKJ9Mx8cusMQITAT3SiaUOPxTJyTkmVMDIBzO
+         3Q4Q2Ca1030OzJotFUtVEM/OCVcQ3+4TmKhfl5Q+e1k9SECDNiwZytYzqg3JAMr/aPLj
+         AV9w==
+X-Gm-Message-State: AOAM533oxvfC0aMoY0W6D+WCoXyMFl5fw3IgCULG8zKCLBbtVVUul0WW
+        PwS5M5pav107aO31MaJ9bTfzka+mkBoyj3MUFN8=
+X-Google-Smtp-Source: ABdhPJzPzFvWUvcF98/COzTmaiWOFFMHkc/OxASIQq+ig/TFcN87HC8IKYfsqGzcakrWllqu2oc5pCkcYcCmvy7tMLI=
+X-Received: by 2002:a05:6402:50d3:b0:41d:86f4:afbf with SMTP id
+ h19-20020a05640250d300b0041d86f4afbfmr6136444edb.146.1650161286211; Sat, 16
+ Apr 2022 19:08:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1150.git.1645441854.gitgitgadget@gmail.com> <c863cebbdc8485225af40593cf2952c933f4ea8d.1645441854.git.gitgitgadget@gmail.com>
-In-Reply-To: <c863cebbdc8485225af40593cf2952c933f4ea8d.1645441854.git.gitgitgadget@gmail.com>
+References: <pull.1150.git.1645441854.gitgitgadget@gmail.com> <d26a221a79d2e0b5ec0cee46a68a3b2caa195842.1645441854.git.gitgitgadget@gmail.com>
+In-Reply-To: <d26a221a79d2e0b5ec0cee46a68a3b2caa195842.1645441854.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 16 Apr 2022 19:07:10 -0700
-Message-ID: <CABPp-BFZgtNNjSF-WS67_vZd5d3Hg0YvimhKFY6X=gNnX8FC-Q@mail.gmail.com>
-Subject: Re: [PATCH 6/7] rebase --abort: improve reflog message
+Date:   Sat, 16 Apr 2022 19:07:53 -0700
+Message-ID: <CABPp-BEiqc3-6zXtuVd=ELfptgy==BU28DW1+87ernjdzpW4-A@mail.gmail.com>
+Subject: Re: [PATCH 7/7] rebase: cleanup action handling
 To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
@@ -59,155 +59,290 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 3:19 PM Phillip Wood via GitGitGadget
+On Mon, Feb 21, 2022 at 9:35 PM Phillip Wood via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> When aborting a rebase the reflog message looks like
+> Treating the action as a string is a hang over from the scripted
+> rebase. The last commit removed the only remaining use of the action
+> that required a string so lets convert the other action users to use
+> the existing action enum instead. If we ever need the action name as a
+> string in the future the action_names array exists exactly for that
+> purpose.
 >
->         rebase (abort): updating HEAD
->
-> which is not very informative. Improve the message by mentioning the
-> branch that we are returning to as we do at the end of a successful
-> rebase so it looks like.
->
->         rebase (abort): returning to refs/heads/topic
-
-That is _so_ much nicer.
-
-> If GIT_REFLOG_ACTION is set in the environment we no longer omit
-> "(abort)" from the reflog message. We don't omit "(start)" and
-> "(finish)" when starting and finishing a rebase in that case so we
-> shouldn't omit "(abort)".
-
-I agree.
-
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  builtin/rebase.c          | 28 ++++++---------------
->  t/t3406-rebase-message.sh | 51 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 59 insertions(+), 20 deletions(-)
+>  builtin/rebase.c | 91 +++++++++++++++++++++++-------------------------
+>  1 file changed, 43 insertions(+), 48 deletions(-)
 >
 > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 678339c7bf7..70426e17b40 100644
+> index 70426e17b40..323f5154092 100644
 > --- a/builtin/rebase.c
 > +++ b/builtin/rebase.c
-> @@ -992,23 +992,6 @@ static void NORETURN error_on_missing_default_upstream(void)
->         exit(1);
+> @@ -58,6 +58,26 @@ enum empty_type {
+>         EMPTY_ASK
+>  };
+>
+> +enum action {
+> +       ACTION_NONE = 0,
+> +       ACTION_CONTINUE,
+> +       ACTION_SKIP,
+> +       ACTION_ABORT,
+> +       ACTION_QUIT,
+> +       ACTION_EDIT_TODO,
+> +       ACTION_SHOW_CURRENT_PATCH
+> +};
+> +
+> +static const char *action_names[] = {
+> +       "undefined",
+> +       "continue",
+> +       "skip",
+> +       "abort",
+> +       "quit",
+> +       "edit_todo",
+> +       "show_current_patch"
+> +};
+> +
+>  struct rebase_options {
+>         enum rebase_type type;
+>         enum empty_type empty;
+> @@ -84,7 +104,7 @@ struct rebase_options {
+>                 REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+>         } flags;
+>         struct strvec git_am_opts;
+> -       const char *action;
+> +       enum action action;
+>         int signoff;
+>         int allow_rerere_autoupdate;
+>         int keep_empty;
+> @@ -155,24 +175,6 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>         return replay;
 >  }
 >
-> -static void set_reflog_action(struct rebase_options *options)
-> -{
-> -       const char *env;
-> -       struct strbuf buf = STRBUF_INIT;
+> -enum action {
+> -       ACTION_NONE = 0,
+> -       ACTION_CONTINUE,
+> -       ACTION_SKIP,
+> -       ACTION_ABORT,
+> -       ACTION_QUIT,
+> -       ACTION_EDIT_TODO,
+> -       ACTION_SHOW_CURRENT_PATCH
+> -};
 > -
-> -       if (!is_merge(options))
-> -               return;
+> -static const char *action_names[] = { "undefined",
+> -                                     "continue",
+> -                                     "skip",
+> -                                     "abort",
+> -                                     "quit",
+> -                                     "edit_todo",
+> -                                     "show_current_patch" };
 > -
-> -       env = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-> -       if (env && strcmp("rebase", env))
-> -               return; /* only override it if it is "rebase" */
-> -
-> -       strbuf_addf(&buf, "rebase (%s)", options->action);
-> -       setenv(GIT_REFLOG_ACTION_ENVIRONMENT, buf.buf, 1);
-> -       strbuf_release(&buf);
-> -}
-> -
->  static int check_exec_cmd(const char *cmd)
+>  static int edit_todo_file(unsigned flags)
 >  {
->         if (strchr(cmd, '\n'))
-> @@ -1287,18 +1270,23 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->         }
->         case ACTION_ABORT: {
->                 struct string_list merge_rr = STRING_LIST_INIT_DUP;
-> -               options.action = "abort";
-> -               set_reflog_action(&options);
-> +               struct strbuf head_msg = STRBUF_INIT;
+>         const char *todo_file = rebase_path_todo();
+> @@ -309,8 +311,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>         return ret;
+>  }
 >
-> +               options.action = "abort";
+> -static int run_sequencer_rebase(struct rebase_options *opts,
+> -                                 enum action command)
+> +static int run_sequencer_rebase(struct rebase_options *opts)
+>  {
+>         unsigned flags = 0;
+>         int abbreviate_commands = 0, ret = 0;
+> @@ -325,7 +326,7 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+>         flags |= opts->reapply_cherry_picks ? TODO_LIST_REAPPLY_CHERRY_PICKS : 0;
+>         flags |= opts->flags & REBASE_NO_QUIET ? TODO_LIST_WARN_SKIPPED_CHERRY_PICKS : 0;
+>
+> -       switch (command) {
+> +       switch (opts->action) {
+>         case ACTION_NONE: {
+>                 if (!opts->onto && !opts->upstream)
+>                         die(_("a base commit must be provided with --upstream or --onto"));
+> @@ -358,7 +359,7 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+>                 break;
+>         }
+>         default:
+> -               BUG("invalid command '%d'", command);
+> +               BUG("invalid command '%d'", opts->action);
+>         }
+>
+>         return ret;
+> @@ -615,7 +616,7 @@ static int run_am(struct rebase_options *opts)
+>         strvec_push(&am.args, "am");
+>         strvec_pushf(&am.env_array, GIT_REFLOG_ACTION_ENVIRONMENT "=%s (pick)",
+>                      getenv(GIT_REFLOG_ACTION_ENVIRONMENT));
+> -       if (opts->action && !strcmp("continue", opts->action)) {
+> +       if (opts->action == ACTION_CONTINUE) {
+>                 strvec_push(&am.args, "--resolved");
+>                 strvec_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+>                 if (opts->gpg_sign_opt)
+> @@ -626,7 +627,7 @@ static int run_am(struct rebase_options *opts)
+>
+>                 return move_to_original_branch(opts);
+>         }
+> -       if (opts->action && !strcmp("skip", opts->action)) {
+> +       if (opts->action == ACTION_SKIP) {
+>                 strvec_push(&am.args, "--skip");
+>                 strvec_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+>                 status = run_command(&am);
+> @@ -635,7 +636,7 @@ static int run_am(struct rebase_options *opts)
+>
+>                 return move_to_original_branch(opts);
+>         }
+> -       if (opts->action && !strcmp("show-current-patch", opts->action)) {
+> +       if (opts->action == ACTION_SHOW_CURRENT_PATCH) {
+>                 strvec_push(&am.args, "--show-current-patch");
+>                 return run_command(&am);
+>         }
+> @@ -728,7 +729,7 @@ static int run_am(struct rebase_options *opts)
+>         return status;
+>  }
+>
+> -static int run_specific_rebase(struct rebase_options *opts, enum action action)
+> +static int run_specific_rebase(struct rebase_options *opts)
+>  {
+>         int status;
+>
+> @@ -746,7 +747,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+>                         opts->gpg_sign_opt = tmp;
+>                 }
+>
+> -               status = run_sequencer_rebase(opts, action);
+> +               status = run_sequencer_rebase(opts);
+>         } else if (opts->type == REBASE_APPLY)
+>                 status = run_am(opts);
+>         else
+> @@ -1016,7 +1017,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         struct strbuf buf = STRBUF_INIT;
+>         struct object_id merge_base;
+>         int ignore_whitespace = 0;
+> -       enum action action = ACTION_NONE;
+>         const char *gpg_sign = NULL;
+>         struct string_list exec = STRING_LIST_INIT_NODUP;
+>         const char *rebase_merges = NULL;
+> @@ -1065,18 +1065,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 OPT_BIT(0, "no-ff", &options.flags,
+>                         N_("cherry-pick all commits, even if unchanged"),
+>                         REBASE_FORCE),
+> -               OPT_CMDMODE(0, "continue", &action, N_("continue"),
+> +               OPT_CMDMODE(0, "continue", &options.action, N_("continue"),
+>                             ACTION_CONTINUE),
+> -               OPT_CMDMODE(0, "skip", &action,
+> +               OPT_CMDMODE(0, "skip", &options.action,
+>                             N_("skip current patch and continue"), ACTION_SKIP),
+> -               OPT_CMDMODE(0, "abort", &action,
+> +               OPT_CMDMODE(0, "abort", &options.action,
+>                             N_("abort and check out the original branch"),
+>                             ACTION_ABORT),
+> -               OPT_CMDMODE(0, "quit", &action,
+> +               OPT_CMDMODE(0, "quit", &options.action,
+>                             N_("abort but keep HEAD where it is"), ACTION_QUIT),
+> -               OPT_CMDMODE(0, "edit-todo", &action, N_("edit the todo list "
+> +               OPT_CMDMODE(0, "edit-todo", &options.action, N_("edit the todo list "
+>                             "during an interactive rebase"), ACTION_EDIT_TODO),
+> -               OPT_CMDMODE(0, "show-current-patch", &action,
+> +               OPT_CMDMODE(0, "show-current-patch", &options.action,
+>                             N_("show the patch file being applied or merged"),
+>                             ACTION_SHOW_CURRENT_PATCH),
+>                 OPT_CALLBACK_F(0, "apply", &options, NULL,
+> @@ -1189,7 +1189,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         if (preserve_merges_selected)
+>                 die(_("--preserve-merges was replaced by --rebase-merges"));
+>
+> -       if (action != ACTION_NONE && total_argc != 2) {
+> +       if (options.action != ACTION_NONE && total_argc != 2) {
+>                 usage_with_options(builtin_rebase_usage,
+>                                    builtin_rebase_options);
+>         }
+> @@ -1208,11 +1208,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         if (options.root && options.fork_point > 0)
+>                 die(_("cannot combine '--root' with '--fork-point'"));
+>
+> -       if (action != ACTION_NONE && !in_progress)
+> +       if (options.action != ACTION_NONE && !in_progress)
+>                 die(_("No rebase in progress?"));
+>         setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+>
+> -       if (action == ACTION_EDIT_TODO && !is_merge(&options))
+> +       if (options.action == ACTION_EDIT_TODO && !is_merge(&options))
+>                 die(_("The --edit-todo action can only be used during "
+>                       "interactive rebase."));
+>
+> @@ -1222,16 +1222,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 else if (exec.nr)
+>                         trace2_cmd_mode("interactive-exec");
+>                 else
+> -                       trace2_cmd_mode(action_names[action]);
+> +                       trace2_cmd_mode(action_names[options.action]);
+>         }
+>
+> -       switch (action) {
+> +       switch (options.action) {
+>         case ACTION_CONTINUE: {
+>                 struct object_id head;
+>                 struct lock_file lock_file = LOCK_INIT;
+>                 int fd;
+>
+> -               options.action = "continue";
+>                 /* Sanity check */
+>                 if (get_oid("HEAD", &head))
+>                         die(_("Cannot read HEAD"));
+> @@ -1257,7 +1256,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         case ACTION_SKIP: {
+>                 struct string_list merge_rr = STRING_LIST_INIT_DUP;
+>
+> -               options.action = "skip";
+>                 rerere_clear(the_repository, &merge_rr);
+>                 string_list_clear(&merge_rr, 1);
+>                 ropts.flags = RESET_HEAD_HARD;
+> @@ -1272,7 +1270,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 struct string_list merge_rr = STRING_LIST_INIT_DUP;
+>                 struct strbuf head_msg = STRBUF_INIT;
+>
+> -               options.action = "abort";
 >                 rerere_clear(the_repository, &merge_rr);
 >                 string_list_clear(&merge_rr, 1);
 >
->                 if (read_basic_state(&options))
->                         exit(1);
-> +
-> +               strbuf_addf(&head_msg, "%s (abort): returning to %s",
-> +                           getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
-> +                           options.head_name ? options.head_name
-> +                                             : oid_to_hex(&options.orig_head));
->                 ropts.oid = &options.orig_head;
-> +               ropts.head_msg = head_msg.buf;
->                 ropts.branch = options.head_name;
->                 ropts.flags = RESET_HEAD_HARD;
-> -               ropts.default_reflog_action = DEFAULT_REFLOG_ACTION;
->                 if (reset_head(the_repository, &ropts) < 0)
->                         die(_("could not move back to %s"),
->                             oid_to_hex(&options.orig_head));
-> diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-> index 5c6cd9af3bc..ceca1600053 100755
-> --- a/t/t3406-rebase-message.sh
-> +++ b/t/t3406-rebase-message.sh
-> @@ -187,6 +187,57 @@ test_reflog () {
->         EOF
->         test_cmp expect actual
->         '
-> +
-> +       test_expect_success "rebase $mode --abort reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
-> +       git checkout conflicts &&
-> +       test_when_finished "git reset --hard Q" &&
-> +
-> +       git log -g -1 conflicts >branch-expect &&
-> +       (
-> +               if test -n "$reflog_action"
-> +               then
-> +                       GIT_REFLOG_ACTION="$reflog_action" &&
-> +                       export GIT_REFLOG_ACTION
-> +               fi &&
-> +               test_must_fail git rebase $mode main &&
-> +               git rebase --abort
-> +       ) &&
-> +
-> +       git log -g --format=%gs -3 >actual &&
-> +       write_reflog_expect <<-EOF &&
-> +       ${reflog_action:-rebase} (abort): returning to refs/heads/conflicts
-> +       ${reflog_action:-rebase} (pick): P
-> +       ${reflog_action:-rebase} (start): checkout main
-> +       EOF
-> +       test_cmp expect actual &&
+> @@ -1312,17 +1309,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 goto cleanup;
+>         }
+>         case ACTION_EDIT_TODO:
+> -               options.action = "edit-todo";
+>                 options.dont_finish_rebase = 1;
+>                 goto run_rebase;
+>         case ACTION_SHOW_CURRENT_PATCH:
+> -               options.action = "show-current-patch";
+>                 options.dont_finish_rebase = 1;
+>                 goto run_rebase;
+>         case ACTION_NONE:
+>                 break;
+>         default:
+> -               BUG("action: %d", action);
+> +               BUG("action: %d", options.action);
+>         }
+>
+>         /* Make sure no rebase is in progress */
+> @@ -1346,7 +1341,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         }
+>
+>         if ((options.flags & REBASE_INTERACTIVE_EXPLICIT) ||
+> -           (action != ACTION_NONE) ||
+> +           (options.action != ACTION_NONE) ||
+>             (exec.nr > 0) ||
+>             options.autosquash) {
+>                 allow_preemptive_ff = 0;
+> @@ -1786,7 +1781,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>         options.revisions = revisions.buf;
+>
+>  run_rebase:
+> -       ret = run_specific_rebase(&options, action);
+> +       ret = run_specific_rebase(&options);
+>
+>  cleanup:
+>         strbuf_release(&buf);
+> --
+> gitgitgadget
 
-I was confused by the ordering at first, before I realized that `git
-log -g` is going to give you reflogs from newest to oldest instead of
-vice-versa.  Looks good.
-
-> +
-> +       # check branch reflog is unchanged
-> +       git log -g -1 conflicts >branch-actual &&
-> +       test_cmp branch-expect branch-actual
-> +       '
-> +
-> +       test_expect_success "rebase $mode --abort detached HEAD reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
-> +       git checkout Q &&
-> +       test_when_finished "git reset --hard Q" &&
-> +
-> +       (
-> +               if test -n "$reflog_action"
-> +               then
-> +                       GIT_REFLOG_ACTION="$reflog_action" &&
-> +                       export GIT_REFLOG_ACTION
-> +               fi &&
-> +               test_must_fail git rebase $mode main &&
-> +               git rebase --abort
-> +       ) &&
-> +
-> +       git log -g --format=%gs -3 >actual &&
-> +       write_reflog_expect <<-EOF &&
-> +       ${reflog_action:-rebase} (abort): returning to $(git rev-parse Q)
-> +       ${reflog_action:-rebase} (pick): P
-> +       ${reflog_action:-rebase} (start): checkout main
-> +       EOF
-> +       test_cmp expect actual
-> +       '
->  }
-
-And thanks for checking the detached HEAD case too.
+Thanks for the nice cleanup!
