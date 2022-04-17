@@ -2,125 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB369C433EF
-	for <git@archiver.kernel.org>; Sun, 17 Apr 2022 05:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 896DBC433F5
+	for <git@archiver.kernel.org>; Sun, 17 Apr 2022 09:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233443AbiDQFkS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Apr 2022 01:40:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60016 "EHLO
+        id S233832AbiDQJig (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Apr 2022 05:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233425AbiDQFkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Apr 2022 01:40:15 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63E642E9D2
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 22:37:41 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id q22so5258003iod.2
-        for <git@vger.kernel.org>; Sat, 16 Apr 2022 22:37:41 -0700 (PDT)
+        with ESMTP id S233795AbiDQJie (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Apr 2022 05:38:34 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989973FBC8
+        for <git@vger.kernel.org>; Sun, 17 Apr 2022 02:35:58 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id e21so15483460wrc.8
+        for <git@vger.kernel.org>; Sun, 17 Apr 2022 02:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DPuilfmAK0M3pcM63OE37N/X+E4w8hYrBVMFjz88DKY=;
-        b=Eu6TZHqhvh3l8CoxVdQPjspxDxI81dvSoWY7EcxNvf0BKLpotwPSXc+zRuavIAIAqR
-         kehCgbCVgPH/5XOAXwC22kmsgnJA+VARsKbh7xAab1nTcAS53/bAZ0wzUEJ3kbtHbqDU
-         SF+HRoo4sSMSRH06M8jj/aZMtDFWFeTscNCaaMMV3GM0YsH+1JH75+W1yKhQxBqhc5XX
-         VaqtL/iwtfJ07a05TFsifU8BnwVncuTUZek0PaatHHRvAyTZRxSrPXsVkCYZtUyBHEy0
-         l6upNXxo6+G55dUvOHVoX5w0MD34yPnQK6kEINBKZN55vF99ko4kyqVdXNF+02IvFd85
-         jqBg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nP3NaD9vRYpOeBhMcg7J/hdrI+GNvHAtmrmj1BTI9lw=;
+        b=ZTIqSQ658kEp+2/RGYCCNdCwzDZjD22WrwojS3OCXF64twQLwELwZbWuxQTxTB7x6e
+         jWZpTK3VgtmAAD+25HTHZ42uN8OOCXn2o//BHKTKFDiLJsEIoL9tgK0XCiGF3bjVS8bq
+         5ccYWyWrZ50PEE4jIOP9p2esMmQIGjKmmtWahir7+RBHFGuRSjD9U1QAZRy/rj+Zq3iS
+         5oBCves/tE0VTOR7I6k89EGwFxcJ+E0CoK526KWMZNyuK7T0VYo1fwaKqiuZmEzXyZa0
+         KYRl9Pz8ImCHBnKhWQKAlIQQaYYHewj1tbyTdYETHinqRMbssUZjE4UBI0qhvUk9UR48
+         MQrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DPuilfmAK0M3pcM63OE37N/X+E4w8hYrBVMFjz88DKY=;
-        b=aLtcmjNlSrzo4yTeaocgGEgxxfK8cs+TDCXFC8Ua3EUV66Uaq5xizO7jjluicIY1Js
-         jmy6AnHS6jTwL3tuXk1CRD1sUlvyL+fIMTgLz0Bkb+v6FffJXxcXePwo0V9HA/Jx6ZsR
-         /mFblpjD1WaaiH9ik30uxrlm17Z/zYLfnjNrWvxNQz212p3jJm7NC9NbA7bcAuihFaC7
-         YNuspLh5rft8dRE0Wh3OF+Qf+AJ2drZZe9HPyxHmSQCVwcf1T+ER2j0q+gq2/fGdU756
-         2sA9/80rsKXKaAdRsRSkPA19yOiOYDMNtLPyVx9/ZYeVZh61REc191Ik905NiQIDNcG+
-         VBLw==
-X-Gm-Message-State: AOAM530mPjEht8Ap7ST8WM3IaaXBueH7LduX5BZWpFkS0ZkUN7Ro34mg
-        uQ8s6gdakapWkbrit8eOBCagXS87yuxVyc6F650=
-X-Google-Smtp-Source: ABdhPJzsFWkn5odOEnKAp9GAJnrJixpKuJL3mSxP7jGe/BSDnAZFa5VcaM55MnuyY9BEl66sikQJph01j5RlaqS8Lws=
-X-Received: by 2002:a05:6602:59e:b0:64c:b96e:aa4f with SMTP id
- v30-20020a056602059e00b0064cb96eaa4fmr2369214iox.126.1650173859954; Sat, 16
- Apr 2022 22:37:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nP3NaD9vRYpOeBhMcg7J/hdrI+GNvHAtmrmj1BTI9lw=;
+        b=0oba6CbvKdQZiUhjawqbDdwTGTEIu0xn2oLPwXDyrn5B8Ea83v01r6uHws8LrGyMsJ
+         Od5OmvRU3oo8bEmAJIviR0Musgmp3QhUKhogYLHe7Y5SxWMw52stMa/O69vl3rq6qD2e
+         uq/UDueIyCDvhlgcm1N/DorQEnbNrMAAGOfrfzRJGph5T2OOelC0+rDV0QbAYGTzvK7X
+         vEEbKH3mWFSwGNiwAQDbJzz+jPEwtECz4PDxWji+VDvizxWfKyGD717lOwvw9toWIDGq
+         RUx1l1CSrHRnY5/emb5T+5EzhmR00u1HPEo2+fgvSObhzNJdjfun+Vas0icwlgYHCm/T
+         BOfQ==
+X-Gm-Message-State: AOAM530QQ/695HKlsGA+5RDv5DGWuxqEeyNmES2CsoIUEI1vAf+iFt53
+        i4zziGzaKvTr5WtN7Din6gY=
+X-Google-Smtp-Source: ABdhPJzrzwwYF+gHfMFnh9biv0uSM5KF3xrwTivtBxAjd6r5tELTIKvwM+zoNe9SWxK5qvvSMi81Ug==
+X-Received: by 2002:adf:e609:0:b0:20a:8110:2245 with SMTP id p9-20020adfe609000000b0020a81102245mr4763546wrm.211.1650188156703;
+        Sun, 17 Apr 2022 02:35:56 -0700 (PDT)
+Received: from localhost.localdomain (176.248.7.93.rev.sfr.net. [93.7.248.176])
+        by smtp.gmail.com with ESMTPSA id b11-20020a5d45cb000000b0020a810f7726sm4470757wrs.5.2022.04.17.02.35.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Apr 2022 02:35:56 -0700 (PDT)
+From:   COGONI Guillaume <cogoni.guillaume@gmail.com>
+To:     gitster@pobox.com
+Cc:     Matthieu.Moy@univ-lyon1.fr, cogoni.guillaume@gmail.com,
+        derrickstolee@github.com, git.jonathan.bressat@gmail.com,
+        git@vger.kernel.org, guillaume.cogoni@gmail.com,
+        shaoxuan.yuan02@gmail.com
+Subject: [PATCH v2 0/1] Documentation/ToolsForGit.txt: Tools for developing Git
+Date:   Sun, 17 Apr 2022 11:35:48 +0200
+Message-Id: <20220417093549.101436-1-cogoni.guillaume@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <xmqqlew554ye.fsf@gitster.g>
+References: <xmqqlew554ye.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20220413164336.101390-1-eantoranz@gmail.com> <xmqq4k2wap8g.fsf@gitster.g>
- <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
- <xmqqbkx2ccj4.fsf@gitster.g> <CAOc6etYwMtfytbw6iRfnJnsexJhe7UydVu0OFUbWP0byS9i=MQ@mail.gmail.com>
- <CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com>
-In-Reply-To: <CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com>
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Sun, 17 Apr 2022 07:37:27 +0200
-Message-ID: <CAOc6etb7fmO2FAv09+wHsDBwnLsBi+B-CwRarm2tfYS-aUWcfg@mail.gmail.com>
-Subject: Re: [RFC] introducing git replay
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 17, 2022 at 7:05 AM Elijah Newren <newren@gmail.com> wrote:
->
->
-> Replaying merges is something I've put a little thought into, so allow
-> me to provide some pointers that may help.  Merges need special
-> handling for replaying, and in my opinion, doing either just a new
-> merge of the new trees (what rebase --rebase-merges does), or just
-> reusing existing trees (what you proposed to start this thread) are
-> both suboptimal, though the former is likely to just be annoying and
-> require potentially unnecessary user refixing, whereas the latter can
-> silently discard changes or reintroduce discarded changes and could be
-> dangerous.  More details on both of these...
->
-> An important part about merges is they may have resolved conflicts --
-> both textual (the standard conflict markers people have to resolve)
-> and semantic (e.g. one person changes the API of some function, and
-> the other branch being merged adds a caller of that function, so the
-> merge has to modify the new caller to use the new API).  We do not
-> just want to do a new merge and re-use the commit message (as rebase
-> --rebase-merges does), for two reasons: (1) the user either has to
-> re-resolve the textual conflict resolutions by hand, or use rerere
-> which requires a working tree (and we'd like replays to proceed
-> without a working tree where possible), and (2) it tosses semantic
-> merge conflict resolutions entirely.  We also do not just want to use
-> existing trees as-is (as you started with in your patch), for three
-> reasons: (1) when we move to a new base the new merge needs to include
-> the changes from the newer base, (2) the topic might have additional
-> changes added (or removed) during the "rebase" which need to be
-> reflected in the merge as well, and (3) the merge may have had
-> additional changes stuffed directly into it to solve semantic
-> conflicts which we want "ported" to the new merge commit.    So, for
-> handling merges, we should avoid both of these overly simplistic
-> mechanisms, and do something that tries to handle forward-porting
-> these conflict resolutions.  I have outlined steps to do so at
-> https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
->
+MOY Matthieu wrote:
 
-Hey, Elijah! Thanks for taking the time and the feedback.
+> I don't think the last sentence is needed, and if it is, it would be
+> better within contrib/vscode/README.md (so that someone reaching this
+> README directly do see the information too).
 
-Forget about me introducing replay as a separate command as a "real"
-proposal. My intent (and which I saw most simple to be able to show
-it) was to present the idea of an optimization (if you will) to the
-rebase mechanism under certain rather narrow conditions:
+I think so too. However, I already make a PATCH last week for 
+contrib/vscode/README:
+(see <20220407204001.112287-2-cogoni.guillaume@gmail.com>).
+And, I see that in What's cooking in git.git (Apr 2022, #04; Thu, 14)
+it will be merge in Next. So, do I take this PATCH from the last week
+and I add it this part in contrib/vscode/README or I just add this part
+here in this new PATCH but where the subject is different?
 
-git rebase --onto A B C
+> - For Emacs, it's useful to put the following in
+>    GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
 
-if A^{tree} == B^{tree} that means that we could create an equivalent
-commit for the segment B..C on top of A without much hassle by reusing
-the same trees from that segment (no need to calculate new trees...and
-no need to move along the working tree as we are creating those
-commits).
+>     ;; note the first part is useful for C editing, too
+>     ((nil . ((indent-tabs-mode . t)
+>                   (tab-width . 8)
+>                   (fill-column . 80)))
+>      (cperl-mode . ((cperl-indent-level . 8)
+>                     (cperl-extra-newline-before-brace . nil)
+>                     (cperl-merge-trailing-else . t))))
 
-My impression from reading your feedback is that you have a much
-broader scope in terms of what you want to achieve.So, for the time
-being, I will work on trying to get the optimization in rebase and see
-how far I am able to move it forward.... and you are able to keep
-replay as a separate command if that is your will for the
-not-so-distant future. :-)
+> Actually, the Linux kernel's CodingStyle contains more relevant stuff 
+> (for C, not Perl):
 
-BR!
+> https://www.kernel.org/doc/html/v4.10/process/coding-style.html#you-ve-made-a-mess-of-it
 
-PS I will be snooping around all of that material you are linking as I
-am sure there will be interesting stuff in there. And thanks, again!
+I add this part directly in ToolsForGit.txt and not in the README in contrib/emacs.
+But, from this document in Documentation/RelNotes/2.18.0.txt, I read this:
+"The scripts in contrib/emacs/ have outlived their usefulness and have been
+replaced with a stub that errors out and tells the user there are replacements."
+So, for the next version of this PATCH, can I replace what is in the README by the 
+configuration that I write in ToolsForGit.txt?
+
+
+OAKLEY Philip  wrote:
+
+> I'm of the view that a README is a positive indicator that there is some
+> informational value regarding the tool's use for developing Git being
+> made available. It doesn't always have to be code before it is of
+> assistance in developing Git.
+
+I agreed with OAKLEY, the README is good indicator to say that we have some
+information besides the scripts.
+
+
+COGONI Guillaume (1):
+  Documentation/ToolsForGit.txt: Tools for developing Git
+
+ Documentation/CodingGuidelines | 11 -----
+ Documentation/Makefile         |  1 +
+ Documentation/ToolsForGit.txt  | 79 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+), 11 deletions(-)
+ create mode 100644 Documentation/ToolsForGit.txt
+
+Difference between v1 and v2
+diff --git a/Documentation/ToolsOnGit.txt b/Documentation/ToolsForGit.txt
+index a33b369a06..d96cadd09c 100644
+--- a/Documentation/ToolsOnGit.txt
++++ b/Documentation/ToolsForGit.txt
+@@ -1,12 +1,12 @@
+-Tools on GIT
+-============
++Tools for developing Git
++========================
+ :sectanchors:
+ 
+ [[summary]]
+ == Summary
+ 
+ This document aims to gather tools that have a README and/or scripts in
+-the GIT project.
++the Git project.
+ 
+ [[author]]
+ === Author
+@@ -32,4 +32,48 @@ setting breakpoints, logpoints, conditional breakpoints and more in the editor.
+ [[emacs]]
+ === Emacs
+ 
+-See contrib/emacs/README for more information.
++- To follow rules of the CodingGuideline, it's useful to put the following in
++GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
++----
++;; note the first part is useful for C editing, too
++((nil . ((indent-tabs-mode . t)
++	 (tab-width . 8)
++	 (fill-column . 80)))
++	 (cperl-mode . ((cperl-indent-level . 8)
++			(cperl-extra-newline-before-brace . nil)
++			(cperl-merge-trailing-else . t))))
++----
++
++- The version for C:
++----
++(defun c-lineup-arglist-tabs-only (ignored)
++	"Line up argument lists by tabs, not spaces"
++	(let* ((anchor (c-langelem-pos c-syntactic-element))
++	       (column (c-langelem-2nd-pos c-syntactic-element))
++	       (offset (- (1+ column) anchor))
++	       (steps (floor offset c-basic-offset)))
++	 (* (max steps 1)
++	    c-basic-offset)))
++
++(add-hook 'c-mode-common-hook
++	(lambda ()
++		;; Add kernel style
++		(c-add-style
++		 "linux-tabs-only"
++		 '("linux" (c-offsets-alist
++			    (arglist-cont-nonempty
++			     c-lineup-gcc-asm-reg
++			     c-lineup-arglist-tabs-only))))))
++
++(add-hook 'c-mode-hook
++	(lambda ()
++		(let ((filename (buffer-file-name)))
++		 ;; Enable kernel mode for the appropriate files
++		 (when (and filename
++			(string-match (expand-file-name "~/src/linux-trees")
++				       filename))
++		 (setq indent-tabs-mode t)
++		 (setq show-trailing-whitespace t)
++		 (c-set-style "linux-tabs-only")))))
++----
++
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index b20b2f94f1..a7d21d6f6b 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -492,17 +492,6 @@ For Perl programs:
+ 
+  - Learn and use Git.pm if you need that functionality.
+ 
+- - For Emacs, it's useful to put the following in
+-   GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
+-
+-    ;; note the first part is useful for C editing, too
+-    ((nil . ((indent-tabs-mode . t)
+-                  (tab-width . 8)
+-                  (fill-column . 80)))
+-     (cperl-mode . ((cperl-indent-level . 8)
+-                    (cperl-extra-newline-before-brace . nil)
+-                    (cperl-merge-trailing-else . t))))
+-
+ For Python scripts:
+ 
+  - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
+
+
+-- 
+2.25.1
+
