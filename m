@@ -2,82 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F6AC433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 18:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54526C433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 18:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347382AbiDRSgk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 14:36:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56190 "EHLO
+        id S1347395AbiDRSkx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 14:40:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbiDRSgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 14:36:39 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D054824F07
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:33:59 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id p10so25440687lfa.12
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:33:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xYfFOqkFdfps2aZ1Djn1n88TjKq8HhcDMYXh5Ai3mM8=;
-        b=CP2Cf1jDuQqameFDSDRHpWXoNu2rHnl7WBdKS5fNhabm8TYLlPJR5OQo5ZMe+bLhAL
-         R6qrMcb0BBah32TfxrS7IEpcxNCcKE0XDd8hIWr15QSsIgtPnS0RZwN1NeeMp9z940yJ
-         md5NlLDTxGkt6/bYAkistW5QZT53MI91iVdFGf61ybKX6KSTWsKnKeMyhe9xe0DbYXY/
-         +WvQf6kabzwYBCDYrjAYo5gf1LfTLIaGZ/CARMj8OZ7azKvec+QZBUFp79Wey2SDNkQM
-         +0HwaoGO0w8Tgr0grGy2+GxDOWHOfwPMVOsWdCQ4JhzNRxdcKfqSjYgfiUxNHn3AxkWF
-         xLOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xYfFOqkFdfps2aZ1Djn1n88TjKq8HhcDMYXh5Ai3mM8=;
-        b=yJN/WEaJXVIx2UjlvmOJwsGvsg46zauExheQrAJBNupek9GxsYk67yj/BMD+qzVbVV
-         cxupwFiErIYcL3y2uefxHuFnIAq4ir2DqjYxHs5GGiMO/Ld3LterkmekFwfENQoObgpR
-         8MgLRPfioKhd0C95067SdmLdJn1z+E2rAeOd96bLpiOcF/EiI9755gSEi5FTJkYmL/1q
-         WthrSLmSCuYzu5b9H2I4xDZzYQTxlWDSzA4mlogB7JfMmWk69OmtwsfGx88oHC3egQmc
-         zPCkURluYh7+ijGoEglawsMuFTdrmPrvt+bZ2BUon9yPHeuYXAsqhXl/3+nyPfeCYlFh
-         T+1g==
-X-Gm-Message-State: AOAM532tN1R0C769rtGDi6bppi5Cy8ZAL80aZj0mIqNRKslJ0EWHko0R
-        ITihQK4THPq11CRcnI8jeKxLIhsm127fd+fHoU8=
-X-Google-Smtp-Source: ABdhPJzSEahiSn7mqsoykh/m3tLsAlFekVshDceSfkwn2GfTlSeMo8FzFPcpYPUS2EjBEot2o9c+LtXQCGPnXgf5PSo=
-X-Received: by 2002:a05:6512:3403:b0:448:5f92:7b0c with SMTP id
- i3-20020a056512340300b004485f927b0cmr8353682lfr.237.1650306837878; Mon, 18
- Apr 2022 11:33:57 -0700 (PDT)
+        with ESMTP id S229523AbiDRSkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 14:40:52 -0400
+Received: from smtp-out-4.talktalk.net (smtp-out-4.talktalk.net [62.24.135.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D180411A2C
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:38:11 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.talktalk.net with SMTP
+        id gWGFnys7MW5NogWGGnuTwO; Mon, 18 Apr 2022 19:38:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1650307089;
+        bh=GOom4bj1HQnafqxEvgFrnVhTZTx4U0Wu/ZtvqkAPqV0=;
+        h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To;
+        b=S9SQjo6zepRi83AQXXTrdu7uYmn33GxYVj7QFlwn5lMxHqHnOK41vSQjzNvlszya2
+         0+7ZJ0W22ZJNxRhrcd85WGV7Mh6Zz9B58qiBhVhVv+63ZBozsWFgkbp4mvkEUrjGj+
+         TjC3O3B0+r4Vs14xzMEEEJP6ZP5MoY7B+E2LPEpU=
+X-Originating-IP: [31.185.185.192]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=LeRCFQXi c=1 sm=1 tr=0 a=BhDTt+XCViy/yeGwkgzVOQ==:117
+ a=BhDTt+XCViy/yeGwkgzVOQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=Ydq8CWi30aKBOekM5k0A:9 a=QEXdDO2ut3YA:10
+Message-ID: <55271bbe-7b6e-7c92-7337-2439a2f5be26@talktalk.net>
+Date:   Mon, 18 Apr 2022 19:38:07 +0100
 MIME-Version: 1.0
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
- <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
-In-Reply-To: <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
-From:   Plato Kiorpelidis <kioplato@gmail.com>
-Date:   Mon, 18 Apr 2022 21:33:31 +0300
-Message-ID: <CAO2gv82L_AYkXMKO7tuxF7AoZMU-LW+q+2S4nCVQvhuM4+UMFQ@mail.gmail.com>
-Subject: Re: [GSoC] Contributor candidate introduction
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Shubham Mishra <shivam828787@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 30/31] CI: have osx-gcc use gcc, not clang
+Content-Language: en-GB-large
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
+ <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+In-Reply-To: <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfGURfz4LQR0VCsM1xvR+KXF/PmV5m3ZtzFgC+xTLPip7lzmq9+AMY/CpApgzonIx76tqvpo4y+I0wDr6F5Ld98dCiPo+y9sgIE6LSvKZktxnpA7S6pD+
+ hEov3Gl3gWlGU2rO5iSSpL5hqRM+MQI/Ztm4Xwgisv4q2/7nK9XI1vDwThOB89tRoG6OUHDTiHkUrOXOFfPYC9Ud6NxH9vEDg+1IFWUuA5t1oj5ETTFP6MJF
+ 8qTxKqDBvfTZari0ZgFbqVa8vKmBAu41m00YZSqVtEZreXL7K5EYP3UK6nAxepQeaxV05N7nwsXwB4oJfzIbm/jyDZRAKvPLPPP9S6xDDuZ2Z/T7GCKFc6tw
+ mBOqdrGQQN7a6MO1UMl7BvKLNuMjHyrpcsNMd/ciNCirkzoSxgdG5Wy17hjjWAWWlRc7tmCrUtpAy3AXPFNJWzWaBwNe0k5Z7v1AVKjqDbglw91L8R9Ak73r
+ YclDkwI7RU6+QeBOJENlEDon6YQ3xLCcLmZOiAVc4DkU2clcp6OlZYMyjNU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 18, 2022 at 8:54 PM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> Hello all,
+On 18/04/2022 17:29, Ævar Arnfjörð Bjarmason wrote:
+> Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
+> "$jobname" to select packages & config, 2021-11-23). In that commit I
+> changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in $PATH points to
+> clang, we need to use gcc-9 instead.
 
-Hey Kaartic,
+As this is fixing a bug in master, perhaps it would be better as a 
+separate patch that can be merged before this series (this series could 
+be rebased on to the fix)
 
->
-> Just a heads up that the proposal deadline (19Apr2022 18:00 UTC) is
-> approaching shortly. I noticed that Abhradeep has submitted his proposal
-> so far. Others, do make sure you submit your proposals in the GSoC
-> website before the deadline. Only then can we consider your proposals
-> for GSoC [ref].
+Best Wishes
 
-Thanks for the gentle reminder :)
-My proposal is nearly complete. I'll sent it for review in the mailing
-list and If the time allows you I'll be grateful if you review it.
+Phillip
 
-Thanks,
-Plato
+> Reported-by: Carlo Arenas <carenas@gmail.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   ci/lib.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index ab7546800e0..8f80be4c3df 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -179,7 +179,7 @@ linux-TEST-vars)
+>   	;;
+>   osx-gcc)
+>   	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
+> -	CC=gcc
+> +	CC=gcc-9
+>   	;;
+>   osx-clang)
+>   	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
+
