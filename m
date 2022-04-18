@@ -2,103 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7DE7C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BF7EC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:33:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242095AbiDRRah (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:30:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49350 "EHLO
+        id S1347098AbiDRRfq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347123AbiDRRaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:30:30 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D25A13F04
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:27:43 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id lc2so27996523ejb.12
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:27:43 -0700 (PDT)
+        with ESMTP id S241994AbiDRRfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:35:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBE12E9D0
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:33:05 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id x17so25205766lfa.10
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QHlm8vIEcoD801CxXOzQ8i73gzoLGIIv2e9W9lc8Prs=;
-        b=DHB8JQjhwrMuLyjMhWNY7qmH/IrLOEL4KpNsSywBsfhFb731iIybvZjoqbgc4ODfjM
-         r/hRkXHsTwyDMLWMtwxP3uKE8u+XYLAtdboiaBplvI0aTJsVRvd+KZb2r+OCrrui0QRk
-         M3+O0y4eCKWnr7v2VipVNZ47gCW5ooEAxLnGra1oxW+iDjw74N+aL3sHJl3Pbxutr6B5
-         1Cwd6Fb7o7YI7REM9116nMVZ9CgCDYtpIUw3Il0Ck1ZvthPVCA50n9+WsSD3Ck0aJ2kT
-         /2qoOqc3CKCBDPlnYGbly6F6oJvlwHILdZ8sD9XXwTzBDE2ls0mjBr2YgAnHpuNyApXM
-         0VJw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8e68M8kqZPQnIi7USlWOKvnGzZ1h0lPpFOQfW8GuXhU=;
+        b=TH6sPLffiGh8u436kTuCS1Q9+8ruTkDyZqhxnkHywYOPw/Wf5530xl6xMeqf0fY48/
+         R1BjjJFdyFeGl2ZHkXD0yDKFYrJAha1y5tt2J1GfrV32d4NfDcJOoHHBlaXRs3TP8yWQ
+         66TRlyL5szRdhE7x6LXcRHMO4BttlnoN7ziZy2d3uG1D5+Mzp//FWXeScEKIkFuKYbXn
+         nnxTYGDsVQ2cfu1mbHWU9jOCqw5fVAncP/hmQIfQPrqRgH0+WOXetZptjzEVXH2IOFr2
+         t1hpQAoZx67360R71cgq+qubFSYynf8iPo5wxuvYnSyBnVq3I51PE5Dw3DpptNjoHwJI
+         A/Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QHlm8vIEcoD801CxXOzQ8i73gzoLGIIv2e9W9lc8Prs=;
-        b=S0shk23oRVbOWjTnq3ackwPZ+z34uEOT+GNj+3b1Mp7FkYHt0ZNwPy8WnTBRKDczao
-         tgBIKE5G7ERJqysWF9zQZwhSDsC6oW0aGQI+JnsrBI0XtFeGycCoMgXhH4E6Zft5VTZt
-         OAN8+bCCxKvttub1hcn8x91sNwxq65WJBE0CtF2h1FaNlI42K23Hnrh0x3ISTnTFK5Jq
-         wsA21royPybeNQTWpI1V4lkDCM3wCtcRae4SEng+DFXZ9wJ6xialvI1pnmF0ym9pPDrL
-         HuyJQ04GGk+/UD3bYYshT2IuoF1a26GQeTqadIjoJ7IyTJJga4S9Ze8YSb95RxVSML5p
-         SHYg==
-X-Gm-Message-State: AOAM532ldaxDU/Cekkx7hWwK3ELiusoI2OzG6BOgwmb8p2sKBcXA/g2K
-        cnCTyTsrtDwk6a03+kY36NyFiCAlUMt7+WPt
-X-Google-Smtp-Source: ABdhPJyaunufXFkVVeAe+pAbNbPtFFgLMZ5T1tYy3px5PpYCVcffWpRz1r0nqZ0JeLx4YnWcv9NPpw==
-X-Received: by 2002:a17:907:728c:b0:6e8:bb41:7df8 with SMTP id dt12-20020a170907728c00b006e8bb417df8mr9933606ejc.688.1650302861480;
-        Mon, 18 Apr 2022 10:27:41 -0700 (PDT)
-Received: from linuxerio.localdomain (j109098.upc-j.chello.nl. [24.132.109.98])
-        by smtp.gmail.com with ESMTPSA id d7-20020a170906174700b006e80a7e3111sm4909747eje.17.2022.04.18.10.27.40
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=8e68M8kqZPQnIi7USlWOKvnGzZ1h0lPpFOQfW8GuXhU=;
+        b=Ij07uu+X0dQrWSH997dVT2q/NiyjUP653CSzmZH8bI4qWu3Tmh0oNrgwZpVzND0V8N
+         n884WkVer2Jm1alwGLqhvm8EVFm/WWJ8TjNaTrNUbRhHOLcuEOpuAnI+JtkThF2ZbRB1
+         +ENBcZRirdEEN2YSqm83/wLND0AU02rAIdu4X0Zx6YHiuVzesC+aWvZLlhmOEAfGb9bT
+         YpMz5UnsDbL8bcNUmS4Nvs0zPOYOGzoyT2d+GCdcXomwLbLA1tKyt+5gN0iwtFIm4yrz
+         csnS2WZuTPFZdJ58W1Kn5WKM5I0EZd2lOnLbr8uq9alUlvM6YNkQ1mG9lA2/QjuQmzTp
+         L1qA==
+X-Gm-Message-State: AOAM53122MHjYhAUhA40TpWrH+zjtMSwZYrTOqgBDFWGabBY35Koet45
+        s4D0RI6KOEobbrsdnIoLYmY8KKdDYRo=
+X-Google-Smtp-Source: ABdhPJzzdYfR+6ZAIs6BnmNKNQL35nAAX5XoqgSOZf9dgCPYQh8mNiviBS1GPL7gOGQ8VZnhh3UGvg==
+X-Received: by 2002:a05:6512:1082:b0:44a:a6be:90b with SMTP id j2-20020a056512108200b0044aa6be090bmr9035824lfg.45.1650303183084;
+        Mon, 18 Apr 2022 10:33:03 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id w23-20020a197b17000000b0046d1729e7d9sm1266535lfc.294.2022.04.18.10.33.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 10:27:41 -0700 (PDT)
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [PATCH v2] rebase: simplify an assignment of options.type in cmd_rebase
-Date:   Mon, 18 Apr 2022 19:27:21 +0200
-Message-Id: <20220418172721.215898-1-eantoranz@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        Mon, 18 Apr 2022 10:33:02 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [RFC] introducing git replay
+References: <20220413164336.101390-1-eantoranz@gmail.com>
+        <xmqq4k2wap8g.fsf@gitster.g>
+        <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
+        <xmqqbkx2ccj4.fsf@gitster.g>
+        <CAOc6etYwMtfytbw6iRfnJnsexJhe7UydVu0OFUbWP0byS9i=MQ@mail.gmail.com>
+        <CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com>
+        <87lew226iw.fsf@osv.gnss.ru>
+        <CABPp-BGQSN2iRWco4pQCVKA3AM6J0L0vyFMnYdrOgK0Pa26tWw@mail.gmail.com>
+Date:   Mon, 18 Apr 2022 20:33:01 +0300
+In-Reply-To: <CABPp-BGQSN2iRWco4pQCVKA3AM6J0L0vyFMnYdrOgK0Pa26tWw@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 18 Apr 2022 09:27:54 -0700")
+Message-ID: <87czhewb3m.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is an if statement where both if and else have the same
-assignment of options.type to REBASE_MERGE. Simplify
-it by getting that assigmnent out of the if.
+Elijah Newren <newren@gmail.com> writes:
 
-Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
----
-Range-diff:
-1:  7b6483fcce ! 1:  959aff8b8e rebase: simplify an assignment of options.type in cmd_rebase
-    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
-     -			if(file_exists(buf.buf)) {
-     -				options.type = REBASE_MERGE;
-     +			options.type = REBASE_MERGE;
-    -+			if(file_exists(buf.buf))
-    ++			if (file_exists(buf.buf))
-      				options.flags |= REBASE_INTERACTIVE_EXPLICIT;
-     -			} else
-     -				options.type = REBASE_MERGE;
+> Hi Sergey,
+>
+> On Mon, Apr 18, 2022 at 12:30 AM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+> [...]
+>> > Replaying merges is something I've put a little thought into, so allow
+>> > me to provide some pointers that may help.  Merges need special
+>> > handling for replaying, and in my opinion, doing either just a new
+>> > merge of the new trees (what rebase --rebase-merges does), or just
+>> > reusing existing trees (what you proposed to start this thread) are
+>> > both suboptimal, though the former is likely to just be annoying and
+>> > require potentially unnecessary user refixing,
+>>
+>> It silently drops user changes as well, and that's the worst thing about
+>> it, not annoyance.
+>
+> Yes, I mentioned that later in the email, but omitted it in the
+> summary you highlight here just because the fixed-tree case was so
+> much more likely to do it.  Anyway, sorry for the inaccuracy in the
+> summarized version.
+>
+>> > whereas the latter can silently discard changes or reintroduce
+>> > discarded changes and could be dangerous. More details on both of
+>> > these...
+>>
+>> Please consider yet another option:
+>
+> I linked to where I had given another option.
+>
+>> https://public-inbox.org/git/87r2oxe3o1.fsf@javad.com/
+>>
+>> that at least is safe with respect to user changes.
+>
+> If you read the suggestion I made (which I'll reinclude here at [1]),
+> you'll note that I read the old thread you link to with both your and
+> Phillips' suggestions.  I dug into them with some examples, and came
+> to the conclusion that we needed something better, as I briefly
+> commented when proposing my suggested alternative (at [1]).  I
+> appreciate your suggestion and the time you put into it, but based on
+> my earlier investigation, I believe my suggestion would be a better
+> way of preserving user changes in merges and I'll be implementing it.
+> The fact that Martin (in this thread) independently came up with the
+> same basic idea and implemented it in jj (though he apparently has
+> some further tweaks around the object model) and it works well
+> suggests to me that the idea has some real world testing too that
+> gives me further confidence in the idea.
 
- builtin/rebase.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Yep, whoever is going to actually implement something always wins, and
+that's a good thing. I'm looking forward for the outcome of all this
+with a hope.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 27fde7bf28..baf7a0bb36 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1187,11 +1187,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		} else {
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "%s/interactive", merge_dir());
--			if(file_exists(buf.buf)) {
--				options.type = REBASE_MERGE;
-+			options.type = REBASE_MERGE;
-+			if (file_exists(buf.buf))
- 				options.flags |= REBASE_INTERACTIVE_EXPLICIT;
--			} else
--				options.type = REBASE_MERGE;
- 		}
- 		options.state_dir = merge_dir();
- 	}
--- 
-2.35.1
-
+Thanks,
+-- Sergey Organov
