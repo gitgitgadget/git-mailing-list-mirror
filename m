@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43787C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B417DC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347039AbiDRR2Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:28:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44970 "EHLO
+        id S1347048AbiDRR2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347070AbiDRR1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:27:08 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07A53344F2
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:20 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id q20so9126355wmq.1
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:20 -0700 (PDT)
+        with ESMTP id S1347031AbiDRR1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:27:07 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF840344E8
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id m15-20020a7bca4f000000b0038fdc1394b1so8635010wml.2
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8mRzZTE/eUo2BdTevQumHmSVF8zbmIWC/Jl501Nud6M=;
-        b=hC1YHmKLbv/r14eJc0fxyLVzLbUSn2fKo8HZ8jI3PeKEn8UfyCTdVyEV6j62CcBnas
-         oTZ1+5guyoduru5UXsDjc3CQJACf5Moa2w7zmYvtHj1ay+GY9eofUwB4BIgpw1F69B9A
-         kW/o8CzBbArHCDE+B1uPAN1R3//6TtJioYoHvKYl2/vv/Gt2TXtFb6vuXCDH9D4H6Zp3
-         m9jECf0Uaz6DGWGnOTR5aOnDkTzS22NbBb+e7+gsFrjb6jSS38Lk2LEGzz+Kv3RfmWzY
-         tQnKWqXFhTxhks08oR6e99aLB7C6zmy7447rR7Um03L9+IQaJCvDKWJIBGji6yy1yxGO
-         B+nw==
+        bh=Uwv3ATPGIcsL6IoKarM6AcLLCW1ewl0sGTUCtMEDj94=;
+        b=Jg3DvTu4hyMRcQ7ocVjqBQtXGfCyRxa7dXRUKNOTmb3Xkae8tMC6BlU3OZn2PN8O+I
+         424Snej4G0tujrm2VSW0cXM78s5fdonFABnQSM2jcsBdG3KU7pCx9yO2PlIO0G3D8F5C
+         QGh+Wqi008mdtOv7BBebXrLFuAexYumCI9SHedyfWkdQD6WZ5i2bZbBGO3PUclDSRrcY
+         xpx4GkcTXPZC7T8/oxXrf9z/p9G404Prs00n+iZZG1XGCI9GRONHYRLr0Ipz0CcP6UgK
+         lTh8CT39yVc1KdbVZML9QvQxRanD85/QgpcItZ/lie2gSEoxMBukSyCp2WoDzVu3S34y
+         H/Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8mRzZTE/eUo2BdTevQumHmSVF8zbmIWC/Jl501Nud6M=;
-        b=Q7vmLw5i8APL0+kX7fnUpxgb5bQQs+bw8Ew3QONQfkN7OUOstq7DIGxcr1imSXnWjp
-         6k0Qd1sTdhsJnugKaJah/vFdgYgMb67KjTY898O+4NVnzyHKODeuJGQgrgpu7TSQrpq8
-         pCJY4gnED2/aZECBO5EVMsiKG5n9BazE70VwP70/qLT3AEN+fFd0oZaTG1Zpo0trty1y
-         Ke/RUeT1CI2BVcm6R1TDKHOaWrTwGbzFeI1KHJwDlyVVbodcr9X5LO9j45ar0reftYEK
-         PgwW8cwJuJGvRHfUX6qXlccd/p0SuVTUZEnme3wQCuMQMJNsRlsF4caJEYEiUVIZZohZ
-         m/vg==
-X-Gm-Message-State: AOAM530j3ahCPFfZW1eHx3ki3oMGt1WqRIcj6uFSjC7MnqcxefCQbjmB
-        YS0uCFbfrGRpFi5C/GwglQjlQ8fRwFivXQ==
-X-Google-Smtp-Source: ABdhPJzbK9TfpvYDBRvYONBkO4scX8T0VTnXsM41GN5h1S7HEy4zgpLQ9JIEV8DQXKYlPwzvr+fOnA==
-X-Received: by 2002:a1c:f30b:0:b0:37b:b5de:c804 with SMTP id q11-20020a1cf30b000000b0037bb5dec804mr16102166wmq.166.1650302659068;
-        Mon, 18 Apr 2022 10:24:19 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=Uwv3ATPGIcsL6IoKarM6AcLLCW1ewl0sGTUCtMEDj94=;
+        b=YTY/pQaJn6E/IRbdbtGz3UB+rjgeOEMmorR1mpmzshyC9BEODJtrYdLBlRlalwjcQ1
+         GbouKMqIZ5vyK9Aqjg4XNC001XNC6UUwz6VsxoRBjyy1OaW+NZKQtjXqC+gK8HsNqKGb
+         i2DEm1QuSaa0zAmdbwpcixdYR2oghqyzdsZ53M/CfCWU0t5Zb2zouqOXwETWO3OZLHZ0
+         d5mKhRGzPSzyhxSTCkKfNDot+XZSY9NO7q6GmphD7bSB3qQSdCPtxBlXZ8zbI5JwB3NG
+         0pJr24611/CE3RJ73anxH/QHgx+bj3TwklI89s17Oa+D9cIG6SCzY/rSwxg658nw1Er2
+         U+MA==
+X-Gm-Message-State: AOAM531ER75zRzPXlMwOGcLnQNk5pF7Ak76GEb9+POAi5sALAsnA+1ks
+        4PnY8wwN4cCeeLrGK9UYwsqKm8Tx/MMSdg==
+X-Google-Smtp-Source: ABdhPJwzRZMeqEsp64w5UwSORo2yLeg6R+QBMuBvx0ImvJiE+VDdC7ZnLwTCmzbBWu0fL2Q5O9Zzrw==
+X-Received: by 2002:a1c:a101:0:b0:392:942f:3aa with SMTP id k1-20020a1ca101000000b00392942f03aamr6809944wme.1.1650302658066;
         Mon, 18 Apr 2022 10:24:18 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Apr 2022 10:24:17 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Albert Cui <albertqcui@gmail.com>,
         "Robin H . Johnson" <robbat2@gentoo.org>,
         Teng Long <dyroneteng@gmail.com>
-Subject: [RFC PATCH v2 18/36] bundle: implement 'fetch' command for direct bundles
-Date:   Mon, 18 Apr 2022 19:23:35 +0200
-Message-Id: <RFC-patch-v2-18.36-ff9a7afaccd-20220418T165545Z-avarab@gmail.com>
+Subject: [RFC PATCH v2 17/36] remote-curl: add 'get' capability
+Date:   Mon, 18 Apr 2022 19:23:34 +0200
+Message-Id: <RFC-patch-v2-17.36-8ac5bfca545-20220418T165545Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
 In-Reply-To: <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
 References: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com> <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
@@ -71,346 +71,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The 'git bundle fetch <uri>' command will be used to download one or
-more bundles from a specified '<uri>'. The implementation being added
-here focuses only on downloading a file from '<uri>' and unbundling it
-if it is a valid bundle file.
+A future change will want a way to download a file over HTTP(S) using
+the simplest of download mechanisms. We do not want to assume that the
+server on the other side understands anything about the Git protocol but
+could be a simple static web server.
 
-If it is not a bundle file, then we currently die(), but a later change
-will attempt to interpret it as a table of contents with possibly
-multiple bundles listed, along with other metadata for each bundle.
+Create the new 'get' capability for the remote helpers which advertises
+that the 'get' command is avalable. A caller can send a line containing
+'get <url> <path>' to download the file at <url> into the file at
+<path>.
 
-That explains a bit why cmd_bundle_fetch() has three steps carefully
-commented, including a "stack" that currently can only hold one bundle.
-We will later update this while loop to push onto the stack when
-necessary.
-
-RFC-TODO: Add documentation to Documentation/git-bundle.txt
-
-RFC-TODO: Add direct tests of 'git bundle fetch' when the URI is a
-bundle file.
-
-RFC-TODO: Split out the docs and subcommand boilerplate into its own
-commit.
+RFC-TODO: This change requires tests directly on the remote helper.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-bundle.txt |   1 +
- builtin/bundle.c             | 261 +++++++++++++++++++++++++++++++++++
- 2 files changed, 262 insertions(+)
+ Documentation/gitremote-helpers.txt |  6 ++++++
+ remote-curl.c                       | 32 +++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 7685b570455..bf5cd90391c 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git bundle' create [-q | --quiet | --progress | --all-progress] [--all-progress-implied]
- 		    [--version=<version>] <file> <git-rev-list-args>
- 'git bundle' verify [-q | --quiet] <file>
-+'git bundle' fetch [--filter=<spec>] <uri>
- 'git bundle' list-heads <file> [<refname>...]
- 'git bundle' unbundle [--progress] <file> [<refname>...]
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 6f1e269ae43..f82588601a9 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -168,6 +168,9 @@ Supported commands: 'list', 'import'.
+ 	Can guarantee that when a clone is requested, the received
+ 	pack is self contained and is connected.
  
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 2adad545a2e..6b6107d83cf 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -3,6 +3,10 @@
- #include "parse-options.h"
- #include "cache.h"
- #include "bundle.h"
-+#include "run-command.h"
-+#include "hashmap.h"
-+#include "object-store.h"
-+#include "refs.h"
- 
- /*
-  * Basic handler for bundle files to connect repositories via sneakernet.
-@@ -14,6 +18,7 @@
- static const char * const builtin_bundle_usage[] = {
-   N_("git bundle create [<options>] <file> <git-rev-list args>"),
-   N_("git bundle verify [<options>] <file>"),
-+  N_("git bundle fetch [<options>] <uri>"),
-   N_("git bundle list-heads <file> [<refname>...]"),
-   N_("git bundle unbundle <file> [<refname>...]"),
-   NULL
-@@ -29,6 +34,11 @@ static const char * const builtin_bundle_verify_usage[] = {
-   NULL
- };
- 
-+static const char * const builtin_bundle_fetch_usage[] = {
-+	N_("git bundle fetch [--filter=<spec>] <uri>"),
-+	NULL
-+};
++'get'::
++	Can use the 'get' command to download a file from a given URI.
 +
- static const char * const builtin_bundle_list_heads_usage[] = {
-   N_("git bundle list-heads <file> [<refname>...]"),
-   NULL
-@@ -132,6 +142,255 @@ static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
- 	return ret;
+ If a helper advertises 'connect', Git will use it if possible and
+ fall back to another capability if the helper requests so when
+ connecting (see the 'connect' command under COMMANDS).
+@@ -418,6 +421,9 @@ Supported if the helper has the "connect" capability.
+ +
+ Supported if the helper has the "stateless-connect" capability.
+ 
++'get' <uri> <path>::
++	Downloads the file from the given `<uri>` to the given `<path>`.
++
+ If a fatal error occurs, the program writes the error message to
+ stderr and exits. The caller should expect that a suitable error
+ message has been printed if the child closes the connection without
+diff --git a/remote-curl.c b/remote-curl.c
+index 67f178b1120..53750d88e76 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1276,6 +1276,33 @@ static void parse_fetch(struct strbuf *buf)
+ 	strbuf_reset(buf);
  }
  
-+/**
-+ * The remote_bundle_info struct contains the necessary data for
-+ * the list of bundles advertised by a table of contents. If the
-+ * bundle URI instead contains a single bundle, then this struct
-+ * can represent a single bundle without a 'uri' but with a
-+ * tempfile storing its current location on disk.
-+ */
-+struct remote_bundle_info {
-+	struct hashmap_entry ent;
-+
-+	/**
-+	 * The 'id' is a name given to the bundle for reference
-+	 * by other bundle infos.
-+	 */
-+	char *id;
-+
-+	/**
-+	 * The 'uri' is the location of the remote bundle so
-+	 * it can be downloaded on-demand. This will be NULL
-+	 * if there was no table of contents.
-+	 */
-+	char *uri;
-+
-+	/**
-+	 * The 'next_id' string, if non-NULL, contains the 'id'
-+	 * for a bundle that contains the prerequisites for this
-+	 * bundle. Used by table of contents to allow fetching
-+	 * a portion of a repository incrementally.
-+	 */
-+	char *next_id;
-+
-+	/**
-+	 * A table of contents can include a timestamp for the
-+	 * bundle as a heuristic for describing a list of bundles
-+	 * in order of recency.
-+	 */
-+	timestamp_t timestamp;
-+
-+	/**
-+	 * If the bundle has been downloaded, then 'file' is a
-+	 * filename storing its contents. Otherwise, 'file' is
-+	 * an empty string.
-+	 */
-+	struct strbuf file;
-+
-+	/**
-+	 * The 'stack_next' pointer allows this struct to form
-+	 * a stack.
-+	 */
-+	struct remote_bundle_info *stack_next;
-+};
-+
-+static void download_uri_to_file(const char *uri, const char *file)
++static void parse_get(struct strbuf *buf)
 +{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	FILE *child_in;
++	struct http_get_options opts = { 0 };
++	struct strbuf url = STRBUF_INIT;
++	struct strbuf path = STRBUF_INIT;
++	const char *p, *space;
 +
-+	strvec_pushl(&cp.args, "git-remote-https", "origin", uri, NULL);
-+	cp.in = -1;
-+	cp.out = -1;
++	if (!skip_prefix(buf->buf, "get ", &p))
++		die(_("http transport does not support %s"), buf->buf);
 +
-+	if (start_command(&cp))
-+		die(_("failed to start remote helper"));
++	space = strchr(p, ' ');
 +
-+	child_in = fdopen(cp.in, "w");
-+	if (!child_in)
-+		die(_("cannot write to child process"));
++	if (!space)
++		die(_("protocol error: expected '<url> <path>', missing space"));
 +
-+	fprintf(child_in, "get %s %s\n\n", uri, file);
-+	fclose(child_in);
++	strbuf_add(&url, p, space - p);
++	strbuf_addstr(&path, space + 1);
 +
-+	if (finish_command(&cp))
-+		die(_("remote helper failed"));
++	http_get_file(url.buf, path.buf, &opts);
++
++	strbuf_release(&url);
++	strbuf_release(&path);
++	printf("\n");
++	fflush(stdout);
++	strbuf_reset(buf);
 +}
 +
-+static void find_temp_filename(struct strbuf *name)
-+{
-+	int fd;
-+	/*
-+	 * Find a temporray filename that is available. This is briefly
-+	 * racy, but unlikely to collide.
-+	 */
-+	fd = odb_mkstemp(name, "bundles/tmp_uri_XXXXXX");
-+	if (fd < 0)
-+		die(_("failed to create temporary file"));
-+	close(fd);
-+	unlink(name->buf);
-+}
+ static int push_dav(int nr_spec, const char **specs)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -1549,9 +1576,14 @@ int cmd_main(int argc, const char **argv)
+ 				printf("unsupported\n");
+ 			fflush(stdout);
+ 
++		} else if (skip_prefix(buf.buf, "get ", &arg)) {
++			parse_get(&buf);
++			fflush(stdout);
 +
-+static void unbundle_fetched_bundle(struct remote_bundle_info *info)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	FILE *f;
-+	struct strbuf line = STRBUF_INIT;
-+	struct strbuf bundle_ref = STRBUF_INIT;
-+	size_t bundle_prefix_len;
-+
-+	strvec_pushl(&cp.args, "bundle", "unbundle",
-+				info->file.buf, NULL);
-+	cp.git_cmd = 1;
-+	cp.out = -1;
-+
-+	if (start_command(&cp))
-+		die(_("failed to start 'unbundle' process"));
-+
-+	strbuf_addstr(&bundle_ref, "refs/bundles/");
-+	bundle_prefix_len = bundle_ref.len;
-+
-+	f = fdopen(cp.out, "r");
-+	while (strbuf_getline(&line, f) != EOF) {
-+		struct object_id oid, old_oid;
-+		const char *refname, *branch_name, *end;
-+		char *space;
-+		int has_old;
-+
-+		strbuf_trim_trailing_newline(&line);
-+
-+		space = strchr(line.buf, ' ');
-+
-+		if (!space)
-+			continue;
-+
-+		refname = space + 1;
-+		*space = '\0';
-+		parse_oid_hex(line.buf, &oid, &end);
-+
-+		if (!skip_prefix(refname, "refs/heads/", &branch_name))
-+			continue;
-+
-+		strbuf_setlen(&bundle_ref, bundle_prefix_len);
-+		strbuf_addstr(&bundle_ref, branch_name);
-+
-+		has_old = !read_ref(bundle_ref.buf, &old_oid);
-+
-+		update_ref("bundle fetch", bundle_ref.buf, &oid,
-+				has_old ? &old_oid : NULL,
-+				REF_SKIP_OID_VERIFICATION,
-+				UPDATE_REFS_MSG_ON_ERR);
-+	}
-+
-+	if (finish_command(&cp))
-+		die(_("failed to unbundle bundle from '%s'"), info->uri);
-+
-+	unlink_or_warn(info->file.buf);
-+}
-+
-+static int cmd_bundle_fetch(int argc, const char **argv, const char *prefix)
-+{
-+	int ret = 0;
-+	int progress = isatty(2);
-+	char *bundle_uri;
-+	struct remote_bundle_info first_file = {
-+		.file = STRBUF_INIT,
-+	};
-+	struct remote_bundle_info *stack = NULL;
-+
-+	struct option options[] = {
-+		OPT_BOOL(0, "progress", &progress,
-+			 N_("show progress meter")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options_cmd_bundle(argc, argv, prefix,
-+			builtin_bundle_fetch_usage, options, &bundle_uri);
-+
-+	if (!startup_info->have_repository)
-+		die(_("'fetch' requires a repository"));
-+
-+	/*
-+	 * Step 1: determine protocol for uri, and download contents to
-+	 * a temporary location.
-+	 */
-+	first_file.uri = bundle_uri;
-+	find_temp_filename(&first_file.file);
-+	download_uri_to_file(bundle_uri, first_file.file.buf);
-+
-+	/*
-+	 * Step 2: Check if the file is a bundle (if so, add it to the
-+	 * stack and move to step 3).
-+	 */
-+
-+	if (is_bundle(first_file.file.buf, 1)) {
-+		/* The simple case: only one file, no stack to worry about. */
-+		stack = &first_file;
-+	} else {
-+		/* TODO: Expect and parse a table of contents. */
-+		die(_("unexpected data at bundle URI"));
-+	}
-+
-+	/*
-+	 * Step 3: For each bundle in the stack:
-+	 * 	i. If not downloaded to a temporary file, download it.
-+	 * 	ii. Once downloaded, check that its prerequisites are in
-+	 * 	    the object database. If not, then push its dependent
-+	 * 	    bundle onto the stack. (Fail if no such bundle exists.)
-+	 * 	iii. If all prerequisites are present, then unbundle the
-+	 * 	     temporary file and pop the bundle from the stack.
-+	 */
-+	while (stack) {
-+		int valid = 1;
-+		int bundle_fd;
-+		struct string_list_item *prereq;
-+		struct bundle_header header = BUNDLE_HEADER_INIT;
-+
-+		if (!stack->file.len) {
-+			find_temp_filename(&stack->file);
-+			download_uri_to_file(stack->uri, stack->file.buf);
-+			if (!is_bundle(stack->file.buf, 1))
-+				die(_("file downloaded from '%s' is not a bundle"), stack->uri);
-+		}
-+
-+		bundle_header_init(&header);
-+		bundle_fd = read_bundle_header(stack->file.buf, &header);
-+		if (bundle_fd < 0)
-+			die(_("failed to read bundle from '%s'"), stack->uri);
-+
-+		for_each_string_list_item(prereq, &header.prerequisites) {
-+			struct object_info info = OBJECT_INFO_INIT;
-+			struct object_id *oid = prereq->util;
-+
-+			if (oid_object_info_extended(the_repository, oid, &info,
-+						     OBJECT_INFO_QUICK)) {
-+				valid = 0;
-+				break;
-+			}
-+		}
-+
-+		close(bundle_fd);
-+		bundle_header_release(&header);
-+
-+		if (valid) {
-+			unbundle_fetched_bundle(stack);
-+		} else if (stack->next_id) {
-+			/*
-+			 * Load the next bundle from the hashtable and
-+			 * push it onto the stack.
-+			 */
-+		} else {
-+			die(_("bundle from '%s' has missing prerequisites and no dependent bundle"),
-+			    stack->uri);
-+		}
-+
-+		stack = stack->stack_next;
-+	}
-+
-+	free(bundle_uri);
-+	return ret;
-+}
-+
- static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix) {
- 	struct bundle_header header = BUNDLE_HEADER_INIT;
- 	int bundle_fd = -1;
-@@ -212,6 +471,8 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		result = cmd_bundle_create(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "verify"))
- 		result = cmd_bundle_verify(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "fetch"))
-+		result = cmd_bundle_fetch(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "list-heads"))
- 		result = cmd_bundle_list_heads(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "unbundle"))
+ 		} else if (!strcmp(buf.buf, "capabilities")) {
+ 			printf("stateless-connect\n");
+ 			printf("fetch\n");
++			printf("get\n");
+ 			printf("option\n");
+ 			printf("push\n");
+ 			printf("check-connectivity\n");
 -- 
 2.36.0.rc2.902.g60576bbc845
 
