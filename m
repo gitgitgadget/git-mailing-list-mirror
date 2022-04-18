@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF573C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD2D5C433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346755AbiDRR2t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:28:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45008 "EHLO
+        id S1346538AbiDRR2x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:28:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347050AbiDRR1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:27:10 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B44E933E32
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:29 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id t1so19310483wra.4
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:29 -0700 (PDT)
+        with ESMTP id S1347090AbiDRR1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:27:14 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0EE340E3
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:32 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id x18so11451575wrc.0
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Zn3yVLvYXtgT/5nSH5RBjOUFWFYAJDlLRjTQ7k0Vr1A=;
-        b=UvX7P/KaDiAQ5l02CZ/X1O373Gti3yLNsi//FKH+Pfybm26PzRFnqHq2Ea8I8Ppa2M
-         ru0X5kHoNA88EqNvujhDcqjJ24E7fUeBtwJqk14A+j/ePvWNL3RLbZhpXgDvgdLUI2uQ
-         Z3ERhqL2AEQvgWrLHHtbchNgrgWfdhPhlYN8e/46FXzjw3oGJuPvjG+WI/o+qLHeiS/S
-         5IyYsNEkEFCwofDyubPW+fxIQ6/g36gb4yavWpvLppb5b4lpxPQewITx1xqVGct+sEzy
-         HDixyM217MU+V9NOpHNdPYXkWXXam20sWIiMbhBW1fffJUUkzrusKUdotuVq1uI83aD8
-         FsWA==
+        bh=aQSQ3rFgbtx2uK9m2z/GVujlZILQ2CH4ujph93EeIdo=;
+        b=OfdUFLy09Qr4NTVH9A1aHIFSmYOqZZxhEjF/NrnA4vxZNhZoVuDGRfTtrfkcCh1mLr
+         G6+q18KcSCd/INx7Xyeq6ViSnz1D9i2p72w3dumzKIT2wt0TX6pQx/nExrv62N3aCOJj
+         t8df2wHZwbQ4/pj1TqWFiSn1YZad8KFtQo/nI7koXTeNcNOkaIqdVyGFtQtoNZs2CgC9
+         2jUER2n/drsQzdB1mKTG2NZsV0B5Ec8wIzTe1dhSbVcDPGi55gYBDV6tnUaeCH6S7iTU
+         Uv7sOlSM4RZwSNy21QtCbYebmCexTtgDQLzx6RlsmIq1cPN721v16T/w5qer9Hw6TWzR
+         aC/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Zn3yVLvYXtgT/5nSH5RBjOUFWFYAJDlLRjTQ7k0Vr1A=;
-        b=SNAw+h1yg8pdwf9WcQGlTywOFgsEuIZJsfHr76GYpHYHEx7mXDYWDoARkqGSwPJmqK
-         9oPobpz5uFAsjBG0EPUvzPL/9PCW2GTQcOMWjMl9vG6guFj8cEgODriyte0CDB9t0AGw
-         px9e7l4Db/+OzdTQXNVyjePf04xIf1drYkDGE5XVS1GncM1/aoP88Z1ZDvVa9mJFP+CX
-         zasTL4XbTzz85EV+rEdvdKK55fofodDnBt56H3uSGOYRB3QKi0eH7YMRXDuVmuDi//wT
-         fCwDJR3BMKgI2y+v97xwi6ASd0Iby/1nRz04LOJqeptI8QgG4kl1+GdTjeqWtBqfO7s+
-         YYfg==
-X-Gm-Message-State: AOAM531Xkq3iprOFjPf7pP6vg+Z/zGbFZ0SRdGo832w/uV0mXzioz+kX
-        Fpxw46s458WB3VtkSMKFntWE0WsoOJG59A==
-X-Google-Smtp-Source: ABdhPJy/IpcCZ7ZrQ20gyxbG/Mz0edI9iXGOUo8gzuKiYzzoBoSoyxAKNaR/7Y/5HjWKICciK9Jagw==
-X-Received: by 2002:adf:dc41:0:b0:205:8df5:464c with SMTP id m1-20020adfdc41000000b002058df5464cmr8525340wrj.445.1650302668005;
-        Mon, 18 Apr 2022 10:24:28 -0700 (PDT)
+        bh=aQSQ3rFgbtx2uK9m2z/GVujlZILQ2CH4ujph93EeIdo=;
+        b=8Jhkna0KeqP4EjFyVD7OenesYzivRpPbctHCwuFkIyzIzOBmtZa8XEVPCHsnFseIEg
+         cCOugatD/56A593QO503++lTxG9n6RsXJZjvEfo9p+HuwIk1ogz/d6aT90NT19cjuQZP
+         3gknVa9HkyFyHXjBtHx+vq4VqUn0JIC4TfIyjhw+GIgcrT+VwZhm/iXh+P6TSadlHyEq
+         AsO2kcqBRqWU5RdIpSHq1WLniS61nVGptG+Z9ymhhdXcIw6kLlSILj0GBMu+Dl+AbGML
+         uwomJoZ3S2dq3SMBSKucatE/hGMrmNUOjhZFeiLhfY7oO+IhUgDkZuKqWHx/taZ5WUDV
+         ZZXg==
+X-Gm-Message-State: AOAM533dLiwmAwncHLGObpFKIBWsbTEny4exGhYRPfuFpK4Flkhu7ska
+        8qikhFbU5wtq/jPpLavIkjFOEIlGaP6ZwQ==
+X-Google-Smtp-Source: ABdhPJwdTKmZRX/0lbGnTY4LbcbPuBDMFgzDt8V0xVvdFGw3NbnBRg8Jv6CQAC14AjwRWW4Ufua1DA==
+X-Received: by 2002:adf:ee81:0:b0:206:1b32:d6f2 with SMTP id b1-20020adfee81000000b002061b32d6f2mr8699870wro.144.1650302670869;
+        Mon, 18 Apr 2022 10:24:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.27
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 10:24:27 -0700 (PDT)
+        Mon, 18 Apr 2022 10:24:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,14 +56,17 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Albert Cui <albertqcui@gmail.com>,
         "Robin H . Johnson" <robbat2@gentoo.org>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: [RFC PATCH v2 27/36] protocol-caps: implement cap_features()
-Date:   Mon, 18 Apr 2022 19:23:44 +0200
-Message-Id: <RFC-patch-v2-27.36-5e8cec1e193-20220418T165545Z-avarab@gmail.com>
+        Teng Long <dyroneteng@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH v2 30/36] connect: implement get_recommended_features()
+Date:   Mon, 18 Apr 2022 19:23:47 +0200
+Message-Id: <RFC-patch-v2-30.36-e834e633e84-20220418T165545Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
 In-Reply-To: <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
 References: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com> <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,122 +74,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The 'features' capability sends a list of "key=value" pairs from the
-server. These are a set of fixed config values, all prefixed with
-"serve." to avoid conflicting with other config values of similar names.
+This method allows a client to request and parse the 'features' capability
+of protocol v2. The response is expected to be a list of 'key=value'
+lines, but this implementation does no checking of the lines, expecting
+a later parse of the lines to be careful of the existence of that '='
+character.
 
-The initial set chosen here are:
+This change is based on an earlier patch [1] written for a similar
+capability.
 
-* bundleURI: Allow advertising one or more bundle servers by URI.
+[1] https://lore.kernel.org/git/RFC-patch-04.13-21caf01775-20210805T150534Z-avarab@gmail.com/
 
-* partialCloneFilter: Advertise one or more recommended partial clone
-  filters.
-
-* sparseCheckout: Advertise that this repository recommends using the
-  sparse-checkout feature in cone mode.
-
-The client will have the choice to enable these features.
-
-RFC-TODO: Create Documentation/config/serve.txt
-
+Co-authored-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- protocol-caps.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++
- protocol-caps.h |  1 +
- 2 files changed, 67 insertions(+)
+ connect.c | 36 ++++++++++++++++++++++++++++++++++++
+ remote.h  |  4 ++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/protocol-caps.c b/protocol-caps.c
-index bbde91810ac..88b01c4133e 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -8,6 +8,7 @@
- #include "object-store.h"
- #include "string-list.h"
- #include "strbuf.h"
-+#include "config.h"
- 
- struct requested_info {
- 	unsigned size : 1;
-@@ -111,3 +112,68 @@ int cap_object_info(struct repository *r, struct packet_reader *request)
- 
- 	return 0;
+diff --git a/connect.c b/connect.c
+index a8fdb5255f7..1739d1f8a5f 100644
+--- a/connect.c
++++ b/connect.c
+@@ -591,6 +591,42 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 	return list;
  }
-+
-+static void send_lines(struct repository *r, struct packet_writer *writer,
-+		       struct string_list *str_list)
+ 
++int get_recommended_features(int fd_out, struct packet_reader *reader,
++			     struct string_list *list, int stateless_rpc)
 +{
-+	struct string_list_item *item;
++	int line_nr = 1;
 +
-+	if (!str_list->nr)
-+		return;
++	server_supports_v2("features", 1);
 +
-+	for_each_string_list_item (item, str_list) {
-+		packet_writer_write(writer, "%s", item->string);
++	/* (Re-)send capabilities */
++	send_capabilities(fd_out, reader);
++
++	/* Send command */
++	packet_write_fmt(fd_out, "command=features\n");
++	packet_delim(fd_out);
++	packet_flush(fd_out);
++
++	/* Process response from server */
++	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
++		const char *line = reader->line;
++		line_nr++;
++
++		string_list_append(list, line);
 +	}
-+}
 +
-+int cap_features(struct repository *r, struct packet_reader *request)
-+{
-+	struct packet_writer writer;
-+	struct string_list feature_list = STRING_LIST_INIT_DUP;
-+	int i = 0;
-+	const char *keys[] = {
-+		"bundleuri",
-+		"partialclonefilter",
-+		"sparsecheckout",
-+		NULL
-+	};
-+	struct strbuf serve_feature = STRBUF_INIT;
-+	struct strbuf key_equals_value = STRBUF_INIT;
-+	size_t len;
-+	strbuf_add(&serve_feature, "serve.", 6);
-+	len = serve_feature.len;
++	if (reader->status != PACKET_READ_FLUSH)
++		return error(_("expected flush after features listing"));
 +
-+	packet_writer_init(&writer, 1);
-+
-+	while (keys[i]) {
-+		struct string_list_item *item;
-+		const struct string_list *values = NULL;
-+		strbuf_setlen(&serve_feature, len);
-+		strbuf_addstr(&serve_feature, keys[i]);
-+
-+		values = repo_config_get_value_multi(r, serve_feature.buf);
-+
-+		if (values) {
-+			for_each_string_list_item(item, values) {
-+				strbuf_reset(&key_equals_value);
-+				strbuf_addstr(&key_equals_value, keys[i]);
-+				strbuf_addch(&key_equals_value, '=');
-+				strbuf_addstr(&key_equals_value, item->string);
-+
-+				string_list_append(&feature_list, key_equals_value.buf);
-+			}
-+		}
-+
-+		i++;
-+	}
-+	strbuf_release(&serve_feature);
-+	strbuf_release(&key_equals_value);
-+
-+	send_lines(r, &writer, &feature_list);
-+
-+	string_list_clear(&feature_list, 1);
-+
-+	packet_flush(1);
-+
++	/*
++	 * Might die(), but obscure enough that that's OK, e.g. in
++	 * serve.c, we'll call BUG() on its equivalent (the
++	 * PACKET_READ_RESPONSE_END check).
++	 */
++	check_stateless_delimiter(stateless_rpc, reader,
++		_("expected response end packet after features listing"));
 +	return 0;
 +}
-diff --git a/protocol-caps.h b/protocol-caps.h
-index 15c4550360c..681d2106d88 100644
---- a/protocol-caps.h
-+++ b/protocol-caps.h
-@@ -4,5 +4,6 @@
- struct repository;
- struct packet_reader;
- int cap_object_info(struct repository *r, struct packet_reader *request);
-+int cap_features(struct repository *r, struct packet_reader *request);
++
+ const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
+ {
+ 	int len;
+diff --git a/remote.h b/remote.h
+index 571338510a8..bccb8484dbd 100644
+--- a/remote.h
++++ b/remote.h
+@@ -242,6 +242,10 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
  
- #endif /* PROTOCOL_CAPS_H */
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
+ 
++/* Used for protocol v2 in order to retrieve recommended features */
++int get_recommended_features(int fd_out, struct packet_reader *reader,
++			     struct string_list *list, int stateless_rpc);
++
+ /*
+  * Remove and free all but the first of any entries in the input list
+  * that map the same remote reference to the same local reference.  If
 -- 
 2.36.0.rc2.902.g60576bbc845
 
