@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F16DC433FE
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 16:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6928C433EF
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 16:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240959AbiDRQcY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 12:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
+        id S235295AbiDRQct (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 12:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231876AbiDRQcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 12:32:10 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF9530556
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:21 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id m14so19133994wrb.6
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:21 -0700 (PDT)
+        with ESMTP id S232389AbiDRQcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 12:32:11 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE223057F
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:26 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id m14so19134253wrb.6
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y6FmAOoYoIpJo1UP9zYO93zLzP89TBaCAy2EkkOpXbY=;
-        b=dLNcrxpTbSStUJ3alH+buxYGsP6LY/L9457pimXxQqoq1OJaUWZua4Wwl0DqYTBw3b
-         EPkW36d58etghud+7FRNV8jZEoT4mZrwocw55fMTdRGmb2ayyLhF99f0Q9dSwJ1iGn+A
-         KOXlGj2NhLGxqnOqjx14EI+u9qHsjtXOVuF+0UhXBMe3DlOFioxA3ILiLIl4BaDgP7fC
-         PcV8YcmDzpwfNSrqDzvV+jkMXM/GOruydOq7gmN48y8PB65c5PPxQThoEW0i49to/yEL
-         0IYmX70srcWac4wM8G7qtpVAMBGteVFfUkZSFAb1s+AU4Potkq8BUDL7BMPlmmx7j7Vp
-         HnDQ==
+        bh=N7Cn/RuPZKhL6tMpgMCHFX9Zq6zyoq+2eN9f42cxcfw=;
+        b=pYxOBhfmU0IBvU0dpCvisKa4UI5lUfKaPJO/2igf7J1W5KfG7MuE4L1jeQhbNnNF2w
+         KUKhV8JQMYl+CyXe7SRKYgikTyxrDvSzSGHv3x2VzDTYjngPmddz7vofE1cgfM+v/Dh5
+         h5mkr4xyxzwhDazdarrFDGAWAttG7g3p6W7T26XppEHw2qiCWyADBGtHr7woxzxeVasd
+         RRt12eLHSAai9lsLMj+WKZ69qqkJs+mtmkJlI7cukC30WeWg+JRw/FsYx+yevU4W8+7+
+         yY2W5lficIVcuNAIbQY3CyTl7JfPkBOhAG+/Rw3IsqAx8tedH3y2Uj3kRzNvq9yvw6Nr
+         J4og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y6FmAOoYoIpJo1UP9zYO93zLzP89TBaCAy2EkkOpXbY=;
-        b=BfnbHEF/TR1U5B7Es7tVByonHEqhPj2/Aucf/PQamT+3GVpizJEViHqxlCjwx7j3C4
-         3PyCRMsnnyTBA6fG0piEgfN1ezOSs1vRK40PuuqAuN3JPJn7oRsO5xwV6Prme+V2PQV8
-         /QDaatiCP4bnQnEtilz/BSfJEFcbIUW6P8Qn/OPrCWGD3ND7K830o5YnTxn1iOYnur3z
-         Wd0E+dYzygq6ItGeYtWiURBIlSINDh8mbJiqhATniQIXLZ6yEbz/F0M6+3i5jJYNIp/+
-         z7ucjSYXlyk5XEdI4GQmcosjP/V6Y+ED3ICp8lJ0HL1qrd8AkovYxADpnnrYZk55V30f
-         yVbw==
-X-Gm-Message-State: AOAM5325OxowpDbUq2n6t/5AqJg+gIAii779TZDy76Rmy70o/CffDbqT
-        ZDkLBQ8EHQmpV5GQrzisD9ekzZmDkySqRg==
-X-Google-Smtp-Source: ABdhPJxYvcdtUz8k4a/wtKFgjwo4lVn/y/5zvkaCPpG/WqfPP/GwVPBV7UCscSNwCwp0RhSaOQsZHw==
-X-Received: by 2002:a5d:4ed2:0:b0:207:b7f7:d02f with SMTP id s18-20020a5d4ed2000000b00207b7f7d02fmr8864932wrv.593.1650299359874;
-        Mon, 18 Apr 2022 09:29:19 -0700 (PDT)
+        bh=N7Cn/RuPZKhL6tMpgMCHFX9Zq6zyoq+2eN9f42cxcfw=;
+        b=INaQYXWUyWcTllxDgnKW7RINz7oEWd8giKlGNTu0VZvBb+r+VqeAfYfMBnXCOVEwVr
+         Pp2XyOVjOJaNXwfJnNTBcWhU4/keRwJO6kKk94AUhQ2mYRcKD+zkWxqLb0axAIR1iTaq
+         gteHKC+Rnn+JKp/M+ac/9SPWncTLERjVvliKaoppTGMZYRxCbi7YCOPLmzVpNmAXa2C6
+         rk08DxI9iMI6L3P0ZGte/ISCqiFjXdOTLqffXnGKyQ0ZNL46T+l28cek3NfXf6jeovtV
+         MbTsjjJOQgoLH90g+zYUFHu0JPvnWXk8yWlzI26fWrc72jQHHSPw3qapilsdVO2Huv7J
+         W4+g==
+X-Gm-Message-State: AOAM532KbznXUVWVE66WHCK3BFHF3iLrvxz6MuQ3B04bAarWtrYb4gmP
+        eVrvHGXMfe/4hj1O2i0LkBLTKEuLaDw6yg==
+X-Google-Smtp-Source: ABdhPJwa37tXxCVu8Fl6VcueanRPac4Dz7pwL/5WkWkWcl/r1343Fcco1Ja4ANiiKcL8I6G2WgLxwA==
+X-Received: by 2002:adf:efc1:0:b0:207:8436:20ab with SMTP id i1-20020adfefc1000000b00207843620abmr8775759wrp.622.1650299364761;
+        Mon, 18 Apr 2022 09:29:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b0038e6c62f527sm15701311wmp.14.2022.04.18.09.29.18
+        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b0038e6c62f527sm15701311wmp.14.2022.04.18.09.29.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 09:29:19 -0700 (PDT)
+        Mon, 18 Apr 2022 09:29:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 08/31] CI: have "static-analysis" run a "make ci-static-analysis" target
-Date:   Mon, 18 Apr 2022 18:28:45 +0200
-Message-Id: <patch-v4-08.31-64a0a1fc8ce-20220418T132809Z-avarab@gmail.com>
+Subject: [PATCH v4 13/31] CI: remove "run-build-and-tests.sh", run "make [test]" directly
+Date:   Mon, 18 Apr 2022 18:28:50 +0200
+Message-Id: <patch-v4-13.31-e0ce614eb6d-20220418T132809Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
 In-Reply-To: <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
 References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com> <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
@@ -76,145 +76,332 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make it easier to run the CI logic locally by creating
-"ci-static-analysis" target.
+Remove the already thin "ci/run-build-and-tests.sh" wrapper and
+instead make the CI run "make" or "make test" directly. By doing this
+we'll be able to easily see at a glance whether our failure was in the
+compilation or testing, whether that's via human eyes or improve
+machine readability.
 
-Now the "check-coccicheck" logic added in 0860a7641ba (travis-ci: fail
-if Coccinelle static analysis found something to transform,
-2018-07-23) can be easily tested outside of CI, and likewise the
-sanity check added in 0e7696c64db (ci: disallow directional
-formatting, 2021-11-04).
+We also need to run our new "ci/check-unignored-build-artifacts.sh" on
+success() in the CI now, just like we already had a step conditional
+on failure() running ci/print-test-failures.sh.
 
-These targets could be improved, the "hdr-check" target will re-do all
-of its work every time it's run, and could with a change similar to my
-c234e8a0ecf (Makefile: make the "sparse" target non-.PHONY,
-2021-09-23). The same goes for the new
-"ci-check-directional-formatting" target.
+The reason we used a "ci/run-build-and-tests.sh" wrapper in the first
+place had to do with Travis CI-specific constraints that no longer
+apply to us, as the Travis CI support has been removed.
 
-But without those improvements being able to easily run a 1=1
-equivalent of the checks we do in CI during a local build is already
-an improvement. Subsequent commits will expand on this ability.
+Instead we can configure the CI in an earlier step by running
+"ci/lib.sh", which under GitHub CI will write the environment
+variables we need to the "$GITHUB_ENV" file.
 
-This change will also make the CI check faster, since we can take
-advantage of parallelism. The "make coccicheck" takes a very long
-time, and at the tail end we might only have one job pegging 100% of
-one CPU core for a long time. Now any extra cores will be free to run
-the rest of the targets under "ci-static-analysis".
+We'll then have access to them in subsequent steps, and crucially
+those variables will be prominently visible at the start of each step
+via an expandable drop-down in the UI.drop-do.
+
+I.e. this changes the CI run from a top-down flow like (pseudocode):
+
+ - job:
+   - step1:
+     - use ci/lib.sh to set env vars
+     - run a script like ci/run-build-and-tests.sh
+   - step2:
+     - if: failure()
+     - use ci/lib.sh to set env vars
+     - run ci/print-test-failures.sh
+
+To:
+
+ - job:
+   - step1:
+     - set variables in $GITHUB_ENV using ci/lib.sh
+   - step2:
+     - make
+   - step3:
+     - make test
+   - step4:
+     - if: failure()
+     - run ci/print-test-failures.sh
+   - step5:
+     - if: success()
+     - run ci/check-unignored-build-artifacts.sh
+
+There is a proposal[2] to get some of the benefits of this approach by
+not re-arranging our variable setup in this way, but to instead use
+the GitHub CI grouping syntax to focus on the relevant parts of "make"
+or "make test" when we have failures.
+
+Doing it this way makes for better looking GitHub CI UI, and lays much
+better ground work for our CI going forward. Because:
+
+ * The CI logic will be more portable to a future CI system, since a
+   common feature of them is to run various commands in sequence, but
+   a future system won't necessarily support the GitHub-specifics
+   syntax of "grouping" output within a "step".
+
+   Even if those systems don't support a "$GITHUB_ENV" emulating will
+   be much easier than to deal with some CI-specific grouping syntax.
+
+ * At the start of every step the GitHub CI presents an expandable
+   list of environment variables from "$GITHUB_ENV". We'll now see
+   exactly what variables affected that step (although we currently
+   overshoot that a bit, and always define all variables).
+
+ * CI failures will be easier to reproduce locally, as this makes the
+   relevant ci/* scripts something that sets up our environment, but
+   leaves "make" and "make test" working as they do locally.
+
+   To reproduce a run the user only needs to set the variables
+   discussed in the drop-down above, either manually or by running
+   "ci/lib.sh".
+
+ * The output will be less verbose. The "ci/lib.sh" script uses "set
+   -x", and before this e.g. "ci/static-analysis.sh" would start with
+   40 lines of trace output, culminating in using "export" to export
+   the relevant environment variables.
+
+   Now that verbosity is in the earlier "ci/lib.sh" step, and not in
+   any subsequent one. The "make" targets then start out with the
+   relevant non-trace output right away.
+
+ * If we do want to use the grouping syntax within a "step" it'll now
+   be easier to do so. It doesn't support nesting, so we'd have to
+   make a choice between using it for e.g. "make" v.s. "make test", or
+   individual test failures. See "sadly" in [3].
+
+1. https://lore.kernel.org/git/211120.86k0h30zuw.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/pull.1117.git.1643050574.gitgitgadget@gmail.com/
+3. https://lore.kernel.org/git/9333ba781b8240f704e739b00d274f8c3d887e39.1643050574.git.gitgitgadget@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  3 +--
- Makefile                   | 28 ++++++++++++++++++++++++++++
- ci/run-static-analysis.sh  | 30 ------------------------------
- shared.mak                 |  1 +
- 4 files changed, 30 insertions(+), 32 deletions(-)
- delete mode 100755 ci/run-static-analysis.sh
+ .github/workflows/main.yml            | 14 ++++++--
+ ci/check-unignored-build-artifacts.sh |  8 +++++
+ ci/install-dependencies.sh            |  4 +++
+ ci/lib.sh                             | 36 +++++++++++++++++++-
+ ci/make-test-artifacts.sh             |  2 --
+ ci/run-build-and-tests.sh             | 47 ---------------------------
+ ci/run-test-slice.sh                  |  2 --
+ ci/test-documentation.sh              |  1 -
+ 8 files changed, 58 insertions(+), 56 deletions(-)
+ create mode 100755 ci/check-unignored-build-artifacts.sh
+ delete mode 100755 ci/run-build-and-tests.sh
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 309b9141249..ad752010102 100644
+index ad752010102..c83f6a21ca3 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -317,8 +317,7 @@ jobs:
+@@ -268,7 +268,10 @@ jobs:
      steps:
      - uses: actions/checkout@v2
      - run: ci/install-dependencies.sh
--    - run: ci/run-static-analysis.sh
--    - run: ci/check-directional-formatting.bash
-+    - run: make ci-static-analysis
+-    - run: ci/run-build-and-tests.sh
++    - run: ci/lib.sh
++    - run: make
++    - run: make test
++      if: success()
+     - run: ci/print-test-failures.sh
+       if: failure()
+     - name: Upload failed tests' directories
+@@ -292,6 +295,7 @@ jobs:
+           image: daald/ubuntu32:xenial
+         - jobname: pedantic
+           image: fedora
++          skip-tests: no
+     env:
+       jobname: ${{matrix.vector.jobname}}
+     runs-on: ubuntu-latest
+@@ -299,9 +303,12 @@ jobs:
+     steps:
+     - uses: actions/checkout@v1
+     - run: ci/install-docker-dependencies.sh
+-    - run: ci/run-build-and-tests.sh
++    - run: ci/lib.sh
++    - run: make
++    - run: make test
++      if: success() && matrix.vector.skip-tests != 'no'
+     - run: ci/print-test-failures.sh
+-      if: failure()
++      if: failure() && matrix.vector.skip-tests != 'no'
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v1
+@@ -317,6 +324,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
++    - run: ci/lib.sh
+     - run: make ci-static-analysis
    sparse:
      needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-diff --git a/Makefile b/Makefile
-index f8bccfab5e9..8717ea7e745 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3031,6 +3031,20 @@ coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
- # See contrib/coccinelle/README
- coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
- 
-+.PHONY: check-coccicheck
-+check-coccicheck: coccicheck
-+	$(QUIET_CHECK)for cocci_patch in contrib/coccinelle/*.patch; do \
-+		if test -s "$$cocci_patch"; then \
-+			echo "Coccinelle suggests the following changes in '$$cocci_patch':"; \
-+			cat "$$cocci_patch"; \
-+			fail=UnfortunatelyYes; \
-+		fi \
-+	done; \
-+	if test -n "$$fail"; then \
-+		echo "error: Coccinelle suggested some changes"; \
-+		exit 1; \
-+	fi
-+
- .PHONY: coccicheck coccicheck-pending
- 
- ### Installation rules
-@@ -3466,3 +3480,17 @@ $(FUZZ_PROGRAMS): all
- 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
- 
- fuzz-all: $(FUZZ_PROGRAMS)
-+
-+### CI "check" targets
+diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
+new file mode 100755
+index 00000000000..56d04b0db9a
+--- /dev/null
++++ b/ci/check-unignored-build-artifacts.sh
+@@ -0,0 +1,8 @@
++#!/bin/sh
 +#
-+# These targets are run from the CI, see .github/workflows/main.yml,
-+# but can also be run manually to run the same assertions locally.
++# Check whether the build created anything not in our .gitignore
++#
 +
-+.PHONY: ci-check-directional-formatting
-+ci-check-directional-formatting:
-+	$(QUIET_CHECK)ci/check-directional-formatting.bash
++. ${0%/*}/lib.sh
 +
-+.PHONY: ci-static-analysis
-+ci-static-analysis: ci-check-directional-formatting
-+ci-static-analysis: check-coccicheck
-+ci-static-analysis: hdr-check
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
++check_unignored_build_artifacts
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 34b4400f38b..01006379fd0 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -22,6 +22,10 @@ ubuntu-latest)
+ 	P4_PATH="$HOME/custom/p4"
+ 	GIT_LFS_PATH="$HOME/custom/git-lfs"
+ 	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
++	if test -n "$GITHUB_PATH"
++	then
++		echo "$PATH" >>"$GITHUB_PATH"
++	fi
+ 
+ 	P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
+ 	LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 3727e6ec2f9..cc9a368be42 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -1,3 +1,5 @@
++#!/bin/sh
++
+ # Library of functions shared by all CI scripts
+ 
+ # Set 'exit on error' for all CI scripts to let the caller know that
+@@ -39,7 +41,10 @@ setenv () {
+ 	val=$2
+ 	shift 2
+ 
+-	eval "export $key=\"$val\""
++	if test -n "$GITHUB_ENV"
++	then
++		echo "$key=$val" >>"$GITHUB_ENV"
++	fi
+ }
+ 
+ check_unignored_build_artifacts ()
+@@ -109,6 +114,35 @@ macos-latest)
+ esac
+ 
+ case "$jobname" in
++linux-gcc)
++	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME main
++	;;
++linux-TEST-vars)
++	setenv --test GIT_TEST_SPLIT_INDEX yes
++	setenv --test GIT_TEST_MERGE_ALGORITHM recursive
++	setenv --test GIT_TEST_FULL_IN_PACK_ARRAY true
++	setenv --test GIT_TEST_OE_SIZE 10
++	setenv --test GIT_TEST_OE_DELTA_SIZE 5
++	setenv --test GIT_TEST_COMMIT_GRAPH 1
++	setenv --test GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
++	setenv --test GIT_TEST_MULTI_PACK_INDEX 1
++	setenv --test GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP 1
++	setenv --test GIT_TEST_ADD_I_USE_BUILTIN 1
++	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME master
++	setenv --test GIT_TEST_WRITE_REV_INDEX 1
++	setenv --test GIT_TEST_CHECKOUT_WORKERS 2
++	;;
++linux-clang)
++	setenv --test GIT_TEST_DEFAULT_HASH sha1
++	;;
++linux-sha256)
++	setenv --test GIT_TEST_DEFAULT_HASH sha256
++	;;
++pedantic)
++	# Don't run the tests; we only care about whether Git can be
++	# built.
++	setenv --build DEVOPTS pedantic
++	;;
+ linux32)
+ 	CC=gcc
+ 	;;
+diff --git a/ci/make-test-artifacts.sh b/ci/make-test-artifacts.sh
+index 646967481f6..45298562982 100755
+--- a/ci/make-test-artifacts.sh
++++ b/ci/make-test-artifacts.sh
+@@ -8,5 +8,3 @@ mkdir -p "$1" # in case ci/lib.sh decides to quit early
+ . ${0%/*}/lib.sh
+ 
+ make artifacts-tar ARTIFACTS_DIRECTORY="$1"
+-
+-check_unignored_build_artifacts
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
 deleted file mode 100755
-index 5a87b1cac96..00000000000
---- a/ci/run-static-analysis.sh
+index 35d45a9373e..00000000000
+--- a/ci/run-build-and-tests.sh
 +++ /dev/null
-@@ -1,30 +0,0 @@
+@@ -1,47 +0,0 @@
 -#!/bin/sh
 -#
--# Perform various static code analysis checks
+-# Build and test Git
 -#
 -
 -. ${0%/*}/lib.sh
 -
--make coccicheck
+-export MAKE_TARGETS="all test"
 -
--set +x
+-case "$jobname" in
+-linux-gcc)
+-	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME main
+-	;;
+-linux-TEST-vars)
+-	setenv --test GIT_TEST_SPLIT_INDEX yes
+-	setenv --test GIT_TEST_MERGE_ALGORITHM recursive
+-	setenv --test GIT_TEST_FULL_IN_PACK_ARRAY true
+-	setenv --test GIT_TEST_OE_SIZE 10
+-	setenv --test GIT_TEST_OE_DELTA_SIZE 5
+-	setenv --test GIT_TEST_COMMIT_GRAPH 1
+-	setenv --test GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS 1
+-	setenv --test GIT_TEST_MULTI_PACK_INDEX 1
+-	setenv --test GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP 1
+-	setenv --test GIT_TEST_ADD_I_USE_BUILTIN 1
+-	setenv --test GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME master
+-	setenv --test GIT_TEST_WRITE_REV_INDEX 1
+-	setenv --test GIT_TEST_CHECKOUT_WORKERS 2
+-	;;
+-linux-clang)
+-	setenv --test GIT_TEST_DEFAULT_HASH sha1
+-	;;
+-linux-sha256)
+-	setenv --test GIT_TEST_DEFAULT_HASH sha256
+-	;;
+-pedantic)
+-	# Don't run the tests; we only care about whether Git can be
+-	# built.
+-	setenv --build DEVOPTS pedantic
+-	export MAKE_TARGETS=all
+-	;;
+-esac
 -
--fail=
--for cocci_patch in contrib/coccinelle/*.patch
--do
--	if test -s "$cocci_patch"
--	then
--		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
--		cat "$cocci_patch"
--		fail=UnfortunatelyYes
--	fi
--done
+-# Any new "test" targets should not go after this "make", but should
+-# adjust $MAKE_TARGETS. Otherwise compilation-only targets above will
+-# start running tests.
+-make $MAKE_TARGETS
+-check_unignored_build_artifacts
+diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+index b9a682b4bcd..70326961454 100755
+--- a/ci/run-test-slice.sh
++++ b/ci/run-test-slice.sh
+@@ -8,5 +8,3 @@
+ make --quiet -C t T="$(cd t &&
+ 	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
+ 	tr '\n' ' ')"
 -
--if test -n "$fail"
--then
--	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
--	exit 1
--fi
--
--make hdr-check ||
--exit 1
-diff --git a/shared.mak b/shared.mak
-index 50d4596f0d6..83e0aa16e7d 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -68,6 +68,7 @@ ifndef V
- 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
- 	QUIET_RC       = @echo '   ' RC $@;
- 	QUIET_SPATCH   = @echo '   ' SPATCH $<;
-+	QUIET_CHECK    = @echo '   ' CHECK $@;
+-check_unignored_build_artifacts
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index 41e2b126311..6b5cce03bd7 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -39,4 +39,3 @@ test -s Documentation/git.html
+ grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
  
- ## Used in "Documentation/Makefile"
- 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ rm -f stdout.log stderr.log stderr.raw
+-check_unignored_build_artifacts
 -- 
 2.36.0.rc2.898.gdf6bbac50ff
 
