@@ -2,99 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54526C433F5
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 18:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23028C433EF
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 18:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347395AbiDRSkx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 14:40:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59936 "EHLO
+        id S1347533AbiDRS7i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 14:59:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbiDRSkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 14:40:52 -0400
-Received: from smtp-out-4.talktalk.net (smtp-out-4.talktalk.net [62.24.135.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D180411A2C
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:38:11 -0700 (PDT)
+        with ESMTP id S243795AbiDRS7h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 14:59:37 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E91531372
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:56:57 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id u17-20020a05600c211100b0038eaf4cdaaeso72797wml.1
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 11:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DIR9tHVM/15PJ7HOI0ujpLaFd4zl6fG4GzTlQ9UnbDg=;
+        b=UIztwgxgZ1osl4Wi3YwhXKP0DQw1hjC1c+eZJ3545p1en/PK4/HFfCqYUdGVExNINs
+         eIhxAZ3zEu3N7zKJgNt3wV927xpd+bnWnvDAU6OTaE0MXIeGf83XZ4rGSom+EzMkTyhJ
+         +90M2gJV4hL6QeE00ggrUXEmmI80tqv5iypimXmI/xLv/GW8VD/n3uskvwDz5t2kEJRt
+         6+zs2MowrkDAem3GhuadHx8DMUw1uE1qkq1YMJ7kgqR7Qrvuv1MYSpMTVpf81fhRsRZH
+         ajbDl2+IBu+5oS8g4PwRgvOH26yGnQ5vqWO86wx9mD7p99hKCq+vg/JVHOwwIk/xXt1P
+         noBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DIR9tHVM/15PJ7HOI0ujpLaFd4zl6fG4GzTlQ9UnbDg=;
+        b=EohOqcx9MWeYh4kqqRCvAMOgyaXbN7rKAKNE69/OIE/x78B+YxpPRh9cqrVeb2g+QK
+         f/CmsTa6Js7YZhGZT7vxV5E0LzoEX2W8GVbsvjgUmUKWaJgjdIimRPtQ9gcIOIvRPXQY
+         jAnCsi3zGQ+Aekv4AT8J5aH+MmorMJBhB6SecIOT4r/OPvvKn9CyPqw8ejaKlJNxUmio
+         Kuk/mDTawXyGjIHM05I1SizDfopUMpCoz/S+n+FRp3OzEewpPWKiDbg6va91Z3Q+poNY
+         7dmWL1wg/Kjr4tENgnU3a4bdImqoscT00rN5aA/BAaSBlDxNIc7C2WhlENJFengMI9AL
+         sGyw==
+X-Gm-Message-State: AOAM531FSRJ19+WPkjSQqc+aysZmUDBcU3Bu8xn4LbMHeX1Dn2t8vnqN
+        IsZS+kH+qhgkMZoNFgKodFk=
+X-Google-Smtp-Source: ABdhPJyygRffdMHXVGHKW14tH3wzQDx5e7DJW0/X8QdhcaUf+ESMqh0njtGWornSYry2JpYTb82ROA==
+X-Received: by 2002:a05:600c:281:b0:38e:bc6e:5971 with SMTP id 1-20020a05600c028100b0038ebc6e5971mr12302488wmk.111.1650308215720;
+        Mon, 18 Apr 2022 11:56:55 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.talktalk.net with SMTP
-        id gWGFnys7MW5NogWGGnuTwO; Mon, 18 Apr 2022 19:38:09 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1650307089;
-        bh=GOom4bj1HQnafqxEvgFrnVhTZTx4U0Wu/ZtvqkAPqV0=;
-        h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To;
-        b=S9SQjo6zepRi83AQXXTrdu7uYmn33GxYVj7QFlwn5lMxHqHnOK41vSQjzNvlszya2
-         0+7ZJ0W22ZJNxRhrcd85WGV7Mh6Zz9B58qiBhVhVv+63ZBozsWFgkbp4mvkEUrjGj+
-         TjC3O3B0+r4Vs14xzMEEEJP6ZP5MoY7B+E2LPEpU=
-X-Originating-IP: [31.185.185.192]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=LeRCFQXi c=1 sm=1 tr=0 a=BhDTt+XCViy/yeGwkgzVOQ==:117
- a=BhDTt+XCViy/yeGwkgzVOQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=Ydq8CWi30aKBOekM5k0A:9 a=QEXdDO2ut3YA:10
-Message-ID: <55271bbe-7b6e-7c92-7337-2439a2f5be26@talktalk.net>
-Date:   Mon, 18 Apr 2022 19:38:07 +0100
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c1c9400b0038ecd1ccc17sm18129648wms.35.2022.04.18.11.56.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Apr 2022 11:56:55 -0700 (PDT)
+Message-ID: <0c9c1b37-24eb-3074-18c2-62185af27d43@gmail.com>
+Date:   Mon, 18 Apr 2022 19:56:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 30/31] CI: have osx-gcc use gcc, not clang
+Subject: Re: Review Request (was Re: [PATCH 0/7] rebase: make reflog messages
+ independent of the backend)
 Content-Language: en-GB-large
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+To:     Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
- <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
- <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-In-Reply-To: <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1150.git.1645441854.gitgitgadget@gmail.com>
+ <64cae3bc-e1b9-d118-2d78-208dc772f74a@gmail.com>
+ <CABPp-BGyesv-0upHdipLg+VrA08FV3cD7NrVK9xm4iVgn8iqHQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CABPp-BGyesv-0upHdipLg+VrA08FV3cD7NrVK9xm4iVgn8iqHQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfGURfz4LQR0VCsM1xvR+KXF/PmV5m3ZtzFgC+xTLPip7lzmq9+AMY/CpApgzonIx76tqvpo4y+I0wDr6F5Ld98dCiPo+y9sgIE6LSvKZktxnpA7S6pD+
- hEov3Gl3gWlGU2rO5iSSpL5hqRM+MQI/Ztm4Xwgisv4q2/7nK9XI1vDwThOB89tRoG6OUHDTiHkUrOXOFfPYC9Ud6NxH9vEDg+1IFWUuA5t1oj5ETTFP6MJF
- 8qTxKqDBvfTZari0ZgFbqVa8vKmBAu41m00YZSqVtEZreXL7K5EYP3UK6nAxepQeaxV05N7nwsXwB4oJfzIbm/jyDZRAKvPLPPP9S6xDDuZ2Z/T7GCKFc6tw
- mBOqdrGQQN7a6MO1UMl7BvKLNuMjHyrpcsNMd/ciNCirkzoSxgdG5Wy17hjjWAWWlRc7tmCrUtpAy3AXPFNJWzWaBwNe0k5Z7v1AVKjqDbglw91L8R9Ak73r
- YclDkwI7RU6+QeBOJENlEDon6YQ3xLCcLmZOiAVc4DkU2clcp6OlZYMyjNU=
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/04/2022 17:29, Ævar Arnfjörð Bjarmason wrote:
-> Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
-> "$jobname" to select packages & config, 2021-11-23). In that commit I
-> changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in $PATH points to
-> clang, we need to use gcc-9 instead.
+Hi Elijah
 
-As this is fixing a bug in master, perhaps it would be better as a 
-separate patch that can be merged before this series (this series could 
-be rebased on to the fix)
+On 17/04/2022 03:13, Elijah Newren wrote:
+> On Mon, Apr 4, 2022 at 8:34 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> If anyone has time to review these patches I'd be very grateful. I've
+>> cc'd this message to some list regulars who have reviewed rebase patches
+>> before but if anyone else fancies taking a look at them that would be great.
+> 
+> I apologize for the delay here...especially when it came after you had
+> already waited a month and a half.  (This is the first git thing I've
+> done in over a month, sadly.)  Anyway, I just read through the series
+> and left some comments; mostly looks good but I second the request to
+> split up one of the patches.
 
-Best Wishes
+There's no need to apologize, I'm very grateful for you comments. I'll 
+re-roll with that patch split up.
+
+Thanks
 
 Phillip
 
-> Reported-by: Carlo Arenas <carenas@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   ci/lib.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index ab7546800e0..8f80be4c3df 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -179,7 +179,7 @@ linux-TEST-vars)
->   	;;
->   osx-gcc)
->   	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
-> -	CC=gcc
-> +	CC=gcc-9
->   	;;
->   osx-clang)
->   	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
-
+>> On 21/02/2022 11:10, Phillip Wood via GitGitGadget wrote:
+>>> This is a series of rebase reflog related patches with the aim of unifying
+>>> the reflog messages from the two rebase backends.
+>>>
+>>>    * improve rebase reflog test coverage
+>>>    * rebase --merge: fix reflog messages for --continue and --skip
+>>>    * rebase --apply: respect GIT_REFLOG_ACTION
+>>>    * rebase --abort: improve reflog message
+>>>    * unify reflog messages between the two rebase backends
+>>>
+>>> This series is based on pw/use-inprocess-checkout-in-rebase
+>>>
+>>> Phillip Wood (7):
+>>>     rebase --apply: remove duplicated code
+>>>     rebase --merge: fix reflog when continuing
+>>>     rebase --merge: fix reflog message after skipping
+>>>     rebase --apply: respect GIT_REFLOG_ACTION
+>>>     rebase --apply: make reflog messages match rebase --merge
+>>>     rebase --abort: improve reflog message
+>>>     rebase: cleanup action handling
+>>>
+>>>    builtin/rebase.c          | 144 ++++++++++++-----------------
+>>>    sequencer.c               |   5 ++
+>>>    t/t3406-rebase-message.sh | 185 +++++++++++++++++++++++++++++++-------
+>>>    3 files changed, 214 insertions(+), 120 deletions(-)
+>>>
+>>>
+>>> base-commit: 38c541ce94048cf72aa4f465be9314423a57f445
+>>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1150%2Fphillipwood%2Fwip%2Frebase-reflog-fixes-v1
+>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1150/phillipwood/wip/rebase-reflog-fixes-v1
+>>> Pull-Request: https://github.com/gitgitgadget/git/pull/1150
