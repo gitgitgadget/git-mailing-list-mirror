@@ -2,218 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9CF8C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 01:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8261CC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 07:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234172AbiDRBaH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Apr 2022 21:30:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42862 "EHLO
+        id S236901AbiDRHH3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 03:07:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiDRBaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Apr 2022 21:30:06 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E7812601
-        for <git@vger.kernel.org>; Sun, 17 Apr 2022 18:27:28 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id n18so11222068plg.5
-        for <git@vger.kernel.org>; Sun, 17 Apr 2022 18:27:28 -0700 (PDT)
+        with ESMTP id S232340AbiDRHH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 03:07:27 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B7CDC2
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 00:04:48 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id o127so8238577iof.12
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 00:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dNqFptEY5V/3c7RGvte+x032caC/PSBwVohRuxaayfk=;
-        b=DnvadNk9Iy95GWeZYZNYEgb2Op4KMosVypdSkbN8j/Z+vntOUHxJqK/Bxb48Ab+K+v
-         aYhys9VE6UYuCLTJv8xm6asrrgs2ItCt8SBhTmtA2iDyPFiEPQRvXtTMzmVRZUhQl0uN
-         H5l9tEUXl7vsLLa0MkWadqZCmcQJZHzWBoQRpT3PtJEzJC4TZoId1b/X4fHAw/ONQYht
-         uKwwfxs7aEtEzf87TI13WkBslDnoRs4Y1G3PTssX1fmpMG9q6xw2kR6mxjL5FlYU053W
-         jHnmNq9iusxiiyv2BzG74a92v9qEoMyLLobKBQdm74oHAm6GZL7E5vTjf2ig4kqi+bob
-         +LyA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kapr040vmaKdpfCbTtD69N5qYkAGxoePakxueS0DZts=;
+        b=XaDiXIY54XFTDTOEoywrJF+nTRMm+iA4Txepa8hoy4HBB8biyIiVMNGSB62ovcVhJz
+         sWY09n45N6gsKkco0SxQCyoCdeSYuKttsNEa5QsxL2U9tviT27HAsyqm3mju3PVOe7SI
+         x0ye4kV20duu/z4H1P12kyUJXO1V/v8csDQzkU/BFjglPVJ1sXnisamCoKFaYYw0Wc+J
+         UGFNz4MbIBczSLQj/B9LE5u0X5CyV0zV4nUvLu/68JLFQtQlr6VnM6YzzHc1Ue5z4R6s
+         rV5mxoKEJS4EqE+Nt6MW7iosNLbCy93a+UWp+8mRJz2U/IIfN0VVUzQc7W99kvR6JeUa
+         mW3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dNqFptEY5V/3c7RGvte+x032caC/PSBwVohRuxaayfk=;
-        b=zSUZu2++Tv57/ez2n3MstOTpIw2PIioK/QZJNKriAaOlHW+kzU9ZCnxc9xsRDYeA/Z
-         dyVYAzsgBWUNPvF9DbQn0DTqaEf7bwDy8WjVQh1196+NDaQharLsHWF8rW4quprKS4hY
-         MJb6B2E8MWUhIJ2PxLYlIpsdB24MAKaBE7bn3oXN5A3ta5N3YDTGDDkcIflSBYaAM0BG
-         1rYwODhcUU9t6Qq6TaVtfK9Qfx786qM8fFZ9/i86915ZJTQrJ5Nh+LjouUV4fgMIxAVO
-         z6skhpEOFMrG7YtEAB1we3NRQ7d+ssis7IWXdFKddtLlYbYDh6bQPjX0VI7hJLJMDUhc
-         FuZw==
-X-Gm-Message-State: AOAM531EzeRp49YNzfOco5Gma8Dbl0leqrkbZOaZDEVP7LB4ds3uM2s6
-        xMdGbNecI/vKTUqUqCAd1rC8pdEPjPg=
-X-Google-Smtp-Source: ABdhPJwKvSkE+qJ2zxq/c6KYyUoy3PeXvs0DDQDdhGvCxmSIKYyu+oDNqGw/Eg78DBQji1Fa3/syDA==
-X-Received: by 2002:a17:90b:390d:b0:1d2:7a7d:170e with SMTP id ob13-20020a17090b390d00b001d27a7d170emr6670727pjb.230.1650245247780;
-        Sun, 17 Apr 2022 18:27:27 -0700 (PDT)
-Received: from xavier.lan ([2001:470:b:114::cc1])
-        by smtp.gmail.com with ESMTPSA id c4-20020a62e804000000b0050a4ed8fe7csm6436456pfi.126.2022.04.17.18.27.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Apr 2022 18:27:27 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, liu.denton@gmail.com, sunshine@sunshineco.com,
-        gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] rebase: use correct base for --keep-base when a branch is given
-Date:   Sun, 17 Apr 2022 19:27:16 -0600
-Message-Id: <20220418012716.2683624-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.35.3
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kapr040vmaKdpfCbTtD69N5qYkAGxoePakxueS0DZts=;
+        b=BwP+zqMZnpy87W8TD3RJD0Li2KaDXggmcN/bAv/GiwUfOPJEghDUqJWL18iC3XTZay
+         HW+m2bS3rvJONMy4jsTgopQOhTaA1Vun8guq42Znjfj1c6++jAk7+/cG7acrccMKDdAi
+         8sFd3AultDlCPDHQCIo7ZOpvd+YQvdEwvRujVbQ+n1JeGT/GRLNno1uPCadIPijpMcl6
+         i1r1P7B3ZZeee+8un2LSXKoAtWyhxBGgg46J//2WCFG4EHv1PcFd/ryKXoKWmGhxpA33
+         k4GuwMOnDLjMCPodcKfx4+cSMUHrdlIizUKU1WgMeAW/ZcY+voRJIOM3KIQrPXiDOeuT
+         Zhhw==
+X-Gm-Message-State: AOAM531vucykxjBRyMdLpAiVwjqR51SKoKzEfb8mZiZnC1x2psdUdNlR
+        7TZpIAHigGv5KLa6A4AUq1nudptflp9Zjno5+hv1QGCIGxPXtQ==
+X-Google-Smtp-Source: ABdhPJytJ4hZlzFqrSGU62y16e0pVsVUnFgB7GBB6O/W3C01k79PlrCD4Cdk5fcQwlE2q6pFh/fmNDgS6pZOIcu6H78=
+X-Received: by 2002:a05:6638:1450:b0:323:b114:c831 with SMTP id
+ l16-20020a056638145000b00323b114c831mr4589438jad.285.1650265487418; Mon, 18
+ Apr 2022 00:04:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220413164336.101390-1-eantoranz@gmail.com> <xmqq4k2wap8g.fsf@gitster.g>
+ <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
+ <xmqqbkx2ccj4.fsf@gitster.g> <CAOc6etYwMtfytbw6iRfnJnsexJhe7UydVu0OFUbWP0byS9i=MQ@mail.gmail.com>
+ <CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com>
+ <CAOc6etb7fmO2FAv09+wHsDBwnLsBi+B-CwRarm2tfYS-aUWcfg@mail.gmail.com> <CANiSa6g7ShxTXNEyJEyb==qCYNAMrNf30VkDPaydvOo0Bm+Onw@mail.gmail.com>
+In-Reply-To: <CANiSa6g7ShxTXNEyJEyb==qCYNAMrNf30VkDPaydvOo0Bm+Onw@mail.gmail.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Mon, 18 Apr 2022 09:04:36 +0200
+Message-ID: <CAOc6etZmLusw4fxTx=9Gm6W2L4cSdOKQP_eX+23HGpdd=r1omA@mail.gmail.com>
+Subject: Re: [RFC] introducing git replay
+To:     Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---keep-base rebases onto the merge base of the given upstream and the
-current HEAD regardless of whether a branch is given. This is contrary
-to the documentation and to the option's intended purpose. Instead,
-rebase onto the merge base of the given upstream and the given branch.
+On Sun, Apr 17, 2022 at 7:23 PM Martin von Zweigbergk
+<martinvonz@gmail.com> wrote:
+>
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/git-rebase.txt     |  5 +--
- builtin/rebase.c                 | 55 ++++++++++++++++----------------
- t/t3416-rebase-onto-threedots.sh | 33 +++++++++++++++++++
- 3 files changed, 64 insertions(+), 29 deletions(-)
+>
+> My (Git-compatible) VCS [1] is very relevant to this thread. It always
+> treats the contents of a merge commit as the diff compared to the
+> re-merge (auto-merged) parents. That applies to diffs (like
+> --remerge-diff) and rebases (what Elijah suggested in that link above)
+> . An important part of the solution I went with is to store
+> information about conflicts in the commits. Note that it's a more
+> high-level representation of the conflicts - not conflict *markers* -
+> that's stored in the commits [2]. Adding a new kind of object type is
+> obviously a huge step to take for Git, but perhaps you can consider it
+> as long as these objects are not exchanged. Also, as you have probably
+> noticed with your `git replay` command, this kind of rebasing without
+> touching the working copy or trees can get pretty fast. I didn't see
+> any performance numbers in your original message, but you are probably
+> able to rebase >1k commits per second in the git.git repo [3].
+>
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 9da4647061..262fb01aec 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -215,9 +215,10 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- 
- --keep-base::
- 	Set the starting point at which to create the new commits to the
--	merge base of <upstream> <branch>. Running
-+	merge base of <upstream> and <branch>. Running
- 	'git rebase --keep-base <upstream> <branch>' is equivalent to
--	running 'git rebase --onto <upstream>... <upstream>'.
-+	running
-+	'git rebase --onto <upstream>...<branch> <upstream> <branch>'.
- +
- This option is useful in the case where one is developing a feature on
- top of an upstream branch. While the feature is being worked on, the
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 27fde7bf28..7f3bffc0a2 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1583,33 +1583,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.upstream_arg = "--root";
- 	}
- 
--	/* Make sure the branch to rebase onto is valid. */
--	if (keep_base) {
--		strbuf_reset(&buf);
--		strbuf_addstr(&buf, options.upstream_name);
--		strbuf_addstr(&buf, "...");
--		options.onto_name = xstrdup(buf.buf);
--	} else if (!options.onto_name)
--		options.onto_name = options.upstream_name;
--	if (strstr(options.onto_name, "...")) {
--		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
--			if (keep_base)
--				die(_("'%s': need exactly one merge base with branch"),
--				    options.upstream_name);
--			else
--				die(_("'%s': need exactly one merge base"),
--				    options.onto_name);
--		}
--		options.onto = lookup_commit_or_die(&merge_base,
--						    options.onto_name);
--	} else {
--		options.onto =
--			lookup_commit_reference_by_name(options.onto_name);
--		if (!options.onto)
--			die(_("Does not point to a valid commit '%s'"),
--				options.onto_name);
--	}
--
- 	/*
- 	 * If the branch to rebase is given, that is the branch we will rebase
- 	 * branch_name -- branch/commit being rebased, or
-@@ -1659,6 +1632,34 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
- 
-+	/* Make sure the branch to rebase onto is valid. */
-+	if (keep_base) {
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, options.upstream_name);
-+		strbuf_addstr(&buf, "...");
-+		strbuf_addstr(&buf, branch_name);
-+		options.onto_name = xstrdup(buf.buf);
-+	} else if (!options.onto_name)
-+		options.onto_name = options.upstream_name;
-+	if (strstr(options.onto_name, "...")) {
-+		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
-+			if (keep_base)
-+				die(_("'%s': need exactly one merge base with branch"),
-+				    options.upstream_name);
-+			else
-+				die(_("'%s': need exactly one merge base"),
-+				    options.onto_name);
-+		}
-+		options.onto = lookup_commit_or_die(&merge_base,
-+						    options.onto_name);
-+	} else {
-+		options.onto =
-+			lookup_commit_reference_by_name(options.onto_name);
-+		if (!options.onto)
-+			die(_("Does not point to a valid commit '%s'"),
-+				options.onto_name);
-+	}
-+
- 	if (options.fork_point > 0) {
- 		struct commit *head =
- 			lookup_commit_reference(the_repository,
-diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
-index 3716a42e81..d1db528e25 100755
---- a/t/t3416-rebase-onto-threedots.sh
-+++ b/t/t3416-rebase-onto-threedots.sh
-@@ -129,6 +129,22 @@ test_expect_success 'rebase --keep-base main from topic' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rebase --keep-base main topic from main' '
-+	git reset --hard &&
-+	git checkout topic &&
-+	git reset --hard G &&
-+	git checkout main &&
-+
-+	git rebase --keep-base main topic &&
-+	git rev-parse C >base.expect &&
-+	git merge-base main HEAD >base.actual &&
-+	test_cmp base.expect base.actual &&
-+
-+	git rev-parse HEAD~2 >actual &&
-+	git rev-parse C^0 >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rebase --keep-base main from side' '
- 	git reset --hard &&
- 	git checkout side &&
-@@ -153,6 +169,23 @@ test_expect_success 'rebase -i --keep-base main from topic' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rebase -i --keep-base main topic from main' '
-+	git reset --hard &&
-+	git checkout topic &&
-+	git reset --hard G &&
-+	git checkout main &&
-+
-+	set_fake_editor &&
-+	EXPECT_COUNT=2 git rebase -i --keep-base main topic &&
-+	git rev-parse C >base.expect &&
-+	git merge-base main HEAD >base.actual &&
-+	test_cmp base.expect base.actual &&
-+
-+	git rev-parse HEAD~2 >actual &&
-+	git rev-parse C^0 >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rebase -i --keep-base main from side' '
- 	git reset --hard &&
- 	git checkout side &&
--- 
-2.35.3
-
+Thanks for all your input (I mean, everybody who has jumped into the
+conversation). In my last experiment to get this into rebase (and
+still without moving the working tree), the 900+ commits that make up
+the segment v2.35.0..v2.36.0-rc1 are converted in some 143 ms in my
+computer, which is an aging dinosaur.
