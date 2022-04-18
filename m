@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D641C433FE
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88EF8C433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347023AbiDRR2e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:28:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44972 "EHLO
+        id S243501AbiDRR2j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:28:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347080AbiDRR1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:27:09 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D169634650
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:25 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id bv16so2149780wrb.9
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:25 -0700 (PDT)
+        with ESMTP id S1347085AbiDRR1K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:27:10 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B43CA33E24
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:28 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id y21so7628849wmi.2
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jBTvGKhHNc3huvHcxWb4cjFp5BKNidrzksFvx8jJIKQ=;
-        b=IzK4Xt8xIpTqJD1tRubyWFxKkpxpgo8E1MCZ97pLgriiFHHWmebO+busDWIq8FKleM
-         RabM4owJjx311s2cX67piz721M46Y2IZVMgAu9Xrt3o/K62Xmdnuab2wcoGzanFDqi1p
-         VI2X2rjOCqOHNU/k0MbFq/dB32e9qpOvvhn0JaPtuizeodDNB6xxwEVQz30i0TOzADaI
-         UIS7nZLiuP584unS3fFiGh4n3aTI75MhiY1rnHV27CJovwF2HzCermgUj3krD/fYlULS
-         Kei18rfm++3lS8M24ocqwBF9qeaGn+3zVwsHg76HIXBzMUGSq8ZNX76FByMhhbTav9Gh
-         IvyA==
+        bh=eoV246/1PGHewPN6wt14WplBIDHHlt+glqAO1B1LvWE=;
+        b=kht9xIiZzumXh1U79Lljbtg9gn0rs+pBr9Aviv1ybHnjtfEpzSN7mFKq3bGOt7npZJ
+         HeE12fhr2z1fpAUwmjPO4Pj8e1a5tTM66Jdmy/B10Kin3xhCfWh+OaMVuSv25CEOmEUk
+         w1t+UIROVvw8IErNreEgZ86gUAmFD5ivNqDHdaopwXqvtjYJQLf81fbLHP/xHgMVjdlO
+         GYciVGl85Gmll2YMavbR35D8VbhcjphwZ/kOShxTX07P8Sf9MSBKVxmpt8m9ERTiskFc
+         NwAVBnzNMtigZcTApIswRVzuZUDT5h00UUx84swM6Tu7NueYu+Un4x/IPqerh2acrGE0
+         uzcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jBTvGKhHNc3huvHcxWb4cjFp5BKNidrzksFvx8jJIKQ=;
-        b=iVnhTbXG6AYaL1ehSkoMM4aSEjxB+N+Ihq4riKgFS0K1OlU5pxfahLC3z234pMs5re
-         ++3s1QF61z+4zuaWFkFjpZnSMEa8TbicQ08ylc2IaKsXVMTytUG/ajaxHWhaPTA9ibMr
-         ZVHWDSJFGMrE1oauwZagsMO2Liet/drMZmU0aWH9u3wyCu1aKcanOt4CpyuWHGsxn292
-         xquHlVZxY2Nx8TbD6BqLkcRs07aYz9jglzB90xAAQvEJP2dQgqMe2vILTMEmGK1AE0+Y
-         rBN8xHhACT9g2DIfjSp+RlY6dH42/pvRCl42nv1FHtJ+mk8ac5UrFEztjI7i/XuaF9NF
-         v2NA==
-X-Gm-Message-State: AOAM533ozrIyF5quc7G3mGrnrJ/Et6YmD6bRRs+Ru6CRcbIrlBk63fEt
-        QrTveWKkLZQwN+1o/IAy8QE3IA47IwIG4A==
-X-Google-Smtp-Source: ABdhPJyvvQ3d9D0DtQrqP1AhzWCYJiIHU0DQgnaxBKRsQESKoce8WhbO0gJZtsfcL31DM/VZMusiuA==
-X-Received: by 2002:adf:8123:0:b0:206:1759:f164 with SMTP id 32-20020adf8123000000b002061759f164mr8946788wrm.654.1650302664081;
-        Mon, 18 Apr 2022 10:24:24 -0700 (PDT)
+        bh=eoV246/1PGHewPN6wt14WplBIDHHlt+glqAO1B1LvWE=;
+        b=QNlidt0tHhfyeh6LLu5PW+SdDk7rp43gt/LqWpEOshB70f3uT6fMS0wkY7n0bT3d1m
+         5GOTAB2l2K1juRvnAkszfJ87bCujq4QWLCpcnxhoQZMownSMKxzGmnm6n4t/LAbkLJUq
+         tbSUGjP6f7kwyyIIZ8W3qMuFB2lQqOlqufOQwOTNmuYi7o9GjGjsZMZVRAfgt0MjYD7D
+         AkIZyujY36md+xBhnh6StF1+u7EjjGZNUoJS4JuZt4AIXJQscFogbaW0WMa4gIoDOUUH
+         KsTXL6qSulXa3gHKQtiusVfo4giDxkQ/vzx+7p/CDOGvTlQUSXZFgNRXUFOFhdPWiMqA
+         QQ0A==
+X-Gm-Message-State: AOAM5307odIeN9pvCQs+dV0cWKlECY3UhEU/247VwqkPriGnaVzwbyhr
+        caXxcBXJ+1lyiwQUvbwtPycBiYNKCkrZsQ==
+X-Google-Smtp-Source: ABdhPJxKzP/95U9a8IVeMxNTwKIb/ccF1AUp7dUa3Z5bdbADqOsaawpL05oQIKtUS1jcGh8dl+D9Yw==
+X-Received: by 2002:a05:600c:3b29:b0:38e:bc90:16c with SMTP id m41-20020a05600c3b2900b0038ebc90016cmr16030070wms.143.1650302667064;
+        Mon, 18 Apr 2022 10:24:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.23
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 10:24:23 -0700 (PDT)
+        Mon, 18 Apr 2022 10:24:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Albert Cui <albertqcui@gmail.com>,
         "Robin H . Johnson" <robbat2@gentoo.org>,
         Teng Long <dyroneteng@gmail.com>
-Subject: [RFC PATCH v2 23/36] clone: add --bundle-uri option
-Date:   Mon, 18 Apr 2022 19:23:40 +0200
-Message-Id: <RFC-patch-v2-23.36-62623324d2f-20220418T165545Z-avarab@gmail.com>
+Subject: [RFC PATCH v2 26/36] fetch: fetch bundles before fetching original data
+Date:   Mon, 18 Apr 2022 19:23:43 +0200
+Message-Id: <RFC-patch-v2-26.36-0a238641247-20220418T165545Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
 In-Reply-To: <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
 References: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com> <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
@@ -71,100 +71,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Cloning a remote repository is one of the most expensive operations in
-Git. The server can spend a lot of CPU time generating a pack-file for
-the client's request. The amount of data can clog the network for a long
-time, and the Git protocol is not resumable. For users with poor network
-connections or are located far away from the origin server, this can be
-especially painful.
+If a user cloned using a bundle URI, then they might want to re-use it
+to download new bundles during 'git fetch' before fetching the remaining
+objects from the origin server. Use the 'fetch.bundleURI' config as the
+indicator for whether this extra step should happen.
 
-The 'git bundle fetch' command allows users to bootstrap a repository
-using a set of bundles. However, this would require them to use 'git
-init' first, followed by the 'git bundle fetch', and finally add a
-remote, fetch, and checkout the branch they want.
+Do not fetch bundles if --dry-run is specified.
 
-Instead, integrate this workflow directly into 'git clone' with the
---bundle-uri' option. If the user is aware of a bundle server, then they
-can tell Git to bootstrap the new repository with these bundles before
-fetching the remaining objects from the origin server.
+RFC-TODO: add tests.
 
-RFC-TODO: Document this option in git-clone.txt.
+RFC-TODO: update Documentation/git-fetch.txt
 
-RFC-TODO: I added a comment about the location of this code being
-necessary for the later step of auto-discovering the bundle URI from the
-origin server. This is probably not actually a requirement, but rather a
-pain point around how I implemented the feature. If a --bundle-uri
-option is specified, but SSH is used for the clone, then the SSH
-connection is left open while Git downloads bundles from another server.
-This is sub-optimal and should be reconsidered when fully reviewed.
-
-RFC-TODO: create tests for this option with a variety of URI types.
-
-RFC-TODO: a simple end-to-end test is available at the end of the
-series.
+RFC-TODO: update Documentation/config/
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/clone.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ builtin/fetch.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index e11f4019b87..51141c979fa 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -78,6 +78,7 @@ static int option_filter_submodules = -1;    /* unspecified */
- static int config_filter_submodules = -1;    /* unspecified */
- static struct string_list server_options = STRING_LIST_INIT_NODUP;
- static int option_remote_submodules;
-+static const char *bundle_uri;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e3791f09ed5..ac684bdf252 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -29,6 +29,7 @@
+ #include "commit-graph.h"
+ #include "shallow.h"
+ #include "worktree.h"
++#include "bundle.h"
  
- static int recurse_submodules_cb(const struct option *opt,
- 				 const char *arg, int unset)
-@@ -161,6 +162,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("any cloned submodules will use their remote-tracking branch")),
- 	OPT_BOOL(0, "sparse", &option_sparse_checkout,
- 		    N_("initialize sparse-checkout file to include only files at root")),
-+	OPT_STRING(0, "bundle-uri", &bundle_uri,
-+		   N_("uri"), N_("a URI for downloading bundles before fetching from origin remote")),
- 	OPT_END()
- };
+ #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
  
-@@ -1233,6 +1236,35 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	refs = transport_get_remote_refs(transport, &transport_ls_refs_options);
- 
-+	/*
-+	 * NOTE: The bundle URI download takes place after transport_get_remote_refs()
-+	 * because a later change will introduce a check for recommended features,
-+	 * which might include a recommended bundle URI.
-+	 */
-+
-+	/*
-+	 * Before fetching from the remote, download and install bundle
-+	 * data from the --bundle-uri option.
-+	 */
-+	if (bundle_uri) {
-+		const char *filter = NULL;
-+
-+		if (filter_options.filter_spec.nr)
-+			filter = expand_list_objects_filter_spec(&filter_options);
+@@ -2180,6 +2181,22 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	/* FETCH_HEAD never gets updated in --dry-run mode */
+ 	if (dry_run)
+ 		write_fetch_head = 0;
++	else {
 +		/*
-+		 * Set the config for fetching from this bundle URI in the
-+		 * future, but do it before fetch_bundle_uri() which might
-+		 * un-set it (for instance, if there is no table of contents).
++		 * --dry-run mode skips bundle downloads, which might
++		 * update some refs.
 +		 */
-+		git_config_set("fetch.bundleuri", bundle_uri);
-+		if (filter)
-+			git_config_set("fetch.bundlefilter", filter);
++		char *bundle_uri = NULL;
++		git_config_get_string("fetch.bundleuri", &bundle_uri);
 +
-+		if (!fetch_bundle_uri(bundle_uri, filter))
-+			warning(_("failed to fetch objects from bundle URI '%s'"),
-+				bundle_uri);
++		if (bundle_uri) {
++			char *filter = NULL;
++			git_config_get_string("fetch.bundlefilter", &filter);
++			fetch_bundle_uri(bundle_uri, filter);
++			free(bundle_uri);
++			free(filter);
++		}
 +	}
-+
- 	if (refs)
- 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
  
+ 	if (all) {
+ 		if (argc == 1)
 -- 
 2.36.0.rc2.902.g60576bbc845
 
