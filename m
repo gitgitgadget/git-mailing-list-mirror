@@ -2,175 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96793C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A9EFC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347121AbiDRRgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56068 "EHLO
+        id S1347158AbiDRRk0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241994AbiDRRgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:36:11 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C492E9F6
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:33:31 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id u18so18227210eda.3
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:33:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=xU+Ms2S6xdHuOIszDxVf3l+qtsMbXkKY65H5CX6m2l0=;
-        b=UoeRU6ZgVvDAq+Ioo7ukjopBYznELU/9i3i4tKVty1dXkO02FFyVbzyZiOCfKjwCzF
-         gdL15m4LSJp4wOohuxA038J7zNOPeFgEj/pJQ210f++cpJ3DlgIaE+5vbTsCw6l7ZTCe
-         En4YdQJ9D+R9RQVfjgCyqn25fXq34zue/c2ClrtJatOgkhiIVJf2bbqDf+hkRJlWdE5t
-         +9nUAZSTJrEqKIWlQq4KO4/uQz0kbzrcreLFNVKALa9gOv7ZrYVCy2NsXmisFtjF8AFs
-         Qon/6xe/HAyIMxNhC0QU2UF8Z+aqwzyH9o9ePfO/MBbKGij7uh/9ZnbLrmzlfj3OjiBO
-         jCqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=xU+Ms2S6xdHuOIszDxVf3l+qtsMbXkKY65H5CX6m2l0=;
-        b=rBjlemAI2TcPG9sk+E6JBkcpoEiAu9MY/xeQQ40qNM59FOrSupzI7F3OLeN7l2Ru/a
-         2+9r/x/VDO50oNrg3avgyArijTOYze4hrH1T/K96hL/5BhqR8jEhZuOPo4Py2lAqLIFk
-         SiA3bZt64/lYU36gEn2nclpepbowt45Mj3oQ6f9hN0NlnNUQxQNF3pGyBFrT7Ubs7H0w
-         MMr01hP2EnwlTWGvmti2CIH0O3f7Q+88IBRXKTw2duixCUj2Osjrp1/wFH2emUkcUR5W
-         Rlp7qD2qSttzZqjV7YXyKWokIb2csSVsoCakudyEJqIlkNzgHGL3FTQDO+fWwgSIJNKl
-         XvTQ==
-X-Gm-Message-State: AOAM531FnmHK/YlanpMOVySPz8YPloUE69Esk38JLucLn6plP3dRgA8o
-        nNE9ifHKxWC6xkG1ZehwQko=
-X-Google-Smtp-Source: ABdhPJyk6N5mXA4sSiNr9gcNUWtRWpQDL4CvPhZ7onJkZuq28iy4R/iNtk/oVESqquRXKJ+3fKKGEQ==
-X-Received: by 2002:a05:6402:298b:b0:41d:675f:8b44 with SMTP id eq11-20020a056402298b00b0041d675f8b44mr13181657edb.377.1650303210179;
-        Mon, 18 Apr 2022 10:33:30 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d1-20020a50fe81000000b004197f2ecdc2sm7248515edt.89.2022.04.18.10.33.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 10:33:29 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ngVFg-006jRL-Uk;
-        Mon, 18 Apr 2022 19:33:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] clone: ignore invalid local refs in remote
-Date:   Mon, 18 Apr 2022 19:30:35 +0200
-References: <pull.1214.git.1650301959803.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1214.git.1650301959803.gitgitgadget@gmail.com>
-Message-ID: <220418.86zgki8ffb.gmgdl@evledraar.gmail.com>
+        with ESMTP id S241994AbiDRRkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:40:24 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28533465C
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:37:44 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 262345A410;
+        Mon, 18 Apr 2022 17:37:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1650303464;
+        bh=S/2BNzdhfCHQD7MiUwuIps27314Osnjo9CHiLMWUhiQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0CNF3y50mbGKnW1Qzn4y1LqkaUQuiFTgMBtqu21APvMbiWzVHzxvbjN8/xweBQngF
+         6uCi5VJr88NUyGOtTpjPCfLmmU56aH7RQBg+2VJSHdh5qTNUdIL4MTpIYHZ7nr8rrY
+         Pe1sv+dAn0A26lvINmRYDkXFwIHxPiu9MyQDWjGZwCG6ZH0kcMHiTMPmDdqlL28nIb
+         qTwaIiUJMDBWpmix01FVdjtneCF8DF1fKpNK6UEEfsNfGAlA6+LyxsmiRK7UIkfU0+
+         BpIGikdDh+SKRZ8wRQUQ24uAnAQUWU7iriU7IN7iCtQFgaKJcO10Y1b+UQCdka/R7R
+         8SYYuGYaB2U8l+xCaaMeAsr397S+ujvoxmawNrZ9r4TlKkveMCPw9Sg+IlQuRLe8tw
+         xDhsk5XWl3BS4di/38UpMhiDOKXX2tjGosfQ7ZA36QlNb9WJqxhg+LW2lEn4UR2b84
+         l/sJs2EsLtdtqzMvIHfxExlRX5hQmYNXQk2bG5Yk7DpLIpnVN/W
+Date:   Mon, 18 Apr 2022 17:37:40 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Attila Csosz <csosza@designsoftware.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git bug report - disk errors on Windows after push
+Message-ID: <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Attila Csosz <csosza@designsoftware.com>, git@vger.kernel.org
+References: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xjsfsyCAAKs5qnG4"
+Content-Disposition: inline
+In-Reply-To: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
+User-Agent: Mutt/2.2.3 (2022-04-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Apr 18 2022, Derrick Stolee via GitGitGadget wrote:
+--xjsfsyCAAKs5qnG4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> When cloning directly from a local repository, we load a list of refs
-> based on scanning the $GIT_DIR/refs/ directory of the "server"
-> repository. If files exist in that directory that do not parse as
-> hexadecimal hashes, then the ref array used by write_remote_refs()
-> ends up with some entries with null OIDs. This causes us to hit a BUG()
-> statement in ref_transaction_create():
->
->   BUG: create called without valid new_oid
->
-> This BUG() call used to be a die() until 033abf97f (Replace all
-> die("BUG: ...") calls by BUG() ones, 2018-05-02). Before that, the die()
-> was added by f04c5b552 (ref_transaction_create(): check that new_sha1 is
-> valid, 2015-02-17).
->
-> The original report for this bug [1] mentioned that this problem did not
-> exist in Git 2.27.0. The failure bisects unsurprisingly to 968f12fda
-> (refs: turn on GIT_REF_PARANOIA by default, 2021-09-24). When
-> GIT_REF_PARANOIA is enabled, this case always fails as far back as I am
-> able to successfully compile and test the Git codebase.
->
-> [1] https://github.com/git-for-windows/git/issues/3781
->
-> There are two approaches to consider here. One would be to remove this
-> BUG() statement in favor of returning with an error. There are only two
-> callers to ref_transaction_create(), so this would have a limited
-> impact.
->
-> The other approach would be to add special casing in 'git clone' to
-> avoid this faulty input to the method.
->
-> While I originally started with changing 'git clone', I decided that
-> modifying ref_transaction_create() was a more complete solution. This
-> prevents failing with a BUG() statement when we already have a good way
-> to report an error (including a reason for that error) within the
-> method. Both callers properly check the return value and die() with the
-> error message, so this is an appropriate direction.
->
-> The added test helps check against a regression, but does check that our
-> intended error message is handled correctly.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->     clone: ignore invalid local refs in remote
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1214%2Fderrickstolee%2Frefs-bug-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1214/derrickstolee/refs-bug-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1214
->
->  refs.c                 | 6 ++++--
->  t/t5605-clone-local.sh | 9 +++++++++
->  2 files changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index 1a964505f92..f300f83e4d4 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1111,8 +1111,10 @@ int ref_transaction_create(struct ref_transaction *transaction,
->  			   unsigned int flags, const char *msg,
->  			   struct strbuf *err)
->  {
-> -	if (!new_oid || is_null_oid(new_oid))
-> -		BUG("create called without valid new_oid");
-> +	if (!new_oid || is_null_oid(new_oid)) {
-> +		strbuf_addf(err, "'%s' has a null OID", refname);
-> +		return 1;
-> +	}
->  	return ref_transaction_update(transaction, refname, new_oid,
->  				      null_oid(), flags, msg, err);
->  }
-> diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-> index 7d63365f93a..21ab6192839 100755
-> --- a/t/t5605-clone-local.sh
-> +++ b/t/t5605-clone-local.sh
-> @@ -141,4 +141,13 @@ test_expect_success 'cloning locally respects "-u" for fetching refs' '
->  	test_must_fail git clone --bare -u false a should_not_work.git
->  '
->  
-> +test_expect_success 'local clone from repo with corrupt refs fails gracefully' '
-> +	git init corrupt &&
-> +	test_commit -C corrupt one &&
-> +	echo a >corrupt/.git/refs/heads/topic &&
-> +
-> +	test_must_fail git clone corrupt working 2>err &&
-> +	grep "has a null OID" err
-> +'
-> +
->  test_done
->
-> base-commit: 11cfe552610386954886543f5de87dcc49ad5735
+Hey,
 
-If I change this test to clone from "$PWD/corrupt" instead we get as far
-as dying in "not our ref" in upload-pack", after the "client" said "want
-0000....".
+On 2022-04-18 at 07:47:07, Attila Csosz wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> Pushing to a directory directly.
+>=20
+> What did you expect to happen? (Expected behavior)
+> Good behavior
+>=20
+> What happened instead? (Actual behavior)
+> Disk errors. After pushing to a directory (my origin field is C:\Work for
+> example) the git repository will be corrupted.
+> Moreover causing disk errors not only in the target git bare repository.
+> I've loosed some other files.
+> Cannot be reproduced exactly. However I have decided to report this probl=
+em.
+> I've experienced this problem for several years.
 
-I don't see anything wrong with this narrow fix, but I wonder how close
-we are to just doing something useful here for the user. I.e. if we
-can't parse_object() what we're about to "copy" to e.g. error() on that,
-but carry on cloning the rest if possible.
+There's nothing that Git should be able to do as a normal operating
+system that causes disk errors.  If you're seeing those kinds of errors,
+the likelihood is that your disk is bad and you need to replace it.
 
-We should probably always return a non-zero at the end, suggesting the
-user omit the bad ref with a refspec. But if we did all that we could
-usefully recover partially corrupt-repos in this state...
+Do note that if you're storing your data in a directory managed by a
+cloud syncing service (e.g., Dropbox or OneDrive), then it is known that
+those file systems corrupt Git repositories and you shouldn't use them
+with Git.  That's due to the way they sync data.
+
+However, if this is a regular file system (e.g., NTFS), then Git
+shouldn't be able to cause disk problems, and if it could, that would be
+a serious defect in Windows, so it's almost certainly going to be a
+hardware problem.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--xjsfsyCAAKs5qnG4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYl2h5AAKCRB8DEliiIei
+gR3XAQDkEV87JkhULZZD18XyEcKQAYxsstwBbJ9DbRsM4vYuMQEAxLx6LO3RMu0s
+ELX1UkfNZvnbb7cu8fx05P7iCer59g4=
+=j6En
+-----END PGP SIGNATURE-----
+
+--xjsfsyCAAKs5qnG4--
