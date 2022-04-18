@@ -2,138 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A874EC4332F
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 13:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBF6CC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 15:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241211AbiDRNFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 09:05:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
+        id S1343790AbiDRPZX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 11:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241192AbiDRNCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 09:02:54 -0400
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1834126AE6
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 05:42:59 -0700 (PDT)
-Received: by mail-qv1-xf34.google.com with SMTP id d9so10824175qvm.4
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 05:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=a0cc3LhFR59clah4UPUhfYGztgGXOJDA/fEp8iPFKeo=;
-        b=Q4uKiAQjzIc+tewyajgEiwgXHvz++/c27/s5hFCHG/OTOk/1x6LsJhYkAeRaNjN5rw
-         LrTtKj4J67gNuTVwahLLXXzSv5mPUpRtLqBUORsPMY5MKdbroEUJfj9kQCUylgMS7x92
-         8M/vtvt2I7UWadUGrqeXe9UXyh2FGxJvgZHyoWPCR9v0XNkAVVnmNNzWjkzE7q6YwS5l
-         CJ4lHp8p0i1OWfUrArmoGrXnj3ZnZgMelhKdN76Qs5ERle6Kv7Nv0dKSKyYjS4sngkwY
-         FLk2EIwu/3+3nCSNKleClSkEjOaOqfjGeWLFd3tbjqNZuvM4lxR8/jnobjnD4J6Rga45
-         IOTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=a0cc3LhFR59clah4UPUhfYGztgGXOJDA/fEp8iPFKeo=;
-        b=J3r5MeJtYkr4Ie17Dti/xubqnadtwfJVwRVihna3Bhlc5GpjNBCn0O2kupaTuWtLuv
-         1ozH9nn/AxEKsyFGrpJQXePkdlYE3qlQ7ncMpeZS/WfPwMighuAOaPTlfDezlmCAqk/x
-         zy3+t0SYJ3ZAat7etlpnzU44eog+SsyvYPeUVSAIJIf+KfS8UkHCoGymX26LIRquXjlZ
-         el/eAhkEnY81ezjCFPWWXirysG9RKYHxXj/5G2CwytN6SVPMsULVfnklRpK6ho1tgdD/
-         5frjhbfjio+7KbgXqNo9qTVqV2/+K6/+G6Qxc44cbAIWhKVjKwLp2SMs4ug35k2goJ7w
-         mjDQ==
-X-Gm-Message-State: AOAM532KJR8w9MuYYOmRt/WY0SmabW8liWORl7UsDg5NXE7SD1Wb4Lwy
-        uBwiOJb4j4sQ5wGfsurpvZXO
-X-Google-Smtp-Source: ABdhPJwCumJy4ZuU8VlEUOLOqmhtg1Y+2pAbofzkb1sNyQe1sSUn8qF0PIHy9huEv/wEEteLp/aMPg==
-X-Received: by 2002:a05:6214:2a82:b0:443:e2fc:c209 with SMTP id jr2-20020a0562142a8200b00443e2fcc209mr7552611qvb.59.1650285777671;
-        Mon, 18 Apr 2022 05:42:57 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f6-20020ac859c6000000b002ee0948f1aesm7344951qtf.72.2022.04.18.05.42.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Apr 2022 05:42:57 -0700 (PDT)
-Message-ID: <61829024-32ab-bbdb-7950-8929b17d6add@github.com>
-Date:   Mon, 18 Apr 2022 08:42:56 -0400
+        with ESMTP id S244857AbiDRPZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 11:25:13 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 689D153714
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 07:27:01 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ngSLB-0003VT-EN;
+        Mon, 18 Apr 2022 15:26:58 +0100
+Message-ID: <f87a549f-540e-d0f3-470c-178c2fa141a5@iee.email>
+Date:   Mon, 18 Apr 2022 15:26:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH 0/4] Sparse index integration with 'git show'
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        vdye@github.com, shaoxuan.yuan02@gmail.com
-References: <pull.1207.git.1649349442.gitgitgadget@gmail.com>
- <Ylhp+q96KOt2+OGZ@google.com> <xmqqk0brz7tb.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqk0brz7tb.fsf@gitster.g>
+Subject: Re: Current state / standard advice for rebasing merges without
+ information loss/re-entry?
+Content-Language: en-GB
+To:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
+References: <CAPMMpojjs4sjKdN6DAJFSwERdjq9XQgi35CcqkXu7HijadHa1Q@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAPMMpojjs4sjKdN6DAJFSwERdjq9XQgi35CcqkXu7HijadHa1Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/14/2022 5:14 PM, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
->>> 'git show' is relatively simple to get working in a way that doesn't fail
->>> when it would previously succeed, but there are some sutbleties when the
->>> user passes a directory path. If that path happens to be a sparse directory
->>> entry, we suddenly start succeeding and printing the tree information!
->>>
->>> Since this behavior can change depending on the sparse checkout definition
->>> and the state of index entries within that directory, this new behavior
->>> would be more likely to confuse users than help them.
->>
->> The two paragraphs above did not really convey to me on first
->> read-through what the problem was. IIUC the main points are:
->>
->> * git-show does not currently work with the sparse index.
->> * A simple change fixes the above, but causes us to sometimes print
->>   unexpected information about trees.
->> * We can use the simple change in our implementation, but must do
->>   additional work to make sure we only print the expected information.
->>
->> I think this could be clarified by:
->> * Including examples of the unhelpful output from the simple
->>   implementation.
->> * Describing in more detail the situations that trigger this.
->> * Describing why those situations don't currently happen without support
->>   for sparse indexes.
-> 
-> I think the issues patches 2-4 addresses are not limited to any
-> specific command, but how ":<path-in-the-index>" syntax is resolved
-> to an object name (including the way how error messages are issued
-> when the given path is not found in the index).
+A few personal ramblings/comments..
+On 18/04/2022 12:56, Tao Klerks wrote:
+> Hi folks,
+>
+> The discussion around Edmundo Carmona Antoranz's recent "git replay"
+> proposal ([1]) led me down a rabbit-hole reminding me I really don't
+> understand where we stand with rebasing merges, and I don't think I'm
+> alone.
+My understanding was the 'preserve' may not have retained the expected
+history structure. `rebasing` merges is better with the history
+expectations. Neither address the merge resolutions.
+>
+> I understand the standard advice at the moment to be something like:
+> ---
+> Use a recent git client, use the '--rebase-merges' option (avoid the
+> --preserve-merges option if you find it), and re-resolve any textual
+> and/or semantic conflicts manually (possibly using rerere if you know
+> what you're doing).
 
-Yes, this is the critical bit. It's the only part of "git show"
-that cares about the index.
- 
-> But the title of the series and presentation place undue stress on
-> "git show", which I suspect may be confusing to some readers.
-> 
-> For example, with these patches, wouldn't "git rev-parse" start
-> working better, even though the proposed log message for no commit
-> in the series talks about "rev-parse" and no tests are done with the
-> "rev-parse" command?
+The rerere man page is still magic for me. The UX here could be
+improved. (also, could the rerere-train be focussed on each merge?)
+> ---
+> Is this correct?
+>
+> This current state/advice seems... suboptimal, at best, because it
+> ignores any information encoded in the original merge commit, as
+> clearly documented in the help. It will often result in you having to
+> resolve conflicts that you already resolved, *where nothing relevant
+> to that merge/commit has changed in your rebase*. If you have rerere,
+> and you know what you are doing, and you were the one that performed
+> the merge, in this repo, then maybe you're ok; similarly if it's a
+> clean merge of course.
+>
+> Elijah Newren describes this problem/opportunity quite carefully in
+> [2], and mentions a bunch of WIP that I have a hard time getting my
+> head around.
+>
+> Similarly, Sergey Organov refers to a thread/discussion four years ago
+> [3], largely involving a debate around two implementations (his and
+> that of Phillip Wood?) that are largely theoretically-equivalent (in a
+> majority of cases), with a lovely explanation of the theory behind the
+> proposal by Igor Djordjevic / Buga [4], but that discussion appears to
+> have dried up; I can't tell whether anything came of it, even if only
+> a manually-usable "rebase a merge" script.
+>
+> Finally, Martin von Zweigbergk mentions his git-like VCS [5] which
+> stores conflict data in some kinds of commit as part of a general
+> "working state is always committable and auto-committed"
+> state-management strategy; I may be misunderstanding something, but I
+> *think* the resulting conflict-resolution information ends up being
+> reusable in a manner theoretically equivalent to the strategy
+> described by Buga as referenced above.
+>
+> These kinds of discussions frequently seem to feature git experts
+> saying "I have a script for my version of this problem" (Elijah,
+> Junio, Johannes Schindelin, ...), or even "I have a VCS for this
+> problem" :), but I seem to be too stupid or impatient to dig
+> through/understand whether or when these things will work for a
+> regular joe and how to use them.
+>
+> The temptation, obviously(?), is to write a "rebase a merge" script to
+> do something like Sergey Organov's V2 proposal referenced above... but
+> it feels like I'd be spending a bunch of time and ultimately just
+> making things worse for the community, rather than better - helping
+> myself based on my (very limited, but still above average)
+> understanding of merge mechanics, in a way that leaves the general
+> public message / status just as unsatisfactory/unhelpful.
+>
+> Does anyone have an existing simpler answer? Ideally I'm looking for
+> something like:
 
-Probably, assuming we unset the command_requires_full_index
-protection on 'git rev-parse'. This might be a good case for
-Shaoxuan to try.
+I believe there is a paper that highlights that even diff's aren't
+unique. So I don't expect merges to be resolvable in the general case.
+It's why we have software engineers;-) 
 
-> I am not suggesting that commands other than "show" should be also
-> discussed in detail or tested.  It would help readers if we said
-> that we are using 'show' merely as an example to demonstrate how
-> ":<path-in-the-index>" syntax interacts with the sparse index
-> entries (1) before the series, and (2) how well the improved
-> object-name parsing logic works after the series.
- 
-I can see that.
-Some background: as we shipped our sparse index integrations in
-the microsoft/git fork and measured performance of real users, we
-noticed that 'git show' was a frequently-used command that went
-from ~0.5 seconds to ~4 seconds in monorepo situations. This was
-unexpected, because we didn't know about the ":<path>" syntax.
-Further, it seemed that some third-party tools were triggering
-this behavior as a frequent way to check on staged content. That
-motivated quickly shipping this integration. Performance improved
-to ~0.1 seconds because of the reduced index size.
-
-Thanks,
--Stolee
+We also have to distinguish between interactive and automatic rebase,
+and how much information could be provided to the user about the
+previous merges (in the insn), and during resolution of a current merge
+conflict compared to the prior conflict. The interactive rebase could
+allow early resolution guidance from the users (e.g. highlighting likely
+semantic conflicts which shouldn't be auto resolved, which to use
+rerere, etc)
+> ---
+> * When you have a merge in your history, and you are rebasing, follow
+> steps XXXXXX, involving this publicly available gist, or contrib
+> script, or experimental flag, and it will probably do what you want.
+> If there is a (new) conflict when rebasing the merge commit, you can
+> expect conflicts to be presented as YYYYY, because rebasing a merge in
+> this "informed" way can fundamentally involve multiple different
+> steps/phases of conflict resolution - rebase conflicts vs merge
+> conflicts.
+> * Something like this will likely be introduced as a new rebase option
+> in a future release, something like "--reapply-merges", or
+> "--rebase-merges-better", because it will always require the user to
+> understand that the three-way conflicts presented as part of such an
+> "informed" merge rebase are subtly different to regular rebase or
+> merge conflicts.
+> ---
+>
+> Is it possible to get that sort of simplistic message for this complex topic?
+>
+> My apologies if this request is a duplicate - obviously a pointer to
+> some sort of existing summary would be perfect.
+>
+> Thanks,
+> Tao
+>
+> [1]: https://lore.kernel.org/git/20220413164336.101390-1-eantoranz@gmail.com/
+> [2]: https://lore.kernel.org/git/CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com/
+> [3]: https://public-inbox.org/git/87r2oxe3o1.fsf@javad.com/
+> [4]: https://public-inbox.org/git/a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com/
+> [5]: https://github.com/martinvonz/jj
+(I'm away 3 days, hence early comments)
+--
+Philip
