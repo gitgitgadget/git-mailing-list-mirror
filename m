@@ -2,85 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB0A3C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5143C433EF
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347242AbiDRR5Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43384 "EHLO
+        id S1345630AbiDRSAS convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 18 Apr 2022 14:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345630AbiDRR5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:57:18 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9448734BB2
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:54:39 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id q12so20136322pgj.13
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=EraWDy4V1Gc6+0Pwn3DfYpHT10M750AdLL0AzMmT+zE=;
-        b=p9tC59yKbi1qL/ePuV+PiciCemHXou1uxt+BYhDYyV/Be8dz2KMxtFFsgDf82ItJaL
-         2WMe5u47AFpEqIV0jF//gUhpLb8g4Z7miIRI8McjB7o+H0j+bMwDyriOEBobZH3b/Fpa
-         jQ1KdAEfKndHkKLqeYTkp3wlAffb/mBkFhlST/UVB6nwJa75Nh93Uwo6aP/xCG5NxwiB
-         XU+xUw2qJDLnIySXNPZq4ZxkZVAgJMaBYTx3t9Qmmlw9hf5HqXStj7R6xBviuSiE/dkR
-         LQ6TcXylF2d1/iakGWzK/hr0KVtAMH2OpKKmKCyR7+u8zHTFUP06cG5hxMxrl33Ay87n
-         vASA==
+        with ESMTP id S231143AbiDRSAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 14:00:17 -0400
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2FD34665
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:57:36 -0700 (PDT)
+Received: by mail-pg1-f172.google.com with SMTP id q19so20188876pgm.6
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:57:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=EraWDy4V1Gc6+0Pwn3DfYpHT10M750AdLL0AzMmT+zE=;
-        b=qV4uX9BiRmq0PR1R/sYY2zMab0foDH9SKaV8jMH1IIILtTztA9nSfpPhdJkz1VijtB
-         WmQSp3Szs1/wWPWw7M01wVY0rayyWBSaC/VrRe/fv8k0wrX6fTmFKuZCjXBIaiTm2/Da
-         y/P6KUBVbXMlTnET3n15tY7hmIJyrvIWd42SS06F5XRJoVCJVWvykdDv0NNhHgqQPcIw
-         8KgYNmLLcrpq+nZDgG5YWBaBqZ57REdpwWevd1RlS1JaqO3cMk9cVI4TvQUjB96JOgUy
-         bGnp00u0ofQuuOm1bKzexaVC283DxzwgpIOQU4kZNjybdvFPo78R+gVBb55uBO5rAHvv
-         SG1g==
-X-Gm-Message-State: AOAM532/0Y792cObM1jXwiinWRkqUzci2ztoqRFq9CKBiluAFhCLD9cf
-        LHMDb4A3xkc/2H4vsGWr0Yg=
-X-Google-Smtp-Source: ABdhPJw3Z4ug5gp7sMpwTXyccJd1E0Ubv4jQRMJGbhtc84leTVUdmJrgAxzHwB9WgZzC6etKOd9ydQ==
-X-Received: by 2002:a63:5565:0:b0:3a2:7450:5e94 with SMTP id f37-20020a635565000000b003a274505e94mr11089898pgm.527.1650304479132;
-        Mon, 18 Apr 2022 10:54:39 -0700 (PDT)
-Received: from [192.168.208.37] ([49.204.135.226])
-        by smtp.gmail.com with ESMTPSA id e12-20020a056a0000cc00b00508343a6f9esm13327361pfj.5.2022.04.18.10.54.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Apr 2022 10:54:38 -0700 (PDT)
-Message-ID: <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
-Date:   Mon, 18 Apr 2022 23:24:34 +0530
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6TKao+9e0tQ4UdhLogu1J04zgoqZ8x7Jvm3MMOVx7D0=;
+        b=J9UC3nCmC+Qgnfc09rMEVldA70GTztdtg4fww1ask6HjyOWr3i3a7q2gwRXFbwFxZi
+         6d9hVV2ohA+XMCwex2UkaSOjLueiMFZ7H8D8Zb4nnpgcV9V1+zBACEtpDK5CBF0UlTQk
+         3KfuQg3ACBVcZQ0ArhA/DcYX88PsqJgFH0mJ2LEoLfXfICdtCc9Cq/ljTKNIDJZOIGqZ
+         P8g2l21vK8RLtgDWcf4T3dXU2bpWs5W7C6pnWWlqMfh24D7FVFCwhTiFyW+BjtaiiptV
+         M5fyvxidp6Xj/nOWsErdp5T/oOapR1U9P1QOy/32C70ozuMGPCzkhT/NWg5Tn5fYqgSb
+         2O4Q==
+X-Gm-Message-State: AOAM531oHbnujI/uhpK+QGEQ9/tq2nPpJacANoCJ2bmKn7wheZsRdnT8
+        m4UDkN6MxUOhZ6c36thi8jwR0PuDh+Fwl4+Gi0wrVwIJYPw=
+X-Google-Smtp-Source: ABdhPJyOvzPmIXyc1Jw0WhyDrJyqZqmOzUTHj7OQNcKYJar8h1xKjB/ufCkpGJHLI2XB7cLGS0TVJDPSRHaLuFZDe5s=
+X-Received: by 2002:a05:6a00:23d2:b0:4fa:f262:719 with SMTP id
+ g18-20020a056a0023d200b004faf2620719mr13649163pfc.4.1650304656016; Mon, 18
+ Apr 2022 10:57:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [GSoC] Contributor candidate introduction
-Content-Language: en-US
-To:     Plato Kiorpelidis <kioplato@gmail.com>,
-        Shubham Mishra <shivam828787@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com> <patch-v4-31.31-4fc67e668da-20220418T132809Z-avarab@gmail.com>
+In-Reply-To: <patch-v4-31.31-4fc67e668da-20220418T132809Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 18 Apr 2022 13:57:25 -0400
+Message-ID: <CAPig+cQi1sRt_fMi13LtFvDL3J3ZcNaOzTugQaN-T41YAgw5Nw@mail.gmail.com>
+Subject: Re: [PATCH v4 31/31] CI: make it easy to use ci/*.sh outside of CI
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+On Mon, Apr 18, 2022 at 12:29 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> In preceding commits the ci/.sh scripts have lost most of their
+> CI-specific assumptions. Let's go even further and explicitly support
+> running ci/lib.sh outside of CI.
+>
+> This was possible before by faking up enough CI-specific variables,
+> but as shown in the new "help" output being added here using the
+> ci/lib.sh to provide "CI-like" has now become trivial.
+>
+> The ci/print-test-failures.sh scripts can now be used outside of CI as
+> well, the only GitHub CI-specific part is now guarded by a check that
+> we'll pass if outside of GitHub CI.
+>
+> There's also a special-case here to not clobber $MAKEFLAGS in the
+> environment if we're outside of CI, in case the user has e.g. "jN" or
+> other flags to "make" that they'd prefer configured already.
+>
+> Using "ci/lib.sh" as a stand-alone script is much more useful if it
+> doesn't hardcode NPROC=10, let's provide a poor shellscript
+> replacement for the online_cpus() we have in thread-utils.c to cover
+> the most common OS's. It was suggested to use "2>&1" to invoke
+> "command -v", but per my reading of [2] and my own testing that
+> doesn't seem to be needed. Perhaps it's only needed for "which(1)"?
 
-Just a heads up that the proposal deadline (19Apr2022 18:00 UTC) is
-approaching shortly. I noticed that Abhradeep has submitted his proposal
-so far. Others, do make sure you submit your proposals in the GSoC
-website before the deadline. Only then can we consider your proposals
-for GSoC [ref].
+Not redirecting stderr makes sense. I almost certainly accidentally
+typed "type foo" reflexively even though I meant to type "command -v
+foo", which explains why I thought redirecting stderr was needed. The
+explanation above probably would have best been done simply as a reply
+to the review thread rather than as part of the commit message, but
+dropping it from the commit message is not worth a reroll.
 
-Thanks.
+> 1. https://lore.kernel.org/git/214f8670-91d5-f4b6-efa1-76966c3ab1ee@sunshineco.com/
+> 2. https://pubs.opengroup.org/onlinepubs/009604499/utilities/command.html
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/ci/lib-online_cpus.sh b/ci/lib-online_cpus.sh
+> @@ -0,0 +1,26 @@
+> +# TODO: Ideally we'd compile t/helper/test-online-cpus.c early, but
+> +# that presents a chicken & egg problem. But if we move it to a
+> +# stand-oline command...
 
-[ref]:
-https://developers.google.com/open-source/gsoc/faq#should_i_send_proposals_directly_to_the_mentoring_organizations
-
---
-Sivaraam
-
+Um, what's a "stand-oline"?
