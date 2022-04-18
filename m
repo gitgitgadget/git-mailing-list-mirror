@@ -2,106 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE336C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 08:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0A40C433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 10:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237389AbiDRInB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 04:43:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37290 "EHLO
+        id S236731AbiDRKWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 06:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237368AbiDRImv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 04:42:51 -0400
-X-Greylist: delayed 1647 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 Apr 2022 01:40:12 PDT
-Received: from gateway22.websitewelcome.com (gateway22.websitewelcome.com [192.185.47.228])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27656430
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 01:40:12 -0700 (PDT)
-Received: from cm10.websitewelcome.com (cm10.websitewelcome.com [100.42.49.4])
-        by gateway22.websitewelcome.com (Postfix) with ESMTP id 527CB4C5C
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 02:47:11 -0500 (CDT)
-Received: from gator3142.hostgator.com ([50.87.144.177])
-        by cmsmtp with SMTP
-        id gM6Jnwv2MRnrrgM6JngG3z; Mon, 18 Apr 2022 02:47:11 -0500
-X-Authority-Reason: nr=8
-Received: from 92-249-234-155.pool.digikabel.hu ([92.249.234.155]:33733 helo=[192.168.0.107])
-        by gator3142.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <csosza@designsoftware.com>)
-        id 1ngM6I-000uhX-Mf
-        for git@vger.kernel.org; Mon, 18 Apr 2022 02:47:10 -0500
-Message-ID: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
-Date:   Mon, 18 Apr 2022 09:47:07 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Content-Language: en-US
+        with ESMTP id S232394AbiDRKWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 06:22:43 -0400
+Received: from mail.eskimo.com (mail.eskimo.com [204.122.16.222])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B4660D7
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 03:20:03 -0700 (PDT)
+Received: from eskimo.com (debian.eskimo.com [204.122.16.15])
+        by mail.eskimo.com (Postfix) with SMTP id DBB45504DC1;
+        Mon, 18 Apr 2022 03:20:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eskimo.com;
+        s=default; t=1650277202;
+        bh=ap3jJITpFoNgPSw2nUWV4+3oMRKCvhmcbEvA0GLmr2Q=;
+        h=From:Date:To:Subject:In-Reply-To:References:From;
+        b=jZG7mVJnUziAIdSEmD3WogQSWhzSkrXFLVki9bemdtYSFN9agJniic/XKqm7OG4gT
+         /xKnzeeD+Nap91F+SJKS5BloH5ubGtGrJfbTsXOzNx9xKn0d6JlrpnS0H8e1LroPBW
+         nJX/p3C1xePEKl7BYWRE5fUlHjo9skWXN+MRP7KI+uLVFUy9IQM7bxIwirDhbUbSUO
+         G4VW+BuVQFmFZvYg3kGyRB9zbO6U6DFH7V27chzVpTMSpmxWmIOO8ZtPlVjlydq6tE
+         KJ3n4Kds9QfhN7gUt9GxnOgzc2XoRBc6VImKamF2AhUSiIrPntHoGAaQ+XBvzoKRmD
+         kx83AMYiUCuQQ==
+Received: (nullmailer pid 3198865 invoked by uid 10926);
+        Mon, 18 Apr 2022 10:20:02 -0000
+From:   scs@eskimo.com (Steve Summit)
+Date:   Mon, 18 Apr 2022 06:16:25 -0400
+Message-ID: <2022Apr18.0616.scs.0001@quinine2.home>
 To:     git@vger.kernel.org
-From:   Attila Csosz <csosza@designsoftware.com>
-Subject: Git bug report - disk errors on Windows after push
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator3142.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - designsoftware.com
-X-BWhitelist: no
-X-Source-IP: 92.249.234.155
-X-Source-L: No
-X-Exim-ID: 1ngM6I-000uhX-Mf
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 92-249-234-155.pool.digikabel.hu ([192.168.0.107]) [92.249.234.155]:33733
-X-Source-Auth: csosza@designsoftware.com
-X-Email-Count: 1
-X-Source-Cap: ZHNnNHQwcjtkc2c0dDByO2dhdG9yMzE0Mi5ob3N0Z2F0b3IuY29t
-X-Local-Domain: yes
+Subject: Re: suggestion for git glossary: "ort"
+In-Reply-To: <xmqq5yn84pm2.fsf@gitster.g>
+References: <2022Apr16.1107.scs.0007@quinine2.home> <xmqq5yn84pm2.fsf@gitster.g>
+X-Virus-Scanned: clamav-milter 0.103.5 at mail.eskimo.com
+X-Virus-Status: Clean
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+gitster wrote:
+> scs@eskimo.com (Steve Summit) writes:
+>> I kept seeing references to "ort" in the git source code, and I
+>> had no idea what it meant.
+>
+> If the aim is to unconfuse those who are new to the codebase, read
+> builtin/merge.c and merge-ort-*.[ch], and wonder what "ort" refers
+> to, I doubt it would help all that much...
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Pushing to a directory directly.
+All I can say is that I am someone who is new to the codebase,
+kept seeing references to "ort", and had no idea what it meant.
+It didn't occur to me that it might be a merge strategy; for all
+I knew orts were things that needed to be merged.
 
-What did you expect to happen? (Expected behavior)
-Good behavior
+> Or is your main issue is even after you discover that "ort" is one
+> of the merge strategies supported by Git, it is unclear how that
+> short non-word was invented?
 
-What happened instead? (Actual behavior)
-Disk errors. After pushing to a directory (my origin field is C:\Work 
-for example) the git repository will be corrupted.
-Moreover causing disk errors not only in the target git bare repository. 
-I've loosed some other files.
-Cannot be reproduced exactly. However I have decided to report this 
-problem.
-I've experienced this problem for several years.
+Well, that too, but really, my thinking was much more simple than
+that: A glossary is where you define special terminology.  "ort"
+is special terminology in git.  Therefore, I thought it belonged
+in git's glossary.  BICBW.
 
-What's different between what you expected and what actually happened?
-Described.
+> ...I doubt it would help all that much to add a new entry to the
+> glossary, especially if they do not think of first taking a look at
+> "git merge --help", which has its own large section on "ort".
 
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.31.1.windows.1
-cpu: x86_64
-built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19044
-compiler info: gnuc: 10.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
-
-
-[Enabled Hooks]
-
-
+Call me stupid :-), but I did not think first of looking there!
+But you'll notice I added a link to that page in the suggested
+glossary entry.  (I doubt I got the markdown link syntax right,
+though.)
