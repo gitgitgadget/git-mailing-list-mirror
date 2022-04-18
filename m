@@ -2,128 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0419CC433F5
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DBF2C433F5
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 17:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344684AbiDRRQM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 13:16:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33582 "EHLO
+        id S1347016AbiDRR0o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 13:26:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243486AbiDRRQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 13:16:10 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760302252F
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:13:30 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id p18so18429804wru.5
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:13:30 -0700 (PDT)
+        with ESMTP id S236088AbiDRR0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 13:26:43 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8816533E13
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:03 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id ay11-20020a05600c1e0b00b0038eb92fa965so12153383wmb.4
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 10:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=rrvhWjlewgdS14yyEftGPUfXKps6z5d8Yih9sdsPAsY=;
-        b=graxgFdpdOg9fFf9GElCDQh0GWlk2SgzTqrwyhjcDvZZi5PfrGSU+6m7c1tZW5Ho3f
-         yVqYIonkiPVSP9P4pVEQX4NAgUKBsh8VFaXFqB5j7Rhf9wcaqWsHA7VG7As2fSTvE9wT
-         ylQuV2qFQD5CA7U/HFTeVGcHJjYdcas5KpbMTDgnUZITcPtOhKA6Q9QhjIK6OymngLGl
-         L4/3LWFCgfqvMqKceTmaZUhJW0m45cs9+l6KoVrMTIHe2AjZkIIwlN6x0kqBo6PzRNGS
-         QVGadFAN46BlxUai/iOdnIZao9DeJBUqiRepuXwzmqBPXbRsc0dG4EJYzggq8qsk0/PV
-         j/6A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GSqMXASLJtEddhTs13pXKC+LhRVWF6Q79Aghg98cJXc=;
+        b=myofghFmNVF7iaIOKnMCyAFTQQFSugmhX/oyj2/rRnjYevHqnS+TqlOMrIEc6fWvkR
+         jOy+n7Pdf4xfu2acMmdVXMONnZBzPsqx5qNaTIzZvp/WHNvPMvWRxd20VJP3nWgND6Mj
+         +KeSERpKlEK2GxHqHi+UJqzOJV0owaeJ9JSN0v9Iw5xNhwjlgKVvE9P47ySCnBLAzFlQ
+         V2PeXkzZVvSOJ9SkcH7f3oeLR7FKlXyvUJr5PnQucUdVIXD2yLeegjGv2hpW6OSSd9Qq
+         EF6Q8OP+TWilAK0BdG1v6AF16P63whqN1Pn3/AtTUWysx1TBJUDlNFoyGqptP9PAHudt
+         ifKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=rrvhWjlewgdS14yyEftGPUfXKps6z5d8Yih9sdsPAsY=;
-        b=g5SA+GqoBOA040f0bwL/JwcdbYgOf7i515I5Z79tjDZJGg0jrRx+b/3J2kSp0wB6FQ
-         wlWs3aAr+CL0aulyKAWlm968k/Pw+b6oEa1PKRT1o0GIdwUHd2Wf8fcNmFm3FW8857tJ
-         ndQ7EiEhZ6H/FGTJw7lHslkthVt211Sy3r9KgFpt7vtwtAeGvhJQvV/hOmXtiH/kXznh
-         cXVsLVCXQXE0MU8xYgT0mCtQBQwBwLsJ/0ij4a9SoRqpNggG1e1IY1UEOFVYiA7GHVQS
-         OCoM4g7diNba8tWMlHJflULNcFNkX1izk+nWrASNUBLn1Qtjgy95Sva1heCqcEJHX9fI
-         Dw5Q==
-X-Gm-Message-State: AOAM533FC11jA/64yMjnABfNVCe03IMKdJQrFANsSbVLHdejU/Vau2w4
-        2IrYQrtLUKAfiCXc7HQ93DnvjHYRi1I=
-X-Google-Smtp-Source: ABdhPJyEdoaOy662kzgHJtfjD+MUYvNyMBkdclnL+dNUzPi2fln2zrRvgiRoTJ3F0KoJKoR3hiHnLw==
-X-Received: by 2002:a05:6000:1c16:b0:207:bc18:d0c2 with SMTP id ba22-20020a0560001c1600b00207bc18d0c2mr8736889wrb.533.1650302008605;
-        Mon, 18 Apr 2022 10:13:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i11-20020a5d584b000000b0020a8d859e5fsm4919592wrf.10.2022.04.18.10.13.27
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GSqMXASLJtEddhTs13pXKC+LhRVWF6Q79Aghg98cJXc=;
+        b=tdyE8IecF8hA45BncyuuGb0jBM/N8J+TiHQPIwVvh0JmajUWsReG2J/U+2hOOu4k9d
+         D8t3GFWV714O8lLcduDfvBAeG6BC+KfAHCeMhGn9h2V/n5OmJEPh9Cpspef0zxa1oJf7
+         JoQcGb3J+SVgw2KJsimB0OWuV9dbbFuyxgXnLLB+7HFdkSyHJS4/h/52mwLXZQ5wDuKF
+         JpzR6/x75bbuu8xlhR6Rm5ZT7Ux+lrhlKTP6rX5nglKQAmnN1z35oEWdY/E5n1rTZ3Rs
+         MF6xbq5LLy1GLiDgYp6yGH3ddK/hh45nJuTCw6MXQLw2xoiqyymKPDYMYro3gx+sLw4Y
+         DWjA==
+X-Gm-Message-State: AOAM530/njYCz/jCfSVrshdvamf+Xk8T/Vs58DOrWoSbVDy0Bsjf3dEF
+        0DZEpZK9ebe8kMz8zcF53HV+DK3HKv9ALA==
+X-Google-Smtp-Source: ABdhPJyXEApyIFzAAU1QWom5odgR0lDG6v/EZs7x3JxnNK/sdOIQ4+axXiv2i8WJEV44bLkaY9ZoSg==
+X-Received: by 2002:a7b:c201:0:b0:38f:f7f5:f6db with SMTP id x1-20020a7bc201000000b0038ff7f5f6dbmr16163358wmi.191.1650302641758;
+        Mon, 18 Apr 2022 10:24:01 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0038ebbbb2ad2sm16803066wms.44.2022.04.18.10.24.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 10:13:28 -0700 (PDT)
-Message-Id: <pull.1213.git.1650302007395.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 18 Apr 2022 17:13:27 +0000
-Subject: [PATCH] commit-graph: close file before returning NULL
+        Mon, 18 Apr 2022 10:24:01 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Albert Cui <albertqcui@gmail.com>,
+        "Robin H . Johnson" <robbat2@gentoo.org>,
+        Teng Long <dyroneteng@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH v2 01/36] connect.c: refactor sending of agent & object-format
+Date:   Mon, 18 Apr 2022 19:23:18 +0200
+Message-Id: <RFC-patch-v2-01.36-95c53a3e779-20220418T165545Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
+In-Reply-To: <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
+References: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com> <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?q?Kleber=20Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Kleber=20Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
+Refactor the sending of the "agent" and "object-format" capabilities
+into a function.
 
-There are two reasons that we could return NULL early within
-load_commit_graph_chain():
+This was added in its current form in ab67235bc4 (connect: parse v2
+refs with correct hash algorithm, 2020-05-25). When we connect to a v2
+server we need to know about its object-format, and it needs to know
+about ours. Since most things in connect.c and transport.c piggy-back
+on the eager getting of remote refs via the handshake() those commands
+can make use of the just-sent-over object-format by ls-refs.
 
- 1. The file does not exist, so the file pointer is NULL.
- 2. The file exists, but is too small to contain a single hash.
+But I'm about to add a command that may come after ls-refs, and may
+not, but we need the server to know about our user-agent and
+object-format. So let's split this into a function.
 
-These were grouped together when the function was first written in
-5c84b3396 (commit-graph: load commit-graph chains, 2019-06-18) in order
-to simplify how the 'chain_name' string is freed. However, the current
-code leaves a narrow window where the file pointer is not closed when
-the file exists, but is rejected for being too small.
-
-Split out these cases separately to ensure we close the file in this
-case.
-
-Signed-off-by: Kleber Tarcísio <klebertarcisio@yahoo.com.br>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
-    commit-graph: close file before returning NULL
-    
-    This change was originally submitted to the microsoft/git fork [1].
-    Kleber discovered this issue using some automated tool they are working
-    on. We recommended that this change be submitted to the core Git group,
-    but we have not had any word from the original author in some time.
-    Hence, I am submitting it on their behalf.
-    
-    [1] https://github.com/microsoft/git/pull/259
-    
-    Thanks, -Stolee
+ connect.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1213%2Fderrickstolee%2Fclose-file-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1213/derrickstolee/close-file-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1213
-
- commit-graph.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 441b36016ba..06107beedcb 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -523,10 +523,13 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
- 	stat_res = stat(chain_name, &st);
- 	free(chain_name);
+diff --git a/connect.c b/connect.c
+index afc79a6236e..e6d0b1d34bd 100644
+--- a/connect.c
++++ b/connect.c
+@@ -473,6 +473,24 @@ void check_stateless_delimiter(int stateless_rpc,
+ 		die("%s", error);
+ }
  
--	if (!fp ||
--	    stat_res ||
--	    st.st_size <= the_hash_algo->hexsz)
-+	if (!fp)
- 		return NULL;
-+	if (stat_res ||
-+	    st.st_size <= the_hash_algo->hexsz) {
-+		fclose(fp);
-+		return NULL;
++static void send_capabilities(int fd_out, struct packet_reader *reader)
++{
++	const char *hash_name;
++
++	if (server_supports_v2("agent", 0))
++		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
++
++	if (server_feature_v2("object-format", &hash_name)) {
++		int hash_algo = hash_algo_by_name(hash_name);
++		if (hash_algo == GIT_HASH_UNKNOWN)
++			die(_("unknown object format '%s' specified by server"), hash_name);
++		reader->hash_algo = &hash_algos[hash_algo];
++		packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
++	} else {
++		reader->hash_algo = &hash_algos[GIT_HASH_SHA1];
 +	}
++}
++
+ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     struct ref **list, int for_push,
+ 			     struct transport_ls_refs_options *transport_options,
+@@ -480,7 +498,6 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     int stateless_rpc)
+ {
+ 	int i;
+-	const char *hash_name;
+ 	struct strvec *ref_prefixes = transport_options ?
+ 		&transport_options->ref_prefixes : NULL;
+ 	const char **unborn_head_target = transport_options ?
+@@ -490,18 +507,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 	if (server_supports_v2("ls-refs", 1))
+ 		packet_write_fmt(fd_out, "command=ls-refs\n");
  
- 	count = st.st_size / (the_hash_algo->hexsz + 1);
- 	CALLOC_ARRAY(oids, count);
-
-base-commit: ab1f2765f78e75ee51dface57e1071b3b7f42b09
+-	if (server_supports_v2("agent", 0))
+-		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
+-
+-	if (server_feature_v2("object-format", &hash_name)) {
+-		int hash_algo = hash_algo_by_name(hash_name);
+-		if (hash_algo == GIT_HASH_UNKNOWN)
+-			die(_("unknown object format '%s' specified by server"), hash_name);
+-		reader->hash_algo = &hash_algos[hash_algo];
+-		packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
+-	} else {
+-		reader->hash_algo = &hash_algos[GIT_HASH_SHA1];
+-	}
++	/* Send capabilities */
++	send_capabilities(fd_out, reader);
+ 
+ 	if (server_options && server_options->nr &&
+ 	    server_supports_v2("server-option", 1))
 -- 
-gitgitgadget
+2.36.0.rc2.902.g60576bbc845
+
