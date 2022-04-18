@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01293C433F5
-	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 16:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D68DAC433EF
+	for <git@archiver.kernel.org>; Mon, 18 Apr 2022 16:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346317AbiDRQdK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 12:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60314 "EHLO
+        id S1346352AbiDRQdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 12:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346260AbiDRQcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 12:32:11 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7607830F7E
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id r4-20020a05600c35c400b0039295dc1fc3so1761026wmq.3
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:30 -0700 (PDT)
+        with ESMTP id S1346267AbiDRQcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 12:32:12 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F822FFC0
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:32 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso12099277wma.0
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 09:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TLFGhv8skTwxo9SLrh3rxnA7+J5n7Ngm8c5OAGy0U/k=;
-        b=f7OfEGnpHVXO8MlpqGX+KLmdck2m9tu5r8pqxP1dJW1LIlWjT4pJRNB9ydtJXXyjBz
-         xBH1Le2GFY0vc4UldWjuebDaorRsg4BSm4CqtQR8zpi+0SpZ1LX/wUOU1/e5esvPFT1V
-         6n+52SM3lvN69azf1B1trBXOQZH/8m1GW4XgT45RCyFoUbqk184ZVV/LQ2kUC/cPT/5+
-         6M7QR+q+toT64iOsyL24u6jxOGrKnPrpeCnmMGlYAVZwdq2yZK+ZVS7O/l2N70W2xnvp
-         S0XUlD6QMT0frTwMLyCmodm1BI6dcACZ5xj/RLMtS3ZgyhTLw1n8C2WGs35S5N4DkBgY
-         uTcw==
+        bh=nrZkbMjpJo1GfRus8xCpCuztuPRLTHMFysiUl4sI/nQ=;
+        b=FD5Okn1vhXudIBP275ejKPqw4QKjLvCciYdxs6GABY7TCOsR0M2rDTqM3N3/SywRPG
+         wCGW1yuLpfGIYL3QnxW52hQDoctObA1wREs/uyY/MMyGtnCwx3sQZwo8z7smtvsLEWkl
+         RjRMu9xaU8OdI4r4TkkoB/1EvrePMhReSveMr0WE1zdRHzd/Vsh7Kg43r38/kL05iKhs
+         lf1XmiwlYV02UIgoT1tolwyRbvqMUTOO+XjjsSOrtcDNHQU4lQOrkxGnwm6tFk5A5R+a
+         oK9PLxyrQq6A80GixMJr4QQbl6ezkh78qO6mifyvJgxaRe3z98FsJKbeJmYyeqcGIVal
+         /w4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TLFGhv8skTwxo9SLrh3rxnA7+J5n7Ngm8c5OAGy0U/k=;
-        b=mcSpfaLRubImohz7Kyt0wu44xtMKZ5VeoXJ5y6QNuzWaxxLchgi8COWK0DgYBZRIuz
-         V0NuSNksXbUfWMr7VX8JVolfUD75/+ojjYPAZm5VXQfaahFPyl/MtuZezIggAJxva19C
-         AhakptaCYY/hqVC/URoOVM8fs1qWWZCT5aPuFMtK6iZNlGF91M4ss7NTxwqVk9EYduwL
-         o0pNGPqht6rgcxDCbvnXIqcYSc9QmUkpzacJCk5mNcsHgL53/zIGReHFqQHrNrsF28i9
-         nb+latBHGFpFYuu/tv5bUyUUYQHwkGHXtn3J5b4r1922xuxqjZ2eQbFF3SnrTPnbC3/Q
-         2Mcg==
-X-Gm-Message-State: AOAM532JtSOYelag39pdqrwUtBDd5p+v2ulG3VftQfKgRgR6pOkBh54o
-        WFsy+dviuhTyA2p6QLHWOKVyB43R+vg5Gg==
-X-Google-Smtp-Source: ABdhPJyQHmgV0E6plFYE+Kj6EUUKfWx5rRsvhe/K9yCOYxPm7IddpAolcSvOHIRYHszzwVRdg/IUbQ==
-X-Received: by 2002:a05:600c:a47:b0:37c:965:2b6f with SMTP id c7-20020a05600c0a4700b0037c09652b6fmr11675393wmq.31.1650299368686;
-        Mon, 18 Apr 2022 09:29:28 -0700 (PDT)
+        bh=nrZkbMjpJo1GfRus8xCpCuztuPRLTHMFysiUl4sI/nQ=;
+        b=YOjG5oRG8hSzqzCzg/0oVhRrvPiZ7soX8oZ2kGbt7XzRhy5hacByWKtDhMRUdsWQFP
+         99tD0yFivCOblTC3S9h7sBObYfs8R8nvOZo8pm0kNv1EtbOdJvDBmAVw8VVuVpbA5+md
+         S7889iLBfjrZMiyPnLn6y+aJyOSj8QzJrRatffH1alhjpqrpnPWvgdV8j4oQfCM23q88
+         zxH1JA9yfAzigURWtes73Ng5WzykrV1muyO7Xtwb6gsXu/LHLXdI7l/8kCUzMKcJ9rG8
+         flavbFLSjp/a5YsiN0moSWkizWMWHiw65Sgy9kCVpJ5ZKa3Pa+HwquK1DRf46HHCJen/
+         uC4A==
+X-Gm-Message-State: AOAM532qVTjK4G+0O5XWBwk0XmzBI+d9MpVssZAGz4P8RDb8+82MyPfe
+        l8ijqofbmmMWO0WPv1AT9sfdr+Ge41Yn+w==
+X-Google-Smtp-Source: ABdhPJyaIXv2jmTyNawfH36MUKVdPHvyzLdAtZY6H3/6TamHPjG20PJ7N/8jqivJ/TDYB4zTaFZIew==
+X-Received: by 2002:a1c:35c2:0:b0:38e:c75d:90a3 with SMTP id c185-20020a1c35c2000000b0038ec75d90a3mr11795097wma.98.1650299370503;
+        Mon, 18 Apr 2022 09:29:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b0038e6c62f527sm15701311wmp.14.2022.04.18.09.29.27
+        by smtp.gmail.com with ESMTPSA id p125-20020a1c2983000000b0038e6c62f527sm15701311wmp.14.2022.04.18.09.29.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 09:29:28 -0700 (PDT)
+        Mon, 18 Apr 2022 09:29:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 17/31] CI: split up and reduce "ci/test-documentation.sh"
-Date:   Mon, 18 Apr 2022 18:28:54 +0200
-Message-Id: <patch-v4-17.31-5e5a5b71700-20220418T132809Z-avarab@gmail.com>
+Subject: [PATCH v4 19/31] CI: combine ci/install{,-docker}-dependencies.sh
+Date:   Mon, 18 Apr 2022 18:28:56 +0200
+Message-Id: <patch-v4-19.31-a9c98582de1-20220418T132809Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.rc2.902.g60576bbc845
 In-Reply-To: <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
 References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com> <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
@@ -76,152 +76,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "ci/test-documentation.sh" script to run the bash-specific
-parts in as one command in the CI job itself, and to run the two "make
-doc" commands at the top-level.
+Combine the "ci/install-dependencies.sh" and
+"ci/install-docker-dependencies.sh" into one script. The "case"
+statement in the latter only cared about "$jobname", and can be folded
+into the same "case" statement in the former.
 
-It'll now be obvious from the title of the step if we failed in the
-asciidoc or asciidoctor step.
+The reason they split up is historical, until a preceding commit
+"ci/lib.sh" required "bash", which might not have been available in
+"docker".
 
-Since the "check_unignored_build_artifacts()" function is now only
-used in "ci/check-unignored-build-artifacts.sh" move that function
-there.
-
-The recipe for the job in ".github/workflows/main.yml" is now a bit
-verbose because it's effectively the same job twice, with a "make
-clean" in-between. It would be better for the verbosity to run it via
-a matrix as done in the alternate approach in [1] does, but then we'd
-sacrifice overall CPU time for the brevity. It might still be worth
-doing, but let's go for this simpler approach for now.
-
-1. https://lore.kernel.org/git/patch-v2-6.6-7c423c8283d-20211120T030848Z-avarab@gmail.com/
+This also fixes issue in "ci/install-docker-dependencies.sh" where
+we'd hide errors due to not using "set -e". Now that we include
+"ci/lib.sh" we won't have that potential issue.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml            | 16 +++++++++++++-
- ci/check-unignored-build-artifacts.sh | 10 +++++++++
- ci/lib.sh                             | 10 ---------
- ci/test-documentation.sh              | 31 +++++++++------------------
- 4 files changed, 35 insertions(+), 32 deletions(-)
+ .github/workflows/main.yml        |  2 +-
+ ci/install-dependencies.sh        | 15 +++++++++++++++
+ ci/install-docker-dependencies.sh | 22 ----------------------
+ 3 files changed, 16 insertions(+), 23 deletions(-)
+ delete mode 100755 ci/install-docker-dependencies.sh
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 2c23a19eac2..92b914f16fd 100644
+index 92b914f16fd..3fd3e4f873c 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -365,4 +365,18 @@ jobs:
+@@ -311,7 +311,7 @@ jobs:
+     container: ${{matrix.vector.image}}
      steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/test-documentation.sh
-+    - run: ci/lib.sh
-+    - run: make check-docs
-+    - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh AsciiDoc
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
-+    - run: make clean
-+    - run: "make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh Asciidoctor
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
-diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
-index 56d04b0db9a..0bc04f32804 100755
---- a/ci/check-unignored-build-artifacts.sh
-+++ b/ci/check-unignored-build-artifacts.sh
-@@ -5,4 +5,14 @@
+     - uses: actions/checkout@v1
+-    - run: ci/install-docker-dependencies.sh
++    - run: ci/install-dependencies.sh
+     - run: ci/lib.sh
+     - run: make
+     - run: make test
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index db58de0a6fd..8e41747ef6f 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -97,6 +97,21 @@ linux-gcc-default)
+ 	sudo apt-get -q update
+ 	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
+ 	;;
++linux32)
++	linux32 --32bit i386 sh -c '
++		apt update >/dev/null &&
++		apt install -y build-essential libcurl4-openssl-dev \
++			libssl-dev libexpat-dev gettext python >/dev/null
++	'
++	;;
++linux-musl)
++	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
++		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
++	;;
++pedantic)
++	dnf -yq update >/dev/null &&
++	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
++	;;
+ esac
  
- . ${0%/*}/lib.sh
- 
-+check_unignored_build_artifacts ()
-+{
-+	! git ls-files --other --exclude-standard --error-unmatch \
-+		-- ':/*' 2>/dev/null ||
-+	{
-+		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
-+		false
-+	}
-+}
-+
- check_unignored_build_artifacts
-diff --git a/ci/lib.sh b/ci/lib.sh
-index ffc0e524aaa..35a972fa3f5 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -47,16 +47,6 @@ setenv () {
- 	fi
- }
- 
--check_unignored_build_artifacts ()
--{
--	! git ls-files --other --exclude-standard --error-unmatch \
--		-- ':/*' 2>/dev/null ||
--	{
--		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
--		false
--	}
--}
+ if type p4d >/dev/null && type p4 >/dev/null
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
+deleted file mode 100755
+index 78b7e326da6..00000000000
+--- a/ci/install-docker-dependencies.sh
++++ /dev/null
+@@ -1,22 +0,0 @@
+-#!/bin/sh
+-#
+-# Install dependencies required to build and test Git inside container
+-#
 -
- # GitHub Action doesn't set TERM, which is required by tput
- setenv TERM ${TERM:-dumb}
- 
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index 6b5cce03bd7..b8a6a6f664e 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -1,10 +1,12 @@
--#!/usr/bin/env bash
-+#!/bin/sh
- #
--# Perform sanity checks on documentation and build it.
-+# Perform sanity checks on "make doc" output and built documentation
- #
- 
- . ${0%/*}/lib.sh
- 
-+generator=$1
-+
- filter_log () {
- 	sed -e '/^GIT_VERSION = /d' \
- 	    -e "/constant Gem::ConfigMap is deprecated/d" \
-@@ -14,28 +16,15 @@ filter_log () {
- 	    "$1"
- }
- 
--make check-docs
--
--# Build docs with AsciiDoc
--make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
--cat stderr.raw
--filter_log stderr.raw >stderr.log
--test ! -s stderr.log
--test -s Documentation/git.html
--test -s Documentation/git.xml
--test -s Documentation/git.1
--grep '<meta name="generator" content="AsciiDoc ' Documentation/git.html
--
--rm -f stdout.log stderr.log stderr.raw
--check_unignored_build_artifacts
--
--# Build docs with AsciiDoctor
--make clean
--make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
- cat stderr.raw
- filter_log stderr.raw >stderr.log
- test ! -s stderr.log
- test -s Documentation/git.html
--grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
-+if test "$generator" = "Asciidoctor"
-+then
-+	test -s Documentation/git.xml
-+	test -s Documentation/git.1
-+fi
-+grep "<meta name=\"generator\" content=\"$generator " Documentation/git.html
- 
- rm -f stdout.log stderr.log stderr.raw
+-case "$jobname" in
+-linux32)
+-	linux32 --32bit i386 sh -c '
+-		apt update >/dev/null &&
+-		apt install -y build-essential libcurl4-openssl-dev \
+-			libssl-dev libexpat-dev gettext python >/dev/null
+-	'
+-	;;
+-linux-musl)
+-	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
+-		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
+-	;;
+-pedantic)
+-	dnf -yq update >/dev/null &&
+-	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+-	;;
+-esac
 -- 
 2.36.0.rc2.898.gdf6bbac50ff
 
