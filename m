@@ -2,95 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8E25C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 17:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F48DC4167D
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 18:23:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238945AbiDSRnL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 13:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51738 "EHLO
+        id S1357146AbiDSSZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 14:25:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233221AbiDSRnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 13:43:08 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D45E1D313
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 10:40:25 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id b7so6810821plh.2
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 10:40:25 -0700 (PDT)
+        with ESMTP id S1358050AbiDSSYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 14:24:05 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B380946650
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:17:37 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id bn33so21549909ljb.6
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:17:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=aZRdZt8/xRpIVElEA3wGfoESzfpK/BvoQB2sAZ5iBw4=;
-        b=ehhV77TT82+gRmJXsh+E3UY7hKVcKqRpR7AD1KgRIFTOYQwRtMXFGn8jua/XcG3AtL
-         rYmiOxHrvS6KQGQlWWO9Pl8iE4eiQSd1cjT3GwRh5vANYL7xPExE7TktkrpkBIoNepHL
-         2tBEM83vXvaHHcA2t3Dm0Hw/1jtqWcjWIcrCgVH0tHFwqjuFL/YE0bQ3Yf69ujrFJPtJ
-         uztPrOSqKx2XmJXtjipH5zIIWak4P1D8r0PKnTmjbADVsisf8G6j35paZwJ16LpJwNa7
-         WjRJtSvsYGK23qCNMx84pAyEMzUgqUSL437uaW7LX+OjT3B4rtzM0MRwt4HtoolQaIhi
-         VgwQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3oCiGnQ3FnOhleiaDf8lkUP1+skeKcNCUZ4oZiqfd50=;
+        b=k0dOaC1x1sAzzfl4lBjlRwOohezCsbAI9FTZjduGPr6XpV9c3CHiEhbXtIuNwVuM1k
+         kudnuOwZux5FSNojPTIthGnE/d0ox1+XYbT+57qIoH+nUI8N36qnIVoT80fQ+9rW65gU
+         k0nrkjeLZBTaYM+iUuw8X0GvaM5IiRtjAqW7/b87ceWlVdPsCfWAB/M+4/FOORoy3S09
+         rPxMf7riAX3n5wLMr/aa04OVZC8fhVE/5zX7+iCdTQvF4Sp34UodU6qjjaDkQt1a7dqB
+         s2MeQFltfUgGmDXzKr/C/Z53g9/mRIfvh+bc/6I7t0UyMHXcSfgOok/UieIYZs1KXRbR
+         XLQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aZRdZt8/xRpIVElEA3wGfoESzfpK/BvoQB2sAZ5iBw4=;
-        b=itecY9qQ2NsulFW7EZnJk/xPOLuM4BkwR5Zp2fsR5qw2gCu+5UdWNaDXrR+xCL70V0
-         9LifxpzVV8yjfSP+9NmU+AxyfZrIc7aHivG75cFgez4Gbt5FBcRjpSHJJrpJOtCygQlj
-         /afHuW/HAsJmfQG1DSLn/LISNb4AAEpMnLsi++UdTZZaa5siG/1/BfyWRtCS2NAACT5t
-         iRzFY02DjfcEk/iKEWI9AemAdRa7kl86ndeTOlAdU+PAMVWa8Gd9qRE6yL4iQfJQ/emk
-         UK8STcDpxCSmrTC1uEKNdbDTMKR8PDUvDFAzB+oMkMZN1rIyNZ1nfs3DuNnbCP1Adc70
-         YZdw==
-X-Gm-Message-State: AOAM5303uFk45jT6Xrr1Qkh5OXpRTyQXYoZlrlCVr6ZEQ3TuziZrD4QJ
-        TxozEc4hAUZX+B1p2zLyfCc=
-X-Google-Smtp-Source: ABdhPJxkLSFKv0S2eFe9KuMHhBwy4Yg+0bzWvA7M1COs2r3WG8M3i7YX5N6rEgSomHAn4aypL0rrXg==
-X-Received: by 2002:a17:90b:1d0c:b0:1d2:a91e:24dc with SMTP id on12-20020a17090b1d0c00b001d2a91e24dcmr10628445pjb.165.1650390025079;
-        Tue, 19 Apr 2022 10:40:25 -0700 (PDT)
-Received: from [192.168.208.37] ([49.204.130.177])
-        by smtp.gmail.com with ESMTPSA id 5-20020a631045000000b0039d942d18f0sm17045101pgq.48.2022.04.19.10.40.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 10:40:24 -0700 (PDT)
-Message-ID: <6ab769f8-92da-774f-9d33-4ab5c1eaab6b@gmail.com>
-Date:   Tue, 19 Apr 2022 23:10:19 +0530
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=3oCiGnQ3FnOhleiaDf8lkUP1+skeKcNCUZ4oZiqfd50=;
+        b=U/v6o8hRsX/qq3ZIJpb3UpCkb17wc6jm+ODmb00m2hFatDsshVP5EW9IQp4zX+KFyV
+         FkjDgymbRbAm+Pz7owWPpvo5+f7Fl8Bd3Smc8wlpGjTk06k2YdAWH1mDlDaTcyen1j/K
+         FQvyvedUdZVhYItJB2tHU+YlxvmlvxgsU8iqD5s+NcS2coDqgLFaUOe3HlfCbC3tPEYq
+         9gPW4RQDPMFCSaGUew5fDQENWthVA/X29qMn3fWenokiQ3F/Bu8iyhLxO5vyHTdOK4gS
+         pgmSI9iVtkCTVwIoescUrjJR1lKMBy3LtfYNG3mfBoptJyoggq4Zibe4TexfRu7MhDrs
+         j2Hw==
+X-Gm-Message-State: AOAM531CoJsmwQSJhCiwc7Okt0wGBhUyNuqw7fOI0TW8UbMSyQbcU5HY
+        XopANT/g/ouQlxqeZrFJaF0FTg1M2Wk=
+X-Google-Smtp-Source: ABdhPJxZP4ULB6OHGeG+uCjuSxT8mbndmG1XP9TAlmWl+NLMwXcOCnx57thANrG41M13KWk2gytFaQ==
+X-Received: by 2002:a2e:9e19:0:b0:247:deb7:cd9f with SMTP id e25-20020a2e9e19000000b00247deb7cd9fmr10370384ljk.261.1650392255262;
+        Tue, 19 Apr 2022 11:17:35 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id bi32-20020a05651c232000b0024dba831e9bsm755037ljb.135.2022.04.19.11.17.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 11:17:34 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
+Subject: Re: Current state / standard advice for rebasing merges without
+ information loss/re-entry?
+References: <CAPMMpojjs4sjKdN6DAJFSwERdjq9XQgi35CcqkXu7HijadHa1Q@mail.gmail.com>
+        <87h76qwd8a.fsf@osv.gnss.ru>
+        <CANiSa6jAjbPRii8GYYLzU88K9P-TG5GGBJGY-H1CwmPkb+yU-w@mail.gmail.com>
+Date:   Tue, 19 Apr 2022 21:17:33 +0300
+In-Reply-To: <CANiSa6jAjbPRii8GYYLzU88K9P-TG5GGBJGY-H1CwmPkb+yU-w@mail.gmail.com>
+        (Martin von Zweigbergk's message of "Tue, 19 Apr 2022 08:24:21 -0700")
+Message-ID: <87zgkh9buq.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [GSoC] Contributor candidate introduction
-Content-Language: en-US
-To:     Jayati Shrivastava <gaurijove@gmail.com>
-Cc:     Plato Kiorpelidis <kioplato@gmail.com>,
-        Shubham Mishra <shivam828787@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Labnan Khalid Masum <khalid.masum.92@gmail.com>,
-        Jack McGuinness <jmcguinness2@ucmerced.edu>,
-        Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
- <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
- <E6525E16-10E8-4C08-A596-6C16AD31F62A@gmail.com>
- <CANsrJQcq-nWPaCyM3qR1d_u4U8wERdKbxFKMVK6Db9uWtyoFfQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <CANsrJQcq-nWPaCyM3qR1d_u4U8wERdKbxFKMVK6Db9uWtyoFfQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jayati,
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-On 19-04-2022 18:46, Jayati Shrivastava wrote:
-> Due to time constraints I shall be unable to participate in GSOC this
-> year, but I'll continue
-> to contribute to Git and invest time in understanding its codebase and
-> hopefully apply
-> next year as a GSOC applicant.
-> 
+> On Tue, Apr 19, 2022 at 5:25 AM Sergey Organov <sorganov@gmail.com> wrote:
+>>
 
-That's understandable. Thanks for letting us know. Hoping to hear from
-you on the mailing list :)
+[...]
 
+>> so I'd still propose to
+>> *rebase* merge *commits* as *content*, without any additional info being
+>> used, if at all possible.
+>
+> Rebasing is about applying changes from some commit onto some other
+> commit, as I'm sure you know.
 
-Others,
+Yep.
 
-Thanks for submitting the proposals on time.
+> What Elijah and I are proposing is to
+> consider the changes in the commit to be relative to the auto-merged
+> parents (regardless of the number of parents - auto-merging a single
+> parent commit just yields that commit), although I don't think Elijah
+> phrased it that way.
 
---
-Sivaraam
+I admit I didn't put enough thought into this new (to me) idea, but I
+can't immediately see advantages of this method. Suppose, for the sake
+of the argument, that the merge commit in question has been created
+without any use of an auto-merge (whatever it actually means) in the
+first place. What's then the reason to consider it to be a diff with
+respect to an auto-merge? What advantages would it bring?
+
+Then, do we need to be able to reproduce that exact auto-merge in 2
+years from now for the method to work reliably? If so, isn't it a
+problem, as we seem to agree that merge algorithms are subject to change
+over time?
+
+Essentially, this method apparently still puts a result of particular
+procedure at the root of the method, again mixing merge-a-process with
+merge-commit-the-result, that to me looks fundamentally flawed. I still
+think that at its core Git should remain indifferent to the way a commit
+has been created, be it merge or non-merge.
+
+OTOH, the method of rebasing merge commits I've described long ago has
+no assumptions about procedures involved in creation of the commit to be
+rebased, nor does it need any notion of conflicts being involved in the
+process, if any. It simply doesn't care, exactly the same way current
+rebase doesn't care, when it rebases non-merge commits, if they were
+created, say, using conflicting cherry-picks. What it cares about is
+preserving the content by properly applying the recorded changes to the
+new base. This property of the method I've suggested makes me believe it
+is the best candidate for the core functionality, on top of which other
+usable features could evolve.
+
+Anyway, the choice is up to whoever gets time and desire to implement
+it, and, not being that guy for now, I'm only looking forward for any
+suitable solution for reliable rebasing of merge commits.
+
+Thanks,
+-- Sergey Organov
