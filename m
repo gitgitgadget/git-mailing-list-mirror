@@ -2,82 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA56BC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 04:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B58F0C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 05:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244209AbiDSEl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 00:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        id S230459AbiDSF24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 01:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbiDSEl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 00:41:28 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47ABF2BB0D
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 21:38:47 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bv19so30458296ejb.6
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 21:38:47 -0700 (PDT)
+        with ESMTP id S230301AbiDSF2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 01:28:54 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B6027CC8
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 22:26:13 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id k14so22912809pga.0
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 22:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V8un2P7JYVyAqYLmOtHbCfbtSvrUz2dU4xPDVG5ePcY=;
-        b=a+49Rt+53u/aZF/y3E+0eBnfcXcEuJrucKBFXG4KZbbkg680qf5G/+X22JcHJwKJvC
-         daJrI1UHXg7N/bNnWobS/e2iPJqQwXhkfy8s1j7RBiD7Gjed5zLtPQKqbwy7rSZMOEpV
-         1zDquQRShnhcKQ5A9LU0W6ps693ZRN7d5nAsfkT89u6i28XRGKzma7cKV5gAl8PBBbGU
-         ZHR12AXUXSZR5OfcLXcIdR/uNzgRE8677edcNM3ZSTz1d8JE/MAC/AZ3/ApuuU/Bgkst
-         a98oYqANqieQktUZaqANI1h/UAGrdBO12v/I7laAdl8JRMhHODHdpTYQ2lEj8ZZYX6Pa
-         3Dkg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7Qj1+TAt+ez/WaEG4B0e6YPEQyqV1pON3g7j0Cv4x04=;
+        b=bdexb+KU+HK0ZgzLGEgyKKMpQiyFlykEuQ+txm8Spxy+K1n1ANcWng1AAueuhXCGJb
+         N5voY5gtyRI8qsdjscxgsVgVew0hYwVMxGLnRy+g5lLQ3ROGdDtm3wIT7J5qL3QzFm/j
+         cSxLG/GDcrrSMRabEnZrpdtqaLrb6Uvd+PP/k4ek4T0DW5lO2RYyWANBx0X0REP0UQm4
+         YZk3MwLNVgpesVXq2bAuHyRDuIn9xTHSB6vzgdCBaxb2I3AVTiiPD5wY4OyrJB0scuC5
+         lN63eGxxElSh+7Fz4WLsdtgsdG4tBgV8JnIDya8qCrb1R58QA+xpnyC5tlJxQB9JV0pO
+         uG6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V8un2P7JYVyAqYLmOtHbCfbtSvrUz2dU4xPDVG5ePcY=;
-        b=qcUHj8o/pp7LPbGdNIceHKJM8rp+nqb3GhmbPDeIxTmKD7rBOcuRlR6aI+Ptl4fDWB
-         wmD9+025qPSLHrvB48zygDraPR/37i4M4T4VU5I8wMKc+Io8nV7hGf/6Pn+RgA6Dw4np
-         c+xzXdW//jescRA4LbwoXrEEIS6G6Gkhx7gKqL8HPF9h14bYNMrPHXy395+UR0VHjcCl
-         n9F6VLJnnyOEbO2w5nmbJyOwG54D/88tjmavkPZNp3Dbkc9ghUl7ALXVfmELasVh8n5b
-         YFyvSADpr+00sWtttpy1o+X5RRvzT8OnNOIR0q2/7FdfDlv3x3Sb4lEi3F57YAREzayz
-         OyeA==
-X-Gm-Message-State: AOAM533x88UR7dKFaLOOD2IOLTWxalQ6iBKwcWCgY//zNhr5tuZeAiLA
-        V1mc14NpLOOB1m0Y1krzE6STLx/UdcLooON2nVE=
-X-Google-Smtp-Source: ABdhPJwOpwWdpxjRHpLIVKjBlJyzQnk4jGv1YOz9OAJSfUln/BL8bIWPDLH9OYy66dFAP77noI5Y5Pn3KIBUjL82KTM=
-X-Received: by 2002:a17:906:dc89:b0:6db:a789:7563 with SMTP id
- cs9-20020a170906dc8900b006dba7897563mr11425760ejc.471.1650343125707; Mon, 18
- Apr 2022 21:38:45 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=7Qj1+TAt+ez/WaEG4B0e6YPEQyqV1pON3g7j0Cv4x04=;
+        b=CdbA6dlixHwAs0ciq4uaqh9ymDWBGJsknsRxlUFsCxqRVo+gNKW6vI4VoMwKbsc8Lp
+         qtNH/otGNxUfDbQfDaJOUK2OLVyqgDit29Xd+VXV5IrgmHVWxZqnMTd4BdTGsTjFPd9g
+         ADSv6HKi3uzFFeRIcL2rZ25QFpZITn0ibw/a+1OxSqSBfuKIVF+f/6F4m4XH+bxv1Wui
+         kpG43ulzWOCe+eoYUsVd2NY7Us2VqsbKcJo7fUvwhJVStqE19dAFW82iveXh+o8ct5dE
+         n6LV6iJkVlhjulEOIdZy2AiNXsNXIQqsC1QXgiJUyVw2NhsgZYNyGuMeUIpFm8KNlF/4
+         EraQ==
+X-Gm-Message-State: AOAM531hFBETwfOBWgBHSlKg1McRiWdbMh+MFDIu3BgFmo08VjXEFCVn
+        MZn+6zBegadIJvyrARMpTEo=
+X-Google-Smtp-Source: ABdhPJxoiUXox0mwUVRP6/5n0o3oV6f9/w9ygOz6aljDGgRkn9Q9jewYCBMM5sip4cnygyCXlGZnIg==
+X-Received: by 2002:a05:6a00:2883:b0:509:322f:685f with SMTP id ch3-20020a056a00288300b00509322f685fmr15899681pfb.60.1650345972842;
+        Mon, 18 Apr 2022 22:26:12 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-72.three.co.id. [180.214.233.72])
+        by smtp.gmail.com with ESMTPSA id n15-20020a17090a2fcf00b001d090271f23sm11923895pjm.54.2022.04.18.22.26.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Apr 2022 22:26:12 -0700 (PDT)
+Message-ID: <5b90dfbf-b299-1388-f9b6-c610ce12bab7@gmail.com>
+Date:   Tue, 19 Apr 2022 12:26:10 +0700
 MIME-Version: 1.0
-References: <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com> <20220418180616.14954-1-chakrabortyabhradeep79@gmail.com>
-In-Reply-To: <20220418180616.14954-1-chakrabortyabhradeep79@gmail.com>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Tue, 19 Apr 2022 10:08:34 +0530
-Message-ID: <CAC316V45LgOYSEu=iGTAXHqeNyCVUHE-Dg_sr1vzfJMr0Zg7ww@mail.gmail.com>
-Subject: Re: [GSoC] Contributor candidate introduction
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 0/3] [GSoC][Patch] area: t4202-log.sh, modernizing test
+ script
+Content-Language: en-US
+To:     Jack McGuinness via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jack McGuinness <jmcguinness2@ucmerced.edu>
+References: <pull.1220.git.1650331876.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <pull.1220.git.1650331876.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hi,
+On 4/19/22 08:31, Jack McGuinness via GitGitGadget wrote:
+> Jack McGuinness (3):
+>   [GSoC][Patch] area: t4202-log.sh, modernizing test script
+>   [GSoC][Patch] area: t4202-log.sh, modernizing test script p2
+>   [GSoC][Patch] area: t4202-log.sh, modernizing test script p3
+> 
+>  t/t4202-log.sh | 156 +++++++++++++++++++++++++------------------------
+>  1 file changed, 80 insertions(+), 76 deletions(-)
+> 
 
-I submitted my proposal after fine-tuning it more according to the reviews :)
+I think the subject prefix of this patch series can be just
+[GSOC] [PATCH] instead.
 
-Thanks,
-Shubham
-
-On Tue, Apr 19, 2022 at 5:06 AM Abhradeep Chakraborty
-<chakrabortyabhradeep79@gmail.com> wrote:
->
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> wrote:
->
-> > Just a heads up that the proposal deadline (19Apr2022 18:00 UTC) is
-> > approaching shortly. I noticed that Abhradeep has submitted his proposal
-> > so far. Others, do make sure you submit your proposals in the GSoC
-> > website before the deadline. Only then can we consider your proposals
-> > for GSoC [ref].
->
-> That is the initial version of my proposal. I will submit the final
-> version soon.
->
-> Thanks :)
+-- 
+An old man doll... just what I always wanted! - Clara
