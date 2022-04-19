@@ -2,138 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E94C433F5
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 12:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20A13C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 13:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348310AbiDSMlE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 08:41:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58212 "EHLO
+        id S1349875AbiDSNKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 09:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232267AbiDSMlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 08:41:03 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D3C35DCD
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 05:38:18 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id bv16so5114129wrb.9
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 05:38:18 -0700 (PDT)
+        with ESMTP id S1351828AbiDSNKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 09:10:01 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0173A1B796
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 06:07:11 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id q14so20409445ljc.12
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 06:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:references:from:cc:in-reply-to
-         :content-transfer-encoding;
-        bh=cQ0d2ghHv6qo2ydME5KtFUSoKFP3+jVqpRNU11RncJ8=;
-        b=SWP0yfgUyaC7KVbNoe03kaKI5ITGm5vJ+fQ3xMtWMKnexnUx/mfGH1vvcFGwhtoS3U
-         NLjdlKhotJEAAGB/HKSE0h224ovBlfFIgwoNx83BHSCjaS/SVYosW+iddsZPIAM8vP7B
-         xmfPgN4Pom8adY/LLjMZLNqgrjyTA3g1u7nubXJdrsFC9sm1vIAOF5+FGqbgDw3goaf7
-         Hx2hwWGgvZaDeIaaV5FHm+b312BxupfaihNP+TGOewUVL19xb6CYIxFcelbAFB2mxAwn
-         LiIVgSmmmYDtDRmnW+2AAEmYoS/g2Y2YPGY8V17YGHLyh2ECkcS/6JD3j8Hdq9Vyo5FV
-         k4gA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=e2IKiBep5EcCRYARuVR/3QK3tRSsRX0o9/GycqIhfTw=;
+        b=lHcTeLxs7DUIyW/BO4EPkbgupib9VnioYZ3zfhDKgV1JAci5IOqIvXJnEE4qRdgiwC
+         6FcozyBs4EmaoepB1Khx6ETyDu7n/EwqV2YywQERwciY4i2UmUn447gjB2o9O09Licnk
+         RSEHaecXWAAkGfJLU1wD4qyoQiVrsrUPyhxSK7Ru7wWoRgt1EcgwUss3Y4a+NSdlVk6K
+         zjnf7C5FzHleqvwRYa1XQHhCwEWP0WXoa8ZLg+2Iv4DajTEtOXq9jhnkbFVi2fa4nklt
+         utSm+XZ35NK7r2vunPndW01ead7jmdCJEv7Eib6xDMYhXeCvNEpXvNZ+l3PEO8FNGKkA
+         O8eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:references:from:cc:in-reply-to
-         :content-transfer-encoding;
-        bh=cQ0d2ghHv6qo2ydME5KtFUSoKFP3+jVqpRNU11RncJ8=;
-        b=jokuY4xLDNmADhS6d5PapP/9C4+w5jOKCJusxeLaU91cP3A3OnwwiAKMEdIJvm3ey5
-         hXPCBX8J+aRzmZP2pHKAVXb6/jlXtaS9ZbVRbBKBS1AnxtAqjGs6wMAPVSKi3UVO+Jf1
-         quJHwJ5iNdmDcypLf3N9lLaYpKTn0wlKKginJRngqHXuZkOyDSX9bnEpc+ENrRfxNbdL
-         w5ZEPmksMcMLUMM8JjcFavAHK0W3kfO/pnHY3HyqfoKR8Sc45t5LIVtggsuhP2a98inH
-         otmB8biNZYwNkg9UgdKVSaHrA+KBHjQBDGTVBvPnCXLkqg+KkL55G5Agltc5cr3S0VI6
-         ZcgA==
-X-Gm-Message-State: AOAM533RbgmDk8rw1WaOSgbIRj0kRcLYf0kCwYzycg0QCAHWASbGuif6
-        Srl9lpvra1gRL0p7qEUlMjU=
-X-Google-Smtp-Source: ABdhPJxo/gYsl9kUmV+2evCfVGH7j7XlIxG4I3SZQqdwuD6Epo5AlYyJMXJPnyapen5j8VGVD/cYNQ==
-X-Received: by 2002:a5d:6da5:0:b0:20a:8805:6988 with SMTP id u5-20020a5d6da5000000b0020a88056988mr10512684wrs.317.1650371896940;
-        Tue, 19 Apr 2022 05:38:16 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id u16-20020a05600c441000b0038ebcbadcedsm27740511wmn.2.2022.04.19.05.38.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 05:38:16 -0700 (PDT)
-Message-ID: <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
-Date:   Tue, 19 Apr 2022 13:38:15 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=e2IKiBep5EcCRYARuVR/3QK3tRSsRX0o9/GycqIhfTw=;
+        b=xWFnMY/K2ZshbeTIgQfZxqKUcDHpQebJKju9n0YhgsLMmB+MDfmTT/1wmNZAGX2cLI
+         zoBE3ucFWzft5Imgzzze92EiJ8HQvCCmZDs/76iKlQ0kxOjmCmVBwgmdBJX/44yDUSLd
+         091rZpcy8xY8snfTm+qPB8rZClSdYDq6VdCkkmrh7YQCkM+zA5tT32wNaeaVPOtOwTnl
+         MbJVvrhqeIvCVj9mEnHniT+ZVbMWA9iBJTNaxvLpt005de4KzqgfI9ITz8dQc+Tq3Bkh
+         UB4WodKtDdscEvBRp7914MrAlKQTayOmzLChrEYJCjedk2EwZDOrYHP3WsPusbMvp8sd
+         LU3w==
+X-Gm-Message-State: AOAM5310L98XJ1/+hC5JF0g/QM7snPQ0oB6RqA+lX87DslEeTFCfXluk
+        WyGdXSPZYT3MhS1qBlF4AuF2qQsQH3krOVyJsHA=
+X-Google-Smtp-Source: ABdhPJxpEa6wUbWoLK7aOO3dhyrZp5qcurH5M8FZf41YbHAVhUnzZMkDMNEkQ75rdmbz00VavImqkHLBpu9VEFA9qV0=
+X-Received: by 2002:a2e:b88d:0:b0:249:86c0:fbd8 with SMTP id
+ r13-20020a2eb88d000000b0024986c0fbd8mr10061994ljp.247.1650373630074; Tue, 19
+ Apr 2022 06:07:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: ab/ci-setup-simplify (was Re: What's cooking in git.git (Apr 2022,
- #05; Mon, 18))
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqbkwyz78z.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-In-Reply-To: <xmqqbkwyz78z.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220410111852.2097418-1-kioplato@gmail.com> <df287d4f-e9da-4ce0-d7e9-1b1fe7671aab@gmail.com>
+In-Reply-To: <df287d4f-e9da-4ce0-d7e9-1b1fe7671aab@gmail.com>
+From:   Plato Kiorpelidis <kioplato@gmail.com>
+Date:   Tue, 19 Apr 2022 16:06:44 +0300
+Message-ID: <CAO2gv81bM2srW0jxFwYQQ6xbt3ZrExNjf7_Y2Dxyfydc71r27w@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/6][GSoC] iterate dirs before or after their contents
+To:     phillip.wood@dunelm.org.uk
+Cc:     git <git@vger.kernel.org>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        mhagger@alum.mit.edu
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * ab/ci-setup-simplify (2022-04-14) 29 commits
->   - CI: make it easy to use ci/*.sh outside of CI
->   - CI: don't use "set -x" in "ci/lib.sh" output
->   - CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
->   - CI: set SANITIZE=leak in MAKEFLAGS directly
->   - CI: set CC in MAKEFLAGS directly, don't add it to the environment
->   - CI: add more variables to MAKEFLAGS, except under vs-build
->   - CI: narrow down variable definitions in --build and --test
->   - CI: only invoke ci/lib.sh as "steps" in main.yml
->   - CI: pre-select test slice in Windows & VS tests
->   - ci/run-test-slice.sh: replace shelling out with "echo"
->   - CI: move "env" definitions into ci/lib.sh
->   - CI: combine ci/install{,-docker}-dependencies.sh
->   - CI: split up and reduce "ci/test-documentation.sh"
->   - CI: invoke "make artifacts-tar" directly in windows-build
->   - CI: check ignored unignored build artifacts in "win[+VS] build" too
->   - ci/lib.sh: use "test" instead of "["
->   - CI: remove "run-build-and-tests.sh", run "make [test]" directly
->   - CI: export variables via a wrapper
->   - CI: consistently use "export" in ci/lib.sh
->   - CI: move p4 and git-lfs variables to ci/install-dependencies.sh
->   - CI: have "static-analysis" run "check-builtins", not "documentation"
->   - CI: have "static-analysis" run a "make ci-static-analysis" target
->   - CI: don't have "git grep" invoke a pager in tree content check
->   - CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
->   - CI: remove unused Azure ci/* code
->   - CI: remove dead "tree skipping" code
->   - CI: remove more dead Travis CI support
->   - CI: make "$jobname" explicit, remove fallback
->   - CI: run "set -ex" early in ci/lib.sh
->   (this branch is used by ab/ci-github-workflow-markup.)
-> 
->   Drive more actions done in CI via the Makefile instead of shell
->   commands sprinkled in .github/workflows/main.yml
-> 
->   Will merge to 'next'?
->   source: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+On Mon, Apr 11, 2022 at 4:37 PM Phillip Wood <phillip.wood123@gmail.com> wr=
+ote:
+>
+> Hi Plato
 
-I haven't had time to read all 31 patches from v4 in detail but I have 
-looked at the results in seen.
+Hey Phillip,
 
-Looking at seen:ci/install-dependencies.sh the shebang has been changed 
-to "#!/bin/sh" but it contains "BREW_PACKAGE=${CC_PACKAGE/-/@}" which is 
-a bashism.
+Thanks for reviewing my patches, your input is welcomed! :)
+I'll reply your reviews and =C3=86var's in the following days. I need some
+time to read dir-iterator again in combination with your comments.
 
-Looking at seen:.github/workflows/main.yaml to skip running the tests 
-one has to set "skip-tests: no" which is utterly confusing.
+>
+> I think this would be a useful addition to git, thanks for working on
+> it. I've left some comments on the individual patches. In general I
+> think this series would benefit from trying to work with the existing
+> code and change one aspect at a time in stages rather than rewriting
+> large chunks all at once.
 
- From what I saw scanning the patches there seemed to be a lot of churn, 
-both of existing code and code that gets added and then moved/refactored 
-within the series.
+Agreed, I'll change one aspect at a time. First, I'll include
+suggested changes from this version and also convert entry.c to use
+dir-iterator instead of opendir, readdir, closedir API and submit v2.
+Then I'll spend some time understanding read_directory_recursive() and
+search for possible parts that can be cleaned up using dir-iterator.
+I'll compile a set of possible customer candidates for dir-iterator as
+reference. This will take some time since I'll prepare for the
+upcoming GSoC as a possible contributor.
 
-Looking at the output of a recent ci run of seen the steps to prepare 
-the environment before building and testing print all the environment 
-variables rather than just the ones being set for that step which seems 
-to go against the aim of "CI: narrow down variable definitions in 
---build and --test". (Also the "SKIP" prefix in the output lacks a ":")
+Thanks,
+Plato
 
-Dscho raised concerns that this removes any support for azure pipelines 
-which he uses when preparing security patches.
-
-I think splitting out the build and test steps is a good idea but I'm 
-less convinced by some of the other changes.
-
-Best Wishes
-
-Phillip
+>
+> Best Wishes
+>
+> Phillip
+>
+> On 10/04/2022 12:18, Plato Kiorpelidis wrote:
+> [...]
