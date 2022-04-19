@@ -2,124 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F48DC4167D
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 18:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF09C433FE
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 19:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357146AbiDSSZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 14:25:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38090 "EHLO
+        id S1357436AbiDSTC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 15:02:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358050AbiDSSYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 14:24:05 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B380946650
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:17:37 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bn33so21549909ljb.6
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:17:37 -0700 (PDT)
+        with ESMTP id S1357528AbiDSTCb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 15:02:31 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F76C04
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:59:47 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id y20so14686062eju.7
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 11:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3oCiGnQ3FnOhleiaDf8lkUP1+skeKcNCUZ4oZiqfd50=;
-        b=k0dOaC1x1sAzzfl4lBjlRwOohezCsbAI9FTZjduGPr6XpV9c3CHiEhbXtIuNwVuM1k
-         kudnuOwZux5FSNojPTIthGnE/d0ox1+XYbT+57qIoH+nUI8N36qnIVoT80fQ+9rW65gU
-         k0nrkjeLZBTaYM+iUuw8X0GvaM5IiRtjAqW7/b87ceWlVdPsCfWAB/M+4/FOORoy3S09
-         rPxMf7riAX3n5wLMr/aa04OVZC8fhVE/5zX7+iCdTQvF4Sp34UodU6qjjaDkQt1a7dqB
-         s2MeQFltfUgGmDXzKr/C/Z53g9/mRIfvh+bc/6I7t0UyMHXcSfgOok/UieIYZs1KXRbR
-         XLQA==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=c+P0eYAuVEAAeLZIMq6Zu+QKNnTL4TEtcPcm8GtiFVQ=;
+        b=IMhnMQC7J790Y9OGjgcmvjzhbA+NP1V8w3lmEeAJuQ/uyaHoj4vHlZdKicir2yVYG/
+         vQoqsYc5RbK2tYa9NfAVVQn3tvJ77LUaBidpW1r71cQlkJj/OawQkSuYOSqHroEkDuvb
+         sR0INadsGrPHKJEpYifvVbSjNm/+vDiWsWugYBGfXuLz189bBcg7mw0AWMOlWTlotzWf
+         0uKPPJYpii/CPI/S7WKmoPQzrmZGqAhq9oc2Nc6TcdZ/oKw4TRew1+LWwnkNeYo0Qo3S
+         99AZxMoDfCHqe+kVjjoLnq4+NwsLdaHZ8Gzrdov0oyeo3lL79re2fAFfHVhTrCn+L1H/
+         BumQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=3oCiGnQ3FnOhleiaDf8lkUP1+skeKcNCUZ4oZiqfd50=;
-        b=U/v6o8hRsX/qq3ZIJpb3UpCkb17wc6jm+ODmb00m2hFatDsshVP5EW9IQp4zX+KFyV
-         FkjDgymbRbAm+Pz7owWPpvo5+f7Fl8Bd3Smc8wlpGjTk06k2YdAWH1mDlDaTcyen1j/K
-         FQvyvedUdZVhYItJB2tHU+YlxvmlvxgsU8iqD5s+NcS2coDqgLFaUOe3HlfCbC3tPEYq
-         9gPW4RQDPMFCSaGUew5fDQENWthVA/X29qMn3fWenokiQ3F/Bu8iyhLxO5vyHTdOK4gS
-         pgmSI9iVtkCTVwIoescUrjJR1lKMBy3LtfYNG3mfBoptJyoggq4Zibe4TexfRu7MhDrs
-         j2Hw==
-X-Gm-Message-State: AOAM531CoJsmwQSJhCiwc7Okt0wGBhUyNuqw7fOI0TW8UbMSyQbcU5HY
-        XopANT/g/ouQlxqeZrFJaF0FTg1M2Wk=
-X-Google-Smtp-Source: ABdhPJxZP4ULB6OHGeG+uCjuSxT8mbndmG1XP9TAlmWl+NLMwXcOCnx57thANrG41M13KWk2gytFaQ==
-X-Received: by 2002:a2e:9e19:0:b0:247:deb7:cd9f with SMTP id e25-20020a2e9e19000000b00247deb7cd9fmr10370384ljk.261.1650392255262;
-        Tue, 19 Apr 2022 11:17:35 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id bi32-20020a05651c232000b0024dba831e9bsm755037ljb.135.2022.04.19.11.17.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 11:17:34 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Martin von Zweigbergk <martinvonz@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
-Subject: Re: Current state / standard advice for rebasing merges without
- information loss/re-entry?
-References: <CAPMMpojjs4sjKdN6DAJFSwERdjq9XQgi35CcqkXu7HijadHa1Q@mail.gmail.com>
-        <87h76qwd8a.fsf@osv.gnss.ru>
-        <CANiSa6jAjbPRii8GYYLzU88K9P-TG5GGBJGY-H1CwmPkb+yU-w@mail.gmail.com>
-Date:   Tue, 19 Apr 2022 21:17:33 +0300
-In-Reply-To: <CANiSa6jAjbPRii8GYYLzU88K9P-TG5GGBJGY-H1CwmPkb+yU-w@mail.gmail.com>
-        (Martin von Zweigbergk's message of "Tue, 19 Apr 2022 08:24:21 -0700")
-Message-ID: <87zgkh9buq.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=c+P0eYAuVEAAeLZIMq6Zu+QKNnTL4TEtcPcm8GtiFVQ=;
+        b=nHo0ii1osbnUvCXcgy+AlTnCA5+kazPj+jKw0v0wFNqIaUHaZ8JQqgtH2DxWsLi3tX
+         x9YLpNZ4saAUGy2MQjKPDHCGIaht/FezmCJmK+SqIaA2JlyWLZNVheULu8tqqc/3ar1l
+         xOJeGWSk8ornSrIuu5I/FXOtB+FGMaJXoz7yULmseq8anolCQx5Zm9Gp6zb5qGfoo6BO
+         RV0+gwzi90HvAXCXdKbxcoovmZBWy/63LA1orF/Sfl9LYUfHglnCUPpSYZCXNJZo4Wtm
+         OE5a20yTCaOcbLazc/nBesH155KaKNaoALELhs2Fchb0y7CIVvMx17Gg3foTMPbHhFq9
+         SmmQ==
+X-Gm-Message-State: AOAM530EP4BHDbrPFtnK5+nPf2bP3qk/DZxH9Nk2+s+Bp18vttYg75b7
+        0x3zZgFXNDZHiqvgji/XAGBRrsguA+dd1LqqtHnfwhjT1s2NZQ==
+X-Google-Smtp-Source: ABdhPJzk4h/3tYo3hq5Sji/+H9Q4iYvdIGAoSsoGF5Hk2wt2wrcriKhJ3kVdmRDwSjPROp2YkKLVHf57a4+WPzxvaV4=
+X-Received: by 2002:a17:906:2bd4:b0:6e8:7e5:39b6 with SMTP id
+ n20-20020a1709062bd400b006e807e539b6mr14717306ejg.25.1650394785491; Tue, 19
+ Apr 2022 11:59:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Tue, 19 Apr 2022 14:59:36 -0400
+Message-ID: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
+Subject: git 2.36.0 regression: pre-commit hooks no longer have stdout/stderr
+ as tty
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin von Zweigbergk <martinvonz@gmail.com> writes:
+here's the shortest reproduction --
 
-> On Tue, Apr 19, 2022 at 5:25 AM Sergey Organov <sorganov@gmail.com> wrote:
->>
+```console
+$ cat ../testrepo/.git/hooks/pre-commit
+#!/usr/bin/env bash
+if [ -t 1 ]; then
+    echo GOOD
+fi
+```
 
-[...]
+in previous git versions:
 
->> so I'd still propose to
->> *rebase* merge *commits* as *content*, without any additional info being
->> used, if at all possible.
+```
+$ git commit -q --allow-empty -m foo
+GOOD
+$
+```
+
+with git 2.36.0:
+
+````
+$ git commit -q --allow-empty -m foo
+$
+```
+
+why I care: I maintain a git hooks framework which uses `isatty` to
+detect whether it's appropriate to color the output.  many tools
+utilize the same check.  in 2.36.0+ isatty is false for stdout and
+stderr causing coloring to be turned off.
+
+I bisected this (it was a little complicated, needed to force a pty):
+
+`../testrepo`: a git repo set up with the hook above
+
+`../bisect.sh`:
+
+```bash
+#!/usr/bin/env bash
+set -eux
+git clean -fxfd >& /dev/null
+make -j6 prefix=3D"$PWD/prefix" NO_GETTEXT=3D1 NO_TCLTK=3D1 install >& /dev=
+/null
+export PATH=3D"$PWD/prefix/bin:$PATH"
+cd ../testrepo
+(../pty git commit -q --allow-empty -m foo || true) | grep GOOD
+```
+
+`../pty`:
+
+```python
+#!/usr/bin/env python3
+import errno
+import os
+import subprocess
+import sys
+
+x: int =3D 'nope'
+
+
+class Pty(object):
+    def __init__(self):
+        self.r =3D self.w =3D None
+
+    def __enter__(self):
+        self.r, self.w =3D os.openpty()
+
+        return self
+
+    def close_w(self):
+        if self.w is not None:
+            os.close(self.w)
+            self.w =3D None
+
+    def close_r(self):
+        assert self.r is not None
+        os.close(self.r)
+        self.r =3D None
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close_w()
+        self.close_r()
+
+
+def cmd_output_p(*cmd, **kwargs):
+    with open(os.devnull) as devnull, Pty() as pty:
+        kwargs =3D {'stdin': devnull, 'stdout': pty.w, 'stderr': pty.w}
+        proc =3D subprocess.Popen(cmd, **kwargs)
+        pty.close_w()
+
+        buf =3D b''
+        while True:
+            try:
+                bts =3D os.read(pty.r, 4096)
+            except OSError as e:
+                if e.errno =3D=3D errno.EIO:
+                    bts =3D b''
+                else:
+                    raise
+            else:
+                buf +=3D bts
+            if not bts:
+                break
+
+    return proc.wait(), buf, None
+
+
+if __name__ =3D=3D '__main__':
+    _, buf, _ =3D cmd_output_p(*sys.argv[1:])
+    sys.stdout.buffer.write(buf)
+```
+
+the first commit it points out:
+
+```
+f443246b9f29b815f0b98a07bb2d425628ae6522 is the first bad commit
+commit f443246b9f29b815f0b98a07bb2d425628ae6522
+Author: Emily Shaffer <emilyshaffer@google.com>
+Date:   Wed Dec 22 04:59:40 2021 +0100
+
+    commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+
+    Move these hooks hook away from run-command.h to and over to the new
+    hook.h library.
+
+    Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+    Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Rebasing is about applying changes from some commit onto some other
-> commit, as I'm sure you know.
+    Acked-by: Emily Shaffer <emilyshaffer@google.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Yep.
+ commit.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+bisect run success
+```
 
-> What Elijah and I are proposing is to
-> consider the changes in the commit to be relative to the auto-merged
-> parents (regardless of the number of parents - auto-merging a single
-> parent commit just yields that commit), although I don't think Elijah
-> phrased it that way.
 
-I admit I didn't put enough thought into this new (to me) idea, but I
-can't immediately see advantages of this method. Suppose, for the sake
-of the argument, that the merge commit in question has been created
-without any use of an auto-merge (whatever it actually means) in the
-first place. What's then the reason to consider it to be a diff with
-respect to an auto-merge? What advantages would it bring?
-
-Then, do we need to be able to reproduce that exact auto-merge in 2
-years from now for the method to work reliably? If so, isn't it a
-problem, as we seem to agree that merge algorithms are subject to change
-over time?
-
-Essentially, this method apparently still puts a result of particular
-procedure at the root of the method, again mixing merge-a-process with
-merge-commit-the-result, that to me looks fundamentally flawed. I still
-think that at its core Git should remain indifferent to the way a commit
-has been created, be it merge or non-merge.
-
-OTOH, the method of rebasing merge commits I've described long ago has
-no assumptions about procedures involved in creation of the commit to be
-rebased, nor does it need any notion of conflicts being involved in the
-process, if any. It simply doesn't care, exactly the same way current
-rebase doesn't care, when it rebases non-merge commits, if they were
-created, say, using conflicting cherry-picks. What it cares about is
-preserving the content by properly applying the recorded changes to the
-new base. This property of the method I've suggested makes me believe it
-is the best candidate for the core functionality, on top of which other
-usable features could evolve.
-
-Anyway, the choice is up to whoever gets time and desire to implement
-it, and, not being that guy for now, I'm only looking forward for any
-suitable solution for reliable rebasing of merge commits.
-
-Thanks,
--- Sergey Organov
+Anthony
