@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75135C433FE
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 01:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8242C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 01:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245412AbiDSBeF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Apr 2022 21:34:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42846 "EHLO
+        id S245418AbiDSBeH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Apr 2022 21:34:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbiDSBeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Apr 2022 21:34:03 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 265D41E3F7
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 18:31:22 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id r4-20020a05600c35c400b0039295dc1fc3so529048wmq.3
-        for <git@vger.kernel.org>; Mon, 18 Apr 2022 18:31:22 -0700 (PDT)
+        with ESMTP id S244590AbiDSBeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Apr 2022 21:34:04 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5321E3F8
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 18:31:23 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id u3so20469676wrg.3
+        for <git@vger.kernel.org>; Mon, 18 Apr 2022 18:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Q4vHFrcL6U+n84kwB4O5isWXvqlO5mjvge06h4xjCRU=;
-        b=nleISJKOiRw3vAKsqxymXrX6lAkfJ4sN5qPlA/IUIaNpXVf6vGVqZF8u1CZLBADe7y
-         RKbSZC7DHYOygqPqi4XKM048uOQ/QXoYl9XxSdmZi9BBjRPRjMVpSpwZ2h11knVNmv7L
-         Tkxaq57FFmMUSIl06lOW84SildJfHM8K2c9d/aIAhlHivHZLphdzJIfhiGa96PCakF7k
-         U8+CVbllISfPdMWQoHtR617QIQrNEqDzcSDEPp1wJh93B1BG339ICFjeuH/V8ayc5cgl
-         5ZMp3gdBg06GfnOnK43/HEq4wfR5RDMRNfSTy7v2i1TcmM4OmisQF8iGwKOUNJqlCb0t
-         dmtQ==
+        bh=88vOcTWf2iEvmsw5UCAeBMnhtdqQ6OwqpFUw+n7vCzk=;
+        b=Nw2MNnJMTz46uGbVe55FJMwTrwWhVkxBElIdMRWKKYAxsEFlWqVf+hgkAkeNiPRPkf
+         rUVlQZ2MQzdp48LYtn3/JEdRaUMViTWD3RajSZ3qMjtGD5lDU0DnbRk5rYA/Krimcvnd
+         npAl+kk1tc8i+t2kzRVA9aLy5LMBGAHIco08imRiSJEc6phZk9iXI2ib0G+u4QoqBXU0
+         0JsnaVsJfvmLmAWz2suFITMpkW2wcrZtoVZPDiW6dad+9duubCBzL4Jm0yNBW6VXRCIP
+         j75lc51QOBt43wnjcIz3k0ovMd614dV+tohWqauvwkzYEmpHoy4L9tr4JnS4ArazR/nl
+         vUsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Q4vHFrcL6U+n84kwB4O5isWXvqlO5mjvge06h4xjCRU=;
-        b=LmejwIhzV22b/VNa+VWEL+M+BIJ6bLitZQhbnz0RT9HXVgffvXp4wd9NEho5DukBve
-         0ezOnl+DHMQq8j89lbOvsGmYxGbPnB3HEMl5UxHGIVHpB7MCdvMQp5xpD+CpXQC2ZYB7
-         6q4LpvuhEKXBsI5PNypnQWYbvER3RFxHXscweNnHTBME7D2nvrLx+LyLhtYo/72KKYZy
-         Onm44ZcJRt8pbRtf3TUPow9ZLsvdONQejwIDVGz+SGfYMltFx1rNX2tvSMxGAq0YFCaC
-         SyHLjZJSQnc60FvqrKX25OWcPKOY2xg4PwIafInKzAEzV4A6y64KcRDSnrzGTKmfJ8O1
-         yn/Q==
-X-Gm-Message-State: AOAM533X4bqpagdkwq0sRJ0ikQzmDU3Nr5Sbm98qO3EiDeuM6Se0zFnF
-        GWl82Tp0AUhBWCz7h4sFTzE1wxAhaSw=
-X-Google-Smtp-Source: ABdhPJxFnF3NVKqRgRzYWfM5V2OELhIm+RJqhWY0azmQ/YD/q9I05UFr345uVy21VT5m38uGJ6FtKw==
-X-Received: by 2002:a1c:3b09:0:b0:38e:ad45:5ec6 with SMTP id i9-20020a1c3b09000000b0038ead455ec6mr13443327wma.194.1650331880303;
-        Mon, 18 Apr 2022 18:31:20 -0700 (PDT)
+        bh=88vOcTWf2iEvmsw5UCAeBMnhtdqQ6OwqpFUw+n7vCzk=;
+        b=H7Ic9cwu0i4/apMyzGmPxSNboSeJFT3gAL6ouNwQzl3xNBUx7jTGmnkfTpbOk5pFES
+         xA+71+rCoXsgr3VvXogJTD9zwygvm8hy6oWRAZBCOooYsGR4ryM1WjaUHev76D11Idhe
+         8yh80oh6tbYN2kH8qu3Y/AUvnip1Dv/WCjWc2ebGF4xBLUPGfrADELebMhygv2sGMCRP
+         y0SgRbHAuPzI7MNBv8kqeJpXoWd7jaHdkhwrh0E/al9Zq+gTM54ixPkDZ3hl+RLtiEjK
+         G0qGX2N8tOvB3NUgiYCTPKNiREnuC34Mkb4i/229UByHHWnNXEh8hPHzB8olnColnyxn
+         AILw==
+X-Gm-Message-State: AOAM5315+xQzRZSf/ddD1cwc6ekdmbVA/iaH7yBYhKGgT55griZU39MI
+        tYJRTeSiuI7m3+l1gzYfthCbyP1w8rM=
+X-Google-Smtp-Source: ABdhPJx0+m57q5SKnrrAszBVchBJ6NXJb32aSh5bQ0Xe+wTGRcxuGAXLAo9uAg5BhVjj2snb/JpdVg==
+X-Received: by 2002:adf:a35c:0:b0:207:aace:b28e with SMTP id d28-20020adfa35c000000b00207aaceb28emr9550049wrb.233.1650331881467;
+        Mon, 18 Apr 2022 18:31:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t9-20020adfa2c9000000b002061561d4a7sm11590664wra.96.2022.04.18.18.31.19
+        by smtp.gmail.com with ESMTPSA id r9-20020a05600c320900b0038f0894d80csm14034125wmp.7.2022.04.18.18.31.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Apr 2022 18:31:19 -0700 (PDT)
-Message-Id: <e5c29a12df61d0f587594664f50ec025b934fadf.1650331876.git.gitgitgadget@gmail.com>
+        Mon, 18 Apr 2022 18:31:20 -0700 (PDT)
+Message-Id: <4f0f4619806b383f280e8f0d0b9000c189a3b540.1650331876.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1220.git.1650331876.gitgitgadget@gmail.com>
 References: <pull.1220.git.1650331876.gitgitgadget@gmail.com>
 From:   "Jack McGuinness via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Apr 2022 01:31:15 +0000
-Subject: [PATCH 2/3] [GSoC][Patch] area: t4202-log.sh, modernizing test script
- p2
+Date:   Tue, 19 Apr 2022 01:31:16 +0000
+Subject: [PATCH 3/3] [GSoC][Patch] area: t4202-log.sh, modernizing test script
+ p3
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,226 +67,180 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jack McGuinness <jmcguinness2@ucmerced.edu>
 
-Remove whitespace after redirect operator.
+Split up multiple lines on one line to multiple
+Fix style of cd & echo in subshell
 
 Signed-off-by: Jack McGuinness <jmcguinness2@ucmerced.edu>
 ---
- t/t4202-log.sh | 62 +++++++++++++++++++++++++-------------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ t/t4202-log.sh | 62 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 18 deletions(-)
 
 diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index c5d191356f1..fe3976829bb 100755
+index fe3976829bb..604b275d6a8 100755
 --- a/t/t4202-log.sh
 +++ b/t/t4202-log.sh
-@@ -45,29 +45,29 @@ test_expect_success setup '
- 	git commit -m sixth
- '
+@@ -1756,13 +1756,20 @@ test_expect_success '--walk-reflogs --graph --no-graph works' '
  
--printf "sixth\nfifth\nfourth\nthird\nsecond\ninitial" > expect
-+printf "sixth\nfifth\nfourth\nthird\nsecond\ninitial" >expect
- test_expect_success 'pretty' '
--	git log --pretty="format:%s" > actual &&
-+	git log --pretty="format:%s" >actual &&
+ test_expect_success 'dotdot is a parent directory' '
+ 	mkdir -p a/b &&
+-	( echo sixth && echo fifth ) >expect &&
+-	( cd a/b && git log --format=%s .. ) >actual &&
++	(
++		echo sixth &&
++		echo fifth
++	) >expect &&
++	(
++		cd a/b &&
++		git log --format=%s ..
++	) >actual &&
  	test_cmp expect actual
  '
  
--printf "sixth\nfifth\nfourth\nthird\nsecond\ninitial\n" > expect
-+printf "sixth\nfifth\nfourth\nthird\nsecond\ninitial\n" >expect
- test_expect_success 'pretty (tformat)' '
--	git log --pretty="tformat:%s" > actual &&
-+	git log --pretty="tformat:%s" >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'setup signed branch' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b signed main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+@@ -1770,7 +1777,8 @@ test_expect_success GPG 'setup signed branch' '
  '
  
- test_expect_success 'pretty (shortcut)' '
--	git log --pretty="%s" > actual &&
-+	git log --pretty="%s" >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'setup signed branch with subkey' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b signed-subkey main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+@@ -1778,7 +1786,8 @@ test_expect_success GPG 'setup signed branch with subkey' '
  '
  
- test_expect_success 'format' '
--	git log --format="%s" > actual &&
-+	git log --format="%s" >actual &&
- 	test_cmp expect actual
+ test_expect_success GPGSM 'setup signed branch x509' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b signed-x509 main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+@@ -1790,7 +1799,8 @@ test_expect_success GPGSM 'setup signed branch x509' '
+ test_expect_success GPGSSH 'setup sshkey signed branch' '
+ 	test_config gpg.format ssh &&
+ 	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b signed-ssh main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+@@ -1802,16 +1812,24 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed commits with keys ha
+ 	touch file &&
+ 	git add file &&
+ 
+-	echo expired >file && test_tick && git commit -a -m expired -S"${GPGSSH_KEY_EXPIRED}" &&
++	echo expired >file &&
++	test_tick &&
++	git commit -a -m expired -S"${GPGSSH_KEY_EXPIRED}" &&
+ 	git tag expired-signed &&
+ 
+-	echo notyetvalid >file && test_tick && git commit -a -m notyetvalid -S"${GPGSSH_KEY_NOTYETVALID}" &&
++	echo notyetvalid >file &&
++	test_tick &&
++	git commit -a -m notyetvalid -S"${GPGSSH_KEY_NOTYETVALID}" &&
+ 	git tag notyetvalid-signed &&
+ 
+-	echo timeboxedvalid >file && test_tick && git commit -a -m timeboxedvalid -S"${GPGSSH_KEY_TIMEBOXEDVALID}" &&
++	echo timeboxedvalid >file &&
++	test_tick &&
++	git commit -a -m timeboxedvalid -S"${GPGSSH_KEY_TIMEBOXEDVALID}" &&
+ 	git tag timeboxedvalid-signed &&
+ 
+-	echo timeboxedinvalid >file && test_tick && git commit -a -m timeboxedinvalid -S"${GPGSSH_KEY_TIMEBOXEDINVALID}" &&
++	echo timeboxedinvalid >file &&
++	test_tick &&
++	git commit -a -m timeboxedinvalid -S"${GPGSSH_KEY_TIMEBOXEDINVALID}" &&
+ 	git tag timeboxedinvalid-signed
  '
  
--cat > expect << EOF
-+cat >expect << EOF
-  This is
-   the sixth
-   commit.
-@@ -77,16 +77,16 @@ cat > expect << EOF
- EOF
- 
- test_expect_success 'format %w(11,1,2)' '
--	git log -2 --format="%w(11,1,2)This is the %s commit." > actual &&
-+	git log -2 --format="%w(11,1,2)This is the %s commit." >actual &&
- 	test_cmp expect actual
+@@ -1878,7 +1896,8 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'log shows failure with commit date
  '
  
- test_expect_success 'format %w(,1,2)' '
--	git log -2 --format="%w(,1,2)This is%nthe %s%ncommit." > actual &&
-+	git log -2 --format="%w(,1,2)This is%nthe %s%ncommit." >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b plain main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+@@ -1897,7 +1916,8 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
  '
  
--cat > expect << EOF
-+cat >expect << EOF
- $(git rev-parse --short :/sixth  ) sixth
- $(git rev-parse --short :/fifth  ) fifth
- $(git rev-parse --short :/fourth ) fourth
-@@ -95,14 +95,14 @@ $(git rev-parse --short :/second ) second
- $(git rev-parse --short :/initial) initial
- EOF
- test_expect_success 'oneline' '
--	git log --oneline > actual &&
-+	git log --oneline >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'log --graph --show-signature for merged tag in shallow clone' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b plain-shallow main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+@@ -1917,7 +1937,8 @@ test_expect_success GPG 'log --graph --show-signature for merged tag in shallow
  '
  
- test_expect_success 'diff-filter=A' '
--	git log --no-renames --pretty="format:%s" --diff-filter=A HEAD > actual &&
--	git log --no-renames --pretty="format:%s" --diff-filter A HEAD > actual-separate &&
--	printf "fifth\nfourth\nthird\ninitial" > expect &&
-+	git log --no-renames --pretty="format:%s" --diff-filter=A HEAD >actual &&
-+	git log --no-renames --pretty="format:%s" --diff-filter A HEAD >actual-separate &&
-+	printf "fifth\nfourth\nthird\ninitial" >expect &&
- 	test_cmp expect actual &&
- 	test_cmp expect actual-separate
- '
-@@ -174,43 +174,43 @@ test_expect_success 'git config log.follow is overridden by --no-follow' '
- 
- # Note that these commits are intentionally listed out of order.
- last_three="$(git rev-parse :/fourth :/sixth :/fifth)"
--cat > expect << EOF
-+cat >expect << EOF
- $(git rev-parse --short :/sixth ) sixth
- $(git rev-parse --short :/fifth ) fifth
- $(git rev-parse --short :/fourth) fourth
- EOF
- test_expect_success 'git log --no-walk <commits> sorts by commit time' '
--	git log --no-walk --oneline $last_three > actual &&
-+	git log --no-walk --oneline $last_three >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'log --graph --show-signature for merged tag with missing key' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b plain-nokey main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+@@ -1936,7 +1957,8 @@ test_expect_success GPG 'log --graph --show-signature for merged tag with missin
  '
  
- test_expect_success 'git log --no-walk=sorted <commits> sorts by commit time' '
--	git log --no-walk=sorted --oneline $last_three > actual &&
-+	git log --no-walk=sorted --oneline $last_three >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'log --graph --show-signature for merged tag with bad signature' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b plain-bad main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+@@ -1958,7 +1980,8 @@ test_expect_success GPG 'log --graph --show-signature for merged tag with bad si
  '
  
--cat > expect << EOF
-+cat >expect << EOF
- === $(git rev-parse --short :/sixth ) sixth
- === $(git rev-parse --short :/fifth ) fifth
- === $(git rev-parse --short :/fourth) fourth
- EOF
- test_expect_success 'git log --line-prefix="=== " --no-walk <commits> sorts by commit time' '
--	git log --line-prefix="=== " --no-walk --oneline $last_three > actual &&
-+	git log --line-prefix="=== " --no-walk --oneline $last_three >actual &&
- 	test_cmp expect actual
+ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	git checkout -b plain-fail main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+@@ -1977,7 +2000,8 @@ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
  '
  
--cat > expect << EOF
-+cat >expect << EOF
- $(git rev-parse --short :/fourth) fourth
- $(git rev-parse --short :/sixth ) sixth
- $(git rev-parse --short :/fifth ) fifth
- EOF
- test_expect_success 'git log --no-walk=unsorted <commits> leaves list of commits as given' '
--	git log --no-walk=unsorted --oneline $last_three > actual &&
-+	git log --no-walk=unsorted --oneline $last_three >actual &&
- 	test_cmp expect actual
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+ 	git checkout -b plain-x509 main &&
+@@ -1998,7 +2022,8 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
  '
  
- test_expect_success 'git show <commits> leaves list of commits as given' '
--	git show --oneline -s $last_three > actual &&
-+	git show --oneline -s $last_three >actual &&
- 	test_cmp expect actual
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 missing key' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+ 	git checkout -b plain-x509-nokey main &&
+@@ -2019,7 +2044,8 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 miss
  '
  
-@@ -227,7 +227,7 @@ test_expect_success 'log --grep' '
- 	test_cmp expect actual
- '
- 
--cat > expect << EOF
-+cat >expect << EOF
- second
- initial
- EOF
-@@ -514,7 +514,7 @@ test_expect_success '-c color.grep.matchSelected log --grep' '
- 	test_cmp expect actual
- '
- 
--cat > expect <<EOF
-+cat >expect <<EOF
- * Second
- * sixth
- * fifth
-@@ -528,7 +528,7 @@ test_expect_success 'simple log --graph' '
- 	test_cmp_graph
- '
- 
--cat > expect <<EOF
-+cat >expect <<EOF
- 123 * Second
- 123 * sixth
- 123 * fifth
-@@ -550,7 +550,7 @@ test_expect_success 'set up merge history' '
- 	git merge side
- '
- 
--cat > expect <<\EOF
-+cat >expect <<\EOF
- *   Merge branch 'side'
- |\
- | * side-2
-@@ -569,7 +569,7 @@ test_expect_success 'log --graph with merge' '
- 	test_cmp_graph --date-order
- '
- 
--cat > expect <<\EOF
-+cat >expect <<\EOF
- | | | *   Merge branch 'side'
- | | | |\
- | | | | * side-2
-@@ -588,7 +588,7 @@ test_expect_success 'log --graph --line-prefix="| | | " with merge' '
- 	test_cmp_graph --line-prefix="| | | " --date-order
- '
- 
--cat > expect.colors <<\EOF
-+cat >expect.colors <<\EOF
- *   Merge branch 'side'
- <BLUE>|<RESET><CYAN>\<RESET>
- <BLUE>|<RESET> * side-2
-@@ -618,7 +618,7 @@ test_expect_success 'diff-tree --graph' '
- 	grep "one" actual
- '
- 
--cat > expect <<\EOF
-+cat >expect <<\EOF
- *   commit main
- |\  Merge: A B
- | | Author: A U Thor <author@example.com>
-@@ -699,7 +699,7 @@ test_expect_success 'set up more tangled history' '
- 	git merge reach
- '
- 
--cat > expect <<\EOF
-+cat >expect <<\EOF
- *   Merge tag 'reach'
- |\
- | \
-@@ -1822,7 +1822,7 @@ test_expect_success GPGSM 'log x509 fingerprint' '
- '
- 
- test_expect_success GPGSM 'log OpenPGP fingerprint' '
--	echo "D4BE22311AD3131E5EDA29A461092E85B7227189" > expect &&
-+	echo "D4BE22311AD3131E5EDA29A461092E85B7227189" >expect &&
- 	git log -n1 --format="%GP" signed-subkey >actual &&
- 	test_cmp expect actual
- '
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 bad signature' '
+-	test_when_finished "git reset --hard && git checkout main" &&
++	test_when_finished "git reset --hard &&
++	git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+ 	git checkout -b plain-x509-bad main &&
 -- 
 gitgitgadget
-
