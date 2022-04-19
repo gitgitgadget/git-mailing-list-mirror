@@ -2,105 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB4A2C433F5
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 11:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E94C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 12:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239095AbiDSL3n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 07:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
+        id S1348310AbiDSMlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 08:41:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351333AbiDSL3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 07:29:41 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C86FE27B1B
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 04:26:55 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id f5so10268359ilj.13
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 04:26:55 -0700 (PDT)
+        with ESMTP id S232267AbiDSMlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 08:41:03 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D3C35DCD
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 05:38:18 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bv16so5114129wrb.9
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 05:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neulinger.org; s=google;
-        h=message-id:date:mime-version:user-agent:content-language:to:from
-         :subject:organization:content-transfer-encoding;
-        bh=ohwSlnI3UoElbL8nWXUKSpJp/BENfG5JZfXHbiWeJQk=;
-        b=DBky7Pk0gxTjaO0K6iGox5KsrOZhdvFXCUjp2hEm0AISV6vlGHUuKfiXmZBryyhWeB
-         DemPxabNSVZyWUFBREtJ3/XBRkeLQn5Wa4jjyijUNBsfywS09zvIJqr2Uj1yXZ3ilSv2
-         11WeiCuG6McAXv6QPOES6qluEoNqriwWbTzIiQkDUXeqwnXGrJPBly255EifZEFtuHEX
-         1oCLxdh8DZjXwJ+Ao5X26ep0qOSYKzT6kVYcRgu/RK7e00tegMYw8sZR4MOXdcwtarxk
-         na99ZFRnVxUV9YeFl5SBuZeUFwwZqq+DZpK4mJQT6yCCAbIDiAugxjq0wGLz8+6ljJU+
-         +kig==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:references:from:cc:in-reply-to
+         :content-transfer-encoding;
+        bh=cQ0d2ghHv6qo2ydME5KtFUSoKFP3+jVqpRNU11RncJ8=;
+        b=SWP0yfgUyaC7KVbNoe03kaKI5ITGm5vJ+fQ3xMtWMKnexnUx/mfGH1vvcFGwhtoS3U
+         NLjdlKhotJEAAGB/HKSE0h224ovBlfFIgwoNx83BHSCjaS/SVYosW+iddsZPIAM8vP7B
+         xmfPgN4Pom8adY/LLjMZLNqgrjyTA3g1u7nubXJdrsFC9sm1vIAOF5+FGqbgDw3goaf7
+         Hx2hwWGgvZaDeIaaV5FHm+b312BxupfaihNP+TGOewUVL19xb6CYIxFcelbAFB2mxAwn
+         LiIVgSmmmYDtDRmnW+2AAEmYoS/g2Y2YPGY8V17YGHLyh2ECkcS/6JD3j8Hdq9Vyo5FV
+         k4gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:from:subject:organization
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:references:from:cc:in-reply-to
          :content-transfer-encoding;
-        bh=ohwSlnI3UoElbL8nWXUKSpJp/BENfG5JZfXHbiWeJQk=;
-        b=S3fjiRJosId6djrIykVxvHwQU5iu5dUUUnkaPXUWMQDnvVn7kNkNCiZYNmNRphzI7L
-         LC9CEMU/rWScsK/MZRw6VG+MHHq4S5pcse7duNuRpAXvfAVERt2v7MHd3KNHE3zq1eZi
-         +bLMl/uvxuFFS088ry3Da6ziwQKCzxZS/2XiAHBpyd+NYvs+Dxxfvebp0Fi4gmhq5Ots
-         rXyTeMTB3M9nMFatXK3izIeGBQ5oxkkg87Bf5IlgsoSCXIqdAm8Rkyj3AUbscij6pWOc
-         GWXYAV96qui0y/0cIUnkKjV8D0u2rP3nfrSPHd63AEBBAufKJAdhO8OAIKtV2Cs3enqN
-         SpFw==
-X-Gm-Message-State: AOAM532qlmD90zOtpRfjUdTUW1UTc6zlhoQ1w2IPd1ACRWfBB7CsIfM9
-        qpkh13q5/PkyR5O2MTWffOhClo3WqS/J/A==
-X-Google-Smtp-Source: ABdhPJxhSwbv8efTYhj023gtS6H/MxKzD94EVp6+bUQ9Z6fJWZ6sIgpZdiGXKWL3BqeY8d1hWzwO6A==
-X-Received: by 2002:a05:6e02:152f:b0:2cc:b71:5b34 with SMTP id i15-20020a056e02152f00b002cc0b715b34mr6382907ilu.23.1650367614702;
-        Tue, 19 Apr 2022 04:26:54 -0700 (PDT)
-Received: from [192.168.125.12] (67-43-241-123.fidnet.com. [67.43.241.123])
-        by smtp.gmail.com with ESMTPSA id u4-20020a92d1c4000000b002cc14bf22ddsm4824651ilg.77.2022.04.19.04.26.53
-        for <git@vger.kernel.org>
+        bh=cQ0d2ghHv6qo2ydME5KtFUSoKFP3+jVqpRNU11RncJ8=;
+        b=jokuY4xLDNmADhS6d5PapP/9C4+w5jOKCJusxeLaU91cP3A3OnwwiAKMEdIJvm3ey5
+         hXPCBX8J+aRzmZP2pHKAVXb6/jlXtaS9ZbVRbBKBS1AnxtAqjGs6wMAPVSKi3UVO+Jf1
+         quJHwJ5iNdmDcypLf3N9lLaYpKTn0wlKKginJRngqHXuZkOyDSX9bnEpc+ENrRfxNbdL
+         w5ZEPmksMcMLUMM8JjcFavAHK0W3kfO/pnHY3HyqfoKR8Sc45t5LIVtggsuhP2a98inH
+         otmB8biNZYwNkg9UgdKVSaHrA+KBHjQBDGTVBvPnCXLkqg+KkL55G5Agltc5cr3S0VI6
+         ZcgA==
+X-Gm-Message-State: AOAM533RbgmDk8rw1WaOSgbIRj0kRcLYf0kCwYzycg0QCAHWASbGuif6
+        Srl9lpvra1gRL0p7qEUlMjU=
+X-Google-Smtp-Source: ABdhPJxo/gYsl9kUmV+2evCfVGH7j7XlIxG4I3SZQqdwuD6Epo5AlYyJMXJPnyapen5j8VGVD/cYNQ==
+X-Received: by 2002:a5d:6da5:0:b0:20a:8805:6988 with SMTP id u5-20020a5d6da5000000b0020a88056988mr10512684wrs.317.1650371896940;
+        Tue, 19 Apr 2022 05:38:16 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.192])
+        by smtp.googlemail.com with ESMTPSA id u16-20020a05600c441000b0038ebcbadcedsm27740511wmn.2.2022.04.19.05.38.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 04:26:53 -0700 (PDT)
-Message-ID: <ec588ff7-b300-bc3a-b51c-67d190b27e9b@neulinger.org>
-Date:   Tue, 19 Apr 2022 06:26:52 -0500
+        Tue, 19 Apr 2022 05:38:16 -0700 (PDT)
+Message-ID: <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
+Date:   Tue, 19 Apr 2022 13:38:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: ab/ci-setup-simplify (was Re: What's cooking in git.git (Apr 2022,
+ #05; Mon, 18))
 Content-Language: en-US
-To:     git@vger.kernel.org
-From:   Nathan Neulinger <nneul@neulinger.org>
-Subject: Recent changes for the unsafe directory handling - TINY improvement
- requested in error output
-Organization: Neulinger Consulting
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqbkwyz78z.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <xmqqbkwyz78z.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> * ab/ci-setup-simplify (2022-04-14) 29 commits
+>   - CI: make it easy to use ci/*.sh outside of CI
+>   - CI: don't use "set -x" in "ci/lib.sh" output
+>   - CI: set PYTHON_PATH setting for osx-{clang,gcc} into "$jobname" case
+>   - CI: set SANITIZE=leak in MAKEFLAGS directly
+>   - CI: set CC in MAKEFLAGS directly, don't add it to the environment
+>   - CI: add more variables to MAKEFLAGS, except under vs-build
+>   - CI: narrow down variable definitions in --build and --test
+>   - CI: only invoke ci/lib.sh as "steps" in main.yml
+>   - CI: pre-select test slice in Windows & VS tests
+>   - ci/run-test-slice.sh: replace shelling out with "echo"
+>   - CI: move "env" definitions into ci/lib.sh
+>   - CI: combine ci/install{,-docker}-dependencies.sh
+>   - CI: split up and reduce "ci/test-documentation.sh"
+>   - CI: invoke "make artifacts-tar" directly in windows-build
+>   - CI: check ignored unignored build artifacts in "win[+VS] build" too
+>   - ci/lib.sh: use "test" instead of "["
+>   - CI: remove "run-build-and-tests.sh", run "make [test]" directly
+>   - CI: export variables via a wrapper
+>   - CI: consistently use "export" in ci/lib.sh
+>   - CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+>   - CI: have "static-analysis" run "check-builtins", not "documentation"
+>   - CI: have "static-analysis" run a "make ci-static-analysis" target
+>   - CI: don't have "git grep" invoke a pager in tree content check
+>   - CI/lib.sh: stop adding leading whitespace to $MAKEFLAGS
+>   - CI: remove unused Azure ci/* code
+>   - CI: remove dead "tree skipping" code
+>   - CI: remove more dead Travis CI support
+>   - CI: make "$jobname" explicit, remove fallback
+>   - CI: run "set -ex" early in ci/lib.sh
+>   (this branch is used by ab/ci-github-workflow-markup.)
+> 
+>   Drive more actions done in CI via the Makefile instead of shell
+>   commands sprinkled in .github/workflows/main.yml
+> 
+>   Will merge to 'next'?
+>   source: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 
-While I understand the need for the recent changes (even if I'd prefer they be limited to turning off any 
-filter/script/custom alias/etc. support) - there is one piece of the new behavior that could be improved for usability:
+I haven't had time to read all 31 patches from v4 in detail but I have 
+looked at the results in seen.
 
-If you do a 'git status' in the directory - you get the "helpful" response:
+Looking at seen:ci/install-dependencies.sh the shebang has been changed 
+to "#!/bin/sh" but it contains "BREW_PACKAGE=${CC_PACKAGE/-/@}" which is 
+a bashism.
 
-   root@server:/local/APPNAME/bin# git status
-   fatal: unsafe repository ('/local/APPNAME' is owned by someone else)
-   To add an exception for this directory, call:
+Looking at seen:.github/workflows/main.yaml to skip running the tests 
+one has to set "skip-tests: no" which is utterly confusing.
 
-   git config --global --add safe.directory /local/APPNAME
+ From what I saw scanning the patches there seemed to be a lot of churn, 
+both of existing code and code that gets added and then moved/refactored 
+within the series.
 
-However, if you do a 'git diff' - such as what you might naturally do right before attempting a 'git commit' - you do 
-NOT get any useful response:
+Looking at the output of a recent ci run of seen the steps to prepare 
+the environment before building and testing print all the environment 
+variables rather than just the ones being set for that step which seems 
+to go against the aim of "CI: narrow down variable definitions in 
+--build and --test". (Also the "SKIP" prefix in the output lacks a ":")
 
-   root@SERVER:/local/APPNAME/bin# git diff
-   warning: Not a git repository. Use --no-index to compare two paths outside a working tree
-   usage: git diff --no-index [<options>] <path> <path>
-   ...snip-long-diff-help...
+Dscho raised concerns that this removes any support for azure pipelines 
+which he uses when preparing security patches.
 
-Please consider a small improvement to have the git diff help output (if displayed due to the repo exclusion warning) - 
-ALSO display the 'git config' suggestion at the end of the output, instead of me having to remember - oh, go issue 
-status to get the command hint to go set the exclusion. Would also be useful to have the git diff output do the same 
-'unsafe repository' message about ownership.
+I think splitting out the build and test steps is a good idea but I'm 
+less convinced by some of the other changes.
 
+Best Wishes
 
-
-In case it matters for why I'm hitting this - server with various different application accounts. All maintained by a 
-trusted list of users, but separated into different users for permissions isolation between the apps/repos/etc. Often 
-edit/commit/etc. as other root or as other users (when facl's are being used). Running 1:2.25.1-1ubuntu3.3 on ubuntu 
-20.04 in case this is already addressed in upstream and just not included in ubuntu repackaging.
-
-
--- Nathan
-
-------------------------------------------------------------
-Nathan Neulinger                       nneul@neulinger.org
-Neulinger Consulting                   (573) 612-1412
+Phillip
