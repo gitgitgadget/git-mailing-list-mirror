@@ -2,205 +2,249 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 271C3C433F5
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 22:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72ED0C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 23:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358369AbiDSW4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 18:56:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48498 "EHLO
+        id S1347546AbiDSXj4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 19:39:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241646AbiDSW4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 18:56:48 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5942E289A1
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 15:54:04 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id md4so171213pjb.4
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 15:54:04 -0700 (PDT)
+        with ESMTP id S1347459AbiDSXjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 19:39:54 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C144113D01
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 16:37:09 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id i24so262799pfa.7
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 16:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=uKTdQ507a9OJFEaVSCv+VaoX6jaMip9hjw4+2ijmjkk=;
-        b=Ob9rpH4r/xhiQL/99gUStKiP9tFp4JzE8yICIL78/lez0wbdJQtv0l4jN3euINRpLq
-         9HbEHLUDSATu2SkeSV28O1SeBlAXFDekqbIL2enzv6aNVriUSWFGKdX1853XENX6y0L3
-         +5W/1lul6fEkoKwMTRlE2+a75MG/1iUjsu/DSb9dajUYd4AEAplWGLfVsHulORLTT8D7
-         zsSoxGpHJvMk+CEKt6fPbb4UJV+JDrRBkn+bKqpWKGyFmvgot/b76mkXgNN8XcBELc83
-         0OtX/Ye1Dx+fmXcqhod8F3M750WtFTrsbDQCYN3nCTeaV+S8Z9CJS/b7kJofBCS3or+V
-         x1iQ==
+        bh=eGpCMQeneIJ0TotQ+zD6YHcznkeRV94EoNS3qhpfdh8=;
+        b=iDBMANZk4Ynwvm1MiJ8vjJ1e3a9Afn+cyFgXWOL73smfASk4WR7TQZ8iinFDCqQ9Zf
+         W0lyVstJIwmTlowJMrflA+EzOrHARCkHYVk2i/i1iz6KA38mT8RjKhu9dX18k3If+wR1
+         9ct5CYWbOIUIaRVBHHA0RHvHeZI2aM3PWemocG6Qd+NtN0KRHnoAe6ZpwTsdbZpv3Uo9
+         XpyAzrDvusPOU0AYc5uVqYivzsWxBkDix2qNr7ZRKVRubyoKFxpdMOQrL7cjidaqH/TE
+         iRqXC+yOzY1leu48Qx9PTo/1gho8sqmCKv/7Idy2jW76Vl+EUt0kXCsz4Bhcc84OFcro
+         EI4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=uKTdQ507a9OJFEaVSCv+VaoX6jaMip9hjw4+2ijmjkk=;
-        b=7fFi+zT+VNiqVxY5FbO3OduXcC+sJfoGPcpxmra+usl8/DFiim6r3A6pUcvPsLU52S
-         sEN5cpyhYduNK2f2lLt+kW7MTkNrf1+iywHaGeGp0wCEEFsKfbSZen7r6RQetiZOx/Hr
-         Ew88a3HwuvVY1SlocQ3E6hDV1uDxPwVKVMjEX6D8uEWSxkppcUwHwF5A2Gy+Pl3DAAqw
-         sF09ZOpwmspM+GGQZ7BIJm9XFuyHL8rYS7SEhA8qFJlUMGddHGUq++XHsZ2aNzPmGv+m
-         kGwaYwqhwb4vZz94/7T98zwk5TY52fDoC81rks3ApKgLckhOZ/2Sd+HbPe2NsRxy9hlE
-         Yz0w==
-X-Gm-Message-State: AOAM531TtH6dC5cZPJw044ZHd8PNb3hkTFnxaAT91ZklaTBPsgePkGLp
-        YS1CkzMVukZaNobrRP+2XrBGAA==
-X-Google-Smtp-Source: ABdhPJy19UaN4AfYKO84Ar/AgCcEKQj3V/WI67VUAQeBxksTAMRNCi+RJMc+aLvWIrfrm3Ax54zADw==
-X-Received: by 2002:a17:902:f690:b0:158:d6ee:b1f9 with SMTP id l16-20020a170902f69000b00158d6eeb1f9mr17450238plg.80.1650408843425;
-        Tue, 19 Apr 2022 15:54:03 -0700 (PDT)
+        bh=eGpCMQeneIJ0TotQ+zD6YHcznkeRV94EoNS3qhpfdh8=;
+        b=nlK/HHoRwaOOiFLRDe4N7ECA9eSuSId7TuyhTAiPgvTji7r0S1lT0ZzcYjBJ4fSrS2
+         PV9xly7PdMKA3WnLnV+l1n/TEfWQqCrzy+NIuKMJgivaxW7y3nfXFZ8uufq1OgtorTMF
+         f+p5uoHW6UOrlEoch44tYw2gdxz8ih7QEaznPIoxQZLMew+7/fBPH2w7ciJl97LeOCND
+         nQZIw6qdafyZy3Dsd4Jetpbg76OCxRZPBzIY5MnunN56p/w3Go+enD91aQ5J/n1bPxPE
+         6YSBuhSnBlTNXBQmvQqO33LhYZ6QM3ZzUTAsQ2kv9/pYEE9JGV50QZ3LnckcPHmpPIeq
+         MkMQ==
+X-Gm-Message-State: AOAM533jUTuu1+9C+2801qWMGkYyL65ZUOrMO7xFwa4/eWQ0B7i+Bv8j
+        P8ssn+VgZUJPnAdkV++rBVEkfyUTqMc9tw==
+X-Google-Smtp-Source: ABdhPJy2WSF9kdODTYIUKwto2bKbIyqbmvNmZqCtgOW26hF4MIny8G+WGUR6UU8dHITjhDW0Ydpq7g==
+X-Received: by 2002:a63:f005:0:b0:3a3:ef7c:c8dd with SMTP id k5-20020a63f005000000b003a3ef7cc8ddmr16365575pgh.37.1650411429036;
+        Tue, 19 Apr 2022 16:37:09 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:db68:2c97:40f3:5624])
-        by smtp.gmail.com with ESMTPSA id b17-20020a056a000a9100b004e1b7cdb8fdsm18769887pfl.70.2022.04.19.15.54.01
+        by smtp.gmail.com with ESMTPSA id gn21-20020a17090ac79500b001ca3c37af65sm17695566pjb.21.2022.04.19.16.37.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 15:54:02 -0700 (PDT)
-Date:   Tue, 19 Apr 2022 15:53:56 -0700
+        Tue, 19 Apr 2022 16:37:08 -0700 (PDT)
+Date:   Tue, 19 Apr 2022 16:37:03 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v3 2/3] CodingGuidelines: hint why we value clearly
- written log messages
-Message-ID: <Yl89hMGLN3DqIkJ7@google.com>
-References: <20220126234205.2923388-1-gitster@pobox.com>
- <20220127190259.2470753-3-gitster@pobox.com>
- <YiFYQBWBVq/HQULM@google.com>
- <xmqqv8wu5zpr.fsf@gitster.g>
- <xmqq8rs82m4f.fsf@gitster.g>
- <220414.86lew7d7tb.gmgdl@evledraar.gmail.com>
+To:     Anthony Sottile <asottile@umich.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: git 2.36.0 regression: pre-commit hooks no longer have
+ stdout/stderr as tty
+Message-ID: <Yl9Hn0C0TwalASC0@google.com>
+References: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220414.86lew7d7tb.gmgdl@evledraar.gmail.com>
+In-Reply-To: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 14, 2022 at 04:04:59PM +0200, Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
+On Tue, Apr 19, 2022 at 02:59:36PM -0400, Anthony Sottile wrote:
+> 
+> here's the shortest reproduction --
+> 
+> ```console
+> $ cat ../testrepo/.git/hooks/pre-commit
+> #!/usr/bin/env bash
+> if [ -t 1 ]; then
+>     echo GOOD
+> fi
+> ```
+> 
+> in previous git versions:
+> 
+> ```
+> $ git commit -q --allow-empty -m foo
+> GOOD
+> $
+> ```
+> 
+> with git 2.36.0:
+> 
+> ````
+> $ git commit -q --allow-empty -m foo
+> $
+> ```
+> 
+> why I care: I maintain a git hooks framework which uses `isatty` to
+> detect whether it's appropriate to color the output.  many tools
+> utilize the same check.  in 2.36.0+ isatty is false for stdout and
+> stderr causing coloring to be turned off.
+> 
+> I bisected this (it was a little complicated, needed to force a pty):
+> 
+> `../testrepo`: a git repo set up with the hook above
+> 
+> `../bisect.sh`:
+> 
+> ```bash
+> #!/usr/bin/env bash
+> set -eux
+> git clean -fxfd >& /dev/null
+> make -j6 prefix="$PWD/prefix" NO_GETTEXT=1 NO_TCLTK=1 install >& /dev/null
+> export PATH="$PWD/prefix/bin:$PATH"
+> cd ../testrepo
+> (../pty git commit -q --allow-empty -m foo || true) | grep GOOD
+> ```
+> 
+> `../pty`:
+> 
+> ```python
+> #!/usr/bin/env python3
+> import errno
+> import os
+> import subprocess
+> import sys
+> 
+> x: int = 'nope'
 > 
 > 
-> On Wed, Apr 13 2022, Junio C Hamano wrote:
+> class Pty(object):
+>     def __init__(self):
+>         self.r = self.w = None
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >> Emily Shaffer <emilyshaffer@google.com> writes:
-> >>
-> >>>> + - Log messages to explain your changes are as important as the
-> >>>> +   changes themselves.  Clearly written code and in-code comments
-> >>>> +   explain how the code works and what is assumed from the surrounding
-> >>>> +   context.  The log messages explain what the changes wanted to
-> >>>> +   achieve and why the changes were necessary (more on this in the
-> >>>> +   accompanying SubmittingPatches document).
-> >>>> +
-> >>>
-> >>> One thing not listed here, that I often hope to find from the commit
-> >>> message (and don't), is "why we did it this way instead of <other way>".
-> >>> I am not sure how to phrase it in this document, though. Maybe:
-> >>>
-> >>>   The log messages explain what the changes wanted to achieve, any
-> >>>   decisions that were made between alternative approaches, and why the
-> >>>   changes were necessary (more on this in blah blah)
-> >>>
-> >>> Or maybe "...whether any alternative approaches were considered..." fits
-> >>> the form of the surrounding sentence better.
-> >>
-> >> Quite valid observation.
-> >>
-> >> Documentation/SubmittingPatches::meaningful-message makes a note on
-> >> these points, and the above may want to be more aligned to them.
-> >>
-> >> Patches welcome, as these have long been merged to 'master/main'.
-> >
-> > Another thing.  If you (not Emily, but figuratively) haven't watched
-> > Victoria's talk https://www.youtube.com/watch?v=4qLtKx9S9a8 on the
-> > topic of clearly written commits, you should drop everything you are
-> > doing and go watch it.
-> >
-> > And with what we learn from it, we may be able to rewrite this part
-> > of the documentation much more clearly.
+>     def __enter__(self):
+>         self.r, self.w = os.openpty()
 > 
-> The slides for it are at
-> https://vdye.github..io/2022/OS101-Writing-Commits.pdf (not in the video
-> description, but at the very end of the video).
+>         return self
 > 
-> It's easy to nitpick/improve existing examples, so here goes :)
+>     def close_w(self):
+>         if self.w is not None:
+>             os.close(self.w)
+>             self.w = None
 > 
-> The main commit message example in that talk starts as just "Make error
-> text more helpful", and ends with a better version as:
+>     def close_r(self):
+>         assert self.r is not None
+>         os.close(self.r)
+>         self.r = None
 > 
-> 	git-portable.sh: make error text more helpful
-> 	
-> 	The message â€œNot a valid command: <invalid command>â€ is
-> 	intended to notify the user that their subcommand is invalid.
-> 	However, when no subcommand is given, the "empty" subcommand
-> 	results in the same message: "Not a valid command:". This does
-> 	not clearly guide the user to the correct behavior, so print
-> 	"Please specify a command" when no subcommand is specified.
+>     def __exit__(self, exc_type, exc_value, traceback):
+>         self.close_w()
+>         self.close_r()
 > 
-> For our CodingGuidelines I think it would be useful to have some version
-> of "if you can explain something with prose or tests, prefer
-> tests".
 > 
-> I.e. other things being equal I'd much prefer this version
-> (pseudo-patch):
+> def cmd_output_p(*cmd, **kwargs):
+>     with open(os.devnull) as devnull, Pty() as pty:
+>         kwargs = {'stdin': devnull, 'stdout': pty.w, 'stderr': pty.w}
+>         proc = subprocess.Popen(cmd, **kwargs)
+>         pty.close_w()
 > 
-> 	git-portable.sh: don't conflate invalid and non-existing command
+>         buf = b''
+>         while True:
+>             try:
+>                 bts = os.read(pty.r, 4096)
+>             except OSError as e:
+>                 if e.errno == errno.EIO:
+>                     bts = b''
+>                 else:
+>                     raise
+>             else:
+>                 buf += bts
+>             if not bts:
+>                 break
 > 
-> 	 git-portable-test.sh | 2 +-
-> 	 1 file changed, 1 insertion(+), 1 deletion(-)
-> 	
-> 	diff --git a/git-portable-test.sh b/git-portable-test.sh
-> 	index c8bd464..e03f4a8 100644
-> 	--- a/git-portable-test.sh
-> 	+++ b/git-portable-test.sh
-> 	@@ -5,7 +5,7 @@ test_expect_failure 'usage: invalid command' '
-> 	 '
-> 	 
-> 	 test_expect_failure 'usage: no command' '
-> 	-	test_expect_code_output 129 "Not a valid command: " ./gitportable.sh
-> 	+	test_expect_code_output 129 "Please specify a command" ./gitportable.sh
-> 	 '
-> 	 
-> 	 test_done
+>     return proc.wait(), buf, None
 > 
-> It ends up basically saying the same thing, but now we're saying it with
-> a regression test (test_expect_code_output doesn't exist, but let's
-> pretend it's test_expect_code + a test_cmp-alike).
 > 
-> What it does entirely omit is the "why".
+> if __name__ == '__main__':
+>     _, buf, _ = cmd_output_p(*sys.argv[1:])
+>     sys.stdout.buffer.write(buf)
+> ```
 > 
-> Now I realize I'm nitpicking a slide shown at a conference, which by its
-> nature needs to show a small pseudo-example, but I think this applies in
-> general:
+> the first commit it points out:
 > 
-> While "why" is a good rule of thumb I think it's just as important to
-> know when not to include explanations and when to include one.
+> ```
+> f443246b9f29b815f0b98a07bb2d425628ae6522 is the first bad commit
+> commit f443246b9f29b815f0b98a07bb2d425628ae6522
+> Author: Emily Shaffer <emilyshaffer@google.com>
 > 
-> For cases where something is straightforward enough (as in this case,
-> the RHS of ": " is clearly missing) I'd think omitting the explanation
-> would be better, as we should also be concerned about the overall signal
-> ratio.
+>     commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+> 
+>     Move these hooks hook away from run-command.h to and over to the new
+>     hook.h library.
+> 
+>     Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+>     Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>     Acked-by: Emily Shaffer <emilyshaffer@google.com>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+>  commit.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+> bisect run success
+> ```
 
-Preface: I don't want to start a fight ;)
+Interesting. I'm surprised to see the tty-ness of hooks changing with
+this patch, as the way the hook is called is pretty much the same:
 
-I think if you are in a position where you already will read every
-single patch that comes across the mailing list, including its diff,
-then you make a really valid point. I can read the negative line of your
-diff, infer the problem ("oh, there's nothing after :"), and examine the
-solution. Fine.
+run_hook_ve() ("the old way") sets no_stdin, stdout_to_stderr, args,
+envvars, and some trace variables, and then runs 'run_command()';
+run_command() invokes start_command().
 
-But I also don't think that most of us working on Git have the time to
-read every patch and its diff. I certainly don't. I'd agree that your
-patch's subject line is a little more informative than Victoria's, but
-past that, if the commit message is empty, I have no idea what problem
-you were trying to solve until I have scrolled through lines of context,
-diff lines, and finally arrive to the regression test (which ends up at
-the very end of the patch in Git, because of the way the codebase is
-organized). Whereas, with Victoria's proposed commit message, I can read
-the paragraph and decide whether I need to review, and from there decide
-whether the diff does what she says it should.
+run_hooks_opt ("the new way") ultimately kicks off the hook with a
+callback that sets up a child_process with no_stdin, stdout_to_stderr,
+args, envvars, and some trace variables (hook.c:pick_next_hook); the
+task queue manager also sets .err to -1 on that child_process; then it
+calls start_command() directly (run-command.c:pp_start_one()).
 
-So as I'm deciding what to review, I definitely would prefer Victoria's
-commit message. Plus, like I mentioned, it gives the extra safeguard of
-allowing reviewers to check: does the patch actually do what the author
-meant for it to do? If we're never told what the author meant for it to
-do, then we are missing information needed for that part of the review.
+I'm not sure I see why the tty-ness would change between the two. If I'm
+being honest, I'm actually slightly surprised that `isatty` returned
+true for your hook before - since the hook process is a child of Git and
+its output is, presumably, being consumed by Git first rather than by an
+interactive user shell.
 
-Anyway, I haven't watched Victoria's talk yet, but I will do so soon :)
+I suppose that with stdout_to_stderr being set, the tty-ness of the main
+process's stderr would then apply to the child process's stdout (we do
+that by calling `dup(2)`). But that's being set in both "the old way"
+and "the new way", so I'm pretty surprised to see a change here.
+
+It *is* true that run-command.c:pp_start_one() sets child_process:err=-1
+for the child and run-command.c:run_hook_ve() didn't do that; that -1
+means that start_command() will create a new fd for the child's stderr.
+Since run_hook_ve() didn't care about the child's stderr before, I
+wonder if that is why? Could it be that now that we're processing the
+child's stderr, the child no longer thinks stderr is in tty, because the
+parent is consuming its output?
+
+I think if that's the case, a fix would involve
+run-command.c:pp_start_one() not setting .err, .stdout_to_stderr, or
+.no_stdin at all on its own, and relying on the 'get_next_task' callback
+to set those things. It's a little more painful than I initially thought
+because the run_processes_parallel() library depends on that err capture
+to run pp_buffer_stderr() unconditionally; I guess it needs a tiny bit
+of shim logic to deal with callers who don't care to see their
+children's stderr.
+
+All that said.... I'd expect that the dup() from the child's stdout to
+the parent's stderr would still result in a happy isatty(1). So I'm not
+convinced this is actually the right solution.... From your repro
+script, I can't quite tell which fd the isatty call is against (to be
+honest, I can't find the isatty call, either). So maybe I'm going the
+wrong direction :)
 
  - Emily
