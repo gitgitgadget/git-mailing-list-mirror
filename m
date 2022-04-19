@@ -2,187 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6761C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 09:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB4A2C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 11:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241904AbiDSKAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 06:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55596 "EHLO
+        id S239095AbiDSL3n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 07:29:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230005AbiDSKAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 06:00:52 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E632250D
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 02:58:09 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 11so15524073edw.0
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 02:58:09 -0700 (PDT)
+        with ESMTP id S1351333AbiDSL3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 07:29:41 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C86FE27B1B
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 04:26:55 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id f5so10268359ilj.13
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 04:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=tT6JfIm4PYLifPCm0xvCZFyhP2/r4ZB8piPW/F0KIUc=;
-        b=iKJUht9HmldX2yZVlgPEZM9ugN0KnqMlWTyj9M46KOPa2xen6it1gFeXo3ey7+VjaD
-         cWgIgFsH4XTUPJS0MoHSoZMdenmTylgkqzAp/g3nekbY+1otLdtC0anNdErKEkq/oGT5
-         fAO1hJSp4r85cVcUOlWzIOVu2rgGZzxRsGAtrt2oNCY16X9NRixM7uqHLTnZ4syEZ+s9
-         BmxWbcSp/FekTk4St2RFUuA2a0DzJKE5xpPibXp4PEijrlD4AERLMktu9LQnQR0wjjJw
-         F2P20Yskb4rL9ecDg6ssvUp6ZNkGF0iONSXe+ry0s/nHjH2YFSxKi+CXTFWDIq2NFSKm
-         3SYA==
+        d=neulinger.org; s=google;
+        h=message-id:date:mime-version:user-agent:content-language:to:from
+         :subject:organization:content-transfer-encoding;
+        bh=ohwSlnI3UoElbL8nWXUKSpJp/BENfG5JZfXHbiWeJQk=;
+        b=DBky7Pk0gxTjaO0K6iGox5KsrOZhdvFXCUjp2hEm0AISV6vlGHUuKfiXmZBryyhWeB
+         DemPxabNSVZyWUFBREtJ3/XBRkeLQn5Wa4jjyijUNBsfywS09zvIJqr2Uj1yXZ3ilSv2
+         11WeiCuG6McAXv6QPOES6qluEoNqriwWbTzIiQkDUXeqwnXGrJPBly255EifZEFtuHEX
+         1oCLxdh8DZjXwJ+Ao5X26ep0qOSYKzT6kVYcRgu/RK7e00tegMYw8sZR4MOXdcwtarxk
+         na99ZFRnVxUV9YeFl5SBuZeUFwwZqq+DZpK4mJQT6yCCAbIDiAugxjq0wGLz8+6ljJU+
+         +kig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=tT6JfIm4PYLifPCm0xvCZFyhP2/r4ZB8piPW/F0KIUc=;
-        b=sVjE7mc4Rf8tvsyrEFSfQudhAb4qd03orfzZhVmx3MrtBmtEVYBthTTqYLDupdwXzP
-         bfK64I04HN9L9ZMJMmW4PBBA9rsSrcSbBNsxyHSk4hsDzPc7CYjYzwZhh9hqwn37qvpk
-         D/uLpXSIBFJjz6VGX1S8lGtDx5dOj9KTDt1BWLTja1JSiXA66x79rsTEVsYRwoLkrmV2
-         rQnlzSXJryhATkchISPHb7NAzIDgi+j6C2CzkUjaYIqoLG7i3qPeit01xMGrZvKPqaiE
-         B5sfct1ga7sQVtfd95qNkT880skVBFKERiD7vxp71xN4wkIlW9ulxbuTUyVaFe+Dsd8i
-         FB6Q==
-X-Gm-Message-State: AOAM532tz6SRYY3gpvoWjBw/St2P+UW4C2x56lQt8R78qYdQvpgDrHW1
-        sWIxOhbqIpsHKCRAhVt1m2o=
-X-Google-Smtp-Source: ABdhPJz4W39Rz2grick1A4BDJfmyyz1KdL+XNgUOwMxYns3LkwJdH1H5Lb22J+S6kA8Z1Jt3onjgKg==
-X-Received: by 2002:a05:6402:198:b0:410:83e3:21d7 with SMTP id r24-20020a056402019800b0041083e321d7mr16411922edv.159.1650362288249;
-        Tue, 19 Apr 2022 02:58:08 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id x12-20020a170906710c00b006ef8f9ee226sm2783563ejj.115.2022.04.19.02.58.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 02:58:07 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ngkcY-006mBM-Lr;
-        Tue, 19 Apr 2022 11:58:06 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 04/27] fsmonitor-settings: bare repos are
- incompatible with FSMonitor
-Date:   Tue, 19 Apr 2022 11:44:19 +0200
-References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
- <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
- <f2c0569c9012a86f252562a9a906f6de37d0a236.1648140680.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <f2c0569c9012a86f252562a9a906f6de37d0a236.1648140680.git.gitgitgadget@gmail.com>
-Message-ID: <220419.86mtgh8kep.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:from:subject:organization
+         :content-transfer-encoding;
+        bh=ohwSlnI3UoElbL8nWXUKSpJp/BENfG5JZfXHbiWeJQk=;
+        b=S3fjiRJosId6djrIykVxvHwQU5iu5dUUUnkaPXUWMQDnvVn7kNkNCiZYNmNRphzI7L
+         LC9CEMU/rWScsK/MZRw6VG+MHHq4S5pcse7duNuRpAXvfAVERt2v7MHd3KNHE3zq1eZi
+         +bLMl/uvxuFFS088ry3Da6ziwQKCzxZS/2XiAHBpyd+NYvs+Dxxfvebp0Fi4gmhq5Ots
+         rXyTeMTB3M9nMFatXK3izIeGBQ5oxkkg87Bf5IlgsoSCXIqdAm8Rkyj3AUbscij6pWOc
+         GWXYAV96qui0y/0cIUnkKjV8D0u2rP3nfrSPHd63AEBBAufKJAdhO8OAIKtV2Cs3enqN
+         SpFw==
+X-Gm-Message-State: AOAM532qlmD90zOtpRfjUdTUW1UTc6zlhoQ1w2IPd1ACRWfBB7CsIfM9
+        qpkh13q5/PkyR5O2MTWffOhClo3WqS/J/A==
+X-Google-Smtp-Source: ABdhPJxhSwbv8efTYhj023gtS6H/MxKzD94EVp6+bUQ9Z6fJWZ6sIgpZdiGXKWL3BqeY8d1hWzwO6A==
+X-Received: by 2002:a05:6e02:152f:b0:2cc:b71:5b34 with SMTP id i15-20020a056e02152f00b002cc0b715b34mr6382907ilu.23.1650367614702;
+        Tue, 19 Apr 2022 04:26:54 -0700 (PDT)
+Received: from [192.168.125.12] (67-43-241-123.fidnet.com. [67.43.241.123])
+        by smtp.gmail.com with ESMTPSA id u4-20020a92d1c4000000b002cc14bf22ddsm4824651ilg.77.2022.04.19.04.26.53
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Apr 2022 04:26:53 -0700 (PDT)
+Message-ID: <ec588ff7-b300-bc3a-b51c-67d190b27e9b@neulinger.org>
+Date:   Tue, 19 Apr 2022 06:26:52 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   Nathan Neulinger <nneul@neulinger.org>
+Subject: Recent changes for the unsafe directory handling - TINY improvement
+ requested in error output
+Organization: Neulinger Consulting
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Mar 24 2022, Jeff Hostetler via GitGitGadget wrote:
+While I understand the need for the recent changes (even if I'd prefer they be limited to turning off any 
+filter/script/custom alias/etc. support) - there is one piece of the new behavior that could be improved for usability:
 
-> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-> index 46be55a4618..50ae3cca575 100644
-> --- a/builtin/fsmonitor--daemon.c
-> +++ b/builtin/fsmonitor--daemon.c
-> @@ -1449,6 +1449,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
->  		die(_("invalid 'ipc-threads' value (%d)"),
->  		    fsmonitor__ipc_threads);
+If you do a 'git status' in the directory - you get the "helpful" response:
 
-I think that structurally the way things are done in
-fsmonitor-settings.c make its use really hard to follow. E.g. here:
+   root@server:/local/APPNAME/bin# git status
+   fatal: unsafe repository ('/local/APPNAME' is owned by someone else)
+   To add an exception for this directory, call:
 
-> +	prepare_repo_settings(the_repository);
+   git config --global --add safe.directory /local/APPNAME
 
-We prep the repo, OK.
+However, if you do a 'git diff' - such as what you might naturally do right before attempting a 'git commit' - you do 
+NOT get any useful response:
 
-> +	fsm_settings__set_ipc(the_repository);
+   root@SERVER:/local/APPNAME/bin# git diff
+   warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+   usage: git diff --no-index [<options>] <path> <path>
+   ...snip-long-diff-help...
 
-Set IPC.
+Please consider a small improvement to have the git diff help output (if displayed due to the repo exclusion warning) - 
+ALSO display the 'git config' suggestion at the end of the output, instead of me having to remember - oh, go issue 
+status to get the command hint to go set the exclusion. Would also be useful to have the git diff output do the same 
+'unsafe repository' message about ownership.
 
-> +	if (fsm_settings__error_if_incompatible(the_repository))
 
-And here we'll error out if we're incompatible, and this is in the
-top-level cmd_fsmonitor__daemon() function. All OK, except why didn't we
-check this before "set IPC?".
 
-Anyway, re-arranging some of the diff below:
+In case it matters for why I'm hitting this - server with various different application accounts. All maintained by a 
+trusted list of users, but separated into different users for permissions isolation between the apps/repos/etc. Often 
+edit/commit/etc. as other root or as other users (when facl's are being used). Running 1:2.25.1-1ubuntu3.3 on ubuntu 
+20.04 in case this is already addressed in upstream and just not included in ubuntu repackaging.
 
-> @@ -86,6 +111,9 @@ void fsm_settings__set_ipc(struct repository *r)
->  
->  	lookup_fsmonitor_settings(r);
->  
-> +	if (check_for_incompatible(r))
-> +		return;
-> +
->  	r->settings.fsmonitor->mode = FSMONITOR_MODE_IPC;
->  	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
->  }
 
-Here in fsm_settings__set_ipc we return with a NOOP if we're not
-compatible.
+-- Nathan
 
-Then:
-
-> +int fsm_settings__error_if_incompatible(struct repository *r)
-> +{
-> +	enum fsmonitor_reason reason = fsm_settings__get_reason(r);
-> +
-> +	switch (reason) {
-> +	case FSMONITOR_REASON_OK:
-> +		return 0;
-> +
-> +	case FSMONITOR_REASON_BARE:
-> +		error(_("bare repository '%s' is incompatible with fsmonitor"),
-> +		      xgetcwd());
-> +		return 1;
-> +	}
-> +
-> +	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
-> +	    reason);
-> +}
-
-Here we'll call fsm_settings__get_reason() which does the same.
-
-> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
-> +{
-> +	if (!r)
-> +		r = the_repository;
-> +
-> +	lookup_fsmonitor_settings(r);
-> +
-> +	return r->settings.fsmonitor->reason;
-> +}
-
-Is there a reason we can't skip this indirection when using the API like
-this and e.g. do:
-
-	enum fsmonitor_reason reason;
-	prepare_repo_settings(the_repository);
-	reason = fsmonitor_check_for_incompatible(the_repository)
-        if (reason != FSMONITOR_REASON_OK)
-        	die("%s", fsm_settings__get_reason_string(reason));
-
-There's just two callers of this API in "seen", and neither need/want
-this pattern where every method needs to lazy load itself, or the
-indirection where fsmonitor-settings.c needs to be used as a
-clearing-house for state management.
-
-Maybe I'm missing something, but why not make check_for_incompatible()
-non-static and have the callers use that (and then it would return
-"fsmonitor_reason", not "int", the int return value being redundant to
-the enum)>
-
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 876112abb21..d29048f16f2 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -1237,6 +1237,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->  
->  	if (fsmonitor > 0) {
->  		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
-> +
-> +		if (fsm_settings__error_if_incompatible(the_repository))
-> +			return 1;
-> +
->  		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
->  			warning(_("core.fsmonitor is unset; "
->  				"set it if you really want to "
-
-This looks like a bug, we knew before aquiring the lockfile that we
-weren't compatible, so why wait until here to error out? This seems to
-skip the rollback_lock_file(), so won't we leave a stale lock?
+------------------------------------------------------------
+Nathan Neulinger                       nneul@neulinger.org
+Neulinger Consulting                   (573) 612-1412
