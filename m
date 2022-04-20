@@ -2,73 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DDE2C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 06:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD65FC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 06:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350262AbiDTGQR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 02:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33794 "EHLO
+        id S243798AbiDTGTw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 02:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230486AbiDTGQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 02:16:15 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D3938BF8
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 23:13:29 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F98A17BB11;
-        Wed, 20 Apr 2022 02:13:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=KSD+dKXCp7D9iCh6AO/ZK5rNPeg+yg+yYxiCjAqYW04=; b=kaWc
-        BFpums/i+oegW1cWjKvH2oNpm1F2SKIPInixX0OxN8Cb66AbdATrdqFe8+5U+LYj
-        qckvqAJJ7MjLqwDknNgbussE7zb/DjmilcvJnrcYOpj7CWuFx9lvd7Ju8QWgPXyX
-        UYOUwq6UgjV2jgySKFsDvFxQJISeyERnPogFMLI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6539517BB10;
-        Wed, 20 Apr 2022 02:13:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 745C917BB0F;
-        Wed, 20 Apr 2022 02:13:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jack McGuinness via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jack McGuinness <jmcguinness2@ucmerced.edu>
-Subject: Re: [PATCH] area: /t/t4204-log.sh, partially modernized test script
- t4202
-References: <pull.1218.git.1650096550631.gitgitgadget@gmail.com>
-Date:   Tue, 19 Apr 2022 23:13:24 -0700
-Message-ID: <xmqqmtggs2nv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1359497AbiDTGTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 02:19:49 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D7D39B87
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 23:17:01 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id 2so1015653pjw.2
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 23:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=BIZSp7IVphnnhMDYjeqbU8PeOS1U0bg0nk24l8E/M1Q=;
+        b=jATRqtZsbC4GdENGrsE1AbC8xiPreUzCdJxQ+ElcUKavCS8kDD/svKaIBC09/agfOm
+         qEsaq4xWTSxhcBAtdMIWZdgTUrg50Hgt3HNpY0d569wT8gFeFAAnF8ynqNs0gR1PmbJ4
+         pUH0UjQBRHEB1/qR853PLZtnauZ8VqlhBMqfQCKV9im9iZg/FPZZ1liczjpPgg7onK1n
+         WcypqInMDKALs7J22PCUS6+WzD9jXd6X75EzbwXrTQ4Dpw6XoRQgfk+Qp90g2/YPvWtM
+         gwktN+pDY4PzZQxxyPQ81vK8ZCPjsdQT0UfWCFhzNSVD9t0mx3KH2F3eGQsoVD+drW6/
+         TlrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=BIZSp7IVphnnhMDYjeqbU8PeOS1U0bg0nk24l8E/M1Q=;
+        b=4MM5+NzAxOOq8Bqpf8iaUinJsT0jdJQsWiDxfFKXH+S3gmk77fomi9f3H95xMuqLua
+         HcjWzNLfu96180Mbupz76Ele+hh9+9tD4ebJxe+NciP4TSlb0Ll4jxdOPA25377U57lt
+         8GU6gL2QY8xJQgKVhgw6R96hPJVhzzy8ZpORJnzxIYGQ04mxXiJYmVhOplQlfeEN3pyH
+         ZYzAaIXQe+L+D/+9XXpRjxkrma7IiCnDD4TzCVx1LsraRuhtzToczEj+4Vbo3/EekBPJ
+         FPOP1PBRxI+cdw8LUo8w0rHjQgK6/yb8kYGR3X1zlwbjnih2S/pa/Gi5CKp6S4gtIQkz
+         Ldeg==
+X-Gm-Message-State: AOAM530dlPAYl7UB4cNBlpXllvQGhvpYWpfbNy+xp2VjrFssapFjZ4HW
+        BnQgb6NusjEAsJs9mpyyByD9ZgqGBBI=
+X-Google-Smtp-Source: ABdhPJznTxf9guYOpURg3Wlw5RGm2GfDxWntiUqE1i6tRX4liD+SCUGbPjyA6k71c2UldWNec+eXlQ==
+X-Received: by 2002:a17:902:bd05:b0:158:544d:6557 with SMTP id p5-20020a170902bd0500b00158544d6557mr19629526pls.70.1650435421315;
+        Tue, 19 Apr 2022 23:17:01 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-69.three.co.id. [180.214.233.69])
+        by smtp.gmail.com with ESMTPSA id u12-20020a17090a890c00b001b8efcf8e48sm21529594pjn.14.2022.04.19.23.16.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Apr 2022 23:17:00 -0700 (PDT)
+Message-ID: <e689bb30-dc7f-6e3d-a8d5-864e00de59d4@gmail.com>
+Date:   Wed, 20 Apr 2022 13:16:57 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FCFC866A-C070-11EC-83D3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: Recent changes for the unsafe directory handling - TINY
+ improvement requested in error output
+Content-Language: en-US
+To:     Nathan Neulinger <nneul@neulinger.org>, git@vger.kernel.org
+References: <ec588ff7-b300-bc3a-b51c-67d190b27e9b@neulinger.org>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <ec588ff7-b300-bc3a-b51c-67d190b27e9b@neulinger.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jack McGuinness via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 4/19/22 18:26, Nathan Neulinger wrote:
+> However, if you do a 'git diff' - such as what you might naturally do right before attempting a 'git commit' - you do NOT get any useful response:
+> 
+>   root@SERVER:/local/APPNAME/bin# git diff
+>   warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+>   usage: git diff --no-index [<options>] <path> <path>
+>   ...snip-long-diff-help...
+> 
+> Please consider a small improvement to have the git diff help output (if displayed due to the repo exclusion warning) - ALSO display the 'git config' suggestion at the end of the output, instead of me having to remember - oh, go issue status to get the command hint to go set the exclusion. Would also be useful to have the git diff output do the same 'unsafe repository' message about ownership.
+> 
 
-> From: Jack <jmcguinness2@ucmerced.edu>
-> Subject: Re: [PATCH] area: /t/t4204-log.sh, partially modernized test script t4202
+I assumed that you have /local/APPNAME/bin shared by users (maybe via
+NFS or something else), right?
 
-I am not sure what "area" in this context is.  Do not report what
-you did in past tense on the title.
+I agreed with your suggestion. Also, I think usage help for git diff
+in this case just add noise.
 
-Perhaps
-
-    Subject: [PATCH] t4202: modernize code layout
-
-or something?
-
-> Remove test body indentations made with spaces, replace with tabs.
-> Remove blank lines at start and end of test bodies.
-
-OK.  The title says "partially", strongly hinting that the script is
-not fully modern even if we take this patch.  There should be some
-mention of left-over work that is left to a later occasion here.
-
-Thanks.
+-- 
+An old man doll... just what I always wanted! - Clara
