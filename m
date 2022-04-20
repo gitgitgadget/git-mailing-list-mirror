@@ -2,60 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC5EC433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 18:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15FFCC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 18:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381387AbiDTSGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 14:06:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
+        id S1381511AbiDTS2b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 14:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381386AbiDTSGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 14:06:40 -0400
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B306473A0
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 11:03:53 -0700 (PDT)
-Received: by mail-io1-f44.google.com with SMTP id p21so2720722ioj.4
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 11:03:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1JKXSDn15RGk+q62hDlIt7Xk3/92xEGk2SH33vr44RI=;
-        b=t9895mr3se9xeEwQN8UY8xpXosE9FibnFiKGOHDQigdcDU/SjpgQ4qqem9Lbo13g+n
-         47fv9LgZDGoOhrulgdJPhwfqug2Erro0s0xnFAAgkzoAp/JoZnfgcJATr9os6xk8BTSB
-         yTt2v0D29y2QB3PfCMXdc77TB7mruBiRUA6bWOyPelvhaDgvtkhgPlBeNfbHJarcP0H8
-         zeJq5nSrdnPYiZ3y4D9vif484hHDNzXVFzY8tJJkAPZ7QQdwZtFmtCkbEHJ5YXADT8Us
-         uWpmdqoOtSaCvJfSQC8X5PdcMWxzdHxJtIzY5DLBnIo3YYNPS7r2NbOMVNTtn4fnCMr2
-         Hx0Q==
-X-Gm-Message-State: AOAM532RvVyRIPPh0FD1mmy4AY86Ll4s+w7c75N3jnU9f+AeWp7veytI
-        QLvMgjJqvTF+lffySC70w7+UWAf1Gvd/JxlRZZ0=
-X-Google-Smtp-Source: ABdhPJy2SstgdHsoHw8bziXRNIusMJww0gaPyLSeDfbQlQp7wQWFUY6W/uhzFL0bv+O2ksVmafOoqkQyRuSJIgja3mI=
-X-Received: by 2002:a05:6602:29d2:b0:64c:753c:c490 with SMTP id
- z18-20020a05660229d200b0064c753cc490mr9929673ioq.90.1650477832688; Wed, 20
- Apr 2022 11:03:52 -0700 (PDT)
+        with ESMTP id S1381478AbiDTS23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 14:28:29 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D821A049
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 11:25:42 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 294511848DC;
+        Wed, 20 Apr 2022 14:25:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6iyz2kbxVmZ2Dp4y3rjR5r877Rqd+/EEXMQC6X
+        5427E=; b=Vq0+N9+1PqKk0I4atK5pYGb1e0KKMsdsMRLgWoY7FO0l+nZrl/Cb/C
+        /avsrcPz+219+yqJOhtpp4AUCPEgUehRADn7bD3o88QqxtmiCAUVdNx6vtCau2Cc
+        vdm2esVEB/6hmZriMD5/6GpW7I3Pl6k+v8eqe734uknD4q9fefv68=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 214361848D9;
+        Wed, 20 Apr 2022 14:25:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A670B1848D8;
+        Wed, 20 Apr 2022 14:25:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 1/8] rebase --apply: remove duplicated code
+References: <pull.1150.git.1645441854.gitgitgadget@gmail.com>
+        <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
+        <a4320f2fcf35f180e1c585be4105194f1555a874.1650448612.git.gitgitgadget@gmail.com>
+Date:   Wed, 20 Apr 2022 11:25:36 -0700
+In-Reply-To: <a4320f2fcf35f180e1c585be4105194f1555a874.1650448612.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Wed, 20 Apr 2022 09:56:44
+        +0000")
+Message-ID: <xmqq35i7r4rj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAJCZ4U-9KYGK0jwnL1GyOYW-CMjV_Eo--g85CbexsV=aQnn7aw@mail.gmail.com>
- <CA+JQ7M8+FR+_t+Fafoggz47bT0joAZFEkjhjf72teZgdNEoNZQ@mail.gmail.com>
- <xmqq8rrzr6dp.fsf@gitster.g> <CA+JQ7M9o+kZUgLkCq7aauCUwzZy6OzwKpyGQ1DxQyaL2jkJBSg@mail.gmail.com>
-In-Reply-To: <CA+JQ7M9o+kZUgLkCq7aauCUwzZy6OzwKpyGQ1DxQyaL2jkJBSg@mail.gmail.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Wed, 20 Apr 2022 20:03:15 +0200
-Message-ID: <CA+JQ7M_Q_Qkh=+qziKg379e_xywQn2RBeAPNx29Dw6a5RXkY1A@mail.gmail.com>
-Subject: Re: help request: unable to merge UTF-16-LE "text" file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kevin Long <kevinlong206@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 469F4F6C-C0D7-11EC-963A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 20, 2022 at 6:29 PM Kevin Long <kevinlong206@gmail.com> wrote:
->
-> Hoping for some suggestions. I've also tried to save the file as UTF-8
-> in both branches, commit, then merge, but still that did not work. I
-> just want to merge it like a normal source code file.
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Solution files tend to be of the "for machines only" variety.
-In my experience, it often ends up being a bunch of csproj GUIDs
-changing back and forth.
-Consider just taking one of the two and manually fixing the solution file?
+> -	strbuf_reset(&msg);
+
+This is unnecessary, because we have released immediately before.
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When we are reattaching HEAD after a fast-forward we can use
+> move_to_original_branch() rather than open coding a copy of that
+> code. The old code appears to handle the case where the rebase is
+> started from a detached HEAD but in fact in that case there is nothing
+> to do as we have already updated HEAD.
+
+At the beginning of move_to_original_branch(), there is an early
+return to do nothing when the head is detached.  But the code before
+the pre-context of the hunk already detached the head at the "onto",
+and the fast-forward case wants to leave the detached head pointing
+at that "onto" commit, so the early return without doing anything is
+exactly what we want to see.
+
+Does that mean that the original code had left two reflog entries
+for HEAD, one to detach at the "onto" commit, and then in this block
+to say "rebase finished" here?  With the new code, because we return
+early from move_to_original_branch(), we no longer leave the "rebase
+finished" record in the reflog of HEAD?
+
+Is it done deliberately as an improvement, or an oversight that led
+to a possible regression?
+
+Or do we still add the reflog entry for HEAD that says "rebase finished"
+somewhere else when we trigger the early return and I am misreading
+the code?
+
+> >  	if (oideq(&merge_base, &options.orig_head)) {
+>  		printf(_("Fast-forwarded %s to %s.\n"),
+>  			branch_name, options.onto_name);
+> -		strbuf_addf(&msg, "rebase finished: %s onto %s",
+> -			options.head_name ? options.head_name : "detached HEAD",
+> -			oid_to_hex(&options.onto->object.oid));
+> -		memset(&ropts, 0, sizeof(ropts));
+> -		ropts.branch = options.head_name;
+> -		ropts.flags = RESET_HEAD_REFS_ONLY;
+> -		ropts.head_msg = msg.buf;
+> -		reset_head(the_repository, &ropts);
+> -		strbuf_release(&msg);
+> +		move_to_original_branch(&options);
+>  		ret = finish_rebase(&options);
+>  		goto cleanup;
+>  	}
+
