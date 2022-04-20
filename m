@@ -2,137 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFE65C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 10:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 075C9C433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 10:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377426AbiDTKHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 06:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39556 "EHLO
+        id S1377516AbiDTKOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 06:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347063AbiDTKHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 06:07:00 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DFD31EC58
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 03:04:14 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id w4so1499182wrg.12
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 03:04:14 -0700 (PDT)
+        with ESMTP id S242267AbiDTKN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 06:13:57 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA2F63ED37
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 03:11:11 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id p18so1557103wru.5
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 03:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=f9ZAXi+EM5e0gULCAw6raizZrHhQO8NYDdfN1ltd/ug=;
-        b=BIl/AmlBmTKW+5JMftT9/EMSVJDxf1Xy8tmbkzOS+OE30fjiLIDBZfoisKFxuf01Pb
-         WhszW3e2nlodWD3OCsVQtTImhos3lbcH6DgxH470fSXO7FcyV+VWO8hjREn3uWcgO0s6
-         nWjy3VtOLsSCwEaegbRDTA4fWz/Fx3+bH2KFYU4w/KQ7xr1hw9VPpEtL6bm4bGEht0BM
-         /QXcw54sdX73M2lfL5Qrys5VOoHslMfKkley+nTT9Nb0P70qffQu9JRWE7gHNiyzChlS
-         TtxnLiwIPTA/nfMW+Vv0w9PNp1vRrGoc8aF0Pti2hlyQxQU2nJ9nDTE6V8hNi7Yngn8s
-         dGPQ==
+        bh=FOlHC/ks7+qsYP9nNPByGBUGdyu50pgufUD/0EpKJpM=;
+        b=R9YioOURBe91X4OQngwGP8RBZ8SYmoagc1pqE77EIi37Yxn190cGFWXJmtDWAMCsfl
+         konBzYOaCKMDyhnd4G9yt1ltKYXEUbeeW1L268zZm1GUE2rBaI3YkH7DhFXho0ACfq1c
+         pqC5yAqkuGujmwOmrTh7bQYAgfiTbR6IyW6kjF7A4p2Cw6WtOSH3AwEL8SOkOlv8oQM4
+         vrMOlrbh1DBbG/pwnY0LgNUpNaX7XeYk1rd++KOt4IrbsUTO0BFfcvV4INF+9/m2FKdK
+         gNwqby74wmusSK9jUB1HvQQEDVyejwRh6j0EkUPncpkbX8w/Itj43n4Ky5bG5+oXUCQk
+         V2HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=f9ZAXi+EM5e0gULCAw6raizZrHhQO8NYDdfN1ltd/ug=;
-        b=V6R2ZEnx3SF1raZyCed6rnXXA/lS75snqs8BJLZYgIDC4fj1wiUNwY5+9g/qp2TliG
-         Oaw7YfX9eZUMDLrQlcpgsbIaRbBNOX7sV9G2Kjgid3rT+x6QXyE6HHL/mhrUglsPxSRA
-         pr1nq1Zxm/uZMezFqZpn3omRCYcvEyImKHDPNs4SKQXUICVSqztW2+9pradP0TgY1ifT
-         Fu0RZ0JeXGX0yZoZAqY1fFJd7SGC6rgd1IJC8ISwBh6zw7SCHxWMDw58WTgIuNmlU1Tb
-         V4S5oGy3CaCMh2CVrkgSXjqq/HOrOuYMfWi2v7GqV/ZMF0NMmdWGfiSvKXfNPAX8a4n2
-         Oe+g==
-X-Gm-Message-State: AOAM532/7bILiZUepN9SMo7eZscj5jFQUvKUPzU62lGkemxF149R/APS
-        or8zyxpel4qZDjOokvS2zuXTcH+1LsY=
-X-Google-Smtp-Source: ABdhPJx4tvsTyoy44rVu+gR7ghO2+wzjnoYjkXdG7I/BpkjbnybQimkW/H5Phi2zAgB8ATs2jla2PA==
-X-Received: by 2002:a5d:6241:0:b0:207:ac0e:3549 with SMTP id m1-20020a5d6241000000b00207ac0e3549mr14654199wrv.343.1650449053047;
-        Wed, 20 Apr 2022 03:04:13 -0700 (PDT)
+        bh=FOlHC/ks7+qsYP9nNPByGBUGdyu50pgufUD/0EpKJpM=;
+        b=wmdg7+JHdlZLU1TlxzuepFBdT9cTx5OsYuXrn/SMxAHVcO5se8zKRGXJu1iLJcCXv6
+         FegUYaU1kFzF6JVKm7Lp7vUaMTWjKM/DT1dWBgsITHaGqtSa3lV3oDd1uJRfY+Pqsp4S
+         jYFOo92oqBhNkva9gswdInG8KQ1+caJ9VM5j9UG4ptWWuUFp9UsJWUW/X3uaM2qEj5Ki
+         +GoAmLmhDdX/xki98KFTjbLrZX0MNYy6aFxHOFvJ5spQbno91lR91RCrtSL0EsnP/luY
+         IADyqpvUMPZU6Ap9D5Pl4Kob8BJzLCN7ipGRgsSiiiqHNyJU0os+OM0AS2VNzqru6GNm
+         Qpxw==
+X-Gm-Message-State: AOAM530HU2E7pT1PNTOYYEL9xq7Ar7b8r3tmCa/3+IrPj0sIKJFpWt7M
+        4JscA2otPm1xWPaIq1Xm7jo=
+X-Google-Smtp-Source: ABdhPJzU9BCOD0tjsv3c+Os73b1BcNWLOSNK2O1xqdnR4eKX4awiMHO4Xcyxv4Fk6lJZAD2tjLo8uw==
+X-Received: by 2002:a05:6000:16c1:b0:20a:b1c5:d7db with SMTP id h1-20020a05600016c100b0020ab1c5d7dbmr1108984wrf.64.1650449470504;
+        Wed, 20 Apr 2022 03:11:10 -0700 (PDT)
 Received: from [192.168.1.201] ([31.185.185.192])
-        by smtp.googlemail.com with ESMTPSA id r14-20020a5d6c6e000000b0020a9f757708sm6327744wrz.33.2022.04.20.03.04.12
+        by smtp.googlemail.com with ESMTPSA id v11-20020adfa1cb000000b0020ab21e1e61sm659938wrv.51.2022.04.20.03.11.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Apr 2022 03:04:12 -0700 (PDT)
-Message-ID: <0825f153-1d03-feb4-1e34-4aaed766deb0@gmail.com>
-Date:   Wed, 20 Apr 2022 11:04:11 +0100
+        Wed, 20 Apr 2022 03:11:10 -0700 (PDT)
+Message-ID: <52382f7c-5b6a-63b6-2eb2-26c12f31f529@gmail.com>
+Date:   Wed, 20 Apr 2022 11:11:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] show-branch: fix SEGFAULT when `--current` and `--reflog`
- together
+Subject: Re: [PATCH v4 30/31] CI: have osx-gcc use gcc, not clang
 Content-Language: en-US
-To:     Gregory David <gregory.david@p1sec.com>, git@vger.kernel.org
-Cc:     ptm-dev <ptm-dev@p1sec.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <a36fd2b0-0573-b93e-a765-ce57a651934e@p1sec.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+ <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
+ <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
+ <55271bbe-7b6e-7c92-7337-2439a2f5be26@talktalk.net>
+ <xmqqh76orx3v.fsf@gitster.g>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <a36fd2b0-0573-b93e-a765-ce57a651934e@p1sec.com>
+In-Reply-To: <xmqqh76orx3v.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gregory
+On 20/04/2022 09:13, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood@talktalk.net> writes:
+> 
+>> On 18/04/2022 17:29, Ævar Arnfjörð Bjarmason wrote:
+>>> Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
+>>> "$jobname" to select packages & config, 2021-11-23). In that commit I
+>>> changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in $PATH points to
+>>> clang, we need to use gcc-9 instead.
+>>
+>> As this is fixing a bug in master, perhaps it would be better as a
+>> separate patch that can be merged before this series (this series
+>> could be rebased on to the fix)
+> 
+> Yeah, that sounds quite sensible.
+> 
+> Or perhaps start from 'master', merge this (and other fixes, if
+> there are, in this series), merge Dscho's CI updates and then use
+> that as an updated base?
 
-Thanks for working on this
-
-On 19/04/2022 17:32, Gregory David wrote:
-> If run `show-branch` with `--current` and `--reflog` simultaneously, a
-> SEGFAULT appears.
-> 
-> The bug is that we read over the end of the `reflog_msg` array after
-> having `append_one_rev()` for the current branch without supplying a
-> convenient message to it.
-> 
-> It seems that it has been introduced in:
-> Commit 1aa68d6735 (show-branch: --current includes the current branch.,
-> 2006-01-11)
-> 
-> Signed-off-by: Gregory DAVID <gregory.david@p1sec.com>
-> Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   builtin/show-branch.c | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
-> 
-> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-> index e12c5e80e3..892241ce0d 100644
-> --- a/builtin/show-branch.c
-> +++ b/builtin/show-branch.c
-> @@ -812,6 +812,26 @@ int cmd_show_branch(int ac, const char **av, const
-> char *prefix)
->   		}
->   		if (!has_head) {
->   			const char *name = head;
-> +			struct object_id oid;
-> +			char *ref;
-> +			unsigned int flags = 0;
-> +			char *log_msg;
-> +			char *end_log_msg;
-> +			timestamp_t timestamp;
-> +			int tz;
-> +
-> +			if (!dwim_ref(*av, strlen(*av), &oid, &ref, 0))
-> +				die(_("no such ref %s"), *av);
-> +			if(read_ref_at(get_main_ref_store(the_repository),
-> +					ref, flags, 0, i, &oid, &log_msg,
-> +					&timestamp, &tz, NULL)) {
-> +				end_log_msg = strchr(log_msg, '\n');
-> +				if (end_log_msg)
-> +					*end_log_msg = '\0';
-> +			}
-> +			if(log_msg == 0 || *log_msg == '\0')
-> +				log_msg = xstrfmt("(none)");
-> +			reflog_msg[ref_name_cnt] = xstrfmt("(%s) (current) %s",
-
-Do we need a bounds check here? I think we're only guaranteed that 
-ref_name_cnt - 1 < MAX_REVS though I found the existing code a bit hard 
-to follow
+It would certainly be nice to get Dscho's updates merged sooner rather 
+than later as I think they represent a more significant improvement for 
+CI users. There is a complication though in that Dscho's series adds 
+github markup to the build output and this series separates the build 
+from the tests which means that is not necessary. I think it should be 
+easy enough to change Dscho's series so it only uses github markup for 
+the tests which is the main improvement and just wait for the build and 
+tests to be separated in this series (ideally they'd be a short easy to 
+review series that did just that).
 
 Best Wishes
 
 Phillip
-
-> show_date(timestamp, tz, DATE_MODE(RELATIVE)), log_msg);
->   			skip_prefix(name, "refs/heads/", &name);
->   			append_one_rev(name);
->   		}
-
