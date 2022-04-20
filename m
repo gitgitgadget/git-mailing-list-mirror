@@ -2,73 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A37FC433F5
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 05:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 955E5C433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 05:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352624AbiDTFT3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 01:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53430 "EHLO
+        id S1343495AbiDTFqO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 01:46:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357504AbiDTFT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 01:19:27 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6D3340E3
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 22:16:42 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 203so593879pgb.3
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 22:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RrUrAgW45ZxmwAjfojakav0AcHFcLpQL6/+KdAhehSM=;
-        b=lEK0pVKmYD9yvjbkcl3UC/jYIcGdRALMVWhR6gsX1gQPrtrdpwDwNl4eHmpG7Jsjcq
-         rT5PdLfjLXadG2zlauWd9pojlJp/+zmwDSJZCWQdDzr0sdfGIEZWJkPwlqw3zx2j+xJv
-         du+aRE5nQhY0lK8WXgk+OM0iWnW9xqAX1q1sdDFA2tTpaj9K0zxiHGBGt8sifgn6KXjw
-         qsH/UakIAtQbHn13adyv8AGwRO+pwsUqhc6Lsw1XR005iYHXKq9/2TeQQjwyHZvDBQHe
-         0aydRCdUvkXE4vVr7E5ICJMn058qVQzxwarehK8ONl+wvsF0XFs2qsvHefxu4UPMmVVt
-         qc1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RrUrAgW45ZxmwAjfojakav0AcHFcLpQL6/+KdAhehSM=;
-        b=wIAYaMmh38WUMF5rj+s6nwnftjvrD++pb1adw+gRJBUuG2f1667l8EvszyfumT3+yF
-         dr+HQvgI2WKc4Fc4N7TzPIdL8RThexJQzMT77hn7n9ylTgQBVfFO5mLcDcudmTnwKF2X
-         zMns9d8rHK6DMyCoJRHoh0+PPWpCZKFJqlO0shkL0nrAXFfdIt0lXjlQAUzs8aGfLC0L
-         DWi8GIEnQEQigJc5ZPIbGtGowRMpigzmA+5/zSk6uWGzfEGboxRygbsLgAB+SlifNugE
-         DHHIJ4IR8UAErDtjQ6JEuaGVvQ4+skXEBiG6knAGM90ay7LXEeG7HyPZWo6FVb9kQ21P
-         EsFQ==
-X-Gm-Message-State: AOAM531dlNy82rnS/PnKd7JwJVH0snq5fGfF6Lv7E+us2lXhuRbhOoLs
-        LPqiS92lMvOo4ZunFp2DFl4OBPRTKLCEtA==
-X-Google-Smtp-Source: ABdhPJxirx/2w/cmpTGkJE0Q4+buLmX91DM9yfIx2Hx2mEJcWZLXAOMBg9eRtbc5UlhZihXNX0ffDw==
-X-Received: by 2002:a63:42:0:b0:3a8:47f7:bf0d with SMTP id 63-20020a630042000000b003a847f7bf0dmr15468899pga.276.1650431801376;
-        Tue, 19 Apr 2022 22:16:41 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.96.31])
-        by smtp.gmail.com with ESMTPSA id q16-20020a17090a431000b001d4a27e6a77sm232985pjg.21.2022.04.19.22.16.38
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 19 Apr 2022 22:16:40 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Git <git@vger.kernel.org>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add coccinelle script to check the option usage strings
-Date:   Wed, 20 Apr 2022 10:46:26 +0530
-Message-Id: <20220420051626.1216-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <pull.1216.git.1650024209568.gitgitgadget@gmail.com>
-References: <pull.1216.git.1650024209568.gitgitgadget@gmail.com>
+        with ESMTP id S231758AbiDTFqM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 01:46:12 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761921DA5E
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 22:43:27 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F6B412840D;
+        Wed, 20 Apr 2022 01:43:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=PioVj6sMEbETBkBPItZYiVkbQDXwuS7evaZM6Lr+IVM=; b=ElqZ
+        rbLYEhwQ0hLOOlzm9HmSjS2XZB39vZJw+RbQNAUgzElgx3HWkgG3gnk6UlRoSuRT
+        Xi2//eeIWK38V8sp6r/AByP4+ECGYPuDx4yMJsgdHwAueXbxxOcUQA/0jzeqx39H
+        UYZJylDY2mqc3LqFfyCnYPVZyCrV15Bx8eHtfKk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17E94128409;
+        Wed, 20 Apr 2022 01:43:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A64E128408;
+        Wed, 20 Apr 2022 01:43:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
+Subject: Re: Current state / standard advice for rebasing merges without
+ information loss/re-entry?
+References: <CAPMMpojjs4sjKdN6DAJFSwERdjq9XQgi35CcqkXu7HijadHa1Q@mail.gmail.com>
+        <f87a549f-540e-d0f3-470c-178c2fa141a5@iee.email>
+        <xmqqczhe1jgp.fsf@gitster.g>
+        <ba1ea459-5981-5972-36e6-913eb19c34b4@iee.email>
+        <xmqq35iaz6n3.fsf@gitster.g>
+        <CANiSa6hEJMWPyfZ_KqgHcKXhMdT7doTnxkK7GZzf-QBh6DhATg@mail.gmail.com>
+Date:   Tue, 19 Apr 2022 22:43:24 -0700
+Message-ID: <xmqqsfq8s41v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC1E98CA-C06C-11EC-B6E5-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-Hello community,
+> On Tue, Apr 19, 2022 at 6:57 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Philip Oakley <philipoakley@iee.email> writes:
+>>
+>> > So, essentially, it's talking a small part of the rerere-train at each
+>> > step in the replay, so that it's more focussed.
+>>
+>> That reminds me of one topic.
+>
+> And it reminds me of a discussion about first-class conflicts vs
+> rerere I had recently [1] (Philip's email hasn't been delivered to me
+> yet). As I wrote there, I think most of rerere's use cases can be
+> fulfilled by first-class conflicts. I understand that it would be a
+> huge project (much more than appropriate for GSoC :)) to add such
+> support to Git. I just want to make sure the project is aware of the
+> idea.
+>
+> [1] https://github.com/martinvonz/jj/issues/175#issuecomment-1079831788
 
-Looks like it is not reviewed yet. Could you please review it?
+I saw that before, but neither of these two "use cases" solve a
+problem relevant to what I have to do often.  It may be a case where
+you have a hammer while rerere is a screwdriver, perhaps?  Each is
+useful in its own ways and is good at different applications.
 
-Thanks :)
+Rebuilding of 'seen' multiple times every day may superficially be
+similar to "test merge" case you mention there, but the desired end
+result from keeping multiple topics in master..seen chain, and have
+selected ones (not necessarily in the order in 'master..seen')
+graduate while keeping others and rebuilding 'seen' with them never
+involves artificially linearlized history in the end, and that is an
+explicit goal---to avoid the last-minute rebasing to the upstream,
+which can introduce unnecessary bugs.
+
+When I merge topics from 'seen' to 'next', I first reorder the
+topics so that these topics that are planned to be merged to 'next'
+come directly on top of the tree that matches 'next' in the
+'master..seen' chain, so that the exact state planned to be in
+'next' in the next iteration appears in 'seen' and be tested.  The
+merge of these topics to 'next' happens in the next integration
+iteration after this preparatory step passes.  It is the same way
+when topics that have been cooking in 'next' are (first planned to
+and then actually) merged to 'master'.  There is no "final last
+minute" rebase involved.
+
+Another thing that I didn't quite see in your "I see rebase as
+replaying the change between parent and child" is how different
+order of merging is handled.  It often happens that topic A and
+topic B have funny interactions, and the resolution rerere records
+when I first merge topic A to 'seen' and then topic B (at which time
+the conflict we are interested in happens) is later cleanly reused
+if topic B turns out to go first long before topic C graduates.
+When such a reordering happens, topic B will be merged first
+(without causing the conflict between topics A and B), then topic A
+is merged.  Dealing with such a reordering of topics was an explicit
+goal of 'rerere' and it works reasonably well, but it is no clear
+how [1] you cited above handles such a use case.
+
+The most importantly, at the philosophical level, in order to allow
+earlier mistakes to be corrected later, Git tries to avoid casting
+heuristic decisions in immutable objects when possible.
+
+Not recording "in this commit, parent and child trees rename path A
+to B, combine some contents of path C and D to create a new path E"
+and instead computing renames when we actually compare these two
+trees, is an example of the application of the philosophy.  It
+allows rename detection heuristics at the runtime to improve over
+time and a commit you made 5 years ago will be shown better with the
+improved rename detection logic.  We do avoid recomputing the same
+information over and over again by having long lived cache data
+structure like commit-graph, but they are left out of the central
+data structure and can be reproducible.
+
+Keeping the rerere database outside the commit object is another
+application of the same philosophy.  There needs a clear way to nuke
+an earlier recorded resolution that was faulty without having to
+rewrite the history, and having it outside the commit object is a
+must, and having database in .git/rr-cache/ is one possible
+implementation to achieve that goal.
+
+Thanks.
