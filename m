@@ -2,378 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 682D7C433FE
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 12:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56E22C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 13:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378537AbiDTMas (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 08:30:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41818 "EHLO
+        id S1378891AbiDTNJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 09:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378530AbiDTMar (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 08:30:47 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F9E28980
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 05:28:00 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id 21so2090746edv.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 05:28:00 -0700 (PDT)
+        with ESMTP id S1378883AbiDTNJZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 09:09:25 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF52442ED8
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 06:06:27 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id i20so2159774wrb.13
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 06:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=pS9wIHjBDqftkygR3I4TjlUGEYT6m1d/kFDNbJ8iIPk=;
-        b=nQ4Gqfu8PHVAttlT6NGrM37Hd8+PobPILm74wHMIQzQIYvIl1Vgut+oP3UK+Td3Mbn
-         7BqkS+3v10wWSAr4wze7drJk8rXfuC8X/3l63+agP7Vc3fCT41a1lMd2MKvCUxRmPXIi
-         pME24b58mbp6RxZRiziQLSAqTuNfKyJmgwJHT9OJpVDrWEm0AqxOP2BzoBrnl6z4ZMo5
-         r5yFJ841cFTivufiBJbAQWMXH10QjJxWVaBRoyzgUaJ/ftTxvl7YPk4pF5NpAcDx/s0+
-         x0yZUMNPapK8L3Q5IP/H1b4We7BWAPjpUCti6/nBe1PIQsPOPU79zPfNxRROaHvC2b+U
-         ql7w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=BYFlmXjOZ+VvW1QdTH75hAm+eMQpIjqPiCGi5UM2FVU=;
+        b=IlkBxRjIXucTOrBVdDfLKyvqupLPa/aah1issviD+ypur9wXOxkMpf2nV98iWmcxhR
+         rHFTfiVyljSoazxodu9JIp9o8aIqMBTemj2S3J6j1ODz5+fGhPXrEe9/zRuBf+bHIQOz
+         DaHRosaxPJgSmcewZEsuNff4YZcnIc4QaJq3RrDkuunoj3uXOAlLqk8DDfVc2P9fimam
+         PDZRoifHQHtIGDVloLTjQiU4BAg4p2SgdsQVTx2hUKWHolO0IZ0EuH/7eMw7R6glsfQO
+         QxELDIiLwuwxVYj8xGiFOa5thda5Ob5L7LarcyhZVAM0F2GVtin0zZhGk1WkN2u8a2FH
+         5ubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=pS9wIHjBDqftkygR3I4TjlUGEYT6m1d/kFDNbJ8iIPk=;
-        b=oxLlLw7+yODEApCPiBCknpD4aGRReztAXXoBIEXBYAa4+W/QRBloj+I4o5zxt4puWB
-         P+A3X67R0xgoeb+w9bvfxre/sAg8UMliCYanEPi0ElEj4Y9q9C74ZHVylH23BW4tCHuY
-         QUj34GijW1JC3qr2IpGoCcx8VfMVm/w17q1lxYLkNg8UkxlGxNMkMFZ+H5DWmvNNvASu
-         kK+bHfVcaIbkbZIogHD/3hf3CrMPzJefGqFonhVdaTUbBwyWE71tAoOGDKbD95UgRewp
-         x668/b1U8XQYyq7wgmMDbxErNF0t/2f+cEUIbHGtZoV03SReOVctJi551UK8tEu2jPX+
-         bCtQ==
-X-Gm-Message-State: AOAM533CfP40MrnhoX57ysJknedfQ29A5doxyJTinfkzoLTEIqvHGEUe
-        z5kQYMMJV/HdRzgPAaHth9A=
-X-Google-Smtp-Source: ABdhPJzEfpcQDm6rCAE8QISxGocPl9QM5rIlKNTRfGvDKtPC1v1hyUqyT0G0ApQpoxeDurzaT8SAMw==
-X-Received: by 2002:aa7:cc02:0:b0:411:487e:36fe with SMTP id q2-20020aa7cc02000000b00411487e36femr22965561edt.338.1650457678462;
-        Wed, 20 Apr 2022 05:27:58 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p24-20020a1709061b5800b006e88dfea127sm6660044ejg.3.2022.04.20.05.27.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=BYFlmXjOZ+VvW1QdTH75hAm+eMQpIjqPiCGi5UM2FVU=;
+        b=H8bsPuP51kBJANpUFCNCuyEoftR1l2PX3R3QAVCRKUXo/jfEvsMatA9CjdWFLtSUMn
+         SZtp+RVmloNsFhFNYP36rTe0IHhZaWwL4BrPvK4kujVi6m4X0DihWRlHwCl0D87cMSZa
+         JKL+lizLD/mjpqLXD2LPW0WvjkXfgN4CO5Xb4fvse1iw01fiSgnrOpxgM6DtyHBQmrhf
+         F+dzGe+yYksclXB+FPIuiglWm21BJ6kfx0jUVkFlzfqETeAtiq6qFSIj/QfsnttWS5/c
+         lpVglFjCSWdThLCWgOhx9JR8p6lP6t0s2vnUKxfdN2Pp145kXeA7kObWCutRFi+BGhwE
+         YHgA==
+X-Gm-Message-State: AOAM5330FclGT4I6CNbU3roUZwAe5wq6KVIB72jk5YfG6TUET4fsuYVi
+        LzqCWbHhSjdzrBiJS9ip4M0=
+X-Google-Smtp-Source: ABdhPJwo0rzoT8VNeBf6VeTtRJGsmuR0A3ZHJVIqc2Jzo3CLwTd6mKJ9z7PCPLHRQ1niBeU1AgTiMQ==
+X-Received: by 2002:adf:d083:0:b0:208:c159:5d33 with SMTP id y3-20020adfd083000000b00208c1595d33mr15190561wrh.692.1650459985923;
+        Wed, 20 Apr 2022 06:06:25 -0700 (PDT)
+Received: from localhost.localdomain (176.248.7.93.rev.sfr.net. [93.7.248.176])
+        by smtp.gmail.com with ESMTPSA id f11-20020a7bcc0b000000b0037e0c362b6dsm18638638wmh.31.2022.04.20.06.06.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 05:27:57 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nh9R7-007JUx-6V;
-        Wed, 20 Apr 2022 14:27:57 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Anthony Sottile <asottile@umich.edu>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: git 2.36.0 regression: pre-commit hooks no longer have
- stdout/stderr as tty
-Date:   Wed, 20 Apr 2022 14:25:15 +0200
-References: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
- <Yl9Hn0C0TwalASC0@google.com>
- <6aabbcd6-f6c2-fe97-eb73-593bcf2e9e75@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6aabbcd6-f6c2-fe97-eb73-593bcf2e9e75@gmail.com>
-Message-ID: <220420.86wnfk6isy.gmgdl@evledraar.gmail.com>
+        Wed, 20 Apr 2022 06:06:25 -0700 (PDT)
+From:   COGONI Guillaume <cogoni.guillaume@gmail.com>
+To:     matthieu.moy@univ-lyon1.fr
+Cc:     cogoni.guillaume@gmail.com, derrickstolee@github.com,
+        git.jonathan.bressat@gmail.com, git@vger.kernel.org,
+        gitster@pobox.com, guillaume.cogoni@gmail.com,
+        shaoxuan.yuan02@gmail.com
+Subject: [PATCH v3 0/1] Documentation/ToolsForGit.txt: Tools for developing Git
+Date:   Wed, 20 Apr 2022 15:06:16 +0200
+Message-Id: <20220420130617.41296-1-cogoni.guillaume@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <c6b48fba-c950-bb3a-3fdb-6d420a4cdfbc@univ-lyon1.fr>
+References: <c6b48fba-c950-bb3a-3fdb-6d420a4cdfbc@univ-lyon1.fr>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+MOY Matthieu wrote:
 
-On Wed, Apr 20 2022, Phillip Wood wrote:
+> I think you can just drop that sentence. For someone a bit familiar with 
+> either VS code or any other IDE, it's no big surprise that the debugger 
+> integration allows such feature. For someone not familiar with VS code, 
+> the patch about to land in next already contains a link to a page 
+> explaining that.
 
-> Hi Emily
->
-> On 20/04/2022 00:37, Emily Shaffer wrote:
->> On Tue, Apr 19, 2022 at 02:59:36PM -0400, Anthony Sottile wrote:
->>> [...]
->> Interesting. I'm surprised to see the tty-ness of hooks changing with
->> this patch, as the way the hook is called is pretty much the same:
->> run_hook_ve() ("the old way") sets no_stdin, stdout_to_stderr, args,
->> envvars, and some trace variables, and then runs 'run_command()';
->> run_command() invokes start_command().
->> run_hooks_opt ("the new way") ultimately kicks off the hook with a
->> callback that sets up a child_process with no_stdin, stdout_to_stderr,
->> args, envvars, and some trace variables (hook.c:pick_next_hook); the
->> task queue manager also sets .err to -1 on that child_process; then it
->> calls start_command() directly (run-command.c:pp_start_one()).
->> I'm not sure I see why the tty-ness would change between the two. If
->> I'm
->> being honest, I'm actually slightly surprised that `isatty` returned
->> true for your hook before - since the hook process is a child of Git and
->> its output is, presumably, being consumed by Git first rather than by an
->> interactive user shell.
->> I suppose that with stdout_to_stderr being set, the tty-ness of the
->> main
->> process's stderr would then apply to the child process's stdout (we do
->> that by calling `dup(2)`). But that's being set in both "the old way"
->> and "the new way", so I'm pretty surprised to see a change here.
->>
->> It *is* true that run-command.c:pp_start_one() sets child_process:err=-1
->> for the child and run-command.c:run_hook_ve() didn't do that; that -1
->> means that start_command() will create a new fd for the child's stderr.
->> Since run_hook_ve() didn't care about the child's stderr before, I
->> wonder if that is why? Could it be that now that we're processing the
->> child's stderr, the child no longer thinks stderr is in tty, because the
->> parent is consuming its output?
->
-> Exactly, stderr is redirected to a pipe so that we can buffer the
-> output from each process and then write it to the real stdout when the
-> process has finished to avoid the output from different processes
-> getting mixed together. Ideally in this case we'd see that stdout is a
-> tty and create a pty rather than a pipe when buffering the output from
-> the process.
+Finally, I drop that sentence, I also think that the link that I put in
+contrib/vscode/README is sufficient.
 
-All: I have a fix for this, currently CI-ing, testing etc. Basically it
-just adds an option to run_process_parallel() to stop doing the
-stdout/stderr interception.
+> contrib/emacs was really not meant for developers hacking on Git. Since 
+> it contains only pointers to obsolete stuff, we may want to just discard 
+> its current content and make it the place to put documentation for 
+> people hacking on Git with Emacs, just like contrib/vscode/ is for VS 
+> code and Git. But we probably have only a few (tens of) lines of 
+> documentation, so adding the doc directly in ToolsForGit.txt is probably 
+> better.
 
-It means that for the current jobs=1 we'll behave as before.
+I left everything as they were. I just add the configuration lines directly 
+in ToolsForGit.txt because there is not a lot of line. 
+But, in the future, if there is more line, it would be better to move all of this 
+in the contrib/emacs/README.
 
-For jobs >1 in the future we'll need to decide what we want to do,
-i.e. you can have TTY, or guaranteed non-interleaved output, but not
-both.
+> A good indicator, yes. But reading only the summary ...
 
-I'd think for hooks no interception makes sense, but in any case we can
-defer that until sometime later...
+I take the summary that you propose, so this not a criterion now.
 
-Preview of the fix below, this is on top of an earlier change to add the
-"struct run_process_parallel_opts" to pass such options along:
+> I agree that removing Emacs-specific code from a general document is 
+> nice, but then you should replace it with a link to ToolsForGit.txt like 
+> "Tips to make your editor follow this style can be found in 
+> ToolsForGit.txt" (without being specific to Emacs, that's the point of 
+> the document, it also applies to VS code and may be extended in the 
+> future to other editors).
 
-diff --git a/hook.c b/hook.c
-index eadb2d58a7b..1f20e5db447 100644
---- a/hook.c
-+++ b/hook.c
-@@ -126,6 +126,7 @@ int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
- 	struct run_process_parallel_opts run_opts = {
- 		.tr2_category = "hook",
- 		.tr2_label = hook_name,
-+		.no_buffering = 1,
- 	};
- 
- 	if (!options)
-diff --git a/run-command.c b/run-command.c
-index 2383375ee07..0f9d84433ad 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1604,7 +1604,7 @@ static void pp_cleanup(struct parallel_processes *pp)
-  * <0 no new job was started, user wishes to shutdown early. Use negative code
-  *    to signal the children.
-  */
--static int pp_start_one(struct parallel_processes *pp)
-+static int pp_start_one(struct parallel_processes *pp, const int no_buffering)
- {
- 	int i, code;
- 
-@@ -1623,9 +1623,12 @@ static int pp_start_one(struct parallel_processes *pp)
- 		strbuf_reset(&pp->children[i].err);
- 		return 1;
- 	}
--	pp->children[i].process.err = -1;
--	pp->children[i].process.stdout_to_stderr = 1;
--	pp->children[i].process.no_stdin = 1;
+Yup, I fix this, I add a mention to Documentation/ToolsForGit.txt in CodingGuideline.
+I add it at the end of the file.
+
+Thanks for your review,
+
+COGONI Guillaume.
+
+COGONI Guillaume (1):
+  Documentation/ToolsForGit.txt: Tools for developing Git
+
+ Documentation/CodingGuidelines | 18 +++++-------
+ Documentation/Makefile         |  1 +
+ Documentation/ToolsForGit.txt  | 51 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 11 deletions(-)
+ create mode 100644 Documentation/ToolsForGit.txt
+
+Interdiff versus v2 :
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index a7d21d6f6b..509cd89aa2 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -722,3 +722,10 @@ Writing Documentation:
+  inline substituted text+ instead of `monospaced literal text`, and with
+  the former, the part that should not get substituted must be
+  quoted/escaped.
 +
-+	if (!no_buffering) {
-+		pp->children[i].process.err = -1;
-+		pp->children[i].process.stdout_to_stderr = 1;
-+		pp->children[i].process.no_stdin = 1;
-+	}
- 
- 	if (start_command(&pp->children[i].process)) {
- 		code = pp->start_failure(&pp->children[i].err,
-@@ -1681,12 +1684,17 @@ static void pp_output(struct parallel_processes *pp)
- 	}
- }
- 
--static int pp_collect_finished(struct parallel_processes *pp)
-+static int pp_collect_finished(struct parallel_processes *pp,
-+			       const int no_buffering)
- {
- 	int i, code;
- 	int n = pp->max_processes;
- 	int result = 0;
- 
-+	if (no_buffering)
-+		for (i = 0; i < pp->max_processes; i++)
-+			pp->children[i].state = GIT_CP_WAIT_CLEANUP;
 +
- 	while (pp->nr_processes > 0) {
- 		for (i = 0; i < pp->max_processes; i++)
- 			if (pp->children[i].state == GIT_CP_WAIT_CLEANUP)
-@@ -1741,7 +1749,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
- static int run_processes_parallel_1(int n, get_next_task_fn get_next_task,
- 				    start_failure_fn start_failure,
- 				    task_finished_fn task_finished,
--				    void *pp_cb)
-+				    void *pp_cb, const int no_buffering)
- {
- 	int i, code;
- 	int output_timeout = 100;
-@@ -1754,7 +1762,7 @@ static int run_processes_parallel_1(int n, get_next_task_fn get_next_task,
- 		    i < spawn_cap && !pp.shutdown &&
- 		    pp.nr_processes < pp.max_processes;
- 		    i++) {
--			code = pp_start_one(&pp);
-+			code = pp_start_one(&pp, no_buffering);
- 			if (!code)
- 				continue;
- 			if (code < 0) {
-@@ -1765,9 +1773,11 @@ static int run_processes_parallel_1(int n, get_next_task_fn get_next_task,
- 		}
- 		if (!pp.nr_processes)
- 			break;
--		pp_buffer_stderr(&pp, output_timeout);
--		pp_output(&pp);
--		code = pp_collect_finished(&pp);
-+		if (!no_buffering) {
-+			pp_buffer_stderr(&pp, output_timeout);
-+			pp_output(&pp);
-+		}
-+		code = pp_collect_finished(&pp, no_buffering);
- 		if (code) {
- 			pp.shutdown = 1;
- 			if (code < 0)
-@@ -1783,7 +1793,8 @@ static int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 				      start_failure_fn start_failure,
- 				      task_finished_fn task_finished,
- 				      void *pp_cb, const char *tr2_category,
--				      const char *tr2_label)
-+				      const char *tr2_label,
-+				      const int no_buffering)
- {
- 	int result;
- 
-@@ -1791,7 +1802,7 @@ static int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 				   ((n < 1) ? online_cpus() : n));
- 
- 	result = run_processes_parallel_1(n, get_next_task, start_failure,
--					  task_finished, pp_cb);
-+					  task_finished, pp_cb, no_buffering);
- 
- 	trace2_region_leave(tr2_category, tr2_label, NULL);
- 
-@@ -1803,6 +1814,8 @@ int run_processes_parallel(int n, get_next_task_fn get_next_task,
- 			   task_finished_fn task_finished, void *pp_cb,
- 			   struct run_process_parallel_opts *opts)
- {
-+	const int no_buffering = opts && opts->no_buffering;
++Documentation/ToolsForGit.txt:
 +
- 	if (!opts)
- 		goto no_opts;
++ This document collects tips, scripts, and configuration files to help
++ contributors working with the Git codebase use their favorite tools while
++ following the Git coding style.
+diff --git a/Documentation/ToolsForGit.txt b/Documentation/ToolsForGit.txt
+index dc370a5861..5060d0d231 100644
+--- a/Documentation/ToolsForGit.txt
++++ b/Documentation/ToolsForGit.txt
+@@ -5,8 +5,9 @@ Tools for developing Git
+ [[summary]]
+ == Summary
  
-@@ -1811,12 +1824,13 @@ int run_processes_parallel(int n, get_next_task_fn get_next_task,
- 		return run_processes_parallel_tr2(n, get_next_task,
- 						  start_failure, task_finished,
- 						  pp_cb, opts->tr2_category,
--						  opts->tr2_label);
-+						  opts->tr2_label,
-+						  no_buffering);
- 	}
+-This document aims to gather tools that have a README and/or scripts in
+-the Git project.
++This document gathers tips, scripts and configuration file to help people
++working on Git's codebase use their favorite tools while following Git's
++coding style.
  
- no_opts:
- 	return run_processes_parallel_1(n, get_next_task, start_failure,
--					task_finished, pp_cb);
-+					task_finished, pp_cb, no_buffering);
- }
+ [[author]]
+ === Author
+@@ -29,6 +30,8 @@ information on using the script.
+ [[emacs]]
+ === Emacs
  
- 
-diff --git a/run-command.h b/run-command.h
-index 9ec57a25de4..062eff81e17 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -463,11 +463,17 @@ typedef int (*task_finished_fn)(int result,
-  *
-  * tr2_category & tr2_label: sets the trace2 category and label for
-  * logging. These must either be unset, or both of them must be set.
-+ *
-+ * no_buffering: Don't redirect stderr to stdout, and don't "buffer"
-+ * the output of the N children started. The output will not be
-+ * deterministic and may be interleaved, but we won't interfere with
-+ * the connection to the TTY.
-  */
- struct run_process_parallel_opts
- {
- 	const char *tr2_category;
- 	const char *tr2_label;
-+	unsigned int no_buffering:1;
- };
- 
- /**
-@@ -477,7 +483,8 @@ struct run_process_parallel_opts
-  *
-  * The children started via this function run in parallel. Their output
-  * (both stdout and stderr) is routed to stderr in a manner that output
-- * from different tasks does not interleave.
-+ * from different tasks does not interleave. This can be disabled by setting
-+ * "no_buffering" in "struct run_process_parallel_opts".
-  *
-  * start_failure_fn and task_finished_fn can be NULL to omit any
-  * special handling.
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index ee281909bc3..fb6ad0bf4f7 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -130,7 +130,7 @@ World
- EOF
- 
- test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
--	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >actual 2>&1 &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 26ed5e11bc8..c0eda4e9237 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -4,6 +4,7 @@ test_description='git-hook command'
- 
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- test_expect_success 'git hook usage' '
- 	test_expect_code 129 git hook &&
-@@ -120,4 +121,49 @@ test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success TTY 'git hook run: stdout and stderr are connected to a TTY: STDOUT redirect' '
-+	rm -rf .git &&
-+	test_when_finished "rm -rf .git" &&
-+	git init . &&
++This is adapted from Linux's suggestion in its CodingStyle document:
 +
-+	test_hook pre-commit <<-EOF &&
-+	{
-+		test -t 1 && echo STDOUT TTY || echo STDOUT NO TTY &&
-+		test -t 2 && echo STDERR TTY || echo STDERR NO TTY
-+	} >actual
-+	EOF
-+
-+	test_commit A &&
-+	test_commit B &&
-+	git reset --soft HEAD^ &&
-+	cat >expect <<-\EOF &&
-+	STDOUT NO TTY
-+	STDERR TTY
-+	EOF
-+	test_terminal git commit -m"msg" &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TTY 'git hook run: stdout and stderr are connected to a TTY: STDERR redirect' '
-+	test_when_finished "rm -rf .git" &&
-+	git init . &&
-+
-+	test_hook pre-commit <<-EOF &&
-+	{
-+		test -t 1 && echo >&2 STDOUT TTY || echo >&2 STDOUT NO TTY &&
-+		test -t 2 && echo >&2 STDERR TTY || echo >&2 STDERR NO TTY
-+	} 2>actual
-+	EOF
-+
-+	test_commit A &&
-+	test_commit B &&
-+	git reset --soft HEAD^ &&
-+	cat >expect <<-\EOF &&
-+	STDOUT TTY
-+	STDERR NO TTY
-+	EOF
-+	test_terminal git commit -m"msg" &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ - To follow rules of the CodingGuideline, it's useful to put the following in
+ GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
+ ----
+@@ -41,36 +44,8 @@ GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
+ 			(cperl-merge-trailing-else . t))))
+ ----
+ 
+-- The version for C:
+-----
+-(defun c-lineup-arglist-tabs-only (ignored)
+-	"Line up argument lists by tabs, not spaces"
+-	(let* ((anchor (c-langelem-pos c-syntactic-element))
+-	       (column (c-langelem-2nd-pos c-syntactic-element))
+-	       (offset (- (1+ column) anchor))
+-	       (steps (floor offset c-basic-offset)))
+-	 (* (max steps 1)
+-	    c-basic-offset)))
+-
+-(add-hook 'c-mode-common-hook
+-	(lambda ()
+-		;; Add kernel style
+-		(c-add-style
+-		 "linux-tabs-only"
+-		 '("linux" (c-offsets-alist
+-			    (arglist-cont-nonempty
+-			     c-lineup-gcc-asm-reg
+-			     c-lineup-arglist-tabs-only))))))
+-
+-(add-hook 'c-mode-hook
+-	(lambda ()
+-		(let ((filename (buffer-file-name)))
+-		 ;; Enable kernel mode for the appropriate files
+-		 (when (and filename
+-			(string-match (expand-file-name "~/src/linux-trees")
+-				       filename))
+-		 (setq indent-tabs-mode t)
+-		 (setq show-trailing-whitespace t)
+-		 (c-set-style "linux-tabs-only")))))
+-----
++For a more complete setup, since Git's codebase uses a coding style
++similar to the Linux kernel's style, tips given in Linux's CodingStyle
++document can be applied here too.
+ 
++==== https://www.kernel.org/doc/html/v4.10/process/coding-style.html#you-ve-made-a-mess-of-it
+-- 
+2.25.1
+
