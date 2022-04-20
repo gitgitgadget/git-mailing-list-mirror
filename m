@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA26C43217
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09DB6C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382201AbiDTUr3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 16:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58966 "EHLO
+        id S1382210AbiDTUrb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 16:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382165AbiDTUrK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1382203AbiDTUrK (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 20 Apr 2022 16:47:10 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7842E45AE2
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:54 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id o20-20020a05600c511400b0038ebbbb2ad8so2054067wms.0
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:54 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275083CA63
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:57 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c10so3880680wrb.1
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bIorACD9MvGhf+EOOe9S7KEedrit1duOzRZ5v8bUeZQ=;
-        b=aDZm//1/KlbHB3RTSchqdsIIZImLw/3+wjUb/0CxQmBEeFO5gyOHpbjH1GRw7bhNF3
-         fhpzm7mezgbHL023CvbgrYaf4XyYbsmshvjv7oiujpqTEvVrMgoOFJsKoofVEuyxzoCt
-         iHvUNUhb57c0nQweVoRi00iAJ8SSJIhO9H+vYW1lImzRDkDlCxZVi+QSRDrSsUVyXO0m
-         K2L70IYme7O0tUBrn3KRQjFJzuj8jfGjYvuC/g4uuPJ+3Pjhi5s4J6vJRQIPYRW18s67
-         55u15NT26IrtQSKR5EcGtHegF4XSNws0g8NCpjzqdDMkrjJPaX4BLLzz/iRkrdAIthsZ
-         4l8w==
+        bh=49gznKgXXcaypBPlROyAWAIsdUble1wg/o3vHy/Znr4=;
+        b=OQfBjneq8+g1B9khs3NnBTBaqkcadQvSKD+AXh8Q5YzB3/UNRfIinlhgJOJsd/oqhj
+         KX5048/PU9BVdSAIyk8i6OlYoiDREfcxLPIOe9kXsRhrOuVNzbLEMZTYYea6hJ7H2fma
+         +6Yc2oq8hOQ6nPYFhhcGnRIxGltJEH1SgnofAM556G4rKWSJHXoEC/dQjNiJtN/AYf2j
+         sSsPoSCiwsbXAgeIShmqevDbTfpKUDSG2TQxIk0oauQC6JHm3AsHIYhKc5Hcl5BW+5wH
+         xOsxAaRUNpOkQmoFGx/uDgajVYoIMLr+ykJF/Ifl6Uc8fcWWIrr+0bvVSx+G4hew0tVJ
+         gkyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bIorACD9MvGhf+EOOe9S7KEedrit1duOzRZ5v8bUeZQ=;
-        b=V9U8NwQiiRfd8viVja9YCLVZVvV6Q8f4BbMQbm9HsC6NbHsG7sXNDCBqlfyBw9JA2h
-         ZjXzllef6ppzRxdsd999wRALG8oTJv8qx8dBXOSMIwGcJaL+oLI00Ri0z+MWHA9cxj6i
-         GkpeXYv14flCzlOXgjibthup3VcHx6HQgOEojR/elQjoE7dDA3ZUzzrEBjB8JvJYwivX
-         FbcRWSHNyAK7O5MREROtuLNfi0sNHeiu5X8Z7/Co/i28le67M/EuwTw8RGqIJ8wGRG7J
-         GReuy0Q9xAU6D29Oo6akASc+i+5XyqHV9CPbCUFILVTnX42GjxCptVxAGrHSM8Cuy3vl
-         Ww3g==
-X-Gm-Message-State: AOAM533mTSbiqGk9y7G7ko9/sE8ePBwdDp2SKvgw7ouOOyPQjX13MuBf
-        wJEGCBj25k5Parw/9IPl3JH8mhdum5k=
-X-Google-Smtp-Source: ABdhPJyUAIZXh46fdZln0Kn1eqprnV7e4zoldw/jh3hvxnpb46xd46OjIa1gF1sINjEp4I6cgYZacw==
-X-Received: by 2002:a7b:cd04:0:b0:38e:d7a4:1548 with SMTP id f4-20020a7bcd04000000b0038ed7a41548mr5277065wmj.73.1650487432699;
-        Wed, 20 Apr 2022 13:43:52 -0700 (PDT)
+        bh=49gznKgXXcaypBPlROyAWAIsdUble1wg/o3vHy/Znr4=;
+        b=wbNrW23+h9Fhd6UyjFhI9UEwVeorrjmX5xo6F6TW5hwNjljs5tWvpytEGrIfyYSylD
+         6XEPiupQhWa2HHqAwruz2yPmgjOkliTyte8l8O/SSueXnjK7QCFi3YebKLO77Gx5RJMg
+         0w3c36aZ8N6NCFCvivqxLy1mW8jo9kHPmPQawPgdBxOeGjV0Qhh9Ts6epUCE75hnju66
+         jdFIir+adOtakt2CdCnVd2ycJ+eqiA70+sRvB1oQUM1Xo3zRWm0ERKSLUzk8HS1T5so3
+         E/tg4pqi6+m34gOnn7ST7C39M2CfH4BGlP6G/XRmSgRX1XSTLIXRdlAuHTtVlGvHq//P
+         9ZtQ==
+X-Gm-Message-State: AOAM531M7kekOQ4kqdhw5E72HzZKT6+7Us0v+2864w2ByAksIaeIMr+w
+        XGpkqdmIOTdlCPoN8xE3wpnlL069JOs=
+X-Google-Smtp-Source: ABdhPJxbFeYLt5V7qsjhVAnM1WNbsWRwDcqkmJFpLP31xpUPn5ugojsQEN5MbX1BcMcRGa2pOs0ChA==
+X-Received: by 2002:adf:8b10:0:b0:20a:b1af:5597 with SMTP id n16-20020adf8b10000000b0020ab1af5597mr3135381wra.677.1650487435331;
+        Wed, 20 Apr 2022 13:43:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p1-20020a1c7401000000b0038ed3bb00c9sm342825wmc.6.2022.04.20.13.43.51
+        by smtp.gmail.com with ESMTPSA id d18-20020a05600c34d200b0038ed14b7ac3sm319180wmq.40.2022.04.20.13.43.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 13:43:52 -0700 (PDT)
-Message-Id: <d890c2e2d97046785efba2343d841e0cd62ccf64.1650487399.git.gitgitgadget@gmail.com>
+        Wed, 20 Apr 2022 13:43:54 -0700 (PDT)
+Message-Id: <9724c41d18d4429f8993c9cf83e7622eca079c46.1650487399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 References: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
         <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Apr 2022 20:43:15 +0000
-Subject: [PATCH v5 25/28] fsmonitor: on macOS also emit NFC spelling for NFD
- pathname
+Date:   Wed, 20 Apr 2022 20:43:17 +0000
+Subject: [PATCH v5 27/28] t7527: test Unicode NFC/NFD handling on MacOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,82 +73,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Emit NFC or NFC and NFD spellings of pathnames on macOS.
-
-MacOS is Unicode composition insensitive, so NFC and NFD spellings are
-treated as aliases and collide.  While the spelling of pathnames in
-filesystem events depends upon the underlying filesystem, such as
-APFS, HFS+ or FAT32, the OS enforces such collisions regardless of
-filesystem.
-
-Teach the daemon to always report the NFC spelling and to report
-the NFD spelling when stored in that format on the disk.
-
-This is slightly more general than "core.precomposeUnicode".
+Confirm that the daemon reports events using the on-disk
+spelling for Unicode NFC/NFD characters.  On APFS we still
+have Unicode aliasing, so we cannot create two files that
+only differ by NFC/NFD, but the on-disk format preserves
+the spelling used to create the file.  On HFS+ we also
+have aliasing, but the path is always stored on disk in
+NFD.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-listen-darwin.c | 33 ++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 55 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 83d38e8ac6c..823cf63999e 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -155,6 +155,35 @@ static int ef_ignore_xattr(const FSEventStreamEventFlags ef)
- 	return ((ef & mask) == kFSEventStreamEventFlagItemXattrMod);
- }
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index a4f8008fea7..5476a01cbff 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -868,4 +868,59 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
+ 	egrep "^event: abc/def/xyz$" ./insensitive.trace
+ '
  
-+/*
-+ * On MacOS we have to adjust for Unicode composition insensitivity
-+ * (where NFC and NFD spellings are not respected).  The different
-+ * spellings are essentially aliases regardless of how the path is
-+ * actually stored on the disk.
-+ *
-+ * This is related to "core.precomposeUnicode" (which wants to try
-+ * to hide NFD completely and treat everything as NFC).  Here, we
-+ * don't know what the value the client has (or will have) for this
-+ * config setting when they make a query, so assume the worst and
-+ * emit both when the OS gives us an NFD path.
-+ */
-+static void my_add_path(struct fsmonitor_batch *batch, const char *path)
-+{
-+	char *composed;
++# The variable "unicode_debug" is defined in the following library
++# script to dump information about how the (OS, FS) handles Unicode
++# composition.  Uncomment the following line if you want to enable it.
++#
++# unicode_debug=true
 +
-+	/* add the NFC or NFD path as received from the OS */
-+	fsmonitor_batch__add_path(batch, path);
++. "$TEST_DIRECTORY/lib-unicode-nfc-nfd.sh"
 +
-+	/* if NFD, also add the corresponding NFC spelling */
-+	composed = (char *)precompose_string_if_needed(path);
-+	if (!composed || composed == path)
-+		return;
++# See if the OS or filesystem does NFC/NFD aliasing/munging.
++#
++# The daemon should err on the side of caution and send BOTH the
++# NFC and NFD forms.  It does not know the original spelling of
++# the pathname (how the user thinks it should be spelled), so
++# emit both and let the client decide (when necessary).  This is
++# similar to "core.precomposeUnicode".
++#
++test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
++	test_when_finished "stop_daemon_delete_repo test_unicode" &&
 +
-+	fsmonitor_batch__add_path(batch, composed);
-+	free(composed);
-+}
++	git init test_unicode &&
 +
++	start_daemon -C test_unicode --tf "$PWD/unicode.trace" &&
 +
- static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			     void *ctx,
- 			     size_t num_of_events,
-@@ -305,7 +334,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 
- 				if (!batch)
- 					batch = fsmonitor_batch__new();
--				fsmonitor_batch__add_path(batch, rel);
-+				my_add_path(batch, rel);
- 			}
- 
- 			if (event_flags[k] & kFSEventStreamEventFlagItemIsDir) {
-@@ -318,7 +347,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 
- 				if (!batch)
- 					batch = fsmonitor_batch__new();
--				fsmonitor_batch__add_path(batch, tmp.buf);
-+				my_add_path(batch, tmp.buf);
- 			}
- 
- 			break;
++	# Create a directory using an NFC spelling.
++	#
++	mkdir test_unicode/nfc &&
++	mkdir test_unicode/nfc/c_${utf8_nfc} &&
++
++	# Create a directory using an NFD spelling.
++	#
++	mkdir test_unicode/nfd &&
++	mkdir test_unicode/nfd/d_${utf8_nfd} &&
++
++	git -C test_unicode fsmonitor--daemon stop &&
++
++	if test_have_prereq UNICODE_NFC_PRESERVED
++	then
++		# We should have seen NFC event from OS.
++		# We should not have synthesized an NFD event.
++		egrep    "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace &&
++		egrep -v "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace
++	else
++		# We should have seen NFD event from OS.
++		# We should have synthesized an NFC event.
++		egrep "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace &&
++		egrep "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace
++	fi &&
++
++	# We assume UNICODE_NFD_PRESERVED.
++	# We should have seen explicit NFD from OS.
++	# We should have synthesized an NFC event.
++	egrep "^event: nfd/d_${utf8_nfd}/?$" ./unicode.trace &&
++	egrep "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
++'
++
+ test_done
 -- 
 gitgitgadget
 
