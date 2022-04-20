@@ -2,179 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9BBEC433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 21:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2D17C433FE
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 22:15:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352476AbiDTVe6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 17:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
+        id S1353833AbiDTWSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 18:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237756AbiDTVe5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 17:34:57 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0165134654
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:32:10 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id v15so3969807edb.12
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3b12WNjWt+iw3+MU+wxJyabdYL6Z2+t/H7bi0DBirPE=;
-        b=RrszTZenkZc2QsRDqvUGbejNd3MLpMLW/TTeS+2llLT7LjN9/bfsK0kUKZZHnpStVr
-         y96/UzBRa/EX1iYov7njmJxpzys8afXSk+AALiwpvVBoKbBYuRztLQNh3Xkv34YaWUd+
-         UBsFHUG2355NVMOLJd5kMtRJAV+wQQwVPb/0I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3b12WNjWt+iw3+MU+wxJyabdYL6Z2+t/H7bi0DBirPE=;
-        b=v1MrzvrS2Ufk7zg8nX9tzQwTxUJpA5VxCbsVAjdK0z9A86EmgAEvbmZEkFn3ekvhJZ
-         F+UhZKNlFwquFQtJH2qAhnmHz+v7Od4ec3khtw4wbgF2D9qc3uimJk03V1HB80YtLChp
-         k3UbO2g6LLiviurHn3rmfTd8W3qcWSblbor1Sn9Lgl/QcoL7V4bt1PHVV9nXvvpdR75C
-         19LMjyu87aTRZskebSOjss4kk7YQzUAsRIbtDkmfXqDFI9QywAU/ogFErAztiO4J7EDX
-         ZGAkHnMbICDUyt1h0jXFEr9MdCEY36S4czcjJ6t7ZP7cmx181VUU/HXzA3upL+5ZisIQ
-         c3bA==
-X-Gm-Message-State: AOAM530iaGPycmUOsP3EJm2xDDlv2x6gDAAk8QNFBtOSDH8IgMt3M9rZ
-        vweycfbw9o/KTnrgAXIzMvhi0OahxddwTnBiReKvcQ==
-X-Google-Smtp-Source: ABdhPJyjjIOPElhuJTkUqop5bSFOXvHA5Fwaj3QSWvbjezDD3NO8HAN0oMPMXsgzZfL8XqJbq8hYoajLXTsALqdBtRs=
-X-Received: by 2002:aa7:c6d7:0:b0:41d:8afe:4a6a with SMTP id
- b23-20020aa7c6d7000000b0041d8afe4a6amr25511280eds.281.1650490328529; Wed, 20
- Apr 2022 14:32:08 -0700 (PDT)
+        with ESMTP id S1351515AbiDTWSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 18:18:41 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3923CA75
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 15:15:54 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D7B3132CC5;
+        Wed, 20 Apr 2022 18:15:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wU82D9BoWT2L8kENXLPt3Dw0QeynQIbyBwzJwe
+        Oj/cU=; b=bvrtw7HDkNYTCT0CFqUvxmz86VjRuNAElfInaNJDIPk/ctn0/xZOWL
+        BUe2oWT+D3nM/mEJ7XYB9tgVT8HKMTuS2Ma+S6BrRcmIpPWCSKgKi53CHX3IwVOW
+        KNKstYh9tLnsUk/VsBbqri39/oLPtTI4wgeraZMC/nYljF1HE5sNs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 74DD6132CC3;
+        Wed, 20 Apr 2022 18:15:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CFD6A132CC2;
+        Wed, 20 Apr 2022 18:15:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 6/8] rebase --apply: make reflog messages match
+ rebase --merge
+References: <pull.1150.git.1645441854.gitgitgadget@gmail.com>
+        <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
+        <95161f21e0004cff1bb0915aa39200b286e592e5.1650448612.git.gitgitgadget@gmail.com>
+Date:   Wed, 20 Apr 2022 15:15:51 -0700
+In-Reply-To: <95161f21e0004cff1bb0915aa39200b286e592e5.1650448612.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Wed, 20 Apr 2022 09:56:49
+        +0000")
+Message-ID: <xmqq4k2nmmeg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1161.v3.git.1646032466.gitgitgadget@gmail.com>
- <pull.1161.v4.git.1647843442911.gitgitgadget@gmail.com> <Yl2qwO0SMPOhb5h9@google.com>
- <CAPMMpogY5vZU8gyRSYh+BM4goPPtJw0cCiM-31sy-s_uGRv8uA@mail.gmail.com> <xmqqczhbr6pv.fsf@gitster.g>
-In-Reply-To: <xmqqczhbr6pv.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Wed, 20 Apr 2022 23:31:57 +0200
-Message-ID: <CAPMMpohQei9vBBm=7hC=N5LPwzMCED=fZcXyePnrkLCHfCJTZw@mail.gmail.com>
-Subject: Re: [PATCH v4] merge: new autosetupmerge option 'simple' for matching branches
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Josh Steadmon <steadmon@google.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 711B73D6-C0F7-11EC-83F2-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 20, 2022 at 7:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Tao Klerks <tao@klerks.biz> writes:
->
-> > ...
-> > To choose either option permanently, see push.default in 'git help config'.
-> > ---
-> >
-> > I would propose to add one sentence at the end along the lines of:
-> > ---
-> > To instead avoid automatically configuring upstream branches when
-> > their name doesn't match the local branch, see option 'simple' of
-> > branch.autosetupmerge in 'git help config'.
-> > ---
-> >
-> > Does that make sense to you?
->
-> Two questions.
->
->  - If a user follows the push.default advice, does it have any
->    advantage to set branch.autosetupmerge=simple at all?
+> The apply backend creates slightly different reflog messages to the
+> merge backend when starting and finishing a rebase and when picking
+> commits. The choice of backend is really an implementation detail so
+> it is confusing to have the same command create different messages
+> depending on which backend is selected. Change the apply backend so
+> the reflog messages from the two backends match as closely as
+> possible.
 
-Probably not?
+I do not agree with that line of thought.
 
-It really depends what they set push.default to:
-* If they set it to upstream/tracking, then
-branch.autosetupmerge=simple doesn't make much sense. You can set
-both, but the outcome is effectively the same as setting push.default
-to simple - not very useful.
-* If they set it to "current", then it probably doesn't make sense
-because what they're angling for is probably a triangular workflow,
-which branch.autosetupmerge=simple very explicitly doesn't support /
-doesn't make sense for. "matching" seems to be an extreme version of
-the same setup.
-* If they set it to "nothing" I'm not sure - I haven't understood in
-what workflows that makes sense.
+When choosing backend, the user clearly cares which one is used to
+do the job, so it is far from an "implementation detail" that is
+better hidden from the users.  In other words, the message being
+different is not source of confusion in this case.  Producing
+different messages depending on the version of Git may create worse
+confusion, though.
 
-Generally, I expect that branch.autosetupmerge=simple makes the most
-sense with push.default left at the default of "simple", for...
-"simple" workflows :)
+> Note that there is still a difference when committing a
+> conflict resolution - the merge backend will use "(continue)" rather
+> than "(pick)" in that case as it does not know which command created
+> the conflict that it is committing.
 
->
->  - If a user follows the branch.autosetupmerge=simple advice, what
->    happens their "git push" on a branch that the .merge is not set
->    due to this configuration?  Shouldn't they have to set up the
->    push.default for these branches anyway?
+That is OK, unless we can teach the backend to produce a more proper
+one (if 'continue' is considered less proper, that is, than 'pick';
+I do not think I would personally care between the two words too
+much).
 
-If the user follows the branch.autosetupmerge=simple advice (and
-leaves push.default at the "simple" default), what they get at push
-time will depend on whether they branched from a same-name remote
-branch or anything else:
+> -	strbuf_addf(&branch_reflog, "%s finished: %s onto %s",
+> +	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+>  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
+>  		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+> -	strbuf_addf(&head_reflog, "%s finished: returning to %s",
+> +	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+>  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), opts->head_name);
+>  	ropts.branch = opts->head_name;
+>  	ropts.flags = RESET_HEAD_REFS_ONLY;
 
-If they branched from a same-name remote branch, their "git push" will
-be perfectly uneventful / unsurprising: they will simply push to the
-remote branch. This is the same as without
-branch.autosetupmerge=simple.
+These convey the same information so it is "Meh---I do not care too
+strongly about them" kind of change, unless the justification is
+"let's show the (word) in parehtheses consistently in these reflog
+entries", in which case they are welcome change.
 
-If they branched from a different-name remote branch (they created an
-new / independent local branch), then no remote tracking relationship
-will have been set up, and instead of the "fatal: The upstream branch
-of your current branch does not match
-the name of your current branch" error and advice, they will get a
-much simpler error and advice:
+Overall, I'd rather see us not to apply this patch at this point in
+time, especially ...
 
----
-fatal: The current branch whatevs has no upstream branch.
-To push the current branch and set the remote as upstream, use
+> +	strvec_pushf(&am.env_array, GIT_REFLOG_ACTION_ENVIRONMENT "=%s (pick)",
 
-    git push --set-upstream origin whatevs
----
+... this new use of .env_array member semantically conflicts with
+the removal of .env member from the structure being proposed in
+another topic in flight.
 
-When they follow those instructions, they will be in the "simple"
-setup same as if they had just branched from same-name.
+> +		     getenv(GIT_REFLOG_ACTION_ENVIRONMENT));
+>  	if (opts->action && !strcmp("continue", opts->action)) {
+>  		strvec_push(&am.args, "--resolved");
+>  		strvec_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+> @@ -1763,7 +1764,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		printf(_("First, rewinding head to replay your work on top of "
+>  			 "it...\n"));
+>  
+> -	strbuf_addf(&msg, "%s: checkout %s",
+> +	strbuf_addf(&msg, "%s (start): checkout %s",
+>  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
 
-Importantly, as soon as they enable branch.autosetupmerge=simple, they
-never see the original mismatching-name error and advice anymore -
-they never again end up with mismatching names at all. (except in edge
-cases like branch renames)
-
->
-> While it might be a good thing to mention branch.autosetupmerge
-> configuration variable, I am not sure if "To instead avoid" is a
-> good thing to say here.  It sounds as if the user can ignore
-> push.default as long as branch.autosetupmerge is taken care of, but
-> I suspect that is not the case.
-
-I disagree. If they get that error and advice, then their push.default
-is set to "simple". If they then set their branch.autosetupmerge to
-"simple" also, this is the simple coherent setup that I, at least,
-would recommend to non-experts.
-
-> Setting the latter to 'simple'
-> means there are *MORE* branches that do not have .remote/.merge set
-> up, doesn't it?  Which in turn means that we are relying more on
-> what push.default is set to, right?
-
-No - the idea here is that instead of telling push.default to do
-something *independent* of the tracking branch (like, for example,
-"current"), the setup the user ends up with is one where the tracking
-branch, if there is one, is always the same-name where you will push
-to.
-
-When you create a new branch (by branching with a new name), your new
-branch doesn't initially have an upstream tracking branch - and that's
-right and correct, there's literally nothing on the server for you to
-track yet - but the first time you push, the (existing) advice
-encourages you to set up that tracking relationship. In this flow you
-very explicitly *don't* rely on push.default, because you never want
-to end up in a confusing (un-simple) situation where what you're
-pulling from and what you're pushing to aren't the same thing - a
-triangular workflow.
-
-The "push the current branch and set the remote as upstream" advice is
-consistent with how many/most GUIs will handle first push for a branch
-that does not have an upstream tracking relationship yet - GUIs will
-typically automatically specify (or set the UI default to) the
-"--set-upstream" option on that first push.
+I think this one is a strict improvement with or without () around
+the word that tells us what phase of the rebase operation we are at,
+and if it happens to match what the other backend produces, that
+would be a tolerable small regression, even though it makes it hard
+to tell them apart.
