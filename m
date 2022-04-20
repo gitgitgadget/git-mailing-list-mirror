@@ -2,111 +2,397 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47C69C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 15:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2B3AC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 16:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354848AbiDTP1h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 11:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57154 "EHLO
+        id S1380499AbiDTQZK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 12:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380205AbiDTP1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 11:27:34 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFC2F45784
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 08:24:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1650468283;
-        bh=2iCVSfqRJPsLOdIaTWS4QQqRufSdD6PTjEygre3rQVQ=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=JJ8m34+1+/wcdoQJ1qIIQopHl3emNhT9CB+ykpCUlIZIRbSerz9xGCUXHBwyAvRBG
-         tUWHbInP73DVgCvsOWei78I9qCPt4GRqKGuOEEKCRoEMBDREKC9vW7EytPW21AMi/e
-         yKW+Ki1osfWrmCVIJ5FYvTZJUkeiEy+/JQ2jxtPE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az196-785.m3u5ga3utehe1jm44gvey0miob.gx.internal.cloudapp.net
- ([23.99.200.225]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1ML9uK-1nQDZg3xA2-00IGju; Wed, 20 Apr 2022 17:24:43 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.36.0
-Date:   Wed, 20 Apr 2022 15:24:40 +0000
-Message-Id: <20220420152440.4913-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.36.0
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S1355738AbiDTQZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 12:25:09 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96C53B546
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 09:22:22 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id y32so3905859lfa.6
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 09:22:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9sNazECU7AZ9vXET0xfpnrZd0eiGCgITHTZ0cRW1zDw=;
+        b=i8HQ+2aC657JN2GB3DwWyECbchoy/0J9u9zGqDR/tJldQLCW55CeHvkrCGhbj0ayO+
+         aINT1Rew+f6Sm9tI3TACepO1XpLsLI2o4NeWko44xXKEKV9RF932e/3TeqbcqlnHlU5s
+         TUpbOokvpIiZezw3P77XbO41PN5NxpLCQxPyHDV/CwAIOCcwaW/DETDVg3FivqgoFU4t
+         yCziRO84TxmWJ6E5kYOB7R5yG/n4KQa0k0oA4Tm53tn69DiLOXhhR6PWnDtNZsvFn74c
+         zavS5p793H1/ic3gusS7Edm9ztmcjGMXN+11P2LQY8sUVTl0RvKTmJh0nctPGTVilMVx
+         mUJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9sNazECU7AZ9vXET0xfpnrZd0eiGCgITHTZ0cRW1zDw=;
+        b=kX/U1j1PAdvtwUiVCILgXJKyyBEB3cKpfNEpW4RMLJP5zjrQlH7xQCtQzEnBWxOWVH
+         1CBlVVZjQakrr1bKqxVbxmvT5FknAsmAz5xA95r8cdNLvI5rM7iE+Qk0Qq/rid2AG7HH
+         0vKAfJwt21CN7RqS1bQ98dcWERYY0RzGkjT4+YHJkAATn97z6exeww9LMsOj/8IeO46v
+         /0VQlMBXnhfJ7s4qZtCstiM1mFlvtasrJsgiC3tKFpnehonwrpJ7DIGmfudyCM5KjAND
+         L6aqehNjYii4KdiFYvj+PEaFlu39zhjZ3FW+V0OJQ0/wlH5nDLeS1qEThfHkzRbP7xF/
+         VI8g==
+X-Gm-Message-State: AOAM533fx4peHHY7q5m2KYcM4RxOHVm2MUKrG0PHLnJo2tdqZgNcp4aq
+        jb7J/agEibtWb23tusvpRw78oyKr7LUR35I5ae9LDQ==
+X-Google-Smtp-Source: ABdhPJw+TrGf71Gw5E8+tnFIe1emhLWrSPOGtc6WKnjLejzD0hBf8OHCS+6fOheQU96dp50ADssoA51oA4UH7IqWzY4=
+X-Received: by 2002:ac2:48b4:0:b0:46f:a773:fefa with SMTP id
+ u20-20020ac248b4000000b0046fa773fefamr15259771lfg.385.1650471740532; Wed, 20
+ Apr 2022 09:22:20 -0700 (PDT)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:Pe3+6dmiGbZw239aiSp9FMFB7tPYMK72T6B+bz/WdvM8xDqtB2n
- nPO/O3DRgTeyvuvzxd4sI/8thso24fNTBlaol2/IBU7/GaRSyfG/BrtmWv7dvJtNkGOIjtk
- PBcLKqCSra3pPdnz7nCUwH4IEi5ThrXGodJuCfjwAtJLw2d/oJGOuFEhzQvLNCzbU96cYex
- be32Xg7bTNZxdqO2S+7AQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7pBGf8Bpxnc=:9sKOfz5MwIRArod1yoScsi
- wdBvKd3iwcKZb/N15IOPT7dxtZy3bRTBDeTQp1Cr//bZ5/sSlBmxX+iGJDU9kfI2o5yGr8dx0
- JsAhht/xoOsxbAIRXGbVgYz9RUnguamFg+KqsNzyVP27XDay+JF+3Y+UBHqIpxGudfMAwFQqW
- vJ38zBQBoiOoaXaJxueuoQj+EYva1d5JNyQafaW6qxUDD7btifvDbieU/3vR5tuSucTU2sVI6
- ImAqQ+3KfxF8mjgdIyNLloAMu0O/6KxV5smAO0frY/2KWmmS3n1NXhMHxOr9kie77Z8MhKdBf
- PcvkB4wPyeuL2BkZ5BfVqZd6WeSfcqUK2ueSfgzBfYa9yxlHCondXfY4mw7qFm+qEO1ANef5D
- iFbCapWow06YCT9/N3vqNIHzKIpQN6XyA4zr8UqTtrQi9ewwDNRgLNoJFjDM68dsLSMfpMXi6
- VLvd49IW4fTbHbze7dK2Wf8hKGXZw2cUJfGa4gPXxZPxrN6/jn/Vt8ENa/B9CwZmXyZ4cqSBk
- 5snfiWlx/vUrLIWwuLunZTCcfSNlJk5vUSbHpmmG1tnRLA0pP9U22gL24GqQW3f66vuekTB2I
- 1tWMt6IXDiREjnP5sCmHVTxzKqcTsUnEz1ALfJmbY8Gm8cHFtArCeHhotRagXz1Riwf2KHodT
- sq/hZ8l0lTZnOkcNc0BELuNz8QK1a34+oX+fMehN+4C7+LMVaNi5e7wYbAsLaO82pOufPRxfx
- vQkkhSziAB4rj+HrTN5mQUeWtTaP6kWdkgvOcIUj82mknRWUxznuRPe2QrV1CmTQJbioJz7os
- oBHYFaKlDUa0Y+qz2ql3aFTMoFP0aamedxqgY8j2YVKYK5JKzzzpGnjGSTM9ic4ybmwDIDRWb
- UbO0DFtdD/Ebb/RcO0guMTkASIqbLs02CF+y1PO5gBIkpLJg4ip7peHyaEKKlc21VVV2df4xq
- 6bFN3dylcZOU4ef+zIoOvd+wHVuJJVyKn6rkYDBEgVRjBqmo7mPTF/GR10rJpQgTidt0puU4u
- jbu7jur9paxYKfsw+eRCrYMAMxSb09mjmAbjFybQpG7iUBaKty7gEGG6t1TFBO2ZZTpe+ADN9
- L0A8g9s/Tg58/Y=
+References: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
+ <Yl9Hn0C0TwalASC0@google.com> <6aabbcd6-f6c2-fe97-eb73-593bcf2e9e75@gmail.com>
+ <220420.86wnfk6isy.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220420.86wnfk6isy.gmgdl@evledraar.gmail.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Wed, 20 Apr 2022 09:22:09 -0700
+Message-ID: <CAJoAoZ=ysz6GDjUVCzUC-4OEwkyfrUzDyAws1xPbKXeLufUa0w@mail.gmail.com>
+Subject: Re: git 2.36.0 regression: pre-commit hooks no longer have
+ stdout/stderr as tty
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Anthony Sottile <asottile@umich.edu>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Wed, Apr 20, 2022 at 5:28 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> >> It *is* true that run-command.c:pp_start_one() sets child_process:err=
+=3D-1
+> >> for the child and run-command.c:run_hook_ve() didn't do that; that -1
+> >> means that start_command() will create a new fd for the child's stderr=
+.
+> >> Since run_hook_ve() didn't care about the child's stderr before, I
+> >> wonder if that is why? Could it be that now that we're processing the
+> >> child's stderr, the child no longer thinks stderr is in tty, because t=
+he
+> >> parent is consuming its output?
+> >
+> > Exactly, stderr is redirected to a pipe so that we can buffer the
+> > output from each process and then write it to the real stdout when the
+> > process has finished to avoid the output from different processes
+> > getting mixed together. Ideally in this case we'd see that stdout is a
+> > tty and create a pty rather than a pipe when buffering the output from
+> > the process.
+>
+> All: I have a fix for this, currently CI-ing, testing etc. Basically it
+> just adds an option to run_process_parallel() to stop doing the
+> stdout/stderr interception.
+>
+> It means that for the current jobs=3D1 we'll behave as before.
+>
+> For jobs >1 in the future we'll need to decide what we want to do,
+> i.e. you can have TTY, or guaranteed non-interleaved output, but not
+> both.
+>
+> I'd think for hooks no interception makes sense, but in any case we can
+> defer that until sometime later...
 
-I hereby announce that Git for Windows 2.36.0 is available from:
+I'm curious what your reasoning is there. I rely on hooks which give
+me user-readable output quite frequently, so the interleaving is
+important to keep them from being useless if I trigger more than one
+hook (e.g. I have separate hooks to check for secret keys and for
+debug strings).
 
-    https://gitforwindows.org/
+Would it make sense to start by setting it based on the number of
+hooks available?
 
-Changes since Git for Windows v2.35.3 (April 15th 2022)
+Left a quick thought below, but please don't consider it as a full
+review - I haven't got time to look much more yet.
 
-This version includes Git LFS v3.1.4, addressing CVE-2022-24826 (if you
-use Git LFS with MinGit, you will want to upgrade).
+>
+> Preview of the fix below, this is on top of an earlier change to add the
+> "struct run_process_parallel_opts" to pass such options along:
+>
+> diff --git a/hook.c b/hook.c
+> index eadb2d58a7b..1f20e5db447 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -126,6 +126,7 @@ int run_hooks_opt(const char *hook_name, struct run_h=
+ooks_opt *options)
+>         struct run_process_parallel_opts run_opts =3D {
+>                 .tr2_category =3D "hook",
+>                 .tr2_label =3D hook_name,
+> +               .no_buffering =3D 1,
+>         };
+>
+>         if (!options)
+> diff --git a/run-command.c b/run-command.c
+> index 2383375ee07..0f9d84433ad 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1604,7 +1604,7 @@ static void pp_cleanup(struct parallel_processes *p=
+p)
+>   * <0 no new job was started, user wishes to shutdown early. Use negativ=
+e code
+>   *    to signal the children.
+>   */
+> -static int pp_start_one(struct parallel_processes *pp)
+> +static int pp_start_one(struct parallel_processes *pp, const int no_buff=
+ering)
+>  {
+>         int i, code;
+>
+> @@ -1623,9 +1623,12 @@ static int pp_start_one(struct parallel_processes =
+*pp)
+>                 strbuf_reset(&pp->children[i].err);
+>                 return 1;
+>         }
+> -       pp->children[i].process.err =3D -1;
+> -       pp->children[i].process.stdout_to_stderr =3D 1;
+> -       pp->children[i].process.no_stdin =3D 1;
+> +
+> +       if (!no_buffering) {
+> +               pp->children[i].process.err =3D -1;
+> +               pp->children[i].process.stdout_to_stderr =3D 1;
+> +               pp->children[i].process.no_stdin =3D 1;
+> +       }
 
-Upcoming breaking changes
+Is it not possible to let run_processes_parallel() callers set these
+flags manually (as they are providing a child_process in the "get next
+task" callback), and then to decide whether to buffer the output based
+on the fd status instead? I'd prefer that rather than an all-or-none
+option that may not apply to every process, I think... But I could be
+wrong :)
 
-We plan to update the included bash to version 5.1 (currently 4.4) soon
-after Git for Windows 2.36.0 is released. Please check your shell
-scripts for potential compatibility issues.
-
-Git for Windows will also stop supporting Windows Vista soon after Git
-for Windows 2.36.0 is released. Around the beginning of 2023, Git for
-Windows will drop support for Windows 7 and for Windows 8, following
-Cygwin's and MSYS2's lead (Git for Windows relies on MSYS2 for
-components such as Bash and Perl).
-
-New Features
-
-  * Comes with Git v2.36.0.
-  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-    3.3.4.
-  * Comes with OpenSSH v8.9p1.
-  * Comes with cURL v7.82.0.
-  * Comes with OpenSSL v1.1.1n.
-  * Comes with Git Credential Manager Core v2.0.696.
-  * Comes with GNU TLS v3.7.4.
-  * Comes with Git LFS v3.1.4.
-
-Git-2.36.0-64-bit.exe | 5196563ba07031257d972c0b3c2ebd3227d98a40587278e11930dbc2f78d4e69
-Git-2.36.0-32-bit.exe | 5de71f60ca0012e5efc6e991696095d3eb5a80d156fb404c3fbe8317ba690313
-PortableGit-2.36.0-64-bit.7z.exe | 2257df41991f07c33176e2af8240181dab44cc713afe0fd95a0e12964fc46bda
-PortableGit-2.36.0-32-bit.7z.exe | 27522261de1666e99d2c9708351de8e25638d6bc2f41e4d9a28bcede4c8eec75
-MinGit-2.36.0-64-bit.zip | 0c6611fc04b9b111777a4f219e198bded07fea80fb14dedb01ebbcc231480986
-MinGit-2.36.0-32-bit.zip | 8c0d78619273116c7d76ca8ec1e5322ba3a315a113acafabcbd9febfb2dc493c
-MinGit-2.36.0-busybox-64-bit.zip | 5c301b9deabae5a83a09efed7f816d325f4ab23b6e3f3a50d077199271e045a0
-MinGit-2.36.0-busybox-32-bit.zip | 2aa9b03696f0aa4d07968316464dbc541eb9a997f578cc110e1c3e206f78f2aa
-Git-2.36.0-64-bit.tar.bz2 | ee3d663e3aa699dea3dc664e29543a2113e022365d169100f708a8660ae7fcbd
-Git-2.36.0-32-bit.tar.bz2 | 6db2399c943ca74ca72884dff1524c6c14f3f16dbd1f139719e62f6d89f0254a
-
-Ciao,
-Johannes
+>
+>         if (start_command(&pp->children[i].process)) {
+>                 code =3D pp->start_failure(&pp->children[i].err,
+> @@ -1681,12 +1684,17 @@ static void pp_output(struct parallel_processes *=
+pp)
+>         }
+>  }
+>
+> -static int pp_collect_finished(struct parallel_processes *pp)
+> +static int pp_collect_finished(struct parallel_processes *pp,
+> +                              const int no_buffering)
+>  {
+>         int i, code;
+>         int n =3D pp->max_processes;
+>         int result =3D 0;
+>
+> +       if (no_buffering)
+> +               for (i =3D 0; i < pp->max_processes; i++)
+> +                       pp->children[i].state =3D GIT_CP_WAIT_CLEANUP;
+> +
+>         while (pp->nr_processes > 0) {
+>                 for (i =3D 0; i < pp->max_processes; i++)
+>                         if (pp->children[i].state =3D=3D GIT_CP_WAIT_CLEA=
+NUP)
+> @@ -1741,7 +1749,7 @@ static int pp_collect_finished(struct parallel_proc=
+esses *pp)
+>  static int run_processes_parallel_1(int n, get_next_task_fn get_next_tas=
+k,
+>                                     start_failure_fn start_failure,
+>                                     task_finished_fn task_finished,
+> -                                   void *pp_cb)
+> +                                   void *pp_cb, const int no_buffering)
+>  {
+>         int i, code;
+>         int output_timeout =3D 100;
+> @@ -1754,7 +1762,7 @@ static int run_processes_parallel_1(int n, get_next=
+_task_fn get_next_task,
+>                     i < spawn_cap && !pp.shutdown &&
+>                     pp.nr_processes < pp.max_processes;
+>                     i++) {
+> -                       code =3D pp_start_one(&pp);
+> +                       code =3D pp_start_one(&pp, no_buffering);
+>                         if (!code)
+>                                 continue;
+>                         if (code < 0) {
+> @@ -1765,9 +1773,11 @@ static int run_processes_parallel_1(int n, get_nex=
+t_task_fn get_next_task,
+>                 }
+>                 if (!pp.nr_processes)
+>                         break;
+> -               pp_buffer_stderr(&pp, output_timeout);
+> -               pp_output(&pp);
+> -               code =3D pp_collect_finished(&pp);
+> +               if (!no_buffering) {
+> +                       pp_buffer_stderr(&pp, output_timeout);
+> +                       pp_output(&pp);
+> +               }
+> +               code =3D pp_collect_finished(&pp, no_buffering);
+>                 if (code) {
+>                         pp.shutdown =3D 1;
+>                         if (code < 0)
+> @@ -1783,7 +1793,8 @@ static int run_processes_parallel_tr2(int n, get_ne=
+xt_task_fn get_next_task,
+>                                       start_failure_fn start_failure,
+>                                       task_finished_fn task_finished,
+>                                       void *pp_cb, const char *tr2_catego=
+ry,
+> -                                     const char *tr2_label)
+> +                                     const char *tr2_label,
+> +                                     const int no_buffering)
+>  {
+>         int result;
+>
+> @@ -1791,7 +1802,7 @@ static int run_processes_parallel_tr2(int n, get_ne=
+xt_task_fn get_next_task,
+>                                    ((n < 1) ? online_cpus() : n));
+>
+>         result =3D run_processes_parallel_1(n, get_next_task, start_failu=
+re,
+> -                                         task_finished, pp_cb);
+> +                                         task_finished, pp_cb, no_buffer=
+ing);
+>
+>         trace2_region_leave(tr2_category, tr2_label, NULL);
+>
+> @@ -1803,6 +1814,8 @@ int run_processes_parallel(int n, get_next_task_fn =
+get_next_task,
+>                            task_finished_fn task_finished, void *pp_cb,
+>                            struct run_process_parallel_opts *opts)
+>  {
+> +       const int no_buffering =3D opts && opts->no_buffering;
+> +
+>         if (!opts)
+>                 goto no_opts;
+>
+> @@ -1811,12 +1824,13 @@ int run_processes_parallel(int n, get_next_task_f=
+n get_next_task,
+>                 return run_processes_parallel_tr2(n, get_next_task,
+>                                                   start_failure, task_fin=
+ished,
+>                                                   pp_cb, opts->tr2_catego=
+ry,
+> -                                                 opts->tr2_label);
+> +                                                 opts->tr2_label,
+> +                                                 no_buffering);
+>         }
+>
+>  no_opts:
+>         return run_processes_parallel_1(n, get_next_task, start_failure,
+> -                                       task_finished, pp_cb);
+> +                                       task_finished, pp_cb, no_bufferin=
+g);
+>  }
+>
+>
+> diff --git a/run-command.h b/run-command.h
+> index 9ec57a25de4..062eff81e17 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -463,11 +463,17 @@ typedef int (*task_finished_fn)(int result,
+>   *
+>   * tr2_category & tr2_label: sets the trace2 category and label for
+>   * logging. These must either be unset, or both of them must be set.
+> + *
+> + * no_buffering: Don't redirect stderr to stdout, and don't "buffer"
+> + * the output of the N children started. The output will not be
+> + * deterministic and may be interleaved, but we won't interfere with
+> + * the connection to the TTY.
+>   */
+>  struct run_process_parallel_opts
+>  {
+>         const char *tr2_category;
+>         const char *tr2_label;
+> +       unsigned int no_buffering:1;
+>  };
+>
+>  /**
+> @@ -477,7 +483,8 @@ struct run_process_parallel_opts
+>   *
+>   * The children started via this function run in parallel. Their output
+>   * (both stdout and stderr) is routed to stderr in a manner that output
+> - * from different tasks does not interleave.
+> + * from different tasks does not interleave. This can be disabled by set=
+ting
+> + * "no_buffering" in "struct run_process_parallel_opts".
+>   *
+>   * start_failure_fn and task_finished_fn can be NULL to omit any
+>   * special handling.
+> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+> index ee281909bc3..fb6ad0bf4f7 100755
+> --- a/t/t0061-run-command.sh
+> +++ b/t/t0061-run-command.sh
+> @@ -130,7 +130,7 @@ World
+>  EOF
+>
+>  test_expect_success 'run_command runs in parallel with more jobs availab=
+le than tasks' '
+> -       test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n=
+%s\n\" Hello World" 2>actual &&
+> +       test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n=
+%s\n\" Hello World" >actual 2>&1 &&
+>         test_cmp expect actual
+>  '
+>
+> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+> index 26ed5e11bc8..c0eda4e9237 100755
+> --- a/t/t1800-hook.sh
+> +++ b/t/t1800-hook.sh
+> @@ -4,6 +4,7 @@ test_description=3D'git-hook command'
+>
+>  TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+> +. "$TEST_DIRECTORY"/lib-terminal.sh
+>
+>  test_expect_success 'git hook usage' '
+>         test_expect_code 129 git hook &&
+> @@ -120,4 +121,49 @@ test_expect_success 'git -c core.hooksPath=3D<PATH> =
+hook run' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success TTY 'git hook run: stdout and stderr are connected t=
+o a TTY: STDOUT redirect' '
+> +       rm -rf .git &&
+> +       test_when_finished "rm -rf .git" &&
+> +       git init . &&
+> +
+> +       test_hook pre-commit <<-EOF &&
+> +       {
+> +               test -t 1 && echo STDOUT TTY || echo STDOUT NO TTY &&
+> +               test -t 2 && echo STDERR TTY || echo STDERR NO TTY
+> +       } >actual
+> +       EOF
+> +
+> +       test_commit A &&
+> +       test_commit B &&
+> +       git reset --soft HEAD^ &&
+> +       cat >expect <<-\EOF &&
+> +       STDOUT NO TTY
+> +       STDERR TTY
+> +       EOF
+> +       test_terminal git commit -m"msg" &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success TTY 'git hook run: stdout and stderr are connected t=
+o a TTY: STDERR redirect' '
+> +       test_when_finished "rm -rf .git" &&
+> +       git init . &&
+> +
+> +       test_hook pre-commit <<-EOF &&
+> +       {
+> +               test -t 1 && echo >&2 STDOUT TTY || echo >&2 STDOUT NO TT=
+Y &&
+> +               test -t 2 && echo >&2 STDERR TTY || echo >&2 STDERR NO TT=
+Y
+> +       } 2>actual
+> +       EOF
+> +
+> +       test_commit A &&
+> +       test_commit B &&
+> +       git reset --soft HEAD^ &&
+> +       cat >expect <<-\EOF &&
+> +       STDOUT TTY
+> +       STDERR NO TTY
+> +       EOF
+> +       test_terminal git commit -m"msg" &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
