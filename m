@@ -2,105 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38CB5C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 21:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F16C9C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 21:30:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382522AbiDTVbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 17:31:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41350 "EHLO
+        id S1382530AbiDTVdd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 17:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382508AbiDTVbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 17:31:12 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C159D427CD
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:28:23 -0700 (PDT)
+        with ESMTP id S1381096AbiDTVdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 17:33:33 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA1A22E0BD
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:30:45 -0700 (PDT)
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F126B5A410;
-        Wed, 20 Apr 2022 21:28:22 +0000 (UTC)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B6A1E5A410;
+        Wed, 20 Apr 2022 21:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1650490103;
-        bh=mKEcP1ipJUpgSJHjHEDZ7dXQb3Eyv+JwvSL2NDpj2H0=;
+        s=default; t=1650490244;
+        bh=G52tiHyZrpuLZ/SDLlVzyTjBpkB5zsuWmcYnuensYYE=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=0nYfehh7M+k57s5Np3JZYDEL3Lf27DsXW90BNuHw8HOHM++LtWapLjtU0j7Tiib04
-         54tPNPHTy8iSpE2kFU4M8EaCkTgsXA6h+CGADZ5qP0nY/I9Ykc4hx1xizImx6RmoK5
-         ALVfQ8lMr4wVKGczHDWBTBauKIGVWZBMM4s595Bz8ZKQzWukYr4+xEwvJqtWTEqRhg
-         MIfMq14zNCeoLQkhzAOYnES1bsN+BWCNaFjHRiD+qxrlmVgWU0ouAQ6ZloQX9FKFmb
-         48FLJLtuc/DklQUcAc++3Y46BvQPvj7hU+vnFkkE2xPx5LM9A6RAEbs+xHhNuIDDo9
-         xpeluYKkByv0o5NILH044aWI3p6baThwfdRZMENE3AiAmJVLad+jqhECtliLtmZvRV
-         UuXlFGBYDbTHltY+0vDjprQbY811+f3oB5nyAVoWEa+jzWpAxLlh7EC7x+w5DS1ExW
-         V720//l6fJXJSYyZiISbg+97HmuXPRIU8ujpXPLMwSaYaGZbtQB
-Date:   Wed, 20 Apr 2022 21:28:19 +0000
+        b=fHtr65pIgRfHXg2/C8ReJrQPRom4dTxDIiMVwjyk+VQ+JsiH0I7dHXqZAUCcNAmqF
+         cSU0oKK3UD9374M9im/gnp3FhiTEJ5eQ0VbK3CCZafF+EMLYiGePV9RmRhgAKbra5/
+         4KqhVoDlWrA+JC48f2zIaJibEDhewslwkZEQZo9oHWn++1eFL+Ie4z8lXg4DzyxwEm
+         vrmc141PBaV3IjQjdjI/XdDQbO2xADcY0b74mVhtB8C8Jxx5luFjkGJt2Hj3e7Lqvm
+         sNoep520WLRTLoWuiXZ0P6g74q33wpBzYhg4uuD7MsBb54IAVPtMwTekou2tr/EHRi
+         +baENB2ppQMRhjKZzBna1UWPBuo7U8onMYi5smgsaifdSvsDTcWYHf9jw/KGS77JxO
+         PjaVYa/2bN+PZt3Zb2215jA+bKXi6zya3MNONJMOFmgRCo1hfyJPMuJB7Xe3wGjAGQ
+         QVQStGV4XYMTLdGwuxP+7UQUrvA6NimEV6EJ67GuRkIAzItcMtr
+Date:   Wed, 20 Apr 2022 21:30:42 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Attila Csosz <csosza@designsoftware.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git bug report - disk errors on Windows after push
-Message-ID: <YmB686xgnjF86F+H@camp.crustytoothpaste.net>
+To:     Daniel Habenicht <daniel-habenicht@outlook.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug Report
+Message-ID: <YmB7gvfKY/0njjZy@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Attila Csosz <csosza@designsoftware.com>, git@vger.kernel.org
-References: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
- <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
- <fa40a6e6-dd83-9e88-e2f7-ab8aff2ca5a4@designsoftware.com>
+        Daniel Habenicht <daniel-habenicht@outlook.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <f1647260b37d492d96ac92f8ef30a087AS1P190MB1750B08CC923A45E2C959250ECF59@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="n3MCpmO+9Dz7pJFl"
+        protocol="application/pgp-signature"; boundary="Su+4epPcnrrF9fnf"
 Content-Disposition: inline
-In-Reply-To: <fa40a6e6-dd83-9e88-e2f7-ab8aff2ca5a4@designsoftware.com>
+In-Reply-To: <f1647260b37d492d96ac92f8ef30a087AS1P190MB1750B08CC923A45E2C959250ECF59@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
 User-Agent: Mutt/2.2.3 (2022-04-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---n3MCpmO+9Dz7pJFl
+--Su+4epPcnrrF9fnf
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-[Please avoid top-posting on this list.]
+On 2022-04-20 at 19:45:32, Daniel Habenicht wrote:
+> Hi there,
+>=20
+> I think I found a bug or at least some unexpected behavior.=C2=A0
+> Please have a look at the following reproduction repo:=C2=A0
+>=20
+> https://github.com/DanielHabenicht/bug-reproduction.git-repo/blob/main/RE=
+ADME.md
 
-On 2022-04-19 at 03:52:23, Attila Csosz wrote:
-> I've experienced the problem at least 3 different external disk.
-> I'm not using cloud syncing service (e.g., Dropbox or OneDrive) for git.
-
-I don't doubt that's the case.  However, it's not possible for Git to
-corrupt a disk just by writing to it.  Git, as a normal unprivileged
-program, can only open files and perform normal read and write
-operations on them.  Management of the file system, including integrity,
-is the responsibility of the operating system.  If running Git on
-Windows causes files outside of the repository to be corrupted, that's
-either a hardware problem or a bug in Windows.
-
-If you're seeing this problem, it could be that you have a series of bad
-disks (say, if you bought a set of cheap flash drives), that the drive
-isn't being removed properly, that you have some sort of broken driver
-or malware, that there's some other hardware problem (e.g., a bad dock,
-USB device, CPU, or memory), or just that there's a previously unknown
-bug in Windows.
-
-None of this is Git's fault, and it's really up to you to figure out
-which of these it is.  You might try isolating it by using a different
-computer to write to the repository first, to see if something about
-your current machine is the problem, and then try isolating other
-causes.
+You're more likely to get someone to look at this if you post the actual
+text to the list.  While I might be willing to look at it on GitHub,
+other folks won't, and I probably won't get a chance to look at this
+issue anytime soon.
 --=20
 brian m. carlson (he/him or they/them)
 Toronto, Ontario, CA
 
---n3MCpmO+9Dz7pJFl
+--Su+4epPcnrrF9fnf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYmB68gAKCRB8DEliiIei
-gUpBAPsHPCGT/AStEVPEPkTf73ImMFY5zM+dO9fmKM3oNlgXOQEAqtIXYdGJvUyk
-RFY9NvbyHJXRKMxAVzx5IDZWb4WrkAs=
-=47vX
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYmB7ggAKCRB8DEliiIei
+gVUjAP9D25DjwW07PjaJRlk0cWIrTLSwvJ5CdI+K7GYv5s1G6wD7Bz3+60JET/oC
+l8Ei06vK2ArznN3SdrOUQdwVmMi3GgI=
+=IJa5
 -----END PGP SIGNATURE-----
 
---n3MCpmO+9Dz7pJFl--
+--Su+4epPcnrrF9fnf--
