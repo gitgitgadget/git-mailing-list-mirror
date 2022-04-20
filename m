@@ -2,213 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A410FC433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE0FBC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354575AbiDTU3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 16:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47846 "EHLO
+        id S1382142AbiDTUdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 16:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353413AbiDTU33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 16:29:29 -0400
+        with ESMTP id S1382138AbiDTUdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 16:33:10 -0400
 Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D46C3B28C
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:26:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37DE340F7
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1650486372;
-        bh=NTZgeUtJbA6MatVn7JK1SkmHPDeXH1uOShOhnl6IWg0=;
-        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-        b=qo1XVtaux5Ou5FQ98j7aVriTTcEdS5dBoBgCivzy6fTcepbMJRxQsX2CdCsyBsRo5
-         /Syeu+BPuBA2KqZGgXrGO68mPt3bls2djTsE7IUsSm2JP6wNyT70PxQS1FnC1SVPGQ
-         hMg/+toXqXYa1+aHLGt85hq6TWQHIIFnimy1q4yo=
+        s=dbaedf251592; t=1650486611;
+        bh=QyQ7tcbPQcdDs/ihYrKk8dymXTfjG/3Dszdf3HNVLPQ=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=T9KEl6aN2hLQ80/PRvHk4WA7lF2LHWPGo/jyoNOOxAfMrI/UnC7YsnTxEVhJOr8x7
+         VgyDzgN8lJpGQOeNf6ot7mvuxCyOncM7MlpU2fqx0RkcwlIvh1wd4b+eCL6wLzjXga
+         /9sM50tu5GUZoF3DFub1Hiap53Gz0LN4dK3zNXDA=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N14ta-1nsqhK0Qpe-012itZ; Wed, 20
- Apr 2022 22:26:12 +0200
-Message-ID: <1c07dad1-3d3d-c52b-4440-631b46520254@web.de>
-Date:   Wed, 20 Apr 2022 22:26:09 +0200
+Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4bUg-1niv7l12bG-001ngQ; Wed, 20
+ Apr 2022 22:30:11 +0200
+Message-ID: <2ad1dd80-e79f-7304-219c-db24bb269c4d@web.de>
+Date:   Wed, 20 Apr 2022 22:30:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.8.0
+Subject: [PATCH 2/2] diff: use mks_tempfile_dt()
 Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] tempfile: add mks_tempfile_dt()
+References: <1c07dad1-3d3d-c52b-4440-631b46520254@web.de>
+In-Reply-To: <1c07dad1-3d3d-c52b-4440-631b46520254@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3Fq418c5UxYw+50UbKstsHjdHRx7IqkaKJMfUgo3UEdlC0wvzUY
- P6vs0nQQwAvdMcyhv+VpPQKJAjDcKgQptmoKEEFmePJxE4cWYUqOViOT9ayKSIwjnw9shoo
- KvQyZZfbL4RQjS31tHRJSPRUoazHdTKQc33YOGm2DTca+oPKeYbhPi2xxOpmuDpjMq068hF
- k/4ow72+YuGhJQ5ePFzwQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jqqa8E5LuL4=:jjshIxLy5lkvjQxRMPdAky
- iw0bIkr7BLu56aZTSNORrYlvC8wG0mp8LVKLEB+//1x667kAUwCOR+aN29LwxUkGXJf5Q7yu7
- mDRnRxGHdbOzmeL9ny1hMiLz9IlWOAuODw1VyDqPIFoR9vtFnLXyaErWv7U56suhaY2jbUV7p
- 11PIZEYL5NtlyYpR7Ws5pptthMQh7kJMK8ieIBtVhf78hMBq+HuLJduG3U08SHOJ3cjztmVz0
- kSGJG++Ia/mWgZ5ZcKW9hu52zoqxjDXsPwogl8qyOX3ZwjxkInF7tWqRVr0pX3otwjmQwR4AN
- qr0cujAzjUt78Guy4UTAN2LrFWq9nc1PriAEQZ1tAuo9g3d0Ha9VA8psKQf//vozUPkDi/Hps
- ibkwOtOVIjviCwDpgd14fuXNkgt+AsMKxDU40LZp1QQBl45wrCLFyCe6LtlvsD+kqjaSWGZTI
- ajV0CN0x5k91r5gorn9hYK0WLN16RgzkQYLb6Kzpb+1arH+6P9oT0vz8P0IB5lvQh7fcY34K4
- vX0gnCzbR1vp7a0ICv5DQjecQv7jGKYcJ6bgBhtVBoOU7M4dgYv3w+chQrGzBZ2i27uyUpMZC
- WWKqPm0iTJ6J6DjWBmzqLXohhKbaNVUrbAFhpdjd8gOC8Ql7rF3/uEIqYGKkVzi7qoHPDKQ42
- b6wftllA0pW6UxDFPpnZZaCW1RN/chKq9GWFjsvgS04+3Ckpl45kZimMZueNQLuKKIaOscIih
- m0dCUnBfXUYRHizMMEIeo5jx/kkBYt/4QtMS5T6K0AADT8w03SuCLCoNx+IwgIgTRQXlxwtNB
- qi+So53+3Sq7mQ0QrkPeqEAp7g8t8ROb68cKqGKDLXZ6mWAtTCHSkbZW/cbpVlqY3e7Qdq0h0
- EMmhd0Hyo6MrhhcFXd+9Lvy7bRHERYiEwms6MueHI1J72a9ur3OZ7nPFReb2YjDvjFVig5uYY
- 8KqYKNJZmYGZVkoEBHvYD/v6Hvk4bs1zxcTnR/OMOpZV7v2pq15QBLNITr/Cbzn1plOURdYyu
- v5zoVZQ+qwt8/EGPuZg4nN6J+dX2K2mqqSG7b9P2SBfRtI0iymiQaM2cyCSVxegKAA==
+X-Provags-ID: V03:K1:4dbF2SmFO/Hb9mCZhwhO8yKcecyIxltq3aOAblzuzwUaK+DXT6T
+ Ic0PuCkA48qcWYYDlxRlXuxo/phv9ynCuYRWylo6dzqLMQLGOick3gUbSkjG5xKLRagjNSr
+ V2X4z6hmC66iKpsc1baWSnDSNeTU7bxF81uVEAZVon/3Vq1vBBHfRs1iXQhTSeN3aM1u+9j
+ ghN+r2pHVjdP1KwlEHzrw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7OMOL9Wujzo=:FTHU98dc/LuYO7IEcV40jN
+ SWlTPYaJpZipZuGv9/MtQOYk9pGqV2zJY/8M6bdDxYUmo9okVuUa5DguiSq1id0q7ohF9tKDQ
+ /M9R5zGI+6FPiOvbE2UA+xJ6XdngH8QgLEbsiZDdUv+JJZNH7MtTAHfoAD9yLSfcTxLjxBc9O
+ tyJ1Ags/sVtgLH28iOP2/ahE5zkSCryVeC6+hw+Dch75Q35R3IEjPGbVptE0GXpn1rPmgfbYZ
+ SBCnaiuHKLbd45J0aSQhDp1sLgEBCtkj6STu3EPI81mjGZTucHwXQ+VUt6un8oLfmB6FiVlnA
+ VENIPCTpfkNGcmvkzjFW1yt9CWWtllPf9rwgMKbLu8Bob/c5c3gGf2Zbx46haKDzK4mnhoZR4
+ ROMJCK/lbUOco5AbYGgvZ8jSTbqoali8PmtrEQTjTNvOBswSNLiRXq0xOEWPgIbDGIYTOkdBP
+ N6QBwmB5oiVKjxIMUpQYCC+c5WMUXkOV5gSB5c76d8ysuKN6iFEpF6GgRfIXuLoeGbbRoFTLL
+ QHdbJIGPVCTn0XuBHP07R52lgEplctf7x/o4weFx5ZemYoqgT7rzZRGcjS6rZQPfVIIaIVStX
+ 3L3xheFcAAnDqzIhw/4eopI0vAjKtnDOwuCPE/KAWmgnDvPGoAvPbi636oGoy08vI360uTkUb
+ uE3Gd2Yv9bPImvTrd2hentDMQ6mtt7Nvv2EuTSZQnlBqcdECwoYzo0FfQS1wPVyPlxjnWGlVw
+ jHRknwjbvPRAUczQ8pYhS2t+XR4DHrYEmz7tllTzrn70FDUDVr/d/loa+snrsRjhaT1N4n1xm
+ 6u2Nx8iBCHwXzqpZijbo0u0Q53KHl1xSC2537Fbi0FpZ/bEvMviG8vhqsIndYfH2awr7R89Do
+ Sj4HqC4RnMpfEKFdpqCplPA1xO92zKE36CJTX/RDBQTqU7sG87e5URJXXgmc6LQw3WEQ4LJqc
+ +u58U4liNnusm9RXon+haa3hO0NXYQed8QaLAWgHj9QCn0XslcX2MS8GQ1U2xqsX4+tmMTFyO
+ 0G9GNbfLCZlIfsE5H5ntkqyLc2QxdCHvdoCJcx0qwJaGOITm8lKgoke5157z/0jAGg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function to create a temporary file with a certain name in a
-temporary directory created using mkdtemp(3).  Its result is more
-sightly than the paths created by mks_tempfile_ts(), which include
-a random prefix.  That's useful for files passed to a program that
-displays their name, e.g. an external diff tool.
+Git uses temporary files to pass the contents of blobs to external diff
+programs and textconv filters.  It calls mks_tempfile_ts() to create
+them, which puts them all in the same directory.  This requires adding
+a random name prefix.
+
+Use mks_tempfile_dt() instead, which allows the files to have arbitrary
+names, each in their own separate temporary directory.  This way they
+can have the same basename as the original blob, which looks nicer in
+graphical diff programs.
+
+The test in t4020 to check the prettiness of the temporary paths was
+neutered by 5476bdf0e8 (diff tests: don't ignore "git diff" exit code in
+"read" loop, 2022-03-07), which removed its grep check without replacing
+it with an equivalent test_cmp check.  Add one that only checks the
+basename of the temporary file and nothing else.
+
+And make the test more robust while at it, by using test_when_finished
+to get rid of the added file even if the test fails.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- tempfile.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- tempfile.h | 13 +++++++++++
- 2 files changed, 76 insertions(+)
+ diff.c                   | 8 +-------
+ t/t4020-diff-external.sh | 8 ++++----
+ 2 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/tempfile.c b/tempfile.c
-index 94aa18f3f7..2024c82691 100644
-=2D-- a/tempfile.c
-+++ b/tempfile.c
-@@ -56,6 +56,20 @@
-
- static VOLATILE_LIST_HEAD(tempfile_list);
-
-+static void remove_template_directory(struct tempfile *tempfile,
-+				      int in_signal_handler)
-+{
-+	if (tempfile->directorylen > 0 &&
-+	    tempfile->directorylen < tempfile->filename.len &&
-+	    tempfile->filename.buf[tempfile->directorylen] =3D=3D '/') {
-+		strbuf_setlen(&tempfile->filename, tempfile->directorylen);
-+		if (in_signal_handler)
-+			rmdir(tempfile->filename.buf);
-+		else
-+			rmdir_or_warn(tempfile->filename.buf);
-+	}
-+}
-+
- static void remove_tempfiles(int in_signal_handler)
+diff --git a/diff.c b/diff.c
+index ef7159968b..e71cf75886 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -4136,18 +4136,13 @@ static void prep_temp_blob(struct index_state *ist=
+ate,
+ 			   int mode)
  {
- 	pid_t me =3D getpid();
-@@ -74,6 +88,7 @@ static void remove_tempfiles(int in_signal_handler)
- 			unlink(p->filename.buf);
- 		else
- 			unlink_or_warn(p->filename.buf);
-+		remove_template_directory(p, in_signal_handler);
+ 	struct strbuf buf =3D STRBUF_INIT;
+-	struct strbuf tempfile =3D STRBUF_INIT;
+ 	char *path_dup =3D xstrdup(path);
+ 	const char *base =3D basename(path_dup);
+ 	struct checkout_metadata meta;
 
- 		p->active =3D 0;
- 	}
-@@ -100,6 +115,7 @@ static struct tempfile *new_tempfile(void)
- 	tempfile->owner =3D 0;
- 	INIT_LIST_HEAD(&tempfile->list);
- 	strbuf_init(&tempfile->filename, 0);
-+	tempfile->directorylen =3D 0;
- 	return tempfile;
+ 	init_checkout_metadata(&meta, NULL, NULL, oid);
+
+-	/* Generate "XXXXXX_basename.ext" */
+-	strbuf_addstr(&tempfile, "XXXXXX_");
+-	strbuf_addstr(&tempfile, base);
+-
+-	temp->tempfile =3D mks_tempfile_ts(tempfile.buf, strlen(base) + 1);
++	temp->tempfile =3D mks_tempfile_dt("git-blob-XXXXXX", base);
+ 	if (!temp->tempfile)
+ 		die_errno("unable to create temp-file");
+ 	if (convert_to_working_tree(istate, path,
+@@ -4162,7 +4157,6 @@ static void prep_temp_blob(struct index_state *istat=
+e,
+ 	oid_to_hex_r(temp->hex, oid);
+ 	xsnprintf(temp->mode, sizeof(temp->mode), "%06o", mode);
+ 	strbuf_release(&buf);
+-	strbuf_release(&tempfile);
+ 	free(path_dup);
  }
 
-@@ -198,6 +214,52 @@ struct tempfile *mks_tempfile_tsm(const char *filenam=
-e_template, int suffixlen,
- 	return tempfile;
- }
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 1219f8bd4c..858a5522f9 100755
+=2D-- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -206,17 +206,17 @@ test_expect_success 'GIT_EXTERNAL_DIFF path counter/=
+total' '
+ '
 
-+struct tempfile *mks_tempfile_dt(const char *directory_template,
-+				 const char *filename)
-+{
-+	struct tempfile *tempfile;
-+	const char *tmpdir;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int fd;
-+	size_t directorylen;
-+
-+	if (!ends_with(directory_template, "XXXXXX")) {
-+		errno =3D EINVAL;
-+		return NULL;
-+	}
-+
-+	tmpdir =3D getenv("TMPDIR");
-+	if (!tmpdir)
-+		tmpdir =3D "/tmp";
-+
-+	strbuf_addf(&sb, "%s/%s", tmpdir, directory_template);
-+	directorylen =3D sb.len;
-+	if (!mkdtemp(sb.buf)) {
-+		int orig_errno =3D errno;
-+		strbuf_release(&sb);
-+		errno =3D orig_errno;
-+		return NULL;
-+	}
-+
-+	strbuf_addf(&sb, "/%s", filename);
-+	fd =3D open(sb.buf, O_CREAT | O_EXCL | O_RDWR, 0600);
-+	if (fd < 0) {
-+		int orig_errno =3D errno;
-+		strbuf_setlen(&sb, directorylen);
-+		rmdir(sb.buf);
-+		strbuf_release(&sb);
-+		errno =3D orig_errno;
-+		return NULL;
-+	}
-+
-+	tempfile =3D new_tempfile();
-+	strbuf_swap(&tempfile->filename, &sb);
-+	tempfile->directorylen =3D directorylen;
-+	tempfile->fd =3D fd;
-+	activate_tempfile(tempfile);
-+	return tempfile;
-+}
-+
- struct tempfile *xmks_tempfile_m(const char *filename_template, int mode)
- {
- 	struct tempfile *tempfile;
-@@ -316,6 +378,7 @@ void delete_tempfile(struct tempfile **tempfile_p)
+ test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths' '
++	test_when_finished "git rm -f file.ext" &&
+ 	touch file.ext &&
+ 	git add file.ext &&
+ 	echo with extension > file.ext &&
 
- 	close_tempfile_gently(tempfile);
- 	unlink_or_warn(tempfile->filename.buf);
-+	remove_template_directory(tempfile, 0);
- 	deactivate_tempfile(tempfile);
- 	*tempfile_p =3D NULL;
- }
-diff --git a/tempfile.h b/tempfile.h
-index 4de3bc77d2..d7804a214a 100644
-=2D-- a/tempfile.h
-+++ b/tempfile.h
-@@ -82,6 +82,7 @@ struct tempfile {
- 	FILE *volatile fp;
- 	volatile pid_t owner;
- 	struct strbuf filename;
-+	size_t directorylen;
- };
+ 	cat >expect <<-EOF &&
+-	file.ext file $(git rev-parse --verify HEAD:file) 100644 file.ext $(test=
+_oid zero) 100644
++	file.ext
+ 	EOF
+ 	GIT_EXTERNAL_DIFF=3Decho git diff file.ext >out &&
+-	cut -d" " -f1,3- <out >actual &&
+-	git update-index --force-remove file.ext &&
+-	rm file.ext
++	basename $(cut -d" " -f2 <out) >actual &&
++	test_cmp expect actual
+ '
 
- /*
-@@ -198,6 +199,18 @@ static inline struct tempfile *xmks_tempfile(const ch=
-ar *filename_template)
- 	return xmks_tempfile_m(filename_template, 0600);
- }
-
-+/*
-+ * Attempt to create a temporary directory in $TMPDIR and to create and
-+ * open a file in that new directory. Derive the directory name from the
-+ * template in the manner of mkdtemp(). Arrange for directory and file
-+ * to be deleted if the program exits before they are deleted
-+ * explicitly. On success return a tempfile whose "filename" member
-+ * contains the full path of the file and its "fd" member is open for
-+ * writing the file. On error return NULL and set errno appropriately.
-+ */
-+struct tempfile *mks_tempfile_dt(const char *directory_template,
-+				 const char *filename);
-+
- /*
-  * Associate a stdio stream with the temporary file (which must still
-  * be open). Return `NULL` (*without* deleting the file) on error. The
+ echo "#!$SHELL_PATH" >fake-diff.sh
 =2D-
 2.35.3
