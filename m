@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09DB6C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6A25C433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382210AbiDTUrb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 16:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58978 "EHLO
+        id S1355124AbiDTUre (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 16:47:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382203AbiDTUrK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 16:47:10 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275083CA63
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:57 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id c10so3880680wrb.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:57 -0700 (PDT)
+        with ESMTP id S1382184AbiDTUqr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 16:46:47 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64BDC44772
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:48 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id s29so777171wrb.8
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=49gznKgXXcaypBPlROyAWAIsdUble1wg/o3vHy/Znr4=;
-        b=OQfBjneq8+g1B9khs3NnBTBaqkcadQvSKD+AXh8Q5YzB3/UNRfIinlhgJOJsd/oqhj
-         KX5048/PU9BVdSAIyk8i6OlYoiDREfcxLPIOe9kXsRhrOuVNzbLEMZTYYea6hJ7H2fma
-         +6Yc2oq8hOQ6nPYFhhcGnRIxGltJEH1SgnofAM556G4rKWSJHXoEC/dQjNiJtN/AYf2j
-         sSsPoSCiwsbXAgeIShmqevDbTfpKUDSG2TQxIk0oauQC6JHm3AsHIYhKc5Hcl5BW+5wH
-         xOsxAaRUNpOkQmoFGx/uDgajVYoIMLr+ykJF/Ifl6Uc8fcWWIrr+0bvVSx+G4hew0tVJ
-         gkyA==
+        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
+        b=XvgPKeUchtTZBF1tUwNmvMTJvMUZsAj3qQMssKjnUYZyxHGfLIKk0JV8HIAgWY69Gf
+         oOxQ1p9T5f/UKQmDPaxBOtj2/OA80hO+wsu4yRm1Gl7eZYWd8yinWq4COlCQFdIFM4ix
+         8MX48HK/j/YB8o3P2opNT3iuOpX9r+bCDXVzblfPhZl1/8e0QUEwVj6ztJF3AnPs5gST
+         D3h3SSTb34Dx3gFwkSb2TDrdPbRofVK8bkxRTtKf6bQEqO3dgNqjL1Xh3Inkzy8tuHNZ
+         dT/pzqY8LD9toCLpfZllb0pAp3zd1EvZCXu/bXlXqzGxP43flT+tVjJgqTPjkzXJe7Yw
+         wrVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=49gznKgXXcaypBPlROyAWAIsdUble1wg/o3vHy/Znr4=;
-        b=wbNrW23+h9Fhd6UyjFhI9UEwVeorrjmX5xo6F6TW5hwNjljs5tWvpytEGrIfyYSylD
-         6XEPiupQhWa2HHqAwruz2yPmgjOkliTyte8l8O/SSueXnjK7QCFi3YebKLO77Gx5RJMg
-         0w3c36aZ8N6NCFCvivqxLy1mW8jo9kHPmPQawPgdBxOeGjV0Qhh9Ts6epUCE75hnju66
-         jdFIir+adOtakt2CdCnVd2ycJ+eqiA70+sRvB1oQUM1Xo3zRWm0ERKSLUzk8HS1T5so3
-         E/tg4pqi6+m34gOnn7ST7C39M2CfH4BGlP6G/XRmSgRX1XSTLIXRdlAuHTtVlGvHq//P
-         9ZtQ==
-X-Gm-Message-State: AOAM531M7kekOQ4kqdhw5E72HzZKT6+7Us0v+2864w2ByAksIaeIMr+w
-        XGpkqdmIOTdlCPoN8xE3wpnlL069JOs=
-X-Google-Smtp-Source: ABdhPJxbFeYLt5V7qsjhVAnM1WNbsWRwDcqkmJFpLP31xpUPn5ugojsQEN5MbX1BcMcRGa2pOs0ChA==
-X-Received: by 2002:adf:8b10:0:b0:20a:b1af:5597 with SMTP id n16-20020adf8b10000000b0020ab1af5597mr3135381wra.677.1650487435331;
-        Wed, 20 Apr 2022 13:43:55 -0700 (PDT)
+        bh=aGhX76dz325gkGkIrL9UlyaHr3ziBUV0IbljHMDHg+g=;
+        b=i0GvIocbPEwlIBgNI6NGDUxbm2uWXrSc8SugnYPqR/fEDfsqT7IHGRFh7ppDcJER3k
+         k72HNkvWW+1X9cN6axq23txIYBs4t1tOLNppUiQt2Nn1M41O4XaWFYzzjrDEOK23BRqV
+         KSFGqAPA5Sxz7VjdRGQozxY23p1oXy1rydYEbwPQ9R+7xFBvSn2AaIsCcDDnZAyOZTvC
+         5SSdfc40h5FHsFBWcdL0Y88J9YX25sc02ezw1uExZ5tWpIFPoVawYKs/MfuuxJE2ATPL
+         8N+2KL6C3Rz9+udRsyMHWFKU98JcVj9aQJiW7HBmEmb0wwGaNStXCoLEpeoit8HnXCDa
+         7/og==
+X-Gm-Message-State: AOAM531JT/GjO4XJeoDCX3S+HsrqE++9Jjxwm9roTniwxKtJVi37xnFd
+        yI9BjXDajS5p37TxCAW4t5iPacoefcA=
+X-Google-Smtp-Source: ABdhPJwUahu4BfFqB/FIxb+tWDDfQ3uAf/i07+UBhCbx5Y1VAMQh5mGkbhTGGPQ+RPg69V0jR+9CFg==
+X-Received: by 2002:a5d:4842:0:b0:207:c6ad:4a48 with SMTP id n2-20020a5d4842000000b00207c6ad4a48mr16533050wrs.149.1650487426639;
+        Wed, 20 Apr 2022 13:43:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d18-20020a05600c34d200b0038ed14b7ac3sm319180wmq.40.2022.04.20.13.43.54
+        by smtp.gmail.com with ESMTPSA id o11-20020a05600c4fcb00b00391447f7fd4sm345198wmq.24.2022.04.20.13.43.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 13:43:54 -0700 (PDT)
-Message-Id: <9724c41d18d4429f8993c9cf83e7622eca079c46.1650487399.git.gitgitgadget@gmail.com>
+        Wed, 20 Apr 2022 13:43:46 -0700 (PDT)
+Message-Id: <15698d64edd0e65e5486a97024818a55c9e4295c.1650487399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 References: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
         <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Apr 2022 20:43:17 +0000
-Subject: [PATCH v5 27/28] t7527: test Unicode NFC/NFD handling on MacOS
+Date:   Wed, 20 Apr 2022 20:43:10 +0000
+Subject: [PATCH v5 20/28] fsmonitor: optimize processing of directory events
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,83 +73,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Confirm that the daemon reports events using the on-disk
-spelling for Unicode NFC/NFD characters.  On APFS we still
-have Unicode aliasing, so we cannot create two files that
-only differ by NFC/NFD, but the on-disk format preserves
-the spelling used to create the file.  On HFS+ we also
-have aliasing, but the path is always stored on disk in
-NFD.
+Teach Git to perform binary search over the cache-entries for a directory
+notification and then linearly scan forward to find the immediate children.
+
+Previously, when the FSMonitor reported a modified directory Git would
+perform a linear search on the entire cache-entry array for all
+entries matching that directory prefix and invalidate them.  Since the
+cache-entry array is already sorted, we can use a binary search to
+find the first matching entry and then only linearly walk forward and
+invalidate entries until the prefix changes.
+
+Also, the original code would invalidate anything having the same
+directory prefix.  Since a directory event should only be received for
+items that are immediately within the directory (and not within
+sub-directories of it), only invalidate those entries and not the
+whole subtree.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 55 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ fsmonitor.c | 71 ++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 54 insertions(+), 17 deletions(-)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index a4f8008fea7..5476a01cbff 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -868,4 +868,59 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
- 	egrep "^event: abc/def/xyz$" ./insensitive.trace
- '
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 292a6742b4f..e1229c289cf 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -184,30 +184,68 @@ static int query_fsmonitor_hook(struct repository *r,
+ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ {
+ 	int i, len = strlen(name);
+-	if (name[len - 1] == '/') {
++	int pos = index_name_pos(istate, name, len);
++
++	trace_printf_key(&trace_fsmonitor,
++			 "fsmonitor_refresh_callback '%s' (pos %d)",
++			 name, pos);
  
-+# The variable "unicode_debug" is defined in the following library
-+# script to dump information about how the (OS, FS) handles Unicode
-+# composition.  Uncomment the following line if you want to enable it.
-+#
-+# unicode_debug=true
++	if (name[len - 1] == '/') {
+ 		/*
+-		 * TODO We should binary search to find the first path with
+-		 * TODO this directory prefix.  Then linearly update entries
+-		 * TODO while the prefix matches.  Taking care to search without
+-		 * TODO the trailing slash -- because '/' sorts after a few
+-		 * TODO interesting special chars, like '.' and ' '.
++		 * The daemon can decorate directory events, such as
++		 * moves or renames, with a trailing slash if the OS
++		 * FS Event contains sufficient information, such as
++		 * MacOS.
++		 *
++		 * Use this to invalidate the entire cone under that
++		 * directory.
++		 *
++		 * We do not expect an exact match because the index
++		 * does not normally contain directory entries, so we
++		 * start at the insertion point and scan.
+ 		 */
++		if (pos < 0)
++			pos = -pos - 1;
+ 
+ 		/* Mark all entries for the folder invalid */
+-		for (i = 0; i < istate->cache_nr; i++) {
+-			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID &&
+-			    starts_with(istate->cache[i]->name, name))
+-				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
++		for (i = pos; i < istate->cache_nr; i++) {
++			if (!starts_with(istate->cache[i]->name, name))
++				break;
++			istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 		}
+-		/* Need to remove the / from the path for the untracked cache */
 +
-+. "$TEST_DIRECTORY/lib-unicode-nfc-nfd.sh"
++		/*
++		 * We need to remove the traling "/" from the path
++		 * for the untracked cache.
++		 */
+ 		name[len - 1] = '\0';
++	} else if (pos >= 0) {
++		/*
++		 * We have an exact match for this path and can just
++		 * invalidate it.
++		 */
++		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 	} else {
+-		int pos = index_name_pos(istate, name, strlen(name));
+-
+-		if (pos >= 0) {
+-			struct cache_entry *ce = istate->cache[pos];
+-			ce->ce_flags &= ~CE_FSMONITOR_VALID;
++		/*
++		 * The path is not a tracked file -or- it is a
++		 * directory event on a platform that cannot
++		 * distinguish between file and directory events in
++		 * the event handler, such as Windows.
++		 *
++		 * Scan as if it is a directory and invalidate the
++		 * cone under it.  (But remember to ignore items
++		 * between "name" and "name/", such as "name-" and
++		 * "name.".
++		 */
++		pos = -pos - 1;
 +
-+# See if the OS or filesystem does NFC/NFD aliasing/munging.
-+#
-+# The daemon should err on the side of caution and send BOTH the
-+# NFC and NFD forms.  It does not know the original spelling of
-+# the pathname (how the user thinks it should be spelled), so
-+# emit both and let the client decide (when necessary).  This is
-+# similar to "core.precomposeUnicode".
-+#
-+test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
-+	test_when_finished "stop_daemon_delete_repo test_unicode" &&
-+
-+	git init test_unicode &&
-+
-+	start_daemon -C test_unicode --tf "$PWD/unicode.trace" &&
-+
-+	# Create a directory using an NFC spelling.
-+	#
-+	mkdir test_unicode/nfc &&
-+	mkdir test_unicode/nfc/c_${utf8_nfc} &&
-+
-+	# Create a directory using an NFD spelling.
-+	#
-+	mkdir test_unicode/nfd &&
-+	mkdir test_unicode/nfd/d_${utf8_nfd} &&
-+
-+	git -C test_unicode fsmonitor--daemon stop &&
-+
-+	if test_have_prereq UNICODE_NFC_PRESERVED
-+	then
-+		# We should have seen NFC event from OS.
-+		# We should not have synthesized an NFD event.
-+		egrep    "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace &&
-+		egrep -v "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace
-+	else
-+		# We should have seen NFD event from OS.
-+		# We should have synthesized an NFC event.
-+		egrep "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace &&
-+		egrep "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace
-+	fi &&
-+
-+	# We assume UNICODE_NFD_PRESERVED.
-+	# We should have seen explicit NFD from OS.
-+	# We should have synthesized an NFC event.
-+	egrep "^event: nfd/d_${utf8_nfd}/?$" ./unicode.trace &&
-+	egrep "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
-+'
-+
- test_done
++		for (i = pos; i < istate->cache_nr; i++) {
++			if (!starts_with(istate->cache[i]->name, name))
++				break;
++			if ((unsigned char)istate->cache[i]->name[len] > '/')
++				break;
++			if (istate->cache[i]->name[len] == '/')
++				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 		}
+ 	}
+ 
+@@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 	 * Mark the untracked cache dirty even if it wasn't found in the index
+ 	 * as it could be a new untracked file.
+ 	 */
+-	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", name);
+ 	untracked_cache_invalidate_path(istate, name, 0);
+ }
+ 
 -- 
 gitgitgadget
 
