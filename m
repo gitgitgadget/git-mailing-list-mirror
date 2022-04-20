@@ -2,266 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 991D4C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Apr 2022 23:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67268C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 03:13:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242459AbiDSXzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Apr 2022 19:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43886 "EHLO
+        id S1359149AbiDTDQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Apr 2022 23:16:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230177AbiDSXzM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Apr 2022 19:55:12 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2122CC8B
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 16:52:27 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id b24so192255edu.10
-        for <git@vger.kernel.org>; Tue, 19 Apr 2022 16:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=umGoMKVQO3j6AxA3oNtd28bglL+qb+EJIgvqzKKeisI=;
-        b=Igk0ED4N2iBcojQar8A4lZgTKMTjShs+kXfyR7BzOd1tmKGKvawNbk0nCnp+XGJQ7b
-         fGXoesmzfeTfFa51K70bKTe3GPkU3fjReJzEUp9WmJKEiochKXnNlO25mUYAEbgDsUHJ
-         UXboEtP/cubDOtKkIuByf4R4ihcCnIxbAlhtACMkxHbhMy+vB0Jj3kwck0R7e7kVi/AZ
-         R5VeC3GlrdpwQtNanGiAGVQvyQpKDsN2BstuTcsr1mfLgzkisCNXo3MDSukxt9KhPOaM
-         eD/6MO/jwSnQeMesnOnDMOrDfWAXOnZUBDzBEIV3Vb4LkbR5iovmpvYedeHNOO7PD4Pn
-         hS0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=umGoMKVQO3j6AxA3oNtd28bglL+qb+EJIgvqzKKeisI=;
-        b=F55osCnz9OYsBZl/YJMIZdSahz6W5I3sU/qSwpZd+9XUExCuBugb+zHAul7wwTvpPJ
-         ZkrSvfTT0yu1PC/oGd1eRFJ+gIhFYURYsMl0UxrX95TI6PbMsO3iEqWTTS0K7p5nd74K
-         AXH6Zi8bKoPiqwEiCuDZ9dVU8eBvr8+4bKsvZR4iI4q/wfBsF8FIVWTu/nvuPMqVguaA
-         CBmBcJdwP1ySo6LHgmGkzJBluCFN9tXPhomdUjBbRDu1wlJ3XGej086AnMz75EmPLIdT
-         R6+/wDIGkdYUt/qbhCLDq/rT3DptkyPaH93pW2ndIs1FbN6++3ZZLcGqlrhXr/NAcvVJ
-         hldQ==
-X-Gm-Message-State: AOAM532PwRJEDY5QF2z9txvK0Sd+y8pid8j1mrew1xFKYLUe09fJRTpU
-        xPx/zf5CbocYIkgLJsMX5v+fYGToq9gagfYei4T1YaMJsT0=
-X-Google-Smtp-Source: ABdhPJw2+YxxnDVPH2MuDVSSjq2FVjHDRQKF6IvHxNQyNvjDRwBBmlCLkZKCM6jc5d6QaPKgq+ecFGj3XV2YHjpUQdw=
-X-Received: by 2002:a05:6402:34c8:b0:423:f53f:6365 with SMTP id
- w8-20020a05640234c800b00423f53f6365mr9509417edc.274.1650412345582; Tue, 19
- Apr 2022 16:52:25 -0700 (PDT)
+        with ESMTP id S1359115AbiDTDQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Apr 2022 23:16:14 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC16313D15
+        for <git@vger.kernel.org>; Tue, 19 Apr 2022 20:13:28 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CCFB126C8F;
+        Tue, 19 Apr 2022 23:13:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=RECwAVl/RfTjgfb6+aGPvAYZstSSyaehL81L7mHQXeY=; b=Fe5g
+        7PKzOMVq6mL2kDOAQKY2/4Q0J7pMzH5AiTflrJfOMbUF2kfDZ79f0VSz0IV7QgJr
+        LVVrNN0ttnO2C8BTNIrpVeQKOx1Wup6Ke7TdI3Dsp/Y2tWAR1TQG0q0r+MHY25Ua
+        jneA6w2VgkJAq5uGzgQBhl9e6d0R7woBRde+ewo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12E3A126C8E;
+        Tue, 19 Apr 2022 23:13:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 75429126C8D;
+        Tue, 19 Apr 2022 23:13:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, Thomas Hurst <tom@hur.st>
+Subject: Re: Corrupt name-rev output
+References: <Ylw+M5wwUYKcLM+M@voi.aagh.net>
+Date:   Tue, 19 Apr 2022 20:13:24 -0700
+Message-ID: <xmqq4k2otpkb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
- <Yl9Hn0C0TwalASC0@google.com>
-In-Reply-To: <Yl9Hn0C0TwalASC0@google.com>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 19 Apr 2022 19:52:15 -0400
-Message-ID: <CA+dzEBntTx++n0QVcd3KHr_ri5Vmo4wEqY4_BBg8zuT7R4e7-Q@mail.gmail.com>
-Subject: Re: git 2.36.0 regression: pre-commit hooks no longer have
- stdout/stderr as tty
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7B00AB2-C057-11EC-904E-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 7:37 PM Emily Shaffer <emilyshaffer@google.com> wro=
-te:
->
-> On Tue, Apr 19, 2022 at 02:59:36PM -0400, Anthony Sottile wrote:
-> >
-> > here's the shortest reproduction --
-> >
-> > ```console
-> > $ cat ../testrepo/.git/hooks/pre-commit
-> > #!/usr/bin/env bash
-> > if [ -t 1 ]; then
-> >     echo GOOD
-> > fi
-> > ```
-> >
-> > in previous git versions:
-> >
-> > ```
-> > $ git commit -q --allow-empty -m foo
-> > GOOD
-> > $
-> > ```
-> >
-> > with git 2.36.0:
-> >
-> > ````
-> > $ git commit -q --allow-empty -m foo
-> > $
-> > ```
-> >
-> > why I care: I maintain a git hooks framework which uses `isatty` to
-> > detect whether it's appropriate to color the output.  many tools
-> > utilize the same check.  in 2.36.0+ isatty is false for stdout and
-> > stderr causing coloring to be turned off.
-> >
-> > I bisected this (it was a little complicated, needed to force a pty):
-> >
-> > `../testrepo`: a git repo set up with the hook above
-> >
-> > `../bisect.sh`:
-> >
-> > ```bash
-> > #!/usr/bin/env bash
-> > set -eux
-> > git clean -fxfd >& /dev/null
-> > make -j6 prefix=3D"$PWD/prefix" NO_GETTEXT=3D1 NO_TCLTK=3D1 install >& =
-/dev/null
-> > export PATH=3D"$PWD/prefix/bin:$PATH"
-> > cd ../testrepo
-> > (../pty git commit -q --allow-empty -m foo || true) | grep GOOD
-> > ```
-> >
-> > `../pty`:
-> >
-> > ```python
-> > #!/usr/bin/env python3
-> > import errno
-> > import os
-> > import subprocess
-> > import sys
-> >
-> > x: int =3D 'nope'
-> >
-> >
-> > class Pty(object):
-> >     def __init__(self):
-> >         self.r =3D self.w =3D None
-> >
-> >     def __enter__(self):
-> >         self.r, self.w =3D os.openpty()
-> >
-> >         return self
-> >
-> >     def close_w(self):
-> >         if self.w is not None:
-> >             os.close(self.w)
-> >             self.w =3D None
-> >
-> >     def close_r(self):
-> >         assert self.r is not None
-> >         os.close(self.r)
-> >         self.r =3D None
-> >
-> >     def __exit__(self, exc_type, exc_value, traceback):
-> >         self.close_w()
-> >         self.close_r()
-> >
-> >
-> > def cmd_output_p(*cmd, **kwargs):
-> >     with open(os.devnull) as devnull, Pty() as pty:
-> >         kwargs =3D {'stdin': devnull, 'stdout': pty.w, 'stderr': pty.w}
-> >         proc =3D subprocess.Popen(cmd, **kwargs)
-> >         pty.close_w()
-> >
-> >         buf =3D b''
-> >         while True:
-> >             try:
-> >                 bts =3D os.read(pty.r, 4096)
-> >             except OSError as e:
-> >                 if e.errno =3D=3D errno.EIO:
-> >                     bts =3D b''
-> >                 else:
-> >                     raise
-> >             else:
-> >                 buf +=3D bts
-> >             if not bts:
-> >                 break
-> >
-> >     return proc.wait(), buf, None
-> >
-> >
-> > if __name__ =3D=3D '__main__':
-> >     _, buf, _ =3D cmd_output_p(*sys.argv[1:])
-> >     sys.stdout.buffer.write(buf)
-> > ```
-> >
-> > the first commit it points out:
-> >
-> > ```
-> > f443246b9f29b815f0b98a07bb2d425628ae6522 is the first bad commit
-> > commit f443246b9f29b815f0b98a07bb2d425628ae6522
-> > Author: Emily Shaffer <emilyshaffer@google.com>
-> >
-> >     commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
-> >
-> >     Move these hooks hook away from run-command.h to and over to the ne=
-w
-> >     hook.h library.
-> >
-> >     Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> >     Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
-.com>
-> >     Acked-by: Emily Shaffer <emilyshaffer@google.com>
-> >     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >
-> >  commit.c | 15 ++++++++-------
-> >  1 file changed, 8 insertions(+), 7 deletions(-)
-> > bisect run success
-> > ```
->
-> Interesting. I'm surprised to see the tty-ness of hooks changing with
-> this patch, as the way the hook is called is pretty much the same:
->
-> run_hook_ve() ("the old way") sets no_stdin, stdout_to_stderr, args,
-> envvars, and some trace variables, and then runs 'run_command()';
-> run_command() invokes start_command().
->
-> run_hooks_opt ("the new way") ultimately kicks off the hook with a
-> callback that sets up a child_process with no_stdin, stdout_to_stderr,
-> args, envvars, and some trace variables (hook.c:pick_next_hook); the
-> task queue manager also sets .err to -1 on that child_process; then it
-> calls start_command() directly (run-command.c:pp_start_one()).
->
-> I'm not sure I see why the tty-ness would change between the two. If I'm
-> being honest, I'm actually slightly surprised that `isatty` returned
-> true for your hook before - since the hook process is a child of Git and
-> its output is, presumably, being consumed by Git first rather than by an
-> interactive user shell.
->
-> I suppose that with stdout_to_stderr being set, the tty-ness of the main
-> process's stderr would then apply to the child process's stdout (we do
-> that by calling `dup(2)`). But that's being set in both "the old way"
-> and "the new way", so I'm pretty surprised to see a change here.
->
-> It *is* true that run-command.c:pp_start_one() sets child_process:err=3D-=
-1
-> for the child and run-command.c:run_hook_ve() didn't do that; that -1
-> means that start_command() will create a new fd for the child's stderr.
-> Since run_hook_ve() didn't care about the child's stderr before, I
-> wonder if that is why? Could it be that now that we're processing the
-> child's stderr, the child no longer thinks stderr is in tty, because the
-> parent is consuming its output?
->
-> I think if that's the case, a fix would involve
-> run-command.c:pp_start_one() not setting .err, .stdout_to_stderr, or
-> .no_stdin at all on its own, and relying on the 'get_next_task' callback
-> to set those things. It's a little more painful than I initially thought
-> because the run_processes_parallel() library depends on that err capture
-> to run pp_buffer_stderr() unconditionally; I guess it needs a tiny bit
-> of shim logic to deal with callers who don't care to see their
-> children's stderr.
->
-> All that said.... I'd expect that the dup() from the child's stdout to
-> the parent's stderr would still result in a happy isatty(1). So I'm not
-> convinced this is actually the right solution.... From your repro
-> script, I can't quite tell which fd the isatty call is against (to be
-> honest, I can't find the isatty call, either). So maybe I'm going the
-> wrong direction :)
+Thomas Hurst <tom@hur.st> writes:
 
-ah, most of the repro script was just so I could bisect -- you can
-ignore pretty much all of it except for the `pre-commit` file:
-
-#!/usr/bin/env bash
-if [ -t 1 ]; then
-   echo GOOD
-fi
-
-this is doing "isatty" against fd 1 which is stdout (it could also try
-the same against fd 2 which was also a tty previously)
-
-Anthony
-
+> I've noticed a series of about 20 commits in the HardenedBSD repository
+> fairly reliably produce garbage names from git name-rev - usually
+> fragments of another commit, sometimes unprintable nonsense.  Sometimes
+> it works just fine...
 >
->  - Emily
+> Here's a quick demo showing how to reproduce the problem:
+>
+> % uname -mrs
+> FreeBSD 13.0-RELEASE-p11 amd64
+> % git --version
+> git version 2.35.2
+> % git clone --bare --mirror https://github.com/HardenedBSD/hardenedBSD.git
+> % cd hardenedBSD.git
+> % git rev-list --branches=\* |
+>   git name-rev --stdin --refs=heads/\* |
+>   egrep -v '^[0-9a-f]{40}( \([a-zA-Z0-9_/.^~-]+\))?$'
+> 3eb67b534cab6a78b44b13e4323fd60353003089 (y:    marcel
+> MFC after:      3 days
+> Relnotes:       yes
+> Sponsored by:   ScaleEngine Inc.
+> Differential Revision:  https://reviews.freebsd.org/D3065
+> ~3)
+> 3ac660fc0c6eb0f876972e7e415c89f1ebed1939 (y:    marcel
+> ...
+> Passing these commits into name-rev as arguments finds them under
+> hardened/current/relro~199^2
+>
+> git fsck --full does not reveal or fix anything, and the problem also
+> persists with a build from source from the next branch.
+>
+> I was unable to reproduce on an Ubuntu machine with 2.32.0, so I used
+> that as a starting point for bisection and landed here:
+>
+>   3656f842789d25d75da41c6c029470052a573b54
+>   name-rev: prefer shorter names over following merges
+
+commit 3656f842789d25d75da41c6c029470052a573b54
+Author: Elijah Newren <newren@gmail.com>
+
+Hmph, Elijah, does this ring a bell?
+
+Thanks.
