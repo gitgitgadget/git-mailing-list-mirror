@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEB3C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A976C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 20:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382198AbiDTUqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 16:46:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58552 "EHLO
+        id S1382216AbiDTUrL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 16:47:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382165AbiDTUq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 16:46:28 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEB6340F6
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:40 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id p18so3863851wru.5
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:40 -0700 (PDT)
+        with ESMTP id S1382167AbiDTUq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 16:46:29 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CB2038D8D
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:42 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n126-20020a1c2784000000b0038e8af3e788so2037589wmn.1
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 13:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jLD5/kKpi8DMO5qU1ej4+CHxgwvkoymtmnde3SN53k4=;
-        b=iRIFIJlAdVwBUkc/hj/6Na3Yt7pLGuKarnjA2Vpcm4RCzB7kk5+62XtpYNsPQpzIyE
-         beMVlcQuulTnKkSFMf7CXP+3wk29cI1CPWurMV0UplOM8WrQIfDNREcnC3OAV/paGeMZ
-         Z7MoNkz+ORNz92DP2XQtH6bVfnNVvxZiLkxGC/aUO57xmCH8/IrRz+ffVjO+fZ9Xp6Zl
-         2ACiRXY/ZowZXdFxlQuGLxpaYPcaJH2OiGmy47s9goscg45fKdMV6gCwsOcuniRvXT33
-         ru9FRi7htAQH5qfT44h+Eax2NhBlyvXkAsOaSGhh6OzLhrR0uYTi9cboTRYaQownnOUM
-         M51Q==
+        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
+        b=q5+8eDYTq43oJO0TuaAFTelNdtRsck2k6btxOoSIEUbe0597KfebruxwkHHW0AOuWW
+         m19pFyFTQBCNWjIQ+Qh84uZv416zkYDCdPuljNH8Ox7haXcMoiwC4zItcjcg8oE8V/IX
+         ZwpSJEkibz+Y+54q3xo2MxYgf+CR28uNFeCeWwbU8pXQhoNGAfG0RQmamW/JeLo6reFz
+         rIalris4A72KIIjjsileysTH1mTjrWzwXavwD1ZDdnsQxSz/aGhWmwO9c4AMPu3mEoBz
+         bGKsg6XebRvqg0s8bIV5CYqDOBromAOc0CYCVMTuEujLFitIGY0T+485EhWfQpYslPYy
+         FBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jLD5/kKpi8DMO5qU1ej4+CHxgwvkoymtmnde3SN53k4=;
-        b=M52V2QhTKFiy7J03Pmk3/Hi09thfe4lQmRLNocIcNUkG0Qq+nELwCSMpUo4nBk4E24
-         MyAZZ1+2Fk4OrGRHwFV/inp3Rwa5hflXvwsrpDLOXF7pzO7P3V+5hkD+6tIixDxiVlXk
-         mbvn2J43slYru26IGpPskaytFo6LQ7ltAfyasc7N5QfO97cZkwUK5IvGqYRj61XMvBoh
-         eYGctPVKAPLHA7BaFKwyIqVWrZAq61dXSzAM6sLyjIanYxoj+dXIXP/6IOnlYNA1/R8M
-         usLrGeS5I+iNd04frUhdHZ2lnU+k5cAOsQF/xJNHx48aNIyy0OFka0EyirI/zr81KYCx
-         yYQA==
-X-Gm-Message-State: AOAM532TDxkXQBaMkvC1Q+eLQnBX+buPb5lS2qKvY8HjPuu4Ql+Cb7of
-        6hYM9uH3P4vbwLkRglHU7/jr6YM8SyM=
-X-Google-Smtp-Source: ABdhPJwVfJvCRRy9T2ovMTVGpDKXeKktZR2RHqY92/gj1uRuKJM/H4eGK/I+DHY4PZMLIOaeoezUFg==
-X-Received: by 2002:a5d:4563:0:b0:207:bc6f:e345 with SMTP id a3-20020a5d4563000000b00207bc6fe345mr16798068wrc.372.1650487419141;
-        Wed, 20 Apr 2022 13:43:39 -0700 (PDT)
+        bh=RHDySr29nbivzTxmvRnigE4gmiYhmYbPGYTJmKipC9k=;
+        b=Q5PzpKP7i3NXiL2vyiEdQcK6XrxlvuLWtVGUlZDqsf59TM1SgePDRqQ1NPK8F3xmFK
+         I1J8rgrvU8CqfnInwxrBNIz41/DoxLTfZVsDtJXnMKaeo+OFy3hImdETJrZFqVVeZziL
+         DarM3l1IS1rnIjmCJllOgd1PgI0Mxvs1lOrtzFb9mBEzmhZ6Cd8GolHXNxOt62stpNQf
+         i8PcjHlZnGD7IoS3oyR3sccAYFmR2cppO8cNmeZtM9ykx0KJMn9vZ66qkMT4QFiem+r1
+         IiPH7PQWGncCOCepftVdULeq1mVL0pdKGp1zdl4yZ+2ZJfOT5JK3sYf7JgsvNVLgxxj3
+         U7ng==
+X-Gm-Message-State: AOAM5309Npnm7cMBFfVPajLwjgneDclcJv6B8hrQxDiuQlgRtVAemXEF
+        egWtIf1eNphhLmoTnkCUvaHOCwPAbng=
+X-Google-Smtp-Source: ABdhPJxG9ruDWlrG9l1jeoGjlQX0+5FmIbilgzyrA8PFEQ4ZGIkEzFSZYLdTXv/ti0BjMytqUaXquw==
+X-Received: by 2002:a05:600c:1d9f:b0:38e:d527:33fc with SMTP id p31-20020a05600c1d9f00b0038ed52733fcmr5319585wms.186.1650487420346;
+        Wed, 20 Apr 2022 13:43:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n15-20020a5d6b8f000000b00207ab69284csm626268wrx.23.2022.04.20.13.43.38
+        by smtp.gmail.com with ESMTPSA id b6-20020adfd1c6000000b0020aac8a9946sm827044wrd.47.2022.04.20.13.43.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Apr 2022 13:43:38 -0700 (PDT)
-Message-Id: <6552f51802ba383f4c82866ce20d989749d47be3.1650487399.git.gitgitgadget@gmail.com>
+        Wed, 20 Apr 2022 13:43:39 -0700 (PDT)
+Message-Id: <f2bf07cd7395abf4e3c79782b174c13201f2c5cc.1650487399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 References: <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
         <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Apr 2022 20:43:04 +0000
-Subject: [PATCH v5 14/28] fsmonitor--daemon: prepare for adding health thread
+Date:   Wed, 20 Apr 2022 20:43:05 +0000
+Subject: [PATCH v5 15/28] fsmonitor--daemon: rename listener thread related
+ variables
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,72 +74,302 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Refactor daemon thread startup to make it easier to start
-a third thread class to monitor the health of the daemon.
+Rename platform-specific listener thread related variables
+and data types as we prepare to add another backend thread
+type.
+
+[] `struct fsmonitor_daemon_backend_data` becomes `struct fsm_listen_data`
+[] `state->backend_data` becomes `state->listen_data`
+[] `state->error_code` becomes `state->listen_error_code`
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ builtin/fsmonitor--daemon.c          |  6 +++---
+ compat/fsmonitor/fsm-listen-darwin.c | 30 ++++++++++++++--------------
+ compat/fsmonitor/fsm-listen-win32.c  | 28 +++++++++++++-------------
+ compat/fsmonitor/fsm-listen.h        |  2 +-
+ fsmonitor--daemon.h                  |  6 +++---
+ 5 files changed, 36 insertions(+), 36 deletions(-)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 1b7c757f583..14cd2d5eb52 100644
+index 14cd2d5eb52..d5def8faf90 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -1174,6 +1174,8 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 		 */
- 		.uds_disallow_chdir = 0
- 	};
-+	int listener_started = 0;
-+	int err = 0;
+@@ -1225,8 +1225,8 @@ cleanup:
  
- 	/*
- 	 * Start the IPC thread pool before the we've started the file
-@@ -1194,15 +1196,20 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	if (pthread_create(&state->listener_thread, NULL,
- 			   fsm_listen__thread_proc, state) < 0) {
- 		ipc_server_stop_async(state->ipc_server_data);
--		ipc_server_await(state->ipc_server_data);
--
--		return error(_("could not start fsmonitor listener thread"));
-+		err = error(_("could not start fsmonitor listener thread"));
-+		goto cleanup;
- 	}
-+	listener_started = 1;
- 
- 	/*
- 	 * The daemon is now fully functional in background threads.
-+	 * Our primary thread should now just wait while the threads
-+	 * do all the work.
-+	 */
-+cleanup:
-+	/*
- 	 * Wait for the IPC thread pool to shutdown (whether by client
--	 * request or from filesystem activity).
-+	 * request, from filesystem activity, or an error).
- 	 */
- 	ipc_server_await(state->ipc_server_data);
- 
-@@ -1211,10 +1218,16 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	 * event from the IPC thread pool, but it doesn't hurt to tell
- 	 * it again.  And wait for it to shutdown.
- 	 */
--	fsm_listen__stop_async(state);
--	pthread_join(state->listener_thread, NULL);
-+	if (listener_started) {
-+		fsm_listen__stop_async(state);
-+		pthread_join(state->listener_thread, NULL);
-+	}
- 
--	return state->error_code;
-+	if (err)
-+		return err;
-+	if (state->error_code)
-+		return state->error_code;
-+	return 0;
+ 	if (err)
+ 		return err;
+-	if (state->error_code)
+-		return state->error_code;
++	if (state->listen_error_code)
++		return state->listen_error_code;
+ 	return 0;
  }
  
- static int fsmonitor_run_daemon(void)
+@@ -1241,7 +1241,7 @@ static int fsmonitor_run_daemon(void)
+ 	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
+ 	pthread_mutex_init(&state.main_lock, NULL);
+ 	pthread_cond_init(&state.cookies_cond, NULL);
+-	state.error_code = 0;
++	state.listen_error_code = 0;
+ 	state.current_token_data = fsmonitor_new_token_data();
+ 
+ 	/* Prepare to (recursively) watch the <worktree-root> directory. */
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 14105f45c18..07113205a61 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -27,7 +27,7 @@
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ 
+-struct fsmonitor_daemon_backend_data
++struct fsm_listen_data
+ {
+ 	CFStringRef cfsr_worktree_path;
+ 	CFStringRef cfsr_gitdir_path;
+@@ -158,7 +158,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			     const FSEventStreamEventId event_ids[])
+ {
+ 	struct fsmonitor_daemon_state *state = ctx;
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	char **paths = (char **)event_paths;
+ 	struct fsmonitor_batch *batch = NULL;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -350,11 +350,11 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		NULL,
+ 		NULL
+ 	};
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 	const void *dir_array[2];
+ 
+ 	CALLOC_ARRAY(data, 1);
+-	state->backend_data = data;
++	state->listen_data = data;
+ 
+ 	data->cfsr_worktree_path = CFStringCreateWithCString(
+ 		NULL, state->path_worktree_watch.buf, kCFStringEncodingUTF8);
+@@ -386,18 +386,18 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ failed:
+ 	error(_("Unable to create FSEventStream."));
+ 
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ 	return -1;
+ }
+ 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	if (!state || !state->backend_data)
++	if (!state || !state->listen_data)
+ 		return;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	if (data->stream) {
+ 		if (data->stream_started)
+@@ -407,14 +407,14 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ 		FSEventStreamRelease(data->stream);
+ 	}
+ 
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ }
+ 
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 	data->shutdown_style = SHUTDOWN_EVENT;
+ 
+ 	CFRunLoopStop(data->rl);
+@@ -422,9 +422,9 @@ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	data->rl = CFRunLoopGetCurrent();
+ 
+@@ -441,7 +441,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 
+ 	switch (data->shutdown_style) {
+ 	case FORCE_ERROR_STOP:
+-		state->error_code = -1;
++		state->listen_error_code = -1;
+ 		/* fall thru */
+ 	case FORCE_SHUTDOWN:
+ 		ipc_server_stop_async(state->ipc_server_data);
+@@ -453,7 +453,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	return;
+ 
+ force_error_stop_without_loop:
+-	state->error_code = -1;
++	state->listen_error_code = -1;
+ 	ipc_server_stop_async(state->ipc_server_data);
+ 	return;
+ }
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index c43d92b9620..be2d93f47b2 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -54,7 +54,7 @@ struct one_watch
+ 	wchar_t dotgit_shortname[16]; /* for 8.3 name */
+ };
+ 
+-struct fsmonitor_daemon_backend_data
++struct fsm_listen_data
+ {
+ 	struct one_watch *watch_worktree;
+ 	struct one_watch *watch_gitdir;
+@@ -263,7 +263,7 @@ static enum get_relative_result get_relative_longname(
+ 
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
+-	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
++	SetEvent(state->listen_data->hListener[LISTENER_SHUTDOWN]);
+ }
+ 
+ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+@@ -337,7 +337,7 @@ static void destroy_watch(struct one_watch *watch)
+ 	free(watch);
+ }
+ 
+-static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
++static int start_rdcw_watch(struct fsm_listen_data *data,
+ 			    struct one_watch *watch)
+ {
+ 	DWORD dwNotifyFilter =
+@@ -516,7 +516,7 @@ static int process_1_worktree_event(
+  */
+ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	struct one_watch *watch = data->watch_worktree;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -646,7 +646,7 @@ force_shutdown:
+  */
+ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	struct one_watch *watch = data->watch_gitdir;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+@@ -704,11 +704,11 @@ skip_this_path:
+ 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct fsm_listen_data *data = state->listen_data;
+ 	DWORD dwWait;
+ 	int result;
+ 
+-	state->error_code = 0;
++	state->listen_error_code = 0;
+ 
+ 	if (start_rdcw_watch(data, data->watch_worktree) == -1)
+ 		goto force_error_stop;
+@@ -773,7 +773,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	}
+ 
+ force_error_stop:
+-	state->error_code = -1;
++	state->listen_error_code = -1;
+ 
+ force_shutdown:
+ 	/*
+@@ -790,7 +790,7 @@ clean_shutdown:
+ 
+ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+ 	CALLOC_ARRAY(data, 1);
+ 
+@@ -823,7 +823,7 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		data->nr_listener_handles++;
+ 	}
+ 
+-	state->backend_data = data;
++	state->listen_data = data;
+ 	return 0;
+ 
+ failed:
+@@ -836,16 +836,16 @@ failed:
+ 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
+-	struct fsmonitor_daemon_backend_data *data;
++	struct fsm_listen_data *data;
+ 
+-	if (!state || !state->backend_data)
++	if (!state || !state->listen_data)
+ 		return;
+ 
+-	data = state->backend_data;
++	data = state->listen_data;
+ 
+ 	CloseHandle(data->hEventShutdown);
+ 	destroy_watch(data->watch_worktree);
+ 	destroy_watch(data->watch_gitdir);
+ 
+-	FREE_AND_NULL(state->backend_data);
++	FREE_AND_NULL(state->listen_data);
+ }
+diff --git a/compat/fsmonitor/fsm-listen.h b/compat/fsmonitor/fsm-listen.h
+index f0539349baf..41650bf8972 100644
+--- a/compat/fsmonitor/fsm-listen.h
++++ b/compat/fsmonitor/fsm-listen.h
+@@ -33,7 +33,7 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state);
+  * do so if the listener thread receives a normal shutdown signal from
+  * the IPC layer.)
+  *
+- * It should set `state->error_code` to -1 if the daemon should exit
++ * It should set `state->listen_error_code` to -1 if the daemon should exit
+  * with an error.
+  */
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state);
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 223c2131b58..2c6fa1a5d91 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -33,7 +33,7 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
+  */
+ void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
+ 
+-struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
++struct fsm_listen_data; /* opaque platform-specific data for listener thread */
+ 
+ struct fsmonitor_daemon_state {
+ 	pthread_t listener_thread;
+@@ -50,8 +50,8 @@ struct fsmonitor_daemon_state {
+ 	int cookie_seq;
+ 	struct hashmap cookies;
+ 
+-	int error_code;
+-	struct fsmonitor_daemon_backend_data *backend_data;
++	int listen_error_code;
++	struct fsm_listen_data *listen_data;
+ 
+ 	struct ipc_server_data *ipc_server_data;
+ 	struct strbuf path_ipc;
 -- 
 gitgitgadget
 
