@@ -2,128 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A960C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 21:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38CB5C433EF
+	for <git@archiver.kernel.org>; Wed, 20 Apr 2022 21:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382497AbiDTV0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 17:26:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35672 "EHLO
+        id S1382522AbiDTVbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 17:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345104AbiDTV0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 17:26:41 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C2A548881
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:23:53 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ECF33118237;
-        Wed, 20 Apr 2022 17:23:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=utaKdbpE+qEMUk7BxZNnpbi+qW7Pt/PbHMpFqq
-        KMqPE=; b=cK88q2TYBdLODlknygpwg3k4GxjK5aX2SJuQvsWB1Sh9PrOT3iYkID
-        cYM8qExtDAxeuxWxvCSo3BWi9cxqh2LiPzUtblXtvbbQhGeVUT1UJ83oLQEUdXnZ
-        PBxCgcSjpnS75D634UiGZJeO2xR+3rhk2NwmnW0F8JWTE26ZhqheU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3B79118236;
-        Wed, 20 Apr 2022 17:23:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S1382508AbiDTVbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 17:31:12 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C159D427CD
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 14:28:23 -0700 (PDT)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50B6C118235;
-        Wed, 20 Apr 2022 17:23:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     COGONI Guillaume <cogoni.guillaume@gmail.com>
-Cc:     matthieu.moy@univ-lyon1.fr, derrickstolee@github.com,
-        git.jonathan.bressat@gmail.com, git@vger.kernel.org,
-        guillaume.cogoni@gmail.com, shaoxuan.yuan02@gmail.com
-Subject: Re: [PATCH v3 1/1] Documentation/ToolsForGit.txt: Tools for
- developing Git
-References: <c6b48fba-c950-bb3a-3fdb-6d420a4cdfbc@univ-lyon1.fr>
-        <20220420130617.41296-1-cogoni.guillaume@gmail.com>
-        <20220420130617.41296-2-cogoni.guillaume@gmail.com>
-Date:   Wed, 20 Apr 2022 14:23:51 -0700
-In-Reply-To: <20220420130617.41296-2-cogoni.guillaume@gmail.com> (COGONI
-        Guillaume's message of "Wed, 20 Apr 2022 15:06:17 +0200")
-Message-ID: <xmqq35i7o3dk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F126B5A410;
+        Wed, 20 Apr 2022 21:28:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1650490103;
+        bh=mKEcP1ipJUpgSJHjHEDZ7dXQb3Eyv+JwvSL2NDpj2H0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0nYfehh7M+k57s5Np3JZYDEL3Lf27DsXW90BNuHw8HOHM++LtWapLjtU0j7Tiib04
+         54tPNPHTy8iSpE2kFU4M8EaCkTgsXA6h+CGADZ5qP0nY/I9Ykc4hx1xizImx6RmoK5
+         ALVfQ8lMr4wVKGczHDWBTBauKIGVWZBMM4s595Bz8ZKQzWukYr4+xEwvJqtWTEqRhg
+         MIfMq14zNCeoLQkhzAOYnES1bsN+BWCNaFjHRiD+qxrlmVgWU0ouAQ6ZloQX9FKFmb
+         48FLJLtuc/DklQUcAc++3Y46BvQPvj7hU+vnFkkE2xPx5LM9A6RAEbs+xHhNuIDDo9
+         xpeluYKkByv0o5NILH044aWI3p6baThwfdRZMENE3AiAmJVLad+jqhECtliLtmZvRV
+         UuXlFGBYDbTHltY+0vDjprQbY811+f3oB5nyAVoWEa+jzWpAxLlh7EC7x+w5DS1ExW
+         V720//l6fJXJSYyZiISbg+97HmuXPRIU8ujpXPLMwSaYaGZbtQB
+Date:   Wed, 20 Apr 2022 21:28:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Attila Csosz <csosza@designsoftware.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git bug report - disk errors on Windows after push
+Message-ID: <YmB686xgnjF86F+H@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Attila Csosz <csosza@designsoftware.com>, git@vger.kernel.org
+References: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
+ <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
+ <fa40a6e6-dd83-9e88-e2f7-ab8aff2ca5a4@designsoftware.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D2230FE-C0F0-11EC-B9F0-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="n3MCpmO+9Dz7pJFl"
+Content-Disposition: inline
+In-Reply-To: <fa40a6e6-dd83-9e88-e2f7-ab8aff2ca5a4@designsoftware.com>
+User-Agent: Mutt/2.2.3 (2022-04-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-COGONI Guillaume <cogoni.guillaume@gmail.com> writes:
 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index b20b2f94f1..509cd89aa2 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -492,17 +492,6 @@ For Perl programs:
->  
->   - Learn and use Git.pm if you need that functionality.
->  
-> - - For Emacs, it's useful to put the following in
-> -   GIT_CHECKOUT/.dir-locals.el, assuming you use cperl-mode:
-> -
-> -    ;; note the first part is useful for C editing, too
-> -    ((nil . ((indent-tabs-mode . t)
-> -                  (tab-width . 8)
-> -                  (fill-column . 80)))
-> -     (cperl-mode . ((cperl-indent-level . 8)
-> -                    (cperl-extra-newline-before-brace . nil)
-> -                    (cperl-merge-trailing-else . t))))
-> -
+--n3MCpmO+9Dz7pJFl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Moving this out is OK as long as it is clear to readers of this
-document that they can refer to the other one for tool specific
-tips.
+[Please avoid top-posting on this list.]
 
->   - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
-> @@ -733,3 +722,10 @@ Writing Documentation:
->   inline substituted text+ instead of `monospaced literal text`, and with
->   the former, the part that should not get substituted must be
->   quoted/escaped.
-> +
-> +
-> +Documentation/ToolsForGit.txt:
-> +
-> + This document collects tips, scripts, and configuration files to help
-> + contributors working with the Git codebase use their favorite tools while
-> + following the Git coding style.
+On 2022-04-19 at 03:52:23, Attila Csosz wrote:
+> I've experienced the problem at least 3 different external disk.
+> I'm not using cloud syncing service (e.g., Dropbox or OneDrive) for git.
 
-This looks strangely out of place.  The preceding "sections" of this
-document are 
+I don't doubt that's the case.  However, it's not possible for Git to
+corrupt a disk just by writing to it.  Git, as a normal unprivileged
+program, can only open files and perform normal read and write
+operations on them.  Management of the file system, including integrity,
+is the responsibility of the operating system.  If running Git on
+Windows causes files outside of the repository to be corrupted, that's
+either a hardware problem or a bug in Windows.
 
- - general coding principle
- - specific guidelines for each language.
- - how output should read
- - how error messages should read
- - how configuration variables are named
- - how documentation pages are written
+If you're seeing this problem, it could be that you have a series of bad
+disks (say, if you bought a set of cheap flash drives), that the drive
+isn't being removed properly, that you have some sort of broken driver
+or malware, that there's some other hardware problem (e.g., a bad dock,
+USB device, CPU, or memory), or just that there's a previously unknown
+bug in Windows.
 
-The name of a single document and explanation on what is in it does
-not make a good new entry in that existing list.
+None of this is Git's fault, and it's really up to you to figure out
+which of these it is.  You might try isolating it by using a different
+computer to write to the repository first, to see if something about
+your current machine is the problem, and then try isolating other
+causes.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-If we must mention the existence of this document in the guidelines
-doc, I have a feeling that a better place might be near the preface
-of the second item, e.g.
+--n3MCpmO+9Dz7pJFl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
-index 509cd89aa2..64ff734ce7 100644
---- c/Documentation/CodingGuidelines
-+++ w/Documentation/CodingGuidelines
-@@ -43,7 +43,10 @@ the overall style of existing code. Modifications to existing
- code is expected to match the style the surrounding code already
- uses (even if it doesn't match the overall style of existing code).
- 
--But if you must have a list of rules, here they are.
-+But if you must have a list of rules, here are some language
-+specific ones.  Note that Documentation/ToolsForGit document
-+has a collection of tips to help you use some external tools
-+to conform to these guidelines.
- 
- For shell scripts specifically (not exhaustive):
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYmB68gAKCRB8DEliiIei
+gUpBAPsHPCGT/AStEVPEPkTf73ImMFY5zM+dO9fmKM3oNlgXOQEAqtIXYdGJvUyk
+RFY9NvbyHJXRKMxAVzx5IDZWb4WrkAs=
+=47vX
+-----END PGP SIGNATURE-----
+
+--n3MCpmO+9Dz7pJFl--
