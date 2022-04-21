@@ -2,156 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D99C433FE
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 17:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC95C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 17:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390915AbiDURv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 13:51:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48278 "EHLO
+        id S1390999AbiDUR4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 13:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390907AbiDURvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 13:51:24 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEB54A3DE
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 10:48:32 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v12so929790wrv.10
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 10:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DNP+WgroDw7VygcU8KXqGH1xsYfxw6qFA26joYUU14g=;
-        b=ogB9Occ3i5x4pO+OQ8ODVccPmupVSRUc/v+5vIdUeFJ8HIt4WUgH4jgfh4JcTStT7I
-         EPTo7WZlioB3v1IRgJaX8HoFhbWyEYsHbsQoJFnCI+6jkJIh4UQz+IJDqlVANPXT7BRh
-         APcOyIxdBPgBKSTgqgkWa6MT/zQrUc3zlHegBv5Sc7HY1+kOcVz8gO17APdiAfbvGW0I
-         KRiOnstqhLh8apTLruwiuIWsJO/I/vkDC3FsDkJnhTMobRI45kyAQbznVWizb1E71Mhq
-         O4qnASeKJPxURtJ7CTIhIlKa1LB8NETZJwH2wPaC6JCN6pRy5/hbPFKmx310spFh7rRj
-         Ed+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DNP+WgroDw7VygcU8KXqGH1xsYfxw6qFA26joYUU14g=;
-        b=rm1So9dCwnUntwIXirkENX4AiX3RDxaPPjpJ+gv+pWI7X0yK74xp/E6/mCus7aB1/y
-         XO2FbD3xt22+7rOXTxxMCSvWYOhR7prszWWVzvtcmgXBrUQf87mR1Ksz8gEhXmKhFdO6
-         up7TKH12kHrtfuXHQPitKF2HmElJdy4bzwj9oUNVGk7XPIlLDo/UTUm5Gi09CcIXUIj6
-         h8IxvI5Cd5q/NvqMiyq5UQaYAKGl+Uz2gJk4kq2MPckQlLRLqWvIbZz995k1diNyGRJd
-         Xupy2DKo22H1YkE28LnlcSJsOTJ38u3Vuk7PNl+JVHHQuczbGwiYKOHbnsF53qfl1R4Z
-         o0rw==
-X-Gm-Message-State: AOAM5308WLaEQ3GOs/l/PBnHJPRrYpSe7Sk51G4l7uGO2zIeHlpsWvR8
-        qlA7D2ovTytUp4uckYve9G5pCcOW3kBsBw==
-X-Google-Smtp-Source: ABdhPJyQyyB2mLgHS2Avv559a4j0DVrebD7iKBNE4zlm1AXam9byaZWOi22/eRcQPNC+bdmVr+07Vg==
-X-Received: by 2002:a5d:58d3:0:b0:20a:c3f3:b71f with SMTP id o19-20020a5d58d3000000b0020ac3f3b71fmr637644wrf.431.1650563310727;
-        Thu, 21 Apr 2022 10:48:30 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g8-20020a5d4888000000b00207a49fa6a1sm3203712wrq.81.2022.04.21.10.48.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 10:48:30 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] CI: select CC based on CC_PACKAGE (again)
-Date:   Thu, 21 Apr 2022 19:48:28 +0200
-Message-Id: <patch-v2-1.1-92acf9420a9-20220421T174733Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.0.879.g3659959fcca
-In-Reply-To: <patch-1.1-d89ad4d5b7c-20220421T130310Z-avarab@gmail.com>
-References: <patch-1.1-d89ad4d5b7c-20220421T130310Z-avarab@gmail.com>
+        with ESMTP id S231863AbiDUR4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 13:56:07 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E46C4A923
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 10:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1650563575;
+        bh=mXrrcZ0OwN+YVlfc9/I9MGoWvcFlQL2PQz/rs961EbQ=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=LElmvSgXK6R7eFeooctoRqqV/fBXQPjZLbqc+w+IrZoXxZ4sSckO/oUW6WGHujWpc
+         QaDiqjO61BKg3Xvi3mRXPBNCDu7CZAejE4mZjXlnvMoVsuodpk6tdXR1WQXYK4ZY3m
+         hqx/umP1W7NeJRRL7Q+U4wd/BYGRzEngE0O3YPhk=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MhWor-1oLJW018d9-00eaeq; Thu, 21
+ Apr 2022 19:52:55 +0200
+Date:   Thu, 21 Apr 2022 19:52:54 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Daniel Habenicht <daniel-habenicht@outlook.de>
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug Report
+Message-ID: <20220421175254.54y7dzxhtu33wu6w@tb-raspi4>
+References: <f1647260b37d492d96ac92f8ef30a087AS1P190MB1750B08CC923A45E2C959250ECF59@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
+ <YmB7gvfKY/0njjZy@camp.crustytoothpaste.net>
+ <017001d85506$bee0adf0$3ca209d0$@nexbridge.com>
+ <AS1P190MB1750C249B4857371132C5DF0ECF49@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
+ <20220421143931.o53dm2qnfcpsido7@tb-raspi4>
+ <AS1P190MB175022A7F1264807ECA464A8ECF49@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <AS1P190MB175022A7F1264807ECA464A8ECF49@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:ROQNwf+xZ2Oza7r/+bWFLsh9WSCvfVpQi08rME0/N0S+JI+cser
+ WSO9s+3rFS4KZVAZELt/uiTH+ANz6rtuDXPvS6WOg0nRPucZyUE3iIgKbdFsmdEIBW/kmFn
+ IAewRFFUYVNjyc/3CW5S75FLbYuEmwTjpjqZe2GSLXPkbdecBN1ZwgVcVng78K783yNSoKn
+ KHmqwnQpdYDfc+McBul9w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aYXqgfKWncs=:juQIClqvJRG9ODmVRebD9Y
+ u08vsHEEfNYXaPQJNeoiFFjdQM1VRTIQPnCSgIaRf/sN7xTcAnQCNYCLTeNGZW74oBPkHW9Uf
+ u7O/hdJP6/svW8b2lplnc8IEt/DwLNaL8RSoGwUhibHYxCSJ7MStK6zPNt9OJbhXWh7IdUjz0
+ rwXXIK45rhb2caJjxWC0BpMGlSflwlMQUKcnUJZjfMs7kx9vt/jRpI2t7aOBXkzUhmuJPITi2
+ BQAUNz0ix+nMGA7afDmObFwgyB+s5v1+WA39pZZDcXYlzEH8+VydqS5zlDdmEkLz9y5Zmay0U
+ qfLzUllsHsWy6+nu+uOUs5k+RWeq9G/EAo5YzKOHe3zrJsjNZYxflWuJ/vwglilw9loR/iG+q
+ 78cpgtQZGKevDOjv1cga1MPVscXAl4yDm3PneJaH080L7N5ALUTdkdmI2Fsn30c1xcyudaDVR
+ n335Nhr3kOneAW7SlYJeg/2TxCRuQOmlB3+2u4wegDafTxOD5z7HXBV6bM33RLOGdmcMLeolU
+ sWgQC9EZ5m+UrvzdQFKw/LCHbjcrEjFZIxOo9Ct/6HMoK/Bac3i4l993ovZ8VNAuS2i45bE/b
+ 1SEVwDeSB3Jt7ekwOumdLb3E5GEWIIUGSnhRqMqKEufAgaZHDN4/06co/mNS48fd+SoAESqFM
+ +hLkMep30NOSH/bm/nlVPH51IgQIDnYqxCNd9XsNo3ke7grWdOBwPHUXensh1QA6lJiywrJ/Y
+ 90JQJI2IhVsVlJHgA2nHzi3E/kBPn8GIY2h/WlD7qFR8NwUx5agGFO67wJ0sQc1XhdI9qJFak
+ 8kGfz8vaL7V3Eda3HLIFpU0Uc/ay3f3eEAM5X41zqolNXOjVuj623UMFJR/vejWAZIHgLndE5
+ TYLPS0Xk/0MJVPQF+VDLpv3BjGbwn/EUX9XBLur7jElWLqRSjiNuGvRQ5CWAWGRO15CRju4bA
+ 3iuJ8oSyAix23cPb+Z+QKVu8B3voIFptQL5G6yVzGTYcuKDm1NtJRvHxKJKfcQlzLm0dx2wJB
+ RQGZARGyOQRbWLOR/Ob7WiiO7WoEtESDG32LB0LgfsU2hjGqQVyOlkK5ihsaqgD8QW35I8tcD
+ 9+DW9dkwerffKw=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
-"$jobname" to select packages & config, 2021-11-23).
+On Thu, Apr 21, 2022 at 03:29:20PM +0000, Daniel Habenicht wrote:
+> Hi Torsten,
+>
+> thanks for your answer.
+> As I explained in the reproduction, I now know why this is happening and=
+ I successfully resolved it for my repository.
+> I just wanted raise awareness that it is not self-explanatory to non-pro=
+fessional users.
+>
+> I would suggest two changes:
+>
+>   1.  Warn the user on commit of the .gitattributes that he also needs t=
+o renormalize the repository (or even better, do that by default).
+>   2.  Include the information about the need for a renormalization commi=
+t on checkouts/restores/reset if there are still files not updated (shown =
+as modified).
+>
+> Regarding the "Users which are confused may put their frustration aside =
+and read the documentation".
+> I think most users won't make the connection for the first 3 google sear=
+ches, if the problem arises only several commits after the gitattributes c=
+hange, or if the repository gets cloned by a new user.
+>
+>
+> Cheers,
+> Daniel
+>
 
-In that commit I changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in
-$PATH points to clang, we need to use gcc-9 instead. Likewise for the
-linux-gcc job CC=gcc-8 was changed to the implicit CC=gcc, which would
-select GCC 9.4.0 instead of GCC 8.4.0.
+(Sorry for the top-posting before, this list uses bottom-posting)
 
-Furthermore in 25715419bf4 (CI: don't run "make test" twice in one
-job, 2021-11-23) when the "linux-TEST-vars" job was split off from
-"linux-gcc" the "cc_package: gcc-8" line was copied along with
-it.
+I still hope that users who are able to find the feature of the
+.gitattributes file(s) are able to find out about the renormalaztion as we=
+ll.
+And you are not the first one who runs into this problem, if that is of an=
+y
+comfort.
 
-That wasn't a bug per-se, as that "make test" would have run under GCC
-8 before the split into two jobs, but the point of selecting different
-compiler for these jobs is to get better coverage, and to narrow down
-any issues with a given compiler to the job that runs it. Since the
-"linux-TEST-vars" job is already special in other ways (in running
-with various GIT_TEST_* variables), and we've got the "linux-gcc" job
-covering gcc-8 let's have it used the default system compiler instead.
+Now, back to your suggestions:
+The way Git works does not seam to allow a reliable detection of files
+that are "modified" after a checkout/restore/reset when .gitattributes
+change. (Someone may correct me if this is wrong.
+It is related/connected to the timestamps of "the index"
+and the files in the working tree and the fact that "git add" will
+need to store a new version of the file in the repo e.g CRLF -> LF)
 
-Reported-by: Carlo Arenas <carenas@gmail.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Automatically doing a renormalization seems to be an impossible thing:
+The commit as such is atomic, including all files in the working tree
+with their line endings and the .gitattributes file itself.
+Changing things here seems the wrong way to go, at least for me.
 
-On Thu, Apr 21 2022, Phillip Wood wrote:
+Showing a hint when a .gitattributes file is commited may be more feasable=
+.
+I haven't digged which part of the code would be the best place.
 
-> CC is set in .github/workflows/main.yaml for the ubuntu and macos jobs
-> so I think they will not fallback to using CC_PACKAGE and therefore
-> not pick up the correct compiler.
-
-Urgh, sorry. I don't know how I got that turned around, but this
-version works, and the (currently ongoing) CI run shows that the
-linux-gcc job selects gcc-8 correctly, instead of gcc:
-
-    https://github.com/avar/git/runs/6116735686?check_suite_focus=true#step:3:22
-
-The osx-gcc job will be likewise fixed, but it's failing in that run
-due to the unrelated perforce installation issue affecting all OSX
-jobs (fix here:
-https://lore.kernel.org/git/cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com/).
-
-Range-diff against v1:
-1:  d89ad4d5b7c ! 1:  92acf9420a9 CI: select CC based on CC_PACKAGE (again)
-    @@ ci/lib.sh: then
-      	CI_REPO_SLUG="$GITHUB_REPOSITORY"
-      	CI_JOB_ID="$GITHUB_RUN_ID"
-     -	CC="${CC:-gcc}"
-    -+	CC="${CC:-${CC_PACKAGE:-gcc}}"
-    ++	CC="${CC_PACKAGE:-${CC:-gcc}}"
-      	DONT_SKIP_TAGS=t
-      
-      	cache_dir="$HOME/none"
-
- .github/workflows/main.yml | 1 -
- ci/lib.sh                  | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index c35200defb9..f12819a00d7 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -236,7 +236,6 @@ jobs:
-           - jobname: linux-TEST-vars
-             cc: gcc
-             os: ubuntu
--            cc_package: gcc-8
-             pool: ubuntu-latest
-           - jobname: osx-clang
-             cc: clang
-diff --git a/ci/lib.sh b/ci/lib.sh
-index cbc2f8f1caa..86e37da9bc5 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -122,7 +122,7 @@ then
- 	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
- 	CI_REPO_SLUG="$GITHUB_REPOSITORY"
- 	CI_JOB_ID="$GITHUB_RUN_ID"
--	CC="${CC:-gcc}"
-+	CC="${CC_PACKAGE:-${CC:-gcc}}"
- 	DONT_SKIP_TAGS=t
- 
- 	cache_dir="$HOME/none"
--- 
-2.36.0.879.g3659959fcca
-
+Patches and ideas are welcome
