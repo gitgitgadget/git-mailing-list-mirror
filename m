@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7BB2C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 928C0C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392268AbiDUURj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 16:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40682 "EHLO
+        id S1392269AbiDUURk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 16:17:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392298AbiDUURd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 16:17:33 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B93163C8
+        with ESMTP id S1392258AbiDUURe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 16:17:34 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF27E3ED04
         for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:43 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id m14so8182334wrb.6
+Received: by mail-wm1-x32c.google.com with SMTP id ay11-20020a05600c1e0b00b0038eb92fa965so6599491wmb.4
         for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8biSKho1+OKVOIB8CCTd48exGbAiqISG8dmbrNrlW+E=;
-        b=YC0eLDCwL+kPb2m54F3/vYG2lTT7VPzFZKy/DtHxtC1ylnbHibJAhFAQy3BnwX7X7l
-         43ZKGAu4z+azw+1v13nqsdDXpOVLK+mpD97UEUCI6NJtV2w+UBXYXv/qVhXPwVvpJBvP
-         OeQvTemMYFZuelm29e97j7lkZiMYnjLbBTqQGtKD5t0DGEiM6Q80VRn2gQbUq0R4GU3c
-         /j0Ae1WCre5r1n2vnuxBJVI4ihaifr9XzuSTzeMzDuvgcATbor9QpUIuaJJU1s+56WbI
-         xFSN+bsW0FDmNNm7ucCS8Mx7RGuiZ3KEsHXBkwgYsY6h1B5tkImB5/0z/Ci0hCMwXrgD
-         IqCg==
+        bh=1cj3i3A0VAQpHlvrWYX1jw1uy5JzgitcbZw9J8lE3LM=;
+        b=BQlDlodP7mTqc0Sf4hgLOmczK7a9sqCn7gqRNf7mKgfIE8IaRqYHoz7rsUSCrgKt0u
+         hvJBBXjIo5Gp0CP2d6dCHcA4BqYT7v7pTxEMA3C5H33BobQQz8FhGofOo94Fpy0JQCTi
+         1H9yiVkdyD+xLbnidkq7XHN6v2tpfXKhsQT8pRDAF0gF2f2ImyvDXLLwi73kwCoUY/Gl
+         G1G4EToujqhpTSBmFBuQwOrtIDmrRA87F7u3qtuQRAVwVt8PCW4/gF3rQIs7s0ml5AWC
+         FXA3cm5WXk2QPa31aYyr0bpp4oT3RjpZk6crpxyOiqZ7zfYIfrvilp9eWge0zeBCcBqt
+         0Uiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8biSKho1+OKVOIB8CCTd48exGbAiqISG8dmbrNrlW+E=;
-        b=zM7PfRmiqyeuY1k2HJ2iNHXgoNEVJYy4VZlYsmLNqlQZkbL23NHbq3NcC7Fdyu54Ny
-         f3qJj0lR7PcSepSqrXg3cX5o8BvOhq5aPYHuoowO6oukl1ZUep1GZGOb8QXi6P9wkYLU
-         OuyfADZoNbr59PVOeEz89FaqMi/GMMDiXVZbD8yIkMECC0KHpuNtRBtXYxf8bt9ZH352
-         7oVQ7Xskk3C6s24pVBAiIbCUcwMvaUOIKp02M6bTJ2we3xU53EXBzX6KSV36plXVq0IG
-         vpbK+nDNcoHWOaQhbrrc3Sjc/K2qTqAi4pJ0Bg5uxuGT7AjJWFYfQJNMdKKAUdBu6nQO
-         1Yww==
-X-Gm-Message-State: AOAM531FzZCU2RnlSNLzr3MI5E4jfKtSmpOpejb6uIhs3ZMsNBCPGNcD
-        MjieYyOT7Etxd81iWB4+CUqvGQZqXv7Png==
-X-Google-Smtp-Source: ABdhPJxUExWP8Tx3yJrTYpvRnGxo6v1txXAQy2xQa9VAyhN8gbO74ZLjUqMj3apcgOWjW7n3jyl5kw==
-X-Received: by 2002:adf:d1cb:0:b0:20a:880b:13d2 with SMTP id b11-20020adfd1cb000000b0020a880b13d2mr1005386wrd.323.1650572081518;
-        Thu, 21 Apr 2022 13:14:41 -0700 (PDT)
+        bh=1cj3i3A0VAQpHlvrWYX1jw1uy5JzgitcbZw9J8lE3LM=;
+        b=6I5+vePDsKSg77aAHR0VZmwjQUQxJc9RfQtw5ZEGkhFtLJS1bLPwcg3RDg4/omA9Ex
+         ffQZt5N1zxmyGU3ZP53fu8MlasNV1LfLGuf4pLYl6NIkI4y0TI5Yj4hOLps3w8KD7NXg
+         14Ex/YV7uRuecFZGfsPoynSlSl25IS4GnttrCKJwKchCXg1Ou7V7TXwHK8zGFA5kNxPx
+         nlP9JYi8ge6dEoLza9fxYkjG4M6Y4gwe3hnI0wtVf+6Vmdp3u0eoqjf4h8XVuCFZBrhp
+         Qr70B/4hqELCVuMUOVUUbrN2a7773MwsxqrQsCsiPLbEr9yZGel+nIa6D7Bo3NtH3sXw
+         6IRA==
+X-Gm-Message-State: AOAM53256vpqiw7zpMscu7PyzWte9dokOlxjLGHHvB/Bm5klAis+yfUM
+        nDp+P5qC8QNaVxxOhgswbMEIYKAPxs2CEA==
+X-Google-Smtp-Source: ABdhPJyzTIvGBoUCwxw/2TRjEBkIaBc8cFoecQpyvVzFMVGPf/1tPhnAm215ZWwmXkJ3i7YFP4jmKw==
+X-Received: by 2002:a05:600c:4e01:b0:392:ab42:48 with SMTP id b1-20020a05600c4e0100b00392ab420048mr899136wmq.169.1650572082278;
+        Thu, 21 Apr 2022 13:14:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l9-20020a1c7909000000b0038eb8171fa5sm1309wme.1.2022.04.21.13.14.40
+        by smtp.gmail.com with ESMTPSA id l9-20020a1c7909000000b0038eb8171fa5sm1309wme.1.2022.04.21.13.14.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 13:14:40 -0700 (PDT)
+        Thu, 21 Apr 2022 13:14:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Hans Jerry Illikainen <hji@dyntopia.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/4] log test: skip a failing mkstemp() test under valgrind
-Date:   Thu, 21 Apr 2022 22:14:35 +0200
-Message-Id: <patch-2.4-0f7d2622541-20220421T200733Z-avarab@gmail.com>
+Subject: [PATCH 3/4] commit-graph.c: don't assume that stat() succeeds
+Date:   Thu, 21 Apr 2022 22:14:36 +0200
+Message-Id: <patch-3.4-fadaa08a3ff-20220421T200733Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.879.gd068ac2c328
 In-Reply-To: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
 References: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
@@ -69,47 +69,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Skip a test added in f1e3df31699 (t: increase test coverage of
-signature verification output, 2020-03-04) when running under
-valgrind. Due to valgrind's interception of mkstemp() this test will
-fail with:
+Fix code added in 8d84097f965 (commit-graph: expire commit-graph
+files, 2019-06-18) to check the return value of the stat() system
+call. Not doing so caused us to use uninitialized memory in the "Bloom
+generation is limited by --max-new-filters" test in
+t4216-log-bloom.sh:
 
+	+ rm -f trace.event
 	+ pwd
-	+ TMPDIR=[...]/t/trash directory.t4202-log/bogus git log --show-signature -n1 plain-fail
-	==7696== VG_(mkstemp): failed to create temp file: [...]/t/trash directory.t4202-log/bogus/valgrind_proc_7696_cmdline_d545ddcf
-	[... 10 more similar lines omitted ..]
-	valgrind: Startup or configuration error:
-	valgrind:    Can't create client cmdline file in [...]/t/trash directory.t4202-log/bogus/valgrind_proc_7696_cmdline_6e542d1d
-	valgrind: Unable to start up properly.  Giving up.
-	error: last command exited with $?=1
+	+ GIT_TRACE2_EVENT=[...]/t/trash directory.t4216-log-bloom/limits/trace.event git commit-graph write --reachable --split=replace --changed-paths --max-new-filters=2
+	==24835== Syscall param utimensat(times[0].tv_sec) points to uninitialised byte(s)
+	==24835==    at 0x499E65A: __utimensat64_helper (utimensat.c:34)
+	==24835==    by 0x4999142: utime (utime.c:36)
+	==24835==    by 0x552BE0: mark_commit_graphs (commit-graph.c:2213)
+	==24835==    by 0x550822: write_commit_graph (commit-graph.c:2424)
+	==24835==    by 0x54E3A0: write_commit_graph_reachable (commit-graph.c:1681)
+	==24835==    by 0x4374BB: graph_write (commit-graph.c:269)
+	==24835==    by 0x436F7D: cmd_commit_graph (commit-graph.c:326)
+	==24835==    by 0x407B9A: run_builtin (git.c:465)
+	==24835==    by 0x406651: handle_builtin (git.c:719)
+	==24835==    by 0x407575: run_argv (git.c:786)
+	==24835==    by 0x406410: cmd_main (git.c:917)
+	==24835==    by 0x511F09: main (common-main.c:56)
+	==24835==  Address 0x1ffeffde70 is on thread 1's stack
+	==24835==  in frame #1, created by utime (utime.c:25)
+	==24835==  Uninitialised value was created by a stack allocation
+	==24835==    at 0x552B50: mark_commit_graphs (commit-graph.c:2201)
+	==24835==
+	[...]
+	error: last command exited with $?=126
+	not ok 137 - Bloom generation is limited by --max-new-filters
+
+This would happen as we stat'd the non-existing
+".git/objects/info/commit-graph" file. Let's fix mark_commit_graphs()
+to check the statu() return value, and while we're at it fix another
+case added in the same commit to do the same.
+
+The caller in expire_commit_graphs() would have been less likely to
+run into this, as it's operating on files it just got from readdir(),
+but it could still happen due to a race with e.g. a concurrent "rm
+-rf" of the commit-graph files.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4202-log.sh | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ commit-graph.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index be07407f855..6e663525582 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1992,10 +1992,13 @@ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
- 	git tag -s -m signed_tag_msg signed_tag_fail &&
- 	git checkout plain-fail &&
- 	git merge --no-ff -m msg signed_tag_fail &&
--	TMPDIR="$(pwd)/bogus" git log --show-signature -n1 plain-fail >actual &&
--	grep "^merged tag" actual &&
--	grep "^No signature" actual &&
--	! grep "^gpg: Signature made" actual
-+	if ! test_have_prereq VALGRIND
-+	then
-+		TMPDIR="$(pwd)/bogus" git log --show-signature -n1 plain-fail >actual &&
-+		grep "^merged tag" actual &&
-+		grep "^No signature" actual &&
-+		! grep "^gpg: Signature made" actual
-+	fi
- '
+diff --git a/commit-graph.c b/commit-graph.c
+index 441b36016ba..2b528187316 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2206,7 +2206,8 @@ static void mark_commit_graphs(struct write_commit_graph_context *ctx)
+ 		struct stat st;
+ 		struct utimbuf updated_time;
  
- test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
+-		stat(ctx->commit_graph_filenames_before[i], &st);
++		if (stat(ctx->commit_graph_filenames_before[i], &st) < 0)
++			continue;
+ 
+ 		updated_time.actime = st.st_atime;
+ 		updated_time.modtime = now;
+@@ -2247,7 +2248,8 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 		strbuf_setlen(&path, dirnamelen);
+ 		strbuf_addstr(&path, de->d_name);
+ 
+-		stat(path.buf, &st);
++		if (stat(path.buf, &st) < 0)
++			continue;
+ 
+ 		if (st.st_mtime > expire_time)
+ 			continue;
 -- 
 2.36.0.879.gd068ac2c328
 
