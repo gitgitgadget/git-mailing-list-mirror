@@ -2,298 +2,315 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A3CDC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 13:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35AF5C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 14:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350189AbiDUNg6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 09:36:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53270 "EHLO
+        id S1389097AbiDUOm7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 10:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230173AbiDUNg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 09:36:56 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C471BE94
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 06:34:05 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id r4-20020a05600c35c400b0039295dc1fc3so3417069wmq.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 06:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=p1sec-com.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:subject
-         :content-language:to:cc:autocrypt:organization;
-        bh=Gf6Bs5F5/9wwuPemWL2BMgM03Ew+elaIfGcU+0aNJMk=;
-        b=DSXFFuf28/KHJq64ZPAiUxtZ6aYf5arOgKN5LkYs8X/ZGz3+nSw99W/Pc0RNDiIz0n
-         4LcaQvL0YahKmiMkeBfT6URPHz5ZpzzBCuxlinCBH6xHhyh11Uu7VVQp/SRJrfuguYje
-         CtMG6d+i2n0zV9wwbRHCkqT2w/wWgDOuYwoErshNdoyF7Vy2X59FxdBVZ6FPPvuktU/I
-         BzeYkTVnFmkSVbovYUdXRHUhO1QoXL3AKaRU07sRJpTpcFHJ1Ggwh135b876mduzLHb3
-         yRrt5eAqVB4aeLKrvjWYP1DbeLr0svvUDCQcbBG7RKL/pWm8BlvSIqNKtdJMXhOgopPJ
-         3eNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
-         :subject:content-language:to:cc:autocrypt:organization;
-        bh=Gf6Bs5F5/9wwuPemWL2BMgM03Ew+elaIfGcU+0aNJMk=;
-        b=O+xzVuJFgOqTP3yH3tmMn9lQS+V4rfZx46mQlXqMW5cDJC5tM0O6FiINFn2FyvzDiJ
-         B2DkJj0g9sOQp9L+wcs0PgracQJTT1h1HZG+8xEaVCeUzmXz9CitcKcELSVGVYZY8TV0
-         /Bjay5AWvpKRI+frq4vEnKKlUccxq0hGl8JclXqQVJc+1GzTmjKx6D02klorFEsJGXgQ
-         kyNZjI+hdnrtqX4s8DN22IgA0SIr46BuhWN65nBojNGgytCj/DJ+VSGyuwLKReu/TkNo
-         wiYA+L/FN3+g6cGTU+Kscfv9zL2B31lLrjC0AovdnHfEgV0lavi2WFNxRDq0hs5nBnda
-         nbKQ==
-X-Gm-Message-State: AOAM530SHWnlWqG6/ysXg8jFkgJuI98XEMtGBvKdjxKltZiZXUm9Pjbj
-        lw4x79EwWpsmjigpmY/vA6Q4Rflqd+Gu3g==
-X-Google-Smtp-Source: ABdhPJxjE2jiwNMX2h+XGTDTCRaSmM/UcTg7cEahxls9kkSgNUJ6JJrVcop667PR2q36FIL0R2f67w==
-X-Received: by 2002:a05:600c:4f88:b0:391:e34e:ca66 with SMTP id n8-20020a05600c4f8800b00391e34eca66mr8556688wmq.16.1650548044399;
-        Thu, 21 Apr 2022 06:34:04 -0700 (PDT)
-Received: from [172.27.32.86] (lputeaux-656-1-154-186.w217-128.abo.wanadoo.fr. [217.128.61.186])
-        by smtp.gmail.com with ESMTPSA id a9-20020a7bc1c9000000b0038eb67e966esm2086885wmj.29.2022.04.21.06.34.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 06:34:03 -0700 (PDT)
-Message-ID: <225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com>
-Date:   Thu, 21 Apr 2022 13:34:03 +0000
+        with ESMTP id S1389541AbiDUOmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 10:42:43 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18794092D
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 07:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1650551972;
+        bh=M2cMIyyEp3m1KPAAFrAYHtPcuanMw38LidmvAjRLyYM=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=qirQJ/BfnXKdK1t5/Dyocj3sHvgmyEiHDjD9Kpoh0dXgka9IdLlM2hW9WsD0yGgPE
+         f+ojmCJdP9HxbY7Qvr/EhsASTFm2X0BbfAJpWSthOTHY4kijwVXTdxWdrNQAWNkmFp
+         YkFhr+S+hS4qtAnAsBVjV8ou0NfijmwPUdnCSUns=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7Nmo-1npFbk0QiC-007uaf; Thu, 21
+ Apr 2022 16:39:32 +0200
+Date:   Thu, 21 Apr 2022 16:39:31 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Daniel Habenicht <daniel-habenicht@outlook.de>
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug Report
+Message-ID: <20220421143931.o53dm2qnfcpsido7@tb-raspi4>
+References: <f1647260b37d492d96ac92f8ef30a087AS1P190MB1750B08CC923A45E2C959250ECF59@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
+ <YmB7gvfKY/0njjZy@camp.crustytoothpaste.net>
+ <017001d85506$bee0adf0$3ca209d0$@nexbridge.com>
+ <AS1P190MB1750C249B4857371132C5DF0ECF49@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-From:   Gregory David <gregory.david@p1sec.com>
-Subject: [PATCH] show-branch: fix SEGFAULT when `--current` and `--reflog`
- together
-Content-Language: en-US
-To:     git@vger.kernel.org
-Cc:     ptm-dev <ptm-dev@p1sec.com>
-Autocrypt: addr=gregory.david@p1sec.com; keydata=
- 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
- v1dxvY4f2F5nhrZWkn5Rw95Qk2jIp0JB7GLzRSg=
-Organization: P1 security
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------uUVz6NkmLsOWOeCGl5KtLHC8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <AS1P190MB1750C249B4857371132C5DF0ECF49@AS1P190MB1750.EURP190.PROD.OUTLOOK.COM>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:eJREiOdYbMB6A9C04IeTG6SbYJjI/nE9z5JGtvXUnyzAJ1cL//G
+ 0Xv92X/F3yMnPPXGQuAmdsaZIm176iEuSX53jUPknG7YJZgzqzpIyJJJoMHUO173vVQjA4X
+ c04b0oQ1qS7rkhSjYrN5x9irI+N3I/Hx/9TPrfS4n4Bn5gbDwmXKyS1vUmyyNY9j7/JydO9
+ NbuP0GffwxukQ4Mmxe8+A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xOC3jO9YyUY=:R1oXo6A7IkN0eYCf0eRmDH
+ IGgYbA7r6c537J6ddX9djBbRlJOz7diNWFnt7Zo00KmuGTCOu/fD1Edx6P2OBkNTl867dz1fX
+ QkVX57v5xXAJ76A+u+zRv2eDX2wYN51mPQvPNsUkTHf8QfBOopgo2tGcv8wQeX1xAqDhp4/PY
+ WbIe8tV+ZpIccaAL8UmBZARBubbXuQB604wyrgkM5tMrYTraALFVY21xmUrpYWpkxFdBMgzF9
+ b9PDi0ozdom0QoKnW7icKG+fx9ABWewWvdbxcX0r6ndo1UCTCuMvih+x2UEMOA4yyLCbjMZaf
+ LG1iYmyYk4Bm55SFjRPiFl9yN83/g8UoSJCVxhD0R41PbbpIDZ3Nb2Moz8AXMqDaCZFR7/AsG
+ rOlUcsBcrqXdpT7TKTnHGHQ6SwARyBymzeIrmQNXeMExClUgjep90xhl66kTDt0TGF4xpUP5J
+ EDVC1OJ79qUeCiiS/DYn8Fvaonqetv9SXUSjDhv6zBfzaCX8WCrEFIpEChCPGHOW9rgXEiA6n
+ z0tw+VX6EnUWO3HWzKdr0kB8z0mmnh2nU/GC8ZBmknEePeSloZxM7eDXeNIiI/Xw5VLFVWJah
+ Lj2EZD4G6DLcMpl9pb6HWzGbukjMkmahWjsJ6/E/48TfjznoZ6kxWstuNjzeGuREUcMiqVmNI
+ fi0gttMa9HjKMyuxyhP7UWazwPJ/nKD4qoFXjBHx1ix3fP8J0+O2OhwiYFY/2Rp5E2WleOiM2
+ Ed7NehFRRbkoLb1JFf8CNE5jLDKKoBEOzy+yDTC8Lm0XTROriVreNjBfi25BsTyLP8NaAsDHg
+ 7eCTz9xoASAb4k8sCm87tTmjXASX01vqijo/ADS0myNSR+JK8A87aSxN/gawZGy1FUzetJ8VR
+ 5uZ6kV0trKfYI0n96vWEvsiA91fwCKUfGsyNUrGRyYcQ2baWADirO6JRdwDZiN4F8fwou1ybl
+ Kt2KTU/8sFXtzTK5qeLnyEqF8CCQZ0/gOiIbbM85h6TNH4iY6d7O3oROAtKwdjIX6Df4X93LP
+ KmXVdmZaQ9fVFDCAuczspTeoFMB6X5N8lwOZzFwVhtBbessH0cL34KHBStSO787tj5p60EY3X
+ LcRLwl0HMKSe3X1pQazDKjJxc3Qko19czazHVR01O2eHJQCFUaOGWUTVLxwQG73LETmfbIWEs
+ cVIew=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------uUVz6NkmLsOWOeCGl5KtLHC8
-Content-Type: multipart/mixed; boundary="------------HVNfVVwZ91V0h7IY8bL1Q2bV";
- protected-headers="v1"
-From: Gregory David <gregory.david@p1sec.com>
-To: git@vger.kernel.org
-Cc: ptm-dev <ptm-dev@p1sec.com>
-Message-ID: <225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com>
-Subject: [PATCH] show-branch: fix SEGFAULT when `--current` and `--reflog`
- together
 
---------------HVNfVVwZ91V0h7IY8bL1Q2bV
-Content-Type: multipart/mixed; boundary="------------RytaKy1fMypCEyBUKXqgMqJG"
+Hej Daniel,
 
---------------RytaKy1fMypCEyBUKXqgMqJG
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+ $ git clone https://github.com/DanielHabenicht/bug-reproduction.git-repo.=
+git
+ $ cd bug-reproduction.git-repo.git
+ $ git ls-files --eol
+ i/none  w/none  attr/                   .gitattributes
+ i/lf    w/lf    attr/                   README.md
+ i/crlf  w/crlf  attr/text eol=3Dlf        test.cs
 
-If run `show-branch` with `--current` and `--reflog` simultaneously, a
-SEGFAULT appears.
+Your repo needs to be re-normalized:
+ $ git add --renormalize .
+ $ git status
+ On branch main
+ Your branch is up to date with 'origin/main'.
 
-The bug is that we read over the end of the `reflog_msg` array after
-having `append_one_rev()` for the current branch without supplying a
-convenient message to it.
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+          modified:   test.cs
 
-It seems that it has been introduced in:
-Commit 1aa68d6735 (show-branch: --current includes the current branch.,
-2006-01-11)
+That is all that needs to be done.
 
-Signed-off-by: Gregory DAVID <gregory.david@p1sec.com>
-Thanks-to: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
----
- builtin/show-branch.c  | 22 +++++++++++++++++++--
- t/t3202-show-branch.sh | 43 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 2 deletions(-)
+Users which are confused may put their frustration aside,
+and read the documentation:
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index e12c5e80e3..c8d830b7c6 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -812,8 +812,26 @@ int cmd_show_branch(int ac, const char **av, const
-char *prefix)
- 		}
- 		if (!has_head) {
- 			const char *name =3D head;
--			skip_prefix(name, "refs/heads/", &name);
--			append_one_rev(name);
-+			struct object_id oid;
-+			char *ref;
-+			unsigned int flags =3D 0;
-+			char *log_msg =3D 0;
-+			char *end_log_msg;
-+			timestamp_t timestamp;
-+			int tz;
-+
-+      if (!dwim_ref(*av, strlen(*av), &oid, &ref, 0))
-+        die(_("no such ref %s"), *av);
-+      read_ref_at(get_main_ref_store(the_repository),
-+                  ref, flags, 0, i, &oid, &log_msg,
-+                  &timestamp, &tz, NULL);
-+      end_log_msg =3D strchr(log_msg, '\n');
-+      if (end_log_msg)
-+        *end_log_msg =3D '\0';
-+      skip_prefix(name, "refs/heads/", &name);
-+      append_one_rev(name);
-+      reflog_msg[ref_name_cnt - 1] =3D xstrfmt("(%s) (current) %s",
-show_date(timestamp, tz, DATE_MODE(RELATIVE)), (!log_msg || !*log_msg) ?
-"(none)" : log_msg);
-+      free(log_msg);
- 		}
- 	}
- diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-index 7a1be73ce8..7f6ffcf8a5 100755
---- a/t/t3202-show-branch.sh
-+++ b/t/t3202-show-branch.sh
-@@ -161,4 +161,47 @@ test_expect_success 'show branch --reflog=3D2' '
- 	test_cmp actual expect
- '
- +test_expect_success 'show branch --reflog=3D2 --current' '
-+	sed "s/^>	//" >expect <<-\EOF &&
-+	>	! [refs/heads/branch10@{0}] (4 years, 5 months ago) commit: branch10
-+	>	 ! [refs/heads/branch10@{1}] (4 years, 5 months ago) commit: branch10=
+https://git-scm.com/docs/gitattributes
 
-+	>	  * [branch10] (4 years, 5 months ago) (current) branch: Created
-from initial
-+	>	---
-+	>	+ * [refs/heads/branch10@{0}] branch10
-+	>	++* [refs/heads/branch10@{1}] initial
-+	EOF
-+	git show-branch --reflog=3D2 --current >actual &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'show branch --current' '
-+	sed "s/^>	//" >expect <<-\EOF &&
-+	>	! [branch1] branch1
-+	>	 ! [branch2] branch2
-+	>	  ! [branch3] branch3
-+	>	   ! [branch4] branch4
-+	>	    ! [branch5] branch5
-+	>	     ! [branch6] branch6
-+	>	      ! [branch7] branch7
-+	>	       ! [branch8] branch8
-+	>	        ! [branch9] branch9
-+	>	         * [branch10] branch10
-+	>	          ! [master] initial
-+	>	-----------
-+	>	         *  [branch10] branch10
-+	>	        +   [branch9] branch9
-+	>	       +    [branch8] branch8
-+	>	      +     [branch7] branch7
-+	>	     +      [branch6] branch6
-+	>	    +       [branch5] branch5
-+	>	   +        [branch4] branch4
-+	>	  +         [branch3] branch3
-+	>	 +          [branch2] branch2
-+	>	+           [branch1] branch1
-+	>	+++++++++*+ [master] initial
-+	EOF
-+	git show-branch --current >actual &&
-+	test_cmp actual expect
-+'
-+
- test_done
---=20
-2.35.1
---------------RytaKy1fMypCEyBUKXqgMqJG
-Content-Type: application/pgp-keys; name="OpenPGP_0xA6DF37692E5DE2F7.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xA6DF37692E5DE2F7.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+especially the part about the line endings and normalization,
+search for "renormalize".
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+I don't know, if there is something we can do that makes live easier,
+but if yes: suggestions are more than welcome.
 
-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
-v1dxvY4f2F5nhrZWkn5Rw95Qk2jIp0JB7GLzRSg=3D
-=3Du6yb
------END PGP PUBLIC KEY BLOCK-----
+So yes, thanks for the report.
 
---------------RytaKy1fMypCEyBUKXqgMqJG--
 
---------------HVNfVVwZ91V0h7IY8bL1Q2bV--
 
---------------uUVz6NkmLsOWOeCGl5KtLHC8
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
 
------BEGIN PGP SIGNATURE-----
-
-wsD5BAABCAAjFiEEgTMgz/uZophfcP0Opt83aS5d4vcFAmJhXUsFAwAAAAAACgkQpt83aS5d4ves
-ugwAjZXs4wEUTwq7S+ocLDgBQtxqnLgWq6ntCsa80C2Q16BHT/dYxqwobgemGXqd8RLX4XocCMpa
-a+JBg5NGBQWK2ZMGI/Nk8cCOAK1PmJGQAdSM9Rz47DNDNzwCwI9Pzxaf7tK0dFB0DAbi5eUo0KqG
-kvKCUTxXYkW3A+NZyB4WTu/EKemEHEGV4RiP8yuq8AEhqsLfqqcxaM6JM3JI2IQ+OSRY+nlOZAVL
-YDYrbM2QJXJdazn4x4lquPft4KkVVq6MVa9JPVbJcQiNFReVmsPN2w6Yt6lIstNONqCGWVYtkXg9
-aHLtYMaChCecQ8WXjEapqA0E+x6Ub9BVnbxUXDbMqoUydYeWThsL5iA93dQbM8pM+aw66cPSSXiZ
-CMmMqf6kEse/PE1HNbBqvvQKN+5PTg37nGgWwGMWYFpdcU+5ogkC0JIWUhVh8rdj9beeaWU9U7OP
-3dXsu+1ZoX/m9lCUHQ+1igI3uwnEpEH716DfQKW36Frg9RFZwZt3VW4RUr8a
-=Oww+
------END PGP SIGNATURE-----
-
---------------uUVz6NkmLsOWOeCGl5KtLHC8--
+On Thu, Apr 21, 2022 at 01:20:37PM +0000, Daniel Habenicht wrote:
+> Hi Randall and Brian,=A0
+>
+> thanks for the fast=A0response.
+> @Randall: I also tried it with autocrlf=3Dinput and it still reproduces.=
+ I included it in the reproduction. I also added more examples for confusi=
+ng behaviour.
+>
+>
+> Here is the full bug report:=A0
+> (You can view a Markdown rendered version of this reproduction at: https=
+://github.com/DanielHabenicht/bug-reproduction.git-repo)
+>
+> # Description
+>
+> When changing the `.gitattributes` file not all changes to the checked i=
+n files are apparent.
+> They only get updated on a new clone or when refreshing the index - that=
+'s somehow expected.
+> But it creates confusion and unexpected behavior if they are not updated=
+ together with the `.gitattributes` changes.
+> It can make easy changes between branches impossible, break the flow of =
+squashing commits or lead to confusing state of everlasting uncommited cha=
+nge.
+> These edge cases for confusing behaviour I have added below.
+>
+> # Reproduction
+>
+> 1. Checkout with the following `.gitconfig` settings set:
+>
+> ```gitconfig
+> # .gitconfig
+> [core]
+>     autocrlf =3D false
+> # Or
+>     autocrlf =3D input
+> ```
+>
+> 2. Clone the repository
+> ```bash
+> git clone https://github.com/DanielHabenicht/bug-reproduction.git-repo.g=
+it
+> ```
+>
+> 3. `test.cs` should be shown as `modified`
+>
+> > This is confusing to the user, he just checked the repo out and did no=
+t change a thing. At least there should be a warning?
+>
+> ```
+> git status
+> On branch main
+> Your branch is up to date with 'origin/main'.
+>
+> Changes not staged for commit:
+>   (use "git add <file>..." to update what will be committed)
+>   (use "git restore <file>..." to discard changes in working directory)
+>         modified:   test.cs
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+> ```
+>
+> 5. Running any git command like the ones below will not remove the chang=
+ed file:
+>
+> ```bash
+> git rm --cached -r .
+> git reset --hard
+> git add --renormalize .
+> ```
+>
+> > This as well is very confusing and there is no indication on why this =
+is happening and there are still modified files after everything should be=
+ reset.
+> > Keep in mind that this could have happened in error and could be happe=
+ning to a totally unrelated (to the inital `.gitattributes` change) user.
+>
+> 6. Running `git diff` is even more confusing, and doing as the warning s=
+uggests (`warning: CRLF will be replaced by LF in test.cs. The file will h=
+ave its original line endings in your working directory`) and replacing `C=
+RLF` by `LF` does silence the warning but does not change the diff itself:
+>
+> ```diff
+> warning: CRLF will be replaced by LF in test.cs.
+> The file will have its original line endings in your working directory
+> diff --git b/test.cs a/test.cs
+> index 1e230ed..5464a2d 100644
+> --- b/test.cs
+> +++ a/test.cs
+> @@ -1,11 +1,11 @@
+> -using System.Diagnostics.CodeAnalysis;
+> -using System.Linq;
+> -using Xunit;
+> -using Moq;
+> -
+> -
+> -
+> -namespace Tests
+> -{
+> -
+> -}
+> +using System.Diagnostics.CodeAnalysis;^M
+> +using System.Linq;^M
+> +using Xunit;^M
+> +using Moq;^M
+> +^M
+> +^M
+> +^M
+> +namespace Tests^M
+> +{^M
+> +^M
+> +}^M
+> ```
+>
+> > This is showing the exact opposite of what git is really doing. Actual=
+ly it replaces the line encoding of the index (i/crlf) with the right enco=
+ding (i/lf) (see **[1]**)
+> > From the git user perspective everything is in great shape, the file i=
+s LF, as it should be, but still git complains about a change that is not =
+visible to the user without background knowledge about gitattributes and t=
+he git index.
+>
+> 8. Try changing the branch to a modified copy with `git checkout some-ch=
+anges` is not possible (also with the recommended command). The only solut=
+ion would be to commit - nothing else helps (but thats not really a soluti=
+on). :
+>
+> ```bash
+> error: Your local changes to the following files would be overwritten by=
+ checkout:
+>         test.cs
+> Please commit your changes or stash them before you switch branches.
+> Aborting
+> ```
+>
+> > This makes changing branches harder, as it can't be force reset and gi=
+t will always complain about files being overwritten.
+> > It also break the flow for squashing commits as you would need to manu=
+ally intervene (and add a commit) if someone forgot to commit all files af=
+ter a .gitattributes change and only recognized it at a later date.
+>
+>
+> **[1]**: I hope this answer explained it right to me: https://stackoverf=
+low.com/a/71937898/9277073.
+> But it is rather unintuitive to me, and possibly other users, as there s=
+eems to be a hidden middle layer leading to this problem. See the graph at=
+ the github repo)
+>
+>
+>
+> Cheers,
+> Daniel
+>
+>
+>
+>
+> Daniel Habenicht
+>
+>
+> From: rsbecker@nexbridge.com <rsbecker@nexbridge.com>
+> Sent: Thursday, April 21, 2022 00:34
+> To: 'brian m. carlson' <sandals@crustytoothpaste.net>; 'Daniel Habenicht=
+' <daniel-habenicht@outlook.de>
+> Cc: git@vger.kernel.org <git@vger.kernel.org>
+> Subject: RE: Bug Report
+> =A0
+> On April 20, 2022 5:31 PM, brian m. carlson wrote:
+> >On 2022-04-20 at 19:45:32, Daniel Habenicht wrote:
+> >> Hi there,
+> >>
+> >> I think I found a bug or at least some unexpected behavior. Please
+> >> have a look at the following reproduction repo:
+> >>
+> >> https://nam12.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fg=
+ithub.com%2FDanielHabenicht%2Fbug-reproduction.git-repo%2Fblob%2Fmain&amp;=
+data=3D05%7C01%7C%7C145ae6f595d54ac7b5fd08da231de43c%7C84df9e7fe9f640afb43=
+5aaaaaaaaaaaa%7C1%7C0%7C637860908535410706%7CUnknown%7CTWFpbGZsb3d8eyJWIjo=
+iMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7=
+C&amp;sdata=3DHXFm4sBZ5yQGQPkBlkzKhkgDJOXBqSlgETkrhGxgkmI%3D&amp;reserved=
+=3D0
+> >> /README.md
+> >
+> >You're more likely to get someone to look at this if you post the actua=
+l text to the
+> >list.=A0 While I might be willing to look at it on GitHub, other folks =
+won't, and I
+> >probably won't get a chance to look at this issue anytime soon.
+>
+> The only thing that I can see that is apparently a problem is that autoc=
+rlf=3Dfalse is not documented in the config help, so it is not apparent wh=
+at the expected result should be relative to the test case. That could be =
+considered confusing. There could also be confusion relative to when the g=
+it diff was done relative to what is in the staging area given his test ca=
+se. I think what Daniel may really want is to use autocrlf=3Dinput.
+>
+> Daniel, please post your entire report to this list rather than using Gi=
+tHub, links, or attachments. I happened to be on GitHub at that moment, so=
+ looked, but otherwise, I would not have specifically looked.
+>
+> --Randall
+>
+> --
+> Brief whoami: NonStop&UNIX developer since approximately
+> UNIX(421664400)
+> NonStop(211288444200000000)
+> -- In real life, I talk too much.
