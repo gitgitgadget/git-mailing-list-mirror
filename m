@@ -2,190 +2,279 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37406C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13017C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386974AbiDUScV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 14:32:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53126 "EHLO
+        id S1391419AbiDUSjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 14:39:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242768AbiDUScT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 14:32:19 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32F0C2BCC
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:29:29 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id bu29so10267040lfb.0
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:29:29 -0700 (PDT)
+        with ESMTP id S1344399AbiDUSja (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 14:39:30 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3188369EA
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:39 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id y21so3734407wmi.2
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nhCmIIlUZVBX1zmBZ4/YrFYbqxnSABbhvYE8znZfK6w=;
-        b=CQDr/PkjHgz4QpAd7SvZIS5ub4vBajiAYD03lRnoQkps9U8v+d5wVMTZXhtluNYWSs
-         kcP+dedIqP32IAQ/VTaWjT7aXhc0QAmwL4KBSqA3R4b2mksy/Au4o96xLDH9HYprbEYo
-         jnzbHJCxi21OmYThhSxO76MaIpyD1Rj0O43x0JK0ygUEUn1M2qmILYDmfCfDt9sHMlYp
-         lmDSV6/OXKWNRbg7UMLjbzxe0EW38Mcf9LkKyz9eyFjcJ0U8KQXeGYohdwcLynCe2chs
-         VsASQK+7MgyayA2/tgG8HeqGLfdQw6oO/ubkZUGEGjQ788SPiAeD33jtIDSb1hkMauu/
-         7tWg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xv/6fkJHjrd5H2YiudQbZ1QRy/W6YCJwc5Bbw5QvGmA=;
+        b=dfNAjs9vJ0uAW9+TpqjhnWc6RPEWFzVRZv07+adsSyH5y3djjmmvsuY7N+1vgtfd/w
+         nONE3xaOqUKMbk2ZXRBtWtYj506XJDFp2FOqCCMwjp9L4NTVX+zFHf9ZU9mGr/TrdoBF
+         OWWYvHxP11VKuBmKUzd/iTJ8dpmuq4YgRM7QTNdbbv08GTumDjPRZizPb9CSAMFsDIrj
+         6od0GYuI+dA4CDlAGLFk918Hyz5Z6lvYGCyaz2tXTN+8VfM4cEFfJ4bP6U7OtzQd6ADO
+         fXQd7QM4ZUQiyNkgEb1gceHQHTjRSqWyZqTtXfO/a+bfBdqxQWd1iNzw8OeD9KPuCA/h
+         qlnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nhCmIIlUZVBX1zmBZ4/YrFYbqxnSABbhvYE8znZfK6w=;
-        b=2awB/gk4PRxOulR6A3nZHCoY2BZOg6N5e0bL+FoSnTr1XXFCxC7oeADnR3+4+WVeJ5
-         XNyncZ89PCUvL2E5FR/YLRE1M9yfuaKVal4S3GPdnp/cdYFUkaO6UstzAe5j2aTYKg5P
-         UiJ2m4VGzz6nSCVGVbXH2bFEmQIN8uGC75kAzPxWcB4MdyDygXcByoFEjgALsPTNPVAf
-         5d6utDgQF06zhnS9d9lFp9+YhF/3ONYsgDKA1EgARdDBS+vL/XU7G2qY+Uih6tLoqJrv
-         1KnBQXvN/Ih5EYdltj6lywe7PzaXbt1pz9YpKLaSf3SG2XCy/iHyoEnGLq61fPF9WV+T
-         5Jyg==
-X-Gm-Message-State: AOAM530KFPw7VXRpsB/mW2RtuYVTrDOTEUexv1Jvym+CRKtuJmQCWz+u
-        HKEM7FlQZK6bSiUB538n9tx8E7+j5bsFCxRX9VeZYA==
-X-Google-Smtp-Source: ABdhPJy87P5ibnd0D28qDYDm943I4Qfr0iIGBTzCqz/JD8T7TYQntCbuugObRySKFKEU03LCmGK/6T17U+X8ExWTzVE=
-X-Received: by 2002:a05:6512:4003:b0:471:9b68:34e5 with SMTP id
- br3-20020a056512400300b004719b6834e5mr507152lfb.325.1650565766868; Thu, 21
- Apr 2022 11:29:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lwnfp7tbc.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Ylobp7sntKeWTLDX@nand.local> <CAJoAoZkgnnvdymuBsM9Ja3+eYSnyohr=FQZMVX_uzZ_pkQhgaw@mail.gmail.com>
-In-Reply-To: <CAJoAoZkgnnvdymuBsM9Ja3+eYSnyohr=FQZMVX_uzZ_pkQhgaw@mail.gmail.com>
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Thu, 21 Apr 2022 11:29:15 -0700
-Message-ID: <CAJoAoZkf6VuAOwX9j8Zc0x4HqJRJ5zQgqfmu+8Zs1kVx88dGpg@mail.gmail.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Glen Choo <chooglen@google.com>, Git List <git@vger.kernel.org>,
-        justin@justinsteven.com,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xv/6fkJHjrd5H2YiudQbZ1QRy/W6YCJwc5Bbw5QvGmA=;
+        b=kUxpiGR/vBpXcNAZEh2hx+giKaHwxpCjJF77/0Kz3KPOcQVIQdnkpcL5wHarFJ5WKt
+         Y+6KKJCYF+wez8Dl1Lz25P6jE2q4rkcAjo1YsI4zbSrouzguY2MJpJNNYEEb2Cv2iGam
+         rn1Y5h/MT7eRDRmHIYTTEUJScJAj69wX39qiNg66nYEvQHG98h2ynLqluJkN7M7awLs1
+         P6DQLttxW2fxoxeI2DbaHLn7nG+zmqQReYceOlWcwBLu84tmonEoT5XywYK3pzNpYeLC
+         NZLetxrIDg7H3iMk3aGFe/y830lXnnWuzUYvMYXoWFVmls02HL7f5uahwp2U3lt0ISdk
+         eExA==
+X-Gm-Message-State: AOAM530gFZwWTNVtAmXnhIQuBY6Seew+Npfzn7IZEv70OM5rTfRpYgxF
+        S40sYKEiryrJljRJOW24f6y5IpM/3+vutQ==
+X-Google-Smtp-Source: ABdhPJwZ5HpORuepAI1Kh847rl0LiZHTkd0PYSNBeYk5huN3gLcUXx/qvwI9njSNko1i9ZYnWvsUSQ==
+X-Received: by 2002:a05:600c:1c29:b0:392:926e:4255 with SMTP id j41-20020a05600c1c2900b00392926e4255mr674014wms.2.1650566198003;
+        Thu, 21 Apr 2022 11:36:38 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o40-20020a05600c512800b0038ebf2858cbsm3108624wms.16.2022.04.21.11.36.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Apr 2022 11:36:37 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+        Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH v5 00/10] CI: js/ci-github-workflow-markup rebased on "use $GITHUB_ENV"
+Date:   Thu, 21 Apr 2022 20:36:24 +0200
+Message-Id: <RFC-cover-v5-00.10-00000000000-20220421T183001Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.0.879.g3659959fcca
+In-Reply-To: <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com>
+References: <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 11:25 AM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> On Fri, Apr 15, 2022 at 6:28 PM Taylor Blau <me@ttaylorr.com> wrote:
-> >
-> > On Fri, Apr 15, 2022 at 05:41:59PM -0700, Glen Choo wrote:
-> > > * We want additional protection on the client besides `git fsck`; there are
-> > >   a few ways to do this:
-> >
-> > I'm a little late to chime into the thread, but I appreciate you
-> > summarizing some of the approaches discussed so far. Let me add my
-> > thoughts on each of these in order:
-> >
-> > >   1. Prevent checking out an embedded bare repo.
-> > >   2. Detect if the bare repo is embedded and refuse to work with it.
-> > >   3. Detect if the bare repo is embedded and do not read its config/hooks, but
-> > >      everything else still 'works'.
-> > >   4. Don't detect bare repos.
-> > >   5. Only detect bare repos that are named `.git` [1].
-> > >
-> > >   (I've responded with my thoughts on each of these approaches in-thread).
-> >
-> >   1. Likely disrupts too many legitimate workflows for us to adopt
-> >      without designing some way to declare an embedded bare repository
-> >      is "safe".
-> >   2. Ditto.
-> >   3. This seems the most promising approach so far. Similar to (1), I
-> >      would also want to make sure we provide an easy way to declare a
-> >      bare repository as "safe" in order to avoid permanently disrupting
-> >      valid workflows that have accumulated over the past >15 years.
->
-> I'd like to think a little more about how we want to determine that a
-> bare repo isn't embedded - wantonly scanning up the filesystem for any
-> gitdir above the current one is really expensive. When I tried that
-> approach for the purposes of including some shared config between
-> superproject and submodules, it slowed down the Git test suite by
-> something like 3-5x. So, I suppose that "we think this is bare" means
-> refs/ and objects/ present in a directory that isn't named '.git/',
-> and then we hunt anywhere above us for another .git/? Of course being
-> careful not to accept another bare repo as the "parent" gitdir.
->
-> Does it work for submodules? I suppose it works for non-bare
-> submodules - and for bare submodules, e.g.
-> 'submodule-having-project.git/modules/some-submodule/' we can rely on
-> the user to turn that flag on if they want their submodule's config
-> and hooks to be noticed from the gitdir. (From
-> 'worktree-for-submodule-having-project/some-submodule' there is a
-> '.git' pointer, so I'd expect things to work normally that way,
-> right?)
->
-> As long as we are careful to avoid searching the filesystem in *every*
-> case, this seems like a pretty reasonable approach to me.
->
-> >   4. Seems like this approach is too heavy-handed.
-> >   5. Ditto.
-> >
-> > > With that in mind, here's what I propose we do next:
-> > >
-> > > * Merge the `git fsck` patch [2] if we think that it is useful despite the
-> > >   potentially huge number of false positives. That patch needs some fixing; I'll
-> > >   make the changes when I'm back.
-> >
-> > If there are lots of false positives, we should consider downgrading the
-> > severity of the proposed `EMBEDDED_BARE_REPO` fsck check to "info". I'm
-> > not clear if there is another reason why this patch would have a
-> > significant number of false positives (i.e., if the detection mechanism
-> > is over-zealous).
-> >
-> > But if not, and this does detect only legitimate embedded bare
-> > repositories, we should use it as a reminder to consider how many
-> > use-cases and workflows will be affected by whatever approach we take
-> > here, if any.
-> >
-> > > * I'll experiment with (5), and if it seems promising, I'll propose this as an
-> > >   opt-in feature, with the intent of making it opt-out in the future. We'll
-> > >   opt-into this at Google to help figure out if this is a good default or not.
-> > >
-> > > * If that direction turns out not to be promising, I'll pursue (1), since that
-> > >   is the only option that can be configured per-repo, which should hopefully
-> > >   minimize the fallout.
-> >
-> > Here's an alternative approach, which I haven't seen discussed thus far:
-> >
-> > When a bare repository is embedded in another repository, avoid reading
-> > its config by default. This means that most Git commands will still
-> > work, but without the possibility of running any "executable" portions
-> > of the config. To opt-out (i.e., to allow legitimate use-cases to start
-> > reading embedded bare repository config again), the embedding repository
-> > would have to set a multi-valued `safe.embeddedRepo` configuration. This
-> > would specify a list of paths relative to the embedding repository's
-> > root of known-safe bare repositories.
-> >
-> > I think there are a couple of desirable attributes of this approach:
-> >
-> >   - It minimally disrupts bare repositories, restricting the change to
-> >     only embedded repositories.
-> >   - It allows most Git commands to continue working as expected (modulo
-> >     reading the config), hopefully making the population of users whose
-> >     workflows will suddenly break pretty small.
-> >   - It requires the user to explicitly opt-in to the unsafe behavior,
-> >     because an attacker could not influence the embedding repository's
-> >     `safe.embeddedRepo` config.
-> >
-> > If we were going to do something about this, I would strongly advocate
-> > for something that resembles the above. Or at the very least, some
-> > solution that captures the attributes I outlined there.
->
-> Nice - a more strict spin on proposal 3 from above, if I understand it
-> right. Rather than allowing any and all bare repos, avoid someone
-> sneaking in a malicious one next to legitimate ones by using an
-> allowlist. Seems reasonable to me.
+See the "v3" for the "real" cover-letter:
+https://lore.kernel.org/git/RFC-cover-v3-0.6-00000000000-20220325T183946Z-avarab@gmail.com/
 
-Ah, another thing I forgot to mention. There has been a little
-discussion in the past about isolating "safe" parts of config (and
-gitdir) from "unsafe" parts, e.g. "which configs and embedded scripts
-are executables", to help better protect from zipfile-type attacks,
-which are very similar to this kind of attack. I wonder if it makes
-sense to consider that sort of thing as a needswork for this bugfix?
-e.g. "/* NEEDSWORK: Only ignore unsafe configs and hooks instead of
-ignoring the entire embedded config and hooks in the future */"?
+I submitted a re-roll of the parent series at
+https://lore.kernel.org/git/cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com
+which required a conflict resolution for this one.
 
->
->  - Emily
+This version also has outstanding changes I had for using
+ci/print-test-failures.sh with a parameter instead of the previous
+copy/pasted and adjusted ci/print-test-failures-github.sh:
+https://lore.kernel.org/git/RFC-patch-v4-1.6-cc137c69ee1-20220413T195514Z-avarab@gmail.com/
+
+There's some discussion about these two serieses in general, and
+Johannes intends to re-roll this:
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2204211454500.355@tvgsbejvaqbjf.bet/
+
+So whatever Junio ends up (re-)picking up (and I'll reply in some of
+those threads) hopefully having this version for comparison helps.
+
+Johannes Schindelin (6):
+  ci: make it easier to find failed tests' logs in the GitHub workflow
+  tests: refactor --write-junit-xml code
+  test(junit): avoid line feeds in XML attributes
+  ci: optionally mark up output in the GitHub workflow
+  ci: use `--github-workflow-markup` in the GitHub workflow
+  ci: call `finalize_test_case_output` a little later
+
+Ævar Arnfjörð Bjarmason (4):
+  CI: don't "cd" in ci/print-test-failures.sh
+  CI: add --exit-code to ci/print-test-failures.sh
+  CI: don't include "test-results/" in ci/print-test-failures.sh output
+  CI: stop setting FAILED_TEST_ARTIFACTS N times
+
+ .github/workflows/main.yml           |  20 +---
+ ci/lib.sh                            |   2 +-
+ ci/print-test-failures.sh            |  89 ++++++++++++++----
+ t/test-lib-functions.sh              |   4 +-
+ t/test-lib-github-workflow-markup.sh |  50 ++++++++++
+ t/test-lib-junit.sh                  | 132 +++++++++++++++++++++++++++
+ t/test-lib.sh                        | 128 ++++----------------------
+ 7 files changed, 282 insertions(+), 143 deletions(-)
+ create mode 100644 t/test-lib-github-workflow-markup.sh
+ create mode 100644 t/test-lib-junit.sh
+
+Range-diff against v4:
+ -:  ----------- >  1:  56910df26e7 CI: don't "cd" in ci/print-test-failures.sh
+ -:  ----------- >  2:  caec0b1089a CI: add --exit-code to ci/print-test-failures.sh
+ -:  ----------- >  3:  577a5be34f4 CI: don't include "test-results/" in ci/print-test-failures.sh output
+ -:  ----------- >  4:  1482f840f64 CI: stop setting FAILED_TEST_ARTIFACTS N times
+ 1:  cc137c69ee1 !  5:  4291892fbd3 ci: make it easier to find failed tests' logs in the GitHub workflow
+    @@ .github/workflows/main.yml: jobs:
+     -      if: failure()
+     -      shell: bash
+     -      run: ci/print-test-failures.sh
+    -+      run: . /etc/profile && make -C t -e || ci/print-test-failures-github.sh
+    ++      run: . /etc/profile && make -C t -e || ci/print-test-failures.sh
+          - name: Upload failed tests' directories
+            if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+            uses: actions/upload-artifact@v2
+    @@ .github/workflows/main.yml: jobs:
+            if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+            uses: actions/upload-artifact@v2
+     @@ .github/workflows/main.yml: jobs:
+    -     - run: ci/lib.sh --build
+          - run: make
+          - run: ci/lib.sh --test
+    +       if: success() && matrix.vector.skip-tests != 'yes'
+     -    - run: make test
+     +    - run: make test || ci/print-test-failures-github.sh
+    -       if: success() && matrix.vector.skip-tests != 'no'
+    +       if: success() && matrix.vector.skip-tests != 'yes'
+     -    - run: ci/print-test-failures.sh
+    --      if: failure() && matrix.vector.skip-tests != 'no'
+    +-      if: failure() && matrix.vector.skip-tests != 'yes'
+          - name: Upload failed tests' directories
+            if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+            uses: actions/upload-artifact@v1
+     
+    - ## ci/print-test-failures-github.sh (new) ##
+    -@@
+    -+#!/bin/sh
+    -+
+    -+. ${0%/*}/lib-ci-type.sh
+    -+
+    -+set -e
+    -+
+    + ## ci/print-test-failures.sh ##
+    +@@ ci/print-test-failures.sh: set -e
+    + . ${0%/*}/lib-ci-type.sh
+    + . ${0%/*}/lib-tput.sh
+    + 
+    +-exit_code=
+     +case "$CI_TYPE" in
+     +github-actions)
+    -+	handle_failed_tests () {
+    -+		mkdir -p t/failed-test-artifacts
+    -+		echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
+    -+
+    -+		for test_exit in t/test-results/*.exit
+    -+		do
+    -+			test 0 != "$(cat "$test_exit")" || continue
+    -+
+    -+			test_name="${test_exit%.exit}"
+    -+			test_name="${test_name##*/}"
+    -+			printf "\\e[33m\\e[1m=== Failed test: ${test_name} ===\\e[m\\n"
+    -+			cat "t/test-results/$test_name.out"
+    -+
+    -+			trash_dir="t/trash directory.$test_name"
+    -+			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
+    -+			tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
+    -+		done
+    -+		return 1
+    -+	}
+    ++	exit_code=t
+    ++	github_workflow_markup=t
+     +	;;
+     +*)
+    -+	echo "Unhandled CI type: $CI_TYPE" >&2
+    -+	exit 1
+    ++	exit_code=
+    ++	github_workflow_markup=
+     +	;;
+     +esac
+     +
+    -+handle_failed_tests
+    + while test $# != 0
+    + do
+    + 	case "$1" in
+    + 	--exit-code)
+    + 		exit_code=t
+    + 		;;
+    ++	--no-exit-code)
+    ++		exit_code=
+    ++		;;
+    ++	--github-workflow-markup)
+    ++		github_workflow_markup=t
+    ++		;;
+    ++	--no-github-workflow-markup)
+    ++		github_workflow_markup=
+    ++		;;
+    + 	*)
+    + 		echo "BUG: invalid $0 argument: $1" >&2
+    + 		exit 1
+    +@@ ci/print-test-failures.sh: do
+    + 		TEST_OUT="${TEST_NAME}.out"
+    + 		TEST_MARKUP="${TEST_NAME}.markup"
+    + 
+    +-		echo "------------------------------------------------------------------------"
+    +-		echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)"
+    +-		echo "------------------------------------------------------------------------"
+    ++		if test -n "$github_workflow_markup"
+    ++		then
+    ++			printf "\\e[33m\\e[1m=== Failed test: ${TEST_NAME} ===\\e[m\\n"
+    ++		else
+    ++			echo "------------------------------------------------------------------------"
+    ++			echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)"
+    ++			echo "------------------------------------------------------------------------"
+    ++		fi
+    + 		cat "t/test-results/${TEST_OUT}"
+    + 
+    + 		trash_dir="trash directory.$TEST_NAME"
+ 2:  91f96c4f210 =  6:  d9b7d5ddf5a tests: refactor --write-junit-xml code
+ 3:  84c722969d5 =  7:  2d233bbdc22 test(junit): avoid line feeds in XML attributes
+ 4:  8acaa800d3a =  8:  5dd43a1624b ci: optionally mark up output in the GitHub workflow
+ 5:  4499f743dd1 !  9:  877edff3b4d ci: use `--github-workflow-markup` in the GitHub workflow
+    @@ ci/lib.sh: MAKEFLAGS="$MAKEFLAGS SKIP_DASHED_BUILT_INS=$SKIP_DASHED_BUILT_INS"
+      	setenv --test GIT_PROVE_OPTS "--timer --jobs $NPROC"
+     -	GIT_TEST_OPTS="--verbose-log -x"
+     +	GIT_TEST_OPTS="--verbose-log -x --github-workflow-markup"
+    -+	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+      	test Windows != "$RUNNER_OS" ||
+      	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+      	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
+     
+    - ## ci/print-test-failures-github.sh ##
+    -@@ ci/print-test-failures-github.sh: github-actions)
+    - 			test_name="${test_exit%.exit}"
+    - 			test_name="${test_name##*/}"
+    - 			printf "\\e[33m\\e[1m=== Failed test: ${test_name} ===\\e[m\\n"
+    --			cat "t/test-results/$test_name.out"
+    -+			cat "t/test-results/$test_name.markup"
+    + ## ci/print-test-failures.sh ##
+    +@@ ci/print-test-failures.sh: do
+    + 		if test -n "$github_workflow_markup"
+    + 		then
+    + 			printf "\\e[33m\\e[1m=== Failed test: ${TEST_NAME} ===\\e[m\\n"
+    ++			cat "t/test-results/$TEST_MARKUP"
+    + 		else
+    + 			echo "------------------------------------------------------------------------"
+    + 			echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)"
+    + 			echo "------------------------------------------------------------------------"
+    ++			cat "t/test-results/${TEST_OUT}"
+    + 		fi
+    +-		cat "t/test-results/${TEST_OUT}"
+      
+    - 			trash_dir="t/trash directory.$test_name"
+    - 			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
+    + 		trash_dir="trash directory.$TEST_NAME"
+    + 		case "$CI_TYPE" in
+ 6:  b291f64821c = 10:  6b278194f9a ci: call `finalize_test_case_output` a little later
+-- 
+2.36.0.879.g3659959fcca
+
