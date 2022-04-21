@@ -2,86 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3035C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 21:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13D6BC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 21:33:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385012AbiDUVdT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 17:33:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56378 "EHLO
+        id S1442019AbiDUVge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 17:36:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233077AbiDUVdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 17:33:17 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017BD49C8E
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 14:30:26 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id fu34so4244770qtb.8
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 14:30:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=DBXaeUfEkR0zyrkfk27T5+6ZyGDlNF3+/abJCEnCj4Q=;
-        b=d3niAeHr5NfXUrazgxXifUSGYT1AGnaZZpAdGcrItaiMUEprEHPiM0ryUFympiTUCy
-         ZqpYrAZCcPZVtW/w5OitOyF1TWPJKipPbVYGlyBaYab8gm3rRSyKXBuMRMwIfdJBorGf
-         8tRKHoVKupxERDw5k0dUFvPg8K6uk6tHamPKAoYq8G0Q8xlnHtAamLJ2Wz36FhWkl1+s
-         V7d1CiezAYXNelG/3IIgd2zETVSMN3n/cTd9mT6aSM0MFPjAZwFXyiwl4vJxaLtwEP8C
-         X5sfSpWGcP4oDQwl/xx9M33fZVt2+wy6zUREnNdntcvYKGI1XtUAJaQM5kJsIpavuIVw
-         MNbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=DBXaeUfEkR0zyrkfk27T5+6ZyGDlNF3+/abJCEnCj4Q=;
-        b=V9oM8E7ql0bBaLoke0PwF3IlKqtorzdNC+5RV+B7eTe2il4x1tC04tnIzwPr+f/owR
-         Va9F2MmvqBa8vYiGjzTU3R2qnFyHefb7OpKfeW2rti+mQtz4RVIMCZUVwQfZImOr2MEe
-         1LGY/KoMSlWbpFA/sZ4ugaUC73zRgqD+4QDdZQnLeQd9qI0A9Q0TYQLE9um5B7vT6CLE
-         tYYdi04exwvyPtZX30WWtJS/t2f8rALLPHXxLr1WcQwrlIH1is9PcnDqaBc6rPWUVqFE
-         jX82TF6pLG06Wb+b9bJQvpEavLycTyW3e5XWcEEiWHgoJEYFEqi0MxchTUfnqz6lCrez
-         mCYw==
-X-Gm-Message-State: AOAM533bdTwr0QV3WsflKNDNIQ/7ATXgvPG+QzDEcCRtGmApKz1hEEGx
-        GXSoiSivVK03EgLNqxzY0dc=
-X-Google-Smtp-Source: ABdhPJxPjTHd2u9sgc/r1nbd+5if7FbX4xK9MuQXBfCRRqWnzUk6au+DIqH+aD1T6wj7s4gbS51+zA==
-X-Received: by 2002:a05:622a:1354:b0:2f1:f1ab:dbb5 with SMTP id w20-20020a05622a135400b002f1f1abdbb5mr1120576qtk.76.1650576626157;
-        Thu, 21 Apr 2022 14:30:26 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id a28-20020a05620a02fc00b0069e8e766a0csm49883qko.94.2022.04.21.14.30.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 14:30:25 -0700 (PDT)
-Date:   Thu, 21 Apr 2022 14:30:24 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] CI: don't fail OSX tests due to brew v.s.
- perforce.com mis-matchy
-Message-ID: <20220421213024.xzkzuy3l7q5assxo@carlos-mbp.lan>
-References: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
+        with ESMTP id S231443AbiDUVg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 17:36:28 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B2A49F9B
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 14:33:37 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 491FC1962CB;
+        Thu, 21 Apr 2022 17:33:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1k1Ni7FBvGAUcz5I8NbOm2yt24Fi3gFgGBJcnz
+        JUmrA=; b=GBbhW8CL4n5xcaGnieNVs2Kj8Y04EacxEmke/OrT2lqY+cLwNDpyaE
+        GhxgtExjcE/Twq7yrozkgsljSXTYgFaa1c+wWyvnldEdEjAyogJ9J3GSSpKRUste
+        mXEhD34bWeXL8gENoAKPuL0QTakfc8NE5/dedG8APz6U6vq0JrIps=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4105E1962CA;
+        Thu, 21 Apr 2022 17:33:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB2081962C9;
+        Thu, 21 Apr 2022 17:33:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Thomas Koutcher via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Thomas Koutcher <thomas.koutcher@online.fr>
+Subject: Re: [PATCH 0/2] diff- family --stat width
+References: <pull.1256.git.git.1650572159.gitgitgadget@gmail.com>
+Date:   Thu, 21 Apr 2022 14:33:32 -0700
+In-Reply-To: <pull.1256.git.git.1650572159.gitgitgadget@gmail.com> (Thomas
+        Koutcher via GitGitGadget's message of "Thu, 21 Apr 2022 20:15:57
+        +0000")
+Message-ID: <xmqqczhaf7f7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B21AC9AE-C1BA-11EC-A971-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 02:53:50PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> For the past days we've again had CI failures due to "brew install"
-> detecting a SHA-256 mismatch when trying to install the perforce
+"Thomas Koutcher via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Since the only reason why that is a concern is because it aborts the
-rest of the run and is a recurring problem, wouldn't it be better to
-tell the script to continue regardless and therefore skip all perforce
-tests?
+> diff- family commands do not use the full terminal width. This is visible in
+> Tig which uses git diff-files to show diffs for unstaged changes. When
+> trying to display diffs with long filenames, the diffstat does not improve
+> when the Tig window size is increased.
+>
+> This patch makes diff-files, diff-index and diff-tree --stat behave like
+> diff --stat and use the full terminal width. The handling of the config
+> option diff.statGraphWidth is also added.
 
-Sure, there is a window where that integration could be broken which
-will be only visible once the perforce cask gets fixed and perforce
-installs again, but wouldn't that be less intrusive and overall safer
-than the currently proposed change?
+I do not think it is a good move to change the output from these
+plumbing commands, whose purpose of existence is to give more
+predictable outcome, to be affected by dynamic elements like the
+width of the terminal the user happens to be using.
 
-Carlo
+A program or script that spawns the plumbing commands should be able
+to pass --stat=<width>, --stat-graph-width=<width> etc. to control
+its behaviour without affecting (and possibly breaking) what other
+programs have been depending on for the last 15+ years.
+
+Thanks.
