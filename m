@@ -2,123 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F638C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 02:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54DCC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 02:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiDUCPA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Apr 2022 22:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53234 "EHLO
+        id S1356764AbiDUCgq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Apr 2022 22:36:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiDUCO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Apr 2022 22:14:59 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD1691B4
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 19:12:11 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 21so4673188edv.1
-        for <git@vger.kernel.org>; Wed, 20 Apr 2022 19:12:11 -0700 (PDT)
+        with ESMTP id S229462AbiDUCgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Apr 2022 22:36:45 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE2DF2BC
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 19:33:56 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id i27so7148844ejd.9
+        for <git@vger.kernel.org>; Wed, 20 Apr 2022 19:33:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tQVAsqAznxNu8PCu0eyohV4jWp9RNB39HeNXFqjNeuA=;
-        b=GFhyQNrTZutwErdBkSiDPJAgzRS+sjRmC/lVMWOOgo+wkYrwFP6lCoPsKHT5YVIOjU
-         9vrzpM55o/MSkFIVdNIm7pjSLZrh2gfJSNM6P0jev1h/EiH0saxX/B1ztO4ogY0JN5+C
-         kq8Gxip1HRPG75AS5Fe/AVemilu1dPG+UTl+GbHAeS9lzXaBT+H/7uugWh9yUwY5OgLd
-         dPETGLDLCHqzKWW2zcTuFk/VFYbM48Fkgg1/8J+Kku8f5WDrzP9LfyxDjttE61NWqFsH
-         zryt2Hm8vulqZCty5/in5xH9Q2IKqekT0b+aGhEtRBJYBu9etSbMBp0hjrGboMRu9NZJ
-         aAJw==
+        bh=XBYqOLerKwHQSNjATDUA71TfsQhMmgxd8Ayf2POpp5s=;
+        b=Y6agWFkGKeGpQPB06PYJTDlBtX6j10tKwJiOVxSJeW4sfI81XkAcYNlzHnPtMKvjl6
+         zIWdPE4SQAuEYwX3D3Muf9fN9v92ustgUMBplrXnUZL3kp1Fw3I2zUioklec0qVzsHyp
+         Zm0Cckf7TW7757Q6nkySzAXH2NxKiQe8ScLUGdCEzJI/HETmSRtuZy1m2xBfBzb2qx04
+         QlVH2JWvfogvTSQe62vvwSplQJ6mqmc8z9QeuGop0Ky7ZMteVo5TjVbrDPg2kDUF8Iag
+         LjsnHJ3EoNTd6j4Ye0sSRF9bXTKgsM9JFw14/DydzBhyy0/BmcR2Sz96khy+iHK9rJLO
+         Ncmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tQVAsqAznxNu8PCu0eyohV4jWp9RNB39HeNXFqjNeuA=;
-        b=DndDblEPcFYmkC4XZnv3jwqytPFFXeKLVtVG56ySo4MCyY6RAhcdMuCw+cXTZdTdrD
-         FGGLVBaV0AAzsoQWn+m7aZJaFj+W363/jCTegie+Dn+HNxJB+0+scW+gIgrpGCy2b/tv
-         FlF02OjxxoU1tBnwQpHjcVTk89krm6WMwh2HZWxexmzWb0zqXQrUwUlzRlG0a+u/UnhP
-         vgyf+7W+Sgh2AHT+VjL9+lg9hhee+0uygZu6zX0NGoQUqZ7fx6LK8dabZDV5VVwef9ah
-         AFat35Wp62UMJbaOgJSvl4H+SQaqCKNqo1ZJlyQ2Ky16VORGIEweajfaEiQKCxDWUHEk
-         yFLQ==
-X-Gm-Message-State: AOAM530ncDqAhT65r7O3Z64/e7pjn9fN16Z+DsSLQYCGMLdPQNnGEa1t
-        qbZMACc+AOURz6NkpxmOigy8xc8ljjC2kMEqjDY4DylRFcQ=
-X-Google-Smtp-Source: ABdhPJztlNSv8M49CazHxvR8de2RIWittTlAmCCpXz3p3PmFvK8Dc5mjckYgkz+KYTqiS540kKbK+0I/vVeH+/pZZ1A=
-X-Received: by 2002:a05:6402:2689:b0:422:15c4:e17e with SMTP id
- w9-20020a056402268900b0042215c4e17emr26988065edd.33.1650507130113; Wed, 20
- Apr 2022 19:12:10 -0700 (PDT)
+        bh=XBYqOLerKwHQSNjATDUA71TfsQhMmgxd8Ayf2POpp5s=;
+        b=JOvhFXMxiEbQzHB12hRlDZ95OydpjjtZWv6N2ty085uuDUKlE1MUGfbZWDH2623rFm
+         4545VpsK44GYdUvbsQKym0+30Djk7x0er6/QQpHXFDwmlFZcUyo0dsv70PqY4q++jS4X
+         BQfH7qlHlHEL9l69/gMSp6SQ9IfpQT+0eVrnl40tiznd0h9yFJkbjwumrrRY1psVdLRu
+         Iwd1UaxDh0amyrnsm+ykvG/bbO7SHLJgIM38LcrGRyL0arPKJ4zGbLsfQCedC9MRMoWN
+         HmAwlVQvdfAP6Rub2tCtG36KX3xmSWi4D/FORPq0DTC/T1WqAghHmSoqXfaV6XOqvnR/
+         giqA==
+X-Gm-Message-State: AOAM532DmUVziHv7WV3O00zIJ5zrR1cTgbWu/gNOKWd3Ny0Nyc+BD1+g
+        zefKo47uh+P9+wpblrkIbsjcDRnkj1077CUk5TY=
+X-Google-Smtp-Source: ABdhPJwFNIVCOMJnjXD9NPqJCcYT+u0oxVYLsYVaI44mdu6YJ2vU/rgpPx1pgM5Cn0QcLBLxKW26QjQ/1bThRj8V9vM=
+X-Received: by 2002:a17:907:7f19:b0:6ef:fe0b:71aa with SMTP id
+ qf25-20020a1709077f1900b006effe0b71aamr5666556ejc.493.1650508435390; Wed, 20
+ Apr 2022 19:33:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <Ylw+M5wwUYKcLM+M@voi.aagh.net> <xmqq4k2otpkb.fsf@gitster.g>
-In-Reply-To: <xmqq4k2otpkb.fsf@gitster.g>
+References: <20220413164336.101390-1-eantoranz@gmail.com> <xmqq4k2wap8g.fsf@gitster.g>
+ <CAOc6etYvOhqQn3icWj3Ny1m+J_60h7aiqW-gvm=dQyDLgG=6NA@mail.gmail.com>
+ <xmqqbkx2ccj4.fsf@gitster.g> <CAOc6etYwMtfytbw6iRfnJnsexJhe7UydVu0OFUbWP0byS9i=MQ@mail.gmail.com>
+ <CABPp-BE=H-OcvGNJKm2zTvV3jEcUV0L=6W76ctpwOewZg56FKg@mail.gmail.com>
+ <87lew226iw.fsf@osv.gnss.ru> <CABPp-BGQSN2iRWco4pQCVKA3AM6J0L0vyFMnYdrOgK0Pa26tWw@mail.gmail.com>
+ <CAPMMpoh9-sm57D_OSVpo4A3KdJypNZbZ2KTWURvcOW0690eviA@mail.gmail.com>
+In-Reply-To: <CAPMMpoh9-sm57D_OSVpo4A3KdJypNZbZ2KTWURvcOW0690eviA@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Apr 2022 19:11:59 -0700
-Message-ID: <CABPp-BGd8194tPo97Zmuu2xX_aqHYfBrVUX0F0r6EPAaUA3U2w@mail.gmail.com>
-Subject: Re: Corrupt name-rev output
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Thomas Hurst <tom@hur.st>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Date:   Wed, 20 Apr 2022 19:33:44 -0700
+Message-ID: <CABPp-BFh-=3E-yMDaU1TgigwriFDbd-CwXe0PJKkc422LCSP6Q@mail.gmail.com>
+Subject: Re: [RFC] introducing git replay
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2022 at 8:13 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Apr 20, 2022 at 4:27 AM Tao Klerks <tao@klerks.biz> wrote:
 >
-> Thomas Hurst <tom@hur.st> writes:
+> On Mon, Apr 18, 2022 at 6:28 PM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > If you read the suggestion I made (which I'll reinclude here at [1]),
+> > you'll note that I read the old thread you link to with both your and
+> > Phillips' suggestions.  I dug into them with some examples, and came
+> > to the conclusion that we needed something better, as I briefly
+> > commented when proposing my suggested alternative (at [1]).  I
+> > appreciate your suggestion and the time you put into it, but based on
+> > my earlier investigation, I believe my suggestion would be a better
+> > way of preserving user changes in merges and I'll be implementing it.
+> > The fact that Martin (in this thread) independently came up with the
+> > same basic idea and implemented it in jj (though he apparently has
+> > some further tweaks around the object model) and it works well
+> > suggests to me that the idea has some real world testing too that
+> > gives me further confidence in the idea.
+> >
+> > [1] https://lore.kernel.org/git/CABPp-BGW39_5r8Lbt3ymR+F_=hWJcf=2e7O75vFNJ=3CEL5s=g@mail.gmail.com/
 >
-> > I've noticed a series of about 20 commits in the HardenedBSD repository
-> > fairly reliably produce garbage names from git name-rev - usually
-> > fragments of another commit, sometimes unprintable nonsense.  Sometimes
-> > it works just fine...
-> >
-> > Here's a quick demo showing how to reproduce the problem:
-> >
-> > % uname -mrs
-> > FreeBSD 13.0-RELEASE-p11 amd64
-> > % git --version
-> > git version 2.35.2
-> > % git clone --bare --mirror https://github.com/HardenedBSD/hardenedBSD.git
-> > % cd hardenedBSD.git
-> > % git rev-list --branches=\* |
-> >   git name-rev --stdin --refs=heads/\* |
-> >   egrep -v '^[0-9a-f]{40}( \([a-zA-Z0-9_/.^~-]+\))?$'
-> > 3eb67b534cab6a78b44b13e4323fd60353003089 (y:    marcel
-> > MFC after:      3 days
-> > Relnotes:       yes
-> > Sponsored by:   ScaleEngine Inc.
-> > Differential Revision:  https://reviews.freebsd.org/D3065
-> > ~3)
-> > 3ac660fc0c6eb0f876972e7e415c89f1ebed1939 (y:    marcel
-> > ...
-> > Passing these commits into name-rev as arguments finds them under
-> > hardened/current/relro~199^2
-> >
-> > git fsck --full does not reveal or fix anything, and the problem also
-> > persists with a build from source from the next branch.
-> >
-> > I was unable to reproduce on an Ubuntu machine with 2.32.0, so I used
-> > that as a starting point for bisection and landed here:
-> >
-> >   3656f842789d25d75da41c6c029470052a573b54
-> >   name-rev: prefer shorter names over following merges
->
-> commit 3656f842789d25d75da41c6c029470052a573b54
-> Author: Elijah Newren <newren@gmail.com>
->
-> Hmph, Elijah, does this ring a bell?
+> Thank you for the clarification, and sorry I'm clearly missing
+> something here - the link you provided is to a deeply threaded
+> conversation about "[PATCH 08/12] merge-ort: provide a
+> merge_get_conflicted_files() helper function", in the context of a
+> server-side merge support patchset... I can't figure out how to relate
+> that conversation to the "how can safely reusing previous merge
+> outcomes when rebasing a merge work well?" topic I thought you had
+> introduced here :(
 
-After digging around last night and tonight, this appears to be a poor
-interaction with commit 2d53975488 ("name-rev: release unused name
-strings", 2020-02-04), which frees shared strings and relies on all
-other users of that shared string to update their name, which
-apparently seemed to rely on some intricacies of how the algorithm
-worked that are no longer valid with my change, resulting in some
-use-after-frees (though for some reason valgrind isn't spotting them
-for me, which made it harder to track these down).
+Sorry, I entered the wrong link, and assumed it was right when I
+copied it into the response email.  Whoops.  The link for [1] was
+supposed to be https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
 
-Reverting 2d53975488 fixes the problem.
+But as has been said elsewhere, what you're asking for doesn't exist
+yet.  That other email was where I outlined a bunch of details about
+what someone could do to implement it, and where I pointed out that I
+planned to eventually implement it if Dscho didn't beat me to it.
+I've since started on it.
 
-Maybe this means we need to have tip_name be a string + a refcount, so
-that we can know when we can safely free it?  Adding Rene to the cc
-for comments.  Rene: If it helps, there's a slightly simpler
-reproduction: clone the repo Thomas mentions, and then instead of his
-"rev-list | name-rev | grep" sequence just run:
-
-    git name-rev --refs=heads/\* 3eb67b534cab6a78b44b13e4323fd60353003089
+I also linked to my tree a few times where anyone can look at what I
+have done so far (which isn't useful to users yet).  If you want to
+take what I've implemented and implement the rest before I can, go
+ahead.  If you want to take the steps I outlined on how to do it in
+the email link I provided above, and implement it from scratch then go
+ahead.  But otherwise, as Junio already pointed out in this thread, it
+just doesn't exist today.
