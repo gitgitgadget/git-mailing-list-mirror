@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CB0C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E7C6C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392282AbiDUUVG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 16:21:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42860 "EHLO
+        id S1392287AbiDUUVf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 16:21:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232935AbiDUUVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 16:21:05 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97BC14C794
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:18:14 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id ay11-20020a05600c1e0b00b0038eb92fa965so6604211wmb.4
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:18:14 -0700 (PDT)
+        with ESMTP id S232935AbiDUUV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 16:21:29 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609164C794
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:18:38 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id v12so1389050wrv.10
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dNUBW5KfplQDZQE70P1sX7AfduLuPfYGI0rAuIwZfio=;
-        b=i1nBdilM+hNwFtBK47vNK7wFpWvxD3nOxVl3BxoKT5CrqsgneLt6Yl/IO9Gecj2XHB
-         0M1VQuhjGM8wWdyIzsMWbHI0pDbwEI20IJ1EFeTbf8PY9l+kC84M8gC/LlBvTcMidRjw
-         ZMJMvhElavF7jfrUAKqfWf8iHC0wxsmQcMz4b0DgLQse3mf8UDeu1byTkETbo4eTRh3p
-         y3hTjQ6gP4hm9D60H+VY6RvV8t1nHIeRBBTEqMqboWto7lEu53qIYchPM8BhcuBdnff3
-         vETb26kbTlGXQ9HoBiuo2Ydo9FSRn4VH9TUUTpPkz59RSMNm7K0XBWl5q8YUJaPwquxn
-         E8RA==
+        bh=6stZ5HXFd1+azh7kkuovAqfutfEdm8mOSCsi6uKfItU=;
+        b=O7a1RpSZ6qdV0WHk/bFq6Vb7HdiD7748p69yEn3ExHvzYiwoT5HuZZIl1LvT88IWUi
+         RaJSU4nRvtc9rIWd/qHNYd3+EgVXiHlZhry3IB0EXpwkCpBhQGYN6B9cxUiRF1SYiya1
+         tTEdZCIXPetkLU6ccQ8IeyLUyfH+vFvvhGoZcFpkI8m6vRTERTvBjKquUkz3icmyaQ3x
+         wRlgfys/G8/g9m9SIBMZqM1FhOMjqI4rvMWN316ARRAb2AKOzAS9TejGfcsNT/U/v4L+
+         VMpLBk9kyE3hUNGz5u6NLTMiJpd9u4GbKlHSBYOqi5t2FXVvpnsmWVGXZ7GKSvdu3D8z
+         9efg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dNUBW5KfplQDZQE70P1sX7AfduLuPfYGI0rAuIwZfio=;
-        b=KW4Mtctk0D0r1r5c78MN1GfYDgu8z/BzfYodsENbptgQgmE0pPsfg9H04SdsA7lLTr
-         3a9A9Bkl5PcwfZ1SiYNJ+FXrly+4WFzlCNVymSejrneyxAeC1k0NyjtfmK5YnMQavBEg
-         hFBB8U03+00pdAKkiUtoMih0b/VaqHEmksjxWs8n+Vbv3J3RiF66FqJ8YCGbaTF3tRHq
-         iMHZ/x2ayPqrU72J5yS1gW0wXvF/QPy6FviZYQEZgtXoc9ymXRc34TNzkbSa+OIHUPkG
-         oHTdAFC6nxii3Qn1kO/XrSX5PDCGm5nvz/cT9UvqCqsQYHJGwMmKfb8iFP0zGiSLvU1W
-         ha2w==
-X-Gm-Message-State: AOAM5321yuZ0G+vNb213J1e/85p1ejD+MrgIJYLehqLS7ysN8EdDlAK9
-        gBCt4ARksjW9+R9I6DxPq3Ai4B+wjyY=
-X-Google-Smtp-Source: ABdhPJz0DnXhQ1l+mG5jq97CVRM3yTazv+VptIdvF78pWbxfofzxAE1fRhUSvmDFpJUNVp53tPRt4w==
-X-Received: by 2002:a1c:19c1:0:b0:393:a19f:8f95 with SMTP id 184-20020a1c19c1000000b00393a19f8f95mr912133wmz.149.1650572292307;
-        Thu, 21 Apr 2022 13:18:12 -0700 (PDT)
+        bh=6stZ5HXFd1+azh7kkuovAqfutfEdm8mOSCsi6uKfItU=;
+        b=rTMIoTytESjY+V+rR7K+Hj9UDqSmjSAOU0IyvPyINQcWnsFUpJPzpC1PyouZc2gVw4
+         LG4h1L4hRljYAJl/gtgEGGCRaFXi6KK9IxARfX7JMDgIAgIcD6u7W6eQM/mKNoCRhisZ
+         ES4m1bjetxwEfgL358d0dE3MGRnV3GwBu+9TkDTvIBRMGpsZukpOX7C266Djd+uzKrd+
+         qs03tfI3Pzq6lvxa5tM2dOGRaRYTjYogKSJUNJ/4pa/IngZK7pIWeSCNgpG3vstveC85
+         uGfM28KkxN+IX1HQvAAwYX0XtTowYSpDnzArk4LMbn4ZNzYGvtld/LpAIAwXot/sEIWd
+         amxg==
+X-Gm-Message-State: AOAM532nCCVDmt43eVaYFZpXGsQLNiMSmQ52xRwY7UrC2/So6Sw/g4Ae
+        KsnM6TiU2NVmyP2wuABqWeQvimdbgDs=
+X-Google-Smtp-Source: ABdhPJwPvO4G2Ot8SX1xyNOL+IxG3+nO4D0D5ljyyPZ61T2eNJRUdvs3K4fmpZxW/ivacMaUQAQEfg==
+X-Received: by 2002:adf:e110:0:b0:205:b611:7a6b with SMTP id t16-20020adfe110000000b00205b6117a6bmr1034833wrz.20.1650572316008;
+        Thu, 21 Apr 2022 13:18:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f14-20020a0560001a8e00b0020aaf034e59sm18968wry.90.2022.04.21.13.17.32
+        by smtp.gmail.com with ESMTPSA id f11-20020a7bcc0b000000b0037e0c362b6dsm13581wmh.31.2022.04.21.13.18.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 13:17:34 -0700 (PDT)
-Message-Id: <c591e50ebb4593f9716c8e7682ecdecdb6fb5ae1.1650572159.git.gitgitgadget@gmail.com>
+        Thu, 21 Apr 2022 13:18:15 -0700 (PDT)
+Message-Id: <94acd9e0a47fcbee91f7759d1556d39fec26dd2d.1650572159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1256.git.git.1650572159.gitgitgadget@gmail.com>
 References: <pull.1256.git.git.1650572159.gitgitgadget@gmail.com>
 From:   "Thomas Koutcher via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Apr 2022 20:15:58 +0000
-Subject: [PATCH 1/2] diff- family --stat: use the full terminal width
+Date:   Thu, 21 Apr 2022 20:15:59 +0000
+Subject: [PATCH 2/2] diff- family --stat: honour config option to limit graph
+ width
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,52 +67,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Thomas Koutcher <thomas.koutcher@online.fr>
 
-Make diff-files, diff-index and diff-tree --stat behave like diff --stat
-and use the full terminal width.
+Make diff-files, diff-index and diff-tree --stat honour config option
+diff.statGraphWidth as, according to git-config(1), it applies to all
+commands generating --stat output except format-patch.
+
+Move the parsing of diff.statgraphwidth from git_diff_ui_config() to
+git_diff_basic_config() to make it accessible to all commands.
 
 Signed-off-by: Thomas Koutcher <thomas.koutcher@online.fr>
 ---
  builtin/diff-files.c | 1 +
  builtin/diff-index.c | 1 +
  builtin/diff-tree.c  | 1 +
- 3 files changed, 3 insertions(+)
+ diff.c               | 9 +++++----
+ 4 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 70103c40952..2265cd256be 100644
+index 2265cd256be..e9b96278434 100644
 --- a/builtin/diff-files.c
 +++ b/builtin/diff-files.c
-@@ -29,6 +29,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+@@ -30,6 +30,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
  	repo_init_revisions(the_repository, &rev, prefix);
  	rev.abbrev = 0;
-+	rev.diffopt.stat_width = -1; /* use full terminal width */
+ 	rev.diffopt.stat_width = -1; /* use full terminal width */
++	rev.diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
  
  	/*
  	 * Consider "intent-to-add" files as new by default, unless
 diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 5fd23ab5b6c..9cb9555fdeb 100644
+index 9cb9555fdeb..10f78180264 100644
 --- a/builtin/diff-index.c
 +++ b/builtin/diff-index.c
-@@ -26,6 +26,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+@@ -27,6 +27,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
  	repo_init_revisions(the_repository, &rev, prefix);
  	rev.abbrev = 0;
-+	rev.diffopt.stat_width = -1; /* use full terminal width */
+ 	rev.diffopt.stat_width = -1; /* use full terminal width */
++	rev.diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
  	prefix = precompose_argv_prefix(argc, argv, prefix);
  
  	/*
 diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 0e0ac1f1670..4a2a2744fae 100644
+index 4a2a2744fae..0b783dcbc44 100644
 --- a/builtin/diff-tree.c
 +++ b/builtin/diff-tree.c
-@@ -122,6 +122,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 		die(_("index file corrupt"));
+@@ -123,6 +123,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
  	opt->abbrev = 0;
  	opt->diff = 1;
-+	opt->diffopt.stat_width = -1; /* use full terminal width */
+ 	opt->diffopt.stat_width = -1; /* use full terminal width */
++	opt->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
  	opt->disable_stdin = 1;
  	memset(&s_r_opt, 0, sizeof(s_r_opt));
  	s_r_opt.tweak = diff_tree_tweak_rev;
+diff --git a/diff.c b/diff.c
+index ef7159968b6..0923a25d5bb 100644
+--- a/diff.c
++++ b/diff.c
+@@ -394,10 +394,6 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		diff_relative = git_config_bool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp(var, "diff.statgraphwidth")) {
+-		diff_stat_graph_width = git_config_int(var, value);
+-		return 0;
+-	}
+ 	if (!strcmp(var, "diff.external"))
+ 		return git_config_string(&external_diff_cmd_cfg, var, value);
+ 	if (!strcmp(var, "diff.wordregex"))
+@@ -477,6 +473,11 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "diff.statgraphwidth")) {
++		diff_stat_graph_width = git_config_int(var, value);
++		return 0;
++	}
++
+ 	if (git_diff_heuristic_config(var, value, cb) < 0)
+ 		return -1;
+ 
 -- 
 gitgitgadget
-
