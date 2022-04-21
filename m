@@ -2,47 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD127C433FE
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7BB2C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392259AbiDUURf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 16:17:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40666 "EHLO
+        id S1392268AbiDUURj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 16:17:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392289AbiDUURd (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1392298AbiDUURd (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Apr 2022 16:17:33 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5629A3ED04
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:42 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id bv16so8143822wrb.9
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:42 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B93163C8
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:43 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id m14so8182334wrb.6
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vGTBEKBV6o8C90oxiV5WDqxa80vdz5MKTnYUG/Y7cXA=;
-        b=YmrmMroWO0fBlpbJWTGpJ3HimzgotBR12YpoIxLhO1qdw4ziJGsS7hUfh5fsMA/Usj
-         vhahyTgXdJTZO5L1FQYZhPsnhU5dJS30iIQD1G72tIjqwYhzcEfKnGpiBX240jpccqdL
-         oP2qRMgmH7hySu9PwXI5+loiTz8NGWRAf7Q48oA1TRe5KWBWMEVq/eKaSGt3ZTaYyslK
-         rrPgbNp9RUK6aa3CF8wnpT6w1f4kvrYOwA3kLH0BGWKq9X7gIOKGYTGB+En1p46PJvCw
-         W+drxHj+sEsFz8T/1Ept/bPcI3+QIU2Swo7lMbxF7kmZhzJtsj2Pc93FY35xQAYChO5P
-         qUmQ==
+        bh=8biSKho1+OKVOIB8CCTd48exGbAiqISG8dmbrNrlW+E=;
+        b=YC0eLDCwL+kPb2m54F3/vYG2lTT7VPzFZKy/DtHxtC1ylnbHibJAhFAQy3BnwX7X7l
+         43ZKGAu4z+azw+1v13nqsdDXpOVLK+mpD97UEUCI6NJtV2w+UBXYXv/qVhXPwVvpJBvP
+         OeQvTemMYFZuelm29e97j7lkZiMYnjLbBTqQGtKD5t0DGEiM6Q80VRn2gQbUq0R4GU3c
+         /j0Ae1WCre5r1n2vnuxBJVI4ihaifr9XzuSTzeMzDuvgcATbor9QpUIuaJJU1s+56WbI
+         xFSN+bsW0FDmNNm7ucCS8Mx7RGuiZ3KEsHXBkwgYsY6h1B5tkImB5/0z/Ci0hCMwXrgD
+         IqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vGTBEKBV6o8C90oxiV5WDqxa80vdz5MKTnYUG/Y7cXA=;
-        b=bnKoESwdaC/pmGMWORNytRNiJDw84RyUXESjUg1Uy1LmOVL34ZOn3rZ5Ld6RHlHIpD
-         KjxBZU+EJBhEaYEyIzLVSmUBKaPKAVhQRKd4kC4XTCns6FeIeAtj65UfzTegPLO89Wx1
-         CoAZE24E7AIZTd5wJjzAwDs/m0ZQzL/7p3GJqjDoxoGHyDDTIgjj23YYzlVhL4tCh7JV
-         Xh3MV406WyWd+G15CRDQb0IvG0jEPXWWKlJ57qme2JPalBwtcM/z4BAjWISbphlSHlJR
-         8FIgQ8tJWJzR9N3y7pIqaXJLSd7DnXvkPr6n0iWS3bjaNpXNpFWLZAwe4UXcmvgUbfYl
-         bVSw==
-X-Gm-Message-State: AOAM532cuCjnRRyIFLuo/Pd5od0fg4E4A8k4cf9IsX7yO7BOo2LiOuCA
-        00hs4eEABUG2oqtDV1e62ASdhioinrDHVA==
-X-Google-Smtp-Source: ABdhPJySm786BKN2o4Ur9iIZnqexdk2yVAPpLuQeMkgyeRWwIe6Ip5b716ODX5VX6fbpEYuooQN7lA==
-X-Received: by 2002:a05:6000:1686:b0:20a:96e0:9bbe with SMTP id y6-20020a056000168600b0020a96e09bbemr959185wrd.635.1650572080571;
-        Thu, 21 Apr 2022 13:14:40 -0700 (PDT)
+        bh=8biSKho1+OKVOIB8CCTd48exGbAiqISG8dmbrNrlW+E=;
+        b=zM7PfRmiqyeuY1k2HJ2iNHXgoNEVJYy4VZlYsmLNqlQZkbL23NHbq3NcC7Fdyu54Ny
+         f3qJj0lR7PcSepSqrXg3cX5o8BvOhq5aPYHuoowO6oukl1ZUep1GZGOb8QXi6P9wkYLU
+         OuyfADZoNbr59PVOeEz89FaqMi/GMMDiXVZbD8yIkMECC0KHpuNtRBtXYxf8bt9ZH352
+         7oVQ7Xskk3C6s24pVBAiIbCUcwMvaUOIKp02M6bTJ2we3xU53EXBzX6KSV36plXVq0IG
+         vpbK+nDNcoHWOaQhbrrc3Sjc/K2qTqAi4pJ0Bg5uxuGT7AjJWFYfQJNMdKKAUdBu6nQO
+         1Yww==
+X-Gm-Message-State: AOAM531FzZCU2RnlSNLzr3MI5E4jfKtSmpOpejb6uIhs3ZMsNBCPGNcD
+        MjieYyOT7Etxd81iWB4+CUqvGQZqXv7Png==
+X-Google-Smtp-Source: ABdhPJxUExWP8Tx3yJrTYpvRnGxo6v1txXAQy2xQa9VAyhN8gbO74ZLjUqMj3apcgOWjW7n3jyl5kw==
+X-Received: by 2002:adf:d1cb:0:b0:20a:880b:13d2 with SMTP id b11-20020adfd1cb000000b0020a880b13d2mr1005386wrd.323.1650572081518;
+        Thu, 21 Apr 2022 13:14:41 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id l9-20020a1c7909000000b0038eb8171fa5sm1309wme.1.2022.04.21.13.14.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Hans Jerry Illikainen <hji@dyntopia.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/4] tests: make RUNTIME_PREFIX compatible with --valgrind
-Date:   Thu, 21 Apr 2022 22:14:34 +0200
-Message-Id: <patch-1.4-315da7c2df0-20220421T200733Z-avarab@gmail.com>
+Subject: [PATCH 2/4] log test: skip a failing mkstemp() test under valgrind
+Date:   Thu, 21 Apr 2022 22:14:35 +0200
+Message-Id: <patch-2.4-0f7d2622541-20220421T200733Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.879.gd068ac2c328
 In-Reply-To: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
 References: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
@@ -69,51 +69,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression in b7d11a0f5d2 (tests: exercise the RUNTIME_PREFIX
-feature, 2021-07-24) where tests that want to set up and test a "git"
-wrapper in $PATH conflicted with the t/bin/valgrind wrapper(s) doing
-the same.
+Skip a test added in f1e3df31699 (t: increase test coverage of
+signature verification output, 2020-03-04) when running under
+valgrind. Due to valgrind's interception of mkstemp() this test will
+fail with:
+
+	+ pwd
+	+ TMPDIR=[...]/t/trash directory.t4202-log/bogus git log --show-signature -n1 plain-fail
+	==7696== VG_(mkstemp): failed to create temp file: [...]/t/trash directory.t4202-log/bogus/valgrind_proc_7696_cmdline_d545ddcf
+	[... 10 more similar lines omitted ..]
+	valgrind: Startup or configuration error:
+	valgrind:    Can't create client cmdline file in [...]/t/trash directory.t4202-log/bogus/valgrind_proc_7696_cmdline_6e542d1d
+	valgrind: Unable to start up properly.  Giving up.
+	error: last command exited with $?=1
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0060-path-utils.sh | 4 ++--
- t/test-lib.sh         | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ t/t4202-log.sh | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 2fe6ae6a4e5..aa35350b6f3 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -542,7 +542,7 @@ test_lazy_prereq CAN_EXEC_IN_PWD '
- 	./git rev-parse
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index be07407f855..6e663525582 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1992,10 +1992,13 @@ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
+ 	git tag -s -m signed_tag_msg signed_tag_fail &&
+ 	git checkout plain-fail &&
+ 	git merge --no-ff -m msg signed_tag_fail &&
+-	TMPDIR="$(pwd)/bogus" git log --show-signature -n1 plain-fail >actual &&
+-	grep "^merged tag" actual &&
+-	grep "^No signature" actual &&
+-	! grep "^gpg: Signature made" actual
++	if ! test_have_prereq VALGRIND
++	then
++		TMPDIR="$(pwd)/bogus" git log --show-signature -n1 plain-fail >actual &&
++		grep "^merged tag" actual &&
++		grep "^No signature" actual &&
++		! grep "^gpg: Signature made" actual
++	fi
  '
  
--test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD 'RUNTIME_PREFIX works' '
-+test_expect_success !VALGRIND,RUNTIME_PREFIX,CAN_EXEC_IN_PWD 'RUNTIME_PREFIX works' '
- 	mkdir -p pretend/bin pretend/libexec/git-core &&
- 	echo "echo HERE" | write_script pretend/libexec/git-core/git-here &&
- 	cp "$GIT_EXEC_PATH"/git$X pretend/bin/ &&
-@@ -550,7 +550,7 @@ test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD 'RUNTIME_PREFIX works' '
- 	echo HERE >expect &&
- 	test_cmp expect actual'
- 
--test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD '%(prefix)/ works' '
-+test_expect_success !VALGRIND,RUNTIME_PREFIX,CAN_EXEC_IN_PWD '%(prefix)/ works' '
- 	mkdir -p pretend/bin &&
- 	cp "$GIT_EXEC_PATH"/git$X pretend/bin/ &&
- 	git config yes.path "%(prefix)/yes" &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 531cef097db..7f3d323e937 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1666,6 +1666,7 @@ test -n "$USE_LIBPCRE2" && test_set_prereq PCRE
- test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- test -n "$SANITIZE_LEAK" && test_set_prereq SANITIZE_LEAK
-+test -n "$GIT_VALGRIND_ENABLED" && test_set_prereq VALGRIND
- 
- if test -z "$GIT_TEST_CHECK_CACHE_TREE"
- then
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
 -- 
 2.36.0.879.gd068ac2c328
 
