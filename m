@@ -2,175 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D75AC4167B
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 15:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C9D6C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 16:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390370AbiDUP7b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 11:59:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52322 "EHLO
+        id S229778AbiDUQdn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 12:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390363AbiDUP71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 11:59:27 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 422934705B
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:56:31 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id l7so10999484ejn.2
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:56:31 -0700 (PDT)
+        with ESMTP id S231739AbiDUQcb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 12:32:31 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C23E24B1CE
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 09:26:37 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id x18so7474260wrc.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 09:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=EgOFK9tREzqbDQne96+1CVAdNLsVEbGLGRiuXsiUq84=;
-        b=K2HKa++AuUgMywF699hTkvfQbKE/NqF9P5KsQ/uBQv5TI4ETqgqE0Bn/nYhSWFJpJM
-         Npe0fvMmP9XVeSFdOJujKZ5h+E/yFDPAqdaR45vWL+e/EP4VQMwhzd3nj0LvKuWwBhZP
-         p+vkBkLuIM1fK5WQuLPNUpQov0/pghSsZ5q0GM2fd9swLcbfJQpb2NPRwg9lnn2u8kED
-         n1aQSZ42/4cAINH+qUQ2OWuQ3KB/YBx1eCRnIvopOhZr6SkfSq74NIWqIeUFT3hFZh+t
-         fnlp2GbmHI1jj2g7/H+7xYJ7RyWR24iYA6nmG4kUWQEVjbmkcZsPULqDBvfGMdIE5oZ/
-         a6ng==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=bR5cyTW0ehdjC274BWnZFgf15WMLFpvVhMhn0f21F4Y=;
+        b=QKdXWQXwFLWvpOoApwH1+2wGMnvDg5yEjdgW6ilTHrKMIA/oVHj9pUzYzBrsDJS+ca
+         hrT9WINSy8RnF530nUJGCE7Pfyf2WV7vPsgwl4fVJVsSklmPpwGOxXnVJzeV/2zafZOO
+         05YKgm1SHkI6Jc5pxMKlcU0IGCzrXcLxJmesOkwA4zux7GrcNVPkCIWKtU5mcBm8/hiY
+         uwBHXLxE233ndz5jCCk+uIwy3DuZfPXCpTVUzWa5YqIyTkwbBUFvQ1CrGNqStGyJCAIs
+         hPIbleuvMxywvd8W6i+vNfYn6SEoP4HbNcXtGT4Jx1aTGVlT1K5C4CO1IaZxsZKzTC03
+         mIGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=EgOFK9tREzqbDQne96+1CVAdNLsVEbGLGRiuXsiUq84=;
-        b=ti4xlUAGuZUT6AjxZx9LI4zd/CIBogsmfxdCFTyRej50xOTBaGeDZGIkInUYUtGWZT
-         nwufy1QJdm/ohuWBDwH+PLR+QXAnNLz3teD4+OQngTZJ2gxAeKuTlJLN6vhhcTcJ7Voj
-         4hZZF1x1gpQKMXUIRk5MvG95TN3/eYoFcQWUOD4edGpUgF6MvLtm0VBJLsB+lxrGFQc3
-         9c71PISevD5F4wq7Sq2d73v4JcaVPFXwl1D6zLmO8PNwSHEvoNbRu68l+xp3W0AzmPir
-         Rp/2IvvdMGwsl43UFSsRdbC5Q7j8T+HMPlTgA6xR9rHm1uYovh+1Q6UNJoaKRfZWTBGQ
-         cS4Q==
-X-Gm-Message-State: AOAM531VcTyxbbEQEi+f5a6X6gVukVnCTpaI9yjzov554CyeNOQbAEY/
-        kJWxEYa7JQek+UUrIIZlmPw=
-X-Google-Smtp-Source: ABdhPJz98VOZQXQ9BjIqBKRlSHzJ4KMRondEGOKlgHsf1tzfUFxIBx284BAAFgeHTKgh6I5LqIB1Fw==
-X-Received: by 2002:a17:907:7252:b0:6df:75cc:615e with SMTP id ds18-20020a170907725200b006df75cc615emr140856ejc.683.1650556589622;
-        Thu, 21 Apr 2022 08:56:29 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p14-20020a05640210ce00b00413211746d4sm11663551edu.51.2022.04.21.08.56.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 08:56:29 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nhZAS-0082Jz-HR;
-        Thu, 21 Apr 2022 17:56:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     derrickstolee@github.com, git@vger.kernel.org, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com, gitster@pobox.com
-Subject: Re: [PATCH v2 4/5] bitmap: add trace2 outputs during open "bitmap"
- file
-Date:   Thu, 21 Apr 2022 17:51:30 +0200
-References: <cover.1650547400.git.dyroneteng@gmail.com>
- <2016ef2e342c2ec6517afa8ec3e57035021fb965.1650547400.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <2016ef2e342c2ec6517afa8ec3e57035021fb965.1650547400.git.dyroneteng@gmail.com>
-Message-ID: <220421.86k0bi77mb.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=bR5cyTW0ehdjC274BWnZFgf15WMLFpvVhMhn0f21F4Y=;
+        b=PiSYe7SR3vj+9T0jDFo3VXeuDdaEBnaGn5iCYixUsJI9vBUeQXMdR7xyhuGONWvfDe
+         ZmvfxyM5h9gpsS0h4rPi+YqNDpvTgwO2kLXfMCxVPYHcEuORkei7D8KM4zbFYjY22ZRx
+         50T6QzuGx9MeysauCsI8E2L50GY4yN/m0ZAGzETDcPq3h6pVue8Z+0RZMVhhIf8Lb0jP
+         9+4Aoj54x0tHEk1Nlvwz0fgPviK2MjN8pYoUi/hGGM2pUa0tK2r8qKeRjlHDk4xaw1De
+         NgppwWkUmEAdAvxS5ptCic7fTANFIturS4bpPU5mi2ynq4uO+NxlWiYmqaOOcvytLyBK
+         oOQA==
+X-Gm-Message-State: AOAM533Qh+tgF7LOx86KSyioEvSB1pwEqFPDEgvJf1yLinA3NbfYIcgp
+        pnTEu61dIZYICdhPZqurZrU=
+X-Google-Smtp-Source: ABdhPJxtUx6bXMaqjQg5IwUNeJoPJPV+O8grYUnB/Tejl51IMA8Jbl/gF5F9MVw2iXf9D2R0EqqSGQ==
+X-Received: by 2002:adf:ea4d:0:b0:20a:9051:7435 with SMTP id j13-20020adfea4d000000b0020a90517435mr430011wrn.200.1650558395616;
+        Thu, 21 Apr 2022 09:26:35 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.192])
+        by smtp.googlemail.com with ESMTPSA id r9-20020a05600c320900b0038f0894d80csm2314476wmp.7.2022.04.21.09.26.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Apr 2022 09:26:35 -0700 (PDT)
+Message-ID: <db2dfab3-205e-036e-e9b5-f64bcf3650f6@gmail.com>
+Date:   Thu, 21 Apr 2022 17:26:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] CI: select CC based on CC_PACKAGE (again)
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Carlo Arenas <carenas@gmail.com>
+References: <patch-1.1-d89ad4d5b7c-20220421T130310Z-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <patch-1.1-d89ad4d5b7c-20220421T130310Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
-On Thu, Apr 21 2022, Teng Long wrote:
+On 21/04/2022 14:03, Ævar Arnfjörð Bjarmason wrote:
+> Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
+> "$jobname" to select packages & config, 2021-11-23).
+> 
+> In that commit I changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in
+> $PATH points to clang, we need to use gcc-9 instead. Likewise for the
+> linux-gcc job CC=gcc-8 was changed to the implicit CC=gcc, which would
+> select GCC 9.4.0 instead of GCC 8.4.0.
+> 
+> Furthermore in 25715419bf4 (CI: don't run "make test" twice in one
+> job, 2021-11-23) when the "linux-TEST-vars" job was split off from
+> "linux-gcc" the "cc_package: gcc-8" line was copied along with
+> it.
+> 
+> That wasn't a bug per-se, as that "make test" would have run under GCC
+> 8 before the split into two jobs, but the point of selecting different
+> compiler for these jobs is to get better coverage, and to narrow down
+> any issues with a given compiler to the job that runs it. Since the
+> "linux-TEST-vars" job is already special in other ways (in running
+> with various GIT_TEST_* variables), and we've got the "linux-gcc" job
+> covering gcc-8 let's have it used the default system compiler instead.
+> 
+> Reported-by: Carlo Arenas <carenas@gmail.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> Range-diff:
+> 1:  94abb826627 < -:  ----------- CI: have osx-gcc use gcc, not clang
+> -:  ----------- > 1:  d89ad4d5b7c CI: select CC based on CC_PACKAGE (again)
+> 
+> The range-diff is against a relevant patch in v4 of a larger CI series
+> of mine[1]. This fix is independent of that, and on top of master. See
+> [2] for the original fix and discussion.
+> 
+> As noted in the updated commit message not only the OSX jobs were
+> affected, but also the linux-gcc job. This fixes both, along with a
+> small fix to the related linux-TEST-vars recipe.
+> 
+> 1. https://lore.kernel.org/git/cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com/
+> 2. https://lore.kernel.org/git/patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com/
+> 
+>   .github/workflows/main.yml | 1 -
+>   ci/lib.sh                  | 2 +-
+>   2 files changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index c35200defb9..f12819a00d7 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -236,7 +236,6 @@ jobs:
+>             - jobname: linux-TEST-vars
+>               cc: gcc
+>               os: ubuntu
+> -            cc_package: gcc-8
+>               pool: ubuntu-latest
+>             - jobname: osx-clang
+>               cc: clang
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index cbc2f8f1caa..44007dcf93b 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -122,7 +122,7 @@ then
+>   	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
+>   	CI_REPO_SLUG="$GITHUB_REPOSITORY"
+>   	CI_JOB_ID="$GITHUB_RUN_ID"
+> -	CC="${CC:-gcc}"
+> +	CC="${CC:-${CC_PACKAGE:-gcc}}"
 
-Thanks for following up..
+CC is set in .github/workflows/main.yaml for the ubuntu and macos jobs 
+so I think they will not fallback to using CC_PACKAGE and therefore not 
+pick up the correct compiler.
 
->   19:38:43.007840 common-main.c:49             | d0 | main                     | version      |     |           |           |              | 2.35.1.582.g8e9092487a
->   19:38:43.007874 common-main.c:50             | d0 | main                     | start        |     |  0.000305 |           |              | /opt/git/master/bin/git rev-list --test-bitmap HEAD
+Best Wishes
 
-It's really helpful to have these full examples in the commit
-message. Thanks.
+Phillip
 
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -312,9 +312,12 @@ char *pack_bitmap_filename(struct packed_git *p)
->  static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  			      struct multi_pack_index *midx)
->  {
-> +	int fd;
->  	struct stat st;
->  	char *bitmap_name = midx_bitmap_filename(midx);
-> -	int fd = git_open(bitmap_name);
-> +	trace2_data_string("midx", the_repository, "try to open bitmap",
-> +			   bitmap_name);
-> +	fd = git_open(bitmap_name);
->  
->  	free(bitmap_name);
+>   	DONT_SKIP_TAGS=t
+>   
+>   	cache_dir="$HOME/none"
 
-Hrm, so re my comment on 5/5 are you trying to use the "try to open" as
-a timer to see what our start time is?
-
-I think probably not, in which case this whole variable flip-around is
-something we won't need.
-
-But if we do actually need it perhaps a sub-region for the timing?
-
-
-> @@ -511,11 +530,18 @@ static int open_midx_bitmap(struct repository *r,
->  static int open_bitmap(struct repository *r,
->  		       struct bitmap_index *bitmap_git)
->  {
-> -	assert(!bitmap_git->map);
-> +	int ret = -1;
->  
-> -	if (!open_midx_bitmap(r, bitmap_git))
-> -		return 0;
-> -	return open_pack_bitmap(r, bitmap_git);
-> +	assert(!bitmap_git->map);
-> +	trace2_region_enter("pack-bitmap", "open_bitmap", r);
-> +	if (!open_midx_bitmap(r, bitmap_git)) {
-> +		ret = 0;
-
-Nit: I think these "goto" patterns are best if your "int ret = N" picks
-an "N" which is the default that you'll "goto", i.e. if you pick "ret =
-0" you'll just need "goto done" here....
-
-> +		goto done;
-> +	}
-> +	ret = open_pack_bitmap(r, bitmap_git);
-
-...which we may then override here.
-
-Just saves you the assignment and the {}, but it tends to add up in
-longer functions.
-
-> +done:
-> +	trace2_region_leave("pack-bitmap", "open_bitmap", r);
-> +	return ret;
->  }
-
-Looks good, aside from the 5/5 comments that much of the data string
-logging looks like it becomes redundant in the end due to error() giving
-us the same thing.
-
->  struct bitmap_index *prepare_bitmap_git(struct repository *r)
-> diff --git a/repo-settings.c b/repo-settings.c
-> index b4fbd16cdc..5bc7a97a6d 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -8,6 +8,7 @@ static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
->  {
->  	if (repo_config_get_bool(r, key, dest))
->  		*dest = def;
-> +	trace2_data_string("config", r, key, *dest ? "true" : "false");
->  }
->  
->  void prepare_repo_settings(struct repository *r)
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index eb63b71852..664cb88b0b 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -421,8 +421,8 @@ test_expect_success 'complains about multiple pack bitmaps' '
->  		test_line_count = 2 bitmaps &&
->  
->  		git rev-list --use-bitmap-index HEAD 2>err &&
-> -		grep "a bitmap has been opened" err &&
-> -		grep "ignoring extra bitmap file" err
-> +		grep "warning: a normal or midx bitmap already has been opened" err &&
-> +		grep "warning: ignoring extra bitmap file" err
->  	)
->  '
-
-
-I haven't tested but part of this test change looks like it'll break
-under bisect, i.e. you changed 1/2 of these strings in 3/5. Did you try
-with "git rebase -i -x 'make test T=t*bitmap*" or similar?
