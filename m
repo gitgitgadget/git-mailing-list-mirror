@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2ABCC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F21B3C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1391421AbiDUSje (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 14:39:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57108 "EHLO
+        id S1391424AbiDUSjg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 14:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1391408AbiDUSjb (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1391404AbiDUSjb (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Apr 2022 14:39:31 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC3B3818D
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:41 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v12so1081568wrv.10
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:41 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E4D37A95
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:40 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n126-20020a1c2784000000b0038e8af3e788so3998222wmn.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=j9Vq0HkJ2RRvZSQV89fC6AYlCIJhMdzcRGujQSX+4J0=;
-        b=AtagkKebqdCdpTBQRyakrRgm9C4+Wag43OUM3HHuOF68axzqHcncPWC7ddY1ymd4Iv
-         YgRC8vGsWJ+I4Z8aodWO6wO/+vdm77V97UGNO+Tj7RZfxxWs4e5oVmJvq2FklbvadsaK
-         vRuqcXEUmzosIzlshALOFk7v3HF5jISythyM5xo1P5HWSIdW3zwk4iA/zlg6cAX/9FK0
-         cr0LFUeiAlGr6JfMhydS7v13zMsvNEMqjRgU6mYdezhaEcT87deHmuf9MkcqbbRO1n/A
-         LLUQP/BZmNcZwze3hi584YMCrk58KW1i02zSOEOFRrIbduag0+WCAKPTK+1I8r5+WuM4
-         l6sw==
+        bh=eBZ0gns+yMZj+MFoorlPBtWgymE4bmRlinap/Si4gaI=;
+        b=ZKqOsq5HZDOkyvwDAGnzCTnpSW70ubkuHrACFIQM0j1uQvMzdlYker0TcE7GLqplU8
+         vDr/PedoK5abNnEMKYBwHHJ+PO3uLZPmuFyRFqJKMIlGlUXgaQdYxLt1pWL+4T7eXG4k
+         s8NCghi86iAbpS3299jOMq86lt5myVCXRk53UDFIksPqrSjmlZXihsRI5TtM2/N0+wtW
+         XAtFPgiyrPmeB6Uf6+QkDEikSbgaP5Ip9EeikaqvapviHfKTkE3MoLDUmcexFFqJHsUB
+         VvCxriDLP/g1Oicmyu3BD0v6uJINO+cySvNs7mOPU4rCMHhnaEGgn4KKYx3P+qvV3gea
+         kg8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j9Vq0HkJ2RRvZSQV89fC6AYlCIJhMdzcRGujQSX+4J0=;
-        b=I2sP5bhnKsActe4dBvdWJQ4k15ai5RtIavV8T7MZ6cVAKYUh+J5FEVPfwGN2e/w6JU
-         8J25cbJuiOA8yjO+5YOQwIcZRfBkS7aihBdvKYFKsepGBOJz/jp3llSpKHqJcrYqpxXc
-         aNjWYqicilYn4mi/z0xjcZk3Kz5lcNbjZYhEZsW5gSZ0dzuZNwWrL+Pzct/oBoIliVrY
-         LWHZhFH64zIlTmfwrNbmmjdTIaMum34g9zg2sSmPxLYZV5oEMcqZIbwQbCrVvHnHPeYs
-         hja6Oo1m0mqESSdkOLvA+caPOg3vu6AwTM3ZI6+XN6yqhVT6HBUT3Uvx4303/XGN2YE8
-         O52A==
-X-Gm-Message-State: AOAM530AGk5a0H9mTivy673GoQNHyI5871vIxwlmVt3o7RvnnK/w3ZKL
-        qtHWL0IZRTyVVtKAOeTH/GWpHFeDouJ9rw==
-X-Google-Smtp-Source: ABdhPJwdJjAgxZD+//2GGKiKE7sepDzoCbGFf82mgSh6FDxkdHGrdvx/x0cdSQO2k2gkVIDJAbmW6g==
-X-Received: by 2002:adf:f088:0:b0:20a:8709:d381 with SMTP id n8-20020adff088000000b0020a8709d381mr746464wro.303.1650566199769;
-        Thu, 21 Apr 2022 11:36:39 -0700 (PDT)
+        bh=eBZ0gns+yMZj+MFoorlPBtWgymE4bmRlinap/Si4gaI=;
+        b=LRBH13WFvZRfMQKcoPJMOcaMsQOmabd+JmZahYnRSwNZrb9zHnLmKxmbJpp532O+DB
+         HBJdJUxXpEtL8cW/vR1n34ETP2Zr7S8O/RN3nz42uzm4ycuxz4Bxlh0edfktMsJ9ymew
+         ffUo3tswAZuXsTIzrf8n2UxkQToGzUBcO6h9xbviPOgT3rCXf84b0S3mlK9Uxu6CWaAM
+         t8U8gf4gRVXzUAM9smhEHe22zXRQGXdaWOhMGhs9GbweKNOjTm6rU2a0naFGZzkSv19s
+         s2eu1QURS8YVGj1KHv6Ad+xY4yUOJUAyYVwqOq0tEbgBwrc+MXBqd5LhO3QRirKX5WiO
+         lo1A==
+X-Gm-Message-State: AOAM531Swwat4BkxFQg1QFLYKnLqWez3LQgve1HsGNIOIEQyoSWrb7VO
+        aez+CXsNTrJP8cY3Nn7CqgoaROOJJiYL0g==
+X-Google-Smtp-Source: ABdhPJw4zXHEfovoGqGyYt95Xk9mnLGSw5kKI0rtRikaDVJhgpwKi6/4QzNL8R0XFhPpB2HEPfG6QA==
+X-Received: by 2002:a05:600c:154b:b0:38f:f7f4:8139 with SMTP id f11-20020a05600c154b00b0038ff7f48139mr653097wmg.60.1650566198890;
+        Thu, 21 Apr 2022 11:36:38 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id o40-20020a05600c512800b0038ebf2858cbsm3108624wms.16.2022.04.21.11.36.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 11:36:39 -0700 (PDT)
+        Thu, 21 Apr 2022 11:36:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v5 02/10] CI: add --exit-code to ci/print-test-failures.sh
-Date:   Thu, 21 Apr 2022 20:36:26 +0200
-Message-Id: <RFC-patch-v5-02.10-caec0b1089a-20220421T183001Z-avarab@gmail.com>
+Subject: [RFC PATCH v5 01/10] CI: don't "cd" in ci/print-test-failures.sh
+Date:   Thu, 21 Apr 2022 20:36:25 +0200
+Message-Id: <RFC-patch-v5-01.10-56910df26e7-20220421T183001Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.879.g3659959fcca
 In-Reply-To: <RFC-cover-v5-00.10-00000000000-20220421T183001Z-avarab@gmail.com>
 References: <RFC-cover-v4-0.6-00000000000-20220413T195514Z-avarab@gmail.com> <RFC-cover-v5-00.10-00000000000-20220421T183001Z-avarab@gmail.com>
@@ -75,65 +75,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The ci/print-test-failures.sh scripts will exit 0 when there's failed
-tests, let's teach it --exit-code to have it exit non-zero in those
-cases.
+Change the logic in ci/print-test-failures.sh so that we don't need to
+"cd" at the top-level, we'll now only do so for the "tar" command.
+
+This way we can remove some duplicate code added in
+aea8879a6ac (travis-ci: include the trash directories of failed tests
+in the trace log, 2018-08-01), i.e. not have both a $TEST_NAME and
+$test_name. The output is exactly the same as before,
+i.e. "test-results/" was included in the heading.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/print-test-failures.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ ci/print-test-failures.sh | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
 diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index f6736f424e0..d00cd0e4944 100755
+index ec395c79ccd..f6736f424e0 100755
 --- a/ci/print-test-failures.sh
 +++ b/ci/print-test-failures.sh
-@@ -8,16 +8,33 @@ set -e
+@@ -8,33 +8,36 @@ set -e
  . ${0%/*}/lib-ci-type.sh
  . ${0%/*}/lib-tput.sh
  
-+exit_code=
-+while test $# != 0
-+do
-+	case "$1" in
-+	--exit-code)
-+		exit_code=t
-+		;;
-+	*)
-+		echo "BUG: invalid $0 argument: $1" >&2
-+		exit 1
-+		;;
-+	esac
-+	shift
-+done
-+
- if ! ls t/test-results/*.exit >/dev/null 2>/dev/null
+-cd t/
+-
+-if ! ls test-results/*.exit >/dev/null 2>/dev/null
++if ! ls t/test-results/*.exit >/dev/null 2>/dev/null
  then
  	echo "Build job failed before the tests could have been run"
  	exit
  fi
  
-+failed=
- for TEST_EXIT in t/test-results/*.exit
+-for TEST_EXIT in test-results/*.exit
++for TEST_EXIT in t/test-results/*.exit
  do
  	if [ "$(cat "$TEST_EXIT")" != "0" ]
  	then
-+		failed=t
- 		TEST_NAME="${TEST_EXIT%.exit}"
- 		TEST_NAME="${TEST_NAME##*/}"
- 		TEST_OUT="${TEST_NAME}.out"
-@@ -42,3 +59,11 @@ do
+-		TEST_OUT="${TEST_EXIT%exit}out"
++		TEST_NAME="${TEST_EXIT%.exit}"
++		TEST_NAME="${TEST_NAME##*/}"
++		TEST_OUT="${TEST_NAME}.out"
++		TEST_MARKUP="${TEST_NAME}.markup"
++
+ 		echo "------------------------------------------------------------------------"
+-		echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)"
++		echo "$(tput setaf 1)test-results/${TEST_OUT}...$(tput sgr0)"
+ 		echo "------------------------------------------------------------------------"
+-		cat "${TEST_OUT}"
++		cat "t/test-results/${TEST_OUT}"
+ 
+-		test_name="${TEST_EXIT%.exit}"
+-		test_name="${test_name##*/}"
+-		trash_dir="trash directory.$test_name"
++		trash_dir="trash directory.$TEST_NAME"
+ 		case "$CI_TYPE" in
+ 		github-actions)
+-			mkdir -p failed-test-artifacts
++			mkdir -p t/failed-test-artifacts
+ 			echo "FAILED_TEST_ARTIFACTS=t/failed-test-artifacts" >>$GITHUB_ENV
+-			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
+-			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
++			cp "t/test-results/${TEST_OUT}" t/failed-test-artifacts/
++			(
++				cd t &&
++				tar czf failed-test-artifacts/"$TEST_NAME".trash.tar.gz "$trash_dir"
++			)
+ 			;;
  		esac
  	fi
- done
-+
-+if test -n "$failed"
-+then
-+	if test -n "$exit_code"
-+	then
-+		exit 1
-+	fi
-+fi
 -- 
 2.36.0.879.g3659959fcca
 
