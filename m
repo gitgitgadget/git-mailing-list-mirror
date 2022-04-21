@@ -2,89 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7095EC433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 23:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A882C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 23:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392522AbiDUXIr convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 21 Apr 2022 19:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
+        id S1442442AbiDUXWF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 19:22:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392472AbiDUXIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 19:08:46 -0400
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3525D43395
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 16:05:55 -0700 (PDT)
-Received: by mail-vk1-f181.google.com with SMTP id bi49so3018527vkb.10
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 16:05:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zSU3xZcUwZW76m5zwU3/0LP4LYVVEYMi5PeUa8VLTQk=;
-        b=ZXmd72EjD4wXHyqyWk1v2Ay8g/hVqNEFUj1CtKM0Hsc9WL0rPPfY9gDoVLrCEZ/Qy4
-         /G3dEZoC0I5FtGyGAFxE1aeUDKTJfxaW5ubC04ZRVnsQA6KzpBKl/uhM2zZfPeMClS63
-         kk192OiVjGhBtl42t+s0Hr1xsfLK1fAhyUEPpBBlyDcB/dFGBIy8cVnvLILIIeUkEkhr
-         LHoDtJDbilgOo3uxqPnofS2lfh5KAgUCpYAqyPPvegzys0w6rQCMq/0xUC54no5akx4f
-         mVrstPXcnk08WQMAzOvNKOnD9YLd+rOnN/vZIsFRLre0xeoDmLh7zNhl+Jl+XxqC7FOo
-         zxNg==
-X-Gm-Message-State: AOAM5334qN2ZDLzv9ZicL9Zv7T+fpaclzops7XnIkfQJcP1KL9Aw/Ldk
-        2Pb8UFftih/TSWYPDEPNmyk1G7XDi4O3ZaRrk1IUgzkcr7HHbg==
-X-Google-Smtp-Source: ABdhPJyzKJRahnzOrpvoVMP9s3oHMQzv8wUVFzueY3x+XrqUO8hy6ECgVqTrsZkbzM8ENuXdRMxPHgMcxsLrdEZQbxo=
-X-Received: by 2002:a05:6122:49d:b0:348:f44e:3219 with SMTP id
- o29-20020a056122049d00b00348f44e3219mr738731vkn.19.1650582354238; Thu, 21 Apr
- 2022 16:05:54 -0700 (PDT)
+        with ESMTP id S1442406AbiDUXWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 19:22:04 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C18242EE6
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 16:19:13 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 23LNJ9mv000726
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 21 Apr 2022 19:19:09 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Alyssa Ross'" <hi@alyssa.is>,
+        "=?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0_Bjarmason'?=" <avarab@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <20220421194832.lshqkl3bogy2f2hy@eve> <220421.86tuam5hoi.gmgdl@evledraar.gmail.com> <20220421223843.6z3y4bnrbu76erhk@eve>
+In-Reply-To: <20220421223843.6z3y4bnrbu76erhk@eve>
+Subject: RE: Failures in t9001-send-email
+Date:   Thu, 21 Apr 2022 19:19:04 -0400
+Organization: Nexbridge Inc.
+Message-ID: <024e01d855d6$35003d00$9f00b700$@nexbridge.com>
 MIME-Version: 1.0
-References: <20220421225515.6316-1-carenas@gmail.com>
-In-Reply-To: <20220421225515.6316-1-carenas@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 21 Apr 2022 19:05:43 -0400
-Message-ID: <CAPig+cT+KWZNYYCWEoc5Wk4Kp_aQw1m48Tks62CAe2EaYJnc+A@mail.gmail.com>
-Subject: Re: [PATCH] ci: make perforce installation optional in macOS
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQNcJ8Y8zFGc2cpM3gWndKn2cOomuwGsTrEwAfGnE7Cp1mzfQA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 21, 2022 at 6:55 PM Carlo Marcelo Arenas Belón
-<carenas@gmail.com> wrote:
-> Using brew to install perforce has several documented[1,2,3,4] edge
-> cases that make it fail periodically, so if problems were found while
-> installing it, just continue without it.
+On April 21, 2022 6:39 PM, Alyssa Ross wrote:
+>> I think a patch to do that would be worth having/reviewing (hint
+>> hint!). As always the real work is updating docs, running the tests
+>> etc., digging up ML discussions to see if there's been any past
+>> arguments for/against it etc.
+>>
+>> In this case the code change itself should be trivial (I honestly
+>> didn't look this time, but really, it's a config default...). So this
+>> seems like a perfect task for someone not too familiar with Git's
+>> codebase, but still interested in contributing :)
 >
-> This means that until the problem is solved all perforce tests will be
-> skipped in macOS, but they are still most likely covered by the other
-> unaffected runs and will be covered again once the issue solves itself.
+>I thought I'd have a go at a patch, but I wasn't able to get the tests
+>running:
 >
-> 1 0eb3671ed96 (ci(osx): use new location of the `perforce` cask, 2019-10-23)
-> 2 5ed9fc3fc86 (ci: prevent `perforce` from being quarantined, 2020-02-27)
-> 3 3831132ace6 (ci/install-depends: attempt to fix "brew cask" stuff, 2021-01-14)
-> 4 https://lore.kernel.org/git/cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com/
-> ---
-> This is based on master and can merge upwards except with seen where it
-> conflicts with the recently added ab/ci-osx-loosen-package-requirement
-> which it is meant to replace.
+>    prove ./t9001-send-email.sh
+>    ./t9001-send-email.sh .. Dubious, test returned 1 (wstat 256, 0x100)
+>    Failed 15/188 subtests
+>      (less 1 skipped subtest: 172 okay)
 >
-> A successful sample run when merged with master available in :
+>    Test Summary Report
+>    -------------------
+>    ./t9001-send-email.sh (Wstat: 256 Tests: 188 Failed: 15)
+>      Failed tests:  27, 51, 78-84, 123, 147-150, 185
+>      Non-zero exit status: 1
+>    Files=1, Tests=188, 17 wallclock secs ( 0.06 usr  0.01 sys + 11.66 cusr
+5.37 csys =
+>17.10 CPU)
+>    Result: FAIL
 >
->   https://github.com/carenas/git/actions/runs/2204519374
->
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> @@ -43,7 +43,7 @@ macos-latest)
-> -       brew install homebrew/cask/perforce
-> +       brew install homebrew/cask/perforce || true
+>I had a look at the tests to try to guess what was wrong, but I didn't come
+up with
+>anything.  Any ideas?  When I run make test, every other test is fine, it's
+just the
+>send-email tests that are problematic.
 
-You do get a vaguely alarming error message[1] with the solution
-implemented by this patch:
+I have the same issue on NonStop. Not sure why, other than our sendmail is
+massively broken.
+--Randall
 
-    ci/install-dependencies.sh: line 81: type: p4d: not found
-
-However, that's an unrelated and existing minor mistake (outside of
-the scope of this fix, probably). It should be using `command -v`
-rather than `type` in the couple conditionals at the bottom of the
-script.
-
-[1]: https://github.com/carenas/git/runs/6119943232?check_suite_focus=true#step:3:116
