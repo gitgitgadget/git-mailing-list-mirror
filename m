@@ -2,43 +2,43 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B6F0C433FE
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 22:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7095EC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 23:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392340AbiDUXBi convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 21 Apr 2022 19:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49244 "EHLO
+        id S1392522AbiDUXIr convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 21 Apr 2022 19:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392318AbiDUXBh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 19:01:37 -0400
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6135E42EC4
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 15:58:42 -0700 (PDT)
-Received: by mail-vs1-f53.google.com with SMTP id j16so5909453vsv.2
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 15:58:42 -0700 (PDT)
+        with ESMTP id S1392472AbiDUXIq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 19:08:46 -0400
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3525D43395
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 16:05:55 -0700 (PDT)
+Received: by mail-vk1-f181.google.com with SMTP id bi49so3018527vkb.10
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 16:05:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HLuCUtPzPom5eA/HKFIhVpx/PXeAJp2/AB70eVVKU8A=;
-        b=r9+BGKN5KbteAo+WsDtpsg6JQvV4UirNtZmb1aWdXlIyn3BL5e9aTkyQr/yOEwy2ZG
-         VY5RVxrztZ+AE/CoNeo2MtJQ9mCJ8P4TsixwswJCSRG4nUPNrnQn4IqNXQmX21IhHLiG
-         QawBFeRp0NLsBNxaY7VyNYwEgfEqNjQPEBw+b/1x0Nth24wLZLEO2Ceak1mmC+mNdv+H
-         Q88zVQdfYYdgmKsw+SUjtWR0WqNJ1RH3S1Gtxy4g8vyZhtrSp4zciRbGGye0JQZ1aJ4r
-         jK9mWwDKsq3e4ZjIDcp6OR7g1JycecoYhszJyat+pr5Z5QkxT8O8yX63dKDNTtDT/Kb+
-         zVjw==
-X-Gm-Message-State: AOAM532WCyb/Cl2NSTQVfa8197MnRltzDjBcCYQ+CtuszR8guEhC6663
-        Nhfli5dAjDjHiVqERaOH3qRTUX8h//fGzF0Z+Z4eUkb1quo=
-X-Google-Smtp-Source: ABdhPJywnrh3cGMCNOCXZUmBHjttPf1xyEwqcViIFXrNFDpa6CmGUCSQJ4LEh53a2rA8LW1EDyfp/PbHan1VOtD5woc=
-X-Received: by 2002:a05:6102:e53:b0:32a:120f:3ef0 with SMTP id
- p19-20020a0561020e5300b0032a120f3ef0mr581261vst.14.1650581921314; Thu, 21 Apr
- 2022 15:58:41 -0700 (PDT)
+        bh=zSU3xZcUwZW76m5zwU3/0LP4LYVVEYMi5PeUa8VLTQk=;
+        b=ZXmd72EjD4wXHyqyWk1v2Ay8g/hVqNEFUj1CtKM0Hsc9WL0rPPfY9gDoVLrCEZ/Qy4
+         /G3dEZoC0I5FtGyGAFxE1aeUDKTJfxaW5ubC04ZRVnsQA6KzpBKl/uhM2zZfPeMClS63
+         kk192OiVjGhBtl42t+s0Hr1xsfLK1fAhyUEPpBBlyDcB/dFGBIy8cVnvLILIIeUkEkhr
+         LHoDtJDbilgOo3uxqPnofS2lfh5KAgUCpYAqyPPvegzys0w6rQCMq/0xUC54no5akx4f
+         mVrstPXcnk08WQMAzOvNKOnD9YLd+rOnN/vZIsFRLre0xeoDmLh7zNhl+Jl+XxqC7FOo
+         zxNg==
+X-Gm-Message-State: AOAM5334qN2ZDLzv9ZicL9Zv7T+fpaclzops7XnIkfQJcP1KL9Aw/Ldk
+        2Pb8UFftih/TSWYPDEPNmyk1G7XDi4O3ZaRrk1IUgzkcr7HHbg==
+X-Google-Smtp-Source: ABdhPJyzKJRahnzOrpvoVMP9s3oHMQzv8wUVFzueY3x+XrqUO8hy6ECgVqTrsZkbzM8ENuXdRMxPHgMcxsLrdEZQbxo=
+X-Received: by 2002:a05:6122:49d:b0:348:f44e:3219 with SMTP id
+ o29-20020a056122049d00b00348f44e3219mr738731vkn.19.1650582354238; Thu, 21 Apr
+ 2022 16:05:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220421225515.6316-1-carenas@gmail.com>
 In-Reply-To: <20220421225515.6316-1-carenas@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 21 Apr 2022 18:58:30 -0400
-Message-ID: <CAPig+cQh7piGQwQwS+d8RRSDODQwmB2V73w__s4yX=09YLRpWg@mail.gmail.com>
+Date:   Thu, 21 Apr 2022 19:05:43 -0400
+Message-ID: <CAPig+cT+KWZNYYCWEoc5Wk4Kp_aQw1m48Tks62CAe2EaYJnc+A@mail.gmail.com>
 Subject: Re: [PATCH] ci: make perforce installation optional in macOS
 To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -64,5 +64,27 @@ On Thu, Apr 21, 2022 at 6:55 PM Carlo Marcelo Arenas Belón
 > 3 3831132ace6 (ci/install-depends: attempt to fix "brew cask" stuff, 2021-01-14)
 > 4 https://lore.kernel.org/git/cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com/
 > ---
+> This is based on master and can merge upwards except with seen where it
+> conflicts with the recently added ab/ci-osx-loosen-package-requirement
+> which it is meant to replace.
+>
+> A successful sample run when merged with master available in :
+>
+>   https://github.com/carenas/git/actions/runs/2204519374
+>
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> @@ -43,7 +43,7 @@ macos-latest)
+> -       brew install homebrew/cask/perforce
+> +       brew install homebrew/cask/perforce || true
 
-Missing sign-off.
+You do get a vaguely alarming error message[1] with the solution
+implemented by this patch:
+
+    ci/install-dependencies.sh: line 81: type: p4d: not found
+
+However, that's an unrelated and existing minor mistake (outside of
+the scope of this fix, probably). It should be using `command -v`
+rather than `type` in the couple conditionals at the bottom of the
+script.
+
+[1]: https://github.com/carenas/git/runs/6119943232?check_suite_focus=true#step:3:116
