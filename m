@@ -2,164 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 598CAC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 14:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BCDCC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 15:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1389789AbiDUPAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 11:00:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38498 "EHLO
+        id S1384038AbiDUPgz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 11:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389750AbiDUPAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 11:00:44 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B54543EF0
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 07:57:55 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id h25so1045349wrc.13
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 07:57:55 -0700 (PDT)
+        with ESMTP id S1349101AbiDUPgx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 11:36:53 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A3B2E082
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:34:03 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id s25so2351352wrb.8
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0+QHon3pu/abWGcCTSu1HZXk7OetzVMGxKkfNlP+AWo=;
-        b=ZpGITeXq4R+i00SNj8Upxqsclp6o8/ufyFlO61r8OgPlHiEQq1eaIPoQ5TeW0JkOtG
-         VnBMKorSm3u1pRQfWeKEijArOEzkAvQdsgYMFqFaJzGKRmY1GoiwIB53eJ2KRuqrednO
-         9nwHe0o3o01nUTsY5rzQDERV8Ikhb4e3pXggRIWgqWb+iK+s33x2lHIuNnDk/FT+f86G
-         4u7KUyYdXpUqn7DU6EPEVjKO8y53sxP7286IpPX7ADqnOF7sFveNuwCdWaovIbyFLa2b
-         OiQq307N3OnglVs8fMgJxejlCK2D0+NJkjT3rs6bSTFHf2vVWCoD73IU1uXsFJaNbvkL
-         2nMA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jLjv0KXjxZyRUnfkRN9+vx5nnC3xKx/BibjHo4BYBH0=;
+        b=hXNHZ6KGOoFMzP5QkyriBmFj+xLNhXZffN0OEO30GNUQ6cL6Ueygd6gVtC1tTHqDKV
+         nd0gvBbOGnpqMeK5DlRswBJW75unTEkUVXcQBPKbyYgolbPFqmGr5GjsfFlj698qrrq+
+         8NvABiOLyLwI4WEdTTDdcfsidPt1dacRKUvrOwqfbhK+kJ5qtBslDXcWbmX+OT2COSPR
+         XUOJ0E2TCUZoAY8I+MssxW15a+6YXJzdxwYst2QrPVH8e1CnfBUlbkH/AsqYQR8xHbga
+         baLAuXHc6V6TRZ+Pd/gAEwy0QWlEXt8uyJH9dLJHMkrYZptMIr7qWCnr6ockOiyefTo+
+         62lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0+QHon3pu/abWGcCTSu1HZXk7OetzVMGxKkfNlP+AWo=;
-        b=r5nuFehgmc+4lZgc5siwnblewos7kF8z/YT6vkdU+QeXVbUdbGgWcHdQ5w4UzNZrpQ
-         Ql8fpM4Zq1bTCmrtwB/xgmFi/9kYaJB0J5Bg0cAJkvNssrLNPXwvjIYa6WEQJ4j3p045
-         OI7cOSZRT8YgCfhHIstUbbCSlE4xvmAk07ExSgtWLFnIDIHYe7biFX2eGWni3ElYdKnO
-         fa+BqTy3G70MiRmBAmf0NWP93OlepkBNhyDdHW400cc169V9rDAqp9b/E5EkLyf0nO2K
-         3HxiJ4++j3tH5rMU/DKwFf1HpBfbG7ySKa4Q5uZy8i7vDulBr+0pm3uCkawNb1xbuhNm
-         5Q8g==
-X-Gm-Message-State: AOAM533HGwQOWS1nFSwvxVG0rpsSm1tcROIduVTGvBT0acnTKw66k4f+
-        6MP4fwhczebVO7eCldBRZRiMs8P/EQA=
-X-Google-Smtp-Source: ABdhPJztPmZTIahj39cE+1f745DE3qFEXIQhDeuhQdw/ZBoxpr2i1CPAwTVPt2a+aIRTgjIOMv3M2g==
-X-Received: by 2002:adf:e9d1:0:b0:207:b80e:dc22 with SMTP id l17-20020adfe9d1000000b00207b80edc22mr85778wrn.405.1650553073318;
-        Thu, 21 Apr 2022 07:57:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2-20020a5d6482000000b0020a96536fcdsm2657144wri.57.2022.04.21.07.57.52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jLjv0KXjxZyRUnfkRN9+vx5nnC3xKx/BibjHo4BYBH0=;
+        b=2S9AhMsVEU5LhdQUeI35351NGdkE4VD/v5jXbU03sMQ6Mq+Pu4SlIDY6KTKZu9N9ws
+         c13fh6D8XbX9vdF/YwjkPF/rrJxqw7/fTyDWijBsQ2EU3+suM/MaqkDemNTfzYnYVxuP
+         N5zdti05HniaO99b3qNGyoOoF3cd+6GadJrbZvv5FprTIkMTfy118uLe5rWI3FCWJS4Z
+         WNWJKJrlRbzDgsODpg/txLZ5bqQvBN4RmLX6GYfjFah7X1pydaItCweJfB8QzS+OEN17
+         ufJmma0ltrNtOJlMCYQlLcdx0ZNkw5EjIiikZijGyUtluef0rKLc9/Xry3jYqqwhGLAD
+         Y+UA==
+X-Gm-Message-State: AOAM530xuMOOd8l5dh34/iR+y2SFIzDkwgOKDyuskzOTkNtnWsselkvN
+        mgYw2EIyE77ZZuAtebFHUt6NpnoLzSKVpg==
+X-Google-Smtp-Source: ABdhPJxDYLOXK+G6iNeoiGKQs/YI79L3908JQwgrwOBrwSi1zKbbS0HE8gzk730mvkfaHvekqv/L2w==
+X-Received: by 2002:a05:6000:18a9:b0:20a:8e74:6a60 with SMTP id b9-20020a05600018a900b0020a8e746a60mr230992wri.65.1650555241909;
+        Thu, 21 Apr 2022 08:34:01 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l126-20020a1c2584000000b00387d4f35651sm2370516wml.10.2022.04.21.08.34.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 07:57:52 -0700 (PDT)
-Message-Id: <0435406e2db6c5977928a2b0b0b79e66c0a078ee.1650553069.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1221.git.1650553069.gitgitgadget@gmail.com>
-References: <pull.1221.git.1650553069.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Apr 2022 14:57:49 +0000
-Subject: [PATCH 2/2] multi-pack-index: use --object-dir real path
-Fcc:    Sent
+        Thu, 21 Apr 2022 08:34:01 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Gregory David <gregory.david@p1sec.com>,
+        ptm-dev <ptm-dev@p1sec.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/2] show-brach: segfault fix from Gregory David
+Date:   Thu, 21 Apr 2022 17:33:46 +0200
+Message-Id: <cover-v3-0.2-00000000000-20220421T152704Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.0.876.g7efc8a7728c
+In-Reply-To: <225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com>
+References: <225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, vdye@github.com, me@ttaylorr.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+This is a version of
+https://lore.kernel.org/git/225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com/
+that applies with "git am", the patch got munged in transit (from the
+looks of it from Thunderbird's wrapping).
 
-The --object-dir argument to 'git multi-pack-index' allows a user to
-specify an alternate to use instead of the local $GITDIR. This is used
-by third-party tools like VFS for Git to maintain the pack-files in a
-"shared object cache" used by multiple clones.
+I added a 1/2 to factor out some shared code used by the segfault fix,
+and made the now-smaller 2/2 use that function.
 
-On Windows, the user can specify a path using a Windows-style file path
-with backslashes such as "C:\Path\To\ObjectDir". This same path style is
-used in the .git/objects/info/alternates file, so it already matches the
-path of that alternate. However, find_odb() converts these paths to
-real-paths for the comparison, which use forward slashes. As of the
-previous change, lookup_multi_pack_index() uses real-paths, so it
-correctly finds the target multi-pack-index when given these paths.
+I also renamed some varibles to reduce wrapping, and made the
+append_one_rev() come after the ref formatting. Other similar code
+above does that, it looks to me like they're equivalent
+(append_one_rev increments ref_name_cnt).
 
-Some commands such as 'git multi-pack-index repack' call child processes
-using the object_dir value, so it can be helpful to convert the path to
-the real-path before sending it to those locations.
+Gregory David (1):
+  show-branch: fix SEGFAULT when `--current` and `--reflog` together
 
-Adding the normalization in builtin/multi-pack-index.c is a little
-complicated because of how the sub-commands were split in 60ca94769
-(builtin/multi-pack-index.c: split sub-commands, 2021-03-30). The
---object-dir argument could be parsed before the sub-command name _or_
-after it. Thus, create a normalize_object_dir() helper to call after all
-arguments are parsed, but before any logic is run on that object dir.
+Ævar Arnfjörð Bjarmason (1):
+  show-branch: refactor in preparation for next commit
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/multi-pack-index.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ builtin/show-branch.c  | 47 ++++++++++++++++++++++++++++++------------
+ t/t3202-show-branch.sh | 43 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 4480ba39827..3853960f9ba 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -90,6 +90,14 @@ static void read_packs_from_stdin(struct string_list *to)
- 	strbuf_release(&buf);
- }
- 
-+static void normalize_object_dir(void)
-+{
-+	if (!opts.object_dir)
-+		opts.object_dir = get_object_directory();
-+	else
-+		opts.object_dir = real_pathdup(opts.object_dir, 1);
-+}
-+
- static int cmd_multi_pack_index_write(int argc, const char **argv)
- {
- 	struct option *options;
-@@ -127,6 +135,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
- 
- 	FREE_AND_NULL(options);
- 
-+	normalize_object_dir();
-+
- 	if (opts.stdin_packs) {
- 		struct string_list packs = STRING_LIST_INIT_DUP;
- 		int ret;
-@@ -169,6 +179,8 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
- 
- 	FREE_AND_NULL(options);
- 
-+	normalize_object_dir();
-+
- 	return verify_midx_file(the_repository, opts.object_dir, opts.flags);
- }
- 
-@@ -195,6 +207,8 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv)
- 
- 	FREE_AND_NULL(options);
- 
-+	normalize_object_dir();
-+
- 	return expire_midx_packs(the_repository, opts.object_dir, opts.flags);
- }
- 
-@@ -225,6 +239,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
- 
- 	FREE_AND_NULL(options);
- 
-+	normalize_object_dir();
-+
- 	return midx_repack(the_repository, opts.object_dir,
- 			   (size_t)opts.batch_size, opts.flags);
- }
-@@ -241,9 +257,6 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 			     builtin_multi_pack_index_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
--	if (!opts.object_dir)
--		opts.object_dir = get_object_directory();
--
- 	if (!argc)
- 		goto usage;
- 
 -- 
-gitgitgadget
+2.36.0.876.g7efc8a7728c
+
