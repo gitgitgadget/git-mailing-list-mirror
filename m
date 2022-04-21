@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE9DC433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 12:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEC6C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 12:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386257AbiDUM4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 08:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52244 "EHLO
+        id S1385192AbiDUM4z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 08:56:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385925AbiDUM4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 08:56:48 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58DC332EE4
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 05:53:59 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id r187-20020a1c44c4000000b0038ccb70e239so5816474wma.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 05:53:59 -0700 (PDT)
+        with ESMTP id S1386066AbiDUM4u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 08:56:50 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5084F33364
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 05:54:00 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id x18so6602799wrc.0
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 05:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T7NZllSdp7PJAfjWm2t10CFWgF6YZa54cQ/jKKiRAy0=;
-        b=K/9uEQhytkiDvOO5G3/LQ2fjhHXFNBtKq2vOBGY9zlYeW0Oze5HLznxLEfnJHPed+P
-         r4mcNsJVgr/BNbbPV3U3K+vYZqJYLc7K0JvYjNkjgcNe3j4U4Cj971i2BdMGpsJ5rLBk
-         2TtggjuVV3AIq/fNEaLoZlU9e+eKnORCOAAzYqXghfb0Bvh5LBOtri1lBYWFqQMGYwV9
-         1z9LcsmnSdecDPu3qdTR/QnpsJVMy6CNOogmo3cf/YXug8cFthW5acU/B3boDkcdAZMo
-         3XZEQuXZ+31hDqDzAu3YX/F+MuzxxACj9bnT9FqC/wzmn9GlEwiMcDSqTC29xhf68Sfo
-         Jo6g==
+        bh=BKyiE99h+4gVEf89FPdhcdo/DI09Tntri9egZ/vWudg=;
+        b=k1q5pyczyTh/HQD55uJnz5DQRYff1cTr0vbBwh0lYLDuJdxJUh+ob3GDgzILTe1Db1
+         //9ob93vGh1wFzpL1OJSfOSXjzs0jbM4hpzPZnxmA6CPemzw/rE3CWkK0urmIBzkSEVM
+         ZLU3eJExfrfcKZsfVQ4ZrzBFMClyrFwiy20YONY2lDAiqFYg+Dp9cdXjKFqEZPd4kDc1
+         qCnfN2Fq3ywZUfDuevKkv1AyX77Pf9CSvFKCorYvIeSHWoS3K5ZoXt2UWDS9HmUBb77T
+         ws3BYliD6e/Dlekcxa8SmVWUkAEcOXY6cSc/S1iy3aOj3rcHZNJCstICKtPwwo/cXJ8k
+         piXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T7NZllSdp7PJAfjWm2t10CFWgF6YZa54cQ/jKKiRAy0=;
-        b=b1VFtkzBkSl5t++aqCOaVWvnEBsy+RCFLYxQeqeMBMPegm4g6A2/4LvhwzN8YeqWO1
-         8Ui60NeUpCaNLoVAYpQ2g5wyp7V7RqezdHiSxugAw/N5Xdlw8mjM5gqFwGA89raf88AI
-         IjslZ7I9WRvgZPQmem7Bv/br6b/+YvaOexyElm+mck+ameJlLVOMtf9qCgg4Iv/fhuJx
-         Fg2s46WErHsZ6lrYZQZ6LnRu2kwELlRfg+Jeu6ZK0haFVtmFIexokPMV9kaka5sz9Y7U
-         +r2P7ujXEY5frp62RZtY7OD+LQ8w6rYndJHNV5lXJFzrMulnVNbIQnZ+Z9KuYnWR7knV
-         BdfA==
-X-Gm-Message-State: AOAM5301Lr77MkumvNVdJtu8oSnehQp85/NYT2ofI4BJPRaLZeZwA5bt
-        i0tiMkODw17gRy6sseruHJRlIW6p0F2IaQ==
-X-Google-Smtp-Source: ABdhPJyvHvHLFSoGg3VX70B4sORtEfGvqAbciEVG/8Rz0IyHR9IycJK6wYfdHUDBi6DxBDi3O3YoLA==
-X-Received: by 2002:a05:600c:3d88:b0:391:7aa1:792b with SMTP id bi8-20020a05600c3d8800b003917aa1792bmr8631055wmb.8.1650545637703;
-        Thu, 21 Apr 2022 05:53:57 -0700 (PDT)
+        bh=BKyiE99h+4gVEf89FPdhcdo/DI09Tntri9egZ/vWudg=;
+        b=CWVmye6krtBJsEJ1x7s3HoIlEie+/6zGeGa8BeupkEfE/cmPZiO/IUQkPjiQOvVOti
+         HcZyBu3N2dW5HQMbp4XFrEbTws1k2rEeLv0e3UF0BVokwEqPh8kr8M8RW0u4NdBPyGye
+         dOl8Mg7PGO8SKVZbMpznjyt3TMPXR6ccB2hqfTebWDDSY93RNZ6idf2aQrQKV4W06DMO
+         lenJ37LwZRtiL7SKVIeSZpjpNFw28kjQ0IocsROiVSB5giIYPmtDTnvQ/UUYmSN14uDP
+         yoPlQvMdBjBzToQi+zBon9waNsVTl0LGYbb+q8EgbImYozNB+JgnJpkYzd3DHA5LdEGA
+         JHzQ==
+X-Gm-Message-State: AOAM533TZ0sJUIORbjjYG/UGcWI+Kz7IKxc5KQXspZz5zcnCGkLZRiRt
+        CaPWMXPruaBMCxD0PKFqZWjUg64YnrsV6A==
+X-Google-Smtp-Source: ABdhPJwGH1nOF2caCizxl7T60NwxH85CN6sBvNKF9PLZliycvv16eLmF/BkAuRJ8SHKrsAj1f19KrQ==
+X-Received: by 2002:a05:6000:8c:b0:207:a4dc:dfab with SMTP id m12-20020a056000008c00b00207a4dcdfabmr19113946wrx.441.1650545638503;
+        Thu, 21 Apr 2022 05:53:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n68-20020a1c2747000000b0038e6b4d5395sm2163685wmn.16.2022.04.21.05.53.56
+        by smtp.gmail.com with ESMTPSA id n68-20020a1c2747000000b0038e6b4d5395sm2163685wmn.16.2022.04.21.05.53.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 21 Apr 2022 05:53:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -58,58 +58,83 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] CI: run "brew install perforce" without past workarounds
-Date:   Thu, 21 Apr 2022 14:53:51 +0200
-Message-Id: <patch-1.2-dcedf03c2d7-20220421T124225Z-avarab@gmail.com>
+Subject: [PATCH 2/2] CI: don't care about SHA256 mismatch on upstream "perforce" package
+Date:   Thu, 21 Apr 2022 14:53:52 +0200
+Message-Id: <patch-2.2-28208bac859-20220421T124225Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.876.g4bfefc07680
 In-Reply-To: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the alternating between --no-quarantine, --cask and fallback
-"git pull" updating of the "perforce" package.
+As can be seen in the commit history[1] of the upstream perforce.rb in
+homebrew-cask the upstream perforce package URL and its SHA-256 are
+aren't a unique pair. The upstream will start publishing an updated
+package at the same URL as the previous version, causing the CI to
+routinely fail with errors like:
 
-As can be seen in [1], [2] and [3] these were workarounds for various
-past CI issues. Running "brew install perforce" works now in GitHub
-CI, so there's no need to alternate between package names, and the
-"git pull" method was a workaround for some staleness issue on the
-Azure pipelines removed in [4].
+	==> Downloading https://cdist2.perforce.com/perforce/r21.2/bin.macosx1015x86_64/helix-core-server.tgz
+	Error: SHA256 mismatch
+	Expected: ffc757b9d4d0629b2594e2777edfb18097825e29c70d8f33a444c7482d622806
+	  Actual: 37bc306f0bdfd1d63cfcea113ada132d96f89d53cbb20c282735d51d06223054
 
-We do have a really common issue with this failing, but that's
-unrelated to any of those past fixes, and removing these old
-workarounds makes dealing with that a lot easier.
+Once someone gets around to updating the perforce.rb the failure of
+git's CI will be cleared up, but in the meantime all osx-{gcc,clang}
+jobs will encounter hard failures.
 
-1. 0eb3671ed96 (ci(osx): use new location of the `perforce` cask, 2019-10-23)
-2. 5ed9fc3fc86 (ci: prevent `perforce` from being quarantined, 2020-02-27)
-3. 3831132ace6 (ci/install-depends: attempt to fix "brew cask" stuff, 2021-01-14)
-4. 6081d3898fe (ci: retire the Azure Pipelines definition, 2020-04-11)
+Let's not be so anal about this and fallback to a "sha256 :no_check"
+on failure. We are already downloading arbitrary binaries from
+perforce's servers, and the point of doing so is to run the
+t/*-git-p4-*.sh tests, not to validate the chain of custody between
+perforce.com and the homebrew-cask repository.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+In the obscure (but unlikely to ever happen) that the failure is
+specifically because perforce.com published a bad updated package, and
+it a failure that their testing wouldn't have caught, but whoever's
+updating the homebrew SHA-256 recipe would have caught, we will have a
+failure in our p4 tests that we wouldn't have otherwise had.
+
+But I think that's so unlikely that we don't need to worry about it,
+whereas seeing failures due to the homebrew recipe lagging upstream is
+a real issue. E.g. "seen"'s latest push-out has such a failure: [3]
+
+Note: It's probably possible to embed this "sed" one-liner directly in
+the HOMEBREW_EDITOR variable, i.e.:
+
+    HOMEBREW_EDITOR='...' brew edit perforce
+
+But my attempts to do so were unsuccessful, particularly since I don't
+have access to a Mac OS X machine other than via by round-tripping
+through the CI. This version of getting the path via --print-path
+works, and is arguably easier to reason about and debug than a cute
+one-liner.
+
+1. https://github.com/Homebrew/homebrew-cask/commits/master/Casks/perforce.rb
+2. https://docs.brew.sh/Cask-Cookbook#required-stanzas
+3. https://github.com/git/git/runs/6104156856?check_suite_focus=true
 ---
- ci/install-dependencies.sh | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ ci/install-dependencies.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index dbcebad2fb2..82fa87f97af 100755
+index 82fa87f97af..540deab4488 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -37,13 +37,7 @@ macos-latest)
+@@ -37,7 +37,13 @@ macos-latest)
  	test -z "$BREW_INSTALL_PACKAGES" ||
  	brew install $BREW_INSTALL_PACKAGES
  	brew link --force gettext
--	brew install --cask --no-quarantine perforce || {
--		# Update the definitions and try again
--		cask_repo="$(brew --repository)"/Library/Taps/homebrew/homebrew-cask &&
--		git -C "$cask_repo" pull --no-stat --ff-only &&
--		brew install --cask --no-quarantine perforce
--	} ||
--	brew install homebrew/cask/perforce
-+	brew install perforce
+-	brew install perforce
++	brew install perforce || {
++		echo Installing perforce failed, assuming and working around SHA256 mismatch >&2 &&
++
++		path=$(brew edit --print-path perforce) &&
++		sed -i -e 's/\(sha256.\).*/\1:no_check/' "$path" &&
++		brew install perforce
++	}
  
  	if test -n "$CC_PACKAGE"
  	then
