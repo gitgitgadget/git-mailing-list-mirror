@@ -2,169 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4E1C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 15:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EF67C4332F
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 15:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390142AbiDUPhA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 11:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33636 "EHLO
+        id S1390334AbiDUPwv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 11:52:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349101AbiDUPgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 11:36:55 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B766B2ED78
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:34:05 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u3so7252902wrg.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:34:05 -0700 (PDT)
+        with ESMTP id S1390359AbiDUPwh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 11:52:37 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25BA547541
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:49:47 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id g23so54765edy.13
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 08:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2+ggnS5gF/FMbeaKLNYrNSBn0d7GYH4Ak96vH44Ih5w=;
-        b=m77ch3LKmRSUtXWsjxbXA8jmoY70hp3rU9jTK3gyq9Q6WNv66XrclGIlzCR50UaS65
-         FstzZKXPl8fYJ2bHYKVpDE2II+KzKlj/3dOyKYagAPkHzJwdu+OJdL0XlNwfKJJjKqUC
-         AYNBZaIh7oZ1olRH76ol74KHR7SqN9MWQfHjsPNISR91L2eViSZPJjliploO3ZnLvSts
-         fxky6AnkmjlcUol1H5O+dl8ZTGWaH/QF+G2t1XCcZQEmlfXjK7Whw0WmAfLty/9O50x3
-         r9EyiRRki6zyljbzHMRsLYb8SVA8RI9e+ot8JAA1Jf/YWeR3W+YEF9Z9mGDfVoyqv5lO
-         2eKw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=8hbrxJHL3lB+6jTv0rOAOgSNdaSon+NyfkFqXn0Qx6I=;
+        b=e8TIhfrhkiFfeIym2E+q2GeTA+wrnUN2fBmEvCFBmK4lgDGgBmBG0PLYy9u9Mot4d/
+         qv03goWbsjKHc6x6XpMrw1KsXf+QiHcezrfbgJmP+7AY9osWP2j79Q2RtFfGOm0/rtoa
+         UT63u5D8EW+a7wDuujIzlFTVEe5Y5zVUnADu8nYdm1UbK8Uf/350YUURQIbNrKhbL97p
+         8eE3B62InMN6V06X9cyD0OTmvsZnLcGFkM+sc9FC0QE3dychHNPnSzXcRAN+SuWqW5Yg
+         XvGtuFUEFxyrtPw27J9ddngTh1njV6qRjUuPFs3ePM4tQ8G4qHTCII4dbxd3kTDVoiZo
+         CVww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2+ggnS5gF/FMbeaKLNYrNSBn0d7GYH4Ak96vH44Ih5w=;
-        b=oMZurJxQFaDy2Wx61QP/SbtlxU8iBjj3Y7lA7PaiYn5r99kYwawumuAroQ6rxLDKGh
-         LFExIC6gz+d7HTUjrORCfveOlSt6JRg1J6xd1UXxTjQPrHLIUq1zDegTH3bSNmflRVmy
-         HRRnozOqPn/tx4np4pGuRx0nuiaZ62vyx34Rvp1wmVU593Fr+UVjPn1mgElB5qnSxXS+
-         +C921t7LHFfBZuNTBAoQx5/5IRMBW57FmuysSFvaZ7GhCKEQow157CkGiOyxNfdcqQjU
-         8gdMFmH5cBoRqnVhj+UGKQCvse449aA9z53iz/5PF6xFksPV7obMSFWH4SGdNOe6Uiu8
-         fksw==
-X-Gm-Message-State: AOAM531ztp5LTYYCni6+E9FlaiGQjm21BZGc01KZ7KyoyCWbZpeYzz6g
-        LO0Y2LqBxdZ1DKlGmt0tU+cEeidhvwBofg==
-X-Google-Smtp-Source: ABdhPJzR3LTm00pRdca24sD/zEIsoW5OQ7G0qJlCNQmHGozETp1qpL9tuC13Kut0sKtA+SREATDwqA==
-X-Received: by 2002:adf:e0c5:0:b0:206:1ba3:26aa with SMTP id m5-20020adfe0c5000000b002061ba326aamr201054wri.645.1650555243929;
-        Thu, 21 Apr 2022 08:34:03 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l126-20020a1c2584000000b00387d4f35651sm2370516wml.10.2022.04.21.08.34.02
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=8hbrxJHL3lB+6jTv0rOAOgSNdaSon+NyfkFqXn0Qx6I=;
+        b=0g+LoDI1v5S/MuZXNqh7SQ5LwPlF802C/BOqFev6Bt0436Oj1G9Rc4LKTNInoO9k7K
+         PbQoe/JTwiNq618fFQKq1IQy9fBD45OJWJntz2scUD8Yarv1KgWjBQhwAsXh0O3Xqcsx
+         onFsf0IayYxWoK3Vu8YaUIO3gS4nW05vSyl3iJUhOUjhWgfy/th+6qxlae3JAMkeoe0B
+         l/zNiWlTTnECLxFQraYw8/cSUoLZSn2MCPqy4WWzSrFw26zvX3akDl07Y20Kc5w6t+Co
+         SL9ncvt9mTikZ9Hh+ZBsynyruoA8lnPGP2f8I1M84PIzeD3SBKblaXoul8iNAY+Xvv2X
+         alJg==
+X-Gm-Message-State: AOAM531vmnKO78AVdXZ7kxb/p5S4E2hmOhGGtpR7gi/UfulERROdfSO1
+        GTpwtDQcHhEKFmtGRSjuJ8o=
+X-Google-Smtp-Source: ABdhPJyAk0/XlopyfdRmfX/NvSWYKQvrkdW2E4+XTQfh59wmiMnmYUZv49LrEl2tTXEqbpKTkpmoyA==
+X-Received: by 2002:a05:6402:270b:b0:424:7dd:9d7b with SMTP id y11-20020a056402270b00b0042407dd9d7bmr229152edd.92.1650556185553;
+        Thu, 21 Apr 2022 08:49:45 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ko11-20020a170907986b00b006e8811cc53esm7922837ejc.137.2022.04.21.08.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 08:34:03 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Gregory David <gregory.david@p1sec.com>,
-        ptm-dev <ptm-dev@p1sec.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 2/2] show-branch: fix SEGFAULT when `--current` and `--reflog` together
-Date:   Thu, 21 Apr 2022 17:33:48 +0200
-Message-Id: <patch-v3-2.2-396c3338533-20220421T152704Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.0.876.g7efc8a7728c
-In-Reply-To: <cover-v3-0.2-00000000000-20220421T152704Z-avarab@gmail.com>
-References: <225b410d-2d98-8c0b-c289-22f753c175d4@p1sec.com> <cover-v3-0.2-00000000000-20220421T152704Z-avarab@gmail.com>
+        Thu, 21 Apr 2022 08:49:44 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nhZ3w-00823v-7i;
+        Thu, 21 Apr 2022 17:49:44 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     derrickstolee@github.com, git@vger.kernel.org, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com, gitster@pobox.com
+Subject: Re: [PATCH v2 5/5] pack-bitmap.c: using error() instead of silently
+ returning -1
+Date:   Thu, 21 Apr 2022 17:41:36 +0200
+References: <cover.1650547400.git.dyroneteng@gmail.com>
+ <1a169d7b5ea4b6aec030a48f718dc2c4e922a9f4.1650547400.git.dyroneteng@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <1a169d7b5ea4b6aec030a48f718dc2c4e922a9f4.1650547400.git.dyroneteng@gmail.com>
+Message-ID: <220421.86o80u77xj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Gregory David <gregory.david@p1sec.com>
 
-If run `show-branch` with `--current` and `--reflog` simultaneously, a
-SEGFAULT appears.
+On Thu, Apr 21 2022, Teng Long wrote:
 
-The bug is that we read over the end of the `reflog_msg` array after
-having `append_one_rev()` for the current branch without supplying a
-convenient message to it.
+> In "open_pack_bitmap_1()" and "open_midx_bitmap_1()", it's better to
+> return error() instead of "-1" when some unexpected error occurs like
+> "stat bitmap file failed", "bitmap header is invalid" or "checksum
+> mismatch", etc.
+>
+> There are places where we do not replace, such as when the bitmap
+> does not exist (no bitmap in repository is allowed) or when another
+> bitmap has already been opened (in which case it should be a warning
+> rather than an error).
+>
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>  pack-bitmap.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index a1d06c4252..e0dcd06db3 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -328,7 +328,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>  		trace2_data_string("midx", the_repository, "stat bitmap file",
+>  				   "failed");
+>  		close(fd);
+> -		return -1;
+> +		return error("cannot stat bitmap file");
+>  	}
 
-It seems that it has been introduced in:
-Commit 1aa68d6735 (show-branch: --current includes the current branch.,
-2006-01-11)
+First, I wondered if we were missing _(), but looking at other string in
+the file they're not using that already, looks like these all should,
+but we can fix this all up some other time in some i18n commit. It's
+fine to keep this for now.
 
-Signed-off-by: Gregory DAVID <gregory.david@p1sec.com>
-Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/show-branch.c  | 13 +++++++++++++
- t/t3202-show-branch.sh | 43 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+)
+But more importantly: I think this should be your 4/5. I.e. just make
+these an error() and you won't need to add e.g. this
+trace2_data_string() for a failed stat.
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 499ef76a508..50c17fb5c31 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -821,6 +821,19 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		}
- 		if (!has_head) {
- 			const char *name = head;
-+			struct object_id oid;
-+			char *ref;
-+			char *msg;
-+			timestamp_t ts;
-+			int tz;
-+
-+			if (!dwim_ref(*av, strlen(*av), &oid, &ref, 0))
-+				die(_("no such ref %s"), *av);
-+			read_ref_at(get_main_ref_store(the_repository), ref,
-+				    flags, 0, i, &oid, &msg, &ts, &tz, NULL);
-+
-+			reflog_msg[ref_name_cnt] = fmt_reflog(msg, ts, tz,
-+							      "(%s) (current) %s");
- 			skip_prefix(name, "refs/heads/", &name);
- 			append_one_rev(name);
- 		}
-diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-index 7a1be73ce87..7f6ffcf8a57 100755
---- a/t/t3202-show-branch.sh
-+++ b/t/t3202-show-branch.sh
-@@ -161,4 +161,47 @@ test_expect_success 'show branch --reflog=2' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'show branch --reflog=2 --current' '
-+	sed "s/^>	//" >expect <<-\EOF &&
-+	>	! [refs/heads/branch10@{0}] (4 years, 5 months ago) commit: branch10
-+	>	 ! [refs/heads/branch10@{1}] (4 years, 5 months ago) commit: branch10
-+	>	  * [branch10] (4 years, 5 months ago) (current) branch: Created from initial
-+	>	---
-+	>	+ * [refs/heads/branch10@{0}] branch10
-+	>	++* [refs/heads/branch10@{1}] initial
-+	EOF
-+	git show-branch --reflog=2 --current >actual &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'show branch --current' '
-+	sed "s/^>	//" >expect <<-\EOF &&
-+	>	! [branch1] branch1
-+	>	 ! [branch2] branch2
-+	>	  ! [branch3] branch3
-+	>	   ! [branch4] branch4
-+	>	    ! [branch5] branch5
-+	>	     ! [branch6] branch6
-+	>	      ! [branch7] branch7
-+	>	       ! [branch8] branch8
-+	>	        ! [branch9] branch9
-+	>	         * [branch10] branch10
-+	>	          ! [master] initial
-+	>	-----------
-+	>	         *  [branch10] branch10
-+	>	        +   [branch9] branch9
-+	>	       +    [branch8] branch8
-+	>	      +     [branch7] branch7
-+	>	     +      [branch6] branch6
-+	>	    +       [branch5] branch5
-+	>	   +        [branch4] branch4
-+	>	  +         [branch3] branch3
-+	>	 +          [branch2] branch2
-+	>	+           [branch1] branch1
-+	>	+++++++++*+ [master] initial
-+	EOF
-+	git show-branch --current >actual &&
-+	test_cmp actual expect
-+'
-+
- test_done
--- 
-2.36.0.876.g7efc8a7728c
+You will be inside your trace2 region, so any failure to stat etc. will
+be obvious from the structure of the data and the "error" event, no
+reason to have an additional trace2_data_string().
 
+Aside from that & as a general matter: Unless you have some use-case for
+trace2 data in this detail I'd think that it would be better just to
+skip logging it (except if we get it for free, such as with error()).
+
+I.e. is this particular callsite really different from other places we
+fail to stat() or open() something?
+
+It's all a moot point with the region + error, but just something to
+keep in mind.
