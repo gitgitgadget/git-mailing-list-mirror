@@ -2,134 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD07AC433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62AB0C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1391538AbiDUSvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 14:51:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36512 "EHLO
+        id S1391674AbiDUS57 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 14:57:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1391539AbiDUSvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 14:51:45 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114934C403
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:48:55 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id i27so11816720ejd.9
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:48:54 -0700 (PDT)
+        with ESMTP id S1391636AbiDUS54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 14:57:56 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EF544C42D
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:54:45 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id i196so6317960ioa.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=/WgeJsDJleHQgBavny4F5HW1EDltOxXH7HSrEMluL+I=;
-        b=Fb+g6errurIgqIAF8/UFOYMECZT32HKFheQUWSyCMES2XvEBLu81D5mXJ3mafFZrX0
-         VSylRb3Nu1Fb5VgcctsGVNe5S4CxKMLqjLKDbfiuKfX/cCzAz+7Q6HFLKgRIhhmPzK80
-         rnHLxYDZiMnxH9JY2JXxB3Gr5nZKXN2p2J5LKuH8qgLnj6/+SiN4vv3SXi6MXuR6uVVW
-         CrbH/s58khoqEFfivQ4lDA8BNNWc/W/jNWJ7eU8bSYUrjJA+38SkK2+ZD7M2+XIhXO6w
-         aPXxALFa1Zh3VB6DTFyewsJP0t2QdNlYyZULoJa9Og0zP/PE8wX2uiCS2usmNk936txy
-         zPdw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=edL1cnqM0xI7ZRNz3M7fhtuKCmz5g0cSubpTbrnsV9U=;
+        b=GNrKtlxaGQ075BnhfrWvWa7PTbGdQexM+YgHAXDv425vqZqbyXF4/vX/Fl0cvRf3/H
+         TX2HY5IeMHbFw5rjUvjTuav8BO+iHv/n0UIU89yGRQ8uog/I3yCla/FO4rr5g5WW8X4r
+         7ErgvHFUUh4RK+Hoe5g6KcGyOFqJp6OqqbB83wOoWp2U2r747VAggE6tlPo9GWvmXKo2
+         sG9PtYMVTpgStPORbqxaNPs3erNv7WYf96xAYxm2lGfwgrHI9gWG1DgrIuFzF780M5/L
+         +8t4DmOXFzX7h5ncHRXXsECP7NE8Z8aE4r5TPYc2i63+gHz1od6TsPEYSQqHydCHYHtt
+         nGrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=/WgeJsDJleHQgBavny4F5HW1EDltOxXH7HSrEMluL+I=;
-        b=5vZPV/p8cxUMibv9jBiHy3U7RWeY3+DXwy7oBtjgQ0D9bkOJPhp+CcnhZqMlDImIjN
-         tSxA/Vg+/ykDYYDsqH8OBnKPsnX4eF7Z6t13Vd8oqupXNlTw7t/GHW1k1HvfV1/sKYXO
-         Id3X0FWcSNlZ0S+r7UKNZb1eTJelYbI5HMQqpblxUcL5/E6hfhyEKK3yGqhGaOG3e0J5
-         T+FUDmwYYBmNDGbc6XorSK0IRY/W729aSEIIbQbhcWOvIZNn4ruJ9OebylUIiRWN5NhF
-         9JLT5JKBpCflvbg0Fbl3oyr4M/ijdtVXUkI3sWbNEawZhSHP9ejS5xNfzmtcZZfuZLlq
-         O7tw==
-X-Gm-Message-State: AOAM531iikJRdikiUHcrPbOFnyQ1O220V+Q6cP/H/DveG3lUxRYck2mm
-        VT/TWURU6PhvEqyWiloqU1w=
-X-Google-Smtp-Source: ABdhPJxKdjaHKqVSjoW8Etc1sDnYJ+WoHUitqtd7l4ksy6HyBZ9MQsf0o9mfitDMniEUIQuUzD3K0g==
-X-Received: by 2002:a17:907:3e9f:b0:6ef:d830:b2cd with SMTP id hs31-20020a1709073e9f00b006efd830b2cdmr842728ejc.34.1650566933365;
-        Thu, 21 Apr 2022 11:48:53 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id r22-20020a17090638d600b006d584aaa9c9sm8108801ejd.133.2022.04.21.11.48.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=edL1cnqM0xI7ZRNz3M7fhtuKCmz5g0cSubpTbrnsV9U=;
+        b=SKnjQqKfV/nYlPu2BQBKDeu4U6S0ICOVqkzTovbs6tRMd5l1z76yBDybLFBnG5Pfe6
+         u7rrSQ4nPeMv8UNQd9i/YhpdS2yCvpTlTEY6TT9bg3zcYmZFVyrKF0M93YT2v19WMhZj
+         qE85ovF3ol038ReQf5Fk+Wxvp3eLQV2RoG/efK3OGFIMtN5Gs2cRRiQqWrJ7akjIL7/3
+         ADzIQUL+SbWSoUfhkpWvl6Z/bLpwaJsJ4Jqr4XOqgGlPxtJHsDnnspyG0WXyrHgK6BNV
+         7tvfATRWJvRvg3IXfpD9QEhjP5NBHlRtB65rZFQ+5uFgKpkdyiAu0i7Np8pI1TBlDwWX
+         vszA==
+X-Gm-Message-State: AOAM532vOSgI8TZ7D1qrSFkTR9s5QjmhUo+7KuVtI8gpk8qZy2SI/vd4
+        wpNzyktZxCoOhY13OR2Yi4bFZ4Ka/hYeOA3R
+X-Google-Smtp-Source: ABdhPJxR4WXWG4L1L6K0JvoZR7ZQCErofBOcKJEbJP4oti+kXkj8ooj+cceD24mbw6mdd+pYy+I92Q==
+X-Received: by 2002:a05:6638:2389:b0:323:abaf:a8fb with SMTP id q9-20020a056638238900b00323abafa8fbmr521840jat.205.1650567284445;
+        Thu, 21 Apr 2022 11:54:44 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s5-20020a0566022bc500b0065490deaf19sm9046221iov.31.2022.04.21.11.54.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 11:48:52 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nhbrI-0088iw-8H;
-        Thu, 21 Apr 2022 20:48:52 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: ab/ci-setup-simplify (was Re: What's cooking in git.git (Apr
- 2022, #05; Mon, 18))
-Date:   Thu, 21 Apr 2022 20:36:55 +0200
-References: <xmqqbkwyz78z.fsf@gitster.g>
- <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
-Message-ID: <220421.86fsm66zmz.gmgdl@evledraar.gmail.com>
+        Thu, 21 Apr 2022 11:54:44 -0700 (PDT)
+Date:   Thu, 21 Apr 2022 14:54:43 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
+        Git List <git@vger.kernel.org>, justin@justinsteven.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: Bare repositories in the working tree are a security risk
+Message-ID: <YmGoc8gwB3W/cfHM@nand.local>
+References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lwnfp7tbc.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <Ylobp7sntKeWTLDX@nand.local>
+ <CAJoAoZkgnnvdymuBsM9Ja3+eYSnyohr=FQZMVX_uzZ_pkQhgaw@mail.gmail.com>
+ <CAJoAoZkf6VuAOwX9j8Zc0x4HqJRJ5zQgqfmu+8Zs1kVx88dGpg@mail.gmail.com>
+ <xmqq4k2mi88p.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4k2mi88p.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Apr 19 2022, Phillip Wood wrote:
-
->> * ab/ci-setup-simplify (2022-04-14) 29 commits
->> [...]
->>   Will merge to 'next'?
->>   source: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+On Thu, Apr 21, 2022 at 11:47:34AM -0700, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 >
-> I haven't had time to read all 31 patches from v4 in detail but I have
-> looked at the results in seen.
+> > Ah, another thing I forgot to mention. There has been a little
+> > discussion in the past about isolating "safe" parts of config (and
+> > gitdir) from "unsafe" parts, e.g. "which configs and embedded scripts
+> > are executables", to help better protect from zipfile-type attacks,
+> > which are very similar to this kind of attack. I wonder if it makes
+> > sense to consider that sort of thing as a needswork for this bugfix?
+> > e.g. "/* NEEDSWORK: Only ignore unsafe configs and hooks instead of
+> > ignoring the entire embedded config and hooks in the future */"?
 >
-> Looking at seen:ci/install-dependencies.sh the shebang has been
-> changed to "#!/bin/sh" but it contains
-> "BREW_PACKAGE=${CC_PACKAGE/-/@}" which is a bashism.
+> There have been such discussions in the past and they all went
+> nowhere because such safe-listing fundamentally does not work.  What
+> you consider "safe" today may turn out to be "unsafe" and in a later
+> version of Git will stop honoring it, and for those who depended on
+> it being listed as "safe", such a security fix will be a regression.
 >
-> Looking at seen:.github/workflows/main.yaml to skip running the tests
-> one has to set "skip-tests: no" which is utterly confusing.
->
-> From what I saw scanning the patches there seemed to be a lot of
-> churn, both of existing code and code that gets added and then
-> moved/refactored within the series.
->
-> Looking at the output of a recent ci run of seen the steps to prepare
-> the environment before building and testing print all the environment 
-> variables rather than just the ones being set for that step which
-> seems to go against the aim of "CI: narrow down variable definitions
-> in --build and --test". (Also the "SKIP" prefix in the output lacks a
-> ":")
+> Disabling the whole thing if the file can be tainted is the only
+> sensible way forward without promising users that they will be hurt
+> by such changes/regressions in the future, I would think.
 
-Thanks. Those were all helpful. I replied to these in a re-roll CL at:
-https://lore.kernel.org/git/cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com/
+I assume when Junio says "safe-listing" he is talking about your "which
+configs and embedded scripts are executables". I have tossed that idea
+around in my own head for a little while, and in addition to the points
+that Junio refers to, I think that this could be confusing for users.
 
-> Dscho raised concerns that this removes any support for azure
-> pipelines which he uses when preparing security patches.
+I worry about forcing the user to consider which parts of their
+config and hooks are being read/ignored, and then re-interpret their
+meaning in light of that.
 
-In the v1 discussion of my series ~2 months ago I asked him how he'd
-prefer to proceed with that:
-https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
+That seems like it would be an unnecessarily tricky position to put
+users in, and I think we could get around it by either reading the
+config/hooks, or ignoring them entirely.
 
-There wasn't any reply to that for about a month so I submitted the v2,
-noting that we might want to do something different there:
-https://lore.kernel.org/git/cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com/
+(It also seems error-prone to me: just trying to list which parts of our
+config could lead to command-execution is challenging for me at least.
+In addition to the ongoing maintenance cost, a clever attacker would
+almost certainly be able to spot some obscure piece of config that we
+didn't consider and then use it in their attack.)
 
-And then as a follow-up to that v2 there was a follow-up discussion
-ending (from my side) here:
-https://lore.kernel.org/git/220406.86bkxeecoi.gmgdl@evledraar.gmail.com/
-
-So, in brief summary I'm still happy to accommodate any such use-case.
-But I don't think it's OK to say that code we don't even use in-tree in
-area X must be kept as-is, to the point where it blocks forward progress
-for things that are used in-tree.
-
-To be clear: I'm not saying that's Johannes's position, it may or may
-not be: The point is that he hasn't replied to
-https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
-or any relevant follow-up discussions. So I don't know what he's
-expecting there, or if it can be reasonably accommodated in making
-changes to ci/* which by their nature must decide to
-support/keep/fork/remove some of that code.
-
-> I think splitting out the build and test steps is a good idea but I'm
-> less convinced by some of the other changes.
-
-What other changes are you referring to here?
+Thanks,
+Taylor
