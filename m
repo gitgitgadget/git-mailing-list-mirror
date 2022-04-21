@@ -2,93 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F959C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD07AC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 18:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1391529AbiDUSuc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 14:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
+        id S1391538AbiDUSvq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 14:51:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386752AbiDUSu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 14:50:29 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA5254BFEE
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:47:39 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 425DF1943A7;
-        Thu, 21 Apr 2022 14:47:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=irMkevTUgq0cerePHY7IEK3urQUkdWj4Ppg7YA
-        HgPRs=; b=UriOSIdUzVvin5JBXzxS3lOvLfRGCqJLAKzbhflF5L3fLLtINRcW3U
-        l18ht18obEro7PrnF8x0k0xh063EThkPsdCqVIpJrfYCBXBVJzE/FbTP7kJqRlIa
-        BXaSGjWCt+77rshd4NeKx2jQ+D5CjU6zuM6rSgDqlDRnF0wCP/EBI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2521D1943A5;
-        Thu, 21 Apr 2022 14:47:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8CAF11943A4;
-        Thu, 21 Apr 2022 14:47:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
-        Git List <git@vger.kernel.org>, justin@justinsteven.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: Bare repositories in the working tree are a security risk
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <kl6lwnfp7tbc.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <Ylobp7sntKeWTLDX@nand.local>
-        <CAJoAoZkgnnvdymuBsM9Ja3+eYSnyohr=FQZMVX_uzZ_pkQhgaw@mail.gmail.com>
-        <CAJoAoZkf6VuAOwX9j8Zc0x4HqJRJ5zQgqfmu+8Zs1kVx88dGpg@mail.gmail.com>
-Date:   Thu, 21 Apr 2022 11:47:34 -0700
-In-Reply-To: <CAJoAoZkf6VuAOwX9j8Zc0x4HqJRJ5zQgqfmu+8Zs1kVx88dGpg@mail.gmail.com>
-        (Emily Shaffer's message of "Thu, 21 Apr 2022 11:29:15 -0700")
-Message-ID: <xmqq4k2mi88p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1391539AbiDUSvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 14:51:45 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114934C403
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:48:55 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id i27so11816720ejd.9
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 11:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=/WgeJsDJleHQgBavny4F5HW1EDltOxXH7HSrEMluL+I=;
+        b=Fb+g6errurIgqIAF8/UFOYMECZT32HKFheQUWSyCMES2XvEBLu81D5mXJ3mafFZrX0
+         VSylRb3Nu1Fb5VgcctsGVNe5S4CxKMLqjLKDbfiuKfX/cCzAz+7Q6HFLKgRIhhmPzK80
+         rnHLxYDZiMnxH9JY2JXxB3Gr5nZKXN2p2J5LKuH8qgLnj6/+SiN4vv3SXi6MXuR6uVVW
+         CrbH/s58khoqEFfivQ4lDA8BNNWc/W/jNWJ7eU8bSYUrjJA+38SkK2+ZD7M2+XIhXO6w
+         aPXxALFa1Zh3VB6DTFyewsJP0t2QdNlYyZULoJa9Og0zP/PE8wX2uiCS2usmNk936txy
+         zPdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=/WgeJsDJleHQgBavny4F5HW1EDltOxXH7HSrEMluL+I=;
+        b=5vZPV/p8cxUMibv9jBiHy3U7RWeY3+DXwy7oBtjgQ0D9bkOJPhp+CcnhZqMlDImIjN
+         tSxA/Vg+/ykDYYDsqH8OBnKPsnX4eF7Z6t13Vd8oqupXNlTw7t/GHW1k1HvfV1/sKYXO
+         Id3X0FWcSNlZ0S+r7UKNZb1eTJelYbI5HMQqpblxUcL5/E6hfhyEKK3yGqhGaOG3e0J5
+         T+FUDmwYYBmNDGbc6XorSK0IRY/W729aSEIIbQbhcWOvIZNn4ruJ9OebylUIiRWN5NhF
+         9JLT5JKBpCflvbg0Fbl3oyr4M/ijdtVXUkI3sWbNEawZhSHP9ejS5xNfzmtcZZfuZLlq
+         O7tw==
+X-Gm-Message-State: AOAM531iikJRdikiUHcrPbOFnyQ1O220V+Q6cP/H/DveG3lUxRYck2mm
+        VT/TWURU6PhvEqyWiloqU1w=
+X-Google-Smtp-Source: ABdhPJxKdjaHKqVSjoW8Etc1sDnYJ+WoHUitqtd7l4ksy6HyBZ9MQsf0o9mfitDMniEUIQuUzD3K0g==
+X-Received: by 2002:a17:907:3e9f:b0:6ef:d830:b2cd with SMTP id hs31-20020a1709073e9f00b006efd830b2cdmr842728ejc.34.1650566933365;
+        Thu, 21 Apr 2022 11:48:53 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id r22-20020a17090638d600b006d584aaa9c9sm8108801ejd.133.2022.04.21.11.48.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Apr 2022 11:48:52 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nhbrI-0088iw-8H;
+        Thu, 21 Apr 2022 20:48:52 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: ab/ci-setup-simplify (was Re: What's cooking in git.git (Apr
+ 2022, #05; Mon, 18))
+Date:   Thu, 21 Apr 2022 20:36:55 +0200
+References: <xmqqbkwyz78z.fsf@gitster.g>
+ <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
+Message-ID: <220421.86fsm66zmz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 828FE4EC-C1A3-11EC-9E3F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
 
->> Nice - a more strict spin on proposal 3 from above, if I understand it
->> right. Rather than allowing any and all bare repos, avoid someone
->> sneaking in a malicious one next to legitimate ones by using an
->> allowlist. Seems reasonable to me.
+On Tue, Apr 19 2022, Phillip Wood wrote:
+
+>> * ab/ci-setup-simplify (2022-04-14) 29 commits
+>> [...]
+>>   Will merge to 'next'?
+>>   source: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
 >
-> Ah, another thing I forgot to mention. There has been a little
-> discussion in the past about isolating "safe" parts of config (and
-> gitdir) from "unsafe" parts, e.g. "which configs and embedded scripts
-> are executables", to help better protect from zipfile-type attacks,
-> which are very similar to this kind of attack. I wonder if it makes
-> sense to consider that sort of thing as a needswork for this bugfix?
-> e.g. "/* NEEDSWORK: Only ignore unsafe configs and hooks instead of
-> ignoring the entire embedded config and hooks in the future */"?
+> I haven't had time to read all 31 patches from v4 in detail but I have
+> looked at the results in seen.
+>
+> Looking at seen:ci/install-dependencies.sh the shebang has been
+> changed to "#!/bin/sh" but it contains
+> "BREW_PACKAGE=${CC_PACKAGE/-/@}" which is a bashism.
+>
+> Looking at seen:.github/workflows/main.yaml to skip running the tests
+> one has to set "skip-tests: no" which is utterly confusing.
+>
+> From what I saw scanning the patches there seemed to be a lot of
+> churn, both of existing code and code that gets added and then
+> moved/refactored within the series.
+>
+> Looking at the output of a recent ci run of seen the steps to prepare
+> the environment before building and testing print all the environment 
+> variables rather than just the ones being set for that step which
+> seems to go against the aim of "CI: narrow down variable definitions
+> in --build and --test". (Also the "SKIP" prefix in the output lacks a
+> ":")
 
-There have been such discussions in the past and they all went
-nowhere because such safe-listing fundamentally does not work.  What
-you consider "safe" today may turn out to be "unsafe" and in a later
-version of Git will stop honoring it, and for those who depended on
-it being listed as "safe", such a security fix will be a regression.
+Thanks. Those were all helpful. I replied to these in a re-roll CL at:
+https://lore.kernel.org/git/cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com/
 
-Disabling the whole thing if the file can be tainted is the only
-sensible way forward without promising users that they will be hurt
-by such changes/regressions in the future, I would think.
+> Dscho raised concerns that this removes any support for azure
+> pipelines which he uses when preparing security patches.
 
-So, no, I do not think such a NEEDSWORK comment is welcome.
+In the v1 discussion of my series ~2 months ago I asked him how he'd
+prefer to proceed with that:
+https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
 
-Thanks.
+There wasn't any reply to that for about a month so I submitted the v2,
+noting that we might want to do something different there:
+https://lore.kernel.org/git/cover-v2-00.25-00000000000-20220325T182534Z-avarab@gmail.com/
 
+And then as a follow-up to that v2 there was a follow-up discussion
+ending (from my side) here:
+https://lore.kernel.org/git/220406.86bkxeecoi.gmgdl@evledraar.gmail.com/
 
+So, in brief summary I'm still happy to accommodate any such use-case.
+But I don't think it's OK to say that code we don't even use in-tree in
+area X must be kept as-is, to the point where it blocks forward progress
+for things that are used in-tree.
+
+To be clear: I'm not saying that's Johannes's position, it may or may
+not be: The point is that he hasn't replied to
+https://lore.kernel.org/git/220222.86y2236ndp.gmgdl@evledraar.gmail.com/
+or any relevant follow-up discussions. So I don't know what he's
+expecting there, or if it can be reasonably accommodated in making
+changes to ci/* which by their nature must decide to
+support/keep/fork/remove some of that code.
+
+> I think splitting out the build and test steps is a good idea but I'm
+> less convinced by some of the other changes.
+
+What other changes are you referring to here?
