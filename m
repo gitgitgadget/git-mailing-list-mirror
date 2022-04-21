@@ -2,112 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7941DC4332F
-	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B0AC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Apr 2022 20:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392234AbiDUULn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 16:11:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
+        id S1392251AbiDUUPH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 16:15:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392227AbiDUULY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 16:11:24 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC5434C7A3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:08:33 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id n8so6171792plh.1
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:08:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:cc:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=UOBcb24bxUsWoecRK7/gy8Gt6Pp7h4tkqnGBuZm/4OY=;
-        b=U78v7PP0dlYr92j3aOxDTfDd3MB246geNDYzTwoVqzSP4MVvh7XzksxnutCFTHx2Ye
-         L2wOOKPwzexVMP28rwwM9fw4JgdLYf7WyJaAUscYKv2hLw5zWhjI1VpiRqN73flCTRwV
-         dEFcDS4SyVlIXj/cNRKqWqGMV9dpaT/wiUvNuk8YI4ZqLtNYzhBjlE1t588TvqCXHsje
-         jF/NDL9/mRdxmHkU/9cMG99UnP4VR2ediBlrU2/1PraeGtbsQ+JcxVqn/m0e2RFX0Lz9
-         gKZ2Y2xaZnDAYOzq7rBfpMcDx67YWoGEY5uLYePNFDcr/wenOztiZgJMGUAr2bRJp4ch
-         osvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :cc:subject:content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=UOBcb24bxUsWoecRK7/gy8Gt6Pp7h4tkqnGBuZm/4OY=;
-        b=GRgKajJ4MVxgRvuWGeTabPLggO93tFa1ashhAzUI+iJhzORlCrMlOYIOJChyRerOXq
-         VrkA+D92zFgjO7kLm5PuVfyd5YzF/eErKvLfeYa2YP7Qckjus0/4fz84YEj+ootnLe2J
-         qgnZSxT/LOx6nH9J3boK+a76bLNm2ifrF4tUNofZjY1bGqNQPDszAzd5wJNL9xA/3nou
-         62FKuHIQzpBaVq1O4lLUAMVP1J4RnT7NIUEVdLf0vCxBYoybnsT7EYwwGa1caQ+7f/zX
-         rHMbLl+y2C7Xg4Pm0Cm1K27UY8Xmm1eOoVD+ySN9jHU/VIizxZyNad5I9byvcUqLLkMO
-         QdzA==
-X-Gm-Message-State: AOAM532mmBMvyv7+HwSPBLPYr52+Wxnal4b1TdFFiQmu0vgj1XpAVeLi
-        RWAfMAS+nQBJ3Yy9lnSjJE4=
-X-Google-Smtp-Source: ABdhPJxCH2nrcgpegDPkrvlOr/bBT2zhpN36Pg/7uhggp18cE5Yr72vRG//BoNBVHsbKjeyUERRAwg==
-X-Received: by 2002:a17:903:204:b0:15a:35be:58b3 with SMTP id r4-20020a170903020400b0015a35be58b3mr879181plh.123.1650571713187;
-        Thu, 21 Apr 2022 13:08:33 -0700 (PDT)
-Received: from ?IPV6:2001:4898:d8:33:9044:3a76:d2d:7ec4? ([2001:4898:80e8:2:1065:3a76:d2d:7ec4])
-        by smtp.gmail.com with ESMTPSA id b24-20020a17090a991800b001cd4989ff44sm3449590pjp.11.2022.04.21.13.08.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 13:08:32 -0700 (PDT)
-Message-ID: <51a685bf-3cd1-b573-535c-e18b2f987d66@gmail.com>
-Date:   Thu, 21 Apr 2022 13:08:31 -0700
+        with ESMTP id S1392227AbiDUUPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 16:15:06 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A67A64DF44
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 13:12:15 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AC2441953B1;
+        Thu, 21 Apr 2022 16:12:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JIJfpOM/xSo/
+        VfLdu23wugeeKAPiHRPZXokcrb0mhqI=; b=pBzxJa7HcgED3I/8bV7zIbWgVj3w
+        AFReekiwRgbyXrZTNlBXvKyoNbYPP7w3s+kzSQG2RsSmMuoUpBdInS3SG9zxyY06
+        8DUkM/+EZQziSha2ehHghpu+gYAfOgQ+wocSfjPDO1j/B6pHGRAmqtVDAud+u/Fg
+        fcuuWEvFWvvqQUo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A413F1953B0;
+        Thu, 21 Apr 2022 16:12:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 317241953AF;
+        Thu, 21 Apr 2022 16:12:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 30/31] CI: have osx-gcc use gcc, not clang
+References: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
+        <cover-v4-00.31-00000000000-20220418T132809Z-avarab@gmail.com>
+        <patch-v4-30.31-94abb826627-20220418T132809Z-avarab@gmail.com>
+        <55271bbe-7b6e-7c92-7337-2439a2f5be26@talktalk.net>
+        <xmqqh76orx3v.fsf@gitster.g>
+        <52382f7c-5b6a-63b6-2eb2-26c12f31f529@gmail.com>
+        <xmqqr15rpp9b.fsf@gitster.g>
+        <220421.8635i66wq6.gmgdl@evledraar.gmail.com>
+Date:   Thu, 21 Apr 2022 13:12:10 -0700
+In-Reply-To: <220421.8635i66wq6.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 21 Apr 2022 21:24:12 +0200")
+Message-ID: <xmqq35i6gpr9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Reply-To: neerajsi@microsoft.com
-Cc:     nksingh85@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: Git bug report - disk errors on Windows after push
-Content-Language: en-US
-To:     Attila Csosz <csosza@designsoftware.com>, neerajsi@microsoft.com
-References: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
- <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
- <fa40a6e6-dd83-9e88-e2f7-ab8aff2ca5a4@designsoftware.com>
- <04a50f96-363f-210f-b894-11945d0eb3e8@gmail.com>
- <CAMYm8FoA55JwXezckJxMPXGLh2+osCwsHHrg_MSjLMqG2emygQ@mail.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-In-Reply-To: <CAMYm8FoA55JwXezckJxMPXGLh2+osCwsHHrg_MSjLMqG2emygQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 53DEE740-C1AF-11EC-A747-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/20/2022 7:29 PM, Attila Csosz wrote:
-> Please check this link also
-> https://github.community/t/what-could-be-the-reason-my-git-repositories-keep-getting-corrupted-broken/184711
-> 
-> You can found many link on web on 'git corrupted repository'. In my
-> opinion when a git repository is corrupted on Windows there is a good
-> chance to HDD errors.
-> 
-> I suggest also run intensive test on Windows (run a bat file commiting
-> and pushing to a bare directory type repository). Check your HDD
-> healthy status after 10-20 run of 'git push'.
-> 
-> My git software is come form 'git-scm.com' and I'm using TortoiseGit.
-> My git software is up to date.
-> Last time my laptop HDD is crashed loosing sensitive datas. I will
-> never push to a local repo I'm using online repo-s like github.
-> 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Do you currently have a drive in the bad state? Is write-caching enabled 
-for the drive 
-(https://docs.microsoft.com/en-us/troubleshoot/windows-server/backup-and-storage/turn-disk-write-caching-on-off)?
+> First. I see you re-queued a the v2 of Johannes's patches. I had some
+> outstanding fixes for my series [2] + the derived version of his on top
+> [3] which I thought I'd submit regardless.
 
-Git hammers the filesystem in a way that's not typically done for a USB 
-drive (especially issuing some "FlushFileBuffers" calls).  So it 
-possibly exposes some inherent flakiness in your setup. For instance, 
-your drives might be good, but something could be wrong with your USB 
-cable or the power supply.
+I do not mind flip-flopping on alternate days for a week or so.
 
-If you have a drive in the bad state, a "chkdsk /scan /X <drive letter>" 
-might give some hints about what specifically is wrong with that filesystem.
+Quite honestly I do not care which ones come first all that much.
+All I care about is (1) we keep CI functional and (2) we do not
+butcher Makefile too badly in the process.  Part of "functional" is
+"not unusably slow".
 
-I'd recommend preferring a cloud-based backup system for your Git repos 
-(e.g. GitHub or GitLab).  Also, for local backups, something solid-state 
-like an SSD might be more reliable in the long run.
+Making the CI process less locked into a particular vendor and
+allowing the build/test with a configuration as similar as what is
+run on CI locally are nice to have that can come at the same time,
+but I wouldn't shed tears if we defer them to later, as long as they
+eventually materialize.
 
-Thanks,
-Neeraj
+If you can fix Dscho's series by adding a series on top, that sounds
+like one approach of lessor resistance.
