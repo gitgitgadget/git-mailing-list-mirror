@@ -2,103 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C1AAC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 01:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E7EC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 02:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443124AbiDVBmU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 21:42:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
+        id S233293AbiDVCad (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 22:30:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344083AbiDVBmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 21:42:17 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1F1A49FA9
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 18:39:26 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id bb21so4593985qtb.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 18:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xVfj5M8AAyGa/1dsezC8V1v0LQipdG11GVEvHFi+goA=;
-        b=e4pEp0Yr29wj/E2fvWTSRHUUOEsG0I/HYyez4OVdGb9pJQx1cAHRh/TnDKjFlOsJtM
-         wjxAmEQDSwAxCbswKt47m9lgJLi0zp01YRx3DH6gvR7mg8y9uLC1B8q4+QmavWbNOjTH
-         njBCG70W2M1H0ZEU6vmHaNFldRYKPuGHK/80e3hCum6QbaXJKfELY1k4hq5BbJH3TXRp
-         q+ZaeH20YQ/XA1qx6jpim/VNsxUR3KbMqvmOB5qcTU8XKvTQAuTXgcsLGvD3YsVqlzNu
-         awjj2rEniHiU5gwB5EJjm3Nwqbc3ls6MEySxVDSifsjkc/UXJ49xQesoilfD6U6pnekJ
-         MdFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xVfj5M8AAyGa/1dsezC8V1v0LQipdG11GVEvHFi+goA=;
-        b=Y6Qu4fo2JXVbWyIh2BMN4nlvMY2GrzEH0VRUPymwMt5svHAXfuuFOoVzhdFhThWNO6
-         ZV6TvmzZ13+DiwDxB0L6LFOzh2v/R2WgpD0uaG9aexP4HgbdTQsAPsa0zk1iFhc/nz78
-         kwZU3koS0L00YGbTDmcwKvFGKPN57NDucfnLHnBDu2M3bN0Xx3OrG+YwoQbJ1/Hpt/TK
-         hj+KV5BlgFbyIr4ZSE3qRwd0G0fx5xuYMgNjoOc9krf24jIqOLPWXc3aomhfjdD8OZM2
-         v3VQyspRPToDTM4dJpHJApABzLZCGEVnl4aJYVkaB97a7Y4P11xgH5emGwo/LOfH15ET
-         sDrg==
-X-Gm-Message-State: AOAM532gGE0/hdqUBB7eKQrW0/KXgMP1xBwbG+WVkTxqORkDVZSumpQM
-        iX6vhrBuQ56Mg6H/eVhzY17bPlKzN/0=
-X-Google-Smtp-Source: ABdhPJxfsfQjCT4K5aUjR27TG2kq/ITaE/5ZuxvB5XeJATwKr5dExFeZaDp47U9Dd69ZKjxT6E1xjA==
-X-Received: by 2002:a05:622a:9:b0:2f1:e9d7:d734 with SMTP id x9-20020a05622a000900b002f1e9d7d734mr1656131qtw.476.1650591565663;
-        Thu, 21 Apr 2022 18:39:25 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id y3-20020a376403000000b0069e899ec3c7sm308026qkb.75.2022.04.21.18.39.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Apr 2022 18:39:25 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com, sunshine@sunshineco.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH v2 2/2] ci: make perforce installation optional in macOS
-Date:   Thu, 21 Apr 2022 18:39:11 -0700
-Message-Id: <20220422013911.7646-3-carenas@gmail.com>
-X-Mailer: git-send-email 2.36.0.266.g59f845bde02
-In-Reply-To: <20220422013911.7646-1-carenas@gmail.com>
-References: <20220421225515.6316-1-carenas@gmail.com>
- <20220422013911.7646-1-carenas@gmail.com>
+        with ESMTP id S231954AbiDVCac (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 22:30:32 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8D81D0CC
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 19:27:40 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B60FD12CD27;
+        Thu, 21 Apr 2022 22:27:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=FAK3Avk7jzQMfSxgx5Sp7aplE5hK4IQ43ZU6CNPS1D0=; b=cfDJ
+        Lc6TRLm3gAMXu98wgvNEhQCQUj3JVLNhn6M86zbGj6Hcvbrmd/xBggIrMvC3DcyM
+        xIA3YCX3osO2IRY72SKWOjAEYnmVUusbTW4T1Pz24hqymfu8skGGv+KSqXfy2k/v
+        0cyve6FhZLE06Izuc0MKj64DyjYqt0JWwZgrsME=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD9F312CD26;
+        Thu, 21 Apr 2022 22:27:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DCDD812CD25;
+        Thu, 21 Apr 2022 22:27:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Josh Steadmon <steadmon@google.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] merge: new autosetupmerge option 'simple' for
+ matching branches
+References: <pull.1161.v3.git.1646032466.gitgitgadget@gmail.com>
+        <pull.1161.v4.git.1647843442911.gitgitgadget@gmail.com>
+        <Yl2qwO0SMPOhb5h9@google.com>
+        <CAPMMpogY5vZU8gyRSYh+BM4goPPtJw0cCiM-31sy-s_uGRv8uA@mail.gmail.com>
+        <xmqqczhbr6pv.fsf@gitster.g>
+        <CAPMMpohQei9vBBm=7hC=N5LPwzMCED=fZcXyePnrkLCHfCJTZw@mail.gmail.com>
+        <xmqqlevzkxrf.fsf@gitster.g>
+        <CAPMMpoiCD+fG=bs2j4Rin5Pvip9Mre9iqLcOb2LYnDQK9cuRxw@mail.gmail.com>
+Date:   Thu, 21 Apr 2022 19:27:37 -0700
+Message-ID: <xmqqzgkddf8m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C76D8E26-C1E3-11EC-B0EC-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using brew to install perforce has several documented[1,2,3,4] edge
-cases that make it fail periodically, so if problems were found while
-installing it, just continue without it.
+Tao Klerks <tao@klerks.biz> writes:
 
-This means that until the problem is solved all perforce tests will be
-skipped in macOS, but they are still most likely covered by the other
-unaffected runs and will be covered again once the issue solves itself.
+>> I am wondering if that is more irritating than it is
+>> worth.  Instead, if you tell them to use branch.autosetupmerge=simple
+>> and use push.default to something better than simple, wouldn't that
+>> cover more cases and give fewer roadblocks to the end-user with
+>> unnecessary errors?
+>
+> I think you're on to something I missed here.
+>
+> Unfortunately, I'm not sure what "something better than simple" for
+> push.default actually is, in the current system.
 
-1 0eb3671ed96 (ci(osx): use new location of the `perforce` cask, 2019-10-23)
-2 5ed9fc3fc86 (ci: prevent `perforce` from being quarantined, 2020-02-27)
-3 3831132ace6 (ci/install-depends: attempt to fix "brew cask" stuff, 2021-01-14)
-4 https://lore.kernel.org/git/cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com/
+"none", probably.  Much better than "current" that can create new
+branches on the other side, which you would want to do with an
+explicit end-user instruction (i.e. not with "git push", but with
+"git push origin topic").
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- ci/install-dependencies.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This depends on what you are really trying to achieve.  If we think
+it through, perhaps it may turn out to be a combination of a bit
+flawed workflow with a bit inadequate toolset.
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 6de20108775..aca01a414ab 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -43,7 +43,7 @@ macos-latest)
- 		git -C "$cask_repo" pull --no-stat --ff-only &&
- 		brew install --cask --no-quarantine perforce
- 	} ||
--	brew install homebrew/cask/perforce
-+	brew install homebrew/cask/perforce || true
- 
- 	if test -n "$CC_PACKAGE"
- 	then
--- 
-2.36.0.266.g59f845bde02
+With "simple" (both in branch.autosetupmerge and push.default), I
+can see that if you create "main" from their "main" and "maint" from
+their "maint", you want to see that
 
+ (1) your "git pull" to integrate what happend on their "main" or
+     "maint" respectively, and
+
+ (2) your "git push" to push what you did on your "main" to their
+     "main", and "maint" to "maint".
+
+But it is totally unclear what you really want to do on "topic" you
+created this way:
+
+    $ git checkout -b topic origin/main
+
+Currently, with both set to "simple", you do not even get .remote
+and .merge for the "topic" branch, so your "git pull" simply does
+not work.  And "git push" will also refuse to work.
+
+But then why are you [*] forking from origin/main in the first
+place?  What is the purpose you created 'topic' and what do you
+plan to do with the result you develop on 'topic'?
+
+	Side note: "you" do not refer to"Tao, the advocate of the
+	'simple' configuration", but figuratively the user who
+	followed the "simple" route and created topic out of
+	origin/main that is not connected to origin/main.
+
+Whatever you commit on topic eventually becomes part of what you'd
+push to origin or elsewhere.  I'd assume it would be origin, because
+as the user who choose 'simple', you have some branches that you
+push back to the same name over there.  Presumably, those are the
+primary integration branches the project has, like 'trunk', 'main',
+'master', etc.
+
+So perhaps the user would have been better off to fork off of the
+LOCAL branch that would eventually be pushed back?  In other words,
+the above user who created 'topic' would have done 
+
+    $ git checkout -b main origin/main
+
+to use as a local integration branch that collects the work you will
+do locally that is targetted for their 'main' track, so to create a
+topic that aims to be part of what is pushed back to their 'main'
+track, you would want to do
+
+    $ git checkout -b topic main
+
+instead?  That way, "git push" would either not get .merge/.remote
+(when branch.autosetupmerge is set to 'true') or point at your local
+'main' branch.
+
+ - The symptom you get from the former is no better than what you
+   get from branch.autosetupmerge=simple but it is not worse.
+   "push" and "pull" refuses to work and suggest you to do something
+   additional.
+
+ - The latter would make your "git push" and "git pull" on 'topic'
+   to work with your local 'main', treating your 'main' in a way
+   very similar to how you treat your remote 'main' when you are on
+   your own 'main', which is quite reasonable if your change flow is
+   designed to be "work on topic, when the changes on topic proves
+   OK, send that to main, and when the changes on main proves OK,
+   send that to their main".
+
+I guess I am esseentially saying that the usefulness of "simple" for
+branch.autosetupmerge is dubious.
+
+> Do you agree that none of the push.default options available today are
+> "right" for this flow? Do you have a preference or opinion as to
+> whether:
+> * push.default=current should be changed to set up tracking when absent, or
+> * push.default=simple should be changed to "simply" push and set up
+> tracking when there is no tracking, or
+> * a new push.default option should be introduced for this behavior, or
+> * some other configuration should be introduced to specify "and set up
+> tracking on default push if missing" (and if so, under what
+> circumstances should it kick in?)
+
+None of the above, I guess.
