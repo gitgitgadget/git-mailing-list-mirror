@@ -2,135 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D6D3C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD095C43217
 	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 18:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230282AbiDVS7b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 14:59:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49454 "EHLO
+        id S230366AbiDVS7c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 14:59:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231558AbiDVS6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 14:58:34 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E26113A4DC
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:54:58 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id lc2so18015595ejb.12
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:54:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+XNcUgD5y3ZWWzONuZ8qG1mWuqM4pAAXMEZLbVkJr24=;
-        b=StRypA77nteh0Kj/B9f8PB7djos1K3o4zpzXGwaqs3O4Pb8k/zOpObPEMgFm1uzUa/
-         d0UNpfptUtbRLfNpkvgjtSM+atmokhjFPYUS2ykcS7LVmoPZq84z/gj+fGZ5iUNpM7v8
-         0VyBT2MARsbpJvGaQ+GuoTVyoihUDGD5ACa4g92li3/0RaUwco4x9B2blggEYOOLBJZ7
-         lqyaChnqbfRHep/RFWDi3miy6rB4/xTgsUPxangMJRErMWZuVKSs07PkAYFK+q4SvnXD
-         Z73ar/rxD2nZL6AMSeaCUEIbNWQy/22L89t34bXiiOYypLZ9XTJFt6Bqm9dgjv4+Q8Ff
-         OWaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=+XNcUgD5y3ZWWzONuZ8qG1mWuqM4pAAXMEZLbVkJr24=;
-        b=v4NrisrVn9eOAFghfUbbSNQApj9mBEooPrzOE+BpfZr//bysDPjYcdfs3m5Q3isQKZ
-         sNZda0ES/w99OkO3HQjXefaGSH9RMzA7GfQmf0Eq6/XActw3cQlAHy7CDwBibD7Wm08O
-         bKKHssjZj7mfyQ67svaLxNpTsslrWovjEnKpdT82R8bvrONNZYwhcOmCR+SQW0J2VzOx
-         Nw1MyUJRIiAsPBH0d3qyE7e8OBfR+69z39MoWxB/eFtZnxJTXu4cLcze7nZuDOuzm2W9
-         G/Ail29HZ2MlX5ejzQdR3pgzCmB43p2aqNOxwQ3VlwfbyMnAj6v+rT58uo0hauAZxL02
-         mxwA==
-X-Gm-Message-State: AOAM5321bhe2mX3rEj7kLmfwgbc0YN8RQqMW1OlkC/daywO+9UDBlEwv
-        QBW2FuVFZFRcx48/qkJpnyt9fhtuET4BEA==
-X-Google-Smtp-Source: ABdhPJwlse4xeMptw/ybWxcA2+UQPWez2keNUVTUMfFTZ+vWcFXV51/xnjgLCqmeH5n6defLog04cA==
-X-Received: by 2002:a17:906:6a27:b0:6ef:f278:8424 with SMTP id qw39-20020a1709066a2700b006eff2788424mr5562322ejc.490.1650653431332;
-        Fri, 22 Apr 2022 11:50:31 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e11-20020a17090681cb00b006e86b594e1fsm982015ejx.207.2022.04.22.11.50.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 11:50:30 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nhyMQ-0009m0-72;
-        Fri, 22 Apr 2022 20:50:30 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] CI: run "brew install perforce" without past
- workarounds
-Date:   Fri, 22 Apr 2022 20:46:14 +0200
-References: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
- <cover-v2-0.3-00000000000-20220422T085958Z-avarab@gmail.com>
- <patch-v2-1.3-dcedf03c2d7-20220422T085958Z-avarab@gmail.com>
- <CAPUEspiuV4XjQH_r+uRMnstRfR4apB0Z83SoVbJTe7xrncyP-g@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <CAPUEspiuV4XjQH_r+uRMnstRfR4apB0Z83SoVbJTe7xrncyP-g@mail.gmail.com>
-Message-ID: <220422.86o80tq7ex.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231615AbiDVS6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 14:58:35 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E106A13A4F7
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1650653415;
+        bh=ikR4tRh1gvIzF7XyijWyKJNxQck1DX8kWMdy3I9hCwE=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=q2LqpbUIgvAL95+WoiZwFibpK2Y1B/NUQe47p2hU7QMgQaD1KmI4sV2+HN+GAQF1Y
+         PIghNz0+d1rZ2Gf02GQHT3VUQV8XRwDAKfUEGc6evDOd+NobJAqow+aBjfBu28lgz7
+         FPcCk+0BM9AmsPs24hyM2pK53HOcei6aT0vtXZKQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MkElP-1oAgBn1m3t-00keF5; Fri, 22
+ Apr 2022 20:44:42 +0200
+Message-ID: <340c8810-d912-7b18-d46e-a9d43f20216a@web.de>
+Date:   Fri, 22 Apr 2022 20:44:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.8.0
+Subject: Re: Corrupt name-rev output
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Thomas Hurst <tom@hur.st>
+References: <Ylw+M5wwUYKcLM+M@voi.aagh.net> <xmqq4k2otpkb.fsf@gitster.g>
+ <CABPp-BGd8194tPo97Zmuu2xX_aqHYfBrVUX0F0r6EPAaUA3U2w@mail.gmail.com>
+ <779eb30b-fdb9-81fb-5d43-c8d388c5cb5a@web.de>
+In-Reply-To: <779eb30b-fdb9-81fb-5d43-c8d388c5cb5a@web.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Q6Ara6+3/eBKPR78pMkCYeaEzBMfHKDUqKRXN+0Gh8hb8Azdo9o
+ /ciBVfR/LjEDNhTBbBTqj5Yy/8LyXRVpaClT0q7C4r9W66j1hCbsiKrRKAXVcTmyZnUMegH
+ 0T77a6oRhxwicpimJXjPJYw455VwQKzQpnmS3XtoPu1mH7sU7zPRU0/aS7RlvX47MSPf6eo
+ Vc4OQuMZQFgK5CmIsb9yA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KWnU8oxY9W8=:DnkC42kN1SXuzPdKi9WuV1
+ UfTJh2leW4YS9O2ZfXbri6U9pjOjLVjJdj3tM5PIjxgBtmRvetymOMXnT6X/bV9aG4C5x9XyL
+ WCsj4w2PbGyQtnpaQXk2i4WXTB8kfDG0phxKma+ahrNn5gg+X4aDSj9vIDC4hAa+IUNz0pGar
+ 6gkDlQaJ14v+1dM3TR4AXfyQEFHRf7+6rubta4EOaDQLvLbixgE6dlWCabwyF84cCUJcosNp7
+ WTpogu267ingIBFgyQnmapKB9k1tChItp8r5WxgEouaXWzOA1BbUi+MbhfEWVyDFtOnQKjUVU
+ apMmWFJPAtFPW59bwswodlrgwaLJiJ3EsdSO8X+/0a412kvVf8CI0RDso9Trw4jpi1zKy29v8
+ LCmIuG11pd2JgTM6+dsdgilDYIjlCWw0EKZN+k1a0SZIPLgVi8Pb8+NhDTxUQW5oWCf1hzHo2
+ 3zVUUObVn4oxKjQxiasmAI255AZ0HMmfX+ApszSvA0OEN6aX0m0xsoJ9WF7hEPTX30OvoElvd
+ iv5djqvwC4MltTOuN7kqSnq4hdmrSSNE1lw1ub0zjxlXnQFOTqiS582IoVe7M170Axqbhwq6G
+ /xYlfb6/0OqQjOBs/qlJO3GSG1GF9VAyOM8mYXDQ4PW2e9oo/XqqZyW2ACnFYpqc4CAtKF9JY
+ PZyLHWieJKUSC4VsoXs+BX13G/qrkosgG6NddZlLS5FJPeDxPOkSfnysK9NPQzVRyDR3imM1A
+ qs6Kp1k1Tqdm+yLfR5Ktp+Kh3ReeG/s3v38fRJFUlgGxvlhcSTzWHkHpydttCgf2TjOtSxcMi
+ euaL3RRGNMwuty18368wzFpXc8Fe4P1DTKCPuvp83IY58tjXAaEHGxGoHozdIPqjwR/LHeotX
+ dDO+lRmcdbWWKw2rapp3sEFXJ9x0ziqnk4QbXbOyBBuD20lA3ALDEGXTWW7Z4JlHIqZabPgPT
+ bMhxk2A60h5kyLWuK+afZ4tR4Jdq1TzVBnl0IpkE3dW8a1TnFCtzQDOuMZTPDRb8+fcPfVM8l
+ +qRzCF1CzY/65JLBp+E8BI7Rna75iUQw3Rx9bSWUycPPnkyuTO101i+JmUWb6lj4oQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Apr 22 2022, Carlo Arenas wrote:
-
-> On Fri, Apr 22, 2022 at 2:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
->> index dbcebad2fb2..82fa87f97af 100755
->> --- a/ci/install-dependencies.sh
->> +++ b/ci/install-dependencies.sh
->> @@ -37,13 +37,7 @@ macos-latest)
->>         test -z "$BREW_INSTALL_PACKAGES" ||
->>         brew install $BREW_INSTALL_PACKAGES
->>         brew link --force gettext
->> -       brew install --cask --no-quarantine perforce || {
->> -               # Update the definitions and try again
->> -               cask_repo=3D"$(brew --repository)"/Library/Taps/homebrew=
-/homebrew-cask &&
->> -               git -C "$cask_repo" pull --no-stat --ff-only &&
->> -               brew install --cask --no-quarantine perforce
->> -       } ||
->> -       brew install homebrew/cask/perforce
->> +       brew install perforce
+Am 21.04.22 um 19:55 schrieb Ren=C3=A9 Scharfe:
+> Am 21.04.22 um 04:11 schrieb Elijah Newren:
 >
-> While this might work under the current VM configuration used by
-> github actions, is definitely not the usual configuration in macOS
-> installations and therefore likely to break if run locally (as some
-> other on the fly changes attempt to suggest)
+>> Reverting 2d53975488 fixes the problem.
 >
-> keeping the "--no-quarantine" makes for a less likely to fail option
-> (since SIP is enabled by default), and therefore I am also concerned
-> that by removing all these other (learned the hard way) workarounds we
-> might be making this more fragile for the future as well.
+> That's a good band-aid.
+Or perhaps it's all we need.  I can't replicate the original reduction
+of peak memory usage for the Chromium repo anymore.  In fact, the very
+next commit, 079f970971 (name-rev: sort tip names before applying,
+2020-02-05), reduced the number of times free(3) is called there from
+44245 to 5, and 3656f84278 (name-rev: prefer shorter names over
+following merges, 2021-12-04) brought that number down to zero.
 
-It works with the current CI, and keeping those fallbacks would have
-meant turning this into some for-loop where we track which command
-variant failed exactly, then retrying that with the SHA-256 munging.
+I can't reproduce the issue with the hardenedBSD repo, by the way, but
+e.g. with 'git name-rev 58b82150da' in the Linux repo.
 
-> instead of this rewrite of the brew interface logic, removing brew as
-> you suggested would be probably better.
+=2D-- >8 ---
+Subject: [PATCH] Revert "name-rev: release unused name strings"
 
-I won't have time to pursue that in the near future, sorry. Especially
-as I've got no OSX box, so any changes to this series mean long painful
-bouncing around against the GitHub CI.
+This reverts commit 2d53975488df195e1431c3f90bfb5b60018d5bf6.
 
-Anyway. I'd be happy for you to pick this up, whether that means
-re-rolling my series with your suggested changes or taking yours over
-mine I really don't care, I just want to not see those OSX CI errors
-anymore.
+3656f84278 (name-rev: prefer shorter names over following merges,
+2021-12-04) broke the assumption of 2d53975488 (name-rev: release unused
+name strings, 2020-02-04) that a better name for a child is a better
+name for all of its ancestors as well, because it added a penalty for
+generation > 0.  This leads to strings being free(3)'d that are still
+needed.
 
-As noted I have a mild preference out of general principle of having the
-CI at least somewhat deterministic, i.e. to do this series where if we
-can't get p4 at all we'll fail.
+079f970971 (name-rev: sort tip names before applying, 2020-02-05)
+already reduced the number of free(3) calls for the use case that
+motivated the original patch (name-rev --all in the Chromium repository)
+from ca. 44000 to 5, and 3656f84278 eliminated even those few.  So this
+revert won't affect name-rev's performance on that particular repo.
 
-But I'd be fine either way, i.e. your series is also fine by
-me. Whatever stops these errors from happening whenever perforce.com
-updates the packages & the brew recipes haven't been bumped yet...
+Reported-by: Thomas Hurst <tom@hur.st>
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/name-rev.c | 21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
-Thanks!
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index c59b5699fe..02ea9d1633 100644
+=2D-- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -18,7 +18,7 @@
+ #define CUTOFF_DATE_SLOP 86400
+
+ struct rev_name {
+-	char *tip_name;
++	const char *tip_name;
+ 	timestamp_t taggerdate;
+ 	int generation;
+ 	int distance;
+@@ -84,7 +84,7 @@ static int commit_is_before_cutoff(struct commit *commit=
+)
+
+ static int is_valid_rev_name(const struct rev_name *name)
+ {
+-	return name && (name->generation || name->tip_name);
++	return name && name->tip_name;
+ }
+
+ static struct rev_name *get_commit_rev_name(const struct commit *commit)
+@@ -146,20 +146,9 @@ static struct rev_name *create_or_update_name(struct =
+commit *commit,
+ {
+ 	struct rev_name *name =3D commit_rev_name_at(&rev_names, commit);
+
+-	if (is_valid_rev_name(name)) {
+-		if (!is_better_name(name, taggerdate, generation, distance, from_tag))
+-			return NULL;
+-
+-		/*
+-		 * This string might still be shared with ancestors
+-		 * (generation > 0).  We can release it here regardless,
+-		 * because the new name that has just won will be better
+-		 * for them as well, so name_rev() will replace these
+-		 * stale pointers when it processes the parents.
+-		 */
+-		if (!name->generation)
+-			free(name->tip_name);
+-	}
++	if (is_valid_rev_name(name) &&
++	    !is_better_name(name, taggerdate, generation, distance, from_tag))
++		return NULL;
+
+ 	name->taggerdate =3D taggerdate;
+ 	name->generation =3D generation;
+=2D-
+2.35.3
