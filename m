@@ -2,118 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC24FC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB6E6C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446106AbiDVJkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 05:40:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55486 "EHLO
+        id S1446247AbiDVJzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 05:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238862AbiDVJko (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 05:40:44 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF32E33882
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:37:51 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id s18so15350257ejr.0
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:37:51 -0700 (PDT)
+        with ESMTP id S1386031AbiDVJzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 05:55:47 -0400
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FCA853731
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:52:54 -0700 (PDT)
+Received: by mail-vs1-xe34.google.com with SMTP id d9so6955103vsh.10
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ZVvemxFQ3FTgntKDkaQYyJOzS5kbajW2+WOZURcz2FI=;
-        b=L91QU8jmYsynP80BXbxBxHLXJxmkhiVul5Yld1V2HgUZq5flFEtGxvrPVT1rV70sf2
-         53Tm7/ZqcExXnJC52rD90M24SPM2k8CEDuK9LSyd57yGbXj/oGAA3Xu5gSZTOwL25V0t
-         PGMqqltencV6Xg6Bt6vwphAQ+ztuR2al0Vam6Tzj7ZL9zvlC3wQWCpKyNcZQFKOsNnbq
-         M9mhDpdtGVUQh9xn+rzvgswXZpDI/lKm+JZByY8wEku5sAZCBTA7fwTZRXU89xC3UhVD
-         A88eO+3ogE6N08dvA7xKsd/sNbZIkRvCmv8EZVbZMSr55+ADxlaOxrSfvsJuNfJMxa3K
-         8C2g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=x6/+socBBmducgCLRdqBbGGjvNgRF3xDEV8sGwRa20Q=;
+        b=UBH6ma2t0DuCdhqjjqOwIxK05r1gOJrhBqFeSAyu34GWIYiN9liIbpxsZL4biWB+EQ
+         Bnr0KdDFILr3b+F1JO0BGDR5Mck8XCXvy5zC/Kzo696SSbLkYIDvxGrNGynO/x86rr44
+         Gf94RO4YxB/Nc2qM7G0yB6NjMeL9koNI5twd0fnR+sjZBHUycb5EpS0gS+HqvkyFroCb
+         5b/kq91/Z/A9fJXqmqrzQWh61lqECwvJrX1FAwwgKzLvjWWkDR5ZgiymDCrNJjfI3qGs
+         W5s1XbB8F6z602ktC9oOvRoHvtjFjrRqkX5aieW2e09Ow9qcS8t/NwxiIeVAB902cbHa
+         vXnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ZVvemxFQ3FTgntKDkaQYyJOzS5kbajW2+WOZURcz2FI=;
-        b=neoVr2Yh0dK6Jarx+jVgYjqYmeY4sepQjgrBNb7mS7GSix7EJqZOqW50OJM8g7Q3CS
-         8/8TTObCju80XP8g/MI3je0YslT2ia1zxzZ5FpYcyj6ihv3PAV+61o84igMD2sSb2xSH
-         OJTZYa3HEFYcvvbZGIZORP+jMfW6peeOQll3cSpCq2jdT0OMAmIRtiBsQQ8iFqlUAYFr
-         6514wICoro+pH6XioZHICYGFfG33tl2za8fcfDQWXPywLUCASJ9UcbtwOV1gNI4xNFeC
-         g52YRLVCS9Z0UxlO+KCZxrnBbBKsXnWLdYaB3uZOLxZnq5UDhBpjy4tI+XN4dQBoanMa
-         3G7Q==
-X-Gm-Message-State: AOAM532QcuJ+PzZc3HLKKJRPuGVEmMY6erkiLOaMY8erMlsnhOU58JMC
-        niom7Wb7BUvnJlO/1oZL5/8=
-X-Google-Smtp-Source: ABdhPJxzsxt2+etdF3gx45oMmAaURjUq5oBluKtyfH6cjG4GStG4BXWGPuaKiNLA/PpU9xjpbSmAuQ==
-X-Received: by 2002:a17:907:2daa:b0:6da:924e:955 with SMTP id gt42-20020a1709072daa00b006da924e0955mr3307411ejc.1.1650620270425;
-        Fri, 22 Apr 2022 02:37:50 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l15-20020a170906938f00b006e8afb5a7d9sm565880ejx.33.2022.04.22.02.37.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 02:37:49 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nhpjZ-008dxO-5P;
-        Fri, 22 Apr 2022 11:37:49 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        "Robin H . Johnson" <robbat2@gentoo.org>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [RFC PATCH v2 00/36] bundle-uri: a "dumb CDN" for git + TOC format
-Date:   Fri, 22 Apr 2022 11:37:10 +0200
-References: <RFC-cover-v2-00.13-00000000000-20220311T155841Z-avarab@gmail.com>
- <RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com>
- <dd9836e8-bfc9-9a52-199a-3ffce26101f8@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <dd9836e8-bfc9-9a52-199a-3ffce26101f8@github.com>
-Message-ID: <220422.864k2l5uhe.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=x6/+socBBmducgCLRdqBbGGjvNgRF3xDEV8sGwRa20Q=;
+        b=D0bhmaJDKWKL2y+NXQ9xH1igvWOdMB19nyTqpRWyjTUM14mIZwG/OMD0y3INum+0Zu
+         NVStOLhKQ6x7h1OJuBz3VTxdAm/0rJE1hqgGwxCn354t8kYFa8QvY7KwL+Rds3n83yf6
+         pdvSfef8fsKrjtHs+gtPetMRZagzg4jFkyqYuXMUq2Sm+WWFTwgdijv8y0nWTgoOQ2Ey
+         oxOR4ocnrrRgoEJPuYJ2caFeFWnD3cy/oo2NZoRMktpE4rnpTTjUcn1+gIBF7JgIdHST
+         6mIMoqBIjdPwH5bg68vVJphpCLOkhApm5yhSh9+AtBxMnai6rHtTkvX+LNw/Eexy+VtZ
+         uuZQ==
+X-Gm-Message-State: AOAM530Q8+R3tgusf9LfJ45LgC5i7N7yDQcVWo/k0vuxQ7FTxyTRktvo
+        Rl8jB7w7im9NBui3J+7b7yOI7TDxZzeI2FE6iYdqB1hM
+X-Google-Smtp-Source: ABdhPJwQ+aitNl4QeoAU8ZkcUatSnicuXSPVd0tj/gvjCbt/GaGpv5Jh/prvt/ROfb/ijd/7fyGc/ZouJBsRvwOmUd8=
+X-Received: by 2002:a05:6102:f92:b0:32a:6c4d:f399 with SMTP id
+ e18-20020a0561020f9200b0032a6c4df399mr1184347vsv.5.1650621173596; Fri, 22 Apr
+ 2022 02:52:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
+ <cover-v2-0.3-00000000000-20220422T085958Z-avarab@gmail.com> <patch-v2-1.3-dcedf03c2d7-20220422T085958Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-1.3-dcedf03c2d7-20220422T085958Z-avarab@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 22 Apr 2022 02:52:42 -0700
+Message-ID: <CAPUEspiuV4XjQH_r+uRMnstRfR4apB0Z83SoVbJTe7xrncyP-g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] CI: run "brew install perforce" without past workarounds
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 22, 2022 at 2:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index dbcebad2fb2..82fa87f97af 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -37,13 +37,7 @@ macos-latest)
+>         test -z "$BREW_INSTALL_PACKAGES" ||
+>         brew install $BREW_INSTALL_PACKAGES
+>         brew link --force gettext
+> -       brew install --cask --no-quarantine perforce || {
+> -               # Update the definitions and try again
+> -               cask_repo=3D"$(brew --repository)"/Library/Taps/homebrew/=
+homebrew-cask &&
+> -               git -C "$cask_repo" pull --no-stat --ff-only &&
+> -               brew install --cask --no-quarantine perforce
+> -       } ||
+> -       brew install homebrew/cask/perforce
+> +       brew install perforce
 
-On Thu, Apr 21 2022, Derrick Stolee wrote:
+While this might work under the current VM configuration used by
+github actions, is definitely not the usual configuration in macOS
+installations and therefore likely to break if run locally (as some
+other on the fly changes attempt to suggest)
 
-> On 4/18/2022 1:23 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> This RFC series is a start at trying to combine the two differing RFC
->> versions of bundle URIs I [1] and Derrick Stolee [2] were kicking
->> around.
->>=20
->> =3D Layout
->>=20
->> This series arranged in the following way:
->>=20
->> * 01-08: "Prep" patches from both [1] and [2] which in principle could
->>   graduate first to "master".
->>=20
->>   I.e. they're prep fixes added for the two bundle-uri
->>   implementations, but which either justify themselves, or e.g. expose
->>   a now-static function via an API.
->>=20
->>   I tried to move things into the "justify themselves" category
->>   whenever possible, but may have overdone it e.g. for 02/36
->>   (originally an idea/commit of Derrick's, but I changed the
->>   authorship as pretty much all of it at this point is something I
->>   changed).
->>=20
->>   For the "prep" changes that are only needed for later changes in the
->>   series perhaps we should just squash them if they're small enough.
->
-> I focused today on reading these first 8 patches with the intention that
-> they can be submitted for full review and merging on their own. I think
-> they don't fully succeed in justifying themselves (since not all public
-> methods have callers) but it would be best to have these refactors
-> settled before getting into the nitty gritty of the bundle URI feature.
->
-> I mostly had a few nits here and there. I noticed that you did not always
-> add your sign-off after mine, so please correct that when you send the
-> next version (assuming you are planning to do so).
+keeping the "--no-quarantine" makes for a less likely to fail option
+(since SIP is enabled by default), and therefore I am also concerned
+that by removing all these other (learned the hard way) workarounds we
+might be making this more fragile for the future as well.
 
-Willdo, sorry.
+instead of this rewrite of the brew interface logic, removing brew as
+you suggested would be probably better.
 
-FWIW the ones with missing sign-off are also those I didn't modify
-(extensively), so while I should fix it it might help as a marker for
-stuff I changed right now...
+Carlo
