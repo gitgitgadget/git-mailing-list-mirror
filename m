@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F36EDC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC48EC433FE
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446269AbiDVJ4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 05:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38000 "EHLO
+        id S1446271AbiDVJ4Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 05:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386031AbiDVJ4V (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1445903AbiDVJ4V (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 22 Apr 2022 05:56:21 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3C2F53B53
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FD053731
         for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:53:24 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id q7so2637895wrm.5
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:53:24 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id m14so10276769wrb.6
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sd3lSCkl9NLhcZ2ZkGYLROWgtYjQOG9zT1SG37D8hOg=;
-        b=EL7sPK37YgvHijetPm1l+OWbaDaD/MySB4wWPcWPa5GzC0xWzRz9sa6WoCRbtpY/Ty
-         lEJdazKVWYbRRk5o6Wbfd3AjjnIZLOnhFmesz7sel6viCL/JBA99V9aiK/t8K9UurbkQ
-         GL21wdmHdB+LZgdnYyld+qNsmqdzmyID1Bkot3gi0DRthlYVSYoEebnJONZhpTUvNH4T
-         4jihZm7j060bNiu6w8zl1DID1EdVeRoZaZApIN4eL1foNDUNO+CjbbtTe8n9c4chUqsc
-         xKVRvYRPu1rQA+vtCb4Y4/Wx9CoV7IUF4SWtYo+TUM1ZPmmVZxf9VTi7ieGLotMKkbz5
-         w2uw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=At6w/IA2rFkhrrj02Qps1WpUlVdI50RCda4mxwgq5Ug=;
+        b=ngqwjOcd1sHOR2ulm+WLBlrGX2VEHdrPs63EuJKWWET2cErYYn9bd+14TGbZplvREP
+         QiyjFVBwKLuyu3MAbRsP29buqWvb2tjLKvGsuGlyrIk/wvsXHr38h4SS7W1eowoMdkyY
+         Ko23FTXzbf+Vcu9gBGc/5/clvMnx9Hcj+DlbUj4DrmYpxIojcN1RcO6MctS8iMsgviIV
+         oIx6Z58FOV9JXPNiv8uCQ75fRtnteYPRXiXaEka3voVSmGNgZGaQUMT7SA4UmXAwYery
+         1cxpQhbSg72ZbEs3WN138XZloCZYEqfie2V46QOw60PwI5UDwGurJ46EIzGTNWOWDKUy
+         yBEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sd3lSCkl9NLhcZ2ZkGYLROWgtYjQOG9zT1SG37D8hOg=;
-        b=qKhUMPs7pJfWzh9MYxvQ8ZOIPPtQJ4nM2/0zgb8bKPl1ZGj3Ar7cNpUMD0uuF66rxl
-         NWzzgDEuCdsY34D9xEwpjxBy1ptxay1O/ChkzUyZYCOot4Jr/KN8HJ89AMYeJ/8gn34A
-         SvjAiqz7pGs7pJg/Dm+n1xCp/nMdrduc7M+VrMHC5HvsE49xVAaEtE2fiQi4ErqXRaBW
-         1AqudgEmcJnBbCjVFFQSW8ESmk5UtMAv6aH3CdSI174jTJdgjrowBjsTVJ0VtDwoFH5U
-         V14y38am7EW3uPHLw7ka5oQr5GjoNl2ulCq42Zj3WJgd2i6BmybhvTvMgdc/xVtF4Y6R
-         N1lA==
-X-Gm-Message-State: AOAM531crtAy9wFKyeiPKizlCdCCT+8A0txDwa6+COLH8ozHtC51S2gU
-        UjRIHQkODG8r6kLeF74nEyUazoky+6Nkbg==
-X-Google-Smtp-Source: ABdhPJwFFWUdx7koTXabp10q4UsvltE+qS8BOENFvmmvGJVs1pC8l2/NNIyaGHfhXBK7j2szUnyc6Q==
-X-Received: by 2002:a5d:5144:0:b0:207:9a13:ca73 with SMTP id u4-20020a5d5144000000b002079a13ca73mr3072712wrt.268.1650621203067;
-        Fri, 22 Apr 2022 02:53:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i6-20020adfa506000000b0020ac34ec647sm1365561wrb.110.2022.04.22.02.53.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=At6w/IA2rFkhrrj02Qps1WpUlVdI50RCda4mxwgq5Ug=;
+        b=pas37v+zaq9QKOMI4noze3qeLKW20CTH8aP18K60zZ+6Mbye/CThMfGQyQwWAbKMKp
+         upE/rjU+bbeAeOI13KUpPX7WZ6CKQVIjF+KkZooCCdFay4yU0R48hJXV8acc6+m43qcT
+         WcSVketi7O8Xpgvnk/mYiqgt7yUncgjCi4eOH27PLL03QQ5chzQHJ0upVNmGFVf6j6bX
+         yZAq5yCL4LM667tNLS5z8Hy7UbPUuQidIPbOUMmbu5XmKV6IZ45x/DQPNMKT3UObNAHX
+         KESFqw+QOpmtmETlzkm96l9VUj23KckEWKxVWC3XnRje5K63s2YhcURFoO7sndhOJgom
+         ob8Q==
+X-Gm-Message-State: AOAM530MY1OvpzqyzIhXT1KuSx6YEe7lynW5Dcg+Lde16fAoO3CtcuBC
+        866lQTFht6TnFFEFg6IQiDb0F5a3ju+z5Q==
+X-Google-Smtp-Source: ABdhPJy0LXsW4xPaYnI8XRxKew8k4dr7Nn8zJtj42gOJzIli1ds3v1z39IYw/KhRI0ifcyAzjgNXYw==
+X-Received: by 2002:adf:8b90:0:b0:207:87ef:2720 with SMTP id o16-20020adf8b90000000b0020787ef2720mr2973523wra.567.1650621202247;
         Fri, 22 Apr 2022 02:53:22 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i6-20020adfa506000000b0020ac34ec647sm1365561wrb.110.2022.04.22.02.53.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 02:53:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,12 +57,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] Makefile: create and use sections for "define" flag listing
-Date:   Fri, 22 Apr 2022 11:53:12 +0200
-Message-Id: <patch-1.5-f799d30e82e-20220422T094624Z-avarab@gmail.com>
+Subject: [PATCH 0/5] core: update our SHA-1 docs, use sha1collisiondetection on OSX too
+Date:   Fri, 22 Apr 2022 11:53:11 +0200
+Message-Id: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.36.0.879.g56a83971f3f
-In-Reply-To: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,276 +68,210 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the "Define ..." template of comments at the top of the Makefile
-was started in 5bdac8b3269 ([PATCH] Improve the compilation-time
-settings interface, 2005-07-29) we've had a lot more flags added,
-including flags that come in "groups". Not having any obvious
-structure to the >500 line comment at the top of the Makefile has made
-it hard to follow.
+I wasn't able to find any on-list references to it being intentional,
+but it appears that while we made the sha1collisiondetection variant
+of SHA-1 the default in early 2017 we've never updated the OSX builds
+to do likewise.
 
-This change is almost entirely a move-only change, the two paragraphs
-at the start of the first two sections are new, and so are the added
-sections themselves, but other than that no lines are changed, only
-moved.
+I don't know what various git packages for OSX to, but our vanilla OSX
+distribution definitely uses Apple Common Crypto, and won't detect the
+https://shattered.io attack.
 
-We now list Makefile-only flags at the start, followed by stand-alone
-flags, and then cover "optional library" flags in their respective
-groups, followed by SHA-1 and SHA-256 flags, and finally
-DEVELOPER-specific flags.
+This series changes that, and while doing so in 2/5 updates our
+documentation and Makefile interface for the SHA-1 selection. Our
+INSTALL file was still claiming we used OpenSSL's SHA-1 by default.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile | 212 +++++++++++++++++++++++++++++++------------------------
- 1 file changed, 118 insertions(+), 94 deletions(-)
+Then since we'd made sha1collisiondetection the default we hadn't
+changed the code's default fallback to be that, it was still
+block-sha1. Now our fallback behavior is "error" instead, which makes
+it less likely that we'll get some foot-gun like the "OSX not using
+sha1collisiondetection" again.
 
-diff --git a/Makefile b/Makefile
-index f8bccfab5e9..246f6729022 100644
---- a/Makefile
-+++ b/Makefile
-@@ -4,8 +4,20 @@ all::
- # Import tree-wide shared Makefile behavior and libraries
- include shared.mak
- 
-+# == Makefile defines ==
-+#
-+# These defines change the behavior of the Makefile itself, but have
-+# no impact on what it builds:
-+#
- # Define V=1 to have a more verbose compile.
- #
-+# == Portability and optional library defines ==
-+#
-+# These defines indicate what Git can expect from the OS, what
-+# libraries are available etc. Much of this is auto-detected in
-+# config.mak.uname, or in configure.ac when using the optional "make
-+# configure && ./configure" (see INSTALL).
-+#
- # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
- #
- # Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
-@@ -30,68 +42,8 @@ include shared.mak
- #
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. Various
--# commands such as log and grep offer runtime options to use
--# Perl-compatible regular expressions instead of standard or extended
--# POSIX regular expressions.
--#
--# Only libpcre version 2 is supported. USE_LIBPCRE2 is a synonym for
--# USE_LIBPCRE, support for the old USE_LIBPCRE1 has been removed.
--#
--# Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
--# in /foo/bar/include and /foo/bar/lib directories.
--#
- # Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
- #
--# Define NO_CURL if you do not have libcurl installed.  git-http-fetch and
--# git-http-push are not built, and you cannot use http:// and https://
--# transports (neither smart nor dumb).
--#
--# Define CURLDIR=/foo/bar if your curl header and library files are in
--# /foo/bar/include and /foo/bar/lib directories.
--#
--# Define CURL_CONFIG to curl's configuration program that prints information
--# about the library (e.g., its version number).  The default is 'curl-config'.
--#
--# Define CURL_LDFLAGS to specify flags that you need to link when using libcurl,
--# if you do not want to rely on the libraries provided by CURL_CONFIG.  The
--# default value is a result of `curl-config --libs`.  An example value for
--# CURL_LDFLAGS is as follows:
--#
--#     CURL_LDFLAGS=-lcurl
--#
--# Define NO_EXPAT if you do not have expat installed.  git-http-push is
--# not built, and you cannot push using http:// and https:// transports (dumb).
--#
--# Define EXPATDIR=/foo/bar if your expat header and library files are in
--# /foo/bar/include and /foo/bar/lib directories.
--#
--# Define EXPAT_NEEDS_XMLPARSE_H if you have an old version of expat (e.g.,
--# 1.1 or 1.2) that provides xmlparse.h instead of expat.h.
--#
--# Define NO_GETTEXT if you don't want Git output to be translated.
--# A translated Git requires GNU libintl or another gettext implementation,
--# plus libintl-perl at runtime.
--#
--# Define USE_GETTEXT_SCHEME and set it to 'fallthrough', if you don't trust
--# the installed gettext translation of the shell scripts output.
--#
--# Define HAVE_LIBCHARSET_H if you haven't set NO_GETTEXT and you can't
--# trust the langinfo.h's nl_langinfo(CODESET) function to return the
--# current character set. GNU and Solaris have a nl_langinfo(CODESET),
--# FreeBSD can use either, but MinGW and some others need to use
--# libcharset.h's locale_charset() instead.
--#
--# Define CHARSET_LIB to the library you need to link with in order to
--# use locale_charset() function.  On some platforms this needs to set to
--# -lcharset, on others to -liconv .
--#
--# Define LIBC_CONTAINS_LIBINTL if your gettext implementation doesn't
--# need -lintl when linking.
--#
--# Define NO_MSGFMT_EXTENDED_OPTIONS if your implementation of msgfmt
--# doesn't support GNU extensions like --check and --statistics
--#
- # Define HAVE_PATHS_H if you have paths.h and want to use the default PATH
- # it specifies.
- #
-@@ -152,40 +104,6 @@ include shared.mak
- # and do not want to use Apple's CommonCrypto library.  This allows you
- # to provide your own OpenSSL library, for example from MacPorts.
- #
--# Define BLK_SHA1 environment variable to make use of the bundled
--# optimized C SHA1 routine.
--#
--# Define PPC_SHA1 environment variable when running make to make use of
--# a bundled SHA1 routine optimized for PowerPC.
--#
--# Define DC_SHA1 to unconditionally enable the collision-detecting sha1
--# algorithm. This is slower, but may detect attempted collision attacks.
--# Takes priority over other *_SHA1 knobs.
--#
--# Define DC_SHA1_EXTERNAL in addition to DC_SHA1 if you want to build / link
--# git with the external SHA1 collision-detect library.
--# Without this option, i.e. the default behavior is to build git with its
--# own built-in code (or submodule).
--#
--# Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
--# sha1collisiondetection shipped as a submodule instead of the
--# non-submodule copy in sha1dc/. This is an experimental option used
--# by the git project to migrate to using sha1collisiondetection as a
--# submodule.
--#
--# Define OPENSSL_SHA1 environment variable when running make to link
--# with the SHA1 routine from openssl library.
--#
--# Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
--# in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
--# wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
--#
--# Define BLK_SHA256 to use the built-in SHA-256 routines.
--#
--# Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
--#
--# Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
--#
- # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
- #
- # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-@@ -480,6 +398,112 @@ include shared.mak
- # `compat/fsmonitor/fsm-listen-<name>.c` that implements the
- # `fsm_listen__*()` routines.
- #
-+# === Optional library: libintl ===
-+#
-+# Define NO_GETTEXT if you don't want Git output to be translated.
-+# A translated Git requires GNU libintl or another gettext implementation,
-+# plus libintl-perl at runtime.
-+#
-+# Define USE_GETTEXT_SCHEME and set it to 'fallthrough', if you don't trust
-+# the installed gettext translation of the shell scripts output.
-+#
-+# Define HAVE_LIBCHARSET_H if you haven't set NO_GETTEXT and you can't
-+# trust the langinfo.h's nl_langinfo(CODESET) function to return the
-+# current character set. GNU and Solaris have a nl_langinfo(CODESET),
-+# FreeBSD can use either, but MinGW and some others need to use
-+# libcharset.h's locale_charset() instead.
-+#
-+# Define CHARSET_LIB to the library you need to link with in order to
-+# use locale_charset() function.  On some platforms this needs to set to
-+# -lcharset, on others to -liconv .
-+#
-+# Define LIBC_CONTAINS_LIBINTL if your gettext implementation doesn't
-+# need -lintl when linking.
-+#
-+# Define NO_MSGFMT_EXTENDED_OPTIONS if your implementation of msgfmt
-+# doesn't support GNU extensions like --check and --statistics
-+#
-+# === Optional library: libexpat ===
-+#
-+# Define NO_EXPAT if you do not have expat installed.  git-http-push is
-+# not built, and you cannot push using http:// and https:// transports (dumb).
-+#
-+# Define EXPATDIR=/foo/bar if your expat header and library files are in
-+# /foo/bar/include and /foo/bar/lib directories.
-+#
-+# Define EXPAT_NEEDS_XMLPARSE_H if you have an old version of expat (e.g.,
-+# 1.1 or 1.2) that provides xmlparse.h instead of expat.h.
-+
-+# === Optional library: libcurl ===
-+#
-+# Define NO_CURL if you do not have libcurl installed.  git-http-fetch and
-+# git-http-push are not built, and you cannot use http:// and https://
-+# transports (neither smart nor dumb).
-+#
-+# Define CURLDIR=/foo/bar if your curl header and library files are in
-+# /foo/bar/include and /foo/bar/lib directories.
-+#
-+# Define CURL_CONFIG to curl's configuration program that prints information
-+# about the library (e.g., its version number).  The default is 'curl-config'.
-+#
-+# Define CURL_LDFLAGS to specify flags that you need to link when using libcurl,
-+# if you do not want to rely on the libraries provided by CURL_CONFIG.  The
-+# default value is a result of `curl-config --libs`.  An example value for
-+# CURL_LDFLAGS is as follows:
-+#
-+#     CURL_LDFLAGS=-lcurl
-+#
-+# === Optional library: libpcre2 ===
-+#
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as log and grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
-+#
-+# Only libpcre version 2 is supported. USE_LIBPCRE2 is a synonym for
-+# USE_LIBPCRE, support for the old USE_LIBPCRE1 has been removed.
-+#
-+# Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
-+# in /foo/bar/include and /foo/bar/lib directories.
-+#
-+# == SHA-1 and SHA-256 defines ==
-+#
-+# Define BLK_SHA1 environment variable to make use of the bundled
-+# optimized C SHA1 routine.
-+#
-+# Define PPC_SHA1 environment variable when running make to make use of
-+# a bundled SHA1 routine optimized for PowerPC.
-+#
-+# Define DC_SHA1 to unconditionally enable the collision-detecting sha1
-+# algorithm. This is slower, but may detect attempted collision attacks.
-+# Takes priority over other *_SHA1 knobs.
-+#
-+# Define DC_SHA1_EXTERNAL in addition to DC_SHA1 if you want to build / link
-+# git with the external SHA1 collision-detect library.
-+# Without this option, i.e. the default behavior is to build git with its
-+# own built-in code (or submodule).
-+#
-+# Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
-+# sha1collisiondetection shipped as a submodule instead of the
-+# non-submodule copy in sha1dc/. This is an experimental option used
-+# by the git project to migrate to using sha1collisiondetection as a
-+# submodule.
-+#
-+# Define OPENSSL_SHA1 environment variable when running make to link
-+# with the SHA1 routine from openssl library.
-+#
-+# Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
-+# in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
-+# wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
-+#
-+# Define BLK_SHA256 to use the built-in SHA-256 routines.
-+#
-+# Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
-+#
-+# Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
-+#
-+# == DEVELOPER defines ==
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
+The 4/5 and 5/5 then remove the PPC_SHA1 implementation. I submitted
+this before as [1], and the range-diff is to that submission (it
+wasn't picked up). I think it makes sense as part of this general
+SHA-1 cleanup.
+
+1. https://lore.kernel.org/git/patch-1.1-05dcdca3877-20220319T005952Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (5):
+  Makefile: create and use sections for "define" flag listing
+  Makefile: really use and document sha1collisiondetection by default
+  Makefile: rephrase the discussion of *_SHA1 knobs
+  Makefile + hash.h: remove PPC_SHA1 implementation
+  Makefile: use $(OBJECTS) instead of $(C_OBJ)
+
+ INSTALL                             |  11 +-
+ Makefile                            | 301 ++++++++++++++++------------
+ configure.ac                        |   3 -
+ contrib/buildsystems/CMakeLists.txt |   3 +-
+ hash.h                              |  12 +-
+ ppc/sha1.c                          |  72 -------
+ ppc/sha1.h                          |  25 ---
+ ppc/sha1ppc.S                       | 224 ---------------------
+ t/t0013-sha1dc.sh                   |   4 +-
+ 9 files changed, 191 insertions(+), 464 deletions(-)
+ delete mode 100644 ppc/sha1.c
+ delete mode 100644 ppc/sha1.h
+ delete mode 100644 ppc/sha1ppc.S
+
+Range-diff:
+-:  ----------- > 1:  f799d30e82e Makefile: create and use sections for "define" flag listing
+-:  ----------- > 2:  5ffb68dc77b Makefile: really use and document sha1collisiondetection by default
+-:  ----------- > 3:  d559e5212bc Makefile: rephrase the discussion of *_SHA1 knobs
+1:  3a8caf62137 ! 4:  4b2d0b7b51a ppc: remove custom SHA-1 implementation
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    ppc: remove custom SHA-1 implementation
+    +    Makefile + hash.h: remove PPC_SHA1 implementation
+     
+         Remove the PPC_SHA1 implementation added in a6ef3518f9a ([PATCH] PPC
+         assembly implementation of SHA1, 2005-04-22). When this was added
+         Apple consumer hardware used the PPC architecture, and the
+         implementation was intended to improve SHA-1 speed there.
+     
+    -    Since it was added we've moved to DC_SHA1 by default, and anyone
+    -    wanting hard-rolled non-DC SHA-1 implementation can use OpenSSL's via
+    -    the OPENSSL_SHA1 knob.
+    +    Since it was added we've moved to using sha1collisiondetection by
+    +    default, and anyone wanting hard-rolled non-DC SHA-1 implementation
+    +    can use OpenSSL's via the OPENSSL_SHA1 knob.
+     
+    -    I'm unsure if this was ever supposed to work on 64-bit PPC. It clearly
+    -    originally targeted 32 bit PPC, but there's some mailing list
+    -    references to this being tried on G5 (PPC 970). I can't get it to do
+    -    anything but segfault on the BE POWER8 machine in the GCC compile
+    -    farm. Anyone caring about speed on PPC these days is likely to be
+    -    using IBM's POWER, not PPC 970.
+    +    Furthermore this doesn't run on the modern PPC processors which anyone
+    +    who's concerned about performance on PPC is likely to be using these
+    +    days, i.e. the IBM POWER series. It originally originally targeted 32
+    +    bit PPC, but there's some mailing list references to this being tried
+    +    on G5 (PPC 970).
+     
+    -    There have been proposals to entirely remove non-DC_SHA1
+    +    I can't get it to do anything but segfault on both the BE and LE POWER
+    +    machines in the GCC compile farm.
+    +
+    +    There have been proposals to entirely remove non-sha1collisiondetection
+         implementations from the tree[1]. I think per [2] that would be a bit
+         overzealous. I.e. there are various set-ups git's speed is going to be
+         more important than the relatively implausible SHA-1 collision attack,
+         or where such attacks are entirely mitigated by other means (e.g. by
+         incoming objects being checked with DC_SHA1).
+     
+    -    The main reason for doing so at this point is to simplify follow-up
+    -    Makefile change. Since PPC_SHA1 included the only in-tree *.S assembly
+    -    file we needed to keep around special support for building objects
+    -    from it. By getting rid of it we know we'll always build *.o from *.c
+    -    files, which makes the build process simpler.
+    +    But that really doesn't apply to PPC_SHA1 in particular, which seems
+    +    to have outlived its usefulness.
+    +
+    +    As this gets rid of the only in-tree *.S assembly file we can remove
+    +    the small bits of logic from the Makefile needed to build objects
+    +    from *.S (as opposed to *.c)
+     
+    -    As an aside the code being removed here was also throwing warnings
+    -    with the "-pedantic" flag, but let's remove it instead of fixing it,
+    -    as 544d93bc3b4 (block-sha1: remove use of obsolete x86 assembly,
+    -    2022-03-10) did for block-sha1/*.
+    +    The code being removed here was also throwing warnings with the
+    +    "-pedantic" flag, it could have been fixed as 544d93bc3b4 (block-sha1:
+    +    remove use of obsolete x86 assembly, 2022-03-10) did for block-sha1/*,
+    +    but as noted above let's remove it instead.
+     
+         1. https://lore.kernel.org/git/20200223223758.120941-1-mh@glandium.org/
+         2. https://lore.kernel.org/git/20200224044732.GK1018190@coredump.intra.peff.net/
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    - ## INSTALL ##
+    -@@ INSTALL: Issues of note:
+    - 
+    - 	  By default, git uses OpenSSL for SHA1 but it will use its own
+    - 	  library (inspired by Mozilla's) with either NO_OPENSSL or
+    --	  BLK_SHA1.  Also included is a version optimized for PowerPC
+    --	  (PPC_SHA1).
+    -+	  BLK_SHA1.
+    - 
+    - 	- "libcurl" library is used for fetching and pushing
+    - 	  repositories over http:// or https://, as well as by
+    -
+      ## Makefile ##
+     @@ Makefile: include shared.mak
+    - # Define BLK_SHA1 environment variable to make use of the bundled
+    - # optimized C SHA1 routine.
+    + # Define OPENSSL_SHA1 to link to the the SHA-1 routines from
+    + # the OpenSSL library.
+      #
+    --# Define PPC_SHA1 environment variable when running make to make use of
+    --# a bundled SHA1 routine optimized for PowerPC.
+    +-# Define PPC_SHA1 to make use of optimized (in assembly)
+    +-# PowerPC SHA-1 routines.
+     -#
+    - # Define DC_SHA1 to unconditionally enable the collision-detecting sha1
+    - # algorithm. This is slower, but may detect attempted collision attacks.
+    - # Takes priority over other *_SHA1 knobs.
+    -@@ Makefile: ifdef OPENSSL_SHA1
+    - 	EXTLIBS += $(LIB_4_CRYPTO)
+    - 	BASIC_CFLAGS += -DSHA1_OPENSSL
+    - else
+    + # Define APPLE_SHA1 to use Apple's CommonCrypto SHA-1 routines on
+    + # Darwin/Mac OS X.
+    + #
+    +@@ Makefile: endif
+    + ifdef DC_SHA1
+    + $(error the DC_SHA1 flag is no longer used, and has become the default. Adjust your build scripts accordingly)
+    + endif
+     +ifdef PPC_SHA1
+    -+$(error PPC_SHA1 has been removed! Use DC_SHA1 instead, which is the default)
+    ++$(error the PPC_SHA1 flag has been removed along with the PowerPC-specific SHA-1 implementation.)
+     +endif
+    - ifdef BLK_SHA1
+    + ifndef NO_DC_SHA1
+    +-	ifneq ($(OPENSSL_SHA1)$(BLK_SHA1)$(PPC_SHA1)$(APPLE_SHA1),)
+    ++	ifneq ($(OPENSSL_SHA1)$(BLK_SHA1)$(APPLE_SHA1),)
+    + $(error no other *_SHA1 option can be defined unless NO_DC_SHA1 is defined)
+    + 	endif
+    + 	LIB_OBJS += sha1dc_git.o
+    +@@ Makefile: ifdef BLK_SHA1
+      	LIB_OBJS += block-sha1/sha1.o
+      	BASIC_CFLAGS += -DSHA1_BLK
+      else
+    @@ Makefile: ifdef OPENSSL_SHA1
+     -	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
+     -	BASIC_CFLAGS += -DSHA1_PPC
+     -else
+    - ifdef APPLE_COMMON_CRYPTO
+    + ifdef APPLE_SHA1
+      	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+      	BASIC_CFLAGS += -DSHA1_APPLE
+     @@ Makefile: endif
+    @@ configure.ac: AC_MSG_NOTICE([CHECKS for site configuration])
+     
+      ## hash.h ##
+     @@
+    - #include "git-compat-util.h"
+    - #include "repository.h"
+      
+    --#if defined(SHA1_PPC)
+    + #if !defined(NO_SHA1_DC)
+    + #include "sha1dc_git.h"
+    +-#elif defined(SHA1_PPC)
+     -#include "ppc/sha1.h"
+    --#elif defined(SHA1_APPLE)
+    -+#if defined(SHA1_APPLE)
+    + #elif defined(SHA1_APPLE)
+      #include <CommonCrypto/CommonDigest.h>
+      #elif defined(SHA1_OPENSSL)
+    - #include <openssl/sha.h>
+     @@
+       * platform's underlying implementation of SHA-1; could be OpenSSL,
+       * blk_SHA, Apple CommonCrypto, etc...  Note that the relevant
+-:  ----------- > 5:  0575faebc30 Makefile: use $(OBJECTS) instead of $(C_OBJ)
 -- 
 2.36.0.879.g56a83971f3f
 
