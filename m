@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53725C4167E
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A016C4332F
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233569AbiDVWie (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 18:38:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46918 "EHLO
+        id S233652AbiDVWif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 18:38:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233961AbiDVWhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 18:37:53 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2E0C1632D4
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:29:59 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id e28so2548386wra.8
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:29:59 -0700 (PDT)
+        with ESMTP id S234186AbiDVWiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 18:38:01 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 652631F9E02
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:07 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id x18so12805079wrc.0
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FYejdevIv/sNJ+Pm7nNh32hrd+w9z8t9/s1drm2KRzs=;
-        b=nNchwVD1ZBXgP2wkGp02oJBmdb7QgRVLgOwkB+4c5IclKLmF2FUGfFuFNQYWfN1Efh
-         fREw+n6ubXqXhILwuCQMT8SGfjIfU1LklGAfKoWy4Yi9DyS4niI659+sqAJ2MsVnvQ6m
-         MPRWmpS8eGAtq1jtDqo9Bxzyy1juK+kuJV2rmMpBYx9OvKNdQhoX9H0pCTxLVScbEzCa
-         E8x0Amqwt9nqHxqV1Sog9TAnZoTfFGZOk6YHYXW72DwGlAkExOU76c3oYaNgtr9mn1/O
-         85boZO3tVSU1LiQ61sICdszZuKTgwWZ6eF5iP4aYdziOR94gceVsoN4eU6C52wPYzlMX
-         Wc9w==
+        bh=Sjfx7SFJhNxZLXokVMmn8yqRtBoQjZzh8JIwTJB3LAY=;
+        b=FC+4r+Ft24radeYOyCZfRVv1aafCA1dRiX3lrzuC9lMnB31cwovlhPcOgK0AbhLDAD
+         060n2KjfhZHBaJOa8hEIL5EZAEncmZqPTY+AQC9exy7i9S6jHNB92xrepfQ5UoK+9S48
+         BUbP871t6HEaYN9btk81Zlb7XvD/EAnr6ZbhTBHhBYwuCW8S8QSPWqJRg7kf946Pc79F
+         TbN0Mx82LAXnN+pFlz+pmImSTPc2Tt9I7OH3fMUMJZGSIs+Zua4XS8FEyuWe6AjcKuR+
+         osaCH53j/RaSaIoVufyRu16pwpBh2NNIDEiQUtpREhJ82y5bVlmV/nGTGnmgqdLibmyY
+         g30A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FYejdevIv/sNJ+Pm7nNh32hrd+w9z8t9/s1drm2KRzs=;
-        b=E3rIopfFfjKynRUZvEg6L+TYLYi9nuWw1iwc113TulZytFxCZidK5e3A5aPzyecweM
-         il1229MDtHlTFulxdUC0Nvv/va19CNAM75WJ42b8HO6IO7leyYsRdmULewXueQGJGFBj
-         2oDAZjBDdCQwojYKQQxJk+2ur/vaJY6iCkGrM31w9aARa5XSgfyDIBKhcogp7bIoQU6x
-         xglFQrn3RwD+kOsCCtR73JpoCQIEH6qaW4xBq7PVfYioRHbUjW8SqvrfRfRQMR/pPJFm
-         MOMZbEau45WdtTCfgnbJLmbDat0nrxxr8ltagM9BEgdgMBwBqK3Y0/GBUMg+Gr/QAJdD
-         V95g==
-X-Gm-Message-State: AOAM532Au9/UzefY0p+uDenKB4dJxK09plOr1JnSQ106JMwmBPzhcMul
-        5IERe237/XkF46v8Fmt9oD8GryxFooA=
-X-Google-Smtp-Source: ABdhPJwrzeCHuNVq0ckKisMfMAEe2rwNCMIOJoxLxHmDXPNwzDJsdLzIPWdxT9rVkuKGslTh+tdp8g==
-X-Received: by 2002:a5d:58d6:0:b0:20a:cc61:2d4f with SMTP id o22-20020a5d58d6000000b0020acc612d4fmr3439360wrf.339.1650662997993;
-        Fri, 22 Apr 2022 14:29:57 -0700 (PDT)
+        bh=Sjfx7SFJhNxZLXokVMmn8yqRtBoQjZzh8JIwTJB3LAY=;
+        b=geSYfEqewXTq/vAnx2tc02z8lhvV1PLihevVZUk3IBaHU4G6EJXfluTuq3ivG6wxvd
+         SSU4AUylBxjxC8ivtJMQMWdQ3i28YARUdqAIMWLTSPQuemxbTxMtcgPCZDFY1tS7969w
+         DYjApZotTEz9v32MRiUk+DUhGNn9UYYgYkWzHQWF9/3pYq1qSht/8vzVmHonQhN5sCwi
+         xe7Pd3QNrVbFJo29fFEAPGCWPhcA9ErPYPcejFwYjNCWS1TV5XS2Fs2jdBl5E4+9m5B6
+         KmdNqDC4lFpwQXV4qJLktbB4VVyY8dZqfsYRovhKicOM7pLPIdc87lHsk8wsqIjZAS66
+         A8zg==
+X-Gm-Message-State: AOAM531eFbpFle0dPsbsLpRvdLWhe3Lxb4jQwIOWG539cdzC5H+QM05t
+        WP9d5axeYCxfgqqldlNMYwXsmdE8QuQ=
+X-Google-Smtp-Source: ABdhPJzzSRCjCnNpNW3xKB6kzLH3QCFZDv0i9z7K7TV+izgcT1nlSRaZmf0jT6tX8x/xREPH0H4+uw==
+X-Received: by 2002:a05:6000:2c9:b0:20a:8f9f:4a08 with SMTP id o9-20020a05600002c900b0020a8f9f4a08mr5171593wry.297.1650663005562;
+        Fri, 22 Apr 2022 14:30:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4-20020a7bcb84000000b00389efb7a5b4sm5331994wmi.17.2022.04.22.14.29.56
+        by smtp.gmail.com with ESMTPSA id c186-20020a1c35c3000000b0038e6c6fc860sm2513578wma.37.2022.04.22.14.30.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 14:29:57 -0700 (PDT)
-Message-Id: <5b246bec2470431898ddc74013f6fb325c2bc281.1650662994.git.gitgitgadget@gmail.com>
+        Fri, 22 Apr 2022 14:30:05 -0700 (PDT)
+Message-Id: <495e54049b4a6043206bc0a7a7fdc1cf0d761ec5.1650662994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
         <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Apr 2022 21:29:28 +0000
-Subject: [PATCH v6 02/28] t7527: test FSMonitor on repos with Unicode root
- paths
+Date:   Fri, 22 Apr 2022 21:29:35 +0000
+Subject: [PATCH v6 09/28] fsmonitor-settings: remote repos on Windows are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,49 +74,145 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create some test repos with UTF8 characters in the pathname of the
-root directory and verify that the builtin FSMonitor can watch them.
+Teach Git to detect remote working directories on Windows and mark them as
+incompatible with FSMonitor.
 
-This test is mainly for Windows where we need to avoid `*A()`
-routines.
+With this `git fsmonitor--daemon run` will error out with a message like it
+does for bare repos.
+
+Client commands, such as `git status`, will not attempt to start the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ compat/fsmonitor/fsm-settings-win32.c | 102 ++++++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 1be21785162..c9c7dd77e3c 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -671,4 +671,27 @@ do
- 	done
- done
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index ee78bba38e3..907655720bb 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
++#include "fsmonitor.h"
  
-+# Test Unicode UTF-8 characters in the pathname of the working
-+# directory root.  Use of "*A()" routines rather than "*W()" routines
-+# on Windows can sometimes lead to odd failures.
-+#
-+u1=$(printf "u_c3_a6__\xC3\xA6")
-+u2=$(printf "u_e2_99_ab__\xE2\x99\xAB")
-+u_values="$u1 $u2"
-+for u in $u_values
-+do
-+	test_expect_success "Unicode in repo root path: $u" '
-+		test_when_finished "stop_daemon_delete_repo $u" &&
+ /*
+  * VFS for Git is incompatible with FSMonitor.
+@@ -23,6 +24,103 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
+ 	return FSMONITOR_REASON_OK;
+ }
+ 
++/*
++ * Remote working directories are problematic for FSMonitor.
++ *
++ * The underlying file system on the server machine and/or the remote
++ * mount type dictates whether notification events are available at
++ * all to remote client machines.
++ *
++ * Kernel differences between the server and client machines also
++ * dictate the how (buffering, frequency, de-dup) the events are
++ * delivered to client machine processes.
++ *
++ * A client machine (such as a laptop) may choose to suspend/resume
++ * and it is unclear (without lots of testing) whether the watcher can
++ * resync after a resume.  We might be able to treat this as a normal
++ * "events were dropped by the kernel" event and do our normal "flush
++ * and resync" --or-- we might need to close the existing (zombie?)
++ * notification fd and create a new one.
++ *
++ * In theory, the above issues need to be addressed whether we are
++ * using the Hook or IPC API.
++ *
++ * So (for now at least), mark remote working directories as
++ * incompatible.
++ *
++ * Notes for testing:
++ *
++ * (a) Windows allows a network share to be mapped to a drive letter.
++ *     (This is the normal method to access it.)
++ *
++ *     $ NET USE Z: \\server\share
++ *     $ git -C Z:/repo status
++ *
++ * (b) Windows allows a network share to be referenced WITHOUT mapping
++ *     it to drive letter.
++ *
++ *     $ NET USE \\server\share\dir
++ *     $ git -C //server/share/repo status
++ *
++ * (c) Windows allows "SUBST" to create a fake drive mapping to an
++ *     arbitrary path (which may be remote)
++ *
++ *     $ SUBST Q: Z:\repo
++ *     $ git -C Q:/ status
++ *
++ * (d) Windows allows a directory symlink to be created on a local
++ *     file system that points to a remote repo.
++ *
++ *     $ mklink /d ./link //server/share/repo
++ *     $ git -C ./link status
++ */
++static enum fsmonitor_reason check_remote(struct repository *r)
++{
++	wchar_t wpath[MAX_PATH];
++	wchar_t wfullpath[MAX_PATH];
++	size_t wlen;
++	UINT driveType;
 +
-+		git init "$u" &&
-+		echo 1 >"$u"/file1 &&
-+		git -C "$u" add file1 &&
-+		git -C "$u" config core.fsmonitor true &&
++	/*
++	 * Do everything in wide chars because the drive letter might be
++	 * a multi-byte sequence.  See win32_has_dos_drive_prefix().
++	 */
++	if (xutftowcs_path(wpath, r->worktree) < 0)
++		return FSMONITOR_REASON_ERROR;
 +
-+		start_daemon -C "$u" &&
-+		git -C "$u" status >actual &&
-+		grep "new file:   file1" actual
-+	'
-+done
++	/*
++	 * GetDriveTypeW() requires a final slash.  We assume that the
++	 * worktree pathname points to an actual directory.
++	 */
++	wlen = wcslen(wpath);
++	if (wpath[wlen - 1] != L'\\' && wpath[wlen - 1] != L'/') {
++		wpath[wlen++] = L'\\';
++		wpath[wlen] = 0;
++	}
 +
- test_done
++	/*
++	 * Normalize the path.  If nothing else, this converts forward
++	 * slashes to backslashes.  This is essential to get GetDriveTypeW()
++	 * correctly handle some UNC "\\server\share\..." paths.
++	 */
++	if (!GetFullPathNameW(wpath, MAX_PATH, wfullpath, NULL))
++		return FSMONITOR_REASON_ERROR;
++
++	driveType = GetDriveTypeW(wfullpath);
++	trace_printf_key(&trace_fsmonitor,
++			 "DriveType '%s' L'%ls' (%u)",
++			 r->worktree, wfullpath, driveType);
++
++	if (driveType == DRIVE_REMOTE) {
++		trace_printf_key(&trace_fsmonitor,
++				 "check_remote('%s') true",
++				 r->worktree);
++		return FSMONITOR_REASON_REMOTE;
++	}
++
++	return FSMONITOR_REASON_OK;
++}
++
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
+ 	enum fsmonitor_reason reason;
+@@ -31,5 +129,9 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ 	if (reason != FSMONITOR_REASON_OK)
+ 		return reason;
+ 
++	reason = check_remote(r);
++	if (reason != FSMONITOR_REASON_OK)
++		return reason;
++
+ 	return FSMONITOR_REASON_OK;
+ }
 -- 
 gitgitgadget
 
