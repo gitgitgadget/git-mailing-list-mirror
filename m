@@ -2,82 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D28BC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 06:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05A0FC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 06:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444555AbiDVGx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 02:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52302 "EHLO
+        id S1444567AbiDVGyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 02:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388274AbiDVGx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 02:53:26 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A2F642E
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 23:50:32 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id y20so14467077eju.7
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 23:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DJXrPJrIwjJqP/bxWDSpQNlAnJvhEOYIxwgXk1taOI8=;
-        b=5oBNA6L8Ki7TXOl4ORKI3wtNOGo1GG7LFhYgLsskKKzn+lLeMTQDD5mUxAF+rjWqjZ
-         5M3qWZZTSTMziwreelazDGk93pBDnvhPjwAHD0wTGVr/rJMPU/0cFFfqdrajzrjsDNBU
-         0EbLNXr+eMc+suBDJ4Ds9BwywYAogseVANpUXVqAVViCN278yvFYKgSGgPaGYLvN+v5R
-         XZNt2mPgoDilGhp6/ZxGoRCA5cuB0bnoxtAXKigfu3ErvLJlPv6gNeuQD7bELu+k1Rmg
-         LBOa0l7l+w2tnR+omF+3oS3Ua00ASCXqlJ40uK5c0k7S8a97klXeFuad6Qkr5KF/IlDd
-         N4yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DJXrPJrIwjJqP/bxWDSpQNlAnJvhEOYIxwgXk1taOI8=;
-        b=Ry7JgoDYPuq8tZG8rQIUex29k6AXrQHL28FRUmaBDSQNvpJiSuslx+cCOtnmUF6TmX
-         nAaDbr8WB3Pzki1DrvVD31MTlTmwdj3gH1Qp38rdIwHuVGFQ51gCDFskP6DXK52QNv6z
-         f93VmHAVx2zI3+/fg/o5tX86DE9sN+eilR5vH7ORnu3FP/EhIYsHJa+u6hqr7o2MsQ9L
-         kyyp5QIYDq141/pgNAl51ZNfkQ21QIjR2uZKQChhH9ynuON8Fw3i8Gk0t+O2kqnI8tz+
-         3ozGJaqHI4wWQ0AiwzW0xX4L5/sPOTVtBi1jbNYXHAr9wJf3zuGbTAej+uTXHamOX7fj
-         2JDQ==
-X-Gm-Message-State: AOAM530ovmrfDGjkzZ31g+CX+DvbeBLkUqA2rIaYKimMocRtldaKq780
-        ulgvtjyPwNXhvlihBR9HpBsOCE8LxIvrG8DHKp4=
-X-Google-Smtp-Source: ABdhPJzrMI8GYQs6xOXUg2uaru+iIfW3IgU/6HV04E9dvhaJvn4d1YewJaFLUJYf6Hh47thS8+1h2g==
-X-Received: by 2002:a17:907:97cc:b0:6da:a8fb:d1db with SMTP id js12-20020a17090797cc00b006daa8fbd1dbmr2812840ejc.267.1650610231246;
-        Thu, 21 Apr 2022 23:50:31 -0700 (PDT)
-Received: from vmiklos.hu (92-249-245-217.pool.digikabel.hu. [92.249.245.217])
-        by smtp.gmail.com with ESMTPSA id o22-20020a170906289600b006e44a0c1105sm442568ejd.46.2022.04.21.23.50.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Apr 2022 23:50:30 -0700 (PDT)
-Date:   Fri, 22 Apr 2022 08:50:28 +0200
-From:   Miklos Vajna <vmiklos@vmiklos.hu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5] log: "--as-filter" option adjusts how "--since"
- cut-off works
-Message-ID: <YmJQNKdMj3Bp2RJE@vmiklos.hu>
-References: <xmqqtub3moa0.fsf@gitster.g>
- <xmqqv8vkpara.fsf@gitster.g>
- <YlCiqgO6rL908Zsi@vmiklos.hu>
- <220412.86pmlmhe9a.gmgdl@evledraar.gmail.com>
- <YlnYDgZRzDI87b/z@vmiklos.hu>
- <xmqqmtgm9c01.fsf@gitster.g>
- <YlrRT6NAgW6nK2fc@vmiklos.hu>
+        with ESMTP id S1390582AbiDVGyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 02:54:05 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B3E50E1C
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 23:51:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 496E519B3B1;
+        Fri, 22 Apr 2022 02:51:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z8+8Q7zGZXlZ16TKMqCPvdywkgJPv2wcT7r54h
+        Spt9s=; b=JCo9FNIIwz8cec2NEaULxAxaQeSlV7KtIr1qoMpD3dnoJwWCq33XIM
+        XhQcp4Pk8kiwTN3qNMapF03FUcBbeD28Q4AAgnDp8RR9ZIJeKlEteyZvigjaYakM
+        P1z/zQokvn8gf3QbEaBMO8xGMKy1kNEgS1y+KTvTrplsecGLGtGhQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 41CF519B3B0;
+        Fri, 22 Apr 2022 02:51:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C093E19B3AE;
+        Fri, 22 Apr 2022 02:51:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Alyssa Ross <hi@alyssa.is>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: Failures in t9001-send-email
+References: <20220421194832.lshqkl3bogy2f2hy@eve>
+        <220421.86tuam5hoi.gmgdl@evledraar.gmail.com>
+        <20220421223843.6z3y4bnrbu76erhk@eve>
+        <36a43fbb-92af-3718-f2fb-51645564a961@kdbg.org>
+Date:   Thu, 21 Apr 2022 23:51:07 -0700
+In-Reply-To: <36a43fbb-92af-3718-f2fb-51645564a961@kdbg.org> (Johannes Sixt's
+        message of "Fri, 22 Apr 2022 07:40:07 +0200")
+Message-ID: <xmqq7d7hd31g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YlrRT6NAgW6nK2fc@vmiklos.hu>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96D97B7E-C208-11EC-BFC4-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-On Sat, Apr 16, 2022 at 04:23:14PM +0200, Miklos Vajna <vmiklos@vmiklos.hu> wrote:
-> Thanks a lot, I've updated the commit message to match this.
+>> I had a look at the tests to try to guess what was wrong, but I didn't
+>> come up with anything.  Any ideas?
+>
+> You run ./t9001-send-email.sh (without `prove`). Add -v to see some
+> verbiage from the tests, throw in -i to have it stop at the first
+> failure (so you don't have to scroll back to find it), and add -x for
+> additional traces of commands that the shell executes (to see the exact
+> command that failed).
+>
+> IFAIC, I always go all in, i.e., either all or none of -v -i -x.
 
-Is there anything else I should tweak in v5 to get this into a topic
-branch?
+Good suggestion.
 
-Thanks,
+I rarely (if ever) use "-x" myself but another useful thing to know,
+while learning how the existing test works (i.e. studying a working
+test, not debugging a broken test) is to use "-d", possibly together
+with "-v", which refrains from removing the trash directory.  Then
+you can go in and examine the state of the test repository the tests
+left.
 
-Miklos
+Thanks.
