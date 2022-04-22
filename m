@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BB1C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E262AC433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233271AbiDVWir (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 18:38:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49574 "EHLO
+        id S233204AbiDVWiv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 18:38:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234293AbiDVWiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 18:38:05 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A9C153D66
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:11 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id b19so12726675wrh.11
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:11 -0700 (PDT)
+        with ESMTP id S234336AbiDVWiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 18:38:07 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36181F9E1F
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:14 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id w4so12716211wrg.12
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/RjRPxI5sciyfuiY2+veGHheZ++WpbgI5b5xEO32xEk=;
-        b=ctthRzTZXSSwjFgK4GfeTL68mOGpRGxMxK6Rz29bmwZZdbej78gEPPlbEN7ti5aXZr
-         BzdEY9zpRSAtPL1CyfbB0/onTSpyBiLH+D70Ihgc7XUG0s8ow6SA6a/2Rkl4ep6I5ODW
-         KdIZ/ILwWnj5yTUVV+8F2Xy+zzK6xx5zVKXYfDJ5+7cGd05FhH0kcHuHQtMDDnKqoZvq
-         Bcy/9AUAQL5hdRMmn9k5f3P7u+HEYWPbnmaIzwcvbGP5FsMPefJ744lU5kCE8Kxdtxog
-         uuPaPatl18/AO+RrRS5obEhwXKqaL2so/OpEAsTO/v4U4MvEyIuoWW4xb7xHRdjndZ7d
-         dmEw==
+        bh=OTLYUOFI+cGlsvNY4S9OqwrezTVUzg9mxH05B+h7KQc=;
+        b=Iig/UEAEdPtEGHLs6+fp4BGEyfOl241xTbqRuk06WdhJdPpKLysLhZ+zflPR0F9HFn
+         31SPdRoS6CIkNiW56Hm4sKV/l12u0OM+RpUKRV9aQMGht7RnOX7p+mr/HWP7DeAhJ8UD
+         lnCHiWu+sLhANqGGj/IbZoqFDkYS1Ke8SCCTD9Loc7ckDvupRsuwg7miCF6ydTCoJter
+         9YjuoUrdjHPNtwDTcU+ALzGREY/QPp53N8oSJihjaYkqyenUNW6O/5oh8264Yc1HcU1M
+         E/LK9hgsWu2O6zxKyg9i+zpurVS4C/z6T1ZN0Y24SanWm1eEzo7Z10b5QZS96Uhd0Olj
+         yDRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/RjRPxI5sciyfuiY2+veGHheZ++WpbgI5b5xEO32xEk=;
-        b=WrT+IOAFt2Mif/g8cPSwL4xBB0udcR6jbXHHZqPUIEeLvOpsH2ErhuVU5bKRXNDMxf
-         qA3SVbM6gB8sr+ixBkfVB3xTVCE+3iPY8uBznPINd3Yzp9+PvKO0Zxx079QtakXJjkbq
-         bHRGFHibqlJsOmxXCTHyed2X91gXepFQGlddAH81RYH40Gow9Ek6JKp0/K3dRNSENUga
-         FjbCRHNKulQMAhlKXRUobnwe5SUCL8jE6Y72H2g8dGrAsKSoKYrjGYWcv/kNoL+nZ0i3
-         3a9OwLJY+GjjeEDwfkwDf/7lYyuiUHOs/zkqr1LGRHxlSGVK1r1SQxPScwa26HdARb7i
-         4zlw==
-X-Gm-Message-State: AOAM5311tLW9p0Rsd4E1Tba5aS1EV4Ylywwf63ATz56082QgMzVEugFn
-        IvtNiR10tt93Ns0OxawmokIL8GMLXm8=
-X-Google-Smtp-Source: ABdhPJwv4NH3xnsG9u7caX5QGT8dmUSx+LRKWjAjP19hN/hF6iC7RoWMd8p+aW0tQFvrfoMJRujTWQ==
-X-Received: by 2002:adf:b64c:0:b0:1e3:16d0:3504 with SMTP id i12-20020adfb64c000000b001e316d03504mr5196867wre.333.1650663009803;
-        Fri, 22 Apr 2022 14:30:09 -0700 (PDT)
+        bh=OTLYUOFI+cGlsvNY4S9OqwrezTVUzg9mxH05B+h7KQc=;
+        b=3RLY6A396/wmjEltYmkz6qz2bbjF+osYcaS5fptC364GcmB88bMjTwZeXG/N01kujD
+         /RTFEvm+Ox9H5E+3BnlKi0jQoouKBq/lmhh+c/oF1SaJdvsEo+I5moOCdhOPuVdflQD7
+         zWF3XzEXPib0g7ji56dGF2iWMWCRFanxATC/Rh3+rAh+V8FQZp9bb3pWf29cXTCXg0Vq
+         Psv/QHJUx0yAuJmDHgpzwNO2c63QM9uqDr5RhrhcLKlKJDxpXGNJjXpJj26palEPUkba
+         OQtJ090G9/Oo9bu/AK7JcDeMs430thnIw6FnlUSYjcf7Tr2tvG9SwKKWjPzDjmTMLJEt
+         D32Q==
+X-Gm-Message-State: AOAM533aLZ4prQXQ3GOWEFup0ru3PX/6O/MLYRSr2BcwdogFDKSr7CTL
+        /oBZBDnf/XzUMre+f4SryQ8+eGHnEzs=
+X-Google-Smtp-Source: ABdhPJzeUNgzO9hwip0n0LpXO/Rgo/ZZeXBV5DlU0Op3fSmI9f9KCnkAa356K2oCnf27M/AHo0ke+w==
+X-Received: by 2002:a5d:4e4c:0:b0:207:a883:cf3a with SMTP id r12-20020a5d4e4c000000b00207a883cf3amr5281048wrt.534.1650663013043;
+        Fri, 22 Apr 2022 14:30:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c3-20020a05600c148300b0038ebc8ad740sm6063095wmh.1.2022.04.22.14.30.09
+        by smtp.gmail.com with ESMTPSA id l8-20020a5d5608000000b00207ab405d15sm2507005wrv.42.2022.04.22.14.30.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 14:30:09 -0700 (PDT)
-Message-Id: <dbb983fd9d0473f3bac0b8873ac59a3b4c54d79b.1650662994.git.gitgitgadget@gmail.com>
+        Fri, 22 Apr 2022 14:30:12 -0700 (PDT)
+Message-Id: <32fc6ba74378cda7a5060d63066d16333765973a.1650662994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
         <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Apr 2022 21:29:39 +0000
-Subject: [PATCH v6 13/28] fsmonitor--daemon: cd out of worktree root
+Date:   Fri, 22 Apr 2022 21:29:42 +0000
+Subject: [PATCH v6 16/28] fsmonitor--daemon: stub in health thread
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,143 +73,384 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach the fsmonitor--daemon to CD outside of the worktree
-before starting up.
+Create another thread to watch over the daemon process and
+automatically shut it down if necessary.
 
-The common Git startup mechanism causes the CWD of the daemon process
-to be in the root of the worktree.  On Windows, this causes the daemon
-process to hold a locked handle on the CWD and prevents other
-processes from moving or deleting the worktree while the daemon is
-running.
+This commit creates the basic framework for a "health" thread
+to monitor the daemon and/or the file system.  Later commits
+will add platform-specific code to do the actual work.
 
-CD to HOME before entering main event loops.
+The "health" thread is intended to monitor conditions that
+would be difficult to track inside the IPC thread pool and/or
+the file system listener threads.  For example, when there are
+file system events outside of the watched worktree root or if
+we want to have an idle-timeout auto-shutdown feature.
+
+This commit creates the health thread itself, defines the thread-proc
+and sets up the thread's event loop.  It integrates this new thread
+into the existing IPC and Listener thread models.
+
+This commit defines the API to the platform-specific code where all of
+the monitoring will actually happen.
+
+The platform-specific code for MacOS is just stubs.  Meaning that the
+health thread will immediately exit on MacOS, but that is OK and
+expected.  Future work can define MacOS-specific monitoring.
+
+The platform-specific code for Windows sets up enough of the
+WaitForMultipleObjects() machinery to watch for system and/or custom
+events.  Currently, the set of wait handles only includes our custom
+shutdown event (sent from our other theads).  Later commits in this
+series will extend the set of wait handles to monitor other
+conditions.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c         | 32 +++++++++++++++++++++++++++--
- compat/fsmonitor/fsm-listen-win32.c | 22 ++++++++++++++------
- fsmonitor--daemon.h                 |  1 +
- 3 files changed, 47 insertions(+), 8 deletions(-)
+ Makefile                             |  6 ++-
+ builtin/fsmonitor--daemon.c          | 39 +++++++++++++++
+ compat/fsmonitor/fsm-health-darwin.c | 24 ++++++++++
+ compat/fsmonitor/fsm-health-win32.c  | 72 ++++++++++++++++++++++++++++
+ compat/fsmonitor/fsm-health.h        | 47 ++++++++++++++++++
+ contrib/buildsystems/CMakeLists.txt  |  2 +
+ fsmonitor--daemon.h                  |  4 ++
+ 7 files changed, 192 insertions(+), 2 deletions(-)
+ create mode 100644 compat/fsmonitor/fsm-health-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-health-win32.c
+ create mode 100644 compat/fsmonitor/fsm-health.h
 
+diff --git a/Makefile b/Makefile
+index 93604fe8ef7..5f1623baadd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -472,8 +472,9 @@ all::
+ #
+ # If your platform supports a built-in fsmonitor backend, set
+ # FSMONITOR_DAEMON_BACKEND to the "<name>" of the corresponding
+-# `compat/fsmonitor/fsm-listen-<name>.c` that implements the
+-# `fsm_listen__*()` routines.
++# `compat/fsmonitor/fsm-listen-<name>.c` and
++# `compat/fsmonitor/fsm-health-<name>.c` files
++# that implement the `fsm_listen__*()` and `fsm_health__*()` routines.
+ #
+ # If your platform has OS-specific ways to tell if a repo is incompatible with
+ # fsmonitor (whether the hook or IPC daemon version), set FSMONITOR_OS_SETTINGS
+@@ -1982,6 +1983,7 @@ endif
+ ifdef FSMONITOR_DAEMON_BACKEND
+ 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
++	COMPAT_OBJS += compat/fsmonitor/fsm-health-$(FSMONITOR_DAEMON_BACKEND).o
+ endif
+ 
+ ifdef FSMONITOR_OS_SETTINGS
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 66b78a0353f..db297649daf 100644
+index b2f578b239a..2c109cf8b37 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -1181,11 +1181,11 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- 	 * before we need it.
- 	 */
- 	if (ipc_server_run_async(&state->ipc_server_data,
--				 fsmonitor_ipc__get_path(), &ipc_opts,
-+				 state->path_ipc.buf, &ipc_opts,
- 				 handle_client, state))
- 		return error_errno(
- 			_("could not start IPC thread pool on '%s'"),
--			fsmonitor_ipc__get_path());
-+			state->path_ipc.buf);
+@@ -3,6 +3,7 @@
+ #include "parse-options.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
++#include "compat/fsmonitor/fsm-health.h"
+ #include "compat/fsmonitor/fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ #include "simple-ipc.h"
+@@ -1136,6 +1137,18 @@ void fsmonitor_publish(struct fsmonitor_daemon_state *state,
+ 	pthread_mutex_unlock(&state->main_lock);
+ }
  
- 	/*
- 	 * Start the fsmonitor listener thread to collect filesystem
-@@ -1220,6 +1220,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
- static int fsmonitor_run_daemon(void)
++static void *fsm_health__thread_proc(void *_state)
++{
++	struct fsmonitor_daemon_state *state = _state;
++
++	trace2_thread_start("fsm-health");
++
++	fsm_health__loop(state);
++
++	trace2_thread_exit();
++	return NULL;
++}
++
+ static void *fsm_listen__thread_proc(void *_state)
  {
- 	struct fsmonitor_daemon_state state;
-+	const char *home;
- 	int err;
+ 	struct fsmonitor_daemon_state *state = _state;
+@@ -1174,6 +1187,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
+ 		 */
+ 		.uds_disallow_chdir = 0
+ 	};
++	int health_started = 0;
+ 	int listener_started = 0;
+ 	int err = 0;
  
- 	memset(&state, 0, sizeof(state));
-@@ -1289,6 +1290,15 @@ static int fsmonitor_run_daemon(void)
- 
- 	strbuf_addch(&state.path_cookie_prefix, '/');
+@@ -1201,6 +1215,17 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
+ 	}
+ 	listener_started = 1;
  
 +	/*
-+	 * We create a named-pipe or unix domain socket inside of the
-+	 * ".git" directory.  (Well, on Windows, we base our named
-+	 * pipe in the NPFS on the absolute path of the git
-+	 * directory.)
++	 * Start the health thread to watch over our process.
 +	 */
-+	strbuf_init(&state.path_ipc, 0);
-+	strbuf_addstr(&state.path_ipc, absolute_path(fsmonitor_ipc__get_path()));
++	if (pthread_create(&state->health_thread, NULL,
++			   fsm_health__thread_proc, state) < 0) {
++		ipc_server_stop_async(state->ipc_server_data);
++		err = error(_("could not start fsmonitor health thread"));
++		goto cleanup;
++	}
++	health_started = 1;
 +
  	/*
- 	 * Confirm that we can create platform-specific resources for the
- 	 * filesystem listener before we bother starting all the threads.
-@@ -1298,6 +1308,23 @@ static int fsmonitor_run_daemon(void)
+ 	 * The daemon is now fully functional in background threads.
+ 	 * Our primary thread should now just wait while the threads
+@@ -1223,10 +1248,17 @@ cleanup:
+ 		pthread_join(state->listener_thread, NULL);
+ 	}
+ 
++	if (health_started) {
++		fsm_health__stop_async(state);
++		pthread_join(state->health_thread, NULL);
++	}
++
+ 	if (err)
+ 		return err;
+ 	if (state->listen_error_code)
+ 		return state->listen_error_code;
++	if (state->health_error_code)
++		return state->health_error_code;
+ 	return 0;
+ }
+ 
+@@ -1242,6 +1274,7 @@ static int fsmonitor_run_daemon(void)
+ 	pthread_mutex_init(&state.main_lock, NULL);
+ 	pthread_cond_init(&state.cookies_cond, NULL);
+ 	state.listen_error_code = 0;
++	state.health_error_code = 0;
+ 	state.current_token_data = fsmonitor_new_token_data();
+ 
+ 	/* Prepare to (recursively) watch the <worktree-root> directory. */
+@@ -1321,6 +1354,11 @@ static int fsmonitor_run_daemon(void)
  		goto done;
  	}
  
-+	/*
-+	 * CD out of the worktree root directory.
-+	 *
-+	 * The common Git startup mechanism causes our CWD to be the
-+	 * root of the worktree.  On Windows, this causes our process
-+	 * to hold a locked handle on the CWD.  This prevents the
-+	 * worktree from being moved or deleted while the daemon is
-+	 * running.
-+	 *
-+	 * We assume that our FS and IPC listener threads have either
-+	 * opened all of the handles that they need or will do
-+	 * everything using absolute paths.
-+	 */
-+	home = getenv("HOME");
-+	if (home && *home && chdir(home))
-+		die_errno(_("could not cd home '%s'"), home);
++	if (fsm_health__ctor(&state)) {
++		err = error(_("could not initialize health thread"));
++		goto done;
++	}
 +
- 	err = fsmonitor_run_daemon_1(&state);
- 
- done:
-@@ -1310,6 +1337,7 @@ done:
- 	strbuf_release(&state.path_worktree_watch);
- 	strbuf_release(&state.path_gitdir_watch);
- 	strbuf_release(&state.path_cookie_prefix);
-+	strbuf_release(&state.path_ipc);
- 
- 	return err;
- }
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 3f1b68267bd..c43d92b9620 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -402,12 +402,22 @@ static int recv_rdcw_watch(struct one_watch *watch)
- 	}
- 
  	/*
--	 * NEEDSWORK: If an external <gitdir> is deleted, the above
--	 * returns an error.  I'm not sure that there's anything that
--	 * we can do here other than failing -- the <worktree>/.git
--	 * link file would be broken anyway.  We might try to check
--	 * for that and return a better error message, but I'm not
--	 * sure it is worth it.
-+	 * GetOverlappedResult() fails if the watched directory is
-+	 * deleted while we were waiting for an overlapped IO to
-+	 * complete.  The documentation did not list specific errors,
-+	 * but I observed ERROR_ACCESS_DENIED (0x05) errors during
-+	 * testing.
-+	 *
-+	 * Note that we only get notificaiton events for events
-+	 * *within* the directory, not *on* the directory itself.
-+	 * (These might be properies of the parent directory, for
-+	 * example).
-+	 *
-+	 * NEEDSWORK: We might try to check for the deleted directory
-+	 * case and return a better error message, but I'm not sure it
-+	 * is worth it.
-+	 *
-+	 * Shutdown if we get any error.
- 	 */
+ 	 * CD out of the worktree root directory.
+ 	 *
+@@ -1344,6 +1382,7 @@ done:
+ 	pthread_cond_destroy(&state.cookies_cond);
+ 	pthread_mutex_destroy(&state.main_lock);
+ 	fsm_listen__dtor(&state);
++	fsm_health__dtor(&state);
  
- 	error(_("GetOverlappedResult failed on '%s' [GLE %ld]"),
+ 	ipc_server_free(state.ipc_server_data);
+ 
+diff --git a/compat/fsmonitor/fsm-health-darwin.c b/compat/fsmonitor/fsm-health-darwin.c
+new file mode 100644
+index 00000000000..b9f709e8548
+--- /dev/null
++++ b/compat/fsmonitor/fsm-health-darwin.c
+@@ -0,0 +1,24 @@
++#include "cache.h"
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsm-health.h"
++#include "fsmonitor--daemon.h"
++
++int fsm_health__ctor(struct fsmonitor_daemon_state *state)
++{
++	return 0;
++}
++
++void fsm_health__dtor(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__loop(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
++{
++}
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+new file mode 100644
+index 00000000000..94b1d020f25
+--- /dev/null
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -0,0 +1,72 @@
++#include "cache.h"
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsm-health.h"
++#include "fsmonitor--daemon.h"
++
++struct fsm_health_data
++{
++	HANDLE hEventShutdown;
++
++	HANDLE hHandles[1]; /* the array does not own these handles */
++#define HEALTH_SHUTDOWN 0
++	int nr_handles; /* number of active event handles */
++};
++
++int fsm_health__ctor(struct fsmonitor_daemon_state *state)
++{
++	struct fsm_health_data *data;
++
++	CALLOC_ARRAY(data, 1);
++
++	data->hEventShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
++
++	data->hHandles[HEALTH_SHUTDOWN] = data->hEventShutdown;
++	data->nr_handles++;
++
++	state->health_data = data;
++	return 0;
++}
++
++void fsm_health__dtor(struct fsmonitor_daemon_state *state)
++{
++	struct fsm_health_data *data;
++
++	if (!state || !state->health_data)
++		return;
++
++	data = state->health_data;
++
++	CloseHandle(data->hEventShutdown);
++
++	FREE_AND_NULL(state->health_data);
++}
++
++void fsm_health__loop(struct fsmonitor_daemon_state *state)
++{
++	struct fsm_health_data *data = state->health_data;
++
++	for (;;) {
++		DWORD dwWait = WaitForMultipleObjects(data->nr_handles,
++						      data->hHandles,
++						      FALSE, INFINITE);
++
++		if (dwWait == WAIT_OBJECT_0 + HEALTH_SHUTDOWN)
++			goto clean_shutdown;
++
++		error(_("health thread wait failed [GLE %ld]"),
++		      GetLastError());
++		goto force_error_stop;
++	}
++
++force_error_stop:
++	state->health_error_code = -1;
++	ipc_server_stop_async(state->ipc_server_data);
++clean_shutdown:
++	return;
++}
++
++void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
++{
++	SetEvent(state->health_data->hHandles[HEALTH_SHUTDOWN]);
++}
+diff --git a/compat/fsmonitor/fsm-health.h b/compat/fsmonitor/fsm-health.h
+new file mode 100644
+index 00000000000..45547ba9380
+--- /dev/null
++++ b/compat/fsmonitor/fsm-health.h
+@@ -0,0 +1,47 @@
++#ifndef FSM_HEALTH_H
++#define FSM_HEALTH_H
++
++/* This needs to be implemented by each backend */
++
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++
++struct fsmonitor_daemon_state;
++
++/*
++ * Initialize platform-specific data for the fsmonitor health thread.
++ * This will be called from the main thread PRIOR to staring the
++ * thread.
++ *
++ * Returns 0 if successful.
++ * Returns -1 otherwise.
++ */
++int fsm_health__ctor(struct fsmonitor_daemon_state *state);
++
++/*
++ * Cleanup platform-specific data for the health thread.
++ * This will be called from the main thread AFTER joining the thread.
++ */
++void fsm_health__dtor(struct fsmonitor_daemon_state *state);
++
++/*
++ * The main body of the platform-specific event loop to monitor the
++ * health of the daemon process.  This will run in the health thread.
++ *
++ * The health thread should call `ipc_server_stop_async()` if it needs
++ * to cause a shutdown.  (It should NOT do so if it receives a shutdown
++ * shutdown signal.)
++ *
++ * It should set `state->health_error_code` to -1 if the daemon should exit
++ * with an error.
++ */
++void fsm_health__loop(struct fsmonitor_daemon_state *state);
++
++/*
++ * Gently request that the health thread shutdown.
++ * It does not wait for it to stop.  The caller should do a JOIN
++ * to wait for it.
++ */
++void fsm_health__stop_async(struct fsmonitor_daemon_state *state);
++
++#endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
++#endif /* FSM_HEALTH_H */
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index b8f9f7a0388..16ace43d1c7 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -289,12 +289,14 @@ if(SUPPORTS_SIMPLE_IPC)
+ 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-win32.c)
+ 
+ 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
+ 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-darwin.c)
+ 
+ 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-darwin.c)
 diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index bd09fffc176..223c2131b58 100644
+index 2c6fa1a5d91..2102a5c9ff5 100644
 --- a/fsmonitor--daemon.h
 +++ b/fsmonitor--daemon.h
-@@ -54,6 +54,7 @@ struct fsmonitor_daemon_state {
- 	struct fsmonitor_daemon_backend_data *backend_data;
+@@ -34,9 +34,11 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
+ void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
+ 
+ struct fsm_listen_data; /* opaque platform-specific data for listener thread */
++struct fsm_health_data; /* opaque platform-specific data for health thread */
+ 
+ struct fsmonitor_daemon_state {
+ 	pthread_t listener_thread;
++	pthread_t health_thread;
+ 	pthread_mutex_t main_lock;
+ 
+ 	struct strbuf path_worktree_watch;
+@@ -51,7 +53,9 @@ struct fsmonitor_daemon_state {
+ 	struct hashmap cookies;
+ 
+ 	int listen_error_code;
++	int health_error_code;
+ 	struct fsm_listen_data *listen_data;
++	struct fsm_health_data *health_data;
  
  	struct ipc_server_data *ipc_server_data;
-+	struct strbuf path_ipc;
- };
- 
- /*
+ 	struct strbuf path_ipc;
 -- 
 gitgitgadget
 
