@@ -2,93 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEA25C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 19:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F8E4C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 19:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbiDVTFh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 15:05:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
+        id S230465AbiDVTFu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 15:05:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbiDVTFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 15:05:35 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F67186BD4
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:56:21 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4F4217B309;
-        Fri, 22 Apr 2022 14:56:20 -0400 (EDT)
+        with ESMTP id S231156AbiDVTFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 15:05:48 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC6713BD4A
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:56:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EAFB0180B62;
+        Fri, 22 Apr 2022 14:48:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FMr6yxTw+BR6
-        DxisTKCh2D7RdXm72avjwtWbHUzmaz0=; b=k9CD8MgehI5eokN4CSNcD/Yn85Nv
-        RvdoIQNJPuTlq7H+tPwItMfXxwvc3SGBkugEFT880cAmwrEgkQjg+iQpgGUacjTj
-        k5hBH+kNBK4kwECDOFPbjFbCv4C7YzHjpvOi/U0JC35ZYT337uXOoo7Vbb+0lK4U
-        Qq6wjT0W3JO1iaY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AD61E17B307;
-        Fri, 22 Apr 2022 14:56:20 -0400 (EDT)
+        :content-type; s=sasl; bh=VXWjkrhqthhMl27motWQJBcqzTol3hI5TLTzvY
+        t+JIU=; b=s2o9QVCxn7KjxfPs7MC/9t558LRtEeCXvl7T+xLmVV7wCLT9AKr5cs
+        0KO5Bu0SNhQaxjKvpXxiipYv2788qKKqJPNIOgFc/Q0nSM2ylHhsXFahTb7ylNAS
+        PKsZeJTCJwQfhBJQEtt9XZ0dEI2BRIxNqfhB0sMSD+MQnumyBUMAo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3B47180B61;
+        Fri, 22 Apr 2022 14:48:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.84.173])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2435C17B306;
-        Fri, 22 Apr 2022 14:56:16 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 71361180B5F;
+        Fri, 22 Apr 2022 14:48:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git-packagers@googlegroups.com
-Cc:     git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Carlo Arenas <carenas@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/5] core: update our SHA-1 docs, use
- sha1collisiondetection on OSX too
-References: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
-Date:   Fri, 22 Apr 2022 11:56:14 -0700
-In-Reply-To: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 22 Apr
- 2022 11:53:11 +0200")
-Message-ID: <xmqqv8v17xrl.fsf@gitster.g>
+To:     Miklos Vajna <vmiklos@vmiklos.hu>, demerphq <demerphq@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: git log --since to not stop after first old commit?
+References: <Yka2GSGs3EIXm6Xt@vmiklos.hu> <xmqq1qygy9nd.fsf@gitster.g>
+        <Yk8Gvf/fjVca9hDB@vmiklos.hu> <xmqqv8vkpara.fsf@gitster.g>
+        <xmqqtub3moa0.fsf@gitster.g>
+        <CANgJU+Wr+tKNPfeh4dst-E_LSnoYYmN1easqmkFUA9spp-rpKQ@mail.gmail.com>
+        <xmqqilrfk14q.fsf@gitster.g>
+Date:   Fri, 22 Apr 2022 11:48:45 -0700
+In-Reply-To: <xmqqilrfk14q.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        11 Apr 2022 09:58:45 -0700")
+Message-ID: <xmqqzgkd7y42.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E3425CF0-C26D-11EC-A0D8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D739F928-C26C-11EC-BB70-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I wasn't able to find any on-list references to it being intentional,
-> but it appears that while we made the sha1collisiondetection variant
-> of SHA-1 the default in early 2017 we've never updated the OSX builds
-> to do likewise.
+>> When you do have the cycles perhaps it is worth considering whether
+>> splitting it up, so that --as-filter is a modifier for traversal stoppers,
+>> would avoid the problem of proliferating options.   Eg, instead of saying
+>> --since-as-filter you would say --since ... --as-filter. That way the
+>> stoppers where "filter like behavior" made sense could just check if the
+>> --as-filter flag was set.
 >
-> I don't know what various git packages for OSX to, but our vanilla OSX
-> distribution definitely uses Apple Common Crypto, and won't detect the
-> https://shattered.io attack.
+> Yes, that has exactly the opposite problem I wanted to warn us about
+> by sending an extra message (to which you are reponding to).  If we
+> have (or can have) very many traversal stopping option, it might
+> make sense to have --as-filter as a modifier and avoid doubling the
+> number of options, but if we only have very few (and fundamentally
+> cannot have more than very few), then giving each of these very few
+> --X its own --X-as-filter variant would probably make more sense.
+> Because end users would probably not know which ones are inherently
+> filters and will not be affected with --as-filter modifier, it would
+> help them understand if we give them independent --since-as-filter
+> option and document it separately, if there aren't many of them.
 >
-> This series changes that, and while doing so in 2/5 updates our
-> documentation and Makefile interface for the SHA-1 selection. Our
-> INSTALL file was still claiming we used OpenSSL's SHA-1 by default.
+> Besides, if we had very few but still multiple of them, --X and
+> --Y-as-filter can be combined to say "X stops as before, but Y is
+> applied as filter", which is strictly more expressive than a
+> separate --as-filter modifier.
 >
-> Then since we'd made sha1collisiondetection the default we hadn't
-> changed the code's default fallback to be that, it was still
-> block-sha1. Now our fallback behavior is "error" instead, which makes
-> it less likely that we'll get some foot-gun like the "OSX not using
-> sha1collisiondetection" again.
->
-> The 4/5 and 5/5 then remove the PPC_SHA1 implementation. I submitted
-> this before as [1], and the range-diff is to that submission (it
-> wasn't picked up). I think it makes sense as part of this general
-> SHA-1 cleanup.
+> So that is why I threw out the message for those interested in the
+> topic to first think about.  I know we agree that --since may be a
+> good candidate to have these two flavours of behaviour.  I do not
+> think anybody carefully thought about existing options to see if
+> there are many like --since that want two flavours, let alone
+> possible options we have said in the past that we may want to have
+> but not yet added.
 
-Thanks for this effort.
+Now I had some time to think about it, I have a feeling that it is
+quite unlikely for us to add traversal stopper other than since, so
+having a separate "--as-filter" would probably be more confusing
+than adding "--since-as-filter", stressing on "only the 'show
+commits with timestamp after this one' has two variants".
 
-I'd like to see somebody with "building Git for distributing to
-macOS" background to comment (I am assuming that the mailing list
-git-packagers@googlegroups.com is the way to reach them).
-
+Thanks.
