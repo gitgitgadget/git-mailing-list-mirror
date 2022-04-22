@@ -2,140 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCEE3C43219
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 07:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFAA3C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 08:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1445407AbiDVIAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 04:00:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
+        id S1388095AbiDVIDt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 04:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1445411AbiDVIAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 04:00:01 -0400
+        with ESMTP id S1382557AbiDVIDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 04:03:48 -0400
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF1F52B19
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 00:56:40 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id C9D773204B2E;
-        Fri, 22 Apr 2022 03:56:36 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 22 Apr 2022 03:56:37 -0400
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E588D527CB
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 01:00:55 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id E1FC53201FC9;
+        Fri, 22 Apr 2022 04:00:54 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Fri, 22 Apr 2022 04:00:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
         :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1650614196; x=1650700596; bh=M90Rzue1xV
-        uT3rXT53C0/ATRWJfEEGW2yJcWy42bqhI=; b=YT23FbGca63lYm9JzK94s8Cr4X
-        R8b1aPMjG0dET7KbhJEc8C/+Yx4i3QAN1yWVaAN5dOHy/3qK4RH2Z5NYe1Qhk0kg
-        eqbdiPvXS77SXjRAsh+j60eQbs0tCiubSmg2ZeBQ3TtyQoKEGF9jjMOqmoV+gg5w
-        pugKaeNbL8lrNSKyJX6ngf97zb5NT+/pdOrMWuRhd9mULsesRPc2taMmmetYqST+
-        2DoEjoXvNajdCDD2Np0c6BPlvxhpDmZwxG0m7BkOBf3wUN++YF5PDvh9JJrPSxiW
-        cYwPaSVdsWF3PZQpC457/Ope7DShJdH8VXpvUcZoy1ZbJv9NJZ6jN9USYiZw==
+        :subject:to:to; s=fm3; t=1650614454; x=1650700854; bh=d3bnGMEFFE
+        nfmly81kyXWmpkyERo2UssD9+RAxTrEFY=; b=emiI4YsuEHzTWFweFrQYqQu+7s
+        d6lY2QIMRILKZ3T7DqRtCsdsB5pTnwrYfhtIFivS+yHmd+jxpAfcr5r0zuejwrAr
+        W0tSI+HounPnnZWrY/tCiTBdyQzz9ZyULlxk2HaW6rK3SNUsn41q3vm/tnlW+xIU
+        32dgmZhdKN6Cy2cEwOzZR0uPSULHRa4mA7b34YpPg4IvyWweNaGxc2wtwms+K/Is
+        JK9OQfE4U37ckSecrormBwlCwmMiXKo4qDPZdVCTScLobE32nDG8SthpncKURLa0
+        ToN9+VnDqT10NJ92NDVwzl5SPHigfZQq1/Pbr/7UwbNZI1F/0B7ITEkVINQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1650614196; x=
-        1650700596; bh=M90Rzue1xVuT3rXT53C0/ATRWJfEEGW2yJcWy42bqhI=; b=n
-        +ofrICzD6tszOJXCW+v+rmMlmdwn1U6PZMem6k7b/ciyrz83NGgjzoZUFec9PZaY
-        WwfvT5Xfd9t2DS/DEi2WBm+SmYs27Mzw9r5c1aw8HpqmaW91mkuXROUpr/fWkEpD
-        RtmskkohgQN7zJYBqB87qsWSOJkKzYAC1UbF7RV2ue8Gpei0ShA1VOuFAYk2pQMj
-        zXEFTMpzMpmUR4/xcm5xS+gtSFMqMKEHSsmhauBqesFrqsNKz3c9elFqxL8cFKeV
-        ukWck+7+Ea6RM3h5IaRP57fFyBm0EmDHHRJ1bRmXea1xrLVUik/Yl+8ohEFBJq6I
-        9jvuUBrF3FZXVgEVVBKGA==
-X-ME-Sender: <xms:tF9iYghBqx050pphz-H45eVcfoW1d4KcfMBpFje3Bq8tQZ8WZvkCQQ>
-    <xme:tF9iYpD8ralYI_P7zpRB4rqzFiwOelmBA9zCcXdYaJ18rL2FnxTkkkoQJLcByAu4R
-    Xly9BRavLBGstinLA>
-X-ME-Received: <xmr:tF9iYoFBHjwjOqo__FArQ99a8XAH0Tb3QVgVbHK82v43ANi1viw_44GhxPx8XFTifg8HxF080gXAVqy8kChHTqRDWVLC2ok>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrtdefgdduvdehucetufdoteggodetrfdotf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1650614454; x=
+        1650700854; bh=d3bnGMEFFEnfmly81kyXWmpkyERo2UssD9+RAxTrEFY=; b=w
+        jXMGFgbtdic8NSJEpr9MywEGQbm9v3AdUZ7OlfZREqF+tnb6chUPFcSA/9EQb+Kv
+        H4GeAuNmOZrNNANMskOczyeADJldZxQcqOZOjvATTQEj8oOW12zIWp3cIBw+RjUQ
+        9ZWKLHisoGFyZ9U1mu1hZ9S5d+VbYyNe3fdq8+cCf9/J3oYnzCDW/FF9xsz870V7
+        L+z7RgU4g54jB3thkTTTaH2Xk62gpc5ntTovaeuzW+2OnDCjgl2A8TvYBpf1gb68
+        a1bnPiC4rMwar210FH/2JbbakOhwsVSpnBkBlWfS+GQP/9CJiAHYKGKI7K/zqhFf
+        1nlObDpDEDV68zJWOw+FA==
+X-ME-Sender: <xms:tmBiYg8_DDR4aDIU-m34omDFxlq6JGcqWirmRUgk3D6Jh5lsJLt10A>
+    <xme:tmBiYotvqJV23ihYtk27fSB8BM-Dsc41jCb405U6lsD8TZ6vKY-Ih5GxFZ5YQWmgp
+    dvs3rYibhw6I2yYxA>
+X-ME-Received: <xmr:tmBiYmC4cmIZ3RMwAzSUJtKdqLEZ2IIzsl1n8ScIgXGKn8oRN92jDQJWkL0WfDnHzKEc-ASelT6K5z2-GclBNc2TdjNf-A0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrtdefgdduvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpeetlhihshhsrgcutfhoshhsuceohhhisegrlhihshhsrgdr
     ihhsqeenucggtffrrghtthgvrhhnpedvgeeifeffkeejhfdvhfdtffelteehjeelueehhf
     dvudeiueeugeeujefgtdetvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
     mhgrihhlfhhrohhmpehqhihlihhsshesvghvvgdrqhihlhhishhsrdhnvght
-X-ME-Proxy: <xmx:tF9iYhQ2i006mwMlnqiDPZMus00CGRKTUEKhsZfIW0g1lrWUDfl0wQ>
-    <xmx:tF9iYtzCj4XEhIwY0VvIbIAVb_bBQ6KxoN2AB2gap8ToeS_dphmTXg>
-    <xmx:tF9iYv47_vIIhvxpu_ISrP4MMXffWhRH_21ul8lOpQVxyonI7n38yA>
-    <xmx:tF9iYupvw82SILGfdS4Gc_IR28UXLho6qvByFcp7Ao12RuJfKFmMgQ>
+X-ME-Proxy: <xmx:tmBiYgct4nkW53f3m9VTByKgaYTvWfdnhTWrguew6RCLHCbSqXcCUw>
+    <xmx:tmBiYlM6eeorFxdZzmwBIPfNo1UrvCmRTti3eMku0Gjfg3LI2n93eg>
+    <xmx:tmBiYqkDb_9onDed9H1Offm0Mzni3-JFh8UXhc-EZEivWNQU1TqYvw>
+    <xmx:tmBiYuYepDwwHkDvG9_CMQRGk1zo0Hc9FKYJ8tR4E5AmFMGXhNxM1w>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 Apr 2022 03:56:35 -0400 (EDT)
+ 22 Apr 2022 04:00:53 -0400 (EDT)
 Received: by eve.qyliss.net (Postfix, from userid 1000)
-        id DEA55484; Fri, 22 Apr 2022 07:56:33 +0000 (UTC)
-Date:   Fri, 22 Apr 2022 07:56:33 +0000
+        id 18F57316; Fri, 22 Apr 2022 08:00:52 +0000 (UTC)
+Date:   Fri, 22 Apr 2022 08:00:52 +0000
 From:   Alyssa Ross <hi@alyssa.is>
-To:     rsbecker@nexbridge.com
-Cc:     =?utf-8?B?J8OGdmFyIEFybmZqw7Zyw7A=?= Bjarmason' 
-        <avarab@gmail.com>, git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: Failures in t9001-send-email
-Message-ID: <20220422075633.rpiteai4uwdd6jvr@eve>
+Message-ID: <20220422080052.diovj33bfnra62uv@eve>
 References: <20220421194832.lshqkl3bogy2f2hy@eve>
  <220421.86tuam5hoi.gmgdl@evledraar.gmail.com>
  <20220421223843.6z3y4bnrbu76erhk@eve>
- <024e01d855d6$35003d00$9f00b700$@nexbridge.com>
+ <36a43fbb-92af-3718-f2fb-51645564a961@kdbg.org>
+ <xmqq7d7hd31g.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="d56e2vfhxhreblwg"
+        protocol="application/pgp-signature"; boundary="3svzkkkyzsxrvd7v"
 Content-Disposition: inline
-In-Reply-To: <024e01d855d6$35003d00$9f00b700$@nexbridge.com>
+In-Reply-To: <xmqq7d7hd31g.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---d56e2vfhxhreblwg
+--3svzkkkyzsxrvd7v
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Thu, Apr 21, 2022 at 07:19:04PM -0400, rsbecker@nexbridge.com wrote:
-> On April 21, 2022 6:39 PM, Alyssa Ross wrote:
-> >I thought I'd have a go at a patch, but I wasn't able to get the tests
-> >running:
-> >
-> >    prove ./t9001-send-email.sh
-> >    ./t9001-send-email.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-> >    Failed 15/188 subtests
-> >      (less 1 skipped subtest: 172 okay)
-> >
-> >    Test Summary Report
-> >    -------------------
-> >    ./t9001-send-email.sh (Wstat: 256 Tests: 188 Failed: 15)
-> >      Failed tests:  27, 51, 78-84, 123, 147-150, 185
-> >      Non-zero exit status: 1
-> >    Files=1, Tests=188, 17 wallclock secs ( 0.06 usr  0.01 sys + 11.66 cusr
-> 5.37 csys =
-> >17.10 CPU)
-> >    Result: FAIL
-> >
-> >I had a look at the tests to try to guess what was wrong, but I didn't come
-> up with
-> >anything.  Any ideas?  When I run make test, every other test is fine, it's
-> just the
-> >send-email tests that are problematic.
+On Thu, Apr 21, 2022 at 11:51:07PM -0700, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
 >
-> I have the same issue on NonStop. Not sure why, other than our sendmail is
-> massively broken.
-> --Randall
+> >> I had a look at the tests to try to guess what was wrong, but I didn't
+> >> come up with anything.  Any ideas?
+> >
+> > You run ./t9001-send-email.sh (without `prove`). Add -v to see some
+> > verbiage from the tests, throw in -i to have it stop at the first
+> > failure (so you don't have to scroll back to find it), and add -x for
+> > additional traces of commands that the shell executes (to see the exact
+> > command that failed).
+> >
+> > IFAIC, I always go all in, i.e., either all or none of -v -i -x.
+>
+> Good suggestion.
+>
+> I rarely (if ever) use "-x" myself but another useful thing to know,
+> while learning how the existing test works (i.e. studying a working
+> test, not debugging a broken test) is to use "-d", possibly together
+> with "-v", which refrains from removing the trash directory.  Then
+> you can go in and examine the state of the test repository the tests
+> left.
 
-For me the solution was to make Term::ReadLine available in my
-development environment.  I hope that helps you too!
+Thank you both for these tips.
 
---d56e2vfhxhreblwg
+I was able to determine the issue by running the test with -vixd,
+noticing which command failed, and then trying to set up my shell
+environment manually to match the test's (PATH, PERLLIB,
+committer/author info, etc.), and ran the same command with the leftover
+trash directory.  This produced error output that didn't show up when I
+was running the test (not sure why) that gave me a line number in
+git-send-email.perl.  I noticed that it was trying to load
+Term::ReadLine near that line, and I didn't have that installed in my
+development environment.
+
+Now that I have that installed, all send-email tests pass.
+Thanks again!
+
+--3svzkkkyzsxrvd7v
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEH9wgcxqlHM/ARR3h+dvtSFmyccAFAmJiX6sACgkQ+dvtSFmy
-ccAaxg//VE8uFVMO2wLQyC9rPrH6UVAEqxxNsl3h7xN911wW1zTApvcl3rczCAg5
-a8oA/H9gyFw6HrZYqPFLMGWhOyjEBdARlvc6cG+lYdNdos2Eace5k0riPCALPGYn
-gEOcrvC/3KkGA6xt9ORK+ufW+Sxk5y7axv5DCasKTn3aQeHaAwiPppc6mWDHWrXv
-CDodqkdvuWxDtD9bTTsKE+qLSAgEJwRiJXRsn97mLfaf3aEzAT69NMg7oIRrRSio
-gvG8VbxpSo3bYb7fmJnp8Z0Gf9k0NbTqnEwPiDFHA7I4XcrZr/rkuh0y7NM38Uis
-qudUYUa0r+tkTGtFydzZ7heqaxf4Wv1EPlbYMWaHeIwkNXQOUVC9RB08/9Iggvf2
-uDZndsXU3mECVXLHgsQLCr5ap9TTZjrZFv2tjjvOc7+XSs6huxt7QYfLJ6/1fCOm
-DCQOVSAt6TrLgQJ5xIGEAkoNeoXTspZSZvt8YF/rHDpoDFkYxcWOOSRRdHBW1qJT
-mhxXnKCefRafg2RlZM5Bk1ixOmQXT8+L3DIPjzrbSel4wLmY4WuChLCfmpE7VOsH
-24qrDBvv16nsAPl/aK0X4Tw2xSGJm+hgACgihAc67/9MzoDHUriCUpYy6KM7pAhn
-O7/O2o+CzlCaXCbV9GmmoK5/UtAEFJd96qAd/O4T7R6vJ7Ep6Vc=
-=m9vP
+iQIzBAABCAAdFiEEH9wgcxqlHM/ARR3h+dvtSFmyccAFAmJiYLIACgkQ+dvtSFmy
+ccC48g/+ITtNkeEarsYs1Vw0oP4mbu2SAMQGT0Qf3BLXwIWJgmWa8beKNqOX0VpT
+0JRLfunSpXBY400unFzYFvZNZXMTTmqZi9tKEgaCc4wXn4N9zDs+zBnewPgLuqqu
+KR/c42F069/Se8lXIxXDeciQCQNDO491lC8GbW4AN6EB9UWfS+PQypj23Fc+GtXb
+diIppZNosh5rhvymyyYxv/pUWfgEB0PejKQDWn93zb90wLVDL06qoBRP5SEGu8Zr
+7WQ2PhGRH6j6urcap/yUQV82pctMkSLCAqfDmnS7AD3PdOqbQO6jtmucJQmlZUgk
+lt+shNcjCA7QrWe/xHE+YarI0SyT8feB455rn9xmwPqzOo1pi4xBM45ANiFOvJ8z
+DjML80QVUd+ZyTktDYGE4Cc0ECfspsQR7u3q0Eos2p54PIwauQO5aX9qICrFfZWG
+0eHJSujYYoGbt95xvTpmCbPZCbItiUCV2JgSQBTmxCLqnwWNEXCmCIvWI+eNI2EK
+jdTft4eBODexP1PU+KGsGbslA3mlOQFVCdcLmJz77s58uecaZsr7siNUWu7sYU7S
+F0jH6o12RiaPgn24qE8C0MZFHtY/azxV1c3Lluu+jEB3G+ECDT+SPDyHGLMGJHXi
+05FmJ/Og2UBt6tNC0QhTuQ6azeshqz1ge5XlnJTHr8RaPjbPxLc=
+=RJJ9
 -----END PGP SIGNATURE-----
 
---d56e2vfhxhreblwg--
+--3svzkkkyzsxrvd7v--
