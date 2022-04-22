@@ -2,173 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06837C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D91C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233732AbiDVJXu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 05:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42004 "EHLO
+        id S1445904AbiDVJZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 05:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233087AbiDVJXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 05:23:49 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E37BE245A1
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:20:56 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id e2so3877826wrh.7
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:20:56 -0700 (PDT)
+        with ESMTP id S1377251AbiDVJY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 05:24:56 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4394403D4
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:22:01 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g23so2676905edy.13
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6yNwxCy835y+Su70Cn6fSyUV5BZHBekZkwYqAkCRzNo=;
-        b=AHOimLUprxcRLkdlYIs3adeVvA8mIh6duhn5XWl5fHzbzSCjy20gMFogi5NP1bDXWf
-         eDLHIxTvjVi9OMk1Co0SiBDSiZOvRoq6nuAAh6trrl+V/PlF0necd9vlYH6XcVRiv1tA
-         7NbvXfbaOUXwlE1FdObmlju3gbHjl2jopG9cjVyzo+ptiF4Ay866SN6WchrJhT/ftXhF
-         8aijJQ5j3q6YKATXXkoKsT59N7ReOVvLbBNc9DxpYJ/m3TDUuBaskFkzcNosxcSV+IF9
-         HZw9JjjVcHsxex7TbIiMATfUL6sKFkwtcMjxpfE9WnEKxczA4KZCJzMZUdeTApU8B3kO
-         U7Kw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=qr6xC9syLQOTy8C1JImFbJ8iB3xyMRtbIt49pqnm7Jo=;
+        b=EYyPNEzQbRQMs2IrCHXf+K/vWJTAheQdLDnkQiKjCIc6EKUh6OBHv9BYt/kUh5UH5o
+         oF0bIjoFcLJuNvyjZdvuY42swqLsfYaiEAeVtyIT/YT7bURwtfvfXb3cwCsr7fUz3RrZ
+         CzrbYJlmhr9uwq5Pbjs5jPTyACk8CtBwVVO5EwIowL6A5NDK5QjDo287muwT7tz+Vr+Q
+         HOujtBVzhnADZiurqYSyxK5D5HHulTg+tdHEhvvKsTAuhCVg1QpYd7Ruyn4zdc8Z4o8z
+         Jn6F+yQgFjH+f9zMm1s3ynTLiRbF4dWQuRYcGFAvm0/Cvs5g7N5Qeb+V+m39LhfehkC4
+         jonQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6yNwxCy835y+Su70Cn6fSyUV5BZHBekZkwYqAkCRzNo=;
-        b=f98WMl0vF7OyDAKjAWgE+dA26qRn+AAPpCHb1FD1m8Zx9wFHlkeX3DN1CrbZC7UYAN
-         j9YFQv6qy+edd9PYO7LpjYJIhHNpHSF/77MAPnMXg11y61hNiYRFyabTsG8WZ6wxY5lE
-         yPJMoalsNgJPndvVzqtY6AJCBZeXfUlgpjqB2U7Zm+GJ16R7wg+zcB2b+T++13MvKX5L
-         z1bvebUr3k1LdEgVrrDIzJaOyXXJgkDj+aJdZCr+sIlORg2HhRcz53Iq31L1HP0bczzd
-         Qyw2ze7r4qArf3oo+jqmsvNDSnvMLdRab0PdoUsDRvsQjIvrdJkwBoeoLE82X1tCpVZ5
-         ixXQ==
-X-Gm-Message-State: AOAM533dcRlEhAjCg/QRvweE54EzJX9+DqwiNlHEYyjIHHXPrXtnaXEG
-        bf9huQfn3Nx0ZND7ijP3r4Qm4TDwD7PPMw==
-X-Google-Smtp-Source: ABdhPJw10YpQQTCsnZDb7cVSwtbJce16+9uqOhz5fYU0nhfNRKGO9QxXQ6MBreaGYQ9W4mnEVPA+gg==
-X-Received: by 2002:adf:eed2:0:b0:20a:9c46:9dfb with SMTP id a18-20020adfeed2000000b0020a9c469dfbmr3050339wrp.656.1650619255239;
-        Fri, 22 Apr 2022 02:20:55 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s13-20020a5d4ecd000000b00207b4c92594sm1210149wrv.59.2022.04.22.02.20.54
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=qr6xC9syLQOTy8C1JImFbJ8iB3xyMRtbIt49pqnm7Jo=;
+        b=CE5jWYjkqLCgK2S3Or8vcFak6vyBMjlZhTVbjutNoUdTJ4Z4rSB4Rz2BY73L4BFuGM
+         PL2JG1HVnFvmWSt2nv+KMH4euWcj0j1vsyRZK9xQYEzdtu30z2HMRgT0+vNbejx0cCB1
+         T8Ckedy8cPc5dP9YwynPlN4ySkgqiR32yBIzR4IvB6/ge/EzETZz/P+8JdyYaTzR6t/l
+         Hees8H7FTTaD3q3J7ciGLwld2+VqbF4g2Us+uwU+h+Z8+aEk7cekWlIr26/VE4fHiuaQ
+         jRL8QunhZowOA/DqA1UCi8h2CRmxhUR9tfH0j6nQnYq3jEzFMKZqP2C+iCuTf+xXhihf
+         vp2w==
+X-Gm-Message-State: AOAM5321N6yEsYHfF/vUPLZNpQ4jRvapLBQFnYomx3rbsP4p7XORyQPZ
+        oCbeDRfW8NvX6Wh9BazIybNCiKwdGtWSfw==
+X-Google-Smtp-Source: ABdhPJxMNZgPAhWRl0ZFORweoidt7lE63fbix9Lxjd/jNLclxLpbGYETgCip0yF9SAn1FXqefpa//g==
+X-Received: by 2002:aa7:c9ce:0:b0:425:c396:dde with SMTP id i14-20020aa7c9ce000000b00425c3960ddemr399650edt.397.1650619320062;
+        Fri, 22 Apr 2022 02:22:00 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b25-20020a056402139900b0041904036ab1sm671157edv.5.2022.04.22.02.21.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 02:20:54 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        Fri, 22 Apr 2022 02:21:59 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nhpUE-008dIO-VT;
+        Fri, 22 Apr 2022 11:21:58 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3] CI: select CC based on CC_PACKAGE (again)
-Date:   Fri, 22 Apr 2022 11:20:53 +0200
-Message-Id: <patch-v3-1.1-8b3444ecc87-20220422T092015Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.36.0.879.g56a83971f3f
-In-Reply-To: <patch-v2-1.1-92acf9420a9-20220421T174733Z-avarab@gmail.com>
-References: <patch-v2-1.1-92acf9420a9-20220421T174733Z-avarab@gmail.com>
+        Derrick Stolee <stolee@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] CI: don't fail OSX tests due to brew v.s.
+ perforce.com mis-matchy
+Date:   Fri, 22 Apr 2022 11:21:43 +0200
+References: <cover-0.2-00000000000-20220421T124225Z-avarab@gmail.com>
+ <20220421213024.xzkzuy3l7q5assxo@carlos-mbp.lan>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220421213024.xzkzuy3l7q5assxo@carlos-mbp.lan>
+Message-ID: <220422.86h76l5v7t.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression in 707d2f2fe86 (CI: use "$runs_on_pool", not
-"$jobname" to select packages & config, 2021-11-23).
 
-In that commit I changed CC=gcc from CC=gcc-9, but on OSX the "gcc" in
-$PATH points to clang, we need to use gcc-9 instead. Likewise for the
-linux-gcc job CC=gcc-8 was changed to the implicit CC=gcc, which would
-select GCC 9.4.0 instead of GCC 8.4.0.
+On Thu, Apr 21 2022, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-Furthermore in 25715419bf4 (CI: don't run "make test" twice in one
-job, 2021-11-23) when the "linux-TEST-vars" job was split off from
-"linux-gcc" the "cc_package: gcc-8" line was copied along with
-it, so its "cc_package" line wasn't working as intended either.
+> On Thu, Apr 21, 2022 at 02:53:50PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> For the past days we've again had CI failures due to "brew install"
+>> detecting a SHA-256 mismatch when trying to install the perforce
+>
+> Since the only reason why that is a concern is because it aborts the
+> rest of the run and is a recurring problem, wouldn't it be better to
+> tell the script to continue regardless and therefore skip all perforce
+> tests?
+>
+> Sure, there is a window where that integration could be broken which
+> will be only visible once the perforce cask gets fixed and perforce
+> installs again, but wouldn't that be less intrusive and overall safer
+> than the currently proposed change?
 
-As a table, this is what's changed by this commit, i.e. it only
-affects the linux-gcc, linux-TEST-vars and osx-gcc jobs:
-
-	|-------------------+-----------+-------------------+-------+-------|
-	| jobname           | vector.cc | vector.cc_package | old   | new   |
-	|-------------------+-----------+-------------------+-------+-------|
-	| linux-clang       | clang     | -                 | clang | clang |
-	| linux-sha256      | clang     | -                 | clang | clang |
-	| linux-gcc         | gcc       | gcc-8             | gcc   | gcc-8 |
-	| osx-clang         | clang     | -                 | clang | clang |
-	| osx-gcc           | gcc       | gcc-9             | clang | gcc-9 |
-	| linux-gcc-default | gcc       | -                 | gcc   | gcc   |
-	| linux-TEST-vars   | gcc       | gcc-8             | gcc   | gcc-8 |
-	|-------------------+-----------+-------------------+-------+-------|
-
-Reported-by: Carlo Arenas <carenas@gmail.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-I just dropped the linux-TEST-vars change from the v2 in lieu of
-trying to get the wording in the commit message right.
-
-Range-diff against v2:
-1:  92acf9420a9 ! 1:  8b3444ecc87 CI: select CC based on CC_PACKAGE (again)
-    @@ Commit message
-         Furthermore in 25715419bf4 (CI: don't run "make test" twice in one
-         job, 2021-11-23) when the "linux-TEST-vars" job was split off from
-         "linux-gcc" the "cc_package: gcc-8" line was copied along with
-    -    it.
-    -
-    -    That wasn't a bug per-se, as that "make test" would have run under GCC
-    -    8 before the split into two jobs, but the point of selecting different
-    -    compiler for these jobs is to get better coverage, and to narrow down
-    -    any issues with a given compiler to the job that runs it. Since the
-    -    "linux-TEST-vars" job is already special in other ways (in running
-    -    with various GIT_TEST_* variables), and we've got the "linux-gcc" job
-    -    covering gcc-8 let's have it used the default system compiler instead.
-    +    it, so its "cc_package" line wasn't working as intended either.
-    +
-    +    As a table, this is what's changed by this commit, i.e. it only
-    +    affects the linux-gcc, linux-TEST-vars and osx-gcc jobs:
-    +
-    +            |-------------------+-----------+-------------------+-------+-------|
-    +            | jobname           | vector.cc | vector.cc_package | old   | new   |
-    +            |-------------------+-----------+-------------------+-------+-------|
-    +            | linux-clang       | clang     | -                 | clang | clang |
-    +            | linux-sha256      | clang     | -                 | clang | clang |
-    +            | linux-gcc         | gcc       | gcc-8             | gcc   | gcc-8 |
-    +            | osx-clang         | clang     | -                 | clang | clang |
-    +            | osx-gcc           | gcc       | gcc-9             | clang | gcc-9 |
-    +            | linux-gcc-default | gcc       | -                 | gcc   | gcc   |
-    +            | linux-TEST-vars   | gcc       | gcc-8             | gcc   | gcc-8 |
-    +            |-------------------+-----------+-------------------+-------+-------|
-     
-         Reported-by: Carlo Arenas <carenas@gmail.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - ## .github/workflows/main.yml ##
-    -@@ .github/workflows/main.yml: jobs:
-    -           - jobname: linux-TEST-vars
-    -             cc: gcc
-    -             os: ubuntu
-    --            cc_package: gcc-8
-    -             pool: ubuntu-latest
-    -           - jobname: osx-clang
-    -             cc: clang
-    -
-      ## ci/lib.sh ##
-     @@ ci/lib.sh: then
-      	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
-
- ci/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index cbc2f8f1caa..86e37da9bc5 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -122,7 +122,7 @@ then
- 	test macos != "$CI_OS_NAME" || CI_OS_NAME=osx
- 	CI_REPO_SLUG="$GITHUB_REPOSITORY"
- 	CI_JOB_ID="$GITHUB_RUN_ID"
--	CC="${CC:-gcc}"
-+	CC="${CC_PACKAGE:-${CC:-gcc}}"
- 	DONT_SKIP_TAGS=t
- 
- 	cache_dir="$HOME/none"
--- 
-2.36.0.879.g56a83971f3f
-
+I tried to answer all of this in the updated v3 CL. Thanks!:
+https://lore.kernel.org/git/cover-v2-0.3-00000000000-20220422T085958Z-avara=
+b@gmail.com/
