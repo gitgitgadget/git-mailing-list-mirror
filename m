@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D730C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8530C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:35:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233403AbiDVWik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 18:38:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48778 "EHLO
+        id S233224AbiDVWin (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 18:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234280AbiDVWiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 18:38:05 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6F01F9E0A
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:10 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id u17-20020a05600c211100b0038eaf4cdaaeso8775162wml.1
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:10 -0700 (PDT)
+        with ESMTP id S234162AbiDVWh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 18:37:59 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E3D1F8EB9
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:06 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id h25so6725147wrc.13
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5W2x8t68NoDAVIFeMr0BVtQdXxzEzVw8wanSKIA/+K4=;
-        b=XeEfAa4Zuyq5j4G+lUAMgPUdzUY0H2GZvZYuivfVnlVbuggnpAxEhEOvJlsAUVqeKN
-         iJ403QKFJK0vpBsr6h/2PZg2qzhKmnIrwsdONzm7k1h5XrzPetVISOIM40UwbS/1FIcC
-         crfHWqAqf6qmDAppTeZMDeWwpZ1hRGycKM3cE9okUl/Us3rDbBfh7PoROPrvYuJVE1j7
-         z8x6mW9DIip13bXxgKKaAqzH/W2XyfmmuR/EZB4FXQEd+2t1RphyOXH7hXlpVv+MDxPY
-         EOoFyww04M5+q5/BBA7JSjlAyaxDLFV3xSsJ4f5sYo4gtA0XgW+l3OulCjDe6Z3OAvj9
-         GieA==
+        bh=+631vAH8yId4sSjUsOxpbOLsLU18SAIV49OlFTix8VU=;
+        b=WRj3YppREhMeKR2SSS03YNJ1lLoXI9ozNjEZ9+ttMikSz6L5+cKwOJR7Zmvb8G4lbn
+         MIZQN44B0Nc/yu1ngfObY9Ym+jHp0h+X+sZ2o36tLS21e3TQ4f8+VEDgsow+rnZEhdz1
+         ko4iJ6S9uTjKp15BVWB0RfUv8r381z0IjKbUgXyopSM1lKCUCuqiCyiJriBUE4geNMXf
+         qtUPR+XdAKEskNBE1u7HkcmGypoKd+rTgoiD5ypxhHnYoAVreHEJDeb8kaKkkDTSrn9J
+         uEC417CiI3CTHeTxnB4T1kz/NoSMjXNGSDC4lQKgFr9WXXCROhaagGKMXTwN63FgWdPS
+         f9aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5W2x8t68NoDAVIFeMr0BVtQdXxzEzVw8wanSKIA/+K4=;
-        b=cNefq6WjodIEFGCus0KkSNbqC1t60wmeKGWtIUav3bvJbYgNG0FkhM5YIEHI1+z409
-         REjDX56XKOY2OKKfe37x7FUqd6i7gVmjk7tU4MEGr3VGwdymXLRO7sKbt3RhQYIGJqOo
-         KO/Hdzug10rNLPhad9bUUt0tZgUDFXk+Jpgd9xVJ/LdkuWoTn+uYzA4JXNurbi+aEZ/O
-         Nq36hyU7GltYEWStYao5ENHd1T+45qt5b0jMZ7FW7+suJPoxDYYz8LRvtgTzIJS6uSOO
-         PIRBXRXg1woXTpKFN3AoJ9Zv9YBhHlJSU2z/LoinOdAwdIEfnnA0Nvkk1a/NQL6lnMDn
-         z21A==
-X-Gm-Message-State: AOAM532xFL1ImT/DKUzWaE5C0Lee5v0BVBS8V11GTaP6+a4mLgzU5S/N
-        qhAB3CA+Okfed+e8OQjU0fnDUGfIg0U=
-X-Google-Smtp-Source: ABdhPJxllx/7SnJ8WJkplu+gzttdW1AYFxZKbi7bXwy/uCuZl/PXKClTFdlfmSberlxXaXZHsrmGVA==
-X-Received: by 2002:a7b:cbc2:0:b0:388:faec:2036 with SMTP id n2-20020a7bcbc2000000b00388faec2036mr5886978wmi.190.1650663008761;
-        Fri, 22 Apr 2022 14:30:08 -0700 (PDT)
+        bh=+631vAH8yId4sSjUsOxpbOLsLU18SAIV49OlFTix8VU=;
+        b=cMSW4Yge58aaqHsUzgl6mH+9SsK9CNzeVekA+6suM2qThhXeehgAIcVquLmtye7gcD
+         vjTwx6LT24/I9fZl/V5bZJ58lr9YGCR1n3ThkMw4lf9z58741iJg3r+eLcP3F6bgBHb5
+         6r7eVnFRBFCaI9dO6Ix5Qq7fKDXHP1gLBoZkP77xEp52lTB0mZ2DmzLcO/CTSdKYPIva
+         sRIp1Vn0L05Ww5PL3D+OOTOWXNdK8MlyCsY4e0CUyWDtYvd0vfEdF+4/346ndtweC9he
+         VMTgwTerKliaRXJDohXFEo+anjsZCOuEUv2xtecGCBz0wQnfaXnXdjgAk9QepS1gws1W
+         igQg==
+X-Gm-Message-State: AOAM533KIVvFKXVIHKGX1tUeMyfgZ/InjejR/CEzEtrI9E7dSy1M7CcA
+        t1XgDrn0/o8ZWWCj3SWNtqtJfyUP7kU=
+X-Google-Smtp-Source: ABdhPJzbDJ4IK8f90cvehYI1W6zgtVY6UIk921V+pAWZwHcE9kSENy7ucdA4XtHm/6p+lwEip8Bzzw==
+X-Received: by 2002:a5d:59a9:0:b0:20a:9047:24ac with SMTP id p9-20020a5d59a9000000b0020a904724acmr5480499wrr.396.1650663004452;
+        Fri, 22 Apr 2022 14:30:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q16-20020a1ce910000000b0038eabd31749sm2986741wmc.32.2022.04.22.14.30.08
+        by smtp.gmail.com with ESMTPSA id e12-20020a056000178c00b0020aaf8d351bsm2574418wrg.103.2022.04.22.14.30.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 14:30:08 -0700 (PDT)
-Message-Id: <f4feb00ec2b9d6f80e5b57275eb8e141f013e253.1650662994.git.gitgitgadget@gmail.com>
+        Fri, 22 Apr 2022 14:30:04 -0700 (PDT)
+Message-Id: <1f5b772d42ae31a897a4966fe88714413826268c.1650662994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
         <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Apr 2022 21:29:38 +0000
-Subject: [PATCH v6 12/28] fsm-listen-darwin: ignore FSEvents caused by xattr
- changes on macOS
+Date:   Fri, 22 Apr 2022 21:29:34 +0000
+Subject: [PATCH v6 08/28] fsmonitor-settings: remote repos on macOS are
+ incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,79 +74,136 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Ignore FSEvents resulting from `xattr` changes.  Git does not care about
-xattr's or changes to xattr's, so don't waste time collecting these
-events in the daemon nor transmitting them to clients.
+Teach Git to detect remote working directories on macOS and mark them as
+incompatible with FSMonitor.
 
-Various security tools add xattrs to files and/or directories, such as
-to mark them as having been downloaded.  We should ignore these events
-since it doesn't affect the content of the file/directory or the normal
-meta-data that Git cares about.
+With this, `git fsmonitor--daemon run` will error out with a message
+like it does for bare repos.
+
+Client commands, like `git status`, will not attempt to start the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsm-listen-darwin.c | 34 +++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ compat/fsmonitor/fsm-settings-darwin.c | 66 ++++++++++++++++++++++++++
+ fsmonitor-settings.c                   | 12 +++++
+ fsmonitor-settings.h                   |  2 +
+ 3 files changed, 80 insertions(+)
 
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 0741fe834c3..14105f45c18 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -100,7 +100,7 @@ static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
- 	if (flag & kFSEventStreamEventFlagItemCloned)
- 		strbuf_addstr(&msg, "ItemCloned|");
- 
--	trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=%u %s",
-+	trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=0x%x %s",
- 			 path, flag, msg.buf);
- 
- 	strbuf_release(&msg);
-@@ -125,6 +125,31 @@ static int ef_is_dropped(const FSEventStreamEventFlags ef)
- 		ef & kFSEventStreamEventFlagUserDropped);
- }
- 
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index 7fce32a3c5b..fdd762bf79d 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -2,8 +2,74 @@
+ #include "config.h"
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
++#include "fsmonitor.h"
++#include <sys/param.h>
++#include <sys/mount.h>
++
 +/*
-+ * If an `xattr` change is the only reason we received this event,
-+ * then silently ignore it.  Git doesn't care about xattr's.  We
-+ * have to be careful here because the kernel can combine multiple
-+ * events for a single path.  And because events always have certain
-+ * bits set, such as `ItemIsFile` or `ItemIsDir`.
++ * Remote working directories are problematic for FSMonitor.
 + *
-+ * Return 1 if we should ignore it.
++ * The underlying file system on the server machine and/or the remote
++ * mount type (NFS, SAMBA, etc.) dictates whether notification events
++ * are available at all to remote client machines.
++ *
++ * Kernel differences between the server and client machines also
++ * dictate the how (buffering, frequency, de-dup) the events are
++ * delivered to client machine processes.
++ *
++ * A client machine (such as a laptop) may choose to suspend/resume
++ * and it is unclear (without lots of testing) whether the watcher can
++ * resync after a resume.  We might be able to treat this as a normal
++ * "events were dropped by the kernel" event and do our normal "flush
++ * and resync" --or-- we might need to close the existing (zombie?)
++ * notification fd and create a new one.
++ *
++ * In theory, the above issues need to be addressed whether we are
++ * using the Hook or IPC API.
++ *
++ * For the builtin FSMonitor, we create the Unix domain socket for the
++ * IPC in the .git directory.  If the working directory is remote,
++ * then the socket will be created on the remote file system.  This
++ * can fail if the remote file system does not support UDS file types
++ * (e.g. smbfs to a Windows server) or if the remote kernel does not
++ * allow a non-local process to bind() the socket.  (These problems
++ * could be fixed by moving the UDS out of the .git directory and to a
++ * well-known local directory on the client machine, but care should
++ * be taken to ensure that $HOME is actually local and not a managed
++ * file share.)
++ *
++ * So (for now at least), mark remote working directories as
++ * incompatible.
 + */
-+static int ef_ignore_xattr(const FSEventStreamEventFlags ef)
++static enum fsmonitor_reason check_remote(struct repository *r)
 +{
-+	static const FSEventStreamEventFlags mask =
-+		kFSEventStreamEventFlagItemChangeOwner |
-+		kFSEventStreamEventFlagItemCreated |
-+		kFSEventStreamEventFlagItemFinderInfoMod |
-+		kFSEventStreamEventFlagItemInodeMetaMod |
-+		kFSEventStreamEventFlagItemModified |
-+		kFSEventStreamEventFlagItemRemoved |
-+		kFSEventStreamEventFlagItemRenamed |
-+		kFSEventStreamEventFlagItemXattrMod |
-+		kFSEventStreamEventFlagItemCloned;
++	struct statfs fs;
 +
-+	return ((ef & mask) == kFSEventStreamEventFlagItemXattrMod);
++	if (statfs(r->worktree, &fs) == -1) {
++		int saved_errno = errno;
++		trace_printf_key(&trace_fsmonitor, "statfs('%s') failed: %s",
++				 r->worktree, strerror(saved_errno));
++		errno = saved_errno;
++		return FSMONITOR_REASON_ERROR;
++	}
++
++	trace_printf_key(&trace_fsmonitor,
++			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
++			 r->worktree, fs.f_type, fs.f_flags, fs.f_fstypename);
++
++	if (!(fs.f_flags & MNT_LOCAL))
++		return FSMONITOR_REASON_REMOTE;
++
++	return FSMONITOR_REASON_OK;
 +}
-+
- static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			     void *ctx,
- 			     size_t num_of_events,
-@@ -190,6 +215,13 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			continue;
- 		}
  
-+		if (ef_ignore_xattr(event_flags[k])) {
-+			trace_printf_key(&trace_fsmonitor,
-+					 "ignore-xattr: '%s', flags=0x%x",
-+					 path_k, event_flags[k]);
-+			continue;
-+		}
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
++	enum fsmonitor_reason reason;
 +
- 		switch (fsmonitor_classify_path_absolute(state, path_k)) {
++	reason = check_remote(r);
++	if (reason != FSMONITOR_REASON_OK)
++		return reason;
++
+ 	return FSMONITOR_REASON_OK;
+ }
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index 600ae165ab1..d2fb0141f8e 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -208,6 +208,18 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
+ 			    xgetcwd());
+ 		goto done;
  
- 		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++	case FSMONITOR_REASON_ERROR:
++		strbuf_addf(&msg,
++			    _("repository '%s' is incompatible with fsmonitor due to errors"),
++			    r->worktree);
++		goto done;
++
++	case FSMONITOR_REASON_REMOTE:
++		strbuf_addf(&msg,
++			    _("remote repository '%s' is incompatible with fsmonitor"),
++			    r->worktree);
++		goto done;
++
+ 	case FSMONITOR_REASON_VFS4GIT:
+ 		strbuf_addf(&msg,
+ 			    _("virtual repository '%s' is incompatible with fsmonitor"),
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index 9e483c14513..ed26ddd7ba9 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -17,6 +17,8 @@ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_UNTESTED = 0,
+ 	FSMONITOR_REASON_OK, /* no incompatibility or when disbled */
+ 	FSMONITOR_REASON_BARE,
++	FSMONITOR_REASON_ERROR, /* FS error probing for compatibility */
++	FSMONITOR_REASON_REMOTE,
+ 	FSMONITOR_REASON_VFS4GIT, /* VFS for Git virtualization */
+ };
+ 
 -- 
 gitgitgadget
 
