@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74AA0C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 02:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB48C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 02:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443361AbiDVCcw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Apr 2022 22:32:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35074 "EHLO
+        id S1443335AbiDVCdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Apr 2022 22:33:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443352AbiDVCcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Apr 2022 22:32:48 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B402BDE3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 19:29:55 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id a1so3125522edt.3
-        for <git@vger.kernel.org>; Thu, 21 Apr 2022 19:29:55 -0700 (PDT)
+        with ESMTP id S1379042AbiDVCdC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Apr 2022 22:33:02 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F17B55B4
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 19:30:10 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id ks6so13658120ejb.1
+        for <git@vger.kernel.org>; Thu, 21 Apr 2022 19:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=eHT2GTSReANdCs/z/L1g7EfhdZR3Zr+SMU+m3vsXGZU=;
-        b=Y6eY+Bgng4Qs8KlFl88DReF8EVzsjpEZNC8GJWEpcnwO8JuLVxyVEcFeQqtko0kOxu
-         jiqZ5gbkcg17EYtacjYQGlrD8CRT6sFAOpoCKHlKTMXJ2jvieiqwJUqr+Ht9WP3a1nI3
-         AgxjIMheEb6HWAvS41FchAz3rOj4XYODrFhA1J2p/90usl+MeErRFiQmE+ocwrpXLU3y
-         QggqjHFQwyjJZsT3hZ3Pik1bjx87El32ODxl6pHG+CDGp0U2hNuQ/0y86Cub5mC8UZFL
-         BjipbGR/H5m2WIrJbdVu/VcpRmqR0cjOt87gCjG4Rv+qGY9gmHDEVC2EaZSFIQHbN37K
-         KTPw==
+        bh=6Km4q6i+TYl5ECaoS1fjZk6svQupzQs59+xXLHHUIlk=;
+        b=TvuUiEXk6sz5K59Q+6WZnfrlI7M9OFaA2hi9pD5NZo5aAJSi6238SLBCOyZflz1eLQ
+         0swwsFcDzzhpSgptFKQmjsYGZ2wHLHvGStrM43s9m2pksJF96t9EVd1NBAmPey2fLE2V
+         2TdXASowyaAZ/CKJkzjeKT+EzvRIin+oSKRa91THNgzX6zR+8cqbpRfp8TE7qSeQuLvt
+         5k85hBXzU5285LTugO2i5krCV8tsWhrnuvaGMMipk0r79JnaLoyR2s8Kl78MXxJO0TQq
+         lhlMJb98PGTWeIrY/z7q0TxMjq5eAOsfFekinsDrwFIN04bnapRElqNNw/CG+wp/2602
+         YYhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eHT2GTSReANdCs/z/L1g7EfhdZR3Zr+SMU+m3vsXGZU=;
-        b=uF82H50i8MnAoiSOJn4hwmvAaFXBIrnLkGAXa/HTMO5xDvWtFWnuNYAYsyUVkAiD2E
-         iBes1IOHHJvP0Jd6+oCNxLYH8YeFLrSONGWTcB2agKkxEdSCPBNK83NJ4n00Di0uEGyO
-         NWr1wFu3lY+UyvK5xBhDZJxx18qE+cesIUEgvxZFHn8OnoG5LNMnxmUKnFpkmZ/uDeCt
-         0sTG+3AcmBWoAffGSQygY2unYi8cTurLuiAELyWAUVrRd0pIIKmLft/DFufA+UHIK9TH
-         pnSXx2MYOiFKlbgZyd8eAoKE7bq0X7KgevWfbX/EDPa3jt7abukPrsIKq/iE3czKV3lu
-         eEVg==
-X-Gm-Message-State: AOAM530LGR8uTeT5unF6nnlewC2JqexjBj64QVirtu5FhrC/uwiPjg5K
-        500v3aIHvAW5tqaRwExXqhaJXh7ObFho2muYBgc=
-X-Google-Smtp-Source: ABdhPJylFhU82SRe9kErHqmP+T13SBTIhTHiBnT9tz26g9oeJh4jt/85ulVZTw0eU8qIze+lfoYhI3blsCnsqfZhZnM=
-X-Received: by 2002:a05:6402:2689:b0:422:15c4:e17e with SMTP id
- w9-20020a056402268900b0042215c4e17emr2606070edd.33.1650594594127; Thu, 21 Apr
- 2022 19:29:54 -0700 (PDT)
+        bh=6Km4q6i+TYl5ECaoS1fjZk6svQupzQs59+xXLHHUIlk=;
+        b=tpscOcn+cnH0OPXUUejYvlkSlhHMYgVQ816R0WUZMzHrRu0Y8KcqBFYg8UejXejeHI
+         lnb4i4NVOtgRI15MxW5lGXpOOqOO876iiDCCZKoS9aMGJ4zc08uOSpYSMHA9C7puWWMx
+         CMiCno6B38luXlGrpZWELSINhbGAd4i4Y0nRPj7krppQn+ktZUEIqqXzmGRCvoq7PMDl
+         QTC9hUGd0iMAr18p3sY7vf5hIxuozCj2S3HYQcr0Sjh6tFD8nkBlSCSykabAuJxTbbAQ
+         cHC9Q3hifqe4iDw5LkFo55DLjPjjcGohI4HnVfXN1YtLOVzDm8Bb4sO3MnyR9iGz2yfG
+         Rvzw==
+X-Gm-Message-State: AOAM530B/815g8Z2F73YO1M/jqppz75Xd6KPv0MOFkMwoWNZjtWhKga+
+        tzVjjNNmJLH2nQf7qVpZ+Ox7FMLAmPhU8E4tL1xVKLJRmpI=
+X-Google-Smtp-Source: ABdhPJxm0t0hgyyCt7kEHpXwiwcXnAcNSB6nUSLscxLYr7VqHv1zs6NqfU/B6NZIBzoIUsWJR2wXJGsw3XGJre++mOw=
+X-Received: by 2002:a17:906:a05a:b0:6ef:a44d:2f46 with SMTP id
+ bg26-20020a170906a05a00b006efa44d2f46mr2155499ejb.192.1650594608727; Thu, 21
+ Apr 2022 19:30:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1148.git.1646725188.gitgitgadget@gmail.com>
- <pull.1148.v2.git.1647054681.gitgitgadget@gmail.com> <a53179764bc5d411726a095a587ea728aa9a20d3.1647054681.git.gitgitgadget@gmail.com>
- <xmqq8rtcqnnn.fsf@gitster.g>
-In-Reply-To: <xmqq8rtcqnnn.fsf@gitster.g>
+ <pull.1148.v2.git.1647054681.gitgitgadget@gmail.com> <eb3b318b39ec3eed754eab7d2c9d20198117545b.1647054681.git.gitgitgadget@gmail.com>
+ <xmqqwngwp87k.fsf@gitster.g>
+In-Reply-To: <xmqqwngwp87k.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 Apr 2022 19:29:42 -0700
-Message-ID: <CABPp-BGmmg7YxaZwerivWGAQ6J5cpc9pRrJkHwMUXArvRXZ+rg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/9] sparse-checkout: make --cone the default
+Date:   Thu, 21 Apr 2022 19:29:57 -0700
+Message-ID: <CABPp-BEt0CzP7B_EvYXOhQoKqk+h=9OwXDmUDCYfB3fnHxv-uA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/9] git-sparse-checkout.txt: update docs for
+ deprecation of 'init'
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -64,76 +65,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the long delay...
-
-On Mon, Mar 14, 2022 at 1:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Mar 14, 2022 at 1:53 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> >  The subset of files is chosen by providing a list of directories in
-> > -cone mode (which is recommended), or by providing a list of patterns
-> > -in non-cone mode.
-> > +cone mode (the default), or by providing a list of patterns in
-> > +non-cone mode.
+> > -When `--no-cone` is passed or `core.sparseCheckoutCone` is false,
+> > -the input list is considered a list of patterns.  This mode is harder
+> > -to use and less performant, and is thus not recommended.  See the
+> > -"Sparse Checkout" section of linkgit:git-read-tree[1] and the "Pattern
+> > -Set" sections below for more details.
+> > +When `--no-cone` is passed, the input list is considered a list of
+> > +patterns.  This mode is harder to use and less performant, and is thus
 >
-> OK.
->
-> > @@ -60,7 +60,7 @@ When the `--stdin` option is provided, the directories or patterns are
-> >  read from standard in as a newline-delimited list instead of from the
-> >  arguments.
-> >  +
-> > -When `--cone` is passed or `core.sparseCheckoutCone` is enabled, the
-> > +When `--cone` is passed or `core.sparseCheckoutCone` is not false, the
-> >  input list is considered a list of directories.  This allows for
->
->
-> I expected a change to Documentation/config/core.txt in this step,
-> because the default value for core.sparseCheckoutCone becomes true
-> if unspecified with this step, and the normal expectation by the
-> readers is what is not explicitly set to true is either 'false' or
-> 'unspecified' (when 'unspecified' has its own meaning, like in
-> gitattributes).
->
-> Something like this?
->
-> diff --git i/Documentation/config/core.txt w/Documentation/config/core.txt
-> index c04f62a54a..03cf075821 100644
-> --- i/Documentation/config/core.txt
-> +++ w/Documentation/config/core.txt
-> @@ -615,8 +615,10 @@ core.sparseCheckout::
->
->  core.sparseCheckoutCone::
->         Enables the "cone mode" of the sparse checkout feature. When the
-> -       sparse-checkout file contains a limited set of patterns, then this
-> -       mode provides significant performance advantages. See
-> +       sparse-checkout file contains a limited set of patterns, this
-> +       mode provides significant performance advantages. The "non
-> +       cone mode" can be requested to allow specifying a more flexible
-> +       patterns by setting this variable to 'false'. See
->         linkgit:git-sparse-checkout[1] for more information.
->
->  core.abbrev::
->
-> > -When `--no-cone` is passed or `core.sparseCheckoutCone` is not enabled,
-> > +When `--no-cone` is passed or `core.sparseCheckoutCone` is false,
->
-> "is set to 'false'" would make it clearer.
->
-> > +If `core.sparseCheckoutCone=true` (set by default or with an explicit
-> > +`--cone`), then Git will parse the sparse-checkout file expecting
->
-> "Unless `core.sparseCheckoutCone` is explicitly set to `false`"
-> might be clearer, but I am not sure.  It is just that I found the
-> phrase "set by default" confusing.
+> "less perfromant" can be quantified, but "harder to use" is probably
+> harder to defend.  Those on a project with need for more flexible
+> way to specify than "these are the directories I care about" would
+> not find it convincing.
 
-Thanks; I applied all three suggestions.
+That text wasn't added by this patch (or even by any patch in this
+series); it was in the pre-image.  I can still change it, of course,
+but I don't think it belongs in this particular patch.  How about I
+replace this text in 8/9 with a link to the new section that was added
+(the one that explains the problems we see with non-cone mode).
 
-> >       /* Set cone/non-cone mode appropriately */
-> >       core_apply_sparse_checkout = 1;
-> > -     if (*cone_mode == 1) {
-> > +     if (*cone_mode) { /* also handles "not specified" (value of -1) */
+> > +not recommended.  See the "Sparse Checkout" section of
+> > +linkgit:git-read-tree[1]
 >
-> The comment is correct, but if we can make the code not to require
-> such a comment, that would be even better.
+> The referenced section (I am reading "git read-tree --help" from
+> seen with these patches) may need updating.  It shows an example
+> of including everything except for unwanted, without mentioning
+> if that is for cone or non-cone.
 
-I had that in v1; I'll revert back to it.
+I wouldn't really say that the example is for either mode (the point
+of the sparse-checkout command is so users don't need to directly edit
+the $GIT_DIR/info/sparse-checkout file), but the examples might be
+useful for people trying to understand the patterns used in non-cone
+mode.  Perhaps this change would be helpful?:
+
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index 99bb387134..0eae9e01fd 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -378,7 +378,9 @@ SPARSE CHECKOUT
+ Note: The `update-index` and `read-tree` primitives for supporting the
+ skip-worktree bit predated the introduction of
+ linkgit:git-sparse-checkout[1].  Users are encouraged to use
+-`sparse-checkout` in preference to these low-level primitives.
++`sparse-checkout` in preference to these low-level primitives.  However,
++the information below might be useful to users trying to understand the
++pattern style used in non-cone mode of the `sparse-checkout` command.
+
+However, I don't think that belongs in this patch (since you were
+commenting on text that only appeared in the diff due to reflowing
+paragraphs), but I can add it to 9/9.
+
+> > and the "Pattern Set" sections below for more
+> > +details.
+>
+> Are we referring to "Internals - cone/full pattern set" sections?
+
+Yeah, as you noted in a later patch, you got confused by looking at
+the end result rather than the state of the tree as of this patch.
+The "Internals -" prefix was added in a later patch.
+
+> This may be a topic of another step in this series, but the "core"
+> section starts by mentioning what characteristics the full pattern
+> set has and uses it to steer readers away from it, which I find it
+> less than ideal.  As we present "core" first (because it is the
+> default), we should present "core" by itself, without requiring to
+> know what the other thing is.
+
+By '"core" section' do you mean the "cone pattern set" section?
+That's my best guess after several comparisons.  I agree that it's
+less than ideal, though I thought that perhaps adding the "Internals"
+prefix would allow folks to just ignore it.  But you may be right that
+I should also overhaul it a bit, maybe splitting it into two sections,
+one about some implementation details about the mode, and another
+later section about how the patterns in cone mode are a strictly
+controlled subset of the possible full pattern set.  However, I think
+that'd go better in patch 7 rather than here.
+
+>  Perhaps replace the entire first
+> paragraph so that the section begins more like so:
+>
+>         The "cone mode", which is the default, lets you specify only
+>         what directories to include and what directories to exclude.
+
+There's no provision to specify individual directories to exclude,
+only which to include.  Everything not listed is excluded.
+
+>         The accepted patterns in the cone pattern set are:...
+>
+> Especially, the last sentence in the paragraph to be struck still
+> lives in the old world in which you needed to opt into the cone
+> mode.
+
+This patch didn't strike any paragraph, so I'm not sure which sentence
+you're referring to.  I tried looking around, and didn't readily find
+it either.  Perhaps my big reshufflings in my new patch 7 addressed
+what you're talking about, though?
