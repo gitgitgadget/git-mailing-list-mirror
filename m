@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8C5C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 10:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E8D3C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 10:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444863AbiDVKcE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 06:32:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59894 "EHLO
+        id S1378038AbiDVKnm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 06:43:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350582AbiDVKcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 06:32:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF2F54BF9
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 03:29:07 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id t25so13504525lfg.7
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 03:29:07 -0700 (PDT)
+        with ESMTP id S1447076AbiDVKnT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 06:43:19 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A043B94
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 03:40:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id g19so13575060lfv.2
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 03:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JVgvY8K65ZK8QJoisoQ0Vs+3YJPa5rWbX0wBU0LM8RI=;
-        b=a6w8E2bwHmAp2CHf7mNfRq5LXkYsno+knOYL3jjGJf5ju7AYZsmt9+Tlc7VONdiXbx
-         VQAy/lp/AUE8zhIMNT/lq4BeROL3UooukTUb4MYcCvrNt1h/8Ru17YDcmxG05V6ANWMq
-         p1TMTq1aHZUzPJBRjpQQ9mBpQ3sOjEIFBEPQTfoYvf1Z+uTfAZURYD+gGVCYPLX6jGGF
-         DW/77DHWDR5HX5uLsNEfeDesyeLLU7hXBResEGulagWdji1xnZiX4qlK2cP4NosPRDWf
-         5/WT+TbH13rc7aGkf41LsrdvSVhe60y5MwoVOpdIlH1erQ6adyConlMsryvGsxUap2X2
-         j0NQ==
+        bh=bn00FLRXWM0Lst975FAJzuk4a/aYyDbzR2Jju3oMcN8=;
+        b=mDKZn1ro2CsvKORUhTIJL38+S5Jf9GbOwEcB0Rxi7la6xmXTiXI13rO9S/whEr27oC
+         SPNAEZIb7CoNGx8aIP+AM7moa8cQ4UVH7elxxBWlQapGhgmR9R1G2nuHGZkFUmnBKahP
+         r1z8q7hXkvCLYh7odW2/nQDmCfoPxJU1w1UNLVBdAdTOtQIW8OPBHWzO/BDkHF+7b6IQ
+         kvBQi0gCT3t+/K0W40dXuGTTvpmLsPm7B+ZEsfaZjCbFxU/UuTY4MLC+PceH/Yv0LE8N
+         tgSWcAu/gN2aJrat3ww7xJzMJC1ohFS/gS03nJmgesViPONTeKQk2M/6nVYEOH3vDcMH
+         4yfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JVgvY8K65ZK8QJoisoQ0Vs+3YJPa5rWbX0wBU0LM8RI=;
-        b=HVoxRwQgz/zqZ8Kn4UCr50wnBWSFBv0MTClweEGRDUtaD525eUrG2dU2ITtXraWvkS
-         UehlOHfKJsQ4t8zioarI4rnF0GtKQMy2/PJ2whR3aqzj4KZ0cQ+RQJfK+AUD17dOyHdj
-         ASi7ZMMO/SvrRSe5XDZx3BczXayY20uCTXSzjxeXATIVZQIOzE0ak5D4uwctJdcoE0vZ
-         QTKVZvKIrLIEVJ/iry22eDFAHK1iHVL7e+0FZsA4pB9+eNvAXT/e6+zdHpDVodr5POcj
-         bQCjjg2RiCxf/3lW+8AG0NQOVt5H8MJAAx36tdkDX5wa6R+SFinYx6WL0VpV2GaPi9lp
-         K/WQ==
-X-Gm-Message-State: AOAM531vmTSEadE9Iv7UnPzvOReBO/gWfgdi3gXLImcRmhBW1sy5E3Yd
-        eC2WjvZ8RDoKaEE7ZfoesSpQB4MpOWZ5bMN0NQ==
-X-Google-Smtp-Source: ABdhPJx6ijFEvxs9gkTyKD6fAG2+HSNF3zXfciOYwzmyvbzkK/g20EEbNgG9UbBGpsLw/x7/ofbUhkYqDEcLyvoy1eY=
+        bh=bn00FLRXWM0Lst975FAJzuk4a/aYyDbzR2Jju3oMcN8=;
+        b=4CEL0ELl0Ph8xGRLINsezieL3EA3DHwMZjZkm3B1r1rRZIa9s6T+CA36hh22AJjToP
+         QXGp+ZWRUgiaLMrqHQd9Nm6m9/CUqweFCSYvgKl80EMo4qNJY2YCGQ0FIjVqjwYoaw77
+         f3cMmcQ6HgQCApBA75PGAbN2NY5AVdacAIVFdsrIZdH6fQwRQbhVh8X0HKYHvidSo1WD
+         6VbWQRm6O/wZ9D+qDg9cptqfVwkcUn5Rj70O6uJ4R/PUvrb9NXalSPZ+tWN6QBqkaN6/
+         vDc8lap5AyCLoX1guUbvpBt77Xx3QLcV+gFmj6SUIf+lVvacOj+pV5jBzIdK9e0J+0LS
+         H50g==
+X-Gm-Message-State: AOAM531XJ/pxQ2ZQs0ewFGWX7jAKTJvou0vlBaxv0k2uiGJpPwrBV1jh
+        MMf/OYlXhNwRt4uRtSd+9j57mbdm/dGhP1oR4g==
+X-Google-Smtp-Source: ABdhPJxYFodebLs1hX6mLKy4i9y4WUOzs11rmgyX1M960pw/MGLdVKb+FA/3iRGFFPTJ9TN3NMlqYl7ddfs7V/IMNQU=
 X-Received: by 2002:a19:674c:0:b0:448:3f49:e6d5 with SMTP id
- e12-20020a19674c000000b004483f49e6d5mr2628277lfj.518.1650623345137; Fri, 22
- Apr 2022 03:29:05 -0700 (PDT)
+ e12-20020a19674c000000b004483f49e6d5mr2658481lfj.518.1650624023680; Fri, 22
+ Apr 2022 03:40:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <CALOmtcX4+ON7+J7K9X4rSYfWYnkciJdFE=v=Oeb7rUqwRt8_JA@mail.gmail.com>
  <CA+CkUQ8hf5m0GZEwcyqLgxMw1vavYey_R4P7oq8=OXc7iAj6MA@mail.gmail.com>
@@ -56,116 +56,49 @@ References: <CALOmtcX4+ON7+J7K9X4rSYfWYnkciJdFE=v=Oeb7rUqwRt8_JA@mail.gmail.com>
  <CAP8UFD1kinAwq7AL68QXqFR_dxkNFaTp2vP_DUU0KKqkbsXCDQ@mail.gmail.com>
  <CALOmtcWaQgrPTkRA6F8bL3Hp64cOxYrB4xHUa1WC+P34ZdFEbw@mail.gmail.com>
  <CAP8UFD1HGbbmJWB_TksGVLa-7nNBz5pdFi59Y7LP3EODF9Lztg@mail.gmail.com>
- <CALOmtcWFwfV11Vxf1xd_fC=HYGPNO1PtKT=E=-A104cGnAbv4g@mail.gmail.com> <CAP8UFD29NgffUBz0CMKyt901Z7Bj5osoBT-4Mfxfp0h_4Qo+Qw@mail.gmail.com>
-In-Reply-To: <CAP8UFD29NgffUBz0CMKyt901Z7Bj5osoBT-4Mfxfp0h_4Qo+Qw@mail.gmail.com>
+ <CALOmtcWFwfV11Vxf1xd_fC=HYGPNO1PtKT=E=-A104cGnAbv4g@mail.gmail.com>
+ <CAP8UFD29NgffUBz0CMKyt901Z7Bj5osoBT-4Mfxfp0h_4Qo+Qw@mail.gmail.com> <CAP8UFD1f6KCO+=+ZoUFr06XUgEZYOZi8G0V+QKCK=bNbAE9VrQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD1f6KCO+=+ZoUFr06XUgEZYOZi8G0V+QKCK=bNbAE9VrQ@mail.gmail.com>
 From:   Tapasweni Pathak <tapaswenipathak@gmail.com>
-Date:   Fri, 22 Apr 2022 15:58:28 +0530
-Message-ID: <CALOmtcWTw=bo=AqGBN8z9Hf602Peu9AVngwKUZZsCt0cr8jbDg@mail.gmail.com>
+Date:   Fri, 22 Apr 2022 16:09:47 +0530
+Message-ID: <CALOmtcU-a0YUe2M5LwoRVU9PR4NOb8Ux-zEx144upo0oFz8PMA@mail.gmail.com>
 Subject: Re: Unify ref-filter formats with other pretty formats: GSoC'22
 To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi Taylor, Hi Junio,
 
-On Fri, Apr 22, 2022 at 2:44 PM Christian Couder
+I have added the mailing list (++git@vger.kernel.org) in this email,
+hope now it lands better in your mailbox.
+
+I would be happy to take these tasks, not that I require any
+mentorship but to work with folks who are involved. I have had times
+where my work has not been seen for quarters and then closed after
+reviews cycles, never let it re-happen.
+
+It is a nice and respectful way to say, already deeply involved folks
+as mentors, for someone who is entering the org or community. Not that
+I require any tech or engineering help or otherwise, I mostly work
+independently, just don't want to go my work stale and be clear on
+what exactly is required (before or after a discussion, rather w/ or
+w/o any discussions)
+
+On Fri, Apr 22, 2022 at 2:51 PM Christian Couder
 <christian.couder@gmail.com> wrote:
 >
-> On Wed, Apr 20, 2022 at 1:49 PM Tapasweni Pathak
-> <tapaswenipathak@gmail.com> wrote:
-> > On Wed, Apr 20, 2022 at 1:45 PM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> > > On Tue, Apr 19, 2022 at 1:54 PM Tapasweni Pathak
-> > > <tapaswenipathak@gmail.com> wrote:
+> Taylor and Junio,
 >
-> > > Maybe you could work on continuing ZheNing Hu's work on the "Use
-> > > ref-filter formats in `git cat-file`" GSoC 2021 project, which is a
-> > > bit related. This is a very difficult task though, as it requires
-> > > dealing with tricky performance issues. And the changes you make might
-> > > conflict with those made by someone working on the "Unify ref-filter
-> > > formats with other pretty formats" GSoC 2022 project.
-> >
-> > I would like to work on this with a planner, separately, we can see
-> > what should be adapted in mine to have everything go smooth and
-> > GSoC'22 project especially.
+> For some context, Tapasweni is willing to work outside the GSoC (as it
+> looks like she is not eligible for GSoC as she is not a beginner in
+> open source) on some Git related project as long as she gets some
+> mentorship.
 >
-> As you seem interested in other things too, I think it's better to
-> avoid this one for now. It could be a bad experience as it's a really
-> difficult subject, and I think it would be much better for you to
-> start with something easier and smaller.
-
-I must insist; would be interested in a planner and document prep for
-the project, I can see some details
-- https://git.github.io/SoC-2021-Ideas/
-- https://lore.kernel.org/git/pull.989.git.1625155693.gitgitgadget@gmail.com/
-- https://docs.google.com/document/d/119k-Xa4CKOt5rC1gg1cqPr6H3MvdgTUizndJGAo1Erk/edit
-- https://github.blog/2021-11-15-highlights-from-git-2-34/
-- https://lore.kernel.org/git/CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com/
-
-to set things for the next steps, let me know if you strongly feel to
-not take up the problem right away.
+> Tapasweni, please correct me if I am wrong.
 >
-> > > Now if we don't find a good applicant for this latter project, you
-> > > might of course work on it. The selected Proposals and Applicant will
-> > > be known on May 20 though. So if that would be your prefered project,
-> > > you would have to wait until then and hope that we don't select
-> > > anyone.
-> >
-> > Happy to take it up, if it remains open.
->
-> Great! Let's see on May 20 if it's still open and you haven't found
-> anything else to work on in the meantime.
->
-> > > See: https://lore.kernel.org/git/xmqq35iaz6n3.fsf@gitster.g/
-> > >
-> > > I think he wants someone to add a `train` command to `git rerere`
-> > > based on what "contrib/rerere-train.sh" does.
-> > >
-> > > As you can see "contrib/rerere-train.sh" is a 102 line long shell
-> > > script, so converting it to a new `train` command in
-> > > "builtin/rerere.c" seems like a not very difficult and not too big
-> > > task (especially if done the same way as the script). Junio will
-> > > likely be involved in this, as it looks like he is interested in it.
-> >
-> > Can I take it up immediately, if Junio is not working on it?
-> > ++gitster@pobox.com. Hi Junio. Do you suggest otherwise?
->
-> I don't want to speak for him, but I don't think he is working on it.
-> In fact, as he suggested it for a GSoC, I think he doesn't plan to
-> work on it soon. Also he might not answer often to emails that aren't
-> also sent to the mailing list.
->
-> So if you want to work on it, I would suggest starting right away. You
-> can of course send an email on the mailing list to let people know
-> that you want to start working on this and to check if anyone is
-> already working on it or has suggestions about it.
-
-++git@vger.kernel.org. :)
->
-> > > Another thing that was discussed recently is that the git-scm.org web
-> > > site could be converted to not use Heroku anymore. If you prefer
-> > > working on this kind of web oriented thing, this could be another
-> > > possibility.
-> >
-> > I have worked a lot on web-based projects, SAAS, IAAS, PAAS, FAAS,
-> > would it be better to share a proposal of comparison of those keeping
-> > git-scm.org in mind, or is it pre-decided where git-scm.org will make
-> > its new home/work?
-> >
-> > This shouldn't take more than 3 working days with no downtimes.
->
-> Nice that you have some experience in this!
->
-> I added Taylor in Cc as he is involved in this and might answer your
-> questions much better than me. Now if you are interested in it, I
-> suggest starting right away and perhaps also sending an email to the
-> mailing list asking your questions and asking for advice there.
-
-Hi Taylor. Great if you can let me know what you want to see
-happening, and if we can discuss tech specifications, you have already
-decided or plan to.
+> Best,
+> Christian.
