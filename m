@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39652C433FE
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD4C8C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 22:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233787AbiDVWjL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 18:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49582 "EHLO
+        id S233828AbiDVWjO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 18:39:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234328AbiDVWiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 18:38:07 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E591F479E
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:13 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id y21so5805646wmi.2
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:13 -0700 (PDT)
+        with ESMTP id S234348AbiDVWiI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 18:38:08 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32B41F9E23
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:15 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id bv16so12723107wrb.9
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 14:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m836DCh9sU/nldq8h1OUR3cjjkb32BqnSVOeB2HQCmk=;
-        b=EK+vjag06hd/rRMr0/cz0qaZ7eT8bLLMkYdIb9wnhtFG+mwjV9JLVn1rPhiJfPdaUH
-         p9VUS8Fd8LgaC/o/EsW+wWT2FxteaQNRT250pq2vTTzdywEnsHaRiCXegRKZZZbW6r69
-         9GhejJtFNQxoCyzZZZ8eB51uXtAA4n7xuZ4F1oxQgvGp1UO6FloI2ZRBs7FQkRwJ1/rj
-         2McovuV7W2WYqLwhSRreSMuD2iLEnIq8/kSp3ci0WWcof6HA8+uKnnD66oRej6v0au1A
-         6vhrLVyucHIU//IPT3b0MRmT/WimRRw4hNdoMFq7QH7jcyz/zMExBHRmxezvfCRolvsu
-         DaaA==
+        bh=Mv6D24bMSysj3hV8m09u6C4BPD9U2eW4vus0bJo6UBo=;
+        b=DVDAOTbEJP/3lGQ8nhTuMvxuNFo3kkL0Ut8qFvKEj6tPNAayXc7KBUKTJbaJ3pG9UW
+         IipehsHaJ5rI7QsIUdqgFSfD8fmL1JeI51ABByx8l2RLuwMm141xWcgyfSAxUqlHk8Gr
+         eGiIE0wiueZbR1XrBzVVhZVUCuOabRnMfL5yS4KAZEI9FbCwC/4M6yGF2s9m/2ONdmvx
+         jjCIPS4nOWI2U08VYgv/lPCeBf8N8ayxPYidhKgOgAVol1cJwpWq9NGs5ZVEBnnTHjEs
+         mMWkhTjSHlB79YMzTZ//2X0QVgTgv8FrlWhYw4T3+yCp/FmqYfsujecYuJgGb2/T+bGJ
+         s0Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m836DCh9sU/nldq8h1OUR3cjjkb32BqnSVOeB2HQCmk=;
-        b=v8CkductAC6MGa6P7hfZGKn7Ijp8A/QX2hXwpw8XbEEQlVhXEGJuiMnifzWcC4P2y7
-         6YAytQqUd15+aBkyxjCUYgJ5vJWtICbLZce+rgPYgNc7jhExliV2YWWA+QPIxoDsankk
-         P2u4LCvB4b4UNA3Bg7xp6SrjcMbjEpg40ATyV8VnnkeAHukJaTGb8ASDBuXqcHEikPPD
-         syX3lwAbGIJL/YXMQrYYZw2z0485okwbe/kcaTuEvqhzr6wUGlLYBK4bkg0So7/eB7vw
-         tEMFRNfWZY/vo2tVnEV/Z7xPf8TOKSqi7RFlI329iMe6suBdiPeg6ZO2+uZls4nZm5YQ
-         BYLw==
-X-Gm-Message-State: AOAM5301It9G+AzDdHh+raW0JBTYGMOoRIYs7G0X1jv1iCTM/AsCOI1K
-        JRXbHcWYPC4ZRrmUz86g9+vTILKKzHY=
-X-Google-Smtp-Source: ABdhPJx4ShQz5Hxv6pw7S9plDGVIANGa2+dhHkZR3UlKMN7p9WDHyVrm7802QQcOIstylBOpazmY/Q==
-X-Received: by 2002:a1c:7416:0:b0:38e:b8b7:e271 with SMTP id p22-20020a1c7416000000b0038eb8b7e271mr14625289wmc.7.1650663011999;
-        Fri, 22 Apr 2022 14:30:11 -0700 (PDT)
+        bh=Mv6D24bMSysj3hV8m09u6C4BPD9U2eW4vus0bJo6UBo=;
+        b=ILx6EjvTZ8Uj8uzVIw+AoEjzJeCtYUUhXD782Q/Vg0RQMplI56cP9aEaezWGRw4z+j
+         hnqQL/L4R3hc+Qo/X2F3IhBxYXRYlQ/45P8XGqCRXYpoI+/+oyvvoaxfwSURVCkt6NDe
+         3Dgb+mVkHAwf8JY8EYuiC/Du0JODCbDQGKzhSr6L+f7Lz0UD/Y2Oooww+x0xIAvmmnwl
+         WCFqosvBc8ISKqNulioolq3lKaiqA+YrXCuTwBAUbUy3mTvbxI2C1oD2Qb7NIz+njX8W
+         oczDMNYo7zI7AY0WqboBKGKBGM+Il+F8x7Cv/2ajGvedipnmc9KRsqRnCRueqOB8sigQ
+         5pwg==
+X-Gm-Message-State: AOAM530GHKJesk3Apu5ILp0JJnSEv2HH1KZ8TQrgcVy81LIfX9k7gOTh
+        GCGccCqBWS0DYjLeTRsnhE8fc0UUIhE=
+X-Google-Smtp-Source: ABdhPJwlUpq6UGAkkD1fQtqaNbHx5a6yXAN1ufIDxMYW6oqhqUqbS/1w86cx/rC9Ee9PbXRhP4uGWA==
+X-Received: by 2002:a05:6000:10c7:b0:206:35e:8711 with SMTP id b7-20020a05600010c700b00206035e8711mr5212938wrx.78.1650663014140;
+        Fri, 22 Apr 2022 14:30:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r3-20020a1c2b03000000b00392a3e6280bsm5339027wmr.8.2022.04.22.14.30.11
+        by smtp.gmail.com with ESMTPSA id o10-20020a5d47ca000000b0020a992ce354sm3072062wrc.76.2022.04.22.14.30.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Apr 2022 14:30:11 -0700 (PDT)
-Message-Id: <b6c5800095fcd6ac77ff9b355df683cd3ee4859e.1650662994.git.gitgitgadget@gmail.com>
+        Fri, 22 Apr 2022 14:30:13 -0700 (PDT)
+Message-Id: <77bc037481a89d69a2c038e5ff0c6d3d5ac656f1.1650662994.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
         <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Apr 2022 21:29:41 +0000
-Subject: [PATCH v6 15/28] fsmonitor--daemon: rename listener thread related
- variables
+Date:   Fri, 22 Apr 2022 21:29:43 +0000
+Subject: [PATCH v6 17/28] fsm-health-win32: add polling framework to monitor
+ daemon health
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,302 +74,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Rename platform-specific listener thread related variables
-and data types as we prepare to add another backend thread
-type.
+Extend the Windows version of the "health" thread to periodically
+inspect the system and shutdown if warranted.
 
-[] `struct fsmonitor_daemon_backend_data` becomes `struct fsm_listen_data`
-[] `state->backend_data` becomes `state->listen_data`
-[] `state->error_code` becomes `state->listen_error_code`
+This commit updates the thread's wait loop to use a timeout and
+defines a (currently empty) table of functions to poll the system.
+
+A later commit will add functions to the table to actually
+inspect the system.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c          |  6 +++---
- compat/fsmonitor/fsm-listen-darwin.c | 30 ++++++++++++++--------------
- compat/fsmonitor/fsm-listen-win32.c  | 28 +++++++++++++-------------
- compat/fsmonitor/fsm-listen.h        |  2 +-
- fsmonitor--daemon.h                  |  6 +++---
- 5 files changed, 36 insertions(+), 36 deletions(-)
+ compat/fsmonitor/fsm-health-win32.c | 65 ++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 90fa9d09efb..b2f578b239a 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1225,8 +1225,8 @@ cleanup:
- 
- 	if (err)
- 		return err;
--	if (state->error_code)
--		return state->error_code;
-+	if (state->listen_error_code)
-+		return state->listen_error_code;
- 	return 0;
- }
- 
-@@ -1241,7 +1241,7 @@ static int fsmonitor_run_daemon(void)
- 	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
- 	pthread_mutex_init(&state.main_lock, NULL);
- 	pthread_cond_init(&state.cookies_cond, NULL);
--	state.error_code = 0;
-+	state.listen_error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 
- 	/* Prepare to (recursively) watch the <worktree-root> directory. */
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 14105f45c18..07113205a61 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -27,7 +27,7 @@
- #include "fsm-listen.h"
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index 94b1d020f25..24fc612bf02 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -4,6 +4,24 @@
+ #include "fsm-health.h"
  #include "fsmonitor--daemon.h"
  
--struct fsmonitor_daemon_backend_data
-+struct fsm_listen_data
++/*
++ * Every minute wake up and test our health.
++ */
++#define WAIT_FREQ_MS (60 * 1000)
++
++/*
++ * State machine states for each of the interval functions
++ * used for polling our health.
++ */
++enum interval_fn_ctx {
++	CTX_INIT = 0,
++	CTX_TERM,
++	CTX_TIMER
++};
++
++typedef int (interval_fn)(struct fsmonitor_daemon_state *state,
++			  enum interval_fn_ctx ctx);
++
+ struct fsm_health_data
  {
- 	CFStringRef cfsr_worktree_path;
- 	CFStringRef cfsr_gitdir_path;
-@@ -158,7 +158,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
- 			     const FSEventStreamEventId event_ids[])
- {
- 	struct fsmonitor_daemon_state *state = ctx;
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	char **paths = (char **)event_paths;
- 	struct fsmonitor_batch *batch = NULL;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -350,11 +350,11 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- 		NULL,
- 		NULL
- 	};
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 	const void *dir_array[2];
- 
- 	CALLOC_ARRAY(data, 1);
--	state->backend_data = data;
-+	state->listen_data = data;
- 
- 	data->cfsr_worktree_path = CFStringCreateWithCString(
- 		NULL, state->path_worktree_watch.buf, kCFStringEncodingUTF8);
-@@ -386,18 +386,18 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- failed:
- 	error(_("Unable to create FSEventStream."));
- 
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
- 	return -1;
+ 	HANDLE hEventShutdown;
+@@ -42,18 +60,61 @@ void fsm_health__dtor(struct fsmonitor_daemon_state *state)
+ 	FREE_AND_NULL(state->health_data);
  }
  
- void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
++/*
++ * A table of the polling functions.
++ */
++static interval_fn *table[] = {
++	NULL, /* must be last */
++};
++
++/*
++ * Call all of the polling functions in the table.
++ * Shortcut and return first error.
++ *
++ * Return 0 if all succeeded.
++ */
++static int call_all(struct fsmonitor_daemon_state *state,
++		    enum interval_fn_ctx ctx)
++{
++	int k;
++
++	for (k = 0; table[k]; k++) {
++		int r = table[k](state, ctx);
++		if (r)
++			return r;
++	}
++
++	return 0;
++}
++
+ void fsm_health__loop(struct fsmonitor_daemon_state *state)
  {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
+ 	struct fsm_health_data *data = state->health_data;
++	int r;
++
++	r = call_all(state, CTX_INIT);
++	if (r < 0)
++		goto force_error_stop;
++	if (r > 0)
++		goto force_shutdown;
  
--	if (!state || !state->backend_data)
-+	if (!state || !state->listen_data)
- 		return;
+ 	for (;;) {
+ 		DWORD dwWait = WaitForMultipleObjects(data->nr_handles,
+ 						      data->hHandles,
+-						      FALSE, INFINITE);
++						      FALSE, WAIT_FREQ_MS);
  
--	data = state->backend_data;
-+	data = state->listen_data;
+ 		if (dwWait == WAIT_OBJECT_0 + HEALTH_SHUTDOWN)
+ 			goto clean_shutdown;
  
- 	if (data->stream) {
- 		if (data->stream_started)
-@@ -407,14 +407,14 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- 		FSEventStreamRelease(data->stream);
- 	}
- 
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
- }
- 
- void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 	data->shutdown_style = SHUTDOWN_EVENT;
- 
- 	CFRunLoopStop(data->rl);
-@@ -422,9 +422,9 @@ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- 
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 
- 	data->rl = CFRunLoopGetCurrent();
- 
-@@ -441,7 +441,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 
- 	switch (data->shutdown_style) {
- 	case FORCE_ERROR_STOP:
--		state->error_code = -1;
-+		state->listen_error_code = -1;
- 		/* fall thru */
- 	case FORCE_SHUTDOWN:
- 		ipc_server_stop_async(state->ipc_server_data);
-@@ -453,7 +453,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 	return;
- 
- force_error_stop_without_loop:
--	state->error_code = -1;
-+	state->listen_error_code = -1;
- 	ipc_server_stop_async(state->ipc_server_data);
- 	return;
- }
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index c43d92b9620..be2d93f47b2 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -54,7 +54,7 @@ struct one_watch
- 	wchar_t dotgit_shortname[16]; /* for 8.3 name */
- };
- 
--struct fsmonitor_daemon_backend_data
-+struct fsm_listen_data
- {
- 	struct one_watch *watch_worktree;
- 	struct one_watch *watch_gitdir;
-@@ -263,7 +263,7 @@ static enum get_relative_result get_relative_longname(
- 
- void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- {
--	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
-+	SetEvent(state->listen_data->hListener[LISTENER_SHUTDOWN]);
- }
- 
- static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
-@@ -337,7 +337,7 @@ static void destroy_watch(struct one_watch *watch)
- 	free(watch);
- }
- 
--static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
-+static int start_rdcw_watch(struct fsm_listen_data *data,
- 			    struct one_watch *watch)
- {
- 	DWORD dwNotifyFilter =
-@@ -516,7 +516,7 @@ static int process_1_worktree_event(
-  */
- static int process_worktree_events(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	struct one_watch *watch = data->watch_worktree;
- 	struct strbuf path = STRBUF_INIT;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -646,7 +646,7 @@ force_shutdown:
-  */
- static int process_gitdir_events(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	struct one_watch *watch = data->watch_gitdir;
- 	struct strbuf path = STRBUF_INIT;
- 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-@@ -704,11 +704,11 @@ skip_this_path:
- 
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data = state->backend_data;
-+	struct fsm_listen_data *data = state->listen_data;
- 	DWORD dwWait;
- 	int result;
- 
--	state->error_code = 0;
-+	state->listen_error_code = 0;
- 
- 	if (start_rdcw_watch(data, data->watch_worktree) == -1)
++		if (dwWait == WAIT_TIMEOUT) {
++			r = call_all(state, CTX_TIMER);
++			if (r < 0)
++				goto force_error_stop;
++			if (r > 0)
++				goto force_shutdown;
++			continue;
++		}
++
+ 		error(_("health thread wait failed [GLE %ld]"),
+ 		      GetLastError());
  		goto force_error_stop;
-@@ -773,7 +773,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 	}
+@@ -61,8 +122,10 @@ void fsm_health__loop(struct fsmonitor_daemon_state *state)
  
  force_error_stop:
--	state->error_code = -1;
-+	state->listen_error_code = -1;
- 
- force_shutdown:
- 	/*
-@@ -790,7 +790,7 @@ clean_shutdown:
- 
- int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
- 	CALLOC_ARRAY(data, 1);
- 
-@@ -823,7 +823,7 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- 		data->nr_listener_handles++;
- 	}
- 
--	state->backend_data = data;
-+	state->listen_data = data;
- 	return 0;
- 
- failed:
-@@ -836,16 +836,16 @@ failed:
- 
- void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- {
--	struct fsmonitor_daemon_backend_data *data;
-+	struct fsm_listen_data *data;
- 
--	if (!state || !state->backend_data)
-+	if (!state || !state->listen_data)
- 		return;
- 
--	data = state->backend_data;
-+	data = state->listen_data;
- 
- 	CloseHandle(data->hEventShutdown);
- 	destroy_watch(data->watch_worktree);
- 	destroy_watch(data->watch_gitdir);
- 
--	FREE_AND_NULL(state->backend_data);
-+	FREE_AND_NULL(state->listen_data);
+ 	state->health_error_code = -1;
++force_shutdown:
+ 	ipc_server_stop_async(state->ipc_server_data);
+ clean_shutdown:
++	call_all(state, CTX_TERM);
+ 	return;
  }
-diff --git a/compat/fsmonitor/fsm-listen.h b/compat/fsmonitor/fsm-listen.h
-index f0539349baf..41650bf8972 100644
---- a/compat/fsmonitor/fsm-listen.h
-+++ b/compat/fsmonitor/fsm-listen.h
-@@ -33,7 +33,7 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state);
-  * do so if the listener thread receives a normal shutdown signal from
-  * the IPC layer.)
-  *
-- * It should set `state->error_code` to -1 if the daemon should exit
-+ * It should set `state->listen_error_code` to -1 if the daemon should exit
-  * with an error.
-  */
- void fsm_listen__loop(struct fsmonitor_daemon_state *state);
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 223c2131b58..2c6fa1a5d91 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -33,7 +33,7 @@ void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
-  */
- void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
  
--struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
-+struct fsm_listen_data; /* opaque platform-specific data for listener thread */
- 
- struct fsmonitor_daemon_state {
- 	pthread_t listener_thread;
-@@ -50,8 +50,8 @@ struct fsmonitor_daemon_state {
- 	int cookie_seq;
- 	struct hashmap cookies;
- 
--	int error_code;
--	struct fsmonitor_daemon_backend_data *backend_data;
-+	int listen_error_code;
-+	struct fsm_listen_data *listen_data;
- 
- 	struct ipc_server_data *ipc_server_data;
- 	struct strbuf path_ipc;
 -- 
 gitgitgadget
 
