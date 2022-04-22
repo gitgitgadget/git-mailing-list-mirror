@@ -2,176 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B649BC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 17:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A683C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 18:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234475AbiDVRMR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 13:12:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52058 "EHLO
+        id S232523AbiDVSLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 14:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240951AbiDVRMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 13:12:14 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09C98D687
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 10:09:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3000A179DD1;
-        Fri, 22 Apr 2022 13:09:15 -0400 (EDT)
+        with ESMTP id S236190AbiDVSGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 14:06:16 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CC68E2B00
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 11:03:20 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB3CA135587;
+        Fri, 22 Apr 2022 13:26:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RDbork1jMJ2b
-        YjhMuZtFR49fcgKwJn3L0HRZ0PRMUHA=; b=p9+haSg3/yF7XwN652xIYttwpDF2
-        Q9JCeunc3fT2cuVtgLe0lA3GYJzruNUWPdZGyP0lawkY3XeD/To8zOHVdCJeYlS/
-        T43k6MqA6ui6OMBaAlskMQ8nrbPZExY1gcpTq5sj+q2+kmHL9XHgP9Nyu57hYvaD
-        s6Mug/fv9fterGs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2887A179DD0;
-        Fri, 22 Apr 2022 13:09:15 -0400 (EDT)
+        :content-type; s=sasl; bh=gq6pUJfry3gU4hRFT/MHtQVLEYMXkZd3/3Frcz
+        EEWZ8=; b=DA6gXdge0anYnTbUdrro4C+k/xkwdTQsHfaHH8XFOe1At1sYBAxZbq
+        EFY1Sig7doamOOUbdwLFSNoFiEN+gV8PFo/uczs5DlPIo2ZCsJH/zsyo3gi0pYX1
+        ZuVRDzGQZvtcDPh8BsN4vKVvHlpG6aouvUunOc64RfufjXQ2OwUjk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3179135586;
+        Fri, 22 Apr 2022 13:26:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.84.173])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8E5E1179DCF;
-        Fri, 22 Apr 2022 13:09:10 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58C34135585;
+        Fri, 22 Apr 2022 13:26:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alyssa Ross <hi@alyssa.is>
+To:     "gdd via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] send-email: always confirm by default
-References: <220421.86tuam5hoi.gmgdl@evledraar.gmail.com>
-        <20220422083629.1404989-1-hi@alyssa.is>
-Date:   Fri, 22 Apr 2022 10:09:09 -0700
-In-Reply-To: <20220422083629.1404989-1-hi@alyssa.is> (Alyssa Ross's message of
-        "Fri, 22 Apr 2022 08:36:29 +0000")
-Message-ID: <xmqq7d7havuy.fsf@gitster.g>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        gdd <gregory.david@p1sec.com>
+Subject: Re: [PATCH] show-branch: fix SEGFAULT on both --current & --reflog
+References: <pull.1222.git.1650634704191.gitgitgadget@gmail.com>
+Date:   Fri, 22 Apr 2022 10:26:22 -0700
+In-Reply-To: <pull.1222.git.1650634704191.gitgitgadget@gmail.com> (gdd via
+        GitGitGadget's message of "Fri, 22 Apr 2022 13:38:24 +0000")
+Message-ID: <xmqqv8v19ght.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ED52D38C-C25E-11EC-A745-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 54E8B3F2-C261-11EC-8F91-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alyssa Ross <hi@alyssa.is> writes:
+"gdd via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> For novice users, it can be very intimidating for git send-email to sen=
-d
-> off a lot of mail without prompting for confirmation.  These users are
-> likely to not know it's even possible to configure git to behave
-> differently.  So let's set a novice-friendly default =E2=80=94 expert u=
-sers who
-> don't need to be prompted every time will be able to set
-> sendemail.confirm to their preference, although from my small sample it
-> sounds plenty of expert users already rely on sendemail.confirm =3D
-> always.
+> From: Gregory DAVID <gregory.david@p1sec.com>
+>
+> If run `show-branch` with `--current` and `--reflog` simultaneously, a
+> SEGFAULT appears.
 
-One thing the current behaviour of "confirm" makes a bad end-user
-experience for recipients is that you can individually say "no, this
-message has wrong address on the CC line, do not send it" and the
-receivers end up seeing [1/4] [2/4] [4/4] and left wondering what
-happend to [3/4], until [3/4] alone is resent.
+Thanks for noticing.  As I said elsewhere, "--current" was invented
+for the sole purpose of being used together with branches and
+individual commits, not in "--reflog" or "--merge-base" modes.
 
-Iterating over messages and letting the user examine the headers for
-each of them is perfectly fine, but it would make it much nicer to
-recipients if the choices are collected first and then even a single
-NO stops the entire series from getting sent.
+And as I also said elsewhere, I do not think of a good reason why a
+user would want to use these two together.
 
-	[Side note] As with everything else in Git, which is a tool
-	to help people interact with each other better, we give
-	priority to avoid wasting time of the more populous side,
-	and naturally, we should aim to make it less annoying to
-	receivers even if it means that the sender needs to spend a
-	bit more time to send the right things to the right people.
+Can you tell us a bit more about what you were trying to achieve
+when you used them together?
 
-And making "confirm" the default before it is fixed may make it
-easier to annoy receivers.
+While waiting for your (and others) valid use cases I probably have
+missed (I said "do not think of" above, not "I think there cannot
+be"), let's speculate what sensible meaning the combination could
+have.
 
-> I also think this approach is better than forbidding the all-in-one
-> format-patch + send-email, because it wouldn't give an accurate preview
-> of recipients, because automatic CCs are added by send-email, not
-> format-patch.
+As is clear from an existing error when two branches are given:
 
-I do not think this part matches reality.  format-patch alone does
-not manage CC or To at all.  What the separation of send-email and
-format-patch does is to train people to actually proofread what they
-are going to send out.  Being able to add Cc: and To: at the header
-part (instead of adding Cc: to trailers and have send-email to pick
-them up, which is error prone and forcing you to advocate this
-default change so that you can check at the last minute) of the
-generated patch text is icing on the cake ;-)
+    $ git show-branch --reflog master maint
+    fatal: --reflog option needs one branch name
 
->  if ($confirm_unconfigured) {
-> -	$confirm =3D scalar %suppress_cc ? 'compose' : 'auto';
-> +	$confirm =3D 'always';
+the "--reflog" mode is not even prepared to work with more than one
+branch.  It is to show reflog entries taken from one branch (it
+could be HEAD)'s reflog.
 
-This got a lot simpler.  I've always wondered why this "if suppress
-CC is there, then default to 'compose' and otherwise 'auto'" makes a
-sensible default.
+But "--current" is about "Among the branches I listed on the command
+line, the current branch may or may not be included. If not, please
+pretend as if I had the current branch there, too".
 
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 42694fe584..e11730f3dc 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -74,8 +74,8 @@ check_no_confirm () {
->  	return 0
->  }
-> =20
-> -test_expect_success $PREREQ 'No confirm with --suppress-cc' '
-> -	test_no_confirm --suppress-cc=3Dsob &&
-> +test_expect_success $PREREQ 'No confirm with --confirm=3Dcompose --sup=
-press-cc' '
-> +	test_no_confirm --confirm=3Dcompose --suppress-cc=3Dsob &&
->  	check_no_confirm
->  '
-> =20
-> @@ -1032,16 +1032,10 @@ test_expect_success $PREREQ '--confirm=3Dcompos=
-e' '
->  	test_confirm --confirm=3Dcompose --compose
->  '
-> =20
-> -test_expect_success $PREREQ 'confirm by default (due to cc)' '
-> +test_expect_success $PREREQ 'confirm by default' '
->  	test_when_finished git config sendemail.confirm never &&
->  	git config --unset sendemail.confirm &&
-> -	test_confirm
-> -'
-> -
-> -test_expect_success $PREREQ 'confirm by default (due to --compose)' '
-> -	test_when_finished git config sendemail.confirm never &&
-> -	git config --unset sendemail.confirm &&
-> -	test_confirm --suppress-cc=3Dall --compose
-> +	test_confirm --suppress-cc=3Dall
->  '
+So, if we said
 
-It is curious that the change to the test this patch adds are only
-to adjust to the fallout the change of the default causes, and there
-is no new test to make sure that unconfigured sendemail.confirm
-triggers confirmation dialogue.
+    $ git show-branch --reflog --current maint
 
-I still have reservations, as I would eventually have to sell those
-existing users that this usability regression [*1*] is worth having
-in the new release.  It will need a large backward-compatibility note
-in the Release Notes, at least.
+while we are on 'master' branch, that is the same as saying
 
-But assuming that you can help convince these few dozens of existing
-Git users out there that it is worth doing, the implementation seems
-correct to me.
+    $ git show-branch --reflog master maint
+
+which should get a usage error, and if we are on 'maint' branch,
+then maint is already there, so there is no point in giving
+'--current' to begin with.
+
+Because
+
+    $ git show-branch --reflog
+
+defaults to showing the reflog entries from current branch,
+
+    $ git show-branch --reflog --current 
+
+hoping that it would show the reflog entries of the current branch
+is indeed a plausible interpretation, but even in this case, it is
+not necessary to give "--current".
+
+So, unless there is a reason why it makes sense to enumerate recent
+reflog entries from a branch *and* the tip of the current branch at
+the same time, I am very much inclined to make it clear that
+"--reflog" and "--current" are mutually incompatible by making it an
+error to give both.
+
+In addition, we _could_ allow a command line with "--reflog --current"
+and nothing else on it, and ignore "--current" only in that case, to
+"support" the "plausible interpretation" above, but I do not think
+it is worth it.
+
+> It seems that it has been introduced in: Commit 1aa68d6735
+> (show-branch: --current includes the current branch., 2006-01-11)
+
+Yes, the commit should have noticed the invalid combination of
+options were given and errored out.  Since omission of such a check
+lead to a segfaulting bug without producing any useful output, it
+is safe to make it an error to give these options at the same time.
 
 Thanks.
-
-
-[Footnote]
-
-*1* The existing users will be surprised by sudden appearance of
-unexpected confirmation dialogue, which they may have never seen,
-and have to decide
-
- (1) keep saying "yes" to send out the current series, or
- (2) abort, read release notes and finally configure the
-     sendemail.confirm away before resending
-
-soon after updating their Git.  They will be extremely annoyed if
-that happens when they were about to send out a large series.
