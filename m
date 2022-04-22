@@ -2,143 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF303C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA209C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 09:36:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446034AbiDVJeD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Apr 2022 05:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50130 "EHLO
+        id S1446092AbiDVJjS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 05:39:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1446070AbiDVJd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 05:33:57 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67B4453B59
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:30:42 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u3so10207221wrg.3
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:30:42 -0700 (PDT)
+        with ESMTP id S1357468AbiDVJjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 05:39:16 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF4EE1CFCD
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:36:23 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id b24so9704903edu.10
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 02:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zsQmV0yqemraXwOUsMKe5YR35m49HPTMoNXBupvyrxY=;
-        b=ox8oSHF6481r5BurPQL22p7fv7lKXSmBtHtYIYmzIXEI7L6zwCjhorJ4Zi+eY0TQhD
-         /xQq9S9K+Uzt1VsH2nWz2mowUp1p3AtkvF/EWKNqSR1UzkWoQIDXrnFuYJGlUUcHe5hL
-         PDGesSlTaJAXJR1EjBRjd9KFssdmm6f7Huwqq9g+s3ZUWd/e4+CjyXKDnkO8TZv6jc7E
-         tDMT5LC8m67Sq1f1BeUKdZIvTPBTM+O5hpUY+BkcQ5IlF4IxI31RXfrXUJ0e9Uk4cBzV
-         6oobemQQJb++1O0EmOkyf/qXT3XKA57n823sAQSqz0uJKVduTHaY2kW4lrp79tB5Yzoa
-         6yYg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=XsMzdfUgkpodqkAhu5tfSsjWuoIjGb7kKp1PEQsVCcI=;
+        b=oXyXTJGIiNL894ZkSAPckzI0/e53THIZQoh1BrJZRogxZBi3PHqyK03icgmH6cDCx+
+         Ve/pdCw7ia4wz8cuVzNNwlEQ8x16l7//ai0lhf0yYEDf6nUuRcXtEpBHpn2SdphAEmxD
+         ylau+Ep4E+WQq/zFgEdwfOVje6JLc/Bk5Ja8TSYoXRMADnRe9uPS9KydXA1SmEW+Vfrh
+         Xjbo0UquNpO9G3z3cbxZ5Wv1WpSibIT6WzZBuQn888ZzZMm9sHz6Ji3Vq4pC8JOxbEsr
+         sWMahQmcGDdjrXsOCfk1/HY7UL9SMwW95TkBRZzsSLOU07OrVZxEgmgssPIlBDK79+BA
+         BZYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zsQmV0yqemraXwOUsMKe5YR35m49HPTMoNXBupvyrxY=;
-        b=6b783cIA5qIFFOElxMdQhqpVIAMcp1ffLBw9oSV8wHIuj0LoT691N6BffvSgB3kD8j
-         hUtWA64RGC84B9qdT9gx+7hcyPiIB5McEK/skpcLHWZ1GVI8r1LvIdVXmAyjGt930gLY
-         Rmsaf2NebWgE4Ewj8+9WUNU77N9jdXwB+f5GNMEbg5yYulqIi9lZhYRZlpQN8bI8oRqo
-         4T5vtotlIooSQ/2xxIfIibGElNT8Eg/SlYY/zhIVbZgbJJiY1EtXrH4fHwqMDA9x6oba
-         PLiclL5x2uR9Jv9xfV9kUYvTSYnSnYEkbs2wVYl5YRODycGGZQaSbhszfk4xYipSiS4x
-         BQdw==
-X-Gm-Message-State: AOAM530qyyl3GgJOAOlXFds4DqMtQVU+BxrQx4tL7i9r7kp15zL8bcSl
-        mmS2LCtpxzamchNBgrPNf/w=
-X-Google-Smtp-Source: ABdhPJzbL2wl0t69U67HjxBouJS+RcqZnetHR+sy1VtcIX9MlB9YYn/e0F6QFhxWTeL+77gAPp62xA==
-X-Received: by 2002:a5d:6b4c:0:b0:1e6:8ece:62e8 with SMTP id x12-20020a5d6b4c000000b001e68ece62e8mr2955314wrw.201.1650619840773;
-        Fri, 22 Apr 2022 02:30:40 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id n2-20020adfc602000000b0020ac8335e46sm1479848wrg.99.2022.04.22.02.30.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Apr 2022 02:30:40 -0700 (PDT)
-Message-ID: <34a9c2dc-f8f5-4c1b-fed8-115429ae5a9f@gmail.com>
-Date:   Fri, 22 Apr 2022 10:30:38 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=XsMzdfUgkpodqkAhu5tfSsjWuoIjGb7kKp1PEQsVCcI=;
+        b=E84btmaLoJKMQl5XywPZSipuIDw1Q7LVlScZC6/L3zJpQxei3+ceoa1AGeGxqwezox
+         CObhuzxFPV9aZjCKpLNFqLbtl0QZh6NFCqWCSnDVjxUreritc1jCiD+jl11mok7wCyQK
+         7+RjijsNutBj1uACT3GS+5CT50BE+qX6b4MSYlrrt3UNurMxPoMfh2Lh6UUYabGwTW2W
+         gCwtXT01ZdcFmdqKJ3BHYO2LuD7D9pZDlCmTLesIY0B6WYyDNhl9NuOXnN/BdA3TDWd3
+         GPc9YYUT9j970KEUJiSf8AVZ2xGJbfTPeBlUUx5MamjCqcpuzmotkctkHWI+1+rrNkpP
+         jjSQ==
+X-Gm-Message-State: AOAM532ubjITMWy2G/IP1tKl4vputeq7xodxGttjOmzUhNc/mn+TtWjA
+        cOZpdboTem3j7k7FiIqJwjQ=
+X-Google-Smtp-Source: ABdhPJxinX1T6EWK9DXJsiVo1yt5Hc8voHCyrSAoeGqIdI6Q4NTqKa3XyKJE5UQsih9aI92jmmhhTg==
+X-Received: by 2002:a05:6402:1cc1:b0:413:2cfb:b6ca with SMTP id ds1-20020a0564021cc100b004132cfbb6camr3730173edb.265.1650620182479;
+        Fri, 22 Apr 2022 02:36:22 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o24-20020aa7dd58000000b00420ca195de9sm672114edw.25.2022.04.22.02.36.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Apr 2022 02:36:21 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nhpi9-008du9-DR;
+        Fri, 22 Apr 2022 11:36:21 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Attila Csosz <csosza@designsoftware.com>, git@vger.kernel.org
+Subject: Re: Git bug report - disk errors on Windows after push
+Date:   Fri, 22 Apr 2022 11:27:23 +0200
+References: <4026b85f-8cae-bcca-af14-e886e80725d4@designsoftware.com>
+ <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <Yl2h5I0apzWhpVtr@camp.crustytoothpaste.net>
+Message-ID: <220422.868rrx5uju.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: ab/ci-setup-simplify (was Re: What's cooking in git.git (Apr
- 2022, #05; Mon, 18))
-Content-Language: en-GB-large
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqqbkwyz78z.fsf@gitster.g>
- <1157a463-f6c6-1df5-59cd-419d73eed1df@gmail.com>
- <220421.86fsm66zmz.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220421.86fsm66zmz.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
 
-On 21/04/2022 19:36, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Apr 19 2022, Phillip Wood wrote:
-> 
->>> * ab/ci-setup-simplify (2022-04-14) 29 commits
->>> [...]
->>>    Will merge to 'next'?
->>>    source: <cover-v3-00.29-00000000000-20220413T194847Z-avarab@gmail.com>
->>
->> I haven't had time to read all 31 patches from v4 in detail but I have
->> looked at the results in seen.
->>
->> Looking at seen:ci/install-dependencies.sh the shebang has been
->> changed to "#!/bin/sh" but it contains
->> "BREW_PACKAGE=${CC_PACKAGE/-/@}" which is a bashism.
->>
->> Looking at seen:.github/workflows/main.yaml to skip running the tests
->> one has to set "skip-tests: no" which is utterly confusing.
->>
->>  From what I saw scanning the patches there seemed to be a lot of
->> churn, both of existing code and code that gets added and then
->> moved/refactored within the series.
->>
->> Looking at the output of a recent ci run of seen the steps to prepare
->> the environment before building and testing print all the environment
->> variables rather than just the ones being set for that step which
->> seems to go against the aim of "CI: narrow down variable definitions
->> in --build and --test". (Also the "SKIP" prefix in the output lacks a
->> ":")
-> 
-> Thanks. Those were all helpful. I replied to these in a re-roll CL at:
-> https://lore.kernel.org/git/cover-v5-00.29-00000000000-20220421T181526Z-avarab@gmail.com/
-> [...] 
->> I think splitting out the build and test steps is a good idea but I'm
->> less convinced by some of the other changes.
-> 
-> What other changes are you referring to here?
+On Mon, Apr 18 2022, brian m. carlson wrote:
 
-Here's a list from memory - apologies if anything here has changed in
-v5
+> [[PGP Signed Part:Undecided]]
+> Hey,
+>
+> On 2022-04-18 at 07:47:07, Attila Csosz wrote:
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your issue.
+>> 
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> Pushing to a directory directly.
+>> 
+>> What did you expect to happen? (Expected behavior)
+>> Good behavior
+>> 
+>> What happened instead? (Actual behavior)
+>> Disk errors. After pushing to a directory (my origin field is C:\Work for
+>> example) the git repository will be corrupted.
+>> Moreover causing disk errors not only in the target git bare repository.
+>> I've loosed some other files.
+>> Cannot be reproduced exactly. However I have decided to report this problem.
+>> I've experienced this problem for several years.
+>
+> There's nothing that Git should be able to do as a normal operating
+> system that causes disk errors.  If you're seeing those kinds of errors,
+> the likelihood is that your disk is bad and you need to replace it.
+>
+> Do note that if you're storing your data in a directory managed by a
+> cloud syncing service (e.g., Dropbox or OneDrive), then it is known that
+> those file systems corrupt Git repositories and you shouldn't use them
+> with Git.  That's due to the way they sync data.
+>
+> However, if this is a regular file system (e.g., NTFS), then Git
+> shouldn't be able to cause disk problems, and if it could, that would be
+> a serious defect in Windows, so it's almost certainly going to be a
+> hardware problem.
 
-Separating the environment setup from running the build/tests is quite
-github specific. If instead we just had scripts that setup the
-environment and ran the appropriate make command they could be used by
-any future CI setup. Doing that would avoid lib.sh being a top level
-script rather than a library as well.
+I think you're most likely right that this is some local HW issue, but
+the report doesn't have enough information to say either way.
 
-I expected tput.sh to be some kind of wrapper around tput but it just
-sets $TERM if it is not already set. We already do that in lib.sh I
-think and I don't see what the point of changing that. I think we'd
-want to do that whenever TERM is not set, not just for github actions.
+But generally as we've been discussing at length in various threads
+related to git's fsync() behavior we can and will corrupt repositories
+due only to our own (mis)use of FS APIs, i.e. not doing fsyncing and the
+like correctly, it's been improved a bit recently.
 
-Moving things from environment variables into MAKEFLAGS adds
-unnecessary complexity as we still have to export those variables on
-windows.
+But we're still in a state of not doing it correctly, and/or relying on
+some implicit assumptions.
 
-The script to run docker builds and tests under a unprivileged user
-is just deleted rather than fixing our docker builds to not run as
-root. At the moment some of the httpd tests are skipped because they
-refuse to run as root.
+For something like an external disk that may have its power cable yanked
+I'd give it about even odds that it's HW v.s. git's own FS syncing logic
+being at fault.
 
-One thing I do like is moving the environment setup out of the github
-actions yaml and into the scripts as it should make it easier to
-support other CI setups.
+We get away with a lot of shenanigans because we're usually on a
+journaled FS, which e.g. on a FAT32 external volume we won't benefit
+from.
 
-Best Wishes
+Attila: I have no idea if this even exists on Windows, but aside from
+other suggestions in this thread I'd suggest enabling whatever Window's
+equivalent of "sync" mounting is (if it even exists). I.e. to have every
+single FS operation by synced to the metal. 
 
-Phillip
+It will make your repository *much much slower*, but it will be safe as
+far as any logic errors in git vis-a-vis syncing go.
