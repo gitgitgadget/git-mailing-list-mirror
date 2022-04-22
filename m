@@ -2,167 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F93AC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 14:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17B61C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Apr 2022 14:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1445426AbiDVOcu convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 22 Apr 2022 10:32:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49278 "EHLO
+        id S1448885AbiDVOuv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Apr 2022 10:50:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1448697AbiDVOcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Apr 2022 10:32:43 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C7E5BD1A
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 07:29:49 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 23METgQd054347
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 22 Apr 2022 10:29:42 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jeff Hostetler'" <git@jeffhostetler.com>,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Jason Morgan'" <jasomorg@qti.qualcomm.com>, <git@vger.kernel.org>
-References: <BN0PR02MB79194599872BD3693CD72CF4F2F49@BN0PR02MB7919.namprd02.prod.outlook.com> <BN0PR02MB79195847F60CA239AE9F5CE3F2F49@BN0PR02MB7919.namprd02.prod.outlook.com> <YmIFeIrTBx6yghwn@camp.crustytoothpaste.net> <fee354b5-e343-c997-b75a-63cf785b5337@jeffhostetler.com>
-In-Reply-To: <fee354b5-e343-c997-b75a-63cf785b5337@jeffhostetler.com>
-Subject: RE: git push locks up forever, file protocol
-Date:   Fri, 22 Apr 2022 10:29:37 -0400
-Organization: Nexbridge Inc.
-Message-ID: <02b301d85655$6881b710$39852530$@nexbridge.com>
+        with ESMTP id S230070AbiDVOuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Apr 2022 10:50:50 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155B0B26
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 07:47:57 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 6170F3F48F5;
+        Fri, 22 Apr 2022 10:47:56 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 092163F47F4;
+        Fri, 22 Apr 2022 10:47:55 -0400 (EDT)
+Subject: Re: [PATCH v4 04/27] fsmonitor-settings: bare repos are incompatible
+ with FSMonitor
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        rsbecker@nexbridge.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1143.v3.git.1647973380.gitgitgadget@gmail.com>
+ <pull.1143.v4.git.1648140680.gitgitgadget@gmail.com>
+ <f2c0569c9012a86f252562a9a906f6de37d0a236.1648140680.git.gitgitgadget@gmail.com>
+ <220419.86mtgh8kep.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3a7d7f7b-dfba-9aa8-271f-6d12773668a4@jeffhostetler.com>
+Date:   Fri, 22 Apr 2022 10:47:55 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE4kVsCyE70WYpBNVv8xXQVbBZyJQF6qSlrAO0fsZsB9h5zDa4YmBvg
-Content-Language: en-ca
+In-Reply-To: <220419.86mtgh8kep.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 22, 2022 10:17 AM, Jeff Hostetler wrote:
->On 4/21/22 9:31 PM, brian m. carlson wrote:
->> On 2022-04-21 at 08:30:50, Jason Morgan wrote:
->>> Hi,
->>>
->>> We have a remote repo accessed using the 'file:' protocol, mounted over
->Samba using drvfs into a WSL2 instance of Ubuntu 20.04.
->>>
->>> We find a 'git push' waits forever. git version 2.25.1
->>
->> I seem to recall that we've fixed some various issues with protocol
->> handling in the 2.29 timeframe.  Is it possible you could try 2.36.0
->> to see if you can reproduce it there?
->>
->> Also, it would be interesting to see if there's a difference in
->> behaviour between setting protocol.version to 0 and setting it to 2.
->> That might tell us something that would help tracking this down.
->>
->>> Over a local LAN this works fine, but over a VPN this fails, hinting at some sort
->of race condition.
->>>
->>> Output from strace hints that git is trying (and failing) to read from a closed file
->handle.
->>
->> I don't think this is the case.  If Git were trying to read from a
->> closed file handle, the kernel would immediately return -1 with errno
->> set to EBADF.  Those operations won't block because there's nothing to
->> read.
->>
->>> Final output from strace:
->>>
->>> -----------
->>> openat(AT_FDCWD,
->>> ".git/objects/ad/065dad4384ae8c81c120c562985078d1f7b34b",
->>> O_RDONLY|O_CLOEXEC) = 3 fstat(3, {st_mode=S_IFREG|0444, st_size=152,
->>> ...}) = 0 mmap(NULL, 152, PROT_READ, MAP_PRIVATE, 3, 0) =
->>> 0x7f3e0e4af000
->>> close(3)                                = 0 munmap(0x7f3e0e4af000,
->>> 152)             = 0 openat(AT_FDCWD,
->>> ".git/objects/30/2508dfe5201db6c000ebf17b0c69e3afb31218",
->>> O_RDONLY|O_CLOEXEC) = 3 fstat(3, {st_mode=S_IFREG|0555, st_size=214,
->>> ...}) = 0 mmap(NULL, 214, PROT_READ, MAP_PRIVATE, 3, 0) =
->>> 0x7f3e0e4af000
->>> close(3)                                = 0 munmap(0x7f3e0e4af000,
->>> 214)             = 0 openat(AT_FDCWD,
->>> ".git/objects/d2/2323ec2ec40a74fbd519509662254c3cfda206",
->>> O_RDONLY|O_CLOEXEC) = 3 fstat(3, {st_mode=S_IFREG|0444, st_size=161,
->>> ...}) = 0 mmap(NULL, 161, PROT_READ, MAP_PRIVATE, 3, 0) =
->>> 0x7f3e0e4af000
->>> close(3)                                = 0
->>
->> FD 3 is closed here...
->>
->>> munmap(0x7f3e0e4af000, 161)             = 0
->>> access(".git/hooks/pre-push", X_OK)     = -1 ENOENT (No such file or
->>> directory) write(4, "00953ea50e3c1f49c33f7dbbb5e3a310"..., 149) = 149
->>> write(4, "0000", 4)                     = 4 pipe([3, 6])
->>> = 0
->>
->> And then it's recreated here as one part of a pipe, so it isn't closed.
->>
->>> fcntl(6, F_GETFD)                       = 0 fcntl(6, F_SETFD,
->>> FD_CLOEXEC)           = 0 mmap(NULL, 8392704, PROT_NONE,
->>> MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7f3e0d641000
->>> mprotect(0x7f3e0d642000, 8388608, PROT_READ|PROT_WRITE) = 0
->>> clone(child_stack=0x7f3e0de40fb0,
->>>
->flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|C
->LONE_
->>> SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID,
->>> parent_tid=[12802], tls=0x7f3e0de41700, child_tidptr=0x7f3e0de419d0)
->>> = 12802
->>
->> My guess is that in the child (which isn't shown here) that FD 6 is
->> hooked up to either standard output or standard error.  You'd need to
->> follow children to see.
->>
->>> pipe([7, 8])                            = 0
->>> stat("/usr/lib/git-core/git", {st_mode=S_IFREG|0755, st_size=3093072,
->>> ...}) = 0 pipe([9, 10])                           = 0
->>> rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
->>> clone(child_stack=NULL,
->>> flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD,
->>> child_tidptr=0x7f3e0e1dae50) = 12803 rt_sigprocmask(SIG_SETMASK, [],
->>> NULL, 8) = 0
->>> close(10)                               = 0 read(9, "", 8)
->>> = 0
->>> close(9)                                = 0
->>> close(7)                                = 0
->>> close(4)                                = 0 fcntl(8, F_GETFL)
->>> = 0x1 (flags O_WRONLY) openat(AT_FDCWD, ".git/objects/3e",
->>> O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4 fstat(4,
->>> {st_mode=S_IFDIR|0777, st_size=4096, ...}) = 0 getdents64(4, /* 22
->>> entries */, 32768)  = 1328 getdents64(4, /* 0 entries */, 32768)   =
->>> 0
->>> close(4)                                = 0 fstat(8,
->>> {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0 write(8,
->>> "^3ea50e3c1f49c33f7dbbb5e3a31017f"..., 83) = 83
->>> close(8)                                = 0 Enumerating objects: 31,
->>> done.ts: 1 Counting objects: 100% (31/31), done.
->>> Delta compression using up to 8 threads Compressing objects: 100%
->>> (23/23), done.
->>> Writing objects: 100% (23/23), 5.60 KiB | 212.00 KiB/s, done.
->>> Total 23 (delta 14), reused 0 (delta 0)
->>> [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 12803
->>> --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=12803,
->>> si_uid=1000, si_status=0, si_utime=2, si_stime=6} --- read(3,
->>
->> If FD 6 were wired up to something in the child and the child exited
->> (which, having received SIGCHLD, is a safe bet), then we'd expect this
->> to see this process get EOF.
->>
->> It's not clear to me what's going on here, but I think this code is
->> ending up in connect.c (search for "transport/file").  Maybe someone
->> else has an idea?
->>
->
->Not sure I can add anything here to what Brian has already said, but you might try
->setting GIT_TRACE2_PERF to an absolute path of a file or an existing directory.
->That'll give you tracing around the child.
 
-The only time I've seen something like this was when we had a poll issue setting a continuation after a non-block condition with no data that caused the stack to get confused. IIRC it was about 4 years ago and one of my first contributions. I don't think this is the same thing because poll does not seem to be involved.
---Randall
 
+On 4/19/22 5:44 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Mar 24 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+>> index 46be55a4618..50ae3cca575 100644
+>> --- a/builtin/fsmonitor--daemon.c
+>> +++ b/builtin/fsmonitor--daemon.c
+>> @@ -1449,6 +1449,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+>>   		die(_("invalid 'ipc-threads' value (%d)"),
+>>   		    fsmonitor__ipc_threads);
+> 
+> I think that structurally the way things are done in
+> fsmonitor-settings.c make its use really hard to follow. E.g. here:
+> 
+>> +	prepare_repo_settings(the_repository);
+> 
+> We prep the repo, OK.
+> 
+>> +	fsm_settings__set_ipc(the_repository);
+> 
+> Set IPC.
+> 
+>> +	if (fsm_settings__error_if_incompatible(the_repository))
+> 
+> And here we'll error out if we're incompatible, and this is in the
+> top-level cmd_fsmonitor__daemon() function. All OK, except why didn't we
+> check this before "set IPC?".
+> 
+> Anyway, re-arranging some of the diff below:
+> 
+>> @@ -86,6 +111,9 @@ void fsm_settings__set_ipc(struct repository *r)
+>>   
+>>   	lookup_fsmonitor_settings(r);
+>>   
+>> +	if (check_for_incompatible(r))
+>> +		return;
+>> +
+>>   	r->settings.fsmonitor->mode = FSMONITOR_MODE_IPC;
+>>   	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
+>>   }
+> 
+> Here in fsm_settings__set_ipc we return with a NOOP if we're not
+> compatible.
+> 
+> Then:
+> 
+>> +int fsm_settings__error_if_incompatible(struct repository *r)
+>> +{
+>> +	enum fsmonitor_reason reason = fsm_settings__get_reason(r);
+>> +
+>> +	switch (reason) {
+>> +	case FSMONITOR_REASON_OK:
+>> +		return 0;
+>> +
+>> +	case FSMONITOR_REASON_BARE:
+>> +		error(_("bare repository '%s' is incompatible with fsmonitor"),
+>> +		      xgetcwd());
+>> +		return 1;
+>> +	}
+>> +
+>> +	BUG("Unhandled case in fsm_settings__error_if_incompatible: '%d'",
+>> +	    reason);
+>> +}
+> 
+> Here we'll call fsm_settings__get_reason() which does the same.
+> 
+>> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
+>> +{
+>> +	if (!r)
+>> +		r = the_repository;
+>> +
+>> +	lookup_fsmonitor_settings(r);
+>> +
+>> +	return r->settings.fsmonitor->reason;
+>> +}
+> 
+> Is there a reason we can't skip this indirection when using the API like
+> this and e.g. do:
+> 
+> 	enum fsmonitor_reason reason;
+> 	prepare_repo_settings(the_repository);
+> 	reason = fsmonitor_check_for_incompatible(the_repository)
+>          if (reason != FSMONITOR_REASON_OK)
+>          	die("%s", fsm_settings__get_reason_string(reason));
+> 
+> There's just two callers of this API in "seen", and neither need/want
+> this pattern where every method needs to lazy load itself, or the
+> indirection where fsmonitor-settings.c needs to be used as a
+> clearing-house for state management.
+> 
+> Maybe I'm missing something, but why not make check_for_incompatible()
+> non-static and have the callers use that (and then it would return
+> "fsmonitor_reason", not "int", the int return value being redundant to
+> the enum)>
+
+I suppose we could rearrange things to hide less of the
+state management.  I'm not sure it matters one way or the
+other, but I'll give it a try and see if simplifies things.
+
+> 
+>> diff --git a/builtin/update-index.c b/builtin/update-index.c
+>> index 876112abb21..d29048f16f2 100644
+>> --- a/builtin/update-index.c
+>> +++ b/builtin/update-index.c
+>> @@ -1237,6 +1237,10 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>>   
+>>   	if (fsmonitor > 0) {
+>>   		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
+>> +
+>> +		if (fsm_settings__error_if_incompatible(the_repository))
+>> +			return 1;
+>> +
+>>   		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
+>>   			warning(_("core.fsmonitor is unset; "
+>>   				"set it if you really want to "
+> 
+> This looks like a bug, we knew before aquiring the lockfile that we
+> weren't compatible, so why wait until here to error out? This seems to
+> skip the rollback_lock_file(), so won't we leave a stale lock?
+> 
+
+Yes, good catch.  The `return` here will bypass the rollback.
+Hopefully, the above rearrangement will make this go away.
+
+I do have to wonder about the rest of this function.  There are
+several `die()`, `exit()`, `usage()`, `BUG()`, and other `return`
+statements after the index lock is taken that won't hit the
+rollback.  Should those be investigated too?  (I can't do that
+now in the context of this series, though.)
+
+Jeff
