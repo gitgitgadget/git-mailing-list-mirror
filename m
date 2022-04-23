@@ -2,211 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E96B7C433EF
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 04:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A867C433F5
+	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 05:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232304AbiDWErT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 00:47:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
+        id S232549AbiDWF2U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 01:28:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230471AbiDWErR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 00:47:17 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321D7136970
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 21:44:20 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5C931824D0;
-        Sat, 23 Apr 2022 00:44:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=/1kIjPMyM938+zz1aRQv7rqBPXCNCE4WbP0Df20sPe0=; b=KoNu
-        QAAjYAIl51XSxlPAY71xxD1k6uOKjJ1OU3DlOxjYVygpWaYT8K+hCllYOgLJikAY
-        Y3rsNCz/SbnNcs/GGYOalfDFHpqsOz9xqqH9LNidvBmNVHQYJY//UCWiWFchtlo9
-        GD/J1/WaxZo3F/Kao5GGOzVWCAaHJ0c0I3vm0yk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ADBCC1824CE;
-        Sat, 23 Apr 2022 00:44:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B35F11824CD;
-        Sat, 23 Apr 2022 00:44:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Josh Steadmon <steadmon@google.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] merge: new autosetupmerge option 'simple' for
- matching branches
-References: <pull.1161.v3.git.1646032466.gitgitgadget@gmail.com>
-        <pull.1161.v4.git.1647843442911.gitgitgadget@gmail.com>
-        <Yl2qwO0SMPOhb5h9@google.com>
-        <CAPMMpogY5vZU8gyRSYh+BM4goPPtJw0cCiM-31sy-s_uGRv8uA@mail.gmail.com>
-        <xmqqczhbr6pv.fsf@gitster.g>
-        <CAPMMpohQei9vBBm=7hC=N5LPwzMCED=fZcXyePnrkLCHfCJTZw@mail.gmail.com>
-        <xmqqlevzkxrf.fsf@gitster.g>
-        <CAPMMpoiCD+fG=bs2j4Rin5Pvip9Mre9iqLcOb2LYnDQK9cuRxw@mail.gmail.com>
-        <xmqqzgkddf8m.fsf@gitster.g>
-        <CAPMMpoj+g-XFKXoAXzW4d6WZRSBO_uE6MRsw2jWUPAjqWFQt2A@mail.gmail.com>
-Date:   Fri, 22 Apr 2022 21:44:14 -0700
-Message-ID: <xmqqv8v02yu9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231922AbiDWF2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 01:28:17 -0400
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-oln040092064029.outbound.protection.outlook.com [40.92.64.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DFF16FACF
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 22:25:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WuEUDdnOWoMVzkx/ww57XjCnel+SZARh4YpQGD6EnIwUbNw2Aq9TnQDaacnVZS31UKaakvfN4JEtc0AstCIo3bj0zHjvt6xiz/6mdBiLCTgZxmLU1P9iKugCqJ/85tsJxLl7yNB4UVJgrqwBqSls5wTdFglA7CCcpQV/KWxw1EE8QIjnxvM4AMUUVVrL6Y2fqXNRxDecZPzAy4wDwNlj02HUUxYM8fPIdHBZEsq4moLmNFlEI0upkGZtob+ylIviu9TPuwNnOl54aPCf8nWc+2zdVQzrfvUBnKtjIXY5RaTtiYnuQlKV8/6IMdnRgLg/1A3MNT4378oJtXaEICOBiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=17vIkY7JbAqSEEXQd80uzNTQnXrGSsbewq1XAj29fW4=;
+ b=ho+kTfEzz8bK6lg3cvWhEeZ+IHM48gqy7ngUT41ZXw9Gz9t8YUB8pUABMfAHJFyQpFKG9ityX9UXTLxSjgTn5jM8Avx2+PdMg0D6ZSTeEGY+NxFKnvP7na2a/2s5nOvEOJmdvV7lEqEww79dupyyp9QhPl1Gd7yFHwKyLurAy/bqDAmZ4hk3LhHus3cpFyYx/xiXfxGYoFFU7m9VMNoGsSGWKeVvVA/s8rYpFU9JvNijK/WB8EPqkRNDsLqYbD85gUn8F+vtgzhtWnBsAQY6eRAB/aC4OT45Z4sWpMBWXkgkuT8JYK1Czl5DldB5hfB8XE1D6FpNzZbw0So/UoAyVg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from AM0PR04MB6019.eurprd04.prod.outlook.com (2603:10a6:208:141::13)
+ by PA4PR04MB7581.eurprd04.prod.outlook.com (2603:10a6:102:f3::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.17; Sat, 23 Apr
+ 2022 05:25:17 +0000
+Received: from AM0PR04MB6019.eurprd04.prod.outlook.com
+ ([fe80::f595:9597:c055:dfe4]) by AM0PR04MB6019.eurprd04.prod.outlook.com
+ ([fe80::f595:9597:c055:dfe4%7]) with mapi id 15.20.5186.015; Sat, 23 Apr 2022
+ 05:25:17 +0000
+Date:   Sat, 23 Apr 2022 07:25:15 +0200 (CEST)
+From:   =?ISO-8859-15?Q?Matthias_A=DFhauer?= <mha1993@live.de>
+To:     git@vger.kernel.org
+cc:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: gitk regression in version 2.36.0
+Message-ID: <AM0PR04MB6019ECF053F1FB7B29D75AB7A5F69@AM0PR04MB6019.eurprd04.prod.outlook.com>
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-TMN:  [QSDqFkWja3d0kf9pRL///hMwO6mc2FwIPBd/xGJga2xxZ6GieAWnqmh7horb1T9v]
+X-ClientProxiedBy: AM6PR02CA0027.eurprd02.prod.outlook.com
+ (2603:10a6:20b:6e::40) To AM0PR04MB6019.eurprd04.prod.outlook.com
+ (2603:10a6:208:141::13)
+X-Microsoft-Original-Message-ID: <95a58d73-29d9-371b-65de-45f8b1b8d165@live.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0787EE20-C2C0-11EC-B1DA-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8ee8d0f4-7207-4b9f-a06a-08da24e9a681
+X-MS-TrafficTypeDiagnostic: PA4PR04MB7581:EE_
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: jH1OISHA5k3DhEY/I4DCUNk4Gsj1ie0+/gWpj9V+K2IgD4VU+a5PwrdI0o9/PlxoaijANbhQct1QqKDjsQZPALMNm9Ghz6YWBhjIeV6k3W801cL2rUNfQ6J0nzvvLrdIFzLf3bktneH6vaYQRPM7PSgYzZ5cFz1RTv+OcAdaqV4OeNE9id8cvrWAcMw/zARww38DGEpxMWFGHElw9NNAYqXyQt6A1r6446Z+svAJbCoAe+BwYUjvpDzLtT0/JAwocu4Q4NzCH7N11fE1ie5XC/b5r5LatSSpdHqQfAE1L3nzkwIuLPOKeGrpM8ojkRGkUrEK3r3SMfMLdMzc5HHnIPS/2p7neOTsgvlNHPstM/ZYJTUyIMlmqYg0l6za1uU4FaZr74NjjgUOtOAOZdgtq+ak2NoXhZRWQ9m8j5vabeXdrjWyyV9jX6JkNuq1zcPXsRPnVvgvBJurUCXBS6VPch0MRS8SGpWMKSKSnAyqLFGb7v2NKtHxZsgY5uN2ae/kDcIt6TyKoaxAX/bGjdgf9FtAI3DP4R2xJl+LwT0CuAc/AJjmMhb9+mka/PJ5rJfXrAAeQqrh7jVSDc9HqY954c8zyVKS64n2OqC++l6chYsR0uzckop4dxN+HmjSQva0
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/yVHrEmczUHhAhL0s38N+iC65TtmJTPBX+JGeRgOQMaAfw6D98tdsCILDg1+?=
+ =?us-ascii?Q?qiEu1EXxUc2NHSN0jRZwZujs18ZibrsMf1MUeadhAgYSsSyrhwuiYLmU+dE4?=
+ =?us-ascii?Q?FvUDeFgb4KmX+81s17uLnmQsPsR4+dDp56Wo1t1b3tYfttvgX/gy5zYcE4fg?=
+ =?us-ascii?Q?0ew3w7HJuIIGpGmO5rajLUiaC93z+xZlirxrW6Hli6cVZW3D851nRmMYRwjN?=
+ =?us-ascii?Q?RUUByylKwWgY1QoE/ujd6ci82zpQpBtEmS4A/9zWn/MjzDOvM40PWEjw7YOy?=
+ =?us-ascii?Q?KQSGiyjgUfU+BH4WDk53fM1qe220uKu09X3wMW80nUZEHmFfM6CL6SivjN3q?=
+ =?us-ascii?Q?o/tIg28ln3fukjwIUYC7qUCz3bGQfihIgo9uZPUNAshHuDabI9l5YRiMsHtO?=
+ =?us-ascii?Q?U5R4+t8VWoANIZBZLVc2MyRjrZts756ZAgYz7Wqxo3JyT9q2thZBqWuogSVQ?=
+ =?us-ascii?Q?3LnbVlrCQ4MCXAZqkg7HyzYtUAhwKGlWaEUEC+Jufx2xofLLR5+zdkpHDiOT?=
+ =?us-ascii?Q?wIslG6GEvM+DRtAPfUelqAc+UjLG0DdkhsGwuBcGhflpw6bX6O87X8XjKdGM?=
+ =?us-ascii?Q?2b9bYJXIGbpssEAEtdmRg7yGc+OONVR+XcfekBNbHD0zghrPW5/01dSkBxKt?=
+ =?us-ascii?Q?Z5aHJb7imEoLqRNM2nKjmq/e8HGh157Rh6dSod1Feh14qv/MUOkVld+mRYl3?=
+ =?us-ascii?Q?AZ4pN30pofOD7Fo5K9RHgpbmCdHrh0hJHmwOKUn0lW9za1bgX2Z/W/JfQNog?=
+ =?us-ascii?Q?ml/Lt2NrjGs0JY/ez7puiEFVIVwFZujD3F6CMGdDQ99X7cP9WeHvj3+uyvkY?=
+ =?us-ascii?Q?ftqnw29HIn/W7UceMzA8awjhF59gqdOgNNtapdbbGCIplGALvHoTv061blvo?=
+ =?us-ascii?Q?Af+PakPRqaHBFHMvCqQnaVqGYLTULNeIh5a1dsWheIhyZ8Pviu+ZqfnhCzRO?=
+ =?us-ascii?Q?yFIFp4HxzCvzjSXYsGuCET+/4r/ngp+cq93EbbYG+Kf61ChZP77mQKMP2E4C?=
+ =?us-ascii?Q?cTyuttlv5EEDH8/P5U9RbglELagl8yRcZCXn2e0PJd9/Xfl1afAIVW3MSLvX?=
+ =?us-ascii?Q?jIuJtFy8lbE13vkygB7RcxtxoT+5jK7e4a0jNDpUZm7EYEkPPbvuOsFYiIUO?=
+ =?us-ascii?Q?nZqqxjGd3z3nLfTGqvq3zIKW9R5brCSxcVNdyJItOaJ1LcdILNUdBTzmUVJ6?=
+ =?us-ascii?Q?C5YfgVCNjUCxP2CLXj2vq75gK78sr3Sz6KeWLFyTN6N1GF/DR7yJlp00pgq9?=
+ =?us-ascii?Q?S2zyszUTXXM+ZQ4/XPxmc+FtaeNLqw9EEkkBG0CaSgbjEw2zSu3oaYPA/Pe8?=
+ =?us-ascii?Q?UPwJqlYFKznN9rSNnDKhd183SQS2ZsAS/4yFA1V4+VXpd3MELx8EfdODYgOh?=
+ =?us-ascii?Q?xlcJTgUQI1TGy3b7I0EtEBNXa6d1L3KNfmz3BwEuQ6CwrAOGjJpNtSNnliO+?=
+ =?us-ascii?Q?kmz45N0PkYgXBfbJRuKqufxNPJUHE7sgwonaHeb0UiSsO6COUSnWUw=3D=3D?=
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-03a34.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ee8d0f4-7207-4b9f-a06a-08da24e9a681
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6019.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2022 05:25:17.2870
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7581
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tao Klerks <tao@klerks.biz> writes:
+Git 2.36.0 (or more precisely 244c27242f (diff.[ch]: have diff_free() call 
+clear_pathspec(opts.pathspec), 2022-02-16)) introduced some change in 
+behaviour that causes gitks highlight feature not to work correctly 
+anymore.
 
->> "none", probably.  Much better than "current" that can create new
->> branches on the other side, which you would want to do with an
->> explicit end-user instruction (i.e. not with "git push", but with
->> "git push origin topic").
+Here's a quick reproducer based on git.git:
 
-Sorry, "nothing" was what I meant.  Those non-simple branches are
-left unconfigured with ASU=simple.  We both agree that the user does
-not want to see the "with push.default=simple you have, you cannot
-push from it" but the reason why they do not want to see can be
-multiple.  You are assuming that they want to push to somewhere
-else.  I am taking into account that they may not want to push them
-at all, but only use locally.  If the intended workflow is
+git checkout 244c27242f44e6b88e3a381c90bde08d134c274b~1
+make install
+git checkout 244c27242f44e6b88e3a381c90bde08d134c274b
+PATH=~/bin:$PATH ~/bin/gitk
+# In commit 4c53a8c20f (Git 2.35.1, 2022-01-28) (2nd from the top)
+# right click GIT-VERSION-GEN and select "Highlight this only".
+# You'll see 4c53a8c20f (Git 2.35.1, 2022-01-28) and
+# 89bece5c8c (Git 2.35, 2022-01-24) highlighted, but not the surrounding
+# commits. Exit gitk.
+make install
+PATH=~/bin:$PATH ~/bin/gitk
+# In commit 4c53a8c20f (Git 2.35.1, 2022-01-28) (2nd from the top)
+# right click GIT-VERSION-GEN and select "Highlight this only".
+# Almost every non-merge commmit will be highlighted.
 
-	git checkout -b main [origin/main] ;# assuming DWIM is on 
-	git checkout -b topic origin/main
-	... work work work ...
-	git checkout main
-	git merge topic
-	... test test test ...
-	... ahh, no it does not work, back to fix topic ...
-	git reset --hard ORIG_HEAD
-	git checkout topic
-	... work work work ...
-	git rebase -i ...
-	git checkout main
-	git merge topic
-	... test test test ...
-        ... yay, this time it is perfect and we can push it out ...
-	git push
+I think this is a change in behaviour in `git diff-tree`, but I'm honestly 
+not sure what arguments gitk passes to `git diff-tree`, so I'm struggling 
+to figure out what exactly changed.
 
-i.e. matching "simple" branches like main are used to locally bundle
-what you locally worked on, and the result is pushed out to the
-other side from there, while non-simple branches like topic are used
-to locally work on your real changes, it is reasonable to expect
-that the user wants "git push" to fail when the 'topic' branch is
-checked out.
+This issue was originally reported as a Git for Windows issue [1], but I 
+can also reproduce it on Linux.
 
-But unfortunately that does not work at the last step, as "nothing"
-unfortunately affects the last step that tries to check out 'main',
-too.  push.default='simple' would make it work.
-
-> I would argue that git generally has a "problem", in that
-> "branch.XXX.merge" entries have two classes of
-> meanings/interpretation:
-> * That is the "parent branch"
-> ** The one I want changes from, when I say "update me with changes"
-> ** The one I eventually want to get my changes to
-> * That is the "remote instance/address" of *this* branch
-> ** If I pull, it's to get changes to the same branch that others might have made
-> ** When I push, it's to get this branch onto the server (not to get my
-> changes into the "upstream")
-
-Yes, that is very well known, and there arey mechanisms to support
-some workflows that separates "where I get changes from" and "where
-I publish my work" (look for "triangular workflows" in the list
-archive).  
-
-The thing is, "simple" is *NOT* meant for triangular workflow.  It
-was to cater to novice users who are used to cvs/svn style
-centralized "there is one place everybody pulls from and pushes to,
-which is where they meet" model.
-> Based on your feedback here, maybe "simple" is not the right name to
-> associate with workflow, its assumptions and tradeoffs - I believe is
-> accurately represents the intent and closely relates to the apparent
-> design intent behind the push.default=simple option, but I'd love
-> proposals as to how to name (and do) it better!
->
->> Currently, with both set to "simple", you do not even get .remote
->> and .merge for the "topic" branch, so your "git pull" simply does
->> not work.  And "git push" will also refuse to work.
->>
->
-> That's right - because the assumption is that you've just created a
-> new independent branch - independent by name, and therefore
-> independent by default. You can of course add "--track" if you know
-> what you're doing and know this is a local-only branch and you want it
-> to track what you branched from and have "pull" bring in changes from
-> there (without explicitly specifying so)!
->
->> But then why are you [*] forking from origin/main in the first
->> place?  What is the purpose you created 'topic' and what do you
->> plan to do with the result you develop on 'topic'?
->
-> The assumption, in this workflow, is that you plan to work on that
-> branch, potentially push to origin to back up or share your work, and
-> will decide explicitly when to merge in changes from the origin you
-> branched (forked) from, or merge changes up there.
->
->>
->>         Side note: "you" do not refer to"Tao, the advocate of the
->>         'simple' configuration", but figuratively the user who
->>         followed the "simple" route and created topic out of
->>         origin/main that is not connected to origin/main.
->>
->> Whatever you commit on topic eventually becomes part of what you'd
->> push to origin or elsewhere.  I'd assume it would be origin, because
->> as the user who choose 'simple', you have some branches that you
->> push back to the same name over there.  Presumably, those are the
->> primary integration branches the project has, like 'trunk', 'main',
->> 'master', etc.
->>
->> So perhaps the user would have been better off to fork off of the
->> LOCAL branch that would eventually be pushed back?  In other words,
->> the above user who created 'topic' would have done
->>
->>     $ git checkout -b main origin/main
->>
->
-> (completely beside the point, but they would be more likely to have
-> just done "git checkout main", for the same outcome)
->
->> to use as a local integration branch that collects the work you will
->> do locally that is targetted for their 'main' track, so to create a
->> topic that aims to be part of what is pushed back to their 'main'
->> track, you would want to do
->>
->>     $ git checkout -b topic main
->>
->> instead?  That way, "git push" would either not get .merge/.remote
->> (when branch.autosetupmerge is set to 'true') or point at your local
->> 'main' branch.
->
-> I'm not sure I understand or agree with what you're saying here with
-> "would [otherwise] point at your local 'main' branch". I have to
-> assume you mean that would be the outcome with "always",
-
-Yeah, I meant to add the matching (when ... is set to ...) after the
-sentence and forgot.  You inferred what I meant to say correctly.
-
-> In suggesting the user could/should have done that (in order to get a
-> sane workflow, presumably), you are also suggesting that they should
-> keep the state of that "local version of the upstream they eventually
-> want to get their changes into" up-to-date: They should first check
-> out master (for example), pull on master to get the state they expect,
-> and *then* create their new differently-named local branch.
-
-FWIW, I am not.
-
-I do not think it is healthy nor necessary to make your local work
-"catch up" too often with the outside world unnecessarily, be it
-done with rebase or with merge.  They _can_ update 'master' when
-outside world has something worth adding to your topic extra
-dependency on and then update 'topic' to include what you took to
-'master' from the outside.  Dissociating the 'topic' from outside
-world is one way to encourage a better workflow.
+[1] https://github.com/git-for-windows/git/issues/3815
