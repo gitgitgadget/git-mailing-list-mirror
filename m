@@ -2,95 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAE5C433F5
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 23:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57EACC433F5
+	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 23:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234921AbiDWXsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 19:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        id S235170AbiDWXuY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 19:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231690AbiDWXsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 19:48:05 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB9C1FF
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 16:45:03 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61D8218E220;
-        Sat, 23 Apr 2022 19:45:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IYkZXcaf92z22tEvICKWbTNgF2RH9zjIk7ZvtO
-        nSDWY=; b=Kr1C0XlXanzWKiFo+8XqlWNHVTcBROGKgxolUqyEIk+/ehskyoUiMH
-        +MtGGstI+FFVfWB57Ek0/eahW/qdsfd++PQUfZfUguwrk/io9h8Fch3NhkaXonUs
-        dxpmuzIOSCLD6G562Rka84yX91+QUUnOJ9FU8XSsDnsjiM5ZpnqFU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 52BB118E21F;
-        Sat, 23 Apr 2022 19:45:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CA5B818E21B;
-        Sat, 23 Apr 2022 19:44:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Guy Maurel <guy.j@maurel.de>, git@vger.kernel.org
-Subject: Re: a problem with git describe
-References: <4ef9287b-6260-9538-7c89-cffb611520ee@maurel.de>
-        <3d762060-b817-0246-c4a2-8eb35096cb7f@iee.email>
-        <xmqqczh73hns.fsf@gitster.g>
-Date:   Sat, 23 Apr 2022 16:44:57 -0700
-In-Reply-To: <xmqqczh73hns.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-        23 Apr 2022 09:09:59 -0700")
-Message-ID: <xmqqk0bf1i12.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235017AbiDWXuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 19:50:23 -0400
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7182AE0C2
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 16:47:25 -0700 (PDT)
+Received: by mail-vs1-xe2a.google.com with SMTP id y74so2221931vsy.7
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 16:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hoP+8/4MHCATeBq6vqaChLIjzrrvcq5IT35Cy+g69WA=;
+        b=BJryoLckTLUfJcaTAxoANyfEYacMdrjQN904UrYGl/sto8Q8JedP7Kl/epsmnnvy5o
+         pj5J1we7IsU1/CiBYiCt3a8Fcw3UfsyUbV7K+qL3olaZF74Uz4c+RLM1no1IEEWy6VTD
+         2Dw3h9mkroZ6P5n2TRmsrBvVhCBLJCK+oFW7SudC47s3SHE5i5nHwkGgxuBRc9XopLuY
+         nWRYYgI9X7qNVA6+A4MZI39Gy0MZk2D9icfL8DGtsQsR2Kf31DM2BBVLLnNP6ThY2Rk4
+         mLdRUPKSXJzG921L7WfP6EzsYPZgDy3EHkptWBkwpfvrsxGQO2HhEkI7bzHnl49To3pd
+         NRJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hoP+8/4MHCATeBq6vqaChLIjzrrvcq5IT35Cy+g69WA=;
+        b=0XepWUzyFQ/Y7JdbM3ih8rQHL8/ZcXCRUiKfGHfptkfNlCDb9gyvvKhNxcBB9G6QYJ
+         PZNRSFu9kZKHxYKo+bifnp0q4wFUXM5/C5rBAPnqeRNmUgcvJIYwAqv3hF1qn14ouq4Z
+         0Qum5KyjitMsgpsFmldLS/CAbyL/ZqSXl8fJ2pdTospMTjb1OzeBthOAnXSi5AaDaiPj
+         wM/M+YUgQmQKbZNjKBAvVadij8aj5y7HwcYgeojqcHfdVelvn7PO4N+PW9jltwL5euh+
+         j/LUbEZc+ayeHOVMAAWndI/eSxQmfpjbWzyWE5XUkyHBSGoL9tAiVg/29vY+ydqYlR4d
+         BItQ==
+X-Gm-Message-State: AOAM533YSgu52jyynPxoCxjYMfWoekOvrDj10q/WtKUVmu7epZrSYLwJ
+        LpE8CUlV179UwunZdQEEchx86She3UySuOnSIE+BoxoIgw4=
+X-Google-Smtp-Source: ABdhPJzL+/+kCDH2l0JnWlbxwwy0CSSRR1lkQcEO0J70HvA3FzH9fIQhictNnTWJgjwHeONNr1JdFdtGm3299QoUVb0=
+X-Received: by 2002:a67:fe01:0:b0:32a:122f:ff67 with SMTP id
+ l1-20020a67fe01000000b0032a122fff67mr3164922vsr.52.1650757644552; Sat, 23 Apr
+ 2022 16:47:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 62CB86E4-C35F-11EC-9D71-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <patch-v5-10.29-07e36035a1e-20220421T181526Z-avarab@gmail.com>
+ <20220423201129.34133-1-carenas@gmail.com> <xmqqo80r1kid.fsf@gitster.g>
+In-Reply-To: <xmqqo80r1kid.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 23 Apr 2022 16:47:13 -0700
+Message-ID: <CAPUEspifNjJGaXZckBn16tfiR07gfEKZt2-Euz=+3Mt0rWZL_A@mail.gmail.com>
+Subject: Re: [PATCH] fixup! CI: move p4 and git-lfs variables to ci/install-dependencies.sh
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Philip Oakley <philipoakley@iee.email> writes:
+On Sat, Apr 23, 2022 at 3:59 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> guy@renard ~/Software/uncrustify $ sudo git describe --always --dirty
->> ...
->> There has also been added an escape hatch of allowing "*" for the
->> permitted safe directories. but do check the updated manuals, and the
->> git mailing list archive (update the search in the above link).
->
-> In this particular case, I do not think '*' is needed, but you need
-> to be careful here.  Whose configuration are you suggesting to add
-> such an entry?  Yourself?  ~root/.gitconfig?
->
-> I wonder if we should loosen "the same owner" check somewhat to
-> cover this situation better.  I expect people also run the
-> installation in repositories they own with "sudo make install",
-> and complaining "euid does not own that repository" when it is
-> merely because they are running as root (and their real identity
-> is still in ruid) feels a bit too strict to be useful.
+> If p4 and p4d were the only files that we grabbed for macOS, then
+> what I wanted to suggest in the previous message would have worked,
 
-Actually, not quite.  when "git" runs in "sudo git", the real
-identity has long lost, so the below would not help.  Sigh.
+true, but it can still work by making them both use the same version
+(which would be likely a CI variable) and pull the three files from
+that directory (which was my end objective as shown) in :
 
- git-compat-util.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  https://github.com/carenas/git/commit/4fd79fa1770bc9e8e57074dbac4e44de173aeb75
 
-diff --git i/git-compat-util.h w/git-compat-util.h
-index 63ba89dd31..90dc1b17cd 100644
---- i/git-compat-util.h
-+++ w/git-compat-util.h
-@@ -398,7 +398,7 @@ static inline int is_path_owned_by_current_uid(const char *path)
- 	struct stat st;
- 	if (lstat(path, &st))
- 		return 0;
--	return st.st_uid == geteuid();
-+	return st.st_uid == geteuid() || st.st_uid == getuid();
- }
- 
- #define is_path_owned_by_current_user is_path_owned_by_current_uid
+> By the way, I spelunked https://filehost.perforce.com/perforce/ from
+> a browser to see how the files are layed out over there, not cdist2.
+> I am guessing that "filehost" is the name they want end-users like us
+> to use when downloading what they distribute?
+
+I presume that was the URL they were using when this code was written,
+FWIW brew uses cdist2, and that is what I get after going to their
+website at the end after clicking through their download forms so I
+assume it is less likely to break as well.
+
+agree though that renaming the variable could be avoided but it looks
+nicer as an intermediate state, and we might even keep it if having
+two different versions is preferred :
+
+  https://github.com/carenas/git/commit/b6699fa3f082ef6d0e8c32718ce5142612003de8
+
+Carlo
