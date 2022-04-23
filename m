@@ -2,83 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42B48C433F5
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 06:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FF3EC433EF
+	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 09:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233498AbiDWGIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 02:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44894 "EHLO
+        id S234186AbiDWJP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 05:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233365AbiDWGIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 02:08:48 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5DFB13F76
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 23:05:51 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 07EF4183367;
-        Sat, 23 Apr 2022 02:05:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=JhZloTlcb1i5
-        FDZkPcNiUqULvtvPyU8yoDHUuuzoLLM=; b=uaIp8lya2XLulKUjYfdbVi6UdrX4
-        tGAvMWgsBMTRHASnrE9GY1morrTU007vfvG3syySLxp6mekyjz/MZug70SJjMb8q
-        f043SvTmPEp2McM/ZsVnF1NdGLomD7AkgWZQQqGlsfYVchBzIDV8qSKh9Qyga+xP
-        FPXLlUKdksgG2Xw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6922183366;
-        Sat, 23 Apr 2022 02:05:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 63962183365;
-        Sat, 23 Apr 2022 02:05:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: gitk regression in version 2.36.0
-References: <AM0PR04MB6019ECF053F1FB7B29D75AB7A5F69@AM0PR04MB6019.eurprd04.prod.outlook.com>
-        <xmqqpml82vkd.fsf@gitster.g>
-Date:   Fri, 22 Apr 2022 23:05:46 -0700
-In-Reply-To: <xmqqpml82vkd.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        22 Apr 2022 22:54:58 -0700")
-Message-ID: <xmqqlevw2v2d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229833AbiDWJP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 05:15:57 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B73E083
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 02:13:01 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id p21so10893069ioj.4
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 02:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aN6tLyIFgjgyvjfIt/V6Q5tyTRPFWB9dFkZzwgLDA68=;
+        b=AHnJihd7v2CHbsYntWWBd2sxYNcuG4Oh2uuIKv3lvLpmXhXvvDJPHPlDeBRymYFZu9
+         dETdwLZ8nt64FGKNmhhMKf6CZYHw59KczreMUnvXz4QBZQ8iWJz3JmtDNd1vGYz8kZ2r
+         LTUMz8G02SLOPu5ta6bzlfehUlgEtQwbZK6+Baj4uA7ltki1DaFGsIYKdmPMi/pzbsWm
+         X9QY3asAtUySHTojuhhtMy7bSms5qwGmwbz2VaUhPrLtullQJVVxLDwbTmlrmAfUjMVG
+         Q0y+dHK982ItIKJo4VmTES8D/qXEq9y+TrIMAv3DmV9UXdTvrzixAb9GNYg0GhT1Mh+o
+         BIAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aN6tLyIFgjgyvjfIt/V6Q5tyTRPFWB9dFkZzwgLDA68=;
+        b=fHOclz5QM0sUJgq0DqvsfidZ92X4eZSVHCydWelXnJumqlE5Nl/tMMJvtnMWiDWTZP
+         feK7b4bSU+sx+OcCCufHQ605IzkGkY5EqwsG30sEPNnRzRUDjdoFOv8ORaDO7nMvhbPi
+         Jmi/f8I1RYPyisbXxq7Piv8WeJHuXAm8mOTGxcdUquXdRVAL81fJG1EMxh4wkZH6Gdjy
+         Pr34e15/FPyEo6+mGnT76PBJe/i9XpVnSfyloR4LKH8YZULDGvUlcahqjTs1cCJTwEgA
+         CS6Xt8pypdATRpL5sjGgfKp/GwwGcR0t3k1eyWU8zfbEoP+Jz+SMLb7VsLdK35XpAqpK
+         iSuQ==
+X-Gm-Message-State: AOAM5316Zk8d6MxuvEyIh0yjQ22MjDiF4TuIBu3wgxyzQ4GxhxdaDbx3
+        I7qMJ3DiOI0naJ1ma9U6J8dN2KoE1fGpO9psZjzH2t3y7ra1xQ==
+X-Google-Smtp-Source: ABdhPJxJ2A/34Ko1Y+xDfPB+hMBU3LdCBGFP5FyhYrdgISRNGzxZ+3f0CY3ElQuiF3jmBPyDBvseJE+GYoREciI+31M=
+X-Received: by 2002:a05:6602:1341:b0:637:d4dc:6f85 with SMTP id
+ i1-20020a056602134100b00637d4dc6f85mr3422527iov.155.1650705181385; Sat, 23
+ Apr 2022 02:13:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6B320F40-C2CB-11EC-928A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <20220422183744.347327-1-eantoranz@gmail.com> <220423.86bkwsra4a.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220423.86bkwsra4a.gmgdl@evledraar.gmail.com>
+From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date:   Sat, 23 Apr 2022 11:12:49 +0200
+Message-ID: <CAOc6etYcByq=n=k+3r=mBR8q=8i-i_G+3LYESN8u0=Krqxt8Fg@mail.gmail.com>
+Subject: Re: [PATCH v1] rebase - recycle
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+On Sat, Apr 23, 2022 at 1:06 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->> Git 2.36.0 (or more precisely 244c27242f (diff.[ch]: have diff_free()
->> call clear_pathspec(opts.pathspec), 2022-02-16)) introduced some
->> change in behaviour that causes gitks highlight feature not to work
->> correctly anymore.
 >
-> Nicely found.
-
-A simple reproduction recipe without gitk is a command line
-invocation like this:
-
-$ git rev-list -10 --max-parents=3D1 v2.36.0 -- Documentation |=20
-  git diff-tree --stdin --stat -- Documentation
-
-The upstream of the pipe lists 10 topmost non-merge commits, going
-back from v2.36.0, that touch Documentation/ directory, and the
-downstream "diff-tree" is told to show for each of these commits to
-compute equivalent of "git show --stat -- Documentation", i.e. only
-the Documentation directory.  But "diff-tree" loses pathspec and we
-will see paths outside Documentation appearing in the output.
-
-If I substitute "git diff-tree" on the downstream of the pipe with
-the version from v2.35.0, of course the correct thing happens X-<.
+Thanks for all the feedback. I'll go through it.
