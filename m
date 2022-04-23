@@ -2,119 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E0C5C433EF
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 09:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3910AC433EF
+	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 10:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234419AbiDWJam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 05:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50780 "EHLO
+        id S234842AbiDWKQZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 06:16:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233174AbiDWJam (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 05:30:42 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E36107736
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 02:27:43 -0700 (PDT)
+        with ESMTP id S234168AbiDWKQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 06:16:24 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5488610C1
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 03:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1650706060;
-        bh=cDbp1HF0u+ic6qfddwlbo6UzoQr6u/QqpJaH73KFt+w=;
+        s=dbaedf251592; t=1650708793;
+        bh=LVZ3IN4ChLZ0tDIytJ/Amdf99Le65tX0rZJQ3o5xKa0=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=pF/UGsakMZvbonMHOKUiUIdYDZwSyUcFYa7DDhFe+cogQ7nuhoMsMDIFfuZM4vFUX
-         4QHhErddIOumfdXb5Gg92o1++VbQuibO71fTZHUAPdoVeGFS7PH1Q6GWPXAqD2/Vjk
-         P4A8t4UqEgRHh9mfkHEKOAp1VZrFuT52iMu2onUs=
+        b=fgcqxrVWC7FC8nHqJ9mIyfooh/6s2hHiP7P5LD9hontyNDRTiuDJHaIdBYSHdCf+w
+         wRKsFBQtfLfR4+thPAL/om9Fhuv8ZInMIaJfpwpXMtqLAbo3GFhOLbC4HM6dtSRp0R
+         nhJmhuERmGvjYG2kEThMLSbax8WLp4KtuxChDurc=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MA4bA-1nb5Jm1lxi-00BaSo; Sat, 23
- Apr 2022 11:27:40 +0200
-Message-ID: <8424860b-e557-55b1-49a0-246a2eb112d4@web.de>
-Date:   Sat, 23 Apr 2022 11:27:40 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rP8-1nkPgX2VuC-002Crx; Sat, 23
+ Apr 2022 12:13:13 +0200
+Message-ID: <737bd2f8-dfd7-6a51-b7f5-33eefa33e975@web.de>
+Date:   Sat, 23 Apr 2022 12:13:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.8.0
 Subject: Re: gitk regression in version 2.36.0
 Content-Language: en-US
-To:     =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <AM0PR04MB6019ECF053F1FB7B29D75AB7A5F69@AM0PR04MB6019.eurprd04.prod.outlook.com>
+ <xmqqpml82vkd.fsf@gitster.g>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <AM0PR04MB6019ECF053F1FB7B29D75AB7A5F69@AM0PR04MB6019.eurprd04.prod.outlook.com>
+In-Reply-To: <xmqqpml82vkd.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:d5BmTwMq+1g99baeEo2XTHpUphNO1oypMo9X+DJN1AMHW22OfMO
- imzAb5+JVX2SLigKknQWPl+AK4boqG3My4P0L6AeWrw0x0tujCvXb91a5yp9uesoXOc62Ez
- 3qj8PtgEANWlfcFkopJFzG2qoAFYtrNCuOpJikMvEMwkZ8PpYnpfeRlfR9m4A/r8iiIxig3
- XYKvgCeQqzKg+zQmPIR9g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kEgLyRydYWU=:W1rvOutywAcKcjU+lV2G2Q
- oA1n4E6UWce1QxdmEKaG6wcqY9MGABKtMscB2IcnUOjVbRRXdAP9xp08DYBngKzDb9KPbcKHS
- iKfS5aMdCpJEFTe87yUw8C4638mOOBl02flSHRCl/xDZhu9GaCoY3G84FiFA7DikN4Fk6l+rU
- U5GW43RZMpMW7FgTfAhPWQy7Q+Vvhkv8f5afdEBa+IRHT80in7NIoJBDQWs7IRnYVV4+NwA44
- vWoQj7yAJVPxXtHJSLC41MswkjxKPMJf3W2QrCa2pckaPolzB1NqpEBFoCxHHO8YXiEbkHk63
- /xeVN0dlOuvIIK+rDsiWhOn5hXm9DxxdGUB/07mmKnFfOf4sg4CBftA+Y4sJvp7JUYD61SJbG
- lQrRqvIDiO75viOkgG/94F6dFMO/xXHlsuVwczCi91amrIEKw52bX1eqzo9zaNKcWOGPGjzg/
- us05exs/Cz+NJsNqwLwo8U6K4Bf+Q58EX2J+RdrNDebEEaC7oxHANCGgUmhxOdf+WG4H0RsZ+
- glSt2EusO9H9TyQXDWAYtnHZ0NRsw5bM7YCbndxFj6Mqn1tnyZymkBiZAlCl2DeNfLpYKYjnm
- b8Z5RLuUB+ela+GrR6TLFkuYmw36ibuHGoQBGnMbaLgZpgxwOV57t+J7PByM7NzE9hcGfKhgY
- fzJ/wABLUyJM+VYKy5edb7OClgG5Ut+ufZNtZUQhHfNuwrJoou+LaEOhlP959zx3ywDm/63R0
- BsLQau9bpsoRi7KyMDi6cN/b7D+b7UW2J9h017pLTv21zfnJ74f0Am0AUOJphLBSRORQmKXOT
- L80CLUDVW6IIlmCg+HxcRVR3jLlDCDWjPTViygNFjtYEJZBtqhVAXkQE1bOIStJtW2ElLysXz
- zbgqhdM/UZAR1+2yX6871eu7jKiOBqkrpByRZivHl/gAiaOdu8L3h4to+i4buXH7e3yIjZZ+o
- 1wuVWe4OMnkdOGThIvyHQ9OIWdpoNr+9uExbA6MQyRX6YyMeVx+6mkandxrBFCGyf/1bRJIeI
- 6OEACrEcrsG32ghgeclw6PREU7sf5uAJhbN8MWAHW+qH38BWet1BJv9dqut1B0+P1Q==
+X-Provags-ID: V03:K1:E3cLiCgN7YcptJMjlwfkfOa4e38x3Is6C0DnxIPvlsikPFKkjLG
+ kQEFRU5JAPNXP+4E/zLw/bWUc2RPNW69hM5/Av1FFAN7jhXAfEILXM85kE95JEHIGnndUoF
+ TqBsInoJ8OvT4PpzD07a/P1hOWKw5iLUSC+7+NjrjW+Sb32OKz7DH9Y4sO9Egt632gnHU5t
+ F8WumoRGbXDl+0PQyrb7Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EtbZ3qemtrY=:GKYi8OdYx//sxGiAauQxoQ
+ eVCFppuWsiiC7O9FRZFtT6wP7VEgG3W/jD5Y0Rf1uwayBwqHq4QWah34r6yE2etOWn1YXjRvL
+ JhToV0xQliqSFPuk1jqdwF9RT59LOqP/g/CFdBlJBHMle2W03j8d6s0kTwHTyLz23i8gJrNlX
+ mnmY0AzO2DrqaiW+XQ6IHcXqq3mvdnC9OC59161Yiw7sVZ0vY8632Xb+SOrZMuGUl6KPwNiYJ
+ hAHNdo0qD2IZyH8+IAFeqV0YkhuD7SdXVm3ipNx59zli4wmMPgVDuYwNsRaSkI7+MqNWxqDYc
+ pXJ8IDjK94hmMj4YEyeeW6xxQGHL3rSNDxkJCBbcuSStNyyIblktAeX+ltV11KQMFuaOqXwJF
+ Yrtn++YYZGIZUDXkh2RF8MhhReqCLWz0x8BY3MzTY3DfBThg1xynWFNvAVS2B/TumM1qC1y5v
+ UdWd6edPU+7nhDU5heRi/WXaStCY7MY0WTnMsOuR65nntxscZ8BidyVRYPXGkrwfkIs8gK3y3
+ rhQFGzoqhdMQ/7apxusmpU6ErOr6vKedq5lPoImHugqkYZ8zt88mKWoae7cRgtANza0x6WwnE
+ 6swjW3JAVPXFhk/2RxEzzoQI98xof8tk6qoWkK/EhfHEnhlToa5MFjdiriVF0wlpceo4xMD5s
+ mmwiFHDv4EMwwlUM5TLf4DZcnsLxAWv1nDG0xWuMQ9oObGFkssYeSudra5H9SATUpPJ76UvSm
+ iRP7z2/xthTvlQP48Gp3D13Sjw5O1DPMHWHXsstqC/Vj12DA1UCky9jJfRvklv0XwC/V7/93l
+ DV0oCQUd5WGAzbSnKcHJBz4ur941Y4ltoOBrda29KeMavQ7s1sJvdUAQIJ40htC6C0w2lHYpv
+ jSahN9lFUsi76e1V5gz1PEazzjRyXxzR1FEsvwgDVskptZ+hCDVAlt1VRwkKAMhxIZLCLOTps
+ h9oCXJ/K3OCpS2TQ80+gZtfChlPkZcMHJNcscJXhg+1OBcQ7JuRXu4CSCBkTbFbvSoBZ/i6IM
+ BkAN+jj7kRq9pFKdDzKdrMlrcuQNgsnCThl6EM55BEz4guMTb6S8TluJusgFk9r54w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.04.22 um 07:25 schrieb Matthias A=C3=9Fhauer:
-> Git 2.36.0 (or more precisely 244c27242f (diff.[ch]: have diff_free()
-> call clear_pathspec(opts.pathspec), 2022-02-16)) introduced some
-> change in behaviour that causes gitks highlight feature not to work
-> correctly anymore.
+Am 23.04.22 um 07:54 schrieb Junio C Hamano:
+> Matthias A=C3=9Fhauer <mha1993@live.de> writes:
 >
-> Here's a quick reproducer based on git.git:
+>> Git 2.36.0 (or more precisely 244c27242f (diff.[ch]: have diff_free()
+>> call clear_pathspec(opts.pathspec), 2022-02-16)) introduced some
+>> change in behaviour that causes gitks highlight feature not to work
+>> correctly anymore.
 >
-> git checkout 244c27242f44e6b88e3a381c90bde08d134c274b~1
-> make install
-> git checkout 244c27242f44e6b88e3a381c90bde08d134c274b
-> PATH=3D~/bin:$PATH ~/bin/gitk
-> # In commit 4c53a8c20f (Git 2.35.1, 2022-01-28) (2nd from the top)
-> # right click GIT-VERSION-GEN and select "Highlight this only".
-> # You'll see 4c53a8c20f (Git 2.35.1, 2022-01-28) and
-> # 89bece5c8c (Git 2.35, 2022-01-24) highlighted, but not the surrounding
-> # commits. Exit gitk.
-> make install
-> PATH=3D~/bin:$PATH ~/bin/gitk
-> # In commit 4c53a8c20f (Git 2.35.1, 2022-01-28) (2nd from the top)
-> # right click GIT-VERSION-GEN and select "Highlight this only".
-> # Almost every non-merge commmit will be highlighted.
->
-> I think this is a change in behaviour in `git diff-tree`, but I'm
-> honestly not sure what arguments gitk passes to `git diff-tree`, so
-> I'm struggling to figure out what exactly changed.
->
-> This issue was originally reported as a Git for Windows issue [1],
-> but I can also reproduce it on Linux.
->
-> [1] https://github.com/git-for-windows/git/issues/3815
+> I am reasonably sure that reverting that commit will be the right
+> thing to do.  It is somewhat unfortunate that it would reintroduce
+> resource leaks that having clear_pathspec() in a wrong place (i.e.
+> diff_free()) was covering up.  We should instead need to find the
+> place where a diff_opt struct goes out of scope (after being used
+> for zero or more times, calling diff_free() after each iteration to
+> release resources consumed per-iteration) and call clear_pathspec().
 
-gitk does something like this to find commits that touched that file
-(just with more commits):
+Right; a small memory leak is better than wrong output.
 
-   # v2.25.3
-   $ git rev-parse 4c53a8c20f ff5b7913f0 | git diff-tree -r -s --stdin GIT=
--VERSION-GEN
-   4c53a8c20f8984adb226293a3ffd7b88c3f4ac1a
-
-   # 244c27242f (diff.[ch]: have diff_free() call clear_pathspec(opts.path=
-spec), 2022-02-16))
-   $ git rev-parse 4c53a8c20f ff5b7913f0 | git diff-tree -r -s --stdin GIT=
--VERSION-GEN
-   4c53a8c20f8984adb226293a3ffd7b88c3f4ac1a
-   ff5b7913f0af62c26682b0376d0aa2d7f5d74b2e
-
-Somewhere in diff-tree a struct diff_options is reused between commits,
-and the caller expects its pathspec to be preserved, but 244c27242f
-clears it.  With the path filter gone, the following commits match.
+Finding those places is a bit complicated by diff_options often being
+embedded in struct rev_info, though.
 
 Ren=C3=A9
+
+
+PS: And I need to learn to download new posts before hitting Send
+(or become faster); sorry for my near-duplicate reply.
