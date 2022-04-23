@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08924C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1711BC4332F
 	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 04:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232768AbiDWE1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 00:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37612 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232761AbiDWE1S (ORCPT <rfc822;git@vger.kernel.org>);
+        id S232760AbiDWE1S (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 23 Apr 2022 00:27:18 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02EACB77
-        for <git@vger.kernel.org>; Fri, 22 Apr 2022 21:24:22 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E8D01820DC;
-        Sat, 23 Apr 2022 00:24:22 -0400 (EDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37458 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232731AbiDWE1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 00:27:17 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0966D302
+        for <git@vger.kernel.org>; Fri, 22 Apr 2022 21:24:19 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27DB9185BF6;
+        Sat, 23 Apr 2022 00:24:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=0Y58ft0HJcpi3SlYWvTRRytf9
-        pvQovUZvwXb1f4/bvw=; b=RJgPENlsrINNQ509QgjdxitydLIdsq1GoWgLT+KQo
-        QIrRxzUkVtas7ev98qPc883DQsODeQlEj0XIAUDaSO5kwHj6DG6qxUFlbCFGA/B3
-        3zHm57T+g1gGDHTevDOiAEtL3/InwAqHijQDtaeWR0k+nJcvmqgKuejbrQiTN8yM
-        ks=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 86F181820DB;
-        Sat, 23 Apr 2022 00:24:22 -0400 (EDT)
+        :content-transfer-encoding; s=sasl; bh=rgdCyOw8/Bkgavbz9VkZSXS+V
+        uzOIozJhRu4vdCq7Cw=; b=hjodmmUYMwVZjKS1MHr2UG7X9gCfLkYW9weFjIzMr
+        QQZLwsursx8OenQ5UWHABmWdNgCFBM5Jank7FkTNv74V4FUTp/dl1UY4OKCeu7UM
+        nEMWIoyAtBdIk6CeJ6T4e5eXd9AeH5p4Pi92fZcp8uCfN18Xoad7QQ/NNjWKiuMD
+        gs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1FF0D185BF5;
+        Sat, 23 Apr 2022 00:24:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.84.173])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 15F6B1820D9;
-        Sat, 23 Apr 2022 00:24:19 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1346185BF3;
+        Sat, 23 Apr 2022 00:24:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Anthony Sottile <asottile@umich.edu>,
         Emily Shaffer <emilyshaffer@google.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 2/6] run-command tests: test stdout of
- run_command_parallel()
+Subject: Re: [PATCH 1/6] run-command API: replace
+ run_processes_parallel_tr2() with opts struct
 References: <CA+dzEBn108QoMA28f0nC8K21XT+Afua0V2Qv8XkR8rAeqUCCZw@mail.gmail.com>
         <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com>
-        <patch-2.6-d9c9b158130-20220421T122108Z-avarab@gmail.com>
-Date:   Fri, 22 Apr 2022 21:24:17 -0700
-Message-ID: <xmqq1qxo4eby.fsf@gitster.g>
+        <patch-1.6-8bf71ce63dd-20220421T122108Z-avarab@gmail.com>
+Date:   Fri, 22 Apr 2022 21:24:14 -0700
+Message-ID: <xmqq7d7g4ec1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3E46380C-C2BD-11EC-8B81-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 3C3B77F2-C2BD-11EC-BED7-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,94 +58,54 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Extend the tests added in c553c72eed6 (run-command: add an
-> asynchronous parallel child processor, 2015-12-15) to test stdout in
-> addition to stderr. A subsequent commit will add additional related
-> tests for a new feature, making it obvious how the output of the two
-> compares on both stdout and stderr will make this easier to reason
-> about.
-
-OK.
-
-The original cared only about the standard error stream, and it was
-sensible to name the actual output there "actual" and the correct
-output "expect" to be compared.
-
-But now we care _both_ the standard output and the standard error
-streams, so if we call one "out", wouldn't we want to call the other
-one "err", I wonder?  If it makes sense, it still is OK if we are
-not doing so inside this step or in the series, but then it would
-make sense to leave ourselves a NEEDSWORK: note to do so later when
-the tree is quiescent.
-
-Other than that, this one is pretty much boringly OK, and boring is
-good.
-
-
-
-
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  t/t0061-run-command.sh | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-> index ee281909bc3..131fcfda90f 100755
-> --- a/t/t0061-run-command.sh
-> +++ b/t/t0061-run-command.sh
-> @@ -130,17 +130,20 @@ World
->  EOF
+>  	if (max_children !=3D 1 && list->nr !=3D 1) {
+>  		struct parallel_fetch_state state =3D { argv.v, list, 0, 0 };
+> +		struct run_process_parallel_opts run_opts =3D {
+> +			.tr2_category =3D "fetch",
+> +			.tr2_label =3D "parallel/fetch",
+> +		};
 > =20
->  test_expect_success 'run_command runs in parallel with more jobs avail=
-able than tasks' '
-> -	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n=
-\" Hello World" 2>actual &&
-> +	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n=
-\" Hello World" >out 2>actual &&
-> +	test_must_be_empty out &&
->  	test_cmp expect actual
->  '
-> =20
->  test_expect_success 'run_command runs in parallel with as many jobs as=
- tasks' '
-> -	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n=
-\" Hello World" 2>actual &&
-> +	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n=
-\" Hello World" >out 2>actual &&
-> +	test_must_be_empty out &&
->  	test_cmp expect actual
->  '
-> =20
->  test_expect_success 'run_command runs in parallel with more tasks than=
- jobs available' '
-> -	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n=
-\" Hello World" 2>actual &&
-> +	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n=
-\" Hello World" >out 2>actual &&
-> +	test_must_be_empty out &&
->  	test_cmp expect actual
->  '
-> =20
-> @@ -154,7 +157,8 @@ asking for a quick stop
->  EOF
-> =20
->  test_expect_success 'run_command is asked to abort gracefully' '
-> -	test-tool run-command run-command-abort 3 false 2>actual &&
-> +	test-tool run-command run-command-abort 3 false >out 2>actual &&
-> +	test_must_be_empty out &&
->  	test_cmp expect actual
->  '
-> =20
-> @@ -163,7 +167,8 @@ no further jobs available
->  EOF
-> =20
->  test_expect_success 'run_command outputs ' '
-> -	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\=
-" Hello World" 2>actual &&
-> +	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\=
-" Hello World" >out 2>actual &&
-> +	test_must_be_empty out &&
->  	test_cmp expect actual
->  '
+>  		strvec_push(&argv, "--end-of-options");
+> -		result =3D run_processes_parallel_tr2(max_children,
+> -						    &fetch_next_remote,
+> -						    &fetch_failed_to_start,
+> -						    &fetch_finished,
+> -						    &state,
+> -						    "fetch", "parallel/fetch");
+> +		result =3D run_processes_parallel(max_children,
+> +						&fetch_next_remote,
+> +						&fetch_failed_to_start,
+> +						&fetch_finished, &state,
+> +						&run_opts);
+
+If the idea is that with unset .tr2_* members we can silently bypass
+the overhead to invoke trace2 machinery without changing much in the
+caller side (or even better, instead of doing this as run_opts but
+as tr2_opts, and allow the caller to pass NULL to decline tracing at
+runtime), that would be wonderful.
+
+If we are going to throw random other members into the struct that
+are unrelated to tr2, then it makes it unclear why we have the three
+*_fn and its callback state still passed as separate parameters,
+rather than making them members of the struct.  After all, it is
+clear that this new struct is designed to be used only with the
+run_process_parallel() API, so it is doubly dubious why these three
+*_fn and callback state are not members.
+
+So, I dunno. =20
+
+Either
+
+ (1) making it to very clear that this is only about trace2 and name
+     the type as such, or
+
+ (2) making it about run_process_parallel (and keep the name), and
+     move the *_fn parameters to it (which will allow us to add more
+optional callbacks if needed),
+
+would make it better (simply by clarifying why we have this extra
+structure and what it is meant to be used for), but the interface as
+posted is halfway between the two, and does not look well suited for
+either purpose, making the reader feel somewhat frustrating.
+
+
