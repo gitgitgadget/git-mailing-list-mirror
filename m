@@ -2,320 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D0CC433EF
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 13:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C23AC433EF
+	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 14:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233218AbiDWNDC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 09:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60978 "EHLO
+        id S232699AbiDWO3b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 10:29:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiDWNDB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 09:03:01 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FE012AFE
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 06:00:01 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id l7so21234582ejn.2
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 06:00:01 -0700 (PDT)
+        with ESMTP id S236227AbiDWO3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 10:29:18 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C01F1BEB5
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 07:26:20 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-deb9295679so11579357fac.6
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 07:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vmiklos-hu.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=TkzFrvt80zJLzfs2sOz08+CmmmzMHlYqCcFinOd+R4A=;
-        b=gsss3CTlMZxe1HY4Gkw9akkq0qgEOMPqrKrMAP7c5sL62cc8g5xcME10BN7CWuV7WA
-         kjksEyaFBBGy1Fj+0A+BPYPgpUIy+OBCqghTXJRvln+qjTFlhK+BLkbHuRHApXFa3y4E
-         bUABYyJIHQt8YwLJwKZ3l79cDM4hC8joEXcJsEY8FZNKZXaM9bfWUizNGBPhQgiteycv
-         UFa+Wyx9jumVrVM+xKUsq8E4F/W6SL23wq8xl0Bf5TCrQDlj4y9AD23hLPGb5pYRZyA6
-         3UL6EG4Aef9iuUt4hjp4zgiFJkV04zZ3btuHdZk4rOEcImPlYdubXCoP1kB5wrnJaMp1
-         MQOQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=L3sJGGybT/WW33tUVJcF9Wr30gyDYhd8w6+B5dPyUCc=;
+        b=KDUCFNSlrVn/YlEYgswyPeGohkBNfiGE0p4Q96hfxWhbF5hV55NJraR+w6Vgyfj6ZL
+         n0y5ZWLkSftPVkm6L4fs2gx4wP0AhWYXpktfbcklKmx/NYjWBSOj7O80PGlOHbmKxiy0
+         uwbuHe/HZFRIvGeakslXopAM7JF5r/hBTgx9uJoZzJ8ErjplSGf/lrveZWluI0+0PFY1
+         58XXMMp++nsQJQiBGmvnIAeo5c2T2wuk6pBgD6GP6gVhclEFoH5hXYg1MR/DRIdjw2p0
+         Gst4M8hw3LEjMZfd03vwhHPD2T9uXOmF98ScbSxypLio4+6uOjniBjV982uw24d6oaNG
+         mMdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=TkzFrvt80zJLzfs2sOz08+CmmmzMHlYqCcFinOd+R4A=;
-        b=l0vZ0e4VEd/8xoSvXR4BuG+35xa2LVE+2FrGTNEOn9pj6sg5xpp7kxP5UIdPiVIjSo
-         kox+zP4wcPq9bmzmDmYWx592t2lba+axbG5rBqrMsKr9vHT3b6KtEXzg/CuRKSrdjtBX
-         pkdVf3sJXgnT1bBDbAK27MhuLtK9ZVDtuAK1XXA5gD6E7Pr0jk2ttOwEyuSfCvvI3fqp
-         KUk/uzwBvWGaICEUdSKv1IS52I87BdR1YUpk8lPKuc5W0SXRu3PxZ4LT0U3Qz6x2o6Lk
-         RCHE2f2kP5RYMEjYp/jcTjntG2KpC/1aHI6cSXwyr5RvEIz1vlnC43W5Pp2GrMPEG7MH
-         HRBQ==
-X-Gm-Message-State: AOAM532IqdS3OYiIKWAouq9LYhLxqAMCqgOdZaqp1deWc26mAfW5dTQJ
-        qfl4ZZlK23QarIvDKV9lcXyZAA==
-X-Google-Smtp-Source: ABdhPJxHWPujqW12HSs7Rhx9od/xzcUK8AlSE3lYNfhjC1cCWfRPmlyQbwY1OphgovgTgCnIupZPog==
-X-Received: by 2002:a17:907:948b:b0:6d8:27f8:ab4a with SMTP id dm11-20020a170907948b00b006d827f8ab4amr8125946ejc.39.1650718800192;
-        Sat, 23 Apr 2022 06:00:00 -0700 (PDT)
-Received: from vmiklos.hu (92-249-245-217.pool.digikabel.hu. [92.249.245.217])
-        by smtp.gmail.com with ESMTPSA id c2-20020a170906170200b006efe7be5f10sm1667106eje.185.2022.04.23.05.59.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 05:59:59 -0700 (PDT)
-Date:   Sat, 23 Apr 2022 14:59:57 +0200
-From:   Miklos Vajna <vmiklos@vmiklos.hu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v7] log: "--since-as-filter" option is a non-terminating
- "--since" variant
-Message-ID: <YmP4TaYmSEi6GeB4@vmiklos.hu>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=L3sJGGybT/WW33tUVJcF9Wr30gyDYhd8w6+B5dPyUCc=;
+        b=o7yKcgD7ZHCNG2gNl5Rfb+HDN1RxHYhU7vcTelElC7LQBkPgvDFhso34vtLvvtxP3u
+         JUqJadd9yeygoOe6SQEIOn31VpxHYkHnm74TfnwtkxuafaJt1yjb/j0G5coUDXHJ2Bqs
+         1BZRFDJxAOjPsZwwr7ExCAN9i8PVwXSphbpF1dZDmIzwTgJTK1I0srraRTE6OLPWaQqz
+         +Z1QZw7XvNLRyF5aUS7ZH5yLycyb0MUt9mApq2fbwQdSWaGOtUaNDNjHToWG06E+xrHs
+         qKiBvA3nCCHZB8Qussm6CgcWsKeFYfw6xtTTGiYPSV5/u5WmnegZqOTvChxqyoxpNV6/
+         EXBQ==
+X-Gm-Message-State: AOAM530bQLNTPYFfW6K3HhHuKvgRnhjag0BxX7s+EwvwrjQhxvtKHM7e
+        CefRpiT330KP1GfzPX/EQ1zYpTqtdqA=
+X-Google-Smtp-Source: ABdhPJye5qbgea4Zpxu7MGmZ9f16AdI+Lvl0hH+hKWAACrz9BP1nivo7r+OieGc8Iq5qaB9tWMUTKw==
+X-Received: by 2002:a05:6871:588:b0:e9:4ae:e5e5 with SMTP id u8-20020a056871058800b000e904aee5e5mr2771874oan.225.1650723978303;
+        Sat, 23 Apr 2022 07:26:18 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id s4-20020a0568301e0400b006015bafee43sm1869993otr.46.2022.04.23.07.26.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Apr 2022 07:26:18 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, sunshine@sunshineco.com,
+        Johannes.Schindelin@gmx.de,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v3 0/4] ci: avoid perforce/brew issues affecting macOS
+Date:   Sat, 23 Apr 2022 07:25:55 -0700
+Message-Id: <20220423142559.32507-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.36.0.266.g59f845bde02
+In-Reply-To: <20220422013911.7646-1-carenas@gmail.com>
+References: <20220422013911.7646-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqee1o6a68.fsf@gitster.g>
- <xmqqsfq44rc6.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "--since=<time>" option of "git log" limits the commits displayed by
-the command by stopping the traversal once it sees a commit whose
-timestamp is older than the given time and not digging further into its
-parents.
+This series is an alternative to ab/ci-osx-loosen-package-requirement
+and includes the parts proposed on it in v2 that didn't conflict.
 
-This is OK in a history where a commit always has a newer timestamp than
-any of its parents'.  Once you see a commit older than the given <time>,
-all ancestor commits of it are even older than the time anyway.  It
-poses, however, a problem when there is a commit with a wrong timestamp
-that makes it appear older than its parents.  Stopping traversal at the
-"incorrectly old" commit will hide its ancestors that are newer than
-that wrong commit and are newer than the cut-off time given with the
---since option.  --max-age and --after being the synonyms to --since,
-they share the same issue.
+The first patch is just a slightly modified version from the one
+proposed by Junio and that adds also a message if git-lfs wasn't found
+just like we do now for perforce while making those messages go to stderr.
 
-Add a new "--since-as-filter" option that is a variant of
-"--since=<time>".  Instead of stopping the traversal to hide an old
-enough commit and its all ancestors, exclude commits with an old
-timestamp from the output but still keep digging the history.
+The second patch replaces the original proposal with a more complicated
+one that removes the use of brew as suggested by Ævar, it is also a
+little bigger than it really needs to be just to make sure it won't
+conflict with on the fly changes, and for the same reason uses some
+hardcoded values that would be worth fixing after.
 
-Without other traversal stopping options, this will force the command in
-"git log" family to dig down the history to the root.  It may be an
-acceptable cost for a small project with short history and many commits
-with screwy timestamps.
+The third patch is only needed to avoid regressions with Azure Pipelines
+which might be deprecated as proposed in other on the fly changes, so it
+might not be needed in seen, but is still needed if this progresses
+further first.  It was made independent so it could be easy to revert if
+Azure support is going away just like TravisCI did.
 
-It is quite unlikely for us to add traversal stopper other than since,
-so have this as a --since-as-filter option, rather than a separate
---as-filter, that would be probably more confusing.
+The last patch was taken from Ævar's v2 and is the only one that will
+require changes in other core on the fly but the conflict resolution is
+trivial, and more importantly doesn't conflict when merged to seen in
+the current spot this branch uses.
 
-Signed-off-by: Miklos Vajna <vmiklos@vmiklos.hu>
----
+For an example of a "successful" run with it merged on top of seen
+(with the previous iteration reverted) see:
 
-Hi Junio,
+  https://github.com/carenas/git/runs/6140236148
 
-On Fri, Apr 22, 2022 at 03:11:11PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks.  Now 2.36 release is behind us, let's queue this in 'seen'
-> and after getting reviewed by somebody else---I do not trust
-> anything looked at by me and nobody else---merge it down, aiming for
-> graduation during this cycle.
+Note that perforce no longer fails because someone fixed the issue
+with their Cask but still most of the new code is excercised correctly.
 
-Ævar: you had opinion in this thread -- are you interested in reviewing this patch?
+This introduces a problem identified by Ævar of making the CI runs less
+consistent, as they might be skipping some of the perforce integrations
+if installing that fails again, but the likelyhood of that failing has
+been reduced by removing the inherent brew flakyness, and so improving
+the UI so that it will be more visible when that happens is probably
+something that can be addressed later, once all other CI related changes
+are settled, or we could reintroduce the hard dependency on installing
+perforce for macOS (just like it is done in Linux)
 
-> Much ealrier than this part in the same loop there is
-> 
-> 		if (revs->max_age != -1 && (commit->date < revs->max_age))
-> 			obj->flags |= UNINTERESTING;
-> 		if (process_parents(revs, commit, &original_list, NULL) < 0)
-> 			return -1;
-> 
-> which taints the commit we are looking at as UNINTERESTING, cutting
-> the traversal down to its parents, if its timestamp is older than
-> max_age, and it would need to be taught not to do that, no?
-> 
-> Ah, OK, max_age_as_filter is *NOT* a boolean (false is -1 and true
-> is something else) but is an independent timestamp and the
-> expectation is that max_age is left to be -1 when --since is not in
-> use.  --since-as-filter's timestamp is stored in max_age_as_filter
-> so the earlier "compare with max_age and use UNINTERESTING bit to
-> stop traversal" code does not have to be modified.
+Carlo Marcelo Arenas Belón (3):
+  ci: make failure to find perforce more user friendly
+  ci: avoid brew for installing perforce
+  ci: reintroduce prevention from perforce being quarantined in macOS
 
-Yes, max_age is the terminating timestamp and max_age_as_filter is the
-filtering timestamp.
+Ævar Arnfjörð Bjarmason (1):
+  CI: use https, not http to download binaries from perforce.com
 
-> > +		if (revs->max_age_as_filter != -1 &&
-> > +			(commit->date < revs->max_age) && !revs->line_level_traverse)
-> > +			continue;
-> >  		date = commit->date;
-> >  		p = &commit_list_insert(commit, p)->next;
-> 
-> And if that is the assumption of this code, shouldn't this part be
-> using "if max_age is set (i.e. not -1) and the commit is older than
-> that and we are not doing -La,b traversal"?  "--since-as-filter"
-> being used does not mean max_age must be set to a value that can be
-> compared to timestamps in commits in the world order of this version
-> of the patch, right?
+ ci/install-dependencies.sh | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-Good catch, commit->date < revs->max_age is meant to be commit->date <
-revs->max_age_as_filter there, fixed.
-
-> Everything except that "why are we checking if --since-as-filter is
-> set and then comparing with the value came from --since?" part looks
-> great to me.  If that indeed is a bug (it is very possible that I am
-> misreading the logic and the comparison with continue is perfectly
-> correct), and if the tests added by this patch didn't catch it, then
-> the test script may need a bit more work to catch such a mistake.
-
-Yes, it was a bug. For example git log --children --since-as-filter=...
-gave empty output due to this. I now added a test for this.
-
-> Hardcoding the object names like this does not pass our test suite.
-> These abbreviated object names hardcode the use of SHA-1, but the
-> code is tested in repositories that use SHA-256 as well.
-> 
-> As you are creating four commits with distinct timestamps, I think
-> you can simply filter out the object name part for comparison,
-> perhaps like:
-> 
-> redact_blame_output () {
-> 	sed -e 's/\([^]*\)\([0-9a-f]*\) /\1HASH /'
-> }
-> 
-> test_expect_success 'git blame --since=...' '
-> 	git blame --since=2020-02-15 file >raw &&
-> 	redact_blame_output <raw >actual &&
-> 	redact_blame_output <<-\EOF &&
-> 	^c7bc5ce (A U Thor 2020-02-01 00:00:00 +0000 1) a
-> 	^c7bc5ce (A U Thor 2020-02-01 00:00:00 +0000 2) a
-> 	33fc0d13 (A U Thor 2020-03-01 00:00:00 +0000 3) a
-> 	ec76e003 (A U Thor 2020-04-01 00:00:00 +0000 4) a
-> 	EOF
-> 	test_cmp expect actual
-> '
-> 
-> But did you really mean to test how --since works with blame?  Given
-> that there does not seem to be any clock skew in the history being
-> tested, I am wondering if this new test file should even be a part
-> of the topic.
-
-I dropped t/t4218-blame-limit.sh from this topic. The idea was to
-increase coverage for git blame --since=..., as it seems to have no
-test. But we can get back to that in a separate topic, I agree to keep
-this topic scoped.
-
-Thanks,
-
-Miklos
-
- Documentation/rev-list-options.txt |  5 ++++
- revision.c                         | 10 ++++++++
- revision.h                         |  1 +
- t/t4217-log-limit.sh               | 41 ++++++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+)
- create mode 100755 t/t4217-log-limit.sh
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index fd4f4e26c9..195e74eec6 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -25,6 +25,11 @@ ordering and formatting options, such as `--reverse`.
- --after=<date>::
- 	Show commits more recent than a specific date.
- 
-+--since-as-filter=<date>::
-+	Show all commits more recent than a specific date. This visits
-+	all commits in the range, rather than stopping at the first commit which
-+	is older than a specific date.
-+
- --until=<date>::
- --before=<date>::
- 	Show commits older than a specific date.
-diff --git a/revision.c b/revision.c
-index 7d435f8048..c367273c00 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1440,6 +1440,9 @@ static int limit_list(struct rev_info *revs)
- 		if (revs->min_age != -1 && (commit->date > revs->min_age) &&
- 		    !revs->line_level_traverse)
- 			continue;
-+		if (revs->max_age_as_filter != -1 &&
-+			(commit->date < revs->max_age_as_filter) && !revs->line_level_traverse)
-+			continue;
- 		date = commit->date;
- 		p = &commit_list_insert(commit, p)->next;
- 
-@@ -1838,6 +1841,7 @@ void repo_init_revisions(struct repository *r,
- 	revs->dense = 1;
- 	revs->prefix = prefix;
- 	revs->max_age = -1;
-+	revs->max_age_as_filter = -1;
- 	revs->min_age = -1;
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
-@@ -2218,6 +2222,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-+	} else if ((argcount = parse_long_opt("since-as-filter", argv, &optarg))) {
-+		revs->max_age_as_filter = approxidate(optarg);
-+		return argcount;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
-@@ -3862,6 +3869,9 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 	if (revs->min_age != -1 &&
- 	    comparison_date(revs, commit) > revs->min_age)
- 			return commit_ignore;
-+	if (revs->max_age_as_filter != -1 &&
-+	    comparison_date(revs, commit) < revs->max_age_as_filter)
-+			return commit_ignore;
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
- 		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
-diff --git a/revision.h b/revision.h
-index 5bc59c7bfe..e80c148b19 100644
---- a/revision.h
-+++ b/revision.h
-@@ -263,6 +263,7 @@ struct rev_info {
- 	int skip_count;
- 	int max_count;
- 	timestamp_t max_age;
-+	timestamp_t max_age_as_filter;
- 	timestamp_t min_age;
- 	int min_parents;
- 	int max_parents;
-diff --git a/t/t4217-log-limit.sh b/t/t4217-log-limit.sh
-new file mode 100755
-index 0000000000..6e01e2629c
---- /dev/null
-+++ b/t/t4217-log-limit.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='git log with filter options limiting the output'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup test' '
-+	git init &&
-+	echo a >file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-02-01 00:00" git commit -m init &&
-+	echo a >>file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-02-01 00:00" git commit -m first &&
-+	echo a >>file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2021-03-01 00:00" git commit -m second &&
-+	echo a >>file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="2022-03-01 00:00" git commit -m third
-+'
-+
-+test_expect_success 'git log --since-as-filter=...' '
-+	git log --since-as-filter="2022-01-01" --format=%s >actual &&
-+	cat >expect <<-\EOF &&
-+	third
-+	first
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git log --children --since-as-filter=...' '
-+	git log --children --since-as-filter="2022-01-01" --format=%s >actual &&
-+	cat >expect <<-\EOF &&
-+	third
-+	first
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
 -- 
-2.34.1
+2.36.0.266.g59f845bde02
 
