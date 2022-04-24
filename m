@@ -2,120 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1EF5C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Apr 2022 06:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F21DC433EF
+	for <git@archiver.kernel.org>; Sun, 24 Apr 2022 06:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237453AbiDXG3X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Apr 2022 02:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56778 "EHLO
+        id S238405AbiDXGoT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Apr 2022 02:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236656AbiDXG3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Apr 2022 02:29:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C9815834
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 23:26:18 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id n32-20020a05600c3ba000b00393ea7192faso230139wms.2
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 23:26:18 -0700 (PDT)
+        with ESMTP id S236405AbiDXGoS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Apr 2022 02:44:18 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043632DAB2
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 23:41:19 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id q12so10777609pgj.13
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 23:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=wepOkOVeJ58wOXnp+KYuWepMWiQtZFeMF+Oo9oKMkUI=;
-        b=R09J/aI4DEKecLAO6vioGRs7zQqsHh0WZVHxSVhsHISVdUbrBa1G2dipBezVwLI9bh
-         JPLu7gBCi2XOLicBWWUZyKVGe2x1ZcMdCkYsBq2z866FQVr+GRoLBWenA/m1boUStE39
-         DLk1+FcOPlZmhkccwkzY8xlrQtxZxoUYnfMntEXtzRMC32HTcj4PZkq7d7vl5zFXJtEl
-         BEMC9qyMN1bS12m8MJuRp3i5uKZMjOlUGabg7ah4r+zqE7H89wLsjgVseCNHWpPlhGWM
-         SWN1+hxKRdAt3COswY6/x6+Lf9XyejV6EWLHsTfRKLAgK1pFMXYuluBYcsG7M9OJnUpb
-         Xwrw==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=/9kYvSw+S8PFcs//IAwG6DhvUoJDNUnkdFL/jfQ0wRA=;
+        b=LB1RkQPB2BboM+PxIHNe5EZvPc+J7brHkfmqj1Msj3d7HPuTsjvUhACYCNV4BHCQFn
+         VqjQvvGYjRLRGvupzE5PGf452c2Sqs5Yn2JR2m3XwM0D8R9KxYoWAdDTuWu8VDQq+QYS
+         oj8jelTIRLGmiQHiG1G3yJnq12TQb5qJX9A+Q13LQgJweXSdbHTYfz/hkpjHqmDZ87f8
+         Tn2tfKdVJTw6bSv+bKdg76+wAslRwJMLgNuPC3luxmr3N/yC5Gz9kGHt514dZ4Eldnlw
+         yN3S8ZHGaJej5zVtHTdQvrpnHOgwIGvN93Jyc07Jbu+gXKdNrP2GtciAJZ3ztLxoqF9K
+         1saQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=wepOkOVeJ58wOXnp+KYuWepMWiQtZFeMF+Oo9oKMkUI=;
-        b=6zkP+eakP9BQIgIp61bF8DGwXctUg7WsDI6/J2wgWm/F7N/IOroU7M7NCW1ViJyZCy
-         IxoZkULKbaW2wAi+EBDV0X7WdSG6wE7H3oIypIpdIzDQ9jfUPRQiwE8rp9SvJ1lDHM07
-         dxdrE2NnyKDPox8iZ3dmSsKxhLH09eSiXZLA3N5n2u/eYqVLd7a1D2hF+aTk7KdLTpfh
-         XEC/BEOtugrxyczexjy3bcfIOuevGADsQqM40br4F3HkKhhHU6HRbpyj5t5xhumtwASm
-         nddBUDswo8tVKOgU+blJVUhMbYPfDLYYdA5cU0LVlsUldggZDcdqsTAvg2bSuqi5AntN
-         xGvw==
-X-Gm-Message-State: AOAM533JuRm0TJarwJpnTVssA08M9lAoOSkrfCU3hVbRBymMRHRtD1kl
-        FpuIpXciFHsQ0LLe/kqzJBXFiivC3mA=
-X-Google-Smtp-Source: ABdhPJylPoKneMeU9bpuAE2ksZlNBxwurdJVPBxqlxY5spi7xZ0ZLn5/LVYQoy477LbnJPmQkj4bNg==
-X-Received: by 2002:a05:600c:3d88:b0:391:7aa1:792b with SMTP id bi8-20020a05600c3d8800b003917aa1792bmr20726215wmb.8.1650781576392;
-        Sat, 23 Apr 2022 23:26:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b00393eb0d01f7sm239916wmq.23.2022.04.23.23.26.15
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=/9kYvSw+S8PFcs//IAwG6DhvUoJDNUnkdFL/jfQ0wRA=;
+        b=JfFKjBaUg6oDGyxqdGc2h7BrHMsCEdPbcYM7G+Cxfl+8uh7d417v8SAZ4T23vdQ89s
+         ky1dwv9xg++bQ5L96LJ8+ScP+lROfcoV2HkPJ1DeRA0LOg1CCwH/Tp2ZtOqohpzh7FyY
+         mDKTvH8yzz1X+YtGUNgABiYSkh6uivNA1SXylOJr13y8R2l3rBaOckHEJ1raUqmzLWhC
+         qRv+OpkE4d6iJoEDFjV6ZsRqZtHW15gDw9NGtyzqz/padYnDBcUAHcJDNjYpz57f3w+K
+         LIKNywJjQmhbgUDEptyo1H90GqZk95uw6fplRdSsALYfVI+UWRL8llt2U9vHD1h9Dp2n
+         +Jew==
+X-Gm-Message-State: AOAM530LqpFEEFd6PWZImXWuWQKEpL3De3PN9L125L6uykYCJPwshrYM
+        GHAftyxbsUzxojR1qfxY0m46azs7xpJARKu0bcg=
+X-Google-Smtp-Source: ABdhPJzgHzTYJsjhMusoI+ULGa8G1zZnIsq26YyjxJR2NE/uu7UiUOCx9MjxtF6ZrTA4VNyq91Lkdg==
+X-Received: by 2002:aa7:88cd:0:b0:50a:9579:a1b with SMTP id k13-20020aa788cd000000b0050a95790a1bmr12891926pff.25.1650782478033;
+        Sat, 23 Apr 2022 23:41:18 -0700 (PDT)
+Received: from kong-HP (014136220210.static.ctinets.com. [14.136.220.210])
+        by smtp.gmail.com with ESMTPSA id n19-20020a62e513000000b005048eef5827sm7818298pff.142.2022.04.23.23.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Apr 2022 23:26:15 -0700 (PDT)
-Message-Id: <pull.1258.git.git.1650781575173.gitgitgadget@gmail.com>
-From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 24 Apr 2022 06:26:15 +0000
-Subject: [PATCH] submodule--helper: fix initialization of
- warn_if_uninitialized
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Sat, 23 Apr 2022 23:41:17 -0700 (PDT)
+Date:   Sun, 24 Apr 2022 14:41:14 +0800
+From:   FanJun Kong <bh1scw@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
+Cc:     FanJun Kong <bh1scw@gmail.com>
+Subject: help for git format-patch lost diffstat
+Message-ID: <20220424064114.nwzldz5s2bnkrlu5@kong-HP>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+Hi, 
 
-This field is supposed to be off by default, and it is only enabled when
-running `git submodule update <path>`, and path is not initialized.
+Here are steps of what I am doing:
 
-Commit c9911c9358 changed it to enabled by default. This affects for
-example git checkout, which displays the following warning for each
-uninitialized submodule:
+First, I created two commits to a demo project.
 
-Submodule path 'sub' not initialized
-Maybe you want to use 'update --init'?
+when I use command:
+git format-patch --cover-letter -1
 
-Amends c9911c9358e611390e2444f718c73900d17d3d60.
+cat 0000-cover-letter.patch
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
-    submodule--helper: fix initialization of warn_if_uninitialized
-    
-    This field is supposed to be off by default, and it is only enabled when
-    running git submodule update <path>, and path is not initialized.
-    
-    Commit c9911c9358 changed it to enabled by default. This affects for
-    example git checkout, which displays the following warning for each
-    uninitialized submodule:
-    
-    Submodule path 'sub' not initialized
-    Maybe you want to use 'update --init'?
-    
-    
-    Amends c9911c9358e611390e2444f718c73900d17d3d60.
-    
-    Signed-off-by: Orgad Shaneh orgads@gmail.com
+From 2e62ef46d5627319c4cb11be81079e3364fca40c Mon Sep 17 00:00:00 2001
+From: FanJun Kong <bh1scw@gmail.com>
+Date: Sun, 24 Apr 2022 14:31:45 +0800
+Subject: [PATCH 0/1] *** SUBJECT HERE ***
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1258%2Forgads%2Fsub-no-warn-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1258/orgads/sub-no-warn-v1
-Pull-Request: https://github.com/git/git/pull/1258
+*** BLURB HERE ***
 
- builtin/submodule--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+FanJun Kong (1):
+  Second commit.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2c87ef9364f..b28112e3040 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2026,7 +2026,7 @@ struct update_data {
- 	.references = STRING_LIST_INIT_DUP, \
- 	.single_branch = -1, \
- 	.max_jobs = 1, \
--	.warn_if_uninitialized = 1, \
-+	.warn_if_uninitialized = 0, \
- }
- 
- static void next_submodule_warn_missing(struct submodule_update_clone *suc,
+   1.c | 4 ++++
+   1 file changed, 4 insertions(+)
 
-base-commit: 6cd33dceed60949e2dbc32e3f0f5e67c4c882e1e
--- 
-gitgitgadget
+--
+2.32.0 (Apple Git-132)
+
+ok, you can see the cover letter has diffstat, just above "--".
+
+Then I change command to:
+
+git format-patch --cover-letter -2
+
+cat 0000-cover-letter.patch
+
+From 2e62ef46d5627319c4cb11be81079e3364fca40c Mon Sep 17 00:00:00 2001
+From: FanJun Kong <bh1scw@gmail.com>
+Date: Sun, 24 Apr 2022 14:34:48 +0800
+Subject: [PATCH 0/2] *** SUBJECT HERE ***
+
+*** BLURB HERE ***
+
+FanJun Kong (2):
+  First commit.
+  Second commit.
+
+--
+2.32.0 (Apple Git-132)
+
+Comparing with last command, I just want to get 2 patches,
+but this time the diffstat is missing.
+
+I am not sure if this is a bug or I miss some options.
+
+I googled this issue, but not got too much.
+
+Thanks for your time.
+Fanjun Kong
