@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57EACC433F5
-	for <git@archiver.kernel.org>; Sat, 23 Apr 2022 23:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C26B7C433F5
+	for <git@archiver.kernel.org>; Sun, 24 Apr 2022 00:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235170AbiDWXuY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Apr 2022 19:50:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54862 "EHLO
+        id S234331AbiDXA2q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Apr 2022 20:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235017AbiDWXuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Apr 2022 19:50:23 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7182AE0C2
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 16:47:25 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id y74so2221931vsy.7
-        for <git@vger.kernel.org>; Sat, 23 Apr 2022 16:47:25 -0700 (PDT)
+        with ESMTP id S229609AbiDXA2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Apr 2022 20:28:45 -0400
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F4917AA5
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 17:25:46 -0700 (PDT)
+Received: by mail-ua1-x933.google.com with SMTP id x5so626856uap.8
+        for <git@vger.kernel.org>; Sat, 23 Apr 2022 17:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hoP+8/4MHCATeBq6vqaChLIjzrrvcq5IT35Cy+g69WA=;
-        b=BJryoLckTLUfJcaTAxoANyfEYacMdrjQN904UrYGl/sto8Q8JedP7Kl/epsmnnvy5o
-         pj5J1we7IsU1/CiBYiCt3a8Fcw3UfsyUbV7K+qL3olaZF74Uz4c+RLM1no1IEEWy6VTD
-         2Dw3h9mkroZ6P5n2TRmsrBvVhCBLJCK+oFW7SudC47s3SHE5i5nHwkGgxuBRc9XopLuY
-         nWRYYgI9X7qNVA6+A4MZI39Gy0MZk2D9icfL8DGtsQsR2Kf31DM2BBVLLnNP6ThY2Rk4
-         mLdRUPKSXJzG921L7WfP6EzsYPZgDy3EHkptWBkwpfvrsxGQO2HhEkI7bzHnl49To3pd
-         NRJA==
+        bh=l3rajYO944Xz3KnawcTd6++JcvwWIa5keDFYZXrqlGk=;
+        b=If6LpVDJoHgPC+RwZU2xMrJhLg1rxsuodAsYyXp2WSeEuZY69ph1QRkrK3vWxYrcKx
+         nq/oK2795ZjwLNA4ISajMYaNL2PiiSAPJTN6HcoejhmdgpnSN0YAshVXFJmDwkOh1PfF
+         5CCRbWzEaWYlHXq71PC/z8Mh4aOi98GUxe1WRCjfwxR8x1FHCxr3DszWW8WXOizKAw+2
+         Ndu1EdzurWz4bRFNZ5afnmfOo1NfEVyn8rqPSPSCNZp9eQRDc5/232c/SlprdUcsUP8C
+         9LPcpCYHXDyJmpzLCo6RqJlZltXHxCXmqIskJA0vs7cO25mimE9FpEvIm0hABOisjvCY
+         OfPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hoP+8/4MHCATeBq6vqaChLIjzrrvcq5IT35Cy+g69WA=;
-        b=0XepWUzyFQ/Y7JdbM3ih8rQHL8/ZcXCRUiKfGHfptkfNlCDb9gyvvKhNxcBB9G6QYJ
-         PZNRSFu9kZKHxYKo+bifnp0q4wFUXM5/C5rBAPnqeRNmUgcvJIYwAqv3hF1qn14ouq4Z
-         0Qum5KyjitMsgpsFmldLS/CAbyL/ZqSXl8fJ2pdTospMTjb1OzeBthOAnXSi5AaDaiPj
-         wM/M+YUgQmQKbZNjKBAvVadij8aj5y7HwcYgeojqcHfdVelvn7PO4N+PW9jltwL5euh+
-         j/LUbEZc+ayeHOVMAAWndI/eSxQmfpjbWzyWE5XUkyHBSGoL9tAiVg/29vY+ydqYlR4d
-         BItQ==
-X-Gm-Message-State: AOAM533YSgu52jyynPxoCxjYMfWoekOvrDj10q/WtKUVmu7epZrSYLwJ
-        LpE8CUlV179UwunZdQEEchx86She3UySuOnSIE+BoxoIgw4=
-X-Google-Smtp-Source: ABdhPJzL+/+kCDH2l0JnWlbxwwy0CSSRR1lkQcEO0J70HvA3FzH9fIQhictNnTWJgjwHeONNr1JdFdtGm3299QoUVb0=
-X-Received: by 2002:a67:fe01:0:b0:32a:122f:ff67 with SMTP id
- l1-20020a67fe01000000b0032a122fff67mr3164922vsr.52.1650757644552; Sat, 23 Apr
- 2022 16:47:24 -0700 (PDT)
+        bh=l3rajYO944Xz3KnawcTd6++JcvwWIa5keDFYZXrqlGk=;
+        b=SDjRRUUX44ml9H4kU6WHgl8OscSEPt1Q+fbwcYgONLCHB4LUk44b/VGfhoNvmq148w
+         a5UYg1yVJ9GaVHkXIwnOw5I6nFOK119jCteRCwRMo07k0E/WCJ/wOxYrF56qnYLAbwME
+         +kvjUqXWlsbwUN6mxlkFGQSICHgOzsT3gILSFvb5ALw8qnXWsFiPdbrk7d/k3e39ker9
+         QwF+xmq7KzonuUIWl8nvwZ+nik/Q+t9U2GA6aNQuvN6w2rZ6qwcBnI6LQU0UnSnYTXDh
+         21gu9sKMXLuKNUfP7DEBrj+RDNhBrqjgiN2/QpSTRxm6vk/BvsFKEuQdVTue1N9cOf38
+         HklQ==
+X-Gm-Message-State: AOAM532rQTwyVbaVqp3IY/W8DWP8qHEwJmrI+Oe3y5EHo9mHTMh5nW2V
+        UtuhNFe7kGYTf/DvfurPnoV9Sd8wrOKZO1GHLG1kVIzd
+X-Google-Smtp-Source: ABdhPJy/3qCbfoymoA5oxkj7RMUS+6U8LS5Go0xUq6QEeAE/XPqpwZ5Vr7sgTr3wUo7LGfRBRs6M8E7V+0Pf1olPf+Y=
+X-Received: by 2002:ab0:654e:0:b0:360:303f:46c7 with SMTP id
+ x14-20020ab0654e000000b00360303f46c7mr3504430uap.6.1650759945900; Sat, 23 Apr
+ 2022 17:25:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <patch-v5-10.29-07e36035a1e-20220421T181526Z-avarab@gmail.com>
  <20220423201129.34133-1-carenas@gmail.com> <xmqqo80r1kid.fsf@gitster.g>
 In-Reply-To: <xmqqo80r1kid.fsf@gitster.g>
 From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 23 Apr 2022 16:47:13 -0700
-Message-ID: <CAPUEspifNjJGaXZckBn16tfiR07gfEKZt2-Euz=+3Mt0rWZL_A@mail.gmail.com>
+Date:   Sat, 23 Apr 2022 17:25:35 -0700
+Message-ID: <CAPUEspibJOiMksnEQTNUiVMp0q7VrArtvL5ZnQFQ=vSr+gzqYw@mail.gmail.com>
 Subject: Re: [PATCH] fixup! CI: move p4 and git-lfs variables to ci/install-dependencies.sh
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, avarab@gmail.com
@@ -60,30 +60,24 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Apr 23, 2022 at 3:59 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> If p4 and p4d were the only files that we grabbed for macOS, then
-> what I wanted to suggest in the previous message would have worked,
+> But if we cannot unify the way the installation is done for macOS
+> and Linux that way, I do not think renaming $LINUX_P4_VERSION to
+> another name is worth doing (notice that the point of the above
+> exercise was to abstract these into just two variables, VERSION and
+> ARCH).
 
-true, but it can still work by making them both use the same version
-(which would be likely a CI variable) and pull the three files from
-that directory (which was my end objective as shown) in :
+BTW, I was intentionally holding those changes for the same reason; if
+renaming the variable causes any pain (my guess was that it will be
+unlikely since the code got moved already at that point, and so
+renaming it at the same time would be unlikely to cause further
+conflicts) then it shouldn't be done now (or maybe ever).
 
-  https://github.com/carenas/git/commit/4fd79fa1770bc9e8e57074dbac4e44de173aeb75
+and those changes should only be done after all the refactoring going
+on now is gone, and only if discussed first with a lengthy period of
+RFC to make sure we get it right and go quickly.
 
-> By the way, I spelunked https://filehost.perforce.com/perforce/ from
-> a browser to see how the files are layed out over there, not cdist2.
-> I am guessing that "filehost" is the name they want end-users like us
-> to use when downloading what they distribute?
-
-I presume that was the URL they were using when this code was written,
-FWIW brew uses cdist2, and that is what I get after going to their
-website at the end after clicking through their download forms so I
-assume it is less likely to break as well.
-
-agree though that renaming the variable could be avoided but it looks
-nicer as an intermediate state, and we might even keep it if having
-two different versions is preferred :
-
-  https://github.com/carenas/git/commit/b6699fa3f082ef6d0e8c32718ce5142612003de8
+Of course, the final version of it will be unlikely to NOT have a
+single function that does the right thing based on those two variables
+and those patches were ever going to be sent as RFC.
 
 Carlo
