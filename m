@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65084C433F5
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 18:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3B79C433FE
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 18:27:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244406AbiDYSa3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 14:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60130 "EHLO
+        id S244414AbiDYSab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 14:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238237AbiDYSaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 14:30:23 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9CE224F1F
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 11:27:18 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id s21so7405182wrb.8
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 11:27:18 -0700 (PDT)
+        with ESMTP id S244350AbiDYSaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 14:30:25 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D8726AE5
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 11:27:20 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso46138wme.5
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 11:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+ol0+1Qc4bYwYytjRhghEShUA8gWYWE4SDrmV1uHNy4=;
-        b=KUCKckpwVouBBn9xj36oDOP4zVW/rPyX6BWUYUkDrKfxb1BF3khNvtPrkILbNq1Xkm
-         XvNskNYH1Acq5LK2ElNeMmDlqBXP93nl0YW8rW0kWUEc05Vdq9Qavn3h+cn2jiahgeF6
-         Cm1/xZZoaCbxB3TcFpNwfYOKHKAkN6Mmx5tainb8K/ereKYQhbTrTsn8igyXmqbQV9JA
-         j7H8HQbjp8UVOGOJs1mlMbKRfraK7zqyDLJO0ruOeIxSBkK/feoKLFtiAdeUg+J0+rqQ
-         d+3zAnWMtH4qkTVQFK0wf+jXBQsVrOr8bQMFmDXZRIrzM5X2QTitUrDpxYBrT41XzlKI
-         MXeA==
+        bh=KpvDYK92geaWq6NAj3ofB2lxVVhPRl0V9Dr3eq9jwlI=;
+        b=fnVnN6H7D/ZkXEKR6fbWl3EZCUjdEj+8WRT8fAVOWWm0cF8GebL1rutjyp23IJw4mZ
+         tu4POAvcyTxCsThEu85Xy1ZbYgpPZNwUdMGjdUJ02Ybm3KFYV9ZmJAsGGTUw+sZZBvXV
+         l6w0LlH5F8G4RD//7fXvECIQfiDWrcdUW1Ng+pAu1OgxLkwL9qZaA2cZehPyNlRCB+rq
+         kYQMYdJA10ajC+vLc5BNmTcpKEm9ObG83bYczbiODX3cpQt1512phJmabVK2ao9VqxNW
+         F02M1avLy+nx84mkfgsHatO1D7voLpFfebIOFU8NDnHNx0IGoYN9/Yywp2Hz2rMapDCC
+         AifA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+ol0+1Qc4bYwYytjRhghEShUA8gWYWE4SDrmV1uHNy4=;
-        b=usrWbgTvvwdHamnWoqVodRTLzjr2fYVWdl4PLV39NwNuBPUNmGSIxV7QjMeySVX/JP
-         5AnCmOPLx9WF/neRkGV4P9WWqDO7T45E7lBMN2Vt0kPsO+16KfPVZic49BMqgB+i0HV3
-         F4mqlRp+trTaeQwQmHeOwcmFMdO1+YO1MX8H+v15hGvqMV96BfbQuw4PHiyD6aP29Mag
-         gvJjNRf2w/FD+vCLllCqgcIMEz4/tEGXZCGsfJpT3CXo6XvQDyZ0xNdoMmblj1lH7267
-         IzdBsnEMEcovZd1Ij1TQKiaw8Io9cSNLoxMBhAfaERqbmptb19XSbDyrc52omfPZ0mZn
-         c7qQ==
-X-Gm-Message-State: AOAM532d7LxC0Uz68XmJaqdjuXf5LYYXwDYHdon+Z3rQjW6+HmV4WQlT
-        olY6/t6YcSMXA01Qp+I0+a0ImTt3xd4=
-X-Google-Smtp-Source: ABdhPJzn7V4qkonrOLo0lQiKtK06oHsY2WUlelYjVkozYlapEBFx0Fj2Hd8afbPfQDQtTmF6lU8Wlg==
-X-Received: by 2002:a5d:63ce:0:b0:20a:da1f:aac5 with SMTP id c14-20020a5d63ce000000b0020ada1faac5mr5500485wrw.589.1650911237062;
-        Mon, 25 Apr 2022 11:27:17 -0700 (PDT)
+        bh=KpvDYK92geaWq6NAj3ofB2lxVVhPRl0V9Dr3eq9jwlI=;
+        b=8JaOY0lIU/DSg81QioN8Y6X6vAB8onULBUY2bm6LTxVn5kGRBIbgtT7S7SlRW9hn/Z
+         tjn/Zo/miiqfsH/5Bj2eqiuwfrSWUp33rkTXcVp7tmZpzsmmv5+dqjdBdy5YDsxx73AL
+         NsrklBSaiGlYZoxfFydQPa3nTZ/M3T7SKkn8Yx31eev3/DkPaVGToIO+49WGq6WxFV40
+         ohH0itpQ2YaOvgN8DaRODpSOWBuwNxVLZph335wWqOUd1CUsi+a0Y2HEknbL/8iU/G4B
+         oMxqX0loI+bTqETdWNkcALzJntILWMnght1zfy2CoOpzF6aQuYfYp+LniDarh4BOHQMI
+         CIXw==
+X-Gm-Message-State: AOAM530P4dWH79xS5GI6q8jba/7+H9+ud9xPJvr5jkCud3s0hqcJOu4/
+        HHCHQtTlA9VrXUBsdf0mmqziScSE7Zk=
+X-Google-Smtp-Source: ABdhPJzZJ3EVegOtRK4wplVwfXc2lbLg2QCBnwrLLJHPqJlhoyTbZijMkeyUdxa4Fj/EV1gSfV6K5w==
+X-Received: by 2002:a1c:a181:0:b0:392:8f7e:d2f8 with SMTP id k123-20020a1ca181000000b003928f7ed2f8mr17956528wme.30.1650911238217;
+        Mon, 25 Apr 2022 11:27:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 62-20020a1c1941000000b00393a1a024desm11063203wmz.14.2022.04.25.11.27.16
+        by smtp.gmail.com with ESMTPSA id p20-20020a05600c359400b00393efe9e780sm1629065wmq.1.2022.04.25.11.27.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 11:27:16 -0700 (PDT)
-Message-Id: <34785a0c7cc6c3547951fb29fc2b3c1cf8be6f54.1650911234.git.gitgitgadget@gmail.com>
+        Mon, 25 Apr 2022 11:27:17 -0700 (PDT)
+Message-Id: <fd580e7947743db545a839e81f027984e70b7717.1650911234.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1221.v2.git.1650911234.gitgitgadget@gmail.com>
 References: <pull.1221.git.1650553069.gitgitgadget@gmail.com>
         <pull.1221.v2.git.1650911234.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Apr 2022 18:27:12 +0000
-Subject: [PATCH v2 1/3] midx: use real paths in lookup_multi_pack_index()
+Date:   Mon, 25 Apr 2022 18:27:13 +0000
+Subject: [PATCH v2 2/3] multi-pack-index: use --object-dir real path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,57 +68,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-This helper looks for a parsed multi-pack-index whose object directory
-matches the given object_dir. Before going into the loop over the parsed
-multi-pack-indexes, it calls find_odb() to ensure that the given
-object_dir is actually a known object directory.
+The --object-dir argument to 'git multi-pack-index' allows a user to
+specify an alternate to use instead of the local $GITDIR. This is used
+by third-party tools like VFS for Git to maintain the pack-files in a
+"shared object cache" used by multiple clones.
 
-However, find_odb() uses real-path manipulations to compare the input to
-the alternate directories. This same real-path comparison is not used in
-the loop, leading to potential issues with the strcmp().
+On Windows, the user can specify a path using a Windows-style file path
+with backslashes such as "C:\Path\To\ObjectDir". This same path style is
+used in the .git/objects/info/alternates file, so it already matches the
+path of that alternate. However, find_odb() converts these paths to
+real-paths for the comparison, which use forward slashes. As of the
+previous change, lookup_multi_pack_index() uses real-paths, so it
+correctly finds the target multi-pack-index when given these paths.
 
-Update the method to use the real-path values instead.
+Some commands such as 'git multi-pack-index repack' call child processes
+using the object_dir value, so it can be helpful to convert the path to
+the real-path before sending it to those locations.
+
+Add a callback to convert the real path immediately upon parsing the
+argument. We need to be careful that we don't store the exact value out
+of get_object_directory() and free it, or we could corrupt a later use
+of the_repository->objects->odb->path.
+
+We don't use get_object_directory() for the initial instantiation in
+cmd_multi_pack_index() because we need 'git multi-pack-index -h' to work
+without a Git repository.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- midx.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ builtin/multi-pack-index.c | 45 ++++++++++++++++++++++++++++----------
+ 1 file changed, 34 insertions(+), 11 deletions(-)
 
-diff --git a/midx.c b/midx.c
-index 107365d2114..3db0e47735f 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1132,17 +1132,26 @@ cleanup:
- static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
- 							const char *object_dir)
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 4480ba39827..5edbb7fe86e 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -44,7 +44,7 @@ static char const * const builtin_multi_pack_index_usage[] = {
+ };
+ 
+ static struct opts_multi_pack_index {
+-	const char *object_dir;
++	char *object_dir;
+ 	const char *preferred_pack;
+ 	const char *refs_snapshot;
+ 	unsigned long batch_size;
+@@ -52,9 +52,23 @@ static struct opts_multi_pack_index {
+ 	int stdin_packs;
+ } opts;
+ 
++
++static int parse_object_dir(const struct option *opt, const char *arg,
++			    int unset)
++{
++	free(opts.object_dir);
++	if (unset)
++		opts.object_dir = xstrdup(get_object_directory());
++	else
++		opts.object_dir = real_pathdup(arg, 1);
++	return 0;
++}
++
+ static struct option common_opts[] = {
+-	OPT_FILENAME(0, "object-dir", &opts.object_dir,
+-	  N_("object directory containing set of packfile and pack-index pairs")),
++	OPT_CALLBACK(0, "object-dir", &opts.object_dir,
++	  N_("directory"),
++	  N_("object directory containing set of packfile and pack-index pairs"),
++	  parse_object_dir),
+ 	OPT_END(),
+ };
+ 
+@@ -232,31 +246,40 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ int cmd_multi_pack_index(int argc, const char **argv,
+ 			 const char *prefix)
  {
-+	struct multi_pack_index *result = NULL;
- 	struct multi_pack_index *cur;
-+	char *obj_dir_real = real_pathdup(object_dir, 1);
-+	struct strbuf cur_path_real = STRBUF_INIT;
++	int res;
+ 	struct option *builtin_multi_pack_index_options = common_opts;
  
- 	/* Ensure the given object_dir is local, or a known alternate. */
--	find_odb(r, object_dir);
-+	find_odb(r, obj_dir_real);
+ 	git_config(git_default_config, NULL);
  
- 	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
--		if (!strcmp(object_dir, cur->object_dir))
--			return cur;
-+		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
-+		if (!strcmp(obj_dir_real, cur_path_real.buf)) {
-+			result = cur;
-+			goto cleanup;
-+		}
- 	}
++	if (the_repository &&
++	    the_repository->objects &&
++	    the_repository->objects->odb)
++		opts.object_dir = xstrdup(the_repository->objects->odb->path);
++
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_multi_pack_index_options,
+ 			     builtin_multi_pack_index_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
  
--	return NULL;
-+cleanup:
-+	free(obj_dir_real);
-+	strbuf_release(&cur_path_real);
-+	return result;
- }
+-	if (!opts.object_dir)
+-		opts.object_dir = get_object_directory();
+-
+ 	if (!argc)
+ 		goto usage;
  
- static int write_midx_internal(const char *object_dir,
+ 	if (!strcmp(argv[0], "repack"))
+-		return cmd_multi_pack_index_repack(argc, argv);
++		res = cmd_multi_pack_index_repack(argc, argv);
+ 	else if (!strcmp(argv[0], "write"))
+-		return cmd_multi_pack_index_write(argc, argv);
++		res =  cmd_multi_pack_index_write(argc, argv);
+ 	else if (!strcmp(argv[0], "verify"))
+-		return cmd_multi_pack_index_verify(argc, argv);
++		res =  cmd_multi_pack_index_verify(argc, argv);
+ 	else if (!strcmp(argv[0], "expire"))
+-		return cmd_multi_pack_index_expire(argc, argv);
++		res =  cmd_multi_pack_index_expire(argc, argv);
++	else {
++		error(_("unrecognized subcommand: %s"), argv[0]);
++		goto usage;
++	}
++
++	free(opts.object_dir);
++	return res;
+ 
+-	error(_("unrecognized subcommand: %s"), argv[0]);
+ usage:
+ 	usage_with_options(builtin_multi_pack_index_usage,
+ 			   builtin_multi_pack_index_options);
 -- 
 gitgitgadget
 
