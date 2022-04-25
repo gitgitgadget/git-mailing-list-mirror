@@ -2,87 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7EAAC433F5
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 06:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 090CBC433F5
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 06:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237582AbiDYG0B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 02:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
+        id S239713AbiDYGmx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 02:42:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230415AbiDYGZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 02:25:53 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9EBA40A11
-        for <git@vger.kernel.org>; Sun, 24 Apr 2022 23:22:47 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id z19so10191557iof.12
-        for <git@vger.kernel.org>; Sun, 24 Apr 2022 23:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XJI0cavHP6+QC1fVoHIhFmaxK35A4o9DnsHsQkl6LNg=;
-        b=PgQMrXHx41KVPaXRxJVM5MnP6ekaBXzjzKxgLKYFyLh349zuZXs1Wm5kMLvWzz5Hfi
-         EcN6h+U4ZGTlDv6dFqDvXE45iYjMbFvPxziado5mJ0wtHVq+IXrKIBHasbGLfV8uideU
-         28yGOsMam/EOfAf9qTmVwk6iPfm2JgrW4n5Z16f6TOs7/862Xcweceg8ylrxW5orqVOX
-         aM352rAqVZG1z7GJ/tq38GXoieFFK1WKk1PDra44axM1q/uXAviHUSfCpVX/uoWEa9eA
-         HmH3+mD9ShWONIjqWMe7/0uGYex0UgnqA8rmkkk0lqmonWDaNz/ConR/fJyUbh/GyNkj
-         9yiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XJI0cavHP6+QC1fVoHIhFmaxK35A4o9DnsHsQkl6LNg=;
-        b=4UxhDsXUiAzSA1nmy5BsuSyLtM5pgk3Y6rYTk7wFZHABpTOIL+mlNcMUSv8gLb30Rv
-         eJm8A3ae1F3DCfcQgzOyIwjAs+UKLPTo2k7ysv9b/gnrpGE2R1XwGfPmgS0CjpAcCnFF
-         6TX6EMoBSxhf7Y34BJZsDcBV3FdVp95dvWkmyVAE8u1Sa3rGHbLsoyMijgWavfD2tNju
-         RoSYpmOQ9sUkK5UVV9SB8/ceZjWN2wOMITFKwy1eM9v0pNjMxxHLCaCwzgV8tOfQE7MG
-         X0OhWbeL4jGURKHmtnCO/Ba7/NE7gE7+82lWDGLOOFA83FkhK+CtxRSacWM3p7pBni3A
-         fs9w==
-X-Gm-Message-State: AOAM533YAauQLLeDUUjvFVBI7WbCO+vl5q0/0XtPoWlu/qvlUD5Qf+G6
-        5CpxHhMpylL4e8+82S0j6v7b3mcTzz/1u/9YUmjnjia30pmprw==
-X-Google-Smtp-Source: ABdhPJzvmcA6Rns7gnbVArhWHNODrNT6jknulyZI9kCvvgsK/lUhTTWRL7Cxq0bkvQiwsIcXfqDAAuEAABO6uoUCPtk=
-X-Received: by 2002:a05:6638:12c2:b0:326:665f:5bc2 with SMTP id
- v2-20020a05663812c200b00326665f5bc2mr6501601jas.196.1650867767164; Sun, 24
- Apr 2022 23:22:47 -0700 (PDT)
+        with ESMTP id S236248AbiDYGmj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 02:42:39 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DEA3AF
+        for <git@vger.kernel.org>; Sun, 24 Apr 2022 23:39:36 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3A2BD1A0CBD;
+        Mon, 25 Apr 2022 02:39:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=YLA+eBrWteRVUX/dZn8SYiKJ6
+        QNyOjKWmlH9kU8mdNg=; b=HG0+lE3QK6Aj2ha7dYg5iy8TF+e6bbviWk3D9CTFs
+        JXhinPD7M+Nq6qz+LO2BBUytgG6s0gv+7Kh7ucY4FnFtG4W5G+SQK4KPnM9C1AK3
+        ZT/ObV9DDE/xdzJrngKNkNBqwM398lkjOy67sb3i16QpPzZJ98nsvjRWtojqSszu
+        JM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2627B1A0CBC;
+        Mon, 25 Apr 2022 02:39:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A35861A0CBB;
+        Mon, 25 Apr 2022 02:39:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Guy Maurel <guy.j@maurel.de>, git@vger.kernel.org
+Subject: Re: a problem with git describe
+References: <4ef9287b-6260-9538-7c89-cffb611520ee@maurel.de>
+        <3d762060-b817-0246-c4a2-8eb35096cb7f@iee.email>
+        <xmqqczh73hns.fsf@gitster.g> <xmqqk0bf1i12.fsf@gitster.g>
+        <20220425020108.5agdq6bdg6umrtbt@carlos-mbp.lan>
+Date:   Sun, 24 Apr 2022 23:39:27 -0700
+Message-ID: <xmqqy1zty8dc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHZPcmD3xmsuM5XQzczqKQEcVXXXc=c9cH9cpqDNPTpBrwd2iA@mail.gmail.com>
-In-Reply-To: <CAHZPcmD3xmsuM5XQzczqKQEcVXXXc=c9cH9cpqDNPTpBrwd2iA@mail.gmail.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Mon, 25 Apr 2022 14:22:35 +0800
-Message-ID: <CAJyCBORnAsJjC6+JmDX_nMMnAEZbLbhVNK9QKB7cb88KGUsARQ@mail.gmail.com>
-Subject: Re: --help for git commands
-To:     =?UTF-8?Q?Dorian_Mari=C3=A9?= <dorian@dorianmarie.fr>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 756255E0-C462-11EC-909C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 24, 2022 at 2:26 PM Dorian Mari=C3=A9 <dorian@dorianmarie.fr> w=
-rote:
->
-> Hi,
->
-> I think it would be nice to have a simple help like other programs do
-> when doing `git [subcommand] --help` or `git [subcommand] -h`.
->
-> It would be a short version of the manual.
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-I think we do have a "simple help like other programs do".
+> At that point, though you might as well excempt root from this check
 
-You will get the git manual page for a command, for example, git-add,
-with one of the followings:
-
-`git add --help`
-`git help add`
-`man git-add`
-
-Or, you can get a "short version of the manual", i.e. usage string, using t=
-his:
-
-`git add -h`
-
---=20
-Thanks & Regards,
-Shaoxuan
+But "root" or any higher-valued account is what needs this kind of
+protection the most, no?  The protection is *not* about people
+knowingly accessing their own repository via "root", but those who
+are in a directory without being aware of its repository-ness.  You
+prepare /var/tmp/.git/ and let others do things that they would do
+in /var/tmp/ throw-away directories normally and get affected by
+what you leave in /var/tmp/.git/config file.  If "root" is among
+these "others", that sounds like you caught a bigger fish X-<.
