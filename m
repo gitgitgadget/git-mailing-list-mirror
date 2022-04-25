@@ -2,110 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C678C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 09:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B97D0C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 09:57:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239050AbiDYJtS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 05:49:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36128 "EHLO
+        id S235387AbiDYKA7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 06:00:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234226AbiDYJtQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 05:49:16 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FA71B7B2
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:46:09 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id c23so25804839plo.0
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:46:09 -0700 (PDT)
+        with ESMTP id S234651AbiDYKA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 06:00:57 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987961C934
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:57:50 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id z144so4264093vsz.13
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=2ZOwvyHQXbaX58WJhT28V5ADM/5kMlCPS95sd2FnPOc=;
-        b=MW+gzgIxa3efDWiPGrYbSorr58ZOFyBoIMLqw3qPOHbtckATw4WN0YrdKT2UZav2+3
-         4k+qWLG1bg7KPVtE0YA34MmDS//m4PYMBEdP+gzU0dXuqeJkLWFh6tSTPOnl2NdlC8wv
-         t3lJxdXrFozTmTwSHS/cCAdDEkczYr0cgQWprlBNu2c6TalBjrXK1Cr7ks014EIyCzlK
-         r5P+szEOg8sm3aAc5z/j6DbhdRhnQpYRs798TWcbf+b6FV9AzwR0z6PUEkFsoJbvapZg
-         y7ohUQrEYLTWG7PmYyp4bRYVbM9DxAHOythXWmAbfimsxpkwYmQh9GqerwLoqXY+xv0d
-         HyuA==
+        bh=/UCBuJ6xkxEerzGhdlDiqmS7Pgxh8w1udsC7S7TuXGE=;
+        b=Ak39IU+pJ7VZ9t1gJDz5WTqi/1sHN1s01/kIsGuc4UDpYmraISqCJZ2dK1QsPpm2ha
+         hBQP+Edf8WMQ5yYh9+zFFEfmHL2YfoHRYdOVBPPqSwDx4DPYNQFNRY3AGMdfMimiAz6Z
+         p8zCK2pNq51NuOXkauafCI93UozC2v3m7SwsgXUl89rocnlAOZwuRgktn4U+ryV5eak1
+         wtxYgXzOPGq1+R9AexmJBt6/3mE33L+toTDCKP5uZxNr5v2VVKQf1MY+zaMna9P1N4ct
+         e4WzKN/ecQJxPdSBkE0r3pQPIUIlL+wY8L1vczipsC9uQvkxq8oGMsBwBMYVTurDZVNF
+         5fxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2ZOwvyHQXbaX58WJhT28V5ADM/5kMlCPS95sd2FnPOc=;
-        b=A8zEuMK8FuQwjSW4G0+QzQHiRwwqwaqDfNRR+PEseUIoMLhU+yE6jPzYO9l1llxkAu
-         GTNZ+FOygQF6yJwZgIV55Byx9XpuuevHEMG3XXyifbBKF4/llmgZNdLSzyEwUi3DUj99
-         gkdMErRVdFILgGV/EwetezH3cIPydQvwxRYhrkodzNiyDQmli/vlB7DEoUIo4pB7TlmY
-         2N2vfSAOiKxMMdhd09MK4rb3nVZwoJlb6npMmUNFGA7EFwjcMIzBgMDMorMJMyYagI7U
-         2wN6w9Hvgba93eSnB81KctuCj/OanJLciO2+jS6IFZTR64Hpavi5YPsT1YSJouGRFHJn
-         qyNA==
-X-Gm-Message-State: AOAM533/X5SJRGcfBQTcGdk5W3ZGc8K7iCpLqoAGCcrBK3zPbtqds5EV
-        PnN1wiPlG6BBcXD+rmPhQ5rGft1AWz+mYptcPVc=
-X-Google-Smtp-Source: ABdhPJxU758RkBZ/O2QxTrPNj7psXvQCiiGr4jft1GqmdNYYQhO05MB+NmLN7+GVS+O1HU/qiu6IP+SG7ZAfWKhG0zc=
-X-Received: by 2002:a17:90b:1d0c:b0:1d2:a91e:24dc with SMTP id
- on12-20020a17090b1d0c00b001d2a91e24dcmr20035298pjb.165.1650879968814; Mon, 25
- Apr 2022 02:46:08 -0700 (PDT)
+        bh=/UCBuJ6xkxEerzGhdlDiqmS7Pgxh8w1udsC7S7TuXGE=;
+        b=Ce+4vymNCASUeKBuhgKCbCD7Gd1+tSylEUfQGKBkPlfRFjpxBLkBKrX3D6/DiBcXkZ
+         S9prpcKCXLz7IRsQ+ROufJNsplDCa9Jh1gftpj8MCxVbM9vVhfJfOlo1bbVvXT2lUZ/3
+         ZpirP7KGTRaVvWuLskcKsowJnzTAdDrv8Ep9eXjsrsDMnXGztoM5EcDuIJkfgQTrBdOL
+         iZtJKGy8gpm8l7z81tZ8pxIFjcHGeGqiveSQ+Ghq8owLwKAfD4578MeoF3wDPfXw9y5a
+         CvG6K6z1dxA8RezjgAYYyDMT2omrbUcRcRsbZnwCvWfyHp5cA47FXKiBnFvlGyUYjAci
+         67pg==
+X-Gm-Message-State: AOAM533zSJNXVhNgrdyHSypsBFR6VUP0FMjf9d2/5qyHMxhV6Nm1Krhb
+        Sb4oQmY48eonN5RwhmW7oGC8bZQEL6Yprx6IYUbFAg==
+X-Google-Smtp-Source: ABdhPJyRN76AXYcyABhOQF4BMUPMHIDvVHbTPWiQ2lDQXu7m/zQv1xFLKrE/kwv4n7EQEV4CzH5z0MhFKqrVWVxd7es=
+X-Received: by 2002:a67:ea51:0:b0:320:c3a9:414b with SMTP id
+ r17-20020a67ea51000000b00320c3a9414bmr4794766vso.81.1650880669666; Mon, 25
+ Apr 2022 02:57:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1220.git.1650331876.gitgitgadget@gmail.com>
- <5b90dfbf-b299-1388-f9b6-c610ce12bab7@gmail.com> <BYAPR06MB4517BCBBA837AA3004B2137DE6F29@BYAPR06MB4517.namprd06.prod.outlook.com>
-In-Reply-To: <BYAPR06MB4517BCBBA837AA3004B2137DE6F29@BYAPR06MB4517.namprd06.prod.outlook.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 25 Apr 2022 11:45:57 +0200
-Message-ID: <CAP8UFD1aAVCgEQvi4WjCiRUBWs6_u-7k-JWTz5b1N7xa=V8OdA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] [GSoC][Patch] area: t4202-log.sh, modernizing test script
-To:     Jack McGuinness <jmcguinness2@ucmerced.edu>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jack McGuinness via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20220415083058.29495-1-carenas@gmail.com> <RFC-cover-0.2-00000000000-20220415T101740Z-avarab@gmail.com>
+ <RFC-patch-1.2-76ed86bf88c-20220415T101740Z-avarab@gmail.com>
+In-Reply-To: <RFC-patch-1.2-76ed86bf88c-20220415T101740Z-avarab@gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 25 Apr 2022 11:57:38 +0200
+Message-ID: <CAFQ2z_O7ytx=AsXuJbYnOdMwT0u03sMP-ZjRRjt4HFn48HT-2g@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/2] reftable: remove the "return_block" abstraction
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, Apr 19, 2022 at 8:33 AM Jack McGuinness
-<jmcguinness2@ucmerced.edu> wrote:
+On Fri, Apr 15, 2022 at 12:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Hi, thank you for the advice. I wanted it to be that way myself, however =
-I was using gitgitgadget to email it, and my PR was composed of three diffe=
-rent commits, which caused it to automatically be formatted that way. I tri=
-ed finding a way to remove it, but I had no luck, If you know how I would l=
-ove to know!
+> This abstraction added in 1214aa841bc (reftable: add blocksource, an
+> abstraction for random access reads, 2021-10-07) has the caller
+> provide a "blockp->data", so there's not point in having the vtable
+> have a custom free() function.
+>
+> In addition this had what looked like a poor man's SANITIZE=3Daddress
+> doing a memset() to 0xff just before the data was free'd.
 
-I don't use gitgitgadget, so I cannot help you much on this. The
-approach I would take if I had to use it would be to find patches on
-the mailing list that were sent using gitgitgadget by experienced
-developers using it, then find and see how the corresponding PRs look
-like on GitHub, and try to imitate those PRs.
+>  void reftable_block_done(struct reftable_block *blockp)
+>  {
+> -       struct reftable_block_source source =3D blockp->source;
+> -       if (blockp && source.ops)
+> -               source.ops->return_block(source.arg, blockp);
+> +       FREE_AND_NULL(blockp->data);
 
-Anyway, it would be nice if you could try again taking into account
-Junio's suggestions in:
 
-https://lore.kernel.org/git/xmqqmtggs2nv.fsf@gitster.g/
+My thinking here is that we could mmap the reftable file to do reads.
+In that case, discarding the block would imply decreasing a refcount
+somewhere, rather than deallocating memory.
 
-I also have some suggestions below.
-
-> To: Jack McGuinness via GitGitGadget; git@vger.kernel.org
-> Cc: Jack McGuinness
-> Subject: Re: [PATCH 0/3] [GSoC][Patch] area: t4202-log.sh, modernizing te=
-st script
-
-This is your second attempt so it would be nice if it had a "v2"
-marker in it like "[PATCH v2 0/3] [GSoC]" instead of "[PATCH 0/3]
-[GSoC][Patch]". (Your next attempt should use "v3".)
-
-> On 4/19/22 08:31, Jack McGuinness via GitGitGadget wrote:
-> > Jack McGuinness (3):
-> >   [GSoC][Patch] area: t4202-log.sh, modernizing test script
-> >   [GSoC][Patch] area: t4202-log.sh, modernizing test script p2
-> >   [GSoC][Patch] area: t4202-log.sh, modernizing test script p3
-
-Junio already commented on the "area: t4202-log.sh" part of the
-subject, so I won't repeat him.
-
-About the "modernizing test script ..." part, it would be nice if the
-different patches would be a bit more specific about what each one is
-doing and "p2" or "p3" is redundant with the "2/3" or "3/3" added by
-GitGitGadget. For example it could be replaced with "remove whitespace
-after redirect" for the second patch.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
