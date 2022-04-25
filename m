@@ -2,204 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE561C433F5
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 17:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5EB0C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 17:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241210AbiDYRs4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 13:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40840 "EHLO
+        id S237973AbiDYRw2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 13:52:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235684AbiDYRsz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 13:48:55 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F2462E0
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 10:45:50 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DA4A11AB22;
-        Mon, 25 Apr 2022 13:45:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:cc:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=TBerMGVoo6S6W8+Rys7XvEVem
-        PuwCP00i/lSxJb1XaI=; b=LbDBY31k0GEmrvmoDuqxQZe59wLB2WJeCmH+N/AB0
-        OzSmOTt6+ukbQzKIZP8uoLtZUBtAQZ/seZAbav8Q34uYOo2hfK4cvuhXSnI7pK1T
-        QrJ9/j3HliP8YdnAhW61rJrk8xNSgPYt2Lb/9LSdUI0jn8lfBXmsWWG/KYic/qik
-        Z0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72FDF11AB1F;
-        Mon, 25 Apr 2022 13:45:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D08B111AB12;
-        Mon, 25 Apr 2022 13:45:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] 2.36 gitk/diff-tree --stdin regression fix
-References: <xmqqh76j3i3r.fsf@gitster.g>
-cc:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Date:   Mon, 25 Apr 2022 10:45:47 -0700
-Message-ID: <xmqqbkwpvyyc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S244061AbiDYRw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 13:52:27 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDFE26AF2
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 10:49:22 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id q20so9739069wmq.1
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 10:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=1Q+jt/6jT73OwpAg6pfX9a07dyWIbU4ZEY4qLFYxTic=;
+        b=V1d+Ndvb0mMg3O8vvw7fAOZ63M5/EGKnXSfMnthWB7RoA1IP1d/wA6rh9RBi1aQSUE
+         kipGa/ZuGy2TBf01moDg8aktw+cLNsQka/fL0k5C9xjAk3enY4TU9elMCkvxMhxqE89n
+         Q4XRfLMW2BIsX/WAfx8PTlk/1c/9yu4cMEx7rt0DIm+dem6ECyzJy9/PdTUxaFeW+5GK
+         ktbtGOSmsBn3V3iM+MehG1eFjiZntnfbvMyZ3MvYxK+0XYO+df9/f5v7DqlskjbIkh+z
+         zhl73kSrCqLlaNM200+aS31kSxrDszVKcsqybnLvLvJeuCBO7QvRDTEVscyc1SWpTxke
+         tGcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1Q+jt/6jT73OwpAg6pfX9a07dyWIbU4ZEY4qLFYxTic=;
+        b=Mv4C6jxcSQV6Pv/Spt2BxZfnKIbIKyX7JPxlksRGB89AOxbMNPCr+L+aoVRqa8Z2LS
+         nQPVjC8P5v+N0nWssX3PE+fetKIV5lYI74VZYmkyezwi0oVllZUlLc1JeuzbJeTGOkYc
+         Ep3K3/cTG4Gdi5suqH4OwQ5cFn3f7ZZDwXe8/JisEkohJPJRDJ3vGpkXlhtRNrs4E/qT
+         JlMKRII/hGvJv90AcPyZ/+YGpY4RXDWoeA8bqziKNbkcVb7jtUThvx5a61R7T47tUHcj
+         J9S7BUUIYQjPGyeKmKjpeFlbem/vErel+jEyBhQDm7krh3dQqSxe4SMf6QwnYHkcRICy
+         hBDg==
+X-Gm-Message-State: AOAM5318B1/V3pt7wo22O2uZdDKmY8pNVM0rfUnkZ8GHPB4J00SuIheV
+        EzjnI2YbEpVlt5ffwl7UcHvQCAqYWZo=
+X-Google-Smtp-Source: ABdhPJzYtz9aV8SI30GAmnR3H0As5LmT/HzZpNM5pKgfXCALvZZ4cgwNqoEjEOcwBWMjGHf4OkOXVw==
+X-Received: by 2002:a1c:f617:0:b0:383:5aab:9c51 with SMTP id w23-20020a1cf617000000b003835aab9c51mr26437703wmc.79.1650908960112;
+        Mon, 25 Apr 2022 10:49:20 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f189-20020a1c38c6000000b0038ff83b9792sm12035263wma.43.2022.04.25.10.49.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 10:49:19 -0700 (PDT)
+Message-Id: <pull.1171.git.1650908957.gitgitgadget@gmail.com>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 25 Apr 2022 17:49:10 +0000
+Subject: [PATCH 0/7] Sparse index: integrate with 'git stash'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8AD6C368-C4BF-11EC-B743-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     derrickstolee@github.com, newren@gmail.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This reverts commit 244c2724 (diff.[ch]: have diff_free() call
-clear_pathspec(opts.pathspec), 2022-02-16).
+This series, in combination with the sparse index integrations of reset [1],
+update-index [2], checkout-index [2], clean [2], and read-tree [3], allows
+most subcommands of 'git stash' to use the sparse index end-to-end without
+index expansion.
 
-The diff_free() call is to be used after a diffopt structure is used
-to compare two sets of paths to release resources that were needed
-only for that comparison, and keep the data such as pathspec that
-are reused by the diffopt structure to make the next and subsequent
-comparison (imagine "git log -p -<options> -- <pathspec>" where the
-options and pathspec are kept in the diffopt structure, used to
-compare HEAD and HEAD~, then used again when HEAD~ and HEAD~2 are
-compared).
+Like the earlier series, this series starts with new tests ensuring
+compatibility of the sparse index with non-sparse index full and sparse
+checkouts [1/7]. Next, sparse index is trivially enabled [2/7].
+Functionally, sparse index-enabled sparse-checkouts remain compatible with
+non-sparse index sparse-checkouts, but there are still some cases where the
+index (or a temporary index) is expanded unnecessarily. These cases are
+fixed in three parts:
 
-We by mistake started clearing the pathspec in diff_free(), so
-programs like gitk that runs
+ * First, 'git stash -u' is made sparse index-compatible by ensuring the
+   "temporary" index holding the stashed, untracked files is created as a
+   sparse index whenever possible (per repo settings &
+   'is_sparse_index_allowed()'). Patch [3/7] exposes
+   'is_sparse_index_allowed()' to files outside of 'sparse-index.c', then
+   patch [4/7] uses that function to mark the temporary index sparse when
+   appropriate.
+ * Next, 'git stash (apply|pop)' are made sparse index-compatible by
+   changing their internal "merge" function (executed via
+   'merge_recursive_generic()') from 'merge_recursive()' to
+   'merge_ort_recursive()'. This requires first allowing
+   'merge_recursive_generic()' to accept a merge function as an input
+   (rather than hardcoding use of 'merge_recursive()') in patch [5/7], then
+   changing the call in 'stash.c' to specify 'merge_ort_recursive()' in
+   patch [6/7]. See note [4] for possible alternate implementations.
+ * Finally, while patches 5 & 6 avoid index expansion for most cases of 'git
+   stash (apply|pop)', applying a stash that includes untracked files still
+   expands the index. This is a result of an internal 'read-tree' execution
+   (specifically in its 'unpack_trees' call) creating a result index that is
+   never sparse in-core, thus forcing the index to be unnecessarily
+   collapsed and re-expanded in 'do_write_locked_index()'. In patch [7/7],
+   'unpack_trees' is updated to set the default sparsity of the resultant
+   index to "sparse" if allowed by repo settings and
+   'is_sparse_index_allowed()' (similar to the change in patch 4).
 
-    git diff-tree --stdin -- <pathspec>
+Performance results (from the 'p2000' tests):
 
-downstream of a pipe, processing one commit after another, started
-showing irrelevant comparison outside the given <pathspec> from the
-second commit.
+(git stash &&
+ git stash pop)              master            this series
+---------------------------------------------------------------------
+full-v3                      4.07(2.42+1.34)   3.98(2.42+1.32) -2.2%
+full-v4                      4.05(2.46+1.31)   4.00(2.49+1.29) -1.2%
+sparse-v3                    7.48(4.81+2.57)   1.53(0.26+1.61) -79.5%
+sparse-v4                    7.35(4.74+2.54)   1.59(0.27+1.63) -78.4%
 
-The buggy commit may have been hiding the places where diff
-machinery is used only once and called diff_free() to release that
-per-comparison resources, but forgetting to call clear_pathspec() to
-release the resource held for the (potentially) repeated comparison,
-and we eventually would want to add clear_pathspec() to clear
-resources to be released after a (potentially repeated) diff session
-is done (if there are similar resources other than pathspec that
-need to be cleared at the end, we should then know where to clear
-them), but that is "per program invocation" leak that will be
-cleaned up by calling exit(3) and of lower priority than fixing this
-behavior-breaking regression.
-
-Reported-by: Matthias A=C3=9Fhauer <mha1993@live.de>
-Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- add-interactive.c | 6 +++---
- blame.c           | 3 +++
-
- builtin/reset.c   | 1 +
- diff.c            | 1 -
- notes-merge.c     | 2 ++
- 5 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/add-interactive.c b/add-interactive.c
-index e1ab39cce3..6498ae196f 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -797,14 +797,14 @@ static int run_revert(struct add_i_state *s, const =
-struct pathspec *ps,
- 	diffopt.flags.override_submodule_config =3D 1;
- 	diffopt.repo =3D s->r;
-=20
--	if (do_diff_cache(&oid, &diffopt)) {
--		diff_free(&diffopt);
-+	if (do_diff_cache(&oid, &diffopt))
- 		res =3D -1;
--	} else {
-+	else {
- 		diffcore_std(&diffopt);
- 		diff_flush(&diffopt);
- 	}
- 	free(paths);
-+	clear_pathspec(&diffopt.pathspec);
-=20
- 	if (!res && write_locked_index(s->r->index, &index_lock,
- 				       COMMIT_LOCK) < 0)
-diff --git a/blame.c b/blame.c
-index 401990726e..206c295660 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1403,6 +1403,7 @@ static struct blame_origin *find_origin(struct repo=
-sitory *r,
- 		}
- 	}
- 	diff_flush(&diff_opts);
-+	clear_pathspec(&diff_opts.pathspec);
- 	return porigin;
- }
-=20
-@@ -1446,6 +1447,7 @@ static struct blame_origin *find_rename(struct repo=
-sitory *r,
- 		}
- 	}
- 	diff_flush(&diff_opts);
-+	clear_pathspec(&diff_opts.pathspec);
- 	return porigin;
- }
-=20
-@@ -2326,6 +2328,7 @@ static void find_copy_in_parent(struct blame_scoreb=
-oard *sb,
- 	} while (unblamed);
- 	target->suspects =3D reverse_blame(leftover, NULL);
- 	diff_flush(&diff_opts);
-+	clear_pathspec(&diff_opts.pathspec);
- }
-=20
- /*
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 24968dd628..b97745ee94 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -274,6 +274,7 @@ static int read_from_tree(const struct pathspec *path=
-spec,
- 		return 1;
- 	diffcore_std(&opt);
- 	diff_flush(&opt);
-+	clear_pathspec(&opt.pathspec);
-=20
- 	return 0;
- }
-diff --git a/diff.c b/diff.c
-index 0aef3db6e1..c862771a58 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6345,7 +6345,6 @@ void diff_free(struct diff_options *options)
-=20
- 	diff_free_file(options);
- 	diff_free_ignore_regex(options);
--	clear_pathspec(&options->pathspec);
- }
-=20
- void diff_flush(struct diff_options *options)
-diff --git a/notes-merge.c b/notes-merge.c
-index 7ba40cfb08..b4a3a903e8 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -175,6 +175,7 @@ static struct notes_merge_pair *diff_tree_remote(stru=
-ct notes_merge_options *o,
- 		       oid_to_hex(&mp->remote));
- 	}
- 	diff_flush(&opt);
-+	clear_pathspec(&opt.pathspec);
-=20
- 	*num_changes =3D len;
- 	return changes;
-@@ -260,6 +261,7 @@ static void diff_tree_local(struct notes_merge_option=
-s *o,
- 		       oid_to_hex(&mp->local));
- 	}
- 	diff_flush(&opt);
-+	clear_pathspec(&opt.pathspec);
- }
-=20
- static void check_notes_merge_worktree(struct notes_merge_options *o)
---=20
-2.36.0-194-g075c326b54
+(echo >>new &&
+ git stash -u &&
+ git stash pop)              master            this series
+---------------------------------------------------------------------
+full-v3                      4.21(2.62+1.45)   4.11(2.55+1.44) -2.4%
+full-v4                      4.11(2.51+1.41)   4.02(2.49+1.41) -2.2%
+sparse-v3                    7.35(4.64+2.66)   1.70(0.32+1.64) -76.9%
+sparse-v4                    7.74(4.87+2.83)   1.70(0.32+1.66) -78.0%
 
 
+[1]
+https://lore.kernel.org/git/pull.1048.v6.git.1638201164.gitgitgadget@gmail.com/
+[2]
+https://lore.kernel.org/git/pull.1109.v2.git.1641924306.gitgitgadget@gmail.com/
+[3]
+https://lore.kernel.org/git/pull.1157.v3.git.1646166271.gitgitgadget@gmail.com/
+[4] I went with changing 'stash' to always use 'merge-ort' in
+'merge_recursive_generic()' as a sort of "middle ground" between "replace
+'merge_recursive()' with 'merge_ort_recursive()' in all of its hardcoded
+internal usage" and "only use 'merge-ort' if using a sparse index in 'git
+stash', otherwise 'merge-recursive'". The former would extend the use of
+'merge-ort' to 'git am' and 'git merge-recursive', whereas the latter is a
+more cautious/narrowly-focused option. If anyone has any other thoughts, I'm
+interested in hearing them.
+
+Thanks!
+
+-Victoria
+
+Victoria Dye (7):
+  stash: expand sparse-checkout compatibility testing
+  stash: integrate with sparse index
+  sparse-index: expose 'is_sparse_index_allowed()'
+  read-cache: set sparsity when index is new
+  merge-recursive: add merge function arg to 'merge_recursive_generic'
+  stash: merge applied stash with merge-ort
+  unpack-trees: preserve index sparsity
+
+ builtin/am.c                             |  2 +-
+ builtin/merge-recursive.c                |  2 +-
+ builtin/stash.c                          |  6 +-
+ merge-ort.c                              |  3 +-
+ merge-recursive.c                        |  4 +-
+ merge-recursive.h                        |  9 ++-
+ read-cache.c                             | 18 ++++-
+ sparse-index.c                           |  2 +-
+ sparse-index.h                           |  1 +
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 94 +++++++++++++++++++++---
+ unpack-trees.c                           |  6 ++
+ 12 files changed, 131 insertions(+), 18 deletions(-)
+
+
+base-commit: 6cd33dceed60949e2dbc32e3f0f5e67c4c882e1e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1171%2Fvdye%2Fsparse%2Fstash-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1171/vdye/sparse/stash-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1171
+-- 
+gitgitgadget
