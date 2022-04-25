@@ -2,142 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA360C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 20:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85533C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 20:56:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239184AbiDYUcU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 16:32:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46164 "EHLO
+        id S239512AbiDYU7f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 16:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245401AbiDYUcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 16:32:17 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8E831509
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 13:29:06 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso283224wma.0
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 13:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/oIz52aIHjAlcJXU74vMc+4p3pNDrUUIIa8JYX462jg=;
-        b=bY4vbHjZku82qeHoN3pwu9XMeSV+YrsQ+Qfebwisxf8+t4dJPvHtlIdsl/EKKySWad
-         qCiWxaLu1Dyhjdl4fmtcbMl+bM7rkHNibHdv1hy1AguIrB9CyJRUtK0MDQnTC4KH++67
-         hixLGsIrtxQIv+TZ/UPGPJYn5uQ/a8mNNW1Bvk30+eXqBIjdn9/6FoDCaHQvFJ+Pwqfs
-         vQ3V18a7bHNm/6xHiD1K2TsyjSZxlgG5PjU9wuKey4IiYTI7K6ZsOuuMcpKp8HS0UXDf
-         /a6BinsETnawil7Y5t61pDpRGPXLjPCoFmSa3xZ944m0mL9iZ3GURthaE/lGaIPw40Bs
-         IVgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/oIz52aIHjAlcJXU74vMc+4p3pNDrUUIIa8JYX462jg=;
-        b=Ch/B97871X8ys2G4d4Os6/qKjQq3m35omqBRwMJwrIb3G7l6HTGhpPtC1Cxehk6yO0
-         H8Z25qCH3c0FFFFySN4xvr722y/bVOUjVMiGfuITOdUmLS5G9Oqk0UGUx7pHlP/TMgIM
-         pDiQCCIIRnrZ9Hew97J5RfVBaxLVuppBWzOp7MjDuJ1jYKhijl9VlNuaWZX239graWXu
-         3GVY2ZhOXFiC2CQo+hK9mQ6+vSKqTCoY5EwK7iKGHS716OlHDvXiG3SL3UIGm5xv+rRj
-         EEBMfpn+P9XrxHejX1SYZQgqRslmo+1Whyv08dGEDjYDwvb/5Hcnusq9exNwWkDsRv9U
-         aiSQ==
-X-Gm-Message-State: AOAM530cA0zbP9fAQbc7YN9YTM/WXQPfeASlVi1RWCH/mG+UqoVlaEsh
-        L2801t0i1TAK4bIGpfZkeKE=
-X-Google-Smtp-Source: ABdhPJzQCbcgKMSgXwPdq8CMd8YzwszUMvd5zc4+AmyLzxFaE9jvhpFEDoNgR0HZCdqhmX4DLylARg==
-X-Received: by 2002:a05:600c:4f08:b0:391:fe3c:40e6 with SMTP id l8-20020a05600c4f0800b00391fe3c40e6mr27336651wmq.34.1650918544737;
-        Mon, 25 Apr 2022 13:29:04 -0700 (PDT)
-Received: from localhost.localdomain (123.79.195.77.rev.sfr.net. [77.195.79.123])
-        by smtp.gmail.com with ESMTPSA id h9-20020adfa4c9000000b0020ae2a771fdsm876256wrb.72.2022.04.25.13.29.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Apr 2022 13:29:04 -0700 (PDT)
-From:   Jonathan <git.jonathan.bressat@gmail.com>
-To:     gitster@pobox.com
-Cc:     Jonathan.bressat@etu.univ-lyon1.fr, Matthieu.Moy@univ-lyon1.fr,
-        cogoni.guillaume@gmail.com, git.jonathan.bressat@gmail.com,
-        git@vger.kernel.org, guillaume.cogoni@gmail.com
-Subject: [PATCH v1 2/2] merge with untracked file that are the same without failure
-Date:   Mon, 25 Apr 2022 22:27:21 +0200
-Message-Id: <20220425202721.20066-3-git.jonathan.bressat@gmail.com>
-X-Mailer: git-send-email 2.35.1.7.gc8609858e0.dirty
-In-Reply-To: <20220425202721.20066-1-git.jonathan.bressat@gmail.com>
-References: <xmqqfsmg97ac.fsf@gitster.g>
- <20220425202721.20066-1-git.jonathan.bressat@gmail.com>
+        with ESMTP id S231753AbiDYU7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 16:59:34 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987171DA57
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 13:56:27 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E5FF11CF09;
+        Mon, 25 Apr 2022 16:56:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qAQwvfo1qi87HnPF2p1S6sGRClgJAxauCr4hsW
+        76+J8=; b=ykxufp6lHtLL0Mo4NnFi8ucAgosfBTM/0G/+QtDE4TcMXWmdoX5l0f
+        9XJyLCyX8VRDmidZGGb2wO1B/Y9EFU2YBULiPMVyNhQTpMB48FqUUcxQtalrj6lQ
+        X42laoTupDGSHCCCuwCYwg8syx+QvolhXujrQ+fykFYKl45Skj0uQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7663E11CF08;
+        Mon, 25 Apr 2022 16:56:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E2B2211CF07;
+        Mon, 25 Apr 2022 16:56:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v2] submodule--helper: fix initialization of
+ warn_if_uninitialized
+References: <pull.1258.git.git.1650781575173.gitgitgadget@gmail.com>
+        <pull.1258.v2.git.git.1650890741430.gitgitgadget@gmail.com>
+        <xmqq35i1vx3y.fsf@gitster.g>
+Date:   Mon, 25 Apr 2022 13:56:24 -0700
+In-Reply-To: <xmqq35i1vx3y.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        25 Apr 2022 11:25:37 -0700")
+Message-ID: <xmqqtuagvq4n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2BDCD300-C4DA-11EC-8085-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In unpack-trees.c in the check_ok_to_remove() function: add a new
-statement, if the file has the same content as the merged file, it
-can be removed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-test this new behaviour in t7615.
+> Is this a fix we can protect from future breakge by adding a test or
+> tweaking an existing test?  It is kind of surprising if we did not
+> have any test that runs "git submodule update" in a superproject
+> with initialized and uninitialized submodule(s) and make sure only
+> the initialized ones are updated.  It may be the matter of examining
+> the warning output that is currently ignored in such a test, if
+> there is one.
 
-Signed-off-by: Jonathan <git.jonathan.bressat@gmail.com>
-Signed-off-by: COGONI Guillaume <cogoni.guillaume@gmail.com>
----
- t/t7615-merge-untracked.sh | 8 ++++----
- unpack-trees.c             | 5 ++++-
- 2 files changed, 8 insertions(+), 5 deletions(-)
+Here is a quick-and-dirty one I came up with.  The superproject
+"super" has a handful of submodules ("submodule" and "rebasing"
+being two of them), so the new tests clone the superproject and
+initializes only one submodule.  Then we see how "submodule update"
+with pathspec works with these two submodules (one initialied and
+the other not).  In another test, we see how "submodule update"
+without pathspec works.
 
-diff --git a/t/t7615-merge-untracked.sh b/t/t7615-merge-untracked.sh
-index 053e6b80ee..99f8bae4c0 100755
---- a/t/t7615-merge-untracked.sh
-+++ b/t/t7615-merge-untracked.sh
-@@ -12,13 +12,13 @@ test_expect_success 'setup' '
- 	git checkout -b A
+I'll queue this on top of your fix for now tentatively.  If nobody
+finds flaws in them, I'll just squash it in soonish before merging
+the whole thing for the maintenance track.
+
+Thanks.
+
+ t/t7406-submodule-update.sh | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git c/t/t7406-submodule-update.sh w/t/t7406-submodule-update.sh
+index 000e055811..43f779d751 100755
+--- c/t/t7406-submodule-update.sh
++++ w/t/t7406-submodule-update.sh
+@@ -670,6 +670,39 @@ test_expect_success 'submodule update --init skips submodule with update=none' '
+ 	)
  '
  
--test_expect_success 'fastforward fail when untracked file has the same content' '
-+test_expect_success 'fastforward overwrite untracked file that has the same content' '
- 	test_when_finished "git branch -D B && git reset --hard init && git clean --force" &&
- 	git checkout -b B &&
- 	test_commit --no-tag "tracked" file "content" &&
- 	git checkout A &&
- 	echo content >file &&
--	test_must_fail git merge B
-+	git merge B
- '
- 
- test_expect_success 'fastforward fail when untracked file has different content' '
-@@ -30,14 +30,14 @@ test_expect_success 'fastforward fail when untracked file has different content'
- 	test_must_fail git merge B
- '
- 
--test_expect_success 'normal merge fail when untracked file has the same content' '
-+test_expect_success 'normal merge overwrite untracked file that has the same content' '
- 	test_when_finished "git branch -D B && git reset --hard init && git clean --force" &&
- 	git checkout -b B &&
- 	test_commit --no-tag "tracked" file "content" fileB "content" &&
- 	git switch A &&
- 	test_commit --no-tag "exA" fileA "content" &&
- 	echo content >file &&
--	test_must_fail git merge B
-+	git merge B
- '
- 
- test_expect_success 'normal merge fail when untracked file has different content' '
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 360844bda3..61e06c04be 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2257,6 +2257,8 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 	if (result) {
- 		if (result->ce_flags & CE_REMOVE)
- 			return 0;
-+	} else if (!ie_modified(&o->result, ce, st, 0)) {
-+		return 0;
- 	}
- 
- 	return add_rejected_path(o, error_type, name);
-@@ -2264,7 +2266,8 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 
- /*
-  * We do not want to remove or overwrite a working tree file that
-- * is not tracked, unless it is ignored.
-+ * is not tracked, unless it is ignored and unless it has the same
-+ * content than the merged file.
-  */
- static int verify_absent_1(const struct cache_entry *ce,
- 			   enum unpack_trees_error_types error_type,
--- 
-2.35.1.7.gc8609858e0.dirty
-
++test_expect_success 'submodule update with pathspec warns against uninitialized ones' '
++	test_when_finished "rm -fr selective" &&
++	git clone super selective &&
++	(
++		cd selective &&
++		git submodule init submodule &&
++
++		git submodule update submodule 2>err &&
++		! grep "Submodule path .* not initialized" err &&
++
++		git submodule update rebasing 2>err &&
++		grep "Submodule path .rebasing. not initialized" err &&
++
++		test_path_exists submodule/.git &&
++		test_path_is_missing rebasing/.git
++	)
++
++'
++
++test_expect_success 'submodule update without pathspec updates only initialized ones' '
++	test_when_finished "rm -fr selective" &&
++	git clone super selective &&
++	(
++		cd selective &&
++		git submodule init submodule &&
++		git submodule update 2>err &&
++		test_path_exists submodule/.git &&
++		test_path_is_missing rebasing/.git &&
++		! grep "Submodule path .* not initialized" err
++	)
++
++'
++
+ test_expect_success 'submodule update continues after checkout error' '
+ 	(cd super &&
+ 	 git reset --hard HEAD &&
