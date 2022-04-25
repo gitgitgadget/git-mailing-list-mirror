@@ -2,150 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E7C5C433F5
-	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 09:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B3CAC433F5
+	for <git@archiver.kernel.org>; Mon, 25 Apr 2022 09:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238634AbiDYJja (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Apr 2022 05:39:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33126 "EHLO
+        id S238668AbiDYJtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Apr 2022 05:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241698AbiDYJiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Apr 2022 05:38:55 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CCCE13F75
-        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:34:10 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F26312DAA6;
-        Mon, 25 Apr 2022 05:34:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=1CqhpLdgKqm14bGF2/ctA9zmhq0/jS2N6e9G76pYXsw=; b=BCYn
-        i8VyTpdLY5yDT3/biM6ukyYe5t4/Ot0R1/BVhf5xY5P9Dnzl8wjDraxQGbCoZCwQ
-        wt58PWqh7XrmZwSNu0ziWWHmXCiNAFUAVEYn3R4H3XZ0/BCpoxErhu7wthXH5fUa
-        AN2tHQedLR+/BY7jL4PLhrID8DmnBD7EEynBhyc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2568612DAA5;
-        Mon, 25 Apr 2022 05:34:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05A5912DAA3;
-        Mon, 25 Apr 2022 05:34:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH] submodule--helper: fix initialization of
- warn_if_uninitialized
-References: <pull.1258.git.git.1650781575173.gitgitgadget@gmail.com>
-Date:   Mon, 25 Apr 2022 02:34:04 -0700
-Message-ID: <xmqqee1ly0ab.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234226AbiDYJs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Apr 2022 05:48:59 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380716559
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:45:55 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id c23so25803591plo.0
+        for <git@vger.kernel.org>; Mon, 25 Apr 2022 02:45:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=D4xEMoBxHNKX9Ft+9r0RWnEGFN+vDMhu6pprGatFYBA=;
+        b=iR+aSBJ5KoGcyqAFbLqOPeIzKildWOwn9NqVJ5QcXRpilqe53lwwCsAbXGGTuWbUBa
+         BBk6tX6YbNO6AXucGjs4EWKaHHXgZ+/+cEqwUYfdslKac45Owm2elGDq4ICtREH1sAsp
+         4vhUiO4c8F9BGQDiCDmO12Ejxfq1Y02auhWreNyTlOm5ho7Js2uUzAFznnH40uPOcZDq
+         2mGFCpJGifQdCCUuzCCeo1iQw0GLyU/RBYpQ5cjC6V9WD63HWlQPOhtWV5lXWi5A+HAS
+         MGQjfj+ExryTBgkhtUMyqcnbAaRzSTJ9SWQgM9igbJfJssoIyk9IksPnaa9IcAVOrIEC
+         dYPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=D4xEMoBxHNKX9Ft+9r0RWnEGFN+vDMhu6pprGatFYBA=;
+        b=UZrnrRpKbuP1swvoI6XEGII+jTV+nh9u/DQ+4wjjQLHu3Liw0pt3e134cwfDsStRWP
+         PSuyiPDpdSrqbvtnUI7eESDWHbzy/MOrxEFwBsxmOsKzN3yRqyBRRmRO6CGQ3dosKP1o
+         zUFref8wcevEdR6iWJhP6MyWRzYKk1iqVyFDUjVJL6qYJw5LvGf0TJFHXBZlTrTa2Y57
+         1930pFwo/jNEh2f/+QnrdhWHoT5CJHrskrktUuSmhMfAEK9FlKivRrqvIijnuapAj+r/
+         gtBpkAI6oa9n0sqWZkYvFZsvePUJEX2MyESM8hcjYW3F2D/Z4ciFjfMnXEHlY/R8hMjG
+         2Orw==
+X-Gm-Message-State: AOAM531w0Kv3bC2+DjZJWT9HKvHnvCNH+EN4z32u9AlHRHyipSxu6Eb+
+        BNYwQzvmwX1ZEMmd6TqkGUP9xSqu8UJ04p0RV10=
+X-Google-Smtp-Source: ABdhPJzrcxC3li7OAHKTgIKXpB/6uikpA9SchX6S/G8H4GBYl+dcqEXXqJcX88nXVvWbIkh/b7kSvA==
+X-Received: by 2002:a17:902:7001:b0:158:43ba:56cc with SMTP id y1-20020a170902700100b0015843ba56ccmr16539143plk.135.1650879954595;
+        Mon, 25 Apr 2022 02:45:54 -0700 (PDT)
+Received: from kong-HP (014136220210.static.ctinets.com. [14.136.220.210])
+        by smtp.gmail.com with ESMTPSA id h10-20020a056a001a4a00b004f7c76f29c3sm11169279pfv.24.2022.04.25.02.45.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Apr 2022 02:45:54 -0700 (PDT)
+Date:   Mon, 25 Apr 2022 17:45:50 +0800
+From:   FanJun Kong <bh1scw@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org
+Subject: Re: help for git format-patch lost diffstat
+Message-ID: <20220425094550.e6vw6xwtk4dcstyd@kong-HP>
+References: <20220424064114.nwzldz5s2bnkrlu5@kong-HP>
+ <CAPig+cQsGZ5Uw13vr5r_SZ9APZwovtxSW5N4QGpieHRx1_6zRg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9CC1F08-C47A-11EC-99C6-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQsGZ5Uw13vr5r_SZ9APZwovtxSW5N4QGpieHRx1_6zRg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 25 Apr 22 ◦ 04:09, Eric Sunshine wrote:
+> On Sun, Apr 24, 2022 at 9:00 AM FanJun Kong <bh1scw@gmail.com> wrote:
+> > First, I created two commits to a demo project.
+> >
+> > when I use command:
+> > git format-patch --cover-letter -1
+> > [...]
+> > FanJun Kong (1):
+> >   First commit.
+> >    1.c | 4 ++++
+> >    1 file changed, 4 insertions(+)
+> >
+> > ok, you can see the cover letter has diffstat, just above "--".
+> >
+> > git format-patch --cover-letter -2
+> > [...]
+> > FanJun Kong (2):
+> >   First commit.
+> >   Second commit.
+> >
+> > Comparing with last command, I just want to get 2 patches,
+> > but this time the diffstat is missing.
+> >
+> > I am not sure if this is a bug or I miss some options.
+> 
+> This is expected behavior according to this code in
+> make_cover_letter() in builtin/log.c:
+> 
+>     /* We can only do diffstat with a unique reference point */
+>     if (origin)
+>         show_diffstat(rev, origin, head);
+> 
+> The problem is that when you format both patches of a two-commit
+> repository, `origin` is NULL because there is no commit preceding the
+> initial commit; the initial commit is the root of the history. Thus,
+> there is nothing prior to the first patch against which to create a
+> diffstat.
+> 
+Very clear explanation, yeah~
+> I have not investigated, but it may be possible to teach
+> show_diffstat() how to generate a diffstat against the "emptiness"
+> preceding the initial commit, but nobody has done so yet. Perhaps this
+> would be a good project for someone interested in contributing to the
+> project (or perhaps not -- as mentioned, I haven't investigated how
+> hard this would be).
 
-> From: Orgad Shaneh <orgads@gmail.com>
->
-> This field is supposed to be off by default, and it is only enabled when
-> running `git submodule update <path>`, and path is not initialized.
-
-"is supposed to be": can you substantiate it with evidence and
-logic?
-
-One easy way to explain the above is to examine what the default
-value was before the problematic commit, and go back from that
-commit to see how the default was decided, and examine how the
-member is used.
-
-> Commit c9911c9358 changed it to enabled by default. This affects
-> for example git checkout, which displays the following warning for
-> each uninitialized submodule:
->
-> Submodule path 'sub' not initialized
-> Maybe you want to use 'update --init'?
-
-We refer to an existing commit like this:
-
-    c9911c93 (submodule--helper: teach update_data more options,
-    2022-03-15) changed it to be enabled by default.
-
-So, taking the above together:
-
-    The .warn_if_uninitialized member was introduced by 48308681
-    (git submodule update: have a dedicated helper for cloning,
-    2016-02-29) to submodule_update_clone struct and initialized to
-    false.  When c9911c93 (submodule--helper: teach update_data more
-    options, 2022-03-15) moved it to update_data struct, it started
-    to initialize it to true but this change was not explained in
-    its log message.
-
-    The member is set to true only when pathspec was given, and is
-    used when a submodule that matched the pathspec is found
-    uninitialized to give diagnostic message.  "submodule update"
-    without pathspec is supposed to iterate over all submodules
-    (i.e. without pathspec limitation) and update only the
-    initialized submodules, and finding uninitialized submodules
-    during the iteration is a totally expected and normal thing that
-    should not be warned.
-
-    Fix this regression by initializing the member to 0.
-
-> Amends c9911c9358e611390e2444f718c73900d17d3d60.
-
-In the context of "git", the verb "amend" has a specific meaning
-(i.e. "commit --amend"), and we should refrain from using it when we
-are doing something else to avoid confusing readers.
-
-We could say
-
-    Fix this problem that was introduced by c9911c93
-    (submodule--helper: teach update_data more options, 2022-03-15)
-
-but it is not necessary, as long as we explained how that commit
-broke the code to justify this change (which we should do anyway).
-
->
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> ---
->     submodule--helper: fix initialization of warn_if_uninitialized
-> ...
->     Signed-off-by: Orgad Shaneh orgads@gmail.com
-
-Here under three-dash line is where you would write comment meant
-for those who read the message on the list that are not necessarily
-meant to be part of resulting commit.  Repeating the same message as
-the log message is not desired here.
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1258%2Forgads%2Fsub-no-warn-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1258/orgads/sub-no-warn-v1
-> Pull-Request: https://github.com/git/git/pull/1258
->
->  builtin/submodule--helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 2c87ef9364f..b28112e3040 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2026,7 +2026,7 @@ struct update_data {
->  	.references = STRING_LIST_INIT_DUP, \
->  	.single_branch = -1, \
->  	.max_jobs = 1, \
-> -	.warn_if_uninitialized = 1, \
-> +	.warn_if_uninitialized = 0, \
->  }
-
-This is not wrong per-se, but omitting the mention of the member
-altogether and letting the compiler initialize it to 0 would
-probably be a better fix.
-
-Thanks.
+From my point of view, it is a bug, but it doesn't affect too much.
+I agree with your suggestion, this is a nice chance to learn how
+to submit patches to upstream.
