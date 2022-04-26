@@ -2,163 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 616E8C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 15:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 404C4C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 16:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352674AbiDZQAw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 12:00:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54720 "EHLO
+        id S1352845AbiDZQO7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 12:14:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347456AbiDZQAu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 12:00:50 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C522638787
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 08:57:42 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id v64-20020a1cac43000000b0038cfd1b3a6dso1786160wme.5
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 08:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=LJpLF77D5XfsIhB24X/X1uC+v3/NiFG9hlIJNl1l2tk=;
-        b=H5PwHSQq2/V5ahKpIiAIBJtFRYAWCg8Ebb3o6TFh7F8TNRAAaD+c7f93j1Hn6O19tR
-         N8QUOSqvxeKmZ0Re4zbYiUtrGUj1iSPV197Sv0SY7rWYooieIce+6gwTrT/q2UeWzcDE
-         69N/s9px2BXJjA69CA1NznHiuQs85ewkz1COTawRPrgyNVtNCwbSE6Dw11sIh5Z3bOqJ
-         joIreHvJM2cocbUqFHqTQLWtm6eC49vUpGB1QN5AVRzAs8tePK9VCOLIYZw0rohKtKOM
-         ntCPE1iQbdBsDexinq5wOwk9FO0UFnvAbHc0DMa5G/2Cio1ZpaCjsBSyYn9gFEU6E3n9
-         wMkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LJpLF77D5XfsIhB24X/X1uC+v3/NiFG9hlIJNl1l2tk=;
-        b=hhQKXscelmKV9lBIGE2fCCDNRDJrhWHo/VdehVSVnyC9ibIHoldD70zsdTJDB8ZFNY
-         f1Mz/+2c/g8QHqyUCBhd81zIsRpE88lfe5kt8QJ/mAoDx3NIQ9c3ZNZs3GhJM8VCTgso
-         yWGZuzPueJA/C5zOzN4t7y6Hn0WVXE3Xhg51MahmJmXRVNu8cRmN+1RPgCDzHp17NWPw
-         RcNYUzmSiIoKqVjhdeqiuGNtELLMt7vQJc2RPx2t0n1le85H2iCXMOAAxtQbDAWhLQyR
-         YICxX8TuwVB5ur5TpCfibk1J9fBq3bQt8q/YCJH84uBRXwDFNx2paAVtjbP8rT+KN659
-         9WqA==
-X-Gm-Message-State: AOAM530OU/PJO2LC4K9F59CraZj7PIeS3yLwKUXO/3eOArDULoSYmWfg
-        b4Y6To1bSpvRa56nJtbleoKsBBw5x4s=
-X-Google-Smtp-Source: ABdhPJy6wru2PG6ZjqUKfMycgnIKg14bLF3J9cUcZUzaMUrlVGt7nVq/oXM98EgNJP6DGCJOi2m04Q==
-X-Received: by 2002:a05:600c:20f:b0:38e:b5a6:7b01 with SMTP id 15-20020a05600c020f00b0038eb5a67b01mr31044027wmi.168.1650988660960;
-        Tue, 26 Apr 2022 08:57:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i11-20020a5d584b000000b0020a8d859e5fsm12430548wrf.10.2022.04.26.08.57.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 08:57:40 -0700 (PDT)
-Message-Id: <pull.1225.v2.git.1650988659280.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1225.git.1650970894143.gitgitgadget@gmail.com>
-References: <pull.1225.git.1650970894143.gitgitgadget@gmail.com>
-From:   "Drew Green via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Apr 2022 15:57:39 +0000
-Subject: [PATCH v2] Added Curl Option to Override Request Method v2
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S1352846AbiDZQO6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 12:14:58 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75319A9B4
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 09:11:50 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE26C183DA6;
+        Tue, 26 Apr 2022 12:11:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=nRdt/6xwo1nJ
+        j6FqlIGQ1XVFrm1pf5FbWVuHlcfXSY8=; b=cfwqqNn670F5syxa8w2e0hVLUa4L
+        gTS3RIleHXVcepXidTcARwlujUHjYuT+l2eozEobYXxHdG69mt2M1O8vBrvsJ+S9
+        ppt0ySY9erpETx8O1rf1OLn/mhZ/u3nR0E+iaDPqildpal0n0B8Jx7i7wC0SaZqW
+        ap2ZzYySBOu5ye4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C653D183DA5;
+        Tue, 26 Apr 2022 12:11:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2BA7C183DA4;
+        Tue, 26 Apr 2022 12:11:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Drew Green <agreenbhm@gmail.com>, agreenbhm <agreenbhm@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Matthias =?utf-8?Q?A=C3=9Fh?= =?utf-8?Q?auer?= 
+        <mha1993@live.de>, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH] 2.36 gitk/diff-tree --stdin regression fix
+References: <xmqqh76j3i3r.fsf@gitster.g> <xmqqbkwpvyyc.fsf@gitster.g>
+        <83a76d46-5069-d6c7-b8b3-f3a063637abb@gmail.com>
+        <6ac7e164-c4ba-0ffc-a8a4-4cede1d4e7ae@gmail.com>
+        <xmqqo80nsw5h.fsf@gitster.g>
+Date:   Tue, 26 Apr 2022 09:11:44 -0700
+In-Reply-To: <xmqqo80nsw5h.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        26 Apr 2022 08:26:50 -0700")
+Message-ID: <xmqq7d7bsu2n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 91F342AE-C57B-11EC-9A84-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: agreenbhm <agreenbhm@gmail.com>
+This only surfaced as a regression after 2.36 release, but the
+breakage was already there with us for at least a year.
 
-Added support for environment variable "CURLOPT_CUSTOMREQUEST"
-and config option "http.customrequest" to allow setting the Curl
-option to override the default request method used by HTTP Git
-operations.  Primary reason for this is to allow support for
-cloning repositories where only GET requests
-are allowed by a local web proxy but not POSTs.  When cloning
-a repo first a GET is made to the server and then a
-POST is made to the "git-upload-pack" endpoint.  In some
-corporate environments with strong controls
-only GET requests are allowed to known repository hosts (such
-as GitHub) through a web proxy to prevent data leakage.  Using this
-new setting, a user can set the "CURLOPT_CUSTOMREQUEST=GET" env at runtime
-or "http.customrequest = GET" in their config file which will
-change the second request from a POST to a GET, bypassing
-web proxy restrictions on the type of requests allowed.
-Tested with GitHub, changing the request from POST to GET still
-results in the expected behavior of the repo successfully being cloned.
+The diff_free() call is to be used after we completely finished with
+a diffopt structure.  After "git diff A B" finishes producing
+output, calling it before process exit is fine.  But there are
+commands that prepares diff_options struct once, compares two sets
+of paths, releases resources that were used to do the comparison,
+then reuses the same diff_option struct to go on to compare the next
+two sets of paths, like "git log -p". =20
 
-This is v2 of this patch, which refactored the placement of the env
-and added the ability to set the config file option.
+After "git log -p" finishes showing a single commit, calling it
+before it goes on to the next commit is NOT fine.  There is a
+mechanism, the .no_free member in diff_options struct, to help "git
+log" to avoid calling diff_free() after showing each commit and
+instead call it just one.  When the mechanism was introduced in
+e900d494 (diff: add an API for deferred freeing, 2021-02-11),
+however, we forgot to do the same to "diff-tree --stdin", which *is*
+a moral equivalent to "git log".
 
-Signed-off-by: agreenbhm <agreenbhm@gmail.com>
+During 2.36 release cycle, we started clearing the pathspec in
+diff_free(), so programs like gitk that runs
+
+    git diff-tree --stdin -- <pathspec>
+
+downstream of a pipe, processing one commit after another, started
+showing irrelevant comparison outside the given <pathspec> from the
+second commit.  The same commit, by forgetting to teach the .no_free
+mechanism, broke "diff-tree --stdin -I<regexp>" and nobody noticed
+it for over a year, presumably because it is so seldom used an
+option.
+
+But <pathspec> is a different story.  The breakage was very
+prominently visible and was reported immediately after 2.36 was
+released.
+
+Fix this breakage by mimicking how "git log" utilizes the .no_free
+member so that "diff-tree --stdin" behaves more similarly to "log".
+
+Protect the fix with a few new tests.
+
+Reported-by: Matthias A=C3=9Fhauer <mha1993@live.de>
+Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-    Added Curl Option to Override Request Method
-    
-    Added support for environment variable "CURLOPT_CUSTOMREQUEST" to allow
-    setting the curl option to override the default request method used by
-    HTTP Git operations. Primary reason for this is to allow support for
-    cloning repositories where only GET requests are allowed but not POSTs.
-    When cloning a repo first a GET is made to the server and then a POST is
-    made to the "git-upload-pack" endpoint. In some corporate environments
-    with strong controls only GET requests are allowed to known repository
-    hosts (such as GitHub) to prevent data leakage by sending data. Using
-    this new environmental variable, a user can set
-    "CURLOPT_CUSTOMREQUEST=GET" which will change the second request from a
-    POST to a GET, bypassing web proxy restrictions on the type of requests
-    allowed. Tested with GitHub, changing the request from POST to GET still
-    results in the expected behavior of the repo successfully being cloned.
-    
-    Signed-off-by: agreenbhm agreenbhm@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1225%2Fagreenbhm%2Fmaster-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1225/agreenbhm/master-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1225
-
-Range-diff vs v1:
-
- 1:  8bf14c61c2a < -:  ----------- Added Curl Option to Override Request Method
- -:  ----------- > 1:  8734bf28344 Added Curl Option to Override Request Method v2
+ * I feel MUCH better with this than the revert, now Phillip helped
+   me to get the root cause straight.  Addition of clear_pathspec()
+   to diff_tree() was *not* a mistake but is quite reasonable thing
+   to do.  Not using the .no_free hack in a code path that needed it
+   was.
 
 
- http.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/http.c b/http.c
-index 229da4d1488..eaf269fc5a7 100644
---- a/http.c
-+++ b/http.c
-@@ -75,6 +75,7 @@ static const char *http_proxy_ssl_key;
- static const char *http_proxy_ssl_ca_info;
- static struct credential proxy_cert_auth = CREDENTIAL_INIT;
- static int proxy_ssl_cert_password_required;
-+static const char *http_custom_request;
- 
- static struct {
- 	const char *name;
-@@ -403,6 +404,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
+ builtin/diff-tree.c     |  3 +++
+ log-tree.c              |  1 +
+ t/t4013-diff-various.sh | 14 ++++++++++++++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 0e0ac1f167..116097a404 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -195,6 +195,7 @@ int cmd_diff_tree(int argc, const char **argv, const =
+char *prefix)
+ 		int saved_dcctc =3D 0;
+=20
+ 		opt->diffopt.rotate_to_strict =3D 0;
++		opt->diffopt.no_free =3D 1;
+ 		if (opt->diffopt.detect_rename) {
+ 			if (!the_index.cache)
+ 				repo_read_index(the_repository);
+@@ -217,6 +218,8 @@ int cmd_diff_tree(int argc, const char **argv, const =
+char *prefix)
+ 		}
+ 		opt->diffopt.degraded_cc_to_c =3D saved_dcctc;
+ 		opt->diffopt.needed_rename_limit =3D saved_nrl;
++		opt->diffopt.no_free =3D 0;
++		diff_free(&opt->diffopt);
  	}
- 
-+	if(!strcmp("http.customrequest", var))
-+		return git_config_string(&http_custom_request, var, value);
+=20
+ 	return diff_result_code(&opt->diffopt, 0);
+diff --git a/log-tree.c b/log-tree.c
+index 25165e2a91..f8c18fd8b9 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1098,6 +1098,7 @@ int log_tree_commit(struct rev_info *opt, struct co=
+mmit *commit)
+ 	opt->loginfo =3D &log;
+ 	opt->diffopt.no_free =3D 1;
+=20
++	/* NEEDSWORK: no restoring of no_free?  Why? */
+ 	if (opt->line_level_traverse)
+ 		return line_log_print(opt, commit);
+=20
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 750aee17ea..628b01f355 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -542,6 +542,20 @@ test_expect_success 'diff-tree --stdin with log form=
+atting' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'diff-tree --stdin with pathspec' '
++	cat >expect <<-EOF &&
++	Third
 +
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
-@@ -1099,6 +1103,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 		    starts_with(url, "https://"))
- 			ssl_cert_password_required = 1;
- 	}
-+	set_from_env(&http_custom_request, "CURLOPT_CUSTOMREQUEST");
- 
- 	curl_default = get_curl_handle();
- }
-@@ -1212,7 +1217,7 @@ struct active_request_slot *get_active_slot(void)
- 		curl_easy_setopt(slot->curl, CURLOPT_COOKIEJAR, curl_cookie_file);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
--	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, http_custom_request);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, NULL);
++	dir/sub
++	Second
++
++	dir/sub
++	EOF
++	git rev-list master^ |
++	git diff-tree -r --stdin --name-only --format=3D%s dir >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'diff -I<regex>: setup' '
+ 	git checkout master &&
+ 	test_seq 50 >file0 &&
+--=20
+2.36.0-202-g319c44b8f9
 
-base-commit: 6cd33dceed60949e2dbc32e3f0f5e67c4c882e1e
--- 
-gitgitgadget
