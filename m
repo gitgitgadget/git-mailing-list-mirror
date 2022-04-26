@@ -2,82 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55BACC433EF
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 14:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55240C433F5
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 15:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344485AbiDZOw1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 10:52:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
+        id S1352328AbiDZPXM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 11:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbiDZOw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 10:52:26 -0400
-Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB9440919
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 07:49:19 -0700 (PDT)
-Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-e93bbb54f9so6901118fac.12
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 07:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=n/HrI69XJPBkJKGrO9NdTuHFlLKWOItfHcx72mgVYB4=;
-        b=GcV25GfAmB3Cmzr7cJjA4hQ3UcuTqw+D9FmmFkk65ZliQDc7oIzUAx1Rlywi1+kmux
-         xcArj+ZGw/Q4c7K4PBO9wsh0FiA+5XWV+JuzIf0+p+AND3Ns3RWhJbUIkbvhs1LXjGFQ
-         gc/OjgW5wtTdtGUxV2NkiCYW3t+jH/9JowKbzrYeJnC66vI0USJ1cYE0Fnk6ktn+lQCr
-         6mbSLayXMgVyXH1JrG94tm6Y7ZAJvCYGAwwQa+GDApZXaMSR01e3cVt/2fUJbYl9BMaR
-         a1fsV91ECMRaaDfnQSOvoTT/SVoqyzb+1zgYZJu3FZuUMA5zM5IuwzFHTP0sfnNp9IXk
-         1DXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=n/HrI69XJPBkJKGrO9NdTuHFlLKWOItfHcx72mgVYB4=;
-        b=4OTdtaS13vqYA9crkR553fLB699zYv55JiZ/aldVMn51e9bLSLKvjo+sNTsYUrPZh+
-         QYpHiE+QCyxvtxD+/6n0MwXt3Q0UngnJy30Aow76IOmh1j2xTP4L8rGpjihVrZAjzKGD
-         Suha/9zSdcOg57UUeYArBoHiSfkysH3b753Fm/8P4OcS9JBjHLkF13oCTxTkFN4u0tzS
-         ovDRC1JKiBgtBV6s4uIq+69n/XWRLgz+jdousg47+hwca7gUbIv0hU/08p/sjspCDQGV
-         ByGFIdMqEzUB9p6A5FdS1vdCc/FUJr9wFypSRb5Pyc/aCFui0cyGv5NdbhFKlQUGmimw
-         CPyA==
-X-Gm-Message-State: AOAM533QfgoIO/jCztyVDGZby7GIJxLqJlkRkftPx1IWAmigVWJsuH+4
-        kmBBRbZlEyU81v7T4AJFjU7vP3CcVA8=
-X-Google-Smtp-Source: ABdhPJyA2FGiCHZEfQ0TWBQJWEjKz1852qEcE2pPVkQvBTn2ATE+ACi3030S1e6+vq52X9Co9WnvNg==
-X-Received: by 2002:a05:6870:d192:b0:de:691:81ad with SMTP id a18-20020a056870d19200b000de069181admr13781960oac.165.1650984557413;
-        Tue, 26 Apr 2022 07:49:17 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id j5-20020a4a9445000000b00329dab1a07fsm5592546ooi.17.2022.04.26.07.49.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 07:49:17 -0700 (PDT)
-Date:   Tue, 26 Apr 2022 07:49:14 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     "Elektronik (C.Gerhardt GmbH & Co. KG)" <elektronik@gerhardt.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "CRM (C.Gerhardt GmbH & Co. KG)" <crm@gerhardt.de>
-Subject: Re: Error after update from 2.31.1 -> 2.36: Unable to negotiate with
- IP port X: no matching host key type found.
-Message-ID: <20220426144914.nyaohjqqqlotxnnm@carlos-mbp.lan>
-References: <VI1PR05MB6495349A4C42AA568A665D7BCCFB9@VI1PR05MB6495.eurprd05.prod.outlook.com>
+        with ESMTP id S1352334AbiDZPXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 11:23:02 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51AD51749E8
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 08:16:38 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DD8E618324B;
+        Tue, 26 Apr 2022 11:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FLw66dAEF2TduJqywNvhRwlYVjg9PtKUH445nz
+        PXnkM=; b=dmbBZsZkQBnc6GhZIHc12LAABLf1oPpflRtk5Sa7u36TWjtQMM/Szi
+        TDRqzgG9pKJ/joZmTghjuEh7qc5ZZV690IemFngERNpQGeeFmHnNIJ3fT+vu3Ymr
+        ek52wdXYWfe/9AqEG5pQBlvEKchhZ/z9LiI6+/kDNNzoKxM7pOr9A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4004183247;
+        Tue, 26 Apr 2022 11:16:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6C805183225;
+        Tue, 26 Apr 2022 11:16:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org,
+        Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] 2.36 gitk/diff-tree --stdin regression fix
+References: <xmqqh76j3i3r.fsf@gitster.g> <xmqqbkwpvyyc.fsf@gitster.g>
+        <83a76d46-5069-d6c7-b8b3-f3a063637abb@gmail.com>
+        <6ac7e164-c4ba-0ffc-a8a4-4cede1d4e7ae@gmail.com>
+Date:   Tue, 26 Apr 2022 08:16:29 -0700
+In-Reply-To: <6ac7e164-c4ba-0ffc-a8a4-4cede1d4e7ae@gmail.com> (Phillip Wood's
+        message of "Tue, 26 Apr 2022 14:45:58 +0100")
+Message-ID: <xmqqsfpzswmq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <VI1PR05MB6495349A4C42AA568A665D7BCCFB9@VI1PR05MB6495.eurprd05.prod.outlook.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DA3705D0-C573-11EC-8204-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 02:05:14PM +0000, Elektronik (C.Gerhardt GmbH & Co. KG) wrote:
->  
-> I found that after an update from git 2.31.1. to 2.36 the authentication to our git server (running gitea 1.13.1) fails. We are getting the following error: 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I am guessing the issue might be the one documented in the following git for
-windows issue:
+> On further inspection we have tests for "log -p -I<regex>" in t4013
+> and e900d494dc ("diff: add an API for deferred freeing", 2021-02-11) 
+> modified builtin/log.c to set the new no_free flag so "log" should be
+> OK. However "diff-tree --stdin -p -I<regex>" is not as 
+> builtin/diff-tree.c is unchanged by e900d494dc so the no_free flag is
+> not set which I think is the cause of the problems reported here.
 
-  https://github.com/git-for-windows/git/issues/3468
+... reported here, meaning some reproduction exists?  It would be
+good to have it in the test, next to the ones I added yesterday, I
+think.
 
-The problem is not with git (neither a git for windows) specific issue, but
-with the underlying version of openssh that is used in your server and the
-best course of option is to upgrade that and generate a new host key, but
-there are other options shown in that ticket that might help in the meanwhile.
+In any case, I think that is a much older breakage that can be left
+after this "oops, where is my pathspec?" regression is dealt with.
 
-Carlo
+> I think the close_file changes in e900d494dc should be safe as far as
+> "diff-tree" is concerned as it never sets that flag.
+>
+> In retrospect the no_free flag is pretty ugly and fragile.
+
+Yes.
+
+> If we
+> really cannot do it another way at least requiring callers to set a
+> flag when they want things freeing would avoid nasty surprises like
+> this at the expense of leaking when the caller forgets to set
+> it. Perhaps once 2.36.1 is out we should step back and think about
+> exactly what we're trying to achieve by removing these bounded leaks
+> rather than annotating them with UNLEAK().
+
+Doubly yes.
+
+There is small per-task resources allocated that is not proportional
+to the size of the task, i.e. "git log -p" may need more resource at
+"peak" in a project with 100k files than in a project with 1k files,
+and we do not want to leak these resources we use to compare two sets
+of 100k (or 1k) files between "commit^" and "commit".  It may allocate
+and deallocate more times in a project with 100k commits than in a
+project with 1k commits, and we do not want to leak 100 times more
+resources in the former project than the latter.  Aiming to reclaim
+these resources needed proportinally to the size of the task is
+absolutely a good thing to do.
+
+But the final clean-up for the very top-level allocations that is
+not proportional to the size of the task, like pathspec, regex, and
+other result from parsing command line options and configuration
+variables?  Using UNLEAK() to squelch the leak checker and letting
+process termination to reclaim them is absolutely a no-cost solution
+that is much better.
