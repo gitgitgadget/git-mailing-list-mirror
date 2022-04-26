@@ -2,221 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F193C433FE
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 10:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C93B5C433F5
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 11:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345685AbiDZKcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 06:32:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41638 "EHLO
+        id S245555AbiDZLEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 07:04:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349048AbiDZKbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 06:31:20 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B793E65E0
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 03:09:58 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id y21so10874170wmi.2
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 03:09:58 -0700 (PDT)
+        with ESMTP id S239584AbiDZLEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 07:04:44 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5745C28E10
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 04:01:37 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id x18so24967995wrc.0
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 04:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=DTguhVg7Q0AqbCgRKm0gJyTp5t+SMJdTc3nNHdZz+Mk=;
-        b=Ac4wzOBMSFra4KC9kvebJySv0v00W1PfcwhBl3Qwskl1EJjA8aJ2oxnx6ttpUPk9hx
-         cvnfLSXAn0v8uEuAJMzbElepTPiKl1UXt4Kj3KkClKz1nlb6Pa5Wei0diLHr+0p3fJR/
-         NCg8/UWeP4nqEOdR+Tj2cd7HeeHny7l5i+Mc8FMpgnCB82uqDLcpnIWHXaBTMTBXRdB8
-         8GQktoUb6+PTgqWfjUTNOQaXc2IuMdPqCwpivfyhDXZCmxbsaC+41Xpc9sBKk9gKxmIN
-         PGPpH5oQBh7dxp5IPkALu/TXYgAjR5imghFOj1ctCQaGbMNWtz58t69TCN0N6YGYQSCs
-         BLwQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=+zh+/WNeDRtegZ8/P8+MWDXKbYNnak86xfOYbhGgsUM=;
+        b=pnELhgRpTGtJaCygQoFt6XKjsanx17SAIx2OoVDZBqeXcSYif3zQdd7aWBmMSDklD7
+         fzs21JKb+YtqKs5dWf4YZXrFebNQ9DJhs2H1+CIqEWwccDPyhDA7iuvFQ0gkcRPXziFM
+         h55iMzi7ZdypZnF40Izg2Fm9YcqabJnP6SxSrJpkDgZ6hwr0bIrjWrQg1uh7v+2bAmuV
+         mCxdskizERUkGRsLIC4FofZJphYJW0i9oCzFpy00ILEmI7UGQ3ORoKwYat4PyNPeUwpV
+         QV7redzpHR693p4ymBbADqRf83aaMNTsP6CG536mSpkzqz8kkLj5dg095jwnUSCfh/Ax
+         CGJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=DTguhVg7Q0AqbCgRKm0gJyTp5t+SMJdTc3nNHdZz+Mk=;
-        b=XDdrEXzWuGG5u2mgUnOrZrmnruSRV2oBe+hTJyLLtEnPcs4czF5B4sW+fFnbQRYjxN
-         7kCk+uQKtXFfP4uLLfiIm3C9LpnV5iP8XBpwF60I5Ia8xtJLU/zYQyBCjgEgoDyz2w4s
-         QvemZPkLS+WuOtuLeiCBg2mkPgOyZflrMMrPitXRd2lW9nL1t8RGpglwmVOJENGrxgqp
-         p03R3H2T2MJca86sAS/TcF9Zcj4QouHM/u2WTWaKufwIJj+b561/gyXP51nT4pkFQDH5
-         b48HNj6y2N04OTeyMaTWdsCcLHZV7+tS/rPKVjH01SDPQG0kJLaeUZ7Qj5cHfAW+7M4A
-         sXAg==
-X-Gm-Message-State: AOAM532WZNxHAiZBFCaLG2F5wcR4C5LT6Bg9wP3ZhQeRlrRxp1PfReMu
-        avq2U2HukeVPZynoZNs9iTc=
-X-Google-Smtp-Source: ABdhPJwD4lZ38rUakVILylZUOvsjn+vofUId1Ja6b0PiioYSzqy5ZJoGH/d6vYCLhkbr1XMadYneAQ==
-X-Received: by 2002:a1c:cc08:0:b0:393:e7d2:e580 with SMTP id h8-20020a1ccc08000000b00393e7d2e580mr12259380wmb.145.1650967797236;
-        Tue, 26 Apr 2022 03:09:57 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id o9-20020adf8b89000000b0020adeb916d8sm3904334wra.30.2022.04.26.03.09.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Apr 2022 03:09:56 -0700 (PDT)
-Message-ID: <83a76d46-5069-d6c7-b8b3-f3a063637abb@gmail.com>
-Date:   Tue, 26 Apr 2022 11:09:55 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] 2.36 gitk/diff-tree --stdin regression fix
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <xmqqh76j3i3r.fsf@gitster.g> <xmqqbkwpvyyc.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqbkwpvyyc.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+zh+/WNeDRtegZ8/P8+MWDXKbYNnak86xfOYbhGgsUM=;
+        b=MTmsQ+X1I3gaJZvw21QOEz7OBTqKn5ZUJwtWLokqBOTcrhMkVMQAiawR/+98Py1n+s
+         EF1K8Q8BFvhqwxf0zozioGBQJX0CrvtXOeikroyq3Xg5vqUy6oECIhX8kG3nGttEj4lb
+         /7U8bitLJWZ87E28cwOxOFwB8cvxpNNqPl1hWzLmvBalU/IQ4VuTFmnDbXwmhqRlY5uB
+         5pKDC26Y4J7pC6B2xPq4sj+zabJyPBdAp3jRfpOzAY3A9uRmRx4g06a/M9LGeFTwXdxr
+         7HiYKa0Gqyc18EkmmiDlVgqRDJVkLzg6RPpEbYGQGBB/maSgAzes2gzVWVrlVt9xJ7fp
+         LPhw==
+X-Gm-Message-State: AOAM533h2biuldMHKIuU8OqEsz6B1IefNh7eIn1vSmJMB/ou3Aav0EZI
+        7zm4amRoXgOrQeaF+GeLhPnk18Hw6cQ=
+X-Google-Smtp-Source: ABdhPJxg5abbX6AlvU1rDnDM31b0RKB3Np6VbRrFuciTvsPmYp/GcZrMXc+PmMYbMzf8DHwBW03JzA==
+X-Received: by 2002:a5d:610b:0:b0:20a:e00b:5e46 with SMTP id v11-20020a5d610b000000b0020ae00b5e46mr5249381wrt.293.1650970895424;
+        Tue, 26 Apr 2022 04:01:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l6-20020a1c2506000000b0038e6fe8e8d8sm13589050wml.5.2022.04.26.04.01.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 04:01:34 -0700 (PDT)
+Message-Id: <pull.1225.git.1650970894143.gitgitgadget@gmail.com>
+From:   "Drew Green via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 26 Apr 2022 11:01:34 +0000
+Subject: [PATCH] Added Curl Option to Override Request Method
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Drew Green <agreenbhm@gmail.com>, agreenbhm <agreenbhm@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/04/2022 18:45, Junio C Hamano wrote:
-> This reverts commit 244c2724 (diff.[ch]: have diff_free() call
-> clear_pathspec(opts.pathspec), 2022-02-16).
-> 
-> The diff_free() call is to be used after a diffopt structure is used
-> to compare two sets of paths to release resources that were needed
-> only for that comparison, and keep the data such as pathspec that
-> are reused by the diffopt structure to make the next and subsequent
-> comparison (imagine "git log -p -<options> -- <pathspec>" where the
-> options and pathspec are kept in the diffopt structure, used to
-> compare HEAD and HEAD~, then used again when HEAD~ and HEAD~2 are
-> compared).
-> 
-> We by mistake started clearing the pathspec in diff_free(), so
-> programs like gitk that runs
-> 
->      git diff-tree --stdin -- <pathspec>
-> 
-> downstream of a pipe, processing one commit after another, started
-> showing irrelevant comparison outside the given <pathspec> from the
-> second commit.
+From: agreenbhm <agreenbhm@gmail.com>
 
-I notice from the patch context that we are still calling 
-diff_free_ignore_regex(options) which was added in c45dc9cf30 ("diff: 
-plug memory leak from regcomp() on {log,diff} -I", 2021-02-11). I think 
-that will need reverting as well as it freeing data that is needed when 
-options is reused by "diff-tree --stdin" or "log -p".
+Added support for environment variable "CURLOPT_CUSTOMREQUEST"
+to allow setting the curl option to override the default request
+method used by HTTP Git operations.  Primary reason for this is to
+allow support for cloning repositories where only GET requests
+are allowed but not POSTs.  When cloning a repo first a GET is
+made to the server and then a POST is made to the "git-upload-pack"
+endpoint.  In some corporate environments with strong controls
+only GET requests are allowed to known repository hosts (such
+as GitHub) to prevent data leakage by sending data.  Using this
+new environmental variable, a user can set
+"CURLOPT_CUSTOMREQUEST=GET" which will change the second request
+from a POST to a GET, bypassing web proxy restrictions on the type
+of requests allowed.  Tested with GitHub, changing the request
+from POST to GET still results in the expected behavior of the
+repo successfully being cloned.
 
-Best Wishes
+Signed-off-by: agreenbhm <agreenbhm@gmail.com>
+---
+    Added Curl Option to Override Request Method
+    
+    Added support for environment variable "CURLOPT_CUSTOMREQUEST" to allow
+    setting the curl option to override the default request method used by
+    HTTP Git operations. Primary reason for this is to allow support for
+    cloning repositories where only GET requests are allowed but not POSTs.
+    When cloning a repo first a GET is made to the server and then a POST is
+    made to the "git-upload-pack" endpoint. In some corporate environments
+    with strong controls only GET requests are allowed to known repository
+    hosts (such as GitHub) to prevent data leakage by sending data. Using
+    this new environmental variable, a user can set
+    "CURLOPT_CUSTOMREQUEST=GET" which will change the second request from a
+    POST to a GET, bypassing web proxy restrictions on the type of requests
+    allowed. Tested with GitHub, changing the request from POST to GET still
+    results in the expected behavior of the repo successfully being cloned.
+    
+    Signed-off-by: agreenbhm agreenbhm@gmail.com
 
-Phillip
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1225%2Fagreenbhm%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1225/agreenbhm/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1225
 
-> The buggy commit may have been hiding the places where diff
-> machinery is used only once and called diff_free() to release that
-> per-comparison resources, but forgetting to call clear_pathspec() to
-> release the resource held for the (potentially) repeated comparison,
-> and we eventually would want to add clear_pathspec() to clear
-> resources to be released after a (potentially repeated) diff session
-> is done (if there are similar resources other than pathspec that
-> need to be cleared at the end, we should then know where to clear
-> them), but that is "per program invocation" leak that will be
-> cleaned up by calling exit(3) and of lower priority than fixing this
-> behavior-breaking regression.
-> 
-> Reported-by: Matthias Aßhauer <mha1993@live.de>
-> Helped-by: René Scharfe <l.s.r@web.de>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   add-interactive.c | 6 +++---
->   blame.c           | 3 +++
-> 
->   builtin/reset.c   | 1 +
->   diff.c            | 1 -
->   notes-merge.c     | 2 ++
->   5 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index e1ab39cce3..6498ae196f 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -797,14 +797,14 @@ static int run_revert(struct add_i_state *s, const struct pathspec *ps,
->   	diffopt.flags.override_submodule_config = 1;
->   	diffopt.repo = s->r;
->   
-> -	if (do_diff_cache(&oid, &diffopt)) {
-> -		diff_free(&diffopt);
-> +	if (do_diff_cache(&oid, &diffopt))
->   		res = -1;
-> -	} else {
-> +	else {
->   		diffcore_std(&diffopt);
->   		diff_flush(&diffopt);
->   	}
->   	free(paths);
-> +	clear_pathspec(&diffopt.pathspec);
->   
->   	if (!res && write_locked_index(s->r->index, &index_lock,
->   				       COMMIT_LOCK) < 0)
-> diff --git a/blame.c b/blame.c
-> index 401990726e..206c295660 100644
-> --- a/blame.c
-> +++ b/blame.c
-> @@ -1403,6 +1403,7 @@ static struct blame_origin *find_origin(struct repository *r,
->   		}
->   	}
->   	diff_flush(&diff_opts);
-> +	clear_pathspec(&diff_opts.pathspec);
->   	return porigin;
->   }
->   
-> @@ -1446,6 +1447,7 @@ static struct blame_origin *find_rename(struct repository *r,
->   		}
->   	}
->   	diff_flush(&diff_opts);
-> +	clear_pathspec(&diff_opts.pathspec);
->   	return porigin;
->   }
->   
-> @@ -2326,6 +2328,7 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
->   	} while (unblamed);
->   	target->suspects = reverse_blame(leftover, NULL);
->   	diff_flush(&diff_opts);
-> +	clear_pathspec(&diff_opts.pathspec);
->   }
->   
->   /*
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 24968dd628..b97745ee94 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -274,6 +274,7 @@ static int read_from_tree(const struct pathspec *pathspec,
->   		return 1;
->   	diffcore_std(&opt);
->   	diff_flush(&opt);
-> +	clear_pathspec(&opt.pathspec);
->   
->   	return 0;
->   }
-> diff --git a/diff.c b/diff.c
-> index 0aef3db6e1..c862771a58 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6345,7 +6345,6 @@ void diff_free(struct diff_options *options)
->   
->   	diff_free_file(options);
->   	diff_free_ignore_regex(options);
-> -	clear_pathspec(&options->pathspec);
->   }
->   
->   void diff_flush(struct diff_options *options)
-> diff --git a/notes-merge.c b/notes-merge.c
-> index 7ba40cfb08..b4a3a903e8 100644
-> --- a/notes-merge.c
-> +++ b/notes-merge.c
-> @@ -175,6 +175,7 @@ static struct notes_merge_pair *diff_tree_remote(struct notes_merge_options *o,
->   		       oid_to_hex(&mp->remote));
->   	}
->   	diff_flush(&opt);
-> +	clear_pathspec(&opt.pathspec);
->   
->   	*num_changes = len;
->   	return changes;
-> @@ -260,6 +261,7 @@ static void diff_tree_local(struct notes_merge_options *o,
->   		       oid_to_hex(&mp->local));
->   	}
->   	diff_flush(&opt);
-> +	clear_pathspec(&opt.pathspec);
->   }
->   
->   static void check_notes_merge_worktree(struct notes_merge_options *o)
+ http.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/http.c b/http.c
+index 229da4d1488..2ca13b848a5 100644
+--- a/http.c
++++ b/http.c
+@@ -1235,6 +1235,8 @@ struct active_request_slot *get_active_slot(void)
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+ 	if (http_auth.password || curl_empty_auth_enabled())
+ 		init_curl_http_auth(slot->curl);
++	if(getenv("CURLOPT_CUSTOMREQUEST"))
++		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, getenv("CURLOPT_CUSTOMREQUEST"));
+ 
+ 	return slot;
+ }
+
+base-commit: 6cd33dceed60949e2dbc32e3f0f5e67c4c882e1e
+-- 
+gitgitgadget
