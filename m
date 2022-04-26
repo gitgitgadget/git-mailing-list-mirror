@@ -2,131 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 384C7C4332F
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 17:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5133BC433EF
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 17:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232012AbiDZRM3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 13:12:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40066 "EHLO
+        id S230440AbiDZRUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 13:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353822AbiDZRLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 13:11:07 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8235F340E2
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 10:07:31 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id w124so9410217vsb.8
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 10:07:31 -0700 (PDT)
+        with ESMTP id S243953AbiDZRSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 13:18:42 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB44C4B
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 10:15:19 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id x5so3348681uap.8
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 10:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6jYW1xZy/WER5Ei1UNSHn7vZdbgh6YSo98xJr9oexcY=;
-        b=RaryjUok7e1g3eO58zdqVagc1wxfoiPNHjfFtCw5flf7R9JGDSxxkPu5FIupP0brL3
-         FrJoiadpyoTjeR2LoICZmNJ0HfkT0C+bewAftxAbiwCfxdj5Lzvtq5Mco0CZKwh1a1sr
-         GFC41osFXvT6rd8qVVUyBl8YVM2IawpA8nXSrSE1VkNYFRNbYx6u1vSSyhY2lOKjsb9Q
-         4JK7JpgJuGJR1AIUI9SHJ4ULFeitrSkerLQ61HtG3g6On1O+MLQ9+WQQiDiWMMgir/S5
-         cMVaMobqe4zMf5Mnc71QSiSgx0EB/iodj3OCdoWGA6obgEI0B+ac7MltMpQqtfoLVRbx
-         sbFw==
+         :cc;
+        bh=rgsqo0ZqbmR0L5SRYPeVh3vR+l39VruuiIpJKJ7t/Kk=;
+        b=qwSnV89uRY3TKS2EaMLyrRsB7YK9WDfIh0/A8PVRrrKJ0OVgoZUrsBDsuxcRzAm6ob
+         FTHDUD0hN6M3KYxiCunE6Ec5orW4SEly0yx/qhR6BsIKIhevjnqoG8Ocw6Y5JIwH6GG5
+         ZnFH/2EjEgL1DYhrf9xLbggVTuomz5jUSGfQfA9rirbFYzeKPvN1q247zoXWgDH73Iwd
+         TF0xoIcEzwgmDB+E3ogMFB8e2tIxUAtKwsuLmshccq87v5Q94Yyn+CUfJmRTfKj+LYw9
+         vCVhTzvxiRg5XA+kRJ8infJTX9rVnxqogLoY3EDf45B/3dsD5gcO47Pz0AyfaWBlAyLK
+         jOLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6jYW1xZy/WER5Ei1UNSHn7vZdbgh6YSo98xJr9oexcY=;
-        b=59OvORkCXoJYjn5FDdE6FJzofuh4Bd3mRV2AwgeFMQTn+qIQSt3PMjNUfimvltZDg8
-         U3pVRGTWThvmJVGHXR17Uq5vMKQ/dGHLAicEhS9ASdjaNiOVlzyfIi7hnpnqxN7XHvVb
-         pvo2Q9G8SqryiWi+ezDl6OgBpHFwgdNZ3jxFNhCH2jF2allrMbm8SGl/6Wf35VkHT43v
-         eRG4m/JTAfa0IhRptxA8/5uC7GMCXpnjv86LbzSvHy/VFiqfqNbSd3nInzvenm0z7Fxw
-         8OU55BoyKAExcCGy+7TZra1AQ0R0jun9kpUWeEDtkbY2N7sKYxA2MPvZG4vbTz21ZPSd
-         N+2g==
-X-Gm-Message-State: AOAM530HzaCujVClM/rB+TdTVX8IlPtsmx9SpIIcvuonKTd1NTKH8Mh/
-        6GvCKi7jG98RXlU2ozSgImLLDrfVHOnmhOkXdaM=
-X-Google-Smtp-Source: ABdhPJz6NpRFd7DHNkp3VkEYlaQ52sT/1T6lBY7dFkDXiDqSmi9IL1IZDROPaU/Dbq7M6u5aopyiRurXSrZi4pCmHkE=
-X-Received: by 2002:a05:6102:ed4:b0:32c:ea17:c6b5 with SMTP id
- m20-20020a0561020ed400b0032cea17c6b5mr944133vst.52.1650992850472; Tue, 26 Apr
- 2022 10:07:30 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=rgsqo0ZqbmR0L5SRYPeVh3vR+l39VruuiIpJKJ7t/Kk=;
+        b=HizBaN6ffaSlEmfDWlsz6IQaHdueqq4qJpKHOdzwaWqh5R33m0bPnwgxmI8jet54WS
+         ftd278pgQSiRrH4dZfr3ZP2+/5MZdyVN10BtkGT3ClcWtvLUCgDuZx1AQkotT9UPp0qx
+         nGMhtZ7ba3YjfbFFxFmAa71Ol8D/KEvkpz7hcG8fjM7VKii5WT1qxlLtVThqDA2emTBM
+         CW2f2j4B7cJ4m97OG04dVft3xPoPSRgzVWNwIBG+DUROXWZZwtOSgsWZM6GcI73VkMtw
+         aOTTGSC1EgAQgw87NM1x6+NdJ3EdLRVwhSO1koShZdvbnLEm9NXxXF+eGCs2bwIwgqM/
+         nrFg==
+X-Gm-Message-State: AOAM530jSIetQD2b/W66/L0nxvJ85CrGs+jizuQ4BP56xv9W5A6kqojx
+        qUZMmi3swdLSGJItVuvDFc3jx7rium1L+qUVZpw=
+X-Google-Smtp-Source: ABdhPJxwIAwTL/bBXq86PaCW5Un/g0QrEraj2QftGmUjzRvuobILrZJGTSGJceHdQGKtDsNWxHlHkgHnYnhKERD0QO0=
+X-Received: by 2002:ab0:53c9:0:b0:360:2831:be85 with SMTP id
+ l9-20020ab053c9000000b003602831be85mr7228567uaa.28.1650993318347; Tue, 26 Apr
+ 2022 10:15:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220422013911.7646-1-carenas@gmail.com> <20220423142559.32507-1-carenas@gmail.com>
- <20220423142559.32507-3-carenas@gmail.com> <nycvar.QRO.7.76.6.2204261747530.355@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2204261747530.355@tvgsbejvaqbjf.bet>
+References: <4ef9287b-6260-9538-7c89-cffb611520ee@maurel.de>
+ <3d762060-b817-0246-c4a2-8eb35096cb7f@iee.email> <xmqqczh73hns.fsf@gitster.g>
+ <xmqqk0bf1i12.fsf@gitster.g> <20220425020108.5agdq6bdg6umrtbt@carlos-mbp.lan>
+ <xmqqy1zty8dc.fsf@gitster.g> <20220425070245.ta6wibzkezlfwzxp@carlos-mbp.lan>
+ <20220425084003.nf267feurpqyvmsd@carlos-mbp.lan> <nycvar.QRO.7.76.6.2204261742120.355@tvgsbejvaqbjf.bet>
+ <CAPUEspiufPMZOfZFunTFYmX7KwPxsKsAeHnfBjKgosA1ZJWqzw@mail.gmail.com> <xmqqpml3rdwx.fsf@gitster.g>
+In-Reply-To: <xmqqpml3rdwx.fsf@gitster.g>
 From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 26 Apr 2022 10:07:18 -0700
-Message-ID: <CAPUEspgBNWPtiriYTVWdnJtdy6jZBBov3zTnwZZGA8gXwMiooA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] ci: avoid brew for installing perforce
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        sunshine@sunshineco.com
+Date:   Tue, 26 Apr 2022 10:15:07 -0700
+Message-ID: <CAPUEspi9mmoxehydOctGiCddUA0QtafXwKbMnprAWUPjO=vQDw@mail.gmail.com>
+Subject: Re: a problem with git describe
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.email>,
+        Guy Maurel <guy.j@maurel.de>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 26, 2022 at 8:55 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Tue, Apr 26, 2022 at 9:46 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Sat, 23 Apr 2022, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> Carlo Arenas <carenas@gmail.com> writes:
 >
-> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> > index 41e9290fbdd..9da03350d09 100755
-> > --- a/ci/install-dependencies.sh
-> > +++ b/ci/install-dependencies.sh
-> > @@ -37,13 +37,14 @@ macos-latest)
-> >       test -z "$BREW_INSTALL_PACKAGES" ||
-> >       brew install $BREW_INSTALL_PACKAGES
-> >       brew link --force gettext
-> > -     brew install --cask --no-quarantine perforce || {
-> > -             # Update the definitions and try again
-> > -             cask_repo=3D"$(brew --repository)"/Library/Taps/homebrew/=
-homebrew-cask &&
-> > -             git -C "$cask_repo" pull --no-stat --ff-only &&
-> > -             brew install --cask --no-quarantine perforce
-> > -     } ||
-> > -     brew install homebrew/cask/perforce
-> > +     mkdir -p $HOME/bin
-> > +     (
-> > +             cd $HOME/bin
-> > +             wget -q "https://cdist2.perforce.com/perforce/r21.2/bin.m=
-acosx1015x86_64/helix-core-server.tgz" &&
+> > Still think that (since we are already touching this) removing the
+> > restriction to
+> > root owned directories might make sense though, ex the following (unrealistic
+> > example) would work:
 >
-> I vaguely recall that G=C3=A1bor Szeder attempted something similar, but =
-I
-> _think_ that ultimately there were too many moving parts in that URL that
-> we did not want to hardcode.
+> I think it is essential to protect unsuspecting "root" user from
+> wandering into an unfamiliar directory that happens to be a trap,
+> i.e. I may do something like this as an admin:
+>
+>     $ sudo sh
+>     # cd / && find usr bin ... >/var/tmp/mylist.txt
+>     # cd /var/tmp
+>
+> with the expectation that I'd then do some text processing on the
+> mylist.txt file, and going there first would allow me to refer to
+> the files more easily, instead of having to say:
+>
+>     # sed -e '... processing ...' </var/tmp/mylist.txt >/var/tmp/out.txt
+>
+> Alas, you as an attacker have done
 
-I can see that, and indeed that is also why those series still keep
-perforce installation as optional so it wouldn't block CI when it does.
+Which is a career that has ended prematurely, it seems.
 
-BTW most of the reasons why those values are hardcoded here
-is just to avoid conflicts with on the fly changes, and making it smarter
-and avoiding the hardcoding would be done as a prerequisite to making
-it mandatory again (if that is what is preferred)
+>     $ cd /var/tmp
+>     $ git init
+>     $ edit .git/config
+>
+> to wait for me.  /var/tmp would be owned by 'root' but allows
+> anybody to write to it, only forbidding people from removing other
+> people's stuff.
 
-> While I don't think that we can solve this fully, I would prefer to keep
-> the existing `brew install` calls but fall back to downloading from a
-> hard-coded URL.
-
-Considering that the expectation from brew maintainers (as documented[1])
-is that those mismatches would happen and should be solved manually
-and that perforce releases just do inplace binary pushes I still stand by m=
-y
-suggestion to avoid brew, but it might be useful as a fallback of the wget
-approach if that helps with your concerns above.
-
-> For the record, the recent problems stem from the fact that the package
-> was cached on GitHub's build agents (I guess to avoid many identical
-> downloads), and the cached package did not match what was recorded in the
-> updated package definition. Which means that those `brew` errors are only
-> transient, until a new VM image is built that caches the then-current
-> perforce package.
-
-FWIW as I updated the brew cask[2], I realized that livecheck pointed to an=
- even
-newer release, so if we are adding brew back it might be worth adding
-yet another
-workaround to delete the cached file and try without a SHA as =C3=86var sug=
-gested.
+Since we are doing stat in that directory anyway, we should be able
+to notice the sticky bit and not fall from that trap, but I get why
+"exempting root" would be a bad idea.
 
 Carlo
-
-[1] https://docs.brew.sh/Common-Issues#cask---checksum-does-not-match
-[2] https://github.com/Homebrew/homebrew-cask/pull/122347
