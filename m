@@ -2,100 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79501C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 23:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F7B7C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 23:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356013AbiDZXPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 19:15:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
+        id S245228AbiDZXh4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 19:37:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356016AbiDZXPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 19:15:37 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37BD14A500
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id b12so121534plg.4
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
+        with ESMTP id S229469AbiDZXhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 19:37:54 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6494069CC8
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:34:45 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id i5so162294wrc.13
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=mLqh4SrCjyYZWi4AZQS7r67r/YbEQBwVQM32K6dfDng=;
-        b=PjTPEX/2RyXvqhob3GJtR5T6V2Lp9yDgegnmBHGiyp5cCippjPvpt5Fd7JKTFIHdMT
-         VlEFDDIXByxIjTQQPeT5sQYdV3zNcT5bNaWDQJYJYGl9acUZgCS1YoO2vyHFAZIOhJnG
-         nQMDUT6H+2udTK7CoQTZCxuzZDo056oado5pnRF27coub1uTWnyPNBQV7WE42MgaAUf3
-         qpHdAanJ8qDnHKZbZgtHmEjvpHv0W3Vf5Rcv76wAwk3gZU3QFH17ByFb1h/+5oynRamJ
-         aGNq3mtPCSIyqZsCTBnsc0XugiXXe1K1gKuW7w+55/dSLTxbRcW6/fPC4fqDRLNqeZSd
-         +RRA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=Owzd5tnNedylg4i3XesV50G1SCpLa62gECKvXfx09cw=;
+        b=EaGDIPUV/KHSwIr3pCG0iXmRmQnvksTfti2t8joYE0UfqAj9ByIxZwRKE+qi2LuCop
+         7U3z+7vF2wY43S82Xj+trfu6rZifRl8w1fbAOTgdAzUxlRUb/bLdqJOp3hbcMnvSqg72
+         gnKCLfe5ocjGmLYzMqWDlvF/+z5bPFvOrjo7gRxQc6YsR16iXL9emflX6SyKVOD2Ix8e
+         tygaLI7rHpM8jC0prgQSNvij5yPhaUGdjDoYvXRb4kD50/ZURCAc+GTBHI9mntKmaNLI
+         LoSb/21jmeUVY28RNMebF6Y5aQ3vV7IVDVZ3Y5+ydqQb1gyev7G2Sap5hrpGc6errmVH
+         ed/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=mLqh4SrCjyYZWi4AZQS7r67r/YbEQBwVQM32K6dfDng=;
-        b=7+kpDN4oOQI8sYs6s4I6MPgZKx1skkfbH+LD0PaLae82s+STcsr+eUJdjJbE9liOXf
-         F2Mu8lZncv0UThkZPtq/IwV0HJC7PcMo4EFTjSUOcLar5jxb/6S4CvpqBprdMbu4I5vH
-         nSL+XHgIFtQH10JQJYrjeUpUEpnP8la4GqYn0rREDlItMtIsy2Hvr/GDmAcbeAW9jCce
-         okqnj2ci1RBxmLIJOZPqaEAAQuz9zaWY1Rh62jHYTpfVn/Rbp+SLENZdPMJToZqzVWrN
-         bq0PuqCFYm1US9qIADcpKz52NfVIQNEvPxHLduiyHd4HwXDO4EnD+xn8hPf6ycjtJ1O4
-         TKiw==
-X-Gm-Message-State: AOAM533PYzRm12GFTdeSsB3MS6LtKqhNMXJgwQLfwkSYjE9pqazuqcQT
-        DvyELproNz/FgM6JxU7Mc6tF84CTQok=
-X-Google-Smtp-Source: ABdhPJzSkb+WEwpcl80j1rtbKqu8N8IZ0KYujZBnnNEM6tbuu2zC/9xlqewkaYPnkG63CKN0MczWVw==
-X-Received: by 2002:a17:902:d510:b0:15c:ecd2:e7fc with SMTP id b16-20020a170902d51000b0015cecd2e7fcmr18512240plg.132.1651014745053;
-        Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:38b:d8c2:e101:e089])
-        by smtp.gmail.com with ESMTPSA id a38-20020a056a001d2600b004f70d5e92basm16785276pfx.34.2022.04.26.16.12.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 16:12:24 -0700 (PDT)
-Date:   Tue, 26 Apr 2022 16:12:22 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Jorawar Singh <jorawarsingh12@gmail.com>, git@vger.kernel.org,
-        Alice Merrick <amerrick@google.com>
-Subject: Re: Git user experience workshop
-Message-ID: <Ymh8VlCTK3m4flWj@google.com>
-References: <CAK-fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com>
- <b94dbce7-d2d5-d260-27c7-b98e009b41a3@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=Owzd5tnNedylg4i3XesV50G1SCpLa62gECKvXfx09cw=;
+        b=TmUXWwyRyeNx0r3r9DE/5r6nHkfT4MWfNRCKOmhWBxl1g1LcANIIgarEgzP8aWN/oJ
+         57xann8h64k4D5V0k6vBqVJDPEw9oc1DGqZcz9PFU6McF0WkO3Vsd36uR5vEm44uhq4s
+         0fM/AKASzOgqnVodvoP+lS1Y23gdlUv0srVkP/Catqw6QCzf1r+UffwpfH4kmEK9SjBm
+         G2ViFzmjAtw7yT0uznKo1MTGJao+i3F62y/0CuyZRoA7ee7CNXBNUbWJui4mta3klgcU
+         O2pU6ang2p/DZwB5zwkP9m/7hqoteeZjWEddsZLYJD8jIGYTGIjv/5XRuQS2D539AzV+
+         yX0A==
+X-Gm-Message-State: AOAM533EigJtqS2g4YMaAc+XFE104NWC7eEkuyry7pBPdLQoojipA2Oi
+        mrK4GQxmYGSwF3rAHqdL58D3Sm1x7kNhD4ggG+c=
+X-Google-Smtp-Source: ABdhPJznj0L6ewKK+totV3azm+tbLMtyPSxp+DQMXBsdzQj9lBUia0T71eHP56etlMImXmRXUiWC6C3BauuDqOOxAek=
+X-Received: by 2002:a5d:448e:0:b0:20a:de9a:a7f3 with SMTP id
+ j14-20020a5d448e000000b0020ade9aa7f3mr8343511wrq.129.1651016083686; Tue, 26
+ Apr 2022 16:34:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b94dbce7-d2d5-d260-27c7-b98e009b41a3@gmail.com>
+References: <pull.1225.git.1650970894143.gitgitgadget@gmail.com>
+ <pull.1225.v2.git.1650988659280.gitgitgadget@gmail.com> <YmhkCAbmNE8A7Wqy@camp.crustytoothpaste.net>
+In-Reply-To: <YmhkCAbmNE8A7Wqy@camp.crustytoothpaste.net>
+From:   Drew Green <agreenbhm@gmail.com>
+Date:   Tue, 26 Apr 2022 19:34:32 -0400
+Message-ID: <CANDN8xGh31E3VwgRUb6YgFuswiyYjzJwK-tyvmo2c6KY+pOtJA@mail.gmail.com>
+Subject: Re: [PATCH v2] Added Curl Option to Override Request Method v2
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Drew Green via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Drew Green <agreenbhm@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Phillip Wood wrote:
-> On 11/04/2022 11:18, Jorawar Singh wrote:
-
->> There's been some conversation about holding a workshop focused on
->> user experience [1].
-[...]
->> The purpose of this workshop is to help incorporate UX practices into
->> the Git development cycle.
-[...]
->> Once a reasonable consensus has been reached, we’ll set the date and
->> time, and ask for RSVPs via email.
+On Tue, Apr 26, 2022 at 7:30 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> Is there any news on a date yet? I filled out the spreadsheet but haven't
-> heard anything.
+> On 2022-04-26 at 15:57:39, Drew Green via GitGitGadget wrote:
+> > From: agreenbhm <agreenbhm@gmail.com>
+> >
+> > Added support for environment variable "CURLOPT_CUSTOMREQUEST"
+> > and config option "http.customrequest" to allow setting the Curl
+> > option to override the default request method used by HTTP Git
+> > operations.  Primary reason for this is to allow support for
+> > cloning repositories where only GET requests
+> > are allowed by a local web proxy but not POSTs.  When cloning
+> > a repo first a GET is made to the server and then a
+> > POST is made to the "git-upload-pack" endpoint.  In some
+> > corporate environments with strong controls
+> > only GET requests are allowed to known repository hosts (such
+> > as GitHub) through a web proxy to prevent data leakage.  Using this
+> > new setting, a user can set the "CURLOPT_CUSTOMREQUEST=GET" env at runtime
+> > or "http.customrequest = GET" in their config file which will
+> > change the second request from a POST to a GET, bypassing
+> > web proxy restrictions on the type of requests allowed.
+> > Tested with GitHub, changing the request from POST to GET still
+> > results in the expected behavior of the repo successfully being cloned.
+>
+> I don't think this is a good idea.  It may happen that GitHub or other
+> servers happen to accept a GET request here, but that is a bug and
+> should be fixed.  It is definitely not something we should depend on or
+> rely on, and it isn't a documented part of the protocol.
+>
+> If your corporate environment doesn't allow POST requests, you may wish
+> to use SSH for Git operations instead, or you may need to explain to
+> your company why you cannot do your job with their proxy in place.
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
 
-Thanks, Phillip!  Let's do 2 May (that's this coming Monday) at
-- 8-10am pacific time
-- 10am-noon central time
-- 11am-1pm eastern time
-- 4-6pm BST
-- 5-7pm CEST
-
-(Thanks to Jorawar for finding the date.)
-
-Jorawar will reach out with more details about how to RSVP, day-of
-logistics, and so on.
-
-Sincerely,
-Jonathan
-
->> [1] https://lore.kernel.org/git/CA+Yb-VSaeKy-g_ywkZzQuEX=k3EXM+Ky-rHOb2az0SHGVbdaVw@mail.gmail.com/
+Brian - I understand what you're saying, however I don't think adding
+this feature is detrimental in any way. It is simply leveraging a
+feature of curl without any promises of resulting behavior. Why not
+allow users to take advantage of a library feature if it can help?
+-- 
+Drew Green
+www.drewgreen.net
+PGP: 17BDDD7E
