@@ -2,70 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00D1BC433F5
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 22:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79501C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 23:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355779AbiDZWra (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 18:47:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
+        id S1356013AbiDZXPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 19:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245546AbiDZWr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 18:47:28 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8FB187465
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 15:44:18 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id g21so451223iom.13
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 15:44:18 -0700 (PDT)
+        with ESMTP id S1356016AbiDZXPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 19:15:37 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37BD14A500
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id b12so121534plg.4
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=zM6n5Bung/E13YzEIHznYnr1KMPe//yCig3MQKTzwkU=;
-        b=amhHST5h/OBxWmKHRErzz3A0jWVrqE2ju9XEZUEgd2ftSYqXqMtaIhPONz3eazwjv+
-         qqjPiABUr9lL6+mAOQGLXa3XsonGUkbF3Do6ygEy/3PSYObQVzQVObq/VygknmECiLVL
-         V3TnZ4bziFz3EjtIL9iBjEJhdgLXgR2s2K8UfdMMJaZGZRPEF+czcET439U5GMKzoe+k
-         gI26cCzXmHw8uRmrDDHLaeeefvVCjbwHBrNY1cDyIOMULIhMhEt3E0eOq5NKW2jwiUHN
-         55JpjpOhCKgR5F1eWW4SWvaL8ZN/9eiLswHPN5W+q3VMl2pbaghGZQ7AG+vihSAnY8hD
-         YVAQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=mLqh4SrCjyYZWi4AZQS7r67r/YbEQBwVQM32K6dfDng=;
+        b=PjTPEX/2RyXvqhob3GJtR5T6V2Lp9yDgegnmBHGiyp5cCippjPvpt5Fd7JKTFIHdMT
+         VlEFDDIXByxIjTQQPeT5sQYdV3zNcT5bNaWDQJYJYGl9acUZgCS1YoO2vyHFAZIOhJnG
+         nQMDUT6H+2udTK7CoQTZCxuzZDo056oado5pnRF27coub1uTWnyPNBQV7WE42MgaAUf3
+         qpHdAanJ8qDnHKZbZgtHmEjvpHv0W3Vf5Rcv76wAwk3gZU3QFH17ByFb1h/+5oynRamJ
+         aGNq3mtPCSIyqZsCTBnsc0XugiXXe1K1gKuW7w+55/dSLTxbRcW6/fPC4fqDRLNqeZSd
+         +RRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zM6n5Bung/E13YzEIHznYnr1KMPe//yCig3MQKTzwkU=;
-        b=Clibp96119Li2637CSP7NvL0hxkmjZSli1nhqRnQKoloBNY8A/nG5yqdpsX/g2KTza
-         n04/mSwVJcQxTqucJ/mpSSdc0wHwGK5IMj250ZSuwSDfrfMKjsQvvmIm/XHPOSY0O9o/
-         SSo8qGfM8RXip4Pv6BoGOptyvbU8NHWvnl5OoecWjrB/t6wCcQLA8p25m7Wgfkl9CUSy
-         2BeV1OCNRrOfgBJuvnFUebmnIcDY+/SvL77tpNDd8aGsaYlqg/MXJHQ+ac50/2bA4LG9
-         J1xIuHjAEjud/PZYxQJl+WPTvWpCP3D+Zw3oR9FIvlKb8I/8EIUguHs9lfBf7Za/mcPn
-         w2yQ==
-X-Gm-Message-State: AOAM531CULXqHD0JFajTOyhpMwFRWj6FuqCLvK6BULLwVrzjD1BjvTvh
-        +e/v/PdXmhNwwNKIhSCuyPpeHMgpwkmYwKmeViXXoUip0aI=
-X-Google-Smtp-Source: ABdhPJx3UfAVtxwopNexNNgVlTr9elKOZps6oxLRD6vthmO36//B3hGPZAR+iMSljUL0RihqMKGfITCUu8NaqYamVsw=
-X-Received: by 2002:a05:6638:2588:b0:32a:beec:a5cc with SMTP id
- s8-20020a056638258800b0032abeeca5ccmr10306612jat.191.1651013057181; Tue, 26
- Apr 2022 15:44:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=mLqh4SrCjyYZWi4AZQS7r67r/YbEQBwVQM32K6dfDng=;
+        b=7+kpDN4oOQI8sYs6s4I6MPgZKx1skkfbH+LD0PaLae82s+STcsr+eUJdjJbE9liOXf
+         F2Mu8lZncv0UThkZPtq/IwV0HJC7PcMo4EFTjSUOcLar5jxb/6S4CvpqBprdMbu4I5vH
+         nSL+XHgIFtQH10JQJYrjeUpUEpnP8la4GqYn0rREDlItMtIsy2Hvr/GDmAcbeAW9jCce
+         okqnj2ci1RBxmLIJOZPqaEAAQuz9zaWY1Rh62jHYTpfVn/Rbp+SLENZdPMJToZqzVWrN
+         bq0PuqCFYm1US9qIADcpKz52NfVIQNEvPxHLduiyHd4HwXDO4EnD+xn8hPf6ycjtJ1O4
+         TKiw==
+X-Gm-Message-State: AOAM533PYzRm12GFTdeSsB3MS6LtKqhNMXJgwQLfwkSYjE9pqazuqcQT
+        DvyELproNz/FgM6JxU7Mc6tF84CTQok=
+X-Google-Smtp-Source: ABdhPJzSkb+WEwpcl80j1rtbKqu8N8IZ0KYujZBnnNEM6tbuu2zC/9xlqewkaYPnkG63CKN0MczWVw==
+X-Received: by 2002:a17:902:d510:b0:15c:ecd2:e7fc with SMTP id b16-20020a170902d51000b0015cecd2e7fcmr18512240plg.132.1651014745053;
+        Tue, 26 Apr 2022 16:12:25 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:38b:d8c2:e101:e089])
+        by smtp.gmail.com with ESMTPSA id a38-20020a056a001d2600b004f70d5e92basm16785276pfx.34.2022.04.26.16.12.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 16:12:24 -0700 (PDT)
+Date:   Tue, 26 Apr 2022 16:12:22 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Jorawar Singh <jorawarsingh12@gmail.com>, git@vger.kernel.org,
+        Alice Merrick <amerrick@google.com>
+Subject: Re: Git user experience workshop
+Message-ID: <Ymh8VlCTK3m4flWj@google.com>
+References: <CAK-fT4Ge88sp_zcTiWuvg5pe7qpGhqWbq3Jt4W0DRVVpy54pwg@mail.gmail.com>
+ <b94dbce7-d2d5-d260-27c7-b98e009b41a3@gmail.com>
 MIME-Version: 1.0
-From:   David Calkins <david.s.calkins@gmail.com>
-Date:   Tue, 26 Apr 2022 18:43:39 -0400
-Message-ID: <CAMTWFOGU1ojFLE0v6cyyOh3tRRNmT8Nc9aWW=RLS4aHwJ5QDmw@mail.gmail.com>
-Subject: use core.fsmonitor instead
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b94dbce7-d2d5-d260-27c7-b98e009b41a3@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I installed Git v2.36.0 for Windows (64-bit) and when running commands
-I get the following output.
+Hi,
 
-hint: core.useBuiltinFSMonitor will be deprecated soon; use
-core.fsmonitor instead
-hint: Disable this message with "git config advice.useCoreFSMonitorConfig false"
+Phillip Wood wrote:
+> On 11/04/2022 11:18, Jorawar Singh wrote:
 
-I opened the system Git config file and updated it to have the below.
+>> There's been some conversation about holding a workshop focused on
+>> user experience [1].
+[...]
+>> The purpose of this workshop is to help incorporate UX practices into
+>> the Git development cycle.
+[...]
+>> Once a reasonable consensus has been reached, we’ll set the date and
+>> time, and ask for RSVPs via email.
+>
+> Is there any news on a date yet? I filled out the spreadsheet but haven't
+> heard anything.
 
- useBuiltinFSMonitor = false
+Thanks, Phillip!  Let's do 2 May (that's this coming Monday) at
+- 8-10am pacific time
+- 10am-noon central time
+- 11am-1pm eastern time
+- 4-6pm BST
+- 5-7pm CEST
 
-After this change I no longer get that output.  However, the hint
-indicated that I should "use core.fsmonitor instead".  Is there
-something else I should be doing besides just telling it not to
-useBuildtinFSMonitor?  How do I tell it to "use core.fsmonitor
-instead"?
+(Thanks to Jorawar for finding the date.)
+
+Jorawar will reach out with more details about how to RSVP, day-of
+logistics, and so on.
+
+Sincerely,
+Jonathan
+
+>> [1] https://lore.kernel.org/git/CA+Yb-VSaeKy-g_ywkZzQuEX=k3EXM+Ky-rHOb2az0SHGVbdaVw@mail.gmail.com/
