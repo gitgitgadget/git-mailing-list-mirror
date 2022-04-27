@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB62C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 18:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EFA8C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 18:16:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244673AbiD0ST5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 14:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42552 "EHLO
+        id S244731AbiD0ST7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 14:19:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244719AbiD0STw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 14:19:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D732DD66
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:31 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id d5so3641832wrb.6
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:31 -0700 (PDT)
+        with ESMTP id S244679AbiD0STv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 14:19:51 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410772C661
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:29 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id d5so3641680wrb.6
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YnGSgwjzx6yg1za1Z1HzxytFQ9bIIkcKN0GE008i7mY=;
-        b=inPXdryFSAKAv9ZPGpcSWLt/jGCvzE0cXw+XHnoqXmyCze/wyTNUL38/skiu/c5cdr
-         9mFyvRL6bgt3A56h7Y2iRv4OOO3WVG+evIOsk/g/6BWOLfv7NNa7K+OGpRVrRozhZvGL
-         qoYPPtwE6K0Pc4qXq9y9+cOBb59ItV2HPI8cb59VkC6/F7OxmTjRXuwP9MawfeOPrPgL
-         pM5A4sDIIcYsOnQGByZFn9CRR14pWiWTaY06fW9bfMEJE1todtFQe0XJ7SLyLmrUgaTs
-         kdhzTIvBQCYXF0U1XnpAR7EYtbTRqxNJau4W+DJYXQHLaKYCcJb3t0TqkGjWiKWH9bCU
-         vq9Q==
+        bh=1qAvMrK9QQnFN1vnNGvpGaSBmcFGP+U1S3g7XKOBhP8=;
+        b=GD8TEd1lKE5m1qL41CPdKishTO5/CoNDkQZHzt016D6xgFsFSVj44zSvOsVvCt0gSb
+         AK1hPVPZxzg5ANgXR3odO4k5b1nlY15lgJGVzlF6rQoP3RLqMz1dE1S8pN25Q6D9Pjgz
+         vuWr4jevsV41xPS6YwosQ4UZnKI8eS8JTICzeejJW4ucFGg/dr2oRJJV59gCDfe1NAuk
+         VXSv2kThwb6xPG4lhid+ItGFBtwGJXd/O2ImV3I04SyAv6ZxPsMKcWwc1AMnL9bjHMfR
+         oF0eqfTGgNWT1QQTueATcYjY6ENGFpvs083Y6Hjn26mqdZmyNpHbUkHXUs3Q/5U6+ZcK
+         7DFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YnGSgwjzx6yg1za1Z1HzxytFQ9bIIkcKN0GE008i7mY=;
-        b=vfsWyGEv8jsHH7WjM8X1Z+Fv/cQxYin8GwWG6mj3cOCTVIuPdgDR2rTVyo0LHOf0q8
-         R21Rjbl8LN6pqU7pMk7BkvwDlfe8XFHosqiOSRBXwPdKsX86KKL1ZfOtHK6Aqegxkde/
-         iDYTo6GtyUNFriUVBZhj4/j3JEVU2ewB6/+YSejfzjMbRleozalowgPaGYOWEGHL5iop
-         U6vtJmL307ooiZfpplxsKvi4lL+7I8UBi5drO1aHJJscKGy3/dmnWGOSakq9bjH/jJw5
-         GV8K7ibIS5r85MNP6hc16L1OTQbkenLU3BZ0MSKQ7WnJVi8xAMpSZP7qYElyZvXGPTuw
-         SDJw==
-X-Gm-Message-State: AOAM533hJJ8xKhaYmE+hrJ8Upw3oaezownCI1Tvhz5tzfGsXT3cX4O42
-        Anr9bt5BMBd0GmCRhKLqGsF8HWP3PcA=
-X-Google-Smtp-Source: ABdhPJzHFhWOpQATPXxPgsYCBbtYl8yNR9fQAw7wZ+WyLv5RSeMDOdiTYhUv/zbOPi9HpNRZP23y6g==
-X-Received: by 2002:a5d:6d05:0:b0:20a:91e4:4b7f with SMTP id e5-20020a5d6d05000000b0020a91e44b7fmr25029986wrq.190.1651083389890;
-        Wed, 27 Apr 2022 11:16:29 -0700 (PDT)
+        bh=1qAvMrK9QQnFN1vnNGvpGaSBmcFGP+U1S3g7XKOBhP8=;
+        b=DEbk0moR7vsCQqWfhtuDdqqeKxw8MnzkvBJF3nvXfp06WTIXakv+sF+oYzX7T2DoSz
+         B35JtPrnHJLfQ2VOFD6G6sHVNmVgSWt0xQyK5MZ5neyxjz/54McPPWiFbXlgqwsLdAA6
+         SEdDMu+Q5Pq577ZjFqIFPrvpx5B8tfa0T3FD0YKSD7kKbOHAFhe4YYpy/8eoUP8Xgf3t
+         422q3WnMYsN7VpYpvvsIvRK2SlMWczVHKaQT3ao4tAnZyIrw1dgS/kTOfQp3KKVV4hxE
+         uEXBDRbdK08V3xfsLciwdUJjmRtXIYjBjDfHOdwmNdwei5TAvqWeBXy9TR6UW83otXOv
+         oBEQ==
+X-Gm-Message-State: AOAM530lEY1ypucT1O6nmJHh2568Fr9c+AO47TloLgsOEpXM7L/HF0s8
+        ZGU3t0xlVbxqrtvnc76KFbUJdEmSoU0=
+X-Google-Smtp-Source: ABdhPJzRrvSJ7276T+xo7vHx3t5LvRiPNuQOtcDJiPYLOYurAauWAu+/Yv7kL0DBgIxbcEmteEQLmQ==
+X-Received: by 2002:a5d:6dd1:0:b0:207:92c4:eaef with SMTP id d17-20020a5d6dd1000000b0020792c4eaefmr23784867wrz.498.1651083387327;
+        Wed, 27 Apr 2022 11:16:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s26-20020adfa29a000000b0020ad8b99d5dsm9414219wra.109.2022.04.27.11.16.28
+        by smtp.gmail.com with ESMTPSA id p4-20020a1c5444000000b00391ca5976c8sm2603334wmi.0.2022.04.27.11.16.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 11:16:29 -0700 (PDT)
-Message-Id: <3179018a8cb72c09c091a58eca4f59f71f90845a.1651083378.git.gitgitgadget@gmail.com>
+        Wed, 27 Apr 2022 11:16:26 -0700 (PDT)
+Message-Id: <4537d473b937b182cd79b2f3c5673b75d92cab23.1651083378.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
 References: <pull.1171.git.1650908957.gitgitgadget@gmail.com>
         <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Apr 2022 18:16:18 +0000
-Subject: [PATCH v2 7/7] unpack-trees: preserve index sparsity
+Date:   Wed, 27 Apr 2022 18:16:16 +0000
+Subject: [PATCH v2 5/7] merge-recursive: add merge function arg to
+ 'merge_recursive_generic'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,64 +68,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-When unpacking trees, set the default sparsity of the resultant index based
-on repo settings and 'is_sparse_index_allowed()'.
+Replace the hardcoded 'merge_recursive()' function used by the
+'merge_recursive_generic()' with a caller-specific merge function. This will
+allow us to use 'merge_ort_recursive()' (and therefore avoid the index
+expansion of 'merge_recursive()') in commands that perform merges with
+'merge_recursive_generic()', such as 'git stash pop'.
 
-Normally, when executing 'unpack_trees', the output index is marked sparse
-when (and only when) it unpacks a sparse directory. However, an index may be
-"sparse" even if it contains no sparse directories - when all files fall
-inside the sparse-checkout definition or otherwise have SKIP_WORKTREE
-disabled. Therefore, the output index may be marked "full" even when it is
-"sparse", resulting in unnecessary 'ensure_full_index' calls when writing to
-disk. Avoid this by setting the "default" index sparsity to match what is
-expected for the repository.
-
-As a consequence of this fix, the (non-merge) 'read-tree' performed when
-applying a stash with untracked files no longer expands the index. Update
-the corresponding test in 't1092'.
+Note that this patch is strictly a refactor; all callers still use
+'merge_recursive()', and any changing to 'merge_ort_recursive()' will be
+done in a later commit.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 2 +-
- unpack-trees.c                           | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ builtin/am.c              | 2 +-
+ builtin/merge-recursive.c | 2 +-
+ builtin/stash.c           | 2 +-
+ merge-ort.c               | 3 ++-
+ merge-recursive.c         | 4 ++--
+ merge-recursive.h         | 9 ++++++++-
+ 6 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index aaf4d880dbc..19221c14225 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1392,7 +1392,7 @@ test_expect_success 'sparse-index is not expanded: stash' '
- 	ensure_not_expanded stash -u &&
- 	(
- 		WITHOUT_UNTRACKED_TXT=1 &&
--		! ensure_not_expanded stash pop
-+		ensure_not_expanded stash pop
- 	) &&
+diff --git a/builtin/am.c b/builtin/am.c
+index 0f4111bafa0..6d01185d122 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1614,7 +1614,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 	if (state->quiet)
+ 		o.verbosity = 0;
  
- 	ensure_not_expanded stash create &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7f528d35cc2..a1d0ff3a4d3 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -11,6 +11,7 @@
- #include "refs.h"
- #include "attr.h"
- #include "split-index.h"
-+#include "sparse-index.h"
- #include "submodule.h"
- #include "submodule-config.h"
- #include "fsmonitor.h"
-@@ -1839,6 +1840,11 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	o->result.fsmonitor_last_update =
- 		xstrdup_or_null(o->src_index->fsmonitor_last_update);
+-	if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
++	if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, merge_recursive, &result)) {
+ 		repo_rerere(the_repository, state->allow_rerere_autoupdate);
+ 		free(their_tree_name);
+ 		return error(_("Failed to merge in the changes."));
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index b9acbf5d342..687ed1e527b 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -81,7 +81,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 	if (o.verbosity >= 3)
+ 		printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
  
-+	if (!o->src_index->initialized &&
-+	    !repo->settings.command_requires_full_index &&
-+	    is_sparse_index_allowed(&o->result, 0))
-+		o->result.sparse_index = 1;
+-	failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
++	failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, merge_recursive, &result);
+ 
+ 	free(better1);
+ 	free(better2);
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 1bfba532044..16171eb1dab 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -554,7 +554,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 	bases[0] = &info->b_tree;
+ 
+ 	ret = merge_recursive_generic(&o, &c_tree, &info->w_tree, 1, bases,
+-				      &result);
++				      merge_recursive, &result);
+ 	if (ret) {
+ 		rerere(0);
+ 
+diff --git a/merge-ort.c b/merge-ort.c
+index 8545354dafd..4bccdfcf355 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4737,7 +4737,8 @@ void merge_incore_recursive(struct merge_options *opt,
+ 	trace2_region_enter("merge", "incore_recursive", opt->repo);
+ 
+ 	/* We set the ancestor label based on the merge_bases */
+-	assert(opt->ancestor == NULL);
++	assert(opt->ancestor == NULL ||
++	       !strcmp(opt->ancestor, "constructed merge base"));
+ 
+ 	trace2_region_enter("merge", "merge_start", opt->repo);
+ 	merge_start(opt, result);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 1ee6364e8b1..2088f5c5fb3 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3806,6 +3806,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 			    const struct object_id *merge,
+ 			    int num_merge_bases,
+ 			    const struct object_id **merge_bases,
++			    recursive_merge_fn_t merge_fn,
+ 			    struct commit **result)
+ {
+ 	int clean;
+@@ -3829,8 +3830,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 	}
+ 
+ 	repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+-	clean = merge_recursive(opt, head_commit, next_commit, ca,
+-				result);
++	clean = merge_fn(opt, head_commit, next_commit, ca, result);
+ 	if (clean < 0) {
+ 		rollback_lock_file(&lock);
+ 		return clean;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index b88000e3c25..6a21f2da538 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -53,6 +53,12 @@ struct merge_options {
+ 	struct merge_options_internal *priv;
+ };
+ 
++typedef int (*recursive_merge_fn_t)(struct merge_options *opt,
++				    struct commit *h1,
++				    struct commit *h2,
++				    struct commit_list *merge_bases,
++				    struct commit **result);
 +
- 	/*
- 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
- 	 */
+ void init_merge_options(struct merge_options *opt, struct repository *repo);
+ 
+ /* parse the option in s and update the relevant field of opt */
+@@ -105,7 +111,7 @@ int merge_recursive(struct merge_options *opt,
+ 
+ /*
+  * merge_recursive_generic can operate on trees instead of commits, by
+- * wrapping the trees into virtual commits, and calling merge_recursive().
++ * wrapping the trees into virtual commits, and calling the provided merge_fn.
+  * It also writes out the in-memory index to disk if the merge is successful.
+  *
+  * Outputs:
+@@ -120,6 +126,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 			    const struct object_id *merge,
+ 			    int num_merge_bases,
+ 			    const struct object_id **merge_bases,
++			    recursive_merge_fn_t merge_fn,
+ 			    struct commit **result);
+ 
+ #endif
 -- 
 gitgitgadget
+
