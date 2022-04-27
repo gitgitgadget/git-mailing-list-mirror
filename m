@@ -2,167 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92733C433FE
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 19:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4253DC433EF
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 19:12:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232229AbiD0TH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 15:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54606 "EHLO
+        id S232918AbiD0TPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 15:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232599AbiD0THF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 15:07:05 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241E918E3B
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:54:24 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0E2261A0C68;
-        Wed, 27 Apr 2022 14:54:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Rzgrx6h4mCrXgrB/uwoOU4RWiAeHtSWiKF7Z8f
-        F8dDU=; b=rwLG2RzTO1Eu+14ZlPGopcicOpbFyWSBZZd0GHW3XdxpG97QcteY/B
-        cG37xPqVC80DWI2TA6Q7Eb+W+QmcgAXjs8C60syjQ6SHu/AY5jCbAwCT4cCSQe9K
-        F9VMsTkPpGR+6IHstrMTN1WhZkCAucZ9AZua880vBMT8TL/6C8+44=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 060281A0C67;
-        Wed, 27 Apr 2022 14:54:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6636B1A0C66;
-        Wed, 27 Apr 2022 14:54:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Carlo Arenas <carenas@gmail.com>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org, philipoakley@iee.email, me@ttaylorr.com,
-        guy.j@maurel.de, szeder.dev@gmail.com, johannes.Schindelin@gmx.de,
-        derrickstolee@github.com, Randall Becker <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] git-compat-util: avoid failing dir ownership checks if
- running privileged
-References: <20220426183105.99779-1-carenas@gmail.com>
-        <20220427000522.15637-1-carenas@gmail.com>
-        <6522673b-494a-951c-be5e-3ca01577c12b@gmail.com>
-        <fcd26e80-daee-2d66-cbdc-b004c478357d@gmail.com>
-        <CAPUEspiHWTTAvNyqqLzcC854UccH=bkPLPBzPaPfzFKn_yt4aA@mail.gmail.com>
-        <b0a80f47-f441-fc6e-3695-58ea83dea2b8@gmail.com>
-Date:   Wed, 27 Apr 2022 11:54:17 -0700
-In-Reply-To: <b0a80f47-f441-fc6e-3695-58ea83dea2b8@gmail.com> (Phillip Wood's
-        message of "Wed, 27 Apr 2022 17:14:27 +0100")
-Message-ID: <xmqqzgk6l5ly.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234198AbiD0TOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 15:14:12 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE10C90CE8
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 12:04:56 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id q23so3810243wra.1
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 12:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z4W7EAoVPs/ZMACArphfVx1fvyrbGn1Y9FuVBcQgB6M=;
+        b=K163+bZtq15VXeGlSbkYfd8QWRrKaWmeQFjgEZvibwig83RT+Q0nVWWmGwUCzWxqe+
+         bi6bTaCQFFQjV9swhEyMT95wjurjjZfnEsl7mEi+IsE24sPkujxV0CUf+O01Xdv71B8x
+         /tZONIYFaGTJsbvUAxSIOwh/aleDQGd1LzRiGNrlK4HSKQYFHwziQkoLZUn8RBeGuYCH
+         MjHU6Zya5NXUYH8mwhY/PkC17exZq9C2lgiAVIgYOxPUPIgLgA7Q5zpzOKp5kX2et8mP
+         2ngSHF+CyAZnKlTDEojAOa7bZbdXkI1VVM/mJFtuBP6RY89B7hjeapItl9+0jbzJ9BkU
+         aPGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Z4W7EAoVPs/ZMACArphfVx1fvyrbGn1Y9FuVBcQgB6M=;
+        b=PZBIHfUtoUFTpSPBk2o8+j9lDySKswS2kcXnHZWauiVtl2ngrlFBgOiPItBydLlt3T
+         uRXu4N7LIT/1hgaOdtsbhmSxwuAXe6Qiv6vl9lwB3tsWh/Pi6wKntYfQ+0Ka6Csb+kSM
+         MA5vMjIXktM49rCGrqJd3NhxmvRck+hPfkqwdkeU49t9lb6KhKfGLlKF5ufimJN1woiH
+         N7ocGbF+7rz5FO7q7j2tc4xVkgRASbI0jh34oeo0IjUG3qsnc0t1PfvBnOr0RiDBvBkJ
+         IQzUkctwgN/YxFM7QvEsYRJ86aTXH+bfZt9cvHYWCfsnlNQ4C3ihRexL+oaahxMYM808
+         RYxA==
+X-Gm-Message-State: AOAM533dTvO0fIVgRQlb9BOHtbvalbWfK4KFU1WqLRsQepmWd/zbE54Q
+        +6RTLO3E3mHUTHinIbJ3OdU9KgUHDi0=
+X-Google-Smtp-Source: ABdhPJz2jOt/tCWeoWyl4mknkDBMGOUA3bGWXOCNMTMYO5np9VNKxxuHbwu7THvZNU8LFQHmFGToNg==
+X-Received: by 2002:adf:ded0:0:b0:20a:f070:6bb0 with SMTP id i16-20020adfded0000000b0020af0706bb0mr3549150wrn.208.1651086295144;
+        Wed, 27 Apr 2022 12:04:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m1-20020a1ca301000000b003929c4bf250sm2216041wme.13.2022.04.27.12.04.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Apr 2022 12:04:54 -0700 (PDT)
+Message-Id: <2f6ecbf260135efc2a7ad09564cf6c64ed6d6f0d.1651086288.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
+References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 27 Apr 2022 19:04:48 +0000
+Subject: [PATCH 3/3] MyFirstContribution: drop PR description for GGG
+ single-patch contributions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7127327A-C65B-11EC-BFF8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-> On 27/04/2022 16:58, Carlo Arenas wrote:
->> On Wed, Apr 27, 2022 at 5:30 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>> You are ignoring any errors when parsing the environment variable - that
->>> is not a good idea in a security check.
->> which errors are you concerned about?, if anything in this code
->
-> I was confused by the fact that the helper function returns a
-> success/failure value which we ignore. However euid is not overwritten 
-> if strtol fails so it is safe I think.
->
->> worries me from a security point of view is the fact that we are
->> relying in getenv not being racy (as mentioned in the original RFC),
->> but there are no errors set there AFAIK.
->> not ignoring errno in strtol is an option, but as mentioned before I
->> decided instead to reject bogus values and therefore not the clobber a
->> previous errno,
->
-> strtol() will set errno if there is a range error ignoring it does not
-> change that. In any case is_path_owned_by_current_uid() already
-> clobbers errno if stat() fails.
+By default, GitHub prefills the PR description using the commit message
+for single-commit PRs. This results in a duplicate commit message below
+the three-dash line if the contributor does not empty out the PR
+description before submitting, which adds noise for reviewers.
 
-IOW we are not preserving errno anyway, so ignoring errno (or
-resetting before calling strtol) does not by us anything.
+Add a note to that effect in MyFirstContribution.txt.
 
-We probably should step back a bit, take a deep breath and think
-what we are trying to protect our users against.  When I said early
-in the discussion how much we trust the value in SUDO_UID, I hoped
-people would do so, and I was especially hoping such a discussion to
-happen when they realized that the width of uid_t is unknown and
-there can be truncations in either direction.
+This partly addresses:
+https://github.com/gitgitgadget/gitgitgadget/issues/340
 
-So let's start one now.
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ Documentation/MyFirstContribution.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-If we didn't trust the value in SUDO_UID, what valid use case do we
-help, and what avenue of attack do we open ourselves to?  This is
-not a suggestion of an alternative, but is a discussion starter to
-illustrate the line along which we want to think about the issues.
-
-The original "sudo make install" (which runs "git describe" inside)
-use case does not really care.  The process running with SUDO_UID is
-not spelunking into random directories uncontrollably without being
-aware that there may be hostile repositories.  The directories they
-visit are part of legitimate journey "make install" takes.
-
-The "sudo sh to get a shell, chdir to /var/tmp/foo to do something"
-use case does care---it needs to make sure that whereever it goes is
-not part of a hostile repository.  So "if SUDO_UID is there, anything
-goes" is not a good protection for such a use case.
-
-If we read SUDO_UID into an int16_t and uid_t happens to be much
-wider than that type, then what happens?  Again, I am not advocating
-to deliberately use shorter type to cause truncation.  This is
-merely to illustrate how much truncation matters.
-
-The "sudo make install" use case may be harmed unless the comparison
-is done carefully.  If the repository owner's UID is beyond 32k then
-asking if (st.st_uid == SUDO_UID) would say "no" due to truncation
-and refuse access to the legitimate user.  If we compare both after
-casting them to int16_t then the repository owner will be allowed in
-again.  A friendly stranger who happens to share the low 16-bit of
-UID will also be allowed to install from the repository, but that is
-not an intended consequence.
-
-The "sudo sh and go spelunking" use case is weakend by truncation.
-It is protected only if the victim's UID does not share the lower
-16-bit with the owner of hostile repository.
-
-So what attack does this allow?  An attacker needs to learn their
-own UID, find another user whose UID is the same modulo 16-bit as a
-potential victim, and the victim has to be among those who can run
-"sudo".  Then the victim somehow has to be talked into running stuff
-in a repository the attacker prepares.
-
-Possible?  Yes.  Practical?  I dunno.  Especially if we do not
-deliberately truncate by reading into int16_t but use "int" (32-bit
-almost everywhere we care about) or "long".  Now how likely is uid_t
-narrower than long?  If it is not likely, then we probably are OK to
-use long and not worry about the truncation at all.  Or use strtoll()
-to make it even less likely.
-
-So, in short, I think it is reasonable if we did:
-
- - do the extra "if SUDO_UID exists, then..." only when we are root.
-
- - use strtol to ensure SUDO_UID is in good shape (all digits) and
-   read into long; use errno=0 trick to notice overflows.  err on
-   the safe side and do not allow if the value cannot be read
-   correctly.
-
- - do the comparison between st.st_uid and strtol() result by
-   casting both to (long).  Without this, st.st_uid has a value that
-   needs wider than long, we cannot allow the owner of such a
-   repository in (and I somehow feel that is unlikely to happen).
-
- - or omit the third one --- tough luck for those whose UID is
-   beyond what a long can represent (and I somehow feel that this is
-   probably OK).
-
-Another thing I'd suggest doing is to have a helper function to do
-the "we do a bit more than geteuid() to come up with the allowed
-owner of repositories we encounter", and call that function instead
-of geteuid().
-
-Thanks.
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index 96da32f7cef..2ce51d8c82e 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -821,6 +821,14 @@ Adding the 'psuh' command
+ Your PR's description will used as the body of the cover letter.
+ include::MyFirstContribution-coverletter.txt[]
+ 
++NOTE: For single-patch contributions, your commit message should already be
++meaningful and explain at a high level the purpose (what is happening and why)
++of your patch, so you usually do not need any additional context. In that case,
++remove the PR description that GitHub automatically generates from your commit
++message (your PR description should be empty). If you do need to supply even
++more context, you can do so in that space and it will be appended to the email
++that GitGitGadget will send, separately from your commit message.
++
+ When you're happy, submit your pull request.
+ 
+ [[run-ci-ggg]]
+-- 
+gitgitgadget
