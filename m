@@ -2,86 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45345C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 20:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AAF2C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 20:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235379AbiD0UHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 16:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59088 "EHLO
+        id S236969AbiD0UeQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 16:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235495AbiD0UHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 16:07:02 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B53F4338B
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 13:03:47 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E7B3D19401D;
-        Wed, 27 Apr 2022 16:03:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vUGWjBxRo7jv
-        mCQSle0vboCg2gPe68Sw/jjv//aysk4=; b=bQLbNkIKzpgC5XABz6mLV73vlkuX
-        Wu/JBH3gYwdrneJXJz8x4onFIZX8VZCJOXv+02qP6TOM5TIrjR3RIJm539oiE7/m
-        ZVSb3HIve7DWsmmVnoeJ1LFgxTYxFASOBrW5eY0OMOYjyixCAjjTuieNZs8RhrHQ
-        2G0XRc1/uxNo2XI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DFACE19401B;
-        Wed, 27 Apr 2022 16:03:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 39D3319401A;
-        Wed, 27 Apr 2022 16:03:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Matthias =?utf-8?Q?A=C3=9Fhau?= =?utf-8?Q?er?= 
-        <mha1993@live.de>
-Subject: Re: [PATCH] 2.36 gitk/diff-tree --stdin regression fix
-References: <xmqqh76j3i3r.fsf@gitster.g> <xmqqbkwpvyyc.fsf@gitster.g>
-        <83a76d46-5069-d6c7-b8b3-f3a063637abb@gmail.com>
-        <6ac7e164-c4ba-0ffc-a8a4-4cede1d4e7ae@gmail.com>
-        <xmqqo80nsw5h.fsf@gitster.g> <xmqq7d7bsu2n.fsf@gitster.g>
-        <561a73aa-7e94-5a09-0c9c-08e8b6ce7188@web.de>
-        <a1dcac11-98ac-9fcd-8375-4fd1be9ace78@web.de>
-Date:   Wed, 27 Apr 2022 13:03:41 -0700
-In-Reply-To: <a1dcac11-98ac-9fcd-8375-4fd1be9ace78@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 27 Apr 2022 20:06:39 +0200")
-Message-ID: <xmqqv8uul2ea.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229691AbiD0UeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 16:34:09 -0400
+X-Greylist: delayed 2129 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 27 Apr 2022 13:30:56 PDT
+Received: from smtp.onerussian.com (washoe.dartmouth.edu [129.170.30.229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B5D1B3C78
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 13:30:55 -0700 (PDT)
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <yoh@onerussian.com>)
+        id 1njnkx-0001vA-CO; Wed, 27 Apr 2022 15:55:23 -0400
+From:   Yaroslav Halchenko <debian@onerussian.com>
+To:     git@vger.kernel.org
+Cc:     Yaroslav Halchenko <debian@onerussian.com>
+Date:   Wed, 27 Apr 2022 15:54:50 -0400
+Message-Id: <20220427195450.366703-1-debian@onerussian.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 23940894-C665-11EC-B291-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: git@vger.kernel.org, yoh@onerussian.com
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: [PATCH] Documentation: replace - use consistent 'replace reference'
+X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+As a new user to 'git replace' I found it a little uncertain about what
+"'replace' reference" documentation was talking since there was only
+"replacement" mentioned in the command summary.  Decided to make it more
+consistent as 'replace reference' after checking that in a few spots there is a
+use of multi word entries within <>.
 
->> +	if (prev_options_with_pathspec =3D=3D options && !options->pathspec.=
-nr)
->> +		BUG("reused struct diff_options, potentially lost pathspec");
->> +	if (options->pathspec.nr)
->> +		prev_options_with_pathspec =3D options;
->
-> This can report a false positive if a diffopt is reused with different
-> pathspecs, and one of them is empty (match all).  Which could be counte=
-red
-> by using a fresh diffopt every time (e.g. pushing it into a loop).
+Signed-off-by: Yaroslav Halchenko <debian@onerussian.com>
+---
+ Documentation/git-replace.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-The only use case to reset pathspec of a diffopt during iteration I
-can think of is the hacky[*] version of "git log --follow" where the
-pathspec is swapped when a rename of a single path being followed is
-detected.
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index f271d758c3..71f98edfe3 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -8,7 +8,7 @@ git-replace - Create, list, delete refs to replace objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git replace' [-f] <object> <replacement>
++'git replace' [-f] <object> <replace reference>
+ 'git replace' [-f] --edit <object>
+ 'git replace' [-f] --graft <commit> [<parent>...]
+ 'git replace' [-f] --convert-graft-file
+@@ -17,16 +17,16 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Adds a 'replace' reference in `refs/replace/` namespace.
++Adds a 'replace reference' in `refs/replace/` namespace.
+ 
+-The name of the 'replace' reference is the SHA-1 of the object that is
+-replaced. The content of the 'replace' reference is the SHA-1 of the
++The name of the 'replace reference' is the SHA-1 of the object that is
++replaced. The content of the 'replace reference' is the SHA-1 of the
+ replacement object.
+ 
+ The replaced object and the replacement object must be of the same type.
+ This restriction can be bypassed using `-f`.
+ 
+-Unless `-f` is given, the 'replace' reference must not yet exist.
++Unless `-f` is given, the 'replace reference' must not yet exist.
+ 
+ There is no other restriction on the replaced and replacement objects.
+ Merge commits can be replaced by non-merge commits and vice versa.
+-- 
+2.35.1
 
-    Side note: hacky because the way it swaps a single pathspec upon
-    seeing one rename means it does not work in a mergy-branchy
-    history where one branch renames and there are still commits
-    that need to be explored on the other branch that had the path
-    under its original name.
