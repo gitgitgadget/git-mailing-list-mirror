@@ -2,78 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE99C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 16:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7058EC433F5
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 16:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241345AbiD0QDM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 12:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55580 "EHLO
+        id S241181AbiD0QFz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 12:05:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241456AbiD0QCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 12:02:41 -0400
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B54B1AB8ED
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 08:59:11 -0700 (PDT)
-Received: by mail-ua1-x929.google.com with SMTP id ay33so783830uab.9
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 08:59:11 -0700 (PDT)
+        with ESMTP id S242290AbiD0QEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 12:04:35 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501A4321A7F
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 09:01:09 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id v12so3126673wrv.10
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 09:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AYmhw+rmsyIetR1B4zpjn8+MAtdLUXh6gPdVxvehxPQ=;
-        b=fMUx87yJDo3uk+PACylyS04ITDkGs7Tg2F4gu1VJbso0Hl5neXRWmxxkV5ZXyMz4+J
-         A9cejnKZUwOR1frBTnsdxyvSZOupVtlN02kKXIfeFqTXL4P95SD0M1C4SJrsXJgc+IoN
-         GqqdxNzMkSyO7S651VtqK+3SxPEdZwUiQyC6O8qoo7gTYuzwpKKOTx3dzSRwsPLFdPCb
-         5p6jIgcVd3PuYW5KUsrhsYlC357cCgCzG1FAm4tcA5KjAUjGouwHy3pPQn04gD4p7zch
-         lAzXDxUxSdpWPmf0GfP3fap+XT3K4WJf4bkxcRTJDr2UpbLpveT0mdP+dO7Hom6q4xsK
-         X0tg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=lEGZUFu2y+aPk+/8yZWYPldZOmfap5e6ih4QbBdgJBk=;
+        b=LtOp85iYlodxE67bSf7rZJ2UjA7JfpztkRZd7x1CzJYa5ZXtrYOgvYOlgx2Rfg6CS0
+         NPWd/2I7RTkWe3b/guikPjCAsX16SW6RZdl0QNOvkarA4cUnV5WRsQTtDRXE/6P3z0Ib
+         SPcya0zoE3xDt+SAeIqBtOjwYogosAdxdAZugdiTtY3syXKZeWg0Gtu34R/e3Y3WXyL2
+         +a2spjQ5YSYQbpxqQCfTtsxkuddNasg+kyeAtzDRYikDTyJ74SmrJvzCWQzV7WfgxiPt
+         JDv+cpM4PiTFsYJyOn9ZEEQjHaC1JLisJNNx4Lw2Ll+IZ+idvleef2VGIR9GhFOqDLvU
+         vmhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AYmhw+rmsyIetR1B4zpjn8+MAtdLUXh6gPdVxvehxPQ=;
-        b=ijF6PgF2WK4lvfca3iO3gNCwp9V/TTLjIhGD6dK+y954flHV36xzVEMAg+FiH1ohtN
-         B/xKhZps3Tjp3p19aG67zBs54lzFyb16V4KAscT1sILoVc4kKcDxAfPe8Brb5ASUu8oV
-         5BUmpGbzVrmRx7FBfJnkrEJl4Msm5Yu6gHpVeDDFbWLLxbavx3N3ZWZK0l+GaMK+MFmO
-         Vec8gDIGAS2CysujTxp1f3OZ42IPBUhsulcHf1VRMC3Je0QYiclQc0iS91+Dn+tEAYZW
-         HjDVi765f6+hR+xxXyCZXY+HFMez3PulSTDmjwToaP2nwSItomUWxeuMpijeW6dyIWDd
-         J7Gw==
-X-Gm-Message-State: AOAM532A/bTCSPk7Ut+saNW4pycrBvIy5NQkJ0/f3bh1jCShGirShnFt
-        fTm3PZ3xbkVRlkGoNjE+BuHSqgflzynMeY7+b8c=
-X-Google-Smtp-Source: ABdhPJxfN5l6abVR+gjAuHEuveTThCWkl/qFaUE26CWC0pPhKk0jg1nN35UC9mlVxx0niVN9fCCbJlMOLQN/vsDL/e0=
-X-Received: by 2002:ab0:654e:0:b0:360:303f:46c7 with SMTP id
- x14-20020ab0654e000000b00360303f46c7mr9115818uap.6.1651075148868; Wed, 27 Apr
- 2022 08:59:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=lEGZUFu2y+aPk+/8yZWYPldZOmfap5e6ih4QbBdgJBk=;
+        b=cDyN/mVfv0bjm2GBtSfQ9hY9Y+LONfwIN3Z59omrDph9GpNphUHRUTsZluU/pa1Cbg
+         sYASpXOQGvY9az0cnMbiDYWGxen8hO5pE0eDLY7pJc1xdNgQ/ISZeAa5mo6v97r/P+IJ
+         nQMECetPc8j2eUxlG5xaW508J6DRdNH9/fLPv00N7KTqQmmFZq6KL09T5FawlSGiezKo
+         VxoqrXxgiDWieCLKxVEeRaupLx6GNyHFl4ENSz2NKfWTqv8uax4rcJogunldansvHxJS
+         juIfHW/4PeDMcidTCpHaEydG4deqJq6E8Hg3fozJie6X8sr70O8JgQUVtWgMdH5IJ/wj
+         1tCA==
+X-Gm-Message-State: AOAM533o05CUyyZuN06MvNVf66HIRhCjQSLM9m5McXd6ihCOGnmk8wjJ
+        ClPm6GYRgoC6imBgGZ7dp/Fcyzu218c=
+X-Google-Smtp-Source: ABdhPJw9W4SLNlc4il8W1vn+g+u+7XdhcY/bzoynImuqdRoW8BtyFyXqIbTAbvat4fbSrlinKG1Qrg==
+X-Received: by 2002:adf:fe84:0:b0:20a:dc0b:4f2d with SMTP id l4-20020adffe84000000b0020adc0b4f2dmr12717917wrr.229.1651075249479;
+        Wed, 27 Apr 2022 09:00:49 -0700 (PDT)
+Received: from localhost ([2a02:2149:8ba4:e400:b4f9:19f2:e54:30c8])
+        by smtp.gmail.com with ESMTPSA id u12-20020a5d468c000000b0020af2142a4bsm1032785wrq.47.2022.04.27.09.00.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Apr 2022 09:00:49 -0700 (PDT)
+Date:   Wed, 27 Apr 2022 19:00:40 +0300
+From:   Plato Kiorpelidis <kioplato@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, matheus.bernardino@usp.br,
+        mhagger@alum.mit.edu
+Subject: Re: [RFC PATCH 5/6] t0066: remove redundant tests
+Message-ID: <20220427160040.v5qj3oua2ayetfow@compass>
+References: <20220410111852.2097418-1-kioplato@gmail.com>
+ <20220410111852.2097418-6-kioplato@gmail.com>
+ <220411.86sfqjj2o0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20220426183105.99779-1-carenas@gmail.com> <20220427000522.15637-1-carenas@gmail.com>
- <6522673b-494a-951c-be5e-3ca01577c12b@gmail.com> <fcd26e80-daee-2d66-cbdc-b004c478357d@gmail.com>
-In-Reply-To: <fcd26e80-daee-2d66-cbdc-b004c478357d@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 27 Apr 2022 08:58:58 -0700
-Message-ID: <CAPUEspiHWTTAvNyqqLzcC854UccH=bkPLPBzPaPfzFKn_yt4aA@mail.gmail.com>
-Subject: Re: [PATCH] git-compat-util: avoid failing dir ownership checks if
- running privileged
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, philipoakley@iee.email, me@ttaylorr.com,
-        guy.j@maurel.de, szeder.dev@gmail.com, johannes.Schindelin@gmx.de,
-        gitster@pobox.com, derrickstolee@github.com,
-        Randall Becker <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220411.86sfqjj2o0.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 5:30 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> You are ignoring any errors when parsing the environment variable - that
-> is not a good idea in a security check.
+On 22/04/11 01:10PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Sun, Apr 10 2022, Plato Kiorpelidis wrote:
+> 
+> > Remove dir-iterator redundant tests since the new tests introduced in
+> > 045738486f (t0066: better test coverage for dir-iterator, 2022-04-07)
+> > supersede them.
+> 
+> This is presumably a forward-reference to the OID for your local version
+> of 2/6. Let's instead squash this change into that commit.
 
-which errors are you concerned about?, if anything in this code
-worries me from a security point of view is the fact that we are
-relying in getenv not being racy (as mentioned in the original RFC),
-but there are no errors set there AFAIK.
-
-not ignoring errno in strtol is an option, but as mentioned before I
-decided instead to reject bogus values and therefore not the clobber a
-previous errno, since I was using strtol as a wider version of atoi.
-
-Carlo
+Will do.
