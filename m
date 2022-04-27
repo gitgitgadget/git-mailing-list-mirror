@@ -2,105 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 874ACC433EF
-	for <git@archiver.kernel.org>; Tue, 26 Apr 2022 23:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 539F9C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 00:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356174AbiDZXoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Apr 2022 19:44:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
+        id S234599AbiD0AIp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Apr 2022 20:08:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356173AbiDZXoL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Apr 2022 19:44:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8527DE2E
-        for <git@vger.kernel.org>; Tue, 26 Apr 2022 16:41:00 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 248BE188F2D;
-        Tue, 26 Apr 2022 19:41:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gwEdAogjD4qHJCZOC9SeV54nsKDNTwsSl+fLTT
-        sIQIU=; b=g1ClxKS6Tg8Luytu8gdjLK/D8jy3tMQ219gszPb8cIErOpiiCDLysI
-        9TuS+A/ACrQ7ycH0qg+kB7RbWm785swmpPYfopb+v5EObzpVOxoJFYFS/wqKrbtU
-        NcCkOzhzUfVQyYO9M9RB9Pr8GR0x1yLwaRAOR5pO+BSqBE+bhh5SU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D10B188F2C;
-        Tue, 26 Apr 2022 19:41:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.84.173])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A0E38188F2A;
-        Tue, 26 Apr 2022 19:40:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Calkins <david.s.calkins@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: use core.fsmonitor instead
-References: <CAMTWFOGU1ojFLE0v6cyyOh3tRRNmT8Nc9aWW=RLS4aHwJ5QDmw@mail.gmail.com>
-Date:   Tue, 26 Apr 2022 16:40:55 -0700
-In-Reply-To: <CAMTWFOGU1ojFLE0v6cyyOh3tRRNmT8Nc9aWW=RLS4aHwJ5QDmw@mail.gmail.com>
-        (David Calkins's message of "Tue, 26 Apr 2022 18:43:39 -0400")
-Message-ID: <xmqqtuafo1ko.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1354866AbiD0AIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Apr 2022 20:08:41 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0961403A
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 17:05:31 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id c17-20020a056830349100b00605ca7d1deeso66956otu.3
+        for <git@vger.kernel.org>; Tue, 26 Apr 2022 17:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uAJ47mBWTKjya4FsVP3elHy5E3cg/lw3Nmd8G63Tr4o=;
+        b=nhjdOMh8tkWLe9RXwYvf9iUsF3fLfnLvI81lCltemzIZF/td471EmsasjrYEsbGGBx
+         9bz0IskcyN1MnPry/3aTjdvfjGl821MsAYBI1FfdtghPv/TOudiQWoNkM9CTBBzmZGLK
+         DJghXM3nXm5O0ZCRe4Anjuy/8qOu/snmWItKdTrPjeVoIF7TZXaGmcoz5Vei2ja3KvEh
+         K2bLG+GdJToOxqmIEWY8q77kn3tv9c3I9/JHNkvde4Tnqi2vVFBN5kwuESDdKhLdYvOm
+         LHLo9aQJpFr5KviJlNpHQ13VDPdyD5k7PKoV9UKIv3TUcN6xyNRuewMPWvr5CmxybR69
+         VtuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uAJ47mBWTKjya4FsVP3elHy5E3cg/lw3Nmd8G63Tr4o=;
+        b=22vZe2kvYSBXd1otuBd2IO7HFFZy8redZzQp9xTOBmnJAAfjcHouG220IHZ5oCXoT4
+         5UTq5/rGSJSOV8wi/+TT9AhDwPF3Qf5sF8fDFxvWOAx6XlbJ/nnKnKGQhgaOljI4oSJL
+         Te5CeX7xPMBvXx1oM9pDvcvrLyD1F/SL5O4xMNuQm1Kdnax0scEX0BjJNyqTTXcy0oxJ
+         tHcwr4QSYR0dAWq6uRyPE2RaS0o0adPpl8jmWo/XLqJLiCkRbuWiy1+7+t0eXL4QxsJC
+         TDhEgkk5SCjFc1/UEtUHOjP2aoILfHxZPWNvwEmk9EQiXdmjy6DJ7QyBsHRxtMICHgdU
+         gdaA==
+X-Gm-Message-State: AOAM532tyWhPX975AtnqXSU/x1TRv/jjr/Qygjxa53Pyp8fV7O8eTCRh
+        96pax4sE0kbgUMYCBrT37CPXu+DwGOdb8w==
+X-Google-Smtp-Source: ABdhPJw11xSDdEb9OZfrC/ANeY+pfSSPAtrHs1GI31mFlrdNq+Vikyc0xbUgo/8dlxtz/3eI/x7++A==
+X-Received: by 2002:a9d:53c4:0:b0:605:72a0:1ffb with SMTP id i4-20020a9d53c4000000b0060572a01ffbmr9363854oth.9.1651017930407;
+        Tue, 26 Apr 2022 17:05:30 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id n25-20020a4a3459000000b0033a622c3b5dsm6230858oof.27.2022.04.26.17.05.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Apr 2022 17:05:30 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     philipoakley@iee.email, me@ttaylorr.com, guy.j@maurel.de,
+        szeder.dev@gmail.com, johannes.Schindelin@gmx.de,
+        gitster@pobox.com, derrickstolee@github.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Randall Becker <rsbecker@nexbridge.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-compat-util: avoid failing dir ownership checks if running privileged
+Date:   Tue, 26 Apr 2022 17:05:22 -0700
+Message-Id: <20220427000522.15637-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.36.0.266.g59f845bde02
+In-Reply-To: <20220426183105.99779-1-carenas@gmail.com>
+References: <20220426183105.99779-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51B0621E-C5BA-11EC-86D2-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Calkins <david.s.calkins@gmail.com> writes:
+bdc77d1d685 (Add a function to determine whether a path is owned by the
+current user, 2022-03-02) checks for the effective uid of the running
+process using geteuid() but didn't account for cases where that uid was
+root (because git was invoked through sudo or a compatible tool) and the
+original user that repository trusted for its config was different,
+therefore failing the following common use case:
 
-> I installed Git v2.36.0 for Windows (64-bit) and when running commands
-> I get the following output.
->
-> hint: core.useBuiltinFSMonitor will be deprecated soon; use
-> core.fsmonitor instead
-> hint: Disable this message with "git config advice.useCoreFSMonitorConfig false"
->
-> I opened the system Git config file and updated it to have the below.
->
->  useBuiltinFSMonitor = false
->
-> After this change I no longer get that output.  However, the hint
-> indicated that I should "use core.fsmonitor instead".  Is there
-> something else I should be doing besides just telling it not to
-> useBuildtinFSMonitor?  How do I tell it to "use core.fsmonitor
-> instead"?
+  guy@renard ~/Software/uncrustify $ sudo git describe --always --dirty
+  [sudo] password for guy:
+  fatal: unsafe repository ('/home/guy/Software/uncrustify' is owned by someone else)
 
-I do not do Windows, and I believe this is one area their codebase
-deviates from what I have in my tree (read: Git for Windows is a bit
-ahead of the real Git), so I have to speak with some speculation,
-but the above does look a poor end-user experience.  If the code
-detected core.useBuildtinFSMonitor is set to true, it should have
-suggested to set core.fsmonitor to true instead, not just leaving at
-"use X instead" without telling how to use X.
+Attempt to detect those cases by using the environment variables that
+sudo or compatible tools create to keep track of the original user id,
+and do the ownership check using that instead.
 
-I am speculating that the old way (on Windows) to use the built-in
-fsmonitor code was
+This assumes the environment the user is running with after going
+privileged can't be tampered with, and also does the check only for
+root to keep the most common case less complicated, but as a side effect
+will miss cases where sudo (or an equivalent) was used to change to
+another unprivileged user or where the equivalent tool used to raise
+privileges didn't track the original id in a sudo compatible way.
 
-    git config core.useBuiltinFSMonitor true
+Reported-by: Guy Maurel <guy.j@maurel.de>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Randall Becker <rsbecker@nexbridge.com>
+Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+Changes since RFC
+* Addresses all spelling errors, even the ones not reported and even if I
+  am sure "priviledged" is a nicer sounding word even if obsoleted.
+* Uses strtol instead of atoi as suggested by Randall and Junio, the extra
+  error checking was too much to handle inline so a new helper function
+  was added.
+* Removes checks for DOAS_UID, in an attempt to make the change smaller
+  and because that is part of an extention that might not be that common.
+  This means `doas` is still broken, but that was punted for now.
+* Has been tested a little more, but is still missing a test case, but
+  as Derrick pointed out doing so is not trivial, so punted for now.
 
-(this is something existed only in Git for Windows).  But the latest
-incantation to ask for the built-in fsmonitor is to say
+ git-compat-util.h | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-    git config core.fsmonitor true
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 58fd813bd01..9bb0eb5087a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -437,12 +437,48 @@ static inline int git_offset_1st_component(const char *path)
+ #endif
+ 
+ #ifndef is_path_owned_by_current_user
++
++#ifdef __TANDEM
++#define ROOT_UID 65535
++#else
++#define ROOT_UID 0
++#endif
++
++/*
++ * this helper function overrides a ROOT_UID with the one provided by
++ * an environment variable, do not use unless the original uid is
++ * root
++ */
++static inline int extract_id_from_env(const char *env, uid_t *id)
++{
++	const char *real_uid = getenv(env);
++
++	if (real_uid && *real_uid) {
++		char *error;
++		long extracted_id = strtol(real_uid, &error, 10);
++		if (!*error && LONG_MIN < extracted_id &&
++				extracted_id < LONG_MAX) {
++			*id = (uid_t)extracted_id;
++			return 1;
++		}
++	}
++	return 0;
++}
++
+ static inline int is_path_owned_by_current_uid(const char *path)
+ {
+ 	struct stat st;
++	uid_t euid;
++
+ 	if (lstat(path, &st))
+ 		return 0;
+-	return st.st_uid == geteuid();
++
++	euid = geteuid();
++	if (euid == ROOT_UID) {
++		/* we might have raised our privileges with sudo */
++		extract_id_from_env("SUDO_UID", &euid);
++	}
++	return st.st_uid == euid;
+ }
+ 
+ #define is_path_owned_by_current_user is_path_owned_by_current_uid
+-- 
+2.36.0.266.g59f845bde02
 
-on platforms that support builtin fsmonitor.  I think that is what
-the message is trying to tell you.
-
-It looks also like a very poor design to give hint tied to an advice
-variable in this case.  They used to use core.usebuiltinfsmonitor
-and they are trying to migrate their users away to use
-core.fsmonitor variable instead, so they could just have tied the
-advice messages to core.fsmonitor variable.  If they see that
-core.usebuiltinfsmonitor is still used, and if they see
-core.fsmonitor also is set (even to 'false'), then they know the
-user has migrated, so they can stay quiet without forcing the user
-to set advice.* configuration variable.  If they do not see
-core.fsmonitor set to anything but core.usebuiltinfsmonitor used,
-then they can complain.  There shouldn't be a need to use the
-advice.usecorefsmonitorconfig variable at all, as far as I see, and
-that makes this end-user experience doubly bad.
