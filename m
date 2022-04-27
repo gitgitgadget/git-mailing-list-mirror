@@ -2,92 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C37C7C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 18:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0678C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 18:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiD0SPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 14:15:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
+        id S244634AbiD0STi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 14:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244719AbiD0SPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 14:15:02 -0400
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0C372B258
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:11:49 -0700 (PDT)
-Received: by mail-vs1-xe31.google.com with SMTP id c62so2459105vsc.10
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:11:49 -0700 (PDT)
+        with ESMTP id S237958AbiD0STf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 14:19:35 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE0DDFE2
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:23 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id b19so3610376wrh.11
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 11:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RF5+5qW7TPQPn07ey9kiRjlDgekV3kYyQ36W4I8L80Y=;
-        b=lt4QGlFkdaM3Ngd8mte2V+IsocgHgyknmvzDYfJuP1boX++JU7XppdfD+H1vlHm1Qz
-         LLjGpAhvMRH5tU6Chrqu57/gWn4Ap9jj7JrFRVlXaSQD8Zo6VZKMlWsUCsrGAsol+1R/
-         4b73P2eyuh8VW/eyhAQ70PUxOVbPbk/7dNMwlKooPaM7pHvTUgpDLsTbcmoWnDVTv7V7
-         rUn6mJOtynXMNVICFaMhW6xz4iYjUuBw/iilOg6sEWpzJz3qQhYPLwiBLIpl1g6a0Yub
-         ysszQUvLNsnapH7+jdYIKeCeUMHyYVQS9eP7+C5uZXVsUT33pZxbltjTU2KTCxm+lq2O
-         WxPg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=igvrIJQoQ0c+Op40m9NQxfZ07jOrWXFTaW9zMmhrCSA=;
+        b=Zgk8rmYueSleFdy5GZyS/WNr7fLgUUilmE5c3BQl6AwkL6LwNsZ9y4ynwZGU3EZ1U8
+         p8eBKDYKR6adaonmHydzngGZKKKuosBSOUdBop8qgVnW1HGHZ+VDp0tD/0Zl3iFg417U
+         XeFO8QSCcTocossYjtsAesI5d5NJiNdy2zp8ZlAMFBEJlYgwHg3xabwH+W2gdHfwrlSU
+         83XkHd3I61N6+kKxWmtWZaLC2bGNWotQ2QoIqHUCia0hovmERmKL0UOtNWMRFEsY+PA/
+         i2XK3p9ei8fn9DeiLCnamm76+jXmBoRGYDxNji1bN5iOw0TP9Mli4VwTnBgVmiweP80P
+         g7eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RF5+5qW7TPQPn07ey9kiRjlDgekV3kYyQ36W4I8L80Y=;
-        b=HDGRgVjZaEKx+357ZJyyAz7ltRJzTwO4XBRiphUTDNNFLQils1K1ewYOfhbhhV4454
-         1ol524Vh9N7T5QfcvKtjBBxXyJ8nHysTZEtfkYaVj3r0pC0C3COrp85li23x1PXuWcTz
-         r3VVOv932it7tEGJnTAq8SXsV+U7iIsWWUPVlzO6rb8YT4Rxu9KzHPmZEZvLfVl9SjFr
-         qoFXT0gsxuHrf5sIgCNZJZk7rTdiyXUEVBdOEBIbUyaqjUGCsyEz/thkTM95wT4kYEPq
-         9BFRzQC0X8S7Yqtt5FPsovxjYOgYolOAtt3qmHb7Q2dE2HiRqOE0ohZh/e4tpJ49B8Wk
-         AeMA==
-X-Gm-Message-State: AOAM530M7Bv+xyqwZKB8eEqHijbMEcwALVsYbULZQFbsVwHHz6jqOZzc
-        3jFL6/CwiVnWVg+gLXvUt2NBrc64H/ytYQDW2J0=
-X-Google-Smtp-Source: ABdhPJzdT7Fw9+dDNg8ICpplRoUQEu57VCH9zgU4GS8gwUl6bQ8pqx0EEGTp+JYvmX20Tp1Zq+89HTeSSwdcdzwf1ag=
-X-Received: by 2002:a67:1a02:0:b0:320:a51f:8067 with SMTP id
- a2-20020a671a02000000b00320a51f8067mr9457753vsa.38.1651083108797; Wed, 27 Apr
- 2022 11:11:48 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=igvrIJQoQ0c+Op40m9NQxfZ07jOrWXFTaW9zMmhrCSA=;
+        b=c+kWffUc1kDTRBJnk6HgyAIDdLqQHZ4RSpdoOEs1tuFHGe7Trys+qBj1hhqomBJg8T
+         NzOXRI54wSq4djnYc9PbZkhYp7l5N9u2cNF9Rr+X3U6XKrkQRTBoIrd71F2aWgU/si8N
+         mFDx/7opKGBB9wgkGgDwg95wv7Feb+EWjmV9CwiOlBawgWbeZKSQ256JgnVvpJsv2U8F
+         +XvbPg8L5QgYlHdBLAFqeDmFWQTl6yu419ThoJDldNr77b6dh5cTDCcV3IDAZwU3gi/k
+         oBl1dWjiep1jN3UmGzS8LfpKKgekSWSA/KZuOADOmiM62ilU9AXJ3uatXjWav3mcKUMB
+         D+EA==
+X-Gm-Message-State: AOAM533ogXt8a5YCPLZdqLILuf3YRj9v+e5WXKTZALTXjOgVOOBEn/5P
+        2bxZKSOftP9IkDGnrHMLMyvqKWusrK0=
+X-Google-Smtp-Source: ABdhPJzEy6A9UsMQeXpLsdPMXF61JIU/R/ftN5R6u0zvGXCIP0FqLOVK5IFCsLxuOY3A/fhyldGCvA==
+X-Received: by 2002:adf:f943:0:b0:203:b456:c71d with SMTP id q3-20020adff943000000b00203b456c71dmr23170151wrr.568.1651083381795;
+        Wed, 27 Apr 2022 11:16:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 3-20020a5d47a3000000b0020aa79d55b5sm17064823wrb.35.2022.04.27.11.16.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Apr 2022 11:16:21 -0700 (PDT)
+Message-Id: <8ea986cb249448f59078e2410e9c9daf13b6c714.1651083378.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
+References: <pull.1171.git.1650908957.gitgitgadget@gmail.com>
+        <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 27 Apr 2022 18:16:12 +0000
+Subject: [PATCH v2 1/7] stash: expand sparse-checkout compatibility testing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220426183105.99779-1-carenas@gmail.com> <20220427000522.15637-1-carenas@gmail.com>
- <6522673b-494a-951c-be5e-3ca01577c12b@gmail.com> <CAPUEsphEymVE1HHeDZE+Fh50fr7DJSpM_YFNC-v=m9hFhgz-UA@mail.gmail.com>
- <xmqqczh2o5xg.fsf@gitster.g> <ed2cdc8f-1908-a095-ddf1-660ef8b5a90b@gmail.com>
- <00ab01d85a5f$2831e0a0$7895a1e0$@nexbridge.com> <CAPUEspjgMw2CwFCj4i+iH8phX_8mSRT0wPYhNrEA0E6avNTaTQ@mail.gmail.com>
- <00b501d85a61$74130240$5c3906c0$@nexbridge.com>
-In-Reply-To: <00b501d85a61$74130240$5c3906c0$@nexbridge.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 27 Apr 2022 11:11:37 -0700
-Message-ID: <CAPUEspgOwmQwqBjauKW=VYJjry3537Te4RLjB=ZuT=CU+rRA4A@mail.gmail.com>
-Subject: Re: [PATCH] git-compat-util: avoid failing dir ownership checks if
- running privileged
-To:     rsbecker@nexbridge.com
-Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, philipoakley@iee.email, me@ttaylorr.com,
-        guy.j@maurel.de, szeder.dev@gmail.com, johannes.Schindelin@gmx.de,
-        derrickstolee@github.com
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     derrickstolee@github.com, newren@gmail.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 11:06 AM <rsbecker@nexbridge.com> wrote:
-> Results on NonStop: strtol("123456789012345678", &endptr, 10) returns 4294967295 and *endptr == '\0' just beyond the last 8.
+From: Victoria Dye <vdye@github.com>
 
-Thanks and errno == ERANGE as POSIX requires, right?, the code
-(untested) I was planning to use instead looks like :
+Add tests verifying expected 'git stash' behavior in
+'t1092-sparse-checkout-compatibility'. These cases establish the expected
+behavior of 'git stash' in a sparse-checkout and verify consistency both
+with and without a sparse index. Although no sparse index compatibility has
+been integrated into 'git stash' yet, the tests are all 'expect_success' -
+we don't want the cone-mode sparse-checkout behavior to change depending on
+whether it is using a sparse index or not. Therefore, we expect these tests
+to continue passing once sparse index is integrated with 'git stash'.
 
-static inline void extract_id_from_env(const char *env, uid_t *id)
-{
-        const char *real_uid = getenv(env);
+Additionally, add performance test cases for 'git stash' both with and
+without untracked files. Note that, unlike the other tests in
+'p2000-sparse-operations.sh', the tests added for 'stash' are combination
+operations. This is done to ensure the stash/unstash is not blocked by the
+modification of '$SPARSE_CONE/a' performed as part of 'test_perf_on_all'.
 
-        /* discard any empty values */
-        if (real_uid && *real_uid) {
-                unsigned long extracted_id;
-                int saved_errno = errno;
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 49 ++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
-                errno = 0;
-                extracted_id = strtoul(real_uid, NULL, 10);
-                if (!errno)
-                        *id = (uid_t)extracted_id;
-                errno = saved_errno;
-        }
-        return 0;
-}
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 382716cfca9..76710cbef35 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -106,6 +106,8 @@ test_perf_on_all () {
+ }
+ 
+ test_perf_on_all git status
++test_perf_on_all 'git stash && git stash pop'
++test_perf_on_all 'echo >>new && git stash -u && git stash pop'
+ test_perf_on_all git add -A
+ test_perf_on_all git add .
+ test_perf_on_all git commit -a -m A
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 236ab530284..86312b30444 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -1034,6 +1034,55 @@ test_expect_success 'cherry-pick with conflicts' '
+ 	test_all_match test_must_fail git cherry-pick to-cherry-pick
+ '
+ 
++test_expect_success 'stash' '
++	init_repos &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>$1
++	EOF
++
++	# Stash a sparse directory (folder1)
++	test_all_match git checkout -b test-branch rename-base &&
++	test_all_match git reset --soft rename-out-to-out &&
++	test_all_match git stash &&
++	test_all_match git status --porcelain=v2 &&
++
++	# Apply the sparse directory stash without reinstating the index
++	test_all_match git stash apply -q &&
++	test_all_match git status --porcelain=v2 &&
++
++	# Reset to state where stash can be applied
++	test_sparse_match git sparse-checkout reapply &&
++	test_all_match git reset --hard rename-out-to-out &&
++
++	# Apply the sparse directory stash *with* reinstating the index
++	test_all_match git stash apply --index -q &&
++	test_all_match git status --porcelain=v2 &&
++
++	# Reset to state where we will get a conflict applying the stash
++	test_sparse_match git sparse-checkout reapply &&
++	test_all_match git reset --hard update-folder1 &&
++
++	# Apply the sparse directory stash with conflicts
++	test_all_match test_must_fail git stash apply --index -q &&
++	test_all_match test_must_fail git stash apply -q &&
++	test_all_match git status --porcelain=v2 &&
++
++	# Reset to base branch
++	test_sparse_match git sparse-checkout reapply &&
++	test_all_match git reset --hard base &&
++
++	# Stash & unstash an untracked file outside of the sparse checkout
++	# definition.
++	run_on_sparse mkdir -p folder1 &&
++	run_on_all ../edit-contents folder1/new &&
++	test_all_match git stash -u &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git stash pop -q &&
++	test_all_match git status --porcelain=v2
++'
++
+ test_expect_success 'checkout-index inside sparse definition' '
+ 	init_repos &&
+ 
+-- 
+gitgitgadget
 
-Carlo
