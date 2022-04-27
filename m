@@ -2,133 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33A95C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 20:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEB7C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 20:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235863AbiD0Uqr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 16:46:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32798 "EHLO
+        id S236730AbiD0Uww (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 16:52:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236434AbiD0Uqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 16:46:45 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B51C0D
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 13:43:33 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id r9so2433919pjo.5
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 13:43:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KDWvEwPuwhAyGXmWEQSTOup8mN9ps8V3yH6LWd93dcU=;
-        b=LfeZcgtsixszPv2mQofVUSudunCEhXPo0zaYkGzseoTQRvNHhvXf5oEnIUyO4NtMSH
-         yvVWhAasI752Br2tN/jlSe45ULE6zy7HaOPgR/PWJz2QGUjq4YN7pPKzz4tQWEDhtFWy
-         DPV/o+KiAeJA3sV20SdQYY7illgUnPAMTW3rWvL+85cGwYo7L2wSx2WXoGa/VyvlRpI8
-         SRts9k8Q0iTr3KqeCAP70LFmNnSAEPun0DUJv2ZYhLv+JNtkt9AI4FUFk6HSCL/0+TMP
-         9Le1cuuECKRCbz/qvjppzX9I3vTKHsA8lbPr4IKA9bvs2H8WWMNmxu2ZXvudnYyHovmw
-         jfWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KDWvEwPuwhAyGXmWEQSTOup8mN9ps8V3yH6LWd93dcU=;
-        b=NMAhbCAOspsBosDK7azaryjhMXsDtHk0n/7YjHlSqd2Z8YhogG+1Ql7gqRD8w6OBm9
-         1FQyunifHsv0/fSmal3CeLaOr3tFMtnHiudtaPKqWGy4I8Fz3BjBmTmQ6VNFAEtepcE1
-         Xiw7FMYSwCHUYjMlROQn2ugcEVqCyA3Gw+ne2jGksWO0f8leA1NTt/yr5Fo7Tm0bU1vR
-         TLsPI/XH86750+uHcap2pddPI8C1FNbMBQbT/1UJANN6hMHRqJqv7IQVDgslNWV8MhhM
-         b9jkylAzStLOG7+F05pX83p+LRlNzeY4ct0uuYVf0LFqZSa6CDPDjjB/xP7Fiwc5SUmD
-         vKEw==
-X-Gm-Message-State: AOAM53190iEnxROPxoEk4utyYr7UWg6y90OL/hld6ROrgGo9P6qhjgZU
-        E5A3JDzClbtJAV5p7aUsx78E
-X-Google-Smtp-Source: ABdhPJwRK0nBBn1ENv+5FvUgu/ncQvxqe79cIdtF341RcmxkEPU/+zccKpOJXxyZLGeIhw7/tAH2gQ==
-X-Received: by 2002:a17:902:e94f:b0:14f:1636:c8a8 with SMTP id b15-20020a170902e94f00b0014f1636c8a8mr30336588pll.130.1651092213132;
-        Wed, 27 Apr 2022 13:43:33 -0700 (PDT)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id g12-20020a056a001a0c00b004e1307b249csm21123181pfv.69.2022.04.27.13.43.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Apr 2022 13:43:30 -0700 (PDT)
-Message-ID: <ed4a0e46-a45c-0b05-fc35-f82e377ea231@github.com>
-Date:   Wed, 27 Apr 2022 13:43:28 -0700
+        with ESMTP id S236946AbiD0Uwr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 16:52:47 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACFF36B48
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 13:49:35 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7EA34134B37;
+        Wed, 27 Apr 2022 16:49:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BhH34cWHgYNSyuqYGfAVeyaaAX5kvYy3OJFYO3
+        kgzLo=; b=IT/B5SnleDi0CepO2m9824NfojeEKYCQ09MqjXKZ+oWQpVffyxLfbx
+        3yOyMi/SA8OjB//iwCZBsRrjVvcKI+5EK5t7/fW4opMf3YGrHvzWpeeYULCf9EHk
+        0+fu4YZLBiN+Q43zJbqlnnuf3eJgiKEc9DEu3sXik4IHvOCya5jig=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72520134B36;
+        Wed, 27 Apr 2022 16:49:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D7918134B35;
+        Wed, 27 Apr 2022 16:49:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 3/3] safe.directory: document and check that it's
+ ignored in the environment
+References: <pull.1215.git.1649863951.gitgitgadget@gmail.com>
+        <20220427170649.4949-1-szeder.dev@gmail.com>
+        <20220427170649.4949-4-szeder.dev@gmail.com>
+        <xmqqlevql0lj.fsf@gitster.g>
+Date:   Wed, 27 Apr 2022 13:49:32 -0700
+In-Reply-To: <xmqqlevql0lj.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        27 Apr 2022 13:42:32 -0700")
+Message-ID: <xmqqee1il09v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH 2/3] MyFirstContribution: also explain cover letter in
- GitGitGadget section
-Content-Language: en-US
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
- <afb80b8e9ee022cba9373f2191ee1619e5897b09.1651086288.git.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <afb80b8e9ee022cba9373f2191ee1619e5897b09.1651086288.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8B17C0CC-C66B-11EC-92F0-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain via GitGitGadget wrote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
-> 
-> The "Sending Patches via GitGitGadget" section mentions that the PR
-> title and description will be used as the cover letter, but does not
-> explain what is a cover letter or what should be included in it.
-> 
-> Mention the purpose of the cover letter in that section, and give
-> examples for the title and description, leveraging the excerpt extracted
-> from the "Sending Patches with git send-email" section in the previous
-> commit.
-> 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->  Documentation/MyFirstContribution.txt | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-> index 681bbefe9cd..96da32f7cef 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -808,8 +808,20 @@ https://github.com/gitgitgadget/git and open a PR either with the "New pull
->  request" button or the convenient "Compare & pull request" button that may
->  appear with the name of your newly pushed branch.
->  
-> -Review the PR's title and description, as it's used by GitGitGadget as the cover
-> -letter for your change. When you're happy, submit your pull request.
-> +Review the PR's title and description, as they're used by GitGitGadget as the
-> +cover letter for your change. The cover letter describes your proposed
-> +contribution as a whole and is ideal to mention any context that might be
-> +useful for reviewers. The title of your PR should be something which
-> +succinctly covers the purpose of your entire topic branch, for example:
-> +
-> +----
-> +Adding the 'psuh' command
+Junio C Hamano <gitster@pobox.com> writes:
 
-Typically I see patch series titles follow the same "imperative mood" as
-commit titles/messages (see 'Documentation/SubmittingPatches.txt'). I'm not
-sure whether that's a rule written down somewhere or just convention, but
-for the sake of consistency you might want to do something like:
+> If we had GIT_SAFE_DIRECTORIES that lists the safe directories (like
+> $PATH does), that would have been absolutely necessary to document
+> how it works, but GIT_CONFIG_* is merely an implementation detail of
+> how "git -c var=val" works and I am not sure if it is even a good
+> idea to hardcode how they happen to work like these tests.  The only
+> thing the users should know is that GIT_CONFIG_{KEY,VALUE}_* are
+> used internally by the implementation and they should not muck with
+> it, no?
 
-	"Add the 'psuh' command"
+I misremembered.  GIT_CONFIG_COUNT and stuff are usable by end user
+scripts, but then ...
 
-> +----
-> +
-> +Your PR's description will used as the body of the cover letter.
+> diff --git a/Documentation/config/safe.txt b/Documentation/config/safe.txt
+> index 6d764fe0cc..ae0e2e3bdb 100644
+> --- a/Documentation/config/safe.txt
+> +++ b/Documentation/config/safe.txt
+> @@ -13,8 +13,8 @@ override any such directories specified in the system config), add a
+>  `safe.directory` entry with an empty value.
+>  +
+>  This config setting is only respected when specified in a system or global
+> -config, not when it is specified in a repository config or via the command
+> -line option `-c safe.directory=<path>`.
+> +config, not when it is specified in a repository config, via the command
+> +line option `-c safe.directory=<path>`, or in environment variables.
 
-Including the line "Your PR's description..." is somewhat confusing to me as
-a first-time reader, since I was interpreting this section to be the
-*verbatim* text of the pull request title & description. If this *is* meant
-to be that description, then the note about the PR description can be
-removed. That point is also mentioned above, so it's probably not needed
-here anyway.
+... this part must clarify what environment variables it is talking
+about.
 
-> +include::MyFirstContribution-coverletter.txt[]
-> +
-> +When you're happy, submit your pull request.
->  
->  [[run-ci-ggg]]
->  === Running CI and Getting Ready to Send
+    ... via the command line option `-c safe.directory=<path>`, or
+    via the GIT_CONFIG_{KEY,VALUE} mechanism.
 
+or something, perhaps.  I actually do think it is a useful addition
+to have GIT_SAFE_DIRECTORIES environment variable that should NOT be
+ignored.
