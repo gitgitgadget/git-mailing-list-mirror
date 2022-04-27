@@ -2,66 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F134CC433F5
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 21:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A84C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 21:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234306AbiD0VTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 17:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
+        id S233144AbiD0V3J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 17:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237692AbiD0VS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 17:18:57 -0400
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9A05710A
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 14:15:38 -0700 (PDT)
-Received: by mail-pl1-f178.google.com with SMTP id q8so2661879plx.3
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 14:15:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sDh/s7+P8/xTzKEk5IFTgloU3PipHK3ytf9swGHjLUQ=;
-        b=uKeYbMTIZBtZA6h3GJZDP9Cc7gE1Mu0iUy/N/zUw/oOMS9WgRMr/jgB9w8weyVxw2y
-         go9g2BkN7tR81McGahkXTkMeRBFEBSBcVqh226NVs63kJvrFw6Xl0Lc+pr11JMT+DkdH
-         z/JTF5llh47KckZw/GdjCIGXFG3v17j9aSjB386RjzfdMnaLNGbGCo5eOb3v3yBHDJqL
-         BkgmidXHg31YpEvcSfj/Jn+IaGRxJ2ukzbKGbTdizhP4xAZGI69OoV9tfyyLo0BCC2zF
-         lKWsjgrSNdTN6vGm++N9REz2sO1863j2HnRWZuT288P//sGXgqgMSUElT8yhPSHp1z/r
-         lcYw==
-X-Gm-Message-State: AOAM531fqeznA200DgohiG0oHZ5KOos2ntgxRfvAWwUSVaKSmkAWAkhY
-        RTLENXdhzJZbI/ztuv6bpSCr4nlNyobrsS1MMiM=
-X-Google-Smtp-Source: ABdhPJwCkHN5jmyU0qy9V2AF+W6aGGt7iED61bUlxOfvQdevs/InvWchwMbibad0WOYlfBd+aisX+6BYcCkqwh6LeWA=
-X-Received: by 2002:a17:90b:3ec8:b0:1d9:6cbb:8222 with SMTP id
- rm8-20020a17090b3ec800b001d96cbb8222mr20704035pjb.104.1651094137692; Wed, 27
- Apr 2022 14:15:37 -0700 (PDT)
+        with ESMTP id S229589AbiD0V3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 17:29:08 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7C1222
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 14:25:56 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C104194D19;
+        Wed, 27 Apr 2022 17:25:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=b0HUmKYkoXObrLhL4wt7LGH17rYY6OB+dPsB7Z
+        WhvQg=; b=I08tSQ4b4sHle+mwO0EZC63ozqYj7JmpgWSjHdktCZ8oUouChcfKmt
+        Q4ZKiu4WkyCfxR23uw9Bp0925hmQQ5uR46hGdfx0TKb9rdT3WnCvbPWhaJbbf/r+
+        E8LqlfoT5kNr43fsBoQXSlSfnL3iQvZEAPxGWs9ky+sHeNQuOZfBk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 14394194D18;
+        Wed, 27 Apr 2022 17:25:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 933FB194D17;
+        Wed, 27 Apr 2022 17:25:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        philipoakley@iee.email, me@ttaylorr.com, guy.j@maurel.de,
+        szeder.dev@gmail.com, johannes.Schindelin@gmx.de,
+        derrickstolee@github.com, Randall Becker <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] git-compat-util: avoid failing dir ownership checks if
+ running privileged
+References: <20220426183105.99779-1-carenas@gmail.com>
+        <20220427000522.15637-1-carenas@gmail.com>
+        <6522673b-494a-951c-be5e-3ca01577c12b@gmail.com>
+        <fcd26e80-daee-2d66-cbdc-b004c478357d@gmail.com>
+        <CAPUEspiHWTTAvNyqqLzcC854UccH=bkPLPBzPaPfzFKn_yt4aA@mail.gmail.com>
+        <b0a80f47-f441-fc6e-3695-58ea83dea2b8@gmail.com>
+        <xmqqzgk6l5ly.fsf@gitster.g>
+        <CAPUEsph9tUkm+JsvU6z0Wt7mtRcTCH1vbvYTEdWjNyXzdoU=vw@mail.gmail.com>
+Date:   Wed, 27 Apr 2022 14:25:50 -0700
+In-Reply-To: <CAPUEsph9tUkm+JsvU6z0Wt7mtRcTCH1vbvYTEdWjNyXzdoU=vw@mail.gmail.com>
+        (Carlo Arenas's message of "Wed, 27 Apr 2022 13:59:33 -0700")
+Message-ID: <xmqqy1zqjk0x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1226.git.1651086288.gitgitgadget@gmail.com> <7e84d5b286de9dddf28ef1c8f38c7d7c28e266f0.1651086288.git.gitgitgadget@gmail.com>
-In-Reply-To: <7e84d5b286de9dddf28ef1c8f38c7d7c28e266f0.1651086288.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 27 Apr 2022 17:15:26 -0400
-Message-ID: <CAPig+cRgD8LjQxnoJQre+sb2NcO2yHz19fPfAQsdYdSYUgyjLA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] MyFirstContribution: move cover letter description to
- a separate file
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D1D304A-C670-11EC-B6D1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 27, 2022 at 3:18 PM Philippe Blain via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> In a subsequent commit we want to reuse the explanation of the purpose of
-> The cover letter form the "Sending Patches with git send-email" section
+Carlo Arenas <carenas@gmail.com> writes:
 
-s/The/the
-s/form/from/
+> On Wed, Apr 27, 2022 at 11:54 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> The "sudo sh to get a shell, chdir to /var/tmp/foo to do something"
+>> use case does care---it needs to make sure that whereever it goes is
+>> not part of a hostile repository.  So "if SUDO_UID is there, anything
+>> goes" is not a good protection for such a use case.
+>
+> FWIW that was never part of the proposal, indeed making git aware of
+> SUDO_ID when it is running as only as root was part of the design to
+> avoid other users probably allowing repositories they don't control by
+> having an evil SUDO_ID.
 
-> in the "Sending Patches via GitGitGadget" section.
+You forgot to quote:
+
+    This is not a suggestion of an alternative, but is a discussion
+    starter to illustrate the line along which we want to think
+    about the issues.
+
+that came before it.
+
+>>  - do the comparison between st.st_uid and strtol() result by
+>>    casting both to (long).  Without this, st.st_uid has a value that
+>>    needs wider than long, we cannot allow the owner of such a
+>>    repository in (and I somehow feel that is unlikely to happen).
 >
-> To avoid text duplication, move this explanation to a separate file and
-> include it in MyFirstContribution.txt.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> do you still want to cast both sides even if discarding values that would
+> overflow an uid_t?
+
+The variable used with strtol (or strtoull or whatever) does not
+have to be casted.  The "both sides" was primarily for the case
+where st.st_uid is wider than whatever integral type we used to
+parse and hold the value we took from the environment, to force
+the same truncation on st.st_uid as the truncation the environment
+parsing may have caused.  But as I keep saying I do not think it is
+worth it, which means ...
+
+>>  - or omit the third one --- tough luck for those whose UID is
+>>    beyond what a long can represent (and I somehow feel that this is
+>>    probably OK).
+
+... this one.
