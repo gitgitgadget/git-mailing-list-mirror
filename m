@@ -2,103 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CEBAC433EF
-	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 21:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 625A3C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Apr 2022 21:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234856AbiD0V5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 17:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44208 "EHLO
+        id S237755AbiD0V7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 17:59:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiD0V5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 17:57:36 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A36B0A7E
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 14:54:24 -0700 (PDT)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S237718AbiD0V7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 17:59:38 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E236E1174
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 14:56:24 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D285135E4F;
+        Wed, 27 Apr 2022 17:56:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YDBG6FL/A/ypCPkiOVyZdu35W51MXIbwLtzLtw
+        +O9O8=; b=ewKW9h2rffym8si25p4VbIdrd7krkQEbRkO9bcicnbj8VJxYdFsQKI
+        aBsGo5GDJULjCcOyLf3Ilh4gN4QQEZbRAVY5bvly420g/YROO0UgXznt4Rr2jEoa
+        ew8N/R8J/eQTvKrru+xRPxwMH90XJ+5tvBKirLC0mua0sbLnZS4qQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9422D135E4E;
+        Wed, 27 Apr 2022 17:56:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.84.173])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 679205A407;
-        Wed, 27 Apr 2022 21:54:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1651096463;
-        bh=IDn61yuniiwNXU+fggJBmpndUzKiC9RM1C4eXO/3KlA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=JLDDLKlP6raLSwttpS8+2Y6C7m25BtYSYW/gtRtu66wLI/+DzLQ4SQHeCFq/MB8vs
-         fywlLSlZgd4IbjX7zLkgkk2ooWGiSwTgXb4veXlR0Sdz3xrpWEiiblkVa09+weez1A
-         zaeGqHhLww3JenK9vTj4CW3RaZ9uvPRXdKZ2dRVv5YskLQW1NeeAcPwpc1Iv18mEqN
-         81Vp4R2BvHlA9o+6Ei1qaMdo5sQCv7ACzeylL1qmu+ttef9KuPo8LMxXap0lAg2cjZ
-         DFPqhkfqnm6yvxQMbK+TK0Xa4Ay1oswMn6WWVOpAKi8xatwsjt2x8vvGs6InrrZEe1
-         O/PQ1fu6hmp64xYeM8AuramSisAnzSQc1da49bWFDEchPvArJbgUbpsUCUD0R8y2/h
-         GurEbjS0JtEpw79ILTrk7GvwA6TUlIUaYnBfHsU2xnEV2UpOFDgCKcSCXI7RS45oEb
-         jQblSdVAw1bDBLeyoZqLnDAzv/iNeDxk4ADYnTqkCvTBoM+RO1W
-Date:   Wed, 27 Apr 2022 21:54:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Git stash create with untracked files?
-Message-ID: <Ymm7iKKn/1I/YwOk@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>
-References: <CAPMMpoj1pF=FfRg6Rgz6bP2mZaQhApL7QQx9=2U7i4AE4zsJ1w@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA098135E4C;
+        Wed, 27 Apr 2022 17:56:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 3/3] MyFirstContribution: drop PR description for GGG
+ single-patch contributions
+References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
+        <2f6ecbf260135efc2a7ad09564cf6c64ed6d6f0d.1651086288.git.gitgitgadget@gmail.com>
+Date:   Wed, 27 Apr 2022 14:56:21 -0700
+In-Reply-To: <2f6ecbf260135efc2a7ad09564cf6c64ed6d6f0d.1651086288.git.gitgitgadget@gmail.com>
+        (Philippe Blain via GitGitGadget's message of "Wed, 27 Apr 2022
+        19:04:48 +0000")
+Message-ID: <xmqqmtg6jim2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="V0U/bAv1ywJrgXNh"
-Content-Disposition: inline
-In-Reply-To: <CAPMMpoj1pF=FfRg6Rgz6bP2mZaQhApL7QQx9=2U7i4AE4zsJ1w@mail.gmail.com>
-User-Agent: Mutt/2.2.3 (2022-04-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0AFF820-C674-11EC-A8B3-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---V0U/bAv1ywJrgXNh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +NOTE: For single-patch contributions, your commit message should already be
+> +meaningful and explain at a high level the purpose (what is happening and why)
+> +of your patch, so you usually do not need any additional context. In that case,
+> +remove the PR description that GitHub automatically generates from your commit
+> +message (your PR description should be empty). If you do need to supply even
+> +more context, you can do so in that space and it will be appended to the email
+> +that GitGitGadget will send, separately from your commit message.
 
-On 2022-04-27 at 10:42:51, Tao Klerks wrote:
-> Hi folks,
->=20
-> I'm just checking in case I'm missing something: Is there any way to
-> tell "git stash create" to include untracked files?
->=20
-> Someone recently brought up a situation where they'd like to take a
-> working directory state (incl untracked but not-ignored files), and
-> reproduce it in another working directory on another machine; "git
-> stash create" seems to be ideal for this purpose, save for the
-> (apparent) lack of arguments support.
+"separately from your commit message" wants to be clarified.  It
+sounds as if GGG will send a separate message.
 
-I don't think there's support for that right now, looking at the code.
+I am _guessing_ that you meant something like "the body of your
+proposed log message ends with your sign-off and followed by a line
+with three-dashes on it.  After that three-dash line, and before the
+diffstat and the patch, is an appropriate place to write additional
+information that are meant to help reviewers during review but will
+become irrelevant after the review is done.  Your PR description
+will appear there for a single patch contribution".
 
-> If this is not possible today and we wanted to better support this
-> usecase, what would be a sensible way to do it? I can see three
-> possible directions:
->=20
-> 1) Change the "create" subcommand to treat specific options as options
-> rather than the stash message (and make it understand -u /
-> --include-untracked)
+If we do not explain the space after the three-dash line elsewhere,
+perhaps we should do so separately, like we talk about cover
+letters.
 
-This seems reasonable.  do_create_stash already takes several arguments
-specifying what to include, so it's probably just a matter of parsing
-options in create_stash and passing the proper arguments to
-do_create_stash.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---V0U/bAv1ywJrgXNh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYmm7hgAKCRB8DEliiIei
-gZ/RAP4jtZPIY8Fs56WdxRJasisIVafvBWGZrsQZZ+Gn+pXNpgD/STSS6Gr4pxh5
-Oa5qFQgoIm2xJHMIuDCmsFR8jlL28Ak=
-=rO4S
------END PGP SIGNATURE-----
-
---V0U/bAv1ywJrgXNh--
+Thanks.
