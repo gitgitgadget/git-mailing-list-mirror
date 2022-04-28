@@ -2,181 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA23FC433EF
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 05:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 904D6C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 05:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236332AbiD1Fha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Apr 2022 01:37:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
+        id S239524AbiD1GBg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Apr 2022 02:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiD1Fh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Apr 2022 01:37:29 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE5025FAF
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 22:34:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE8DF1A56C8;
-        Thu, 28 Apr 2022 01:34:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4xqvQuGMrykp
-        8lmVUgSmPNHB0FyCUm4YKNUpPbkJZpM=; b=eZkFUGw6aSJrBArm7q1KMeuy7hAk
-        2lHuPCxMDtV9dkSZ/oCnC9gABCGtK6Q+Se2Q/dhnXb3rgLAJemjNSguy3kliPfrG
-        N0mBdgt2f5WcI0whEpNDlTbckHhoJI55dR6IpAsQnjvt3D7sfqz6o/q0R8BCsrPo
-        cLpBKufaAVdsArE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BBA5B1A56C7;
-        Thu, 28 Apr 2022 01:34:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38E171A56C6;
-        Thu, 28 Apr 2022 01:34:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com
-Subject: Re: [PATCH 2/2] t: add tests for safe.directory when running with sudo
-References: <20220427222649.63516-1-carenas@gmail.com>
-        <20220428033544.68188-1-carenas@gmail.com>
-        <20220428033544.68188-3-carenas@gmail.com>
-Date:   Wed, 27 Apr 2022 22:34:10 -0700
-In-Reply-To: <20220428033544.68188-3-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 27 Apr 2022 20:35:44 -0700")
-Message-ID: <xmqqsfpxg4a5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231791AbiD1GBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Apr 2022 02:01:34 -0400
+Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E948F34B9C
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 22:58:19 -0700 (PDT)
+Received: by mail-vk1-xa36.google.com with SMTP id s68so1859424vke.6
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 22:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0NtQaXXwNPMkbi4Ijfvy+3sGafen94gfKmr/34/bHAs=;
+        b=c97vjrup+eNkhz16gFNO3qvGXKggJV8ziaxly4/pdvOdrp0B8zqE31t9i8v1L0mVsE
+         DoVyAz+5I0HURzDIIZ0M0boJGM87WY7nec7RsXXcq5ElnFzVpjfFzJSULuNA21J7GYQk
+         wzPWcPETcIx7dfokj8CZZhx6haJStD491xOvNsE8xiJoey4H8cKLue6QOiepdYhwkP93
+         QlRPX/rAydGyDXlCpdUlpq0Rd00A/+ISbnsq/1q7+BtAyGIbJFvQlCvLEL0NZIEbsfa9
+         PYWyidLD/NsyEtq1OeSNzcLFjbiPEpD8IhOf91KI9tOgKOkuPi58OQqV6+oWiJnT5WdQ
+         MFUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0NtQaXXwNPMkbi4Ijfvy+3sGafen94gfKmr/34/bHAs=;
+        b=UIm1Dj6dt/gGQBu5BdRTC7DQhvSt05LrH7xsHF7+B/ZyQQmzv+BXCWbjD8keJVsdJz
+         f+t5LpXw0jV9K697RgPAtKST2LoVDuIRWoXhbgFq2ukmjev/f5BR/Ty8pZYNZOKLXRh3
+         8BPFFbJOV+1GgK6Su639DzUk/sCxEKx6fdebi4zf5VOD6GvKcp097Rn4Ok6aQkEF5Hur
+         wKzw/tXDqdlpF8x0PDr69jSTW/KZQ7wjATRU/hsntMl7Kb/jcPSn9LGLvzW8ksXHQ9mA
+         3l7SU1g9d3og6gHRWoUvcLpuhoIwKTv7/3pAeKaUo9iRNQoprJu2r5sKSfcRa3ZM1UdY
+         ms+w==
+X-Gm-Message-State: AOAM533r6rn3opvISAnm1PRC3MwRaVJxvQne3esveb8fRxsiO4XLWEuE
+        usf1BBwcngkbAaTOGH7BSrr1NPT+1euzrCG8qh1KvooG
+X-Google-Smtp-Source: ABdhPJx2BTlEGoXqSdZYGxQEkuqpoxx6II4ce3JNukkrmVyt6HOO8uuBmLn8DjrPzMNswt6iz8HZI8gHDOkilBqoSOc=
+X-Received: by 2002:a05:6122:984:b0:34d:8cc5:43d8 with SMTP id
+ g4-20020a056122098400b0034d8cc543d8mr6338424vkd.39.1651125499023; Wed, 27 Apr
+ 2022 22:58:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D50D1E22-C6B4-11EC-9821-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <20220427222649.63516-1-carenas@gmail.com> <20220428033544.68188-1-carenas@gmail.com>
+ <20220428033544.68188-2-carenas@gmail.com> <xmqqlevphjmg.fsf@gitster.g>
+In-Reply-To: <xmqqlevphjmg.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 27 Apr 2022 22:58:07 -0700
+Message-ID: <CAPUEsphE1PkZ_oZVAizUqeJRaA3muL1t8ONH=7bCqvxOksf2zg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Documentation: explain how safe.directory works when
+ running under sudo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
-
-> In a previous commit the functionality for fixing this regression was
-> implemented, so add a test for it and the relevant infrastructure.
+On Wed, Apr 27, 2022 at 10:17 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+> > diff --git a/Documentation/config/safe.txt b/Documentation/config/safe.=
+txt
+> > index 6d764fe0ccf..67f8ef5d766 100644
+> > --- a/Documentation/config/safe.txt
+> > +++ b/Documentation/config/safe.txt
+> > @@ -26,3 +26,11 @@ directory was listed in the `safe.directory` list. I=
+f `safe.directory=3D*`
+> >  is set in system config and you want to re-enable this protection, the=
+n
+> >  initialize your list with an empty value before listing the repositori=
+es
+> >  that you deem safe.
+> > ++
+> > +When git tries to check for ownership of git repositories it will obvi=
+ously
 >
-> This new test file is meant to be run in CI and checks for a SUDO
-> prerequisite which requires a passwordless configuration if run
-> locally, but that is common there.
+> Comma before "it will obviously".
+
+Obviously my whole paragraph could be improved further, do you want
+a reroll with this fix, or would instead fixup locally?
+
+> > +use the user that is being used to run git itself, but if git is runni=
+ng
+
+"use the user that is being used", is something my high school grammar
+teacher would label as a "cacophony", so feel free to provide an
+alternative as well there.
+
+> > +as root, it will first check if it might had been started through `sud=
+o`,
+> > +and if that is the case, will use the user id that invoked sudo instea=
+d.
 >
-> It could be run locally by first running sudo, so the credentials are
-> temporarily cached and then running it as :
->
->   $ IKNOWWHATIAMDOING=3DYES ./t0034-root-safe-directory.sh
->
-> It is slightly ackward as it needs to clean up after itself since the
+> This raises a design question.  In a repository is owned by root,
+> shouldn't "sudo git describe" work?  IOW, I am wondering if the
+> "instead" at the end of the description is what we want, or if we
+> want to check both the original user and "root".
 
-"awkward", I think.
+I think it makes sense to have both, and your implementation below
+seems like a good way to do it but it might not be as safe as it
+seems, since sometimes directories owned by root might be also world
+writable and therefore not necessarily safe.
 
-> test framework would fail to do its own cleanup otherwise, and for
-> simplicity creates its own subtree while ignoring the one provided by
-> the framework, but doing some better integration has been punted.
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  t/t0034-root-safe-directory.sh | 51 ++++++++++++++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100755 t/t0034-root-safe-directory.sh
->
-> diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directo=
-ry.sh
-> new file mode 100755
-> index 00000000000..c62bf3777c0
-> --- /dev/null
-> +++ b/t/t0034-root-safe-directory.sh
-> @@ -0,0 +1,51 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'verify safe.directory checks while running as root=
-'
-> +
-> +. ./test-lib.sh
-> +
-> +if [ "$IKNOWWHATIAMDOING" !=3D "YES" ]; then
-> +	skip_all=3D"You must set env var IKNOWWHATIAMDOING=3DYES in order to =
-run thi
-> +s test"
-> +	test_done
-> +fi
-> +
-> +if ! test_have_prereq NOT_ROOT
-> +then
-> +	skip_all=3D"this test uses sudo to run as root"
+This is obviously not directly related to this code, but the original
+issue as reported in Windows for the original CVE could be traced back
+to the default policy to allow any authenticated user to write in the
+root directory.
 
-As a statement of fact, there is nothing wrong per-se in this
-message.  It may be an explanation why you should not run this as
-root, but as an explanation of the reason why all tests in this
-script are skipped, and more importantly, hint to testers what they
-need to do to correct the situation, this is too cryptic to readers.
-
-Perhaps telling them
-
-	skip_all=3D"do not run this test as root"
-
-is more important and useful.
-
-> +	test_done
-> +fi
-> +
-> +doalarm () {
-> +	perl -e 'alarm shift; exec @ARGV' -- "$@"
-> +}
-> +
-> +test_lazy_prereq SUDO '
-> +	doalarm 1 sudo id -u >u &&
-> +	id -u root >r &&
-> +	test_cmp u r
-> +'
-> +
-> +test_expect_success SUDO 'setup' '
-> +	sudo rm -rf root &&
-> +	mkdir -p root/r &&
-> +	sudo chown root root &&
-> +	(
-> +		cd root/r &&
-> +		git init
-> +	)
-> +'
-> +
-> +test_expect_success SUDO 'sudo git status works' '
-> +	(
-> +		cd root/r &&
-> +		git status &&
-> +		sudo git status
-> +	)
-> +'
-
-All of the above are positive tests.  One possible negative test is
-to prepare a root-owned repository and see what "git status" as
-yourself in there does.  And also see what "git status" as root
-there does.
-
-test_expect_success SUDO 'in root owned repository' '
-	mkdir root/p
-        sudo chown root root/p &&
-	sudo git init root/p &&
-
-	# owned by other person (root), do I see it as a repository?
-	(
-		cd root/p &&
-		test_must_fail git status
-	) &&
-
-	# owned by root, can I access it under sudo?
-	(
-		cd root/p &&
-		sudo git status
-	)
-'
-
-> +test_expect_success SUDO 'cleanup' '
-> +	sudo rm -rf root
-> +'
-> +
-> +test_done
+Carlo
