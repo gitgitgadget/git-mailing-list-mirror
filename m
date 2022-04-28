@@ -2,75 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CEA3C433F5
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 20:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B7BC433F5
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 20:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236009AbiD1U73 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Apr 2022 16:59:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39978 "EHLO
+        id S1346406AbiD1VB2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Apr 2022 17:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbiD1U72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Apr 2022 16:59:28 -0400
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859D12ED55
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 13:56:12 -0700 (PDT)
-Received: by mail-vs1-xe2e.google.com with SMTP id z144so5741640vsz.13
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 13:56:12 -0700 (PDT)
+        with ESMTP id S241199AbiD1VB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Apr 2022 17:01:28 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AFAC0E5C
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 13:58:13 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-2f7d4addafdso57171997b3.6
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 13:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cYs+Sg58xiR9aMfB0zRT+qMmcmNnR/WFvHxkBCr+3lo=;
-        b=leYIj6AiA+liwTBaWS7eOQG9jEXd/iockxNb/Ihpe9Sb8WTecduvUyK8uPLPavzm3R
-         qrnKnxDt3Np55tKcJV52du3W6mnuQ9b6lrNLemGmSWJZxwqX9lWBa+L126fk/G4GfMA2
-         zU8qIDtmz7wil32HsJpYgmZBrxC4CAJtxAK1FMfDhgWPrhN1v2Nvr+lUDObelfmK8U+2
-         1+NshFPl7AUuJ+aehQZDqNSPSqudZlthZ0kfoIjN7EzVu5Hx2UR106K6bScYKSa/aoNP
-         B6yJFmveQH0wRr1ShZS26weZ9lBKEAf9dTjJSQfA+expXGMhqzzm5WwKhdmUtGAd0zUT
-         elVw==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=QGfgdH4S5iq3/YIdH1DBzDxATO3ewl9tdS/V5zMZ4P0=;
+        b=sk8E9mKmjW5GljjZu8BqLU+1rwXE1ptIeB0wTYw+qZfTxZCsxtM/0w0Mrr8SewOA2K
+         N4HssvApUhGzTZlpdbdcbyGcC6+whsZBXFAY1dqEKfS3FFMn71i3N71Y2KStZFkcN/Lz
+         ivTQz54waQFJdDHC/BtMqK1GXO46MZE+0D5m7olqH1c5LRptexr7SsO0yFUAjVi0PBtW
+         vYwpP07cddhpjfMtwBG9mvRYkN3t0dui7rCYPEY1sHXep2rBZB13ffbMWvylVGZGOKZs
+         l9jb/hp1tTPWKq1uJDYcjjLGadJZTcDYzcfO225cum7XUO+kr3qrfRYSZbaH44yjpGBK
+         X64w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cYs+Sg58xiR9aMfB0zRT+qMmcmNnR/WFvHxkBCr+3lo=;
-        b=BmFDHztiXYm1jsytMpCOEP7taoA4QK9uhDW2yYz1VtvtcnOr3CNrIsdeHI8uw9rKFl
-         kUzsO3i8o0oWdmXRDUVqmOiBlsKXwWVe4MiM9xW/racOqPXgZpnzEbT/qQfg/Zyft6lk
-         a0dkTHImpaoLhWxLyU8blglUddhNNe4HbpYqybrgY9GfUeJNh0d1HNfqdNeTUZ1yB3mk
-         y11Rbvs6KCpsmZiHS16qPmGJi1eXFs++PlJY7BwRSRItOjwMUMv0udcd4gFbzyqclYy7
-         iOxaqIphlFNo8Wc8qg3XI02SZQMOuKO2dx7YmGq71v2W0IOsOEFpEHA4sBIEfZRlU0ow
-         EIHA==
-X-Gm-Message-State: AOAM530rN+zsk35X/wHzwBcvO62NlHipoDnP4oLtBHcBVSgKslPG1ehP
-        C5bv+cu/AdcFqmkMKf4Mp9HPBe0ifJkmm4A6WV0fh/txL0M=
-X-Google-Smtp-Source: ABdhPJxv2+sTJiiKD0seV6DB6rVc+KPGUOsOwH6ljRkQfkgB6XeB1UMMWt7J0DCJ+ZhP54LuH1f9ktSGwxohoHj+I5k=
-X-Received: by 2002:a05:6102:ed4:b0:32c:ea17:c6b5 with SMTP id
- m20-20020a0561020ed400b0032cea17c6b5mr4813791vst.52.1651179371665; Thu, 28
- Apr 2022 13:56:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220428033544.68188-1-carenas@gmail.com> <20220428105852.94449-1-carenas@gmail.com>
- <20220428105852.94449-4-carenas@gmail.com> <xmqq7d79du6c.fsf@gitster.g>
- <000001d85b39$9d5cfc90$d816f5b0$@nexbridge.com> <CAPUEsph+p-fD8vMOMU4Djkc8cFUmm=9JVFdgaxkQ4-CpKZgnCA@mail.gmail.com>
- <000801d85b40$ac11ec80$0435c580$@nexbridge.com>
-In-Reply-To: <000801d85b40$ac11ec80$0435c580$@nexbridge.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 28 Apr 2022 13:56:00 -0700
-Message-ID: <CAPUEspgcd1CYTfL=ug3WtnOrJscWbyQXeF-2SQ_24KcCTkuRkA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] t: add tests for safe.directory when running with sudo
-To:     rsbecker@nexbridge.com
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=QGfgdH4S5iq3/YIdH1DBzDxATO3ewl9tdS/V5zMZ4P0=;
+        b=74V6itaVzwXtHQpNnBrbeb/hUoXcernsRuj3JO7iwnkItXogITbyPbzdLRAVkcu3lW
+         akRuNEdVAcMTa5jIvOFPeodpYTC6rSyD8dWOrrC5ggXHlt2Hic+rq5X/gt54yDMqbtYH
+         Fbd7rDi4Cnl/0bDZw8LiRvOj+X42ORgOzqrCcsXEZG8KYfPrZpHhgp7BgHY+R9AoTguY
+         b0bP+iM7FU1K2V3G+BJL4T2ZtUb72u76bFeyO86UbhmlF0D58HFzbT8Jn9n19NQbr9Wx
+         +VBqaiwvmjOATxENBi9uYl03FRQLyE3k/pwMt50kzn0spWZzEDidYGx03CzQC7L73XcR
+         9PIQ==
+X-Gm-Message-State: AOAM533ZmaJYNrw+Spuy1wT5r5wi/i8fNchNnBMj4Ue0TWTST31SNXqI
+        nEolawWfZXYg6dR6hFaAjoRcZ+QZ/yQioxnf93Wr4ioNylBLLPttu0xKGTfjmm1LEviZLud/oky
+        yQb7k90jo+0fqCN+L4EuHnKtTq1+an+unrJt+Z6RktDY8Gj4k+hcldvnJgMEv3h8=
+X-Google-Smtp-Source: ABdhPJxMGSe1TUQGRQqYJEWIx+K4Zvy6Fzo6B9H9ShSZ0BNk69DPEL+FcVPwKHpof7B321jqoDudlmpPld2zOQ==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:4b3d:36d0:ff5:c1a6])
+ (user=steadmon job=sendgmr) by 2002:a05:6902:34f:b0:645:463a:b824 with SMTP
+ id e15-20020a056902034f00b00645463ab824mr32370614ybs.39.1651179492185; Thu,
+ 28 Apr 2022 13:58:12 -0700 (PDT)
+Date:   Thu, 28 Apr 2022 13:58:10 -0700
+Message-Id: <4616d09ffa632bd2c9e308a713c4bdf2a1328c3c.1651179450.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
+Subject: [PATCH] run-command: don't spam trace2_child_exit()
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 28, 2022 at 1:43 PM <rsbecker@nexbridge.com> wrote:
-> I tried to find is_root in POSIX but could not. Do you have a reference? It is not in bash 4.3.48, which is on our older system.
+In rare cases, wait_or_whine() cannot determine a child process's exit
+status (and will return -1 in this case). This can cause Git to issue
+trace2 child_exit events despite the fact that the child is still
+running. In pathological cases, we've seen > 80 million exit events in
+our trace logs for a single child process.
 
-my bad; is_root is a helper function i provided as part of this file;
-the latest version which should work in your posix system AND was
-specifically written to hopefully not break with NON-STOP based on
-what you told us about it looks like (hand edited and not tested) :
+Fix this by only issuing trace2 events in finish_command_in_signal() if
+we get a value other than -1 from wait_or_whine().
 
-is_root() {
-  id -u >u
-  id -u root >r
-  cmp u r
-}
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ run-command.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/run-command.c b/run-command.c
+index a8501e38ce..e0fe2418a2 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -983,7 +983,8 @@ int finish_command(struct child_process *cmd)
+ int finish_command_in_signal(struct child_process *cmd)
+ {
+ 	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 1);
+-	trace2_child_exit(cmd, ret);
++	if (ret != -1)
++		trace2_child_exit(cmd, ret);
+ 	return ret;
+ }
+ 
+
+base-commit: faa21c10d44184f616d391c158dcbb13b9c72ef3
+-- 
+2.36.0.464.gb9c8b46e94-goog
+
