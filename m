@@ -2,69 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B40A5C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 18:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F4E2C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 18:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350984AbiD1SYg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Apr 2022 14:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38978 "EHLO
+        id S1351041AbiD1S3U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Apr 2022 14:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350977AbiD1SYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Apr 2022 14:24:34 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4236256C34
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 11:21:18 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id r8so3792638qvx.10
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 11:21:18 -0700 (PDT)
+        with ESMTP id S1351160AbiD1S3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Apr 2022 14:29:17 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99CE238185
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 11:26:01 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id r8so3801496qvx.10
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 11:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=P8cgOQvbmQhQY2WtXJ/hl7WcKU1MKDbAthFVKdOEMLc=;
-        b=Msfv6IN0YGCNgNSOfUuAurYHqL4l9nzEyxbmWzWp8cUIqOABs0OsmwNa2w3cudI5wV
-         Bls9frrbHF6BN1mekqqd6f/mPtUdeMb0Gom7GsINijn4wfct93J1gagvSpzzQJ8zqj2w
-         wMLO+qvzTy2rX3bavHfd9xF4+BD4N1vTaI9riQFRPkyYHltZNwJgc39O1FMq+v0+cVEy
-         SkN8h1wx1i6koRR+HqQnWVvANha0HMc0p+Iq1QQYJ3VSXD8YvtYAmLVOUBeCS0+3JqZ6
-         Q31rUMOOMMvYbcM3kV0NYjsCyk/MukzW+9oTXmW1BaWd6ETfbaC0kdwHPFFo4o/XJJ8/
-         65kQ==
+        bh=GpptQ4dy/k5LgIpiViLrDGDg5XfwfvJbJPmnlxdtL+E=;
+        b=BBwH7DnvsUQtIZ7TDLpaVNjXn+kOMwBwZdOpQ5DVAAsSDw6vugUC4jtt6021g6NHr/
+         00vhaWwB4JuA7Tmpd7qVOdNWfwcBc1vZJeV4oAipqg/ghEj9f2dLllid8pDvKy4ILFa+
+         C0d+zXiRPWZaIRS5zVzez+iTOM2g0NJiMts+8aQSe3Nbm9GYEAZXSi2TcW2TBQM7MCgZ
+         0eZ1Cs16z52DTNVnVzqu9eUIHMoOYjbptZAPf63ynGbEWNW7npYodCPJBfSMxaDe75oB
+         EMpjl+VwH+/TVxCHUfmLZV2XCqvRPxYly6MmPMtpCF6yJklPcNzjSzjuX4pS9G90r4hT
+         WK/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=P8cgOQvbmQhQY2WtXJ/hl7WcKU1MKDbAthFVKdOEMLc=;
-        b=gEyTCnZz/V292pTA95NEMWjGQRopVvljzQi8HovMRdMGZw485EnYCXt5mxsCK7On/P
-         zANcwIcbL7MGo+kztHBldd2p5tZDCC7oc86LkuAvOcnPh+6z4cCBrzi2KoBIRO9ym3Ht
-         hgz7cXmya8WgTzrRm1JSlI5fwZdr47TeLW6XKbzeBi/CSw+OzFUngCtXcUa26nnYE+yZ
-         +e5LuczPmv9bbAj/tqTdU7NrXMnHru2AXNnnBxUoAvS4NbRdUmlnYp3QWxFw3/Vb+B2e
-         tJERbD13CtT8nH2awUEYC1LiYran0tR19kSwPhnLuf7lutcKG0dJyaUE9fonvYyjsEpn
-         FYug==
-X-Gm-Message-State: AOAM531GEf79Jf+S8NRdAAVGbntwqhHkm9ld5GApgAAU6FfzSW4jugVW
-        6Q+jzL7pgFvGE+xY6yDU+3Y=
-X-Google-Smtp-Source: ABdhPJxljN1yU/DC4ltmZtkQ0VK/ExPkJp+v1+ftW9ZMyRKkDnNrcLEm/PYI2zbS1jXSF/x5MhgZyA==
-X-Received: by 2002:a05:6214:766:b0:456:5223:7bdc with SMTP id f6-20020a056214076600b0045652237bdcmr6682872qvz.14.1651170077386;
-        Thu, 28 Apr 2022 11:21:17 -0700 (PDT)
+        bh=GpptQ4dy/k5LgIpiViLrDGDg5XfwfvJbJPmnlxdtL+E=;
+        b=5EmFmYsI2fQhbNgiNJkjmrSq0LwxOc2shR2K6ZPljoUOgPGfLHzmIgyLeoPh8HPcjY
+         jJkW2GIDFHFD7PKe3BqUN249U9UPAa+RdA2DAUH1fZlX2GWyeor2Ae4y7aPNS66RshhG
+         sbjBuIJxREiVCeqpkTCeIH29eacVBHGbZb/zQXiseOioGgpyKsZGVHneNLJuH3P+MCLZ
+         TwgRXajej6nd7C7EsMZIewQ8/5Kv6oFv462n+Koj12e9p/HTynG24UQ7my8c5Cy6mhH8
+         arbtu4LopxZOQDK4q1h1DZP6UrFXTwIw2u2cWKyTo9GpO7vRosUh0WclHypmqtuSdtYZ
+         IhVA==
+X-Gm-Message-State: AOAM533HgcFJZb9RoI1spXfAlEarNZHntsmG8LiZ8hzk0ze+gePPj+FT
+        XAKicZW020uQVA4i6SUB6iC1+SmAJp+YGw==
+X-Google-Smtp-Source: ABdhPJylkVIlHGBY5kdN9lDFxUZYdkiNfZqUriCxkq9SiHU2iXiRP41B4cNfWW8sidypV/Qpscuvsg==
+X-Received: by 2002:a05:6214:27ed:b0:456:2dfd:104f with SMTP id jt13-20020a05621427ed00b004562dfd104fmr19324832qvb.38.1651170360806;
+        Thu, 28 Apr 2022 11:26:00 -0700 (PDT)
 Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id bm15-20020a05620a198f00b0069fb41d38e7sm293028qkb.127.2022.04.28.11.21.16
+        by smtp.gmail.com with ESMTPSA id t10-20020a05620a034a00b0069c06c95bf7sm318852qkm.14.2022.04.28.11.25.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Apr 2022 11:21:17 -0700 (PDT)
-Subject: Re: [PATCH 2/3] MyFirstContribution: also explain cover letter in
- GitGitGadget section
-To:     Victoria Dye <vdye@github.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Thu, 28 Apr 2022 11:26:00 -0700 (PDT)
+Subject: Re: [PATCH 3/3] MyFirstContribution: drop PR description for GGG
+ single-patch contributions
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
- <afb80b8e9ee022cba9373f2191ee1619e5897b09.1651086288.git.gitgitgadget@gmail.com>
- <ed4a0e46-a45c-0b05-fc35-f82e377ea231@github.com>
+ <2f6ecbf260135efc2a7ad09564cf6c64ed6d6f0d.1651086288.git.gitgitgadget@gmail.com>
+ <xmqqmtg6jim2.fsf@gitster.g>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <c7030c98-bd65-7d0e-89ac-ae291e22b10d@gmail.com>
-Date:   Thu, 28 Apr 2022 14:21:15 -0400
+Message-ID: <73b8834b-c2be-7e47-0f77-4853a5a051b7@gmail.com>
+Date:   Thu, 28 Apr 2022 14:25:59 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <ed4a0e46-a45c-0b05-fc35-f82e377ea231@github.com>
+In-Reply-To: <xmqqmtg6jim2.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -72,41 +71,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria,
 
-Le 2022-04-27 à 16:43, Victoria Dye a écrit :
-> Philippe Blain via GitGitGadget wrote:
 
->> +----
->> +Adding the 'psuh' command
+Le 2022-04-27 à 17:56, Junio C Hamano a écrit :
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> Typically I see patch series titles follow the same "imperative mood" as
-> commit titles/messages (see 'Documentation/SubmittingPatches.txt'). I'm not
-> sure whether that's a rule written down somewhere or just convention, but
-> for the sake of consistency you might want to do something like:
+>> +NOTE: For single-patch contributions, your commit message should already be
+>> +meaningful and explain at a high level the purpose (what is happening and why)
+>> +of your patch, so you usually do not need any additional context. In that case,
+>> +remove the PR description that GitHub automatically generates from your commit
+>> +message (your PR description should be empty). If you do need to supply even
+>> +more context, you can do so in that space and it will be appended to the email
+>> +that GitGitGadget will send, separately from your commit message.
 > 
-> 	"Add the 'psuh' command"
+> "separately from your commit message" wants to be clarified.  It
+> sounds as if GGG will send a separate message.
 > 
+> I am _guessing_ that you meant something like "the body of your
+> proposed log message ends with your sign-off and followed by a line
+> with three-dashes on it.  After that three-dash line, and before the
+> diffstat and the patch, is an appropriate place to write additional
+> information that are meant to help reviewers during review but will
+> become irrelevant after the review is done.  Your PR description
+> will appear there for a single patch contribution".
 
-I fully agree. I just copied the existing patch series title from 
-the git-send-email section further down. I think it would make sense
-to change this to also using the imperative mood just like commit messages
-in a preparatory commit. I'll do that.
+Yes, this is what I meant. I'll try to phrase it differently.
 
->> +----
->> +
->> +Your PR's description will used as the body of the cover letter.
 > 
-> Including the line "Your PR's description..." is somewhat confusing to me as
-> a first-time reader, since I was interpreting this section to be the
-> *verbatim* text of the pull request title & description. If this *is* meant
-> to be that description, then the note about the PR description can be
-> removed. That point is also mentioned above, so it's probably not needed
-> here anyway.
+> If we do not explain the space after the three-dash line elsewhere,
+> perhaps we should do so separately, like we talk about cover
+> letters.
 
-I'm not exactly sure what you mean. I meant that the description of the PR
-will be used as the body of the cover letter...
+Yeah, it is explained in the "Bonus Chapter: One-Patch Changes" subsection [1]
+at the end of the "Sending Patches with git send-email" section, so I guess
+people only reading the GitGitGadget instructions will not read that far...
 
-Thanks for having a look!
+Considering your other comment, I think that a little section titled something like
+"Anatomy of a patch series" would make sense to introduce how then end product
+looks like and then the sections on GGG or git-send-email can reference this earlier section.
+
+Good idea.
+Thanks!
 
 Philippe.
+
+
+[1] https://git-scm.com/docs/MyFirstContribution#single-patch
