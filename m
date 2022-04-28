@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A7CAC433EF
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 03:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 566DFC433F5
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 03:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242371AbiD1DjK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Apr 2022 23:39:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
+        id S242389AbiD1DjN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Apr 2022 23:39:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232081AbiD1DjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Apr 2022 23:39:07 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ABFF7246F
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 20:35:53 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id l203so4158851oif.0
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 20:35:53 -0700 (PDT)
+        with ESMTP id S242348AbiD1DjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Apr 2022 23:39:09 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70E356FF49
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 20:35:54 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so4010138fac.7
+        for <git@vger.kernel.org>; Wed, 27 Apr 2022 20:35:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MWIT6UZ+Lx11P5mTkpcfJ3/QkwhieUQASn6/oHEhOJY=;
-        b=oMADvdHAK9zbNgrnkykL/CuKUkxK2EFgdgtho4ftAAHqao/lJEgj9kvHQ4NZRs6I7y
-         WF1atO3gLh8kEp5M/MEyWFt1AJoILEAeDE+sw8f55pgtOnpk8YGDVQdQWoEQBtF43xzh
-         9PScpdPZ5uNoBL7D6m/VjaNyl782scbRmK9iy4TG5FTrnkY3uDAwqFA1P28RLv4vbelL
-         bqK7/Wyk6D7d1YjAtbtQjJADVbqFo8yxLJAEoGrosuIH1EjHI8zebkyh1C1s4QuLBLcs
-         OSk/BXQyE1FhMZcQzRn0jV0iRX5luYYVbNZmWYMXK0PyVeYhvM+zNW3En0LYZcaOMTFa
-         mxpQ==
+        bh=ny9w5jfOZLPwfKIp2tL4D7hy36R2IyG1XC4cNbwk+4w=;
+        b=d51rjCOklFnczGVS6yTcqGDtw8SBHGu7GmRt2PQyo3kVGNBT/V+1JR7EfGRUOFtRiJ
+         qVC27i24w+pjDNsU0GVXAZTji2y6XUA9A8pYFhwQn/CebTgPVLnPYyNm+JTuw1pwMs43
+         qwK5Bf7iBmPvxcv5b/79upfV5GohrISPhUI3azYoJxqLZCqSNTbV8oSSLmnyGq1mr415
+         wBqS5q7PFCYrLjC8wBkZhJEA2UHUkLKXa1eAXAeirqeMHt+cng7YyDbTbJ/g5XP4+Z6g
+         o7Td1XlUompnPpUsycb4TdLdeS90XsUHKHche+zqHGs3Gj0iDzAWIxHhp9aBlYkqcj5A
+         2l9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MWIT6UZ+Lx11P5mTkpcfJ3/QkwhieUQASn6/oHEhOJY=;
-        b=woOrBZkPptk+LEABwFoN1Iw+A+g8tDLV6IzEEAgJgPkIBSSDl1O3GzUXmK5lEe459Y
-         fM7e2FJZprL0Eo/ujBiEC7xikmuY5+OEylVkTpXE8KecB0X5QYwKp0l9CE9VTVJDNJPU
-         FFJ+c3QVV0VygA/1WxZux7WXJZI/dEroqnV/w9buBRt2VdhNdjKsy2/nFoIm8RvyR5r3
-         wEUNhRiyFhqRUQfu2tAjpubcceTKKDfC4pLLOpIkzkX7dwlRynIkGNcwT9TIsBUdhwRi
-         phZtLeHkTw+tpgfoWWZsaJJeGZzbsv7a+8ZR8VpHW0KAsqDVmvuCYzx9drXrCXWa54Ml
-         TPqg==
-X-Gm-Message-State: AOAM531qorh/hxKICHsdYbNVRcj/c3r5M+CaZuL8lepsiWWSQDKaOV0S
-        4N+X+oFuFgLFFsr9QvM+iPr60PlSG1Q=
-X-Google-Smtp-Source: ABdhPJxx80qcf3t1z1EnIy1pcKSDolFrz22Mn9soC3/qmZCcS8Eg58zuEp22+efY18mhcdsJbVnanw==
-X-Received: by 2002:a54:4688:0:b0:325:9a36:ecfe with SMTP id k8-20020a544688000000b003259a36ecfemr1729462oic.96.1651116952077;
-        Wed, 27 Apr 2022 20:35:52 -0700 (PDT)
+        bh=ny9w5jfOZLPwfKIp2tL4D7hy36R2IyG1XC4cNbwk+4w=;
+        b=PydQsY7fZ1Dzae5w1nZLC6P1ppTiDPo2ahs/SAJXcxk0eszz4BaNkEshG5gdSVJ8GT
+         CEMHqw2CzgFTKY6zQmQm1nvGP8DVrd3VXFDbEbaCeqNvIBP1qR88CVEmEduuTTs3TmQP
+         V/nTDGj4mG/Z5Lv/OYzejgNTSrTV99PdnrxCCkBqC7JHoHmFlWMNK0e1exHS398NJWqt
+         sBspqaGzZolLwrX/Cqyp9xvKjcrhkCG0E+c484tTn7sBypQs7y0rydd1Ibh+XzUwoGCD
+         bCV23sFHUjnSnDbkDrWpCK12SInVhHZ3dQdGrziP3bc1YE691LMUzK6pWRpOFkyb4dfV
+         Yolg==
+X-Gm-Message-State: AOAM530Fv0uRv1RIPjJnSOVG6EYUtA4cIEYpXVbGn2K0onbBTLdx8lsn
+        G2S2Qh8KJz2cuTLJcmJQGak8R3SkjCg=
+X-Google-Smtp-Source: ABdhPJyxEhZMUPVQaj1G20KshKCs/25FtHESXQTk2paFpWBdGniklZFZMvV8lmp+d+Zp2dN0TG1fsw==
+X-Received: by 2002:a05:6870:d607:b0:e9:1fc3:48c6 with SMTP id a7-20020a056870d60700b000e91fc348c6mr9332739oaq.151.1651116954001;
+        Wed, 27 Apr 2022 20:35:54 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id x21-20020a4a6215000000b0033993dc1d65sm7432217ooc.8.2022.04.27.20.35.51
+        by smtp.gmail.com with ESMTPSA id x21-20020a4a6215000000b0033993dc1d65sm7432217ooc.8.2022.04.27.20.35.53
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Apr 2022 20:35:51 -0700 (PDT)
+        Wed, 27 Apr 2022 20:35:53 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     szeder.dev@gmail.com, gitster@pobox.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 0/2] fix `sudo make install` regression in maint
-Date:   Wed, 27 Apr 2022 20:35:42 -0700
-Message-Id: <20220428033544.68188-1-carenas@gmail.com>
+Subject: [PATCH 2/2] t: add tests for safe.directory when running with sudo
+Date:   Wed, 27 Apr 2022 20:35:44 -0700
+Message-Id: <20220428033544.68188-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.36.0.266.g59f845bde02
-In-Reply-To: <20220427222649.63516-1-carenas@gmail.com>
+In-Reply-To: <20220428033544.68188-1-carenas@gmail.com>
 References: <20220427222649.63516-1-carenas@gmail.com>
+ <20220428033544.68188-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,35 +67,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following series complement the recently queued[0] RFC that adds
-the missing functionality to allow git to validate a git repository
-while running under sudo.
+In a previous commit the functionality for fixing this regression was
+implemented, so add a test for it and the relevant infrastructure.
 
-They could be squashed together if preferred, as they seem to be
-smaller that I had originally assumed and also unlikely to conflict.
+This new test file is meant to be run in CI and checks for a SUDO
+prerequisite which requires a passwordless configuration if run
+locally, but that is common there.
 
-The test uses a function I stole from rs/t7812-pcre2-ws-bug-test that
-could be alternatively moved to a common location and reused if that
-is preferred, but it is small enough that might be as well be done
-as part of some cleanup later.
+It could be run locally by first running sudo, so the credentials are
+temporarily cached and then running it as :
 
-Tried to change the documentation in a way that wouldn't conflict with
-other on the fly changes, but there is at least one pending change
-not in seen AFAIK in the same file from Gábor which might[1], but the
-resolution should be to take both sides.
+  $ IKNOWWHATIAMDOING=YES ./t0034-root-safe-directory.sh
 
-Carlo Marcelo Arenas Belón (2):
-  Documentation: explain how safe.directory works when running under
-    sudo
-  t: add tests for safe.directory when running with sudo
+It is slightly ackward as it needs to clean up after itself since the
+test framework would fail to do its own cleanup otherwise, and for
+simplicity creates its own subtree while ignoring the one provided by
+the framework, but doing some better integration has been punted.
 
- Documentation/config/safe.txt  |  8 ++++++
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
  t/t0034-root-safe-directory.sh | 51 ++++++++++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+)
+ 1 file changed, 51 insertions(+)
  create mode 100755 t/t0034-root-safe-directory.sh
 
-[0] https://lore.kernel.org/git/xmqqilqujgvs.fsf@gitster.g/
-[1] https://lore.kernel.org/git/xmqqee1il09v.fsf@gitster.g/
+diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
+new file mode 100755
+index 00000000000..c62bf3777c0
+--- /dev/null
++++ b/t/t0034-root-safe-directory.sh
+@@ -0,0 +1,51 @@
++#!/bin/sh
++
++test_description='verify safe.directory checks while running as root'
++
++. ./test-lib.sh
++
++if [ "$IKNOWWHATIAMDOING" != "YES" ]; then
++	skip_all="You must set env var IKNOWWHATIAMDOING=YES in order to run thi
++s test"
++	test_done
++fi
++
++if ! test_have_prereq NOT_ROOT
++then
++	skip_all="this test uses sudo to run as root"
++	test_done
++fi
++
++doalarm () {
++	perl -e 'alarm shift; exec @ARGV' -- "$@"
++}
++
++test_lazy_prereq SUDO '
++	doalarm 1 sudo id -u >u &&
++	id -u root >r &&
++	test_cmp u r
++'
++
++test_expect_success SUDO 'setup' '
++	sudo rm -rf root &&
++	mkdir -p root/r &&
++	sudo chown root root &&
++	(
++		cd root/r &&
++		git init
++	)
++'
++
++test_expect_success SUDO 'sudo git status works' '
++	(
++		cd root/r &&
++		git status &&
++		sudo git status
++	)
++'
++
++test_expect_success SUDO 'cleanup' '
++	sudo rm -rf root
++'
++
++test_done
 -- 
 2.36.0.266.g59f845bde02
 
