@@ -2,146 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D68EBC433EF
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 06:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36014C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 10:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244282AbiD1GpN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Apr 2022 02:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S234343AbiD1KhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Apr 2022 06:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232349AbiD1GpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Apr 2022 02:45:11 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD835F266
-        for <git@vger.kernel.org>; Wed, 27 Apr 2022 23:41:53 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC15013936B;
-        Thu, 28 Apr 2022 02:41:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=A4uY5qHLnrYl
-        CEiycUMS2zk5KQ+EbhsA3/bVDnOFjm0=; b=OHpVXhmY+rv0bzk96yCODw/iInKJ
-        bctGTMtojz8eieCQb899HA9MBkYaBVUadGngFy5IgfQhkPIKE1PvIPcCRi9E3NeO
-        0CgIbWQ6E/0bOBLUumUptreONMnHBKbHihtaGKp3vvenQgmaU6HMkNIW0LWYykPV
-        +Pfg81tUdLKbxAo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0A59139369;
-        Thu, 28 Apr 2022 02:41:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE2D5139368;
-        Thu, 28 Apr 2022 02:41:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com
-Subject: Re: [PATCH 1/2] Documentation: explain how safe.directory works
- when running under sudo
-References: <20220427222649.63516-1-carenas@gmail.com>
-        <20220428033544.68188-1-carenas@gmail.com>
-        <20220428033544.68188-2-carenas@gmail.com>
-        <xmqqlevphjmg.fsf@gitster.g>
-        <CAPUEsphE1PkZ_oZVAizUqeJRaA3muL1t8ONH=7bCqvxOksf2zg@mail.gmail.com>
-Date:   Wed, 27 Apr 2022 23:41:50 -0700
-In-Reply-To: <CAPUEsphE1PkZ_oZVAizUqeJRaA3muL1t8ONH=7bCqvxOksf2zg@mail.gmail.com>
-        (Carlo Arenas's message of "Wed, 27 Apr 2022 22:58:07 -0700")
-Message-ID: <xmqqh76dg15d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234079AbiD1KhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Apr 2022 06:37:01 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4888D69CFC
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:33:47 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id kq17so8670910ejb.4
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:33:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=J/Wz/4RDhwZZT5UtksUaTLkFMtUsz4lleJj3K6/W23A=;
+        b=qZUB2urf8zC7ZrRJVldEb9Iz5ERlha62f+gO6j5xZ7HQTvDmV+sRlFLl4IpWpYzFsv
+         96ktY5lvN59LY0muojabKDVsv1Y/wssWRWyW7upmn3q0J43hz/qZeSqSiuMcKrSCzf7g
+         uBqwJET3ZPZdYVPTvpQWaYYCLKv1tqBEd2KGrN09TOdiY2nyHipBfjGyutnTc04rIt1P
+         h54xDKeiDjVh6ped7Les8KHWD/PAcCeLq300BWVs05ldvifgwHr4aDvcWaCjyl4iNH+n
+         DKBxxX9tMvIdeJnkFgndlwB8sBvFjZ2Ra22WNZCuQG1UsWLomzcskc6nL5L5etLoxd+7
+         rOrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=J/Wz/4RDhwZZT5UtksUaTLkFMtUsz4lleJj3K6/W23A=;
+        b=OXDbTpl+BYA+kkqIQiPDkpzceIZDBYpXhkIut06Pw8v5lbKliEXh4jq7JJMxrNOQaf
+         uZWpcP7tKGzL+haGZMpALtB+er4EBfQ3mR1WKel4P7eSmPx75oL/J+8sydmT5nLfuR2g
+         wdMNev0ca1ptlNWbgCwJ2bFHW9iP7r83kEMSxqRXyV8MY3sEccGVfIpMHUaNzaJ184Vz
+         xtMOF599tDze4Wz7IXMZbYnxSj5r6Ytm0TR1AqFJzS8MijKoIyv9Tgo8u3y1h53wQtNq
+         cc6vD5Y6B2IKMD9taGWajKATZMXUecNkHI3tKIBD/Wep/X5uSU79BebpWyKL7bYAtntO
+         BL8A==
+X-Gm-Message-State: AOAM533rNhUH2SXiyqMo0Hu6KB67VGNNjFTYZAsTEoMNL7BMiUhqAJOH
+        jzVP4OqIN6R2lf6MQztYk//Vc8UtUVFWMnxMtDc=
+X-Google-Smtp-Source: ABdhPJwE0R73mEo4WhFBd8Xiz3K9EC4EzUgzY0RMR6caTnB+lQwrsjhYuAa7T2n+Ht1nFM+JSjHTCrVIuy7IvucI+i4=
+X-Received: by 2002:a17:907:2cc3:b0:6da:e6cb:2efa with SMTP id
+ hg3-20020a1709072cc300b006dae6cb2efamr31028958ejc.169.1651142025840; Thu, 28
+ Apr 2022 03:33:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 497188A8-C6BE-11EC-8668-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <xmqqfsmg97ac.fsf@gitster.g> <20220425202721.20066-1-git.jonathan.bressat@gmail.com>
+ <xmqqczh4vp6e.fsf@gitster.g> <fdd9f13d14e942f3a1572866761b9580@SAMBXP02.univ-lyon1.fr>
+ <243b40ef-a720-46aa-6657-87ac8d3c3bdc@univ-lyon1.fr> <xmqq35hzsu0d.fsf@gitster.g>
+In-Reply-To: <xmqq35hzsu0d.fsf@gitster.g>
+From:   Jonathan Bressat <git.jonathan.bressat@gmail.com>
+Date:   Thu, 28 Apr 2022 12:33:34 +0200
+Message-ID: <CANteD_zD9ViBi5woHycU_CR1rJcv7YjKDFDiKTA8de04yrTs5Q@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] Be nicer to the user on tracked/untracked merge conflicts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
+        Guillaume Cogoni <cogoni.guillaume@gmail.com>,
+        BRESSAT JONATHAN p1802864 <jonathan.bressat@etu.univ-lyon1.fr>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "guillaume.cogoni@gmail.com" <guillaume.cogoni@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Apr 27, 2022 at 10:17 PM Junio C Hamano <gitster@pobox.com> wro=
-te:
->> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->> > diff --git a/Documentation/config/safe.txt b/Documentation/config/sa=
-fe.txt
->> > index 6d764fe0ccf..67f8ef5d766 100644
->> > --- a/Documentation/config/safe.txt
->> > +++ b/Documentation/config/safe.txt
->> > @@ -26,3 +26,11 @@ directory was listed in the `safe.directory` list=
-. If `safe.directory=3D*`
->> >  is set in system config and you want to re-enable this protection, =
-then
->> >  initialize your list with an empty value before listing the reposit=
-ories
->> >  that you deem safe.
->> > ++
->> > +When git tries to check for ownership of git repositories it will o=
-bviously
->>
->> Comma before "it will obviously".
->
-> Obviously my whole paragraph could be improved further, do you want
-> a reroll with this fix, or would instead fixup locally?
+> Probably a command line option ("git merge" would probably want the
+> same one) plus a configuration varaible to give it the default (the
+> latter is optional).
 
-I think the patches (including the previous one) are still fluid and
-expect them to be reworked; local fix-ups would be a bit premature
-and leads to waste.  At least not yet.
+First, we think that add an option to pull and merge is more suited to
+our situation, and next, it could be good to add the configuration
+variable
 
->> This raises a design question.  In a repository is owned by root,
->> shouldn't "sudo git describe" work?  IOW, I am wondering if the
->> "instead" at the end of the description is what we want, or if we
->> want to check both the original user and "root".
->
-> I think it makes sense to have both, and your implementation below
-> seems like a good way to do it but it might not be as safe as it
-> seems, since sometimes directories owned by root might be also world
-> writable and therefore not necessarily safe.
+In unpack-trees.c there is a list of files that cause problem with merge.
+We want to split this list to list files that have the same content, then if
+all the files have the same content, we can suggest to use the option
+to overwrite those files.
+Then we can modify the error message to show the files that have the
+same content apart.
 
-I am not quite following you; that logic applies to directories
-owned by euid (not necessarily root).  As we are loosening to make
-"sudo" usable again, the use case to visit root-owned repository as
-root via "sudo" is worth discussing, if not worth immediately
-supporting, I would think.  I do not think it is absolutely needed
-as there is an easy workaround (see below).
+> I wonder if this whole thing is an attempt to work around whatever
+> "stash --untracked" fails to do well (or perhaps there are no such
+> shortcomings, but just the users are not made aware of the command
+> enough).  If you have these two untracked files (file1.txt and
+> file2.txt) are "in the way" for a merge to succeed, I have to wonder
+> if "Please move or remove" message that was introduced by 23cbf11b
+> (merge-recursive: porcelain messages for checkout, 2010-08-11) is
+> still giving a good piece of advice to users today.
 
-Assuming we will go without "same euid, whether it is root or not,
-plus SUDO_UID when run as root", here a test addition, updated from
-the one I gave you in the review of [2/2]
+We got a similar idea, but we finally decide that it was not a very good
+approach because it's not efficient if we have a lot of files or some big files.
+And because if there are files that doesn't block the merge, we treat them
+anyway and they will move from the work tree, it's a bit overkill.
 
-test_expect_success SUDO 'in root owned repository' '
-	mkdir root/p
-        sudo chown root root/p &&
-	sudo git init root/p &&
+> Note that I never use "git stash" with "untracked" option, so I do
+>  not know if it works well in this context already, or we need more
+> work before it becomes usable in this scenario.  But it smells like
+> it is exactly what we might want to use in such a situation to stash
+> away these untracked file1.txt and file2.txt while running the
+> merge, while allowing us to recover them after running the merge or
+> discarding it.  I dunno.
 
-	# owned by other person (root), do I see it as a repository?
-	(
-		cd root/p &&
-		test_must_fail git status
-	) &&
+Indeed, git stash works well with this kind of problem, however an option
+would be easier in that specific case.
 
-	# owned by root, can I access it under sudo?
-	(
-		cd root/p &&
-		test_must_fail sudo git status
-	) &&
+Thanks for you're helpfull review, you always give us a lot of good
+information and ideas.
 
-	# workaround #1, giving GIT_DIR explicitly
-	(
-		cd root/p &&
-		sudo "
-			GIT_DIR=3D.git GIT_WORK_TREE=3D. git status
-		"
-	) &&
-
-	# workaround #2, discarding SUDO_UID
-	(
-		cd root/p &&
-		sudo "
-			unset SUDO_UID;
-			git status
-		"
-	)
-'
-
-
+Cogoni Guillaume and
+Bressat Jonathan
