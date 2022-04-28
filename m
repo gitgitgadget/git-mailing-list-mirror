@@ -2,112 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36014C433F5
-	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 10:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 115A6C433FE
+	for <git@archiver.kernel.org>; Thu, 28 Apr 2022 10:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234343AbiD1KhC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Apr 2022 06:37:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
+        id S1345130AbiD1LDL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Apr 2022 07:03:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234079AbiD1KhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Apr 2022 06:37:01 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4888D69CFC
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:33:47 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id kq17so8670910ejb.4
-        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:33:47 -0700 (PDT)
+        with ESMTP id S1345168AbiD1LCw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Apr 2022 07:02:52 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294E3A204C
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:59:04 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id jt15so2911991qvb.13
+        for <git@vger.kernel.org>; Thu, 28 Apr 2022 03:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J/Wz/4RDhwZZT5UtksUaTLkFMtUsz4lleJj3K6/W23A=;
-        b=qZUB2urf8zC7ZrRJVldEb9Iz5ERlha62f+gO6j5xZ7HQTvDmV+sRlFLl4IpWpYzFsv
-         96ktY5lvN59LY0muojabKDVsv1Y/wssWRWyW7upmn3q0J43hz/qZeSqSiuMcKrSCzf7g
-         uBqwJET3ZPZdYVPTvpQWaYYCLKv1tqBEd2KGrN09TOdiY2nyHipBfjGyutnTc04rIt1P
-         h54xDKeiDjVh6ped7Les8KHWD/PAcCeLq300BWVs05ldvifgwHr4aDvcWaCjyl4iNH+n
-         DKBxxX9tMvIdeJnkFgndlwB8sBvFjZ2Ra22WNZCuQG1UsWLomzcskc6nL5L5etLoxd+7
-         rOrA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Def9yQQ3IUenybB9/BxRC5wGHNUgLmmvEzUPm2mVd1o=;
+        b=VyKEXfxw/5NGjnIdfzIK2kePWZ4AoSAUBkuYUG7x5zfsqzMjrjozpV76yDztx2GyHZ
+         4UaBIFwa/JavY6zzdX7JGZLMR3Qw8FBnKnTGRs4ny3SNbhV/Bpf2d6bBf8Xcd1aiszl8
+         L3iV+KCzdwJOVdM0ViUqr2P4Me32oEu/XXuDb+RWDH8Lvct+KFF/I3iLJn4i0eG3ZDJq
+         KoZ09nShN10tvO3lxf+PuZ8Bcz1pWe1O4xjns2oAYni2CK2JApatCk7ZgQgfpVuVfB6j
+         nMRi0psUW91+TAUlsKL5D4Ywx+ctaX4flB4o0NEyZA8q0R4FuH5BJ+t3Mlw6/VgLzUx7
+         OVUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J/Wz/4RDhwZZT5UtksUaTLkFMtUsz4lleJj3K6/W23A=;
-        b=OXDbTpl+BYA+kkqIQiPDkpzceIZDBYpXhkIut06Pw8v5lbKliEXh4jq7JJMxrNOQaf
-         uZWpcP7tKGzL+haGZMpALtB+er4EBfQ3mR1WKel4P7eSmPx75oL/J+8sydmT5nLfuR2g
-         wdMNev0ca1ptlNWbgCwJ2bFHW9iP7r83kEMSxqRXyV8MY3sEccGVfIpMHUaNzaJ184Vz
-         xtMOF599tDze4Wz7IXMZbYnxSj5r6Ytm0TR1AqFJzS8MijKoIyv9Tgo8u3y1h53wQtNq
-         cc6vD5Y6B2IKMD9taGWajKATZMXUecNkHI3tKIBD/Wep/X5uSU79BebpWyKL7bYAtntO
-         BL8A==
-X-Gm-Message-State: AOAM533rNhUH2SXiyqMo0Hu6KB67VGNNjFTYZAsTEoMNL7BMiUhqAJOH
-        jzVP4OqIN6R2lf6MQztYk//Vc8UtUVFWMnxMtDc=
-X-Google-Smtp-Source: ABdhPJwE0R73mEo4WhFBd8Xiz3K9EC4EzUgzY0RMR6caTnB+lQwrsjhYuAa7T2n+Ht1nFM+JSjHTCrVIuy7IvucI+i4=
-X-Received: by 2002:a17:907:2cc3:b0:6da:e6cb:2efa with SMTP id
- hg3-20020a1709072cc300b006dae6cb2efamr31028958ejc.169.1651142025840; Thu, 28
- Apr 2022 03:33:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Def9yQQ3IUenybB9/BxRC5wGHNUgLmmvEzUPm2mVd1o=;
+        b=wYtXPPeNmp6o/FH8IctEClqILDJTDU1Oe5Oc4BUYekY/+4urNJMSrHavUoLvT/rNs8
+         /9Imp29HZ5dEnSyhBYngswSfIXY+YdkzQABby73s33HeeB2ReV1FIsLUA+afAYjt7Y+I
+         HyhT9xJSKdzeTiWLz4lBh9ZJACgHus85TvHPHmOONwff/UVQ/wMH4JP80h7aFXN3VIEi
+         N04aIK6I8xtsRpqonshPIeA3bdfidS0nI+6CBmCwrzqic7oach9XS+c3me+lDGMSBVQf
+         pln7HemJYlnZQCZcRF7tWQNMq3Z5ZadAeMZoNfPmnQrA3W/VsXStFZMxbzZLgy2BW9Bw
+         U8rA==
+X-Gm-Message-State: AOAM531XdN1kXDA9wCPnDYSPB3KmyJm9gxUAsvt0godQqh17uKq8YPEi
+        LzmFrcfWDm2fKn7n78g5W+NjmtTBmeY=
+X-Google-Smtp-Source: ABdhPJyY/Sw8f19rTULHdmbqr+yxxLntJMEVT9KeLheVaYDxeRQRoz+dmNNn7063sKa/cVkqlp7RgA==
+X-Received: by 2002:ad4:5c4c:0:b0:456:4d9e:db91 with SMTP id a12-20020ad45c4c000000b004564d9edb91mr7148185qva.37.1651143543093;
+        Thu, 28 Apr 2022 03:59:03 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id v3-20020a05622a014300b002e1dcd4cfa9sm12950299qtw.64.2022.04.28.03.59.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Apr 2022 03:59:02 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Guy Maurel <guy.j@maurel.de>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2 1/3] git-compat-util: avoid failing dir ownership checks if running privileged
+Date:   Thu, 28 Apr 2022 03:58:50 -0700
+Message-Id: <20220428105852.94449-2-carenas@gmail.com>
+X-Mailer: git-send-email 2.36.0.352.g0cd7feaf86f
+In-Reply-To: <20220428105852.94449-1-carenas@gmail.com>
+References: <20220428033544.68188-1-carenas@gmail.com>
+ <20220428105852.94449-1-carenas@gmail.com>
 MIME-Version: 1.0
-References: <xmqqfsmg97ac.fsf@gitster.g> <20220425202721.20066-1-git.jonathan.bressat@gmail.com>
- <xmqqczh4vp6e.fsf@gitster.g> <fdd9f13d14e942f3a1572866761b9580@SAMBXP02.univ-lyon1.fr>
- <243b40ef-a720-46aa-6657-87ac8d3c3bdc@univ-lyon1.fr> <xmqq35hzsu0d.fsf@gitster.g>
-In-Reply-To: <xmqq35hzsu0d.fsf@gitster.g>
-From:   Jonathan Bressat <git.jonathan.bressat@gmail.com>
-Date:   Thu, 28 Apr 2022 12:33:34 +0200
-Message-ID: <CANteD_zD9ViBi5woHycU_CR1rJcv7YjKDFDiKTA8de04yrTs5Q@mail.gmail.com>
-Subject: Re: [PATCH v1 0/2] Be nicer to the user on tracked/untracked merge conflicts
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>,
-        Guillaume Cogoni <cogoni.guillaume@gmail.com>,
-        BRESSAT JONATHAN p1802864 <jonathan.bressat@etu.univ-lyon1.fr>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "guillaume.cogoni@gmail.com" <guillaume.cogoni@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+bdc77d1d685 (Add a function to determine whether a path is owned by the
+current user, 2022-03-02) checks for the effective uid of the running
+process using geteuid() but didn't account for cases where that user was
+root (because git was invoked through sudo or a compatible tool) and the
+original uid that repository trusted for its config was no longer known,
+therefore failing the following otherwise safe call:
 
-> Probably a command line option ("git merge" would probably want the
-> same one) plus a configuration varaible to give it the default (the
-> latter is optional).
+  guy@renard ~/Software/uncrustify $ sudo git describe --always --dirty
+  [sudo] password for guy:
+  fatal: unsafe repository ('/home/guy/Software/uncrustify' is owned by someone else)
 
-First, we think that add an option to pull and merge is more suited to
-our situation, and next, it could be good to add the configuration
-variable
+Attempt to detect those cases by using the environment variables that
+those tools create to keep track of the original user id, and do the
+ownership check using that instead.
 
-In unpack-trees.c there is a list of files that cause problem with merge.
-We want to split this list to list files that have the same content, then if
-all the files have the same content, we can suggest to use the option
-to overwrite those files.
-Then we can modify the error message to show the files that have the
-same content apart.
+This assumes the environment the user is running with after going
+privileged can't be tampered with, and also does the check only for
+root to keep the most common case less complicated, but as a side effect
+will miss cases where sudo (or an equivalent) was used to change to
+another unprivileged user or where the equivalent tool used to raise
+privileges didn't track the original id in a sudo compatible way.
 
-> I wonder if this whole thing is an attempt to work around whatever
-> "stash --untracked" fails to do well (or perhaps there are no such
-> shortcomings, but just the users are not made aware of the command
-> enough).  If you have these two untracked files (file1.txt and
-> file2.txt) are "in the way" for a merge to succeed, I have to wonder
-> if "Please move or remove" message that was introduced by 23cbf11b
-> (merge-recursive: porcelain messages for checkout, 2010-08-11) is
-> still giving a good piece of advice to users today.
+Reported-by: Guy Maurel <guy.j@maurel.de>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Randall Becker <rsbecker@nexbridge.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-compat-util.h | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
-We got a similar idea, but we finally decide that it was not a very good
-approach because it's not efficient if we have a lot of files or some big files.
-And because if there are files that doesn't block the merge, we treat them
-anyway and they will move from the work tree, it's a bit overkill.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 63ba89dd31d..dfdd3e4f81a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -393,12 +393,50 @@ static inline int git_offset_1st_component(const char *path)
+ #endif
+ 
+ #ifndef is_path_owned_by_current_user
++
++#ifdef __TANDEM
++#define ROOT_UID 65535
++#else
++#define ROOT_UID 0
++#endif
++
++/*
++ * this helper function overrides a ROOT_UID with the one provided by
++ * an environment variable, do not use unless the original user is
++ * root
++ */
++static inline void extract_id_from_env(const char *env, uid_t *id)
++{
++	const char *real_uid = getenv(env);
++
++	/* discard any empty values */
++	if (real_uid && *real_uid) {
++		char *endptr;
++		unsigned long env_id;
++		int saved_errno = errno;
++
++		errno = 0;
++		env_id = strtoul(real_uid, &endptr, 10);
++		if (!errno && !*endptr && env_id <= (uid_t)-1)
++			*id = env_id;
++
++		errno = saved_errno;
++	}
++}
++
+ static inline int is_path_owned_by_current_uid(const char *path)
+ {
+ 	struct stat st;
++	uid_t euid;
++
+ 	if (lstat(path, &st))
+ 		return 0;
+-	return st.st_uid == geteuid();
++
++	euid = geteuid();
++	if (euid == ROOT_UID)
++		extract_id_from_env("SUDO_UID", &euid);
++
++	return st.st_uid == euid;
+ }
+ 
+ #define is_path_owned_by_current_user is_path_owned_by_current_uid
+-- 
+2.36.0.352.g0cd7feaf86f
 
-> Note that I never use "git stash" with "untracked" option, so I do
->  not know if it works well in this context already, or we need more
-> work before it becomes usable in this scenario.  But it smells like
-> it is exactly what we might want to use in such a situation to stash
-> away these untracked file1.txt and file2.txt while running the
-> merge, while allowing us to recover them after running the merge or
-> discarding it.  I dunno.
-
-Indeed, git stash works well with this kind of problem, however an option
-would be easier in that specific case.
-
-Thanks for you're helpfull review, you always give us a lot of good
-information and ideas.
-
-Cogoni Guillaume and
-Bressat Jonathan
