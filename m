@@ -2,108 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1605C433EF
-	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 20:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71536C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 20:32:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380482AbiD2UWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Apr 2022 16:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53312 "EHLO
+        id S1380812AbiD2UfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Apr 2022 16:35:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380689AbiD2UWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Apr 2022 16:22:30 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF81D64C0
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 13:19:10 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EDA411C497;
-        Fri, 29 Apr 2022 16:19:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pDyMD9ntjWdiWABxp1Ulg0UqyKzBpBK78Rj0Bk
-        hvee8=; b=iQBMTj1ciILZvUA/b7Rh7y0hapYn76tgccMXKeZvtVj5kbiEWjxh0o
-        LFC82ZVXNK3nIR53+xyHcrJK5J9SnllrGYeSTqYqYwOgefqz+gBPU0MIMesnAjlI
-        m4VwR0O4CQw5P9G0g60hJhGSe/2I70Tvj44lM+Vc7On3OiN7wGpZQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26D2211C496;
-        Fri, 29 Apr 2022 16:19:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7D35811C495;
-        Fri, 29 Apr 2022 16:19:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Austin Morton <austin.morton@aquatic.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Able to checkout same branch in multiple worktrees when using
- symbolic-refs
-References: <CAAir=1MbwGtONW7yWRWoXKzAiwqwhOAqdhfWYMYLxt1vANuUOA@mail.gmail.com>
-Date:   Fri, 29 Apr 2022 13:19:08 -0700
-In-Reply-To: <CAAir=1MbwGtONW7yWRWoXKzAiwqwhOAqdhfWYMYLxt1vANuUOA@mail.gmail.com>
-        (Austin Morton's message of "Fri, 29 Apr 2022 19:05:56 +0000")
-Message-ID: <xmqqsfpvabib.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1380669AbiD2UfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Apr 2022 16:35:17 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678C465402
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 13:31:58 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id a5so6180085qvx.1
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 13:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+VxP2AVM5ujXPkGJTdTg72o+unsMTKf/XK+WxH9a70I=;
+        b=HgpG9chrrNSmT+umqJtbF5mNagRNLqZKWl207nxAo2JAzdYQyN71T7yZDUXH0Ku5o+
+         vKZhwp4HvKC3/z7yjwL15l+jzP78Unz7PsmGxcrk+n+Q3jx2ySS+N4vf+OqSCZjK57SD
+         Rh+q6G/kTsEU4/rxt+Bcr8KCpknhvoTgz24hmwUFVzdWC/ryU8Zp02GkQf00GZ3EB9jr
+         5umREwUnwg9ZkIDaMvAurLKxn9RM+m6Sl62Oh8Xstdh3YJvHBzORiBASzCM8HXtd85Xd
+         J6Tzy1x0vsjqG8BrMraHHFTRobQk4egiG1MSHandUKBrXqZgW6TLhzmhNWBn1xfdliYs
+         T9gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+VxP2AVM5ujXPkGJTdTg72o+unsMTKf/XK+WxH9a70I=;
+        b=QqOtysnfk05q7vj8Yjj65BBsAKRKtTKDhrEeR75TzWx+ohAm9rNvjHeNQD4h7hraRO
+         5wd3FZWSQI1vEhT/dwZuvSEbMUEKKqJfzOZCTzOPbxzeYfUG+Q60lJEGZiX7+kpgf/BA
+         7+nx3H4FUtxWi7P83FzPhUzbiWjdkYYLY6T9aetzCeyIteFF+Y8roZJSXva3a3dBiqO2
+         BZu6EjhU9g41ZBXYFeT1y2c8XjZ8JE+6NmDioGFsxcrAIszb6PTwcMCx2RLuezAhvAaB
+         sY5Rj3gMrZO72rFll3XRSTyAakSUZ50XrrOFG6nGAI+LewOWyVVWWfCqLA+suMVsT0JM
+         2Bbg==
+X-Gm-Message-State: AOAM530sN8ZcBgtYSj/iinTFc98CnJ+EXEe5Zma7Eg7OAR4vQmBUagWI
+        /60y1kQnEqUPM7rFDuS9CmjZrFaFjFo=
+X-Google-Smtp-Source: ABdhPJyhhVPwJApW9rMeYDaPxrZ8ljwuReIDK3TdG4HxZ6mWiNpdJgHwsKITu/5gybREqxVNMswEQw==
+X-Received: by 2002:a0c:e2cd:0:b0:456:568c:6697 with SMTP id t13-20020a0ce2cd000000b00456568c6697mr730909qvl.14.1651264317386;
+        Fri, 29 Apr 2022 13:31:57 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id o26-20020a05620a111a00b0069fc13ce242sm110732qkk.115.2022.04.29.13.31.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Apr 2022 13:31:57 -0700 (PDT)
+Date:   Fri, 29 Apr 2022 13:31:55 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Cc:     git-mailing-list <git@vger.kernel.org>
+Subject: Re: git not compiling under MSYS2
+Message-ID: <20220429203155.ve5iemdgr6mualvp@carlos-mbp.lan>
+References: <CAKepmajpJ0Nhr0SPNicg6djhH36f+dT_SHrb7pOEK7J0eXYuFA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A0820532-C7F9-11EC-B87E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKepmajpJ0Nhr0SPNicg6djhH36f+dT_SHrb7pOEK7J0eXYuFA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Austin Morton <austin.morton@aquatic.com> writes:
+On Fri, Apr 29, 2022 at 02:40:14PM -0400, Jack Adrian Zappa wrote:
+> Anyone have any idea why it's not building?
 
-> When using a symbolic-ref I am able to inadvertently checkout the same
-> branch in multiple worktrees when using the symbolic-ref name, despite
-> being prevented from doing so if I use the target branch name.
+because the codebase doesn't support that environment yet AFAIK.
 
-Don't do that if it hurts ;-)
+I'd been successful building git in windows with MinGW64 gcc (both 64
+and 32 bit), Visual Studio's cl and even the clang that comes as an option
+in that last one (which uses the clang-cl interface)
 
-If you checked out 'main' in the secondary worktree and made a
-commit there, the symbolic-ref makes 'master' to be updated,
-confusing the primary worktree whose index and the working tree
-files record work relative to the old commit before the secondary
-worktree updated it via the symbolic-ref, which is exactly the same
-situation that the "do not check out the same branch in two
-different worktrees" protection tries to save the user from, but I
-do not think we currently do so.
+If you want to build it in an MSYS2 like environment the best option is to
+use the Git for Windows SDK[1] which AFAIK is based on one of the MSYS2
+variants (most likely the one with gcc and the old crt)
 
-Because this "do not check a branch out twice and let it be futzed
-with from the two places" is primarily a mechanism to help
-inexperienced users from getting confused (and there is an escape
-hatch mechanism to allow it to those who know what they are doing),
-and use of symbolic-ref to make 'main' and 'master' synonyms with
-each other is not something inexperienced users who have no clue on
-what they are doing would be doing anyway, it may not be a huge
-deal.
+Carlo
 
-I also suspect there is no way, other than scanning _all_ the local
-branches, to see if some other branch aliases the branch we are
-about to check out.  It may potentially be somewhat expensive.
-
-But it would be nice if it can get fixed in inexpensively.
-
-Thanks for a report.
-
-
-> Below is a minimal reproducer:
->
-> $ git --version
-> git version 2.36.0
-> $ git init .
-> $ git status
-> $ git commit --allow-empty -m "Initial commit"
-> $ git symbolic-ref refs/heads/main refs/heads/master
-> $ git worktree add ../worktree2
-> $ git worktree list
-> /home/amorton/test/worktree1 cd8312d [master]
-> /home/amorton/test/worktree2 cd8312d [worktree2]
-> $ cd ../worktree2
-> $ git checkout master
-> fatal: 'master' is already checked out at '/home/amorton/test/worktree1'
-> $ git checkout main
-> Switched to branch 'main'
-> $ git worktree list
-> /home/amorton/test/worktree1 cd8312d [master]
-> /home/amorton/test/worktree2 cd8312d [master]
+[1] https://github.com/git-for-windows/build-extra/releases/tag/git-sdk-1.0.8
