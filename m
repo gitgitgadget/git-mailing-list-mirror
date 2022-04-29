@@ -2,111 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDCF8C433EF
-	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 19:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFF95C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 19:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380242AbiD2TJG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Apr 2022 15:09:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59350 "EHLO
+        id S237383AbiD2TJb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Apr 2022 15:09:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380220AbiD2TIz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Apr 2022 15:08:55 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309C35BD2E
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:05:36 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id t3-20020a656083000000b0039cf337edd6so4149908pgu.18
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:05:36 -0700 (PDT)
+        with ESMTP id S230141AbiD2TJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Apr 2022 15:09:29 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3D3A1452
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:06:10 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-2f16645872fso94837917b3.4
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=RaAdmI2LGai9dui+hF7C0y5LScWXyZrEjj4Fk+9di9c=;
-        b=a2bmNiPRCVW2xFrqV6BPkyM+BbYyprVlv6OFvUbToIYxuSRTX2V3BaZ83iL3YNSzbb
-         xw6zbmQwl+PQPY6AfsFaJifk0VpA3m0eXN4UxV7n9cJZrL0NYz3hcGJea0Fss63MCM4G
-         h5stH2mcBHHHCh9aHq2Y50n7KGmHFE6IlIDNd/7juj+ltT0+ibPpayPdN4CK12tkKWuc
-         SRJUWTZhD0JdYg2SV//fMdK2WG+LSTN7Ydff4PvZZLfnDuM2S1ZZ2x88NURiM23V7J4x
-         7M3SsWPuZr+A5nGnMtep92ju1pXedXrT1lIbqd7Vh+QgMn7ATu24yDYAvBUgq0TIEbjh
-         MPeQ==
+        d=aquatic.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u+dxvBzP/vZlnFycHXglnZgWwVRNH/a1UGIvQXw2TNs=;
+        b=WpsPxzsSSSsfkpZPoIhCfcKHNce1pNZ4LQw7T/ieXbgwdTBVe8q9wQCmvNh6kkHP2O
+         o+h87QPtZj0oPCQd3PG9C7wLyyX3j6o+pW3GnMVv28OS1dPX4GPDS+Po8vvyFkp1jnS7
+         BK71FyxgO1DyAfHZghg0OEiw6gNyyK0O/owSgmupyLLhO9kN6Y/Ymsa6iyi5D5VsfFe8
+         wElvnBiqp32z/2JQ+i8QqFbO41xs445yM/cdMWamy/r7jvkb6jlSuppX58B9Ug6YeXJI
+         Ph8O1xarv1vInJoIMeFc5T6z+52+ZK0yPeVF5pqQ1zj+/aTz+eyd5AdIlV0h+sA0wJuD
+         SRTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=RaAdmI2LGai9dui+hF7C0y5LScWXyZrEjj4Fk+9di9c=;
-        b=bU9yYFKd3jV+4Yf6tOTTsfQWd6qM6Bm2FGG8R7SFXLfcn8ddnM16OhEUt9+P9KR/Cp
-         A9mp/N6za8RWKzzIjETCxavP3IHfULwpLfhIfIQLuAxhJJ42/bdwYDjVORlvr9TBGnNz
-         MacbunVKiIuP7yRsWuaQHf0fHB6cE7DbqnfQdc9WwlRpwant+JTVZ37nJBq84mOReWDg
-         fsoQJbmS4zKQlkfQ7ZC3h5fVjZiga5EbOpJRwwsJ+mP5LfRZIYWmXD8JSrCB11yTEKAV
-         Peotyg+P3g8C9jtAgGL0+EdTPDBX+5iOrPnof8ay4J/eMFg9Hj2UMIbylpLk/sf8d4R/
-         y6EA==
-X-Gm-Message-State: AOAM532E+AIY3KhQV+ytHIoSRWRM9yLC+Wo+e4lMRuKnHTK/Y0+IuF00
-        4cdgj38zPTkc+6hAJwMTVq8aNUb4GbBflA==
-X-Google-Smtp-Source: ABdhPJwWcc8NEncozJVH9Bivoi583INZFErWFmZz9+vEXdowzvvEYxGFLQyObNCBAP7L6frJO1Olq0rQ9UexjA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:c986:b0:1d9:56e7:4e83 with SMTP
- id w6-20020a17090ac98600b001d956e74e83mr435861pjt.1.1651259135302; Fri, 29
- Apr 2022 12:05:35 -0700 (PDT)
-Date:   Fri, 29 Apr 2022 12:05:26 -0700
-In-Reply-To: <xmqqczgzdc1r.fsf@gitster.g>
-Message-Id: <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
- <xmqqczgzdc1r.fsf@gitster.g>
-Subject: Re: Bugreport - submodules are fetched twice in some cases
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Benedek Kozma <cyberbeni@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u+dxvBzP/vZlnFycHXglnZgWwVRNH/a1UGIvQXw2TNs=;
+        b=2D5b1kXXRWMPyCFavSoTmYISa1qavT93TfLtITEC5GvtFXKykdWF4RUY5bH3dt7l7a
+         HekLuTLlHpyaLx9Jhm2HrzOwRuCEWAI7Qb1Nw4ETFMqzD5S45i4OrfHgxorJ9jUZe7sF
+         KuS/o9Y461QVJc11Z3w0CsBwJ4ehk53o2USGmP2QUKD+E2V8F8U6zv3iYy1zCUfl2s2h
+         5e2ZN467/6qDG1f/DO4MxQGUMmUnmAWDwkAO2cOoiZiixmzhBux8FeOA1hePkjbZ64At
+         YJGtYT21VWquqVAyUK0qcVqSRXU4MxR50BtHAXW1uKfL9WnOHQjTpaBkweJI1Hjo3UVw
+         U55g==
+X-Gm-Message-State: AOAM531lSQSdQThTTlN9z23m7XcRDSIBjnGS4pe8otOueBBF6lWQYfWd
+        TDAU8re4z0RuD2h7X0AQ9kPeIPcvwErqq2hgbG0FjXqhtkxDHDH4uMLGBRo6LU2DqWBYXiitVgJ
+        ZlGllzxBMD4R0+60UM4X+K5L7m5Wg3gCvxR/QkMS0pqh/Atic70Kidsvjj5bc0BPBBA2EPbl+6V
+        7TSesbkigeSRIdvdsKAfspl4fBnyGAlMHIJLBJXQxscW+raj1U7SKjEjfPc5QjlX8=
+X-Google-Smtp-Source: ABdhPJzBvpiy45b0V+/NfPvMVkBHzfNLdA6g/fMzjTquyDzci+VgE+SzRXq7gOAu5cyIR/oXHk/sOtC6ppPhd3GaXhw=
+X-Received: by 2002:a81:23ce:0:b0:2f8:ad74:1185 with SMTP id
+ j197-20020a8123ce000000b002f8ad741185mr804897ywj.120.1651259167070; Fri, 29
+ Apr 2022 12:06:07 -0700 (PDT)
+MIME-Version: 1.0
+From:   Austin Morton <austin.morton@aquatic.com>
+Date:   Fri, 29 Apr 2022 19:05:56 +0000
+Message-ID: <CAAir=1MbwGtONW7yWRWoXKzAiwqwhOAqdhfWYMYLxt1vANuUOA@mail.gmail.com>
+Subject: Able to checkout same branch in multiple worktrees when using symbolic-refs
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello,
 
-> A simple and concrete reproduction 
->
->     git init top
->     cd top
->     date >file1
->     git init sub
->     cd sub
->     date >subfile1
->     git add .
->     git commit -m subinitial
->     cd .. ;# back to top
->     git submodule add ./sub sub
->     git add file1
->     git commit -m initial
->     cd .. ;# out of top
->     git clone --recurse-submodules top copy
->     cd copy
->     git config submodule.recurse true
->     git config fetch.parallel 0
->     GIT_TRACE2=$(pwd)/trace git fetch --all --prune --prune-tags
->
-> This throws the three lines to the output.
->
-> Fetching origin
-> Fetching submodule sub
-> Fetching submodule sub
->
-> The two "Fetching submodule" messages are coming from two separate
-> calls to get_fetch_task_from_index(), and the trace does show that
-> the code is doing "git-upload-pack" three times (one for the top
-> level, twice for the same top/sub).  We can see it by grepping
-> for "git-upload-pack" in the resulting 'trace' file above.
+When using a symbolic-ref I am able to inadvertently checkout the same
+branch in multiple worktrees when using the symbolic-ref name, despite
+being prevented from doing so if I use the target branch name.
 
- 
-Thanks for the reproduction recipe and findings, that'll be very helpful
-:)
+Below is a minimal reproducer:
 
-> Glen, as submodule.c::fetch_submodules() was created in your heavy
-> refactoring quite recently, I thought I'd redirect this report in
-> your direction, as I expect you'd be the most clueful in this area
-> ;-)
+$ git --version
+git version 2.36.0
+$ git init .
+$ git status
+$ git commit --allow-empty -m "Initial commit"
+$ git symbolic-ref refs/heads/main refs/heads/master
+$ git worktree add ../worktree2
+$ git worktree list
+/home/amorton/test/worktree1 cd8312d [master]
+/home/amorton/test/worktree2 cd8312d [worktree2]
+$ cd ../worktree2
+$ git checkout master
+fatal: 'master' is already checked out at '/home/amorton/test/worktree1'
+$ git checkout main
+Switched to branch 'main'
+$ git worktree list
+/home/amorton/test/worktree1 cd8312d [master]
+/home/amorton/test/worktree2 cd8312d [master]
 
-Hm, this does look like something that I probably introduced. But even
-if it turns out to be older than that, I think I am the right person to
-fix it, yes.
 
-I'm a little caught up with the embedded bare repo work, but I think I
-can find time to debug this within the next 2 working days or so.
+-- 
+Austin Morton
+austin.morton@aquatic.com
