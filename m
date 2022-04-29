@@ -2,107 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AFB6C433F5
-	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 19:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D790C4332F
+	for <git@archiver.kernel.org>; Fri, 29 Apr 2022 20:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354832AbiD2TWX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Apr 2022 15:22:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
+        id S1380492AbiD2UGV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Apr 2022 16:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231805AbiD2TWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Apr 2022 15:22:22 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1537CB0D04
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:19:04 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id o11so6471857qtp.13
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 12:19:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QJ6ilOVHWHxUhqbtHmR3eILtk69rC9HR3jGelNLP4/c=;
-        b=dQmn9ZiwGRr+F14GYddbtpF6wCgGOLb2pFaGZ3FjwHcsORP1iXYGoNwmF90aEqRf9m
-         XlGkE+gKrQ+dUGQsCjpkM0C98ijdY1onEEFzM/Y9Tfr3jkQljip0chl3C6HGJBspUiIt
-         J5Nzc9vUDBfHdUPDlSiPYqHvgfBrwitaeYqr5S9/3Y/M87840y7h97FCWJZjN0XIfrSE
-         wh3uX+LaPESFYUVAxQdxlIiqGMpuwSVrLvrMyewzB1VA0V5eH1FVbeEYQczyrc0T/18F
-         4n6MPWb35GFhmdQGu2ptZK6sEdNOMU2vR7G/ZkyggnglXlV9/Sop1eTM05sp8Y2bJvat
-         nNGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QJ6ilOVHWHxUhqbtHmR3eILtk69rC9HR3jGelNLP4/c=;
-        b=WC9UeDUzNGbIPcyzu8hFNHTxx6JQncuwJVG+/UYwfJMppHwj3yssb8un6oP/p5+WMg
-         GTB7/+UXV8l6BV8pOmbG8eKkrMridLoWncNMY5zqOzq12ynU1qj0MqR1EVcMzIuIrsh4
-         5ikKAEFKq8hVkWrJSklXhB8A/vD3O5RqbJQFeoklOxx0OCFvqEOtVZ/oLY/UoXRTBgex
-         VRE0GVrSdl++KR/lW0ViLJ39B8h8Oi6L/mxCBRsApPh70jFLVCYuUwkBtRiJMuTey8i3
-         K2C2L8lOMbPA4jNJ0V13AiMS5lg1xrrJ983UmMM+UIh0lM+vC3quW4WzthrLAYgyoOVz
-         UHhg==
-X-Gm-Message-State: AOAM531mNtu2p3yHEJ5WxZ3/3baK6Vf9RuE3xztYrYc0KCXLCdz3/pWS
-        UOVMQQiKnmdaj8qzYntW5Yg8
-X-Google-Smtp-Source: ABdhPJyxHvvTN0eFT9zdBUj5FW6uqV+ByCSTMaQy7sWTwRYXOXQeywDo6HUc6wx0xTej3PrQvOac+A==
-X-Received: by 2002:a05:622a:30a:b0:2f2:4a5:59b1 with SMTP id q10-20020a05622a030a00b002f204a559b1mr853643qtw.546.1651259943245;
-        Fri, 29 Apr 2022 12:19:03 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b433:ef9d:298c:a2c2? ([2600:1700:e72:80a0:b433:ef9d:298c:a2c2])
-        by smtp.gmail.com with ESMTPSA id d11-20020a05620a140b00b0069fc13ce1dfsm24850qkj.16.2022.04.29.12.19.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 12:19:03 -0700 (PDT)
-Message-ID: <b6deba3f-9019-fb6f-7bb3-cc2f647dcff6@github.com>
-Date:   Fri, 29 Apr 2022 15:19:01 -0400
+        with ESMTP id S1359680AbiD2UGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Apr 2022 16:06:19 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69EF3BCB4F
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 13:03:00 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E60BC11C138;
+        Fri, 29 Apr 2022 16:02:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=R6aHQmFXjEu0EN6fnzlB4pf8CBbq6m0S8tDrhx
+        LotXg=; b=fymIe3CyabFC2P5Nu49kI/VJPBRWK1IG6kKWZ53PHnQzhQqTsVlb5i
+        S+D+PUpK8seDZXx+TqbPCuB9/t43hxHVrn7XREJxkC97RxjWL2VNvffalOa39ZhW
+        EGkPX5VIvH1OFYtQ5l96Epu++MnTatlIU6CUn/Ptrmvldc9apoX2k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEA4611C135;
+        Fri, 29 Apr 2022 16:02:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 504B711C133;
+        Fri, 29 Apr 2022 16:02:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Benedek Kozma <cyberbeni@gmail.com>
+Subject: Re: Bugreport - submodules are fetched twice in some cases
+References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
+        <xmqqczgzdc1r.fsf@gitster.g>
+        <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Fri, 29 Apr 2022 13:02:57 -0700
+In-Reply-To: <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Fri, 29 Apr 2022 12:05:26 -0700")
+Message-ID: <xmqq1qxfbqtq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 2/3] t0033-safe-directory: check when 'safe.directory' is
- ignored
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-References: <pull.1215.git.1649863951.gitgitgadget@gmail.com>
- <20220427170649.4949-1-szeder.dev@gmail.com>
- <20220427170649.4949-3-szeder.dev@gmail.com> <xmqqr15il0uo.fsf@gitster.g>
- <a44b4f0e-038c-9bcd-80d6-f53c87bd7f2d@github.com>
- <xmqq8rrndb6h.fsf@gitster.g> <20220429190625.GA1626@szeder.dev>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220429190625.GA1626@szeder.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DA2E1D4-C7F7-11EC-817D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/29/2022 3:06 PM, SZEDER Gábor wrote:
-> On Fri, Apr 29, 2022 at 10:57:58AM -0700, Junio C Hamano wrote:
->> Derrick Stolee <derrickstolee@github.com> writes:
->>> test_config would do the same, right? I think it automatically
->>> does the test_when_finished for us.
+Glen Choo <chooglen@google.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> A simple and concrete reproduction 
 >>
->> I thought it (specifically, anything depends on test_when_finished)
->> has trouble working well from inside a subprocess?
-> 
-> Yeah, test_config doesn't work in a subshell, because modifying
-> the variable holding the cleanup commands won't be visible after
-> leaving the subshell, and the protection added in 0968f12a99
-> (test-lib-functions: detect test_when_finished in subshell,
-> 2015-09-05) will kick in.  And we do need a subshell to set the
-> config, because without unsetting GIT_TEST_ASSUME_DIFFERENT_OWNER 'git
-> config' would refuse to touch the config file.
+>>     git init top
+>>     cd top
+>>     date >file1
+>>     git init sub
+>>     cd sub
+>>     date >subfile1
+>>     git add .
+>>     git commit -m subinitial
+>>     cd .. ;# back to top
+>>     git submodule add ./sub sub
+>>     git add file1
+>>     git commit -m initial
+>>     cd .. ;# out of top
+>>     git clone --recurse-submodules top copy
+>>     cd copy
+>>     git config submodule.recurse true
+>>     git config fetch.parallel 0
+>>     GIT_TRACE2=$(pwd)/trace git fetch --all --prune --prune-tags
+>>
+>> This throws the three lines to the output.
+>>
+>> Fetching origin
+>> Fetching submodule sub
+>> Fetching submodule sub
+>>
+>> The two "Fetching submodule" messages are coming from two separate
+>> calls to get_fetch_task_from_index(), and the trace does show that
+>> the code is doing "git-upload-pack" three times (one for the top
+>> level, twice for the same top/sub).  We can see it by grepping
+>> for "git-upload-pack" in the resulting 'trace' file above.
+>
+>  
+> Thanks for the reproduction recipe and findings, that'll be very helpful
+> :)
+>
+>> Glen, as submodule.c::fetch_submodules() was created in your heavy
+>> refactoring quite recently, I thought I'd redirect this report in
+>> your direction, as I expect you'd be the most clueful in this area
+>> ;-)
+>
+> Hm, this does look like something that I probably introduced. But even
+> if it turns out to be older than that, I think I am the right person to
+> fix it, yes.
 
-Ah yes, of course.
- 
-> I think something like
-> 
->   test_when_finished "(
->         unset GIT_TEST_ASSUME_DIFFERENT_USER &&
->         git config --unset safe.directory
->         )"
-> 
-> would work, though.
+It seems that ever since the introduction of the --prune-tags option
+at v2.16.1-16-g97716d217c (fetch: add a --prune-tags option and
+fetch.pruneTags config, 2018-02-09), we always behaved this way.
 
-Would it be simpler to use this?
+Without "--prune-tags" (but still with "--prune"), we can go even
+older than that version, and v2.10.0 seems to fetch only once.
 
-	GIT_TEST_ASSUME_DIFFERENT_USER=0 git config --unset safe.directory
+And the command keeps working that way all the way back to the
+commit that starts honoring submodule.recurse configuration, at
+v2.13.0-137-g58f4203e7d (builtin/fetch.c: respect
+'submodule.recurse' option, 2017-05-31)
 
-Thanks,
--Stolee
+If we instead use "git fetch --recurse-submodules" with versions
+of GIt older than that, we can go even older.  I saw v2.5.0 behaves
+that way before I got tired and gave up.
+
+So, we still would want to eventually get to it, but no rush.  This
+is an old thing and not as urgent as fixing a recent regression.
+
+FWIW, without "--all", we do not make an extra fetch at all, with
+the current code or with code as ancient as v2.5.0
+
+Thanks.
