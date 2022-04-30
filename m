@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0212AC433F5
-	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 04:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08F13C433EF
+	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 04:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240859AbiD3ERt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Apr 2022 00:17:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38962 "EHLO
+        id S240894AbiD3ERx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Apr 2022 00:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240812AbiD3ERp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Apr 2022 00:17:45 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF642E6AC
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:24 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id l7so18752979ejn.2
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:24 -0700 (PDT)
+        with ESMTP id S240814AbiD3ERq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Apr 2022 00:17:46 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F056F3B02A
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:25 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id y3so18664886ejo.12
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LqSgevMKrnKOuaMi35EpQEVjNRHj2C99lKB2HFrd3mU=;
-        b=mOKYKYxEY0vS72HLSFSdjjA9yCrWJ7aexnTTtt4+wja8vKYnKRbPA6+u+WJrdhkGIT
-         UQYtBHhY78QIBVi5TqdVkEixTEd6gwafSqZBIiH72pRIa21lX8FpMduLVJSkHN5rG9S3
-         X4BnWIP82TWP6fsiSXtOAq+vNd+BjarVmrAURXk+96ek2YLuxXYJDWBYPB6TW739/prh
-         Kn1+N2Hg6/fWek4uuey/JDnim9N03OmkdA90wadvj40id6+VTwIMqhoJSb5LufSg4ea6
-         BpGsRs/qndUmh2779DO7fI2m3JpYH5+u1gI8J2I5ubsiIzrYkh0vmy2xArPJguJlX9Zy
-         PVEw==
+        bh=qIphQNVs8nfUWPJKoherI+7RHJsYeZLgJ+i5HFIOLGg=;
+        b=jwQi0ySidkpTqXs/khe0i+KEJ9lH56BtovSmtWYwLz/4CA1a5NH/XFWSgNMQi98kxW
+         PqT+IQGQl1AfgOGZt1YnMcW8lLi0Uh0Q7eGsEq+tBXNGHG69PX1FBfs5ECZ1XzWy9JNA
+         hZg69MW95oTUZysmfp6T0j8hyBDPrU/TxtXnzv9snlhf8WH61Wa1hi+vJtYJWntqx5lW
+         0FEQ4PNI9ID96GUd1qxCNhqtv6MLGuUi6RGdTuKwgtHnQv0qp5N4aCshKuSSF3KR/9F6
+         bKFsq/YTXl9e8xsR8/5YZnS0wgyD0x1URPxGqCCBS50lWYeh0vyvh5CtSTJsX/TVbZ9f
+         vDqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LqSgevMKrnKOuaMi35EpQEVjNRHj2C99lKB2HFrd3mU=;
-        b=qgAivuI4DCMTTXRYQRgb3LyGd0kmfttwBo33kvjwxNL7q3mBYUxI4WnBt9sGIFmcNu
-         LUvW5dilZgFfqDwx5SfJh0BQBloTA4yi7vBgN4YErvPGtyfNcy3pRH8X4OM9QAldT0ya
-         7Ma2j2dIr//RWRvTmS5s22bJxckU6zN4g2bcR4L6uBW+915TLXXnylY9ufVI4GONMTwD
-         OaqLM5qCYsRp7OZPULfk5rbpin7RJt4qLyZc2Knk9XgMxy9d1qvaCFYM09ZGWKbPW9Y7
-         O/oFUk8oAhuYAJC9T27pVijOtdLOVMauNe9/L55Dq0iPm3anTpr1yDBz1CERjVOeQDdA
-         19Iw==
-X-Gm-Message-State: AOAM5307FjID+jwZLsyPjbVzZXLNQbByCfLo+Xv0VEPsRvGXSHFPLDtX
-        JfSiGQswjp+/nWoa85JmffhZAY2oMDk=
-X-Google-Smtp-Source: ABdhPJwKa2PpbIq+9UjSA//wRB6wHvEEcut8e7/X0HXMIRFWAyCp/oqMS1k26Y6/FzWuASt+K+TA9Q==
-X-Received: by 2002:a17:906:fca:b0:6f3:e2d8:7c57 with SMTP id c10-20020a1709060fca00b006f3e2d87c57mr2316155ejk.320.1651292063068;
-        Fri, 29 Apr 2022 21:14:23 -0700 (PDT)
+        bh=qIphQNVs8nfUWPJKoherI+7RHJsYeZLgJ+i5HFIOLGg=;
+        b=3YY4o6kFwDGNs88EyC19uQHXDXkE18mjFEKs5uD5sG0a7o6cSyf87OW+F0FK2QqJep
+         u/TTINPtGmbdcHNWaELnoXvGGfrMfW+dDCkp3OQXggk1P18XibgjOy3hAkw+chd9hmti
+         RGb8DAnU/pgQJzjLSbarN7zMf3xMc5Kd0Irebn2+wMHjYw02E71OHKtMOSgkK7E91nFC
+         j6VBnmy3rCxyZtrmEyLKXOCyFts34UQHakBT0fOowzLu6B+dDDVJhttU+uIz0AyozqLU
+         PPrjTyh8eKxOKXXtUlDmWNzCSowGMW3/4lENtfkAUqSxJAFs7nblgFyzzT6jZouU5fg/
+         qZyA==
+X-Gm-Message-State: AOAM530dinHyeL8R4NOW2rrcFkVkwAXneDXAlqg9DsbEIOufXp2tgKvL
+        ajRHCElk/8mE0LWA0ajac/DogsBxBq0=
+X-Google-Smtp-Source: ABdhPJwz5sKSC8TuUAwS2IdLVu+SxPgMAS/+RcJhil1CGHntF9pijWsscWOAdZNIKu8chhz4FY2vjg==
+X-Received: by 2002:a17:907:7810:b0:6e7:ef73:8326 with SMTP id la16-20020a170907781000b006e7ef738326mr2293541ejc.429.1651292064303;
+        Fri, 29 Apr 2022 21:14:24 -0700 (PDT)
 Received: from fedora35.example.com ([151.27.248.133])
-        by smtp.gmail.com with ESMTPSA id og47-20020a1709071def00b006f3ef214e79sm1243586ejc.223.2022.04.29.21.14.22
+        by smtp.gmail.com with ESMTPSA id og47-20020a1709071def00b006f3ef214e79sm1243586ejc.223.2022.04.29.21.14.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 21:14:22 -0700 (PDT)
+        Fri, 29 Apr 2022 21:14:23 -0700 (PDT)
 From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/23] archive.c: Fix coding style
-Date:   Sat, 30 Apr 2022 04:13:46 +0000
-Message-Id: <20220430041406.164719-4-gitter.spiros@gmail.com>
+Subject: [PATCH 04/23] blame.c: Fix coding style
+Date:   Sat, 30 Apr 2022 04:13:47 +0000
+Message-Id: <20220430041406.164719-5-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220430041406.164719-1-gitter.spiros@gmail.com>
 References: <20220430041406.164719-1-gitter.spiros@gmail.com>
@@ -67,22 +67,40 @@ integral value with constant 0 or '\ 0', or a pointer value with constant NULL."
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- archive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ blame.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index e29d0e00f6..654ea2a6ed 100644
---- a/archive.c
-+++ b/archive.c
-@@ -465,7 +465,7 @@ static void parse_treeish_arg(const char **argv,
- 	}
- 
- 	tree = parse_tree_indirect(&oid);
--	if (tree == NULL)
-+	if (!tree)
- 		die(_("not a tree object: %s"), oid_to_hex(&oid));
- 
- 	if (prefix) {
+diff --git a/blame.c b/blame.c
+index 186ad96120..da1052ac94 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1072,7 +1072,7 @@ static struct blame_entry *blame_merge(struct blame_entry *list1,
+ 	if (p1->s_lno <= p2->s_lno) {
+ 		do {
+ 			tail = &p1->next;
+-			if ((p1 = *tail) == NULL) {
++			if (!(p1 = *tail)) {
+ 				*tail = p2;
+ 				return list1;
+ 			}
+@@ -1082,7 +1082,7 @@ static struct blame_entry *blame_merge(struct blame_entry *list1,
+ 		*tail = p2;
+ 		do {
+ 			tail = &p2->next;
+-			if ((p2 = *tail) == NULL)  {
++			if (!(p2 = *tail))  {
+ 				*tail = p1;
+ 				return list1;
+ 			}
+@@ -1090,7 +1090,7 @@ static struct blame_entry *blame_merge(struct blame_entry *list1,
+ 		*tail = p1;
+ 		do {
+ 			tail = &p1->next;
+-			if ((p1 = *tail) == NULL) {
++			if (!(p1 = *tail)) {
+ 				*tail = p2;
+ 				return list1;
+ 			}
 -- 
 2.35.1
 
