@@ -2,91 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A18C433F5
-	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 04:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD8B3C433F5
+	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 04:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382290AbiD3ETD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Apr 2022 00:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
+        id S240980AbiD3ExJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Apr 2022 00:53:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382204AbiD3ESU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Apr 2022 00:18:20 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D3AF6EB0F
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:45 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id y3so18665529ejo.12
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rZxbhKjEZ8Or6/polrg/mQ7xB1PUvAf+YLX2+y17z9c=;
-        b=G+pd/RyZWwIgkQXUAeVvknPgP0n9xqFr5QCXu49fXM26ZTTo2ARpvgThTx++sgQQAV
-         35Pld3h5DSDyWWQk5ZTZiiiAQICn7xLJTssHqD5VssOC9iwA/fgCXxwA7bW6rOKji+o/
-         rUqfsawbYTpgL1QN4XvfwjzNQN+vDruKrG72d/YGO5V8PACm1TT2/5AjfQKixztEn4OP
-         r1uY+vZquqUWytCZM5LjYbhapNsrXqYBkVxIQv1PzIgrrwSJeLJwOPIvyVlRWqxHMP00
-         iAVWmKpd9Nj17S+PV7J0cs38LbOCmManxTj8W8KtJ+4pV1JTqDsXKUrFFSc0Oal5wQA3
-         KGGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rZxbhKjEZ8Or6/polrg/mQ7xB1PUvAf+YLX2+y17z9c=;
-        b=yhkEo1S8mmiA1Am9SbU//InN3Bs+4ZX8tn8ChAbDEJkUg10ev1Pg9AJ7idT5eZWNld
-         rv8Ma6Ol8oMWLbPJvZRI5g48Sh0wJVDT+OitMKekwAkbpTEBIiuzh1P6R5txUnlzn/G8
-         iLdhfZ260/uxnmaWwN0aTmbQb7LD9UpQaRsV3uV04i6Fsdbltl+aDrVOGJSmplWaTxH5
-         F/uOskIZIS9kqdRzBmsaffFJbtG+Klu4xM3s1sItuISHsJiHinDa/yP2OB4NwANHITFs
-         02A8drbaLd8aulIoNEcMCgklsb/q8vUGjm8QafPzs79dvCyk8jQBoqh1JgzXK5TGC851
-         CAwQ==
-X-Gm-Message-State: AOAM530jNq8aOfs3rNgiiE25NaAf3qWGWNTBQmD/tDCLeEqs+DahEHxf
-        JaC1YuuuRXgCAlZ3LrIwvvOv1T2KFXI=
-X-Google-Smtp-Source: ABdhPJyfS6YM77Ws0UWhYNBLCZlMfeyIDn45MzosKMUnNpDGpfQqHt5NxzXdfjla4cVBhrc5pUjmDQ==
-X-Received: by 2002:a17:907:97cd:b0:6f3:aeb8:6002 with SMTP id js13-20020a17090797cd00b006f3aeb86002mr2272072ejc.530.1651292083889;
-        Fri, 29 Apr 2022 21:14:43 -0700 (PDT)
-Received: from fedora35.example.com ([151.27.248.133])
-        by smtp.gmail.com with ESMTPSA id og47-20020a1709071def00b006f3ef214e79sm1243586ejc.223.2022.04.29.21.14.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 21:14:43 -0700 (PDT)
-From:   Elia Pinto <gitter.spiros@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 22/23] combine-diff.c: Fix coding style
-Date:   Sat, 30 Apr 2022 04:14:05 +0000
-Message-Id: <20220430041406.164719-23-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220430041406.164719-1-gitter.spiros@gmail.com>
-References: <20220430041406.164719-1-gitter.spiros@gmail.com>
+        with ESMTP id S240931AbiD3ExJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Apr 2022 00:53:09 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E779DBAB84
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 21:49:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1651294181;
+        bh=MlrUaHm8y8Io4nMxfi8mnbThTz6S9kHXUid/zPtpFog=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=fdQmSYCAgvqFyPJsVdYXR9mhJVyUyxpUMcLDUVXk/DbybLnoQ6KFvgaMrR2+nKwJh
+         vyweIHaKveFt6MfJhqIsZmwRMzvKQBOU1v/ZeNLjxAZpdbLjGWYzWDsRHbEdBnaq+y
+         m7MsW1JNnCMiN4b8nG0lrXIgfoI9QF2kw2QO9M5g=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MNwjS-1nVIxp2IwK-00OKsx; Sat, 30
+ Apr 2022 06:49:41 +0200
+Date:   Sat, 30 Apr 2022 06:49:40 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "Mirochnik, Oleg V" <oleg.v.mirochnik@intel.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git reset --hard can leave modified files
+Message-ID: <20220430044940.6botq23lxmpqxbel@tb-raspi4>
+References: <CY5PR11MB6089858FD6FCC971D6F216DDC6FC9@CY5PR11MB6089.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CY5PR11MB6089858FD6FCC971D6F216DDC6FC9@CY5PR11MB6089.namprd11.prod.outlook.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:A/5FUNDbqNA4M/3yi3c65fC32PAxFpqK+VRuLhc7Z5GigC11kE3
+ YasUnA3y9LHxgs49Wu70PvdIjU1mPzZY/p5kuHOXmKvG5W0Lu2MFS1+Hpxm5FqAwKMlsF7F
+ Pr/L2y1RV26TVP1ryIFKMEfvUPVBLqOlPTryevF9f0kXQzS2dx+LrGdSH12gS0OoZAfxGkK
+ HmRdGuNSGXO//EXagX/Xw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zc1sXdvK9oQ=:ticTuGrKWyIks+lFazkLpS
+ U5YK1AsR5g8AGYsJ/Gh1l5zZntQZdedngJowLwNymYYAle+jsA5Uhe2l8qvCGN03lnFUBSh50
+ VzDtah892eJUidRUJJn8/Cc5AfL8W7fZsQUNfz9Mk9s/YCP2mYQ1RndW2ym6sQEu1kpBYH/pp
+ PYfRgH3ZTNYfH2hAU/2Ls454NX7jaa6iMqKMgE2BoUYhVlEsdPLA+KoEz6Y9qmfHKugZwSw9e
+ /AeOfvS55QzzgZdS4asZptQ3FY16/ZhKRkKT4ZVJvTSUzFbegoJXktvu+jcC+XJSokTtwynsK
+ cgmGVCd5jr0j1fhy3yuSq/MzxCdcz/HAwGGxitwF0iYyhV4OS8IIA1qXBCvreSoQtxHvtDnnl
+ lXixGWDtthqaWNKK83GjTRaq7vp/6v79XxIV0yc8KMT9q87Ozb4SpwX1yjbopegVk3qdARVCP
+ KuzYWmDkD56fKWHgjzM5hbNFuw3IiBelUvf9qcrPdnbISZbMqa7VW08G+wzYCFr6UfI7ockCU
+ mrP157iubuL8DuB0E7vfcfJpbtoQNHA8RW4iJIkgMBWIXxYLBd/qds6KJLvol11W2MR5V1z2d
+ DSKchscLPmt3+u0DY1SRyVbBNibu9H0RL2v0xcjPOWMWmSwMRCXupSJD86Rk+qVjUmnRDN19Z
+ Rl7IQgLrc30lCdu8f21/PbFu45WJYXHKPoZNZbXefLcI4JMlmRsIp1aFmiSPXQtMdr+JmMej6
+ iVrB1cOatQIwOZELbCiViOYjBTj8DqMbj0rTfY8QJMtWf8vT8o32MP5Zg8eV0gJVZbMtEdIeg
+ byd545ZAE0J44EYpIMNTamMUEWj52u6ODAMy7wJw5ZNamxckSZOsr0u9GiAfnqWKk8KLC3HmR
+ hhWApyROg5NA02yxKY6h7yTcOZSXbur03OgzlxbQYo28/v2169e1+8pv/3jT6Bul1S6Zz9iVm
+ SkEGEqssCJXI57oNadqUIcBIRMzYspNWGV9FLltpoZv6ohjiINvLO8zvCYbKgpiPsOEEz1VpN
+ YUP6QdAvfHi27PNhqZsJROPwSjRYAGs9FfIf9TdOZmjc47ha93nLJHm5RSLy9pmHroSAs4iil
+ 4D1ec+d5/AfAkU=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adhere to the git coding style which requires "Do not explicitly compute an
-integral value with constant 0 or '\ 0', or a pointer value with constant NULL."
+On Fri, Apr 29, 2022 at 03:50:59PM +0000, Mirochnik, Oleg V wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> git clone https://github.com/intel/llvm
+> cd llvm
+> git checkout git-bug-reproducer
+> git merge 38df0bd4fccd1067f3abe078d42e94c740748628 -m Merge1 --no-ff
+> git merge b6b8d34554a4d85ec064463b54a27e073c42beeb -m Merge2 --no-ff
+> git reset --hard HEAD~
+> git status --porcelain
+>
+> What did you expect to happen? (Expected behavior)
+> An empty output from the last command
+>
+> What happened instead? (Actual behavior)
+>  M clang-tools-extra/test/clang-apply-replacements/Inputs/crlf/crlf.cpp
+>  M clang-tools-extra/test/clang-apply-replacements/Inputs/crlf/crlf.cpp.=
+expected
+>
+> What's different between what you expected and what actually happened?
+> Obvious
+>
+> Anything else you want to add:
+> The issue is flaky. First found for v2.29.2
+> Multiple executions of the "git reset --hard HEAD" can help.
+> I ran a simple script to get some numbers: 100 attempts to get and fix t=
+he issue with up to 100 runs of the "git reset --hard HEAD"
+> Got max number of runs - 45. Most of the cases (63) required 5 runs. 5 c=
+ases did not get the issue at all.
+> V2.36.0 built from sources got similar results:
+>
+> The script:
+> (set -e; for a in {0..99}; do echo ++++++++++++++++ a=3D$a; git reset --=
+hard origin/git-bug-reproducer; git merge b2d4d67d5e34c345cb6a3cf725b2e26a=
+15a9dfe5 -m Merge1 --no-ff; git merge b6b8d34554a4d85ec064463b54a27e073c42=
+beeb -m Merge2 --no-ff; git reset --hard HEAD~; for b in {1..99}; do git s=
+tatus --porcelain | grep . || break; git reset --hard HEAD; done; echo +++=
++++++ b=3D$b; git status --porcelain | grep . || continue; echo FAILED $a;=
+ break; done) > ../logg 2>&1
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+>
+>
+> [System Info]
+> git version:
+> git version 2.36.0
+> cpu: x86_64
+> no commit associated with this build
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> uname: Linux 4.18.0-193.el8.x86_64 #1 SMP Fri Mar 27 14:35:58 UTC 2020 x=
+86_64
+> compiler info: gnuc: 4.4
+> libc info: glibc: 2.28
+> $SHELL (typically, interactive shell): /bin/bash
+>
+>
+> [Enabled Hooks]
+> not run from a git repository - no hooks to show
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- combine-diff.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+One quesion, out of interest:
+do you have core.autocrlf=3Dtrue ?
+What does
+git config core.autocrlf
+give you ?
 
-diff --git a/combine-diff.c b/combine-diff.c
-index d93782daeb..b724f02123 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -195,10 +195,10 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
- 	struct lline *baseend, *newend = NULL;
- 	int i, j, origbaselen = *lenbase;
- 
--	if (newline == NULL)
-+	if (!newline)
- 		return base;
- 
--	if (base == NULL) {
-+	if (!base) {
- 		*lenbase = lennew;
- 		return newline;
- 	}
--- 
-2.35.1
+
+
+The llvm repo itself has a lot of files commited with CRLF in the repo.
+
+You can see this by running
+git ls-files --eol | grep "^i/crlf"
+
+So my recommendation would be to set up a proper
+.gitatributes file in the root of the repo, run
+
+git add --renormalize .
+git add .gitattributes
+git commit -m "Normalize the line endings"
+
 
