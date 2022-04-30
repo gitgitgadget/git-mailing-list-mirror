@@ -2,168 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF0BDC433EF
-	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 10:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A889C433EF
+	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 13:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346530AbiD3Kge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Apr 2022 06:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45734 "EHLO
+        id S1377356AbiD3NXY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Apr 2022 09:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231492AbiD3Kgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Apr 2022 06:36:33 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F27D612B5
-        for <git@vger.kernel.org>; Sat, 30 Apr 2022 03:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1651314767;
-        bh=alMXa1H1fkQN82eso7y5wb9O8nf3B8Tb0W3L01iXbdo=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=L4CFpUJnB5HxaL5T+8xtg+v7DAzQBrBiGyGhMq5h8bU8S2xsOl2uAIjyXPg2Xm8oc
-         KnD0e3QdzDiiQZgjjFSxHGXTS4wG6kjGiUZT7e9X2e8aVyQfQFmDY57j2S3InZyIUF
-         861xGijtUN6YmOWmC4emT3K1JLQeccOG4XOIzD0U=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MGxQV-1ngdwr3uUd-00EDoW; Sat, 30
- Apr 2022 12:32:46 +0200
-Message-ID: <c36896a1-6247-123b-4fa3-b7eb24af1897@web.de>
-Date:   Sat, 30 Apr 2022 12:32:44 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: [PATCH] 2.36 format-patch regression fix
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Daniel Li <dan@danielyli.com>, git@vger.kernel.org
-References: <CAHVT7hW28jMcphDPhcUG==mycCWDaAt46wWo68=oTcSvebHWwg@mail.gmail.com>
- <xmqqzgk388tt.fsf@gitster.g> <xmqqo80j87g0.fsf_-_@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqo80j87g0.fsf_-_@gitster.g>
+        with ESMTP id S229947AbiD3NXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Apr 2022 09:23:22 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A13BA8895
+        for <git@vger.kernel.org>; Sat, 30 Apr 2022 06:20:01 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id n32-20020a05600c3ba000b00393ea7192faso6161837wms.2
+        for <git@vger.kernel.org>; Sat, 30 Apr 2022 06:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=1l3NyiCRdKfXubg1c8rqAXmITynAZwBmwYfMEZ7z1jg=;
+        b=hPqXC9JQnnaSu3qSz3aDJgZAlv5VRgJbEDuLEjpuD6gYeNEpB7VaDU8PntU+gOGvHM
+         yGtkCzjQlqEWh3o12hn0UY0b1LnyI5l8Syza+QqeOCCsPAGMVt3eZDJWt1D010qmkZhJ
+         NO4u/OU0D9UA/FwxI9h5r5FA+Wl+kiiAjbmJ3DWEARVZWzlaMivAwWBnnfMvVWx/JKyH
+         dV3SeJWi6BKwHgvudd+b0KPLUOiKcEzo4ZmqwsxayBjrN/QXHFTOFzsPcMxGNcf4mZYw
+         0tnjglBhBMbwG4iDWQMQTixQD0t9zJ0Xz4rg9jNwdZqO21M91784DkyUng/mNcDp+9Q5
+         IVkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1l3NyiCRdKfXubg1c8rqAXmITynAZwBmwYfMEZ7z1jg=;
+        b=WhL6EmsI6IyN1XJ1+3kTGQeX7ifnZIur0jWoY2bGuLit78NLplM3G7++YxLwO+nIKX
+         sxGsuftPQ+Yh0BbMV4Kf5WSujs/DHtG+sGeRZ4TMWxqXiTQ/OlCJR07/SZPpqqQu0ZuH
+         uY89DRHDbFsJnXnrWam1N7tBikjmzIVTWQKp8YKdQN0iZ85JLs0vaZtnua/ay54vK63n
+         6RWX05Mkt6kLjbOUXz2uNXjRJGNV6Oq5DISp8bbBnU3YkZqEjleQLoR4Bx2kP/U5ZN6b
+         qM56ubTxq2n4QaVK5wOct2Skuc9pX6hYTxjuiOdf4MtF26F11aFnSk+BnbTaxMeiEHSh
+         RMeg==
+X-Gm-Message-State: AOAM532s8YCUo7T0KqIdhRIXkN+pb6h3QT3ugDVdJP8pg8YJuawASZA8
+        /hCfk5m3PYITh2Ia6xhrtT2w06PxZpU=
+X-Google-Smtp-Source: ABdhPJyBR0Gj7T1Ak1G3olwNSVjM3MNCaQV25AM8yCKojUmuM63KZUsSr8Clzqr+xHqjrLDzUBcPcQ==
+X-Received: by 2002:a7b:ce0a:0:b0:394:41e:2517 with SMTP id m10-20020a7bce0a000000b00394041e2517mr7585973wmc.135.1651324799259;
+        Sat, 30 Apr 2022 06:19:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o8-20020adfca08000000b0020c5253d911sm2078085wrh.93.2022.04.30.06.19.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Apr 2022 06:19:57 -0700 (PDT)
+Message-Id: <pull.1227.git.1651324796892.gitgitgadget@gmail.com>
+From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 30 Apr 2022 13:19:56 +0000
+Subject: [PATCH] builtin/remote.c: teach `-v` to list filters for promisor
+ remotes
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:p3D2L5UQfbi1hTdctb04goQK7ddFZAT5DUM0bguiq61PgzW6YsH
- PKmrIaGirRbtlFVoZui32gWnUGMrQqkduWU98d2ZJpM17gbYZbf6AN5J7ilmxg0cHN+htA6
- 1zuVNEL93gJBePn3yQdviZXGY7nMVq5lrzSE2zYEY3m8grOVIP+RsOHLCFf7TLlUQQaj0xn
- rD31AZBWhmdG7Vnjb4S2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:25VGplwG4Ks=:k14H2nc/hvqYu95/n9ScgD
- jJxivkXEnVXFhsjdBblROLcYs0tmXfTyywVT2OpTGPzfudkEvCY0+Bk6pWZzcX9pPZlRUpRdQ
- j2W19B1J9G1Sj8dObABrxqewPBubBp053v8iQPgDzH547PGnI9rJzA2lCLJ//NvjHfxhkdEEs
- wTcgLAjUGdrL8LCz3SLlJOHF6Hg5p0e/ErspmNJycWsPjyYtrnaaCe3KRkJ6L+P03bINI16al
- XKKgQAIqWTpYjepF93hS3Q8ckgnB+2EHUPXqKAhnlFIcRxFYvWXoC4yQE//OF2SlAYUYY9lC7
- iyDj8ReOOIVFlc7IsyUwXvzmpXzyyucrjAyg5NarIrR01ZTauLa74j+i+h4d865VHTgK4kTPZ
- nrMAjcmJ9rZpeeAmMCR9CZq36H8f6PdccaStX/cyqUjaq2wlgv9SdmrFgGcvslYG1YFZpjAiv
- Llh3PaB0qNCe3lL+RkYuRHkjnHGRDGut/QDkzCK85+n7/+2RyKdLQCdvWekuElnbyBUpKuVA2
- SYi1y7gGFBC9kSw0yctI3rT8FdNkUkjWJTSaLkQ3hPbh5ljpSTOHr7Tkwai7GE7GHfZK6s1X4
- fTSBxEwBeI2JZsR8pJcBKsqyMyqC3ZFF2XTPc+helYkSBTs8PCL3u/H0UQXyJgkAks38cyh4w
- iJ0APQdV+2dwkJj7wtzG13hvC8Hby0Bd5vztRAsQeNjHWH3n/AX+gVt36gCGnq6FMgiGuweSv
- LbOnwPAvKIUeKNftgM79CrIkBXmdydEWTMgx3CjuRKP4Dk9tc4M4dbhe/vWW331xc9WoE17Oj
- X1m21mxoRX5B7I/8cKPc9+GwN7mGUxRgtDZcp0Ann9W5fja5OAuTThha+KVwQeDP/1vLSSTsE
- YSbHAKmU64a9+uVd34WmOIx5Skf2flXCEW6xe0cGOK+K6qg1aIvWAETrBM5cgy7YoLcZJcBpR
- BYRHQ1RiyhnhrHEgPaM44dZL9NDn9PhbfZHjZGDRHPWYE7KCAOR6j3Sv7dIuXFQA5c5bmGT9/
- 0mLMr5+rnyygxBrUXwl7g2qmdKcQp4MonDKUX9VwY/9qOTkHnnGcPDeDJ6bxl738GQ==
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-e900d494dc (diff: add an API for deferred freeing, 2021-02-11) added a
-way to allow reusing diffopts: the no_free bit.  244c27242f (diff.[ch]:
-have diff_free() call clear_pathspec(opts.pathspec), 2022-02-16) made
-that mechanism mandatory.
+From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-git format-patch only sets no_free when --output is given, causing it to
-forget pathspecs after the first commit.  Set no_free unconditionally
-instead.
+`git remote -v` (`--verbose`) lists down the names of remotes along with
+their urls. It would be beneficial for users to also specify the filter
+types for promisor remotes. Something like this -
 
-The existing test was unable to detect this breakage because it checks
-stderr for the absence of a certain string, but format-patch writes to
-stdout.  Also the test was not checking the case of one commit modifying
-multiple files and a pathspec limiting the diff.  Replace it with a more
-thorough one.
+	origin	remote-url (fetch) [blob:none]
+	origin	remote-url (push)
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/log.c           |  9 ++-------
- t/t4014-format-patch.sh | 33 +++++++++++++++++++++++++++++++--
- 2 files changed, 33 insertions(+), 9 deletions(-)
+Teach `git remote -v` to also specify the filters for promisor remotes.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index c211d66d1d..9acc130594 100644
-=2D-- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1883,6 +1883,7 @@ int cmd_format_patch(int argc, const char **argv, co=
-nst char *prefix)
- 	rev.diff =3D 1;
- 	rev.max_parents =3D 1;
- 	rev.diffopt.flags.recursive =3D 1;
-+	rev.diffopt.no_free =3D 1;
- 	rev.subject_prefix =3D fmt_patch_subject_prefix;
- 	memset(&s_r_opt, 0, sizeof(s_r_opt));
- 	s_r_opt.def =3D "HEAD";
-@@ -2008,13 +2009,7 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
+Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+---
+    builtin/remote.c: teach -v to list filters for promisor remotes
+    
+    Fixes #1211 [1]
+    
+    [1] https://github.com/gitgitgadget/git/issues/1211
 
- 	if (use_stdout) {
- 		setup_pager();
--	} else if (rev.diffopt.close_file) {
--		/*
--		 * The diff code parsed --output; it has already opened the
--		 * file, but we must instruct it not to close after each diff.
--		 */
--		rev.diffopt.no_free =3D 1;
--	} else {
-+	} else if (!rev.diffopt.close_file) {
- 		int saved;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1227%2FAbhra303%2Fpromisor_remote-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1227/Abhra303/promisor_remote-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1227
 
- 		if (!output_directory)
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 7dc5a5c736..fbec8ad2ef 100755
-=2D-- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -926,11 +926,40 @@ test_expect_success 'format-patch --numstat should p=
-roduce a patch' '
+ builtin/remote.c         |  8 ++++++++
+ t/t5616-partial-clone.sh | 11 +++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 5f4cde9d784..95e28b534f4 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1190,7 +1190,15 @@ static int get_one_entry(struct remote *remote, void *priv)
+ 	int i, url_nr;
+ 
+ 	if (remote->url_nr > 0) {
++		struct strbuf promisor_config = STRBUF_INIT;
++		const char *partial_clone_filter = NULL;
++
++		strbuf_addf(&promisor_config, "remote.%s.partialclonefilter", remote->name);
+ 		strbuf_addf(&url_buf, "%s (fetch)", remote->url[0]);
++		if (!git_config_get_string_tmp(promisor_config.buf, &partial_clone_filter))
++			strbuf_addf(&url_buf, " [%s]", partial_clone_filter);
++
++		strbuf_release(&promisor_config);
+ 		string_list_append(list, remote->name)->util =
+ 				strbuf_detach(&url_buf, NULL);
+ 	} else
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 4a3778d04a8..bf8f3644d3c 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -49,6 +49,17 @@ test_expect_success 'do partial clone 1' '
+ 	test "$(git -C pc1 config --local remote.origin.partialclonefilter)" = "blob:none"
  '
+ 
++test_expect_success 'filters for promisor remotes is listed by git remote -v' '
++	git clone --filter=blob:none "file://$(pwd)/srv.bare" pc2 &&
++	git -C pc2 remote -v >out &&
++	grep "[blob:none]" out &&
++
++	git -C pc2 config remote.origin.partialCloneFilter object:type=commit &&
++	git -C pc2 remote -v >out &&
++	grep "[object:type=commit]" out &&
++	rm -rf pc2
++'
++
+ test_expect_success 'verify that .promisor file contains refs fetched' '
+ 	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
+ 	test_line_count = 1 promisorlist &&
 
- test_expect_success 'format-patch -- <path>' '
--	git format-patch main..side -- file 2>error &&
--	! grep "Use .--" error
-+	rm -f *.patch &&
-+	git checkout -b pathspec main &&
-+
-+	echo file_a 1 >file_a &&
-+	echo file_b 1 >file_b &&
-+	git add file_a file_b &&
-+	git commit -m pathspec_initial &&
-+
-+	echo file_a 2 >>file_a &&
-+	git add file_a &&
-+	git commit -m pathspec_a &&
-+
-+	echo file_b 2 >>file_b &&
-+	git add file_b &&
-+	git commit -m pathspec_b &&
-+
-+	echo file_a 3 >>file_a &&
-+	echo file_b 3 >>file_b &&
-+	git add file_a file_b &&
-+	git commit -m pathspec_ab &&
-+
-+	cat >expect <<-\EOF &&
-+	0001-pathspec_initial.patch
-+	0002-pathspec_a.patch
-+	0003-pathspec_ab.patch
-+	EOF
-+
-+	git format-patch main..pathspec -- file_a >output &&
-+	test_cmp expect output &&
-+	! grep file_b *.patch
- '
-
- test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
-+	git checkout side &&
- 	git format-patch --ignore-if-in-upstream HEAD
- '
-
-=2D-
-2.35.3
-
+base-commit: 0f828332d5ac36fc63b7d8202652efa152809856
+-- 
+gitgitgadget
