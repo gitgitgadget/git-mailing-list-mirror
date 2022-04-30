@@ -2,265 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2AFFC433EF
-	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 01:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 063FFC433F5
+	for <git@archiver.kernel.org>; Sat, 30 Apr 2022 02:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378646AbiD3BRk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Apr 2022 21:17:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45222 "EHLO
+        id S1376801AbiD3CZl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Apr 2022 22:25:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237041AbiD3BRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Apr 2022 21:17:39 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C0EAD1CD8
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 18:14:19 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id f4so11437710iov.2
-        for <git@vger.kernel.org>; Fri, 29 Apr 2022 18:14:19 -0700 (PDT)
+        with ESMTP id S240220AbiD3CZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Apr 2022 22:25:38 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BB66E546
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 19:22:18 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id 125so11468879iov.10
+        for <git@vger.kernel.org>; Fri, 29 Apr 2022 19:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uAu3r6bvSHmUV3cm6nRQmv7P/bEYWnRTfihRSklGtdk=;
-        b=aEo1imJx1Oc79Cy8IjWh+C5XrF0pVEK6Q11+AcjmuYDjMDa3yBibhQRwioNsfCGzOm
-         quD+4aSAG6wJEnwQF3kqqCOevDWuFRcg0OI0kNDg/8CRlKbGXZLKZkq80785ftZUWHR6
-         DzpNslbP7UEVMKd623+juArG8SA6wuGucPSeN6p0m+L/biTW2FBdCnmLLbzhXv9k5SHh
-         FYvHYzdMXT/6pfgLKJ3hUinLV4hu45WaX4gkslHlWS4lqTE2za00r1bm4ILY3yktnE2h
-         dy83jq2LhJm39xPkj5n6BVC/f9JSjjG0FVrp04VICgKsEt6J240LkkZU+XQFaQxahljE
-         MB5Q==
+        d=danielyli-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=vakzOLOHGXw9AOcEV3+M88M/YntzMrtYrRKGxTg0MVs=;
+        b=gYEIVOz5IspnyLPGvvngxPROFFR1Dij/xlx3iYOGgz0VnGoE/bHWNjzJFK3HlGtukr
+         2aZzt9yl0IiyCYGwvD3QlQms+e5hc0JNL1S5BZoz6nIMNmXYrsRao5Al+xYkLPKJp6Y+
+         cz8j9P5Jrhort38QArfFGQeh7HaFtmoezS5uymgo43uKAvFC3Yv+T+DwbxTVNb99SckB
+         kJH/Dolp2vkRCkRBuv6hg72sFmA/3RFYhQUwr1e55NfzrT0ej7qiN1/sNZSMe1A7Apd2
+         QXaNcPcQI4FL7GRus+BRdorsM13LIwMKBCVzXPfWNuYgULcM/N4PleG0ZT6bfxlHzv8R
+         B/cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uAu3r6bvSHmUV3cm6nRQmv7P/bEYWnRTfihRSklGtdk=;
-        b=a1IG9PN+F4q0TXXkpovjofNy5ALL7pSMukwRmISkQoYMrU5xffCw12CUWht1ENxB8m
-         XbGl99IMu4tXvgV87lCHPZVm9x5zlXzA2Dss66NGRW7oLAfcCkRFvvw2NP5PR3wCANps
-         kGClal9yzk9zGNzD7+LeY97krfcFqTT/hyQOXi+SvH+cKaYVlBJ5u8R3EgWfU0LtXqP1
-         G3yDGjV1iauDXxnaU68fVw2yQ1luxOBk5XquYJWBP4egPNejEG/kzzeP73djQEjDx6jf
-         soJEmGo1f476TcMBSMNXcl1BZcjAMS9KeLUtEWTI9QVjWNh0Q3mOgcTZqjNHAUSWVmw4
-         83Uw==
-X-Gm-Message-State: AOAM531hdEUzWWIYofqVD1Utc3LzjIV7/N4Fpw/7KAoFOGONAQPJ4dHD
-        /MkbUqGNPEBZeFFT7VcZEZhI2FbagxAovOrz
-X-Google-Smtp-Source: ABdhPJxf6gd5gLb26yDwepoVLh0k5T6WT8HKHTfQmAlWSDwzTjLqaPduEytsdlDMFfftgYHUfeMpjg==
-X-Received: by 2002:a6b:3f05:0:b0:65a:431a:30cf with SMTP id m5-20020a6b3f05000000b0065a431a30cfmr789047ioa.117.1651281258446;
-        Fri, 29 Apr 2022 18:14:18 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y17-20020a6bd811000000b0065a47e16f5dsm238086iob.47.2022.04.29.18.14.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 18:14:17 -0700 (PDT)
-Date:   Fri, 29 Apr 2022 21:14:17 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        justin@justinsteven.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        rsbecker@nexbridge.com
-Subject: Re: Bare repositories in the working tree are a security risk
-Message-ID: <YmyNacEAiRl4zLW4@nand.local>
-References: <kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lwnfp7tbc.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Ylobp7sntKeWTLDX@nand.local>
- <kl6ly1zno328.fsf@chooglen-macbookpro.roam.corp.google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=vakzOLOHGXw9AOcEV3+M88M/YntzMrtYrRKGxTg0MVs=;
+        b=Wz6cvb1OfF25Gc2cXDv9MRMyEHZRKaGRTl79anVduqeIjQIKGD/7R3ItoRcKYFheKg
+         JHVxPkQKdFZyB21IdFovUd+F/bENO8gFtkorKIOR9cKl1oYllNc3lf9/3S0vkw4Sv7jJ
+         sqOlO7Wp5sGjmdv4VRaTOJZqWifY0UNdGVtTdrNjnfim0vQodmVl4jB9guWcPHpQfrez
+         jIqoiQCL2b9GN8v20P80Mo8GN+i2cn2cn16tUIQdnboU/lv8HTPtFfGR3DukpJsgJJar
+         bSSRPDjY/pYnO40YmJJbBejx2jNKO7p170GaKoq/bAxh+KUZzInUyr9yQJsApzbqWt2T
+         MAQw==
+X-Gm-Message-State: AOAM533xm7SHjHyN4KaLEY+iKUHBzrCsq/ee6FunvQSL5Ny8jO6PM2Vo
+        SQdJNr+o5aQVYgJlVrpBTWZCEx6mbx/6+osvj6IDA9nuL7ZdyQ==
+X-Google-Smtp-Source: ABdhPJx1m+/oRUfgDTMP0DmRpRxlCZFw1E7Y12gPhyvk+Rw361VqU75YaA8VZik64O8QiqK3WJ+T+zskjkakaG8YyNs=
+X-Received: by 2002:a6b:4912:0:b0:654:b214:de9e with SMTP id
+ u18-20020a6b4912000000b00654b214de9emr903926iob.182.1651285337671; Fri, 29
+ Apr 2022 19:22:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <kl6ly1zno328.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Daniel Li <dan@danielyli.com>
+Date:   Fri, 29 Apr 2022 19:22:06 -0700
+Message-ID: <CAHVT7hW28jMcphDPhcUG==mycCWDaAt46wWo68=oTcSvebHWwg@mail.gmail.com>
+Subject: Bug: `git show` honors path filters only for the first commit
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 29, 2022 at 04:57:51PM -0700, Glen Choo wrote:
-> Thanks so much for the response - it's really helpful, and there's a lot of food
-> for thought here.
->
-> (Sorry that I didn't get back to you sooner, there really is a lot of
-> great stuff here to think about :))
+git version: 2.36.0
+OS: macOS Monterey 12.2.1
+Installed via: homebrew
 
-No problem, I'm glad that you found it helpful (and likewise!).
+Bug summary: When `git show` is invoked with more than one commit, it
+only respects the `<path>` filters for the first commit.
 
-> So I'll leave behind this idea of "blocking embedding bare repos" for
-> now; I think there are more promising proposals in this thread.
+This is best illustrated with an example. In git's own source repo,
+invoke `git show --oneline --name-only ecc7c8841d 961b130d20
+d3115660b4` and observe the files these commits touch (the `--oneline
+--name-only` arguments are to make this example short; they're not
+relevant to the bug):
 
-I am in strong agreement with you here, but I would add an additional
-point which is that even if we encouraged submodules over embedded bare
-repos, or suggested storing bare repos on CDNs or what have you, there's
-significant momentum in the "do nothing" category which we have to take
-into account, too.
+    $ git show --oneline --numstat ecc7c8841d 961b130d20 d3115660b4
+    ecc7c8841d repo_read_index: add config to expect files outside
+sparse patterns
+    2       0       Documentation/config.txt
+    27      0       Documentation/config/sparse.txt
+    1       0       cache.h
+    14      0       config.c
+    1       0       environment.c
+    2       1       sparse-index.c
+    19      0       t/t1090-sparse-checkout-scope.sh
+    961b130d20 branch: add --recurse-submodules option for branch creation
+    3       0       Documentation/config/advice.txt
+    26      11      Documentation/config/submodule.txt
+    18      1       Documentation/git-branch.txt
+    1       0       advice.c
+    1       0       advice.h
+    141     0       branch.c
+    29      0       branch.h
+    38      6       builtin/branch.c
+    38      0       builtin/submodule--helper.c
+    61      0       submodule-config.c
+    34      0       submodule-config.h
+    9       2       submodule.c
+    3       0       submodule.h
+    292     0       t/t3207-branch-submodule.sh
+    d3115660b4 branch: add flags and config to inherit tracking
+    2       1       Documentation/config/branch.txt
+    17      7       Documentation/git-branch.txt
+    1       1       Documentation/git-checkout.txt
+    1       1       Documentation/git-switch.txt
+    42      7       branch.c
+    2       1       branch.h
+    4       2       builtin/branch.c
+    4       2       builtin/checkout.c
+    3       0       config.c
+    16      0       parse-options-cb.c
+    2       0       parse-options.h
+    10      1       t/t2017-checkout-orphan.sh
+    23      0       t/t2027-checkout-track.sh
+    28      0       t/t2060-switch.sh
+    33      0       t/t3200-branch.sh
+    17      0       t/t7201-co.sh
 
-So even if we made it as easy as possible to convert to, for e.g., using
-submodules, getting the millions (?) of repositories with embedded bare
-repositories in them that have accumulated over the years to actually
-change seems virtually impossible to me.
+Now invoke the same command but filtered on files under the
+`Documentation/` directory. Observe that this path is only respected
+for the first commit:
 
-> >>   1. Prevent checking out an embedded bare repo.
-> >>   2. Detect if the bare repo is embedded and refuse to work with it.
-> >>   3. Detect if the bare repo is embedded and do not read its config/hooks, but
-> >>      everything else still 'works'.
-> >>   4. Don't detect bare repos.
-> >>   5. Only detect bare repos that are named `.git` [1].
-> >>
-> >>   (I've responded with my thoughts on each of these approaches in-thread).
-> >
-> >   1. Likely disrupts too many legitimate workflows for us to adopt
-> >      without designing some way to declare an embedded bare repository
-> >      is "safe".
-> >   2. Ditto.
-> >   3. This seems the most promising approach so far. Similar to (1), I
-> >      would also want to make sure we provide an easy way to declare a
-> >      bare repository as "safe" in order to avoid permanently disrupting
-> >      valid workflows that have accumulated over the past >15 years.
-> >   4. Seems like this approach is too heavy-handed.
-> >   5. Ditto.
->
-> If I understand you correctly, it seems like we can ship any of the options from
-> 1.-3., provided there is an easy way to opt-in known, "safe" bare repos.
+    $ git show --oneline --numstat ecc7c8841d 961b130d20 d3115660b4 --
+Documentation
+    ecc7c8841d repo_read_index: add config to expect files outside
+sparse patterns
+    2       0       Documentation/config.txt
+    27      0       Documentation/config/sparse.txt
+    961b130d20 branch: add --recurse-submodules option for branch creation
+    3       0       Documentation/config/advice.txt
+    26      11      Documentation/config/submodule.txt
+    18      1       Documentation/git-branch.txt
+    1       0       advice.c
+    1       0       advice.h
+    141     0       branch.c
+    29      0       branch.h
+    38      6       builtin/branch.c
+    38      0       builtin/submodule--helper.c
+    61      0       submodule-config.c
+    34      0       submodule-config.h
+    9       2       submodule.c
+    3       0       submodule.h
+    292     0       t/t3207-branch-submodule.sh
+    d3115660b4 branch: add flags and config to inherit tracking
+    2       1       Documentation/config/branch.txt
+    17      7       Documentation/git-branch.txt
+    1       1       Documentation/git-checkout.txt
+    1       1       Documentation/git-switch.txt
+    42      7       branch.c
+    2       1       branch.h
+    4       2       builtin/branch.c
+    4       2       builtin/checkout.c
+    3       0       config.c
+    16      0       parse-options-cb.c
+    2       0       parse-options.h
+    10      1       t/t2017-checkout-orphan.sh
+    23      0       t/t2027-checkout-track.sh
+    28      0       t/t2060-switch.sh
+    33      0       t/t3200-branch.sh
+    17      0       t/t7201-co.sh
 
-After thinking about it some more, I think that we should probably try
-to ship (3) of the ones that we agree are viable, but more on that
-below...
+The expected output should be:
 
-> Yes, that's good to keep in mind. After mulling about it some more, I don't have
-> a clear direction on the fsck patch to be honest, I'll leave this alone for now
-> and I'll return to it if I get a clearer picture.
+    $ git show --oneline --numstat ecc7c8841d 961b130d20 d3115660b4 --
+Documentation
+    ecc7c8841d repo_read_index: add config to expect files outside
+sparse patterns
+    2       0       Documentation/config.txt
+    27      0       Documentation/config/sparse.txt
+    961b130d20 branch: add --recurse-submodules option for branch creation
+    3       0       Documentation/config/advice.txt
+    26      11      Documentation/config/submodule.txt
+    18      1       Documentation/git-branch.txt
+    d3115660b4 branch: add flags and config to inherit tracking
+    2       1       Documentation/config/branch.txt
+    17      7       Documentation/git-branch.txt
+    1       1       Documentation/git-checkout.txt
+    1       1       Documentation/git-switch.txt
 
-Sounds good. I'm happy to have ideas bounced off of me in the meantime ;).
+Bonus: Surprisingly, the `<path>` *is* respected for commits that
+don't have any files satisfying the `<path>`. For example, the
+following command correctly excludes commit `f36d4f8316` from the
+output because it doesn't contain any files under `Documentation/`:
 
-> I really like the `safe.embeddedRepo` idea, though I'm not convinced about
-> "respect only the safe parts of the embedded repo". I'll address the latter
-> first.
+    $ git show --oneline --numstat ecc7c8841d f36d4f8316 961b130d20
+d3115660b4 -- Documentation
+    ecc7c8841d repo_read_index: add config to expect files outside
+sparse patterns
+    2       0       Documentation/config.txt
+    27      0       Documentation/config/sparse.txt
+    961b130d20 branch: add --recurse-submodules option for branch creation
+    3       0       Documentation/config/advice.txt
+    26      11      Documentation/config/submodule.txt
+    18      1       Documentation/git-branch.txt
+    1       0       advice.c
+    1       0       advice.h
+    141     0       branch.c
+    29      0       branch.h
+    38      6       builtin/branch.c
+    38      0       builtin/submodule--helper.c
+    61      0       submodule-config.c
+    34      0       submodule-config.h
+    9       2       submodule.c
+    3       0       submodule.h
+    292     0       t/t3207-branch-submodule.sh
+    d3115660b4 branch: add flags and config to inherit tracking
+    2       1       Documentation/config/branch.txt
+    17      7       Documentation/git-branch.txt
+    1       1       Documentation/git-checkout.txt
+    1       1       Documentation/git-switch.txt
+    42      7       branch.c
+    2       1       branch.h
+    4       2       builtin/branch.c
+    4       2       builtin/checkout.c
+    3       0       config.c
+    16      0       parse-options-cb.c
+    2       0       parse-options.h
+    10      1       t/t2017-checkout-orphan.sh
+    23      0       t/t2027-checkout-track.sh
+    28      0       t/t2060-switch.sh
+    33      0       t/t3200-branch.sh
+    17      0       t/t7201-co.sh
 
-To be clear, I am advocating for "only the safe parts" insofar as "read
-repository extensions, core.repositoryFormatVersion and literally
-nothing else". I'm definitely not suggesting we go and enumerate every
-configurable value, determine whether it's safe or not, and then read
-only the safe ones. That approach seems doomed to fail, since no matter
-how clever we are, there will always be some slightly-cleverer attacker
-who can find a vector that we missed.
+Cheers,
 
-> I think brian m. carlson was coming from a similar direction, and the "respect
-> only the safe parts of the embedded repo" part of the proposal sounds similar to
-> his [1]. Both seem to be motivated by your second point - protect as many
-> workflows as we can. It's a good guiding principle, and I think it's a good
-> place to start from. That said, I'm not sure that this proposal serves these
-> users that well:
->
-> - Not reading the config might break the embedded bare repos in ways we don't
->   expect (e.g. not reading core.repositoryformatversion).
+Dan Li
 
-I'm hoping that if we include this among the list of essential- and
-known-safe config values that we'll mitigate this reasonably well.
+--
 
-> - Users who use embedded bare repos as test fixtures presumably want their tests
->   to mimic real-world scenarios as closely as possible; running in this
->   half-state of "use some parts of the repo but not others" doesn't seem a good
->   fit for that use case.
-
-It's hard to estimate how many of these tests will get broken. But I
-think the important trade-off to consider between "abort all Git
-operations in embedded bare repositories" and "warn, and avoid reading
-config/hooks" is how disruptive the change will be. The latter seems far
-less disruptive to me, so I would rather us favor that over an
-overly-conservative approach.
-
-> - This complicates the rules significantly for the user, who now has to figure
->   out which parts of the bare repo are respected and which are not.
-
-On this point I disagree, but I suspect we weren't on the same page
-about what "only the safe parts" meant when you wrote this. To be
-extra-extra clear, I don't think we should read some parts of config and
-not other, I mean we should read _only_ the above listed parts (the
-format version and extensions) and nothing else.
-
-> - I'm also of the opinion that changing the rules like this actually does affect
->   workflows, even if it doesn't break libgit2's tests.
->   - A diligent user still has to convince themselves that the tests are passing
->     for the right reasons, possibly adapting to the new rules (e.g. by
->     selectively enabling `safe.embeddedRepo` on the right test fixtures).
->   - A less diligent user might not even realize the change has happened and
->     end up with difficult to debug results somewhere down the line.
-
-I am sympathetic to what you're saying, but I (a) think there's still a
-tradeoff here that doesn't obviously point us in one direction or the
-other and (b) we should equally keep in mind other workflows besides
-just test fixtures. Does that change our thinking at all? I'm not sure.
-
-> I'm also not keen on it for other reasons:
->
-> - This expands the attack surface significantly, and I'm pessimistic that we
->   can maintain a list of the 'safe' parts of a bare repo. A lot of attention has
->   been focused on config/hooks, but I wouldn't be surprised if a creative
->   attacker finds some other avenue that we missed (maybe a buffer overflow
->   attack on a malicious index file?).
-
-I disagree, though again I suspect we were thinking of different thing
-when saying "only read safe parts of the config". Still though, I would
-argue that it limits the attack surface at the right level, which is to
-say any vector that we _did_ miss is something that we should just fix
-(e.g., preventing a buffer overflow) and not "oops, this config value
-does specify an executable".
-
-(We shouldn't have to deal with the index file, though, since a bare
-repository would not read the index, no?).
-
-> - I expect that this is also going to be really complex to implement and
->   maintain; instead of looking in a single gitdir for everything, we now look in
->   two gitdirs.
-
-I'd think that any approach we take that has different behavior
-for bare repositories depending on whether or not they are embedded has
-to do a similar check, so I don't think this adds significant
-complexity. Though not having written any code here yet, I'd take what I
-say with a huge grain of salt ;-).
-
-> What is promising is an allow-listing scheme like `safe.embeddedRepo` that can
-> be enabled on a per-repository basis. . Using an allowlist to selectively choose
-> *entire* embedded bare repos preserves the first and third attributes you
-> described, and it keeps things simple(-ish) for us and users. Breaking libgit2
-> and Git LFS this way is pretty harsh, but it will give us the confidence that we
-> have communicated the behavior change (and fix!) to the relevant users, rather
-> than having them find out the wrong way.
-
-Hmm. I still am pretty convicted that this (avoid working with unknown
-embedded bare repositories) is too harsh of a change to
-make the default. Replace "Breaking libgit2 and Git LFS" with "breaking
-many hundreds of thousands of repositories" [1], and I think that we
-would need to come up with something more lightweight.
-
-> Some extra thoughts (in case they're helpful):
->
-> - It's pretty important to get the format of `safe.embeddedRepo` 'correct', but
->   what 'correct' is is up for debate. For example, should we allow '*'? (I think
->   so, but I know some don't ;)).
-
-Stolee (cc'd) will have an interesting perspective here (at least as it
-relates to the 2.35.3 release), I think.
-
-> - There might be some unifying principles behind "allowlisting certain embedded
->   bare repos" and "disabling/enabling bare repo detection" that can guide our
->   fix.
->   - Perhaps we could allow different 'levels' of bare repo protection, like
->     'allow all bare repos', 'allow only non-embedded bare repos', 'allow no bare
->     repos', 'allow embedded bare repos but not their configs".
->
->   - If we do want to discourage embedded bare repos (and flip the default), this
->     kind of gradual roll-out might give projects a way to incrementally migrate.
-
-Ah! Are you suggesting a global configuration setting that controls the
-behavior of embedded bare repositories that _aren't_ listed in a
-repositories safe.embeddedRepo list?
-
-That sort of thing could work, though I'd argue strongly that any Git
-2.x.y release should make the default behavior "avoid config/hooks"
-as opposed to "refuse to work". We could consider changing that default
-in Git 3.x.y, but I feel strongly that any Git 2.x.y release should
-cater as much to existing workflows as possible without significantly
-compromising on attack surface area.
-
-Thanks,
-Taylor
-
-[1]: I have no idea if that figure is right, but I suspect it's in the
-right order of magnitude. I could look into it further, though.
+Daniel Li
+dan@danielyli.com
