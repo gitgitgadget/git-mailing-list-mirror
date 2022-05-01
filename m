@@ -2,162 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4683AC433F5
-	for <git@archiver.kernel.org>; Sun,  1 May 2022 15:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B91CC433F5
+	for <git@archiver.kernel.org>; Sun,  1 May 2022 16:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348505AbiEAQBG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 May 2022 12:01:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42016 "EHLO
+        id S1348926AbiEAQRu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 May 2022 12:17:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348485AbiEAQBF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 May 2022 12:01:05 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16C793700A
-        for <git@vger.kernel.org>; Sun,  1 May 2022 08:57:40 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id c23so10893367plo.0
-        for <git@vger.kernel.org>; Sun, 01 May 2022 08:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KtkAM1mtQZtg6yxf7Hix5rk5LNBhdg3+f+SPKyVKFFA=;
-        b=PZMf6o+QwjjTMUA5d6JopMhghKBg0Ynrde+7qoS+R+k1Kb0oieJySFzoxFPAXN97Nl
-         RKFWl4rGmcDX1uVm+GTe4viVAvNhiAsAaZB4pB0jVCsoM/LWORM33jUv2Ok0tHlEYUb3
-         +333n5aSQCS22TfrKHOdVck6i2DQ+rfqwl2RVbG6PhOuC4kjo25RNKjd+a1nlIKPEZwm
-         U5IW9MqkjdmyQzh253jOzE16tC75sQyH7ZwrZR5Y0NAVy2z4WCYXgI7E2/1xVP1nXYfr
-         N9JPYx3Ec6LRwztE5hclkj2quBfSOOv3eEMrkSnjCgPkUMb5BvfsN7GeNp+f2ciIqAB8
-         JVEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KtkAM1mtQZtg6yxf7Hix5rk5LNBhdg3+f+SPKyVKFFA=;
-        b=dWvHTvqCuOIFQNcpzrErHqs/vOkI/koLPO4FD1+KYJEag7vPHAv9z9Lr+aJsn/vs7e
-         ZqEmcf7h+dGbz0WbU8qq8EFuBBNFv/HcCTDWpxEjFUyDOlJqJ/HZJd/CE+0c1ktYJZxo
-         mfXlDT07elnITCbSCsXiAGeg5WuALcGTJQmWo1J9FIVmgqHGCje7FhzwgsEJZUgHWFK/
-         Tq9PO3wZzoPHjIIJhPT2IUrnFVhQis1U4bNmy4Kr8dpZ3HS3vkWxWLobqsgLFZQf9E/8
-         zUzCTQtNs42ogkhDRP5/qufMu+c7FI16nukeM6eYi6dZumb5a9z3edhxaXDLGm/MX3VU
-         7bgQ==
-X-Gm-Message-State: AOAM53043NISsc0lSJjsPmZoIYTda4F22X3T1NCVFzhxLaMHAIK8jPqF
-        5ksaurgCxoF+aQjTkmC+IbQ=
-X-Google-Smtp-Source: ABdhPJxNWD2ZoCaMwh5nrMWHDsbJ8OUdl82AbYe7z1plTkp+fhqIN8ysXzqw9uffbVFb4H1YJbB62Q==
-X-Received: by 2002:a17:90b:3851:b0:1dc:4f70:1cb with SMTP id nl17-20020a17090b385100b001dc4f7001cbmr3176049pjb.167.1651420659400;
-        Sun, 01 May 2022 08:57:39 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:8f:d15a:dfd:3071:bcbb:fbcc])
-        by smtp.gmail.com with ESMTPSA id q89-20020a17090a1b6200b001cd4989ff60sm13914935pjq.39.2022.05.01.08.57.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 01 May 2022 08:57:38 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: [PATCH] builtin/remote.c: teach `-v` to list filters for promisor remotes
-Date:   Sun,  1 May 2022 21:27:25 +0530
-Message-Id: <20220501155725.93866-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <xmqqczgy6zk5.fsf@gitster.g>
+        with ESMTP id S1348925AbiEAQRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 May 2022 12:17:46 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7ABC53A48
+        for <git@vger.kernel.org>; Sun,  1 May 2022 09:14:20 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9934A12D0C1;
+        Sun,  1 May 2022 12:14:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zfM56v8vLwUbCo9SLEtm1kQD2UsBY2UMqsFV/I
+        USHds=; b=yCTpJeO52VGFqnXTEGfJM/l+nicW+6jdmsYRArg9Lkl+er1/dj41r5
+        TdWEVbEFaLtB2ozzCM7zZn4IvmS13ZQH98EhcOvl5O8+3/a7izroxNxgBUo9nxiA
+        fiJowbDuAfgzPWw1hCTbrQTEuzfJt6R2a14tXw1ryUH9vW8+Wt4qk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9210B12D0C0;
+        Sun,  1 May 2022 12:14:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 01E1D12D0BF;
+        Sun,  1 May 2022 12:14:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: [PATCH] builtin/remote.c: teach `-v` to list filters for
+ promisor remotes
 References: <xmqqczgy6zk5.fsf@gitster.g>
+        <20220501155725.93866-1-chakrabortyabhradeep79@gmail.com>
+Date:   Sun, 01 May 2022 09:14:17 -0700
+In-Reply-To: <20220501155725.93866-1-chakrabortyabhradeep79@gmail.com>
+        (Abhradeep Chakraborty's message of "Sun, 1 May 2022 21:27:25 +0530")
+Message-ID: <xmqqfslt44di.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C11C691A-C969-11EC-A30D-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the late response.
+Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
 
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Three comments and a half on the code:
+> Sorry for the late response.
 >
->  - Is it likely that to new readers it would be obvious that what is
->    in the [square brackets] is the list-objects-filter used?  When we
->    want to add new kinds of information other than the URL and the
->    list-objects-filter, what is our plan to add them? 
-
-I do think that new readers can easily understand the meaning of the
-text inside the [square brackets]. These square brackets (with the
-list-objects-filter inside it) will be shown only if the remote is
-a promisor remote. So, users who don't use promisor remotes, will not
-be affected. Those who used the filters can only notice the change.
-They can easily understand it. In fact, I think it would give them an
-option to quickly check which are the promisor remotes and which are not.
-Though this change should be properly documented (which I forgot to
-add) so that they can be sure about it.
-
->  - The presentation order is <remote-name> then <direction> (fetch
->    or push) and then optionally <list-objects-filter>.
+> Junio C Hamano <gitster@pobox.com> wrote:
 >
->    (a) shouldn't the output format be described in the
->        doucmentation?
+>> Three comments and a half on the code:
+>>
+>>  - Is it likely that to new readers it would be obvious that what is
+>>    in the [square brackets] is the list-objects-filter used?  When we
+>>    want to add new kinds of information other than the URL and the
+>>    list-objects-filter, what is our plan to add them? 
 >
->    (b) does it make sense to append new information like this, or
->        is it more logical to keep the <direction> at the end?
+> I do think that new readers can easily understand the meaning of the
+> text inside the [square brackets]. These square brackets (with the
+> list-objects-filter inside it) will be shown only if the remote is
+> a promisor remote. So, users who don't use promisor remotes, will not
+> be affected. Those who used the filters can only notice the change.
+> They can easily understand it. In fact, I think it would give them an
+> option to quickly check which are the promisor remotes and which are not.
+> Though this change should be properly documented (which I forgot to
+> add) so that they can be sure about it.
 
-Yeah, it should be documented. I forgot it :|
-Will add it in the next version.
+You forgot to answer more important half of the question.  It would
+be easy for you to know what the string inside brackets means
+because you are so obsessed with the promisor remote to write this
+patch ;-) But when we need to add even more pieces of information in
+the future, will it stay so?  Can "[some-random-string]" easily be
+identified as a list-objects-filter by those who do not care
+particularly about promisor remotes (e.g. those who wanted to see
+the URL to tell multiple remote nicknames apart) when the line has
+even more piece of information in the future?
 
-I think it is better to keep <list-objects-filter> at the end.
-Because I think, people first want to check whether the remote
-is (fetch) or (push). After that, they might want to know about the
-filter. Another point is that <list-objects-filter> is optional
-(i.e. only for promisor remotes). It would not make sense to put an
-optional info in between two permanent info (in this case,
-<remote-name> and <direction>). It would be difficult for scripts
-which parse the output of `git remote -v` on the basis of string
-positions.
+At some point, we'd need to either (1) stop adding too many details
+to avoid cluttering the output line, or (2) start labeling each
+piece of information to make it easy for the readers to identify
+which one is which [*].  We need to ask ourselves why now is not
+that "some point" already.
 
->  - Now url_buf no longer contains the url of the remote, but it still
->    is called url_buf.  It is merely a "temporary string" now.  Is it
->    a good idea to either rename it, stop reusing the same thing for
->    different purposes, or do something else?
+    Side note: and the strategy to add new pieces of information
+    need to take the same approach between the two, and that is why
+    we need "what is the plan to add new pieces of information?"
+    answered.
 
-Hmm, this can be a subject for discussion. Yes, it is true that the
-name `url_buf` is not suitable for the additional info it contains ( in
-the proposed change). I did it to use less memory. I think renaming it
-to `remote_info_buf` or similar is a better idea.
+> (i.e. which are promisor remotes and which are not) one by one. If the
+> user try to search for the promisor remotes in the config file, he/she
+> have to go through the other configuration settings (irrelevant to him/her
+> at that time) to reach the `[remote]` section. Isn't it?
 
->  - By adding this unconditionally, we would break the scripts that
->    read the output from this command and expect there won't be extra
->    information after the <direction>.  It may be a good thing (they
->    are not prepared to see the list-objects-filter, and the breakage
->    may serve as a reminder that they need to update these scripts
->    when they see breakage), or it may be an irritating regression.
+Sorry, but the question does not make much sense to me.  Why is a
+piece of information you get from "git config" irrelevant if you get
+it in order to figure out what you want to know, i.e.  what promisor
+remote do we rely on?
 
-I agree. Frankly speaking, I have no counter argument for this. I can
-tell that the proposed change will be beneficial for the users who use
-promisor remotes along with other remotes. So, may be we can accept the
-short term consequences of it. What we can do is we can provide a proper
-documentation so that if anything bad happen to those scripts, devs can
-see the documentation and update the scripts accordingly.
-
-> But stepping back a bit.
+>> ...  If
+>> it makes sense to add the extra <list-objects-filtrer> information,
+>> that would mean that there are probably two remote nicknames that
+>> refer to the same URL (i.e. "remote -v" readers cannot tell them
+>> apart without extra information), but how likely is that, I wonder?
 >
-> Why do we want to give this in the "remote -v" output in the first
-> place?  When a reader really cares, they can ask "git config" for
-> this extra piece of information.  When you have more than one
-> remote, "git remote -v" that gives the URL is a good way to remind
-> which nickname you'd want to give to "git pull" or "git push".
+> I think, having a proper documentation about the new changes is the
+> answer to it.
 
-`remote -v` helps users to get the overall idea of the remotes. We can
-see how many remotes are there, which remote name corresponds to which
-url etc. That is we can get a summary of remotes. Having that said, does
-not it make sense to add the extra <list-objects-filter> here? Users
-can easily understand which are promisor remotes ( along with their
-filter type) and which are not. Of course, they can use git config for
-that. But it would be a tidious job to check the the type of remotes
-(i.e. which are promisor remotes and which are not) one by one. If the
-user try to search for the promisor remotes in the config file, he/she
-have to go through the other configuration settings (irrelevant to him/her
-at that time) to reach the `[remote]` section. Isn't it?
+The question is "what can readers achieve by having this extra
+information in 'remote -v' output".  Do you have to duck the
+question because you cannot answer in a simple sentence, and instead
+readers must read reams of documentation pages?  I doubt it would be
+that obscure.
 
-> ...  If
-> it makes sense to add the extra <list-objects-filtrer> information,
-> that would mean that there are probably two remote nicknames that
-> refer to the same URL (i.e. "remote -v" readers cannot tell them
-> apart without extra information), but how likely is that, I wonder?
+I wanted to like the patch, the changed text is simple enough, but
+quite honestly, the lack of clarity in the answers to the most basic
+"why do we want this? what is this good for? how does this help the
+users?" questions, I am not yet succeeding to do so.
 
-I think, having a proper documentation about the new changes is the
-answer to it.
-
-
-Thanks :)
+Thanks.
