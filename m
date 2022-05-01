@@ -2,87 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D352C433F5
-	for <git@archiver.kernel.org>; Sun,  1 May 2022 20:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D50DC433F5
+	for <git@archiver.kernel.org>; Sun,  1 May 2022 23:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354661AbiEAU4i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 May 2022 16:56:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38116 "EHLO
+        id S1355929AbiEAXRq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 May 2022 19:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238355AbiEAU4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 May 2022 16:56:33 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C070FFD2D
-        for <git@vger.kernel.org>; Sun,  1 May 2022 13:53:05 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id r9so11213374pjo.5
-        for <git@vger.kernel.org>; Sun, 01 May 2022 13:53:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=fIopAsmX7S0OYDWMPHFg4V0XAIlKPKCtWWq84vuFRzs=;
-        b=Q9p2yNxnN/1qwHUARKkfiezOwKelPRGhfQdxW8FTBlfMsecKXbi0VuIIfiW9XN1AoY
-         xJCMDxqFJ156WY5AcRmG9V6hheBx9tDw4a1NnzsOu0n7T/rxW1Nsja5rf1NUnNfrY2yv
-         e2QDw+mqhIAZsDRTdXJNviAgK3r6uba6f6EqAmrLCVEsC8xkHV6RuJEmNPO1Hct3/dzD
-         fTIz7r3punNQSr71fuz8cQNNA1AVemQ3XtM1EOf5qi0VIM/2a7empqvz6JShmWE9yRjv
-         /o3wbqD7UfGC2w20FHLtmuaXlkkNx8sVo4yZxVrwgH+TLVxdzzUtQetT0BemLbO8SpVQ
-         IFxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=fIopAsmX7S0OYDWMPHFg4V0XAIlKPKCtWWq84vuFRzs=;
-        b=6HHVVFq0oml7fEgG/HY+fWWOMqA2/+m2HNnWAlTidgtj6kJ6jxQbWAN5alkSvcLwVu
-         AJn1FoqF1WgtHT8JHZjPuyMQuVwrn1V8E6BKBiFcOhXiR6CHDOBMzKLa14mGsQFCXLH+
-         5qnEyP6h3eORKNY99fFwwS2I0oPVZ7Y5EokL1d+TNft7FGe9GNlIRrBbXyRBclbZRd1A
-         4hjDyZjVTXiUevEaLrwQAxwtT9vt/bOQCzAkzA1yc4ktRQU+iX8e6aYE1/utU8xTcdqk
-         /U/02UPLg1MRdV1vCADDX5bDBspDbwo5ICtnFlxA1KSs5T8PSXui+P4aMcm22xJ+QGNm
-         JXRA==
-X-Gm-Message-State: AOAM532iv3jCvBK/YB9AflEI6lgptG6FfpH8J/S5XuiOL/UjVb1D6/UT
-        8sjQ4rvRz9Bc9HwdMP+H/AakEmd1NEtBnobaB9cHPf2cyPM=
-X-Google-Smtp-Source: ABdhPJxTSgrw7udv907pXbQdZtu9qmQZi2rHLo9J7KICosBd68hLublPaP6ySZGQ2Ll8W/fZ3hj9E3hJhZH/BmIU7Lc=
-X-Received: by 2002:a17:90a:e7d1:b0:1da:30d0:9327 with SMTP id
- kb17-20020a17090ae7d100b001da30d09327mr9902021pjb.144.1651438384874; Sun, 01
- May 2022 13:53:04 -0700 (PDT)
+        with ESMTP id S232078AbiEAXRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 May 2022 19:17:44 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052381400A
+        for <git@vger.kernel.org>; Sun,  1 May 2022 16:14:17 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7E5D19CFD1;
+        Sun,  1 May 2022 19:14:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=43odZ5A1CHODHOGFqZVoJzHHQ6+8h87dbDFdAX
+        gBZTI=; b=tVo97TVrBMWsuec5jE6Dv1Wq3pVUz6ZyJM2mtw4H2HUzyDB/3yigSg
+        MaEsWchOgmrNkO1FYMMg94Ae39XhBgIcqOhfIxDlypPZDpfSJ1hqAtEmQx/gDj/Z
+        vc7QWbEiSbfiU5HfCynYhMmfL4WqXCCeFdbiFc+pWgFtugGKcMA1Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF2C419CFD0;
+        Sun,  1 May 2022 19:14:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4373419CFCF;
+        Sun,  1 May 2022 19:14:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH 01/23] contrib/coccinnelle: add equals-null.cocci
+References: <20220430041406.164719-1-gitter.spiros@gmail.com>
+        <20220430041406.164719-2-gitter.spiros@gmail.com>
+        <6e8cd958-b749-0a55-d8ae-ff249f06bd2f@iee.email>
+        <xmqqpmky70jb.fsf@gitster.g>
+        <a3e06290-052e-af36-4170-301e567d561d@iee.email>
+        <xmqqr15e5fm3.fsf@gitster.g> <xmqqmtg25cjw.fsf@gitster.g>
+        <CA+EOSBnx3-G02=zXGUrRuKPTDPBSYoBY=rERCORe8NtywEOiGg@mail.gmail.com>
+Date:   Sun, 01 May 2022 16:14:08 -0700
+In-Reply-To: <CA+EOSBnx3-G02=zXGUrRuKPTDPBSYoBY=rERCORe8NtywEOiGg@mail.gmail.com>
+        (Elia Pinto's message of "Sun, 1 May 2022 19:04:06 +0200")
+Message-ID: <xmqqbkwg4zi7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 1 May 2022 22:52:53 +0200
-Message-ID: <CAP8UFD08-6XpDSXYMShLFOiHfwbaqbus9axgmGG1+SAP9RgXOw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 86
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Bruno Brito <bruno@git-tower.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Brandon Pugh <bp@brandonpugh.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68469BF4-C9A4-11EC-90F6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-The 86th edition of Git Rev News is now published:
+>> What I found curious is that the result of applying these patches to
+>> v2.36.0 and running coccicheck reveals that we are not making the
+>> codebase clean wrt this new coccinelle rule.
+>>
+> It is possible, I did not use coccicheck to apply the semantic patch
+> (on next)  but i use a my script which I think is slightly more
+> efficient but perhaps it is not so correct. Anyway, given the
+> discussion that has taken place so far, what do you think is best for
+> me to do? Do a reroll (perhaps with only 2 patches in total ) or wait
+> for the "right" moment in the future as foreseen by the Documentation
+> and dedicate the time to more useful contributions for git? Thank you
+> all for the review
 
-  https://git.github.io/rev_news/2022/04/30/edition-86/
+Hmph.  Even if these patches were created by coccicheck we should
+sanity check them to make sure we are not applying some stupid and
+obvious mistakes, but if they were created by an ad-hoc tool, it
+means we would need to check a lot more careful than a patch that
+was done with a known tool with a clear rule (which is what running
+"make coccicheck" with your new rule file would have given us).
 
-Thanks a lot to Bruno Brito, Brandon Pugh, Carlo Marcelo Arenas Bel=C3=B3n
-and Philip Oakley who helped this month!
+To avoid unnecessary conflicts with in-flight topics, ideally, we
+perhaps could do something along this line:
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+ * Pick a recent stable point that is an ancestor of all topics in
+   flight.  Add the new coccinelle rule file, take "make coccicheck"
+   output and create a two-patch series like Philip suggested.  Queue
+   the result in a topic branch B.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
+ * For each topic in flight T, make a trial merge of T into B, and
+   examine "make coccicheck" output.  Any new breakages such a test
+   finds are new violations the topic T introduces.  Discard the
+   result of the trial merge, and add one commit to topic T that
+   corrects the violations the topic introduced, and send that fixup
+   to the author of the topic for consideration when the topic is
+   rerolled (or if the topic is in 'next', acked to be queued on
+   top).  Do not fix the violations that is corrected when branch B
+   was prepared above.
 
-  https://github.com/git/git.github.io/issues/577
+As I assumed that applying the patches in this series would create
+the branch B, and then I saw that the tip of 'seen' after merging
+this topic still needed to have a lot more fixes according to "make
+coccicheck", I got a (false) impression that there are too many new
+violations from topics in flight, which was the primary source of my
+negative reaction against potential code churn.  If we try the above
+exercise, perhaps there may not be too many topics that need fix-up
+beyond what we fix in the branch B, and if that is the case, I would
+not be so negative.
+
+Thanks.
+
+
+
