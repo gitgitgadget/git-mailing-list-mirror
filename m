@@ -2,158 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7B14C433F5
-	for <git@archiver.kernel.org>; Sun,  1 May 2022 09:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F6FAC433F5
+	for <git@archiver.kernel.org>; Sun,  1 May 2022 12:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244194AbiEAJjO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 May 2022 05:39:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57798 "EHLO
+        id S1346994AbiEAMcp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 May 2022 08:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244866AbiEAJjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 May 2022 05:39:04 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC3F1B79E
-        for <git@vger.kernel.org>; Sun,  1 May 2022 02:35:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1651397718;
-        bh=Qwvn/mGTRoWlcwjfNhTX4zGku4w65oLtLKUz5/Oc38w=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=qAj8e/0y4ajuAyu2H25Zx2Pk+TD4wlIKbUDv2a5ni6WH5CKJYWBLkPuAFLLdsyGxB
-         /3E9ziRs0V0iHvsdpCadvAE9osKZv7GZMKxp6K30gqzzzh6f3VgjMGMOurBUdWy1IA
-         W7bJKnNXcYqRkH78cAcHfS0OgnG8FHLGq3nf4/OI=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MZjET-1nNfY90ALv-00WuOX; Sun, 01
- May 2022 11:35:18 +0200
-Message-ID: <6af1aed1-ab13-ee0e-e979-d2f826ec776a@web.de>
-Date:   Sun, 1 May 2022 11:35:16 +0200
+        with ESMTP id S1346975AbiEAMcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 May 2022 08:32:43 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BAE5621E
+        for <git@vger.kernel.org>; Sun,  1 May 2022 05:29:17 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id b19so16416178wrh.11
+        for <git@vger.kernel.org>; Sun, 01 May 2022 05:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chrisdown.name; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=3GJqdEjMdOxiXsWHyj1lOPuCKzXHIlzbWVyf9MgN47Y=;
+        b=K26HMHClMhQXd/SAIod35mKebFmDLr5Ox1PIJItYFT+jpp3s9lhL0R924in5QtKooz
+         MvhZrv1Xu8PKyAYEG6W/SwPLZ9IG8j+PFEUOr5Qri+nxUrJkEExYpz0CGJ5SGG+oVdky
+         qrBAEZB+j2JaO2p0G/96OLuKJLIipl8UoTPFk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=3GJqdEjMdOxiXsWHyj1lOPuCKzXHIlzbWVyf9MgN47Y=;
+        b=hl204QTyY3nxOtptOGGjbzC4KjIC6dm8XX2QYQK9qawS2qpyDYe5XrwI2PjoJbxF1x
+         /WJEiM5Oj9sCWxSzP0ukHH4H1il3tUeWQlQlcuE1vnNAlUxcSWms2H1qQSVZ6ET0jR55
+         V1eKK64qkGv/6cItgzPFf+HS1vOPSnhpCH0Mqkc+pM8Zo/cw0prYBFiWyszBspdva9vx
+         TRjkdhpPGBiuByqtxfSMEZv8dJroxOQd7yP4eU7wC9N0Vjr2gaFJpUwTLKjW3USuLhch
+         O+Zyq/NWCF5hZ9CyVTasPvOeWRyq8HG0n9aPMZvPeiCXyZT/uYaklUQi8lMKnEJ8xfi0
+         LCFA==
+X-Gm-Message-State: AOAM533sb0xvhmmmf2BNjgEgpfFtacRb5TkOV+QxoWzlaXSBoRJS00BK
+        tNIBeL48zavPKjW6Uv8KLvBi/SAxLspASg==
+X-Google-Smtp-Source: ABdhPJwPRPkZRO9ZNkFxn9+/qUF/GRSzOs8h29Ysq7WZVr9lTh1f331qID8HIZ71NX34EP47ktnNjg==
+X-Received: by 2002:adf:fc47:0:b0:20a:d494:3ee5 with SMTP id e7-20020adffc47000000b0020ad4943ee5mr6381297wrs.696.1651408155770;
+        Sun, 01 May 2022 05:29:15 -0700 (PDT)
+Received: from localhost ([2a01:4b00:8432:8600:5ee4:2aff:fe50:f48d])
+        by smtp.gmail.com with ESMTPSA id l9-20020adfb109000000b0020c5253d8d7sm4435160wra.35.2022.05.01.05.29.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 May 2022 05:29:15 -0700 (PDT)
+Date:   Sun, 1 May 2022 13:29:14 +0100
+From:   Chris Down <chris@chrisdown.name>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] bisect--helper: warn if we are assuming an unlikely pathspec
+Message-ID: <Ym59GmfWpCSV9Bqr@chrisdown.name>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH] 2.36 format-patch regression fix
-Content-Language: en-US
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Daniel Li <dan@danielyli.com>, git@vger.kernel.org
-References: <CAHVT7hW28jMcphDPhcUG==mycCWDaAt46wWo68=oTcSvebHWwg@mail.gmail.com>
- <xmqqzgk388tt.fsf@gitster.g> <xmqqo80j87g0.fsf_-_@gitster.g>
- <c36896a1-6247-123b-4fa3-b7eb24af1897@web.de>
- <20220430163232.ytvwru4fnylow2jk@carlos-mbp.lan>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20220430163232.ytvwru4fnylow2jk@carlos-mbp.lan>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1G0xw5JlrznYha7jKnl40DwfnPAv7WjJPhk8ucBq9o14QwH1V7D
- fT4wW+jqUKA+onMdN17LNCnCdjCanYRi7y8SCS5vjasqK5ylNXf/m14URS2tnaTbEOBCW8n
- de23NaYusqmiGz996U6FXNuXVg8D2UuC1s2I5seuM6GowPKCjfkWkIaK+eeLNYQ+x9wUBFV
- MB+Uq+adoZdzg1aRPkfNg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ERxka9x0D8o=:us2R3IIbbGjDkU89qBcxbd
- V2kk8ut5Z+Dchwynbnae3E451rmTKE0NsJZB5gElUbiFvSRqD43aMbPcMY/wFcP+m0u3CkKL/
- OSWxSv0w3bZ7w3IbqKYavw6DwgqOIDEMlhSoaIf/8XqQeQ+C7UQS/Evb4zMsp+AcoCEaKqUYA
- lPfqQXd3g9E1JXojnzdLFqPDtRqz9fzhSpmtu+kyjkzeJZLGMALMjK4K8UCctgCBRV5Wln9e3
- C3I3FVI2zxqb6a2bzXoo+kpeRbcIsAQfn7MvmJZ37d8EvX+LuAPQTggNRJZGFXsz+Orpvjeb1
- q6D86lI5mzrlweGo1DZTIv/YcRYaZ7LEgWJpJLWs9i8CkPgcaCLEOXWugvTpD7kWJokHCKa2y
- k2Rtq4dMQwjh6uPzS08xUN+7cwpOYV0iBmowUSVXC6XdHJNKN7qliy6jpDqQO8hx7eeXZ8zBT
- Xq1NMsIz2y+NWAe6XZ+VSAfXAiKSFxly4yDKX+grZe1tSCbnL9o+jttkEfslgv5lb53CXuqkY
- O72o/vZwcJxVoqLvT2lta9ddPazG7P7xmgmvffsAPJ4bVOv8g6JiJjffiiAvLJI3O2m0Oiq0Y
- 7Z+10kIiBFMZZ0XiIPd2VOjLO37iLw+3i82IQFygPYcb/0ErYuIF9E8X46ZZdQNu/uQBQZ7xb
- bypdmmUmJHJ/13FTBl4d+O406Qu22oqyHz0/CQxKlrOrzLQuwoTRCBYS7Myn8VoOrZoIlPElH
- LS2l2P+BYh3chsZ1L8ezpY9pqsb4DIwkXnV7yk4jfDuaKRKiJIfhZRWJnQdnvntYSvzybWqdk
- RUltVn4YN/IOXLZ7MsAmRqp/r8DsJKtsNLMrchhsY8Xl26eYa6vPNpI0e04Ao1ZRHpfQGtc9e
- Agl5xbQ6VMggF+6UGf6mULSwRvmi/8ISBeI9BpHNxUjGP3+W8tBoaUNXml0d0zBkPZzLsmje1
- Bm2R88CUVMpH6Nzy1rTMVANcDWYi4TTHW2AeYLTygFYTR8eMIAzOc/ryY+RHgNwiNDF4bl8yE
- PS6gR44YMQPEvypUKnC6+co2M9RBcfvaFO85x98TazJVUHcaK9g+/Npzsq/6bDvKRjAV81Pj2
- jT0GFFpVccMO+Y=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/2.2.3 (d9199322) (2022-04-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.04.22 um 18:32 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
-> On Sat, Apr 30, 2022 at 12:32:44PM +0200, Ren=C3=A9 Scharfe wrote:
->> e900d494dc (diff: add an API for deferred freeing, 2021-02-11) added a
->> way to allow reusing diffopts: the no_free bit.  244c27242f (diff.[ch]:
->> have diff_free() call clear_pathspec(opts.pathspec), 2022-02-16) made
->> that mechanism mandatory.
->>
->> git format-patch only sets no_free when --output is given, causing it t=
-o
->> forget pathspecs after the first commit.  Set no_free unconditionally
->> instead.
->
-> I remember when I saw the first commit long ago, and thought; well that =
-is
-> very round about way to reintroduce the UNLEAK removal that might have m=
-ade
-> it visible.
->
-> Haven't looked too closely, but considering that we were warned[1] the
-> interface was hard to use and might cause problems later and it did.
->
-> wouldn't it a better and more secure solution to UNLEAK and remove all t=
-his
-> code, at least until it could be refactored cleanly, of course?
+Commit 73c6de06aff8 ("bisect: don't use invalid oid as rev when
+starting") changes the behaviour to consider invalid oids as pathspecs
+again, as in the old shell implementation.
 
-Silently self-destructing pathspecs are a safety hazard indeed.
+While that behaviour may be desirable, it can also cause confusion. For
+example, while bisecting in a particular repo I encountered this:
 
-no_free also affects freeing ignore_regex and parseopts, and even
-closing the output file.  I don't know about the file, but leaking the
-first two is harmless.  So removing the flag is safe as long as we make
-sure the output file is closed as needed.
+    $ git bisect start d93ff48803f0 v6.3
+    $
 
-A safe diff_free() would only be called a particular diffopt once, when
-it's no longer needed.  It could check for reuse by setting a flag the
-first time, like in the patch below.  1426 tests in 163 test scripts
-fail for me with it applied on top of the regression fixes from this
-thread.
+...which led to me sitting for a few moments, wondering why there's no
+printout stating the first rev to check.
 
-Removing the diff_free() calls from diff.c::diff_flush() and
-log-tree.c::log_tree_commit() reduces this to just one or two in t7527
-(seems to be flaky).  Perhaps this is still salvageable?
+It turns out that the tag was actually "6.3", not "v6.3", and thus the
+bisect was still silently started with only a bad rev, because
+d93ff48803f0 was a valid oid and "v6.3" was silently considered to be a
+pathspec.
 
->
-> Carlo
->
-> [1] https://lore.kernel.org/git/YCUFNVj7qlt9wzlX@coredump.intra.peff.net=
-/
+While this behaviour may be desirable, it can be confusing, especially
+with different repo conventions either using or not using "v" before
+release names, or when a branch name or tag is simply misspelled on the
+command line.
 
+In order to avoid this, emit a warning when we are assuming an argument
+is a pathspec, but no such path exists in the checkout and this doesn't
+look like a pathspec according to looks_like_pathspec:
 
-=2D--
- diff.c | 3 +++
- diff.h | 1 +
- 2 files changed, 4 insertions(+)
+    $ git bisect start d93ff48803f0 v6.3
+    warning: assuming 'v6.3' is a path
+    $
 
-diff --git a/diff.c b/diff.c
-index ef7159968b..01296829b5 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -6458,10 +6458,13 @@ void diff_free(struct diff_options *options)
- 	if (options->no_free)
- 		return;
+If the filename is after the double dash, assume the user knows what
+they're doing, just like with other git commands.
 
-+	if (options->is_dead)
-+		BUG("double diff_free() on %p", (void *)options);
- 	diff_free_file(options);
- 	diff_free_ignore_regex(options);
- 	clear_pathspec(&options->pathspec);
- 	FREE_AND_NULL(options->parseopts);
-+	options->is_dead =3D 1;
- }
+Signed-off-by: Chris Down <chris@chrisdown.name>
+---
+ builtin/bisect--helper.c    |  4 ++++
+ cache.h                     |  1 +
+ setup.c                     |  2 +-
+ t/t6030-bisect-porcelain.sh | 18 ++++++++++++++++++
+ 4 files changed, 24 insertions(+), 1 deletion(-)
 
- void diff_flush(struct diff_options *options)
-diff --git a/diff.h b/diff.h
-index 8ae18e5ab1..c31d32ba19 100644
-=2D-- a/diff.h
-+++ b/diff.h
-@@ -398,6 +398,7 @@ struct diff_options {
- 	struct strmap *additional_path_headers;
-
- 	int no_free;
-+	int is_dead;
- };
-
- unsigned diff_filter_bit(char status);
-=2D-
-2.35.3
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 8b2b259ff0..30a73e2a7d 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -682,6 +682,10 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, const char **a
+ 			die(_("'%s' does not appear to be a valid "
+ 			      "revision"), arg);
+ 		} else {
++			if (!has_double_dash &&
++			    !looks_like_pathspec(arg) &&
++			    !check_filename(NULL, arg))
++				warning(_("assuming '%s' is a path"), arg);
+ 			break;
+ 		}
+ 	}
+diff --git a/cache.h b/cache.h
+index 6226f6a8a5..bae92859a3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -648,6 +648,7 @@ void verify_filename(const char *prefix,
+ 		     int diagnose_misspelt_rev);
+ void verify_non_filename(const char *prefix, const char *name);
+ int path_inside_repo(const char *prefix, const char *path);
++int looks_like_pathspec(const char *arg);
+ 
+ #define INIT_DB_QUIET 0x0001
+ #define INIT_DB_EXIST_OK 0x0002
+diff --git a/setup.c b/setup.c
+index a7b36f3ffb..bafbfb0d5e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -208,7 +208,7 @@ static void NORETURN die_verify_filename(struct repository *r,
+  * but which look sufficiently like pathspecs that we'll consider
+  * them such for the purposes of rev/pathspec DWIM parsing.
+  */
+-static int looks_like_pathspec(const char *arg)
++int looks_like_pathspec(const char *arg)
+ {
+ 	const char *p;
+ 	int escaped = 0;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 5382e5d216..2ea50f4ba4 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -1025,4 +1025,22 @@ test_expect_success 'bisect visualize with a filename with dash and space' '
+ 	git bisect visualize -p -- "-hello 2"
+ '
+ 
++test_expect_success 'bisect warning on implicit enoent pathspec' '
++	git bisect reset &&
++	git bisect start "$HASH4" doesnotexist 2>output &&
++	grep -F "assuming '\''doesnotexist'\'' is a path" output
++'
++
++test_expect_success 'bisect fatal on implicit enoent pathspec with dash' '
++	git bisect reset &&
++	test_must_fail git bisect start "$HASH4" doesnotexist -- dne2 2>output &&
++	grep -F "'\''doesnotexist'\'' does not appear to be a valid revision" output
++'
++
++test_expect_success 'bisect no warning on explicit enoent pathspec' '
++	git bisect reset &&
++	git bisect start "$HASH4" -- doesnotexist 2>output &&
++	[ -z "$(cat output)" ]
++'
++
+ test_done
+-- 
+2.36.0
 
