@@ -2,116 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FEDC433F5
-	for <git@archiver.kernel.org>; Mon,  2 May 2022 22:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA339C433F5
+	for <git@archiver.kernel.org>; Mon,  2 May 2022 23:08:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232339AbiEBXCL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 May 2022 19:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52056 "EHLO
+        id S230499AbiEBXLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 May 2022 19:11:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiEBXCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 May 2022 19:02:10 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E6E28993
-        for <git@vger.kernel.org>; Mon,  2 May 2022 15:58:33 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 267A21097DF;
-        Mon,  2 May 2022 18:58:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=23aoe2tWJmWEZhySpYdqQ+YAy0b4cTCG5bv6es
-        /RMME=; b=AJ2V9ZeOdqQqUg4ZBTpGWU955BJvYTqf/h12gMvkOqU2eF1B1tVNo4
-        bJGy+4wSDjBSMSWkSEwWhElYO/LOLgKRLiqVlTIITw8EP//Zuh6U23//Upzh8Bpj
-        ZK34KkIkL3NUsJ4dW0+XPcnYP5vKMKx++vvXFIZ+a1BQdJSlPjHwU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D1E51097DE;
-        Mon,  2 May 2022 18:58:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7F3801097DD;
-        Mon,  2 May 2022 18:58:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com, me@ttaylorr.com
-Subject: Re: [PATCH v4 2/8] fetch-pack: move fetch default settings
-References: <20220328191112.3092139-1-calvinwan@google.com>
-        <20220502170904.2770649-1-calvinwan@google.com>
-        <20220502170904.2770649-3-calvinwan@google.com>
-Date:   Mon, 02 May 2022 15:58:30 -0700
-In-Reply-To: <20220502170904.2770649-3-calvinwan@google.com> (Calvin Wan's
-        message of "Mon, 2 May 2022 17:08:58 +0000")
-Message-ID: <xmqq8rrjv8x5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229556AbiEBXLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 May 2022 19:11:35 -0400
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F3C82ED65
+        for <git@vger.kernel.org>; Mon,  2 May 2022 16:08:05 -0700 (PDT)
+Received: by mail-ua1-x936.google.com with SMTP id ay15so3375862uab.9
+        for <git@vger.kernel.org>; Mon, 02 May 2022 16:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cX89tGhnywbkLFdbGAJSePjilzzsxv6u+gRf8BbwYMk=;
+        b=KILn4E/NZivOrasPFtWzDq8gk39tlCg0djuer5KHOyJ/keJAIKTFK5GsiBmEFY6tpZ
+         3p8ABV+4nJZGHRT/KxG3cpjguJiHsDrE0x65vXX93qjBEZQXWRmarxuMz5+/T+KGTW6N
+         0cfrpDCbeTwu3StQYuSAUlEALYE3WY8Kn6fJ88TxXNYHQTyy1+8eadAZJC3Q+TVIqMZO
+         Bxa96Lk4HIczxj8L6X02EzIR0DZTYfMoCh3eUchwo0GfSR/xbp2bxCs9MgFNeXIZKCr3
+         9ULCpGthrbYEAKzmzxDuvbk2uRqhv2h+yvP/pigUg6uQ1A95qu9P87RQOT3VILWmKsvP
+         ZF/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cX89tGhnywbkLFdbGAJSePjilzzsxv6u+gRf8BbwYMk=;
+        b=Vt8ostntcfEtx9WsVp3OHDeJbt9Yanl+PezveOhoVfpIoJ4pXauglv2fWaXPwyZVdn
+         m1BWylhpJmehakF3pPeeSCVklehIMs5BIF1slEsAmzy82XSt4X1RjsVacFY+F0kbFjtX
+         399F9RYfS4bxIWrM5wkhopVKz+p+UKnGGJCEGRv5RrmP56VERm1dcfANioyO0TuLtOds
+         5bP5gkaToy9+7l4RP7sdRyo/tybAcgBAgk0URty0AYKTYMVGL0w1YF3++gAzWxP4HfJQ
+         PRQ48cP1l08k16EoQu8Bf9xQTXvjMQPm2ccgvHIqXaKRpg7l/NkD16flG30SdtiYj/Jw
+         d4yQ==
+X-Gm-Message-State: AOAM533FXCKiraA65HBkxZFSQ5Ta8WoRWOiacVm2/y1SWggkbYULRWTR
+        GBSRjI4aJFXS/IdP0AEp5LWPRlo4g3tvS6rwDN0=
+X-Google-Smtp-Source: ABdhPJxBp9OkKHlXkVyBBOC51Ga4jfrKMkS9EkUsZB3iiI7NYPbR1a7ej2O7P4ewDMfyedlNVgo5plD3D34ACTI6oJ0=
+X-Received: by 2002:a9f:3084:0:b0:360:1fa1:6aca with SMTP id
+ j4-20020a9f3084000000b003601fa16acamr3716867uab.57.1651532884152; Mon, 02 May
+ 2022 16:08:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 632650FC-CA6B-11EC-8716-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20220428105852.94449-1-carenas@gmail.com> <20220502183920.88982-1-carenas@gmail.com>
+ <20220502183920.88982-2-carenas@gmail.com> <xmqqy1zjwrbu.fsf@gitster.g>
+In-Reply-To: <xmqqy1zjwrbu.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 2 May 2022 16:07:53 -0700
+Message-ID: <CAPUEspj9YPFttgf+W604PAUuabDCSOOaOdik9Z+cPbQRDk7e2g@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
-
-> When the state machine in do_fetch_pack_v2() is in FETCH_CHECK_LOCAL, we
-> set a few v2-specific defaults. It will be helpful for a future patch to
-> have these defaults set if the initial state is not FETCH_CHECK_LOCAL.
-
-
-> This is a safe change since the initial state is currently always
-> FETCH_CHECK_LOCAL, so we're guaranteed to hit that code whether it's in
-> the state machine or not.
-
-What does "it" (which supposed to be able to be in the state machine
-and also not to be in the state matchine) in the last sentence refer
-to?
-
+On Mon, May 2, 2022 at 2:35 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> ---
-
-Missing sign-off.
-
-The patch looks correct and I agree that this is a benign no-op
-because the initial value of state is FETCH_CHECK_LOCAL (i.e. the
-block of code moved here will execute pretty much as the first
-thing, and the relative order between that block and sorting of ref
-list should not matter).  I just didn't understand the explanation
-given by the patch why it is safe.
-
-Thanks.
-
->  fetch-pack.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 >
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index e06125c90a..45473b4602 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1610,18 +1610,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
->  		reader.me = "fetch-pack";
->  	}
->  
-> +	/* v2 supports these by default */
-> +	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
-> +	use_sideband = 2;
-> +	if (args->depth > 0 || args->deepen_since || args->deepen_not)
-> +		args->deepen = 1;
-> +
->  	while (state != FETCH_DONE) {
->  		switch (state) {
->  		case FETCH_CHECK_LOCAL:
->  			sort_ref_list(&ref, ref_compare_name);
->  			QSORT(sought, nr_sought, cmp_ref_by_name);
->  
-> -			/* v2 supports these by default */
-> -			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
-> -			use_sideband = 2;
-> -			if (args->depth > 0 || args->deepen_since || args->deepen_not)
-> -				args->deepen = 1;
-> -
->  			/* Filter 'ref' by 'sought' and those that aren't local */
->  			mark_complete_and_common_ref(negotiator, args, &ref);
->  			filter_refs(args, &ref, sought, nr_sought);
+> > +     command -v git >u &&
+> > +     sudo command -v git >r &&
+> > +     test_cmp u r
+>
+> While this is not as thorough as the "make sure we see the
+> environment intact" that I alluded to during the previous review, it
+> at least makes sure PATH (which our test framework tweaks) is
+> propagated down to "sudo" environment intact, which should be good
+> enough to run just "init" and "status".  Keeping things simple is
+> good.
+
+Sorry, I should have mentioned that explicitly in my response.
+
+That is not possible.  sudo by design will try to minimize the
+environment that root is running on, so the only way to make sure git
+still works as expected there, is to add to that environment
+everything else we might need.
+
+That is why I have to invent that ugly looking "env" file and the
+function to import variables with it, and I was assuming that for it
+to be useful in the end we might need to maybe import everything
+"GIT*" too, but obviously I didn't want to do that now, and that is
+why I only did the branch name (more as an example, than as something
+that was strictly needed) since you mentioned that in your review and
+I could see how it was related to `git init` being added to the tests
+in the next commit.
+
+Guess I botched it in my refactoring anyway, since it also makes sense
+for it to be added in the next commit together with `git init`instead
+of here.
+
+> may have to exclude this from tests that require specialized
+> environment like valgrind tests, but that is not of immediate
+> concern.
+
+I didn't test valgrind, but I would assume it is probably broken now,
+as well as anything else that relies on extra environmental things.
+
+Carlo
