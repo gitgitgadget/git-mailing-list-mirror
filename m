@@ -2,142 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7D4C433F5
-	for <git@archiver.kernel.org>; Mon,  2 May 2022 14:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CA30C433EF
+	for <git@archiver.kernel.org>; Mon,  2 May 2022 14:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238664AbiEBO6Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 May 2022 10:58:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
+        id S1385625AbiEBPAm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 May 2022 11:00:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238434AbiEBO6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 May 2022 10:58:14 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C580DECE
-        for <git@vger.kernel.org>; Mon,  2 May 2022 07:54:45 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-2f7bb893309so150182437b3.12
-        for <git@vger.kernel.org>; Mon, 02 May 2022 07:54:45 -0700 (PDT)
+        with ESMTP id S1385619AbiEBPAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 May 2022 11:00:41 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F978DFCB
+        for <git@vger.kernel.org>; Mon,  2 May 2022 07:57:12 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id cu23-20020a17090afa9700b001d98d8e53b7so146953pjb.0
+        for <git@vger.kernel.org>; Mon, 02 May 2022 07:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aquatic.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c+rqx4d+WDgIJjBcFP8WX7C/8Bf3BQd16V6oPnzhKF8=;
-        b=a92bB+ZmNeHKX4WGr0JNOP52dCtRSi0wWcR4lHUDCqTzh+hNhjnWeU4J/L1odx8F/B
-         8xkW3vHmPcyplhY4jSamQX5CfjYUfuk5KIi4wlTUxRLlIqmvIvQfj8jogVpvwKjmh71O
-         e2M7HXFBwcqt3bJ86kOUC+/yT84sv9mQRDN46NNCTmprPyipjYdNsrRIWeqbBamUvB7y
-         vctJoxbuoha/3zPJ4duApGUpqmxAOQdJw8tiOk3cBDeYrEOjfqKUsYp5amHs50ZFHf8j
-         4k950B8YiGnyAvI1VACFJkHzGpDR2Z04AjnV3w38d6ReVqtkmPVpj4owNLMjnSIqeaW2
-         dNCA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LnKxQTXlAzzQEyOAVYQUp5r7nxc6vZnAXY6N/5b4fWk=;
+        b=grxHmCBpW/Wa6ueP2UWNKvLNfPRYm0fXh0rRpJdhaqZmywQH5TeG0JhWyBabpYrLeY
+         P1M6PqGtD71sMG282RHgNIDohAq8ALQSdcnzOG1tpETF1EH1b1mfsl/At5HjUWdSU6iM
+         wpGxy99UKO0uHX6RT9GXhpSR6K+wSFWwZYq8VB1GpzifjkyxviNflLMOmiaTuqp6uSAZ
+         BJXJEiL33XfKZz+36TP4AhZo7Ejy+kth8LYiMqpv7M+ctHVG8+XjdEfFe6Q8gcSrMRja
+         zNXvDgVbQFnEphE/zmghruZUTdBFzornjRlzt4vwM5xWh0+hV2MgVCI6h9M/RYpnKuc5
+         PP9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c+rqx4d+WDgIJjBcFP8WX7C/8Bf3BQd16V6oPnzhKF8=;
-        b=54q/I5ZnlCsywhZTD40cN2SEcLEs3W+bJSnFbeaF2UAVz0a5/NHWX0TREETsd8RosX
-         En1EDQFuqpM2WOzBbmCRo+9p/ilDLugGDcge1R6l83Ntm2JKWG0quvnzcnA/JepVOxRI
-         ZEjroddQJO+xHHpfizUCFvvef/EqJsIipXvgBzhhZznZgxKOy/Ba8Q675Omah9QlLFcy
-         peqboR4jkoBYSmvqbfv0D1lIKmk26pWm4+4smH2IH82sg/0mgzwzSY76XF1ZYk1/chwz
-         ninD333VVccyX/2aVOM9ufa/HurZpJnAyoTSxWLN46tLlJekSheriT0vPlnjXpvj2jsj
-         r0Ig==
-X-Gm-Message-State: AOAM530gvfsf79EMHISlyzVSI2nnsRhvowI0nkslXXbS2MjvmRNw0XIT
-        1ZELVcobx++IBpQTxPYFxnXaO2DnZoMhO6Z32cdtBiq733A90v/HAKdIZpRCyTdaP7cTu18ycOE
-        b3CETv9qjMu7XT5vLoadlXFJnfYyl5jzZUwmqOv23JCDmTldlhWxWGH1/2KS5KpiU7sMIupgUu0
-        tXr0sEFL8/F6JUYJ96CKsoQOQzFQ5KnzIqkITAu1UAnvkzT71Er2g27iT9zWa4wMo=
-X-Google-Smtp-Source: ABdhPJxH5cOnriiipTWM2XVCZ5/V3sdVhLO+Xa7XdihwPZMhtDffKMEiZGl8NCr46sML5bfCnT29E6HGVrIw5AVTrck=
-X-Received: by 2002:a05:690c:110:b0:2ec:2d79:eee1 with SMTP id
- bd16-20020a05690c011000b002ec2d79eee1mr12246268ywb.21.1651503283830; Mon, 02
- May 2022 07:54:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LnKxQTXlAzzQEyOAVYQUp5r7nxc6vZnAXY6N/5b4fWk=;
+        b=vm0aKy9E0Pt9+qh0SXGopgahkIC9vZK0niX6BdmO0WyabFiT6HfLvlFNFNEkhbjrvN
+         FFCc1NnG9WyV1HC5cX9mAGv8jTeqfUGz4SFkWXm/27tqrhz8GMAuIY46yb/LjCP++gSJ
+         n37MyTrDv5OkhFtdnYZefb6dx0i5ysJ0/HNRd1mKi4e5cqMixC1rp+Krt2upQNYeLYN6
+         vqML/ui9mBNgpeTWxKbOB30JkwIweAcQW3Wb6FV43VETiXFsyuc5QPMWEGFeRMpBhb/m
+         ZHSJQHVBZ0xdOXz9pErqEJ07L8kbatVez8yJgOhyra2RDwMXn1TNqUcQsnST2L7iBK6J
+         CUEQ==
+X-Gm-Message-State: AOAM533DqvEGcMg+wDR3S1cY6Ev+8jANRGZdKkDwxG425v43D1Vni9pz
+        NOgUr0xw6XZpmsK1nFTZOpHUic8sEMU=
+X-Google-Smtp-Source: ABdhPJzmg4gsJraqYcSXes2bw/g00FRVi5pPhI10+/o3orgKNitGxmsUsC5w1Xnzq7JJNYIFr1NLaQ==
+X-Received: by 2002:a17:902:ef48:b0:159:51d:f725 with SMTP id e8-20020a170902ef4800b00159051df725mr12533940plx.47.1651503431834;
+        Mon, 02 May 2022 07:57:11 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:2dc8:74e2:c904:9b3b:957c:f8a7])
+        by smtp.gmail.com with ESMTPSA id m5-20020a170902db0500b0015e8d4eb25bsm4764407plx.165.2022.05.02.07.57.08
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 02 May 2022 07:57:11 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin/remote.c: teach `-v` to list filters for promisor remotes
+Date:   Mon,  2 May 2022 20:26:24 +0530
+Message-Id: <20220502145624.12702-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <ab047b4b-6037-af78-1af6-ad35ac6d7c90@iee.email>
+References: <ab047b4b-6037-af78-1af6-ad35ac6d7c90@iee.email>
 MIME-Version: 1.0
-References: <CAAir=1MbwGtONW7yWRWoXKzAiwqwhOAqdhfWYMYLxt1vANuUOA@mail.gmail.com>
- <xmqqsfpvabib.fsf@gitster.g>
-In-Reply-To: <xmqqsfpvabib.fsf@gitster.g>
-From:   Austin Morton <austin.morton@aquatic.com>
-Date:   Mon, 2 May 2022 14:54:33 +0000
-Message-ID: <CAAir=1NY=98Z_cTrEyUn6tcPFR3UGNUmXs=2hg27LMGijGZpUw@mail.gmail.com>
-Subject: Re: Able to checkout same branch in multiple worktrees when using symbolic-refs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By your own definition I am not an inexperienced user (since I am
-using worktrees and symbolic-refs), but this has bitten me on enough
-occasions to beat me into submission and submit a bug report ;-)
 
-I don't know why you would need to scan all the local branches, unless
-that is what "git worktree list" ends up doing under the hood?
+Philip Oakley <philipoakley@iee.email> wrote:
 
-"HEAD" in a worktree that was checked out using the symbolic-ref still
-contains the symbolic ref name, while the worktree list resolves it.
+> When I use the `git remote` command, I use the -vv variant to what what
+> I need, i.e. its more than `-v`, so maybe adding an extra
+> `--show-partial-filter` option may be necessary (with a more compact
+> name ;-).
 
-$ cat .git/worktrees/worktree2/HEAD
-ref: refs/heads/main
-$ git worktree list
-/home/amorton/test/worktree1 cd8312d [master]
-/home/amorton/test/worktree2 cd8312d [master]
+If adding new informations to `-v` is not possible (to avoid messy output),
+atleast including it to `-vv` makes sense to me (though I am not sure if 
+`git remote -vv` is currently implemented). 
 
-Seems like you would "just" need to resolve the symbolic-ref in the
-same way that the worktree code does when checking against existing
-worktrees in find_shared_symref during checkout.
+> There will also be a similar desire (IIUC) to match the sparse/cone mode
+> repos to their remotes, i.e. to remind a user that what is held at the
+> remote isn't the same as held locally.
 
-Cheers,
-Austin
+Yeah, maybe.
 
-On Fri, Apr 29, 2022 at 8:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+> I hear your pain here. I had the same issue with the branch description.
+> (https://stackoverflow.com/questions/15058844/print-branch-description).
+> It's the same 'extract from config' problem.
 >
-> Austin Morton <austin.morton@aquatic.com> writes:
+> ```You can display the branch description using a git config command.
 >
-> > When using a symbolic-ref I am able to inadvertently checkout the same
-> > branch in multiple worktrees when using the symbolic-ref name, despite
-> > being prevented from doing so if I use the target branch name.
+> To show all branch descriptions, I have the alias
 >
-> Don't do that if it hurts ;-)
+> brshow = config --get-regexp 'branch.*.description'
 >
-> If you checked out 'main' in the secondary worktree and made a
-> commit there, the symbolic-ref makes 'master' to be updated,
-> confusing the primary worktree whose index and the working tree
-> files record work relative to the old commit before the secondary
-> worktree updated it via the symbolic-ref, which is exactly the same
-> situation that the "do not check out the same branch in two
-> different worktrees" protection tries to save the user from, but I
-> do not think we currently do so.
+> , and for the current HEAD I have
 >
-> Because this "do not check a branch out twice and let it be futzed
-> with from the two places" is primarily a mechanism to help
-> inexperienced users from getting confused (and there is an escape
-> hatch mechanism to allow it to those who know what they are doing),
-> and use of symbolic-ref to make 'main' and 'master' synonyms with
-> each other is not something inexperienced users who have no clue on
-> what they are doing would be doing anyway, it may not be a huge
-> deal.
+> brshow1 = !git config --get "branch.$(git rev-parse --abbrev-ref
+> HEAD).description". ```
 >
-> I also suspect there is no way, other than scanning _all_ the local
-> branches, to see if some other branch aliases the branch we are
-> about to check out.  It may potentially be somewhat expensive.
->
-> But it would be nice if it can get fixed in inexpensively.
->
-> Thanks for a report.
->
->
-> > Below is a minimal reproducer:
-> >
-> > $ git --version
-> > git version 2.36.0
-> > $ git init .
-> > $ git status
-> > $ git commit --allow-empty -m "Initial commit"
-> > $ git symbolic-ref refs/heads/main refs/heads/master
-> > $ git worktree add ../worktree2
-> > $ git worktree list
-> > /home/amorton/test/worktree1 cd8312d [master]
-> > /home/amorton/test/worktree2 cd8312d [worktree2]
-> > $ cd ../worktree2
-> > $ git checkout master
-> > fatal: 'master' is already checked out at '/home/amorton/test/worktree1'
-> > $ git checkout main
-> > Switched to branch 'main'
-> > $ git worktree list
-> > /home/amorton/test/worktree1 cd8312d [master]
-> > /home/amorton/test/worktree2 cd8312d [master]
+> so it is possible to generalise the config query, if hard to discover.
+> <https://stackoverflow.com/a/15062356/717355>
+
+Thanks for the info. I tried your suggestion and it worked. But still,
+it is better to include <list-object-filter> in the output. This is
+because of the second point I mentioned in my previous comment. Users
+can be much more clear about the types of available remotes overall.
+IMO specifying filters for remotes is far more important than the
+branch description. The behaviour of `git fetch` depends on it. If
+we can specify `(fetch)` in the output then why not the filter of that
+`fetch` on which the behaviour of `fetch` functionality highly depends?
+
+Thanks :)
