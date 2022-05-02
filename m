@@ -2,228 +2,215 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B53EBC433F5
-	for <git@archiver.kernel.org>; Mon,  2 May 2022 19:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44AF4C433F5
+	for <git@archiver.kernel.org>; Mon,  2 May 2022 19:27:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387017AbiEBTIW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 May 2022 15:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40504 "EHLO
+        id S1387115AbiEBTa0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 May 2022 15:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387033AbiEBTIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 May 2022 15:08:16 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8171B871
-        for <git@vger.kernel.org>; Mon,  2 May 2022 12:04:45 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91D96137B38;
-        Mon,  2 May 2022 15:04:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YKcyfKHvND1gyRnjrLK/zry+7mrxRmVcuVkgo6
-        rRz0A=; b=fKsKESRYbbc2MCVnKHLM8srSM9ORN2vA+EExms+/21ITlgOevwgzyn
-        XUh+CfoeuCdW5p04qwAcpOrkMncksZicSiMcNk2LoxYMovlb6nZREreHnK7eAsQY
-        auiE1KBNSQOYos9uJpwu6RILR7Cix8tOQ1zCPV3GaqDdmFwb99Eas=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89785137B37;
-        Mon,  2 May 2022 15:04:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6010137B36;
-        Mon,  2 May 2022 15:04:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jacob Vosmaer <jacob@gitlab.com>
-Subject: Re: [PATCH] http: add custom hostname to IP address resolves
-References: <20220502083639.610279-1-chriscool@tuxfamily.org>
-Date:   Mon, 02 May 2022 12:04:42 -0700
-In-Reply-To: <20220502083639.610279-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Mon, 2 May 2022 10:36:39 +0200")
-Message-ID: <xmqqfslrycvp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238991AbiEBTaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 May 2022 15:30:16 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F37C108
+        for <git@vger.kernel.org>; Mon,  2 May 2022 12:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1651519595;
+        bh=Wdsz8pLJcM1YdMLVvdZoOzGDUoiY37IWllIAENc45Js=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=RxCbbjHpayzaawKOnTOCRwDMeLwrG7DvW1eeRqrnMNNb4WjqNl/wRfKEm5JVpg3Dh
+         OvmPR6ogOX2PTOAdJy8hf4QzfEOF4biLX4ThIVPJFHZ4eQ0isnwXwCjbr3eEe9P/4k
+         h60N9dBdlELcXg63TL5lygjoyjsvw73LFPJncNKU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRk0W-1nO0Fl2RT8-00TFtz; Mon, 02
+ May 2022 21:26:35 +0200
+Date:   Mon, 2 May 2022 21:26:34 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "Mirochnik, Oleg V" <oleg.v.mirochnik@intel.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git reset --hard can leave modified files
+Message-ID: <20220502192634.bzjfvoda2wjjxs3i@tb-raspi4>
+References: <CY5PR11MB6089858FD6FCC971D6F216DDC6FC9@CY5PR11MB6089.namprd11.prod.outlook.com>
+ <20220430044940.6botq23lxmpqxbel@tb-raspi4>
+ <CY5PR11MB608914F7E815A8EF95441BB1C6C19@CY5PR11MB6089.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA0F3B8E-CA4A-11EC-9344-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CY5PR11MB608914F7E815A8EF95441BB1C6C19@CY5PR11MB6089.namprd11.prod.outlook.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:W/krqEppZWlcDSevnwXGEJwZ0GND6oHSXHa3otMO1eRR8HLpg2S
+ 8cbJhjDNU9CwuMmIGsbpiLo5OZOcGGHyyyeYrVQEI9fpjBoXa3qK14uFp+359ljOQT4/Iud
+ TJXDB2qrtqz85rGV5q/cRtAE55qTNm8DdPsKMusnOUlRkP1hWQxjuPkXzJYBE9E1yGj4bv+
+ zFGoGe/VO+6IWvgD+qHGA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y+BNhuuXcMM=:grBq3xDtszG13E9o3Grs/K
+ NvKhTJegwEZonHmVi0rBhsA8FgU0dY/f0ajm8BP+dEZM/dmXwgo7gLywUfgiKqWowlMiEUIky
+ RyxDO1QYOcVV94XniDJoWuyNCHmJOcEJhJZW8A5mcubImyNRnn0kKWIB7gWGlw1uIH3p88p5C
+ fU76o7zhgRVdQBzabNS/SnCevVJjq1+dxx2Yn1smypdOoxD6VvIhPm7QczKgC5IRYMc0/e4Hv
+ o3kr0nhPGpvlCLO28TQBRvcS6yWxSV3s+muhFUODR/Nr99XcBAOkGTQ5+wfdCW2HroqzenTqE
+ TiRc2RZ9rwMhd8Qf6QOh6XtcPVSpdHXY6z1yVLWPGD+MrMKDIwBd97xvGZFwdxUXM5OHfXLYp
+ AQzIrlZQUeTrfc1bgVouy2gNx70fsuOANxqY97O6Dx7AekXaaRfQHr+UXTc13UoI21DNifUZz
+ OfOuNE+5uTXm821lhznjEslkcfwsqHD5w2OdPlkCxYf+ChZvblI4YUuuA2c2ONH5AcgB7d9fi
+ z7JId7EojABKoYGZ8oPEUqjd4mZ3y5qQ7Uy4xHGhmi6c22yYrwop323zyCC55o2CoEtenPWpQ
+ CobEEfEQZOTziuRH4hvBpHXXScePYCNG2s0MlXVg4nPgVL+Y/MACk8hY828YOrmyzGxvDMIIu
+ HpKPEzLqglzZO6qSQLvRuE0aN9zm1nAGhuY0H8W8HHWyIOeWBKSueaoJGROz6pE90+xkOsoyf
+ NWigVlSZlMPKQpIRTeAZaQIuI4PAA6LmlLKevyCQPiNLDwZ9XF0IjfCk3eZzeyv080qHl9zs5
+ LXTg5h46xtWMTq7S/1vuEegxy3cgsGW+pNBcns1fAA3Ep7lIDJFGlMskzoBynd1UTfKQKYGXn
+ RqXshDSZ7WINHAw3UfELtB+k5t6kI4NtXh0ZOqeIJWvjn1VzYeNReDHa21d+HIbw8iClhyxjV
+ RCZYkPQ/6ltPnp6uR3LYiDPLybCRz7pryArP8QutY3zxZdUf7NBLd0TiCwL2eJ3H8E2ivS+j2
+ Xq+q2/YVMyBm64Z3QCoLu2YKw2O5DRLDr7MMVN2VbFDu/0ni/JH6dGKp15W5vQHraA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> Subject: Re: [PATCH] http: add custom hostname to IP address resolves
-
-I can guess what you means, but I am not able to quite parse the
-above.  I guess the phrase that makes me hiccup when I read is
-"resolve" used as a noun.
-
-> Libcurl has a CURLOPT_RESOLVE easy option that allows
-> hostname resolve information in the following form to
-
-The same here, "... allows the result of hostname resolution in the
-following format ...", perhaps?
-
-> be passed:
+On Mon, May 02, 2022 at 06:37:26PM +0000, Mirochnik, Oleg V wrote:
+> > -----Original Message-----
+> > From: Torsten B=F6gershausen <tboegi@web.de>
+> > Sent: Friday, April 29, 2022 9:50 PM
+> > To: Mirochnik, Oleg V <oleg.v.mirochnik@intel.com>
+> > Cc: git@vger.kernel.org
+> > Subject: Re: git reset --hard can leave modified files
+> >
+> > On Fri, Apr 29, 2022 at 03:50:59PM +0000, Mirochnik, Oleg V wrote:
+> > > Thank you for filling out a Git bug report!
+> > > Please answer the following questions to help us understand your iss=
+ue.
+> > >
+> > > What did you do before the bug happened? (Steps to reproduce your
+> > > issue) git clone https://github.com/intel/llvm cd llvm git checkout
+> > > git-bug-reproducer git merge 38df0bd4fccd1067f3abe078d42e94c74074862=
+8
+> > > -m Merge1 --no-ff git merge b6b8d34554a4d85ec064463b54a27e073c42beeb
+> > > -m Merge2 --no-ff git reset --hard HEAD~ git status --porcelain
+> > >
+> > > What did you expect to happen? (Expected behavior) An empty output
+> > > from the last command
+> > >
+> > > What happened instead? (Actual behavior)  M
+> > > clang-tools-extra/test/clang-apply-replacements/Inputs/crlf/crlf.cpp
+> > >  M
+> > > clang-tools-extra/test/clang-apply-replacements/Inputs/crlf/crlf.cpp=
+.e
+> > > xpected
+> > >
+> > > What's different between what you expected and what actually happene=
+d?
+> > > Obvious
+> > >
+> > > Anything else you want to add:
+> > > The issue is flaky. First found for v2.29.2 Multiple executions of t=
+he
+> > > "git reset --hard HEAD" can help.
+> > > I ran a simple script to get some numbers: 100 attempts to get and f=
+ix the issue
+> > with up to 100 runs of the "git reset --hard HEAD"
+> > > Got max number of runs - 45. Most of the cases (63) required 5 runs.=
+ 5 cases
+> > did not get the issue at all.
+> > > V2.36.0 built from sources got similar results:
+> > >
+> > > The script:
+> > > (set -e; for a in {0..99}; do echo ++++++++++++++++ a=3D$a; git rese=
+t
+> > > --hard origin/git-bug-reproducer; git merge
+> > > b2d4d67d5e34c345cb6a3cf725b2e26a15a9dfe5 -m Merge1 --no-ff; git merg=
+e
+> > > b6b8d34554a4d85ec064463b54a27e073c42beeb -m Merge2 --no-ff; git rese=
+t
+> > > --hard HEAD~; for b in {1..99}; do git status --porcelain | grep . |=
+|
+> > > break; git reset --hard HEAD; done; echo ++++++++ b=3D$b; git status
+> > > --porcelain | grep . || continue; echo FAILED $a; break; done) >
+> > > ../logg 2>&1
+> > >
+> > > Please review the rest of the bug report below.
+> > > You can delete any lines you don't wish to share.
+> > >
+> > >
+> > > [System Info]
+> > > git version:
+> > > git version 2.36.0
+> > > cpu: x86_64
+> > > no commit associated with this build
+> > > sizeof-long: 8
+> > > sizeof-size_t: 8
+> > > shell-path: /bin/sh
+> > > uname: Linux 4.18.0-193.el8.x86_64 #1 SMP Fri Mar 27 14:35:58 UTC 20=
+20
+> > > x86_64 compiler info: gnuc: 4.4 libc info: glibc: 2.28 $SHELL
+> > > (typically, interactive shell): /bin/bash
+> > >
+> > >
+> > > [Enabled Hooks]
+> > > not run from a git repository - no hooks to show
+> >
+> > One quesion, out of interest:
+> > do you have core.autocrlf=3Dtrue ?
 >
-> 	[+]HOST:PORT:ADDRESS[,ADDRESS]
+> Nope.
 >
-> This way, redirects and everything operating against the
-> HOST+PORT will use the provided ADDRESS(s).
+> > What does
+> > git config core.autocrlf
+> > give you ?
 >
-> The following form is also allowed to stop using these
-> resolves:
+> Nothing:
+> $ git config core.autocrlf
+> $
 >
-> 	-HOST:PORT
+> > The llvm repo itself has a lot of files commited with CRLF in the repo=
+.
+> >
+> > You can see this by running
+> > git ls-files --eol | grep "^i/crlf"
+> >
+> > So my recommendation would be to set up a proper .gitatributes file in=
+ the root
+> > of the repo, run
+> >
+> > git add --renormalize .
+> > git add .gitattributes
+> > git commit -m "Normalize the line endings"
+>
+> AFAIK all of them CRLF files are intentional.
+> LLVM community decides on the stuff, we have to follow the decisions.
+>
 
-The above is a reasonable summary of CURLOPT_RESOLVE documentation
-that is appropriate to have here for those of us who are not
-familiar with it.  For those of us who may want to learn more, it
-would help to have an URL to the canonical documentation page, e.g.
-https://curl.se/libcurl/c/CURLOPT_RESOLVE.html but it is not
-required.  People should be able to find it easily.
+I somewhat suspect seriously that the problem is related to this thread:
+https://reviews.llvm.org/D124563
 
-> Let's add a corresponding "http.hostResolve" config
-> option that takes advantage of CURLOPT_RESOLVE.
+I didn't dig into all the details (yet).
 
-CURLOPT_RESOLVE allows us to feed cURL a list of these <host,port>
--> <address> mappings, so we use that mechansim to feed the values
-listed on the multi-valued configuration variable (spell it out as
-such, by the way, instead of saying "config option", which may give
-a false impression that it is a last-one-wins single string with
-many such mapping entries on it).
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ git show c9a16e8c3d99173c7525e576d78eed571
+Drop '* text=3Dauto' from .gitattributes and normalize
 
-OK.
+ Git wants to check in 'text' files with LF endings, so this changes them
+     in the repository but not in the checkout, where they keep CRLF endin=
+gs.
 
-> Each value configured for the "http.hostResolve" key
-> is passed "as is" to curl through CURLOPT_RESOLVE, so it
-> should be in one of the above 2 forms. This keeps the
-> implementation simple and makes us consistent with
-> libcurl's CURLOPT_RESOLVE, and with curl's corresponding
-> `--resolve` command line option.
+    Differential Revision: https://reviews.llvm.org/D124563
+=2D-------------------
+I don't know, if this was a good change or not.
+If folks wants CRLF in their working tree, there are 3 ways to do so:
+- Set core.autoclrf to true
+- Set core.eol to CRLF
+(This works on Windows and Unix)
 
-OK.
+Or, if everybody should have CRLF in the working tree,
+we could (and should) still have LF in the repo.
 
-> I am not sure if some tests could/should be added. Ideas about how to
-> test this are welcome.
+Just set
 
-It should.  Perhaps invent a totally bogus domain name, map that to
-localhost ::1, run a test server locally, and try to clone from that
-bogus domain?
+*myfiles.cpp text=3Dauto eol=3Dcrlf
 
-> +http.hostResolve::
+In other words
+(I may be wrong due a lack of time to dig deeper into the llvm repo)
+the problem seems to come from upstream.
 
-Is "host" a good prefix for it?  
+And we could find out, what upstream really wants and needs,
+and may be able to help here.
 
-In the context of HTTP(s), if there is no other thing than host that
-we resolve, "http.resolve" may be sufficient.  For those who are
-looking for CURLOPT_RESOLVE equivalent, "http.curloptResolve" may
-make it easier to find.
+Is this maybe something you can do, contact upstream ?
 
-> +	Hostname resolve information that will be used first when sending
-> +	HTTP requests.  This information should be in one of the following
-> +	forms:
-> +
-> +	- [+]HOST:PORT:ADDRESS[,ADDRESS]
-> +	- -HOST:PORT
-> +
-> ++
-> +The first form redirects all requests to the given `HOST:PORT`
-> +to the provided `ADDRESS`(s). The second form clears all previous
-> +config values for that `HOST:PORT` combination.  To allow easy
-> +overriding of all the settings inherited from the system config,
-> +an empty value will reset all resolve information to the empty
-> +list.
-
-If I understand your use case correctly, this is not something you
-would want to hardcode in your configuration files for long term, is
-it?  I am wondering if we want to mention the expected use case here
-as well, something like
-
-    This is designed to be used primarily from the command line
-    configuration variable override, e.g.
-
-	$ git -c http.resolve=example.com:443:127.0.0.1 \
-	    clone https://example.com/user/project.git
-
-perhaps?  Not a suggestion, but soliciting thoughts.
-
-> diff --git a/http.c b/http.c
-> index 229da4d148..e9cc46ee52 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -128,6 +128,9 @@ static struct curl_slist *pragma_header;
->  static struct curl_slist *no_pragma_header;
->  static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
->  
-> +static struct curl_slist *host_resolves;
-> +static struct string_list http_host_resolve = STRING_LIST_INIT_DUP;
-> +
->  static struct active_request_slot *active_queue_head;
->  
->  static char *cached_accept_language;
-> @@ -393,6 +396,17 @@ static int http_options(const char *var, const char *value, void *cb)
->  		return 0;
->  	}
->  
-> +	if (!strcmp("http.hostresolve", var)) {
-> +		if (!value) {
-> +			return config_error_nonbool(var);
-> +		} else if (!*value) {
-> +			string_list_clear(&http_host_resolve, 0);
-
-
-OK, this is a way to "clear" the list of entries accumulated on this
-multi-valued configuration variable so far.  And it is documented in
-the above, too.  Good.
-
-> +		} else {
-> +			string_list_append(&http_host_resolve, value);
-> +		}
-> +		return 0;
-> +	}
-> +
->  	if (!strcmp("http.followredirects", var)) {
->  		if (value && !strcmp(value, "initial"))
->  			http_follow_config = HTTP_FOLLOW_INITIAL;
-> @@ -985,6 +999,17 @@ static void set_from_env(const char **var, const char *envname)
->  		*var = val;
->  }
->  
-> +static struct curl_slist *http_copy_host_resolve(void)
-> +{
-> +	struct curl_slist *hosts = NULL;
-> +	const struct string_list_item *item;
-> +
-> +	for_each_string_list_item(item, &http_host_resolve)
-> +		hosts = curl_slist_append(hosts, item->string);
-> +
-> +	return hosts;
-> +}
-> +
->  void http_init(struct remote *remote, const char *url, int proactive_auth)
->  {
->  	char *low_speed_limit;
-> @@ -1048,6 +1073,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
->  	no_pragma_header = curl_slist_append(http_copy_default_headers(),
->  		"Pragma:");
->  
-> +	host_resolves = http_copy_host_resolve();
-
-This is curious.  I imagined that the reason why you keep the
-original in a string_list and copy it to a curl_slist was perhaps
-because you'll lose the latter every time you make a curl request,
-but it does not appear to be the case.  You http_init() just once
-and then the same CURL *curl instance will be reused until you clear
-it with http_cleanup().  So I do not see offhand the need to have
-the string_list at all.
-
-Does it work equally well if you used curl_slist_append() in
-http_options() and maintain ONLY the curl_slist version of the
-host_resolve list?  That would make it unnecessary to keep
-http_host_resolve and add http_copy_host_resolve() function, no?
-
-Thanks.
