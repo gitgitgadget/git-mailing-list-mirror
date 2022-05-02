@@ -2,107 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA339C433F5
-	for <git@archiver.kernel.org>; Mon,  2 May 2022 23:08:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E62C433F5
+	for <git@archiver.kernel.org>; Mon,  2 May 2022 23:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbiEBXLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 May 2022 19:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52992 "EHLO
+        id S230096AbiEBX2i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 May 2022 19:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbiEBXLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 May 2022 19:11:35 -0400
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F3C82ED65
-        for <git@vger.kernel.org>; Mon,  2 May 2022 16:08:05 -0700 (PDT)
-Received: by mail-ua1-x936.google.com with SMTP id ay15so3375862uab.9
-        for <git@vger.kernel.org>; Mon, 02 May 2022 16:08:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cX89tGhnywbkLFdbGAJSePjilzzsxv6u+gRf8BbwYMk=;
-        b=KILn4E/NZivOrasPFtWzDq8gk39tlCg0djuer5KHOyJ/keJAIKTFK5GsiBmEFY6tpZ
-         3p8ABV+4nJZGHRT/KxG3cpjguJiHsDrE0x65vXX93qjBEZQXWRmarxuMz5+/T+KGTW6N
-         0cfrpDCbeTwu3StQYuSAUlEALYE3WY8Kn6fJ88TxXNYHQTyy1+8eadAZJC3Q+TVIqMZO
-         Bxa96Lk4HIczxj8L6X02EzIR0DZTYfMoCh3eUchwo0GfSR/xbp2bxCs9MgFNeXIZKCr3
-         9ULCpGthrbYEAKzmzxDuvbk2uRqhv2h+yvP/pigUg6uQ1A95qu9P87RQOT3VILWmKsvP
-         ZF/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cX89tGhnywbkLFdbGAJSePjilzzsxv6u+gRf8BbwYMk=;
-        b=Vt8ostntcfEtx9WsVp3OHDeJbt9Yanl+PezveOhoVfpIoJ4pXauglv2fWaXPwyZVdn
-         m1BWylhpJmehakF3pPeeSCVklehIMs5BIF1slEsAmzy82XSt4X1RjsVacFY+F0kbFjtX
-         399F9RYfS4bxIWrM5wkhopVKz+p+UKnGGJCEGRv5RrmP56VERm1dcfANioyO0TuLtOds
-         5bP5gkaToy9+7l4RP7sdRyo/tybAcgBAgk0URty0AYKTYMVGL0w1YF3++gAzWxP4HfJQ
-         PRQ48cP1l08k16EoQu8Bf9xQTXvjMQPm2ccgvHIqXaKRpg7l/NkD16flG30SdtiYj/Jw
-         d4yQ==
-X-Gm-Message-State: AOAM533FXCKiraA65HBkxZFSQ5Ta8WoRWOiacVm2/y1SWggkbYULRWTR
-        GBSRjI4aJFXS/IdP0AEp5LWPRlo4g3tvS6rwDN0=
-X-Google-Smtp-Source: ABdhPJxBp9OkKHlXkVyBBOC51Ga4jfrKMkS9EkUsZB3iiI7NYPbR1a7ej2O7P4ewDMfyedlNVgo5plD3D34ACTI6oJ0=
-X-Received: by 2002:a9f:3084:0:b0:360:1fa1:6aca with SMTP id
- j4-20020a9f3084000000b003601fa16acamr3716867uab.57.1651532884152; Mon, 02 May
- 2022 16:08:04 -0700 (PDT)
+        with ESMTP id S233753AbiEBX0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 May 2022 19:26:38 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B5781D302
+        for <git@vger.kernel.org>; Mon,  2 May 2022 16:23:05 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 18741108CC8;
+        Mon,  2 May 2022 19:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6P58TDTCWwJXU0qnhDPyXgQaYqJo/mRlWHXTMf
+        karX0=; b=c1nNJXiBwNNXZ6kC+ECvsuAse+PxFDRnd6PrTOIbSsow+emwrOh7Ok
+        pfjaen+mTkMsHGrHg+NGRSAJRZX+uzjJio2bz1AR3o2g8wocC5Cri8HD2XnZe+OB
+        EG7USRfW/OEDu0yaW4nYtdBFZZsb5zR57PxDVn9FT3wj/aphUdPbU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FA45108CC7;
+        Mon,  2 May 2022 19:23:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D248108CC6;
+        Mon,  2 May 2022 19:23:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com, me@ttaylorr.com
+Subject: Re: [PATCH v4 3/8] object-store: add function to free object_info
+ contents
+References: <20220328191112.3092139-1-calvinwan@google.com>
+        <20220502170904.2770649-1-calvinwan@google.com>
+        <20220502170904.2770649-4-calvinwan@google.com>
+Date:   Mon, 02 May 2022 16:23:03 -0700
+In-Reply-To: <20220502170904.2770649-4-calvinwan@google.com> (Calvin Wan's
+        message of "Mon, 2 May 2022 17:08:59 +0000")
+Message-ID: <xmqqzgjztt7s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220428105852.94449-1-carenas@gmail.com> <20220502183920.88982-1-carenas@gmail.com>
- <20220502183920.88982-2-carenas@gmail.com> <xmqqy1zjwrbu.fsf@gitster.g>
-In-Reply-To: <xmqqy1zjwrbu.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 2 May 2022 16:07:53 -0700
-Message-ID: <CAPUEspj9YPFttgf+W604PAUuabDCSOOaOdik9Z+cPbQRDk7e2g@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/3] t: document regression git safe.directory when
- using sudo
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        phillip.wood123@gmail.com,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D10C7936-CA6E-11EC-92E1-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 2, 2022 at 2:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+Calvin Wan <calvinwan@google.com> writes:
+
+> Introduce free_object_info_contents.
 >
-> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+> ---
+>  object-file.c  | 16 ++++++++++++++++
+>  object-store.h |  3 +++
+>  2 files changed, 19 insertions(+)
 >
-> > +     command -v git >u &&
-> > +     sudo command -v git >r &&
-> > +     test_cmp u r
->
-> While this is not as thorough as the "make sure we see the
-> environment intact" that I alluded to during the previous review, it
-> at least makes sure PATH (which our test framework tweaks) is
-> propagated down to "sudo" environment intact, which should be good
-> enough to run just "init" and "status".  Keeping things simple is
-> good.
+> diff --git a/object-file.c b/object-file.c
+> index 5ffbf3d4fd..34a6e34adf 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2659,3 +2659,19 @@ int read_loose_object(const char *path,
+>  		munmap(map, mapsize);
+>  	return ret;
+>  }
+> +
+> +void free_object_info_contents(struct object_info *object_info)
+> +{
+> +	if (!object_info)
+> +		return;
 
-Sorry, I should have mentioned that explicitly in my response.
+This is OK, but ...
 
-That is not possible.  sudo by design will try to minimize the
-environment that root is running on, so the only way to make sure git
-still works as expected there, is to add to that environment
-everything else we might need.
 
-That is why I have to invent that ugly looking "env" file and the
-function to import variables with it, and I was assuming that for it
-to be useful in the end we might need to maybe import everything
-"GIT*" too, but obviously I didn't want to do that now, and that is
-why I only did the branch name (more as an example, than as something
-that was strictly needed) since you mentioned that in your review and
-I could see how it was related to `git init` being added to the tests
-in the next commit.
+> +	if (object_info->typep)
+> +		free(object_info->typep);
+> +	if (object_info->sizep)
+> +		free(object_info->sizep);
+> +	if (object_info->disk_sizep)
+> +		free(object_info->disk_sizep);
+> +	if (object_info->delta_base_oid)
+> +		free(object_info->delta_base_oid);
+> +	if (object_info->type_name)
+> +		free(object_info->type_name);
 
-Guess I botched it in my refactoring anyway, since it also makes sense
-for it to be added in the next commit together with `git init`instead
-of here.
+	if (PTR)
+		free(PTR);
 
-> may have to exclude this from tests that require specialized
-> environment like valgrind tests, but that is not of immediate
-> concern.
+can and should be written as
 
-I didn't test valgrind, but I would assume it is probably broken now,
-as well as anything else that relies on extra environmental things.
+	free(PTR);
 
-Carlo
+If we are reusing object_info after calling this function, we
+_might_ want to use FREE_AND_NULL() instead of free().
+
+> +}
+> \ No newline at end of file
+
+Let's avoid such incomplete lines.
+
+> diff --git a/object-store.h b/object-store.h
+> index bd2322ed8c..840e04b56f 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -533,4 +533,7 @@ int for_each_object_in_pack(struct packed_git *p,
+>  int for_each_packed_object(each_packed_object_fn, void *,
+>  			   enum for_each_object_flags flags);
+>  
+> +/* Free pointers inside of object_info, but not object_info itself */
+> +void free_object_info_contents(struct object_info *object_info);
+> +
+>  #endif /* OBJECT_STORE_H */
