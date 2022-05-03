@@ -2,84 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FD9C433EF
-	for <git@archiver.kernel.org>; Tue,  3 May 2022 07:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF558C433EF
+	for <git@archiver.kernel.org>; Tue,  3 May 2022 09:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232081AbiECHYk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 May 2022 03:24:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59568 "EHLO
+        id S229836AbiECJ62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 May 2022 05:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232707AbiECHYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 May 2022 03:24:12 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9966FF5
-        for <git@vger.kernel.org>; Tue,  3 May 2022 00:20:15 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id e5so2317393pgc.5
-        for <git@vger.kernel.org>; Tue, 03 May 2022 00:20:15 -0700 (PDT)
+        with ESMTP id S229638AbiECJ61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 May 2022 05:58:27 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8355934BA4
+        for <git@vger.kernel.org>; Tue,  3 May 2022 02:54:55 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id 7so9753922pga.12
+        for <git@vger.kernel.org>; Tue, 03 May 2022 02:54:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1JXmWxzbhtTQCYUSr2ir/NKhGiq2f0u4eB+CeQrwdu0=;
-        b=ODlR20O1rSeCpAkmbRKd+82vrMYYk2vkfmyPkDGceAc1to8hmsNpBKvegAkpucl2Qd
-         BINpF4TLJ9v6FRspf4vSooAwDidNPluY/sqKVzN9qsEIc8DSKLqZXtlpz3oEOQzeSnIF
-         JwRqZOOsXTa2kH665gWhKWtgH9fmKwKaMwf5DXRTb2hBOnntLsiMfSuxLiLWmscgtz66
-         01AbcjA1pZlXx6CkVGHKD+hVUOTzptjsRqAJ+vo6wMHY29Dw6v0o1cYTnQuJr3f/o4he
-         k1Kv7amX/hkCL2e8pdiPT5Ol2hHXzuzDLKYqsdOL+YIsOrWEpqQ+dh2oRjbDTpZ64yCE
-         vwdQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=95xrxm4MIs7uIG/h8l7BvXvmqbPypsVbMG2Gi7BagpY=;
+        b=NrGAOd1dVgJzt3sEJSOJtKkxTL2vCV4aCpjbz7Zc5kckJtRBbXYvXI5sMQxsnEA18/
+         tpFIycd5SW9PqiR6HADSe4txeTSg69gWyR/p6jMbyui79LtryyixBPpUTlGCGEj7vyiP
+         +MVTo4Zt43G2VOJ+EV4aNQIgfIBJwopNBFxI1Tsc0TKgFF1slU6rjagGHb8yNdIIAEc2
+         JfAIV8PgUGCOg8f/LWpYUyaTPrE9o878miOiRwrH6mscgy8uYeDE/TUwoSzg55CNtX5w
+         TOA9uzrkcWqA9LfftfTGsH03NXJ8GRvzWFbdLUAFVkYIHYLWE7725nMgnjyT4SR0UiUv
+         OggA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1JXmWxzbhtTQCYUSr2ir/NKhGiq2f0u4eB+CeQrwdu0=;
-        b=nxabU/BzjqDs5dBlGUtgcx+GgWwTPvoqoeqtlxZDRfSSWQ+v6acT+/HsqY6kIGtccP
-         yRi/cwvIG39LrkIDHpQ5Yz0h907tMu6lz/X+2BWszOCr/tdwD6WR+Mql67oUr9pVZxRy
-         JrqXjxr5puEKjpOQOOTmxXsZ3GUgN9FzogRXNlPQEgnOpvZ6PUywfaxosoORdBoM3Z/f
-         c4BpgcxFHmvSM69fcTwyWJ7JpamAq7smC//RO+KupuaVrEhMkN8XjgklBu+3N1XZwkhT
-         4fejJuBvRkxZSGm+Fg//d1chRLjfjLek79D5J5P0WdPm1HiNfeRKEcClPDesjktM5i21
-         Syiw==
-X-Gm-Message-State: AOAM533GqC2C/Gh/FSo/YPisLhenrq3QTilAVYh1qAaG2ylJLqEAPaeX
-        xI3goCdbRsGzjj5KLhheMY+e8tnQZqA=
-X-Google-Smtp-Source: ABdhPJxupM2FbTTHrE1uD63mRpPhp/kBsEMMS6OqcXgtvPOxSggJxft+QK3ofz8+8SsI7rpd+UUaGQ==
-X-Received: by 2002:a63:82c2:0:b0:3c2:8bd5:7238 with SMTP id w185-20020a6382c2000000b003c28bd57238mr404175pgd.440.1651562415198;
-        Tue, 03 May 2022 00:20:15 -0700 (PDT)
-Received: from localhost (subs32-116-206-28-55.three.co.id. [116.206.28.55])
-        by smtp.gmail.com with ESMTPSA id bb8-20020a170902bc8800b0015e8d4eb208sm5655116plb.82.2022.05.03.00.20.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 00:20:14 -0700 (PDT)
-Date:   Tue, 3 May 2022 14:20:11 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] proto-v2 doc: mark-up fix
-Message-ID: <YnDXqzdiEGNkCrdu@debian.me>
-References: <xmqqczgvsa7k.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=95xrxm4MIs7uIG/h8l7BvXvmqbPypsVbMG2Gi7BagpY=;
+        b=JgiK7nTjmIdkCC/BADwQ+yXm4NVGvdoHtFZ8rUXmbaMOgn04jGHTVhXpRBTnb2ILte
+         9b4kSIN0Pps7jmPPHKs1DGUwA2DvQzbatD820BVAK+tRm8EEajwrNt3ZuMbxCoQb/eIY
+         Ir6avVeBmdtIR54am5GvfpdbNNEMdcHmaQVRgdCIaQE5xSyok/J+r4JhePGFLLDnO2OM
+         ILLmX4PRjiyULXlbtSwzIYYGBjorbBEtf9P5yylcp7m5hHjO+gjEIfR+kYZxpOuIJ88j
+         nDNjlPV0XVVbR38ACYFuJn5UR4J6TL3RvkbZC7XsFS/JWEj6mFT/tuuu6ntD8nS2kRiA
+         tcNA==
+X-Gm-Message-State: AOAM533yuAroNGasfk1VlvpJCK3FfN8uUmMyNA9sL3gJnxaCv14S44Ms
+        6/pvcvx51+n3cRTxg+9bJNiOzIukcdWiBgGz9l1/Vxj+4fQ=
+X-Google-Smtp-Source: ABdhPJzOrUfoN8od4zFPDoejwhFTIIYvDl034oBlNQyu38O3FZ8EWXdAgLBAzGLjHPp4fhiipadvwj+THL9EWb53+z0=
+X-Received: by 2002:a63:4101:0:b0:3aa:6375:e5f4 with SMTP id
+ o1-20020a634101000000b003aa6375e5f4mr13108424pga.240.1651571694806; Tue, 03
+ May 2022 02:54:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqczgvsa7k.fsf@gitster.g>
+References: <20220430041406.164719-1-gitter.spiros@gmail.com> <20220430041406.164719-7-gitter.spiros@gmail.com>
+In-Reply-To: <20220430041406.164719-7-gitter.spiros@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 3 May 2022 11:54:43 +0200
+Message-ID: <CAP8UFD2NSEO3qE+wSVdY2=dOrzKaoW5hcwnk04swm8zxuhoxUQ@mail.gmail.com>
+Subject: Re: [PATCH 06/23] builtin/bisect--helper.c: Fix coding style
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 02, 2022 at 05:58:55PM -0700, Junio C Hamano wrote:
->  The provided options must not contain a NUL or LF character.
->  
-> - object-format
-> -~~~~~~~~~~~~~~~
-> +object-format
-> +~~~~~~~~~~~~~
->  
->  The server can advertise the `object-format` capability with a value `X` (in the
->  form `object-format=X`) to notify the client that the server is able to deal
+About the commit subject, I think something like the following would be better:
 
-LGTM.
+"bisect--helper: fix comparison with NULL"
 
-The mistake fixed by this patch doesn't affect the asciidoc output (only
-tested with html), since the subheading is correctly rendered.
+This way it doesn't use an uppercase for "fix", the area part is
+smaller, it's more specific about what the patch is doing.
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+On Tue, May 3, 2022 at 3:15 AM Elia Pinto <gitter.spiros@gmail.com> wrote:
+>
+> Adhere to the git coding style which requires "Do not explicitly compute an
+> integral value with constant 0 or '\ 0', or a pointer value with constant NULL."
 
--- 
-An old man doll... just what I always wanted! - Clara
+The actual wording is:
+
+"Do not explicitly compare an integral value with constant 0 or '\0',
+or a pointer value with constant NULL."
+
+which is a bit different from what you wrote. (It's "compare" not
+"compute" and "'\0'" not "'\ 0'".)
+
+The rest looks fine.
