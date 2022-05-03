@@ -2,190 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4893BC433EF
-	for <git@archiver.kernel.org>; Tue,  3 May 2022 00:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A98FDC433F5
+	for <git@archiver.kernel.org>; Tue,  3 May 2022 01:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbiECAJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 May 2022 20:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        id S229907AbiECBNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 May 2022 21:13:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiECAJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 May 2022 20:09:32 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70E0E1DA5E
-        for <git@vger.kernel.org>; Mon,  2 May 2022 17:05:59 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F532109208;
-        Mon,  2 May 2022 20:05:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/fI5AmtQK6KWCe3XQvCivjpMaO0tI2miRGxmk2
-        CDjjA=; b=i7vSXAAz+qfALLosLFeZX+hqGNiegZrypKfzCd8eIFfbI6Jv1oYRT1
-        1kX8t5MFWWl15hwIsLiEvoV2L9x3OtfcXJQ0rx3fMCDGVam1QREvXJArlT2Qkh8c
-        yUpl9UH7Iae5foBUPVt201bT4bDMUe6JJnWStBMCN3lY21zkVXmjc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F4B0109205;
-        Mon,  2 May 2022 20:05:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C95DD109204;
-        Mon,  2 May 2022 20:05:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com, me@ttaylorr.com
-Subject: Re: [PATCH v4 4/8] object-info: send attribute packet regardless of
- object ids
-References: <20220328191112.3092139-1-calvinwan@google.com>
-        <20220502170904.2770649-1-calvinwan@google.com>
-        <20220502170904.2770649-5-calvinwan@google.com>
-Date:   Mon, 02 May 2022 17:05:56 -0700
-In-Reply-To: <20220502170904.2770649-5-calvinwan@google.com> (Calvin Wan's
-        message of "Mon, 2 May 2022 17:09:00 +0000")
-Message-ID: <xmqqee1btr8b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229830AbiECBN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 May 2022 21:13:29 -0400
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF684093A
+        for <git@vger.kernel.org>; Mon,  2 May 2022 18:09:51 -0700 (PDT)
+Received: by mail-io1-f50.google.com with SMTP id e3so13925465ios.6
+        for <git@vger.kernel.org>; Mon, 02 May 2022 18:09:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SvdNLRA2s1qzR9Moj6Me5a5/SRkWLPY3U/IPji5HmZs=;
+        b=CMfLW+N9O2/0AUEqc9X9gWLO5uMIjkW0uiZgHQADPtpUcUcCT2WvfzIeAYUaDK/CF6
+         KHSUs+OvobNL75iAVAO/Q8puv1+fqbBX5590ynIG0MoqdfLolEfsCwaca6cESwRVN60L
+         92W9gU+GvsosfzHCC1+vmfd7diuDs44o93bnVQyrcLzd3Q/B2GhDFBHkE7Kbhc0RJjUs
+         mWyFvAr74JFEL+WA9r9JcApcCy6G3LGgn4bN76gOX9f53giiEqFYF02b5NpPc0dedUVg
+         vvl3VHEsMBd84CvC0ScyAo9qN3Gp7C1orRm1wi1UlstHWyqBhaoxf8uUgIx8bd7n2zeQ
+         WbXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SvdNLRA2s1qzR9Moj6Me5a5/SRkWLPY3U/IPji5HmZs=;
+        b=SOuoO6VuO+sh8AKyWYNnXcLCy9kL6s35dek2ANmG+LZ3MF4xhOOAiT1yijl67MXTmp
+         VMYw+KcxJ8FWbe3Uw1XVGQp7mz5EEfo7aJWH2Mw3wSLD1bLMbrIn9Isg6uMseRwFqv9Z
+         1+Mx1b9ZbBNzgEVwkGQYSdq4BwjnSrPqVUfkpm2jkYkGEnBZy47knAp6sDn8EdGukimz
+         1DWxA+9VJdLhQAV+XzweJepUs8eJwigubmOLoS4R8xl0khGLzf4AvcGq0eZvrPhN1fts
+         yL65aRLVRl19pxX8mudsgbuXUUxAB4tsunWOfoYmuDob1qE+MGMsP0K0lcWjeMOM9dkt
+         z5yA==
+X-Gm-Message-State: AOAM530Q3zZslph16wG7JqYuuuI/348hFdlxZmi93ab19wR+sF6J7sgz
+        lxXxv2LibWXITb3TYL9/wnGRMkC0A5Ghm2t/
+X-Google-Smtp-Source: ABdhPJzGcRwJ/yvGAtlZfrCeTQDLLE7Qy9AiNMfLCndmRBBdP9q+Q+UQIyzegZUAV/+sVJf3ixFYTQ==
+X-Received: by 2002:a05:6638:617:b0:32a:de4f:7772 with SMTP id g23-20020a056638061700b0032ade4f7772mr5988984jar.155.1651539774752;
+        Mon, 02 May 2022 18:02:54 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v15-20020a056e020f8f00b002cde6e352d1sm3096341ilo.27.2022.05.02.18.02.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 May 2022 18:02:54 -0700 (PDT)
+Date:   Mon, 2 May 2022 21:02:53 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brad Beam <brad.beam@b-rad.info>, git@vger.kernel.org
+Subject: Re: Bug report - ssh signing causes git tag -l malloc failed
+Message-ID: <YnB/Pam2ti1A8c0e@nand.local>
+References: <16668F1B-7670-4136-8AAF-ABAAA802C7D4@b-rad.info>
+ <xmqq7d73y97i.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CEEF7C06-CA74-11EC-981F-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7d73y97i.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
-
-> Currently on the server side of object-info, if the client does not send
-> any object ids in the request or if the client requests an attribute the
-> server does not support, the server will either not send any packets
-> back or error out.
-
-There is an early return when oid_str_list->nr (i.e. number of
-objects we are queried) is zero, and we return without showing the
-"size" token in the output (called "attribute").  The change in this
-patch changes the behaviour and makes such a request responded with
-"size" but without any size information for no objects.
-
-It is unclear why that is a good change, though.
-
-The loop that accepts requests in today's code sends an error when
-it sees a line that it does not understand.  The patch stops doing
-so.  Also, after ignoring such an unknown line, the requests that
-were understood are responded to by send_info() function.  The patch
-instead refuses to give any output in such a case.
-
-It is unclear why either of these two makes it a good change,
-though.
-
-> Consider the scenario where the client git version is
-> ahead of the server git version, and the client can request additional
-> object-info besides 'size'. There needs to be a way to tell whether the
-> server can honor all of the client attribute requests before the client
-> sends a request with all of the object ids.
-
-Yes.  If we want to learn about "size", "frotz", and "nitfol"
-attributes about these objects, we can send "size", "frotz",
-"nitfol", and then start feeding object names.  Then we can observe
-that "frotz" were not liked to learn that this old server does not
-understand it, and the same for "nitfol".  At least we would have
-learned about size of these objects, without this patch.
-
-Now, an updated server side with this patch would respond with
-"size" and no other response.  Does it mean it does not understand
-"frotz", it does not understand "nitfol", or neither?  Did we get no
-response because we didn't feed objects, or because we asked for
-something they don't know about?
-
-How well does the current client work with today's server side and
-the server side updated with this patch?  I _think_ this change is
-essentially a no-op when there is no version skew (i.e. we do not
-ask for anything today's server does not know about and we do not
-necessarily ask today's server about zero objects).
-
-Am I correct to assume that those who are talking with today's
-server side are all out-of-tree custom clients?
-
-I am wondering how much damage we are causing them with this change
-in behaviour, especially with the lack of "You asked for X, but I
-don't understand X", which is replaced by no output, which would be
-totally unexpected by them.
-
-It totally is possible that this "object-info" request is treated as
-an experimental curiosity that is not ready for production and has
-no existing users.  If this were in 2006, I would just _declare_
-such is a case and move on, breaking the protocol for existing users
-whose number is zero.  But I am afraid that we no longer live in
-such a simpler world, so...
-
-> In a future patch, if the
-> client were to make an initial command request with only attributes, the
-> server would be able to confirm which attributes it could return.
+On Mon, May 02, 2022 at 01:24:01PM -0700, Junio C Hamano wrote:
+> Brad Beam <brad.beam@b-rad.info> writes:
 >
-> ---
->  protocol-caps.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+> Thanks for a report.
 >
-> diff --git a/protocol-caps.c b/protocol-caps.c
-> index bbde91810a..bc7def0727 100644
-> --- a/protocol-caps.c
-> +++ b/protocol-caps.c
-> @@ -11,6 +11,7 @@
->  
->  struct requested_info {
->  	unsigned size : 1;
-> +	unsigned unknown : 1;
->  };
+> > What did you do before the bug happened? (Steps to reproduce your
+> > issue)
+> >
+> > When using ssh signing `git tag -l --format='%(contents:body)'
+> > <tag>` returns `fatal: Out of memory, malloc failed (tried to
+> > allocate 18446744073709551323 bytes)`
+>
+> An obvious first follow-up question is if there is any difference in
+> behaviour if another kind of signing (like PGP) is used.
 
-OK.
+It works when using gpg.format=openpgp, and breaks reliably when signing
+using OpenSSH. The simplest reproduction I could come up with is:
 
->  /*
-> @@ -40,12 +41,12 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->  	struct string_list_item *item;
->  	struct strbuf send_buffer = STRBUF_INIT;
->  
-> -	if (!oid_str_list->nr)
-> -		return;
-> -
->  	if (info->size)
->  		packet_writer_write(writer, "size");
->  
-> +	if (info->unknown || !oid_str_list->nr)
-> +		goto release;
-> +
->  	for_each_string_list_item (item, oid_str_list) {
->  		const char *oid_str = item->string;
->  		struct object_id oid;
-> @@ -72,12 +73,13 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->  		packet_writer_write(writer, "%s", send_buffer.buf);
->  		strbuf_reset(&send_buffer);
->  	}
-> +release:
->  	strbuf_release(&send_buffer);
->  }
+    git init repo
+    (
+      cd repo
+      >foo
+      git add foo
+      git commit -m "$(date)"
+      git tag -sam foo foo
+    )
 
-OK, except for the bypass for info->unknown case, which I am not
-sure about.
+I think the difference is that when signing with OpenPGP, the "foo" tag
+looks like this:
 
->  int cap_object_info(struct repository *r, struct packet_reader *request)
->  {
-> -	struct requested_info info;
-> +	struct requested_info info = { 0 };
+    $ git -C repo cat-file -p foo
+    object d9b42c39c8520b2b9d62d67aa4138e1a28ce7aee
+    type commit
+    tag foo
+    tagger Taylor Blau <me@ttaylorr.com> 1651538928 -0400
 
-Wow.  We have been using info uninitialized?  Is this a silent
-bugfix?
+    foo
+    -----BEGIN PGP SIGNATURE-----
 
-If info.size bit was on due to on-stack garbage, we would have given
-our response with "size" attribute prefixed, even when the client
-side never requested it.
+    iQEzBAABCgAdFiEEuSAhSeE5DcWB+EsnUHZwBbY/KHsFAmJwe/AACgkQUHZwBbY/
+    [...]
 
-> @@ -92,9 +94,7 @@ int cap_object_info(struct repository *r, struct packet_reader *request)
->  		if (parse_oid(request->line, &oid_str_list))
->  			continue;
->  
-> -		packet_writer_error(&writer,
-> -				    "object-info: unexpected line: '%s'",
-> -				    request->line);
-> +		info.unknown = 1;
+and with OpenSSH, the tag object looks like:
 
+    $ git -C repo cat-file -p foo
+    object 64303f1200e1114d91f250cede3245364b07fce7
+    type commit
+    tag foo
+    tagger Taylor Blau <me@ttaylorr.com> 1651538975 -0400
+
+    foo
+    -----BEGIN SSH SIGNATURE-----
+    U1NIU0lHAAAAAQAAARcAAAAHc3NoLXJzYQAAAAMBAAEAAAEBAPKMdi3zhEm/soWtUUR9bZ
+    [...]
+
+note the missing newline after "-----BEGIN SSH SIGNATURE-----", which
+confuses ref-filter.c:find_subpos(). In particular, it seems to confuse
+the code near the comment "subject goes to first empty line before
+signature begins", since the OpenSSH-signed version of "foo" treats the
+entire message (including the signature itself) as the subject.
+
+That puts buf after sigstart, meaning that *nonsiglen gets assigned to a
+negative number and overflows. Luckily this just results in a bogus
+malloc call which crashes us, so I don't think this is meaningfully
+exploitable.
+
+The following diff seems to do the trick by restoring the intent of our
+"scooch batch 'eol' if it goes beyond 'sigstart'" to the case where we
+just assume the whole message is the subject. Folks more familiar with
+this code are more than welcome to chime in ;).
+
+--- 8< ---
+diff --git a/ref-filter.c b/ref-filter.c
+index 7838bd22b8..1d69e28d68 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1376,12 +1376,14 @@ static void find_subpos(const char *buf,
+ 	*sub = buf;
+ 	/* subject goes to first empty line before signature begins */
+ 	if ((eol = strstr(*sub, "\n\n"))) {
+-		eol = eol < sigstart ? eol : sigstart;
++		;
+ 	/* check if message uses CRLF */
+ 	} else if (! (eol = strstr(*sub, "\r\n\r\n"))) {
+ 		/* treat whole message as subject */
+ 		eol = strrchr(*sub, '\0');
+ 	}
++	if (sigstart < eol)
++		eol = sigstart;
+ 	buf = eol;
+ 	*sublen = buf - *sub;
+ 	/* drop trailing newline, if present */
+--- >8 ---
+
+Thanks,
+Taylor
