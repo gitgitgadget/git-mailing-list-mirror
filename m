@@ -2,51 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 728DDC433EF
-	for <git@archiver.kernel.org>; Tue,  3 May 2022 10:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C73C433EF
+	for <git@archiver.kernel.org>; Tue,  3 May 2022 13:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232521AbiECLCH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 May 2022 07:02:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41288 "EHLO
+        id S236036AbiECN1l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 May 2022 09:27:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234537AbiECLCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 May 2022 07:02:03 -0400
-X-Greylist: delayed 557 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 03 May 2022 03:58:30 PDT
-Received: from pv50p00im-hyfv10021501.me.com (pv50p00im-hyfv10021501.me.com [17.58.6.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AD4FCC
-        for <git@vger.kernel.org>; Tue,  3 May 2022 03:58:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1651574953;
-        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
-        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
-        b=PlWueLgvrAV/ZQ6GwqniYZTN64b3UfsxVC1iq+MfAmBQE3Fk1XhxbjPJAE4+ysOXL
-         e9z2RQSHQZL0scwhldR2k62ooEwK0Q4FM3sgeGw3K5021IsC2yQmSRairJHfE7NpK7
-         y+t5faEfW8A4KJ/kDeAdqxy4PR+tNkL+DwSZiA0LGuKFzjEnfepmO3ePN6bSyIbzwE
-         GelU7w3sQAJFYoy+lo+z+GCk60CAU47Vb3hy9m3InqqtOTyXjIZLC1xcJq5nlHRcBp
-         4LaO+CExH4y05JqFSFiORCftLW8FP2WMzcPT5uAax978Jnm8yWJQ6i0cS1YoEPj80K
-         lNzeAVsfJI9Zg==
-Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
-        by pv50p00im-hyfv10021501.me.com (Postfix) with ESMTPSA id E5E702C035F;
-        Tue,  3 May 2022 10:49:11 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From:   =?utf-8?Q?Nam_H=E1=BB=93?= <honamluxurychef@icloud.com>
-Mime-Version: 1.0 (1.0)
-Date:   Tue, 3 May 2022 17:48:55 +0700
-Subject: active
-Message-Id: <9705803E-BED4-44A6-BBA5-774D83BD9713@icloud.com>
-To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (19E258)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.486,18.0.858
- definitions=2022-05-03_03:2022-05-02,2022-05-03 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=675 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2009150000 definitions=main-2205030082
+        with ESMTP id S236016AbiECN1k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 May 2022 09:27:40 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2573377C7
+        for <git@vger.kernel.org>; Tue,  3 May 2022 06:24:08 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id a191so1425627pge.2
+        for <git@vger.kernel.org>; Tue, 03 May 2022 06:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v4rmeG7xC05SBG4+TLUVFdD8yVUD37TGwPracvTN1GM=;
+        b=jeJ94VMcJ5lL9R1PnmchgNEtjQRVGjw00cy24ISdI7WNP82i1cC+1TUBbU4kHhkLt1
+         y2o0yaYmwizJtCLa1hXPLoYK6Fpwyfw0PkuX7mESiF3j4y3TRe50FnM/AZs6Ks1240jG
+         Ut82GEx5eMqLLbTRO/EJDnc8GVWc6JR7qDOwayRAU+Q0uPVW1GTCq7mzvR3sGyJjivwT
+         jEgxdbtSY5Kk3NZwe1EIXTmgzJKQ6uyUbhNONNvQLHCU3/8tRVSirhFULXufWXyWmVOW
+         Vx0hVNXFDdnMUlCOQrFx6/DbaHeZQzneAFvcRKpJsVVODDpYp3U1Iu+VaC7YrJzkZCKc
+         2ZqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v4rmeG7xC05SBG4+TLUVFdD8yVUD37TGwPracvTN1GM=;
+        b=SVkzMeHLB/2sYDLa0ri7ZTWrfhbwRmsY3lXOBL2+sviFnlGAxYaLOtpdwsIWLbLuDV
+         ABcKtKeWmWnZrHiEXnMkCWVi5jXOOV323DArw8Io0pUYeuUuRhB2//SD0l/WC3hUh7wN
+         tJXQ+i5ppyaIAjVUFZUBmZehzM53g9RuB3zGK7s7ZPCxDzCOrV8oTiGnGAcd9D8CoTyL
+         Sh0hqqvZpXWTiWuA+K/1TOh17Yfk/m12xPd2hpYcunDc6HXDVYuOVyoFXjBN6/EuPdrC
+         F7AjZcfOG1Bomz0f2eaN6qPysc24Ro/bPVLJ5DS0aevATh7EcVEuBHkcNWPrT30cLXlr
+         ZkqQ==
+X-Gm-Message-State: AOAM530LYk4uikmmYxbrBXIrTBVYXDxs71Hg4jPg8UTqoWsFI2fMdlEy
+        fitbefwc8vgR+kzsUXlklFU=
+X-Google-Smtp-Source: ABdhPJyG37W27+cPlgfdFsBzoA5LKnq/vrdDdim+TDHvd/O0BFS2V1UIqDjn6j2ygmkGK9uBr4mbnQ==
+X-Received: by 2002:a63:f749:0:b0:3aa:361c:8827 with SMTP id f9-20020a63f749000000b003aa361c8827mr13752555pgk.361.1651584248308;
+        Tue, 03 May 2022 06:24:08 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id j8-20020aa78008000000b0050dc76281b3sm6484950pfi.141.2022.05.03.06.24.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 May 2022 06:24:07 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [PATCH 1/9] Makefile: sort "po/git.pot" by file location
+Date:   Tue,  3 May 2022 21:23:46 +0800
+Message-Id: <20220503132354.9567-2-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <20220503132354.9567-1-worldhello.net@gmail.com>
+References: <20220503132354.9567-1-worldhello.net@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
+Before feeding xgettext with more C souce files which may be ignored
+by various compiler conditions, add new option "--sort-by-file" to
+xgettext program to create stable message template file "po/git.pot".
 
-Sent from my iPhone
+With this update, the newly generated "po/git.pot" will has the same
+entries while in a different order. We won't checkin the newly generated
+"po/git.pot", because we will remove it from tree in a later commit.
+
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index f8bccfab5e..83e968e2a4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2706,6 +2706,7 @@ XGETTEXT_FLAGS = \
+ 	--force-po \
+ 	--add-comments=TRANSLATORS: \
+ 	--msgid-bugs-address="Git Mailing List <git@vger.kernel.org>" \
++	--sort-by-file \
+ 	--from-code=UTF-8
+ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+ 	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
+-- 
+2.35.1.577.g74cc1aa55f
+
