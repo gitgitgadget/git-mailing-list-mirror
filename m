@@ -2,92 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 358CCC433F5
-	for <git@archiver.kernel.org>; Tue,  3 May 2022 04:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C984C433EF
+	for <git@archiver.kernel.org>; Tue,  3 May 2022 05:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbiECFBr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 May 2022 01:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53032 "EHLO
+        id S229479AbiECFzP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 May 2022 01:55:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231342AbiECFBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 May 2022 01:01:45 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72D73BA71
-        for <git@vger.kernel.org>; Mon,  2 May 2022 21:58:14 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id cx11-20020a17090afd8b00b001d9fe5965b3so1241677pjb.3
-        for <git@vger.kernel.org>; Mon, 02 May 2022 21:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:to:from
-         :subject:content-transfer-encoding;
-        bh=WifkHTvGkBhOihOjBSfC/6UWaPjyjIm2i3ufFu4NYLQ=;
-        b=bkNQwMuZ5qnFueQ4cJfgyLp4e8aAEKS42RgY/cPAHfkD7rZl/kFDbPzOF6Nf4GMTVG
-         BrJ6hp3YJ1r2FWVxGMVS2cALoKvxe4W5vcsBfd15Qqy/ziAmkaOEK94zRFqc4YVZ8gd6
-         UMRmQW/6qnahAGtUf6bQY8w76mbFfWUwd6T8U4VlozJOxd0JX/BuCWYWASsPNS15QyfL
-         swgAN+YCXXTtzViFZpQforUe4fbPbgUX539/VTU1wVjMLb1nwoM0Gq1jL0uH4PDKklQm
-         E11OnBbSUkI6wZnim3zerDvoZtLVb6Q2xvmIih0XuaMQVZDVh50gm4kboMZcuoBv1Gnl
-         Fzvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:from:subject:content-transfer-encoding;
-        bh=WifkHTvGkBhOihOjBSfC/6UWaPjyjIm2i3ufFu4NYLQ=;
-        b=yhtHh2OJMj+g0Klpb09euf2LqIwN3WFoMwBYjUxjlnoj1bopwmrHWcU49nR+DsQ22B
-         UZ2bJWCsEtfVhzf0+0O4L328MXxkM1wPXAiZjnPPWYLIV7OkDeARNgbN0sux/QsIAC2+
-         uM/8w/LwMN2h8YyEU/Uaz1bg0e5R/vp+c9THzCLdS6W1Kek4nvZ3vX/QlSyF7eKBnD2G
-         /wXOGcgusJcqzL+p6SxKbfcR9hnb2rVALtKM70UFFMGLlnghn9vOYhiLvh9sTLKCOVuH
-         trgtsCIHJTogM742WV8eIUZf6iBh5dI25oGCaw+nOo47Ax519DM6EeibL47bRL53n+zi
-         0azA==
-X-Gm-Message-State: AOAM5338rlBEL0uLXd6XA6wUunrXW3Y3RjmPDAERYEPrV3jVfZXtSzf+
-        SPheEaJY2u5KocZHlJzkK9ZDeQlMePA=
-X-Google-Smtp-Source: ABdhPJxazULf4BWcCyNRZQi/RNc2iepSkZtUxbsyEb2tg3gfuwj8Z2f56d75Xp1YK7xxtqTQwJ9mrw==
-X-Received: by 2002:a17:90b:2311:b0:1d9:2e43:c7ae with SMTP id mt17-20020a17090b231100b001d92e43c7aemr2832788pjb.47.1651553894084;
-        Mon, 02 May 2022 21:58:14 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-4.three.co.id. [180.214.233.4])
-        by smtp.gmail.com with ESMTPSA id o3-20020a63f143000000b003c14af5062asm11609654pgk.66.2022.05.02.21.58.12
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 May 2022 21:58:13 -0700 (PDT)
-Message-ID: <9b3a9023-cd73-2e9d-64f1-7cc7e53d9b54@gmail.com>
-Date:   Tue, 3 May 2022 11:58:10 +0700
+        with ESMTP id S229458AbiECFzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 May 2022 01:55:14 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FEE237CC
+        for <git@vger.kernel.org>; Mon,  2 May 2022 22:51:42 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BBC18189695;
+        Tue,  3 May 2022 01:51:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=y+66l9tZCBpTdKKBJmxrzS/ohopcsl6RfOKyJX
+        pWSnI=; b=scbrVR6dkwyQuQnFppOnpiYEs2Z4guCMEk3UG0n0L59cb1AToAe5qm
+        TM9P1ukBgSNC28YGXZiJN0Kemoe+x35fxtNfm5pWAlU3Xub7PoVjHkqWOkD/VhVO
+        TPOAWPDJdnFUTAGYdYc8TH7qb7gPl6K8bl0ScOgsTSfytyGK3V+CI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B50ED189694;
+        Tue,  3 May 2022 01:51:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 404C0189679;
+        Tue,  3 May 2022 01:51:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Incorrect branch information after fetching (local branch !=
+ remote branch)
+References: <9b3a9023-cd73-2e9d-64f1-7cc7e53d9b54@gmail.com>
+Date:   Mon, 02 May 2022 22:51:37 -0700
+In-Reply-To: <9b3a9023-cd73-2e9d-64f1-7cc7e53d9b54@gmail.com> (Bagas Sanjaya's
+        message of "Tue, 3 May 2022 11:58:10 +0700")
+Message-ID: <xmqq7d73rwnq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Content-Language: en-US
-To:     git@vger.kernel.org
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Incorrect branch information after fetching (local branch != remote
- branch)
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1932529A-CAA5-11EC-A83E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-I have a copy of linux.git (Linux kernel) repository, with following
-branch mapping:
+> I have a copy of linux.git (Linux kernel) repository, with following
+> branch mapping:
+>
+>   * master -> torvalds/master (Linus' mainline tree)
+>   * linux-5.*.y -> stable/linux-5.*.y (Stable tree)
+>   * net-next -> net-next/master (net-next tree)
+>
+> When I fetch the mainline tree (torvalds/master), I get the expected
+> branch fetching info:
+>
+> From https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
+>    672c0c5173427e..9050ba3a61a4b5  master     -> torvalds/master
+>
+> When I fetch net-next, I get possibly incorrect branch name instead:
+>
+> From https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next
+>    6e28f56c0d1d97..0530a683fc858a  master     -> net-next/master
+>
+> I expected that net-next (local branch name) is displayed instead of
+> master in this case.
+>
+> Thanks.
 
-  * master -> torvalds/master (Linus' mainline tree)
-  * linux-5.*.y -> stable/linux-5.*.y (Stable tree)
-  * net-next -> net-next/master (net-next tree)
+I may be entirely missing what you are raising as a problem, but visiting
 
-When I fetch the mainline tree (torvalds/master), I get the expected
-branch fetching info:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/
 
-From https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
-   672c0c5173427e..9050ba3a61a4b5  master     -> torvalds/master
+shows that their primary branch is called 'master'.
 
-When I fetch net-next, I get possibly incorrect branch name instead:
+The verbose report left by "git fetch" tells us what branch they
+have is used to update what branch we have, so I think this is
+pretty much expected.
 
-From https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next
-   6e28f56c0d1d97..0530a683fc858a  master     -> net-next/master
+I am puzzled by your mention of 'net-next' (local).
 
-I expected that net-next (local branch name) is displayed instead of
-master in this case.
+You may have
 
-Thanks.
+    [branch "net-next"]
+        remote = net-next
+	merge = master
 
--- 
-An old man doll... just what I always wanted! - Clara
+and that is where your expectation on the local may be coming from,
+but it wouldn't be all that relevant to "git fetch". The update of
+the local branch will happen long after "git fetch" is done.
+
+Besides, you may have more than one local branch that is forked from
+the same remotes/net-next/master remote-tracking branch and at that
+point "git fetch" wouldn't be able to tell which one of these
+multiple local branches to show.
