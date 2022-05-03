@@ -2,80 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF558C433EF
-	for <git@archiver.kernel.org>; Tue,  3 May 2022 09:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 262FAC433EF
+	for <git@archiver.kernel.org>; Tue,  3 May 2022 10:26:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbiECJ62 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 May 2022 05:58:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43730 "EHLO
+        id S233502AbiECKa3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 May 2022 06:30:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbiECJ61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 May 2022 05:58:27 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8355934BA4
-        for <git@vger.kernel.org>; Tue,  3 May 2022 02:54:55 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 7so9753922pga.12
-        for <git@vger.kernel.org>; Tue, 03 May 2022 02:54:55 -0700 (PDT)
+        with ESMTP id S230251AbiECKa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 May 2022 06:30:27 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3AAEC56
+        for <git@vger.kernel.org>; Tue,  3 May 2022 03:26:51 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 125-20020a1c1983000000b003941f354c62so1027475wmz.0
+        for <git@vger.kernel.org>; Tue, 03 May 2022 03:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=95xrxm4MIs7uIG/h8l7BvXvmqbPypsVbMG2Gi7BagpY=;
-        b=NrGAOd1dVgJzt3sEJSOJtKkxTL2vCV4aCpjbz7Zc5kckJtRBbXYvXI5sMQxsnEA18/
-         tpFIycd5SW9PqiR6HADSe4txeTSg69gWyR/p6jMbyui79LtryyixBPpUTlGCGEj7vyiP
-         +MVTo4Zt43G2VOJ+EV4aNQIgfIBJwopNBFxI1Tsc0TKgFF1slU6rjagGHb8yNdIIAEc2
-         JfAIV8PgUGCOg8f/LWpYUyaTPrE9o878miOiRwrH6mscgy8uYeDE/TUwoSzg55CNtX5w
-         TOA9uzrkcWqA9LfftfTGsH03NXJ8GRvzWFbdLUAFVkYIHYLWE7725nMgnjyT4SR0UiUv
-         OggA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bVj5kjC97dXIGOeKdz6N2KACmQPsxzaytf3UGy/noJ8=;
+        b=XQaJ7sQ4IAY+PpdYM22dXjGzAn/S4+co6bvbcQ43SLABgMbNOPXDCxP0v6nDFX+aTe
+         OaMvVM1ZJf3hLMGoPTGwvGf03L5iGLOznz39V8+lon+qc8FG4xHmmf4W3Z3jcCKpCH2x
+         NHzfE6KHKq1isMeFoV8YrSi8ukC97FI/yaiNj3J3HOjM4AWXa8lw08S3Yp+LPAzbYgYG
+         Mmn5zBJf/q2M8n5nfbvUqrjjUxOI5WU1fOFXXt3GXPOrFYoE7YfAN0pOXxhfIdSiOb2l
+         WFumvf08Mu1PstB4GH7MkxVN4xqTO4/2pltZFyH/pFHYAcsnxBglToFFwZ9inbX7dXKN
+         zlnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=95xrxm4MIs7uIG/h8l7BvXvmqbPypsVbMG2Gi7BagpY=;
-        b=JgiK7nTjmIdkCC/BADwQ+yXm4NVGvdoHtFZ8rUXmbaMOgn04jGHTVhXpRBTnb2ILte
-         9b4kSIN0Pps7jmPPHKs1DGUwA2DvQzbatD820BVAK+tRm8EEajwrNt3ZuMbxCoQb/eIY
-         Ir6avVeBmdtIR54am5GvfpdbNNEMdcHmaQVRgdCIaQE5xSyok/J+r4JhePGFLLDnO2OM
-         ILLmX4PRjiyULXlbtSwzIYYGBjorbBEtf9P5yylcp7m5hHjO+gjEIfR+kYZxpOuIJ88j
-         nDNjlPV0XVVbR38ACYFuJn5UR4J6TL3RvkbZC7XsFS/JWEj6mFT/tuuu6ntD8nS2kRiA
-         tcNA==
-X-Gm-Message-State: AOAM533yuAroNGasfk1VlvpJCK3FfN8uUmMyNA9sL3gJnxaCv14S44Ms
-        6/pvcvx51+n3cRTxg+9bJNiOzIukcdWiBgGz9l1/Vxj+4fQ=
-X-Google-Smtp-Source: ABdhPJzOrUfoN8od4zFPDoejwhFTIIYvDl034oBlNQyu38O3FZ8EWXdAgLBAzGLjHPp4fhiipadvwj+THL9EWb53+z0=
-X-Received: by 2002:a63:4101:0:b0:3aa:6375:e5f4 with SMTP id
- o1-20020a634101000000b003aa6375e5f4mr13108424pga.240.1651571694806; Tue, 03
- May 2022 02:54:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bVj5kjC97dXIGOeKdz6N2KACmQPsxzaytf3UGy/noJ8=;
+        b=GJqmuaUotjq+DWNl+0V+BmxFlzpVPyqX9E395Jk1p+M0MOc7AyPqFXhRjpl1AFmFpB
+         yHWn0/gGmXbKVcorA7dmR4tL3wdHzdQGWkUfddNcmGMS3Ic6TJNaVA87fOLDCsK5enpk
+         Rc/NMDHMoSB+LsaJJMZd7RCU3xck96/PjX5t38KMFd/fdEbciPVBgut+vKZQrCACGrrq
+         kPJCv4uE+AZ0Azi7Ym3tt9Wq2JQyDiteen+M7Nr1CnR38UEbem8YpIjy3dSogLbS1e/V
+         AklyxfOUv1r0SXHevkXaq5W8R5OHh+/YGMLh0C8YaEqZwqdCeRjsyMg1hSHTl251KVaH
+         Uctg==
+X-Gm-Message-State: AOAM533AjqbMcpDCSB+/uGHD1dheZYOp1TM/zVOEWfrQzrz5n0QwVOl8
+        4VyrPqo70jQZEgsv/P9zYzebGe+Iskc=
+X-Google-Smtp-Source: ABdhPJxAicth3ivfsVv/9KpbWBckOF4loNUy6jYiqwy/cv70tqyDjpSa+AkQdTOuE7YInQ+1DHcvkA==
+X-Received: by 2002:a05:600c:9:b0:393:ea67:1c68 with SMTP id g9-20020a05600c000900b00393ea671c68mr2797779wmc.92.1651573609793;
+        Tue, 03 May 2022 03:26:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l20-20020adfc794000000b0020c5253d8dfsm9918755wrg.43.2022.05.03.03.26.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 May 2022 03:26:48 -0700 (PDT)
+Message-Id: <pull.1172.v2.git.1651573607.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1172.git.1646919331.gitgitgadget@gmail.com>
+References: <pull.1172.git.1646919331.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 03 May 2022 10:26:41 +0000
+Subject: [PATCH v2 0/6] A couple of fixes for the Trace2 documentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220430041406.164719-1-gitter.spiros@gmail.com> <20220430041406.164719-7-gitter.spiros@gmail.com>
-In-Reply-To: <20220430041406.164719-7-gitter.spiros@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 3 May 2022 11:54:43 +0200
-Message-ID: <CAP8UFD2NSEO3qE+wSVdY2=dOrzKaoW5hcwnk04swm8zxuhoxUQ@mail.gmail.com>
-Subject: Re: [PATCH 06/23] builtin/bisect--helper.c: Fix coding style
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-About the commit subject, I think something like the following would be better:
+While verifying a suggestion for a contributor before sending it, I noticed
+that the Trace2 documentation contained an incorrect example. Looking
+around, I found a couple other things I wanted to fix, so here are the
+patches.
 
-"bisect--helper: fix comparison with NULL"
+Note: This patch series is not intended to be perfectionist. I just want the
+result to be good enough, and move on to more important things.
 
-This way it doesn't use an uppercase for "fix", the area part is
-smaller, it's more specific about what the patch is doing.
+Changes since v1:
 
-On Tue, May 3, 2022 at 3:15 AM Elia Pinto <gitter.spiros@gmail.com> wrote:
->
-> Adhere to the git coding style which requires "Do not explicitly compute an
-> integral value with constant 0 or '\ 0', or a pointer value with constant NULL."
+ * Added an Oxford comma (at least I think it is a stylistic one, not a
+   required one, but then, all three people involved in the discussion are
+   non-native speakers, so there).
+ * Added a patch to use a consistent style for function names.
+ * I now surround even more terms in backticks.
+ * I spotted and fixed a missing full stop, too.
 
-The actual wording is:
+Johannes Schindelin (6):
+  trace2 docs: a couple of grammar fixes
+  trace2 docs: "printf" is not an English word
+  trace2 docs: surround more terms in backticks
+  trace2 docs: fix a JSON formatted example
+  trace2 docs: clarify what `varargs` is all about
+  trace2 docs: add missing full stop
 
-"Do not explicitly compare an integral value with constant 0 or '\0',
-or a pointer value with constant NULL."
+ Documentation/technical/api-trace2.txt | 44 +++++++++++++-------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-which is a bit different from what you wrote. (It's "compare" not
-"compute" and "'\0'" not "'\ 0'".)
 
-The rest looks fine.
+base-commit: 1a4874565fa3b6668042216189551b98b4dc0b1b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1172%2Fdscho%2Ffix-trace2-docs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1172/dscho/fix-trace2-docs-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1172
+
+Range-diff vs v1:
+
+ 1:  07f7ee46232 ! 1:  3b944102ff2 trace2 docs: a couple of grammar fixes
+     @@ Documentation/technical/api-trace2.txt: for example.
+       Trace2 is controlled using `trace2.*` config values in the system and
+       global config files and `GIT_TRACE2*` environment variables.  Trace2 does
+      -not read from repo local or worktree config files or respect `-c`
+     -+not read from repo local or worktree config files nor does it respect `-c`
+     - command line config settings.
+     +-command line config settings.
+     ++not read from repo local or worktree config files, nor does it respect
+     ++`-c` command line config settings.
+       
+       == Trace2 Targets
+     + 
+      @@ Documentation/technical/api-trace2.txt: Format details are given in a later section.
+       
+       === The Normal Format Target
+ -:  ----------- > 2:  3c1ca34927a trace2 docs: "printf" is not an English word
+ 2:  284c6a3df84 ! 3:  2ddd9ff4506 trace2 docs: surround more terms in backticks
+     @@ Commit message
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## Documentation/technical/api-trace2.txt ##
+     +@@ Documentation/technical/api-trace2.txt: Format details are given in a later section.
+     + === The Normal Format Target
+     + 
+     + The normal format target is a traditional `printf()` format and similar
+     +-to the GIT_TRACE format.  This format is enabled with the `GIT_TRACE2`
+     ++to the `GIT_TRACE` format.  This format is enabled with the `GIT_TRACE2`
+     + environment variable or the `trace2.normalTarget` system or global
+     + config setting.
+     + 
+      @@ Documentation/technical/api-trace2.txt: $ cat ~/log.normal
+     + === The Performance Format Target
+       
+       The performance format target (PERF) is a column-based format to
+     - replace GIT_TRACE_PERFORMANCE and is suitable for development and
+     +-replace GIT_TRACE_PERFORMANCE and is suitable for development and
+      -testing, possibly to complement tools like gprof.  This format is
+     ++replace `GIT_TRACE_PERFORMANCE` and is suitable for development and
+      +testing, possibly to complement tools like `gprof`.  This format is
+       enabled with the `GIT_TRACE2_PERF` environment variable or the
+       `trace2.perfTarget` system or global config setting.
+     @@ Documentation/technical/api-trace2.txt: take a `va_list` argument.
+       See `trace2.h` for more details.  The following discussion will only
+       describe the simplified forms.
+       
+     +@@ Documentation/technical/api-trace2.txt: as each thread starts and allocates TLS storage.
+     + There are a few issues to resolve before we can completely
+     + switch to Trace2.
+     + 
+     +-* Updating existing tests that assume GIT_TRACE format messages.
+     ++* Updating existing tests that assume `GIT_TRACE` format messages.
+     + 
+     +-* How to best handle custom GIT_TRACE_<key> messages?
+     ++* How to best handle custom `GIT_TRACE_<key>` messages?
+     + 
+     +-** The GIT_TRACE_<key> mechanism allows each <key> to write to a
+     ++** The `GIT_TRACE_<key>` mechanism allows each <key> to write to a
+     + different file (in addition to just stderr).
+     + 
+     + ** Do we want to maintain that ability or simply write to the existing
+ 3:  b893f6a7faf = 4:  1c5a7008382 trace2 docs: fix a JSON formatted example
+ 4:  2eecea50e51 = 5:  0c09fd000a6 trace2 docs: clarify what `varargs` is all about
+ -:  ----------- > 6:  e1a94b0d1ae trace2 docs: add missing full stop
+
+-- 
+gitgitgadget
