@@ -2,78 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB89BC43219
-	for <git@archiver.kernel.org>; Wed,  4 May 2022 13:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 594F5C433EF
+	for <git@archiver.kernel.org>; Wed,  4 May 2022 14:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346410AbiEDN7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 May 2022 09:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46846 "EHLO
+        id S1348732AbiEDOPB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 May 2022 10:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350949AbiEDN7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 May 2022 09:59:15 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661E9B99
-        for <git@vger.kernel.org>; Wed,  4 May 2022 06:55:39 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D233A1A544D;
-        Wed,  4 May 2022 09:55:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=UoI4iYJsFCtJue/fsV7+HdrB2RyWJQgem27wmpp36Po=; b=FHqD
-        O8198aOZpqbZ02W67ZloEKSn7xe8HboV073Tdkve6w2b0dqT30byjSbdwJnJGmFJ
-        5WL8al3h3FY/+mDwVUn3T02Zf0rdZvf5ioHj5eZzQCiHrvOs+gk+CgCUV+jA/Wn2
-        DO2rRSDD3CDGrTxhIcMGARIrHjsltHDcq1Jako0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA9E41A544C;
-        Wed,  4 May 2022 09:55:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4C67B1A544B;
-        Wed,  4 May 2022 09:55:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jason Hatton <jhatton@globalfinishing.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git status extremely slow if any file is a multiple of 8GBi
-References: <CY4PR16MB1655A1F7DD8B2FABCC30C9DAAFC39@CY4PR16MB1655.namprd16.prod.outlook.com>
-Date:   Wed, 04 May 2022 06:55:34 -0700
-Message-ID: <xmqqczgtpfl5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239972AbiEDOO7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 May 2022 10:14:59 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C0A5FAB
+        for <git@vger.kernel.org>; Wed,  4 May 2022 07:11:22 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j15so2224756wrb.2
+        for <git@vger.kernel.org>; Wed, 04 May 2022 07:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3DUPACR40f58Qh021Py0/TQJGeZqXSruUkV4c+P4MIg=;
+        b=nH3EFWv8rksmgwwoCnncjN0/Uvq6qgn0ZjqdG9oDaRLFJCpaWnghZu9TDN2NR5+haZ
+         JCA1FhqSRGpnXadz2K0sWPtvdGE2MCRnWcuyo7UGA4IyTYTP7jX893Yv7qf/fsRMsbTR
+         EmkdcpK6jmayx66IPFDMgwHKFHz07fxu4PbopVSgU5kkDq2G2Gs1l8qHN1aAuuOlNU8y
+         GfoKZQnvmpfNZ+d2amgi6syjLIzrGD0s3Vk3uUcXT7JKMjbuUsHeS9i2/aFYq/l4X7BO
+         OP+pIYNPi/YijXsQZVgfd0S2JntFtr/K5qq1i4azqgH8IY+KO/aO2up6FQt0vKkO6Rbu
+         PMcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3DUPACR40f58Qh021Py0/TQJGeZqXSruUkV4c+P4MIg=;
+        b=lLDp6FpQeDk4eP5OW1RNOrH4PsJl7Gd+h4T9DHoKEjEzm/2BU+FIl4pplOhifaD40Z
+         VGBFpNQv9+AZzmy+YSPLH3Vn/BhzoewBTu5uXdkvyNRc5AlFPUv5VoMj48Xok6XWhob7
+         RcivO6y7HkwhjQn05Rw4RI1d/GqeYaDnMDYef6rQTUDYS/SnWVKG0R+GQ1SZI+E/6gvX
+         6TgOvfcmdbncIyuWQGA7F5Gd4FQzyxyZ+MYr61asUVsuH/z3FELLwV6YUKTfUZ8AGZdv
+         n3lUCPRSwPPYztePmy0SC0VRTofk/IsSG3/ptfvxHourIVXws4oCJBR3EkEGP41Y1wZG
+         iRNA==
+X-Gm-Message-State: AOAM53021DzmeeGPIgZGvlWGmajs3JEgv/5Utjn+XSSP9sR+ef5Tt63y
+        rWNP0mBx4rTl8ZdmYH1tNc6QdaHQefM=
+X-Google-Smtp-Source: ABdhPJx2n60YKTSQzywzGcAQlg6k6iyR+gRil7O+weJc0CrIg2RZcjAxgq8lxAu0CBZ1viB1m0FUoQ==
+X-Received: by 2002:a5d:690c:0:b0:20a:d9d1:f5ce with SMTP id t12-20020a5d690c000000b0020ad9d1f5cemr16945616wru.295.1651673481267;
+        Wed, 04 May 2022 07:11:21 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id p26-20020adfa21a000000b0020c5253d8ecsm11623597wra.56.2022.05.04.07.11.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 07:11:20 -0700 (PDT)
+Message-ID: <1e5c95cb-74b7-011f-7597-1639b84e56ff@gmail.com>
+Date:   Wed, 4 May 2022 15:11:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF0A0E24-CBB1-11EC-B974-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+Content-Language: en-GB-large
+To:     Carlo Arenas <carenas@gmail.com>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20220428105852.94449-1-carenas@gmail.com>
+ <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com>
+ <9b92b380-1da1-b76d-1eb4-469aba289694@gmail.com>
+ <20220503155649.b4ehcez2ytfwyq6e@carlos-mbp.lan>
+ <d54b7672-36ab-a2b8-1a73-7d1a444a5936@gmail.com>
+ <CAPUEsphJrD5VUp+QiDFr+rp7MiRrPQO8vO++O-ibXZ+BhC43HQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAPUEsphJrD5VUp+QiDFr+rp7MiRrPQO8vO++O-ibXZ+BhC43HQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jason Hatton <jhatton@globalfinishing.com> writes:
+Hi Carlo
 
-> I have a proposed idea that may or may not help. Would it be possible for any
-> file that is a multiple of 2^32 to be adjusted to a file size of 1 instead of
-> zero? Git is already functioning with mangling file sizes over 4GB in the
-> index, so maybe bumping up the size of 2^32 multiple files would mitigate the
-> issue.
+Just a quick reply for now with some brief thoughts - I'll try and 
+answer more fully tomorrow.
 
-Clever.  
+On 04/05/2022 14:02, Carlo Arenas wrote:
+ >[...]
+> 
+> This is indeed a bug, my intention was that it will be called in every
+> request so I need to at least make it "not lazy"
 
-The condition sd_size==0 is used as a signal for "no, we really need
-to compare the contents", and causes the contents to be hashed, and
-if the contents match the object name recorded in the index, the
-on-disk size is stored in sd_size and the entry is marked as
-CE_UPTODATE.  Alas, if the truncated st_size is 0, the resulting
-entry would have sd_size==0 again, so a workaround like what you
-outlined is needed.
+Unfortunately don't think that will work, it just evaluates the 
+prerequisite when you define it and uses the cached result for each 
+test. (The lazy one evaluates the prerequisite on its first use and then 
+caches the result)
 
-You'd need to make sure that you tweaked
+>> Making it lazy just means it is evaluated when it is
+>> first required rather than when it is defined. You're right that we want
+>> to avoid sudo hanging because it is waiting for a password. We should
+>> define something like
+>>
+>> sudo () {
+>>          command sudo -n "$@"
+>> }
+> 
+> This gets us half way to what is needed.  Indeed I explicitly use sudo
+> -n in the "prerequisite" for this reason, and originally I used a perl
+> function that called sudo with a timeout and then killed it after a
+> fixed time.
+> 
+> The problem is we ALSO don't want the tests to fail if sudo suddenly
+> decides to ask for a password, so by design I wanted to detect that
+> issue in the prerequisite and disable the test instead, which I
+> obviously didn't get right.
 
-	if (sd->sd_size != (unsigned int) st->st_size)
-		changed |= DATA_CHANGED;
+I don't think we have a mechanism to do that. I think the best we can do 
+is just to skip the whole file if the SUDO prerequisite fails. Depending 
+on the configuration sudo will delay the expiration of the cache 
+password each time it is called. In any case this test file is not going 
+to take much time to run so if the prerequisite passes the tests should 
+hopefully run before the cached password expires.
 
-that appears at the end of read-cache.c::match_stat_data() in a way
-that is consistent with how you munge the sd_size member in
-fill_stat_data(), if you are going to go that route.
+Another possibility is to call a function at the start of each test that 
+skips the test if 'sudo -n' fails.
 
-Thanks.
+> [...] 
+> again I think the "we are running things as root folks!!" is enough to
+> trigger a "better do not set that IKNOWWHATIAMDOING" variable on me,
+> but it might be my sysadmin experience talking.
+
+It is the fact that we're not just changing the uid that is used to run 
+the tests but we're changing the environment as well that I think we 
+need to call out. It is not obvious that running the tests with a 
+different uid will stop $HOME pointing to $TEST_DIRECTORY.
+
+
+I'll try and get back to you on the other points tomorrow
+
+Best Wishes
+
+Phillip
