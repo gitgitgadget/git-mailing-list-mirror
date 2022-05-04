@@ -2,108 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A82BDC433EF
-	for <git@archiver.kernel.org>; Wed,  4 May 2022 15:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA8DC433EF
+	for <git@archiver.kernel.org>; Wed,  4 May 2022 15:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352659AbiEDPqA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 May 2022 11:46:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41040 "EHLO
+        id S1352727AbiEDPvU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 May 2022 11:51:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352627AbiEDPpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 May 2022 11:45:52 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7401BE86
-        for <git@vger.kernel.org>; Wed,  4 May 2022 08:42:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 32F3311C127;
-        Wed,  4 May 2022 11:42:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XpWarGiFBXcJCQ1hCRLBCRNbWO5w4u+WcAWzCG
-        1Ib4c=; b=Rdvde3QrqoJFEsNuIYPnnb9x6wlW0ZuwUW/ydP2GfQyjF8dn903wBa
-        t4adfzOmT/cNwB43XJAOP5c1VQGti59IT/ETbRChS0t/QHQFIFp3eXvEhsnaTBFH
-        e+srdtUD7g6EZdqs5AX+IRn2k0tHzqG5qwe4VALp5Lx88qnCCEFHc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A690C11C126;
-        Wed,  4 May 2022 11:42:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6A9C11C123;
-        Wed,  4 May 2022 11:42:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com, me@ttaylorr.com
-Subject: Re: [PATCH v4 5/8] transport: add client side capability to request
- object-info
-References: <20220328191112.3092139-1-calvinwan@google.com>
-        <20220502170904.2770649-1-calvinwan@google.com>
-        <20220502170904.2770649-6-calvinwan@google.com>
-        <xmqqilqnsaep.fsf@gitster.g>
-        <CAFySSZBuxMdO-TNUeXcHijmG8hmrSs6LDvJ=O4ZePiyZAcJaeA@mail.gmail.com>
-Date:   Wed, 04 May 2022 08:42:11 -0700
-In-Reply-To: <CAFySSZBuxMdO-TNUeXcHijmG8hmrSs6LDvJ=O4ZePiyZAcJaeA@mail.gmail.com>
-        (Calvin Wan's message of "Tue, 3 May 2022 11:58:46 -0700")
-Message-ID: <xmqqee19nw30.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1352759AbiEDPvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 May 2022 11:51:18 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BED245AD9
+        for <git@vger.kernel.org>; Wed,  4 May 2022 08:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1651679259;
+        bh=Uea28kwGxWzSbe8Pi+czl7FMMVhNr/K5X7Y16sXKzYs=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=MwCW7mC5FEAl+USvO79rlUyfOfK3PoGdOcI7pS56dUTFjka+0JouVLbSdGeFTBcLV
+         ecGbU9xD2C/HqtqKLONFStJJ/8iVsVSrE9d/o505bpkIvMNDNMWe+pau4f1iM/STVJ
+         PHx8HG4p72BF8TNrTXp8h/VvAsGlYUn0N9zgvQh8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MeDMb-1oM9f00pyp-00bDtW; Wed, 04
+ May 2022 17:42:29 +0200
+Date:   Wed, 4 May 2022 17:42:28 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "Mirochnik, Oleg V" <oleg.v.mirochnik@intel.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git reset --hard can leave modified files
+Message-ID: <20220504154228.wxk6scaqtzri5w42@tb-raspi4>
+References: <CY5PR11MB6089858FD6FCC971D6F216DDC6FC9@CY5PR11MB6089.namprd11.prod.outlook.com>
+ <20220430044940.6botq23lxmpqxbel@tb-raspi4>
+ <CY5PR11MB608914F7E815A8EF95441BB1C6C19@CY5PR11MB6089.namprd11.prod.outlook.com>
+ <20220502192634.bzjfvoda2wjjxs3i@tb-raspi4>
+ <CY5PR11MB608955D3020A85983471A260C6C19@CY5PR11MB6089.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C44A6F7A-CBC0-11EC-B4F1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CY5PR11MB608955D3020A85983471A260C6C19@CY5PR11MB6089.namprd11.prod.outlook.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:iJu8w2B1+3gsq+r2U0zA2wr9jj4/ivaMOlV10Q3ongnvaNq5m+p
+ kOEQJhy45FoTSpZq9qyC3v2Cr2YYenOFjn8gPHcZ0HeWLHeXjwD29BJn/nJ50pmswfqJNDP
+ 19dTliWad9kmPflyf9W9z7mDMfIeWttqsaiX/3vkJpLE6IVz6rkWDhwJYXqT56xCruAHyO7
+ lY7W52C9WdrbzL6767VTA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Vd6mEIAPZyo=:de8lUE4yW+4ji+asDIdXzd
+ 7MfpE3kS6hZnY4DHoNQApxv79rwztQTEOmNb1RlZdDGejcqKqsv1DPzxVnDYeOsi5YioZWs9P
+ SP4pUWsCDQ6fp7Dccu9pK6v6ekj9Otf10lddc4qEHvasEJy7v+KvLdEah2BLW3E31ww9Rgp4S
+ Wh4Weg1jfR+Yrrqk8sanxBHIJDGqrCs0m31Qi98viDYtYoTg8THl3tHV7nJlQhPRw8UEuY3xT
+ hHR6jF2+tdpEEDbzlI1W08Umku6kF36l9XiNhbwg5U42iagwcVoae630S/8+/Vnp9HZDxj2zz
+ Jiok917CJ4vqXvGAQ4be7A1YPb5hmt1WFPMpHS7vGEpq2TJRUhGWAQOqo1dP8HIIqsn6myFAU
+ cJhw96Rq6CYB6H3WmkeUWTMJ+wvXIZQ1wawX9/DvU5rH8FB83NeVXyLvZGAfy/SwKn0cOUViE
+ y5ipkpzmOM9GNwrGYc7bIriKS4OJyQgSu6GfzoA7DbVB7PIrvEx82FRr5zt8fUrixXA6SMpDt
+ Ya3GfhJ1mhz7ptzIsXlJf2DThXwSnygM4fQ2YN395PNxCLOBi0hJ877RWgAxGJ2KUR5jBN3d/
+ cPR2XG+WvFqwzfo12igABtd+8w9MZcffLy7tBJckb7tgWZ02Ty7ClS8C4hIansRWkSoDXFHLw
+ XexbIa0ofeP/QQDCIaR/wEPCZFhLVMZjzfyzf9tbx+KNKAtBnIBpZB66BiECdjzWTISAbnmFT
+ 5NNHslLoMrYvz3tXunY5XudmM88GmEh0vj9HEPB57GZMS7w8TaMJFJINgjWs0ONjbKHmjYA4A
+ U/uhbYmh2dDi3ZOTRhHA34uaXaS31LxKK7Pa6JUP1LHB9CDx1pqh8Gh34OgL7RDrtoMbGtqA5
+ MXgKmp212m0kF61WitvTdukjSJ1e/+Jk5o50XMzme1QJX74YkZkXloJD39yeulAT/3+5qUuW+
+ +b577er4lqk2J5W6NdaQl4SCZVjIiMj1CJKYT/mOYybASgly7zVCQxQ1ONeuq65OFiGh6Jm/4
+ sXxnrUlX1RJczMkZM8i5o23k0shm8WCUsrdweHhOXGp2ImNT17GDlgLh31b+7aCRAudlZ+rmu
+ CKDSOw5wks7vuI=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+On Mon, May 02, 2022 at 10:07:11PM +0000, Mirochnik, Oleg V wrote:
+[]
+> >
+> > In other words
+> > (I may be wrong due a lack of time to dig deeper into the llvm repo) t=
+he problem
+> > seems to come from upstream.
+> >
+> > And we could find out, what upstream really wants and needs, and may b=
+e able
+> > to help here.
+> >
+> > Is this maybe something you can do, contact upstream ?
+> No, I could not as I'm not a llvm contributor.
+You can become one ;-)
 
->> It seems that the result of applying 1-5/8 does not compile.
+> Here is another related discussion, hopefully could be useful -- https:/=
+/reviews.llvm.org/D48494
 >
-> I'll check why this is the case. I should get in the habit of compiling
-> all of my patches individually.
-
-For a 8-patch series, we should make sure that all 8 states resuting
-from applying patches 1-thru-N for each N (1 <= N <= 8) builds and
-tests OK for bisectability.
-
-I often do not check that due to lack of time on the receiving end,
-but for this series, I didn't understand the sudden appearance of
-the object_info_options member in the code that didn't even seem to
-be populated anywhere, and I noticed that the series was organized
-incorrectly.  Perhaps a simple rebase misordering?
-
->> size_index was initialized to -1 and I was expecting we can tell the
->> attribute is not used by checking (size_index < 0), but this seems
->> to make size_index 1 based, not 0 based.  Intended?
+> Actually, I don't quite understand what your suggestions are.
 >
-> Yes the server returns the packet as "object_id SP size" so the first
-> value is always the object_id.
+> Are you telling it's not a git bug but an invalid setup in the llvm-proj=
+ect repo?
+Yes
 
-I think this is to skip the object name that comes as the first item
-in the response, but it would be more "pure" to keep foo_index
-0-based and add the offset by whatever constant number of things
-that come in front (currently, 1 for object name) near a lot closer
-to where we parse and read the data, i.e. in the while() loop below.
+> If so, then I'd suggest you (or git community) provide a clear descripti=
+on
+> (or link to a related document) what needs to be done to make it valid
+> and I'd ask one of our contributors to propose a correspondent fix into =
+the upstream.
+> Or you agree it's a bug.
+> Then I'd ask to propose your recommendations as a temporary (or permanen=
+t) workaround.
+>
+> Could you please clarify?
 
-IOW, the code that sets size_index based on the attribute query
-response should not have to know how many fixed elements will come
-before these attributes on the response lines.  That knowledge
-belongs to the code below:
+Now, the documentation, which I think you ask for, is here:
+https://git-scm.com/docs/gitattributes
 
-> +     i = 0;
-> +     while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
-> +             struct string_list object_info_values = STRING_LIST_INIT_DUP;
-> +
-> +             string_list_split(&object_info_values, reader.line, ' ', -1);
-> +             if (size_index > 0) {
-> +                     if (!strcmp(object_info_values.items[size_index].string, ""))
+If I look at the repo, commit 4ff40855fcc0c1320f31350bc9e93d4d6ce6891f
+(HEAD -> git-bug-reproducer, origin/git-bug-reproducer)
 
-And here the code that uses size_index should be like
+and run the official eol-diagnostic tool:
+$ git ls-files --eol >eol-prob.txt
+and then
+$ grep "^i/crlf.*attr/text" eol-prob.txt
+I get 9 files listed, so I pick the first one for a discussion:
 
-		if (0 <= size_index &&
-		    !strcmp(object_info_values.items[1 + size_index].string, ""))
-			...
+i/crlf  w/crlf  attr/text eol=3Dcrlf      clang-tools-extra/test/clang-app=
+ly-replacements/Inputs/crlf/crlf.cpp
 
-if we wanted the logic to be more "pure" and keep foo_index 0-based.
+What we have in the repo is a "conflict".
+The attributes says it is a text file, and the index file (what had been c=
+ommited)
+has CRLF.
+Git can not resolve the conflict.
+(setting text=3Dauto could work. Or normalize. Or both. Normalization is r=
+ecomended anyway)
+
+So, the solution would be to renormalize all files:
+
+$ git add --renormalize .
+(The . is important)
+
+After that you will see those 9 files modified, and they need to be commit=
+ed.
+
+In general, for a cross-platform project, it could be useful to set up a
+.gitattributes file in the top directory, with one line:
+* text=3Dauto
+
+That file can then be tweaked for BAT or sh files as needed.
+
+That should all be in the documentation - if not, please ask and/or send u=
+s
+patches.
+
+
+
+
+
+
+
