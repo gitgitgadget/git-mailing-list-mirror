@@ -2,218 +2,237 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A072C433F5
-	for <git@archiver.kernel.org>; Wed,  4 May 2022 10:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFF28C433F5
+	for <git@archiver.kernel.org>; Wed,  4 May 2022 11:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348238AbiEDKuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 May 2022 06:50:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56434 "EHLO
+        id S1348626AbiEDLTR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 May 2022 07:19:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235739AbiEDKt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 May 2022 06:49:59 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F181A047
-        for <git@vger.kernel.org>; Wed,  4 May 2022 03:46:23 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id d5so1441301wrb.6
-        for <git@vger.kernel.org>; Wed, 04 May 2022 03:46:23 -0700 (PDT)
+        with ESMTP id S1348631AbiEDLTP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 May 2022 07:19:15 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973D55FEF
+        for <git@vger.kernel.org>; Wed,  4 May 2022 04:15:35 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id p189so657894wmp.3
+        for <git@vger.kernel.org>; Wed, 04 May 2022 04:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7o2w/lEZXUmuYDooCFBi6SWsj+oqT8aR5vd7jewpJR4=;
-        b=olPP4DCrcfY12Ir8ogIX3rel+h5D6gcqKpOG42X2qEkQXsyl/nlNacimCIyrRwdX+K
-         rQ24aSkyRrhdQkrOxEog5uSdCRxGD+96gHv4cSjW+BhAkt9/ySDZlnPIBWVCdEUkKMj0
-         anCVRYGY31bePjAGt2z1raBS6FXY+KNTeQt2DkgHKG+Vji3sPOLJdGP44OPOuAiz+viq
-         bQzzR0NPbE6ocJ52ihfj4Lg0Y/Cynm2A1XDuKglt3xc+rc2LFzVHi32HSMGfKNAI4Rau
-         PrvOqec9XgFA/9v3NXyAvH+cUWvD8J0so0F68wBx96ey31ZyslU/F0lb4mxsSsOJRCVM
-         /wMA==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=WbcaZ4/4GEM/xtwzIwumKua3t+u+DHhDrlaDFi1JTfY=;
+        b=kOLiHn/5uKpVp+KG4YVbavza8I3eXc/fgINJ6f+YoRdLg+feRSslQp5RfKFFpyfh0R
+         NL12PdvwUJev2FmESMJwahsyDmkYPoqvqyxhWouy6dqYCqlJ4ZB//h8JA835t6gPuhBe
+         cwOXk72TRZgiYxB62m1F/Tg6DT8Q4i28SouNcu681+kVEr4FdGsyv+zkMZQ81gotAGhp
+         A9t3Ec3cFE1BX6DmiTWYuYLRIRTq2vPgkFJ9QLbzfzeXqgPK7wGwy8X3wrD3gHFmJ38d
+         fLMduE4bf6S2Ml9JhrVvrplny95W7tlHOOthcVwg2BhQG5KoJWZIzdFbYo2DhQkUdLGo
+         UXJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7o2w/lEZXUmuYDooCFBi6SWsj+oqT8aR5vd7jewpJR4=;
-        b=SJjffD5JfW99hwhfl2lpF+j65vdicJmPm+RAFMHbsw2Zeva80TApc8r0rub4CDaA4Z
-         6rj1KUBHAekDME5LBYh+3pWkYMfrVycTBvD7sP0aW1rkPz80ZAVMnpdXIS3QGMb3NwvB
-         BxzfOEsgR/+vUgYbxP/jkgjbNzzfHTQEer91KxgJMptY/p5d4VHfDmlqGSj3kO+V2MjF
-         aJkwmz3eLedp9noqjO9LVysiBBSPPP/9Kym00MXzlD6mSlT3G2k5LBrO21FFt31aJY3p
-         GhDwWbAZMfNYNXRYcc7OlxDbs730YvhzJjN1uO66v47Smehbd6EfcjMTicPOPLBZJUE/
-         7NYg==
-X-Gm-Message-State: AOAM532A1Y5oCxuxujUSD31hz9tb6qtbrXbfMCV/E1FN+aE2iz7FGk8+
-        Nz/g/XmkNXTykthxm18uvSZYrGiEFrM=
-X-Google-Smtp-Source: ABdhPJwktRxdp+MbBIE6py3uAJXUUsHQ3OKUW22PdTC4md3MuGWjkisMuPDO4vHOLgDWEJd+Ik39wA==
-X-Received: by 2002:a5d:678b:0:b0:20a:db0b:7395 with SMTP id v11-20020a5d678b000000b0020adb0b7395mr16249713wru.668.1651661181576;
-        Wed, 04 May 2022 03:46:21 -0700 (PDT)
-Received: from localhost.localdomain ([2001:861:3005:2510:8136:b85d:849b:69cd])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c264b00b0039444973258sm3979704wmy.0.2022.05.04.03.46.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 May 2022 03:46:20 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Carlo Arenas <carenas@gmail.com>
-Subject: [PATCH v2] http: add custom hostname to IP address resolutions
-Date:   Wed,  4 May 2022 12:46:01 +0200
-Message-Id: <20220504104601.136403-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.36.0.1.g9c537b8458.dirty
-In-Reply-To: <20220502083639.610279-1-chriscool@tuxfamily.org>
-References: <20220502083639.610279-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=WbcaZ4/4GEM/xtwzIwumKua3t+u+DHhDrlaDFi1JTfY=;
+        b=ShuXbv5OtFdp/Hb5Nu3SmRra/hXWVf+WLptuUYVmofxtSf1y92hV6ChvRa+eLs8IRu
+         1izoj3UppSFnm2Pnrc1VANP1oqevItgeBj41VduZF6gpHZbdOS3Pb63/SF4lXHUZengW
+         EnsOwCWOb5Tzzz46CoZbyMEfJqlGwNyQc5eW+vJ6HesDP9YjYg/VEfZjjkast/87ga8/
+         ccCYfDuIs4Q0JSt5+LAoY7b/s/K5AnVIJeyGzt60g3B7N3YvvZb2SN70BT1KVRy/tn5S
+         hNXmqteKc09w1PTEiT4wEAd9DUvEkXPcbL3fM9w1se1GmD9IXABbxCWCmttk66X0Bw9n
+         0oCQ==
+X-Gm-Message-State: AOAM532umpr2EczMQVsfH80RIkzZawYjmwWlwGUSimnNPJPNaIQ3efje
+        CCeYjLh0GcTFoK5CjP/xZsg=
+X-Google-Smtp-Source: ABdhPJylNtlihcfuiPbvxWUP7ggS9D0UymhdgDbOYNOyjKzlrSrK0VAtZjRg7zzWBpQljrQNz+Rl4A==
+X-Received: by 2002:a7b:c202:0:b0:394:1e7d:af44 with SMTP id x2-20020a7bc202000000b003941e7daf44mr7201164wmi.139.1651662933974;
+        Wed, 04 May 2022 04:15:33 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id x1-20020adfbb41000000b0020c7fb81b0fsm1458577wrg.46.2022.05.04.04.15.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 May 2022 04:15:33 -0700 (PDT)
+Message-ID: <d54b7672-36ab-a2b8-1a73-7d1a444a5936@gmail.com>
+Date:   Wed, 4 May 2022 12:15:29 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+Content-Language: en-US
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20220428105852.94449-1-carenas@gmail.com>
+ <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com>
+ <9b92b380-1da1-b76d-1eb4-469aba289694@gmail.com>
+ <20220503155649.b4ehcez2ytfwyq6e@carlos-mbp.lan>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220503155649.b4ehcez2ytfwyq6e@carlos-mbp.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Libcurl has a CURLOPT_RESOLVE easy option that allows
-the result of hostname resolution in the following
-format to be passed:
+Hi Carlo
 
-	[+]HOST:PORT:ADDRESS[,ADDRESS]
+On 03/05/2022 16:56, Carlo Marcelo Arenas Belón wrote:
+> On Tue, May 03, 2022 at 03:03:59PM +0100, Phillip Wood wrote:
+>>> +
+>>> +# this prerequisite should be added to all the tests, it not only prevents
+>>> +# the test from failing but also warms up any authentication cache sudo
+>>> +# might need to avoid asking for a password
+>>
+>> If this is required for all the tests then it would be simpler just to skip
+>> all the tests if it is not satisfied as you do above.
+> 
+> it is obviously not required (as shown by some tests in patch 3 not having
+> it and by my choice if the word "should"),
 
-This way, redirects and everything operating against the
-HOST+PORT will use the provided ADDRESS(s).
+I'm afraid it is not obvious to me. As far as I can see the only test 
+that does not have this prerequisite is 'cannot access if owned by root' 
+added in patch 3. That test needs a setup test to run first which 
+requires sudo so there is no point running it if this prerequisite is 
+not satisfied.
 
-The following format is also allowed to stop using
-hostname resolutions that have already been passed:
+> but it still recommended, which
+> I was hoping would be explained by that comment since if sudo to root is
+> only allowed "temporarily" by someone typing their password, then sudo keeps
+> that authentication in a cache, that could probably expire otherwise.
+> 
+> Ironically, this comment was meant to explain why it was not checked once
+> at the beginning and being used instead in almost every test, but presume
+> I wasn't clear enough, not sure if worth resubmitting either.
 
-	-HOST:PORT
+That was not clear to me. Prerequisites are evaluated once and the 
+result is cached. Making it lazy just means it is evaluated when it is 
+first required rather than when it is defined. You're right that we want 
+to avoid sudo hanging because it is waiting for a password. We should 
+define something like
 
-See https://curl.se/libcurl/c/CURLOPT_RESOLVE.html for
-more details.
+sudo () {
+	command sudo -n "$@"
+}
 
-Let's add a corresponding "http.resolve" config option
-that takes advantage of CURLOPT_RESOLVE.
+to avoid that.
 
-Each value configured for the "http.resolve" key is
-passed "as is" to curl through CURLOPT_RESOLVE, so it
-should be in one of the above 2 formats. This keeps the
-implementation simple and makes us consistent with
-libcurl's CURLOPT_RESOLVE, and with curl's corresponding
-`--resolve` command line option.
+>> Running "sudo env" shows that it sets $HOME to /root which means that these
+>> tests will pick up /root/.gitconfig if it exists.
+> 
+> I think this depends on how sudo is configured, but yes ANY environment
+> variables could be set to unsafe values that would confuse git if it assumes
+> it is still running as part of the test suite.
 
-The implementation uses CURLOPT_RESOLVE only in
-get_active_slot() which is called by all the HTTP
-request sending functions.
+I think I'm using the default configuration for that setting (or at 
+least the default configured by the linux distribution I'm using).
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
+> My approach was to make sure (with the prerequisite) that at least we have
+> PATH set to the right value, so we won't start accidentally running the
+> system provided git, but you are correct that at least for patch1, the only
+> thing I can WARRANT to work is `git status`, but it should be also clear
+> to whoever writes tests using sudo, that it can't be otherwise since git it
+> is not only running as root, but it is running in the environment that sudo
+> provides when doing so.
+> 
+>> Normally when running the
+>> tests we set $HOME to $TEST_DIRECTORY so they are run in a predictable
+>> environment. At least anything pointed to by core.hooksPath or
+>> core.fsmontior in that file is expecting to be run as root.
+> 
+> which should be the same expectation of anyone running `sudo make install`
+> in their own repository, so we are just mimicking the use case we care
+> about.
 
-Changes since v1 are the following:
+Two of the most important promises the suite makes are that (i) tests do 
+not write outside $TEST_DIRECTORY and (ii) the tests are not affected by 
+the user's or system's git config files. By having $HOME point to /root 
+we are clearly violating the second promise and making it much easier to 
+accidentally violate the first by inadvertently writing to $HOME.
 
-  - rename the new config option to "http.resolve" 
-  - use "resolution" instead of "resolve" for the noun
-  - use "format" instead of "form"
-  - improved commit message and documentation
-  - stop using a string_list and remove unnecessary
-    related variables and functions
-  - add a simple test
+> core.hooksPath or core.fsmonitor might be relevant now, but there is no way
+> for me to predict what else might be in the future,
 
-Thanks to Junio and Carlo for the suggestions.
+exactly, they are just examples and show why setting HOME=root is a bad idea
 
-As this version is very different from v1, I am not
-sure a range diff would be very useful as it would
-be very long compared to the size of the patch.
+> and then again `sudo -H`
+> will behave differently than `sudo` and there is nothing git can do to
+> prevent that, so I keep thinking $HOME is not that special eitherway.
 
- Documentation/config/http.txt | 16 ++++++++++++++++
- http.c                        | 18 ++++++++++++++++++
- t/t5551-http-fetch-smart.sh   |  7 +++++++
- 3 files changed, 41 insertions(+)
+I think $HOME is important enough to worry about because the test suite 
+deliberately resets to avoid reading the user's config. Whether some 
+other random variable such as GIT_COMMITTER_DATE is set or not does not 
+matter in the same way.
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index 7003661c0d..86f8a5978f 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -98,6 +98,22 @@ http.version::
- 	- HTTP/2
- 	- HTTP/1.1
- 
-+http.resolve::
-+	Hostname resolution information that will be used first when sending
-+	HTTP requests.  This information should be in one of the following
-+	formats:
-+
-+	- [+]HOST:PORT:ADDRESS[,ADDRESS]
-+	- -HOST:PORT
-+
-++
-+The first format redirects all requests to the given `HOST:PORT`
-+to the provided `ADDRESS`(s). The second format clears all
-+previous config values for that `HOST:PORT` combination.  To
-+allow easy overriding of all the settings inherited from the
-+system config, an empty value will reset all resolution
-+information to the empty list.
-+
- http.sslVersion::
- 	The SSL version to use when negotiating an SSL connection, if you
- 	want to force the default.  The available and default version
-diff --git a/http.c b/http.c
-index 229da4d148..7f3b7403ce 100644
---- a/http.c
-+++ b/http.c
-@@ -128,6 +128,8 @@ static struct curl_slist *pragma_header;
- static struct curl_slist *no_pragma_header;
- static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
- 
-+static struct curl_slist *host_resolutions;
-+
- static struct active_request_slot *active_queue_head;
- 
- static char *cached_accept_language;
-@@ -393,6 +395,18 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.resolve", var)) {
-+		if (!value) {
-+			return config_error_nonbool(var);
-+		} else if (!*value) {
-+			curl_slist_free_all(host_resolutions);
-+			host_resolutions = NULL;
-+		} else {
-+			host_resolutions = curl_slist_append(host_resolutions, value);
-+		}
-+		return 0;
-+	}
-+
- 	if (!strcmp("http.followredirects", var)) {
- 		if (value && !strcmp(value, "initial"))
- 			http_follow_config = HTTP_FOLLOW_INITIAL;
-@@ -1131,6 +1145,9 @@ void http_cleanup(void)
- 	curl_slist_free_all(no_pragma_header);
- 	no_pragma_header = NULL;
- 
-+	curl_slist_free_all(host_resolutions);
-+	host_resolutions = NULL;
-+
- 	if (curl_http_proxy) {
- 		free((void *)curl_http_proxy);
- 		curl_http_proxy = NULL;
-@@ -1211,6 +1228,7 @@ struct active_request_slot *get_active_slot(void)
- 	if (curl_save_cookies)
- 		curl_easy_setopt(slot->curl, CURLOPT_COOKIEJAR, curl_cookie_file);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
-+	curl_easy_setopt(slot->curl, CURLOPT_RESOLVE, host_resolutions);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, NULL);
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index f92c79c132..d97380be87 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -567,4 +567,11 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
- 	grep symref=HEAD:refs/heads/ trace
- '
- 
-+test_expect_success 'passing hostname resolution information works' '
-+	BOGUS_HOST=gitbogusexamplehost.com &&
-+	BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
-+	test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
-+	git -c "http.resolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
-+'
-+
- test_done
--- 
-2.36.0.1.g9c537b8458.dirty
+> it might be worth adding that as well as a constrain into the prerequisite
+> though, so if your sudo does change HOME then we skip these tests, or we
+> try harder to call sudo in a way that doesn't change HOME instead.
 
+It would be better to call git via a wrapper that sets HOME correctly
+
+>> I think it is
+>> worth spelling this out explicitly in the commit message (currently it is a
+>> bit vague about what the implications of not having better integration with
+>> the test framework are) and the top of the test file. Note that t1509
+>> sources test-lib.sh as the root user so does not have this issue.
+> 
+> As explained below, there is no way to "explictly" document all things that
+> might be relevant, and being vague was therefore by design.
+
+Being vague by design is unhelpful, just because it is difficult to list 
+all the possible implications of a changes does not mean that one should 
+not list the important known issues. Commit messages should be 
+transparent about the known implications of the changes the commit 
+introduces and whether there are likely to be other unanticipated 
+implications.
+
+> t1509 has also a different objective AFAIK, which is to test in an environment
+> where everything is running as root, which is not what we want to do here.
+
+Indeed - I brought it up because we're reusing IKNOWWHATIAMDOING but not 
+documenting that we using it in a different way.
+
+> root is relevant only when we got it through sudo, hence I don't think that
+> just reading test-lib.sh through sudo as well would be a "solution" in this
+> case, but I agree with you that for a full integration a lot more would be
+> needed, which was again documented and punted explicitly.
+> 
+>>> +test_lazy_prereq SUDO '
+>>> +	sudo -n id -u >u &&
+>>> +	id -u root >r &&
+>>> +	test_cmp u r &&
+>>> +	command -v git >u &&
+>>> +	sudo command -v git >r &&
+>>> +	test_cmp u r
+>>> +'
+>>> +
+>>> +test_expect_success SUDO 'setup' '
+>>> +	sudo rm -rf root &&
+>>> +	mkdir -p root/r &&
+>>> +	sudo chown root root &&
+>>> +	(
+>>> +		cd root/r &&
+>>> +		git init
+>>
+>> Using git -C <directory> would eliminate a lot of the sub shells in this
+>> file
+> 
+> My assumption (and help me understand if it was incorrect) is that these
+> tests should document the expected use cases, so you are correct that
+> both cd and -C accomplish the same in the end, but I think that cd is what
+> users would more normally use, and by writing with it (specially since it
+> requires a subshell) is also more easy to spot and understand that an
+> invocation of git with -C.
+> 
+> I have to admit I didn't even thought of using -C originally because of
+> that, but if you think that makes the test easier to understand and better
+> I am sure happy to include that in a reroll.
+
+I think it's pretty common to use -C in the test suite when running git 
+in a repository that is a subdirectory of $TEST_DIRECTORY.
+
+Best Wishes
+
+Phillip
+
+> Carlo
