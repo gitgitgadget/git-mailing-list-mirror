@@ -2,135 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80A9AC433F5
-	for <git@archiver.kernel.org>; Wed,  4 May 2022 14:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61923C433EF
+	for <git@archiver.kernel.org>; Wed,  4 May 2022 14:36:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351352AbiEDOii (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 May 2022 10:38:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49308 "EHLO
+        id S1351366AbiEDOjm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 May 2022 10:39:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347638AbiEDOig (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 May 2022 10:38:36 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B298C20F5D
-        for <git@vger.kernel.org>; Wed,  4 May 2022 07:34:59 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57A6B11ABC8;
-        Wed,  4 May 2022 10:34:58 -0400 (EDT)
+        with ESMTP id S1351421AbiEDOjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 May 2022 10:39:14 -0400
+Received: from pb-sasl-trial2.pobox.com (pb-sasl-trial2.pobox.com [64.147.108.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863C01F600
+        for <git@vger.kernel.org>; Wed,  4 May 2022 07:35:37 -0700 (PDT)
+Received: from pb-sasl-trial2.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 2B99A2B09F;
+        Wed,  4 May 2022 10:35:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3tYxjKLlSzm4tkz6jF7dYS2D7dxsqB8lSEmJ5e
-        bBn2g=; b=AXd67eFcVdU4DhIWb0n0X9GnWTSvlAQmXajMlVJOIyPBfIMN3yu+aX
-        xfVXj7w0fH53QBKKSEFMp1pdgUFuIO8LAMKuyZcn+r8Csfqbee4ujcn0B9Dl4hZ8
-        G3KS/dx8mLX03yAsJ4q7B2qP9w2jFIiUOghgYNUAof8DFs1dXVids=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E32911ABC5;
-        Wed,  4 May 2022 10:34:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=EGFyF2SAu7idkolFS8+4bV6KP
+        kI=; b=oMnsk7T+iX8tf5JswxEOFIEaYT+aOorEGkkfYBirva8sgg55an6rJGARE
+        BSNg1QpIwUHyeTtVdZwGv9tmOfRZv9xyGTaRgblLRdEUKdb0ZoOa1lLIU39zgSij
+        yASoVyMQnzXYXREVT8T3TvEWA+hODbe1Hm3YP5Ym6BzjdxGC4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=QVh2fVxa/nFzKoZnJTP
+        SL6rrrMsJE27VjTfz/Rq+UvTplUnC+0r5BrIGnVcPmnoJwpdFk0ITTxwxlL9YVo1
+        jJWb6H6XY8W9Ik11RxBDkh3T7fwWEd71Lpldedf90WnKseVYBrv07J9V7NdQ4BQo
+        zlFjf3gCo4K18FSwGbw632s8=
+Received: from pb-smtp1.nyi.icgroup.com (pb-smtp1.pobox.com [10.90.30.53])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 025622B09C;
+        Wed,  4 May 2022 10:35:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF74B11ABC4;
-        Wed,  4 May 2022 10:34:57 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12E5011B83A;
+        Wed,  4 May 2022 10:35:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jacob Vosmaer <jacob@gitlab.com>
-Subject: Re: [PATCH] http: add custom hostname to IP address resolves
-References: <20220502083639.610279-1-chriscool@tuxfamily.org>
-        <xmqqfslrycvp.fsf@gitster.g>
-        <CAP8UFD0hWUudP6pZVGS5yOVCjbBCm1LdK_EbrsQp9KiVPPMCyA@mail.gmail.com>
-Date:   Wed, 04 May 2022 07:34:56 -0700
-In-Reply-To: <CAP8UFD0hWUudP6pZVGS5yOVCjbBCm1LdK_EbrsQp9KiVPPMCyA@mail.gmail.com>
-        (Christian Couder's message of "Wed, 4 May 2022 12:07:59 +0200")
-Message-ID: <xmqqzgjxnz73.fsf@gitster.g>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH 0/9] Incremental po/git.pot update and new l10n workflow
+References: <20220503132354.9567-1-worldhello.net@gmail.com>
+Date:   Wed, 04 May 2022 07:35:34 -0700
+Message-ID: <xmqqtua5nz61.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5F24E034-CBB7-11EC-BAD2-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 756B4978-CBB7-11EC-BAB9-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
->> The above is a reasonable summary of CURLOPT_RESOLVE documentation
->> that is appropriate to have here for those of us who are not
->> familiar with it.  For those of us who may want to learn more, it
->> would help to have an URL to the canonical documentation page, e.g.
->> https://curl.se/libcurl/c/CURLOPT_RESOLVE.html but it is not
->> required.  People should be able to find it easily.
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> Yeah, I also thought that it wasn't required, but I will add it
-> anyway, as I agree it could be useful and hopefully it doesn't change
-> very often.
-
-Ah, I didn't consider the URL going stale at all.  Forcing readers
-to look for the keyword certainly is a way to avoid it, but they
-will do that once they realize URL went stale, so there is not a
-strong incentive to avoid recording the now-current URL, I would
-think.
-
->> > +http.hostResolve::
->>
->> Is "host" a good prefix for it?
->>
->> In the context of HTTP(s), if there is no other thing than host that
->> we resolve, "http.resolve" may be sufficient.  For those who are
->> looking for CURLOPT_RESOLVE equivalent, "http.curloptResolve" may
->> make it easier to find.
+> =C3=86var and I started discussing this topic (incremental po/git.pot u=
+pdate
+> and new l10n workflow) on a GitHub issue[^1] a month ago. There are
+> several improvements to the l10n workflow:
 >
-> I am Ok with just "http.resolve". I think using "curlopt" is perhaps
-> going into too many details about the implementation of the feature,
-> which could theoretically change if we ever decided to use something
-> other than curl.
+> * Variable "LOCALIZED_C" is not stable, that cause the "po/git.pot" fil=
+e
+>   generated by different user may have different number of entries.
+>   This issues is fixed in patch 2/9.
 
-You may want to step back a bit and rethink.
+Allowing translators to pick a random point in the history and run
+the tool to generate .pot file locally creates that problem for us.
+It also means that various .po files would correspond to slightly
+different versions of the source tree.
 
-Even if we decide to rewrite that part of the system not to depend
-on cURL, end-user facing documented interface, i.e. how the mappings
-are given to the system, will stay with us, and it is clear that it
-was modeled after CURLOPT_RESOLVE---well, it was stolen from them
-verbatim ;-).
+The "only the coordinator updates .pot, everybody works off of that
+file" was one way to ensure that you do not have to worry about these
+two problems.
 
-So we may wean ourselves off of cURL, but CURLOPT_RESOLVE will stay
-with us for this particular feature.
+So, if you are moving to the "no .pot file committed in-tree,
+translators generate .pot for themselves" model, you do need to make
+sure you have consistent set of files to localize.  So [2/9] does
+try to fix an issue worth solving (assuming that the new model is
+what i18n/l10n team members want).
 
->> I am wondering if we want to mention the expected use case here
->> as well, something like
->>
->>     This is designed to be used primarily from the command line
->>     configuration variable override, e.g.
->>
->>         $ git -c http.resolve=example.com:443:127.0.0.1 \
->>             clone https://example.com/user/project.git
->>
->> perhaps?  Not a suggestion, but soliciting thoughts.
+I am not sure what your plans are to make sure everybody works off
+of the same version, though.  Even if you scrape the source tree for
+source files that may not be relevant to your build, if you do not
+start off of the same version, your set of sources may be a bit off
+compared to the other translators'.
+
+> * Generate "po/git.pot" in an incremental way, so we do not need to mun=
+ge
+>   source files in-place, do not need a clean checkout, and do not need
+>   "reset --hard". See patch 3/9.
+
+That may be a worthwhile thing to do.  I have no strong opinions.
+
+> * Remove file "po/git.pot" from tree. It can be generated at runtime.
+>   See patch 5/9, 6/9.
+
+Another reason, IIRC, why we adopted "the coordinator prepares pot"
+model, in addition to the stability of the source and .pot file
+across languages, was because we wanted to reduce the load on
+language team.  It also may be handy to be able to view "git log -p"
+on the file, as long as we somehow reduce the patch noise (perhaps
+by stripping the line numbers that are constantly changing).
+
+Again, assuming that i18n/l10n team members are OK with this, I have
+no complaints.
+
+> * L10n contributors can update theire "po/XX.pot" using:
+>   "make po-update PO_FILE=3Dpo/XX.po". See patch 7/9.
 >
-> I am also interested in others' thoughts about this. If no one thinks
-> that a config option could be useful, I am Ok with making it a
-> "--resolve" command line option that can be passed to any Git command
-> similar to "-c <name>=<value>":
+> * L10n contributors for new language can initialize "po/XX.pot" using:
+>   "make po-init PO_FILE=3Dpo/XX.po". See patch 8/9.
 >
-> git --resolve=... <command> [<args>]
+> * L10n contributors can start translations at any time, even before the
+>   l10n announcing l10n window open. We must have a new l10n workflow,
+>   see patch 9/9.
 
-Absolutely not.
+Is it truly OK for the language packs for Git 2.36 to be prepared
+from v2.36.0~27 for French while German are done using v2.36.0~12?
+Again, if there is no practical downside for doing so that worries
+the i18n/l10n team members, I have no real complaints, but this is
+the one that worries me the most, actually, in the whole thing.
 
-"git [push|fetch|clone|ls-remote] --dns-pre-resolve=..." that is
-*NOT* git wide, but is only for transport commands might be a
-possibility, but even then, you'd need to invent a way to do the
-same for non cURL transports (we want to be able to pin the IP when
-going over SSH to a certain host, for the same reason) if we promote
-it to an officially supported command line option.
-
-Unless we do that, it is probably better to leave it as an obscure
-configuration meant to help server operators.  At least, with the
-name of the configuration variable prefixed with http.*, we have a
-valid excuse when somebody complains "the feature does not do
-anything for git:// transport".
-
-Thanks.
+Thanks for working on this topic, both of you.
