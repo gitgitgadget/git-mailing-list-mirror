@@ -2,136 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C87C433F5
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 10:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B35AC433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 11:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356061AbiEEKwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 06:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58754 "EHLO
+        id S243122AbiEELTz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 07:19:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233719AbiEEKwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 06:52:42 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF59E15FD7
-        for <git@vger.kernel.org>; Thu,  5 May 2022 03:49:02 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id c1-20020a17090a558100b001dca2694f23so3625080pji.3
-        for <git@vger.kernel.org>; Thu, 05 May 2022 03:49:02 -0700 (PDT)
+        with ESMTP id S238836AbiEELTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 07:19:53 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D689153B56
+        for <git@vger.kernel.org>; Thu,  5 May 2022 04:16:14 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id p3so1251724qvi.7
+        for <git@vger.kernel.org>; Thu, 05 May 2022 04:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=T5KwN8wrknyRZJOBitIpSinGcHyVGsXdNjlWBqUKlXo=;
-        b=CXZGhY09YC6rTsZ4B9n6i6PU240f/XBEDwhxGGm/kKyo5PqfevNoMpXBt8iuihoEcd
-         YSeCFpNYP6CRlxQdlFkdB+d6viTfp+vRv+1FmGYypzC8HNTJpllfQiJ2LJZ1L8wXKiHY
-         +eB67twiqgmGdz0sDBYFb+F/RoYSoNWd5jzSwCSPKYBLRyY0nFBCyGNSuevF4tb2dCuw
-         Ot4nMC4mybTsrHxOpyqatuZPb31Kv/BNnNn8Gi6fS1yxEHJzltJvx+ZPd8+ULROCPtbW
-         gTlxmdSerT0eYFIQJV43WIp1LYGLsMBBFyu/CZgmOyfE90xbQMZmwfSfCKuR+W5OKf2b
-         T9tg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aEwyJAuFyNTqlqPG5TTR/KUcL9VX6nkovn7htiW9KuY=;
+        b=PJIKklEsgbHiBj3DX4pRT5F5mF1kXUqL/M5mCwYTgBY0UIupde+WFPY10V1tt/YCNA
+         riisKb4joaQUj4v/MNejEDWcVSQ9ggqToBU5hBltL+58hZHO6RdPaG+3UWyCzQbyDc0T
+         Iv5GUJkswHj/8v9oHW10v5th7XgQ+ttkrNTacGI3rWAJyutn6qJ8cwYL0ixiPGk5o6+2
+         HDHCk9/CLkG2jpOtIh1I6AWuPMjsWAk36gNWZp1kbCEoIoXDBbQA6whcnJieqZ6xVFPw
+         t8Vgjc3wiX43ZpopXP/HXkS9BsWF3oERhRIEk+5BZLivELNf9v9NdTzRJNlIcJ2+S/z9
+         14vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T5KwN8wrknyRZJOBitIpSinGcHyVGsXdNjlWBqUKlXo=;
-        b=NLTkwOBFEmLUgnwlVObKzK5cT7S8uKh9QCANo8ZwiUDSj0NRqHRgywwqX/qVTX6JHp
-         oMFpJd2X7Dv7S7eTJRNe/8QykfNsmrc/JyqvrZkU+TXxEY60Cgd97dea66iRfHT2F4dx
-         4+dIbOHW7czMDs6tRjXaD4nULV3iTs5wcbSXMWCStrzix3/gbMVw6CZhC1myCng9lmsT
-         jCv/AIPpvb/fDi/LmocgiOvUwhmAy1kwBxOoIN0YeHZJI7btFmJnuOu+GoDBDaLKIk6y
-         khc5OOdC7iwqmsPqsXQvy4IUCBR9WDQd4/vofP5No71HpHmCJBAoVpfLoBWFu7jv3qo2
-         bJzA==
-X-Gm-Message-State: AOAM532dYhrduQVGlvBvzkS62RhtwxThEiFXz+VipBe6gueDq9xHp2kY
-        7w8957HFwGiK6d5qbxJSVm+1TGVCTizty0BG2IM=
-X-Google-Smtp-Source: ABdhPJynwioRZbkCg3pFwk9QQUOLKUJvCOgq2pPm+JGjJU2GGveB8B1gjoN25GJ1+ZJknvfXNs/E3SDT2yzNGVhE40c=
-X-Received: by 2002:a17:902:ce8b:b0:15e:c249:1bf0 with SMTP id
- f11-20020a170902ce8b00b0015ec2491bf0mr9174419plg.125.1651747742354; Thu, 05
- May 2022 03:49:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220502083639.610279-1-chriscool@tuxfamily.org>
- <xmqqfslrycvp.fsf@gitster.g> <CAP8UFD0hWUudP6pZVGS5yOVCjbBCm1LdK_EbrsQp9KiVPPMCyA@mail.gmail.com>
- <xmqqzgjxnz73.fsf@gitster.g>
-In-Reply-To: <xmqqzgjxnz73.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 5 May 2022 12:48:50 +0200
-Message-ID: <CAP8UFD0V6scSD8LuUiRQ0BWmG2mFATVFNQ2DgwaWFp6bigBkZw@mail.gmail.com>
-Subject: Re: [PATCH] http: add custom hostname to IP address resolves
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aEwyJAuFyNTqlqPG5TTR/KUcL9VX6nkovn7htiW9KuY=;
+        b=Bl1TpwcDNwjXAbAhCqak8Sh8utNOMCH5wHRQhBICmcS6j2oKumD2Qr/gpKSlQmSOCQ
+         nvszOrMZAD0u0pWwXD5K2WdsTyTsc3O+InTSQSLinhnT51Ho9dpQO76znF93S3H2ESQP
+         bM8Q27ClJnoAoQAZ1Zc0hJGKiP3wNFEfhjGnD067qRe4RuE7ztEq+UzG891fR1ZAdQs3
+         9q66yRe/mV6R2lnvnx/CdwVeUMNeknMTL1j+ljJZYZfp0jsB4ed5V3MbVi/XGdh+KhPJ
+         w+PAbg16504kdCglZrHrNvYxJohpjdyM9L50vQ44p9YkHQ05CHAJP0+70tUQ5tRUpwXt
+         fzmg==
+X-Gm-Message-State: AOAM533Zx+DqQ1tWr5bKraRogmOWcgddAHaRXvDXHWq5Wkjpyn5iwFoc
+        rdDSlkDeOfnGl3PiI0yavs4=
+X-Google-Smtp-Source: ABdhPJzrpH7FIZR9otDGqWOY6bMJk/3dKZoV72pOdKduQtVyAaj5Qm2XAKEDj13YEHclSUsPUAvYXA==
+X-Received: by 2002:a05:6214:20e6:b0:446:779e:6a16 with SMTP id 6-20020a05621420e600b00446779e6a16mr21808332qvk.81.1651749373639;
+        Thu, 05 May 2022 04:16:13 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id z11-20020ac8100b000000b002f39b99f683sm680474qti.29.2022.05.05.04.16.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 04:16:13 -0700 (PDT)
+Date:   Thu, 5 May 2022 04:16:08 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Derrick Stolee <derrickstolee@github.com>,
         Jacob Vosmaer <jacob@gitlab.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] http: add custom hostname to IP address resolves
+Message-ID: <20220505111608.o63obxrifoqz6j5w@carlos-mbp.lan>
+References: <20220502083639.610279-1-chriscool@tuxfamily.org>
+ <xmqqfslrycvp.fsf@gitster.g>
+ <CAP8UFD0hWUudP6pZVGS5yOVCjbBCm1LdK_EbrsQp9KiVPPMCyA@mail.gmail.com>
+ <xmqqzgjxnz73.fsf@gitster.g>
+ <CAP8UFD0V6scSD8LuUiRQ0BWmG2mFATVFNQ2DgwaWFp6bigBkZw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0V6scSD8LuUiRQ0BWmG2mFATVFNQ2DgwaWFp6bigBkZw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 4, 2022 at 4:34 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
-
-> > I am Ok with just "http.resolve". I think using "curlopt" is perhaps
-> > going into too many details about the implementation of the feature,
-> > which could theoretically change if we ever decided to use something
-> > other than curl.
->
-> You may want to step back a bit and rethink.
->
-> Even if we decide to rewrite that part of the system not to depend
-> on cURL, end-user facing documented interface, i.e. how the mappings
-> are given to the system, will stay with us, and it is clear that it
-> was modeled after CURLOPT_RESOLVE---well, it was stolen from them
-> verbatim ;-).
->
-> So we may wean ourselves off of cURL, but CURLOPT_RESOLVE will stay
-> with us for this particular feature.
-
-Yeah, the CURLOPT_RESOLVE format will stay with us, so Ok, I will
-rename it "http.curloptResolve" in the next iteration then.
-
-> >> I am wondering if we want to mention the expected use case here
-> >> as well, something like
-> >>
-> >>     This is designed to be used primarily from the command line
-> >>     configuration variable override, e.g.
-> >>
-> >>         $ git -c http.resolve=example.com:443:127.0.0.1 \
-> >>             clone https://example.com/user/project.git
-> >>
-> >> perhaps?  Not a suggestion, but soliciting thoughts.
+On Thu, May 05, 2022 at 12:48:50PM +0200, Christian Couder wrote:
+> On Wed, May 4, 2022 at 4:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >
+> > > I am also interested in others' thoughts about this. If no one thinks
+> > > that a config option could be useful, I am Ok with making it a
+> > > "--resolve" command line option that can be passed to any Git command
+> > > similar to "-c <name>=<value>":
+> > >
+> > > git --resolve=... <command> [<args>]
 > >
-> > I am also interested in others' thoughts about this. If no one thinks
-> > that a config option could be useful, I am Ok with making it a
-> > "--resolve" command line option that can be passed to any Git command
-> > similar to "-c <name>=<value>":
+> > Absolutely not.
 > >
-> > git --resolve=... <command> [<args>]
->
-> Absolutely not.
->
-> "git [push|fetch|clone|ls-remote] --dns-pre-resolve=..." that is
-> *NOT* git wide, but is only for transport commands might be a
-> possibility, but even then, you'd need to invent a way to do the
-> same for non cURL transports (we want to be able to pin the IP when
-> going over SSH to a certain host, for the same reason) if we promote
-> it to an officially supported command line option.
+> > "git [push|fetch|clone|ls-remote] --dns-pre-resolve=..." that is
+> > *NOT* git wide, but is only for transport commands might be a
+> > possibility, but even then, you'd need to invent a way to do the
+> > same for non cURL transports (we want to be able to pin the IP when
+> > going over SSH to a certain host, for the same reason) if we promote
+> > it to an officially supported command line option.
+> 
+> Ok with renaming and implementing it only in transport commands. I
+> don't want, and I don't think it should be necessary, to invent a way
+> to do the same for non cURL transports though. I think it should be Ok
+> with the doc saying that the option has only been implemented for
+> HTTP(S) yet and will have no effect when other transports are used.
 
-Ok with renaming and implementing it only in transport commands. I
-don't want, and I don't think it should be necessary, to invent a way
-to do the same for non cURL transports though. I think it should be Ok
-with the doc saying that the option has only been implemented for
-HTTP(S) yet and will have no effect when other transports are used.
+I think it will be better if git aborts with an error if it is used for
+a transport that it doesn't support, instead of relying in the documentation,
+though.
+ 
+> If there is a simple way to do the same thing for ssh, then I might
+> take a look at it later. For "file" or bundle transports, I don't
+> think it makes sense, and the "git" transport is not used much in big
+> hosting services where this feature is likely to be used.
 
-If there is a simple way to do the same thing for ssh, then I might
-take a look at it later. For "file" or bundle transports, I don't
-think it makes sense, and the "git" transport is not used much in big
-hosting services where this feature is likely to be used.
+This seems definitely useful also for ssh which is also used in big
+hosting services.
 
-> Unless we do that, it is probably better to leave it as an obscure
-> configuration meant to help server operators.  At least, with the
-> name of the configuration variable prefixed with http.*, we have a
-> valid excuse when somebody complains "the feature does not do
-> anything for git:// transport".
+Ironically, I think would be even more useful for the "git" transport
+specially because it doesn't have other protections to rely on that
+would help prevent spoofing (like TLS), which might be also why it is
+not that widely used anymore.
 
-I am happy with leaving it as an obscure configuration meant to help
-server operators. So I will just rename it "http.curloptResolve" in
-the next iteration.
-
-Thanks!
+Carlo
