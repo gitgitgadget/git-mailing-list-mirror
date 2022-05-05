@@ -2,241 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B2EAC433F5
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 08:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7185C433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 09:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344985AbiEEI5d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 04:57:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38172 "EHLO
+        id S1354003AbiEEJoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 05:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbiEEI53 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 04:57:29 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC434A3FC
-        for <git@vger.kernel.org>; Thu,  5 May 2022 01:53:49 -0700 (PDT)
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N0Zfg-1o0khi3bM4-00wRFG for <git@vger.kernel.org>; Thu, 05 May 2022 10:53:46
- +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 95C701E01E7
-        for <git@vger.kernel.org>; Thu,  5 May 2022 08:53:46 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Lr4LHQ1RgCas for <git@vger.kernel.org>;
-        Thu,  5 May 2022 10:53:46 +0200 (CEST)
-Received: from pfwvexchange.corp.cetitec.com (unknown [10.10.1.40])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPS id 1AB5D1E01E6
-        for <git@vger.kernel.org>; Thu,  5 May 2022 10:53:46 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (10.8.5.23) by
- pfwvexchange.corp.cetitec.com (10.10.1.40) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 5 May 2022 10:53:45 +0200
-Received: by pflmari.corp.cetitec.com (Postfix, from local account)
-Date:   Thu, 5 May 2022 10:53:45 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     <git@vger.kernel.org>
-Subject: Crashes in t/t4058-diff-duplicates.sh
-Message-ID: <YnOQmVFVRuqnanMi@pflmari>
+        with ESMTP id S1345776AbiEEJoi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 05:44:38 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6A14D60F
+        for <git@vger.kernel.org>; Thu,  5 May 2022 02:40:59 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id bg25so2284352wmb.4
+        for <git@vger.kernel.org>; Thu, 05 May 2022 02:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MUQIZ9BBLEkGNIanflVGWjFGRWM56zLaDvA9Tyo+C4M=;
+        b=haDOf9nshL+aTCv8dfiyK8yiXr4tM+nsIG7WbnOlq00YHhmSKF9Xp3fMx951tOksyx
+         /cKsYsJSTLFHsnu+m+Yqj0y0tsartBOPBgYG7mhBCxVA/zKTcaf+r7UH4flqKq1RE59l
+         pXNCmVXKWPIegW8YqgrVabDRXfZIPe5c2Q9uhuDHax3K8RRtyuedf6QolUHwvJwBP47a
+         89gNxk+3q87QIDrBOlOdeoIvvG1gH9C5JgU0DzPaTuf8VN6cSr2JOAxqV+tsweOocEUk
+         MTm4xGq2uUFNnP1Nxi9RVAduA2as5SbgskWEIDRpBm4GiuCcC1jpw7xnbB5E8ScvQxKk
+         2ulQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MUQIZ9BBLEkGNIanflVGWjFGRWM56zLaDvA9Tyo+C4M=;
+        b=37fCuI1QhNCUgjZYHdL2Y8CTOdOu9r3A8g2/w6z6KT+PCc1W5qgC1l9JB1RjMtJErh
+         Sv0Tuxjg8SSVO3E15bxNS3mR9cJvqrlT70/vKFGAGx4pWDsv1ZpWA6HT6x3r4EedOxEW
+         gzXb9xakarS+6p+amYvVuLLsSROa9FXIeo2K2nBX7A7yamWMIOjABHEXZNnwOQSUEQNw
+         QX5vgRxRo5e1/n88mP6b24WaatXkMGf+3nb707DsMsY5wwAvGIK2DqMGlQHG2RFJzC14
+         gwpMVxOa/Q6xdwYV5ChFjbu4rySwe6X4EKFY4XqpDS99C550hdb5GVSGoCVPCid+AsFm
+         X1XQ==
+X-Gm-Message-State: AOAM5304u2Toha2jjn/6/Gv3AclUPod/y8F5/Rky5hbX3wN8fCPqI2we
+        lyBP/o1nklICeMj+ntWHodw=
+X-Google-Smtp-Source: ABdhPJxKQzd7RRFpQHQE0vxm80W8YPKA0D5JWZo65MyjXZdiZdWexn8IKRzbPANeQUi8TSet0c+9dQ==
+X-Received: by 2002:a05:600c:2e08:b0:394:24c:2da4 with SMTP id o8-20020a05600c2e0800b00394024c2da4mr3721303wmf.134.1651743657531;
+        Thu, 05 May 2022 02:40:57 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id o7-20020a05600c510700b003942a244f3csm5690692wms.21.2022.05.05.02.40.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 May 2022 02:40:56 -0700 (PDT)
+Message-ID: <41ec8c09-f31f-46ce-d6ec-4b6fdd78228a@gmail.com>
+Date:   Thu, 5 May 2022 10:40:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] setup: tighten ownership checks post CVE-2022-24765
+Content-Language: en-GB-large
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, junio@pobox.com
+References: <20220504184401.17438-1-carenas@gmail.com>
+ <20220505005009.27789-1-carenas@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220505005009.27789-1-carenas@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.8.5.23]
-X-ClientProxiedBy: pfwvexchange.corp.cetitec.com (10.10.1.40) To
- pfwvexchange.corp.cetitec.com (10.10.1.40)
-X-EsetResult: clean, is OK
-X-EsetId: 37303A29E82A2D51667D67
-X-Provags-ID: V03:K1:jQm+hsCKJBTm4BjHA+9CQxUMS8XuxM3ouYHzFecafJeIjbmrktl
- Djkf0goCalKLp1IOrkG1YgcSED7E0pD6kfGaHhe8GSeMy0EwlHRXZWcJg8kAFKX/vyReybC
- zzSPSOoifebRjBp9GfrjFOAG9k95FnoomKKzr7C4OtvXt/jzhyaGUS4BxlSclqltt1rPZO6
- 9BlGAr9ME0auqYktG+VLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TuLzUfgLaSk=:sM0Km8Rcy4v8RCI3NzkOW2
- gz5f8AOPqsr8B58JpPK1raSh1jagyxBwf0e4Xm/NFWo9BTzdhtcI/fJ4FBg/vXgPOoNpWITUT
- J2ixQAgEup2m8cfHHseV34JG4Rt/30haUwLqf9BtwC9psuYd//TQWwE0oktyJj+5T60un29bs
- b8mv5ROb3vyGiO9x9KhqLmARPwt7p7tX89RMymNh4N1zQlMn2sGzOTUeoe/6tEvkyQjQd2F5g
- C4yfnlPXc5Bf8Ghd//VwTC+lXgkVr61nDlpEpvHBZ93jaGs5GoJVsQfjPY3SKdnnJEKiRYaMf
- wpepYAWm2iSrUBWsdcrQ0cThlkH5fK62NJFu0StOP5TWEmgW3A9zP4TQmc0rq7Y5H7Ge69NCs
- cmr4bsb5uLRXcBjChtBPE22ZHKNxrwDTfLsHB/MB/27/DI7nAdgGgpiSF250Qw2H4qYT5AnKf
- ESrLR1YrEHAxcqn4JLX9q79rc1OEimB8bNlshA6GhfdGuVsP4+e6+x3/67defQ6ES62SJ9RbO
- im08qCRDXawRGAyauHg58QQArCV3WI1KAkWPf99xuguau74QkVtlxBYBdqi1FV8hlUmswKoZQ
- aL1Yab0QPdFAxh9Pu8IvAqkpHQ+iIDgAT26i6iomyapc1EQ1rOHqbdESayTXvSkLADtw2Rek2
- ZwMjPuKd/XH8CfA+Wsj6a/vxbZEpb1WQCOKTaQdjZdeBmRyGN2WkxvL0dCiWNsQEj1h6vVpmI
- ImO5e9Mwr7OaywfO
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Carlo
 
-the test t4058-diff-duplicates reliably dumps core here:
+On 05/05/2022 01:50, Carlo Marcelo Arenas Belón wrote:
+> 8959555cee7 (setup_git_directory(): add an owner check for the top-level
+> directory, 2022-03-02), adds a function to check for ownership of
+> repositories using a directory that is representative of it (its workdir)
+> and ways to add it to an exception list if needed, but that check breaks
+> when the ownership of the workdir is not the same than the ownership of
+> directory where the configuration and other relevant files reside.
+> 
+> An attacker could create a git repository in a directory that he has write
+> access to but is owned by the victim, and therefore workaround the fix that
+> was introduced with CVE-2022-24765 to attack them, like in the following
+> scenario which could result in privilege escalation if root then runs a git
+> command in that directory or any of its sub directories:
+> 
+>    $ git -C /tmp init
+> 
+> To avoid that, extend the ensure_valid_ownership function to be able to
+> check for ownership of both the worktree and the gitdir, and use that for
+> non bare repositories.
 
-CORE-OF: /home/xxx/yyyyyyy/git/git
+Looking at the code below it now only ever checks the ownership of the 
+gitdir, it no longer checks the ownership of the worktree. I haven't 
+really thought through what happens if I cd into a worktree added by an 
+attacker to a repository that I own which has extentions.worktreeConfig 
+set. My initial thought is that if they can add a worktree then they can 
+probably edit the repository config anyway but I wonder if an attacker 
+can set GIT_COMMON_DIR to a directory where they have write permission 
+to add a worktree to a repository where they don't have write permission.
 
-DUMPCORE_ARGS:
- 9975
- 9975
- 11
- !home!xxx!yyyyyyy!git!git
-DUMPCORE_ARGS_END
+> [...]
+> diff --git a/setup.c b/setup.c
+> index aad9ace0af9..0fae2d71a3c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1054,14 +1054,21 @@ static int safe_directory_cb(const char *key, const char *value, void *d)
+>   	return 0;
+>   }
+>   
+> -static int ensure_valid_ownership(const char *path)
+> +static int ensure_valid_ownership(const char *worktree, const char *gitdir)
+>   {
+> -	struct safe_directory_data data = { .path = path };
+> +	struct safe_directory_data data = { .path = worktree };
 
-PROC-9975:
- root -> /
- cwd -> /home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates
- fd/0 -> /dev/null
- fd/1 -> /dev/pts/7
- fd/2 -> /dev/pts/7
- fd/3 -> /dev/pts/7
- fd/4 -> /dev/pts/7
- fd/5 -> /dev/pts/7
- fd/6 -> /dev/pts/7
- fd/7 -> /dev/pts/7
- fd/8 -> /home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates/.git/index.lock
-PROC-9975_END
+We keep checking the worktree path against safe.directory - good.
 
-ENVIRONMENT:
-GIT_COMMITTER_NAME=C O Mitter
-USER=xxx
-GIT_AUTHOR_EMAIL=author@example.com
-GIT_TEMPLATE_DIR=/home/xxx/yyyyyyy/git/templates/blt
-XDG_SEAT=seat0
-TAR_OPTIONS=--atime-preserve
-GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true
-_x05=[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]
-GIT_EXEC_PATH=/home/xxx/yyyyyyy/git
-SSH_AGENT_PID=3796
-XDG_SESSION_TYPE=x11
-GIT_CEILING_DIRECTORIES=/home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates/..
-USER_HOME=/home/xxx
-SHLVL=1
-LESS=RSX
-HOME=/home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates
-OLDPWD=/home/xxx/yyyyyyy/git/t
-GIT_AUTHOR_DATE=1112354055 +0200
-_x35=[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]
-DESKTOP_SESSION=lightdm-xsession
-ZERO_OID=0000000000000000000000000000000000000000
-OID_REGEX=[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]
-XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
-PAGER=cat
-GIT_AUTHOR_NAME=A U Thor
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-qjoVRmyD3o,guid=8cdc53ee0598990a001ad838627364a4
-u200c=‌
-COLORTERM=rxvt-xpm
-test_prereq=
-GNOME_KEYRING_CONTROL=/run/user/1000/keyring
-GIT_TEST_MERGE_ALGORITHM=ort
-EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-GITPERLLIB=/home/xxx/yyyyyyy/git/perl/build/lib:/home/xxx/yyyyyyy/git/perl/build/lib
-LOGNAME=xxx
-GIT_ATTR_NOSYSTEM=1
-WINDOWID=56623113
-_=./t4058-diff-duplicates.sh
-GIT_TEST_CHECK_CACHE_TREE=false
-XDG_SESSION_CLASS=user
-COLORFGBG=15;default
-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-TERM=dumb
-XDG_SESSION_ID=2
-COLUMNS=80
-GIT_TRACE_BARE=1
-USER_TERM=rxvt-unicode-256color
-GIT_MERGE_VERBOSITY=5
-PATH=/home/xxx/yyyyyyy/git/bin-wrappers:/home/xxx/yyyyyyy/git/bin-wrappers:/home/xxx/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
-LESSCHARSET=latin1
-GDM_LANG=en_US.utf8
-GIT_CONFIG_NOSYSTEM=1
-XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
-XDG_RUNTIME_DIR=/run/user/1000
-DISPLAY=:0
-GIT_DEFAULT_HASH=sha1
-LANG=C
-LSAN_OPTIONS=fast_unwind_on_malloc=0:strip_path_prefix=/home/xxx/yyyyyyy/git/:abort_on_error=1
-GIT_TRACE2_EVENT_NESTING=100
-GNUPGHOME=/home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates/gnupg-home-not-used
-SHELL=/bin/bash
-MALLOC_CHECK_=3
-GIT_TEXTDOMAINDIR=/home/xxx/yyyyyyy/git/po/build/locale
-EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-MALLOC_PERTURB_=165
-OSTYPE=linux-gnu
-ASAN_OPTIONS=detect_leaks=0:strip_path_prefix=/home/xxx/yyyyyyy/git/:abort_on_error=1
-GIT_COMMITTER_EMAIL=committer@example.com
-PWD=/home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates
-SHELL_PATH=/bin/sh
-PERL_PATH=/usr/bin/perl
-LC_ALL=C
-GIT_MERGE_AUTOEDIT=no
-LC_NUMERIC=C
-TZ=UTC
-GIT_COMMITTER_DATE=1112354055 +0200
-LF=\n
-MANPATH=:/home/xxx/share/man
-EDITOR=:
-GIT_TEST_FSYNC=0
-ENVIRONMENT_END
+> +	const char *check_path;
+> +
+> +	if (gitdir)
+> +		check_path = gitdir;
+> +	else
+> +		check_path = worktree;
 
-PID_TRACE:
-9975 (git) S /home/xxx/yyyyyyy/git/git merge update 
- cwd: /home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates
-9653 (t4058-diff-dupl) S /bin/sh ./t4058-diff-duplicates.sh -d -v -i 
- cwd: /home/xxx/yyyyyyy/git/t/trash directory.t4058-diff-duplicates
-4932 (bash) S bash 
- cwd: /home/xxx/yyyyyyy/git/t
-4924 (urxvt) S urxvt 
- cwd: /home/xxx
-1 (init) S init [2]   
- cwd: /
-PID_TRACE_END
+We check either the gitdir or worktree but always call this function 
+with a non-NULL gitdir so in fact always check that. This code could be 
+removed.
 
-GDB:
-Reading symbols from /home/xxx/yyyyyyy/git/git...
-[New LWP 9975]
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-Core was generated by `/home/xxx/yyyyyyy/git/git merge update'.
-Program terminated with signal SIGSEGV, Segmentation fault.
-#0  0x00005629e52f4a00 in traverse_by_cache_tree (info=0x7fff27e7dba8, 
-    info=0x7fff27e7dba8, nr_names=2, nr_entries=4, pos=0)
-    at unpack-trees.c:807
-807			len = ce_namelen(src[0]);
-Threads:
-  Id   Target Id                        Frame 
-* 1    Thread 0x7f408feb8740 (LWP 9975) 0x00005629e52f4a00 in traverse_by_cache_tree (info=0x7fff27e7dba8, info=0x7fff27e7dba8, nr_names=2, nr_entries=4, pos=0) at unpack-trees.c:807
-Stack:
-new_ce_len = <optimized out>
-len = <optimized out>
-rc = <optimized out>
-o = 0x7fff27e7e930
-tree_ce = 0x5629e596e7d0
-ce_len = 240
-i = 1
-src = {0x5629e594a518, 0x5629e596e7d0, 0x5629e596e7d0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}
-d = <optimized out>
-src = {<optimized out>, <optimized out>, <optimized out>, <optimized out>, <optimized out>, <optimized out>, <optimized out>, <optimized out>, <optimized out>}
-o = <optimized out>
-tree_ce = <optimized out>
-ce_len = <optimized out>
-i = <optimized out>
-d = <optimized out>
-new_ce_len = <optimized out>
-len = <optimized out>
-rc = <optimized out>
-#0  0x00005629e52f4a00 in traverse_by_cache_tree (info=0x7fff27e7dba8, info=0x7fff27e7dba8, nr_names=2, nr_entries=4, pos=0) at unpack-trees.c:807
-#1  traverse_trees_recursive (n=n@entry=2, dirmask=dirmask@entry=3, df_conflicts=df_conflicts@entry=0, names=names@entry=0x7fff27e7df80, info=info@entry=0x7fff27e7e420) at unpack-trees.c:872
-#2  0x00005629e52f5668 in unpack_callback (n=<optimized out>, mask=3, dirmask=3, names=0x7fff27e7df80, info=<optimized out>) at unpack-trees.c:1479
-#3  0x00005629e52f3162 in traverse_trees (istate=0x5629e541c980 <the_index>, n=n@entry=2, t=t@entry=0x7fff27e7e6f0, info=info@entry=0x7fff27e7e420) at tree-walk.c:532
-#4  0x00005629e52f82fa in unpack_trees (len=len@entry=2, t=t@entry=0x7fff27e7e6f0, o=o@entry=0x7fff27e7e930) at unpack-trees.c:1882
-#5  0x00005629e523d2ae in checkout_fast_forward (r=0x5629e541caa0 <the_repo>, head=head@entry=0x5629e594be24, remote=remote@entry=0x5629e594be6c, overwrite_ignore=1) at merge.c:94
-#6  0x00005629e5135742 in cmd_merge (argc=<optimized out>, argv=<optimized out>, prefix=<optimized out>) at builtin/merge.c:1578
-#7  0x00005629e50c921b in run_builtin (argv=0x7fff27e7f9c0, argc=2, p=0x5629e53ead48 <commands+1608>) at git.c:465
-#8  handle_builtin (argc=2, argv=0x7fff27e7f9c0) at git.c:719
-#9  0x00005629e50ca53d in run_argv (argv=0x7fff27e7f700, argcp=0x7fff27e7f70c) at git.c:786
-#10 cmd_main (argc=<optimized out>, argc@entry=3, argv=<optimized out>, argv@entry=0x7fff27e7f9b8) at git.c:917
-#11 0x00005629e50c8f03 in main (argc=3, argv=0x7fff27e7f9b8) at common-main.c:56
-GDB_END
+>   	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
+> -	    is_path_owned_by_current_user(path))
+> +	    is_path_owned_by_current_user(check_path))
 
-end
+Previously we checked the ownership of the worktree but now we check the 
+ownership of the gitdir instead to handle the "git -C /tmp init" case.
 
-P.S. dumpcore (the tool which produced this trace) is this: https://github.com/raalkml/dumpcore
+>   		return 1;
+>   
+> +	data.is_safe = 0; /* ensure we are initialized and secure by default */
+>   	read_very_early_config(safe_directory_cb, &data);
+>   
+>   	return data.is_safe;
+> @@ -1166,14 +1173,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>   		}
+>   		strbuf_setlen(dir, offset);
+>   		if (gitdirenv) {
+> -			if (!ensure_valid_ownership(dir->buf))
+> +			const char *gitdir_to_check = gitdirenv;
+> +			struct strbuf gdbuf = STRBUF_INIT;
+> +			int ret;
+> +
+> +			if (!is_absolute_path(gitdirenv)) {
+> +				strbuf_addf(&gdbuf, "%s/%s", dir->buf,
+> +						gitdirenv);
+> +				gitdir_to_check = gdbuf.buf;
+> +			}
+> +			ret = ensure_valid_ownership(dir->buf, gitdir_to_check);
+> +			strbuf_release(&gdbuf);
+> +			if (!ret)
+>   				return GIT_DIR_INVALID_OWNERSHIP;
+>   			strbuf_addstr(gitdir, gitdirenv);
+>   			return GIT_DIR_DISCOVERED;
+>   		}
+>   
+>   		if (is_git_directory(dir->buf)) {
+> -			if (!ensure_valid_ownership(dir->buf))
+> +			if (!ensure_valid_ownership(NULL, dir->buf))
+
+Previously we checked bare repositories against safe.directory now we no 
+longer do that as worktree is NULL. If this is intentional it should be 
+flagged up in the commit message.
+
+Best Wishes
+
+Phillip
+
+>   				return GIT_DIR_INVALID_OWNERSHIP;
+>   			strbuf_addstr(gitdir, ".");
+>   			return GIT_DIR_BARE;
+> diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
+> index a68e1d7602b..a3ddebb009a 100755
+> --- a/t/t0034-root-safe-directory.sh
+> +++ b/t/t0034-root-safe-directory.sh
+> @@ -47,6 +47,35 @@ test_expect_success SUDO 'sudo git status as original owner' '
+>   	)
+>   '
+>   
+> +test_expect_success SUDO 'unsecure worktree with non bare repository' '
+> +	sudo rm -rf root &&
+> +	sudo mkdir -p root/t &&
+> +	sudo chmod 1777 root/t &&
+> +	(
+> +		cd root/t &&
+> +		git init &&
+> +		git status &&
+> +		sudo git status &&
+> +		run_with_sudo <<-END
+> +			unset SUDO_UID &&
+> +			! git status
+> +		END
+> +	)
+> +'
+> +
+> +test_expect_success SUDO 'non bare repository using a gitfile' '
+> +	sudo rm -rf root &&
+> +	mkdir -p root/w &&
+> +	mkdir -p root/e &&
+> +	(
+> +		cd root/w &&
+> +		git init --separate-git-dir ../e &&
+> +		git status &&
+> +		sudo chown -R root ../e &&
+> +		test_must_fail git status
+> +	)
+> +'
+> +
+>   # this destroys the test environment used above
+>   test_expect_success SUDO 'cleanup regression' '
+>   	sudo rm -rf root
+
