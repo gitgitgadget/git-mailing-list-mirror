@@ -2,95 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 659B2C433EF
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 00:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 185E5C433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 00:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230453AbiEEAYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 May 2022 20:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43944 "EHLO
+        id S233029AbiEEAyN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 May 2022 20:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232410AbiEEAYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 May 2022 20:24:04 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B114D9E5
-        for <git@vger.kernel.org>; Wed,  4 May 2022 17:20:27 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 16so3660568lju.13
-        for <git@vger.kernel.org>; Wed, 04 May 2022 17:20:27 -0700 (PDT)
+        with ESMTP id S232535AbiEEAyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 May 2022 20:54:09 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE53121241
+        for <git@vger.kernel.org>; Wed,  4 May 2022 17:50:31 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id t16so2157713qtr.9
+        for <git@vger.kernel.org>; Wed, 04 May 2022 17:50:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9kPc5VWiHQIgTsAopw0ZtMiSu6twpvitMhEWRO7rCS4=;
-        b=ppyQ1mcREdhuMvYkspfk3Q9V5wLM4ULwNYJMstRfL0/RpBbggIlr0+Vd8BOo2M1sH3
-         KOKMJGExT3YveTDJC034pAiU9a8OGv6rRJoJsBjfDOwKjSuPLsxoKm+k6bJaVMnfAykZ
-         yZlOqD/mJxQ29b3b2GYWJ0tSDWPObbz1S+4n2hYLJxIBxSUS4oIAdokHMJ7pHNDnL4Z8
-         PyexvTsca5AH0o1VWFFX6aVdY0OSjBah86ewCJka/1r7U1aojIdDZ3vB0MrfU1tKQCGA
-         +Xjkno6S9RhTO3pLMm4/WQlPfYFFsIkHGsmGKhUYyzzgUth5qAI+XuVY4qv/tCNPfva5
-         U07w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KydD/MTJtm9qU0fy2NCws4ij8HR85/LV8uremO1pZdg=;
+        b=QPOiQ2VvHrSZAvYyAeJfiP5cyQNQn/6DWUxX/bPE2EGUcMmbm2A5vsNHbv0Yhhdaov
+         4XUxocMyp/U+aCwMancH7WejY4rR6wLm6YT0R4+iKYILWFpv7Fz9sA+a/MrkZW0RIoY8
+         bz3Fa31Tz/qog7hGu0cb7j/7JaLa7y7WMy8ExFCxyBRmj8zdPUNnKUNk1vSyJNMx352M
+         jaERHws7AcuDlGt0JVyRaf0SwNA0zCnpyyQPEWdzH5kSsuoHJFJvgA5wl+lqzwcnasbg
+         Sf8pQzeVjLZCANe0NeMQ9BNt6CTgAq/ZeRRdyB0FCBkAJuAxiUxSKEJ9pNfK1STE5yhM
+         v+5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9kPc5VWiHQIgTsAopw0ZtMiSu6twpvitMhEWRO7rCS4=;
-        b=niGzBXwbNVZm2gkMJGjZs4e6S4b9oM+CDBC7ZfGuD31tWDbwQy/uu7Z6UJ7+hNmMCy
-         jnCjZe3kG0x4G+WN9Y9/DiXVfScUEDH80uzBwnZi2kxjOxjV0DOzHxLacXs6gklTUYli
-         /jLIbyN28keqEEwLnBkt8o0IEo0Ne30MJqpF/pnHTWs07nHUZ0rqfRLDNpI77A5nQXo5
-         ux/tv2ks4t1dtYF/8cFI5MySABODHAKsKlzXSGjrEGv3ru2WC0kwB+mEI1RfFbWoPr31
-         VcQO7lL7y8/qGY/ERMiTI5H0cLUQB0NZ5mh/PcfPYpZGXDVKTdmFpSDhbDaaviV5RMeM
-         ofgQ==
-X-Gm-Message-State: AOAM5323VQSCCAafdEob9GlGDclDBtKTQuf/LlsJCNn9NtQUCGD5x8m9
-        kAEKZELgWa+ZRMUysJACsGsYwKNvZo+SEk9ndtk=
-X-Google-Smtp-Source: ABdhPJyAuzMRvG5p8tbolEM6rRzYCqKzesv0ws+L52xWe6w2+Z7TqAxhJQpCv0uT350/yrOqJ1poMjAymbtOYpONlNQ=
-X-Received: by 2002:a2e:b8c2:0:b0:250:61c6:8398 with SMTP id
- s2-20020a2eb8c2000000b0025061c68398mr7937331ljp.378.1651710025648; Wed, 04
- May 2022 17:20:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KydD/MTJtm9qU0fy2NCws4ij8HR85/LV8uremO1pZdg=;
+        b=K5yW7UfWxk1mNUliv2SOvD/+oWppo2LWXg0KvIv2iLOWO8//ZKF9gZV5xCvFoIFRj2
+         cGiNwEF5dRk964t10paKCRVLlFkHB7XoFPNY4MTbEXVJfUzWz/q9YiII2YCIFi+Q9/t/
+         lu2Atc8j6Yq8vX5cwbeCI7TtS52xNm3EQ9nbwQexELn4dxt3ASaP1XfwYtHEhbdH3ArY
+         ynFHDYBh/itZStVty6c481xCO/Gv4Z/1dKiNIoJUZk9qJSOxMKTv0+6HOzsUkG75NO5J
+         SwEYAHWru6fetUok6SQ6OYmaesIvehTcYAylGbg+eo06xqyxCNX2eriTiVFmHykExoXz
+         nprw==
+X-Gm-Message-State: AOAM533kz625952S327jVyK5qzuUnt3D0klN2WQ33p68cFUMHjotMyqC
+        njJ/Ch2DwxB9wuSy1vhD0t7o/HnsvGE=
+X-Google-Smtp-Source: ABdhPJyt3gd1xQKf6V39N86Zv2f10sB5HVDwerNWQvPt8Q4rP9FGnzq/DqCLVYew+6MyWRNJq6v1Ew==
+X-Received: by 2002:a05:622a:1651:b0:2f3:440c:5ffb with SMTP id y17-20020a05622a165100b002f3440c5ffbmr21822920qtj.232.1651711830823;
+        Wed, 04 May 2022 17:50:30 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id 19-20020a370313000000b0069fc13ce1f2sm58433qkd.35.2022.05.04.17.50.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 May 2022 17:50:30 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, junio@pobox.com
+Subject: [PATCH v2] setup: tighten ownership checks post CVE-2022-24765
+Date:   Wed,  4 May 2022 17:50:09 -0700
+Message-Id: <20220505005009.27789-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.36.0.352.g0cd7feaf86f
+In-Reply-To: <20220504184401.17438-1-carenas@gmail.com>
+References: <20220504184401.17438-1-carenas@gmail.com>
 MIME-Version: 1.0
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
- <xmqqtua5nz61.fsf@gitster.g> <YnKS1zIr0YAUJ6N4@acer>
-In-Reply-To: <YnKS1zIr0YAUJ6N4@acer>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 5 May 2022 08:20:13 +0800
-Message-ID: <CANYiYbFDm+aYE9avabnffcTNR4HT6rv77bQiWbAWSzzxeFxUxw@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Incremental po/git.pot update and new l10n workflow
-To:     Daniel Santos <dacs.git@brilhante.top>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 4, 2022 at 11:03 PM Daniel Santos <dacs.git@brilhante.top> wrote:
->
-> I haven't applied the patches and, for me, the prior workflow has no
-> issues.
->
-> Improving the po files in order to not have the 'diff noise' is
-> something that I consider ok, but still, I also don't see problems
-> with how it is now. So, it is the only thing that I consider an
-> improvement, from what I have read.
+8959555cee7 (setup_git_directory(): add an owner check for the top-level
+directory, 2022-03-02), adds a function to check for ownership of
+repositories using a directory that is representative of it (its workdir)
+and ways to add it to an exception list if needed, but that check breaks
+when the ownership of the workdir is not the same than the ownership of
+directory where the configuration and other relevant files reside.
 
-A new git clone of git.git is about 150MB in size, while the "po/"
-history occupies 28MB. By removing the location line numbers,
-the size can be reduced from 28MB to 6MB.
+An attacker could create a git repository in a directory that he has write
+access to but is owned by the victim, and therefore workaround the fix that
+was introduced with CVE-2022-24765 to attack them, like in the following
+scenario which could result in privilege escalation if root then runs a git
+command in that directory or any of its sub directories:
 
-See: https://lore.kernel.org/git/20220504124121.12683-1-worldhello.net@gmail.com/
+  $ git -C /tmp init
 
---
-Jiang Xin
+To avoid that, extend the ensure_valid_ownership function to be able to
+check for ownership of both the worktree and the gitdir, and use that for
+non bare repositories.
+
+Reported-by: Hanno Böck <hanno@hboeck.de>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+Changes since RFC
+* remove debug code from ensure_valid_ownership since is no longer needed
+* replace convoluted logic in setup_git_directory_gently_1 with Junio's
+* improve tests (AGAIN, not considered production and only for convenience)
+* hopefully improved commit message and spelling.
+
+The changes in setup.c should be sufficient to cover for all known issues, but
+has been only lightly tested and mostly in *NIX, so more changes might be
+needed to cover Windows. Specially the use of "/" to reconstruct the gitdir
+based on the previously cut workdir might be problematic if not covered by
+its compat code.
+
+The code for setup_git_directory_gently_1 is inefficient (as pointed by
+dscho) and could be improved by instead reusing the buffer before it is cut
+by the setlen, but if doing so, then a copy of the full gitdir will be
+needed, so a solution for that is not provided.
+
+In the same line, we already know before getting into the condition, if we
+are coming from a gitfile or not, so the is_absolute_path(gitdirenv) could
+be optimized away, like it was done in the RFC with an incorrectly named
+is_bare boolean, but that change hasn't been implemented as the cost of the
+current implementation is unknown and feels like premature optimization.
+
+Slightly off-topic and maybe more of an ADMINISTRATIVE, but had added the
+Reported-by for the guy that came with the last report, not sure what the
+right procedure is, and might be better if kept as a note, but be careful
+of git send-email to avoid leaks, at least until we have a final version.
+
+ setup.c                        | 28 +++++++++++++++++++++++-----
+ t/t0034-root-safe-directory.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 5 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index aad9ace0af9..0fae2d71a3c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1054,14 +1054,21 @@ static int safe_directory_cb(const char *key, const char *value, void *d)
+ 	return 0;
+ }
+ 
+-static int ensure_valid_ownership(const char *path)
++static int ensure_valid_ownership(const char *worktree, const char *gitdir)
+ {
+-	struct safe_directory_data data = { .path = path };
++	struct safe_directory_data data = { .path = worktree };
++	const char *check_path;
++
++	if (gitdir)
++		check_path = gitdir;
++	else
++		check_path = worktree;
+ 
+ 	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
+-	    is_path_owned_by_current_user(path))
++	    is_path_owned_by_current_user(check_path))
+ 		return 1;
+ 
++	data.is_safe = 0; /* ensure we are initialized and secure by default */
+ 	read_very_early_config(safe_directory_cb, &data);
+ 
+ 	return data.is_safe;
+@@ -1166,14 +1173,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		}
+ 		strbuf_setlen(dir, offset);
+ 		if (gitdirenv) {
+-			if (!ensure_valid_ownership(dir->buf))
++			const char *gitdir_to_check = gitdirenv;
++			struct strbuf gdbuf = STRBUF_INIT;
++			int ret;
++
++			if (!is_absolute_path(gitdirenv)) {
++				strbuf_addf(&gdbuf, "%s/%s", dir->buf,
++						gitdirenv);
++				gitdir_to_check = gdbuf.buf;
++			}
++			ret = ensure_valid_ownership(dir->buf, gitdir_to_check);
++			strbuf_release(&gdbuf);
++			if (!ret)
+ 				return GIT_DIR_INVALID_OWNERSHIP;
+ 			strbuf_addstr(gitdir, gitdirenv);
+ 			return GIT_DIR_DISCOVERED;
+ 		}
+ 
+ 		if (is_git_directory(dir->buf)) {
+-			if (!ensure_valid_ownership(dir->buf))
++			if (!ensure_valid_ownership(NULL, dir->buf))
+ 				return GIT_DIR_INVALID_OWNERSHIP;
+ 			strbuf_addstr(gitdir, ".");
+ 			return GIT_DIR_BARE;
+diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
+index a68e1d7602b..a3ddebb009a 100755
+--- a/t/t0034-root-safe-directory.sh
++++ b/t/t0034-root-safe-directory.sh
+@@ -47,6 +47,35 @@ test_expect_success SUDO 'sudo git status as original owner' '
+ 	)
+ '
+ 
++test_expect_success SUDO 'unsecure worktree with non bare repository' '
++	sudo rm -rf root &&
++	sudo mkdir -p root/t &&
++	sudo chmod 1777 root/t &&
++	(
++		cd root/t &&
++		git init &&
++		git status &&
++		sudo git status &&
++		run_with_sudo <<-END
++			unset SUDO_UID &&
++			! git status
++		END
++	)
++'
++
++test_expect_success SUDO 'non bare repository using a gitfile' '
++	sudo rm -rf root &&
++	mkdir -p root/w &&
++	mkdir -p root/e &&
++	(
++		cd root/w &&
++		git init --separate-git-dir ../e &&
++		git status &&
++		sudo chown -R root ../e &&
++		test_must_fail git status
++	)
++'
++
+ # this destroys the test environment used above
+ test_expect_success SUDO 'cleanup regression' '
+ 	sudo rm -rf root
+-- 
+2.36.0.352.g0cd7feaf86f
+
