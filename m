@@ -2,147 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3018DC433EF
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 20:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D67FFC433EF
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 21:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385905AbiEEUgh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 16:36:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50672 "EHLO
+        id S1385483AbiEEVIF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 17:08:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385894AbiEEUge (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 16:36:34 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3928B5F8EA
-        for <git@vger.kernel.org>; Thu,  5 May 2022 13:32:54 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id x22so4072213qto.2
-        for <git@vger.kernel.org>; Thu, 05 May 2022 13:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZKvAip+QVMJG77BrZdsdgT4zmHfAIqD5R2KHtQLTQ/s=;
-        b=VhB/jKfsCk6h9AOfX0IffnRGJ1h9396OpYlcEjptXrScuPrNSctMLOer77ERgDWdFz
-         +DmLEUtA76gaaIBs3H13r9ic+ETX/B4tw3xoH/2RccU3wMrU6xALaKJ4G+9H+f4+r0JS
-         alMbJ96ceDSGwjYu22gWQqKzoUf2MyiTFokXxwNkAuoFSwO09y5zbXvxpwBI9a0knZRp
-         LFVB2w5UsoaxlSHRIFuBDhbZZaVAFOi69mYS5vAvoCigFjNA39/+OxWimFVUfGB5T3hd
-         SIT+PaXeYQuHxLwRVDyQASm4RqtpciG7Unfw5yET4USKjgbKZR2JyiHwCq35H74Hm63D
-         8o7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZKvAip+QVMJG77BrZdsdgT4zmHfAIqD5R2KHtQLTQ/s=;
-        b=IG2Q8PeEf26hkM4+ECKg3G6+9Oo84rHm5+Fpt3+Y0LSmH/5aaw89qr7NscrzKkq3Jy
-         Fjw6UAUrixKpgu9/VZxjqnLfpkCGye255X6QQy8UQUVh30gNsXErOwU3od4eszVxWedy
-         AgLO0RaBVpxJIhUfjY3I1B93zjfwDk7ngsa92TT8QE6cFjnRh6QzUdr58kDcmfPYoytV
-         vRw5YCbS0IzJ8yDnDkLx/2AHPH6Kutn0IKP2EvG0wzUF1moslVq9ATL2YKqyiwR3Ueag
-         SnnimYf9wyc3Ea++ZYQh8A4Rf9JEVHp83M/GIiIvbiPSoliK67ZXtYWoIY3NLz9Pq9ll
-         keOQ==
-X-Gm-Message-State: AOAM530QzGjYrRw0AofU4W30jDXnqd7MBA+N9wGYiI2MYVDSl9zIKfmP
-        Rv5bYBLRUFToBQhYNip4GrdyE/1kZYdSqsLAWww=
-X-Google-Smtp-Source: ABdhPJxDwAdTrf5JNhaiPRmSjniG7iH1FJ4viOGdix/t1+j7VuFwLJP6i0r02qFHv39Fb5fgY3aPmg==
-X-Received: by 2002:ac8:5f85:0:b0:2f3:c5c8:8cb0 with SMTP id j5-20020ac85f85000000b002f3c5c88cb0mr924833qta.408.1651782773104;
-        Thu, 05 May 2022 13:32:53 -0700 (PDT)
-Received: from localhost.localdomain (pool-100-33-115-203.nycmny.fios.verizon.net. [100.33.115.203])
-        by smtp.gmail.com with ESMTPSA id y12-20020ac8524c000000b002f39b99f695sm1350285qtn.47.2022.05.05.13.32.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 13:32:52 -0700 (PDT)
-From:   Goss Geppert <gg.oss.dev@gmail.com>
-X-Google-Original-From: Goss Geppert <ggossdev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        christian w <usebees@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: [RFC PATCH 1/1] dir: consider worktree config in path recursion
-Date:   Thu,  5 May 2022 20:32:34 +0000
-Message-Id: <20220505203234.21586-2-ggossdev@gmail.com>
-X-Mailer: git-send-email 2.36.0
-In-Reply-To: <20220505203234.21586-1-ggossdev@gmail.com>
-References: <20220505203234.21586-1-ggossdev@gmail.com>
+        with ESMTP id S232320AbiEEVID (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 17:08:03 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA7B25EBE2
+        for <git@vger.kernel.org>; Thu,  5 May 2022 14:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1651784645;
+        bh=FQ5mT7si7XwZBiNg1yeYHFkVo643uT8nq29X+rbFSqg=;
+        h=X-UI-Sender-Class:Date:From:Subject:To:Cc:References:In-Reply-To;
+        b=PvyUQri7NPYQLAtRxKY6jqTtFvcF9klUZYLDeptdJ29B+5m2NufcimtkEDA4OlNS+
+         +YJtg4wA8V6AgkKzOqlCJLWOE1S2NDjDUoINHf31qOXxk03SYGLxgFchVEnUWbmQpW
+         ZQOiIqvJW3JBWpmIdV/kHmddHmIuFqSKFAvY1bZ8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.27.144]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MzTLO-1o06fE3SMa-00vQuT; Thu, 05
+ May 2022 23:04:04 +0200
+Message-ID: <0d78c98a-841e-719b-add3-acc7a7a2d7c6@web.de>
+Date:   Thu, 5 May 2022 23:04:03 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: Git status extremely slow if any file is a multiple of 8GBi
+To:     Jason Hatton <jhatton@globalfinishing.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <CY4PR16MB16558FE8E69B2045435AD59DAFC39@CY4PR16MB1655.namprd16.prod.outlook.com>
+Content-Language: en-US
+In-Reply-To: <CY4PR16MB16558FE8E69B2045435AD59DAFC39@CY4PR16MB1655.namprd16.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fyACanhEJm8MrKzhIJusmzyTZz2oL9CrXcGcflYD9G6YABSDTeX
+ ULdp26uVQoJtKdobLMK5kJOQEXhnlpDUXwP0m7FyH6rQy3eWZRBE2cKwUWy8foxdIs4rEHJ
+ JNeDhdEJbkkjVsBndzn1s3GaO7cxxEwF++Y4h9MYB45qrhiRZqaQPxIKPBauEufvRFR/nw2
+ KJXC/dT9Utipld43hLYXQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RsmSka1Dok8=:jNpUdoRSD6TzeLMYTYOhGz
+ o/vFO7ymnKUmp5fY90mf4fAot2l0kf3gL/ojIkaiFG4RVRMJWRNecfwzarhSLYMBD6c9+xWnW
+ FY8TMTub0e3rwGTI1mvJFH5tdBVpcCSkCldfi5x865D0f78mZvDE8utQ3yG04LgBh16Bl6UW2
+ ElOOm+aQ3Ld0CoBlKw9GKur/6nBPFOEMMicdHn/3XGy5X4xscQ8ESvUdQ+ShLQvWqQ6qCnPF2
+ UWrCe7mwiq2LexadE2nTyt1iQqvPpBvIraiIxZUuucDCpk+E5/0Ghm5IR1WanJpsE6l9h6mgh
+ sU/rOCOMwSdAkpr9hib6Buwl8R6VV+e1/sbdihn+4IkJS1gTY1MQAepqO31ERrac7T+bZWA+A
+ F0ZyXX3LMYFb1zHPirRfE5hbPG9BGUrylsjAxGT1sXBQlPbEXPrlNXcQ04WuAx3puUf7kzxSw
+ dR1/oOaV4+Kogy/6iQ3t8IFhKmse3QiFikFAKMsLzQNPhPIj0ePbRJiXwkaX4k1SYGOIQE+Vo
+ XuOXRYHrE0cH4PCKfU3IACgAJyB3iwOj7KgWuM4vA3/yxvYI5d1uaaLstpbD6orsMfN/+ilDP
+ P4Zt6GlyUUyu2opWbATEHjisy7K6h5vSejHlgT68Z47iyySRYbgfuWzFWwePInc7WrTNjA+Wp
+ HcC+8nw20UwD9PkHVSxetmU7/83KsIvAZ5lgY09xsxlqBQSJW68P3q4Cuw8VcJoChD9I73AMP
+ IForY1qeKasdx1Adu6zlgvXUJZ6IMeIBIc3ASKdiRhJ01IbdzSoYmECcjqQNzdDmnOGQwmur3
+ bR3dcw3yeaJHsUnG6lfBXnsxqmJ6D/gVkmJ4Lbz2kjd9u0BY5xxCCODMth+JQCgBNu3rpXIbk
+ RJbFPVvS2MhwCS1DAq5+7prs54V+a4m7rY35pzoQvPTRfxh7K522omeWdOFCH31/GBAzsuqzt
+ uMrT6dCfihpWDNmd8L8RkkMeCsvoAvAn9fDT7O0+cl531+r/9qCv3Pp4TB3KwuOTZu9v9+i86
+ P82hdJvHTxh7mYqeDh1KSzHNmJ89tiv+nvYV/+i77fbX4KKPM8dkhXn2DyEfLibNhg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 8d92fb2927 (dir: replace exponential algorithm with a linear one,
-2020-04-01) the following no longer works:
+Am 04.05.22 um 19:47 schrieb Jason Hatton:
+>>> The condition sd_size=3D=3D0 is used as a signal for "no, we really ne=
+ed
+>>> to compare the contents", and causes the contents to be hashed, and
+>>> if the contents match the object name recorded in the index, the
+>>> on-disk size is stored in sd_size and the entry is marked as
+>>> CE_UPTODATE.  Alas, if the truncated st_size is 0, the resulting
+>>> entry would have sd_size=3D=3D0 again, so a workaround like what you
+>>> outlined is needed.
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> This is of secondary importance, but the fact that Jason observed
+>> 8GBi files gets hashed over and over unnecessarily means that we
+>> would do the same for an empty file, opening, reading 0-bytes,
+>> hashing, and closing, without taking advantage of the fact that
+>> CE_UPTODATE bit says the file contents should be up-to-date with
+>> respect to the cached object name, doesn't it?
+>>
+>> Or do we have "if st_size =3D=3D 0 and sd_size =3D=3D 0 then we know wh=
+at it
+>> hashes to (i.e. EMPTY_BLOB_SHA*) and there is no need to do the
+>> usual open-read-hash-close dance" logic (I didn't check)?
+>
+> Junio C Hamano
+>
+> As best as I can tell, it rechecks the zero sized files. My Linux box ca=
+n run
+> git ls in .006 seconds with 1000 zero sized files in the repo. Rehashing=
+ every
+> file that is a multiple of 2^32 with every "git ls" on the other hand...
+>
+> I managed to actually compile git with the proposed changes.
 
-    1) Initialize a repository.
-    2) Set the `core.worktree` location to a parent directory of the
-       default worktree.
-    3) Add a file located in the default worktree location to the index
-       (i.e. anywhere in the immediate parent directory of the gitdir).
+Meaning that file sizes of n * 2^32 bytes get recorded as 1 byte instead
+of 0 bytes?  Why 1 and not e.g. 2^32-1 or 2^31 (or 42)?
 
-This commit adds a check to determine whether a nested repository that
-is encountered in recursing a path is actually `the_repository`.  If so,
-simply treat the directory as if it doesn't contain a nested repository.
+> It seems to correct
+> the problem and "make test" passes. If upgrading to the patched version =
+if git,
+> git will rehash the 8GBi files once and work normally. If downgrading to=
+ an
+> unpatched version, git will perceive that the 8GBi files have changes. T=
+his
+> needs to be corrected with "git add" or "git checkout".
 
-Prior to this commit, the `add` operation was silently ignored.
----
- dir.c | 37 ++++++++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 7 deletions(-)
+Not nice, but safe.  Can there be an unsafe scenario as well?  Like if a
+4GiB file gets added to the index by the new version, which records a
+size of 1, then the file is extended by one byte while mtime stays the
+same and then an old git won't detect the change?
 
-diff --git a/dir.c b/dir.c
-index f2b0f24210..cef39f43d8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1861,7 +1861,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	 */
- 	enum path_treatment state;
- 	int matches_how = 0;
--	int nested_repo = 0, check_only, stop_early;
-+	int check_only, stop_early;
- 	int old_ignored_nr, old_untracked_nr;
- 	/* The "len-1" is to strip the final '/' */
- 	enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
-@@ -1893,16 +1893,39 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 
- 	if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
- 		!(dir->flags & DIR_NO_GITLINKS)) {
-+		/*
-+		 * Determine if `dirname` is a nested repo by confirming that:
-+		 * 1) we are in a nonbare repository, and
-+		 * 2) `dirname` is not an immediate parent of `the_repository->gitdir`,
-+		 *    which could occur if the `worktree` location was manually
-+		 *    configured by the user
-+		 */
-+		int nested_repo;
- 		struct strbuf sb = STRBUF_INIT;
- 		strbuf_addstr(&sb, dirname);
- 		nested_repo = is_nonbare_repository_dir(&sb);
-+
-+		if (nested_repo) {
-+			char *real_dirname, *real_gitdir;
-+			strbuf_reset(&sb);
-+			strbuf_addstr(&sb, dirname);
-+			strbuf_complete(&sb, '/');
-+			strbuf_addstr(&sb, ".git");
-+			real_dirname = real_pathdup(sb.buf, 0);
-+			real_gitdir = real_pathdup(the_repository->gitdir, 0);
-+
-+			nested_repo = !!strcmp(real_dirname, real_gitdir);
-+			free(real_gitdir);
-+			free(real_dirname);
-+		}
- 		strbuf_release(&sb);
--	}
--	if (nested_repo) {
--		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
--		    (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
--			return path_none;
--		return excluded ? path_excluded : path_untracked;
-+
-+		if (nested_repo) {
-+			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-+				(matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-+				return path_none;
-+			return excluded ? path_excluded : path_untracked;
-+		}
- 	}
- 
- 	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES)) {
--- 
-2.36.0
+> If you people are
+> interested, I may be able to find a way to send a patch to the list or p=
+ut it
+> on github.
 
+Patches are always welcome, they make discussions and testing easier.
+
+Ren=C3=A9
