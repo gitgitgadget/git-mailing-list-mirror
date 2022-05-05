@@ -2,104 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F232C433EF
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 14:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA257C433FE
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 15:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380715AbiEEOiX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 10:38:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33448 "EHLO
+        id S1381055AbiEEPIw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 11:08:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244025AbiEEOiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 10:38:22 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7911A5AA57
-        for <git@vger.kernel.org>; Thu,  5 May 2022 07:34:42 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id d5so6377567wrb.6
-        for <git@vger.kernel.org>; Thu, 05 May 2022 07:34:42 -0700 (PDT)
+        with ESMTP id S1381034AbiEEPIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 11:08:43 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F5B5B8BB
+        for <git@vger.kernel.org>; Thu,  5 May 2022 08:05:03 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id kq17so9305831ejb.4
+        for <git@vger.kernel.org>; Thu, 05 May 2022 08:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=IxXeNUNPT2iJXtlrUCNWdYGywA9T3pW+S9QocYt/qzY=;
-        b=jEsVhpwStntOe2d475kKCsy34rPyDozLHSGp/47mb2hUVBdA2nRKPb0njyK32EGgFd
-         8AiZNFsoopYzy9zz+djtwHTnvziV+ZghhVzdvk4bSHUA+vOFnzxFhIxlpo1ey9hi6x29
-         4smtJN/MpMg2gbYBKrHVP5B2YrYjW5OUdQFoUp3CRrd5G9yrA2qaAlO3mk/joKJscbLR
-         TOSimo9KnNcXlmmFZNfj4M1ynjuhxoukyTmGyijAE5EaIgsde8Wuhv6RYip98wzg1gWA
-         gwWwlG1lEdJreElQfTCKdYRIfaMbud2wOjkKH4Q8Zgu4K5OvOxYdbalIfrNKU5/0G9MI
-         Ejqg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qgoY0jiV+79M1m/c+5/eYLNZGa9VAZyHXFqvCw/HOgw=;
+        b=OMPTDsT16xgyCbK9sJfl+F5VFnCn8ZwfahYgudmo0o7Qvjcb/xtCoDQHwiAutgREJh
+         aMsKr2+yIIZnawpp7jRbsKRRdUqeGR+BR6Zxc1qSn9BK8x3+WnY6ekd6w5txLCkJnmY4
+         St3XN+Grg1lorXnx2MYw9EqlEtuGrSd9dcTdIvDEaz32VFUzOpLG9G2AWprJeZYiLRT9
+         YKoQy1luuqnn5eSR3YVmfl2kbLrT5y+CQcKkOu8Nz494ATDkamu7vdCDwIfzf7QotRM2
+         wY1tHxrVeApA9LH0Ja9gZJfFqB0hRb6Ue/IIiZpAPzzGP1XrX4lwRYY51Vj8w8NFQV3m
+         kG/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=IxXeNUNPT2iJXtlrUCNWdYGywA9T3pW+S9QocYt/qzY=;
-        b=m5J48qHzNNqJfvdCG/HBINDZoOclAd+HX7fkHCR9sOHS6dnf3xi2IODpfsd/rgQ8ZW
-         R9jUDEfMbSBRyg880oigqNKOXaoqVrg4vzxUs7V4rBqdS6YEu06BICo3uapi0j3wXC7b
-         tgTYA1U34Uodnu2vJlAH06aB1GIWNjUWpmuTU9zqUF/RTT1wYFFswiScPUdsI7uV5066
-         b5PX69pvNItdqGHNHkeRqU9IbFyEXaDq3fWEBAU5etu8EUGN3XEgrU4INkZXn/wmQ4wN
-         4K1DN+SQoukyn667BiImf1I2Q4q3LTwdAWBn90eB9ANMEnXqShgL6c5GLdO6CKZMi9dK
-         FA+w==
-X-Gm-Message-State: AOAM533GE5/hWuPP835XiDI3nRdAOgxAc24eff5yAfUJLUM0njnEa2H6
-        eEzfJORevizNm4kAw5SCUz6cHvRVw8w=
-X-Google-Smtp-Source: ABdhPJyeUjyLdlnPxhKYhevNicjWZUqI32BA01v1Iu64+hT4kjn41mnj69QyxoGTyjD+VsUDFc5vgQ==
-X-Received: by 2002:a5d:56c8:0:b0:20a:d4a1:94de with SMTP id m8-20020a5d56c8000000b0020ad4a194demr20703181wrw.268.1651761281095;
-        Thu, 05 May 2022 07:34:41 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id x18-20020adfdd92000000b0020c5253d915sm1324511wrl.97.2022.05.05.07.34.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 07:34:40 -0700 (PDT)
-Message-ID: <06d8719c-1732-c40f-61ec-e010f208cb5d@gmail.com>
-Date:   Thu, 5 May 2022 15:34:37 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qgoY0jiV+79M1m/c+5/eYLNZGa9VAZyHXFqvCw/HOgw=;
+        b=lEhHrcyD1x3HYbOSCeW/KiUK9F+vTA3dZOIN8nu4kze6KpTbQ3GMYktVdkZvkBNXLr
+         +uuDrbfTJzmOuyVRDFojUuaOKPrAhwoiP2righACGTFlcy1Rzw16EoN5Aq9MyWLOOP8L
+         zp3s/pi/A685RMkUyzKXblITe6osYb8CGFxXkADdRe5CcSNUoepkqo+dt7qbIbH/DGwb
+         JDWgZeVYLVmRYQqow1d3oaKqE88rXYpThjPHMPy9v4Y2zMmFCi0pRAN6vkH0E/NGPB2T
+         RjPlk2zVBhNPi7JsLo4/QbnK4c6gTv/AmxX10XivWD3jSAteAcHf6wRt04yVz78+2cYC
+         V7gg==
+X-Gm-Message-State: AOAM532axXoRzdDK6HB6LmeZBsGkdaljTdUaFACc/sjbikG58grHIw2u
+        br5Y2jMNnPFc7fb2Zuczfbqyi81sFug4LrG1KY6sBFPScNs=
+X-Google-Smtp-Source: ABdhPJyFvb9Pp+L1cn++lr81dNI0MJdEbB5U+xQubuYhGo5ZJ7oHrNOlwwFe3cpelwxKBCPAzMK1ZvBK+y4DRTzYDaw=
+X-Received: by 2002:a17:907:6090:b0:6f0:2a64:2ef7 with SMTP id
+ ht16-20020a170907609000b006f02a642ef7mr26510177ejc.476.1651763101514; Thu, 05
+ May 2022 08:05:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
- using sudo
-Content-Language: en-GB-large
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20220428105852.94449-1-carenas@gmail.com>
- <20220503065442.95699-1-carenas@gmail.com>
- <20220503065442.95699-2-carenas@gmail.com>
- <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <xmqqilqnvacd.fsf@gitster.g> <0facc01f-ee36-333a-eb25-9c98d616700e@github.com>
+ <xmqqy1zhmftk.fsf@gitster.g>
+In-Reply-To: <xmqqy1zhmftk.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 5 May 2022 08:04:49 -0700
+Message-ID: <CABPp-BHDKRX4sW_Jjqw5j7Voas0X_xkFZgg5Jqk0TkNZOd7k1g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2022, #01; Mon, 2)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+On Wed, May 4, 2022 at 9:18 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> >> * en/sparse-cone-becomes-default (2022-04-21) 9 commits
+> >>  - Documentation: some sparsity wording clarifications
+> >>  - git-sparse-checkout.txt: mark non-cone mode as deprecated
+> >>  - git-sparse-checkout.txt: flesh out pattern set sections a bit
+> >>  - git-sparse-checkout.txt: add a new EXAMPLES section
+> >>  - git-sparse-checkout.txt: shuffle some sections and mark as internal
+> >>  - git-sparse-checkout.txt: update docs for deprecation of 'init'
+> >>  - git-sparse-checkout.txt: wording updates for the cone mode default
+> >>  - sparse-checkout: make --cone the default
+> >>  - tests: stop assuming --no-cone is the default mode for sparse-checkout
+> >>
+> >>  Deprecate non-cone mode of the sparse-checkout feature.
+> >>
+> >>  Will merge to 'next'?
+> >>  source: <pull.1148.v3.git.1650594746.gitgitgadget@gmail.com>
+> >
+> > This has been quite stable and I'd like to see it merge early in the
+> > release cycle in case that catches anything during local testing.
+>
+> This one I am not worried about stability all that much; I am more
+> worried about breaking those who do not believe in "cone is the
+> future" and managing their expectations.
 
-On 05/05/2022 14:44, Johannes Schindelin wrote:
->> A new SUDO prerequisite is provided that does some sanity checking
->> to make sure the sudo command that will be used allows for passwordless
->> execution as root and doesn't mess with git execution paths, but
->> otherwise additional work will be required to ensure additional
->> commands behave as expected and that will be addressed in a later patch.
->>
->> Most of those characteristics make this test mostly suitable only for
->> CI, but it could be executed locally if special care is taken to provide
->> for some of them in the local configuration and maybe making use of the
->> sudo credential cache by first invoking sudo, entering your password if
->> needed, and then invoking the test by doing:
->>
->>    $ IKNOWWHATIAMDOING=YES ./t0034-root-safe-directory.sh
-> 
-> Hmm. I would like to suggest that we can side-step all of these issues
-> (and the ones I outline below) by considering a similar approach to the
-> one Stolee took in t0033: use one or more `GIT_TEST_*` environment
-> variables to pretend the exact scenario we want to test for.
+What path forward would you like to see?
 
-That's an excellent suggestion. Trying to use sudo in the tests leads to 
-all sorts of issues, if we can use a GIT_TEST_* approach instead that 
-would be much better.
+On v2 you said, "There are a few things that I found questionable, but
+they were mostly documentation issues".  You brought up several points
+in v2 where my wording in the Documentation was admittedly suboptimal,
+though I think I addressed all of those in v3.
 
-Best Wishes
+I also brought up an alternative change for consideration in the cover
+letter, though you didn't comment on it and other reviewers, while
+okay with the alternative, seemed to agree with my proposed changes in
+the series over the alternative.
 
-Phillip
+Also, it might be worth noting:
+  - sparse-checkout, the capability in Git since ~2010, remains
+unmodified by these changes
+  - sparse-checkout, the subcommand added a couple years ago, still
+supports all non-cone mode behaviors it did before
+  - the change here is that the sparse-checkout subcommand's default
+becomes cone mode, along with documentation updates
