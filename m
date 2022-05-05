@@ -2,129 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1964BC433F5
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 15:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56F1DC433EF
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 15:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381170AbiEEPRK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 11:17:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39478 "EHLO
+        id S242772AbiEEPyl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 11:54:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381181AbiEEPRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 11:17:07 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A44D95BE66
-        for <git@vger.kernel.org>; Thu,  5 May 2022 08:13:20 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-e656032735so4511175fac.0
-        for <git@vger.kernel.org>; Thu, 05 May 2022 08:13:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=31qvx5flzKOg1DpAHR0SfrjwvFaFGEpx7CR51Ssp/z0=;
-        b=R0khGPK5er2Y2E0BLd24XD/5q5Kjo0JtagjOvBV1CubNHa/+VGF7dkx4IvxuhkbtTl
-         fpE+gpXZGl1aCBuHRs2HOgBfwFLD0vF4xbs8erfroxdK/bzyO4XAClWEYfnZMzZeP0pL
-         B5Y16ppRu1FCVtCvD8Rv3wvKmOBDpodoe4baIhS1MuZnqMgtNzao34hcrFNl7kP/vviq
-         rRGyUB7HOyzwr5iCJbKZfw0+/55VdrLHi5SMjVi2Zx57umoLBYgRU1UYspnYJezeGZLG
-         v4xi+aM8vU2A/i6AbOjm7U8vIi+v1HkOITvB304yFNjnPizNaFihCZYDZPpS+Yko3Dt/
-         gs9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=31qvx5flzKOg1DpAHR0SfrjwvFaFGEpx7CR51Ssp/z0=;
-        b=BzXHdkfvRwfCNM58cUQaaDNCTxXMxlPB0YzxoC67Q36pA5hcbJfowjSWnKzThIIpAq
-         Uu/d4ILF7yri/gZoXDR5+tmLFNvRjPxptWVtV1OszZdvc4t7pMgUqtxTU68AvfctsXhS
-         rl8zYSvfgLjsANJbEj9tWmPsONawJEK2rrggykSCtn8OlNKfLyFIT1PSWj2YAz/j5ljN
-         dSY7wJAPAXABoUBIvSFnwdQMrZJIZTGQweBBRKIzZNfxazogeKIx9hDW0DPuSxGt5MCN
-         LutmsLUI+PWrA5Mc285WcOZKyy6XBIOb1IwP5V5YU6zfvxKKpW//G22ZAKAswJgrfTfc
-         oTHg==
-X-Gm-Message-State: AOAM531FyDxGczXWtjvsVKEWVxxTaIm4LPNq6V48VOERkiqzR2+hb+Jr
-        VPsPThceExpfHxeUsT9K658YP7Q0lmtQ
-X-Google-Smtp-Source: ABdhPJzrs5MI0xEoDgtDQj2M4Yz7Lb5FxAJ37Cp0+kCH7Bn/MDYTXeNbozpJLV6ol+rm9uZ39/52cA==
-X-Received: by 2002:a05:6870:7909:b0:ee:91b:bb48 with SMTP id hg9-20020a056870790900b000ee091bbb48mr1675518oab.157.1651763599770;
-        Thu, 05 May 2022 08:13:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:a0d9:dd04:b268:f889? ([2600:1700:e72:80a0:a0d9:dd04:b268:f889])
-        by smtp.gmail.com with ESMTPSA id t6-20020a056870f20600b000e686d1388dsm620314oao.39.2022.05.05.08.13.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 08:13:19 -0700 (PDT)
-Message-ID: <720e86b3-367d-ab83-d3ba-a05cdf9bf0c2@github.com>
-Date:   Thu, 5 May 2022 11:13:18 -0400
+        with ESMTP id S239638AbiEEPyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 11:54:39 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FB64A3E5
+        for <git@vger.kernel.org>; Thu,  5 May 2022 08:50:59 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 28BFD1ABBE1;
+        Thu,  5 May 2022 11:50:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bSwVbaj7dC/G5uEWcpYRalezC9RKaMjsf4/Lzf
+        c2rDE=; b=oZ+MiMeGSu7sBEl4ToYRCOI+S3i+MZSq17gLCsuGTcfdgRpb6+pW45
+        WVIvlZr9mASXelFMGfuuuUIHJgAJ3mSL1xONb9HNJmvgcq/ZbOvuQnbok4E2lbUZ
+        uTULG3dbc0XgQMw6D25QbGeANvPLd7tqlCUkKzg/VmChSQqokxA9Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20C1F1ABBE0;
+        Thu,  5 May 2022 11:50:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A37301ABBDF;
+        Thu,  5 May 2022 11:50:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+References: <20220428105852.94449-1-carenas@gmail.com>
+        <20220503065442.95699-1-carenas@gmail.com>
+        <20220503065442.95699-2-carenas@gmail.com>
+        <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+Date:   Thu, 05 May 2022 08:50:53 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 5 May 2022 15:44:34 +0200 (CEST)")
+Message-ID: <xmqqsfpof06a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: What's cooking in git.git (May 2022, #01; Mon, 2)
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Victoria Dye <vdye@github.com>
-References: <xmqqilqnvacd.fsf@gitster.g>
- <0facc01f-ee36-333a-eb25-9c98d616700e@github.com>
- <xmqqy1zhmftk.fsf@gitster.g>
- <CABPp-BHDKRX4sW_Jjqw5j7Voas0X_xkFZgg5Jqk0TkNZOd7k1g@mail.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BHDKRX4sW_Jjqw5j7Voas0X_xkFZgg5Jqk0TkNZOd7k1g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 25B62388-CC8B-11EC-A42D-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/5/2022 11:04 AM, Elijah Newren wrote:
-> On Wed, May 4, 2022 at 9:18 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->>>> * en/sparse-cone-becomes-default (2022-04-21) 9 commits
->>>>  - Documentation: some sparsity wording clarifications
->>>>  - git-sparse-checkout.txt: mark non-cone mode as deprecated
->>>>  - git-sparse-checkout.txt: flesh out pattern set sections a bit
->>>>  - git-sparse-checkout.txt: add a new EXAMPLES section
->>>>  - git-sparse-checkout.txt: shuffle some sections and mark as internal
->>>>  - git-sparse-checkout.txt: update docs for deprecation of 'init'
->>>>  - git-sparse-checkout.txt: wording updates for the cone mode default
->>>>  - sparse-checkout: make --cone the default
->>>>  - tests: stop assuming --no-cone is the default mode for sparse-checkout
->>>>
->>>>  Deprecate non-cone mode of the sparse-checkout feature.
->>>>
->>>>  Will merge to 'next'?
->>>>  source: <pull.1148.v3.git.1650594746.gitgitgadget@gmail.com>
->>>
->>> This has been quite stable and I'd like to see it merge early in the
->>> release cycle in case that catches anything during local testing.
->>
->> This one I am not worried about stability all that much; I am more
->> worried about breaking those who do not believe in "cone is the
->> future" and managing their expectations.
-> 
-> What path forward would you like to see?
-> 
-> On v2 you said, "There are a few things that I found questionable, but
-> they were mostly documentation issues".  You brought up several points
-> in v2 where my wording in the Documentation was admittedly suboptimal,
-> though I think I addressed all of those in v3.
-> 
-> I also brought up an alternative change for consideration in the cover
-> letter, though you didn't comment on it and other reviewers, while
-> okay with the alternative, seemed to agree with my proposed changes in
-> the series over the alternative.
-> 
-> Also, it might be worth noting:
->   - sparse-checkout, the capability in Git since ~2010, remains
-> unmodified by these changes
->   - sparse-checkout, the subcommand added a couple years ago, still
-> supports all non-cone mode behaviors it did before
->   - the change here is that the sparse-checkout subcommand's default
-> becomes cone mode, along with documentation updates
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I think Junio's concerns are the same ones we have had that delayed
-this switch from the start: we don't know who might be surprised by
-this change.
+>> A new SUDO prerequisite is provided that does some sanity checking
+>> to make sure the sudo command that will be used allows for passwordless
+>> execution as root and doesn't mess with git execution paths, but
+>> otherwise additional work will be required to ensure additional
+>> commands behave as expected and that will be addressed in a later patch.
 
-We've given this enough time to collect opinions from interested
-parties that watch the list, but we need the next level of feedback
-at this point. That's why I'm advocating to merge this now and have
-a long time before the release to gather feedback.
+This part probably needs to be stressed, not just here but near the
+part where we require IKNOWWHATIAMDOING=YES to be set.  For regular
+interactive boxes, this test should pretty much be useless, as on a
+normally configured machine with human users, it is likely that
+"sudo" updates/restricts PATH to a limited set of directories and
+exclude the path to our just-built-and-being-tested "git".
 
-Thanks,
--Stolee
+IOW, this is primarily (and likely to be solely) for a specialized
+CI job in a very controlled environment.
+
+>> +# this prerequisite should be added to all the tests, it not only prevents
+>> +# the test from failing but also warms up any authentication cache sudo
+>> +# might need to avoid asking for a password
+>> +test_lazy_prereq SUDO '
+>> +	sudo -n id -u >u &&
+>> +	id -u root >r &&
+>> +	test_cmp u r &&
+>> +	command -v git >u &&
+>> +	sudo command -v git >r &&
+>
+> In my Ubuntu setup, `/bin/sh` is a symbolic link to `/bin/dash`, which
+> does not understand the `command`. It might make more sense to use `type`
+> here, but it is quite possible that `type git` uses a different output
+> format than `sudo type git` if they use different shells.
+
+So with that in mind, shell portability is still an issue, but ...
+
+> Another complication is that the `/etc/sudoers` I have over here specifies
+
+... /etc/sudoers (both people allowed to use and how environments
+are futzed with) is not.  If your /etc/sudoers do not allow SUDO
+prereq here to pass, then that is OK.
