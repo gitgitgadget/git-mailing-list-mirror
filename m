@@ -2,221 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7185C433F5
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 09:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C87C433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 10:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354003AbiEEJoq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 05:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58386 "EHLO
+        id S1356061AbiEEKwo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 06:52:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345776AbiEEJoi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 05:44:38 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6A14D60F
-        for <git@vger.kernel.org>; Thu,  5 May 2022 02:40:59 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id bg25so2284352wmb.4
-        for <git@vger.kernel.org>; Thu, 05 May 2022 02:40:59 -0700 (PDT)
+        with ESMTP id S233719AbiEEKwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 06:52:42 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF59E15FD7
+        for <git@vger.kernel.org>; Thu,  5 May 2022 03:49:02 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id c1-20020a17090a558100b001dca2694f23so3625080pji.3
+        for <git@vger.kernel.org>; Thu, 05 May 2022 03:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MUQIZ9BBLEkGNIanflVGWjFGRWM56zLaDvA9Tyo+C4M=;
-        b=haDOf9nshL+aTCv8dfiyK8yiXr4tM+nsIG7WbnOlq00YHhmSKF9Xp3fMx951tOksyx
-         /cKsYsJSTLFHsnu+m+Yqj0y0tsartBOPBgYG7mhBCxVA/zKTcaf+r7UH4flqKq1RE59l
-         pXNCmVXKWPIegW8YqgrVabDRXfZIPe5c2Q9uhuDHax3K8RRtyuedf6QolUHwvJwBP47a
-         89gNxk+3q87QIDrBOlOdeoIvvG1gH9C5JgU0DzPaTuf8VN6cSr2JOAxqV+tsweOocEUk
-         MTm4xGq2uUFNnP1Nxi9RVAduA2as5SbgskWEIDRpBm4GiuCcC1jpw7xnbB5E8ScvQxKk
-         2ulQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=T5KwN8wrknyRZJOBitIpSinGcHyVGsXdNjlWBqUKlXo=;
+        b=CXZGhY09YC6rTsZ4B9n6i6PU240f/XBEDwhxGGm/kKyo5PqfevNoMpXBt8iuihoEcd
+         YSeCFpNYP6CRlxQdlFkdB+d6viTfp+vRv+1FmGYypzC8HNTJpllfQiJ2LJZ1L8wXKiHY
+         +eB67twiqgmGdz0sDBYFb+F/RoYSoNWd5jzSwCSPKYBLRyY0nFBCyGNSuevF4tb2dCuw
+         Ot4nMC4mybTsrHxOpyqatuZPb31Kv/BNnNn8Gi6fS1yxEHJzltJvx+ZPd8+ULROCPtbW
+         gTlxmdSerT0eYFIQJV43WIp1LYGLsMBBFyu/CZgmOyfE90xbQMZmwfSfCKuR+W5OKf2b
+         T9tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MUQIZ9BBLEkGNIanflVGWjFGRWM56zLaDvA9Tyo+C4M=;
-        b=37fCuI1QhNCUgjZYHdL2Y8CTOdOu9r3A8g2/w6z6KT+PCc1W5qgC1l9JB1RjMtJErh
-         Sv0Tuxjg8SSVO3E15bxNS3mR9cJvqrlT70/vKFGAGx4pWDsv1ZpWA6HT6x3r4EedOxEW
-         gzXb9xakarS+6p+amYvVuLLsSROa9FXIeo2K2nBX7A7yamWMIOjABHEXZNnwOQSUEQNw
-         QX5vgRxRo5e1/n88mP6b24WaatXkMGf+3nb707DsMsY5wwAvGIK2DqMGlQHG2RFJzC14
-         gwpMVxOa/Q6xdwYV5ChFjbu4rySwe6X4EKFY4XqpDS99C550hdb5GVSGoCVPCid+AsFm
-         X1XQ==
-X-Gm-Message-State: AOAM5304u2Toha2jjn/6/Gv3AclUPod/y8F5/Rky5hbX3wN8fCPqI2we
-        lyBP/o1nklICeMj+ntWHodw=
-X-Google-Smtp-Source: ABdhPJxKQzd7RRFpQHQE0vxm80W8YPKA0D5JWZo65MyjXZdiZdWexn8IKRzbPANeQUi8TSet0c+9dQ==
-X-Received: by 2002:a05:600c:2e08:b0:394:24c:2da4 with SMTP id o8-20020a05600c2e0800b00394024c2da4mr3721303wmf.134.1651743657531;
-        Thu, 05 May 2022 02:40:57 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id o7-20020a05600c510700b003942a244f3csm5690692wms.21.2022.05.05.02.40.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 May 2022 02:40:56 -0700 (PDT)
-Message-ID: <41ec8c09-f31f-46ce-d6ec-4b6fdd78228a@gmail.com>
-Date:   Thu, 5 May 2022 10:40:54 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=T5KwN8wrknyRZJOBitIpSinGcHyVGsXdNjlWBqUKlXo=;
+        b=NLTkwOBFEmLUgnwlVObKzK5cT7S8uKh9QCANo8ZwiUDSj0NRqHRgywwqX/qVTX6JHp
+         oMFpJd2X7Dv7S7eTJRNe/8QykfNsmrc/JyqvrZkU+TXxEY60Cgd97dea66iRfHT2F4dx
+         4+dIbOHW7czMDs6tRjXaD4nULV3iTs5wcbSXMWCStrzix3/gbMVw6CZhC1myCng9lmsT
+         jCv/AIPpvb/fDi/LmocgiOvUwhmAy1kwBxOoIN0YeHZJI7btFmJnuOu+GoDBDaLKIk6y
+         khc5OOdC7iwqmsPqsXQvy4IUCBR9WDQd4/vofP5No71HpHmCJBAoVpfLoBWFu7jv3qo2
+         bJzA==
+X-Gm-Message-State: AOAM532dYhrduQVGlvBvzkS62RhtwxThEiFXz+VipBe6gueDq9xHp2kY
+        7w8957HFwGiK6d5qbxJSVm+1TGVCTizty0BG2IM=
+X-Google-Smtp-Source: ABdhPJynwioRZbkCg3pFwk9QQUOLKUJvCOgq2pPm+JGjJU2GGveB8B1gjoN25GJ1+ZJknvfXNs/E3SDT2yzNGVhE40c=
+X-Received: by 2002:a17:902:ce8b:b0:15e:c249:1bf0 with SMTP id
+ f11-20020a170902ce8b00b0015ec2491bf0mr9174419plg.125.1651747742354; Thu, 05
+ May 2022 03:49:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] setup: tighten ownership checks post CVE-2022-24765
-Content-Language: en-GB-large
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, junio@pobox.com
-References: <20220504184401.17438-1-carenas@gmail.com>
- <20220505005009.27789-1-carenas@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20220505005009.27789-1-carenas@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220502083639.610279-1-chriscool@tuxfamily.org>
+ <xmqqfslrycvp.fsf@gitster.g> <CAP8UFD0hWUudP6pZVGS5yOVCjbBCm1LdK_EbrsQp9KiVPPMCyA@mail.gmail.com>
+ <xmqqzgjxnz73.fsf@gitster.g>
+In-Reply-To: <xmqqzgjxnz73.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 5 May 2022 12:48:50 +0200
+Message-ID: <CAP8UFD0V6scSD8LuUiRQ0BWmG2mFATVFNQ2DgwaWFp6bigBkZw@mail.gmail.com>
+Subject: Re: [PATCH] http: add custom hostname to IP address resolves
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jacob Vosmaer <jacob@gitlab.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo
+On Wed, May 4, 2022 at 4:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
 
-On 05/05/2022 01:50, Carlo Marcelo Arenas Belón wrote:
-> 8959555cee7 (setup_git_directory(): add an owner check for the top-level
-> directory, 2022-03-02), adds a function to check for ownership of
-> repositories using a directory that is representative of it (its workdir)
-> and ways to add it to an exception list if needed, but that check breaks
-> when the ownership of the workdir is not the same than the ownership of
-> directory where the configuration and other relevant files reside.
-> 
-> An attacker could create a git repository in a directory that he has write
-> access to but is owned by the victim, and therefore workaround the fix that
-> was introduced with CVE-2022-24765 to attack them, like in the following
-> scenario which could result in privilege escalation if root then runs a git
-> command in that directory or any of its sub directories:
-> 
->    $ git -C /tmp init
-> 
-> To avoid that, extend the ensure_valid_ownership function to be able to
-> check for ownership of both the worktree and the gitdir, and use that for
-> non bare repositories.
+> > I am Ok with just "http.resolve". I think using "curlopt" is perhaps
+> > going into too many details about the implementation of the feature,
+> > which could theoretically change if we ever decided to use something
+> > other than curl.
+>
+> You may want to step back a bit and rethink.
+>
+> Even if we decide to rewrite that part of the system not to depend
+> on cURL, end-user facing documented interface, i.e. how the mappings
+> are given to the system, will stay with us, and it is clear that it
+> was modeled after CURLOPT_RESOLVE---well, it was stolen from them
+> verbatim ;-).
+>
+> So we may wean ourselves off of cURL, but CURLOPT_RESOLVE will stay
+> with us for this particular feature.
 
-Looking at the code below it now only ever checks the ownership of the 
-gitdir, it no longer checks the ownership of the worktree. I haven't 
-really thought through what happens if I cd into a worktree added by an 
-attacker to a repository that I own which has extentions.worktreeConfig 
-set. My initial thought is that if they can add a worktree then they can 
-probably edit the repository config anyway but I wonder if an attacker 
-can set GIT_COMMON_DIR to a directory where they have write permission 
-to add a worktree to a repository where they don't have write permission.
+Yeah, the CURLOPT_RESOLVE format will stay with us, so Ok, I will
+rename it "http.curloptResolve" in the next iteration then.
 
-> [...]
-> diff --git a/setup.c b/setup.c
-> index aad9ace0af9..0fae2d71a3c 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1054,14 +1054,21 @@ static int safe_directory_cb(const char *key, const char *value, void *d)
->   	return 0;
->   }
->   
-> -static int ensure_valid_ownership(const char *path)
-> +static int ensure_valid_ownership(const char *worktree, const char *gitdir)
->   {
-> -	struct safe_directory_data data = { .path = path };
-> +	struct safe_directory_data data = { .path = worktree };
+> >> I am wondering if we want to mention the expected use case here
+> >> as well, something like
+> >>
+> >>     This is designed to be used primarily from the command line
+> >>     configuration variable override, e.g.
+> >>
+> >>         $ git -c http.resolve=example.com:443:127.0.0.1 \
+> >>             clone https://example.com/user/project.git
+> >>
+> >> perhaps?  Not a suggestion, but soliciting thoughts.
+> >
+> > I am also interested in others' thoughts about this. If no one thinks
+> > that a config option could be useful, I am Ok with making it a
+> > "--resolve" command line option that can be passed to any Git command
+> > similar to "-c <name>=<value>":
+> >
+> > git --resolve=... <command> [<args>]
+>
+> Absolutely not.
+>
+> "git [push|fetch|clone|ls-remote] --dns-pre-resolve=..." that is
+> *NOT* git wide, but is only for transport commands might be a
+> possibility, but even then, you'd need to invent a way to do the
+> same for non cURL transports (we want to be able to pin the IP when
+> going over SSH to a certain host, for the same reason) if we promote
+> it to an officially supported command line option.
 
-We keep checking the worktree path against safe.directory - good.
+Ok with renaming and implementing it only in transport commands. I
+don't want, and I don't think it should be necessary, to invent a way
+to do the same for non cURL transports though. I think it should be Ok
+with the doc saying that the option has only been implemented for
+HTTP(S) yet and will have no effect when other transports are used.
 
-> +	const char *check_path;
-> +
-> +	if (gitdir)
-> +		check_path = gitdir;
-> +	else
-> +		check_path = worktree;
+If there is a simple way to do the same thing for ssh, then I might
+take a look at it later. For "file" or bundle transports, I don't
+think it makes sense, and the "git" transport is not used much in big
+hosting services where this feature is likely to be used.
 
-We check either the gitdir or worktree but always call this function 
-with a non-NULL gitdir so in fact always check that. This code could be 
-removed.
+> Unless we do that, it is probably better to leave it as an obscure
+> configuration meant to help server operators.  At least, with the
+> name of the configuration variable prefixed with http.*, we have a
+> valid excuse when somebody complains "the feature does not do
+> anything for git:// transport".
 
->   	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
-> -	    is_path_owned_by_current_user(path))
-> +	    is_path_owned_by_current_user(check_path))
+I am happy with leaving it as an obscure configuration meant to help
+server operators. So I will just rename it "http.curloptResolve" in
+the next iteration.
 
-Previously we checked the ownership of the worktree but now we check the 
-ownership of the gitdir instead to handle the "git -C /tmp init" case.
-
->   		return 1;
->   
-> +	data.is_safe = 0; /* ensure we are initialized and secure by default */
->   	read_very_early_config(safe_directory_cb, &data);
->   
->   	return data.is_safe;
-> @@ -1166,14 +1173,25 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
->   		}
->   		strbuf_setlen(dir, offset);
->   		if (gitdirenv) {
-> -			if (!ensure_valid_ownership(dir->buf))
-> +			const char *gitdir_to_check = gitdirenv;
-> +			struct strbuf gdbuf = STRBUF_INIT;
-> +			int ret;
-> +
-> +			if (!is_absolute_path(gitdirenv)) {
-> +				strbuf_addf(&gdbuf, "%s/%s", dir->buf,
-> +						gitdirenv);
-> +				gitdir_to_check = gdbuf.buf;
-> +			}
-> +			ret = ensure_valid_ownership(dir->buf, gitdir_to_check);
-> +			strbuf_release(&gdbuf);
-> +			if (!ret)
->   				return GIT_DIR_INVALID_OWNERSHIP;
->   			strbuf_addstr(gitdir, gitdirenv);
->   			return GIT_DIR_DISCOVERED;
->   		}
->   
->   		if (is_git_directory(dir->buf)) {
-> -			if (!ensure_valid_ownership(dir->buf))
-> +			if (!ensure_valid_ownership(NULL, dir->buf))
-
-Previously we checked bare repositories against safe.directory now we no 
-longer do that as worktree is NULL. If this is intentional it should be 
-flagged up in the commit message.
-
-Best Wishes
-
-Phillip
-
->   				return GIT_DIR_INVALID_OWNERSHIP;
->   			strbuf_addstr(gitdir, ".");
->   			return GIT_DIR_BARE;
-> diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
-> index a68e1d7602b..a3ddebb009a 100755
-> --- a/t/t0034-root-safe-directory.sh
-> +++ b/t/t0034-root-safe-directory.sh
-> @@ -47,6 +47,35 @@ test_expect_success SUDO 'sudo git status as original owner' '
->   	)
->   '
->   
-> +test_expect_success SUDO 'unsecure worktree with non bare repository' '
-> +	sudo rm -rf root &&
-> +	sudo mkdir -p root/t &&
-> +	sudo chmod 1777 root/t &&
-> +	(
-> +		cd root/t &&
-> +		git init &&
-> +		git status &&
-> +		sudo git status &&
-> +		run_with_sudo <<-END
-> +			unset SUDO_UID &&
-> +			! git status
-> +		END
-> +	)
-> +'
-> +
-> +test_expect_success SUDO 'non bare repository using a gitfile' '
-> +	sudo rm -rf root &&
-> +	mkdir -p root/w &&
-> +	mkdir -p root/e &&
-> +	(
-> +		cd root/w &&
-> +		git init --separate-git-dir ../e &&
-> +		git status &&
-> +		sudo chown -R root ../e &&
-> +		test_must_fail git status
-> +	)
-> +'
-> +
->   # this destroys the test environment used above
->   test_expect_success SUDO 'cleanup regression' '
->   	sudo rm -rf root
-
+Thanks!
