@@ -2,72 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6734BC433EF
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 16:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C748C433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 16:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242807AbiEEQO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 12:14:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60542 "EHLO
+        id S240127AbiEEQTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 12:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382134AbiEEQOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 12:14:00 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD09D5D1AF
-        for <git@vger.kernel.org>; Thu,  5 May 2022 09:09:50 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C1DDC17911D;
-        Thu,  5 May 2022 12:09:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KXPX4YFJfprX5rW6P48y4xMfpB9r3IgiXoBCNj
-        /xFJ4=; b=svm5tMjvJt/d1qOTjdzS59oupANRn9NfwKOaOpDyEpdqCZdLW5o+aN
-        y58P4MVbBtcoGmun0m51RNByDG+GW1nHrOx935GyLog/SmQZIulBImKComQVKKvF
-        IHJ9kCXiS/4xoEAIaZOITgqHAdAxO53WUxS84Znos9WVLySLiUTMk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B9DD517911C;
-        Thu,  5 May 2022 12:09:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 275C117911A;
-        Thu,  5 May 2022 12:09:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        git@vger.kernel.org, bagasdotme@gmail.com,
-        phillip.wood123@gmail.com, Guy Maurel <guy.j@maurel.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v3 2/3] git-compat-util: avoid failing dir ownership
- checks if running privileged
-References: <20220428105852.94449-1-carenas@gmail.com>
-        <20220503065442.95699-1-carenas@gmail.com>
-        <20220503065442.95699-3-carenas@gmail.com>
-        <nycvar.QRO.7.76.6.2205051545370.355@tvgsbejvaqbjf.bet>
-Date:   Thu, 05 May 2022 09:09:44 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2205051545370.355@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 5 May 2022 16:01:21 +0200 (CEST)")
-Message-ID: <xmqqilqkezav.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1381989AbiEEQTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 12:19:24 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43C381DA51
+        for <git@vger.kernel.org>; Thu,  5 May 2022 09:15:44 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id dk23so9677755ejb.8
+        for <git@vger.kernel.org>; Thu, 05 May 2022 09:15:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EfAVTX4xXIswk5Gn2VqMSZnsHJk3fYxd+19OJ8pXTEs=;
+        b=AtyZACB5baJstM0Ygbs/iZQQ62Dvzg8IBH3bA9h/XC4URGWZ2DSnMXnpFBoW3UWLec
+         1BAL/If/gmNDDL4k+7OJL2jW+n+33eOfXGbXGp4VmciApRBSs7sUY0gHbuK3XonzXbuF
+         mLLeKQFwcMEea5EUH3594Ihd2bEtybNf1UV4jcgTb+L94mPmbptAdZk26lQqHhioHFLS
+         swj5Ndu3InSp3zkVQHK+F1UUF2ky6VVINylHpBJ7HnzU4EoqMY0789+F/0d/HoHXHjtA
+         YKK4Hdkn+h/PgmQRX/l/aqp1VPgEAVyISF7kiBZqNx5/BywA877Qhk28ORuszZHCoKcu
+         a9hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EfAVTX4xXIswk5Gn2VqMSZnsHJk3fYxd+19OJ8pXTEs=;
+        b=ekYre1BNNFDsR7AtMyq2dHJESEk+K1BLJo4V7S0UwmStkSOHJhCVPGkZhjqe57bcm0
+         3nVmvozGSua8RNfJ65rD6yXAaHfKeublCHnMNp6XdBEwyz56OFsCQ0rpk8AiujBhqKks
+         DIoNK1XVuiVeFipHYWgT0MnWry8FsaGiWdCR+3rzqwAKxfIONcjqaGnrCMcJErQ9R49Z
+         P5QNMeRCCosF0Ob4kSJ8aJmMhwt3gf0bJslnhPh5CdXEZD0qqYx6mUGsmeLOwdetoxkC
+         2MeW/EfXkOWAktUJtWnppO06eDsdCYpaCJZmYbzfwyWMBNDpaEG4LzxEK+4qNOTi+IkY
+         fujg==
+X-Gm-Message-State: AOAM530S3a4sUy7c1uzAuEy4jxZtxHHGfYD9N1aGst+nElBJkFgO5KSL
+        6ZQQPDHKtsK0ZsCazVtqevDS+pKWcGXd2PR7m8o=
+X-Google-Smtp-Source: ABdhPJx05V+VQVy1su7tLb+A3Pgp5imtkxCOud5eEPKY2mP1n/TXvMUR45d3m8+Kvmb2/X/WvKBkdPFMEmaWLfx9JtQ=
+X-Received: by 2002:a17:906:a05a:b0:6ef:a44d:2f46 with SMTP id
+ bg26-20020a170906a05a00b006efa44d2f46mr26759693ejb.192.1651767342703; Thu, 05
+ May 2022 09:15:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8222A98-CC8D-11EC-B113-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <xmqqilqnvacd.fsf@gitster.g> <0facc01f-ee36-333a-eb25-9c98d616700e@github.com>
+ <xmqqy1zhmftk.fsf@gitster.g> <CABPp-BHDKRX4sW_Jjqw5j7Voas0X_xkFZgg5Jqk0TkNZOd7k1g@mail.gmail.com>
+ <xmqqmtfwezx5.fsf@gitster.g>
+In-Reply-To: <xmqqmtfwezx5.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 5 May 2022 09:15:31 -0700
+Message-ID: <CABPp-BH8VsH+Y3UxAvZM2kua8XGRE1RyenrESeYwofcq-=kjbQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2022, #01; Mon, 2)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> We could side-step all of this, of course, if we simply did this:
+On Thu, May 5, 2022 at 8:56 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> 	euid = getuid();
-> 	if (euid == ROOT_UID)
-> 		euid = git_env_ulong("SUDO_UID", euid);
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > On v2 you said, "There are a few things that I found questionable, but
+> > they were mostly documentation issues".  You brought up several points
+> > in v2 where my wording in the Documentation was admittedly suboptimal,
+> > though I think I addressed all of those in v3.
+>
+> Correct.  The above is all assuming that "cone is the future" is
+> what is shared by the population that depends on sparse-checkout.  I
+> do not have strong opinions to declare that, but to help the topic
+> move forward, I was giving reviews under the condition, i.e. "If
+> there is such a concensus, here are the things in your current
+> iteration that would need to be addressed".
 
-Yes, that is not "side-stepping" at all.  It is "we already have a
-function that knows how to use strto*l() correctly" ;-)
+Thanks for the clarification.
 
-Very good suggestion.  Thanks.
+> I vaguely recall there were folks who didn't like the change of
+> default the last time you brought this topic up.  Convincing them is
+> not my job---it is yours.  Mine has been to help prepare the code
+> ready for public consumption when that happens.
+
+That's a surprise to me; I don't remember anyone bringing that up,
+ever.  Did I somehow miss it??  I'd be happy to talk to anyone and
+hear their concerns if they do hold such an opinion.  Over the last
+year or so both Stolee and Victoria have suggested such a change or
+said they wondered why I didn't include such a change with other
+sparse-checkout changes we were making, and I mentioned a few times I
+thought it'd be a good future plan and finally submitted it.  To the
+best of my memory, no one ever offered a counter opinion.
+
+Are you perhaps mixing this up with the case where people brought up
+concerns with suggested tab-completion changes?  That's the only other
+related series recently where folks brought up concerns with suggested
+changes.
