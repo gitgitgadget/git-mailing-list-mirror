@@ -2,148 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B74F0C433EF
-	for <git@archiver.kernel.org>; Thu,  5 May 2022 22:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79D36C433F5
+	for <git@archiver.kernel.org>; Thu,  5 May 2022 22:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386523AbiEEWxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 18:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35842 "EHLO
+        id S233219AbiEEW7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 18:59:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386498AbiEEWxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 18:53:05 -0400
-Received: from pb-sasl-trial3.pobox.com (pb-sasl-trial3.pobox.com [64.147.108.87])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBF35E755
-        for <git@vger.kernel.org>; Thu,  5 May 2022 15:49:23 -0700 (PDT)
-Received: from pb-sasl-trial3.pobox.com (localhost.local [127.0.0.1])
-        by pb-sasl-trial3.pobox.com (Postfix) with ESMTP id D694336D76;
-        Thu,  5 May 2022 18:49:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hjKIMst0oa01
-        EJHH8U3U8y7vu80=; b=fDvxglDc3l539zF7crjjS1FxGPC9G6uQaTMryWZyPmIY
-        I74UPslZZ01e/8MaJMoUmQqPkA91+8HRU/hrXA4jgpxZ5sgWRM45WpvO84w973qd
-        iaX15vjTZYQKUlQ4m8CoW6yc2cVnexzxS/mDbGW0S1DVe50n6pySL1NcAnT4X3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wOr0sV
-        4YxHrLrjy7jrdVyUhfU2yevNZD1a6KtJbjg1FBOJaSKoC8a5py0u4KXyIuYLJ6bG
-        zUJGNsy2p33ELHLBHnpP5Veyd9t3tyih+ptDFW3ZJ8q+rEphr+omrEv8rhq9z0n3
-        HMF1hs/ZSBXSrSuoH83xnGqoNZ/aKb1ziDvxM=
-Received: from pb-smtp2.nyi.icgroup.com (pb-smtp2.pobox.com [10.90.30.54])
-        by pb-sasl-trial3.pobox.com (Postfix) with ESMTP id B148D36D75;
-        Thu,  5 May 2022 18:49:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F23A8128E30;
-        Thu,  5 May 2022 18:49:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Santos <dacs.git@brilhante.top>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH 0/9] Incremental po/git.pot update and new l10n workflow
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
-        <xmqqtua5nz61.fsf@gitster.g> <YnKS1zIr0YAUJ6N4@acer>
-        <CANYiYbFDm+aYE9avabnffcTNR4HT6rv77bQiWbAWSzzxeFxUxw@mail.gmail.com>
-        <YnRI6u+dV5GNHoD9@acer>
-Date:   Thu, 05 May 2022 15:49:17 -0700
-In-Reply-To: <YnRI6u+dV5GNHoD9@acer> (Daniel Santos's message of "Thu, 5 May
-        2022 23:00:10 +0100")
-Message-ID: <xmqq5ymjppci.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1386498AbiEEW7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 18:59:10 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D77410FC7
+        for <git@vger.kernel.org>; Thu,  5 May 2022 15:55:27 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nmkNZ-0008TR-8N;
+        Thu, 05 May 2022 23:55:26 +0100
+Message-ID: <9b6b7ad0-df90-62e0-abb1-c23862ded4ac@iee.email>
+Date:   Thu, 5 May 2022 23:55:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 990F7F70-CCC5-11EC-A066-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: Git status extremely slow if any file is a multiple of 8GBi
+Content-Language: en-GB
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jason Hatton <jhatton@globalfinishing.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <CY4PR16MB16558FE8E69B2045435AD59DAFC39@CY4PR16MB1655.namprd16.prod.outlook.com>
+ <0d78c98a-841e-719b-add3-acc7a7a2d7c6@web.de>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <0d78c98a-841e-719b-add3-acc7a7a2d7c6@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Santos <dacs.git@brilhante.top> writes:
+On 05/05/2022 22:04, René Scharfe wrote:
+> Am 04.05.22 um 19:47 schrieb Jason Hatton:
+>>>> The condition sd_size==0 is used as a signal for "no, we really need
+>>>> to compare the contents", and causes the contents to be hashed, and
+>>>> if the contents match the object name recorded in the index, the
+>>>> on-disk size is stored in sd_size and the entry is marked as
+>>>> CE_UPTODATE.  Alas, if the truncated st_size is 0, the resulting
+>>>> entry would have sd_size==0 again, so a workaround like what you
+>>>> outlined is needed.
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>> This is of secondary importance, but the fact that Jason observed
+>>> 8GBi files gets hashed over and over unnecessarily means that we
+>>> would do the same for an empty file, opening, reading 0-bytes,
+>>> hashing, and closing, without taking advantage of the fact that
+>>> CE_UPTODATE bit says the file contents should be up-to-date with
+>>> respect to the cached object name, doesn't it?
+>>>
+>>> Or do we have "if st_size == 0 and sd_size == 0 then we know what it
+>>> hashes to (i.e. EMPTY_BLOB_SHA*) and there is no need to do the
+>>> usual open-read-hash-close dance" logic (I didn't check)?
+>> Junio C Hamano
+>>
+>> As best as I can tell, it rechecks the zero sized files. My Linux box can run
+>> git ls in .006 seconds with 1000 zero sized files in the repo. Rehashing every
+>> file that is a multiple of 2^32 with every "git ls" on the other hand...
+>>
+>> I managed to actually compile git with the proposed changes.
+> Meaning that file sizes of n * 2^32 bytes get recorded as 1 byte instead
+> of 0 bytes?  Why 1 and not e.g. 2^32-1 or 2^31 (or 42)?
 
-> It is worth discussing this.
+My thought on this. after considering a few options, would be that the
+'sign bit' of the uint32_t size should be set to 1 when the high word of
+the 64 bit filesize value is non zero.
+
+This would result in file sizes of 0 to 4GiB-1 retaining their existing
+values, and those from 4GiB onward produces a down-folded 2GiB to 4GiB-1
+values.
+
+This would mean, That we are able to detect almost all incremental and
+decremental changes in filesizes, as well as retaining the 'zero is
+racy' flag aspect.
+>> It seems to correct
+>> the problem and "make test" passes. If upgrading to the patched version if git,
+>> git will rehash the 8GBi files once and work normally. If downgrading to an
+>> unpatched version, git will perceive that the 8GBi files have changes. This
+>> needs to be corrected with "git add" or "git checkout".
+> Not nice, but safe.  Can there be an unsafe scenario as well?  Like if a
+> 4GiB file gets added to the index by the new version, which records a
+> size of 1, then the file is extended by one byte while mtime stays the
+> same and then an old git won't detect the change?
+
+There is still some potential for different Git versions to be
+'confused' for these very large files, but I feel that it's relatively
+safe (no worse than the 'set to unity' idea). For large files we will
+always have that loss of precision at the 32bit rollover. It just a case
+of choosing a least worst.
+
+I haven't considered if my proposed 'truncation' overhead would be fast
+code.
+
+>> If you people are
+>> interested, I may be able to find a way to send a patch to the list or put it
+>> on github.
+> Patches are always welcome, they make discussions and testing easier.
 >
-> Also, I don't believe Github issue is the proper way to discuss about
-> this in the beginning. It cannot be expected to make everyone on board
-> with this modification of workflowm being discussed on a web service
-> website obscure issue, that needs login. We have a mailing list that
-> is to be used for this purpose.
->
-> I feel less part of this community, with important issues happening on
-> Github issues.
-
-While I understand the sentiment, after reading that issues page, I
-actually have a totally different impression.
-
-Step back and take a deep breath, and let me ask you the same
-question under a few hypothetical settings:
-
- * Imagine that =C3=86var have been working on this series alone, without
-   help from Jiang.  He did some brainstorming with himself to
-   polish the ideas, cleaned up the code, etc. in his own head,
-   perhaps with help from some automated tools and CI.  And after
-   working for a month, sent this as a patch series to be reviewed
-   to the list?  Do you feel excluded for not being invited for an
-   early review?  I would guess not.  I certainly don't feel
-   excluded myself.
-
- * What if he, during the course of the above month working on this
-   topic, asked for a help from a specific person of his choice?
-   Perhaps Jiang was visiting the same part of the world and they
-   talked about the series in person, private over a glass of beer
-   or two?  Do you feel excluded that you didn't have a chance to
-   join this discussion?  I would guess not.  I certainly don't feel
-   excluded myself.
-
- * What if that exchange of ideas and help to polish the series was
-   done virtually, and the medium of choice between the two happened
-   to be GitHub issues?  Do you now suddenly feel excluded?  I do
-   not feel excluded myself, but do you?
-
-The way I read that issues page, I think the exchange between them
-falls squarely into that category.  They are not pretending to make
-"project decisions".  They are preparing a proposal to bring forward
-to the project participants.  During the course of their conversation,
-they may express their opinions on how better to serve the audience
-as if they were a fact, but that is something you can dispute once
-the proposal comes out to the list.
-
-In other words, we should treat this just another patch series to be
-reviewed, instead of "two important people in Git i18n/l10n are
-presenting fait-accompli to the community".   I do not see a problem
-in that.
-
-As long as they do not duck a valid question about anything in the
-series with "well that has been decided long ago while we prepared
-this series and it is too late to change now", that is.
-
-And I do not think anything like that has happened yet so far.
-
-So, yes, please discuss and see a consensus form among i18n/l10n
-stakeholders.  Perhaps some of the design decisions they made are
-based on different values from you have (e.g. you highly value the
-line numbers, while they justify the removal with reduced size) and
-it is a fair discussion to have if the decisions the patch series
-makes is based on the right balance between pros-and-cons.
-
-Thanks.
+> René
+Philip
