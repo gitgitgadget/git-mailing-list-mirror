@@ -2,120 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C2EDC433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 00:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7413EC433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 00:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381211AbiEFAyK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 20:54:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54090 "EHLO
+        id S1385016AbiEFA42 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 May 2022 20:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233468AbiEFAyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 20:54:09 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23DC165BF
-        for <git@vger.kernel.org>; Thu,  5 May 2022 17:50:27 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id x17so10117360lfa.10
-        for <git@vger.kernel.org>; Thu, 05 May 2022 17:50:27 -0700 (PDT)
+        with ESMTP id S1387682AbiEFA4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 May 2022 20:56:23 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C531EEEA
+        for <git@vger.kernel.org>; Thu,  5 May 2022 17:52:41 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id m62so3572797wme.5
+        for <git@vger.kernel.org>; Thu, 05 May 2022 17:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0w+kbq012XrYmYU90GuN1laAHApHGoNqH/XFXoyniIM=;
-        b=Rqh/ggsLEgL8N6LUtvKt+zpymKlBQhyuQmQ76JWCY+K0IE/NPS/pzMmnGYA6kZB8yo
-         XgQBhl6muziPilF9G4iifpBJ3pNTHW6fkfoQsWDL3vjs1iRMDI0ZvktdSEXpKWmnZYDo
-         74oDhcffiI+tkeYT9HM+UiKOzaImw3J4Tm7lo2++hz6Rd9fZbyOyX2mLIpfmiiXCXjy9
-         8Uek1+4SRCE83TI3bNBwDqTQ5AFW63yTd1qSTq3lS2+Up+IgHXjpy7944725SGu+hjVs
-         oLYvFuHDFyi7/H/+QsFQcYgpSgwYsAlV+pSsaDMsKsCRp3o2aSTZCFABWV8HdJeeKLpU
-         KPlg==
+        d=chrisdown.name; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=8YFR/gavfI3lmCKRomiwlxra/HU6ebsjxaDYW5zTWD8=;
+        b=Dq4es0VKAW41Kj8KyxmNYnkDQGK3Q0ocuAb2BokQbZsHDnfWcQV0jUKi4l2V4K1Hnr
+         OvBtiwzPPBMSvttqYyUCnRrzT2wM7dGiJPjPvOUGoJossm/8FbLl19rABHR9PnkqU9MP
+         D3m/B7impbM8rWrzWDBCTE1VAFwqTRpFYVOg8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0w+kbq012XrYmYU90GuN1laAHApHGoNqH/XFXoyniIM=;
-        b=leJssw/zUyJWIkpKkHjj9S4Dl2BV5D/EwYdu1W0bWxVHqsRZDrXJmUmWo43RXLshEr
-         /2IkiS9K44E3YHDmPX+A2IFfSo0EW5bKtvuGPLd1cWvou7/7wUSn9nRuOoBW2ZoZtYVu
-         tT/srNelEhJSa8QCJQO8/S6JmpQGzn6nBKFCyx/l3BOr+HrspM5BhFkcgTemhzjB8n1F
-         OJLrK39r4BZgJzHACXKDhgJCarqIPSjkFig3WXg6wSuHU1FnCgb0421wjPZoMytPGJYJ
-         S9fguZqOU1hdus+QgUFvAfUwMtwvkzLbnLG+Gubx89+hEOJz6VNSEfbRR/4jK/vN/o85
-         TMSw==
-X-Gm-Message-State: AOAM5336+vN9mEKVq6gtvrDOGs+6Fnnj4a1O7MnDQ+jxoaoL/BUP3taI
-        Ecq+YfnfOME8qukI0rnsByKjCFLP0LaVnOBDfYU=
-X-Google-Smtp-Source: ABdhPJzc6OrwHRxQcRvjI6tuGVWcfmuRZumJNCqn7R1klzZETiviMyX+L5SfQPTcRiUqy7t8lsoADb3lAhsTn8t78nM=
-X-Received: by 2002:a19:4f53:0:b0:472:1714:61f1 with SMTP id
- a19-20020a194f53000000b00472171461f1mr686232lfk.473.1651798225909; Thu, 05
- May 2022 17:50:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
- <xmqqtua5nz61.fsf@gitster.g> <YnKS1zIr0YAUJ6N4@acer> <CANYiYbFDm+aYE9avabnffcTNR4HT6rv77bQiWbAWSzzxeFxUxw@mail.gmail.com>
- <YnRI6u+dV5GNHoD9@acer>
-In-Reply-To: <YnRI6u+dV5GNHoD9@acer>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 6 May 2022 08:50:13 +0800
-Message-ID: <CANYiYbH++nachBO_JU0zEcDkbkJYCkPQ3HTivwsNpaD7UvgsqQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Incremental po/git.pot update and new l10n workflow
-To:     Daniel Santos <dacs.git@brilhante.top>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=8YFR/gavfI3lmCKRomiwlxra/HU6ebsjxaDYW5zTWD8=;
+        b=CR79BWTpZBTVcBreS6LoQs/XwaAIP0/4xXFUlNnkUbExxgLa5QbDWWnuq5hqRSQySj
+         jwlwGABzRI9WYZmiXhWab/Dsw8PSM0dPfe64f66KGKPfHrsFJD9IUEUu9is80cKVv8Xs
+         K5zFZxWzJouvXtu/ep+O+cbrkHzP4tFjLYrTIMcTiS/U7u0Lmf+RBuUKJ8fcUvaTR64P
+         R+hCHNM6XYjvWM8he9p+olTJBffcup4mQRHJTIKffyBX1EV0p8J5iv5Ic+ds7auq0vJ0
+         n/iyO+fSB60NDfgZhICVOYaiK630tE5y6l1m3ztY71Yryd2uOF2CKwki1/EytWSfjmi1
+         2GlA==
+X-Gm-Message-State: AOAM532vXc42ZirTC2A/ZLAi3TfVWc94Ne3KuE//bpb8iOe7XeNt4hLT
+        Hyv8Ou+K26QTnDA9l7pKn9nxqyRVPtON5QnNk5U=
+X-Google-Smtp-Source: ABdhPJzYcxmyTEZzS8hqEiTpSG3HUpbW79Xj60ZJO0QIgfTI/Qlw11s0ZbW2EURIyxrZ8gs6L+JKPw==
+X-Received: by 2002:a05:600c:4e93:b0:394:e58:c446 with SMTP id f19-20020a05600c4e9300b003940e58c446mr761000wmq.21.1651798359286;
+        Thu, 05 May 2022 17:52:39 -0700 (PDT)
+Received: from localhost ([2a01:4b00:8432:8600:5ee4:2aff:fe50:f48d])
+        by smtp.gmail.com with ESMTPSA id n11-20020a056000170b00b0020c5253d8c7sm2250139wrc.19.2022.05.05.17.52.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 May 2022 17:52:38 -0700 (PDT)
+Date:   Fri, 6 May 2022 01:52:37 +0100
+From:   Chris Down <chris@chrisdown.name>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>, kernel-team@fb.com
+Subject: [PATCH v2 0/2] bisect: status improvements when bisect is not fully
+ fleshed out
+Message-ID: <cover.1651796862.git.chris@chrisdown.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/2.2.4 (c3baa83e) (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 6, 2022 at 6:01 AM Daniel Santos <dacs.git@brilhante.top> wrote:
->
-> On Thu, May 05, 2022 at 08:20:13AM +0800, Jiang Xin wrote:
-> >
-> > A new git clone of git.git is about 150MB in size, while the "po/"
-> > history occupies 28MB. By removing the location line numbers,
-> > the size can be reduced from 28MB to 6MB.
-> >
-> > See: https://lore.kernel.org/git/20220504124121.12683-1-worldhello.net@gmail.com/
->
-> That is an improvement of size only for few people. On GNU/Linux
-> install of git by most users is done through packages, and most git
-> users of other OS, also will not receive this improvement.
+When bisecting, we currently don't output anything before bisection
+starts in earnest, which can result in some confusion. For example, in
+the case illustrated in the first commit in this patch series, it's
+trivial to accidentally misspell a tag or branch and accidentally end up
+in an unintended state with no clear indication about what happened.
 
-We, l10n contributors, only need to make a small setup to our local
-repository, and we can avoid uncontrolled growth of files under "po/",
-resulting in more than 50% of the Git repository capacity coming
-from l10n a day. See patch 9/9 or this link:
+This patch series makes it so that we give information about bisect
+state even before the bisect is ready to begin. We also store these
+changes in state to the bisect log.
 
- * https://github.com/jiangxin/git/blob/avar/new-l10n-workflow/po/README.md?plain=1#L160-L171
+v2:
 
-> Have you considered how the removal of these lines from the po files
-> will affect the quality of the translation work?
-> For new translator, not having these lines might make them less prone
-> to understand po files usage in C?
-> And probably make them contribute less to i18n C code?
+- Move to improve bisect output overall, instead of just warning for the
+  specific unintended pathspec case.
 
-The location numbers will always be there in your po/pt_PT.po.
-Please read:
+Chris Down (2):
+  bisect: output state before we are ready to compute bisection
+  bisect: output bisect setup status in bisect log
 
- * https://github.com/jiangxin/git/blob/review/avar/po/README.md?plain=1#L133-L158
+ bisect.h                    |  6 ++++
+ builtin/bisect--helper.c    | 69 ++++++++++++++++++++++++++++++-------
+ t/t6030-bisect-porcelain.sh | 23 +++++++++++++
+ 3 files changed, 85 insertions(+), 13 deletions(-)
 
-> Has these implementation upgrade better benefits than counter effects?
->
-> It is worth discussing this.
 
-The new l10n workflow is open for discussion, see patch 9/9 or this link:
+base-commit: f5aaf72f1b5aeb3b77bccabce014ea2590e823e2
+-- 
+2.36.0
 
- * https://github.com/jiangxin/git/blob/avar/new-l10n-workflow/po/README.md?plain=1#L60-L95
-
---
-Jiang Xin
