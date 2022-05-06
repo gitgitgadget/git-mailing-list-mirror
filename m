@@ -2,167 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B619C433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 10:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B41EBC433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 10:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390876AbiEFKWf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 06:22:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60180 "EHLO
+        id S1390955AbiEFK0o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 06:26:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239719AbiEFKWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 06:22:34 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C4C75DE54
-        for <git@vger.kernel.org>; Fri,  6 May 2022 03:18:50 -0700 (PDT)
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MtObA-1o5y1p0uWk-00urWA; Fri, 06 May 2022 12:18:31 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id C623B1E01E7;
-        Fri,  6 May 2022 10:18:29 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id dXkTDeUoSEUz; Fri,  6 May 2022 12:18:29 +0200 (CEST)
-Received: from pfwvexchange.corp.cetitec.com (unknown [10.10.1.40])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPS id 3F96D1E01E6;
-        Fri,  6 May 2022 12:18:29 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (10.8.5.52) by
- pfwvexchange.corp.cetitec.com (10.10.1.40) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 6 May 2022 12:18:28 +0200
-Received: by pflmari.corp.cetitec.com (Postfix, from local account)
-Date:   Fri, 6 May 2022 12:18:28 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     Taylor Blau <me@ttaylorr.com>
-CC:     <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: Crashes in t/t4058-diff-duplicates.sh
-Message-ID: <YnT19KB2XkBrJOLQ@pflmari>
-References: <YnOQmVFVRuqnanMi@pflmari>
- <YnSWgDdxgm+XWiLt@nand.local>
+        with ESMTP id S1390951AbiEFK0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 06:26:43 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A7563384
+        for <git@vger.kernel.org>; Fri,  6 May 2022 03:23:00 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nmv6w-0005dO-68;
+        Fri, 06 May 2022 11:22:59 +0100
+Message-ID: <f3f883cb-9141-6871-0f3d-3d3293a17f5f@iee.email>
+Date:   Fri, 6 May 2022 11:22:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <YnSWgDdxgm+XWiLt@nand.local>
-X-Originating-IP: [10.8.5.52]
-X-ClientProxiedBy: pfwvexchange.corp.cetitec.com (10.10.1.40) To
- pfwvexchange.corp.cetitec.com (10.10.1.40)
-X-EsetResult: clean, is OK
-X-EsetId: 37303A29E82A2D51667C6B
-X-Provags-ID: V03:K1:yFyi2JC97pzi0tBSU0vM73PU6y7m9+DMI5gBS6FNet44Pwk6CLK
- A4W2alc4Ukt74dbH6dFTWU8ZBg9a4jCV0J/e1pLKUuhrpHgkSz3QHhY3UJAHUmMsMSu+Cv9
- CL2INjcAYxn9q9XIJiMxp6KNCbD3zEacP5dELisu2AeKQwCfvCL3Z8GyN2qwZqheY69aauz
- c7KXSZLcRZEgbcuv43drg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7MYMnEoWZVo=:fEpn/FlKCAx11X55atrsF+
- Ko5y/6N4w0dPY1yBY01jgeoRhtnMpqWTrFdxcdacNU8ecXqh1hIkrNfEc7H0TLlZMcwcGxK/1
- xgKBDFJPWktX1JvPQxBTvGaJ986DAI4cpRam2GUqJvzdW8SWMgWOWs9tF4imZyD/6tFdHgrBk
- bq2kue5k5mCtW9CrmnmhL+s0Usie9mw2N4pS76QHcGz1yXfSH9/lfVikrnbKUDf3qIwcMOsJw
- 7H5XgaP0OgAmDqc0EC8t8BymUhctUrpXqpVzu4pO/1Lf/HEtQFtE//oqW17NbhhJ0YypEqmCK
- PWu9fNOZSxXQTJA/LMs+nAkKkAXy2Buthsf4gTQ+s/f/AjXqz5jx/VG5AwDhpvIVsA7S27QqH
- Fc6HdZuoLwNFrK+MqJGOqdJBrEsk7KtlLkkTf2npYf4BBuJeqp9hKEca12fyoasrC7ICdh3VK
- FrgFuBt9H65by/W4JfFkR4K6ALleLPt2CwgW414O00S+9FnedEjBhFCS803V2f1+OIPsJ4Dfy
- djmFMV2BVDG8vVlN2ZITBPe1ZYQJyez+mDpI9ekk62b6rJrqpbCqXXbIsRPjLYJhPIuYwkA9c
- KtKpvcoWHMQ5Q4hv/991vmIxWqZTOkq+dPele1Oq59iHEALEDd2AfttHElfnDe2dTcZwQH6yx
- qrAgluVaLzdfmxzKsE37Tq9ozPPwa8knYNKQecasvZd4uBnrJRMIlQSR7F/zE7QVmY0Rrdt9z
- Z8WGjnLc3a+F7h1n
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
+Content-Language: en-GB
+To:     Jason Hatton <jhatton@globalfinishing.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau, Fri, May 06, 2022 05:31:12 +0200:
-> On Thu, May 05, 2022 at 10:53:45AM +0200, Alex Riesen wrote:
-> > Hi,
-> >
-> > the test t4058-diff-duplicates reliably dumps core here:
-> 
-> It was a little tricky to find out what part of t4058 you were referring
-> to, but...
+On 06/05/2022 01:26, Jason Hatton wrote:
+> Git cache stores file sizes using uint32_t. This causes any file
+> that is a multiple of 2^32 to have a cached file size of zero.
+> Zero is a special value used by racily clean. This causes git to
+> rehash every file that is a multiple of 2^32 every time git status
+> or git commit is run.
+>
+> This patch mitigates the problem by making all files that are a
+> multiple of 2^32 appear to have a size of 1<<31 instead of zero.
+>
+> The value of 1<<31 is chosen to keep it as far away from zero
+> as possible to help prevent things getting mixed up with unpatched
+> versions of git.
+>
+> An example would be to have a 2^32 sized file in the index of
+> patched git. Patched git would save the file as 2^31 in the cache.
+> An unpatched git would very much see the file has changed in size
+> and force it to rehash the file, which is safe. The file would
+> have to grow or shrink by exactly 2^31 and retain all of its
+> ctime, mtime, and other attributes for old git to not notice
+> the change.
+>
+> This patch does not change the behavior of any file that is not
+> an exact multiple of 2^32.
+>
+> Signed-off-by: Jason D. Hatton <jhatton@globalfinishing.com>
+> ---
+>  cache.h      |  1 +
+>  read-cache.c | 16 ++++++++++++++--
+>  2 files changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 4b666b2848..74e983227b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -898,6 +898,7 @@ int ie_modified(struct index_state *, const struct cache_entry *, struct stat *,
+>  #define HASH_SILENT 8
+>  int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
+>  int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
+> +unsigned int munge_st_size(off_t st_size);
+>  
+>  /*
+>   * Record to sd the data from st that we use to check whether a file
+> diff --git a/read-cache.c b/read-cache.c
+> index ea6150ea28..b0a1b505db 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -163,6 +163,18 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
+>  		add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+>  }
+>  
+> +/*
+> + * Munge st_size into an unsigned int.
 
-Very sorry! I forgot to include the output of the test itself!
+This "Munge" above isn't telling the reader 'why'/'what' is going on.
+The comment should in some way highlight that a zero size result is
+special, and that we have the roll over issue when the stored in 32 bits
+- the double duty of racy vs changed in the stat data heuristic.
+Synonyms of 'munge' ?
 
-> > Core was generated by `/home/xxx/yyyyyyy/git/git merge update'.
-> 
-> ...helps us out ;-). The only match for "git merge update" is in
-> t4058.16, which blames back to ac14de13b2 (t4058: explore duplicate tree
-> entry handling in a bit more detail, 2020-12-11), which helpfully
-> explains that this segfault is known (and furthermore they are
-> long-lived and likely not even worth fixing, per ac14de13b2).
 
-Thanks for finding the commit! Makes absolutely sense, but...
+> + */
+> +unsigned int munge_st_size(off_t st_size) {
+> +	unsigned int sd_size = st_size;
+> +
+> +	if(!sd_size && st_size)
+> +		return 0x80000000;
+> +	else
+> +		return sd_size;
+> +}
+> +
+>  void fill_stat_data(struct stat_data *sd, struct stat *st)
+>  {
+>  	sd->sd_ctime.sec = (unsigned int)st->st_ctime;
+> @@ -173,7 +185,7 @@ void fill_stat_data(struct stat_data *sd, struct stat *st)
+>  	sd->sd_ino = st->st_ino;
+>  	sd->sd_uid = st->st_uid;
+>  	sd->sd_gid = st->st_gid;
+> -	sd->sd_size = st->st_size;
+> +	sd->sd_size = munge_st_size(st->st_size);
+>  }
+>  
+>  int match_stat_data(const struct stat_data *sd, struct stat *st)
+> @@ -212,7 +224,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
+>  			changed |= INODE_CHANGED;
+>  #endif
+>  
+> -	if (sd->sd_size != (unsigned int) st->st_size)
+> +	if (sd->sd_size != munge_st_size(st->st_size))
+>  		changed |= DATA_CHANGED;
+>  
+>  	return changed;
 
-I have a little problem with the approach to have it crashing though.
-It crashes for every run of the tests: I have a crash core collecting program
-on the machine I use to build binaries of the tools I use. While it is not
-hard to isolate builds of Git (as a whole) with coredump collecting switched
-off I'd prefer to not do it: it's a special case (which gets forgotten) and
-with it I'll miss new crashes in Git (which I might have authored).
-It is inconvenient to crash regularly.
-
-Is it reasonable to ask to replace the crash in case of this known breakage
-with an error()+exit(130)? (`exit(130)` because the test_expect_failure seems
-to require an exit code greater than 129, and I failed to find where it is).
-
-Or, since the test-lib already has a notion of "expected failure" provide
-the *tests* with a way to reduce collateral effects of that failure?
-Like below with the GDB.
-
-Regards,
-Alex
-
-diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-index 54614b814d..b2f9ab07d1 100755
---- a/t/t4058-diff-duplicates.sh
-+++ b/t/t4058-diff-duplicates.sh
-@@ -132,22 +132,38 @@ test_expect_success 'create a few commits' '
- 	rm commit_id up final
- '
- 
-+may_crash() {
-+	local ret
-+	if test -n "$GIT_DEBUGGER"
-+	then
-+		"$@"
-+		ret=$?
-+	else
-+		GIT_DEBUGGER="gdb --batch --return-child-result --nh -ex run --args"
-+		export GIT_DEBUGGER
-+		"$@"
-+		ret=$?
-+		unset GIT_DEBUGGER
-+	fi
-+	return $ret
-+}
-+
- test_expect_failure 'git read-tree does not segfault' '
- 	test_when_finished rm .git/index.lock &&
--	test_might_fail git read-tree --reset base
-+	test_might_fail may_crash git read-tree --reset base
- '
- 
- test_expect_failure 'reset --hard does not segfault' '
- 	test_when_finished rm .git/index.lock &&
- 	git checkout base &&
--	test_might_fail git reset --hard
-+	test_might_fail may_crash git reset --hard
- '
- 
- test_expect_failure 'git diff HEAD does not segfault' '
- 	git checkout base &&
- 	GIT_TEST_CHECK_CACHE_TREE=false &&
- 	git reset --hard &&
--	test_might_fail git diff HEAD
-+	test_might_fail may_crash git diff HEAD
- '
- 
- test_expect_failure 'can switch to another branch when status is empty' '
-@@ -183,7 +199,7 @@ test_expect_success 'switch to base branch and force status to be clean' '
- '
- 
- test_expect_failure 'fast-forward from duplicate entries to non-duplicate' '
--	git merge update
-+	may_crash git merge update
- '
- 
- test_done
