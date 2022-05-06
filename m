@@ -2,156 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C55ABC433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 22:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BABEAC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 23:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444833AbiEFXBN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 19:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40978 "EHLO
+        id S243418AbiEFX72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 19:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1391458AbiEFXBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 19:01:09 -0400
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D7C10D2
-        for <git@vger.kernel.org>; Fri,  6 May 2022 15:57:25 -0700 (PDT)
-Received: by mail-ua1-x92b.google.com with SMTP id f13so3306961uax.11
-        for <git@vger.kernel.org>; Fri, 06 May 2022 15:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mDFA50hcJESJnboDgAPVEIdQKFBTXLIJmvU4UJlT49M=;
-        b=H0iUUwE6fCAInLB0urh+QzNINXRXS6FimWYy5IkNo4bC+c8YTEtT9VACcA54LhmZAx
-         GiIu1wfMMb2cMFYeN1oCz0as5qqBnVqkrnSEMun2bU15f+1aCSf2HADh9mlgzYiQmu08
-         wO3tt1LB73xmegILGBYLdNNTd2gCrJq7/Ms5LR7CXe03l/XaYCHy7IJljclWq5wreXwA
-         TPhYqGDlW3RsDZIGGkqPYBww1z281G1gxBugwPejVn+rhMYbC8uqIteTnaO56o38O6Yq
-         PfcLqurPekYlMLLkN8czxeLVMfN29kvmYObzZDqqdP3UlevijVLk+1rotAEluvzGfEPE
-         TNfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mDFA50hcJESJnboDgAPVEIdQKFBTXLIJmvU4UJlT49M=;
-        b=T1tQ08b4wNXv2hYP+PAKixNUUq9096XDbMw5H2nFm7+7uhkpgyfwab/U2oyTFxXaeg
-         9h/PX1sf/IYJgOgcBOhQqtEEo2lRddz0VQLp2qE58+Vxb906lpQYVhM3DSNbbJIdvVJY
-         ReemOrfxj7LsPoMLvW8pL0gyHhyrnozclOuQObTyEFIqv5Atd8B8y2MFdc6okiAgyQc1
-         gtFroZWlynWEcp4qZH9I0KN+UIWS5+ytAgZ3FvMZ/Dr5hXHd0jeTgwlO6DYeMqEwih1f
-         2dTnUFskXaFQmSmO9ByeZPC5fbfl/Hh7IP6BBuMGJ6a0he4+RGNqaohBZ7dRXFTMH5U2
-         cKmg==
-X-Gm-Message-State: AOAM532OQwhFeNLhQUZteooHrxH/tUx2binvhh0NP6Kc2kK7bbMq3BoS
-        8blPsvBr5DkPHMHUx5Uag4vhDJrpdTpAW9kappQ=
-X-Google-Smtp-Source: ABdhPJwSfgXLbRZruYgpGHMWqT8LbKhqS5PosO3LP2Vdk1u4mDe+JsFT7JvXvkihSluB16qnA9ULQ5/yjRqK8Q14KVs=
-X-Received: by 2002:a05:6130:3a1:b0:365:84fa:2f57 with SMTP id
- az33-20020a05613003a100b0036584fa2f57mr2308084uab.62.1651877844211; Fri, 06
- May 2022 15:57:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220428033544.68188-1-carenas@gmail.com> <20220428105852.94449-1-carenas@gmail.com>
- <20220428105852.94449-4-carenas@gmail.com> <xmqq7d79du6c.fsf@gitster.g>
- <5493b2f1-e59d-d91d-ac21-47c93d2996f2@gmail.com> <xmqq7d79gjre.fsf@gitster.g>
- <CAPUEspibV6LKVAGpUPBoDYWvF7cjBJUJOSMDzLY6ErMF8s-Eng@mail.gmail.com> <xmqq1qx6jq0b.fsf@gitster.g>
-In-Reply-To: <xmqq1qx6jq0b.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 6 May 2022 15:57:13 -0700
-Message-ID: <CAPUEspjOPNTMrBdLQMKcbXYY7G+Vm1br++7C3rq6Bs+5xZ4yHg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] t: add tests for safe.directory when running with sudo
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S235557AbiEFX71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 19:59:27 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE0A22299
+        for <git@vger.kernel.org>; Fri,  6 May 2022 16:55:39 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E756411BD2F;
+        Fri,  6 May 2022 19:55:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/kVp+LW4lwNN9O9GLlcAyn/gMlzTefek6DlDXe
+        81oc8=; b=PynDOvY2OLHTlwe90rtKTNsF9ZqxqwxrmAhPozJd92A1yd+FW3vt9z
+        PyK8P/6H80jiIJgddhZiK0WiigIllQ+JgF2RdO/LkplCwQwidGNVy20KAbGdG/+P
+        em4Ytm6PbSNahxlPWEQgQuXzxvOwnEFGilZUzZbfWT1toJBjxzaFU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEAC111BD2E;
+        Fri,  6 May 2022 19:55:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5282911BD2D;
+        Fri,  6 May 2022 19:55:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
 Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 3/3] t: add tests for safe.directory when running
+ with sudo
+References: <20220428033544.68188-1-carenas@gmail.com>
+        <20220428105852.94449-1-carenas@gmail.com>
+        <20220428105852.94449-4-carenas@gmail.com>
+        <xmqq7d79du6c.fsf@gitster.g>
+        <5493b2f1-e59d-d91d-ac21-47c93d2996f2@gmail.com>
+        <xmqq7d79gjre.fsf@gitster.g>
+        <CAPUEspibV6LKVAGpUPBoDYWvF7cjBJUJOSMDzLY6ErMF8s-Eng@mail.gmail.com>
+        <xmqq1qx6jq0b.fsf@gitster.g>
+        <CAPUEspjOPNTMrBdLQMKcbXYY7G+Vm1br++7C3rq6Bs+5xZ4yHg@mail.gmail.com>
+Date:   Fri, 06 May 2022 16:55:36 -0700
+In-Reply-To: <CAPUEspjOPNTMrBdLQMKcbXYY7G+Vm1br++7C3rq6Bs+5xZ4yHg@mail.gmail.com>
+        (Carlo Arenas's message of "Fri, 6 May 2022 15:57:13 -0700")
+Message-ID: <xmqqfslmi5c7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 06BEC08A-CD98-11EC-9DD9-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 6, 2022 at 2:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+Carlo Arenas <carenas@gmail.com> writes:
+
+> makes sense, but I still unsure about the two questions I had above:
 >
-> Carlo Arenas <carenas@gmail.com> writes:
+> * would it make sense to make it run ONLY if both variables are set to
+> YES or is it enough to use one (most likely the GIT_TEST one) that we
+> would enable independently in CI?
 >
-> > Since I am renaming it anyway as part of this topic with RFC v4, would
-> > it be a good idea to require both?
-> >
-> > I see the "IKNOWHATIAMDOING" not as a normal GIT_TEST flag, but as a
-> > "here be dragons!" warning, and I later found that I either
-> > misremembered it being enabled in the CI, or it was dropped with one
-> > of those refactors we do often there.
-> >
-> > My RFC v4 includes a new nice looking GIT_TEST variable as suggested
-> > by Phillip which I am also enabling in the CI to hopefully make it
-> > even more clear that this is only meant to run there, but sadly that
-> > also means that this patch will likely have a conflict when merged
-> > upwards.
+> the advantage I see of having both variables is that it is even less
+> likely to even run accidentally in a desktop somewhere and maybe break
+> that test, and also keeps the meaning I wanted to attach to it with
+> that ugly looking flag that no one should ever try to enable in their
+> workstations unless they really know what they are doing.
 >
-> This must build from the older mainteance tracks like maint-2.30, so
-> let's keep the changes to absolute minimum
+> The advantage of ONLY having the GIT_TEST one is that it will be
+> easier to enable in CI and for whoever wants to play with it on their
+> workstation as well, but might still encourage people trying to make
+> it work and wasting their time.
 
-makes sense, but I still unsure about the two questions I had above:
+Those who want to use it in CI would need to be told (or have to
+figure it out) by the patch that adds either IKNOWWHATIAMDOING or
+GIT_TEST_WHATEVER, and as long as the patch does its job well
+enough, I do not see much difference either way.  The only possible
+difference is if we use IKNOWWHATIAMDOING then a special CI job that
+may run with tweaked /etc/sudoers would run the test in this series
+*and* the other test we borrowed IKNOWWHATIAMDOING from, which may
+not necessarily be what we want to do.
 
-* would it make sense to make it run ONLY if both variables are set to
-YES or is it enough to use one (most likely the GIT_TEST one) that we
-would enable independently in CI?
+> * since we have to enable CI for these to be useful, would that be
+> something to be done in an additional patch as part of this topic
+> branch and you will only pull the commits before it to maint to avoid
+> conflicts, or should it be done completely independently as a mini
+> feature branch that depends on this one that will be pulled to seen
+> and merged downwards from it?
 
-the advantage I see of having both variables is that it is even less
-likely to even run accidentally in a desktop somewhere and maybe break
-that test, and also keeps the meaning I wanted to attach to it with
-that ugly looking flag that no one should ever try to enable in their
-workstations unless they really know what they are doing.
+I'd expect that nobody pays attention to GitHub CI runs on
+maint-2.30 - maint-2.35 branches when I push out.  I am hoping that
+these fixes are built on maint-2.30 _without_ CI integration (i.e.
+the SUDO tests won't be run due to lack of IKNOWWHATIAMDOING in the
+CI environment).
 
-The advantage of ONLY having the GIT_TEST one is that it will be
-easier to enable in CI and for whoever wants to play with it on their
-workstation as well, but might still encourage people trying to make
-it work and wasting their time.
+A single branch, without CI integration, based on maint-2.30 would
+be prepared.  Let's call that cb/path-owner-check-with-sudo topic.
 
-* since we have to enable CI for these to be useful, would that be
-something to be done in an additional patch as part of this topic
-branch and you will only pull the commits before it to maint to avoid
-conflicts, or should it be done completely independently as a mini
-feature branch that depends on this one that will be pulled to seen
-and merged downwards from it?
+It is merged to another branch, based on v2.36.0.  Let's call that
+cb/test-path-owner-check-with-sudo-in-ci.
 
-somehow offtopic but just curious about your process, presume that if
-we go with a single topic branch adding it instead as 2/4 would break
-your flow/scripts since the only way to get that merged would be to
-cherry-pick, right?
+On that latter branch, changes to CI to tweak /etc/sudoers and set
+IKNOWWHATIAMDOING would be created.  That latter branch will
+percolate down starting at 'seen', through 'next', 'master' and
+finally to 'maint'.
 
-> I actually think 1/3 and 3/3 are OK.  Are there remaining issues in
-> these two patches (which only are tests)?
+After all that happens to prove the primary topic (sans CI) is
+sound, the tip of maint-2.30 would be updated by merging it, i.e.
+cb/path-owner-check-with-sudo, and then the result would be merged
+to maint-2.31, ..., percolating upwards to maint-2.35.  The
+resulting maint-2.35 may be merged to 'maint' after that but that
+should become a "already up-to-date" merge, I would expect, because
+'maint' by that time would have got cb/path-owner-check-with-sudo as
+part of merging cb/test-path-owner-check-with-sudo-in-ci already,
+and the merge of cb/path-owner-check-with-sudo is the only thing
+'maint-2.35' has that hasn't merged to 'maint' at that point.
 
-The versions of them in RFCv4 have more documentation and are cleaner
-since they mostly include most of the feedback that was collected on
-them (even if I am still unsure because it is spread around and
-difficult to track, hence why I was planning an RFC)
+> true, but the apparent check for ULONG_MAX (which should have a
+> comment added) was really a check not to overflow when assigning the
+> value we got into uid_t, by sacrificing an unlikely to be valid
+> ULONG_MAX as an uid.
 
-I don't think there is anything significantly different though but
-they are and will need another review (which I am hoping would be
-uncontroversial)
+Are you worried about uid_t wider than ulong?  strtoul() with !errno
+test covers the case, doesn't it?  SUDO_UID cannot have any integer
+that cannot be represented in uid_t and if strtoul() does not say
+ERANGE, we know whatever value in SUID_UID did not overflow ulong.
 
-> As to 2/3, I think the code is basically already fine, but a
-> simplification like the following on top would be a good idea.
->
->  * We clear errno before making strtoul() call, so any non-zero
->    errno must have happeneed in strtoul(), which includes ERANGE.
->    There is no point checking the returned value env_id; if it is
->    ULONG_MAX but errno is 0, then the SUDO_UID legitimately is
->    naming a user whose UID is that special value, and it is not an
->    indication of an overflow.
+> it ALSO avoids someone trying to sneak a value that would overflow in
+> one of the most common configurations we will run where sizeof(long) >
+> sizeof(uid_t) && MIN_UID_T >=0, by using an equivalent to MAX_UID_T
 
-true, but the apparent check for ULONG_MAX (which should have a
-comment added) was really a check not to overflow when assigning the
-value we got into uid_t, by sacrificing an unlikely to be valid
-ULONG_MAX as an uid.
-
-it also has the intentional side effect of breaking this code if uid_t
-is signed and hopefully triggering a warning in the process since it
-would be always false, that way whoever has a system where this type
-is signed will have to carry their own version of the code and we
-don't have to deal with the portability of it.
-
-lastly (since it really made me proud and would be sad to see it go)
-it ALSO avoids someone trying to sneak a value that would overflow in
-one of the most common configurations we will run where sizeof(long) >
-sizeof(uid_t) && MIN_UID_T >=0, by using an equivalent to MAX_UID_T
-(which only exists in a few systems and therefore can't be relied on)
-to discard values that would overflow the range uid_t has.
-
-without it, we would probably find ourselves in the future having to
-deal with an embarrassing bug that others before us had suffered.
-
-Carlo
+Sorry, -ECANNOTPARSE.  If strtoul() can parse everything in uid_t
+then where is the room for overflowing?  We are trying to protect an
+unsuspecting user who temporary has become 'root' via sudo, and not
+somebody deliberately hurt themselves or others by setting SUDO_UID
+deliberately to strange values (once you are 'root', you have easier
+ways to hurt other people).
