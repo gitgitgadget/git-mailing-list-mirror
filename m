@@ -2,93 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92418C433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66794C433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:04:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443962AbiEFVEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 17:04:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56564 "EHLO
+        id S1444330AbiEFVHu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 17:07:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1444332AbiEFVDq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 17:03:46 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 561966F4A7
-        for <git@vger.kernel.org>; Fri,  6 May 2022 13:59:59 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1449B1871DC;
-        Fri,  6 May 2022 16:59:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iTzpO0X9YByWrU9rXPX/tqFzHuKOILv3qySG+Q
-        269xs=; b=VeZwHRgMHorPfCyVHC/Ukue9jRC5V/x86LU9QMkgnxpBFnlNTuFnxQ
-        j90YjATLNzPJrPVBPvJe+b0PKqzie9pw3DiXKUM+m4TDa1TSInSDEq+VEEDpnmO/
-        kgaDoKt5EiMC4CvWs1HvKomby/YbLr/MNURTkB1K3s4Hivt8JkukA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C05D1871D9;
-        Fri,  6 May 2022 16:59:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E798F1871D5;
-        Fri,  6 May 2022 16:59:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, bagasdotme@gmail.com,
-        Guy Maurel <guy.j@maurel.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v3 2/3] git-compat-util: avoid failing dir ownership
- checks if running privileged
-References: <20220428105852.94449-1-carenas@gmail.com>
-        <20220503065442.95699-1-carenas@gmail.com>
-        <20220503065442.95699-3-carenas@gmail.com>
-        <nycvar.QRO.7.76.6.2205051545370.355@tvgsbejvaqbjf.bet>
-        <c9fc0fc6-c688-022d-9476-aaa87c66d295@gmail.com>
-        <CAPUEspiMsvNhQF-RjW5eu3Xco9gU7TFt4w9dOOcF1PGM4Z+ceQ@mail.gmail.com>
-        <xmqq35hml9cs.fsf@gitster.g>
-        <CAPUEspj98i9oTECSvSp4c-sDQ=hrxJHCY3Nn6QwqdAf9Ntnahw@mail.gmail.com>
-Date:   Fri, 06 May 2022 13:59:52 -0700
-In-Reply-To: <CAPUEspj98i9oTECSvSp4c-sDQ=hrxJHCY3Nn6QwqdAf9Ntnahw@mail.gmail.com>
-        (Carlo Arenas's message of "Fri, 6 May 2022 13:22:49 -0700")
-Message-ID: <xmqqh762js1j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1378271AbiEFVHt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 17:07:49 -0400
+Received: from mail-vk1-xa29.google.com (mail-vk1-xa29.google.com [IPv6:2607:f8b0:4864:20::a29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB85B6EC75
+        for <git@vger.kernel.org>; Fri,  6 May 2022 14:04:04 -0700 (PDT)
+Received: by mail-vk1-xa29.google.com with SMTP id t12so4152699vkt.5
+        for <git@vger.kernel.org>; Fri, 06 May 2022 14:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V3SKNH+5ZlngRjA1jHoCn8KK2BFeQSbLagDXg393kwE=;
+        b=MaZvHxiz7+m1Ve5Z3oXwEQlpPQtngkclIs2aomg1TCyjw66Gt6YXkdOUXRFzKKVLSF
+         91RUYxdV0WAoei6Ec+93rooi00GOu1wbYNencE6qsYaLXcaJRv3D+pSY/o9kyWB6ti3l
+         InNrEqDZe5DA6a029BYRlB3cCWdv8D2bH8B7X1iw2kBfBFQZrowgZoe39dD6CjvynEVC
+         PrDAL6FEZI2D1ix1RZ+CusC6DEUZd0KSbh1IrE88zGIKl27j1PAoW2CoIaCrnsKAU7Cd
+         bHR5zj3zS+d7TAEbaoeLAS4A+Ad81/PkJwP/0jtN9VO6REqx56p+VS/0drFExwcSzFjq
+         WBJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V3SKNH+5ZlngRjA1jHoCn8KK2BFeQSbLagDXg393kwE=;
+        b=BcBvG4qwO0F2M/kNcWv92wukfFJBczSyUQZ19RRZXCID/34qWAfBTbTnHzYn7x9ZJ3
+         vtoSAjPT+KsAVSR/6DamXUKO97fVNyFivheINvF9Kx2urlqE+FL/iv/pc8S9zj6q1CM2
+         NWnaZutqhz+NkmA7IRqLZkeg06LNdIW8dpv9e0ABgzL+d2CAyMnkAEgILkgT4t4rqhq1
+         xcYK5dvQkiOhz7wdbSuAPalL0+8WQBQiIh2iHa3s1PHPOl31r12K/r55htGBjEkBTzpL
+         WskS1iWrEBjab78BhJPQp72C6M5+ehcppSiAhrCp04Hmet5A+ouNoata3l1X5Y4wSOTI
+         GlOw==
+X-Gm-Message-State: AOAM532xyBsOKGQf/DAt3H6FV6spvnoMJb5cGhuNUCqrzpCJW1eGEqSB
+        iIYy58Qg4A/w6tU7y1fik2NF1+rsLdgSGSycJeE=
+X-Google-Smtp-Source: ABdhPJxvSfT69N6LbvBQOpO3JVR16Rb34HS1Kfbkng5aKvbkS7jqBFVQ2SWe4P8NUi7UnuNRHNRtnnQWe9RufMxyMtw=
+X-Received: by 2002:ac5:c856:0:b0:34e:d0b4:7a10 with SMTP id
+ g22-20020ac5c856000000b0034ed0b47a10mr1925118vkm.39.1651871043782; Fri, 06
+ May 2022 14:04:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7A65AF76-CD7F-11EC-A2ED-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <20220428105852.94449-1-carenas@gmail.com> <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com> <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+ <xmqqlevfesnu.fsf@gitster.g> <xmqqczgrdb0j.fsf@gitster.g>
+In-Reply-To: <xmqqczgrdb0j.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 6 May 2022 14:03:49 -0700
+Message-ID: <CAPUEspjugusSzuLJkuHdN-TsfVpqcyAGnTaKEGu9qtwUAghwmw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+On Thu, May 5, 2022 at 12:39 PM Junio C Hamano <gitster@pobox.com> wrote:
+> So I am not so optimistic that we
+> can invent a GIT_TEST_* knob as good as ASSUME_DIFFERENT_OWNER for
+> that.
 
-> On Fri, May 6, 2022 at 1:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Carlo Arenas <carenas@gmail.com> writes:
->>
->> > which is also why we can't use it, any possibly bogus or suspicious
->> > value we get from SUDO_UID MUST be ignored.
->>
->> I do not think I agree.  If we have a strange value in SUDO_UID, it
->> would be much better and safer to err on the safe side.
->
-> ignoring it is the safe side; for example if we replace the current
-> function with the proposed one then some user lucky enough to have
-> access to the latest linux supercomputer that has been patched to have
-> a 64-bit uid_t (because who makes 32-bit supercomputers nowadays)
-> would get root[1] access by simply faking his SUDO_UID to be UINT_MAX
-> + 1.
+the only option I can think of (if the pain point is running git
+through sudo is just too cumbersome) AND we don't want to weaken our
+implementation by allowing the SUDO_UID escape hatch to non-root would
+be to still use sudo to change the ownership of the git binaries we
+are testing with to root and SUID them.
 
-Since we do not pay attention to SUDO_UID unless euid is root,
-anybody who can attack by faking SUDO_UID to affect what Git does
-can already become root on the box.  So such an attacker would
-already have root access without our help, or they would not.
+but at that point we are likely to deal with similar platform specific
+issues for why running git as root is still problematic regardless,
+and for whatever reason I feel even more compelled to ever run that
+script in my workstation since at least with the current
+implementation I know exactly which commands are running as root.  It
+also makes this functionality slightly more dangerous since it will be
+included as part of the production binaries as you pointed out.
 
-In any case, if we notice that SUDO_UID is not a valid number and
-die(), we deny the access anyway, so there is no need to write more
-code to ignore.
+My hope to broaden its visibility was to instead (since this was
+mainly meant to be a CI only test as explained[1] originally) was to
+add to our CI setup ways to fix the agents sudoers configuration to
+fit what we need, but I won't do that now, and will probably wait for
+a while until the on the fly CI changes settle.
 
+Carlo
+
+[1] https://lore.kernel.org/git/CAPUEspitAQrEjMpUyw8e2pyT1MT+h_dO5wSU0wWDWTqSye5TwA@mail.gmail.com/
