@@ -2,127 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7633C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 17:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5409DC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 17:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444182AbiEFRbR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 13:31:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
+        id S1444232AbiEFRnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 13:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236163AbiEFRbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 13:31:15 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5196D944
-        for <git@vger.kernel.org>; Fri,  6 May 2022 10:27:31 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17AAE118AEC;
-        Fri,  6 May 2022 13:27:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=x8mGg88Yvj14EEWIY/q30fhC9
-        e2WK/k+RiEHjVEPw1A=; b=ZzsL80cch2m06lgOk1AQ1bFOKLq5Cxbugn4fbgGU2
-        iMocLcSfgyxbj15yacEtRa+HuTYATw1lbT2NO5TtMdTbHo1VDM8AzpmZUDQJbeI9
-        WNQG5rSxN/tFFsU2kaUJk3zZRIXaLDdKcGb57sPUHDvIxNWAAgrQv19f1jd/zXS7
-        G4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FDE7118AEB;
-        Fri,  6 May 2022 13:27:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 77089118AEA;
-        Fri,  6 May 2022 13:27:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.36.1
-Date:   Fri, 06 May 2022 10:27:28 -0700
-Message-ID: <xmqqczgqmv0f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236386AbiEFRnK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 13:43:10 -0400
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D231B35AA9
+        for <git@vger.kernel.org>; Fri,  6 May 2022 10:39:26 -0700 (PDT)
+Received: by mail-vs1-xe36.google.com with SMTP id e19so7853930vsu.12
+        for <git@vger.kernel.org>; Fri, 06 May 2022 10:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=CgHRNuoY6nfGQsjMkwyCrU08ss6ThqejPo3cqZgftGQ=;
+        b=FnCrDVmzMhAJJOhsemS05OgoG+Oey1r3Qo82YGbhMDkkOtKNRH4FFjy5k81581H14M
+         6ddFr243C2RekiHh5NS+suBwv4xaJrn9GVY0GZCCq58yYoY/NKElnAbnLfth+8/3YBly
+         NDCIMCFFeSHSfHQvliUeljulsSm+Um1DhTGz9yeF4w02+LfKsnqaNeEDFekG+TFdFxZi
+         5rA9W+Ucu3WOYZIylxUiwUc1EFTyh+2SeeYxt6iOShXRlQRs0pFZYKUYAJjM3SEhM10P
+         ZEuQ2hvc33pIiK5oLG+LLaJfTtgWL7rrU4vqdBDAALR1BNUD2P5y151k/um7yYT5Afp3
+         1n4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=CgHRNuoY6nfGQsjMkwyCrU08ss6ThqejPo3cqZgftGQ=;
+        b=Yue53CaZFzb+HdzYyIi8XmPoFmgUQCA9ubrfGCS8KK7OMHpd8QqeeZoQMwVQFJxfEG
+         JCL38b7S30XrcnAZK0XVzrbtRxEoeYQ9UxJJ82c08QPtOBjmlGhj6HsmiXlyTOL5xLLJ
+         TT2Gm3xnCY8DtUCY8AZgJ6+pj37XmiYWSuXUOWIN7Us5/hn/Ab49/9/utRfx3tEuyh5k
+         6OpZtPx1046eh9d91UiX5r1JXaWK9Dn8WaRS1f5J409VW0etmaxB46kc6Rwm4lYWPQJ8
+         Hv+x0b8KA83RMWPjBZLthnJ0gdpndhiQdmqBVTtPBoMsfKxAQRxHqKYBA/MdNKQjvCY1
+         vZhw==
+X-Gm-Message-State: AOAM531wnhe/pY8AHbuILvVjR1yau3ym2rg2QqN1SdklzZoN+oIGmeCf
+        LIKss+3x5/tYx8mH+0F8McLWu2IlP+rN76iEkj4=
+X-Google-Smtp-Source: ABdhPJzlxfVyOh2W7be/5rLZWSlhS+OAX+WcNucNKlbP+ZLpAa39upGuQ4CPJ+eeLkY5wMgWqcBOm0A+cF4tpU2gufI=
+X-Received: by 2002:a05:6102:1519:b0:32d:8834:f17a with SMTP id
+ f25-20020a056102151900b0032d8834f17amr1509862vsv.1.1651858765931; Fri, 06 May
+ 2022 10:39:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CE1B2B14-CD61-11EC-A85B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20220428105852.94449-1-carenas@gmail.com> <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com> <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 6 May 2022 10:39:12 -0700
+Message-ID: <CAPUEspiNpNSiasswXK_SWPUPR=m8Hq2vq3b_XisnVz3zbTy8MA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, gitster@pobox.com, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest maintenance release Git v2.36.1 is now available at
-the usual places.
+On Thu, May 5, 2022 at 6:44 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> On Mon, 2 May 2022, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> >
+> >   $ IKNOWWHATIAMDOING=3DYES ./t0034-root-safe-directory.sh
+>
+> Hmm. I would like to suggest that we can side-step all of these issues
+> (and the ones I outline below) by considering a similar approach to the
+> one Stolee took in t0033: use one or more `GIT_TEST_*` environment
+> variables to pretend the exact scenario we want to test for.
 
-This is to fix many of the regressions shipped with v2.36.0;
-unfortunately, there still are a few known regressions that are not
-yet fixed, which have to wait for future maintenance releases.
+I wish we could, but I think it is not possible in principle because
+it would break the trust chain that we are relying on here to make
+this work.
 
-The tarballs are found at:
+As explained in the commit message from the next patch, for this to be
+useful as well as safe our ONLY chance is to trust SUDO_UID hasn't
+been tampered with, which also requires that we run through sudo so
+git is running as root and not as the regular user the test suite
+would use.
 
-    https://www.kernel.org/pub/software/scm/git/
+If we remove the (I am really root, before I trust SUDO_UID)
+requirement from our code, we have just opened ourselves to a way to
+weaken the protections that were added with CVE-2022-24765.
 
-The following public repositories all have a copy of the 'v2.36.1'
-tag and the 'maint' branch that the tag points at:
+to be frank while Junio mention this "weakens" the checks, I consider
+I was strengthened them by introducing a mechanism the user could use
+(only when he is root) to safely tell us that he wants to trust a
+repository that is not owned by him without having to create an
+exception, and also improving the usability of it, but "magically"
+detecting which uid they are most likely to trust.
 
-  url =3D https://git.kernel.org/pub/scm/git/git
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
+> It took me a good chunk of time to figure out how to run these tests, and
+> I will have to remember to revert the temporary edit of `/etc/sudoers`
+> file. This is definitely not something I plan on doing often, so I wonder
+> how these regression tests can guarantee that no regressions are
+> introduced if they are so hard to run ;-)
 
-----------------------------------------------------------------
+by running in the CI (at least the macOS hosts, and maybe others if we
+decide later to butcher their sudoers config as well)
+I am adding more instructions in the commit message from the next RFC
+to help anyone that might want to run this locally (which I
+wouldn't recommend myself)
 
-Git v2.36.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> This would be more canonical as `test_when_finished "sudo rm -rf root"` i=
+n
+> the preceding test cases.
 
-Fixes since v2.36
------------------
+correct, but I was attempting not to do that to make it less of a pain
+to write more tests since (probably incorrectly) I assumed it would be
+simpler to remember that there is a test at the end that does the
+cleanup and at least one at the beginning that does the setup than
+probably having to take care of those 2 things on each test that you
+write.
 
- * "git submodule update" without pathspec should silently skip an
-   uninitialized submodule, but it started to become noisy by mistake.
+Ideally, the test framework would be able to know that this test
+creates files as root and cleanup itself, but that was specifically
+punted.
 
- * "diff-tree --stdin" has been broken for about a year, but 2.36
-   release broke it even worse by breaking running the command with
-   <pathspec>, which in turn broke "gitk" and got noticed.  This has
-   been corrected by aligning its behaviour to that of "log".
+I am keeping this for the next RFC, but I am open to changing it to
+whatever you would prefer, until a proper integration could be written
+to clean that mess up.
 
- * Regression fix for 2.36 where "git name-rev" started to sometimes
-   reference strings after they are freed.
-
- * "git show <commit1> <commit2>... -- <pathspec>" lost the pathspec
-   when showing the second and subsequent commits, which has been
-   corrected.
-
- * "git fast-export -- <pathspec>" lost the pathspec when showing the
-   second and subsequent commits, which has been corrected.
-
- * "git format-patch <args> -- <pathspec>" lost the pathspec when
-   showing the second and subsequent commits, which has been
-   corrected.
-
- * Get rid of a bogus and over-eager coccinelle rule.
-
- * Correct choices of C compilers used in various CI jobs.
-
-Also contains minor documentation updates and code clean-ups.
-
-----------------------------------------------------------------
-
-Changes since v2.36.0 are as follows:
-
-Junio C Hamano (4):
-      2.36 gitk/diff-tree --stdin regression fix
-      2.36 show regression fix
-      cocci: drop bogus xstrdup_or_null() rule
-      Git 2.36.1
-
-Orgad Shaneh (1):
-      submodule--helper: fix initialization of warn_if_uninitialized
-
-Ren=C3=A9 Scharfe (3):
-      Revert "name-rev: release unused name strings"
-      2.36 format-patch regression fix
-      2.36 fast-export regression fix
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
-      CI: select CC based on CC_PACKAGE (again)
-
+Carlo
