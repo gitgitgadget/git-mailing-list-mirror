@@ -2,168 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F88C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 04:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A46FC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 07:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239173AbiEFEqS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 00:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33276 "EHLO
+        id S1389529AbiEFH1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 03:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbiEFEqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 00:46:17 -0400
-X-Greylist: delayed 316 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 May 2022 21:42:34 PDT
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006E3580DA
-        for <git@vger.kernel.org>; Thu,  5 May 2022 21:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1651812150;
-        bh=SJ+z+YvHtjHpqA6goIaFFEPmrfSnW9HW4mld+AUqHLk=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=THMT9RGu9/9dHKI8F1ZOOWmEB2hDYxEzzoH0M986ewRp0reUk8MBNYE5NUYHSiidV
-         DbPdtpEAx7MuX8tLV6nMZvRvfHUnhVm3IT+j0Jpwtsyycro6owtxNe+dznvrPF4TuW
-         j2odGta1Yy8Vqs+7lES9P+Nnhkb92Bl0mXL9Nh/s=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mmhnu-1oCVTr3l02-00jy2T; Fri, 06
- May 2022 06:37:05 +0200
-Date:   Fri, 6 May 2022 06:37:03 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jason Hatton <jhatton@globalfinishing.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
-Message-ID: <20220506043703.gqoi62t3mbnbga44@tb-raspi4>
-References: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+        with ESMTP id S1389530AbiEFH1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 03:27:44 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D8E674D7
+        for <git@vger.kernel.org>; Fri,  6 May 2022 00:23:56 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id z2so11202491ejj.3
+        for <git@vger.kernel.org>; Fri, 06 May 2022 00:23:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZZcBlWagN5QiiqQVxzUe9B5r+tWF6kjoLrb/WxgPTKk=;
+        b=E7o2OLIBu7dmgDrz1gsSP6XIa5UIPB1ZKMCe9L3wuFb55exfP7w7N0f/HnxtNZCjvT
+         wsIZJZXHI8DuTOMmqijDjC5cQAjN/KInPgRziev5c57Td5Yb6S3Fm/pRZ0lYGHRlItoj
+         GFMZs/P3v8vjR+ePKQUTbaTQI2cRsNOA+cVdCsNQIkpwgq4wz6N9e3dq0X1C7XoVFY6B
+         Of+gGhxMoHbBGNS2+G82mitr8pq2zgxtbuM008zgmRg06sZ64KEPxmaigV3AxMQn+JIh
+         wI8a2649ZTgNA7nX09Iq5emG9cQOcJVSR+19g1yaRhLhwaIM7UeqszULu4QoLIQphE1r
+         79FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZZcBlWagN5QiiqQVxzUe9B5r+tWF6kjoLrb/WxgPTKk=;
+        b=eFE2dV2LFtQR9mw2T/N8v0JZiLBWKkLSIm21Su/V2N2EL9Fm4AgNCMMJK+j/DuIEjp
+         AsgLl8TY0wCYhXn4OyFH6uJo4dyY9dkyflGkO9UtIYHsaIMwutoOhcTBiWYFLii3Cdxw
+         nksabXvJzqUNZmumZ+j0QpaA78kzl0M36JgI0/o9fM7KFE3YiYb1Kph/ajk5pSlOZ6HK
+         tzkbu+23MGIGpFKMMZW5ahzWC5ryRQks+UoqW1rRKbpli0pOXuVGgsPfdoEMQV1zrKKt
+         PaMdzdDcZtmP4Uam8IuAOu3t4lkjO+D6l6VETr+a6LGkCFzGmBoVBx0IclHp8IGfcgyv
+         TXnA==
+X-Gm-Message-State: AOAM533D+5FbwbprSo2HyyOPJ26ET6sOHq4e14i+alkPGrLCSlGPdjPB
+        L1Yc1RL1Bbgae0rY2uCzP6ejCHJeuupah0Caras=
+X-Google-Smtp-Source: ABdhPJyClhwnxGIehaBXgyOEkeSy5xnMqavOPhKZdE+lrnrZsz03viRqJT11KlHzCGbk0r1eiW4FHgztgqYYpPqTjnQ=
+X-Received: by 2002:a17:906:c145:b0:6f3:9ea7:1d41 with SMTP id
+ dp5-20020a170906c14500b006f39ea71d41mr1752852ejc.269.1651821835261; Fri, 06
+ May 2022 00:23:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:UTWvJRXzihAEYKXLOa4D8ZKB1FIAVKw4cmBKGkClxh8e26Qv/9+
- k2oc7ZGEq3MDjHa/zIqH5K/ogzGCALGnvpCG5vKBm+cAe6cZlVrGLmyIcb9at/bVBILkbuE
- kyG7ohgK+c8DrJYi8smu5tajTdVZXGXouejlKBdDiWfxUiy2KAXAWqBBuJIeJWfwgTge0I5
- 7gG42HxmJe7a0pZtv2OZA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IgdBnN8etEg=:Y/+iRi6V7zpzvUC+sJ5Ggg
- iTVQrNtWtmyWkujKRcAFdCkogG63u1++Iv77BuLxIAhDZ09V8SYhhfFm55802N3dsoiMfmVTU
- BKv30nwrYnwfbO1eaV4g4hmeaKNa+6EpZtMgqYgXt1/e4KVj9dypWPj494sv4G0wc4N8xOClc
- VfmWh0JXx2aktex/KEszsPcSTEN4ZbH5GKG58vqW7cMcYpSiFlC6QiiQWdgPfwyoz6MSIqxMz
- mt1qu7ghu9zeb0o612X8S/7dvj3pQzJAVjkTJf/WThC0h8UPNYmh29GMETWtw/6f/moVR6qV/
- we4ecN3CJ1CCrr6Y74MfHEiG7gDyiheuFzfyb1iHthNXnHRdmJNjpV1MM28zmEEuDyG+GymII
- a9feNbx4aoMdz+HEY45mIISlalD4OgsI+Wbvza5pr/niUspdTOvBqVL4C5SbzjTTGAKIO8tWO
- dJMFRnGurRXfW2W4v37C2lgWBgzWM5B+P4Cer2snvb1NLm+MF+xkrUePqOnBioQ7Zf3mYT5IA
- IHfL9krN0hp0ovtvA6NP2g8mEV6l7yBRE2pVBC6GdqvcM8Biyyt4ii9ZD+dsZlfMzigXxL0LM
- tdamMbVhihzc+pP9pGoZ3T3XB2jg8EZBNcJVMdG/omFubb1K+Vn5iCxxOVOmSgIStf1NBqf49
- 5fhEw3lG7xvV2j8w/pULAY9qsb+VP3CSZnT0kSeRxvX4W49QuE0aKFm/ZaN9VEmTGBg1EkaQl
- t1uB/zXJpyb3w33vKTZAxfVOZ/OtJPVlOacJbKU2OkDyWBwb7YqcAnXL3z7igHJm6LL67K1Pb
- csc7XSveCrVEHV/8Pa/czm9Wg44dnwhU7xzndbbE7w+kd3isD3Mkp18ta/bIIJSDTR+Dwt4V9
- GGSQRT5zxhCgdJH+vc67U1tXn9hX7VaEeJlk49l34MiQvAfWZCL6wiK1bZ+FHCGp1gHb5EYND
- 9UWV9nO6MUZLhOMr0BD1L5arqp9JMPj4vCcHxoYZm/4cm73OQP/HMpJUnxZGjrgDMF4Wxd8/E
- o503C36uSpNCQNGU8MV7Xa08DUV8ajxTQJxGH6IqXMsnBRS4NMXsadSw4cL3fOPTDQnBNuDN1
- okUOkoNUUzSmfc=
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1171.git.1650908957.gitgitgadget@gmail.com>
+ <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com> <4537d473b937b182cd79b2f3c5673b75d92cab23.1651083378.git.gitgitgadget@gmail.com>
+In-Reply-To: <4537d473b937b182cd79b2f3c5673b75d92cab23.1651083378.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 6 May 2022 00:23:43 -0700
+Message-ID: <CABPp-BHcWjOeVhRD_XKTko0OH2pwYsuCt8PzH=C_0u_gUWe0GQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] merge-recursive: add merge function arg to 'merge_recursive_generic'
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 06, 2022 at 12:26:53AM +0000, Jason Hatton wrote:
-> Git cache stores file sizes using uint32_t. This causes any file
-> that is a multiple of 2^32 to have a cached file size of zero.
-> Zero is a special value used by racily clean. This causes git to
-> rehash every file that is a multiple of 2^32 every time git status
-> or git commit is run.
+On Wed, Apr 27, 2022 at 11:16 AM Victoria Dye via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> This patch mitigates the problem by making all files that are a
-> multiple of 2^32 appear to have a size of 1<<31 instead of zero.
+> From: Victoria Dye <vdye@github.com>
 >
-> The value of 1<<31 is chosen to keep it as far away from zero
-> as possible to help prevent things getting mixed up with unpatched
-> versions of git.
+> Replace the hardcoded 'merge_recursive()' function used by the
+> 'merge_recursive_generic()' with a caller-specific merge function. This will
+> allow us to use 'merge_ort_recursive()' (and therefore avoid the index
+> expansion of 'merge_recursive()') in commands that perform merges with
+> 'merge_recursive_generic()', such as 'git stash pop'.
 >
-> An example would be to have a 2^32 sized file in the index of
-> patched git. Patched git would save the file as 2^31 in the cache.
-> An unpatched git would very much see the file has changed in size
-> and force it to rehash the file, which is safe. The file would
-> have to grow or shrink by exactly 2^31 and retain all of its
-> ctime, mtime, and other attributes for old git to not notice
-> the change.
->
-> This patch does not change the behavior of any file that is not
-> an exact multiple of 2^32.
->
-> Signed-off-by: Jason D. Hatton <jhatton@globalfinishing.com>
+> Note that this patch is strictly a refactor; all callers still use
+> 'merge_recursive()', and any changing to 'merge_ort_recursive()' will be
+> done in a later commit.
+
+I'm not sure if we can gut merge_recursive_generic(), but I don't
+think stash should use it...
+
+> Signed-off-by: Victoria Dye <vdye@github.com>
 > ---
->  cache.h      |  1 +
->  read-cache.c | 16 ++++++++++++++--
->  2 files changed, 15 insertions(+), 2 deletions(-)
+>  builtin/am.c              | 2 +-
+>  builtin/merge-recursive.c | 2 +-
+>  builtin/stash.c           | 2 +-
+>  merge-ort.c               | 3 ++-
+>  merge-recursive.c         | 4 ++--
+>  merge-recursive.h         | 9 ++++++++-
+>  6 files changed, 15 insertions(+), 7 deletions(-)
 >
-> diff --git a/cache.h b/cache.h
-> index 4b666b2848..74e983227b 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -898,6 +898,7 @@ int ie_modified(struct index_state *, const struct c=
-ache_entry *, struct stat *,
->  #define HASH_SILENT 8
->  int index_fd(struct index_state *istate, struct object_id *oid, int fd,=
- struct stat *st, enum object_type type, const char *path, unsigned flags)=
-;
->  int index_path(struct index_state *istate, struct object_id *oid, const=
- char *path, struct stat *st, unsigned flags);
-> +unsigned int munge_st_size(off_t st_size);
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 0f4111bafa0..6d01185d122 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1614,7 +1614,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+>         if (state->quiet)
+>                 o.verbosity = 0;
+>
+> -       if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
+> +       if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, merge_recursive, &result)) {
+>                 repo_rerere(the_repository, state->allow_rerere_autoupdate);
+>                 free(their_tree_name);
+>                 return error(_("Failed to merge in the changes."));
+> diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+> index b9acbf5d342..687ed1e527b 100644
+> --- a/builtin/merge-recursive.c
+> +++ b/builtin/merge-recursive.c
+> @@ -81,7 +81,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+>         if (o.verbosity >= 3)
+>                 printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
+>
+> -       failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
+> +       failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, merge_recursive, &result);
+>
+>         free(better1);
+>         free(better2);
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 1bfba532044..16171eb1dab 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -554,7 +554,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>         bases[0] = &info->b_tree;
+>
+>         ret = merge_recursive_generic(&o, &c_tree, &info->w_tree, 1, bases,
+> -                                     &result);
+> +                                     merge_recursive, &result);
+>         if (ret) {
+>                 rerere(0);
+>
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 8545354dafd..4bccdfcf355 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -4737,7 +4737,8 @@ void merge_incore_recursive(struct merge_options *opt,
+>         trace2_region_enter("merge", "incore_recursive", opt->repo);
+>
+>         /* We set the ancestor label based on the merge_bases */
+> -       assert(opt->ancestor == NULL);
+> +       assert(opt->ancestor == NULL ||
+> +              !strcmp(opt->ancestor, "constructed merge base"));
+
+...and here's one of the reasons why.  The fact that
+merge_recursive_generic() uses this string when exactly one merge base
+is passed is something that is only correct for git-am; it is wrong
+and actively misleading for git-stash since it has a real merge base
+that is not internally constructed by the operation using the merge
+machinery.  (The merge base it uses is something like $STASH^1, IIRC.)
+
+In fact, this was half the coin around why merge_recursive_generic()
+wasn't converted when merge-ort was written; see
+https://lore.kernel.org/git/CABPp-BHW61zA+MefvWK47iVZKY97rxc2XZ-NjXzuJxEhgSLqUw@mail.gmail.com/
+and https://lore.kernel.org/git/CABPp-BFr=1iVY739cfh-1Hp82x-Mny-k4y0f3zZ_YuP3PxiGfQ@mail.gmail.com/
+for more details.
+
+The use of merge_recursive_generic() by stash is also a bit weird;
+most of the time, stash is going to have actual commits instead of
+just trees.  But stash dereferences those commits to trees, passes
+them to merge_recursive_generic(), and then merge_recursive_generic()
+has to create fake commits containing those trees, because the merge
+machinery wants commits.  It feels a bit like a Rube Goldberg machine.
+Also, stash also always calls merge_recursive_generic() with exactly
+one merge base, which together with having real commits both kind of
+defeat the need for "generic".    I think stash should just use
+merge_trees()/merge_incore_nonrecursive() directly (much as
+sequencer.c does).  The only special case to worry about with stash is
+when c_tree != HEAD^{tree}, i.e. when applying changes on top of
+already present changes instead of just on top of HEAD.  But in that
+case, I think stash should be the thing to create a fake commit rather
+than invoking some wrapper that will create fake commits for all three
+trees.
+
+>         trace2_region_enter("merge", "merge_start", opt->repo);
+>         merge_start(opt, result);
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 1ee6364e8b1..2088f5c5fb3 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3806,6 +3806,7 @@ int merge_recursive_generic(struct merge_options *opt,
+>                             const struct object_id *merge,
+>                             int num_merge_bases,
+>                             const struct object_id **merge_bases,
+> +                           recursive_merge_fn_t merge_fn,
+>                             struct commit **result)
+>  {
+>         int clean;
+> @@ -3829,8 +3830,7 @@ int merge_recursive_generic(struct merge_options *opt,
+>         }
+>
+>         repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+> -       clean = merge_recursive(opt, head_commit, next_commit, ca,
+> -                               result);
+> +       clean = merge_fn(opt, head_commit, next_commit, ca, result);
+>         if (clean < 0) {
+>                 rollback_lock_file(&lock);
+>                 return clean;
+> diff --git a/merge-recursive.h b/merge-recursive.h
+> index b88000e3c25..6a21f2da538 100644
+> --- a/merge-recursive.h
+> +++ b/merge-recursive.h
+> @@ -53,6 +53,12 @@ struct merge_options {
+>         struct merge_options_internal *priv;
+>  };
+>
+> +typedef int (*recursive_merge_fn_t)(struct merge_options *opt,
+> +                                   struct commit *h1,
+> +                                   struct commit *h2,
+> +                                   struct commit_list *merge_bases,
+> +                                   struct commit **result);
+> +
+>  void init_merge_options(struct merge_options *opt, struct repository *repo);
+>
+>  /* parse the option in s and update the relevant field of opt */
+> @@ -105,7 +111,7 @@ int merge_recursive(struct merge_options *opt,
 >
 >  /*
->   * Record to sd the data from st that we use to check whether a file
-> diff --git a/read-cache.c b/read-cache.c
-> index ea6150ea28..b0a1b505db 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -163,6 +163,18 @@ void rename_index_entry_at(struct index_state *ista=
-te, int nr, const char *new_n
->  		add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_T=
-O_REPLACE);
->  }
+>   * merge_recursive_generic can operate on trees instead of commits, by
+> - * wrapping the trees into virtual commits, and calling merge_recursive().
+> + * wrapping the trees into virtual commits, and calling the provided merge_fn.
+>   * It also writes out the in-memory index to disk if the merge is successful.
+>   *
+>   * Outputs:
+> @@ -120,6 +126,7 @@ int merge_recursive_generic(struct merge_options *opt,
+>                             const struct object_id *merge,
+>                             int num_merge_bases,
+>                             const struct object_id **merge_bases,
+> +                           recursive_merge_fn_t merge_fn,
+>                             struct commit **result);
 >
-> +/*
-> + * Munge st_size into an unsigned int.
-> + */
-> +unsigned int munge_st_size(off_t st_size) {
-> +	unsigned int sd_size =3D st_size;
-
-Should this be written as
-	unsigned int sd_size =3D (unsigned int)st_size;
-
-
-> +
-> +	if(!sd_size && st_size)
-> +		return 0x80000000;
-> +	else
-> +		return sd_size;
-> +}
-> +
->  void fill_stat_data(struct stat_data *sd, struct stat *st)
->  {
->  	sd->sd_ctime.sec =3D (unsigned int)st->st_ctime;
-> @@ -173,7 +185,7 @@ void fill_stat_data(struct stat_data *sd, struct sta=
-t *st)
->  	sd->sd_ino =3D st->st_ino;
->  	sd->sd_uid =3D st->st_uid;
->  	sd->sd_gid =3D st->st_gid;
-> -	sd->sd_size =3D st->st_size;
-> +	sd->sd_size =3D munge_st_size(st->st_size);
->  }
->
->  int match_stat_data(const struct stat_data *sd, struct stat *st)
-> @@ -212,7 +224,7 @@ int match_stat_data(const struct stat_data *sd, stru=
-ct stat *st)
->  			changed |=3D INODE_CHANGED;
 >  #endif
->
-> -	if (sd->sd_size !=3D (unsigned int) st->st_size)
-> +	if (sd->sd_size !=3D munge_st_size(st->st_size))
->  		changed |=3D DATA_CHANGED;
->
->  	return changed;
 > --
-> 2.36.0
->
+> gitgitgadget
