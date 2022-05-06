@@ -2,113 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95376C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BA66C433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:17:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444382AbiEFVUy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 17:20:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41014 "EHLO
+        id S242556AbiEFVVY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 17:21:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348961AbiEFVUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 17:20:52 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECFD561285
-        for <git@vger.kernel.org>; Fri,  6 May 2022 14:17:07 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 647F11874FC;
-        Fri,  6 May 2022 17:17:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T71K7bM7KYgTfWDUdlDhMzW7uiV/LlMoEbWN+F
-        pFh+Y=; b=FgtqFOR8MWkQdBcpqhCzWmdjXKkmVfyh1ppAHekbl48c3MVoHus0nx
-        wbdpOrrRiAtmiVxr+0gpjbY96RXZZtld584ynLr+lXWGAhxJL18/UGd5toNzYOi9
-        R/13DyUh9yVQ1ofGTUIrgli3UtTK3wOscoW/0M8R97IFlG8+3K5Vs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D8FC1874FB;
-        Fri,  6 May 2022 17:17:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 038871874F9;
-        Fri,  6 May 2022 17:17:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Michael J Gruber <git@grubix.eu>
-Subject: [PATCH] http.c: clear the 'finished' member once we are done with it
-References: <cover.1651859773.git.git@grubix.eu>
-        <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
-        <xmqqtua2jtr0.fsf@gitster.g>
-Date:   Fri, 06 May 2022 14:17:01 -0700
-In-Reply-To: <xmqqtua2jtr0.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        06 May 2022 13:22:59 -0700")
-Message-ID: <xmqqczgqjr8y.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1444391AbiEFVVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 17:21:22 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D52B661289
+        for <git@vger.kernel.org>; Fri,  6 May 2022 14:17:37 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nn5KR-0005hk-FN;
+        Fri, 06 May 2022 22:17:36 +0100
+Message-ID: <dd2ffc74-af7e-c2fb-8466-f16e419c39d6@iee.email>
+Date:   Fri, 6 May 2022 22:17:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DFC4371E-CD81-11EC-A8F8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jason Hatton <jhatton@globalfinishing.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+ <f3f883cb-9141-6871-0f3d-3d3293a17f5f@iee.email> <xmqqr156obxg.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqqr156obxg.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In http.c, the run_active_slot() function allows the given "slot" to
-make progress by calling step_active_slots() in a loop repeatedly,
-and the loop is not left until the request held in the slot
-completes.
+On 06/05/2022 17:36, Junio C Hamano wrote:
+>>> + */
+>>> +unsigned int munge_st_size(off_t st_size) {
+>>> +	unsigned int sd_size = st_size;
+>>> +
+>>> +	if(!sd_size && st_size)
+> Style.
+Ah, the same line / braces choice (as per coding guidelines).
+>>> +		return 0x80000000;
+>>> +	else
+>>> +		return sd_size;
+>>> +}
+> This may treat non-zero multiple of 4GiB as "not racy", but has
+> anybody double checked the concern Réne brought up earlier that a
+> 4GiB file that was added and then got rewritten to 2GiB within the
+> same second would suddenly start getting treated as not racy?
+This is the pre-existing problem, that ~1in 2^31 size changes might not
+get noticed for size change. The 0 byte / 4GiB change is an identical
+issue, as is changing from 3 bytes to 4GiB+3 bytes, etc., so that's no
+worse than before (well maybe twice as 'unlikely').
 
-Ages ago, we used to use the slot->in_use member to get out of the
-loop, which misbehaved when the request in "slot" completes (at
-which time, the result of the request is copied away from the slot,
-and the in_use member is cleared, making the slot ready to be
-reused), and the "slot" gets reused to service a different request
-(at which time, the "slot" becomes in_use again, even though it is
-for a different request).  The loop terminating condition mistakenly
-thought that the original request has yet to be completed.
-
-Today's code, after baa7b67d (HTTP slot reuse fixes, 2006-03-10)
-fixed this issue, uses a separate "slot->finished" member that is
-set in run_active_slot() to point to an on-stack variable, and the
-code that completes the request in finish_active_slot() clears the
-on-stack variable via the pointer to signal that the particular
-request held by the slot has completed.  It also clears the in_use
-member (as before that fix), so that the slot itself can safely be
-reused for an unrelated request.
-
-One thing that is not quite clean in this arrangement is that,
-unless the slot gets reused, at which point the finished member is
-reset to NULL, the member keeps the value of &finished, which
-becomes a dangling pointer into the stack when run_active_slot()
-returns.  Clear the finished member before the control leaves the
-function, but make sure to limit it to the case where the pointer
-still points at the on-stack variable of ours (the pointer may be
-set to point at the on-stack variable of somebody else after the
-slot gets reused, in which case we do not want to touch it).
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * So, this has been sitting in my pile of random patches for a few
-   weeks.
-
- http.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/http.c b/http.c
-index 229da4d148..85437b1980 100644
---- a/http.c
-+++ b/http.c
-@@ -1367,6 +1367,9 @@ void run_active_slot(struct active_request_slot *slot)
- 			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
- 		}
- 	}
-+
-+	if (slot->finished == &finished)
-+		slot->finished = NULL;
- }
- 
- static void release_active_slot(struct active_request_slot *slot)
--- 
-2.36.1-200-gf89ea983ca
-
+>
+> The patch (the firnal version of it anyway) needs to be accompanied
+> by a handful of test additions to tickle corner cases like that.
+They'd be protected by the EXPENSIVE prerequisite I would assume.
+Any particular test t/txxx that they should be placed in (I'm not that
+familiar with the test suit)
+--
+Philip
