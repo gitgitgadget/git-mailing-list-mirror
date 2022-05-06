@@ -2,129 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ADDFC433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D514C433FE
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 21:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444553AbiEFVrk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 17:47:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
+        id S1358686AbiEFVy0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 17:54:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348985AbiEFVrj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 17:47:39 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2F46FA1B
-        for <git@vger.kernel.org>; Fri,  6 May 2022 14:43:54 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6BE381878CA;
-        Fri,  6 May 2022 17:43:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GzFquTIeh/knOjLFxK7FPXCj5IChkkOvuboz7b
-        6kE5A=; b=mwucrzYZJ2jAIlrx47YO3fzdze58Bv3UwtVkCMYqYb7DujB+FdK10W
-        DhV7DB132PlDIf2kxe+JWxJjtINcwUt7F/eLQlEh55V+gfBE5oXmwdtyImWc7hUd
-        7LxDfjc8ziKZVCnF+BJzq+z+bnk3GJ7Wxb/x0OdPzK+g30KA4v7KQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 645541878C9;
-        Fri,  6 May 2022 17:43:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0FD5D1878C8;
-        Fri,  6 May 2022 17:43:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] t: add tests for safe.directory when running
- with sudo
-References: <20220428033544.68188-1-carenas@gmail.com>
-        <20220428105852.94449-1-carenas@gmail.com>
-        <20220428105852.94449-4-carenas@gmail.com>
-        <xmqq7d79du6c.fsf@gitster.g>
-        <5493b2f1-e59d-d91d-ac21-47c93d2996f2@gmail.com>
-        <xmqq7d79gjre.fsf@gitster.g>
-        <CAPUEspibV6LKVAGpUPBoDYWvF7cjBJUJOSMDzLY6ErMF8s-Eng@mail.gmail.com>
-Date:   Fri, 06 May 2022 14:43:48 -0700
-In-Reply-To: <CAPUEspibV6LKVAGpUPBoDYWvF7cjBJUJOSMDzLY6ErMF8s-Eng@mail.gmail.com>
-        (Carlo Arenas's message of "Fri, 6 May 2022 10:50:04 -0700")
-Message-ID: <xmqq1qx6jq0b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9DA4A28E-CD85-11EC-BC49-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+        with ESMTP id S1355406AbiEFVyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 17:54:21 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29B71FA61
+        for <git@vger.kernel.org>; Fri,  6 May 2022 14:50:32 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id j187-20020a638bc4000000b003c1922b0f1bso4189228pge.3
+        for <git@vger.kernel.org>; Fri, 06 May 2022 14:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :content-transfer-encoding;
+        bh=ThfGv2vp7dCS52z0CDNTrsZeJaVoVBCvSE+rrTxMltI=;
+        b=Qwxwh70pJ2PKi5Vqm7PK8TOivSyxhIkAClYbxoBKTq6CdJHuNQ/mZXy+FbqPWeqQRQ
+         ZENaOUX5/WclZYPNo3gX1FmYQhe5ypxOBzMhC4SkdfFlGuazDWYrtTxB+he+8w7cJwUV
+         PVF8yOg/G0diUz1d9MryNUl5v1eG457k3yE7zsbaePXKZNw2EhHCuk1NjXW1X8rTEPVr
+         3J/7lDjXBsyD/H8JVX/GF+cykJlBQ8pttwGjbFeuV456fFoexgzJsi2IgKLp3DqZYWHG
+         QKKyMVmiw9OeDYCQBA0Zft/+Mh3ErnfTisslA63/q9fEvfBqyw5xbLAg8gTgVwvCm0Z/
+         U4uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:content-transfer-encoding;
+        bh=ThfGv2vp7dCS52z0CDNTrsZeJaVoVBCvSE+rrTxMltI=;
+        b=BM1Os3FTvTtNWnAzU8J1XDLkpOv1utf8233HJ2X4Hve3fpizKwB58GSKZz8jHHbaxV
+         VKddkztYkySrU4ByuHdijeu4dHKy+nEyRJsQPPJ1T69M8TzwqDfLsfjUJv1lmQFtH4ql
+         5YuvpsAj0wOtvA4oHTxhu28RTt5NDhnI92gYNw+l66psVh/ixVSCvnFjuI7Yu5y3OTnK
+         CJW1DAOc/USlsGg6DNq9HWzRyQbA2kgw8J4kZ6b24lgT2Q1Een9MaqhK7b0A8y3WJswO
+         2nM1Y434DfrAlt06gyXKD/VrRfnHs5njUFHfBOmzTynXgvo3q0eSDI68P2GfMCqk0kkO
+         P95Q==
+X-Gm-Message-State: AOAM532sMn4nqqnzdQRuTq7t4cjT3SaK/IPov48njAs89I+sdBX9QKsJ
+        0innaLU4Txdz2I592Cky/qOjWo5ivG4Xyw==
+X-Google-Smtp-Source: ABdhPJxyoODXpcGNUJzlhQd3/31yWfE7cyEVvxS4qiImlUILD7gXt/y2tK9sNTq6eYLUlKgc2CsAndzgEVyc9A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:9802:0:b0:50d:4f5d:fef6 with SMTP id
+ e2-20020aa79802000000b0050d4f5dfef6mr5613486pfl.9.1651873832061; Fri, 06 May
+ 2022 14:50:32 -0700 (PDT)
+Date:   Fri, 06 May 2022 14:50:28 -0700
+In-Reply-To: <fc492627-c552-10ec-b30c-820299241278@gmail.com>
+Message-Id: <kl6lbkwa8h5n.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <CAFnZ=JNE_Sa3TsKghBPj1d0cz3kc6o91Ogj-op8o6qK8t9hPgg@mail.gmail.com>
+ <fc492627-c552-10ec-b30c-820299241278@gmail.com>
+Subject: Re: Bug Report: fetch.recurseSubmodules doesn't affect git pull as
+ otherwise stated in the git config docs
+From:   Glen Choo <chooglen@google.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Huang Zou <huang.zou@schrodinger.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-> Since I am renaming it anyway as part of this topic with RFC v4, would
-> it be a good idea to require both?
+> Hi Huang,
 >
-> I see the "IKNOWHATIAMDOING" not as a normal GIT_TEST flag, but as a
-> "here be dragons!" warning, and I later found that I either
-> misremembered it being enabled in the CI, or it was dropped with one
-> of those refactors we do often there.
+> Le 2022-05-02 =C3=A0 10:42, Huang Zou a =C3=A9crit=C2=A0:
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your issue.
+>>=20
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> 1) Set the following configs:
+>>  git config submodule.recurse true
+>>  git config fetch.recurseSubmodules false
+>> 2) On a repo with submodules, run:
+>> git pull
+>>=20
+>> What did you expect to happen? (Expected behavior)
+>> git pull doesn't recursively fetch submodules
+>>=20
+>> What happened instead? (Actual behavior)
+>> Submodules are fetched recursively
+>>=20
+>> What's different between what you expected and what actually happened?
+>> Submodules are fetched recursively
+>>=20
+>> Anything else you want to add:
+>> git fetch works as intended. The documentation for fetch.recurseSubmodul=
+es
+>> states that "This option controls whether git fetch (and the underlying
+>> fetch in git pull)" so I would naturally expect git pull to behave the s=
+ame
+>> as git fetch
 >
-> My RFC v4 includes a new nice looking GIT_TEST variable as suggested
-> by Phillip which I am also enabling in the CI to hopefully make it
-> even more clear that this is only meant to run there, but sadly that
-> also means that this patch will likely have a conflict when merged
-> upwards.
+> I did not try to reproduce, but I took a look at the code and I think I u=
+nderstand
+> what happens.=20
+>
+> When 'git pull' invokes 'git fetch', it does so by specifically using the=
+ '--recurse-submodules'
+> flag, see [1]. It sends either 'yes', 'no' or 'on-demand' as value, depen=
+ding on the value
+> of the local variable 'recurse_submodules'. This variable is initialized =
+to the config value
+> of 'submodule.recurse' in 'git_pull_config' [2], called at [3], and then =
+overwritten by the value given
+> explicitely on the command line [4], parsed at [5].
+>
+> So when 'git fetch' runs when called by 'git pull', it always receive the=
+=20
+> '--recurse-submodules' flag, and thus any config for fetch.recurseSubmodu=
+les is ignored
+> (since explicit command line flags always have precedence over config val=
+ues).
 
-This must build from the older mainteance tracks like maint-2.30, so
-let's keep the changes to absolute minimum, especially since that
-will become the base for any further usability tweaks (in an earlier
-round you suggested to cover "doas", and other changes may want to
-be applied but all of them should be deferred to later changes).
+Thanks for looking into this! This seems to agree with my reading of the
+code. I haven't tried to reproduce it either, but the code looks
+obviously incorrect.
 
-I actually think 1/3 and 3/3 are OK.  Are there remaining issues in
-these two patches (which only are tests)?
+> So one way to fix this would be to also parse 'fetch.recurseSubmodules' i=
+n 'git_pull_config',
+> and send the correct value to the 'git fetch' invocation... Or simpler, c=
+all 'git fetch' with
+> '--recurse-submodules-default' [9] instead...
 
-As to 2/3, I think the code is basically already fine, but a
-simplification like the following on top would be a good idea.
+Despite having touched this code fairly recently, I had to do quite a
+rereading to refresh myself on how this works. If I _am_ reading this
+correctly, then I think we actually want to set `--recurse-submodules`
+and not `--recurse-submodules-default`.
 
- * The callers do not care how errno is modified by the call made
-   into extract_id_from_env(); we are potentially clobbering errno
-   by calling getenv(), lstat(), geteuid(), etc, and we have no
-   "preserve errno as the caller had" around them.  So let's lose
-   the saved_errno thing.
+The short story is that the two are not equivalent - when figuring out
+_which_ submodules to fetch (we determine on a submodule-by-submodule
+basis; we don't just say "should we fetch all submodules?"),
+`--recurse-submodules-default` gets overrided by config values, but
+`--recurse-submodules` does not.
 
- * We clear errno before making strtoul() call, so any non-zero
-   errno must have happeneed in strtoul(), which includes ERANGE.
-   There is no point chekcing the returned value env_id; if it is
-   ULONG_MAX but errno is 0, then the SUDO_UID legitimately is
-   naming a user whose UID is that special value, and it is not an
-   indication of an overflow.
+The longer story (which I think is quite difficult to explain, I am also
+a little confused) is that in a recursive fetch,
+`--recurse-submodules-default` is the value of the parent's (we'll call
+it P) `--recurse-submodules`. This only matters when a process, C1, has
+to pass a value for `--recurse-submodules` to its child, C2. The
+precedence order is:
 
-With the change squashed in, [2/3] can have 
+- C1's --recurse-submodules | fetch.recurseSubmodules |
+  submodule.recurse
+- C2's submodule entry in C1's .git/config
+- C2's entry in C1's .gitmodules
+- C1's --recurse-submodules-default (aka P's --recurse-submodules)
 
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
+Specifically, in code:
 
-Thanks.
+  static int get_fetch_recurse_config(const struct submodule *submodule,
+              struct submodule_parallel_fetch *spf)
+  {
+    // Glen: passed in from builtin/fetch, which parses
+    //  --recurse-submodules, fetch.recurseSubmodules, submodule.recurse
+    if (spf->command_line_option !=3D RECURSE_SUBMODULES_DEFAULT)
+      return spf->command_line_option;
 
- git-compat-util.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+    if (submodule) {
+      // ...
+      // Glen: fetch configuration from .gitmodules
+      int fetch_recurse =3D submodule->fetch_recurse;
 
-diff --git c/git-compat-util.h w/git-compat-util.h
-index dfdd3e4f81..43c9cd0b48 100644
---- c/git-compat-util.h
-+++ w/git-compat-util.h
-@@ -413,14 +413,11 @@ static inline void extract_id_from_env(const char *env, uid_t *id)
- 	if (real_uid && *real_uid) {
- 		char *endptr;
- 		unsigned long env_id;
--		int saved_errno = errno;
- 
- 		errno = 0;
- 		env_id = strtoul(real_uid, &endptr, 10);
--		if (!errno && !*endptr && env_id <= (uid_t)-1)
-+		if (!*endptr && !errno)
- 			*id = env_id;
--
--		errno = saved_errno;
- 	}
- }
- 
+      key =3D xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->nam=
+e);
+      if (!repo_config_get_string_tmp(spf->r, key, &value)) {
+        // Glen: fetch configuration from .git/config
+        fetch_recurse =3D parse_fetch_recurse_submodules_arg(key, value);
+      }
+      // ...
+    }
+
+    // Glen: --recurse-submodules-default
+    return spf->default_option;
+  }
+
+So `--recurse-submodules-default` really wasn't meant for anything other
+than "fetch" invoking itself in a superproject-submodule setting.
+
+Of course, I could be entirely wrong and I should just write up a test
+case :). I hope to send one soon.
+
+> [sidenote]
+> I'm thought for a while that it was maybe not a good idea to change the b=
+ehaviour
+> in your specific situation. If you have 'submodule.recurse'
+> set to true and 'fetch.recurseSubmodules' set to false, and if the code i=
+s changed so that indeed
+> 'git pull' does not fetch recursively, then the code will still try to up=
+date the submodule working
+> trees after the end of the operation (merge or rebase), see the end of 'c=
+md_pull' [6], [7]. This  is
+> OK, because if there are new submodule commits referenced by the superpro=
+ject and they were not fetched because the=20
+> fetch was not recursive, then the call to 'git submodule update' in updat=
+e_submodules/rebase_submodule
+> should fetch them, so no problem there.
+> [/sidenote]
+
+I think the bigger question to ask is "what is the intended effect of
+'submodule.recurse =3D true' and 'fetch.recurseSubmodules =3D false'?". I
+think it is not surprising to think that recursive worktree operations
+might fail if the submodule commits weren't fetched.
+
+Perhaps this is just a performance optimization? i.e. after fetching in
+the superproject, the user wants to skip the rev walk that discovers new
+submodule commits.
