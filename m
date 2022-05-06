@@ -2,87 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AB95C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 09:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04963C433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 09:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348245AbiEFJMk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 05:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57646 "EHLO
+        id S1390680AbiEFJo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 05:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235148AbiEFJMj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 05:12:39 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587505DE5A
-        for <git@vger.kernel.org>; Fri,  6 May 2022 02:08:56 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id w5-20020a17090aaf8500b001d74c754128so10325636pjq.0
-        for <git@vger.kernel.org>; Fri, 06 May 2022 02:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=m4d8ALm5kWcrOiSzP1oMFxEP3ot/QxNUKs3yHJAfW6g=;
-        b=XHnDD9MsiC2m27V1XypSYS/Lqlu/fE2g6njv4tYnIa+VkVHOchx6XBnvV6gOX5ol+A
-         zS9JeQmeopFXNf6vV5qGsymtYyfTUHbmoB4o2lgZB3OWeL6+nKL46SF93DUjn238GAfQ
-         1U+5vNYjJ2Bak0kKIpdeFLMm2bEO1VmDDNxYitowvxSShQGcFfQ6u1AoJ+yQv+eB4thd
-         QIfFGbWfHRzzmYwg0kFJZtzK5CJPYQH+65kVdukr6XU+dSJbBh7WmqovIEIHVHs9eiyk
-         MI5GdT/50gs4kSILZn92m667ircSOYVYyJJIRIAlmoWuk/UE00sFw8wQSO+CaCveetxC
-         SUag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=m4d8ALm5kWcrOiSzP1oMFxEP3ot/QxNUKs3yHJAfW6g=;
-        b=LQwKP6eE6I17DhCofQQ+3Y23X1vw6GX31zA5h93FezoMuyHCVjOyJ+H9O/SwGrrdUQ
-         y1WnVaSwU+tYS+v5tjN2KGVHisy6WZBb3ICI9bpOIgJgb7ritXt+tyAxw2eIc7LdP7uE
-         wLCz8bR05QJkPX6cTelvLjl5X9zcFu2T8n/hV6QJFTpjj/D2jQreJkF5XVUJxEqDJwhN
-         S/yF/46PUtLXKr+HmtGNgMktl+gvYlWyJ6ddCIIFMQbaAevMivkKFLKDgw1JRXYkSvud
-         NlZbDSvaZyGVC1PIlqT7xsLGRNqnQI+LwQjwRPxTYLFUPnbVff1kewYUFAYWVHssEULk
-         8FTw==
-X-Gm-Message-State: AOAM5310XFHh8mV1VsBsVVYUuQW8zdCeUS02Ln+ylfEqrXYPScsOWY0b
-        ECtlcPvKkB8X1OTujQtIbFk=
-X-Google-Smtp-Source: ABdhPJxWMCsj3SkYPNfdCkpANGCdO8OUHyXa1T1SSNQ/DnT886sln6IrS19H3VK0pItbIdmuLU3QtA==
-X-Received: by 2002:a17:902:e94e:b0:154:3a4:c5e8 with SMTP id b14-20020a170902e94e00b0015403a4c5e8mr2644355pll.19.1651828135846;
-        Fri, 06 May 2022 02:08:55 -0700 (PDT)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.60])
-        by smtp.gmail.com with ESMTPSA id s43-20020a056a001c6b00b0050dc762819dsm2792349pfw.119.2022.05.06.02.08.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 May 2022 02:08:55 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     me@ttaylorr.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 3/5] pack-bitmap.c: make warnings more detailed when opening bitmap
-Date:   Fri,  6 May 2022 17:08:33 +0800
-Message-Id: <20220506090833.17033-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.1.583.g30faa5f068
-In-Reply-To: <YmGTphnsVJn7CX5V@nand.local>
-References: <YmGTphnsVJn7CX5V@nand.local>
+        with ESMTP id S1390733AbiEFJoj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 05:44:39 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C23D27149
+        for <git@vger.kernel.org>; Fri,  6 May 2022 02:40:55 -0700 (PDT)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nmuSC-0000zw-8H;
+        Fri, 06 May 2022 10:40:52 +0100
+Message-ID: <5fcf56ee-8da9-c4b0-a23f-661bbb727077@iee.email>
+Date:   Fri, 6 May 2022 10:40:51 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [Email External to GFS] Re: Git status extremely slow if any file
+ is a multiple of 8GBi
+Content-Language: en-GB
+To:     Jason Hatton <jhatton@globalfinishing.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <CY4PR16MB16558FE8E69B2045435AD59DAFC39@CY4PR16MB1655.namprd16.prod.outlook.com>
+ <0d78c98a-841e-719b-add3-acc7a7a2d7c6@web.de>
+ <9b6b7ad0-df90-62e0-abb1-c23862ded4ac@iee.email>
+ <CY4PR16MB165558026798A6E51E6A005FAFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CY4PR16MB165558026798A6E51E6A005FAFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 21 Apr 2022 13:25:58 -0400, Taylor Blau wrote:
+On 06/05/2022 01:22, Jason Hatton wrote:
+> I believe it would be best to only change the behavior of files that are
+> multiples of 2^32 exactly. Changing the behavior of all files larger than
+> 4GBi may not be good. I like the idea of using 0x80000000 instead of 1.
 
-> I'm glad that the existing warning has been marked for translation.
-> There's no reason that it couldn't have been before, so I'm glad to see
-> it added now.
+I think, having had a further think, that the 0x80000000 would be a
+better balance as it would, as you say, only affect exact multiples of
+4GiB, and fix the 'racy' confusion.
 
-Thanks and it's actually suggested by Ævar Arnfjörð Bjarmason.
+> I have a patch file, but I'm not sure how to actually submit it. I'm going to
+> attempt using outlook.
+>
+> Jason
+You maybe able to use the `git format-patch` to generate an easily
+applied patch, and `git send-email` to post it to the list without
+damage from outlook/gmail/whatever.
 
-> But I'm not sure that the new warning tells the user anything that the
-> old one didn't. The old warning says "ignoring extra bitmap file: ...",
-> leading us to believe that another one has already been opened. The new
-> warning makes the latter part explicit, but I don't think it adds any
-> new information that wasn't already readily available.
-> ... 
-> This is out of sync with the warning you added, causing t5310.74 to
-> fail.
+Se the bottom part of
+https://public-inbox.org/git/CY4PR16MB165558026798A6E51E6A005FAFC59@CY4PR16MB1655.namprd16.prod.outlook.com/
+which has "Reply instructions:"
 
-Yeah, I agree with you about this. 
-Will roll back on here and fix the broken test in next patch.
+or just start with a simple .patch or .txt attachment (or in-line) of
+the diff to get a good visual.
+
+The full discussion about submitting patches is at
+https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+(and other hosts), but don't let perfect be the enemy of useful;
+
+--
+Philip
 
 
-Thanks
