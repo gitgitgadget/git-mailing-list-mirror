@@ -2,152 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A24C433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 03:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F88C433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 04:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343785AbiEFDH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 May 2022 23:07:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42882 "EHLO
+        id S239173AbiEFEqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 00:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234102AbiEFDH0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 May 2022 23:07:26 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5A363BC8
-        for <git@vger.kernel.org>; Thu,  5 May 2022 20:03:45 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id o18so5041897qtk.7
-        for <git@vger.kernel.org>; Thu, 05 May 2022 20:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TrtAV+W6NsY1tXDIfHOFImtltgelki9ANT9vuo7ALR8=;
-        b=LLXyjlmD5zav/6c/4/LDAzn9NBxjz4oi1P/fWOLg+78nDtlpIPvXo3s3OxFTk+ymui
-         KFP8rxNi8ol370m4gqmprF/TgIgyOOnK4kiak1MydDdcw+NzBKBb4TV34BL5rj+KvtZf
-         4aUaVNT2OHO+wKQYj0lvjUYRRK4btf0UNynzvAESfjsst+qPVdzvGzxv0MZRn+e/CSt0
-         RpTHmGK3L5IRPFtz4wZ/UASE5HFIC0957MOX8vl+gjMFd3sa425zAYc5hQ4Gvg+Kt3Lw
-         RFO2qycLBWf1SRLBbGvshy6d16O2VOy6pMSbO9BzcecrfI/3RaJvAEGUwHMEufY/t7RQ
-         bsYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TrtAV+W6NsY1tXDIfHOFImtltgelki9ANT9vuo7ALR8=;
-        b=zP7tsxilFjRKlhnv1uTk1jmhIMTHZk8zxEaHLHdOkJq7VXz2fNqUZdg/VUf8vGd8Pz
-         CIa2ooJveoUOnCGDp5ChPgVAWPwhYkwl4qhsyJMogtr6Nw7w5fFyI3QtEvf7eFSG0lnw
-         d3juKxJda3spm/Um8Su/gC6rtSDldiD4U+GUuTgW3GwjFcDcw/2CR8UCKBDQsJuKwz19
-         l3Xz2QNj3sD1/WeVgxSeDLpRU+qQqLii3D8eEqajUiNlmJSr9YWcBCUNaX3gxbTsM1yr
-         BEXVezd8W4zUa5imUmWIN2YFHqrIzbrcjHI5p1U8nFOdRtu+UCQgs3fbo2DEatjrEjdX
-         mfaQ==
-X-Gm-Message-State: AOAM5301pltH4SIfeS2ntw/nGQoFQ3LE4e8LPNa5c+tvCBYstNOT/yir
-        4IeNeTFTyw9xebWL8ypo7adytQ==
-X-Google-Smtp-Source: ABdhPJxcU1oavbmaSPAQzv50dNydZR7EoXTOf+NdSbnJeJq5TqxE+Uar8XrA9RVijQxVtLjMVEfo2A==
-X-Received: by 2002:ac8:7d8a:0:b0:2f3:b85b:39c2 with SMTP id c10-20020ac87d8a000000b002f3b85b39c2mr1032579qtd.500.1651806224581;
-        Thu, 05 May 2022 20:03:44 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 140-20020a370c92000000b0069fe7f77e4bsm1794254qkm.33.2022.05.05.20.03.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 May 2022 20:03:44 -0700 (PDT)
-Date:   Thu, 5 May 2022 23:03:43 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Chris Down <chris@chrisdown.name>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>, kernel-team@fb.com
-Subject: Re: [PATCH v2 2/2] bisect: output bisect setup status in bisect log
-Message-ID: <YnSQDzhNjmu5ws4f@nand.local>
-References: <cover.1651796862.git.chris@chrisdown.name>
- <acab8859d02c95750fdbc691ac672c17d5be0291.1651796862.git.chris@chrisdown.name>
+        with ESMTP id S229703AbiEFEqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 00:46:17 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 May 2022 21:42:34 PDT
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006E3580DA
+        for <git@vger.kernel.org>; Thu,  5 May 2022 21:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1651812150;
+        bh=SJ+z+YvHtjHpqA6goIaFFEPmrfSnW9HW4mld+AUqHLk=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=THMT9RGu9/9dHKI8F1ZOOWmEB2hDYxEzzoH0M986ewRp0reUk8MBNYE5NUYHSiidV
+         DbPdtpEAx7MuX8tLV6nMZvRvfHUnhVm3IT+j0Jpwtsyycro6owtxNe+dznvrPF4TuW
+         j2odGta1Yy8Vqs+7lES9P+Nnhkb92Bl0mXL9Nh/s=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mmhnu-1oCVTr3l02-00jy2T; Fri, 06
+ May 2022 06:37:05 +0200
+Date:   Fri, 6 May 2022 06:37:03 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jason Hatton <jhatton@globalfinishing.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
+Message-ID: <20220506043703.gqoi62t3mbnbga44@tb-raspi4>
+References: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <acab8859d02c95750fdbc691ac672c17d5be0291.1651796862.git.chris@chrisdown.name>
+In-Reply-To: <CY4PR16MB16552D74E064638BEC11ECB1AFC59@CY4PR16MB1655.namprd16.prod.outlook.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:UTWvJRXzihAEYKXLOa4D8ZKB1FIAVKw4cmBKGkClxh8e26Qv/9+
+ k2oc7ZGEq3MDjHa/zIqH5K/ogzGCALGnvpCG5vKBm+cAe6cZlVrGLmyIcb9at/bVBILkbuE
+ kyG7ohgK+c8DrJYi8smu5tajTdVZXGXouejlKBdDiWfxUiy2KAXAWqBBuJIeJWfwgTge0I5
+ 7gG42HxmJe7a0pZtv2OZA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:IgdBnN8etEg=:Y/+iRi6V7zpzvUC+sJ5Ggg
+ iTVQrNtWtmyWkujKRcAFdCkogG63u1++Iv77BuLxIAhDZ09V8SYhhfFm55802N3dsoiMfmVTU
+ BKv30nwrYnwfbO1eaV4g4hmeaKNa+6EpZtMgqYgXt1/e4KVj9dypWPj494sv4G0wc4N8xOClc
+ VfmWh0JXx2aktex/KEszsPcSTEN4ZbH5GKG58vqW7cMcYpSiFlC6QiiQWdgPfwyoz6MSIqxMz
+ mt1qu7ghu9zeb0o612X8S/7dvj3pQzJAVjkTJf/WThC0h8UPNYmh29GMETWtw/6f/moVR6qV/
+ we4ecN3CJ1CCrr6Y74MfHEiG7gDyiheuFzfyb1iHthNXnHRdmJNjpV1MM28zmEEuDyG+GymII
+ a9feNbx4aoMdz+HEY45mIISlalD4OgsI+Wbvza5pr/niUspdTOvBqVL4C5SbzjTTGAKIO8tWO
+ dJMFRnGurRXfW2W4v37C2lgWBgzWM5B+P4Cer2snvb1NLm+MF+xkrUePqOnBioQ7Zf3mYT5IA
+ IHfL9krN0hp0ovtvA6NP2g8mEV6l7yBRE2pVBC6GdqvcM8Biyyt4ii9ZD+dsZlfMzigXxL0LM
+ tdamMbVhihzc+pP9pGoZ3T3XB2jg8EZBNcJVMdG/omFubb1K+Vn5iCxxOVOmSgIStf1NBqf49
+ 5fhEw3lG7xvV2j8w/pULAY9qsb+VP3CSZnT0kSeRxvX4W49QuE0aKFm/ZaN9VEmTGBg1EkaQl
+ t1uB/zXJpyb3w33vKTZAxfVOZ/OtJPVlOacJbKU2OkDyWBwb7YqcAnXL3z7igHJm6LL67K1Pb
+ csc7XSveCrVEHV/8Pa/czm9Wg44dnwhU7xzndbbE7w+kd3isD3Mkp18ta/bIIJSDTR+Dwt4V9
+ GGSQRT5zxhCgdJH+vc67U1tXn9hX7VaEeJlk49l34MiQvAfWZCL6wiK1bZ+FHCGp1gHb5EYND
+ 9UWV9nO6MUZLhOMr0BD1L5arqp9JMPj4vCcHxoYZm/4cm73OQP/HMpJUnxZGjrgDMF4Wxd8/E
+ o503C36uSpNCQNGU8MV7Xa08DUV8ajxTQJxGH6IqXMsnBRS4NMXsadSw4cL3fOPTDQnBNuDN1
+ okUOkoNUUzSmfc=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 06, 2022 at 01:52:54AM +0100, Chris Down wrote:
-> This allows seeing the current intermediate status without adding a new
-> good or bad commit:
+On Fri, May 06, 2022 at 12:26:53AM +0000, Jason Hatton wrote:
+> Git cache stores file sizes using uint32_t. This causes any file
+> that is a multiple of 2^32 to have a cached file size of zero.
+> Zero is a special value used by racily clean. This causes git to
+> rehash every file that is a multiple of 2^32 every time git status
+> or git commit is run.
 >
->     $ git bisect log | tail -1
->     # status: waiting for bad commit, 1 good commit known
-
-Hmm. I was worried that this would make it harder to turn the output of
-"git bisect log" into something you can inject into "git bisect replay
-<log>". But it doesn't, because you prefix the status lines with a '#'
-character.
-
-That's good, and I think it's an improvement over what I'd currently
-recommend, which would be something like:
-
-    git bisect log | grep '^# bad:'
-    git bisect log | grep '^# good:'
-
-to see the state of our good and bad endpoints.
-
-I'm not totally convinced it _needs_ to live in "git bisect log",
-though, since it feels like additional information that is just added
-for convenience. That's not the worst thing in the world, but I think
-it would be fine to just take the first patch (with my suggestions
-applied) as well.
-
-> Signed-off-by: Chris Down <chris@chrisdown.name>
+> This patch mitigates the problem by making all files that are a
+> multiple of 2^32 appear to have a size of 1<<31 instead of zero.
+>
+> The value of 1<<31 is chosen to keep it as far away from zero
+> as possible to help prevent things getting mixed up with unpatched
+> versions of git.
+>
+> An example would be to have a 2^32 sized file in the index of
+> patched git. Patched git would save the file as 2^31 in the cache.
+> An unpatched git would very much see the file has changed in size
+> and force it to rehash the file, which is safe. The file would
+> have to grow or shrink by exactly 2^31 and retain all of its
+> ctime, mtime, and other attributes for old git to not notice
+> the change.
+>
+> This patch does not change the behavior of any file that is not
+> an exact multiple of 2^32.
+>
+> Signed-off-by: Jason D. Hatton <jhatton@globalfinishing.com>
 > ---
->  builtin/bisect--helper.c    | 25 ++++++++++++++++++++-----
->  t/t6030-bisect-porcelain.sh |  9 +++++++--
->  2 files changed, 27 insertions(+), 7 deletions(-)
+>  cache.h      |  1 +
+>  read-cache.c | 16 ++++++++++++++--
+>  2 files changed, 15 insertions(+), 2 deletions(-)
 >
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 9d583f651c..ef75f0a0ce 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -404,6 +404,21 @@ static struct bisect_state bisect_status(const struct bisect_terms *terms)
->  	return bs;
+> diff --git a/cache.h b/cache.h
+> index 4b666b2848..74e983227b 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -898,6 +898,7 @@ int ie_modified(struct index_state *, const struct c=
+ache_entry *, struct stat *,
+>  #define HASH_SILENT 8
+>  int index_fd(struct index_state *istate, struct object_id *oid, int fd,=
+ struct stat *st, enum object_type type, const char *path, unsigned flags)=
+;
+>  int index_path(struct index_state *istate, struct object_id *oid, const=
+ char *path, struct stat *st, unsigned flags);
+> +unsigned int munge_st_size(off_t st_size);
+>
+>  /*
+>   * Record to sd the data from st that we use to check whether a file
+> diff --git a/read-cache.c b/read-cache.c
+> index ea6150ea28..b0a1b505db 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -163,6 +163,18 @@ void rename_index_entry_at(struct index_state *ista=
+te, int nr, const char *new_n
+>  		add_index_entry(istate, new_entry, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_T=
+O_REPLACE);
 >  }
 >
-> +__attribute__((format (printf, 1, 2)))
-> +static void bisect_log_printf(const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +	char buf[1024];
+> +/*
+> + * Munge st_size into an unsigned int.
+> + */
+> +unsigned int munge_st_size(off_t st_size) {
+> +	unsigned int sd_size =3D st_size;
+
+Should this be written as
+	unsigned int sd_size =3D (unsigned int)st_size;
+
+
 > +
-> +	va_start(ap, fmt);
-> +	if (vsnprintf(buf, sizeof(buf), fmt, ap) < 0)
-> +		*buf = '\0';
-> +	va_end(ap);
-> +
-> +	printf("%s", buf);
-> +	append_to_file(git_path_bisect_log(), "# %s", buf);
+> +	if(!sd_size && st_size)
+> +		return 0x80000000;
+> +	else
+> +		return sd_size;
 > +}
-
-This direct use of vsnprintf might be avoided by preparing the output in
-bisect_print_status() via a strbuf and then calling:
-
-    append_to_file(git_path_bisect_log(), "# %s", buf.buf).
-
->  static void bisect_print_status(const struct bisect_terms *terms)
+> +
+>  void fill_stat_data(struct stat_data *sd, struct stat *st)
 >  {
->  	const struct bisect_state bs = bisect_status(terms);
-> @@ -413,13 +428,13 @@ static void bisect_print_status(const struct bisect_terms *terms)
->  		return;
->
->  	if (!bs.nr_good && !bs.nr_bad)
-> -		printf(_("status: waiting for both good and bad commits\n"));
-> +		bisect_log_printf(_("status: waiting for both good and bad commits\n"));
->  	else if (bs.nr_good)
-> -		printf(Q_("status: waiting for bad commit, %d good commit known\n",
-> -			  "status: waiting for bad commit, %d good commits known\n",
-> -			  bs.nr_good), bs.nr_good);
-> +		bisect_log_printf(Q_("status: waiting for bad commit, %d good commit known\n",
-> +				     "status: waiting for bad commit, %d good commits known\n",
-> +				     bs.nr_good), bs.nr_good);
->  	else
-> -		printf(_("status: waiting for good commit(s), bad commit known\n"));
-> +		bisect_log_printf(_("status: waiting for good commit(s), bad commit known\n"));
+>  	sd->sd_ctime.sec =3D (unsigned int)st->st_ctime;
+> @@ -173,7 +185,7 @@ void fill_stat_data(struct stat_data *sd, struct sta=
+t *st)
+>  	sd->sd_ino =3D st->st_ino;
+>  	sd->sd_uid =3D st->st_uid;
+>  	sd->sd_gid =3D st->st_gid;
+> -	sd->sd_size =3D st->st_size;
+> +	sd->sd_size =3D munge_st_size(st->st_size);
 >  }
-
-Interesting; this patch removes the output that we were giving to users
-in the last patch. Should it go to both places?
-
-Thanks,
-Taylor
+>
+>  int match_stat_data(const struct stat_data *sd, struct stat *st)
+> @@ -212,7 +224,7 @@ int match_stat_data(const struct stat_data *sd, stru=
+ct stat *st)
+>  			changed |=3D INODE_CHANGED;
+>  #endif
+>
+> -	if (sd->sd_size !=3D (unsigned int) st->st_size)
+> +	if (sd->sd_size !=3D munge_st_size(st->st_size))
+>  		changed |=3D DATA_CHANGED;
+>
+>  	return changed;
+> --
+> 2.36.0
+>
