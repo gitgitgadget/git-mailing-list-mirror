@@ -2,111 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6334AC433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 12:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B65BDC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 12:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1392107AbiEFMrZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 08:47:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46962 "EHLO
+        id S1388394AbiEFM7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 08:59:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240287AbiEFMrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 08:47:22 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C705930D
-        for <git@vger.kernel.org>; Fri,  6 May 2022 05:43:39 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id iq2-20020a17090afb4200b001d93cf33ae9so10703963pjb.5
-        for <git@vger.kernel.org>; Fri, 06 May 2022 05:43:39 -0700 (PDT)
+        with ESMTP id S1392201AbiEFM7c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 08:59:32 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8157563516
+        for <git@vger.kernel.org>; Fri,  6 May 2022 05:55:49 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d25so6178022pfo.10
+        for <git@vger.kernel.org>; Fri, 06 May 2022 05:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fFMWC2v5AJKPtsb4BFQ5fMERbNzH7EcGH3E35XYLFe8=;
-        b=ovKHyB6U5YCR/+dD/IFhN5MrQAKLZQBKg6gfSvcqmQ6KU7rB4bAowg6LYJOb1M6xhj
-         5z/cT5VyGrxGBTKEvhpR7ijTdmVrwXc0jLvyvbI/4Ki5Heo9mR1RXmiyXgKVCTiK5Wbm
-         L7MTRV+W5lqWchp0+S3JzFbnt8WV8u9QkIlyWtJS7ulqKxn1r3+M/RVUIS9x3xUo+aYP
-         wlsf4FPfWr+zyjmHA6Wewp9zVLkLjo9fHXBwM81JciD9WT1teRcYN5vwWKaw5ggceDTD
-         HbfFCIVuRe3AqRj3Igoro9M1tVumwqxdwJ69LQZV+N0A802DWpDa+trX7790S79aPxs0
-         n/7A==
+        bh=uDHuo4GceaVZYsc779yxn7+Jbst1CbCIsljJZ1Wu/xA=;
+        b=Xtxh7eQj81GE1qum7BROSbTbwCEgmrCFrQN50rA1vdjNUeNddQdRmgCPMUFjCNB/yw
+         i8vxgejkWwpC7tef7B101kwJm7ICOs9jTEEdfKPwUPMjHGMmfJD5SXgI2sg71zSz3w0b
+         1Vuo8LUG51bVe9TG3fpQNpcQVu23a7vVkbAWPjw/dybGQZdUUCgYto6txap64iS+cZa0
+         rza2PLAxOvYOKN2jh/sAi7i5YFasXZoumaNa9Ah0VTQbKHx7MAJps6DSDRJWLde6grT+
+         uJE9nglkKkNFjj7PIadZsvK1IPNSyKNmjMNDwo9IdlhDpandcdcmuWXYaPrscqFiMJqo
+         vhlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fFMWC2v5AJKPtsb4BFQ5fMERbNzH7EcGH3E35XYLFe8=;
-        b=nVF69A3KMBdOG2KEPNhgBMcfSl0QyD22+OgLKebFGNM5ZoN2Pnj/3dguXgdzvzpGAb
-         Ggk9z9mXTqOrZJaD0md6dCceyRxH/xV58/fOqJasJmKbb9Lb6Ge628M/VGFBIgdXUdgC
-         UeGzdYcZ0apcG5+muVgmFmzhUJfjOiDQzcvw6o/gZWgB2oJbjoaCjx7uhXK9WAwW/9ER
-         iKNu5h0Dcm8VrDFDHLcozDF9KGzP3ntxHpJWKkw+UBHefHu81QfJpd0/FeK3rOktf/tf
-         l3bDvNF+VGdlCusacielu2OQ/PGtKcdiAu0p/yi/Qi+KTFUc5Oe95W31c/AlVaSOc1oi
-         31wA==
-X-Gm-Message-State: AOAM533/m2ZXhZW1Lly+BEFeEG7sqQBPnjWpJvjvQHj3UE8cFXsuMYr3
-        wZuTz/j9A/T1ZhHYEUCd/r0=
-X-Google-Smtp-Source: ABdhPJz+3IrrXIzVm1EcGiM+lLusfmFT/7J8o1Ts5c6XclBJRDyTNgiDvgp/sjfKE9BERjTXpOOmBg==
-X-Received: by 2002:a17:902:eb85:b0:15e:bf29:bd9f with SMTP id q5-20020a170902eb8500b0015ebf29bd9fmr3453658plg.135.1651841018814;
-        Fri, 06 May 2022 05:43:38 -0700 (PDT)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.53])
-        by smtp.gmail.com with ESMTPSA id p43-20020a056a0026eb00b0050dc7628184sm3376729pfw.94.2022.05.06.05.43.36
+        bh=uDHuo4GceaVZYsc779yxn7+Jbst1CbCIsljJZ1Wu/xA=;
+        b=vEsyR7Jsg3wF9kRmai2uzqAWJuKMhjOR/ZDiw0pLAPoy0Jj1cJi7nwCnwqe0nK/v60
+         QD7sJ33NUeWar7MpDT/qAqD/DlOzBkLFdbDsgXtXfsFSRZGZFV1OKJYYmEe1zAjTM2Z1
+         ebKb7LLRaS+PHV0AlwIRZg0NlotsZTb1UizBm8BMdY7uBw37J2u0o9ThbixZU8FPWmFZ
+         ajy9o+FrheKRCCAPFR6jVOCprccQuo+u4+4tY13pbzWco2SRE4Ys8xRLVzE/JvXxquVN
+         Yp2531b3GDf861Y/Kirq7lMMm1dZ9aSCdCklVySwopyrr4lE5AQXUiqcYNHUIgANj/uf
+         zF1A==
+X-Gm-Message-State: AOAM533J5VTC0uFMxrGvBfcyX3UNIWgGrxYG96MUGJFfTpErOoGGjewA
+        1Z8fNW1lhIJPexvr4ZThC60=
+X-Google-Smtp-Source: ABdhPJy/Z4QTVyR2ZI7Gq5bgpPMOB26dSWGuIydXD59DjInFQpFiWQHzmschXovI5zK7clf0AV1FUA==
+X-Received: by 2002:a63:6205:0:b0:3c6:4449:fc69 with SMTP id w5-20020a636205000000b003c64449fc69mr2399929pgb.330.1651841748965;
+        Fri, 06 May 2022 05:55:48 -0700 (PDT)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.50])
+        by smtp.gmail.com with ESMTPSA id cj9-20020a056a00298900b0050dc76281b3sm3301600pfb.141.2022.05.06.05.55.43
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 May 2022 05:43:38 -0700 (PDT)
+        Fri, 06 May 2022 05:55:48 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
-To:     git@jeffhostetler.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+To:     avarab@gmail.com
+Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 4/5] bitmap: add trace2 outputs during open "bitmap" file
-Date:   Fri,  6 May 2022 20:43:33 +0800
-Message-Id: <20220506124333.58956-1-dyroneteng@gmail.com>
+Subject: Re: [PATCH v2 5/5] pack-bitmap.c: using error() instead of silently returning -1
+Date:   Fri,  6 May 2022 20:55:30 +0800
+Message-Id: <20220506125530.70989-1-dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.35.1.582.g1a169d7b5e
-In-Reply-To: <8005642d-979f-8e48-7a93-07b8a888bdc7@jeffhostetler.com>
-References: <8005642d-979f-8e48-7a93-07b8a888bdc7@jeffhostetler.com>
+In-Reply-To: <220421.86o80u77xj.gmgdl@evledraar.gmail.com>
+References: <220421.86o80u77xj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This might just be a style thing, but rather than logging the pathname
-> in a separate data_string message, you can use the _printf version of
-> region_enter and region_leave to also print the name of the
-> path -- like I did in read-cache.c for the "do_read_index"
-> calls.
+On Thu, 21 Apr 2022 17:41:36 +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> First, I wondered if we were missing _(), but looking at other string in
+> the file they're not using that already, looks like these all should,
+> but we can fix this all up some other time in some i18n commit. It's
+> fine to keep this for now.
+
+Yes, I agree with you.
+
+I also think I have a willingness to make another patchset to solve
+the _() missing problems recently.
+
+> But more importantly: I think this should be your 4/5. I.e. just make
+> these an error() and you won't need to add e.g. this
+> trace2_data_string() for a failed stat.
+
+Make sense. Will adjust the order in next path.
+ 
+> You will be inside your trace2 region, so any failure to stat etc. will
+> be obvious from the structure of the data and the "error" event, no
+> reason to have an additional trace2_data_string().
+
+Yeah, I forgot about the "error()" already load the trace2 functions in.
+Will remove the redundant trace2_data_string() where it's  obviously will
+return error().
+
+> Aside from that & as a general matter: Unless you have some use-case for
+> trace2 data in this detail I'd think that it would be better just to
+> skip logging it (except if we get it for free, such as with error()).
 > 
-> ... | region_enter | ... | index | label:do_read_index .git/index
-> ...
-> ... | region_leave | ... | index | label:do_read_index .git/index
-
-Appreciate for the input about the _printf version, we can choose to
-let the region_enter and region_leave to print the pathname by moving
-the related "midx_bitmap_filename()" and "pack_bitmap_filename" at
-front, but it's not enough because both midx and normal bitmap support
-multiple opening, so it's likely we keep on the current way using
-"trace2_data_string()" in "open_pack_bitmap_1()" and "open_midx_bitmap_1()"
-is a simpler solution.
-
-I'm not sure If I totally get the meaning about your suggestion,
-so correct me if I understand you wrong.
-
-> As AEvar suggests in another message in this thread, I'm not sure if
-> you need the region timing here for reading the bitmap, but all of
-> the error and any other data messages will be bounded between the
-> region_enter and region_leave events and that might (or might not)
-> be helpful.
-
-I think it's needed in my opinion, the bounded between the region is
-helpful, especially when we want to know the detailed debug info like
-we do in "open_midx_bitmap_1()".  
-
-
-> Also, I agree with AEvar's statements about using error() and getting
-> the trace2 error messages for free and not needing some of the
-> trace2_data_string() messages that you have later in this file.
+> I.e. is this particular callsite really different from other places we
+> fail to stat() or open() something?
 > 
-> I wonder if it would be worth adding the pathname of the invalid
-> file to those new error messages.  Granted you'll have it in the
-> trace2 log, but then you'll also get it on stderr if that would
-> be helpful.
+> It's all a moot point with the region + error, but just something to
+> keep in mind.
 
-I think I will remove the redundant "trace2_data_string()" code when
-it will return by "error()".
+Make sense.
+
+And I think it's a good case in "open_midx_bitmap_1()" to add related
+trace2_data_string() because there only a general error info in "cleanup:".
 
 
 Thanks.
