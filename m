@@ -2,77 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 256D3C433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 10:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B619C433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 10:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1390839AbiEFKRv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 06:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57258 "EHLO
+        id S1390876AbiEFKWf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 06:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245457AbiEFKRs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 06:17:48 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143625930D
-        for <git@vger.kernel.org>; Fri,  6 May 2022 03:14:06 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id hh4so5523224qtb.10
-        for <git@vger.kernel.org>; Fri, 06 May 2022 03:14:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chrisdown.name; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2fGW4FMZalJ1+ClsHxPkx32Ax3ECzX9t24SJPkpqvX0=;
-        b=ppPcuHKZGcKjDo3BmTGtJYDoF7VjNyVDIEkkcj2Eo2P46qGA3ett1lGvGhE58X2i3D
-         IKUsJ0eY1MiqWHfv2EE3kMiVasjeXHwJu/8XGfT0Uy0+RhSx4rsSTtxzFbpffgFU0S5U
-         xVOFHr8wxW1FZQGpYflGxuzxC7dP7cZ8R2+AI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2fGW4FMZalJ1+ClsHxPkx32Ax3ECzX9t24SJPkpqvX0=;
-        b=IakwOCOZWLlBC4I6U4TXK0gYLjDUswI2u4gOCBoJglVnPJv0LMD7s/AQF9itb7j240
-         5RZPVcm9eRCARmBBi9YqIETke0HmeCvE2ecppiKc5QhgVdZymLP2iO5yRUinkTuMedng
-         hytpdRIYS6U7RazQE2VzLcN91R1ztPJBtOmaWZQwfqXh612v6Tw4iPuR+POFyqCYYOzm
-         p5uO5/0s0an3PNn7FqtbsUEqR1dgYgbfr3jPr30yFO9y1jO5lFNlOV46I1o8VqUzYkZw
-         CRCsyHQCm2g8HGaGXpfiJodDAwwz0IrOEUWxQMPk8rOnxpD5WtD7Q5fJqG/RFIGsb5eE
-         9toA==
-X-Gm-Message-State: AOAM530/bgYyBP1KfQexIOOudGaYdEocyViTONdgvQ/1ESz1ugNQyKa6
-        mSPySzsABDvgQ18n55Cme6YZ9w==
-X-Google-Smtp-Source: ABdhPJwCbbMRTHUO8fLP+GXn1JmoR23tmPyA74kxjZgV1MeDSnVq/h5h7f/LrOjfXOTIwXEaUyXWdA==
-X-Received: by 2002:ac8:7d4a:0:b0:2f3:bbe2:f97f with SMTP id h10-20020ac87d4a000000b002f3bbe2f97fmr1886440qtb.355.1651832044801;
-        Fri, 06 May 2022 03:14:04 -0700 (PDT)
-Received: from localhost ([2620:10d:c091:480::1:3428])
-        by smtp.gmail.com with ESMTPSA id i19-20020a05620a0a1300b0069fc13ce226sm2177563qka.87.2022.05.06.03.14.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 May 2022 03:14:04 -0700 (PDT)
-Date:   Fri, 6 May 2022 11:14:02 +0100
-From:   Chris Down <chris@chrisdown.name>
+        with ESMTP id S239719AbiEFKWe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 06:22:34 -0400
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C4C75DE54
+        for <git@vger.kernel.org>; Fri,  6 May 2022 03:18:50 -0700 (PDT)
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MtObA-1o5y1p0uWk-00urWA; Fri, 06 May 2022 12:18:31 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id C623B1E01E7;
+        Fri,  6 May 2022 10:18:29 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id dXkTDeUoSEUz; Fri,  6 May 2022 12:18:29 +0200 (CEST)
+Received: from pfwvexchange.corp.cetitec.com (unknown [10.10.1.40])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPS id 3F96D1E01E6;
+        Fri,  6 May 2022 12:18:29 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (10.8.5.52) by
+ pfwvexchange.corp.cetitec.com (10.10.1.40) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 6 May 2022 12:18:28 +0200
+Received: by pflmari.corp.cetitec.com (Postfix, from local account)
+Date:   Fri, 6 May 2022 12:18:28 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>, kernel-team@fb.com
-Subject: Re: [PATCH v2 1/2] bisect: output state before we are ready to
- compute bisection
-Message-ID: <YnT06hCm9zR287aY@chrisdown.name>
-References: <cover.1651796862.git.chris@chrisdown.name>
- <11edd3e4dbaac7fada8a3bcd43f4bbd353087637.1651796862.git.chris@chrisdown.name>
- <YnSNWMBRZA0S8X26@nand.local>
+CC:     <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: Crashes in t/t4058-diff-duplicates.sh
+Message-ID: <YnT19KB2XkBrJOLQ@pflmari>
+References: <YnOQmVFVRuqnanMi@pflmari>
+ <YnSWgDdxgm+XWiLt@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <YnSNWMBRZA0S8X26@nand.local>
-User-Agent: Mutt/2.2.4 (c3baa83e) (2022-04-30)
+In-Reply-To: <YnSWgDdxgm+XWiLt@nand.local>
+X-Originating-IP: [10.8.5.52]
+X-ClientProxiedBy: pfwvexchange.corp.cetitec.com (10.10.1.40) To
+ pfwvexchange.corp.cetitec.com (10.10.1.40)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A29E82A2D51667C6B
+X-Provags-ID: V03:K1:yFyi2JC97pzi0tBSU0vM73PU6y7m9+DMI5gBS6FNet44Pwk6CLK
+ A4W2alc4Ukt74dbH6dFTWU8ZBg9a4jCV0J/e1pLKUuhrpHgkSz3QHhY3UJAHUmMsMSu+Cv9
+ CL2INjcAYxn9q9XIJiMxp6KNCbD3zEacP5dELisu2AeKQwCfvCL3Z8GyN2qwZqheY69aauz
+ c7KXSZLcRZEgbcuv43drg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7MYMnEoWZVo=:fEpn/FlKCAx11X55atrsF+
+ Ko5y/6N4w0dPY1yBY01jgeoRhtnMpqWTrFdxcdacNU8ecXqh1hIkrNfEc7H0TLlZMcwcGxK/1
+ xgKBDFJPWktX1JvPQxBTvGaJ986DAI4cpRam2GUqJvzdW8SWMgWOWs9tF4imZyD/6tFdHgrBk
+ bq2kue5k5mCtW9CrmnmhL+s0Usie9mw2N4pS76QHcGz1yXfSH9/lfVikrnbKUDf3qIwcMOsJw
+ 7H5XgaP0OgAmDqc0EC8t8BymUhctUrpXqpVzu4pO/1Lf/HEtQFtE//oqW17NbhhJ0YypEqmCK
+ PWu9fNOZSxXQTJA/LMs+nAkKkAXy2Buthsf4gTQ+s/f/AjXqz5jx/VG5AwDhpvIVsA7S27QqH
+ Fc6HdZuoLwNFrK+MqJGOqdJBrEsk7KtlLkkTf2npYf4BBuJeqp9hKEca12fyoasrC7ICdh3VK
+ FrgFuBt9H65by/W4JfFkR4K6ALleLPt2CwgW414O00S+9FnedEjBhFCS803V2f1+OIPsJ4Dfy
+ djmFMV2BVDG8vVlN2ZITBPe1ZYQJyez+mDpI9ekk62b6rJrqpbCqXXbIsRPjLYJhPIuYwkA9c
+ KtKpvcoWHMQ5Q4hv/991vmIxWqZTOkq+dPele1Oq59iHEALEDd2AfttHElfnDe2dTcZwQH6yx
+ qrAgluVaLzdfmxzKsE37Tq9ozPPwa8knYNKQecasvZd4uBnrJRMIlQSR7F/zE7QVmY0Rrdt9z
+ Z8WGjnLc3a+F7h1n
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau writes:
->Could or should these printf()'s be advise() calls instead? That would
->make it easier for users to turn them off if they don't want the extra
->output. At the very least, we should make sure that they are sent to
->stderr to discourage scripting around them.
+Taylor Blau, Fri, May 06, 2022 05:31:12 +0200:
+> On Thu, May 05, 2022 at 10:53:45AM +0200, Alex Riesen wrote:
+> > Hi,
+> >
+> > the test t4058-diff-duplicates reliably dumps core here:
+> 
+> It was a little tricky to find out what part of t4058 you were referring
+> to, but...
 
-Ah, I didn't know about advise(); looks like it could be reasonable to use 
-here. If nobody objects, I'll change to advise() when the rest of the feedback 
-has come in and v3 is sent.
+Very sorry! I forgot to include the output of the test itself!
 
-Thanks!
+> > Core was generated by `/home/xxx/yyyyyyy/git/git merge update'.
+> 
+> ...helps us out ;-). The only match for "git merge update" is in
+> t4058.16, which blames back to ac14de13b2 (t4058: explore duplicate tree
+> entry handling in a bit more detail, 2020-12-11), which helpfully
+> explains that this segfault is known (and furthermore they are
+> long-lived and likely not even worth fixing, per ac14de13b2).
+
+Thanks for finding the commit! Makes absolutely sense, but...
+
+I have a little problem with the approach to have it crashing though.
+It crashes for every run of the tests: I have a crash core collecting program
+on the machine I use to build binaries of the tools I use. While it is not
+hard to isolate builds of Git (as a whole) with coredump collecting switched
+off I'd prefer to not do it: it's a special case (which gets forgotten) and
+with it I'll miss new crashes in Git (which I might have authored).
+It is inconvenient to crash regularly.
+
+Is it reasonable to ask to replace the crash in case of this known breakage
+with an error()+exit(130)? (`exit(130)` because the test_expect_failure seems
+to require an exit code greater than 129, and I failed to find where it is).
+
+Or, since the test-lib already has a notion of "expected failure" provide
+the *tests* with a way to reduce collateral effects of that failure?
+Like below with the GDB.
+
+Regards,
+Alex
+
+diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
+index 54614b814d..b2f9ab07d1 100755
+--- a/t/t4058-diff-duplicates.sh
++++ b/t/t4058-diff-duplicates.sh
+@@ -132,22 +132,38 @@ test_expect_success 'create a few commits' '
+ 	rm commit_id up final
+ '
+ 
++may_crash() {
++	local ret
++	if test -n "$GIT_DEBUGGER"
++	then
++		"$@"
++		ret=$?
++	else
++		GIT_DEBUGGER="gdb --batch --return-child-result --nh -ex run --args"
++		export GIT_DEBUGGER
++		"$@"
++		ret=$?
++		unset GIT_DEBUGGER
++	fi
++	return $ret
++}
++
+ test_expect_failure 'git read-tree does not segfault' '
+ 	test_when_finished rm .git/index.lock &&
+-	test_might_fail git read-tree --reset base
++	test_might_fail may_crash git read-tree --reset base
+ '
+ 
+ test_expect_failure 'reset --hard does not segfault' '
+ 	test_when_finished rm .git/index.lock &&
+ 	git checkout base &&
+-	test_might_fail git reset --hard
++	test_might_fail may_crash git reset --hard
+ '
+ 
+ test_expect_failure 'git diff HEAD does not segfault' '
+ 	git checkout base &&
+ 	GIT_TEST_CHECK_CACHE_TREE=false &&
+ 	git reset --hard &&
+-	test_might_fail git diff HEAD
++	test_might_fail may_crash git diff HEAD
+ '
+ 
+ test_expect_failure 'can switch to another branch when status is empty' '
+@@ -183,7 +199,7 @@ test_expect_success 'switch to base branch and force status to be clean' '
+ '
+ 
+ test_expect_failure 'fast-forward from duplicate entries to non-duplicate' '
+-	git merge update
++	may_crash git merge update
+ '
+ 
+ test_done
