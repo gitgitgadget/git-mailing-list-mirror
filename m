@@ -2,109 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B65BDC433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 12:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA0CC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 16:23:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1388394AbiEFM7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 08:59:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55496 "EHLO
+        id S1443743AbiEFQ1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 12:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1392201AbiEFM7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 08:59:32 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8157563516
-        for <git@vger.kernel.org>; Fri,  6 May 2022 05:55:49 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d25so6178022pfo.10
-        for <git@vger.kernel.org>; Fri, 06 May 2022 05:55:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uDHuo4GceaVZYsc779yxn7+Jbst1CbCIsljJZ1Wu/xA=;
-        b=Xtxh7eQj81GE1qum7BROSbTbwCEgmrCFrQN50rA1vdjNUeNddQdRmgCPMUFjCNB/yw
-         i8vxgejkWwpC7tef7B101kwJm7ICOs9jTEEdfKPwUPMjHGMmfJD5SXgI2sg71zSz3w0b
-         1Vuo8LUG51bVe9TG3fpQNpcQVu23a7vVkbAWPjw/dybGQZdUUCgYto6txap64iS+cZa0
-         rza2PLAxOvYOKN2jh/sAi7i5YFasXZoumaNa9Ah0VTQbKHx7MAJps6DSDRJWLde6grT+
-         uJE9nglkKkNFjj7PIadZsvK1IPNSyKNmjMNDwo9IdlhDpandcdcmuWXYaPrscqFiMJqo
-         vhlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uDHuo4GceaVZYsc779yxn7+Jbst1CbCIsljJZ1Wu/xA=;
-        b=vEsyR7Jsg3wF9kRmai2uzqAWJuKMhjOR/ZDiw0pLAPoy0Jj1cJi7nwCnwqe0nK/v60
-         QD7sJ33NUeWar7MpDT/qAqD/DlOzBkLFdbDsgXtXfsFSRZGZFV1OKJYYmEe1zAjTM2Z1
-         ebKb7LLRaS+PHV0AlwIRZg0NlotsZTb1UizBm8BMdY7uBw37J2u0o9ThbixZU8FPWmFZ
-         ajy9o+FrheKRCCAPFR6jVOCprccQuo+u4+4tY13pbzWco2SRE4Ys8xRLVzE/JvXxquVN
-         Yp2531b3GDf861Y/Kirq7lMMm1dZ9aSCdCklVySwopyrr4lE5AQXUiqcYNHUIgANj/uf
-         zF1A==
-X-Gm-Message-State: AOAM533J5VTC0uFMxrGvBfcyX3UNIWgGrxYG96MUGJFfTpErOoGGjewA
-        1Z8fNW1lhIJPexvr4ZThC60=
-X-Google-Smtp-Source: ABdhPJy/Z4QTVyR2ZI7Gq5bgpPMOB26dSWGuIydXD59DjInFQpFiWQHzmschXovI5zK7clf0AV1FUA==
-X-Received: by 2002:a63:6205:0:b0:3c6:4449:fc69 with SMTP id w5-20020a636205000000b003c64449fc69mr2399929pgb.330.1651841748965;
-        Fri, 06 May 2022 05:55:48 -0700 (PDT)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.50])
-        by smtp.gmail.com with ESMTPSA id cj9-20020a056a00298900b0050dc76281b3sm3301600pfb.141.2022.05.06.05.55.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 May 2022 05:55:48 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     avarab@gmail.com
-Cc:     derrickstolee@github.com, dyroneteng@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 5/5] pack-bitmap.c: using error() instead of silently returning -1
-Date:   Fri,  6 May 2022 20:55:30 +0800
-Message-Id: <20220506125530.70989-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.1.582.g1a169d7b5e
-In-Reply-To: <220421.86o80u77xj.gmgdl@evledraar.gmail.com>
-References: <220421.86o80u77xj.gmgdl@evledraar.gmail.com>
+        with ESMTP id S1443761AbiEFQ1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 12:27:15 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D0B26B0BD
+        for <git@vger.kernel.org>; Fri,  6 May 2022 09:23:30 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEF6C1182EF;
+        Fri,  6 May 2022 12:23:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=UKpqbnwRtLpZ
+        52ICDFLeLRxVkfRhIB9tWsa4gKhE58o=; b=P5SXeqbABSLDvdqh4sjN5/0Rh6/S
+        BmZHIUwCidxpA1SJIwwmWOnLmWMTchCe3SXSk//21RVUdwJ7dVV97Osn2IkL6P5P
+        qpnJlSI53B9A6QhaT4CrvuNoz4cUAZx4rsaUyRwjuihkXikVldOUT3WO27hnlYbV
+        T9dKHflX0Q+H3wE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD8501182EE;
+        Fri,  6 May 2022 12:23:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2459C1182EC;
+        Fri,  6 May 2022 12:23:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Cc:     Christian =?utf-8?Q?Gr=C3=BCn?= <christian.gruen@gmail.com>,
+        git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+        Halil Sen <halilsen@gmail.com>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Resizing panels in the gitk window
+References: <CAP94bnOyrx6hCmWSjmejVfopUydk10ga42wJzm1M4nk_OXn9Mg@mail.gmail.com>
+        <CAP94bnMHggYR=FOh8462tncFAxOUJ-db=yj7YPoTJRS-VwjEgw@mail.gmail.com>
+        <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
+Date:   Fri, 06 May 2022 09:23:27 -0700
+In-Reply-To: <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
+        ("Matthias =?utf-8?Q?A=C3=9Fhauer=22's?= message of "Fri, 6 May 2022
+ 14:00:08 +0200
+        (CEST)")
+Message-ID: <xmqqzgjuocjk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DD1640BC-CD58-11EC-9FAD-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 21 Apr 2022 17:41:36 +0200, Ævar Arnfjörð Bjarmason wrote:
+Matthias A=C3=9Fhauer <mha1993@live.de> writes:
 
-> First, I wondered if we were missing _(), but looking at other string in
-> the file they're not using that already, looks like these all should,
-> but we can fix this all up some other time in some i18n commit. It's
-> fine to keep this for now.
+> It looks like the issue at [1]. It sadly seems like nobody ever
+> reviewed or applied thos suggested patches, but there is some more
+> off-list discussion at [2].
+>
+> [1] https://lore.kernel.org/git/pull.1219.git.git.1645386457.gitgitgadg=
+et@gmail.com/#t
+> [2] https://github.com/git/git/pull/1219#issuecomment-1113122632
 
-Yes, I agree with you.
+Thanks for a pointer.
 
-I also think I have a willingness to make another patchset to solve
-the _() missing problems recently.
+I do recall seeing [1] but I do not see anything happened on the
+thread since then.  I didn't look at it back then primarily because
+the patches were made against a wrong history (no, you do not want
+to make a gitk patch against my tree nor throw a pull request at my
+repository), and there was no way for me to pick it up.
 
-> But more importantly: I think this should be your 4/5. I.e. just make
-> these an error() and you won't need to add e.g. this
-> trace2_data_string() for a failed stat.
+As Documentation/SubmittingPatches says:
 
-Make sense. Will adjust the order in next path.
- 
-> You will be inside your trace2 region, so any failure to stat etc. will
-> be obvious from the structure of the data and the "error" event, no
-> reason to have an additional trace2_data_string().
+    Some parts of the system have dedicated maintainers with their own
+    repositories.
+    ...=20
+    Patches to these parts should be based on their trees.
 
-Yeah, I forgot about the "error()" already load the trace2 functions in.
-Will remove the redundant trace2_data_string() where it's  obviously will
-return error().
+Having said that, gitk has been quiescent for quite a while, and I
+wonder if Paul's been too busy for (or no longer interested in)
+maintaining it and perhaps he can use a replacement maintainer?
 
-> Aside from that & as a general matter: Unless you have some use-case for
-> trace2 data in this detail I'd think that it would be better just to
-> skip logging it (except if we get it for free, such as with error()).
-> 
-> I.e. is this particular callsite really different from other places we
-> fail to stat() or open() something?
-> 
-> It's all a moot point with the region + error, but just something to
-> keep in mind.
-
-Make sense.
-
-And I think it's a good case in "open_midx_bitmap_1()" to add related
-trace2_data_string() because there only a general error info in "cleanup:".
-
-
-Thanks.
