@@ -2,228 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 678A6C433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 22:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C55ABC433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 22:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1444722AbiEFW2W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 18:28:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37702 "EHLO
+        id S1444833AbiEFXBN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 19:01:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351131AbiEFW2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 18:28:20 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05DA347548
-        for <git@vger.kernel.org>; Fri,  6 May 2022 15:24:36 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id t11so7036131qto.11
-        for <git@vger.kernel.org>; Fri, 06 May 2022 15:24:35 -0700 (PDT)
+        with ESMTP id S1391458AbiEFXBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 19:01:09 -0400
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D7C10D2
+        for <git@vger.kernel.org>; Fri,  6 May 2022 15:57:25 -0700 (PDT)
+Received: by mail-ua1-x92b.google.com with SMTP id f13so3306961uax.11
+        for <git@vger.kernel.org>; Fri, 06 May 2022 15:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=rHsKqkwmc+jxsW6UqIJe7+wamPrRlVExUeedGOw4tvw=;
-        b=X0SMfdVziayOE541jewRYpDOY8gMVFnx5e01wfyfBpOmb5ux7f/V4oHiS7Karm12Mt
-         3uJsC3dER4la12f102jnKimLYeZptKk/bJk+AHfXgdSWKIOr2bU3RGliFjFTx/k5qvTO
-         Rcgw4pe2/h8AaWkfMzrOFeijXePHjmY3UqBvyUkyVncOWJ9N1ZnlDRtDsZl1X36K4kHM
-         9yGq7xYgm75c4PpqMb4oGIPsCswqCs10M2IOXZZliAGmA5jLVTLdjQqjvICOcK3INPfd
-         qGap0tIALMb7d9H+lfnkleTwecSCuPo4byU7tupxaPOZFa9UkWNO3EohyoIFmZWQTZ8I
-         +a8A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mDFA50hcJESJnboDgAPVEIdQKFBTXLIJmvU4UJlT49M=;
+        b=H0iUUwE6fCAInLB0urh+QzNINXRXS6FimWYy5IkNo4bC+c8YTEtT9VACcA54LhmZAx
+         GiIu1wfMMb2cMFYeN1oCz0as5qqBnVqkrnSEMun2bU15f+1aCSf2HADh9mlgzYiQmu08
+         wO3tt1LB73xmegILGBYLdNNTd2gCrJq7/Ms5LR7CXe03l/XaYCHy7IJljclWq5wreXwA
+         TPhYqGDlW3RsDZIGGkqPYBww1z281G1gxBugwPejVn+rhMYbC8uqIteTnaO56o38O6Yq
+         PfcLqurPekYlMLLkN8czxeLVMfN29kvmYObzZDqqdP3UlevijVLk+1rotAEluvzGfEPE
+         TNfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rHsKqkwmc+jxsW6UqIJe7+wamPrRlVExUeedGOw4tvw=;
-        b=HjiGEEmFcvCGY44Z5fxq31+TWFN+qgKKcoruSb3sQZLuiDrGZp+S3xGdl4+urHS9Eo
-         uiyJdk3SrNj3WM35LlcIf80SKDlkMv8x19wLtc/mPMjXK0uws/xrAc9HQAR66jqELf19
-         iv5/5qRdJ/9vr74eP47yey4iy3oF1JJTWx5eZNvDX0Ra5edvfiUkIpMK3uxRQxu/DxV2
-         22SUx9z+5wFShFBPkAdN/ZBNN+s/niKapcFWaDiPna7hUA9F1Jv5IHYnHrVgH3lVzchD
-         UzcNVt2hhgi0MpjRkWv64VAfSTb4cnnI9maNv1jbXQbUbFv9u8k69bJX4dmyQGx8+b4F
-         dSSw==
-X-Gm-Message-State: AOAM530792rNimkHL7hunS/oC8B9UVQHRPstqAwrXCY3RGU/aXgt3TMR
-        EsPjxYxmRr6eil9Kc6imbeadJmdxrgo=
-X-Google-Smtp-Source: ABdhPJxy+su4rQ6Iqtsi8o5ClWAqCxhuma8EKX1QseK+e4vZMMZl3IqfufLFhnc3LhfsG3UnV0XwVA==
-X-Received: by 2002:a05:622a:1984:b0:2f3:b9bf:64b2 with SMTP id u4-20020a05622a198400b002f3b9bf64b2mr5022054qtc.472.1651875874825;
-        Fri, 06 May 2022 15:24:34 -0700 (PDT)
-Received: from [192.168.50.110] (modemcable064.93-201-24.mc.videotron.ca. [24.201.93.64])
-        by smtp.gmail.com with ESMTPSA id 16-20020a05620a06d000b0069fc13ce1dbsm3018099qky.12.2022.05.06.15.24.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 May 2022 15:24:34 -0700 (PDT)
-Subject: Re: Bug Report: fetch.recurseSubmodules doesn't affect git pull as
- otherwise stated in the git config docs
-To:     Glen Choo <chooglen@google.com>,
-        Huang Zou <huang.zou@schrodinger.com>, git@vger.kernel.org
-References: <CAFnZ=JNE_Sa3TsKghBPj1d0cz3kc6o91Ogj-op8o6qK8t9hPgg@mail.gmail.com>
- <fc492627-c552-10ec-b30c-820299241278@gmail.com>
- <kl6lbkwa8h5n.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <b4d7600e-ed4e-b4b3-262a-a69818c25365@gmail.com>
-Date:   Fri, 6 May 2022 18:24:32 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mDFA50hcJESJnboDgAPVEIdQKFBTXLIJmvU4UJlT49M=;
+        b=T1tQ08b4wNXv2hYP+PAKixNUUq9096XDbMw5H2nFm7+7uhkpgyfwab/U2oyTFxXaeg
+         9h/PX1sf/IYJgOgcBOhQqtEEo2lRddz0VQLp2qE58+Vxb906lpQYVhM3DSNbbJIdvVJY
+         ReemOrfxj7LsPoMLvW8pL0gyHhyrnozclOuQObTyEFIqv5Atd8B8y2MFdc6okiAgyQc1
+         gtFroZWlynWEcp4qZH9I0KN+UIWS5+ytAgZ3FvMZ/Dr5hXHd0jeTgwlO6DYeMqEwih1f
+         2dTnUFskXaFQmSmO9ByeZPC5fbfl/Hh7IP6BBuMGJ6a0he4+RGNqaohBZ7dRXFTMH5U2
+         cKmg==
+X-Gm-Message-State: AOAM532OQwhFeNLhQUZteooHrxH/tUx2binvhh0NP6Kc2kK7bbMq3BoS
+        8blPsvBr5DkPHMHUx5Uag4vhDJrpdTpAW9kappQ=
+X-Google-Smtp-Source: ABdhPJwSfgXLbRZruYgpGHMWqT8LbKhqS5PosO3LP2Vdk1u4mDe+JsFT7JvXvkihSluB16qnA9ULQ5/yjRqK8Q14KVs=
+X-Received: by 2002:a05:6130:3a1:b0:365:84fa:2f57 with SMTP id
+ az33-20020a05613003a100b0036584fa2f57mr2308084uab.62.1651877844211; Fri, 06
+ May 2022 15:57:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <kl6lbkwa8h5n.fsf@chooglen-macbookpro.roam.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <20220428033544.68188-1-carenas@gmail.com> <20220428105852.94449-1-carenas@gmail.com>
+ <20220428105852.94449-4-carenas@gmail.com> <xmqq7d79du6c.fsf@gitster.g>
+ <5493b2f1-e59d-d91d-ac21-47c93d2996f2@gmail.com> <xmqq7d79gjre.fsf@gitster.g>
+ <CAPUEspibV6LKVAGpUPBoDYWvF7cjBJUJOSMDzLY6ErMF8s-Eng@mail.gmail.com> <xmqq1qx6jq0b.fsf@gitster.g>
+In-Reply-To: <xmqq1qx6jq0b.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 6 May 2022 15:57:13 -0700
+Message-ID: <CAPUEspjOPNTMrBdLQMKcbXYY7G+Vm1br++7C3rq6Bs+5xZ4yHg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] t: add tests for safe.directory when running with sudo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Glen!
+On Fri, May 6, 2022 at 2:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Carlo Arenas <carenas@gmail.com> writes:
+>
+> > Since I am renaming it anyway as part of this topic with RFC v4, would
+> > it be a good idea to require both?
+> >
+> > I see the "IKNOWHATIAMDOING" not as a normal GIT_TEST flag, but as a
+> > "here be dragons!" warning, and I later found that I either
+> > misremembered it being enabled in the CI, or it was dropped with one
+> > of those refactors we do often there.
+> >
+> > My RFC v4 includes a new nice looking GIT_TEST variable as suggested
+> > by Phillip which I am also enabling in the CI to hopefully make it
+> > even more clear that this is only meant to run there, but sadly that
+> > also means that this patch will likely have a conflict when merged
+> > upwards.
+>
+> This must build from the older mainteance tracks like maint-2.30, so
+> let's keep the changes to absolute minimum
 
-Le 2022-05-06 à 17:50, Glen Choo a écrit :
-> Philippe Blain <levraiphilippeblain@gmail.com> writes:
-> 
->> Hi Huang,
->>
->> Le 2022-05-02 à 10:42, Huang Zou a écrit :
->>> Thank you for filling out a Git bug report!
->>> Please answer the following questions to help us understand your issue.
->>>
->>> What did you do before the bug happened? (Steps to reproduce your issue)
->>> 1) Set the following configs:
->>>  git config submodule.recurse true
->>>  git config fetch.recurseSubmodules false
->>> 2) On a repo with submodules, run:
->>> git pull
->>>
->>> What did you expect to happen? (Expected behavior)
->>> git pull doesn't recursively fetch submodules
->>>
->>> What happened instead? (Actual behavior)
->>> Submodules are fetched recursively
->>>
->>> What's different between what you expected and what actually happened?
->>> Submodules are fetched recursively
->>>
->>> Anything else you want to add:
->>> git fetch works as intended. The documentation for fetch.recurseSubmodules
->>> states that "This option controls whether git fetch (and the underlying
->>> fetch in git pull)" so I would naturally expect git pull to behave the same
->>> as git fetch
->>
->> I did not try to reproduce, but I took a look at the code and I think I understand
->> what happens. 
->>
->> When 'git pull' invokes 'git fetch', it does so by specifically using the '--recurse-submodules'
->> flag, see [1]. It sends either 'yes', 'no' or 'on-demand' as value, depending on the value
->> of the local variable 'recurse_submodules'. This variable is initialized to the config value
->> of 'submodule.recurse' in 'git_pull_config' [2], called at [3], and then overwritten by the value given
->> explicitely on the command line [4], parsed at [5].
->>
->> So when 'git fetch' runs when called by 'git pull', it always receive the 
->> '--recurse-submodules' flag, and thus any config for fetch.recurseSubmodules is ignored
->> (since explicit command line flags always have precedence over config values).
-> 
-> Thanks for looking into this! This seems to agree with my reading of the
-> code. I haven't tried to reproduce it either, but the code looks
-> obviously incorrect.
-> 
->> So one way to fix this would be to also parse 'fetch.recurseSubmodules' in 'git_pull_config',
->> and send the correct value to the 'git fetch' invocation... Or simpler, call 'git fetch' with
->> '--recurse-submodules-default' [9] instead...
-> 
-> Despite having touched this code fairly recently, I had to do quite a
-> rereading to refresh myself on how this works. If I _am_ reading this
-> correctly, then I think we actually want to set `--recurse-submodules`
-> and not `--recurse-submodules-default`.
-> 
-> The short story is that the two are not equivalent - when figuring out
-> _which_ submodules to fetch (we determine on a submodule-by-submodule
-> basis; we don't just say "should we fetch all submodules?"),
-> `--recurse-submodules-default` gets overrided by config values, but
-> `--recurse-submodules` does not.
-> 
-> The longer story (which I think is quite difficult to explain, I am also
-> a little confused) is that in a recursive fetch,
-> `--recurse-submodules-default` is the value of the parent's (we'll call
-> it P) `--recurse-submodules`. This only matters when a process, C1, has
-> to pass a value for `--recurse-submodules` to its child, C2. The
-> precedence order is:
-> 
-> - C1's --recurse-submodules | fetch.recurseSubmodules |
->   submodule.recurse
-> - C2's submodule entry in C1's .git/config
-> - C2's entry in C1's .gitmodules
-> - C1's --recurse-submodules-default (aka P's --recurse-submodules)
-> 
-> Specifically, in code:
-> 
->   static int get_fetch_recurse_config(const struct submodule *submodule,
->               struct submodule_parallel_fetch *spf)
->   {
->     // Glen: passed in from builtin/fetch, which parses
->     //  --recurse-submodules, fetch.recurseSubmodules, submodule.recurse
->     if (spf->command_line_option != RECURSE_SUBMODULES_DEFAULT)
->       return spf->command_line_option;
-> 
->     if (submodule) {
->       // ...
->       // Glen: fetch configuration from .gitmodules
->       int fetch_recurse = submodule->fetch_recurse;
-> 
->       key = xstrfmt("submodule.%s.fetchRecurseSubmodules", submodule->name);
->       if (!repo_config_get_string_tmp(spf->r, key, &value)) {
->         // Glen: fetch configuration from .git/config
->         fetch_recurse = parse_fetch_recurse_submodules_arg(key, value);
->       }
->       // ...
->     }
-> 
->     // Glen: --recurse-submodules-default
->     return spf->default_option;
->   }
-> 
-> So `--recurse-submodules-default` really wasn't meant for anything other
-> than "fetch" invoking itself in a superproject-submodule setting.
-> 
-> Of course, I could be entirely wrong and I should just write up a test
-> case :). I hope to send one soon.
+makes sense, but I still unsure about the two questions I had above:
 
-OK so it's more complicated than I thought (I'm not surprised :P). Thanks for 
-the details.
+* would it make sense to make it run ONLY if both variables are set to
+YES or is it enough to use one (most likely the GIT_TEST one) that we
+would enable independently in CI?
 
-The other thing I thought about, is that even if '--recurse-submodules-default'
-worked as I thought it did when I wrote this, it would still not be the right
-thing to change builtin/pull to invoke 'git fetch' with it instead, since then
-a user invoking e.g. 'git pull --recurse-submodules=false', who has 'fetch.recurseSubmodules=true',
-would not get a recursive fetch, since the internal fetch would prioritise 'fetch.recurseSubmodules=true',
-but that's contrary to user expectation that command-line flags override config, always...
-So whatever is done to fix this, we might need to keep track of where 'recurse_submodules'
-was set from, either the command-line or the config.
+the advantage I see of having both variables is that it is even less
+likely to even run accidentally in a desktop somewhere and maybe break
+that test, and also keeps the meaning I wanted to attach to it with
+that ugly looking flag that no one should ever try to enable in their
+workstations unless they really know what they are doing.
 
-> 
->> [sidenote]
->> I'm thought for a while that it was maybe not a good idea to change the behaviour
->> in your specific situation. If you have 'submodule.recurse'
->> set to true and 'fetch.recurseSubmodules' set to false, and if the code is changed so that indeed
->> 'git pull' does not fetch recursively, then the code will still try to update the submodule working
->> trees after the end of the operation (merge or rebase), see the end of 'cmd_pull' [6], [7]. This  is
->> OK, because if there are new submodule commits referenced by the superproject and they were not fetched because the 
->> fetch was not recursive, then the call to 'git submodule update' in update_submodules/rebase_submodule
->> should fetch them, so no problem there.
->> [/sidenote]
-> 
-> I think the bigger question to ask is "what is the intended effect of
-> 'submodule.recurse = true' and 'fetch.recurseSubmodules = false'?".
+The advantage of ONLY having the GIT_TEST one is that it will be
+easier to enable in CI and for whoever wants to play with it on their
+workstation as well, but might still encourage people trying to make
+it work and wasting their time.
 
-Yes, I agree that it would be nice if Huang clarified that as I'm not sure
-either of the use case.
+* since we have to enable CI for these to be useful, would that be
+something to be done in an additional patch as part of this topic
+branch and you will only pull the commits before it to maint to avoid
+conflicts, or should it be done completely independently as a mini
+feature branch that depends on this one that will be pulled to seen
+and merged downwards from it?
 
-> I
-> think it is not surprising to think that recursive worktree operations
-> might fail if the submodule commits weren't fetched.
+somehow offtopic but just curious about your process, presume that if
+we go with a single topic branch adding it instead as 2/4 would break
+your flow/scripts since the only way to get that merged would be to
+cherry-pick, right?
 
-Yes, if ever 'merge' and 'rebase' are taught to obey 'submodule.recurse'
-(if only I had time to work on that!), then all hell would break loose
-if submodule commits were not fetched when these operations start.
+> I actually think 1/3 and 3/3 are OK.  Are there remaining issues in
+> these two patches (which only are tests)?
 
-> 
-> Perhaps this is just a performance optimization? i.e. after fetching in
-> the superproject, the user wants to skip the rev walk that discovers new
-> submodule commits.
-> 
+The versions of them in RFCv4 have more documentation and are cleaner
+since they mostly include most of the feedback that was collected on
+them (even if I am still unsure because it is spread around and
+difficult to track, hence why I was planning an RFC)
 
+I don't think there is anything significantly different though but
+they are and will need another review (which I am hoping would be
+uncontroversial)
 
-Cheers,
-Philippe.
+> As to 2/3, I think the code is basically already fine, but a
+> simplification like the following on top would be a good idea.
+>
+>  * We clear errno before making strtoul() call, so any non-zero
+>    errno must have happeneed in strtoul(), which includes ERANGE.
+>    There is no point checking the returned value env_id; if it is
+>    ULONG_MAX but errno is 0, then the SUDO_UID legitimately is
+>    naming a user whose UID is that special value, and it is not an
+>    indication of an overflow.
+
+true, but the apparent check for ULONG_MAX (which should have a
+comment added) was really a check not to overflow when assigning the
+value we got into uid_t, by sacrificing an unlikely to be valid
+ULONG_MAX as an uid.
+
+it also has the intentional side effect of breaking this code if uid_t
+is signed and hopefully triggering a warning in the process since it
+would be always false, that way whoever has a system where this type
+is signed will have to carry their own version of the code and we
+don't have to deal with the portability of it.
+
+lastly (since it really made me proud and would be sad to see it go)
+it ALSO avoids someone trying to sneak a value that would overflow in
+one of the most common configurations we will run where sizeof(long) >
+sizeof(uid_t) && MIN_UID_T >=0, by using an equivalent to MAX_UID_T
+(which only exists in a few systems and therefore can't be relied on)
+to discard values that would overflow the range uid_t has.
+
+without it, we would probably find ourselves in the future having to
+deal with an embarrassing bug that others before us had suffered.
+
+Carlo
