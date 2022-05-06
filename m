@@ -2,167 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A1B6C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 20:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A502C433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 20:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443043AbiEFUhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 16:37:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
+        id S1443328AbiEFUo4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 16:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235709AbiEFUhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 16:37:19 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC8F6D3AB
-        for <git@vger.kernel.org>; Fri,  6 May 2022 13:33:33 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D45111A089;
-        Fri,  6 May 2022 16:33:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BZqoJyc6EMh8N8wpTKf/ntoMcfV7RaBT+XXWoo
-        FnsMM=; b=kt1FU3WQP3SFXeGuxKdOM71MvzUSyjo7AU6DVcWfBhD7rY8cDRQfSg
-        AjrLcUN6lZ6WAZb2fm0R1MS9A1ugDrd8eBrw6+bYz005KoATZCn+uTOaPI6pD8Xr
-        0iInv7m2xXiMbA/JOLgcdXAUKemvHs2d6hf+VG0WVMX62I5UyDaEc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04D5511A088;
-        Fri,  6 May 2022 16:33:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DCDC11A084;
-        Fri,  6 May 2022 16:33:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH] [RFC] setup.c: make bare repo discovery optional
-References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
-Date:   Fri, 06 May 2022 13:33:30 -0700
-In-Reply-To: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com> (Glen
-        Choo via GitGitGadget's message of "Fri, 06 May 2022 18:30:10 +0000")
-Message-ID: <xmqqmtfujt9h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233143AbiEFUox (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 16:44:53 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED1E369CD7
+        for <git@vger.kernel.org>; Fri,  6 May 2022 13:41:08 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id t16so6864809qtr.9
+        for <git@vger.kernel.org>; Fri, 06 May 2022 13:41:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pS+ACe5FPOnbZKRcEmkmdiTdJNSY3g5BPtzFSlvTaY4=;
+        b=MPd2GFcJCApjfAIG7G9accDZ3VJM4r/dOgKA4HMuHi3qFYIK00AAsiqEQ/Wk9ROXG3
+         kaoUREGk3TUte6zFMV0HYhEDoBgkUwS/J59NTBpxgDC0/4o3ooPRDLXw99JEepk1aSIf
+         QXfQvO5H4TyA7Rb19Ui36+omQwNzBX5dWbxBvbReM9M5Spy/PfSORtJM9fntzDv+3kix
+         E7UfAhm8DxMIEHJpluXbsj+kxE7ZF7oAjklKvgFOvq48lSmNVg1PuJG8ivIyGcMyFysq
+         U3O57ci//lRNRF15PbejEis2QVJYUPc9z495QPr9eFwKqGozn/Trsxw+bA9Z0uQwZBgK
+         84mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pS+ACe5FPOnbZKRcEmkmdiTdJNSY3g5BPtzFSlvTaY4=;
+        b=44NShckKIg047FGcQScDPeEpQsboiusq42qx4vDBEaIgK6eZr+p9XqodQYTiwTigA6
+         vcbMCaZXWU1lCP6Z3f6xrfYRKl0t+6/yZRGeeaADu/BJedyhlfNHtr5t+R03InOO1K+6
+         OAth8cCvtJxlrc+pWXoqc2rR3Dv1kn4o3Osyz9p+L8Lotcc6OlRJsQxZLfLamHCo3TdQ
+         eGrfbwZiRByTXRPG53tGkxfYaW4z9pvzYsLBR/LAN1qkLPppoRHFFLJVfDdL/9O0Jfge
+         KvlJ1zYJBYMBZFn2gBAyAqZFtUYO6yNZZNskM4NAJVQXeBe1NzCUktpMs6oiEaKAmfP7
+         NELQ==
+X-Gm-Message-State: AOAM533yN6ih4cOo4gd9C5IBPjLJ3ts08TVAYXLwovN+W9zPJZexfCdV
+        MZnv3HIiUeM/yoi1XDAK7Mv8LRcDXq4=
+X-Google-Smtp-Source: ABdhPJw+luzwn4k4dOBzpO2PfV+s3u4DVdM39vsd5XhLyYtvrxH3fEm81j4i4QunuHKGNKZvQJZe2w==
+X-Received: by 2002:a05:622a:293:b0:2f3:b483:baae with SMTP id z19-20020a05622a029300b002f3b483baaemr4456861qtw.111.1651869667961;
+        Fri, 06 May 2022 13:41:07 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id r68-20020ae9dd47000000b0069fc13ce201sm2561760qkf.50.2022.05.06.13.41.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 May 2022 13:41:07 -0700 (PDT)
+Date:   Fri, 6 May 2022 13:41:02 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] http.c: avoid gcc warning
+Message-ID: <20220506204102.iyn7mxogtz2t7gh6@carlos-mbp.lan>
+References: <cover.1651859773.git.git@grubix.eu>
+ <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB1D6430-CD7B-11EC-86BE-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, May 06, 2022 at 08:04:06PM +0200, Michael J Gruber wrote:
+> Related to -Wdangling-pointer.
+> 
+> In fact, this use of the pointer looks scary and has not created
+> problems so far only because the pointer in the struct is not used when
+> execution is out of the scope of the local function (and the pointer
+> invalid).
 
-> From: Glen Choo <chooglen@google.com>
->
-> Add a config variable, `safe.barerepository`, that tells Git whether or
-> not to recognize bare repositories when it is trying to discover the
-> repository. This only affects repository discovery, thus it has no
-> effect if discovery was not done (e.g. `--git-dir` was passed).
+I think it might had been used by a different thread though and therefore
+it should be at least a thread local static to be safe (which should be
+possible to do now that we are supporting C99).
 
-> +safe.barerepository::
-> +	This config entry specifies directories that Git can recognize as
-> +	a bare repository when looking for the repository (aka repository
-> +	discovery). This has no effect if repository discovery is not
-> +	performed e.g. the path to the repository is set via `--git-dir`
-> +	(see linkgit:git[1]).
-> ++
-> +It is recommended that you set this value so that Git will only use the bare
-> +repositories you intend it to. This prevents certain types of security and
-> +non-security problems, such as:
-> +
-> +* `git clone`-ing a repository containing a maliciously bare repository
-> +  inside it.
+If you are going that route, would be important to tell you that I tried
+and got in trouble because of Windows and the build environment in use
+there, but it didn't seem that difficult to fix, before I got sidetracked.
 
-"maliciously bare"? "malicious bare" probably.
-
-> +* Git recognizing a directory that isn't mean to be a bare repository,
-
-"mean to be" -> "meant to be".
-
-> +  but happens to look like one.
-
-> diff --git a/setup.c b/setup.c
-> index a7b36f3ffbf..9b5dd877273 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1133,6 +1133,40 @@ static int ensure_valid_ownership(const char *path)
->  	return data.is_safe;
->  }
->  
-> +/*
-> + * This is similar to safe_directory_data, but only supports true/false.
-> + */
-> +struct safe_bare_repository_data {
-> +	int is_safe;
-> +};
-> +
-> +static int safe_bare_repository_cb(const char *key, const char *value, void *d)
-> +{
-> +	struct safe_bare_repository_data *data = d;
-> +
-> +	if (strcmp(key, "safe.barerepository"))
-> +		return 0;
-> +
-> +	if (!value || !strcmp(value, "*")) {
-> +		data->is_safe = 1;
-> +		return 0;
-> +	}
-> +	if (!*value) {
-> +		data->is_safe = 0;
-> +		return 0;
-> +	}
-> +	return -1;
-> +}
-> +
-> +static int should_detect_bare(void)
-> +{
-> +	struct safe_bare_repository_data data;
-> +
-> +	read_very_early_config(safe_bare_repository_cb, &data);
-> +
-> +	return data.is_safe;
-> +}
-> +
->  enum discovery_result {
->  	GIT_DIR_NONE = 0,
->  	GIT_DIR_EXPLICIT,
-> @@ -1238,7 +1272,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
->  			return GIT_DIR_DISCOVERED;
->  		}
->  
-> -		if (is_git_directory(dir->buf)) {
-> +		if (should_detect_bare() && is_git_directory(dir->buf)) {
->  			if (!ensure_valid_ownership(dir->buf))
->  				return GIT_DIR_INVALID_OWNERSHIP;
->  			strbuf_addstr(gitdir, ".");
-
-This is in a loop, which will go up and try the parent directory if
-the body of this block is not entered, so it is calling the new
-should_detect_bare() helper over and over if it returns false.
-
-Not a very good idea.
-
-Perhaps this would help?  I dunno.
-
-static int should_detect_bare(void)
-{
-	static int should = -1; /* unknown yet */
-
-	if (should < 0) {
-		struct safe_bare_repository_data data = { 0 };
-		read_very_early_config(safe_bare_repository_cb, &data);
-		should = data.is_safe;
-	}
-	return should;
-}
-
-In any case, I very much appreciate the fact that this touches the
-setup_git_directory_gently_1() codepath only minimally, as we have
-other plans to update the code further soonish.
-
-Thanks.
+Carlo
