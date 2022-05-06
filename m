@@ -2,97 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AADEC433EF
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 16:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C9D7C433EF
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 16:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443862AbiEFQqZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 12:46:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47576 "EHLO
+        id S1443895AbiEFQve (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 12:51:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379152AbiEFQqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 12:46:24 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E725360DE
-        for <git@vger.kernel.org>; Fri,  6 May 2022 09:42:40 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EA80518502D;
-        Fri,  6 May 2022 12:42:39 -0400 (EDT)
+        with ESMTP id S1343762AbiEFQvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 12:51:32 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196D94551C
+        for <git@vger.kernel.org>; Fri,  6 May 2022 09:47:49 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C64941182D3;
+        Fri,  6 May 2022 12:47:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mwywzJtEtCm1i5bIN4AFN8It1kW3qXQ1TqN9fq
-        I3jy0=; b=xFi1LiNTfSgpqVdXKyFiILi6q4BMGw1L/hgMXqQV9v4g75P7mS0c61
-        5cPIt+qGG5ABbVZQxKZnGlhoMehlsqthdK9rtgCXZxA7MTfInCQoWgY+DtRRdbp1
-        NLQv+/iGpyttceYePI91bIQWnqXoLwiuAvzvb+Epygv23suIVB7mc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E323118502C;
-        Fri,  6 May 2022 12:42:39 -0400 (EDT)
+        :content-type; s=sasl; bh=rMQT4uRjgXD+dOfaTwT+AH7i4TFTbG6gfwmmff
+        Kdy1o=; b=vB7K8BdjrLlk/UlmMtDNWUUGC5NpOgp4Dnoy2dw88TTbzbE3d97xRr
+        93CaXPTtVBjfWu8x3l5rgpfTg1upmiJA5JlBXg2UGJyVrj9QYkhHF1oAcGHUGshH
+        0beRIYB+71p/oBVrujzK8XYAMQ/8vdZxNqD69Ma51uKvHRQ9XGu8Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD3511182D2;
+        Fri,  6 May 2022 12:47:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7F6CB18502B;
-        Fri,  6 May 2022 12:42:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2E6791182C4;
+        Fri,  6 May 2022 12:47:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Chris Down <chris@chrisdown.name>, git@vger.kernel.org,
+To:     Chris Down <chris@chrisdown.name>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <chriscool@tuxfamily.org>, kernel-team@fb.com
-Subject: Re: [PATCH v2 1/2] bisect: output state before we are ready to
- compute bisection
+Subject: Re: [PATCH v2 2/2] bisect: output bisect setup status in bisect log
 References: <cover.1651796862.git.chris@chrisdown.name>
-        <11edd3e4dbaac7fada8a3bcd43f4bbd353087637.1651796862.git.chris@chrisdown.name>
-        <YnSNWMBRZA0S8X26@nand.local>
-Date:   Fri, 06 May 2022 09:42:35 -0700
-In-Reply-To: <YnSNWMBRZA0S8X26@nand.local> (Taylor Blau's message of "Thu, 5
-        May 2022 22:52:08 -0400")
-Message-ID: <xmqqmtfuobno.fsf@gitster.g>
+        <acab8859d02c95750fdbc691ac672c17d5be0291.1651796862.git.chris@chrisdown.name>
+Date:   Fri, 06 May 2022 09:47:43 -0700
+In-Reply-To: <acab8859d02c95750fdbc691ac672c17d5be0291.1651796862.git.chris@chrisdown.name>
+        (Chris Down's message of "Fri, 6 May 2022 01:52:54 +0100")
+Message-ID: <xmqqh762obf4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 88F8F95E-CD5B-11EC-A46F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 40F3F25C-CD5C-11EC-A0E9-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Chris Down <chris@chrisdown.name> writes:
 
->> +	if (!bs.nr_good && !bs.nr_bad)
->> +		printf(_("status: waiting for both good and bad commits\n"));
->> +	else if (bs.nr_good)
->> +		printf(Q_("status: waiting for bad commit, %d good commit known\n",
->> +			  "status: waiting for bad commit, %d good commits known\n",
->> +			  bs.nr_good), bs.nr_good);
->> +	else
->> +		printf(_("status: waiting for good commit(s), bad commit known\n"));
->> +}
+> This allows seeing the current intermediate status without adding a new
+> good or bad commit:
 >
-> Could or should these printf()'s be advise() calls instead?
+>     $ git bisect log | tail -1
+>     # status: waiting for bad commit, 1 good commit known
 
-Given that existing bisect_next_all() mesasge to give estimates come
-to the standard output, I do not think so.
+Clever.  As we are keeping the "log" of what we have done so far,
+it is a good place to record this new piece of info, too.  I find
+it much better than my earlier suggestion to add "bisect status"
+subcommand.
 
-	/*
-	 * TRANSLATORS: the last %s will be replaced with "(roughly %d
-	 * steps)" translation.
-	 */
-	printf(Q_("Bisecting: %d revision left to test after this %s\n",
-		  "Bisecting: %d revisions left to test after this %s\n",
-		  nr), nr, steps_msg);
+> +__attribute__((format (printf, 1, 2)))
+> +static void bisect_log_printf(const char *fmt, ...)
+> +{
+> +	va_list ap;
+> +	char buf[1024];
+> +
+> +	va_start(ap, fmt);
+> +	if (vsnprintf(buf, sizeof(buf), fmt, ap) < 0)
+> +		*buf = '\0';
+> +	va_end(ap);
 
-I view these new messages as merely correcting the gap we used to
-have.  We should have been giving feedback to the end-user when they
-did something, but instead we were giving feedback only when we did
-something, which resulted in the original "Huh?" that motivated this
-series.
-
-I actually wonder if we should do s/status:/Bisecting:/ to make the
-messages even more uniform, but if we were to go in that direction
-in the longer term, we'd probably be downcasing "Bisecting" to match
-our error/warning/info messages.
+We probably should use strbuf_addf() or something so that we do not
+even have to wonder if 1024 is large enough for everybody.  That
+would be in line with what is done in other parts of the codebase,
+e.g. bisect_next_all() uses xstrfmt() that is a thin wrapper around
+strbuf to format the estimated steps.
 
 Thanks.
-
-
-
