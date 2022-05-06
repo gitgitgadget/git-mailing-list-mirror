@@ -2,103 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AAF6C433F5
-	for <git@archiver.kernel.org>; Fri,  6 May 2022 12:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6334AC433F5
+	for <git@archiver.kernel.org>; Fri,  6 May 2022 12:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1391678AbiEFMQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 08:16:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+        id S1392107AbiEFMrZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 May 2022 08:47:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389887AbiEFMQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 08:16:16 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB2164BF6
-        for <git@vger.kernel.org>; Fri,  6 May 2022 05:12:34 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id l9-20020a056830268900b006054381dd35so4791176otu.4
-        for <git@vger.kernel.org>; Fri, 06 May 2022 05:12:34 -0700 (PDT)
+        with ESMTP id S240287AbiEFMrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 May 2022 08:47:22 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C705930D
+        for <git@vger.kernel.org>; Fri,  6 May 2022 05:43:39 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id iq2-20020a17090afb4200b001d93cf33ae9so10703963pjb.5
+        for <git@vger.kernel.org>; Fri, 06 May 2022 05:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zx475DjljKG62JPPjVZpqEPtbzKYJvMSYioU3iV5J2A=;
-        b=WKG5DLSSB9TcOq1MZYYzLkyUHSKLldBARVcCBCPsXYerKeYillH+Yv1du2E4xRv2pF
-         44NREc8VFn6OCZfqSWCxFPR0BGUM3adGSSZMHlSLKmo+gzcIZgvpGdS+jKsblQrngH7r
-         gLzn2fSgO1kOPUmUYIYt22ddiXX41znhjjVGPP6fK8pSux/Oie2V4QZbAINfDBJMQxuD
-         soWgftQIYSAZz5ajlSYaNBFOk5bXioIVLMR0X+JYTs3AVgxPjCwZN1d974PLXmaf36Tq
-         G/oQP61gi8skOJrAmBJds9+QgKNeFCfPzU6GEoaCr0LbmzRHoBx4egLuM6BmuBF9xhYE
-         GvUA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fFMWC2v5AJKPtsb4BFQ5fMERbNzH7EcGH3E35XYLFe8=;
+        b=ovKHyB6U5YCR/+dD/IFhN5MrQAKLZQBKg6gfSvcqmQ6KU7rB4bAowg6LYJOb1M6xhj
+         5z/cT5VyGrxGBTKEvhpR7ijTdmVrwXc0jLvyvbI/4Ki5Heo9mR1RXmiyXgKVCTiK5Wbm
+         L7MTRV+W5lqWchp0+S3JzFbnt8WV8u9QkIlyWtJS7ulqKxn1r3+M/RVUIS9x3xUo+aYP
+         wlsf4FPfWr+zyjmHA6Wewp9zVLkLjo9fHXBwM81JciD9WT1teRcYN5vwWKaw5ggceDTD
+         HbfFCIVuRe3AqRj3Igoro9M1tVumwqxdwJ69LQZV+N0A802DWpDa+trX7790S79aPxs0
+         n/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zx475DjljKG62JPPjVZpqEPtbzKYJvMSYioU3iV5J2A=;
-        b=UuqxAlQKi3zj8WL/GlBbiePrQ+ZwdjKdscGXgM1bKWE57Vt6DBWKQK3f172fcq8pCk
-         kJ14qPFmpNXgjLC1CDQ0zzK9KEH1WzJzsaJMaDqX4AN1p/yE8bl+n7Pg+LdjVTjbsMR3
-         lCovE/tW5/uQKP+NhzKgT9IU1mhJLoGfdhu3D/EvdaiKdIfqcmP0e3tydF12Y1x3S7Qp
-         A24uai5b4WdvkynmsVl5nnFw3uKvjS/4dPnEoUGlz9mCe0azjClfxMCL+cJTO1f1GKKT
-         gSRPyCP7F7h0C6CSHRR/9BKpz/4N2RpavANVJ0uTc7BRzgXox+Ch+jjD6TDIqX8cF3EK
-         fr2g==
-X-Gm-Message-State: AOAM532RlOFgmQmlE5UgeQQI4uJ8CcTXticogyZ9xLU0Wxjj6szrP4MD
-        WIHQoZszYuUcfBTKGfL5SysNqOByMov2Mic9j+EEUPHD
-X-Google-Smtp-Source: ABdhPJwTNz7hP2ORu8l2qeEuvQyR5yDg+subTCvoDr9omrahB4t+wDT9L/FyC60Ex/1aAVwMyDt9bIV1b9+PKGRRwIg=
-X-Received: by 2002:a9d:4d8f:0:b0:606:210c:ccf5 with SMTP id
- u15-20020a9d4d8f000000b00606210cccf5mr908030otk.308.1651839153565; Fri, 06
- May 2022 05:12:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fFMWC2v5AJKPtsb4BFQ5fMERbNzH7EcGH3E35XYLFe8=;
+        b=nVF69A3KMBdOG2KEPNhgBMcfSl0QyD22+OgLKebFGNM5ZoN2Pnj/3dguXgdzvzpGAb
+         Ggk9z9mXTqOrZJaD0md6dCceyRxH/xV58/fOqJasJmKbb9Lb6Ge628M/VGFBIgdXUdgC
+         UeGzdYcZ0apcG5+muVgmFmzhUJfjOiDQzcvw6o/gZWgB2oJbjoaCjx7uhXK9WAwW/9ER
+         iKNu5h0Dcm8VrDFDHLcozDF9KGzP3ntxHpJWKkw+UBHefHu81QfJpd0/FeK3rOktf/tf
+         l3bDvNF+VGdlCusacielu2OQ/PGtKcdiAu0p/yi/Qi+KTFUc5Oe95W31c/AlVaSOc1oi
+         31wA==
+X-Gm-Message-State: AOAM533/m2ZXhZW1Lly+BEFeEG7sqQBPnjWpJvjvQHj3UE8cFXsuMYr3
+        wZuTz/j9A/T1ZhHYEUCd/r0=
+X-Google-Smtp-Source: ABdhPJz+3IrrXIzVm1EcGiM+lLusfmFT/7J8o1Ts5c6XclBJRDyTNgiDvgp/sjfKE9BERjTXpOOmBg==
+X-Received: by 2002:a17:902:eb85:b0:15e:bf29:bd9f with SMTP id q5-20020a170902eb8500b0015ebf29bd9fmr3453658plg.135.1651841018814;
+        Fri, 06 May 2022 05:43:38 -0700 (PDT)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.53])
+        by smtp.gmail.com with ESMTPSA id p43-20020a056a0026eb00b0050dc7628184sm3376729pfw.94.2022.05.06.05.43.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 May 2022 05:43:38 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     git@jeffhostetler.com
+Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v2 4/5] bitmap: add trace2 outputs during open "bitmap" file
+Date:   Fri,  6 May 2022 20:43:33 +0800
+Message-Id: <20220506124333.58956-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.35.1.582.g1a169d7b5e
+In-Reply-To: <8005642d-979f-8e48-7a93-07b8a888bdc7@jeffhostetler.com>
+References: <8005642d-979f-8e48-7a93-07b8a888bdc7@jeffhostetler.com>
 MIME-Version: 1.0
-References: <CAP94bnOyrx6hCmWSjmejVfopUydk10ga42wJzm1M4nk_OXn9Mg@mail.gmail.com>
- <CAP94bnMHggYR=FOh8462tncFAxOUJ-db=yj7YPoTJRS-VwjEgw@mail.gmail.com> <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
-In-Reply-To: <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
-From:   =?UTF-8?Q?Christian_Gr=C3=BCn?= <christian.gruen@gmail.com>
-Date:   Fri, 6 May 2022 14:12:22 +0200
-Message-ID: <CAP94bnO9myHnSv7V15XdJDZY6WkvA85r5m_1=kyFi5=GCYMmeQ@mail.gmail.com>
-Subject: Re: Resizing panels in the gitk window
-To:     =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
-Cc:     git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
-        Halil Sen <halilsen@gmail.com>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, Matthias, for the clarification. I=E2=80=99ll follow the discussion=
- on GitHub.
+> This might just be a style thing, but rather than logging the pathname
+> in a separate data_string message, you can use the _printf version of
+> region_enter and region_leave to also print the name of the
+> path -- like I did in read-cache.c for the "do_read_index"
+> calls.
+> 
+> ... | region_enter | ... | index | label:do_read_index .git/index
+> ...
+> ... | region_leave | ... | index | label:do_read_index .git/index
+
+Appreciate for the input about the _printf version, we can choose to
+let the region_enter and region_leave to print the pathname by moving
+the related "midx_bitmap_filename()" and "pack_bitmap_filename" at
+front, but it's not enough because both midx and normal bitmap support
+multiple opening, so it's likely we keep on the current way using
+"trace2_data_string()" in "open_pack_bitmap_1()" and "open_midx_bitmap_1()"
+is a simpler solution.
+
+I'm not sure If I totally get the meaning about your suggestion,
+so correct me if I understand you wrong.
+
+> As AEvar suggests in another message in this thread, I'm not sure if
+> you need the region timing here for reading the bitmap, but all of
+> the error and any other data messages will be bounded between the
+> region_enter and region_leave events and that might (or might not)
+> be helpful.
+
+I think it's needed in my opinion, the bounded between the region is
+helpful, especially when we want to know the detailed debug info like
+we do in "open_midx_bitmap_1()".  
 
 
-On Fri, May 6, 2022 at 2:00 PM Matthias A=C3=9Fhauer <mha1993@live.de> wrot=
-e:
->
->
-> On Thu, 5 May 2022, Christian Gr=C3=BCn wrote:
->
-> > Resizing panels in the gitk window leads to a error message that=E2=80=
-=99s
-> > presented multiple times in a dialog:
-> >
-> > expected integer but got ""
-> > expected integer but got ""
-> >    while executing
-> > "$win sash place 0 $sash0 [lindex $s0 1]"
-> >    (procedure "resizeclistpanes" line 38)
-> >    invoked from within
-> > "resizeclistpanes .tf.histframe.pwclist 1834"
-> >    (command bound to event)
-> >
-> > Is this a known bug?
->
-> It looks like the issue at [1]. It sadly seems like nobody ever reviewed
-> or applied thos suggested patches, but there is some more off-list
-> discussion at [2].
->
-> > I=E2=80=99ll be happy to give more details.
-> > Best, Christian
-> >
->
-> Best regards
->
-> Matthias
->
-> [1] https://lore.kernel.org/git/pull.1219.git.git.1645386457.gitgitgadget=
-@gmail.com/#t
-> [2] https://github.com/git/git/pull/1219#issuecomment-1113122632
+> Also, I agree with AEvar's statements about using error() and getting
+> the trace2 error messages for free and not needing some of the
+> trace2_data_string() messages that you have later in this file.
+> 
+> I wonder if it would be worth adding the pathname of the invalid
+> file to those new error messages.  Granted you'll have it in the
+> trace2 log, but then you'll also get it on stderr if that would
+> be helpful.
+
+I think I will remove the redundant "trace2_data_string()" code when
+it will return by "error()".
+
+
+Thanks.
