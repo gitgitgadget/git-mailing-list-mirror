@@ -2,175 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD16DC433F5
-	for <git@archiver.kernel.org>; Sat,  7 May 2022 03:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0378C433F5
+	for <git@archiver.kernel.org>; Sat,  7 May 2022 04:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1445434AbiEGDaT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 May 2022 23:30:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43466 "EHLO
+        id S1445485AbiEGEOC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 May 2022 00:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1445429AbiEGDaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 May 2022 23:30:14 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F4F5DE55
-        for <git@vger.kernel.org>; Fri,  6 May 2022 20:26:28 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id y3so17527493ejo.12
-        for <git@vger.kernel.org>; Fri, 06 May 2022 20:26:28 -0700 (PDT)
+        with ESMTP id S230269AbiEGENz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 May 2022 00:13:55 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D1B658E
+        for <git@vger.kernel.org>; Fri,  6 May 2022 21:09:58 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id t5so10648305edw.11
+        for <git@vger.kernel.org>; Fri, 06 May 2022 21:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IDwpK6XrtdszfahxVq7N0Pe/De+IBmbZbgkNBw2bKMQ=;
-        b=L4w9QXPQZJvRAvAlUqsgs71zFuI99w3VWU9qj3X8Bxmk3E5a+BpueKSqSZ7ZwcpgdP
-         dS11GUTq3x4uOCBPDIfpn+cZ80VLMmql7v2EcTBUpBe7tmr38RRgbroBx64tjUdqarM0
-         +An99ICM41WB02xX9SFgME3xhRDv3wKBzyWlIc/mgKsp6GZcHj+mb7AbTwYsW+t3ZbI5
-         JI5mO62dh+/DE8iPAeitrMCx8C90GMysTt6fRNEKx6G2QcKJ9sNn1et0K8CMl33+6os+
-         glak71NIFVaZr4dGJ8GbHn0Q+JKc/jxDFNkBlO0lhB68KmgYlJ4GJyPLfJSlbJe96m0Z
-         /a5Q==
+        bh=YyVAfsFYSDZ71CPu8mTReetOYKAxDfIx5KPEslxQGA4=;
+        b=Y2yzyAwWrXbhCPP2/bD1UMF1U4oGlJrXq886Fb1UMHnVu4OLAcokWo2RWKA0n69Kx/
+         gq716YJDn1r8YvmKJ8ZH1fon1NKzNwzc2Mi+K06e5oaLgU5JX4ckaMU+Qn+d7DxvD4BU
+         /q5qgGcmiXswLcWnUAEUSe+zfm4T+LPR9nnzS2pW9Yhgd5rX5AZgVbYRmozhU5qoIGY6
+         lNqonWBOc9EiVNhHm2mX3ux3Uxek2S+DovGyUifugxI5FwcX3Hzw2UUodVC4h9bLVc1t
+         c07+JVYFl1Jwv/Crj2+FgEECC9ci9l7xe3kwcUNhst+nyJ3SgyZ1jejiylATJSgGEg1n
+         nLKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IDwpK6XrtdszfahxVq7N0Pe/De+IBmbZbgkNBw2bKMQ=;
-        b=Sf9gvspTWVQqgG4QAzpx66+pt3GlDQE1NP6+NWAC6o+NJ1mb4DbOVLYneOzGgRst4g
-         /lkE7b9KQKTM/mMtzw7TNo0+YIM2WjUyB9iDDapYzUOR90fZG9bQIIU2Mw0dOK4jurFO
-         DT+VsHZdK0hKw0N2yaPrD7WNYf4kSuUDYDNIU8Cp767xNHzcwUhuaxVddYZAXNEq/kmL
-         n9XYgHVpZ4KlqEPlj66i/CuLf1d6pKSX41ZChD4ue04JY5spn1rFVc/0R2P1Nv1wXex5
-         +2pBgW89bH7oqGqmBoQYPDexsG7uPCVDE4zkeTPHpljApZCIocnaQ+1fc8i2IBkRgQ2L
-         dpGg==
-X-Gm-Message-State: AOAM532A+X9oJ6XvlBLC5d2uPA13+KEyyG6yzp/XhtjptOzH2wS+cWcD
-        Z05RShUbDpqxX1rNJ84iz51BLNce9/gAprYT04U=
-X-Google-Smtp-Source: ABdhPJyRNzW5eCiJnLhYNWvPjGS8Gey/21+5gSpqQztC1orcfXQfqq1GgdxPDT/5cFPXpZp7PdSweLhNTz+VbR1c9TY=
-X-Received: by 2002:a17:907:7f26:b0:6f4:69c:196f with SMTP id
- qf38-20020a1709077f2600b006f4069c196fmr5555255ejc.613.1651893987156; Fri, 06
- May 2022 20:26:27 -0700 (PDT)
+        bh=YyVAfsFYSDZ71CPu8mTReetOYKAxDfIx5KPEslxQGA4=;
+        b=TcnjotiRsGMI4aZRQNW8tNkGEuyF+8K14hlfMm94ppDnR1U7Z6ytgy3iLmssFMp26T
+         qO9UPigSKkaSOlQ0vHPOAY0KwFbnOXxCEpieKSXubSUJoyJcBZMxOzkzcjvwN8WRskcT
+         lgBJTXi72a9EsTVYJD8r41KZPIqTXFtco5oGa3uevqHFnUSzcJ6hUIVtrg7jAWjjqqjz
+         0zxdDcBKt80iUNzMlmHU67VdStIOJ5/bZw2FctaX/jQGNeo81Q7KvZXvBnNpiC+bPAfg
+         cm/2YOxHMEyAOBz1MdCboeiVVYVkb4NwCOpCizkrvMlrCXaWU6UNn9i5+MBQuxPL0IC0
+         luDg==
+X-Gm-Message-State: AOAM530IqbfXRC7wpohQdU4qSzSEAR1Z1jWnnBmoEYHy5PNHoAxwyO79
+        nNl/QGg15jaWB0/SN2okU9s7PbPXzXhkG5HXZOo=
+X-Google-Smtp-Source: ABdhPJwiBPrTGKU8U57anGCHTY0wV4xJPeqEm14qe8icg83fkDFOq9wl1gPNDDus7omk2WrS+BH5FJJvvW4qSNGCKr0=
+X-Received: by 2002:a05:6402:1297:b0:428:3848:a89d with SMTP id
+ w23-20020a056402129700b004283848a89dmr7031448edv.94.1651896596588; Fri, 06
+ May 2022 21:09:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220505203234.21586-1-ggossdev@gmail.com> <20220505203234.21586-2-ggossdev@gmail.com>
-In-Reply-To: <20220505203234.21586-2-ggossdev@gmail.com>
+References: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
+ <CAP8UFD2p+Evqv_MBAgv23zooppsNWjOw6ZU2GLqAq_skZoJPOw@mail.gmail.com>
+In-Reply-To: <CAP8UFD2p+Evqv_MBAgv23zooppsNWjOw6ZU2GLqAq_skZoJPOw@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 May 2022 20:26:15 -0700
-Message-ID: <CABPp-BFwiLXMVaFs-Lc-zU6X=pBiF8+o9rOuHEAArD2zMQ1NNQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] dir: consider worktree config in path recursion
-To:     Goss Geppert <gg.oss.dev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        christian w <usebees@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Date:   Fri, 6 May 2022 21:09:45 -0700
+Message-ID: <CABPp-BGD3AZvXwmSHfQQ_xh_UqevH23kdBYijAWUk8GHu1q0Qw@mail.gmail.com>
+Subject: Re: Question about pre-merge and git merge octopus strategy
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, vascomalmeida@sapo.pt
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 5, 2022 at 1:32 PM Goss Geppert <gg.oss.dev@gmail.com> wrote:
+On Fri, May 6, 2022 at 10:24 AM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> Since 8d92fb2927 (dir: replace exponential algorithm with a linear one,
-> 2020-04-01) the following no longer works:
+> Hi,
 >
->     1) Initialize a repository.
->     2) Set the `core.worktree` location to a parent directory of the
->        default worktree.
->     3) Add a file located in the default worktree location to the index
->        (i.e. anywhere in the immediate parent directory of the gitdir).
+> On Fri, May 6, 2022 at 10:15 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
-> This commit adds a check to determine whether a nested repository that
-> is encountered in recursing a path is actually `the_repository`.  If so,
-> simply treat the directory as if it doesn't contain a nested repository.
+> > I am thinking about if git can "pre-merge" multiple branches, which
+> > can check if merge
+> > will have conflict, but not to merge them actually, like a option `--intend`.
+> >
+> > I find "git merge-tree" can output merge result in stdout, which meets
+> > my needs, but it can only
+> > support two branches' merge.
 >
-> Prior to this commit, the `add` operation was silently ignored.
-> ---
->  dir.c | 37 ++++++++++++++++++++++++++++++-------
->  1 file changed, 30 insertions(+), 7 deletions(-)
+> Elijah (added in Cc) has been working on "git merge-tree" improvements
+> based on the new "ort" merge he developed. It supports merging 2
+> branches, but maybe there are ways to make it support more than 2.
+
+The primary issue with in-core octopus merges is that there are lots
+of questions about how to handle conflicts; possibly even more so than
+git merge-tree --write-tree brings up, and that took us months of
+discussion.  In particular, with octopii, do iterate merging one
+branch in at a time and stop with any conflicts (thus potentially
+stopping N-1 times when merging N branches), do you attempt to just
+run all N-1 merges and have conflicts that can't readily be expressed
+in the index (especially for non-textual multi-way conflicts, but even
+nested conflict markers for text files could be painful), do you
+attempt to handle the multi-way textual conflicts a new way with code
+replacing xdiff/ in order to avoid nested conflicts?  I wasn't sure
+what to do, so never implemented that in "ort".
+
+Of course, people could roll their own by just serially merging pairs
+of commits, and then rewriting the history to replace the string of
+merges with an octopus.  Or perhaps just use "git merge --no-commit"
+serially, though that only works if the branches touch disjoint files
+(otherwise one of the merges will complain you have changes that could
+be overwritten by the next merge).  And yes, if you don't want to mess
+with the working tree/index, you could serially use the "git
+merge-tree --write-tree" once I finish it, but it's not ready yet.
+(Sorry about that; I've got a bunch of nearly complete changes from a
+while ago but just didn't have much Git time.  I'll try to get to it
+soon.)
+
+However, I think Junio said that octopus merge only handles trivial
+cases anyway, in which case an iterated "git merge --write-tree" would
+actually be a sufficient solution here and we could sidestep the more
+convoluted cases.  But, sadly for ZheNing, that option doesn't exist
+yet -- It's still under development.
+
+> > So I find git merge with more than two branches can use octopus strategy.
+> > What about git merge --no-commit? Which will not commit automatically,
+> > so we can check if they have
+> > confilct, and abort merge.
 >
-> diff --git a/dir.c b/dir.c
-> index f2b0f24210..cef39f43d8 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1861,7 +1861,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->          */
->         enum path_treatment state;
->         int matches_how = 0;
-> -       int nested_repo = 0, check_only, stop_early;
-> +       int check_only, stop_early;
-
-This part of the patch, along with two other parts below, is
-orthogonal to the actual fix being made.  It probably makes the code
-clearer, but should be done in an independent cleanup commit.
-
->         int old_ignored_nr, old_untracked_nr;
->         /* The "len-1" is to strip the final '/' */
->         enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
-> @@ -1893,16 +1893,39 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+> Yeah, I think that's what you want.
 >
->         if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
->                 !(dir->flags & DIR_NO_GITLINKS)) {
-> +               /*
-> +                * Determine if `dirname` is a nested repo by confirming that:
-> +                * 1) we are in a nonbare repository, and
-> +                * 2) `dirname` is not an immediate parent of `the_repository->gitdir`,
-> +                *    which could occur if the `worktree` location was manually
-> +                *    configured by the user
-> +                */
+> > I think it's not useful for git merge-octopus, because if we meet a
+> > merge conflict, we can't find
+> > MERGE_HEAD at all! How can we abort this conflict merge?
 
-This is a good comment, but it'd be really nice to be able to point a
-user at a testcase in the testsuite for them to inspect further (e.g.
-"see t####, 'TESTCASE DESCRIPTION' for an case where this matters").
+MERGE_HEAD doesn't have anything to do with aborting the conflict
+resolution step.  When you need to abort, the thing you want to go
+back to is HEAD (which represents the commit you had checked out and
+were merging the other stuff into), not MERGE_HEAD (which represents
+the branch or branches you were merging into HEAD).
 
-> +               int nested_repo;
+> I don't know octopus merges much, but I think you should be able to
+> abort using "git reset" (maybe with "--hard").  If the merge was
+> performed using --no-commit or if there was a conflict, then I think
+> it should be expected that there is no MERGE_HEAD as no commit would
+> be created so MERGE_HEAD would have nothing to point to.
 
-Just this line immediately above this comment is part of the orthogonal cleanup.
+MERGE_HEAD isn't something created during a merge, it's something that
+existed before it -- namely, the tip of the other branch we are
+merging.  For an octopus merge, you'd thus expect it to have N commits
+rather than just 1.
 
->                 struct strbuf sb = STRBUF_INIT;
->                 strbuf_addstr(&sb, dirname);
->                 nested_repo = is_nonbare_repository_dir(&sb);
-> +
-> +               if (nested_repo) {
-> +                       char *real_dirname, *real_gitdir;
-> +                       strbuf_reset(&sb);
-> +                       strbuf_addstr(&sb, dirname);
-> +                       strbuf_complete(&sb, '/');
-> +                       strbuf_addstr(&sb, ".git");
-
-> +                       real_dirname = real_pathdup(sb.buf, 0);
-> +                       real_gitdir = real_pathdup(the_repository->gitdir, 0);
-
-I haven't thought it through, but is there a reason you can't just
-compare the_repository->gitdir to sb.buf at this point?  Why is
-real_pathdup needed?
-
-> +
-> +                       nested_repo = !!strcmp(real_dirname, real_gitdir);
-> +                       free(real_gitdir);
-> +                       free(real_dirname);
-> +               }
-
-Everything up to here other than the two parts I mentioned as being
-orthogonal (both relating to where "nested_repo" is defined), makes up
-the actual fix.
-
->                 strbuf_release(&sb);
-> -       }
-> -       if (nested_repo) {
-> -               if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-> -                   (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-> -                       return path_none;
-> -               return excluded ? path_excluded : path_untracked;
-> +
-> +               if (nested_repo) {
-> +                       if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-> +                               (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-> +                               return path_none;
-> +                       return excluded ? path_excluded : path_untracked;
-> +               }
-
-This final block is part of the orthogonal code cleanup that belongs
-in a separate commit.
-
->         }
->
->         if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES)) {
-> --
-> 2.36.0
-
-Thanks for finding, reporting, and sending in a patch.  Could you
-split up the patch as indicated above, and add a testcase to the patch
-with the fix, and include your Signed-off-by trailer on the commits?
+AUTO_MERGE, new to ort, is something that is created during a merge
+and when the merge interrupts due to conflicts to ask the user to
+resolve the conflicts, AUTO_MERGE represents the tree checked out in
+the working copy (thus it is a tree that likely has files with
+conflict markers in them).
