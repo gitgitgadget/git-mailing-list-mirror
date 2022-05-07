@@ -2,141 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D5EDC433F5
-	for <git@archiver.kernel.org>; Sat,  7 May 2022 05:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B22F0C433F5
+	for <git@archiver.kernel.org>; Sat,  7 May 2022 06:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237798AbiEGFol (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 May 2022 01:44:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42560 "EHLO
+        id S1382207AbiEGGSg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 May 2022 02:18:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1445662AbiEGFoG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 May 2022 01:44:06 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 607E22C2
-        for <git@vger.kernel.org>; Fri,  6 May 2022 22:40:20 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id h10-20020a056830400a00b00605e92cc450so6291537ots.11
-        for <git@vger.kernel.org>; Fri, 06 May 2022 22:40:20 -0700 (PDT)
+        with ESMTP id S1345119AbiEGGSf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 May 2022 02:18:35 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB2BF532E9
+        for <git@vger.kernel.org>; Fri,  6 May 2022 23:14:49 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-ed9a75c453so9344845fac.11
+        for <git@vger.kernel.org>; Fri, 06 May 2022 23:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=f7rGj+UkwVXXJNLAqxRopp32EFqacraWaPXbS+Bh888=;
-        b=C17t1qoyf23ymio2KMejOOPa8i9/J8mT19TxtLYqb8lJPrBfW6S7E/xOLOxtEdPbNV
-         5XDiXJHp52aAyaeHKBnleCtZiJuAfLbeQIym8+/Zo6ciz9IGcb4wKPoh7/6NZkH3DolB
-         OnTTFgjGhf6Oij49SQPmhymVn/L+m8gRuj3mHoRmt8C8a2hgKgatDrKwvD48SxGSeXdc
-         DYidl4EgMl+mp7M/bkcnwl3TYMdp2xVUDONFhw8TAWUvVbDcjvxioZpcrt4x7qP0S6h8
-         DpB3A4tF6Ib3GHLeNV95H2A/+qvaY7vbh3uDKi2CV6Dx4AyvHmk+voJf61TgdeeGPCOO
-         P5CQ==
+         :content-disposition:in-reply-to;
+        bh=y5rUL/0izUMkZPkzKggOKBGpMj5VljOvLO2uBlnQWN4=;
+        b=TtSJBpIwk/5d68Tl6UwDC9//GG0GsJ1y7NQ5GnxA1sCw3n12swrQJSioLbks9DZUc6
+         nR5PndtIiUYLUKFy06Q15nQGjM2CNMW3ZjayRD0orWXhNVyAl/J+qlHPU0BF7XLW2Nus
+         XEokeLA4BJVoG29Hnh0pHU9rcEQASmQOQPj60QP1S3jKNByMzICJDnD/8XQtt/Tu4RTV
+         OEp0eUKWnGYgP+PXbc/mNW3cIvO1F2ik1K2f80TJf+RikBLyVhhX/OX5DWXk736YA2EA
+         KQbGRUdK640aXsFwu6HApmaX+2p3N+xtCcpYAyciWGm3KmIDcEgoYUfFgRlcDxH/lQ53
+         Abrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=f7rGj+UkwVXXJNLAqxRopp32EFqacraWaPXbS+Bh888=;
-        b=7bqOTpop5jQ/FXIWL9SSbtOJQ7Rc8HEBp02avtZaStZkpwLgvf3a+27661f1YN43PK
-         k0ovc3com5179cbGfHbyrHksg5Ftb8wLnERAErga1Twg7Wt9ZtPz7MpZfWKfS42H6A9k
-         SUUJN0psuGIlI77zmd73YmtLYN+LQh1lCf/dqjyHqJ8tKSW4qTY5E7dGaU311yBww1X/
-         V4dQbQ1jlAQFUvFYuE24dyd0Vd9DlAEFI0OFLUejLE4v8mNOo5Xkqa03SKQsoajMM03q
-         YjSW4JDP0PYKzrnkMcuApJ38lKnCr0/xne7NvGsW6cA2cp9HziIYF0caZ4N8vaAFdDD6
-         I+RQ==
-X-Gm-Message-State: AOAM532CTDWj1aJz8gmoRdNQwC9yWR88ExhWfa/hp12XnDRxhoO/Q1nQ
-        PrFtegdeHPDyaHH4iaXaOgjQF4dUarc=
-X-Google-Smtp-Source: ABdhPJykZvLB4vnnE0rNvBi4+P7t5SohGSXF9377PyZSPKZWyxohFt/D9LMpd8jGT8CwV6D6rRNKxg==
-X-Received: by 2002:a05:6830:1491:b0:606:103c:6680 with SMTP id s17-20020a056830149100b00606103c6680mr2244406otq.18.1651902019652;
-        Fri, 06 May 2022 22:40:19 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=y5rUL/0izUMkZPkzKggOKBGpMj5VljOvLO2uBlnQWN4=;
+        b=7QnipLpISTDXRHtXwqMded2jZbuMgxgmdazAND8q19G2jsn/t91bU9Ogl+OXulZge5
+         hae1a5i8mIxLcXlwpEluIAEfCupi6UeBpp/Hef+Gpm5Lr1d5Ks47HLVVT+4rWXwIXiW6
+         FRrqFACfFD4hxQbwMVEgFjBE7mSBXxNqY1YoPVW3jLakB5RudBVrV+Au10m5O/rJ3at/
+         FzIikPZ+nl8/cggonVdUbZ3hkLxMnmWmkJcoAraGq1PBJ5pcZ9X6kNJrceCYkKDs0/zy
+         K81KX+7i5wY0ZYAf/x8zPl3Tgctm1EYgQcyWDU2EothN0scQPhzw+XqDmvpqK89Mo+0i
+         /3Hw==
+X-Gm-Message-State: AOAM533zD3ctUut225mZdnnQ2uQxJczeBr/OpSjMsnww6Co79vQAvAWk
+        5oMa94gNvQTpLWriIYvMmj+sJ9HgZrg=
+X-Google-Smtp-Source: ABdhPJy9ZAiJ998Oq2FSBGFN64tZRqCOFxZiaAkkRhBD4TvT3TOaYdsc1SAGeHin02oHByIKfGIzCg==
+X-Received: by 2002:a05:6870:f206:b0:d6:ca78:94f0 with SMTP id t6-20020a056870f20600b000d6ca7894f0mr3068986oao.4.1651904089197;
+        Fri, 06 May 2022 23:14:49 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id f3-20020a9d7b43000000b00605da994088sm2404281oto.2.2022.05.06.22.40.18
+        by smtp.gmail.com with ESMTPSA id f7-20020a0568301c2700b0060603221269sm2334297ote.57.2022.05.06.23.14.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 May 2022 22:40:19 -0700 (PDT)
-Date:   Fri, 6 May 2022 22:40:17 -0700
+        Fri, 06 May 2022 23:14:48 -0700 (PDT)
+Date:   Fri, 6 May 2022 23:14:47 -0700
 From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH] http.c: clear the 'finished' member once we are done
- with it
-Message-ID: <20220507054017.fnvb6xisr6s7m2l5@carlos-mbp.lan>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] dir.c: avoid gcc warning
+Message-ID: <20220507061401.onpbrd35w5xjrrh6@carlos-mbp.lan>
 References: <cover.1651859773.git.git@grubix.eu>
- <3f0e462e86625a3c253653e4a4eefabcd8590bf9.1651859773.git.git@grubix.eu>
- <xmqqtua2jtr0.fsf@gitster.g>
- <xmqqczgqjr8y.fsf_-_@gitster.g>
+ <cd50ec73ddafaaeba04298ae79cbf625cc0d7697.1651859773.git.git@grubix.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqczgqjr8y.fsf_-_@gitster.g>
+In-Reply-To: <cd50ec73ddafaaeba04298ae79cbf625cc0d7697.1651859773.git.git@grubix.eu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 06, 2022 at 02:17:01PM -0700, Junio C Hamano wrote:
-> diff --git a/http.c b/http.c
-> index 229da4d148..85437b1980 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1367,6 +1367,9 @@ void run_active_slot(struct active_request_slot *slot)
->  			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
->  		}
->  	}
-> +
-> +	if (slot->finished == &finished)
-> +		slot->finished = NULL;
+On Fri, May 06, 2022 at 08:04:05PM +0200, Michael J Gruber wrote:
+> Related to -Wstringop-overread.
+> 
+> In fact, this may be a false positive
 
-I am not completely sure yet (since I looked at it long ago and got
-sidetracked) but I think this might be optimized out (at least by gcc12)
-since it is technically UB, which is why it never "fixed" the warning.
+Indeed it seems more like a bug[1] in gcc12, probably with their optimizer.
 
-the "correct" way to implement this would be to make "finished" a thread
-local static, which is finally one good reason to support C99, but the
-syntax to do so with Windows broke my first attempt at doing so and now
-I can even find the code I used then which required a per platform macro
-and was better looking than the following
+Getting to the bottom of it with a minimized version of the code that would
+trigger it would be a good way to help it move forward instead of "fixing"
+git's codebase IMHO.
+
+It would be also nice if someone from the gcc team would confirm or deny if
+this is indeed something worth waiting for a fix on their side, or would
+need some workaround in ours, or maybe even a real fix.
+
+FWIW there is already a workaround of sorts in our codebase since 846a29afb0
+(config.mak.dev: workaround gcc 12 bug affecting "pedantic" CI job, 2022-04-15)
+so that this warning should be expected when building with DEVELOPER=1 but
+it won't break the build as it would normally do.
 
 Carlo
---- >8 ----
-Date: Wed, 20 Apr 2022 23:25:55 -0700
-Subject: [PATCH] http: avoid using out of scope pointers
 
-baa7b67d091 (HTTP slot reuse fixes, 2006-03-10) introduces a way
-to notify a curl thread that its slot is finished by using a pointer
-to a stack variable from run_active_slot(), but then gcc 12 was
-released and started rightfully to complain about it (-Wdangling-pointer).
-
-Use instead a thread storage static variable which is safe to use
-between threads since C99 and doesn't go out of scope, while being
-functionally equivalent to the original code, and also remove the
-workaround from 9c539d1027d (config.mak.dev: alternative workaround
-to gcc 12 warning in http.c, 2022-04-15)
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- config.mak.dev | 1 -
- http.c         | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/config.mak.dev b/config.mak.dev
-index c3104f400b..335efd4620 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -68,7 +68,6 @@ endif
- # https://bugzilla.redhat.com/show_bug.cgi?id=2075786
- ifneq ($(filter gcc12,$(COMPILER_FEATURES)),)
- DEVELOPER_CFLAGS += -Wno-error=stringop-overread
--DEVELOPER_CFLAGS += -Wno-error=dangling-pointer
- endif
- 
- GIT_TEST_PERL_FATAL_WARNINGS = YesPlease
-diff --git a/http.c b/http.c
-index 229da4d148..cb9acfca19 100644
---- a/http.c
-+++ b/http.c
-@@ -1327,7 +1327,7 @@ void run_active_slot(struct active_request_slot *slot)
- 	fd_set excfds;
- 	int max_fd;
- 	struct timeval select_timeout;
--	int finished = 0;
-+	static __thread int finished;
- 
- 	slot->finished = &finished;
- 	while (!finished) {
--- 
-2.36.0.352.g0cd7feaf86f
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=2075786
