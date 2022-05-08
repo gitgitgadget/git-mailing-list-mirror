@@ -2,85 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DF95C433F5
-	for <git@archiver.kernel.org>; Sun,  8 May 2022 15:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8D3FC433F5
+	for <git@archiver.kernel.org>; Sun,  8 May 2022 15:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234484AbiEHPFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 May 2022 11:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
+        id S234690AbiEHPhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 May 2022 11:37:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234500AbiEHPFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 May 2022 11:05:47 -0400
+        with ESMTP id S234013AbiEHPho (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 May 2022 11:37:44 -0400
 Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0992101EB
-        for <git@vger.kernel.org>; Sun,  8 May 2022 08:01:56 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id p4so9373956qtq.12
-        for <git@vger.kernel.org>; Sun, 08 May 2022 08:01:56 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B70AE03D
+        for <git@vger.kernel.org>; Sun,  8 May 2022 08:33:53 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id k2so9422563qtp.1
+        for <git@vger.kernel.org>; Sun, 08 May 2022 08:33:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xx3Vs5tq02ryj3e7uosqMMzQ4DlSiIb38VkqPY3wPBg=;
-        b=qJ1lGbh5kBgkIxSnASmHaJFXL7e9Q1H4RBKYjLCim6KXhdBd8011WOEUBFWc1mfkK7
-         frN+t5LkHnOpX+vWk8silwA/eN+3wFozZHjZpEg8WTovElAGlegg1T7ZGjojOirBtHGK
-         /IZqKx80YDYHj6DMXY2rvGl2g/p4IjkfSlu7fix9AuYnICfghUhlnMkHdQYCBpbqpFx+
-         ccXWdel5x173UoBrGQ6jWAZP+rwaQ2E9itDdup/dj5lWjlkE6thh8UrAsqtkVVFTEYpH
-         ga7akpoQKNpbgNBaiBiNKSQUGySD7pDGd67lVbItaoz9AOvGcqYRPxQIrWuppF9pHaO2
-         LX7w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=5icwPKC63crjEJDtNH/79PVDLbwLPOer8WrVfWzycqg=;
+        b=Sc2wZlQHqmyZRpRACRHNqkPfKiceKVPlISQA0FS6g57HAaURS7hsDkT3yFfZ8gx2zV
+         IOXYoScfNHFFdFVsCILgNOeAskLQeCvY2gz9X5VKDsnlihPqB1lCyc7OVnkqiDw0scbX
+         wVsm9dSfPU0f9ggPLwEO7GBWu5TK6FWC/3WF5lwPWSmuHgrhektutvZP6Hffi/P0RIPD
+         XpJ1hctOO5V73cqG7hSUKJNOCsi79l/srJgWeILNwXZV+3VZMsN4XjG7FxuY84D79iJZ
+         Cmt17VIKUjJVUFQSn7SNYUql8ZBnftmvtelhIDeNdvU+dw7p8lOojtOQycHaeXGooXf5
+         xwhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xx3Vs5tq02ryj3e7uosqMMzQ4DlSiIb38VkqPY3wPBg=;
-        b=R3i0DlBHgQVwLsvuVYzb9p5KDF2FI9GnATt8ZsPcQJ0JIh3ylAhf606CfOGlJy632R
-         INT9XJ9H5tbbCE0x8iE+vIDRT4yl7zZ4m5dUQNyOrbUcaxPIBV7Dw/6JF/smIcfWCx23
-         lan9kVNn2sFnjVRm2BzoGpLhQOtoAeQKTtTn5RFlnKGRCf28VCDOcJa5VtiW5NSJ0E5b
-         4Plvd8WiLyBiH5l66XZ54v0zDO3Ts+BOnBHEYMePBYdHEo2skKFiPoLZmmyVic6d/Mdh
-         ppIZRRQDjgCv3ISYWQkHgqjXvkv3ii+j9bYbG6UtkcrtCemg+j+QrzD0jGH3ok8WWPTB
-         bAVQ==
-X-Gm-Message-State: AOAM532flaf6nEr5Df/DmsYppmdq/cHr79RJjQWtDpRcZAjKzBMlPXms
-        5Ff+tzKMlH8WdjM1iaTpjA0=
-X-Google-Smtp-Source: ABdhPJyUvApGIMlYs7JINddKW8HuwdJzmymE3H7iuI3o/RQLFtHlqPbqDxAikgVZuqb1XeJuEFmj0A==
-X-Received: by 2002:a05:622a:104b:b0:2f3:d94d:8829 with SMTP id f11-20020a05622a104b00b002f3d94d8829mr1483332qte.678.1652022115315;
-        Sun, 08 May 2022 08:01:55 -0700 (PDT)
-Received: from carlos-mbp-2.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id k1-20020a378801000000b006a054356d60sm2483008qkd.43.2022.05.08.08.01.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 May 2022 08:01:54 -0700 (PDT)
-Date:   Sun, 8 May 2022 08:01:53 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        vascomalmeida@sapo.pt
-Subject: Re: Question about pre-merge and git merge octopus strategy
-Message-ID: <20220508150153.74dvhl5cgi7wu5a4@carlos-mbp-2.lan>
-References: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5icwPKC63crjEJDtNH/79PVDLbwLPOer8WrVfWzycqg=;
+        b=6RDA+SFxW4t5bHlmG+FWvVnnDtgqNtZqsk6NFhw+GvTZp7IjHx+jffdX2NWmLGjiwa
+         B09n8NAiM94Rt775kL+m7cmvbfil/voHDTIT8wXYpVjcqetyswCaacsv+nAxcf82+5sL
+         XtZM98y1DaPAGIbOIY1tfzAF/C5+ey4FKY+8VYQiE767QHb//9aCPi/2bo5Z000/sAl9
+         9Zh2a8YKFPF8a6UrMR3J2CsHw/Q2MKnVG0kfZGxyvNnZ0rxhDV4IeICyDwGPtKqlHJ4q
+         vIXEIXsGmZYS7QbktbBB0TheA+PySAlFrG2YF6cXeqSBi2HJjMR4oyDfxfSiOgNM7syB
+         vwPQ==
+X-Gm-Message-State: AOAM5313pXQNcFg6XPXSMYyLZVEwpIUWAoK2wZob9D3l1mPhnwm9zfgl
+        1/Hq5UX+yzaN9midEP/cBuIa7m3Vwi8=
+X-Google-Smtp-Source: ABdhPJymVCj1hyM6f3xTtWLz4cMdBIFR/fbA8Dx6sl36lGgvZM+JQXmtXMh95454qSOueJPczd1QZw==
+X-Received: by 2002:a05:622a:82:b0:2f3:b5de:4d2d with SMTP id o2-20020a05622a008200b002f3b5de4d2dmr11485968qtw.144.1652024032720;
+        Sun, 08 May 2022 08:33:52 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id i22-20020ae9ee16000000b0069fc13ce1e5sm5494671qkg.22.2022.05.08.08.33.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 May 2022 08:33:52 -0700 (PDT)
+Subject: Re: [PATCH v3] builtin/remote.c: teach `-v` to list filters for
+ promisor remotes
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Junio C Hamano <gitster@pobox.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+References: <pull.1227.v2.git.1651591253333.gitgitgadget@gmail.com>
+ <pull.1227.v3.git.1651933221216.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <aa9884d5-b69a-bfd2-4235-a30326bd65f6@gmail.com>
+Date:   Sun, 8 May 2022 11:33:51 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
+In-Reply-To: <pull.1227.v3.git.1651933221216.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 06, 2022 at 04:14:56PM +0800, ZheNing Hu wrote:
+Hi Abhradeep,
+
+Le 2022-05-07 à 10:20, Abhradeep Chakraborty via GitGitGadget a écrit :
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 > 
-> I am thinking about if git can "pre-merge" multiple branches, which
-> can check if merge
-> will have conflict, but not to merge them actually, like a option `--intend`.
+> `git remote -v` (`--verbose`) lists down the names of remotes along with
+> their urls. 
 
-why not merge them and find that way if they have conflicts that are left
-unresolved, or are you also interested in conflicts that were solved by the
-merge?
+small nit: I would capitalize URLs.
 
-if you only care about the unresolved conflicts then (unless this broke
-recently with ort) the following (untested) should work:
+> It would be beneficial for users to also specify the filter
+> types for promisor remotes. Something like this -
+> 
+> 	origin	remote-url (fetch) [blob:none]
+> 	origin	remote-url (push)
+> 
+> Teach `git remote -v` to also specify the filters for promisor remotes.
+> 
+> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> ---
+>     builtin/remote.c: teach -v to list filters for promisor remotes
+>     
+>     Fixes #1211 [1]
 
-  $ git switch target
-  $ git merge topic && echo "SHIP IT!" || git reset --hard ORIG_HEAD
+I don't think this matters much, but if Junio is OK with that, it would
+be nice to include the reference to the GitGitGadget issue in the commit
+message itself, though with its full URL, something like:
 
-obviously will need to be changed if you want to merge more than two branches
-but the principle is tme same.
+Closes: https://github.com/gitgitgadget/git/issues/1211
 
-Carlo
+as another trailer before your signed-off-by. By including it in the 
+commit message we allow the issue to be closed automatically when your topic
+branch is merged to 'master'. By using the full link we make sure that GitHub 
+knows we are targetting that issue specifically, not any other issue or PR in 
+any fork of Git with the same number.
+
+>     
+>     In the previous version, documentation is updated (describing the
+>     proposed change) and url_buf is renamed into remote_info_buf. In this
+>     varsion, some more test cases are added and broken indentations are
+>     fixed.
+
+Again, small nit to make it easier for reviewers: usually we prefer to see
+what has changed since the previous version first, and then (if you want, 
+it's not strictly necessary) what changed in the other previous versions. 
+It's not necessary since if we want that info we can refer to the cover letters
+of the previous iterations directly. And ideally, in bullet points. So something like:
+
+Changes since v2:
+- added more test cases
+- fixed broken indentations
+
+Changes since v1:
+- updated documentation
+- renamed url_buf into remote_info_buf
+
+>     
+>     [1] https://github.com/gitgitgadget/git/issues/1211
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1227%2FAbhra303%2Fpromisor_remote-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1227/Abhra303/promisor_remote-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1227
+
+Thanks,
+
+Philippe.
