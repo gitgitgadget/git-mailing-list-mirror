@@ -2,107 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3ED2C433EF
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 20:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FC55C433EF
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 21:04:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229482AbiEIUb3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 16:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49864 "EHLO
+        id S229938AbiEIVID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 17:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiEIUbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 16:31:20 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B652E0E11
-        for <git@vger.kernel.org>; Mon,  9 May 2022 13:13:41 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id l18so28927697ejc.7
-        for <git@vger.kernel.org>; Mon, 09 May 2022 13:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=krC+RS8dqUNELNsb2IqnjregGES/kgwvFakH46oRPOw=;
-        b=B+5TJo8ixBC2stAG18lpREh0Jjh1xOSU+7fLwi8zOGcFN7m6BneeLT3rPxbzqUyJks
-         ah7x/MU+cMYVaTEVhOumFyi8YKYKlrY82euE1RCc/PDHuYDUSWfWskkrapOZ4WKXfefu
-         Q6rjPPJ1NV/7ke3hu13Kme7z70ZGstSHEdiGo5H5vtJnm53sHYURPI7VrggVALlAlTjL
-         PQDm83/ZPrj8py576dq9/I3I0cjMHfM0h6YqDnkpnjNye7d2AlKDt4IjWEf8SfMUDkrD
-         4BojMuug/CKGqSnfYHZqWXzPoj88Ub/xY+FudsPxTmr9/ieAQXFCCkMiglJJnsFid+5p
-         Le8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=krC+RS8dqUNELNsb2IqnjregGES/kgwvFakH46oRPOw=;
-        b=LRQLYPh+XFTU1ijJyOwJD6XzFnZZfFY2FByWjIdwZNWoxE2xtnXMU/6Rm58uIr9LqD
-         4j9xShKh31TT0N8Z/yUPdIU7e2a9sjfi2pGQV4cM2BgCmdPxsQlMfRCNqwxfhDt0Zh0E
-         lhXdKjZ4pzWoyDRhTglFGZk1wukOIp92RG23sorlbra271D2o2hmQnpQINGVBVoZDALG
-         gMC4u2chSR0HIpnC5zHAYdS1cEAS6RBYBNPzBHRtnL25LISPWVR+XpdbJBR46nbbpxvn
-         +FEQrcAbDanp2G0fTenRhV8kr8NmZhSUOAjO31I5sDs2lp6MvXmgxPDQ9yRIq/EvZPJ5
-         V13g==
-X-Gm-Message-State: AOAM533L0xWy+8oTdu76ATCTftMEBbVhmaL8VyVKvC/sQMrJ+0YGY+jW
-        +oRp/hqvblfq1eANcqixTHpwlDfoVOg=
-X-Google-Smtp-Source: ABdhPJwOkiqSgVyjz3DOzvRIyQ/sgkW2DvcaRizor393T01FjIfOHNXLGD6TD2zGrVsqAUNwCUM8hg==
-X-Received: by 2002:a17:906:3ec1:b0:6e8:aae3:90de with SMTP id d1-20020a1709063ec100b006e8aae390demr16018393ejj.127.1652127219776;
-        Mon, 09 May 2022 13:13:39 -0700 (PDT)
-Received: from localhost ([2a02:2149:8a7c:1900:a49c:b216:27f2:528a])
-        by smtp.gmail.com with ESMTPSA id en20-20020a17090728d400b006f3ef214e20sm5390954ejc.134.2022.05.09.13.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 13:13:39 -0700 (PDT)
-Date:   Mon, 9 May 2022 23:13:32 +0300
-From:   Plato Kiorpelidis <kioplato@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Shubham Mishra <shivam828787@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [GSoC] Contributor candidate introduction
-Message-ID: <20220509201332.sxedn4rrgfsqmrm3@compass>
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
- <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
- <965b5394-9f72-e4a3-9ed4-6abcf67fb524@gmail.com>
+        with ESMTP id S229499AbiEIVH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 17:07:58 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A5E2618CF
+        for <git@vger.kernel.org>; Mon,  9 May 2022 14:04:03 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D1B5A1828B4;
+        Mon,  9 May 2022 17:04:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tRsE5r5Cy43TrLBQnEe1p7QiBp7/jIhsxFNjTO
+        JuYSk=; b=uZ7sq0/9k0LzpMDYPPzbAEztgrHagsUGay9Wq2Tbiwnf+rhoxWoNNe
+        fZNQjNaWiG2C2SFbsmCsBcoUB8SfgYVciyh6L6G+jwg7VgRuAoxs5eJIfAzQKQid
+        7cvgBjY3iacQgYskPrWdXguCu2mn2sS4fOK4j1o/8Tt7+fymTu/io=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CA4FB1828B3;
+        Mon,  9 May 2022 17:04:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 73EBE1828B1;
+        Mon,  9 May 2022 17:03:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Plato Kiorpelidis <kioplato@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v2 04/15] test-dir-iterator: consistently return
+ EXIT_FAILURE or EXIT_SUCCESS
+References: <20220509175159.2948802-1-kioplato@gmail.com>
+        <20220509175159.2948802-5-kioplato@gmail.com>
+Date:   Mon, 09 May 2022 14:03:57 -0700
+In-Reply-To: <20220509175159.2948802-5-kioplato@gmail.com> (Plato
+        Kiorpelidis's message of "Mon, 9 May 2022 20:51:48 +0300")
+Message-ID: <xmqq35hictaa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <965b5394-9f72-e4a3-9ed4-6abcf67fb524@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8B621B44-CFDB-11EC-BF5F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/05/09 12:14PM, Kaartic Sivaraam wrote:
-> Hello all,
+Plato Kiorpelidis <kioplato@gmail.com> writes:
 
-Hey Kaartic,
+> Throughout test-dir-iterator.c we were returning/exiting with either
+> integers or EXIT_FAILURE. Improve readability and reduce mental load
+> by being consistent with what test-dir-iterator returns through the
+> test-tool. Returning mixed constants and integers could indicate that
+> it matters for some reason e.g. architecture of test-tool and cmd__*
+> functions.
+>
+> EXIT_SUCCESS and EXIT_FAILURE are specified by the C standard.
+> That makes the code more portable and standardized.
 
-> We were reviewing the proposals and noticed some missing information.
-> Hence we wanted to gather the information now.
-> 
-> Shubham,
-> You have mentioned that you'll be able to dedicate 35-40 hours per week.
-> We just confirm if that's feasible despite you having the commitment of
-> a full-time job.
-> 
-> Also, do let us know if you would have any other commitments during the
-> GSoC period that you're already aware of.
-> 
-> Plato,
-> Do leṭ us know if you would have any other commitments during the GSoC
-> period that you're already aware of.
+And less portable for the invoking process of "git".  The invoking
+process used to be able to depend ou getting WEXITSTATUS() from our
+exit status to obtain "1" when we exited with 1; if we start exiting
+with EXIT_FAILURE, there is no guarantee what non-zero value is used.
 
-GSoC is my priority and I already spend most of my time studying Git and the
-project's related material. I've got some university classes and assignments
-until early June, but it's something I've already been doing in parallel with
-GSoC and my work on dir-iterator [1]. I don't have something major planned for
-the summer since I would prefer investing most of my time into Git and GSoC.
-After this semester ends in early June I'll be completely free to focus on GSoC.
+So, I am not sure if this is a good direction to go in.
 
-[1]: https://lore.kernel.org/git/20220509175159.2948802-1-kioplato@gmail.com/
+> Signed-off-by: Plato Kiorpelidis <kioplato@gmail.com>
+> ---
+>  t/helper/test-dir-iterator.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-Thanks,
-Plato
+Especially given that this is a helper for testing, we may want to
+return/exit with different non-zero value at different places to
+make it easier for the test script to tell where in the program we
+decided to exit a failure.  IOW, if we return not EXIT_FAILURE but 2
+(or whatever value that is not used elsewhere) in the first hunk,
+and let the second hunk continue to return 1, then the calling test
+script can tell which one decided to fail.
 
-> Apologies for reaching out late. Since the project selection deadline is
-> approaching soon, do respond as soon as it is feasible for you.
-> 
-> 
-> --
-> Sivaraam
+As to EXIT_SUCCESS, I do not have a strong opinion against it, but
+because EXIT_FAILURE is a bad idea, we probably should avoid it for
+consistency.
+
+Thanks.
+
+> diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
+> index 659b6bfa81..81e931673e 100644
+> --- a/t/helper/test-dir-iterator.c
+> +++ b/t/helper/test-dir-iterator.c
+> @@ -39,7 +39,7 @@ int cmd__dir_iterator(int argc, const char **argv)
+>  
+>  	if (!diter) {
+>  		printf("dir_iterator_begin failure: %s\n", error_name(errno));
+> -		exit(EXIT_FAILURE);
+> +		return EXIT_FAILURE;
+>  	}
+>  
+>  	while ((iter_status = dir_iterator_advance(diter)) == ITER_OK) {
+> @@ -58,8 +58,8 @@ int cmd__dir_iterator(int argc, const char **argv)
+>  
+>  	if (iter_status != ITER_DONE) {
+>  		printf("dir_iterator_advance failure\n");
+> -		return 1;
+> +		return EXIT_FAILURE;
+>  	}
+>  
+> -	return 0;
+> +	return EXIT_SUCCESS;
+>  }
