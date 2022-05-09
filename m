@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B72C433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77A89C433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239815AbiEIR65 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 13:58:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
+        id S239825AbiEIR7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 13:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239784AbiEIR6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 13:58:52 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02A32CCD1F
-        for <git@vger.kernel.org>; Mon,  9 May 2022 10:54:57 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id be20so17174460edb.12
-        for <git@vger.kernel.org>; Mon, 09 May 2022 10:54:57 -0700 (PDT)
+        with ESMTP id S239803AbiEIR6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 13:58:55 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207A32CCD1F
+        for <git@vger.kernel.org>; Mon,  9 May 2022 10:55:01 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a21so17206533edb.1
+        for <git@vger.kernel.org>; Mon, 09 May 2022 10:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VKDxrijw84sYdbJWr5DaXujjMNAqhTlE6569q5KTrlg=;
-        b=DkjdCYbbcHr/jb/Kk4NXgndVD5xwJr1SCqgBqR1QN1QVltXJ+En5fQYxXbYotJljCm
-         e8r2pqeDkeau5TyxKSw/0bS9cdB2m3Bt6lLjjWKvGF7oQaQQz0QjLFJL+Gs/Uc9HlgiA
-         V9OdVp+Rd15LQ58AnHFD8r7PN3DNzzMnYT8TWoVO9VC2I/66vyt//nsKxAtCeIzJXHn2
-         pqD2VTKsuX2DgF7oug9CymxEC9dQYf78uRRmGX7Z8DWphnVitoVKgHiQAQMkByt2novS
-         KppLuZsA7g3a9SvDcIdjfgHZljKDx/hdLz8D/wy5s1MJBSjUVOPunGGHx3EO7Y/3Gi4y
-         0o1g==
+        bh=Y8P4P8Bx/34XhG7chSqDwFYnBiBuSuKjkYNCtVMS3Rg=;
+        b=nDMlsuRHtpDSIwKx+1tkxJaOrkk2kRCA1wHEx1FLc+Z7PM6yOtI2XySRIc9EUqwqmg
+         qzYITKeu484HttDadrlPZq+5m2oAGZ8L+51aMdu/k/JiDO4g0KlX4QmRCTuM59Q+gsW6
+         kFT1n5gdSTIzRbUgoE/GNxnCwXnQKg0LGRlBnNiy7fu541chD21U6DejTZagzZ7WTQKg
+         t828s44JLnh1RqH9eKtBgibiL32/oj6LLhcc8s6w2HRmaAxgGI1OB8lmnJ/R2jgaCHtL
+         c/xoIFvpsj5Miujax1K1bbKiwFp1sC1JUiXyBT6n9tC6X+mfLnbuVZcl497iiJbc0cR2
+         61VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VKDxrijw84sYdbJWr5DaXujjMNAqhTlE6569q5KTrlg=;
-        b=qfQwkBgFOexbBusMndpno0gclSRA9qOZOphGwAVx0LigWcTNEiD7gWWDoFAaMIHUGF
-         m9FsXzuSld80LIabfv0KhLmF59WGxnqNLr3tKsqPjYsMwQWDdUtyO5AGoO5wyPCt7wi6
-         SxXhhh3qL5boG/uN7RVa3MvhpAsbTDmsm5mnJ+lfOmkTq3TQe2XkDp46xh6qulSrLOrt
-         OOt5UQmxcPk4uRnmyKT0Mh77DXDI+vcg/sQod2izkNczgedaaa2JO4m/p41lPKCv/+Yu
-         lwhmY4uAyb3FDiSy8kYTvJYWXRu+ipe63bn0jXZhYhgteKBd9NOoHH9TDI5xSazuBg1E
-         qrAw==
-X-Gm-Message-State: AOAM532Kr3eii6QurcOvImQfrfE1gB9uAxfVnB3yp1HU7OFs2fJTQYyY
-        azr1yk6N+UObDvlk3GrgYfwkwfzrFvE=
-X-Google-Smtp-Source: ABdhPJyRwBNEDKPpioNP6+I2aorNWeDRoiGQraPjzHn5rObhe+ID9wjNsXBNmWCTiWOq4CxjpdHnFA==
-X-Received: by 2002:a05:6402:278a:b0:427:d0e1:599e with SMTP id b10-20020a056402278a00b00427d0e1599emr18628619ede.58.1652118896576;
-        Mon, 09 May 2022 10:54:56 -0700 (PDT)
+        bh=Y8P4P8Bx/34XhG7chSqDwFYnBiBuSuKjkYNCtVMS3Rg=;
+        b=Dhd7PpRtsZzAkY5SNltrJGOEOQ6J9j6H/dhi/7NgsgAdpHTjVN4TQw6AYnCYoeGusJ
+         qQo43w3txP85R5M3R6W7/Pee0H/ZM0SYLeRftkxbJWN6PDvoMcA1xXzZpbBHf6viC/HG
+         HNcl1Z/OIZlhWcGiAKXc/YTN9p56aEH9+u8fPDRKDYvsdbKe1jvW2TwugynL6f+8fn9k
+         4/spFFWG+RjgkI/ycWoy2eQfdrHyErp8u34J+cM6F1ALJdaLAFHhpEj/L7dA8aLsFw4e
+         dr6+3hNGyYVe0ywUO3jq3PS7IK0wTKmC4BTHJ7GqoJM/GKhpUtd2q47NjdApWuuIqQQH
+         wVVQ==
+X-Gm-Message-State: AOAM532ood+zaDo3g4QT0vcvdl2OmuoHosydai3SeboghvcMu+dxJGn5
+        ZBYcnC363RuU+SL39UWX/nNZ0rn03TQ=
+X-Google-Smtp-Source: ABdhPJxrojBYAZCVZh2T9s8c5hQkiW3VpcBDyLz4d3qH9Ntt3pdUsSZtOs6LvIdUKbJKVKlUNCV9Vw==
+X-Received: by 2002:a05:6402:1941:b0:413:2b7e:676e with SMTP id f1-20020a056402194100b004132b7e676emr19056894edz.114.1652118899675;
+        Mon, 09 May 2022 10:54:59 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:2149:8a7c:1900:a49c:b216:27f2:528a])
-        by smtp.gmail.com with ESMTPSA id l17-20020aa7cad1000000b0042617ba63bfsm6552883edt.73.2022.05.09.10.54.55
+        by smtp.gmail.com with ESMTPSA id l17-20020aa7cad1000000b0042617ba63bfsm6552883edt.73.2022.05.09.10.54.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 10:54:56 -0700 (PDT)
+        Mon, 09 May 2022 10:54:59 -0700 (PDT)
 From:   Plato Kiorpelidis <kioplato@gmail.com>
 To:     git@vger.kernel.org
 Cc:     phillip.wood123@gmail.com, avarab@gmail.com,
         Plato Kiorpelidis <kioplato@gmail.com>
-Subject: [PATCH v2 02/15] t0066: remove dependency between unrelated tests
-Date:   Mon,  9 May 2022 20:51:46 +0300
-Message-Id: <20220509175159.2948802-3-kioplato@gmail.com>
+Subject: [PATCH v2 03/15] t0066: shorter expected and actual output file names
+Date:   Mon,  9 May 2022 20:51:47 +0300
+Message-Id: <20220509175159.2948802-4-kioplato@gmail.com>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220509175159.2948802-1-kioplato@gmail.com>
 References: <20220509175159.2948802-1-kioplato@gmail.com>
@@ -63,34 +63,170 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two unrelated tests were using the same path for testing. That's
-incorrect because if the test that depends on the other test, which
-creates the directory hierarcy, is ran using the --run flag then it
-will fail, even though it should pass, because the path doesn't exist.
-Unrelated tests should not have dependencies among them.
+Change the names of expected-* and actual-* files to shorter ones to
+improve readability, avoiding line breaks. There is no reason to have
+descriptive expected-* and actual-* file names since subtests
+descriptions fulfill this need.
+
+If a test fails we can re-run it with --run flag and read its expected
+and actual outputs, since each subtest shares the same file names for
+expected and actual outputs.
 
 Signed-off-by: Plato Kiorpelidis <kioplato@gmail.com>
 ---
- t/t0066-dir-iterator.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/t0066-dir-iterator.sh | 59 ++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 30 deletions(-)
 
 diff --git a/t/t0066-dir-iterator.sh b/t/t0066-dir-iterator.sh
-index 807c43d447..801749eb7e 100755
+index 801749eb7e..b21c58ade3 100755
 --- a/t/t0066-dir-iterator.sh
 +++ b/t/t0066-dir-iterator.sh
-@@ -63,9 +63,11 @@ test_expect_success 'begin should fail upon inexistent paths' '
+@@ -16,7 +16,7 @@ test_expect_success 'setup -- dir w/ complex structure' '
+ 	>dir/d/e/d/a
+ '
+ test_expect_success 'dir-iterator should iterate through all files' '
+-	cat >expected-iteration-sorted-output <<-EOF &&
++	cat >expected-sorted-out <<-EOF &&
+ 	[d] (a) [a] ./dir/a
+ 	[d] (a/b) [b] ./dir/a/b
+ 	[d] (a/b/c) [c] ./dir/a/b/c
+@@ -30,10 +30,10 @@ test_expect_success 'dir-iterator should iterate through all files' '
+ 	[f] (d/e/d/a) [a] ./dir/d/e/d/a
+ 	EOF
+ 
+-	test-tool dir-iterator ./dir >out &&
+-	sort out >./actual-iteration-sorted-output &&
++	test-tool dir-iterator ./dir >actual-out &&
++	sort actual-out >actual-sorted-out &&
+ 
+-	test_cmp expected-iteration-sorted-output actual-iteration-sorted-output
++	test_cmp expected-sorted-out actual-sorted-out
+ '
+ 
+ test_expect_success 'setup -- dir w/ three nested dirs w/ file' '
+@@ -41,35 +41,34 @@ test_expect_success 'setup -- dir w/ three nested dirs w/ file' '
+ 	>dir2/a/b/c/d
+ '
+ test_expect_success 'dir-iterator should list files in the correct order' '
+-	cat >expected-pre-order-output <<-EOF &&
++	cat >expected-out <<-EOF &&
+ 	[d] (a) [a] ./dir2/a
+ 	[d] (a/b) [b] ./dir2/a/b
+ 	[d] (a/b/c) [c] ./dir2/a/b/c
+ 	[f] (a/b/c/d) [d] ./dir2/a/b/c/d
+ 	EOF
+ 
+-	test-tool dir-iterator ./dir2 >actual-pre-order-output &&
++	test-tool dir-iterator ./dir2 >actual-out &&
+ 
+-	test_cmp expected-pre-order-output actual-pre-order-output
++	test_cmp expected-out actual-out
+ '
+ 
+ test_expect_success 'begin should fail upon inexistent paths' '
+-	echo "dir_iterator_begin failure: ENOENT" >expected-inexistent-path-output &&
++	echo "dir_iterator_begin failure: ENOENT" >expected-out &&
+ 
+-	test_must_fail test-tool dir-iterator ./inexistent-path \
+-		>actual-inexistent-path-output &&
++	test_must_fail test-tool dir-iterator ./inexistent-path >actual-out &&
+ 
+-	test_cmp expected-inexistent-path-output actual-inexistent-path-output
++	test_cmp expected-out actual-out
  '
  
  test_expect_success 'begin should fail upon non directory paths' '
-+	>some-file &&
-+
- 	echo "dir_iterator_begin failure: ENOTDIR" >expected-non-dir-output &&
+ 	>some-file &&
  
--	test_must_fail test-tool dir-iterator ./dir/b >actual-non-dir-output &&
-+	test_must_fail test-tool dir-iterator ./some-file >actual-non-dir-output &&
+-	echo "dir_iterator_begin failure: ENOTDIR" >expected-non-dir-output &&
++	echo "dir_iterator_begin failure: ENOTDIR" >expected-out &&
  
- 	test_cmp expected-non-dir-output actual-non-dir-output
+-	test_must_fail test-tool dir-iterator ./some-file >actual-non-dir-output &&
++	test_must_fail test-tool dir-iterator ./some-file >actual-out &&
+ 
+-	test_cmp expected-non-dir-output actual-non-dir-output
++	test_cmp expected-out actual-out
  '
+ 
+ test_expect_success POSIXPERM,SANITY 'setup -- dir w/ dir w/o perms w/ file' '
+@@ -77,28 +76,28 @@ test_expect_success POSIXPERM,SANITY 'setup -- dir w/ dir w/o perms w/ file' '
+ 	>dir3/a/b
+ '
+ test_expect_success POSIXPERM,SANITY 'advance should not fail on errors by default' '
+-	cat >expected-no-permissions-output <<-EOF &&
++	cat >expected-out <<-EOF &&
+ 	[d] (a) [a] ./dir3/a
+ 	EOF
+ 
+ 	chmod 0 dir3/a &&
+ 
+-	test-tool dir-iterator ./dir3 >actual-no-permissions-output &&
+-	test_cmp expected-no-permissions-output actual-no-permissions-output &&
++	test-tool dir-iterator ./dir3 >actual-out &&
++	test_cmp expected-out actual-out &&
++
+ 	chmod 755 dir3/a
+ '
+ test_expect_success POSIXPERM,SANITY 'advance should fail on errors, w/ pedantic flag' '
+-	cat >expected-no-permissions-pedantic-output <<-EOF &&
++	cat >expected-out <<-EOF &&
+ 	[d] (a) [a] ./dir3/a
+ 	dir_iterator_advance failure
+ 	EOF
+ 
+ 	chmod 0 dir3/a &&
+ 
+-	test_must_fail test-tool dir-iterator --pedantic ./dir3 \
+-		>actual-no-permissions-pedantic-output &&
+-	test_cmp expected-no-permissions-pedantic-output \
+-		actual-no-permissions-pedantic-output &&
++	test_must_fail test-tool dir-iterator --pedantic ./dir3 >actual-out &&
++	test_cmp expected-out actual-out &&
++
+ 	chmod 755 dir3/a
+ '
+ 
+@@ -110,7 +109,7 @@ test_expect_success SYMLINKS 'setup -- dir w/ symlinks w/o cycle' '
+ 	ln -s ../b dir4/a/f
+ '
+ test_expect_success SYMLINKS 'dir-iterator should not follow symlinks by default' '
+-	cat >expected-no-follow-sorted-output <<-EOF &&
++	cat >expected-sorted-out <<-EOF &&
+ 	[d] (a) [a] ./dir4/a
+ 	[d] (b) [b] ./dir4/b
+ 	[d] (b/c) [c] ./dir4/b/c
+@@ -119,13 +118,13 @@ test_expect_success SYMLINKS 'dir-iterator should not follow symlinks by default
+ 	[s] (a/f) [f] ./dir4/a/f
+ 	EOF
+ 
+-	test-tool dir-iterator ./dir4 >out &&
+-	sort out >actual-no-follow-sorted-output &&
++	test-tool dir-iterator ./dir4 >actual-out &&
++	sort actual-out >actual-sorted-out &&
+ 
+-	test_cmp expected-no-follow-sorted-output actual-no-follow-sorted-output
++	test_cmp expected-sorted-out actual-sorted-out
+ '
+ test_expect_success SYMLINKS 'dir-iterator should follow symlinks w/ follow flag' '
+-	cat >expected-follow-sorted-output <<-EOF &&
++	cat >expected-sorted-out <<-EOF &&
+ 	[d] (a) [a] ./dir4/a
+ 	[d] (a/f) [f] ./dir4/a/f
+ 	[d] (a/f/c) [c] ./dir4/a/f/c
+@@ -135,10 +134,10 @@ test_expect_success SYMLINKS 'dir-iterator should follow symlinks w/ follow flag
+ 	[f] (a/e) [e] ./dir4/a/e
+ 	EOF
+ 
+-	test-tool dir-iterator --follow-symlinks ./dir4 >out &&
+-	sort out >actual-follow-sorted-output &&
++	test-tool dir-iterator --follow-symlinks ./dir4 >actual-out &&
++	sort actual-out >actual-sorted-out &&
+ 
+-	test_cmp expected-follow-sorted-output actual-follow-sorted-output
++	test_cmp expected-sorted-out actual-sorted-out
+ '
+ 
+ test_expect_success SYMLINKS 'setup -- dir w/ symlinks w/ cycle' '
 -- 
 2.36.1
 
