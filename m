@@ -2,114 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 302F0C433EF
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 23:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87F81C433EF
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 23:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232326AbiEIXWb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 19:22:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43548 "EHLO
+        id S232488AbiEIXbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 19:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbiEIXWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 19:22:30 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB5B051333
-        for <git@vger.kernel.org>; Mon,  9 May 2022 16:18:34 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D64CE1365BF;
-        Mon,  9 May 2022 19:18:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=554+IYPmMv4Y/M2WPBIEOXfsJdJXwBy44nA9Yw
-        XS1YM=; b=np0wWARMbgI662rzk/Ggme8Lzt6KKBOaom3rFH/o9DkQGYCBDxGw28
-        AP0i89r/JNB8vZ3umNQFl+umI0KFawCYAR95Ox73FNFmYi1MQx2gou3N3Ple6XAI
-        u3JIc37KTu00rcsgT+R75sI+R+vozhz1wmr6xBUR9ElDFNyyvJ7UM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CDAC01365BE;
-        Mon,  9 May 2022 19:18:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2D3DE1365BD;
-        Mon,  9 May 2022 19:18:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Timo Funke <timoses@msn.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Weird behaviour of git diff-index in container
-References: <VI1PR0402MB28779C7A41783472B2EF6823BFC69@VI1PR0402MB2877.eurprd04.prod.outlook.com>
-Date:   Mon, 09 May 2022 16:18:32 -0700
-In-Reply-To: <VI1PR0402MB28779C7A41783472B2EF6823BFC69@VI1PR0402MB2877.eurprd04.prod.outlook.com>
-        (Timo Funke's message of "Mon, 9 May 2022 22:42:14 +0000")
-Message-ID: <xmqqy1za9tx3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231748AbiEIXbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 19:31:33 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C08CE7327
+        for <git@vger.kernel.org>; Mon,  9 May 2022 16:27:37 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id d5so21455996wrb.6
+        for <git@vger.kernel.org>; Mon, 09 May 2022 16:27:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=yfO8LVXam42Gh4pI+FGUuHSugJMGgVu/+EUL2M5evrg=;
+        b=QLVidS9jZeS2OUKTZCN/08L6+yD32slfLpmNbKCISEkdCxl8PJ7rKNUeIQNKb/I+/w
+         ofVAJ51yWFWTEWr271L4whbYZgI3ioVt8n6eaCAp9W5G4WruKSVcTLFCAaMKQr4B39Ls
+         +L3uKv+QLKG1BJtdWdX/JnuNNSWOOfs8OhVipSiDduqTz7qhvfBbDBYbjFWjb6GvUK0C
+         ABInzN/jAG/G+3I4IB+RWemyBX0ClgaPyKuWyYLKF/HJB029ISH7sBMgqaRODPL5DAA2
+         9uceNkZvZL1SlEzK0Kx3gaajB13iZh37PvIIa0huYJNVlwst0DimoOYjC2otIBFsrZjC
+         eehQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=yfO8LVXam42Gh4pI+FGUuHSugJMGgVu/+EUL2M5evrg=;
+        b=47jX/FcrYbIFBZd/7bM8Tran89fIAsRkd5DVLwiM8sDPTuJGIINcie1iSSocUoGx06
+         X3zAK4F0aEWOVUoCLE0fuETHF20xxVgRD6nFVFUaxEyyChvztIGT2oUqqlv8jBFQd8D8
+         cwLW/tRbjzhvjh6U27PpqkqCBI6I8wYsEl+6BoKE/FwWn4HfieCLB0qjkfP9+WOHyl4K
+         QmyDcfzoMX3Mxi6SWH2fn9dfTE8825BtYwy29S9rRJAPntZMCsmYB91FSAzsgyUPF/18
+         w4PzrmGhYR2lqj/nhFZ2PdL7kyWvQq4FUenwte7xNAfnwwuNlU93zF+MBFINoTQ0SI0x
+         5Ypg==
+X-Gm-Message-State: AOAM5322BZy8+V3FFSt5RAGmJTnP3RTBdq9eksZkV8d6N6UoDdBohUq4
+        Jd43E11oH+YKrXzgDIZqdJBeDsow1Xc=
+X-Google-Smtp-Source: ABdhPJyP1V0nu8ZtdJUb7sjZRAMy4Ty3cguCB8BOr4OMqQ25EdwJ+a2hvtWvJmSeR3dJlPat159zEA==
+X-Received: by 2002:a5d:6d04:0:b0:20c:52de:9ce4 with SMTP id e4-20020a5d6d04000000b0020c52de9ce4mr17171839wrq.572.1652138855726;
+        Mon, 09 May 2022 16:27:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o8-20020a5d4748000000b0020c5253d8fbsm11933945wrs.71.2022.05.09.16.27.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 16:27:35 -0700 (PDT)
+Message-Id: <pull.1262.git.git.1652138854255.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 May 2022 23:27:34 +0000
+Subject: [PATCH] pull: only pass '--recurse-submodules' to subcommands
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 584A0C2C-CFEE-11EC-A15E-CB998F0A682E-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Huang Zou <huang.zou@schrodinger.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Timo Funke <timoses@msn.com> writes:
+From: Glen Choo <chooglen@google.com>
 
->> container# git diff-index --quiet HEAD -- ; echo $?
-> 1
->> container# git status
-> On branch master
-> nothing to commit, working tree clean
->> container# git diff-index --quiet HEAD -- ; echo $?
-> 0
+Fix a bug in "git pull" where `submodule.recurse` is preferred over
+`fetch.recurseSubmodules` (Documentation/config/fetch.txt says that
+`fetch.recurseSubmodules` should be preferred.). Do this by passing the
+value of the "--recurse-submodules" CLI option to the underlying fetch,
+instead of passing a value that combines the CLI option and config
+variables.
 
-This is unfortunately very much expected and doubly unfortunately
-not very well documented.  Patches to update documentation is very
-much welcomed, but such a patch cannot be written in void, so let's
-explain what is going on.
+In other words, this bug occurred because builtin/pull.c is conflating
+two similar-sounding, but different concepts:
 
-To detect paths that have not been modified quickly, Git uses the
-mechanism called "cached stat data" in the index.  Among the cached
-stat data is the timestamp of the last modification of each file.
-By noting that the fact that the last time it checked, the contents
-in the file on the filesystem hasn't been modified, together with
-the file timestamp observed at the time of such a check, the next
-time somebody asks "please compute 'git diff'", Git can notice that
-the timestamp of the working tree file hasn't changed and say "no,
-there is no change" without looking at the contents.
+- Whether "git pull" itself should care about submodules e.g. whether it
+  should update the submodule worktrees after performing a merge.
+- The value of "--recurse-submodules" to pass to the underlying "git
+  fetch".
 
-Now, when the file on the filesystem is "touched" in a way that its
-timestamp gets updated without changing the contents (hence, if
-there weren't the above optimization, diff would have said "no
-change"), Git will think there is a change in the file.
+Thus, when `submodule.recurse` is set, the underlying "git fetch" gets
+invoked with "--recurse-submodules", overriding the value of
+`fetch.recurseSubmodules`.
 
-There are two levels of Git subcommands.  Porcelain commands, like
-"git diff", are end-user facing and are optimized more for usability
-than performance.  "git diff --quiet HEAD --" in the above scenario
-WILL notice that there is no change in the contents after all and
-exit with 0 (unless diff.autoRefreshIndex configuration is set to
-false).  The way they do so is by refreshing the "cached stat data"
-automatically before using, and that operation is called "refreshing
-the index" (hence the configuration variable name to disable it).
+An alternative (and more obvious) approach to fix the bug would be to
+teach "git pull" to understand `fetch.recurseSubmodules`, but the
+proposed solution works better because:
 
-On the other hand, plumbing commands, like "git diff-files" and "git
-diff-index", are designed to be used in scripts, number of times,
-and do not want to pay the cost of refreshing the index always
-before working.  The correct way to use them in a repository whose
-current state you do not know about is to first "refresh the index"
-by running the command to do so,  e.g. "git update-index --refresh"
-before doing anything else.
+- We don't maintain two identical config-parsing implementions in "git
+  pull" and "git fetch".
+- It works better with other commands invoked by "git pull" e.g. "git
+  merge" won't accidentally respect `fetch.recurseSubmodules`.
 
-If you were to run "git diff-files" and "git diff-index HEAD" in a
-row in order to compute what "git status" would give you, for
-example, you do not need to and want to pay the cost of refreshing
-the index twice.  You run "git update-index --refresh" once, and
-then run "git diff-files".  Doing so would not change the contents
-of the working tree files, so you do not have to refresh the index
-again after that, before running "git diff-index HEAD".  That is why
-these plumbing commands do not refresh the index themselves.  They
-expect you to be refreshing the index before you call them.
+Reported-by: Huang Zou <huang.zou@schrodinger.com>
+Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+    pull: only pass '--recurse-submodules' to subcommands
+    
+    Thanks Huang Zou for the report [1], and Philippe Blain for the initial
+    investigation.
+    
+    This patch fixes the original bug, but not in the 'obvious' way of
+    teaching "git pull" to parse fetch.recurseSubmodules. Instead, "git
+    pull" now propagates its value of "--recurse-submodules" to "git fetch"
+    (ignoring any config values), and leaves the config parsing to "git
+    fetch".
+    
+    I think this works better because we get a nice separation of "config
+    that git pull cares about" and "config that its subprocess care about",
+    and as a result:
+    
+     * We don't maintain two identical config-parsing implementations in
+       "git pull" and "git fetch".
+     * It works better with other commands invoked by "git pull" e.g. "git
+       merge" won't accidentally respect fetch.recurseSubmodules.
+    
+    PS I'm having a hard time writing today, let me know how the commit
+    message/cover letter can be improved :)
+    
+    [1]
+    https://lore.kernel.org/git/CAFnZ=JNE_Sa3TsKghBPj1d0cz3kc6o91Ogj-op8o6qK8t9hPgg@mail.gmail.com
+    
+    In-Reply-To:
+    CAFnZ=JNE_Sa3TsKghBPj1d0cz3kc6o91Ogj-op8o6qK8t9hPgg@mail.gmail.com
 
-"git status" is one of the commands (as a Porcelain) that refreshes
-the index automatically, so it is very much understandable that the
-same "diff-index --quiet" behaves differently after running it once
-and until you touch/smudge the working tree files.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1262%2Fchooglen%2Fpull%2Ffetch-recurse-submodules-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1262/chooglen/pull/fetch-recurse-submodules-v1
+Pull-Request: https://github.com/git/git/pull/1262
 
+ builtin/pull.c            | 10 +++++++---
+ t/t5572-pull-submodule.sh | 14 ++++++++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 4d667abc19d..01155ba67b2 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -72,6 +72,7 @@ static const char * const pull_usage[] = {
+ static int opt_verbosity;
+ static char *opt_progress;
+ static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++static int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
+ 
+ /* Options passed to git-merge or git-rebase */
+ static enum rebase_type opt_rebase = -1;
+@@ -120,7 +121,7 @@ static struct option pull_options[] = {
+ 		N_("force progress reporting"),
+ 		PARSE_OPT_NOARG),
+ 	OPT_CALLBACK_F(0, "recurse-submodules",
+-		   &recurse_submodules, N_("on-demand"),
++		   &recurse_submodules_cli, N_("on-demand"),
+ 		   N_("control for recursive fetching of submodules"),
+ 		   PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
+ 
+@@ -536,8 +537,8 @@ static int run_fetch(const char *repo, const char **refspecs)
+ 		strvec_push(&args, opt_tags);
+ 	if (opt_prune)
+ 		strvec_push(&args, opt_prune);
+-	if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT)
+-		switch (recurse_submodules) {
++	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
++		switch (recurse_submodules_cli) {
+ 		case RECURSE_SUBMODULES_ON:
+ 			strvec_push(&args, "--recurse-submodules=on");
+ 			break;
+@@ -1001,6 +1002,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
+ 
++	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
++		recurse_submodules = recurse_submodules_cli;
++
+ 	if (cleanup_arg)
+ 		/*
+ 		 * this only checks the validity of cleanup_arg; we don't need
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index fa6b4cca65c..65aaa7927fb 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -107,6 +107,20 @@ test_expect_success " --[no-]recurse-submodule and submodule.recurse" '
+ 	test_path_is_file super/sub/merge_strategy_4.t
+ '
+ 
++test_expect_success "fetch.recurseSubmodules option triggers recursive fetch (but not recursive update)" '
++	test_commit -C child merge_strategy_5 &&
++	git -C parent submodule update --remote &&
++	git -C parent add sub &&
++	git -C parent commit -m "update submodule" &&
++
++	git -C super -c fetch.recursesubmodules=true pull --no-rebase &&
++	# Check that the submodule commit was fetched
++	sub_oid=$(git -C super rev-parse FETCH_HEAD:sub) &&
++	git -C super/sub cat-file -e $sub_oid &&
++	# Check that the submodule worktree did not update
++	! test_path_is_file super/sub/merge_strategy_5.t
++'
++
+ test_expect_success 'pull --rebase --recurse-submodules (remote superproject submodule changes, local submodule changes)' '
+ 	# This tests the following scenario :
+ 	# - local submodule has new commits
+
+base-commit: e8005e4871f130c4e402ddca2032c111252f070a
+-- 
+gitgitgadget
