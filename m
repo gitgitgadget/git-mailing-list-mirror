@@ -2,74 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F59EC433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 21:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB2AC433FE
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 22:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230206AbiEIVtV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 17:49:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49132 "EHLO
+        id S231573AbiEIW0a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 18:26:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230214AbiEIVtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 17:49:19 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8785C245C56
-        for <git@vger.kernel.org>; Mon,  9 May 2022 14:45:24 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60C72135744;
-        Mon,  9 May 2022 17:45:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=weB3DnrXaUiu
-        621VhyGL0I6G2r9EFPVucqh9vk+lRdw=; b=brDIqCTGf5TdJP5UB1xxvhSLXYW8
-        /jCQM6lN4m3CuDy6DQRJ/NoJMBE8BKBUnutWra2iMLPe7P/vt6ReZfiGTNMa3G+S
-        DXgTHAL6gOF8xo0IMBk8putoOFKBzhdSUuCumYtsrEzWiA5+H5IiJByrjpa9a8Nv
-        HCM4P9xfXYKokvs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55569135742;
-        Mon,  9 May 2022 17:45:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA60A135741;
-        Mon,  9 May 2022 17:45:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 3/3] safe.directory: document and check that it's
- ignored in the environment
-References: <pull.1215.git.1649863951.gitgitgadget@gmail.com>
-        <20220427170649.4949-1-szeder.dev@gmail.com>
-        <20220427170649.4949-4-szeder.dev@gmail.com>
-        <xmqqlevql0lj.fsf@gitster.g> <xmqqee1il09v.fsf@gitster.g>
-        <20220509213915.GA2043@szeder.dev>
-Date:   Mon, 09 May 2022 14:45:21 -0700
-In-Reply-To: <20220509213915.GA2043@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Mon, 9 May 2022 23:39:15 +0200")
-Message-ID: <xmqqlevabcsu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231534AbiEIW0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 18:26:20 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A11215E601
+        for <git@vger.kernel.org>; Mon,  9 May 2022 15:22:25 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id kl21so11494629qvb.9
+        for <git@vger.kernel.org>; Mon, 09 May 2022 15:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=27PmDnUpOu+KdGpp3BWaYqqoHsdya6uHHeGP0/Z8cZw=;
+        b=S402PckPYv8RwTKS01otRr2FU703VUxwOFlyBLScv2XlxV/zVJpiSADadBn2g3Vvka
+         w/DbTODgu8fgW++sp9uROG192lBaH3KnIRJDxLYOXQjbLRtvv5PYzlaOR75sB8bemRM7
+         EMr/T3i/4Su59Qc54XMJXW/D2RaZX2adTtKcsES0VoiazCvR3FJeNel9coZVu9KLRHRS
+         8l+471tfU/GaZYG3/RbayFFj6685ZEKQT4D4rFH8/wBcrmLGireykK0Z8EFMvpGHcQiZ
+         7z1WHsA4U+CnJMM9qm9nqYNfxFWhSbmEXc7JWCnaqgb6x0Dqx6je+tcH5SWXiFyf9Vh5
+         2kQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=27PmDnUpOu+KdGpp3BWaYqqoHsdya6uHHeGP0/Z8cZw=;
+        b=JfHPweEyz8s1+mNfAcLJA9C27zVCo4T2S6aBkSgf/6+j/bEJkQMH5TL5++l1bVdDfT
+         jyKh9LE0oIpY8fItD3Dr3ZqWj4HXmkdM6326X9kFItSZeJ819YZRh6xVJ2iKbuttYI23
+         Bohqo1L2DsIDwoa47q+Ai5udDx6VPkozEiF3h2Rm1CxON04sTwE7pnqNdTFp4umMZHJR
+         qqVMRcxr204FCgLUYjsMa0D/LqDsvXW39EhDDoXf3FY8PXGUj7HyXSnHUSiwTb4IxwKl
+         7GZgeDOnKtUbYYoOC1US2HQDDUwTq4e1W4p1LdubYgtwJapXNapviE3K9PE68r2qPi+W
+         qYFA==
+X-Gm-Message-State: AOAM532tzFQppnbXk6R/Zc6cM+dq25q8QW2Tx1qbTbjgxFT4lMyS84eC
+        jH8KQixGqBjxonaFsCVUjVupDQ==
+X-Google-Smtp-Source: ABdhPJy3bsilYfpj2cONUVVY9uhSHbrHMYeCrakjAc+qgoQ7mO3OksFzIfLRyTMxZBL/sbf6hWblUw==
+X-Received: by 2002:ad4:5dc3:0:b0:45a:cde5:f31c with SMTP id m3-20020ad45dc3000000b0045acde5f31cmr15631931qvh.90.1652134944333;
+        Mon, 09 May 2022 15:22:24 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g15-20020ac87d0f000000b002f3e127be41sm1248184qtb.20.2022.05.09.15.22.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 15:22:23 -0700 (PDT)
+Date:   Mon, 9 May 2022 18:22:23 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v4] builtin/remote.c: teach `-v` to list filters for
+ promisor remotes
+Message-ID: <YnmUH5MKeKiafn94@nand.local>
+References: <Ynk0mADTSJU/xVUd@nand.local>
+ <20220509172157.28593-1-chakrabortyabhradeep79@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5418FA80-CFE1-11EC-8D8E-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20220509172157.28593-1-chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Mon, May 09, 2022 at 10:51:57PM +0530, Abhradeep Chakraborty wrote:
+> Taylor Blau <me@ttaylorr.com> wrote:
+>
+> > But there was a good question raised by Phillip in
+> >
+> >     https://lore.kernel.org/git/ab047b4b-6037-af78-1af6-ad35ac6d7c90@iee.email/
+> >
+> > that I didn't see addressed in your response, which was "why not put
+> > this behind a new `--show-partial-filter` option"?
+>
+> Actually, I addressed it[1] -
 
-> repositoy could trivially safe-list itself.  However, it's unclear (to
-> me) why 'git -c safe.directory=3D...' is ignored: 8959555cee
-> (setup_git_directory(): add an owner check for the top-level
-> directory, 2022-03-02) only states that it's ignored, but doesn't
-> justify why.  Now, let's suppose that there was a compelling reason to
+Ah, sorry that I missed it! I think Phillipe's GGG issue is probably a
+good signal that we are not making this information as discoverable to
+users as we could be.
 
-Correct.  I do not think it is a restriction with any sensible
-justification, just that it happened to be implemented that way.
+I share Junio's concern that this change may tempt future contributors
+to add more output still to "git remote", but perhaps not. So I'd be OK
+with this change as-is.
 
-IOW, I am saying that GIT_SAFE_DIRECTORIES may be a lot nicer user
-interface than fixing the "we ignore 'git -c safe.directory'?"  bug.
+> [1] https://lore.kernel.org/git/20220501193807.94369-1-chakrabortyabhradeep79@gmail.com/
+
+Thanks,
+Taylor
