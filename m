@@ -2,135 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBBE4C433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 08:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B24C433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 09:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232715AbiEII4B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 04:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52982 "EHLO
+        id S230281AbiEIJtb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 05:49:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbiEII0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 04:26:10 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F301A449D
-        for <git@vger.kernel.org>; Mon,  9 May 2022 01:22:06 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id u3so18311803wrg.3
-        for <git@vger.kernel.org>; Mon, 09 May 2022 01:22:05 -0700 (PDT)
+        with ESMTP id S237788AbiEIJSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 05:18:07 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0899620CA52
+        for <git@vger.kernel.org>; Mon,  9 May 2022 02:14:12 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id c1-20020a17090a558100b001dca2694f23so12120884pji.3
+        for <git@vger.kernel.org>; Mon, 09 May 2022 02:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aEMYJy+mOnvD3L5Y+ZlIg9VK5mDcFBgwXx+M2Z7or0g=;
-        b=ImKYJl7ob6Uc+9g9WhDCLySfcfKycp46uP4i9Gs6xKK7fSZlQWVdZjcISOm7CmgJgy
-         cgkgwyfCEmuXJvgTuC1fkBG82HcR2OSzbx4TYjAetHGs/cYM6SSG6hTZuaZltPnad5Lk
-         xRtcpc3mci9guWhircUjdqA0p3TcriKcoU35CHPPyNnvVYDIVkEsEEBbruRBDeyZaMnp
-         s483xwfUUbgfpNKAwm/FQH52h7Qab/G/aUqDSdGMUsnJZVn/zhp8NVP749oAcmSveFRc
-         H0hhYvB2+AWjGME42hTp3WjJMjup6fIs5kono1XEa9Roe5R3Ze4MHTY+0XJBRLLBSi4C
-         naVg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QIlonvmBigUhfovEfMW19S2GNedCdOg2cd+DYfzR1OU=;
+        b=jm4pzxh3MdMvtvtlAHcPJLlr9m+U1m/c3U/ywZG90JcfgPoN4ZTHKMPvNul5Fk/KE5
+         z6i7/DpF3OR0BwSgMnA1iGlFVJlrGCfDmK+SW9rX4TZ3/wMIiYHAvF9PxQJl8oJEvXvq
+         N7sgks4KWNoiFuZPOYcYWRdNFL4KjOUEracSqFzI4FwFSaQpwwuYoHhm6hJ3Vuub35dk
+         +hGxw6Rd5Op9ejk0Vg8wAhcA2Gks1ex2EFs7SyXnle/WJf8UNM4UpfoKSbcJ3gyQxRWa
+         uG+zBCPGUQMVERDEo84vrlM8kvbh/C9fHaurkkwSeQ4K55VAdf7FXxFura0kT+ZtzOmZ
+         L6PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aEMYJy+mOnvD3L5Y+ZlIg9VK5mDcFBgwXx+M2Z7or0g=;
-        b=r8Gkyu+MiEI3RqfmdZ5J/3gweIxvE+HhQWpBhyvBNoGGXLHCsrN4YusiyfgXovQ6kA
-         KegcgDDfaoKJ1ZcRvGmhfvBTPP6TMNIJri8IT88M35FDtLW9qn2HGb//t99r8TJAa0fv
-         jUMmgixpJofaEjREA1+cSodyGAhRyyE9O29JdtWVyIev8qVHwFB3hE7gOWJd3rctliKW
-         lN/lPiq+jOE8JJk7hX0k4+ZYTPKyOjXmiFJt1JMgpzCl59dc657AhpO4mKbT54HmUSFF
-         GTgL7f5x0G66xMo8upJgAIw0JJL51qmHKUcuIwGduhd4Uombnr7/wwdZHOcPFauyPyb7
-         BUYg==
-X-Gm-Message-State: AOAM5325EkJVLSDbTKu0xgpcXdbfEweeCQZGCQQmV2vwUTBCAwDnbyKP
-        OU8RXLI7cevyON3315YyeCXiJtLrlKA=
-X-Google-Smtp-Source: ABdhPJyk5K7tYEc090O6Wo13MDe9sPxbPvoo0FfeNDdYJYu+q+5KNhKWwTOiYdESC2x0yx619EZ8vA==
-X-Received: by 2002:a05:6000:707:b0:20c:4fd8:1d61 with SMTP id bs7-20020a056000070700b0020c4fd81d61mr13067051wrb.407.1652084489888;
-        Mon, 09 May 2022 01:21:29 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.192])
-        by smtp.gmail.com with ESMTPSA id bk19-20020a0560001d9300b0020c5253d908sm10293905wrb.84.2022.05.09.01.21.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 May 2022 01:21:29 -0700 (PDT)
-Message-ID: <4314bf6d-d76c-bc5b-a7f9-e59c7c181c7c@gmail.com>
-Date:   Mon, 9 May 2022 09:21:25 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QIlonvmBigUhfovEfMW19S2GNedCdOg2cd+DYfzR1OU=;
+        b=ZSd5rhQL1Ke7Dsy3QnK/W3pjsrT76qCdRmv6nGj7wXxJyUHB7OUUWMYWxgurbv7BMT
+         VE0AkpdT6Lw0jUWydFOnZpXGI6bivKYKwIEjCVg5zvR1RaKClBBy8vmD0uALKVNdnwaC
+         VddJSLx1+QK+JCVMAdWtX/th4ByfzbWoGjpZinymjyLinvq+CjNtrGQ0IsdOH48keMEt
+         ucsZd+wJqzjbGWWVORH1fcmWzFz4sNjRkGwCsM98JLJIlKKCTQv7o4Em3OQcOQfSmrD0
+         sdx6SepqqmCb1KvWSl/GWIwPjh9ErHf/mCTgj5IFUciHeniP84m2rShwZdJImD46cr6b
+         4Rrw==
+X-Gm-Message-State: AOAM533h9QOJwYwwt2WiXHs1pAuXOEQFjS+fUbM512U1m4cTPHI+HZQM
+        C/a32Aob2GgTCcApFN6HcGo=
+X-Google-Smtp-Source: ABdhPJz2iL+QnWF5Kehb2wgmGFXOtJHgeu3mKKwwWoGmhf5reWA/77qfzW0FjyGGzvhqWgn0fuwS+A==
+X-Received: by 2002:a17:90b:4a4a:b0:1dc:4731:31a4 with SMTP id lb10-20020a17090b4a4a00b001dc473131a4mr17309885pjb.19.1652087651592;
+        Mon, 09 May 2022 02:14:11 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:2bc7:fe6a:cca3:78bd:7640:2c62])
+        by smtp.gmail.com with ESMTPSA id n10-20020a170903110a00b0015e8d4eb1cesm6595673plh.24.2022.05.09.02.14.07
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 09 May 2022 02:14:10 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v3] builtin/remote.c: teach `-v` to list filters for promisor remotes
+Date:   Mon,  9 May 2022 14:43:15 +0530
+Message-Id: <20220509091315.13234-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <f15e2673-ddc3-27ff-d31c-7fa32af27ae7@gmail.com>
+References: <f15e2673-ddc3-27ff-d31c-7fa32af27ae7@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
- using sudo
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org, bagasdotme@gmail.com,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20220428105852.94449-1-carenas@gmail.com>
- <20220503065442.95699-1-carenas@gmail.com>
- <20220503065442.95699-2-carenas@gmail.com>
- <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
- <xmqqlevfesnu.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqlevfesnu.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Philippe Blain <levraiphilippeblain@gmail.com> wrote:
 
-On 05/05/2022 19:33, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> Hmm. I would like to suggest that we can side-step all of these issues
->> (and the ones I outline below) by considering a similar approach to the
->> one Stolee took in t0033: use one or more `GIT_TEST_*` environment
->> variables to pretend the exact scenario we want to test for.
-> 
-> I like the GIT_TEST_ASSUME_DIFFERENT_OWNER because it is fairly
-> clear that it cannot be used as a new attack vector, even with
-> social engineering.
-> 
-> It would be nice if we can do something similar, but I am coming up
-> empty while trying to think of "we are testing; pretend that ..."
-> that is good for testing this SUDO_UID special case *and* clearly
-> cannot be used as an attack target.
-> 
-> So I very much like the suggestion in principle, but I am not sure
-> how useful the suggestion would be to make the resulting code better
-> in practice.
-> 
-> Perhaps this may be a way to pretend we are running a command under
-> 'sudo'?
-> 
-> 	test_pretend_sudo () {	
->              GIT_TEST_PRETEND_GETEUID_RETURNING_ROOT=1 \
-> 	    GIT_TEST_PRETEND_LSTAT_RETURNING_ROOT=root/p \
->                  SUDO_UID=0 "$@"
-> 	}
-> 
-> 	test_expect_success 'access root-owned repository as root' '
-> 		mkdir root/p &&
-> 		git init root/p &&
-> 		test_pretend_sudo git status
-> 	'
-> 
-> That way we can avoid having to run "chown" while preparing for the
-> test fixture, and running "git status" under root, but I am not sure
-> if we want our shipped production binaries to have these "pretend"
-> knobs.
+> I think the tests woud fit better in t5505-remote.sh, since the patch really
+> adds a feature to the 'git remote' command. 
 
-Lets ask ourselves "How could an attacker use these knobs to facilitate 
-an attack?". They need to either (a) set these variables in the user's 
-environment themselves or (b) persuade the user to set them. For (a) if 
-an attacker can set them in the user's environment then they can change 
-the user's $PATH or $GIT_DIR and $GIT_WORK_TREE so this does not open up 
-a new way to compromise the user. For (b) I'm not sure it is easier to 
-socially engineer the user to set these new variables rather than 
-GIT_DIR and GIT_WORK_TREE which will also bypass the check.
+I think you're right. Thanks!
 
-Best Wishes
+> I found it sligtly awkward to use the future tense here. Maybe just:
+>
+>     For promisor remotes, also show which filter
+>     (`blob:none` etc.) that promisor remote use, wrapped in square brackets.
+>
+> And technically, it's not really the remote that "uses" the filter, 
+> but more the local Git client. So maybe something like this would
+> be more accurate and simpler:
+>
+>     For promisor remotes, also show which filter (`blob:none` etc.)
+>     are configured, wrapped in square brackets.
+>
+> And even then "wrapped in square brackets" *could* be dropped, I 
+> think.
 
-Phillip
+Got it. Thanks for the suggestions about both the PR and the patch.
+Will update it.
 
-
-> Thanks.
+Thanks :)
