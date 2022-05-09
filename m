@@ -2,107 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92B23C433EF
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 15:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7D5EC433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 15:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238030AbiEIPQt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 11:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49076 "EHLO
+        id S238216AbiEIPWk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 11:22:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238020AbiEIPQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 11:16:48 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C8F1FE1EF
-        for <git@vger.kernel.org>; Mon,  9 May 2022 08:12:51 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id j12so10550660oie.1
-        for <git@vger.kernel.org>; Mon, 09 May 2022 08:12:51 -0700 (PDT)
+        with ESMTP id S238242AbiEIPWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 11:22:37 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E8422440D
+        for <git@vger.kernel.org>; Mon,  9 May 2022 08:18:43 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id e24so19950860wrc.9
+        for <git@vger.kernel.org>; Mon, 09 May 2022 08:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=P4ymQejNQ2JXsU4XxotNNHm7rJ+RQBn6dZcK+i2WW9A=;
-        b=JNtBbnIdkHkJHDFb6aSzdB4sO7EcJwNWM2YZxBDQwq56lqNNkwuED1IQ2NUOL4UnPm
-         8FQjR2ZDWnrSmRM5n80k6zygUVowVpCh1+wL5erWxXAteIZ6cuWgqipEqBk8mnsSx4/s
-         tgPVxGjy0hveUk2KGQxxMBu3vc+tdX+jkdGxC4yA3DrzRiQzk37LlUG3yrju/VT5VtQv
-         c+X7i13j2eedeNrcT8c56g/w734cL2pGZZ21UO8fS+C3y2DQaOcuRtn08H0ITXEX4Y9S
-         l1OeOqRlSuP14Gylue/AttVCsRTc6B8Tj0B0cJ5y9LMRNxyARgqBqABlhH6brSu/44oB
-         pwUQ==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Im17A3+eAsmoH9ZXmZHe2RLSZLGeQcJ0qDqhiq0iy2Q=;
+        b=BbAyeNujJi4qDpD61ldC1G7JUMsXCpSaMAtaCdBTxF3WKX6NBu1/NFJb4K7QatOamT
+         EnpeH4cAnOFLZyDBIpXTDdTahctVdZ6x0KNFfONaUvpzaV/r6zR4bohpXQfvHStY7J62
+         CeLQEkl/gAa7PBAKK+0xodFrfXqrIoid9kiop5miWbel6kc3QqcGuQyrSP+n4IBb51cF
+         4HpvezYRzHp1MqBdG9LU89OEKfBl57H8YwyxxP3XngfJpJFo7HL0lU3IgRtnVgrN9dWS
+         eid0IdZjOqWm9CYyGM7CMhUkJ22qKLHRcydsFjgu1vzP3gQNDlDNvQapJXeHMk4T9ske
+         DRdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P4ymQejNQ2JXsU4XxotNNHm7rJ+RQBn6dZcK+i2WW9A=;
-        b=KQjTjYrSU3xklW4bqs48+kb9fGb8OXO4QgJCtG3koBkOomZ7+xc6HAH7i1W9SoZr7L
-         44RhdM1+N2UQocU+hPU7zb1x6XIC08CSxWM/qJFQh76XiL/gpY4SR2f91GjzgujbLhQ2
-         qid6COwj8TmVdHEuKB8cxp4ZC1VE06Jx0K/UdmtdUlSbV6YUQk9Kib++fE+qCEwBa6hG
-         2vXtYu/7jTHK4byokMELfcP8TtZ6lhyFJM+wkm37A2eL7fwzA5bw66ZEhK7fMCsn/gbw
-         t9dia6TK1E/Ll46sy206HWII8G5fiK04Q27xP4ssOpAfXxTmd4gvrP9i6bIA1iYhArU/
-         5rAA==
-X-Gm-Message-State: AOAM532vLidjdfPhg2ha954mzy9P991nlVhclufsjJ7/DrKtcimHFc5y
-        1Q3p0Ar6AXqM4XFMMi4RVDt5h70rDXmM9VyhGKl3QLSeMth0dg==
-X-Google-Smtp-Source: ABdhPJw6fJYikTDKwaRS/y/dLYbeUZAYZuOdeO2s3Zx1a+zN7ONylmJ1mBKMLEtxg53RojCXB9bKj5eE8oJFcE+Uqgg=
-X-Received: by 2002:a05:6808:bc8:b0:326:bc22:c530 with SMTP id
- o8-20020a0568080bc800b00326bc22c530mr3562291oik.114.1652109170902; Mon, 09
- May 2022 08:12:50 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Im17A3+eAsmoH9ZXmZHe2RLSZLGeQcJ0qDqhiq0iy2Q=;
+        b=yv14OegsBwY+Zo/oT1wfRrpVmfJ5QU63WM5Hj9dfVEvcwxGbKTkNOz2UJe4bn+rkKn
+         ueZEDfw1/lB2E+SB2xM5Gx2LEmqpee4FG04NSYx6EU6s2tTV5hgoTHBD845bZqjzQo8U
+         xjPw3giD6pUQJQxRq+ec02Mdq395dKop6kB0BUybkmBZb94F3zKsrRMLzWNIUaOtn1lc
+         DkSljWQJsp2uIxpRyKiUAKLN92ysk3nyjDU0cK018Jgb2boRXbmIYc6sryz2kA53Cer8
+         HwjdM7eEtfzQiMN9iTP+kUMwzjoVm6GOwlrSqR2ts9xEGk8tCFNB9a3/0LTiZDX58Z12
+         0WIg==
+X-Gm-Message-State: AOAM531YkCR4UPvtVgEmsxpiHBmnAg9BhMX0nUZYe/pT3cX/PIvp3hOR
+        CXJ12mcEBkV3Ui2YmYQ48e8=
+X-Google-Smtp-Source: ABdhPJyj3LO8aPQYRvGhlYE9SqVi+48CmerZzf0aIrObNGG+NP1gEDdoC0hle9OM917KBUGMuB4klg==
+X-Received: by 2002:a5d:63ce:0:b0:20a:da1f:aac5 with SMTP id c14-20020a5d63ce000000b0020ada1faac5mr14069275wrw.589.1652109521831;
+        Mon, 09 May 2022 08:18:41 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.192])
+        by smtp.gmail.com with ESMTPSA id l124-20020a1c2582000000b0039482d95ab7sm7978770wml.24.2022.05.09.08.18.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 May 2022 08:18:41 -0700 (PDT)
+Message-ID: <8b7e0af4-7b6b-8891-edc1-81d6b0f3b412@gmail.com>
+Date:   Mon, 9 May 2022 16:18:37 +0100
 MIME-Version: 1.0
-References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
- <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com> <965b5394-9f72-e4a3-9ed4-6abcf67fb524@gmail.com>
-In-Reply-To: <965b5394-9f72-e4a3-9ed4-6abcf67fb524@gmail.com>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Mon, 9 May 2022 20:42:38 +0530
-Message-ID: <CAC316V7dRjsLiVJLvB-PXRDVZ0NB0xin9XEWq9QBiARthNuGaw@mail.gmail.com>
-Subject: Re: [GSoC] Contributor candidate introduction
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Plato Kiorpelidis <kioplato@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+Content-Language: en-GB-large
+To:     Carlo Arenas <carenas@gmail.com>, phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, bagasdotme@gmail.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20220428105852.94449-1-carenas@gmail.com>
+ <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com>
+ <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+ <xmqqlevfesnu.fsf@gitster.g> <4314bf6d-d76c-bc5b-a7f9-e59c7c181c7c@gmail.com>
+ <CAPUEspiX4FJc4-1DGCek1iWMYL7M7Xir9PSXbFAwQy7xTFKxYg@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAPUEspiX4FJc4-1DGCek1iWMYL7M7Xir9PSXbFAwQy7xTFKxYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kaartic,
+Hi Carlo
 
-At my job, my timings are flexible. I already discussed about GSoC
-with my team and Microsoft is supportive for open source
-contributions. I have done side projects and open source contributions
-in past also, so this shouldn't be a problem. I also planned to spend
-weekends on this (I usually spend weekends on my desk, so this is fine
-for me).
+On 09/05/2022 15:51, Carlo Arenas wrote:
+> On Mon, May 9, 2022 at 1:21 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 05/05/2022 19:33, Junio C Hamano wrote:
+>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>
+>>>> Hmm. I would like to suggest that we can side-step all of these issues
+>>>> (and the ones I outline below) by considering a similar approach to the
+>>>> one Stolee took in t0033: use one or more `GIT_TEST_*` environment
+>>>> variables to pretend the exact scenario we want to test for.
+>>>
+>>> Perhaps this may be a way to pretend we are running a command under
+>>> 'sudo'?
+>>>
+>>>        test_pretend_sudo () {
+>>>               GIT_TEST_PRETEND_GETEUID_RETURNING_ROOT=1 \
+>>>            GIT_TEST_PRETEND_LSTAT_RETURNING_ROOT=root/p \
+>>>                   SUDO_UID=0 "$@"
+>>>        }
+>>>
+>>>        test_expect_success 'access root-owned repository as root' '
+>>>                mkdir root/p &&
+>>>                git init root/p &&
+>>>                test_pretend_sudo git status
+>>>        '
+>>>
+>>> That way we can avoid having to run "chown" while preparing for the
+>>> test fixture, and running "git status" under root, but I am not sure
+>>> if we want our shipped production binaries to have these "pretend"
+>>> knobs.
+>>
+>> Lets ask ourselves "How could an attacker use these knobs to facilitate
+>> an attack?".
+> 
+> That is not the question raised by having those "pretend" knobs in the
+> production binary, but instead how can an attacker abuse them to get
+> themself and UID he doesn't have and therefore additional access.
 
-I do not have any other commitments or planned vacations throughout
-the GSoC timeline. I would be able to dedicate 35-40 hours per week :)
+Maybe I'm missing something but I thought the idea was that these knobs 
+were only for the safe.directory check and the normal file permissions 
+would apply to all the other code.
 
-Thanks,
-Shubham
+Best Wishes
 
+Phillip
 
-
-On Mon, May 9, 2022 at 12:14 PM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> Hello all,
->
-> We were reviewing the proposals and noticed some missing information.
-> Hence we wanted to gather the information now.
->
-> Shubham,
-> You have mentioned that you'll be able to dedicate 35-40 hours per week.
-> We just confirm if that's feasible despite you having the commitment of
-> a full-time job.
->
-> Also, do let us know if you would have any other commitments during the
-> GSoC period that you're already aware of.
->
-> Plato,
-> Do le=E1=B9=AD us know if you would have any other commitments during the=
- GSoC
-> period that you're already aware of.
->
-> Apologies for reaching out late. Since the project selection deadline is
-> approaching soon, do respond as soon as it is feasible for you.
->
->
-> --
-> Sivaraam
+> The fact that the current code requires you to be root to even enable
+> the logic makes it more difficult to use SUDO_UID that way, because if
+> you already got root, you don't really need them, but take into
+> consideration that this discussion starts with (how can we run these
+> things as a the test user and avoid sudo, hence root).
+> 
+> Carlo
