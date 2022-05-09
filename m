@@ -2,102 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75623C433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 16:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C34FC433EF
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 16:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239014AbiEIQ2p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 12:28:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
+        id S239074AbiEIQbM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 12:31:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238952AbiEIQ2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 12:28:44 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5865D1A809
-        for <git@vger.kernel.org>; Mon,  9 May 2022 09:24:50 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id f5so9641308ilj.13
-        for <git@vger.kernel.org>; Mon, 09 May 2022 09:24:50 -0700 (PDT)
+        with ESMTP id S239063AbiEIQbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 12:31:10 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9141921AAB7
+        for <git@vger.kernel.org>; Mon,  9 May 2022 09:27:14 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id hf18so11598557qtb.0
+        for <git@vger.kernel.org>; Mon, 09 May 2022 09:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=schrodinger.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2b06CUdYXjWiEn3nP1UkmanFdhCZqI0dkeFbHfZJj/g=;
-        b=nkO51lEz9mgol8qBKDbo/8FL4QlEIU2F2JIMZZukCvzOfqYsqBWSehCBeyCV0DriWk
-         y9oj4mkvfw420VaZl3iAbfc+HSG4kxcxUobvTxSdav3S8D5ZRVLdWVnwmc69c9/A+V2W
-         mo6P1xh6LSuvhWAIkAc2p5VM8Ck49WQ06uLTnpfMptOn8wn+VMm5NMEtcrzy11NzFdUp
-         o7b/D5f1nbNqFZMpULNToA0YCSFAIFcv5drPUXoZzAu86O4BsVeyaFw738bHe1SPrK+d
-         t5TQfzdWRPUt/4CArzmN2+SFkFu9cREfGpSCM1kJK6bRTWXrmxkKv/GVqoBFmY3aQaU1
-         nAew==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9TE1N7Fb7Gy5GOuurGgQd1cQxccC1aAj1ZZaPsLY8U8=;
+        b=KLDcoTvK9HKATkxyW/PW394mD+lk9MFFGjLF/DTVQ/KLE85paW4meSQxzbC80QjHtF
+         E+6nIb3kENe5pXBNPM3pToeyJRQqhI3cBLSbPKIRzn/GfupPVN/7P9xcJeF1tk/jDuVZ
+         4QCira0WrRJvJjPX/9i3EuUVauNU3PzE8kbh+MFhZQqZQa+xjScVQ71MS/Tb6/WPjTpk
+         c+YDJMwF8cVAw8pU9UaHUhAy8LHFJSaqP4kQusKUL4P++njtoQh/LwFAi8o5dWZPXzyv
+         aIrgtabC+Y/kyzyzVToBvbc43NZdVVyid8FblYwJo6hvN7++VwluEzxEVkKNQBLvCb35
+         jHLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2b06CUdYXjWiEn3nP1UkmanFdhCZqI0dkeFbHfZJj/g=;
-        b=zuiZxrMS9YS81roly6+SCj/lxV8bQ0fs4BmODv/FhlZNPhYT6PclqOMhgvS9oSovm+
-         VJbWqK9f61HFVFFJbKLKdQYfEh1krWdpau5KaUhW96ScWa46k1DQzbcoUbEqSTqLVEid
-         iZQTU4a3OAoTO/rTI3ERZdGIv78/kKas+Kz2Ta5xLUWRCzT+StEyhC48sbeb5gFOfqmf
-         peF28By0h75lRWRPUTFWqQp31iK6C/ZQAFLeQjFqcjSJ8H11XeVRT8yU0xKYMLMq/SuH
-         2K5sTtWiH2K+Pjub61bHVLHppDYLtscRWERJW5l7yTQG26J9D7u9j5BjUvZZRk/fAM/G
-         jRww==
-X-Gm-Message-State: AOAM533/yXuLrc7M5tT5qB9fYCvHul12a84rKobbZNkCS31GruZnMyKp
-        V94xxAqrqdQVwIOu0VZe3kKdMSJnnlPfcUKWSj0GoA==
-X-Google-Smtp-Source: ABdhPJwgo5SgPItE/EcoPQt4Vn3gUwCWjTWhIF9i3VKKs4DwLbQIzCqIwOO+gh2wvWhOQhySIYaOoC368MtPYTuIqF4=
-X-Received: by 2002:a92:d4cf:0:b0:2cd:6e3e:9d8c with SMTP id
- o15-20020a92d4cf000000b002cd6e3e9d8cmr7045638ilm.242.1652113489733; Mon, 09
- May 2022 09:24:49 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9TE1N7Fb7Gy5GOuurGgQd1cQxccC1aAj1ZZaPsLY8U8=;
+        b=zj3kqvaXLONDISApAalcyF7uQF3r09fC2YtM8B2ioyvv4dLW2ls72I8+pvo0vFP4xm
+         HobS09H+vV6b1neHOrH7AB7H7GNpo8BMon4GocRxL/a5wWKAO0oyokJBILdI4NO7dck8
+         ogbfA8vZjBv50YscF8ciD61cAvSQcjpScOaMJN3ns0qgTG4v1sBiMO47DclfsC+27AMb
+         WSPgNcxzXB9CV9RgUvAbDUUQzFMZMQp03+Zq0HWxOt4SaOso7Md9rLjRkQbh5XW/zKcj
+         0D6l1AcP1JKXYzoZU9KzOZH/MTiiuNkngPp7jbvinXVcXusKMcasBhbCo9MJNFxFxG1W
+         PVxg==
+X-Gm-Message-State: AOAM533qsuJQlq35GrCxj8q8H3wwKYbL2fuFEV1cvsOC5HD4n0UNK30c
+        u6Rckrpp2DoR6hS0iNHKuuVlww==
+X-Google-Smtp-Source: ABdhPJyZYdszs8wvyQpVnVENoSbvngD3fq9SAiIRiUoVgPlq6qX8tRKJfZ5T/LDLG2dw4AaL7xQq6A==
+X-Received: by 2002:a05:622a:c4:b0:2e1:cb5b:9b5c with SMTP id p4-20020a05622a00c400b002e1cb5b9b5cmr15627049qtw.69.1652113633706;
+        Mon, 09 May 2022 09:27:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a26-20020ac84d9a000000b002f39b99f676sm7813165qtw.16.2022.05.09.09.27.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 09:27:13 -0700 (PDT)
+Date:   Mon, 9 May 2022 12:27:12 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Chris Down <chris@chrisdown.name>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>, kernel-team@fb.com
+Subject: Re: [PATCH v2 2/2] bisect: output bisect setup status in bisect log
+Message-ID: <YnlA4NpNMuyVkQIR@nand.local>
+References: <cover.1651796862.git.chris@chrisdown.name>
+ <acab8859d02c95750fdbc691ac672c17d5be0291.1651796862.git.chris@chrisdown.name>
+ <xmqqh762le32.fsf@gitster.g>
+ <Ynk2q1XVGsLPvALn@nand.local>
+ <xmqqv8ueelip.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAFnZ=JNE_Sa3TsKghBPj1d0cz3kc6o91Ogj-op8o6qK8t9hPgg@mail.gmail.com>
- <fc492627-c552-10ec-b30c-820299241278@gmail.com> <kl6lbkwa8h5n.fsf@chooglen-macbookpro.roam.corp.google.com>
- <b4d7600e-ed4e-b4b3-262a-a69818c25365@gmail.com>
-In-Reply-To: <b4d7600e-ed4e-b4b3-262a-a69818c25365@gmail.com>
-From:   Huang Zou <huang.zou@schrodinger.com>
-Date:   Mon, 9 May 2022 12:24:38 -0400
-Message-ID: <CAFnZ=JO15s=nXSNSDNeMvS98M49HxZ6N6EfNxP6v7-46i6dDNw@mail.gmail.com>
-Subject: Re: Bug Report: fetch.recurseSubmodules doesn't affect git pull as
- otherwise stated in the git config docs
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv8ueelip.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Glen & Philippe,
-
-Thanks for taking the time to look into this!
-
-> > I think the bigger question to ask is "what is the intended effect of
-> > 'submodule.recurse = true' and 'fetch.recurseSubmodules = false'?".
+On Mon, May 09, 2022 at 09:08:46AM -0700, Junio C Hamano wrote:
+> > I don't think so. bisect_log_printf() has only one caller, which is
+> > bisect_print_status(). Couldn't the latter manage its own strbuf without
+> > the need to introduce a new varargs function?
 >
-> Yes, I agree that it would be nice if Huang clarified that as I'm not sure
-> either of the use case.
+> I actually was hoping that other existing informational messages
+> prefixed with "Bisecting:" (i.e. those that tells you how many steps
+> are remaining) can go as similar comments to the log file; they are
+> currently written with plain-vanilla printf(3), and could use this
+> one instead.
 
-> > Perhaps this is just a performance optimization? i.e. after fetching in
-> > the superproject, the user wants to skip the rev walk that discovers new
-> > submodule commits.
-> >
+I see. In that case I agree that we this function should take varargs,
+and it should pass that va_list to strbuf_vaddf().
 
-So the use case here is just performance optimization. My team has
-over 10 submodules and I do not deal with most of them. I want to be
-able to pull the latest changes quickly (fetching submodules adds ~13
-seconds when there are no new commits to a pull that would otherwise
-take ~1 second). I want my working tree to be clean after
-pulls/checkouts. So checkouts and other commands that update my commit
-HEAD should still recursively update submodules (hence
-submodule.recurse is true). Although, I may be naively assuming that
-fetches can be avoided if I only care about the commit referenced in
-the submodule link. If that isn't the case, then the more practical
-use-case would be  'submodule.recurse = true' and
-'fetch.recurseSubmodules = on-demand', so at least submodules are only
-fetched when there are changes.
-
-The other use-case here, which I should have probably included in my
-original report, is `git pull` currently also recurse into *inactive
-submodules*. i.e. submodules that are not set in "submodule.active".
-If my submodules are not active, and not initialized, then git should
-not fetch commits in those submodules regardless of the settings in
-fetch.recurseSubmodules
-
-I hope this helps clear up a few things!
+But this patch shouldn't reimplement the wheel here with a bare
+vsnprintf() call that could be replaced with a strbuf.
 
 Thanks,
-Huang
+Taylor
