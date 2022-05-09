@@ -2,146 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BF5C433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B23AC433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239412AbiEIRFo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 13:05:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34814 "EHLO
+        id S239467AbiEIRPI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 13:15:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239344AbiEIRFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 13:05:43 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 606A017B84F
-        for <git@vger.kernel.org>; Mon,  9 May 2022 10:01:49 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id o11so11636628qtp.13
-        for <git@vger.kernel.org>; Mon, 09 May 2022 10:01:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=H+Rpej5SyhkOonXIgHaKPQIAcI/s5UVUHx2yDttNyUA=;
-        b=k8nSuh02849Qad3aT2faEB6iIL53lD9GxNTxzZpo/excD3uXQ3zP398xlGDjZcTL4y
-         tfid3bZhoNaWMh6sY2iziqKGWYaLD77o88c4gXRhqcXLD+vdtTf1GVHUKFQbKcSod7cE
-         CYi5JdXUacb2l8IE1xLgk1pembnRtiPLcTBLXBbjiktk1okM5Is0isZlz2B4NxtMActm
-         Wix17NneY9QCzOCps/IxqEk9p8Zgm8rn07OPh/Mccxj8RMhL3nJzHLSX1+I3rTiCCqIK
-         urrOjwzVsYAMlQYbZ2ntofcGUjxAA8yOY454Tk5VS3iWJvW8nIVAcFVfcc3Yv8jCLIh2
-         vxMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=H+Rpej5SyhkOonXIgHaKPQIAcI/s5UVUHx2yDttNyUA=;
-        b=1YmWFaqyOF+umzYrkgbaH4fmbYKA0flElWvyM7gKbRxlFnHjiixOLs0/R6ItFNmKQl
-         QmwQoa400gP3qIM05vAD6RZlg7hRoS0AGn0qmlpDRqdheTJbf3X9tRyRANkfIMEzpK5N
-         Ln2y2B8AxyUyztOLJCty0OLLcHAahRiZfDdqF7nihco80znTAHOW7J6DwmCuWzCfkSVo
-         G3yv+YqmQTWompHE9Az+IKOGJgInDGTHg1U8+QqWqnmkC01/QYthvZUeUI3t1ouJ2pi5
-         j3NHGzupbTGQ5aw6AfWqCFFtN0WUw0ZTPKnC6D9ZQyISsva4QlI4oxU2NdhPGHPVZUOc
-         LmnQ==
-X-Gm-Message-State: AOAM533pQM0z6mPNrOO54ThjrnFVgwb2Xhazz6iBnQhxdbrv3GiAOBd9
-        QuzI37XguYhWTzyIlrq2A5Y=
-X-Google-Smtp-Source: ABdhPJxik5oUmhZyS0cnFu8vjpJIMtnXd5KULX/+2Su1KGO4o9Z26QWuok0zD93YHKknk9YEB5EBgw==
-X-Received: by 2002:a05:622a:58d:b0:2f3:cceb:d9ab with SMTP id c13-20020a05622a058d00b002f3ccebd9abmr12633366qtb.36.1652115708316;
-        Mon, 09 May 2022 10:01:48 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id g15-20020ac87d0f000000b002f3e127be41sm733771qtb.20.2022.05.09.10.01.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 May 2022 10:01:47 -0700 (PDT)
-Subject: Re: [PATCH v4] builtin/remote.c: teach `-v` to list filters for
- promisor remotes
-To:     Taylor Blau <me@ttaylorr.com>,
-        Abhradeep Chakraborty via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
-        Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-References: <pull.1227.v3.git.1651933221216.gitgitgadget@gmail.com>
- <pull.1227.v4.git.1652095969026.gitgitgadget@gmail.com>
- <Ynk0mADTSJU/xVUd@nand.local>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <54aee42d-fe78-eef1-a371-7ca310a9319f@gmail.com>
-Date:   Mon, 9 May 2022 13:01:48 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S231344AbiEIRPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 13:15:07 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1024B13CEE
+        for <git@vger.kernel.org>; Mon,  9 May 2022 10:11:09 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D91B3133F81;
+        Mon,  9 May 2022 13:11:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Su0DMNk82G52KCZXTosq778spQBviilze5vk75
+        cfWus=; b=s3UDI0dwcorsYWlqIeJWoLTzdmOyTUjHw21bGE85iQgSNiMP/+tDuL
+        t4ovcwOwG5ach6r01xCgW1isrBiVaB/pVcu+PEKbax7M01Vw7UCZ9G1pXq6N53Ze
+        DYQbPdr0f9dGW5BUk9P1h3HNMNG41abZKNiOgFns5WdCvsdSs4vuY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF6AC133F80;
+        Mon,  9 May 2022 13:11:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 406D3133F7F;
+        Mon,  9 May 2022 13:11:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Halil SEN <halilsen@gmail.com>
+Cc:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
+        Christian =?utf-8?Q?Gr=C3=BCn?= <christian.gruen@gmail.com>,
+        git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Resizing panels in the gitk window
+References: <CAP94bnOyrx6hCmWSjmejVfopUydk10ga42wJzm1M4nk_OXn9Mg@mail.gmail.com>
+        <CAP94bnMHggYR=FOh8462tncFAxOUJ-db=yj7YPoTJRS-VwjEgw@mail.gmail.com>
+        <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
+        <xmqqzgjuocjk.fsf@gitster.g>
+        <CAOeUTuufDgsyp7FgJj4T+h=JOMaWYVBkMx8S6fNRQ3cdVo6tOw@mail.gmail.com>
+Date:   Mon, 09 May 2022 10:11:06 -0700
+In-Reply-To: <CAOeUTuufDgsyp7FgJj4T+h=JOMaWYVBkMx8S6fNRQ3cdVo6tOw@mail.gmail.com>
+        (Halil SEN's message of "Mon, 9 May 2022 14:46:45 +0200")
+Message-ID: <xmqqtu9yd42d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <Ynk0mADTSJU/xVUd@nand.local>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 047D7620-CFBB-11EC-B005-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+Halil SEN <halilsen@gmail.com> writes:
 
-Le 2022-05-09 à 11:34, Taylor Blau a écrit :
-> On Mon, May 09, 2022 at 11:32:48AM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
->> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
->>
->> `git remote -v` (`--verbose`) lists down the names of remotes along with
->> their URLs. It would be beneficial for users to also specify the filter
->> types for promisor remotes. Something like this -
-> 
-> This version looks like it has addressed many (all?) of the comments
-> previously discussed during review. On a quick scan, the code and tests
-> look good to my eyes, too.
-> 
-> But there was a good question raised by Phillip in
-> 
->     https://lore.kernel.org/git/ab047b4b-6037-af78-1af6-ad35ac6d7c90@iee.email/
-> 
-> that I didn't see addressed in your response, which was "why not put
-> this behind a new `--show-partial-filter` option"?
+> Junio C Hamano, <gitster@pobox.com> wrote:
+>> I didn't look at it back then primarily because
+>> the patches were made against a wrong history
+>
+> I remember looking for Paul's repository but I
+> failed to find it so created the patch against
+> the main git repo. Maybe I should have
+> mentioned this in my message since I knew
+> the documentation included that note.
+>
+> I am happy to rebase my patch if someone
+> could point me in the right direction.
 
-I originally opened the issue on GGG that this series adresses.
-My justification, and asnwer to that question, is simple:
-'git remote -v', for me, is a way to ask Git to give me all the information it 
-knows about my configured remotes. That's why I thought that it would 
-be really nice if partial clones filters would be shown. 
+Thanks for giving me a chance to double-check what we have in
+Documentation/SubmittingPatches is not stale:
 
-After all, 'git remote' is listed in the 'porcelain' section of the 
-Git commands [1], and isn't the goal of declaring commands "porcelain"
-that we can make their output more useful to the users without worrying as
-much about backwards compatibility than with plumbing commands?
+- `gitk-git/` comes from Paul Mackerras's gitk project:
 
-> I share (what I think is) Junio's feeling that having information that
-> is readily available from e.g., running "git config --get
-> remote.<name>.partialObjectFilter" seems redundant. I could understand
-> forcing a user to know the config key's name feels like a hurdle. But
-> cluttering the output of `git remote -v` seems like the wrong solution
-> to that hurdle.
+	git://ozlabs.org/~paulus/gitk
 
-As I said above, I have 'git rem' (my alias for 'git remote -v') in my muscle
-memory and use it when I want to have an outline of my configured remotes.
-I think it would be really easier to add the filters info to the existing output.
-It's really faster to type than using 'git config', and you do not have to remember
-which remote name to query. I think "clutter" is a little strong word here :)
+I just made a fresh clone of it just to make sure.  The latest
+commit in the repository is 6cd80496 (gitk: Resize panes correctly
+when reducing window size, 2020-10-03).  It seems to be related to
+the topic you are working on?
 
-> But I can see where it _would_ be useful. So it would be nice to be able
-> to turn the extra output on in those cases, but _only_ those cases, and
-> a flag would be a nice way to go about doing that.
+Again, I wonder if Paul's been too busy for (or no longer interested
+in) maintaining it and perhaps he can use a replacement maintainer?
 
-If really this topic is blocked by "we do not want to change the default output
-of 'git remote -v'", then I agree it would be nice to be able to set 
-'remote.showFilters' (or similar) to get such output, I agree.
-
-Or, making 'git remote' act like 'git branch' and accept a second '-v', i.e.
-'git remote -vv' would list filters (then I would just adjust my alias :P). 
-Then we can outright declare "the output of 'git remote -vv' is subject to 
-future changes to show more useful information", or similar, so we do not
-have to do the same dance the next time we want to add some other info.
-
-The downside of hiding such new features behing config values or additional flags
-is that it really, really limits their discoverability. This is something that I 
-often think about and think we should really do better in Git, in general. 
-For example, features like 'remote.pushDefault' or the 'diff=*' attribute
-for language-aware hunk headers (and funcname-limited log/blame etc) are immensely 
-useful, but often even experienced and long-time Git users do not even know they exist, 
-because they are not covered in "regular" Git tutorials...
-
-Cheers,
-
-Philippe.
-
-[1] https://git-scm.com/docs/git#Documentation/git.txt-ahrefdocsgit-remotegit-remote1a
+Thanks.
