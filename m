@@ -2,100 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB662C433EF
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 15:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3436C433EF
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 16:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238709AbiEIQCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 12:02:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41516 "EHLO
+        id S238780AbiEIQD4 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 9 May 2022 12:03:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238593AbiEIQCS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 12:02:18 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95A52D9ECD
-        for <git@vger.kernel.org>; Mon,  9 May 2022 08:58:23 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id m1so3906058qkn.10
-        for <git@vger.kernel.org>; Mon, 09 May 2022 08:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8e0q7KTps17Y6pcMw7krBl/XGuvqfmneBpenrDxL7hc=;
-        b=kTgKGYl4ZhafQeQDdZLzW13pTqU3kV4KLXuMosEY6FKFSdBKI8CfvPz7+qIMoXVD21
-         GxHbexI1YRc7xBaPP9oKTt5Ir4Vqi0VkJzberwbONq0ue0WP8ARPzYRc1CP7Yifqnyyp
-         uJZXKxIN0RDdbUNwBh6TResLMwbFUnqrFhDFJ7U/3c+PMjOBfXwrlKH+DgzkAwJV4jqS
-         PCkwchf0Z9P0HPSvwAzcLjfkJrLfDIkTk4ujFZr8ct3hi5Zs9B6EjmUCn1YWud7toXJS
-         mNbEsG03a+5eOGtPzEsArPBA2YHDy6/ZjJZCGfiz/S4DjmdFAtUnELy5xxqRL9p+QPOQ
-         3C4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8e0q7KTps17Y6pcMw7krBl/XGuvqfmneBpenrDxL7hc=;
-        b=QUP30uEJ0QF0DG7VtqKAUt234I+RAcFSx6vajHvCg0syIIflnDYR4XubUUZDbHpRLP
-         rXW2g5hTZFWY2vZI5/9RPvtl0tzOElrUVrmfAoDCWbDlEVPkcHTCbdJkBihMtMylbIqk
-         zCEE/vu87Xr3oltdUN+XCklFaMs103rJOXLShaqfdp13dmLzH+P44MdB53zTTfMvXHBA
-         ni4JeRukyK6Akom+PGzIoQKODHDIt4hwRjcoqZhAqz+dk30doofZYoJcFyspsdIgfnAt
-         jQeSt2vwIGE0V2BvKtEgxusXjKpLlhGZhK+XrN+856jJ8GQm8zoWTatksgMo05OXaMBn
-         ea/A==
-X-Gm-Message-State: AOAM532o16u105KkBZ8zJIG98tS6m4Su9BuXyKhRtSWO1czUT7V4Tydz
-        zesgEXwFckvwk/iTx3vgK5XD/TfUPIgV1cL/
-X-Google-Smtp-Source: ABdhPJzA/NIaAC17BRKW6PLmdjnqTnTf48Hpa2TooIs8vrFYu+MjvVs6K2gAelyrg0Q14lX+yMPEaA==
-X-Received: by 2002:a05:620a:2892:b0:67e:be24:e5d7 with SMTP id j18-20020a05620a289200b0067ebe24e5d7mr11931511qkp.762.1652111902959;
-        Mon, 09 May 2022 08:58:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l1-20020ae9f001000000b0069fd35d2abcsm7153689qkg.112.2022.05.09.08.58.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 08:58:22 -0700 (PDT)
-Date:   Mon, 9 May 2022 11:58:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] dir.c: avoid gcc warning
-Message-ID: <Ynk6HdsPqYH9Np92@nand.local>
-References: <cover.1651859773.git.git@grubix.eu>
- <cd50ec73ddafaaeba04298ae79cbf625cc0d7697.1651859773.git.git@grubix.eu>
- <xmqqy1zejtte.fsf@gitster.g>
+        with ESMTP id S238713AbiEIQDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 12:03:55 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196812A7C0B
+        for <git@vger.kernel.org>; Mon,  9 May 2022 09:00:00 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 249Fxs5p031579
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 9 May 2022 11:59:54 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Michael J Gruber'" <git@grubix.eu>
+Cc:     <git@vger.kernel.org>
+References: <cover.1651859773.git.git@grubix.eu>        <f306f43f375bc9b9c98e85260587442e5d9ef0ba.1652094958.git.git@grubix.eu> <xmqq7d6ug0un.fsf@gitster.g>
+In-Reply-To: <xmqq7d6ug0un.fsf@gitster.g>
+Subject: RE: [PATCH] detect-compiler: make detection independent of locale
+Date:   Mon, 9 May 2022 11:59:49 -0400
+Organization: Nexbridge Inc.
+Message-ID: <034701d863bd$d3688200$7a398600$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy1zejtte.fsf@gitster.g>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKBROfmxINt9G3t8H7f4u2eJilVLQILeCTbAue0ZeurnVdx8A==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 06, 2022 at 01:21:33PM -0700, Junio C Hamano wrote:
-> Michael J Gruber <git@grubix.eu> writes:
+On May 9, 2022 11:52 AM, Junio C Hamano wrote:
+>Michael J Gruber <git@grubix.eu> writes:
 >
-> > Related to -Wstringop-overread.
-> >
-> > In fact, this may be a false positive, but reading until the correct end
-> > is desirable here anyways.
+>> `detect-compiler` has accumulated a few compiler dependent workarounds
+>> lately for the more and more ubiquitious gcc12. This is intended to
+>> make CI set-ups work across tool-chain updates, but also help those
+>> developers who build with `DEVELOPER=1`.
+>>
+>> Alas, `detect-compiler` uses the locale dependent output of `$(CC) -v`
+>> to parse for the version string, which fails unless it literally
+>> contains ` version`.
+>>
+>> Use `LANG=C $(CC) -v` instead to grep for stable output.
 >
-> But the correct end is start + (end - start), not start + (end -
-> start + 1), isn't it?  We've stripped trailing junk like /.git and
-> end is point at one byte beyond the end of URL to the repository.
+>I think this patch is a bit insufficient.
 >
-> E.g. for "https://auth@host/", we have advanced start to point at
-> "h" at the beginning of "host", and we have moved end back from
-> pointing at the NUL at the end to point at "/" at the end of
-> "host/".
+>    $ LC_ALL=ja_JP.utf8 LANG=C gcc -v 2>&1 | head -n 1
+>    組み込み spec を使用しています。
+>    $ LC_ALL=C LANG=ja_JP.utf8 gcc -v 2>&1 | head -n 1
+>    Using built-in specs.
 >
-> We are trying to make sure that the resulting "host" string between
-> start and end do not have a slash to apply this special case.
+>In theory overriding LC_ALL alone may be sufficient these days where everybody
+>seems to know about LC_*, but just out of habit, I would recommend forcing
+>both, i.e.
 >
-> If the original URL were "https://auth@host:4321/", the end points
-> at "/" at the end of "host:4321/", making the string to be checked
-> to "host:4321" and we are trying to see it has no '/' in it (which
-> is the case).  By extending the string by one, memchr() will see the
-> '/' at the end that is outside.
+>>  get_version_line() {
+>> -	$CC -v 2>&1 | grep ' version '
+>> +	LANG=C $CC -v 2>&1 | grep ' version '
 >
-> This seems to be a behaviour breaking change and I am not sure what
-> we are trying to achieve with it.  Is this a suggestion made by a
-> broken compiler you have, or something?
+>this on top of the posted patch, which is what I'll squash in when queuing this
+>patch (no need to resend if you agree with the above and unless you have other
+>changes and improvements).
+>
+>Thanks.
+>
+>diff --git i/detect-compiler w/detect-compiler index 473f3bd4fe..50087f5670
+>100755
+>--- i/detect-compiler
+>+++ w/detect-compiler
+>@@ -9,7 +9,7 @@ CC="$*"
+> #
+> # FreeBSD clang version 3.4.1 (tags/RELEASE...)
+> get_version_line() {
+>-	LANG=C $CC -v 2>&1 | grep ' version '
+>+	LANG=C LC_ALL=C $CC -v 2>&1 | grep ' version '
+> }
+>
+> get_family() {
 
-I agree with this reasoning; the change here does not seem correct to
-me, and the original version looks to be doing what it advertises.
+Just a small transfer of experience from a different project - if we transition or expand LOCALE functions into C at some point. Be aware that the locale_t series in C is not supported universally, despite being in POSIX going back a few years. We found, at least on the OpenSSL project, that using locale_t caused compile breakages on a variety of platforms, including some older but active Linux variants. Just raising awareness as I'm working this issue there.
 
-Thanks,
-Taylor
+Sincerely,
+Randall
+
