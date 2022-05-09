@@ -2,97 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D690CC433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 16:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 192A3C433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 16:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239058AbiEIQdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 12:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
+        id S239122AbiEIQkL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 12:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239029AbiEIQdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 12:33:32 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3EE316C5E3
-        for <git@vger.kernel.org>; Mon,  9 May 2022 09:29:37 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E6D1133B4D;
-        Mon,  9 May 2022 12:29:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ttu4kjUwG0bKOOulc8vCETuiH9QJJQ5+H675pj
-        FeXEk=; b=uOMkaS9WyL2uNGDp38fCicV4D6II1C33SVx8wxlEgcOPG2W3pmYqP+
-        yh8C1eOjN5b/iIVT1KvxhZXijeURa6uLI5Brm8xMYC7VrZyNEhILfmKp28qDn8F4
-        JSfdNIukgZ1gmp0bPIdjCEMbwvzuomY/BsqUpW9XD013YOKLZDJrY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 935F6133B4C;
-        Mon,  9 May 2022 12:29:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5582133B4B;
-        Mon,  9 May 2022 12:29:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v3] builtin/remote.c: teach `-v` to list filters for
- promisor remotes
-References: <pull.1227.v2.git.1651591253333.gitgitgadget@gmail.com>
-        <pull.1227.v3.git.1651933221216.gitgitgadget@gmail.com>
-        <aa9884d5-b69a-bfd2-4235-a30326bd65f6@gmail.com>
-Date:   Mon, 09 May 2022 09:29:33 -0700
-In-Reply-To: <aa9884d5-b69a-bfd2-4235-a30326bd65f6@gmail.com> (Philippe
-        Blain's message of "Sun, 8 May 2022 11:33:51 -0400")
-Message-ID: <xmqqilqeekk2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239117AbiEIQkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 12:40:09 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8286B1261C
+        for <git@vger.kernel.org>; Mon,  9 May 2022 09:36:15 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id n8so10855343qke.11
+        for <git@vger.kernel.org>; Mon, 09 May 2022 09:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1gOd4E2vM9e73f2jiliFO841n5I6TXXalK3wpBjgQr8=;
+        b=IuCX06ap7ns2bX0FTiQZQFlBb5TrAyLy76WVG9ZYVVpIA6RerqWRkKjXxKMMl2q8Hj
+         ZlKQ1moz6qaAjkdgJLTdOacT2bU9afL5bc20cIdON30LIUPgSN37lN01U9Hs0C3A2oJe
+         +9If0ovC6zXAv98a4hC4uN9QV1BXBlHBvTmn/0SbrIITx02c/qAq4PWCjsDA9P5Lo5m6
+         vGZIbo/bnNLcxDimhcQKkDCXZGNxHohfiLYBJXKq4h40AGxeKqEFytxs4+Lq99M9nGWw
+         Aqkt6covy52AOtOMgUkpkLm+fk0kTd4j0MetFhnPZkUUkHuF6S+KT1kvUwF4bsjwFxUZ
+         7wqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1gOd4E2vM9e73f2jiliFO841n5I6TXXalK3wpBjgQr8=;
+        b=VdpJ6vTZvZb/2BSkMKH/mNhbbZ20SHEXCwvkLNOkxE0vXsLHlqct7Ss9KRpmCAoSEn
+         WyiZzJhWaxEAkn8w3nR04RL0OCsKCsBesQ85GhHDIPQw45zPhCP62k+g3YAJcG2xFba7
+         PSio6JQtv8chFs80XxStx56Cj/a/sVpnM1Fv6SoLwtSpyggDnO6yegEmxzWiRrwNHBdH
+         D0GzRRBEHM/5W1om6QoxgY4xhzPao3lP8rBECPuEXTk+ws+ZEMrK3ttDEIZgyUHNVJYi
+         4lFfR3pzJXYYwl9WmRC4A7+s9NNQ+ZoDtHCvvZD2cDl+uaF2gQ8ZBkcqMNmcAuZl2sPP
+         d/lA==
+X-Gm-Message-State: AOAM533RBem2cQyu9WR+uRaThcqr0MSbJDA8nWIDu6H5Zy7j5+2nA4Ct
+        AMXl8w9QFMTYtSPKWxuXhOkvpS2mtbbGvu4z
+X-Google-Smtp-Source: ABdhPJycDC+LHffAm6jchOHF8bT5sPvomBjGuHt9gYJa+GPh2+Xmc8S/WPqDVuyyZ42S4FeB5DLv8A==
+X-Received: by 2002:a37:6c46:0:b0:60d:d526:7e48 with SMTP id h67-20020a376c46000000b0060dd5267e48mr12361464qkc.451.1652114174645;
+        Mon, 09 May 2022 09:36:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id e2-20020ac845c2000000b002f39b99f6basm7920425qto.84.2022.05.09.09.36.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 May 2022 09:36:14 -0700 (PDT)
+Date:   Mon, 9 May 2022 12:36:13 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Shubham Mishra <shivam828787@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Plato Kiorpelidis <kioplato@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>
+Subject: Re: [GSoC] Contributor candidate introduction
+Message-ID: <YnlC/WA3nwRA8NQx@nand.local>
+References: <CAO2gv81zCGbxNN_7a2j7sJZ_fbHiFXf4YxagddWLBWw7-ki5zw@mail.gmail.com>
+ <660025e5-637d-8e93-e7ba-65a3ad474bad@gmail.com>
+ <965b5394-9f72-e4a3-9ed4-6abcf67fb524@gmail.com>
+ <CAC316V7dRjsLiVJLvB-PXRDVZ0NB0xin9XEWq9QBiARthNuGaw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36509200-CFB5-11EC-8BD1-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAC316V7dRjsLiVJLvB-PXRDVZ0NB0xin9XEWq9QBiARthNuGaw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
-
->> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
->> ---
->>     builtin/remote.c: teach -v to list filters for promisor remotes
->>     
->>     Fixes #1211 [1]
+On Mon, May 09, 2022 at 08:42:38PM +0530, Shubham Mishra wrote:
+> Hi Kaartic,
 >
-> I don't think this matters much, but if Junio is OK with that, it would
-> be nice to include the reference to the GitGitGadget issue in the commit
-> message itself, though with its full URL, something like:
->
-> Closes: https://github.com/gitgitgadget/git/issues/1211
->
-> as another trailer before your signed-off-by. By including it in the 
-> commit message we allow the issue to be closed automatically when your topic
-> branch is merged to 'master'. By using the full link we make sure that GitHub 
-> knows we are targetting that issue specifically, not any other issue or PR in 
-> any fork of Git with the same number.
+> At my job, my timings are flexible. I already discussed about GSoC
+> with my team and Microsoft is supportive for open source
+> contributions. I have done side projects and open source contributions
+> in past also, so this shouldn't be a problem. I also planned to spend
+> weekends on this (I usually spend weekends on my desk, so this is fine
+> for me).
 
-Nice to know.  Is there a handy GGG users' guide that mentions these
-"magic trailers" (the other one I have seen used is "Cc:")?
+Be careful to not over-extend yourself. I think it's great that you're
+excited about GSoC, but in order for it to be the most successful for
+you, you should make sure that your work on Git happens during the times
+that work best for you.
 
-> Again, small nit to make it easier for reviewers: usually we prefer to see
-> what has changed since the previous version first, and then (if you want, 
-> it's not strictly necessary) what changed in the other previous versions. 
+I'm not familiar with your exact working arrangement, but I would
+caution you that participating in GSoC (if your GSoC project expects
+35-40 hours a week from you) _is_ equivalent to a full-time job.
 
-Yup.  For a single-patch topic, the following may not apply, but for
-a multi-patch topic, a full "topic overview" should also be
-available in the cover letter of the latest version.
+If your existing full-time job allows you to spend time working on GSoC,
+that's great. But if your normal work is separate from GSoC, having two
+full-time commitments seems like a recipe for disaster.
 
-A reviewer who was absent while older iterations were reviewed
-should not have to fish for cover letters of previous iterations to
-learn what the topic is about to decide if the topic is worth their
-time to review.  Once they get interested enough, they can of course
-dig older iterations, but the job of the cover letter in each
-iteration is to allow them to become interested with the least
-effort.
+> I do not have any other commitments or planned vacations throughout
+> the GSoC timeline. I would be able to dedicate 35-40 hours per week :)
 
-Thanks.
+Likewise, GSoC shouldn't get in the way of your personal commitments.
+Taking breaks is part of doing productive work ;-).
+
+Thanks,
+Taylor
