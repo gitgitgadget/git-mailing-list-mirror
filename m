@@ -2,356 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6DB0C433F5
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 13:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E332C433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 14:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236455AbiEINw5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 09:52:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38778 "EHLO
+        id S237746AbiEIOzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 10:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236383AbiEINwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 May 2022 09:52:55 -0400
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CDF92B248
-        for <git@vger.kernel.org>; Mon,  9 May 2022 06:48:59 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 2B4825C0139;
-        Mon,  9 May 2022 09:48:59 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 09 May 2022 09:48:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1652104139; x=1652190539; bh=3S7MlgQFuG
-        M1IJL1cPIoR9dt1H8IuFvyrq/wLJKUCII=; b=ETlok/RfvrnHdWgw/OkTsbJe8i
-        /W8cG6X1LrYDHUXdCCBYsexEF0gLBw9XcXvZ1/Sp3fuZXpp2I5p9EGeKx5DRO+Vd
-        OPASBPducUVtFbYUroN+Zxed7RzceklmT6AVWx7e035lqM05LwSfklsXiUYGixQk
-        8soLA9oexf4LNpwNQsvfZB38XKnXarr11OocHPkfen71MlfZ1wGNHUiPwSVRUvHz
-        KHLj2hjlqRzy2HbdJ+QnINvTtDldcwqElKKY4SbK1bVQX9odD5fKsMpUsbLU627g
-        rDnoCjMDkElB6Dm1zPDTzWveEPiygmsL9lQdpq1YOl8CixW0Tbv45P0hgMpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1652104139; x=
-        1652190539; bh=3S7MlgQFuGM1IJL1cPIoR9dt1H8IuFvyrq/wLJKUCII=; b=I
-        /pdP7DWLVTDa0WCCmYDFiY/wgwmc5oOgvR0lcOAa1LFGlAmPoec6zEGmulD1VcWf
-        dqn8MvczWDy7hejL4rCSxra3gUSut3rIODpcHa8Mjr+kODTd1c/DZncYig1t1mxC
-        0+FDkZbpJYVOgfYmOA7x+OQ98sbwSh9IbsiF0M5VNYumNpIKu3rUyleI6obnpIod
-        FzQwBol+FaaAB2eJxQG/kaaietu4mI98dEtOj9FHaNe2RsnS1T6tBVjxk+lJfC9p
-        r3yAlwIXnNHta1uzi3/gL0em5UCYXK8AtoRsIgMpovLss3Ljj5ba/SjxrRaHoBkg
-        8AKoeB9/d48DoWn5hh9wg==
-X-ME-Sender: <xms:yht5Yn8oQf2W8J5owW1MICCLkOjoqAUo43QAUSonngADv50flOnNNg>
-    <xme:yht5Yjt0Kh66KIYkVJ8p97Srro8JqVvmjsp8nWNwPwKAFBvlctQaErdREQkqBT1_Y
-    D1jEPX_CrEXSLUb9g>
-X-ME-Received: <xmr:yht5YlDXREQaeZF6HmRdmj3-bNiamLToOmdyxotMskXXGWJI5kWlq2PXm_Q0s97Jsiw1iD8t9V6T-B0-m6sXfYrKgZDKJ1U7roFhRosYdfImv-wqUR-Nng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelgdeikecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:yht5Yjf5ZA0WyXtVGkMS7uPX7bJ09k1EK8vxkHXoD2qbW_j1QKrKJw>
-    <xmx:yht5YsNK3RheOy3eaV9mZjua4-zAWrvO46mZUd0gPgU-vwX4dwWIEw>
-    <xmx:yht5YlmjDu7C36m0q_dMhhxBaw5CJ7F2eMurcDJuBBDsV-GInTfRdQ>
-    <xmx:yxt5YlbN703ZTacXCn3t9Q9x7KcH_l9GG5GYZp0DQvgdrgkZuakkqQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 May 2022 09:48:57 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a182cc3c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 9 May 2022 13:48:53 +0000 (UTC)
-Date:   Mon, 9 May 2022 15:48:52 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Michael Heemskerk <mheemskerk@atlassian.com>
-Cc:     Michael Heemskerk via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] refs: honor reference-transaction semantics when
- deleting refs
-Message-ID: <YnkbxByewguRY5sZ@ncase>
-References: <pull.1228.git.1651676435634.gitgitgadget@gmail.com>
- <YnizZ/a/hQ6hpRPB@ncase>
- <CAJDSCnPfGhL+_AL5Q1uAs8LLvW=Yckx=Ev0tQy1myCvyNF955g@mail.gmail.com>
+        with ESMTP id S237522AbiEIOzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 May 2022 10:55:45 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FACC24D58D
+        for <git@vger.kernel.org>; Mon,  9 May 2022 07:51:51 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id d22so11369109vsf.2
+        for <git@vger.kernel.org>; Mon, 09 May 2022 07:51:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AJnzyBuLCpRkYmvobx56aIwB+liTiLJZDU5Kwr8/7Rg=;
+        b=HRhynrK4d2AgRpcYZ7J4Ky4A+QIUjLc/jxfW/N+39YIam++clxm6rkSoDNZcGNfiUM
+         RmwXQEBkrRzItRB/26zvsTLpgn95kywsM/iiUTl5AR1RI77smMPZqs4K4g8Un4j45Grz
+         ZthN9Wbkx2F4/ybhbTYVJ5qUO1W7wZ43b8P5dq28D9s4Oa+4n1zj95fvxiUL/gWdnQni
+         Xtq5sBsymTDL7YPrkKlWDVtMl2j2cF0ze8JvRs7TUkOLfYfXhgQud4C+1DXgWRe1vRQ0
+         k+gqqzcF1JSxt+LseB+4qnoCn5g8ChdMw+LaIoZ+MI6VyDDTxG3YxKwzIKAFPdPeN+fm
+         PJ4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AJnzyBuLCpRkYmvobx56aIwB+liTiLJZDU5Kwr8/7Rg=;
+        b=SjNY2xUMnSNgnutbCxnyMKe49pIWkcKcTQkqUAFKtdngiwny9z+OKUcH0laEDvmUIU
+         tM1wJgz64FwuFh/j92T2FFeVUByRJeRVWxpQ90D40axtD/7w1nolEvS8Q/US+XTaIbhV
+         5tohT15dcdJ/ZgD2OT4c0m7zUe2kXggAToiDfIP9/rsqQCTGnfCzbEe7r3TeyTcjjQNn
+         CFYO58YdyQn+elQ/HB/6TikGLotLFS0PWuQX5i/Upk529aJt/ggBtDvtwMPI3vB4vDkx
+         LuuvWzpVPUQZ3uuj5WvskwJjugpjELygBg4skXjiuastMCi+SBEaGbpbFrv4tY5cSKe+
+         OhgQ==
+X-Gm-Message-State: AOAM533exMjcLFGI+JR4+t7kk8+p7NbyG8Vw8MSj8y64WSG5ijJOjCIY
+        BAKZ75vY7JGU9aso7a2vNMthlnoPqvKZe6c+n5Y=
+X-Google-Smtp-Source: ABdhPJzlvi7gXsNCUWTkp11UtymOSP4rjTB3cx6F4vzi1vlMreXE+X3oB43hLfRjhgQaL5OpaJg32Swh+hUXpPLQSbo=
+X-Received: by 2002:a67:1a02:0:b0:320:a51f:8067 with SMTP id
+ a2-20020a671a02000000b00320a51f8067mr8163890vsa.38.1652107910143; Mon, 09 May
+ 2022 07:51:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="QJBo+ldFcXbqovwX"
-Content-Disposition: inline
-In-Reply-To: <CAJDSCnPfGhL+_AL5Q1uAs8LLvW=Yckx=Ev0tQy1myCvyNF955g@mail.gmail.com>
+References: <20220428105852.94449-1-carenas@gmail.com> <20220503065442.95699-1-carenas@gmail.com>
+ <20220503065442.95699-2-carenas@gmail.com> <nycvar.QRO.7.76.6.2205051439290.355@tvgsbejvaqbjf.bet>
+ <xmqqlevfesnu.fsf@gitster.g> <4314bf6d-d76c-bc5b-a7f9-e59c7c181c7c@gmail.com>
+In-Reply-To: <4314bf6d-d76c-bc5b-a7f9-e59c7c181c7c@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 9 May 2022 07:51:36 -0700
+Message-ID: <CAPUEspiX4FJc4-1DGCek1iWMYL7M7Xir9PSXbFAwQy7xTFKxYg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] t: document regression git safe.directory when
+ using sudo
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, bagasdotme@gmail.com,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---QJBo+ldFcXbqovwX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, May 09, 2022 at 12:18:51PM +0200, Michael Heemskerk wrote:
-> On Mon, May 9, 2022 at 8:23 AM Patrick Steinhardt <ps@pks.im> wrote:
+On Mon, May 9, 2022 at 1:21 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> On 05/05/2022 19:33, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > >
-> > I really like these changes given that they simplify things, but I
-> > wonder whether we can do them. In the preimage we're eagerly removing
-> > loose refs: any error encountered when deleting a reference is recorded,
-> > but we keep on trying to remove the other refs, as well. With the new
-> > behaviour we now create a single transaction for all refs and try to
-> > commit it. This also means that we'll abort the transaction when locking
-> > any of the refs fails, which is a change in behaviour.
+> >> Hmm. I would like to suggest that we can side-step all of these issues
+> >> (and the ones I outline below) by considering a similar approach to the
+> >> one Stolee took in t0033: use one or more `GIT_TEST_*` environment
+> >> variables to pretend the exact scenario we want to test for.
 > >
-> > The current behaviour is explicitly documented in `refs.h:refs_delete_r=
-efs()`:
+> > Perhaps this may be a way to pretend we are running a command under
+> > 'sudo'?
 > >
-> >     /*
-> >      * Delete the specified references. If there are any problems, emit
-> >      * errors but attempt to keep going (i.e., the deletes are not done=
- in
-> >      * an all-or-nothing transaction). msg and flags are passed through=
- to
-> >      * ref_transaction_delete().
-> >      */
-> >     int refs_delete_refs(struct ref_store *refs, const char *msg,
-> >                          struct string_list *refnames, unsigned int fla=
-gs);
+> >       test_pretend_sudo () {
+> >              GIT_TEST_PRETEND_GETEUID_RETURNING_ROOT=1 \
+> >           GIT_TEST_PRETEND_LSTAT_RETURNING_ROOT=root/p \
+> >                  SUDO_UID=0 "$@"
+> >       }
 > >
-> > There are multiple callsites of this function via `delete_refs()`. Now
-> > honestly, most of these callsites look somewhat broken:
+> >       test_expect_success 'access root-owned repository as root' '
+> >               mkdir root/p &&
+> >               git init root/p &&
+> >               test_pretend_sudo git status
+> >       '
 > >
-> >     - `bisect.c` simply does its best to clean up bisect state. This
-> >       usecase looks fine to me.
-> >
-> >     - `builtin/branch.c` reports the branches as deleted even if
-> >       `delete_refs()` failed.
-> >
-> >     - `builtin/remote.c` also misreports the deleted branches for the
-> >       `prune` verb. The `rm` verb looks alright: if deletion of any
-> >       branch failed then it doesn't prune the remote's config in the end
-> >       and reports an error.
-> >
-> >     - `builtin/fetch.c` also misreports deleted branches with `--prune`.
-> >
-> > So most of these commands incorrectly handle the case where only a
-> > subset of branches has been deleted. This raises the question whether
-> > the interface provided by `refs_delete_refs()` is actually sensible if
-> > it's so easy to get wrong. It doesn't even report which branches could
-> > be removed and which couldn't. Furthermore, the question is whether new
-> > backends like the reftable backend which write all refs into a single
-> > slice would actually even be in a position to efficiently retain
-> > semantics of this function.
-> >
-> > I'm torn. There are valid usecases for eagerly deleting refs even if a
-> > subset of deletions failed, making this change a tough sell, but most of
-> > the callsites don't actually handle this correctly in the first place.
->=20
-> Exactly; this is the reason that I initially suggested fixing the issue by
-> just removing the upfront rewrite of packed-refs. With that rewrite remov=
-ed,
-> the refs-to-be-deleted are deleted in individual transactions, which may =
-or
-> may not rewrite packed-refs. The downside, as you correctly pointed out,
-> is that we could end up rewriting packed-refs multiple times, which could
-> come at a significant performance penalty for repositories with large
-> packed-refs files.
->=20
-> Unfortunately, the current approach of updating packed-refs in one
-> transaction and updating the loose refs in individual transactions doesn't
-> work either.
->=20
-> So what are our options?
->=20
-> - delete each of the refs in a separate transaction and pay a (potentially
->   significant) performance penalty in repositories with large packed-refs
->   files when deleting many refs. I'll note that this scenario is similar =
-to
->   deleting a set of refs through a non-atomic push.
-
-By chance I know that on gitlab.com we've had huge performance issues
-with access patterns like this. In some cases with repos that have
-millions of refs I have seen that certain actions were completely
-dominated by rewriting the packed-refs file. So I'd rather avoid going
-there given that it would be a serious performance regression.
-
-> - switch to a single transaction and update refs.h:refs_delete_refs to use
->   an all-or-nothing approach (the approach I've taken in my patch).
-
-This is the easiest approach, but also backwards incompatible as I've
-layed out above. I personally wouldn't mind, and as said I think that
-most of the usecases are broken anyway because of implementations which
-misreport the case where we only partially deleted refs. But it's not a
-decision we can make without more discussion, I guess.
-
-> - improve the reference-transaction mechanism to support the
->   'batch-of-transactions' mode more efficiently. If I remember correctly,
->   something like that has been suggested before, but I'm not sure if it's
->   actually been built or spiked. In this batch-of-transactions mode, git
->   could try to prepare all refs, and only invoke the hook for the refs th=
-at
->   could be successfully prepared. The hook should then be able to
->   reject individual ref updates, and git would then apply only the
->   non-rejected ref updates. While such a change would make many
->   scenarios where multiple refs are being updated more efficient, it's al=
-so
->   a much bigger change that's hard to make without breaking the current
->   reference-transaction protocol.
-
-Peff and I had such a discussion in the past, and having transactions
-with eager semantics would also fix some edge cases we have in other
-parts of the codebase. You already mentioned git-fetch(1) without
-`--atomic`, and there are likely others that could benefit.
-
-I did have a go at this several times already, but none of the
-approaches I took resulted in a clean-to-use API. I consider this to be
-the best solution, but also the hardest one to implement, unfortunately.
-
-> Sticking to a transaction per ref and rewriting packed-refs multiple times
-> is the safer option. Deleting the refs in a single transaction is the more
-> performant option, but changes the behavior. A stay/stale lock file could
-> then make it impossible to remove a remote, or to prune /refs/remotes/
-> refs.
->=20
-> My suggestion would be to stick to a transaction per ref and pay the
-> same performance penalty as you'd get when deleting many refs through
-> a non-atomic push.
-
-I don't think we should do this. The one-transaction-per-ref issue is
-why I added the `--atomic` flag to git-fetch(1) in the first place,
-because it has been biting us in repos with millions of refs. Quoting
-583bc41923 (fetch: make `--atomic` flag cover pruning of refs,
-2022-02-17), which introduces this flag:
-
-    Benchmark 1: git fetch --prune --atomic +refs/*:refs/* (HEAD~)
-      Time (mean =C2=B1 =CF=83):      2.366 s =C2=B1  0.021 s    [User: 0.8=
-58 s, System: 1.508 s]
-      Range (min =E2=80=A6 max):    2.328 s =E2=80=A6  2.407 s    10 runs
-
-    Benchmark 2: git fetch --prune --atomic +refs/*:refs/* (HEAD)
-      Time (mean =C2=B1 =CF=83):      1.369 s =C2=B1  0.017 s    [User: 0.7=
-15 s, System: 0.641 s]
-      Range (min =E2=80=A6 max):    1.346 s =E2=80=A6  1.400 s    10 runs
-
-    Summary
-      'git fetch --prune --atomic +refs/*:refs/* (HEAD)' ran
-        1.73 =C2=B1 0.03 times faster than 'git fetch --prune --atomic +ref=
-s/*:refs/* (HEAD~)'
-
-And this is only with a 100k references. The issue gets a lot worse when
-you're in the millions of refs, both because you have 10x more refs to
-prune, but also because the packed-refs file is 10x larger. So
-performance doesn't scale linearly with the number of refs, but is a
-product of file size and number of refs.
-
-[snip]
-> > One thing that worries me is that these patches kind of set the current
-> > behaviour of driving the reftx hook via both packed and loose backend
-> > into stone. My patch series that got reverted is going to change that
-> > behaviour though so that we don't execute the hook from the packed
-> > backend, and consequentially we'd have to change all these tests again
-> > to match the new behaviour. This makes it a lot harder to argue though
-> > that we can safely switch to the new behaviour without breaking any
-> > assumptions when we even codified our current assumptions into tests.
->=20
-> The counter argument to that is that it's kind of scary if you could remo=
-ve
->  half of the reference-transaction callbacks without needing to update a
-> test. I'd rather have tests that verify current behavior that you need to
-> update when you intentionally change the behavior, then not have those
-> tests?
-
-Oh, I certainly agree there. And we have stated in the past that the
-reftx hook is _not_ providing a stable interface with regards to exactly
-when it is called. We only want to guarantee that it is called on a
-transaction.
-
-> > Taking a step back I wonder whether my previous approach to just hide
-> > the hook for the packed backend was the right thing to do though. An
-> > alternative would be to instead expose additional information to the
-> > hook so that it can decide by itself whether it wants to execute the
-> > hook or not. This could e.g. trivially be done by exposing a new
-> > "GIT_REFS_BACKEND" environment variable to the reftx hook that gets set
-> > to either "packed-refs", "loose-refs" or "reftables" depending on which
-> > backend is currently in use. Equipped with this information a hook
-> > script can then easily ignore any updates to the packed-refs file by
-> > itself without having to change the way it is invoked right now and thus
-> > we wouldn't regress any currently existing hooks.
->=20
-> From the reference-transaction hook writer's perspective, the backend
-> involved is an implementation detail that the hook should not have to
-> care about. Getting separate callbacks for the loose and the packed
-> backends makes it a lot harder to write a good reference-transaction
-> hook, especially when the callbacks differ if a ref is packed or not.
+> > That way we can avoid having to run "chown" while preparing for the
+> > test fixture, and running "git status" under root, but I am not sure
+> > if we want our shipped production binaries to have these "pretend"
+> > knobs.
 >
-> IMO, there should really be a "files" backend transaction, that internally
-> takes care of locking individual refs and possibly "packed-refs" in case
-> of a deletion. In addition, not getting "artificial" packed callbacks also
-> saves us a few extra reference-transaction callbacks when deleting refs.
-> Even if those take only a few ms per invocation, when deleting hundreds
-> of refs, it's still something that we'd like to avoid if we can.
+> Lets ask ourselves "How could an attacker use these knobs to facilitate
+> an attack?".
 
-True. In this case it's just an alternative way to tackle this specific
-issue given that one wouldn't typically care about the packed-refs
-changes. And it's very much an artifact of the files-backend really
-being two backends in one. In any case I can see arguments for both
-approaches, and ultimately I agree that it would be best if the
-files-backend behaved as if it was a single one.
+That is not the question raised by having those "pretend" knobs in the
+production binary, but instead how can an attacker abuse them to get
+themself and UID he doesn't have and therefore additional access.
 
-> > >  test_done
-> > > diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> > > index 4620f0ca7fa..8b09a99c2e8 100755
-> > > --- a/t/t5510-fetch.sh
-> > > +++ b/t/t5510-fetch.sh
-> > > @@ -169,10 +169,10 @@ test_expect_success REFFILES 'fetch --prune fai=
-ls to delete branches' '
-> > >       git clone . prune-fail &&
-> > >       cd prune-fail &&
-> > >       git update-ref refs/remotes/origin/extrabranch main &&
-> > > -     : this will prevent --prune from locking packed-refs for deleti=
-ng refs, but adding loose refs still succeeds  &&
-> > > -     >.git/packed-refs.new &&
-> > > +     : this will prevent --prune from locking refs/remotes/origin/ex=
-tra for deletion &&
-> > > +     >.git/refs/remotes/origin/extrabranch.lock &&
-> > >
-> > > -     test_must_fail git fetch --prune origin
-> > > +     test_must_fail git fetch --prune origin > outputs 2> errors
-> >
-> > It would be nice to have an explanation why exactly this change is
-> > needed, and why it is fine that the visible behaviour changes here.
->=20
-> The  test was relying on the fact that the packed-refs file was locked wh=
-en
-> git fetch --prune is called. My patch replaces that unconditional lock wi=
-th
-> a transaction. The transaction only takes out the lock if packed-refs
-> actually needs to be updated, and since the ref being pruned only exists
-> as a loose ref, git fetch --prune failed to fail.
->=20
-> I've replaced the lock on packed-refs with a lock on the loose ref that
-> should be pruned.
+The fact that the current code requires you to be root to even enable
+the logic makes it more difficult to use SUDO_UID that way, because if
+you already got root, you don't really need them, but take into
+consideration that this discussion starts with (how can we run these
+things as a the test user and avoid sudo, hence root).
 
-Ah, thanks. I was missing the fact that the lock for the packed-refs
-file was taken unconditionally before.
-
-Patrick
-
---QJBo+ldFcXbqovwX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmJ5G8MACgkQVbJhu7ck
-PpS9Sw//SR0a+yy6hfmEM91vkOiTLE1FD3RqtFmdAs8hVL2Q3Ufpnpz9pIFBUsjD
-2HdwEoQY+9jKAG2uPHGjcFQqloNe9i+H1NIvq8bIV5E+ArXhj9SHBDDwS2iZXdcN
-8zAFuALpoxkip+2zGd5MpoHsoxm6pQONvkh656KAzmqAsfK5hhmZNNVRz9njZ99R
-3riCfv3F29dTwPzyq2P7w4sL+8IJYi3BG0rp36VVKIjZrBvPz1lna76Yv3oRFGFw
-duycntR6jV51JDJjzRB5xYMpbBAobN5BUztDbLtAViAQ3pTfRPpwfSFb0oSTqYWC
-cRH6nAnoR9vbyxdNReZEQoM4ZRDmG7HbrNLu5zLlPsOzaqZwna21x7a9aUFnaWLA
-p+QIxvF/pgiCO/o46vXB4gPuADG1k5h+oDR3DsxB9sI9eazdFW+dpcaILRipp5tI
-dDJk22nSWdX8skIjW/EdXiYqyRUr7GgyFcox35DBjLxba7XiCIzRcl0gfFlNji9L
-I94M3twp3RwHY1T2MiMyHBJ1Xhmjz8oDZ1AGTpXuFk7bPwylXvj/qiruCP2QOq/y
-KDiFocbBqVtiSFHBjb+Yy+Ww6KZcoczqrK1ZJlyyfNnMIlDMOKO8aXufjVvUkxFo
-j5lqrkrnP2tlQNiIjrUhBv1U78qh+X7Q169buNMFufJv59+9BW0=
-=kgrQ
------END PGP SIGNATURE-----
-
---QJBo+ldFcXbqovwX--
+Carlo
