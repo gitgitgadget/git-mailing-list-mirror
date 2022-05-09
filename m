@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7505C433FE
-	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7443AC433F5
+	for <git@archiver.kernel.org>; Mon,  9 May 2022 17:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239816AbiEIR7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 May 2022 13:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42128 "EHLO
+        id S239829AbiEIR7H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 May 2022 13:59:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239807AbiEIR65 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239814AbiEIR65 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 May 2022 13:58:57 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4902D7EFA
-        for <git@vger.kernel.org>; Mon,  9 May 2022 10:55:02 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id j6so28290558ejc.13
-        for <git@vger.kernel.org>; Mon, 09 May 2022 10:55:02 -0700 (PDT)
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9AB2D7EFD
+        for <git@vger.kernel.org>; Mon,  9 May 2022 10:55:03 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a21so17206533edb.1
+        for <git@vger.kernel.org>; Mon, 09 May 2022 10:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ar5pAoqex4NIZtMdP8szFrrlwNua7QsgqQzukT7jAT8=;
-        b=Z3Hx/t8+uii+hfGND4iwzO82iaa6osGr+W1xiK59QRq4LN0J6LKFszh5u601uteHJN
-         i2Jvg9zrkWy2uWuToOal0l0SL4nupVECjDevzb8NdcX4sn3bVC4qLIXiEhArk2H/+Be0
-         JL9VqU/OL9wL/gKLgIeAUcbEtbbj45Wq8/0N6bOk6UuNLk9OvkW0SFkXRXZotmtvWU5b
-         FyVb4RzyYul3FlaF/xwpgcvquCLnXr9V+6ODe3A1zMmbLmGkFIrGjlkJrd8aKPOGYaqs
-         UI0rNdotc82g6M0t6+y60e4uNrC0TfhT86hjP04Hu23RctKds2qas1Q+nqcYh9DJ6Fcv
-         nBkw==
+        bh=zbp0m/JBmcCn2CtDc8T5iAGob/QKeDBumuIuvRbbVio=;
+        b=oCLP5r+Y+TjfReagS7imcFc/fujB5K2CNXpuDiGt8gErIB8FpQ9yZGKbqjd3IbHwIm
+         BhbxdVnCdhSnq3RUpwST1LGbyWnLV+5naiksfTnSZ6iJ7JB9MTw+mGwS44RH/xnevDCe
+         hVcv0Ebv9DZwQ1Y3CDzbauhGMBRvnnQ+VSx1kDhumCYfhQTGXV6UUEhp3tPSeY7NfaXd
+         z9uxXdF1uB/zWCbAIj6abO5K/62zXupJzSCOPG7vinSTQupPZZ3U640MyqlFA0JDnhyZ
+         qkmdnnA8xC+ImAK0e2bfx4nb5oYlZn01sdkA+wnHh4O7yxJA+7H2C88m+1frmO8bG/ce
+         zxIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ar5pAoqex4NIZtMdP8szFrrlwNua7QsgqQzukT7jAT8=;
-        b=bAaCB/mBOhpUygK184nsm+tzutZFVjGokFuQExPZeO9SJFR4h2oNN34FapGyB3cNGY
-         Z7sRaKdw0toZqdBHGbDIbbQS3WSB5Cy7Zr//69LOV3R/kXEaubvMd2D1bST4za6nziFx
-         cRUN3M+wWorOWc/zAeiZOvmEDf6cepcjQFH/Ldp1mDDwuWco7KMdf/rgPjuvsJp5mqaM
-         +5UAZOdb8xFQRf040YLVsdMMj5xUNxpNUpAvxlC7rKDEuIehGW/Wq+JDDs43yNOmUFWt
-         HEdZu7MejGHoEvzSevjTQBRVXSjVb3q2oX+zoMmtBfG6TJtXjF9OQgEDDvdTzOFWEstT
-         DauQ==
-X-Gm-Message-State: AOAM530Kasi78741a0D8niR42dMoVqh8BJViizqxqWeg/Qg4q6/Cmwk4
-        Hm8wzCW5W+GZ8qiXpO6EcYEPFjqqMKI=
-X-Google-Smtp-Source: ABdhPJxWuQjw5sEww5fG4dwwx02GsxHtmxbLAYUTdKhvYa8h8yf9pFsgWPOXjQ+/zttOZ1whtSVg5Q==
-X-Received: by 2002:a17:906:2983:b0:6f3:c1c9:1dba with SMTP id x3-20020a170906298300b006f3c1c91dbamr15876716eje.89.1652118901395;
-        Mon, 09 May 2022 10:55:01 -0700 (PDT)
+        bh=zbp0m/JBmcCn2CtDc8T5iAGob/QKeDBumuIuvRbbVio=;
+        b=A2DmlJwA3QlnrU8T3mVFD5OGMfDhqROozZ0yIwgisZgMaTQf1xZrwkX8Stgersuzli
+         eQQ/EfrN/SZs7WirQDhsaJHBr+RP/16wmoOc2Fd0rdlpnr0kvl9rnkdVF0MFARYhWKls
+         w6foDvfp8KxiE3xA17tuJHoew6GLKW7nfO9hwqCaesD3dBzgJtYthHwrCxuH+qd62C69
+         DQoTqnZd2hWMME46By8qoud0KRYcPBPoiJWht5MtzIEkuq6kXmNHwJao/ll7a/Vq3TQ3
+         IZ/cwENrLVY/U4LqqQPpKvCTCRQX3NTqcv9gpIzEo5E3lonksu8TKwiqFfKakKoBlQcw
+         8R5A==
+X-Gm-Message-State: AOAM530gvCS0d/rcygy8zZTe03N+0Zr8LgguAvB5JjAAIxqVvhEYwQBD
+        a05X0F4XvpxB644K0aNqk29YYBH43Ww=
+X-Google-Smtp-Source: ABdhPJyabz6HuTCGv9CtkIPvv3kB8ZdMIWlNLbfBdHg82/GpULBzPzFr+H8sfm/na0Yc23EiKB35qg==
+X-Received: by 2002:a50:ee11:0:b0:425:b5b3:a48d with SMTP id g17-20020a50ee11000000b00425b5b3a48dmr18439921eds.246.1652118902681;
+        Mon, 09 May 2022 10:55:02 -0700 (PDT)
 Received: from localhost.localdomain ([2a02:2149:8a7c:1900:a49c:b216:27f2:528a])
-        by smtp.gmail.com with ESMTPSA id l17-20020aa7cad1000000b0042617ba63bfsm6552883edt.73.2022.05.09.10.55.00
+        by smtp.gmail.com with ESMTPSA id l17-20020aa7cad1000000b0042617ba63bfsm6552883edt.73.2022.05.09.10.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 May 2022 10:55:01 -0700 (PDT)
+        Mon, 09 May 2022 10:55:02 -0700 (PDT)
 From:   Plato Kiorpelidis <kioplato@gmail.com>
 To:     git@vger.kernel.org
 Cc:     phillip.wood123@gmail.com, avarab@gmail.com,
         Plato Kiorpelidis <kioplato@gmail.com>
-Subject: [PATCH v2 04/15] test-dir-iterator: consistently return EXIT_FAILURE or EXIT_SUCCESS
-Date:   Mon,  9 May 2022 20:51:48 +0300
-Message-Id: <20220509175159.2948802-5-kioplato@gmail.com>
+Subject: [PATCH v2 05/15] test-dir-iterator: print EACCES and ELOOP errno set by dir_iterator
+Date:   Mon,  9 May 2022 20:51:49 +0300
+Message-Id: <20220509175159.2948802-6-kioplato@gmail.com>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220509175159.2948802-1-kioplato@gmail.com>
 References: <20220509175159.2948802-1-kioplato@gmail.com>
@@ -63,44 +63,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Throughout test-dir-iterator.c we were returning/exiting with either
-integers or EXIT_FAILURE. Improve readability and reduce mental load
-by being consistent with what test-dir-iterator returns through the
-test-tool. Returning mixed constants and integers could indicate that
-it matters for some reason e.g. architecture of test-tool and cmd__*
-functions.
+Currently, only ENOENT and ENOTDIR errno names are explicitly printed
+when an unsuccessful call to dir_iterator_begin occurs. In case any
+other errno happens it's collapsed and ESOMETHINGELSE is printed.
+ESOMETHINGELSE collapses a lot of errno error numbers which makes
+explicitly testing for specific cases of directory hierarcies
+impossible.
 
-EXIT_SUCCESS and EXIT_FAILURE are specified by the C standard.
-That makes the code more portable and standardized.
+This commit allows for more thorought testing by seperating EACCES and
+ELOOP errno from ESOMETHINGELSE, which makes them explicitly printed
+instead of just collapsed into ESOMETHINGELSE.
+
+Right now, there isn't any test that depends on ESOMETHINGELSE directly,
+neither in EACCES or ELOOP as a result, since only errno error codes set
+by unsuccessful dir_iterator_begin calls are printed and the ones set by
+dir_iterator_advance are ignored. However, this commit provides the
+required support that future tests need to improve test coverage.
 
 Signed-off-by: Plato Kiorpelidis <kioplato@gmail.com>
 ---
- t/helper/test-dir-iterator.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/helper/test-dir-iterator.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
-index 659b6bfa81..81e931673e 100644
+index 81e931673e..cdb9269ad5 100644
 --- a/t/helper/test-dir-iterator.c
 +++ b/t/helper/test-dir-iterator.c
-@@ -39,7 +39,7 @@ int cmd__dir_iterator(int argc, const char **argv)
- 
- 	if (!diter) {
- 		printf("dir_iterator_begin failure: %s\n", error_name(errno));
--		exit(EXIT_FAILURE);
-+		return EXIT_FAILURE;
+@@ -9,6 +9,8 @@ static const char *error_name(int error_number)
+ 	switch (error_number) {
+ 	case ENOENT: return "ENOENT";
+ 	case ENOTDIR: return "ENOTDIR";
++	case EACCES: return "EACCES";
++	case ELOOP: return "ELOOP";
+ 	default: return "ESOMETHINGELSE";
  	}
- 
- 	while ((iter_status = dir_iterator_advance(diter)) == ITER_OK) {
-@@ -58,8 +58,8 @@ int cmd__dir_iterator(int argc, const char **argv)
- 
- 	if (iter_status != ITER_DONE) {
- 		printf("dir_iterator_advance failure\n");
--		return 1;
-+		return EXIT_FAILURE;
- 	}
- 
--	return 0;
-+	return EXIT_SUCCESS;
  }
 -- 
 2.36.1
