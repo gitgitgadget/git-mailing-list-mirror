@@ -2,107 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C80EBC433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 20:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B568C433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 21:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233013AbiEJUyS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 16:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57680 "EHLO
+        id S229715AbiEJVsK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 17:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232685AbiEJUyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 16:54:17 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB5C24E000
-        for <git@vger.kernel.org>; Tue, 10 May 2022 13:54:16 -0700 (PDT)
-Received: from host217-43-165-125.range217-43.btcentralplus.com ([217.43.165.125] helo=[192.168.1.168])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1noWs1-0003wA-F3;
-        Tue, 10 May 2022 21:54:14 +0100
-Message-ID: <271b6a9a-a5f4-0336-51b8-860ad07f2609@iee.email>
-Date:   Tue, 10 May 2022 21:54:10 +0100
+        with ESMTP id S229475AbiEJVsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 17:48:09 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DE38381BD
+        for <git@vger.kernel.org>; Tue, 10 May 2022 14:48:08 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D3DE18B2EE;
+        Tue, 10 May 2022 17:48:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oWm8YCLE1h5wF+GCB/8Ya6y7CqZrx6LiOHrIVP
+        3TtfQ=; b=VJsMroNaRpQunKI6ONFVibj8y9e7+83Oy72rD6RpmrNWS+gBi+Zsti
+        HYRAtcx+REPWfjqnPSLZNJkrH0aG9ki/hgKSSma7FFxpcO01QfDQlSY77qQrfDab
+        UvZcAx1vgY6T2fQLtIbjeOnf3DoMUgajqrvLcI05dX6j0D43nE8EA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1567918B2ED;
+        Tue, 10 May 2022 17:48:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B45DD18B2EC;
+        Tue, 10 May 2022 17:48:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 1/7] archive: optionally add "virtual" files
+References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
+        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
+        <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
+Date:   Tue, 10 May 2022 14:48:02 -0700
+In-Reply-To: <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 10 May 2022
+        19:26:58 +0000")
+Message-ID: <xmqqtu9x6ovh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [FR] supporting submodules with alternate version control systems
- (new contributor)
-Content-Language: en-US
-To:     Jason Pyeron <jpyeron@pdinc.us>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        'Addison Klinke' <addison@baller.tv>
-Cc:     git@vger.kernel.org, 'Addison Klinke' <agk38@case.edu>
-References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com>
- <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <01e601d86492$43bb70b0$cb325210$@pdinc.us>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DE7F0F4C-D0AA-11EC-8619-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/05/2022 18:20, Jason Pyeron wrote:
->> -----Original Message-----
->> From: Junio C Hamano
->> Sent: Tuesday, May 10, 2022 1:01 PM
->> To: Addison Klinke <addison@baller.tv>
->>
->> Addison Klinke <addison@baller.tv> writes:
->>
->>> Is something along these lines feasible?
->> Offhand, I only think of one thing that could make it fundamentally
->> infeasible.
->>
->> When you bind an external repository (be it stored in Git or
->> somebody else's system) as a submodule, each commit in the
->> superproject records which exact commit in the submodule is used
->> with the rest of the superproject tree.  And that is done by
->> recording the object name of the commit in the submodule.
->>
->> What it means for the foreign system that wants to "plug into" a
->> superproject in Git as a submodule?  It is required to do two
->> things:
->>
->>   * At the time "git commit" is run at the superproject level, the
->>     foreign system has to be able to say "the version I have to be
->>     used in the context of this superproject commit is X", with X
->>     that somehow can be stored in the superproject's tree object
->>     (which is sized 20-byte for SHA-1 repositories; in SHA-256
->>     repositories, it is a bit wider).
->>
->>   * At the time "git chekcout" is run at the superproject level, the
->>     superproject will learn the above X (i.e. the version of the
->>     submodule that goes with the version of the superproject being
->>     checked out).  The foreign system has to be able to perform a
->>     "checkout" given that X.
->>
->> If a foreign system cannot do the above two, then it fundamentally
->> would be incapable of participating in such a "superproject and
->> submodule" relationship.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-The sub-modules already have that problem if the user forgets publish 
-their sub-module (see notes in the docs ;-).
-> The submodule "type" could create an object (hashed and stored) that contains the needed "translation" details. The object would be hashed using SHA1 or SHA256 depending on the git config. The format of the object's contents would be defined by the submodule's "code".
->
-Another way of looking at the issue is via a variant of Git-LFS with a 
-smudge/clean style filter. I.e. the DataVCS would be treated as a 'file'.
+> @@ -514,14 +522,38 @@ static int add_file_cb(const struct option *opt, const char *arg, int unset)
+>  	if (!arg)
+>  		return -1;
+>  
+> -	path = prefix_filename(args->prefix, arg);
+> -	item = string_list_append_nodup(&args->extra_files, path);
+> -	item->util = info = xmalloc(sizeof(*info));
+> +	info = xmalloc(sizeof(*info));
+>  	info->base = xstrdup_or_null(base);
+> -	if (stat(path, &info->stat))
+> -		die(_("File not found: %s"), path);
+> -	if (!S_ISREG(info->stat.st_mode))
+> -		die(_("Not a regular file: %s"), path);
+> +
+> +	if (!strcmp(opt->long_name, "add-file")) {
+> +		path = prefix_filename(args->prefix, arg);
+> +		if (stat(path, &info->stat))
+> +			die(_("File not found: %s"), path);
+> +		if (!S_ISREG(info->stat.st_mode))
+> +			die(_("Not a regular file: %s"), path);
+> +		info->content = NULL; /* read the file later */
+> +	} else {
 
-The LFS already uses the .gitattributes to define a 'type', while the 
-submodules don't yet have that capability. There is just a single 
-special type within a tree object of "sub-module"  being a mode 16000 
-commit (see https://longair.net/blog/2010/06/02/git-submodules-explained/).
+This pretends that this new one will stay to be the only other
+option that uses the same callback in the future.  To be more
+defensive, it should do
 
-One thought is that one uses a proper sub-module that within it then has 
-the single 'large' file git-lfs style that hosts the hash reference for 
-the data VCS 
-(https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md). It would be 
-the regular sub-modules .gitattributes file that handles the data 
-conversion.
+	} else if (!strcmp(opt->long_name, "...")) {
 
-It may be converting an X-Y problem into an X-Y-Z solution, or just 
-extending the problem.
+and end the if/else if/else cascade with
 
---
-Philip
+	} else {
+		BUG("add_file_cb called for unknown option");
+	}
 
+> +		const char *colon = strchr(arg, ':');
+> +		char *p;
+> +
+> +		if (!colon)
+> +			die(_("missing colon: '%s'"), arg);
+> +
+> +		p = xstrndup(arg, colon - arg);
+> +		if (!args->prefix)
+> +			path = p;
+> +		else {
+> +			path = prefix_filename(args->prefix, p);
+> +			free(p);
+> +		}
+> +		memset(&info->stat, 0, sizeof(info->stat));
+> +		info->stat.st_mode = S_IFREG | 0644;
 
+I can sympathize with the desire to omit the mode bits because it
+may not be useful for the immediate purpose of "scalar diagnose"
+where the extracting end won't care what the file's permission bits
+are, but by letting this "mode is hardcoded" thing squat here would
+later make it more work when other people want to add an option that
+truely lets the caller add a "vitual" file, in response to end-user
+complaints that they cannot use the existing one to add an
+exectuable file, for example.  I do not care too much about the
+pathname limitation that does not allow a colon in it, simply
+because it is unusual enough, but I am not sure about hardcoded
+permission bits.
+
+If we did "--add-virtual-file=<path>:0644:<contents>" instead from
+day one, it certainly adds a few more lines of logic to this patch,
+and the calling "scalar diagnose" may have to pass a few more bytes,
+but I suspect that such a change would help the project in the
+longer run.
+
+Thanks.
