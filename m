@@ -2,99 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E01A5C433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 18:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 294B5C433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 18:26:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348757AbiEJSYx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 14:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        id S1348877AbiEJS0q convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 10 May 2022 14:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242474AbiEJSYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 14:24:52 -0400
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A26633E18
-        for <git@vger.kernel.org>; Tue, 10 May 2022 11:20:52 -0700 (PDT)
-Received: by mail-vs1-xe2f.google.com with SMTP id i186so17712888vsc.9
-        for <git@vger.kernel.org>; Tue, 10 May 2022 11:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Y8cVwtEhCdihJeODXNysfkPHSbqTpFngQdiAj+F/Ybc=;
-        b=fQMYgg3WtfHL/Kjo8j3L3ctoUaacElSTRgd89QTB01gpBHYLmCAsuSrJ/E6OejVtyU
-         2gCiicy7W7abH/FAKgipxkEPdp3m+0VrZvLQB34gXuU/eMsnMl28iF/u20CLvumzpNeH
-         FMSTUquYAmDMP/J68zBRbURkLfdVqOiPPVMyTaX59kQb663ZH2s7zLoiIMeltjheA4MO
-         rCkh8l1jh/Pq1nWTepaP9Uqyw0T2nOSu3EfnTpLDDVGVLDoSJSWMhCJXFn4/MXCwfqQr
-         cTaBoKonha1fN9fhblYoiC0SxNvoEZk5xatXWs9vsRPPXbQNGA0EPTcn5Au1DJKE9B78
-         wi5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Y8cVwtEhCdihJeODXNysfkPHSbqTpFngQdiAj+F/Ybc=;
-        b=NXz+Ps6c3cjh+K6SQB51yDFHFHbnQ516sZo8nZ2/0TZFkWqiSi11e5Y2jkKyGy/hqv
-         46MHMV7kCNceDiICUFoxbCQQJ1mZ0JzKlcZLZloUT3w1pfPVKHHx2fFpjqiCCckoEPiH
-         Au3sKyckLscgVEg/qXjH00uWFNOYYp6tLjMyrW1ET6E4xa8PDZ1ywKevHq+Aiq7PsXL7
-         Y7W6oo9vfP2HSwKLBNVeNxF3mhQB6q9hAM6SmwCfg3FfFiYieIsdnGDOnTozO+oIi+Iz
-         lgEIZtKKkIZw00jL9wnLXg/akGLz2eKsIY+lxKunUznRBnxxjxVhLshV1569i7segSe4
-         wvyg==
-X-Gm-Message-State: AOAM5322urMp3sZH0cVROBBLZ9CANV7m/kpy+f79CNggmB1eWr1ehVTg
-        UEGdtMEVavzzvu9QrvRUzKWua83AqaXbk6Yyz6Q=
-X-Google-Smtp-Source: ABdhPJzbxNXdWYTbSfsLrFifC51VG6CTOpcsV94Ywd+i+df+tvCRfMSzssejFMIynrkGJ1asHTZNiOk2DPNaEXVOL6w=
-X-Received: by 2002:a67:c905:0:b0:32c:69bd:18a3 with SMTP id
- w5-20020a67c905000000b0032c69bd18a3mr12794131vsk.5.1652206851994; Tue, 10 May
- 2022 11:20:51 -0700 (PDT)
+        with ESMTP id S1348886AbiEJS0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 14:26:45 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5287170F16
+        for <git@vger.kernel.org>; Tue, 10 May 2022 11:26:43 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24AIQcCN010781
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 10 May 2022 14:26:38 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Addison Klinke'" <addison@baller.tv>,
+        "'Jason Pyeron'" <jpyeron@pdinc.us>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
+        "'Addison Klinke'" <agk38@case.edu>
+References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com> <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us> <CAE9CXujPzu3_95pBDVRXKFU_z40j9Y7v5_1y3c+WnFpz1_oY4w@mail.gmail.com>
+In-Reply-To: <CAE9CXujPzu3_95pBDVRXKFU_z40j9Y7v5_1y3c+WnFpz1_oY4w@mail.gmail.com>
+Subject: RE: [FR] supporting submodules with alternate version control systems (new contributor)
+Date:   Tue, 10 May 2022 14:26:33 -0400
+Organization: Nexbridge Inc.
+Message-ID: <03ca01d8649b$7d6a3310$783e9930$@nexbridge.com>
 MIME-Version: 1.0
-References: <20220504104601.136403-1-chriscool@tuxfamily.org> <20220509153834.485871-1-chriscool@tuxfamily.org>
-In-Reply-To: <20220509153834.485871-1-chriscool@tuxfamily.org>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 10 May 2022 11:20:41 -0700
-Message-ID: <CAPUEsphA=q10wCsrf3AxR9fXz9HQHt374tDFoWBu++EPNDA-LA@mail.gmail.com>
-Subject: Re: [PATCH v3] http: add custom hostname to IP address resolutions
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQMmAUfbvsYWpozP57O9QeLcqWKlogGoVhkBAX3yDo8CHEtlFqpTHZoQ
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 9, 2022 at 8:38 AM Christian Couder
-<christian.couder@gmail.com> wrote:
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index f92c79c132..4a8dbb7eee 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -567,4 +567,11 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
->         grep symref=HEAD:refs/heads/ trace
->  '
+On May 10, 2022 1:27 PM, Addison Klinke wrote:
+>Thanks for the quick replies
 >
-> +test_expect_success 'passing hostname resolution information works' '
-> +       BOGUS_HOST=gitbogusexamplehost.com &&
-> +       BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
-> +       test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
-> +       git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
-> +'
+>> Junio Hamano: When you bind an external repository (be it stored in
+>> Git or
+>somebody else's system) as a submodule, each commit in the superproject
+>records which exact commit in the submodule is used with the rest of the
+>superproject tree.
+>
+>This should be fine then - at least the data versioning tools I'm familiar with can all
+>specify their current commit and checkout by commit hash. Does it matter how
+>the hashes are structured/stored internally? For example, I believe Dolt keeps
+>them in a MySQL table that connects to Noms under the hood.
+>
+> > Junio Hamano: not judging "if it is realistic" at this point
+>
+>What would be the best approach for answering this portion?
 
-Is setting it up as a command line config option the way you expect to
-use this, and if so why not make it a full blown command line option
-with the previous caveats that were discussed before?
+Basically, answer the following: Can you implement a command like the cvs2git that can be re-executed on an idempotent (repeatedly with the same result) basis?
 
-I also think it might be a little confusing (and probably warranted of
-an advice message) if git will decide based on a configuration
-somewhere in its resolution tree that the IP I am connecting is
-different than the one I expect it to use through the system
-configured resolution mechanism for such a thing.
+If yes, then you can build your own automation to move code into a submodule from your own VCS system into a git repository and the work with the submodule without the git code-base knowing about this.
 
-I assume that if you want to use this frequently, having that advice
-disabled in your global config wouldn't be a hassle, but it might be
-useful to know that I am interacting with a potentially different IP
-when referring to some host by name in my local repo, maybe because I
-forgot to change that setting after some debugging.
+If you can go the other way, from git to your other VCS system, repeatedly, then you can go back again. This is likely to be much harder as git has a much richer representation model than is typical of VCS systems.
 
-I am sure all those folks that forget to edit their /etc/hosts after
-they are done with their local site versions might instead use this
-and then be happy to be warned about it later.
+One way may be sufficient for your purposes. Research how cvs2git works and see whether you are able to emulate its functions.
 
-Carlo
+>> Jason Pyeron: The submodule "type" could create an object (hashed and
+>> stored) that contains the needed "translation" details
+>
+>That sounds like an interesting idea. Since I'd like to offload the burden of
+>maintaining these translation files to the 3rd party developers, it would be nice if
+>they got copied to a standard location (i.e. ~/.gitmodules/translations/tool_x)
+>during the 3rd party install.
+>Then when a submodule is added with "type = tool_x", git checks that the
+>appropriate translation file is available, and if so, copies it into the parent
+>repository.
+>
+>On Tue, May 10, 2022 at 11:20 AM Jason Pyeron <jpyeron@pdinc.us> wrote:
+>>
+>> > -----Original Message-----
+>> > From: Junio C Hamano
+>> > Sent: Tuesday, May 10, 2022 1:01 PM
+>> > To: Addison Klinke <addison@baller.tv>
+>> >
+>> > Addison Klinke <addison@baller.tv> writes:
+>> >
+>> > > Is something along these lines feasible?
+>> >
+>> > Offhand, I only think of one thing that could make it fundamentally
+>> > infeasible.
+>> >
+>> > When you bind an external repository (be it stored in Git or
+>> > somebody else's system) as a submodule, each commit in the
+>> > superproject records which exact commit in the submodule is used
+>> > with the rest of the superproject tree.  And that is done by
+>> > recording the object name of the commit in the submodule.
+>> >
+>> > What it means for the foreign system that wants to "plug into" a
+>> > superproject in Git as a submodule?  It is required to do two
+>> > things:
+>> >
+>> >  * At the time "git commit" is run at the superproject level, the
+>> >    foreign system has to be able to say "the version I have to be
+>> >    used in the context of this superproject commit is X", with X
+>> >    that somehow can be stored in the superproject's tree object
+>> >    (which is sized 20-byte for SHA-1 repositories; in SHA-256
+>> >    repositories, it is a bit wider).
+>> >
+>> >  * At the time "git chekcout" is run at the superproject level, the
+>> >    superproject will learn the above X (i.e. the version of the
+>> >    submodule that goes with the version of the superproject being
+>> >    checked out).  The foreign system has to be able to perform a
+>> >    "checkout" given that X.
+>> >
+>> > If a foreign system cannot do the above two, then it fundamentally
+>> > would be incapable of participating in such a "superproject and
+>> > submodule" relationship.
+>>
+>> The submodule "type" could create an object (hashed and stored) that contains
+>the needed "translation" details. The object would be hashed using SHA1 or
+>SHA256 depending on the git config. The format of the object's contents would be
+>defined by the submodule's "code".
+
+I would not try to do this inside the git infrastructure. What you may be able to do in my suggestion above, is to restrict how your other VCS system is used and restrict how your team uses git to make the mapping repeatable. This is typical of some environments where there is an SVN repo and a git repo that are mirrored. This does simplify matters particularly if you do not have to modify either system but are building a façade or wrapper around both.
+
+Keep this as simple as possible to meet a minimum viable set of requirements.
+--Randal 
+
