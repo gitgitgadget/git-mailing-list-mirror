@@ -2,153 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C933C433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE9FC433EF
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:45:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238136AbiEJXo0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 19:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33878 "EHLO
+        id S237563AbiEJXpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 19:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229837AbiEJXoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 19:44:23 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA52B59090
-        for <git@vger.kernel.org>; Tue, 10 May 2022 16:44:22 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B122C18BA92;
-        Tue, 10 May 2022 19:44:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=95i8k8wQPDfBmxVyTNOpBrywbUU2VDykSAXsqt
-        7iC6o=; b=sjClEv5fPa3BISMe7+pQcRxi0RRdiysLF8aitGg0kph/zhuj/AOvbK
-        f5EHJ9Yt1P+o6I+s1ghZj+d7HByu47mNmBhr9nmjGsBILElgj1q6K5auxVx1BGOj
-        vXIf/V5+b4u5ZJtApYhi07yK2DXbBa1Ia8MGmUn0AzA8VUz5Ag0FM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CF0518BA91;
-        Tue, 10 May 2022 19:44:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3763918BA8B;
-        Tue, 10 May 2022 19:44:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 1/3] t: regression git needs safe.directory when
- using sudo
-References: <20220507163508.78459-1-carenas@gmail.com>
-        <20220510174616.18629-1-carenas@gmail.com>
-        <20220510174616.18629-2-carenas@gmail.com>
-        <xmqqczgl6nua.fsf@gitster.g>
-        <CAPUEspgGZeF8LA5PZNF87=+zZLKvWLqWtpD5YUBUON4gq_TaDg@mail.gmail.com>
-Date:   Tue, 10 May 2022 16:44:16 -0700
-In-Reply-To: <CAPUEspgGZeF8LA5PZNF87=+zZLKvWLqWtpD5YUBUON4gq_TaDg@mail.gmail.com>
-        (Carlo Arenas's message of "Tue, 10 May 2022 16:11:55 -0700")
-Message-ID: <xmqqwnet3qcv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229837AbiEJXpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 19:45:39 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4FA5BE6B
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:45:38 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id c8so804290qvh.10
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:45:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2oLFudd1ID2U12ZY/K5VZYCknL+3a8qUT6pJbkOoz4A=;
+        b=TpSVf97Irk46z9/fJ59PhwxROvJspekCqfbQFno+a/JUhEC0VZzNIY3HDL9yk7VAAV
+         mzeICJ0VtqIRcLq045aTBbCoaF06Te16sX+1ZjYVmndxMDImx7ZubK38+DicfVOO22SX
+         9vUa2bmAIZ6DZFt7cQ9mQZP0wxOjZBhlcZv+pE0rCkgTwV+8ljKobpwHR8EZvXUhgMeS
+         7gHDocyAQJlZzCavmpldScb90Q0Z4/fk0rZ9LyM9wpknVbiZELE+Tw6GtXaXOGi0v5dU
+         8sRzPKwhGq1bEENFs9+lf8W/3fk3YCnGu4DUQgRfXBTk3IcdwxKp85EHswjSPkWQLy1x
+         SwAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2oLFudd1ID2U12ZY/K5VZYCknL+3a8qUT6pJbkOoz4A=;
+        b=qiInGJ+g2ExxKMJ9J8LOT2Fr7E1pMMNt1YKii6JhWNzamkrcNwdbg/VPT4vNz776xy
+         xABaeae0uGU/RzyNjgeHZnbuuah1W4UcteMFvQu4KkhS5XfotR3HxkNAgZSSHAcShWI2
+         iojrm8eWm4w5pb9yCFBw6T8Aqa+fexHLGpF3xC3riIoPRw8nA3ZjPR5liKFnvizP8YST
+         VbCJKjU0h0+gBlHKHuRegz5PMeW37fNGjZQVcKCfFWckmnPEqXTAe5+yMQ4G3GnLmP4r
+         nOQuVQzO+Lpmkb9LdyBqXXJa+7t+9aHBIyFPXKCZ61OHKlvrTg8s3LTijbCXOhTb1U7u
+         Xirw==
+X-Gm-Message-State: AOAM530Of4RuaUGn0noYQpIdb9cLLDuGH0qQ492vKM4sTSKWZnFkkC95
+        dSMAHMxWakUWpqMZoaNH9hA=
+X-Google-Smtp-Source: ABdhPJxvbCTDUY4BwQ5C8AeOqzIIbaKnJhRUBUENifcdCzk0p1UKWszBYTw8j1y6QfFKMsmqyv6G4g==
+X-Received: by 2002:a05:6214:1cc5:b0:443:6a15:5894 with SMTP id g5-20020a0562141cc500b004436a155894mr19713279qvd.59.1652226337886;
+        Tue, 10 May 2022 16:45:37 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id i8-20020a05622a08c800b002f3ad89629dsm284893qte.2.2022.05.10.16.45.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 May 2022 16:45:37 -0700 (PDT)
+Subject: Re: [PATCH 2/3] MyFirstContribution: also explain cover letter in
+ GitGitGadget section
+To:     Victoria Dye <vdye@github.com>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
+ <afb80b8e9ee022cba9373f2191ee1619e5897b09.1651086288.git.gitgitgadget@gmail.com>
+ <ed4a0e46-a45c-0b05-fc35-f82e377ea231@github.com>
+ <c7030c98-bd65-7d0e-89ac-ae291e22b10d@gmail.com>
+ <f7f64135-7d57-5926-501b-13e83411b4fd@github.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <875578c1-c3a9-bccb-40a7-b390b6a123ef@gmail.com>
+Date:   Tue, 10 May 2022 19:45:35 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1B9D9FD2-D0BB-11EC-B95C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+In-Reply-To: <f7f64135-7d57-5926-501b-13e83411b4fd@github.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+Hi Victoria,
 
->> > +test_lazy_prereq SUDO '
->> > +     sudo -n id -u >u &&
->> > +     id -u root >r &&
->> > +     test_cmp u r &&
->> > +     command -v git >u &&
->> > +     sudo command -v git >r &&
->> > +     test_cmp u r
->> > +'
+Le 2022-04-29 à 12:27, Victoria Dye a écrit :
+> Philippe Blain wrote:
+>> Hi Victoria,
 >>
->> I vaguely recall mentions of older dash that lack "command -v" made
->> earlier, but implementations of dash I have handy seem to know it.
->> I am personally fine with this as this script has a very narrow and
->> limited audience in mind.
->
-> I did check that, but think the report was mistaken.
-> Debian, Ubuntu, NetBSD and OpenBSD would fail the same way here, but
-> it is not because of the use of dash, as much as sudo NOT being
-> configured to default to `-s` mode.
-
-OK.
-
-> dscho was right to point out that I should had usen type instead, but
-> that wouldn't work because of the mismatch of shells and therefore the
-> mismatch of outputs, so I went with command instead as an extra clever
-> way to make sure both the shell inside and outside were most likely
-> the same, even if some sudo somewhere decides in the name of security
-> not to respect its own "-s mode" and force a "safer" shell.
-
-In this particular case, "command -v" is the right thing to use, as
-you care where the command is found on the $PATH and "type --path"
-is *NOT* portable.
-
->> > +     sudo chown root root &&
->> > +     (
->> > +             cd root/r &&
->> > +             git init
->> > +     )
->> > +'
+>> Le 2022-04-27 à 16:43, Victoria Dye a écrit :
+>>> Philippe Blain via GitGitGadget wrote:
 >>
->> So, "root/" is owned by root, "root/r" is owned by the tester.
->
-> It doesn't need to be root, but needs to be different than "tester",
-
-To make sure you do not misunderstand, I know the ownership of
-root/r and root/p matter---tester and root must be different.  And
-we use these two as sample repositories owned by two different
-users.
-
-What I am pointing out here is the root/ directory itself.  I do not
-think its ownership does not matter anywhere in these new tests (not
-just this patch, but after applying all three patches).
-
->> > +test_expect_failure SUDO 'sudo git status as original owner' '
->> > +     (
->> > +             cd root/r &&
->> > +             git status &&
+>>>> +----
+>>>> +Adding the 'psuh' command
+>>>
+>>> Typically I see patch series titles follow the same "imperative mood" as
+>>> commit titles/messages (see 'Documentation/SubmittingPatches.txt'). I'm not
+>>> sure whether that's a rule written down somewhere or just convention, but
+>>> for the sake of consistency you might want to do something like:
+>>>
+>>> 	"Add the 'psuh' command"
+>>>
 >>
->> The tester runs "git status" in "root/r" owned by the tester and it
->> should succeed.
+>> I fully agree. I just copied the existing patch series title from 
+>> the git-send-email section further down. I think it would make sense
+>> to change this to also using the imperative mood just like commit messages
+>> in a preparatory commit. I'll do that.
 >>
->> > +             sudo git status
+>>>> +----
+>>>> +
+>>>> +Your PR's description will used as the body of the cover letter.
+>>>
+>>> Including the line "Your PR's description..." is somewhat confusing to me as
+>>> a first-time reader, since I was interpreting this section to be the
+>>> *verbatim* text of the pull request title & description. If this *is* meant
+>>> to be that description, then the note about the PR description can be
+>>> removed. That point is also mentioned above, so it's probably not needed
+>>> here anyway.
 >>
->> We want the tester to be able to do the same while temporarily
->> becoming 'root' with "sudo", but we know it fails right now.
+>> I'm not exactly sure what you mean. I meant that the description of the PR
+>> will be used as the body of the cover letter...
 >>
->> > +     )
->> > +'
->>
->> Mental note.  We do not need root to be owned by 'root' with the
->> tests we see here.  Perhaps we would add some that requires it in
->> later patches.  We'll see.
->
-> I am not good with subtle messages in a foreign language, but is this
-> a way to imply that I shouldn't need to chown and instead use the
-> GIT_TEST_PRETEND feature more?
+> 
+> Sorry for being unclear. What I meant was that, the way this part of the
+> document reads (to me) right now, it looks like the recommendation is to
+> create a pull request with the title & description:
+> 
+> Title: 
+> 	Adding the 'psuh' command
+> Description:
+> 	Your PR's description will [be] used as the body of the cover
+> 	letter. <insert content from MyFirstContribution-coverletter.txt>
+> 
+> That is, the line "Your PR description will..." is the first line of the
+> description (which I don't think was your intention).
+> 
+> That said, upon a more holistic re-read, I've found a few more things that
+> are confusing/oddly phrased. I'll try re-reviewing (part of) the patch
+> below, with (hopefully) more direct/concrete feedback this time:
+> 
+>> -Review the PR's title and description, as it's used by GitGitGadget as the cover
+>> -letter for your change. When you're happy, submit your pull request.
+>> +Review the PR's title and description, as they're used by GitGitGadget as the
+>> +cover letter for your change. The cover letter describes your proposed
+>> +contribution as a whole and is ideal to mention any context that might be
+> 
+> s/is ideal to/should(?)
+> 
+>> +useful for reviewers. The title of your PR should be something which
+>> +succinctly covers the purpose of your entire topic branch, for example:
+>> +
+>> +----
+>> +Adding the 'psuh' command
+>> +----
+> 
+> Other than the "Adding" -> "Add" change, this is good - the example title
+> will be formatted as a monospaced block, clearly separating it from the
+> advice/context preceding it.
+> 
+>> +
+>> +Your PR's description will used as the body of the cover letter.
+>> +include::MyFirstContribution-coverletter.txt[]
+>> +
+> 
+> Conversely, this section has no visible separation between the context
+> ("Your PR's description...") and the example
+> ("include::MyFirstContribution-coverletter.txt[]"), hence my confusion
+> earlier. 
+> 
+> To parallel the title example, maybe you could use similar monospace
+> formatting for the example? E.g.:
+> 
+> +
+> +Your PR's description will used as the body of the cover letter.
+> + 
+> +----
+> +include::MyFirstContribution-coverletter.txt[]
+> +----
+> +
+> 
+> One thing I noticed on my re-read is that the context you provide for the
+> title ("The title of your PR should be something...") isn't quite paralleled
+> in the context for the description ("Your PR's description..."). The former
+> talks about *how* you should write your cover letter title, whereas the
+> latter simply states that the PR description will become the cover letter's
+> content. For added context, then, you might want to describe how the cover
+> letter content should be written, e.g.:
+> 
+> +
+> +Your PR's description will be used as the body of the cover letter and
+> +should explain the purpose of the series, for example:
+> + 
+> +----
+> +include::MyFirstContribution-coverletter.txt[]
+> +----
+> +
+> 
+> (note the s/will used/will be used)
+> 
+> Apologies for all the picky grammar comments - this series includes a lot of
+> really helpful information for new contributors, and I really appreciate
+> your work here! Hopefully my feedback is a bit more clear this time (and is
+> relatively straightforward to implement).
 
-No.  I just said I made a mental note of the fact that the ownership
-of root/ directory (not root/r which is the other directory this
-test script creates in this step) does not matter at least in patch
-1/3, but I cannot say, by that observation alone, that chown we saw
-earlier should be removed, because patches 2/3 and 3/3 might start
-requiring root/ to be owned by 'root'.  Hence "I made a mental note
-here.  We do not have anything that requires the above chown in this
-patch, but we might see something that makes it a good idea to keep
-the chown in later patches".
+Thanks for your feedback. I'll send an updated and expanded version soon
+and I think I've adressed the different things you noted.
 
-I do not think GIT_TEST_PRETEND needs to be involved at all.  It's
-just root/ can be left owned by the tester, because we only care
-about the owners of root/p and root/r in these three patches.
+Cheers,
 
-Thanks.
+Philippe.
 
