@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D62C9C433FE
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3428FC433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237926AbiEJXcp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 19:32:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44984 "EHLO
+        id S237697AbiEJXcr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 19:32:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233422AbiEJXcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 19:32:39 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24EDA1D5008
-        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:38 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id k126-20020a1ca184000000b003943fd07180so269751wme.3
-        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:38 -0700 (PDT)
+        with ESMTP id S236397AbiEJXck (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 19:32:40 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C7351D5007
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:39 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id q20so242318wmq.1
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=igvrIJQoQ0c+Op40m9NQxfZ07jOrWXFTaW9zMmhrCSA=;
-        b=Gwmtk5Tphfb7m1ycXD9+oXLUHrdNsRhsBTECrIVF5RTLbMfj+E0j0fcavVhRl7bAH+
-         99TrOfVFrCTPm/S4aFcFGznbQe18piYnqg+YTAynxERPZjLUVHqfBOF6PynSGvPL0+CD
-         02fYC8J/BMIAy4CXFhcks2MRldogonW5syyBNbJKemT82zswqqjldrmh9KoqI7nAUjQA
-         G4CaxqMGsJRLxYQN5dLVKJ1Ai1tWLB45uHCWI+AJpaZjmg7FTfo4Oh9xvxu/O4aIs+Tu
-         InJUtbBEXjYRU4tPEus0Hz2N57h3IrpKKXtjw/OAXJOnAfuionXOl/pGDdn6HUva2CkP
-         eDrQ==
+        bh=udkS8dA54x7bIimMz0F9qvNG6TEGzzvh+7UbZZKzdNw=;
+        b=TrNl9J2qRUmmCqm+Q7bYWmtXjW7MvMobjUyHRyKzVXDQUs2KkwoqCPzhxp6zwRWU9f
+         EsBwCUcE0fwtVmWgt/7ldElcHHVsZLm2NgnByDnAvKE+8MtBTm5znx8q67ZVPQ4mQvhp
+         Yg3qHygku1+SwwRSHzUybNA+otI369Gcs9fUql1P5fXYunx5X2nHRaxusxdmkKrxTDkM
+         j0we1htCthRlelfqXSTI67ROVbmGvSGBofL5c6HHVti2IugHw+FdkMqeo/DBbw57HU3S
+         DOz6NF2qsHhwXMasA/2T2jgC+XqEx5ORjY/r6zp0DQX8ZV/rq/euLiXGkrdEQg26BEcP
+         IHnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=igvrIJQoQ0c+Op40m9NQxfZ07jOrWXFTaW9zMmhrCSA=;
-        b=Wm/vTl2TmYagze7oNNeE10QpJs4+detpEIROSMR+lgGvPZ+kgCjl0zBwANa/r7txGE
-         ytciZ4WqGbS8KSV2Ja8ZUJDrvi9R0gE2JNbfh2+fH4MClSMOP2FOsKx1vLY7kSfMNlrz
-         B8CuVf4w5JGt0PG/dYxUyNcUU5kgVip0c3uEaOT/hMgrsi/ed3Ps/s9M5rGkOjQGtYSc
-         /bsRL5aRNzF/u4Nb29nL5Dx+JXw+Ke4uCuRxAT7MICu2ir/BABLo85XHxfq9oeUu4day
-         CV8m+fs7aYrD7/ft+Rhs3009gO1uMrrJbWIMpB1nfc/f/lufXqLhM5/HVCSyIrl2N2wU
-         NrgA==
-X-Gm-Message-State: AOAM530DFNc2yR02cDQS7Blox0BzLwei9ROIbN3ZHv0VkLr1k5zdmrnH
-        O7TZRUd+nv677LlmqSmnthLKtcjWhMw=
-X-Google-Smtp-Source: ABdhPJyQgaeCl6A8PtAbv4ZVpTN2Fbkr41a76uzSkOwuS8HO6OW7g71vMyRv9d0hvjqRdfSOjMiH+w==
-X-Received: by 2002:a05:600c:5008:b0:394:533c:54a1 with SMTP id n8-20020a05600c500800b00394533c54a1mr2098413wmr.15.1652225556349;
-        Tue, 10 May 2022 16:32:36 -0700 (PDT)
+        bh=udkS8dA54x7bIimMz0F9qvNG6TEGzzvh+7UbZZKzdNw=;
+        b=wLDTGmKN3j9A77XYAhiOA372vj0dMQcUSp+6Bsf3hrZpL2So3dKhTkG9I2Xw+Air0r
+         ZFlKQb4hHs1aYVHHS5ZBaGQ8Z61g5wT991xxp3K8aFK+sjZ3DdsR78w809Z06U43B8Jo
+         kyQzIwlaq1N23BHbiKYRQOI862joioVDeWCx1XUTBVUpkDtTEouOtPI+vyI5s6Gkvxae
+         CdoUyCNSPQ4HmCRCKOGD1rUoMtzD/rQvE5MFXrwyp+69T/Q60nYrmNEo4BZLTmg7oIRg
+         9e8ealZD6t0P5Wl0R7SIE1qJDlk9B/4k4rEI85JDchyritY3HizA8LYnE664Yywjc0MT
+         5hwQ==
+X-Gm-Message-State: AOAM532Rx2hnJ1SYXcoOLkB0w0+iXE4bZNu0Bkl7qg/v4qepAUyy0zsI
+        rKMZ90vnISQtNRzjRj2b5O7Rx2CCb1c=
+X-Google-Smtp-Source: ABdhPJx+/epJ0+Z/Vee/c/zd0g+q1xlAxce8NTI5ZTVN1EE93V/0n8b39+7+JOysvk1v0hmbMtGIfA==
+X-Received: by 2002:a05:600c:214e:b0:394:31c6:b66b with SMTP id v14-20020a05600c214e00b0039431c6b66bmr2080192wml.31.1652225557764;
+        Tue, 10 May 2022 16:32:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j18-20020a05600c1c1200b003947e11c3ecsm506409wms.17.2022.05.10.16.32.34
+        by smtp.gmail.com with ESMTPSA id r7-20020adfe687000000b0020c5253d908sm161904wrm.84.2022.05.10.16.32.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 16:32:35 -0700 (PDT)
-Message-Id: <4e0a09f7a3ce55ea5478a3539c0c0e80188bf533.1652225552.git.gitgitgadget@gmail.com>
+        Tue, 10 May 2022 16:32:37 -0700 (PDT)
+Message-Id: <7be484a8c0beb5787967e4c89fb3eab15006e3be.1652225552.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com>
 References: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
         <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 May 2022 23:32:27 +0000
-Subject: [PATCH v3 1/6] stash: expand sparse-checkout compatibility testing
+Date:   Tue, 10 May 2022 23:32:28 +0000
+Subject: [PATCH v3 2/6] stash: integrate with sparse index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,98 +67,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add tests verifying expected 'git stash' behavior in
-'t1092-sparse-checkout-compatibility'. These cases establish the expected
-behavior of 'git stash' in a sparse-checkout and verify consistency both
-with and without a sparse index. Although no sparse index compatibility has
-been integrated into 'git stash' yet, the tests are all 'expect_success' -
-we don't want the cone-mode sparse-checkout behavior to change depending on
-whether it is using a sparse index or not. Therefore, we expect these tests
-to continue passing once sparse index is integrated with 'git stash'.
+Enable sparse index in 'git stash' by disabling
+'command_requires_full_index'.
 
-Additionally, add performance test cases for 'git stash' both with and
-without untracked files. Note that, unlike the other tests in
-'p2000-sparse-operations.sh', the tests added for 'stash' are combination
-operations. This is done to ensure the stash/unstash is not blocked by the
-modification of '$SPARSE_CONE/a' performed as part of 'test_perf_on_all'.
+With sparse index enabled, some subcommands of 'stash' work without
+expanding the index, e.g., 'git stash', 'git stash list', 'git stash drop',
+etc. Others ensure the index is expanded either directly (as in the case of
+'git stash [pop|apply]', where the call to 'merge_recursive_generic()' in
+'do_apply_stash()' triggers the expansion), or in a command called
+internally by stash (e.g., 'git update-index' in 'git stash -u'). So, in
+addition to enabling sparse index, add tests to 't1092' demonstrating which
+variants of 'git stash' expand the index, and which do not.
+
+Finally, add the option to skip writing 'untracked.txt' in
+'ensure_not_expanded', and use that option to successfully apply stashed
+untracked files without a conflict in 'untracked.txt'.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/perf/p2000-sparse-operations.sh        |  2 +
- t/t1092-sparse-checkout-compatibility.sh | 49 ++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ builtin/stash.c                          |  3 +++
+ t/t1092-sparse-checkout-compatibility.sh | 29 +++++++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 382716cfca9..76710cbef35 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -106,6 +106,8 @@ test_perf_on_all () {
- }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0c7b6a95882..1bfba532044 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1770,6 +1770,9 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
  
- test_perf_on_all git status
-+test_perf_on_all 'git stash && git stash pop'
-+test_perf_on_all 'echo >>new && git stash -u && git stash pop'
- test_perf_on_all git add -A
- test_perf_on_all git add .
- test_perf_on_all git commit -a -m A
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	index_file = get_index_file();
+ 	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
+ 		    (uintmax_t)pid);
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 236ab530284..86312b30444 100755
+index 86312b30444..75d844cd71d 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1034,6 +1034,55 @@ test_expect_success 'cherry-pick with conflicts' '
- 	test_all_match test_must_fail git cherry-pick to-cherry-pick
+@@ -1271,7 +1271,10 @@ test_expect_success 'index.sparse disabled inline uses full index' '
+ 
+ ensure_not_expanded () {
+ 	rm -f trace2.txt &&
+-	echo >>sparse-index/untracked.txt &&
++	if test -z "$WITHOUT_UNTRACKED_TXT"
++	then
++		echo >>sparse-index/untracked.txt
++	fi &&
+ 
+ 	if test "$1" = "!"
+ 	then
+@@ -1375,6 +1378,30 @@ test_expect_success 'sparse-index is not expanded: merge conflict in cone' '
+ 	)
  '
  
-+test_expect_success 'stash' '
++test_expect_success 'sparse-index is not expanded: stash' '
 +	init_repos &&
 +
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
++	echo >>sparse-index/a &&
++	ensure_not_expanded stash &&
++	ensure_not_expanded stash list &&
++	ensure_not_expanded stash show stash@{0} &&
++	! ensure_not_expanded stash apply stash@{0} &&
++	ensure_not_expanded stash drop stash@{0} &&
 +
-+	# Stash a sparse directory (folder1)
-+	test_all_match git checkout -b test-branch rename-base &&
-+	test_all_match git reset --soft rename-out-to-out &&
-+	test_all_match git stash &&
-+	test_all_match git status --porcelain=v2 &&
++	echo >>sparse-index/deep/new &&
++	! ensure_not_expanded stash -u &&
++	(
++		WITHOUT_UNTRACKED_TXT=1 &&
++		! ensure_not_expanded stash pop
++	) &&
 +
-+	# Apply the sparse directory stash without reinstating the index
-+	test_all_match git stash apply -q &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Reset to state where stash can be applied
-+	test_sparse_match git sparse-checkout reapply &&
-+	test_all_match git reset --hard rename-out-to-out &&
-+
-+	# Apply the sparse directory stash *with* reinstating the index
-+	test_all_match git stash apply --index -q &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Reset to state where we will get a conflict applying the stash
-+	test_sparse_match git sparse-checkout reapply &&
-+	test_all_match git reset --hard update-folder1 &&
-+
-+	# Apply the sparse directory stash with conflicts
-+	test_all_match test_must_fail git stash apply --index -q &&
-+	test_all_match test_must_fail git stash apply -q &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Reset to base branch
-+	test_sparse_match git sparse-checkout reapply &&
-+	test_all_match git reset --hard base &&
-+
-+	# Stash & unstash an untracked file outside of the sparse checkout
-+	# definition.
-+	run_on_sparse mkdir -p folder1 &&
-+	run_on_all ../edit-contents folder1/new &&
-+	test_all_match git stash -u &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git stash pop -q &&
-+	test_all_match git status --porcelain=v2
++	ensure_not_expanded stash create &&
++	oid=$(git -C sparse-index stash create) &&
++	ensure_not_expanded stash store -m "test" $oid &&
++	ensure_not_expanded reset --hard &&
++	! ensure_not_expanded stash pop
 +'
 +
- test_expect_success 'checkout-index inside sparse definition' '
+ test_expect_success 'sparse index is not expanded: diff' '
  	init_repos &&
  
 -- 
