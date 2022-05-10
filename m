@@ -2,229 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D25C433EF
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 17:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E01A5C433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 18:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348388AbiEJRvH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 13:51:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38368 "EHLO
+        id S1348757AbiEJSYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 14:24:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348399AbiEJRuh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 13:50:37 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2805A2C8
-        for <git@vger.kernel.org>; Tue, 10 May 2022 10:46:39 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id d19so9007405lfj.4
-        for <git@vger.kernel.org>; Tue, 10 May 2022 10:46:39 -0700 (PDT)
+        with ESMTP id S242474AbiEJSYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 14:24:52 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A26633E18
+        for <git@vger.kernel.org>; Tue, 10 May 2022 11:20:52 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id i186so17712888vsc.9
+        for <git@vger.kernel.org>; Tue, 10 May 2022 11:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ostif-org.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc
-         :content-transfer-encoding;
-        bh=YTXuoswGEz2MAqkG8EYd9n83f96bto7x5LesOB4n3yc=;
-        b=oEHLdVeu1EN197ghORba30EZvdwxtPWCnk3UO2MzxlslQ7mfh3Gk32qu+8uIi9hs4A
-         BiMf0Sac4QdiPywsqUrvgCUooldYQPWRPXaUkT409CwC5gByiiQeyG/7nNioTwDMwYdh
-         l+JWB7Q9BiRPtqj/Uq6kDb2lB0cqKRxvH3O/DXIIYiJ9AOhpQZA5sJR8jptrsp4nW5i/
-         cgm52VtlheEhfbiAGub7gVGJSXfGLsz0OwLEM1o0Zs81+taS8T3BIkOsC0I8ncAV2rdy
-         Ap+vruAI4bpMODx4t2BjVHGLeBP9lrPFpXvh2ycIuyGw81wTaXIt5Wjy+oq3LBzw7izM
-         d6Pw==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y8cVwtEhCdihJeODXNysfkPHSbqTpFngQdiAj+F/Ybc=;
+        b=fQMYgg3WtfHL/Kjo8j3L3ctoUaacElSTRgd89QTB01gpBHYLmCAsuSrJ/E6OejVtyU
+         2gCiicy7W7abH/FAKgipxkEPdp3m+0VrZvLQB34gXuU/eMsnMl28iF/u20CLvumzpNeH
+         FMSTUquYAmDMP/J68zBRbURkLfdVqOiPPVMyTaX59kQb663ZH2s7zLoiIMeltjheA4MO
+         rCkh8l1jh/Pq1nWTepaP9Uqyw0T2nOSu3EfnTpLDDVGVLDoSJSWMhCJXFn4/MXCwfqQr
+         cTaBoKonha1fN9fhblYoiC0SxNvoEZk5xatXWs9vsRPPXbQNGA0EPTcn5Au1DJKE9B78
+         wi5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:cc:content-transfer-encoding;
-        bh=YTXuoswGEz2MAqkG8EYd9n83f96bto7x5LesOB4n3yc=;
-        b=I/PvK4eBSN85b/H+NQJuH1j94vWHZMA06fJYPyqADrGDsM36EeeeotvfBlUdkq56sz
-         IRHPEGAjkU9LhR8tYkvXnXO4aMmD5RmbvTrLxT9QOuC79nejmmlK1hpPjndViNX+A41k
-         jPHdranU+LTzEuw1tJsD5wkVINJ/yF2DNongcKpD/yCpc/s1sY8gfxJKse+TUIdONMX7
-         7t2N91kQ2EWA3qzq+wmfVmwZomGmethxwqoZntzPSh/OpbpGb6Pwubs2W5x2f3+3lGsz
-         5TmzQZXkzWMmgeFhOWhYqjne/i7gKMIuLy73paxmycd1/9yp//VpFP5x+tQqqclZS8nY
-         0vDA==
-X-Gm-Message-State: AOAM532k8Q2zhfQ8OL/+7IzHOLlu35g1KKZK7llrtA9Iq+fYLognv349
-        0PisDtJkZC+8ugKTjsaK8e41JZKejyNxUiw+K5K1CnXoH/c0Xqo6
-X-Google-Smtp-Source: ABdhPJyiIRqoTqnu91HoxIXltJMtXBRqj+q4bPuPvi6BozNAJqvMd4O1Beoc0ud9obV/dCqGGQR8qbT66JlWXVDuUgo=
-X-Received: by 2002:ac2:48ad:0:b0:472:4ef:d347 with SMTP id
- u13-20020ac248ad000000b0047204efd347mr16610921lfg.422.1652204797113; Tue, 10
- May 2022 10:46:37 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Y8cVwtEhCdihJeODXNysfkPHSbqTpFngQdiAj+F/Ybc=;
+        b=NXz+Ps6c3cjh+K6SQB51yDFHFHbnQ516sZo8nZ2/0TZFkWqiSi11e5Y2jkKyGy/hqv
+         46MHMV7kCNceDiICUFoxbCQQJ1mZ0JzKlcZLZloUT3w1pfPVKHHx2fFpjqiCCckoEPiH
+         Au3sKyckLscgVEg/qXjH00uWFNOYYp6tLjMyrW1ET6E4xa8PDZ1ywKevHq+Aiq7PsXL7
+         Y7W6oo9vfP2HSwKLBNVeNxF3mhQB6q9hAM6SmwCfg3FfFiYieIsdnGDOnTozO+oIi+Iz
+         lgEIZtKKkIZw00jL9wnLXg/akGLz2eKsIY+lxKunUznRBnxxjxVhLshV1569i7segSe4
+         wvyg==
+X-Gm-Message-State: AOAM5322urMp3sZH0cVROBBLZ9CANV7m/kpy+f79CNggmB1eWr1ehVTg
+        UEGdtMEVavzzvu9QrvRUzKWua83AqaXbk6Yyz6Q=
+X-Google-Smtp-Source: ABdhPJzbxNXdWYTbSfsLrFifC51VG6CTOpcsV94Ywd+i+df+tvCRfMSzssejFMIynrkGJ1asHTZNiOk2DPNaEXVOL6w=
+X-Received: by 2002:a67:c905:0:b0:32c:69bd:18a3 with SMTP id
+ w5-20020a67c905000000b0032c69bd18a3mr12794131vsk.5.1652206851994; Tue, 10 May
+ 2022 11:20:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <10fd679a-eb94-5380-2070-699f1b56a7b1@x41-dsec.de>
- <nycvar.QRO.7.76.6.2204052352030.379@tvgsbejvaqbjf.bet> <6cb10d5e-d8f2-0d7e-a15a-4728466e0c21@x41-dsec.de>
- <nycvar.QRO.7.76.6.2204071350080.347@tvgsbejvaqbjf.bet> <CAJY0qZLwQJ_6Me1em4X6M=YJb0O2+7rSYeKisLFOGH7_BW3Lww@mail.gmail.com>
- <CAJY0qZJaBvwA19PN=Gm4c5gSVqYYBOoVwgF=1mZTNEjmXFSc7A@mail.gmail.com>
-In-Reply-To: <CAJY0qZJaBvwA19PN=Gm4c5gSVqYYBOoVwgF=1mZTNEjmXFSc7A@mail.gmail.com>
-From:   Derek Zimmer <derek@ostif.org>
-Date:   Tue, 10 May 2022 12:46:25 -0500
-Message-ID: <CAJY0qZJ5sUmXeDZG45fvotcvFo4PRQy1Fv64Y1J7OjTF-8s0Mg@mail.gmail.com>
-Subject: Re: Covierty Integration / Improvement
-Cc:     git@vger.kernel.org
+References: <20220504104601.136403-1-chriscool@tuxfamily.org> <20220509153834.485871-1-chriscool@tuxfamily.org>
+In-Reply-To: <20220509153834.485871-1-chriscool@tuxfamily.org>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 10 May 2022 11:20:41 -0700
+Message-ID: <CAPUEsphA=q10wCsrf3AxR9fXz9HQHt374tDFoWBu++EPNDA-LA@mail.gmail.com>
+Subject: Re: [PATCH v3] http: add custom hostname to IP address resolutions
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all, (this is a resend, google mail arbitrarily decides to
-switch out of plaintext whenever it likes)
-
-Thank you for the conversations about Coverity. After some internal
-discussions and negotiating with our security partners, we have
-secured some engineers directly from Github who want to work on CodeQL
-for Git. They will do the work of getting CodeQL working, do a scan,
-and then evaluate how much work getting CodeQL into a usable state for
-Git is by looking at the false positive rate and figuring out what can
-be muted with rules, and the false negative rate vs Coverity / other
-current tests and create some custom tests.
-
-This should give us a good baseline on what is needed to get Git a
-solid security scanner for the CI/CD pipeline. We are focusing on
-making the results useful and removing nags to save as much developer
-time as possible when using it, so that you get the security benefits
-without significant drawbacks.
-
-Do we have anyone here that is interested in helping the team set up
-CodeQL? I'm sure the engineers will have some questions, especially
-regarding the current Coverity mess and what needs to improve in order
-to make this new setup more usable.
-
-Derek Zimmer
-Executive Director
-Open Source Technology Improvement Fund
-
-Derek Zimmer
-Executive Director
-Open Source Technology Improvement Fund
-
-
-On Tue, May 10, 2022 at 12:43 PM Derek Zimmer <derek@ostif.org> wrote:
+On Mon, May 9, 2022 at 8:38 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index f92c79c132..4a8dbb7eee 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -567,4 +567,11 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
+>         grep symref=HEAD:refs/heads/ trace
+>  '
 >
-> Hello all,
->
-> Thank you for the conversations about Coverity. After some internal discu=
-ssions and negotiating with our security partners, we have secured some eng=
-ineers directly from Github who want to work on CodeQL for Git. They will d=
-o the work of getting CodeQL working, do a scan, and then evaluate how much=
- work getting CodeQL into a usable state for Git is by looking at the false=
- positive rate and figuring out what can be muted with rules, and the false=
- negative rate vs Coverity / other current tests and create some custom tes=
-ts.
->
-> This should give us a good baseline on what is needed to get Git a solid =
-security scanner for the CI/CD pipeline. We are focusing on making the resu=
-lts useful and removing nags to save as much developer time as possible whe=
-n using it, so that you get the security benefits without significant drawb=
-acks.
->
-> Do we have anyone here that is interested in helping the team set up Code=
-QL? I'm sure the engineers will have some questions, especially regarding t=
-he current Coverity mess and what needs to improve in order to make this ne=
-w setup more usable.
->
-> Derek Zimmer
-> Executive Director
-> Open Source Technology Improvement Fund
->
-> On Mon, Apr 11, 2022 at 1:49 PM Derek Zimmer <derek@ostif.org> wrote:
->>
->> Hello all,
->>
->> Answers inline + more context
->>
->> > If OSTIF can help us get better support from Coverity (as you can see =
-at
->> > https://github.com/git-for-windows/build-extra/commit/23eea104 I could
->> > have wished for a better experience there), I am all for it!
->>
->> We may be able to convince them to help based on the volume of work that=
- we do with many open source projects. Not helping one open source project =
-may seem like a small loss to them. Not getting recommended to hundreds of =
-high profile projects because of lacking support is different. It is especi=
-ally concerning that this particular bug likely affects a huge number of cu=
-stomers.
->>
->> > If not, have you considered if you could help us getting a comprehensi=
-ve
->> > CodeQL coverage instead? Theoretically, CodeQL should be able to do th=
-e
->> > same as Coverity, while allowing us to tweak the analysis in a lot mor=
-e
->> > powerful ways than Coverity (most notably, it should allow us to reduc=
-e
->> > the number of false positives rather dramatically).
->>
->> This is absolutely an option, although we may have to petition Google / =
-OpenSSF / the Linux Foundation for a slight increase in funding, as setting=
- up CodeQL from scratch is a much more laborious task than setting up rules=
- for an existing Coverity setup. We absolutely can do this, but we'd have t=
-o split it into a second project with separate funding in order to keep the=
- primary work moving forward while we work out the details.
->>
->> If you ultimately think that setting up CodeQL will yield better results=
- overall for Git, I can get started on finding the resources to get it done=
- immediately. (I have a meeting with the Linux Foundation tomorrow.)
->>
->> If we are going to go with CodeQL as a separate project, we can drop the=
- Coverity work from the current SoW/Proposal and proceed with all of the ot=
-her action items.
->>
->> Let me know your thoughts everyone on what best suits Git here. It sound=
-s to me like CodeQL is the way to go but if there's a compelling argument f=
-or Coverity we can explore that.
->>
->> All the best,
->>
->> Derek Zimmer
->> Executive Director
->> Open Source Technology Improvement Fund
->>
->>
->> On Thu, Apr 7, 2022 at 6:58 AM Johannes Schindelin <Johannes.Schindelin@=
-gmx.de> wrote:
->>>
->>> Hi Markus,
->>>
->>> On Thu, 7 Apr 2022, Markus Vervier wrote:
->>>
->>> > On 4/6/22 00:17, Johannes Schindelin wrote:
->>> > > On Fri, 1 Apr 2022, Markus Vervier wrote:
->>> > > > X41 is processing the current RfP
->>> > > would you kindly provide a bit more context? This seems to come rig=
-ht out
->>> > > of left field. Is "RfP" a "Request for Proposals"? If so, I am not =
-aware
->>> > > that the git developer team submitted one...
->>> >
->>> > thank you and everyone else for their comments. To clear up the conte=
-xt:
->>> >
->>> > The OSTIF (https://ostif.org) is organizing a security audit for git
->>> > and one of the questions was about Coverity and if the results it gav=
-e in the
->>> > past could be verified and/or improved.
->>>
->>> Thank you for the context!
->>>
->>> If OSTIF can help us get better support from Coverity (as you can see a=
-t
->>> https://github.com/git-for-windows/build-extra/commit/23eea104 I could
->>> have wished for a better experience there), I am all for it!
->>>
->>> Out of curiosity: are you (or is OSTIF) affiliated with Synopsys someho=
-w?
->>>
->>> If not, have you considered if you could help us getting a comprehensiv=
-e
->>> CodeQL coverage instead? Theoretically, CodeQL should be able to do the
->>> same as Coverity, while allowing us to tweak the analysis in a lot more
->>> powerful ways than Coverity (most notably, it should allow us to reduce
->>> the number of false positives rather dramatically).
->>>
->>> It is the number of knobs CodeQL allows that has looked too daunting fo=
-r
->>> me to give it more than a cursory try [*1*].
->>>
->>> Thank you,
->>> Johannes
->>>
->>> Footnote *1*: I had played with CodeQL last year but was called away to=
- a
->>> more pressing project, therefore this is woefully incomplete:
->>> https://github.com/git-for-windows/git/compare/main...dscho:codeql
+> +test_expect_success 'passing hostname resolution information works' '
+> +       BOGUS_HOST=gitbogusexamplehost.com &&
+> +       BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+> +       test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
+> +       git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
+> +'
+
+Is setting it up as a command line config option the way you expect to
+use this, and if so why not make it a full blown command line option
+with the previous caveats that were discussed before?
+
+I also think it might be a little confusing (and probably warranted of
+an advice message) if git will decide based on a configuration
+somewhere in its resolution tree that the IP I am connecting is
+different than the one I expect it to use through the system
+configured resolution mechanism for such a thing.
+
+I assume that if you want to use this frequently, having that advice
+disabled in your global config wouldn't be a hassle, but it might be
+useful to know that I am interacting with a potentially different IP
+when referring to some host by name in my local repo, maybe because I
+forgot to change that setting after some debugging.
+
+I am sure all those folks that forget to edit their /etc/hosts after
+they are done with their local site versions might instead use this
+and then be happy to be warned about it later.
+
+Carlo
