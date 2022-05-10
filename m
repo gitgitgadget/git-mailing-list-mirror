@@ -2,132 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 294B5C433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 18:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB101C433FE
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 18:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348877AbiEJS0q convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 10 May 2022 14:26:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
+        id S1345778AbiEJS1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 14:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348886AbiEJS0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 14:26:45 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5287170F16
-        for <git@vger.kernel.org>; Tue, 10 May 2022 11:26:43 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24AIQcCN010781
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 10 May 2022 14:26:38 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Addison Klinke'" <addison@baller.tv>,
-        "'Jason Pyeron'" <jpyeron@pdinc.us>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "'Addison Klinke'" <agk38@case.edu>
-References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com> <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us> <CAE9CXujPzu3_95pBDVRXKFU_z40j9Y7v5_1y3c+WnFpz1_oY4w@mail.gmail.com>
-In-Reply-To: <CAE9CXujPzu3_95pBDVRXKFU_z40j9Y7v5_1y3c+WnFpz1_oY4w@mail.gmail.com>
-Subject: RE: [FR] supporting submodules with alternate version control systems (new contributor)
-Date:   Tue, 10 May 2022 14:26:33 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03ca01d8649b$7d6a3310$783e9930$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMmAUfbvsYWpozP57O9QeLcqWKlogGoVhkBAX3yDo8CHEtlFqpTHZoQ
-Content-Language: en-ca
+        with ESMTP id S1348918AbiEJS1b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 14:27:31 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87571F0183
+        for <git@vger.kernel.org>; Tue, 10 May 2022 11:27:24 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id p18-20020aa78612000000b0050d1c170018so6601424pfn.15
+        for <git@vger.kernel.org>; Tue, 10 May 2022 11:27:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=J3e6yEQRaN2/UcKMG14HVkqGG7eg4+nznvpeTY0JJEo=;
+        b=RglADIXBOXpEzGGdVSZnFWKwjTZiQA5hyJ//QLbUqH3kl2loZ9o3lFkYHWjKFsUbpM
+         liZCHaTLnF9e5VE4tBoZexsNpSSDGhzPwVhg420+v7N1QBVToLe6ni1oEqvbRdDCM/Ga
+         u0WLE90q5BG2WwOWInrSzJPLX2Fy8E6xHB0QNFYlBpIhoWFI+Out0Ps8bz3uppo+my1X
+         Mxlj/NCYx1FJG9UmDWXsmqIwUkVj4yyQVN4xx79e40FbOb0GtzVknhfGfGbIQHO9D4NP
+         tDYp/iWqwnQXunzjO63AjQ6ZBzESe3epfmTLl8BvWopyZT5hfcBCOm38Pt1SdD8keLFN
+         e62w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=J3e6yEQRaN2/UcKMG14HVkqGG7eg4+nznvpeTY0JJEo=;
+        b=bInPhVqUoHX4Tt+x1HGeBeYdLvraTHEnjrt0KxbNQxlfZmVCeMyosW1vNKd1MI7Vfy
+         7MP3hUorCtMUDrC4wZy1Pe9yf32OFM1IJbmbjPFnBnMcsEOhktR54xWaDysIHbxmxi7q
+         ZHCGsq90QIMmV2X5kBZNLmenUl9CbPknTnqo/BQo5spOwR4bz5gbddmEJFzer3OWPzBN
+         HMFLi1YILDInX/4NF1ftepMjq71l7dkPjVFlGSIvV2uKxsv8UTJKL4E3ecaQGaT+9nyu
+         t0C4Ko4QngBoKa+MFMtuGQxyRuH/oNA4ZAzELFj1cuRBkfMCsRaIhyduc6bnmXEh62Bx
+         N2AQ==
+X-Gm-Message-State: AOAM531V22S+s1DqxbONJcuK1G6m+AioiQQ7oMGvS7e365NojfqHwI83
+        sImM5OUmHNSd/mPbAK4tmpOoTOl2gj0B/g==
+X-Google-Smtp-Source: ABdhPJwipBNl/xpvkG1hLvWlvlt1qelfrEOIKU6SdL+PCw7Kxqq+l9ewJsH1q1YQ3TBFy+XWhsIKABiOTTrETQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:7104:b0:15e:ddb8:199 with SMTP id
+ a4-20020a170902710400b0015eddb80199mr21999158pll.80.1652207244116; Tue, 10
+ May 2022 11:27:24 -0700 (PDT)
+Date:   Tue, 10 May 2022 11:27:21 -0700
+In-Reply-To: <3234941c-5190-819f-fe3a-f528942c6b44@gmail.com>
+Message-Id: <kl6l35hh8cqe.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1262.git.git.1652138854255.gitgitgadget@gmail.com> <3234941c-5190-819f-fe3a-f528942c6b44@gmail.com>
+Subject: Re: [PATCH] pull: only pass '--recurse-submodules' to subcommands
+From:   Glen Choo <chooglen@google.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     Huang Zou <huang.zou@schrodinger.com>,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 10, 2022 1:27 PM, Addison Klinke wrote:
->Thanks for the quick replies
+
+Thanks Philippe and Junio, both! 
+
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
+
+>>  	if (cleanup_arg)
+>>  		/*
+>>  		 * this only checks the validity of cleanup_arg; we don't need
+>> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+>> index fa6b4cca65c..65aaa7927fb 100755
+>> --- a/t/t5572-pull-submodule.sh
+>> +++ b/t/t5572-pull-submodule.sh
+>> @@ -107,6 +107,20 @@ test_expect_success " --[no-]recurse-submodule and submodule.recurse" '
+>>  	test_path_is_file super/sub/merge_strategy_4.t
+>>  '
+>>  
+>> +test_expect_success "fetch.recurseSubmodules option triggers recursive fetch (but not recursive update)" '
+>> +	test_commit -C child merge_strategy_5 &&
+>> +	git -C parent submodule update --remote &&
+>> +	git -C parent add sub &&
+>> +	git -C parent commit -m "update submodule" &&
+>> +
+>> +	git -C super -c fetch.recursesubmodules=true pull --no-rebase &&
+>> +	# Check that the submodule commit was fetched
+>> +	sub_oid=$(git -C super rev-parse FETCH_HEAD:sub) &&
+>> +	git -C super/sub cat-file -e $sub_oid &&
+>> +	# Check that the submodule worktree did not update
+>> +	! test_path_is_file super/sub/merge_strategy_5.t
+>> +'
+>> +
 >
->> Junio Hamano: When you bind an external repository (be it stored in
->> Git or
->somebody else's system) as a submodule, each commit in the superproject
->records which exact commit in the submodule is used with the rest of the
->superproject tree.
+> OK so here we test the following situation:
 >
->This should be fine then - at least the data versioning tools I'm familiar with can all
->specify their current commit and checkout by commit hash. Does it matter how
->the hashes are structured/stored internally? For example, I believe Dolt keeps
->them in a MySQL table that connects to Noms under the hood.
+> fetch.recurseSubmodules  submodule.recurse  --recurse-submodules  fetch result  pull result
+> -----------------------  -----------------  --------------------  ------------  ------------
+> true                     unset              absent                recursive     not recursive
 >
-> > Junio Hamano: not judging "if it is realistic" at this point
+> I think this is a good start, but since the default behaviour 
+> of Git is the following:
 >
->What would be the best approach for answering this portion?
-
-Basically, answer the following: Can you implement a command like the cvs2git that can be re-executed on an idempotent (repeatedly with the same result) basis?
-
-If yes, then you can build your own automation to move code into a submodule from your own VCS system into a git repository and the work with the submodule without the git code-base knowing about this.
-
-If you can go the other way, from git to your other VCS system, repeatedly, then you can go back again. This is likely to be much harder as git has a much richer representation model than is typical of VCS systems.
-
-One way may be sufficient for your purposes. Research how cvs2git works and see whether you are able to emulate its functions.
-
->> Jason Pyeron: The submodule "type" could create an object (hashed and
->> stored) that contains the needed "translation" details
+> fetch.recurseSubmodules  submodule.recurse  --recurse-submodules  fetch result  pull result
+> -----------------------  -----------------  --------------------  ------------  ------------
+> default: on-demand       default: false     unset                 on-demand     not recursive
 >
->That sounds like an interesting idea. Since I'd like to offload the burden of
->maintaining these translation files to the 3rd party developers, it would be nice if
->they got copied to a standard location (i.e. ~/.gitmodules/translations/tool_x)
->during the 3rd party install.
->Then when a submodule is added with "type = tool_x", git checks that the
->appropriate translation file is available, and if so, copies it into the parent
->repository.
->
->On Tue, May 10, 2022 at 11:20 AM Jason Pyeron <jpyeron@pdinc.us> wrote:
->>
->> > -----Original Message-----
->> > From: Junio C Hamano
->> > Sent: Tuesday, May 10, 2022 1:01 PM
->> > To: Addison Klinke <addison@baller.tv>
->> >
->> > Addison Klinke <addison@baller.tv> writes:
->> >
->> > > Is something along these lines feasible?
->> >
->> > Offhand, I only think of one thing that could make it fundamentally
->> > infeasible.
->> >
->> > When you bind an external repository (be it stored in Git or
->> > somebody else's system) as a submodule, each commit in the
->> > superproject records which exact commit in the submodule is used
->> > with the rest of the superproject tree.  And that is done by
->> > recording the object name of the commit in the submodule.
->> >
->> > What it means for the foreign system that wants to "plug into" a
->> > superproject in Git as a submodule?  It is required to do two
->> > things:
->> >
->> >  * At the time "git commit" is run at the superproject level, the
->> >    foreign system has to be able to say "the version I have to be
->> >    used in the context of this superproject commit is X", with X
->> >    that somehow can be stored in the superproject's tree object
->> >    (which is sized 20-byte for SHA-1 repositories; in SHA-256
->> >    repositories, it is a bit wider).
->> >
->> >  * At the time "git chekcout" is run at the superproject level, the
->> >    superproject will learn the above X (i.e. the version of the
->> >    submodule that goes with the version of the superproject being
->> >    checked out).  The foreign system has to be able to perform a
->> >    "checkout" given that X.
->> >
->> > If a foreign system cannot do the above two, then it fundamentally
->> > would be incapable of participating in such a "superproject and
->> > submodule" relationship.
->>
->> The submodule "type" could create an object (hashed and stored) that contains
->the needed "translation" details. The object would be hashed using SHA1 or
->SHA256 depending on the git config. The format of the object's contents would be
->defined by the submodule's "code".
+> we end up testing something not very far from the default behaviour.
 
-I would not try to do this inside the git infrastructure. What you may be able to do in my suggestion above, is to restrict how your other VCS system is used and restrict how your team uses git to make the mapping repeatable. This is typical of some environments where there is an SVN repo and a git repo that are mirrored. This does simplify matters particularly if you do not have to modify either system but are building a façade or wrapper around both.
+Yes, I made a silly mistake with the test.. (I could've
+sworn it made sense at the time).
 
-Keep this as simple as possible to meet a minimum viable set of requirements.
---Randal 
+- fetch.recurseSubmodules=true always worked correctly when
+  submodule.recurse is not set because "git pull" realizes that the
+  behavior is unspecified, so "git fetch" doesn't receive a
+  "--recurse-submodules" and does the right thing.
+
+  For completeness, we probably still want this test (even though it has
+  always passed).
+
+- I didn't test the actual buggy behavior, which is the precedence of
+  the two config values.
+
+  This would be a new test that tests something like
+  fetch.recurseSubmodules=foo and submodule.recurse=bar. This should be
+  enough to test precedence; I don't think we need to test more
+  combinations of values.
+
+I hope you both didn't waste too much time on this :)
 
