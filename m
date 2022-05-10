@@ -2,129 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9608C433EF
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C933C433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238511AbiEJXdL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 19:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45248 "EHLO
+        id S238136AbiEJXo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 19:44:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236294AbiEJXcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 19:32:46 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A121D5008
-        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:45 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id n126-20020a1c2784000000b0038e8af3e788so280737wmn.1
-        for <git@vger.kernel.org>; Tue, 10 May 2022 16:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=YnGSgwjzx6yg1za1Z1HzxytFQ9bIIkcKN0GE008i7mY=;
-        b=IsiANKljeATx8m5Q94EiE7ZIxYt5BNONQCHm6azwonv9ld4N6kSrsusLrNwteLwvlF
-         X3BnK0Yh7NVEeYg2PPwIoRtELtIMu7Kq50emyYBfccj4DA4kMf8v3XO5V0NG6VzntKNG
-         EmDN5Rsu4WCXFtFa71zDTGq2Sl1wR0GSxUyXf2pKRI2bSW93aX0xlLADK8+daO5DJ+vr
-         PtZypBFZBjOjYAZ7M5ae5oLsi9qcfqzn9tzxqsVHIU6LA7hNMQdciEJ4rZ98GXQO4+i5
-         MxeOqEk2xY2fu4kPOMBW24PC8gEpQgKnkYzVBU/W21u6dcUvszc/YzilNMIfqpRlNuKF
-         tpig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YnGSgwjzx6yg1za1Z1HzxytFQ9bIIkcKN0GE008i7mY=;
-        b=JxPW3CQHGJt6N64FIBsBZGhWh4vFjBAL+CpEtJWth9P38qUZDJKzUfII0eBue0mblp
-         keASrXkR6UD/KY2UQjWNpm8GpA+LHzezTnv/7ZaItWuLJEOUMp3v/PNl4eoe4DFkXIgw
-         43LQ8CBBc2MxPM9i1Hu7IvQtagXJ2yODTIGD3sg/nYgQy1hcE8KCa8KgdzkYa5A54ojA
-         Ali847tsMZ89uLbdJhkuPps8Zej0dcbOXy7hd4FI8KIsJNbAw9TTu1YoRjlfvhLXgNVY
-         dWS3VVrTUqIcOYTxKb+JLjpwWZLnHSRyub481vnWJzs6AZ1d3+C2itkIxbVKe1En+RFb
-         LpCA==
-X-Gm-Message-State: AOAM533NvaLJr9LvhzUCtX3qS8VIXCbwhJDtCbf34F2Xugf8RIj+lzIm
-        3Hd4DdT42cOmmj9YzmMbmli77nnyzfY=
-X-Google-Smtp-Source: ABdhPJwiXdm4O6ELzT6IkA6s7azEGD/SLW6U+tPiRi33V2mHTckQepWhUTqluNPzx92F/XQLS0al7w==
-X-Received: by 2002:a7b:c4c8:0:b0:394:26c5:b79e with SMTP id g8-20020a7bc4c8000000b0039426c5b79emr2120612wmk.15.1652225563671;
-        Tue, 10 May 2022 16:32:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8-20020a7bc1c8000000b00394867d66ddsm437688wmj.35.2022.05.10.16.32.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 16:32:43 -0700 (PDT)
-Message-Id: <4b4c38fcc03515c113dc1c15210be6b42baf8029.1652225552.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com>
-References: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
-        <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 May 2022 23:32:32 +0000
-Subject: [PATCH v3 6/6] unpack-trees: preserve index sparsity
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229837AbiEJXoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 19:44:23 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA52B59090
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:44:22 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B122C18BA92;
+        Tue, 10 May 2022 19:44:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=95i8k8wQPDfBmxVyTNOpBrywbUU2VDykSAXsqt
+        7iC6o=; b=sjClEv5fPa3BISMe7+pQcRxi0RRdiysLF8aitGg0kph/zhuj/AOvbK
+        f5EHJ9Yt1P+o6I+s1ghZj+d7HByu47mNmBhr9nmjGsBILElgj1q6K5auxVx1BGOj
+        vXIf/V5+b4u5ZJtApYhi07yK2DXbBa1Ia8MGmUn0AzA8VUz5Ag0FM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CF0518BA91;
+        Tue, 10 May 2022 19:44:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3763918BA8B;
+        Tue, 10 May 2022 19:44:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 1/3] t: regression git needs safe.directory when
+ using sudo
+References: <20220507163508.78459-1-carenas@gmail.com>
+        <20220510174616.18629-1-carenas@gmail.com>
+        <20220510174616.18629-2-carenas@gmail.com>
+        <xmqqczgl6nua.fsf@gitster.g>
+        <CAPUEspgGZeF8LA5PZNF87=+zZLKvWLqWtpD5YUBUON4gq_TaDg@mail.gmail.com>
+Date:   Tue, 10 May 2022 16:44:16 -0700
+In-Reply-To: <CAPUEspgGZeF8LA5PZNF87=+zZLKvWLqWtpD5YUBUON4gq_TaDg@mail.gmail.com>
+        (Carlo Arenas's message of "Tue, 10 May 2022 16:11:55 -0700")
+Message-ID: <xmqqwnet3qcv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, newren@gmail.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B9D9FD2-D0BB-11EC-B95C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+Carlo Arenas <carenas@gmail.com> writes:
 
-When unpacking trees, set the default sparsity of the resultant index based
-on repo settings and 'is_sparse_index_allowed()'.
+>> > +test_lazy_prereq SUDO '
+>> > +     sudo -n id -u >u &&
+>> > +     id -u root >r &&
+>> > +     test_cmp u r &&
+>> > +     command -v git >u &&
+>> > +     sudo command -v git >r &&
+>> > +     test_cmp u r
+>> > +'
+>>
+>> I vaguely recall mentions of older dash that lack "command -v" made
+>> earlier, but implementations of dash I have handy seem to know it.
+>> I am personally fine with this as this script has a very narrow and
+>> limited audience in mind.
+>
+> I did check that, but think the report was mistaken.
+> Debian, Ubuntu, NetBSD and OpenBSD would fail the same way here, but
+> it is not because of the use of dash, as much as sudo NOT being
+> configured to default to `-s` mode.
 
-Normally, when executing 'unpack_trees', the output index is marked sparse
-when (and only when) it unpacks a sparse directory. However, an index may be
-"sparse" even if it contains no sparse directories - when all files fall
-inside the sparse-checkout definition or otherwise have SKIP_WORKTREE
-disabled. Therefore, the output index may be marked "full" even when it is
-"sparse", resulting in unnecessary 'ensure_full_index' calls when writing to
-disk. Avoid this by setting the "default" index sparsity to match what is
-expected for the repository.
+OK.
 
-As a consequence of this fix, the (non-merge) 'read-tree' performed when
-applying a stash with untracked files no longer expands the index. Update
-the corresponding test in 't1092'.
+> dscho was right to point out that I should had usen type instead, but
+> that wouldn't work because of the mismatch of shells and therefore the
+> mismatch of outputs, so I went with command instead as an extra clever
+> way to make sure both the shell inside and outside were most likely
+> the same, even if some sudo somewhere decides in the name of security
+> not to respect its own "-s mode" and force a "safer" shell.
 
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 2 +-
- unpack-trees.c                           | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+In this particular case, "command -v" is the right thing to use, as
+you care where the command is found on the $PATH and "type --path"
+is *NOT* portable.
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index aaf4d880dbc..19221c14225 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1392,7 +1392,7 @@ test_expect_success 'sparse-index is not expanded: stash' '
- 	ensure_not_expanded stash -u &&
- 	(
- 		WITHOUT_UNTRACKED_TXT=1 &&
--		! ensure_not_expanded stash pop
-+		ensure_not_expanded stash pop
- 	) &&
- 
- 	ensure_not_expanded stash create &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7f528d35cc2..a1d0ff3a4d3 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -11,6 +11,7 @@
- #include "refs.h"
- #include "attr.h"
- #include "split-index.h"
-+#include "sparse-index.h"
- #include "submodule.h"
- #include "submodule-config.h"
- #include "fsmonitor.h"
-@@ -1839,6 +1840,11 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	o->result.fsmonitor_last_update =
- 		xstrdup_or_null(o->src_index->fsmonitor_last_update);
- 
-+	if (!o->src_index->initialized &&
-+	    !repo->settings.command_requires_full_index &&
-+	    is_sparse_index_allowed(&o->result, 0))
-+		o->result.sparse_index = 1;
-+
- 	/*
- 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
- 	 */
--- 
-gitgitgadget
+>> > +     sudo chown root root &&
+>> > +     (
+>> > +             cd root/r &&
+>> > +             git init
+>> > +     )
+>> > +'
+>>
+>> So, "root/" is owned by root, "root/r" is owned by the tester.
+>
+> It doesn't need to be root, but needs to be different than "tester",
+
+To make sure you do not misunderstand, I know the ownership of
+root/r and root/p matter---tester and root must be different.  And
+we use these two as sample repositories owned by two different
+users.
+
+What I am pointing out here is the root/ directory itself.  I do not
+think its ownership does not matter anywhere in these new tests (not
+just this patch, but after applying all three patches).
+
+>> > +test_expect_failure SUDO 'sudo git status as original owner' '
+>> > +     (
+>> > +             cd root/r &&
+>> > +             git status &&
+>>
+>> The tester runs "git status" in "root/r" owned by the tester and it
+>> should succeed.
+>>
+>> > +             sudo git status
+>>
+>> We want the tester to be able to do the same while temporarily
+>> becoming 'root' with "sudo", but we know it fails right now.
+>>
+>> > +     )
+>> > +'
+>>
+>> Mental note.  We do not need root to be owned by 'root' with the
+>> tests we see here.  Perhaps we would add some that requires it in
+>> later patches.  We'll see.
+>
+> I am not good with subtle messages in a foreign language, but is this
+> a way to imply that I shouldn't need to chown and instead use the
+> GIT_TEST_PRETEND feature more?
+
+No.  I just said I made a mental note of the fact that the ownership
+of root/ directory (not root/r which is the other directory this
+test script creates in this step) does not matter at least in patch
+1/3, but I cannot say, by that observation alone, that chown we saw
+earlier should be removed, because patches 2/3 and 3/3 might start
+requiring root/ to be owned by 'root'.  Hence "I made a mental note
+here.  We do not have anything that requires the above chown in this
+patch, but we might see something that makes it a good idea to keep
+the chown in later patches".
+
+I do not think GIT_TEST_PRETEND needs to be involved at all.  It's
+just root/ can be left owned by the tester, because we only care
+about the owners of root/p and root/r in these three patches.
+
+Thanks.
+
