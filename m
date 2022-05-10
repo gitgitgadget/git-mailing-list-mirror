@@ -2,146 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54371C433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 22:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9775EC433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 22:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbiEJWKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 18:10:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37858 "EHLO
+        id S235596AbiEJWXR convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 10 May 2022 18:23:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbiEJWK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 18:10:29 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5CC28B6AD
-        for <git@vger.kernel.org>; Tue, 10 May 2022 15:10:28 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A871718D75C;
-        Tue, 10 May 2022 18:10:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=j6hh8dyjkXS2
-        x5L3uw2yL16sbiK6onyU7FSLDU0BFf8=; b=wGCmvrYodglAIl9ZAPEFUIU3X1jS
-        7ylZM/ZG3344FsHjVqqnZPoTwQaEkObhyh4qUYo5VtQdMkCrM/w+9Vyx1gKynLx3
-        rUz5F6ihIEvX25EhePpA8iKK6SHCNsPFQxa0G/XldBR44MAcpp03lbePL5ju7ryB
-        qB5q4DBQ9XsUX54=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0BA018D75B;
-        Tue, 10 May 2022 18:10:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4795D18D75A;
-        Tue, 10 May 2022 18:10:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 1/3] t: regression git needs safe.directory when
- using sudo
-References: <20220507163508.78459-1-carenas@gmail.com>
-        <20220510174616.18629-1-carenas@gmail.com>
-        <20220510174616.18629-2-carenas@gmail.com>
-Date:   Tue, 10 May 2022 15:10:21 -0700
-In-Reply-To: <20220510174616.18629-2-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 10 May 2022 10:46:14 -0700")
-Message-ID: <xmqqczgl6nua.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235500AbiEJWXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 18:23:15 -0400
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690D71D5250
+        for <git@vger.kernel.org>; Tue, 10 May 2022 15:23:13 -0700 (PDT)
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24AMN5g2019516
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 10 May 2022 18:23:06 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>
+Cc:     <git@vger.kernel.org>,
+        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
+        "'Taylor Blau'" <me@ttaylorr.com>,
+        "'Derrick Stolee'" <stolee@gmail.com>,
+        "'Elijah Newren'" <newren@gmail.com>,
+        "'Johannes Schindelin'" <johannes.schindelin@gmx.de>
+References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>        <fdba4ed6f4d5ed4f78404e0a0c5b338c22678533.1652210824.git.gitgitgadget@gmail.com> <xmqqmtfp6ohc.fsf@gitster.g>
+In-Reply-To: <xmqqmtfp6ohc.fsf@gitster.g>
+Subject: RE: [PATCH v4 2/7] archive --add-file-with-contents: allow paths containing colons
+Date:   Tue, 10 May 2022 18:23:01 -0400
+Organization: Nexbridge Inc.
+Message-ID: <03d801d864bc$85fe62a0$91fb27e0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FD87A5AE-D0AD-11EC-A33B-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKQWb69+l7J8EAL2VRwkE+mUiRXFgGWHZmgAloL258CqO2kQatz++rA
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
-
-> Note that because of the way sudo interacts with the system, a much
-> more complete integration with the test framework will require a lot
-> more work and that was therefore intentionally punted for now.
+On May 10, 2022 5:57 PM, Junio C Hamano wrote:
+>"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>writes:
 >
-> The current implementation requires ...
-> ...
-> If it fails to run, then it means your local setup wouldn't work for th=
-e
-> test because of the configuration sudo has or other system settings, an=
-d
-> things that might help are to comment out sudo's secure_path config, an=
-d
-> make sure that the account you are using has no restrictions on the
-> commands it can run through sudo, just like is provided for the user in
-> the CI.
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> By allowing the path to be enclosed in double-quotes, we can avoid the
+>> limitation that paths cannot contain colons.
+>> ...
+>> +		struct strbuf buf = STRBUF_INIT;
+>> +		const char *p = arg;
+>> +
+>> +		if (*p != '"')
+>> +			p = strchr(p, ':');
+>> +		else if (unquote_c_style(&buf, p, &p) < 0)
+>> +			die(_("unclosed quote: '%s'"), arg);
 >
-> For example (assuming a username of marta for you) something probably
-> similar to the following entry in your /etc/sudoers (or equivalent) fil=
-e:
+>Even though I do not think people necessarily would want to use colons in their
+>pathnames (it has problems interoperating with other systems), lifting the
+>limitation is a good thing to do.  I totally forgot that we designed
+>unquote_c_style() to self terminate and return the end pointer to the caller so the
+>caller does not have to worry, which is very nice.
 >
->   marta	ALL=3D(ALL:ALL) NOPASSWD: ALL
+>Even if this step weren't here in the series, I would have thought the mode bits
+>issue was more serious than "no colons in path"
+>limitation, but given that we address this unusual corner case limitation, I would
+>think we should address the hardcoded mode bits at the same time.
 >
-> Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+>> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh index
+>> 8ff1257f1a0..5b8bbfc2692 100755
+>> --- a/t/t5003-archive-zip.sh
+>> +++ b/t/t5003-archive-zip.sh
+>> @@ -207,13 +207,21 @@ check_zip with_untracked  check_added
+>> with_untracked untracked untracked
+>>
+>>  test_expect_success UNZIP 'git archive --format=zip --add-file-with-content' '
+>> +	if test_have_prereq FUNNYNAMES
+>> +	then
+>> +		QUOTED=quoted:colon
+>> +	else
+>> +		QUOTED=quoted
+>> +	fi &&
+>
+>;-)
+>
+>>  	git archive --format=zip >with_file_with_content.zip \
+>> +		--add-file-with-content=\"$QUOTED\": \
+>>  		--add-file-with-content=hello:world $EMPTY_TREE &&
+>>  	test_when_finished "rm -rf tmp-unpack" &&
+>>  	mkdir tmp-unpack && (
+>>  		cd tmp-unpack &&
+>>  		"$GIT_UNZIP" ../with_file_with_content.zip &&
+>>  		test_path_is_file hello &&
+>> +		test_path_is_file $QUOTED &&
+>
+>Looks OK, even though it probably is a good idea to have dq around $QUOTED, so
+>that future developers can easily insert SP into its value to use a bit more common
+>but still a bit more problematic pathnames in the test.
 
-Very well written.
+A test case for .gitignore in this would be good too. People on our exotic platform do this stuff as a matter of course. As an example, a name of $Z3P4:12399334 being used as a named pipe (associated with the unique name of a process) actually has been seen in the wild recently. My solution was to wild card this and/or contain it in an ignored directory.
+Regards,
+Randall
 
-> +test_lazy_prereq SUDO '
-> +	sudo -n id -u >u &&
-> +	id -u root >r &&
-> +	test_cmp u r &&
-> +	command -v git >u &&
-> +	sudo command -v git >r &&
-> +	test_cmp u r
-> +'
-
-I vaguely recall mentions of older dash that lack "command -v" made
-earlier, but implementations of dash I have handy seem to know it.
-I am personally fine with this as this script has a very narrow and
-limited audience in mind.
-
-> +test_expect_success SUDO 'setup' '
-> +	sudo rm -rf root &&
-> +	mkdir -p root/r &&
-> +	sudo chown root root &&
-> +	(
-> +		cd root/r &&
-> +		git init
-> +	)
-> +'
-
-So, "root/" is owned by root, "root/r" is owned by the tester.
-
-> +test_expect_failure SUDO 'sudo git status as original owner' '
-> +	(
-> +		cd root/r &&
-> +		git status &&
-
-The tester runs "git status" in "root/r" owned by the tester and it
-should succeed.
-
-> +		sudo git status
-
-We want the tester to be able to do the same while temporarily
-becoming 'root' with "sudo", but we know it fails right now.
-
-> +	)
-> +'
-
-Mental note.  We do not need root to be owned by 'root' with the
-tests we see here.  Perhaps we would add some that requires it in
-later patches.  We'll see.
-
-> +# this MUST be always the last test
-> +test_expect_success SUDO 'cleanup' '
-> +	sudo rm -rf root
-> +'
-> +
-> +test_done
-
-So far, looking good.
-
-Thanks.
