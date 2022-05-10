@@ -2,106 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F68C433EF
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 20:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C80EBC433F5
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 20:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231168AbiEJUrm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 16:47:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35726 "EHLO
+        id S233013AbiEJUyS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 16:54:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbiEJUrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 16:47:40 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975451CC99F
-        for <git@vger.kernel.org>; Tue, 10 May 2022 13:47:39 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 79E953F4131;
-        Tue, 10 May 2022 16:47:38 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 21ED03F4114;
-        Tue, 10 May 2022 16:47:38 -0400 (EDT)
-Subject: Re: [PATCH v2 4/5] bitmap: add trace2 outputs during open "bitmap"
- file
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-References: <8005642d-979f-8e48-7a93-07b8a888bdc7@jeffhostetler.com>
- <20220506124333.58956-1-dyroneteng@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7047d8f1-5959-a553-5a53-ace7b5b925c1@jeffhostetler.com>
-Date:   Tue, 10 May 2022 16:47:37 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S232685AbiEJUyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 16:54:17 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB5C24E000
+        for <git@vger.kernel.org>; Tue, 10 May 2022 13:54:16 -0700 (PDT)
+Received: from host217-43-165-125.range217-43.btcentralplus.com ([217.43.165.125] helo=[192.168.1.168])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1noWs1-0003wA-F3;
+        Tue, 10 May 2022 21:54:14 +0100
+Message-ID: <271b6a9a-a5f4-0336-51b8-860ad07f2609@iee.email>
+Date:   Tue, 10 May 2022 21:54:10 +0100
 MIME-Version: 1.0
-In-Reply-To: <20220506124333.58956-1-dyroneteng@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [FR] supporting submodules with alternate version control systems
+ (new contributor)
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     Jason Pyeron <jpyeron@pdinc.us>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        'Addison Klinke' <addison@baller.tv>
+Cc:     git@vger.kernel.org, 'Addison Klinke' <agk38@case.edu>
+References: <CAE9CXuhvqfhARrqz2=oS1=9BF=iNhGbJv7y3HmYs1tddn8ndiQ@mail.gmail.com>
+ <xmqq4k1x8gqj.fsf@gitster.g> <01e601d86492$43bb70b0$cb325210$@pdinc.us>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <01e601d86492$43bb70b0$cb325210$@pdinc.us>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 5/6/22 8:43 AM, Teng Long wrote:
->> This might just be a style thing, but rather than logging the pathname
->> in a separate data_string message, you can use the _printf version of
->> region_enter and region_leave to also print the name of the
->> path -- like I did in read-cache.c for the "do_read_index"
->> calls.
+On 10/05/2022 18:20, Jason Pyeron wrote:
+>> -----Original Message-----
+>> From: Junio C Hamano
+>> Sent: Tuesday, May 10, 2022 1:01 PM
+>> To: Addison Klinke <addison@baller.tv>
 >>
->> ... | region_enter | ... | index | label:do_read_index .git/index
->> ...
->> ... | region_leave | ... | index | label:do_read_index .git/index
-> 
-> Appreciate for the input about the _printf version, we can choose to
-> let the region_enter and region_leave to print the pathname by moving
-> the related "midx_bitmap_filename()" and "pack_bitmap_filename" at
-> front, but it's not enough because both midx and normal bitmap support
-> multiple opening, so it's likely we keep on the current way using
-> "trace2_data_string()" in "open_pack_bitmap_1()" and "open_midx_bitmap_1()"
-> is a simpler solution.
-> 
-> I'm not sure If I totally get the meaning about your suggestion,
-> so correct me if I understand you wrong.
-
-That's fine.  I was assuming that you were only operating
-on a single file at a time and opening, using, closing it
-in a nicely bracketed fashion.  The region_enter and _leave
-is good for capturing that.  But if you might be handling
-both files concurrently, then your messages would be better
-since we don't want mix or improperly nest the regions.
-
-(I must admit that I haven't studied the bitmap code, so
-I defer to your judgement here.)
-
-> 
->> As AEvar suggests in another message in this thread, I'm not sure if
->> you need the region timing here for reading the bitmap, but all of
->> the error and any other data messages will be bounded between the
->> region_enter and region_leave events and that might (or might not)
->> be helpful.
-> 
-> I think it's needed in my opinion, the bounded between the region is
-> helpful, especially when we want to know the detailed debug info like
-> we do in "open_midx_bitmap_1()".
-> 
-> 
->> Also, I agree with AEvar's statements about using error() and getting
->> the trace2 error messages for free and not needing some of the
->> trace2_data_string() messages that you have later in this file.
+>> Addison Klinke <addison@baller.tv> writes:
 >>
->> I wonder if it would be worth adding the pathname of the invalid
->> file to those new error messages.  Granted you'll have it in the
->> trace2 log, but then you'll also get it on stderr if that would
->> be helpful.
-> 
-> I think I will remove the redundant "trace2_data_string()" code when
-> it will return by "error()".
-> 
-> 
-> Thanks.
-> 
+>>> Is something along these lines feasible?
+>> Offhand, I only think of one thing that could make it fundamentally
+>> infeasible.
+>>
+>> When you bind an external repository (be it stored in Git or
+>> somebody else's system) as a submodule, each commit in the
+>> superproject records which exact commit in the submodule is used
+>> with the rest of the superproject tree.  And that is done by
+>> recording the object name of the commit in the submodule.
+>>
+>> What it means for the foreign system that wants to "plug into" a
+>> superproject in Git as a submodule?  It is required to do two
+>> things:
+>>
+>>   * At the time "git commit" is run at the superproject level, the
+>>     foreign system has to be able to say "the version I have to be
+>>     used in the context of this superproject commit is X", with X
+>>     that somehow can be stored in the superproject's tree object
+>>     (which is sized 20-byte for SHA-1 repositories; in SHA-256
+>>     repositories, it is a bit wider).
+>>
+>>   * At the time "git chekcout" is run at the superproject level, the
+>>     superproject will learn the above X (i.e. the version of the
+>>     submodule that goes with the version of the superproject being
+>>     checked out).  The foreign system has to be able to perform a
+>>     "checkout" given that X.
+>>
+>> If a foreign system cannot do the above two, then it fundamentally
+>> would be incapable of participating in such a "superproject and
+>> submodule" relationship.
+
+The sub-modules already have that problem if the user forgets publish 
+their sub-module (see notes in the docs ;-).
+> The submodule "type" could create an object (hashed and stored) that contains the needed "translation" details. The object would be hashed using SHA1 or SHA256 depending on the git config. The format of the object's contents would be defined by the submodule's "code".
+>
+Another way of looking at the issue is via a variant of Git-LFS with a 
+smudge/clean style filter. I.e. the DataVCS would be treated as a 'file'.
+
+The LFS already uses the .gitattributes to define a 'type', while the 
+submodules don't yet have that capability. There is just a single 
+special type within a tree object of "sub-module"  being a mode 16000 
+commit (see https://longair.net/blog/2010/06/02/git-submodules-explained/).
+
+One thought is that one uses a proper sub-module that within it then has 
+the single 'large' file git-lfs style that hosts the hash reference for 
+the data VCS 
+(https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md). It would be 
+the regular sub-modules .gitattributes file that handles the data 
+conversion.
+
+It may be converting an X-Y problem into an X-Y-Z solution, or just 
+extending the problem.
+
+--
+Philip
+
+
