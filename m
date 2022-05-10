@@ -2,60 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 438F7C433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 22:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C99C433EF
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 23:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235829AbiEJW5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 18:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36624 "EHLO
+        id S232480AbiEJXLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 19:11:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231931AbiEJW5L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 18:57:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003485F8C0
-        for <git@vger.kernel.org>; Tue, 10 May 2022 15:57:08 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4B7018B777;
-        Tue, 10 May 2022 18:57:06 -0400 (EDT)
+        with ESMTP id S229792AbiEJXLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 19:11:51 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CEA7B7C0
+        for <git@vger.kernel.org>; Tue, 10 May 2022 16:11:50 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B710F13EA2D;
+        Tue, 10 May 2022 19:11:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yaN5p8NEu4ay
-        Nonhh3M5b4DEPCIE3rFgFpYa4dINJIg=; b=xfLHc2JtXG9UEiAwN7SlVvDrndxm
-        RlaAphKgPWm+7GM4iHPmzwi2PER9TsmXHbKoFehnElMopnsk9pkfvfOWjEzjwoM4
-        Czor1l0GtWI8cb+mDRW3v+9vApssd+9UO65JwltDNHPgUXxXhq/MpUv/6SZnaCPv
-        WZj2ZzmflIJiMHo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCF2C18B775;
-        Tue, 10 May 2022 18:57:06 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=UteAz+h/FTl1
+        SHzOYtyIk+aF8plug/FXOrLMTYSf0vo=; b=hb4e2GKXGtEHZRVXkZWNjgC5GV1Q
+        zp9+8ob5CN7EYeHKkLHCWvKdMkhyTbCJ9a3AWhuDOdMKKrAyPmqvIyExAOhozjyL
+        PcPsf5yXC7uGwT73YSji9LwDDtLWgBYDNfddwp7uMsr2TC4tfbloox3UweW1TTDC
+        Cf9TGh6jhbgm1ds=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD1DC13EA2C;
+        Tue, 10 May 2022 19:11:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 73A0618B771;
-        Tue, 10 May 2022 18:57:03 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1116113EA2B;
+        Tue, 10 May 2022 19:11:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
 Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
-        Guy Maurel <guy.j@maurel.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4 2/3] git-compat-util: avoid failing dir ownership
- checks if running privileged
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4 3/3] t0034: add negative tests and allow git init to
+ mostly work under sudo
 References: <20220507163508.78459-1-carenas@gmail.com>
         <20220510174616.18629-1-carenas@gmail.com>
-        <20220510174616.18629-3-carenas@gmail.com>
-Date:   Tue, 10 May 2022 15:57:02 -0700
-In-Reply-To: <20220510174616.18629-3-carenas@gmail.com> ("Carlo Marcelo
+        <20220510174616.18629-4-carenas@gmail.com>
+Date:   Tue, 10 May 2022 16:11:45 -0700
+In-Reply-To: <20220510174616.18629-4-carenas@gmail.com> ("Carlo Marcelo
  Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 10 May 2022 10:46:15 -0700")
-Message-ID: <xmqqv8ud5741.fsf@gitster.g>
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 10 May 2022 10:46:16 -0700")
+Message-ID: <xmqqczgl56fi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 81F8F79C-D0B4-11EC-A621-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 90A2BEE8-D0B6-11EC-8553-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,189 +60,146 @@ X-Mailing-List: git@vger.kernel.org
 
 Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
-> This assumes the environment the user is running on after going
-> privileged can't be tampered with, and also adds code to restrict that
-> the new behavior only applies if running as root, therefore keeping the
-> most common case, which runs unprivileged, from changing, but because o=
-f
-> that, it will miss cases where sudo (or an equivalent) was used to chan=
-ge
-> to another unprivileged user or where the equivalent tool used to raise
-> privileges didn't track the original id in a sudo compatible way.
+> Note that the specific test that documents that after the previous
+> changes, it is no longer possible for root (if obtained through sudo)
+> to NOT add an exception or NOT need a "workaround" to be able to run gi=
+t
+> commands in a repository owned by thyself, is marked as a regression
+> and is expected to be fixed with a future change, which hasn't been
+> provided yet and that is not part of this series.
 
-Well written.
+Do you mean "you can easily unset SUDO_UID to access root-owned
+repositories as root"?  Ahh, no, "after tentatively becoming root,
+you can access your own (via SUDO_UID) and root-owned repositories"
+is what you meant, I think.  I think that is reasonable to stop the
+current round before adding the support for it.
 
-> Because of compatibility with sudo, the code assumes that uid_t is an
-> unsigned integer type (which is not required by the standard) but is us=
-ed
-> that way in their codebase to generate SUDO_UID.
+> As described in the comments from the test itself, at least one of the
+> documented workarounds could fail if sudo doesn't allow root to call su=
+do
+> or if root is not in sudoers, but that is very unlikely, and more
+> importantly actually not what is provided by the currently supported su=
+do
+> configuration this test already relies on and therefore adding a way to
+> validate it works in the prerequisite has been punted for now.
 
-Heh, that is a good point.
+OK.
 
-> ++
-> +When git tries to check for ownership of git repositories, it will
-> +obviously do so with the uid of the user that is running git itself,
+> diff --git a/t/lib-sudo.sh b/t/lib-sudo.sh
+> new file mode 100644
+> index 0000000000..d8a88fb9db
+> --- /dev/null
+> +++ b/t/lib-sudo.sh
+> @@ -0,0 +1,12 @@
+> +# Helpers for running git commands under sudo.
+> +
+> +# Runs a scriplet passed through stdin under sudo.
+> +run_with_sudo () {
+> +	local ret
+> +	local RUN=3D"$TEST_DIRECTORY/$$.sh"
+> +	write_script "$RUN" "$TEST_SHELL_PATH"
+> +	sudo "$TEST_SHELL_PATH" -c "\"$RUN\""
 
-We do not need "obviously" here, but this has overlap with the
-beginning part of the safe.directory explanation, so I would
-probably suggest rewriting it altogether.
+This is not wrong per-se, but I think
 
-> +but if git is running as root, in a platform that provides sudo and is
-> +not Windows, it will check first if it might have been started through
+	sudo "$RUN"
 
-Does Windows provide sudo that leaves the original user in SUDO_UID
-(I doubt it)?  If not, then "on a platform that provides sudo, it will"
-would be sufficient.
+would be sufficient, wouldn't it?=20
 
-> +it, and if that is the case, will use the uid of the user that invoked
-> +sudo instead.
-
- =20
-  As explained, Git only allows you to access repositories owned by
-  yourself, i.e. the user who is running Git, by default.  When Git
-  is running as 'root', however, instead of allowing accesses to
-  repositories owned by 'root', it checks the SUDO_UID environment
-  variable and if it is set, allows access to repositories owned by
-  the uid recorded as its value.  This is to make it easy to perform
-  a common sequence "make && sudo make install".  A process running
-  under 'sudo' runs as 'root' but the 'sudo' command exports the
-  environment variable to record who the original user was.
-
-> +If that is not what you would prefer and want git to only trust
-> +repositories that are owned by root instead, then you should remove
-> +the `SUDO_UID` variable from root's environment.
-
-s/should/can/.  But otherwise this is excellent.
-
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 63ba89dd31..754cd90d43 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -393,12 +393,64 @@ static inline int git_offset_1st_component(const =
-char *path)
->  #endif
+> @@ -19,6 +26,12 @@ test_lazy_prereq SUDO '
+>  	test_cmp u r
+>  '
 > =20
->  #ifndef is_path_owned_by_current_user
-> +
-> +#ifdef __TANDEM
-> +#define ROOT_UID 65535
-> +#else
-> +#define ROOT_UID 0
-> +#endif
-> +
-> +/*
-> + * This helper function overrides a ROOT_UID with the one provided by
-> + * an environment variable, do not use unless the original user is
-> + * root or could be used as means to escalate to root privileges.
+> +if ! test_have_prereq SUDO
+> +then
+> +	skip_all=3D"Your sudo/system configuration is either too strict or un=
+supported"
+> +	test_done
+> +fi
 
-I do not understand the "or could be used ..." at all.  If the
-original user obtained from geteuid() is not root, then no matter
-what we do to *id here in this function, we won't let you gain the
-root privilege.  The system won't let us give you the root privilege
-because we (Git) are running as a normal user.
+Quite sensible and understandable.
 
-Or do you mean
-
-	Do not use this function when
-
-	 (1) geteuid() did not say we are running as 'root', or=20
-	 (2) using this function will compromise the system.=20
-
-Then I can sort-of understand it, but (2) is a too obvious thing to
-say.
-
-> + * PORTABILITY WARNING:
-> + * This code assumes uid_t is unsigned because that is what sudo does.
-> + * If your uid_t type is signed and all your ids are positive then it
-> + * should all work fine, but need to make sure sudo never generates a
-> + * value higher than what can be represented by your uid_t type or a
-> + * negative value or it will trigger wraparound bugs.
-
-"sudo" generating a value higher than what uid_t can represent in
-SUDO_UID *is* a bug that we shouldn't have to worry about.
-Otherwise "sudo" as a tool would be unusable by folks with higher
-UID on their system.
-
-In their implementation of "sudo", they must have done getuid(),
-stored the value in uid_t and formatted it into a string.  If they
-lost precision there by wrapping around or truncating, we can do
-nothing about it, but the thing is, we cannot even tell.
-
-> + * If that happens the uid used might be incorrect and then trigger
-> + * an access error from the filesystem itself.
-
-If uid we are extracting is incorrect, Git will fail to refuse
-access, the access is done as 'root', and filesystem level safety
-will not trigger.  The end result is that I run "sudo git describe"
-in your repository and instead of getting refused, because our "sudo"
-was broken and SUDO_UID had your numeric uid, I execute "git" as root
-in your repository.
-
-IOW, this change is meant to make it slightly convenient to allow
-access to one's own stuff, but it got a bit more convenient by
-allowing me access to my own stuff plus yours ;-)
-
-> + * In the unlikely scenario this happened to you, and that is how you
-> + * got to this message, we would like to know about it by letting us
-> + * now with an email to git@vger.kernel.org indicating which platform,
-> + * you are running on and which version of sudo you used to see if we
-> + * can provide you a patch that would prevent this issue in the future=
-.
-
-Nice.  What message does the reporter see?
-
-> + */
-> +static inline void extract_id_from_env(const char *env, uid_t *id)
-> +{
-> +	const char *real_uid =3D getenv(env);
-> +
-> +	/* discard anything empty to avoid a more complex check below */
-> +	if (real_uid && *real_uid) {
-> +		char *endptr =3D NULL;
-> +		unsigned long env_id;
-> +
-> +		errno =3D 0;
-> +		/* silent overflow errors could trigger a bug below */
-
-What "bug" are we referring to?
-
-> +		env_id =3D strtoul(real_uid, &endptr, 10);
-> +		if (!*endptr && !errno)
-> +			*id =3D env_id;
-> +	}
-> +}
-> +
->  static inline int is_path_owned_by_current_uid(const char *path)
->  {
->  	struct stat st;
-> +	uid_t euid;
-> +
->  	if (lstat(path, &st))
->  		return 0;
-> -	return st.st_uid =3D=3D geteuid();
-> +
-> +	euid =3D geteuid();
-> +	if (euid =3D=3D ROOT_UID)
-> +		extract_id_from_env("SUDO_UID", &euid);
-> +
-> +	return st.st_uid =3D=3D euid;
->  }
-> =20
->  #define is_path_owned_by_current_user is_path_owned_by_current_uid
-> diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directo=
-ry.sh
-> index 2e4492a66d..ecd9dca6b3 100755
-> --- a/t/t0034-root-safe-directory.sh
-> +++ b/t/t0034-root-safe-directory.sh
-> @@ -29,7 +29,7 @@ test_expect_success SUDO 'setup' '
+> @@ -37,6 +50,51 @@ test_expect_success SUDO 'sudo git status as origina=
+l owner' '
 >  	)
 >  '
 > =20
-> -test_expect_failure SUDO 'sudo git status as original owner' '
-> +test_expect_success SUDO 'sudo git status as original owner' '
->  	(
->  		cd root/r &&
->  		git status &&
+> +test_expect_success SUDO 'setup root owned repository' '
+> +	sudo mkdir -p root/p &&
+> +	sudo git init root/p
+> +'
+
+OK, so=20
+
+	root/ is owned by 'root',
+	root/r is owned by the tester, and
+	root/p is owned by 'root'.
+
+> +test_expect_success 'cannot access if owned by root' '
+> +	(
+> +		cd root/p &&
+> +		test_must_fail git status
+> +	)
+> +'
+
+OK.
+
+Mark this point as [A] for future reference.
+
+> +test_expect_failure SUDO 'can access with sudo if root' '
+> +	(
+> +		cd root/p &&
+> +		sudo git status
+> +	)
+> +'
+
+OK.
+
+
+> +test_expect_success SUDO 'can access with sudo using a workaround' '
+> +	# run sudo twice; would fail if root is not in sudoers
+
+It probably is a good idea to check "you can run nested sudo" before
+setting SUDO prerequisite.  Then we do not have to say "would fail"
+here.
+
+> +	(
+> +		cd root/p &&
+> +		sudo sudo git status
+> +	) &&
+> +	# provide explicit GIT_DIR
+> +	(
+> +		cd root/p &&
+> +		run_with_sudo <<-END
+> +			GIT_DIR=3D.git &&
+> +			GIT_WORK_TREE=3D. &&
+> +			export GIT_DIR GIT_WORK_TREE &&
+> +			git status
+> +		END
+> +	) &&
+
+OK.  We probably want to highlight that this "by default you can
+only access your own repository" is *not* a security measure that
+protects the repositories---it is a security measure to protect
+you from potentially malicious repositories by unknowingly stepping
+into them.  To do so, let's go back to point [A] and add a similar
+"I as a tester can still access repository owned by root, as long as
+I express that I want to access it explicitly" test after it. i.e.
+
+	(
+		cd root/p &&
+		GIT_DIR=3D.git GIT_WORK_TREE=3D. git status
+	)
+
+> +	# discard SUDO_UID
+> +	(
+> +		cd root/p &&
+> +		run_with_sudo <<-END
+> +			unset SUDO_UID &&
+> +			git status
+> +		END
+> +	)
+> +'
 
 OK.
 
