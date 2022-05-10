@@ -2,111 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9775EC433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 22:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 950F2C433EF
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 22:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235596AbiEJWXR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 10 May 2022 18:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
+        id S235287AbiEJWpT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 18:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235500AbiEJWXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 18:23:15 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690D71D5250
-        for <git@vger.kernel.org>; Tue, 10 May 2022 15:23:13 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24AMN5g2019516
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 10 May 2022 18:23:06 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>,
-        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Derrick Stolee'" <stolee@gmail.com>,
-        "'Elijah Newren'" <newren@gmail.com>,
-        "'Johannes Schindelin'" <johannes.schindelin@gmx.de>
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>        <fdba4ed6f4d5ed4f78404e0a0c5b338c22678533.1652210824.git.gitgitgadget@gmail.com> <xmqqmtfp6ohc.fsf@gitster.g>
-In-Reply-To: <xmqqmtfp6ohc.fsf@gitster.g>
-Subject: RE: [PATCH v4 2/7] archive --add-file-with-contents: allow paths containing colons
-Date:   Tue, 10 May 2022 18:23:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03d801d864bc$85fe62a0$91fb27e0$@nexbridge.com>
+        with ESMTP id S230111AbiEJWpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 18:45:18 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFF920D271
+        for <git@vger.kernel.org>; Tue, 10 May 2022 15:45:17 -0700 (PDT)
+Received: from host217-43-165-125.range217-43.btcentralplus.com ([217.43.165.125] helo=[192.168.1.168])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1noYbU-00043O-AP;
+        Tue, 10 May 2022 23:45:16 +0100
+Message-ID: <1a56b96c-2c58-ccaf-11ae-5e8264a323b1@iee.email>
+Date:   Tue, 10 May 2022 23:45:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKQWb69+l7J8EAL2VRwkE+mUiRXFgGWHZmgAloL258CqO2kQatz++rA
-Content-Language: en-ca
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
+Content-Language: en-US
+To:     Jason Hatton <jhatton@globalfinishing.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CY4PR16MB1655F83010A128D4ED67C7EDAFC49@CY4PR16MB1655.namprd16.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CY4PR16MB1655F83010A128D4ED67C7EDAFC49@CY4PR16MB1655.namprd16.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 10, 2022 5:57 PM, Junio C Hamano wrote:
->"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
->writes:
->
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 07/05/2022 03:15, Jason Hatton wrote:
+>> Philip Oakley <philipoakley@iee.email> writes:
 >>
->> By allowing the path to be enclosed in double-quotes, we can avoid the
->> limitation that paths cannot contain colons.
->> ...
->> +		struct strbuf buf = STRBUF_INIT;
->> +		const char *p = arg;
->> +
->> +		if (*p != '"')
->> +			p = strchr(p, ':');
->> +		else if (unquote_c_style(&buf, p, &p) < 0)
->> +			die(_("unclosed quote: '%s'"), arg);
->
->Even though I do not think people necessarily would want to use colons in their
->pathnames (it has problems interoperating with other systems), lifting the
->limitation is a good thing to do.  I totally forgot that we designed
->unquote_c_style() to self terminate and return the end pointer to the caller so the
->caller does not have to worry, which is very nice.
->
->Even if this step weren't here in the series, I would have thought the mode bits
->issue was more serious than "no colons in path"
->limitation, but given that we address this unusual corner case limitation, I would
->think we should address the hardcoded mode bits at the same time.
->
->> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh index
->> 8ff1257f1a0..5b8bbfc2692 100755
->> --- a/t/t5003-archive-zip.sh
->> +++ b/t/t5003-archive-zip.sh
->> @@ -207,13 +207,21 @@ check_zip with_untracked  check_added
->> with_untracked untracked untracked
+>>>> This may treat non-zero multiple of 4GiB as "not racy", but has
+>>>> anybody double checked the concern Réne brought up earlier that a
+>>>> 4GiB file that was added and then got rewritten to 2GiB within the
+>>>> same second would suddenly start getting treated as not racy?
+>>> This is the pre-existing problem, that ~1in 2^31 size changes might not
+>>> get noticed for size change. The 0 byte / 4GiB change is an identical
+>>> issue, as is changing from 3 bytes to 4GiB+3 bytes, etc., so that's no
+>>> worse than before (well maybe twice as 'unlikely').
+>> OK, it added one more case to 2^32-1 existing cases, I guess.
 >>
->>  test_expect_success UNZIP 'git archive --format=zip --add-file-with-content' '
->> +	if test_have_prereq FUNNYNAMES
->> +	then
->> +		QUOTED=quoted:colon
->> +	else
->> +		QUOTED=quoted
->> +	fi &&
+>>>> The patch (the firnal version of it anyway) needs to be accompanied
+>>>> by a handful of test additions to tickle corner cases like that.
+>>> They'd be protected by the EXPENSIVE prerequisite I would assume.
+>> Oh, absolutely.  Thanks for spelling that out.
+> I have been testing out the patch a bit and have good and (mostly) bad news.
 >
->;-)
+> What works using a munge value of 1.
 >
->>  	git archive --format=zip >with_file_with_content.zip \
->> +		--add-file-with-content=\"$QUOTED\": \
->>  		--add-file-with-content=hello:world $EMPTY_TREE &&
->>  	test_when_finished "rm -rf tmp-unpack" &&
->>  	mkdir tmp-unpack && (
->>  		cd tmp-unpack &&
->>  		"$GIT_UNZIP" ../with_file_with_content.zip &&
->>  		test_path_is_file hello &&
->> +		test_path_is_file $QUOTED &&
+> $ git add
+> $ git status
 >
->Looks OK, even though it probably is a good idea to have dq around $QUOTED, so
->that future developers can easily insert SP into its value to use a bit more common
->but still a bit more problematic pathnames in the test.
+> Racy seems to work.
+>
+> $ touch .git/index 4GiB # 4GiB is now racy
+> $ git status # Git will rehash the racy file
+> $ git status # Git cached the file. Second status is fast.
+>
+> What doesn't work.
+>
+> $ git checkout 4GiB
+> $ fatal: packed object is corrupt!
+>
+> Using a munge value of 1<<31 causes even more problems. The file hash in the
+> index for 4GiB files (git ls-files -s --debug) are set to the zero file hash.
+>
+> I looked up and down the code base and couldn't figure out how the munged
+> value was leaking out of read-cache.c and breaking things. Most of the code
+> I found tends to use stat and then convert that to a size_t, not using the
+> munged unsigned int at all.
+>
+> Maybe someone else will have better luck. This seems over my head :(
+>
+> Thanks
+> --
+> Jason
+>
+Is there a problem that 1<<31, when on a 32bit long is MAX_NEG, rather 
+than being MAX_POS? And the size would need to be positive to be an 
+acceptable file size?
+(The code is a bit of a mish-mash on the Windows LLP64 side, where long 
+is only 32 bits).
 
-A test case for .gitignore in this would be good too. People on our exotic platform do this stuff as a matter of course. As an example, a name of $Z3P4:12399334 being used as a named pipe (associated with the unique name of a process) actually has been seen in the wild recently. My solution was to wild card this and/or contain it in an ignored directory.
-Regards,
-Randall
-
+Philip
+Apologies for the terseness.
