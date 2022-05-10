@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7295EC433F5
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 19:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 943D5C433FE
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 19:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238841AbiEJT1b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 15:27:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+        id S239805AbiEJT1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 15:27:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239805AbiEJT1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 15:27:18 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD5C3616B
-        for <git@vger.kernel.org>; Tue, 10 May 2022 12:27:15 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id d5so8072wrb.6
-        for <git@vger.kernel.org>; Tue, 10 May 2022 12:27:15 -0700 (PDT)
+        with ESMTP id S236093AbiEJT1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 15:27:15 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A83A2C128
+        for <git@vger.kernel.org>; Tue, 10 May 2022 12:27:09 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id d5so8145wrb.6
+        for <git@vger.kernel.org>; Tue, 10 May 2022 12:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FJ0VvqP8x2j0FbHa0XDUiAhX7eAX+nOlgM67ZhMwLss=;
-        b=alYqXdoz0W4CSRa3xDK2B4vwS167cMjw8Bc0zzyDi/7DkvS235OxL5D58vEalFihXI
-         /l3lrqc1XFK+JbsyCxWBGuPImdqvnMc98xRxDuct5FHz6qjYRddItFuL79P7nE2+G25B
-         +SEJC8DBaV9DZ73HNpUj6PG706xr7oIC0qlsnAN56OVBdX8/ZoB9f/tt7KtlcXtk4+Pn
-         3Pwh6u+AmZbkZL+wWEQLM8Y45DrRHxtg8Mw6BeJWUCdm8I0Br5Cb2xBbBIy9UO/mPCMj
-         5vvbAej+mjX+OoDr4329xsa1LR7rgH06m76nuAfOO2kW1bimAmZlhWDGDH37VtQnu3Ij
-         BuJw==
+        bh=v2bVxgiXyAJb5mJiV2jLmDxYyCHvoUPxWAqoNPpKzrk=;
+        b=ZFChZdDA7j+F47Wdxf7nG5si6H6/eP/C+jLOWvpEzr6wsUy6A2Gnbk7s2HS7ufErNt
+         6hNRfNA/YwKNgJwcalg80jMNEDSDHuUaOB4QJ1y4vPobXtqILldozyv7jmvqsJr4UvGm
+         xsW5dANwjv6WJCI+knAX/antBw3sD8YwvEwUui12mzd6ItNVjV7+BwpVvWqUJOaA7Ag1
+         Tps69Pg9RVI/tMpAj9REu3sK8MiI1+6UQagr7sXdYeQmeYDEDvXAuVYM3ruAUj/wxFQ0
+         DT4B05OXsWf8ex03MZpXeCMAjLVlGf/T0unZrPTyMr1JLmkNxnVqJUUfFcvyP6/fPKAI
+         jgQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FJ0VvqP8x2j0FbHa0XDUiAhX7eAX+nOlgM67ZhMwLss=;
-        b=Q0JV0Cm9j7HXpAjR7NCQu1GmmA05GieFA39qfPfzPfNBESCezvUQKhYky9SOOn8NNz
-         nltHvhyLTkJB1FfCTSLY1Ik12PhOitLqCr44cWFfW91LJyc+RAqljjHcq5otcZLdLPAh
-         j5s2ooiC7NZi3bi+oF8ICOe0soxxJTsqxchFtrtbLUaen5waW51Q8toXCIqdMkeOorCu
-         7Mowdgzsy4/eYy1TgXJRHf7cjlFm2kkPI/jFfDyFpfH+MuLIOeGsry6sbXQxP9SENkU1
-         a0CgRQNCItYMECh1M8abCmfBzHUzNEOvqePR+hIebPrF3Vk9/MzsjdmWsTaq/odaxyD9
-         /gtw==
-X-Gm-Message-State: AOAM533R8WmJATl+Fgl8aqEJh/D0pdrEtP12z1REarUvcK90WviF4Wu/
-        44ObgbX4Ch7UXYzt+Qh+3rJZ4m1fyAo=
-X-Google-Smtp-Source: ABdhPJxE/KFvCzNoJJXyAb5HYeUqcZ9weWTw7ohQWn5XdThHKFJQ7FkRDGxGkr4nwV67eqf7qtxZJA==
-X-Received: by 2002:a5d:5051:0:b0:20a:e005:cca3 with SMTP id h17-20020a5d5051000000b0020ae005cca3mr19394365wrt.560.1652210834537;
-        Tue, 10 May 2022 12:27:14 -0700 (PDT)
+        bh=v2bVxgiXyAJb5mJiV2jLmDxYyCHvoUPxWAqoNPpKzrk=;
+        b=df1w2DRLaY+jKvPVo0LBlrKScbtD1nEwyO5rX0dkeGjnFXyNoy+5ZfMeqiV1X0jPRd
+         iK6n4Mf59NLj6ED0EyC6p1g/qVjmZyNx2yqMmcNWziqutj6RLyI4fSUnbRNm4tU+P2uQ
+         MueUBQwjhu69Y0yuJ7P0kAnPFA9BPCNu03l45J2YMAXLVt+7d4puh7oEyODz1YILrNsX
+         NbavIVeC4tGiMe4BozEeG/mciEYmKcnGZWgeudE7ssCjygB5zMtDvoM5641KSLY5NBGz
+         v7obbfhd/+XyiDtxlEOMTyaB9uEgpiKfXBt0AKrHCuQoRQt22vob/1klj3SpcbusbIPB
+         Le9w==
+X-Gm-Message-State: AOAM53250x/ynsNx3k/cJZcoO0N9ML4GLeIEzOnUpW/vOcnkzh4bQrDy
+        Efv88U9323THVxHoD0EJS0qcag9vao4=
+X-Google-Smtp-Source: ABdhPJzK0NxEHTV/+8Vw3vNgVsgqjfxWh0bLANQxvybahaqguF0eAOx3NAqxb6gKAlhuKyVWlLv/cA==
+X-Received: by 2002:a5d:678b:0:b0:20a:db0b:7395 with SMTP id v11-20020a5d678b000000b0020adb0b7395mr20344374wru.668.1652210827794;
+        Tue, 10 May 2022 12:27:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c18-20020a05600c0a5200b003942a244ec8sm106147wmq.13.2022.05.10.12.27.13
+        by smtp.gmail.com with ESMTPSA id q64-20020a1c4343000000b003942a244ec2sm114641wma.7.2022.05.10.12.27.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 May 2022 12:27:13 -0700 (PDT)
-Message-Id: <3f63b197d420c35f7606d823a981b067964876a6.1652210824.git.gitgitgadget@gmail.com>
+        Tue, 10 May 2022 12:27:07 -0700 (PDT)
+Message-Id: <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
 References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
         <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 May 2022 19:27:02 +0000
-Subject: [PATCH v4 5/7] scalar diagnose: include disk space information
+Date:   Tue, 10 May 2022 19:26:58 +0000
+Subject: [PATCH v4 1/7] archive: optionally add "virtual" files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,99 +71,157 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When analyzing problems with large worktrees/repositories, it is useful
-to know how close to a "full disk" situation Scalar/Git operates. Let's
-include this information.
+With the `--add-file-with-content=<path>:<content>` option, `git
+archive` now supports use cases where relatively trivial files need to
+be added that do not exist on disk.
+
+This will allow us to generate `.zip` files with generated content,
+without having to add said content to the object database and without
+having to write it out to disk.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 53 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  1 +
- 2 files changed, 54 insertions(+)
+ Documentation/git-archive.txt | 11 ++++++++
+ archive.c                     | 51 +++++++++++++++++++++++++++++------
+ t/t5003-archive-zip.sh        | 12 +++++++++
+ 3 files changed, 66 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 367a2c50e25..34cbec59b45 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -303,6 +303,58 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
- 	return res;
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index bc4e76a7834..a0edc9167b2 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -61,6 +61,17 @@ OPTIONS
+ 	by concatenating the value for `--prefix` (if any) and the
+ 	basename of <file>.
+ 
++--add-file-with-content=<path>:<content>::
++	Add the specified contents to the archive.  Can be repeated to add
++	multiple files.  The path of the file in the archive is built
++	by concatenating the value for `--prefix` (if any) and the
++	basename of <file>.
+++
++The `<path>` cannot contain any colon, the file mode is limited to
++a regular file, and the option may be subject to platform-dependent
++command-line limits. For non-trivial cases, write an untracked file
++and use `--add-file` instead.
++
+ --worktree-attributes::
+ 	Look for attributes in .gitattributes files in the working tree
+ 	as well (see <<ATTRIBUTES>>).
+diff --git a/archive.c b/archive.c
+index a3bbb091256..d798624cd5f 100644
+--- a/archive.c
++++ b/archive.c
+@@ -263,6 +263,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
+ struct extra_file_info {
+ 	char *base;
+ 	struct stat stat;
++	void *content;
+ };
+ 
+ int write_archive_entries(struct archiver_args *args,
+@@ -337,7 +338,13 @@ int write_archive_entries(struct archiver_args *args,
+ 		strbuf_addstr(&path_in_archive, basename(path));
+ 
+ 		strbuf_reset(&content);
+-		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
++		if (info->content)
++			err = write_entry(args, &fake_oid, path_in_archive.buf,
++					  path_in_archive.len,
++					  info->stat.st_mode,
++					  info->content, info->stat.st_size);
++		else if (strbuf_read_file(&content, path,
++					  info->stat.st_size) < 0)
+ 			err = error_errno(_("could not read '%s'"), path);
+ 		else
+ 			err = write_entry(args, &fake_oid, path_in_archive.buf,
+@@ -493,6 +500,7 @@ static void extra_file_info_clear(void *util, const char *str)
+ {
+ 	struct extra_file_info *info = util;
+ 	free(info->base);
++	free(info->content);
+ 	free(info);
  }
  
-+#ifndef WIN32
-+#include <sys/statvfs.h>
-+#endif
-+
-+static int get_disk_info(struct strbuf *out)
-+{
-+#ifdef WIN32
-+	struct strbuf buf = STRBUF_INIT;
-+	char volume_name[MAX_PATH], fs_name[MAX_PATH];
-+	DWORD serial_number, component_length, flags;
-+	ULARGE_INTEGER avail2caller, total, avail;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
-+		error(_("could not determine free disk size for '%s'"),
-+		      buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_setlen(&buf, offset_1st_component(buf.buf));
-+	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
-+				   &serial_number, &component_length, &flags,
-+				   fs_name, sizeof(fs_name))) {
-+		error(_("could not get info for '%s'"), buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, avail2caller.QuadPart);
-+	strbuf_addch(out, '\n');
-+	strbuf_release(&buf);
-+#else
-+	struct strbuf buf = STRBUF_INIT;
-+	struct statvfs stat;
-+
-+	strbuf_realpath(&buf, ".", 1);
-+	if (statvfs(buf.buf, &stat) < 0) {
-+		error_errno(_("could not determine free disk size for '%s'"),
-+			    buf.buf);
-+		strbuf_release(&buf);
-+		return -1;
-+	}
-+
-+	strbuf_addf(out, "Available space on '%s': ", buf.buf);
-+	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
-+	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
-+	strbuf_release(&buf);
-+#endif
-+	return 0;
-+}
-+
- /* printf-style interface, expects `<key>=<value>` argument */
- static int set_config(const char *fmt, ...)
- {
-@@ -599,6 +651,7 @@ static int cmd_diagnose(int argc, const char **argv)
- 	get_version_info(&buf, 1);
+@@ -514,14 +522,38 @@ static int add_file_cb(const struct option *opt, const char *arg, int unset)
+ 	if (!arg)
+ 		return -1;
  
- 	strbuf_addf(&buf, "Enlistment root: %s\n", the_repository->worktree);
-+	get_disk_info(&buf);
- 	write_or_die(stdout_fd, buf.buf, buf.len);
- 	strvec_pushf(&archiver_args,
- 		     "--add-file-with-content=diagnostics.log:%.*s",
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 6802d317258..934b2485d91 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -94,6 +94,7 @@ SQ="'"
- test_expect_success UNZIP 'scalar diagnose' '
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	scalar diagnose cloned >out 2>err &&
-+	grep "Available space" out &&
- 	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
- 	zip_path=$(cat zip_path) &&
- 	test -n "$zip_path" &&
+-	path = prefix_filename(args->prefix, arg);
+-	item = string_list_append_nodup(&args->extra_files, path);
+-	item->util = info = xmalloc(sizeof(*info));
++	info = xmalloc(sizeof(*info));
+ 	info->base = xstrdup_or_null(base);
+-	if (stat(path, &info->stat))
+-		die(_("File not found: %s"), path);
+-	if (!S_ISREG(info->stat.st_mode))
+-		die(_("Not a regular file: %s"), path);
++
++	if (!strcmp(opt->long_name, "add-file")) {
++		path = prefix_filename(args->prefix, arg);
++		if (stat(path, &info->stat))
++			die(_("File not found: %s"), path);
++		if (!S_ISREG(info->stat.st_mode))
++			die(_("Not a regular file: %s"), path);
++		info->content = NULL; /* read the file later */
++	} else {
++		const char *colon = strchr(arg, ':');
++		char *p;
++
++		if (!colon)
++			die(_("missing colon: '%s'"), arg);
++
++		p = xstrndup(arg, colon - arg);
++		if (!args->prefix)
++			path = p;
++		else {
++			path = prefix_filename(args->prefix, p);
++			free(p);
++		}
++		memset(&info->stat, 0, sizeof(info->stat));
++		info->stat.st_mode = S_IFREG | 0644;
++		info->content = xstrdup(colon + 1);
++		info->stat.st_size = strlen(info->content);
++	}
++	item = string_list_append_nodup(&args->extra_files, path);
++	item->util = info;
++
+ 	return 0;
+ }
+ 
+@@ -554,6 +586,9 @@ static int parse_archive_args(int argc, const char **argv,
+ 		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
+ 		  N_("add untracked file to archive"), 0, add_file_cb,
+ 		  (intptr_t)&base },
++		{ OPTION_CALLBACK, 0, "add-file-with-content", args,
++		  N_("path:content"), N_("add untracked file to archive"), 0,
++		  add_file_cb, (intptr_t)&base },
+ 		OPT_STRING('o', "output", &output, N_("file"),
+ 			N_("write the archive to this file")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 1e6d18b140e..8ff1257f1a0 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -206,6 +206,18 @@ test_expect_success 'git archive --format=zip --add-file' '
+ check_zip with_untracked
+ check_added with_untracked untracked untracked
+ 
++test_expect_success UNZIP 'git archive --format=zip --add-file-with-content' '
++	git archive --format=zip >with_file_with_content.zip \
++		--add-file-with-content=hello:world $EMPTY_TREE &&
++	test_when_finished "rm -rf tmp-unpack" &&
++	mkdir tmp-unpack && (
++		cd tmp-unpack &&
++		"$GIT_UNZIP" ../with_file_with_content.zip &&
++		test_path_is_file hello &&
++		test world = $(cat hello)
++	)
++'
++
+ test_expect_success 'git archive --format=zip --add-file twice' '
+ 	echo untracked >untracked &&
+ 	git archive --format=zip --prefix=one/ --add-file=untracked \
 -- 
 gitgitgadget
 
