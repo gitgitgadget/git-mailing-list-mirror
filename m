@@ -2,196 +2,433 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B20AC43217
-	for <git@archiver.kernel.org>; Tue, 10 May 2022 07:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 982B6C433EF
+	for <git@archiver.kernel.org>; Tue, 10 May 2022 13:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233971AbiEJHhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 03:37:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56510 "EHLO
+        id S234191AbiEJNIV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 09:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239011AbiEJHK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 03:10:57 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE91E17E16E
-        for <git@vger.kernel.org>; Tue, 10 May 2022 00:06:57 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id z2so29459312ejj.3
-        for <git@vger.kernel.org>; Tue, 10 May 2022 00:06:57 -0700 (PDT)
+        with ESMTP id S233776AbiEJNIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 09:08:19 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9433526CC74
+        for <git@vger.kernel.org>; Tue, 10 May 2022 06:04:21 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id d5so23733531wrb.6
+        for <git@vger.kernel.org>; Tue, 10 May 2022 06:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wZKytYx9Yx4qjTgCkH2KjNw/Pkw90f6ILwnu+65+pKY=;
-        b=IiYEH/V52vHN7K6xhvN0hI4DsiGywlZSG0EJ+1yVPfJTOv+G833zw2mteW+ifzQKXz
-         wMmej/4cdUiKlwUOPn3rLrf0vjTddCplLjOnB3j08K2IhSUWOmFyS1Cc155aKEM1iwL/
-         OE6BQzOupOlRMTCPn4PJ38Jql+BqNCq5UE25Nm/4kal10k3ikZ054nfNactRH4FKi5Ec
-         ASW39G4t5tIidWo+3dSuc65N2W1k+PAfSo3xPNiS3sFDmy8FKViuCNs8X1g5ZgiTepoa
-         raMSmg8EV/ozXNIK+GJ5lpAz8fz1N8LglGpUqRh70cvVWkHrwsmDcFNUhRcGdNW71uSC
-         RQTw==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Rh8tmAShUVxCUITT7t8kg1Dr2qTvkkEv+pfBkJdp0QE=;
+        b=WJ5z45D01QlKGUHaSxmBJMJ4YBq2GsWYxVrnQiknxE3i9iyc8oQMOZCZ4g/Ag4w/YP
+         ll5QfQnZWSvGIkiqyLZ5wf6yNBPFIVYFXSS2e7Vuve4tPWAsdLuyMygsaIAPnMRjLw/+
+         mnXLKGPxkOkwTfiari1r2WaUEowYx7zFXzqJ7IsDIoUMbhXd+L04kVf3fINYkkZOfJxQ
+         VjOcfVVZ2fbcLIixk652NPN5R2oPjyhrfIGuLUhReMRCUhDjAyy6C4qKXNweim0YVycR
+         C/2h2zs2I31BNUfDFQ6O2GGlvBHExY1x3xm1V0JfxQ/Ver40V+O9ibM7kXns7ezZ8IlH
+         0SSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wZKytYx9Yx4qjTgCkH2KjNw/Pkw90f6ILwnu+65+pKY=;
-        b=K8wIyQD0HU0692sxx+jzqmNieKuh3yCo7wR01SFZ3UHdVrnePSL64hG3h6C7rcHxPP
-         xJ0C3UGGPuvGRCXoXYH70ot7yS8TStEaPjjz4UUfsRh+20g+cJLgNUOmpTPlTVKzYo7b
-         q3I5QWT8ttwNzib0+WI0CTyaQq8LvNrJFqzl9rueYCYW7l9MooGELVdCWpsv1f2W3U72
-         qc7ekrw7J5kKZcQ7rMbkgHBQbICYYObb1kV/l/6lJgPcufwYeNkCFzlgNg1dzHw2WDCT
-         63iUzscGdLwM0XgOTUMsdfRrid0AaaTD+WjHCzNADgSRXgF84GGeOg6/38a0oM0nBOt+
-         6w8Q==
-X-Gm-Message-State: AOAM5333WCHl4bTEA9hvoDtJ3hwNi2dlEY5QSPXS9WLi5RnfoyC/CeNt
-        IavgGrbJWCqx9xoQU8C5H6ZC3iWjhF8D/5qiX50=
-X-Google-Smtp-Source: ABdhPJzA16SzJIWltlFD9Ucwb1K2ukqVT17IDNyFJWn5XjCxo4198LMZYNVTbYGJBpbqUEIeg1gYOpvXXYTGcmNsXo4=
-X-Received: by 2002:a17:906:3a45:b0:6f4:e9e7:4ff with SMTP id
- a5-20020a1709063a4500b006f4e9e704ffmr17851413ejf.100.1652166416091; Tue, 10
- May 2022 00:06:56 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Rh8tmAShUVxCUITT7t8kg1Dr2qTvkkEv+pfBkJdp0QE=;
+        b=K+wB084uzubxDory4wJb4lThJY1PaCB7P3/YApCLYD0j+1KTbr+/e9hkPM1MMMS9hS
+         1JumKC/QD+wcxgiHaX4R8+u7UGOoCPiitqP0UhZJVZTsh88TBxnL6YvN9sJkfn1ONg+t
+         yXm4Z46VoIP8ZErWLqoT7BMkHgDR6gLAKynGzby7+1IIKm5XBJFlb0ikHqqznocbJxvN
+         fK1ZEKntLCJvuzfPSmILWCz7StiXRGalwOxY9OVJoaCuMKfTbt99WnqKiVxJXTAjN/eF
+         T06XNc6Uf3PpZzKmY56eiZYlSSmEXyeBsjchGLGXX3+FT4SyKs91g8tDIKOO9mTiSjUn
+         AAEw==
+X-Gm-Message-State: AOAM530YRYJVhqZF7Qzdx4yPc9SoCDocXPwPzVVSpx3DTFj9HIbeVSU+
+        GfMfg+dWQ9M6nc/w+Za96MvdM38SH+8=
+X-Google-Smtp-Source: ABdhPJzhVdPtoZXBXXote0pt+xJuyVxwYpYv9nZq82Rpr57T6EKSMScBPqjM26tNN02mGSX6K4k4rA==
+X-Received: by 2002:a5d:5966:0:b0:20a:e810:5e9d with SMTP id e38-20020a5d5966000000b0020ae8105e9dmr18276694wri.240.1652187859880;
+        Tue, 10 May 2022 06:04:19 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.192])
+        by smtp.googlemail.com with ESMTPSA id n44-20020a05600c502c00b0039429bfebebsm4141451wmr.3.2022.05.10.06.04.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 May 2022 06:04:19 -0700 (PDT)
+Message-ID: <e21eaf9f-8784-88e1-e4d0-49135db1189b@gmail.com>
+Date:   Tue, 10 May 2022 14:04:18 +0100
 MIME-Version: 1.0
-References: <pull.1171.git.1650908957.gitgitgadget@gmail.com>
- <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com> <4537d473b937b182cd79b2f3c5673b75d92cab23.1651083378.git.gitgitgadget@gmail.com>
- <CABPp-BHcWjOeVhRD_XKTko0OH2pwYsuCt8PzH=C_0u_gUWe0GQ@mail.gmail.com> <65dd1914-137e-d9ba-ee1f-7611e5f71d30@github.com>
-In-Reply-To: <65dd1914-137e-d9ba-ee1f-7611e5f71d30@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 10 May 2022 00:06:44 -0700
-Message-ID: <CABPp-BGcxu8gkNtdKYsGErNapxKzcHugNxoz61=RwG-8dkOWGg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] merge-recursive: add merge function arg to 'merge_recursive_generic'
-To:     Victoria Dye <vdye@github.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 10/15] dir-iterator: refactor dir_iterator_advance()
+Content-Language: en-US
+To:     Plato Kiorpelidis <kioplato@gmail.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, Junio C Hamano <gitster@pobox.com>
+References: <20220509175159.2948802-1-kioplato@gmail.com>
+ <20220509175159.2948802-11-kioplato@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220509175159.2948802-11-kioplato@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 9, 2022 at 12:24 PM Victoria Dye <vdye@github.com> wrote:
->
-> Elijah Newren wrote:
-> > On Wed, Apr 27, 2022 at 11:16 AM Victoria Dye via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Victoria Dye <vdye@github.com>
-> >>
-> >> Replace the hardcoded 'merge_recursive()' function used by the
-> >> 'merge_recursive_generic()' with a caller-specific merge function. This will
-> >> allow us to use 'merge_ort_recursive()' (and therefore avoid the index
-> >> expansion of 'merge_recursive()') in commands that perform merges with
-> >> 'merge_recursive_generic()', such as 'git stash pop'.
-> >>
-> >> Note that this patch is strictly a refactor; all callers still use
-> >> 'merge_recursive()', and any changing to 'merge_ort_recursive()' will be
-> >> done in a later commit.
-> >
-> > I'm not sure if we can gut merge_recursive_generic(), but I don't
-> > think stash should use it...
-> >
-> >> Signed-off-by: Victoria Dye <vdye@github.com>
-> >> ---
-> >>  builtin/am.c              | 2 +-
-> >>  builtin/merge-recursive.c | 2 +-
-> >>  builtin/stash.c           | 2 +-
-> >>  merge-ort.c               | 3 ++-
-> >>  merge-recursive.c         | 4 ++--
-> >>  merge-recursive.h         | 9 ++++++++-
-> >>  6 files changed, 15 insertions(+), 7 deletions(-)
-> >>
-> >> diff --git a/builtin/am.c b/builtin/am.c
-> >> index 0f4111bafa0..6d01185d122 100644
-> >> --- a/builtin/am.c
-> >> +++ b/builtin/am.c
-> >> @@ -1614,7 +1614,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
-> >>         if (state->quiet)
-> >>                 o.verbosity = 0;
-> >>
-> >> -       if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
-> >> +       if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, merge_recursive, &result)) {
-> >>                 repo_rerere(the_repository, state->allow_rerere_autoupdate);
-> >>                 free(their_tree_name);
-> >>                 return error(_("Failed to merge in the changes."));
-> >> diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-> >> index b9acbf5d342..687ed1e527b 100644
-> >> --- a/builtin/merge-recursive.c
-> >> +++ b/builtin/merge-recursive.c
-> >> @@ -81,7 +81,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
-> >>         if (o.verbosity >= 3)
-> >>                 printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
-> >>
-> >> -       failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
-> >> +       failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, merge_recursive, &result);
-> >>
-> >>         free(better1);
-> >>         free(better2);
-> >> diff --git a/builtin/stash.c b/builtin/stash.c
-> >> index 1bfba532044..16171eb1dab 100644
-> >> --- a/builtin/stash.c
-> >> +++ b/builtin/stash.c
-> >> @@ -554,7 +554,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
-> >>         bases[0] = &info->b_tree;
-> >>
-> >>         ret = merge_recursive_generic(&o, &c_tree, &info->w_tree, 1, bases,
-> >> -                                     &result);
-> >> +                                     merge_recursive, &result);
-> >>         if (ret) {
-> >>                 rerere(0);
-> >>
-> >> diff --git a/merge-ort.c b/merge-ort.c
-> >> index 8545354dafd..4bccdfcf355 100644
-> >> --- a/merge-ort.c
-> >> +++ b/merge-ort.c
-> >> @@ -4737,7 +4737,8 @@ void merge_incore_recursive(struct merge_options *opt,
-> >>         trace2_region_enter("merge", "incore_recursive", opt->repo);
-> >>
-> >>         /* We set the ancestor label based on the merge_bases */
-> >> -       assert(opt->ancestor == NULL);
-> >> +       assert(opt->ancestor == NULL ||
-> >> +              !strcmp(opt->ancestor, "constructed merge base"));
-> >
-> > ...and here's one of the reasons why.  The fact that
-> > merge_recursive_generic() uses this string when exactly one merge base
-> > is passed is something that is only correct for git-am; it is wrong
-> > and actively misleading for git-stash since it has a real merge base
-> > that is not internally constructed by the operation using the merge
-> > machinery.  (The merge base it uses is something like $STASH^1, IIRC.)
-> >
-> > In fact, this was half the coin around why merge_recursive_generic()
-> > wasn't converted when merge-ort was written; see
-> > https://lore.kernel.org/git/CABPp-BHW61zA+MefvWK47iVZKY97rxc2XZ-NjXzuJxEhgSLqUw@mail.gmail.com/
-> > and https://lore.kernel.org/git/CABPp-BFr=1iVY739cfh-1Hp82x-Mny-k4y0f3zZ_YuP3PxiGfQ@mail.gmail.com/
-> > for more details.
-> >
->
-> All of that makes sense, thanks for the context!
->
-> > The use of merge_recursive_generic() by stash is also a bit weird;
-> > most of the time, stash is going to have actual commits instead of
-> > just trees.  But stash dereferences those commits to trees, passes
-> > them to merge_recursive_generic(), and then merge_recursive_generic()
-> > has to create fake commits containing those trees, because the merge
-> > machinery wants commits.  It feels a bit like a Rube Goldberg machine.
-> > Also, stash also always calls merge_recursive_generic() with exactly
-> > one merge base, which together with having real commits both kind of
-> > defeat the need for "generic".    I think stash should just use
-> > merge_trees()/merge_incore_nonrecursive() directly (much as
-> > sequencer.c does).  The only special case to worry about with stash is
-> > when c_tree != HEAD^{tree}, i.e. when applying changes on top of
-> > already present changes instead of just on top of HEAD.  But in that
-> > case, I think stash should be the thing to create a fake commit rather
-> > than invoking some wrapper that will create fake commits for all three
-> > trees.
-> >
->
-> I'm a bit confused about this. The non-recursive merge functions
-> ('merge_trees()' & 'merge_ort_nonrecursive()' or the lower-level
-> 'merge_incore_nonrecursive()') merge trees, not commits, so performing a
-> non-recursive merge requires dereferencing commits to trees anyway. I think
-> I agree with your other message [1] that the 'stash' merge doesn't need to
-> merge recursively, but that would mean it also doesn't use the commits
-> *directly* (i.e., as arguments in the merge).
->
-> Apologies if I'm missing something obvious, but I want to make sure I
-> understand your suggestion.
->
-> [1] https://lore.kernel.org/git/CABPp-BFANwZn73w8zrVySB7mh0bQQBdGJjBuSJy50UOeyYT6aA@mail.gmail.com/
+Hi Plato
 
-Oh, right, it's only the recursive merge that needs commits (so that
-it can find ancestors and ancestors of ancestors, etc.).  So, ignore
-my comments about making fake commits; that's not needed.
+On 09/05/2022 18:51, Plato Kiorpelidis wrote:
+> Simplify dir_iterator_advance() by converting from iterative to
+> recursive implementation. This conversion makes dir-iterator more
+> maintainable for the following reasons:
+>    * dir-iterator iterates the file-system, which is a tree structure.
+>      Traditionally, tree traversals, in textbooks, lectures and online
+>      sources are implemented recursively and not iteratively. Therefore
+>      it helps reduce mental load for readers, since it's easier to follow
+>      as it reminds of the same tree traversals we use on tree structures.
+
+In a traditional recursive tree walk the function that walks the tree 
+applies a user supplied function to each node, the function that walks 
+the tree does not return until every node has been visited. The 
+recursive implementation relies on the initial call not returning until 
+all the nodes have been visited and as Junio pointed out will exhaust 
+the stack if the tree is too deep. This is not a traditional recursive 
+tree walk though because we're implementing a iterator so our function 
+returns each node that it visits rather than applying a user supplied 
+function to the node thereby loosing any benefit offered by a recursive 
+implementation.
+
+
+>    * recursion requires one less indentation depth because we get rid of
+>      the while loop and instead recurse, using the program's stack.
+>    * in each recursive step a set of instructions are executed and
+>      recursion lays out the code structurally in a better way, such that
+>      these instructions stand out symmetrically for each recursive step.
+> 
+> This makes dir-iterator easier to work with, understand and introduce
+> new functionality, like post-order on some directory entries, because it
+> reminds us of the same operations we use to traverse tree structures.
+
+I'm afraid I'm still not convinced the end result is easier to 
+understand or use. It is unusual for a patch that adds twice as many 
+lines as it removes to make the code simpler.
+
+Best Wishes
+
+Phillip
+
+> Signed-off-by: Plato Kiorpelidis <kioplato@gmail.com>
+> ---
+>   dir-iterator.c | 223 ++++++++++++++++++++++++++++++++-----------------
+>   1 file changed, 146 insertions(+), 77 deletions(-)
+> 
+> diff --git a/dir-iterator.c b/dir-iterator.c
+> index b17e9f970a..3adcfbc966 100644
+> --- a/dir-iterator.c
+> +++ b/dir-iterator.c
+> @@ -7,8 +7,7 @@ struct dir_iterator_level {
+>   	DIR *dir;
+>   
+>   	/*
+> -	 * The length of the directory part of path at this level
+> -	 * (including a trailing '/'):
+> +	 * The length of the directory part of path at this level.
+>   	 */
+>   	size_t prefix_len;
+>   };
+> @@ -34,8 +33,9 @@ struct dir_iterator_int {
+>   	size_t levels_alloc;
+>   
+>   	/*
+> -	 * A stack of levels. levels[0] is the uppermost directory
+> -	 * that will be included in this iteration.
+> +	 * A stack of levels. levels[0] is the root directory.
+> +	 * It won't be included in the iteration, but iteration will happen
+> +	 * inside it's subdirectories.
+>   	 */
+>   	struct dir_iterator_level *levels;
+>   
+> @@ -43,36 +43,63 @@ struct dir_iterator_int {
+>   	unsigned int flags;
+>   };
+>   
+> +enum {
+> +	OK,
+> +	FAIL_ENOENT,
+> +	FAIL_NOT_ENOENT,
+> +};
+> +
+>   /*
+>    * Push a level in the iter stack and initialize it with information from
+> - * the directory pointed by iter->base->path. It is assumed that this
+> - * strbuf points to a valid directory path. Return 0 on success and -1
+> - * otherwise, setting errno accordingly and leaving the stack unchanged.
+> + * the directory pointed by iter->base->path. Don't open the directory.
+> + *
+> + * Return 1 on success.
+> + * Return 0 when `iter->base->path` isn't a directory.
+>    */
+>   static int push_level(struct dir_iterator_int *iter)
+>   {
+>   	struct dir_iterator_level *level;
+>   
+> +	if (!S_ISDIR(iter->base.st.st_mode))
+> +		return 0;
+> +
+>   	ALLOC_GROW(iter->levels, iter->levels_nr + 1, iter->levels_alloc);
+>   	level = &iter->levels[iter->levels_nr++];
+>   
+> -	if (!is_dir_sep(iter->base.path.buf[iter->base.path.len - 1]))
+> -		strbuf_addch(&iter->base.path, '/');
+> +	level->dir = NULL;
+> +
+>   	level->prefix_len = iter->base.path.len;
+>   
+> -	level->dir = opendir(iter->base.path.buf);
+> -	if (!level->dir) {
+> -		int saved_errno = errno;
+> -		if (errno != ENOENT) {
+> -			warning_errno("error opening directory '%s'",
+> -				      iter->base.path.buf);
+> -		}
+> -		iter->levels_nr--;
+> +	return 1;
+> +}
+> +
+> +/*
+> + * Activate most recent pushed level. Stack is unchanged.
+> + *
+> + * Return values:
+> + * OK on success.
+> + * FAIL_ENOENT on failed exposure because entry does not exist.
+> + * FAIL_NOT_ENOENT on failed exposure because of errno other than ENOENT.
+> + */
+> +static int activate_level(struct dir_iterator_int *iter)
+> +{
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+> +	int saved_errno;
+> +
+> +	if (level->dir)
+> +		return OK;
+> +
+> +	if ((level->dir = opendir(iter->base.path.buf)) != NULL)
+> +		return OK;
+> +
+> +	saved_errno = errno;
+> +	if (errno != ENOENT) {
+> +		warning_errno("error opening directory '%s'", iter->base.path.buf);
+>   		errno = saved_errno;
+> -		return -1;
+> +		return FAIL_NOT_ENOENT;
+>   	}
+> -
+> -	return 0;
+> +	errno = saved_errno;
+> +	return FAIL_ENOENT;
+>   }
+>   
+>   /*
+> @@ -81,12 +108,10 @@ static int push_level(struct dir_iterator_int *iter)
+>    */
+>   static int pop_level(struct dir_iterator_int *iter)
+>   {
+> -	struct dir_iterator_level *level =
+> -		&iter->levels[iter->levels_nr - 1];
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+>   
+>   	if (level->dir && closedir(level->dir))
+> -		warning_errno("error closing directory '%s'",
+> -			      iter->base.path.buf);
+> +		warning_errno("error closing directory '%s'", iter->base.path.buf);
+>   	level->dir = NULL;
+>   
+>   	return --iter->levels_nr;
+> @@ -94,82 +119,119 @@ static int pop_level(struct dir_iterator_int *iter)
+>   
+>   /*
+>    * Populate iter->base with the necessary information on the next iteration
+> - * entry, represented by the given dirent de. Return 0 on success and -1
+> - * otherwise, setting errno accordingly.
+> + * entry, represented by the given relative path to the lowermost directory,
+> + * d_name.
+> + *
+> + * Return values:
+> + * OK on successful exposure of the provided entry.
+> + * FAIL_ENOENT on failed exposure because entry does not exist.
+> + * FAIL_NOT_ENOENT on failed exposure because of errno other than ENOENT.
+>    */
+> -static int prepare_next_entry_data(struct dir_iterator_int *iter,
+> -				   struct dirent *de)
+> +static int expose_entry(struct dir_iterator_int *iter, char *d_name)
+>   {
+> -	int err, saved_errno;
+> +	int stat_err;
+>   
+> -	strbuf_addstr(&iter->base.path, de->d_name);
+> -	/*
+> -	 * We have to reset these because the path strbuf might have
+> -	 * been realloc()ed at the previous strbuf_addstr().
+> -	 */
+> -	iter->base.relative_path = iter->base.path.buf +
+> -				   iter->levels[0].prefix_len;
+> -	iter->base.basename = iter->base.path.buf +
+> -			      iter->levels[iter->levels_nr - 1].prefix_len;
+> +	strbuf_addch(&iter->base.path, '/');
+> +	strbuf_addstr(&iter->base.path, d_name);
+>   
+>   	if (iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS)
+> -		err = stat(iter->base.path.buf, &iter->base.st);
+> +		stat_err = stat(iter->base.path.buf, &iter->base.st);
+>   	else
+> -		err = lstat(iter->base.path.buf, &iter->base.st);
+> +		stat_err = lstat(iter->base.path.buf, &iter->base.st);
+>   
+> -	saved_errno = errno;
+> -	if (err && errno != ENOENT)
+> +	if (stat_err && errno != ENOENT) {
+>   		warning_errno("failed to stat '%s'", iter->base.path.buf);
+> +		return FAIL_NOT_ENOENT;
+> +	} else if (stat_err && errno == ENOENT) {
+> +		return FAIL_ENOENT;
+> +	}
+>   
+> -	errno = saved_errno;
+> -	return err;
+> +	/*
+> +	 * We have to reset relative path and basename because the path strbuf
+> +	 * might have been realloc()'ed at the previous strbuf_addstr().
+> +	 */
+> +
+> +	iter->base.relative_path =
+> +		iter->base.path.buf + iter->levels[0].prefix_len + 1;
+> +	iter->base.basename =
+> +		iter->base.path.buf + iter->levels[iter->levels_nr - 1].prefix_len + 1;
+> +
+> +	return OK;
+>   }
+>   
+>   int dir_iterator_advance(struct dir_iterator *dir_iterator)
+>   {
+> -	struct dir_iterator_int *iter =
+> -		(struct dir_iterator_int *)dir_iterator;
+> +	struct dir_iterator_int *iter = (struct dir_iterator_int *)dir_iterator;
+> +	struct dir_iterator_level *level = &iter->levels[iter->levels_nr - 1];
+> +	struct dirent *dir_entry = NULL;
+> +	int expose_err, activate_err;
+> +	/* For shorter code width-wise, more readable */
+> +	unsigned int PEDANTIC = iter->flags & DIR_ITERATOR_PEDANTIC;
+>   
+> -	if (S_ISDIR(iter->base.st.st_mode) && push_level(iter)) {
+> -		if (errno != ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
+> -			goto error_out;
+> -		if (iter->levels_nr == 0)
+> +	/*
+> +	 * Attempt to open the directory of the last level if not opened yet.
+> +	 *
+> +	 * Remember that we ignore ENOENT errors so that the user of this API
+> +	 * can remove entries between calls to `dir_iterator_advance()`.
+> +	 * We care for errors other than ENOENT only when PEDANTIC is enabled.
+> +	 */
+> +
+> +	activate_err = activate_level(iter);
+> +
+> +	if (activate_err == FAIL_NOT_ENOENT && PEDANTIC) {
+> +		goto error_out;
+> +	} else if (activate_err != OK) {
+> +		--iter->levels_nr;
+> +
+> +		if (iter->levels_nr == 0)  /* Failed to open root directory */
+>   			goto error_out;
+> +
+> +		return dir_iterator_advance(dir_iterator);
+>   	}
+>   
+> -	/* Loop until we find an entry that we can give back to the caller. */
+> -	while (1) {
+> -		struct dirent *de;
+> -		struct dir_iterator_level *level =
+> -			&iter->levels[iter->levels_nr - 1];
+> +	strbuf_setlen(&iter->base.path, level->prefix_len);
+> +
+> +	errno = 0;
+> +	dir_entry = readdir(level->dir);
+> +
+> +	if (!dir_entry) {
+> +		if (errno) {
+> +			warning_errno("errno reading dir '%s'", iter->base.path.buf);
+> +			if (PEDANTIC)
+> +				goto error_out;
+>   
+> -		strbuf_setlen(&iter->base.path, level->prefix_len);
+> -		errno = 0;
+> -		de = readdir(level->dir);
+> -
+> -		if (!de) {
+> -			if (errno) {
+> -				warning_errno("error reading directory '%s'",
+> -					      iter->base.path.buf);
+> -				if (iter->flags & DIR_ITERATOR_PEDANTIC)
+> -					goto error_out;
+> -			} else if (pop_level(iter) == 0) {
+> +			return dir_iterator_advance(dir_iterator);
+> +		} else {
+> +			/*
+> +			 * Current directory has been iterated through.
+> +			 */
+> +
+> +			if (pop_level(iter) == 0)
+>   				return dir_iterator_abort(dir_iterator);
+> -			}
+> -			continue;
+> +
+> +			return dir_iterator_advance(dir_iterator);
+>   		}
+> +	}
+>   
+> -		if (is_dot_or_dotdot(de->d_name))
+> -			continue;
+> +	if (is_dot_or_dotdot(dir_entry->d_name))
+> +		return dir_iterator_advance(dir_iterator);
+>   
+> -		if (prepare_next_entry_data(iter, de)) {
+> -			if (errno != ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
+> -				goto error_out;
+> -			continue;
+> -		}
+> +	/*
+> +	 * Successfully read entry from current directory level.
+> +	 */
+>   
+> -		return ITER_OK;
+> -	}
+> +	expose_err = expose_entry(iter, dir_entry->d_name);
+> +
+> +	if (expose_err == FAIL_NOT_ENOENT && PEDANTIC)
+> +		goto error_out;
+> +
+> +	if (expose_err == OK)
+> +		push_level(iter);
+> +
+> +	if (expose_err != OK)
+> +		return dir_iterator_advance(dir_iterator);
+> +
+> +	return ITER_OK;
+>   
+>   error_out:
+>   	dir_iterator_abort(dir_iterator);
+> @@ -207,6 +269,8 @@ struct dir_iterator *dir_iterator_begin(const char *path, unsigned int flags)
+>   
+>   	strbuf_init(&iter->base.path, PATH_MAX);
+>   	strbuf_addstr(&iter->base.path, path);
+> +	/* expose_entry() appends dir seperator before exposing an entry */
+> +	strbuf_trim_trailing_dir_sep(&iter->base.path);
+>   
+>   	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+>   	iter->levels_nr = 0;
+> @@ -226,6 +290,11 @@ struct dir_iterator *dir_iterator_begin(const char *path, unsigned int flags)
+>   		goto error_out;
+>   	}
+>   
+> +	if (!push_level(iter)) {
+> +		saved_errno = ENOTDIR;
+> +		goto error_out;
+> +	}
+> +
+>   	return dir_iterator;
+>   
+>   error_out:
+
