@@ -2,122 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CE46C433EF
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 16:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AAFDC433EF
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 16:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345160AbiEKQwD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 May 2022 12:52:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48706 "EHLO
+        id S233807AbiEKQwV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 May 2022 12:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238100AbiEKQvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 May 2022 12:51:53 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07579694BA
-        for <git@vger.kernel.org>; Wed, 11 May 2022 09:51:24 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64FD7129594;
-        Wed, 11 May 2022 12:51:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AmRoRGsyTnfRtm1W6uswCmq4rKCFbV7RGvbmwB
-        EYSPg=; b=Tcur9oY7pY+Q5ifEXDeYf9LSMoNruyUQznv4yq5oTmD6u6lL4GbqWU
-        3VRqj+90/dELiD4WaA8MxmWMva1k7fDKW5AKnKQeUl2A2hkGzw3z4N8jzbpbiIhH
-        C+SE2GIUGecfqIgWmNvCWE8LmnchzgsVBDfY4MsusnTrMeISNPJHM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BCF9129593;
-        Wed, 11 May 2022 12:51:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A912B129592;
-        Wed, 11 May 2022 12:51:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Goss Geppert <gg.oss.dev@gmail.com>
-Cc:     git@vger.kernel.org, christian w <usebees@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/2] dir: minor refactoring / clean-up
-References: <20220505203234.21586-1-ggossdev@gmail.com>
-        <20220510171527.25778-1-ggossdev@gmail.com>
-        <20220510171527.25778-3-ggossdev@gmail.com>
-Date:   Wed, 11 May 2022 09:51:20 -0700
-In-Reply-To: <20220510171527.25778-3-ggossdev@gmail.com> (Goss Geppert's
-        message of "Tue, 10 May 2022 17:15:27 +0000")
-Message-ID: <xmqqv8ucko6v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9610866E-D14A-11EC-A3A4-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S238122AbiEKQwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 May 2022 12:52:16 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68BDDB60
+        for <git@vger.kernel.org>; Wed, 11 May 2022 09:52:14 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id x16-20020aa793b0000000b0050d3d5c4f4eso1388760pff.6
+        for <git@vger.kernel.org>; Wed, 11 May 2022 09:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=I5CzC+LkCNL/IaTQ2lJ4De6XfS+VyFou7euo5mTC5BY=;
+        b=nLCjWowYodm5z7/LkJqXRSkF34n6wk4ufzjXXdHUm7lAWWCYygLSgSNR1BeiMu+V3n
+         Mtz9T0n1p1fW99OHFz/4aNZ0pQqN9R54y835b64jqZ+EZI7fc6r1UxJEJiw4qF7zTo2J
+         zVwnf1w155tSxoa1+T8EOlPSL+e8KpvCE2Kd/dIia3iLI31+C9AU2IpN7njCuBuQlTm8
+         89FHTQlEyrCZBenJ7e8vm4Fw4lVZfDbAIYOI+ZsJdewrM9FGy7SyWr16NJPFAW/Rhu9F
+         XEyqPwUWFs4qmGeTClT63WA76A8V1uRjL4JQurqSdCsmNGijdzdZHsX6hnO1e8vkzeJV
+         Lwcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=I5CzC+LkCNL/IaTQ2lJ4De6XfS+VyFou7euo5mTC5BY=;
+        b=1Z9SSV3D8I8r9uzccHVcrBQJrC22vSLt5xWc5M7psHYxRAoZYsWrujS3GBZmiIPjNS
+         WY5r7Cspnkoq8uUv+jAzsZVTctj5VePBKFlRHZod6OnlCoeNmHgTsTW/grVGFtTMfoPz
+         RrN2KnXBTcrNZj01Bb+xDcC5+g4fJzEpaCkncPSzN74h5Or89dxhvCxpPXBxVT5yRYDU
+         vD27qrzylI7iJgpqmZIpqf/hMowv8G6al95RoSQs3PmHjOWjhVkuKJ6YAn4QufifPJ9M
+         SkrCrGw2DHC6Z8CnUK/Eitk8le8mLC3lK/aMk/FyPBX6FIEyUk1kCUXLoR9363ubp6/O
+         enTQ==
+X-Gm-Message-State: AOAM5309qFR1wfPVshKx8f1sVlpxEKuDIGHEPBlM4BE9a2OX+YZDOjAT
+        VSi3+oKfLgDOXF3tJR6stRUDjiDe2cAbkg==
+X-Google-Smtp-Source: ABdhPJzZ8QnrX/ZOhmFIZga9hGmyDsYdRXzZYGkyzNDMgZv/eez68ImuNtC+D5J3DdzebaXvIZR1APlfecxHcg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2188:b0:50d:b093:12a2 with SMTP
+ id h8-20020a056a00218800b0050db09312a2mr25907475pfi.84.1652287933853; Wed, 11
+ May 2022 09:52:13 -0700 (PDT)
+Date:   Wed, 11 May 2022 09:52:12 -0700
+In-Reply-To: <xmqq4k1wq1i6.fsf@gitster.g>
+Message-Id: <kl6lwnesxb9f.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <xmqq4k1wq1i6.fsf@gitster.g>
+Subject: gc/pull-recurse-submodules (was Re: What's cooking in git.git (May
+ 2022, #03; Tue, 10))
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Goss Geppert <gg.oss.dev@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Improve readability.
-
-It reads somewhat a subjective opinion, without explaining how/why
-the change makes it more readable.  Perhaps
-
-	Narrow the scope of the nested_repo variable to the block
-	that uses it.
-
-or something?
-
-I was hoping that we can/should apply these two patches near where
-the breakage happened, but unfortunately this part has been updated
-a bit since then, so merging upwards would involve a bit of conflict
-resolution.  We should be able to manage.
-
-Thanks.
-
-
-> Signed-off-by: Goss Geppert <ggossdev@gmail.com>
-> ---
->  dir.c | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
+> * gc/pull-recurse-submodules (2022-05-10) 1 commit
+>  - pull: only pass '--recurse-submodules' to subcommands
 >
-> diff --git a/dir.c b/dir.c
-> index a1886e61a3..329db72999 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1861,7 +1861,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  	 */
->  	enum path_treatment state;
->  	int matches_how = 0;
-> -	int nested_repo = 0, check_only, stop_early;
-> +	int check_only, stop_early;
->  	int old_ignored_nr, old_untracked_nr;
->  	/* The "len-1" is to strip the final '/' */
->  	enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
-> @@ -1901,6 +1901,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  		 *    configured by the user; see t2205 testcases 1a-1d for examples
->  		 *    where this matters
->  		 */
-> +		int nested_repo;
->  		struct strbuf sb = STRBUF_INIT;
->  		strbuf_addstr(&sb, dirname);
->  		nested_repo = is_nonbare_repository_dir(&sb);
-> @@ -1919,12 +1920,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  			free(real_dirname);
->  		}
->  		strbuf_release(&sb);
-> -	}
-> -	if (nested_repo) {
-> -		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-> -		    (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-> -			return path_none;
-> -		return excluded ? path_excluded : path_untracked;
-> +
-> +		if (nested_repo) {
-> +			if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-> +				(matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-> +				return path_none;
-> +			return excluded ? path_excluded : path_untracked;
-> +		}
->  	}
->  
->  	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES)) {
+>  "git pull" without "--recurse-submodules=<arg>" made
+>  submodule.recurse take precedence over fetch.recurseSubmodules by
+>  mistake, which has been corrected.
+>
+>  Expecting a reroll to retitle it.
+>  cf. <3234941c-5190-819f-fe3a-f528942c6b44@gmail.com>
+>  source: <pull.1262.v2.git.git.1652210747614.gitgitgadget@gmail.com>
+
+Thanks for picking it up! Unless others, e.g. Philippe, feel strongly
+about the title, I'm not planning to retitle it.
+
+I don't feel strongly about the title, so I also don't mind if you
+choose to retitle it to whatever you wish.
