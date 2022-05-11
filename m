@@ -2,116 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDEA8C433EF
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 16:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64500C433EF
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 16:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344437AbiEKQOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 May 2022 12:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
+        id S1344841AbiEKQhw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 May 2022 12:37:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233115AbiEKQOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 May 2022 12:14:40 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C74466FA0D
-        for <git@vger.kernel.org>; Wed, 11 May 2022 09:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1652285655;
-        bh=KqruA2Rjx/O8EtrWzTQL8kUCotjLmDjmxeENaooV1fs=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=UgQKvV9/6oe2jq5bkJTQBXRrN8792z6Zc3KyxoQRsvUY4EJtoiMpsUyvIefY3FkUW
-         274Wf3+5GegX0Jg2e/w0ziF/sCI96ZlWhVNF7Cwflgr3i8PF1TSQ3fHk/CXKcEXRDG
-         3Rr3RUdRUCawVOZqVBAY8L8ud0u5ItRUAQ/HAEcM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MqqTV-1oAOHu2fL7-00mXyg; Wed, 11
- May 2022 18:14:15 +0200
-Message-ID: <3cf6e4f8-9151-6d68-21ca-b94d6a7557e6@web.de>
-Date:   Wed, 11 May 2022 18:14:12 +0200
+        with ESMTP id S235018AbiEKQhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 May 2022 12:37:50 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA916D940
+        for <git@vger.kernel.org>; Wed, 11 May 2022 09:37:49 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E13E81902C9;
+        Wed, 11 May 2022 12:37:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PqQvekdxJRgqGBOPyOr3jNd6EFBQSJpnkuVkgp
+        MlCIM=; b=Tc08OzWlHykYaglg+Sa+fIYTYlx/2aFTKNTdzz480RfZ1NmFrz4Wvr
+        iX1BbN8Uon7+DUc63NILk7pJaUDl4tONY7ZCspFrd8SBYjVJkgIZymLoqudBRjA2
+        sO8b8zyDrJZOXyMHBgEJODL2+PV4svhbyDdjjIw/Y/0XMR2bGor9I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D98E01902C8;
+        Wed, 11 May 2022 12:37:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 83D811902C7;
+        Wed, 11 May 2022 12:37:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Goss Geppert <gg.oss.dev@gmail.com>
+Cc:     git@vger.kernel.org, christian w <usebees@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 1/2] dir: consider worktree config in path recursion
+References: <20220505203234.21586-1-ggossdev@gmail.com>
+        <20220510171527.25778-1-ggossdev@gmail.com>
+        <20220510171527.25778-2-ggossdev@gmail.com>
+Date:   Wed, 11 May 2022 09:37:43 -0700
+In-Reply-To: <20220510171527.25778-2-ggossdev@gmail.com> (Goss Geppert's
+        message of "Tue, 10 May 2022 17:15:26 +0000")
+Message-ID: <xmqq7d6sm3e0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.0
-Subject: Re: [PATCH v4 1/7] archive: optionally add "virtual" files
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com
-Cc:     'Johannes Schindelin via GitGitGadget' <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, 'Taylor Blau' <me@ttaylorr.com>,
-        'Derrick Stolee' <stolee@gmail.com>,
-        'Elijah Newren' <newren@gmail.com>,
-        'Johannes Schindelin' <johannes.schindelin@gmx.de>
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
- <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
- <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
- <xmqqtu9x6ovh.fsf@gitster.g> <03d701d864ba$46d15c10$d4741430$@nexbridge.com>
- <xmqq8rr955zf.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq8rr955zf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JeyadmIpK0Y4+R7bII+TYBvp20ZfvFSY06dibZDu+OBOlVdOB8z
- 6ragH073hhSzn+rmMvvncX+7rBbAwWXCX2m/fTG5Xr9+wQTdmOC293MD4NeghoJ3SSAT+nv
- hMeqXTuwW6UhP6s0Xh5zHdIw7rd/NoR7UyiTaDEdQzs/kuIP52qWpsopAtPLgAp1l/gbBiC
- Le7YubHzrj8+WhdMlp4og==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FDURS9nEhtE=:TyT+lp08zwq55Mg2DN00Td
- nN6Fw3JaKJEQUDG2wlW81kOVNyxIwNRuQRYt9CXdUYwlAn9EBIpH0C6tWaPErWWhyVul8MZsz
- 1cb892Uf+LSgxOBPbkNoeUQg8Oq0M8X55r9K9K8fAxBXiS+4tXz1dM6yY7z3Nj5LX0iwqfMLo
- r9r61j67J6szuIJGMniAc7Rpjr8DTVEX0Jobvcsiw99J3+0T6g2s30/J3EyYhEi1k74Up+/Iq
- Oh+nNv8LTYiNIbCSlXfsHp0MBh+ECwAZBsbAQmaB8xF30TrkWKcY0cN3QU1rjol/ryt77+jM7
- DM7ObZi6Qv/eEuCyUTcNPnbO9oqetsfkCtDsDzLImDmewSfezml6R7dJ9VpGbFfPMCHzRUic5
- JldpxqXxC4MQ/urEHKPTgRP4V7uf5zbbYWsQR3Ut3t3ltQP6O9UikaMFvBsp5zVCnK4kvpSDC
- /bLz2nw9VoUxXB3Wh/yfBYAomoYGckVZkA+UtFZdD2H9v4Y34fm5llYtwGfGELExraJFIkNhl
- ZHaFDbz3bYV2ldR44Mu3QBuLGQxhHOcyaoSVVlkj6U5ZgX+p9vnMVE/LfEE/Ms75WaRTDfgRQ
- Labkju5ap7ro4T70ZQ8bZuEF3jedrT8+JXKzpoxSiOnx0n4WD9Zx5njTG6z9c67GXJNPLEXWZ
- CWHpgreDTz556HfyBS1fKlMoAl2KoK5VjeS4j6AjGpSzDHlYlIPcoRlMJNtkVUH0sMp87CDjI
- OK0Od+N+tFAg9SKyElwK5HhopTqTI8L7/Hfe7Co8D7s1+Tc0l3FrKO3DS8wgCP7+CcJtb4huS
- zFL3UouRnhvXhURNqFJ2o4dlejvsH0epyrWcp0R5C8lHtJSM2qH/GUr67BegCTRl24Yo4H6RX
- w45KmEZ4I6z305Lt+a2RjfxnG4cAVeScLJJJNZw3GtcFCPIfoJ1ufKi0Hm4whNFIrScdGSlRB
- t/b+jDzq3iACtmIBqVjcS4MJlkSTN4wUdfEUwKOYqdfAJDJuJX5lniEg5EOGYpfh23s+wWakv
- cMfaXY/GqpU2HiPN2qfWi17G54kHQsuUXI5wSuSK1Dor2YdNnSVFS4V2oi8rESILP7ZM3iE5k
- WKXxj2uwferCnZCWC4YxgKuKnA77xd5qvKs
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF00F124-D148-11EC-BFCB-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.05.22 um 01:21 schrieb Junio C Hamano:
-> <rsbecker@nexbridge.com> writes:
->
->>> If we did "--add-virtual-file=3D<path>:0644:<contents>" instead from d=
-ay one, it
->>> certainly adds a few more lines of logic to this patch, and the callin=
-g "scalar
->>> diagnose" may have to pass a few more bytes, but I suspect that such a=
- change
->>> would help the project in the longer run.
+Goss Geppert <gg.oss.dev@gmail.com> writes:
 
-> I did say "scalar diagnose" may not care.  But a patch to "git
-> archive" will affect other people, and among them there would be
-> people who say "gee, now I can add a handful of files from the
-> command line with their contents, without actually having them in
-> throw-away untracked files, when running 'git archive'.  That's
-> handy!", try it out and get disappointed by their inability to
-> create executable files that way.
+> diff --git a/dir.c b/dir.c
+> index f2b0f24210..a1886e61a3 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1893,9 +1893,31 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
 
-Which might motivate them to contribute a patch to add that feature.
-Give them a chance! :)
+>  	if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
+>  		!(dir->flags & DIR_NO_GITLINKS)) {
+> +		/*
+> +		 * Determine if `dirname` is a nested repo by confirming that:
+> +		 * 1) we are in a nonbare repository, and
+> +		 * 2) `dirname` is not an immediate parent of `the_repository->gitdir`,
+> +		 *    which could occur if the `worktree` location was manually
+> +		 *    configured by the user; see t2205 testcases 1a-1d for examples
+> +		 *    where this matters
+> +		 */
+>  		struct strbuf sb = STRBUF_INIT;
+>  		strbuf_addstr(&sb, dirname);
+>  		nested_repo = is_nonbare_repository_dir(&sb);
+> +
+> +		if (nested_repo) {
+> +			char *real_dirname, *real_gitdir;
+> +			strbuf_reset(&sb);
+> +			strbuf_addstr(&sb, dirname);
+> +			strbuf_complete(&sb, '/');
+> +			strbuf_addstr(&sb, ".git");
+> +			real_dirname = real_pathdup(sb.buf, 0);
 
-> And obviously I care more about
-> "git archive" than "scalar diagnose".  I very welcome to enhance the
-> former to support the need for the latter.  I do not see a good
-> reason to stop at a half-feature added to the former, even that
-> added half is enough to satisfy the latter, when the other half is
-> not all that hard to add, and it is reasonably expected that users
-> other than "scalar diagnose" would naturally want the other half,
-> too.
+Is this _complete() necessary?
 
-FWIW, I'd already be satisfied by a convincing outline of a way towards
-a complete solution to accept the partial feature, just to be sure we
-don't paint ourselves into a corner.  But I'm bad at both strategy and
-saying no, so that's that.
+Near the top of this function there is
 
-Regarding file modes: We only effectively support the executable bit,
-so an additional option --add-virtual-executable-file=3D<path>:<contents>
-would suffice.  It would also prevent the false impression that
-arbitrary file modes can be used ("I said 0123 and got 0644, bug!").
-And it would not even be the longest Git option..
+	/* The "len-1" is to strip the final '/' */
+	enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
 
-Ren=C3=A9
+which indicates that we are safe to assume dirname ends with '/'.
+
+> +			real_gitdir = real_pathdup(the_repository->gitdir, 0);
+
+This function is repeatedly called during the traversal.
+
+How expensive is it to keep calling real_pathdup() on the constant
+the_repository->gitdir just in case it might be the same as our true
+GIT_DIR?
+
+> +
+> +			nested_repo = !!strcmp(real_dirname, real_gitdir);
+> +			free(real_gitdir);
+> +			free(real_dirname);
+> +		}
+>  		strbuf_release(&sb);
+>  	}
+>  	if (nested_repo) {
+> diff --git a/t/t2205-add-worktree-config.sh b/t/t2205-add-worktree-config.sh
+> new file mode 100755
+> index 0000000000..ca70cf3fe2
+> --- /dev/null
+> +++ b/t/t2205-add-worktree-config.sh
+> @@ -0,0 +1,89 @@
+> +#!/bin/sh
+> +
+> +test_description='directory traversal respects worktree config
+> +
+> +This test configures the repository`s worktree to be two levels above the
+> +`.git` directory and checks whether we are able to add to the index those files
+> +that are in either (1) the manually configured worktree directory or (2) the
+> +standard worktree location with respect to the `.git` directory (i.e. ensuring
+> +that the encountered `.git` directory is not treated as belonging to a foreign
+> +nested repository)'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success '1a: setup' '
+> +	test_create_repo test1 &&
+> +	git --git-dir="test1/.git" config core.worktree "$(pwd)" &&
+> +
+> +	mkdir -p outside-tracked outside-untracked &&
+> +	mkdir -p test1/inside-tracked test1/inside-untracked &&
+> +	>file-tracked &&
+> +	>file-untracked &&
+> +	>outside-tracked/file &&
+> +	>outside-untracked/file &&
+> +	>test1/file-tracked &&
+> +	>test1/file-untracked &&
+> +	>test1/inside-tracked/file &&
+> +	>test1/inside-untracked/file &&
+> +
+> +	cat >expect-tracked-unsorted <<-EOF &&
+> +	../file-tracked
+> +	../outside-tracked/file
+> +	file-tracked
+> +	inside-tracked/file
+> +	EOF
+> +
+> +	cat >expect-untracked-unsorted <<-EOF &&
+> +	../file-untracked
+> +	../outside-untracked/file
+> +	file-untracked
+> +	inside-untracked/file
+> +	EOF
+> +
+> +	cat expect-tracked-unsorted expect-untracked-unsorted >expect-all-unsorted &&
+> +
+> +	cat >.gitignore <<-EOF
+> +	.gitignore
+> +	actual-*
+> +	expect-*
+> +	EOF
+> +'
+> +
+> +test_expect_success '1b: pre-add all' '
+> +	local parent_dir="$(pwd)" &&
+> +	(
+> +		cd test1 &&
+> +		git ls-files -o --exclude-standard "$parent_dir" >../actual-all-unsorted
+> +	) &&
+> +	sort actual-all-unsorted >actual-all &&
+> +	sort expect-all-unsorted >expect-all &&
+> +	test_cmp expect-all actual-all
+> +'
+> +
+> +test_expect_success '1c: post-add tracked' '
+> +	local parent_dir="$(pwd)" &&
+> +	(
+> +		cd test1 &&
+> +		git add file-tracked &&
+> +		git add inside-tracked &&
+> +		git add ../outside-tracked &&
+> +		git add "$parent_dir/file-tracked" &&
+> +		git ls-files "$parent_dir" >../actual-tracked-unsorted
+> +	) &&
+> +	sort actual-tracked-unsorted >actual-tracked &&
+> +	sort expect-tracked-unsorted >expect-tracked &&
+> +	test_cmp expect-tracked actual-tracked
+> +'
+> +
+> +test_expect_success '1d: post-add untracked' '
+> +	local parent_dir="$(pwd)" &&
+> +	(
+> +		cd test1 &&
+> +		git ls-files -o --exclude-standard "$parent_dir" >../actual-untracked-unsorted
+> +	) &&
+> +	sort actual-untracked-unsorted >actual-untracked &&
+> +	sort expect-untracked-unsorted >expect-untracked &&
+> +	test_cmp expect-untracked actual-untracked
+> +'
+> +
+> +test_done
