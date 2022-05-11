@@ -2,146 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C43F0C433EF
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 22:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C6DDC433EF
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 22:30:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348686AbiEKWYP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 May 2022 18:24:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
+        id S1348761AbiEKWah (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 May 2022 18:30:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234788AbiEKWYO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 May 2022 18:24:14 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E85513325A
-        for <git@vger.kernel.org>; Wed, 11 May 2022 15:24:11 -0700 (PDT)
-Received: from host217-43-165-125.range217-43.btcentralplus.com ([217.43.165.125] helo=[192.168.1.168])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1noukb-0004MA-DU;
-        Wed, 11 May 2022 23:24:09 +0100
-Message-ID: <972cb306-04ce-133d-9d09-5da40afd675f@iee.email>
-Date:   Wed, 11 May 2022 23:24:07 +0100
+        with ESMTP id S1348751AbiEKWaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 May 2022 18:30:35 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDC1227CD4
+        for <git@vger.kernel.org>; Wed, 11 May 2022 15:30:33 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id eq14so3133903qvb.4
+        for <git@vger.kernel.org>; Wed, 11 May 2022 15:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FBoQTZE1l44DRqklcB70Zp+AMxsc3QHT7RGfXOP2tZk=;
+        b=eyGR/nvRnY1L7bAezvN9E821Hiwx0etfQnr+/zAVEQMsNNM2k6IuSHYyv2g7MN/QWI
+         Bz+wLzGOVLJHKxAY3q0wwCQfvSjf/CMTZohw9SUKftnqVtNqzlWmYg+isLHAS/1lfl4o
+         HQo+g8A3AxH9VBwJku+Y/SuThLD8y0ydxmEb2Zp8HEZpHptDzcNRoxaXCQv+xfmzrcmF
+         0MbiA1uiopxLkKHZanZRxFjo9jEisJRZFlw8zRXfn3ALzzl1bipXhR1HmIKBfreAnnMz
+         irSMxV0Lne2Pl79XgIKAIbBuFGyhRuc4+tKNcNsbSXtM1VfwotLV+qLXQ6B4vsIHguSG
+         S+sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FBoQTZE1l44DRqklcB70Zp+AMxsc3QHT7RGfXOP2tZk=;
+        b=xc9SoNofyqSRd4hdTe9xk1u1O1gGNGZeAOMNFOZbKfhCRl94MQzcMFtDBkMkpnc1Q+
+         /fiRFVnjRXJIIw0I33e0uPqIpAk8GgxWSI4KqvJ9jdC3Zc92HO1GIg7HNTxlsexZE83W
+         5Owa+Rq+Ozwme7WipLl6aYLlt1H3akSgSA0CikSvbDaOioqmiYJKxCf31+0oG2gDRcY2
+         pbMnpZ7r+pSpfJpssHvRjpbhWGm2FmlvGu+q8h4fr7ahAnPTcZaf5c4OM1n4B2XLWO4w
+         chYpS7COWzfNmgul5H3RsISX7HInbKhTi5OkXsfHgLItZAoo/znrvdyR4+c1hk8/oNdR
+         0vcA==
+X-Gm-Message-State: AOAM531kDDQcDkswAT90URyinsbkRojdZ5SEohguXozt3Fbn1cyPkBlb
+        zPVMS46aq6wLBbPxWOoSYuU=
+X-Google-Smtp-Source: ABdhPJwV0d2UqnZwf72G/mMEoB2yBprRYxgSZimFOm9BE+pm9FzmypqoQxOObrWnrWaNh+UEg9Tffw==
+X-Received: by 2002:a05:6214:8eb:b0:456:4fd4:6dd2 with SMTP id dr11-20020a05621408eb00b004564fd46dd2mr24078394qvb.75.1652308232453;
+        Wed, 11 May 2022 15:30:32 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id o8-20020a05622a008800b002f39b99f688sm2231782qtw.34.2022.05.11.15.30.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 May 2022 15:30:31 -0700 (PDT)
+Subject: Re: [PATCH v2] pull: only pass '--recurse-submodules' to subcommands
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Huang Zou <huang.zou@schrodinger.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>
+References: <pull.1262.git.git.1652138854255.gitgitgadget@gmail.com>
+ <pull.1262.v2.git.git.1652210747614.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <deafd5db-6303-46b3-a5d5-b4117ba16781@gmail.com>
+Date:   Wed, 11 May 2022 18:30:27 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] Prevent git from rehashing 4GBi files
-Content-Language: en-US
-To:     "Jason D. Hatton" <jason.hatton@gmail.com>,
-        Jason Hatton <jhatton@globalfinishing.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, l.s.r@web.de
-References: <CY4PR16MB1655F83010A128D4ED67C7EDAFC49@CY4PR16MB1655.namprd16.prod.outlook.com>
- <1a56b96c-2c58-ccaf-11ae-5e8264a323b1@iee.email>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <1a56b96c-2c58-ccaf-11ae-5e8264a323b1@iee.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <pull.1262.v2.git.git.1652210747614.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/05/2022 18:47, Jason D. Hatton wrote:
->> Is there a problem that 1<<31, when on a 32bit long is MAX_NEG, 
->> rather than being MAX_POS? And the size would need to be positive to 
->> be an acceptable file size?
->> (The code is a bit of a mish-mash on the Windows LLP64 side, where 
->> long is only 32 bits).
->>
->> Philip
->> Apologies for the terseness.
->
-> Philip
->
-> I made a little test script and tried out several different
-> things.
->
-> tldr; It didn't make any difference.
->
-> Files tested:
-> 1, 2 and 4 GiB with and without LFS. Tested with 0, 1, 1<<30,
-> and 1<<31 mung builds. I'm only listing the problems unless
-> stated otherwise. The mung didn't appear to introduce any
-> new issues with my limited tests.
->
-> git 2.36.0.windows.1 release:    fails on 4GiB w/o LFS - corrupts pack 
-> file
->    git status is very slow.
->    Sometimes stores zero file instead of corruption.
->
-> git 2.36.0.windows.1 custom compile w/o patches:
->    fails on 4GiB w/o LFS - stores zero file
->    git status is very slow.
->
-> git 2.36.0.windows.1 with 1U<<31 mung:
->    fails on 4GiB w/o LFS - stores zero file
->
-> git 2.36.0.windows.1 with 1U<<30 mung:
->    fails on 4GiB w/o LFS - stores zero file
->
-> git 2.36.0.windows.1 with 1 mung:
->    fails on 4GiB w/o LFS - stores zero file
->
-> git 2.36.0 Ubuntu
->    unpatched works, but has the slow status issue.
->
-> The test script I used is below:
+Hi Glen,
 
-Without the git-lfs (to grossly shorten the file size in the pack) I 
-wasn't expecting much, given the use of 'long' in places in the code 
-base for the file sizes, so 2GiB and 4GiB files would likely fail on the 
-Windows LP32 parts.
+Le 2022-05-10 à 15:25, Glen Choo via GitGitGadget a écrit :
+> From: Glen Choo <chooglen@google.com>
+> 
+> Fix a bug in "git pull" where `submodule.recurse` is preferred over
+> `fetch.recurseSubmodules` when performing a fetch
+> (Documentation/config/fetch.txt says that `fetch.recurseSubmodules`
+> should be preferred.). Do this by passing the value of the
+> "--recurse-submodules" CLI option to the underlying fetch, instead of
+> passing a value that combines the CLI option and config variables.
+> 
+> In other words, this bug occurred because builtin/pull.c is conflating
+> two similar-sounding, but different concepts:
+> 
+> - Whether "git pull" itself should care about submodules e.g. whether it
+>   should update the submodule worktrees after performing a merge.
+> - The value of "--recurse-submodules" to pass to the underlying "git
+>   fetch".
+> 
+> Thus, when `submodule.recurse` is set, the underlying "git fetch" gets
+> invoked with "--recurse-submodules[=value]", overriding the value of
+> `fetch.recurseSubmodules`.
+> 
+> An alternative (and more obvious) approach to fix the bug would be to
+> teach "git pull" to understand `fetch.recurseSubmodules`, but the
+> proposed solution works better because:
+> 
+> - We don't maintain two identical config-parsing implementions in "git
+>   pull" and "git fetch".
+> - It works better with other commands invoked by "git pull" e.g. "git
+>   merge" won't accidentally respect `fetch.recurseSubmodules`.
+> 
+> Reported-by: Huang Zou <huang.zou@schrodinger.com>
+> Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>     pull: only pass '--recurse-submodules' to subcommands
+>     
+>     Thanks for the debugging help :)
+>     
+>     Changes since v1:
+>     
+>      * add a test that actually tests the precedence of the config values
+>        * I've kept the previous test; it has always worked, but it still
+>          seems like a useful smoke test
+>      * reworded the commit message slightly
 
-I was under the impression that the core code for packs had been size_t 
-hardened, but there may be some paths either in git-lfs or the actual 
-file checkout that cause that fail.
+Thanks, this version looks good to me. I don't feel to strongly about the 
+title either, so as you wish :)
 
-There was a previous series by Matt Cooper on:
-  "Allow clean/smudge filters to handle huge files in the LLP64 data model"
-(https://lore.kernel.org/git/pull.1068.git.1635320952.gitgitgadget@gmail.com/t/#u)
-  Merge commit f9ba6acaa9348ea7b733bf78adc2f084247a912f
-'mc/clean-smudge-with-llp64'
+Philippe.
 
-That series had some in-code checks, and some test-suite tests, though 
-the latter classed as EXPENSIVE (i.e. not normally run), which may add 
-more insight.
-
->
->
-> #!/bin/sh
->
-> GB1=$((1 * 1024*1024*1024))
-> GB2=$((2 * 1024*1024*1024))
-> GB4=$((4 * 1024*1024*1024))
->
-> die()
-> {
->    echo "$1"
->    exit 1
-> }
->
-> test_file()
-> {
->    echo "=== TESTING $2 ==="
->    rm -rf .git .gitattributes .gitignore .gitmodules &&
->        git init &&
->        git lfs track '*.big' &&
->        truncate --size "$1" "$2" &&
->        git add "$2" &&
->        git commit -m "$2" &&
->        git fsck &&
->        mv "$2" bak &&
->        git restore "$2" &&
->        cmp "$2" bak || die "$2"
->    git status && timeout 5 git status || die "$2 git status slow"
->    rm -rf .git .gitattributes .gitignore .gitmodules "$2" bak
-> }
->
-> test_file "$GB1" gb1.big
-> test_file "$GB2" gb2.big
-> test_file "$GB4" gb4.big
-> test_file "$GB1" gb1
-> test_file "$GB2" gb2
-> test_file "$GB4" gb4
-> echo done 
---
-Philip
