@@ -2,101 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73E20C433F5
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 18:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B46C433F5
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 18:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346007AbiEKSAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 May 2022 14:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35222 "EHLO
+        id S1345980AbiEKSAg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 May 2022 14:00:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345982AbiEKSAJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 May 2022 14:00:09 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E2E6FA2E
-        for <git@vger.kernel.org>; Wed, 11 May 2022 11:00:07 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id l1so2664861qvh.1
-        for <git@vger.kernel.org>; Wed, 11 May 2022 11:00:07 -0700 (PDT)
+        with ESMTP id S1345992AbiEKSAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 May 2022 14:00:14 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC366FA3D
+        for <git@vger.kernel.org>; Wed, 11 May 2022 11:00:12 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id kl21so2637360qvb.9
+        for <git@vger.kernel.org>; Wed, 11 May 2022 11:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chrisdown.name; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=pnQ2y7Zji8HkQBPKd/hZ7p0V+aU5COAa3V87Xvt9coM=;
-        b=ExXKLw5lKJ68DCYPNZuIxC+xRZ0PurLzmPB8KUBBEQffX8VaRz/KQi50omBgCEDePG
-         HjP86R9Rfs8Blo9eMXhqpCOz20JkGrW18ycMUxQsFLxPSq1HVfxJ6WcHiDPEOrRIOvW/
-         fX5GZDyrnih9UmvnYT4a4c3MV2cOKIob7dGXM=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MCcojyDFGEH5xMYRHfLhxeU5siVLIr1xF5P/67zZtKE=;
+        b=Gfj/G9jmeIgF87uDQopxjN6+CNeAWBoU3cRd4xlwXdaam7v8CGRA6iVxBGruwLxtgG
+         hkDPJZgkDrn+OcEaAOwiNigtCOZ6ML2NBDwVZk5qCqd+PJ/sS+GdCWm9XnGebLLsDhPZ
+         IMjMQ02+P3QXyiOCl1K8Jxy/J7BwHTVjn1e40=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=pnQ2y7Zji8HkQBPKd/hZ7p0V+aU5COAa3V87Xvt9coM=;
-        b=W4NPgHIag5LtDLIuwzHqGGzqtsLxBqzDzVuZ8cf1/QAsSBnzPauBOumagqqMbMIiOj
-         bjExQ68B9Z3F2X7bNNsFl9+MhYSkZk1pPbXBFGa9P4VB02tElHVuNdQlZ/ResU9DFMvN
-         nHnQdOZhTeloZ2vXYMDMFfsLGpmfOxgDBlEfbJDO+q2UQ6RwB1/AcVCB8LuCt60dro5y
-         asPxIzizQNLLfB04vOX6ceiUeLi7ASANGw4F3b3Qvpo/hQX5CMIeZLlj0eKrTQttNfcf
-         fu1G+vVTcRMCUs45hZsL6UHC0dt6f0+bviBv7tFXScPJ2YCcmzb9SV8m/Pe9zuyngAWb
-         Dhjg==
-X-Gm-Message-State: AOAM532D5cGNtsZjpSxl4MfB8BPor6CXKJVHLsKE7Cw8ZGcV1icj/9h8
-        i/CNKTUpH1DgQR1zSSYqYH7DS5yErtLtVyvmIzM=
-X-Google-Smtp-Source: ABdhPJxBPCPOZC0iaoBp3TemYdVqZZ0yeGC0TIZirv9YovimdPCnQtQCq+2pN6hHRVmkB6w/T2xl6A==
-X-Received: by 2002:a05:6214:21e1:b0:440:fa7a:493e with SMTP id p1-20020a05621421e100b00440fa7a493emr23165565qvj.55.1652292006546;
-        Wed, 11 May 2022 11:00:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MCcojyDFGEH5xMYRHfLhxeU5siVLIr1xF5P/67zZtKE=;
+        b=Kt2TXGLvzoC8cK/elXE3pjfdPt0usQ8XKBtynfSr19BNrU4zjizyO4Xy0pOLh0QFbw
+         ml36craNFhmmdVpdunWJaVHLKvAFu7SUX+x0pOisRjMTQEe32NmSbPsu9uIC8iCQWoNG
+         t6ZL7EzhomEaEAXEKNxJBLwmNQBOCPURGmUVEM5GKI8qr81qwbbxc7YH78RoTm1jPvaR
+         4k8oB3vnvKlD+bMMNssWjescuAGaYHLaSzV2wobdClomESBq6KnxVVgjgjjzGNF9TB8f
+         +JTdNzgYODARaFhwD0qXSj3z2/rVDcxw4se01kr/cvlJiGmoSLivYbwY5e4lPNqCC6nW
+         MT0w==
+X-Gm-Message-State: AOAM532dazpyVhsyRtRcGM5z5Zkm7C3RbaY4kws54J40wp/vq4Vcvpam
+        YoYJ9RsQbPJpVeRIuab7R0rDpOZ2hTamBru4eVo=
+X-Google-Smtp-Source: ABdhPJxFWqXLGgyWPY/RWn0f00vOhlUyVMUvK8Ur6TycmApi8BHXAQO7+pX8W+bCVCs11Vng8HRXqg==
+X-Received: by 2002:a05:6214:13e5:b0:458:812:217e with SMTP id ch5-20020a05621413e500b004580812217emr23144164qvb.60.1652292011028;
+        Wed, 11 May 2022 11:00:11 -0700 (PDT)
 Received: from localhost ([2620:10d:c091:480::1:e9fd])
-        by smtp.gmail.com with ESMTPSA id 69-20020aed304b000000b002f39b99f66dsm1443237qte.7.2022.05.11.11.00.05
+        by smtp.gmail.com with ESMTPSA id x22-20020a05620a099600b0069fc13ce216sm1491853qkx.71.2022.05.11.11.00.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 11:00:06 -0700 (PDT)
-Date:   Wed, 11 May 2022 19:00:04 +0100
+        Wed, 11 May 2022 11:00:10 -0700 (PDT)
+Date:   Wed, 11 May 2022 19:00:09 +0100
 From:   Chris Down <chris@chrisdown.name>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Christian Couder <chriscool@tuxfamily.org>,
         Taylor Blau <me@ttaylorr.com>, kernel-team@fb.com
-Subject: [PATCH v3 0/2] bisect: status improvements when bisect is not fully
- fleshed out
-Message-ID: <cover.1652291688.git.chris@chrisdown.name>
+Subject: [PATCH v3 1/2] bisect: output state before we are ready to compute
+ bisection
+Message-ID: <2cd916580524d0d303b252687e29a064a3aaa387.1652291688.git.chris@chrisdown.name>
+References: <cover.1652291688.git.chris@chrisdown.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1652291688.git.chris@chrisdown.name>
 User-Agent: Mutt/2.2.4 (c3baa83e) (2022-04-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When bisecting, we currently don't output anything before bisection
-starts in earnest, which can result in some confusion. For example, in
-the case illustrated in the first commit in this patch series, it's
-trivial to accidentally misspell a tag or branch and accidentally end up
-in an unintended state with no clear indication about what happened.
+Commit 73c6de06aff8 ("bisect: don't use invalid oid as rev when
+starting") changes the behaviour of `git bisect` to consider invalid
+oids as pathspecs again, as in the old shell implementation.
 
-This patch series makes it so that we give information about bisect
-state even before the bisect is ready to begin. We also store these
-changes in state to the bisect log.
+While that behaviour may be desirable, it can also cause confusion. For
+example, while bisecting in a particular repo I encountered this:
 
-v2:
+    $ git bisect start d93ff48803f0 v6.3
+    $
 
-- Move to improve bisect output overall, instead of just warning for the
-  specific unintended pathspec case.
+...which led to me sitting for a few moments, wondering why there's no
+printout stating the first rev to check.
 
-v3:
+It turns out that the tag was actually "6.3", not "v6.3", and thus the
+bisect was still silently started with only a bad rev, because
+d93ff48803f0 was a valid oid and "v6.3" was silently considered to be a
+pathspec.
 
-- Fix test indentation
-- Rename bs to state
-- Use `unsigned int' for nr_{good,bad}
-- Pass the bisect state struct as an argument into bisect_print_status
-- Zero-initialise bisect_state directly, don't use memset()
-- Fix multiline comment style in bisect.h
-- Use strbuf in bisect_log_printf
-- Change `git bisect log' use an output file in tests instead of piping
+While this behaviour may be desirable, it can be confusing, especially
+with different repo conventions either using or not using "v" before
+release names, or when a branch name or tag is simply misspelled on the
+command line.
 
-Chris Down (2):
-  bisect: output state before we are ready to compute bisection
-  bisect: output bisect setup status in bisect log
+In order to avoid situations like this, make it more clear what we're
+waiting for:
 
- bisect.h                    |  9 +++++
- builtin/bisect--helper.c    | 69 ++++++++++++++++++++++++++++++-------
- t/t6030-bisect-porcelain.sh | 28 +++++++++++++++
- 3 files changed, 93 insertions(+), 13 deletions(-)
+    $ git bisect start d93ff48803f0 v6.3
+    status: waiting for good commit(s), bad commit known
 
+We already have good output once the bisect process has begun in
+earnest, so we don't need to do anything more there.
+
+Signed-off-by: Chris Down <chris@chrisdown.name>
+---
+ bisect.h                    |  9 +++++++
+ builtin/bisect--helper.c    | 53 ++++++++++++++++++++++++++++---------
+ t/t6030-bisect-porcelain.sh | 18 +++++++++++++
+ 3 files changed, 67 insertions(+), 13 deletions(-)
+
+diff --git a/bisect.h b/bisect.h
+index 1015aeb8ea..ee3fd65f3b 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -62,6 +62,15 @@ enum bisect_error {
+ 	BISECT_INTERNAL_SUCCESS_MERGE_BASE = -11
+ };
+ 
++/*
++ * Stores how many good/bad commits we have stored for a bisect. nr_bad can
++ * only be 0 or 1.
++ */
++struct bisect_state {
++	unsigned int nr_good;
++	unsigned int nr_bad;
++};
++
+ enum bisect_error bisect_next_all(struct repository *r, const char *prefix);
+ 
+ int estimate_bisect_steps(int all);
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 8b2b259ff0..fa8024a864 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -329,12 +329,12 @@ static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
+ 	return 0;
+ }
+ 
+-static int mark_good(const char *refname, const struct object_id *oid,
+-		     int flag, void *cb_data)
++static int inc_nr(const char *refname, const struct object_id *oid,
++		  int flag, void *cb_data)
+ {
+-	int *m_good = (int *)cb_data;
+-	*m_good = 0;
+-	return 1;
++	unsigned int *nr = (unsigned int *)cb_data;
++	(*nr)++;
++	return 0;
+ }
+ 
+ static const char need_bad_and_good_revision_warning[] =
+@@ -384,23 +384,48 @@ static int decide_next(const struct bisect_terms *terms,
+ 			     vocab_good, vocab_bad, vocab_good, vocab_bad);
+ }
+ 
+-static int bisect_next_check(const struct bisect_terms *terms,
+-			     const char *current_term)
++static void bisect_status(struct bisect_state *state,
++			  const struct bisect_terms *terms)
+ {
+-	int missing_good = 1, missing_bad = 1;
+ 	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
+ 	char *good_glob = xstrfmt("%s-*", terms->term_good);
+ 
+ 	if (ref_exists(bad_ref))
+-		missing_bad = 0;
++		state->nr_bad = 1;
+ 
+-	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
+-			     (void *) &missing_good);
++	for_each_glob_ref_in(inc_nr, good_glob, "refs/bisect/",
++			     (void *) &state->nr_good);
+ 
+ 	free(good_glob);
+ 	free(bad_ref);
++}
++
++static void bisect_print_status(const struct bisect_terms *terms)
++{
++	struct bisect_state state = { 0 };
++
++	bisect_status(&state, terms);
++
++	/* If we had both, we'd already be started, and shouldn't get here. */
++	if (state.nr_good && state.nr_bad)
++		return;
+ 
+-	return decide_next(terms, current_term, missing_good, missing_bad);
++	if (!state.nr_good && !state.nr_bad)
++		printf(_("status: waiting for both good and bad commits\n"));
++	else if (state.nr_good)
++		printf(Q_("status: waiting for bad commit, %d good commit known\n",
++			  "status: waiting for bad commit, %d good commits known\n",
++			  state.nr_good), state.nr_good);
++	else
++		printf(_("status: waiting for good commit(s), bad commit known\n"));
++}
++
++static int bisect_next_check(const struct bisect_terms *terms,
++			     const char *current_term)
++{
++	struct bisect_state state = { 0 };
++	bisect_status(&state, terms);
++	return decide_next(terms, current_term, !state.nr_good, !state.nr_bad);
+ }
+ 
+ static int get_terms(struct bisect_terms *terms)
+@@ -606,8 +631,10 @@ static enum bisect_error bisect_next(struct bisect_terms *terms, const char *pre
+ 
+ static enum bisect_error bisect_auto_next(struct bisect_terms *terms, const char *prefix)
+ {
+-	if (bisect_next_check(terms, NULL))
++	if (bisect_next_check(terms, NULL)) {
++		bisect_print_status(terms);
+ 		return BISECT_OK;
++	}
+ 
+ 	return bisect_next(terms, prefix);
+ }
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 5382e5d216..686f6d5c7f 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -1025,4 +1025,22 @@ test_expect_success 'bisect visualize with a filename with dash and space' '
+ 	git bisect visualize -p -- "-hello 2"
+ '
+ 
++test_expect_success 'bisect state output with multiple good commits' '
++	git bisect reset &&
++	git bisect start >output &&
++	grep "waiting for both good and bad commits" output &&
++	git bisect good "$HASH1" >output &&
++	grep "waiting for bad commit, 1 good commit known" output &&
++	git bisect good "$HASH2" >output &&
++	grep "waiting for bad commit, 2 good commits known" output
++'
++
++test_expect_success 'bisect state output with bad commit' '
++	git bisect reset &&
++	git bisect start >output &&
++	grep "waiting for both good and bad commits" output &&
++	git bisect bad "$HASH4" >output &&
++	grep -F "waiting for good commit(s), bad commit known" output
++'
++
+ test_done
 -- 
 2.36.0
 
