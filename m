@@ -2,75 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA891C433F5
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 08:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC2FC433F5
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 10:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243556AbiEKIWE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 May 2022 04:22:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
+        id S231354AbiEKKCG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 May 2022 06:02:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243548AbiEKIV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 May 2022 04:21:56 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CF6140FE
-        for <git@vger.kernel.org>; Wed, 11 May 2022 01:21:52 -0700 (PDT)
-Received: by gandalf.ozlabs.org (Postfix, from userid 1003)
-        id 4Kynv04KQnz4ySb; Wed, 11 May 2022 18:21:48 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.org;
-        s=201707; t=1652257308;
-        bh=fHw2E+8XMnTbmj4Qoqm9nINHo3i+Cos8u5n17gysTeM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=M2lywZPyPJnLKOsRWeCD/WDGlddujPANogdxLdKGiOUAQyqToth6JzrjCnjxmlBuj
-         nM9O4HadbgQb1o+yWrGkA8q8crTlNpIj5LMEme14FSOD+Ua1AkBhZ07P6kOLDzgDU6
-         QJU5nmpkmX8f57Yqf5cihERjaxNx9uhHeViSrTWOtZNLLX2bwyI3YVcCiKo4Ru4nBR
-         pklKqiy88nVgOCavNpxIQpH0x8FYUqwd0d8K1OmsZtNzBVGA77MOaOYPyqQ/eiW5Ri
-         w6qgT9WEuEouX2ECZCPEuDXBysThyoncr2fvcCuX+TS0dBx2lR3jkUjnr4rFORYn8U
-         cfBZ/Es5ad4jg==
-Date:   Wed, 11 May 2022 18:21:43 +1000
-From:   Paul Mackerras <paulus@ozlabs.org>
-To:     Halil SEN <halilsen@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>,
-        Christian =?iso-8859-1?Q?Gr=FCn?= <christian.gruen@gmail.com>,
-        git@vger.kernel.org,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: Resizing panels in the gitk window
-Message-ID: <YntyF+dHp2WEpI8v@cleo>
-References: <CAP94bnOyrx6hCmWSjmejVfopUydk10ga42wJzm1M4nk_OXn9Mg@mail.gmail.com>
- <CAP94bnMHggYR=FOh8462tncFAxOUJ-db=yj7YPoTJRS-VwjEgw@mail.gmail.com>
- <AM0PR04MB6019000A6C54CF97447E7B6EA5C59@AM0PR04MB6019.eurprd04.prod.outlook.com>
- <xmqqzgjuocjk.fsf@gitster.g>
- <CAOeUTuufDgsyp7FgJj4T+h=JOMaWYVBkMx8S6fNRQ3cdVo6tOw@mail.gmail.com>
- <xmqqtu9yd42d.fsf@gitster.g>
- <CAOeUTusOW1=cDKNhrBCzdzfbVLmY_qb7yg114ukRfy904S34uA@mail.gmail.com>
+        with ESMTP id S241447AbiEKKBa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 May 2022 06:01:30 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D387F369E6
+        for <git@vger.kernel.org>; Wed, 11 May 2022 03:01:27 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B54E10ADA8;
+        Wed, 11 May 2022 06:01:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=qoQ8PEEZxDqw+nsfkZMz1heKGHj6sAhrq38GQve0zm0=; b=fUrN
+        ODngNbM4qByfI7OT59XxW89EJl3Mld8ectGtl8PFocU3orPzBEPJWezIiIpM/sMQ
+        bqx2D6vaUQxEmVmi/t56J21iqU9/z46EX7Oech9ZaU8YGtp9mUZQfnNPvhKNrmdv
+        PZfzHMe+YbTsWH1d4StCnkDuOgp9dLpi+wwtD5k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9329110ADA6;
+        Wed, 11 May 2022 06:01:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 00AD410ADA4;
+        Wed, 11 May 2022 06:01:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 2/5] MyFirstContribution: add standalone section on
+ cover letter
+References: <pull.1226.git.1651086288.gitgitgadget@gmail.com>
+        <pull.1226.v2.git.1652233654.gitgitgadget@gmail.com>
+        <9552d80a80d9574c8f256696fad06f48b39b51c9.1652233654.git.gitgitgadget@gmail.com>
+Date:   Wed, 11 May 2022 03:01:24 -0700
+Message-ID: <xmqqa6boo0az.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOeUTusOW1=cDKNhrBCzdzfbVLmY_qb7yg114ukRfy904S34uA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 51E545E4-D111-11EC-AF9D-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 09, 2022 at 10:19:21PM +0200, Halil SEN wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > It seems to be related to the topic you are working on?
-> 
-> It indeed is related. Sorry for troubling you with the repo, I don't
-> remember exactly how I failed before, thanks for sharing it.
-> 
-> > Again, I wonder if Paul's been too busy for (or no longer interested
-> > in) maintaining it and perhaps he can use a replacement maintainer?
-> 
-> I guess I should rebase my patch and resubmit it nevertheless.
-> I'll do it within the next few days. Now that I thought about it,
-> I think I had trouble creating and e-mailing the patch to the mail
-> list and the gitgitgadget was available only for the main repo.
-> I shall ask for help if I fail to do so again.
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-No need to rebase, I have manually applied your patches.
+> +The body of the cover letter is used to give additional context to reviewers.
+> +Be sure to explain anything your patches don't make clear on their own, but
+> +remember that since the cover letter is not recorded in the commit history,
+> +anything that might be useful to future readers of the repository's history
+> +should be in your commit messages, not in your cover letter.
 
-Junio, could you do a pull from my repository to get them?
+I agree with only a half of the last sentence.
 
-Thanks,
-Paul.
+Things that are useful for "git log" readers should be in the commit
+message (but that goes without saying---by definition "git log"
+readers are reading commit messages).  If that material helps to
+understand the overall topic structure by the reviewers, it is not
+wrong to have that _also_ in your cover letter.  IOW, I sense that
+"not in your cover letter" is a bit too strong.
+
+Other than that, I found that 1/5 and 2/5 are very nicely written.
+
+Thanks.
+
