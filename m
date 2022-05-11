@@ -2,140 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 807E0C433EF
-	for <git@archiver.kernel.org>; Wed, 11 May 2022 00:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DADCC433F5
+	for <git@archiver.kernel.org>; Wed, 11 May 2022 00:56:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbiEKA0y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 May 2022 20:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45306 "EHLO
+        id S236620AbiEKA4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 May 2022 20:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239214AbiEKA0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 May 2022 20:26:51 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857445D5DF
-        for <git@vger.kernel.org>; Tue, 10 May 2022 17:26:49 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FDC418E79C;
-        Tue, 10 May 2022 20:26:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q9sFKKCS4G35jZ1bJp1UBfyAr4C/P3lBx9MrcB
-        5p614=; b=dQZKFiqEAD0NQ5/TXlGWFbhTGl9L6exc/wT5/5aCK5lTrIVNT1tBE2
-        35YZ2LbOtVP8FhOxjWVYbjeDWa9iZfLhn5aDQHv7METjscZoVqDkbaaROmSATxIt
-        c8GoVdgvBWnBzyAs5pGxdvr5V+GFtRqBmoGn3EhnA9nQu7OkKUWiE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 377E318E79B;
-        Tue, 10 May 2022 20:26:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D91A518E79A;
-        Tue, 10 May 2022 20:26:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, newren@gmail.com,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v3 5/6] stash: apply stash using 'merge_ort_nonrecursive()'
-References: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
-        <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com>
-        <e733c2fd9f497a8d80555126ec2e166e182ab8db.1652225552.git.gitgitgadget@gmail.com>
-Date:   Tue, 10 May 2022 17:26:43 -0700
-In-Reply-To: <e733c2fd9f497a8d80555126ec2e166e182ab8db.1652225552.git.gitgitgadget@gmail.com>
-        (Victoria Dye via GitGitGadget's message of "Tue, 10 May 2022 23:32:31
-        +0000")
-Message-ID: <xmqqsfpg52yk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233586AbiEKA4u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 May 2022 20:56:50 -0400
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C9337BD6
+        for <git@vger.kernel.org>; Tue, 10 May 2022 17:56:49 -0700 (PDT)
+Received: by mail-vs1-xe2d.google.com with SMTP id e10so493566vsr.1
+        for <git@vger.kernel.org>; Tue, 10 May 2022 17:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BVP017lF9TEBsw6OjwehK4+ecM6Cf54zyFCtVZGJ+Sk=;
+        b=lc3gMVDJ2NUv9YU28Z8YsBzkJWHFceZObll4reMJcyEkFOjF6Z2KmvTy1Tr0M1jqyq
+         UPQ8Sqt1Z/a8U/ovdkn+sQ/gufzy28xcWs5P/a8w41OHUZBNLgMVwPySGh3BWUZxQBQ7
+         v/FFgFxRbIqUrPTiTRmc2V1AuEUPh64ubqtYcBsW5SyKHm5KPMgMu+rSj4F2Xf24QAMe
+         w/bseJpT28bBJ9VgSrdfy89iAqQitaFe0HgAwcVb34o6vehNnF9lTTljxcIXzZSvPrZv
+         j1N6ccRI8T11bU3AE6LXmGqJ9vBssLsGAvteJR9kCvDObBfLXNpIhM2XrkX1AFeRnyi4
+         SCfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BVP017lF9TEBsw6OjwehK4+ecM6Cf54zyFCtVZGJ+Sk=;
+        b=ESe5Wwy5Z1cXXhLD80Ui+U6+cmfUdf7XpDLrugXoLolWwrmoKelhkEppjVtZGrZ+X2
+         ug3JHLB3B9270B16qblg0EIAX2DpxXg8I5c/qvfODgRSx9iHK8n1zVRbfPoDI5iQJFxo
+         sfP6pVuxnQmrE4uZ+rdJYzw/XkVHrQHqn910SFHimQKWPi0DyZ+TWtRteFAKhDngvs/Z
+         b2A64ND5a8yThPuC9Acb8ClmunJ7H7kvHLQw98R07S9RmHXt2dN4dSzNdPWKmU6YxTdC
+         e4ub2vk8h87lB3fNvRog8jkGwF2FdcnoBVBtN5p4TpoUzTphm/ahZzAiFIGD74tlDTSi
+         ckgQ==
+X-Gm-Message-State: AOAM531tQcyNXiKHULFATtI01XCLOFvACwke0+0/HE4Ke35qdJJ/QzjY
+        stx8UhG2djBfiyAj1dMDe/JT7pFmitg+BucLqNRD0j12
+X-Google-Smtp-Source: ABdhPJzoaadU4+2lDQ+L8fMYEb0q/oNI24t3nNOzW9Ib9MnehW3zQagjvaZI6XGI7+5HyPI85h6GU75IaWs8OL4J1kw=
+X-Received: by 2002:a67:d303:0:b0:32d:3d07:17c4 with SMTP id
+ a3-20020a67d303000000b0032d3d0717c4mr12315732vsj.52.1652230608826; Tue, 10
+ May 2022 17:56:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 098BA784-D0C1-11EC-8DF4-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <20220507163508.78459-1-carenas@gmail.com> <20220510174616.18629-1-carenas@gmail.com>
+ <20220510174616.18629-2-carenas@gmail.com> <xmqqczgl6nua.fsf@gitster.g>
+ <CAPUEspgGZeF8LA5PZNF87=+zZLKvWLqWtpD5YUBUON4gq_TaDg@mail.gmail.com> <xmqqwnet3qcv.fsf@gitster.g>
+In-Reply-To: <xmqqwnet3qcv.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 10 May 2022 17:56:37 -0700
+Message-ID: <CAPUEspjppJh3+obLoNpP8ckHz=-0G=MEUUBHnrab6=Znv+RiUg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] t: regression git needs safe.directory when using sudo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, May 10, 2022 at 4:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Carlo Arenas <carenas@gmail.com> writes:
+> >>
+> >> Mental note.  We do not need root to be owned by 'root' with the
+> >> tests we see here.  Perhaps we would add some that requires it in
+> >> later patches.  We'll see.
+> >
+> > I am not good with subtle messages in a foreign language, but is this
+> > a way to imply that I shouldn't need to chown and instead use the
+> > GIT_TEST_PRETEND feature more?
+>
+> No.  I just said I made a mental note of the fact that the ownership
+> of root/ directory (not root/r which is the other directory this
+> test script creates in this step) does not matter at least in patch
+> 1/3, but I cannot say, by that observation alone, that chown we saw
+> earlier should be removed, because patches 2/3 and 3/3 might start
+> requiring root/ to be owned by 'root'.  Hence "I made a mental note
+> here.  We do not have anything that requires the above chown in this
+> patch, but we might see something that makes it a good idea to keep
+> the chown in later patches".
 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 1bfba532044..3fe549f7d3c 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -492,13 +493,13 @@ static void unstage_changes_unless_new(struct object_id *orig_tree)
->  static int do_apply_stash(const char *prefix, struct stash_info *info,
->  			  int index, int quiet)
->  {
-> -	int ret;
-> +	int clean, ret;
->  	int has_index = index;
->  	struct merge_options o;
->  	struct object_id c_tree;
->  	struct object_id index_tree;
-> -	struct commit *result;
-> -	const struct object_id *bases[1];
-> +	struct tree *head, *merge, *merge_base;
-> +	struct lock_file lock = LOCK_INIT;
->  
->  	read_cache_preload(NULL);
->  	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-> @@ -541,6 +542,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->  
->  	o.branch1 = "Updated upstream";
->  	o.branch2 = "Stashed changes";
-> +	o.ancestor = "Stash base";
->  
->  	if (oideq(&info->b_tree, &c_tree))
->  		o.branch1 = "Version stash was based on";
-> @@ -551,10 +553,26 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->  	if (o.verbosity >= 3)
->  		printf_ln(_("Merging %s with %s"), o.branch1, o.branch2);
->  
-> -	bases[0] = &info->b_tree;
-> +	head = lookup_tree(o.repo, &c_tree);
-> +	merge = lookup_tree(o.repo, &info->w_tree);
-> +	merge_base = lookup_tree(o.repo, &info->b_tree);
-> +
-> +	repo_hold_locked_index(o.repo, &lock, LOCK_DIE_ON_ERROR);
-> +	clean = merge_ort_nonrecursive(&o, head, merge, merge_base);
-> +
-> +	/*
-> +	 * If 'clean' >= 0, reverse the value for 'ret' so 'ret' is 0 when the
-> +	 * merge was clean, and nonzero if the merge was unclean or encountered
-> +	 * an error.
-> +	 */
-> +	ret = clean >= 0 ? !clean : clean;
-> +
-> +	if (ret < 0)
-> +		rollback_lock_file(&lock);
-> +	else if (write_locked_index(o.repo->index, &lock,
-> +				      COMMIT_LOCK | SKIP_IF_UNCHANGED))
-> +		ret = error(_("could not write index"));
->  
-> -	ret = merge_recursive_generic(&o, &c_tree, &info->w_tree, 1, bases,
-> -				      &result);
+got it; we actually DO (or at least I intended to, but didn't because
+of a bug and complicating the tests unnecessarily).but then as usual I
+didn't document it well, apologize for that.
 
-Nice.  We need a bit more boilerplate code, but all we need is a three-way
-merge without any recursive magic.
+`root` is called that way because it was meant to be a ceiling of
+sorts and used as a safetynet (like GIT_CEILING in the test suite) to
+block the tests in this file for going up one more level and using the
+default git repository from the suite by mistake.  That is also why it
+is owned by root.
 
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 85c6a56f1b7..aaf4d880dbc 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -1385,7 +1385,7 @@ test_expect_success 'sparse-index is not expanded: stash' '
->  	ensure_not_expanded stash &&
->  	ensure_not_expanded stash list &&
->  	ensure_not_expanded stash show stash@{0} &&
-> -	! ensure_not_expanded stash apply stash@{0} &&
-> +	ensure_not_expanded stash apply stash@{0} &&
->  	ensure_not_expanded stash drop stash@{0} &&
->  
->  	echo >>sparse-index/deep/new &&
-> @@ -1399,7 +1399,7 @@ test_expect_success 'sparse-index is not expanded: stash' '
->  	oid=$(git -C sparse-index stash create) &&
->  	ensure_not_expanded stash store -m "test" $oid &&
->  	ensure_not_expanded reset --hard &&
-> -	! ensure_not_expanded stash pop
-> +	ensure_not_expanded stash pop
->  '
->  
->  test_expect_success 'sparse index is not expanded: diff' '
+of course later I find out that for it to really stop the walking it
+needed a .git on its own and to create one I needed to do it as root
+which I didn't even attempt to do until patch 3 (at that time too, I
+was thinking maybe I could get patch 1 and 2 ready first, so my name
+wouldn't be on every git update and one of the reasons why nobody can
+get anything merged into next)
+
+one option would be to consolidate its use with the root repository
+that gets created in patch 3, which I could have done originally
+instead of just using the ones you provided almost AS-IS, or as you
+pointed out we could remove the safety net since it is not needed and
+it is buggy anyway.
+
+will remove the chown in v5 otherwise but I think the plan above
+shouldn't be that intrusive and might be better.
+
+Carlo
