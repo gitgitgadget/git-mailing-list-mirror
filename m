@@ -2,168 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEC51C433EF
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 05:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C91EFC433F5
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 08:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349210AbiELFMq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 01:12:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33364 "EHLO
+        id S1351472AbiELIaS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 04:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349230AbiELFMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 01:12:43 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F9B41622
-        for <git@vger.kernel.org>; Wed, 11 May 2022 22:12:42 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id kq17so7913357ejb.4
-        for <git@vger.kernel.org>; Wed, 11 May 2022 22:12:42 -0700 (PDT)
+        with ESMTP id S1351324AbiELIaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 04:30:14 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D4C21937F
+        for <git@vger.kernel.org>; Thu, 12 May 2022 01:30:12 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id cx11-20020a17090afd8b00b001d9fe5965b3so7170362pjb.3
+        for <git@vger.kernel.org>; Thu, 12 May 2022 01:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=C5Y6VofiICQSc3vrGJLdcc4mVgJfY9B98GDCrdZGzxo=;
-        b=JTwm6BsR6KjQ3EAvap7SRa35TLyjwgBzVJMAy2X0r/M5uV2oLT4QoPLNDrBA9Pn9w/
-         A51Yqy7Fn2DUKVODp7uHptDEup7DHi/5cKvDKtLJazb5ezq9UyD/7rKaLw0UYsOYVxs3
-         n1f+VzyFj/pmTa9bTRI14PNMYCbDJRv9cNJk4=
+        bh=kPNTz8mZKECgGUkg94G5fPudm1GocJsNiqfe8zlWEg8=;
+        b=OTsUGFcnqfBUh0UaQdH50cOhaf/1nRx4ZvJNfIRjYXKMYbzhajkLvUVOHfII3MKvdT
+         C3awiQ7L40UGAMS6gFPXt+FVwECclhK5c9iiZLraEz9IRslcUATXzwhSTTWPOl7ynMbE
+         VO6zsQhUmZVi5NbuX045dJWaRIhptiwEBdpqhXGyY9FL4NNm/dAkOfBATF+aLPr9dL7U
+         nslXIQA0c7nuFLlJI6dZtQDJYurpJ2tG1liF15jSYT7PiVwJcQGp+AU1XleRi81qv2bs
+         T6ObThtljh7SCaF2uMy6pG9wtEp4QG23f01NwMPudc2snDiwl3iCe6BKWByNwCjMZUbs
+         8VNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=C5Y6VofiICQSc3vrGJLdcc4mVgJfY9B98GDCrdZGzxo=;
-        b=k8aLk5w8nfWEjpRM501G7l7Dqm38jWqMTWiZtL+S3Yw71mvtIJjtIMCmoSuIr0Ii3P
-         rFTBjrP29GHYfWAJad7XJHD3BkMlNTMKgdo7/VDobETVoZV6PJf9vSVZjWwiawSxN3B+
-         0Krc9kXBOaVzyfwA9+c6tuPBq3sDdeuyrmD8aWXYBaKhnOGDpvFRt2uLzDWQBwwYWbOK
-         TOwxBbbiebIhFwp/sJEHf0hHi2woGaZ4U6gPlCLCSrlVz+tAD/SqOm3PyxRlJc14TI5V
-         aoM3UTMnTjs0tS3yDfR0k2P4DvTl8PI+KuyfvZWouHJ8CHpCPQXEoLUnedvia0iBDMnY
-         SWNQ==
-X-Gm-Message-State: AOAM531rJRF+D7UAUpnRq52bnTldE9QSLEt7C2dZ0hoK4oK6v/b0/Qg3
-        smaH+H7j22dDMxfWTwLykgIiKIpBphE8sqGT77EsVg==
-X-Google-Smtp-Source: ABdhPJyDlKslrjWcuIIXl/9ignnUdYhiMkk6E9m0mpsJky+Au486QflNssY31mq8QL8i+Mms7Szn0HVOi/Erm3VDsHw=
-X-Received: by 2002:a17:907:1c87:b0:6f0:29ea:cc01 with SMTP id
- nb7-20020a1709071c8700b006f029eacc01mr28058752ejc.671.1652332360968; Wed, 11
- May 2022 22:12:40 -0700 (PDT)
+        bh=kPNTz8mZKECgGUkg94G5fPudm1GocJsNiqfe8zlWEg8=;
+        b=a9V4Y8VM2uwbcp5ITmS4KXhjkC1pON2IR9BApSzAOMauOiMa6sNSoHALJyHFJLk76w
+         Iw8s4c08PrDu03keMbZMTZh/a/KAHOMycOpDphl5ufK8FzGSTm8hhJoSj5qiP5qZhNGN
+         hMX/TPs/afJhz6oPMpgdUNIYXcUxYxt0Umx3p5DNesnqHPB/DS1kNa/4qMBslRuaqGxv
+         tmossWCx0PXZwqeTD/Zkj99fDsSi+JjyklOIOwk8LIfxZVtsB+6Gi38yvjlIHyCuo04J
+         +D1SnuP+9Ne5VvdB+reCsHnvHKC4tNEl/7KwO94KiQPDOXxt5XaSkWstXIGHWuiGRqtk
+         KcUw==
+X-Gm-Message-State: AOAM5305V7yHpx2YTqZ88tacEoBh+iXGy3Zw4q4Sl2YkDijTdgLwTPLN
+        DxJruhfZxlSx/Ue+gRYAFJ1hOMcRYcbyWQ74pqY=
+X-Google-Smtp-Source: ABdhPJx7Yjr0vEknlqgm7F6chUVVUDQ+vwk91WuBL+Z9OTn5Z3Q1W/cmbPJsNMjYNOr7ea2MwC9Tt3BRtyJBIts4UPg=
+X-Received: by 2002:a17:902:ce8b:b0:15e:c249:1bf0 with SMTP id
+ f11-20020a170902ce8b00b0015ec2491bf0mr28912352plg.125.1652344211433; Thu, 12
+ May 2022 01:30:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1182.v2.git.1647995031417.gitgitgadget@gmail.com>
- <pull.1182.v3.git.1651344174050.gitgitgadget@gmail.com> <xmqqh765mcn0.fsf@gitster.g>
-In-Reply-To: <xmqqh765mcn0.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 12 May 2022 07:12:29 +0200
-Message-ID: <CAPMMpogxDfmoc_9CnL6x2Hf79BgWDrq=3KfMrbc+xwyo1k=yJQ@mail.gmail.com>
-Subject: Re: [PATCH v3] t3200: fix antipatterns in existing branch tests
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20220504104601.136403-1-chriscool@tuxfamily.org>
+ <20220509153834.485871-1-chriscool@tuxfamily.org> <CAPUEsphA=q10wCsrf3AxR9fXz9HQHt374tDFoWBu++EPNDA-LA@mail.gmail.com>
+In-Reply-To: <CAPUEsphA=q10wCsrf3AxR9fXz9HQHt374tDFoWBu++EPNDA-LA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 May 2022 10:29:59 +0200
+Message-ID: <CAP8UFD2F=5RsB_WVOHKmzJsD9UJgZ2YM_yreTur2_huAAJ=+Vw@mail.gmail.com>
+Subject: Re: [PATCH v3] http: add custom hostname to IP address resolutions
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 4, 2022 at 7:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, May 10, 2022 at 8:20 PM Carlo Arenas <carenas@gmail.com> wrote:
 >
-> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->
-> > @@ -510,63 +512,57 @@ test_expect_success 'git branch --copy dumps usage' '
-> >  test_expect_success 'git branch -c d e should work' '
-> >       git branch --create-reflog d &&
-> >       git reflog exists refs/heads/d &&
-> > -     git config branch.d.dummy Hello &&
-> > +     test_config branch.d.dummy Hello &&
-> >       git branch -c d e &&
-> >       git reflog exists refs/heads/d &&
-> >       git reflog exists refs/heads/e &&
-> > -     echo Hello >expect &&
-> > -     git config branch.e.dummy >actual &&
-> > -     test_cmp expect actual &&
-> > -     echo Hello >expect &&
-> > -     git config branch.d.dummy >actual &&
-> > -     test_cmp expect actual
-> > +     test_cmp_config Hello branch.e.dummy &&
-> > +     test_cmp_config Hello branch.d.dummy
+> On Mon, May 9, 2022 at 8:38 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> > index f92c79c132..4a8dbb7eee 100755
+> > --- a/t/t5551-http-fetch-smart.sh
+> > +++ b/t/t5551-http-fetch-smart.sh
+> > @@ -567,4 +567,11 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
+> >         grep symref=HEAD:refs/heads/ trace
 > >  '
+> >
+> > +test_expect_success 'passing hostname resolution information works' '
+> > +       BOGUS_HOST=gitbogusexamplehost.com &&
+> > +       BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+> > +       test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
+> > +       git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
+> > +'
 >
-> This test used to leave both branch.d.dummy and branch.e.dummy behind
-> for later tests.  Now with this patch, we clean branch.d.dummy
-> because we use test_config, but branch.e.dummy that was copied by
-> successful "git branch -c" will still be left.
->
->  - It is unforunate that it is impossible to verify that the change
->    in behaviour for branch.d.dummy is correct.  Without checking all
->    the remainder of the test (and no, grepping for branch.d.dummy is
->    not "checking all the remainder"---a later "branch -c d x" would
->    have created brnach.x.dummy in the original, but with this patch,
->    it would not), which is time consuming, that is.
->
->    I trust you made sure that branch.d.dummy is never used after
->    this test is done---it would have been good to explain it either
->    in the proposed log message or after three-dash that you did
->    check and how to save reviewer bandwidth.
+> Is setting it up as a command line config option the way you expect to
+> use this, and if so why not make it a full blown command line option
+> with the previous caveats that were discussed before?
 
-I will add a comment, and will (first) more diligently check for
-dependencies on things now-removed.
+Yeah, it's how GitLab will likely use this, but this is the same for
+most (if not all) config options these days in GitLab. So I don't
+think it's a good criteria.
 
-My strategy was, frankly, a little more haphazard: eyeball the intent,
-look for references in the following couple tests, and otherwise
-assume that if the tests still pass, it means they didn't unexpectedly
-depend on this.
+I already talked about it, but one of the issues with a command line
+option is that such an option might not be worth implementing for SSH
+(which might not need it) or other protocols for different reasons. So
+we would have a CLI option with probably a generic name that would
+actually work only with one (or a few) protocols, and we would need to
+decide what to do in case this option is used along with a protocol
+that it doesn't support.
 
-Fwiw, the not-trivial-but-still-straightforward approach I'm using is
-to search case-sensitively for the word "d" in this example. a, b, c
-and d are all bad because they are common english words or flags used
-throughout this test, but other letters and combinations are easier to
-check in this reasonably-simple way.
+> I also think it might be a little confusing (and probably warranted of
+> an advice message) if git will decide based on a configuration
+> somewhere in its resolution tree that the IP I am connecting is
+> different than the one I expect it to use through the system
+> configured resolution mechanism for such a thing.
 
->
->  - Are you deliberatly leaving branch.e.dummy uncleaned, or is it a
->    mere oversight?
->
+I would be Ok to add an advice message or another kind of message
+telling users that the IP used is based on the config variable. It
+could break scripts parsing Git's output though (even if it's bad
+practice to do so). So we would need to decide the kind of message and
+its content. Suggestions welcome.
 
-Somewhere in-between. My intent with these changes was to use the
-right helpers/patterns, but I did not aspire to making sure nothing
-leaks between tests at all.
+> I assume that if you want to use this frequently, having that advice
+> disabled in your global config wouldn't be a hassle, but it might be
+> useful to know that I am interacting with a potentially different IP
+> when referring to some host by name in my local repo, maybe because I
+> forgot to change that setting after some debugging.
 
-Generally speaking, none of the tests I've seen (in this file or
-others) clean up / delete the *branches* they create - presumably
-because there's no significant need - the existence of branches rarely
-or never has side-effects unless explicitly referenced. Config, on the
-other hand, is a good thing to clean up by default, because it is much
-more likely to interfere with later tests.
+Yeah, maybe. On the other hand GIT_CURL_VERBOSE might already be the
+canonical way to debug this and might already tell about this.
 
-Something like configuring "branch.x.dummy" (or the more meaningful
-"branch.x.merge") straddles those 2 worlds - I would use test_config
-to be consistent if setting one manually, but it's still
-branch-specific stuff so I wouldn't be diligent about removing it if
-it was created as a side-effect of another command like "git branch
--c" - just like I'm not removing the new branch itself.
+Yeah, it does:
 
-That said, now that you've called my attention to it, I'll look for
-leaky branch configs :)
+<= Recv header:
+== Info: Connection #0 to host gitbogusexamplehost.com left intact
+== Info: RESOLVE gitbogusexamplehost.com:5551 is - old addresses discarded!
+== Info: Added gitbogusexamplehost.com:5551:127.0.0.1 to DNS cache
+== Info: Couldn't find host gitbogusexamplehost.com in the .netrc
+file; using defaults
+== Info: Found bundle for host gitbogusexamplehost.com: 0x5556d2bd1340
+[serially]
+== Info: Can not multiplex, even if we wanted to!
+== Info: Re-using existing connection! (#0) with host gitbogusexamplehost.com
+== Info: Connected to gitbogusexamplehost.com (127.0.0.1) port 5551 (#0)
 
-I will also add a note clarifying "intend to use the right
-patterns/helpers, but not necessarily to eliminate state leaks between
-tests" in the commit message.
+I agree it might not be very clear that it's because
+"http.curloptResolve" is used though. But maybe we could output a more
+explicit warning message only if GIT_CURL_VERBOSE is set.
 
-> >  test_expect_success 'git branch --copy is a synonym for -c' '
-> >       git branch --create-reflog copy &&
-> >       git reflog exists refs/heads/copy &&
-> > -     git config branch.copy.dummy Hello &&
-> > +     test_config branch.copy.dummy Hello &&
-> >       git branch --copy copy copy-to &&
-> >       git reflog exists refs/heads/copy &&
-> >       git reflog exists refs/heads/copy-to &&
-> > -     echo Hello >expect &&
-> > -     git config branch.copy.dummy >actual &&
-> > -     test_cmp expect actual &&
-> > -     echo Hello >expect &&
-> > -     git config branch.copy-to.dummy >actual &&
-> > -     test_cmp expect actual
-> > +     test_cmp_config Hello branch.copy.dummy &&
-> > +     test_cmp_config Hello branch.copy-to.dummy
-> >  '
->
-> The same comment for branch.copy.dummy and branch.copy-to.dummy
-> applies.
->
-> I'll stop here for now.  Thanks for starting this clean-up.
+> I am sure all those folks that forget to edit their /etc/hosts after
+> they are done with their local site versions might instead use this
+> and then be happy to be warned about it later.
 
-Thank you!
+Do you mean that those folks might like a config option ;-)
