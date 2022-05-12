@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E41B6C43217
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 23:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EE6AC433FE
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 23:44:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359617AbiELXn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 19:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
+        id S1359622AbiELXoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 19:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359604AbiELXnr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 19:43:47 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 185C6289BFF
-        for <git@vger.kernel.org>; Thu, 12 May 2022 16:43:44 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 129so3909676wmz.0
-        for <git@vger.kernel.org>; Thu, 12 May 2022 16:43:44 -0700 (PDT)
+        with ESMTP id S1359595AbiELXnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 19:43:46 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91F4289BE0
+        for <git@vger.kernel.org>; Thu, 12 May 2022 16:43:42 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id b19so9235566wrh.11
+        for <git@vger.kernel.org>; Thu, 12 May 2022 16:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eJhSanNTrvwh73K6ul8u5rLauB4yVfCuB5NCOfi1PhE=;
-        b=oQH1i16nWhsiWLP3qbER5hZpkF3wkIwh679YuaHYua9NH7Q0YszEXA346eMi0p03SO
-         XeLO+vimm6hl1ug3wWnlSwFcf/llbIr7t+6ZXieCuejh9NBdn/DZwm5JiBbc7y+Y2k/t
-         SThUUQGcf6pRDm1ciB80jgHbQ1F2fe9ZZB+JfBQ/UK8rd9kBIziAkLxlSTSrzTmhZcFe
-         AXydGSUWR++FvybLpdDsNhlY/id+9nZFLYr+gC5/5+IBpxxjFG0fXUpO9YX4CJhckm+v
-         FcoWUAp2L1TsCZiZ02zzKUbsIJZJJISWveS/h/IzoW8e/WhFJ1OqFBl9UQ6zxW+urEWp
-         dKqw==
+        bh=hL6JSLdjVbdVjD5T2UlHRtSJRkuLVyPAPM4zlPDnOU8=;
+        b=Qy1KK7CpC1JrQFinywOg1Agz77DzEOut6PiE8+iDYaBofWwWG8j3/1p2xuCZfBOTIo
+         7JAyZHAKGIZ3uNQ1NBUnEBw/x5Yi3Q8i1DWQCEdM1XXt3XHIyEVbjzgTg1AVhby23AfR
+         pqtbgfGuZ0fv5Z51LfMqmAyHNP1NlRxGfyhhyiHlRfHhf6bhtrQTRkV+pCZAkuhYAed+
+         RJZ8qryQO0PBlXwFNT4MI2XXJhVTaFbUv5wlQ53QSxgZPPSh+3bgFkc5RGerakSoiouN
+         P8Raju2A56TE0YeIiaO5IZztmnI0PYa6qkqX+uxgjhaTZiTYn2RDSdAmahH7PFD8RNQd
+         ci1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eJhSanNTrvwh73K6ul8u5rLauB4yVfCuB5NCOfi1PhE=;
-        b=scN8p+yfkmBLY/iUnESSJtI3QUZNBPxvwf9Va4NrlrQJ3QCrKj3lYpYAKFMfB/JdZh
-         kv3MGJHIGAcI+ifwTw1Osz9+NBFv5GONIUNoDP9HX5tBYB76lTeHlWU9p8EnaNoE3cXe
-         PCFSnLb/iiaNOaUf/3dlUsvuVZHl9wkySm8LYpZuG79le3HVkTxbj41vW9S4eeRkoRSY
-         OGMWndb2b9X8DBEgGDEc3G3JATj3ANWKqQ8tIhbmhyqrdzVangK2z8AlO7oaT//Slro0
-         nPuqsH7pdmxX8qwGuhkA8GV8z/7SzDV6b9Lxungo7jyC9ZaNtc2lbCZbvlaQ9D8k5A8l
-         svzg==
-X-Gm-Message-State: AOAM530orCnxhsYYbde4ULinnNCmBRYDvZnLAdnym7f3bFI+/TUgPW0H
-        6kqjO6efiSKLATnLdFq/oNDKcSkvHG0=
-X-Google-Smtp-Source: ABdhPJwcWHeXhroPS8jJATNj+nj/psfaCiJhdirpt61Q2poVz/n2upMg602uvzDVU+N1Mhr+TPC+pw==
-X-Received: by 2002:a7b:c5d0:0:b0:389:fe85:3d79 with SMTP id n16-20020a7bc5d0000000b00389fe853d79mr12457140wmk.77.1652399023151;
-        Thu, 12 May 2022 16:43:43 -0700 (PDT)
+        bh=hL6JSLdjVbdVjD5T2UlHRtSJRkuLVyPAPM4zlPDnOU8=;
+        b=7yl5I/HvaVMX1QR5dbX7N4O+8CHPyGTNAsfYqx8GaBBW/hz7wO5ioBKGkOya8lsIIz
+         mfTPMsWw5L9W3LSbKzHgqYC2eU/qEefVMDThsgbEtHjesXB4xGjvW9JV52bJoJBlA/N7
+         5iOG6DxWOy39DHlec9z1mbT9ZUTd6ANPGRvc+EztErtbkTIbqS+vaLbWzouhKWGWZb6H
+         9jq0efoeJjhCAM/xoRuJ6pKN451l7/3kO16co3jf2RxeX2JuZevwR2RGjGt7K574yeF8
+         v5byl9m5C7hZxLTje8BkZIEznGRvh11r7F3Nx5WCw9l0TL0IjdjJE5L/XC9flW5/GuUn
+         iqSQ==
+X-Gm-Message-State: AOAM530NP8GImdoy7j6P0/VrxYQCzyVBCkKRCr5LNSSErBmzlu+yjhaw
+        vMBBWL2fZz4yIflZnKUpf29UsCt+Z3o=
+X-Google-Smtp-Source: ABdhPJy/JmK4c/mITGdNO9bnU6OYwF7qIH1k1pXGu4RcGn4AgK0wX3rnyYGSJPQao3HMWu7j9Nkhmw==
+X-Received: by 2002:a5d:47cc:0:b0:20c:6b7c:8a19 with SMTP id o12-20020a5d47cc000000b0020c6b7c8a19mr1552009wrc.608.1652399020952;
+        Thu, 12 May 2022 16:43:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a4-20020a05600c348400b003942a244ec4sm861965wmq.9.2022.05.12.16.43.42
+        by smtp.gmail.com with ESMTPSA id l9-20020adfc789000000b0020cd8f1d25csm753195wrg.8.2022.05.12.16.43.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 May 2022 16:43:42 -0700 (PDT)
-Message-Id: <02598d431e0eb4f7cad9b7703c2fb244c3d15781.1652399017.git.gitgitgadget@gmail.com>
+        Thu, 12 May 2022 16:43:40 -0700 (PDT)
+Message-Id: <ee3238f5a9169f0c7d046089c7951791b8db3cab.1652399017.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1226.v3.git.1652399017.gitgitgadget@gmail.com>
 References: <pull.1226.v2.git.1652233654.gitgitgadget@gmail.com>
         <pull.1226.v3.git.1652399017.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 May 2022 23:43:36 +0000
-Subject: [PATCH v3 4/5] MyFirstContribution: reference "The cover letter" in
- GitGitGadget section
+Date:   Thu, 12 May 2022 23:43:34 +0000
+Subject: [PATCH v3 2/5] MyFirstContribution: add standalone section on cover
+ letter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,37 +75,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The "Sending Patches via GitGitGadget" section mentions that the PR
-title and description will be used as the cover letter, but does not
-explain what is a cover letter or what should be included in it.
+An explanation of the purpose of the cover letter is included in the
+"Sending Patches with git send-email" / "Preparing Email" section but is
+missing from the "Sending Patches via GitGitGadget" section.
 
-Refer readers to the new "The cover letter" section added in a previous
-commit.
+Add a standalone section "The cover letter" under the "Getting Started:
+Anatomy of a Patch Series" header to explain what the cover letter is
+used for and to draft the cover letter of the 'psuh' topic used in the
+tutorial.
+
+For now we mostly copy content from the "Sending Patches with git
+send-email" section but do not adjust that section, nor the GGG section,
+to reference the new section. This is done in following commits.
+
+Also, adjust the "Preparing Email" Asciidoc anchor to avoid conflicts.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/MyFirstContribution.txt | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ Documentation/MyFirstContribution.txt | 51 ++++++++++++++++++++++++---
+ 1 file changed, 47 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index f6ee5b8b1ae..9eb2dfec959 100644
+index 22848f84bec..94f722d4b7f 100644
 --- a/Documentation/MyFirstContribution.txt
 +++ b/Documentation/MyFirstContribution.txt
-@@ -899,8 +899,12 @@ https://github.com/gitgitgadget/git and open a PR either with the "New pull
- request" button or the convenient "Compare & pull request" button that may
- appear with the name of your newly pushed branch.
- 
--Review the PR's title and description, as it's used by GitGitGadget as the cover
--letter for your change. When you're happy, submit your pull request.
-+Review the PR's title and description, as they're used by GitGitGadget
-+respectively as the subject and body of the cover letter for your change. Refer
-+to <<cover-letter,"The cover letter">> above for advice on how to title your
-+submission and what content to include in the description.
+@@ -760,9 +760,52 @@ We can note a few things:
+   _n_-commit series.
+ - Each patch is sent as a reply to an introductory email called the _cover
+   letter_ of the series, prefixed "[PATCH 0/_n_]".
+-- Subsequent iterations of the patch series are labelled "[PATCH v2]", "[PATCH
+-  v3]", etc. and sent with a new cover letter, itself a reply to the cover
+-  letter of the previous iteration (more on that below).
++- Subsequent iterations of the patch series are labelled "PATCH v2", "PATCH
++  v3", etc. in place of "PATCH". For example, "[PATCH v2 1/3]" would be the first of
++  three patches in the second iteration. Each iteration is sent with a new cover
++  letter (like "[PATCH v2 0/3]" above), itself a reply to the cover letter of the
++  previous iteration (more on that below).
 +
-+When you're happy, submit your pull request.
++NOTE: A single-patch topic is sent with "[PATCH]", "[PATCH v2]", etc. without
++_i_/_n_ numbering (in the above thread overview, no single-patch topic appears,
++though).
++
++[[cover-letter]]
++=== The cover letter
++
++In addition to an email per patch, the Git community also expects your patches
++to come with a cover letter. This is an important component of change
++submission as it explains to the community from a high level what you're trying
++to do, and why, in a way that's more apparent than just looking at your
++patches.
++
++The title of your cover letter should be something which succinctly covers the
++purpose of your entire topic branch. It's often in the imperative mood, just
++like our commit message titles. Here is how we'll title our series:
++
++---
++Add the 'psuh' command
++---
++
++The body of the cover letter is used to give additional context to reviewers.
++Be sure to explain anything your patches don't make clear on their own, but
++remember that since the cover letter is not recorded in the commit history,
++anything that might be useful to future readers of the repository's history
++should also be in your commit messages.
++
++Here's an example body for `psuh`:
++
++----
++Our internal metrics indicate widespread interest in the command
++git-psuh - that is, many users are trying to use it, but finding it is
++unavailable, using some unknown workaround instead.
++
++The following handful of patches add the psuh command and implement some
++handy features on top of it.
++
++This patchset is part of the MyFirstContribution tutorial and should not
++be merged.
++----
  
- [[run-ci-ggg]]
- === Running CI and Getting Ready to Send
+ At this point the tutorial diverges, in order to demonstrate two
+ different methods of formatting your patchset and getting it reviewed.
+@@ -1000,7 +1043,7 @@ but want reviewers to look at what they have so far. You can add this flag with
+ Check and make sure that your patches and cover letter template exist in the
+ directory you specified - you're nearly ready to send out your review!
+ 
+-[[cover-letter]]
++[[preparing-cover-letter]]
+ === Preparing Email
+ 
+ In addition to an email per patch, the Git community also expects your patches
 -- 
 gitgitgadget
 
