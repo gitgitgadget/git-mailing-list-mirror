@@ -2,457 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC63FC433EF
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 14:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7988BC433F5
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 14:51:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354790AbiELOWW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 10:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38918 "EHLO
+        id S1355602AbiELOvu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 10:51:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345321AbiELOWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 10:22:19 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39B3BA9BD
-        for <git@vger.kernel.org>; Thu, 12 May 2022 07:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1652365320;
-        bh=9jn1xDkBhceOMeeUhGC4uNdfhUX6F7TsEH9bgtzFIkM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=htRS5nGc1mLp7ARqYZEX1FTIFjQKPpPspdLI0DeTvdzUMXS9B5hvYmWZyqLt2gClS
-         uExaIIdYHTBKdCYNjv7Yn/RreSzr285ESYfwGDbo2J2Ugfmhak193ZyruqxvJ/MSiF
-         eogHVhL0sVTxNreAuXqmnkI7CScJuICq4pJAJqvY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([213.196.213.50]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mnpru-1o9eYU1RYQ-00pMyb; Thu, 12
- May 2022 16:22:00 +0200
-Date:   Thu, 12 May 2022 16:21:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Torsten B??gershausen <tboegi@web.de>,
-        rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 04/28] fsmonitor-settings: bare repos are incompatible
- with FSMonitor
-In-Reply-To: <72b94acd5fe87eaa1dba9bfb66a7a738a0b46a91.1650662994.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2205121620540.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>        <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <72b94acd5fe87eaa1dba9bfb66a7a738a0b46a91.1650662994.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S1345370AbiELOvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 10:51:49 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E875DA01
+        for <git@vger.kernel.org>; Thu, 12 May 2022 07:51:48 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id n10so10763888ejk.5
+        for <git@vger.kernel.org>; Thu, 12 May 2022 07:51:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0nyQuROR62eBUNxyGJd3C+9X3x+utPVMrDIO3v1rJfg=;
+        b=cb1xRySsajBMgK0tvA3T/XlBqCZRqXYE9TFIG1axks0bKtiGHZ6sRbkl2JQkF/doro
+         vnH6exco7PHZXLyxIGJcuLL96KkRtl2ez59eIxP4C8/dVf1y5IlHTDCS39dULLGqhZSW
+         UleuywDxmBNgiABmJgg3mGhP5gkgRO0dha4RiqZ2F3IJyYCKy5ZzqUlktbJhE7CfhugS
+         ie55AbpxZKwiASnqRqZedaQWWwmdkkVRD2/pjNzItUVfkrRb4Og0zLL38xVDA46rfZli
+         R4FLUb1++GOOjN8oK1/dNVda0qijidJV6C79VaXOPDiY5V/kHUBycA+WMOJV7wjf7wLM
+         /4jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0nyQuROR62eBUNxyGJd3C+9X3x+utPVMrDIO3v1rJfg=;
+        b=r7KI6Bp0GLhlCWxHwlqxho8cHu8LoOrGW0k+d/pApmK+zzIvSlYn6PvXhYnHHfmPty
+         FyAbeCYXsI/r3E4ofIWitMfFZFnTs4Vuo8gqh7JxNte/QiCi+Ge7BEBDCtlV+OTsu3yU
+         idMOgD2WUuoFUQE85y4NjMRcDtAXAwTdw4V8/trFw8YKS4GpzwLso/jPb3eNFTwftTu8
+         2H+ye9nqjvnfcYa6gykgjHolFQV5syFdK6fpe/GNojcaHeVc6ZMVP7hSb2K9Re+n1gYC
+         PU00ZYsI/k5dhSPu6CsCWDOl3kV1W0ivjUdS70dovtJ3fbQr1T2F56vbYo6a+V3UXzxu
+         LiLA==
+X-Gm-Message-State: AOAM532ubWceUez/Snc8jWxe2SK+DjoF7+QfVcn5d/YUuUVlCuvQqc6d
+        GDSNJkHO1Klwt+wI3N8y+t053CC3R3/KUJB+mzZzmTfq
+X-Google-Smtp-Source: ABdhPJxXFiFBYaialzHTB7d4PfTFfloY1Lr67Xeuiq9+cP5D7MGofcmOVKHN5JGAdX9iebtmh4mGUhu4e0D7+gimvd0=
+X-Received: by 2002:a17:906:a05a:b0:6ef:a44d:2f46 with SMTP id
+ bg26-20020a170906a05a00b006efa44d2f46mr282781ejb.192.1652367106565; Thu, 12
+ May 2022 07:51:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DmpKfUVk/++cEmv5D9lMMTeD8wiVe8nbVeEfVMxVjGnHYhujS7Q
- lRwt3bTGOpLyCaz+IdaHmI8qBW+0gYqm5Yseh6baMoh1SXozMm8Yjkl2tbZgXD8gMMcquVB
- DW9DbwINPTUg8PEi3MtinczMNEd68498VVSIpLtbMdtJLLOQU9Hg9WvD7u8bdHVCxdZwGi9
- P1bWs+MmQ3ja+WSfPG60A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YZvsZuAdFdg=:qEDlaLPcjvesGRCvWmV5Wl
- z/2EpwJRhs3aBYFI8cVgVxNVV8V467zSI5DFxitEztL4sLzp2hh0UlNoxNPDJqRoBAqESfVa/
- xJZwIchy+dMlCeagcSNBjsvmOzh8cMdjzhaYufSWjL4piP6okRcaWYVrrvqdiQ+1QwcmSxbwS
- NGmc3K4DRx+cc+995dI41SIbutJaaVs/FHCshGGrPDo1r7qsh3jyoZvHdkNzqzFu1xkBOhoW9
- XPfis4AOt5dvBmx3QXq0s5FgUUWQqYwj+T1s71VZ2xb+ceybk8L4b12vkfpNdVLqSjKjCWCcA
- 2N0Uycv8Ywm3Y8ldgmAvaVKyrgP3NMfnDCT35jZvoxPIc8ubVGZxiYBqHqTkDusA23qmbYCmH
- K7MHDn2dJGUdrufpmM2DMvN9E1BWDWDyZq5fPJl5zk3FvlrHjW/KjbpfL8ASnznTaYXzx2Aj+
- OTNznD2Jd1KNYFPRodlJcY3Kwsux8XQpMdcWeGP7vR37/Lg7sLwncSBLjlrJ+oiNekQ33RRvc
- ItSfu/ZHp0WLp+g8DwIHk2VCsozJuLR+Eq4ubLFXHuVutOEdptYkUQZx7sOjYgkR4qFM2oQQl
- E/V1NG67LqCSqSzltQd88OTfiwcz2gs/A7T/nzCKJ/HkHu2E0bSmo50iu6ojUHbRqOfbsNNbH
- ryL2DpQLH1km5JgWtoDe3cKhkLKfe8hUZ9DtSxNFK7+4Eoea6galgsKNciDpVs0TsfTlzlFoZ
- LtEQwGjVF1P2mTMpGotLYJfskx3lDPDY574BVaBmHs4u1r3HFbk/ub0NHTHmUMbLh3B5/Fe11
- tXrTOyCmWn4Al3lSmDKVbfwyuCkW6+KcaG7LZBjyRrmQCSp37tWHgC4s6Ijs9KxFFA4BR5nHb
- y2MF8IUoXSsCF1Kz1M2GCupFt9/OVq+wbSBlVLZmxdSQTj08mYpmE4JaevusmXChyk+X9Ew45
- YOuNBrUkDKhy8ZcG4dFA4RtVRI8/JyS5ZijtEYgKPbFKIYU9RpHGcOQ6CclQonEePGJV4BnLE
- zx2KHswRkPvQxD3C8Qhd6V7a8OXLhwL8XUvKWyt6mwuQrVyip5MahLV5+PTv8vWdmwDNno5zX
- oBYCnrURaXUgL4=
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1171.v2.git.1651083378.gitgitgadget@gmail.com>
+ <pull.1171.v3.git.1652225552.gitgitgadget@gmail.com> <e733c2fd9f497a8d80555126ec2e166e182ab8db.1652225552.git.gitgitgadget@gmail.com>
+In-Reply-To: <e733c2fd9f497a8d80555126ec2e166e182ab8db.1652225552.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 12 May 2022 07:51:35 -0700
+Message-ID: <CABPp-BGf35aOYb-nua-i16MOL_14w9c=QETjsGnKzE6D2rr27A@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] stash: apply stash using 'merge_ort_nonrecursive()'
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
-
-On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
-
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+On Tue, May 10, 2022 at 4:32 PM Victoria Dye via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Bare repos do not have a worktree, so there is nothing for the
-> daemon watch.
+> From: Victoria Dye <vdye@github.com>
 >
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Update 'stash' to use 'merge_ort_nonrecursive()' to apply a stash to the
+> current working tree. When 'git stash apply' was converted from its shell
+> script implementation to a builtin in 8a0fc8d19d (stash: convert apply to
+> builtin, 2019-02-25), 'merge_recursive_generic()' was used to merge a stash
+> into the working tree as part of 'git stash (apply|pop)'. However, with the
+> single merge base used in 'do_apply_stash()', the commit wrapping done by
+> 'merge_recursive_generic()' is not only unnecessary, but misleading (the
+> *real* merge base is labeled "constructed merge base"). Therefore, a
+> non-recursive merge of the working tree, stashed tree, and stash base tree
+> is more appropriate.
+>
+> There are two options for a non-recursive merge-then-update-worktree
+> function: 'merge_trees()' and 'merge_ort_nonrecursive()'. Use
+> 'merge_ort_nonrecursive()' to align with the default merge strategy used by
+> 'git merge' (6a5fb96672 (Change default merge backend from recursive to ort,
+> 2021-08-04)) and, because merge-ort does not operate in-place on the index,
+> avoid unnecessary index expansion. Update tests in 't1092' verifying index
+> expansion for 'git stash' accordingly.
+>
+> Signed-off-by: Victoria Dye <vdye@github.com>
 > ---
->  builtin/fsmonitor--daemon.c |  18 +++++
->  builtin/update-index.c      |  16 +++++
->  fsmonitor-settings.c        | 133 ++++++++++++++++++++++++++++++------
->  fsmonitor-settings.h        |  16 +++++
->  t/t7519-status-fsmonitor.sh |  23 +++++++
->  5 files changed, 186 insertions(+), 20 deletions(-)
+>  builtin/stash.c                          | 30 +++++++++++++++++++-----
+>  t/t1092-sparse-checkout-compatibility.sh |  4 ++--
+>  2 files changed, 26 insertions(+), 8 deletions(-)
 >
-> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-> index 46be55a4618..66b78a0353f 100644
-> --- a/builtin/fsmonitor--daemon.c
-> +++ b/builtin/fsmonitor--daemon.c
-> @@ -1423,6 +1423,7 @@ static int try_to_start_background_daemon(void)
->  int cmd_fsmonitor__daemon(int argc, const char **argv, const char *pref=
-ix)
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 1bfba532044..3fe549f7d3c 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -7,6 +7,7 @@
+>  #include "cache-tree.h"
+>  #include "unpack-trees.h"
+>  #include "merge-recursive.h"
+> +#include "merge-ort-wrappers.h"
+>  #include "strvec.h"
+>  #include "run-command.h"
+>  #include "dir.h"
+> @@ -492,13 +493,13 @@ static void unstage_changes_unless_new(struct object_id *orig_tree)
+>  static int do_apply_stash(const char *prefix, struct stash_info *info,
+>                           int index, int quiet)
 >  {
->  	const char *subcmd;
-> +	enum fsmonitor_reason reason;
->  	int detach_console =3D 0;
+> -       int ret;
+> +       int clean, ret;
+>         int has_index = index;
+>         struct merge_options o;
+>         struct object_id c_tree;
+>         struct object_id index_tree;
+> -       struct commit *result;
+> -       const struct object_id *bases[1];
+> +       struct tree *head, *merge, *merge_base;
+> +       struct lock_file lock = LOCK_INIT;
 >
->  	struct option options[] =3D {
-> @@ -1449,6 +1450,23 @@ int cmd_fsmonitor__daemon(int argc, const char **=
-argv, const char *prefix)
->  		die(_("invalid 'ipc-threads' value (%d)"),
->  		    fsmonitor__ipc_threads);
+>         read_cache_preload(NULL);
+>         if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+> @@ -541,6 +542,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
 >
-> +	prepare_repo_settings(the_repository);
-> +	/*
-> +	 * If the repo is fsmonitor-compatible, explicitly set IPC-mode
-> +	 * (without bothering to load the `core.fsmonitor` config settings).
-> +	 *
-> +	 * If the repo is not compatible, the repo-settings will be set to
-> +	 * incompatible rather than IPC, so we can use one of the __get
-> +	 * routines to detect the discrepancy.
-> +	 */
-> +	fsm_settings__set_ipc(the_repository);
-> +
-> +	reason =3D fsm_settings__get_reason(the_repository);
-> +	if (reason > FSMONITOR_REASON_OK)
-> +		die("%s",
-> +		    fsm_settings__get_incompatible_msg(the_repository,
-> +						       reason));
-> +
->  	if (!strcmp(subcmd, "start"))
->  		return !!try_to_start_background_daemon();
+>         o.branch1 = "Updated upstream";
+>         o.branch2 = "Stashed changes";
+> +       o.ancestor = "Stash base";
 >
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 876112abb21..01ed4c4976b 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -1237,6 +1237,22 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
+>         if (oideq(&info->b_tree, &c_tree))
+>                 o.branch1 = "Version stash was based on";
+> @@ -551,10 +553,26 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>         if (o.verbosity >= 3)
+>                 printf_ln(_("Merging %s with %s"), o.branch1, o.branch2);
 >
->  	if (fsmonitor > 0) {
->  		enum fsmonitor_mode fsm_mode =3D fsm_settings__get_mode(r);
-> +		enum fsmonitor_reason reason =3D fsm_settings__get_reason(r);
+> -       bases[0] = &info->b_tree;
+> +       head = lookup_tree(o.repo, &c_tree);
+> +       merge = lookup_tree(o.repo, &info->w_tree);
+> +       merge_base = lookup_tree(o.repo, &info->b_tree);
 > +
-> +		/*
-> +		 * The user wants to turn on FSMonitor using the command
-> +		 * line argument.  (We don't know (or care) whether that
-> +		 * is the IPC or HOOK version.)
-> +		 *
-> +		 * Use one of the __get routines to force load the FSMonitor
-> +		 * config settings into the repo-settings.  That will detect
-> +		 * whether the file system is compatible so that we can stop
-> +		 * here with a nice error message.
-> +		 */
-> +		if (reason > FSMONITOR_REASON_OK)
-> +			die("%s",
-> +			    fsm_settings__get_incompatible_msg(r, reason));
-> +
->  		if (fsm_mode =3D=3D FSMONITOR_MODE_DISABLED) {
->  			warning(_("core.fsmonitor is unset; "
->  				"set it if you really want to "
-> diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-> index 757d230d538..7d3177d441a 100644
-> --- a/fsmonitor-settings.c
-> +++ b/fsmonitor-settings.c
-> @@ -9,23 +9,42 @@
->   */
->  struct fsmonitor_settings {
->  	enum fsmonitor_mode mode;
-> +	enum fsmonitor_reason reason;
->  	char *hook_path;
->  };
->
-> -static void lookup_fsmonitor_settings(struct repository *r)
-> +static enum fsmonitor_reason check_for_incompatible(struct repository *=
-r)
-> +{
-> +	if (!r->worktree) {
-> +		/*
-> +		 * Bare repositories don't have a working directory and
-> +		 * therefore have nothing to watch.
-> +		 */
-> +		return FSMONITOR_REASON_BARE;
-> +	}
-> +
-> +	return FSMONITOR_REASON_OK;
-> +}
-> +
-> +static struct fsmonitor_settings *alloc_settings(void)
->  {
->  	struct fsmonitor_settings *s;
-> +
-> +	CALLOC_ARRAY(s, 1);
-> +	s->mode =3D FSMONITOR_MODE_DISABLED;
-> +	s->reason =3D FSMONITOR_REASON_UNTESTED;
-> +
-> +	return s;
-> +}
-> +
-> +static void lookup_fsmonitor_settings(struct repository *r)
-> +{
->  	const char *const_str;
->  	int bool_value;
->
->  	if (r->settings.fsmonitor)
->  		return;
->
-> -	CALLOC_ARRAY(s, 1);
-> -	s->mode =3D FSMONITOR_MODE_DISABLED;
-> -
-> -	r->settings.fsmonitor =3D s;
-> -
->  	/*
->  	 * Overload the existing "core.fsmonitor" config setting (which
->  	 * has historically been either unset or a hook pathname) to
-> @@ -38,6 +57,8 @@ static void lookup_fsmonitor_settings(struct repositor=
-y *r)
->  	case 0: /* config value was set to <bool> */
->  		if (bool_value)
->  			fsm_settings__set_ipc(r);
-> +		else
-> +			fsm_settings__set_disabled(r);
->  		return;
->
->  	case 1: /* config value was unset */
-> @@ -53,18 +74,18 @@ static void lookup_fsmonitor_settings(struct reposit=
-ory *r)
->  		return;
->  	}
->
-> -	if (!const_str || !*const_str)
-> -		return;
-> -
-> -	fsm_settings__set_hook(r, const_str);
-> +	if (const_str && *const_str)
-> +		fsm_settings__set_hook(r, const_str);
-> +	else
-> +		fsm_settings__set_disabled(r);
->  }
->
->  enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
->  {
->  	if (!r)
->  		r =3D the_repository;
-> -
-> -	lookup_fsmonitor_settings(r);
-> +	if (!r->settings.fsmonitor)
-> +		lookup_fsmonitor_settings(r);
->
->  	return r->settings.fsmonitor->mode;
->  }
-> @@ -73,31 +94,55 @@ const char *fsm_settings__get_hook_path(struct repos=
-itory *r)
->  {
->  	if (!r)
->  		r =3D the_repository;
-> -
-> -	lookup_fsmonitor_settings(r);
-> +	if (!r->settings.fsmonitor)
-> +		lookup_fsmonitor_settings(r);
->
->  	return r->settings.fsmonitor->hook_path;
->  }
->
->  void fsm_settings__set_ipc(struct repository *r)
->  {
-> +	enum fsmonitor_reason reason =3D check_for_incompatible(r);
-> +
-> +	if (reason !=3D FSMONITOR_REASON_OK) {
-> +		fsm_settings__set_incompatible(r, reason);
-> +		return;
-> +	}
-> +
-> +	/*
-> +	 * Caller requested IPC explicitly, so avoid (possibly
-> +	 * recursive) config lookup.
-> +	 */
->  	if (!r)
->  		r =3D the_repository;
-> -
-> -	lookup_fsmonitor_settings(r);
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor =3D alloc_settings();
->
->  	r->settings.fsmonitor->mode =3D FSMONITOR_MODE_IPC;
-> +	r->settings.fsmonitor->reason =3D reason;
->  	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
->  }
->
->  void fsm_settings__set_hook(struct repository *r, const char *path)
->  {
-> +	enum fsmonitor_reason reason =3D check_for_incompatible(r);
-> +
-> +	if (reason !=3D FSMONITOR_REASON_OK) {
-> +		fsm_settings__set_incompatible(r, reason);
-> +		return;
-> +	}
-> +
-> +	/*
-> +	 * Caller requested hook explicitly, so avoid (possibly
-> +	 * recursive) config lookup.
-> +	 */
->  	if (!r)
->  		r =3D the_repository;
-> -
-> -	lookup_fsmonitor_settings(r);
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor =3D alloc_settings();
->
->  	r->settings.fsmonitor->mode =3D FSMONITOR_MODE_HOOK;
-> +	r->settings.fsmonitor->reason =3D reason;
->  	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
->  	r->settings.fsmonitor->hook_path =3D strdup(path);
->  }
-> @@ -106,9 +151,57 @@ void fsm_settings__set_disabled(struct repository *=
-r)
->  {
->  	if (!r)
->  		r =3D the_repository;
-> -
-> -	lookup_fsmonitor_settings(r);
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor =3D alloc_settings();
->
->  	r->settings.fsmonitor->mode =3D FSMONITOR_MODE_DISABLED;
-> +	r->settings.fsmonitor->reason =3D FSMONITOR_REASON_OK;
-> +	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
-> +}
-> +
-> +void fsm_settings__set_incompatible(struct repository *r,
-> +				    enum fsmonitor_reason reason)
-> +{
-> +	if (!r)
-> +		r =3D the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor =3D alloc_settings();
-> +
-> +	r->settings.fsmonitor->mode =3D FSMONITOR_MODE_INCOMPATIBLE;
-> +	r->settings.fsmonitor->reason =3D reason;
->  	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
->  }
-> +
-> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
-> +{
-> +	if (!r)
-> +		r =3D the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		lookup_fsmonitor_settings(r);
-> +
-> +	return r->settings.fsmonitor->reason;
-> +}
-> +
-> +char *fsm_settings__get_incompatible_msg(const struct repository *r,
-> +					 enum fsmonitor_reason reason)
-> +{
-> +	struct strbuf msg =3D STRBUF_INIT;
-> +
-> +	switch (reason) {
-> +	case FSMONITOR_REASON_UNTESTED:
-> +	case FSMONITOR_REASON_OK:
-> +		goto done;
-> +
-> +	case FSMONITOR_REASON_BARE:
-> +		strbuf_addf(&msg,
-> +			    _("bare repository '%s' is incompatible with fsmonitor"),
-> +			    xgetcwd());
-> +		goto done;
-> +	}
-> +
-> +	BUG("Unhandled case in fsm_settings__get_incompatible_msg: '%d'",
-> +	    reason);
-> +
-> +done:
-> +	return strbuf_detach(&msg, NULL);
-> +}
-> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-> index a4c5d7b4889..4c7592896e4 100644
-> --- a/fsmonitor-settings.h
-> +++ b/fsmonitor-settings.h
-> @@ -4,18 +4,34 @@
->  struct repository;
->
->  enum fsmonitor_mode {
-> +	FSMONITOR_MODE_INCOMPATIBLE =3D -1, /* see _reason */
->  	FSMONITOR_MODE_DISABLED =3D 0,
->  	FSMONITOR_MODE_HOOK =3D 1, /* core.fsmonitor=3D<hook_path> */
->  	FSMONITOR_MODE_IPC =3D 2,  /* core.fsmonitor=3D<true> */
->  };
->
-> +/*
-> + * Incompatibility reasons.
-> + */
-> +enum fsmonitor_reason {
-> +	FSMONITOR_REASON_UNTESTED =3D 0,
-> +	FSMONITOR_REASON_OK, /* no incompatibility or when disbled */
+> +       repo_hold_locked_index(o.repo, &lock, LOCK_DIE_ON_ERROR);
+> +       clean = merge_ort_nonrecursive(&o, head, merge, merge_base);
 
-s/disbled/disabled/
+A very minor nit: I actually have a minor dislike for the
+merge-ort-wrappers, but I included them in case people objected to the
+slightly more verbose real API.  I assumed it'd only be used to
+convert existing calls to merge_trees() and merge_recursive(); in this
+case you were converting a call to merge_recursive_generic(), so I
+would have preferred using merge_incore_nonrecursive().  That might
+have answered Jonathan's question better too when he saw the explicit
+merge_switch_to_result() call.  However, it's a minor point; I'm not
+sure it's worth a re-roll.
 
-I usually try to avoid pointing out speling erors, but I kind of wanted to
-show that I really studied this patch series for a couple hours.
 
-The patch looks good to me,
-Dscho
-
-> +	FSMONITOR_REASON_BARE,
-> +};
-> +
->  void fsm_settings__set_ipc(struct repository *r);
->  void fsm_settings__set_hook(struct repository *r, const char *path);
->  void fsm_settings__set_disabled(struct repository *r);
-> +void fsm_settings__set_incompatible(struct repository *r,
-> +				    enum fsmonitor_reason reason);
->
->  enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
->  const char *fsm_settings__get_hook_path(struct repository *r);
->
-> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r);
-> +char *fsm_settings__get_incompatible_msg(const struct repository *r,
-> +					 enum fsmonitor_reason reason);
-> +
->  struct fsmonitor_settings;
->
->  #endif /* FSMONITOR_SETTINGS_H */
-> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-> index a6308acf006..9a8e21c5608 100755
-> --- a/t/t7519-status-fsmonitor.sh
-> +++ b/t/t7519-status-fsmonitor.sh
-> @@ -55,6 +55,29 @@ test_lazy_prereq UNTRACKED_CACHE '
->  	test $ret -ne 1
->  '
->
-> +# Test that we detect and disallow repos that are incompatible with FSM=
-onitor.
-> +test_expect_success 'incompatible bare repo' '
-> +	test_when_finished "rm -rf ./bare-clone actual expect" &&
-> +	git init --bare bare-clone &&
-> +
-> +	test_must_fail \
-> +		git -C ./bare-clone -c core.fsmonitor=3Dfoo \
-> +			update-index --fsmonitor 2>actual &&
-> +	grep "bare repository .* is incompatible with fsmonitor" actual &&
-> +
-> +	test_must_fail \
-> +		git -C ./bare-clone -c core.fsmonitor=3Dtrue \
-> +			update-index --fsmonitor 2>actual &&
-> +	grep "bare repository .* is incompatible with fsmonitor" actual
-> +'
-> +
-> +test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo=
-' '
-> +	test_when_finished "rm -rf ./bare-clone actual" &&
-> +	git init --bare bare-clone &&
-> +	test_must_fail git -C ./bare-clone fsmonitor--daemon run 2>actual &&
-> +	grep "bare repository .* is incompatible with fsmonitor" actual
-> +'
-> +
->  test_expect_success 'setup' '
->  	mkdir -p .git/hooks &&
->  	: >tracked &&
-> --
-> gitgitgadget
->
->
+This series looks good to me:
+Reviewed-by: Elijah Newren <newren@gmail.com>
