@@ -2,109 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB32CC433F5
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 22:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59186C433EF
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 22:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359205AbiELWcf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 18:32:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59536 "EHLO
+        id S1359206AbiELWgQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 18:36:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359199AbiELWcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 18:32:32 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E4CA308B
-        for <git@vger.kernel.org>; Thu, 12 May 2022 15:32:30 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02D4D11C3A4;
-        Thu, 12 May 2022 18:32:30 -0400 (EDT)
+        with ESMTP id S1359223AbiELWgH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 18:36:07 -0400
+X-Greylist: delayed 215 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 12 May 2022 15:36:05 PDT
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA152555BB
+        for <git@vger.kernel.org>; Thu, 12 May 2022 15:36:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1319219C318;
+        Thu, 12 May 2022 18:32:28 -0400 (EDT)
         (envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NAitZOvsq15v
-        kpoJYXzpoEnEwgVl7LaEbaWv0PgDOdE=; b=hE2bMAkxFXsNeD+6JPWCFENbHl8E
-        4LIydaUUwiyFgpQHK98hhGG5jXYSnx74qFzO0+UB51s8ZPzZaSmT/9G0E/rA+pIr
-        FG1Bvi3ZcCjHqf+U/uFefxStrhZKpj2eiVnX6MzU92wQfiwNF7pfNP8wsqitA56r
-        nZF6Jt9tAFrRmow=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ECE0911C3A3;
-        Thu, 12 May 2022 18:32:29 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=06U3yT5vhAJL
+        sxdAxFrEQq7xv+oNM5pGIVrcU5fsEEY=; b=fwS0M4HD3kqy1/UvuoDutb14kyDw
+        9l8wQ34F3VmYmkieufMBFFHs7ao3p6tQendagWJOsjylBG+dSF7qjRMOy94ho6GY
+        UBQmHYdOcKZWV+obo12Aak+4410VAoNDs42uvim8C3El7FqsLgHUo6cmQeIggHa8
+        jI3s+i9nDlmrwQI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B08719C317;
+        Thu, 12 May 2022 18:32:28 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5552411C39A;
-        Thu, 12 May 2022 18:32:29 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A59C119C316;
+        Thu, 12 May 2022 18:32:24 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/4] log test: skip a failing mkstemp() test under valgrind
-Date:   Thu, 12 May 2022 15:32:16 -0700
-Message-Id: <20220512223218.237544-3-gitster@pobox.com>
+Subject: [PATCH v2 0/4] test fixes around valgrind
+Date:   Thu, 12 May 2022 15:32:14 -0700
+Message-Id: <20220512223218.237544-1-gitster@pobox.com>
 X-Mailer: git-send-email 2.36.1-338-g1c7f76a54c
-In-Reply-To: <20220512223218.237544-1-gitster@pobox.com>
+In-Reply-To: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
 References: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
- <20220512223218.237544-1-gitster@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Pobox-Relay-ID: 6826C32C-D243-11EC-91FF-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 655DEA08-D243-11EC-AA4B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Updates the valgrind test framework a bit, and then fixes a few
+issues valgrind has found.
 
-Skip a test added in f1e3df31699 (t: increase test coverage of
-signature verification output, 2020-03-04) when running under
-valgrind. Due to valgrind's interception of mkstemp() this test will
-fail with:
+Essentailly the same as the previously posted version, but those
+suggested fixes squashed in.
 
-	+ pwd
-	+ TMPDIR=3D[...]/t/trash directory.t4202-log/bogus git log --show-signat=
-ure -n1 plain-fail
-	=3D=3D7696=3D=3D VG_(mkstemp): failed to create temp file: [...]/t/trash=
- directory.t4202-log/bogus/valgrind_proc_7696_cmdline_d545ddcf
-	[... 10 more similar lines omitted ..]
-	valgrind: Startup or configuration error:
-	valgrind:    Can't create client cmdline file in [...]/t/trash directory=
-.t4202-log/bogus/valgrind_proc_7696_cmdline_6e542d1d
-	valgrind: Unable to start up properly.  Giving up.
-	error: last command exited with $?=3D1
+I am sending this out as a final "complain now, or this will go to
+'next' soonish" warning.  The "What's cooking" report is getting
+crowded with too many topics marked as "Expecting a reroll", and I'm
+trying to do easier ones myself to see how much reduction we can
+make.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t4202-log.sh | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
+  tests: using custom GIT_EXEC_PATH breaks --valgrind tests
+  log test: skip a failing mkstemp() test under valgrind
+  commit-graph.c: don't assume that stat() succeeds
+  object-file: fix a unpack_loose_header() regression in 3b6a8db3b03
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index be07407f85..6e66352558 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1992,10 +1992,13 @@ test_expect_success GPG 'log --show-signature for=
- merged tag with GPG failure' '
- 	git tag -s -m signed_tag_msg signed_tag_fail &&
- 	git checkout plain-fail &&
- 	git merge --no-ff -m msg signed_tag_fail &&
--	TMPDIR=3D"$(pwd)/bogus" git log --show-signature -n1 plain-fail >actual=
- &&
--	grep "^merged tag" actual &&
--	grep "^No signature" actual &&
--	! grep "^gpg: Signature made" actual
-+	if ! test_have_prereq VALGRIND
-+	then
-+		TMPDIR=3D"$(pwd)/bogus" git log --show-signature -n1 plain-fail >actua=
-l &&
-+		grep "^merged tag" actual &&
-+		grep "^No signature" actual &&
-+		! grep "^gpg: Signature made" actual
-+	fi
- '
-=20
- test_expect_success GPGSM 'log --graph --show-signature for merged tag x=
-509' '
+ commit-graph.c        |  6 ++++--
+ object-file.c         |  8 ++++++--
+ t/t0060-path-utils.sh |  4 ++--
+ t/t1006-cat-file.sh   | 10 ++++++++--
+ t/t1450-fsck.sh       | 13 +++++++++++--
+ t/t4202-log.sh        | 11 +++++++----
+ t/test-lib.sh         |  1 +
+ 7 files changed, 39 insertions(+), 14 deletions(-)
+
+
+1:  4ebaddb01d ! 1:  3b79af1dde tests: make RUNTIME_PREFIX compatible wit=
+h --valgrind
+    @@ Metadata
+     Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+    =20
+      ## Commit message ##
+    -    tests: make RUNTIME_PREFIX compatible with --valgrind
+    +    tests: using custom GIT_EXEC_PATH breaks --valgrind tests
+    =20
+         Fix a regression in b7d11a0f5d2 (tests: exercise the RUNTIME_PRE=
+FIX
+         feature, 2021-07-24) where tests that want to set up and test a =
+"git"
+2:  b25609d6fc =3D 2:  35a7226706 log test: skip a failing mkstemp() test=
+ under valgrind
+3:  d56edb6654 ! 3:  84d1793178 commit-graph.c: don't assume that stat() =
+succeeds
+    @@ Commit message
+    =20
+         This would happen as we stat'd the non-existing
+         ".git/objects/info/commit-graph" file. Let's fix mark_commit_gra=
+phs()
+    -    to check the statu() return value, and while we're at it fix ano=
+ther
+    +    to check the stat()'s return value, and while we're at it fix an=
+other
+         case added in the same commit to do the same.
+    =20
+         The caller in expire_commit_graphs() would have been less likely=
+ to
+4:  995cfb0439 =3D 4:  391ae0a276 object-file: fix a unpack_loose_header(=
+) regression in 3b6a8db3b03
+
+
+
 --=20
 2.36.1-338-g1c7f76a54c
 
