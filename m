@@ -2,89 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE3F6C433F5
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 23:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F15F9C433FE
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 23:39:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359523AbiELXf7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 19:35:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47884 "EHLO
+        id S1359554AbiELXjX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 19:39:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359511AbiELXf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 19:35:56 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA011834B
-        for <git@vger.kernel.org>; Thu, 12 May 2022 16:35:56 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id m1so5947528qkn.10
-        for <git@vger.kernel.org>; Thu, 12 May 2022 16:35:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=c1Gzh1IsbnVP2i9hHiATH+xjhPp006ZwsNp3Hkzf2mg=;
-        b=OdEk+RL5OAoVukyTbcofVssyj26PbgvvXJImWstwEt8nqA+iO/WpMBpmqbrC2p02f0
-         AeHqt4TQtxhbgcHToXpInIgyVC5mHXnCL9nBjdAbKI5ATgpOVzDM6YVR971diWzMT8jo
-         LK3J3EWV49WkzYOZLMRhx5YUilObDQHMm12S7dfp+kle+E7InAw6aaeMYF1AQnMoCmNr
-         o1E8vr1PErNd5LD6jWbAOL+XxjyScF3b+mC09+tj4hE9cY2gDBxMZn3pOvrhDdOVcCrN
-         OVBo4MxN3DDQ54ON/e/GSPkN7GyAroAAHHX/huzLq5ukgPfW8TGOWu5sJfXFLmkH4QRU
-         U0oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=c1Gzh1IsbnVP2i9hHiATH+xjhPp006ZwsNp3Hkzf2mg=;
-        b=cr5kc2nGg9jw5jF6SIz35nqdK8AFk+vAr4K6UTh9olfN/rhMX4wT4b62x9rPWgCCcs
-         GQm7JM5w0nf/cjtL2xromvT7X8EiuSTz/Sab5gKhT3Nw0MU6qkydXk2vtyTlEXq4vCGv
-         MkMP6CoPnZFcBRF5UeDuaGFplmJzjpXX2LhK7CyFuf4LaOgd3gR6j5BzDpFuoxg1zttx
-         /wxJH43Q3A4Se4jCb415Xdz7h7u04Qlb9JVHTr7dg1mQVZ+R8Dv8oIHdczSZYxaIsgA4
-         DH8wMxGCNFXU8tMYbuT6ei8mRqy0N4a1yZDCmHKA3e3UhP82Gqjx1a3UO2/Yy5r7Q7xZ
-         QXEw==
-X-Gm-Message-State: AOAM5309mKP7g9LGHnJ8H5oLU5rnhORa7RFtQIoSMiUS1Yx+Kpa6xr0Y
-        e2aefElMw/5jCzL5tXZdHwY=
-X-Google-Smtp-Source: ABdhPJw5wqhjaTSBCQdBJ3UVd9g4aaiKkPCiUQBdr3e6r7KxXiy95qFfgiuez3fKYu0vt7bPngWHFw==
-X-Received: by 2002:a37:670b:0:b0:69f:b5e2:5e2d with SMTP id b11-20020a37670b000000b0069fb5e25e2dmr1878048qkc.326.1652398555241;
-        Thu, 12 May 2022 16:35:55 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id bq31-20020a05620a469f00b0069fc13ce1fbsm463968qkb.44.2022.05.12.16.35.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 16:35:54 -0700 (PDT)
-Subject: Re: [PATCH v3] pull: do not let submodule.recurse override
- fetch.recurseSubmodules
-To:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Huang Zou <huang.zou@schrodinger.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Glen Choo <chooglen@google.com>
-References: <pull.1262.v2.git.git.1652210747614.gitgitgadget@gmail.com>
- <pull.1262.v3.git.git.1652312560207.gitgitgadget@gmail.com>
- <xmqqv8uaebav.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <14349c04-6879-6fd6-30f0-4272a627b93d@gmail.com>
-Date:   Thu, 12 May 2022 19:35:53 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S1359534AbiELXjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 19:39:16 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3B52286FF9
+        for <git@vger.kernel.org>; Thu, 12 May 2022 16:39:15 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B2AF11CC07;
+        Thu, 12 May 2022 19:39:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=okDg8VhP5R2G
+        d8mrFIgbs17g0XipEpVfctn7REPx0w8=; b=HDSCSdIATc1Mu5PUIAZ6Zco9qb6A
+        V9oWuugGEwWtCtZzmQLSHKNj6dXt1JjQMu5qq4+V5lnAOdzwfNhxp94RIFw/qepF
+        CZWpVE+xTKJbLKYIpxn5Q+qm4WLM1jveOq3151j0gBeTjXcFQNXkanQSpXMpIU0I
+        bQ6TT6UYnYBCidw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 628B511CC06;
+        Thu, 12 May 2022 19:39:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8AD411CC04;
+        Thu, 12 May 2022 19:39:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 4/4] object-file: fix a unpack_loose_header()
+ regression in 3b6a8db3b03
+References: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
+        <20220512223218.237544-1-gitster@pobox.com>
+        <20220512223218.237544-5-gitster@pobox.com>
+Importance: high
+Date:   Thu, 12 May 2022 16:39:12 -0700
+In-Reply-To: <20220512223218.237544-5-gitster@pobox.com> (Junio C. Hamano's
+        message of "Thu, 12 May 2022 15:32:18 -0700")
+Message-ID: <xmqqo802codb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqv8uaebav.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: BAF73786-D24C-11EC-8920-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Glen and Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Le 2022-05-12 à 16:38, Junio C Hamano a écrit :
-> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Glen Choo <chooglen@google.com>
-> 
-> Let's see if there are any more inputs and start merging down to
-> 'next'.
-> 
+> diff --git a/object-file.c b/object-file.c
+> index 5ffbf3d4fd..b5d1d12b68 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2623,8 +2623,12 @@ int read_loose_object(const char *path,
+>  		goto out;
+>  	}
+> =20
+> -	if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+> -				NULL) < 0) {
+> +	switch (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+> +				    NULL)) {
+> +	case ULHR_OK:
+> +		break;
+> +	case ULHR_BAD:
+> +	case ULHR_TOO_LONG:
+>  		error(_("unable to unpack header of %s"), path);
+>  		goto out;
+>  	}
 
-Well I just thought that since you just merged pb/submodule-recurse-mode-enum
-into 'next', maybe Glen could make use of the new enum in his new code,
-though that could also be a separate cleanup for later.
+Regarding this hunk, since we only care about a single "did we get
+any error, or did we unpack OK" bit, I think this should be more
+like
 
-Philippe.
+	if (unpack_loose_header(...) !=3D ULHR_OK) {
+		error(_("unable to..."), path);
+		goto out;
+	}
+
+It is true, as =C3=86var mentioned, that there is another place in the
+same file that uses switch() in loose_object_info(), and it should
+remain to be switch() on the returned enum because it wants to
+behave differnetly depending on the kind of error it gets.  But that
+is not a reason to make this part that only cares about a single
+"did it fail?" into a switch and force future developers to add a
+useless case arm.
+
+I left it there as posted in the previous round because I was too
+lazy ;-) and also it is something we can clean up with a follow up
+patch outside the series.  As my today's focus has been to reduce
+the number of topics waiting for a reroll, I'd rather leave things
+that are not outright broken but needs clean up as they are for the
+sake of expediency.
+
+Thanks.
