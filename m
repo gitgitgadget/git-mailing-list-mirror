@@ -2,30 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF87C433F5
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 15:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70FE7C433F5
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 15:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352937AbiELPJI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 11:09:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32818 "EHLO
+        id S1355799AbiELPLl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 11:11:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346249AbiELPJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 11:09:07 -0400
+        with ESMTP id S1355812AbiELPLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 11:11:37 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF8A230225
-        for <git@vger.kernel.org>; Thu, 12 May 2022 08:09:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65D12608EB
+        for <git@vger.kernel.org>; Thu, 12 May 2022 08:11:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1652368129;
-        bh=NgNAKDX6mVyZSdXxLm4p7ZfvZwayBqxtTAt02415VhE=;
+        s=badeba3b8450; t=1652368277;
+        bh=rAGIGMDCj+AC5NtrO6VIP7JojbBLyElmByEbmHJ5SPo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SX8vBEClvP+oF7B28Utl3E2CMrLFWZ8/fKOQl867twVYh5mJ/YsdGnHazwPr/0Rua
-         Xs59Jj3SWGN5jXUChccdSHroqZhQTe/8T3JPOf2V66DvKruJfQv41IUUuNSZdCDN9S
-         PqujdrveUOD8MX50zshBpmn3CKUxux5JCqgvHCrI=
+        b=b/MuQGTHoM0HvYlAI8Zld/gX3FiB2PfTL92RWspLdVW+Q5SUJ1LR0I6GuitBqn1zl
+         aFeBQKOM2nuPaZ6TYv+Iuge0f3/0ZIUHH9rDjx+GJ9mu8+V5k9HnmSSuuMNg7buoXz
+         OLXOXSfSfczl7WjIobCjFilgJE9mQev/T1ttZExo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([213.196.213.50]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4axg-1nocT92Bao-001k3s; Thu, 12
- May 2022 17:08:49 +0200
-Date:   Thu, 12 May 2022 17:08:48 +0200 (CEST)
+Received: from [172.18.242.215] ([213.196.213.50]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbRfv-1oM2FY2l3Z-00bu4X; Thu, 12
+ May 2022 17:11:17 +0200
+Date:   Thu, 12 May 2022 17:11:15 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
@@ -36,35 +36,35 @@ cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 20/28] fsmonitor: optimize processing of directory
- events
-In-Reply-To: <48af0813deccab924d3591b4df025b17bf309260.1650662994.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2205121708400.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>        <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <48af0813deccab924d3591b4df025b17bf309260.1650662994.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v6 23/28] fsmonitor: never set CE_FSMONITOR_VALID on
+ submodules
+In-Reply-To: <d0e25f6bac663e9ae4d63322f102378dd2ecba84.1650662994.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205121709210.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>        <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <d0e25f6bac663e9ae4d63322f102378dd2ecba84.1650662994.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:t7RhOHIoqSTkUWejvlOLIrAjA8jtQvOqFgHFKnnU5MSHVjnAp2e
- 3/lQi7i1zx3M3NUatQUIy0vDfjd6qz61s8KM5ANOjZ3uzxb6quWN4m6dejjNLSz5hiIPQFs
- F3pU++CdUdqXqrB+Tu7D1h72b76C21+vh/q9uLbQvKw5DQrNN88HjS6Mgi3rhI1NiZ5dgm2
- nYC7jruT1P1qa4QhnMOBQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NTnYnnc05Oc=:gMcgq0l9mcy7jnJXKPhC1d
- nrnLXAXvpvdD9Q6BfubiG6djuMEIb1P+wv62zM55XpMhzlgKboyGqzxuF1G+K9yPlJnXNRlwO
- Psvyt7dMbnahqIWhuusjUUArY80MvbUNlpL3bK9FuEpylATTYXa51PFVB2zZz6DRUQz8nfdsD
- IWCNe2hudE2DG50TGwBALNeOPO7S04E9i7gt1B/6jOi82HzvqHpv10cNe+uvgWwFcFUJaCE67
- vDfRELN4Kpya0/uIITcUecAxAJzxXW723k9F8npYfscR5J98bJnK578SSDXHKz6SRxrDPJqy+
- rc9eSfamHBVK15JFzfDYcAZugf+NYF/a8m9Src46i3RaGlT5hQjssIkCQnxx/2V6715d2Svps
- VlMv0CR9bJMmbk8eMgapC13AEC38+VwlP/rY3yvZDX96z0TpcL3Tv8S7HvPOagrJpoutoVqm/
- 8yqM/jsp7aSM9FXP5hjTzJyyjEiOZZevv8oMGDkVS9XAuPNE0K6E3DGT48NwMVIVlpzBAkcVj
- 1JkM2DV81eCCWR0Yr9KocaedKZaMvpLQoBIpftENRO6BwGLQtuiISfVKeZs6cmAOguZ+5D8o1
- 22iJeMHzlsUe961E2OgkK7AtS/LowiVPBOKsnw/ovIdl1y0RW1ZB7mWe/iU8rXAFme6ypAfWv
- tvsWVjJDE1FK6rRjTqhg8OIOhr4WyUv2Qwmn237MxDhbZ78C7cETAD1VNn5hydxYueRtahtXW
- yq8A9+zNzMrx9lj4Ps/wx6Io4+R4yMwGAXUxiPaCuc0JONHKyPUKRgviz7rnSQl8Ng5nW9Vfr
- DFKVRA+et4g/dy54Kn2b7KgfAuC2ffNZUnpmQ55Cb/zUVSk7FypzWf5XryoeMwMThH2vVYFPh
- bH9YMP5aMyIy2szc04AcIdnMHGqtca+CmVK8cml+R5GspRBtluNzrcazRU3+xzlW3ntjmh9K+
- 3hgjwvkFmuBotpsH9aSGYPxStuKbi8LxnmdGnlEpCscJkoDeIaB2Lj9xoFTdlrEJzkJFsbIl/
- FKReLHEia8OUJVrQtFPrAMAps+cu5WILEeNmszpvXP8N+ackj59m0ga+qBddXZQzLQqJZVWO8
- i+kofRR4ICEXlCCzzzB7ce7Ej2o/HvLkFWPEIA9MUnST+EtnoJiqFttrQ==
+X-Provags-ID: V03:K1:BiZGWfYD2BT5+02lZOomox7UZkck98qkest8suJldEnnF+2czcJ
+ MDbV++10H4TfYgGDKQymVClPf9Qn+Ulm2QIC1j7IuyBtUKm9XH3D5hwPTA2YWng1rcA5KC7
+ 7qoD7tHj21jBpLD5jWok//AibMIWIBtmmbrybkGhRGQArW0VY/n6x1F4PvWwN/PLhbOU3Du
+ ZhcQxkk7CsBUVp1k844gQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qc91myQjjUg=:IpzupQT4ODSYKqulUBgdQY
+ ADjKWAGcS1NEeoRIHceNEbhPlDQbPBw10keGXZaJ2oHgT1QIEUea65HYbkU4Bbl5mvE1yj22k
+ v9r/inMGvRLSP+OINkCE/H5GA4tQyhKkoikfzDkUmGYrXdnQggUFjwsioV6sbpctVOM18aG/5
+ mxF3jHZMoghiCfSRhzhbfNgnrhRrmuj7ozyHGacZnnba3yATBk4csuNC3QYYSY3I0MLGX1yvs
+ QdRpR5dTOQqxwIUkMJSkxqVN6i81oehxOaHUW9E+DwGk3GK4oH9E+99HOopUx0fw71T6/ku5d
+ xuPo/U59/u2GN7Hm20szldWG+3VFga0irpJ9sPX6/nZFzmuzYiRWd0Xaypqq5aaULKAv+YAe8
+ ymrZEoKAP0pDW+AZ4Kg8+id5TQ4aS96ydN6azmULbSs8fosO/ZrgARoPBTe3SHXOgCvKsmgej
+ UzoBVnWq32izTjtUVr6mps4X2Lz7U6nUewGctiFtJlTHtfH1Lle9dIShTIYbQ1vk+vpVP72y8
+ 2IiSmRnVPFJL8cv3fPoWo70dSnvJ9IVdt/rMdRTNzJt+hU6iJYnnwVjPhMnwBTJLBReECfZeP
+ TznSFGeh6pQ+7JFYXgtUqoBGelXPmBURkiXQyeB8tplf0tpuavfEm6yXf8iZYC+PQVom5bxla
+ 47kerTLZ0Z/+v+c/qni80vjkfHcukypANUZJy6bOZFlaWrCAE4h3t4HqeRAeXIfe2LTj0DymV
+ dZeRgQbPR7q8yDBcCnCBfeIdRjEBJDWnWr6/eMIoeDK3asrL8Ufc6h7R7/f149ZuGxx+JVmGG
+ GQtkErGETeIK9o9JHXHFBsls41etP3/QKJIG9nyrhl85kk/AaCLKh6bwVCOYrETIdRLfRDbCa
+ +kVOZUnYxrXnE75eRhZLu7tvM2oqpgN1bOQpqPa2AwwIvB4/bUC5/iEBwy0QIa87BjcFLkwKF
+ 3bqO4daMQhKNMXQGucg+PS2Sm+z3wU8PWhG02/JQ8ncs1E0/HwPYdPBc9DA7lOYz0ywlDn4De
+ Vm4W75f6QgTEZruGP6bqDX1NUKh8P29jQnnv8/w1u5zPX30kiDHhhT09+cHYxFnwim5qiOBd4
+ WAdWHS7Wrt1kDM=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,142 +76,218 @@ On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
 
 > From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> Teach Git to perform binary search over the cache-entries for a director=
-y
-> notification and then linearly scan forward to find the immediate childr=
-en.
+> Never set CE_FSMONITOR_VALID on the cache-entry of submodule
+> directories.
 >
-> Previously, when the FSMonitor reported a modified directory Git would
-> perform a linear search on the entire cache-entry array for all
-> entries matching that directory prefix and invalidate them.  Since the
-> cache-entry array is already sorted, we can use a binary search to
-> find the first matching entry and then only linearly walk forward and
-> invalidate entries until the prefix changes.
+> During a client command like 'git status', we may need to recurse
+> into each submodule to compute a status summary for the submodule.
+> Since the purpose of the ce_flag is to let Git avoid scanning a
+> cache-entry, setting the flag causes the recursive call to be
+> avoided and we report incorrect (no status) for the submodule.
 >
-> Also, the original code would invalidate anything having the same
-> directory prefix.  Since a directory event should only be received for
-> items that are immediately within the directory (and not within
-> sub-directories of it), only invalidate those entries and not the
-> whole subtree.
+> We created an OS watch on the root directory of our working
+> directory and we receive events for everything in the cone
+> under it.  When submodules are present inside our working
+> directory, we receive events for both our repo (the super) and
+> any subs within it.  Since our index doesn't have any information
+> for items within the submodules, we can't use those events.
+>
+> We could try to truncate the paths of those events back to the
+> submodule boundary and mark the GITLINK as dirty, but that
+> feels expensive since we would have to prefix compare every FS
+> event that we receive against a list of submodule roots.  And
+> it still wouldn't be sufficient to correctly report status on
+> the submodule, since we don't have any space in the cache-entry
+> to cache the submodule's status (the 'SCMU' bits in porcelain
+> V2 speak).  That is, the CE_FSMONITOR_VALID bit just says that
+> we don't need to scan/inspect it because we already know the
+> answer -- it doesn't say that the item is clean -- and we
+> don't have space in the cache-entry to store those answers.
+> So we should always do the recursive scan.
+>
+> Therefore, we should never set the flag on GITLINK cache-entries.
 >
 > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 > ---
->  fsmonitor.c | 71 ++++++++++++++++++++++++++++++++++++++++-------------
->  1 file changed, 54 insertions(+), 17 deletions(-)
+>  fsmonitor.c                  |   2 +
+>  fsmonitor.h                  |  11 ++++
+>  t/t7527-builtin-fsmonitor.sh | 111 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 124 insertions(+)
 >
 > diff --git a/fsmonitor.c b/fsmonitor.c
-> index 292a6742b4f..e1229c289cf 100644
+> index e1229c289cf..57d6a483bee 100644
 > --- a/fsmonitor.c
 > +++ b/fsmonitor.c
-> @@ -184,30 +184,68 @@ static int query_fsmonitor_hook(struct repository =
-*r,
->  static void fsmonitor_refresh_callback(struct index_state *istate, char=
- *name)
+> @@ -580,6 +580,8 @@ void tweak_fsmonitor(struct index_state *istate)
+>  		if (fsmonitor_enabled) {
+>  			/* Mark all entries valid */
+>  			for (i =3D 0; i < istate->cache_nr; i++) {
+> +				if (S_ISGITLINK(istate->cache[i]->ce_mode))
+> +					continue;
+>  				istate->cache[i]->ce_flags |=3D CE_FSMONITOR_VALID;
+>  			}
+>
+> diff --git a/fsmonitor.h b/fsmonitor.h
+> index 3f41f653691..edf7ce5203b 100644
+> --- a/fsmonitor.h
+> +++ b/fsmonitor.h
+> @@ -68,6 +68,15 @@ static inline int is_fsmonitor_refreshed(const struct=
+ index_state *istate)
+>   * Set the given cache entries CE_FSMONITOR_VALID bit. This should be
+>   * called any time the cache entry has been updated to reflect the
+>   * current state of the file on disk.
+> + *
+> + * However, never mark submodules as valid.  When commands like "git
+> + * status" run they might need to recurse into the submodule (using a
+> + * child process) to get a summary of the submodule state.  We don't
+> + * have (and don't want to create) the facility to translate every
+> + * FS event that we receive and that happens to be deep inside of a
+> + * submodule back to the submodule root, so we cannot correctly keep
+> + * track of this bit on the gitlink directory.  Therefore, we never
+> + * set it on submodules.
+>   */
+>  static inline void mark_fsmonitor_valid(struct index_state *istate, str=
+uct cache_entry *ce)
 >  {
->  	int i, len =3D strlen(name);
-> -	if (name[len - 1] =3D=3D '/') {
-> +	int pos =3D index_name_pos(istate, name, len);
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "fsmonitor_refresh_callback '%s' (pos %d)",
-> +			 name, pos);
+> @@ -75,6 +84,8 @@ static inline void mark_fsmonitor_valid(struct index_s=
+tate *istate, struct cache
 >
-> +	if (name[len - 1] =3D=3D '/') {
->  		/*
-> -		 * TODO We should binary search to find the first path with
-> -		 * TODO this directory prefix.  Then linearly update entries
-> -		 * TODO while the prefix matches.  Taking care to search without
-> -		 * TODO the trailing slash -- because '/' sorts after a few
-> -		 * TODO interesting special chars, like '.' and ' '.
-> +		 * The daemon can decorate directory events, such as
-> +		 * moves or renames, with a trailing slash if the OS
-> +		 * FS Event contains sufficient information, such as
-> +		 * MacOS.
-> +		 *
-> +		 * Use this to invalidate the entire cone under that
-> +		 * directory.
-> +		 *
-> +		 * We do not expect an exact match because the index
-> +		 * does not normally contain directory entries, so we
-> +		 * start at the insertion point and scan.
->  		 */
-> +		if (pos < 0)
-> +			pos =3D -pos - 1;
+>  	if (fsm_mode > FSMONITOR_MODE_DISABLED &&
+>  	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
+> +		if (S_ISGITLINK(ce->ce_mode))
+> +			return;
+>  		istate->cache_changed =3D 1;
+>  		ce->ce_flags |=3D CE_FSMONITOR_VALID;
+>  		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->n=
+ame);
+> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+> index d0e681d008f..4c49ae5a684 100755
+> --- a/t/t7527-builtin-fsmonitor.sh
+> +++ b/t/t7527-builtin-fsmonitor.sh
+> @@ -721,4 +721,115 @@ do
+>  	'
+>  done
 >
->  		/* Mark all entries for the folder invalid */
-> -		for (i =3D 0; i < istate->cache_nr; i++) {
-> -			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID &&
-> -			    starts_with(istate->cache[i]->name, name))
-> -				istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
-> +		for (i =3D pos; i < istate->cache_nr; i++) {
-> +			if (!starts_with(istate->cache[i]->name, name))
-> +				break;
-> +			istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
->  		}
-> -		/* Need to remove the / from the path for the untracked cache */
+> +# Test fsmonitor interaction with submodules.
+> +#
+> +# If we start the daemon in the super, it will see FS events for
+> +# everything in the working directory cone and this includes any
+> +# files/directories contained *within* the submodules.
+> +#
+> +# A `git status` at top level will get events for items within the
+> +# submodule and ignore them, since they aren't named in the index
+> +# of the super repo.  This makes the fsmonitor response a little
+> +# noisy, but it doesn't alter the correctness of the state of the
+> +# super-proper.
+> +#
+> +# When we have submodules, `git status` normally does a recursive
+> +# status on each of the submodules and adds a summary row for any
+> +# dirty submodules.  (See the "S..." bits in porcelain V2 output.)
+> +#
+> +# It is therefore important that the top level status not be tricked
+> +# by the FSMonitor response to skip those recursive calls.  That is,
+> +# even if FSMonitor says that the mtime of the submodule directory
+> +# hasn't changed and it could be implicitly marked valid, we must
+> +# not take that shortcut.  We need to force the recusion into the
+> +# submodule so that we get a summary of the status *within* the
+> +# submodule.
 > +
-> +		/*
-> +		 * We need to remove the traling "/" from the path
-> +		 * for the untracked cache.
-> +		 */
->  		name[len - 1] =3D '\0';
-> +	} else if (pos >=3D 0) {
-> +		/*
-> +		 * We have an exact match for this path and can just
-> +		 * invalidate it.
-> +		 */
-> +		istate->cache[pos]->ce_flags &=3D ~CE_FSMONITOR_VALID;
->  	} else {
-> -		int pos =3D index_name_pos(istate, name, strlen(name));
-> -
-> -		if (pos >=3D 0) {
-> -			struct cache_entry *ce =3D istate->cache[pos];
-> -			ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
-> +		/*
-> +		 * The path is not a tracked file -or- it is a
-> +		 * directory event on a platform that cannot
-> +		 * distinguish between file and directory events in
-> +		 * the event handler, such as Windows.
-> +		 *
-> +		 * Scan as if it is a directory and invalidate the
-> +		 * cone under it.  (But remember to ignore items
-> +		 * between "name" and "name/", such as "name-" and
-> +		 * "name.".
-> +		 */
-> +		pos =3D -pos - 1;
+> +create_super () {
+> +	super=3D"$1" &&
 > +
-> +		for (i =3D pos; i < istate->cache_nr; i++) {
-> +			if (!starts_with(istate->cache[i]->name, name))
-> +				break;
-> +			if ((unsigned char)istate->cache[i]->name[len] > '/')
+> +	git init "$super" &&
+> +	echo x >"$super/file_1" &&
+> +	echo y >"$super/file_2" &&
+> +	echo z >"$super/file_3" &&
+> +	mkdir "$super/dir_1" &&
+> +	echo a >"$super/dir_1/file_11" &&
+> +	echo b >"$super/dir_1/file_12" &&
+> +	mkdir "$super/dir_1/dir_2" &&
+> +	echo a >"$super/dir_1/dir_2/file_21" &&
+> +	echo b >"$super/dir_1/dir_2/file_22" &&
+> +	git -C "$super" add . &&
+> +	git -C "$super" commit -m "initial $super commit"
+> +}
+> +
+> +create_sub () {
+> +	sub=3D"$1" &&
+> +
+> +	git init "$sub" &&
+> +	echo x >"$sub/file_x" &&
+> +	echo y >"$sub/file_y" &&
+> +	echo z >"$sub/file_z" &&
+> +	mkdir "$sub/dir_x" &&
+> +	echo a >"$sub/dir_x/file_a" &&
+> +	echo b >"$sub/dir_x/file_b" &&
+> +	mkdir "$sub/dir_x/dir_y" &&
+> +	echo a >"$sub/dir_x/dir_y/file_a" &&
+> +	echo b >"$sub/dir_x/dir_y/file_b" &&
+> +	git -C "$sub" add . &&
+> +	git -C "$sub" commit -m "initial $sub commit"
+> +}
+> +
+> +my_match_and_clean () {
+> +	git -C super --no-optional-locks status --porcelain=3Dv2 >actual.with =
+&&
+> +	git -C super --no-optional-locks -c core.fsmonitor=3Dfalse \
+> +		status --porcelain=3Dv2 >actual.without &&
+> +	test_cmp actual.with actual.without &&
+> +
+> +	git -C super/dir_1/dir_2/sub reset --hard &&
+> +	git -C super/dir_1/dir_2/sub clean -d -f
+> +}
+> +
+> +test_expect_success "Submodule always visited" '
 
-Nice attention to detail casting `istate->cache[i]->name[len]` to
-`(unsigned char)` before comparing to '/'!
-
-> +				break;
-> +			if (istate->cache[i]->name[len] =3D=3D '/')
-> +				istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
->  		}
->  	}
->
-> @@ -215,7 +253,6 @@ static void fsmonitor_refresh_callback(struct index_=
-state *istate, char *name)
->  	 * Mark the untracked cache dirty even if it wasn't found in the index
->  	 * as it could be a new untracked file.
->  	 */
-> -	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", =
-name);
-
-Did you mean to remove this statement in this patch? Not a big issue, but
-I wonder what the rationale for it is, and since I have an inquisitive
-mind, I figured I'd just ask.
+I almost feel bad offering this nit: could you use single-quotes, and
+start with a lower-case `s`?
 
 Thanks,
 Dscho
 
->  	untracked_cache_invalidate_path(istate, name, 0);
->  }
->
+> +	test_when_finished "git -C super fsmonitor--daemon stop; \
+> +			    rm -rf super; \
+> +			    rm -rf sub" &&
+> +
+> +	create_super super &&
+> +	create_sub sub &&
+> +
+> +	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
+> +	git -C super commit -m "add sub" &&
+> +
+> +	start_daemon -C super &&
+> +	git -C super config core.fsmonitor true &&
+> +	git -C super update-index --fsmonitor &&
+> +	git -C super status &&
+> +
+> +	# Now run pairs of commands w/ and w/o FSMonitor while we make
+> +	# some dirt in the submodule and confirm matching output.
+> +
+> +	# Completely clean status.
+> +	my_match_and_clean &&
+> +
+> +	# .M S..U
+> +	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_u &&
+> +	my_match_and_clean &&
+> +
+> +	# .M S.M.
+> +	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_m &&
+> +	git -C super/dir_1/dir_2/sub add . &&
+> +	my_match_and_clean &&
+> +
+> +	# .M S.M.
+> +	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
+> +	git -C super/dir_1/dir_2/sub add . &&
+> +	my_match_and_clean &&
+> +
+> +	# .M SC..
+> +	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
+> +	git -C super/dir_1/dir_2/sub add . &&
+> +	git -C super/dir_1/dir_2/sub commit -m "SC.." &&
+> +	my_match_and_clean
+> +'
+> +
+>  test_done
 > --
 > gitgitgadget
 >
