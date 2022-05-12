@@ -2,118 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBF2EC433F5
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 18:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84B9AC433F5
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 18:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357516AbiELSPQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 14:15:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59438 "EHLO
+        id S1357805AbiELS6F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 14:58:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357502AbiELSPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 14:15:14 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8D226FA64
-        for <git@vger.kernel.org>; Thu, 12 May 2022 11:15:11 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 714F919A63F;
-        Thu, 12 May 2022 14:15:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wy2oSqza6u19
-        1gWjM+0oPFG5TqCXkLuQTZlHJBjNqY4=; b=WgK7S3lAX+YMe+SbADTLpdmDKU0r
-        qScq2dp0ffp3eMPrVM9UNHiHfAr2196bWfOfcUjUWfRBFi2C41I+Ct5Fat6INlV8
-        G6lqQPEBkJKP+N36EmeQMF9q/MnupiO2Rc6uYbyftFtivvTHWm2zt8pNFvFx8v/Q
-        ENpFvZuhQDLJ3qU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A1D019A63E;
-        Thu, 12 May 2022 14:15:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1221219A63A;
-        Thu, 12 May 2022 14:15:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     rsbecker@nexbridge.com,
-        'Johannes Schindelin via GitGitGadget' 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        'Taylor Blau' <me@ttaylorr.com>,
-        'Derrick Stolee' <stolee@gmail.com>,
-        'Elijah Newren' <newren@gmail.com>,
-        'Johannes Schindelin' <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/7] archive: optionally add "virtual" files
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
-        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
-        <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
-        <xmqqtu9x6ovh.fsf@gitster.g>
-        <03d701d864ba$46d15c10$d4741430$@nexbridge.com>
-        <xmqq8rr955zf.fsf@gitster.g>
-        <3cf6e4f8-9151-6d68-21ca-b94d6a7557e6@web.de>
-        <xmqqzgjnkgy0.fsf@gitster.g>
-        <47ed5a2f-f4aa-1ec1-27c9-9b0b70eb8bca@web.de>
-Date:   Thu, 12 May 2022 11:15:05 -0700
-In-Reply-To: <47ed5a2f-f4aa-1ec1-27c9-9b0b70eb8bca@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 12 May 2022 18:16:50 +0200")
-Message-ID: <xmqqfslefwie.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1348075AbiELS6D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 14:58:03 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AFF9712ED
+        for <git@vger.kernel.org>; Thu, 12 May 2022 11:58:03 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id x52so5607763pfu.11
+        for <git@vger.kernel.org>; Thu, 12 May 2022 11:58:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uFeGXu4JtlL7ajJfo9ocR6vsyaJulJH2macwsnXhXnw=;
+        b=YXXREif6XBD5Tzb3HluABc5xlenjVWVqqqPPX/VR7u5vdWZdywBz0xgt0L4O5h1dtT
+         q+2Ll4ZZCylRJfNLH4Q8dQ1Q2qvX0OQNJ+iBZHpJ6/L9aolpMCtQQGu8QuwKDKTxVDr4
+         KzKBiYrUZPKuRR1kPNNjna7CwZP1cjPz+oJLtak+fsa9mjvSvasREwiMgmsyTGleYpTN
+         pverim0KbwYLDnnHbDcDiDNqkQN35DI0+23b9W2hjbGxV/osu6rz4Cg6IpRwYsT7kqS6
+         CEbxKU7dx1cIEbmoIHFyXR7u2oPePBUVd1jAmycetm7KEosbNaGZTPOiZG8iSRZEGWUj
+         941Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uFeGXu4JtlL7ajJfo9ocR6vsyaJulJH2macwsnXhXnw=;
+        b=gMoY3pDE0x5bKq6e+yq7DO5YaZp04GiE2S4P5U+rzlxA4ozNwtkapE69/soA+NtwoB
+         mKbd1P83pzxgh9ADxFoFvr7ES89xTSWt8PxzfYXtPDRrhT9+vZYw2neWNJoIyYjczx3Y
+         KQQEwXwjbbt7uGbnKFp/jLnqSQLVpCTTQdZjt/oe08gAFHkDY7aJCun86EpQF5DZvHIr
+         h9vKSbMKmC/XgXHf+q6Eo5Ri2S4n844X2wiBUm8oSYxxP2CgUzPeSAgwqFtCVU0dzYsR
+         biFXuCo8u2Zm0QwsYavyVgRQYrNUIhDL1TnbMx18H8KQMrfpEBAbWcPzCvPFIBAvgnCQ
+         FOfg==
+X-Gm-Message-State: AOAM532RTNUlcBLXOrlBCJvEVoTlo8yKsFaesGmmxXbUzHVgVShBRJqH
+        AvLs1o56hLTwN6UHMixOCXVYXfjPXIaaDpuQs+PhM/iRF/A=
+X-Google-Smtp-Source: ABdhPJyin2H7Mv5zXYcnrm3ayGd3tdqLjSRT7C7KPlNr0Ji/fb7xgJOzp/VWt8OjWa2u1YSey+3DuTwKLM/jRzdwYBk=
+X-Received: by 2002:a05:6a00:8c2:b0:510:98ac:96c9 with SMTP id
+ s2-20020a056a0008c200b0051098ac96c9mr871056pfu.18.1652381882305; Thu, 12 May
+ 2022 11:58:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 73D6DDFC-D21F-11EC-88A6-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20220502083639.610279-1-chriscool@tuxfamily.org>
+ <20220504104601.136403-1-chriscool@tuxfamily.org> <20220505112114.ktki3dgjbyukzhlm@carlos-mbp.lan>
+ <CAP8UFD3UvjJzEQApiCKSknDWaTjbEMKkr17j1QN-8gwz7eWV3Q@mail.gmail.com> <xmqqzgjmg1q5.fsf@gitster.g>
+In-Reply-To: <xmqqzgjmg1q5.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 12 May 2022 20:57:50 +0200
+Message-ID: <CAP8UFD2tk7ti_G0Ao_-u0g9+hm-x4gnuSjEPHbnKPan6S741Ug@mail.gmail.com>
+Subject: Re: [PATCH v2] http: add custom hostname to IP address resolutions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
-
-> Good point.  write_tar_entry() actually normalizes the permission bits
-> and applies tar.umask (0002 by default):
+On Thu, May 12, 2022 at 6:22 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
-> 		*header.typeflag =3D TYPEFLAG_DIR;
-> 		mode =3D (mode | 0777) & ~tar_umask;
-> 	} else if (S_ISLNK(mode)) {
-> 		*header.typeflag =3D TYPEFLAG_LNK;
-> 		mode |=3D 0777;
-> 	} else if (S_ISREG(mode)) {
-> 		*header.typeflag =3D TYPEFLAG_REG;
-> 		mode =3D (mode | ((mode & 0100) ? 0777 : 0666)) & ~tar_umask;
-
-Yeah, this side seems to care only about u+x bit, so
-"add-executable" as a separate option would fly we..
-
-> But write_zip_entry() only normalizes (drops) the permission bits of
-> non-executable files:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->                 attr2 =3D S_ISLNK(mode) ? ((mode | 0777) << 16) :
->                         (mode & 0111) ? ((mode) << 16) : 0;
->                 if (S_ISLNK(mode) || (mode & 0111))
->                         creator_version =3D 0x0317;
+> > "Perhaps invent a totally bogus domain name, map that to
+> > localhost ::1, run a test server locally, and try to clone from that
+> > bogus domain?"
+> >
+> > (See: https://lore.kernel.org/git/xmqqfslrycvp.fsf@gitster.g/)
+> >
+> > I think "a totally bogus domain name" refers to something other than
+> > "example.com".
 >
-> attr2 corresponds to the field "external file attributes" mentioned in
-> the ZIP format specification, APPNOTE.TXT.  It's interpreted based on
-> the "version made by" (creator_version here); that 0x03 part above
-> means "UNIX".  The default is MS-DOS (FAT filesystem), with effectivly
-> no support for file permissions.
+> I meant a domain that should not be used for purposes other than
+> being examples in the real world, including "example.com".
+
+Ok, thanks for the clarification and for copying the relevant RFC
+information below.
+
+> But RFC6761, which is an update to RFC2606, describes a set of
+> properties that make .invalid nice domain to use, including:
 >
-> So we currently leak permission bits of executable files into ZIP
-> archives, but not tar files. :-|  Normalizing those to 0755 would be
-> more consistent.
-
-Yup.
-
->> For tracked paths, we probably are normalizing the blobs
->> between 0644 and 0755 way before the values are passed as "mode"
->> parameter to the write_entry() functions, but for these extra files,
->> there is no such massaging.
+>  1.  Users are free to use "invalid" names as they would any other
+>      domain names.  Users MAY assume that queries for "invalid"
+>      names will always return NXDOMAIN responses.
 >
-> Right, mode values from read_tree() pass through canon_mode(), so only
-> untracked files (those appended with --add-file) are affected by the
-> leakage mentioned above.
+>  3.  Name resolution APIs and libraries SHOULD recognize "invalid"
+>      names as special and SHOULD always return immediate negative
+>      responses.  Name resolution APIs SHOULD NOT send queries for
+>      "invalid" names to their configured caching DNS server(s).
 
-Thanks for sanity-checking.
+I wonder if libcurl considers itself as a name resolution library or
+not. It has a DNS cache, so maybe in some ways it is. Also however it
+considers itself now, it could perhaps change in the future. Even if
+the current developers are against such a change, a new RFC might be
+more precise and specify something for libraries like libcurl which
+could make it change.
 
+So I am not so sure that using "invalid" is our best bet.
+
+> Another possibility is ".test" but it is more for testing DNS, not
+> application, i.e.
+
+In a way we are testing DNS, as we are actually testing libcurl's DNS
+caching and its CURLOPT_RESOLVE option (even if we also test that Git
+is correctly passing the config option to libcurl at the same time).
+
+>  1.  Users are free to use these test names as they would any other
+>      domain names.  However, since there is no central authority
+>      responsible for use of test names, users SHOULD be aware that
+>      these names are likely to yield different results on different
+>      networks.
+>
+>  3.  Name resolution APIs and libraries SHOULD NOT recognize test
+>      names as special and SHOULD NOT treat them differently.  Name
+>      resolution APIs SHOULD send queries for test names to their
+>      configured caching DNS server(s).
+
+So with this we can at least expect that the way libcurl considers
+itself will have no impact on our tests.
+
+> so for a code like what we are discussing, which would not want the
+> names to be shown to DNS and yield any IP address, ".test" makes a
+> poorer "bogus domain name" than ".invalid", I think.
+
+I would think that there are risks in both cases. I am Ok with using
+any of the following in the test:
+
+BOGUS_HOST=gitbogusexamplehost.invalid # or
+BOGUS_HOST=gitbogusexamplehost.test
+
+The test passes for me either way.
+
+> By the way, we seem to have references to .xz top-level domain,
+> which appeared only in earlier drafts of what became RFC2606 (which
+> was updated by RFC6761) in both documentation pages and tests.  At
+> some point we may want to update the former to ".example" and the
+> latter to ".invalid" as a clean-up.
+
+Yeah, good idea.
+
+> > Also "example.com" does seem to resolve to an IP address and even has
+> > an HTTP(S) server on it, while I think the purpose of the test would
+> > be to check that there is not even a valid DNS resolution when the new
+> > option is not used.
+>
+> Yup, that makes ".invalid" a better candidate, I think.
+
+Ok, I will use "gitbogusexamplehost.invalid" in the next iteration then.
