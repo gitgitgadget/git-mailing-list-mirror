@@ -2,116 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F38C433EF
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 21:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD6A9C433EF
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 22:08:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356598AbiELVbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 17:31:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
+        id S1359054AbiELWIe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 18:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358721AbiELVbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 17:31:21 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4391393C1
-        for <git@vger.kernel.org>; Thu, 12 May 2022 14:31:20 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02D6319BC4A;
-        Thu, 12 May 2022 17:31:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZkydM1NsIpaiiyJco3iRVICGW9nJk4ugXYdZ2I
-        RUJ9U=; b=Icc4ltb3VU+C+ekmqJaIP3+xlfAmNhMenjiiXuxjqomdGMdiUhX8ao
-        Gs2TStYaT+ms9WJo3D/0YblPXs9087Aep4bOVWm+gPZMoUve+R1t7/is2SbJHWer
-        rU5m9/JxoOg0FThhFzoSBNtZU+wAzrtBnUr0JJipAgDjS3OkMk0ag=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEADC19BC49;
-        Thu, 12 May 2022 17:31:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D701C19BC48;
-        Thu, 12 May 2022 17:31:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     rsbecker@nexbridge.com,
-        'Johannes Schindelin via GitGitGadget' 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        'Taylor Blau' <me@ttaylorr.com>,
-        'Derrick Stolee' <stolee@gmail.com>,
-        'Elijah Newren' <newren@gmail.com>,
-        'Johannes Schindelin' <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/7] archive: optionally add "virtual" files
-References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
-        <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
-        <45662cf582ab7c8b1c32f55c9a34f4d73a28b71d.1652210824.git.gitgitgadget@gmail.com>
-        <xmqqtu9x6ovh.fsf@gitster.g>
-        <03d701d864ba$46d15c10$d4741430$@nexbridge.com>
-        <xmqq8rr955zf.fsf@gitster.g>
-        <3cf6e4f8-9151-6d68-21ca-b94d6a7557e6@web.de>
-        <xmqqzgjnkgy0.fsf@gitster.g>
-        <47ed5a2f-f4aa-1ec1-27c9-9b0b70eb8bca@web.de>
-        <xmqqfslefwie.fsf@gitster.g>
-Date:   Thu, 12 May 2022 14:31:09 -0700
-In-Reply-To: <xmqqfslefwie.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        12 May 2022 11:15:05 -0700")
-Message-ID: <xmqqmtfme8v6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1359053AbiELWIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 18:08:32 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29FC5280E04
+        for <git@vger.kernel.org>; Thu, 12 May 2022 15:08:28 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id fu47so5563631qtb.5
+        for <git@vger.kernel.org>; Thu, 12 May 2022 15:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=SQgdtv/YjLbXH86Hq08MEB18WWytDLYDDSms3dc/EmE=;
+        b=gWdGuWndMEBS6Ntd1lxDcrMgz2yOKi+HKVS92Le1CMaEt2F1CHE7BI9Xmqell97OJ4
+         FjxHZDLZr21QCYD4u96W/NJ6zG82ubFHcMx/96ShEXFwRhLKaEAh6+hUir1FhX5bvU7m
+         dqX76vfIiGOMV0tgcGstGx4Zki5dCGCCKuPCIp/RgcwzhOlXT5yK3EInvXF0X1OqNWpk
+         d6XcusPmjhic022K32mrguKkAmayd5lgi+uQfKupC8JUWd1r34vddm/CmTxy9IWW9VQ1
+         0kE+bv5Lb8z5EPRc2CV6g5KpUf3Q545HMtNGWQO+HjkSqvO9DUESF8g0nQTP1x96vs3d
+         msRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=SQgdtv/YjLbXH86Hq08MEB18WWytDLYDDSms3dc/EmE=;
+        b=8RciTZDqFYH11JmjGrUxkaccZAbYLpK8DQpjkBJaBHmJvw6vWm+YugkkWX9psms0Pz
+         OBK7hA0TML8HaC6DFdkSjuaKUJ6v/b9ACwKag+Smu/vJxvP6c7D1jOxUixC1Kv7u6guI
+         kakimd+RRsergl5SSVzYgLjISx9KYYkQ/ux97R8/ZEZ3qSiBVm+knLF5MSIdvjSkezrB
+         S/q7WTypqoYHGAbiWsU3X3FLjTvsiyc6TRjU7CoE/j64X3mSY4pZGpaIR94y33+vPJ6U
+         hKJFBNotEEPuBpYvysEQmRR/EXF90OLCAr6hFA1J6KOETlngUiFIKzpjgXa6qIkaLMV0
+         y6Jg==
+X-Gm-Message-State: AOAM533LBR1gGFN+gOLxrfJujwkeZrPNx9VivC4J1vDAl5Wv23yiLcAs
+        LAMsLtS3EVVc8lbJ+aH/9y0ydKpDVC8Ece5lrjtKO48owB8=
+X-Google-Smtp-Source: ABdhPJwIc8MZ5RRYMgkA6Jo/CksxlrtZtaCAfrLTmQJuNjys0h4RnV/d7Rc8H4R+swALMd4aToaPvhaAiByLyBk7OkQ=
+X-Received: by 2002:a05:622a:148f:b0:2f3:b46a:f197 with SMTP id
+ t15-20020a05622a148f00b002f3b46af197mr1929144qtx.233.1652393307295; Thu, 12
+ May 2022 15:08:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D79D3816-D23A-11EC-995C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+From:   Tometchy <tometchy@gmail.com>
+Date:   Fri, 13 May 2022 00:08:16 +0200
+Message-ID: <CALihXsDEJBrvt08F5SnNoFkQ21nJixnb7b+L_arAJCV6pWWKyg@mail.gmail.com>
+Subject: git restore --all
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> So we currently leak permission bits of executable files into ZIP
->> archives, but not tar files. :-|  Normalizing those to 0755 would be
->> more consistent.
-
-Today, I was scanning the "What's cooking" draft and saw too many
-topics that are marked with "Expecting a reroll".  It turns out that
-this "mode bits" thing will not be a blocker to make us wait for a
-reroll of the topic, so let's handle it separately, before we
-forget, as an independent fix outside the series under discussion.
-
-Thanks.
-
---- >8 ---
-Subject: [PATCH] archive: do not let on-disk mode leak to zip archives
-
-When the "--add-file" option is used to add the contents from an
-untracked file to the archive, the permission mode bits for these
-files are sent to the archive-backend specific "write_entry()"
-method as-is.  We normalize the mode bits for tracked files way
-before we pass them to the write_entry() method; we should do the
-same here.
-
-This is not strictly needed for "tar" archive-backend, as it has its
-own code to further clean them up, but "zip" archive-backend is not
-so well prepared.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- archive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/archive.c b/archive.c
-index e29d0e00f6..12a08af531 100644
---- a/archive.c
-+++ b/archive.c
-@@ -342,7 +342,7 @@ int write_archive_entries(struct archiver_args *args,
- 		else
- 			err = write_entry(args, &fake_oid, path_in_archive.buf,
- 					  path_in_archive.len,
--					  info->stat.st_mode,
-+					  canon_mode(info->stat.st_mode),
- 					  content.buf, content.len);
- 		if (err)
- 			break;
--- 
-2.36.1-338-g1c7f76a54c
-
+Hi I suggest adding "-A / --all" option to restore command which will
+actually do
+"git restore :/". It will be consistent with "--all" option available
+in "git add" command :)
