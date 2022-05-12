@@ -2,30 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70FE7C433F5
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 15:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E01C433EF
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 15:26:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355799AbiELPLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 11:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
+        id S1355908AbiELP0n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 11:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355812AbiELPLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 11:11:37 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65D12608EB
-        for <git@vger.kernel.org>; Thu, 12 May 2022 08:11:34 -0700 (PDT)
+        with ESMTP id S1350445AbiELP0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 11:26:42 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1353541304
+        for <git@vger.kernel.org>; Thu, 12 May 2022 08:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1652368277;
-        bh=rAGIGMDCj+AC5NtrO6VIP7JojbBLyElmByEbmHJ5SPo=;
+        s=badeba3b8450; t=1652369181;
+        bh=pHlSFfqKQedHxfijD+RCF3zeBlal1E+b9Etc6YkttBU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=b/MuQGTHoM0HvYlAI8Zld/gX3FiB2PfTL92RWspLdVW+Q5SUJ1LR0I6GuitBqn1zl
-         aFeBQKOM2nuPaZ6TYv+Iuge0f3/0ZIUHH9rDjx+GJ9mu8+V5k9HnmSSuuMNg7buoXz
-         OLXOXSfSfczl7WjIobCjFilgJE9mQev/T1ttZExo=
+        b=Cg1KfTXW00CagZ26U/hyAp9h0p13DH0N72zcrJadVtSwMTc1YimGDfnC1QUqnNeA1
+         lz6J8XoIG5XZV2+WDma7mcMA8+axcfRXoYuBiAZ+C2YZqf3GLdj4K0XrJ82v/7rt4l
+         e7uTmHrKFtBFmlHaeijsN1djLbFrAejXt/0s9Qpw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.18.242.215] ([213.196.213.50]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbRfv-1oM2FY2l3Z-00bu4X; Thu, 12
- May 2022 17:11:17 +0200
-Date:   Thu, 12 May 2022 17:11:15 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDywo-1nfEYT0BOe-00A27v; Thu, 12
+ May 2022 17:26:21 +0200
+Date:   Thu, 12 May 2022 17:26:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
@@ -36,35 +36,35 @@ cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
         rsbecker@nexbridge.com, Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 23/28] fsmonitor: never set CE_FSMONITOR_VALID on
- submodules
-In-Reply-To: <d0e25f6bac663e9ae4d63322f102378dd2ecba84.1650662994.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2205121709210.352@tvgsbejvaqbjf.bet>
-References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>        <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <d0e25f6bac663e9ae4d63322f102378dd2ecba84.1650662994.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v6 26/28] t/lib-unicode-nfc-nfd: helper prereqs for
+ testing unicode nfc/nfd
+In-Reply-To: <8278f32c4d894d4930b9f1f70f3aa01679e2011e.1650662994.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2205121711300.352@tvgsbejvaqbjf.bet>
+References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>        <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com> <8278f32c4d894d4930b9f1f70f3aa01679e2011e.1650662994.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BiZGWfYD2BT5+02lZOomox7UZkck98qkest8suJldEnnF+2czcJ
- MDbV++10H4TfYgGDKQymVClPf9Qn+Ulm2QIC1j7IuyBtUKm9XH3D5hwPTA2YWng1rcA5KC7
- 7qoD7tHj21jBpLD5jWok//AibMIWIBtmmbrybkGhRGQArW0VY/n6x1F4PvWwN/PLhbOU3Du
- ZhcQxkk7CsBUVp1k844gQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qc91myQjjUg=:IpzupQT4ODSYKqulUBgdQY
- ADjKWAGcS1NEeoRIHceNEbhPlDQbPBw10keGXZaJ2oHgT1QIEUea65HYbkU4Bbl5mvE1yj22k
- v9r/inMGvRLSP+OINkCE/H5GA4tQyhKkoikfzDkUmGYrXdnQggUFjwsioV6sbpctVOM18aG/5
- mxF3jHZMoghiCfSRhzhbfNgnrhRrmuj7ozyHGacZnnba3yATBk4csuNC3QYYSY3I0MLGX1yvs
- QdRpR5dTOQqxwIUkMJSkxqVN6i81oehxOaHUW9E+DwGk3GK4oH9E+99HOopUx0fw71T6/ku5d
- xuPo/U59/u2GN7Hm20szldWG+3VFga0irpJ9sPX6/nZFzmuzYiRWd0Xaypqq5aaULKAv+YAe8
- ymrZEoKAP0pDW+AZ4Kg8+id5TQ4aS96ydN6azmULbSs8fosO/ZrgARoPBTe3SHXOgCvKsmgej
- UzoBVnWq32izTjtUVr6mps4X2Lz7U6nUewGctiFtJlTHtfH1Lle9dIShTIYbQ1vk+vpVP72y8
- 2IiSmRnVPFJL8cv3fPoWo70dSnvJ9IVdt/rMdRTNzJt+hU6iJYnnwVjPhMnwBTJLBReECfZeP
- TznSFGeh6pQ+7JFYXgtUqoBGelXPmBURkiXQyeB8tplf0tpuavfEm6yXf8iZYC+PQVom5bxla
- 47kerTLZ0Z/+v+c/qni80vjkfHcukypANUZJy6bOZFlaWrCAE4h3t4HqeRAeXIfe2LTj0DymV
- dZeRgQbPR7q8yDBcCnCBfeIdRjEBJDWnWr6/eMIoeDK3asrL8Ufc6h7R7/f149ZuGxx+JVmGG
- GQtkErGETeIK9o9JHXHFBsls41etP3/QKJIG9nyrhl85kk/AaCLKh6bwVCOYrETIdRLfRDbCa
- +kVOZUnYxrXnE75eRhZLu7tvM2oqpgN1bOQpqPa2AwwIvB4/bUC5/iEBwy0QIa87BjcFLkwKF
- 3bqO4daMQhKNMXQGucg+PS2Sm+z3wU8PWhG02/JQ8ncs1E0/HwPYdPBc9DA7lOYz0ywlDn4De
- Vm4W75f6QgTEZruGP6bqDX1NUKh8P29jQnnv8/w1u5zPX30kiDHhhT09+cHYxFnwim5qiOBd4
- WAdWHS7Wrt1kDM=
+X-Provags-ID: V03:K1:V2RHv27imo/o4OzyHFL15MEmZOv7Ki4IdiO0RTWT5OxAAkAd+ps
+ LXiFFkgUx4n55YVHVXUqZhxVPfWQvp4WITQ67La0AVtcLwycvAwtnho6ISWIGYU/DfOPlhr
+ Ap82QoAnGEvObgid9QkRC/jMhUfM147Cf+J5wECk5O+IzibrHrxDxVPgiQ+sunrGnnLmO45
+ SklY5nQ80ZaUxQjmuEbDg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R2ludOm58K8=:/9N/gQmwj7h0jE29NpQVQw
+ 1eqNuL9xkNyKekZDdIZft2cnDyW43WrjWjHKm1tgwlAWRFQU1MDF3ulr1+bMFFt+Jz3lnz0sK
+ BjG92WIlrZCw/ftXFUUUG/JIF6D99rF+dtU5qwrFL/xZd73KPWypdrCMk/tyni/CTWzqAcS5p
+ qAnD1yEbM/c/yBXQ5u9BUsF5sSADHRuD2IGklLKHwyTGyzhtZmOAygkZzR0qJzNIb5vTehwD6
+ QD/nxd5hax9tWfnaB+/91CZo+/WF1YkL9wnYUpjpDJ8FNK6dNuO6RvLP8TskJ0bjmV3nUjoxV
+ 4Ivv6uYFMZRF6Lq/yrlTQe8zcscoCjs/aIqDktw7Prf74+sJj0F0bNlbViB7V3soqW6QzUB8w
+ y+6P1vNX6ppi8JJkGvaBlqJCRawiho6XM4UYt2RFDdkQ+p/8gvLA9HxOOg58RzjVY/KzuZFO8
+ 9QYhAQHToaeXexfi/iX2YgL36Gi1uOiIXIcsp8SHsN2CB9GyJuQJKnBWJZxLV+12ItR3CGQ6A
+ BZgR+tUhZoV6yAvlsu4DPA5FqyWnsrU2wr6H4fRQofdInN0g0qToUkW8sR7zu7IjzLlXUO4vP
+ 4wuigJnr2HE2Mo38Uu+6yKLFxcqKdfdOOfCrMmaBLJFIbweNeoFKX3u1bvVF4/1NtRD8uu0vi
+ 1bt+UEVyMD+79EPCOKH6QUC9dkrHYodUkEeHn6B/uoFtFmEi01wzJTHqPth3hOnDHrpPenKiE
+ d68kLNuUNbF62Y1YMg9zIkA7fT+tL8L8O9/nnagIBpnkj8E47lGWdHwhgZ7RZn5oAv81x6rwt
+ NXSvXgMNLgw2Vz6db14hvjYXpv/ktX6snygBIX8/NYcSWUzTAzrfNswbWQqtZKJunGqI5U3Lb
+ QSgRx7IyRBUpomittfG/r89IZ6Fk8tL0Gfx9Z7fBCaBjBKWlqdABcOU1diTZGf09rxhTI8A5u
+ zC5L8otxovtH0SfWWJw62ml35bVp5yYCtA3UqL/ukiHgxcS3roTUZ0HkQF/RwMSUPOn4p0KrL
+ rOXKfQRwyb83uO2Z4z9iO/0cl2GVsvXM+SZwFlG5gXaK5vIox8PswlDHBIKOL4kmlowdQN5F+
+ g2smz5cCaaB1j4=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,218 +76,302 @@ On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
 
 > From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> Never set CE_FSMONITOR_VALID on the cache-entry of submodule
-> directories.
->
-> During a client command like 'git status', we may need to recurse
-> into each submodule to compute a status summary for the submodule.
-> Since the purpose of the ce_flag is to let Git avoid scanning a
-> cache-entry, setting the flag causes the recursive call to be
-> avoided and we report incorrect (no status) for the submodule.
->
-> We created an OS watch on the root directory of our working
-> directory and we receive events for everything in the cone
-> under it.  When submodules are present inside our working
-> directory, we receive events for both our repo (the super) and
-> any subs within it.  Since our index doesn't have any information
-> for items within the submodules, we can't use those events.
->
-> We could try to truncate the paths of those events back to the
-> submodule boundary and mark the GITLINK as dirty, but that
-> feels expensive since we would have to prefix compare every FS
-> event that we receive against a list of submodule roots.  And
-> it still wouldn't be sufficient to correctly report status on
-> the submodule, since we don't have any space in the cache-entry
-> to cache the submodule's status (the 'SCMU' bits in porcelain
-> V2 speak).  That is, the CE_FSMONITOR_VALID bit just says that
-> we don't need to scan/inspect it because we already know the
-> answer -- it doesn't say that the item is clean -- and we
-> don't have space in the cache-entry to store those answers.
-> So we should always do the recursive scan.
->
-> Therefore, we should never set the flag on GITLINK cache-entries.
+> Create a set of prereqs to help understand how file names
+> are handled by the filesystem when they contain NFC and NFD
+> Unicode characters.
 >
 > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 > ---
->  fsmonitor.c                  |   2 +
->  fsmonitor.h                  |  11 ++++
->  t/t7527-builtin-fsmonitor.sh | 111 +++++++++++++++++++++++++++++++++++
->  3 files changed, 124 insertions(+)
+>  t/lib-unicode-nfc-nfd.sh | 167 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 167 insertions(+)
+>  create mode 100755 t/lib-unicode-nfc-nfd.sh
 >
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index e1229c289cf..57d6a483bee 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -580,6 +580,8 @@ void tweak_fsmonitor(struct index_state *istate)
->  		if (fsmonitor_enabled) {
->  			/* Mark all entries valid */
->  			for (i =3D 0; i < istate->cache_nr; i++) {
-> +				if (S_ISGITLINK(istate->cache[i]->ce_mode))
-> +					continue;
->  				istate->cache[i]->ce_flags |=3D CE_FSMONITOR_VALID;
->  			}
->
-> diff --git a/fsmonitor.h b/fsmonitor.h
-> index 3f41f653691..edf7ce5203b 100644
-> --- a/fsmonitor.h
-> +++ b/fsmonitor.h
-> @@ -68,6 +68,15 @@ static inline int is_fsmonitor_refreshed(const struct=
- index_state *istate)
->   * Set the given cache entries CE_FSMONITOR_VALID bit. This should be
->   * called any time the cache entry has been updated to reflect the
->   * current state of the file on disk.
-> + *
-> + * However, never mark submodules as valid.  When commands like "git
-> + * status" run they might need to recurse into the submodule (using a
-> + * child process) to get a summary of the submodule state.  We don't
-> + * have (and don't want to create) the facility to translate every
-> + * FS event that we receive and that happens to be deep inside of a
-> + * submodule back to the submodule root, so we cannot correctly keep
-> + * track of this bit on the gitlink directory.  Therefore, we never
-> + * set it on submodules.
->   */
->  static inline void mark_fsmonitor_valid(struct index_state *istate, str=
-uct cache_entry *ce)
->  {
-> @@ -75,6 +84,8 @@ static inline void mark_fsmonitor_valid(struct index_s=
-tate *istate, struct cache
->
->  	if (fsm_mode > FSMONITOR_MODE_DISABLED &&
->  	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
-> +		if (S_ISGITLINK(ce->ce_mode))
-> +			return;
->  		istate->cache_changed =3D 1;
->  		ce->ce_flags |=3D CE_FSMONITOR_VALID;
->  		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->n=
-ame);
-> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-> index d0e681d008f..4c49ae5a684 100755
-> --- a/t/t7527-builtin-fsmonitor.sh
-> +++ b/t/t7527-builtin-fsmonitor.sh
-> @@ -721,4 +721,115 @@ do
->  	'
->  done
->
-> +# Test fsmonitor interaction with submodules.
+> diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
+> new file mode 100755
+> index 00000000000..cf9c26d1e22
+> --- /dev/null
+> +++ b/t/lib-unicode-nfc-nfd.sh
+> @@ -0,0 +1,167 @@
+> +# Help detect how Unicode NFC and NFD are handled on the filesystem.
+> +
+> +# A simple character that has a NFD form.
 > +#
-> +# If we start the daemon in the super, it will see FS events for
-> +# everything in the working directory cone and this includes any
-> +# files/directories contained *within* the submodules.
+> +# NFC:       U+00e9 LATIN SMALL LETTER E WITH ACUTE
+> +# UTF8(NFC): \xc3 \xa9
 > +#
-> +# A `git status` at top level will get events for items within the
-> +# submodule and ignore them, since they aren't named in the index
-> +# of the super repo.  This makes the fsmonitor response a little
-> +# noisy, but it doesn't alter the correctness of the state of the
-> +# super-proper.
+> +# NFD:       U+0065 LATIN SMALL LETTER E
+> +#            U+0301 COMBINING ACUTE ACCENT
+> +# UTF8(NFD): \x65  +  \xcc \x81
 > +#
-> +# When we have submodules, `git status` normally does a recursive
-> +# status on each of the submodules and adds a summary row for any
-> +# dirty submodules.  (See the "S..." bits in porcelain V2 output.)
+> +utf8_nfc=3D$(printf "\xc3\xa9")
+> +utf8_nfd=3D$(printf "\x65\xcc\x81")
+> +
+> +# Is the OS or the filesystem "Unicode composition sensitive"?
 > +#
-> +# It is therefore important that the top level status not be tricked
-> +# by the FSMonitor response to skip those recursive calls.  That is,
-> +# even if FSMonitor says that the mtime of the submodule directory
-> +# hasn't changed and it could be implicitly marked valid, we must
-> +# not take that shortcut.  We need to force the recusion into the
-> +# submodule so that we get a summary of the status *within* the
-> +# submodule.
-> +
-> +create_super () {
-> +	super=3D"$1" &&
-> +
-> +	git init "$super" &&
-> +	echo x >"$super/file_1" &&
-> +	echo y >"$super/file_2" &&
-> +	echo z >"$super/file_3" &&
-> +	mkdir "$super/dir_1" &&
-> +	echo a >"$super/dir_1/file_11" &&
-> +	echo b >"$super/dir_1/file_12" &&
-> +	mkdir "$super/dir_1/dir_2" &&
-> +	echo a >"$super/dir_1/dir_2/file_21" &&
-> +	echo b >"$super/dir_1/dir_2/file_22" &&
-> +	git -C "$super" add . &&
-> +	git -C "$super" commit -m "initial $super commit"
-> +}
-> +
-> +create_sub () {
-> +	sub=3D"$1" &&
-> +
-> +	git init "$sub" &&
-> +	echo x >"$sub/file_x" &&
-> +	echo y >"$sub/file_y" &&
-> +	echo z >"$sub/file_z" &&
-> +	mkdir "$sub/dir_x" &&
-> +	echo a >"$sub/dir_x/file_a" &&
-> +	echo b >"$sub/dir_x/file_b" &&
-> +	mkdir "$sub/dir_x/dir_y" &&
-> +	echo a >"$sub/dir_x/dir_y/file_a" &&
-> +	echo b >"$sub/dir_x/dir_y/file_b" &&
-> +	git -C "$sub" add . &&
-> +	git -C "$sub" commit -m "initial $sub commit"
-> +}
-> +
-> +my_match_and_clean () {
-> +	git -C super --no-optional-locks status --porcelain=3Dv2 >actual.with =
-&&
-> +	git -C super --no-optional-locks -c core.fsmonitor=3Dfalse \
-> +		status --porcelain=3Dv2 >actual.without &&
-> +	test_cmp actual.with actual.without &&
-> +
-> +	git -C super/dir_1/dir_2/sub reset --hard &&
-> +	git -C super/dir_1/dir_2/sub clean -d -f
-> +}
-> +
-> +test_expect_success "Submodule always visited" '
-
-I almost feel bad offering this nit: could you use single-quotes, and
-start with a lower-case `s`?
-
-Thanks,
-Dscho
-
-> +	test_when_finished "git -C super fsmonitor--daemon stop; \
-> +			    rm -rf super; \
-> +			    rm -rf sub" &&
-> +
-> +	create_super super &&
-> +	create_sub sub &&
-> +
-> +	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
-> +	git -C super commit -m "add sub" &&
-> +
-> +	start_daemon -C super &&
-> +	git -C super config core.fsmonitor true &&
-> +	git -C super update-index --fsmonitor &&
-> +	git -C super status &&
-> +
-> +	# Now run pairs of commands w/ and w/o FSMonitor while we make
-> +	# some dirt in the submodule and confirm matching output.
-> +
-> +	# Completely clean status.
-> +	my_match_and_clean &&
-> +
-> +	# .M S..U
-> +	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_u &&
-> +	my_match_and_clean &&
-> +
-> +	# .M S.M.
-> +	echo z >super/dir_1/dir_2/sub/dir_x/dir_y/foobar_m &&
-> +	git -C super/dir_1/dir_2/sub add . &&
-> +	my_match_and_clean &&
-> +
-> +	# .M S.M.
-> +	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
-> +	git -C super/dir_1/dir_2/sub add . &&
-> +	my_match_and_clean &&
-> +
-> +	# .M SC..
-> +	echo z >>super/dir_1/dir_2/sub/dir_x/dir_y/file_a &&
-> +	git -C super/dir_1/dir_2/sub add . &&
-> +	git -C super/dir_1/dir_2/sub commit -m "SC.." &&
-> +	my_match_and_clean
+> +# That is, does the OS or the filesystem allow files to exist with
+> +# both the NFC and NFD spellings?  Or, does the OS/FS lie to us and
+> +# tell us that the NFC and NFD forms are equivalent.
+> +#
+> +# This is or may be independent of what type of filesystem we have,
+> +# since it might be handled by the OS at a layer above the FS.
+> +# Testing shows on MacOS using APFS, HFS+, and FAT32 reports a
+> +# collision, for example.
+> +#
+> +# This does not tell us how the Unicode pathname will be spelled
+> +# on disk, but rather only that the two spelling "collide".  We
+> +# will examine the actual on disk spelling in a later prereq.
+> +#
+> +test_lazy_prereq UNICODE_COMPOSITION_SENSITIVE '
+> +	mkdir trial_${utf8_nfc} &&
+> +	mkdir trial_${utf8_nfd}
 > +'
 > +
->  test_done
+> +# Is the spelling of an NFC pathname preserved on disk?
+> +#
+> +# On MacOS with HFS+ and FAT32, NFC paths are converted into NFD
+> +# and on APFS, NFC paths are preserved.  As we have established
+> +# above, this is independent of "composition sensitivity".
+> +#
+> +# 0000000 63 5f c3 a9
+> +#
+> +# (/usr/bin/od output contains different amount of whitespace
+> +# on different platforms, so we need the wildcards here.)
+> +#
+> +test_lazy_prereq UNICODE_NFC_PRESERVED '
+> +	mkdir c_${utf8_nfc} &&
+> +	ls | od -t x1 | grep "63 *5f *c3 *a9"
+
+As far as I can see, this would be the first usage of `od` in the test
+suite. I'd actually like to reduce our dependency on Unix-y tools, not
+increase it.
+
+One thing we could do would be to imitate t4030, and introduce a shell
+function that calls Perl, something like:
+
+	bin2hex () {
+		perl -e '
+			$/ =3D undef;
+			$_ =3D <>;
+			s/./sprintf("%02x ", ord($&))/ge;
+			print $_
+		'
+	}
+
+But it is a thorn in my side for quite a few years already that we
+_require_ Perl, even in NO_PERL builds.
+
+So maybe a much better idea would be to introduce a small helper in
+`t/helper/` that converts binary data on stdin to hex on stdout? Something
+like this:
+
+=2D- snip --
+=46rom bee2a3c43c90683b3e86e1739361570cce76d382 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 12 May 2022 17:24:50 +0200
+Subject: [PATCH] tests: add a helped to print a hexdump
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ Makefile                |  1 +
+ t/helper/test-hexdump.c | 24 ++++++++++++++++++++++++
+ t/helper/test-tool.c    |  1 +
+ t/helper/test-tool.h    |  1 +
+ 4 files changed, 27 insertions(+)
+ create mode 100644 t/helper/test-hexdump.c
+
+diff --git a/Makefile b/Makefile
+index 4a23508d16f..fc262f99a1f 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -708,6 +708,7 @@ TEST_BUILTINS_OBJS +=3D test-getcwd.o
+ TEST_BUILTINS_OBJS +=3D test-hash-speed.o
+ TEST_BUILTINS_OBJS +=3D test-hash.o
+ TEST_BUILTINS_OBJS +=3D test-hashmap.o
++TEST_BUILTINS_OBJS +=3D test-hexdump.o
+ TEST_BUILTINS_OBJS +=3D test-index-version.o
+ TEST_BUILTINS_OBJS +=3D test-json-writer.o
+ TEST_BUILTINS_OBJS +=3D test-lazy-init-name-hash.o
+diff --git a/t/helper/test-hexdump.c b/t/helper/test-hexdump.c
+new file mode 100644
+index 00000000000..13f154d9fa7
+=2D-- /dev/null
++++ b/t/helper/test-hexdump.c
+@@ -0,0 +1,24 @@
++#include "test-tool.h"
++#include "git-compat-util.h"
++
++/*
++ * Read stdin and print a hexdump to stdout.
++ */
++int cmd__hexdump(int argc, const char **argv)
++{
++	char buf[1024];
++	ssize_t i, len;
++
++	for (;;) {
++		len =3D xread(0, buf, sizeof(buf));
++		if (len < 0)
++			die_errno("failure reading stdin");
++		if (!len)
++			break;
++
++		for (i =3D 0; i < len; i++)
++			printf("%02x ", buf[i]);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 3ce5585e53a..44bd8269a07 100644
+=2D-- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -35,6 +35,7 @@ static struct test_cmd cmds[] =3D {
+ 	{ "genzeros", cmd__genzeros },
+ 	{ "getcwd", cmd__getcwd },
+ 	{ "hashmap", cmd__hashmap },
++	{ "hexdump", cmd__hexdump },
+ 	{ "hash-speed", cmd__hash_speed },
+ 	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 9f0f5228508..8ec30136913 100644
+=2D-- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -25,6 +25,7 @@ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
+ int cmd__getcwd(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
++int cmd__hexdump(int argc, const char **argv);
+ int cmd__hash_speed(int argc, const char **argv);
+ int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+=2D- snap --
+
+Other than the `od` usage, this patch looks good to me.
+
+Thank you very much for driving FSMonitor forward!
+Dscho
+
+> +'
+> +
+> +# Is the spelling of an NFD pathname preserved on disk?
+> +#
+> +# 0000000 64 5f 65 cc 81
+> +#
+> +test_lazy_prereq UNICODE_NFD_PRESERVED '
+> +	mkdir d_${utf8_nfd} &&
+> +	ls | od -t x1 | grep "64 *5f *65 *cc *81"
+> +'
+> +	mkdir c_${utf8_nfc} &&
+> +	mkdir d_${utf8_nfd} &&
+> +
+> +# The following _DOUBLE_ forms are more for my curiosity,
+> +# but there may be quirks lurking when there are multiple
+> +# combining characters in non-canonical order.
+> +
+> +# Unicode also allows multiple combining characters
+> +# that can be decomposed in pieces.
+> +#
+> +# NFC:        U+1f67 GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMEN=
+I
+> +# UTF8(NFC):  \xe1 \xbd \xa7
+> +#
+> +# NFD1:       U+1f61 GREEK SMALL LETTER OMEGA WITH DASIA
+> +#             U+0342 COMBINING GREEK PERISPOMENI
+> +# UTF8(NFD1): \xe1 \xbd \xa1  +  \xcd \x82
+> +#
+> +# But U+1f61 decomposes into
+> +# NFD2:       U+03c9 GREEK SMALL LETTER OMEGA
+> +#             U+0314 COMBINING REVERSED COMMA ABOVE
+> +# UTF8(NFD2): \xcf \x89  +  \xcc \x94
+> +#
+> +# Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
+> +#
+> +# Note that I've used the canonical ordering of the
+> +# combinining characters.  It is also possible to
+> +# swap them.  My testing shows that that non-standard
+> +# ordering also causes a collision in mkdir.  However,
+> +# the resulting names don't draw correctly on the
+> +# terminal (implying that the on-disk format also has
+> +# them out of order).
+> +#
+> +greek_nfc=3D$(printf "\xe1\xbd\xa7")
+> +greek_nfd1=3D$(printf "\xe1\xbd\xa1\xcd\x82")
+> +greek_nfd2=3D$(printf "\xcf\x89\xcc\x94\xcd\x82")
+> +
+> +# See if a double decomposition also collides.
+> +#
+> +test_lazy_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE '
+> +	mkdir trial_${greek_nfc} &&
+> +	mkdir trial_${greek_nfd2}
+> +'
+> +
+> +# See if the NFC spelling appears on the disk.
+> +#
+> +test_lazy_prereq UNICODE_DOUBLE_NFC_PRESERVED '
+> +	mkdir c_${greek_nfc} &&
+> +	ls | od -t x1 | grep "63 *5f *e1 *bd *a7"
+> +'
+> +
+> +# See if the NFD spelling appears on the disk.
+> +#
+> +test_lazy_prereq UNICODE_DOUBLE_NFD_PRESERVED '
+> +	mkdir d_${greek_nfd2} &&
+> +	ls | od -t x1 | grep "64 *5f *cf *89 *cc *94 *cd *82"
+> +'
+> +
+> +# The following is for debugging. I found it useful when
+> +# trying to understand the various (OS, FS) quirks WRT
+> +# Unicode and how composition/decomposition is handled.
+> +# For example, when trying to understand how (macOS, APFS)
+> +# and (macOS, HFS) and (macOS, FAT32) compare.
+> +#
+> +# It is rather noisy, so it is disabled by default.
+> +#
+> +if test "$unicode_debug" =3D "true"
+> +then
+> +	if test_have_prereq UNICODE_COMPOSITION_SENSITIVE
+> +	then
+> +		echo NFC and NFD are distinct on this OS/filesystem.
+> +	else
+> +		echo NFC and NFD are aliases on this OS/filesystem.
+> +	fi
+> +
+> +	if test_have_prereq UNICODE_NFC_PRESERVED
+> +	then
+> +		echo NFC maintains original spelling.
+> +	else
+> +		echo NFC is modified.
+> +	fi
+> +
+> +	if test_have_prereq UNICODE_NFD_PRESERVED
+> +	then
+> +		echo NFD maintains original spelling.
+> +	else
+> +		echo NFD is modified.
+> +	fi
+> +
+> +	if test_have_prereq UNICODE_DOUBLE_COMPOSITION_SENSITIVE
+> +	then
+> +		echo DOUBLE NFC and NFD are distinct on this OS/filesystem.
+> +	else
+> +		echo DOUBLE NFC and NFD are aliases on this OS/filesystem.
+> +	fi
+> +
+> +	if test_have_prereq UNICODE_DOUBLE_NFC_PRESERVED
+> +	then
+> +		echo Double NFC maintains original spelling.
+> +	else
+> +		echo Double NFC is modified.
+> +	fi
+> +
+> +	if test_have_prereq UNICODE_DOUBLE_NFD_PRESERVED
+> +	then
+> +		echo Double NFD maintains original spelling.
+> +	else
+> +		echo Double NFD is modified.
+> +	fi
+> +fi
 > --
 > gitgitgadget
 >
