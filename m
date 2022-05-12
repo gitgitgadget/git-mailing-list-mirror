@@ -2,151 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9908CC433EF
-	for <git@archiver.kernel.org>; Thu, 12 May 2022 22:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61D4EC433F5
+	for <git@archiver.kernel.org>; Thu, 12 May 2022 22:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359241AbiELWjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 18:39:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59200 "EHLO
+        id S1359247AbiELWj4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 18:39:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352418AbiELWjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 18:39:46 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C73282000
-        for <git@vger.kernel.org>; Thu, 12 May 2022 15:39:43 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E137136A7E;
-        Thu, 12 May 2022 18:39:43 -0400 (EDT)
+        with ESMTP id S1359238AbiELWjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 18:39:51 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91C3A282000
+        for <git@vger.kernel.org>; Thu, 12 May 2022 15:39:49 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E6341A0396;
+        Thu, 12 May 2022 18:39:49 -0400 (EDT)
         (envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=WALHf6uwZTuZWK7lcqgKq8p04
-        n60bPinbzYTY/JsGxY=; b=nr+j7itnZeGaBdylVqJRl/EP1ZMiKuckIi6nSAdTf
-        LZw2tQAlAsc88z1LDqU11/snaNKD832Fyjo/Oezjy3OGI0QaY38dv6jCCGG3LFoI
-        /obMDrFkzUdsyJ9xPx5aT3PSVgbMNVQk0n8/lG81zonw4yhEeF3baGGcpR14tfAB
-        X4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 536A1136A7D;
-        Thu, 12 May 2022 18:39:43 -0400 (EDT)
+        :content-transfer-encoding; s=sasl; bh=VBFZKMTgLFv7BTEaGtRBzOKJr
+        eg7RjsOqL2Rf/IHXD8=; b=sUHn6MLCjeVLdOPDy5pRgUefvkloA0ZZNpKGuoDz/
+        eRTOCtpNZ2EcvT/l3UqcZYXiRcxxGd7jxk3Wi827X5UOHdIGalcTSqUMfn/dLFCf
+        bdIDWSohX6mV9bDgunLr1HGj7zCJIPmXYV/Ti2rOkL0ExAoOr1dne5a7r0C0SN4n
+        gE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3745D1A0395;
+        Thu, 12 May 2022 18:39:49 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B2E48136A7C;
-        Thu, 12 May 2022 18:39:42 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D90A41A0394;
+        Thu, 12 May 2022 18:39:45 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v4 0/4] ci: avoid perforce/brew issues affecting macOS
-Date:   Thu, 12 May 2022 15:39:36 -0700
-Message-Id: <20220512223940.238367-1-gitster@pobox.com>
+Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v4 2/4] ci: avoid brew for installing perforce
+Date:   Thu, 12 May 2022 15:39:38 -0700
+Message-Id: <20220512223940.238367-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.36.1-338-g1c7f76a54c
-In-Reply-To: <20220423142559.32507-1-carenas@gmail.com>
+In-Reply-To: <20220512223940.238367-1-gitster@pobox.com>
 References: <20220423142559.32507-1-carenas@gmail.com>
+ <20220512223940.238367-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 6A77DC50-D244-11EC-B895-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6C593730-D244-11EC-889E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We see macOS CI job failures from time to time when the version of
-p4 brew expects is slightly older than what is offered at Perforce's
-download site.  Instead of failing to run the tests altogether, just
-skip "git-p4" tests, like we do for tests that depends on any other
-optional packages, when this happens.
+From: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 
-This is essentially unchanged from the v3 posted by Carlo on April
-23rd, with a few fix-ups that have been cooking on top squashed in.
+Perfoce's cask in brew is meant[1] to be used only by humans, so replace
+its use from the CI with a scripted binary download which is less likely
+to fail, as it is done in Linux.
 
-The changes from the previous round (i.e. the "fix-ups" that have
-been floating on top, which got squashed in) are:
+Kept the logic together so it will be less likely to break when moved
+around as on the fly code changes in this area are settled, at which
+point it will also feasable to ammend it to avoid some of the hardcoded
+values by using similar variables to the ones Linux does.
 
- * The first step has a fix to a couple of wrong redirections that
-   created a junk file whose name is "2", instead of sending the
-   messages to the standard error.
+In that same line, a POSIX sh syntax is used instead of the similar one
+used in Linux in preparation for an unrelated future change that might
+change the shell currently configured for it.
 
- * The last step makes two places that we download Perforce packages
-   to use https://cdist2.perforce.com/ (earlier one of the places
-   used that, the other https://filehost.perforce.com/).
+This change reintroduces the risk that the installed binaries might not
+work because of being quarantined that was fixed with 5ed9fc3fc86 (ci:
+prevent `perforce` from being quarantined, 2020-02-27) but fixing that
+now was also punted for simplicity and since the affected cloud provider
+is scheduled to be retired with an on the fly change, but should be
+addressed if that other change is not integrated further.
 
-I am sending this out as a final "complain now, or this will go to
-'next' soonish" warning.  The "What's cooking" report is getting
-crowded with too many topics marked as "Expecting a reroll", and I'm
-trying to do easier ones myself to see how much reduction we can
-make.
+The discussion on the need to keep 2 radically different versions of
+the binaries to be tested with Linux vs macOS or how to upgrade to
+newer versions now that brew won't do that automatically for us has
+been punted for now as well.  On that line the now obsolete comment
+about it in lib.sh was originally being updated by this change but
+created conflicts as it is moved around by other on the fly changes,
+so will be addressed independently as well.
 
-Carlo Marcelo Arenas Bel=C3=B3n (3):
-  ci: make failure to find perforce more user friendly
-  ci: avoid brew for installing perforce
-  ci: reintroduce prevention from perforce being quarantined in macOS
+[1] https://github.com/Homebrew/homebrew-cask/pull/122347#discussion_r856=
+026584
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
-  ci: use https, not http to download binaries from perforce.com
+Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/install-dependencies.sh | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
- ci/install-dependencies.sh | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
-
-
-1:  5730a749bc ! 1:  024459486c ci: make failure to find perforce more us=
-er friendly
-    @@ ci/install-dependencies.sh: linux-gcc-default)
-      	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
-      	p4 -V | grep Rev.
-     +else
-    -+	echo "WARNING: perforce wasn't installed, see above for clues why"=
- >2
-    ++	echo >&2 "WARNING: perforce wasn't installed, see above for clues =
-why"
-      fi
-     -if type git-lfs >/dev/null
-     +if type git-lfs >/dev/null 2>&1
-    @@ ci/install-dependencies.sh: linux-gcc-default)
-      	echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
-      	git-lfs version
-     +else
-    -+	echo "WARNING: git-lfs wasn't installed, see above for clues why" =
->2
-    ++	echo >&2 "WARNING: git-lfs wasn't installed, see above for clues w=
-hy"
-      fi
-2:  8cd96645ae =3D 2:  8717dbe8d9 ci: avoid brew for installing perforce
-3:  1f06d0ba06 =3D 3:  6a4f085d63 ci: reintroduce prevention from perforc=
-e being quarantined in macOS
-4:  6bf267b995 ! 4:  5be72d9150 ci: use https, not http to download binar=
-ies from perforce.com
-    @@ Commit message
-         at least, and is one less thing to worry about when checking whe=
-re
-         else we rely on non-TLS'd http connections.
-    =20
-    +    Also, use the same download site at perforce.com for Linux and m=
-acOS
-    +    tarballs for consistency.
-    +
-         Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gm=
-ail.com>
-    +    Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.co=
-m>
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-    =20
-      ## ci/install-dependencies.sh ##
-    @@ ci/install-dependencies.sh
-      . ${0%/*}/lib.sh
-     =20
-     -P4WHENCE=3Dhttp://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
-    -+P4WHENCE=3Dhttps://filehost.perforce.com/perforce/r$LINUX_P4_VERSIO=
-N
-    ++P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r$LINUX_P4_VERSION
-      LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$L=
-INUX_GIT_LFS_VERSION
-      UBUNTU_COMMON_PKGS=3D"make libssl-dev libcurl4-openssl-dev libexpat=
--dev
-       tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sas=
-l-perl
-
-
-
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index fa620f8fcd..8e796fa669 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -37,13 +37,14 @@ macos-latest)
+ 	test -z "$BREW_INSTALL_PACKAGES" ||
+ 	brew install $BREW_INSTALL_PACKAGES
+ 	brew link --force gettext
+-	brew install --cask --no-quarantine perforce || {
+-		# Update the definitions and try again
+-		cask_repo=3D"$(brew --repository)"/Library/Taps/homebrew/homebrew-cask=
+ &&
+-		git -C "$cask_repo" pull --no-stat --ff-only &&
+-		brew install --cask --no-quarantine perforce
+-	} ||
+-	brew install homebrew/cask/perforce
++	mkdir -p $HOME/bin
++	(
++		cd $HOME/bin
++		wget -q "https://cdist2.perforce.com/perforce/r21.2/bin.macosx1015x86_=
+64/helix-core-server.tgz" &&
++		tar -xf helix-core-server.tgz
++	)
++	PATH=3D"$PATH:${HOME}/bin"
++	export PATH
+=20
+ 	if test -n "$CC_PACKAGE"
+ 	then
 --=20
 2.36.1-338-g1c7f76a54c
 
