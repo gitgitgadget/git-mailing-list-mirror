@@ -2,83 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D279C433F5
-	for <git@archiver.kernel.org>; Fri, 13 May 2022 12:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5054FC433EF
+	for <git@archiver.kernel.org>; Fri, 13 May 2022 13:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380477AbiEMM5I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 May 2022 08:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
+        id S232387AbiEMNxg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 May 2022 09:53:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380456AbiEMM5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 May 2022 08:57:06 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527089B186
-        for <git@vger.kernel.org>; Fri, 13 May 2022 05:57:03 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 22CCE1A49D2;
-        Fri, 13 May 2022 08:57:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=m06ObQ8j+UICxj+6qHPBNWTZK470Ml5yvPDeu5HqsIM=; b=bfOV
-        vy6seMJ881dhVJczQe+G2C8YAh2QLtcXlLK5785XoBWlHjF4zcCkwmG1RldtXV8j
-        N0zVIo/+PsOo1i0m7rCuE3IHViF6a8LA594pmSXQpzsO4SPqe8UHBP7GmUlySi1t
-        NZLkT5cH4L6DSKIxGPfHjdxPauXCo/VfBZ+lAaE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1B5771A49D1;
-        Fri, 13 May 2022 08:57:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B94641A49CE;
-        Fri, 13 May 2022 08:56:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>, vascomalmeida@sapo.pt
-Subject: Re: Question about pre-merge and git merge octopus strategy
-References: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
-        <CAP8UFD2p+Evqv_MBAgv23zooppsNWjOw6ZU2GLqAq_skZoJPOw@mail.gmail.com>
-        <CABPp-BGD3AZvXwmSHfQQ_xh_UqevH23kdBYijAWUk8GHu1q0Qw@mail.gmail.com>
-        <CAOLTT8STRfqq4bfobCK8Q5uvtXzgNYY0x0wNh4HNyAhv0Mc07A@mail.gmail.com>
-        <CABPp-BEFYjTvK4ZNSg+yiahRAzXW=KU11a-b+QRdcBDGb-movQ@mail.gmail.com>
-        <CAOLTT8R7QmpvaFPTRs3xTpxr7eiuxF-ZWtvUUSC0-JOo9Y+SqA@mail.gmail.com>
-        <CABPp-BHmNBMypVDrE=gPMXoHT9uH-u4HJG1dAuY0tjSGrK0yPg@mail.gmail.com>
-        <xmqqk0aqhia1.fsf@gitster.g>
-        <CABPp-BGOGLUPOn20yWzCrBYCykiet0=5UfbkuGC78f-QoWVvYg@mail.gmail.com>
-Date:   Fri, 13 May 2022 05:56:58 -0700
-Message-ID: <xmqq35hdd205.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234170AbiEMNxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 May 2022 09:53:25 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6419A59BA9
+        for <git@vger.kernel.org>; Fri, 13 May 2022 06:50:29 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id j6so7717098pfe.13
+        for <git@vger.kernel.org>; Fri, 13 May 2022 06:50:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=J4jXmL7Zrg1ZokojVoQJaM9bD2IQFHmudTGshRrCwjI=;
+        b=llgxOrC/PiG/tzZkZ4L9PU0vS169btnGeNWXEH98ud+hd7LQa1Yk4j7dHoFwPa7Oz9
+         Zf649RbgKDURaxW8hkCzDzhFCEQT7vj//YJN1iny90IfwhI5PtCTDhbr6o7XOulwc0s2
+         n7eHwWZPswwfAZXZIS1q/qrpk22ZQIoKuqvBHoSR2A+s009bSwyYvzgSIeFoHzyyoZdw
+         JXgl83H48NbtssSjadMbdT8+oEp5LK9zMxsoKwQ3UWhH0tJvbJsMj6q20LhoT+jqlq/p
+         UHnndMU+GG6iFDT2gmeoXcF37PTjJ9V0TJd9NMbhc+2MuRuvLnGBx7w4o4HJ2yykFqgb
+         T28w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=J4jXmL7Zrg1ZokojVoQJaM9bD2IQFHmudTGshRrCwjI=;
+        b=SMTRhAyEF1Vsu8o/FEfvdNG/K05OtSVcrGEBEq8Eb9GyH8jXJoT3CBKta8aaBZU/l2
+         H3QzwzSLjjq+uuE/Ui591aX22w6HzpYjoLZgBwBeX0bWMmmbdiCMlhvRjl31GEpnLqDh
+         h87aWiqto9EG0EyvQnpZ1Oa7kqPnAyN8o9gdwvVjekngZqfRZzyHPHJR/7BtXzQ3Mwal
+         GOHNayRqgLbrZ3ILYy+RUdEp4Osxy56ip6FNhKqyx0VRs/lOuXd3aPNQ2dRh1VbdBYQj
+         37FccgZtwJCkGj5GyemMBbRWRAvlV+rxrbo2mHYZLVXS09QLHNxVlnkw4UGgnC432eV9
+         3nww==
+X-Gm-Message-State: AOAM533QesjueYsLaNEcmJewKNyDZsDnh6Y7TMtay2m6WAGA+lvOgLtS
+        THXjb+8CSmt2n+AOhWjtDco=
+X-Google-Smtp-Source: ABdhPJwV3I7ITqcjB/u3O4W9W2tf3klgl4CfnKCtS8Kc+mzC0LnOFX8CYiA2vU2HdSFL9sZX0z5LkQ==
+X-Received: by 2002:a65:6a4c:0:b0:39c:f169:b54a with SMTP id o12-20020a656a4c000000b0039cf169b54amr4190075pgu.384.1652449826533;
+        Fri, 13 May 2022 06:50:26 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:4e9e:ceaa:e164:1ef4:34a1:c63d])
+        by smtp.gmail.com with ESMTPSA id v18-20020a170902e8d200b0015e8d4eb2b4sm1824341plg.254.2022.05.13.06.50.22
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 13 May 2022 06:50:25 -0700 (PDT)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v4] builtin/remote.c: teach `-v` to list filters for promisor remotes
+Date:   Fri, 13 May 2022 19:19:46 +0530
+Message-Id: <20220513134946.1581-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <xmqqmtfqd25h.fsf@gitster.g>
+References: <xmqqmtfqd25h.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D530E12-D2BC-11EC-806A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
->> If merge-recursive or merge-resolve is asked to merge a single
->> commit to the current branch without any other strategies to use as
->> a fallback, they leave the working tree and index into a state where
->> the end-user can conclude the conflict resolution and commit the
->> result.  In spirit, we are in the same situation, aren't we?
->
-> I don't think it's quite the same....
-> ...
-> Or are you saying that if all merge strategies return a 2, we just
-> treat the last one as good enough and consider the merge to be in
-> progress?
+> Isn't it where we already are with "remote -v", though?  I am not
+> sure addition of excess information that may not be universally
+> useful is a very welcome change, even with "remote -v -v".  I am not
+> worried about showing the "list-object-filter", but I worry about
+> managing temptations of future developers to add other stuff.
 
-No, I was just confusing the difference between the special return
-value 2 and a normal failure value 1.
+If future developers come up with some really useful stuff (i.e. 
+universally useful), I think those should be added in the output
+irrespective of the no of existing info in the output. If the
+output becomes messy, we should focus on how we can make the output
+clear may be using tabular format.
 
-I have a feeling that it would be nice if we can restore to pristine
-on the calling "git merge" side, rather than forcing individual
-strategy backends to implement the restore-to-pristine correctly,
-but in any case, as you said, we should behave as if a merge
-strategy backend never run after it failed with exit value 2 by
-restoring to pristine state.
+Else you can drop the idea and suggest them to introduce a new flag
+(depending on the situation). If you still have some doubt about my
+PR i.e. if you can not determine which category my PR belongs to, I
+can go with adding `show-partial-clone` flag. The downside would
+be that `remote -v` will not give the full summary in case of partial
+clone.
+
+If you like the tabular format approach, I am further going to propose
+a table format -
+
++---------------+----------------------------------------------+
+|  remote name  |          remote info                         |
++---------------+--------+--------+----------------------------+
+|               |        | url    | https://blah.com/blah.git  |
+|  origin       |        +--------+----------------------------+
+|               |        | filter | blob:none                  |
+|               | fetch  +--------+----------------------------+
+|               |        | .                                   |
+|               |        | .     (some important data)         |
+|               +--------+--------+----------------------------+
+|               |        | url    | https://blah.com/blah.git  |
+|               | push   +--------+----------------------------+
+|               |        | ... (some important data)           |
++---------------+--------+-------------------------------------+
+
+In this way, user can see the summary of all remotes with visual ease.
+Of course it is not suitable for scripting. In that case we can use
+a new flag `--raw` which will let `-v` to provide a space/tab seperated
+sequence of info (similar to current format).
+
+Let me know if you (as in all) like/dislike my view and give your
+arguments regarding my proposal.
+
+Thanks :) 
