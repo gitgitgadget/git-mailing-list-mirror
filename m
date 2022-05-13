@@ -2,63 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F7A2C433FE
-	for <git@archiver.kernel.org>; Fri, 13 May 2022 01:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9436BC43217
+	for <git@archiver.kernel.org>; Fri, 13 May 2022 01:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359832AbiEMBAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 May 2022 21:00:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
+        id S1359834AbiEMBAq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 May 2022 21:00:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359838AbiEMBAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 May 2022 21:00:38 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3042E28BDDC
-        for <git@vger.kernel.org>; Thu, 12 May 2022 18:00:35 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id l1so5679283qvh.1
-        for <git@vger.kernel.org>; Thu, 12 May 2022 18:00:35 -0700 (PDT)
+        with ESMTP id S1359827AbiEMBAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 May 2022 21:00:39 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6068C28B877
+        for <git@vger.kernel.org>; Thu, 12 May 2022 18:00:37 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id dv4so5636431qvb.13
+        for <git@vger.kernel.org>; Thu, 12 May 2022 18:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4wmDxjP2mGvvbTbVAmUg7e2xipQK04OlptWFYCPhh70=;
-        b=oUN85uvuIqSSHKSbFvcliBqXnrqdZDhvcVu41/f1wawsVJHv2xBdBaREdvjHHop00j
-         XXlewCp+TvKIwHv6xL44d97rwJSJIP29RJAREpyibIo8yy/yXUvwhjPAUnxoQWwRyHnZ
-         a2gAaoXQUVmxEav4iBCVgfLqroA8lApIJMWy6Xg3RXxiO9yUZ6nGTlM8JIFo3AnBphDm
-         Kkau1+rxkejHGCKmZGiCPhY9SPa6Iz9AK5GHK9kIr0yixfk8pCAGe0Wpt+OUM3Y2ylJm
-         yG3IWE2Ejr9E27WBepdH6hA3hXc+wH7M14aoCmCRvg7a7GXsXXaiuNr4InEUPVyqpUQA
-         v4iA==
+        bh=qyolCt5vrNxZZwHvL6LyGqRrlNXwbUmjD3hLew2/fZY=;
+        b=Fkr2mih/hmqbfiQoFJbYPR/alYSiDhqxKX/ZJRuhXMXrnDO+9MXsYOi7BfGyOiqxkF
+         9R7TV87/lrDYzLR3Et+rZBww4alyoSEnwwJOax/01J/ptZM2K7W+RNiEAxQAm/BxTY75
+         4VVQqJJnMyzN4cazOxIQCDptFjbs0TPRWs2nhi2pbdU3GTg8FnK96xNECZ392Ndc4LzK
+         +t6CY6oH1Po7Q6Y76FRQrkTWho5Kn6EzuD//6akDf7a0a4QrabwLYd4t3qLwz+/ry3nN
+         f5ytrUeRdvFMLgPpLL40R3I5OJRI51gekU4LC14iSVcqfqbO19sAOS3QvJdqHOXwRAHX
+         vwrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4wmDxjP2mGvvbTbVAmUg7e2xipQK04OlptWFYCPhh70=;
-        b=mcFk59T3ry0CW3PvfYn1B53O+JmxyXb+TILSbcP8bR3Zxoi5zBIQmvNkRxGWNUImGf
-         o4qjAGeO9lNvbBoAo1vkC6d4flMzQF8xxZ7f8dNOXH5AWKQXGocR1y+mFfFabEZWhaTE
-         iJQ3PxuqYSn3eXJDlbBUpxCS1Ys73edh1kU8gbuYMm6FyVdTbp75QUtlDufI6r00En3V
-         /yLUOnYNM16BakVQpn50QRMX0L+gVH/niR0c6lX/QKqCD+NdF081kmTtdvzGWvVSjqij
-         HKKHHSrUtAaBsdegZrj+97MqBZf1jheOdlEilqiUcXTQXBDg55e6babZqgsLI79fGFkJ
-         vlIg==
-X-Gm-Message-State: AOAM5317qu7ZKZCWLbOPMk2KHeglCIjmtG47PLZpjs9TOhILijqJfL9Z
-        048kmTroFiS8ALx5jvYc4tjaROthSXg=
-X-Google-Smtp-Source: ABdhPJyllTOjPjsO/BePgNIbrFgBEj5LeBU6dUq5D+C5q1LSr+t28vF2WIWrgniXGYkUA2pQ/wVCSA==
-X-Received: by 2002:a05:6214:1bc7:b0:45b:85e:e5a4 with SMTP id m7-20020a0562141bc700b0045b085ee5a4mr2568824qvc.57.1652403633816;
-        Thu, 12 May 2022 18:00:33 -0700 (PDT)
+        bh=qyolCt5vrNxZZwHvL6LyGqRrlNXwbUmjD3hLew2/fZY=;
+        b=7mxl0hmvq2ws5ADOcTNnf0GLXQuz53lWvN56nBHnN2vgVW1Kru4SJVBAjsFrtat0JK
+         y4WcClYZFy58e6kHYAi4KUnT4wMM94L+zey6sZD/54CLum1wiIY+5TSvXxWl5kA3oD2y
+         pc9R+x5xvymHwSFbusmMI3ExE10aQt6JBCiG7hq0su6z2EjWwS21+QhvcF6fwMX2/BFi
+         mL8is+YX93myjxbhP/X5++AfIJhGNxvkHSpX46Lspx6KYH5KVkOd7iVooeIgH8eQv4NJ
+         j4FtXadgAnTetB/qkKUIwu/qd3zY2eIpIM8+nSQQfDVkx6jfQ2hrije2Z1pjFxuc3p4R
+         hh2A==
+X-Gm-Message-State: AOAM531fbohky/mRWYXjq07p/w7atxLhq6Xd8keiDIGo4I/E5eP1f8tt
+        nN3v0qhe9+WMRtmlkDxCAA+S/lUrUEk=
+X-Google-Smtp-Source: ABdhPJwzf+Qc88uVI4E83OdQSq1PomlqF1FBhml0rk80aqeTs6PdMSysR5rwLaichb4j0uglMr2HNA==
+X-Received: by 2002:a05:6214:d8c:b0:45a:de69:79e7 with SMTP id e12-20020a0562140d8c00b0045ade6979e7mr2333871qve.15.1652403635661;
+        Thu, 12 May 2022 18:00:35 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id s202-20020a3745d3000000b0069fc13ce227sm583541qka.88.2022.05.12.18.00.32
+        by smtp.gmail.com with ESMTPSA id s202-20020a3745d3000000b0069fc13ce227sm583541qka.88.2022.05.12.18.00.33
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 May 2022 18:00:33 -0700 (PDT)
+        Thu, 12 May 2022 18:00:34 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, bagasdotme@gmail.com,
         johannes.Schindelin@gmx.de,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
+        <carenas@gmail.com>, Guy Maurel <guy.j@maurel.de>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v5 1/4] t: regression git needs safe.directory when using sudo
-Date:   Thu, 12 May 2022 18:00:17 -0700
-Message-Id: <20220513010020.55361-2-carenas@gmail.com>
+        Randall Becker <rsbecker@nexbridge.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v5 2/4] git-compat-util: avoid failing dir ownership checks if running privileged
+Date:   Thu, 12 May 2022 18:00:18 -0700
+Message-Id: <20220513010020.55361-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.36.1.371.g0fb0ef0c8d
 In-Reply-To: <20220513010020.55361-1-carenas@gmail.com>
 References: <20220510174616.18629-1-carenas@gmail.com>
@@ -70,131 +72,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally reported after release of v2.35.2 (and other maint branches)
-for CVE-2022-24765 and blocking otherwise harmless commands that were
-done using sudo in a repository that was owned by the user.
+bdc77d1d685 (Add a function to determine whether a path is owned by the
+current user, 2022-03-02) checks for the effective uid of the running
+process using geteuid() but didn't account for cases where that user was
+root (because git was invoked through sudo or a compatible tool) and the
+original uid that repository trusted for its config was no longer known,
+therefore failing the following otherwise safe call:
 
-Add a new test script with very basic support to allow running git
-commands through sudo, so a reproduction could be implemented and that
-uses only `git status` as a proxy of the issue reported.
+  guy@renard ~/Software/uncrustify $ sudo git describe --always --dirty
+  [sudo] password for guy:
+  fatal: unsafe repository ('/home/guy/Software/uncrustify' is owned by someone else)
 
-Note that because of the way sudo interacts with the system, a much
-more complete integration with the test framework will require a lot
-more work and that was therefore intentionally punted for now.
+Attempt to detect those cases by using the environment variables that
+those tools create to keep track of the original user id, and do the
+ownership check using that instead.
 
-The current implementation requires the execution of a special cleanup
-function which should always be kept as the last "test" or otherwise
-the standard cleanup functions will fail because they can't remove
-the root owned directories that are used.  This also means that if
-failures are found while running, the specifics of the failure might
-not be kept for further debugging and if the test was interrupted, it
-will be necessary to clean the working directory manually before
-restarting by running:
+This assumes the environment the user is running on after going
+privileged can't be tampered with, and also adds code to restrict that
+the new behavior only applies if running as root, therefore keeping the
+most common case, which runs unprivileged, from changing, but because of
+that, it will miss cases where sudo (or an equivalent) was used to change
+to another unprivileged user or where the equivalent tool used to raise
+privileges didn't track the original id in a sudo compatible way.
 
-  $ sudo rm -rf trash\ directory.t0034-root-safe-directory/
+Because of compatibility with sudo, the code assumes that uid_t is an
+unsigned integer type (which is not required by the standard) but is used
+that way in their codebase to generate SUDO_UID.  In systems where uid_t
+is signed, sudo might be also patched to NOT be unsigned and that might
+be able to trigger an edge case and a bug (as described in the code), but
+it is considered unlikely to happen and even if it does, the code would
+just mostly fail safely, so there was no attempt either to detect it or
+prevent it by the code, which is something that might change in the future,
+based on expected user feedback.
 
-The test file also uses at least one initial "setup" test that creates
-a parallel execution directory under the "root" sub directory, which
-should be used as top level directory for all repositories that are
-used in this test file.  Unlike all other tests the repository provided
-by the test framework should go unused.
-
-Special care should be taken when invoking commands through sudo, since
-the environment is otherwise independent from what the test framework
-setup and might have changed the values for HOME, SHELL and dropped
-several relevant environment variables for your test.  Indeed `git status`
-was used as a proxy because it doesn't even require commits in the
-repository to work and usually doesn't require much from the environment
-to run, but a future patch will add calls to `git init` and that will
-fail to honor the default branch name, unless that setting is NOT
-provided through an environment variable (which means even a CI run
-could fail that test if enabled incorrectly).
-
-A new SUDO prerequisite is provided that does some sanity checking
-to make sure the sudo command that will be used allows for passwordless
-execution as root without restrictions and doesn't mess with git's
-execution path.  This matches what is provided by the macOS agents that
-are used as part of GitHub actions and probably nowhere else.
-
-Most of those characteristics make this test mostly only suitable for
-CI, but it might be executed locally if special care is taken to provide
-for all of them in the local configuration and maybe making use of the
-sudo credential cache by first invoking sudo, entering your password if
-needed, and then invoking the test with:
-
-  $ GIT_TEST_ALLOW_SUDO=YES ./t0034-root-safe-directory.sh
-
-If it fails to run, then it means your local setup wouldn't work for the
-test because of the configuration sudo has or other system settings, and
-things that might help are to comment out sudo's secure_path config, and
-make sure that the account you are using has no restrictions on the
-commands it can run through sudo, just like is provided for the user in
-the CI.
-
-For example (assuming a username of marta for you) something probably
-similar to the following entry in your /etc/sudoers (or equivalent) file:
-
-  marta	ALL=(ALL:ALL) NOPASSWD: ALL
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Reported-by: Guy Maurel <guy.j@maurel.de>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Randall Becker <rsbecker@nexbridge.com>
 Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t0034-root-safe-directory.sh | 44 ++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
- create mode 100755 t/t0034-root-safe-directory.sh
+ Documentation/config/safe.txt  | 13 +++++++++
+ git-compat-util.h              | 53 +++++++++++++++++++++++++++++++++-
+ t/t0034-root-safe-directory.sh |  2 +-
+ 3 files changed, 66 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config/safe.txt b/Documentation/config/safe.txt
+index 6d764fe0ccf..c6ebd1674dd 100644
+--- a/Documentation/config/safe.txt
++++ b/Documentation/config/safe.txt
+@@ -26,3 +26,16 @@ directory was listed in the `safe.directory` list. If `safe.directory=*`
+ is set in system config and you want to re-enable this protection, then
+ initialize your list with an empty value before listing the repositories
+ that you deem safe.
+++
++As explained, Git only allows you to access repositories owned by
++yourself, i.e. the user who is running Git, by default.  When Git
++is running as 'root' in a non Windows platform that provides sudo,
++ however, git checks the SUDO_UID environment variable that sudo creates
++and will allow access to the uid recorded as its value instead.
++This is to make it easy to perform a common sequence during installation
++"make && sudo make install".  A git process running under 'sudo' runs as
++'root' but the 'sudo' command exports the environment variable to record
++which id the original user has.
++If that is not what you would prefer and want git to only trust
++repositories that are owned by root instead, then you must remove
++the `SUDO_UID` variable from root's environment before invoking git.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 63ba89dd31d..e7cbfa65c9a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -393,12 +393,63 @@ static inline int git_offset_1st_component(const char *path)
+ #endif
+ 
+ #ifndef is_path_owned_by_current_user
++
++#ifdef __TANDEM
++#define ROOT_UID 65535
++#else
++#define ROOT_UID 0
++#endif
++
++/*
++ * Do not use this function when
++ * (1) geteuid() did not say we are running as 'root', or
++ * (2) using this function will compromise the system.
++ *
++ * PORTABILITY WARNING:
++ * This code assumes uid_t is unsigned because that is what sudo does.
++ * If your uid_t type is signed and all your ids are positive then it
++ * should all work fine.
++ * If your version of sudo uses negative values for uid_t or it is
++ * buggy and return an overflowed value in SUDO_UID, then git might
++ * fail to grant access to your repository properly or even mistakenly
++ * grant access to someone else.
++ * In the unlikely scenario this happened to you, and that is how you
++ * got to this message, we would like to know about it; so sent us an
++ * email to git@vger.kernel.org indicating which platform you are
++ * using and which version of sudo, so we can improve this logic and
++ * maybe provide you with a patch that would prevent this issue again
++ * in the future.
++ */
++static inline void extract_id_from_env(const char *env, uid_t *id)
++{
++	const char *real_uid = getenv(env);
++
++	/* discard anything empty to avoid a more complex check below */
++	if (real_uid && *real_uid) {
++		char *endptr = NULL;
++		unsigned long env_id;
++
++		errno = 0;
++		/* silent overflow errors could trigger a bug here */
++		env_id = strtoul(real_uid, &endptr, 10);
++		if (!*endptr && !errno)
++			*id = env_id;
++	}
++}
++
+ static inline int is_path_owned_by_current_uid(const char *path)
+ {
+ 	struct stat st;
++	uid_t euid;
++
+ 	if (lstat(path, &st))
+ 		return 0;
+-	return st.st_uid == geteuid();
++
++	euid = geteuid();
++	if (euid == ROOT_UID)
++		extract_id_from_env("SUDO_UID", &euid);
++
++	return st.st_uid == euid;
+ }
+ 
+ #define is_path_owned_by_current_user is_path_owned_by_current_uid
 diff --git a/t/t0034-root-safe-directory.sh b/t/t0034-root-safe-directory.sh
-new file mode 100755
-index 00000000000..f6a5d63ff41
---- /dev/null
+index f6a5d63ff41..6b8ea5357f6 100755
+--- a/t/t0034-root-safe-directory.sh
 +++ b/t/t0034-root-safe-directory.sh
-@@ -0,0 +1,44 @@
-+#!/bin/sh
-+
-+test_description='verify safe.directory checks while running as root'
-+
-+. ./test-lib.sh
-+
-+if [ "$GIT_TEST_ALLOW_SUDO" != "YES" ]
-+then
-+	skip_all="You must set env var GIT_TEST_ALLOW_SUDO=YES in order to run this test"
-+	test_done
-+fi
-+
-+test_lazy_prereq SUDO '
-+	sudo -n id -u >u &&
-+	id -u root >r &&
-+	test_cmp u r &&
-+	command -v git >u &&
-+	sudo command -v git >r &&
-+	test_cmp u r
-+'
-+
-+test_expect_success SUDO 'setup' '
-+	sudo rm -rf root &&
-+	mkdir -p root/r &&
-+	(
-+		cd root/r &&
-+		git init
-+	)
-+'
-+
-+test_expect_failure SUDO 'sudo git status as original owner' '
-+	(
-+		cd root/r &&
-+		git status &&
-+		sudo git status
-+	)
-+'
-+
-+# this MUST be always the last test
-+test_expect_success SUDO 'cleanup' '
-+	sudo rm -rf root
-+'
-+
-+test_done
+@@ -28,7 +28,7 @@ test_expect_success SUDO 'setup' '
+ 	)
+ '
+ 
+-test_expect_failure SUDO 'sudo git status as original owner' '
++test_expect_success SUDO 'sudo git status as original owner' '
+ 	(
+ 		cd root/r &&
+ 		git status &&
 -- 
 2.36.1.371.g0fb0ef0c8d
 
