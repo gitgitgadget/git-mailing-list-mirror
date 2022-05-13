@@ -2,211 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A07F7C433EF
-	for <git@archiver.kernel.org>; Fri, 13 May 2022 07:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2453FC433F5
+	for <git@archiver.kernel.org>; Fri, 13 May 2022 08:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377736AbiEMHNM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 May 2022 03:13:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52418 "EHLO
+        id S1378541AbiEMIq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 May 2022 04:46:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377722AbiEMHMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 May 2022 03:12:48 -0400
-Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69BC326C4CE
-        for <git@vger.kernel.org>; Fri, 13 May 2022 00:12:45 -0700 (PDT)
-Received: by psionic.psi5.com (Postfix, from userid 1002)
-        id 845BD40CA9; Fri, 13 May 2022 09:04:42 +0200 (CEST)
-From:   Simon.Richter@hogyros.de
-To:     git@vger.kernel.org
-Cc:     Simon Richter <Simon.Richter@hogyros.de>
-Subject: [PATCH 2/3] Add config option/env var to limit HTTP auth methods
-Date:   Fri, 13 May 2022 09:04:15 +0200
-Message-Id: <20220513070416.37235-3-Simon.Richter@hogyros.de>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220513070416.37235-1-Simon.Richter@hogyros.de>
-References: <20220513070416.37235-1-Simon.Richter@hogyros.de>
+        with ESMTP id S1378558AbiEMIqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 May 2022 04:46:24 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9113B1FA69
+        for <git@vger.kernel.org>; Fri, 13 May 2022 01:46:20 -0700 (PDT)
+Received: from host217-43-165-125.range217-43.btcentralplus.com ([217.43.165.125] helo=[192.168.1.168])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1npQwD-0007Dy-5c;
+        Fri, 13 May 2022 09:46:18 +0100
+Message-ID: <9a01bede-40d8-e7e8-6d8c-42beea8f6f35@iee.email>
+Date:   Fri, 13 May 2022 09:46:17 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: Git Submodules ref setting
+Content-Language: en-US
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        =?UTF-8?B?0JLQsNC00LjQvCDQptCy0LXRgtC60L7Qsg==?= 
+        <vadim.tsvetkov80@gmail.com>, git@vger.kernel.org
+References: <F20FCD5B-7788-4D4C-8402-2C4CF447B2F5@gmail.com>
+ <88fa7138-cb3f-ab88-525c-198396b0a262@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <88fa7138-cb3f-ab88-525c-198396b0a262@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Simon Richter <Simon.Richter@hogyros.de>
+On 12/05/2022 23:42, Philippe Blain wrote:
+> Hi,
+>
+> Le 2022-05-12 à 16:01, Вадим Цветков a écrit :
+>> Hello,
+>>
+>> I've started a small project which involves several git repositories, which depends on each other.
+>> For dealing with these repos I wanted to use git submodules as a simple package manager.
+>> However, it seems impossible to lock a submodule to particular ref, only to a branch.
+> Submodules are recorded in the superproject *at a specific commit*.
+> That's the data model. There is no other options.
+>
+> There is a 'branch' setting that you can put in '.gitmodules'.
+> This *only* affects the command 'git submodule update --remote', nothing else.
+>
+> If you mean that you would like to have a non-branch ref recorded in '.gitmodules'
+> i.e. something like refs/other-refs/example instead of 'some-branch' that corresponds
+> to 'refs/heads/some-branch', then no this is not possible either.
+>
+>> I would like to ask if this is deliberate design choice?
+> Yes, it was a deliberate design choice to have a deterministic state
+> of a repository using submodules upon 'git clone'. Recording a submodule
+> at a specific branch instead of at a specific commit would make this design
+> choice impossible to achieve.
+>
+>> And if it's not, may I contribute this feature?
+>>
+> It depends on what you mean by 'lock submodule to a specific ref'.
+>
+> I encourage you to read the "Git Submodules" chapter of the Pro Git book [1]
+> for an in-depth overview of how submodules work. And after that, for reference
+> the Git documentation:
 
-This allows forcing an authentication mechanism when the available
-credentials do not match the automatically selected "best" mechanism.
+I didn't find the man page, or the scm chapter that great in explaining 
+the overall way that sub-modules are conceived and organised.
 
-For example, MS DevOps server supports both NTLM and Basic authentication,
-but the NTLM backend is connected to the user database only and does not
-accept Personal Access Tokens; curl however selects NTLM over Basic if both
-are available.
+There is an implicit assumption in the man pages that folks, in general, 
+already know the background and concepts, and are just looking for the 
+particular command option details. I.e that it is a reference manual. 
+There has been a lot of work done over the years on sub-modules but, to 
+me, the concentration has been on _implementation_ (which is obviously 
+important), rather than _explanation_ of how sub-modules work and the 
+newer capabilities mesh into the existing ones.
 
-Signed-off-by: Simon Richter <Simon.Richter@hogyros.de>
----
- Documentation/config/http.txt   | 19 +++++++++++++++++++
- Documentation/config/remote.txt |  4 ++++
- http.c                          | 33 ++++++++++++++++++++++++++++++++-
- remote.c                        |  4 ++++
- remote.h                        |  3 +++
- 5 files changed, 62 insertions(+), 1 deletion(-)
+As seen here, the existing usage as a place holder for libraries at 
+exact versions has been 'lost' in the flurry of newer capabilities. It 
+maybe something to add to the wider UX discussions [A].
+>
+> - git-submodule(1): https://git-scm.com/docs/git-submodule
+> - gitsubmodules(7): https://git-scm.com/docs/gitsubmodules
+> - gitmodules(5): https://git-scm.com/docs/gitmodules
+>
+> I hope that helps,
+>
+> Philippe.
+>
+> [1] https://git-scm.com/book/en/v2/Git-Tools-Submodules
+Philip
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index 7003661c0d..d9875afa4d 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -1,3 +1,22 @@
-+http.authMethod::
-+	Set the method with which to authenticate to the HTTP server, if
-+	required. This can be overridden on a per-remote basis; see
-+	`remote.<name>.authMethod`. Both can be overridden by the
-+	`GIT_HTTP_AUTHMETHOD` environment variable.  Possible values are:
-++
-+--
-+* `anyauth` - Automatically pick a suitable authentication method. It is
-+  assumed that the server answers an unauthenticated request with a 401
-+  status code and one or more WWW-Authenticate headers with supported
-+  authentication methods. This is the default.
-+* `basic` - HTTP Basic authentication
-+* `digest` - HTTP Digest authentication; this prevents the password from being
-+  transmitted to the server in clear text
-+* `negotiate` - GSS-Negotiate authentication (compare the --negotiate option
-+  of `curl(1)`)
-+* `ntlm` - NTLM authentication (compare the --ntlm option of `curl(1)`)
-+--
-+
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy',
- 	'https_proxy', and 'all_proxy' environment variables (see `curl(1)`). In
-diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
-index 0678b4bcfe..0f87234427 100644
---- a/Documentation/config/remote.txt
-+++ b/Documentation/config/remote.txt
-@@ -10,6 +10,10 @@ remote.<name>.url::
- remote.<name>.pushurl::
- 	The push URL of a remote repository.  See linkgit:git-push[1].
- 
-+remote.<name>.authMethod::
-+	For http and https remotes, the method to use for
-+	authenticating against the server. See `http.authMethod`.
-+
- remote.<name>.proxy::
- 	For remotes that require curl (http, https and ftp), the URL to
- 	the proxy to use for that remote.  Set to the empty string to
-diff --git a/http.c b/http.c
-index 318dc5daea..c5af90b1b8 100644
---- a/http.c
-+++ b/http.c
-@@ -108,6 +108,7 @@ static const char *curl_proxyuserpwd;
- static const char *curl_cookie_file;
- static int curl_save_cookies;
- struct credential http_auth = CREDENTIAL_INIT;
-+static const char *http_authmethod;
- static int http_proactive_auth;
- static const char *user_agent;
- static int curl_empty_auth = -1;
-@@ -356,6 +357,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 	if (!strcmp("http.useragent", var))
- 		return git_config_string(&user_agent, var, value);
- 
-+	if (!strcmp("http.authmethod", var))
-+		return git_config_string(&http_authmethod, var, value);
-+
- 	if (!strcmp("http.emptyauth", var)) {
- 		if (value && !strcmp("auto", value))
- 			curl_empty_auth = -1;
-@@ -450,6 +454,27 @@ static void var_override(const char **var, char *value)
- 	}
- }
- 
-+static void init_curl_http_auth_method(CURL *result)
-+{
-+	var_override(&http_authmethod, getenv("GIT_HTTP_AUTHMETHOD"));
-+
-+	if (http_authmethod) {
-+		int i;
-+		for (i = 0; i < ARRAY_SIZE(authmethods); i++) {
-+			if (!strcmp(http_authmethod, authmethods[i].name)) {
-+				http_auth_methods = authmethods[i].curlauth_param;
-+				break;
-+			}
-+		}
-+		if (i == ARRAY_SIZE(authmethods)) {
-+			warning("unsupported authentication method %s: using anyauth",
-+					http_authmethod);
-+			http_auth_methods = CURLAUTH_ANY;
-+		}
-+	}
-+	curl_easy_setopt(result, CURLOPT_HTTPAUTH, http_auth_methods);
-+}
-+
- static void set_proxyauth_name_password(CURL *result)
- {
- 		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
-@@ -786,7 +811,7 @@ static CURL *get_curl_handle(void)
- #endif
- 
- 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
--	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-+	init_curl_http_auth_method(result);
- 
- #ifdef CURLGSSAPI_DELEGATION_FLAG
- 	if (curl_deleg) {
-@@ -1040,6 +1065,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	if (remote && remote->http_proxy)
- 		curl_http_proxy = xstrdup(remote->http_proxy);
- 
-+	if (remote)
-+		var_override(&http_authmethod, remote->http_authmethod);
-+
- 	if (remote)
- 		var_override(&http_proxy_authmethod, remote->http_proxy_authmethod);
- 
-@@ -1504,6 +1532,9 @@ static int handle_curl_result(struct slot_results *results)
- 			if (results->auth_avail) {
- 				http_auth_methods &= results->auth_avail;
- 				http_auth_methods_restricted = 1;
-+				/* fail if no methods left */
-+				if(http_auth_methods == 0)
-+					return HTTP_NOAUTH;
- 			}
- 			return HTTP_REAUTH;
- 		}
-diff --git a/remote.c b/remote.c
-index 42a4e7106e..dca7b82c9f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -155,6 +155,7 @@ static void remote_clear(struct remote *remote)
- 	FREE_AND_NULL(remote->pushurl);
- 	free((char *)remote->receivepack);
- 	free((char *)remote->uploadpack);
-+	FREE_AND_NULL(remote->http_authmethod);
- 	FREE_AND_NULL(remote->http_proxy);
- 	FREE_AND_NULL(remote->http_proxy_authmethod);
- }
-@@ -461,6 +462,9 @@ static int handle_config(const char *key, const char *value, void *cb)
- 			remote->fetch_tags = -1;
- 		else if (!strcmp(value, "--tags"))
- 			remote->fetch_tags = 2;
-+	} else if (!strcmp(subkey, "authmethod")) {
-+		return git_config_string((const char **)&remote->http_authmethod,
-+					 key, value);
- 	} else if (!strcmp(subkey, "proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
-diff --git a/remote.h b/remote.h
-index 4a1209ae2c..c063d30356 100644
---- a/remote.h
-+++ b/remote.h
-@@ -105,6 +105,9 @@ struct remote {
- 	const char *receivepack;
- 	const char *uploadpack;
- 
-+	/* The method for authenticating against the (HTTP) server */
-+	char *http_authmethod;
-+
- 	/* The proxy to use for curl (http, https, ftp, etc.) URLs. */
- 	char *http_proxy;
- 
--- 
-2.30.2
-
+[A] 
+https://lore.kernel.org/git/CA+Yb-VSaeKy-g_ywkZzQuEX=k3EXM+Ky-rHOb2az0SHGVbdaVw@mail.gmail.com/
