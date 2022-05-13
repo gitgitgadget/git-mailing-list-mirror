@@ -2,102 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB1A9C433EF
-	for <git@archiver.kernel.org>; Fri, 13 May 2022 10:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41E0FC433F5
+	for <git@archiver.kernel.org>; Fri, 13 May 2022 12:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379417AbiEMKV6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 May 2022 06:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49572 "EHLO
+        id S1380137AbiEMMHP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 May 2022 08:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379406AbiEMKVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 May 2022 06:21:53 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB7BC1737D7
-        for <git@vger.kernel.org>; Fri, 13 May 2022 03:21:42 -0700 (PDT)
+        with ESMTP id S1380126AbiEMMHO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 May 2022 08:07:14 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0628694BD
+        for <git@vger.kernel.org>; Fri, 13 May 2022 05:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1652437295;
-        bh=yLzT2NGLVeD5graUNLHTPGo7YZVuFojGgAqk5WF4FMw=;
+        s=badeba3b8450; t=1652443618;
+        bh=rrE40TKWqmZ+0tfDLWibSh2m6XeIMhiSlFCGhG0K07w=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gUme7v9XZPSXTwM3YLEu75G16JzTpHAVNzNqteKni7iRbSH6WGpXBVt7rkJdI5uWq
-         sj9wsJFS3VDptkerAz4mlR4mec/VIjs7fCVlccIGV4TYBIFxehkBlxwjhpLI6wNzbD
-         dYH5R7kKTDgc3PziJ1wxc7G/3Qg8yTAOMKVMlw+k=
+        b=howXqZvIv68dgmkneG/Zh1fShOohPLVxrtvZ3GnRVmUyjCA9JZte/xaMxp1FiqudN
+         ZG3kEr+HbYGYEIoxTNiHdf9XwbVVQFxVsiFPVCi+d6QGRacw/NkWWIIFpHtj8yOX9U
+         DwqKW1BM8PtVa7R5/IBTZNAwsRc+LE1aTlqevuIM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.215.85]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MplXz-1o8Wt02SQH-00qDCD; Fri, 13
- May 2022 12:21:35 +0200
-Date:   Fri, 13 May 2022 12:21:33 +0200 (CEST)
+Received: from [172.18.242.215] ([89.1.215.85]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQv8x-1nS42P0kuF-00NzB3; Fri, 13
+ May 2022 14:06:58 +0200
+Date:   Fri, 13 May 2022 14:06:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
- helper function
-In-Reply-To: <nycvar.QRO.7.76.6.2203101546110.357@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2205131220200.352@tvgsbejvaqbjf.bet>
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
- <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com> <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com> <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet> <CABPp-BGnqXdFBNAyKRXgvCHv+aUZTMg-CgcQf95dKAR-e1zSjQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2203071718090.11118@tvgsbejvaqbjf.bet> <CABPp-BGW39_5r8Lbt3ymR+F_=hWJcf=2e7O75vFNJ=3CEL5s=g@mail.gmail.com> <nycvar.QRO.7.76.6.2203101546110.357@tvgsbejvaqbjf.bet>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/scalar-diagnose, was Re: What's cooking in git.git (May 2022,
+ #04; Thu, 12)
+In-Reply-To: <xmqqilqacmmd.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2205131404280.352@tvgsbejvaqbjf.bet>
+References: <xmqqilqacmmd.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aOxTa6XygmpAROLkyb6GxksNAuTO7Y9MF9q0Em9dkE55f7GSjPH
- VZIyB3EuTArEn4/W9awHHbY3keRc4PFRiAGWrE4vj01pvm0+vTCqwdjg3pS573pI5QO3Yoz
- Rr2vhoK3oMuO2nNk9U/zr9oONk7gwtySaxrhpT7X7yeoaTEwnhHvpjjp2A8pleVahICAJLR
- /+pzJ6kwOd65qFFgUJ/8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vSHvBPcFMh0=:WmNlpYicfWkWgBq1z0kP+J
- btY/6J18JvkCw8xGcGLCnJ4SJvGE0aqAS5cuOz1JDZfdiyNQwz3+kV446VShO4E2iLlzLJEF8
- Zmdmd7NKt3OFVNLGf5G4QYHCtczOuY02M+a027Z7VOVb6LUeWc5jc7AamtqEIPyoSRyKbhjBU
- sCXvp2HA517qPCf8ujafVpzzoV1IS8/QwEIekuLui9Sv2L2kgZN1CCAi0V26Pg1S/JJJXdkzs
- 7e9rVYQwJF3OBjYqXfK7Loo4n5JSHoAj3XndVhenzPhmdh7yUCrV7HmX9ylFqbq/pr++Llre4
- hHpfEau2icBUnumAq/jDHlSTbnn4mhZp6WmPR2m9SebElVCCn6O3odFw0evi2t4pex2fbzK8l
- w/2S5iJ+8wCZbE3YKy47p/znbOR8HXjN5rd0noxHcsFjQocFfXmyMSbmMnVhyg/U0JVU6gzSI
- L4Kh10hBPpR39XLUCepaFiYkyyXF2I0vU6Y4zPWGGJWyZgXyUPY654Ulx/7549X5a4J/RoTi9
- 1x9RA0uGD4xTLr63IFuN9N/HeDYAV+bqQ5M76WfULw+oc1n3dIzZcabgPPIiV7u30WsAVlygh
- +Vp8hkC6EJ0ETPuULvdYH4GBIH408N4VYU4C75o/WCXP0obphvVhz+oWPJBsRl35J+UTqzYCz
- Kyg9Pb16/FMMIvejwNGso4gNfjkQsoI8A2Y5AAjEUNilFSNIrRmWO2QSHnbkVwEt4q6SWXC7x
- WDqb4J+eo9ELndfGti3Ott60uNauX55lfeq64BL7XGqdliOcWLrkW52zUpRo6VO9kw0qmGL4B
- U+7BgEWzp6HVJ8i5eUJx9U5vguJbPhR0mY1wkMs5Y2uNtT2iiLRA6etA24mKM/3nMw+7J36Ww
- R2gdCwW321nIrH4BduXe5chCZHcnzdW0EBsVjlx6gjC9l/6z2YGDvhwtDCxB6B+KizwRHwydz
- Th95+gQsPvhAclxfA+ToQ9GxfM6XreXuyF2BlEwT8u76272+/R9DKKJDHb6KJwrw57mu1oQsI
- giBqXqbKcDamCFSHpFyHlqLAEGj8Al91NLT9kXMNNDQ+VYVITLJImyCZayPGL9Yt8TjjF8yeH
- EQnYRJZ3wuAzTo=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-660998962-1652443618=:352"
+X-Provags-ID: V03:K1:n01/EHPNWZgUwIzLZpT3l7b3GzIbUbgyN4FdUPBR5qehzE4Ft/u
+ nlWOaTijMfRmfXmvH1bP9Kb29NhQWupQdIDv+bQik2LDAXekNN1KMi0d/LyZDFkZNemkarg
+ k0ptLHtC0xHJvOI5S70Duof3nkB1qCRmwVvS6UBQsZ8C2+PEuguf26G5Uvoq5q8tU/c1SIT
+ k1lHiBjuAFRtZaASAnjAA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9CmWnr1Pwb4=:/rrj97KYOz70Xzc8C8YRao
+ 1Jw6S1/vkTbsUt3TnYCpA13BvHnfF9iu/h/0/SQLkqZbCnNFcHJaxBrGd8n8sjr7nkXKPVUpx
+ mHvmS/lcSJSS+c2YNIBdj2mLwawPUWlPMmXUkdSc4cMartkDkr2Zl01XQbz8uDkXVMi7b5n2H
+ tEK6X3TlMtoTDFoS53fozN0tHubXWDu2wVujR5MNN/P2k1WNXh2CEQTb+hq3lpORjDeAWUK3k
+ bZj+97EOhsIFx1eU7M4pawzoxxJMy2hjJLE+2Ri/vycjI0JYXtbp6drRh6URR1oKAsjnWMSD3
+ vDNrO1loQNlevnIPk/0GzVrkOIN4ElsWxuZCnOWXHKGHfCZkdzImamPXKEZ0h28kTt5Xda3zY
+ W2Fjb1eFjtG1uLSONRJS4egbDTpwM1Ifz+bxNpPscSx3bTuD75ArmAeycL36WQS3lTZj3QQH7
+ 1aAsNRrYz/gK/fZsV5zXD8cT1ZvjJaLuUa0ADUlZGuO/pmvGgWlY35Ks/dpn/cTCx98DggTRo
+ 1ql4+ALTHixVCVvHDvRXe8vv3Dmm1YQ0IeY5GV9UBY419jvfiJ3/0XCrvqtAlzRzs8OGOhDAU
+ TlWWzMHdB7jCqiNQMjJAlLhe9p0HQNwZ0AMyhJtUbHeHRPMgfej5FkenSVYONA7Rqmtrq/evs
+ BFnSI+hhiR8FKS6NiM4zvWQ9Rwg/MEGPZijHoC3B1vA198TrjY2oRe/ULxbX/KtYRbg3eYKj4
+ v0/JrivnzNdxS7attxuBnjOk3PxuzAfBsJjjlVgVGmJ72VpLPjWVYPaYkWpB9wUPOSkYcpIRR
+ 51lFWvDkri0eMn4lLMFeyVdEMD/oeqGM5BtPkXZZdMNyhEkUeId52JRkAKbUBRsM5Zv501tnF
+ uVFjeHUAn3HI1ovT21hSDnOXhB7GB0rEELecT6vaC+B3uF82PHbMDunPSyGzhhzF3VVLX2sj6
+ fcH6k/wJQJwROGqjJpW3mPRMI/7YxBYv+suMhofot9Fl4TbDTKQbignRy9M27BFzxJXg67dWE
+ qhfD5cmkPDbA3Q5jUa/YxqCt01IQNwmA6nXgjvv7zh/oLbCH3zMpGEghBDMYb/S4v9DX6GQQV
+ zeJGxntRrYyyIE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 10 Mar 2022, Johannes Schindelin wrote:
+--8323328-660998962-1652443618=:352
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Tue, 8 Mar 2022, Elijah Newren wrote:
+Hi Junio,
+
+On Thu, 12 May 2022, Junio C Hamano wrote:
+
+> * js/scalar-diagnose (2022-05-12) 8 commits
+>  - fixup: archive: optionally add "virtual" files
+>  - scalar: teach `diagnose` to gather loose objects information
+>  - scalar: teach `diagnose` to gather packfile info
+>  - scalar diagnose: include disk space information
+>  - scalar: implement `scalar diagnose`
+>  - scalar: validate the optional enlistment argument
+>  - archive --add-file-with-contents: allow paths containing colons
+>  - archive: optionally add "virtual" files
 >
-> > So, this is one series where even if everyone else says to merge it
-> > already, I'd like to wait a bit longer on it until I feel confident we
-> > have a solution that handles at least the current usecases.
+>  Implementation of "scalar diagnose" subcommand.
 >
-> Fair enough, you're in charge of this series, and I really like what you
-> came up with.
->
-> My thinking was driven more by the users' side, as I am relatively eager
-> to integrate this into production, but am loathe to do that with an earl=
-y
-> iteration of `en/merge-tree` that might be substantially revamped, still=
-.
+>  Will merge to 'next' after squashing the fix in?
+>  source: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
 
-I've been bogged down with things elsewhere, but should now have time to
-help on this end.
+Yes, please!
 
-Elijah, _is_ there anything I can help with?
+My first reaction was: but wait, what about the file mode? Then I
+remembered that Ren=C3=A9 offered the opinion that we could easily introdu=
+ce
+`--add-executable-file-with-contents` _iff_ we need that at some stage,
+and when I considered symbolic links, I noticed that the `--add-file`
+option does not accept those in the first place, so it would be funny if
+`--add-file-with-contents` supported symbolic links.
 
 Thanks,
 Dscho
+
+--8323328-660998962-1652443618=:352--
