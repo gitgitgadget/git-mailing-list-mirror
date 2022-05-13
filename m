@@ -2,104 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41E0FC433F5
-	for <git@archiver.kernel.org>; Fri, 13 May 2022 12:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D279C433F5
+	for <git@archiver.kernel.org>; Fri, 13 May 2022 12:57:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380137AbiEMMHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 May 2022 08:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38858 "EHLO
+        id S1380477AbiEMM5I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 May 2022 08:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380126AbiEMMHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 May 2022 08:07:14 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0628694BD
-        for <git@vger.kernel.org>; Fri, 13 May 2022 05:07:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1652443618;
-        bh=rrE40TKWqmZ+0tfDLWibSh2m6XeIMhiSlFCGhG0K07w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=howXqZvIv68dgmkneG/Zh1fShOohPLVxrtvZ3GnRVmUyjCA9JZte/xaMxp1FiqudN
-         ZG3kEr+HbYGYEIoxTNiHdf9XwbVVQFxVsiFPVCi+d6QGRacw/NkWWIIFpHtj8yOX9U
-         DwqKW1BM8PtVa7R5/IBTZNAwsRc+LE1aTlqevuIM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.242.215] ([89.1.215.85]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQv8x-1nS42P0kuF-00NzB3; Fri, 13
- May 2022 14:06:58 +0200
-Date:   Fri, 13 May 2022 14:06:56 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/scalar-diagnose, was Re: What's cooking in git.git (May 2022,
- #04; Thu, 12)
-In-Reply-To: <xmqqilqacmmd.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2205131404280.352@tvgsbejvaqbjf.bet>
-References: <xmqqilqacmmd.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S1380456AbiEMM5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 May 2022 08:57:06 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527089B186
+        for <git@vger.kernel.org>; Fri, 13 May 2022 05:57:03 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 22CCE1A49D2;
+        Fri, 13 May 2022 08:57:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=m06ObQ8j+UICxj+6qHPBNWTZK470Ml5yvPDeu5HqsIM=; b=bfOV
+        vy6seMJ881dhVJczQe+G2C8YAh2QLtcXlLK5785XoBWlHjF4zcCkwmG1RldtXV8j
+        N0zVIo/+PsOo1i0m7rCuE3IHViF6a8LA594pmSXQpzsO4SPqe8UHBP7GmUlySi1t
+        NZLkT5cH4L6DSKIxGPfHjdxPauXCo/VfBZ+lAaE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1B5771A49D1;
+        Fri, 13 May 2022 08:57:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B94641A49CE;
+        Fri, 13 May 2022 08:56:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>, vascomalmeida@sapo.pt
+Subject: Re: Question about pre-merge and git merge octopus strategy
+References: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
+        <CAP8UFD2p+Evqv_MBAgv23zooppsNWjOw6ZU2GLqAq_skZoJPOw@mail.gmail.com>
+        <CABPp-BGD3AZvXwmSHfQQ_xh_UqevH23kdBYijAWUk8GHu1q0Qw@mail.gmail.com>
+        <CAOLTT8STRfqq4bfobCK8Q5uvtXzgNYY0x0wNh4HNyAhv0Mc07A@mail.gmail.com>
+        <CABPp-BEFYjTvK4ZNSg+yiahRAzXW=KU11a-b+QRdcBDGb-movQ@mail.gmail.com>
+        <CAOLTT8R7QmpvaFPTRs3xTpxr7eiuxF-ZWtvUUSC0-JOo9Y+SqA@mail.gmail.com>
+        <CABPp-BHmNBMypVDrE=gPMXoHT9uH-u4HJG1dAuY0tjSGrK0yPg@mail.gmail.com>
+        <xmqqk0aqhia1.fsf@gitster.g>
+        <CABPp-BGOGLUPOn20yWzCrBYCykiet0=5UfbkuGC78f-QoWVvYg@mail.gmail.com>
+Date:   Fri, 13 May 2022 05:56:58 -0700
+Message-ID: <xmqq35hdd205.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-660998962-1652443618=:352"
-X-Provags-ID: V03:K1:n01/EHPNWZgUwIzLZpT3l7b3GzIbUbgyN4FdUPBR5qehzE4Ft/u
- nlWOaTijMfRmfXmvH1bP9Kb29NhQWupQdIDv+bQik2LDAXekNN1KMi0d/LyZDFkZNemkarg
- k0ptLHtC0xHJvOI5S70Duof3nkB1qCRmwVvS6UBQsZ8C2+PEuguf26G5Uvoq5q8tU/c1SIT
- k1lHiBjuAFRtZaASAnjAA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9CmWnr1Pwb4=:/rrj97KYOz70Xzc8C8YRao
- 1Jw6S1/vkTbsUt3TnYCpA13BvHnfF9iu/h/0/SQLkqZbCnNFcHJaxBrGd8n8sjr7nkXKPVUpx
- mHvmS/lcSJSS+c2YNIBdj2mLwawPUWlPMmXUkdSc4cMartkDkr2Zl01XQbz8uDkXVMi7b5n2H
- tEK6X3TlMtoTDFoS53fozN0tHubXWDu2wVujR5MNN/P2k1WNXh2CEQTb+hq3lpORjDeAWUK3k
- bZj+97EOhsIFx1eU7M4pawzoxxJMy2hjJLE+2Ri/vycjI0JYXtbp6drRh6URR1oKAsjnWMSD3
- vDNrO1loQNlevnIPk/0GzVrkOIN4ElsWxuZCnOWXHKGHfCZkdzImamPXKEZ0h28kTt5Xda3zY
- W2Fjb1eFjtG1uLSONRJS4egbDTpwM1Ifz+bxNpPscSx3bTuD75ArmAeycL36WQS3lTZj3QQH7
- 1aAsNRrYz/gK/fZsV5zXD8cT1ZvjJaLuUa0ADUlZGuO/pmvGgWlY35Ks/dpn/cTCx98DggTRo
- 1ql4+ALTHixVCVvHDvRXe8vv3Dmm1YQ0IeY5GV9UBY419jvfiJ3/0XCrvqtAlzRzs8OGOhDAU
- TlWWzMHdB7jCqiNQMjJAlLhe9p0HQNwZ0AMyhJtUbHeHRPMgfej5FkenSVYONA7Rqmtrq/evs
- BFnSI+hhiR8FKS6NiM4zvWQ9Rwg/MEGPZijHoC3B1vA198TrjY2oRe/ULxbX/KtYRbg3eYKj4
- v0/JrivnzNdxS7attxuBnjOk3PxuzAfBsJjjlVgVGmJ72VpLPjWVYPaYkWpB9wUPOSkYcpIRR
- 51lFWvDkri0eMn4lLMFeyVdEMD/oeqGM5BtPkXZZdMNyhEkUeId52JRkAKbUBRsM5Zv501tnF
- uVFjeHUAn3HI1ovT21hSDnOXhB7GB0rEELecT6vaC+B3uF82PHbMDunPSyGzhhzF3VVLX2sj6
- fcH6k/wJQJwROGqjJpW3mPRMI/7YxBYv+suMhofot9Fl4TbDTKQbignRy9M27BFzxJXg67dWE
- qhfD5cmkPDbA3Q5jUa/YxqCt01IQNwmA6nXgjvv7zh/oLbCH3zMpGEghBDMYb/S4v9DX6GQQV
- zeJGxntRrYyyIE=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2D530E12-D2BC-11EC-806A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Elijah Newren <newren@gmail.com> writes:
 
---8323328-660998962-1652443618=:352
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Junio,
-
-On Thu, 12 May 2022, Junio C Hamano wrote:
-
-> * js/scalar-diagnose (2022-05-12) 8 commits
->  - fixup: archive: optionally add "virtual" files
->  - scalar: teach `diagnose` to gather loose objects information
->  - scalar: teach `diagnose` to gather packfile info
->  - scalar diagnose: include disk space information
->  - scalar: implement `scalar diagnose`
->  - scalar: validate the optional enlistment argument
->  - archive --add-file-with-contents: allow paths containing colons
->  - archive: optionally add "virtual" files
+>> If merge-recursive or merge-resolve is asked to merge a single
+>> commit to the current branch without any other strategies to use as
+>> a fallback, they leave the working tree and index into a state where
+>> the end-user can conclude the conflict resolution and commit the
+>> result.  In spirit, we are in the same situation, aren't we?
 >
->  Implementation of "scalar diagnose" subcommand.
->
->  Will merge to 'next' after squashing the fix in?
->  source: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
+> I don't think it's quite the same....
+> ...
+> Or are you saying that if all merge strategies return a 2, we just
+> treat the last one as good enough and consider the merge to be in
+> progress?
 
-Yes, please!
+No, I was just confusing the difference between the special return
+value 2 and a normal failure value 1.
 
-My first reaction was: but wait, what about the file mode? Then I
-remembered that Ren=C3=A9 offered the opinion that we could easily introdu=
-ce
-`--add-executable-file-with-contents` _iff_ we need that at some stage,
-and when I considered symbolic links, I noticed that the `--add-file`
-option does not accept those in the first place, so it would be funny if
-`--add-file-with-contents` supported symbolic links.
-
-Thanks,
-Dscho
-
---8323328-660998962-1652443618=:352--
+I have a feeling that it would be nice if we can restore to pristine
+on the calling "git merge" side, rather than forcing individual
+strategy backends to implement the restore-to-pristine correctly,
+but in any case, as you said, we should behave as if a merge
+strategy backend never run after it failed with exit value 2 by
+restoring to pristine state.
