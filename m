@@ -2,156 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 479E1C433FE
-	for <git@archiver.kernel.org>; Sat, 14 May 2022 15:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77DC5C433F5
+	for <git@archiver.kernel.org>; Sat, 14 May 2022 18:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbiENPAY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 May 2022 11:00:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58130 "EHLO
+        id S234617AbiENSQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 May 2022 14:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232476AbiENPAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 May 2022 11:00:22 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BC54E08;
-        Sat, 14 May 2022 08:00:18 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id v12so14848640wrv.10;
-        Sat, 14 May 2022 08:00:18 -0700 (PDT)
+        with ESMTP id S230459AbiENSQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 May 2022 14:16:19 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7A3112A
+        for <git@vger.kernel.org>; Sat, 14 May 2022 11:16:17 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id c1-20020a17090a558100b001dca2694f23so10609217pji.3
+        for <git@vger.kernel.org>; Sat, 14 May 2022 11:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=vv+o+55YXAM2c6OUCRW2q6ii8idb0X1t9nLPOtCUUZQ=;
-        b=jzwA06VJmmXnaSxDmJLTAqHI8qmB3Cvtoe3lfLfzqZihTf6lNK0UzWs7r6zWAbLYU3
-         GWclQV3Tepl3fiVPcVtlV2BLzAQzUJL3Kug2M/FihPL95MsXDcQ1QrMg39JfOoTYJKaS
-         Tqf0F2FYNmEGosOfVPGscy3P5QPzxov8MRPhC8VzMjLGgUVP2am2Q6OI7KEr3U1+bk1G
-         eHxFSNNJi1ygGOdbN3HB+zJ0822MCklsTKXMET5AfW0onmjIlAxbHGa80Czy81TAPd3a
-         sOFw0IDHVmEqlOLMzSh75x5eMJveaDglvEKrq4F/pIRWASOJGvh2gcjM5oyMjX4CG7IO
-         qSPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h3lYKNLefRFExjV7hPQKgzb0auTloZkZu7k1esGdRgo=;
+        b=ldvsmb4AhzZCftsTX3jAmoaplY9LfzgCeMbqRrobQh0k4NAQVk7VWTqCy78+JiaD9C
+         UZQil4TxNI7D4ie3SkFsUsEf1+regPYMmZfFUloGXYZyEfvJ1DgPeXEPT2SCk4lKt2Yb
+         NwWcn1yEkLT4mHXlMYcp3EzurqjVrNUsstU8rGBGcZuWq+knrM2V/3/G2CRe+QKVubJj
+         JnsYEAEwswfLItFIjvzF+AeSvkCATn5kRRbcaghJDIDanC9vMUDOOEFQWdrFRZxvX8gM
+         uUj4Vcr4YOUXUGdgWDj6PC8FaHOr/MKocpL/ScA0UciKpRT/EgQP15k9U8V/7K6rE7Ce
+         r2Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=vv+o+55YXAM2c6OUCRW2q6ii8idb0X1t9nLPOtCUUZQ=;
-        b=lOaDP0smB+9cWCy6Mq8dUEO1AHWiE/iSVwpIy5TXNDRbesVsyAabhZ0UFZnw9GveAl
-         OYQnSuEoiafP1cqgZpKM3mimwNwz2w7tXf46zhXEUdIMS/fOBs+yEF/DQi84IP8NDJkj
-         eylIjCUCYo8gyFq7pmXtjDEGfsEYT9Xc02BMc6MYmaMA7dLjnzCd9lICHvT84byl8JC2
-         nT8cnUrgNJNB/Bq1Kpg7N6cIC1qfU5cZIeU5vO14KkFJhSTiRdjI0CHIzDp1Z4Vzf9RC
-         3uZLS0GSJx6TiBdGZX9ulORBvYR3H+P8BPHB7/0zodhBbzjQvgpeU3HzqDJsVMLcoNc2
-         uWEw==
-X-Gm-Message-State: AOAM531vZR2/yCLTwsVcwiGAWUJr19U8P7XmA8ARJWuIZT+rsmBc7y0G
-        uaOlvH6N6YjDpmf+m0T8DW8=
-X-Google-Smtp-Source: ABdhPJzjBKMRRSWA2z5JWZ324rwFI0/FzSJJzD/7eX9uAEIQDCFKRonJDM2Bj0vhY06lM5LvGw9Xzg==
-X-Received: by 2002:a5d:618f:0:b0:20c:ffa0:95a8 with SMTP id j15-20020a5d618f000000b0020cffa095a8mr1741344wru.306.1652540417081;
-        Sat, 14 May 2022 08:00:17 -0700 (PDT)
-Received: from [192.168.0.160] ([170.253.36.171])
-        by smtp.gmail.com with ESMTPSA id b12-20020a05600c4e0c00b003948f4e750fsm8453090wmq.23.2022.05.14.08.00.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 May 2022 08:00:16 -0700 (PDT)
-Message-ID: <76ff060f-a3f2-2e60-5b1a-4a59cf3f3d8c@gmail.com>
-Date:   Sat, 14 May 2022 17:00:14 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h3lYKNLefRFExjV7hPQKgzb0auTloZkZu7k1esGdRgo=;
+        b=BU9O5olF/ePr9PEXGDGQQGJDePSL2KBYfjpa3s71BAVmC1NyEZowfNbz511PqBDvv1
+         o9L+3dYZbOBKcF8cPlyMrrSpe2PpUFdTwT71kcqRF6wxPSMqTSLDwS78htm0df4HblEP
+         0gUXoXn8Sk9CbRNFTqYy9gtlxPEgt6tBWIqw3NBrKDVEIlBb2G6xJ2qky+LujgZhDSfC
+         76ZQ4kkte1FodQscyzp5GIGo7Q3g69RlwhLkKfWgizwRZB9/ixgrZdt3L6poL8eKDfNJ
+         ntfqtE/Uze3mpQ5m9U+FwHw3XB70YYj3H0fH9nYejJzxl83ZSeeDxvx3c9qZnlJ9W2sH
+         dg1A==
+X-Gm-Message-State: AOAM532674oe91Xv7MSHEnEMJVAKliaVxoao4QaBjj+ubAW565v4RAqO
+        nGOZL5p288d4VEvh0BiwiogoohYTVeGXyuSDcUI=
+X-Google-Smtp-Source: ABdhPJxIydJMDU1zlVc16haFH6SO7O66PlSP4Fsu+SgHFCIaRoqxz0hzHbRNFM1K241AtnadbqeQ417PTZz/4bSMMrk=
+X-Received: by 2002:a17:902:e94e:b0:158:91e6:501 with SMTP id
+ b14-20020a170902e94e00b0015891e60501mr10252994pll.29.1652552177411; Sat, 14
+ May 2022 11:16:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] getpriority: Only getpriority translation the priority
- values
-Content-Language: en-US
-From:   Alejandro Colomar <alx.manpages@gmail.com>
-To:     Theodore Dubois <tbodt@google.com>
-Cc:     linux-man@vger.kernel.org, mtk.manpages@gmail.com,
-        git@vger.kernel.org, nick black <dankamongmen@gmail.com>
-References: <20220510220821.1481801-1-tbodt@google.com>
- <0fc70bd3-5883-47e4-1814-6ed6c756a400@gmail.com>
-In-Reply-To: <0fc70bd3-5883-47e4-1814-6ed6c756a400@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.1264.git.git.1652361610103.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1264.git.git.1652361610103.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 14 May 2022 20:16:05 +0200
+Message-ID: <CAN0heSoCiNnrknyfE7RrsLKcGcGqDYo9k9ubzcEo1r+CxO1hVQ@mail.gmail.com>
+Subject: Re: [PATCH] grep: add --max-count command line option
+To:     "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Carlos_L=C3=B3pez?= <00xc@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[CC += nick]
+Hi Carlos,
 
-On 5/14/22 16:37, Alejandro Colomar wrote:
-> Hi Theodore,
-> 
-> On 5/11/22 00:08, Theodore Dubois wrote:
->> The translation is needed to avoid returning a negative number from a
->> successful syscall, and this requirement doesn't apply to setpriority.
->> See the implementation of getpriority in kernel/sys.c.
->>
->> Signed-off-by: Theodore Dubois <tbodt@google.com>
-> 
-> Patch applied.
-> 
-> BTW, I had to manually edit the patch.
-> It's the second time I see this (I can't find the other one), your patch 
+Welcome to the mailing list. :-)
 
-The other one:
+On Thu, 12 May 2022 at 21:13, Carlos L. via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: =?UTF-8?q?Carlos=20L=C3=B3pez?= <00xc@protonmail.com>
+>
+> This patch adds a command line option analogous to that of GNU
+> grep(1)'s -m / --max-count, which users might already be used to.
+> This makes it possible to limit the amount of matches shown in the
+> output while keeping the functionality of other options such as -C
+> (show code context) or -p (show containing function), which would be
+> difficult to do with a shell pipeline (e.g. head(1)).
 
-<https://lore.kernel.org/linux-man/809c40c4-068b-8296-57d9-024e6623362d@gmail.com/T/#u>
+Makes sense to me.
 
-nick, I finally found it again!
+> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+> index 3d393fbac1b..02b36046475 100644
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -23,6 +23,7 @@ SYNOPSIS
+>            [--break] [--heading] [-p | --show-function]
+>            [-A <post-context>] [-B <pre-context>] [-C <context>]
+>            [-W | --function-context]
+> +          [-m | --max-count <num>]
 
-> didn't apply for the following reason: the a/ and b/ prefixes in the 
-> file paths are missing.  Did you use git-format-patch(1) to produce the 
-> patch?  Can you reproduce this?
-> 
-> I CCd the git mailing list in case they know what's going on.
-> 
-> Thanks,
-> 
-> Alex
-> 
->> ---
->>   man2/getpriority.2 | 17 ++++-------------
->>   1 file changed, 4 insertions(+), 13 deletions(-)
->>
->> diff --git man2/getpriority.2 man2/getpriority.2
-> 
-> Should have been:
-> diff --git a/man2/getpriority.2 b/man2/getpriority.2
-> 
->> index 3e1be3e6c..24c1b7f11 100644
->> --- man2/getpriority.2
->> +++ man2/getpriority.2
-> 
-> Should have been:
-> 
-> --- a/man2/getpriority.2
-> +++ b/man2/getpriority.2
-> 
-> 
->> @@ -206,20 +206,11 @@ All BSD-like systems (SunOS 4.1.3, Ultrix 4.2,
->>   manner as Linux 2.6.12 and later.
->>   .\"
->>   .SS C library/kernel differences
->> -Within the kernel, nice values are actually represented
->> -using the range 40..1
->> -(since negative numbers are error codes) and these are the values
->> -employed by the
->> -.BR setpriority ()
->> -and
->> -.BR getpriority ()
->> -system calls.
->> -The glibc wrapper functions for these system calls handle the
->> -translations between the user-land and kernel representations
->> -of the nice value according to the formula
->> +The getpriority system call returns nice values translated to the 
->> range 40..1,
->> +since a negative return value would be interpreted as an error.
->> +The glibc wrapper function for getpriority translates the value back 
->> according to the formula
->>   .IR "unice\ =\ 20\ \-\ knice" .
->> -(Thus, the kernel's 40..1 range corresponds to the
->> -range \-20..19 as seen by user space.)
->> +(Thus, the 40..1 range returned by the kernel corresponds to the 
->> range \-20..19 as seen by user space.)
->>   .SH BUGS
->>   According to POSIX, the nice value is a per-process setting.
->>   However, under the current Linux/NPTL implementation of POSIX threads,
-> 
+I think this should be
 
--- 
-Alejandro Colomar
-Linux man-pages comaintainer; https://www.kernel.org/doc/man-pages/
-http://www.alejandro-colomar.es/
+    [(-m | --max-count) <num>]
+
+since the short form "-m" also wants to take "<num>".
+
+> +-m <num>::
+> +--max-count <num>::
+> +       Limit the amount of matches per file. When using the -v or
+> +       --invert-match option, the search stops after the specified
+> +       number of non-matches. Setting this option to 0 has no effect.
+
+Please use `backticks` with `-v` and `--invert-match` so that they are
+set in monospace.
+
+Regarding the special value 0, it's a bit unclear what "has no effect"
+means. In particular, it can have an effect in the sense that when it
+is used like
+
+  git grep -m 1 -m 0 foo
+
+it undoes the `-m 1`.
+
+But also, that's not how my grep(1) behaves: with `-m 0`, it limits the
+number of matches to zero. I don't know how useful that is (can that
+zero-case be optimized by exiting with 1 before even trying to find the
+needle!?), or if maybe different variants of grep handle this
+differently?  If all grep implementations handle 0 by actually only
+emitting zero hits, I think it would be wise for us to handle 0 the same
+way.
+
+As for overriding an earlier `-m <foo>`, which could be useful, it seems
+to me like `--no-max-count` would make sense.
+
+All in all, I would suggest the following documentation:
+
+    -m <num>::
+    --max-count <num>::
+           Limit the amount of matches per file. When using the `-v` or
+           `--invert-match` option, the search stops after the specified
+           number of non-matches. Use `--no-max-count` to countermand an
+           earlier `--max-count` option on the command line.
+
+... and of course the matching implementation. :-) Maybe you could
+achieve that by using -1 to signal that there's no max-count in play?
+How does that sound to you?
+
+Even if we want to handle the zero just like you do, I think this patch
+needs a few tests. We should make sure to test the 0-case (whatever we
+end up wanting it to behave like), and probably the "suppress an earlier
+-m by giving --no-max-count" case. It also seems wise to set up some
+test scenario where there are several files involved so that we can see
+that we don't just print the first m matches *globally*, but that the
+counter is really handled *per file*.
+
+I think this `-m` flag would be a nice addition. I know that I've been
+missing something like it a few times. As you wrote in your commit
+message, `| head -3` can work for some use-cases, but definitely not for
+others. This `-m` is a lot more granular than `-l` which can be seen as
+a crude `-m 1`. Thanks for posting this patch! I hope you find my
+comments useful.
+
+Martin
