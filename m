@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3EAAC433F5
-	for <git@archiver.kernel.org>; Sat, 14 May 2022 02:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8F48C433EF
+	for <git@archiver.kernel.org>; Sat, 14 May 2022 02:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbiENCve (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 May 2022 22:51:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
+        id S231371AbiENC5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 May 2022 22:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiENCvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 May 2022 22:51:32 -0400
-Received: from mail-ua1-x94a.google.com (mail-ua1-x94a.google.com [IPv6:2607:f8b0:4864:20::94a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D0D508125
-        for <git@vger.kernel.org>; Fri, 13 May 2022 17:52:42 -0700 (PDT)
-Received: by mail-ua1-x94a.google.com with SMTP id r4-20020ab06604000000b00360317232f6so4492252uam.6
-        for <git@vger.kernel.org>; Fri, 13 May 2022 17:52:42 -0700 (PDT)
+        with ESMTP id S231395AbiENC4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 May 2022 22:56:21 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC3E3864E2
+        for <git@vger.kernel.org>; Fri, 13 May 2022 18:20:35 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id x4-20020a1709028ec400b0015e84d42eaaso5122931plo.7
+        for <git@vger.kernel.org>; Fri, 13 May 2022 18:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=SfRpF9GVkVdRGby/98utHShd9vD3xlZBAwXpvE5LsUY=;
-        b=QnOIMlXY/Ur2oMqiRnViQ9bAKrMDDK2og+I+sYBmVvLL7SC5kaX0HxkWHjeoQZvwQE
-         R43Mmg5jcwz5jYHwC/lL4XSgHjMgl+nyWE332n5yN710dpJ4UaHbcS5AwjRvFaa6SJun
-         bd0n8S6hsSSHmP6Oiq3tJ2wewhCBPgctckPrKhcpY1Zh5HDA6kO+1C3Z+IhZ+ca66JeR
-         HSjRzcio8FB7M8jYeOfe732QL6MkYcNuU1C8OvMO4+9Aywp1S38ttgASGs/cy4R3UgZ4
-         YxGppx3Yoq/wtbOktrn9IT1SJb6QDxknOVDDKomAGyKXohgtHkZKJIXfEeHGDzobFk4N
-         2gwA==
+        bh=gohVnMtzztEbIPJ9As/pveH3DDYcdj5drov+Kmj2GAU=;
+        b=gfYaJ/CCX18qhxhhIcrLt9L6lmBvRC1VB1MFJvz3C6/4HBi378+IXaaPCJwQgTAulb
+         aE21+Q9vy9nispqEEgwxHMlcq++W7J0jL1M0FbtDz60nPK23Nd3VAAqF78nXJOJy9S9V
+         iDHfeCoAnvWsn8qQaqTmJh+9AigHAX+z0VDQoyb4zhhLgS8Hv+tKHyKn1skZZJmbYa1m
+         LgEaNj6KQsJzsn41Ct11k+/Z0EBYXFujPonCXqqytyvRFfDh73aW1LO8zkI6wINiDuXm
+         SGg8Kil3C1qDNLO3PGjdl3KjAnSGXUJO1ico3HMfaiGiUqn9SWo1A4JWm4leUhPLWmnI
+         4hTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=SfRpF9GVkVdRGby/98utHShd9vD3xlZBAwXpvE5LsUY=;
-        b=oKs4tJcE2aia6MeqfncWOyYW7YJjIehC4fGUuvYIHslQG2cr8BfeO3Xv2760Yd/+MX
-         o4i8K13U6IVqXiMbEdtd6LAZkwffKZDldNtnR6HOAZWjOd72E4PLOxivmDPgkuN8staL
-         +ASj9tU4dEgOdOjZqPxbeUdozeR1MSS/WXXmtHuZMWSUmxjopc74sFuR4x+7Cu0cUNyh
-         gESiTMWBcit28d3tVjCm0pLk++/oB84swMcNYsfXwFe9yBgEUxMD2OKSFEvIZJlATAc+
-         wlQE8YOVigkUOY7lx/yw938ixsvDNnU8iBg6siPlTSuQfgKCsR/6xSd0WDiKDWdWo4pJ
-         jjCQ==
-X-Gm-Message-State: AOAM531gBPLg1ZkH0hfeFFpA2b7fLjWk8+awAwVY6KSmWztTEB9/vKHG
-        6oQMb+AWPgaKS2Aw+rbKo4A2s3WKibTXcA==
-X-Google-Smtp-Source: ABdhPJzOqf0bDM2qTYOi7lxDfR6jNH+mQXBC05LHesD49ijoVGO07ijUspe0oSaZoRBWbcItXEIt/mzsKoGE2A==
+        bh=gohVnMtzztEbIPJ9As/pveH3DDYcdj5drov+Kmj2GAU=;
+        b=z9OQqhgd03hvVBwsd4TMjAcqnUghUvzXBRx2P1eS2ZwhMDesryMVhUAJ/mfBJgOZwz
+         aSNbZDanUFPhhYl9LX9vX34CWYbLvTwZy/tkt+5+CQQpRfh35qH80mmbLQX4GwrUFGDI
+         AjnVJymhi/gwNAMAX06mrU4gHjHqzLlG5KOdz1JJgyCDZ9UA3upiL2UcpFrsXKIyj7lC
+         fyGiXxNIBePCV+8TWaO9wzzxU4VV1i4LI8qwbZKv6jUBAMGE5Ri+wDp15G8yHGNvoHb6
+         0EyYpWG/SmDml2czvI24LufoNVExmNVGRZEip/j7HSIN6IXuESZr5rTRBtXkZruonmAw
+         Y5Tw==
+X-Gm-Message-State: AOAM533KnqfJOP4CA7irvPRhlIDa6A+tEbz+ZntknJUgPTOB4S3VDjfZ
+        QJg7RIrYJkryK88qqCckLYsmOmHCIkPRdg==
+X-Google-Smtp-Source: ABdhPJx7K/oDkPrKT3adJ1vHQWXBehcaDGE9c6WoKWL6PrdxLYJOMZGx2l31LevPpzyRo6N8xpGqeFT6i0DjBg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1a53:b0:510:a045:b92e with SMTP
- id h19-20020a056a001a5300b00510a045b92emr6665932pfv.64.1652487339143; Fri, 13
- May 2022 17:15:39 -0700 (PDT)
-Date:   Fri, 13 May 2022 17:15:37 -0700
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2481:b0:50d:4839:5896 with SMTP
+ id c1-20020a056a00248100b0050d48395896mr6923413pfv.37.1652486829077; Fri, 13
+ May 2022 17:07:09 -0700 (PDT)
+Date:   Fri, 13 May 2022 17:07:00 -0700
 In-Reply-To: <xmqq1qxfbqtq.fsf@gitster.g>
-Message-Id: <kl6la6blj7fa.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <kl6lczghj7tn.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
  <xmqqczgzdc1r.fsf@gitster.g> <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
@@ -61,51 +61,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Glen Choo <chooglen@google.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> A simple and concrete reproduction 
+>>>
+>>>     git init top
+>>>     cd top
+>>>     date >file1
+>>>     git init sub
+>>>     cd sub
+>>>     date >subfile1
+>>>     git add .
+>>>     git commit -m subinitial
+>>>     cd .. ;# back to top
+>>>     git submodule add ./sub sub
+>>>     git add file1
+>>>     git commit -m initial
+>>>     cd .. ;# out of top
+>>>     git clone --recurse-submodules top copy
+>>>     cd copy
+>>>     git config submodule.recurse true
+>>>     git config fetch.parallel 0
+>>>     GIT_TRACE2=$(pwd)/trace git fetch --all --prune --prune-tags
+>>>
+>>> This throws the three lines to the output.
+>>>
+>>> Fetching origin
+>>> Fetching submodule sub
+>>> Fetching submodule sub
+>>>
+>>> The two "Fetching submodule" messages are coming from two separate
+>>> calls to get_fetch_task_from_index(), and the trace does show that
+>>> the code is doing "git-upload-pack" three times (one for the top
+>>> level, twice for the same top/sub).  We can see it by grepping
+>>> for "git-upload-pack" in the resulting 'trace' file above.
+>>
+>>  
+>> Thanks for the reproduction recipe and findings, that'll be very helpful
+>> :)
+>>
+>>> Glen, as submodule.c::fetch_submodules() was created in your heavy
+>>> refactoring quite recently, I thought I'd redirect this report in
+>>> your direction, as I expect you'd be the most clueful in this area
+>>> ;-)
+>>
+>> Hm, this does look like something that I probably introduced. But even
+>> if it turns out to be older than that, I think I am the right person to
+>> fix it, yes.
+>
+> It seems that ever since the introduction of the --prune-tags option
+> at v2.16.1-16-g97716d217c (fetch: add a --prune-tags option and
+> fetch.pruneTags config, 2018-02-09), we always behaved this way.
+>
+> Without "--prune-tags" (but still with "--prune"), we can go even
+> older than that version, and v2.10.0 seems to fetch only once.
+>
+> And the command keeps working that way all the way back to the
+> commit that starts honoring submodule.recurse configuration, at
+> v2.13.0-137-g58f4203e7d (builtin/fetch.c: respect
+> 'submodule.recurse' option, 2017-05-31)
+>
+> If we instead use "git fetch --recurse-submodules" with versions
+> of GIt older than that, we can go even older.  I saw v2.5.0 behaves
+> that way before I got tired and gave up.
+>
+> So, we still would want to eventually get to it, but no rush.  This
+> is an old thing and not as urgent as fixing a recent regression.
+>
 > FWIW, without "--all", we do not make an extra fetch at all, with
 > the current code or with code as ancient as v2.5.0
 
-Aha, the reason why I wasn't able to override "--recurse-submodules" is
-that I didn't notice add_options_to_argv() was setting
-"--recurse-submodules" for each of the 'inner' fetch-es in
-fetch_multiple().
+I had a little free time, so I dug into it a bit more. "--all" does seem
+to be the crux of it and I _very strongly_ suspect it is because "--all"
+creates a child process which also fetches submodules.
 
-So a PoC fix might look like this
+Here's a hint inside of builtin/fetch.c:fetch_multiple..
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
+  static int fetch_multiple(struct string_list *list, int max_children)
+  {
+    // ....
+    strvec_pushl(&argv, "fetch", "--append", "--no-auto-gc", "--no-write-commit-graph", NULL);
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e3791f09ed..d42646e68c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1856,10 +1856,6 @@ static void add_options_to_argv(struct strvec *argv)
- 		strvec_push(argv, "--force");
- 	if (keep)
- 		strvec_push(argv, "--keep");
--	if (recurse_submodules == RECURSE_SUBMODULES_ON)
--		strvec_push(argv, "--recurse-submodules");
--	else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
--		strvec_push(argv, "--recurse-submodules=on-demand");
- 	if (tags == TAGS_SET)
- 		strvec_push(argv, "--tags");
- 	else if (tags == TAGS_UNSET)
-@@ -1942,8 +1938,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 			return errcode;
- 	}
- 
--	strvec_pushl(&argv, "fetch", "--append", "--no-auto-gc",
--		     "--no-write-commit-graph", NULL);
-+	strvec_pushl(&argv, "fetch", "--append", "--no-auto-gc", "--no-write-commit-graph", "--recurse-submodules=false", NULL);
- 	add_options_to_argv(&argv);
- 
- 	if (max_children != 1 && list->nr != 1) {
-@@ -2271,6 +2266,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			max_children = fetch_parallel_config;
- 
- 		add_options_to_argv(&options);
-+		if (recurse_submodules == RECURSE_SUBMODULES_ON)
-+			strvec_push(&options, "--recurse-submodules");
-+		else if (recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND)
-+			strvec_push(&options, "--recurse-submodules=on-demand");
- 		result = fetch_submodules(the_repository,
- 					  &options,
- 					  submodule_prefix,
+Notice how we pass "--no-auto-gc" and "--no-write-commit-graph"? This
+makes sense because those tasks run _after_ the main fetch and only need
+to run once. If we didn't pass these flags, then we'd run those tasks
+once per remote, and once more after the main fetch (R + 1 times, where
+R is the number of remotes).
+
+And obviously, we aren't passing "--recurse-submodules=false", so there's
+good reason to believe that "--all" will fetch submodules R + 1 times.
+
+But confusingly, I can't validate this hypothesis because I can't get
+the "inner fetch" to respect "--recurse-submodules" (I hope this isn't
+due to that recent change I made).
+
+I did most of this testing without "--prune" or "--prune-tags". Your
+findings suggest that they're somewhat relevant though, so maybe I'll
+look at those versions to get more clues.
