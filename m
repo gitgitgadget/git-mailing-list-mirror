@@ -2,122 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E550C433F5
-	for <git@archiver.kernel.org>; Sat, 14 May 2022 09:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E5F9C433F5
+	for <git@archiver.kernel.org>; Sat, 14 May 2022 13:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231455AbiENJdB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 May 2022 05:33:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
+        id S232446AbiENNRa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 May 2022 09:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231461AbiENJc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 May 2022 05:32:59 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F100EDFF0
-        for <git@vger.kernel.org>; Sat, 14 May 2022 02:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1652520754;
-        bh=ILFSSWeqa1ykyCcmi7J18IgNT5Mvl6Dp61thlTPWzL0=;
-        h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
-        b=It706Rhprlt9fT5osmV17bkgSbkNKYfdO+cRiwxQfE0F6mIvFixPOlWz3bOhj/tv+
-         u1Z1NVgz9hl602IZbJYHzlidt/Y2xeegRazvQKmU7HWyRKJasD8y+GArPwCh9mZBof
-         juFL1HWtXOzDkxbwnvF5UKLnLpdek5Bw5TpvOXCE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.145.161]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MV2OY-1nNeMe0u6I-00SZoc; Sat, 14
- May 2022 11:32:34 +0200
-Message-ID: <a6a14213-bc82-d6fb-43dd-5a423c40a4f8@web.de>
-Date:   Sat, 14 May 2022 11:32:31 +0200
+        with ESMTP id S232440AbiENNR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 May 2022 09:17:29 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAF73F88E
+        for <git@vger.kernel.org>; Sat, 14 May 2022 06:17:25 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id fu47so9168110qtb.5
+        for <git@vger.kernel.org>; Sat, 14 May 2022 06:17:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IzcO3erWb69vizQCxbC6t6jEkUBKOh13lLvItXoVhlE=;
+        b=Bz0PhN1jjl/pPWPB8SSRtICgBAbtqlyRc2SH6xgCbyvuBaWUKkZhnk3AFNZHtXl4wj
+         Ks702ZcSmKjtAuok2YV4b4TgTrGjvgFKrZpcfoHSz4t81i3HXpfq7N62ChBs9auHkGoE
+         Xm1yUVE5NBlqPlVG/SatuMql6a+z+4vhgCEHub+mtlhFAAQE9PXNw2jt8a1TI4UIIvFR
+         NFL8DSRjS5ZoKgoPoZes7gzpLG8BVJk2sWrvJ5ZXytUR352/5vsbocGvOco1kpZ/+FhO
+         EPgNkC5xAfV1udAkCUPLzFERMukvVd9Z/bmFs06BS7b023XrXX55gROHk5doQu/zzYFf
+         JpNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IzcO3erWb69vizQCxbC6t6jEkUBKOh13lLvItXoVhlE=;
+        b=Z2BN9PyzgJKGBOLmkpblxj85LFYf5F5wvHrviLDiUFXwdqN+/A5h3LwLqr4pCJ+r54
+         1XBC0KFQ+0LI6253j6f242HiKNnLvvIm4UV47uGeADVAqI9xvqv3RniW+YX6nwlQysG0
+         NkcnbO/FAepDLZNALUZYnqOyaInbZJlgnAdo2r+CuwVPsStrhscUt2qlRIeEual1ErUR
+         p0MqDViIuYAcEAvyPhwdPQa8xLZ/HLml1Q3TcYeG8IfZoafRWqBjYyDceAZIix58/A6E
+         /EYS1cAPIEhaSz3nu5v0jlr7mfa/93F0FvV+uGdKEoIN1UKjT2OKEInySh48bd/BpbOE
+         irKA==
+X-Gm-Message-State: AOAM530+Zwyr5I25gFD83P2N6CsxT2NlwDgOagvpAcFuGeLEgc0/WINk
+        EsrnuY/AcE754BgK235sGrjIJA==
+X-Google-Smtp-Source: ABdhPJyjyrCpDsfrp9zs4so0HgXugTF+FqubUTXv0ozhRoGcFGE7SHiNCTYJf+5B6lJVE0BRAMC0IA==
+X-Received: by 2002:ac8:58ca:0:b0:2f3:da32:ab1 with SMTP id u10-20020ac858ca000000b002f3da320ab1mr8499446qta.308.1652534244558;
+        Sat, 14 May 2022 06:17:24 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t203-20020a37aad4000000b0069fc55f2ff3sm2890397qke.9.2022.05.14.06.17.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 May 2022 06:17:23 -0700 (PDT)
+Date:   Sat, 14 May 2022 09:17:22 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com
+Subject: Re: [PATCH 2/2] builtin/pack-objects.c: ensure pack validity from
+ MIDX bitmap objects
+Message-ID: <Yn+r4lPi8vNK/qFG@nand.local>
+References: <bcc48004450769410d7e6d8a6e56f08bfa9a02a3.1652458395.git.me@ttaylorr.com>
+ <20220513230639.1099955-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.0
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Bug: combined diff with --ignore-matching-lines
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:V22dkRAMeMf05gHafW0AyXEYYvs2nsgMU7lnDH7kYg2jbxNCKmo
- 1FMEVN+/0sX+9iSrg3vJbCBusLhJ8Lj6Md1jj1+fbaAJn0L8txunud98B5IYbs4bzYvPdUp
- L8HuJpzgRq2FfqmnMbfRRnGm4uni7ltm1LwuMHInsmy9hjD2yJhdQPOfMRibVYqBWyBp/Hn
- tnZU21Kxd1mWliswQ+Vug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KPpY8GeBV/I=:jBswYj9OxKuOevJMlOjekA
- KBwLr577p/xcvXzE8dKgoGteu0rS7rRgVh81LWvOvmXpIBXzgNpkouHGf9PnBwT/qg6ujl4Aq
- ZATLmlcBXu/jH3cWk5BK4KiBVICDGzJVFVMdZTS84YwM+d6lhvK3gDHl4h/DVwCbSFmZr87ci
- DXJ2QJ96wBYT8TbUeVhLqlDwjZLKIoSf3++/FFQgjaEOBQdSpz6XS5eJwUvynkaFMtgoI637V
- NEQBeXFA/U5dBVM0B6pyCtG+XqEvq9Ig++33Tv53rx6ijEAdCPcbejXxln7DBSur4K7kNNT92
- m7H+JFPyzYXyCYGDn2TePqWLtxfSN+OsyACY6P6kjCEniDFCW8wP6DBQJkfFfK93jf+5Tl4Hv
- htRCmNXrOZ0DtL3ypkeEfpoLP5x2GOXsWtZa4ZNr5ee3XuJfgN3A90AzySyDSeeL7QkU4WXBO
- 3LIbcFdtyOstWB11PohlvWjUKgqqjg4ftY99QS9a7KuPPjy3dzkGcI2bpje033bLj2CduGv1e
- eYUerCkPw+NnTyRMq2+NrYXBcg5XDpC+IbKDI3Uq9O+AXfQgDqllZffQk8OFh9ktfumIq5K81
- hzZxwGbG4ywMX0vuN0oBYQKhJXsElagYMpUwSCoOMtiBX+eJaYZoN0EUUUUsFb+iZP/KtLqMn
- cFaIjFPS89dSCdUWzLI8gXdS+n+heeqkY3SvufCwQnsmvZPGV2CmVVX+ScZlh2qynYtO2fh09
- vJ2PMkmE4wFDfS3AEz9fwU+U8XjLoDFSkxiWN5IB8afikcFCj+54zr+UWJP/P4DDWN8F6HbX1
- Iu7bkWzeWkZEy3YKdD57+n/cZZKHXiiFo/GRj8Drk1mT5ty8TVx0j3WqkO6cL8beiin6hJ51X
- cOucAcAG+NTRMPrRUQfSuStTtU37usZbt0KIJ8AZXbK7mtBQhSl5wzhQXyqi3Bz6Y4g6KWALZ
- Uza2yPGtN2DuQ/5CBC+yBb8M8vXGEvu+udUSoMKuX20k26YWP3wce6KImZQqyYzj8nfGVIgZ6
- 7rUsEfBLpzABmgZe8iLmIjPOLW7+2P8UHG+ggopA9nlrF2Yk0w4ex2EQeWRcwkiZPQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220513230639.1099955-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Fri, May 13, 2022 at 04:06:39PM -0700, Jonathan Tan wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> > An alternative approach to closing this race would have been to call
+> > `is_pack_valid()` on _all_ packs in a multi-pack bitmap on load. This
+> > has a couple of problems:
+> >
+> >   - it is unnecessarily expensive in the cases where we don't actually
+> >     need to open any packs (e.g., in `git rev-list --use-bitmap-index
+> >     --count`)
+> >
+> >   - more importantly, it means any time we would have hit this race,
+> >     we'll avoid using bitmaps altogether, leading to significant
+> >     slowdowns by forcing a full object traversal
+>
+> This answers a question I had about why we're only opening the preferred
+> pack instead of all packs. (You mention in [1] that it's also answered
+> in that patch message, but I didn't see it.) In any case, it might be
+> clearer to move this part to the 1st commit.
+>
+> [1] https://lore.kernel.org/git/Yn63nDhSBIEa3%2F+%2F@nand.local/
 
-git diff segfaults when it's asked to produce a combined diff and ignore
-certain lines with --ignore-matching-lines/-I, e.g.:
+Makes sense, will do. In [1] I was referring to why we wanted to call
+`is_pack_valid()` as early as we did, and not in
+`reuse_partial_packfile_from_bitmap()`.
 
-   $ git diff -I DEF_VER v2.33.3 v2.33.3^@
-   zsh: segmentation fault  ./git-diff -I DEF_VER v2.33.3 v2.33.3^@
+But the quoted part here is useful context for the first patch, too, so
+I moved it up.
 
-That's because combine-diff.c::diff_tree_combined() copies a diffopt
-without making a deep copy of the ignore_regex array and frees it, then
-later tries to use it.
+> > Work around this by calling `is_pack_valid()` from within
+> > `want_found_object()`, matching the behavior in
+> > `want_object_in_pack_one()` (which has an analogous call). Most calls to
+> > `is_pack_valid()` should be basically no-ops, since only the first call
+> > requires us to open a file (subsequent calls realize the file is already
+> > open, and return immediately).
+> >
+> > This does require us to make a small change in
+> > `want_object_in_pack_one()`, since `want_found_object()` may return `-1`
+> > (indicating "keep searching for other packs containing this object")
+> > when `*found_pack` is non-NULL. Force `want_object_in_pack_one()` to
+> > call `is_pack_valid()` when `p != *found_pack`, not just when
+> > `*found_pack` is non-NULL.
+>
+> It took me a while to realize that the relevant want_found_object()
+> invocation that may return -1 is not the one in
+> want_object_in_pack_one(), but in the latter's caller
+> want_object_in_pack(). But even in this case, couldn't
+> want_found_object() return -1 (see the very end of the function) even
+> before this patch?
 
-The segfault can be fixed by adding "diffopt.no_free =3D 1;" or reverting
-c45dc9cf30 (diff: plug memory leak from regcomp() on {log,diff} -I,
-2021-02-11).
+Perhaps changing the parenthetical to be:
 
-But even with that the only thing the command ignores is the option -I;
-the GIT-VERSION-GEN changes in the middle should have been omitted:
+    (indicating that `want_object_in_pack()` should continue searching
+    for other packs containing this object)
 
-   $ git diff -I DEF_VER v2.33.3 v2.33.3^@
-   diff --cc Documentation/RelNotes/2.33.3.txt
-   index 0000000000,0000000000..e2bada12a1
-   new file mode 100644
-   --- /dev/null
-   +++ b/Documentation/RelNotes/2.33.3.txt
-   @@@ -1,0 -1,0 +1,4 @@@
-   ++Git Documentation/RelNotes/2.33.3.txt Release Notes
-   ++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-   ++
-   ++This release merges up the fixes that appear in v2.33.3.
-   diff --cc GIT-VERSION-GEN
-   index d81eab5f00,e7efe58866..86a3a2870c
-   --- a/GIT-VERSION-GEN
-   +++ b/GIT-VERSION-GEN
-   @@@ -1,7 -1,7 +1,7 @@@
-     #!/bin/sh
+Yes, `want_found_object()` could have returned -1 before, but the only
+time when `*found_pack != NULL` and `want_found_object()` would have returned
+-1 is when given `--local` with at least one non-local pack.
 
-     GVF=3DGIT-VERSION-FILE
-   - DEF_VER=3Dv2.33.2
-    -DEF_VER=3Dv2.32.2
-   ++DEF_VER=3Dv2.33.3
+I actually think it's possible we have a bug there, since AFAICT the
+pre-image of this patch would have left the non-NULL `*found_pack` alone
+but picked a copy of the given object from a _different_ pack. So I
+think this change inadvertently resolves that bug.
 
-     LF=3D'
-     '
-   diff --cc RelNotes
-   index 8e79de2efe,4ac68388c3..899139d9ec
-   --- a/RelNotes
-   +++ b/RelNotes
-   @@@ -1,1 -1,1 +1,1 @@@
-   - Documentation/RelNotes/2.33.2.txt
-    -Documentation/RelNotes/2.32.2.txt
-   ++Documentation/RelNotes/2.33.3.txt
+> > @@ -1424,14 +1427,15 @@ static int want_object_in_pack_one(struct packed_git *p,
+> >  				   off_t *found_offset)
+> >  {
+> >  	off_t offset;
+> > +	int use_found = p == *found_pack;
+> >
+> > -	if (p == *found_pack)
+> > +	if (use_found)
+> >  		offset = *found_offset;
+> >  	else
+> >  		offset = find_pack_entry_one(oid->hash, p);
+> >
+> >  	if (offset) {
+> > -		if (!*found_pack) {
+> > +		if (!use_found) {
+> >  			if (!is_pack_valid(p))
+> >  				return -1;
+> >  			*found_offset = offset;
+>
+> My understanding of the purpose of this code change is that if we reach
+> here with a non-NULL *found_pack, it is likely that *found_pack contains
+> an invalid pack, and this part overwrites *found_pack (and
+> *found_offset) if it finds a valid pack. This seems like a good change,
+> but I don't see how this is a result of something that "does require
+> us" (as far as I can tell, *found_pack could have already been invalid
+> before this patch, so the downstream code should already be able to
+> handle it). Maybe it's just that we couldn't tell if the pack is invalid
+> previously, but now we can; but if so, it would be better to say "use
+> this added information to overwrite *found_pack when it makes sense" or
+> something like that.
 
-Just setting need_generic_pathscan is not enough.  Ideas?
+I think my reply above indicates why this change is necessary, but if
+we're talking about separate issues, let me know.
 
-Ren=C3=A9
-
+Thanks,
+Taylor
