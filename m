@@ -2,100 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 257DFC433F5
-	for <git@archiver.kernel.org>; Sun, 15 May 2022 19:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 320A6C433EF
+	for <git@archiver.kernel.org>; Sun, 15 May 2022 21:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238347AbiEOTWL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 May 2022 15:22:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57450 "EHLO
+        id S232185AbiEOVTD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 May 2022 17:19:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiEOTWK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 May 2022 15:22:10 -0400
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDE622280
-        for <git@vger.kernel.org>; Sun, 15 May 2022 12:22:09 -0700 (PDT)
-Received: by mail-vs1-xe2c.google.com with SMTP id w124so13515685vsb.8
-        for <git@vger.kernel.org>; Sun, 15 May 2022 12:22:09 -0700 (PDT)
+        with ESMTP id S229661AbiEOVTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 May 2022 17:19:01 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A347C3587A
+        for <git@vger.kernel.org>; Sun, 15 May 2022 14:19:00 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r30so410755wra.13
+        for <git@vger.kernel.org>; Sun, 15 May 2022 14:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yhV2SrnLKmqFxBJkSZyykomDZVU2g0zioH0RfYsxcW0=;
-        b=NG+cpWR/6bdiXz8DQI5RF8RkFLTPgPkAijAnckybnD8jp8mwNSCm2Oj61cKDRPmpFa
-         Dk54WQ8lxvKuvEb6nZAyiRztikRJ5EPWeagUeOZJBMYf65Xb9DX/mK/iJUP86EzodKwq
-         NPSE4cd/O1CnU38y2GE1UF2VWSuwp1nrm5WoMmxsz3LZxHkVMAvPqkn2QcQwxpsn9zw+
-         IF1ZiHvWkjZy0AYnJJGYsCa+D4fKzAnaD32yjADidtn9Bg9jHvBislDw25nEhHlr59a+
-         CTNMkPoS0qLuYX2fdLWHAgJ3xxfaB2/hT9F0q1Hr2Li9dxPbe05fFzUnR5tbpVNy3AS4
-         P3bA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=wr27IUaGFSi9LZI9UIxT/xCicp0l0b/95Iwb8gBAxjI=;
+        b=E/mBcrWeI4jP2n9oXI3kq3HWgdZLjtT5HZpxqzHOFQIbMzeYCO7s76YFwgx90ll9hr
+         9NUwsanW0C9waufJWibenT/yEfWKwLu7kjyEiu2lb9tACU/mGuBBf+5qUx2KP+OeGgen
+         2CIzREWkKJKP9IYrSozkWoKN/ie011ADjk6A/a61HIsmFTtiJt2qdA0RaePnA1xtnwVl
+         j1a97wOMuH4ARO/sOntAhFbX8MYMuZ2CMQh8c3sviXtbitPSZhrThIyCSUA5mLB78Pt1
+         Go+ckzk1Yg+HYN6BTthYJ0KOe1WqKDQC4iI+WnHOPeppX2fYvO2yUd2qOPZwOw9D+dK7
+         mcHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yhV2SrnLKmqFxBJkSZyykomDZVU2g0zioH0RfYsxcW0=;
-        b=cUzAdG75jHC00ksHkYMdyNaoX5VLMajOutzih/GWv53vZZ5L5fbhV8I1QOvz6V3yI5
-         3J3SR34IRY/9ftmatjnacLSS4TOrnkSgZ+6SHiGr/2CZmpOcVfie0WCgRlQb8o+FG3G9
-         L5cgUyerFULT8+ftL1rmhi2DICxnxj9jE2yvdugGqaGNA3v3/3fYjsnEyKtSWp23Q7YF
-         JSat0jIcvKvVMGC9gDXj2UYm+1ZshoxR0P4xWGQ04uz7GQF1u79N7TZVeq5scM1cBFAw
-         6vxjUwQvvPdWRpSyJmBsAGNS2l5rrkgs+b8atzdkXhiRO9YnMkvln+wX0cYlFFUiH/9A
-         HvLw==
-X-Gm-Message-State: AOAM530XUmGG5zCE0h4r5HGLEMNiI92hrZULeMSVeXwPB48MtXEXNd7w
-        zuEs4XT+AX3EF/hneQDYwNjk7mGPi/cgg+9nPh3zqILM
-X-Google-Smtp-Source: ABdhPJwWr90GNE0WKomkDz4+ejzZyUFAfuidJkgMhI196yPPAbI19N4e1dgdYddWhLw6Ud8ZFuAMd0Ps9fexaGB+zdc=
-X-Received: by 2002:a67:d303:0:b0:32d:3d07:17c4 with SMTP id
- a3-20020a67d303000000b0032d3d0717c4mr5136518vsj.52.1652642528202; Sun, 15 May
- 2022 12:22:08 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wr27IUaGFSi9LZI9UIxT/xCicp0l0b/95Iwb8gBAxjI=;
+        b=wS750z3ED2uiONDZhAUP3TPiaHb9Brn+nYMmuxiC3BWQZMMl0g0757x9A+tEVbPGuj
+         mfqURQMvyB/T6jstwneTdoMBfJO1reDCEXWKCrwWATsKVbQbLMRO+Srw3evYOtqOiY+e
+         rd+V7wE3Q06P33vAK+RVWIBgMvvmBMlFdSgntqhdlQxzswXA9vZ+6Dq/77abnlq5eFoU
+         utiAOk99yZBxv6C7LIm49drj4Ns9YUQPKe5H29gudwWyzBpzBgjSL7oqox+8j+rH8BE5
+         v+7vEu29DjajsqZVMz4c7DlRDgxxg1F3HuGzIWN6JKPA9JEeqdR9uYUcwPS/aRpO0Nd7
+         yGlg==
+X-Gm-Message-State: AOAM530hyLsYb+gw1w4LB9ZQIp9rOf8UGJTrwQu8fjiYlZjv0IIX8t04
+        3RbWguRapdbrj2bDz5z73bgCX2WiE9c=
+X-Google-Smtp-Source: ABdhPJzXv9bazmQ9XsAkEvj4/pszVpzwmp3q4U5zjAbcmcd3c3Dpf2TRDhpUUSixkIMaQhVnsgVP8A==
+X-Received: by 2002:a05:6000:100c:b0:20a:c8db:69d2 with SMTP id a12-20020a056000100c00b0020ac8db69d2mr11619330wrx.19.1652649538807;
+        Sun, 15 May 2022 14:18:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d17-20020adfa411000000b0020d07958bb3sm1873111wra.3.2022.05.15.14.18.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 May 2022 14:18:58 -0700 (PDT)
+Message-Id: <pull.1232.git.1652649537647.gitgitgadget@gmail.com>
+From:   "Nadav Goldstein via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 15 May 2022 21:18:57 +0000
+Subject: [PATCH] stash: added safety flag for stash clear subcommand
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220510174616.18629-1-carenas@gmail.com> <20220513010020.55361-1-carenas@gmail.com>
- <20220513010020.55361-4-carenas@gmail.com> <xmqqee0ycjos.fsf@gitster.g>
- <CAPUEspj1JTG2Ujuk4O6ogo6qEQEwe-2aHF8J95xjX+OpY4cenQ@mail.gmail.com> <xmqqr14u7n4l.fsf@gitster.g>
-In-Reply-To: <xmqqr14u7n4l.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sun, 15 May 2022 12:21:55 -0700
-Message-ID: <CAPUEsphNOf37WB_xUuRNdfcz1TRRsSocbUoCbrmA3OjS_BTpdw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/4] t0034: add negative tests and allow git init to
- mostly work under sudo
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        johannes.Schindelin@gmx.de,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Nadav Goldstein <nadav.goldstein96@gmail.com>,
+        Nadav Goldstein <nadav.goldstein@blazepod.co>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 15, 2022 at 9:54 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Arenas <carenas@gmail.com> writes:
->
-> > On Thu, May 12, 2022 at 6:20 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Heh.  I am a bit surprised that double sudo would become a separate
-> >> prerequisite,
-> >
-> > It is because it goes away in the optional patch 4, since it won't be
-> > needed anymore after that.
->
-> Hmph, it may not be needed, but it should still work, in which case
-> it probably is still worth testing, even with the optional patch #4.
+From: Nadav Goldstein <nadav.goldstein@blazepod.co>
 
-Just because it works, it doesn't mean we have to test it.
+Introduced a flag (git stash clear -i) when when used,
+instead of silently clearing the stash, will present a
+confirmation to the user regarding the action which he's
+about to perform. Took the inspiration from rm -rf -i flag.
+This flag also outputs extra logs (abort/success) to let
+the user know more "interactively" what is happening with
+the stash (hence the flag name).
 
-IMHO tests are better reserved for things that might not work or that
-should work, so this gets in the same bucket than "triple sudo" would
-go, and interestingly enough we could add that test without having to
-add a new prerequisite too!
+Signed-off-by: Nadav Goldstein <nadav.goldstein@blazepod.co>
+---
+    stash clear: added safety flag for stash clear subcommand
+    
+    Added a flag to git stash clear (-i|--interactive), which prompts the
+    user to confirm he indeed wants to clear the stash, otherwise it will
+    abort.
+    
+    I found it useful as a frequent stash clear user which means my terminal
+    always have it in recent commands, which could mean accidental erase of
+    work. This flag ensures accidental fires won't clear hard work :)
+    
+    I also thought it would be better to do it opt in, to not change the way
+    the command works in prod, only add to it.
 
-> No?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1232%2Fnadav96%2Fclear-stash-prompt-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1232/nadav96/clear-stash-prompt-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1232
 
-Your call, my assumption was (since this patch is part of this series,
-albeit optional), that the "double sudo" need will be short lived and
-therefore better not to have this test to begin with, or remove it as
-soon as the need is gone, which in practice would be the time between
-when this series (without the optional patch) is released, and the
-time that optional path gets released (maybe as part of another
-series, since it might be dropped from this one).
+ Documentation/git-stash.txt |  9 +++++++--
+ builtin/stash.c             | 21 +++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
-alternatively we can make it not optional, and then the test will
-NEVER be needed.
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 6e15f475257..a7ab5379779 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -17,7 +17,7 @@ SYNOPSIS
+ 	     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
+-'git stash' clear
++'git stash' clear [-i|--interactive]
+ 'git stash' create [<message>]
+ 'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
+ 
+@@ -127,7 +127,7 @@ the stash entry is applied on top of the commit that was HEAD at the
+ time `git stash` was run, it restores the originally stashed state
+ with no conflicts.
+ 
+-clear::
++clear [-i|--interactive]::
+ 	Remove all the stash entries. Note that those entries will then
+ 	be subject to pruning, and may be impossible to recover (see
+ 	'Examples' below for a possible strategy).
+@@ -160,6 +160,11 @@ OPTIONS
+ All ignored and untracked files are also stashed and then cleaned
+ up with `git clean`.
+ 
++-i::
++--interactive::
++	This option is only valid for clear command, when applied, will request
++	a confirmation from the user before proceeding to clear the stash.
++
+ -u::
+ --include-untracked::
+ --no-include-untracked::
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0c7b6a95882..b012d24ef38 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -26,7 +26,7 @@ static const char * const git_stash_usage[] = {
+ 	N_("git stash drop [-q|--quiet] [<stash>]"),
+ 	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+ 	N_("git stash branch <branchname> [<stash>]"),
+-	"git stash clear",
++	"git stash clear [-i|--interactive]",
+ 	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+@@ -67,7 +67,7 @@ static const char * const git_stash_branch_usage[] = {
+ };
+ 
+ static const char * const git_stash_clear_usage[] = {
+-	"git stash clear",
++	"git stash clear [-i|--interactive]",
+ 	NULL
+ };
+ 
+@@ -215,7 +215,10 @@ static int do_clear_stash(void)
+ 
+ static int clear_stash(int argc, const char **argv, const char *prefix)
+ {
++	int is_prompt;
+ 	struct option options[] = {
++		OPT_BOOL('i', "interactive", &is_prompt,
++			 N_("confirm clearing stash")),
+ 		OPT_END()
+ 	};
+ 
+@@ -226,7 +229,21 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
+ 	if (argc)
+ 		return error(_("git stash clear with arguments is "
+ 			       "unimplemented"));
++	if (is_prompt == 1) {
++		char code[2];
++		printf("Are you sure you want to clear your stash? [y/N]: ");
++		if (fgets(code, 2, stdin) != NULL) {
++			if (code[0] == 'y' || code[0] == 'Y') {
++				printf_ln(_("Clearing stash"));
++				return do_clear_stash();
++			}
++			else {
++				printf_ln(_("Aborting clear"));
++			}
++		}
+ 
++		return 0;
++	}
+ 	return do_clear_stash();
+ }
+ 
 
-Carlo
+base-commit: e8005e4871f130c4e402ddca2032c111252f070a
+-- 
+gitgitgadget
