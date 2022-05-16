@@ -2,236 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A9BBC433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 17:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80B87C433FE
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 18:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242345AbiEPR5g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 13:57:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
+        id S1344494AbiEPSLr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 14:11:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230453AbiEPR5d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 13:57:33 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0165F39BB4
-        for <git@vger.kernel.org>; Mon, 16 May 2022 10:57:31 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61C081266F4;
-        Mon, 16 May 2022 13:57:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Iivhn1j9J2dZh1EoJ0wGlOyQ8XW8S4FcR8nyVO
-        fkdpU=; b=Bkl09PRjbImyZJWI1XGKFsqny4+8uo8FZn1Qm1QY9J+aMftUY4/to+
-        0sedPrO2CcYYRVcN9sTQM5Oe8ehBe4gqQ1cyqcZJ8OUdTEhG2eytq28azk5/JYHD
-        u6wgq88s21unh83NmAdhzEyFSzGAAs87jDbWjLtq0HOGsLGmyj7jM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 581491266F3;
-        Mon, 16 May 2022 13:57:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB1C91266F2;
-        Mon, 16 May 2022 13:57:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH v2] fetch: limit shared symref check only for local
- branches
-References: <pull.1266.git.git.1652690275625.gitgitgadget@gmail.com>
-        <pull.1266.v2.git.git.1652690501963.gitgitgadget@gmail.com>
-        <xmqqv8u54gcm.fsf@gitster.g>
-Date:   Mon, 16 May 2022 10:57:27 -0700
-In-Reply-To: <xmqqv8u54gcm.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        16 May 2022 09:00:57 -0700")
-Message-ID: <xmqqfsl92we0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S242544AbiEPSLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 14:11:43 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2048B3D492
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:37 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id bd25-20020a05600c1f1900b0039485220e16so363234wmb.0
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=0Iwctf6yWHFlYfVS0y3XEp3zXjzoA1fatcTP94Ledrk=;
+        b=gVeHlFCEoHNyOVAD+bJpDC85CUC8DrZznlAjsQDkX47CvK83jK66Q9GnMAcOvfhGDm
+         mmnm3ID+mEyfDu7qWlaoO0X6xTtNMZ0NRMie1EfRppfk/EmLMzUI0Nc8r3B296bFMMls
+         wNV6QPbhH18lZwDFFSMKnijSxCantUMTVyf1ZTjsMnEKL4GXMTQmMnjsY81DmdZwK9cP
+         nd9tSRbcaZLsYrZQTHoj+V5WlLB5OL6qaAQ/CecAdSUR0+NtbFjSAdLfG010NgBmSJHM
+         J6Ouu464bPgCaf+zS7SRregeQx9a3oBpXqcnofcXs5jrt539QOPjkI7UPVvcggV7o0nd
+         BfoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=0Iwctf6yWHFlYfVS0y3XEp3zXjzoA1fatcTP94Ledrk=;
+        b=JKDt29+bMpdgE4XwrDxa1ZVwFo6HCvhp+Z5X+MbcT3Ap6kiSFaQKcG7Hoe/7zXs6rE
+         HprvboKTPUVe4OhxHbsPnKXDpWE8WjJ4sTcPyY1zoZmy2SDzSpoP81ne3Y86wPptGgP2
+         hgrtfObPc97AMLX7eEsbL0mJ4a/PGZbImF2+Abprv7EXrOq6UdlqLzxVbR58+3HppKaz
+         EgQij8Zg6nnGYEM1xHjDQd976ytrm+P/nsbf1FOLymrUuR+dfheQDKSBWGeJT+cLMtFr
+         nLLvVj5afJ9VdmiD2PrwHHP5C9f/UVgL/xmL6VkPrHPUGJ6azj2H2kTZ5+Mh+ysHUIUn
+         rGdw==
+X-Gm-Message-State: AOAM532qXjQt9RPwuWkWZB3HMLVMB4VlsqUNRCJH7dSjSz1fdvEw1DCg
+        P6hTQ9+mV7HNFrasBNfv7X3Me/n+zrU=
+X-Google-Smtp-Source: ABdhPJzAKUmOL1OpwLygnAGptBtxCX5EwqbSkVynJ2/i90zVgVGDZj7pyDgXdr3oOIqKxOvJlJkcRQ==
+X-Received: by 2002:a05:600c:600d:b0:394:5353:507a with SMTP id az13-20020a05600c600d00b003945353507amr18031766wmb.96.1652724695109;
+        Mon, 16 May 2022 11:11:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n12-20020adf8b0c000000b0020cdf6ecafbsm12545589wra.81.2022.05.16.11.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 May 2022 11:11:34 -0700 (PDT)
+Message-Id: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 16 May 2022 18:11:25 +0000
+Subject: [PATCH 0/8] Sparse index: integrate with sparse-checkout
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A6B09A54-D541-11EC-A84A-CB998F0A682E-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, vdye@github.com, shaoxuan.yuan02@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This series is based on ds/sparse-colon-path.
 
->> Limit it to protect only refs/heads/* to improve fetch performance.
->
-> The point of the check is to prevent the index+working tree in the
-> worktrees to go out of sync with HEAD, and HEAD by definition can
-> point only into refs/heads/*, this change should be OK.
+This series integrates the 'git sparse-checkout' builtin with the sparse
+index. This is the last integration that we fast-tracked into the
+microsoft/git fork. After this, we have no work in flight that would
+conflict with a Google Summer of Code project in this area.
 
-I am willing to take the above change as-is as a standalone patch,
-but independently from that ...
+The tricky part about the sparse-checkout builtin is that we actually do
+need to expand the index when growing the sparse-checkout boundary. The
+trick is to expand it only as far as we need it, and then ensure that we
+collapse any removed directories before the command completes.
 
-> It is surprising find_shared_symref() is so expensive, though.  If
-> you have a dozen worktrees linked to the current repository, there
-> are at most a dozen HEAD that point at various refs in refs/heads/
-> namespace.  Even if you need to check a thousand ref_map elements,
-> it should cost almost nothing if you build a hashmap to find matches
-> with these dozen HEADs upfront, no?
->
-> Another thing that is surprising is that you say this loop is
-> expensive when there are many tags or branches.  Do you mean it is
-> expensive when there are many tags and branches that are updated, or
-> it is expensive to merely have thousands of dormant tags and
-> branches?  If the latter, I wonder if it is sensible to limit the
-> check only to the refs that are going to be updated.
+To do this, we introduce a concept of a "partially expanded" index. In fact,
+we break the boolean sparse_index member into an enum with three states:
 
-... I was wondering if an approach like the attached might be a
-better way to proceed in the longer run.  Instead of (or in addition
-to) reducing the number of calls to the function, we should see if
-we can make the function less expensive.
+ * COMPLETELY_FULL (0): No sparse directories exist.
 
-In short, find_shared_symref(), and is_worktree_being_FUTZed(), is
-following a wrong API pattern that encourages a loop to call them
-repeatedly by taking 'target' parameter and doing a comparison
-itself.  If you want to find if any of your 1000 refs violate what
-they are trying to check, you'd need to call them 1000 times.
+ * COMPLETELY_SPARSE (1): Sparse directories may exist. Files outside the
+   sparse-checkout cone are reduced to sparse directory entries whenever
+   possible.
 
-Instead, you should be able to learn which branch is to be protected
-per each worktree and do the asking about your 1000 refs yourself.
+ * PARTIALLY_SPARSE (2): Sparse directories may exist. Some file entries
+   outside the sparse-checkout cone may exist. Running convert_to_sparse()
+   may further reduce those files to sparse directory entries.
 
-If we instead find out what branch, other than the one pointed at by
-the HEAD symref, each worktree is working on, just like we find out
-what branch is pointed at by the HEAD symref, and store that
-findings in the worktree structure, you should be able to walk the
-list of worktrees just once to build a hashmap that lets you tell
-which branches are not to be messed with before deciding if the
-fetch should go through.
+Most of the patches in this series focus on introducing this enum and
+carefully converting previous uses of the boolean to use the enum. Some
+additional work is required to refactor ensure_full_index() into a new
+expand_to_pattern_list() method, as they are doing essentially the same
+thing, but with different scopes.
 
-The following is not even compile tested, and some details may be
-wrong, but I hope it is good enough to illustrate the idea.
+The result is improved performance on the sparse-checkout builtin as
+demonstrated in a new p2000-sparse-operations.sh performance test:
 
- worktree.c | 73 ++++++++++++++++++++++++++++++++++----------------------------
- worktree.h |  5 +++++
- 2 files changed, 45 insertions(+), 33 deletions(-)
 
-diff --git c/worktree.c w/worktree.c
-index 90fc085f76..2d96bd9dd1 100644
---- c/worktree.c
-+++ w/worktree.c
-@@ -15,6 +15,7 @@ void free_worktrees(struct worktree **worktrees)
- 		free(worktrees[i]->path);
- 		free(worktrees[i]->id);
- 		free(worktrees[i]->head_ref);
-+		free(worktrees[i]->protected_branch);
- 		free(worktrees[i]->lock_reason);
- 		free(worktrees[i]->prune_reason);
- 		free(worktrees[i]);
-@@ -22,13 +23,28 @@ void free_worktrees(struct worktree **worktrees)
- 	free (worktrees);
- }
- 
-+int is_worktree_being_rebased(const struct worktree *wt,
-+			      const char *target)
-+{
-+	return ((wt->protected_reason == WT_BRANCH_REBASING) &&
-+		(!strcmp(target, wt->protected_branch)));
-+}
-+
-+int is_worktree_being_bisected(const struct worktree *wt,
-+			       const char *target)
-+{
-+	return ((wt->protected_reason == WT_BRANCH_BISECTING) &&
-+		(!strcmp(target, wt->protected_branch)));
-+}
-+
- /**
-- * Update head_oid, head_ref and is_detached of the given worktree
-+ * Grab HEAD-related information of the given worktree
-  */
- static void add_head_info(struct worktree *wt)
- {
- 	int flags;
- 	const char *target;
-+	struct wt_status_state state;
- 
- 	target = refs_resolve_ref_unsafe(get_worktree_ref_store(wt),
- 					 "HEAD",
-@@ -41,6 +57,29 @@ static void add_head_info(struct worktree *wt)
- 		wt->head_ref = xstrdup(target);
- 	else
- 		wt->is_detached = 1;
-+
-+	wt->protected_reason = 0;
-+	memset(&state, 0, sizeof(state));
-+	if (wt_status_check_rebase(wt, &state) &&
-+	    (state.rebase_in_progress ||
-+	     state.rebase_interactive_in_progress) &&
-+	    state.branch &&
-+	    skip_prefix(state.branch, "refs/heads/", &target)) {
-+		wt->protected_branch = xstrdup(target);
-+		wt->protected_reason = WT_BRANCH_REBASING;
-+	}
-+	wt_status_state_free_buffers(&state);
-+
-+	memset(&state, 0, sizeof(state));
-+	if (wt_status_check_bisect(wt, &state) && state.branch &&
-+	    skip_prefix(state.branch, "refs/heads/", &target)) {
-+		if (wt->protected_reason)
-+			BUG("branch '%s' being bisected and rebased at the same time?",
-+			    wt->protected_branch);
-+		wt->protected_branch = xstrdup(target);
-+		wt->protected_reason = WT_BRANCH_BISECTING;
-+	}
-+	wt_status_state_free_buffers(&state);
- }
- 
- /**
-@@ -365,38 +404,6 @@ void update_worktree_location(struct worktree *wt, const char *path_)
- 	strbuf_release(&path);
- }
- 
--int is_worktree_being_rebased(const struct worktree *wt,
--			      const char *target)
--{
--	struct wt_status_state state;
--	int found_rebase;
--
--	memset(&state, 0, sizeof(state));
--	found_rebase = wt_status_check_rebase(wt, &state) &&
--		       (state.rebase_in_progress ||
--			state.rebase_interactive_in_progress) &&
--		       state.branch &&
--		       skip_prefix(target, "refs/heads/", &target) &&
--		       !strcmp(state.branch, target);
--	wt_status_state_free_buffers(&state);
--	return found_rebase;
--}
--
--int is_worktree_being_bisected(const struct worktree *wt,
--			       const char *target)
--{
--	struct wt_status_state state;
--	int found_bisect;
--
--	memset(&state, 0, sizeof(state));
--	found_bisect = wt_status_check_bisect(wt, &state) &&
--		       state.branch &&
--		       skip_prefix(target, "refs/heads/", &target) &&
--		       !strcmp(state.branch, target);
--	wt_status_state_free_buffers(&state);
--	return found_bisect;
--}
--
- /*
-  * note: this function should be able to detect shared symref even if
-  * HEAD is temporarily detached (e.g. in the middle of rebase or
-diff --git c/worktree.h w/worktree.h
-index e9e839926b..4e9d06c26a 100644
---- c/worktree.h
-+++ w/worktree.h
-@@ -10,6 +10,11 @@ struct worktree {
- 	char *path;
- 	char *id;
- 	char *head_ref;		/* NULL if HEAD is broken or detached */
-+	char *protected_branch; /* being rebased or bisected, othewise NULL */
-+	enum {
-+		WT_BRANCH_REBASING = 1,
-+		WT_BRANCH_BISECTING,
-+	} protected_reason;
- 	char *lock_reason;	/* private - use worktree_lock_reason */
- 	char *prune_reason;     /* private - use worktree_prune_reason */
- 	struct object_id head_oid;
+Test HEAD~1 HEAD
+================
+
+2000.24: git sparse-checkout ... (sparse-v3) 2.14(1.55+0.58) 1.57(1.03+0.53)
+-26.6% 2000.25: git sparse-checkout ... (sparse-v4) 2.20(1.62+0.57)
+1.58(0.98+0.59) -28.2%
+
+The improvement here is less dramatic because the operation is dominated by
+writing and deleting a lot of files in the worktree. A repeated no-op
+operation such as git sparse-checkout set $SPARSE_CONE would show a greater
+improvement, but is less interesting since it could gain that improvement
+without satisfying the "hard" parts of this builtin.
+
+I specifically chose how to update the tests in t1092 and p2000 to avoid
+conflicts with Victoria's 'git stash' work.
+
+Thanks, -Stolee
+
+Derrick Stolee (8):
+  sparse-index: create expand_to_pattern_list()
+  sparse-index: introduce partially-sparse indexes
+  cache-tree: implement cache_tree_find_path()
+  sparse-checkout: --no-sparse-index needs a full index
+  sparse-index: partially expand directories
+  sparse-index: complete partial expansion
+  p2000: add test for 'git sparse-checkout [add|set]'
+  sparse-checkout: integrate with sparse index
+
+ builtin/sparse-checkout.c                |   8 +-
+ cache-tree.c                             |  24 +++++
+ cache-tree.h                             |   2 +
+ cache.h                                  |  32 ++++--
+ read-cache.c                             |   6 +-
+ sparse-index.c                           | 126 ++++++++++++++++++++---
+ sparse-index.h                           |  14 +++
+ t/perf/p2000-sparse-operations.sh        |   1 +
+ t/t1092-sparse-checkout-compatibility.sh |  25 +++++
+ unpack-trees.c                           |   4 +
+ 10 files changed, 214 insertions(+), 28 deletions(-)
+
+
+base-commit: 124b05b23005437fa5fb91863bde2a8f5840e164
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1208%2Fderrickstolee%2Fsparse-index%2Fsparse-checkout-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1208/derrickstolee/sparse-index/sparse-checkout-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1208
+-- 
+gitgitgadget
