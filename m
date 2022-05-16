@@ -2,97 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E21F1C433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 06:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CE1C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 07:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230260AbiEPGL1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 02:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59504 "EHLO
+        id S240656AbiEPHdy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 03:33:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235513AbiEPGLX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 02:11:23 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 766B0FCC
-        for <git@vger.kernel.org>; Sun, 15 May 2022 23:11:22 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id il11-20020a17090b164b00b001df666f7a90so619696pjb.8
-        for <git@vger.kernel.org>; Sun, 15 May 2022 23:11:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=85pvB8XA7mCJ+syZIAzhIx1DqPADYSgryrn+PYracQw=;
-        b=PwxF1GfwuBukC73GaJd4gXF96Jyh2cIHZOp2pcAd7Y/tZxAOYkD3B81sscJgIYL4/A
-         iiWIBHx7TeoK4txy9jvoe1X4Nr5IYMp6mKPR1TzAWivqeK+8pHrEp7H8Cw7HBT6SGPYJ
-         XqNlQ1tHhv+gV5wG4TiW3vRGh1qs6AVFpjeNEEdn4r3rR/fsVlaAUcHgKOnDscmC2MzU
-         HUoYh9k1AyBPo4RIw3omjjBxLYT/LmZTMfvMLjhqVV+Tl4EWxfMRa9Fx1P4rsveXvvGh
-         G9Oe9l2Ay+EN5L8QbKaMu3GWLkJNSsf6H1UcBFAl6+X4uwzjMdyebfLiSSSSqTSQ9SCn
-         dMrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=85pvB8XA7mCJ+syZIAzhIx1DqPADYSgryrn+PYracQw=;
-        b=GLGxy5Su+dtW0FdlVrpBO7bVYgDZBuB8edk17+ySbD4svy/SUqbUq3cDp8LdvGShGW
-         KKVIkZJ0Z39VQs/tTZQTbpsSYQ2M1PpRL0uIvb/3Q160Qkbkuf6vG13HdelkpdmR+gJY
-         FB5eSfQiaHS+z211Xju0Ce5toqEpBXcdcTdYRuOgTNRrTzx8zb6K4dvD8PWmIW/ZYYZq
-         zwu7OVOMGPDR7T9FL/kOyKEbmPaSqJVGyBKGjkZDukforWc5dQVZb5c6wgC7LMFHYzIm
-         nKQzwwFLk88q3QFpCEMBx2drcvJ8rgPqtsYjIULUdXJAZfKcJeO53ZXhva+0urMBcbOX
-         oRng==
-X-Gm-Message-State: AOAM531uNqiIaZVPwjD6oekhAry6gs8jcP3pVVPmKgpCVa3yni+H0JIQ
-        A/QhdaleX+q5ltcxfUTq9a80R5uMzS3IWBQgs2OD
-X-Google-Smtp-Source: ABdhPJycFzDHjgrQrPMeSvH9F/75Ym5y/0X+Q9G7MrCPyoGy+MtTYOORLIrMm62qcmesocOGXO8KoLQRSWDaA4Sjy89L
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:903:20f:b0:158:d86a:f473 with
- SMTP id r15-20020a170903020f00b00158d86af473mr16389915plh.92.1652681481947;
- Sun, 15 May 2022 23:11:21 -0700 (PDT)
-Date:   Sun, 15 May 2022 23:11:19 -0700
-In-Reply-To: <Yn+v8mEHm2sfo4sn@nand.local>
-Message-Id: <20220516061119.1569730-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
-Subject: Re: [PATCH 2/2] builtin/pack-objects.c: ensure pack validity from
- MIDX bitmap objects
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        vdye@github.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S237755AbiEPHdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 03:33:52 -0400
+X-Greylist: delayed 331 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 16 May 2022 00:33:50 PDT
+Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085BB2315E
+        for <git@vger.kernel.org>; Mon, 16 May 2022 00:33:49 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 212D0160122;
+        Mon, 16 May 2022 00:28:18 -0700 (PDT)
+Received: from zimbra.cs.ucla.edu ([127.0.0.1])
+        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id BzhgLVdxcqj3; Mon, 16 May 2022 00:28:17 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 5EF5316012F;
+        Mon, 16 May 2022 00:28:17 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
+Received: from zimbra.cs.ucla.edu ([127.0.0.1])
+        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id CFsyhCDiHoDI; Mon, 16 May 2022 00:28:17 -0700 (PDT)
+Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
+        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id 2F209160126;
+        Mon, 16 May 2022 00:28:17 -0700 (PDT)
+Message-ID: <e89577f8-8f52-bf09-15f3-c534bf1a6c64@cs.ucla.edu>
+Date:   Mon, 16 May 2022 00:28:16 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, "Carlos L." <00xc@protonmail.com>,
+        GNU grep developers <grep-devel@gnu.org>
+References: <pull.1264.git.git.1652361610103.gitgitgadget@gmail.com>
+ <xmqqilq658b3.fsf@gitster.g>
+From:   Paul Eggert <eggert@cs.ucla.edu>
+Organization: UCLA Computer Science Department
+Subject: Re: [PATCH] grep: add --max-count command line option
+In-Reply-To: <xmqqilq658b3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-> On Fri, May 13, 2022 at 04:06:39PM -0700, Jonathan Tan wrote:
-> > (An alternative to the change in this patch may be to reset *found_pack
-> > to NULL when it is found that the pack is invalid, but I haven't
-> > investigated all the callers to see if they can tolerate *found_pack
-> > moving changing non-NULL to NULL, so the change in this patch is
-> > probably more practical.)
-> 
-> I haven't either, but I think that this points out a flaw in the patch I
-> originally posted.
-> 
-> Consider this:
-> 
->   - `want_object_in_pack()` calls `want_found_object()` with a pack that
->     has gone away and has zero open fds, and `want_found_object()`
->     returns -1
->   - `want_object_in_pack()` continues and calls
->     `want_object_in_pack_one()` later on, with some pack that is the
->     same as `*found_pack`
->   - `want_object_in_pack_one()` then _doesn't_ call `is_pack_valid()`
->     (since `p == *found_pack`), leaving us in the same situation as
->     before.
-> 
-> I think that would be sufficient to hit this race even after this patch.
+On 5/15/22 22:57, Junio C Hamano wrote:
 
-Ah, yes, indeed this would be a problem.
+> It indeed is curious why GNU grep chose to immediately exit with 1
+> when "-m 0" was given,
 
-> I'll take a look to see if `want_object_in_pack()` callers can handle
-> `*found_pack` being set back to NULL. They should be able to, but I want
-> to do a little more careful analysis to be sure.
+As I vaguely recall, if "-m 1" stops before "-m 2" does, then the idea 
+was that it's reasonable for "-m 0" to stop before "-m 1" does, and the 
+logical place to stop is right at the start, before any matches are 
+found (i.e., exit with status 1).
 
-Sounds good.
+What would be more useful for 'grep -m 0' to do? (Sorry, I came into 
+this conversation just now.) Perhaps GNU 'grep -m 0' should change, if 
+there's something better for it to do.
 
-> Thanks for pointing this out, I am so glad for your review! :-)
 
-Thanks for your kind words! Thanks for your explanations too.
+> What "git grep -m -1" should do?  IIRC, OPT_INTEGER is for signed
+> integer but the new .max_count member, as well as the existing
+> "count" that is compared with it, are of "unsigned" type.  Either
+> erroring out or treating it as unlimited is probably fine, but
+> whatever we do, we should document and have a test for it.
+
+'grep -m -1' treats the count as being unlimited, but this isn't 
+documented and (from the code) appears to be accidental. It'd make sense 
+for it to be documented.
