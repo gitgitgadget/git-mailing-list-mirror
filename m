@@ -2,129 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 454DBC433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 08:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD55C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 08:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241812AbiEPIiX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 04:38:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
+        id S238562AbiEPIjP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 04:39:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238562AbiEPIiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 04:38:21 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3891E0B1
-        for <git@vger.kernel.org>; Mon, 16 May 2022 01:38:19 -0700 (PDT)
-Date:   Mon, 16 May 2022 08:38:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail2; t=1652690295; x=1652949495;
-        bh=YqL5cin3zOsAh2OxR2sHS5zxJzEhKCDsGsaHeI5FxSA=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=YJMU6+EPHvwI/F5X3yqvfReyKU9iOu6waxHN5I55Jqw1D/FGDQ+KNCNtnjbxqb4qg
-         EEBLv/pnxAQ+NqB34rqGiIY+HJnR/sY/U6hR/maNSPrBD9Dj0LrD0zPPzpNVs5MIa9
-         K3eL8iMvEGhsq78YR8Eiyom6u2FDMxH5/ssHVIjXB3mPXZDth9SKazdkodLefu2BLR
-         qmM/GD/h3N7/7sCxF4CdlrftZZDv8nRi1a9Un8KN0DwD4htiNz+WWZkCc0PJP7Mu0m
-         lJsxGCqtVO+HPRvNOeh9nW8XLSiy/PWie+YhJQxNiTrS9TsGn4Jtisi7v2d8j2jBBB
-         C1ONb2Ag6pGug==
-To:     Paul Eggert <eggert@cs.ucla.edu>
-From:   "Carlos L." <00xc@protonmail.com>
+        with ESMTP id S231559AbiEPIjL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 04:39:11 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC1CE0D1
+        for <git@vger.kernel.org>; Mon, 16 May 2022 01:39:09 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a5so15662833wrp.7
+        for <git@vger.kernel.org>; Mon, 16 May 2022 01:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GYKNFgyzOSnscfbsVVJLXAG58PzEbOPA2lV4+2nL5R8=;
+        b=ZEpKPr/wwvyRSAdQH3U9J0tCKXSYr5BThDhqYDyvFoHbJBz8vtK2TsYqB9qi99ircA
+         UqG1oD6v+CDHrHMY693NAztLpROhQO+hq3bXM0hSIHf/6TVbAEeVjeBXQIxIGfmNJn3e
+         DibMpOj8yIgFlG5E2jNlzozWunOEHee9zFsxRoiRau4TKfWrUaGLTmjt/pz7fLkY6nER
+         evMjlFvWD3BWQgugW4bDCJQAS69HTm48dxkF8Zuvio6Ft6jIFo0HhY4WGsq8j+I3m0fe
+         nJuepnvjm/3/boK4OIt5YXGIoNKjWoUiuATlrW7VjtAEzYrME9Ck3RNZHdPqLwkXWm24
+         4W7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GYKNFgyzOSnscfbsVVJLXAG58PzEbOPA2lV4+2nL5R8=;
+        b=z0tbF+mMsY8BLzSQSKpQTBWvb09Q9pP0DBDkGZBxZ4+ptgMlxyr1qjXk87A1IJWT8y
+         ZwIy4PIBLd9y97AYr73vYSl/HO1eGo1k2+JS6tiLw7OAGZ+cn7WITJ6tvh6WZ09d9Q7G
+         QU6NovBwFFn4X2UpTYvl/nUitmq2xvpjlZPS9OomL3hRDcCaci1+wgtEn7CBBW2fgQhN
+         dKjyfqT8kKCQDbxNXTqYJfAaiD3KCsueOnX3o7QYrzWj8q1hvGsikR7NoNNFfSIP8tfh
+         Fp426FZpuduNq0fkirDWVvfFrvGvkwKde9c3oouGX7MQlwiTouxW0z2JLyTuKwuue+HW
+         fO/g==
+X-Gm-Message-State: AOAM533Ph3QmGhchQe+epj1z1KX67h8H6d+ziF9gsYCKO/QacgSEPmOp
+        9SlJnkItB7bGlJBjv8urEaFzH2iXK14=
+X-Google-Smtp-Source: ABdhPJy/LbJYOAz1Rq/lymcFNgevgcSPZ6Dm0S3r8Q2O4rbGptUTbOd0YKZsTaD5qmniEpEkO3VXsg==
+X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id c18-20020adffb12000000b0020c79b2a200mr13518206wrr.617.1652690347178;
+        Mon, 16 May 2022 01:39:07 -0700 (PDT)
+Received: from localhost.localdomain ([2001:861:3005:2510:8d3:1902:531f:83c1])
+        by smtp.gmail.com with ESMTPSA id i10-20020a05600c354a00b003942a244f37sm14359720wmq.16.2022.05.16.01.39.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 May 2022 01:39:06 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Carlos L. via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, GNU grep developers <grep-devel@gnu.org>
-Reply-To: "Carlos L." <00xc@protonmail.com>
-Subject: Re: [PATCH] grep: add --max-count command line option
-Message-ID: <MHNbacVw7D6ZU3OJvgIqqRMu70HlgYIYQPduUEUnzWCqkGUsUGRLopGGWj-CbyjNilDcUfLB6elfSRgDOaob9cPpjeAf-I6xuMArQZ0y3io=@protonmail.com>
-In-Reply-To: <e89577f8-8f52-bf09-15f3-c534bf1a6c64@cs.ucla.edu>
-References: <pull.1264.git.git.1652361610103.gitgitgadget@gmail.com> <xmqqilq658b3.fsf@gitster.g> <e89577f8-8f52-bf09-15f3-c534bf1a6c64@cs.ucla.edu>
-Feedback-ID: 24333956:user:proton
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4] http: add custom hostname to IP address resolutions
+Date:   Mon, 16 May 2022 10:38:51 +0200
+Message-Id: <20220516083851.202057-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.36.1.75.ga27ebf5988
+In-Reply-To: <20220509153834.485871-1-chriscool@tuxfamily.org>
+References: <20220509153834.485871-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi list,
+Libcurl has a CURLOPT_RESOLVE easy option that allows
+the result of hostname resolution in the following
+format to be passed:
 
-Thanks to everyone who provided feedback :)
+	[+]HOST:PORT:ADDRESS[,ADDRESS]
 
-On Saturday, May 14th, 2022 at 20:16, Martin =C3=85gren <martin.agren@gmail=
-.com> wrote:
-> I think this should be
->
-> [(-m | --max-count) <num>]
+This way, redirects and everything operating against the
+HOST+PORT will use the provided ADDRESS(s).
 
-> Please use `backticks` with `-v` and `--invert-match` so that they are
-> set in monospace.
+The following format is also allowed to stop using
+hostname resolutions that have already been passed:
 
-I will add these suggestions to my patch.
+	-HOST:PORT
 
-> Regarding the special value 0, it's a bit unclear what "has no effect"
-> means. In particular, it can have an effect in the sense that when it
-> is used like
->
-> git grep -m 1 -m 0 foo
->
-> it undoes the `-m 1`.
->
-> But also, that's not how my grep(1) behaves: with `-m 0`, it limits the
-> number of matches to zero. I don't know how useful that is (can that
-> zero-case be optimized by exiting with 1 before even trying to find the
-> needle!?), or if maybe different variants of grep handle this
-> differently? If all grep implementations handle 0 by actually only
-> emitting zero hits, I think it would be wise for us to handle 0 the same
-> way.
+See https://curl.se/libcurl/c/CURLOPT_RESOLVE.html for
+more details.
 
-I agree the wording is not clear. I did not see a good use case for GNU's `=
--m 0`, which is why I used that value as unlimited. I am not sold on using =
-`--no-max-count` or -1 *just* for consistency, but if someone can point to =
-a good use case of GNU's `-m 0` (especially in git grep), I will gladly con=
-cede.
+Let's add a corresponding "http.curloptResolve" config
+option that takes advantage of CURLOPT_RESOLVE.
 
-> Even if we want to handle the zero just like you do, I think this patch
-> needs a few tests. We should make sure to test the 0-case (whatever we
-> end up wanting it to behave like), and probably the "suppress an earlier
-> -m by giving --no-max-count" case. It also seems wise to set up some
-> test scenario where there are several files involved so that we can see
-> that we don't just print the first m matches globally, but that the
-> counter is really handled per file.
+Each value configured for the "http.curloptResolve" key
+is passed "as is" to libcurl through CURLOPT_RESOLVE, so
+it should be in one of the above 2 formats. This keeps
+the implementation simple and makes us consistent with
+libcurl's CURLOPT_RESOLVE, and with curl's corresponding
+`--resolve` command line option.
 
-This seems sound. Is there any documentation on how to write tests for git?
+The implementation uses CURLOPT_RESOLVE only in
+get_active_slot() which is called by all the HTTP
+request sending functions.
 
-On Monday, May 16th, 2022 at 07:57, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Good thing that this is defined as "per-file" limit. If it were a
-> global limit, the interaction between this one and "--threads=3D<num>"
-> would have been interesting. Perhaps add a test to make sure the
-> feature continues to work with "--threads=3D2" (I am assuming that you
-> have already tested this implementation works with the option).
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
 
-I did and I found no unexpected behavior.
+Changes since v3:
 
-> What "git grep -m -1" should do? IIRC, OPT_INTEGER is for signed
-> integer but the new .max_count member, as well as the existing
-> "count" that is compared with it, are of "unsigned" type. Either
-> erroring out or treating it as unlimited is probably fine, but
-> whatever we do, we should document and have a test for it.
+  - Use gitbogusexamplehost.invalid instead of gitbogusexamplehost.com
+    in the test.
+  - Rebased on top of master at 277cf0bc36 (second 0th batch of topics
+    from the previous cycle, 2022-05-11).
 
-I would favor treating it as an error. As mentioned above, using 0 to descr=
-ibe "unlimited matches" (e.g. the default) is my preference, but I am willi=
-ng to concede if someone can think of a good use for `-m 0`. Also, from the=
- implementation side (although not as important) it looks better: if we all=
-ow negative values, we need to distinguish between -1 (unlimited) and -4 (d=
-isplay error to user, probably) - the patch is much simpler right now. And =
-just as a side note, we avoid an issue in the pretty much insignificant use=
- case of giving a very big value (UINT_MAX) for `-m` and it overflowing int=
-o -1, thus not properly limiting the number of matches.
+Range diff:
 
-On Monday, May 16th, 2022 at 09:28, Paul Eggert <eggert@cs.ucla.edu> wrote:
-> As I vaguely recall, if "-m 1" stops before "-m 2" does, then the idea
-> was that it's reasonable for "-m 0" to stop before "-m 1" does, and the
-> logical place to stop is right at the start, before any matches are
-> found (i.e., exit with status 1).
+1:  3d689f8a6f ! 1:  a27ebf5988 http: add custom hostname to IP address resolutions
+    @@ t/t5551-http-fetch-smart.sh: test_expect_success 'client falls back from v2 to v
+      '
+      
+     +test_expect_success 'passing hostname resolution information works' '
+    -+  BOGUS_HOST=gitbogusexamplehost.com &&
+    ++  BOGUS_HOST=gitbogusexamplehost.invalid &&
+     +  BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
+     +  test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
+     +  git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
 
-As I mentioned above, I do not see what this `-m 0` behavior is useful for,=
- but if someone could show me an use for it I would appreciate it.
+ Documentation/config/http.txt | 16 ++++++++++++++++
+ http.c                        | 18 ++++++++++++++++++
+ t/t5551-http-fetch-smart.sh   |  7 +++++++
+ 3 files changed, 41 insertions(+)
 
-Again, thank you everyone for your comments.
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index 7003661c0d..179d03e57b 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -98,6 +98,22 @@ http.version::
+ 	- HTTP/2
+ 	- HTTP/1.1
+ 
++http.curloptResolve::
++	Hostname resolution information that will be used first by
++	libcurl when sending HTTP requests.  This information should
++	be in one of the following formats:
++
++	- [+]HOST:PORT:ADDRESS[,ADDRESS]
++	- -HOST:PORT
++
+++
++The first format redirects all requests to the given `HOST:PORT`
++to the provided `ADDRESS`(s). The second format clears all
++previous config values for that `HOST:PORT` combination.  To
++allow easy overriding of all the settings inherited from the
++system config, an empty value will reset all resolution
++information to the empty list.
++
+ http.sslVersion::
+ 	The SSL version to use when negotiating an SSL connection, if you
+ 	want to force the default.  The available and default version
+diff --git a/http.c b/http.c
+index 229da4d148..8beacb95cc 100644
+--- a/http.c
++++ b/http.c
+@@ -128,6 +128,8 @@ static struct curl_slist *pragma_header;
+ static struct curl_slist *no_pragma_header;
+ static struct string_list extra_http_headers = STRING_LIST_INIT_DUP;
+ 
++static struct curl_slist *host_resolutions;
++
+ static struct active_request_slot *active_queue_head;
+ 
+ static char *cached_accept_language;
+@@ -393,6 +395,18 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp("http.curloptresolve", var)) {
++		if (!value) {
++			return config_error_nonbool(var);
++		} else if (!*value) {
++			curl_slist_free_all(host_resolutions);
++			host_resolutions = NULL;
++		} else {
++			host_resolutions = curl_slist_append(host_resolutions, value);
++		}
++		return 0;
++	}
++
+ 	if (!strcmp("http.followredirects", var)) {
+ 		if (value && !strcmp(value, "initial"))
+ 			http_follow_config = HTTP_FOLLOW_INITIAL;
+@@ -1131,6 +1145,9 @@ void http_cleanup(void)
+ 	curl_slist_free_all(no_pragma_header);
+ 	no_pragma_header = NULL;
+ 
++	curl_slist_free_all(host_resolutions);
++	host_resolutions = NULL;
++
+ 	if (curl_http_proxy) {
+ 		free((void *)curl_http_proxy);
+ 		curl_http_proxy = NULL;
+@@ -1211,6 +1228,7 @@ struct active_request_slot *get_active_slot(void)
+ 	if (curl_save_cookies)
+ 		curl_easy_setopt(slot->curl, CURLOPT_COOKIEJAR, curl_cookie_file);
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, pragma_header);
++	curl_easy_setopt(slot->curl, CURLOPT_RESOLVE, host_resolutions);
+ 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, curl_errorstr);
+ 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, NULL);
+ 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, NULL);
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index f92c79c132..b9351a732f 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -567,4 +567,11 @@ test_expect_success 'client falls back from v2 to v0 to match server' '
+ 	grep symref=HEAD:refs/heads/ trace
+ '
+ 
++test_expect_success 'passing hostname resolution information works' '
++	BOGUS_HOST=gitbogusexamplehost.invalid &&
++	BOGUS_HTTPD_URL=$HTTPD_PROTO://$BOGUS_HOST:$LIB_HTTPD_PORT &&
++	test_must_fail git ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null &&
++	git -c "http.curloptResolve=$BOGUS_HOST:$LIB_HTTPD_PORT:127.0.0.1" ls-remote "$BOGUS_HTTPD_URL/smart/repo.git" >/dev/null
++'
++
+ test_done
+-- 
+2.36.1.75.ga27ebf5988
+
