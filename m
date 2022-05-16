@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D92F4C4332F
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 21:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C67C433FE
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 21:01:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348878AbiEPVBp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 17:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
+        id S1348922AbiEPVBr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 17:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349303AbiEPVBN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 17:01:13 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F253EF30
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:36:59 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id n8so15564252plh.1
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:36:59 -0700 (PDT)
+        with ESMTP id S1349471AbiEPVBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 17:01:22 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10174FC64
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:38:30 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id n8so15567689plh.1
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4+3g2DVl+J5P7Mvs7lE5rk7Js5UYbiT/ebyIPjmOCZM=;
-        b=Mt07kAPQyd6Am9aIWjiggTRSAWh0BY1mJAtJ3+YyB8oTB2k/60BdagUbQp2i/YqeN8
-         GvRj4IZLLAhq80hkohVFL4gTslvnOsVAa9nsIrZzOydhpACJePxjKE8aQI28eAswUiQD
-         5BRRY72KfY52Q2oTJCyRaAJyJkUxOB1Rhh+8+G3kvQhU9XyIa1soG4v/gtBm2hYR8d3O
-         ziyT5efV4g9y1owr10dKgUogpM1hhcZ6JaG9ES5zKokkBtZidI33QY8UmmdVsTzkv4Uy
-         FDtN1fyJgqt/AyAfTWCbSXdJwndv0t5GnDvZhzxEj/RLhtrYdsPT2Nu+U+w26VBZF+rC
-         Ah+w==
+        bh=MrX8yONeUCi3ZOxXHu6dfrbvWrCQmD4DHpjt/E0Kzjs=;
+        b=jl7MKfC//R4/r9Wt+UXI2zM+P5iFu6bis+B0U4DgsjWhdrpIiouVsZXwRqJGAxnEzE
+         EBj4VZw/c0AfPR12XaRpOvuqOqX+eSn7DNNliqmNNFCwN/u+IOHkckfwHmiP4Oi0zrbK
+         C3+vOdahYnF/rct4Voo0XyObpc2yhjVjczZm+NC+rnUVvsCaDqF5V0r8/YNpj7MMTs1H
+         N/jcmIqk0CYCZEl3Zv4+qo51lsXjUnnhXvH9WoSL09AcacldUuuCfsGxASiQc1cfskki
+         atPUvOb8ttp7rJ7A2tvoed1+D4Kigpp7WXDOJNLuNDLpOWjWivsPNtDIJwxEM34z30BW
+         BiSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=4+3g2DVl+J5P7Mvs7lE5rk7Js5UYbiT/ebyIPjmOCZM=;
-        b=GsfVVu9HWpG+IufM+J4yZSU45/WNjl6VQxGe1AvM2DtgW+JK3V3z6CRp+gv0glTx2i
-         mvgMDBmqSKAY4rSL0p4ZRmMoJqsJN7B0lciQQC0ZETdBVArEiclKxax6Kwz/0fziVkEZ
-         Pm7jITMyggTYpksxZfv+DihG3fg9RtPorYITQ0eKnkRbauSPe8ydU5Tigl2GssuAJVma
-         glRVHjUAqQM7OmgAIytzERmt3vWRHVpda6UH/ApgXFBvISn9ZTjfjKoDJt2E5ydLvUrR
-         ObuzVodlue4lXQMC0iKEFAgXVC0GS0BIblgFVB7F/yLFIwJlDgvb/Q/JM/TP62FdgvVa
-         jScA==
-X-Gm-Message-State: AOAM532ndOUzygeTmb0SfykKz0mPPSMzbDTSis0D3avDkS8ayE8eu8z1
-        HIP3eWyrN7XaRbY5gi7WgNpd
-X-Google-Smtp-Source: ABdhPJztSkRhzVuaI1zr1oC1QMPVVyQfBAY9F/VfogtC6tvtMtFd4TbpGAr6ajZXLsuGb/XlLygXnw==
-X-Received: by 2002:a17:902:bd05:b0:15f:19a0:95ed with SMTP id p5-20020a170902bd0500b0015f19a095edmr19370800pls.31.1652733418655;
-        Mon, 16 May 2022 13:36:58 -0700 (PDT)
+        bh=MrX8yONeUCi3ZOxXHu6dfrbvWrCQmD4DHpjt/E0Kzjs=;
+        b=R5Q3lSfzIMa2pk69HPd4dGc3v0osA1JaXX4QQL1Cf+fA2RXCbRMo939G61iTR9a0H8
+         msU4sjqfUOaBbJAvnEG7bulBl7WF7AeKhn8ILj7PbJ/ltZV2DdTcH4Hflknr60zRxCQ1
+         Kw+mky+ioSMVeMmBUyJG8LHzx3OvKszDGV00qXSOTcJWTPCzisXp4bNOCMPLD07I+2n3
+         +4pO1HmchSnXSp2CLbFxwUV2bEZ0NMQyCzjxYroLbYIKH+hmj1hw4Mcf1mwHQtiDZhJJ
+         cLaFTJrGxI7sgihiRS/I1k2jRJcYxBVN8jDquWI5tgDMqtst5VEquQP5LqOgh8EN0XuR
+         dY5w==
+X-Gm-Message-State: AOAM531DToKbKBRygj0OzFghzBj2Icag42eN6gc35Gg2ZyZtLl2I4BWU
+        70jU/FWEYMIBAZ0V1AxMki08
+X-Google-Smtp-Source: ABdhPJwnIOCZjudG6/UMU5wHx9oNj8ATbOle7KM+m8vXVkpQzg0q8pQx/KjhY5W5NWZtM9KAfNVmZQ==
+X-Received: by 2002:a17:902:c409:b0:15e:bdd3:1fa3 with SMTP id k9-20020a170902c40900b0015ebdd31fa3mr19224583plk.67.1652733510475;
+        Mon, 16 May 2022 13:38:30 -0700 (PDT)
 Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id w22-20020a1709027b9600b0015e8d4eb25fsm7449282pll.169.2022.05.16.13.36.57
+        by smtp.gmail.com with ESMTPSA id n17-20020a17090ac69100b001df7612950dsm130267pjt.7.2022.05.16.13.38.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 13:36:58 -0700 (PDT)
-Message-ID: <a90af86d-e3dd-e0fe-106a-52123d6ac023@github.com>
-Date:   Mon, 16 May 2022 13:36:56 -0700
+        Mon, 16 May 2022 13:38:30 -0700 (PDT)
+Message-ID: <9191a98c-087a-39b9-cff3-eb7eccd198ea@github.com>
+Date:   Mon, 16 May 2022 13:38:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH 5/8] sparse-index: partially expand directories
+Subject: Re: [PATCH 8/8] sparse-checkout: integrate with sparse index
 Content-Language: en-US
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     gitster@pobox.com, shaoxuan.yuan02@gmail.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
- <5c7546ab07080b43972b265eb2eee3de0c5396a2.1652724693.git.gitgitgadget@gmail.com>
+ <b8a349c6deeb4b970075629d0c292b2ae9f7d0d3.1652724693.git.gitgitgadget@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <5c7546ab07080b43972b265eb2eee3de0c5396a2.1652724693.git.gitgitgadget@gmail.com>
+In-Reply-To: <b8a349c6deeb4b970075629d0c292b2ae9f7d0d3.1652724693.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -73,121 +73,124 @@ X-Mailing-List: git@vger.kernel.org
 Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> The expand_to_pattern_list() method expands sparse directory entries
-> to their list of contained files when either the pattern list is NULL or
-> the directory is contained in the new pattern list's cone mode patterns.
+> When modifying the sparse-checkout definition, the sparse-checkout
+> builtin calls update_sparsity() to modify the SKIP_WORKTREE bits of all
+> cache entries in the index. Before, we needed the index to be fully
+> expanded in order to ensure we had the full list of files necessary that
+> match the new patterns.
 > 
-> It is possible that the pattern list has a recursive match with a
-> directory 'A/B/C/' and so an existing sparse directory 'A/B/' would need
-> to be expanded. If there exists a directory 'A/B/D/', then that
-> directory should not be expanded and instead we can create a sparse
-> directory.
+> Insert a call to reset_sparse_directories() that expands sparse
+> directories that are within the new pattern list, but only far enough
+> that every necessary file path now exists as a cache entry. The
+> remaining logic within update_sparsity() will modify the SKIP_WORKTREE
+> bits appropriately.
 > 
-> To implement this, we plug into the add_path_to_index() callback for the
-> call to read_tree_at(). Since we now need access to both the index we
-> are writing and the pattern list we are comparing, create a 'struct
-> modify_index_context' to use as a data transfer object. It is important
-> that we use the given pattern list since we will use this pattern list
-> to change the sparse-checkout patterns and cannot use
-> istate->sparse_checkout_patterns.
+> This allows us to disable command_requires_full_index within the
+> sparse-checkout builtin. Add tests that demonstrate that we are not
+> expanding to a full index unnecessarily.
+> 
+> We can see the improved performance in the p2000 test script:
+> 
+> Test                           HEAD~1            HEAD
+> ------------------------------------------------------------------------
+> 2000.24: git ... (sparse-v3)   2.14(1.55+0.58)   1.57(1.03+0.53) -26.6%
+> 2000.25: git ... (sparse-v4)   2.20(1.62+0.57)   1.58(0.98+0.59) -28.2%
+> 
+> These reductions of 26-28% are small compared to most examples, but the
+> time is dominated by writing a new copy of the base repository to the
+> worktree and then deleting it again. The fact that the previous index
+> expansion was such a large portion of the time is telling how important
+> it is to complete this sparse index integration.
 > 
 > Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 > ---
->  sparse-index.c | 46 +++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 39 insertions(+), 7 deletions(-)
+>  builtin/sparse-checkout.c                |  3 +++
+>  t/t1092-sparse-checkout-compatibility.sh | 25 ++++++++++++++++++++++++
+>  unpack-trees.c                           |  4 ++++
+>  3 files changed, 32 insertions(+)
 > 
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 79e8ff087bc..3d8eed585b5 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -9,6 +9,11 @@
->  #include "dir.h"
->  #include "fsmonitor.h"
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index cbff6ad00b0..0157b292b36 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -937,6 +937,9 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
 >  
-> +struct modify_index_context {
-> +	struct index_state *write;
-> +	struct pattern_list *pl;
-> +};
+>  	git_config(git_default_config, NULL);
+>  
+> +	prepare_repo_settings(the_repository);
+> +	the_repository->settings.command_requires_full_index = 0;
 > +
->  static struct cache_entry *construct_sparse_dir_entry(
->  				struct index_state *istate,
->  				const char *sparse_dir,
-> @@ -231,18 +236,41 @@ static int add_path_to_index(const struct object_id *oid,
->  			     struct strbuf *base, const char *path,
->  			     unsigned int mode, void *context)
->  {
-> -	struct index_state *istate = (struct index_state *)context;
-> +	struct modify_index_context *ctx = (struct modify_index_context *)context;
->  	struct cache_entry *ce;
->  	size_t len = base->len;
+>  	if (argc > 0) {
+>  		if (!strcmp(argv[0], "list"))
+>  			return sparse_checkout_list(argc, argv);
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 93bcfd20bbc..614357fc48c 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1552,6 +1552,31 @@ test_expect_success 'ls-files' '
+>  	ensure_not_expanded ls-files --sparse
+>  '
 >  
-> -	if (S_ISDIR(mode))
-> -		return READ_TREE_RECURSIVE;
-> +	if (S_ISDIR(mode)) {
-> +		int dtype;
-> +		size_t baselen = base->len;
-> +		if (!ctx->pl)
-> +			return READ_TREE_RECURSIVE;
->  
-> -	strbuf_addstr(base, path);
-> +		/*
-> +		 * Have we expanded to a point outside of the sparse-checkout?
-> +		 */
-> +		strbuf_addstr(base, path);
-> +		strbuf_add(base, "/-", 2);
+> +test_expect_success 'sparse index is not expanded: sparse-checkout' '
+> +	init_repos &&
 > +
-> +		if (path_matches_pattern_list(base->buf, base->len,
-> +					      NULL, &dtype,
-> +					      ctx->pl, ctx->write)) {
-> +			strbuf_setlen(base, baselen);
-> +			return READ_TREE_RECURSIVE;
-> +		}
->  
-> -	ce = make_cache_entry(istate, mode, oid, base->buf, 0, 0);
-> +		/*
-> +		 * The path "{base}{path}/" is a sparse directory. Create the correct
-> +		 * name for inserting the entry into the idnex.
+> +	ensure_not_expanded sparse-checkout set deep/deeper2 &&
+> +	ensure_not_expanded sparse-checkout set deep/deeper1 &&
+> +	ensure_not_expanded sparse-checkout set deep &&
+> +	ensure_not_expanded sparse-checkout add folder1 &&
+> +	ensure_not_expanded sparse-checkout set deep/deeper1 &&
+> +	ensure_not_expanded sparse-checkout set folder2 &&
+> +
+> +	# Demonstrate that the checks that "folder1/a" is a file
+> +	# do not cause a sparse-index expansion (since it is in the
+> +	# sparse-checkout cone).
+> +	echo >>sparse-index/folder2/a &&
+> +	git -C sparse-index add folder2/a &&
+> +
+> +	ensure_not_expanded sparse-checkout add folder1 &&
+> +
+> +	# Skip checks here, since deep/deeper1 is inside a sparse directory
+> +	# that must be expanded to check whether `deep/deeper1` is a file
+> +	# or not.
+> +	ensure_not_expanded sparse-checkout set --skip-checks deep/deeper1 &&
+> +	ensure_not_expanded sparse-checkout set
+> +'
+> +
 
-s/idnex/index
+These tests look good for ensuring sparsity is preserved, but it'd be nice
+to also have some "stress tests" of 'sparse-checkout (add|set)'. The purpose
+would be to make sure the index has the right contents for various types of
+pattern changes, e.g. running 'sparse-checkout (add|set) <path>', then
+verifying index contents with 'ls-files --sparse'. Paths might be:
 
-> +		 */
-> +		strbuf_setlen(base, base->len - 1);
-> +	} else {
-> +		strbuf_addstr(base, path);
-> +	}
+- in vs. out of (current) cone
+- match an existing vs. nonexistent directory
+
+etc.
+
+>  # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
+>  # in this scenario, but it shouldn't.
+>  test_expect_success 'reset mixed and checkout orphan' '
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 7f528d35cc2..9745e0dfc34 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -18,6 +18,7 @@
+>  #include "promisor-remote.h"
+>  #include "entry.h"
+>  #include "parallel-checkout.h"
+> +#include "sparse-index.h"
+>  
+>  /*
+>   * Error messages expected by scripts out of plumbing commands such as
+> @@ -2018,6 +2019,9 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
+>  			goto skip_sparse_checkout;
+>  	}
+>  
+> +	/* Expand sparse directories as needed */
+> +	expand_to_pattern_list(o->src_index, o->pl);
 > +
-> +	ce = make_cache_entry(ctx->write, mode, oid, base->buf, 0, 0);
->  	ce->ce_flags |= CE_SKIP_WORKTREE | CE_EXTENDED;
-> -	set_index_entry(istate, istate->cache_nr++, ce);
-> +	set_index_entry(ctx->write, ctx->write->cache_nr++, ce);
->  
->  	strbuf_setlen(base, len);
->  	return 0;
-> @@ -254,6 +282,7 @@ void expand_to_pattern_list(struct index_state *istate,
->  	int i;
->  	struct index_state *full;
->  	struct strbuf base = STRBUF_INIT;
-> +	struct modify_index_context ctx;
->  
->  	/*
->  	 * If the index is already full, then keep it full. We will convert
-> @@ -294,6 +323,9 @@ void expand_to_pattern_list(struct index_state *istate,
->  	full->cache_nr = 0;
->  	ALLOC_ARRAY(full->cache, full->cache_alloc);
->  
-> +	ctx.write = full;
-> +	ctx.pl = pl;
-> +
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce = istate->cache[i];
->  		struct tree *tree;
-> @@ -319,7 +351,7 @@ void expand_to_pattern_list(struct index_state *istate,
->  		strbuf_add(&base, ce->name, strlen(ce->name));
->  
->  		read_tree_at(istate->repo, tree, &base, &ps,
-> -			     add_path_to_index, full);
-> +			     add_path_to_index, &ctx);
->  
->  		/* free directory entries. full entries are re-used */
->  		discard_cache_entry(ce);
+>  	/* Set NEW_SKIP_WORKTREE on existing entries. */
+>  	mark_all_ce_unused(o->src_index);
+>  	mark_new_skip_worktree(o->pl, o->src_index, 0,
 
