@@ -2,110 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E868C433EF
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 18:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD3CC433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 18:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344743AbiEPSZO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 14:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38640 "EHLO
+        id S1344951AbiEPSgr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 14:36:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234244AbiEPSZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 14:25:12 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3143E31935
-        for <git@vger.kernel.org>; Mon, 16 May 2022 11:25:11 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5101212E1DC;
-        Mon, 16 May 2022 14:25:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kKSHdlT9Y9bqKdejwzum1iEf1x04fPX0YDVFRL
-        G25wc=; b=byEEWEBe3k/nMcQ6k9BiCQlAuD9NtX1njf1xG2q/+5vS0Y3Gkd2Gs+
-        s1MG7z7L5MJ1/khE28C1SQSNuCY3jL7Y6gwZLTbZpY7SlfXd8zRhgqxEUSOcqS8d
-        M+oiKmNnSBfWFdGr81QtsxBjFUxtA8r1HPq81lYZ/opngSlLi7mhU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA18512E1DA;
-        Mon, 16 May 2022 14:25:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B520F12E1D8;
-        Mon, 16 May 2022 14:25:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Benedek Kozma <cyberbeni@gmail.com>
-Subject: Re: Bugreport - submodules are fetched twice in some cases
-References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
-        <xmqqczgzdc1r.fsf@gitster.g>
-        <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqq1qxfbqtq.fsf@gitster.g>
-        <kl6lczghj7tn.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqpmkg8z58.fsf@gitster.g>
-        <kl6l7d6ljrrg.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Mon, 16 May 2022 11:25:03 -0700
-In-Reply-To: <kl6l7d6ljrrg.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Mon, 16 May 2022 10:45:23 -0700")
-Message-ID: <xmqq4k1p2v40.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82537C86-D545-11EC-A85B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S1344948AbiEPSgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 14:36:45 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 392693E5DF
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:36:44 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id s2-20020a17090302c200b00158ea215fa2so8425358plk.3
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:36:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8izCZtjXwbQM9O+bnc4rujSPlPoihFyjLflTAmZpzjM=;
+        b=M8p35tRb2PkWM+AEISYdSt5veql2gsV9NxLq/ysX05kJmTtPTg82W/dh4C0+Bg+kLC
+         lIQlvtROO/ZB/jXexqVXORHe1S4JsxzEoXvNKw2S73pOC9oexQbFFOwJm+Ku9q+IuQPp
+         icXUP9DWl0DKHDdT/v2mG0f0CK4DzBLm89SEbkkxo/XB3dj9svpBIYopjJr2BRsTx8Sm
+         2tO+RbotW/lSBSyYSg8IYieLqN40rY8dKZjTvtxQ5TnIaaBqaNbVDfXRXugGIbuC/f9w
+         qXk5P8vfY2cqhUX7+r1NHDlvCpXHcLbEVcyBVdju5NfXpFy/xzdasw3RRGR8/RxVcB2o
+         tlhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8izCZtjXwbQM9O+bnc4rujSPlPoihFyjLflTAmZpzjM=;
+        b=dj2xBsG8iY8X3IA2rdIKRvc7DZ/F72WioZnsr+/4zqserF1DzaChGdDUZEpyvmRIZU
+         pds+HR526yryJa/q1lyyWzoLzhQGG/vvcNw0gp+yh/qp+UGu9WUckyepawgIJ2qFaQFK
+         JdLN+a3Wj5wJVLLMbUX3wp1mEaklKma1iOyMi0e6xXucnsCjjlKDiAhUccnwf8TzKFqy
+         SG5irF7yzRA7Bbx+6Ep07JhvjXDRL3orlwywsKFngw+5Y6nR0LY+UewMLSB17cFnM+SD
+         4lbuKMpgTYznG6q1ylo3rDMqtat9hRTptSvcpu0AvlZRZUc1/oqOSXEl8lBi0sUWaWdS
+         dJ1g==
+X-Gm-Message-State: AOAM532lGmdGNTRt3/k47G8RbkT6XGVlGqBUeraYmekvl1dngq+xG6pO
+        8fPBEvxUtc9BLGjWpYzLwaUVrrv0QG4Izw==
+X-Google-Smtp-Source: ABdhPJxijQsLBJxZk9EZXpKQsdouarTNMCQ8AcgeWBZUNDlBwCR9Lz4yB/vot/y0RPbBih5WCPdKj+Y5Pa2OWQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:1809:b0:1dc:1597:20c with SMTP id
+ lw9-20020a17090b180900b001dc1597020cmr20882016pjb.36.1652726203634; Mon, 16
+ May 2022 11:36:43 -0700 (PDT)
+Date:   Mon, 16 May 2022 11:36:41 -0700
+In-Reply-To: <xmqqy1z12zxr.fsf@gitster.g>
+Message-Id: <kl6ly1z1iati.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
+ <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com> <xmqqy1z12zxr.fsf@gitster.g>
+Subject: Re: [PATCH v2 0/2] setup.c: make bare repo discovery optional
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I don't think we are in the ideal scenario because we only snapshot when
-> we fetch without "--all":
+> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
->   cmd_fetch() > *fetch_one()* > do_fetch() > backfill_tags() >
->     fetch_and_consume_refs() > store_updated_refs() >
->     check_for_new_submodule_commits()
->
-> In the ideal scenario, it would be something like:
->
->   cmd_fetch() >
->     TODO_snapshot_old_refs(), fetch_[one|multiple](),
->     TODO_register_new_refs()
->
-> It looks non-trivial enough that I don't think I'll try to fix this
-> soon, but it does not look prohibitively hard.
-
-It matches my gut feeling.
-
->> Provided if we have the "make sure everything needed in the
->> submodule is fetched by inspecting the range of commits we fetch for
->> a superproject" working correctly for a single remote, an
->> alternative approach is to run "git fetch --recurse-submodules" for
->> each remote separately, without the "parent" process doing anything
->> in the submodule (i.e. you earlier counted R+1 fetches, but instead,
->> we make R fetches in the submodule.  It is less than ideal but it
->> may be easier to implement).
+>>  * die()-ing is necessary if we're trying to flip the default value of
+>>    discovery.bare. We'd expect many bare repo users to be broken, and it's
+>>    more helpful to fail loudly than to silently ignore the bare repo.
 >>
->> Thoughts?
+>>    But in the long term, long after we've flipped the default and users know
+>>    that they need to opt into bare repo discovery, would it be a better UX
+>>    to just silently ignore the bare repo?
 >
-> The +1 fetch is redundant, so it's probably good to get rid of it
-> anyway.
+> Would a middle-ground of giving a warning() message help?  Can it be
+> loud and annoying enough to knudge the users to adjust without
+> breaking the functionality?
 
-Sounds sensible.  It should be a single-liner, i.e.
+Personally, when my tool changes its behavior, I would strongly prefer
+it to die than to "change behavior + warn". I'd feel more comfortable
+knowing that the tool did nothing as opposed to doing the wrong thing
+and only being informed after the fact. Also, I sometimes ignore
+warnings ;)
 
- builtin/fetch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+When we _do_ transition away from die(), ignore + warning() sounds like
+a good first step.
 
-diff --git i/builtin/fetch.c w/builtin/fetch.c
-index eeee5ac8f1..be61c390c1 100644
---- i/builtin/fetch.c
-+++ w/builtin/fetch.c
-@@ -2262,7 +2262,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		result = fetch_multiple(&list, max_children);
- 	}
- 
--	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
-+	if (!result && remote && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
- 		struct strvec options = STRVEC_INIT;
- 		int max_children = max_jobs;
- 
+But if any of this flies in the face of the project's conventions, let
+me know as such.
+
+>>      +    Add a config variable, `discovery.bare`, that tells Git whether or not
+>>      +    it should work with the bare repository it has discovered i.e. Git will
+>>      +    die() if it discovers a bare repository, but it is not allowed by
+>
+> Missing comma before "i.e."
+
+Thanks.
+
+>>      +++
+>>      ++The currently supported values are `always` (Git always recognizes bare
+>>      ++repositories) and `never` (Git never recognizes bare repositories).
+>>      ++This defaults to `always`, but this default is likely to change.
+>>      +++
+>>      ++If your workflow does not rely on bare repositories, it is recommended that
+>>      ++you set this value to `never`. This makes repository discovery easier to
+>>      ++reason about and prevents certain types of security and non-security
+>>      ++problems, such as:
+>
+> Hopefully "git fetch" over ssh:// and file:/// would run the other
+> side with GIT_DIR explicitly set?
+
+Ah, I'll check this and get back to you.
+
+>                                                        I do not yet
+> find these "problems, such as..." so convincing.
+
+What would be a convincing rationale to you? I'll capture that here.
+
+I'm assuming that you already have such an rationale in mind when you
+say that the longer-term default is that "we respect bare repositories
+only if they are the cwd.". I'm also assuming that this rationale is
+something other than embedded bare repos, because "cwd-only" does not
+protect against that.
+
+Perhaps "never" sounds better to folks who don't ever expect bare
+repositories and want to lock down the environment. Randall (cc-ed)
+suggests one such use case in [1].
+
+(To Randall: Oops, I actually meant to cc you earlier, since you were
+the first to suggest a practical use case for never allowing bare repos.
+It must've slipped my mind).
+
+[1] https://lore.kernel.org/git/005d01d84ad0$782e8fc0$688baf40$@nexbridge.com.
