@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0AA3C433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 21:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C660BC433F5
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 21:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348954AbiEPVBt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 17:01:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43774 "EHLO
+        id S1348972AbiEPVBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 17:01:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349294AbiEPVBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 17:01:12 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021903915D
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:36:51 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id l20-20020a17090a409400b001dd2a9d555bso457032pjg.0
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:36:51 -0700 (PDT)
+        with ESMTP id S1349454AbiEPVBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 17:01:21 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62D14FC53
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:38:12 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id x23so15061405pff.9
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jICJ9+gYK2yBeZwWJ/dsYU/3CHnceJU+W3yVr4uDYFE=;
-        b=dfI3tjiNwK/lnzZly8806nKApB6TdSGmnp/WvR6TBlzLmMpCGNY9uOPPUgAZ2Jdtnf
-         39HXvxAaQoVx6JPUPOCgmnlllXM2Lg/Dgxhegzr0JL3KjO5nyUBp4hSAXUDoEVlzQlts
-         sHwHq/yELCCpv8+Eqy2tWL7trG7HGxPdR/cWDjYQeBxDrKZB0UN9H3AbjXOaa8/LoDZO
-         M+EoGgE/2r2fv2QCEAgzDP+TvoltBhwLcDQuqWHgJ1qS/KPj2qJ6Z3yE2CHFfm9aVqz8
-         AIJROs/yaTAVplcw1LCAuTC8BcqE49UqrIPv0iemh1d7ZBCInHspwq4Q3MfGOMKssiHP
-         41DQ==
+        bh=CIMcc/srAV1gt16EB59tl23Y1fo6WN9L0f2duqNmVO8=;
+        b=KsrWwcyoiI4g4ljtjCrv+v/dSSje6DGmfpvHip6GvAPFQY/rRa3OjumVMXswpD062k
+         RpAlxhbllZhM8FgL9zXZ8+Yvf+DXtkmHxOEl95kz6bYzfRegBLORKOna9Bx8VgnCxO2f
+         FSr0m6vw40jzCs3g3qmpL0x1zKykUc3r8L3fApgyEQ8dXJC9CARiVHGRZMoywUxYDUxX
+         DK1Lzn9bnNiKs5wABJcjtDRGTk/EgdrUfoDVdoAfph6W0TA13C0q+/4KsbqaKGaZbEeO
+         XeycKMFj7pJOkLxyw1TgujuDrQmZJs7Q88Ukt83MNgaZ92cAtooQ3ZTLjQtKOzAOAj8t
+         5mxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=jICJ9+gYK2yBeZwWJ/dsYU/3CHnceJU+W3yVr4uDYFE=;
-        b=Q7g5j30gAh+qpYV3g1QLnxhv9eNyPE+Mha5DazKpU/cPanwXcEvO6Jc6TNH4NfV3i2
-         d8LNSItCS+h8MNtbhghMIqWuLcRWKjuzj9u5c8WiUtCyLcO8ShfXAmGFP+/FWQlHFrLQ
-         LmaF86yMgITo0Y8rv9WezB9FVuMZhkUta0BzaiBP9X/2jdaMb+7uZbXL8oFTy4QWIT1h
-         iqKB/P95EVI11Dkk2P3RvDDXQV7Je63gs3y8FViR8nCGQ2d/Jza2T81XWBgc4Hn8CeYr
-         5/PtXKIc8w1HgA8SpNX/BjTalX/XHvu3mImACMyoRH9h2AENKTcooo3EEFirDNLY+7XF
-         /d+Q==
-X-Gm-Message-State: AOAM530lMYJ23EKYEVDFtbWaqVPWZfF6jAzcJp8xjkk/6e7FAxLiaD7k
-        vFr9nPHG3jFfHQccZgHUni8t
-X-Google-Smtp-Source: ABdhPJzAnIJArZJ9zxyCHXiKmdXkUyyFCKjpZNC55p4or0EIOVV0ePEgjjmIVrQKiV+YFXfQeXHfiQ==
-X-Received: by 2002:a17:90a:690c:b0:1df:3b6f:d073 with SMTP id r12-20020a17090a690c00b001df3b6fd073mr9914975pjj.18.1652733411502;
-        Mon, 16 May 2022 13:36:51 -0700 (PDT)
+        bh=CIMcc/srAV1gt16EB59tl23Y1fo6WN9L0f2duqNmVO8=;
+        b=5eJmHqqqbQjblnjYOeV0m0g5faOZ5ozOJkarWQcSC7V/b6YacOJEM+heXfPNLq26z9
+         zoM6QWI5WnR+c3iX+IZet7LBcxaifeCVsIAs64BkVMMtG9LKjARsrrE3Sp/e5yXvPU1k
+         Ulqn+psEcBg8bZQBBD6kXhHhbnbM7KcAoKsY/viCNLqHdC27PWP0GKipbaJpleLQsH8h
+         3urdga7fOhMuvTncEWmzRXEw1OrzSIxZlE20BR3zb80PcXTEa1+mWq1iU1RCR4Gi8m1n
+         4MBLhJJCLMCGJ8Copg48Iyx54sIgyk1mBD2ieigsFHjC4cdCBrZAIz1CKgyAihIIRQWo
+         M93A==
+X-Gm-Message-State: AOAM531S1y+s3V+epvYwMd04dpy2HtHRkVzecVQmGoQeNFICQ97+TWt6
+        zMXLG6OQh8RmpDhcYtSJbJiw
+X-Google-Smtp-Source: ABdhPJygBOiea5Wc/a5d1lpKgzx92sjDZchmlTk1ifrBsm+ZiQcL8XD492QgBZ55/ZiR8o8tXkiA1A==
+X-Received: by 2002:a05:6a00:1152:b0:4be:ab79:fcfa with SMTP id b18-20020a056a00115200b004beab79fcfamr18964730pfm.3.1652733492094;
+        Mon, 16 May 2022 13:38:12 -0700 (PDT)
 Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id b8-20020a17090a990800b001df6216e89dsm112254pjp.28.2022.05.16.13.36.50
+        by smtp.gmail.com with ESMTPSA id w22-20020a1709027b9600b0015e8d4eb25fsm7450136pll.169.2022.05.16.13.38.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 May 2022 13:36:51 -0700 (PDT)
-Message-ID: <12df1777-9f02-ca6f-7d17-57aebe25d06c@github.com>
-Date:   Mon, 16 May 2022 13:36:49 -0700
+        Mon, 16 May 2022 13:38:11 -0700 (PDT)
+Message-ID: <ac3869a5-3592-5408-587a-178afde3f7e9@github.com>
+Date:   Mon, 16 May 2022 13:38:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.8.1
-Subject: Re: [PATCH 1/8] sparse-index: create expand_to_pattern_list()
+Subject: Re: [PATCH 6/8] sparse-index: complete partial expansion
 Content-Language: en-US
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     gitster@pobox.com, shaoxuan.yuan02@gmail.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
- <f1194d56d331611446c285a1d070509d73bd5f43.1652724693.git.gitgitgadget@gmail.com>
+ <eba63cc12af4f60320b34a54eef691b9f59d86bc.1652724693.git.gitgitgadget@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <f1194d56d331611446c285a1d070509d73bd5f43.1652724693.git.gitgitgadget@gmail.com>
+In-Reply-To: <eba63cc12af4f60320b34a54eef691b9f59d86bc.1652724693.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -73,124 +73,135 @@ X-Mailing-List: git@vger.kernel.org
 Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> This is the first change in a series to allow modifying the
-> sparse-checkout pattern set without expanding a sparse index to a full
-> one in the process. Here, we focus on the problem of expanding the
-> pattern set through a command like 'git sparse-checkout add <path>'
-> which needs to create new index entries for the paths now being written
-> to the worktree.
+> To complete the implementation of expand_to_pattern_list(), we need to
+> detect when a sparse directory entry should remain sparse. This avoids a
+> full expansion, so we now need to use the PARTIALLY_SPARSE mode to
+> indicate this state.
 > 
-> To achieve this, we need to be able to replace sparse directory entries
-> with their contained files and subdirectories. Once this is complete,
-> other code paths can discover those cache entries and write the
-> corresponding files to disk before committing the index.
-> 
-> We already have logic in ensure_full_index() that expands the index
-> entries, so we will use that as our base. Create a new method,
-> expand_to_pattern_list(), which takes a pattern list, but for now mostly
-> ignores it. The current implementation is only correct when the pattern
-> list is NULL as that does the same as ensure_full_index(). In fact,
-> ensure_full_index() is converted to a shim over
-> expand_to_pattern_list().
-> 
-> A future update will actually implement expand_to_pattern_list() to its
-> full capabilities. For now, it is created and documented.
+> There still are no callers to this method, but we will add one in the
+> next change.
 > 
 > Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 > ---
->  sparse-index.c | 35 ++++++++++++++++++++++++++++++++---
->  sparse-index.h | 14 ++++++++++++++
->  2 files changed, 46 insertions(+), 3 deletions(-)
+>  sparse-index.c | 41 +++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 37 insertions(+), 4 deletions(-)
 > 
 > diff --git a/sparse-index.c b/sparse-index.c
-> index 8636af72de5..37c7df877a6 100644
+> index 3d8eed585b5..0bad5503304 100644
 > --- a/sparse-index.c
 > +++ b/sparse-index.c
-> @@ -248,19 +248,41 @@ static int add_path_to_index(const struct object_id *oid,
->  	return 0;
->  }
->  
-> -void ensure_full_index(struct index_state *istate)
-> +void expand_to_pattern_list(struct index_state *istate,
-> +			      struct pattern_list *pl)
-
-Hyper-nit: I don't think this is aligned (it's probably not worth fixing
-unless you end up rerolling for something else).
-
->  {
->  	int i;
->  	struct index_state *full;
->  	struct strbuf base = STRBUF_INIT;
->  
-> +	/*
-> +	 * If the index is already full, then keep it full. We will convert
-> +	 * it to a sparse index on write, if possible.
-> +	 */
->  	if (!istate || !istate->sparse_index)
->  		return;
->  
-> +	/*
-> +	 * If our index is sparse, but our new pattern set does not use
-> +	 * cone mode patterns, then we need to expand the index before we
-> +	 * continue. A NULL pattern set indicates a full expansion to a
-> +	 * full index.
-> +	 */
-> +	if (pl && !pl->use_cone_patterns)
-> +		pl = NULL;
+> @@ -297,8 +297,24 @@ void expand_to_pattern_list(struct index_state *istate,
+>  	 * continue. A NULL pattern set indicates a full expansion to a
+>  	 * full index.
+>  	 */
+> -	if (pl && !pl->use_cone_patterns)
+> +	if (pl && !pl->use_cone_patterns) {
+>  		pl = NULL;
+> +	} else {
+> +		/*
+> +		 * We might contract file entries into sparse-directory
+> +		 * entries, and for that we will need the cache tree to
+> +		 * be recomputed.
+> +		 */
+> +		cache_tree_free(&istate->cache_tree);
 > +
+> +		/*
+> +		 * If there is a problem creating the cache tree, then we
+> +		 * need to expand to a full index since we cannot satisfy
+> +		 * the current request as a sparse index.
+> +		 */
+> +		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+> +			pl = NULL;
+> +	}
+>  
 >  	if (!istate->repo)
 >  		istate->repo = the_repository;
->  
-> -	trace2_region_enter("index", "ensure_full_index", istate->repo);
-> +	/*
-> +	 * A NULL pattern set indicates we are expanding a full index, so
-> +	 * we use a special region name that indicates the full expansion.
-> +	 * This is used by test cases, but also helps to differentiate the
-> +	 * two cases.
-> +	 */
-> +	trace2_region_enter("index",
-> +			    pl ? "expand_to_pattern_list" : "ensure_full_index",
-> +			    istate->repo);
->  
->  	/* initialize basics of new index */
+> @@ -317,8 +333,14 @@ void expand_to_pattern_list(struct index_state *istate,
 >  	full = xcalloc(1, sizeof(struct index_state));
-> @@ -322,7 +344,14 @@ void ensure_full_index(struct index_state *istate)
+>  	memcpy(full, istate, sizeof(struct index_state));
+>  
+> +	/*
+> +	 * This slightly-misnamed 'full' index might still be sparse if we
+> +	 * are only modifying the list of sparse directories. This hinges
+> +	 * on whether we have a non-NULL pattern list.
+> +	 */
+> +	full->sparse_index = pl ? PARTIALLY_SPARSE : COMPLETELY_FULL;
+> +
+>  	/* then change the necessary things */
+> -	full->sparse_index = 0;
+>  	full->cache_alloc = (3 * istate->cache_alloc) / 2;
+>  	full->cache_nr = 0;
+>  	ALLOC_ARRAY(full->cache, full->cache_alloc);
+> @@ -330,11 +352,22 @@ void expand_to_pattern_list(struct index_state *istate,
+>  		struct cache_entry *ce = istate->cache[i];
+>  		struct tree *tree;
+>  		struct pathspec ps;
+> +		int dtype;
+>  
+>  		if (!S_ISSPARSEDIR(ce->ce_mode)) {
+>  			set_index_entry(full, full->cache_nr++, ce);
+>  			continue;
+>  		}
+> +
+> +		/* We now have a sparse directory entry. Should we expand? */
+> +		if (pl &&
+> +		    path_matches_pattern_list(ce->name, ce->ce_namelen,
+> +					      NULL, &dtype,
+> +					      pl, istate) <= 0) {
+
+If I'm reading this correctly, what this is doing is:
+
+- if we have a sparse directory entry
+- ...and we're expanding only what matches the pattern list (i.e., not
+  'ensure_full_index')
+- ...and that sparse directory path is either *not matching* or *undecided
+  whether it matches* the pattern list
+- ...then we add the sparse directory to the result index and continue. 
+
+The part that's confusing me is the "<= 0", which means a return value of
+'UNDECIDED' from 'path_matches_pattern_list' adds the sparse directory
+as-is. At the moment, it looks like 'UNDECIDED' is only returned if not
+using cone patterns (so it shouldn't make a functional difference at this
+point), but wouldn't that return value indicate that the pattern *may or may
+not* match the path, so we should continue on to 'read_tree_at()'?
+
+All that to say, should the condition be:
+
+		/* We now have a sparse directory entry. Should we expand? */
+		if (pl &&
+		    path_matches_pattern_list(ce->name, ce->ce_namelen,
+					      NULL, &dtype,
+					      pl, istate) == NOT_MATCHED) {
+
+to reflect that a sparse directory should only be added to the index if we
+*know* it isn't matched?
+
+To be clear, this is ultimately a non-functional nit - my question is mostly
+to make sure I understand the intent of the code.
+
+> +			set_index_entry(full, full->cache_nr++, ce);
+> +			continue;
+> +		}
+> +
+>  		if (!(ce->ce_flags & CE_SKIP_WORKTREE))
+>  			warning(_("index entry is a directory, but not sparse (%08x)"),
+>  				ce->ce_flags);
+> @@ -360,7 +393,7 @@ void expand_to_pattern_list(struct index_state *istate,
+>  	/* Copy back into original index. */
+>  	memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
+>  	memcpy(&istate->dir_hash, &full->dir_hash, sizeof(full->dir_hash));
+> -	istate->sparse_index = 0;
+> +	istate->sparse_index = pl ? PARTIALLY_SPARSE : COMPLETELY_FULL;
+>  	free(istate->cache);
+>  	istate->cache = full->cache;
+>  	istate->cache_nr = full->cache_nr;
+> @@ -374,7 +407,7 @@ void expand_to_pattern_list(struct index_state *istate,
+>  
+>  	/* Clear and recompute the cache-tree */
 >  	cache_tree_free(&istate->cache_tree);
->  	cache_tree_update(istate, 0);
+> -	cache_tree_update(istate, 0);
+> +	cache_tree_update(istate, WRITE_TREE_MISSING_OK);
 >  
-> -	trace2_region_leave("index", "ensure_full_index", istate->repo);
-> +	trace2_region_leave("index",
-> +			    pl ? "expand_to_pattern_list" : "ensure_full_index",
-> +			    istate->repo);
-> +}
-> +
-> +void ensure_full_index(struct index_state *istate)
-> +{
-> +	expand_to_pattern_list(istate, NULL);
->  }
->  
->  void ensure_correct_sparsity(struct index_state *istate)
-> diff --git a/sparse-index.h b/sparse-index.h
-> index 633d4fb7e31..037b541f49d 100644
-> --- a/sparse-index.h
-> +++ b/sparse-index.h
-> @@ -23,4 +23,18 @@ void expand_to_path(struct index_state *istate,
->  struct repository;
->  int set_sparse_index_config(struct repository *repo, int enable);
->  
-> +struct pattern_list;
-> +
-> +/**
-> + * Scan the given index and compare its entries to the given pattern list.
-> + * If the index is sparse and the pattern list uses cone mode patterns,
-> + * then modify the index to contain the all of the file entries within that
-> + * new pattern list. This expands sparse directories only as far as needed.
-> + *
-> + * If the pattern list is NULL or does not use cone mode patterns, then the
-> + * index is expanded to a full index.
-> + */
-> +void expand_to_pattern_list(struct index_state *istate,
-> +			      struct pattern_list *pl);
-> +
->  #endif
+>  	trace2_region_leave("index",
+>  			    pl ? "expand_to_pattern_list" : "ensure_full_index",
 
