@@ -2,133 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F18F3C433EF
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 20:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FB2C43219
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 20:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347101AbiEPU3N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 16:29:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56734 "EHLO
+        id S1345252AbiEPUv5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 16:51:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348837AbiEPU1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 16:27:55 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29E6F1928A
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:11:20 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id p189so9344817wmp.3
-        for <git@vger.kernel.org>; Mon, 16 May 2022 13:11:20 -0700 (PDT)
+        with ESMTP id S1348708AbiEPUvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 16:51:24 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA718427F7
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:27:10 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id cd6-20020a056a00420600b00510a99055e2so6643306pfb.17
+        for <git@vger.kernel.org>; Mon, 16 May 2022 13:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=U/r/9EV8L9YP7PY4ue/BiQabkdglT5aaqWXkZsxe3Uo=;
-        b=q0LfEFXNHlTRxWEQXN+Un3Yik5mr9+fPuUzP2DqxwWsOT1EO9vVq4sEVkE2/9OTJsj
-         1ERld5Ev+WYyemr0LzER/0w7uQS3pwdFrHQNvVQrPfR14lRYKvtP3A8DnxFqMSYd7GdN
-         lcYuLI6psugXXfPPqH+bQJBBUi+N/a2R6pXmhMhou9zGrRI75cRS/8DUv2jwCDE3n6Fh
-         g0Wt0f9KWOdkhznEXtiRHzTCg6Y3ud+K3oLNaubP1qWrf6BO4GTW/UsvhApykV2iWG1M
-         Xa8ohnQysIask8ESnjgZkQFHnF6dgFvPt2fF5eDPx9V3QGcBCNRSOKTMQCo6+XgbU3II
-         4aZg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=uFya0/I1eMuhB0cRNJD+NnBrVttVtQN8mD0it6Jx8HU=;
+        b=gf/FAln9YZ8wssMq8aficTEMCRrRoUVw21k0xMbXz46sBCE8iY601md88A4gWhJvh/
+         L3DiswaS2RAAxfE+K3uifhiTXBG2wMKPJe+u1QpAu1V5CiRBBYlvv0/MUWhOF6Fht/eu
+         pikMa3wXmAgdbSrCvVshzBThr8ml6W1Vj3m88t2ycpbyBxrr0C8BfnJDsQ3tbDGhxjX+
+         sLx6t3WpqADZFFWI87UvcTWvIb55DKyKJ1M3+NvCywlEZOBQ7sd1HV1syI1mxmEeUlLP
+         PGyqgLznf64+FmHxkmP2YdkcFbeCGyWWeW8m6mZ/Vgd19JxenzAG/jCGPAHBn0HVwI7k
+         nCgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=U/r/9EV8L9YP7PY4ue/BiQabkdglT5aaqWXkZsxe3Uo=;
-        b=e/dprYB312BFl14g5g6ZUrGdkeaP1JirkiJvhwfWMrC+NaMZ4CdTYCGdAUuXRhJjCy
-         5xp82bcXIBBJ8Wshve5ecanPfqO+JT/2W+W/qgcwNJsOZgoxGiELLfLUdOVM6ri+LTeJ
-         T4z0RA1SFzBoSlHCbeS0h3ZXmysa7l8TZHPglxTIiSMR+cbtDO6teLNdA3wt0K8t050p
-         e2lV/jiIvY7SSnE15dHEpaFG3ipyB0nFcfazuS7ZSqGZjTbm3N7Sbs1kPDggESuxlpHi
-         SxJiOCC0pPZGqOGq0SpYuP7iUXtTv6itMN6g1Afeq/b5eC3OdQMTAENaxjizkh4Urv8s
-         sx2Q==
-X-Gm-Message-State: AOAM533IydGx6HRS5gd4M53wfrkSpcupowXk1Tuzp1dLbUXqesLOI8Q+
-        rkJi1xiOeRYBs10qnNAct2JJPoXJWOQ=
-X-Google-Smtp-Source: ABdhPJyDkcAdspidqRaZqbe66YjHG2f3//vpRRSEhGQHeejwQObJlDb6tl/gsnzEGYUizQ5o3MW6Ww==
-X-Received: by 2002:a05:600c:4f15:b0:394:8ea0:bb45 with SMTP id l21-20020a05600c4f1500b003948ea0bb45mr18355125wmq.206.1652731878351;
-        Mon, 16 May 2022 13:11:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x3-20020a1c7c03000000b0039482d95ab7sm187206wmc.24.2022.05.16.13.11.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 13:11:17 -0700 (PDT)
-Message-Id: <c35f35dc08a8b315a7f4ee783dfa407f774b0b38.1652731865.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1233.git.1652731865.gitgitgadget@gmail.com>
-References: <pull.1233.git.1652731865.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 16 May 2022 20:11:05 +0000
-Subject: [PATCH 8/8] bundle.h: make "fd" version of read_bundle_header()
- public
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, jonathantanmy@google.com,
-        jrnieder@gmail.com, albertqcui@gmail.com, robbat2@gentoo.org,
-        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=uFya0/I1eMuhB0cRNJD+NnBrVttVtQN8mD0it6Jx8HU=;
+        b=ILbiU2q/ciy5WLIi2r40uGPPINR+XKbiAniwh3jwQVQzritJWhqZbkdU28eKcSKHxZ
+         ATwNvIhbFPgIicNa+bZI5gHbY8gW50Tj9mZqh1UU8PfYq0/6AiMieOtl2koVVJu1RL58
+         EXPwDXEx9Urh/4w8uf8zJ50Ys8y47JuRc56v0hQ+o9dD4CsfTY6ufFZSllHQsmo8X0e8
+         hNRoH4lLYeuremAlh5Badj4dCWJb2gEFgcbcSc63aARwbvK3xU6fI8zDd2oL/u5OBeJf
+         6PCKM2T8jGiS/SRDzVsBzvRgorcvnhzkBgF4t2xMXT0fPVTO/cmLSfnIEdLj84vGWDNZ
+         ye4A==
+X-Gm-Message-State: AOAM5329qqZXNi9KRrB0AidvvE1a+B95Mj2KZ/igqzSLkvVKqPH0FyJx
+        ygbv7Q11P2rGbaFTAuurcdoSWXivi6fbiw==
+X-Google-Smtp-Source: ABdhPJzrisNBBQXu81PxB9tazRbXlj2BlxQ4hSshjTKsLPXPgLcuEejPH7Y82eJtjpHR+bu7SPPME6Rp+XRcgw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a65:6e0d:0:b0:3c6:12af:15b4 with SMTP id
+ bd13-20020a656e0d000000b003c612af15b4mr16471471pgb.338.1652732830120; Mon, 16
+ May 2022 13:27:10 -0700 (PDT)
+Date:   Mon, 16 May 2022 13:27:00 -0700
+In-Reply-To: <xmqqk0al1e50.fsf@gitster.g>
+Message-Id: <kl6lv8u5i5pn.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
+ <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com> <xmqqy1z12zxr.fsf@gitster.g>
+ <kl6ly1z1iati.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqk0al1e50.fsf@gitster.g>
+Subject: Re: [PATCH v2 0/2] setup.c: make bare repo discovery optional
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>, rsbecker@nexbridge.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
- <avarab@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Change the parse_bundle_header() function to be non-static, and rename
-it to parse_bundle_header_fd(). The parse_bundle_header() function is
-already public, and it's a thin wrapper around this function. This
-will be used by code that wants to pass a fd to the bundle API.
+> Glen Choo <chooglen@google.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>
+>>>>  * die()-ing is necessary if we're trying to flip the default value of
+>>>>    discovery.bare. We'd expect many bare repo users to be broken, and it's
+>>>>    more helpful to fail loudly than to silently ignore the bare repo.
+>>>>
+>>>>    But in the long term, long after we've flipped the default and users know
+>>>>    that they need to opt into bare repo discovery, would it be a better UX
+>>>>    to just silently ignore the bare repo?
+>>>
+>>> Would a middle-ground of giving a warning() message help?  Can it be
+>>> loud and annoying enough to knudge the users to adjust without
+>>> breaking the functionality?
+>>
+>> Personally, when my tool changes its behavior, I would strongly prefer
+>> it to die than to "change behavior + warn". I'd feel more comfortable
+>> knowing that the tool did nothing as opposed to doing the wrong thing
+>> and only being informed after the fact. Also, I sometimes ignore
+>> warnings ;)
+>
+> Heh, personally I would try very hard not to change the behaviour
+> without explicitly asked by the users with configuration or command
+> line option.  Flipping the default has traditionally been done in
+> two or three phases.
+>
+>  (1) We start by giving a loud and annoying warning to those who
+>      haven't configured and tell them the default *will* change, how
+>      to keep the current behaviour forever, and how to live in the
+>      future by adopting the future default early.
+>
+>  (2) After a while, we flip the default.  Those who haven't
+>      configured are given a notice that the default has changed, how
+>      to keep the old behaviour forever, and how to explicitly choose
+>      the same value as the default to squelch the notice.
+>
+>  (3) After yet another while, we stop giving the notice.  If we
+>      omitted (2), here is where we flip the default.
+>
+> Strictly speaking, we can have (1) in one release and then could
+> directly jump to (3), but some distros may skip the releases that
+> has (1), and (2) is an attempt to help users of such distros.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- bundle.c | 8 ++++----
- bundle.h | 2 ++
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Ah, that is very helpful. Thanks. It's pretty clear that I misunderstood
+what you meant by "giving a warning() message" - the warning() is there
+to prepare users in advance of the change; we don't actually want the
+warning() in the long term.
 
-diff --git a/bundle.c b/bundle.c
-index d50cfb5aa7e..5fa41a52f11 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -66,8 +66,8 @@ static int parse_bundle_signature(struct bundle_header *header, const char *line
- 	return -1;
- }
- 
--static int parse_bundle_header(int fd, struct bundle_header *header,
--			       const char *report_path)
-+int read_bundle_header_fd(int fd, struct bundle_header *header,
-+			  const char *report_path)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int status = 0;
-@@ -143,7 +143,7 @@ int read_bundle_header(const char *path, struct bundle_header *header)
- 
- 	if (fd < 0)
- 		return error(_("could not open '%s'"), path);
--	return parse_bundle_header(fd, header, path);
-+	return read_bundle_header_fd(fd, header, path);
- }
- 
- int is_bundle(const char *path, int quiet)
-@@ -153,7 +153,7 @@ int is_bundle(const char *path, int quiet)
- 
- 	if (fd < 0)
- 		return 0;
--	fd = parse_bundle_header(fd, &header, quiet ? NULL : path);
-+	fd = read_bundle_header_fd(fd, &header, quiet ? NULL : path);
- 	if (fd >= 0)
- 		close(fd);
- 	bundle_header_release(&header);
-diff --git a/bundle.h b/bundle.h
-index 7fef2108f43..0c052f54964 100644
---- a/bundle.h
-+++ b/bundle.h
-@@ -24,6 +24,8 @@ void bundle_header_release(struct bundle_header *header);
- 
- int is_bundle(const char *path, int quiet);
- int read_bundle_header(const char *path, struct bundle_header *header);
-+int read_bundle_header_fd(int fd, struct bundle_header *header,
-+			  const char *report_path);
- int create_bundle(struct repository *r, const char *path,
- 		  int argc, const char **argv, struct strvec *pack_options,
- 		  int version);
--- 
-gitgitgadget
+For something as disruptive as discovering bare repos, having all of
+(1), (2) and (3) sounds appropriate.
+
+>>> Hopefully "git fetch" over ssh:// and file:/// would run the other
+>>> side with GIT_DIR explicitly set?
+>>
+>> Ah, I'll check this and get back to you.
+>>
+>>>                                                        I do not yet
+>>> find these "problems, such as..." so convincing.
+>>
+>> What would be a convincing rationale to you? I'll capture that here.
+>
+> That is a wrong question.  You are the one pushing for castrating
+> the bare repositories.
+
+Let me clarify in case this wasn't received the way I intended. Earlier
+in the thread, you mentioned:
+
+  The longer-term default should be "cwd is allowed, but we do not
+  bother going up from object/04 subdirectory of a bare repository",
+  [...]
+
+which I took to mean "Junio thinks that, by default, Git should stop
+walking up to find a bare repo, and thinks this is better because of
+rationale X.", and not, "Junio does not think that the default needs to
+change, but is just suggesting a better default than Glen's".
+
+If it is the former, then there is obviously some thought process here
+that is worth sharing.
+
+If it the latter, then I'm in favor of taking Stolee's suggestion to
+drop "cwd", since nobody else finds it useful enough. (I like the
+'simplification' story, but not enough to push "cwd" through, especially
+since it does quite little security-wise.)
+
+>> I'm assuming that you already have such an rationale in mind when you
+>> say that the longer-term default is that "we respect bare repositories
+>> only if they are the cwd.". I'm also assuming that this rationale is
+>> something other than embedded bare repos, because "cwd-only" does not
+>> protect against that.
+>
+> No, I do not have such a "different" rationale to justify the change
+> proposed in this patch.  I was saying that the claim "embedded bare
+> repos are risky", backed by your two examples, did not sound all
+> that serious a problem.  Presented with a more serious brekage
+> scenario, it may make the description more convincing.
+
+Fair. I'll mull over this.
