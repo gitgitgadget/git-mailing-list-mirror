@@ -2,121 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9E6FC433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 08:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACE17C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 11:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233119AbiEPImA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 04:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42524 "EHLO
+        id S242295AbiEPLCa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 07:02:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241894AbiEPIls (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 04:41:48 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E6CEBE08
-        for <git@vger.kernel.org>; Mon, 16 May 2022 01:41:45 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso10462787wma.0
-        for <git@vger.kernel.org>; Mon, 16 May 2022 01:41:44 -0700 (PDT)
+        with ESMTP id S241000AbiEPLC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 07:02:26 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4774B38B9
+        for <git@vger.kernel.org>; Mon, 16 May 2022 04:02:25 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id e4-20020a17090301c400b00161995eef69so201615plh.12
+        for <git@vger.kernel.org>; Mon, 16 May 2022 04:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=wCQQCcvP0n3ykZSOIi4JOHNiYGTGwQqdr1xKPrKbvHU=;
-        b=Os3fpjo0BMqXPBnwSF6Y593q02dJtwfSgSUgOZAYHtFhfonPVV448EJDNSYH/p0G00
-         QNbp2bOy7WsZfe+07Q2bYWSqsJsZHEAr9J5XLEaTMdUHIN5COyhB3KRqvGDjoaTcmw6C
-         tt2EXljPY9Yof21ymm9mAUKq3LekXDDRz9/A4yZr74+p/2ZwQNCGp6rQElzC2qZGZ8o/
-         zZRfrwauvczEyBqxR9fwwkk9X79TxMJVcodO5R9mKw8SAWmxMNxF1RbFuRg0fTGz1OL6
-         PQ9mdeP5w1Bp3OJbUH+xbIZnYgrFzam5QpYhr7c41qOsbFzuxJck7lUV2KEivBLZTfsB
-         DLeg==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=/GJiC+5vJNBYXUIZNAgaFBpDItymrUoTWvJKBXRbGR8=;
+        b=g43pzexvJUEjz+3x0SU4VLM/siSmrJ7crQU8nEw7VI8VphX/FBlSSaoO8r/263EvWc
+         7cwnNo7I/CY+somZ4yJDjnDnEa2ivANQFwkEogJ+ZJ3jnK0TemgwaNMhS4TLcO9YVVPq
+         5H3M50LfnVNlqPqn5vv/9WXbY5IyKjJlSbWTzy6Z/8I9htiTjntAhJhck2n4qESnQFw4
+         cIJOXcjnWlsdRHKv6zd0azzUssaphEkde6DTXB6ht7xALDsqshXQtltetrbE8TaturqJ
+         j9MSOI/Y1hc9RqfJeAkIM6qF55zvUQm8Ft24cOtpsZObVhlCN5MRcj4rCeMhWNMQ5l8o
+         a0Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wCQQCcvP0n3ykZSOIi4JOHNiYGTGwQqdr1xKPrKbvHU=;
-        b=tGddKmdOSmcKPmwN3XYJ1fegU9vrf8Oj012LqCrI8N98THIM+UqPzVnBDr8dLFrFzs
-         SLlPCLxlqRmMBIbz66hwXbaa7BCObOugNP4KGKEO1TwQoCPjVvdlMZ9JFBEGXMcpm7PD
-         ExnTLxbpSLnqF2+dKcFNSH5M+Iy5EEKRA8XKrDZ3Ry18Er9aGo52h0ZIvfUntL3g9/qH
-         T/gY30eHvVY0PhdxMqtBJ0NOhzoHwktZbKlQp29rf9uGi7c1rev8CpBY10+E2x6rcidQ
-         IoHwYFntgCkcZzffp+MzKl1OQ3j19bPXTAG0D39kXy9+zIKRd/MkusbX4n8YwGxyYGRV
-         dzGA==
-X-Gm-Message-State: AOAM531qQu2+gDMQv7qOo1qKrdh0APloaZx/RCnR6gtnPnPSbitjN9Es
-        7Oj03r5QkUtv0uBWQNPFsHupYLH9rpw=
-X-Google-Smtp-Source: ABdhPJy2fd6FEgEpfZ6IddDpPc7Ekmhn9GDuXYymiWDtIIH2t4Ea2io7w+40l9CB9Wcm3rtawfE5+g==
-X-Received: by 2002:a05:600c:c8:b0:395:a97c:c458 with SMTP id u8-20020a05600c00c800b00395a97cc458mr15559566wmm.119.1652690503262;
-        Mon, 16 May 2022 01:41:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u4-20020a7bc044000000b003942a244ee2sm9378017wmc.39.2022.05.16.01.41.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 01:41:42 -0700 (PDT)
-Message-Id: <pull.1266.v2.git.git.1652690501963.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1266.git.git.1652690275625.gitgitgadget@gmail.com>
-References: <pull.1266.git.git.1652690275625.gitgitgadget@gmail.com>
-From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 May 2022 08:41:41 +0000
-Subject: [PATCH v2] fetch: limit shared symref check only for local branches
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=/GJiC+5vJNBYXUIZNAgaFBpDItymrUoTWvJKBXRbGR8=;
+        b=bYVfbjcOAwlq3edhWgSJQZ4mShZLKtV9ghzUChs0rRoMUvtK0mG4mvfnl6E2ge1YnU
+         0GasL3npB4R/SC4KRte+339oy63nouoOZPTFrwGR+EEQFCfKrRb9vEcVVQkq4hP66FrT
+         7Fi1vAUff0G4mWuIZvGJPrgCKbW3T6iVSTAj6ngvI/TTNxWNhROZuDBEbm2WLZ4/D4+W
+         OmAGl8JIoeZPiN2cDRtTH4U2fTG+K6oMFtQh0+UznjwUHIMxXIxh7UxyPudp7mSy7OSk
+         I5pAc7x4VdsrlcHa//zFX1Izqu+bT6hidK/27jsKFEtRqdkGAa9b5UYOlu5hlQmXMKa3
+         g7wg==
+X-Gm-Message-State: AOAM532IhwjEcwG4z6QfJpN6ldcOcUSFfU/VOpph+diyQNieD3Yptq/l
+        NOiBbqFBPOjlw8WCIpQvv/ZMccuS1JebwkyzicowCKidEewhOPTnri2azNQOUiofOC8H+oNgmhv
+        26bvmuaHIlkM7U8mThVlbT+01Mk4Q78jW4PmVwi3J3CuL6VQs1DOeBBfvFARLVz7obqsxVnGS6r
+        rT
+X-Google-Smtp-Source: ABdhPJx5sZpcozudgtVVNtwajb0cwCdw5Lr47bz7B1iT+9ot5nbGuB6bQEh9HOuxmhrUdg9rO0VrCmUWqW8tGrw8+Mvb
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:f3d5:b0:1df:2191:5ad2 with
+ SMTP id ha21-20020a17090af3d500b001df21915ad2mr10683505pjb.136.1652698944551;
+ Mon, 16 May 2022 04:02:24 -0700 (PDT)
+Date:   Mon, 16 May 2022 04:02:20 -0700
+Message-Id: <20220516110221.3490982-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
+Subject: [PATCH] fetch-pack: make unexpected peek result non-fatal
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+When a Git server responds to a fetch request, it may send optional
+sections before the packfile section. To handle this, the Git client
+calls packet_reader_peek() (see process_section_header()) in order to
+see what's next without consuming the line.
 
-This check was introduced in 8ee5d73137f (Fix fetch/pull when run without
---update-head-ok, 2008-10-13) in order to protect against replacing the ref
-of the active branch by mistake, for example by running git fetch origin
-master:master.
+However, as implemented, Git errors out whenever what's peeked is not an
+ordinary line. This is not only unexpected (here, we only need to know
+whether the upcoming line is the section header we want) but causes
+errors to include the name of a section header that is irrelevant to the
+cause of the error. For example, at $DAYJOB, we have seen "fatal: error
+reading section header 'shallow-info'" error messages when none of the
+repositories involved are shallow.
 
-It was later extended in 8bc1f39f411 (fetch: protect branches checked out
-in all worktrees, 2021-12-01) to scan all worktrees.
+Therefore, fix this so that the peek returns 1 if the upcoming line is
+the wanted section header and nothing else. Because of this change,
+reader->line may now be NULL later in the function, so update the error
+message printing code accordingly.
 
-This operation is very expensive (takes about 30s in my repository) when
-there are many tags or branches, and it is executed on every fetch, even if
-no local heads are updated at all.
-
-Limit it to protect only refs/heads/* to improve fetch performance.
-
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
-    fetch: limit shared symref check only for local branches
+ fetch-pack.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1266%2Forgads%2Ffetch-perf-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1266/orgads/fetch-perf-v2
-Pull-Request: https://github.com/git/git/pull/1266
-
-Range-diff vs v1:
-
- 1:  5e86dc86d3d ! 1:  72bea90b26f fetch: limit shared symref check only for local branches
-     @@ builtin/fetch.c: static void check_not_current_branch(struct ref *ref_map,
-       	const struct worktree *wt;
-       	for (; ref_map; ref_map = ref_map->next)
-       		if (ref_map->peer_ref &&
-     -+			starts_with(ref_map->peer_ref->name, "refs/heads/") &&
-     ++		    starts_with(ref_map->peer_ref->name, "refs/heads/") &&
-       		    (wt = find_shared_symref(worktrees, "HEAD",
-       					     ref_map->peer_ref->name)) &&
-       		    !wt->is_bare)
-
-
- builtin/fetch.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e3791f09ed5..eeee5ac8f15 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1440,6 +1440,7 @@ static void check_not_current_branch(struct ref *ref_map,
- 	const struct worktree *wt;
- 	for (; ref_map; ref_map = ref_map->next)
- 		if (ref_map->peer_ref &&
-+		    starts_with(ref_map->peer_ref->name, "refs/heads/") &&
- 		    (wt = find_shared_symref(worktrees, "HEAD",
- 					     ref_map->peer_ref->name)) &&
- 		    !wt->is_bare)
-
-base-commit: 277cf0bc36094f6dc4297d8c9cef79df045b735d
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 4e1e88eea0..6d0d271259 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1370,17 +1370,20 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ static int process_section_header(struct packet_reader *reader,
+ 				  const char *section, int peek)
+ {
+-	int ret;
+-
+-	if (packet_reader_peek(reader) != PACKET_READ_NORMAL)
+-		die(_("error reading section header '%s'"), section);
++	int ret = 0;
+ 
+-	ret = !strcmp(reader->line, section);
++	if (packet_reader_peek(reader) == PACKET_READ_NORMAL &&
++	    !strcmp(reader->line, section))
++		ret = 1;
+ 
+ 	if (!peek) {
+-		if (!ret)
+-			die(_("expected '%s', received '%s'"),
+-			    section, reader->line);
++		if (!ret) {
++			if (reader->line)
++				die(_("expected '%s', received '%s'"),
++				    section, reader->line);
++			else
++				die(_("expected '%s'"), section);
++		}
+ 		packet_reader_read(reader);
+ 	}
+ 
 -- 
-gitgitgadget
+2.36.0.550.gb090851708-goog
+
