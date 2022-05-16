@@ -2,108 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C9E6C433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 16:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EFAEC433F5
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 16:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343573AbiEPQZr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 12:25:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
+        id S1343786AbiEPQlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 12:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233696AbiEPQZq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 12:25:46 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E0BDE9A
-        for <git@vger.kernel.org>; Mon, 16 May 2022 09:25:44 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6BBD818EA2E;
-        Mon, 16 May 2022 12:25:43 -0400 (EDT)
+        with ESMTP id S1343742AbiEPQk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 12:40:56 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6722140D8
+        for <git@vger.kernel.org>; Mon, 16 May 2022 09:40:53 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F094019124F;
+        Mon, 16 May 2022 12:40:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=0RzUdwRweKkT
-        3rzNWskQFOZo1kACSTEBi/PtlCDeyE4=; b=wrYqc9z0pAVEnBaGDL5kLFqcVbiy
-        D7cvy0lTNqhsi1SqX7zVaVBggBMcaXPUusWBKcIe7lMnYoTBYR8Pm8vXpkhi3WPA
-        ydOpp+8/DlkJ+IdNirRG/LJlXP8ac6ZNbGG1vqmXYACpMLhxcQ14DSqm41r/oZ4H
-        phzgXCPQMNubxzY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 63BDB18EA2D;
-        Mon, 16 May 2022 12:25:43 -0400 (EDT)
+        :content-type; s=sasl; bh=VExm7+Xv9OBxU8D1S7YCaty2LIHVXwKFB4xSSa
+        CEwws=; b=RT0cdIxSWUd+1t59YtwRR8EB1sPRKQT1IOMyOTCzfoegkytOiapl7s
+        OC+6CNxwZMOxPHZqGQkZ90EQWcEE+WnLCcs3ielQoZoiQlR3KLY9yv7umsXIO51Z
+        33vgr3IKFYSbABodkt9JTnXG1BoMaSJCjLgfv7OZSmmOkR2Y9QP90=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E8D1D19124E;
+        Mon, 16 May 2022 12:40:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0DFC318EA2C;
-        Mon, 16 May 2022 12:25:40 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8A88019124D;
+        Mon, 16 May 2022 12:40:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
-        johannes.Schindelin@gmx.de,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 3/4] t0034: add negative tests and allow git init to
- mostly work under sudo
-References: <20220510174616.18629-1-carenas@gmail.com>
-        <20220513010020.55361-1-carenas@gmail.com>
-        <20220513010020.55361-4-carenas@gmail.com>
-        <xmqqee0ycjos.fsf@gitster.g>
-        <CAPUEspj1JTG2Ujuk4O6ogo6qEQEwe-2aHF8J95xjX+OpY4cenQ@mail.gmail.com>
-        <xmqqr14u7n4l.fsf@gitster.g>
-        <CAPUEsphNOf37WB_xUuRNdfcz1TRRsSocbUoCbrmA3OjS_BTpdw@mail.gmail.com>
-        <xmqqo7zy59p3.fsf@gitster.g>
-        <20220516130753.kgelgbfovs5kze7h@Carlos-MacBook-Pro-2.local>
-Date:   Mon, 16 May 2022 09:25:38 -0700
-In-Reply-To: <20220516130753.kgelgbfovs5kze7h@Carlos-MacBook-Pro-2.local>
-        ("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 16 May
- 2022 06:07:53
-        -0700")
-Message-ID: <xmqqee0t4f7h.fsf@gitster.g>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v2 0/2] setup.c: make bare repo discovery optional
+References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
+        <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com>
+Date:   Mon, 16 May 2022 09:40:48 -0700
+In-Reply-To: <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com> (Glen
+        Choo via GitGitGadget's message of "Fri, 13 May 2022 23:37:36 +0000")
+Message-ID: <xmqqy1z12zxr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D33E7788-D534-11EC-906C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F15A933A-D536-11EC-BE27-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Sun, May 15, 2022 at 10:27:04PM -0700, Junio C Hamano wrote:
->> Carlo Arenas <carenas@gmail.com> writes:
->>=20
->> >> Hmph, it may not be needed, but it should still work, in which case
->> >> it probably is still worth testing, even with the optional patch #4=
-.
->> >
->> > Just because it works, it doesn't mean we have to test it.
->>=20
->> Yes.  It all depends on the answer to this question
+>  * die()-ing is necessary if we're trying to flip the default value of
+>    discovery.bare. We'd expect many bare repo users to be broken, and it's
+>    more helpful to fail loudly than to silently ignore the bare repo.
 >
-> Not quite, after all this is part of the "git" testsuite and therefore =
-will
-> only apply if it would be testing git's functionality, and in this case=
- it
-> does not.
+>    But in the long term, long after we've flipped the default and users know
+>    that they need to opt into bare repo discovery, would it be a better UX
+>    to just silently ignore the bare repo?
 
-It is immaterial if the way how "sudo sudo git" behaves is "git's
-functionality" or not, because what we care about is what the end
-user sees as a whole and it does not matter all that much to them
-where the observed behaviour comes from.
+Would a middle-ground of giving a warning() message help?  Can it be
+loud and annoying enough to knudge the users to adjust without
+breaking the functionality?
 
-The rule is simple.  If we care about the behaviour to stay with us
-over time, we ensure it with a test.  If we are certain that no
-users will depend on such a behaviour and are willing to break them
-(i.e. users who depend on how "sudo sudo git" behaves, which is an
-empty set) when we need to update the code, then we don't.
+The longer-term default should be "cwd is allowed, but we do not
+bother going up from object/04 subdirectory of a bare repository",
+not "bare repositories should not be usable at all without GIT_DIR".
 
-And if that changes with and without the optional patch #4, it makes
-it more important to have test (if we care, that is).  Later we may
-find what patch #4 does is detrimental to user experience and decide
-to tweak it out (not necessarily with a revert of #4, but doing an
-equivalent of reverting of it only in the code part and not tests).
+>      +    Add a config variable, `discovery.bare`, that tells Git whether or not
+>      +    it should work with the bare repository it has discovered i.e. Git will
+>      +    die() if it discovers a bare repository, but it is not allowed by
 
-In any case, as I said in the beginning, this was merely "a bit
-surprised" and "not a serious enough thing to trigger a reroll", so
-I will stop wasting our time on this thread.
+Missing comma before "i.e."
 
-Thanks.
+>      ++discovery.bare::
+>      ++	Specifies what kinds of directories Git can recognize as a bare
+>      ++	repository when looking for the repository (aka repository
+>       +	discovery). This has no effect if repository discovery is not
+>       +	performed e.g. the path to the repository is set via `--git-dir`
+>       +	(see linkgit:git[1]).
+>       ++
+>       +This config setting is only respected when specified in a system or global
+>       +config, not when it is specified in a repository config or via the command
+>      ++line option `-c discovery.bare=<value>`.
+
+;-)
+
+>      +++
+>      ++The currently supported values are `always` (Git always recognizes bare
+>      ++repositories) and `never` (Git never recognizes bare repositories).
+>      ++This defaults to `always`, but this default is likely to change.
+>      +++
+>      ++If your workflow does not rely on bare repositories, it is recommended that
+>      ++you set this value to `never`. This makes repository discovery easier to
+>      ++reason about and prevents certain types of security and non-security
+>      ++problems, such as:
+
+Hopefully "git fetch" over ssh:// and file:/// would run the other
+side with GIT_DIR explicitly set?  As long as this recommendation
+does not break these use cases, I think we are OK, but I do not yet
+find these "problems, such as..." so convincing.
