@@ -2,145 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80B87C433FE
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 18:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB045C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 18:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344494AbiEPSLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 14:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
+        id S1344600AbiEPSLt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 14:11:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242544AbiEPSLn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 14:11:43 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2048B3D492
-        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:37 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id bd25-20020a05600c1f1900b0039485220e16so363234wmb.0
-        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:37 -0700 (PDT)
+        with ESMTP id S1344584AbiEPSLo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 14:11:44 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAC53D4AB
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:38 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id f2so14595144wrc.0
+        for <git@vger.kernel.org>; Mon, 16 May 2022 11:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=0Iwctf6yWHFlYfVS0y3XEp3zXjzoA1fatcTP94Ledrk=;
-        b=gVeHlFCEoHNyOVAD+bJpDC85CUC8DrZznlAjsQDkX47CvK83jK66Q9GnMAcOvfhGDm
-         mmnm3ID+mEyfDu7qWlaoO0X6xTtNMZ0NRMie1EfRppfk/EmLMzUI0Nc8r3B296bFMMls
-         wNV6QPbhH18lZwDFFSMKnijSxCantUMTVyf1ZTjsMnEKL4GXMTQmMnjsY81DmdZwK9cP
-         nd9tSRbcaZLsYrZQTHoj+V5WlLB5OL6qaAQ/CecAdSUR0+NtbFjSAdLfG010NgBmSJHM
-         J6Ouu464bPgCaf+zS7SRregeQx9a3oBpXqcnofcXs5jrt539QOPjkI7UPVvcggV7o0nd
-         BfoA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=g3ENZQRudzmoqf6r+akG3aRLZ7L9YsK4RFiAywuqTNc=;
+        b=oMwAfje26AUbg6n+pOcpllT1kybLgEupAcXFXJPqEZ3ay8xoKq/LTd8irI7PIdQ7W9
+         OQO8HbbJQYfqGKZoN1nR0P4QAu1dpcdnWhtbNO0VkGSUG7ntI2L4E8gNKcn4xDyJ5NsN
+         FVtMqotQGwu6/8eIPu3Yd7isAIkeImKk8iJVDrhtG3ScGHoPHMDy+yrNuWzo1/ROsCIP
+         uc7iFotV5bLInSDn4CTr5Jr7owpmfQrxGaDiudq+H7qGl6sH4B+TryqyghbnzeMsFCXN
+         73Lx0EEJPm38MVu8U60imOUP8cI9o452xd/xTBottovFFP88Yu7ALDsmdbqHfZHuWm8i
+         N8dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0Iwctf6yWHFlYfVS0y3XEp3zXjzoA1fatcTP94Ledrk=;
-        b=JKDt29+bMpdgE4XwrDxa1ZVwFo6HCvhp+Z5X+MbcT3Ap6kiSFaQKcG7Hoe/7zXs6rE
-         HprvboKTPUVe4OhxHbsPnKXDpWE8WjJ4sTcPyY1zoZmy2SDzSpoP81ne3Y86wPptGgP2
-         hgrtfObPc97AMLX7eEsbL0mJ4a/PGZbImF2+Abprv7EXrOq6UdlqLzxVbR58+3HppKaz
-         EgQij8Zg6nnGYEM1xHjDQd976ytrm+P/nsbf1FOLymrUuR+dfheQDKSBWGeJT+cLMtFr
-         nLLvVj5afJ9VdmiD2PrwHHP5C9f/UVgL/xmL6VkPrHPUGJ6azj2H2kTZ5+Mh+ysHUIUn
-         rGdw==
-X-Gm-Message-State: AOAM532qXjQt9RPwuWkWZB3HMLVMB4VlsqUNRCJH7dSjSz1fdvEw1DCg
-        P6hTQ9+mV7HNFrasBNfv7X3Me/n+zrU=
-X-Google-Smtp-Source: ABdhPJzAKUmOL1OpwLygnAGptBtxCX5EwqbSkVynJ2/i90zVgVGDZj7pyDgXdr3oOIqKxOvJlJkcRQ==
-X-Received: by 2002:a05:600c:600d:b0:394:5353:507a with SMTP id az13-20020a05600c600d00b003945353507amr18031766wmb.96.1652724695109;
-        Mon, 16 May 2022 11:11:35 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=g3ENZQRudzmoqf6r+akG3aRLZ7L9YsK4RFiAywuqTNc=;
+        b=OiTUfEfAnAthpsyBd6aTmkIdnPC8oXXLEXsN7O/A3nKqO7kXRlEwsQ9q/qroZgoCRO
+         4UW/PI8bCjkuRGYBsRH1OjBlXLABILr0D0khRdF66guhemDCJBTU5imcEFVzWuH7EbaX
+         d1C4o81klHZkdBl48ff0scp5db3NsgzcejvziY49TJbIk4hCm5fn610ST1egvop2DzDE
+         eTTucEFfw+wgeMBrttEpm+Q+akxvo1q95JJE4zwq43D0suaybcFQFIMkRXBKJEzRB9gl
+         7jDyqVUAk6wTlVAGlKewrR2vvaaKuKpf1Kua2qofx1y/vN9cOr6v4fGZZRCTDXRwk0C4
+         XVlg==
+X-Gm-Message-State: AOAM531Sx5mxn41AovZZ+cim1Tcdrzdvp0EhNlLSUH91brIFUuGoUQth
+        KrmMGeWZp9cf3ZwCeZhit4qx6mUDoyE=
+X-Google-Smtp-Source: ABdhPJyGMIEPWQ2pFU2BfycWtxuv7XmbHn/BCibf4/DHHgGW0Mepa702weX/jyuPkqXNskQlQ6M6YQ==
+X-Received: by 2002:a5d:59a6:0:b0:20c:5aa2:ae1b with SMTP id p6-20020a5d59a6000000b0020c5aa2ae1bmr15375453wrr.130.1652724696304;
+        Mon, 16 May 2022 11:11:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n12-20020adf8b0c000000b0020cdf6ecafbsm12545589wra.81.2022.05.16.11.11.34
+        by smtp.gmail.com with ESMTPSA id q22-20020adfb196000000b0020cfed0bb7fsm6682422wra.53.2022.05.16.11.11.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 11:11:34 -0700 (PDT)
-Message-Id: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+        Mon, 16 May 2022 11:11:35 -0700 (PDT)
+Message-Id: <f1194d56d331611446c285a1d070509d73bd5f43.1652724693.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
+References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 May 2022 18:11:25 +0000
-Subject: [PATCH 0/8] Sparse index: integrate with sparse-checkout
+Date:   Mon, 16 May 2022 18:11:26 +0000
+Subject: [PATCH 1/8] sparse-index: create expand_to_pattern_list()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, vdye@github.com, shaoxuan.yuan02@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is based on ds/sparse-colon-path.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-This series integrates the 'git sparse-checkout' builtin with the sparse
-index. This is the last integration that we fast-tracked into the
-microsoft/git fork. After this, we have no work in flight that would
-conflict with a Google Summer of Code project in this area.
+This is the first change in a series to allow modifying the
+sparse-checkout pattern set without expanding a sparse index to a full
+one in the process. Here, we focus on the problem of expanding the
+pattern set through a command like 'git sparse-checkout add <path>'
+which needs to create new index entries for the paths now being written
+to the worktree.
 
-The tricky part about the sparse-checkout builtin is that we actually do
-need to expand the index when growing the sparse-checkout boundary. The
-trick is to expand it only as far as we need it, and then ensure that we
-collapse any removed directories before the command completes.
+To achieve this, we need to be able to replace sparse directory entries
+with their contained files and subdirectories. Once this is complete,
+other code paths can discover those cache entries and write the
+corresponding files to disk before committing the index.
 
-To do this, we introduce a concept of a "partially expanded" index. In fact,
-we break the boolean sparse_index member into an enum with three states:
+We already have logic in ensure_full_index() that expands the index
+entries, so we will use that as our base. Create a new method,
+expand_to_pattern_list(), which takes a pattern list, but for now mostly
+ignores it. The current implementation is only correct when the pattern
+list is NULL as that does the same as ensure_full_index(). In fact,
+ensure_full_index() is converted to a shim over
+expand_to_pattern_list().
 
- * COMPLETELY_FULL (0): No sparse directories exist.
+A future update will actually implement expand_to_pattern_list() to its
+full capabilities. For now, it is created and documented.
 
- * COMPLETELY_SPARSE (1): Sparse directories may exist. Files outside the
-   sparse-checkout cone are reduced to sparse directory entries whenever
-   possible.
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ sparse-index.c | 35 ++++++++++++++++++++++++++++++++---
+ sparse-index.h | 14 ++++++++++++++
+ 2 files changed, 46 insertions(+), 3 deletions(-)
 
- * PARTIALLY_SPARSE (2): Sparse directories may exist. Some file entries
-   outside the sparse-checkout cone may exist. Running convert_to_sparse()
-   may further reduce those files to sparse directory entries.
-
-Most of the patches in this series focus on introducing this enum and
-carefully converting previous uses of the boolean to use the enum. Some
-additional work is required to refactor ensure_full_index() into a new
-expand_to_pattern_list() method, as they are doing essentially the same
-thing, but with different scopes.
-
-The result is improved performance on the sparse-checkout builtin as
-demonstrated in a new p2000-sparse-operations.sh performance test:
-
-
-Test HEAD~1 HEAD
-================
-
-2000.24: git sparse-checkout ... (sparse-v3) 2.14(1.55+0.58) 1.57(1.03+0.53)
--26.6% 2000.25: git sparse-checkout ... (sparse-v4) 2.20(1.62+0.57)
-1.58(0.98+0.59) -28.2%
-
-The improvement here is less dramatic because the operation is dominated by
-writing and deleting a lot of files in the worktree. A repeated no-op
-operation such as git sparse-checkout set $SPARSE_CONE would show a greater
-improvement, but is less interesting since it could gain that improvement
-without satisfying the "hard" parts of this builtin.
-
-I specifically chose how to update the tests in t1092 and p2000 to avoid
-conflicts with Victoria's 'git stash' work.
-
-Thanks, -Stolee
-
-Derrick Stolee (8):
-  sparse-index: create expand_to_pattern_list()
-  sparse-index: introduce partially-sparse indexes
-  cache-tree: implement cache_tree_find_path()
-  sparse-checkout: --no-sparse-index needs a full index
-  sparse-index: partially expand directories
-  sparse-index: complete partial expansion
-  p2000: add test for 'git sparse-checkout [add|set]'
-  sparse-checkout: integrate with sparse index
-
- builtin/sparse-checkout.c                |   8 +-
- cache-tree.c                             |  24 +++++
- cache-tree.h                             |   2 +
- cache.h                                  |  32 ++++--
- read-cache.c                             |   6 +-
- sparse-index.c                           | 126 ++++++++++++++++++++---
- sparse-index.h                           |  14 +++
- t/perf/p2000-sparse-operations.sh        |   1 +
- t/t1092-sparse-checkout-compatibility.sh |  25 +++++
- unpack-trees.c                           |   4 +
- 10 files changed, 214 insertions(+), 28 deletions(-)
-
-
-base-commit: 124b05b23005437fa5fb91863bde2a8f5840e164
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1208%2Fderrickstolee%2Fsparse-index%2Fsparse-checkout-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1208/derrickstolee/sparse-index/sparse-checkout-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1208
+diff --git a/sparse-index.c b/sparse-index.c
+index 8636af72de5..37c7df877a6 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -248,19 +248,41 @@ static int add_path_to_index(const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-void ensure_full_index(struct index_state *istate)
++void expand_to_pattern_list(struct index_state *istate,
++			      struct pattern_list *pl)
+ {
+ 	int i;
+ 	struct index_state *full;
+ 	struct strbuf base = STRBUF_INIT;
+ 
++	/*
++	 * If the index is already full, then keep it full. We will convert
++	 * it to a sparse index on write, if possible.
++	 */
+ 	if (!istate || !istate->sparse_index)
+ 		return;
+ 
++	/*
++	 * If our index is sparse, but our new pattern set does not use
++	 * cone mode patterns, then we need to expand the index before we
++	 * continue. A NULL pattern set indicates a full expansion to a
++	 * full index.
++	 */
++	if (pl && !pl->use_cone_patterns)
++		pl = NULL;
++
+ 	if (!istate->repo)
+ 		istate->repo = the_repository;
+ 
+-	trace2_region_enter("index", "ensure_full_index", istate->repo);
++	/*
++	 * A NULL pattern set indicates we are expanding a full index, so
++	 * we use a special region name that indicates the full expansion.
++	 * This is used by test cases, but also helps to differentiate the
++	 * two cases.
++	 */
++	trace2_region_enter("index",
++			    pl ? "expand_to_pattern_list" : "ensure_full_index",
++			    istate->repo);
+ 
+ 	/* initialize basics of new index */
+ 	full = xcalloc(1, sizeof(struct index_state));
+@@ -322,7 +344,14 @@ void ensure_full_index(struct index_state *istate)
+ 	cache_tree_free(&istate->cache_tree);
+ 	cache_tree_update(istate, 0);
+ 
+-	trace2_region_leave("index", "ensure_full_index", istate->repo);
++	trace2_region_leave("index",
++			    pl ? "expand_to_pattern_list" : "ensure_full_index",
++			    istate->repo);
++}
++
++void ensure_full_index(struct index_state *istate)
++{
++	expand_to_pattern_list(istate, NULL);
+ }
+ 
+ void ensure_correct_sparsity(struct index_state *istate)
+diff --git a/sparse-index.h b/sparse-index.h
+index 633d4fb7e31..037b541f49d 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -23,4 +23,18 @@ void expand_to_path(struct index_state *istate,
+ struct repository;
+ int set_sparse_index_config(struct repository *repo, int enable);
+ 
++struct pattern_list;
++
++/**
++ * Scan the given index and compare its entries to the given pattern list.
++ * If the index is sparse and the pattern list uses cone mode patterns,
++ * then modify the index to contain the all of the file entries within that
++ * new pattern list. This expands sparse directories only as far as needed.
++ *
++ * If the pattern list is NULL or does not use cone mode patterns, then the
++ * index is expanded to a full index.
++ */
++void expand_to_pattern_list(struct index_state *istate,
++			      struct pattern_list *pl);
++
+ #endif
 -- 
 gitgitgadget
+
