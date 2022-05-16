@@ -2,121 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F76C433F5
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 16:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10596C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 16:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239674AbiEPQKq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 May 2022 12:10:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40648 "EHLO
+        id S245756AbiEPQOo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 12:14:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236231AbiEPQKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 12:10:44 -0400
+        with ESMTP id S238418AbiEPQOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 12:14:41 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1705E26E3
-        for <git@vger.kernel.org>; Mon, 16 May 2022 09:10:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9BF381BE
+        for <git@vger.kernel.org>; Mon, 16 May 2022 09:14:41 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04B3212D32B;
-        Mon, 16 May 2022 12:10:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70D0112D363;
+        Mon, 16 May 2022 12:14:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wv5B/ErL8nStEJMnAFSwV11RiJu/8ciwck+vTy
-        2euFI=; b=xlQbcZe7ck+feolO2LytvaFo/mM1SVuTAuG3NgyIQQV5JH91uAueoR
-        8fG3TPnNhYYLxVtcwFx/6H8UHj8KiKyKuP9IdIozr1qzRe73xkwf8XLuPBmZjYuk
-        8Ey+smzwtVUz/F0zmx8QFDVLczvdWWucx2ScUzKNu5IEULgTeLLco=
+        :content-type; s=sasl; bh=KQD8W4M+ZiY2BB/QLLjZhc799arVoaqSNZbN59
+        q6OjE=; b=vEr7bUoEjqe+3wIkmXNhTlT3lfBpoiRZ9trUfbfsToxtBuAPMEWG91
+        v2+3c2sOtDChnVlhjFkpo04iuV+nh4hr9Fymb30t0lp2VoSOHeDif5zQ6+Jjq+NB
+        i+V1jUh1bc50nrh2xSnO3UNx4/hsr3Q4B3FJAiUK+e5pdyVdh/9hs=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE7C512D32A;
-        Mon, 16 May 2022 12:10:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68AB812D362;
+        Mon, 16 May 2022 12:14:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5555112D329;
-        Mon, 16 May 2022 12:10:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C88FD12D361;
+        Mon, 16 May 2022 12:14:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+To:     Damien Regad <dregad@mantisbt.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: make unexpected peek result non-fatal
-References: <20220516110221.3490982-1-jonathantanmy@google.com>
-Date:   Mon, 16 May 2022 09:10:40 -0700
-In-Reply-To: <20220516110221.3490982-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 16 May 2022 04:02:20 -0700")
-Message-ID: <xmqqr14t4fwf.fsf@gitster.g>
+Subject: Re: Date in git-commit output inconsistent with log.date format
+References: <CA+zp4VNWMxZ2ieS8KP2-uUu90AMmdzyR31VGkf78KdG4jY4eug@mail.gmail.com>
+Date:   Mon, 16 May 2022 09:14:38 -0700
+In-Reply-To: <CA+zp4VNWMxZ2ieS8KP2-uUu90AMmdzyR31VGkf78KdG4jY4eug@mail.gmail.com>
+        (Damien Regad's message of "Mon, 16 May 2022 14:42:05 +0200")
+Message-ID: <xmqqmtfh4fpt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB92D068-D532-11EC-B9B9-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 49B627F0-D533-11EC-8F1C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Damien Regad <dregad@mantisbt.org> writes:
 
-> When a Git server responds to a fetch request, it may send optional
-> sections before the packfile section. To handle this, the Git client
-> calls packet_reader_peek() (see process_section_header()) in order to
-> see what's next without consuming the line.
+> I was amending a commit message, and noticed the date in the output is
+> printed in 'default' format, as shown below:
 >
-> However, as implemented, Git errors out whenever what's peeked is not an
-> ordinary line. This is not only unexpected (here, we only need to know
-> whether the upcoming line is the section header we want) but causes
-> errors to include the name of a section header that is irrelevant to the
-> cause of the error. For example, at $DAYJOB, we have seen "fatal: error
-> reading section header 'shallow-info'" error messages when none of the
-> repositories involved are shallow.
+> $ git commit --amend --no-edit
+> [x bf63ada92] Test commit
+>  Date: Mon May 16 14:25:57 2022 +0200
+>  1 file changed, 32 insertions(+)
+>  create mode 100644 test.txt
 >
-> Therefore, fix this so that the peek returns 1 if the upcoming line is
-> the wanted section header and nothing else. Because of this change,
-> reader->line may now be NULL later in the function, so update the error
-> message printing code accordingly.
+> Since I have set log.date=iso, I was expecting the date to use the
+> Is it intentional that the
+> default format is applied instead ?
 
-[not a suggestion to change anything; just making sure I got the
-above correct]
+Yes.
 
-We used to die unless READ_NORMAL was returned, so the code after
-packet_reader_peek() can rely on reader->line to be populated.  Now
-that code must handle cases where an earlier _peek() gave something
-other than READ_NORMAL and in such an error case reader->line points
-at NULL.  So any code that assumed reader->line was populated needs
-to be updated.
+That output is from "git commit", and is not from any command in the
+"git log" family.  Besides, it way predates the introduction of
+log.date configuration variable.
 
-Makes sense.
+This could be a XY problem.  Can you tell us why you care?  What
+motivates you to see that date (and optionally Author when the
+author is different from the current user) output in a specific
+format---it is meant for human consumption so "I run 'git commit' in
+a script and scrape its output" would not be it.
 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  fetch-pack.c | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
->
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 4e1e88eea0..6d0d271259 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1370,17 +1370,20 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
->  static int process_section_header(struct packet_reader *reader,
->  				  const char *section, int peek)
->  {
-> -	int ret;
-> -
-> -	if (packet_reader_peek(reader) != PACKET_READ_NORMAL)
-> -		die(_("error reading section header '%s'"), section);
-> +	int ret = 0;
->  
-> -	ret = !strcmp(reader->line, section);
-> +	if (packet_reader_peek(reader) == PACKET_READ_NORMAL &&
-> +	    !strcmp(reader->line, section))
-> +		ret = 1;
->  
->  	if (!peek) {
-> -		if (!ret)
-> -			die(_("expected '%s', received '%s'"),
-> -			    section, reader->line);
-> +		if (!ret) {
-> +			if (reader->line)
-> +				die(_("expected '%s', received '%s'"),
-> +				    section, reader->line);
-> +			else
-> +				die(_("expected '%s'"), section);
-> +		}
->  		packet_reader_read(reader);
->  	}
+Thanks.
