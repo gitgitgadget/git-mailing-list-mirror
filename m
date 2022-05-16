@@ -2,98 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F0B4C433EF
-	for <git@archiver.kernel.org>; Mon, 16 May 2022 14:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC85C433EF
+	for <git@archiver.kernel.org>; Mon, 16 May 2022 14:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244410AbiEPOiq convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 16 May 2022 10:38:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40134 "EHLO
+        id S244634AbiEPO7h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 May 2022 10:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232814AbiEPOio (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 May 2022 10:38:44 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D800A2C120
-        for <git@vger.kernel.org>; Mon, 16 May 2022 07:38:42 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24GEcfhG017321
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 16 May 2022 10:38:41 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Derrick Stolee'" <derrickstolee@github.com>,
-        "'Git Mailing List'" <git@vger.kernel.org>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Emily Shaffer'" <emilyshaffer@google.com>,
-        "'Glen Choo'" <chooglen@google.com>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>,
-        "'Christian Couder'" <christian.couder@gmail.com>
-References: <6af83767-576b-75c4-c778-0284344a8fe7@github.com> <daadac3e-d4c2-431f-a0bd-d8734d4424d8@github.com>
-In-Reply-To: <daadac3e-d4c2-431f-a0bd-d8734d4424d8@github.com>
-Subject: RE: [Discussion] What is Git's Security Boundary?
-Date:   Mon, 16 May 2022 10:38:36 -0400
-Organization: Nexbridge Inc.
-Message-ID: <004d01d86932$a36f95f0$ea4ec1d0$@nexbridge.com>
+        with ESMTP id S233790AbiEPO73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 May 2022 10:59:29 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F0838BFA
+        for <git@vger.kernel.org>; Mon, 16 May 2022 07:59:29 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id y12so7848386ior.7
+        for <git@vger.kernel.org>; Mon, 16 May 2022 07:59:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=odx/9PHbo57I84nD8LkhHvHae2MOEdVogz0SDWlKjpA=;
+        b=iZGoQGQmyfKiEWF0T/8ziWOAPuZEflZcUGitBDIcVIBhYaVvbDdZBgrtD0h8EHRNwX
+         nYfpkTtSMWfIXMRsS1rn1jRECtH/HACVI4wYadcZcrkcgLMS4Kp5bxFRDxpuDpKnHv7J
+         ZZJNT24AmIGgwyL33JVANNTRJeZhncIFWwoEmVYPn/hvVbUp28uc6fAT+f53sUOR5NZU
+         DheDel4U4EizWNhy3T+gWz9154hWD889EF/ijEtJY064oiWfflMz5baYYr19zk3yytFm
+         jWnP+DpD9k9U/QRZPbOqc3NTkutAiXUyS+xn4NYPa2Zt7Ri+1bJI+H7zVu0eMkVfrUB0
+         uk/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=odx/9PHbo57I84nD8LkhHvHae2MOEdVogz0SDWlKjpA=;
+        b=wqGF0AJEY4/JagVn7xyOjFyeJbWUSi6gPa4UEx92uPzIL+2OGkl5vDrF+IOQDWC0Ek
+         GQnARNgsmoBnXWC3eBrd5lVrfB83GizvkIGB2T3IB2Byu7G2IuWzqnRav5Bfp64wERrt
+         gNV//4fgD49sB4sW4c9arEI7sGQx0VydB1NzoxG49/PbZjmgqikFbhFkMjae4kR+yr13
+         T9Cri3qfV31WvqMjtAfsBwU3P3o98uR8jnlufHQ/ClY/aennXIoC3ClSTU2gCr9wHBHA
+         DyE6MIJZlwhRYKLPttGPRP7OLtkrAdLQV+Us6Ub98I9q/wX1+m7DwUjIqFn6bh80Bwdu
+         i0Ug==
+X-Gm-Message-State: AOAM5332SwfSaMPoaqhpr8vcHfSx5XJur+7v8WXH6xMEtlDnkVJoxtU7
+        CQRDGajppTygFgrnVL5y0mJg
+X-Google-Smtp-Source: ABdhPJxN/vX2m0CJpT7nltKOAnMWY6TdOr2UltlUnVakcoKZhJjnNVE440PBSGwy1alxZ8ZVrrvXwg==
+X-Received: by 2002:a05:6602:1584:b0:65a:cf4f:c93a with SMTP id e4-20020a056602158400b0065acf4fc93amr8006703iow.52.1652713168405;
+        Mon, 16 May 2022 07:59:28 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:a875:ee72:945f:af93? ([2600:1700:e72:80a0:a875:ee72:945f:af93])
+        by smtp.gmail.com with ESMTPSA id l6-20020a056e0212e600b002cde6e352c6sm2599020iln.16.2022.05.16.07.59.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 May 2022 07:59:28 -0700 (PDT)
+Message-ID: <377be0e9-8a0f-4a86-0a66-3b08c0284dae@github.com>
+Date:   Mon, 16 May 2022 10:59:27 -0400
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFUTNuklZy2dEvLMMbYj4IxjUlnXAFs0y7orh5gAVA=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v2 4/4] object-file: fix a unpack_loose_header()
+ regression in 3b6a8db3b03
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <cover-0.4-00000000000-20220421T200733Z-avarab@gmail.com>
+ <20220512223218.237544-1-gitster@pobox.com>
+ <20220512223218.237544-5-gitster@pobox.com> <xmqqo802codb.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqo802codb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 16, 2022 10:14 AM, Derrick Stolee wrote:
->On 4/26/2022 1:00 PM, Derrick Stolee wrote:
->> I've been having a few discussions internally and externally with
->> folks about the 2.35.2 release and the safe.directory config value.
->> After stumbling a little with a too-technical proposal, I (along with
->> Taylor) figured out that I was jumping into "solutions" mode without
->> first talking about the problem and agreeing on common language there.
->
->> I'm hoping to start a conversation in this thread about "What is Git's
->> security boundary?" so we can have an established base to work from
->> for future security incidents or protections.
->
->I'm back from a vacation, and haven't seen any response to this message.
->
->I thought this would be an interesting topic that would create a lot of valuable
->discussion, but that has not happened. I have a few ideas of why that could be:
->
->1. It's long, so readers put if off until it fell off the end of their
->   inboxes.
->
->2. The fixes for 2.36.1 have been taking priority.
->
->3. There are no patches, so I should submit code if I want concrete
->   feedback.
->
->4. I'm so off base that it's not even worth replying.
->
->Of course, it could be a combination of these or any number of other things.
->
->I'm sending this email as a hopeful ping that this topic could use some feedback.
->I'm looking forward to your ideas.
+On 5/12/2022 7:39 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> diff --git a/object-file.c b/object-file.c
+>> index 5ffbf3d4fd..b5d1d12b68 100644
+>> --- a/object-file.c
+>> +++ b/object-file.c
+>> @@ -2623,8 +2623,12 @@ int read_loose_object(const char *path,
+>>  		goto out;
+>>  	}
+>>  
+>> -	if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+>> -				NULL) < 0) {
+>> +	switch (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+>> +				    NULL)) {
+>> +	case ULHR_OK:
+>> +		break;
+>> +	case ULHR_BAD:
+>> +	case ULHR_TOO_LONG:
+>>  		error(_("unable to unpack header of %s"), path);
+>>  		goto out;
+>>  	}
+> 
+> Regarding this hunk, since we only care about a single "did we get
+> any error, or did we unpack OK" bit, I think this should be more
+> like
+> 
+> 	if (unpack_loose_header(...) != ULHR_OK) {
+> 		error(_("unable to..."), path);
+> 		goto out;
+> 	}
+> 
+> It is true, as Ævar mentioned, that there is another place in the
+> same file that uses switch() in loose_object_info(), and it should
+> remain to be switch() on the returned enum because it wants to
+> behave differnetly depending on the kind of error it gets.  But that
+> is not a reason to make this part that only cares about a single
+> "did it fail?" into a switch and force future developers to add a
+> useless case arm.
+> 
+> I left it there as posted in the previous round because I was too
+> lazy ;-) and also it is something we can clean up with a follow up
+> patch outside the series.  As my today's focus has been to reduce
+> the number of topics waiting for a reroll, I'd rather leave things
+> that are not outright broken but needs clean up as they are for the
+> sake of expediency.
 
-Some ramblings, since you asked, and I hope I am not missing the point:
+Taking a look at your new version, I agree that this use of 'switch'
+is out of place and can make things more confusing in the future.
 
-I guess some (me) were waiting for more ideas on what you meant by "Security boundary". In network security, the definition is fairly clear - the line where security needs change, so a firewall, DMZ, etc. When talking about applications, a security boundary would be an area where the concept of a user diverges from the system, so your GitHub logon vs. user ids on the servers where GitHub runs - or perhaps Amazon is a better example.
+Here is a patch doing exactly what you recommended, which you can
+choose to add or squash. I made you co-author, but I expect you to
+add your sign-off after mine.
 
-The line blurs for git because we depend on the underlying user authentication mechanisms of the platform. To do anything in git, you either have to have a legitimate logon to the server where git runs or are coming in anonymously in a read-only (hopefully) fashion. In one view, your boundary expands beyond one system, making the boundary non-traditional.
+-- >8 --
 
-The "security boundary" line is different for git than what a network security admin would consider as a similar domain. In gits terms (my view anyway), the boundary is functional. Do we want git doing something intended vs. unintended given the structure of the repository. In strict technical terms, the boundary is at fopen() and exec(). Can git access something or do something on a system and if so, should it. Conversely, is git blocked from doing something it should be able to do. This seems like well structured problem except for the introduction of incoming changes that could trigger undesired behaviour either at clone, fetch/merge time, switch or other situations where there is a side impact.
+From 85cd37b4f23e06980ea95311067d735144fe932f Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Mon, 16 May 2022 10:53:27 -0400
+Subject: [PATCH] object-file: convert 'switch' back to 'if'
 
-So putting the fopen() boundary into a box, that seems pretty much up to the operating system. I am not 100% sure that the safe.directory situation is required for that - although I have had customers asking for something like that for about 3 years.
+This switch statement was recently added to make it clear that
+unpack_loose_header() returns an enum value, not an int. This adds
+complications for future developers if that enum gains new values, since
+that developer would need to add a case statement to this switch for
+little real value.
 
-There are three areas of ancillary impacts that give me continual concern: clean/smudge, hooks, workflows. Each hits the exec() boundary. Clean/smudge has a well-defined control that is up to the user or system admin to manage. Similarly hooks, although hook import has become a topic lately. The GitHub (and other app) Workflow Actions concept opens up a new area that allows the exec() boundary to be traversed, potentially with undesired side effects. Actions depends on GitHub to provide safety controls, which is outside git's responsibility although git is the transport vector through which potential problems can be introduced. We then get into "trust" and who is trusted across that boundary and is the trust justified. If it were up to me, I would want all of the incoming changes to be signed at least for accountability, but more having some kind of authentication to ensure the trust.
+Instead, we can revert back to an 'if' statement, but make the enum
+explicit by using "!= ULHR_OK" instead of assuming it has the numerical
+value zero.
 
-I'm not sure whether this is what you are looking for.
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
 
-Sincerely,
-Randall
+ object-file.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index b5d1d12b68a..52e4ae1b5f0 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2623,12 +2623,8 @@ int read_loose_object(const char *path,
+ 		goto out;
+ 	}
+ 
+-	switch (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+-				    NULL)) {
+-	case ULHR_OK:
+-		break;
+-	case ULHR_BAD:
+-	case ULHR_TOO_LONG:
++	if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
++				NULL) != ULHR_OK) {
+ 		error(_("unable to unpack header of %s"), path);
+ 		goto out;
+ 	}
+-- 
+2.35.3.vfs.0.0
+
 
