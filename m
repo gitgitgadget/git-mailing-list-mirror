@@ -2,142 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34309C433F5
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 16:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55B7BC4332F
+	for <git@archiver.kernel.org>; Tue, 17 May 2022 17:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351182AbiEQQr0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 12:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41446 "EHLO
+        id S1351288AbiEQRDC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 May 2022 13:03:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351236AbiEQQrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 12:47:22 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15F235044F
-        for <git@vger.kernel.org>; Tue, 17 May 2022 09:47:11 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id b20-20020a62a114000000b0050a6280e374so7971692pff.13
-        for <git@vger.kernel.org>; Tue, 17 May 2022 09:47:11 -0700 (PDT)
+        with ESMTP id S1351287AbiEQRDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 May 2022 13:03:01 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BBD3FDAC
+        for <git@vger.kernel.org>; Tue, 17 May 2022 10:02:59 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id t25so32418308lfg.7
+        for <git@vger.kernel.org>; Tue, 17 May 2022 10:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=gcaXs5HU/nWgC68BQWAaObu5tcmgzBNSoxqxSWARRD8=;
-        b=qzOcnxde5On3mmjistmWUiqeRMraSCyiJxECBw2aOomnnAlrrGlk5MVIVTYLti08Kf
-         25SNWZc46cgrNsQSxkkK2nzdLfZfC6NKe5fZBCIridC8zZ7gUJo1iypIEjBxwKUk2UiV
-         7xz5vm3dk3NUE1G/RYS5yjbt9ZGbtb4bwJZptlHDu/Qoc55ZAGvvdTOAqglB113X4gUN
-         v/IL697HWgsZ1GeIejINLypxlo17lZBsMAcUFdZa0npjQBRkuQIrydSCNcM/Jqi9qbOL
-         JjKypL6W2DexWr8AWiveWpa0FsoAoWzfRErdHmIQe+yAYjd8paTGpZaTdNw0w9Z6HR0D
-         +vRA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5L6SOo5F/HUI2kufRUrMQPP8m5oy+oLLd7gQZE9ie9E=;
+        b=I+y869zvanpaVT6RTyQMvYSlTLIuJp4diOojEYCBJ/IGYZiG6lEvp7B9PivC5nUnJ7
+         F5Qj0NtOEZnpvxdaBJ+U1YyBhfV2sBA+/xC9s2LdYejKWg/6ODyKNpZSsOll8QGwSHuT
+         331LdvmxapQQRziBmTyu5bIrD6zwJ8aNkJ2BmsqLTVFTBoX0CyAlEYQ8Wc7nmJe3viUn
+         Dq2lm9yljnTgdjvSgmixXH5BTrIepy9nPRj3SbitNeLKbFaP6JpnQ9MGE1YnnISBxHmE
+         vcTvczgwmP7ojkc/yuPVUEwz+qAk4f/1GaFO4kQ6RbMdscGz5o6AoHPAHSglXYaQqXRf
+         wZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=gcaXs5HU/nWgC68BQWAaObu5tcmgzBNSoxqxSWARRD8=;
-        b=M3nECWo8MeDShmAJjwSXuuyNllJV+gPpGih6v98agVbny9uDL0rveYUn/P8GlVHu7M
-         y2hk/Ak/5k24984aQDPawCfMPcWI1lFPHl8eTmn64mgpaPPLvClMg2xpJGZ5FsLkz1la
-         sG7CT+UNfn0LFUKvne2NiIMf6oOi3cxYQh9vHQK/FSEm31bLuQ7JlZ9f44OPlcNipFMp
-         Il8CoOIIq5UyOcy3CUDDvLyb+SLs6chQIfkVUhPjSCpP1b45U/0SAxvaoi5Yria4k4gB
-         Ok1sdO+W85CE/HlRd0SzYtF4hupPSUIZy1sxuJExAOgpjEpVovEwolPjwXI1RTUTIHaq
-         pKxw==
-X-Gm-Message-State: AOAM530MiGDnYer+Ad9bc/Ivm9wYZu0e8CYviwvJ/utsFCMg6l9MdLF7
-        wcuqzApSmhiEbuV9Dly6rrYsgi/+GVa7gA==
-X-Google-Smtp-Source: ABdhPJwqacEcE2fcqaeXHjxHRdOag0lz5OsRxghfEZrVwkpoxoz7Qzg6Bq5HuXlk9vwZKO8b9c0OWFfJIC5Jrw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:2ad0:0:b0:3c1:5f7e:fd78 with SMTP id
- q199-20020a632ad0000000b003c15f7efd78mr20271927pgq.56.1652806030507; Tue, 17
- May 2022 09:47:10 -0700 (PDT)
-Date:   Tue, 17 May 2022 09:47:06 -0700
-In-Reply-To: <xmqqk0alyqyj.fsf_-_@gitster.g>
-Message-Id: <kl6lo7zwhzsl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
- <xmqqczgzdc1r.fsf@gitster.g> <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqq1qxfbqtq.fsf@gitster.g> <kl6lczghj7tn.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqpmkg8z58.fsf@gitster.g> <kl6l7d6ljrrg.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqq4k1p2v40.fsf@gitster.g> <xmqqwnel1eqb.fsf@gitster.g> <xmqqczgd16wx.fsf_-_@gitster.g>
- <xmqqk0alyqyj.fsf_-_@gitster.g>
-Subject: Re: [PATCH v2] fetch: do not run a redundant fetch from submodule
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Benedek Kozma <cyberbeni@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5L6SOo5F/HUI2kufRUrMQPP8m5oy+oLLd7gQZE9ie9E=;
+        b=YnPu7W1mKY6HHI3I8IMJyss4XDOaRSAnVeA+HM5iqN6oC+b1MiqrYNqlM05kB6tjfV
+         wfU2xwXAzmeA6TAb2y4EUoZlQ+Pnu+xFDDT7RhurB1/r1NnJlY2ABKTqVkTZ4GPWxALP
+         twPqDeOkr9brEnrsH0M3REV5OpKdqjpgBcCEvirqDH8KvZKzozonVwJ+nuWmF23SueTy
+         18mHIHrc0Ci8Or3vbcZEDZSEQadPxAfHff8QchLzBiZ8Mj8msNmoi6bDyD0D2JKRyki5
+         nKQ5DQpE1HAdZ6prhpj1J7ERY86j4F3j/WIkstSfyNw74RH1fMyPj99h5NJR/eR2Rod8
+         nIvw==
+X-Gm-Message-State: AOAM531UU+MHs71yLpBMNwJmp3X5Py/vDplcbgKMAXb9UhvFPvHwVkQy
+        KTbmlgLgq39hAQpp6CpOsE5sUy0sIqRAF/th/kFzpQ==
+X-Google-Smtp-Source: ABdhPJxVM0XyAy75+pxbdy9VCAvEO9Bg6qqAFJkiVvlMFZCJsnrNEM7MvYfEj0USuQjhDC0u59fUCrjayh4ni6ICops=
+X-Received: by 2002:a19:4303:0:b0:473:f5fb:27b2 with SMTP id
+ q3-20020a194303000000b00473f5fb27b2mr17399323lfa.626.1652806977127; Tue, 17
+ May 2022 10:02:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220510220821.1481801-1-tbodt@google.com> <0fc70bd3-5883-47e4-1814-6ed6c756a400@gmail.com>
+ <CAN0heSper1O2ZdFq6RE=7znC0o+sFEsd8CBR3ckFtSoZu7Bzfw@mail.gmail.com>
+In-Reply-To: <CAN0heSper1O2ZdFq6RE=7znC0o+sFEsd8CBR3ckFtSoZu7Bzfw@mail.gmail.com>
+From:   Theodore Dubois <tbodt@google.com>
+Date:   Tue, 17 May 2022 10:02:36 -0700
+Message-ID: <CAN3rvwBWBPLB+Pm14S5Nb9LOV6ajhT8qMbwi5bBm1pK_8AgN5g@mail.gmail.com>
+Subject: Re: [PATCH] getpriority: Only getpriority translation the priority values
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Alejandro Colomar <alx.manpages@gmail.com>,
+        linux-man@vger.kernel.org, mtk.manpages@gmail.com,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Yep, I have diff.noprefix on.
 
-This version looks good to me, thanks :)
+~Theodore
 
-  Reviewed-by: Glen Choo <chooglen@google.com>
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> t5617 is much cleanly organized than t5526, and we may want to clean
-> up the latter after dust settles.
-
-Yeah, t5526 has so many tests for the 'core' functionality that it's
-hard to fit something 'tangential' like "--all". I might touch it again
-soon, so I'll keep this in mind.
-
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index e3791f09ed..8b15c40bb2 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -2261,7 +2265,17 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->  		result = fetch_multiple(&list, max_children);
->  	}
->  
-> -	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
-> +
-> +	/*
-> +	 * This is only needed after fetch_one(), which does not fetch
-> +	 * submodules by itself.
-> +	 *
-> +	 * When we fetch from multiple remotes, fetch_multiple() has
-> +	 * already updated submodules to grab commits necessary for
-> +	 * the fetched history from each remote, so there is no need
-> +	 * to fetch submodules from here.
-> +	 */
-> +	if (!result && remote && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
->  		struct strvec options = STRVEC_INIT;
->  		int max_children = max_jobs;
-
-Looks good; the comment is easier to understand than my suggestion for
-sure.
-
-> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-> index 43dada8544..a301b56db8 100755
-> --- a/t/t5526-fetch-submodules.sh
-> +++ b/t/t5526-fetch-submodules.sh
-> @@ -1125,4 +1125,31 @@ test_expect_success 'fetch --recurse-submodules updates name-conflicted, unpopul
->  	)
->  '
->  
-> +test_expect_success 'fetch --all with --recurse-submodules' '
-> +	test_when_finished "rm -fr src_clone" &&
-> +	git clone --recurse-submodules src src_clone &&
-> +	(
-> +		cd src_clone &&
-> +		git config submodule.recurse true &&
-> +		git config fetch.parallel 0 &&
-> +		git fetch --all 2>../fetch-log
-> +	) &&
-> +	grep "^Fetching submodule sub$" fetch-log >fetch-subs &&
-> +	test_line_count = 1 fetch-subs
-> +'
-> +
-> +test_expect_success 'fetch --all with --recurse-submodules with multiple' '
-> +	test_when_finished "rm -fr src_clone" &&
-> +	git clone --recurse-submodules src src_clone &&
-> +	(
-> +		cd src_clone &&
-> +		git remote add secondary ../src &&
-> +		git config submodule.recurse true &&
-> +		git config fetch.parallel 0 &&
-> +		git fetch --all 2>../fetch-log
-> +	) &&
-> +	grep "Fetching submodule sub" fetch-log >fetch-subs &&
-> +	test_line_count = 2 fetch-subs
-> +'
-> +
-
-Also looks good.
+On Sat, May 14, 2022 at 11:43 AM Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+>
+> On Sat, 14 May 2022 at 17:11, Alejandro Colomar <alx.manpages@gmail.com> =
+wrote:
+> >
+> > BTW, I had to manually edit the patch.
+> > It's the second time I see this (I can't find the other one), your patc=
+h
+> > didn't apply for the following reason: the a/ and b/ prefixes in the
+> > file paths are missing.  Did you use git-format-patch(1) to produce the
+> > patch?  Can you reproduce this?
+> >
+> > I CCd the git mailing list in case they know what's going on.
+>
+> Sounds like `git format-patch --no-prefix` at play. Or more likely, that
+> the `diff.noprefix` config is on. I don't think it can be cancelled out
+> by a `--no-no-prefix`, unfortunately. If a script is involved in running
+> `git format-patch`, maybe it's not too tedious to make it do
+>
+>   git -c diff.noprefix=3Dno format-patch ...
+>
+> to cancel the config. (If that config really does want to be on, that
+> is.)
+>
+> That said, something like
+>
+>   git am -p0 ...
+>
+> should help on the receiving side, by way of skipping fewer path
+> components when applying the patch.
+>
+> Martin
