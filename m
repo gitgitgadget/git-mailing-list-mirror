@@ -2,136 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 205D6C433F5
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 08:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F77FC433F5
+	for <git@archiver.kernel.org>; Tue, 17 May 2022 10:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242289AbiEQIX6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 04:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
+        id S244846AbiEQKZQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 May 2022 06:25:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234309AbiEQIXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 04:23:55 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0805033370
-        for <git@vger.kernel.org>; Tue, 17 May 2022 01:23:53 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id eg11so7539935edb.11
-        for <git@vger.kernel.org>; Tue, 17 May 2022 01:23:52 -0700 (PDT)
+        with ESMTP id S1344125AbiEQKY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 May 2022 06:24:59 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA1A4C429
+        for <git@vger.kernel.org>; Tue, 17 May 2022 03:23:57 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id i27so33720142ejd.9
+        for <git@vger.kernel.org>; Tue, 17 May 2022 03:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mUdmw2zOJg9i8eIRMGwPSAzZkPGh7TNdHGMtuH7DjXg=;
-        b=i5r1ALnsGcQKk68QSrGcTk2RI2IP73IlOLWuW+vOJPguRGrwTpfuGdLdSa4+dnL12/
-         6nA7MGBsZ/1UMsxSycNbpRbOwJNov6IbofRjL7mLrnfi7bK1WN2QrqOOt73GeIZhBDRN
-         5bTzjINetKyRN6gUBeF0QZEpNAICFb+r+RRk4vLadnXRe06OQhIAxmjjrn3Ydqg3ki/3
-         CCqVWJ5DziX0jAxFywADwDCNo0M83czIhHWuNu/5njzMgbE2cuh/UYD4iY/oDYKd+loa
-         JTV5RDRpuYvRKwegME9lzzwgamDzdOabkO193ZQqtKSQ0RZ3brVD172DhaW3+829jJj9
-         g2LA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=n6Ji9ZgpqyqS/xu6W5VXJDdS1PA4wV4lFa9QrqcIri0=;
+        b=RBdVfgFd8sMuKhS/oPUza3jKQ6xR4u+D6ZexYts01sUNZMNKCpyAd+seID+x8a2T4/
+         jNs12V2lL7pvEUnA9Q0LiCw4KUJfMuD5NH/D/kmfzvsdNP+Rq1jGvi/eYCkASKMtFVun
+         /1VizV7BDsD0a/ckJXGbMCV5JW6MZqrqUJjT3nhdZmNoIUu/euHKswMw1/K6xASnSV4b
+         WAOgIQ78nutTvTmx7gXhIP49/6co7arz3uIZg+VUgXrMMTbItNkAzMfgnsUGFuzcxHCo
+         flQs4pGVRltMkbyIz2cG4Hs2AAHcphqmsiQ+Hy4HA7nqPOG/h3nwTUaO2bezjCHq6ET3
+         7ENg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mUdmw2zOJg9i8eIRMGwPSAzZkPGh7TNdHGMtuH7DjXg=;
-        b=OxFkZAzN6aB5EdtelHmTYgO0NxTlAv+wTtwQN6ifenuXhEN7JVMEYzOwBE4nMyKAsO
-         GfJ7KmcRBhtpCPdsqu9wQZfKLT6pBZUvB+FbakQpr9Xl2dfrcvDlLFyLhRjfMcUj7z6t
-         NYa+gTnStc1MEI0uBlSUxDQzSERE1sD9Pv01kPBhEqFquvv+hRCNfCJsL70LLDhOEwU+
-         sb4L374mpPynNrjPHgGEmyz8U+NAO7UMLdIcg0rIlSBQDaKYChtcXp4zjFGGGaJh2ZAg
-         JlFAk9Poztc89pakvo4WpNzyDNVLADIf7yRQwpd71htiJc1JMlYF5w55IsZLD8jtUqCm
-         AdAA==
-X-Gm-Message-State: AOAM5334ObhFEHwKcdwLdp0HQZXUlwOYoWk31JexzACa8gjceaqO1iEg
-        1KAZakRxsSYdc8Dme4dLygeqyOlWMJ6RA/ealkA=
-X-Google-Smtp-Source: ABdhPJwwJsDtXVLanrpIVPb1FnCqCvSyX3DGsUB2MNE5HG7oZi3dANOW7KbfgnC7tixXA97JVdlv1nXt0fW6kWaM/6c=
-X-Received: by 2002:a05:6402:50d2:b0:428:b39:5c08 with SMTP id
- h18-20020a05640250d200b004280b395c08mr17567664edb.146.1652775831558; Tue, 17
- May 2022 01:23:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
- <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet> <CABPp-BGnqXdFBNAyKRXgvCHv+aUZTMg-CgcQf95dKAR-e1zSjQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2203071718090.11118@tvgsbejvaqbjf.bet> <CABPp-BGW39_5r8Lbt3ymR+F_=hWJcf=2e7O75vFNJ=3CEL5s=g@mail.gmail.com>
- <nycvar.QRO.7.76.6.2203101546110.357@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2205131220200.352@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2205131220200.352@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 17 May 2022 01:23:40 -0700
-Message-ID: <CABPp-BHQPrun3xhXBhbBnZ9cAy1sV7_r-kGsQhC-YsRMvoERmw@mail.gmail.com>
-Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
- helper function
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=n6Ji9ZgpqyqS/xu6W5VXJDdS1PA4wV4lFa9QrqcIri0=;
+        b=AeJiySHeNFbAiKu3kdO5z/B3sl5J80tE9m4E6aP3A6RLfwBq0Q/k480TwibFcmUPOW
+         ABrsU2A+Yao5sBgSI+UPXK9VyfelKixODyeNWRe8/8rABmtGJfgWK+C0kXcu0Uoqkdan
+         9mbK87HX+2/fceJ7z7lsaCGXK2khke9qThcfnvfz/rUSfc1ZKrJ3cp9dH+1hOtv3TlaF
+         t3UjCGWljqIgYnFXtTf0lrelQYCqLUlaKQzGnedsp2/o3suhUqb5rEzgNTuI4Ihk8Joe
+         UpZI8SqtYFUt+6iidbNiQ7cxBQLlLHuQwyGbFgPc5x9wEh7jy4A35GPLyWLp3rogQcOb
+         nVRg==
+X-Gm-Message-State: AOAM532x9oSYGCY0PLLGXYzeaZ5x2kFSi3n580IqWKb2M+aenllBVWKC
+        OgZmT4lM+HOYUJpmA5kZgxk=
+X-Google-Smtp-Source: ABdhPJyB+iuCnC3YLvMyVwcZxKejvGIfz+x8ItGuc1U0bfx2RrVwcemCN9XB4SqtI5neP3GLVNEQvQ==
+X-Received: by 2002:a17:907:3f15:b0:6fc:30f0:6561 with SMTP id hq21-20020a1709073f1500b006fc30f06561mr18754809ejc.691.1652783035411;
+        Tue, 17 May 2022 03:23:55 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id zd20-20020a17090698d400b006f3ef214e46sm852316ejb.172.2022.05.17.03.23.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 May 2022 03:23:54 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nquMq-001TEp-Pw;
+        Tue, 17 May 2022 12:23:52 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+        Thomas Hurst <tom@hur.st>
+Subject: Re: Corrupt name-rev output
+Date:   Tue, 17 May 2022 12:15:20 +0200
+References: <Ylw+M5wwUYKcLM+M@voi.aagh.net> <xmqq4k2otpkb.fsf@gitster.g>
+ <CABPp-BGd8194tPo97Zmuu2xX_aqHYfBrVUX0F0r6EPAaUA3U2w@mail.gmail.com>
+ <779eb30b-fdb9-81fb-5d43-c8d388c5cb5a@web.de>
+ <340c8810-d912-7b18-d46e-a9d43f20216a@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <340c8810-d912-7b18-d46e-a9d43f20216a@web.de>
+Message-ID: <220517.86sfp878zr.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
 
-On Fri, May 13, 2022 at 3:21 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Elijah,
->
-> On Thu, 10 Mar 2022, Johannes Schindelin wrote:
->
-> > On Tue, 8 Mar 2022, Elijah Newren wrote:
-> >
-> > > So, this is one series where even if everyone else says to merge it
-> > > already, I'd like to wait a bit longer on it until I feel confident we
-> > > have a solution that handles at least the current usecases.
-> >
-> > Fair enough, you're in charge of this series, and I really like what you
-> > came up with.
-> >
-> > My thinking was driven more by the users' side, as I am relatively eager
-> > to integrate this into production, but am loathe to do that with an early
-> > iteration of `en/merge-tree` that might be substantially revamped, still.
->
-> I've been bogged down with things elsewhere, but should now have time to
-> help on this end.
->
-> Elijah, _is_ there anything I can help with?
+On Fri, Apr 22 2022, Ren=C3=A9 Scharfe wrote:
 
-Yeah, I've been bogged down with other things too; the little Git time
-I've had has been spent responding to review requests or other things
-folks manually were asking for my input on.
+> Am 21.04.22 um 19:55 schrieb Ren=C3=A9 Scharfe:
+>> Am 21.04.22 um 04:11 schrieb Elijah Newren:
+>>
+>>> Reverting 2d53975488 fixes the problem.
+>>
+>> That's a good band-aid.
+> Or perhaps it's all we need.  I can't replicate the original reduction
+> of peak memory usage for the Chromium repo anymore.  In fact, the very
+> next commit, 079f970971 (name-rev: sort tip names before applying,
+> 2020-02-05), reduced the number of times free(3) is called there from
+> 44245 to 5, and 3656f84278 (name-rev: prefer shorter names over
+> following merges, 2021-12-04) brought that number down to zero.
+>
+> I can't reproduce the issue with the hardenedBSD repo, by the way, but
+> e.g. with 'git name-rev 58b82150da' in the Linux repo.
+>
+> --- >8 ---
+> Subject: [PATCH] Revert "name-rev: release unused name strings"
+>
+> This reverts commit 2d53975488df195e1431c3f90bfb5b60018d5bf6.
+>
+> 3656f84278 (name-rev: prefer shorter names over following merges,
+> 2021-12-04) broke the assumption of 2d53975488 (name-rev: release unused
+> name strings, 2020-02-04) that a better name for a child is a better
+> name for all of its ancestors as well, because it added a penalty for
+> generation > 0.  This leads to strings being free(3)'d that are still
+> needed.
+>
+> 079f970971 (name-rev: sort tip names before applying, 2020-02-05)
+> already reduced the number of free(3) calls for the use case that
+> motivated the original patch (name-rev --all in the Chromium repository)
+> from ca. 44000 to 5, and 3656f84278 eliminated even those few.  So this
+> revert won't affect name-rev's performance on that particular repo.
+>
+> Reported-by: Thomas Hurst <tom@hur.st>
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  builtin/name-rev.c | 21 +++++----------------
+>  1 file changed, 5 insertions(+), 16 deletions(-)
+>
+> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> index c59b5699fe..02ea9d1633 100644
+> --- a/builtin/name-rev.c
+> +++ b/builtin/name-rev.c
+> @@ -18,7 +18,7 @@
+>  #define CUTOFF_DATE_SLOP 86400
+>
+>  struct rev_name {
+> -	char *tip_name;
+> +	const char *tip_name;
+>  	timestamp_t taggerdate;
+>  	int generation;
+>  	int distance;
+> @@ -84,7 +84,7 @@ static int commit_is_before_cutoff(struct commit *commi=
+t)
+>
+>  static int is_valid_rev_name(const struct rev_name *name)
+>  {
+> -	return name && (name->generation || name->tip_name);
+> +	return name && name->tip_name;
+>  }
+>
+>  static struct rev_name *get_commit_rev_name(const struct commit *commit)
+> @@ -146,20 +146,9 @@ static struct rev_name *create_or_update_name(struct=
+ commit *commit,
+>  {
+>  	struct rev_name *name =3D commit_rev_name_at(&rev_names, commit);
+>
+> -	if (is_valid_rev_name(name)) {
+> -		if (!is_better_name(name, taggerdate, generation, distance, from_tag))
+> -			return NULL;
+> -
+> -		/*
+> -		 * This string might still be shared with ancestors
+> -		 * (generation > 0).  We can release it here regardless,
+> -		 * because the new name that has just won will be better
+> -		 * for them as well, so name_rev() will replace these
+> -		 * stale pointers when it processes the parents.
+> -		 */
+> -		if (!name->generation)
+> -			free(name->tip_name);
+> -	}
+> +	if (is_valid_rev_name(name) &&
+> +	    !is_better_name(name, taggerdate, generation, distance, from_tag))
+> +		return NULL;
+>
+>  	name->taggerdate =3D taggerdate;
+>  	name->generation =3D generation;
 
-I think I got a fair amount of this implemented about a month or so
-ago.  I just pushed up what I have to the wip-for-in-core-merge-tree
-branch of newren/git.  Some notes:
+I haven't dug into whether it's a false positive, but with this change
+GCC's -fanalyzer has started complaining about a potential NULL
+dereference:
 
-  * A big "WIP" commit that needs to be broken up
-  * The previous "output" member of merge_result, containing a strmap
-of conflict and informational messages (basically a mapping of
-filename -> strbuf) now needs to be replaced by a strmap "conflicts",
-which is now a mapping of primary_filename -> logical_conflicts, and
-logical_conflicts is an array of logical_conflict, and
-logical_conflict has a type, array of paths, and message.
-  * Since "output" is no longer part of merge_result, the new
-remerge-diff functionality is going to need to be modified since it
-used that field, and instead iterate on "conflicts" to get the same
-information
-  * I have some FIXME comments in a couple places where I need to
-figure out how I want to pass the variable number of arguments (in a
-function already accepting a variable number of arguments for other
-reasons, making the function in a way have to variable length lists of
-arguments)
-  * The new enums and structs I added to merge-ort.c really have to be
-added to merge-ort.h and become part of the API.  Feels a little
-unfortunate since it'll make the API _much_ more involved, but I don't
-see any other way to solve your usecase.
+    builtin/name-rev.c:230:50: error: dereference of NULL =E2=80=98name=E2=
+=80=99 [CWE-476] [-Werror=3Danalyzer-null-dereference]
+      230 |                                 generation =3D name->generation=
+ + 1;
 
-If you want to take a stab at the above, or even see if my changes
-make sense (sorry for it all being squashed into one big commit and
-not having good commit messages, but, you know...you did ask), that'd
-be great.
+This "fixes" it, and passes all tests, but presumably a better fix
+involves the callers of get_commit_rev_name() (or that function itself)
+deciding if they're OK with NULL here earlier?:
+=09
+	diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+	index 02ea9d16330..1d3a620ac72 100644
+	--- a/builtin/name-rev.c
+	+++ b/builtin/name-rev.c
+	@@ -209,6 +209,7 @@ static void name_rev(struct commit *start_commit,
+	 		struct rev_name *name =3D get_commit_rev_name(commit);
+	 		struct commit_list *parents;
+	 		int parent_number =3D 1;
+	+		assert(name);
+=09=20
+	 		parents_to_queue_nr =3D 0;
+=09=20
+=09
