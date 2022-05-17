@@ -2,113 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16194C433EF
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 13:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A13C433F5
+	for <git@archiver.kernel.org>; Tue, 17 May 2022 14:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347280AbiEQN6x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 09:58:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52324 "EHLO
+        id S243694AbiEQOxZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 May 2022 10:53:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348275AbiEQN6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 09:58:48 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D69FA4D604
-        for <git@vger.kernel.org>; Tue, 17 May 2022 06:58:42 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id n23so7601887edy.0
-        for <git@vger.kernel.org>; Tue, 17 May 2022 06:58:42 -0700 (PDT)
+        with ESMTP id S1349471AbiEQOxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 May 2022 10:53:21 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D53848E60
+        for <git@vger.kernel.org>; Tue, 17 May 2022 07:52:44 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id i9so3669778edr.8
+        for <git@vger.kernel.org>; Tue, 17 May 2022 07:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=SfEdqcXW7R5kWLef2TihZhV5qO2BvwnWueJDclCpKTI=;
-        b=anGEXkjzeSMvB65An4oR9PYl7RsCMI75kFhvBiNM22QoTu1UB7vJd2cNxLTkteSN45
-         giWc6zprL6SrM4JhdIzi7GrowPPlqlTLB6S2r9lejv3TRMAF9/odxZi31p8ABGyizQHB
-         LrO+TjlQq1VoTJcYVNtgmSyXGj6UgA9UKzVjgsGtogLXc9XWGjFiCtYHCXJ4BdJK0WS6
-         Fob2KWQvSmnWijpBUzT4aQNllrqXbOU8Gc2kyvIJugVaMd+6iaE9LfMfBKpyPKKym8T1
-         q1YypJMKHYjSmnjIh69BeTq1JkgL7SffewBMa/ySOR58zpNwTq4VfsYQXO+CQI+vXlDz
-         fXDg==
+         :message-id:mime-version;
+        bh=KyQLN/VmE05UPTrvFiRT5Z/7ZmMfpQ26L9vnPyy/35Q=;
+        b=qz3HTLKJV9z/ridewKfd0S+WId9SxF4BiJVKZpfYRyUOKgQyELLMVvFun8cR1CP6ys
+         6Vm8Z1ICkMIuvEB3SM/4Uy17Fqf2+GHfyVxkeDGlzKlb7TPq4ApP1hiVFWC3wJ2bC2V7
+         grKVZxU0GbUfeGLCqGhChCBZ8bJvnip7ZtjO75vaXxrNdkB+DpTDUxCzwKmzCHBSPEMv
+         pYkF+UvK++Uu7xDL1jVkxLZJ/OnGkyOh+y00Fm+SGrPy42QbbXe5KUuWr+b5BtY5z5JI
+         Jqv4iOZItuyWdnovTm7VodU13tuHcDuXbd3Q7W4YZXBVe3+weHqtkKZcEeWh1Hoq4RI5
+         tQpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=SfEdqcXW7R5kWLef2TihZhV5qO2BvwnWueJDclCpKTI=;
-        b=tlZzvEcsBRCZx8Z0Q9GG1KRVIjV5TKaj6ujANAP5udEl2BSTtE7M2I5VzyEx+m/pds
-         fwO573zUzpHKBoNMbza4Jj/E9/kRprXAWm7XLqaxV1V/v2RjasOU5YisL0qCUdM1ae+i
-         xziEXaAYc+GXv6kbWsYlrJUtWDOiKw9JEjKRYojmLP/0gPcvkSEfSCPMyUK5vuWcHe5W
-         HqrKboCfkXOlUJHWxob9VDv9XvMAj4SsSepfBLu9rwfC3gnP7Y/0su7eDoKa7SeOdTGQ
-         fcloZFnMqvme13TJZa2CzqymOCpeOFCaeea6ddhtEr4kqmaaoJ2wcihBmaWfsqcT0gVY
-         3Emw==
-X-Gm-Message-State: AOAM5327KwelBbSu9B8SQnanzoFs0g1YdTVejgqvrDXaS0LjjbsJ41Cr
-        O5tuyG5jKtGi41Z46VMtnMTTgAOf49E=
-X-Google-Smtp-Source: ABdhPJy446VA08f4LGEaPLgSHZ22Frdozjysf978YNA//38AtBq1rXtR+ki+NnQtTNieQd0NgxGb4g==
-X-Received: by 2002:a50:ed12:0:b0:42a:a8d3:12c with SMTP id j18-20020a50ed12000000b0042aa8d3012cmr14467292eds.337.1652795921365;
-        Tue, 17 May 2022 06:58:41 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=KyQLN/VmE05UPTrvFiRT5Z/7ZmMfpQ26L9vnPyy/35Q=;
+        b=i12zYFhPXLdGkJ4JXq3iW30pvVDGmPhXcZy+GY9yPzUSJCzuCWPcghkbhFAHAcUWu1
+         upgvaa+1VpoyP+QGV35pb9VAXa6JwzHNYzuchn+21sNnLypxXM772FKcZr0p+gzgXWdF
+         c9HOSI/Sb0S83VbCt47YPHTgxt/ljUrP1AOkrVPR9FoIan2sqXa5wlQOgN23rUVSf1e0
+         RVSMMB+N5tqlny0koFFFb/24WgLnz6PdW5lA9Oyfx/hP6Cdz2XkyftqWoZpVDui1ZYkC
+         QQWrpYEaW+SHQofeqnz7i1bOotk7lBewO847xKwNOKS11J5YhFUozfq9p0pv2zNjcPjK
+         hQhg==
+X-Gm-Message-State: AOAM532J5mlQL4rI0ny8aQbp7bvRPdodt8sWIOcMoi20cbxorR50OXGd
+        qXnF9gPsf5V3UIsSA0tfN++6J2xel8A=
+X-Google-Smtp-Source: ABdhPJz0zBxTmzUsAocjVSku/ROFGbZC5QG1vgRTnLoKs+ryQiRfffqb3abYR/uJNagFl/LrRRZbDw==
+X-Received: by 2002:a05:6402:42d4:b0:416:5cac:a9a0 with SMTP id i20-20020a05640242d400b004165caca9a0mr19549104edc.86.1652799162059;
+        Tue, 17 May 2022 07:52:42 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id 12-20020a17090602cc00b006fe7725ed7dsm154190ejk.34.2022.05.17.06.58.40
+        by smtp.gmail.com with ESMTPSA id t25-20020a170906a11900b006f3ef214dd0sm1126331ejy.54.2022.05.17.07.52.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 May 2022 06:58:40 -0700 (PDT)
+        Tue, 17 May 2022 07:52:41 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nqxih-001b5e-Vz;
-        Tue, 17 May 2022 15:58:39 +0200
+        id 1nqyYy-001dIC-8L;
+        Tue, 17 May 2022 16:52:40 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] commit: fix "author_ident" leak
-Date:   Tue, 17 May 2022 15:48:29 +0200
-References: <cover-0.2-00000000000-20220216T081844Z-avarab@gmail.com>
- <xmqqzgjmcqlg.fsf@gitster.g>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 3/7] scalar: validate the optional enlistment argument
+Date:   Tue, 17 May 2022 16:51:59 +0200
+References: <pull.1128.v3.git.1651677919.gitgitgadget@gmail.com>
+ <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
+ <da9f52a82406ffc909e9c5f2b6b5e77818d972c0.1652210824.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqzgjmcqlg.fsf@gitster.g>
-Message-ID: <220517.86fsl86z1s.gmgdl@evledraar.gmail.com>
+In-reply-to: <da9f52a82406ffc909e9c5f2b6b5e77818d972c0.1652210824.git.gitgitgadget@gmail.com>
+Message-ID: <220517.867d6k6wjr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, May 12 2022, Junio C Hamano wrote:
+On Tue, May 10 2022, Johannes Schindelin via GitGitGadget wrote:
 
-> Since 4c28e4ada03 (commit: die before asking to edit the log
-> message, 2010-12-20), we have been "leaking" the "author_ident" when
-> prepare_to_commit() fails.  Instead of returning from right there,
-> introduce an exit status variable and jump to the clean-up label
-> at the end.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Instead of explicitly releasing the resource with strbuf_release(),
-> mark the variable with UNLEAK() at the end, together with two other
-> variables that are already marked as such.  If this were in a
-> utility function that is called number of times, but these are
-> different, we should explicitly release resources that grow
-> proportionally to the size of the problem being solved, but
-> cmd_commit() is like main() and there is no point in spending extra
-> cycles to release individual pieces of resource at the end, just
-> before process exit will clean everything for us for free anyway.
+> The `scalar` command needs a Scalar enlistment for many subcommands, and
+> looks in the current directory for such an enlistment (traversing the
+> parent directories until it finds one).
 >
-> This fixes a leak demonstrated by e.g. "t3505-cherry-pick-empty.sh",
-> but unfortunately we cannot mark it or other affected tests as passing
-> now with "TEST_PASSES_SANITIZE_LEAK=3Dtrue" as we'll need to fix many
-> other memory leaks before doing so.
+> These is subcommands can also be called with an optional argument
+> specifying the enlistment. Here, too, we traverse parent directories as
+> needed, until we find an enlistment.
 >
-> Incidentally there are two tests that always passes the leak checker
-> with or without this change.  Mark them as such.
+> However, if the specified directory does not even exist, or is not a
+> directory, we should stop right there, with an error message.
 >
-> This is based on an earlier patch by =C3=86var, but takes a different
-> approach that is more maintainable.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  contrib/scalar/scalar.c          | 6 ++++--
+>  contrib/scalar/t/t9099-scalar.sh | 5 +++++
+>  2 files changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+> index 1ce9c2b00e8..00dcd4b50ef 100644
+> --- a/contrib/scalar/scalar.c
+> +++ b/contrib/scalar/scalar.c
+> @@ -43,9 +43,11 @@ static void setup_enlistment_directory(int argc, const char **argv,
+>  		usage_with_options(usagestr, options);
+>  
+>  	/* find the worktree, determine its corresponding root */
+> -	if (argc == 1)
+> +	if (argc == 1) {
+>  		strbuf_add_absolute_path(&path, argv[0]);
+> -	else if (strbuf_getcwd(&path) < 0)
+> +		if (!is_directory(path.buf))
+> +			die(_("'%s' does not exist"), path.buf);
+> +	} else if (strbuf_getcwd(&path) < 0)
+>  		die(_("need a working directory"));
+>  
+>  	strbuf_trim_trailing_dir_sep(&path);
+> diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+> index 2e1502ad45e..9d83fdf25e8 100755
+> --- a/contrib/scalar/t/t9099-scalar.sh
+> +++ b/contrib/scalar/t/t9099-scalar.sh
+> @@ -85,4 +85,9 @@ test_expect_success 'scalar delete with enlistment' '
+>  	test_path_is_missing cloned
+>  '
+>  
+> +test_expect_success '`scalar [...] <dir>` errors out when dir is missing' '
+> +	! scalar run config cloned 2>err &&
 
-We've talked about UNLEAK() v.s. strbuf_release() elsewhere, so let's
-leave that aside. I know your preferences in that area.
-
-But even accounting for that, I don't see what the "more maintainable"
-here refers to. The approach I suggested would s/UNLEAK/strbuf_release/
-in the 4th hunk, but otherwise be equivalent.
-
-Surely both are about as easy to maintain. To the extent that there's
-any difference at all I'd think the strbuf_release() would pull ahead,
-as it's guaranteed to do the right thing with all of our memory analysis
-tooling (some of which will have a noop UNLEAK()).
-
-Just a small question, I see this is in "next" already, and I'm fine
-with this change either way.
+Needs to use test_must_fail, not !
