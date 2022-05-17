@@ -2,198 +2,289 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22AA1C433EF
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 18:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0FC8C433EF
+	for <git@archiver.kernel.org>; Tue, 17 May 2022 19:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344313AbiEQS4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 14:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48162 "EHLO
+        id S1352662AbiEQT1C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 May 2022 15:27:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352388AbiEQS4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 14:56:34 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A487E1583A
-        for <git@vger.kernel.org>; Tue, 17 May 2022 11:56:32 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id v140-20020a252f92000000b0064d955c7b4eso4210906ybv.18
-        for <git@vger.kernel.org>; Tue, 17 May 2022 11:56:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bt6RHZwbyq0s7LDDyrHRkXoWzCRQhBm+Hs5Lnsm1ZJo=;
-        b=R5mUw5vOXgU65SmfxV6I3Sm4QOzjAulwJ4w4noS2yBo96Q9N2wS7XC95gX50xtjfVC
-         qJXQDidvgWZ8KEbnMkE9rduANlekyz9hSKRNgkNq0UTDnIs8U1dzuGkcp17RDXHyo6RC
-         wty7V8drgjXUz9vzNKVElXBDpskAelvtTCLEmPtI7K+aQIKPFh3jRdHHPPanBmnZP6FQ
-         0u4Bem5XK9zoGHHzwDNVwbGrAhz1SZi0TlJIQau6BkZcGB3GdX4s3I6GzBcLQgNOr9LM
-         18qvEjbuiOaEplK3hCH8JXvhKtfTTBjm75xsAJVKWOLq2gmDr4617ZlqUh7CfmdRieXJ
-         HtPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bt6RHZwbyq0s7LDDyrHRkXoWzCRQhBm+Hs5Lnsm1ZJo=;
-        b=cegBVbHfLEPHHVj65JIy6wVTef0EIHsnh4nYq4pRqy6RtcNd4LYjyDRwUcLQLT5T+/
-         aS2MA30riWB2PERan1jOfxilyoHkrBt3+S6fArR095FOkuRQbmq1+VHMNrITMZfAJlE1
-         Ndh6t4/FCcZwni56jCKX9JI9VlnNAF/81Or04Mps+KcavVIXknT9mk3PSWvQ5FK017A8
-         /la5yPbhFSr3MY7+1DL5kkt1U360WRZFEPMRnxuVFG+lLuB2+KNrvk6I9Mwlut4kk4P1
-         T25naHIw4QF3l2FbC3IRQxrG1Q5qdDqk+XXP6k8z40iZZsckWQ+VpSr8XgoXYCr5ae9G
-         7c1A==
-X-Gm-Message-State: AOAM533/SIn1l6kVZgpd9noLnanFkoj1Yesel5caau+SBDfmmbaKoVo3
-        9TbIIj9Ui7Lp2bs+OcVUJsLyw4uB5QIsJA==
-X-Google-Smtp-Source: ABdhPJwFoKHA4gEFEA1yA82yojNZ6wvEs/0EBWecvBci/Njzv15xPq77OM4xpE8857lidsWxO5UzL1zi9mcLvQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6902:1007:b0:649:7745:d393 with SMTP
- id w7-20020a056902100700b006497745d393mr24520341ybt.407.1652813791656; Tue,
- 17 May 2022 11:56:31 -0700 (PDT)
-Date:   Tue, 17 May 2022 11:56:29 -0700
-In-Reply-To: <5b969c5e-e802-c447-ad25-6acc0b784582@github.com>
-Message-Id: <kl6llev0htsy.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
- <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com> <5b969c5e-e802-c447-ad25-6acc0b784582@github.com>
-Subject: Re: [PATCH v2 0/2] setup.c: make bare repo discovery optional
-From:   Glen Choo <chooglen@google.com>
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S241252AbiEQT1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 May 2022 15:27:00 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33DBD17047
+        for <git@vger.kernel.org>; Tue, 17 May 2022 12:26:58 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 1BE233F4128;
+        Tue, 17 May 2022 15:26:58 -0400 (EDT)
+Received: from REPLICASERVER01.azshci.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id B447A3F4104;
+        Tue, 17 May 2022 15:26:57 -0400 (EDT)
+Subject: Re: [PATCH v6 01/28] fsm-listen-win32: handle shortnames
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Torsten B??gershausen <tboegi@web.de>, rsbecker@nexbridge.com,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1143.v5.git.1650487398.gitgitgadget@gmail.com>
+ <pull.1143.v6.git.1650662994.gitgitgadget@gmail.com>
+ <8b7c5f4e234e5b139b640652fcfdafb2e24e9db8.1650662994.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2205121617460.352@tvgsbejvaqbjf.bet>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <59cfe53d-4529-b594-014c-ade72ba86c41@jeffhostetler.com>
+Date:   Tue, 17 May 2022 15:26:56 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
+MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.2205121617460.352@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Thanks, I think this has advanced the conversation quite a bit.
 
-Derrick Stolee <derrickstolee@github.com> writes:
-
-> On 5/13/2022 7:37 PM, Glen Choo via GitGitGadget wrote:
->> Thanks all for the comments on v1, I've expanded this series somewhat to
->> address them,...
->
-> Please include a full cover letter with each version, so reviewers
-> can respond to the full series goals.
->
-> Your series here intends to start protecting against malicious
-> embedded bare repositories by allowing users to opt-in to a more
-> protected state. When the 'discovery.bare' option is set, then
-> Git may die() on a bare repository that is discovered based on
-> the current working directory (these protections are ignored if
-> the user specifies the directory directly through --git-dir or
-> $GIT_DIR).
->
-> The 'discovery.bare' option has these values at the end of your
-> series:
->
-> * 'always' (default) allows all bare repos, matching the current
->   behavior of Git.
->
-> * 'never' avoids operating in bare repositories altogether.
->
-> * 'cwd' operates in a bare repository only if the current directory
->   is exactly the root of the bare repository.
-
-My mistake, I should have prepared this summary myself. Thanks again.
-
-> It is important that we keep 'always' as the default at first,
-> because we do not want to introduce a breaking change without
-> warning (at least for an issue like this that has been around
-> for a long time).
-
-Yes.
-
-> The 'never' option is a good one for very security-conscious
-> users who really want to avoid problems. I don't anticipate that
-> users who know about this option and set it themselves are the
-> type that would fall for the social engineering required to
-> attack using this vector, but I can imagine an IT department
-> installing the value in system config across a fleet of machines.
-
-Yes. Setting the 'never' option in a system config is the use case that
-motivated this.
-
-> I find the 'cwd' option to not be valuable. It unblocks most
-> existing users, but also almost completely removes the protection
-> that the option was supposed to provide.
-
-Ok, I agree that it provides next-to-no protection. I'll drop it in this
-series; it's easy enough to reimplement if users really want it anyway.
-
-> This leads to what I think would be a valuable replacement for
-> the 'cwd' option:
->
-> * 'no-embedded' allows non-embedded bare repositories. An
->   _embedded bare repository_ is a bare repository whose parent
->   directory is contained in the worktree of a non-bare Git
->   repository. When in this mode, embedded bare repositories are
->   not allowed unless the parent non-bare Git repository has a
->   'safe.embedded' config value storing the path to the current
->   embedded bare repository.
->
-> That was certainly difficult to write, but here it is as
-> pseudo-code to hopefully remove some doubt as to how this might
-> work:
->
->   if repo is bare:
->     if value == "always":
->        return ALLOWED
->     if value == "never":
->        return FORBIDDEN;
->
->     path = get_parent_repo()
->
->     if !path:
->        return ALLOWED
->     
->     if config_file_has_value("{path}/.git/config", "safe.embedded", repo):
->        return ALLOWED
->
->     return FORBIDDEN
->
-> With this kind of option, we can protect users from these
-> social engineering attacks while providing an opt-in protection
-> for scenarios where embedded bare repos are currently being used
-> (while also not breaking anyone using non-embedded bare repos).
-
+On 5/12/22 10:20 AM, Johannes Schindelin wrote:
+> Hi Jeff,
+> 
+> On Fri, 22 Apr 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Teach FSMonitor daemon on Windows to recognize shortname paths as
+>> aliases of normal longname paths.  FSMonitor clients, such as `git
+>> status`, should receive the longname spelling of changed files (when
+>> possible).
+>>
 [...]
 
-> This 'no-embedded' option is something that I could see as a
-> potential new default, after it has proven itself in a released
-> version of Git.
+>> +/*
+>> + * See if the worktree root directory has shortnames enabled.
+>> + * This will help us decide if we need to do an expensive shortname
+>> + * to longname conversion on every notification event.
+>> + *
+>> + * We do not want to create a file to test this, so we assume that the
+>> + * root directory contains a ".git" file or directory.  (Our caller
+>> + * only calls us for the worktree root, so this should be fine.)
+>> + *
+>> + * Remember the spelling of the shortname for ".git" if it exists.
+>> + */
+>> +static void check_for_shortnames(struct one_watch *watch)
+>> +{
+>> +	wchar_t buf_in[MAX_PATH + 1];
+>> +	wchar_t buf_out[MAX_PATH + 1];
+>> +	wchar_t *last_slash = NULL;
+>> +	wchar_t *last_bslash = NULL;
+>> +	wchar_t *last;
+>> +
+>> +	/* build L"<wt-root-path>/.git" */
+>> +	wcscpy(buf_in, watch->wpath_longname);
+>> +	wcscpy(buf_in + watch->wpath_longname_len, L".git");
+> 
+> Could you use `wcsncpy()` here (with the appropriate length designed not
+> to overrun the `buf_in` buffer?
+> 
+> Or even better: use `swprintf()` (which has a `count` parameter)? The
+> performance impact should be negligible because we only do this once,
+> right?
 
-I agree, this sounds like a good default that should work for most
-users.
+The RHS is a MAX_PATH buffer, so I don't think it was exploitable,
+but yes it is good to make it explicit.  Good catch. Thanks.
 
-That said, I don't think I will implement it, and even if I do, it won't
-be in this series. I have serious doubts that I'd be able to deliver it
-in a reasonable amount of time (I tried preparing patches to this effect
-and failed [1]), and 'never' is sufficient for $DAYJOB's current needs.
 
-I would be very happy to see this come to fruition though. I have no
-objections to anyone preparing patches for this, and I'll gladly review
-those if that's helpful.
+>> +
+>> +	if (!GetShortPathNameW(buf_in, buf_out, MAX_PATH))
+>> +		return;
+>> +
+>> +	last_slash = wcsrchr(buf_out, L'/');
+>> +	last_bslash = wcsrchr(buf_out, L'\\');
+>> +	if (last_slash > last_bslash)
+>> +		last = last_slash + 1;
+>> +	else if (last_bslash)
+>> +		last = last_bslash + 1;
+>> +	else
+>> +		last = buf_out;
+> 
+> While this is all correct, I would find it clearer to write this as
+> following:
+> 
+> 	for (filename = p = buf_out; *p; p++)
+> 		/* We can be sure that `buf_out` does not end in a slash */
+> 		if (*p == L'/' || *p == '\\')
+> 			filename = p + 1;
 
-[1] The specific trouble I had was figuring out whether or not the
- 'parent' repo was tracking the bare repo, since an untracked bare repo
- in the working tree isn't (in some sense) really "embedded" and it
- can't have come from a remote.
+sure.
 
- But maybe the tracking check is unnecessary. We would break a few more
- users without it, but 'safe.embedded' is an easy enough way for a user
- to unbreak themselves.
+> 
+>> +
+>> +	if (!wcscmp(last, L".git"))
+>> +		return;
+>> +
+>> +	watch->has_shortnames = 1;
+>> +	wcsncpy(watch->dotgit_shortname, last,
+>> +		ARRAY_SIZE(watch->dotgit_shortname));
+>> +
+>> +	/*
+>> +	 * The shortname for ".git" is usually of the form "GIT~1", so
+>> +	 * we should be able to avoid shortname to longname mapping on
+>> +	 * every notification event if the source string does not
+>> +	 * contain a "~".
+>> +	 *
+>> +	 * However, the documentation for GetLongPathNameW() says
+>> +	 * that there are filesystems that don't follow that pattern
+>> +	 * and warns against this optimization.
+>> +	 *
+>> +	 * Lets test this.
+>> +	 */
+>> +	if (wcschr(watch->dotgit_shortname, L'~'))
+>> +		watch->has_tilda = 1;
+>> +}
+>> +
+>> +enum get_relative_result {
+>> +	GRR_NO_CONVERSION_NEEDED,
+>> +	GRR_HAVE_CONVERSION,
+>> +	GRR_SHUTDOWN,
+>> +};
+>> +
+>> +/*
+>> + * Info notification paths are relative to the root of the watch.
+>> + * If our CWD is still at the root, then we can use relative paths
+>> + * to convert from shortnames to longnames.  If our process has a
+>> + * different CWD, then we need to construct an absolute path, do
+>> + * the conversion, and then return the root-relative portion.
+>> + *
+>> + * We use the longname form of the root as our basis and assume that
+>> + * it already has a trailing slash.
+>> + *
+>> + * `wpath_len` is in WCHARS not bytes.
+>> + */
+>> +static enum get_relative_result get_relative_longname(
+>> +	struct one_watch *watch,
+>> +	const wchar_t *wpath, DWORD wpath_len,
+>> +	wchar_t *wpath_longname)
+>> +{
+>> +	wchar_t buf_in[2 * MAX_PATH + 1];
+>> +	wchar_t buf_out[MAX_PATH + 1];
+>> +	DWORD root_len;
+>> +
+>> +	/* Build L"<wt-root-path>/<event-rel-path>" */
+>> +	root_len = watch->wpath_longname_len;
+>> +	wcsncpy(buf_in, watch->wpath_longname, root_len);
+>> +	wcsncpy(buf_in + root_len, wpath, wpath_len);
+> 
+> Here, too, I would like to have a check to prevent an overrun. Maybe
+> `swprintf()` again? I guess we could invent `xswprintf()` which would
+> return an error if the return value is -1 or if it used up the entire
+> buffer (i.e. if it overran).
 
-> I mentioned some other concerns in your PATCH 1 about how we
-> are now adding the third use of read_very_early_config() and that
-> we should probably refactor that before adding the third option,
-> in order to avoid additional performance costs as well as it
-> being difficult to audit which config options are only checked
-> from these "protected" config files.
+The relative portion is not necessarily null terminated.  It comes
+from the FILE_NOTIFY_INFOMATION buffer from the kernel.  We could
+use swprintf() here, to prevent the overflow, but we might miss the
+fact that it was truncated.  I'll add checks to make sure the sum
+is within limits or give up.
 
-Makes sense. I'll ask about specifics on that subthread.
+> 
+>> +	buf_in[root_len + wpath_len] = 0;
+>> +
+>> +	/*
+>> +	 * We don't actually know if the source pathname is a
+>> +	 * shortname or a longname.  This routine allows either to be
+>> +	 * given as input.
+>> +	 */
+>> +	if (!GetLongPathNameW(buf_in, buf_out, MAX_PATH)) {
+>> +		/*
+>> +		 * The shortname to longname conversion can fail for
+>> +		 * various reasons, for example if the file has been
+>> +		 * deleted.  (That is, if we just received a
+>> +		 * delete-file notification event and the file is
+>> +		 * already gone, we can't ask the file system to
+>> +		 * lookup the longname for it.  Likewise, for moves
+>> +		 * and renames where we are given the old name.)
+>> +		 *
+>> +		 * Since deleting or moving a file or directory by its
+>> +		 * shortname is rather obscure, I'm going ignore the
+>> +		 * failure and ask the caller to report the original
+>> +		 * relative path.  This seems kinder than failing here
+>> +		 * and forcing a resync.  Besides, forcing a resync on
+>> +		 * every file/directory delete would effectively
+>> +		 * cripple monitoring.
+>> +		 *
+>> +		 * We might revisit this in the future.
+>> +		 */
+>> +		return GRR_NO_CONVERSION_NEEDED;
+>> +	}
+>> +
+>> +	if (!wcscmp(buf_in, buf_out)) {
+>> +		/*
+>> +		 * The path does not have a shortname alias.
+>> +		 */
+>> +		return GRR_NO_CONVERSION_NEEDED;
+>> +	}
+>> +
+>> +	if (wcsncmp(buf_in, buf_out, root_len)) {
+>> +		/*
+>> +		 * The spelling of the root directory portion of the computed
+>> +		 * longname has changed.  This should not happen.  Basically,
+>> +		 * it means that we don't know where (without recomputing the
+>> +		 * longname of just the root directory) to split out the
+>> +		 * relative path.  Since this should not happen, I'm just
+>> +		 * going to let this fail and force a shutdown (because all
+>> +		 * subsequent events are probably going to see the same
+>> +		 * mismatch).
+>> +		 */
+>> +		return GRR_SHUTDOWN;
+>> +	}
+>> +
+>> +	/* Return the worktree root-relative portion of the longname. */
+>> +
+>> +	wcscpy(wpath_longname, buf_out + root_len);
+>> +	return GRR_HAVE_CONVERSION;
+>> +}
+>> +
+>>   void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+>>   {
+>>   	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
+>> @@ -111,7 +274,9 @@ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+>>   	DWORD share_mode =
+>>   		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
+>>   	HANDLE hDir;
+>> -	wchar_t wpath[MAX_PATH];
+>> +	DWORD len_longname;
+>> +	wchar_t wpath[MAX_PATH + 1];
+>> +	wchar_t wpath_longname[MAX_PATH + 1];
+>>
+>>   	if (xutftowcs_path(wpath, path) < 0) {
+>>   		error(_("could not convert to wide characters: '%s'"), path);
+>> @@ -128,6 +293,20 @@ static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
+>>   		return NULL;
+>>   	}
+>>
+>> +	if (!GetLongPathNameW(wpath, wpath_longname, MAX_PATH)) {
+>> +		error(_("[GLE %ld] could not get longname of '%s'"),
+>> +		      GetLastError(), path);
+>> +		CloseHandle(hDir);
+>> +		return NULL;
+>> +	}
+>> +
+>> +	len_longname = wcslen(wpath_longname);
+> 
+> Let's assign the return value of `GetLongPathNameW()` to `len_longname`,
+> in case of success it contains the number of characters, too.
 
->
-> Thanks,
-> -Stolee
+Good idea.  Thanks!
+
+> 
+> The rest of the patch looks good to me!
+> 
+> Thank you,
+> Dscho
+
+Thanks for you attention to detail here.
+Jeff
