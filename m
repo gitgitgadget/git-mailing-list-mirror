@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84B10C433FE
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 13:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1B9C433EF
+	for <git@archiver.kernel.org>; Tue, 17 May 2022 13:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346544AbiEQNXr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 09:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32872 "EHLO
+        id S245282AbiEQN2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 May 2022 09:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343851AbiEQNXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 09:23:33 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755AF42A02
-        for <git@vger.kernel.org>; Tue, 17 May 2022 06:23:31 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id bs17so14560120qkb.0
-        for <git@vger.kernel.org>; Tue, 17 May 2022 06:23:31 -0700 (PDT)
+        with ESMTP id S240106AbiEQN2K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 May 2022 09:28:10 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE8D341F98
+        for <git@vger.kernel.org>; Tue, 17 May 2022 06:28:09 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id z126so14526762qkb.2
+        for <git@vger.kernel.org>; Tue, 17 May 2022 06:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OBWWMBa1+yAyI4omNSctaGCAAF7BEcBHfgzlqWc1iQk=;
-        b=Zyep/aRvdfhS+GGCAtZr4CXzO9V9g2tmTJeI73+U+MxYkkCJFPNSfIPs8LBNWMTMPA
-         JbYoCP4mRLbGguxg5CgYL4bXLRA8kh50R2v1spp5VeNaIKQ1y/K0KyV6WrfTHtW8JWRJ
-         uDw50WlZMX4rI90OTUoLOBylz9zlcGtV8ge8n8b5xfjxECtG5NZAfpUKhQpTvX9AEeQ+
-         IjcNBdiMhyMLnzlk0ey8/Z81IkIOaB8a29ee5XlpPuSEJIEvBxt92PS+cZS5l8V0vRF5
-         3HGE9RW1C+GhZ7cfDBp1MPIQNoY8n3FzZ3WBIrtf2L+fMHrIbk7tYSl9b525YH1ahU9h
-         n99w==
+        bh=tUoWir3d68QP0OU3niNDkjgBQR2J/+bnrw1rNR+6lCs=;
+        b=eLsgeAPeY32y5oDpzLFcF+FOo1jKSpLiyUCuSIpfnJiEyD03zwANyX/WsQrwjLJ0oA
+         tm3Z20BexsuW0uLr0yFI0MQ5LM2BpjpAK1UPbw8GL1NOWAMia6VQ3OtTiI0mE1ejQC4P
+         uFQOVb4eNh4bDCqm1IEcx7cxmWsYwSc/jLDvroHFwGK4GbFXBNycMWEMhEr6t2gXy6Za
+         sMvaLNr1gk4CvN1KQghebHzr8+/WohVKQ+s5wKfFTHXy6CLirjnnpzE0E86ITBvnIvay
+         78kEFIGDI3mufLlPXJO2J90mLueYBzwvREt0ORg1q9FBv+nlAOs8R5mlzyL6F3YMTpS8
+         zMjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=OBWWMBa1+yAyI4omNSctaGCAAF7BEcBHfgzlqWc1iQk=;
-        b=6SL5sHBnccq7O7s7xyGCCyAtfI7dm/glF8VvWHi4qeZCBEvziuxwKzbuPS0aB8Kdt3
-         WLV0S4r8oz997UJh/kf0m1O+G1+b0FkgbQlfnkLlxh1SITPP8It/oksGzdrXZN8834cd
-         ussIN1ORxzkQzElZzHRY0UozuoeBvRj1L5O58XrsNkd0g+3vuWXCNktZcwNh2+KgviAy
-         fysMBjlmKtcQ/tkEafFmCpPHpJtqScL/J69BJksiRbLcITE2BpnQJbiyy7KkH1qP+Tdw
-         Z5SI6njcSWJtxiCTPeAkwwKD/nU6bjGjEEGCiLou6OzAOyWbTXWsEUcEodkd25TTZS/+
-         jYZg==
-X-Gm-Message-State: AOAM5335iBgZ0iPOU1ejX84UgA122m0a93ndl0Ed28bW7Mm0WNbH/O9j
-        q9LN8OAvrfQ4x1wdfasrQPbx
-X-Google-Smtp-Source: ABdhPJxLINcE815nf/z7+3uDf+hzwvNA8KErS0phXUMM8T/VONOfDhEhJxZuQKNZmnY+KDsCzEmqew==
-X-Received: by 2002:a37:7c8:0:b0:69f:c5f8:85a2 with SMTP id 191-20020a3707c8000000b0069fc5f885a2mr16564388qkh.662.1652793810579;
-        Tue, 17 May 2022 06:23:30 -0700 (PDT)
+        bh=tUoWir3d68QP0OU3niNDkjgBQR2J/+bnrw1rNR+6lCs=;
+        b=YhcvUYA5A48aUlIrJqCVKgkzjVw7MA5Ah6pixAPMLvLWAMowLoTATGRQyFMy/UtqNn
+         JyxortABBnF/4eBoLzMfGllwUiblCjBwcyChq9C2TE5XXcV5OLjf7lgha6AuoshNQOrI
+         ombMhUuUDAlTCeSZTrH4YXxib0Qp0Oe+48lB9kK8e2T7IgRD1d/IxaLT7XXJm1G0okRx
+         rC49Qi0ufcVDCiyCbl8PVbXdO1RpV8mCbPnsaWed/+tKWEo16t2nYYTLREK1MDAsxro6
+         hokirVFrsTqX9SBfA54DWaqECFU8HJsKLi0V5aYVvK42Z3kpf55U9QdmjgxHVaavSI3O
+         99BQ==
+X-Gm-Message-State: AOAM531qcCBa2wYI8HtDEhFWzgzbkag6ghCZY7/1YnolhDJ66v09nzDU
+        ClppW1wkrtK+Ox+nmAMIgrzKLgFF+mIL
+X-Google-Smtp-Source: ABdhPJyWkqbbZ7MkjF4cRBLRVr1+eetpBjowQ2+WdZww8mvdPNLzI17nw70nlXDljntxntDH4CtMjA==
+X-Received: by 2002:a05:620a:1529:b0:69f:e354:c71f with SMTP id n9-20020a05620a152900b0069fe354c71fmr16263555qkk.375.1652794089093;
+        Tue, 17 May 2022 06:28:09 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:d51:acba:6df0:5bea? ([2600:1700:e72:80a0:d51:acba:6df0:5bea])
-        by smtp.gmail.com with ESMTPSA id u190-20020a3792c7000000b0069fca79fa3asm7743617qkd.62.2022.05.17.06.23.30
+        by smtp.gmail.com with ESMTPSA id v12-20020ac8748c000000b002f39b99f68bsm7575454qtq.37.2022.05.17.06.28.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 May 2022 06:23:30 -0700 (PDT)
-Message-ID: <f756a125-2d88-3a32-1ae1-652932c663b2@github.com>
-Date:   Tue, 17 May 2022 09:23:28 -0400
+        Tue, 17 May 2022 06:28:08 -0700 (PDT)
+Message-ID: <f9f49c09-c566-6938-273d-56015ed14d4e@github.com>
+Date:   Tue, 17 May 2022 09:28:06 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH 6/8] sparse-index: complete partial expansion
+Subject: Re: [PATCH 8/8] sparse-checkout: integrate with sparse index
 Content-Language: en-US
 To:     Victoria Dye <vdye@github.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
@@ -61,10 +61,10 @@ To:     Victoria Dye <vdye@github.com>,
 Cc:     gitster@pobox.com, shaoxuan.yuan02@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1208.git.1652724693.gitgitgadget@gmail.com>
- <eba63cc12af4f60320b34a54eef691b9f59d86bc.1652724693.git.gitgitgadget@gmail.com>
- <ac3869a5-3592-5408-587a-178afde3f7e9@github.com>
+ <b8a349c6deeb4b970075629d0c292b2ae9f7d0d3.1652724693.git.gitgitgadget@gmail.com>
+ <9191a98c-087a-39b9-cff3-eb7eccd198ea@github.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ac3869a5-3592-5408-587a-178afde3f7e9@github.com>
+In-Reply-To: <9191a98c-087a-39b9-cff3-eb7eccd198ea@github.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,46 +75,85 @@ On 5/16/2022 4:38 PM, Victoria Dye wrote:
 > Derrick Stolee via GitGitGadget wrote:
 >> From: Derrick Stolee <dstolee@microsoft.com>
 
+>> +test_expect_success 'sparse index is not expanded: sparse-checkout' '
+>> +	init_repos &&
 >> +
->> +		/* We now have a sparse directory entry. Should we expand? */
->> +		if (pl &&
->> +		    path_matches_pattern_list(ce->name, ce->ce_namelen,
->> +					      NULL, &dtype,
->> +					      pl, istate) <= 0) {
+>> +	ensure_not_expanded sparse-checkout set deep/deeper2 &&
+>> +	ensure_not_expanded sparse-checkout set deep/deeper1 &&
+>> +	ensure_not_expanded sparse-checkout set deep &&
+>> +	ensure_not_expanded sparse-checkout add folder1 &&
+>> +	ensure_not_expanded sparse-checkout set deep/deeper1 &&
+>> +	ensure_not_expanded sparse-checkout set folder2 &&
+>> +
+>> +	# Demonstrate that the checks that "folder1/a" is a file
+>> +	# do not cause a sparse-index expansion (since it is in the
+>> +	# sparse-checkout cone).
+>> +	echo >>sparse-index/folder2/a &&
+>> +	git -C sparse-index add folder2/a &&
+>> +
+>> +	ensure_not_expanded sparse-checkout add folder1 &&
+>> +
+>> +	# Skip checks here, since deep/deeper1 is inside a sparse directory
+>> +	# that must be expanded to check whether `deep/deeper1` is a file
+>> +	# or not.
+>> +	ensure_not_expanded sparse-checkout set --skip-checks deep/deeper1 &&
+>> +	ensure_not_expanded sparse-checkout set
+>> +'
+>> +
 > 
-> If I'm reading this correctly, what this is doing is:
+> These tests look good for ensuring sparsity is preserved, but it'd be nice
+> to also have some "stress tests" of 'sparse-checkout (add|set)'. The purpose
+> would be to make sure the index has the right contents for various types of
+> pattern changes, e.g. running 'sparse-checkout (add|set) <path>', then
+> verifying index contents with 'ls-files --sparse'. Paths might be:
 > 
-> - if we have a sparse directory entry
-> - ...and we're expanding only what matches the pattern list (i.e., not
->   'ensure_full_index')
-> - ...and that sparse directory path is either *not matching* or *undecided
->   whether it matches* the pattern list
-> - ...then we add the sparse directory to the result index and continue. 
+> - in vs. out of (current) cone
+> - match an existing vs. nonexistent directory
 > 
-> The part that's confusing me is the "<= 0", which means a return value of
-> 'UNDECIDED' from 'path_matches_pattern_list' adds the sparse directory
-> as-is. At the moment, it looks like 'UNDECIDED' is only returned if not
-> using cone patterns (so it shouldn't make a functional difference at this
-> point), but wouldn't that return value indicate that the pattern *may or may
-> not* match the path, so we should continue on to 'read_tree_at()'?
-> 
-> All that to say, should the condition be:
-> 
-> 		/* We now have a sparse directory entry. Should we expand? */
-> 		if (pl &&
-> 		    path_matches_pattern_list(ce->name, ce->ce_namelen,
-> 					      NULL, &dtype,
-> 					      pl, istate) == NOT_MATCHED) {
-> 
-> to reflect that a sparse directory should only be added to the index if we
-> *know* it isn't matched?
-> 
-> To be clear, this is ultimately a non-functional nit - my question is mostly
-> to make sure I understand the intent of the code.
+> etc.
 
-You are 100% correct, and using "== NOT_MATCHED" makes the intention clear,
-as well as being more robust to a breakage in path_matches_pattern_list().
+I guess I was relying on tests added previously for the sparse index,
+such as this one:
+
+test_expect_success 'sparse-index contents' '
+	init_repos &&
+
+	git -C sparse-index ls-files --sparse --stage >cache &&
+	for dir in folder1 folder2 x
+	do
+		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
+		grep "040000 $TREE 0	$dir/" cache \
+			|| return 1
+	done &&
+
+	git -C sparse-index sparse-checkout set folder1 &&
+
+	git -C sparse-index ls-files --sparse --stage >cache &&
+	for dir in deep folder2 x
+	do
+		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
+		grep "040000 $TREE 0	$dir/" cache \
+			|| return 1
+	done &&
+
+	git -C sparse-index sparse-checkout set deep/deeper1 &&
+
+	git -C sparse-index ls-files --sparse --stage >cache &&
+	for dir in deep/deeper2 folder1 folder2 x
+	do
+		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
+		grep "040000 $TREE 0	$dir/" cache \
+			|| return 1
+	done &&
+
+	# Disabling the sparse-index replaces tree entries with full ones
+	git -C sparse-index sparse-checkout init --no-sparse-index &&
+	test_sparse_match git ls-files --stage --sparse
+'
+
+But this test isn't covering enough interesting cases that might
+cause issues with the changes in this series. I'll add a patch that
+increases coverage in this area.
 
 Thanks,
 -Stolee
-
