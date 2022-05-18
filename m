@@ -2,138 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B651C433EF
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 23:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF499C433F5
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 23:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbiERXMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 19:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42972 "EHLO
+        id S231449AbiERXso (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 19:48:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbiERXL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 19:11:58 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4835FF06
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:37 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id 135so793891qkm.4
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:37 -0700 (PDT)
+        with ESMTP id S231327AbiERXsl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 19:48:41 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C95FA466
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:48:40 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id z18so4107523iob.5
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=beYgpiUSMYByF238APD21gzP2aiQvmYtnPxY8mzwXC4=;
-        b=F7OK4aYE79k03+JUrpK6xa9uJWQV1ZAgaJ4EHVRgIcaRvIS1xsbBtkk04nD/N/clzE
-         FTOCvtoacWrf3rDNVQ0LZg1Ttsxmxd1XVcgHqaNcKdgCl3QFZ5dHAc7uZYkqOUBM8e9H
-         fMsrExyayYaJmKANy4/Tcmnhb3q9nXvXkmTkusolLud0uVlNsdPjFBtYjUcJUvOzW0NU
-         ElxUGyY3kyq4qWhGFiXIzj/yzUjiWtAzoIZQKN8DcZyHgr3LHtKIAMnLjdzVLyM931FQ
-         fkTO2iFH9EH3jFRK6rZi4D1a+erwnUz/WR4kxTDpztyCbYaQyqF8U7F62C+GPfQiqm2f
-         nHxw==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+LW8RKMWa7cU8KmXBM27lGQcogd7+eHDNhLSTU+kfKs=;
+        b=KAwe/5uZT6MTDTbIp7dC2Z/UWSyKTrTF5run7SHT/Kl1+9y5XLt/jJpWc8F327Q5bx
+         ckpsD4u7CtocsErwsJR9OKHf6EqlQZH7cMTzc7p6sYCUAfRqaKyV+cMP1/7tdhYhIKMY
+         o1BbfgTUrd5W9oeBkyq2zIh+1ZTwRdtXPw/ly68ZdjnQ57nueHmAR70ADo2eXyO7c0/1
+         r0jBDUuHVxD/7vF+ThFWP4GW8lO14yMVQ8VQqTgBCCUEXbHR8s+TwHvtowi1yszVNnUR
+         HOqvl/xf6mniolRScL+7VUkOIyBpKjfqXSDd7IDsN/iMbToiU+zpSZdSS8vGFft6bPrN
+         ieqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=beYgpiUSMYByF238APD21gzP2aiQvmYtnPxY8mzwXC4=;
-        b=mRj/eS1OXrNcwSvBQbfPtKcR7OCtgI1vOx9p89iLEfHN+Lnqjf1MIrVRT5nOp6yvWs
-         0NlJVyhdmsjUvUznPmjFoESganPWfhRCSBE0SrTAHmFoH6F4dlXyPKgKaW9OyyMhMqR0
-         rczuLnflHiKoVXKxEo//wlgpHoXz+Wjst3cqGZ2Nl+RqxF29b6jKcKO2JiOu4i4+2hyP
-         biJ7+Zvaanm5Ct78B3ilH6zPB7f4wDmKd69sRDnYbajBswrJ5qORVORoY5a0+PKHgYQH
-         opsKzk4xJCs8qFvd7FkiLdCoUNsn6e+3LbcJvwsJTXZrAmgeGvB7/YN9INHdrwXGJxTk
-         giaw==
-X-Gm-Message-State: AOAM5304hu2TQ63+U9g4BWE/24uFQYjrwxd39JcwiNlkW5fkrT0cY5CL
-        UA2AlWcX3CzARMCVj1c5koNjGzNpSCY0Oh7k
-X-Google-Smtp-Source: ABdhPJzDP4Y/mJc20R5+zhcWYwgvXw0aNaaFRPUnzy1zbGUjYwdg8Xdk2mfArnrqy9G1jS/BCOBy9g==
-X-Received: by 2002:a37:5347:0:b0:69f:842f:bfed with SMTP id h68-20020a375347000000b0069f842fbfedmr1337590qkb.303.1652915496218;
-        Wed, 18 May 2022 16:11:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o67-20020a375a46000000b0069fc7108dcesm339430qkb.61.2022.05.18.16.11.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 16:11:35 -0700 (PDT)
-Date:   Wed, 18 May 2022 19:11:35 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
-        jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v4 17/17] sha1-file.c: don't freshen cruft packs
-Message-ID: <07fa9d4b475d37189e978a42a3939b0a20834af3.1652915424.git.me@ttaylorr.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+LW8RKMWa7cU8KmXBM27lGQcogd7+eHDNhLSTU+kfKs=;
+        b=TwcFWL13iIQGdGg6YwSsEVmOIT/y7fNENH3/PYGmYGZ2yXyrXG8Rvsta7Fjj+L7CeM
+         +S8lEdRM8MbZ0+Ns12P5CQAupPBsNvoPQh+o2f69W4Bmj9ybMaH3SHi0XeAsA//bFg0z
+         IBmgOZDfJa6ttWIllEI0Q1sG+J25/5GUOkTuz0AbIHZAth7qh4sjPvmZoz4Kv+FMQQlB
+         V7sOtLIBiieZx34grLt0yf9slhtbE8hQiqZQdW68wB379xUBjM5sPQqNtOCN6bYCkluD
+         wSoHSvL8BbytmmxgjRLGTck6bU/jvmzZpSqn8NEbdUinwbWBl18Yx9bLN7JIO2gjx1v+
+         HumQ==
+X-Gm-Message-State: AOAM533cUJGzmoJ7mJxAvxCWFVaBqGCVjeBBL1KlI/tNXb9oD8A5B4PE
+        0Ne3AgvrvptlGms+ak5MNzDV
+X-Google-Smtp-Source: ABdhPJxz0Z2WL5r13bcX2+8dHSHEFoUY52VJ6WLI7ucpu23CynbkaUYD8vSWFcRT3Qh9qDnxMXLnTQ==
+X-Received: by 2002:a05:6638:1456:b0:32c:beaa:df98 with SMTP id l22-20020a056638145600b0032cbeaadf98mr1210552jad.300.1652917719944;
+        Wed, 18 May 2022 16:48:39 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e5b1:67d1:8563:152a? ([2600:1700:e72:80a0:e5b1:67d1:8563:152a])
+        by smtp.gmail.com with ESMTPSA id j75-20020a02634e000000b0032e7148438asm251859jac.105.2022.05.18.16.48.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 May 2022 16:48:39 -0700 (PDT)
+Message-ID: <98d9bbe5-1902-0dc4-e41e-33020d0396ad@github.com>
+Date:   Wed, 18 May 2022 19:48:37 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v4 00/17] cruft packs
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
+        larsxschneider@gmail.com, tytso@mit.edu
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1652915424.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From:   Derrick Stolee <derrickstolee@github.com>
 In-Reply-To: <cover.1652915424.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't bother to freshen objects stored in a cruft pack individually
-by updating the `.mtimes` file. This is because we can't portably `mmap`
-and write into the middle of a file (i.e., to update the mtime of just
-one object). Instead, we would have to rewrite the entire `.mtimes` file
-which may incur some wasted effort especially if there a lot of cruft
-objects and they are freshened infrequently.
+On 5/18/2022 7:10 PM, Taylor Blau wrote:
+> Here is another reroll of my series to implement "cruft packs", which is based
+> on the v2.36 tree, and incorporates feedback from the discussion we had about
+> mixed-version GCs with cruft packs in [1].
+> 
+> The changes here are limited to:
+> 
+>   - a cautionary note in Documentation/technical/cruft-packs.txt
+>     describing the potential interaction between pruning GCs across pre-
+>     and post-cruft pack versions of Git, as discussed towards the bottom
+>     of [2]
 
-Instead, force the freshening code to avoid an optimizing write by
-writing out the object loose and letting it pick up a current mtime.
+I think this documentation is sufficient guarding against this issue,
+which is not so critical as to do something more involved. When users
+opt-in to using cruft packs, they should know about their scenario
+enough to know if they would stumble into this issue.
 
-This works because we prefer the mtime of the loose copy of an object
-when both a loose and packed one exist (whether or not the packed copy
-comes from a cruft pack or not).
+>   - updating the `finalize_hashfile()` calls for writing `.mtimes` files
+>     to indicate that they are `FSYNC_COMPONENT_PACK_METADATA`, since the
+>     original version of this series predates the fine-grained fsync
+>     configuration in 2.36.
 
-This could certainly do with a test and/or be included earlier in this
-series/PR, but I want to wait until after I have a chance to clean up
-the overly-repetitive nature of the cruft pack tests in general.
+Good to have this update and not require it to be handled at merge
+time by the maintainer.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- object-file.c                 |  2 ++
- t/t5329-pack-objects-cruft.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+> As always, a range-diff is below. Thanks in advance for taking another
+> look!
 
-diff --git a/object-file.c b/object-file.c
-index ff0cffe68e..495a359200 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2035,6 +2035,8 @@ static int freshen_packed_object(const struct object_id *oid)
- 	struct pack_entry e;
- 	if (!find_pack_entry(the_repository, oid, &e))
- 		return 0;
-+	if (e.p->is_cruft)
-+		return 0;
- 	if (e.p->freshened)
- 		return 1;
- 	if (!freshen_file(e.p->pack_name))
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 3910e186ef..4681558612 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -711,4 +711,29 @@ test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
- 	)
- '
- 
-+test_expect_success 'cruft objects are freshend via loose' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		echo "cruft" >contents &&
-+		blob="$(git hash-object -w -t blob contents)" &&
-+		loose="$objdir/$(test_oid_to_path $blob)" &&
-+
-+		test_commit base &&
-+
-+		git repack --cruft -d &&
-+
-+		test_path_is_missing "$loose" &&
-+		test-tool pack-mtimes "$(basename "$(ls $packdir/pack-*.mtimes)")" >cruft &&
-+		grep "$blob" cruft &&
-+
-+		# write the same object again
-+		git hash-object -w -t blob contents &&
-+
-+		test_path_is_file "$loose"
-+	)
-+'
-+
- test_done
--- 
-2.36.1.94.gb0d54bedca
+Looking at the range-diff, I'm happy with this version.
+
+Thanks,
+-Stolee
