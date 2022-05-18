@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76287C433F5
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 23:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C845C433F5
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 23:12:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231394AbiERXL6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 19:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39158 "EHLO
+        id S231303AbiERXMB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 19:12:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbiERXLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 19:11:05 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24980E00D
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:03 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id r27so4052192iot.1
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:03 -0700 (PDT)
+        with ESMTP id S231191AbiERXLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 19:11:07 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0712512AEC
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:06 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id i5so2575786ilv.0
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=hbjZya/lcmOcKNQZnKnTdQ7PP9mvuviLGWXtq/9S3xc=;
-        b=3gzgmjVyZP5HLzIpuHwkdkjObH5qMil/SNNLmg6NWeuzDqJFpXWs8RFLG1yuVKbXzC
-         vS828sT4mySeV7i9WcbEtAg5r+9lSmdEP44FNO2zPh8T9qZtU7LNLgV+ia6vAA9LH6Xq
-         LNIR5Dnm0Jf8fiHwaarQEBD9syURKFQjK1LWHVuvSCjqiZf2oT2oq9RzECWMb/11FZ9t
-         19fOWAaRuXfqQnljA7aTCuT+Okcx3hvxXwzP9VpxWHW1bhnw9oJbFBNkn1a+jcZMkis1
-         4RFp6gf6uGkvT0mo07vz3zez/Z1+drZSwrynzx5DaYX8SspXeyxUrHXpFTJ6lqq6docL
-         n22g==
+        bh=P+Hq+TxYueHz3mILps4sx45Lxjp1F6wSHdMmiOm9nUM=;
+        b=lGL5Z/Chm/jwxMSRI2jpxiGf2TKA6DTA55pDeSoZmM0Zwak0CUylKGa0mLGzm1Y7o2
+         6qgdp2VXNrYNf51kiWPFBqedE93EsGBMqY2/bM3TZknCUXHqRWTkzGPumGuaGoj8177d
+         fQkbhxNN/PoiTVgu8QG2RPuRnf9QMhYm0hLRfiGorW8K3MFIIA2AO11s9gZa8Bf0BXwP
+         EZfxUlGAw5Jo1v8sygaPWAR4aBaJo8ql8U6QuMpFIpxgwuhaKOll8saPnG+rERh1BR9q
+         YPlnRLQU3hhAm0ifivcoHd8nhYqHgYZf03opeMrIFkh6f0cEDt0zaeUafDgBGUXhNwpq
+         Xwsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=hbjZya/lcmOcKNQZnKnTdQ7PP9mvuviLGWXtq/9S3xc=;
-        b=OfLPIpXMe5b9mQgW7hNcPGwZGQqQfCXqNKfhba+0coTJ5pVBuXKuMuX2WD3g4gEzIy
-         DFUBolMF8G4/KeSJBgYVx6nFzJKZu6k0TuAz5iZ4ngALXIj+4tfq19UF7Xp2mrtBIKO3
-         SfuC0atWMQr0SRhmkINlF9kh4+3ggvX6NMoot4tIheWOkm+SmgnPew1h1EAklvYjHOlY
-         cgnzmrk9DBcddsnUClkzA+m/UZ0mp54YvJeb+t7DJGQuY1T/Gzmqpk22nz9B4yWgpHQP
-         Iqp8ui6g7vsl32ar43ORqV707RB++DmcmV23a1M0Klc6pA0aoMuaxt8uEC+s9TrdzvLX
-         h+9w==
-X-Gm-Message-State: AOAM533fYnoo2Z/cnlU4ZD9AXRLPqY4Z5tU1KZz5r4FLV/iB4scEIoZp
-        7GmOhIjCpC4GQkUnKMJ9EQfxUsopHnmUifZK
-X-Google-Smtp-Source: ABdhPJwi8mxgj7WM579RnoRZNINqgYrCVNCK/14bzrnOg5w7R7hD00Ym5O2QeqLCajAmD32bxabEpA==
-X-Received: by 2002:a05:6602:2d0e:b0:64f:d1ff:ac9c with SMTP id c14-20020a0566022d0e00b0064fd1ffac9cmr1015592iow.41.1652915462378;
-        Wed, 18 May 2022 16:11:02 -0700 (PDT)
+        bh=P+Hq+TxYueHz3mILps4sx45Lxjp1F6wSHdMmiOm9nUM=;
+        b=QW7wBl/qlQAZ+ypWqJz5ol2R1x0PtDMuT5Tennw1IwqmuPAKQJ++v7SQ+2qFy5xKfR
+         /GCh8MMhuTz67Y8yML5VMfVFkfUhBvhsyKKjWtP3WipicrJjmgk6HHEQNVNcfnZH8oIg
+         xuJF+xRc21mVdqb99ZMKzOuAbrEDv6ZX67AolT+6jjj9K+KFjzCLvKJUnbRr+HWSHdoZ
+         OXOItpg5aCslTfsFCrnHL2UZaN4qXtCsC4KSK04XMiPKw8KdQcRtf9GPx9vyF0CvSED8
+         F49GHxydtCGooO+qvcTDorKk1k+yHLIpIIP09yvR2Q16Kt0MOzsRWHKqjEg6wv8FD6IC
+         3row==
+X-Gm-Message-State: AOAM533XcJ1wYX9Ar887KwDDW4Fhe7KIYjQv7dYdp1K3weOSu2POlqlK
+        heamd/NgVq9W5w6J6yUwes7fiDzmNPrgFUBJ
+X-Google-Smtp-Source: ABdhPJxVeYbzXB5sNazA2qjwOTy5ghGYA1xmyOeHcx3nux0EJiN1nkYW+9XAJk7ZRWxq01IBfyxc1g==
+X-Received: by 2002:a92:cc07:0:b0:2d1:1b36:a95b with SMTP id s7-20020a92cc07000000b002d11b36a95bmr1065620ilp.165.1652915465179;
+        Wed, 18 May 2022 16:11:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g22-20020a022716000000b0032b3a781797sm233415jaa.91.2022.05.18.16.11.01
+        by smtp.gmail.com with ESMTPSA id k1-20020a0566022a4100b0065a989b183asm238344iov.41.2022.05.18.16.11.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 16:11:02 -0700 (PDT)
-Date:   Wed, 18 May 2022 19:11:01 -0400
+        Wed, 18 May 2022 16:11:04 -0700 (PDT)
+Date:   Wed, 18 May 2022 19:11:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v4 04/17] chunk-format.h: extract oid_version()
-Message-ID: <1d775f9850f00b0c3d1e9133669a6365c8d7bbba.1652915424.git.me@ttaylorr.com>
+Subject: [PATCH v4 05/17] pack-mtimes: support writing pack .mtimes files
+Message-ID: <6172861bd9caa3036d0042293b54a9de841ae2b5.1652915424.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1652915424.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,193 +64,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are three definitions of an identical function which converts
-`the_hash_algo` into either 1 (for SHA-1) or 2 (for SHA-256). There is a
-copy of this function for writing both the commit-graph and
-multi-pack-index file, and another inline definition used to write the
-.rev header.
-
-Consolidate these into a single definition in chunk-format.h. It's not
-clear that this is the best header to define this function in, but it
-should do for now.
-
-(Worth noting, the .rev caller expects a 4-byte unsigned, but the other
-two callers work with a single unsigned byte. The consolidated version
-uses the latter type, and lets the compiler widen it when required).
-
-Another caller will be added in a subsequent patch.
+Now that the `.mtimes` format is defined, supplement the pack-write API
+to be able to conditionally write an `.mtimes` file along with a pack by
+setting an additional flag and passing an oidmap that contains the
+timestamps corresponding to each object in the pack.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- chunk-format.c | 12 ++++++++++++
- chunk-format.h |  3 +++
- commit-graph.c | 18 +++---------------
- midx.c         | 18 +++---------------
- pack-write.c   | 15 ++-------------
- 5 files changed, 23 insertions(+), 43 deletions(-)
+ pack-objects.c |  6 ++++
+ pack-objects.h | 25 ++++++++++++++++
+ pack-write.c   | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ pack.h         |  1 +
+ 4 files changed, 109 insertions(+)
 
-diff --git a/chunk-format.c b/chunk-format.c
-index 1c3dca62e2..0275b74a89 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -181,3 +181,15 @@ int read_chunk(struct chunkfile *cf,
+diff --git a/pack-objects.c b/pack-objects.c
+index fe2a4eace9..272e8d4517 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -170,6 +170,9 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
  
- 	return CHUNK_NOT_FOUND;
- }
+ 		if (pdata->layer)
+ 			REALLOC_ARRAY(pdata->layer, pdata->nr_alloc);
 +
-+uint8_t oid_version(const struct git_hash_algo *algop)
++		if (pdata->cruft_mtime)
++			REALLOC_ARRAY(pdata->cruft_mtime, pdata->nr_alloc);
+ 	}
+ 
+ 	new_entry = pdata->objects + pdata->nr_objects++;
+@@ -198,6 +201,9 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 	if (pdata->layer)
+ 		pdata->layer[pdata->nr_objects - 1] = 0;
+ 
++	if (pdata->cruft_mtime)
++		pdata->cruft_mtime[pdata->nr_objects - 1] = 0;
++
+ 	return new_entry;
+ }
+ 
+diff --git a/pack-objects.h b/pack-objects.h
+index dca2351ef9..393b9db546 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -168,6 +168,14 @@ struct packing_data {
+ 	/* delta islands */
+ 	unsigned int *tree_depth;
+ 	unsigned char *layer;
++
++	/*
++	 * Used when writing cruft packs.
++	 *
++	 * Object mtimes are stored in pack order when writing, but
++	 * written out in lexicographic (index) order.
++	 */
++	uint32_t *cruft_mtime;
+ };
+ 
+ void prepare_packing_data(struct repository *r, struct packing_data *pdata);
+@@ -289,4 +297,21 @@ static inline void oe_set_layer(struct packing_data *pack,
+ 	pack->layer[e - pack->objects] = layer;
+ }
+ 
++static inline uint32_t oe_cruft_mtime(struct packing_data *pack,
++				      struct object_entry *e)
 +{
-+	switch (hash_algo_by_ptr(algop)) {
-+	case GIT_HASH_SHA1:
-+		return 1;
-+	case GIT_HASH_SHA256:
-+		return 2;
-+	default:
-+		die(_("invalid hash version"));
-+	}
++	if (!pack->cruft_mtime)
++		return 0;
++	return pack->cruft_mtime[e - pack->objects];
 +}
-diff --git a/chunk-format.h b/chunk-format.h
-index 9ccbe00377..7885aa0848 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -2,6 +2,7 @@
- #define CHUNK_FORMAT_H
- 
- #include "git-compat-util.h"
-+#include "hash.h"
- 
- struct hashfile;
- struct chunkfile;
-@@ -65,4 +66,6 @@ int read_chunk(struct chunkfile *cf,
- 	       chunk_read_fn fn,
- 	       void *data);
- 
-+uint8_t oid_version(const struct git_hash_algo *algop);
++
++static inline void oe_set_cruft_mtime(struct packing_data *pack,
++				      struct object_entry *e,
++				      uint32_t mtime)
++{
++	if (!pack->cruft_mtime)
++		CALLOC_ARRAY(pack->cruft_mtime, pack->nr_alloc);
++	pack->cruft_mtime[e - pack->objects] = mtime;
++}
 +
  #endif
-diff --git a/commit-graph.c b/commit-graph.c
-index 06107beedc..066d82ed6a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -193,18 +193,6 @@ char *get_commit_graph_chain_filename(struct object_directory *odb)
- 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
- }
- 
--static uint8_t oid_version(void)
--{
--	switch (hash_algo_by_ptr(the_hash_algo)) {
--	case GIT_HASH_SHA1:
--		return 1;
--	case GIT_HASH_SHA256:
--		return 2;
--	default:
--		die(_("invalid hash version"));
--	}
--}
--
- static struct commit_graph *alloc_commit_graph(void)
- {
- 	struct commit_graph *g = xcalloc(1, sizeof(*g));
-@@ -365,9 +353,9 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 	}
- 
- 	hash_version = *(unsigned char*)(data + 5);
--	if (hash_version != oid_version()) {
-+	if (hash_version != oid_version(the_hash_algo)) {
- 		error(_("commit-graph hash version %X does not match version %X"),
--		      hash_version, oid_version());
-+		      hash_version, oid_version(the_hash_algo));
- 		return NULL;
- 	}
- 
-@@ -1924,7 +1912,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
- 
- 	hashwrite_u8(f, GRAPH_VERSION);
--	hashwrite_u8(f, oid_version());
-+	hashwrite_u8(f, oid_version(the_hash_algo));
- 	hashwrite_u8(f, get_num_chunks(cf));
- 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
- 
-diff --git a/midx.c b/midx.c
-index 3db0e47735..c617c51cd0 100644
---- a/midx.c
-+++ b/midx.c
-@@ -41,18 +41,6 @@
- 
- #define PACK_EXPIRED UINT_MAX
- 
--static uint8_t oid_version(void)
--{
--	switch (hash_algo_by_ptr(the_hash_algo)) {
--	case GIT_HASH_SHA1:
--		return 1;
--	case GIT_HASH_SHA256:
--		return 2;
--	default:
--		die(_("invalid hash version"));
--	}
--}
--
- const unsigned char *get_midx_checksum(struct multi_pack_index *m)
- {
- 	return m->data + m->data_len - the_hash_algo->rawsz;
-@@ -134,9 +122,9 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
- 		      m->version);
- 
- 	hash_version = m->data[MIDX_BYTE_HASH_VERSION];
--	if (hash_version != oid_version()) {
-+	if (hash_version != oid_version(the_hash_algo)) {
- 		error(_("multi-pack-index hash version %u does not match version %u"),
--		      hash_version, oid_version());
-+		      hash_version, oid_version(the_hash_algo));
- 		goto cleanup_fail;
- 	}
- 	m->hash_len = the_hash_algo->rawsz;
-@@ -420,7 +408,7 @@ static size_t write_midx_header(struct hashfile *f,
- {
- 	hashwrite_be32(f, MIDX_SIGNATURE);
- 	hashwrite_u8(f, MIDX_VERSION);
--	hashwrite_u8(f, oid_version());
-+	hashwrite_u8(f, oid_version(the_hash_algo));
- 	hashwrite_u8(f, num_chunks);
- 	hashwrite_u8(f, 0); /* unused */
- 	hashwrite_be32(f, num_packs);
 diff --git a/pack-write.c b/pack-write.c
-index a2adc565f4..27b171e440 100644
+index 27b171e440..23c0342018 100644
 --- a/pack-write.c
 +++ b/pack-write.c
-@@ -2,6 +2,7 @@
- #include "pack.h"
+@@ -3,6 +3,10 @@
  #include "csum-file.h"
  #include "remote.h"
+ #include "chunk-format.h"
++#include "pack-mtimes.h"
++#include "oidmap.h"
 +#include "chunk-format.h"
++#include "pack-objects.h"
  
  void reset_pack_idx_option(struct pack_idx_option *opts)
  {
-@@ -181,21 +182,9 @@ static int pack_order_cmp(const void *va, const void *vb, void *ctx)
- 
- static void write_rev_header(struct hashfile *f)
- {
--	uint32_t oid_version;
--	switch (hash_algo_by_ptr(the_hash_algo)) {
--	case GIT_HASH_SHA1:
--		oid_version = 1;
--		break;
--	case GIT_HASH_SHA256:
--		oid_version = 2;
--		break;
--	default:
--		die("write_rev_header: unknown hash version");
--	}
--
- 	hashwrite_be32(f, RIDX_SIGNATURE);
- 	hashwrite_be32(f, RIDX_VERSION);
--	hashwrite_be32(f, oid_version);
-+	hashwrite_be32(f, oid_version(the_hash_algo));
+@@ -277,6 +281,70 @@ const char *write_rev_file_order(const char *rev_name,
+ 	return rev_name;
  }
  
- static void write_rev_index_positions(struct hashfile *f,
++static void write_mtimes_header(struct hashfile *f)
++{
++	hashwrite_be32(f, MTIMES_SIGNATURE);
++	hashwrite_be32(f, MTIMES_VERSION);
++	hashwrite_be32(f, oid_version(the_hash_algo));
++}
++
++/*
++ * Writes the object mtimes of "objects" for use in a .mtimes file.
++ * Note that objects must be in lexicographic (index) order, which is
++ * the expected ordering of these values in the .mtimes file.
++ */
++static void write_mtimes_objects(struct hashfile *f,
++				 struct packing_data *to_pack,
++				 struct pack_idx_entry **objects,
++				 uint32_t nr_objects)
++{
++	uint32_t i;
++	for (i = 0; i < nr_objects; i++) {
++		struct object_entry *e = (struct object_entry*)objects[i];
++		hashwrite_be32(f, oe_cruft_mtime(to_pack, e));
++	}
++}
++
++static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
++{
++	hashwrite(f, hash, the_hash_algo->rawsz);
++}
++
++static const char *write_mtimes_file(const char *mtimes_name,
++				     struct packing_data *to_pack,
++				     struct pack_idx_entry **objects,
++				     uint32_t nr_objects,
++				     const unsigned char *hash)
++{
++	struct hashfile *f;
++	int fd;
++
++	if (!to_pack)
++		BUG("cannot call write_mtimes_file with NULL packing_data");
++
++	if (!mtimes_name) {
++		struct strbuf tmp_file = STRBUF_INIT;
++		fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
++		mtimes_name = strbuf_detach(&tmp_file, NULL);
++	} else {
++		unlink(mtimes_name);
++		fd = xopen(mtimes_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
++	}
++	f = hashfd(fd, mtimes_name);
++
++	write_mtimes_header(f);
++	write_mtimes_objects(f, to_pack, objects, nr_objects);
++	write_mtimes_trailer(f, hash);
++
++	if (adjust_shared_perm(mtimes_name) < 0)
++		die(_("failed to make %s readable"), mtimes_name);
++
++	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
++			  CSUM_HASH_IN_STREAM | CSUM_CLOSE | CSUM_FSYNC);
++
++	return mtimes_name;
++}
++
+ off_t write_pack_header(struct hashfile *f, uint32_t nr_entries)
+ {
+ 	struct pack_header hdr;
+@@ -479,6 +547,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 char **idx_tmp_name)
+ {
+ 	const char *rev_tmp_name = NULL;
++	const char *mtimes_tmp_name = NULL;
+ 
+ 	if (adjust_shared_perm(pack_tmp_name))
+ 		die_errno("unable to make temporary pack file readable");
+@@ -491,9 +560,17 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 	rev_tmp_name = write_rev_file(NULL, written_list, nr_written, hash,
+ 				      pack_idx_opts->flags);
+ 
++	if (pack_idx_opts->flags & WRITE_MTIMES) {
++		mtimes_tmp_name = write_mtimes_file(NULL, to_pack, written_list,
++						    nr_written,
++						    hash);
++	}
++
+ 	rename_tmp_packfile(name_buffer, pack_tmp_name, "pack");
+ 	if (rev_tmp_name)
+ 		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
++	if (mtimes_tmp_name)
++		rename_tmp_packfile(name_buffer, mtimes_tmp_name, "mtimes");
+ }
+ 
+ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
+diff --git a/pack.h b/pack.h
+index fd27cfdfd7..01d385903a 100644
+--- a/pack.h
++++ b/pack.h
+@@ -44,6 +44,7 @@ struct pack_idx_option {
+ #define WRITE_IDX_STRICT 02
+ #define WRITE_REV 04
+ #define WRITE_REV_VERIFY 010
++#define WRITE_MTIMES 020
+ 
+ 	uint32_t version;
+ 	uint32_t off32_limit;
 -- 
 2.36.1.94.gb0d54bedca
 
