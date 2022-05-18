@@ -2,56 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6BB8C433EF
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 18:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B8BC433EF
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 18:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241534AbiERShF convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 18 May 2022 14:37:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50058 "EHLO
+        id S241485AbiERSkY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 14:40:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241296AbiERShE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 14:37:04 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6671DB586
-        for <git@vger.kernel.org>; Wed, 18 May 2022 11:37:03 -0700 (PDT)
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [174.119.96.21] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 24IIau9j059546
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 18 May 2022 14:36:56 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Plato Kiorpelidis'" <kioplato@gmail.com>,
-        <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>,
-        <avarab@gmail.com>
-References: <20220509175159.2948802-1-kioplato@gmail.com>       <20220509175159.2948802-14-kioplato@gmail.com>  <88421b18-0fa0-236a-b74b-c5ee3ef53279@gmail.com>        <20220518173947.4qabalu6mjmzumen@compass>       <016201d86adf$5a4e1eb0$0eea5c10$@nexbridge.com> <xmqq35h6ww55.fsf@gitster.g>
-In-Reply-To: <xmqq35h6ww55.fsf@gitster.g>
-Subject: RE: [PATCH v2 13/15] dir-iterator: option to iterate dirs in pre-order
-Date:   Wed, 18 May 2022 14:36:50 -0400
-Organization: Nexbridge Inc.
-Message-ID: <016b01d86ae6$40b2ed80$c218c880$@nexbridge.com>
+        with ESMTP id S241440AbiERSkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 14:40:23 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908B31E38AB
+        for <git@vger.kernel.org>; Wed, 18 May 2022 11:40:22 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id r23so3914625wrr.2
+        for <git@vger.kernel.org>; Wed, 18 May 2022 11:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=l+AYXSULqS5l3lNAYhb5ltvAGhjHIa+6wQ6d3TJcNT4=;
+        b=I6LPCJZxsHpTyU3KMsatNeCEu+lKnzVAsnMp0ARjIgEEzQhO65zu0uVu3BFRof/kRP
+         bIrFcUVlY9Li9blRMmvmBHMpVf9L+xDzfywEgvXNEFkXktFSHr7RFHXhIvlBxyh2Qc2O
+         WWOjzbvnU7xc9IRX8C1r3sp6JzGTXKrM3hjz49tGcc58veRsyjKQdpFkhBiMJeFwXTl5
+         hWbamCPl0wAj0b0wRiXI2MC0e+7938yiFZ0YyLfq51fJiqf5heNCWquDkIoT+m2UhtGY
+         uKCAiIfAnYrHooiR2Psl5lz/E0qJi5m+o06648h9WuCqhTLi3jCN0e+ogbvt7tYizr/W
+         0lUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=l+AYXSULqS5l3lNAYhb5ltvAGhjHIa+6wQ6d3TJcNT4=;
+        b=hU7RD6y1oB2cub6RLiNVWbxR3h0SJdfvRcJ3Kirr7/Hk0gn5pmpeehYIUTh0uA11C4
+         AlH1Z5rdOnxznfxpkN/mebHbgkmsx9qXaJO7p8ETKexmuGwgDvFJBgRSZtklz/9AwZmX
+         c0JHO+2Yte6Gze1K264RAre7RyWCwc2VgXwEkwM4shDJ88JfYlJIe04uJpoAQ09tOdLu
+         LRXqXR6CNLEQaj0GPChyxGdGx8d3UPEpm/ugDWNXn758WuiuJotE5a5Aa9sKtkRcTTN3
+         axJz2RR3oKbdKvQNPUYEVNb4yl+uFfWbDXn1+xImgtJP67JJlr8zf/DwX6se+hf5vAYu
+         Relg==
+X-Gm-Message-State: AOAM530w2GWsUjOG/HlU9CZhH1Bvzwcx4dzTwoVcnkVtKpL/l5QOoD/4
+        FRa5kmQdEEbyjbNcSjRGtCS+ZBB0t8A=
+X-Google-Smtp-Source: ABdhPJwMCU2PomhOg8o28weJWUJLtHGtiaKurmvyooavC+38T4ZH0x8Ds65eqtD7DgLYVOlNRJKpsQ==
+X-Received: by 2002:adf:fc01:0:b0:20c:ff9a:2c53 with SMTP id i1-20020adffc01000000b0020cff9a2c53mr870272wrr.142.1652899220716;
+        Wed, 18 May 2022 11:40:20 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h21-20020a05600c351500b003971ece4e8bsm2561303wmq.13.2022.05.18.11.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 May 2022 11:40:20 -0700 (PDT)
+Message-Id: <pull.1265.git.git.1652899219597.gitgitgadget@gmail.com>
+From:   "mataha via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 18 May 2022 18:40:19 +0000
+Subject: [PATCH] templates: clarify SHA1 arg in prepare-commit-msg
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQEtoa9KICtof6G0d82GO44tkWkaaAFac/2+AdFePPMCFShFEwG1hhefASaFcyeuOaChAA==
+To:     git@vger.kernel.org
+Cc:     mataha <mateusz.kazimierczuk@xolv.io>,
+        mataha <mateusz.kazimierczuk@xolv.io>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 18, 2022 2:09 PM Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->> Could this be a fallback position where nftw() is not available? I am
->> not how broadly nftw() is supported but it appears to do what you are
->> looking for.
->
->Yeah, nftw() sounds like a better approach than what we have been doing for the
->past decade by writing our own iterator.
+From: mataha <mateusz.kazimierczuk@xolv.io>
 
-Not to mention being blindingly faster and lower resource usage on some "exotic" platforms 😊
+'prepare-commit-msg' hook sample description doesn't mention the third
+argument (a commit object name) nor when is it actually passed to that
+hook by git-commit (if the source is a commit; see builtin/commit.c#L777,
+sequencer.c#L1219). Seeing that it's documented in githooks(5), there
+should be no reason not to include that in the sample hook as well.
 
+Signed-off-by: Mateusz 'mataha' Kazimierczuk <mateusz.kazimierczuk@xolv.io>
+---
+    Mention the third argument in 'prepare-commit-msg' hook sample
+    
+    'prepare-commit-msg' hook sample doesn't mention what the third argument
+    is for nor when is it actually passed; I feel like it should be, for the
+    sake of convenience (this doesn't mean that a user shouldn't refer to a
+    more detailed description in the manual, of course).
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1265%2Fmataha%2Fdoc%2Fprepare-commit-msg-args-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1265/mataha/doc/prepare-commit-msg-args-v1
+Pull-Request: https://github.com/git/git/pull/1265
+
+ templates/hooks--prepare-commit-msg.sample | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
+index 318afe3fd86..bc06d0701a8 100755
+--- a/templates/hooks--prepare-commit-msg.sample
++++ b/templates/hooks--prepare-commit-msg.sample
+@@ -3,9 +3,9 @@
+ # An example hook script to prepare the commit log message.
+ # Called by "git commit" with the name of the file that has the
+ # commit message, followed by the description of the commit
+-# message's source.  The hook's purpose is to edit the commit
+-# message file.  If the hook fails with a non-zero status,
+-# the commit is aborted.
++# message's source and the commit object name (if the source was
++# a commit).  The hook's purpose is to edit the commit message file.
++# If the hook fails with a non-zero status, the commit is aborted.
+ #
+ # To enable this hook, rename this file to "prepare-commit-msg".
+ 
+
+base-commit: 277cf0bc36094f6dc4297d8c9cef79df045b735d
+-- 
+gitgitgadget
