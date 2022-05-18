@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 040EEC433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1760C433EF
 	for <git@archiver.kernel.org>; Wed, 18 May 2022 23:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230423AbiERXKy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 19:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38344 "EHLO
+        id S230438AbiERXKz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 19:10:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230428AbiERXKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 19:10:52 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23C063AC
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:10:49 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id hh4so3413844qtb.10
-        for <git@vger.kernel.org>; Wed, 18 May 2022 16:10:49 -0700 (PDT)
+        with ESMTP id S229766AbiERXKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 19:10:54 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68965A475
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:10:52 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id n10so3189164qvi.5
+        for <git@vger.kernel.org>; Wed, 18 May 2022 16:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=J9A7QUwSMtUTE9V9ep9knuOFm86Sksaj+/ci+zTakCc=;
-        b=3nMMVw5x13+KiLu7JN9EXxFKYF/GRo03egGdCAQLA7uQ9iJF4fvHSk4v0Wqti7Nd6w
-         pc0p30KdfDtqESx6splqyzKvgOAVs/h1WuTZ/ihg9J3m0uuO1eOrc1ntu5aLAZlJbh0x
-         PfHvTPkLaIN1Ibtj5HAQlDVQJAu591Hw1PvRghStsdba1t5wlrma1usUKLKa3eyT8o2l
-         o/wkzKEHfNU3r8rxoBMd3+D9FokfR53gh7nyYnlkV+AsW43JngZxKWAi8kidp0cEqAOq
-         zlB4XvEknguNZ22A6hc7tXeGBElXiTEv1B6gMXwjOgjluHgIPzE8oIer5c2kJvneomnN
-         G1sw==
+        bh=T6J2KAUcykXAWBflW089+vQh+u0cb3XLHedy/kp6Ryg=;
+        b=pQtmGxIDmZYDewGQMQ6ewYDdy3zV79j1z2sXEeLwOXgGhWQYwbpJx9oORdFTQAuyFw
+         A+C5e55+W/HNSubOlZWtzh/bF2wAsCQ0/FfjaBsVkItMnvq6rpP/+jHCFemL+7nvIci5
+         MfpWl2sQ8/te24qAVrsJqMqO+w236TotEYmXjd1WF+cWwsDRJjZJYncoiMwU7uzoEgde
+         7Pp6sQONFsDX3AjkcELaWXjAkJOcEtgm7+WBFBU3lyaU3QXLpe4wKw+y1u5ex7f/uAmT
+         fEAfSX8HgjLt90AVPMycfUmk1fc8KomWGXjwgRSe8/MXhODIuWZNQMFov1LJIC/kbZCk
+         AnHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=J9A7QUwSMtUTE9V9ep9knuOFm86Sksaj+/ci+zTakCc=;
-        b=QOJivZSEHiWCE4hNxFUd8nxx5RJO6l2b3oT4i7o9geu+5If+u1c+TdrTqJu2gUgncJ
-         shpSfpuSWqbonCVyOEo+191yBvF/n/9QUJuCD1uacEjLGykIXq+KVWe9j04jGnzoLaTE
-         5WfFalnYEjmM2qXr6J3v0BGrYzo3ynawFB2VEJZCvmgQjRaBc+2+0C4WDmdEwREyjJ/u
-         GEQK85hZm/92RE8q29uqFNa5jAaNI+vHnSmxoyLw3fTEYPZGssNdskNMGVRJNi6lYW/L
-         zwXRM2hvnXvBF/gKCurvgaY3iDwCO3oc7VoDgVWVjxd40XZCRrV2N+mL499bWQ+SykQ4
-         Y0AA==
-X-Gm-Message-State: AOAM530h4PIANXYO6QiOO64d+mvdl6JkZ+4LOG1ahDokYfdnQpI1GCYK
-        YmPiLjyS4AGIzsCS/o32/jigKLRJWSRTEImq
-X-Google-Smtp-Source: ABdhPJxLc7PdnYID/9XP3CjYifngXA7z6sKA/kIK3SWoSlVRldFYjMepOffF7aJ8eooHl4CseFGj3A==
-X-Received: by 2002:ac8:7f04:0:b0:2f3:d6d6:8406 with SMTP id f4-20020ac87f04000000b002f3d6d68406mr1836864qtk.509.1652915448458;
-        Wed, 18 May 2022 16:10:48 -0700 (PDT)
+        bh=T6J2KAUcykXAWBflW089+vQh+u0cb3XLHedy/kp6Ryg=;
+        b=Wyir8TdvG6cElfW9DSHmljA+b0V7Rwq5jA3Z/AW0G01g4AYF20CD97M0n7LAIXPAE6
+         ja7Gs/loxLj8JuMfKTyb55pimNLGrUOXVRHVYTQ6nfPM/EmUykmHkpWM+gSvmBSAqGDL
+         VXVNA5Ii5G+i7lnETk18Fx8LKidzM4qk3ZCek+dd7UBLBtNDdjxBz8lEG9WfKtPvHK+W
+         pC4Vgpc+p072h2yQTOG3gTWIFdQYRwfluFZsAmrdcBJW7VLQT3fOuB6Oep9IEC5PUx1t
+         Xzo/LQVL+Gb1o2j/aFL8OsXhcu72DfM5ko400KHIcOxbfK6Qdd2BRW3fab+WlaoYqIUB
+         qHPw==
+X-Gm-Message-State: AOAM531h39dslkyoxlWgTRdUelmWFE+FytRUwxQi8EsCitx1CajVkA9y
+        hHNJsecX6YCsnNNedr+75hsDvuwlYQWBKSYT
+X-Google-Smtp-Source: ABdhPJyKMomZ9ZGweu/SUrHBUTicqh1m9nn6qw9UhFcFqWtpmt79Tx0WNqU4Ahs/2qZx21Y3oVbxQQ==
+X-Received: by 2002:a05:6214:5009:b0:461:f919:9521 with SMTP id jo9-20020a056214500900b00461f9199521mr120937qvb.8.1652915451323;
+        Wed, 18 May 2022 16:10:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m79-20020a37a352000000b0069fc13ce208sm324894qke.57.2022.05.18.16.10.47
+        by smtp.gmail.com with ESMTPSA id l63-20020a37a242000000b0069fc13ce21bsm335954qke.76.2022.05.18.16.10.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 16:10:48 -0700 (PDT)
-Date:   Wed, 18 May 2022 19:10:47 -0400
+        Wed, 18 May 2022 16:10:50 -0700 (PDT)
+Date:   Wed, 18 May 2022 19:10:50 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: [PATCH v4 01/17] Documentation/technical: add cruft-packs.txt
-Message-ID: <f494ef7377bf8fb14d96e860106033d1bd1c9ec1.1652915424.git.me@ttaylorr.com>
+Subject: [PATCH v4 02/17] pack-mtimes: support reading .mtimes files
+Message-ID: <8f9fd21be9fcdda5c73d800fc66d1087d61a6888.1652915424.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1652915424.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,158 +64,316 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a technical document to explain cruft packs. It contains a brief
-overview of the problem, some background, details on the implementation,
-and a couple of alternative approaches not considered here.
+To store the individual mtimes of objects in a cruft pack, introduce a
+new `.mtimes` format that can optionally accompany a single pack in the
+repository.
+
+The format is defined in Documentation/technical/pack-format.txt, and
+stores a 4-byte network order timestamp for each object in name (index)
+order.
+
+This patch prepares for cruft packs by defining the `.mtimes` format,
+and introducing a basic API that callers can use to read out individual
+mtimes.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/Makefile                  |   1 +
- Documentation/technical/cruft-packs.txt | 123 ++++++++++++++++++++++++
- 2 files changed, 124 insertions(+)
- create mode 100644 Documentation/technical/cruft-packs.txt
+ Documentation/technical/pack-format.txt |  19 ++++
+ Makefile                                |   1 +
+ builtin/repack.c                        |   1 +
+ object-store.h                          |   5 +-
+ pack-mtimes.c                           | 126 ++++++++++++++++++++++++
+ pack-mtimes.h                           |  15 +++
+ packfile.c                              |  19 +++-
+ 7 files changed, 183 insertions(+), 3 deletions(-)
+ create mode 100644 pack-mtimes.c
+ create mode 100644 pack-mtimes.h
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index adb2f1b50a..2faffb52ab 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -94,6 +94,7 @@ TECH_DOCS += MyFirstContribution
- TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
- TECH_DOCS += technical/bundle-format
-+TECH_DOCS += technical/cruft-packs
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
- TECH_DOCS += technical/index-format
-diff --git a/Documentation/technical/cruft-packs.txt b/Documentation/technical/cruft-packs.txt
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 6d3efb7d16..c443dbb526 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -294,6 +294,25 @@ Pack file entry: <+
+ 
+ All 4-byte numbers are in network order.
+ 
++== pack-*.mtimes files have the format:
++
++  - A 4-byte magic number '0x4d544d45' ('MTME').
++
++  - A 4-byte version identifier (= 1).
++
++  - A 4-byte hash function identifier (= 1 for SHA-1, 2 for SHA-256).
++
++  - A table of 4-byte unsigned integers in network order. The ith
++    value is the modification time (mtime) of the ith object in the
++    corresponding pack by lexicographic (index) order. The mtimes
++    count standard epoch seconds.
++
++  - A trailer, containing a checksum of the corresponding packfile,
++    and a checksum of all of the above (each having length according
++    to the specified hash function).
++
++All 4-byte numbers are in network order.
++
+ == multi-pack-index (MIDX) files have the following format:
+ 
+ The multi-pack-index files refer to multiple pack-files and loose objects.
+diff --git a/Makefile b/Makefile
+index 61aadf3ce8..a299580b7c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -993,6 +993,7 @@ LIB_OBJS += oidtree.o
+ LIB_OBJS += pack-bitmap-write.o
+ LIB_OBJS += pack-bitmap.o
+ LIB_OBJS += pack-check.o
++LIB_OBJS += pack-mtimes.o
+ LIB_OBJS += pack-objects.o
+ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+diff --git a/builtin/repack.c b/builtin/repack.c
+index d1a563d5b6..e7a3920c6d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -217,6 +217,7 @@ static struct {
+ } exts[] = {
+ 	{".pack"},
+ 	{".rev", 1},
++	{".mtimes", 1},
+ 	{".bitmap", 1},
+ 	{".promisor", 1},
+ 	{".idx"},
+diff --git a/object-store.h b/object-store.h
+index 53996018c1..2c4671ed7a 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -115,12 +115,15 @@ struct packed_git {
+ 		 freshened:1,
+ 		 do_not_close:1,
+ 		 pack_promisor:1,
+-		 multi_pack_index:1;
++		 multi_pack_index:1,
++		 is_cruft:1;
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	struct revindex_entry *revindex;
+ 	const uint32_t *revindex_data;
+ 	const uint32_t *revindex_map;
+ 	size_t revindex_size;
++	const uint32_t *mtimes_map;
++	size_t mtimes_size;
+ 	/* something like ".git/objects/pack/xxxxx.pack" */
+ 	char pack_name[FLEX_ARRAY]; /* more */
+ };
+diff --git a/pack-mtimes.c b/pack-mtimes.c
 new file mode 100644
-index 0000000000..c0f583cd48
+index 0000000000..46ad584af1
 --- /dev/null
-+++ b/Documentation/technical/cruft-packs.txt
-@@ -0,0 +1,123 @@
-+= Cruft packs
++++ b/pack-mtimes.c
+@@ -0,0 +1,126 @@
++#include "pack-mtimes.h"
++#include "object-store.h"
++#include "packfile.h"
 +
-+The cruft packs feature offer an alternative to Git's traditional mechanism of
-+removing unreachable objects. This document provides an overview of Git's
-+pruning mechanism, and how a cruft pack can be used instead to accomplish the
-+same.
++static char *pack_mtimes_filename(struct packed_git *p)
++{
++	size_t len;
++	if (!strip_suffix(p->pack_name, ".pack", &len))
++		BUG("pack_name does not end in .pack");
++	/* NEEDSWORK: this could reuse code from pack-revindex.c. */
++	return xstrfmt("%.*s.mtimes", (int)len, p->pack_name);
++}
 +
-+== Background
++#define MTIMES_HEADER_SIZE (12)
++#define MTIMES_MIN_SIZE (MTIMES_HEADER_SIZE + (2 * the_hash_algo->rawsz))
 +
-+To remove unreachable objects from your repository, Git offers `git repack -Ad`
-+(see linkgit:git-repack[1]). Quoting from the documentation:
++struct mtimes_header {
++	uint32_t signature;
++	uint32_t version;
++	uint32_t hash_id;
++};
 +
-+[quote]
-+[...] unreachable objects in a previous pack become loose, unpacked objects,
-+instead of being left in the old pack. [...] loose unreachable objects will be
-+pruned according to normal expiry rules with the next 'git gc' invocation.
++static int load_pack_mtimes_file(char *mtimes_file,
++				 uint32_t num_objects,
++				 const uint32_t **data_p, size_t *len_p)
++{
++	int fd, ret = 0;
++	struct stat st;
++	void *data = NULL;
++	size_t mtimes_size;
++	struct mtimes_header header;
++	uint32_t *hdr;
 +
-+Unreachable objects aren't removed immediately, since doing so could race with
-+an incoming push which may reference an object which is about to be deleted.
-+Instead, those unreachable objects are stored as loose object and stay that way
-+until they are older than the expiration window, at which point they are removed
-+by linkgit:git-prune[1].
++	fd = git_open(mtimes_file);
 +
-+Git must store these unreachable objects loose in order to keep track of their
-+per-object mtimes. If these unreachable objects were written into one big pack,
-+then either freshening that pack (because an object contained within it was
-+re-written) or creating a new pack of unreachable objects would cause the pack's
-+mtime to get updated, and the objects within it would never leave the expiration
-+window. Instead, objects are stored loose in order to keep track of the
-+individual object mtimes and avoid a situation where all cruft objects are
-+freshened at once.
++	if (fd < 0) {
++		ret = -1;
++		goto cleanup;
++	}
++	if (fstat(fd, &st)) {
++		ret = error_errno(_("failed to read %s"), mtimes_file);
++		goto cleanup;
++	}
 +
-+This can lead to undesirable situations when a repository contains many
-+unreachable objects which have not yet left the grace period. Having large
-+directories in the shards of `.git/objects` can lead to decreased performance in
-+the repository. But given enough unreachable objects, this can lead to inode
-+starvation and degrade the performance of the whole system. Since we
-+can never pack those objects, these repositories often take up a large amount of
-+disk space, since we can only zlib compress them, but not store them in delta
-+chains.
++	mtimes_size = xsize_t(st.st_size);
 +
-+== Cruft packs
++	if (mtimes_size < MTIMES_MIN_SIZE) {
++		ret = error(_("mtimes file %s is too small"), mtimes_file);
++		goto cleanup;
++	}
 +
-+A cruft pack eliminates the need for storing unreachable objects in a loose
-+state by including the per-object mtimes in a separate file alongside a single
-+pack containing all loose objects.
++	if (mtimes_size - MTIMES_MIN_SIZE != st_mult(sizeof(uint32_t), num_objects)) {
++		ret = error(_("mtimes file %s is corrupt"), mtimes_file);
++		goto cleanup;
++	}
 +
-+A cruft pack is written by `git repack --cruft` when generating a new pack.
-+linkgit:git-pack-objects[1]'s `--cruft` option. Note that `git repack --cruft`
-+is a classic all-into-one repack, meaning that everything in the resulting pack is
-+reachable, and everything else is unreachable. Once written, the `--cruft`
-+option instructs `git repack` to generate another pack containing only objects
-+not packed in the previous step (which equates to packing all unreachable
-+objects together). This progresses as follows:
++	data = hdr = xmmap(NULL, mtimes_size, PROT_READ, MAP_PRIVATE, fd, 0);
 +
-+  1. Enumerate every object, marking any object which is (a) not contained in a
-+     kept-pack, and (b) whose mtime is within the grace period as a traversal
-+     tip.
++	header.signature = ntohl(hdr[0]);
++	header.version = ntohl(hdr[1]);
++	header.hash_id = ntohl(hdr[2]);
 +
-+  2. Perform a reachability traversal based on the tips gathered in the previous
-+     step, adding every object along the way to the pack.
++	if (header.signature != MTIMES_SIGNATURE) {
++		ret = error(_("mtimes file %s has unknown signature"), mtimes_file);
++		goto cleanup;
++	}
 +
-+  3. Write the pack out, along with a `.mtimes` file that records the per-object
-+     timestamps.
++	if (header.version != 1) {
++		ret = error(_("mtimes file %s has unsupported version %"PRIu32),
++			    mtimes_file, header.version);
++		goto cleanup;
++	}
 +
-+This mode is invoked internally by linkgit:git-repack[1] when instructed to
-+write a cruft pack. Crucially, the set of in-core kept packs is exactly the set
-+of packs which will not be deleted by the repack; in other words, they contain
-+all of the repository's reachable objects.
++	if (!(header.hash_id == 1 || header.hash_id == 2)) {
++		ret = error(_("mtimes file %s has unsupported hash id %"PRIu32),
++			    mtimes_file, header.hash_id);
++		goto cleanup;
++	}
 +
-+When a repository already has a cruft pack, `git repack --cruft` typically only
-+adds objects to it. An exception to this is when `git repack` is given the
-+`--cruft-expiration` option, which allows the generated cruft pack to omit
-+expired objects instead of waiting for linkgit:git-gc[1] to expire those objects
-+later on.
++cleanup:
++	if (ret) {
++		if (data)
++			munmap(data, mtimes_size);
++	} else {
++		*len_p = mtimes_size;
++		*data_p = (const uint32_t *)data;
++	}
 +
-+It is linkgit:git-gc[1] that is typically responsible for removing expired
-+unreachable objects.
++	close(fd);
++	return ret;
++}
 +
-+== Caution for mixed-version environments
++int load_pack_mtimes(struct packed_git *p)
++{
++	char *mtimes_name = NULL;
++	int ret = 0;
 +
-+Repositories that have cruft packs in them will continue to work with any older
-+version of Git. Note, however, that previous versions of Git which do not
-+understand the `.mtimes` file will use the cruft pack's mtime as the mtime for
-+all of the objects in it. In other words, do not expect older (pre-cruft pack)
-+versions of Git to interpret or even read the contents of the `.mtimes` file.
++	if (!p->is_cruft)
++		return ret; /* not a cruft pack */
++	if (p->mtimes_map)
++		return ret; /* already loaded */
 +
-+Note that having mixed versions of Git GC-ing the same repository can lead to
-+unreachable objects never being completely pruned. This can happen under the
-+following circumstances:
++	ret = open_pack_index(p);
++	if (ret < 0)
++		goto cleanup;
 +
-+  - An older version of Git running GC explodes the contents of an existing
-+    cruft pack loose, using the cruft pack's mtime.
-+  - A newer version running GC collects those loose objects into a cruft pack,
-+    where the .mtime file reflects the loose object's actual mtimes, but the
-+    cruft pack mtime is "now".
++	mtimes_name = pack_mtimes_filename(p);
++	ret = load_pack_mtimes_file(mtimes_name,
++				    p->num_objects,
++				    &p->mtimes_map,
++				    &p->mtimes_size);
++cleanup:
++	free(mtimes_name);
++	return ret;
++}
 +
-+Repeating this process will lead to unreachable objects not getting pruned as a
-+result of repeatedly resetting the objects' mtimes to the present time.
++uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos)
++{
++	if (!p->mtimes_map)
++		BUG("pack .mtimes file not loaded for %s", p->pack_name);
++	if (p->num_objects <= pos)
++		BUG("pack .mtimes out-of-bounds (%"PRIu32" vs %"PRIu32")",
++		    pos, p->num_objects);
 +
-+If you are GC-ing repositories in a mixed version environment, consider omitting
-+the `--cruft` option when using linkgit:git-repack[1] and linkgit:git-gc[1], and
-+leaving the `gc.cruftPacks` configuration unset until all writers understand
-+cruft packs.
++	return get_be32(p->mtimes_map + pos + 3);
++}
+diff --git a/pack-mtimes.h b/pack-mtimes.h
+new file mode 100644
+index 0000000000..38ddb9f893
+--- /dev/null
++++ b/pack-mtimes.h
+@@ -0,0 +1,15 @@
++#ifndef PACK_MTIMES_H
++#define PACK_MTIMES_H
 +
-+== Alternatives
++#include "git-compat-util.h"
 +
-+Notable alternatives to this design include:
++#define MTIMES_SIGNATURE 0x4d544d45 /* "MTME" */
++#define MTIMES_VERSION 1
 +
-+  - The location of the per-object mtime data, and
-+  - Storing unreachable objects in multiple cruft packs.
++struct packed_git;
 +
-+On the location of mtime data, a new auxiliary file tied to the pack was chosen
-+to avoid complicating the `.idx` format. If the `.idx` format were ever to gain
-+support for optional chunks of data, it may make sense to consolidate the
-+`.mtimes` format into the `.idx` itself.
++int load_pack_mtimes(struct packed_git *p);
 +
-+Storing unreachable objects among multiple cruft packs (e.g., creating a new
-+cruft pack during each repacking operation including only unreachable objects
-+which aren't already stored in an earlier cruft pack) is significantly more
-+complicated to construct, and so aren't pursued here. The obvious drawback to
-+the current implementation is that the entire cruft pack must be re-written from
-+scratch.
++uint32_t nth_packed_mtime(struct packed_git *p, uint32_t pos);
++
++#endif
+diff --git a/packfile.c b/packfile.c
+index 835b2d2716..fc0245fbab 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -334,12 +334,22 @@ static void close_pack_revindex(struct packed_git *p)
+ 	p->revindex_data = NULL;
+ }
+ 
++static void close_pack_mtimes(struct packed_git *p)
++{
++	if (!p->mtimes_map)
++		return;
++
++	munmap((void *)p->mtimes_map, p->mtimes_size);
++	p->mtimes_map = NULL;
++}
++
+ void close_pack(struct packed_git *p)
+ {
+ 	close_pack_windows(p);
+ 	close_pack_fd(p);
+ 	close_pack_index(p);
+ 	close_pack_revindex(p);
++	close_pack_mtimes(p);
+ 	oidset_clear(&p->bad_objects);
+ }
+ 
+@@ -363,7 +373,7 @@ void close_object_store(struct raw_object_store *o)
+ 
+ void unlink_pack_path(const char *pack_name, int force_delete)
+ {
+-	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor"};
++	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor", ".mtimes"};
+ 	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t plen;
+@@ -718,6 +728,10 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+ 	if (!access(p->pack_name, F_OK))
+ 		p->pack_promisor = 1;
+ 
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".mtimes");
++	if (!access(p->pack_name, F_OK))
++		p->is_cruft = 1;
++
+ 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
+ 	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
+ 		free(p);
+@@ -869,7 +883,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
+ 	    ends_with(file_name, ".pack") ||
+ 	    ends_with(file_name, ".bitmap") ||
+ 	    ends_with(file_name, ".keep") ||
+-	    ends_with(file_name, ".promisor"))
++	    ends_with(file_name, ".promisor") ||
++	    ends_with(file_name, ".mtimes"))
+ 		string_list_append(data->garbage, full_name);
+ 	else
+ 		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
 -- 
 2.36.1.94.gb0d54bedca
 
