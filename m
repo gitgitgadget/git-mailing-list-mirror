@@ -2,102 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0F19C433EF
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 15:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 124C8C433F5
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 15:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239526AbiERPkR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 11:40:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50090 "EHLO
+        id S239608AbiERPv1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 11:51:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239512AbiERPkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 11:40:07 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C3A17CE43
-        for <git@vger.kernel.org>; Wed, 18 May 2022 08:40:06 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id tk15so4594660ejc.6
-        for <git@vger.kernel.org>; Wed, 18 May 2022 08:40:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ftw2Z3zo0lUpYyH52I48ZZSQpKtm3eje5zm6X2Nq0Jg=;
-        b=NXTImLtg6z9gygobPv+ZhCdRrVvgaeI+9+tR5cqlrPeoMbCRcZs/nsoUQybjrrxQcr
-         U9z01JSvR/kegpFZlxYMddR5KQmkLZoPRsMB/w0MXaXetZ1Ni4z+78n6FHVvgHrWpW+g
-         DHGlB+cdeLK+yTRsZ9lYfHl+5tSNMBmVuDjx3C/Og5BaUn/jl9LKFOegq5KILdnywLeE
-         ba0XhxKsUiZKmzSM9+a538BHx5sUglKxJojGO8ALcK4YFaiqpEPOHBDcZ6d/tZD9NMsw
-         wVQj/J01XPKBme4qpnf+fkKFQ6WJF+PH0Usa4FnhKFG+RcIhf7JEPzMf6+uLItLq27TG
-         /dKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ftw2Z3zo0lUpYyH52I48ZZSQpKtm3eje5zm6X2Nq0Jg=;
-        b=X+BRC7VBauL80j0Q5d8VVAei3PjXXGlxEiEA60c0mtb8RNjaquXPaOI4uURyjEPuz2
-         /gePujxrMtkJIm4UDLoDfTD5Npc2fedSvJMLVJPRngtFZ3GZOsCHmDC/f80wEUJnJOVD
-         9Vh/rTDIPBOej6Jd28bQ1YS1GfVE9lupIVtyMtyFdp85OD+LGHGNKx5yL40N9gPfNo3x
-         UtYXoYQWAypjNP7zBIFi0kjbaNPYcQs79Voa4sV1kAWclCvCv+LoQszGmzMseZyHMi3X
-         C8W76xtbfn2DWL7bNG/ITyaRIZMbcrpKoYNDx5UJe3jInfD0kZphdCC2QUMylx0hs5VR
-         hgvw==
-X-Gm-Message-State: AOAM533jgrl5PDUtHld1Q8W+YzftWXO+iytpYfIBghEiN2+Y44ySJ0r6
-        nW1b7chRZXM75RQaHOu/L3s=
-X-Google-Smtp-Source: ABdhPJwdFVP7+8AQQhr7eMzttD9IW9c9Hfy6HEWblq6RMePUNJ0Rd+nXgwq58QMn7gxSWbhprugynA==
-X-Received: by 2002:a17:907:a428:b0:6fa:9253:6f88 with SMTP id sg40-20020a170907a42800b006fa92536f88mr200318ejc.518.1652888404632;
-        Wed, 18 May 2022 08:40:04 -0700 (PDT)
-Received: from localhost ([2a02:2149:8aa1:7500:dc1c:e29b:83a4:b580])
-        by smtp.gmail.com with ESMTPSA id rk9-20020a170907214900b006fe816bf08asm1063278ejb.60.2022.05.18.08.40.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 08:40:04 -0700 (PDT)
-Date:   Wed, 18 May 2022 18:39:51 +0300
-From:   Plato Kiorpelidis <kioplato@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v2 10/15] dir-iterator: refactor dir_iterator_advance()
-Message-ID: <20220518153951.ebmcd5nsnwwdrebz@compass>
-References: <20220509175159.2948802-1-kioplato@gmail.com>
- <20220509175159.2948802-11-kioplato@gmail.com>
- <xmqqr152be4n.fsf@gitster.g>
+        with ESMTP id S239602AbiERPuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 11:50:54 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25DF323177
+        for <git@vger.kernel.org>; Wed, 18 May 2022 08:50:51 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4101C1375CF;
+        Wed, 18 May 2022 11:50:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/jU5VIvSeLtZ8TcCtU/aFb6T0Ru/Hx4mxvCSpj
+        rvx0Q=; b=tlYyPa6gpgTvX0p6ez2R04J1jpJnNQT5IYk/KkgfCX/H1yIe/7HvMh
+        ZhP8V4YUGThUnZ2Bou4SH1LBmOzyd5Kk8QvoCle+IvoCtASojufyeVbPRjqH/vFX
+        zXCpQRCI812PrXf1NCpQYXNnAW3zSaC0oOnfWDWq1ZAATYv984I+k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37AFD1375CE;
+        Wed, 18 May 2022 11:50:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 784F91375C9;
+        Wed, 18 May 2022 11:50:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Orgad Shaneh <orgads@gmail.com>
+Cc:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH v2] fetch: limit shared symref check only for local
+ branches
+References: <pull.1266.git.git.1652690275625.gitgitgadget@gmail.com>
+        <pull.1266.v2.git.git.1652690501963.gitgitgadget@gmail.com>
+        <xmqqv8u54gcm.fsf@gitster.g>
+        <CAGHpTBJDeOMCfv36Sey1tGadQThS8mGR00YiK4C16BbV==W8XQ@mail.gmail.com>
+        <xmqqtu9oxxmv.fsf@gitster.g>
+        <CAGHpTBK_K+GK5z3XD-7ob7JPLrUnohfMCRVD2wrwbMhDyy3TEw@mail.gmail.com>
+Date:   Wed, 18 May 2022 08:50:46 -0700
+In-Reply-To: <CAGHpTBK_K+GK5z3XD-7ob7JPLrUnohfMCRVD2wrwbMhDyy3TEw@mail.gmail.com>
+        (Orgad Shaneh's message of "Tue, 17 May 2022 13:41:14 +0300")
+Message-ID: <xmqqilq2yh49.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr152be4n.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48CE852C-D6C2-11EC-B6DE-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/05/09 02:16PM, Junio C Hamano wrote:
-> Plato Kiorpelidis <kioplato@gmail.com> writes:
-> 
-> > Simplify dir_iterator_advance() by converting from iterative to
-> > recursive implementation. This conversion makes dir-iterator more
-> > maintainable for the following reasons:
-> >   * dir-iterator iterates the file-system, which is a tree structure.
-> >     Traditionally, tree traversals, in textbooks, lectures and online
-> >     sources are implemented recursively and not iteratively. Therefore
-> >     it helps reduce mental load for readers, since it's easier to follow
-> >     as it reminds of the same tree traversals we use on tree structures.
-> 
-> Careful.
-> 
-> Many algorithms that are taught in the recursive form in textbooks
-> are turned into iterative in production systems for a reason.  To
-> avoid too deep a recursion wasting too much stack space.  A loop
-> with management of work items using in-program data structures like
-> stack or queue often makes a large traversal bearable.
-> 
-> The most obvious example is our history traversal code.  History
-> stored in Git is a tree structure, but no sane reimplementation of
-> Git (well, at least those that want to be able to deal with a
-> history larger than a toy project) would implement "git log" using a
-> recursive algorithm.
+Orgad Shaneh <orgads@gmail.com> writes:
 
-That's a good point, I didn't think about that. It's also something that's
-objective, so it's easier to reach a conclusion. This whole refactoring of
-dir_iterator_advance() is a matter of opinion on what's more readable or not.
+> This would require shuffling the code. check_not_current_branch() is
+> called by do_fetch before fetch_and_consume_refs (which updates
+> ref->old_oid and ref->new_oid).
 
-In this case, however, the dir_iterator_advance() is performing tail recursion
-which doesn't require stack space. It reuses the stack frame from the current
-call for the next call. Does this still pose a problem and why? If it does, I've
-got no problem to work with the existing iterative implementation.
+Oh, that's unfortunate.
 
-Thanks,
-Plato
+We may not be matching them with the current values of the local
+copies in ref_map in today's code until fetch_and_consume_refs()
+calls store_updated_refs() to update the .new_oid member, but I
+would have thought that we learned the equivalent of "git ls-remote"
+output a lot earlier, at least most of the time, via a call to
+transport_get_remote_refs(), and that was why I thought such an
+optimization was doable.
+
+Thanks.  
