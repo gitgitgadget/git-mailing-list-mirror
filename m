@@ -2,149 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3440FC433EF
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 20:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDD54C433EF
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 21:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242702AbiERUvl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 16:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46188 "EHLO
+        id S243105AbiERVGj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 17:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242688AbiERUvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 16:51:39 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE3166AFB
-        for <git@vger.kernel.org>; Wed, 18 May 2022 13:51:36 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9A20E18D172;
-        Wed, 18 May 2022 16:51:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5336jWVjL4ndbIXnTjevY01s7Un85N2IfOA0hV
-        7adG8=; b=BeDBX5OdRrICbePJCNlLkyIUCSsfxAWMyeoyQN/1WzGA/ohzdi6KDp
-        7hEUBy6KAToh4XcC93Yn4zpKm9Mvz1kuHmZuW6O9kAyRMfkIbCowsN+RJRWdhYiN
-        egLMD4lV3NHCOhon7vY3RKSoDEgud8DXLB2FJCzZ98y8+raoHc9Tg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92E4218D170;
-        Wed, 18 May 2022 16:51:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AADB718D16E;
-        Wed, 18 May 2022 16:51:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nadav Goldstein <nadav.goldstein@blazepod.co>
-Cc:     git@vger.kernel.org, gitgitgadget@gmail.com,
-        nadav.goldstein96@gmail.com
-Subject: Re: [PATCH] stash: added safety flag for stash clear subcommand
-References: <CAApwGmCsQNK42=5x1OxdovgVxdzj2Vs5H1FaUJhAGCXvmA5pzw@mail.gmail.com>
-Date:   Wed, 18 May 2022 13:51:31 -0700
-In-Reply-To: <CAApwGmCsQNK42=5x1OxdovgVxdzj2Vs5H1FaUJhAGCXvmA5pzw@mail.gmail.com>
-        (Nadav Goldstein's message of "Wed, 18 May 2022 21:53:36 +0300")
-Message-ID: <xmqqy1yytvho.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S243251AbiERVGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 17:06:23 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A06F248CF
+        for <git@vger.kernel.org>; Wed, 18 May 2022 14:06:15 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id wh22so6002307ejb.7
+        for <git@vger.kernel.org>; Wed, 18 May 2022 14:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=blazepod-co.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=m6UwpUKtXixUg5Yq552UmT3AgoDJ6BOtpLslvQAHYFY=;
+        b=OThKnsDASWrtVyN3s8iCqUuNp7MXrAX0Ymju+MMyJNlm0WSn48txAmSiaUDRm3Zwku
+         TDUzknp37kAOkLS2nDDx8GLCrEKQYkBU3YYzBDbUxbFh5B/y5HOJjb6JJblZTSmZac6D
+         uCbjM/UOH9j2XVQlgOaTJP5gNAxMuNQVFgpZPkeMQbwtoA++0L/cyOx4Mv7gkED3Bxew
+         0fR/VRQvd+OrDzBcAVt/qOxFdLc5x2L2tvwfaYO/OgZuMyxiYoSKgv+ylam/p3opS3g0
+         jOQ+MPveWohDlG0OR072sBoyoIpWlr/lu8COvhMB409CHz2swxcBY+x4o3FdD2oOPflK
+         oUxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=m6UwpUKtXixUg5Yq552UmT3AgoDJ6BOtpLslvQAHYFY=;
+        b=78sN1ZL+NeO4uGCZKgMo+DB1aWrLJ29sSYQIdHQsOlRYo6SZWqbrAuTMA35QtslLvC
+         2IdrGXZ2AhLEDgmvJrS+wCK9i2U23OdNeymg7KauSMcm27KSJ4ZnuUTro1IdCtCYdQHy
+         Fh2FI/seCyjJOr0ZaCTO70ioBy8zkc8z/1IjujzPW3vaI5MKPqMme+NWU2/ai3NOeyal
+         MXMlhv82Ot4RnSiNp4w7hu8IYNjYnYrYlPM+2qOGYOtnwXMFZzlD3hpHXReFzcffLZ2g
+         oK+WrUPjyRB0VCAu14QOIvts96Z0V8pfahbdtViacAqRB41ecD2ix9nmu7noJc2lObfp
+         xw6A==
+X-Gm-Message-State: AOAM530usBpKXyR3mlzGuYkyKonMuUJ49YvVIh6AtFP1c7hRJ/WdjbdY
+        LJBLoOzSi6nWpNdB0VaI6tCz9ous/HInrG2NYdm1Vg==
+X-Google-Smtp-Source: ABdhPJwbzho2DW2MDS3rPcnNqY3WWCwMCZYfarl8Yl5c8jP83tqkUg8WI6KJ+DNq3+ywzbQxH2Fg0R2myCbIYFn2P6M=
+X-Received: by 2002:a17:906:4fc3:b0:6e0:66a5:d59c with SMTP id
+ i3-20020a1709064fc300b006e066a5d59cmr1334332ejw.131.1652907974588; Wed, 18
+ May 2022 14:06:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4C95F7F6-D6EC-11EC-86FC-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+From:   Nadav Goldstein <nadav.goldstein@blazepod.co>
+Date:   Thu, 19 May 2022 00:05:38 +0300
+Message-ID: <CAApwGmCwB7=t7fDD96-NvSFXeqv59zOrr4ZCbmx65eQ5qiuJVw@mail.gmail.com>
+Subject: Re: [PATCH] stash: added safety flag for stash clear subcommand
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, gitgitgadget@gmail.com,
+        nadav.goldstein96@gmail.com, nadav.goldstein@blazepod.co
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nadav Goldstein <nadav.goldstein@blazepod.co> writes:
+I completely agree with everything you said :)
 
-> If we make "git stash clear" to by default not clear the stash and
-> just present the stashes to be dropped (and require -f to force
-> clearing the stash), wouldn't we essentially make a duplicate of "git
-> stash list"?
-
-Correct, but that is not what I would imagine to be a parallel to
-"git clean [-f|-n]" with clean.requireForce.  If you haven't played
-with "git clean" with various settings of that variable, you should.
-Its behaviour illustrates pretty well what I meant in the message
-that prompted your response, to which I am responding to.  I would
-imagine that "git stash clear [-f|-n]" with stashClear.requireForce
-to be more like:
-
- * stashClear.requireForce that is not set is treated as if it is
-   set to true;
-
- * "git stash clear" without -f or -n will die with a single line of
-   message, telling the user to give either -f or -n, unless the
-   configuration is set explicitly to 'false'.
-
-It will be more like "confirmation" to those who run "git stash
-clear", and then if they are certain, run "git stash clear -f".
-
-Of course, "interactive" can be added like "git clean -i".
-
-Just like "-i" defeats the refusal by "clear.requireForce" when
-running "git clean", "git stash clear -i" would go interactive and
-should be usable regardless of what value stashClear.requireForce
-has.
-
-> Regarding making it opt out instead of opt in, I am afraid there are
-> tools that use git stash clean automatically, and making the
-> confirmation opt-out (by default confirm) we can potentially break
-> them, don't you think it would be more gentle to the git community to
-> make it opt in?
-
-It is usually a good idea to introduce such a disruptive feature
-gradually by first making it opt-in, with a warning message to tell
-users that the default will change in the future.  For this feature,
-it may go like this:
-
- 1. Phase one.
-
- * "git stash clear" learns "-f|--force" and "-n|--dry-run"
-   options.
-
- * A configuration variable stashClear.requireForce is introduced.
-   "git stash clear" starts paying attention to it.  When it is
-
-    - set to true, "git stash clear" without "-f" or "-n" errors
-      out.
-
-    - set to false, "git stash clear" works just like today.  No
-      extra messages, no extra errors.
-
-    - unset, "git stash clear" gives a warning message to tell the
-      users two things:
-
-      - The stashClear.requireForce configuration variable exists
-        and when it is set to true, you need to pass "-f" to make
-        "git stash clear" actually clear.  When it is set to false,
-        the stash is cleared just like before.  When it is unset,
-        you will see this warning message, but the command clears
-        the stash.
-
-      - The default value of stashClear.requireForce will become
-        true in a future version of Git, and users are encouraged to
-        set their preference early by setting the configuration
-        variable now.
-
-      but otherwise it goes ahead and clears the stash.
-
- * Release notes talks about upcoming default flip for the variable.
-
- 2. Phase two (probably several releases after Phase one).
-
- * The behaviour of "git stash clear" is changed so that when
-   stashClear.requireForce is
-
-    - set to true of false, it behaves identically as phase one.
-
-    - unset, "git stash clear" gives a warning message to tell the
-      users about the stashClear.requireForce variable just like in
-      phase one (the description needs to be adjusted to say that
-      the default value is now 'true'), and behaves as if the
-      variable is set to 'true'.
-
- 3. Phase three (probably several releases after Phase two).
-
- * Long after users have adjusted to the new "safer by default"
-   behaviour, we shorten the error message given to those who do not
-   have the variable configured, similar to the message "git clean"
-   gives to those without clear.requireForce.
-
+I will get to work on v2, thanks!
