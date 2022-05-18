@@ -2,136 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDA6C433EF
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 18:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D96B7C433EF
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 20:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241817AbiERS66 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 14:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50236 "EHLO
+        id S242222AbiERUFe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 16:05:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241809AbiERS6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 14:58:55 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16686218FF8
-        for <git@vger.kernel.org>; Wed, 18 May 2022 11:58:54 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F20A4189902;
-        Wed, 18 May 2022 14:58:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qHqjhMDXZZxwQM1nrQwppGuaHo3vMuRwyav4Gy
-        CnLq0=; b=xufR66C5QalpapUALwn5kzaVZSIPRmpgfsz43KdkmOmM6xW+3YQVhh
-        0rjFs3SmmWkHSayjMW+dc3URIzjKW7WWADUK/4CvGvN3DPG1sEUkVdGNVo64PZDC
-        Nsbs/FJgwonkpdS/vGgZS04LRQ9pVJ1g0GOsm3vQSvykT7Duob/9w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E58AD189900;
-        Wed, 18 May 2022 14:58:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C88BA1898FC;
-        Wed, 18 May 2022 14:58:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "mataha via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, mataha <mateusz.kazimierczuk@xolv.io>
-Subject: Re: [PATCH] templates: clarify SHA1 arg in prepare-commit-msg
-References: <pull.1265.git.git.1652899219597.gitgitgadget@gmail.com>
-Date:   Wed, 18 May 2022 11:58:46 -0700
-In-Reply-To: <pull.1265.git.git.1652899219597.gitgitgadget@gmail.com> (mataha
-        via GitGitGadget's message of "Wed, 18 May 2022 18:40:19 +0000")
-Message-ID: <xmqqtu9mvfa1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S242215AbiERUFd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 16:05:33 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3DF02375DB
+        for <git@vger.kernel.org>; Wed, 18 May 2022 13:05:31 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso3823767wma.0
+        for <git@vger.kernel.org>; Wed, 18 May 2022 13:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=k9GHGCuef0MIhLayTjOT1f61qHmpj35gpO2QY+Eq3Fw=;
+        b=oE1Pe0q35UX6/zR1xecstaoc2EO3Y8WF6cOnzOPR9/FU5mJuRj8sYmg2/nDzSBo5vy
+         8HHMPWQ/CXjiSW3GIciwNeMKuFrSUWQoS5mLHK8p41vGYnNKv6cVPa/t2FTYDQEZHpHx
+         dwY4Tm1SXVKhGCjf47MTu+kU1LrLq2gTmxOsQf8cTzp05N17r3VPhytiqUSC3DGv5Hl2
+         UBSfRz2zPIp9+Nx3EwkUrY6+1Lno1ZEsbWvtnfrajOPvahTD6ZilrZsl3z5wPGYCFvmb
+         3gNvVCrxcIq9yFeqFmCCGkmCwGFX9kiGOROoRj7RFgXPX8+eTlvRImnj+SMwre10slS7
+         daiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=k9GHGCuef0MIhLayTjOT1f61qHmpj35gpO2QY+Eq3Fw=;
+        b=pUYtRGWBGvme2VlywWRm/FrKqUo2RrKRAWUOHRQMF0PwWEYnerV+rO8quWVzkmdDwj
+         lI5CbblyEoFVXakB6bftpwiEMgPxMSdN9yVf6ZwToB5ZKtH/IXhNrNCo9VzjlK3+Oyc3
+         fR4z/PDf/VpJ66Q3EVhTQoQ9CVGrmH70hTHUOpgQCW+PVB4+RyJcx8xiEHTaNZKzRz9I
+         3SzteMvEr8h+RnC8OEg4l1dTGVPg3zlVn2NcxOYvTXra9hAtvPqZi8ZrcQFCALR+Z/S9
+         VLVeLBQk3geu/J8+6F6ZzJzGKV5Rgm3ptPYaiOWp8eP51OeUbTUj1TFpUPV+N7Q4+AYQ
+         CX4g==
+X-Gm-Message-State: AOAM531GEKYKPr5+ur/xmfriR/RNGuOUXLqIH8UM/VwEPsnR6T/C7KWH
+        EY/i5yjCPPCWdmu5QtPK9Hxx4GOPB/gSNw==
+X-Google-Smtp-Source: ABdhPJyc/Q+6KDBjRMU1pdFikJ7gX66uxko7nsFwaTyJoNqHlTMNzD9pNDUp18kVKKJIdbRbZDFvCA==
+X-Received: by 2002:a05:600c:4e13:b0:394:797e:3358 with SMTP id b19-20020a05600c4e1300b00394797e3358mr1403858wmq.30.1652904330052;
+        Wed, 18 May 2022 13:05:30 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id f18-20020adfb612000000b0020d00174eabsm2674441wre.94.2022.05.18.13.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 May 2022 13:05:29 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Anthony Sottile <asottile@umich.edu>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/8] run-command tests: change if/if/... to if/else if/else
+Date:   Wed, 18 May 2022 22:05:17 +0200
+Message-Id: <patch-v2-1.8-26a81eff267-20220518T195858Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.36.1.952.g0ae626f6cd7
+In-Reply-To: <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20220421T122108Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8C677126-D6DC-11EC-AB6A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the development community.
+Refactor the code in cmd__run_command() to make a subsequent changes
+smaller by reducing duplication.
 
-"mataha via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/helper/test-run-command.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-> From: mataha <mateusz.kazimierczuk@xolv.io>
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index f3b90aa834a..bd98dd9624b 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -371,6 +371,8 @@ int cmd__run_command(int argc, const char **argv)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	int jobs;
++	get_next_task_fn next_fn = NULL;
++	task_finished_fn finished_fn = NULL;
+ 
+ 	if (argc > 1 && !strcmp(argv[1], "testsuite"))
+ 		exit(testsuite(argc - 1, argv + 1));
+@@ -411,18 +413,18 @@ int cmd__run_command(int argc, const char **argv)
+ 	strvec_clear(&proc.args);
+ 	strvec_pushv(&proc.args, (const char **)argv + 3);
+ 
+-	if (!strcmp(argv[1], "run-command-parallel"))
+-		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, NULL, &proc));
+-
+-	if (!strcmp(argv[1], "run-command-abort"))
+-		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, task_finished, &proc));
+-
+-	if (!strcmp(argv[1], "run-command-no-jobs"))
+-		exit(run_processes_parallel(jobs, no_job,
+-					    NULL, task_finished, &proc));
++	if (!strcmp(argv[1], "run-command-parallel")) {
++		next_fn = parallel_next;
++	} else if (!strcmp(argv[1], "run-command-abort")) {
++		next_fn = parallel_next;
++		finished_fn = task_finished;
++	} else if (!strcmp(argv[1], "run-command-no-jobs")) {
++		next_fn = no_job;
++		finished_fn = task_finished;
++	} else {
++		fprintf(stderr, "check usage\n");
++		return 1;
++	}
+ 
+-	fprintf(stderr, "check usage\n");
+-	return 1;
++	exit(run_processes_parallel(jobs, next_fn, NULL, finished_fn, &proc));
+ }
+-- 
+2.36.1.952.g0ae626f6cd7
 
-The name here must match the name you sign the patch off as,
-i.e. this line should read
-
-    From: Mateusz 'mataha' Kazimierczuk <mateusz.kazimierczuk@xolv.io>
-
-> 'prepare-commit-msg' hook sample description doesn't mention the third
-> argument (a commit object name) nor when is it actually passed to that
-> hook by git-commit (if the source is a commit; see builtin/commit.c#L777,
-> sequencer.c#L1219). Seeing that it's documented in githooks(5), there
-> should be no reason not to include that in the sample hook as well.
-
-There should be a mention of the commit that added the hook, namely,
-8089c85b (git-commit: add a prepare-commit-msg hook, 2008-02-05).
-The log message for this patch should also observe that this third
-argument, which is given only when the source is 'commit', was not
-mentioned in the sample hook added by the original commit.
-
-Interestingly, its log message reads:
-
-    ...
-    Its purpose is to modify the commit message in-place.
-
-    It takes one to three parameters.  The first is the name of the file that
-    the commit log message.  The second is the source of the commit message,
-    and can be: "message" (if a -m or -F option was given); "template" (if a
-    -t option was given or the configuration option commit.template is set);
-    "merge" (if the commit is a merge or a .git/MERGE_MSG file exists);
-    "squash" (if a .git/SQUASH_MSG file exists); or "commit", followed by
-    a commit SHA1 as the third parameter (if a -c, -C or --amend option
-    was given).
-    ...
-
-So it wasn't a mistake that the sample did not mention it.  I think
-the reason why the original, and today's version, does not mention
-it is because no sample code in the file actually uses it.
-
-I am not yet convinced that it is a good idea to only add mention to
-the third one if we are not showing how it is used to this file,
-especially given that in the documentation we _do_ cover these
-arguments fully.
-
-Thanks.
-
-> Signed-off-by: Mateusz 'mataha' Kazimierczuk <mateusz.kazimierczuk@xolv.io>
-> ---
->     Mention the third argument in 'prepare-commit-msg' hook sample
->     
->     'prepare-commit-msg' hook sample doesn't mention what the third argument
->     is for nor when is it actually passed; I feel like it should be, for the
->     sake of convenience (this doesn't mean that a user shouldn't refer to a
->     more detailed description in the manual, of course).
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1265%2Fmataha%2Fdoc%2Fprepare-commit-msg-args-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1265/mataha/doc/prepare-commit-msg-args-v1
-> Pull-Request: https://github.com/git/git/pull/1265
->
->  templates/hooks--prepare-commit-msg.sample | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-> index 318afe3fd86..bc06d0701a8 100755
-> --- a/templates/hooks--prepare-commit-msg.sample
-> +++ b/templates/hooks--prepare-commit-msg.sample
-> @@ -3,9 +3,9 @@
->  # An example hook script to prepare the commit log message.
->  # Called by "git commit" with the name of the file that has the
->  # commit message, followed by the description of the commit
-> -# message's source.  The hook's purpose is to edit the commit
-> -# message file.  If the hook fails with a non-zero status,
-> -# the commit is aborted.
-> +# message's source and the commit object name (if the source was
-> +# a commit).  The hook's purpose is to edit the commit message file.
-> +# If the hook fails with a non-zero status, the commit is aborted.
->  #
->  # To enable this hook, rename this file to "prepare-commit-msg".
->  
->
-> base-commit: 277cf0bc36094f6dc4297d8c9cef79df045b735d
