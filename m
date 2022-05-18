@@ -2,133 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0964FC433F5
-	for <git@archiver.kernel.org>; Tue, 17 May 2022 21:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0D1EC433EF
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 04:03:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbiEQVv7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 May 2022 17:51:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60848 "EHLO
+        id S229527AbiEREDx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 00:03:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbiEQVv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 May 2022 17:51:57 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3278E1CFF9
-        for <git@vger.kernel.org>; Tue, 17 May 2022 14:51:55 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id cd6-20020a056a00420600b00510a99055e2so140608pfb.17
-        for <git@vger.kernel.org>; Tue, 17 May 2022 14:51:55 -0700 (PDT)
+        with ESMTP id S229528AbiEREDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 00:03:50 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 205D143395
+        for <git@vger.kernel.org>; Tue, 17 May 2022 21:02:11 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id t6so850540wra.4
+        for <git@vger.kernel.org>; Tue, 17 May 2022 21:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=5Oy8hLI24trn3Vy+pGZ6U6k2vvoxCrb6x1XIYZIJMVI=;
-        b=BSqkgrxTqrBxGKiKQSUknapZY8rYIX3dhozckDR+SEjrIbF47tD4h4M+RXMQYXMTMQ
-         tlN/P+NLEUEykC6MatAp92aZtYfIx+RknMXHhzpgfDI1JgmvxBNwkfCT2ASljex3iAOE
-         dLybfh5hSqA9Lf6suJQ7tuMdhDIxF2hVTzXknVpHPHGFU97Gf5Kkzm1l+JPXO7ZVW7sM
-         2RJDlSOkJsQHO0DdICjhkPqkJKc+QDWIPZ6GyokOVeb0pUeGSWrG2YjcDr5y1c58jfJR
-         Av2YtCh6EqFzNcZJ+//qeI+g2F0svbr+f9BIRGJIwcWDTux0TrG/xkpi40b6eqZbHyAN
-         8OjA==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Zsy1x22sxPzHhbviyXdX6v3rpQh3Kip9v1QmmOH4QEw=;
+        b=St5u5HNzpSmJMERNl9H9K9yDO3wWjJnRuJTC+91B8aR7bElTllcSz9O2zdgDO87+lx
+         yGeDwcGkRScWFpIF+awFR6cwqSkm99sboTy0Eb60uMlTgINbOzl7WQy4AuChVWrhi58T
+         gmNEeh69td0BqxC+igzc34u7NSb7x9+bLOuWRu2xIy+/XYUxi1RnhvYOlWDQX99BzfgX
+         WoynNwzA9QV4ahbxKUKVZUwQDQ81DFTM7m+0qmiHWBNst5sW7t3WAb/PLnVGu16HG0k8
+         guwEytL0DNHjpGBZvwjOKVVGzPRhXLGHLMlxsu+BANLjohr1ZgXwHo3CceoUhuo/8Puh
+         D+SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=5Oy8hLI24trn3Vy+pGZ6U6k2vvoxCrb6x1XIYZIJMVI=;
-        b=mnqm93h+wwCicWn0+Dix/MtXG6ioj/xe7QrQEHtOGrr7MdzoYx2n/X/oIKXy1O2gac
-         DDxUv9vd5HTpLgW171LwqV63Dv2mlZ0P1lzGWLMs+6/vCqkL5hSyWCu6oOvoS/VVzaJ5
-         JZCEi52zIsbjoeV6aY58BmbO8V69TAlcnWd8/9sb5iOPkh7j6UMqgmaBOrwss+i8EZpi
-         0M3UkLQ3DONUipQToVnTnP/g5yJHD8ZZSTB5hqLzMz07XZdKvhm1627pJLwPDDN3f13H
-         Ivg9+oDrt653sFPPxWHDbpzs1CEFjrm+ow5SIFlb76IHE+Jx3xa2wvnBukcCSM2f6B5w
-         4NyQ==
-X-Gm-Message-State: AOAM533gUyva2BfHo57v1tfbblWoRXTnIuznjFyPSh0iR095UyLZR7/O
-        JFXCn8t1Az9AoBE2+EWp/sz2nyiW7AOVQw==
-X-Google-Smtp-Source: ABdhPJydIns+NDzzErJ062Q9RVgJh8/dy+joLpZfyur6zCJpgiOG51f4/s5OzF8KEGJepcsnXa+Y8T7nfnd52g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:cf02:0:b0:50d:3e00:60c with SMTP id
- b2-20020a62cf02000000b0050d3e00060cmr24468475pfg.69.1652824315440; Tue, 17
- May 2022 14:51:55 -0700 (PDT)
-Date:   Tue, 17 May 2022 14:51:47 -0700
-In-Reply-To: <kl6lilq3j4aq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6lfsl7j098.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1261.git.git.1651861810633.gitgitgadget@gmail.com>
- <pull.1261.v2.git.git.1652485058.gitgitgadget@gmail.com> <22b10bf9da8ccf4ae4da634aadfdaff5ee7a3508.1652485058.git.gitgitgadget@gmail.com>
- <e5139922-9b74-ebfa-756c-629918e0456b@github.com> <kl6lilq3j4aq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 1/2] setup.c: make bare repo discovery optional
-From:   Glen Choo <chooglen@google.com>
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Zsy1x22sxPzHhbviyXdX6v3rpQh3Kip9v1QmmOH4QEw=;
+        b=bd9PK7RnYa095B54U151wpVvJ1gzXf60osin7OrXFOg7Cid7ah/eOCwCRptGYvtAQF
+         lxUjY1HQ0tXyYYSRJAfP87osJZFMSO43HxwoyQN7gIwjw/I+9bcwI7TQNMdNTCe1qngO
+         rRZ5eIm7/FdZOfiTELKJI4hxNS7ubJVj1+uY/tyivYHfHGU2loN+xWJa1G0h8n98MQaH
+         gLOppPmLBYkn6KEYYJa9kV9JKz4iYvmWrrUWi6vn4mLHB8YlqwvSSJfzKznS9PMboujA
+         6ttwYeMtqCaNhtnOauGPAGUdtdFwZ28jt3JmOGQOGU9k/gm+ntjfhDX/Oy7/rILIJ2Tj
+         mxkQ==
+X-Gm-Message-State: AOAM533PwKvgAi99gdascIh8Gg2WCLRGl5S6oADgH/lf0mVRsPjjoQ4x
+        Xktr9dEQZNxWB9VpVFRd8Wu+zCcTYTg=
+X-Google-Smtp-Source: ABdhPJwLJvcJidYYQoUoF2UG0aHfYEA/lQ+IC5CO/V7W15BMj25svCwqpuWd/tfLoC34hU1H9d+sBQ==
+X-Received: by 2002:adf:ed0e:0:b0:20d:fd3:de77 with SMTP id a14-20020adfed0e000000b0020d0fd3de77mr8402957wro.213.1652846306819;
+        Tue, 17 May 2022 20:58:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q2-20020adfab02000000b0020c5253d8edsm694919wrc.57.2022.05.17.20.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 May 2022 20:58:26 -0700 (PDT)
+Message-Id: <pull.1267.git.git.1652846305514.gitgitgadget@gmail.com>
+From:   "Yuyi Wang via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 18 May 2022 03:58:25 +0000
+Subject: [PATCH] Add pcre2 support for cmake build system.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Yuyi Wang <Strawberry_Str@hotmail.com>,
+        Yuyi Wang <Strawberry_Str@hotmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+From: Yuyi Wang <Strawberry_Str@hotmail.com>
 
->>> +static int check_bare_repo_allowed(void)
->>> +{
->>> +	if (discovery_bare_config == DISCOVERY_BARE_UNKNOWN) {
->>> +		read_very_early_config(discovery_bare_cb, NULL);
->>
->> This will add the third place where we use read_very_early_config(),
->> adding to the existing calls in tr2_sysenv_load() and
->> ensure_valid_ownership(). If I understand it correctly, that means
->> that every Git execution in a bare repository will now parse the
->> system and global config three times.
->>
->> This doesn't count the check for uploadpack.packobjectshook in
->> upload-pack.c that uses current_config_scope() to restrict its
->> value to the system and global config.
->>
->> We are probably at the point where we need to instead create a
->> configset that stores this "protected config" and allow us to
->> lookup config keys directly from that configset instead of
->> iterating through these config files repeatedly.
->
-> Looking at all of the read_very_early_config() calls,
->
-> - check_bare_repo_allowed() can use git_configset_get_string()
-> - ensure_valid_ownership() can use git_configset_get_value_multi()
-> - tr2_sysenv_load() reads every value with the "trace2." prefix. AFAICT
->   configsets only support exact key lookups and I don't see an easy way
->   teach configsets to support prefix lookups.
->
-> (I didn't look too closely at uploadpack.packobjectshook because I don't
-> know enough about config scopes to comment.)
->
-> So using a configset, we'll still need to read the config files at least
-> twice. That's better than thrice, but it doesn't cover the
-> tr2_sysenv_load() use case, and we'll run into this yet again if add
-> function that reads all config values with a given prefix.
->
-> An hacky alternative that covers all of these use cases would be to read
-> all protected config in a single pass, e.g.
->
->   static struct protected_config {
->          struct safe_directory_data safe_directory_data;
->          const char *discovery_bare;
->          struct string_list tr2_sysenv;
->   };
->
->   static int protected_config_cb()
->   {
->     /* Parse EVERYTHING that belongs in protected_config. */
->   }
->
-> but protected_config_cb() would have to parse too many unrelated things
-> for my liking.
->
-> So I'll use the configset for the cases where the key is known, and
-> perhaps we'll punt on tr2_sysenv_load().
+This commit fixes one of the TODOs listed in the CMakeLists.txt.
 
-Since I'm trying to replace read_very_early_config() anyway, is this a
-good time to teach git to respect "-c safe.directory"?
+There's also some small fix to ensure it builds successfully.
 
-My understanding of [1] is that we only ignore "-c safe.directory"
-because read_very_early_config() doesn't support it, but we would prefer
-to support it if we could.
+Signed-off-by: Yuyi Wang <Strawberry_Str@hotmail.com>
+---
+    Add pcre2 support for cmake build system.
+    
+    Pcre2 is dealt with pkg-config.
 
-[1] https://lore.kernel.org/git/xmqqlevabcsu.fsf@gitster.g/
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1267%2FBerrysoft%2Fcmake%2Fpcre2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1267/Berrysoft/cmake/pcre2-v1
+Pull-Request: https://github.com/git/git/pull/1267
+
+ contrib/buildsystems/CMakeLists.txt | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 185f56f414f..99d6cb963c4 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -54,7 +54,7 @@ set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+ 
+ option(USE_VCPKG "Whether or not to use vcpkg for obtaining dependencies.  Only applicable to Windows platforms" ON)
+ if(NOT WIN32)
+-	set(USE_VCPKG OFF CACHE BOOL FORCE)
++	set(USE_VCPKG OFF CACHE BOOL "" FORCE)
+ endif()
+ 
+ if(NOT DEFINED CMAKE_EXPORT_COMPILE_COMMANDS)
+@@ -108,7 +108,6 @@ project(git
+ 
+ #TODO gitk git-gui gitweb
+ #TODO Enable NLS on windows natively
+-#TODO Add pcre support
+ 
+ #macros for parsing the Makefile for sources and scripts
+ macro(parse_makefile_for_sources list_var regex)
+@@ -160,6 +159,14 @@ if(NOT (WIN32 AND (CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID ST
+ 	find_package(Intl)
+ endif()
+ 
++find_package(PkgConfig)
++if(PkgConfig_FOUND)
++	pkg_check_modules(PCRE2 libpcre2-8)
++	if(PCRE2_FOUND)
++		add_compile_definitions(USE_LIBPCRE2)
++	endif()
++endif()
++
+ if(NOT Intl_FOUND)
+ 	add_compile_definitions(NO_GETTEXT)
+ 	if(NOT Iconv_FOUND)
+@@ -180,6 +187,9 @@ endif()
+ if(Intl_FOUND)
+ 	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
+ endif()
++if(PCRE2_FOUND)
++	include_directories(SYSTEM ${PCRE2_INCLUDE_DIRS})
++endif()
+ 
+ 
+ if(WIN32 AND NOT MSVC)#not required for visual studio builds
+@@ -277,7 +287,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 
+ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+ 	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
+-	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c)
++	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c compat/linux/procinfo.c)
+ endif()
+ 
+ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+@@ -700,6 +710,9 @@ endif()
+ if(Iconv_FOUND)
+ 	target_link_libraries(common-main ${Iconv_LIBRARIES})
+ endif()
++if(PCRE2_FOUND)
++	target_link_libraries(common-main ${PCRE2_LIBRARIES})
++endif()
+ if(WIN32)
+ 	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
+ 	add_dependencies(common-main git-rc)
+
+base-commit: 277cf0bc36094f6dc4297d8c9cef79df045b735d
+-- 
+gitgitgadget
