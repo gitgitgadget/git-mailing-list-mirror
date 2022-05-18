@@ -2,86 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16BD4C433F5
-	for <git@archiver.kernel.org>; Wed, 18 May 2022 15:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF56C433EF
+	for <git@archiver.kernel.org>; Wed, 18 May 2022 16:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239740AbiERPx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 May 2022 11:53:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52132 "EHLO
+        id S240264AbiERQbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 May 2022 12:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239589AbiERPxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 May 2022 11:53:24 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCCCB1C9654
-        for <git@vger.kernel.org>; Wed, 18 May 2022 08:53:21 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DEBC13DBB7;
-        Wed, 18 May 2022 11:53:20 -0400 (EDT)
+        with ESMTP id S240301AbiERQbo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 May 2022 12:31:44 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCA73EF29
+        for <git@vger.kernel.org>; Wed, 18 May 2022 09:31:34 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5CC0B18BD21;
+        Wed, 18 May 2022 12:30:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=76ROPWK0I5USWOFTLu3J5s+7y2BMHc06UaqpHd
-        xUrfA=; b=HidAEdOB7rbIAwysgTtSrnrsybmX8kW4+1JlrEcagh3pMhvAdqHxRf
-        mNXDouuDUfdopcbVt/48kUA5molMdkiN7Ec2XDZEkTZFDHo8Ndmzryl5zN9wZ6Ym
-        Q5l7GwwuBYCTF7jvj3K1gNX/fiJFWTJlyNRv+GESTEiTHJUp7msN8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7445B13DBB6;
-        Wed, 18 May 2022 11:53:20 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=ptnSN4YTfdPtmAqTcU2i8v/8k
+        bBlvfzQGKZLZwt33Hw=; b=N+4ZSQ7M0DmiWgYocTEmIu0QoeojyCxzdWtjOKRUD
+        2zAiNZ6ctOkt9iWC6NUL6Z6MGQxB+a6ml33JQgqMetKbPwXKUm0coydwBuvRfmNQ
+        JE79rfpWzopTlnnFddIImcbBVwTDhXQMNShtCNRFF8nTYLrYppuUBkiAczM2g5Rd
+        u8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 562FB18BD1F;
+        Wed, 18 May 2022 12:30:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D11C713DBB3;
-        Wed, 18 May 2022 11:53:19 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C4FEB18BD1E;
+        Wed, 18 May 2022 12:30:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Benedek Kozma <cyberbeni@gmail.com>
-Subject: Re: [PATCH v2] fetch: do not run a redundant fetch from submodule
-References: <CAN8jHOgwVF5g=jM_KYT0Oh+j+Lk3qvdyA4zNRbzf8e1Xp5WAUw@mail.gmail.com>
-        <xmqqczgzdc1r.fsf@gitster.g>
-        <kl6l4k2bpv61.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqq1qxfbqtq.fsf@gitster.g>
-        <kl6lczghj7tn.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqpmkg8z58.fsf@gitster.g>
-        <kl6l7d6ljrrg.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqq4k1p2v40.fsf@gitster.g> <xmqqwnel1eqb.fsf@gitster.g>
-        <xmqqczgd16wx.fsf_-_@gitster.g> <xmqqk0alyqyj.fsf_-_@gitster.g>
-        <kl6lo7zwhzsl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Wed, 18 May 2022 08:53:18 -0700
-In-Reply-To: <kl6lo7zwhzsl.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Tue, 17 May 2022 09:47:06 -0700")
-Message-ID: <xmqqczgayh01.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] commit: fix "author_ident" leak
+References: <cover-0.2-00000000000-20220216T081844Z-avarab@gmail.com>
+        <xmqqzgjmcqlg.fsf@gitster.g>
+        <220517.86fsl86z1s.gmgdl@evledraar.gmail.com>
+Date:   Wed, 18 May 2022 09:30:44 -0700
+Message-ID: <xmqqtu9mx0p7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A39F1C1E-D6C2-11EC-ACC8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DE4EEDDA-D6C7-11EC-BB3D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->> +
->> +	/*
->> +	 * This is only needed after fetch_one(), which does not fetch
->> +	 * submodules by itself.
->> +	 *
->> +	 * When we fetch from multiple remotes, fetch_multiple() has
->> +	 * already updated submodules to grab commits necessary for
->> +	 * the fetched history from each remote, so there is no need
->> +	 * to fetch submodules from here.
->> +	 */
->> +	if (!result && remote && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
->>  		struct strvec options = STRVEC_INIT;
->>  		int max_children = max_jobs;
->
-> Looks good; the comment is easier to understand than my suggestion for
-> sure.
+> But even accounting for that, I don't see what the "more maintainable"
+> here refers to. The approach I suggested would s/UNLEAK/strbuf_release/
+> in the 4th hunk, but otherwise be equivalent.
 
-Thanks.  Today's code has diverged too much from the original code I
-wrote long time ago (before submodules), and I needed an extra set
-of eyeballs to double check and tell me that what I (wishfully)
-wrote how the code works with submodules is in line with today's
-code ;-)
+Judicious use of UNLEAK() has documentation value to tell readers
+which use of pointer variables need to be explicitly released, and
+which pointer variables can just implicitly released by going out of
+scope at the end.  There are also a few other small added benefits
+(they do not have to be changed when the helper needed to do the
+real release changes, and not doing an explicit real release on
+resources when there no need to is conceptually cleaner).  But they
+are icing on the cake.
 
+Sorry for a late reply---I go offline every other Tuesday and
+yesterday was such a Tuesday.
