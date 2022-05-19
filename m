@@ -2,179 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0EA0C433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 17:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3A88C433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 17:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242518AbiESRSi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 13:18:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48294 "EHLO
+        id S243122AbiESRam (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 13:30:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242509AbiESRSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 13:18:35 -0400
-Received: from pb-sasl-trial20.pobox.com (pb-sasl-trial20.pobox.com [173.228.157.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C30677CB09
-        for <git@vger.kernel.org>; Thu, 19 May 2022 10:18:34 -0700 (PDT)
-Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
-        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id C4EA03A101;
-        Thu, 19 May 2022 13:18:31 -0400 (EDT)
+        with ESMTP id S243118AbiESRac (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 13:30:32 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80768B36E1
+        for <git@vger.kernel.org>; Thu, 19 May 2022 10:29:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70C181156E4;
+        Thu, 19 May 2022 13:29:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4p6Ui5Ses0XYRZaJeJaTogVYMnI=; b=A94cfw
-        E4MpAWPHK7XZtpMcScpGrBjS+5mQC84ntYgep+Jgpmy5F/3V7qR/sn8LPoFylHWn
-        8BeeklM6b1nGx1/PjcVEPRSvYdWicaGzG1g0NoDR310rrbYcSSYtTx0fhHN3O+T3
-        5mz+LF52bI9yyb0Mh77JuMWEEOJLg7w2MnMzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WvNYjwIPtbLiKKhzeH7wDF9U8s8wbPpc
-        UoqlqDccpBddyrf4J4Z4D8JyVfoJjqkbKLXk6B6M25Vv2J1Nw6nCLTJd/makuyIj
-        T+KbuJWKbi1fozVwbKHGkKNpHFsXARIliVOGi7GZTKDKbUZz/cf0VTTgW0L4ZTZ+
-        95EX2Ngl+Mo=
-Received: from pb-smtp21.sea.icgroup.com (pb-smtp21.pobox.com [10.110.30.21])
-        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id AAB7E3A0FE;
-        Thu, 19 May 2022 13:18:31 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=DW1CxXMfjJnp
+        lYZZHBk2BhwJa+ciHXlM07tbZIsqw18=; b=Za3uc67F3Miqvnaf/NlwVXywTyXM
+        SMpOnIRZjjp5Os/nb3y7Ly4X5Cilh++MGu1bLJIWftIMU42PTF1MhXERRRRFRxKV
+        s61+sTDvsPa5c3rIR+m6H68aFVamGs1e1/ChERIt9B/DaFuV8xe8hFX/VTKBYlba
+        po3z6NQNff6iTOQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6777F1156E3;
+        Thu, 19 May 2022 13:29:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.65.128])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3C6971927C8;
-        Thu, 19 May 2022 13:18:28 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB8521156E2;
+        Thu, 19 May 2022 13:29:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2 9/9] l10n: Document the new l10n workflow
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
-        <20220519081548.3380-10-worldhello.net@gmail.com>
-Date:   Thu, 19 May 2022 10:18:27 -0700
-In-Reply-To: <20220519081548.3380-10-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Thu, 19 May 2022 16:15:48 +0800")
-Message-ID: <xmqqfsl5phjw.fsf@gitster.g>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2022, #05; Mon, 16)
+References: <xmqq5ym4zpmn.fsf@gitster.g>
+        <20220519152344.ktrifm3pc42bjruh@Carlos-MacBook-Pro-2.local>
+Date:   Thu, 19 May 2022 10:29:02 -0700
+In-Reply-To: <20220519152344.ktrifm3pc42bjruh@Carlos-MacBook-Pro-2.local>
+        ("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 19 May
+ 2022 08:23:44
+        -0700")
+Message-ID: <xmqqa6bdph29.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B2DFFEF2-D797-11EC-BA74-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2E3C293A-D799-11EC-9A7C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-> +## Creating the "po/git.pot" file
-> +
-> +The "po/git.pot" file, once generated by the the l10n coordinator had
+> On Mon, May 16, 2022 at 10:37:04PM -0700, Junio C Hamano wrote:
+>>=20
+>> * cb/path-owner-check-with-sudo (2022-05-12) 4 commits
+>>  - git-compat-util: allow root to access both SUDO_UID and root owned
+>>  - t0034: add negative tests and allow git init to mostly work under s=
+udo
+>>  - git-compat-util: avoid failing dir ownership checks if running priv=
+ileged
+>>  - t: regression git needs safe.directory when using sudo
+>>=20
+>>  With a recent update to refuse access to repositories of other
+>>  people by default, "sudo make install" and "sudo git describe"
+>>  stopped working.  This series intends to loosen it while keeping
+>>  the safety.
+>>=20
+>>  Will merge to 'next'?
+>>  source: <20220513010020.55361-1-carenas@gmail.com>
+>
+> I am obviously biased, and probably confused, since this is already in =
+the
+> "cooking" section, but I think this is ready and should be merged to ne=
+xt
+> without the optional patch 4.
 
-"once generated" -> "used to be generated"
+I agree that #4 may be subject to further discussion, but the other
+three are solid enough.  Let's merge it down.
 
-> +been removed from the tree. L10n contributors can generated it at
-
-"can generated it" -> "can generate it"
-
-> +runtime using command:
-> +
-> +```shell
-> +make pot
-> +```
-
-Just a minor detail, but I wonder if we want "make po/git.pot" here
-rather than "make pot", as the text before this command talks about
-"creating the po/git.pot file".  It used to be that the readers of
-this document didn't have to worry about po/git.pot and the only
-thing they needed to know was stuff starting from "make po-init",
-but now they must be more aware of po/git.pot than before, so...
-
-> +Then language contributors use this file to prepare translations for
-> +their language, but they are not expected to modify it.
-
-> @@ -115,32 +117,14 @@ If your language XX does not have translated message file "po/XX.po" yet,
-> ...
-> +make po-init PO_FILE=po/XX.po
->  ```
->  
-> -And change references to PACKAGE VERSION in the PO Header Entry to
-> -just "Git":
-> +Where XX is the locale, e.g. "de", "is", "pt\_BR", "zh\_CN", etc.
-
-"Where" -> "where".
-
-XX was called "the two character language translation codes"
-(mouthful isn't it) in much earlier part of the documentation, but
-here it stands for more than the language part.  I wonder if that
-is confusing and we'd better use something other than XX.
-
-In any case, we should define "locale" and tell the readers that
-language "XX" can be followed by territory "_YY" that clarifies the
-variant of the language, probably at the same place where we
-explained the two-letter language code and to the same degree by
-explaining the two-letter country codes and where they come from
-(i.e. ISO 3166-1).
-
-> +It will:
->  
-> +- Call "make pot" at runtime to generate new "po/git.pot" file
-
-What does "at runtime" mean here?  Would it change the meaning if I
-rewrote this line to
-
-	Call "make pot" to generate new "po/git.pot" file
-
-at all?  To put it differently, does it call "make pot" at runtime,
-but it does not call "msgmerge --add-location ..." at runtime?
-
-If "at runtime" is truly a noiseword, then remove it.  It is
-confusing.
-
-> +- Call "msgmerge --add-location --backup=off -U po/XX.po po/git.pot"
-> +  to update your "po/XX.po"
-> +- The "--add-location" option for msgmerge will add location lines,
-> +  and these location lines will help translation tools to location
-> +  translation context easily.
-
-"help translation tools to location" -> "help translation tools to locate"
-
-probably.
-
-> +To save a location-less "po/XX.po" automatically in repository, you
-> +can:
-> +
-> +- Define new attribute for "po/XX.po" by adding new line in
-> +  ".git/info/attributes":
-> +
-> +        /po/XX.po filter=gettext-no-location
-> +
-> +- Define driver for "gettext-no-location" filter:
-
-"filter" -> "clean filter"?
-
-> +        $ git config --global filter.gettext-no-location.clean \
-> +              "msgcat --no-location -"
-> +
-> +You're now ready to ask the l10n coordinator to pull from you.
-
-Should this part also explain what it is doing, just like we
-explained what happens when "make po-update" is run in an earlier
-section?
-
-    The above sets up a clean filter for po/XX.po file so that the
-    "msgcat --no-location" command is used to strip out the location
-    information from the contents when the file is checked in.
-
-or something, perhaps?
+Thanks.
