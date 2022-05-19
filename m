@@ -2,101 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F656C433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 15:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1254EC433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 15:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239121AbiESPVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 11:21:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59842 "EHLO
+        id S240854AbiESPXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 11:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234009AbiESPVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 11:21:18 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37C85643C
-        for <git@vger.kernel.org>; Thu, 19 May 2022 08:21:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CAFEA191952;
-        Thu, 19 May 2022 11:21:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=qDENc7xJFQWK
-        7VN8KHD43GM+xeMwfRqJ6lwLgIZnsgU=; b=KEOn6j14ySh/nuMPvxJJfnS8RyIH
-        tNBluLPESIXvjdZefXPMA2evrn0ss5RY0XNaL93/5eHTPnVpVRo1PU8FCgubb155
-        r21orWHfS/vzhAa9uQmBiy1ieZFXg8yI69PvM9j6OQF/jnpm0A2vDMjuezGl7hri
-        jTV6JizZF4U5T2c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4DC0191950;
-        Thu, 19 May 2022 11:21:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.65.128])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67BA319194F;
-        Thu, 19 May 2022 11:21:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        derrickstolee@github.com, jrnieder@gmail.com,
-        larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v4 02/17] pack-mtimes: support reading .mtimes files
-References: <cover.1638224692.git.me@ttaylorr.com>
-        <cover.1652915424.git.me@ttaylorr.com>
-        <8f9fd21be9fcdda5c73d800fc66d1087d61a6888.1652915424.git.me@ttaylorr.com>
-        <220519.86zgjd4wvk.gmgdl@evledraar.gmail.com>
-Date:   Thu, 19 May 2022 08:21:10 -0700
-In-Reply-To: <220519.86zgjd4wvk.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 19 May 2022 12:40:56 +0200")
-Message-ID: <xmqqr14pr1jt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S240840AbiESPXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 11:23:48 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9F25EBE5
+        for <git@vger.kernel.org>; Thu, 19 May 2022 08:23:46 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id p3so4817407qvi.7
+        for <git@vger.kernel.org>; Thu, 19 May 2022 08:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SIJYWMeGNE6gqAIbqqZELYZ37fjSLwxb75Jam3Ey0xY=;
+        b=TsnG9ILtuaPiw8sUyyREF7IeBYIhlNLKO0bpKgNVMLUNQaX8UcYIGbSXf2NmbsQXDB
+         Y6ytK+LUkNM+SmwkZctXIxhLOC2S4M8EbdkAkRaaGqBa7IYc6fGpx9ghUIv3bT7JQf9T
+         zuwRNVlbHthjDzArFqd0E9ieGL7dpZ8ypaYzqup2xf/uAWQXoTEXQ9VqjE2yZvq/6J+X
+         l72rAqb/ibEziR/lXeyoqHrDEwhKSmEkvrgLwXs5chkNAW2DbXVAG1aKoykrPbMMpnFI
+         gTH9Y1hSZY+jATb9mtN57m/+ESoZpCMCcz5oA8riY9PMezQJ8ZvL4BB9vYeW2y31dH2r
+         rrWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SIJYWMeGNE6gqAIbqqZELYZ37fjSLwxb75Jam3Ey0xY=;
+        b=CM99HsLR0Op7X5z1sKOiG9ZbGMJ8qV0TPhCwJHGoRlAt60oVklvtKO548iw/XvHuMK
+         lnCjlww2LQOOKKYh4yL398uxVnE2WslkLfbj9rVZ8tTdpvJeKRkQSj9P80Q9RgzrEygN
+         P1UgiUbZTb0LF4moXUmdZ24mEQYO1bBfRplISG6vKlkT1M/suEX07PwYo9YRwMZ7ZMH+
+         kd+5qmHNQRcK6AIBeiQG7A9I11G/YU2aBb6rY4R/ntTmiYvLIM5cQSsvNl/Q7hv+Dkpk
+         fkwHaDNh5bOPV/+0ByjDBXEeEE0kqElDMtAwMzAC33Hft8gkO+OyHPaK8Uf2rb218Ijq
+         XP+g==
+X-Gm-Message-State: AOAM532FLNgtN2MLBwm5rVVzzkRQXYs6fkmrF5vLCrVKQ7Kp4lenhkAx
+        uThBC+PW8bhsJJ7hhNVSBZcKnnWPtMI=
+X-Google-Smtp-Source: ABdhPJxCf99JBW7/J9u8trW30pOJQiONIyJ8KQWgbIe+1SIcKnHNL6RcBKS2qL6taXx119tJNVx8Dg==
+X-Received: by 2002:a05:6214:764:b0:45a:98a0:ddb0 with SMTP id f4-20020a056214076400b0045a98a0ddb0mr4543607qvz.15.1652973826026;
+        Thu, 19 May 2022 08:23:46 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([50.221.51.195])
+        by smtp.gmail.com with ESMTPSA id u16-20020ac858d0000000b002f3d52d57bcsm1548138qta.26.2022.05.19.08.23.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 May 2022 08:23:45 -0700 (PDT)
+Date:   Thu, 19 May 2022 08:23:44 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2022, #05; Mon, 16)
+Message-ID: <20220519152344.ktrifm3pc42bjruh@Carlos-MacBook-Pro-2.local>
+References: <xmqq5ym4zpmn.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 50993DE0-D787-11EC-A243-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5ym4zpmn.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, May 16, 2022 at 10:37:04PM -0700, Junio C Hamano wrote:
+> 
+> * cb/path-owner-check-with-sudo (2022-05-12) 4 commits
+>  - git-compat-util: allow root to access both SUDO_UID and root owned
+>  - t0034: add negative tests and allow git init to mostly work under sudo
+>  - git-compat-util: avoid failing dir ownership checks if running privileged
+>  - t: regression git needs safe.directory when using sudo
+> 
+>  With a recent update to refuse access to repositories of other
+>  people by default, "sudo make install" and "sudo git describe"
+>  stopped working.  This series intends to loosen it while keeping
+>  the safety.
+> 
+>  Will merge to 'next'?
+>  source: <20220513010020.55361-1-carenas@gmail.com>
 
-> On Wed, May 18 2022, Taylor Blau wrote:
->
-> Nit:
->
->> +  - A 4-byte magic number '0x4d544d45' ('MTME').
->> +
->> +  - A 4-byte version identifier (=3D 1).
->> +
->> +  - A 4-byte hash function identifier (=3D 1 for SHA-1, 2 for SHA-256=
-).
->
-> Here we let it suffice that later we'll say "All 4-byte numbers are in
-> network order".
->
->> +  - A table of 4-byte unsigned integers in network order. The ith
->
-> But here we call out "network order" explicitly, shouldn't this just be
-> s/ in network order//?
->
->> +    value is the modification time (mtime) of the ith object in the
->> +    corresponding pack by lexicographic (index) order. The mtimes
->> +    count standard epoch seconds.
->> +
->> +  - A trailer, containing a checksum of the corresponding packfile,
->> +    and a checksum of all of the above (each having length according
->> +    to the specified hash function).
->> +
->> +All 4-byte numbers are in network order.
->
-> I.e. this is sufficient.
+I am obviously biased, and probably confused, since this is already in the
+"cooking" section, but I think this is ready and should be merged to next
+without the optional patch 4.
 
-Very good eyes.  One explicit mention among several others can
-indeed be misleading the readers.
+That MIGHT helps us understand how bad of a regression it is in the real
+world for not being able to access a repository owned by root by a root
+user that got there by doing `sudo -s` and then browsing around (which IMHO
+we shouldn't be encouraging people to do, anyway).
 
-When asked for "network order", all your search engines show are
-entries about "network byte order", so let's use that longer form of
-spelling.
+and if there is an outcry, it will be easily "fixed" by getting patch 4 in,
+which ironically might had been the only patch almost no one commented on so
+far, but I think is less likely to have issues that might need to be fixed
+before doing so.
 
-Thanks.
+Carlo
