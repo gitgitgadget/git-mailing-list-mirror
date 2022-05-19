@@ -2,191 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C91A7C433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6FD8C433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:32:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243849AbiESSSj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 14:18:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34094 "EHLO
+        id S243324AbiESScj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 14:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243826AbiESSSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 14:18:18 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 471D0EBA97
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:15 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id p189so3330331wmp.3
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tFFHzUyw+itlS2o1LNy+a7mqx3/e2BvK13aAU/vxYfE=;
-        b=Ym7QbPffadr9NKxcfyAacV2ivN8P71VbW3eXlbgp5DyKpMR/9beh3w0HVt3ZXfGE+W
-         dW3PdbC4ZrT0B5WBcYPHXlIw7soZksygYQm0ErxiPdQIMfLq8/gecX16n3zg1IV2hFOb
-         8o7t/NKuJE+IKqcuLnmgduPJ6/+wHn/UqoMQiPMesLrg1P5uzQo4/hK3kPbSYXHw8unQ
-         6UniIunPNMa/eRqPTAk96rIxi0oAM9DC6DQKtHENrnE+rkuMgtuOMWlHnBOTxuO9dtpH
-         J5kSOmyj97W/E8n877Yo5tER0erg+hjPOs0eFocb1cV8iKM6lflGvIx+HXmcgJSu8uJe
-         JjQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tFFHzUyw+itlS2o1LNy+a7mqx3/e2BvK13aAU/vxYfE=;
-        b=SAQH3F1RUf8v27dV/bPR/xe1ysSm3wWeuLtnP353eXrW5pdpyohLJMrIx0AYs+H9jD
-         Y34Fgfshx7GCn8k7EIM45ibMiuzd+38OncMPHVW+wFiWr4tvIMhM4b4AOdZe+zwHdZuh
-         GMNQ+0IRdqx3ShpPE0j8wJK6hCdAyiq3hOrAh0woWucsTXLfZ9ePB3DY4M0tTxGshbNa
-         6E/+60BHto3SmeB/huJgP8q4DQnXqwx5nhxl8wibr0AcWSqdoooposcYs1vbFjYuoSYx
-         sS863Jqh5bWoLED/dXO8IbPjFpmoe2J3UrUzqGIf5rUFwe8Em3s9UGrkH/ZG2xHNuiQB
-         w70A==
-X-Gm-Message-State: AOAM533IN8hBkioNRTB/60SDhAVR1so2JyB53y/WsGVnc/3Bqr/7PKCS
-        mYNGk4lfCVZuqHs0k6JkFkLbQC270Lg=
-X-Google-Smtp-Source: ABdhPJz0ZozQQEvJKLs/77LHdPL4w3jTqD7CiFHhVURyax0YUl+Z+bqyG1MDUYd74xDSMRCdUFkISQ==
-X-Received: by 2002:a7b:c8c7:0:b0:394:9e02:baa with SMTP id f7-20020a7bc8c7000000b003949e020baamr5353590wml.26.1652984293470;
-        Thu, 19 May 2022 11:18:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b9-20020adf9b09000000b0020c5253d8dfsm257932wrc.43.2022.05.19.11.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 11:18:12 -0700 (PDT)
-Message-Id: <62e173b47cf2550a8e458c4d2cf667402b0c8ee3.1652984283.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
-References: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
-        <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
-From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 May 2022 18:18:03 +0000
-Subject: [PATCH v5 7/7] scalar: teach `diagnose` to gather loose objects
- information
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S234068AbiESSch (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 14:32:37 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C54B5F99
+        for <git@vger.kernel.org>; Thu, 19 May 2022 11:32:37 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3CD4F1934BF;
+        Thu, 19 May 2022 14:32:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QGOjY8GTVlWLx25I79VjTghMM8Y9yOtQH0dPht
+        jfMRE=; b=V1kp/GjCBL6x0E3wpXdJa9KUYbJVUZtt4nVa6qIU5RvrF9GSeARSfe
+        De3S46KrMMKzPmC+5176A34LIidF6nFYZq5+jtLSqJ6pm/fBsTVCTeTwtAvDL+xk
+        pQ1HadHjCo6sfFqBFvnlaK51e4sQHRz7PWxQs+3ALLBqaa1flIaP0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 362A01934BE;
+        Thu, 19 May 2022 14:32:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.65.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6B951934BC;
+        Thu, 19 May 2022 14:32:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] merge: make restore_state() do as its name says
+References: <pull.1231.git.1652977582.gitgitgadget@gmail.com>
+        <88bdca72a780d70e156e22e1ab96dedd368c761b.1652977582.git.gitgitgadget@gmail.com>
+        <xmqq5ym1pgby.fsf@gitster.g>
+Date:   Thu, 19 May 2022 11:32:31 -0700
+In-Reply-To: <xmqq5ym1pgby.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        19 May 2022 10:44:49 -0700")
+Message-ID: <xmqqwnehnzk0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>, rsbecker@nexbridge.com,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0C140C48-D7A2-11EC-A435-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-When operating at the scale that Scalar wants to support, certain data
-shapes are more likely to cause undesirable performance issues, such as
-large numbers of loose objects.
+>> +test_expect_success 'set up custom strategy' '
+>> +	test_commit --no-tag "Initial" base base &&
+>> +git show-ref &&
+>> +
+>> +	for b in branch1 branch2 branch3
+>> +	do
+>> +		git checkout -b $b main &&
+>> +		test_commit --no-tag "Change on $b" base $b
+>> +	done &&
+>> +
+>> +	git checkout branch1 &&
+>
+> Here, perhaps we can make two additional test cases, that try with
+> local change that (1) overlaps with the changes branch2 and branch3
+> bring in and that (2) does not overlap.  I am worried about the case
+> (2) losing the local change due to the call to reset_hard().
 
-By including statistics about this, `scalar diagnose` now makes it
-easier to identify such scenarios.
+We do not need a new test to demonstrate the breakage in the
+proposed patch, I think.  Here is one place I found that we already
+test that merging in a dirty working tree fails.  We only need to
+make sure that we do so without losing local changes.
 
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/scalar/scalar.c          | 59 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  5 ++-
- 2 files changed, 63 insertions(+), 1 deletion(-)
+ t/t6424-merge-unrelated-index-changes.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index d302c27e114..0c278681758 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -619,6 +619,60 @@ static int dir_file_stats(struct object_directory *object_dir, void *data)
- 	return 0;
- }
+diff --git c/t/t6424-merge-unrelated-index-changes.sh w/t/t6424-merge-unrelated-index-changes.sh
+index 89dd544f38..88e0b541a0 100755
+--- c/t/t6424-merge-unrelated-index-changes.sh
++++ w/t/t6424-merge-unrelated-index-changes.sh
+@@ -171,7 +171,8 @@ test_expect_success 'octopus, unrelated file touched' '
+ 	touch random_file && git add random_file &&
  
-+static int count_files(char *path)
-+{
-+	DIR *dir = opendir(path);
-+	struct dirent *e;
-+	int count = 0;
-+
-+	if (!dir)
-+		return 0;
-+
-+	while ((e = readdir(dir)) != NULL)
-+		if (!is_dot_or_dotdot(e->d_name) && e->d_type == DT_REG)
-+			count++;
-+
-+	closedir(dir);
-+	return count;
-+}
-+
-+static void loose_objs_stats(struct strbuf *buf, const char *path)
-+{
-+	DIR *dir = opendir(path);
-+	struct dirent *e;
-+	int count;
-+	int total = 0;
-+	unsigned char c;
-+	struct strbuf count_path = STRBUF_INIT;
-+	size_t base_path_len;
-+
-+	if (!dir)
-+		return;
-+
-+	strbuf_addstr(buf, "Object directory stats for ");
-+	strbuf_add_absolute_path(buf, path);
-+	strbuf_addstr(buf, ":\n");
-+
-+	strbuf_add_absolute_path(&count_path, path);
-+	strbuf_addch(&count_path, '/');
-+	base_path_len = count_path.len;
-+
-+	while ((e = readdir(dir)) != NULL)
-+		if (!is_dot_or_dotdot(e->d_name) &&
-+		    e->d_type == DT_DIR && strlen(e->d_name) == 2 &&
-+		    !hex_to_bytes(&c, e->d_name, 1)) {
-+			strbuf_setlen(&count_path, base_path_len);
-+			strbuf_addstr(&count_path, e->d_name);
-+			total += (count = count_files(count_path.buf));
-+			strbuf_addf(buf, "%s : %7d files\n", e->d_name, count);
-+		}
-+
-+	strbuf_addf(buf, "Total: %d loose objects", total);
-+
-+	strbuf_release(&count_path);
-+	closedir(dir);
-+}
-+
- static int cmd_diagnose(int argc, const char **argv)
- {
- 	struct option options[] = {
-@@ -687,6 +741,11 @@ static int cmd_diagnose(int argc, const char **argv)
- 	foreach_alt_odb(dir_file_stats, &buf);
- 	strvec_push(&archiver_args, buf.buf);
- 
-+	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, "--add-virtual-file=objects-local.txt:");
-+	loose_objs_stats(&buf, ".git/objects");
-+	strvec_push(&archiver_args, buf.buf);
-+
- 	if ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
- 	    (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
- 	    (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 3dd5650cceb..72023a1ca1d 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -95,6 +95,7 @@ test_expect_success UNZIP 'scalar diagnose' '
- 	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	git repack &&
- 	echo "$(pwd)/.git/objects/" >>cloned/src/.git/objects/info/alternates &&
-+	test_commit -C cloned/src loose &&
- 	scalar diagnose cloned >out 2>err &&
- 	grep "Available space" out &&
- 	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
-@@ -106,7 +107,9 @@ test_expect_success UNZIP 'scalar diagnose' '
- 	unzip -p "$zip_path" diagnostics.log >out &&
- 	test_file_not_empty out &&
- 	unzip -p "$zip_path" packs-local.txt >out &&
--	grep "$(pwd)/.git/objects" out
-+	grep "$(pwd)/.git/objects" out &&
-+	unzip -p "$zip_path" objects-local.txt >out &&
-+	grep "^Total: [1-9]" out
+ 	test_must_fail git merge C^0 D^0 &&
+-	test_path_is_missing .git/MERGE_HEAD
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_path_exists random_file
  '
  
- test_done
--- 
-gitgitgadget
+ test_expect_success 'octopus, related file removed' '
