@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1E73C433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 10:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D484C433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 10:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236952AbiESK2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 06:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44316 "EHLO
+        id S236689AbiESKjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 06:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236801AbiESK15 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 06:27:57 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B21EEAEE1E
-        for <git@vger.kernel.org>; Thu, 19 May 2022 03:27:48 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id ch13so8976471ejb.12
-        for <git@vger.kernel.org>; Thu, 19 May 2022 03:27:48 -0700 (PDT)
+        with ESMTP id S231860AbiESKjh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 06:39:37 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51BFD64717
+        for <git@vger.kernel.org>; Thu, 19 May 2022 03:39:36 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id h11so5307832eda.8
+        for <git@vger.kernel.org>; Thu, 19 May 2022 03:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Zk9QPqkzlAfXYyAeyDKseMcII4VaDZot3Tt1afx3wuo=;
-        b=OO8Tl9xcEUvMfJuRfnL+KWAc7CaZLeJtwXTHzR4DH6VpeABcXm9u+yVL+nPzCixytH
-         ukJtHjLroz/oyotbRR+GzjfqUwHotkavESLw6Wn1KMiv7iW7riTA+bZJMqMwaFJ3kKIu
-         mJ+byO55e7x+7tbw0ipthXCx52RPwmHsEnNZ3Tuakf7AQzziimyZDHcXCaPX9rX55Jxy
-         W+gfmps3VDVyYPoLn14beTsDvOfkBO606qbukdbHMNj+hOMUUcQIbvB7dR6uCTziGenN
-         5IFBwKmoBjp/1HNhvj9wHUwY0u/OsepPmu4M0HBU0qz1g2U6o355AGgmOzQqzsq8SYjE
-         kBlg==
+         :message-id:mime-version;
+        bh=oPjff5Qa7rHTW/9hYT+SIv31CJqWqv4cH23EI6T2M2I=;
+        b=mCTRFLT3I4jOD+qM7T+B1krcHMgxkKIl+8GPtw7u8k5uze9v2ORt/vJjgJxnbBZN0+
+         2m/u/aQxpv0fLrkZ2ZGhiqDfspu/xPdMntlq7zat/74pEEDanMZIbDr9stDqbc4VTS8p
+         Kj4pQP9GUO5WeiyeBsJ1YvypcgBeKlXOujX5ImejT5zKF+SvwZztur8ByoMJBlSzGHuy
+         wjiBP9NEZWklfY6b4zahoqx8Pa9CqxCfQhnfM1UvAkIURPbI7Ev144CyftJ5RxeqJzvr
+         ih/VJTN9H7MZ16cNc1gr1QZ/PjA9q+t1hkj4WPwiMAhui6PUyT9+oJ/98Vt8/j9Jt8xf
+         KeLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Zk9QPqkzlAfXYyAeyDKseMcII4VaDZot3Tt1afx3wuo=;
-        b=Qc/8oXuUwc8j5yfw8rVL6oVmzlBhmUGxZ0zM8FA/5rq3p05TEeTA6F4bioHZOuNMkb
-         ZWQYO/IpoJUhkQVTjH3tZUpy79hyqmNL4uyDqdXW6lY4cf6KkBfCVGzZ9wxdAiYV0u42
-         JV1ZIEYlFyo9Bv3PBW8Uxd1N1uq4ho5g8QTfdAoTZw46cbaGaij3EjsMk7Rur9gFrhRc
-         be/OIiiqLV9vymDW23JJDqw6Fh2g0LDuEPDomXjODBHLIOty9+3n95GRoc47jZFv45Q2
-         pKf125H9r/wx3squZOJWa8fBGEqYYSUQIpeSWyJkWvMRwQ7c1/4uSDqAD85yu236tL01
-         /60Q==
-X-Gm-Message-State: AOAM531gXGFRcwj2WimHwQb3cRmZpvpFBoo3FRi2fCDX/oXWjx8UajQa
-        MKubc3RjKLlqRpbkTWqO3Ww=
-X-Google-Smtp-Source: ABdhPJxq58p+IfYnAvNcDm3sKVdnZA6EPFGsU0hyaQ4VRtR4K8m0jhcLoHaNzIS5m1n5/jRqd7T5IQ==
-X-Received: by 2002:a17:907:9605:b0:6f5:c66:7c13 with SMTP id gb5-20020a170907960500b006f50c667c13mr3546663ejc.66.1652956067055;
-        Thu, 19 May 2022 03:27:47 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=oPjff5Qa7rHTW/9hYT+SIv31CJqWqv4cH23EI6T2M2I=;
+        b=oUlICc/9QkARCLrpKPYbdssJlxZsW+2iuHJszhugFrnaq12oi6KvtOd5rmvB9Cxh1V
+         8Lk6gIjctCZ+SZKlNdghOlnJbDLZx8/50u8qLP+Mwq/A5gA0mTt9JPKrmSWPxp8jFsf7
+         Vo/Z/wYhRB8m4DW6BKt4lGp4sycOR6KwLf34C+NxKYpRYjK2Bq10LEIBDpWcTJqzPvxV
+         b8Gv3R04ydMhlw/2h39MqPpyKIJH5jYqsCrKTlRdlsZ2I3advBtM/NX9V6ohQ7fSWrGa
+         KHAQ4v2Qtzyc2P3siILv4sLzWUiBtJole+7QOXzWedifsThRXkvuwJlW5qYLAUMnYv5i
+         ifqA==
+X-Gm-Message-State: AOAM530J+RGamyNZbPP56Q+z/5UMCzTS1zE7M4y1gacDP8cNG/wRXEdE
+        2Zq5QqphvYR0/9Hn2GSKTF/nuc9i10HWdQ==
+X-Google-Smtp-Source: ABdhPJw1yNNagmpsxMgnWN7Lnw1e93udmkCVC/LX8cN72YTyFh+lL3sbUlGrMADbPwwg/mLouho9Yw==
+X-Received: by 2002:aa7:cd87:0:b0:427:f800:220d with SMTP id x7-20020aa7cd87000000b00427f800220dmr4665994edv.112.1652956774831;
+        Thu, 19 May 2022 03:39:34 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c25-20020aa7d619000000b0042a5a39ba7esm2637015edr.25.2022.05.19.03.27.45
+        by smtp.gmail.com with ESMTPSA id d12-20020a056402000c00b0042617ba637bsm2567740edu.5.2022.05.19.03.39.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 03:27:45 -0700 (PDT)
+        Thu, 19 May 2022 03:39:33 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nrdNg-0023Zd-QN;
-        Thu, 19 May 2022 12:27:44 +0200
+        id 1nrdZ6-0023yp-P5;
+        Thu, 19 May 2022 12:39:32 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Alexander Shopov <ash@kambanaria.org>,
         Jordi Mas <jmas@softcatala.org>,
         Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
@@ -69,18 +70,16 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Peter Krefting <peter@softwolves.pp.se>,
         Emir SARI <bitigchi@me.com>,
         =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2 8/9] Makefile: add "po-init" rule to initialize po/XX.po
-Date:   Thu, 19 May 2022 12:22:17 +0200
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH v2 0/9] Incremental po/git.pot update and new l10n workflow
+Date:   Thu, 19 May 2022 12:28:05 +0200
 References: <20220503132354.9567-1-worldhello.net@gmail.com>
- <20220519081548.3380-9-worldhello.net@gmail.com>
+ <20220519081548.3380-1-worldhello.net@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220519081548.3380-9-worldhello.net@gmail.com>
-Message-ID: <220519.868rqx6cm7.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220519081548.3380-1-worldhello.net@gmail.com>
+Message-ID: <220519.864k1l6c2j.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -88,112 +87,63 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, May 19 2022, Jiang Xin wrote:
 
-> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> The core translation is the minimum set of work that must be done for a
-> new language translation.
+> A workflow change for translators are being proposed.
 >
-> There are over 5000 messages in the template message file "po/git.pot"
-> that need to be translated. It is not a piece of cake for such a huge
-> workload. So we used to define a small set of messages called "core
-> translation" that a new l10n contributor must complete before sending
-> pull request to the l10n coordinator.
+> Changes since v1:
 >
-> By pulling in some parts of the git-po-helper[^1] logic, we add rule
-> "core-pot" to create this core translation message "po/git-core.pot":
->
->     make core-pot
->
-> To help new l10n contributors to initialized their "po/XX.pot" from
-> "po/git-core.pot", we also add new rules "po-init":
->
->     make po-init POT_FILE=3Dpo/XX.po
+> * Patch 4/9: When running "make check-pot", do not update "po/git.pot".
+> * Patch 6/9: reword: the removal of "po/git.pot" is in preceding commit.
+> * Patch 7/9 and 8/9: Add new funciton "check_po_file_envvar" for reuse in both
+>   po-update and po-init targets.
 
-This is a typo, you mean PO_FILE, not POT_FILE.
+Thanks a lot for picking this up. I left some detailed comments on
+individual commits.
 
->  Makefile      | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  po/.gitignore |  1 +
->  shared.mak    |  1 +
->  3 files changed, 46 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index edebd44d5c..0a687a6eb2 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2801,6 +2801,7 @@ po-update: po/git.pot
->  	$(check_po_file_envvar)
->  	@if test ! -e $(PO_FILE); then \
->  		echo >&2 "error: $(PO_FILE) does not exist"; \
-> +		echo >&2 'To create an initial po file, use: "make po-init PO_FILE=3Dp=
-o/XX.po"'; \
+My own latest WIP version of an approximation of this topic was
+https://github.com/avar/git/tree/avar/Makefile-incremental-po-git-pot-rule,
+which is what I used for some of the range-diffs.
 
-Correct here.
+(I think the first E-Mail I sent had a range-diff against the latest
+version I found in your fork, but I found that was probably the v1
+version, but I think those comments applied to your v2 (which I read
+on-list))
 
->  		exit 1; \
->  	fi
->  	$(QUIET_MSGMERGE)$(MSGMERGE) $(MSGMERGE_FLAGS) $(PO_FILE) po/git.pot
-> @@ -2808,6 +2809,49 @@ po-update: po/git.pot
->  .PHONY: check-pot
->  check-pot: $(LOCALIZED_ALL_GEN_PO)
->=20=20
-> +### TODO FIXME: Translating everything in these files is a bad
-> +### heuristic for "core", as we'll translate obscure error() messages
-> +### along with commonly seen i18n messages. A better heuristic would
-> +### be to e.g. use spatch to first remove error/die/warning
-> +### etc. messages.
-> +LOCALIZED_C_CORE =3D
-> +LOCALIZED_C_CORE +=3D builtin/checkout.c
-> +LOCALIZED_C_CORE +=3D builtin/clone.c
-> +LOCALIZED_C_CORE +=3D builtin/index-pack.c
-> +LOCALIZED_C_CORE +=3D builtin/push.c
-> +LOCALIZED_C_CORE +=3D builtin/reset.c
-> +LOCALIZED_C_CORE +=3D remote.c
-> +LOCALIZED_C_CORE +=3D wt-status.c
-> +
-> +LOCALIZED_C_CORE_GEN_PO =3D $(LOCALIZED_C_CORE:%=3D.build/pot/po/%.po)
-> +
-> +.PHONY: core-pot
-> +core-pot: po/git-core.pot
-> +
-> +.build/pot/git-core.header: $(LOCALIZED_C_CORE_GEN_PO)
-> +	$(call mkdir_p_parent_template)
-> +	$(QUIET_XGETTEXT)$(XGETTEXT) $(XGETTEXT_FLAGS_C) \
-> +		-o - /dev/null | \
-> +	sed -e 's|charset=3DCHARSET|charset=3DUTF-8|g' >$@ && \
-> +	echo '"Plural-Forms: nplurals=3DINTEGER; plural=3DEXPRESSION;\\n"' >>$@
-> +
+Aside from differences already noted I spotted that your "make pot" ends
+up with a po/git.pot that has a header, but I omitted it in
+mine. Perhaps that explains some of the headers in 8/9? I.e. we don't
+need the header on po/git.pot, perhaps that explains the difference
+noted in my comment in 8/9?
 
-This looks OK to me, FWIW in the version I have on my branch I tried to
-munge some of this a bit more. So the diff between my (-)/yours (+) is:
-=09
-	--- po/fo.po    2022-05-19 12:23:02.548459230 +0200
-	+++ po/fo.po.jx 2022-05-19 12:22:50.608563768 +0200
-	@@ -1,19454 +1,1224 @@
-	+# Faroese translations for Git package.
-	+# Copyright (C) 2022 THE Git'S COPYRIGHT HOLDER
-	 # This file is distributed under the same license as the Git package.
-	+# Automatically generated, 2022.
-	+#
-	 msgid ""
-	 msgstr ""
-	 "Project-Id-Version: Git\n"
-	-"Last-Translator: make by the Makefile\n"
-	-"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
-	+"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
-	+"POT-Creation-Date: 2022-05-19 12:22+0200\n"
-	+"PO-Revision-Date: 2022-05-19 12:22+0200\n"
-	+"Last-Translator: Automatically generated\n"
-	+"Language-Team: none\n"
-	 "Language: fo\n"
-	 "MIME-Version: 1.0\n"
-	 "Content-Type: text/plain; charset=3DUTF-8\n"
-	 "Content-Transfer-Encoding: 8bit\n"
-	 "Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);\n"
-	-"PO-Revision-Date: 2022-04-11 11:05+0200\n"
+Also: shouldn't "make clean" remove the generated po/git.pot and
+po/git-core.pot? I see you added it to "distclean", maybe that's better
+(or maybe that's from a version of mine...).
 
-So yours has the "Faroese translations for Git package" (good), but I
-also omitted/corrected some of the headers. See 72ed0c8b2e6 (i18n:
-migrate to line-number-less i18n workflow, 2022-04-03) in my fork.
+Just from some last minute testing I think you want this squashed in
+(and move that "sed" to the "init" and/or "update" of the individual
+po/XX.po files):
+	
+	diff --git a/Makefile b/Makefile
+	index 65a7558261a..57db37db556 100644
+	--- a/Makefile
+	+++ b/Makefile
+	@@ -2778,14 +2778,7 @@ $(LOCALIZED_PERL_GEN_PO): .build/pot/po/%.po: %
+	 	$(QUIET_XGETTEXT)$(XGETTEXT) --omit-header \
+	 		-o$@ $(XGETTEXT_FLAGS_PERL) $<
+	 
+	-.build/pot/git.header: $(LOCALIZED_ALL_GEN_PO)
+	-	$(call mkdir_p_parent_template)
+	-	$(QUIET_XGETTEXT)$(XGETTEXT) $(XGETTEXT_FLAGS_C) \
+	-		-o - /dev/null | \
+	-	sed -e 's|charset=CHARSET|charset=UTF-8|g' >$@ && \
+	-	echo '"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\\n"' >>$@
+	-
+	-po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
+	+po/git.pot: $(LOCALIZED_ALL_GEN_PO)
+	 	$(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
+	 
+	 .PHONY: pot
 
-This version is also fine, but just in case you wanted to steal
-something from it...
+I.e. we can just msgcat po/git.pot without the header. For both
+"po-init" and "po-update" that seems to do the right thing for me...
