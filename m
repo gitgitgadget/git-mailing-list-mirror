@@ -2,179 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BA2AC433EF
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 14:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F2EC433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 14:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239277AbiESOqL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 10:46:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
+        id S239934AbiESOrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 10:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239936AbiESOqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 10:46:04 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B225338D8C
-        for <git@vger.kernel.org>; Thu, 19 May 2022 07:46:01 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id f9so10519290ejc.0
-        for <git@vger.kernel.org>; Thu, 19 May 2022 07:46:01 -0700 (PDT)
+        with ESMTP id S239923AbiESOrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 10:47:12 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FF5A0D3F
+        for <git@vger.kernel.org>; Thu, 19 May 2022 07:47:10 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id y7so8935905ejr.13
+        for <git@vger.kernel.org>; Thu, 19 May 2022 07:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=sFTSyldIXWQCez9U4lhbppb+m4nmISSnqUM+yBzYft8=;
-        b=bfTXWrAAx0Wa74SlpvKdehlhq+8EjoJYnnYZLZqIqyaDyGdgWRU39ugBQrFkiVh89e
-         NPrXBUBS6B75JCJ4nERrSWEE3NCH0Y8vk7GhYqFwwrlhi2s/tiQdXjZXwAa8Gz//Qddy
-         lCe5yG5jZnOo4tZkXg1K2XcsdF+c1RS4fRm6DhvVEWHFUuOkOpOy+zqxi8KOXA26MWVZ
-         x/Z3KM7dVO8XyHYB6p22rYwpsW2TAFzJXMYrjMUmNSfnI0ozlSdPs1JUwCFCqKr6VATG
-         SJFfn1kyzq5KeQV7Ow9uYCIyUL6ToEoT//agA6Hr+fkU2TGIl7XhJhjrgUa+qWM/qz+p
-         1Nng==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/M0/TLFfePDz8Dk2StMw+L262DziJLTfZj1ktBTCneM=;
+        b=jWBfpzWtzAqLvtmorpPuLIjlSGkSB+mSpRFs1k0RAMJOTd3uDRiA52S2J6Kd1Nj/Uy
+         XIW56MRWnHsQs3GE9ihBohHClF22gXYgMDLjLbFUm2bkKq8no/RzDD+Bizv879u1roo8
+         nAXQNRw0iu+n0xnp+rQuPpGHtiKBXNoWJHlcw0etyC0+qm+vKbvpCaLMggTk/8lBg4Fo
+         QdCixWoljnno94FJXnFT493qbtlu8ycDfOvXroIDYicraviQDj2wIoE4IQ6TnlXsOgff
+         hpeQXoL3utIR7BmISSMuYGV9zVQ1Hah3wtCzgS21APK4uHrT0tZY2Ha4fG7+m5VKK0pK
+         8cRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=sFTSyldIXWQCez9U4lhbppb+m4nmISSnqUM+yBzYft8=;
-        b=SQBh2XugPXdA/5rvVwBwuq0LgBQGfkxIk/Kt4AlmGPgnQE2s/sHuXyem2AfKiUBBwF
-         GsVT48uBPY72xxjo7SQ60YcRbjfngFrDJKGVB7aef5JqGinwdJe2Pyo5bKFWA7SDckDn
-         7SrCW2e9Zyw7e+oK6mfClRh2UjR5hXDtv/XDnSesJdLddNXhj0YMcAGCQjl1gVFFsj2o
-         yeWT4h9cbMaxdLziidGCtxWLc7kg1R7EkHgw5S5RFsAdOGAn+af6kCV9dJh7UudthAAu
-         53tOeScwbYibanQJp49Xo8D0+7aUb5Op5qzHZe1MffjtcNFIDeSg0mG+fYYFf4CGO6TQ
-         eQ/Q==
-X-Gm-Message-State: AOAM533GSU9ozkTR9h0dObQd0ov1WTvp10u/PwqlQkyq2Bw/oD14GaK5
-        Bd7ic1hZvSvxf/G2k4wZFkQ=
-X-Google-Smtp-Source: ABdhPJy/p/y7Rj8vRAMmEe77PiNeKAJWRAddHMtPM3mR+7O2wG06Schm2NDKgr3oWpywkDYvEAe1wQ==
-X-Received: by 2002:a17:906:4795:b0:6fe:69f4:bcb3 with SMTP id cw21-20020a170906479500b006fe69f4bcb3mr4829990ejc.526.1652971560120;
-        Thu, 19 May 2022 07:46:00 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ay5-20020a170907900500b006f3ef214dccsm2091482ejc.50.2022.05.19.07.45.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 07:45:59 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nrhPa-002CDR-HQ;
-        Thu, 19 May 2022 16:45:58 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH v2 0/9] Incremental po/git.pot update and new l10n workflow
-Date:   Thu, 19 May 2022 16:41:01 +0200
-References: <20220503132354.9567-1-worldhello.net@gmail.com>
- <20220519081548.3380-1-worldhello.net@gmail.com>
- <220519.864k1l6c2j.gmgdl@evledraar.gmail.com>
- <CANYiYbEj_G=Zm4ybLB=DhwXSMo7jFC+rf57m=vnFObbgOnqzrg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <CANYiYbEj_G=Zm4ybLB=DhwXSMo7jFC+rf57m=vnFObbgOnqzrg@mail.gmail.com>
-Message-ID: <220519.865ym14m3d.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/M0/TLFfePDz8Dk2StMw+L262DziJLTfZj1ktBTCneM=;
+        b=Rqfb0P1+1y6XTzqNxkFqjf5NlcnIdXbVqSNijWaLH7kS/LWf/HrP8wb4HlVNKPF4w0
+         hVRnuQT4+evXosUfaqciq5oUWQuxmglAR0Vrnr3IJR+JSgOgEXj0+4bw2bmY2k7P3agt
+         X6UXIE99CskepWUO2Ed6NUinDY8x88U7WwWSkpAg10gNHFtVInD/jpUeVN63G5U85dMf
+         qhUytwfcZncf5n3bgEB0UzN+o5dkvi7HD6b2dk1W/4GZlag41mFpJ+3PJc6pnbEHkEhw
+         o4Sz+NgOrgyqDkAybjxG9bs5TjcUxAMlakz/0Xz1j18pJNe0ayV8VSTjGi/hCr2Fgd0c
+         5V7Q==
+X-Gm-Message-State: AOAM533skRhNh3hp+zVIJwflzcecdulJSvXgtrRBIiR/6sD4+spzahzp
+        RQTKDD5ZmijlLWOqcNDIclSZOm3oyKxfPptFA8w=
+X-Google-Smtp-Source: ABdhPJzq2kEjRFT2VTDNtGkt7VKn5AEiEzzbBy0aevg9Em5o9dAgaTyXIHXlKQrRz7cDYqrjACyTvQIeq6oDN2iTbss=
+X-Received: by 2002:a17:906:5783:b0:6fe:a263:f648 with SMTP id
+ k3-20020a170906578300b006fea263f648mr659003ejq.493.1652971628679; Thu, 19 May
+ 2022 07:47:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAOLTT8S8rh+VYcuaqBeNtmphiRqw7HropLFpkxfnTJq6BngGXw@mail.gmail.com>
+ <CAP8UFD2p+Evqv_MBAgv23zooppsNWjOw6ZU2GLqAq_skZoJPOw@mail.gmail.com>
+ <CABPp-BGD3AZvXwmSHfQQ_xh_UqevH23kdBYijAWUk8GHu1q0Qw@mail.gmail.com>
+ <CAOLTT8STRfqq4bfobCK8Q5uvtXzgNYY0x0wNh4HNyAhv0Mc07A@mail.gmail.com>
+ <CABPp-BEFYjTvK4ZNSg+yiahRAzXW=KU11a-b+QRdcBDGb-movQ@mail.gmail.com>
+ <CAOLTT8R7QmpvaFPTRs3xTpxr7eiuxF-ZWtvUUSC0-JOo9Y+SqA@mail.gmail.com>
+ <CABPp-BHmNBMypVDrE=gPMXoHT9uH-u4HJG1dAuY0tjSGrK0yPg@mail.gmail.com>
+ <xmqqk0aqhia1.fsf@gitster.g> <CABPp-BGOGLUPOn20yWzCrBYCykiet0=5UfbkuGC78f-QoWVvYg@mail.gmail.com>
+ <CAOLTT8TDomk9zUg49yrhpu1T776FKrnu7RGJ_bx9iaYKUEvvTg@mail.gmail.com>
+In-Reply-To: <CAOLTT8TDomk9zUg49yrhpu1T776FKrnu7RGJ_bx9iaYKUEvvTg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 19 May 2022 07:46:56 -0700
+Message-ID: <CABPp-BFrifAymOVNniXiKWv2tZpgxQwxmZAhhGE8eaeJVODNkA@mail.gmail.com>
+Subject: Re: Question about pre-merge and git merge octopus strategy
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>, vascomalmeida@sapo.pt
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, May 19 2022, Jiang Xin wrote:
-
-> On Thu, May 19, 2022 at 6:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> Thanks a lot for picking this up. I left some detailed comments on
->> individual commits.
->>
->> My own latest WIP version of an approximation of this topic was
->> https://github.com/avar/git/tree/avar/Makefile-incremental-po-git-pot-ru=
-le,
->> which is what I used for some of the range-diffs.
->>
->> (I think the first E-Mail I sent had a range-diff against the latest
->> version I found in your fork, but I found that was probably the v1
->> version, but I think those comments applied to your v2 (which I read
->> on-list))
->>
->> Aside from differences already noted I spotted that your "make pot" ends
->> up with a po/git.pot that has a header, but I omitted it in
->> mine. Perhaps that explains some of the headers in 8/9? I.e. we don't
->> need the header on po/git.pot, perhaps that explains the difference
->> noted in my comment in 8/9?
->>
->> Also: shouldn't "make clean" remove the generated po/git.pot and
->> po/git-core.pot? I see you added it to "distclean", maybe that's better
->> (or maybe that's from a version of mine...).
->>
->> Just from some last minute testing I think you want this squashed in
->> (and move that "sed" to the "init" and/or "update" of the individual
->> po/XX.po files):
->>
->>         diff --git a/Makefile b/Makefile
->>         index 65a7558261a..57db37db556 100644
->>         --- a/Makefile
->>         +++ b/Makefile
->>         @@ -2778,14 +2778,7 @@ $(LOCALIZED_PERL_GEN_PO): .build/pot/po/%=
-.po: %
->>                 $(QUIET_XGETTEXT)$(XGETTEXT) --omit-header \
->>                         -o$@ $(XGETTEXT_FLAGS_PERL) $<
->>
->>         -.build/pot/git.header: $(LOCALIZED_ALL_GEN_PO)
->>         -       $(call mkdir_p_parent_template)
->>         -       $(QUIET_XGETTEXT)$(XGETTEXT) $(XGETTEXT_FLAGS_C) \
->>         -               -o - /dev/null | \
->>         -       sed -e 's|charset=3DCHARSET|charset=3DUTF-8|g' >$@ && \
->>         -       echo '"Plural-Forms: nplurals=3DINTEGER; plural=3DEXPRES=
-SION;\\n"' >>$@
->>         -
->>         -po/git.pot: .build/pot/git.header $(LOCALIZED_ALL_GEN_PO)
->>         +po/git.pot: $(LOCALIZED_ALL_GEN_PO)
->>                 $(QUIET_GEN)$(MSGCAT) $(MSGCAT_FLAGS) $^ >$@
->>
->>          .PHONY: pot
->>
->> I.e. we can just msgcat po/git.pot without the header. For both
->> "po-init" and "po-update" that seems to do the right thing for me...
+On Thu, May 19, 2022 at 6:15 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
-> Benefits of having a header for "po/git.pot" file:
-> 1. Have a nice field "Project-Id-Version: Git" in the head of a new
->     generated po file.
-> 2. We can identify the base version of "po/git.pot" by inspecting
->     the "POT-Creation-Date" field in the header of a po file.
+> Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B45=E6=9C=8813=E6=97=
+=A5=E5=91=A8=E4=BA=94 13:16=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > On Thu, May 12, 2022 at 8:39 AM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> > >
+> > > Elijah Newren <newren@gmail.com> writes:
+> > >
+> > > >     Merge with strategy octopus failed.
+> > > >
+> > > > Also, if we check `git status`:
+> > > >
+> > > >     $ git status
+> > > >     On branch main
+> > > >     Unmerged paths:
+> > > >       (use "git restore --staged <file>..." to unstage)
+> > > >       (use "git add <file>..." to mark resolution)
+> > > >     both modified:   base
+> > > >
+> > > >     no changes added to commit (use "git add" and/or "git commit -a=
+")
+> > > >
+> > > > And in git-merge-octopus.sh we see:
+> > > >
+> > > >     case "$OCTOPUS_FAILURE" in
+> > > >     1)
+> > > >     # We allow only last one to have a hand-resolvable
+> > > >     # conflicts.  Last round failed and we still had
+> > > >     # a head to merge.
+> > > >     gettextln "Automated merge did not work."
+> > > >     gettextln "Should not be doing an octopus."
+> > > >     exit 2
+> > > >     esac
+> > > >
+> > > > and in builtin/merge.c, we see:
+> > > >
+> > > >     /*
+> > > >      * The backend exits with 1 when conflicts are
+> > > >      * left to be resolved, with 2 when it does not
+> > > >      * handle the given merge at all.
+> > > >      */
+> > > >
+> > > > Which means git-merge-octopus.sh is claiming it can't handle this t=
+ype
+> > > > of merge, and some other merge strategy should be tried, and
+> > > > implicitly that it didn't leave any conflicts to be resolved becaus=
+e
+> > > > it can't handle this merge.
+> > >
+> > > Correct.  Near the beginning of the loop you found the above
+> > > comment, there is this code:
+> > >
+> > >         if (use_strategies_nr =3D=3D 1 ||
+> > >             /*
+> > >              * Stash away the local changes so that we can try more t=
+han one.
+> > >              */
+> > >             save_state(&stash))
+> > >                 oidclr(&stash);
+> > >
+> > >         for (i =3D 0; !merge_was_ok && i < use_strategies_nr; i++) {
+> > >                 int ret, cnt;
+> > >                 if (i) {
+> > >                         printf(_("Rewinding the tree to pristine...\n=
+"));
+> > >                         restore_state(&head_commit->object.oid, &stas=
+h);
+> > >                 }
+> >
+> > Side-comment, which becomes important below: The save/restore code in
+> > builtin/merge.c appears to be broken to me.  As noted in the code
+> > above, stash will be set to null_oid() if save_state() returns
+> > non-zero (which happens when "stash create" has no output, which
+> > happens if there is _initially_ no state to save, i.e. if there are no
+> > local changes before the merge started).  restore_state() is a no-op
+> > whenever stash is the null_oid, meaning in that case it won't actually
+> > rewind the tree to a pristine state to undo the changes of the
+> > previous merge attempt.  So, if:
+> >
+> > * The user had no local changes before starting the merge
+> > * Multiple merge strategies are applicable
+> > * The first merge strategy makes index/working-tree changes, but
+> > returns with exit status 2
+> >
+> > Then the restore_state() called before the second merge strategy will
+> > do nothing, and the second merge strategy will be working on an index
+> > and working tree with garbage leftover from the first merge strategy.
+> > While this may have never been triggered (in what case do we have
+> > multiple merge strategies that all return an exit status of 2?), I
+> > suspect we want to fix this problem with something like this:
+> >
+> > diff --git a/builtin/merge.c b/builtin/merge.c
+> > index f178f5a3ee..7f3650fb09 100644
+> > --- a/builtin/merge.c
+> > +++ b/builtin/merge.c
+> > @@ -378,11 +378,11 @@ static void restore_state(const struct object_id =
+*head,
+> >         struct strbuf sb =3D STRBUF_INIT;
+> >         const char *args[] =3D { "stash", "apply", NULL, NULL };
+> >
+> > +       reset_hard(head, 1);
+> > +
+> >         if (is_null_oid(stash))
+> >                 return;
+> >
+> > -       reset_hard(head, 1);
+> > -
+> >         args[2] =3D oid_to_hex(stash);
+> >
+> >         /*
+> >
+>
+> It looks like this code can go back to the old state now?
+>
+> I think if we can handle it as special case when:
+>
+> 1. Use octopus merge without other strategies (no friend).
+> 2. Merge failed, so we don't have the best strategy.
+>
+> Then we force restore the original state?
 
-For 1: Yes, we should have a header, I'm saying we don't need it for
-po/git.pot, just po/XX.po, and not having it in po/git.pot makes things
-a bit simpler, since when you "msgmerge" it you only worry about merging
-the content, not the header.
-
-The header you can then create with msginit, which in both our versions
-we'd "sed" or otherwise correctly invoke msginit to add the correct
-fields.
-
-For 2: I think that having such fields in a world where everyone uses
-version control (and the git project certainly does) is rather useless,
-they're there in the PO format because it pre-dates version control
-being ubiquitous.
-
-The time-related fields I left in I left there because it seemed that
-some PO tooling (e.g. Emacs's po-mode) insists on it.
-
-Anyway, this is all small potatoes. I only pointed this out because when
-I was hacking this up & debugging it I found it much easier to deal with
-being able to piece together things with just msgcat, which we can do
-with po/git.pot if it doesn't have a header.
-
-But for adding the header we either need to msgcat a header file (which
-an early version of my patches did), or just skip it and have it only
-added for the XX.po files.
-
-I think it's simpler just to omit it :)
+Yeah, I've got some patches ready; just didn't submit yet as I was
+hoping to get time to update the in-core merge series.
+https://github.com/gitgitgadget/git/pull/1231
