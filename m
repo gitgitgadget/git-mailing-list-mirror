@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5AABC433F5
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 11:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B4A7C433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 12:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237525AbiESLsE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 07:48:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52892 "EHLO
+        id S237984AbiESMmA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 08:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbiESLsD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 07:48:03 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72FFB41FB
-        for <git@vger.kernel.org>; Thu, 19 May 2022 04:48:02 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id ck4so5158938ejb.8
-        for <git@vger.kernel.org>; Thu, 19 May 2022 04:48:02 -0700 (PDT)
+        with ESMTP id S237981AbiESMl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 08:41:58 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5487BA98C
+        for <git@vger.kernel.org>; Thu, 19 May 2022 05:41:56 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id n13so7817838ejv.1
+        for <git@vger.kernel.org>; Thu, 19 May 2022 05:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=nKp6mjj/EPcIwGZYSE0yosYFV7kQN0rZpCTuvFIzhik=;
-        b=dZnqD1GeQnzAR2t816B5cP+4x53oROekJaklf9oAw6a/TT0VCTOAfLwY05s6jsYWC4
-         flfSzvZiL8El7uA3x+2PqmkJPlsriB9CiUPpkBMvAqvhZ3SV2+BikROv+iIODzg/c/uT
-         xJ/Bzpweb8E0vav6zaZXAsGIBDCZDO8KRQr994SPGn4ZD+RrnFy5n8HPh2eHkiAOUy0V
-         bZwRpTYZ2ChED6Tr9Byc/6yd3VR+Z0dcfC6UDSceQ1C1gLo1IVVaLFwCWty2AV+XT1uh
-         xm68W6Xg7qLEPeEC0Ue87lwnUZmVHA222k82YN+wd24OXo/mx0YxviVyWW9Y0BIFAj+b
-         J5GQ==
+        bh=MWXIRD+obaigG4iDAp/66Bu/XwEJxRmB02zNt+f6C04=;
+        b=VNjEGb/r7lQQB48UuCSYuLltBcwHxnuglgBIgw1NDR1kqkNYL7b8mb07aMGnEwk290
+         XlwqxLGFmbFqU5WhlPgtrYdH4WT9XCb4FGo9FezR4lkG+TPEMY79SQJCAt3oMBQMT8Vs
+         3TPe/6VVqla6XfFL/UT98ihifeDxgXZmXZWURFb6huSxcrk5sUfcp4Q6XAqRqh8Hn8pc
+         AfzT5bAeQjXqiGnsNwNy3lBvYkQgKE0GK7A5aYm8PVeiz8rYtrP2iW/0orgYEMW0Vw29
+         tLQ67yz8To0s3yzcdVANbP5shL3eaRPJtqbkkyUGsYrTPdJy5EftgP/sRPETEa0dwFGw
+         pgqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=nKp6mjj/EPcIwGZYSE0yosYFV7kQN0rZpCTuvFIzhik=;
-        b=namuDQbLSoYFlJwcgYqf3A7sqScVbslsWXX/XsnK46Py8oWhQdztJ6o7T7g4+yLX6P
-         7xpZtNuA6Dh+pSf4VsCwy06Wbq3DXdF8lqrPNe/F7XVcuoWND+zjPPIUtCuvHSX3EORL
-         Z7CRtndXJEkJkn6+g4FxpMHORh7F4/dLYkynCtGmfavGBUXH6xZEbq80+DYFXF0rGyx1
-         ICc1ByhOvSMfAuNUuqBF5hMxmPp/oOx1T3CUz5pcunWFsbHGIn36T2UwgTreZSzfll6f
-         blkvRunzIk65dcUTqNMrt0sMpOIiDfEDcVFmEjlrSFIAA5OiLfOaWFOiCeV7U6gfaD+7
-         D+VQ==
-X-Gm-Message-State: AOAM531EOeA9iiC8Xf12aUD8VuS1KjkJY+J8OzTRtxCDNpWPViIfSWPm
-        qLU2H52UG4kyCtInnh/hJOM=
-X-Google-Smtp-Source: ABdhPJyhbhDtl8PBlH16kvtOKW/FZzAoKjAoY705JUxcfHiO4YiEjXGPVlUqgbobXTs8pgezySHhyQ==
-X-Received: by 2002:a17:906:7311:b0:6f4:da1c:2866 with SMTP id di17-20020a170906731100b006f4da1c2866mr3999760ejc.195.1652960881242;
-        Thu, 19 May 2022 04:48:01 -0700 (PDT)
+        bh=MWXIRD+obaigG4iDAp/66Bu/XwEJxRmB02zNt+f6C04=;
+        b=I8gBn+1IPAmZJE7kvPRMc9tFOV5UEvhg2yhJd9IOGfZJE3mmJNEUcu7abwLjioQPit
+         5f73vWJcjYjM4XkzixV40gDBhFi9c7awYj/e4bCfVhVRglsefo36GrCjM+POdkljnohW
+         qBVbrXiHyCTSGbeHpetCZBjt6v6FlUD1fnT8IUdEvqkqpVbmiGwm8qdyZ3MwvC4wCYFK
+         dhDYojKlvEoN92BE33VbzoFTtMOogvf8jTlS3MfeQDX8/OoYCcTInwSKAY5o5wuvI79t
+         z5J+auR6JTggXLLimAnhGWb9OZRw1kfSXGpjySV8kRO/jsF/snnON0b1o1fYECkeg2x0
+         ylZw==
+X-Gm-Message-State: AOAM531w5pnJVVeR50o2elVUeAg5RjVF0rpvsBj7YmzF6cabcTSqVNlG
+        MlD/t5fmIIVX+Rg6RU8Sj2E=
+X-Google-Smtp-Source: ABdhPJwaVThletMhnj0ENxs8ogzxawAil+qOcwn+YqDeg7sEco4FRLVPmyVHUJMPiMMOW4H/NTuDvQ==
+X-Received: by 2002:a17:907:720f:b0:6f8:5c31:4027 with SMTP id dr15-20020a170907720f00b006f85c314027mr4123184ejc.284.1652964115280;
+        Thu, 19 May 2022 05:41:55 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id gv29-20020a1709072bdd00b006f3ef214e13sm1996229ejc.121.2022.05.19.04.48.00
+        by smtp.gmail.com with ESMTPSA id 28-20020a170906015c00b006f3ef214da8sm2109030ejh.14.2022.05.19.05.41.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 04:48:00 -0700 (PDT)
+        Thu, 19 May 2022 05:41:54 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nredL-0026HP-UQ;
-        Thu, 19 May 2022 13:47:59 +0200
+        id 1nrfTV-0027vh-LL;
+        Thu, 19 May 2022 14:41:53 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
         jrnieder@gmail.com, larsxschneider@gmail.com, tytso@mit.edu
-Subject: Re: [PATCH v4 04/17] chunk-format.h: extract oid_version()
-Date:   Thu, 19 May 2022 13:44:14 +0200
+Subject: Re: [PATCH v4 00/17] cruft packs
+Date:   Thu, 19 May 2022 13:54:41 +0200
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1652915424.git.me@ttaylorr.com>
- <1d775f9850f00b0c3d1e9133669a6365c8d7bbba.1652915424.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <1d775f9850f00b0c3d1e9133669a6365c8d7bbba.1652915424.git.me@ttaylorr.com>
-Message-ID: <220519.86mtfd4uc0.gmgdl@evledraar.gmail.com>
+In-reply-to: <cover.1652915424.git.me@ttaylorr.com>
+Message-ID: <220519.86ee0p4ru6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,51 +71,24 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, May 18 2022, Taylor Blau wrote:
 
-> There are three definitions of an identical function which converts
-> `the_hash_algo` into either 1 (for SHA-1) or 2 (for SHA-256). There is a
-> copy of this function for writing both the commit-graph and
-> multi-pack-index file, and another inline definition used to write the
-> .rev header.
+> Here is another reroll of my series to implement "cruft packs", which is based
+> on the v2.36 tree, and incorporates feedback from the discussion we had about
+> mixed-version GCs with cruft packs in [1].
 >
-> Consolidate these into a single definition in chunk-format.h. It's not
-> clear that this is the best header to define this function in, but it
-> should do for now.
+> The changes here are limited to:
+>
+>   - a cautionary note in Documentation/technical/cruft-packs.txt
+>     describing the potential interaction between pruning GCs across pre-
+>     and post-cruft pack versions of Git, as discussed towards the bottom
+>     of [2]
+>
+>   - updating the `finalize_hashfile()` calls for writing `.mtimes` files
+>     to indicate that they are `FSYNC_COMPONENT_PACK_METADATA`, since the
+>     original version of this series predates the fine-grained fsync
+>     configuration in 2.36.
+>
+> As always, a range-diff is below. Thanks in advance for taking another
+> look!
 
-Maybe hash.h? :)
-https://lore.kernel.org/git/RFC-patch-2.2-051f0612ab9-20220519T113538Z-avarab@gmail.com/
-
-> (Worth noting, the .rev caller expects a 4-byte unsigned, but the other
-> two callers work with a single unsigned byte. The consolidated version
-> uses the latter type, and lets the compiler widen it when required).
-
-I just went for "int" and had the compiler similarly cast that, which
-seems simpler & more obvious, no?
-
-I.e. it seems to me that we really only need these more narrow types at
-the time that we write this data, which we alredy have casts for.
-
-> +uint8_t oid_version(const struct git_hash_algo *algop)
-> +{
-> +	switch (hash_algo_by_ptr(algop)) {
-> +	case GIT_HASH_SHA1:
-> +		return 1;
-> +	case GIT_HASH_SHA256:
-> +		return 2;
-> +	default:
-> +		die(_("invalid hash version"));
-> +	}
-
-As noted in the 2/2 I posted above we have some cases where we really
-should have BUG here, and others (reading) which are arguably die(). I
-think just going for BUG() makes sense in this case.
-
-But if you're just unifying existing code we can also just keep it
-as-is.
-
-FWIW I struggled to come up with a name for this, and ended up with
-hash_short_id_by_algo(). Somewhat bikesheddy, but I'd prefer if we fixed
-that "oid_version" name while at it, since this really has nothing do do
-with an "OID version" (whatever that is).
-
-We only refer to hash versions elsewhere, which collectively describe
-the versions of all OIDs we need to handle.
+I left some minor & nit-y comments on this v4, but overall I think this
+looks really good with not much to add.
