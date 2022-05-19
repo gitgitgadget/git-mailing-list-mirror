@@ -2,91 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E031C433EF
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 06:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D1DC433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 07:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232437AbiESG3y convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 19 May 2022 02:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49436 "EHLO
+        id S230306AbiESHFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 03:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbiESG3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 02:29:52 -0400
-X-Greylist: delayed 380 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 18 May 2022 23:29:50 PDT
-Received: from fred.zcu.cz (fred.zcu.cz [147.228.57.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4618511152
-        for <git@vger.kernel.org>; Wed, 18 May 2022 23:29:50 -0700 (PDT)
-Received: from webmail.zcu.cz (webmail.zcu.cz [147.228.57.30])
-        by fred.zcu.cz (Postfix) with ESMTP id E79DC80025ED
-        for <git@vger.kernel.org>; Thu, 19 May 2022 08:23:25 +0200 (CEST)
-From:   "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>
-To:     git@vger.kernel.org
-User-Agent: SOGoMail 5.6.0
+        with ESMTP id S229963AbiESHFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 03:05:18 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 00:05:17 PDT
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66121B8BDE
+        for <git@vger.kernel.org>; Thu, 19 May 2022 00:05:17 -0700 (PDT)
+Received: (qmail 5826 invoked by uid 109); 19 May 2022 06:58:35 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 May 2022 06:58:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Date:   Thu, 19 May 2022 02:58:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Ing. Martin Prantl Ph.D." <perry@ntis.zcu.cz>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
+Subject: Re: Bug - remote.c:236: hashmap_put overwrote entry after
+ hashmap_get returned NULL
+Message-ID: <YoXqmrOTxD5MiDU1@coredump.intra.peff.net>
+References: <24f547-6285e280-59-40303580@48243747>
 MIME-Version: 1.0
-Date:   Thu, 19 May 2022 08:23:25 +0200
-Subject: Bug - =?utf-8?q?remote.c=3A236=3A?==?utf-8?q?_hashmap=5Fput?= overwrote 
- entry after =?utf-8?q?hashmap=5Fget?= returned NULL
-Message-ID: <24f547-6285e280-59-40303580@48243747>
-X-Forward: 88.100.183.94
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Virus-Scanned: clamav-milter 0.103.5 at fred
-X-Virus-Status: Clean
-X-ZCU-MailScanner-ID: E79DC80025ED.AC638
-X-ZCU-MailScanner-SpamCheck: not spam (whitelisted),
-        SpamAssassin (not cached, score=-1.01, required 5,
-        autolearn=disabled, ALL_TRUSTED -1.00, T_SCC_BODY_TEXT_LINE -0.01)
-X-ZCU-MailScanner-From: perry@ntis.zcu.cz
-X-ZCU-Spam-Status: No
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <24f547-6285e280-59-40303580@48243747>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I try to push to remote git server, I got:
+On Thu, May 19, 2022 at 08:23:25AM +0200, Ing. Martin Prantl Ph.D. wrote:
 
-BUG: remote.c:236: hashmap_put overwrote entry after hashmap_get returned NULL
+> file:.git/config    branch..remote=origin
+> file:.git/config    branch..merge=refs/heads/
+> [...]
+> 
+> git ls-remote
+> BUG: remote.c:236: hashmap_put overwrote entry after hashmap_get returned NULL
 
-When I try push to another repository on the same server, it is working correctly. The problem is only with one repo.
+Those branch entries with an empty subsection are the culprit. I'm not
+sure how they got there, but they should be safe to remove, which will
+make your immediate problem go away.
 
-Local Git version: 2.36.0.windows.1
-Server Git version: 2.19.2
+It looks like handling of such bogus keys regressed in 4a2dcb1a08
+(remote: die if branch is not found in repository, 2021-11-17). In
+make_branch(), the call to find_branch() gets confused by the 0-length
+"len" parameter, and instead uses strlen() on the partial string
+containing the rest of the config key. So it tries to look up branch
+".remote" for the first key, and ".merge" for the second. Since neither
+exist, in both cases it then tries to add a new entry, but this time
+correctly using the 0-length string. Which will confusingly already be
+present when handling the second key.
 
-git fsck did not reveal any problem
-Checking object directories: 100% (256/256), done.
-Checking objects: 100% (23956/23956), done.
-Checking connectivity: 18782, done.
+Either find_branch() needs to become more careful about distinguishing
+the two cases, or perhaps 0-length names should be rejected earlier (I
+don't think they could ever be useful).
 
-git config --list --show-origin
-file:C:/Program Files/Git/etc/gitconfig    diff.astextplain.textconv=astextplain
-file:C:/Program Files/Git/etc/gitconfig    filter.lfs.clean=git-lfs clean -- %f
-file:C:/Program Files/Git/etc/gitconfig    filter.lfs.smudge=git-lfs smudge -- %f
-file:C:/Program Files/Git/etc/gitconfig    filter.lfs.process=git-lfs filter-process
-file:C:/Program Files/Git/etc/gitconfig    filter.lfs.required=true
-file:C:/Program Files/Git/etc/gitconfig    http.sslbackend=openssl
-file:C:/Program Files/Git/etc/gitconfig    http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
-file:C:/Program Files/Git/etc/gitconfig    core.autocrlf=true
-file:C:/Program Files/Git/etc/gitconfig    core.fscache=true
-file:C:/Program Files/Git/etc/gitconfig    core.symlinks=false
-file:C:/Program Files/Git/etc/gitconfig    core.editor="C:\\Program Files\\Notepad++\\notepad++.exe" -multiInst -notabbar -nosession -noPlugin
-file:C:/Program Files/Git/etc/gitconfig    pull.rebase=false
-file:C:/Program Files/Git/etc/gitconfig    credential.helper=manager-core
-file:C:/Program Files/Git/etc/gitconfig    credential.https://dev.azure.com.usehttppath=true
-file:C:/Program Files/Git/etc/gitconfig    init.defaultbranch=master
-file:C:/Users/XXX/.gitconfig    user.name=XXX
-file:C:/Users/XXX/.gitconfig    user.email=xxx
-file:C:/Users/XXX/.gitconfig    credential.helper=manager-core
-file:.git/config    core.bare=false
-file:.git/config    core.repositoryformatversion=0
-file:.git/config    core.filemode=false
-file:.git/config    core.symlinks=false
-file:.git/config    core.ignorecase=true
-file:.git/config    core.logallrefupdates=true
-file:.git/config    remote.origin.url=ssh://xxx/volume1/homes/disk_station/git/repo.git
-file:.git/config    remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-file:.git/config    branch..remote=origin
-file:.git/config    branch..merge=refs/heads/
-file:.git/config    branch.master.remote=origin
-file:.git/config    branch.master.merge=refs/heads/master
+Perhaps something like this, though I'll leave it to the original author
+(cc'd) to decide what's best.
 
-git ls-remote
-BUG: remote.c:236: hashmap_put overwrote entry after hashmap_get returned NULL
+diff --git a/remote.c b/remote.c
+index 42a4e7106e..2f000a6416 100644
+--- a/remote.c
++++ b/remote.c
+@@ -354,7 +354,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	struct remote_state *remote_state = cb;
+ 
+ 	if (parse_config_key(key, "branch", &name, &namelen, &subkey) >= 0) {
+-		if (!name)
++		if (!name || !namelen)
+ 			return 0;
+ 		branch = make_branch(remote_state, name, namelen);
+ 		if (!strcmp(subkey, "remote")) {
 
+-Peff
