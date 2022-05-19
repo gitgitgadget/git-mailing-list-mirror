@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3826CC433EF
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 09:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A4AC433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 09:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235937AbiESJRG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 05:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S234472AbiESJZi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 05:25:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbiESJRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 05:17:04 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444E45BE56
-        for <git@vger.kernel.org>; Thu, 19 May 2022 02:17:03 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id c10so6245037edr.2
-        for <git@vger.kernel.org>; Thu, 19 May 2022 02:17:03 -0700 (PDT)
+        with ESMTP id S231781AbiESJZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 05:25:37 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1209CF46
+        for <git@vger.kernel.org>; Thu, 19 May 2022 02:25:36 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id gi33so253077ejc.3
+        for <git@vger.kernel.org>; Thu, 19 May 2022 02:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=4nbcng8Pykrf/fiUtwmMJgiv35LlkZIMANmCpSS8rc0=;
-        b=UhHAEw/6pEhoPrgQMc5RKw1TADfl7I73ePRW8xpChf7PSfR6odU2E8JAg+vHDrbyAa
-         GzIDbc8yXrIJxXu2afR8QncQcYrg4AIWl0sQ27/H42NZmw7nlsAo41w4JV7HE9tqg/J7
-         j0aCdgUAo6azT7ITWO8h70eVfCfAwKwS/7KyX0QJAnOqeRYVqdYl7E2Xz0f79U3xFOmG
-         ZTnOWoY1Yd1gVMvV2ZViwch1BJJ2dy7jNhB+Bzo2hLiIBp105ZtJBICNeeIKTFEtPEfB
-         mjhk2y1MuZqk3ADB2LZHJRec38TwyMOVAsSw/ZhurLkd9CKCU6JPCrudgAwtK72l9JbA
-         MXuw==
+        bh=V9OlpwGnydwBoEaBEph8Dd254aKcAou05DzJwMmiOkY=;
+        b=CDtzAgoWQTh/su4L8iKhLehTDbQAXDA+roISMSrqHFR1raqbc58vT1sVaxu9T0Gfj7
+         uugrHicXtDmWBPKzUYk2614X6CHbMhAAe5FQhg9RtUo9I2CcNEUVI24nCgMJz2Z1Bttb
+         h7E3/H6LtETQwULhllzxm6bptryXNVVYoFfyHUOfBMWhGnAvC+FLPtTyi/5FB412Da47
+         QAcF4WaW/TL4bZIv0RYNvTC9b5+zPpio4uYtsna06UYPQIfKmb5U4AIkaESEAlCqzM0j
+         bKbwvFVD3Q3q0KYRdV/QG0k2HVJnhpus3WauXJXx0uWpz4Gh1odP1NtkeOsX3AirFpHi
+         nb0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=4nbcng8Pykrf/fiUtwmMJgiv35LlkZIMANmCpSS8rc0=;
-        b=hgpvMCAZQHicJ0P4ZTTOJtJ2oGkFKjDHQDwmLx0JdYOvVqGkBLQQHq+N8TjkmRcGCN
-         EY4ZpCfgZ33AqzXzNTfwulT+IEQE4Es/D2uc/weqRJf/MOysl4jKI4NeFq/2hhZ+Z5Iz
-         NEHeAfKb0a8ECyMMgVc32m1tA0E1DlTuGayCnEpJ9/hm7nsIVYJVFf9ilfMEVgmg9aTs
-         xXWONJcLmVFRhmO2tFms6V6fRkrtQYg3uTMqRKRrUuuoQPn3MuJaXUnjzH4OdyNfikZE
-         a9qTJ0S5AJmD08NycvcCWo6l2ESIJcbELYAN3BXp3+L6aKG7By6ILd9FI+u6DuwBlBTr
-         8zcg==
-X-Gm-Message-State: AOAM532kp41oyFzP2cLjdE/m9TvmwuAU5yiylBip1ZxLvXwF9y7ClOFM
-        ML7PLFOoJTjOSUI6bTDaWbI=
-X-Google-Smtp-Source: ABdhPJxVlJoPp0sTOMIaj3mnL6CFMGaXn7S57kIxyCT9vlYNyt4B6/O1TkSXeLrFpXqgvMUB46ZqlA==
-X-Received: by 2002:a05:6402:5189:b0:42b:4b8:32e7 with SMTP id q9-20020a056402518900b0042b04b832e7mr1319178edd.177.1652951821536;
-        Thu, 19 May 2022 02:17:01 -0700 (PDT)
+        bh=V9OlpwGnydwBoEaBEph8Dd254aKcAou05DzJwMmiOkY=;
+        b=xN7RI8fFMU+Oe9Ozj7GScGb9Ec71gQmXM8BpWI3/BncyBV/V8Vbjo7N1SydqI6uBiH
+         AIytNFZDVSTuwSInY0GowZ1lAZOijnaowahiUp4vpSaRs/peklk/0+vHe8PRhsw+70aU
+         nfyvVVfKv0XMZxr4Dp/5YhJ401JFVkQAtBUBMDgNIQD7Dhq5VvcKcCfeebz46oPq5nv6
+         pyTHfR4lO/nt5FajqIq0FA9BgdNaoGeVIKMEAo1g8EIO3APLstUjf1KE/VqErlNEPcWY
+         F0cqkZUyAHEWGvz65/brql5KHyzmjVVjJLx4t23hHDvuXEsM3oOW85/B3F5xvW9IKdOt
+         g5zg==
+X-Gm-Message-State: AOAM532dYjPrw9kH8ijpVejJs57N8ITiUmvprlAb6YiAYY4fi7nyPPRu
+        sHDMZjIYJTNB/vt8EyWa6n4=
+X-Google-Smtp-Source: ABdhPJx+KVl7/5YE2Do3WW04GiSEf1ZkoM/xwv1OPOLmTdlbzvZrQzKsgQlunEZYCdwCRwaOPo/MbA==
+X-Received: by 2002:a17:906:c110:b0:6f5:77de:2324 with SMTP id do16-20020a170906c11000b006f577de2324mr3299394ejc.143.1652952334440;
+        Thu, 19 May 2022 02:25:34 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id n27-20020a17090673db00b006fe7ca9d105sm1938075ejl.44.2022.05.19.02.17.00
+        by smtp.gmail.com with ESMTPSA id og9-20020a1709071dc900b006f3ef214deesm1900034ejc.84.2022.05.19.02.25.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 02:17:00 -0700 (PDT)
+        Thu, 19 May 2022 02:25:33 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nrcHD-0021Ea-DB;
-        Thu, 19 May 2022 11:16:59 +0200
+        id 1nrcPU-0021WY-KJ;
+        Thu, 19 May 2022 11:25:32 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
@@ -71,13 +71,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Emir SARI <bitigchi@me.com>,
         =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
         Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH v2 1/9] Makefile: sort "po/git.pot" by file location
-Date:   Thu, 19 May 2022 10:53:51 +0200
+Subject: Re: [PATCH v2 2/9] Makefile: generate "po/git.pot" from stable
+ LOCALIZED_C
+Date:   Thu, 19 May 2022 11:18:17 +0200
 References: <20220503132354.9567-1-worldhello.net@gmail.com>
- <20220519081548.3380-2-worldhello.net@gmail.com>
+ <20220519081548.3380-3-worldhello.net@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220519081548.3380-2-worldhello.net@gmail.com>
-Message-ID: <220519.86tu9l6fw4.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220519081548.3380-3-worldhello.net@gmail.com>
+Message-ID: <220519.86pmk96fhv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -89,116 +90,70 @@ On Thu, May 19 2022, Jiang Xin wrote:
 
 > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> Before feeding xgettext with more C souce files which may be ignored
-> by various compiler conditions, add new option "--sort-by-file" to
-> xgettext program to create stable message template file "po/git.pot".
+> When running "make pot" on different platform, we may get a different
+> message template file "po/git.pot". This is because the "LOCALIZED_C"
+> variable may have different C source files on different platforms or
+> different compiler conditions.
+
+As noted in my review of 1/9 this part of the rationale makes perfect
+sense, no matter what we should always get the same results from "make
+pot" on different platforms.
+
+And I like the simplicity of using FOUND_C_SOURCES, unfortunately...
+
+> We can make a stable "LOCALIZED_C" variable by applying patch snippets
+> as follows:
 >
-> With this update, the newly generated "po/git.pot" will has the same
-> entries while in a different order. We won't checkin the newly generated
-> "po/git.pot", because we will remove it from tree in a later commit.
+>      ifdef NO_LIBGEN_H
+>          COMPAT_CFLAGS += -DNO_LIBGEN_H
+>          COMPAT_OBJS += compat/basename.o
+>     +else
+>     +    LOCALIZED_C += compat/basename.c
+>      endif
 >
+> But it is much simpler to use variables "$(FOUND_C_SOURCES)" and
+> "$(FOUND_C_SOURCES)" to form a stable "LOCALIZED_C".
+>
+> With this update, the newly generated "po/git.pot" will have 30 new
+> entries coming from the following C source files:
+>
+>  * compat/fsmonitor/fsm-listen-win32.c
+>  * compat/mingw.c
+>  * compat/regex/regcomp.c
+>  * compat/simple-ipc/ipc-win32.c
+
+Those files which list "our" code look like obvious bug fixes, i.e. we
+are the primary maintainer of that compat/* code, so we should do the
+translation.
+
+But the inclusion of compat/regex/regcomp.c there is a bug IMO. It's
+code we got from glibc/awk. Do we really want to be using translator
+time on that?
+
+Hrm, maybe. After all those systems (most notably Windows) won't have
+glibc/awk's translation catalogs, and in any case even if they did we'd
+be using some ~decade old version of the code, so the two won't match up
+well.
+
+So maybe this is fine....
+
 > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  Makefile | 1 +
->  1 file changed, 1 insertion(+)
+>  Makefile | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/Makefile b/Makefile
-> index f8bccfab5e..83e968e2a4 100644
+> index 83e968e2a4..60ca42c268 100644
 > --- a/Makefile
 > +++ b/Makefile
-> @@ -2706,6 +2706,7 @@ XGETTEXT_FLAGS = \
->  	--force-po \
->  	--add-comments=TRANSLATORS: \
->  	--msgid-bugs-address="Git Mailing List <git@vger.kernel.org>" \
-> +	--sort-by-file \
->  	--from-code=UTF-8
->  XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
->  	--keyword=_ --keyword=N_ --keyword="Q_:1,2"
+> @@ -2714,7 +2714,8 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
+>  	--keyword=gettextln --keyword=eval_gettextln
+>  XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
+>  	--keyword=__ --keyword=N__ --keyword="__n:1,2"
+> -LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+> +LOCALIZED_C = $(FOUND_C_SOURCES) $(SCALAR_SOURCES) \
+> +	      $(FOUND_H_SOURCES) $(GENERATED_H)
 
-I'm not opposed to this change, but between this and 2/9 I'm still
-unsure what the aim is exactly, and if the results are desired.
-
-In 2/9 you correctly point out that we have messages we've missed due to
-LOCALIZED_C being platform-specific.
-
-That should never happen (although your implementation in 2/9 may have
-some small issues, I'll reply there separately), i.e. we should always
-have "make pot" generate the same po/git.pot from the same commit
-whether you're on linux, mac os x etc.
-
-But AFAICT we have a "stable" sort order now, it's in whatever order we
-feed the files to xgettext, which ultimately comes down to e.g. the list
-of $(LIB_OBJS) in the Makefile.
-
-I've been looking over the libintl documentation to see what exactly
-these sort options do, and how they differ from the default, and it's
-not really described.
-
-AFAICT the xgettext behavior we have now is that we'll process the files
-we have in order, and for those files extract the messages we have as we
-see them.
-
-One fringe benefit of that is that e.g. "make pot
-XGETTEXT_INCLUDE_TESTS=Y" (which I think I've only ever used, and
-probably only ~10 years ago) will get added at the end, but now it'll be
-added wherever t/t0200 sorts.
-
-Then because compose the builtin objs and lib objs by concatenation, but
-don't $(sort) them in the Makefile most of this change is due to us
-e.g. sorting builtin/* before parse-options.c or whatever.
-
-But oddly we also have cases like this:
-
-        strbuf_addf(&header, print_file_item_data.modified_fmt,
-                    _("staged"), _("unstaged"), _("path"));
-
-Before this we'd list those in that order in the git.pot, but now
-because of --sort-by-file we'll list any messages on the same line in
-sorted msgid order, not in the orderd they appear in. Another example is
-e.g. this in builtin/blame.c:
-
-    OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming"))
-
-Where before we'd list them in that order, but now it's with "ignore.."
-before "rev".
-
-I think this change would be easier to follow & explain if you first
-made this change:
-	
-	diff --git a/Makefile b/Makefile
-	index 61aadf3ce88..3726fe8064a 100644
-	--- a/Makefile
-	+++ b/Makefile
-	@@ -2715,10 +2715,9 @@ XGETTEXT_FLAGS_SH = $(XGETTEXT_FLAGS) --language=Shell \
-	 	--keyword=gettextln --keyword=eval_gettextln
-	 XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
-	 	--keyword=__ --keyword=N__ --keyword="__n:1,2"
-	-LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
-	-LOCALIZED_SH = $(SCRIPT_SH)
-	-LOCALIZED_SH += git-sh-setup.sh
-	-LOCALIZED_PERL = $(SCRIPT_PERL)
-	+LOCALIZED_C = $(sort $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H))
-	+LOCALIZED_SH = $(sort $(SCRIPT_SH) git-sh-setup.sh)
-	+LOCALIZED_PERL = $(sort $(SCRIPT_PERL))
-	 
-	 ifdef XGETTEXT_INCLUDE_TESTS
-	 LOCALIZED_C += t/t0200/test.c
-
-Which would sort things within C, SH and Perl files (but not among
-them). Then this change would AFAICT only:
-
- * Change that "within one line" sort order, as noted above
- * Sort across C/SH/Perl.
-
-I'm mostly "meh" on the result, but it's also because I genuinely don't
-get what the goal was. Is it because in 2/9 you'll end up using
-$(FOUND_C_SOURCES), which we derive from either "git ls-files" or
-"find", the latter of which has an unstable sort order?
-
-Even if that's the case a smaller change is to just use $(sort) as noted
-above. I like that a tiny bit more because then the "--join-existing" we
-do for SH/Perl is an append, whereas now we'll re-sort the whole thing.
-
-I also don't think it matters much either way, so whatever you're happy
-with, the above all came from trying to follow along...
+The SCALAR_SOURCES seems snuck in here, but it's worth noting in the
+commit message that we effectively had it here before as part of C_OBJ.
