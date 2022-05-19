@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A0CC433EF
-	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C91A7C433F5
+	for <git@archiver.kernel.org>; Thu, 19 May 2022 18:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243796AbiESSSg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 May 2022 14:18:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34050 "EHLO
+        id S243849AbiESSSj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 May 2022 14:18:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243803AbiESSSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 May 2022 14:18:17 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204F9EBAA2
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:14 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id k126-20020a1ca184000000b003943fd07180so3126094wme.3
-        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:14 -0700 (PDT)
+        with ESMTP id S243826AbiESSSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 May 2022 14:18:18 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 471D0EBA97
+        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:15 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id p189so3330331wmp.3
+        for <git@vger.kernel.org>; Thu, 19 May 2022 11:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=q4Nq0XKv3sAz87ZRO+MCbKnQgUW64Vx3dbiERrPUd8U=;
-        b=EvnVBEOJ4Jmyf69+PNIiXo+BW/tNcX9n9OSGjMeIsDqbn9bb66hPHfXTL0PgFci7Rr
-         52Z122Q+bD+bVBz3EIFm7KSlKY7DDlPpa7Au6yfuuSuDz+825T70wfmHbIJLM97caaJy
-         WtcLMtNEgkdJFrHbD6n3/ayGnqBuAqC9LrOVnMoOXCcKXN0E8p1s2ep/QQ5BBs7s7uB9
-         twH5jWqWBcQyuMg5rWW95ae+B5tVaQl0Gpek1WuCcoyLESQ0oS8l5FjM5yVSMLTNcuml
-         nnawgvFFnEGTkJW4jox6yPVnwyIQUxIr3uWVhBEIMOhaMrUU2H7WU7px3yzyadJj4ZTU
-         gBhQ==
+        bh=tFFHzUyw+itlS2o1LNy+a7mqx3/e2BvK13aAU/vxYfE=;
+        b=Ym7QbPffadr9NKxcfyAacV2ivN8P71VbW3eXlbgp5DyKpMR/9beh3w0HVt3ZXfGE+W
+         dW3PdbC4ZrT0B5WBcYPHXlIw7soZksygYQm0ErxiPdQIMfLq8/gecX16n3zg1IV2hFOb
+         8o7t/NKuJE+IKqcuLnmgduPJ6/+wHn/UqoMQiPMesLrg1P5uzQo4/hK3kPbSYXHw8unQ
+         6UniIunPNMa/eRqPTAk96rIxi0oAM9DC6DQKtHENrnE+rkuMgtuOMWlHnBOTxuO9dtpH
+         J5kSOmyj97W/E8n877Yo5tER0erg+hjPOs0eFocb1cV8iKM6lflGvIx+HXmcgJSu8uJe
+         JjQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=q4Nq0XKv3sAz87ZRO+MCbKnQgUW64Vx3dbiERrPUd8U=;
-        b=JscRgLkF/RqBOg56X+txK4OzjShpccIpZMYxrkyfaLTCOO/yiSlgSXbTuT85QWG9Eu
-         tKVTTdeBnC4QRCtrm1mAVXJPpeXp5tB/SqtZx/uswkl9bqLMdwg+lOd3WO4f+6DVYVpD
-         Mgr9Ct2xvrBgKAAy/FYFRj1tfc+yvP+g4hAtlZzvEZ7XK1QSmLd+x5Wh8pSGXOsL/J70
-         Dnlry38WYJY+xCEib5F/blhc/WolkKWBSwNensWLWHtGfL5JJwfEeyR7E+CapCytt8Wb
-         DaElUAqjBk/yIHkYMbjaTHQX2pBw3qg+pKYqRDBaWwqQdQQ6kv59iczMOrqpHhgX9PUL
-         zEIg==
-X-Gm-Message-State: AOAM532W29qK8uOjYeIKgLEOsZX1F8900QKqKY8NeMelUn/1VwU778sq
-        RxxGDkYDIjYPojKY0sD/1+8swZJXa1g=
-X-Google-Smtp-Source: ABdhPJw/l8jY33z8WGVNn/cEudQsF9/dit6iF0qln6SVi5A9wd+uCZCfVrDTrrJQvlN4bOSVAvMUIg==
-X-Received: by 2002:a05:600c:5112:b0:394:55bd:5f9d with SMTP id o18-20020a05600c511200b0039455bd5f9dmr5603731wms.188.1652984292343;
-        Thu, 19 May 2022 11:18:12 -0700 (PDT)
+        bh=tFFHzUyw+itlS2o1LNy+a7mqx3/e2BvK13aAU/vxYfE=;
+        b=SAQH3F1RUf8v27dV/bPR/xe1ysSm3wWeuLtnP353eXrW5pdpyohLJMrIx0AYs+H9jD
+         Y34Fgfshx7GCn8k7EIM45ibMiuzd+38OncMPHVW+wFiWr4tvIMhM4b4AOdZe+zwHdZuh
+         GMNQ+0IRdqx3ShpPE0j8wJK6hCdAyiq3hOrAh0woWucsTXLfZ9ePB3DY4M0tTxGshbNa
+         6E/+60BHto3SmeB/huJgP8q4DQnXqwx5nhxl8wibr0AcWSqdoooposcYs1vbFjYuoSYx
+         sS863Jqh5bWoLED/dXO8IbPjFpmoe2J3UrUzqGIf5rUFwe8Em3s9UGrkH/ZG2xHNuiQB
+         w70A==
+X-Gm-Message-State: AOAM533IN8hBkioNRTB/60SDhAVR1so2JyB53y/WsGVnc/3Bqr/7PKCS
+        mYNGk4lfCVZuqHs0k6JkFkLbQC270Lg=
+X-Google-Smtp-Source: ABdhPJz0ZozQQEvJKLs/77LHdPL4w3jTqD7CiFHhVURyax0YUl+Z+bqyG1MDUYd74xDSMRCdUFkISQ==
+X-Received: by 2002:a7b:c8c7:0:b0:394:9e02:baa with SMTP id f7-20020a7bc8c7000000b003949e020baamr5353590wml.26.1652984293470;
+        Thu, 19 May 2022 11:18:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t11-20020adfba4b000000b0020c6fa5a797sm248478wrg.91.2022.05.19.11.18.11
+        by smtp.gmail.com with ESMTPSA id b9-20020adf9b09000000b0020c5253d8dfsm257932wrc.43.2022.05.19.11.18.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 11:18:11 -0700 (PDT)
-Message-Id: <0fa20d7375009999d978da682c3f98a604cda9e4.1652984283.git.gitgitgadget@gmail.com>
+        Thu, 19 May 2022 11:18:12 -0700 (PDT)
+Message-Id: <62e173b47cf2550a8e458c4d2cf667402b0c8ee3.1652984283.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
 References: <pull.1128.v4.git.1652210824.gitgitgadget@gmail.com>
         <pull.1128.v5.git.1652984283.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 May 2022 18:18:02 +0000
-Subject: [PATCH v5 6/7] scalar: teach `diagnose` to gather packfile info
+Date:   Thu, 19 May 2022 18:18:03 +0000
+Subject: [PATCH v5 7/7] scalar: teach `diagnose` to gather loose objects
+ information
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,99 +74,119 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-It's helpful to see if there are other crud files in the pack
-directory. Let's teach the `scalar diagnose` command to gather
-file size information about pack files.
+When operating at the scale that Scalar wants to support, certain data
+shapes are more likely to cause undesirable performance issues, such as
+large numbers of loose objects.
 
-While at it, also enumerate the pack files in the alternate
-object directories, if any are registered.
+By including statistics about this, `scalar diagnose` now makes it
+easier to identify such scenarios.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 30 ++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh |  6 +++++-
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ contrib/scalar/scalar.c          | 59 ++++++++++++++++++++++++++++++++
+ contrib/scalar/t/t9099-scalar.sh |  5 ++-
+ 2 files changed, 63 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 0a9e25a57f8..d302c27e114 100644
+index d302c27e114..0c278681758 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -12,6 +12,7 @@
- #include "packfile.h"
- #include "help.h"
- #include "archive.h"
-+#include "object-store.h"
- 
- /*
-  * Remove the deepest subdirectory in the provided path string. Path must not
-@@ -595,6 +596,29 @@ cleanup:
- 	return res;
+@@ -619,6 +619,60 @@ static int dir_file_stats(struct object_directory *object_dir, void *data)
+ 	return 0;
  }
  
-+static void dir_file_stats_objects(const char *full_path, size_t full_path_len,
-+				   const char *file_name, void *data)
++static int count_files(char *path)
 +{
-+	struct strbuf *buf = data;
-+	struct stat st;
++	DIR *dir = opendir(path);
++	struct dirent *e;
++	int count = 0;
 +
-+	if (!stat(full_path, &st))
-+		strbuf_addf(buf, "%-70s %16" PRIuMAX "\n", file_name,
-+			    (uintmax_t)st.st_size);
++	if (!dir)
++		return 0;
++
++	while ((e = readdir(dir)) != NULL)
++		if (!is_dot_or_dotdot(e->d_name) && e->d_type == DT_REG)
++			count++;
++
++	closedir(dir);
++	return count;
 +}
 +
-+static int dir_file_stats(struct object_directory *object_dir, void *data)
++static void loose_objs_stats(struct strbuf *buf, const char *path)
 +{
-+	struct strbuf *buf = data;
++	DIR *dir = opendir(path);
++	struct dirent *e;
++	int count;
++	int total = 0;
++	unsigned char c;
++	struct strbuf count_path = STRBUF_INIT;
++	size_t base_path_len;
 +
-+	strbuf_addf(buf, "Contents of %s:\n", object_dir->path);
++	if (!dir)
++		return;
 +
-+	for_each_file_in_pack_dir(object_dir->path, dir_file_stats_objects,
-+				  data);
++	strbuf_addstr(buf, "Object directory stats for ");
++	strbuf_add_absolute_path(buf, path);
++	strbuf_addstr(buf, ":\n");
 +
-+	return 0;
++	strbuf_add_absolute_path(&count_path, path);
++	strbuf_addch(&count_path, '/');
++	base_path_len = count_path.len;
++
++	while ((e = readdir(dir)) != NULL)
++		if (!is_dot_or_dotdot(e->d_name) &&
++		    e->d_type == DT_DIR && strlen(e->d_name) == 2 &&
++		    !hex_to_bytes(&c, e->d_name, 1)) {
++			strbuf_setlen(&count_path, base_path_len);
++			strbuf_addstr(&count_path, e->d_name);
++			total += (count = count_files(count_path.buf));
++			strbuf_addf(buf, "%s : %7d files\n", e->d_name, count);
++		}
++
++	strbuf_addf(buf, "Total: %d loose objects", total);
++
++	strbuf_release(&count_path);
++	closedir(dir);
 +}
 +
  static int cmd_diagnose(int argc, const char **argv)
  {
  	struct option options[] = {
-@@ -657,6 +681,12 @@ static int cmd_diagnose(int argc, const char **argv)
- 		     "--add-virtual-file=diagnostics.log:%.*s",
- 		     (int)buf.len, buf.buf);
+@@ -687,6 +741,11 @@ static int cmd_diagnose(int argc, const char **argv)
+ 	foreach_alt_odb(dir_file_stats, &buf);
+ 	strvec_push(&archiver_args, buf.buf);
  
 +	strbuf_reset(&buf);
-+	strbuf_addstr(&buf, "--add-virtual-file=packs-local.txt:");
-+	dir_file_stats(the_repository->objects->odb, &buf);
-+	foreach_alt_odb(dir_file_stats, &buf);
++	strbuf_addstr(&buf, "--add-virtual-file=objects-local.txt:");
++	loose_objs_stats(&buf, ".git/objects");
 +	strvec_push(&archiver_args, buf.buf);
 +
  	if ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
  	    (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
  	    (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 934b2485d91..3dd5650cceb 100755
+index 3dd5650cceb..72023a1ca1d 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -93,6 +93,8 @@ test_expect_success '`scalar [...] <dir>` errors out when dir is missing' '
- SQ="'"
- test_expect_success UNZIP 'scalar diagnose' '
+@@ -95,6 +95,7 @@ test_expect_success UNZIP 'scalar diagnose' '
  	scalar clone "file://$(pwd)" cloned --single-branch &&
-+	git repack &&
-+	echo "$(pwd)/.git/objects/" >>cloned/src/.git/objects/info/alternates &&
+ 	git repack &&
+ 	echo "$(pwd)/.git/objects/" >>cloned/src/.git/objects/info/alternates &&
++	test_commit -C cloned/src loose &&
  	scalar diagnose cloned >out 2>err &&
  	grep "Available space" out &&
  	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <err >zip_path &&
-@@ -102,7 +104,9 @@ test_expect_success UNZIP 'scalar diagnose' '
- 	folder=${zip_path%.zip} &&
- 	test_path_is_missing "$folder" &&
+@@ -106,7 +107,9 @@ test_expect_success UNZIP 'scalar diagnose' '
  	unzip -p "$zip_path" diagnostics.log >out &&
--	test_file_not_empty out
-+	test_file_not_empty out &&
-+	unzip -p "$zip_path" packs-local.txt >out &&
-+	grep "$(pwd)/.git/objects" out
+ 	test_file_not_empty out &&
+ 	unzip -p "$zip_path" packs-local.txt >out &&
+-	grep "$(pwd)/.git/objects" out
++	grep "$(pwd)/.git/objects" out &&
++	unzip -p "$zip_path" objects-local.txt >out &&
++	grep "^Total: [1-9]" out
  '
  
  test_done
 -- 
 gitgitgadget
-
